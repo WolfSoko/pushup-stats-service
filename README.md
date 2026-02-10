@@ -27,11 +27,17 @@ Anpassbar über Umgebungsvariable:
 ```bash
 npm install
 
-# API (Port 8787)
+# Terminal 1: API (Express, Port 8787)
 npx nx serve api
 
-# Web (Angular SSR Dev Server)
+# Terminal 2: Web (Angular SSR Dev Server mit Proxy /api -> :8787)
 npx nx serve web
+```
+
+Hinweis: Falls Port `8787` belegt ist, API mit anderem Port starten:
+
+```bash
+PORT=8788 npx nx serve api
 ```
 
 ## Builds

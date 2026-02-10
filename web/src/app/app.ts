@@ -57,10 +57,12 @@ export class App implements AfterViewInit {
   granularity: 'daily' | 'hourly' = 'daily';
   rows: Array<{ bucket: string; total: number; dayIntegral: number }> = [];
 
-  private readonly apiBase = 'http://127.0.0.1:8787';
+  private readonly apiBase = '/api';
 
   ngAfterViewInit(): void {
-    this.load();
+    if (isPlatformBrowser(this.platformId)) {
+      this.load();
+    }
   }
 
   async load(): Promise<void> {
@@ -69,7 +71,7 @@ export class App implements AfterViewInit {
     if (this.to) params.set('to', this.to);
 
     const query = params.toString();
-    const url = `${this.apiBase}/api/stats${query ? `?${query}` : ''}`;
+    const url = `${this.apiBase}/stats${query ? `?${query}` : ''}`;
     const data = await firstValueFrom(this.http.get<StatsResponse>(url));
 
     this.granularity = data.meta.granularity || 'daily';

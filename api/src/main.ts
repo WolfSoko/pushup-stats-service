@@ -1,4 +1,5 @@
-import http from 'node:http';
+import express from 'express';
+import cors from 'cors';
 import fs from 'node:fs';
 import path from 'node:path';
 
@@ -17,8 +18,6 @@ type SeriesEntry = {
 const WORKSPACE = process.env.WORKSPACE_DIR || '/home/wolf/.openclaw/workspace';
 const CSV_PATH = process.env.PUSHUPS_CSV_PATH || path.join(WORKSPACE, 'pushups.csv');
 const PORT = Number(process.env.PORT || 8787);
-const STATIC_DIR =
-  process.env.WEB_DIST_PATH || path.join(process.cwd(), 'dist', 'web', 'browser');
 
 function parseCsv(): PushupEntry[] {
   if (!fs.existsSync(CSV_PATH)) return [];
@@ -76,101 +75,43 @@ function aggregateHourly(rows: PushupEntry[]): SeriesEntry[] {
   });
 }
 
-function contentType(file: string): string {
-  const ext = path.extname(file).toLowerCase();
-  if (ext === '.html') return 'text/html; charset=utf-8';
-  if (ext === '.js' || ext === '.mjs') return 'application/javascript; charset=utf-8';
-  if (ext === '.css') return 'text/css; charset=utf-8';
-  if (ext === '.json') return 'application/json; charset=utf-8';
-  if (ext === '.svg') return 'image/svg+xml';
-  if (ext === '.png') return 'image/png';
-  if (ext === '.jpg' || ext === '.jpeg') return 'image/jpeg';
-  if (ext === '.webp') return 'image/webp';
-  if (ext === '.ico') return 'image/x-icon';
-  return 'application/octet-stream';
-}
+const app = express();
+app.use(cors());
 
-function sendJson(res: http.ServerResponse, status: number, data: unknown): void {
-  const body = JSON.stringify(data);
-  res.writeHead(status, {
-    'Content-Type': 'application/json; charset=utf-8',
-    'Cache-Control': 'no-store',
-    'Access-Control-Allow-Origin': '*',
-  });
-  res.end(body);
-}
-
-function safeStaticPath(urlPath: string): string {
-  const clean = decodeURIComponent(urlPath.split('?')[0]);
-  const rel = clean.replace(/^\/+/, '');
-  const resolved = path.resolve(STATIC_DIR, rel);
-  if (!resolved.startsWith(path.resolve(STATIC_DIR))) return '';
-  return resolved;
-}
-
-const server = http.createServer((req, res) => {
-  const u = new URL(req.url || '/', `http://${req.headers.host}`);
-
-  if (req.method === 'OPTIONS') {
-    res.writeHead(204, {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'GET,OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type',
-    });
-    res.end();
-    return;
-  }
-
-  if (u.pathname === '/api/stats') {
-    const rows = parseCsv();
-    const from = u.searchParams.get('from');
-    const to = u.searchParams.get('to');
-    const inRange = (d: string): boolean => (!from || d >= from) && (!to || d <= to);
-
-    const filteredRows = rows.filter((x) => inRange(x.timestamp.slice(0, 10)));
-    const daily = aggregateDaily(filteredRows);
-    const distinctDays = new Set(filteredRows.map((x) => x.timestamp.slice(0, 10))).size;
-    const granularity = distinctDays > 0 && distinctDays < 7 ? 'hourly' : 'daily';
-    const series = granularity === 'hourly' ? aggregateHourly(filteredRows) : daily;
-    const total = daily.reduce((s, x) => s + x.total, 0);
-
-    sendJson(res, 200, {
-      meta: {
-        from: from || null,
-        to: to || null,
-        entries: filteredRows.length,
-        days: distinctDays,
-        total,
-        granularity,
-      },
-      series,
-      daily,
-      entries: filteredRows,
-    });
-    return;
-  }
-
-  // Static app serving
-  let target = safeStaticPath(u.pathname === '/' ? '/index.html' : u.pathname);
-  if (target && fs.existsSync(target) && fs.statSync(target).isFile()) {
-    res.writeHead(200, { 'Content-Type': contentType(target) });
-    fs.createReadStream(target).pipe(res);
-    return;
-  }
-
-  // SPA fallback
-  target = path.join(STATIC_DIR, 'index.html');
-  if (fs.existsSync(target)) {
-    res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
-    fs.createReadStream(target).pipe(res);
-    return;
-  }
-
-  sendJson(res, 404, { error: 'Not found', detail: 'Web build fehlt. Bitte `npx nx build web --configuration=production` ausführen.' });
+app.get('/health', (_req, res) => {
+  res.json({ ok: true });
 });
 
-server.listen(PORT, '127.0.0.1', () => {
-  console.log(`pushup service listening on http://127.0.0.1:${PORT}`);
+app.get('/api/stats', (req, res) => {
+  const rows = parseCsv();
+  const from = typeof req.query.from === 'string' ? req.query.from : null;
+  const to = typeof req.query.to === 'string' ? req.query.to : null;
+  const inRange = (d: string): boolean => (!from || d >= from) && (!to || d <= to);
+
+  const filteredRows = rows.filter((x) => inRange(x.timestamp.slice(0, 10)));
+  const daily = aggregateDaily(filteredRows);
+  const distinctDays = new Set(filteredRows.map((x) => x.timestamp.slice(0, 10))).size;
+  const granularity = distinctDays > 0 && distinctDays < 7 ? 'hourly' : 'daily';
+  const series = granularity === 'hourly' ? aggregateHourly(filteredRows) : daily;
+  const total = daily.reduce((s, x) => s + x.total, 0);
+
+  res.setHeader('Cache-Control', 'no-store');
+  res.json({
+    meta: {
+      from,
+      to,
+      entries: filteredRows.length,
+      days: distinctDays,
+      total,
+      granularity,
+    },
+    series,
+    daily,
+    entries: filteredRows,
+  });
+});
+
+app.listen(PORT, '127.0.0.1', () => {
+  console.log(`pushup api listening on http://127.0.0.1:${PORT}`);
   console.log(`CSV path: ${CSV_PATH}`);
-  console.log(`Static path: ${STATIC_DIR}`);
 });

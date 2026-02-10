@@ -26,7 +26,7 @@ describe('App', () => {
     const fixture = TestBed.createComponent(App);
     fixture.detectChanges();
 
-    const req = httpMock.expectOne('http://127.0.0.1:8787/api/stats');
+    const req = httpMock.expectOne('/api/stats');
     req.flush({
       meta: { from: null, to: null, entries: 0, days: 0, total: 0, granularity: 'daily' },
       series: [],
