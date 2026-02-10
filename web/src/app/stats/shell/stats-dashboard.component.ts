@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit, PLATFORM_ID, computed, inject, signal } from '@angular/core';
+import { Component, OnInit, PLATFORM_ID, computed, inject, signal } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { catchError, finalize, of } from 'rxjs';
@@ -18,7 +18,6 @@ import { StatsTableComponent } from '../components/stats-table/stats-table.compo
 export class StatsDashboardComponent implements OnInit {
   private readonly api = inject(StatsApiService);
   private readonly platformId = inject(PLATFORM_ID);
-  private readonly cdr = inject(ChangeDetectorRef);
 
   readonly from = signal('');
   readonly to = signal('');
@@ -39,7 +38,6 @@ export class StatsDashboardComponent implements OnInit {
       const from = fromDate.toISOString().slice(0, 10);
       this.from.set(from);
       this.to.set(to);
-      this.cdr.markForCheck();
       this.load();
     }
   }
@@ -59,7 +57,6 @@ export class StatsDashboardComponent implements OnInit {
         ),
         finalize(() => {
           this.loading.set(false);
-          this.cdr.markForCheck();
         }),
       )
       .subscribe((data) => {
@@ -68,7 +65,6 @@ export class StatsDashboardComponent implements OnInit {
         this.days.set(data.meta.days);
         this.entries.set(data.meta.entries);
         this.rows.set(data.series);
-        this.cdr.markForCheck();
       });
   }
 
