@@ -37,3 +37,6 @@ jobs:
 
       - name: Build
         run: npx nx run-many -t build --parallel=3
+
+      - run: npx nx fix-ci
+      if: always()
