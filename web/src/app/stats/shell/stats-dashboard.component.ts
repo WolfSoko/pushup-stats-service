@@ -31,6 +31,9 @@ export class StatsDashboardComponent implements OnInit {
 
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
+      const today = new Date().toISOString().slice(0, 10);
+      this.from = today;
+      this.to = today;
       this.load();
     }
   }
