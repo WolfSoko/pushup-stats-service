@@ -13,7 +13,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     <section class="controls">
       <div class="heading">
         <h2>Zeitraum auswählen</h2>
-        <p>Form-basiert wie im Angular-Material-Beispiel</p>
       </div>
 
       <mat-form-field appearance="outline">
