@@ -34,7 +34,7 @@ function aggregateDaily(rows) {
   }
   return [...map.entries()]
     .sort((a, b) => a[0].localeCompare(b[0]))
-    .map(([bucket, total]) => ({ bucket, total }));
+    .map(([bucket, total]) => ({ bucket, total, dayIntegral: total }));
 }
 
 function aggregateHourly(rows) {
@@ -43,9 +43,22 @@ function aggregateHourly(rows) {
     const h = r.timestamp.slice(0, 13) + ':00'; // YYYY-MM-DDTHH:00
     map.set(h, (map.get(h) || 0) + r.reps);
   }
-  return [...map.entries()]
+
+  const base = [...map.entries()]
     .sort((a, b) => a[0].localeCompare(b[0]))
     .map(([bucket, total]) => ({ bucket, total }));
+
+  let currentDay = null;
+  let running = 0;
+  return base.map((x) => {
+    const day = x.bucket.slice(0, 10);
+    if (day !== currentDay) {
+      currentDay = day;
+      running = 0;
+    }
+    running += x.total;
+    return { ...x, dayIntegral: running };
+  });
 }
 
 function sendJson(res, status, data) {

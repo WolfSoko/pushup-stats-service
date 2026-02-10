@@ -18,6 +18,7 @@
     table{width:100%;border-collapse:collapse}
     th,td{padding:8px;border-bottom:1px solid #2d3444;text-align:left}
     th{color:#aeb7c6;font-weight:600}
+    .legend{font-size:12px;color:#9fb2ce;margin-top:8px}
   </style>
 </head>
 <body>
@@ -39,6 +40,7 @@
   <div class="card">
     <h3 id="chartTitle">Verlauf (Tageswerte)</h3>
     <canvas id="chart" width="1100" height="320"></canvas>
+    <div class="legend">Blau: Intervallwert · Orange: Tages-Integral (kumuliert pro Tag)</div>
   </div>
 
   <div class="card">
@@ -89,7 +91,7 @@ function drawChart(series, granularity){
 
   const pad = {l:52,r:18,t:18,b:46};
   const cw = w - pad.l - pad.r, ch = h - pad.t - pad.b;
-  const max = Math.max(...series.map(d=>d.total), 1);
+  const max = Math.max(...series.map(d => Math.max(d.total || 0, d.dayIntegral || 0)), 1);
   const bw = Math.max(6, Math.min(44, cw / series.length * 0.55));
   const step = cw / Math.max(series.length,1);
 
@@ -101,22 +103,14 @@ function drawChart(series, granularity){
     ctx.fillStyle='#8f9bb1'; ctx.fillText(String(val), 8, y+4);
   }
 
-  ctx.strokeStyle = '#55d6be';
-  ctx.beginPath();
+  // Bars: interval values
   series.forEach((d, i) => {
     const x = pad.l + step*i + step/2;
-    const y = pad.t + ch - (d.total/max)*ch;
-    if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
-  });
-  ctx.stroke();
-
-  series.forEach((d, i) => {
-    const x = pad.l + step*i + step/2;
-    const y = pad.t + ch - (d.total/max)*ch;
+    const y = pad.t + ch - ((d.total || 0)/max)*ch;
     const bx = x - bw/2;
     const bh = pad.t + ch - y;
     ctx.fillStyle = '#4e8cff66';
-    ctx.fillRect(bx,y,bw,bh);
+    ctx.fillRect(bx, y, bw, bh);
 
     ctx.fillStyle = '#c5d3ea';
     if (series.length <= 16 || i % Math.ceil(series.length/16)===0) {
@@ -127,6 +121,17 @@ function drawChart(series, granularity){
       ctx.restore();
     }
   });
+
+  // Line: day integral
+  ctx.strokeStyle = '#ffb84d';
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  series.forEach((d, i) => {
+    const x = pad.l + step*i + step/2;
+    const y = pad.t + ch - ((d.dayIntegral || 0)/max)*ch;
+    if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+  });
+  ctx.stroke();
 }
 
 async function load(){
