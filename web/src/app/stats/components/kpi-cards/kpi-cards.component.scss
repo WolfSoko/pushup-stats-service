@@ -1,0 +1,21 @@
+.kpis {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+
+  mat-card {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  span {
+    color: #a8b8d6;
+    font-size: 0.85rem;
+  }
+
+  b {
+    font-size: 1.7rem;
+    line-height: 1;
+  }
+}

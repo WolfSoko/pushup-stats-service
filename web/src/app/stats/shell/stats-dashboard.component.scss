@@ -1,0 +1,17 @@
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 20px;
+  color: #e6edf9;
+}
+
+h1 {
+  margin: 0 0 12px;
+}
+
+app-filter-bar,
+app-kpi-cards,
+app-stats-chart {
+  display: block;
+  margin-bottom: 14px;
+}

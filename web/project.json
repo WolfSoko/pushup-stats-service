@@ -20,19 +20,14 @@
             "input": "web/public"
           }
         ],
-        "styles": ["web/src/styles.scss"],
-        "server": "web/src/main.server.ts",
-        "ssr": {
-          "entry": "web/src/server.ts"
-        },
-        "outputMode": "server"
+        "styles": ["web/src/styles.scss"]
       },
       "configurations": {
         "production": {
           "budgets": [
             {
               "type": "initial",
-              "maximumWarning": "500kb",
+              "maximumWarning": "700kb",
               "maximumError": "1mb"
             },
             {
@@ -83,7 +78,7 @@
       "executor": "@nx/web:file-server",
       "options": {
         "buildTarget": "web:build",
-        "staticFilePath": "dist/web/browser",
+        "staticFilePath": "dist/web",
         "spa": true
       }
     }

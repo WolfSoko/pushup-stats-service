@@ -7,7 +7,12 @@ import { StatsFilter, StatsResponse } from '@nx-temp/stats-models';
 export class StatsApiService {
   private readonly http = inject(HttpClient);
 
-  load(_filter: StatsFilter = {}): Observable<StatsResponse> {
-    return this.http.get<StatsResponse>('/api/stats');
+  load(filter: StatsFilter = {}): Observable<StatsResponse> {
+    const params = new URLSearchParams();
+    if (filter.from) params.set('from', filter.from);
+    if (filter.to) params.set('to', filter.to);
+    const query = params.toString();
+
+    return this.http.get<StatsResponse>(`/api/stats${query ? `?${query}` : ''}`);
   }
 }

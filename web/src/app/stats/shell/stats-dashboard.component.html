@@ -1,0 +1,18 @@
+<main class="container">
+  <h1>Liegestütze Statistik</h1>
+
+  <app-filter-bar
+    [from]="from"
+    [to]="to"
+    (fromChange)="from = $event"
+    (toChange)="to = $event"
+    (refresh)="load()"
+    (clearFilters)="reset()"
+  />
+
+  <app-kpi-cards [total]="total" [days]="days" [entries]="entries" [avg]="avg" />
+
+  <app-stats-chart [series]="rows" [granularity]="granularity" />
+
+  <app-stats-table [rows]="rows" [granularity]="granularity" />
+</main>
