@@ -18,4 +18,13 @@ module.exports = {
     'jest-preset-angular/build/serializers/ng-snapshot',
     'jest-preset-angular/build/serializers/html-comment',
   ],
+  coverageReporters: ['text-summary', 'html', 'json-summary'],
+  coverageThreshold: {
+    global: {
+      statements: 100,
+      branches: 0,
+      functions: 0,
+      lines: 100,
+    },
+  },
 };
