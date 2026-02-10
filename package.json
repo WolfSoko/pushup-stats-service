@@ -8,6 +8,8 @@
     "build": "nx run-many -t build",
     "test": "nx run-many -t test",
     "lint": "nx run-many -t lint",
+    "coverage:web": "nx run web:test --skip-nx-cache --codeCoverage",
+    "coverage:record": "node scripts/record-coverage.mjs",
     "setup:hooks": "git config core.hooksPath .githooks"
   },
   "private": true,
