@@ -1,6 +1,7 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, PLATFORM_ID, inject } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
-import { finalize } from 'rxjs';
+import { catchError, finalize, of } from 'rxjs';
 import { StatsGranularity, StatsSeriesEntry } from '@nx-temp/stats-models';
 import { StatsApiService } from '@nx-temp/stats-data-access';
 import { FilterBarComponent } from '../components/filter-bar/filter-bar.component';
@@ -16,6 +17,7 @@ import { StatsTableComponent } from '../components/stats-table/stats-table.compo
 })
 export class StatsDashboardComponent implements OnInit {
   private readonly api = inject(StatsApiService);
+  private readonly platformId = inject(PLATFORM_ID);
 
   from = '';
   to = '';
@@ -28,14 +30,26 @@ export class StatsDashboardComponent implements OnInit {
   rows: StatsSeriesEntry[] = [];
 
   ngOnInit(): void {
-    this.load();
+    if (isPlatformBrowser(this.platformId)) {
+      this.load();
+    }
   }
 
   load(): void {
     this.loading = true;
     this.api
       .load({ from: this.from || undefined, to: this.to || undefined })
-      .pipe(finalize(() => (this.loading = false)))
+      .pipe(
+        catchError(() =>
+          of({
+            meta: { from: null, to: null, entries: 0, days: 0, total: 0, granularity: 'daily' as const },
+            series: [],
+            daily: [],
+            entries: [],
+          }),
+        ),
+        finalize(() => (this.loading = false)),
+      )
       .subscribe((data) => {
         this.granularity = data.meta.granularity;
         this.total = data.meta.total;
