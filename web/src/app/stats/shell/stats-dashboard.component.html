@@ -9,14 +9,7 @@
   </header>
 
   <section class="panel">
-    <app-filter-bar
-      [from]="from()"
-      [to]="to()"
-      (fromChange)="from.set($event)"
-      (toChange)="to.set($event)"
-      (refresh)="load()"
-      (clearFilters)="reset()"
-    />
+    <app-filter-bar [from]="from()" [to]="to()" (fromChange)="from.set($event)" (toChange)="to.set($event)" />
   </section>
 
   @if (errorMessage()) {

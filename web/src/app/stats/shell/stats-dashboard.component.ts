@@ -50,7 +50,7 @@ export class StatsDashboardComponent implements OnInit {
   });
   readonly errorMessage = computed(() => {
     if (!this.statsResource.error()) return '';
-    return 'Daten konnten nicht geladen werden. Bitte kurz warten und erneut auf „Aktualisieren“ tippen.';
+    return 'Daten konnten nicht geladen werden. Bitte Zeitraum prüfen oder die Seite neu laden.';
   });
 
   ngOnInit(): void {
@@ -65,12 +65,4 @@ export class StatsDashboardComponent implements OnInit {
     }
   }
 
-  load(): void {
-    this.statsResource.reload();
-  }
-
-  reset(): void {
-    this.from.set('');
-    this.to.set('');
-  }
 }

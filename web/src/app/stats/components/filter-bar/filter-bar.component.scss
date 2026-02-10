@@ -14,29 +14,6 @@
   color: #9fb0d3;
 }
 
-.inputs {
-  display: grid;
-  gap: 12px;
-  grid-template-columns: repeat(2, minmax(160px, 1fr));
-}
-
-.actions {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
 mat-form-field {
-  width: 100%;
-}
-
-@media (max-width: 680px) {
-  .inputs {
-    grid-template-columns: 1fr;
-  }
-
-  .actions button {
-    flex: 1;
-    min-width: 130px;
-  }
+  width: min(560px, 100%);
 }

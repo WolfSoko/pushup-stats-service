@@ -30,7 +30,7 @@ describe('FilterBarComponent', () => {
     expect(to?.getDate()).toBe(7);
   });
 
-  it('emits ISO dates on picker change handlers', () => {
+  it('emits ISO dates on range change handlers', () => {
     const fromSpy = jest.fn();
     const toSpy = jest.fn();
     component.fromChange.subscribe(fromSpy);
@@ -41,5 +41,25 @@ describe('FilterBarComponent', () => {
 
     expect(fromSpy).toHaveBeenCalledWith('2026-02-11');
     expect(toSpy).toHaveBeenCalledWith('2026-02-12');
+  });
+
+  it('renders date range picker without manual action buttons', () => {
+    const text = fixture.nativeElement.textContent;
+    expect(text).toContain('Zeitraum');
+    expect(text).not.toContain('Aktualisieren');
+    expect(text).not.toContain('Zurücksetzen');
+  });
+
+  it('computes comparison range for selected period', () => {
+    const comparisonStart = component.comparisonStart();
+    const comparisonEnd = component.comparisonEnd();
+
+    expect(comparisonStart?.getFullYear()).toBe(2026);
+    expect(comparisonStart?.getMonth()).toBe(0);
+    expect(comparisonStart?.getDate()).toBe(25);
+
+    expect(comparisonEnd?.getFullYear()).toBe(2026);
+    expect(comparisonEnd?.getMonth()).toBe(0);
+    expect(comparisonEnd?.getDate()).toBe(31);
   });
 });
