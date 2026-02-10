@@ -35,8 +35,11 @@ jobs:
       - name: Lint
         run: npx nx run-many -t lint --parallel=3
 
-      - name: Test
-        run: npx nx run-many -t test --parallel=3 --passWithNoTests
+      - name: Test (libs + api)
+        run: npx nx run-many -t test --projects=stats-models,stats-data-access,api --parallel=3 --passWithNoTests
+
+      - name: Test + Coverage (web, with thresholds)
+        run: npx nx run web:test --codeCoverage
 
       - name: Build
         run: npx nx run-many -t build --parallel=3

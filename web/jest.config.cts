@@ -19,4 +19,12 @@ module.exports = {
     'jest-preset-angular/build/serializers/html-comment',
   ],
   coverageReporters: ['text-summary', 'html', 'json-summary'],
+  coverageThreshold: {
+    global: {
+      statements: 80,
+      branches: 60,
+      functions: 75,
+      lines: 80,
+    },
+  },
 };
