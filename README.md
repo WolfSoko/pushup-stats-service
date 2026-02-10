@@ -1,21 +1,66 @@
-# Push-up Stats Service
+# Push-up Stats Service (Nx Monorepo)
 
-Kleiner Node.js-Service für Liegestütz-Statistiken mit:
+Nx-Monorepo mit:
 
-- Tagesaggregation aus `pushups.csv`
-- API Endpoint: `/api/stats?from=YYYY-MM-DD&to=YYYY-MM-DD`
-- Web-UI mit Verlaufsgrafik und Kalenderfilter
+- **`web`**: Angular App mit **SSR + Hydration** und Angular Material Dark Theme
+- **`api`**: Node.js API für `/api/stats` (Quelle: `pushups.csv`)
 
-## Start
+## Features
+
+- Tages- und Stundenaggregation
+- `dayIntegral` (kumuliert pro Tag)
+- Deutsche UI-Labels wie im bisherigen Service
+- KPI-Karten, Chart, Tabellenansicht
+
+## CSV-Quelle
+
+Standardmäßig wird gelesen aus:
+
+- `/home/wolf/.openclaw/workspace/pushups.csv`
+
+Anpassbar über Umgebungsvariable:
+
+- `PUSHUPS_CSV_PATH=/pfad/zu/pushups.csv`
+
+## Lokale Entwicklung
 
 ```bash
-node server.mjs
+npm install
+
+# API (Port 8787)
+npx nx serve api
+
+# Web (Angular SSR Dev Server)
+npx nx serve web
 ```
 
-Standard-Port: `8787` (über `PORT` anpassbar).
-
-## Tailscale Serve (Beispiel)
+## Builds
 
 ```bash
-tailscale serve --service=svc:pushups --https=443 http://127.0.0.1:8787
+# Alles bauen
+npx nx run-many -t build
+
+# Nur Web (SSR Output)
+npx nx build web
+
+# Nur API
+npx nx build api
 ```
+
+## Tests & Lint
+
+```bash
+npx nx run-many -t lint
+npx nx run-many -t test
+```
+
+## API
+
+`GET /api/stats?from=YYYY-MM-DD&to=YYYY-MM-DD`
+
+Antwort enthält:
+
+- `meta` (entries, days, total, granularity)
+- `series` (daily oder hourly)
+- `daily`
+- `entries`
