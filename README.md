@@ -1,72 +1,42 @@
 # Push-up Stats Service (Nx Monorepo)
 
-Nx-Monorepo mit:
+Produktionsnahe Nx-Architektur mit:
 
-- **`web`**: Angular App mit **SSR + Hydration** und Angular Material Dark Theme
-- **`api`**: Node.js API für `/api/stats` (Quelle: `pushups.csv`)
+- **web**: Angular App (deutsche UI, Dark Theme)
+- **api**: Node.js API mit kompatiblem Vertrag auf `GET /api/stats`
+- **libs/stats-models**: Shared Models/Typen
+- **libs/stats-data-access**: API Service (Datenzugriff)
 
-## Features
+## UI-Architektur (Smart/Presentational)
 
-- Tages- und Stundenaggregation
-- `dayIntegral` (kumuliert pro Tag)
-- Deutsche UI-Labels wie im bisherigen Service
-- KPI-Karten, Chart, Tabellenansicht
-
-## CSV-Quelle
-
-Standardmäßig wird gelesen aus:
-
-- `/home/wolf/.openclaw/workspace/pushups.csv`
-
-Anpassbar über Umgebungsvariable:
-
-- `PUSHUPS_CSV_PATH=/pfad/zu/pushups.csv`
+- **Smart Container**: `StatsDashboardComponent`
+- **Presentational Components**:
+  - `FilterBarComponent`
+  - `KpiCardsComponent`
+  - `StatsChartComponent` (Chart.js statt Canvas-Handcode)
+  - `StatsTableComponent`
 
 ## Lokale Entwicklung
 
 ```bash
 npm install
-
-# Terminal 1: API (Express, Port 8787)
 npx nx serve api
-
-# Terminal 2: Web (Angular SSR Dev Server mit Proxy /api -> :8787)
 npx nx serve web
 ```
 
-Hinweis: Falls Port `8787` belegt ist, API mit anderem Port starten:
+## Qualitätssicherung
 
 ```bash
-PORT=8788 npx nx serve api
-```
-
-## Builds
-
-```bash
-# Alles bauen
-npx nx run-many -t build
-
-# Nur Web (SSR Output)
-npx nx build web
-
-# Nur API
-npx nx build api
-```
-
-## Tests & Lint
-
-```bash
-npx nx run-many -t lint
-npx nx run-many -t test
+npx nx run-many -t lint test build
 ```
 
 ## API
 
 `GET /api/stats?from=YYYY-MM-DD&to=YYYY-MM-DD`
 
-Antwort enthält:
+Kompatibel zu vorher:
 
-- `meta` (entries, days, total, granularity)
-- `series` (daily oder hourly)
+- `meta` (`entries`, `days`, `total`, `granularity`, ...)
+- `series`
 - `daily`
 - `entries`
