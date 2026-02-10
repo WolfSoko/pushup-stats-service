@@ -1,4 +1,4 @@
-import { Component, OnInit, PLATFORM_ID, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, PLATFORM_ID, inject } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { catchError, finalize, of } from 'rxjs';
@@ -18,6 +18,7 @@ import { StatsTableComponent } from '../components/stats-table/stats-table.compo
 export class StatsDashboardComponent implements OnInit {
   private readonly api = inject(StatsApiService);
   private readonly platformId = inject(PLATFORM_ID);
+  private readonly cdr = inject(ChangeDetectorRef);
 
   from = '';
   to = '';
@@ -31,9 +32,14 @@ export class StatsDashboardComponent implements OnInit {
 
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
-      const today = new Date().toISOString().slice(0, 10);
-      this.from = today;
-      this.to = today;
+      const now = new Date();
+      const to = now.toISOString().slice(0, 10);
+      const fromDate = new Date(now);
+      fromDate.setDate(fromDate.getDate() - 6);
+      const from = fromDate.toISOString().slice(0, 10);
+      this.from = from;
+      this.to = to;
+      this.cdr.markForCheck();
       this.load();
     }
   }
@@ -51,7 +57,10 @@ export class StatsDashboardComponent implements OnInit {
             entries: [],
           }),
         ),
-        finalize(() => (this.loading = false)),
+        finalize(() => {
+          this.loading = false;
+          this.cdr.markForCheck();
+        }),
       )
       .subscribe((data) => {
         this.granularity = data.meta.granularity;
@@ -60,6 +69,7 @@ export class StatsDashboardComponent implements OnInit {
         this.entries = data.meta.entries;
         this.avg = this.days ? (this.total / this.days).toFixed(1) : '0';
         this.rows = data.series;
+        this.cdr.markForCheck();
       });
   }
 

@@ -1,5 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerInputEvent, MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -8,14 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-filter-bar',
-  imports: [
-    FormsModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-  ],
+  imports: [MatButtonModule, MatFormFieldModule, MatInputModule, MatDatepickerModule, MatNativeDateModule],
   template: `
     <section class="controls">
       <div class="heading">
@@ -26,24 +18,14 @@ import { MatInputModule } from '@angular/material/input';
       <div class="inputs">
         <mat-form-field appearance="outline">
           <mat-label>Von</mat-label>
-          <input
-            matInput
-            [matDatepicker]="fromPicker"
-            [ngModel]="toDate(from)"
-            (dateChange)="onFromDateChange($event)"
-          />
+          <input matInput [matDatepicker]="fromPicker" [value]="fromDateValue" (dateChange)="onFromDateChange($event)" />
           <mat-datepicker-toggle matIconSuffix [for]="fromPicker"></mat-datepicker-toggle>
           <mat-datepicker #fromPicker></mat-datepicker>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>Bis</mat-label>
-          <input
-            matInput
-            [matDatepicker]="toPicker"
-            [ngModel]="toDate(to)"
-            (dateChange)="onToDateChange($event)"
-          />
+          <input matInput [matDatepicker]="toPicker" [value]="toDateValue" (dateChange)="onToDateChange($event)" />
           <mat-datepicker-toggle matIconSuffix [for]="toPicker"></mat-datepicker-toggle>
           <mat-datepicker #toPicker></mat-datepicker>
         </mat-form-field>
@@ -57,7 +39,7 @@ import { MatInputModule } from '@angular/material/input';
   `,
   styleUrl: './filter-bar.component.scss',
 })
-export class FilterBarComponent {
+export class FilterBarComponent implements OnChanges {
   @Input() from = '';
   @Input() to = '';
   @Output() fromChange = new EventEmitter<string>();
@@ -65,7 +47,15 @@ export class FilterBarComponent {
   @Output() refresh = new EventEmitter<void>();
   @Output() clearFilters = new EventEmitter<void>();
 
-  toDate(value: string): Date | null {
+  fromDateValue: Date | null = null;
+  toDateValue: Date | null = null;
+
+  ngOnChanges(_changes: SimpleChanges): void {
+    this.fromDateValue = this.parseIsoDate(this.from);
+    this.toDateValue = this.parseIsoDate(this.to);
+  }
+
+  private parseIsoDate(value: string): Date | null {
     if (!value) return null;
     const [y, m, d] = value.split('-').map(Number);
     if (!y || !m || !d) return null;
@@ -81,10 +71,12 @@ export class FilterBarComponent {
   }
 
   onFromDateChange(event: MatDatepickerInputEvent<Date>): void {
-    this.fromChange.emit(this.toIsoDate(event.value ?? null));
+    this.fromDateValue = event.value ?? null;
+    this.fromChange.emit(this.toIsoDate(this.fromDateValue));
   }
 
   onToDateChange(event: MatDatepickerInputEvent<Date>): void {
-    this.toChange.emit(this.toIsoDate(event.value ?? null));
+    this.toDateValue = event.value ?? null;
+    this.toChange.emit(this.toIsoDate(this.toDateValue));
   }
 }
