@@ -34,13 +34,7 @@ export class StatsDashboardComponent implements OnInit {
 
   readonly statsResource = resource({
     params: () => this.filter(),
-    loader: async ({ params }) => {
-      try {
-        return await firstValueFrom(this.api.load(params));
-      } catch {
-        return EMPTY_STATS;
-      }
-    },
+    loader: async ({ params }) => firstValueFrom(this.api.load(params)),
   });
 
   readonly stats = computed(() => this.statsResource.value() ?? EMPTY_STATS);
@@ -53,6 +47,10 @@ export class StatsDashboardComponent implements OnInit {
   readonly loading = computed(() => {
     const status = this.statsResource.status();
     return status === 'loading' || status === 'reloading';
+  });
+  readonly errorMessage = computed(() => {
+    if (!this.statsResource.error()) return '';
+    return 'Daten konnten nicht geladen werden. Bitte kurz warten und erneut auf „Aktualisieren“ tippen.';
   });
 
   ngOnInit(): void {

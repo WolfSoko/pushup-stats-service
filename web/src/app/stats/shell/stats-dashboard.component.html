@@ -18,6 +18,16 @@
     />
   </section>
 
+  @if (errorMessage()) {
+    <section class="status-banner error" role="alert" aria-live="polite">
+      {{ errorMessage() }}
+    </section>
+  }
+
+  @if (loading()) {
+    <section class="status-banner loading" aria-live="polite">Lade Statistikdaten…</section>
+  }
+
   <app-kpi-cards [total]="total()" [days]="days()" [entries]="entries()" [avg]="avg()" />
 
   <section class="content-grid">
