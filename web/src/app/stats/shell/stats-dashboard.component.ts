@@ -1,5 +1,4 @@
-import { Component, OnInit, PLATFORM_ID, computed, inject, resource, signal } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { Component, computed, inject, resource, signal } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { firstValueFrom } from 'rxjs';
 import { StatsGranularity, StatsResponse, StatsSeriesEntry } from '@nx-temp/stats-models';
@@ -14,18 +13,34 @@ const EMPTY_STATS: StatsResponse = {
   series: [],
 };
 
+function toLocalIsoDate(date: Date): string {
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, '0');
+  const d = String(date.getDate()).padStart(2, '0');
+  return `${y}-${m}-${d}`;
+}
+
+function createDefaultRange(): { from: string; to: string } {
+  const now = new Date();
+  const to = toLocalIsoDate(now);
+  const fromDate = new Date(now);
+  fromDate.setDate(fromDate.getDate() - 6);
+  const from = toLocalIsoDate(fromDate);
+  return { from, to };
+}
+
 @Component({
   selector: 'app-stats-dashboard',
   imports: [MatCardModule, FilterBarComponent, KpiCardsComponent, StatsChartComponent, StatsTableComponent],
   templateUrl: './stats-dashboard.component.html',
   styleUrl: './stats-dashboard.component.scss',
 })
-export class StatsDashboardComponent implements OnInit {
+export class StatsDashboardComponent {
   private readonly api = inject(StatsApiService);
-  private readonly platformId = inject(PLATFORM_ID);
 
-  readonly from = signal('');
-  readonly to = signal('');
+  private readonly defaultRange = createDefaultRange();
+  readonly from = signal(this.defaultRange.from);
+  readonly to = signal(this.defaultRange.to);
 
   private readonly filter = computed(() => ({
     from: this.from() || undefined,
@@ -52,17 +67,4 @@ export class StatsDashboardComponent implements OnInit {
     if (!this.statsResource.error()) return '';
     return 'Daten konnten nicht geladen werden. Bitte Zeitraum prüfen oder die Seite neu laden.';
   });
-
-  ngOnInit(): void {
-    if (isPlatformBrowser(this.platformId)) {
-      const now = new Date();
-      const to = now.toISOString().slice(0, 10);
-      const fromDate = new Date(now);
-      fromDate.setDate(fromDate.getDate() - 6);
-      const from = fromDate.toISOString().slice(0, 10);
-      this.from.set(from);
-      this.to.set(to);
-    }
-  }
-
 }
