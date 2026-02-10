@@ -1,13 +1,18 @@
-import { Component, OnInit, PLATFORM_ID, computed, inject, signal } from '@angular/core';
+import { Component, OnInit, PLATFORM_ID, computed, inject, resource, signal } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
-import { catchError, finalize, of } from 'rxjs';
-import { StatsGranularity, StatsSeriesEntry } from '@nx-temp/stats-models';
+import { firstValueFrom } from 'rxjs';
+import { StatsGranularity, StatsResponse, StatsSeriesEntry } from '@nx-temp/stats-models';
 import { StatsApiService } from '@nx-temp/stats-data-access';
 import { FilterBarComponent } from '../components/filter-bar/filter-bar.component';
 import { KpiCardsComponent } from '../components/kpi-cards/kpi-cards.component';
 import { StatsChartComponent } from '../components/stats-chart/stats-chart.component';
 import { StatsTableComponent } from '../components/stats-table/stats-table.component';
+
+const EMPTY_STATS: StatsResponse = {
+  meta: { from: null, to: null, entries: 0, days: 0, total: 0, granularity: 'daily' },
+  series: [],
+};
 
 @Component({
   selector: 'app-stats-dashboard',
@@ -21,13 +26,34 @@ export class StatsDashboardComponent implements OnInit {
 
   readonly from = signal('');
   readonly to = signal('');
-  readonly total = signal(0);
-  readonly days = signal(0);
-  readonly entries = signal(0);
+
+  private readonly filter = computed(() => ({
+    from: this.from() || undefined,
+    to: this.to() || undefined,
+  }));
+
+  readonly statsResource = resource({
+    params: () => this.filter(),
+    loader: async ({ params }) => {
+      try {
+        return await firstValueFrom(this.api.load(params));
+      } catch {
+        return EMPTY_STATS;
+      }
+    },
+  });
+
+  readonly stats = computed(() => this.statsResource.value() ?? EMPTY_STATS);
+  readonly total = computed(() => this.stats().meta.total);
+  readonly days = computed(() => this.stats().meta.days);
+  readonly entries = computed(() => this.stats().meta.entries);
   readonly avg = computed(() => (this.days() ? (this.total() / this.days()).toFixed(1) : '0'));
-  readonly loading = signal(false);
-  readonly granularity = signal<StatsGranularity>('daily');
-  readonly rows = signal<StatsSeriesEntry[]>([]);
+  readonly granularity = computed<StatsGranularity>(() => this.stats().meta.granularity);
+  readonly rows = computed<StatsSeriesEntry[]>(() => this.stats().series);
+  readonly loading = computed(() => {
+    const status = this.statsResource.status();
+    return status === 'loading' || status === 'reloading';
+  });
 
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
@@ -38,39 +64,15 @@ export class StatsDashboardComponent implements OnInit {
       const from = fromDate.toISOString().slice(0, 10);
       this.from.set(from);
       this.to.set(to);
-      this.load();
     }
   }
 
   load(): void {
-    this.loading.set(true);
-    this.api
-      .load({ from: this.from() || undefined, to: this.to() || undefined })
-      .pipe(
-        catchError(() =>
-          of({
-            meta: { from: null, to: null, entries: 0, days: 0, total: 0, granularity: 'daily' as const },
-            series: [],
-            daily: [],
-            entries: [],
-          }),
-        ),
-        finalize(() => {
-          this.loading.set(false);
-        }),
-      )
-      .subscribe((data) => {
-        this.granularity.set(data.meta.granularity);
-        this.total.set(data.meta.total);
-        this.days.set(data.meta.days);
-        this.entries.set(data.meta.entries);
-        this.rows.set(data.series);
-      });
+    this.statsResource.reload();
   }
 
   reset(): void {
     this.from.set('');
     this.to.set('');
-    this.load();
   }
 }
