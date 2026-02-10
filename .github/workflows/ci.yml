@@ -30,7 +30,7 @@ jobs:
         run: npm ci
 
       - name: Nx Cloud distributed run starten
-        run: npx nx-cloud start-ci-run --distribute-on="2 linux-medium-js" --stop-agents-after="build"
+        run: npx nx-cloud start-ci-run --distribute-on="3 linux-medium-js" --stop-agents-after="build"
 
       - name: Lint
         run: npx nx run-many -t lint --parallel=3
