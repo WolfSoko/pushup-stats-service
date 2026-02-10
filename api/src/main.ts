@@ -15,9 +15,10 @@ type SeriesEntry = {
 };
 
 const WORKSPACE = process.env.WORKSPACE_DIR || '/home/wolf/.openclaw/workspace';
-const CSV_PATH =
-  process.env.PUSHUPS_CSV_PATH || path.join(WORKSPACE, 'pushups.csv');
+const CSV_PATH = process.env.PUSHUPS_CSV_PATH || path.join(WORKSPACE, 'pushups.csv');
 const PORT = Number(process.env.PORT || 8787);
+const STATIC_DIR =
+  process.env.WEB_DIST_PATH || path.join(process.cwd(), 'dist', 'web', 'browser');
 
 function parseCsv(): PushupEntry[] {
   if (!fs.existsSync(CSV_PATH)) return [];
@@ -75,6 +76,20 @@ function aggregateHourly(rows: PushupEntry[]): SeriesEntry[] {
   });
 }
 
+function contentType(file: string): string {
+  const ext = path.extname(file).toLowerCase();
+  if (ext === '.html') return 'text/html; charset=utf-8';
+  if (ext === '.js' || ext === '.mjs') return 'application/javascript; charset=utf-8';
+  if (ext === '.css') return 'text/css; charset=utf-8';
+  if (ext === '.json') return 'application/json; charset=utf-8';
+  if (ext === '.svg') return 'image/svg+xml';
+  if (ext === '.png') return 'image/png';
+  if (ext === '.jpg' || ext === '.jpeg') return 'image/jpeg';
+  if (ext === '.webp') return 'image/webp';
+  if (ext === '.ico') return 'image/x-icon';
+  return 'application/octet-stream';
+}
+
 function sendJson(res: http.ServerResponse, status: number, data: unknown): void {
   const body = JSON.stringify(data);
   res.writeHead(status, {
@@ -83,6 +98,14 @@ function sendJson(res: http.ServerResponse, status: number, data: unknown): void
     'Access-Control-Allow-Origin': '*',
   });
   res.end(body);
+}
+
+function safeStaticPath(urlPath: string): string {
+  const clean = decodeURIComponent(urlPath.split('?')[0]);
+  const rel = clean.replace(/^\/+/, '');
+  const resolved = path.resolve(STATIC_DIR, rel);
+  if (!resolved.startsWith(path.resolve(STATIC_DIR))) return '';
+  return resolved;
 }
 
 const server = http.createServer((req, res) => {
@@ -127,10 +150,27 @@ const server = http.createServer((req, res) => {
     return;
   }
 
-  sendJson(res, 404, { error: 'Not found' });
+  // Static app serving
+  let target = safeStaticPath(u.pathname === '/' ? '/index.html' : u.pathname);
+  if (target && fs.existsSync(target) && fs.statSync(target).isFile()) {
+    res.writeHead(200, { 'Content-Type': contentType(target) });
+    fs.createReadStream(target).pipe(res);
+    return;
+  }
+
+  // SPA fallback
+  target = path.join(STATIC_DIR, 'index.html');
+  if (fs.existsSync(target)) {
+    res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+    fs.createReadStream(target).pipe(res);
+    return;
+  }
+
+  sendJson(res, 404, { error: 'Not found', detail: 'Web build fehlt. Bitte `npx nx build web --configuration=production` ausführen.' });
 });
 
 server.listen(PORT, '127.0.0.1', () => {
-  console.log(`pushup api listening on http://127.0.0.1:${PORT}`);
+  console.log(`pushup service listening on http://127.0.0.1:${PORT}`);
   console.log(`CSV path: ${CSV_PATH}`);
+  console.log(`Static path: ${STATIC_DIR}`);
 });
