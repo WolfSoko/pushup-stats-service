@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDatepickerModule, MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { MatDatepickerInputEvent, MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -18,32 +18,41 @@ import { MatInputModule } from '@angular/material/input';
   ],
   template: `
     <section class="controls">
-      <mat-form-field appearance="outline">
-        <mat-label>Von</mat-label>
-        <input
-          matInput
-          [matDatepicker]="fromPicker"
-          [ngModel]="toDate(from)"
-          (dateChange)="onFromDateChange($event)"
-        />
-        <mat-datepicker-toggle matIconSuffix [for]="fromPicker"></mat-datepicker-toggle>
-        <mat-datepicker #fromPicker></mat-datepicker>
-      </mat-form-field>
+      <div class="heading">
+        <h2>Filter</h2>
+        <p>Zeitraum auswählen und Daten aktualisieren</p>
+      </div>
 
-      <mat-form-field appearance="outline">
-        <mat-label>Bis</mat-label>
-        <input
-          matInput
-          [matDatepicker]="toPicker"
-          [ngModel]="toDate(to)"
-          (dateChange)="onToDateChange($event)"
-        />
-        <mat-datepicker-toggle matIconSuffix [for]="toPicker"></mat-datepicker-toggle>
-        <mat-datepicker #toPicker></mat-datepicker>
-      </mat-form-field>
+      <div class="inputs">
+        <mat-form-field appearance="outline">
+          <mat-label>Von</mat-label>
+          <input
+            matInput
+            [matDatepicker]="fromPicker"
+            [ngModel]="toDate(from)"
+            (dateChange)="onFromDateChange($event)"
+          />
+          <mat-datepicker-toggle matIconSuffix [for]="fromPicker"></mat-datepicker-toggle>
+          <mat-datepicker #fromPicker></mat-datepicker>
+        </mat-form-field>
 
-      <button mat-flat-button color="primary" (click)="refresh.emit()">Aktualisieren</button>
-      <button mat-stroked-button (click)="clearFilters.emit()">Alles</button>
+        <mat-form-field appearance="outline">
+          <mat-label>Bis</mat-label>
+          <input
+            matInput
+            [matDatepicker]="toPicker"
+            [ngModel]="toDate(to)"
+            (dateChange)="onToDateChange($event)"
+          />
+          <mat-datepicker-toggle matIconSuffix [for]="toPicker"></mat-datepicker-toggle>
+          <mat-datepicker #toPicker></mat-datepicker>
+        </mat-form-field>
+      </div>
+
+      <div class="actions">
+        <button mat-flat-button color="primary" (click)="refresh.emit()">Aktualisieren</button>
+        <button mat-stroked-button (click)="clearFilters.emit()">Zurücksetzen</button>
+      </div>
     </section>
   `,
   styleUrl: './filter-bar.component.scss',

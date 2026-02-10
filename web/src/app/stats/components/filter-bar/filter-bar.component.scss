@@ -1,6 +1,42 @@
 .controls {
-  display: flex;
+  display: grid;
+  gap: 14px;
+}
+
+.heading h2 {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.heading p {
+  margin: 4px 0 0;
+  font-size: 0.88rem;
+  color: #9fb0d3;
+}
+
+.inputs {
+  display: grid;
   gap: 12px;
-  align-items: center;
+  grid-template-columns: repeat(2, minmax(160px, 1fr));
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
   flex-wrap: wrap;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+@media (max-width: 680px) {
+  .inputs {
+    grid-template-columns: 1fr;
+  }
+
+  .actions button {
+    flex: 1;
+    min-width: 130px;
+  }
 }

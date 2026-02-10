@@ -1,9 +1,28 @@
 .chart {
-  min-height: 340px;
+  min-height: 360px;
+  border-radius: 18px;
+  padding: 18px;
+}
+
+.chart-header {
+  h2 {
+    margin: 0;
+  }
+
+  p {
+    margin: 6px 0 0;
+    color: #a9bbdf;
+    font-size: 0.88rem;
+  }
 }
 
 .chart-host {
-  height: 260px;
+  height: clamp(260px, 34vw, 360px);
+  margin-top: 14px;
+  padding: 10px;
+  border-radius: 14px;
+  background: linear-gradient(180deg, rgba(15, 21, 37, 0.9), rgba(12, 17, 30, 0.9));
+  border: 1px solid rgba(120, 146, 204, 0.22);
 }
 
 canvas {
@@ -13,7 +32,31 @@ canvas {
 }
 
 .legend {
-  color: #9eb1d6;
-  margin: 8px 0 0;
-  font-size: 0.8rem;
+  margin-top: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  color: #adc1e8;
+  font-size: 0.83rem;
+
+  span {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+  }
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  display: inline-block;
+}
+
+.dot-bar {
+  background: #6b98ff;
+}
+
+.dot-line {
+  background: #ffbe66;
 }

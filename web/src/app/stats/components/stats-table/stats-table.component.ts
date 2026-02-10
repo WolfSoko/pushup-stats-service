@@ -6,16 +6,31 @@ import { StatsGranularity, StatsSeriesEntry } from '@nx-temp/stats-models';
   selector: 'app-stats-table',
   imports: [MatCardModule],
   template: `
-    <mat-card>
-      <h2>{{ granularity === 'hourly' ? 'Stundenwerte' : 'Tageswerte' }}</h2>
+    <mat-card class="table-card">
+      <div class="table-header">
+        <h2>{{ granularity === 'hourly' ? 'Stundenwerte' : 'Tageswerte' }}</h2>
+        <p>{{ rows.length }} Datensätze</p>
+      </div>
+
       <div class="table-wrap">
         <table>
           <thead>
-            <tr><th>{{ granularity === 'hourly' ? 'Zeit' : 'Datum' }}</th><th>Liegestütze</th></tr>
+            <tr>
+              <th>{{ granularity === 'hourly' ? 'Zeit' : 'Datum' }}</th>
+              <th>Liegestütze</th>
+            </tr>
           </thead>
           <tbody>
             @for (row of rows; track row.bucket) {
-            <tr><td>{{ formatBucket(row.bucket) }}</td><td>{{ row.total }}</td></tr>
+              <tr>
+                <td>{{ formatBucket(row.bucket) }}</td>
+                <td>{{ row.total }}</td>
+              </tr>
+            }
+            @if (!rows.length) {
+              <tr>
+                <td colspan="2" class="empty">Keine Daten im gewählten Zeitraum.</td>
+              </tr>
             }
           </tbody>
         </table>

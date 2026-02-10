@@ -10,11 +10,21 @@ Chart.register(...registerables);
   imports: [MatCardModule],
   template: `
     <mat-card class="chart">
-      <h2>{{ granularity === 'hourly' ? 'Verlauf (Stundenwerte)' : 'Verlauf (Tageswerte)' }}</h2>
+      <div class="chart-header">
+        <div>
+          <h2>{{ granularity === 'hourly' ? 'Verlauf (Stundenwerte)' : 'Verlauf (Tageswerte)' }}</h2>
+          <p>Intervallwerte als Balken, Tages-Integral als Trendlinie</p>
+        </div>
+      </div>
+
       <div class="chart-host">
         <canvas id="statsChart"></canvas>
       </div>
-      <p class="legend">Blau: Intervallwert · Orange: Tages-Integral</p>
+
+      <div class="legend" aria-label="Legende">
+        <span><i class="dot dot-bar"></i>Intervallwert</span>
+        <span><i class="dot dot-line"></i>Tages-Integral</span>
+      </div>
     </mat-card>
   `,
   styleUrl: './stats-chart.component.scss',
@@ -35,11 +45,27 @@ export class StatsChartComponent {
     if (!element) return;
 
     this.chart?.destroy();
-    const data: ChartConfiguration<'bar'>['data'] = {
+    const data: any = {
       labels: series.map((d) => d.bucket),
       datasets: [
-        { label: 'Intervallwert', data: series.map((d) => d.total), backgroundColor: '#4f8cff88' },
-        { label: 'Tages-Integral', data: series.map((d) => d.dayIntegral), type: 'line' as never, borderColor: '#ffb74d' },
+        {
+          label: 'Intervallwert',
+          data: series.map((d) => d.total),
+          backgroundColor: '#5e8eff99',
+          borderRadius: 6,
+          maxBarThickness: 34,
+        },
+        {
+          label: 'Tages-Integral',
+          data: series.map((d) => d.dayIntegral),
+          type: 'line' as never,
+          borderColor: '#ffbe66',
+          backgroundColor: '#ffbe66',
+          pointRadius: 2,
+          pointHoverRadius: 4,
+          tension: 0.24,
+          yAxisID: 'y',
+        },
       ],
     };
 
@@ -49,8 +75,27 @@ export class StatsChartComponent {
       options: {
         responsive: true,
         maintainAspectRatio: false,
-        scales: { x: { ticks: { color: '#c8d3ea' } }, y: { ticks: { color: '#c8d3ea' } } },
-        plugins: { legend: { labels: { color: '#d9e1f0' } } },
+        interaction: { intersect: false, mode: 'index' },
+        scales: {
+          x: {
+            ticks: { color: '#c8d3ea', maxRotation: 0, autoSkip: true },
+            grid: { color: 'rgba(116, 140, 190, 0.15)' },
+          },
+          y: {
+            ticks: { color: '#c8d3ea', precision: 0 },
+            grid: { color: 'rgba(116, 140, 190, 0.2)' },
+          },
+        },
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            backgroundColor: 'rgba(14,20,35,0.95)',
+            titleColor: '#eff4ff',
+            bodyColor: '#dbe6ff',
+            borderColor: 'rgba(125, 154, 219, 0.35)',
+            borderWidth: 1,
+          },
+        },
       },
     });
   }

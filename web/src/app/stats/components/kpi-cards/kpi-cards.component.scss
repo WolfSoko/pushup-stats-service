@@ -1,21 +1,35 @@
 .kpis {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 14px;
+}
 
-  mat-card {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-  }
+.kpi-card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  border-radius: 16px;
+  padding: 16px;
 
   span {
     color: #a8b8d6;
-    font-size: 0.85rem;
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
   }
 
   b {
-    font-size: 1.7rem;
+    font-size: clamp(1.5rem, 3vw, 2rem);
     line-height: 1;
+    font-variant-numeric: tabular-nums;
   }
+}
+
+.kpi-card.primary {
+  border-color: rgba(94, 142, 255, 0.45);
+  background: linear-gradient(160deg, rgba(32, 55, 107, 0.45), rgba(19, 26, 43, 0.92));
+}
+
+.kpi-card.accent {
+  border-color: rgba(255, 184, 88, 0.4);
 }
