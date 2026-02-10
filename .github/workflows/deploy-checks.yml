@@ -35,6 +35,6 @@ jobs:
 
       - name: Verify build artifacts
         run: |
-          test -f dist/web/browser/index.html
+          test -f dist/web/browser/index.csr.html
           test -f dist/web/server/server.mjs
           test -f dist/api/main.js
