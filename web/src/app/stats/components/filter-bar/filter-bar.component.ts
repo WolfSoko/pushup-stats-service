@@ -22,16 +22,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
           <input matStartDate formControlName="start" placeholder="Von" />
           <input matEndDate formControlName="end" placeholder="Bis" />
         </mat-date-range-input>
-        <mat-hint>TT.MM.JJJJ – TT.MM.JJJJ</mat-hint>
         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-date-range-picker #picker></mat-date-range-picker>
-
-        @if (range.controls.start.hasError('matStartDateInvalid')) {
-          <mat-error>Ungültiges Startdatum</mat-error>
-        }
-        @if (range.controls.end.hasError('matEndDateInvalid')) {
-          <mat-error>Ungültiges Enddatum</mat-error>
-        }
       </mat-form-field>
     </section>
   `,
