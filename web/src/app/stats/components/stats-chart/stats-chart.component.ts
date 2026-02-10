@@ -25,7 +25,7 @@ Chart.register(...registerables);
       <div class="chart-header">
         <div>
           <h2>{{ granularity() === 'hourly' ? 'Verlauf (Stundenwerte)' : 'Verlauf (Tageswerte)' }}</h2>
-          <p>Intervallwerte als Balken, Tages-Integral als Trendlinie</p>
+          <p>Intervallwerte als Balken, Tages-Integral + gleitender Durchschnitt als Trendlinien</p>
         </div>
       </div>
 
@@ -36,6 +36,7 @@ Chart.register(...registerables);
       <div class="legend" aria-label="Legende">
         <span><i class="dot dot-bar"></i>Intervallwert</span>
         <span><i class="dot dot-line"></i>Tages-Integral</span>
+        <span><i class="dot dot-avg"></i>Gleitender Durchschnitt</span>
       </div>
     </mat-card>
   `,
@@ -73,12 +74,21 @@ export class StatsChartComponent implements AfterViewInit {
 
     this.zone.runOutsideAngular(() => {
       this.chart?.destroy();
+      const totals = series.map((d) => d.total);
+      const windowSize = this.granularity() === 'hourly' ? 3 : 7;
+      const movingAvg = totals.map((_, index) => {
+        const from = Math.max(0, index - windowSize + 1);
+        const window = totals.slice(from, index + 1);
+        const sum = window.reduce((acc, value) => acc + value, 0);
+        return Number((sum / window.length).toFixed(2));
+      });
+
       const data: any = {
         labels: series.map((d) => d.bucket),
         datasets: [
           {
             label: 'Intervallwert',
-            data: series.map((d) => d.total),
+            data: totals,
             backgroundColor: '#5e8eff99',
             borderRadius: 6,
             maxBarThickness: 34,
@@ -92,6 +102,18 @@ export class StatsChartComponent implements AfterViewInit {
             pointRadius: 2,
             pointHoverRadius: 4,
             tension: 0.24,
+            yAxisID: 'y',
+          },
+          {
+            label: 'Gleitender Durchschnitt',
+            data: movingAvg,
+            type: 'line',
+            borderColor: '#7ef0c8',
+            backgroundColor: '#7ef0c8',
+            borderDash: [7, 5],
+            pointRadius: 0,
+            pointHoverRadius: 3,
+            tension: 0.32,
             yAxisID: 'y',
           },
         ],
