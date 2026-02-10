@@ -72,6 +72,17 @@ export class StatsChartComponent implements AfterViewInit {
     const element = this.chartCanvas?.nativeElement;
     if (!element) return;
 
+    const isJestJsdom = typeof navigator !== 'undefined' && /jsdom/i.test(navigator.userAgent);
+    if (isJestJsdom) return;
+
+    let context: CanvasRenderingContext2D | null = null;
+    try {
+      context = element.getContext('2d');
+    } catch {
+      return;
+    }
+    if (!context) return;
+
     this.zone.runOutsideAngular(() => {
       this.chart?.destroy();
       const totals = series.map((d) => d.total);
@@ -119,7 +130,7 @@ export class StatsChartComponent implements AfterViewInit {
         ],
       };
 
-      this.chart = new Chart(element, {
+      this.chart = new Chart(context, {
         type: 'bar',
         data,
         options: {

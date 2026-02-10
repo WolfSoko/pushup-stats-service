@@ -24,7 +24,7 @@ describe('StatsDashboardComponent', () => {
                   granularity: 'daily',
                 },
                 series: [{ bucket: '2026-01-10', total: 50, dayIntegral: 50 }],
-              })
+              }),
             ),
           },
         },
@@ -32,6 +32,8 @@ describe('StatsDashboardComponent', () => {
     }).compileComponents();
 
     fixture = TestBed.createComponent(StatsDashboardComponent);
+    fixture.detectChanges();
+    await fixture.whenStable();
     fixture.detectChanges();
   });
 
