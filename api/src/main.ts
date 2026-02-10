@@ -18,6 +18,9 @@ type SeriesEntry = {
 const WORKSPACE = process.env.WORKSPACE_DIR || '/home/wolf/.openclaw/workspace';
 const CSV_PATH = process.env.PUSHUPS_CSV_PATH || path.join(WORKSPACE, 'pushups.csv');
 const PORT = Number(process.env.PORT || 8787);
+const WEB_DIST_PATH =
+  process.env.WEB_DIST_PATH ||
+  path.join(process.cwd(), 'dist', 'web', 'browser');
 
 function parseCsv(): PushupEntry[] {
   if (!fs.existsSync(CSV_PATH)) return [];
@@ -111,7 +114,16 @@ app.get('/api/stats', (req, res) => {
   });
 });
 
+if (fs.existsSync(WEB_DIST_PATH)) {
+  app.use(express.static(WEB_DIST_PATH));
+
+  app.get('*', (_req, res) => {
+    res.sendFile(path.join(WEB_DIST_PATH, 'index.html'));
+  });
+}
+
 app.listen(PORT, '127.0.0.1', () => {
   console.log(`pushup api listening on http://127.0.0.1:${PORT}`);
   console.log(`CSV path: ${CSV_PATH}`);
+  console.log(`Web path: ${WEB_DIST_PATH}`);
 });
