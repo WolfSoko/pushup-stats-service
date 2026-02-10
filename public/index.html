@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Push-up Statistik</title>
+  <style>
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:#0f1115;color:#e8e8e8;margin:0;padding:20px}
+    .card{background:#171a21;border:1px solid #2a2f3a;border-radius:14px;padding:16px;margin-bottom:14px}
+    .row{display:flex;gap:12px;flex-wrap:wrap;align-items:end}
+    label{font-size:14px;color:#aeb7c6;display:flex;flex-direction:column;gap:4px}
+    input,button{background:#0f1115;color:#e8e8e8;border:1px solid #32394a;border-radius:8px;padding:8px 10px}
+    button{cursor:pointer}
+    .kpis{display:flex;gap:14px;flex-wrap:wrap}
+    .kpi{background:#0f1115;border:1px solid #32394a;border-radius:10px;padding:10px 12px;min-width:120px}
+    .kpi b{font-size:22px}
+    canvas{width:100%;height:260px;background:#0f1115;border:1px solid #32394a;border-radius:10px}
+    table{width:100%;border-collapse:collapse}
+    th,td{padding:8px;border-bottom:1px solid #2d3444;text-align:left}
+    th{color:#aeb7c6;font-weight:600}
+  </style>
+</head>
+<body>
+  <h2>Liegestütze Statistik</h2>
+  <div class="card row">
+    <label>Von <input id="from" type="date"></label>
+    <label>Bis <input id="to" type="date"></label>
+    <button id="load">Aktualisieren</button>
+    <button id="all">Alles</button>
+  </div>
+
+  <div class="card kpis">
+    <div class="kpi">Gesamt<br><b id="total">0</b></div>
+    <div class="kpi">Tage<br><b id="days">0</b></div>
+    <div class="kpi">Einträge<br><b id="entries">0</b></div>
+    <div class="kpi">Ø / Tag<br><b id="avg">0</b></div>
+  </div>
+
+  <div class="card">
+    <h3>Verlauf (Tageswerte)</h3>
+    <canvas id="chart" width="1100" height="320"></canvas>
+  </div>
+
+  <div class="card">
+    <h3>Tageswerte</h3>
+    <table>
+      <thead><tr><th>Datum</th><th>Liegestütze</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+
+<script>
+const fromEl = document.getElementById('from');
+const toEl = document.getElementById('to');
+const rowsEl = document.getElementById('rows');
+const totalEl = document.getElementById('total');
+const daysEl = document.getElementById('days');
+const entriesEl = document.getElementById('entries');
+const avgEl = document.getElementById('avg');
+const canvas = document.getElementById('chart');
+const ctx = canvas.getContext('2d');
+
+function fmtDate(d){return new Date(d).toLocaleDateString('de-DE');}
+
+function drawChart(daily){
+  const w = canvas.width, h = canvas.height;
+  ctx.clearRect(0,0,w,h);
+  ctx.fillStyle = '#0f1115'; ctx.fillRect(0,0,w,h);
+  if (!daily.length) {
+    ctx.fillStyle = '#8a94a6'; ctx.fillText('Keine Daten im gewählten Zeitraum.', 20, 30); return;
+  }
+
+  const pad = {l:52,r:18,t:18,b:46};
+  const cw = w - pad.l - pad.r, ch = h - pad.t - pad.b;
+  const max = Math.max(...daily.map(d=>d.total), 1);
+  const bw = Math.max(8, Math.min(44, cw / daily.length * 0.6));
+  const step = cw / Math.max(daily.length,1);
+
+  ctx.strokeStyle = '#2f3747'; ctx.lineWidth = 1;
+  for(let i=0;i<=4;i++){
+    const y = pad.t + ch*(i/4);
+    ctx.beginPath(); ctx.moveTo(pad.l,y); ctx.lineTo(w-pad.r,y); ctx.stroke();
+    const val = Math.round(max*(1 - i/4));
+    ctx.fillStyle='#8f9bb1'; ctx.fillText(String(val), 8, y+4);
+  }
+
+  ctx.strokeStyle = '#55d6be';
+  ctx.fillStyle = '#55d6be88';
+  ctx.beginPath();
+  daily.forEach((d, i) => {
+    const x = pad.l + step*i + step/2;
+    const y = pad.t + ch - (d.total/max)*ch;
+    if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+  });
+  ctx.stroke();
+
+  daily.forEach((d, i) => {
+    const x = pad.l + step*i + step/2;
+    const y = pad.t + ch - (d.total/max)*ch;
+    const bx = x - bw/2;
+    const by = y;
+    const bh = pad.t + ch - y;
+    ctx.fillStyle = '#4e8cff66'; ctx.fillRect(bx,by,bw,bh);
+    ctx.fillStyle = '#c5d3ea';
+    if (daily.length <= 16 || i % Math.ceil(daily.length/16)===0) {
+      ctx.save();
+      ctx.translate(x, h-8);
+      ctx.rotate(-0.45);
+      ctx.fillText(d.date.slice(5), 0, 0);
+      ctx.restore();
+    }
+  });
+}
+
+async function load(){
+  const qs = new URLSearchParams();
+  if (fromEl.value) qs.set('from', fromEl.value);
+  if (toEl.value) qs.set('to', toEl.value);
+  const res = await fetch('/api/stats?' + qs.toString());
+  const data = await res.json();
+
+  totalEl.textContent = data.meta.total;
+  daysEl.textContent = data.meta.days;
+  entriesEl.textContent = data.meta.entries;
+  avgEl.textContent = data.meta.days ? (data.meta.total / data.meta.days).toFixed(1) : '0';
+
+  rowsEl.innerHTML = data.daily.map(d => `<tr><td>${fmtDate(d.date)}</td><td>${d.total}</td></tr>`).join('');
+  drawChart(data.daily);
+}
+
+document.getElementById('load').addEventListener('click', load);
+document.getElementById('all').addEventListener('click', ()=>{ fromEl.value=''; toEl.value=''; load(); });
+load();
+</script>
+</body>
+</html>
