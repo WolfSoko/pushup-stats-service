@@ -5,9 +5,16 @@ on:
     branches: [main]
   pull_request:
 
+permissions:
+  contents: read
+
 jobs:
   lint-test-build:
     runs-on: ubuntu-latest
+    env:
+      # Für PRs nur Read-Token, für main Pushes Write-Token.
+      # Bei Fork-PRs sind Secrets automatisch nicht verfügbar.
+      NX_CLOUD_ACCESS_TOKEN: ${{ github.event_name == 'pull_request' && secrets.NX_CLOUD_ACCESS_TOKEN_READ || secrets.NX_CLOUD_ACCESS_TOKEN_WRITE }}
 
     steps:
       - name: Checkout
