@@ -22,17 +22,30 @@ function parseCsv() {
     if (!timestamp || Number.isNaN(n)) continue;
     rows.push({ timestamp, reps: n, source: source || '' });
   }
-  rows.sort((a,b)=> new Date(a.timestamp) - new Date(b.timestamp));
+  rows.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
   return rows;
 }
 
 function aggregateDaily(rows) {
   const map = new Map();
   for (const r of rows) {
-    const d = r.timestamp.slice(0,10);
+    const d = r.timestamp.slice(0, 10);
     map.set(d, (map.get(d) || 0) + r.reps);
   }
-  return [...map.entries()].sort((a,b)=>a[0].localeCompare(b[0])).map(([date,total])=>({date,total}));
+  return [...map.entries()]
+    .sort((a, b) => a[0].localeCompare(b[0]))
+    .map(([bucket, total]) => ({ bucket, total }));
+}
+
+function aggregateHourly(rows) {
+  const map = new Map();
+  for (const r of rows) {
+    const h = r.timestamp.slice(0, 13) + ':00'; // YYYY-MM-DDTHH:00
+    map.set(h, (map.get(h) || 0) + r.reps);
+  }
+  return [...map.entries()]
+    .sort((a, b) => a[0].localeCompare(b[0]))
+    .map(([bucket, total]) => ({ bucket, total }));
 }
 
 function sendJson(res, status, data) {
@@ -60,16 +73,30 @@ const server = http.createServer((req, res) => {
 
   if (u.pathname === '/api/stats') {
     const rows = parseCsv();
-    const daily = aggregateDaily(rows);
     const from = u.searchParams.get('from');
     const to = u.searchParams.get('to');
     const inRange = (d) => (!from || d >= from) && (!to || d <= to);
-    const filteredDaily = daily.filter(x => inRange(x.date));
-    const filteredRows = rows.filter(x => inRange(x.timestamp.slice(0,10)));
-    const total = filteredDaily.reduce((s,x)=>s+x.total,0);
+
+    const filteredRows = rows.filter(x => inRange(x.timestamp.slice(0, 10)));
+    const daily = aggregateDaily(filteredRows);
+
+    const distinctDays = new Set(filteredRows.map(x => x.timestamp.slice(0, 10))).size;
+    const granularity = distinctDays > 0 && distinctDays < 7 ? 'hourly' : 'daily';
+    const series = granularity === 'hourly' ? aggregateHourly(filteredRows) : daily;
+
+    const total = daily.reduce((s, x) => s + x.total, 0);
+
     return sendJson(res, 200, {
-      meta: { from: from || null, to: to || null, entries: filteredRows.length, days: filteredDaily.length, total },
-      daily: filteredDaily,
+      meta: {
+        from: from || null,
+        to: to || null,
+        entries: filteredRows.length,
+        days: distinctDays,
+        total,
+        granularity
+      },
+      series,
+      daily,
       entries: filteredRows
     });
   }
