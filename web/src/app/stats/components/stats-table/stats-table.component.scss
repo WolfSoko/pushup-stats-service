@@ -30,7 +30,7 @@
 table {
   width: 100%;
   border-collapse: collapse;
-  min-width: 340px;
+  min-width: min(340px, 100%);
 }
 
 th,

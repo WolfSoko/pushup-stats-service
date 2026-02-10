@@ -7,6 +7,10 @@
   gap: 20px;
 }
 
+.container > * {
+  min-width: 0;
+}
+
 .page-header {
   padding: clamp(16px, 2vw, 24px);
   border: 1px solid rgba(123, 159, 255, 0.25);
@@ -74,6 +78,10 @@ h1 {
 .content-grid {
   display: grid;
   gap: 18px;
+}
+
+.content-grid > * {
+  min-width: 0;
 }
 
 @media (max-width: 680px) {
