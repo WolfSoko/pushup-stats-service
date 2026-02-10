@@ -1,36 +1,37 @@
-import { Component, OnChanges, SimpleChanges, computed, input, output, signal } from '@angular/core';
-import { MatDatepickerInputEvent, MatDatepickerModule } from '@angular/material/datepicker';
+import { Component, OnChanges, SimpleChanges, input, output } from '@angular/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-filter-bar',
-  imports: [MatFormFieldModule, MatInputModule, MatDatepickerModule, MatNativeDateModule],
+  imports: [MatFormFieldModule, MatInputModule, MatDatepickerModule, MatNativeDateModule, ReactiveFormsModule],
   template: `
     <section class="controls">
       <div class="heading">
-        <h2>Zeitraum</h2>
-        <p>Datumsbereich auswählen (wie im Material-Range-Picker)</p>
+        <h2>Zeitraum auswählen</h2>
+        <p>Form-basiert wie im Angular-Material-Beispiel</p>
       </div>
 
       <mat-form-field appearance="outline">
         <mat-label>Zeitraum</mat-label>
-        <mat-date-range-input
-          [rangePicker]="picker"
-          [comparisonStart]="comparisonStart()"
-          [comparisonEnd]="comparisonEnd()"
-        >
-          <input
-            matStartDate
-            placeholder="Von"
-            [value]="fromDateValue()"
-            (dateChange)="onFromDateChange($event)"
-          />
-          <input matEndDate placeholder="Bis" [value]="toDateValue()" (dateChange)="onToDateChange($event)" />
+        <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
+          <input matStartDate formControlName="start" placeholder="Von" />
+          <input matEndDate formControlName="end" placeholder="Bis" />
         </mat-date-range-input>
+        <mat-hint>TT.MM.JJJJ – TT.MM.JJJJ</mat-hint>
         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-date-range-picker #picker></mat-date-range-picker>
+
+        @if (range.controls.start.hasError('matStartDateInvalid')) {
+          <mat-error>Ungültiges Startdatum</mat-error>
+        }
+        @if (range.controls.end.hasError('matEndDateInvalid')) {
+          <mat-error>Ungültiges Enddatum</mat-error>
+        }
       </mat-form-field>
     </section>
   `,
@@ -43,28 +44,29 @@ export class FilterBarComponent implements OnChanges {
   readonly fromChange = output<string>();
   readonly toChange = output<string>();
 
-  readonly fromDateValue = signal<Date | null>(null);
-  readonly toDateValue = signal<Date | null>(null);
-
-  readonly comparisonStart = computed(() => {
-    const from = this.fromDateValue();
-    const to = this.toDateValue();
-    if (!from || !to) return null;
-
-    const spanDays = this.dayDiffInclusive(from, to);
-    const comparisonEnd = this.addDays(this.startOfDay(from), -1);
-    return this.addDays(comparisonEnd, -(spanDays - 1));
+  readonly range = new FormGroup({
+    start: new FormControl<Date | null>(null),
+    end: new FormControl<Date | null>(null),
   });
 
-  readonly comparisonEnd = computed(() => {
-    const from = this.fromDateValue();
-    if (!from) return null;
-    return this.addDays(this.startOfDay(from), -1);
-  });
+  constructor() {
+    this.range.controls.start.valueChanges.pipe(takeUntilDestroyed()).subscribe((value) => {
+      this.fromChange.emit(this.toIsoDate(value));
+    });
+
+    this.range.controls.end.valueChanges.pipe(takeUntilDestroyed()).subscribe((value) => {
+      this.toChange.emit(this.toIsoDate(value));
+    });
+  }
 
   ngOnChanges(_changes: SimpleChanges): void {
-    this.fromDateValue.set(this.parseIsoDate(this.from()));
-    this.toDateValue.set(this.parseIsoDate(this.to()));
+    this.range.patchValue(
+      {
+        start: this.parseIsoDate(this.from()),
+        end: this.parseIsoDate(this.to()),
+      },
+      { emitEvent: false },
+    );
   }
 
   private parseIsoDate(value: string): Date | null {
@@ -80,32 +82,5 @@ export class FilterBarComponent implements OnChanges {
     const m = String(value.getMonth() + 1).padStart(2, '0');
     const d = String(value.getDate()).padStart(2, '0');
     return `${y}-${m}-${d}`;
-  }
-
-  private startOfDay(value: Date): Date {
-    return new Date(value.getFullYear(), value.getMonth(), value.getDate());
-  }
-
-  private addDays(value: Date, delta: number): Date {
-    const d = new Date(value);
-    d.setDate(d.getDate() + delta);
-    return d;
-  }
-
-  private dayDiffInclusive(from: Date, to: Date): number {
-    const start = this.startOfDay(from);
-    const end = this.startOfDay(to);
-    const msPerDay = 24 * 60 * 60 * 1000;
-    return Math.max(1, Math.floor((end.getTime() - start.getTime()) / msPerDay) + 1);
-  }
-
-  onFromDateChange(event: MatDatepickerInputEvent<Date>): void {
-    this.fromDateValue.set(event.value ?? null);
-    this.fromChange.emit(this.toIsoDate(this.fromDateValue()));
-  }
-
-  onToDateChange(event: MatDatepickerInputEvent<Date>): void {
-    this.toDateValue.set(event.value ?? null);
-    this.toChange.emit(this.toIsoDate(this.toDateValue()));
   }
 }

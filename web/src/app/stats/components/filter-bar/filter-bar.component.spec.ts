@@ -17,49 +17,36 @@ describe('FilterBarComponent', () => {
     fixture.detectChanges();
   });
 
-  it('maps input ISO dates to local date signals', () => {
-    const from = component.fromDateValue();
-    const to = component.toDateValue();
+  it('maps input ISO dates into reactive form controls', () => {
+    const start = component.range.controls.start.value;
+    const end = component.range.controls.end.value;
 
-    expect(from?.getFullYear()).toBe(2026);
-    expect(from?.getMonth()).toBe(1);
-    expect(from?.getDate()).toBe(1);
+    expect(start?.getFullYear()).toBe(2026);
+    expect(start?.getMonth()).toBe(1);
+    expect(start?.getDate()).toBe(1);
 
-    expect(to?.getFullYear()).toBe(2026);
-    expect(to?.getMonth()).toBe(1);
-    expect(to?.getDate()).toBe(7);
+    expect(end?.getFullYear()).toBe(2026);
+    expect(end?.getMonth()).toBe(1);
+    expect(end?.getDate()).toBe(7);
   });
 
-  it('emits ISO dates on range change handlers', () => {
+  it('emits ISO dates when reactive range controls change', () => {
     const fromSpy = jest.fn();
     const toSpy = jest.fn();
     component.fromChange.subscribe(fromSpy);
     component.toChange.subscribe(toSpy);
 
-    component.onFromDateChange({ value: new Date(2026, 1, 11) } as any);
-    component.onToDateChange({ value: new Date(2026, 1, 12) } as any);
+    component.range.controls.start.setValue(new Date(2026, 1, 11));
+    component.range.controls.end.setValue(new Date(2026, 1, 12));
 
     expect(fromSpy).toHaveBeenCalledWith('2026-02-11');
     expect(toSpy).toHaveBeenCalledWith('2026-02-12');
   });
 
-  it('renders date range picker without manual action buttons', () => {
+  it('renders form-style date range picker without manual action buttons', () => {
     const text = fixture.nativeElement.textContent;
-    expect(text).toContain('Zeitraum');
+    expect(text).toContain('Zeitraum auswählen');
     expect(text).not.toContain('Aktualisieren');
     expect(text).not.toContain('Zurücksetzen');
-  });
-
-  it('computes comparison range for selected period', () => {
-    const comparisonStart = component.comparisonStart();
-    const comparisonEnd = component.comparisonEnd();
-
-    expect(comparisonStart?.getFullYear()).toBe(2026);
-    expect(comparisonStart?.getMonth()).toBe(0);
-    expect(comparisonStart?.getDate()).toBe(25);
-
-    expect(comparisonEnd?.getFullYear()).toBe(2026);
-    expect(comparisonEnd?.getMonth()).toBe(0);
-    expect(comparisonEnd?.getDate()).toBe(31);
   });
 });
