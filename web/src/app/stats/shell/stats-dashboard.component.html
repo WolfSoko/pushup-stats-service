@@ -9,19 +9,19 @@
 
   <section class="panel">
     <app-filter-bar
-      [from]="from"
-      [to]="to"
-      (fromChange)="from = $event"
-      (toChange)="to = $event"
+      [from]="from()"
+      [to]="to()"
+      (fromChange)="from.set($event)"
+      (toChange)="to.set($event)"
       (refresh)="load()"
       (clearFilters)="reset()"
     />
   </section>
 
-  <app-kpi-cards [total]="total" [days]="days" [entries]="entries" [avg]="avg" />
+  <app-kpi-cards [total]="total()" [days]="days()" [entries]="entries()" [avg]="avg()" />
 
   <section class="content-grid">
-    <app-stats-chart [series]="rows" [granularity]="granularity" />
-    <app-stats-table [rows]="rows" [granularity]="granularity" />
+    <app-stats-chart [series]="rows()" [granularity]="granularity()" />
+    <app-stats-table [rows]="rows()" [granularity]="granularity()" />
   </section>
 </main>

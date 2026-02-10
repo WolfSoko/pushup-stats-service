@@ -2,11 +2,13 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
-  Input,
   NgZone,
   PLATFORM_ID,
   ViewChild,
+  effect,
   inject,
+  input,
+  signal,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
@@ -22,7 +24,7 @@ Chart.register(...registerables);
     <mat-card class="chart">
       <div class="chart-header">
         <div>
-          <h2>{{ granularity === 'hourly' ? 'Verlauf (Stundenwerte)' : 'Verlauf (Tageswerte)' }}</h2>
+          <h2>{{ granularity() === 'hourly' ? 'Verlauf (Stundenwerte)' : 'Verlauf (Tageswerte)' }}</h2>
           <p>Intervallwerte als Balken, Tages-Integral als Trendlinie</p>
         </div>
       </div>
@@ -45,22 +47,23 @@ export class StatsChartComponent implements AfterViewInit {
 
   @ViewChild('chartCanvas') private chartCanvas?: ElementRef<HTMLCanvasElement>;
 
-  @Input() granularity: StatsGranularity = 'daily';
+  readonly granularity = input<StatsGranularity>('daily');
+  readonly series = input<StatsSeriesEntry[]>([]);
 
-  private pendingSeries: StatsSeriesEntry[] = [];
-
-  @Input() set series(value: StatsSeriesEntry[]) {
-    this.pendingSeries = value ?? [];
-    if (isPlatformBrowser(this.platformId)) {
-      queueMicrotask(() => this.renderChart(this.pendingSeries));
-    }
-  }
-
+  private readonly viewReady = signal(false);
   private chart?: Chart;
+
+  constructor() {
+    effect(() => {
+      if (!isPlatformBrowser(this.platformId) || !this.viewReady()) return;
+      const currentSeries = this.series();
+      queueMicrotask(() => this.renderChart(currentSeries));
+    });
+  }
 
   ngAfterViewInit(): void {
     if (isPlatformBrowser(this.platformId)) {
-      this.renderChart(this.pendingSeries);
+      this.viewReady.set(true);
     }
   }
 

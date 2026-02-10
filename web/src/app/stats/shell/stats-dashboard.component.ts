@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit, PLATFORM_ID, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, PLATFORM_ID, computed, inject, signal } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { catchError, finalize, of } from 'rxjs';
@@ -20,15 +20,15 @@ export class StatsDashboardComponent implements OnInit {
   private readonly platformId = inject(PLATFORM_ID);
   private readonly cdr = inject(ChangeDetectorRef);
 
-  from = '';
-  to = '';
-  total = 0;
-  days = 0;
-  entries = 0;
-  avg = '0';
-  loading = false;
-  granularity: StatsGranularity = 'daily';
-  rows: StatsSeriesEntry[] = [];
+  readonly from = signal('');
+  readonly to = signal('');
+  readonly total = signal(0);
+  readonly days = signal(0);
+  readonly entries = signal(0);
+  readonly avg = computed(() => (this.days() ? (this.total() / this.days()).toFixed(1) : '0'));
+  readonly loading = signal(false);
+  readonly granularity = signal<StatsGranularity>('daily');
+  readonly rows = signal<StatsSeriesEntry[]>([]);
 
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
@@ -37,17 +37,17 @@ export class StatsDashboardComponent implements OnInit {
       const fromDate = new Date(now);
       fromDate.setDate(fromDate.getDate() - 6);
       const from = fromDate.toISOString().slice(0, 10);
-      this.from = from;
-      this.to = to;
+      this.from.set(from);
+      this.to.set(to);
       this.cdr.markForCheck();
       this.load();
     }
   }
 
   load(): void {
-    this.loading = true;
+    this.loading.set(true);
     this.api
-      .load({ from: this.from || undefined, to: this.to || undefined })
+      .load({ from: this.from() || undefined, to: this.to() || undefined })
       .pipe(
         catchError(() =>
           of({
@@ -58,24 +58,23 @@ export class StatsDashboardComponent implements OnInit {
           }),
         ),
         finalize(() => {
-          this.loading = false;
+          this.loading.set(false);
           this.cdr.markForCheck();
         }),
       )
       .subscribe((data) => {
-        this.granularity = data.meta.granularity;
-        this.total = data.meta.total;
-        this.days = data.meta.days;
-        this.entries = data.meta.entries;
-        this.avg = this.days ? (this.total / this.days).toFixed(1) : '0';
-        this.rows = data.series;
+        this.granularity.set(data.meta.granularity);
+        this.total.set(data.meta.total);
+        this.days.set(data.meta.days);
+        this.entries.set(data.meta.entries);
+        this.rows.set(data.series);
         this.cdr.markForCheck();
       });
   }
 
   reset(): void {
-    this.from = '';
-    this.to = '';
+    this.from.set('');
+    this.to.set('');
     this.load();
   }
 }
