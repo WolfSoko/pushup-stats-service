@@ -186,7 +186,7 @@ describe('StatsTableComponent', () => {
 
   it('cancelEdit closes dialog and clears editing id', () => {
     const component = fixture.componentInstance;
-    const closeSpy = jest.spyOn(component.dialog, 'closeAll').mockImplementation(() => {});
+    const closeSpy = jest.spyOn(component.dialog, 'closeAll').mockReturnValue(undefined);
 
     component.startEdit({ _id: '1', timestamp: '2026-02-10T13:45:00', reps: 8, source: 'wa' });
     component.cancelEdit();
