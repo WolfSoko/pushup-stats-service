@@ -9,6 +9,41 @@
     </div>
   </header>
 
+  <section class="today-focus" aria-label="Tagesfokus">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Heute gesamt</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p class="focus-number">{{ todayTotal() }}</p>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Zielfortschritt</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>{{ todayTotal() }} / {{ dailyGoal() }}</p>
+        <mat-progress-bar mode="determinate" [value]="goalProgressPercent()"></mat-progress-bar>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Letzter Eintrag</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        @if (lastEntry(); as latest) {
+          <p>{{ latest.reps }} Reps · {{ latest.type || 'Standard' }}</p>
+          <small>{{ latest.timestamp | date: 'dd.MM.yyyy, HH:mm' }}</small>
+        } @else {
+          <p>Noch kein Eintrag heute.</p>
+        }
+      </mat-card-content>
+    </mat-card>
+  </section>
+
   <section class="mini-badges" aria-label="All-Time Kurzübersicht">
     <span class="badge"><small>All-Time Gesamt</small><b>{{ allTimeTotal() }}</b></span>
     <span class="badge"><small>All-Time Tage</small><b>{{ allTimeDays() }}</b></span>
@@ -20,8 +55,6 @@
     <app-filter-bar [from]="from()" [to]="to()" (fromChange)="from.set($event)" (toChange)="to.set($event)" />
   </section>
 
-  <app-kpi-cards [total]="total()" [days]="days()" [entries]="entries()" [avg]="avg()" />
-
   @if (errorMessage()) {
     <section class="status-banner error" role="alert" aria-live="polite">
       {{ errorMessage() }}
@@ -32,10 +65,30 @@
     <section class="status-banner loading" aria-live="polite">Lade Statistikdaten…</section>
   }
 
-  <section class="content-grid">
+  <section class="mid-grid">
     <app-stats-chart [series]="rows()" [granularity]="granularity()" />
+
+    <mat-card class="quick-actions">
+      <mat-card-header>
+        <mat-card-title>Schnellaktionen</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <button type="button" mat-flat-button (click)="addQuickEntry(10)">
+          <mat-icon>bolt</mat-icon>
+          +10 eintragen
+        </button>
+        <button type="button" mat-flat-button (click)="addQuickEntry(20)">
+          <mat-icon>flash_on</mat-icon>
+          +20 eintragen
+        </button>
+      </mat-card-content>
+    </mat-card>
+  </section>
+
+  <section class="latest-entries">
+    <h2>Neueste Einträge</h2>
     <app-stats-table
-      [entries]="entryRows()"
+      [entries]="latestEntries()"
       [busyAction]="busyAction()"
       [busyId]="busyId()"
       (create)="onCreateEntry($event)"
