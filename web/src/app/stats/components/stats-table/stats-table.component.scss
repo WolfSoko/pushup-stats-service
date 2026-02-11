@@ -39,6 +39,10 @@
     cursor: pointer;
     background: rgba(94, 142, 255, 0.4);
     font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
   }
 }
 

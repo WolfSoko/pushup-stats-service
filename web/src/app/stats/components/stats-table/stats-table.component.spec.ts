@@ -99,4 +99,18 @@ describe('StatsTableComponent', () => {
 
     expect(updateSpy).not.toHaveBeenCalled();
   });
+
+  it('exposes busy helper state for spinner rendering', () => {
+    fixture.componentRef.setInput('busyAction', 'delete');
+    fixture.componentRef.setInput('busyId', '1');
+    fixture.detectChanges();
+
+    const component = fixture.componentInstance;
+    expect(component.isBusy('delete', '1')).toBe(true);
+    expect(component.isBusy('update', '1')).toBe(false);
+
+    fixture.componentRef.setInput('busyAction', 'create');
+    fixture.detectChanges();
+    expect(component.isCreateBusy()).toBe(true);
+  });
 });

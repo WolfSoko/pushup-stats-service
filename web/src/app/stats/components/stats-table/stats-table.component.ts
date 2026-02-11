@@ -1,11 +1,12 @@
 import { DatePipe } from '@angular/common';
 import { Component, input, output, signal } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { PushupRecord } from '@nx-temp/stats-models';
 
 @Component({
   selector: 'app-stats-table',
-  imports: [MatCardModule, DatePipe],
+  imports: [MatCardModule, MatProgressSpinnerModule, DatePipe],
   template: `
     <mat-card class="table-card">
       <div class="table-header">
@@ -24,7 +25,13 @@ import { PushupRecord } from '@nx-temp/stats-models';
           required
         />
         <input type="text" [value]="newSource()" (input)="newSource.set(asValue($event))" placeholder="Quelle" />
-        <button type="submit">Neu</button>
+        <button type="submit" [disabled]="isCreateBusy()">
+          @if (isCreateBusy()) {
+            <mat-spinner diameter="14"></mat-spinner>
+          } @else {
+            Neu
+          }
+        </button>
       </form>
 
       <div class="table-wrap">
@@ -62,13 +69,36 @@ import { PushupRecord } from '@nx-temp/stats-models';
                 </td>
                 <td class="actions">
                   @if (isEditing(entry._id)) {
-                    <button type="button" aria-label="Speichern" title="Speichern" (click)="save(entry)">💾</button>
-                    <button type="button" aria-label="Abbrechen" title="Abbrechen" (click)="cancelEdit()">✖️</button>
+                    <button
+                      type="button"
+                      aria-label="Speichern"
+                      title="Speichern"
+                      [disabled]="isBusy('update', entry._id)"
+                      (click)="save(entry)"
+                    >
+                      @if (isBusy('update', entry._id)) {
+                        <mat-spinner diameter="14"></mat-spinner>
+                      } @else {
+                        💾
+                      }
+                    </button>
+                    <button type="button" aria-label="Abbrechen" title="Abbrechen" [disabled]="isBusy('update', entry._id)" (click)="cancelEdit()">✖️</button>
                   } @else {
                     <button type="button" aria-label="Edit" title="Edit" (click)="startEdit(entry)">✏️</button>
                   }
-                  <button type="button" class="danger" aria-label="Löschen" title="Löschen" (click)="remove.emit(entry._id)">
-                    🗑️
+                  <button
+                    type="button"
+                    class="danger"
+                    aria-label="Löschen"
+                    title="Löschen"
+                    [disabled]="isBusy('delete', entry._id)"
+                    (click)="remove.emit(entry._id)"
+                  >
+                    @if (isBusy('delete', entry._id)) {
+                      <mat-spinner diameter="14"></mat-spinner>
+                    } @else {
+                      🗑️
+                    }
                   </button>
                 </td>
               </tr>
@@ -87,6 +117,8 @@ import { PushupRecord } from '@nx-temp/stats-models';
 })
 export class StatsTableComponent {
   readonly entries = input<PushupRecord[]>([]);
+  readonly busyAction = input<'create' | 'update' | 'delete' | null>(null);
+  readonly busyId = input<string | null>(null);
 
   readonly create = output<{ timestamp: string; reps: number; source?: string }>();
   readonly update = output<{ id: string; reps: number; source: string }>();
@@ -102,6 +134,14 @@ export class StatsTableComponent {
 
   asValue(event: Event): string {
     return (event.target as HTMLInputElement).value;
+  }
+
+  isCreateBusy(): boolean {
+    return this.busyAction() === 'create';
+  }
+
+  isBusy(action: 'update' | 'delete', id: string): boolean {
+    return this.busyAction() === action && this.busyId() === id;
   }
 
   isEditing(id: string): boolean {

@@ -47,6 +47,8 @@ export class StatsDashboardComponent {
 
   readonly from = signal(this.initialRange.from);
   readonly to = signal(this.initialRange.to);
+  readonly busyAction = signal<'create' | 'update' | 'delete' | null>(null);
+  readonly busyId = signal<string | null>(null);
 
   private readonly filter = computed(() => ({
     from: this.from() || undefined,
@@ -109,18 +111,39 @@ export class StatsDashboardComponent {
   }
 
   async onCreateEntry(payload: { timestamp: string; reps: number; source?: string }) {
-    await firstValueFrom(this.api.createPushup(payload));
-    this.refreshAll();
+    this.busyAction.set('create');
+    this.busyId.set(null);
+    try {
+      await firstValueFrom(this.api.createPushup(payload));
+      this.refreshAll();
+    } finally {
+      this.busyAction.set(null);
+      this.busyId.set(null);
+    }
   }
 
   async onUpdateEntry(payload: { id: string; reps: number; source?: string }) {
-    await firstValueFrom(this.api.updatePushup(payload.id, { reps: payload.reps, source: payload.source }));
-    this.refreshAll();
+    this.busyAction.set('update');
+    this.busyId.set(payload.id);
+    try {
+      await firstValueFrom(this.api.updatePushup(payload.id, { reps: payload.reps, source: payload.source }));
+      this.refreshAll();
+    } finally {
+      this.busyAction.set(null);
+      this.busyId.set(null);
+    }
   }
 
   async onDeleteEntry(id: string) {
-    await firstValueFrom(this.api.deletePushup(id));
-    this.refreshAll();
+    this.busyAction.set('delete');
+    this.busyId.set(id);
+    try {
+      await firstValueFrom(this.api.deletePushup(id));
+      this.refreshAll();
+    } finally {
+      this.busyAction.set(null);
+      this.busyId.set(null);
+    }
   }
 
   private refreshAll() {

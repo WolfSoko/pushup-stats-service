@@ -35,6 +35,8 @@
     <app-stats-chart [series]="rows()" [granularity]="granularity()" />
     <app-stats-table
       [entries]="entryRows()"
+      [busyAction]="busyAction()"
+      [busyId]="busyId()"
       (create)="onCreateEntry($event)"
       (update)="onUpdateEntry($event)"
       (remove)="onDeleteEntry($event)"
