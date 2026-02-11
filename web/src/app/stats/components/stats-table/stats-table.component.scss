@@ -3,6 +3,16 @@
   max-height: 62vh;
 }
 
+.table-header h2 {
+  padding-left: 8px;
+}
+
+.mat-mdc-header-row {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+}
+
 .actions {
   display: inline-flex;
   gap: 4px;

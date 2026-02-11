@@ -87,7 +87,7 @@ import { PushupRecord } from '@nx-temp/stats-models';
               @if (isEditing(entry._id)) {
                 <button
                   type="button"
-                  mat-icon-button
+                  mat-mini-fab
                   aria-label="Speichern"
                   title="Speichern"
                   [disabled]="isBusy('update', entry._id)"
@@ -101,7 +101,7 @@ import { PushupRecord } from '@nx-temp/stats-models';
                 </button>
                 <button
                   type="button"
-                  mat-icon-button
+                  mat-mini-fab
                   aria-label="Abbrechen"
                   title="Abbrechen"
                   [disabled]="isBusy('update', entry._id)"
@@ -110,14 +110,14 @@ import { PushupRecord } from '@nx-temp/stats-models';
                   <mat-icon>close</mat-icon>
                 </button>
               } @else {
-                <button type="button" mat-icon-button aria-label="Edit" title="Edit" (click)="startEdit(entry)">
+                <button type="button" mat-mini-fab aria-label="Edit" title="Edit" (click)="startEdit(entry)">
                   <mat-icon>edit</mat-icon>
                 </button>
               }
               <button
                 type="button"
                 class="danger"
-                mat-icon-button
+                mat-mini-fab
                 aria-label="Löschen"
                 title="Löschen"
                 [disabled]="isBusy('delete', entry._id)"
