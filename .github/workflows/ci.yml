@@ -48,7 +48,7 @@ jobs:
         run: npx playwright install --with-deps chromium
 
       - name: E2E (isolated test DB)
-        run: npx nx run web-e2e:e2e
+        run: npx nx run web-e2e:e2e-ci
 
       - name: Nx fix-ci (always)
         if: always()

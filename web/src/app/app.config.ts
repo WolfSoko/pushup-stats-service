@@ -5,7 +5,7 @@ import {
   provideZonelessChangeDetection,
 } from '@angular/core';
 import { registerLocaleData } from '@angular/common';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withFetch } from '@angular/common/http';
 import localeDe from '@angular/common/locales/de';
 import { MAT_DATE_LOCALE, provideNativeDateAdapter } from '@angular/material/core';
 import { provideClientHydration, withIncrementalHydration } from '@angular/platform-browser';
@@ -15,7 +15,7 @@ registerLocaleData(localeDe);
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
-    provideHttpClient(),
+    provideHttpClient(withFetch()),
     provideClientHydration(withIncrementalHydration()),
     provideZonelessChangeDetection(),
     provideNativeDateAdapter(),

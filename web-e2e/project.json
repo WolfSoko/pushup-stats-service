@@ -10,6 +10,13 @@
         "config": "web-e2e/playwright.config.ts",
         "skipInstall": true
       }
+    },
+    "e2e-ci": {
+      "executor": "@nx/playwright:playwright",
+      "options": {
+        "config": "web-e2e/playwright.config.ts",
+        "skipInstall": true
+      }
     }
   }
 }
