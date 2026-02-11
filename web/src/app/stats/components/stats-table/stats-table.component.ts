@@ -7,6 +7,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSortModule, Sort } from '@angular/material/sort';
+import { MatTableModule } from '@angular/material/table';
 import { PushupRecord } from '@nx-temp/stats-models';
 
 @Component({
@@ -20,6 +22,8 @@ import { PushupRecord } from '@nx-temp/stats-models';
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
+    MatTableModule,
+    MatSortModule,
   ],
   template: `
     <mat-card class="table-card">
@@ -35,106 +39,104 @@ import { PushupRecord } from '@nx-temp/stats-models';
       </div>
 
       <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>
-                <button type="button" class="sort-btn" mat-button (click)="setSort('timestamp')">
-                  Zeit {{ sortIcon('timestamp') }}
-                </button>
-              </th>
-              <th>
-                <button type="button" class="sort-btn" mat-button (click)="setSort('reps')">
-                  Reps {{ sortIcon('reps') }}
-                </button>
-              </th>
-              <th>
-                <button type="button" class="sort-btn" mat-button (click)="setSort('source')">
-                  Quelle {{ sortIcon('source') }}
-                </button>
-              </th>
-              <th>Aktion</th>
-            </tr>
-          </thead>
-          <tbody>
-            @for (entry of sortedEntries(); track entry._id) {
-              <tr>
-                <td>{{ entry.timestamp | date: 'dd.MM.yyyy, HH:mm' }}</td>
-                <td>
-                  @if (isEditing(entry._id)) {
-                    <input
-                      matInput
-                      type="number"
-                      min="1"
-                      [value]="editReps(entry)"
-                      (input)="setEditReps(entry, asValue($event))"
-                    />
+        <table
+          mat-table
+          [dataSource]="sortedEntries()"
+          matSort
+          [matSortActive]="sortBy()"
+          [matSortDirection]="sortDir()"
+          (matSortChange)="onSortChange($event)"
+        >
+          <ng-container matColumnDef="timestamp">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header="timestamp">Zeit</th>
+            <td mat-cell *matCellDef="let entry">{{ entry.timestamp | date: 'dd.MM.yyyy, HH:mm' }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="reps">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header="reps">Reps</th>
+            <td mat-cell *matCellDef="let entry">
+              @if (isEditing(entry._id)) {
+                <input
+                  matInput
+                  type="number"
+                  min="1"
+                  [value]="editReps(entry)"
+                  (input)="setEditReps(entry, asValue($event))"
+                />
+              } @else {
+                <span>{{ entry.reps }}</span>
+              }
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="source">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header="source">Quelle</th>
+            <td mat-cell *matCellDef="let entry">
+              @if (isEditing(entry._id)) {
+                <input matInput type="text" [value]="editSource(entry)" (input)="setEditSource(entry, asValue($event))" />
+              } @else {
+                <span>{{ entry.source }}</span>
+              }
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>Aktion</th>
+            <td mat-cell *matCellDef="let entry" class="actions">
+              @if (isEditing(entry._id)) {
+                <button
+                  type="button"
+                  mat-icon-button
+                  aria-label="Speichern"
+                  title="Speichern"
+                  [disabled]="isBusy('update', entry._id)"
+                  (click)="save(entry)"
+                >
+                  @if (isBusy('update', entry._id)) {
+                    <mat-spinner diameter="14"></mat-spinner>
                   } @else {
-                    <span>{{ entry.reps }}</span>
+                    <mat-icon>save</mat-icon>
                   }
-                </td>
-                <td>
-                  @if (isEditing(entry._id)) {
-                    <input matInput type="text" [value]="editSource(entry)" (input)="setEditSource(entry, asValue($event))" />
-                  } @else {
-                    <span>{{ entry.source }}</span>
-                  }
-                </td>
-                <td class="actions">
-                  @if (isEditing(entry._id)) {
-                    <button
-                      type="button"
-                      mat-icon-button
-                      aria-label="Speichern"
-                      title="Speichern"
-                      [disabled]="isBusy('update', entry._id)"
-                      (click)="save(entry)"
-                    >
-                      @if (isBusy('update', entry._id)) {
-                        <mat-spinner diameter="14"></mat-spinner>
-                      } @else {
-                        <mat-icon>save</mat-icon>
-                      }
-                    </button>
-                    <button
-                      type="button"
-                      mat-icon-button
-                      aria-label="Abbrechen"
-                      title="Abbrechen"
-                      [disabled]="isBusy('update', entry._id)"
-                      (click)="cancelEdit()"
-                    >
-                      <mat-icon>close</mat-icon>
-                    </button>
-                  } @else {
-                    <button type="button" mat-icon-button aria-label="Edit" title="Edit" (click)="startEdit(entry)">
-                      <mat-icon>edit</mat-icon>
-                    </button>
-                  }
-                  <button
-                    type="button"
-                    class="danger"
-                    mat-icon-button
-                    aria-label="Löschen"
-                    title="Löschen"
-                    [disabled]="isBusy('delete', entry._id)"
-                    (click)="remove.emit(entry._id)"
-                  >
-                    @if (isBusy('delete', entry._id)) {
-                      <mat-spinner diameter="14"></mat-spinner>
-                    } @else {
-                      <mat-icon>delete</mat-icon>
-                    }
-                  </button>
-                </td>
-              </tr>
-            }
-            @if (!sortedEntries().length) {
-              <tr>
-                <td colspan="4" class="empty">Keine Einträge im gewählten Zeitraum.</td>
-              </tr>
-            }
-          </tbody>
+                </button>
+                <button
+                  type="button"
+                  mat-icon-button
+                  aria-label="Abbrechen"
+                  title="Abbrechen"
+                  [disabled]="isBusy('update', entry._id)"
+                  (click)="cancelEdit()"
+                >
+                  <mat-icon>close</mat-icon>
+                </button>
+              } @else {
+                <button type="button" mat-icon-button aria-label="Edit" title="Edit" (click)="startEdit(entry)">
+                  <mat-icon>edit</mat-icon>
+                </button>
+              }
+              <button
+                type="button"
+                class="danger"
+                mat-icon-button
+                aria-label="Löschen"
+                title="Löschen"
+                [disabled]="isBusy('delete', entry._id)"
+                (click)="remove.emit(entry._id)"
+              >
+                @if (isBusy('delete', entry._id)) {
+                  <mat-spinner diameter="14"></mat-spinner>
+                } @else {
+                  <mat-icon>delete</mat-icon>
+                }
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell empty" [attr.colspan]="displayedColumns.length">Keine Einträge im gewählten Zeitraum.</td>
+          </tr>
         </table>
       </div>
     </mat-card>
@@ -190,6 +192,7 @@ export class StatsTableComponent {
   readonly newReps = signal('');
   readonly newSource = signal('web');
 
+  readonly displayedColumns = ['timestamp', 'reps', 'source', 'actions'];
   readonly sortBy = signal<'timestamp' | 'reps' | 'source'>('timestamp');
   readonly sortDir = signal<'asc' | 'desc'>('desc');
   readonly sortedEntries = computed(() => {
@@ -228,18 +231,15 @@ export class StatsTableComponent {
     return this.busyAction() === action && this.busyId() === id;
   }
 
-  setSort(column: 'timestamp' | 'reps' | 'source'): void {
-    if (this.sortBy() === column) {
-      this.sortDir.set(this.sortDir() === 'asc' ? 'desc' : 'asc');
+  onSortChange(sort: Sort): void {
+    if (!sort.active || !sort.direction) {
+      this.sortBy.set('timestamp');
+      this.sortDir.set('desc');
       return;
     }
-    this.sortBy.set(column);
-    this.sortDir.set('asc');
-  }
 
-  sortIcon(column: 'timestamp' | 'reps' | 'source'): string {
-    if (this.sortBy() !== column) return '↕';
-    return this.sortDir() === 'asc' ? '↑' : '↓';
+    this.sortBy.set(sort.active as 'timestamp' | 'reps' | 'source');
+    this.sortDir.set(sort.direction as 'asc' | 'desc');
   }
 
   isEditing(id: string): boolean {

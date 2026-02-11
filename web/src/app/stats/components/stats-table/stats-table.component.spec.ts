@@ -27,10 +27,10 @@ describe('StatsTableComponent', () => {
       { _id: '2', timestamp: '2026-02-10T10:00:00', reps: 20, source: 'web' },
     ]);
 
-    component.setSort('reps');
+    component.onSortChange({ active: 'reps', direction: 'asc' });
     expect(component.sortedEntries().map((x) => x._id)).toEqual(['1', '2']);
 
-    component.setSort('reps');
+    component.onSortChange({ active: 'reps', direction: 'desc' });
     expect(component.sortedEntries().map((x) => x._id)).toEqual(['2', '1']);
   });
 
