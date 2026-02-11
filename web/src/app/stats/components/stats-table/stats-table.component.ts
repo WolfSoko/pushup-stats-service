@@ -30,7 +30,7 @@ import { PushupRecord } from '@nx-temp/stats-models';
   template: `
     <mat-card class="table-card">
       <div class="table-header">
-        <h2>Einträge (CRUD)</h2>
+        <h2>Einträge</h2>
         <div class="header-actions">
           <p>{{ entries().length }} Einträge</p>
           <button type="button" class="add-btn" mat-flat-button (click)="openCreateDialog()">
