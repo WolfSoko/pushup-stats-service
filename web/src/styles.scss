@@ -9,7 +9,13 @@ html {
         tertiary: mat.$violet-palette,
         theme-type: dark,
       ),
-      typography: Inter,
+      typography: (
+        brand-family: 'Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif',
+        plain-family: 'Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif',
+        regular-weight: 400,
+        medium-weight: 500,
+        bold-weight: 700,
+      ),
       density: 0,
     )
   );
