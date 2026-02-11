@@ -54,8 +54,8 @@ export function aggregateDaily(rows: PushupEntry[]): SeriesEntry[] {
 export function aggregateHourly(rows: PushupEntry[]): SeriesEntry[] {
   const map = new Map<string, number>();
   for (const r of rows) {
-    const h = `${r.timestamp.slice(0, 13)}:00`;
-    map.set(h, (map.get(h) || 0) + r.reps);
+    const minuteBucket = r.timestamp.slice(0, 16);
+    map.set(minuteBucket, (map.get(minuteBucket) || 0) + r.reps);
   }
 
   const base = [...map.entries()]

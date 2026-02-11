@@ -46,9 +46,10 @@ describe('api stats core', () => {
     ];
 
     expect(aggregateHourly(rows)).toEqual([
-      { bucket: '2026-02-10T10:00', total: 15, dayIntegral: 15 },
-      { bucket: '2026-02-10T11:00', total: 7, dayIntegral: 22 },
-      { bucket: '2026-02-11T09:00', total: 3, dayIntegral: 3 },
+      { bucket: '2026-02-10T10:05', total: 10, dayIntegral: 10 },
+      { bucket: '2026-02-10T10:45', total: 5, dayIntegral: 15 },
+      { bucket: '2026-02-10T11:05', total: 7, dayIntegral: 22 },
+      { bucket: '2026-02-11T09:10', total: 3, dayIntegral: 3 },
     ]);
   });
 
