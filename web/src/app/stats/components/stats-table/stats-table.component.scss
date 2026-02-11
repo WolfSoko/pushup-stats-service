@@ -1,212 +1,54 @@
 .table-card {
-  border-radius: 18px;
-  padding: 16px;
+  border-radius: 16px;
 }
 
 .table-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 10px;
-
-  h2 {
-    margin: 0;
-  }
-
-  p {
-    margin: 0;
-    color: #9db0d8;
-    font-size: 0.86rem;
-  }
+  gap: 12px;
 }
 
 .header-actions {
   display: flex;
   align-items: center;
-  gap: 10px;
-}
-
-.add-btn {
-  border-radius: 10px;
-  border: 1px solid rgba(118, 145, 203, 0.22);
-  background: rgba(94, 142, 255, 0.4);
-  color: #dbe7ff;
-  padding: 8px 11px;
-  cursor: pointer;
-  white-space: nowrap;
+  gap: 8px;
 }
 
 .table-wrap {
-  overflow-x: auto;
+  overflow: auto;
   margin-top: 12px;
-  border: 1px solid rgba(118, 145, 203, 0.22);
-  border-radius: 12px;
-  max-width: 100%;
 }
 
 table {
   width: 100%;
-  border-collapse: collapse;
-  min-width: 560px;
-}
-
-.mat-column-actions {
-  width: 96px;
-  min-width: 96px;
-  white-space: nowrap;
-}
-
-th,
-td {
-  text-align: left;
-  padding: 11px 12px;
-  border-bottom: 1px solid rgba(122, 145, 197, 0.18);
-}
-
-tbody tr:hover {
-  background: rgba(92, 132, 232, 0.12);
-}
-
-th {
-  color: #b3c5e8;
-  font-weight: 600;
-  font-size: 0.83rem;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  background: rgba(17, 24, 41, 0.8);
-}
-
-.sort-btn {
-  all: unset;
-  cursor: pointer;
-  color: inherit;
-  font: inherit;
-}
-
-td input {
-  width: 100%;
-  border-radius: 8px;
-  border: 1px solid rgba(118, 145, 203, 0.22);
-  background: rgba(17, 24, 41, 0.8);
-  color: #dbe7ff;
-  padding: 7px 8px;
 }
 
 .actions {
-  display: flex;
-  gap: 6px;
+  display: inline-flex;
   align-items: center;
-  justify-content: flex-start;
-  overflow: visible;
-
-  button {
-    border-radius: 8px;
-    border: 1px solid rgba(118, 145, 203, 0.22);
-    background: rgba(94, 142, 255, 0.35);
-    color: #dbe7ff;
-    padding: 7px 10px;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 40px;
-  }
-
-  .mat-mdc-icon-button {
-    --mdc-icon-button-state-layer-size: 36px;
-    width: 36px;
-    height: 36px;
-    padding: 6px;
-    margin: 0;
-    line-height: 1;
-  }
-
-  .mat-icon {
-    font-size: 18px;
-    width: 18px;
-    height: 18px;
-  }
-
-  .danger {
-    background: rgba(210, 75, 75, 0.35);
-  }
+  gap: 4px;
 }
 
 .empty {
   text-align: center;
-  color: #9ab0db;
-  padding: 20px;
 }
 
 .create-dialog {
   display: grid;
   gap: 10px;
   min-width: min(86vw, 380px);
-  box-sizing: border-box;
-  padding: 4px 2px;
-
-  h3 {
-    margin: 0;
-    line-height: 1.2;
-    font-size: clamp(1.1rem, 4vw, 1.5rem);
-    padding-left: 8px;
-  }
-
-  input {
-    border-radius: 8px;
-    border: 1px solid rgba(118, 145, 203, 0.22);
-    background: rgba(17, 24, 41, 0.8);
-    color: #dbe7ff;
-    padding: 9px 10px;
-  }
 }
 
 .dialog-actions {
   display: flex;
   justify-content: flex-end;
   gap: 8px;
-  margin-top: 6px;
 }
 
 @media (max-width: 680px) {
-  .table-card {
-    padding: 12px;
-  }
-
   .table-header {
     align-items: flex-start;
     flex-direction: column;
-  }
-
-  table {
-    min-width: 460px;
-  }
-
-  th,
-  td {
-    padding: 9px 8px;
-  }
-
-  .mat-column-actions {
-    width: 78px;
-    min-width: 78px;
-  }
-
-  .actions {
-    gap: 3px;
-
-    .mat-mdc-icon-button {
-      --mdc-icon-button-state-layer-size: 28px;
-      width: 28px;
-      height: 28px;
-      padding: 3px;
-      margin: 0;
-    }
-
-    .mat-icon {
-      font-size: 15px;
-      width: 15px;
-      height: 15px;
-    }
   }
 }
