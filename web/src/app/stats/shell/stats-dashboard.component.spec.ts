@@ -4,8 +4,19 @@ import { StatsDashboardComponent } from './stats-dashboard.component';
 import { PushupLiveService, StatsApiService } from '@nx-temp/stats-data-access';
 import { signal } from '@angular/core';
 
+function nowLocalMinuteIso(): string {
+  const now = new Date();
+  const y = now.getFullYear();
+  const m = String(now.getMonth() + 1).padStart(2, '0');
+  const d = String(now.getDate()).padStart(2, '0');
+  const hh = String(now.getHours()).padStart(2, '0');
+  const mm = String(now.getMinutes()).padStart(2, '0');
+  return `${y}-${m}-${d}T${hh}:${mm}`;
+}
+
 describe('StatsDashboardComponent', () => {
   let fixture: ComponentFixture<StatsDashboardComponent>;
+  const todayTs = nowLocalMinuteIso();
   const serviceMock = {
     load: jest.fn((filter?: { from?: string; to?: string }) => {
       if (!filter?.from && !filter?.to) {
@@ -21,7 +32,10 @@ describe('StatsDashboardComponent', () => {
       });
     }),
     listPushups: jest.fn().mockReturnValue(
-      of([{ _id: '1', timestamp: '2026-02-10T13:45:00', reps: 8, source: 'wa' }]),
+      of([
+        { _id: '1', timestamp: '2026-02-10T13:45:00', reps: 8, source: 'wa', type: 'Standard' },
+        { _id: '2', timestamp: todayTs, reps: 12, source: 'web', type: 'Diamond' },
+      ]),
     ),
     createPushup: jest.fn().mockReturnValue(of({ _id: '1' })),
     updatePushup: jest.fn().mockReturnValue(of({ _id: '1' })),
@@ -59,10 +73,12 @@ describe('StatsDashboardComponent', () => {
     window.history.replaceState({}, '', '/');
   });
 
-  it('shows german title and filtered total kpi card', () => {
+  it('shows german title and today focus section', () => {
     const text = fixture.nativeElement.textContent;
     expect(text).toContain('Liegestütze Statistik');
-    expect(text).toContain('50');
+    expect(text).toContain('Heute gesamt');
+    expect(text).toContain('Zielfortschritt');
+    expect(text).toContain('Letzter Eintrag');
   });
 
   it('initializes filter state from URL query params', () => {
@@ -81,6 +97,13 @@ describe('StatsDashboardComponent', () => {
     expect(component.allTimeAvg()).toBe('48.0');
   });
 
+  it('computes today total, latest entry and latest 10 rows', () => {
+    const component = fixture.componentInstance;
+    expect(component.todayTotal()).toBe(12);
+    expect(component.lastEntry()?._id).toBe('2');
+    expect(component.latestEntries()).toHaveLength(2);
+  });
+
   it('runs CRUD handlers and refreshes resources', async () => {
     const component = fixture.componentInstance;
 
@@ -88,10 +111,20 @@ describe('StatsDashboardComponent', () => {
     expect(serviceMock.createPushup).toHaveBeenCalled();
 
     await component.onUpdateEntry({ id: '1', reps: 14, source: 'wa' });
-    expect(serviceMock.updatePushup).toHaveBeenCalledWith('1', { reps: 14, source: 'wa' });
+    expect(serviceMock.updatePushup).toHaveBeenCalledWith('1', { reps: 14, source: 'wa', type: undefined });
 
     await component.onDeleteEntry('1');
     expect(serviceMock.deletePushup).toHaveBeenCalledWith('1');
+  });
+
+  it('adds quick entry via create API helper', async () => {
+    const component = fixture.componentInstance;
+
+    await component.addQuickEntry(10);
+
+    expect(serviceMock.createPushup).toHaveBeenCalledWith(
+      expect.objectContaining({ reps: 10, source: 'web', type: 'Standard' }),
+    );
   });
 
   it('reloads data when live websocket tick changes', async () => {

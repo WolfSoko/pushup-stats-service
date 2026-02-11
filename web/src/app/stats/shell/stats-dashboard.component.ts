@@ -1,11 +1,13 @@
-import { DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { DatePipe, DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { Component, PLATFORM_ID, REQUEST, computed, effect, inject, resource, signal } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { firstValueFrom } from 'rxjs';
 import { PushupRecord, StatsGranularity, StatsResponse, StatsSeriesEntry } from '@nx-temp/stats-models';
 import { PushupLiveService, StatsApiService } from '@nx-temp/stats-data-access';
 import { FilterBarComponent } from '../components/filter-bar/filter-bar.component';
-import { KpiCardsComponent } from '../components/kpi-cards/kpi-cards.component';
 import { StatsChartComponent } from '../components/stats-chart/stats-chart.component';
 import { StatsTableComponent } from '../components/stats-table/stats-table.component';
 
@@ -32,7 +34,16 @@ function createDefaultRange(): { from: string; to: string } {
 
 @Component({
   selector: 'app-stats-dashboard',
-  imports: [MatCardModule, FilterBarComponent, KpiCardsComponent, StatsChartComponent, StatsTableComponent],
+  imports: [
+    MatCardModule,
+    MatButtonModule,
+    MatIconModule,
+    MatProgressBarModule,
+    DatePipe,
+    FilterBarComponent,
+    StatsChartComponent,
+    StatsTableComponent,
+  ],
   templateUrl: './stats-dashboard.component.html',
   styleUrl: './stats-dashboard.component.scss',
 })
@@ -87,6 +98,24 @@ export class StatsDashboardComponent {
   readonly granularity = computed<StatsGranularity>(() => this.stats().meta.granularity);
   readonly rows = computed<StatsSeriesEntry[]>(() => this.stats().series);
   readonly entryRows = computed<PushupRecord[]>(() => this.entriesResource.value() ?? []);
+  readonly dailyGoal = signal(100);
+  readonly todayTotal = computed(() => {
+    const today = toLocalIsoDate(new Date());
+    return this.entryRows()
+      .filter((entry) => entry.timestamp.slice(0, 10) === today)
+      .reduce((sum, entry) => sum + entry.reps, 0);
+  });
+  readonly goalProgressPercent = computed(() => Math.min(100, Math.round((this.todayTotal() / this.dailyGoal()) * 100)));
+  readonly lastEntry = computed<PushupRecord | null>(() => {
+    const rows = this.entryRows();
+    if (!rows.length) return null;
+    return [...rows].sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())[0] ?? null;
+  });
+  readonly latestEntries = computed<PushupRecord[]>(() => {
+    return [...this.entryRows()]
+      .sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())
+      .slice(0, 10);
+  });
   readonly loading = computed(() => {
     const status = this.statsResource.status();
     return status === 'loading' || status === 'reloading';
@@ -153,6 +182,22 @@ export class StatsDashboardComponent {
       this.busyAction.set(null);
       this.busyId.set(null);
     }
+  }
+
+  async addQuickEntry(reps: number) {
+    const now = new Date();
+    const y = now.getFullYear();
+    const m = String(now.getMonth() + 1).padStart(2, '0');
+    const d = String(now.getDate()).padStart(2, '0');
+    const hh = String(now.getHours()).padStart(2, '0');
+    const mm = String(now.getMinutes()).padStart(2, '0');
+
+    await this.onCreateEntry({
+      timestamp: `${y}-${m}-${d}T${hh}:${mm}`,
+      reps,
+      source: 'web',
+      type: 'Standard',
+    });
   }
 
   private refreshAll() {
