@@ -94,7 +94,7 @@ export class StatsChartComponent implements AfterViewInit {
         return Number((sum / window.length).toFixed(2));
       });
 
-      const data: ChartConfiguration<'bar'>['data'] = {
+      const data: ChartConfiguration<'bar' | 'line'>['data'] = {
         labels: series.map((d) => d.bucket),
         datasets: [
           {

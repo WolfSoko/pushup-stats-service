@@ -79,6 +79,13 @@ th {
   background: rgba(17, 24, 41, 0.8);
 }
 
+.sort-btn {
+  all: unset;
+  cursor: pointer;
+  color: inherit;
+  font: inherit;
+}
+
 td input {
   width: 100%;
   border-radius: 8px;

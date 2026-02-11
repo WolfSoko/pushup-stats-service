@@ -20,6 +20,20 @@ describe('StatsTableComponent', () => {
     expect(text).toContain('10.02.2026, 13:45');
   });
 
+  it('sorts rows by selected column and direction', () => {
+    const component = fixture.componentInstance;
+    fixture.componentRef.setInput('entries', [
+      { _id: '1', timestamp: '2026-02-10T13:45:00', reps: 8, source: 'wa' },
+      { _id: '2', timestamp: '2026-02-10T10:00:00', reps: 20, source: 'web' },
+    ]);
+
+    component.setSort('reps');
+    expect(component.sortedEntries().map((x) => x._id)).toEqual(['1', '2']);
+
+    component.setSort('reps');
+    expect(component.sortedEntries().map((x) => x._id)).toEqual(['2', '1']);
+  });
+
   it('is read-only by default and switches to edit mode', () => {
     const component = fixture.componentInstance;
     const entry = { _id: '1', timestamp: '2026-02-10T13:45:00', reps: 8, source: 'wa' };

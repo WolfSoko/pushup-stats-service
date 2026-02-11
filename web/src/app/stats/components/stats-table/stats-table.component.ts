@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, input, output, signal } from '@angular/core';
+import { Component, computed, input, output, signal } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { PushupRecord } from '@nx-temp/stats-models';
@@ -11,7 +11,7 @@ import { PushupRecord } from '@nx-temp/stats-models';
     <mat-card class="table-card">
       <div class="table-header">
         <h2>Einträge (CRUD)</h2>
-        <p>{{ entries().length }} Einträge</p>
+        <p>{{ sortedEntries().length }} Einträge</p>
       </div>
 
       <form class="create-row" (submit)="submitCreate($event)">
@@ -38,14 +38,26 @@ import { PushupRecord } from '@nx-temp/stats-models';
         <table>
           <thead>
             <tr>
-              <th>Zeit</th>
-              <th>Reps</th>
-              <th>Quelle</th>
+              <th>
+                <button type="button" class="sort-btn" (click)="setSort('timestamp')">
+                  Zeit {{ sortIcon('timestamp') }}
+                </button>
+              </th>
+              <th>
+                <button type="button" class="sort-btn" (click)="setSort('reps')">
+                  Reps {{ sortIcon('reps') }}
+                </button>
+              </th>
+              <th>
+                <button type="button" class="sort-btn" (click)="setSort('source')">
+                  Quelle {{ sortIcon('source') }}
+                </button>
+              </th>
               <th>Aktion</th>
             </tr>
           </thead>
           <tbody>
-            @for (entry of entries(); track entry._id) {
+            @for (entry of sortedEntries(); track entry._id) {
               <tr>
                 <td>{{ entry.timestamp | date: 'dd.MM.yyyy, HH:mm' }}</td>
                 <td>
@@ -103,7 +115,7 @@ import { PushupRecord } from '@nx-temp/stats-models';
                 </td>
               </tr>
             }
-            @if (!entries().length) {
+            @if (!sortedEntries().length) {
               <tr>
                 <td colspan="4" class="empty">Keine Einträge im gewählten Zeitraum.</td>
               </tr>
@@ -128,6 +140,20 @@ export class StatsTableComponent {
   readonly newReps = signal('');
   readonly newSource = signal('web');
 
+  readonly sortBy = signal<'timestamp' | 'reps' | 'source'>('timestamp');
+  readonly sortDir = signal<'asc' | 'desc'>('desc');
+  readonly sortedEntries = computed(() => {
+    const rows = [...this.entries()];
+    const by = this.sortBy();
+    const dir = this.sortDir() === 'asc' ? 1 : -1;
+
+    return rows.sort((a, b) => {
+      if (by === 'timestamp') return a.timestamp.localeCompare(b.timestamp) * dir;
+      if (by === 'reps') return (a.reps - b.reps) * dir;
+      return a.source.localeCompare(b.source) * dir;
+    });
+  });
+
   private readonly editedReps = signal<Record<string, string>>({});
   private readonly editedSource = signal<Record<string, string>>({});
   private readonly editingId = signal<string | null>(null);
@@ -142,6 +168,20 @@ export class StatsTableComponent {
 
   isBusy(action: 'update' | 'delete', id: string): boolean {
     return this.busyAction() === action && this.busyId() === id;
+  }
+
+  setSort(column: 'timestamp' | 'reps' | 'source'): void {
+    if (this.sortBy() === column) {
+      this.sortDir.set(this.sortDir() === 'asc' ? 'desc' : 'asc');
+      return;
+    }
+    this.sortBy.set(column);
+    this.sortDir.set('asc');
+  }
+
+  sortIcon(column: 'timestamp' | 'reps' | 'source'): string {
+    if (this.sortBy() !== column) return '↕';
+    return this.sortDir() === 'asc' ? '↑' : '↓';
   }
 
   isEditing(id: string): boolean {
