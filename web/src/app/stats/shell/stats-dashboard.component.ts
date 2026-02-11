@@ -2,7 +2,7 @@ import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { Component, PLATFORM_ID, REQUEST, computed, effect, inject, resource, signal } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { firstValueFrom } from 'rxjs';
-import { StatsGranularity, StatsResponse, StatsSeriesEntry } from '@nx-temp/stats-models';
+import { PushupRecord, StatsGranularity, StatsResponse, StatsSeriesEntry } from '@nx-temp/stats-models';
 import { StatsApiService } from '@nx-temp/stats-data-access';
 import { FilterBarComponent } from '../components/filter-bar/filter-bar.component';
 import { KpiCardsComponent } from '../components/kpi-cards/kpi-cards.component';
@@ -58,6 +58,11 @@ export class StatsDashboardComponent {
     loader: async ({ params }) => firstValueFrom(this.api.load(params)),
   });
 
+  readonly entriesResource = resource({
+    params: () => this.filter(),
+    loader: async ({ params }) => firstValueFrom(this.api.listPushups(params)),
+  });
+
   readonly allTimeResource = resource({
     loader: async () => firstValueFrom(this.api.load({})),
   });
@@ -78,6 +83,7 @@ export class StatsDashboardComponent {
   );
   readonly granularity = computed<StatsGranularity>(() => this.stats().meta.granularity);
   readonly rows = computed<StatsSeriesEntry[]>(() => this.stats().series);
+  readonly entryRows = computed<PushupRecord[]>(() => this.entriesResource.value() ?? []);
   readonly loading = computed(() => {
     const status = this.statsResource.status();
     return status === 'loading' || status === 'reloading';
@@ -100,6 +106,27 @@ export class StatsDashboardComponent {
       const nextUrl = `${this.document.location.pathname}${query ? `?${query}` : ''}`;
       window.history.replaceState(window.history.state, '', nextUrl);
     });
+  }
+
+  async onCreateEntry(payload: { timestamp: string; reps: number; source?: string }) {
+    await firstValueFrom(this.api.createPushup(payload));
+    this.refreshAll();
+  }
+
+  async onUpdateEntry(payload: { id: string; reps: number; source?: string }) {
+    await firstValueFrom(this.api.updatePushup(payload.id, { reps: payload.reps, source: payload.source }));
+    this.refreshAll();
+  }
+
+  async onDeleteEntry(id: string) {
+    await firstValueFrom(this.api.deletePushup(id));
+    this.refreshAll();
+  }
+
+  private refreshAll() {
+    this.statsResource.reload();
+    this.allTimeResource.reload();
+    this.entriesResource.reload();
   }
 
   private resolveInitialRange(): { from: string; to: string } {

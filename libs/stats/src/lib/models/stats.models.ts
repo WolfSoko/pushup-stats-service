@@ -24,3 +24,24 @@ export interface StatsFilter {
   from?: string;
   to?: string;
 }
+
+export interface PushupRecord {
+  _id: string;
+  timestamp: string;
+  reps: number;
+  source: string;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+export interface PushupCreate {
+  timestamp: string;
+  reps: number;
+  source?: string;
+}
+
+export interface PushupUpdate {
+  timestamp?: string;
+  reps?: number;
+  source?: string;
+}

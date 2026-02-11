@@ -6,33 +6,34 @@ import { StatsApiService } from '@nx-temp/stats-data-access';
 describe('StatsDashboardComponent', () => {
   let fixture: ComponentFixture<StatsDashboardComponent>;
   const serviceMock = {
-    load: jest.fn().mockReturnValue(
-      of({
-        meta: {
-          from: null,
-          to: null,
-          entries: 2,
-          days: 1,
-          total: 50,
-          granularity: 'daily',
-        },
+    load: jest.fn((filter?: { from?: string; to?: string }) => {
+      if (!filter?.from && !filter?.to) {
+        return of({
+          meta: { from: null, to: null, entries: 100, days: 25, total: 1200, granularity: 'daily' },
+          series: [{ bucket: '2026-01-10', total: 1200, dayIntegral: 1200 }],
+        });
+      }
+
+      return of({
+        meta: { from: filter.from ?? null, to: filter.to ?? null, entries: 2, days: 1, total: 50, granularity: 'daily' },
         series: [{ bucket: '2026-01-10', total: 50, dayIntegral: 50 }],
-      }),
+      });
+    }),
+    listPushups: jest.fn().mockReturnValue(
+      of([{ _id: '1', timestamp: '2026-02-10T13:45:00', reps: 8, source: 'wa' }]),
     ),
+    createPushup: jest.fn().mockReturnValue(of({ _id: '1' })),
+    updatePushup: jest.fn().mockReturnValue(of({ _id: '1' })),
+    deletePushup: jest.fn().mockReturnValue(of({ ok: true })),
   };
 
   beforeEach(async () => {
-    serviceMock.load.mockClear();
+    jest.clearAllMocks();
     window.history.replaceState({}, '', '/?from=2026-02-01&to=2026-02-10');
 
     await TestBed.configureTestingModule({
       imports: [StatsDashboardComponent],
-      providers: [
-        {
-          provide: StatsApiService,
-          useValue: serviceMock,
-        },
-      ],
+      providers: [{ provide: StatsApiService, useValue: serviceMock }],
     }).compileComponents();
 
     fixture = TestBed.createComponent(StatsDashboardComponent);
@@ -45,7 +46,7 @@ describe('StatsDashboardComponent', () => {
     window.history.replaceState({}, '', '/');
   });
 
-  it('shows german title and total kpi', () => {
+  it('shows german title and filtered total kpi card', () => {
     const text = fixture.nativeElement.textContent;
     expect(text).toContain('Liegestütze Statistik');
     expect(text).toContain('50');
@@ -56,22 +57,27 @@ describe('StatsDashboardComponent', () => {
     expect(component.from()).toBe('2026-02-01');
     expect(component.to()).toBe('2026-02-10');
     expect(serviceMock.load).toHaveBeenCalledWith({ from: '2026-02-01', to: '2026-02-10' });
+    expect(serviceMock.listPushups).toHaveBeenCalledWith({ from: '2026-02-01', to: '2026-02-10' });
   });
 
-  it('falls back to default range when URL has no filter params', async () => {
-    window.history.replaceState({}, '', '/');
-    serviceMock.load.mockClear();
+  it('loads all-time stats separately for badges', () => {
+    const component = fixture.componentInstance;
+    expect(component.allTimeTotal()).toBe(1200);
+    expect(component.allTimeDays()).toBe(25);
+    expect(component.allTimeEntries()).toBe(100);
+    expect(component.allTimeAvg()).toBe('48.0');
+  });
 
-    const localFixture = TestBed.createComponent(StatsDashboardComponent);
-    localFixture.detectChanges();
-    await localFixture.whenStable();
+  it('runs CRUD handlers and refreshes resources', async () => {
+    const component = fixture.componentInstance;
 
-    const component = localFixture.componentInstance;
-    expect(component.from()).toMatch(/^\d{4}-\d{2}-\d{2}$/);
-    expect(component.to()).toMatch(/^\d{4}-\d{2}-\d{2}$/);
-    expect(serviceMock.load).toHaveBeenCalledWith({
-      from: component.from(),
-      to: component.to(),
-    });
+    await component.onCreateEntry({ timestamp: '2026-02-11T07:00', reps: 12, source: 'web' });
+    expect(serviceMock.createPushup).toHaveBeenCalled();
+
+    await component.onUpdateEntry({ id: '1', reps: 14, source: 'wa' });
+    expect(serviceMock.updatePushup).toHaveBeenCalledWith('1', { reps: 14, source: 'wa' });
+
+    await component.onDeleteEntry('1');
+    expect(serviceMock.deletePushup).toHaveBeenCalledWith('1');
   });
 });

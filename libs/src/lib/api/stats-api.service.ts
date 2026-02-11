@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, PLATFORM_ID, TransferState, inject, makeStateKey } from '@angular/core';
 import { isPlatformServer } from '@angular/common';
-import { Observable, of, tap } from 'rxjs';
-import { StatsFilter, StatsResponse } from '@nx-temp/stats-models';
+import { Injectable, PLATFORM_ID, TransferState, inject, makeStateKey } from '@angular/core';
+import { Observable, map, of, tap } from 'rxjs';
+import { PushupCreate, PushupRecord, PushupUpdate, StatsFilter, StatsResponse } from '@nx-temp/stats-models';
 
 @Injectable({ providedIn: 'root' })
 export class StatsApiService {
@@ -23,17 +23,41 @@ export class StatsApiService {
       return of(cached);
     }
 
-    const base =
-      isPlatformServer(this.platformId)
-        ? `http://127.0.0.1:${(typeof process !== 'undefined' && process.env?.['PORT']) || '8787'}`
-        : '';
-
-    return this.http.get<StatsResponse>(`${base}/api/stats${query ? `?${query}` : ''}`).pipe(
+    return this.http.get<StatsResponse>(`${this.baseUrl()}/api/stats${query ? `?${query}` : ''}`).pipe(
       tap((payload) => {
         if (isPlatformServer(this.platformId)) {
           this.transferState.set(key, payload);
         }
       }),
     );
+  }
+
+  listPushups(filter: StatsFilter = {}): Observable<PushupRecord[]> {
+    return this.http.get<PushupRecord[]>(`${this.baseUrl()}/api/pushups`).pipe(
+      map((rows) =>
+        rows.filter((row) => {
+          const date = row.timestamp.slice(0, 10);
+          return (!filter.from || date >= filter.from) && (!filter.to || date <= filter.to);
+        }),
+      ),
+    );
+  }
+
+  createPushup(payload: PushupCreate): Observable<PushupRecord> {
+    return this.http.post<PushupRecord>(`${this.baseUrl()}/api/pushups`, payload);
+  }
+
+  updatePushup(id: string, payload: PushupUpdate): Observable<PushupRecord> {
+    return this.http.put<PushupRecord>(`${this.baseUrl()}/api/pushups/${id}`, payload);
+  }
+
+  deletePushup(id: string): Observable<{ ok: true }> {
+    return this.http.delete<{ ok: true }>(`${this.baseUrl()}/api/pushups/${id}`);
+  }
+
+  private baseUrl(): string {
+    return isPlatformServer(this.platformId)
+      ? `http://127.0.0.1:${(typeof process !== 'undefined' && process.env?.['PORT']) || '8787'}`
+      : '';
   }
 }

@@ -20,6 +20,28 @@
   }
 }
 
+.create-row {
+  margin-top: 12px;
+  display: grid;
+  grid-template-columns: 1.4fr 0.8fr 0.8fr auto;
+  gap: 8px;
+
+  input,
+  button {
+    border-radius: 8px;
+    border: 1px solid rgba(118, 145, 203, 0.22);
+    background: rgba(17, 24, 41, 0.8);
+    color: #dbe7ff;
+    padding: 8px 10px;
+  }
+
+  button {
+    cursor: pointer;
+    background: rgba(94, 142, 255, 0.4);
+    font-weight: 600;
+  }
+}
+
 .table-wrap {
   overflow-x: auto;
   margin-top: 12px;
@@ -53,9 +75,31 @@ th {
   background: rgba(17, 24, 41, 0.8);
 }
 
-td:last-child {
-  font-weight: 600;
-  font-variant-numeric: tabular-nums;
+td input {
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid rgba(118, 145, 203, 0.22);
+  background: rgba(17, 24, 41, 0.8);
+  color: #dbe7ff;
+  padding: 7px 8px;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+
+  button {
+    border-radius: 8px;
+    border: 1px solid rgba(118, 145, 203, 0.22);
+    background: rgba(94, 142, 255, 0.35);
+    color: #dbe7ff;
+    padding: 7px 10px;
+    cursor: pointer;
+  }
+
+  .danger {
+    background: rgba(210, 75, 75, 0.35);
+  }
 }
 
 .empty {

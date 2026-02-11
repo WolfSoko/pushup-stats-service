@@ -33,6 +33,11 @@
 
   <section class="content-grid">
     <app-stats-chart [series]="rows()" [granularity]="granularity()" />
-    <app-stats-table [rows]="rows()" [granularity]="granularity()" />
+    <app-stats-table
+      [entries]="entryRows()"
+      (create)="onCreateEntry($event)"
+      (update)="onUpdateEntry($event)"
+      (remove)="onDeleteEntry($event)"
+    />
   </section>
 </main>

@@ -12,21 +12,24 @@ describe('StatsTableComponent', () => {
     fixture = TestBed.createComponent(StatsTableComponent);
   });
 
-  it('renders daily bucket using date pipe format', () => {
-    fixture.componentRef.setInput('granularity', 'daily');
-    fixture.componentRef.setInput('rows', [{ bucket: '2026-02-10', total: 10, dayIntegral: 10 }]);
+  it('renders entry date with date pipe', () => {
+    fixture.componentRef.setInput('entries', [{ _id: '1', timestamp: '2026-02-10T13:45:00', reps: 8, source: 'wa' }]);
     fixture.detectChanges();
 
     const text = fixture.nativeElement.textContent;
-    expect(text).toContain('10.02.2026');
+    expect(text).toContain('10.02.2026, 13:45');
   });
 
-  it('renders hourly bucket including minute precision', () => {
-    fixture.componentRef.setInput('granularity', 'hourly');
-    fixture.componentRef.setInput('rows', [{ bucket: '2026-02-10T13:45', total: 8, dayIntegral: 18 }]);
-    fixture.detectChanges();
+  it('emits create event from form submit', () => {
+    const component = fixture.componentInstance;
+    const createSpy = jest.fn();
+    component.create.subscribe(createSpy);
 
-    const text = fixture.nativeElement.textContent;
-    expect(text).toContain('10.02., 13:45');
+    component.newTimestamp.set('2026-02-11T07:00');
+    component.newReps.set('12');
+    component.newSource.set('web');
+    component.submitCreate(new Event('submit'));
+
+    expect(createSpy).toHaveBeenCalledWith({ timestamp: '2026-02-11T07:00', reps: 12, source: 'web' });
   });
 });
