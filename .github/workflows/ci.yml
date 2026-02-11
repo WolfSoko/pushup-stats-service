@@ -30,7 +30,7 @@ jobs:
         run: npm ci
 
       - name: Nx Cloud distributed run starten
-        run: npx nx-cloud start-ci-run --distribute-on="3 linux-medium-js" --stop-agents-after="e2e"
+        run: npx nx-cloud start-ci-run --distribute-on="3 linux-medium-js" --stop-agents-after="lint,test,build,e2e-ci"
 
       - name: Nx chain (lint + test + build + e2e-ci)
         run: npx nx run-many -t lint test build e2e-ci --projects=stats-models,stats-data-access,api,web,web-e2e --parallel=3 --configuration=ci
