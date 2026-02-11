@@ -8,6 +8,13 @@
     </div>
   </header>
 
+  <section class="mini-badges" aria-label="Kurzübersicht">
+    <span class="badge"><small>Gesamt</small><b>{{ total() }}</b></span>
+    <span class="badge"><small>Tage</small><b>{{ days() }}</b></span>
+    <span class="badge"><small>Einträge</small><b>{{ entries() }}</b></span>
+    <span class="badge"><small>Ø/Tag</small><b>{{ avg() }}</b></span>
+  </section>
+
   <section class="panel">
     <app-filter-bar [from]="from()" [to]="to()" (fromChange)="from.set($event)" (toChange)="to.set($event)" />
   </section>
