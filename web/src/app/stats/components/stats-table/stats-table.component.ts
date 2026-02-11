@@ -1,5 +1,5 @@
-import { DatePipe } from '@angular/common';
-import { AfterViewInit, Component, TemplateRef, ViewChild, effect, inject, input, output, signal } from '@angular/core';
+import { DatePipe, NgTemplateOutlet, isPlatformBrowser } from '@angular/common';
+import { AfterViewInit, Component, PLATFORM_ID, TemplateRef, ViewChild, effect, inject, input, output, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
@@ -20,6 +20,7 @@ import { PushupRecord } from '@nx-temp/stats-models';
     MatCardModule,
     MatProgressSpinnerModule,
     DatePipe,
+    NgTemplateOutlet,
     MatDialogModule,
     MatButtonModule,
     MatFormFieldModule,
@@ -39,66 +40,19 @@ import { PushupRecord } from '@nx-temp/stats-models';
       </mat-card-header>
 
       <mat-card-content>
-        <cdk-virtual-scroll-viewport class="table-wrap" [itemSize]="56" [minBufferPx]="280" [maxBufferPx]="560">
-          <mat-table
-            [dataSource]="dataSource"
-            matSort
-            [matSortActive]="'timestamp'"
-            [matSortDirection]="'desc'"
-            class="mat-elevation-z8"
-          >
-          <ng-container matColumnDef="timestamp">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>Zeit</mat-header-cell>
-            <mat-cell *matCellDef="let entry">{{ entry.timestamp | date: 'dd.MM.yyyy, HH:mm' }}</mat-cell>
-          </ng-container>
+        @if (isBrowser) {
+          <cdk-virtual-scroll-viewport class="table-wrap" [itemSize]="56" [minBufferPx]="280" [maxBufferPx]="560">
+            <ng-container *ngTemplateOutlet="entriesTable"></ng-container>
+          </cdk-virtual-scroll-viewport>
+        } @else {
+          <div class="table-wrap">
+            <ng-container *ngTemplateOutlet="entriesTable"></ng-container>
+          </div>
+        }
 
-          <ng-container matColumnDef="reps">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>Reps</mat-header-cell>
-            <mat-cell *matCellDef="let entry"><span>{{ entry.reps }}</span></mat-cell>
-          </ng-container>
-
-          <ng-container matColumnDef="source">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>Quelle</mat-header-cell>
-            <mat-cell *matCellDef="let entry"><span>{{ entry.source }}</span></mat-cell>
-          </ng-container>
-
-          <ng-container matColumnDef="type">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>Typ</mat-header-cell>
-            <mat-cell *matCellDef="let entry"><span>{{ entry.type || 'Standard' }}</span></mat-cell>
-          </ng-container>
-
-          <ng-container matColumnDef="actions">
-            <mat-header-cell *matHeaderCellDef>Aktion</mat-header-cell>
-            <mat-cell *matCellDef="let entry" class="actions">
-              <button type="button" mat-mini-fab aria-label="Bearbeiten" title="Bearbeiten" (click)="openEditDialog(entry)">
-                <mat-icon>edit</mat-icon>
-              </button>
-              <button
-                type="button"
-                class="danger"
-                mat-mini-fab
-                aria-label="Löschen"
-                title="Löschen"
-                [disabled]="isBusy('delete', entry._id)"
-                (click)="remove.emit(entry._id)"
-              >
-                @if (isBusy('delete', entry._id)) {
-                  <mat-spinner diameter="14"></mat-spinner>
-                } @else {
-                  <mat-icon>delete</mat-icon>
-                }
-              </button>
-            </mat-cell>
-          </ng-container>
-
-          <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
-          <mat-row matRipple *matRowDef="let row; columns: displayedColumns"></mat-row>
-        </mat-table>
-
-          @if (!entries().length) {
-            <p class="empty">Keine Einträge im gewählten Zeitraum.</p>
-          }
-        </cdk-virtual-scroll-viewport>
+        @if (!entries().length) {
+          <p class="empty">Keine Einträge im gewählten Zeitraum.</p>
+        }
       </mat-card-content>
 
       <mat-card-actions align="end">
@@ -108,6 +62,63 @@ import { PushupRecord } from '@nx-temp/stats-models';
         </button>
       </mat-card-actions>
     </mat-card>
+
+    <ng-template #entriesTable>
+      <mat-table
+        [dataSource]="dataSource"
+        matSort
+        [matSortActive]="'timestamp'"
+        [matSortDirection]="'desc'"
+        class="mat-elevation-z8"
+      >
+        <ng-container matColumnDef="timestamp">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Zeit</mat-header-cell>
+          <mat-cell *matCellDef="let entry">{{ entry.timestamp | date: 'dd.MM.yyyy, HH:mm' }}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="reps">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Reps</mat-header-cell>
+          <mat-cell *matCellDef="let entry"><span>{{ entry.reps }}</span></mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="source">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Quelle</mat-header-cell>
+          <mat-cell *matCellDef="let entry"><span>{{ entry.source }}</span></mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="type">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Typ</mat-header-cell>
+          <mat-cell *matCellDef="let entry"><span>{{ entry.type || 'Standard' }}</span></mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef>Aktion</mat-header-cell>
+          <mat-cell *matCellDef="let entry" class="actions">
+            <button type="button" mat-mini-fab aria-label="Bearbeiten" title="Bearbeiten" (click)="openEditDialog(entry)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button
+              type="button"
+              class="danger"
+              mat-mini-fab
+              aria-label="Löschen"
+              title="Löschen"
+              [disabled]="isBusy('delete', entry._id)"
+              (click)="remove.emit(entry._id)"
+            >
+              @if (isBusy('delete', entry._id)) {
+                <mat-spinner diameter="14"></mat-spinner>
+              } @else {
+                <mat-icon>delete</mat-icon>
+              }
+            </button>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+        <mat-row matRipple *matRowDef="let row; columns: displayedColumns"></mat-row>
+      </mat-table>
+    </ng-template>
 
     <ng-template #createDialog>
       <h2 mat-dialog-title>Neuen Eintrag anlegen</h2>
@@ -206,6 +217,8 @@ import { PushupRecord } from '@nx-temp/stats-models';
 })
 export class StatsTableComponent implements AfterViewInit {
   readonly dialog = inject(MatDialog);
+  private readonly platformId = inject(PLATFORM_ID);
+  readonly isBrowser = isPlatformBrowser(this.platformId);
 
   @ViewChild('createDialog') createDialog?: TemplateRef<unknown>;
   @ViewChild('editDialog') editDialog?: TemplateRef<unknown>;
