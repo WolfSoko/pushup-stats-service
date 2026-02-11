@@ -67,15 +67,22 @@ async function ensureSeededFromCsv() {
   await db.insert(csvRows.map((r) => ({ timestamp: r.timestamp, reps: r.reps, source: r.source || 'csv' })));
 }
 
+type DbDoc = {
+  _id?: string;
+  timestamp?: unknown;
+  reps?: unknown;
+  source?: unknown;
+};
+
 async function allRows(): Promise<PushupEntry[]> {
-  const docs = (await db.find({}).sort({ timestamp: 1 })) as Array<any>;
+  const docs = (await db.find({}).sort({ timestamp: 1 })) as DbDoc[];
   return docs
-    .filter((d) => d?.timestamp && typeof d?.reps === 'number')
+    .filter((d) => typeof d.timestamp === 'string' && typeof d.reps === 'number')
     .map((d) => ({
       _id: d._id,
-      timestamp: String(d.timestamp),
-      reps: Number(d.reps),
-      source: String(d.source || 'api'),
+      timestamp: d.timestamp as string,
+      reps: d.reps as number,
+      source: typeof d.source === 'string' ? d.source : 'api',
     }));
 }
 
