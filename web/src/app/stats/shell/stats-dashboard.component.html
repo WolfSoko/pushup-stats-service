@@ -8,11 +8,11 @@
     </div>
   </header>
 
-  <app-kpi-cards [total]="total()" [days]="days()" [entries]="entries()" [avg]="avg()" />
-
   <section class="panel">
     <app-filter-bar [from]="from()" [to]="to()" (fromChange)="from.set($event)" (toChange)="to.set($event)" />
   </section>
+
+  <app-kpi-cards [total]="total()" [days]="days()" [entries]="entries()" [avg]="avg()" />
 
   @if (errorMessage()) {
     <section class="status-banner error" role="alert" aria-live="polite">
