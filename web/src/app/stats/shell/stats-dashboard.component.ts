@@ -58,11 +58,24 @@ export class StatsDashboardComponent {
     loader: async ({ params }) => firstValueFrom(this.api.load(params)),
   });
 
+  readonly allTimeResource = resource({
+    loader: async () => firstValueFrom(this.api.load({})),
+  });
+
   readonly stats = computed(() => this.statsResource.value() ?? EMPTY_STATS);
+  readonly allTimeStats = computed(() => this.allTimeResource.value() ?? EMPTY_STATS);
+
   readonly total = computed(() => this.stats().meta.total);
   readonly days = computed(() => this.stats().meta.days);
   readonly entries = computed(() => this.stats().meta.entries);
   readonly avg = computed(() => (this.days() ? (this.total() / this.days()).toFixed(1) : '0'));
+
+  readonly allTimeTotal = computed(() => this.allTimeStats().meta.total);
+  readonly allTimeDays = computed(() => this.allTimeStats().meta.days);
+  readonly allTimeEntries = computed(() => this.allTimeStats().meta.entries);
+  readonly allTimeAvg = computed(() =>
+    this.allTimeDays() ? (this.allTimeTotal() / this.allTimeDays()).toFixed(1) : '0',
+  );
   readonly granularity = computed<StatsGranularity>(() => this.stats().meta.granularity);
   readonly rows = computed<StatsSeriesEntry[]>(() => this.stats().series);
   readonly loading = computed(() => {
