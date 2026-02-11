@@ -1,3 +1,4 @@
+import { PLATFORM_ID } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { StatsTableComponent } from './stats-table.component';
 
@@ -286,5 +287,22 @@ describe('StatsTableComponent', () => {
     component.openCreateDialog();
 
     expect(component.newTimestamp()).toBe('2026-02-11T08:15');
+  });
+
+  it('renders non-virtual table fallback on server platform', async () => {
+    TestBed.resetTestingModule();
+    await TestBed.configureTestingModule({
+      imports: [StatsTableComponent],
+      providers: [{ provide: PLATFORM_ID, useValue: 'server' }],
+    }).compileComponents();
+
+    const serverFixture = TestBed.createComponent(StatsTableComponent);
+    serverFixture.componentRef.setInput('entries', [{ _id: 's1', timestamp: '2026-02-11T10:00:00', reps: 12, source: 'web' }]);
+    serverFixture.detectChanges();
+
+    expect(serverFixture.componentInstance.isBrowser).toBe(false);
+    const host = serverFixture.nativeElement as HTMLElement;
+    expect(host.querySelector('cdk-virtual-scroll-viewport')).toBeNull();
+    expect(host.querySelector('mat-table')).toBeTruthy();
   });
 });

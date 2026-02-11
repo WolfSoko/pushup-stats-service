@@ -6,10 +6,12 @@ import {
 } from '@angular/core';
 import { registerLocaleData } from '@angular/common';
 import { provideHttpClient, withFetch } from '@angular/common/http';
+import { provideRouter } from '@angular/router';
 import localeDe from '@angular/common/locales/de';
 import { MAT_DATE_LOCALE, provideNativeDateAdapter } from '@angular/material/core';
 import { provideClientHydration, withIncrementalHydration } from '@angular/platform-browser';
 import { provideServiceWorker } from '@angular/service-worker';
+import { appRoutes } from './app.routes';
 
 registerLocaleData(localeDe);
 
@@ -17,6 +19,7 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideHttpClient(withFetch()),
+    provideRouter(appRoutes),
     provideClientHydration(withIncrementalHydration()),
     provideZonelessChangeDetection(),
     provideNativeDateAdapter(),

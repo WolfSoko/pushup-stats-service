@@ -49,4 +49,26 @@ describe('FilterBarComponent', () => {
     expect(text).not.toContain('Aktualisieren');
     expect(text).not.toContain('Zurücksetzen');
   });
+
+  it('maps empty and invalid ISO input values to null dates', () => {
+    fixture.componentRef.setInput('from', '');
+    fixture.componentRef.setInput('to', '2026-xx-07');
+    fixture.detectChanges();
+
+    expect(component.range.controls.start.value).toBeNull();
+    expect(component.range.controls.end.value).toBeNull();
+  });
+
+  it('emits empty string when date controls are cleared', () => {
+    const fromSpy = jest.fn();
+    const toSpy = jest.fn();
+    component.fromChange.subscribe(fromSpy);
+    component.toChange.subscribe(toSpy);
+
+    component.range.controls.start.setValue(null);
+    component.range.controls.end.setValue(null);
+
+    expect(fromSpy).toHaveBeenCalledWith('');
+    expect(toSpy).toHaveBeenCalledWith('');
+  });
 });
