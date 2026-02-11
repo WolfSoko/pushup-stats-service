@@ -54,76 +54,25 @@ import { PushupRecord } from '@nx-temp/stats-models';
 
           <ng-container matColumnDef="reps">
             <mat-header-cell *matHeaderCellDef mat-sort-header>Reps</mat-header-cell>
-            <mat-cell *matCellDef="let entry">
-              @if (isEditing(entry._id)) {
-                <input
-                  matInput
-                  type="number"
-                  min="1"
-                  [value]="editReps(entry)"
-                  (input)="setEditReps(entry, asValue($event))"
-                />
-              } @else {
-                <span>{{ entry.reps }}</span>
-              }
-            </mat-cell>
+            <mat-cell *matCellDef="let entry"><span>{{ entry.reps }}</span></mat-cell>
           </ng-container>
 
           <ng-container matColumnDef="source">
             <mat-header-cell *matHeaderCellDef mat-sort-header>Quelle</mat-header-cell>
-            <mat-cell *matCellDef="let entry">
-              @if (isEditing(entry._id)) {
-                <input matInput type="text" [value]="editSource(entry)" (input)="setEditSource(entry, asValue($event))" />
-              } @else {
-                <span>{{ entry.source }}</span>
-              }
-            </mat-cell>
+            <mat-cell *matCellDef="let entry"><span>{{ entry.source }}</span></mat-cell>
           </ng-container>
 
           <ng-container matColumnDef="type">
             <mat-header-cell *matHeaderCellDef mat-sort-header>Typ</mat-header-cell>
-            <mat-cell *matCellDef="let entry">
-              @if (isEditing(entry._id)) {
-                <input matInput type="text" [value]="editType(entry)" (input)="setEditType(entry, asValue($event))" />
-              } @else {
-                <span>{{ entry.type || 'Standard' }}</span>
-              }
-            </mat-cell>
+            <mat-cell *matCellDef="let entry"><span>{{ entry.type || 'Standard' }}</span></mat-cell>
           </ng-container>
 
           <ng-container matColumnDef="actions">
             <mat-header-cell *matHeaderCellDef>Aktion</mat-header-cell>
             <mat-cell *matCellDef="let entry" class="actions">
-              @if (isEditing(entry._id)) {
-                <button
-                  type="button"
-                  mat-mini-fab
-                  aria-label="Speichern"
-                  title="Speichern"
-                  [disabled]="isBusy('update', entry._id)"
-                  (click)="save(entry)"
-                >
-                  @if (isBusy('update', entry._id)) {
-                    <mat-spinner diameter="14"></mat-spinner>
-                  } @else {
-                    <mat-icon>save</mat-icon>
-                  }
-                </button>
-                <button
-                  type="button"
-                  mat-mini-fab
-                  aria-label="Abbrechen"
-                  title="Abbrechen"
-                  [disabled]="isBusy('update', entry._id)"
-                  (click)="cancelEdit()"
-                >
-                  <mat-icon>close</mat-icon>
-                </button>
-              } @else {
-                <button type="button" mat-mini-fab aria-label="Edit" title="Edit" (click)="startEdit(entry)">
-                  <mat-icon>edit</mat-icon>
-                </button>
-              }
+              <button type="button" mat-mini-fab aria-label="Bearbeiten" title="Bearbeiten" (click)="openEditDialog(entry)">
+                <mat-icon>edit</mat-icon>
+              </button>
               <button
                 type="button"
                 class="danger"
@@ -208,6 +157,50 @@ import { PushupRecord } from '@nx-temp/stats-models';
         </button>
       </mat-dialog-actions>
     </ng-template>
+
+    <ng-template #editDialog>
+      <h2 mat-dialog-title>Eintrag bearbeiten</h2>
+
+      <mat-dialog-content class="create-dialog-content">
+        <mat-form-field appearance="outline">
+          <mat-label>Reps</mat-label>
+          <input matInput type="number" min="1" [value]="editRepsById()" (input)="setEditRepsById(asValue($event))" required />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Typ</mat-label>
+          <mat-select [value]="editTypeMode()" (valueChange)="editTypeMode.set($event)">
+            @for (typeOption of typeOptions; track typeOption) {
+              <mat-option [value]="typeOption">{{ typeOption }}</mat-option>
+            }
+            <mat-option value="Custom">Custom</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        @if (editTypeMode() === 'Custom') {
+          <mat-form-field appearance="outline">
+            <mat-label>Eigener Typ</mat-label>
+            <input matInput type="text" [value]="editTypeCustom()" (input)="editTypeCustom.set(asValue($event))" />
+          </mat-form-field>
+        }
+
+        <mat-form-field appearance="outline">
+          <mat-label>Quelle</mat-label>
+          <input matInput type="text" [value]="editSourceById()" (input)="setEditSourceById(asValue($event))" />
+        </mat-form-field>
+      </mat-dialog-content>
+
+      <mat-dialog-actions align="end">
+        <button type="button" mat-button (click)="cancelEdit()">Abbrechen</button>
+        <button type="button" mat-flat-button [disabled]="!editingId() || isBusy('update', editBusyId())" (click)="saveFromDialog()">
+          @if (editingId() && isBusy('update', editBusyId())) {
+            <mat-spinner diameter="14"></mat-spinner>
+          } @else {
+            Speichern
+          }
+        </button>
+      </mat-dialog-actions>
+    </ng-template>
   `,
   styleUrl: './stats-table.component.scss',
 })
@@ -215,6 +208,7 @@ export class StatsTableComponent implements AfterViewInit {
   readonly dialog = inject(MatDialog);
 
   @ViewChild('createDialog') createDialog?: TemplateRef<unknown>;
+  @ViewChild('editDialog') editDialog?: TemplateRef<unknown>;
   @ViewChild(MatSort) sort?: MatSort;
 
   readonly entries = input<PushupRecord[]>([]);
@@ -238,7 +232,9 @@ export class StatsTableComponent implements AfterViewInit {
   private readonly editedReps = signal<Record<string, string>>({});
   private readonly editedSource = signal<Record<string, string>>({});
   private readonly editedType = signal<Record<string, string>>({});
-  private readonly editingId = signal<string | null>(null);
+  readonly editingId = signal<string | null>(null);
+  readonly editTypeMode = signal('Standard');
+  readonly editTypeCustom = signal('');
 
   constructor() {
     this.dataSource.sortingDataAccessor = (item, property) => {
@@ -280,19 +276,39 @@ export class StatsTableComponent implements AfterViewInit {
     return this.busyAction() === action && this.busyId() === id;
   }
 
+  editBusyId(): string {
+    return this.editingId() ?? '';
+  }
+
   isEditing(id: string): boolean {
     return this.editingId() === id;
+  }
+
+  openEditDialog(entry: PushupRecord): void {
+    if (!this.editDialog) return;
+    this.startEdit(entry);
+    this.dialog.open(this.editDialog, { width: 'min(92vw, 420px)', maxWidth: '92vw' });
   }
 
   startEdit(entry: PushupRecord): void {
     this.editingId.set(entry._id);
     this.editedReps.update((prev) => ({ ...prev, [entry._id]: String(entry.reps) }));
     this.editedSource.update((prev) => ({ ...prev, [entry._id]: entry.source }));
-    this.editedType.update((prev) => ({ ...prev, [entry._id]: entry.type || 'Standard' }));
+
+    const type = entry.type || 'Standard';
+    this.editedType.update((prev) => ({ ...prev, [entry._id]: type }));
+    if (this.typeOptions.includes(type)) {
+      this.editTypeMode.set(type);
+      this.editTypeCustom.set('');
+    } else {
+      this.editTypeMode.set('Custom');
+      this.editTypeCustom.set(type);
+    }
   }
 
   cancelEdit(): void {
     this.editingId.set(null);
+    this.dialog.closeAll();
   }
 
   editReps(entry: PushupRecord): string {
@@ -317,6 +333,44 @@ export class StatsTableComponent implements AfterViewInit {
 
   setEditType(entry: PushupRecord, value: string): void {
     this.editedType.update((prev) => ({ ...prev, [entry._id]: value }));
+  }
+
+  editRepsById(): string {
+    const id = this.editingId();
+    if (!id) return '';
+    const entry = this.entries().find((row) => row._id === id);
+    return id ? this.editedReps()[id] ?? String(entry?.reps ?? '') : '';
+  }
+
+  setEditRepsById(value: string): void {
+    const id = this.editingId();
+    if (!id) return;
+    this.editedReps.update((prev) => ({ ...prev, [id]: value }));
+  }
+
+  editSourceById(): string {
+    const id = this.editingId();
+    if (!id) return '';
+    const entry = this.entries().find((row) => row._id === id);
+    return this.editedSource()[id] ?? entry?.source ?? '';
+  }
+
+  setEditSourceById(value: string): void {
+    const id = this.editingId();
+    if (!id) return;
+    this.editedSource.update((prev) => ({ ...prev, [id]: value }));
+  }
+
+  saveFromDialog(): void {
+    const id = this.editingId();
+    if (!id) return;
+    const entry = this.entries().find((row) => row._id === id);
+    if (!entry) return;
+
+    const type = this.editTypeMode() === 'Custom' ? this.editTypeCustom().trim() || 'Custom' : this.editTypeMode();
+    this.setEditType(entry, type);
+    this.save(entry);
+    this.dialog.closeAll();
   }
 
   submitCreate(): void {

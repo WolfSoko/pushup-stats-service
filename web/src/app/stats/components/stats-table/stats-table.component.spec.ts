@@ -149,6 +149,108 @@ describe('StatsTableComponent', () => {
     expect(updateSpy).not.toHaveBeenCalled();
   });
 
+  it('opens edit dialog and stores edit values', () => {
+    fixture.componentRef.setInput('entries', [{ _id: '1', timestamp: '2026-02-10T13:45:00', reps: 8, source: 'wa' }]);
+    fixture.detectChanges();
+
+    const component = fixture.componentInstance;
+    const openSpy = jest.spyOn(component.dialog, 'open').mockReturnValue({} as never);
+    const entry = { _id: '1', timestamp: '2026-02-10T13:45:00', reps: 8, source: 'wa', type: 'Diamond Tempo' };
+
+    component.openEditDialog(entry);
+
+    expect(component.editingId()).toBe('1');
+    expect(component.editTypeMode()).toBe('Custom');
+    expect(component.editTypeCustom()).toBe('Diamond Tempo');
+    expect(openSpy).toHaveBeenCalled();
+  });
+
+  it('submits update via dialog using selected type', () => {
+    fixture.componentRef.setInput('entries', [{ _id: '1', timestamp: '2026-02-10T13:45:00', reps: 8, source: 'wa' }]);
+    fixture.detectChanges();
+
+    const component = fixture.componentInstance;
+    const updateSpy = jest.fn();
+    component.update.subscribe(updateSpy);
+
+    const entry = { _id: '1', timestamp: '2026-02-10T13:45:00', reps: 8, source: 'wa' };
+    component.startEdit(entry);
+    component.setEditRepsById('14');
+    component.setEditSourceById('web');
+    component.editTypeMode.set('Diamond');
+
+    component.saveFromDialog();
+
+    expect(updateSpy).toHaveBeenCalledWith({ id: '1', reps: 14, source: 'web', type: 'Diamond' });
+  });
+
+  it('cancelEdit closes dialog and clears editing id', () => {
+    const component = fixture.componentInstance;
+    const closeSpy = jest.spyOn(component.dialog, 'closeAll').mockImplementation(() => {});
+
+    component.startEdit({ _id: '1', timestamp: '2026-02-10T13:45:00', reps: 8, source: 'wa' });
+    component.cancelEdit();
+
+    expect(component.editingId()).toBeNull();
+    expect(closeSpy).toHaveBeenCalled();
+  });
+
+  it('handles missing edit dialog and missing edit id safely', () => {
+    const component = fixture.componentInstance;
+
+    component.openEditDialog({ _id: 'x', timestamp: '2026-02-10T13:45:00', reps: 8, source: 'wa' });
+
+    expect(component.editingId()).toBeNull();
+    expect(component.editRepsById()).toBe('');
+    expect(component.editSourceById()).toBe('');
+
+    component.setEditRepsById('12');
+    component.setEditSourceById('web');
+    component.saveFromDialog();
+
+    expect(component.editBusyId()).toBe('');
+  });
+
+  it('uses predefined type mode when editing known type', () => {
+    const component = fixture.componentInstance;
+    component.startEdit({ _id: '2', timestamp: '2026-02-10T13:45:00', reps: 8, source: 'wa', type: 'Diamond' });
+
+    expect(component.editTypeMode()).toBe('Diamond');
+    expect(component.editTypeCustom()).toBe('');
+  });
+
+  it('falls back to Custom type label if custom edit type is empty', () => {
+    fixture.componentRef.setInput('entries', [{ _id: '1', timestamp: '2026-02-10T13:45:00', reps: 8, source: 'wa' }]);
+    fixture.detectChanges();
+
+    const component = fixture.componentInstance;
+    const updateSpy = jest.fn();
+    component.update.subscribe(updateSpy);
+
+    component.startEdit({ _id: '1', timestamp: '2026-02-10T13:45:00', reps: 8, source: 'wa' });
+    component.editTypeMode.set('Custom');
+    component.editTypeCustom.set('');
+    component.saveFromDialog();
+
+    expect(updateSpy).toHaveBeenCalledWith({ id: '1', reps: 8, source: 'wa', type: 'Custom' });
+  });
+
+  it('emits create with custom fallback and resets custom field', () => {
+    const component = fixture.componentInstance;
+    const createSpy = jest.fn();
+    component.create.subscribe(createSpy);
+
+    component.newTimestamp.set('2026-02-11T07:20');
+    component.newReps.set('9');
+    component.newSource.set('web');
+    component.newType.set('Custom');
+    component.newTypeCustom.set('');
+    component.submitCreate();
+
+    expect(createSpy).toHaveBeenCalledWith({ timestamp: '2026-02-11T07:20', reps: 9, source: 'web', type: 'Custom' });
+    expect(component.newTypeCustom()).toBe('');
+  });
+
   it('exposes busy helper state for spinner rendering', () => {
     fixture.componentRef.setInput('busyAction', 'delete');
     fixture.componentRef.setInput('busyId', '1');
