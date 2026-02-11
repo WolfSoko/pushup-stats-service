@@ -1,4 +1,5 @@
-import { Component, computed, inject, resource, signal } from '@angular/core';
+import { DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { Component, PLATFORM_ID, REQUEST, computed, effect, inject, resource, signal } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { firstValueFrom } from 'rxjs';
 import { StatsGranularity, StatsResponse, StatsSeriesEntry } from '@nx-temp/stats-models';
@@ -37,10 +38,15 @@ function createDefaultRange(): { from: string; to: string } {
 })
 export class StatsDashboardComponent {
   private readonly api = inject(StatsApiService);
+  private readonly platformId = inject(PLATFORM_ID);
+  private readonly document = inject(DOCUMENT);
+  private readonly request = inject(REQUEST, { optional: true }) as { url?: string } | null;
 
   private readonly defaultRange = createDefaultRange();
-  readonly from = signal(this.defaultRange.from);
-  readonly to = signal(this.defaultRange.to);
+  private readonly initialRange = this.resolveInitialRange();
+
+  readonly from = signal(this.initialRange.from);
+  readonly to = signal(this.initialRange.to);
 
   private readonly filter = computed(() => ({
     from: this.from() || undefined,
@@ -67,4 +73,38 @@ export class StatsDashboardComponent {
     if (!this.statsResource.error()) return '';
     return 'Daten konnten nicht geladen werden. Bitte Zeitraum prüfen oder die Seite neu laden.';
   });
+
+  constructor() {
+    effect(() => {
+      if (!isPlatformBrowser(this.platformId)) return;
+      const params = new URLSearchParams();
+      const from = this.from();
+      const to = this.to();
+      if (from) params.set('from', from);
+      if (to) params.set('to', to);
+
+      const query = params.toString();
+      const nextUrl = `${this.document.location.pathname}${query ? `?${query}` : ''}`;
+      window.history.replaceState(window.history.state, '', nextUrl);
+    });
+  }
+
+  private resolveInitialRange(): { from: string; to: string } {
+    const search = this.resolveSearchString();
+    const params = new URLSearchParams(search);
+    const from = params.get('from') ?? this.defaultRange.from;
+    const to = params.get('to') ?? this.defaultRange.to;
+    return { from, to };
+  }
+
+  private resolveSearchString(): string {
+    if (isPlatformBrowser(this.platformId)) {
+      return this.document.location.search || '';
+    }
+
+    const url = this.request?.url || '';
+    const qIndex = url.indexOf('?');
+    if (qIndex === -1) return '';
+    return url.slice(qIndex);
+  }
 }
