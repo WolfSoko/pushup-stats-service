@@ -30,7 +30,7 @@ jobs:
         run: npm ci
 
       - name: Nx Cloud distributed run starten
-        run: npx nx-cloud start-ci-run --distribute-on="3 linux-medium-js" --stop-agents-after="build"
+        run: npx nx-cloud start-ci-run --distribute-on="3 linux-medium-js" --stop-agents-after="e2e"
 
       - name: Lint
         run: npx nx run-many -t lint --parallel=3
@@ -48,7 +48,7 @@ jobs:
         run: npx playwright install --with-deps chromium
 
       - name: E2E (isolated test DB)
-        run: npx nx run web-e2e:e2e --skip-nx-cache
+        run: npx nx run web-e2e:e2e
 
       - name: Nx fix-ci (always)
         if: always()
