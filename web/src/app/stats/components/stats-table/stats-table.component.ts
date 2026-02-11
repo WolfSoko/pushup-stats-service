@@ -7,6 +7,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatRippleModule } from '@angular/material/core';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { PushupRecord } from '@nx-temp/stats-models';
@@ -24,6 +25,7 @@ import { PushupRecord } from '@nx-temp/stats-models';
     MatIconModule,
     MatTableModule,
     MatSortModule,
+    MatRippleModule,
   ],
   template: `
     <mat-card class="table-card">
@@ -131,7 +133,7 @@ import { PushupRecord } from '@nx-temp/stats-models';
           </ng-container>
 
           <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
-          <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+          <mat-row matRipple *matRowDef="let row; columns: displayedColumns"></mat-row>
         </mat-table>
 
         @if (!entries().length) {
