@@ -22,22 +22,22 @@ Chart.register(...registerables);
   imports: [MatCardModule],
   template: `
     <mat-card class="chart">
-      <div class="chart-header">
-        <div>
-          <h2>{{ granularity() === 'hourly' ? 'Verlauf (Stundenwerte)' : 'Verlauf (Tageswerte)' }}</h2>
-          <p>Intervallwerte als Balken, Tages-Integral + gleitender Durchschnitt als Trendlinien</p>
+      <mat-card-header>
+        <mat-card-title>{{ granularity() === 'hourly' ? 'Verlauf (Stundenwerte)' : 'Verlauf (Tageswerte)' }}</mat-card-title>
+        <mat-card-subtitle>Intervallwerte als Balken, Tages-Integral + gleitender Durchschnitt als Trendlinien</mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content>
+        <div class="chart-host">
+          <canvas #chartCanvas></canvas>
         </div>
-      </div>
 
-      <div class="chart-host">
-        <canvas #chartCanvas></canvas>
-      </div>
-
-      <div class="legend" aria-label="Legende">
-        <span><i class="dot dot-bar"></i>Intervallwert</span>
-        <span><i class="dot dot-line"></i>Tages-Integral</span>
-        <span><i class="dot dot-avg"></i>Gleitender Durchschnitt</span>
-      </div>
+        <div class="legend" aria-label="Legende">
+          <span><i class="dot dot-bar"></i>Intervallwert</span>
+          <span><i class="dot dot-line"></i>Tages-Integral</span>
+          <span><i class="dot dot-avg"></i>Gleitender Durchschnitt</span>
+        </div>
+      </mat-card-content>
     </mat-card>
   `,
   styleUrl: './stats-chart.component.scss',

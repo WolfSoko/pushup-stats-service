@@ -1,18 +1,23 @@
 .chart {
   min-height: 360px;
   border-radius: 18px;
-  padding: 18px;
-}
 
-.chart-header {
-  h2 {
+  .mat-mdc-card-header {
+    padding: 16px 16px 8px;
+  }
+
+  .mat-mdc-card-title {
     margin: 0;
   }
 
-  p {
-    margin: 6px 0 0;
+  .mat-mdc-card-subtitle {
+    margin-top: 6px;
     color: #a9bbdf;
     font-size: 0.88rem;
+  }
+
+  .mat-mdc-card-content {
+    padding: 0 16px 16px;
   }
 }
 
@@ -34,7 +39,14 @@ canvas {
 @media (max-width: 680px) {
   .chart {
     min-height: 300px;
-    padding: 12px;
+
+    .mat-mdc-card-header {
+      padding: 12px 12px 8px;
+    }
+
+    .mat-mdc-card-content {
+      padding: 0 12px 12px;
+    }
   }
 
   .chart-host {

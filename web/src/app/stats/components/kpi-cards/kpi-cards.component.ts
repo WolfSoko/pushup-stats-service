@@ -7,20 +7,36 @@ import { MatCardModule } from '@angular/material/card';
   template: `
     <section class="kpis">
       <mat-card class="kpi-card primary">
-        <span>Gesamt</span>
-        <b>{{ total() }}</b>
+        <mat-card-header>
+          <mat-card-title>Gesamt</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <b>{{ total() }}</b>
+        </mat-card-content>
       </mat-card>
       <mat-card class="kpi-card">
-        <span>Tage</span>
-        <b>{{ days() }}</b>
+        <mat-card-header>
+          <mat-card-title>Tage</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <b>{{ days() }}</b>
+        </mat-card-content>
       </mat-card>
       <mat-card class="kpi-card">
-        <span>Einträge</span>
-        <b>{{ entries() }}</b>
+        <mat-card-header>
+          <mat-card-title>Einträge</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <b>{{ entries() }}</b>
+        </mat-card-content>
       </mat-card>
       <mat-card class="kpi-card accent">
-        <span>Ø / Tag</span>
-        <b>{{ avg() }}</b>
+        <mat-card-header>
+          <mat-card-title>Ø / Tag</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <b>{{ avg() }}</b>
+        </mat-card-content>
       </mat-card>
     </section>
   `,
