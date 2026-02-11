@@ -43,6 +43,7 @@ import { PushupRecord } from '@nx-temp/stats-models';
           mat-table
           [dataSource]="sortedEntries()"
           matSort
+          class="mat-elevation-z8"
           [matSortActive]="sortBy()"
           [matSortDirection]="sortDir()"
           (matSortChange)="onSortChange($event)"
