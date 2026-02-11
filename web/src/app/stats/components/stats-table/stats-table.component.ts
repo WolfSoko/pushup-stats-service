@@ -39,8 +39,7 @@ import { PushupRecord } from '@nx-temp/stats-models';
       </div>
 
       <div class="table-wrap">
-        <table
-          mat-table
+        <mat-table
           [dataSource]="dataSource"
           matSort
           [matSortActive]="'timestamp'"
@@ -48,13 +47,13 @@ import { PushupRecord } from '@nx-temp/stats-models';
           class="mat-elevation-z8"
         >
           <ng-container matColumnDef="timestamp">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Zeit</th>
-            <td mat-cell *matCellDef="let entry">{{ entry.timestamp | date: 'dd.MM.yyyy, HH:mm' }}</td>
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Zeit</mat-header-cell>
+            <mat-cell *matCellDef="let entry">{{ entry.timestamp | date: 'dd.MM.yyyy, HH:mm' }}</mat-cell>
           </ng-container>
 
           <ng-container matColumnDef="reps">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Reps</th>
-            <td mat-cell *matCellDef="let entry">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Reps</mat-header-cell>
+            <mat-cell *matCellDef="let entry">
               @if (isEditing(entry._id)) {
                 <input
                   matInput
@@ -66,23 +65,23 @@ import { PushupRecord } from '@nx-temp/stats-models';
               } @else {
                 <span>{{ entry.reps }}</span>
               }
-            </td>
+            </mat-cell>
           </ng-container>
 
           <ng-container matColumnDef="source">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Quelle</th>
-            <td mat-cell *matCellDef="let entry">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Quelle</mat-header-cell>
+            <mat-cell *matCellDef="let entry">
               @if (isEditing(entry._id)) {
                 <input matInput type="text" [value]="editSource(entry)" (input)="setEditSource(entry, asValue($event))" />
               } @else {
                 <span>{{ entry.source }}</span>
               }
-            </td>
+            </mat-cell>
           </ng-container>
 
           <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef>Aktion</th>
-            <td mat-cell *matCellDef="let entry" class="actions">
+            <mat-header-cell *matHeaderCellDef>Aktion</mat-header-cell>
+            <mat-cell *matCellDef="let entry" class="actions">
               @if (isEditing(entry._id)) {
                 <button
                   type="button"
@@ -128,16 +127,16 @@ import { PushupRecord } from '@nx-temp/stats-models';
                   <mat-icon>delete</mat-icon>
                 }
               </button>
-            </td>
+            </mat-cell>
           </ng-container>
 
-          <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+          <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+        </mat-table>
 
-          <tr class="mat-row" *matNoDataRow>
-            <td class="mat-cell empty" [attr.colspan]="displayedColumns.length">Keine Einträge im gewählten Zeitraum.</td>
-          </tr>
-        </table>
+        @if (!entries().length) {
+          <p class="empty">Keine Einträge im gewählten Zeitraum.</p>
+        }
       </div>
     </mat-card>
 
