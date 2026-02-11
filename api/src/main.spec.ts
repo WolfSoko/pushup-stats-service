@@ -1,7 +1,8 @@
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
-import { aggregateDaily, aggregateHourly, buildStats, parseCsv, type PushupEntry } from './main';
+import { NestFactory } from '@nestjs/core';
+import { aggregateDaily, aggregateHourly, buildStats, createApp, parseCsv, type PushupEntry } from './main';
 
 describe('api stats core', () => {
   it('parses csv and skips invalid rows', () => {
@@ -78,5 +79,44 @@ describe('api stats core', () => {
     expect(result.meta.granularity).toBe('daily');
     expect(result.series).toHaveLength(7);
     expect(result.meta.total).toBe(70);
+  });
+
+  it('creates nest app and enables cors', async () => {
+    const fakeExpress = { use: jest.fn(), get: jest.fn() };
+    const fakeApp = {
+      enableCors: jest.fn(),
+      getHttpAdapter: jest.fn().mockReturnValue({ getInstance: () => fakeExpress }),
+    };
+
+    const createSpy = jest.spyOn(NestFactory, 'create').mockResolvedValue(fakeApp as any);
+    const existsSpy = jest.spyOn(fs, 'existsSync').mockReturnValue(false);
+
+    const app = await createApp();
+
+    expect(createSpy).toHaveBeenCalled();
+    expect(fakeApp.enableCors).toHaveBeenCalled();
+    expect(app).toBe(fakeApp);
+
+    createSpy.mockRestore();
+    existsSpy.mockRestore();
+  });
+
+  it('registers static fallback when web dist exists', async () => {
+    const fakeExpress = { use: jest.fn(), get: jest.fn() };
+    const fakeApp = {
+      enableCors: jest.fn(),
+      getHttpAdapter: jest.fn().mockReturnValue({ getInstance: () => fakeExpress }),
+    };
+
+    const createSpy = jest.spyOn(NestFactory, 'create').mockResolvedValue(fakeApp as any);
+    const existsSpy = jest.spyOn(fs, 'existsSync').mockReturnValue(true);
+
+    await createApp();
+
+    expect(fakeExpress.use).toHaveBeenCalled();
+    expect(fakeExpress.get).toHaveBeenCalledWith('*', expect.any(Function));
+
+    createSpy.mockRestore();
+    existsSpy.mockRestore();
   });
 });

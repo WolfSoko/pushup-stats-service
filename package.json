@@ -73,10 +73,14 @@
     "@angular/platform-browser-dynamic": "~21.1.0",
     "@angular/platform-server": "~21.1.0",
     "@angular/router": "~21.1.0",
+    "@nestjs/common": "^11.1.13",
+    "@nestjs/core": "^11.1.13",
+    "@nestjs/platform-express": "^11.1.13",
     "chart.js": "^4.5.1",
     "cors": "^2.8.6",
     "express": "^4.21.2",
     "ng2-charts": "^8.0.0",
+    "reflect-metadata": "^0.2.2",
     "rxjs": "~7.8.0"
   },
   "packageManager": "npm@11.9.0+sha512.04166853ddba142ca98f86fb57b1258a7c6c59ccb82acb3cf141b77a315898acaaed47395e74f7e0c7b69c486008e68be6a6381ef1aee5a23dd82e0e61decd68"
