@@ -22,8 +22,6 @@ import { MatCardModule } from '@angular/material/card';
       max-width: 1100px;
       margin: 0 auto;
       padding: 16px;
-      display: grid;
-      gap: 12px;
     }
   `,
 })
