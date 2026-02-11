@@ -12,7 +12,7 @@ import {
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
-import { Chart, registerables } from 'chart.js';
+import { Chart, ChartConfiguration, registerables } from 'chart.js';
 import { StatsGranularity, StatsSeriesEntry } from '@nx-temp/stats-models';
 
 Chart.register(...registerables);
@@ -94,7 +94,7 @@ export class StatsChartComponent implements AfterViewInit {
         return Number((sum / window.length).toFixed(2));
       });
 
-      const data: any = {
+      const data: ChartConfiguration<'bar'>['data'] = {
         labels: series.map((d) => d.bucket),
         datasets: [
           {
