@@ -36,6 +36,11 @@ mat-table {
   gap: 8px;
 }
 
+.actions .danger {
+  --mdc-fab-container-color: var(--mat-sys-error-container);
+  --mdc-fab-icon-color: var(--mat-sys-on-error-container);
+}
+
 .create-dialog-content {
   display: grid;
   gap: 10px;
