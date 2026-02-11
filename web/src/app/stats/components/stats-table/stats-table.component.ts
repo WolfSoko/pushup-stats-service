@@ -29,18 +29,13 @@ import { PushupRecord } from '@nx-temp/stats-models';
   ],
   template: `
     <mat-card class="table-card">
-      <div class="table-header">
-        <h2>Einträge</h2>
-        <div class="header-actions">
-          <p>{{ entries().length }} Einträge</p>
-          <button type="button" class="add-btn" mat-flat-button (click)="openCreateDialog()">
-            <mat-icon>add</mat-icon>
-            Neu
-          </button>
-        </div>
-      </div>
+      <mat-card-header>
+        <mat-card-title>Einträge</mat-card-title>
+        <mat-card-subtitle>{{ entries().length }} Einträge</mat-card-subtitle>
+      </mat-card-header>
 
-      <div class="table-wrap" (scroll)="onTableScroll($event)">
+      <mat-card-content>
+        <div class="table-wrap" (scroll)="onTableScroll($event)">
         <mat-table
           [dataSource]="dataSource"
           matSort
@@ -136,10 +131,18 @@ import { PushupRecord } from '@nx-temp/stats-models';
           <mat-row matRipple *matRowDef="let row; columns: displayedColumns"></mat-row>
         </mat-table>
 
-        @if (!entries().length) {
-          <p class="empty">Keine Einträge im gewählten Zeitraum.</p>
-        }
-      </div>
+          @if (!entries().length) {
+            <p class="empty">Keine Einträge im gewählten Zeitraum.</p>
+          }
+        </div>
+      </mat-card-content>
+
+      <mat-card-actions align="end">
+        <button type="button" class="add-btn" mat-flat-button (click)="openCreateDialog()">
+          <mat-icon>add</mat-icon>
+          Neu
+        </button>
+      </mat-card-actions>
     </mat-card>
 
     <ng-template #createDialog>
