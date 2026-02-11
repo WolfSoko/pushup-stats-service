@@ -1,6 +1,10 @@
 .table-wrap {
-  overflow: auto;
-  max-height: 62vh;
+  display: block;
+  height: 62vh;
+}
+
+mat-table {
+  width: 100%;
 }
 
 .mat-mdc-card-header {

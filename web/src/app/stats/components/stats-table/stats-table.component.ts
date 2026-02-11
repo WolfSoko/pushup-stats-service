@@ -10,6 +10,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatRippleModule } from '@angular/material/core';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 import { PushupRecord } from '@nx-temp/stats-models';
 
 @Component({
@@ -26,6 +27,7 @@ import { PushupRecord } from '@nx-temp/stats-models';
     MatTableModule,
     MatSortModule,
     MatRippleModule,
+    ScrollingModule,
   ],
   template: `
     <mat-card class="table-card">
@@ -35,14 +37,14 @@ import { PushupRecord } from '@nx-temp/stats-models';
       </mat-card-header>
 
       <mat-card-content>
-        <div class="table-wrap" (scroll)="onTableScroll($event)">
-        <mat-table
-          [dataSource]="dataSource"
-          matSort
-          [matSortActive]="'timestamp'"
-          [matSortDirection]="'desc'"
-          class="mat-elevation-z8"
-        >
+        <cdk-virtual-scroll-viewport class="table-wrap" [itemSize]="56" [minBufferPx]="280" [maxBufferPx]="560">
+          <mat-table
+            [dataSource]="dataSource"
+            matSort
+            [matSortActive]="'timestamp'"
+            [matSortDirection]="'desc'"
+            class="mat-elevation-z8"
+          >
           <ng-container matColumnDef="timestamp">
             <mat-header-cell *matHeaderCellDef mat-sort-header>Zeit</mat-header-cell>
             <mat-cell *matCellDef="let entry">{{ entry.timestamp | date: 'dd.MM.yyyy, HH:mm' }}</mat-cell>
@@ -134,7 +136,7 @@ import { PushupRecord } from '@nx-temp/stats-models';
           @if (!entries().length) {
             <p class="empty">Keine Einträge im gewählten Zeitraum.</p>
           }
-        </div>
+        </cdk-virtual-scroll-viewport>
       </mat-card-content>
 
       <mat-card-actions align="end">
@@ -200,10 +202,6 @@ export class StatsTableComponent implements AfterViewInit {
   readonly displayedColumns = ['timestamp', 'reps', 'source', 'actions'];
   readonly dataSource = new MatTableDataSource<PushupRecord>([]);
 
-  private readonly pageSize = 40;
-  private readonly scrollThresholdPx = 80;
-  private readonly visibleCount = signal(this.pageSize);
-
   private readonly editedReps = signal<Record<string, string>>({});
   private readonly editedSource = signal<Record<string, string>>({});
   private readonly editingId = signal<string | null>(null);
@@ -217,9 +215,7 @@ export class StatsTableComponent implements AfterViewInit {
     };
 
     effect(() => {
-      const rows = this.entries();
-      this.visibleCount.set(this.pageSize);
-      this.dataSource.data = rows.slice(0, this.pageSize);
+      this.dataSource.data = this.entries();
     });
   }
 
@@ -247,18 +243,6 @@ export class StatsTableComponent implements AfterViewInit {
 
   isBusy(action: 'update' | 'delete', id: string): boolean {
     return this.busyAction() === action && this.busyId() === id;
-  }
-
-  onTableScroll(event: Event): void {
-    const el = event.target as HTMLElement;
-    const nearBottom = el.scrollTop + el.clientHeight >= el.scrollHeight - this.scrollThresholdPx;
-    if (!nearBottom) return;
-
-    const nextCount = Math.min(this.visibleCount() + this.pageSize, this.entries().length);
-    if (nextCount === this.visibleCount()) return;
-
-    this.visibleCount.set(nextCount);
-    this.dataSource.data = this.entries().slice(0, nextCount);
   }
 
   isEditing(id: string): boolean {

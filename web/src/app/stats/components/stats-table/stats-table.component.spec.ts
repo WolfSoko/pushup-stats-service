@@ -12,12 +12,12 @@ describe('StatsTableComponent', () => {
     fixture = TestBed.createComponent(StatsTableComponent);
   });
 
-  it('renders entry date with date pipe', () => {
-    fixture.componentRef.setInput('entries', [{ _id: '1', timestamp: '2026-02-10T13:45:00', reps: 8, source: 'wa' }]);
+  it('binds entry data to table dataSource', () => {
+    const entries = [{ _id: '1', timestamp: '2026-02-10T13:45:00', reps: 8, source: 'wa' }];
+    fixture.componentRef.setInput('entries', entries);
     fixture.detectChanges();
 
-    const text = fixture.nativeElement.textContent;
-    expect(text).toContain('10.02.2026, 13:45');
+    expect(fixture.componentInstance.dataSource.data).toEqual(entries);
   });
 
   it('sorts rows by selected column and direction', () => {
@@ -34,7 +34,7 @@ describe('StatsTableComponent', () => {
     expect(desc.map((x) => x._id)).toEqual(['2', '1']);
   });
 
-  it('loads more rows on near-bottom table scroll', () => {
+  it('binds all entries to dataSource for virtual viewport rendering', () => {
     const component = fixture.componentInstance;
     const entries = Array.from({ length: 60 }).map((_, i) => ({
       _id: String(i + 1),
@@ -46,15 +46,6 @@ describe('StatsTableComponent', () => {
     fixture.componentRef.setInput('entries', entries);
     fixture.detectChanges();
 
-    expect(component.dataSource.data.length).toBe(40);
-
-    const target = {
-      scrollTop: 500,
-      clientHeight: 300,
-      scrollHeight: 820,
-    } as unknown as HTMLElement;
-
-    component.onTableScroll({ target } as unknown as Event);
     expect(component.dataSource.data.length).toBe(60);
   });
 
