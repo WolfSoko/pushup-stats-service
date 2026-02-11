@@ -40,3 +40,7 @@ mat-table {
   display: grid;
   gap: 10px;
 }
+
+.create-dialog-content mat-form-field:first-child {
+  margin-top: 8px;
+}
