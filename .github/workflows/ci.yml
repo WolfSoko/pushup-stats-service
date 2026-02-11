@@ -32,23 +32,8 @@ jobs:
       - name: Nx Cloud distributed run starten
         run: npx nx-cloud start-ci-run --distribute-on="3 linux-medium-js" --stop-agents-after="e2e"
 
-      - name: Lint
-        run: npx nx run-many -t lint --parallel=3
-
-      - name: Test + Coverage (libs + api)
-        run: npx nx run-many -t test --projects=stats-models,stats-data-access,api --parallel=3 --passWithNoTests --codeCoverage
-
-      - name: Test + Coverage (web, with thresholds)
-        run: npx nx run web:test --codeCoverage
-
-      - name: Build
-        run: npx nx run-many -t build --parallel=3
-
-      - name: Install Playwright browser (Chromium)
-        run: npx playwright install --with-deps chromium
-
-      - name: E2E (isolated test DB)
-        run: npx nx run web-e2e:e2e-ci
+      - name: Nx chain (lint + test + build + e2e-ci)
+        run: npx nx run-many -t lint test build e2e-ci --projects=stats-models,stats-data-access,api,web,web-e2e --parallel=3 --configuration=ci
 
       - name: Nx fix-ci (always)
         if: always()
