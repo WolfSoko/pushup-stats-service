@@ -1,3 +1,15 @@
+.table-card .mat-mdc-card-header {
+  padding: 16px 16px 8px;
+}
+
+.table-card .mat-mdc-card-content {
+  padding: 0 16px 8px;
+}
+
+.table-card .mat-mdc-card-actions {
+  padding: 8px 16px 16px;
+}
+
 .table-wrap {
   display: block;
   height: 62vh;
@@ -7,19 +19,21 @@ mat-table {
   width: 100%;
 }
 
-.mat-mdc-card-header {
-  padding-bottom: 0;
-}
-
 .mat-mdc-header-row {
   position: sticky;
   top: 0;
   z-index: 3;
+  background: var(--mat-sys-surface);
+}
+
+.mat-mdc-header-cell,
+.mat-mdc-cell {
+  padding-inline: 16px;
 }
 
 .actions {
   display: inline-flex;
-  gap: 4px;
+  gap: 8px;
 }
 
 .create-dialog {
