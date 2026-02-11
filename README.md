@@ -30,6 +30,23 @@ npx nx serve web
 npx nx run-many -t lint test build
 ```
 
+## TDD-Guardrails (RED/GREEN/REFACTOR)
+
+Für neue Features gilt ab jetzt verbindlich:
+
+1. **RED**: zuerst Test schreiben, der fehlschlägt
+2. **GREEN**: minimalen Code schreiben, bis der Test grün ist
+3. **REFACTOR**: aufräumen, ohne Verhalten zu ändern
+
+### Mini-Checkliste vor Commit
+
+- [ ] Für jede neue/angepasste public Methode gibt es einen passenden Testfall
+- [ ] Bei Bugfix: Test reproduziert den Bug zuerst (RED)
+- [ ] `npx nx run stats-data-access:test --codeCoverage` (bei Data-Access-Änderungen)
+- [ ] `npx nx run web:test --codeCoverage` (bei Web-Änderungen)
+- [ ] `npx nx run api:test --codeCoverage` (bei API-Änderungen)
+- [ ] Erst danach refactoren und committen
+
 ## API
 
 `GET /api/stats?from=YYYY-MM-DD&to=YYYY-MM-DD`
