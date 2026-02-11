@@ -44,6 +44,12 @@ jobs:
       - name: Build
         run: npx nx run-many -t build --parallel=3
 
+      - name: Install Playwright browser (Chromium)
+        run: npx playwright install --with-deps chromium
+
+      - name: E2E (isolated test DB)
+        run: npx nx run web-e2e:e2e --skip-nx-cache
+
       - name: Nx fix-ci (always)
         if: always()
         run: npx nx fix-ci
