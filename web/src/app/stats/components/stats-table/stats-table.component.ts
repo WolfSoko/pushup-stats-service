@@ -40,7 +40,7 @@ import { PushupRecord } from '@nx-temp/stats-models';
         </div>
       </div>
 
-      <div class="table-wrap">
+      <div class="table-wrap" (scroll)="onTableScroll($event)">
         <mat-table
           [dataSource]="dataSource"
           matSort
@@ -197,6 +197,10 @@ export class StatsTableComponent implements AfterViewInit {
   readonly displayedColumns = ['timestamp', 'reps', 'source', 'actions'];
   readonly dataSource = new MatTableDataSource<PushupRecord>([]);
 
+  private readonly pageSize = 40;
+  private readonly scrollThresholdPx = 80;
+  private readonly visibleCount = signal(this.pageSize);
+
   private readonly editedReps = signal<Record<string, string>>({});
   private readonly editedSource = signal<Record<string, string>>({});
   private readonly editingId = signal<string | null>(null);
@@ -210,7 +214,9 @@ export class StatsTableComponent implements AfterViewInit {
     };
 
     effect(() => {
-      this.dataSource.data = this.entries();
+      const rows = this.entries();
+      this.visibleCount.set(this.pageSize);
+      this.dataSource.data = rows.slice(0, this.pageSize);
     });
   }
 
@@ -238,6 +244,18 @@ export class StatsTableComponent implements AfterViewInit {
 
   isBusy(action: 'update' | 'delete', id: string): boolean {
     return this.busyAction() === action && this.busyId() === id;
+  }
+
+  onTableScroll(event: Event): void {
+    const el = event.target as HTMLElement;
+    const nearBottom = el.scrollTop + el.clientHeight >= el.scrollHeight - this.scrollThresholdPx;
+    if (!nearBottom) return;
+
+    const nextCount = Math.min(this.visibleCount() + this.pageSize, this.entries().length);
+    if (nextCount === this.visibleCount()) return;
+
+    this.visibleCount.set(nextCount);
+    this.dataSource.data = this.entries().slice(0, nextCount);
   }
 
   isEditing(id: string): boolean {

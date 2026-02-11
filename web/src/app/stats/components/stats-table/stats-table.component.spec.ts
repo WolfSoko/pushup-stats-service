@@ -34,6 +34,30 @@ describe('StatsTableComponent', () => {
     expect(desc.map((x) => x._id)).toEqual(['2', '1']);
   });
 
+  it('loads more rows on near-bottom table scroll', () => {
+    const component = fixture.componentInstance;
+    const entries = Array.from({ length: 60 }).map((_, i) => ({
+      _id: String(i + 1),
+      timestamp: `2026-02-10T10:${String(i % 60).padStart(2, '0')}:00`,
+      reps: i + 1,
+      source: 'wa',
+    }));
+
+    fixture.componentRef.setInput('entries', entries);
+    fixture.detectChanges();
+
+    expect(component.dataSource.data.length).toBe(40);
+
+    const target = {
+      scrollTop: 500,
+      clientHeight: 300,
+      scrollHeight: 820,
+    } as unknown as HTMLElement;
+
+    component.onTableScroll({ target } as unknown as Event);
+    expect(component.dataSource.data.length).toBe(60);
+  });
+
   it('is read-only by default and switches to edit mode', () => {
     const component = fixture.componentInstance;
     const entry = { _id: '1', timestamp: '2026-02-10T13:45:00', reps: 8, source: 'wa' };
