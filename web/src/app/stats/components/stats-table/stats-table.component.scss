@@ -50,6 +50,12 @@ table {
   min-width: 560px;
 }
 
+th:last-child,
+td.actions {
+  width: 1%;
+  white-space: nowrap;
+}
+
 th,
 td {
   text-align: left;
@@ -103,6 +109,20 @@ td input {
     min-width: 40px;
   }
 
+  .mat-mdc-icon-button {
+    --mdc-icon-button-state-layer-size: 36px;
+    width: 36px;
+    height: 36px;
+    padding: 6px;
+    line-height: 1;
+  }
+
+  .mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+  }
+
   .danger {
     background: rgba(210, 75, 75, 0.35);
   }
@@ -152,5 +172,31 @@ td input {
   .table-header {
     align-items: flex-start;
     flex-direction: column;
+  }
+
+  table {
+    min-width: 500px;
+  }
+
+  th,
+  td {
+    padding: 9px 8px;
+  }
+
+  .actions {
+    gap: 4px;
+
+    .mat-mdc-icon-button {
+      --mdc-icon-button-state-layer-size: 30px;
+      width: 30px;
+      height: 30px;
+      padding: 4px;
+    }
+
+    .mat-icon {
+      font-size: 16px;
+      width: 16px;
+      height: 16px;
+    }
   }
 }
