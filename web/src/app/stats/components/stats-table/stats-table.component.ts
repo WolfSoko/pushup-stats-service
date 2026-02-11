@@ -27,7 +27,10 @@ import { PushupRecord } from '@nx-temp/stats-models';
         <h2>Einträge (CRUD)</h2>
         <div class="header-actions">
           <p>{{ sortedEntries().length }} Einträge</p>
-          <button type="button" class="add-btn" mat-flat-button (click)="openCreateDialog()">+ Neu</button>
+          <button type="button" class="add-btn" mat-flat-button (click)="openCreateDialog()">
+            <mat-icon>add</mat-icon>
+            Neu
+          </button>
         </div>
       </div>
 
