@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { Request, Response } from 'express';
 import fs from 'node:fs';
 import path from 'node:path';
 import { NestFactory } from '@nestjs/core';
@@ -25,7 +25,7 @@ export async function createApp() {
   if (fs.existsSync(WEB_DIST_PATH)) {
     const expressApp = app.getHttpAdapter().getInstance();
     expressApp.use(express.static(WEB_DIST_PATH));
-    expressApp.get('*', (_req: any, res: any) => {
+    expressApp.get('*', (_req: Request, res: Response) => {
       res.sendFile(path.join(WEB_DIST_PATH, 'index.html'));
     });
   }

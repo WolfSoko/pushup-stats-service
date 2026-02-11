@@ -131,7 +131,7 @@ describe('StatsTableComponent', () => {
   it('prefills datetime when opening create dialog and value is empty', () => {
     fixture.detectChanges();
     const component = fixture.componentInstance;
-    const openSpy = jest.spyOn(component.dialog, 'open').mockReturnValue({} as any);
+    const openSpy = jest.spyOn(component.dialog, 'open').mockReturnValue({} as never);
 
     component.newTimestamp.set('');
     component.openCreateDialog();
@@ -143,7 +143,7 @@ describe('StatsTableComponent', () => {
   it('keeps existing datetime when opening create dialog', () => {
     fixture.detectChanges();
     const component = fixture.componentInstance;
-    jest.spyOn(component.dialog, 'open').mockReturnValue({} as any);
+    jest.spyOn(component.dialog, 'open').mockReturnValue({} as never);
 
     component.newTimestamp.set('2026-02-11T08:15');
     component.openCreateDialog();

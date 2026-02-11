@@ -2,6 +2,7 @@ import { PLATFORM_ID, TransferState, makeStateKey } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
+import { StatsResponse } from '@nx-temp/stats-models';
 import { StatsApiService } from './stats-api.service';
 
 describe('StatsApiService', () => {
@@ -60,7 +61,7 @@ describe('StatsApiService', () => {
   it('reuses TransferState payload on browser without extra HTTP call', () => {
     const { service, httpMock } = setup('browser');
     const transferState = TestBed.inject(TransferState);
-    const key = makeStateKey<any>('stats:from=2026-02-01&to=2026-02-10');
+    const key = makeStateKey<StatsResponse>('stats:from=2026-02-01&to=2026-02-10');
     const cachedPayload = {
       meta: { from: '2026-02-01', to: '2026-02-10', entries: 2, days: 1, total: 15, granularity: 'daily' },
       series: [{ bucket: '2026-02-10', total: 15, dayIntegral: 15 }],
@@ -68,7 +69,7 @@ describe('StatsApiService', () => {
 
     transferState.set(key, cachedPayload);
 
-    let value: any = null;
+    let value: StatsResponse | null = null;
     service.load({ from: '2026-02-01', to: '2026-02-10' }).subscribe((v) => (value = v));
 
     expect(value).toEqual(cachedPayload);
@@ -121,7 +122,7 @@ describe('StatsApiService', () => {
   it('lists pushups and filters by date range client-side', () => {
     const { service, httpMock } = setup('browser');
 
-    let rows: any[] = [];
+    let rows: Array<{ _id: string }> = [];
     service.listPushups({ from: '2026-02-10', to: '2026-02-10' }).subscribe((v) => (rows = v));
 
     const req = httpMock.expectOne('/api/pushups');

@@ -88,7 +88,7 @@ describe('api stats core', () => {
       getHttpAdapter: jest.fn().mockReturnValue({ getInstance: () => fakeExpress }),
     };
 
-    const createSpy = jest.spyOn(NestFactory, 'create').mockResolvedValue(fakeApp as any);
+    const createSpy = jest.spyOn(NestFactory, 'create').mockResolvedValue(fakeApp as never);
     const existsSpy = jest.spyOn(fs, 'existsSync').mockReturnValue(false);
 
     const app = await createApp();
@@ -108,7 +108,7 @@ describe('api stats core', () => {
       getHttpAdapter: jest.fn().mockReturnValue({ getInstance: () => fakeExpress }),
     };
 
-    const createSpy = jest.spyOn(NestFactory, 'create').mockResolvedValue(fakeApp as any);
+    const createSpy = jest.spyOn(NestFactory, 'create').mockResolvedValue(fakeApp as never);
     const existsSpy = jest.spyOn(fs, 'existsSync').mockReturnValue(true);
 
     await createApp();
