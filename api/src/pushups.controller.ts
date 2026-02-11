@@ -23,7 +23,7 @@ export class PushupsController {
       timestamp: body.timestamp,
       reps: Number(body.reps),
       source: body.source ?? 'api',
-      ...(body.type ? { type: body.type } : {}),
+      type: body.type ?? 'Standard',
     });
   }
 

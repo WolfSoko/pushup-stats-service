@@ -21,6 +21,7 @@ type PushupEntry = {
   timestamp: string;
   reps: number;
   source: string;
+  type?: string;
 };
 
 type SeriesEntry = {
@@ -74,6 +75,7 @@ type DbDoc = {
   timestamp?: unknown;
   reps?: unknown;
   source?: unknown;
+  type?: unknown;
 };
 
 async function allRows(): Promise<PushupEntry[]> {
@@ -85,6 +87,7 @@ async function allRows(): Promise<PushupEntry[]> {
       timestamp: d.timestamp as string,
       reps: d.reps as number,
       source: typeof d.source === 'string' ? d.source : 'api',
+      type: typeof d.type === 'string' ? d.type : 'Standard',
     }));
 }
 
@@ -184,7 +187,7 @@ app.get('/api/pushups', async (_req, res) => {
 });
 
 app.post('/api/pushups', async (req, res) => {
-  const payload = req.body as { timestamp?: string; reps?: number; source?: string };
+  const payload = req.body as { timestamp?: string; reps?: number; source?: string; type?: string };
   if (!payload?.timestamp || Number(payload?.reps) <= 0) {
     res.status(400).json({ error: 'timestamp and positive reps are required' });
     return;
@@ -194,6 +197,7 @@ app.post('/api/pushups', async (req, res) => {
     timestamp: payload.timestamp,
     reps: Number(payload.reps),
     source: payload.source || 'api',
+    type: payload.type || 'Standard',
   });
 
   io.emit('pushups:changed');
@@ -202,7 +206,7 @@ app.post('/api/pushups', async (req, res) => {
 
 app.put('/api/pushups/:id', async (req, res) => {
   const id = req.params['id'];
-  const payload = req.body as { timestamp?: string; reps?: number; source?: string };
+  const payload = req.body as { timestamp?: string; reps?: number; source?: string; type?: string };
 
   await db.update(
     { _id: id },
@@ -211,6 +215,7 @@ app.put('/api/pushups/:id', async (req, res) => {
         ...(payload.timestamp ? { timestamp: payload.timestamp } : {}),
         ...(typeof payload.reps !== 'undefined' ? { reps: Number(payload.reps) } : {}),
         ...(typeof payload.source !== 'undefined' ? { source: payload.source } : {}),
+        ...(typeof payload.type !== 'undefined' ? { type: payload.type || 'Standard' } : {}),
       },
     },
   );

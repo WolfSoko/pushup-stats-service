@@ -26,15 +26,17 @@ export class PushupDbService {
   }
 
   async findAll(): Promise<PushupDoc[]> {
-    return this.db.find({}).sort({ timestamp: 1 });
+    const rows = await this.db.find({}).sort({ timestamp: 1 });
+    return rows.map((row) => ({ ...row, type: row.type ?? 'Standard' }));
   }
 
   async findById(id: string): Promise<PushupDoc | null> {
-    return this.db.findOne({ _id: id });
+    const row = await this.db.findOne({ _id: id });
+    return row ? { ...row, type: row.type ?? 'Standard' } : null;
   }
 
   async create(input: Omit<PushupDoc, '_id' | 'createdAt' | 'updatedAt'>): Promise<PushupDoc> {
-    return this.db.insert(input);
+    return this.db.insert({ ...input, type: input.type ?? 'Standard' });
   }
 
   async update(id: string, patch: Partial<Omit<PushupDoc, '_id' | 'createdAt' | 'updatedAt'>>): Promise<PushupDoc | null> {

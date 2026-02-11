@@ -24,9 +24,9 @@ describe('PushupsController', () => {
   });
 
   it('creates entry', async () => {
-    (db.create as jest.Mock).mockResolvedValue({ _id: '1', timestamp: '2026-02-11T10:00:00', reps: 10, source: 'api' });
+    (db.create as jest.Mock).mockResolvedValue({ _id: '1', timestamp: '2026-02-11T10:00:00', reps: 10, source: 'api', type: 'Standard' });
     await controller.create({ timestamp: '2026-02-11T10:00:00', reps: 10 });
-    expect(db.create).toHaveBeenCalledWith({ timestamp: '2026-02-11T10:00:00', reps: 10, source: 'api' });
+    expect(db.create).toHaveBeenCalledWith({ timestamp: '2026-02-11T10:00:00', reps: 10, source: 'api', type: 'Standard' });
   });
 
   it('throws on missing entry', async () => {
