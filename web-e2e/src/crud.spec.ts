@@ -12,9 +12,9 @@ test('CRUD table works on isolated e2e database', async ({ page }) => {
   await page.goto('/');
   await expect(page.getByRole('heading', { name: 'Liegestütze Statistik' })).toBeVisible();
 
-  await createEntry(page, '2026-02-11T07:30', '15', 'e2e');
+  await createEntry(page, '2026-02-11T07:30', '15', 'entry-a');
 
-  const e2eRow = page.locator('tbody tr').filter({ hasText: 'e2e' }).first();
+  const e2eRow = page.locator('tbody tr').filter({ hasText: 'entry-a' }).first();
   await expect(e2eRow).toBeVisible();
   await expect(e2eRow).toContainText('15');
 

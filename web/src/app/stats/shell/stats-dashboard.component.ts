@@ -95,6 +95,7 @@ export class StatsDashboardComponent {
     if (!this.statsResource.error()) return '';
     return 'Daten konnten nicht geladen werden. Bitte Zeitraum prüfen oder die Seite neu laden.';
   });
+  readonly liveConnected = computed(() => this.live.connected());
 
   constructor() {
     effect(() => {

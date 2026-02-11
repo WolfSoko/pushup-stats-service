@@ -54,6 +54,16 @@ h1 {
   max-width: 68ch;
 }
 
+.live-state {
+  margin: 8px 0 0;
+  font-size: 0.82rem;
+  color: #7ef0c8;
+
+  &.offline {
+    color: #ff9ea1;
+  }
+}
+
 .mini-badges {
   display: flex;
   flex-wrap: wrap;

@@ -2,7 +2,12 @@ import { PLATFORM_ID } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { PushupLiveService } from './pushup-live.service';
 
-const onMock = jest.fn();
+type EventHandler = () => void;
+
+const handlers: Record<string, EventHandler> = {};
+const onMock = jest.fn((event: string, cb: EventHandler) => {
+  handlers[event] = cb;
+});
 const ioMock = jest.fn(() => ({ on: onMock }));
 
 jest.mock('socket.io-client', () => ({
@@ -13,36 +18,39 @@ describe('PushupLiveService', () => {
   afterEach(() => {
     TestBed.resetTestingModule();
     jest.clearAllMocks();
+    Object.keys(handlers).forEach((k) => delete handlers[k]);
   });
 
-  it('starts with 0 on server and does not create socket', () => {
+  it('starts disconnected on server and does not create socket', () => {
     TestBed.configureTestingModule({
       providers: [{ provide: PLATFORM_ID, useValue: 'server' }],
     });
 
     const service = TestBed.inject(PushupLiveService);
     expect(service.updateTick()).toBe(0);
+    expect(service.connected()).toBe(false);
     expect(ioMock).not.toHaveBeenCalled();
   });
 
-  it('subscribes to websocket event and increments signal on browser', () => {
-    let handler: (() => void) | undefined;
-    onMock.mockImplementation((event: string, cb: () => void) => {
-      if (event === 'pushups:changed') handler = cb;
-    });
-
+  it('connect handler sets connected and increments tick', () => {
     TestBed.configureTestingModule({
       providers: [{ provide: PLATFORM_ID, useValue: 'browser' }],
     });
 
     const service = TestBed.inject(PushupLiveService);
-    expect(ioMock).toHaveBeenCalledWith('/', {
-      path: '/socket.io',
-      transports: ['websocket', 'polling'],
-    });
+
+    expect(ioMock).toHaveBeenCalled();
+    expect(service.connected()).toBe(false);
     expect(service.updateTick()).toBe(0);
 
-    handler?.();
+    handlers['connect']?.();
+    expect(service.connected()).toBe(true);
     expect(service.updateTick()).toBe(1);
+
+    handlers['disconnect']?.();
+    expect(service.connected()).toBe(false);
+
+    handlers['pushups:changed']?.();
+    expect(service.updateTick()).toBe(2);
   });
 });

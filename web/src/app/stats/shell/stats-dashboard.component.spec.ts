@@ -29,11 +29,16 @@ describe('StatsDashboardComponent', () => {
   };
 
   const liveTick = signal(0);
-  const liveMock = { updateTick: liveTick.asReadonly() };
+  const liveConnected = signal(false);
+  const liveMock = {
+    updateTick: liveTick.asReadonly(),
+    connected: liveConnected.asReadonly(),
+  };
 
   beforeEach(async () => {
     jest.clearAllMocks();
     liveTick.set(0);
+    liveConnected.set(false);
     window.history.replaceState({}, '', '/?from=2026-02-01&to=2026-02-10');
 
     await TestBed.configureTestingModule({
@@ -98,5 +103,15 @@ describe('StatsDashboardComponent', () => {
 
     expect(serviceMock.load.mock.calls.length).toBeGreaterThan(initialLoadCalls);
     expect(serviceMock.listPushups.mock.calls.length).toBeGreaterThan(0);
+  });
+
+  it('shows live connection state', () => {
+    liveConnected.set(true);
+    fixture.detectChanges();
+    expect(fixture.nativeElement.textContent).toContain('Live: verbunden');
+
+    liveConnected.set(false);
+    fixture.detectChanges();
+    expect(fixture.nativeElement.textContent).toContain('Live: getrennt');
   });
 });

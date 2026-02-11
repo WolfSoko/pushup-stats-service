@@ -5,6 +5,7 @@
       <p class="eyebrow">Pushup Stats</p>
       <h1>Liegestütze Statistik</h1>
       <p class="subtitle">Behalte Trainingsvolumen und Verlauf im Blick – klar, schnell und mobil optimiert.</p>
+      <p class="live-state" [class.offline]="!liveConnected()">Live: {{ liveConnected() ? 'verbunden' : 'getrennt' }}</p>
     </div>
   </header>
 
