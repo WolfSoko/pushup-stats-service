@@ -8,6 +8,8 @@
     </div>
   </header>
 
+  <app-kpi-cards [total]="total()" [days]="days()" [entries]="entries()" [avg]="avg()" />
+
   <section class="panel">
     <app-filter-bar [from]="from()" [to]="to()" (fromChange)="from.set($event)" (toChange)="to.set($event)" />
   </section>
@@ -21,8 +23,6 @@
   @if (loading()) {
     <section class="status-banner loading" aria-live="polite">Lade Statistikdaten…</section>
   }
-
-  <app-kpi-cards [total]="total()" [days]="days()" [entries]="entries()" [avg]="avg()" />
 
   <section class="content-grid">
     <app-stats-chart [series]="rows()" [granularity]="granularity()" />
