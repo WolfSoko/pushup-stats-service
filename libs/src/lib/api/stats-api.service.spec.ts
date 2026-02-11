@@ -117,4 +117,56 @@ describe('StatsApiService', () => {
       }
     }
   });
+
+  it('lists pushups and filters by date range client-side', () => {
+    const { service, httpMock } = setup('browser');
+
+    let rows: any[] = [];
+    service.listPushups({ from: '2026-02-10', to: '2026-02-10' }).subscribe((v) => (rows = v));
+
+    const req = httpMock.expectOne('/api/pushups');
+    expect(req.request.method).toBe('GET');
+    req.flush([
+      { _id: '1', timestamp: '2026-02-09T10:00:00', reps: 10, source: 'wa' },
+      { _id: '2', timestamp: '2026-02-10T10:00:00', reps: 12, source: 'wa' },
+    ]);
+
+    expect(rows.map((x) => x._id)).toEqual(['2']);
+    httpMock.verify();
+  });
+
+  it('creates pushup via POST', () => {
+    const { service, httpMock } = setup('browser');
+
+    service.createPushup({ timestamp: '2026-02-11T07:00', reps: 15, source: 'web' }).subscribe();
+
+    const req = httpMock.expectOne('/api/pushups');
+    expect(req.request.method).toBe('POST');
+    expect(req.request.body).toEqual({ timestamp: '2026-02-11T07:00', reps: 15, source: 'web' });
+    req.flush({ _id: '1', timestamp: '2026-02-11T07:00', reps: 15, source: 'web' });
+    httpMock.verify();
+  });
+
+  it('updates pushup via PUT', () => {
+    const { service, httpMock } = setup('browser');
+
+    service.updatePushup('abc', { reps: 20 }).subscribe();
+
+    const req = httpMock.expectOne('/api/pushups/abc');
+    expect(req.request.method).toBe('PUT');
+    expect(req.request.body).toEqual({ reps: 20 });
+    req.flush({ _id: 'abc', timestamp: '2026-02-11T07:00', reps: 20, source: 'web' });
+    httpMock.verify();
+  });
+
+  it('deletes pushup via DELETE', () => {
+    const { service, httpMock } = setup('browser');
+
+    service.deletePushup('abc').subscribe();
+
+    const req = httpMock.expectOne('/api/pushups/abc');
+    expect(req.request.method).toBe('DELETE');
+    req.flush({ ok: true });
+    httpMock.verify();
+  });
 });
