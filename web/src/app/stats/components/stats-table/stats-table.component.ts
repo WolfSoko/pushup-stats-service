@@ -62,12 +62,14 @@ import { PushupRecord } from '@nx-temp/stats-models';
                 </td>
                 <td class="actions">
                   @if (isEditing(entry._id)) {
-                    <button type="button" (click)="save(entry)">Speichern</button>
-                    <button type="button" (click)="cancelEdit()">Abbrechen</button>
+                    <button type="button" aria-label="Speichern" title="Speichern" (click)="save(entry)">💾</button>
+                    <button type="button" aria-label="Abbrechen" title="Abbrechen" (click)="cancelEdit()">✖️</button>
                   } @else {
                     <button type="button" aria-label="Edit" title="Edit" (click)="startEdit(entry)">✏️</button>
                   }
-                  <button type="button" class="danger" (click)="remove.emit(entry._id)">Löschen</button>
+                  <button type="button" class="danger" aria-label="Löschen" title="Löschen" (click)="remove.emit(entry._id)">
+                    🗑️
+                  </button>
                 </td>
               </tr>
             }
