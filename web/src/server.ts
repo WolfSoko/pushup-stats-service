@@ -9,10 +9,12 @@ import {
   writeResponseToNodeResponse,
 } from '@angular/ssr/node';
 import express from 'express';
+import { createServer } from 'node:http';
 import { dirname, resolve, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import fs from 'node:fs';
 import Datastore from 'nedb-promises';
+import { Server as SocketIOServer } from 'socket.io';
 
 type PushupEntry = {
   _id?: string;
@@ -134,6 +136,12 @@ const angularAppEngineManifest = (
 ɵsetAngularAppEngineManifest(angularAppEngineManifest);
 
 const app = express();
+const httpServer = createServer(app);
+const io = new SocketIOServer(httpServer, {
+  path: '/socket.io',
+  cors: { origin: true, credentials: true },
+});
+
 const angularApp = new AngularNodeAppEngine();
 
 app.use(express.json());
@@ -188,6 +196,7 @@ app.post('/api/pushups', async (req, res) => {
     source: payload.source || 'api',
   });
 
+  io.emit('pushups:changed');
   res.status(201).json(created);
 });
 
@@ -212,6 +221,7 @@ app.put('/api/pushups/:id', async (req, res) => {
     return;
   }
 
+  io.emit('pushups:changed');
   res.json(updated);
 });
 
@@ -222,6 +232,7 @@ app.delete('/api/pushups/:id', async (req, res) => {
     res.status(404).json({ error: 'Pushup entry not found' });
     return;
   }
+  io.emit('pushups:changed');
   res.json({ ok: true });
 });
 
@@ -245,7 +256,7 @@ app.use('/**', (req, res, next) => {
 if (isMainModule(import.meta.url) || process.env['pm_id']) {
   const port = process.env['PORT'] || 4000;
   void ensureSeededFromCsv();
-  app.listen(port, () => {
+  httpServer.listen(port, () => {
     console.log(`Node SSR server listening on http://localhost:${port}`);
     console.log(`CSV path: ${CSV_PATH}`);
     console.log(`DB path: ${DB_PATH}`);

@@ -3,7 +3,7 @@ import { Component, PLATFORM_ID, REQUEST, computed, effect, inject, resource, si
 import { MatCardModule } from '@angular/material/card';
 import { firstValueFrom } from 'rxjs';
 import { PushupRecord, StatsGranularity, StatsResponse, StatsSeriesEntry } from '@nx-temp/stats-models';
-import { StatsApiService } from '@nx-temp/stats-data-access';
+import { PushupLiveService, StatsApiService } from '@nx-temp/stats-data-access';
 import { FilterBarComponent } from '../components/filter-bar/filter-bar.component';
 import { KpiCardsComponent } from '../components/kpi-cards/kpi-cards.component';
 import { StatsChartComponent } from '../components/stats-chart/stats-chart.component';
@@ -41,6 +41,7 @@ export class StatsDashboardComponent {
   private readonly platformId = inject(PLATFORM_ID);
   private readonly document = inject(DOCUMENT);
   private readonly request = inject(REQUEST, { optional: true }) as { url?: string } | null;
+  private readonly live = inject(PushupLiveService);
 
   private readonly defaultRange = createDefaultRange();
   private readonly initialRange = this.resolveInitialRange();
@@ -107,6 +108,13 @@ export class StatsDashboardComponent {
       const query = params.toString();
       const nextUrl = `${this.document.location.pathname}${query ? `?${query}` : ''}`;
       window.history.replaceState(window.history.state, '', nextUrl);
+    });
+
+    effect(() => {
+      if (!isPlatformBrowser(this.platformId)) return;
+      const tick = this.live.updateTick();
+      if (!tick) return;
+      this.refreshAll();
     });
   }
 

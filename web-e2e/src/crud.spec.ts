@@ -1,18 +1,18 @@
-import { expect, test } from '@playwright/test';
+import { expect, Page, test } from '@playwright/test';
+
+async function createEntry(page: Page, timestamp: string, reps: string, source: string) {
+  await page.getByRole('button', { name: '+ Neu' }).click();
+  await page.locator('.create-dialog input[type="datetime-local"]').fill(timestamp);
+  await page.locator('.create-dialog input[placeholder="Reps"]').fill(reps);
+  await page.locator('.create-dialog input[placeholder="Quelle"]').fill(source);
+  await page.getByRole('button', { name: 'Speichern' }).click();
+}
 
 test('CRUD table works on isolated e2e database', async ({ page }) => {
   await page.goto('/');
-
   await expect(page.getByRole('heading', { name: 'Liegestütze Statistik' })).toBeVisible();
 
-  const tsInput = page.locator('input[type="datetime-local"]').first();
-  const repsInput = page.getByPlaceholder('Reps');
-  const sourceInput = page.getByPlaceholder('Quelle');
-
-  await tsInput.fill('2026-02-11T07:30');
-  await repsInput.fill('15');
-  await sourceInput.fill('e2e');
-  await page.getByRole('button', { name: 'Neu' }).click();
+  await createEntry(page, '2026-02-11T07:30', '15', 'e2e');
 
   const e2eRow = page.locator('tbody tr').filter({ hasText: 'e2e' }).first();
   await expect(e2eRow).toBeVisible();
@@ -24,4 +24,23 @@ test('CRUD table works on isolated e2e database', async ({ page }) => {
     ),
     e2eRow.getByRole('button', { name: 'Löschen' }).click(),
   ]);
+});
+
+test('websocket pushes updates to other open clients', async ({ browser }) => {
+  const pageA = await browser.newPage();
+  const pageB = await browser.newPage();
+
+  try {
+    await pageA.goto('/');
+    await pageB.goto('/');
+
+    await createEntry(pageA, '2026-02-11T07:45', '9', 'ws-e2e');
+
+    const rowOnB = pageB.locator('tbody tr').filter({ hasText: 'ws-e2e' }).first();
+    await expect(rowOnB).toBeVisible({ timeout: 10000 });
+    await expect(rowOnB).toContainText('9');
+  } finally {
+    await pageA.close();
+    await pageB.close();
+  }
 });

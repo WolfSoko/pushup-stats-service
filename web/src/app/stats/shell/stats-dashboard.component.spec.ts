@@ -1,7 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 import { StatsDashboardComponent } from './stats-dashboard.component';
-import { StatsApiService } from '@nx-temp/stats-data-access';
+import { PushupLiveService, StatsApiService } from '@nx-temp/stats-data-access';
+import { signal } from '@angular/core';
 
 describe('StatsDashboardComponent', () => {
   let fixture: ComponentFixture<StatsDashboardComponent>;
@@ -27,13 +28,20 @@ describe('StatsDashboardComponent', () => {
     deletePushup: jest.fn().mockReturnValue(of({ ok: true })),
   };
 
+  const liveTick = signal(0);
+  const liveMock = { updateTick: liveTick.asReadonly() };
+
   beforeEach(async () => {
     jest.clearAllMocks();
+    liveTick.set(0);
     window.history.replaceState({}, '', '/?from=2026-02-01&to=2026-02-10');
 
     await TestBed.configureTestingModule({
       imports: [StatsDashboardComponent],
-      providers: [{ provide: StatsApiService, useValue: serviceMock }],
+      providers: [
+        { provide: StatsApiService, useValue: serviceMock },
+        { provide: PushupLiveService, useValue: liveMock },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(StatsDashboardComponent);
@@ -79,5 +87,16 @@ describe('StatsDashboardComponent', () => {
 
     await component.onDeleteEntry('1');
     expect(serviceMock.deletePushup).toHaveBeenCalledWith('1');
+  });
+
+  it('reloads data when live websocket tick changes', async () => {
+    const initialLoadCalls = serviceMock.load.mock.calls.length;
+
+    liveTick.set(1);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    expect(serviceMock.load.mock.calls.length).toBeGreaterThan(initialLoadCalls);
+    expect(serviceMock.listPushups.mock.calls.length).toBeGreaterThan(0);
   });
 });
