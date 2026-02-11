@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, TemplateRef, ViewChild, computed, inject, input, output, signal } from '@angular/core';
+import { AfterViewInit, Component, TemplateRef, ViewChild, effect, inject, input, output, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
@@ -7,8 +7,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatSortModule, Sort } from '@angular/material/sort';
-import { MatTableModule } from '@angular/material/table';
+import { MatSort, MatSortModule } from '@angular/material/sort';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { PushupRecord } from '@nx-temp/stats-models';
 
 @Component({
@@ -30,7 +30,7 @@ import { PushupRecord } from '@nx-temp/stats-models';
       <div class="table-header">
         <h2>Einträge (CRUD)</h2>
         <div class="header-actions">
-          <p>{{ sortedEntries().length }} Einträge</p>
+          <p>{{ entries().length }} Einträge</p>
           <button type="button" class="add-btn" mat-flat-button (click)="openCreateDialog()">
             <mat-icon>add</mat-icon>
             Neu
@@ -41,20 +41,19 @@ import { PushupRecord } from '@nx-temp/stats-models';
       <div class="table-wrap">
         <table
           mat-table
-          [dataSource]="sortedEntries()"
+          [dataSource]="dataSource"
           matSort
+          [matSortActive]="'timestamp'"
+          [matSortDirection]="'desc'"
           class="mat-elevation-z8"
-          [matSortActive]="sortBy()"
-          [matSortDirection]="sortDir()"
-          (matSortChange)="onSortChange($event)"
         >
           <ng-container matColumnDef="timestamp">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header="timestamp">Zeit</th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Zeit</th>
             <td mat-cell *matCellDef="let entry">{{ entry.timestamp | date: 'dd.MM.yyyy, HH:mm' }}</td>
           </ng-container>
 
           <ng-container matColumnDef="reps">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header="reps">Reps</th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Reps</th>
             <td mat-cell *matCellDef="let entry">
               @if (isEditing(entry._id)) {
                 <input
@@ -71,7 +70,7 @@ import { PushupRecord } from '@nx-temp/stats-models';
           </ng-container>
 
           <ng-container matColumnDef="source">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header="source">Quelle</th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Quelle</th>
             <td mat-cell *matCellDef="let entry">
               @if (isEditing(entry._id)) {
                 <input matInput type="text" [value]="editSource(entry)" (input)="setEditSource(entry, asValue($event))" />
@@ -176,10 +175,11 @@ import { PushupRecord } from '@nx-temp/stats-models';
   `,
   styleUrl: './stats-table.component.scss',
 })
-export class StatsTableComponent {
+export class StatsTableComponent implements AfterViewInit {
   readonly dialog = inject(MatDialog);
 
   @ViewChild('createDialog') createDialog?: TemplateRef<unknown>;
+  @ViewChild(MatSort) sort?: MatSort;
 
   readonly entries = input<PushupRecord[]>([]);
   readonly busyAction = input<'create' | 'update' | 'delete' | null>(null);
@@ -194,23 +194,30 @@ export class StatsTableComponent {
   readonly newSource = signal('web');
 
   readonly displayedColumns = ['timestamp', 'reps', 'source', 'actions'];
-  readonly sortBy = signal<'timestamp' | 'reps' | 'source'>('timestamp');
-  readonly sortDir = signal<'asc' | 'desc'>('desc');
-  readonly sortedEntries = computed(() => {
-    const rows = [...this.entries()];
-    const by = this.sortBy();
-    const dir = this.sortDir() === 'asc' ? 1 : -1;
-
-    return rows.sort((a, b) => {
-      if (by === 'timestamp') return a.timestamp.localeCompare(b.timestamp) * dir;
-      if (by === 'reps') return (a.reps - b.reps) * dir;
-      return a.source.localeCompare(b.source) * dir;
-    });
-  });
+  readonly dataSource = new MatTableDataSource<PushupRecord>([]);
 
   private readonly editedReps = signal<Record<string, string>>({});
   private readonly editedSource = signal<Record<string, string>>({});
   private readonly editingId = signal<string | null>(null);
+
+  constructor() {
+    this.dataSource.sortingDataAccessor = (item, property) => {
+      if (property === 'timestamp') return new Date(item.timestamp).getTime();
+      if (property === 'reps') return item.reps;
+      if (property === 'source') return item.source;
+      return '';
+    };
+
+    effect(() => {
+      this.dataSource.data = this.entries();
+    });
+  }
+
+  ngAfterViewInit(): void {
+    if (this.sort) {
+      this.dataSource.sort = this.sort;
+    }
+  }
 
   openCreateDialog(): void {
     if (!this.createDialog) return;
@@ -230,17 +237,6 @@ export class StatsTableComponent {
 
   isBusy(action: 'update' | 'delete', id: string): boolean {
     return this.busyAction() === action && this.busyId() === id;
-  }
-
-  onSortChange(sort: Sort): void {
-    if (!sort.active || !sort.direction) {
-      this.sortBy.set('timestamp');
-      this.sortDir.set('desc');
-      return;
-    }
-
-    this.sortBy.set(sort.active as 'timestamp' | 'reps' | 'source');
-    this.sortDir.set(sort.direction as 'asc' | 'desc');
   }
 
   isEditing(id: string): boolean {

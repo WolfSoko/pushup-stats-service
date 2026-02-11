@@ -22,16 +22,16 @@ describe('StatsTableComponent', () => {
 
   it('sorts rows by selected column and direction', () => {
     const component = fixture.componentInstance;
-    fixture.componentRef.setInput('entries', [
+    const rows = [
       { _id: '1', timestamp: '2026-02-10T13:45:00', reps: 8, source: 'wa' },
       { _id: '2', timestamp: '2026-02-10T10:00:00', reps: 20, source: 'web' },
-    ]);
+    ];
 
-    component.onSortChange({ active: 'reps', direction: 'asc' });
-    expect(component.sortedEntries().map((x) => x._id)).toEqual(['1', '2']);
+    const asc = component.dataSource.sortData(rows, { active: 'reps', direction: 'asc' });
+    expect(asc.map((x) => x._id)).toEqual(['1', '2']);
 
-    component.onSortChange({ active: 'reps', direction: 'desc' });
-    expect(component.sortedEntries().map((x) => x._id)).toEqual(['2', '1']);
+    const desc = component.dataSource.sortData(rows, { active: 'reps', direction: 'desc' });
+    expect(desc.map((x) => x._id)).toEqual(['2', '1']);
   });
 
   it('is read-only by default and switches to edit mode', () => {
