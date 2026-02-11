@@ -3,7 +3,6 @@ import { StatsTableComponent } from './stats-table.component';
 
 describe('StatsTableComponent', () => {
   let fixture: ComponentFixture<StatsTableComponent>;
-  let component: StatsTableComponent;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -11,22 +10,23 @@ describe('StatsTableComponent', () => {
     }).compileComponents();
 
     fixture = TestBed.createComponent(StatsTableComponent);
-    component = fixture.componentInstance;
   });
 
-  it('formats daily bucket as german date', () => {
+  it('renders daily bucket using date pipe format', () => {
     fixture.componentRef.setInput('granularity', 'daily');
+    fixture.componentRef.setInput('rows', [{ bucket: '2026-02-10', total: 10, dayIntegral: 10 }]);
     fixture.detectChanges();
 
-    expect(component.formatBucket('2026-02-10')).toBe('10.2.2026');
+    const text = fixture.nativeElement.textContent;
+    expect(text).toContain('10.02.2026');
   });
 
-  it('formats hourly bucket with date and time', () => {
+  it('renders hourly bucket including minute precision', () => {
     fixture.componentRef.setInput('granularity', 'hourly');
+    fixture.componentRef.setInput('rows', [{ bucket: '2026-02-10T13:45', total: 8, dayIntegral: 18 }]);
     fixture.detectChanges();
 
-    const formatted = component.formatBucket('2026-02-10T13');
-    expect(formatted).toContain('10.02.');
-    expect(formatted).toContain('13:00');
+    const text = fixture.nativeElement.textContent;
+    expect(text).toContain('10.02., 13:45');
   });
 });

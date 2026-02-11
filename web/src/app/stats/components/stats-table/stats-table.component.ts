@@ -1,10 +1,11 @@
+import { DatePipe } from '@angular/common';
 import { Component, input } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { StatsGranularity, StatsSeriesEntry } from '@nx-temp/stats-models';
 
 @Component({
   selector: 'app-stats-table',
-  imports: [MatCardModule],
+  imports: [MatCardModule, DatePipe],
   template: `
     <mat-card class="table-card">
       <div class="table-header">
@@ -23,7 +24,9 @@ import { StatsGranularity, StatsSeriesEntry } from '@nx-temp/stats-models';
           <tbody>
             @for (row of rows(); track row.bucket) {
               <tr>
-                <td>{{ formatBucket(row.bucket) }}</td>
+                <td>
+                  {{ row.bucket | date: (granularity() === 'hourly' ? 'dd.MM., HH:mm' : 'dd.MM.yyyy') }}
+                </td>
                 <td>{{ row.total }}</td>
               </tr>
             }
@@ -42,16 +45,4 @@ import { StatsGranularity, StatsSeriesEntry } from '@nx-temp/stats-models';
 export class StatsTableComponent {
   readonly rows = input<StatsSeriesEntry[]>([]);
   readonly granularity = input<StatsGranularity>('daily');
-
-  formatBucket(bucket: string): string {
-    if (this.granularity() === 'hourly') {
-      return new Date(`${bucket}:00`).toLocaleString('de-DE', {
-        day: '2-digit',
-        month: '2-digit',
-        hour: '2-digit',
-        minute: '2-digit',
-      });
-    }
-    return new Date(bucket).toLocaleDateString('de-DE');
-  }
 }
