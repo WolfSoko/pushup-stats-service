@@ -1,54 +1,19 @@
-.table-card {
-  border-radius: 16px;
-}
-
-.table-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-}
-
-.header-actions {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
 .table-wrap {
   overflow: auto;
-  margin-top: 12px;
-}
-
-table {
-  width: 100%;
 }
 
 .actions {
   display: inline-flex;
-  align-items: center;
   gap: 4px;
-}
-
-.empty {
-  text-align: center;
 }
 
 .create-dialog {
   display: grid;
   gap: 10px;
-  min-width: min(86vw, 380px);
 }
 
 .dialog-actions {
   display: flex;
   justify-content: flex-end;
   gap: 8px;
-}
-
-@media (max-width: 680px) {
-  .table-header {
-    align-items: flex-start;
-    flex-direction: column;
-  }
 }
