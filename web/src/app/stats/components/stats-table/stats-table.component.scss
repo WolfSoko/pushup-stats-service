@@ -6,8 +6,8 @@
 .table-header {
   display: flex;
   justify-content: space-between;
-  align-items: baseline;
-  gap: 8px;
+  align-items: center;
+  gap: 10px;
 
   h2 {
     margin: 0;
@@ -20,30 +20,20 @@
   }
 }
 
-.create-row {
-  margin-top: 12px;
-  display: grid;
-  grid-template-columns: 1.4fr 0.8fr 0.8fr auto;
-  gap: 8px;
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
 
-  input,
-  button {
-    border-radius: 8px;
-    border: 1px solid rgba(118, 145, 203, 0.22);
-    background: rgba(17, 24, 41, 0.8);
-    color: #dbe7ff;
-    padding: 8px 10px;
-  }
-
-  button {
-    cursor: pointer;
-    background: rgba(94, 142, 255, 0.4);
-    font-weight: 600;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 44px;
-  }
+.add-btn {
+  border-radius: 10px;
+  border: 1px solid rgba(118, 145, 203, 0.22);
+  background: rgba(94, 142, 255, 0.4);
+  color: #dbe7ff;
+  padding: 8px 11px;
+  cursor: pointer;
+  white-space: nowrap;
 }
 
 .table-wrap {
@@ -51,12 +41,13 @@
   margin-top: 12px;
   border: 1px solid rgba(118, 145, 203, 0.22);
   border-radius: 12px;
+  max-width: 100%;
 }
 
 table {
   width: 100%;
   border-collapse: collapse;
-  min-width: min(340px, 100%);
+  min-width: 560px;
 }
 
 th,
@@ -106,6 +97,10 @@ td input {
     color: #dbe7ff;
     padding: 7px 10px;
     cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
   }
 
   .danger {
@@ -117,4 +112,40 @@ td input {
   text-align: center;
   color: #9ab0db;
   padding: 20px;
+}
+
+.create-dialog {
+  display: grid;
+  gap: 10px;
+  min-width: min(86vw, 380px);
+
+  h3 {
+    margin: 0 0 6px;
+  }
+
+  input {
+    border-radius: 8px;
+    border: 1px solid rgba(118, 145, 203, 0.22);
+    background: rgba(17, 24, 41, 0.8);
+    color: #dbe7ff;
+    padding: 9px 10px;
+  }
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+@media (max-width: 680px) {
+  .table-card {
+    padding: 12px;
+  }
+
+  .table-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
 }

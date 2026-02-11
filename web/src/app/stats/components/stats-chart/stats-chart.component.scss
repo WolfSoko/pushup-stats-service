@@ -31,6 +31,23 @@ canvas {
   height: 100%;
 }
 
+@media (max-width: 680px) {
+  .chart {
+    min-height: 300px;
+    padding: 12px;
+  }
+
+  .chart-host {
+    height: 240px;
+    padding: 6px;
+  }
+
+  .legend {
+    gap: 10px;
+    font-size: 0.78rem;
+  }
+}
+
 .legend {
   margin-top: 12px;
   display: flex;

@@ -1,38 +1,23 @@
 import { DatePipe } from '@angular/common';
-import { Component, computed, input, output, signal } from '@angular/core';
+import { Component, TemplateRef, ViewChild, computed, inject, input, output, signal } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { PushupRecord } from '@nx-temp/stats-models';
 
 @Component({
   selector: 'app-stats-table',
-  imports: [MatCardModule, MatProgressSpinnerModule, DatePipe],
+  imports: [MatCardModule, MatProgressSpinnerModule, DatePipe, MatDialogModule, MatButtonModule],
   template: `
     <mat-card class="table-card">
       <div class="table-header">
         <h2>Einträge (CRUD)</h2>
-        <p>{{ sortedEntries().length }} Einträge</p>
+        <div class="header-actions">
+          <p>{{ sortedEntries().length }} Einträge</p>
+          <button type="button" class="add-btn" (click)="openCreateDialog()">+ Neu</button>
+        </div>
       </div>
-
-      <form class="create-row" (submit)="submitCreate($event)">
-        <input type="datetime-local" [value]="newTimestamp()" (input)="newTimestamp.set(asValue($event))" required />
-        <input
-          type="number"
-          min="1"
-          [value]="newReps()"
-          (input)="newReps.set(asValue($event))"
-          placeholder="Reps"
-          required
-        />
-        <input type="text" [value]="newSource()" (input)="newSource.set(asValue($event))" placeholder="Quelle" />
-        <button type="submit" [disabled]="isCreateBusy()">
-          @if (isCreateBusy()) {
-            <mat-spinner diameter="14"></mat-spinner>
-          } @else {
-            Neu
-          }
-        </button>
-      </form>
 
       <div class="table-wrap">
         <table>
@@ -94,7 +79,15 @@ import { PushupRecord } from '@nx-temp/stats-models';
                         💾
                       }
                     </button>
-                    <button type="button" aria-label="Abbrechen" title="Abbrechen" [disabled]="isBusy('update', entry._id)" (click)="cancelEdit()">✖️</button>
+                    <button
+                      type="button"
+                      aria-label="Abbrechen"
+                      title="Abbrechen"
+                      [disabled]="isBusy('update', entry._id)"
+                      (click)="cancelEdit()"
+                    >
+                      ✖️
+                    </button>
                   } @else {
                     <button type="button" aria-label="Edit" title="Edit" (click)="startEdit(entry)">✏️</button>
                   }
@@ -124,10 +117,41 @@ import { PushupRecord } from '@nx-temp/stats-models';
         </table>
       </div>
     </mat-card>
+
+    <ng-template #createDialog>
+      <div class="create-dialog">
+        <h3>Neuen Eintrag anlegen</h3>
+        <input type="datetime-local" [value]="newTimestamp()" (input)="newTimestamp.set(asValue($event))" required />
+        <input
+          type="number"
+          min="1"
+          [value]="newReps()"
+          (input)="newReps.set(asValue($event))"
+          placeholder="Reps"
+          required
+        />
+        <input type="text" [value]="newSource()" (input)="newSource.set(asValue($event))" placeholder="Quelle" />
+
+        <div class="dialog-actions">
+          <button type="button" mat-button (click)="dialog.closeAll()">Abbrechen</button>
+          <button type="button" mat-flat-button [disabled]="isCreateBusy()" (click)="submitCreate()">
+            @if (isCreateBusy()) {
+              <mat-spinner diameter="14"></mat-spinner>
+            } @else {
+              Speichern
+            }
+          </button>
+        </div>
+      </div>
+    </ng-template>
   `,
   styleUrl: './stats-table.component.scss',
 })
 export class StatsTableComponent {
+  readonly dialog = inject(MatDialog);
+
+  @ViewChild('createDialog') createDialog?: TemplateRef<unknown>;
+
   readonly entries = input<PushupRecord[]>([]);
   readonly busyAction = input<'create' | 'update' | 'delete' | null>(null);
   readonly busyId = input<string | null>(null);
@@ -157,6 +181,11 @@ export class StatsTableComponent {
   private readonly editedReps = signal<Record<string, string>>({});
   private readonly editedSource = signal<Record<string, string>>({});
   private readonly editingId = signal<string | null>(null);
+
+  openCreateDialog(): void {
+    if (!this.createDialog) return;
+    this.dialog.open(this.createDialog, { width: 'min(92vw, 420px)' });
+  }
 
   asValue(event: Event): string {
     return (event.target as HTMLInputElement).value;
@@ -214,8 +243,7 @@ export class StatsTableComponent {
     this.editedSource.update((prev) => ({ ...prev, [entry._id]: value }));
   }
 
-  submitCreate(event: Event): void {
-    event.preventDefault();
+  submitCreate(): void {
     const reps = Number(this.newReps());
     if (!this.newTimestamp() || Number.isNaN(reps) || reps <= 0) return;
 
@@ -226,6 +254,7 @@ export class StatsTableComponent {
     });
 
     this.newReps.set('');
+    this.dialog.closeAll();
   }
 
   save(entry: PushupRecord): void {

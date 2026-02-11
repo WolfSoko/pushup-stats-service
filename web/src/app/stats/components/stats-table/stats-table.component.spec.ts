@@ -68,7 +68,7 @@ describe('StatsTableComponent', () => {
     component.newTimestamp.set('2026-02-11T07:00');
     component.newReps.set('12');
     component.newSource.set('web');
-    component.submitCreate(new Event('submit'));
+    component.submitCreate();
 
     expect(createSpy).toHaveBeenCalledWith({ timestamp: '2026-02-11T07:00', reps: 12, source: 'web' });
   });
@@ -80,7 +80,7 @@ describe('StatsTableComponent', () => {
 
     component.newTimestamp.set('');
     component.newReps.set('0');
-    component.submitCreate(new Event('submit'));
+    component.submitCreate();
 
     expect(createSpy).not.toHaveBeenCalled();
   });
