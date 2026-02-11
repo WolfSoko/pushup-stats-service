@@ -3,8 +3,8 @@ import { expect, Page, test } from '@playwright/test';
 async function createEntry(page: Page, timestamp: string, reps: string, source: string) {
   await page.getByRole('button', { name: '+ Neu' }).click();
   await page.locator('.create-dialog input[type="datetime-local"]').fill(timestamp);
-  await page.locator('.create-dialog input[placeholder="Reps"]').fill(reps);
-  await page.locator('.create-dialog input[placeholder="Quelle"]').fill(source);
+  await page.locator('.create-dialog input[type="number"]').fill(reps);
+  await page.locator('.create-dialog input[type="text"]').fill(source);
   await page.getByRole('button', { name: 'Speichern' }).click();
 }
 

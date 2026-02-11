@@ -3,19 +3,31 @@ import { Component, TemplateRef, ViewChild, computed, inject, input, output, sig
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { PushupRecord } from '@nx-temp/stats-models';
 
 @Component({
   selector: 'app-stats-table',
-  imports: [MatCardModule, MatProgressSpinnerModule, DatePipe, MatDialogModule, MatButtonModule],
+  imports: [
+    MatCardModule,
+    MatProgressSpinnerModule,
+    DatePipe,
+    MatDialogModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatIconModule,
+  ],
   template: `
     <mat-card class="table-card">
       <div class="table-header">
         <h2>Einträge (CRUD)</h2>
         <div class="header-actions">
           <p>{{ sortedEntries().length }} Einträge</p>
-          <button type="button" class="add-btn" (click)="openCreateDialog()">+ Neu</button>
+          <button type="button" class="add-btn" mat-flat-button (click)="openCreateDialog()">+ Neu</button>
         </div>
       </div>
 
@@ -24,17 +36,17 @@ import { PushupRecord } from '@nx-temp/stats-models';
           <thead>
             <tr>
               <th>
-                <button type="button" class="sort-btn" (click)="setSort('timestamp')">
+                <button type="button" class="sort-btn" mat-button (click)="setSort('timestamp')">
                   Zeit {{ sortIcon('timestamp') }}
                 </button>
               </th>
               <th>
-                <button type="button" class="sort-btn" (click)="setSort('reps')">
+                <button type="button" class="sort-btn" mat-button (click)="setSort('reps')">
                   Reps {{ sortIcon('reps') }}
                 </button>
               </th>
               <th>
-                <button type="button" class="sort-btn" (click)="setSort('source')">
+                <button type="button" class="sort-btn" mat-button (click)="setSort('source')">
                   Quelle {{ sortIcon('source') }}
                 </button>
               </th>
@@ -48,6 +60,7 @@ import { PushupRecord } from '@nx-temp/stats-models';
                 <td>
                   @if (isEditing(entry._id)) {
                     <input
+                      matInput
                       type="number"
                       min="1"
                       [value]="editReps(entry)"
@@ -59,7 +72,7 @@ import { PushupRecord } from '@nx-temp/stats-models';
                 </td>
                 <td>
                   @if (isEditing(entry._id)) {
-                    <input type="text" [value]="editSource(entry)" (input)="setEditSource(entry, asValue($event))" />
+                    <input matInput type="text" [value]="editSource(entry)" (input)="setEditSource(entry, asValue($event))" />
                   } @else {
                     <span>{{ entry.source }}</span>
                   }
@@ -68,6 +81,7 @@ import { PushupRecord } from '@nx-temp/stats-models';
                   @if (isEditing(entry._id)) {
                     <button
                       type="button"
+                      mat-icon-button
                       aria-label="Speichern"
                       title="Speichern"
                       [disabled]="isBusy('update', entry._id)"
@@ -76,24 +90,28 @@ import { PushupRecord } from '@nx-temp/stats-models';
                       @if (isBusy('update', entry._id)) {
                         <mat-spinner diameter="14"></mat-spinner>
                       } @else {
-                        💾
+                        <mat-icon>save</mat-icon>
                       }
                     </button>
                     <button
                       type="button"
+                      mat-icon-button
                       aria-label="Abbrechen"
                       title="Abbrechen"
                       [disabled]="isBusy('update', entry._id)"
                       (click)="cancelEdit()"
                     >
-                      ✖️
+                      <mat-icon>close</mat-icon>
                     </button>
                   } @else {
-                    <button type="button" aria-label="Edit" title="Edit" (click)="startEdit(entry)">✏️</button>
+                    <button type="button" mat-icon-button aria-label="Edit" title="Edit" (click)="startEdit(entry)">
+                      <mat-icon>edit</mat-icon>
+                    </button>
                   }
                   <button
                     type="button"
                     class="danger"
+                    mat-icon-button
                     aria-label="Löschen"
                     title="Löschen"
                     [disabled]="isBusy('delete', entry._id)"
@@ -102,7 +120,7 @@ import { PushupRecord } from '@nx-temp/stats-models';
                     @if (isBusy('delete', entry._id)) {
                       <mat-spinner diameter="14"></mat-spinner>
                     } @else {
-                      🗑️
+                      <mat-icon>delete</mat-icon>
                     }
                   </button>
                 </td>
@@ -121,16 +139,21 @@ import { PushupRecord } from '@nx-temp/stats-models';
     <ng-template #createDialog>
       <div class="create-dialog">
         <h3>Neuen Eintrag anlegen</h3>
-        <input type="datetime-local" [value]="newTimestamp()" (input)="newTimestamp.set(asValue($event))" required />
-        <input
-          type="number"
-          min="1"
-          [value]="newReps()"
-          (input)="newReps.set(asValue($event))"
-          placeholder="Reps"
-          required
-        />
-        <input type="text" [value]="newSource()" (input)="newSource.set(asValue($event))" placeholder="Quelle" />
+
+        <mat-form-field appearance="outline">
+          <mat-label>Zeitpunkt</mat-label>
+          <input matInput type="datetime-local" [value]="newTimestamp()" (input)="newTimestamp.set(asValue($event))" required />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Reps</mat-label>
+          <input matInput type="number" min="1" [value]="newReps()" (input)="newReps.set(asValue($event))" required />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Quelle</mat-label>
+          <input matInput type="text" [value]="newSource()" (input)="newSource.set(asValue($event))" />
+        </mat-form-field>
 
         <div class="dialog-actions">
           <button type="button" mat-button (click)="dialog.closeAll()">Abbrechen</button>
