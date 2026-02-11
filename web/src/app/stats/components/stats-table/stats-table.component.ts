@@ -184,7 +184,10 @@ export class StatsTableComponent {
 
   openCreateDialog(): void {
     if (!this.createDialog) return;
-    this.dialog.open(this.createDialog, { width: 'min(92vw, 420px)' });
+    if (!this.newTimestamp()) {
+      this.newTimestamp.set(this.defaultDateTimeLocal());
+    }
+    this.dialog.open(this.createDialog, { width: 'min(92vw, 420px)', maxWidth: '92vw' });
   }
 
   asValue(event: Event): string {
@@ -255,6 +258,12 @@ export class StatsTableComponent {
 
     this.newReps.set('');
     this.dialog.closeAll();
+  }
+
+  private defaultDateTimeLocal(): string {
+    const now = new Date();
+    const pad = (value: number) => String(value).padStart(2, '0');
+    return `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}T${pad(now.getHours())}:${pad(now.getMinutes())}`;
   }
 
   save(entry: PushupRecord): void {

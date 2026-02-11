@@ -118,9 +118,13 @@ td input {
   display: grid;
   gap: 10px;
   min-width: min(86vw, 380px);
+  box-sizing: border-box;
+  padding: 4px 2px;
 
   h3 {
-    margin: 0 0 6px;
+    margin: 0;
+    line-height: 1.2;
+    font-size: clamp(1.1rem, 4vw, 1.5rem);
   }
 
   input {

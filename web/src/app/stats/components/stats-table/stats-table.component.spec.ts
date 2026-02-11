@@ -127,4 +127,27 @@ describe('StatsTableComponent', () => {
     fixture.detectChanges();
     expect(component.isCreateBusy()).toBe(true);
   });
+
+  it('prefills datetime when opening create dialog and value is empty', () => {
+    fixture.detectChanges();
+    const component = fixture.componentInstance;
+    const openSpy = jest.spyOn(component.dialog, 'open').mockReturnValue({} as any);
+
+    component.newTimestamp.set('');
+    component.openCreateDialog();
+
+    expect(component.newTimestamp()).toMatch(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/);
+    expect(openSpy).toHaveBeenCalled();
+  });
+
+  it('keeps existing datetime when opening create dialog', () => {
+    fixture.detectChanges();
+    const component = fixture.componentInstance;
+    jest.spyOn(component.dialog, 'open').mockReturnValue({} as any);
+
+    component.newTimestamp.set('2026-02-11T08:15');
+    component.openCreateDialog();
+
+    expect(component.newTimestamp()).toBe('2026-02-11T08:15');
+  });
 });
