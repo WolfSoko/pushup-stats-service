@@ -71,15 +71,16 @@
     <mat-card class="quick-actions">
       <mat-card-header>
         <mat-card-title>Schnellaktionen</mat-card-title>
+        <mat-card-subtitle>Schnell eintragen ohne Dialog</mat-card-subtitle>
       </mat-card-header>
       <mat-card-content>
-        <button type="button" mat-flat-button (click)="addQuickEntry(10)">
+        <button type="button" mat-flat-button class="quick-btn quick-btn--ten" (click)="addQuickEntry(10)">
           <mat-icon>bolt</mat-icon>
-          +10 eintragen
+          +10 Reps
         </button>
-        <button type="button" mat-flat-button (click)="addQuickEntry(20)">
+        <button type="button" mat-flat-button class="quick-btn quick-btn--twenty" (click)="addQuickEntry(20)">
           <mat-icon>flash_on</mat-icon>
-          +20 eintragen
+          +20 Reps
         </button>
       </mat-card-content>
     </mat-card>

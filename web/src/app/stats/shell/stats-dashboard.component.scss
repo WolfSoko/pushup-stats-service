@@ -141,13 +141,34 @@ h1 {
 }
 
 .quick-actions {
+  border: 1px solid rgba(123, 159, 255, 0.24);
+  background: linear-gradient(170deg, rgba(22, 30, 49, 0.86), rgba(14, 19, 33, 0.9));
+
   mat-card-content {
     display: grid;
     gap: 10px;
+  }
 
-    button {
-      justify-content: flex-start;
+  .quick-btn {
+    justify-content: flex-start;
+    min-height: 44px;
+    border-radius: 12px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+
+    mat-icon {
+      margin-right: 6px;
     }
+  }
+
+  .quick-btn--ten {
+    background: linear-gradient(135deg, rgba(63, 128, 255, 0.92), rgba(58, 92, 213, 0.92));
+    color: #f4f8ff;
+  }
+
+  .quick-btn--twenty {
+    background: linear-gradient(135deg, rgba(109, 86, 255, 0.92), rgba(71, 63, 215, 0.92));
+    color: #f6f3ff;
   }
 }
 
