@@ -148,9 +148,9 @@ import { PushupRecord } from '@nx-temp/stats-models';
     </mat-card>
 
     <ng-template #createDialog>
-      <div class="create-dialog">
-        <h3>Neuen Eintrag anlegen</h3>
+      <h2 mat-dialog-title>Neuen Eintrag anlegen</h2>
 
+      <mat-dialog-content class="create-dialog-content">
         <mat-form-field appearance="outline">
           <mat-label>Zeitpunkt</mat-label>
           <input matInput type="datetime-local" [value]="newTimestamp()" (input)="newTimestamp.set(asValue($event))" required />
@@ -165,18 +165,18 @@ import { PushupRecord } from '@nx-temp/stats-models';
           <mat-label>Quelle</mat-label>
           <input matInput type="text" [value]="newSource()" (input)="newSource.set(asValue($event))" />
         </mat-form-field>
+      </mat-dialog-content>
 
-        <div class="dialog-actions">
-          <button type="button" mat-button (click)="dialog.closeAll()">Abbrechen</button>
-          <button type="button" mat-flat-button [disabled]="isCreateBusy()" (click)="submitCreate()">
-            @if (isCreateBusy()) {
-              <mat-spinner diameter="14"></mat-spinner>
-            } @else {
-              Speichern
-            }
-          </button>
-        </div>
-      </div>
+      <mat-dialog-actions align="end">
+        <button type="button" mat-button (click)="dialog.closeAll()">Abbrechen</button>
+        <button type="button" mat-flat-button [disabled]="isCreateBusy()" (click)="submitCreate()">
+          @if (isCreateBusy()) {
+            <mat-spinner diameter="14"></mat-spinner>
+          } @else {
+            Speichern
+          }
+        </button>
+      </mat-dialog-actions>
     </ng-template>
   `,
   styleUrl: './stats-table.component.scss',

@@ -36,13 +36,9 @@ mat-table {
   gap: 8px;
 }
 
-.create-dialog {
+.create-dialog-content {
   display: grid;
   gap: 10px;
-}
-
-.dialog-actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 8px;
+  min-width: min(88vw, 420px);
+  padding-top: 4px;
 }
