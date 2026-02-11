@@ -42,18 +42,31 @@ import { PushupRecord } from '@nx-temp/stats-models';
               <tr>
                 <td>{{ entry.timestamp | date: 'dd.MM.yyyy, HH:mm' }}</td>
                 <td>
-                  <input
-                    type="number"
-                    min="1"
-                    [value]="editReps(entry)"
-                    (input)="setEditReps(entry, asValue($event))"
-                  />
+                  @if (isEditing(entry._id)) {
+                    <input
+                      type="number"
+                      min="1"
+                      [value]="editReps(entry)"
+                      (input)="setEditReps(entry, asValue($event))"
+                    />
+                  } @else {
+                    <span>{{ entry.reps }}</span>
+                  }
                 </td>
                 <td>
-                  <input type="text" [value]="editSource(entry)" (input)="setEditSource(entry, asValue($event))" />
+                  @if (isEditing(entry._id)) {
+                    <input type="text" [value]="editSource(entry)" (input)="setEditSource(entry, asValue($event))" />
+                  } @else {
+                    <span>{{ entry.source }}</span>
+                  }
                 </td>
                 <td class="actions">
-                  <button type="button" (click)="save(entry)">Speichern</button>
+                  @if (isEditing(entry._id)) {
+                    <button type="button" (click)="save(entry)">Speichern</button>
+                    <button type="button" (click)="cancelEdit()">Abbrechen</button>
+                  } @else {
+                    <button type="button" aria-label="Edit" title="Edit" (click)="startEdit(entry)">✏️</button>
+                  }
                   <button type="button" class="danger" (click)="remove.emit(entry._id)">Löschen</button>
                 </td>
               </tr>
@@ -83,9 +96,24 @@ export class StatsTableComponent {
 
   private readonly editedReps = signal<Record<string, string>>({});
   private readonly editedSource = signal<Record<string, string>>({});
+  private readonly editingId = signal<string | null>(null);
 
   asValue(event: Event): string {
     return (event.target as HTMLInputElement).value;
+  }
+
+  isEditing(id: string): boolean {
+    return this.editingId() === id;
+  }
+
+  startEdit(entry: PushupRecord): void {
+    this.editingId.set(entry._id);
+    this.editedReps.update((prev) => ({ ...prev, [entry._id]: String(entry.reps) }));
+    this.editedSource.update((prev) => ({ ...prev, [entry._id]: entry.source }));
+  }
+
+  cancelEdit(): void {
+    this.editingId.set(null);
   }
 
   editReps(entry: PushupRecord): string {
@@ -126,5 +154,6 @@ export class StatsTableComponent {
       reps,
       source: this.editSource(entry) || 'web',
     });
+    this.editingId.set(null);
   }
 }
