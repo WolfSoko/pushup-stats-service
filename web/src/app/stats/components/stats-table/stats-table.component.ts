@@ -10,6 +10,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatRippleModule } from '@angular/material/core';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatSelectModule } from '@angular/material/select';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { PushupRecord } from '@nx-temp/stats-models';
 
@@ -26,6 +27,7 @@ import { PushupRecord } from '@nx-temp/stats-models';
     MatIconModule,
     MatTableModule,
     MatSortModule,
+    MatSelectModule,
     MatRippleModule,
     ScrollingModule,
   ],
@@ -74,6 +76,17 @@ import { PushupRecord } from '@nx-temp/stats-models';
                 <input matInput type="text" [value]="editSource(entry)" (input)="setEditSource(entry, asValue($event))" />
               } @else {
                 <span>{{ entry.source }}</span>
+              }
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="type">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Typ</mat-header-cell>
+            <mat-cell *matCellDef="let entry">
+              @if (isEditing(entry._id)) {
+                <input matInput type="text" [value]="editType(entry)" (input)="setEditType(entry, asValue($event))" />
+              } @else {
+                <span>{{ entry.type || 'Standard' }}</span>
               }
             </mat-cell>
           </ng-container>
@@ -162,6 +175,23 @@ import { PushupRecord } from '@nx-temp/stats-models';
         </mat-form-field>
 
         <mat-form-field appearance="outline">
+          <mat-label>Typ</mat-label>
+          <mat-select [value]="newType()" (valueChange)="newType.set($event)">
+            @for (typeOption of typeOptions; track typeOption) {
+              <mat-option [value]="typeOption">{{ typeOption }}</mat-option>
+            }
+            <mat-option value="Custom">Custom</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        @if (newType() === 'Custom') {
+          <mat-form-field appearance="outline">
+            <mat-label>Eigener Typ</mat-label>
+            <input matInput type="text" [value]="newTypeCustom()" (input)="newTypeCustom.set(asValue($event))" />
+          </mat-form-field>
+        }
+
+        <mat-form-field appearance="outline">
           <mat-label>Quelle</mat-label>
           <input matInput type="text" [value]="newSource()" (input)="newSource.set(asValue($event))" />
         </mat-form-field>
@@ -191,19 +221,23 @@ export class StatsTableComponent implements AfterViewInit {
   readonly busyAction = input<'create' | 'update' | 'delete' | null>(null);
   readonly busyId = input<string | null>(null);
 
-  readonly create = output<{ timestamp: string; reps: number; source?: string }>();
-  readonly update = output<{ id: string; reps: number; source: string }>();
+  readonly create = output<{ timestamp: string; reps: number; source?: string; type?: string }>();
+  readonly update = output<{ id: string; reps: number; source: string; type?: string }>();
   readonly remove = output<string>();
 
   readonly newTimestamp = signal('');
   readonly newReps = signal('');
   readonly newSource = signal('web');
+  readonly newType = signal('Standard');
+  readonly newTypeCustom = signal('');
+  readonly typeOptions = ['Standard', 'Diamond', 'Wide', 'Archer', 'Decline', 'Incline', 'Pike', 'Knuckle'];
 
-  readonly displayedColumns = ['timestamp', 'reps', 'source', 'actions'];
+  readonly displayedColumns = ['timestamp', 'reps', 'source', 'type', 'actions'];
   readonly dataSource = new MatTableDataSource<PushupRecord>([]);
 
   private readonly editedReps = signal<Record<string, string>>({});
   private readonly editedSource = signal<Record<string, string>>({});
+  private readonly editedType = signal<Record<string, string>>({});
   private readonly editingId = signal<string | null>(null);
 
   constructor() {
@@ -211,6 +245,7 @@ export class StatsTableComponent implements AfterViewInit {
       if (property === 'timestamp') return new Date(item.timestamp).getTime();
       if (property === 'reps') return item.reps;
       if (property === 'source') return item.source;
+      if (property === 'type') return item.type || 'Standard';
       return '';
     };
 
@@ -253,6 +288,7 @@ export class StatsTableComponent implements AfterViewInit {
     this.editingId.set(entry._id);
     this.editedReps.update((prev) => ({ ...prev, [entry._id]: String(entry.reps) }));
     this.editedSource.update((prev) => ({ ...prev, [entry._id]: entry.source }));
+    this.editedType.update((prev) => ({ ...prev, [entry._id]: entry.type || 'Standard' }));
   }
 
   cancelEdit(): void {
@@ -275,6 +311,14 @@ export class StatsTableComponent implements AfterViewInit {
     this.editedSource.update((prev) => ({ ...prev, [entry._id]: value }));
   }
 
+  editType(entry: PushupRecord): string {
+    return this.editedType()[entry._id] ?? entry.type ?? 'Standard';
+  }
+
+  setEditType(entry: PushupRecord, value: string): void {
+    this.editedType.update((prev) => ({ ...prev, [entry._id]: value }));
+  }
+
   submitCreate(): void {
     const reps = Number(this.newReps());
     if (!this.newTimestamp() || Number.isNaN(reps) || reps <= 0) return;
@@ -283,9 +327,11 @@ export class StatsTableComponent implements AfterViewInit {
       timestamp: this.newTimestamp(),
       reps,
       source: this.newSource() || 'web',
+      type: this.resolvedNewType(),
     });
 
     this.newReps.set('');
+    this.newTypeCustom.set('');
     this.dialog.closeAll();
   }
 
@@ -302,7 +348,14 @@ export class StatsTableComponent implements AfterViewInit {
       id: entry._id,
       reps,
       source: this.editSource(entry) || 'web',
+      type: this.editType(entry) || 'Standard',
     });
     this.editingId.set(null);
+  }
+
+  private resolvedNewType(): string {
+    if (this.newType() !== 'Custom') return this.newType();
+    const custom = this.newTypeCustom().trim();
+    return custom || 'Custom';
   }
 }

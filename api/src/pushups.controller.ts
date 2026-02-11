@@ -18,16 +18,22 @@ export class PushupsController {
   }
 
   @Post()
-  async create(@Body() body: { timestamp: string; reps: number; source?: string }) {
-    return this.db.create({ timestamp: body.timestamp, reps: Number(body.reps), source: body.source ?? 'api' });
+  async create(@Body() body: { timestamp: string; reps: number; source?: string; type?: string }) {
+    return this.db.create({
+      timestamp: body.timestamp,
+      reps: Number(body.reps),
+      source: body.source ?? 'api',
+      ...(body.type ? { type: body.type } : {}),
+    });
   }
 
   @Put(':id')
-  async update(@Param('id') id: string, @Body() body: { timestamp?: string; reps?: number; source?: string }) {
+  async update(@Param('id') id: string, @Body() body: { timestamp?: string; reps?: number; source?: string; type?: string }) {
     const updated = await this.db.update(id, {
       ...(body.timestamp ? { timestamp: body.timestamp } : {}),
       ...(typeof body.reps !== 'undefined' ? { reps: Number(body.reps) } : {}),
       ...(typeof body.source !== 'undefined' ? { source: body.source } : {}),
+      ...(typeof body.type !== 'undefined' ? { type: body.type } : {}),
     });
 
     if (!updated) throw new NotFoundException('Pushup entry not found');

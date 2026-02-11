@@ -119,7 +119,7 @@ export class StatsDashboardComponent {
     });
   }
 
-  async onCreateEntry(payload: { timestamp: string; reps: number; source?: string }) {
+  async onCreateEntry(payload: { timestamp: string; reps: number; source?: string; type?: string }) {
     this.busyAction.set('create');
     this.busyId.set(null);
     try {
@@ -131,11 +131,11 @@ export class StatsDashboardComponent {
     }
   }
 
-  async onUpdateEntry(payload: { id: string; reps: number; source?: string }) {
+  async onUpdateEntry(payload: { id: string; reps: number; source?: string; type?: string }) {
     this.busyAction.set('update');
     this.busyId.set(payload.id);
     try {
-      await firstValueFrom(this.api.updatePushup(payload.id, { reps: payload.reps, source: payload.source }));
+      await firstValueFrom(this.api.updatePushup(payload.id, { reps: payload.reps, source: payload.source, type: payload.type }));
       this.refreshAll();
     } finally {
       this.busyAction.set(null);

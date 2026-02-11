@@ -85,7 +85,27 @@ describe('StatsTableComponent', () => {
     component.newSource.set('web');
     component.submitCreate();
 
-    expect(createSpy).toHaveBeenCalledWith({ timestamp: '2026-02-11T07:00', reps: 12, source: 'web' });
+    expect(createSpy).toHaveBeenCalledWith({ timestamp: '2026-02-11T07:00', reps: 12, source: 'web', type: 'Standard' });
+  });
+
+  it('emits custom type from create dialog state', () => {
+    const component = fixture.componentInstance;
+    const createSpy = jest.fn();
+    component.create.subscribe(createSpy);
+
+    component.newTimestamp.set('2026-02-11T07:10');
+    component.newReps.set('8');
+    component.newSource.set('web');
+    component.newType.set('Custom');
+    component.newTypeCustom.set('Diamond Tempo');
+    component.submitCreate();
+
+    expect(createSpy).toHaveBeenCalledWith({
+      timestamp: '2026-02-11T07:10',
+      reps: 8,
+      source: 'web',
+      type: 'Diamond Tempo',
+    });
   });
 
   it('does not emit create on invalid input', () => {
@@ -112,7 +132,7 @@ describe('StatsTableComponent', () => {
 
     component.save(entry);
 
-    expect(updateSpy).toHaveBeenCalledWith({ id: '1', reps: 15, source: 'web' });
+    expect(updateSpy).toHaveBeenCalledWith({ id: '1', reps: 15, source: 'web', type: 'Standard' });
     expect(component.isEditing('1')).toBe(false);
   });
 

@@ -8,6 +8,7 @@ export type PushupDoc = {
   timestamp: string;
   reps: number;
   source: string;
+  type?: string;
   createdAt?: Date;
   updatedAt?: Date;
 };
