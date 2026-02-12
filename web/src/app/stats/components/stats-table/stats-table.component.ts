@@ -1,5 +1,5 @@
 import { AsyncPipe, DatePipe, NgTemplateOutlet, isPlatformBrowser } from '@angular/common';
-import { AfterViewInit, Component, PLATFORM_ID, TemplateRef, ViewChild, effect, inject, input, output, signal } from '@angular/core';
+import { AfterViewInit, Component, PLATFORM_ID, TemplateRef, ViewChild, computed, effect, inject, input, output, signal } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { map, startWith } from 'rxjs';
 import { MatButtonModule } from '@angular/material/button';
@@ -41,6 +41,11 @@ import { PushupRecord } from '@nx-temp/stats-models';
       <mat-card-header>
         <mat-card-title>Einträge</mat-card-title>
         <mat-card-subtitle>{{ entries().length }} Einträge</mat-card-subtitle>
+        <span class="header-spacer"></span>
+        <button type="button" mat-button class="toggle-source" (click)="toggleSourceColumn()">
+          <mat-icon>{{ showSourceColumn() ? 'visibility' : 'visibility_off' }}</mat-icon>
+          Quelle
+        </button>
       </mat-card-header>
 
       <mat-card-content>
@@ -85,14 +90,14 @@ import { PushupRecord } from '@nx-temp/stats-models';
           <mat-cell *matCellDef="let entry"><span>{{ entry.reps }}</span></mat-cell>
         </ng-container>
 
-        <ng-container matColumnDef="source">
-          <mat-header-cell *matHeaderCellDef mat-sort-header>Quelle</mat-header-cell>
-          <mat-cell *matCellDef="let entry"><span>{{ entry.source }}</span></mat-cell>
-        </ng-container>
-
         <ng-container matColumnDef="type">
           <mat-header-cell *matHeaderCellDef mat-sort-header>Typ</mat-header-cell>
           <mat-cell *matCellDef="let entry"><span>{{ entry.type || 'Standard' }}</span></mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="source">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Quelle</mat-header-cell>
+          <mat-cell *matCellDef="let entry"><span>{{ entry.source }}</span></mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="actions">
@@ -119,8 +124,8 @@ import { PushupRecord } from '@nx-temp/stats-models';
           </mat-cell>
         </ng-container>
 
-        <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
-        <mat-row matRipple *matRowDef="let row; columns: displayedColumns"></mat-row>
+        <mat-header-row *matHeaderRowDef="displayedColumns(); sticky: true"></mat-header-row>
+        <mat-row matRipple *matRowDef="let row; columns: displayedColumns()"></mat-row>
       </mat-table>
     </ng-template>
 
@@ -277,9 +282,16 @@ export class StatsTableComponent implements AfterViewInit {
     map((value) => this.filterOptions(value, this.sourceOptions)),
   );
 
-  // (moved below)
+  private static readonly SOURCE_COL_STORAGE_KEY = 'pushups.ui.showSourceColumn';
 
-  readonly displayedColumns = ['timestamp', 'reps', 'source', 'type', 'actions'];
+  readonly showSourceColumn = signal(false);
+
+  readonly displayedColumns = computed(() => {
+    const base = ['timestamp', 'reps', 'type'];
+    const cols = this.showSourceColumn() ? [...base, 'source'] : base;
+    return [...cols, 'actions'];
+  });
+
   readonly dataSource = new MatTableDataSource<PushupRecord>([]);
 
   private readonly editedReps = signal<Record<string, string>>({});
@@ -308,6 +320,18 @@ export class StatsTableComponent implements AfterViewInit {
       if (property === 'type') return item.type || 'Standard';
       return '';
     };
+
+    if (this.isBrowser) {
+      const raw = window.localStorage.getItem(StatsTableComponent.SOURCE_COL_STORAGE_KEY);
+      if (raw === 'true') this.showSourceColumn.set(true);
+
+      effect(() => {
+        window.localStorage.setItem(
+          StatsTableComponent.SOURCE_COL_STORAGE_KEY,
+          this.showSourceColumn() ? 'true' : 'false',
+        );
+      });
+    }
 
     effect(() => {
       this.dataSource.data = this.entries();
@@ -481,6 +505,10 @@ export class StatsTableComponent implements AfterViewInit {
     const needle = (value ?? '').toLowerCase().trim();
     if (!needle) return options;
     return options.filter((opt) => opt.toLowerCase().includes(needle));
+  }
+
+  toggleSourceColumn(): void {
+    this.showSourceColumn.update((prev) => !prev);
   }
 
   private normalizeSource(value: string): string {
