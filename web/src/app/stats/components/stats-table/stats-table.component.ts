@@ -153,8 +153,20 @@ import { PushupRecord } from '@nx-temp/stats-models';
 
         <mat-form-field appearance="outline">
           <mat-label>Quelle</mat-label>
-          <input matInput type="text" [value]="newSource()" (input)="newSource.set(asValue($event))" />
+          <mat-select [value]="newSourceMode()" (valueChange)="newSourceMode.set($event)">
+            @for (sourceOption of sourceOptions; track sourceOption) {
+              <mat-option [value]="sourceOption">{{ sourceOption }}</mat-option>
+            }
+            <mat-option value="Custom">Custom</mat-option>
+          </mat-select>
         </mat-form-field>
+
+        @if (newSourceMode() === 'Custom') {
+          <mat-form-field appearance="outline">
+            <mat-label>Eigene Quelle</mat-label>
+            <input matInput type="text" [value]="newSourceCustom()" (input)="newSourceCustom.set(asValue($event))" />
+          </mat-form-field>
+        }
       </mat-dialog-content>
 
       <mat-dialog-actions align="end">
@@ -197,8 +209,20 @@ import { PushupRecord } from '@nx-temp/stats-models';
 
         <mat-form-field appearance="outline">
           <mat-label>Quelle</mat-label>
-          <input matInput type="text" [value]="editSourceById()" (input)="setEditSourceById(asValue($event))" />
+          <mat-select [value]="editSourceMode()" (valueChange)="editSourceMode.set($event)">
+            @for (sourceOption of sourceOptions; track sourceOption) {
+              <mat-option [value]="sourceOption">{{ sourceOption }}</mat-option>
+            }
+            <mat-option value="Custom">Custom</mat-option>
+          </mat-select>
         </mat-form-field>
+
+        @if (editSourceMode() === 'Custom') {
+          <mat-form-field appearance="outline">
+            <mat-label>Eigene Quelle</mat-label>
+            <input matInput type="text" [value]="editSourceCustom()" (input)="editSourceCustom.set(asValue($event))" />
+          </mat-form-field>
+        }
       </mat-dialog-content>
 
       <mat-dialog-actions align="end">
@@ -234,10 +258,14 @@ export class StatsTableComponent implements AfterViewInit {
 
   readonly newTimestamp = signal('');
   readonly newReps = signal('');
-  readonly newSource = signal('web');
+  readonly newSourceMode = signal('web');
+  readonly newSourceCustom = signal('');
+
   readonly newType = signal('Standard');
   readonly newTypeCustom = signal('');
+
   readonly typeOptions = ['Standard', 'Diamond', 'Wide', 'Archer', 'Decline', 'Incline', 'Pike', 'Knuckle'];
+  readonly sourceOptions = ['web', 'wa'];
 
   readonly displayedColumns = ['timestamp', 'reps', 'source', 'type', 'actions'];
   readonly dataSource = new MatTableDataSource<PushupRecord>([]);
@@ -248,6 +276,8 @@ export class StatsTableComponent implements AfterViewInit {
   readonly editingId = signal<string | null>(null);
   readonly editTypeMode = signal('Standard');
   readonly editTypeCustom = signal('');
+  readonly editSourceMode = signal('web');
+  readonly editSourceCustom = signal('');
 
   constructor() {
     this.dataSource.sortingDataAccessor = (item, property) => {
@@ -306,7 +336,15 @@ export class StatsTableComponent implements AfterViewInit {
   startEdit(entry: PushupRecord): void {
     this.editingId.set(entry._id);
     this.editedReps.update((prev) => ({ ...prev, [entry._id]: String(entry.reps) }));
-    this.editedSource.update((prev) => ({ ...prev, [entry._id]: entry.source }));
+    const source = entry.source || 'web';
+    this.editedSource.update((prev) => ({ ...prev, [entry._id]: source }));
+    if (this.sourceOptions.includes(source)) {
+      this.editSourceMode.set(source);
+      this.editSourceCustom.set('');
+    } else {
+      this.editSourceMode.set('Custom');
+      this.editSourceCustom.set(source);
+    }
 
     const type = entry.type || 'Standard';
     this.editedType.update((prev) => ({ ...prev, [entry._id]: type }));
@@ -382,6 +420,10 @@ export class StatsTableComponent implements AfterViewInit {
 
     const type = this.editTypeMode() === 'Custom' ? this.editTypeCustom().trim() || 'Custom' : this.editTypeMode();
     this.setEditType(entry, type);
+
+    const source = this.editSourceMode() === 'Custom' ? this.editSourceCustom().trim() || 'Custom' : this.editSourceMode();
+    this.setEditSource(entry, source);
+
     this.save(entry);
     this.dialog.closeAll();
   }
@@ -393,12 +435,13 @@ export class StatsTableComponent implements AfterViewInit {
     this.create.emit({
       timestamp: this.newTimestamp(),
       reps,
-      source: this.newSource() || 'web',
+      source: this.resolvedNewSource(),
       type: this.resolvedNewType(),
     });
 
     this.newReps.set('');
     this.newTypeCustom.set('');
+    this.newSourceCustom.set('');
     this.dialog.closeAll();
   }
 
@@ -423,6 +466,12 @@ export class StatsTableComponent implements AfterViewInit {
   private resolvedNewType(): string {
     if (this.newType() !== 'Custom') return this.newType();
     const custom = this.newTypeCustom().trim();
+    return custom || 'Custom';
+  }
+
+  private resolvedNewSource(): string {
+    if (this.newSourceMode() !== 'Custom') return this.newSourceMode() || 'web';
+    const custom = this.newSourceCustom().trim();
     return custom || 'Custom';
   }
 }

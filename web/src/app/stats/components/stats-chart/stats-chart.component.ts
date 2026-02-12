@@ -49,6 +49,7 @@ export class StatsChartComponent implements AfterViewInit {
   @ViewChild('chartCanvas') private chartCanvas?: ElementRef<HTMLCanvasElement>;
 
   readonly granularity = input<StatsGranularity>('daily');
+  readonly rangeMode = input<'day' | 'week' | 'month'>('week');
   readonly series = input<StatsSeriesEntry[]>([]);
 
   private readonly viewReady = signal(false);
@@ -140,7 +141,29 @@ export class StatsChartComponent implements AfterViewInit {
           interaction: { intersect: false, mode: 'index' },
           scales: {
             x: {
-              ticks: { color: '#c8d3ea', maxRotation: 0, autoSkip: true },
+              ticks: {
+                color: '#c8d3ea',
+                maxRotation: 0,
+                autoSkip: this.rangeMode() === 'day' ? false : true,
+                maxTicksLimit: this.rangeMode() === 'month' ? 12 : undefined,
+                callback: (value, index) => {
+                  const bucket = series[index]?.bucket ?? '';
+                  if (this.rangeMode() === 'day') {
+                    return bucket; // e.g. 08
+                  }
+                  // daily buckets are ISO dates (YYYY-MM-DD)
+                  const parsed = /^\d{4}-\d{2}-\d{2}$/.test(bucket) ? new Date(`${bucket}T00:00:00`) : null;
+                  if (!parsed || Number.isNaN(parsed.getTime())) return bucket;
+
+                  if (this.rangeMode() === 'week') {
+                    const weekday = parsed.toLocaleDateString('de-DE', { weekday: 'short' });
+                    return `${weekday}`;
+                  }
+
+                  // month
+                  return String(parsed.getDate());
+                },
+              },
               grid: { color: 'rgba(116, 140, 190, 0.15)' },
             },
             y: {

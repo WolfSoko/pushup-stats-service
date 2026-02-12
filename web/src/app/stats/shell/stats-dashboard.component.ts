@@ -32,6 +32,36 @@ function createDefaultRange(): { from: string; to: string } {
   return { from, to };
 }
 
+function parseIsoDate(value: string): Date | null {
+  if (!value) return null;
+  const [y, m, d] = value.split('-').map(Number);
+  if (!y || !m || !d) return null;
+  return new Date(y, m - 1, d);
+}
+
+function inferRangeMode(from: string, to: string): 'day' | 'week' | 'month' {
+  const start = parseIsoDate(from);
+  const end = parseIsoDate(to);
+  if (!start || !end) return 'week';
+  const s = new Date(start.getFullYear(), start.getMonth(), start.getDate());
+  const e = new Date(end.getFullYear(), end.getMonth(), end.getDate());
+
+  if (s.getTime() === e.getTime()) return 'day';
+
+  const diffDays = Math.round((e.getTime() - s.getTime()) / 86_400_000) + 1;
+  if (diffDays === 7 && s.getDay() === 1) return 'week';
+
+  const isMonthStart = s.getDate() === 1;
+  const lastDay = new Date(s.getFullYear(), s.getMonth() + 1, 0).getDate();
+  const isMonthEnd =
+    e.getFullYear() === s.getFullYear() &&
+    e.getMonth() === s.getMonth() &&
+    e.getDate() === lastDay;
+
+  if (isMonthStart && isMonthEnd) return 'month';
+  return 'week';
+}
+
 @Component({
   selector: 'app-stats-dashboard',
   imports: [
@@ -59,6 +89,7 @@ export class StatsDashboardComponent {
 
   readonly from = signal(this.initialRange.from);
   readonly to = signal(this.initialRange.to);
+  readonly rangeMode = signal<'day' | 'week' | 'month'>(inferRangeMode(this.initialRange.from, this.initialRange.to));
   readonly busyAction = signal<'create' | 'update' | 'delete' | null>(null);
   readonly busyId = signal<string | null>(null);
 
@@ -99,13 +130,36 @@ export class StatsDashboardComponent {
   readonly rows = computed<StatsSeriesEntry[]>(() => this.stats().series);
   readonly entryRows = computed<PushupRecord[]>(() => this.entriesResource.value() ?? []);
   readonly dailyGoal = signal(100);
-  readonly todayTotal = computed(() => {
-    const today = toLocalIsoDate(new Date());
+
+  readonly selectedDayTotal = computed(() => {
+    const day = this.from() || toLocalIsoDate(new Date());
     return this.entryRows()
-      .filter((entry) => entry.timestamp.slice(0, 10) === today)
+      .filter((entry) => entry.timestamp.slice(0, 10) === day)
       .reduce((sum, entry) => sum + entry.reps, 0);
   });
-  readonly goalProgressPercent = computed(() => Math.min(100, Math.round((this.todayTotal() / this.dailyGoal()) * 100)));
+
+  readonly periodTotal = computed(() => {
+    // Use entry data for day view (more robust when user browses non-today days)
+    if (this.rangeMode() === 'day') return this.selectedDayTotal();
+    return this.total();
+  });
+
+  readonly periodGoal = computed(() => {
+    const multiplier = this.rangeMode() === 'day' ? 1 : Math.max(1, this.days());
+    return this.dailyGoal() * multiplier;
+  });
+
+  readonly goalProgressPercent = computed(() =>
+    this.periodGoal() ? Math.min(100, Math.round((this.periodTotal() / this.periodGoal()) * 100)) : 0,
+  );
+
+  readonly periodTitle = computed(() => {
+    if (this.rangeMode() === 'day') {
+      const today = toLocalIsoDate(new Date());
+      return this.from() === today ? 'Heute gesamt' : 'Tag gesamt';
+    }
+    return this.rangeMode() === 'week' ? 'Woche gesamt' : 'Monat gesamt';
+  });
   readonly lastEntry = computed<PushupRecord | null>(() => {
     const rows = this.entryRows();
     if (!rows.length) return null;
@@ -127,6 +181,11 @@ export class StatsDashboardComponent {
   readonly liveConnected = computed(() => this.live.connected());
 
   constructor() {
+    effect(() => {
+      // Keep derived range mode in sync even when the user picks dates manually.
+      this.rangeMode.set(inferRangeMode(this.from(), this.to()));
+    });
+
     effect(() => {
       if (!isPlatformBrowser(this.platformId)) return;
       const params = new URLSearchParams();

@@ -70,6 +70,7 @@ export class FilterBarComponent implements OnChanges {
 
   readonly fromChange = output<string>();
   readonly toChange = output<string>();
+  readonly modeChange = output<RangeMode>();
 
   readonly mode = signal<RangeMode>('week');
 
@@ -89,19 +90,41 @@ export class FilterBarComponent implements OnChanges {
   }
 
   ngOnChanges(): void {
+    const start = this.parseIsoDate(this.from());
+    const end = this.parseIsoDate(this.to());
+
     this.range.patchValue(
       {
-        start: this.parseIsoDate(this.from()),
-        end: this.parseIsoDate(this.to()),
+        start,
+        end,
       },
       { emitEvent: false },
     );
+
+    // Keep toggle state in sync when range is changed from outside (e.g. initial URL params).
+    const inferred = this.inferMode(start, end);
+    this.mode.set(inferred);
   }
 
   setMode(value: RangeMode): void {
     if (!value) return;
+
+    const previousStart = this.range.controls.start.value;
+    const previousEnd = this.range.controls.end.value;
+    const today = this.startOfDay(new Date());
+
     this.mode.set(value);
-    this.applyModeRange();
+    this.modeChange.emit(value);
+
+    // UX: when switching from week/month to day (or month to week), pick "today" if it's inside the current range.
+    const shouldPreferToday =
+      !!previousStart &&
+      !!previousEnd &&
+      today.getTime() >= this.startOfDay(previousStart).getTime() &&
+      today.getTime() <= this.startOfDay(previousEnd).getTime() &&
+      (value === 'day' || value === 'week');
+
+    this.applyModeRange(shouldPreferToday ? today : undefined);
   }
 
   jumpToToday(): void {
@@ -165,6 +188,23 @@ export class FilterBarComponent implements OnChanges {
 
   private startOfDay(value: Date): Date {
     return new Date(value.getFullYear(), value.getMonth(), value.getDate());
+  }
+
+  private inferMode(start: Date | null, end: Date | null): RangeMode {
+    if (!start || !end) return 'week';
+    const s = this.startOfDay(start);
+    const e = this.startOfDay(end);
+    if (s.getTime() === e.getTime()) return 'day';
+
+    const diffDays = Math.round((e.getTime() - s.getTime()) / 86_400_000) + 1;
+    if (diffDays === 7 && s.getDay() === 1) return 'week'; // Monday
+
+    const isMonthStart = s.getDate() === 1;
+    const lastDay = new Date(s.getFullYear(), s.getMonth() + 1, 0).getDate();
+    const isMonthEnd = e.getFullYear() === s.getFullYear() && e.getMonth() === s.getMonth() && e.getDate() === lastDay;
+    if (isMonthStart && isMonthEnd) return 'month';
+
+    return 'week';
   }
 
   private parseIsoDate(value: string): Date | null {

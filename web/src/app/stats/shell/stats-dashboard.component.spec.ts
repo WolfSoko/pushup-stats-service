@@ -76,7 +76,8 @@ describe('StatsDashboardComponent', () => {
   it('shows german title and today focus section', () => {
     const text = fixture.nativeElement.textContent;
     expect(text).toContain('Liegestütze Statistik');
-    expect(text).toContain('Heute gesamt');
+    // Title depends on selected range mode.
+    expect(text).toContain('gesamt');
     expect(text).toContain('Zielfortschritt');
     expect(text).toContain('Letzter Eintrag');
   });
@@ -98,9 +99,18 @@ describe('StatsDashboardComponent', () => {
     expect(component.allTimeAvg()).toBe('48.0');
   });
 
-  it('computes today total, latest entry and latest 10 rows', () => {
+  it('computes selected period totals, latest entry and latest 10 rows', async () => {
     const component = fixture.componentInstance;
-    expect(component.todayTotal()).toBe(12);
+
+    // Switch to "day" mode by selecting today.
+    const today = todayTs.slice(0, 10);
+    component.from.set(today);
+    component.to.set(today);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    expect(component.selectedDayTotal()).toBe(12);
+    expect(component.periodTotal()).toBe(12);
     expect(component.lastEntry()?._id).toBe('2');
     expect(component.latestEntries()).toHaveLength(2);
   });

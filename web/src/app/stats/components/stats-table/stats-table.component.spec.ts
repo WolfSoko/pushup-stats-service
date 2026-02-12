@@ -83,7 +83,7 @@ describe('StatsTableComponent', () => {
 
     component.newTimestamp.set('2026-02-11T07:00');
     component.newReps.set('12');
-    component.newSource.set('web');
+    component.newSourceMode.set('web');
     component.submitCreate();
 
     expect(createSpy).toHaveBeenCalledWith({ timestamp: '2026-02-11T07:00', reps: 12, source: 'web', type: 'Standard' });
@@ -96,7 +96,7 @@ describe('StatsTableComponent', () => {
 
     component.newTimestamp.set('2026-02-11T07:10');
     component.newReps.set('8');
-    component.newSource.set('web');
+    component.newSourceMode.set('web');
     component.newType.set('Custom');
     component.newTypeCustom.set('Diamond Tempo');
     component.submitCreate();
@@ -177,7 +177,7 @@ describe('StatsTableComponent', () => {
     const entry = { _id: '1', timestamp: '2026-02-10T13:45:00', reps: 8, source: 'wa' };
     component.startEdit(entry);
     component.setEditRepsById('14');
-    component.setEditSourceById('web');
+    component.editSourceMode.set('web');
     component.editTypeMode.set('Diamond');
 
     component.saveFromDialog();
@@ -243,7 +243,7 @@ describe('StatsTableComponent', () => {
 
     component.newTimestamp.set('2026-02-11T07:20');
     component.newReps.set('9');
-    component.newSource.set('web');
+    component.newSourceMode.set('web');
     component.newType.set('Custom');
     component.newTypeCustom.set('');
     component.submitCreate();

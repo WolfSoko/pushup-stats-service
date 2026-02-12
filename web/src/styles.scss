@@ -43,6 +43,15 @@ mat-card {
   box-shadow: 0 14px 34px rgba(1, 5, 16, 0.45);
 }
 
+/* Ensure consistent spacing between card title area and content. */
+mat-card-header {
+  padding-bottom: 8px;
+}
+
+mat-card-header + mat-card-content {
+  padding-top: 0;
+}
+
 .mdc-text-field--outlined {
   --mdc-outlined-text-field-outline-color: rgba(120, 149, 209, 0.42);
 }
