@@ -1,0 +1,95 @@
+
+> nx run web:test
+
+[0m[7m[1m[31m FAIL [39m[22m[27m[0m [0m[7m[37m web [39m[27m[0m [2mweb/src/app/stats/shell/[22m[1manalysis-page.component.spec.ts[22m
+  [1m● [22mTest suite failed to run
+    [1m[31mJest encountered an unexpected token[39m[22m
+    Jest failed to parse a file. This happens e.g. when your code or its dependencies use non-standard JavaScript syntax, or when Jest is not configured to support such syntax.
+    Out of the box Jest supports Babel, which will be used to transform your files into valid JS based on your Babel configuration.
+    By default "node_modules" folder is ignored by transformers.
+    Here's what you can do:
+     • If you are trying to use ECMAScript Modules, see [4mhttps://jestjs.io/docs/ecmascript-modules[24m for how to enable it.
+     • If you are trying to use TypeScript, see [4mhttps://jestjs.io/docs/getting-started#using-typescript[24m
+     • To have some of your "node_modules" files transformed, you can specify a custom [1m"transformIgnorePatterns"[22m in your config.
+     • If you need a custom transformation, specify a [1m"transform"[22m option in your config.
+     • If you simply want to mock your non-JS modules (e.g. binary assets) you can stub them out with the [1m"moduleNameMapper"[22m config option.
+    You'll find more details and examples of these config options in the docs:
+    [36mhttps://jestjs.io/docs/configuration[39m
+    For information about custom transformations, see:
+    [36mhttps://jestjs.io/docs/code-transformation[39m
+    [1m[31mDetails:[39m[22m
+    /home/wolf/.openclaw/workspace/pushup-stats-service/node_modules/lodash-es/lodash.js:10
+    export { default as add } from './add.js';
+    ^^^^^^
+    SyntaxError: Unexpected token 'export'
+    [0m [90m 2 |[39m [36mimport[39m { [33mMatCardModule[39m } [36mfrom[39m [32m'@angular/material/card'[39m[33m;[39m
+     [90m 3 |[39m [36mimport[39m { [33mMatTableModule[39m } [36mfrom[39m [32m'@angular/material/table'[39m[33m;[39m
+    [31m[1m>[22m[39m[90m 4 |[39m [36mimport[39m { [33mBaseChartDirective[39m } [36mfrom[39m [32m'ng2-charts'[39m[33m;[39m
+     [90m   |[39m [31m[1m^[22m[39m
+     [90m 5 |[39m [36mimport[39m { [33mChartConfiguration[39m[33m,[39m [33mChartData[39m[33m,[39m [33mChartType[39m } [36mfrom[39m [32m'chart.js'[39m[33m;[39m
+     [90m 6 |[39m [36mimport[39m { firstValueFrom } [36mfrom[39m [32m'rxjs'[39m[33m;[39m
+     [90m 7 |[39m [36mimport[39m { [33mStatsApiService[39m } [36mfrom[39m [32m'@nx-temp/stats-data-access'[39m[33m;[39m[0m
+      [2mat Runtime.createScriptFromCode ([22m../node_modules/jest-runtime/build/index.js[2m:1318:40)[22m
+      [2mat Object.<anonymous> ([22m../node_modules/ng2-charts/fesm2022/ng2-charts.mjs[2m:4:23)[22m
+      [2mat Object.<anonymous> ([22msrc/app/stats/shell/analysis-page.component.ts[2m:4:1)[22m
+      [2mat Object.<anonymous> ([22m[0m[36msrc/app/stats/shell/analysis-page.component.spec.ts[39m[0m[2m:4:1)[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m web [39m[27m[0m [2mweb/src/app/[22m[1mapp.spec.ts[22m
+[0m[7m[1m[31m FAIL [39m[22m[27m[0m [0m[7m[37m web [39m[27m[0m [2mweb/src/app/[22m[1mapp.routes.spec.ts[22m
+[1m[31m  [1m● [22m[1mappRoutes › lazy-loads analysis component[39m[22m
+    [1m[31mJest encountered an unexpected token[39m[22m
+    Jest failed to parse a file. This happens e.g. when your code or its dependencies use non-standard JavaScript syntax, or when Jest is not configured to support such syntax.
+    Out of the box Jest supports Babel, which will be used to transform your files into valid JS based on your Babel configuration.
+    By default "node_modules" folder is ignored by transformers.
+    Here's what you can do:
+     • If you are trying to use ECMAScript Modules, see [4mhttps://jestjs.io/docs/ecmascript-modules[24m for how to enable it.
+     • If you are trying to use TypeScript, see [4mhttps://jestjs.io/docs/getting-started#using-typescript[24m
+     • To have some of your "node_modules" files transformed, you can specify a custom [1m"transformIgnorePatterns"[22m in your config.
+     • If you need a custom transformation, specify a [1m"transform"[22m option in your config.
+     • If you simply want to mock your non-JS modules (e.g. binary assets) you can stub them out with the [1m"moduleNameMapper"[22m config option.
+    You'll find more details and examples of these config options in the docs:
+    [36mhttps://jestjs.io/docs/configuration[39m
+    For information about custom transformations, see:
+    [36mhttps://jestjs.io/docs/code-transformation[39m
+    [1m[31mDetails:[39m[22m
+    /home/wolf/.openclaw/workspace/pushup-stats-service/node_modules/lodash-es/lodash.js:10
+    export { default as add } from './add.js';
+    ^^^^^^
+    SyntaxError: Unexpected token 'export'
+[2m[22m
+[2m    [0m [90m 2 |[39m [36mimport[39m { [33mMatCardModule[39m } [36mfrom[39m [32m'@angular/material/card'[39m[33m;[39m[22m
+[2m     [90m 3 |[39m [36mimport[39m { [33mMatTableModule[39m } [36mfrom[39m [32m'@angular/material/table'[39m[33m;[39m[22m
+[2m    [31m[1m>[22m[2m[39m[90m 4 |[39m [36mimport[39m { [33mBaseChartDirective[39m } [36mfrom[39m [32m'ng2-charts'[39m[33m;[39m[22m
+[2m     [90m   |[39m [31m[1m^[22m[2m[39m[22m
+[2m     [90m 5 |[39m [36mimport[39m { [33mChartConfiguration[39m[33m,[39m [33mChartData[39m[33m,[39m [33mChartType[39m } [36mfrom[39m [32m'chart.js'[39m[33m;[39m[22m
+[2m     [90m 6 |[39m [36mimport[39m { firstValueFrom } [36mfrom[39m [32m'rxjs'[39m[33m;[39m[22m
+[2m     [90m 7 |[39m [36mimport[39m { [33mStatsApiService[39m } [36mfrom[39m [32m'@nx-temp/stats-data-access'[39m[33m;[39m[0m[22m
+[2m[22m
+[2m      [2mat Runtime.createScriptFromCode ([22m[2m../node_modules/jest-runtime/build/index.js[2m:1318:40)[22m[2m[22m
+[2m      [2mat Object.<anonymous> ([22m[2m../node_modules/ng2-charts/fesm2022/ng2-charts.mjs[2m:4:23)[22m[2m[22m
+[2m      [2mat Object.<anonymous> ([22m[2msrc/app/stats/shell/analysis-page.component.ts[2m:4:1)[22m[2m[22m
+[2m      [2mat [22m[2msrc/app/app.routes.ts[2m:16:26[22m[2m[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m web [39m[27m[0m [2mweb/src/app/stats/components/filter-bar/[22m[1mfilter-bar.component.spec.ts[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m web [39m[27m[0m [2mweb/src/app/stats/components/stats-table/[22m[1mstats-table.component.spec.ts[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m web [39m[27m[0m [2mweb/src/app/stats/shell/[22m[1mstats-dashboard.component.spec.ts[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m web [39m[27m[0m [2mweb/src/app/stats/shell/[22m[1mentries-page.component.spec.ts[22m
+[1mTest Suites: [22m[1m[31m2 failed[39m[22m, [1m[32m5 passed[39m[22m, 7 total
+[1mTests:       [22m[1m[31m1 failed[39m[22m, [1m[32m49 passed[39m[22m, 50 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        6.077 s, estimated 7 s
+[2mRan all test suites[22m[2m.[22m
+
+
+
+ NX   Running target test for project web failed
+
+Failed tasks:
+
+- web:test
+
+Hint: run the command with --verbose for more details.
+
+
+ NX   Nx Cloud encountered some problems
+
+You are not logged into Nx Cloud. You will have limited access to Nx Cloud features such as the remote cache. To log into your workspace, run "nx-cloud login". (code: 401)
+

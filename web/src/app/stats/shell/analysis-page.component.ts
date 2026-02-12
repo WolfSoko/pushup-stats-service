@@ -1,11 +1,12 @@
-import { NgStyle } from '@angular/common';
 import { Component, computed, inject, resource } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
-import { MatTooltipModule } from '@angular/material/tooltip';
+import { BaseChartDirective } from 'ng2-charts';
+import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
 import { firstValueFrom } from 'rxjs';
 import { StatsApiService } from '@nx-temp/stats-data-access';
 import { PushupRecord } from '@nx-temp/stats-models';
+import { enUS } from 'date-fns/locale';
 
 interface TrendPoint {
   label: string;
@@ -19,7 +20,7 @@ interface HeatmapRow {
 
 @Component({
   selector: 'app-analysis-page',
-  imports: [MatCardModule, MatTableModule, MatTooltipModule, NgStyle],
+  imports: [MatCardModule, MatTableModule, BaseChartDirective],
   template: `
     <main class="page-wrap">
       <section class="grid">
@@ -81,29 +82,12 @@ interface HeatmapRow {
           <mat-card-title>Heatmap (Wochentag/Uhrzeit)</mat-card-title>
         </mat-card-header>
         <mat-card-content class="heatmap-wrap">
-          <mat-table [dataSource]="heatmap()" class="heatmap-table">
-            <ng-container matColumnDef="hour">
-              <mat-header-cell *matHeaderCellDef>Std</mat-header-cell>
-              <mat-cell *matCellDef="let row" class="weekday-cell">{{ row.hour }}</mat-cell>
-            </ng-container>
-
-            @for (day of weekdayColumns; track day; let dayIndex = $index) {
-              <ng-container [matColumnDef]="day">
-                <mat-header-cell *matHeaderCellDef>{{ day }}</mat-header-cell>
-                <mat-cell *matCellDef="let row" class="heatmap-cell" [ngStyle]="heatCellStyle(row.weekdays[dayIndex])" [matTooltip]="row.weekdays[dayIndex] + ' Reps'">
-                </mat-cell>
-              </ng-container>
-            }
-
-            <mat-header-row *matHeaderRowDef="heatmapColumns"></mat-header-row>
-            <mat-row *matRowDef="let row; columns: heatmapColumns"></mat-row>
-          </mat-table>
+          <canvas baseChart
+            [data]="heatmapChartData()"
+            [options]="heatmapChartOptions"
+            [type]="'matrix'">
+          </canvas>
         </mat-card-content>
-        <div class="legend">
-          <span>0</span>
-          <div class="gradient-bar"></div>
-          <span>{{ heatmapMax() }} (Max)</span>
-        </div>
       </mat-card>
     </main>
   `,
@@ -117,45 +101,23 @@ interface HeatmapRow {
     .best-grid { display: grid; grid-template-columns: repeat(2, minmax(180px, 1fr)); gap: 12px; }
 
     .heatmap-full { width: 100%; }
-    .heatmap-wrap { overflow: auto; width: 100%; }
-    .heatmap-table { width: 100%; min-width: 620px; }
-    .weekday-cell { font-weight: 600; min-width: 52px; }
-    .heatmap-cell {
-      justify-content: center;
-      border-radius: 6px;
-      margin: 1px;
-      min-height: 30px;
-      min-width: 40px;
-      font-size: 0.78rem;
-      font-variant-numeric: tabular-nums;
-      padding: 0 4px;
-    }
+    .heatmap-wrap { overflow: auto; width: 100%; min-height: 400px; }
 
     @media (max-width: 900px) {
       .page-wrap { padding: 12px; gap: 12px; }
       .grid { grid-template-columns: 1fr; gap: 12px; }
       .best-grid { grid-template-columns: 1fr 1fr; }
-      .heatmap-table { min-width: 520px; }
-      .heatmap-cell { min-width: 34px; min-height: 28px; font-size: 0.72rem; }
     }
 
     @media (max-width: 600px) {
       .best-grid { grid-template-columns: 1fr; }
-      .heatmap-table { min-width: 460px; }
-      .weekday-cell { min-width: 44px; font-size: 0.75rem; }
-      .heatmap-cell { min-width: 30px; min-height: 24px; font-size: 0.66rem; }
     }
-
-    .legend { display: flex; align-items: center; gap: 12px; padding: 12px 24px; font-size: 0.85rem; }
-    .gradient-bar { flex: 1; max-width: 200px; height: 12px; border-radius: 4px; background: linear-gradient(to right, rgba(69, 137, 255, 0.12), rgba(69, 137, 255, 0.8)); }
   `,
 })
 export class AnalysisPageComponent {
   private readonly api = inject(StatsApiService);
 
   readonly trendColumns = ['label', 'total'];
-  readonly weekdayColumns = ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'];
-  readonly heatmapColumns = ['hour', ...this.weekdayColumns];
 
   readonly entriesResource = resource({ loader: async () => firstValueFrom(this.api.listPushups({})) });
   readonly rows = computed(() => this.entriesResource.value() ?? []);
@@ -182,22 +144,88 @@ export class AnalysisPageComponent {
     return [...byMonth.entries()].sort(([a], [b]) => a.localeCompare(b)).slice(-12).map(([label, total]) => ({ label, total }));
   });
 
-  readonly heatmap = computed<HeatmapRow[]>(() => {
-    const rows = Array.from({ length: 24 }, (_, hour) => ({
-      hour: String(hour).padStart(2, '0'),
-      weekdays: Array(7).fill(0),
-    }));
+  readonly heatmapChartData = computed<ChartData<'matrix'>>(() => {
+    const days = ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'];
+    const hours = Array.from({ length: 24 }, (_, i) => `${i}`.padStart(2, '0'));
+    
+    // Use 'any' to bypass strict MatrixDataPoint type check for now, as chartjs-chart-matrix types are tricky with string axes
+    const dataPoints: any[] = [];
+    
+    // Initialize grid with 0
+    for (const day of days) {
+      for (const hour of hours) {
+        dataPoints.push({ x: day, y: hour, v: 0 });
+      }
+    }
 
+    const map = new Map<string, number>();
     for (const row of this.rows()) {
       const date = new Date(row.timestamp);
-      const weekday = (date.getDay() + 6) % 7;
-      const hour = date.getHours();
-      rows[hour].weekdays[weekday] += row.reps;
+      // getDay(): 0 = Sun, 1 = Mon...
+      // We need 0 = Mon, 6 = Sun to match 'days' array index
+      const dayIndex = (date.getDay() + 6) % 7; 
+      const dayLabel = days[dayIndex];
+      const hourLabel = String(date.getHours()).padStart(2, '0');
+      
+      const key = `${dayLabel}-${hourLabel}`;
+      map.set(key, (map.get(key) ?? 0) + row.reps);
     }
-    return rows;
+
+    const data = dataPoints.map(p => {
+        const key = `${p.x}-${p.y}`;
+        return { x: p.x, y: p.y, v: map.get(key) ?? 0 };
+    });
+
+    return {
+      datasets: [{
+        label: 'Pushups',
+        data: data,
+        backgroundColor: (context) => {
+          const value = (context.raw as { v: number }).v;
+          if (value === 0) return 'rgba(0,0,0,0.02)';
+          const max = Math.max(...data.map(d => d.v)) || 1;
+          const alpha = 0.2 + (value / max) * 0.8;
+          return `rgba(69, 137, 255, ${alpha})`;
+        },
+        borderColor: 'rgba(0,0,0,0)',
+        borderWidth: 1,
+        width: ({ chart }) => (chart.chartArea || {}).width / 7 - 1,
+        height: ({ chart }) => (chart.chartArea || {}).height / 24 - 1
+      }]
+    };
   });
 
-  readonly heatmapMax = computed(() => Math.max(1, ...this.heatmap().flatMap((row) => row.weekdays)));
+  readonly heatmapChartOptions: ChartConfiguration['options'] = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          title: () => '',
+          label: (context) => {
+            const v = (context.raw as { v: number, x: string, y: string });
+            return `${v.x} ${v.y}:00 - ${v.v} Reps`;
+          }
+        }
+      }
+    },
+    scales: {
+      x: {
+        type: 'category',
+        labels: ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'],
+        position: 'top',
+        grid: { display: false }
+      },
+      y: {
+        type: 'category',
+        labels: Array.from({ length: 24 }, (_, i) => `${i}`.padStart(2, '0')),
+        offset: true,
+        reverse: true,
+        grid: { display: false }
+      }
+    }
+  };
 
   readonly bestSingleEntry = computed<PushupRecord | null>(() => {
     if (!this.rows().length) return null;
@@ -238,15 +266,6 @@ export class AnalysisPageComponent {
     }
     return streak;
   });
-
-  heatCellStyle(value: number): Record<string, string> {
-    const intensity = Math.min(1, value / this.heatmapMax());
-    const alpha = 0.12 + intensity * 0.68;
-    return {
-      'background-color': `rgba(69, 137, 255, ${alpha.toFixed(3)})`,
-      color: intensity > 0.55 ? '#ffffff' : '#d7e6ff',
-    };
-  }
 
   private sortedUniqueDates(): string[] {
     return [...new Set(this.rows().map((x) => x.timestamp.slice(0, 10)))].sort((a, b) => a.localeCompare(b));
