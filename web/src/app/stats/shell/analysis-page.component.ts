@@ -1,12 +1,12 @@
-import { Component, computed, inject, resource } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { Component, computed, inject, PLATFORM_ID, resource } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
 import { BaseChartDirective } from 'ng2-charts';
-import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
+import { ChartConfiguration, ChartData } from 'chart.js';
 import { firstValueFrom } from 'rxjs';
 import { StatsApiService } from '@nx-temp/stats-data-access';
 import { PushupRecord } from '@nx-temp/stats-models';
-import { enUS } from 'date-fns/locale';
 
 interface TrendPoint {
   label: string;
@@ -82,11 +82,16 @@ interface HeatmapRow {
           <mat-card-title>Heatmap (Wochentag/Uhrzeit)</mat-card-title>
         </mat-card-header>
         <mat-card-content class="heatmap-wrap">
-          <canvas baseChart
-            [data]="heatmapChartData()"
-            [options]="heatmapChartOptions"
-            [type]="'matrix'">
-          </canvas>
+          @if (isBrowser) {
+            <canvas
+              baseChart
+              [data]="heatmapChartData()"
+              [options]="heatmapChartOptions"
+              [type]="'matrix'">
+            </canvas>
+          } @else {
+            <div class="ssr-note">Heatmap wird im Browser geladen…</div>
+          }
         </mat-card-content>
       </mat-card>
     </main>
@@ -102,6 +107,7 @@ interface HeatmapRow {
 
     .heatmap-full { width: 100%; }
     .heatmap-wrap { overflow: auto; width: 100%; min-height: 400px; }
+    .ssr-note { padding: 12px; color: rgba(230, 237, 249, 0.7); font-size: 0.9rem; }
 
     @media (max-width: 900px) {
       .page-wrap { padding: 12px; gap: 12px; }
@@ -116,6 +122,7 @@ interface HeatmapRow {
 })
 export class AnalysisPageComponent {
   private readonly api = inject(StatsApiService);
+  readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
 
   readonly trendColumns = ['label', 'total'];
 
