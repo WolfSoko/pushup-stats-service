@@ -27,8 +27,8 @@ export const appConfig: ApplicationConfig = {
     provideZonelessChangeDetection(),
     provideNativeDateAdapter(),
     provideCharts(withDefaultRegisterables(), {
-      registerables: [MatrixController, MatrixElement],
-      plugins: [ChartDataLabels],
+      // Register matrix controller/element + datalabels plugin.
+      registerables: [MatrixController, MatrixElement, ChartDataLabels as any],
     }),
     { provide: LOCALE_ID, useValue: 'de-DE' },
     { provide: MAT_DATE_LOCALE, useValue: 'de-DE' }, provideServiceWorker('ngsw-worker.js', {

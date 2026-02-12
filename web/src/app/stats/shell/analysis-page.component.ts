@@ -218,7 +218,7 @@ export class AnalysisPageComponent {
       },
       // chartjs-plugin-datalabels
       datalabels: {
-        display: (ctx) => {
+        display: (ctx: any) => {
           const raw = ctx.dataset.data?.[ctx.dataIndex] as any;
           return !!raw && typeof raw.v === 'number' && raw.v > 0;
         },
@@ -226,12 +226,12 @@ export class AnalysisPageComponent {
         anchor: 'center',
         align: 'center',
         clamp: true,
-        color: (ctx) => {
+        color: (ctx: any) => {
           const raw = ctx.dataset.data?.[ctx.dataIndex] as any;
           const v = typeof raw?.v === 'number' ? raw.v : 0;
           return v >= 10 ? 'rgba(10,12,18,0.95)' : 'rgba(230,237,249,0.95)';
         },
-        font: (ctx) => {
+        font: (ctx: any) => {
           const raw = ctx.dataset.data?.[ctx.dataIndex] as any;
           const v = typeof raw?.v === 'number' ? raw.v : 0;
           return { size: v >= 10 ? 11 : 10, weight: 700 };
