@@ -13,6 +13,7 @@ import { provideClientHydration, withIncrementalHydration } from '@angular/platf
 import { provideServiceWorker } from '@angular/service-worker';
 import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 import { MatrixController, MatrixElement } from 'chartjs-chart-matrix';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { appRoutes } from './app.routes';
 
 registerLocaleData(localeDe);
@@ -25,7 +26,10 @@ export const appConfig: ApplicationConfig = {
     provideClientHydration(withIncrementalHydration()),
     provideZonelessChangeDetection(),
     provideNativeDateAdapter(),
-    provideCharts(withDefaultRegisterables(), { registerables: [MatrixController, MatrixElement] }),
+    provideCharts(withDefaultRegisterables(), {
+      registerables: [MatrixController, MatrixElement],
+      plugins: [ChartDataLabels],
+    }),
     { provide: LOCALE_ID, useValue: 'de-DE' },
     { provide: MAT_DATE_LOCALE, useValue: 'de-DE' }, provideServiceWorker('ngsw-worker.js', {
             enabled: !isDevMode(),

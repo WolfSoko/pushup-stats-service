@@ -211,27 +211,48 @@ export class AnalysisPageComponent {
         callbacks: {
           title: () => '',
           label: (context) => {
-            const v = (context.raw as { v: number, x: string, y: string });
+            const v = context.raw as { v: number; x: string; y: string };
             return `${v.x} ${v.y}:00 - ${v.v} Reps`;
-          }
-        }
-      }
+          },
+        },
+      },
+      // chartjs-plugin-datalabels
+      datalabels: {
+        display: (ctx) => {
+          const raw = ctx.dataset.data?.[ctx.dataIndex] as any;
+          return !!raw && typeof raw.v === 'number' && raw.v > 0;
+        },
+        formatter: (value: any) => (value?.v ? String(value.v) : ''),
+        anchor: 'center',
+        align: 'center',
+        clamp: true,
+        color: (ctx) => {
+          const raw = ctx.dataset.data?.[ctx.dataIndex] as any;
+          const v = typeof raw?.v === 'number' ? raw.v : 0;
+          return v >= 10 ? 'rgba(10,12,18,0.95)' : 'rgba(230,237,249,0.95)';
+        },
+        font: (ctx) => {
+          const raw = ctx.dataset.data?.[ctx.dataIndex] as any;
+          const v = typeof raw?.v === 'number' ? raw.v : 0;
+          return { size: v >= 10 ? 11 : 10, weight: 700 };
+        },
+      } as any,
     },
     scales: {
       x: {
         type: 'category',
         labels: ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'],
         position: 'top',
-        grid: { display: false }
+        grid: { display: false },
       },
       y: {
         type: 'category',
         labels: Array.from({ length: 24 }, (_, i) => `${i}`.padStart(2, '0')),
         offset: true,
         reverse: true,
-        grid: { display: false }
-      }
-    }
+        grid: { display: false },
+      },
+    },
   };
 
   readonly bestSingleEntry = computed<PushupRecord | null>(() => {

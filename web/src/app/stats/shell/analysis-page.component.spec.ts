@@ -74,17 +74,42 @@ describe('AnalysisPageComponent', () => {
   it('builds heatmap chart data', () => {
     const component = fixture.componentInstance;
     const data = component.heatmapChartData();
-    
+
     expect(data.datasets.length).toBe(1);
     expect(data.datasets[0].data.length).toBe(24 * 7); // 24 hours * 7 days
-    
+
     // Check if data points exist
     const points = data.datasets[0].data as any[];
     // Find entry for Monday 08:00 (id 1, reps 10)
     // 2026-02-09 is Monday. 08:00.
     // x should be 'Mo', y should be '08'
-    const entry = points.find(p => p.x === 'Mo' && p.y === '08');
+    const entry = points.find((p) => p.x === 'Mo' && p.y === '08');
     expect(entry).toBeDefined();
     expect(entry.v).toBe(10);
+  });
+
+  it('shows datalabels only for non-zero heatmap cells', () => {
+    const component = fixture.componentInstance;
+    const data = component.heatmapChartData();
+    const dl = (component.heatmapChartOptions as any).plugins.datalabels;
+
+    const dataset = data.datasets[0];
+
+    // Find one non-zero and one zero cell.
+    const points = dataset.data as any[];
+    const nonZeroIndex = points.findIndex((p) => p.v > 0);
+    const zeroIndex = points.findIndex((p) => p.v === 0);
+
+    expect(nonZeroIndex).toBeGreaterThanOrEqual(0);
+    expect(zeroIndex).toBeGreaterThanOrEqual(0);
+
+    const nonZeroCtx = { dataset, dataIndex: nonZeroIndex };
+    const zeroCtx = { dataset, dataIndex: zeroIndex };
+
+    expect(dl.display(nonZeroCtx)).toBe(true);
+    expect(dl.display(zeroCtx)).toBe(false);
+
+    expect(dl.formatter(points[nonZeroIndex])).toBe(String(points[nonZeroIndex].v));
+    expect(dl.formatter(points[zeroIndex])).toBe('');
   });
 });
