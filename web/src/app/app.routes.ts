@@ -15,5 +15,9 @@ export const appRoutes: Routes = [
     path: 'analyse',
     loadComponent: () => import('./stats/shell/analysis-page.component').then((m) => m.AnalysisPageComponent),
   },
+  {
+    path: 'settings',
+    loadComponent: () => import('./stats/shell/settings-page.component').then((m) => m.SettingsPageComponent),
+  },
   { path: '**', redirectTo: '' },
 ];

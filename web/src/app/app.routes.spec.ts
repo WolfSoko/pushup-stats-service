@@ -3,7 +3,7 @@ import { appRoutes } from './app.routes';
 describe('appRoutes', () => {
   it('defines dashboard, data and analysis routes', () => {
     const paths = appRoutes.map((r) => r.path);
-    expect(paths).toEqual(['', 'daten', 'eintraege', 'analyse', '**']);
+    expect(paths).toEqual(['', 'daten', 'eintraege', 'analyse', 'settings', '**']);
   });
 
   it('lazy-loads dashboard component', async () => {

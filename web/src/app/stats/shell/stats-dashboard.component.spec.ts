@@ -1,7 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 import { StatsDashboardComponent } from './stats-dashboard.component';
-import { PushupLiveService, StatsApiService } from '@nx-temp/stats-data-access';
+import { PushupLiveService, StatsApiService, UserConfigApiService } from '@nx-temp/stats-data-access';
+import { UserContextService } from '../../user-context.service';
 import { signal } from '@angular/core';
 
 function nowLocalMinuteIso(): string {
@@ -60,6 +61,8 @@ describe('StatsDashboardComponent', () => {
       providers: [
         { provide: StatsApiService, useValue: serviceMock },
         { provide: PushupLiveService, useValue: liveMock },
+        { provide: UserContextService, useValue: { userIdSafe: () => 'u1' } },
+        { provide: UserConfigApiService, useValue: { getConfig: jest.fn().mockReturnValue(of({ userId: 'u1', dailyGoal: 100, ui: { showSourceColumn: false } })) } },
       ],
     }).compileComponents();
 

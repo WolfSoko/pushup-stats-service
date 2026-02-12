@@ -6,7 +6,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { firstValueFrom } from 'rxjs';
 import { PushupRecord, StatsGranularity, StatsResponse, StatsSeriesEntry } from '@nx-temp/stats-models';
-import { PushupLiveService, StatsApiService } from '@nx-temp/stats-data-access';
+import { PushupLiveService, StatsApiService, UserConfigApiService } from '@nx-temp/stats-data-access';
+import { UserContextService } from '../../user-context.service';
 import { FilterBarComponent } from '../components/filter-bar/filter-bar.component';
 import { StatsChartComponent } from '../components/stats-chart/stats-chart.component';
 import { StatsTableComponent } from '../components/stats-table/stats-table.component';
@@ -129,7 +130,15 @@ export class StatsDashboardComponent {
   readonly granularity = computed<StatsGranularity>(() => this.stats().meta.granularity);
   readonly rows = computed<StatsSeriesEntry[]>(() => this.stats().series);
   readonly entryRows = computed<PushupRecord[]>(() => this.entriesResource.value() ?? []);
+  private readonly user = inject(UserContextService);
+  private readonly userConfigApi = inject(UserConfigApiService);
+
   readonly dailyGoal = signal(100);
+
+  readonly userConfigResource = resource({
+    params: () => ({ userId: this.user.userIdSafe() }),
+    loader: async ({ params }) => firstValueFrom(this.userConfigApi.getConfig(params.userId)),
+  });
 
   readonly selectedDayTotal = computed(() => {
     const day = this.from() || toLocalIsoDate(new Date());
@@ -197,6 +206,12 @@ export class StatsDashboardComponent {
       const query = params.toString();
       const nextUrl = `${this.document.location.pathname}${query ? `?${query}` : ''}`;
       window.history.replaceState(window.history.state, '', nextUrl);
+    });
+
+    effect(() => {
+      const cfg = this.userConfigResource.value();
+      if (!cfg) return;
+      this.dailyGoal.set(cfg.dailyGoal ?? 100);
     });
 
     effect(() => {

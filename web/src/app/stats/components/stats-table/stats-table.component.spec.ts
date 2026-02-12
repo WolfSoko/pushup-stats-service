@@ -1,13 +1,29 @@
 import { PLATFORM_ID } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { of } from 'rxjs';
 import { StatsTableComponent } from './stats-table.component';
+import { UserConfigApiService } from '@nx-temp/stats-data-access';
+import { UserContextService } from '../../../user-context.service';
 
 describe('StatsTableComponent', () => {
   let fixture: ComponentFixture<StatsTableComponent>;
 
+  const userMock = {
+    userIdSafe: () => 'u1',
+  } as unknown as UserContextService;
+
+  const userConfigApiMock = {
+    getConfig: jest.fn().mockReturnValue(of({ userId: 'u1', dailyGoal: 100, ui: { showSourceColumn: false } })),
+    updateConfig: jest.fn().mockReturnValue(of({ userId: 'u1', ui: { showSourceColumn: true } })),
+  } as unknown as UserConfigApiService;
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [StatsTableComponent],
+      providers: [
+        { provide: UserContextService, useValue: userMock },
+        { provide: UserConfigApiService, useValue: userConfigApiMock },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(StatsTableComponent);
@@ -290,7 +306,11 @@ describe('StatsTableComponent', () => {
     TestBed.resetTestingModule();
     await TestBed.configureTestingModule({
       imports: [StatsTableComponent],
-      providers: [{ provide: PLATFORM_ID, useValue: 'server' }],
+      providers: [
+        { provide: PLATFORM_ID, useValue: 'server' },
+        { provide: UserContextService, useValue: userMock },
+        { provide: UserConfigApiService, useValue: userConfigApiMock },
+      ],
     }).compileComponents();
 
     const serverFixture = TestBed.createComponent(StatsTableComponent);

@@ -15,6 +15,9 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { PushupRecord } from '@nx-temp/stats-models';
+import { UserContextService } from '../../../user-context.service';
+import { UserConfigApiService } from '@nx-temp/stats-data-access';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-stats-table',
@@ -282,7 +285,8 @@ export class StatsTableComponent implements AfterViewInit {
     map((value) => this.filterOptions(value, this.sourceOptions)),
   );
 
-  private static readonly SOURCE_COL_STORAGE_KEY = 'pushups.ui.showSourceColumn';
+  private readonly user = inject(UserContextService);
+  private readonly userConfigApi = inject(UserConfigApiService);
 
   readonly showSourceColumn = signal(false);
 
@@ -322,15 +326,8 @@ export class StatsTableComponent implements AfterViewInit {
     };
 
     if (this.isBrowser) {
-      const raw = window.localStorage.getItem(StatsTableComponent.SOURCE_COL_STORAGE_KEY);
-      if (raw === 'true') this.showSourceColumn.set(true);
-
-      effect(() => {
-        window.localStorage.setItem(
-          StatsTableComponent.SOURCE_COL_STORAGE_KEY,
-          this.showSourceColumn() ? 'true' : 'false',
-        );
-      });
+      // Load preference from DB based on active user.
+      void this.loadShowSourceFromDb();
     }
 
     effect(() => {
@@ -507,8 +504,30 @@ export class StatsTableComponent implements AfterViewInit {
     return options.filter((opt) => opt.toLowerCase().includes(needle));
   }
 
-  toggleSourceColumn(): void {
-    this.showSourceColumn.update((prev) => !prev);
+  async toggleSourceColumn(): Promise<void> {
+    const next = !this.showSourceColumn();
+    this.showSourceColumn.set(next);
+
+    if (!this.isBrowser) return;
+
+    try {
+      await firstValueFrom(
+        this.userConfigApi.updateConfig(this.user.userIdSafe(), {
+          ui: { showSourceColumn: next },
+        }),
+      );
+    } catch {
+      // If saving fails, keep UI responsive; we'll try again on next toggle.
+    }
+  }
+
+  private async loadShowSourceFromDb(): Promise<void> {
+    try {
+      const cfg = await firstValueFrom(this.userConfigApi.getConfig(this.user.userIdSafe()));
+      this.showSourceColumn.set(!!cfg.ui?.showSourceColumn);
+    } catch {
+      // ignore; keep default
+    }
   }
 
   private normalizeSource(value: string): string {

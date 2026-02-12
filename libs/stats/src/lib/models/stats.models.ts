@@ -48,3 +48,16 @@ export interface PushupUpdate {
   source?: string;
   type?: string;
 }
+
+export interface UserConfig {
+  userId: string;
+  displayName?: string;
+  dailyGoal?: number;
+  ui?: {
+    showSourceColumn?: boolean;
+  };
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+export type UserConfigUpdate = Partial<Pick<UserConfig, 'displayName' | 'dailyGoal' | 'ui'>>;
