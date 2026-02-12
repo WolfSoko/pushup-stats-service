@@ -1,3 +1,25 @@
+mat-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+mat-card-header {
+  padding-bottom: 0;
+}
+
+mat-card-title,
+mat-card-subtitle {
+  margin: 0;
+}
+
+mat-card-header + mat-card-content,
+mat-card-header + mat-card-actions,
+mat-card-content + mat-card-actions,
+mat-card-content + mat-card-footer {
+  margin-top: 8px;
+}
+
 .top-nav {
   position: sticky;
   top: 0;

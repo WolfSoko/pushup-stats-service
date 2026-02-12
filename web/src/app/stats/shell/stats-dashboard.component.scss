@@ -144,6 +144,8 @@ h1 {
   border: 1px solid rgba(123, 159, 255, 0.24);
   background: linear-gradient(170deg, rgba(22, 30, 49, 0.86), rgba(14, 19, 33, 0.9));
 
+  gap: 8px;
+
   mat-card-content {
     display: flex;
     flex-wrap: wrap;

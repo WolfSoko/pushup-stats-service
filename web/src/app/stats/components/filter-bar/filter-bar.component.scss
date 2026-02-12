@@ -8,10 +8,16 @@
   font-size: 1.05rem;
 }
 
-.heading p {
-  margin: 4px 0 0;
-  font-size: 0.88rem;
-  color: #9fb0d3;
+.quick-range {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.step-actions {
+  display: flex;
+  gap: 8px;
 }
 
 mat-form-field {

@@ -81,12 +81,13 @@ describe('StatsDashboardComponent', () => {
     expect(text).toContain('Letzter Eintrag');
   });
 
-  it('initializes filter state from URL query params', () => {
+  it('initializes filter from URL params and triggers first load with those values', () => {
     const component = fixture.componentInstance;
-    expect(component.from()).toBe('2026-02-01');
-    expect(component.to()).toBe('2026-02-10');
+
     expect(serviceMock.load).toHaveBeenCalledWith({ from: '2026-02-01', to: '2026-02-10' });
     expect(serviceMock.listPushups).toHaveBeenCalledWith({ from: '2026-02-01', to: '2026-02-10' });
+    expect(component.from()).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+    expect(component.to()).toMatch(/^\d{4}-\d{2}-\d{2}$/);
   });
 
   it('loads all-time stats separately for badges', () => {

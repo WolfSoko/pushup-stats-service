@@ -1,19 +1,55 @@
-import { Component, OnChanges, input, output } from '@angular/core';
+import { Component, OnChanges, input, output, signal } from '@angular/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
+type RangeMode = 'day' | 'week' | 'month';
+
 @Component({
   selector: 'app-filter-bar',
-  imports: [MatFormFieldModule, MatInputModule, MatDatepickerModule, MatNativeDateModule, ReactiveFormsModule],
+  imports: [
+    MatFormFieldModule,
+    MatInputModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatButtonToggleModule,
+    MatButtonModule,
+    MatIconModule,
+    ReactiveFormsModule,
+  ],
   template: `
     <section class="controls">
       <div class="heading">
         <h2>Zeitraum auswählen</h2>
       </div>
+
+      <section class="quick-range" aria-label="Schnellwahl Zeitraum">
+        <mat-button-toggle-group [value]="mode()" (valueChange)="setMode($event)">
+          <mat-button-toggle value="day">Tag</mat-button-toggle>
+          <mat-button-toggle value="week">Woche</mat-button-toggle>
+          <mat-button-toggle value="month">Monat</mat-button-toggle>
+        </mat-button-toggle-group>
+
+        <div class="step-actions">
+          <button type="button" mat-stroked-button (click)="shiftRange(-1)">
+            <mat-icon>chevron_left</mat-icon>
+            Zurück
+          </button>
+          <button type="button" mat-stroked-button (click)="jumpToToday()">
+            Heute
+          </button>
+          <button type="button" mat-stroked-button (click)="shiftRange(1)">
+            Vor
+            <mat-icon>chevron_right</mat-icon>
+          </button>
+        </div>
+      </section>
 
       <mat-form-field appearance="outline">
         <mat-label>Zeitraum</mat-label>
@@ -34,6 +70,8 @@ export class FilterBarComponent implements OnChanges {
 
   readonly fromChange = output<string>();
   readonly toChange = output<string>();
+
+  readonly mode = signal<RangeMode>('week');
 
   readonly range = new FormGroup({
     start: new FormControl<Date | null>(null),
@@ -58,6 +96,75 @@ export class FilterBarComponent implements OnChanges {
       },
       { emitEvent: false },
     );
+  }
+
+  setMode(value: RangeMode): void {
+    if (!value) return;
+    this.mode.set(value);
+    this.applyModeRange();
+  }
+
+  jumpToToday(): void {
+    this.applyModeRange(new Date());
+  }
+
+  shiftRange(direction: -1 | 1): void {
+    const start = this.range.controls.start.value;
+    const end = this.range.controls.end.value;
+    if (!start || !end) {
+      this.applyModeRange();
+      return;
+    }
+
+    const nextStart = new Date(start);
+    const nextEnd = new Date(end);
+
+    if (this.mode() === 'day') {
+      nextStart.setDate(nextStart.getDate() + direction);
+      nextEnd.setDate(nextEnd.getDate() + direction);
+    } else if (this.mode() === 'week') {
+      nextStart.setDate(nextStart.getDate() + direction * 7);
+      nextEnd.setDate(nextEnd.getDate() + direction * 7);
+    } else {
+      nextStart.setMonth(nextStart.getMonth() + direction);
+      nextEnd.setMonth(nextEnd.getMonth() + direction);
+      nextEnd.setDate(new Date(nextEnd.getFullYear(), nextEnd.getMonth() + 1, 0).getDate());
+    }
+
+    this.range.patchValue({ start: nextStart, end: nextEnd });
+  }
+
+  private applyModeRange(anchorDate?: Date): void {
+    const anchor = anchorDate ?? this.range.controls.end.value ?? this.range.controls.start.value ?? new Date();
+
+    if (this.mode() === 'day') {
+      const day = this.startOfDay(anchor);
+      this.range.patchValue({ start: day, end: day });
+      return;
+    }
+
+    if (this.mode() === 'week') {
+      const start = this.startOfWeek(anchor);
+      const end = new Date(start);
+      end.setDate(start.getDate() + 6);
+      this.range.patchValue({ start, end });
+      return;
+    }
+
+    const start = new Date(anchor.getFullYear(), anchor.getMonth(), 1);
+    const end = new Date(anchor.getFullYear(), anchor.getMonth() + 1, 0);
+    this.range.patchValue({ start, end });
+  }
+
+  private startOfWeek(value: Date): Date {
+    const d = this.startOfDay(value);
+    const day = (d.getDay() + 6) % 7;
+    d.setDate(d.getDate() - day);
+    return d;
+  }
+
+  private startOfDay(value: Date): Date {
+    return new Date(value.getFullYear(), value.getMonth(), value.getDate());
   }
 
   private parseIsoDate(value: string): Date | null {

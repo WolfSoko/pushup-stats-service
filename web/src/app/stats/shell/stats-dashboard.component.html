@@ -51,6 +51,23 @@
     <span class="badge"><small>All-Time Ø/Tag</small><b>{{ allTimeAvg() }}</b></span>
   </section>
 
+  <mat-card class="quick-actions">
+    <mat-card-header>
+      <mat-card-title>Schnellaktionen</mat-card-title>
+      <mat-card-subtitle>Schnell eintragen ohne Dialog</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <button type="button" mat-flat-button class="quick-btn quick-btn--ten" (click)="addQuickEntry(10)">
+        <mat-icon>bolt</mat-icon>
+        +10 Reps
+      </button>
+      <button type="button" mat-flat-button class="quick-btn quick-btn--twenty" (click)="addQuickEntry(20)">
+        <mat-icon>flash_on</mat-icon>
+        +20 Reps
+      </button>
+    </mat-card-content>
+  </mat-card>
+
   <section class="panel">
     <app-filter-bar [from]="from()" [to]="to()" (fromChange)="from.set($event)" (toChange)="to.set($event)" />
   </section>
@@ -67,29 +84,12 @@
 
   <section class="mid-grid">
     <app-stats-chart [series]="rows()" [granularity]="granularity()" />
-
-    <mat-card class="quick-actions">
-      <mat-card-header>
-        <mat-card-title>Schnellaktionen</mat-card-title>
-        <mat-card-subtitle>Schnell eintragen ohne Dialog</mat-card-subtitle>
-      </mat-card-header>
-      <mat-card-content>
-        <button type="button" mat-flat-button class="quick-btn quick-btn--ten" (click)="addQuickEntry(10)">
-          <mat-icon>bolt</mat-icon>
-          +10 Reps
-        </button>
-        <button type="button" mat-flat-button class="quick-btn quick-btn--twenty" (click)="addQuickEntry(20)">
-          <mat-icon>flash_on</mat-icon>
-          +20 Reps
-        </button>
-      </mat-card-content>
-    </mat-card>
   </section>
 
   <section class="latest-entries">
-    <h2>Neueste Einträge</h2>
+    <h2>Einträge im gewählten Zeitraum</h2>
     <app-stats-table
-      [entries]="latestEntries()"
+      [entries]="entryRows()"
       [busyAction]="busyAction()"
       [busyId]="busyId()"
       (create)="onCreateEntry($event)"
