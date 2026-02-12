@@ -83,7 +83,8 @@ describe('StatsTableComponent', () => {
 
     component.newTimestamp.set('2026-02-11T07:00');
     component.newReps.set('12');
-    component.newSourceMode.set('web');
+    component.newSourceControl.setValue('web');
+    component.newTypeControl.setValue('Standard');
     component.submitCreate();
 
     expect(createSpy).toHaveBeenCalledWith({ timestamp: '2026-02-11T07:00', reps: 12, source: 'web', type: 'Standard' });
@@ -96,9 +97,8 @@ describe('StatsTableComponent', () => {
 
     component.newTimestamp.set('2026-02-11T07:10');
     component.newReps.set('8');
-    component.newSourceMode.set('web');
-    component.newType.set('Custom');
-    component.newTypeCustom.set('Diamond Tempo');
+    component.newSourceControl.setValue('web');
+    component.newTypeControl.setValue('Diamond Tempo');
     component.submitCreate();
 
     expect(createSpy).toHaveBeenCalledWith({
@@ -161,8 +161,7 @@ describe('StatsTableComponent', () => {
     component.openEditDialog(entry);
 
     expect(component.editingId()).toBe('1');
-    expect(component.editTypeMode()).toBe('Custom');
-    expect(component.editTypeCustom()).toBe('Diamond Tempo');
+    expect(component.editTypeControl.value).toBe('Diamond Tempo');
     expect(openSpy).toHaveBeenCalled();
   });
 
@@ -177,8 +176,8 @@ describe('StatsTableComponent', () => {
     const entry = { _id: '1', timestamp: '2026-02-10T13:45:00', reps: 8, source: 'wa' };
     component.startEdit(entry);
     component.setEditRepsById('14');
-    component.editSourceMode.set('web');
-    component.editTypeMode.set('Diamond');
+    component.editSourceControl.setValue('web');
+    component.editTypeControl.setValue('Diamond');
 
     component.saveFromDialog();
 
@@ -212,15 +211,14 @@ describe('StatsTableComponent', () => {
     expect(component.editBusyId()).toBe('');
   });
 
-  it('uses predefined type mode when editing known type', () => {
+  it('sets edit type control when editing known type', () => {
     const component = fixture.componentInstance;
     component.startEdit({ _id: '2', timestamp: '2026-02-10T13:45:00', reps: 8, source: 'wa', type: 'Diamond' });
 
-    expect(component.editTypeMode()).toBe('Diamond');
-    expect(component.editTypeCustom()).toBe('');
+    expect(component.editTypeControl.value).toBe('Diamond');
   });
 
-  it('falls back to Custom type label if custom edit type is empty', () => {
+  it('falls back to Standard type label if edit type is emptied', () => {
     fixture.componentRef.setInput('entries', [{ _id: '1', timestamp: '2026-02-10T13:45:00', reps: 8, source: 'wa' }]);
     fixture.detectChanges();
 
@@ -229,27 +227,26 @@ describe('StatsTableComponent', () => {
     component.update.subscribe(updateSpy);
 
     component.startEdit({ _id: '1', timestamp: '2026-02-10T13:45:00', reps: 8, source: 'wa' });
-    component.editTypeMode.set('Custom');
-    component.editTypeCustom.set('');
+    component.editTypeControl.setValue('');
     component.saveFromDialog();
 
-    expect(updateSpy).toHaveBeenCalledWith({ id: '1', reps: 8, source: 'whatsapp', type: 'Custom' });
+    expect(updateSpy).toHaveBeenCalledWith({ id: '1', reps: 8, source: 'whatsapp', type: 'Standard' });
   });
 
-  it('emits create with custom fallback and resets custom field', () => {
+  it('emits create with Standard fallback and resets type/source controls', () => {
     const component = fixture.componentInstance;
     const createSpy = jest.fn();
     component.create.subscribe(createSpy);
 
     component.newTimestamp.set('2026-02-11T07:20');
     component.newReps.set('9');
-    component.newSourceMode.set('web');
-    component.newType.set('Custom');
-    component.newTypeCustom.set('');
+    component.newSourceControl.setValue('web');
+    component.newTypeControl.setValue('');
     component.submitCreate();
 
-    expect(createSpy).toHaveBeenCalledWith({ timestamp: '2026-02-11T07:20', reps: 9, source: 'web', type: 'Custom' });
-    expect(component.newTypeCustom()).toBe('');
+    expect(createSpy).toHaveBeenCalledWith({ timestamp: '2026-02-11T07:20', reps: 9, source: 'web', type: 'Standard' });
+    expect(component.newTypeControl.value).toBe('Standard');
+    expect(component.newSourceControl.value).toBe('web');
   });
 
   it('exposes busy helper state for spinner rendering', () => {

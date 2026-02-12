@@ -1,5 +1,7 @@
-import { DatePipe, NgTemplateOutlet, isPlatformBrowser } from '@angular/common';
+import { AsyncPipe, DatePipe, NgTemplateOutlet, isPlatformBrowser } from '@angular/common';
 import { AfterViewInit, Component, PLATFORM_ID, TemplateRef, ViewChild, effect, inject, input, output, signal } from '@angular/core';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { map, startWith } from 'rxjs';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
@@ -10,7 +12,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatRippleModule } from '@angular/material/core';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatSelectModule } from '@angular/material/select';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { PushupRecord } from '@nx-temp/stats-models';
 
@@ -20,6 +22,7 @@ import { PushupRecord } from '@nx-temp/stats-models';
     MatCardModule,
     MatProgressSpinnerModule,
     DatePipe,
+    AsyncPipe,
     NgTemplateOutlet,
     MatDialogModule,
     MatButtonModule,
@@ -28,7 +31,8 @@ import { PushupRecord } from '@nx-temp/stats-models';
     MatIconModule,
     MatTableModule,
     MatSortModule,
-    MatSelectModule,
+    MatAutocompleteModule,
+    ReactiveFormsModule,
     MatRippleModule,
     ScrollingModule,
   ],
@@ -136,37 +140,35 @@ import { PushupRecord } from '@nx-temp/stats-models';
 
         <mat-form-field appearance="outline">
           <mat-label>Typ</mat-label>
-          <mat-select [value]="newType()" (valueChange)="newType.set($event)">
-            @for (typeOption of typeOptions; track typeOption) {
-              <mat-option [value]="typeOption">{{ typeOption }}</mat-option>
+          <input
+            type="text"
+            matInput
+            [formControl]="newTypeControl"
+            [matAutocomplete]="typeAuto"
+            placeholder="Pick one / Custom"
+          />
+          <mat-autocomplete #typeAuto="matAutocomplete">
+            @for (option of filteredTypeOptions$ | async; track option) {
+              <mat-option [value]="option">{{ option }}</mat-option>
             }
-            <mat-option value="Custom">Custom</mat-option>
-          </mat-select>
+          </mat-autocomplete>
         </mat-form-field>
-
-        @if (newType() === 'Custom') {
-          <mat-form-field appearance="outline">
-            <mat-label>Eigener Typ</mat-label>
-            <input matInput type="text" [value]="newTypeCustom()" (input)="newTypeCustom.set(asValue($event))" />
-          </mat-form-field>
-        }
 
         <mat-form-field appearance="outline">
           <mat-label>Quelle</mat-label>
-          <mat-select [value]="newSourceMode()" (valueChange)="newSourceMode.set($event)">
-            @for (sourceOption of sourceOptions; track sourceOption) {
-              <mat-option [value]="sourceOption">{{ sourceOption }}</mat-option>
+          <input
+            type="text"
+            matInput
+            [formControl]="newSourceControl"
+            [matAutocomplete]="sourceAuto"
+            placeholder="web / whatsapp / Custom"
+          />
+          <mat-autocomplete #sourceAuto="matAutocomplete">
+            @for (option of filteredSourceOptions$ | async; track option) {
+              <mat-option [value]="option">{{ option }}</mat-option>
             }
-            <mat-option value="Custom">Custom</mat-option>
-          </mat-select>
+          </mat-autocomplete>
         </mat-form-field>
-
-        @if (newSourceMode() === 'Custom') {
-          <mat-form-field appearance="outline">
-            <mat-label>Eigene Quelle</mat-label>
-            <input matInput type="text" [value]="newSourceCustom()" (input)="newSourceCustom.set(asValue($event))" />
-          </mat-form-field>
-        }
       </mat-dialog-content>
 
       <mat-dialog-actions align="end">
@@ -192,37 +194,35 @@ import { PushupRecord } from '@nx-temp/stats-models';
 
         <mat-form-field appearance="outline">
           <mat-label>Typ</mat-label>
-          <mat-select [value]="editTypeMode()" (valueChange)="editTypeMode.set($event)">
-            @for (typeOption of typeOptions; track typeOption) {
-              <mat-option [value]="typeOption">{{ typeOption }}</mat-option>
+          <input
+            type="text"
+            matInput
+            [formControl]="editTypeControl"
+            [matAutocomplete]="editTypeAuto"
+            placeholder="Pick one / Custom"
+          />
+          <mat-autocomplete #editTypeAuto="matAutocomplete">
+            @for (option of filteredEditTypeOptions$ | async; track option) {
+              <mat-option [value]="option">{{ option }}</mat-option>
             }
-            <mat-option value="Custom">Custom</mat-option>
-          </mat-select>
+          </mat-autocomplete>
         </mat-form-field>
-
-        @if (editTypeMode() === 'Custom') {
-          <mat-form-field appearance="outline">
-            <mat-label>Eigener Typ</mat-label>
-            <input matInput type="text" [value]="editTypeCustom()" (input)="editTypeCustom.set(asValue($event))" />
-          </mat-form-field>
-        }
 
         <mat-form-field appearance="outline">
           <mat-label>Quelle</mat-label>
-          <mat-select [value]="editSourceMode()" (valueChange)="editSourceMode.set($event)">
-            @for (sourceOption of sourceOptions; track sourceOption) {
-              <mat-option [value]="sourceOption">{{ sourceOption }}</mat-option>
+          <input
+            type="text"
+            matInput
+            [formControl]="editSourceControl"
+            [matAutocomplete]="editSourceAuto"
+            placeholder="web / whatsapp / Custom"
+          />
+          <mat-autocomplete #editSourceAuto="matAutocomplete">
+            @for (option of filteredEditSourceOptions$ | async; track option) {
+              <mat-option [value]="option">{{ option }}</mat-option>
             }
-            <mat-option value="Custom">Custom</mat-option>
-          </mat-select>
+          </mat-autocomplete>
         </mat-form-field>
-
-        @if (editSourceMode() === 'Custom') {
-          <mat-form-field appearance="outline">
-            <mat-label>Eigene Quelle</mat-label>
-            <input matInput type="text" [value]="editSourceCustom()" (input)="editSourceCustom.set(asValue($event))" />
-          </mat-form-field>
-        }
       </mat-dialog-content>
 
       <mat-dialog-actions align="end">
@@ -258,15 +258,26 @@ export class StatsTableComponent implements AfterViewInit {
 
   readonly newTimestamp = signal('');
   readonly newReps = signal('');
-  readonly newSourceMode = signal('web');
-  readonly newSourceCustom = signal('');
 
-  readonly newType = signal('Standard');
-  readonly newTypeCustom = signal('');
+  // Autocomplete inputs (allow selecting from options OR entering custom text).
+  readonly newTypeControl = new FormControl<string>('Standard', { nonNullable: true });
+  readonly newSourceControl = new FormControl<string>('web', { nonNullable: true });
 
   readonly typeOptions = ['Standard', 'Diamond', 'Wide', 'Archer', 'Decline', 'Incline', 'Pike', 'Knuckle'];
   // Canonical source values ("wa" is legacy; use "whatsapp").
   readonly sourceOptions = ['web', 'whatsapp'];
+
+  readonly filteredTypeOptions$ = this.newTypeControl.valueChanges.pipe(
+    startWith(this.newTypeControl.value),
+    map((value) => this.filterOptions(value, this.typeOptions)),
+  );
+
+  readonly filteredSourceOptions$ = this.newSourceControl.valueChanges.pipe(
+    startWith(this.newSourceControl.value),
+    map((value) => this.filterOptions(value, this.sourceOptions)),
+  );
+
+  // (moved below)
 
   readonly displayedColumns = ['timestamp', 'reps', 'source', 'type', 'actions'];
   readonly dataSource = new MatTableDataSource<PushupRecord>([]);
@@ -275,10 +286,19 @@ export class StatsTableComponent implements AfterViewInit {
   private readonly editedSource = signal<Record<string, string>>({});
   private readonly editedType = signal<Record<string, string>>({});
   readonly editingId = signal<string | null>(null);
-  readonly editTypeMode = signal('Standard');
-  readonly editTypeCustom = signal('');
-  readonly editSourceMode = signal('web');
-  readonly editSourceCustom = signal('');
+
+  readonly editTypeControl = new FormControl<string>('Standard', { nonNullable: true });
+  readonly editSourceControl = new FormControl<string>('web', { nonNullable: true });
+
+  readonly filteredEditTypeOptions$ = this.editTypeControl.valueChanges.pipe(
+    startWith(this.editTypeControl.value),
+    map((value) => this.filterOptions(value, this.typeOptions)),
+  );
+
+  readonly filteredEditSourceOptions$ = this.editSourceControl.valueChanges.pipe(
+    startWith(this.editSourceControl.value),
+    map((value) => this.filterOptions(value, this.sourceOptions)),
+  );
 
   constructor() {
     this.dataSource.sortingDataAccessor = (item, property) => {
@@ -337,26 +357,15 @@ export class StatsTableComponent implements AfterViewInit {
   startEdit(entry: PushupRecord): void {
     this.editingId.set(entry._id);
     this.editedReps.update((prev) => ({ ...prev, [entry._id]: String(entry.reps) }));
-    const rawSource = entry.source || 'web';
-    const source = rawSource === 'wa' ? 'whatsapp' : rawSource;
-    this.editedSource.update((prev) => ({ ...prev, [entry._id]: source }));
-    if (this.sourceOptions.includes(source)) {
-      this.editSourceMode.set(source);
-      this.editSourceCustom.set('');
-    } else {
-      this.editSourceMode.set('Custom');
-      this.editSourceCustom.set(source);
-    }
 
-    const type = entry.type || 'Standard';
+    const rawSource = entry.source || 'web';
+    const source = this.normalizeSource(rawSource);
+    this.editedSource.update((prev) => ({ ...prev, [entry._id]: source }));
+    this.editSourceControl.setValue(source);
+
+    const type = (entry.type || 'Standard').trim() || 'Standard';
     this.editedType.update((prev) => ({ ...prev, [entry._id]: type }));
-    if (this.typeOptions.includes(type)) {
-      this.editTypeMode.set(type);
-      this.editTypeCustom.set('');
-    } else {
-      this.editTypeMode.set('Custom');
-      this.editTypeCustom.set(type);
-    }
+    this.editTypeControl.setValue(type);
   }
 
   cancelEdit(): void {
@@ -420,10 +429,10 @@ export class StatsTableComponent implements AfterViewInit {
     const entry = this.entries().find((row) => row._id === id);
     if (!entry) return;
 
-    const type = this.editTypeMode() === 'Custom' ? this.editTypeCustom().trim() || 'Custom' : this.editTypeMode();
+    const type = (this.editTypeControl.value || '').trim() || 'Standard';
     this.setEditType(entry, type);
 
-    const source = this.editSourceMode() === 'Custom' ? this.editSourceCustom().trim() || 'Custom' : this.editSourceMode();
+    const source = this.normalizeSource((this.editSourceControl.value || '').trim() || 'web');
     this.setEditSource(entry, source);
 
     this.save(entry);
@@ -434,16 +443,19 @@ export class StatsTableComponent implements AfterViewInit {
     const reps = Number(this.newReps());
     if (!this.newTimestamp() || Number.isNaN(reps) || reps <= 0) return;
 
+    const type = (this.newTypeControl.value || '').trim() || 'Standard';
+    const source = this.normalizeSource((this.newSourceControl.value || '').trim() || 'web');
+
     this.create.emit({
       timestamp: this.newTimestamp(),
       reps,
-      source: this.resolvedNewSource(),
-      type: this.resolvedNewType(),
+      source,
+      type,
     });
 
     this.newReps.set('');
-    this.newTypeCustom.set('');
-    this.newSourceCustom.set('');
+    this.newTypeControl.setValue('Standard');
+    this.newSourceControl.setValue('web');
     this.dialog.closeAll();
   }
 
@@ -465,16 +477,16 @@ export class StatsTableComponent implements AfterViewInit {
     this.editingId.set(null);
   }
 
-  private resolvedNewType(): string {
-    if (this.newType() !== 'Custom') return this.newType();
-    const custom = this.newTypeCustom().trim();
-    return custom || 'Custom';
+  private filterOptions(value: string | null | undefined, options: string[]): string[] {
+    const needle = (value ?? '').toLowerCase().trim();
+    if (!needle) return options;
+    return options.filter((opt) => opt.toLowerCase().includes(needle));
   }
 
-  private resolvedNewSource(): string {
-    if (this.newSourceMode() !== 'Custom') return this.newSourceMode() || 'web';
-    const custom = this.newSourceCustom().trim();
-    // Normalize legacy shorthand.
-    return custom === 'wa' ? 'whatsapp' : (custom || 'Custom');
+  private normalizeSource(value: string): string {
+    const v = (value || '').trim();
+    if (!v) return 'web';
+    if (v === 'wa') return 'whatsapp';
+    return v;
   }
 }
