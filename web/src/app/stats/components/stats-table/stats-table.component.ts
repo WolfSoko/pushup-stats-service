@@ -265,7 +265,8 @@ export class StatsTableComponent implements AfterViewInit {
   readonly newTypeCustom = signal('');
 
   readonly typeOptions = ['Standard', 'Diamond', 'Wide', 'Archer', 'Decline', 'Incline', 'Pike', 'Knuckle'];
-  readonly sourceOptions = ['web', 'wa'];
+  // Canonical source values ("wa" is legacy; use "whatsapp").
+  readonly sourceOptions = ['web', 'whatsapp'];
 
   readonly displayedColumns = ['timestamp', 'reps', 'source', 'type', 'actions'];
   readonly dataSource = new MatTableDataSource<PushupRecord>([]);
@@ -336,7 +337,8 @@ export class StatsTableComponent implements AfterViewInit {
   startEdit(entry: PushupRecord): void {
     this.editingId.set(entry._id);
     this.editedReps.update((prev) => ({ ...prev, [entry._id]: String(entry.reps) }));
-    const source = entry.source || 'web';
+    const rawSource = entry.source || 'web';
+    const source = rawSource === 'wa' ? 'whatsapp' : rawSource;
     this.editedSource.update((prev) => ({ ...prev, [entry._id]: source }));
     if (this.sourceOptions.includes(source)) {
       this.editSourceMode.set(source);
@@ -472,6 +474,7 @@ export class StatsTableComponent implements AfterViewInit {
   private resolvedNewSource(): string {
     if (this.newSourceMode() !== 'Custom') return this.newSourceMode() || 'web';
     const custom = this.newSourceCustom().trim();
-    return custom || 'Custom';
+    // Normalize legacy shorthand.
+    return custom === 'wa' ? 'whatsapp' : (custom || 'Custom');
   }
 }

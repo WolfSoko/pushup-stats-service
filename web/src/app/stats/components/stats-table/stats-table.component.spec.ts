@@ -58,7 +58,7 @@ describe('StatsTableComponent', () => {
     component.startEdit(entry);
     expect(component.isEditing(entry._id)).toBe(true);
     expect(component.editReps(entry)).toBe('8');
-    expect(component.editSource(entry)).toBe('wa');
+    expect(component.editSource(entry)).toBe('whatsapp');
 
     component.cancelEdit();
     expect(component.isEditing(entry._id)).toBe(false);
@@ -233,7 +233,7 @@ describe('StatsTableComponent', () => {
     component.editTypeCustom.set('');
     component.saveFromDialog();
 
-    expect(updateSpy).toHaveBeenCalledWith({ id: '1', reps: 8, source: 'wa', type: 'Custom' });
+    expect(updateSpy).toHaveBeenCalledWith({ id: '1', reps: 8, source: 'whatsapp', type: 'Custom' });
   });
 
   it('emits create with custom fallback and resets custom field', () => {
