@@ -249,12 +249,12 @@ app.use(
   }),
 );
 
-app.use('/**', (req, res, next) => {
+// NOTE: Express does not treat '/**' as a catch-all route. Use '*' so deep links
+// like '/analyse' and '/entries' are SSR-rendered.
+app.get('*', (req, res, next) => {
   angularApp
     .handle(req)
-    .then((response) =>
-      response ? writeResponseToNodeResponse(response, res) : next(),
-    )
+    .then((response) => (response ? writeResponseToNodeResponse(response, res) : next()))
     .catch(next);
 });
 
