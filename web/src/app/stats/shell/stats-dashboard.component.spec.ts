@@ -82,6 +82,13 @@ describe('StatsDashboardComponent', () => {
     expect(text).toContain('Letzter Eintrag');
   });
 
+  it('offers quick add buttons for 10, 20 and 30 reps', () => {
+    const text = fixture.nativeElement.textContent;
+    expect(text).toContain('+10 Reps');
+    expect(text).toContain('+20 Reps');
+    expect(text).toContain('+30 Reps');
+  });
+
   it('initializes filter from URL params and triggers first load with those values', () => {
     const component = fixture.componentInstance;
 
