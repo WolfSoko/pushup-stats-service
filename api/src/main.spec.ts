@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { NestFactory } from '@nestjs/core';
-import { aggregateDaily, aggregateHourly, buildStats, createApp, parseCsv, type PushupEntry } from './main';
+import { aggregateDaily, aggregateHourly, buildStats, createApp, parseCsv, startServer, type PushupEntry } from './main';
 
 describe('api stats core', () => {
   it('parses csv and skips invalid rows', () => {
@@ -118,5 +118,28 @@ describe('api stats core', () => {
 
     createSpy.mockRestore();
     existsSpy.mockRestore();
+  });
+
+  it('startServer listens on localhost and logs', async () => {
+    const fakeExpress = { use: jest.fn(), get: jest.fn() };
+    const fakeApp = {
+      enableCors: jest.fn(),
+      getHttpAdapter: jest.fn().mockReturnValue({ getInstance: () => fakeExpress }),
+      listen: jest.fn().mockResolvedValue(undefined),
+    };
+
+    const createSpy = jest.spyOn(NestFactory, 'create').mockResolvedValue(fakeApp as never);
+    const existsSpy = jest.spyOn(fs, 'existsSync').mockReturnValue(false);
+    const logSpy = jest.spyOn(console, 'log').mockImplementation(() => undefined);
+
+    await startServer();
+
+    expect(createSpy).toHaveBeenCalled();
+    expect(fakeApp.listen).toHaveBeenCalledWith(expect.any(Number), '127.0.0.1');
+    expect(logSpy).toHaveBeenCalled();
+
+    createSpy.mockRestore();
+    existsSpy.mockRestore();
+    logSpy.mockRestore();
   });
 });

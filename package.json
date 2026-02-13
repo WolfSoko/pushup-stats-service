@@ -94,5 +94,5 @@
     "socket.io": "^4.8.3",
     "socket.io-client": "^4.8.3"
   },
-  "packageManager": "npm@11.9.0+sha512.04166853ddba142ca98f86fb57b1258a7c6c59ccb82acb3cf141b77a315898acaaed47395e74f7e0c7b69c486008e68be6a6381ef1aee5a23dd82e0e61decd68"
+  "packageManager": "npm@11.10.0+sha256.43c653384c39617756846ad405705061a78fb6bbddb2ced57ab79fb92e8af2a7"
 }
