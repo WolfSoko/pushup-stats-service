@@ -24,15 +24,30 @@ type PushupEntry = {
   type?: string;
 };
 
+type UserConfig = {
+  userId: string;
+  displayName?: string;
+  dailyGoal?: number;
+  ui?: {
+    showSourceColumn?: boolean;
+  };
+};
+
 type SeriesEntry = {
   bucket: string;
   total: number;
   dayIntegral: number;
 };
 
-const WORKSPACE = process.env['WORKSPACE_DIR'] || '/home/wolf/.openclaw/workspace';
-const CSV_PATH = process.env['PUSHUPS_CSV_PATH'] || join(WORKSPACE, 'pushups.csv');
-const DB_PATH = process.env['PUSHUPS_DB_PATH'] || join(process.cwd(), 'data', 'pushups.db');
+const WORKSPACE =
+  process.env['WORKSPACE_DIR'] || '/home/wolf/.openclaw/workspace';
+const CSV_PATH =
+  process.env['PUSHUPS_CSV_PATH'] || join(WORKSPACE, 'pushups.csv');
+const DB_PATH =
+  process.env['PUSHUPS_DB_PATH'] || join(process.cwd(), 'data', 'pushups.db');
+const USER_CONFIG_DB_PATH =
+  process.env['USER_CONFIG_DB_PATH'] ||
+  join(process.cwd(), 'data', 'user-config.db');
 
 const serverDistFolder = dirname(fileURLToPath(import.meta.url));
 const browserDistFolder = resolve(serverDistFolder, '../browser');
@@ -58,7 +73,20 @@ function parseCsv(): PushupEntry[] {
 
 const dbDir = dirname(DB_PATH);
 fs.mkdirSync(dbDir, { recursive: true });
-const db = Datastore.create({ filename: DB_PATH, autoload: true, timestampData: true });
+const db = Datastore.create({
+  filename: DB_PATH,
+  autoload: true,
+  timestampData: true,
+});
+
+const userConfigDbDir = dirname(USER_CONFIG_DB_PATH);
+fs.mkdirSync(userConfigDbDir, { recursive: true });
+const userConfigDb = Datastore.create({
+  filename: USER_CONFIG_DB_PATH,
+  autoload: true,
+  timestampData: true,
+});
+void userConfigDb.ensureIndex({ fieldName: 'userId', unique: true });
 
 async function ensureSeededFromCsv() {
   const count = await db.count({});
@@ -67,7 +95,13 @@ async function ensureSeededFromCsv() {
   const csvRows = parseCsv();
   if (!csvRows.length) return;
 
-  await db.insert(csvRows.map((r) => ({ timestamp: r.timestamp, reps: r.reps, source: r.source || 'csv' })));
+  await db.insert(
+    csvRows.map((r) => ({
+      timestamp: r.timestamp,
+      reps: r.reps,
+      source: r.source || 'csv',
+    })),
+  );
 }
 
 type DbDoc = {
@@ -81,7 +115,9 @@ type DbDoc = {
 async function allRows(): Promise<PushupEntry[]> {
   const docs = (await db.find({}).sort({ timestamp: 1 })) as DbDoc[];
   return docs
-    .filter((d) => typeof d.timestamp === 'string' && typeof d.reps === 'number')
+    .filter(
+      (d) => typeof d.timestamp === 'string' && typeof d.reps === 'number',
+    )
     .map((d) => ({
       _id: d._id,
       timestamp: d.timestamp as string,
@@ -132,7 +168,9 @@ const angularAppManifest = (
   await import(new URL('./angular-app-manifest.mjs', import.meta.url).href)
 ).default;
 const angularAppEngineManifest = (
-  await import(new URL('./angular-app-engine-manifest.mjs', import.meta.url).href)
+  await import(
+    new URL('./angular-app-engine-manifest.mjs', import.meta.url).href
+  )
 ).default;
 
 ɵsetAngularAppManifest(angularAppManifest);
@@ -157,13 +195,17 @@ app.get('/api/stats', async (req, res) => {
   const rows = await allRows();
   const from = typeof req.query['from'] === 'string' ? req.query['from'] : null;
   const to = typeof req.query['to'] === 'string' ? req.query['to'] : null;
-  const inRange = (d: string): boolean => (!from || d >= from) && (!to || d <= to);
+  const inRange = (d: string): boolean =>
+    (!from || d >= from) && (!to || d <= to);
 
   const filteredRows = rows.filter((x) => inRange(x.timestamp.slice(0, 10)));
   const daily = aggregateDaily(filteredRows);
-  const distinctDays = new Set(filteredRows.map((x) => x.timestamp.slice(0, 10))).size;
+  const distinctDays = new Set(
+    filteredRows.map((x) => x.timestamp.slice(0, 10)),
+  ).size;
   const granularity = distinctDays > 0 && distinctDays < 7 ? 'hourly' : 'daily';
-  const series = granularity === 'hourly' ? aggregateHourly(filteredRows) : daily;
+  const series =
+    granularity === 'hourly' ? aggregateHourly(filteredRows) : daily;
   const total = daily.reduce((s, x) => s + x.total, 0);
 
   res.setHeader('Cache-Control', 'no-store');
@@ -186,8 +228,83 @@ app.get('/api/pushups', async (_req, res) => {
   res.json(await allRows());
 });
 
+app.get('/api/users/:userId/config', async (req, res) => {
+  const userId = req.params['userId'];
+  if (!userId) {
+    res.status(400).json({ error: 'userId is required' });
+    return;
+  }
+
+  const doc = (await userConfigDb.findOne({ userId })) as UserConfig | null;
+  res.setHeader('Cache-Control', 'no-store');
+  res.json(
+    doc || {
+      userId,
+      displayName: userId,
+      dailyGoal: 100,
+      ui: { showSourceColumn: false },
+    },
+  );
+});
+
+app.put('/api/users/:userId/config', async (req, res) => {
+  const userId = req.params['userId'];
+  if (!userId) {
+    res.status(400).json({ error: 'userId is required' });
+    return;
+  }
+
+  const body = (req.body || {}) as Partial<UserConfig>;
+  const displayName =
+    typeof body.displayName === 'string' ? body.displayName : undefined;
+  const dailyGoal =
+    typeof body.dailyGoal === 'number' ? body.dailyGoal : undefined;
+  const showSourceColumn =
+    typeof body.ui?.showSourceColumn === 'boolean'
+      ? body.ui.showSourceColumn
+      : undefined;
+
+  const patch: UserConfig = {
+    userId,
+    ...(typeof displayName !== 'undefined' ? { displayName } : {}),
+    ...(typeof dailyGoal !== 'undefined' ? { dailyGoal } : {}),
+    ui:
+      typeof showSourceColumn !== 'undefined'
+        ? { showSourceColumn }
+        : undefined,
+  };
+
+  try {
+    await userConfigDb.update(
+      { userId },
+      {
+        $set: {
+          userId,
+          ...(typeof displayName !== 'undefined' ? { displayName } : {}),
+          ...(typeof dailyGoal !== 'undefined' ? { dailyGoal } : {}),
+          ...(typeof showSourceColumn !== 'undefined'
+            ? { ui: { showSourceColumn } }
+            : {}),
+        },
+      },
+      { upsert: true },
+    );
+  } catch (_e) {
+    res.status(500).json({ error: 'failed to update user config' });
+    return;
+  }
+
+  const updated = (await userConfigDb.findOne({ userId })) as UserConfig | null;
+  res.json(updated || patch);
+});
+
 app.post('/api/pushups', async (req, res) => {
-  const payload = req.body as { timestamp?: string; reps?: number; source?: string; type?: string };
+  const payload = req.body as {
+    timestamp?: string;
+    reps?: number;
+    source?: string;
+    type?: string;
+  };
   if (!payload?.timestamp || Number(payload?.reps) <= 0) {
     res.status(400).json({ error: 'timestamp and positive reps are required' });
     return;
@@ -206,16 +323,27 @@ app.post('/api/pushups', async (req, res) => {
 
 app.put('/api/pushups/:id', async (req, res) => {
   const id = req.params['id'];
-  const payload = req.body as { timestamp?: string; reps?: number; source?: string; type?: string };
+  const payload = req.body as {
+    timestamp?: string;
+    reps?: number;
+    source?: string;
+    type?: string;
+  };
 
   await db.update(
     { _id: id },
     {
       $set: {
         ...(payload.timestamp ? { timestamp: payload.timestamp } : {}),
-        ...(typeof payload.reps !== 'undefined' ? { reps: Number(payload.reps) } : {}),
-        ...(typeof payload.source !== 'undefined' ? { source: payload.source } : {}),
-        ...(typeof payload.type !== 'undefined' ? { type: payload.type || 'Standard' } : {}),
+        ...(typeof payload.reps !== 'undefined'
+          ? { reps: Number(payload.reps) }
+          : {}),
+        ...(typeof payload.source !== 'undefined'
+          ? { source: payload.source }
+          : {}),
+        ...(typeof payload.type !== 'undefined'
+          ? { type: payload.type || 'Standard' }
+          : {}),
       },
     },
   );
@@ -254,7 +382,9 @@ app.use(
 app.get('*', (req, res, next) => {
   angularApp
     .handle(req)
-    .then((response) => (response ? writeResponseToNodeResponse(response, res) : next()))
+    .then((response) =>
+      response ? writeResponseToNodeResponse(response, res) : next(),
+    )
     .catch(next);
 });
 
