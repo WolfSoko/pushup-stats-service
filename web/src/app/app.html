@@ -2,7 +2,7 @@
   <mat-sidenav
     #drawer
     class="app-sidenav"
-    [mode]="isHandset() ? 'over' : 'side'"
+    mode="over"
     [opened]="navOpen()"
     (openedChange)="navOpen.set($event)"
     [autoFocus]="false"
@@ -17,25 +17,25 @@
         routerLink="/"
         routerLinkActive="active"
         [routerLinkActiveOptions]="{ exact: true }"
-        (click)="isHandset() && navOpen.set(false)"
+        (click)="navOpen.set(false)"
       >
         <mat-icon matListItemIcon>dashboard</mat-icon>
         <span matListItemTitle>Dashboard</span>
       </a>
 
-      <a mat-list-item routerLink="/daten" routerLinkActive="active" (click)="isHandset() && navOpen.set(false)">
+      <a mat-list-item routerLink="/daten" routerLinkActive="active" (click)="navOpen.set(false)">
         <mat-icon matListItemIcon>list</mat-icon>
         <span matListItemTitle>Daten</span>
       </a>
 
-      <a mat-list-item routerLink="/analyse" routerLinkActive="active" (click)="isHandset() && navOpen.set(false)">
+      <a mat-list-item routerLink="/analyse" routerLinkActive="active" (click)="navOpen.set(false)">
         <mat-icon matListItemIcon>insights</mat-icon>
         <span matListItemTitle>Analyse</span>
       </a>
 
       <mat-divider></mat-divider>
 
-      <a mat-list-item routerLink="/settings" routerLinkActive="active" (click)="isHandset() && navOpen.set(false)">
+      <a mat-list-item routerLink="/settings" routerLinkActive="active" (click)="navOpen.set(false)">
         <mat-icon matListItemIcon>settings</mat-icon>
         <span matListItemTitle>Einstellungen</span>
       </a>
