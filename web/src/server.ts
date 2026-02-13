@@ -201,8 +201,13 @@ app.use((req, res, next) => {
       !req.path.startsWith('/socket.io');
 
     if (isApi || isSsrPage) {
+      const fwd = req.get('x-forwarded-for');
+      const ip = req.ip;
+      const remote = req.socket.remoteAddress;
+      const ua = req.get('user-agent');
+
       console.log(
-        `${new Date().toISOString()} ${req.method} ${req.originalUrl} -> ${res.statusCode} (${ms}ms, rss=${rssMb}MB)`,
+        `${new Date().toISOString()} ${req.method} ${req.originalUrl} -> ${res.statusCode} (${ms}ms, rss=${rssMb}MB, ip=${ip}, remote=${remote}${fwd ? `, xff=${fwd}` : ''}${ua ? `, ua=${JSON.stringify(ua)}` : ''})`,
       );
     }
   });
