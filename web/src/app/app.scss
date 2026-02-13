@@ -20,6 +20,25 @@ mat-card-content + mat-card-footer {
   margin-top: 8px;
 }
 
+.app-shell {
+  min-height: 100vh;
+}
+
+.app-sidenav {
+  width: min(80vw, 320px);
+
+  .active {
+    font-weight: 700;
+  }
+
+  .sidenav-header {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    font-weight: 700;
+  }
+}
+
 .top-nav {
   position: sticky;
   top: 0;
@@ -29,4 +48,16 @@ mat-card-content + mat-card-footer {
   .active {
     font-weight: 700;
   }
+
+  .spacer {
+    flex: 1 1 auto;
+  }
+
+  .app-title {
+    font-weight: 700;
+  }
+}
+
+.app-content {
+  padding: 12px;
 }

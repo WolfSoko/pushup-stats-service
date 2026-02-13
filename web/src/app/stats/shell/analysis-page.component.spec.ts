@@ -6,8 +6,9 @@ import { StatsApiService } from '@nx-temp/stats-data-access';
 import { BaseChartDirective } from 'ng2-charts';
 
 @Directive({
+  // eslint-disable-next-line @angular-eslint/directive-selector
   selector: '[baseChart]',
-  standalone: true
+  standalone: true,
 })
 class MockBaseChartDirective {
   @Input() data: any;

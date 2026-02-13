@@ -59,6 +59,17 @@ test('websocket pushes updates to other open clients', async ({ browser }) => {
   }
 });
 
+test('settings page is reachable from navigation', async ({ page }) => {
+  await page.goto('/');
+  await expect(page.getByRole('heading', { name: 'Liegestütze Statistik' })).toBeVisible();
+
+  // On desktop viewport the sidenav is open; click the list item.
+  await page.getByRole('link', { name: 'Einstellungen' }).first().click();
+
+  await expect(page).toHaveURL(/\/settings$/);
+  await expect(page.getByText('User-Profil & Tagesziel')).toBeVisible();
+});
+
 test('dashboard period controls (Tag/Woche + Heute/Vor/Zurück) filter table rows', async ({ page }) => {
   const now = new Date();
   const today = new Date(now);
