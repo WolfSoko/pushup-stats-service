@@ -187,6 +187,29 @@ const angularApp = new AngularNodeAppEngine();
 
 app.use(express.json());
 
+// Minimal request logging to help diagnose memory spikes / traffic patterns.
+app.use((req, res, next) => {
+  const start = Date.now();
+  res.on('finish', () => {
+    const ms = Date.now() - start;
+    const rssMb = Math.round(process.memoryUsage().rss / 1024 / 1024);
+
+    const isApi = req.path.startsWith('/api/') || req.path === '/health';
+    const isSsrPage =
+      req.method === 'GET' &&
+      !req.path.startsWith('/api/') &&
+      !req.path.startsWith('/socket.io');
+
+    if (isApi || isSsrPage) {
+      console.log(
+        `${new Date().toISOString()} ${req.method} ${req.originalUrl} -> ${res.statusCode} (${ms}ms, rss=${rssMb}MB)`,
+      );
+    }
+  });
+
+  next();
+});
+
 app.get('/health', (_req, res) => {
   res.json({ ok: true, storage: 'nedb' });
 });
