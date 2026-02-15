@@ -4,6 +4,18 @@
   "projectType": "application",
   "prefix": "app",
   "sourceRoot": "web/src",
+  "i18n": {
+    "sourceLocale": {
+      "code": "de",
+      "subPath": ""
+    },
+    "locales": {
+      "en": {
+        "translation": "web/src/locale/messages.en.xlf",
+        "subPath": "en"
+      }
+    }
+  },
   "tags": [],
   "targets": {
     "build": {
@@ -18,6 +30,7 @@
         "ssr": {
           "entry": "web/src/server.ts"
         },
+        "polyfills": ["@angular/localize/init"],
         "tsConfig": "web/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": [
@@ -32,6 +45,7 @@
       },
       "configurations": {
         "production": {
+          "localize": ["de", "en"],
           "budgets": [
             {
               "type": "initial",
@@ -82,6 +96,15 @@
       "options": {
         "jestConfig": "web/jest.config.cts",
         "tsConfig": "web/tsconfig.spec.json"
+      }
+    },
+    "extract-i18n": {
+      "executor": "@angular/build:extract-i18n",
+      "options": {
+        "buildTarget": "web:build:production",
+        "format": "xlf2",
+        "outputPath": "web/src/locale",
+        "outFile": "messages.xlf"
       }
     },
     "serve-static": {

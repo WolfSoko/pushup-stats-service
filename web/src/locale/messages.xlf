@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="2.0" xmlns="urn:oasis:names:tc:xliff:document:2.0" srcLang="de">
+  <file id="ngi18n" original="ng.template">
+    <unit id="app.title">
+      <notes>
+        <note category="location">web/src/app/app.html:11,12</note>
+        <note category="location">web/src/app/app.html:71,72</note>
+      </notes>
+      <segment>
+        <source>Pushups</source>
+      </segment>
+    </unit>
+    <unit id="nav.dashboard">
+      <notes>
+        <note category="location">web/src/app/app.html:23,26</note>
+      </notes>
+      <segment>
+        <source>Dashboard</source>
+      </segment>
+    </unit>
+    <unit id="nav.data">
+      <notes>
+        <note category="location">web/src/app/app.html:28,31</note>
+      </notes>
+      <segment>
+        <source>Daten</source>
+      </segment>
+    </unit>
+    <unit id="nav.analysis">
+      <notes>
+        <note category="location">web/src/app/app.html:33,36</note>
+      </notes>
+      <segment>
+        <source>Analyse</source>
+      </segment>
+    </unit>
+    <unit id="nav.settings">
+      <notes>
+        <note category="location">web/src/app/app.html:40,43</note>
+      </notes>
+      <segment>
+        <source>Einstellungen</source>
+      </segment>
+    </unit>
+    <unit id="nav.language">
+      <notes>
+        <note category="location">web/src/app/app.html:45,47</note>
+      </notes>
+      <segment>
+        <source>Sprache</source>
+      </segment>
+    </unit>
+    <unit id="nav.lang.de">
+      <notes>
+        <note category="location">web/src/app/app.html:49,52</note>
+      </notes>
+      <segment>
+        <source>Deutsch</source>
+      </segment>
+    </unit>
+    <unit id="nav.lang.en">
+      <notes>
+        <note category="location">web/src/app/app.html:54,56</note>
+      </notes>
+      <segment>
+        <source>English</source>
+      </segment>
+    </unit>
+    <unit id="nav.aria">
+      <notes>
+        <note category="location">web/src/app/app.html:60</note>
+      </notes>
+      <segment>
+        <source>Pushup Navigation</source>
+      </segment>
+    </unit>
+    <unit id="nav.openMenu">
+      <notes>
+        <note category="location">web/src/app/app.html:64,65</note>
+      </notes>
+      <segment>
+        <source>Menü öffnen</source>
+      </segment>
+    </unit>
+  </file>
+</xliff>

@@ -30,6 +30,22 @@ npx nx serve web
 npx nx run-many -t lint test build
 ```
 
+## Production / Daemon (systemd --user)
+
+Der SSR-Service läuft als systemd User-Service: **`pushup-service.service`**.
+
+- Unit-Datei: `~/.config/systemd/user/pushup-service.service`
+- Startkommando: `node dist/web/server/server.mjs`
+- Port: `8787`
+
+Nützliche Befehle:
+
+```bash
+systemctl --user status pushup-service.service
+systemctl --user restart pushup-service.service
+journalctl --user -u pushup-service.service -f
+```
+
 ## TDD-Guardrails (RED/GREEN/REFACTOR)
 
 Für neue Features gilt ab jetzt verbindlich:

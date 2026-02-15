@@ -8,7 +8,7 @@
     [autoFocus]="false"
   >
     <mat-toolbar class="sidenav-header">
-      <span>Pushups</span>
+      <span i18n="@@app.title">Pushups</span>
     </mat-toolbar>
 
     <mat-nav-list>
@@ -20,35 +20,63 @@
         (click)="navOpen.set(false)"
       >
         <mat-icon matListItemIcon>dashboard</mat-icon>
-        <span matListItemTitle>Dashboard</span>
+        <span matListItemTitle i18n="@@nav.dashboard">Dashboard</span>
       </a>
 
       <a mat-list-item routerLink="/daten" routerLinkActive="active" (click)="navOpen.set(false)">
         <mat-icon matListItemIcon>list</mat-icon>
-        <span matListItemTitle>Daten</span>
+        <span matListItemTitle i18n="@@nav.data">Daten</span>
       </a>
 
       <a mat-list-item routerLink="/analyse" routerLinkActive="active" (click)="navOpen.set(false)">
         <mat-icon matListItemIcon>insights</mat-icon>
-        <span matListItemTitle>Analyse</span>
+        <span matListItemTitle i18n="@@nav.analysis">Analyse</span>
       </a>
 
       <mat-divider></mat-divider>
 
       <a mat-list-item routerLink="/settings" routerLinkActive="active" (click)="navOpen.set(false)">
         <mat-icon matListItemIcon>settings</mat-icon>
-        <span matListItemTitle>Einstellungen</span>
+        <span matListItemTitle i18n="@@nav.settings">Einstellungen</span>
+      </a>
+
+      <mat-divider></mat-divider>
+
+      <div class="mat-subtitle-2" style="padding: 8px 16px" i18n="@@nav.language">Sprache</div>
+
+      <a
+        mat-list-item
+        href="#"
+        (click)="setLanguage('de', $event); navOpen.set(false)"
+      >
+        <mat-icon matListItemIcon>language</mat-icon>
+        <span matListItemTitle i18n="@@nav.lang.de">Deutsch</span>
+      </a>
+
+      <a
+        mat-list-item
+        href="#"
+        (click)="setLanguage('en', $event); navOpen.set(false)"
+      >
+        <mat-icon matListItemIcon>language</mat-icon>
+        <span matListItemTitle i18n="@@nav.lang.en">English</span>
       </a>
     </mat-nav-list>
   </mat-sidenav>
 
   <mat-sidenav-content>
-    <mat-toolbar class="top-nav" role="navigation" aria-label="Pushup Navigation">
-      <button mat-icon-button type="button" aria-label="Menü öffnen" (click)="navOpen.set(!navOpen())">
+    <mat-toolbar class="top-nav" role="navigation" aria-label="Pushup Navigation" i18n-aria-label="@@nav.aria">
+      <button
+        mat-icon-button
+        type="button"
+        aria-label="Menü öffnen"
+        i18n-aria-label="@@nav.openMenu"
+        (click)="navOpen.set(!navOpen())"
+      >
         <mat-icon>menu</mat-icon>
       </button>
 
-      <span class="app-title">Pushups</span>
+      <span class="app-title" i18n="@@app.title">Pushups</span>
       <span class="spacer"></span>
     </mat-toolbar>
 

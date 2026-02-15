@@ -187,6 +187,9 @@ const angularApp = new AngularNodeAppEngine();
 
 app.use(express.json());
 
+// NOTE: Locale routing is handled by the front proxy (see proxy/server.cjs).
+// The SSR service itself should serve content for its locale at '/'.
+
 // Minimal request logging to help diagnose memory spikes / traffic patterns.
 app.use((req, res, next) => {
   const start = Date.now();

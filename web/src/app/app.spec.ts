@@ -49,5 +49,10 @@ describe('App', () => {
     expect(root.textContent).toContain('Daten');
     expect(root.textContent).toContain('Analyse');
     expect(root.textContent).toContain('Einstellungen');
+
+    // Language switch
+    expect(root.textContent).toContain('Sprache');
+    expect(root.textContent).toContain('Deutsch');
+    expect(root.textContent).toContain('English');
   });
 });

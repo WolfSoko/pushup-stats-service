@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="2.0" xmlns="urn:oasis:names:tc:xliff:document:2.0" srcLang="de" trgLang="en">
+  <file id="ngi18n" original="ng.template">
+    <unit id="app.title">
+      <segment>
+        <source>Pushups</source>
+        <target>Pushups</target>
+      </segment>
+    </unit>
+
+    <unit id="nav.dashboard">
+      <segment>
+        <source>Dashboard</source>
+        <target>Dashboard</target>
+      </segment>
+    </unit>
+
+    <unit id="nav.data">
+      <segment>
+        <source>Daten</source>
+        <target>Data</target>
+      </segment>
+    </unit>
+
+    <unit id="nav.analysis">
+      <segment>
+        <source>Analyse</source>
+        <target>Analysis</target>
+      </segment>
+    </unit>
+
+    <unit id="nav.settings">
+      <segment>
+        <source>Einstellungen</source>
+        <target>Settings</target>
+      </segment>
+    </unit>
+
+    <unit id="nav.language">
+      <segment>
+        <source>Sprache</source>
+        <target>Language</target>
+      </segment>
+    </unit>
+
+    <unit id="nav.lang.de">
+      <segment>
+        <source>Deutsch</source>
+        <target>Deutsch</target>
+      </segment>
+    </unit>
+
+    <unit id="nav.lang.en">
+      <segment>
+        <source>English</source>
+        <target>English</target>
+      </segment>
+    </unit>
+
+    <unit id="nav.aria">
+      <segment>
+        <source>Pushup Navigation</source>
+        <target>Push-up navigation</target>
+      </segment>
+    </unit>
+
+    <unit id="nav.openMenu">
+      <segment>
+        <source>Menü öffnen</source>
+        <target>Open menu</target>
+      </segment>
+    </unit>
+  </file>
+</xliff>

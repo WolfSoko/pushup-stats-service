@@ -31,6 +31,18 @@ export class App {
   private readonly swUpdate = inject(SwUpdate, { optional: true });
   private readonly snackBar = inject(MatSnackBar);
 
+  setLanguage(lang: 'de' | 'en', ev?: Event): void {
+    ev?.preventDefault();
+
+    // Pin the language choice client-side. This avoids issues with service worker
+    // navigation caching swallowing Set-Cookie headers.
+    const maxAge = 180 * 24 * 60 * 60; // 180 days
+    document.cookie = `lang=${encodeURIComponent(lang)}; Path=/; Max-Age=${maxAge}; SameSite=Lax`;
+
+    const target = lang === 'en' ? '/en/' : '/';
+    window.location.assign(target);
+  }
+
   /** Whether the sidenav is open (same behavior on all screen sizes). */
   readonly navOpen = signal(false);
 
