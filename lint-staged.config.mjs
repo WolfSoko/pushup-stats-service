@@ -1,3 +1,3 @@
 export default {
-  '*': 'npx nx affected:lint --files=',
+  '*': ['npx eslint --fix', 'prettier --write'],
 };
