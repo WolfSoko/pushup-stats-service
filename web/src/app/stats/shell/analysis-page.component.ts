@@ -1,21 +1,27 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { isPlatformBrowser } from '@angular/common';
-import { Component, computed, inject, PLATFORM_ID, resource } from '@angular/core';
+import {
+  Component,
+  computed,
+  inject,
+  PLATFORM_ID,
+  resource,
+} from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
+import { Chart, ChartConfiguration } from 'chart.js';
+import { MatrixController, MatrixElement } from 'chartjs-chart-matrix';
 import { BaseChartDirective } from 'ng2-charts';
-import { ChartConfiguration, ChartData } from 'chart.js';
 import { firstValueFrom } from 'rxjs';
-import { StatsApiService } from '@nx-temp/stats-data-access';
-import { PushupRecord } from '@nx-temp/stats-models';
+import { StatsApiService } from '@pu-stats/data-access';
+import { PushupRecord } from '@pu-stats/models';
+
+// Register the matrix controller and element
+Chart.register(MatrixController, MatrixElement);
 
 interface TrendPoint {
   label: string;
   total: number;
-}
-
-interface HeatmapRow {
-  hour: string;
-  weekdays: number[];
 }
 
 @Component({
@@ -69,10 +75,24 @@ interface HeatmapRow {
             <mat-card-title>Bestwerte & Streaks</mat-card-title>
           </mat-card-header>
           <mat-card-content class="best-grid">
-            <div><strong>Bestwert Einzel-Eintrag:</strong><div>{{ bestSingleEntry()?.reps ?? 0 }} Reps</div></div>
-            <div><strong>Bester Tag:</strong><div>{{ bestDay()?.date ?? '—' }} · {{ bestDay()?.total ?? 0 }} Reps</div></div>
-            <div><strong>Aktuelle Streak:</strong><div>{{ currentStreak() }} Tage</div></div>
-            <div><strong>Längste Streak:</strong><div>{{ longestStreak() }} Tage</div></div>
+            <div>
+              <strong>Bestwert Einzel-Eintrag:</strong>
+              <div>{{ bestSingleEntry()?.reps ?? 0 }} Reps</div>
+            </div>
+            <div>
+              <strong>Bester Tag:</strong>
+              <div>
+                {{ bestDay()?.date ?? '—' }} · {{ bestDay()?.total ?? 0 }} Reps
+              </div>
+            </div>
+            <div>
+              <strong>Aktuelle Streak:</strong>
+              <div>{{ currentStreak() }} Tage</div>
+            </div>
+            <div>
+              <strong>Längste Streak:</strong>
+              <div>{{ longestStreak() }} Tage</div>
+            </div>
           </mat-card-content>
         </mat-card>
       </section>
@@ -87,7 +107,8 @@ interface HeatmapRow {
               baseChart
               [data]="heatmapChartData()"
               [options]="heatmapChartOptions"
-              [type]="'matrix'">
+              [type]="'matrix'"
+            >
             </canvas>
           } @else {
             <div class="ssr-note">Heatmap wird im Browser geladen…</div>
@@ -97,26 +118,64 @@ interface HeatmapRow {
     </main>
   `,
   styles: `
-    .page-wrap { max-width: 1200px; margin: 0 auto; padding: 16px; display: grid; gap: 16px; }
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; }
-    mat-table { width: 100%; }
+    .page-wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 16px;
+      display: grid;
+      gap: 16px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 16px;
+    }
+    mat-table {
+      width: 100%;
+    }
 
-    mat-card-content { overflow: auto; }
+    mat-card-content {
+      overflow: auto;
+    }
 
-    .best-grid { display: grid; grid-template-columns: repeat(2, minmax(180px, 1fr)); gap: 12px; }
+    .best-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(180px, 1fr));
+      gap: 12px;
+    }
 
-    .heatmap-full { width: 100%; }
-    .heatmap-wrap { overflow: auto; width: 100%; min-height: 400px; }
-    .ssr-note { padding: 12px; color: rgba(230, 237, 249, 0.7); font-size: 0.9rem; }
+    .heatmap-full {
+      width: 100%;
+    }
+    .heatmap-wrap {
+      overflow: auto;
+      width: 100%;
+      min-height: 400px;
+    }
+    .ssr-note {
+      padding: 12px;
+      color: rgba(230, 237, 249, 0.7);
+      font-size: 0.9rem;
+    }
 
     @media (max-width: 900px) {
-      .page-wrap { padding: 12px; gap: 12px; }
-      .grid { grid-template-columns: 1fr; gap: 12px; }
-      .best-grid { grid-template-columns: 1fr 1fr; }
+      .page-wrap {
+        padding: 12px;
+        gap: 12px;
+      }
+      .grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+      .best-grid {
+        grid-template-columns: 1fr 1fr;
+      }
     }
 
     @media (max-width: 600px) {
-      .best-grid { grid-template-columns: 1fr; }
+      .best-grid {
+        grid-template-columns: 1fr;
+      }
     }
   `,
 })
@@ -126,7 +185,9 @@ export class AnalysisPageComponent {
 
   readonly trendColumns = ['label', 'total'];
 
-  readonly entriesResource = resource({ loader: async () => firstValueFrom(this.api.listPushups({})) });
+  readonly entriesResource = resource({
+    loader: async () => firstValueFrom(this.api.listPushups({})),
+  });
   readonly rows = computed(() => this.entriesResource.value() ?? []);
 
   readonly weekTrend = computed(() => {
@@ -138,7 +199,10 @@ export class AnalysisPageComponent {
       const key = `${year}-W${week}`;
       byWeek.set(key, (byWeek.get(key) ?? 0) + row.reps);
     }
-    return [...byWeek.entries()].sort(([a], [b]) => a.localeCompare(b)).slice(-8).map(([label, total]) => ({ label, total }));
+    return [...byWeek.entries()]
+      .sort(([a], [b]) => a.localeCompare(b))
+      .slice(-8)
+      .map(([label, total]) => ({ label, total }));
   });
 
   readonly monthTrend = computed<TrendPoint[]>(() => {
@@ -148,16 +212,21 @@ export class AnalysisPageComponent {
       const label = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
       byMonth.set(label, (byMonth.get(label) ?? 0) + row.reps);
     }
-    return [...byMonth.entries()].sort(([a], [b]) => a.localeCompare(b)).slice(-12).map(([label, total]) => ({ label, total }));
+    return [...byMonth.entries()]
+      .sort(([a], [b]) => a.localeCompare(b))
+      .slice(-12)
+      .map(([label, total]) => ({ label, total }));
   });
 
-  readonly heatmapChartData = computed<ChartData<'matrix'>>(() => {
+  readonly heatmapChartData = computed<any>(() => {
     const days = ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'];
-    const hours = Array.from({ length: 24 }, (_, i) => `${i}`.padStart(2, '0'));
-    
+    const hours = Array.from({ length: 24 }, (_, i) =>
+      `${24 - i}`.padStart(2, '0'),
+    );
+
     // Use 'any' to bypass strict MatrixDataPoint type check for now, as chartjs-chart-matrix types are tricky with string axes
-    const dataPoints: any[] = [];
-    
+    const dataPoints: { x: string; y: string; v: number }[] = [];
+
     // Initialize grid with 0
     for (const day of days) {
       for (const hour of hours) {
@@ -170,35 +239,40 @@ export class AnalysisPageComponent {
       const date = new Date(row.timestamp);
       // getDay(): 0 = Sun, 1 = Mon...
       // We need 0 = Mon, 6 = Sun to match 'days' array index
-      const dayIndex = (date.getDay() + 6) % 7; 
+      const dayIndex = (date.getDay() + 6) % 7;
       const dayLabel = days[dayIndex];
       const hourLabel = String(date.getHours()).padStart(2, '0');
-      
+
       const key = `${dayLabel}-${hourLabel}`;
       map.set(key, (map.get(key) ?? 0) + row.reps);
     }
 
-    const data = dataPoints.map(p => {
-        const key = `${p.x}-${p.y}`;
-        return { x: p.x, y: p.y, v: map.get(key) ?? 0 };
+    const data = dataPoints.map((p) => {
+      const key = `${p.x}-${p.y}`;
+      return { x: p.x, y: p.y, v: map.get(key) ?? 0 } as any;
     });
 
     return {
-      datasets: [{
-        label: 'Pushups',
-        data: data,
-        backgroundColor: (context) => {
-          const value = (context.raw as { v: number }).v;
-          if (value === 0) return 'rgba(0,0,0,0.02)';
-          const max = Math.max(...data.map(d => d.v)) || 1;
-          const alpha = 0.2 + (value / max) * 0.8;
-          return `rgba(69, 137, 255, ${alpha})`;
+      datasets: [
+        {
+          label: 'Pushups',
+          data: data,
+          backgroundColor: (context: any) => {
+            const raw = context.raw as { v: number };
+            const value = raw.v;
+            if (value === 0) return 'rgba(0,0,0,0.02)';
+            const max = Math.max(...data.map((d) => d.v)) || 1;
+            const alpha = 0.2 + (value / max) * 0.8;
+            return `rgba(69, 137, 255, ${alpha})`;
+          },
+          borderColor: 'rgba(0,0,0,0)',
+          borderWidth: 1,
+          width: ({ chartArea }: { chartArea: { width: number } }) =>
+            (chartArea || { width: 0 }).width / 7 - 1,
+          height: ({ chartArea }: { chartArea: { height: number } }) =>
+            (chartArea || { height: 0 }).height / 24 - 1,
         },
-        borderColor: 'rgba(0,0,0,0)',
-        borderWidth: 1,
-        width: ({ chart }) => (chart.chartArea || {}).width / 7 - 1,
-        height: ({ chart }) => (chart.chartArea || {}).height / 24 - 1
-      }]
+      ],
     };
   });
 
@@ -210,34 +284,39 @@ export class AnalysisPageComponent {
       tooltip: {
         callbacks: {
           title: () => '',
-          label: (context) => {
+          label: (context: any) => {
             const v = context.raw as { v: number; x: string; y: string };
             return `${v.x} ${v.y}:00 - ${v.v} Reps`;
           },
         },
       },
-      // chartjs-plugin-datalabels
       datalabels: {
         display: (ctx: any) => {
-          const raw = ctx.dataset.data?.[ctx.dataIndex] as any;
+          const raw = ctx.dataset.data?.[ctx.dataIndex] as unknown as {
+            v: number;
+          };
           return !!raw && typeof raw.v === 'number' && raw.v > 0;
         },
-        formatter: (value: any) => (value?.v ? String(value.v) : ''),
+        formatter: (value: { v: number }) => (value?.v ? String(value.v) : ''),
         anchor: 'center',
         align: 'center',
         clamp: true,
         color: (ctx: any) => {
-          const raw = ctx.dataset.data?.[ctx.dataIndex] as any;
+          const raw = ctx.dataset.data?.[ctx.dataIndex] as unknown as {
+            v: number;
+          };
           const v = typeof raw?.v === 'number' ? raw.v : 0;
           return v >= 10 ? 'rgba(10,12,18,0.95)' : 'rgba(230,237,249,0.95)';
         },
         font: (ctx: any) => {
-          const raw = ctx.dataset.data?.[ctx.dataIndex] as any;
+          const raw = ctx.dataset.data?.[ctx.dataIndex] as unknown as {
+            v: number;
+          };
           const v = typeof raw?.v === 'number' ? raw.v : 0;
           return { size: v >= 10 ? 11 : 10, weight: 700 };
         },
-      } as any,
-    },
+      },
+    } as any,
     scales: {
       x: {
         type: 'category',
@@ -296,7 +375,9 @@ export class AnalysisPageComponent {
   });
 
   private sortedUniqueDates(): string[] {
-    return [...new Set(this.rows().map((x) => x.timestamp.slice(0, 10)))].sort((a, b) => a.localeCompare(b));
+    return [...new Set(this.rows().map((x) => x.timestamp.slice(0, 10)))].sort(
+      (a, b) => a.localeCompare(b),
+    );
   }
 
   private daysBetween(a: string, b: string): number {
@@ -306,15 +387,21 @@ export class AnalysisPageComponent {
   }
 
   private isoWeek(date: Date): number {
-    const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+    const d = new Date(
+      Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()),
+    );
     const day = d.getUTCDay() || 7;
     d.setUTCDate(d.getUTCDate() + 4 - day);
     const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
-    return Math.ceil(((d.getTime() - yearStart.getTime()) / 86_400_000 + 1) / 7);
+    return Math.ceil(
+      ((d.getTime() - yearStart.getTime()) / 86_400_000 + 1) / 7,
+    );
   }
 
   private isoWeekYear(date: Date): number {
-    const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+    const d = new Date(
+      Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()),
+    );
     const day = d.getUTCDay() || 7;
     d.setUTCDate(d.getUTCDate() + 4 - day);
     return d.getUTCFullYear();

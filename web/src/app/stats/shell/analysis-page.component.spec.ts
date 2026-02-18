@@ -2,7 +2,7 @@ import { Component, Input, Directive } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 import { AnalysisPageComponent } from './analysis-page.component';
-import { StatsApiService } from '@nx-temp/stats-data-access';
+import { StatsApiService } from '@pu-stats/data-access';
 import { BaseChartDirective } from 'ng2-charts';
 
 @Directive({
@@ -20,7 +20,7 @@ describe('AnalysisPageComponent', () => {
   let fixture: ComponentFixture<AnalysisPageComponent>;
 
   const apiMock = {
-    listPushups: jest.fn().mockReturnValue(
+    listPushups: vitest.fn().mockReturnValue(
       of([
         { _id: '1', timestamp: '2026-02-09T08:00:00', reps: 10, source: 'wa' }, // Mo
         { _id: '2', timestamp: '2026-02-10T08:00:00', reps: 12, source: 'web' }, // Di
@@ -37,11 +37,11 @@ describe('AnalysisPageComponent', () => {
       imports: [AnalysisPageComponent],
       providers: [{ provide: StatsApiService, useValue: apiMock }],
     })
-    .overrideComponent(AnalysisPageComponent, {
-      remove: { imports: [BaseChartDirective] },
-      add: { imports: [MockBaseChartDirective] }
-    })
-    .compileComponents();
+      .overrideComponent(AnalysisPageComponent, {
+        remove: { imports: [BaseChartDirective] },
+        add: { imports: [MockBaseChartDirective] },
+      })
+      .compileComponents();
 
     fixture = TestBed.createComponent(AnalysisPageComponent);
     fixture.detectChanges();
@@ -110,7 +110,9 @@ describe('AnalysisPageComponent', () => {
     expect(dl.display(nonZeroCtx)).toBe(true);
     expect(dl.display(zeroCtx)).toBe(false);
 
-    expect(dl.formatter(points[nonZeroIndex])).toBe(String(points[nonZeroIndex].v));
+    expect(dl.formatter(points[nonZeroIndex])).toBe(
+      String(points[nonZeroIndex].v),
+    );
     expect(dl.formatter(points[zeroIndex])).toBe('');
   });
 });

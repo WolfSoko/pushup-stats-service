@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, NotFoundException, Param, Post, Put } from '@nestjs/common';
 import { PushupDbService } from './pushup-db.service';
 
-@Controller('api/pushups')
+@Controller('pushups')
 export class PushupsController {
   constructor(private readonly db: PushupDbService) {}
 

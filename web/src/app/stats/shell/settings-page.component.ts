@@ -1,16 +1,29 @@
-import { Component, computed, effect, inject, resource, signal } from '@angular/core';
+import {
+  Component,
+  computed,
+  effect,
+  inject,
+  resource,
+  signal,
+} from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { firstValueFrom } from 'rxjs';
-import { UserConfigApiService } from '@nx-temp/stats-data-access';
+import { UserConfigApiService } from '@pu-stats/data-access';
 import { UserContextService } from '../../user-context.service';
 
 @Component({
   selector: 'app-settings-page',
-  imports: [MatCardModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule],
+  imports: [
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatIconModule,
+  ],
   template: `
     <main class="page-wrap">
       <mat-card>
@@ -23,8 +36,16 @@ import { UserContextService } from '../../user-context.service';
           <section class="grid">
             <mat-form-field appearance="outline">
               <mat-label>User ID</mat-label>
-              <input matInput [value]="userIdDraft()" (input)="userIdDraft.set(asValue($event))" placeholder="z.B. wolf" />
-              <mat-hint>Wird für Multi-User-Zuordnung genutzt (Auth kommt später).</mat-hint>
+              <input
+                matInput
+                [value]="userIdDraft()"
+                (input)="userIdDraft.set(asValue($event))"
+                placeholder="z.B. wolf"
+              />
+              <mat-hint
+                >Wird für Multi-User-Zuordnung genutzt (Auth kommt
+                später).</mat-hint
+              >
             </mat-form-field>
 
             <div class="row">
@@ -37,7 +58,12 @@ import { UserContextService } from '../../user-context.service';
 
             <mat-form-field appearance="outline">
               <mat-label>Anzeigename</mat-label>
-              <input matInput [value]="displayNameDraft()" (input)="displayNameDraft.set(asValue($event))" placeholder="Wolf" />
+              <input
+                matInput
+                [value]="displayNameDraft()"
+                (input)="displayNameDraft.set(asValue($event))"
+                placeholder="Wolf"
+              />
             </mat-form-field>
 
             <mat-form-field appearance="outline">
@@ -58,7 +84,12 @@ import { UserContextService } from '../../user-context.service';
           }
 
           <div class="row">
-            <button type="button" mat-flat-button [disabled]="saving()" (click)="save()">
+            <button
+              type="button"
+              mat-flat-button
+              [disabled]="saving()"
+              (click)="save()"
+            >
               <mat-icon>save</mat-icon>
               Speichern
             </button>
@@ -74,12 +105,37 @@ import { UserContextService } from '../../user-context.service';
     </main>
   `,
   styles: `
-    .page-wrap { max-width: 900px; margin: 0 auto; padding: 16px; display: grid; gap: 12px; }
-    .grid { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); align-items: start; }
-    .row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
-    .pill { padding: 6px 10px; border-radius: 999px; border: 1px solid rgba(123, 159, 255, 0.24); }
-    .muted { opacity: 0.8; font-size: 0.9rem; }
-    .error { color: #ffd8d8; }
+    .page-wrap {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 16px;
+      display: grid;
+      gap: 12px;
+    }
+    .grid {
+      display: grid;
+      gap: 12px;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      align-items: start;
+    }
+    .row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .pill {
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(123, 159, 255, 0.24);
+    }
+    .muted {
+      opacity: 0.8;
+      font-size: 0.9rem;
+    }
+    .error {
+      color: #ffd8d8;
+    }
   `,
 })
 export class SettingsPageComponent {
@@ -98,7 +154,8 @@ export class SettingsPageComponent {
 
   readonly configResource = resource({
     params: () => ({ userId: this.activeUserId() }),
-    loader: async ({ params }) => firstValueFrom(this.api.getConfig(params.userId)),
+    loader: async ({ params }) =>
+      firstValueFrom(this.api.getConfig(params.userId)),
   });
 
   readonly config = computed(() => this.configResource.value());

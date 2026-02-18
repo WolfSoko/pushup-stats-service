@@ -13,7 +13,7 @@ export type PushupDoc = {
   updatedAt?: Date;
 };
 
-const DEFAULT_DB_PATH = process.env.PUSHUPS_DB_PATH || path.join(process.cwd(), 'data', 'pushups.db');
+const DEFAULT_DB_PATH = process.env.PUSHUPS_DB_PATH || path.join(process.cwd(), 'data', `pushups${process.env.NODE_ENV === 'development' ? '-dev' : ''}.db`);
 
 @Injectable()
 export class PushupDbService {

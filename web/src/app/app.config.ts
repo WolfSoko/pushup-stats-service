@@ -9,7 +9,7 @@ import { provideHttpClient, withFetch } from '@angular/common/http';
 import { provideRouter } from '@angular/router';
 import localeDe from '@angular/common/locales/de';
 import { MAT_DATE_LOCALE, provideNativeDateAdapter } from '@angular/material/core';
-import { provideClientHydration, withIncrementalHydration } from '@angular/platform-browser';
+import { provideClientHydration, withEventReplay, withI18nSupport, withIncrementalHydration } from '@angular/platform-browser';
 import { provideServiceWorker } from '@angular/service-worker';
 import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 import { MatrixController, MatrixElement } from 'chartjs-chart-matrix';
@@ -23,7 +23,7 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideHttpClient(withFetch()),
     provideRouter(appRoutes),
-    provideClientHydration(withIncrementalHydration()),
+    provideClientHydration(withIncrementalHydration(), withEventReplay(), withI18nSupport()),
     provideZonelessChangeDetection(),
     provideNativeDateAdapter(),
     provideCharts(withDefaultRegisterables(), {

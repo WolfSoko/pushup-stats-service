@@ -8,15 +8,15 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "importHelpers": true,
-    "target": "es2015",
+    "target": "es2024",
     "module": "esnext",
-    "lib": ["es2020", "dom"],
+    "lib": ["es2024", "dom"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@nx-temp/stats-models": ["libs/stats/src/index.ts"],
-      "@nx-temp/stats-data-access": ["libs/src/index.ts"]
+      "@pu-stats/models": ["libs/stats/src/index.ts"],
+      "@pu-stats/data-access": ["libs/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

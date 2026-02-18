@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { buildStats } from './stats.core';
-import { PushupDbService } from './pushup-db.service';
+import { PushupDbService } from '../pushups/pushup-db.service';
 
 @Injectable()
 export class StatsService {

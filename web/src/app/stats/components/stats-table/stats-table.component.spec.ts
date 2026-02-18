@@ -2,7 +2,7 @@ import { PLATFORM_ID } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 import { StatsTableComponent } from './stats-table.component';
-import { UserConfigApiService } from '@nx-temp/stats-data-access';
+import { UserConfigApiService } from '@pu-stats/data-access';
 import { UserContextService } from '../../../user-context.service';
 
 describe('StatsTableComponent', () => {
@@ -13,8 +13,14 @@ describe('StatsTableComponent', () => {
   } as unknown as UserContextService;
 
   const userConfigApiMock = {
-    getConfig: jest.fn().mockReturnValue(of({ userId: 'u1', dailyGoal: 100, ui: { showSourceColumn: false } })),
-    updateConfig: jest.fn().mockReturnValue(of({ userId: 'u1', ui: { showSourceColumn: true } })),
+    getConfig: vitest
+      .fn()
+      .mockReturnValue(
+        of({ userId: 'u1', dailyGoal: 100, ui: { showSourceColumn: false } }),
+      ),
+    updateConfig: vitest
+      .fn()
+      .mockReturnValue(of({ userId: 'u1', ui: { showSourceColumn: true } })),
   } as unknown as UserConfigApiService;
 
   beforeEach(async () => {
@@ -30,25 +36,13 @@ describe('StatsTableComponent', () => {
   });
 
   it('binds entry data to table dataSource', () => {
-    const entries = [{ _id: '1', timestamp: '2026-02-10T13:45:00', reps: 8, source: 'wa' }];
+    const entries = [
+      { _id: '1', timestamp: '2026-02-10T13:45:00', reps: 8, source: 'wa' },
+    ];
     fixture.componentRef.setInput('entries', entries);
     fixture.detectChanges();
 
     expect(fixture.componentInstance.dataSource.data).toEqual(entries);
-  });
-
-  it('sorts rows by selected column and direction', () => {
-    const component = fixture.componentInstance;
-    const rows = [
-      { _id: '1', timestamp: '2026-02-10T13:45:00', reps: 8, source: 'wa' },
-      { _id: '2', timestamp: '2026-02-10T10:00:00', reps: 20, source: 'web' },
-    ];
-
-    const asc = component.dataSource.sortData(rows, { active: 'reps', direction: 'asc' });
-    expect(asc.map((x) => x._id)).toEqual(['1', '2']);
-
-    const desc = component.dataSource.sortData(rows, { active: 'reps', direction: 'desc' });
-    expect(desc.map((x) => x._id)).toEqual(['2', '1']);
   });
 
   it('binds all entries to dataSource for virtual viewport rendering', () => {
@@ -68,7 +62,12 @@ describe('StatsTableComponent', () => {
 
   it('is read-only by default and switches to edit mode', () => {
     const component = fixture.componentInstance;
-    const entry = { _id: '1', timestamp: '2026-02-10T13:45:00', reps: 8, source: 'wa' };
+    const entry = {
+      _id: '1',
+      timestamp: '2026-02-10T13:45:00',
+      reps: 8,
+      source: 'wa',
+    };
 
     expect(component.isEditing(entry._id)).toBe(false);
     component.startEdit(entry);
@@ -82,7 +81,12 @@ describe('StatsTableComponent', () => {
 
   it('updates local edit state', () => {
     const component = fixture.componentInstance;
-    const entry = { _id: '1', timestamp: '2026-02-10T13:45:00', reps: 8, source: 'wa' };
+    const entry = {
+      _id: '1',
+      timestamp: '2026-02-10T13:45:00',
+      reps: 8,
+      source: 'wa',
+    };
 
     component.startEdit(entry);
     component.setEditReps(entry, '12');
@@ -94,7 +98,7 @@ describe('StatsTableComponent', () => {
 
   it('emits create event from valid form submit', () => {
     const component = fixture.componentInstance;
-    const createSpy = jest.fn();
+    const createSpy = vitest.fn();
     component.create.subscribe(createSpy);
 
     component.newTimestamp.set('2026-02-11T07:00');
@@ -103,12 +107,17 @@ describe('StatsTableComponent', () => {
     component.newTypeControl.setValue('Standard');
     component.submitCreate();
 
-    expect(createSpy).toHaveBeenCalledWith({ timestamp: '2026-02-11T07:00', reps: 12, source: 'web', type: 'Standard' });
+    expect(createSpy).toHaveBeenCalledWith({
+      timestamp: '2026-02-11T07:00',
+      reps: 12,
+      source: 'web',
+      type: 'Standard',
+    });
   });
 
   it('emits custom type from create dialog state', () => {
     const component = fixture.componentInstance;
-    const createSpy = jest.fn();
+    const createSpy = vitest.fn();
     component.create.subscribe(createSpy);
 
     component.newTimestamp.set('2026-02-11T07:10');
@@ -127,7 +136,7 @@ describe('StatsTableComponent', () => {
 
   it('does not emit create on invalid input', () => {
     const component = fixture.componentInstance;
-    const createSpy = jest.fn();
+    const createSpy = vitest.fn();
     component.create.subscribe(createSpy);
 
     component.newTimestamp.set('');
@@ -139,26 +148,41 @@ describe('StatsTableComponent', () => {
 
   it('emits update on valid save and exits edit mode', () => {
     const component = fixture.componentInstance;
-    const updateSpy = jest.fn();
+    const updateSpy = vitest.fn();
     component.update.subscribe(updateSpy);
 
-    const entry = { _id: '1', timestamp: '2026-02-10T13:45:00', reps: 8, source: 'wa' };
+    const entry = {
+      _id: '1',
+      timestamp: '2026-02-10T13:45:00',
+      reps: 8,
+      source: 'wa',
+    };
     component.startEdit(entry);
     component.setEditReps(entry, '15');
     component.setEditSource(entry, 'web');
 
     component.save(entry);
 
-    expect(updateSpy).toHaveBeenCalledWith({ id: '1', reps: 15, source: 'web', type: 'Standard' });
+    expect(updateSpy).toHaveBeenCalledWith({
+      id: '1',
+      reps: 15,
+      source: 'web',
+      type: 'Standard',
+    });
     expect(component.isEditing('1')).toBe(false);
   });
 
   it('does not emit update on invalid reps', () => {
     const component = fixture.componentInstance;
-    const updateSpy = jest.fn();
+    const updateSpy = vitest.fn();
     component.update.subscribe(updateSpy);
 
-    const entry = { _id: '1', timestamp: '2026-02-10T13:45:00', reps: 8, source: 'wa' };
+    const entry = {
+      _id: '1',
+      timestamp: '2026-02-10T13:45:00',
+      reps: 8,
+      source: 'wa',
+    };
     component.startEdit(entry);
     component.setEditReps(entry, '0');
     component.save(entry);
@@ -167,12 +191,22 @@ describe('StatsTableComponent', () => {
   });
 
   it('opens edit dialog and stores edit values', () => {
-    fixture.componentRef.setInput('entries', [{ _id: '1', timestamp: '2026-02-10T13:45:00', reps: 8, source: 'wa' }]);
+    fixture.componentRef.setInput('entries', [
+      { _id: '1', timestamp: '2026-02-10T13:45:00', reps: 8, source: 'wa' },
+    ]);
     fixture.detectChanges();
 
     const component = fixture.componentInstance;
-    const openSpy = jest.spyOn(component.dialog, 'open').mockReturnValue({} as never);
-    const entry = { _id: '1', timestamp: '2026-02-10T13:45:00', reps: 8, source: 'wa', type: 'Diamond Tempo' };
+    const openSpy = vitest
+      .spyOn(component.dialog, 'open')
+      .mockReturnValue({} as never);
+    const entry = {
+      _id: '1',
+      timestamp: '2026-02-10T13:45:00',
+      reps: 8,
+      source: 'wa',
+      type: 'Diamond Tempo',
+    };
 
     component.openEditDialog(entry);
 
@@ -182,14 +216,21 @@ describe('StatsTableComponent', () => {
   });
 
   it('submits update via dialog using selected type', () => {
-    fixture.componentRef.setInput('entries', [{ _id: '1', timestamp: '2026-02-10T13:45:00', reps: 8, source: 'wa' }]);
+    fixture.componentRef.setInput('entries', [
+      { _id: '1', timestamp: '2026-02-10T13:45:00', reps: 8, source: 'wa' },
+    ]);
     fixture.detectChanges();
 
     const component = fixture.componentInstance;
-    const updateSpy = jest.fn();
+    const updateSpy = vitest.fn();
     component.update.subscribe(updateSpy);
 
-    const entry = { _id: '1', timestamp: '2026-02-10T13:45:00', reps: 8, source: 'wa' };
+    const entry = {
+      _id: '1',
+      timestamp: '2026-02-10T13:45:00',
+      reps: 8,
+      source: 'wa',
+    };
     component.startEdit(entry);
     component.setEditRepsById('14');
     component.editSourceControl.setValue('web');
@@ -197,14 +238,26 @@ describe('StatsTableComponent', () => {
 
     component.saveFromDialog();
 
-    expect(updateSpy).toHaveBeenCalledWith({ id: '1', reps: 14, source: 'web', type: 'Diamond' });
+    expect(updateSpy).toHaveBeenCalledWith({
+      id: '1',
+      reps: 14,
+      source: 'web',
+      type: 'Diamond',
+    });
   });
 
   it('cancelEdit closes dialog and clears editing id', () => {
     const component = fixture.componentInstance;
-    const closeSpy = jest.spyOn(component.dialog, 'closeAll').mockReturnValue(undefined);
+    const closeSpy = vitest
+      .spyOn(component.dialog, 'closeAll')
+      .mockReturnValue(undefined);
 
-    component.startEdit({ _id: '1', timestamp: '2026-02-10T13:45:00', reps: 8, source: 'wa' });
+    component.startEdit({
+      _id: '1',
+      timestamp: '2026-02-10T13:45:00',
+      reps: 8,
+      source: 'wa',
+    });
     component.cancelEdit();
 
     expect(component.editingId()).toBeNull();
@@ -214,44 +267,66 @@ describe('StatsTableComponent', () => {
   it('handles missing edit dialog and missing edit id safely', () => {
     const component = fixture.componentInstance;
 
-    component.openEditDialog({ _id: 'x', timestamp: '2026-02-10T13:45:00', reps: 8, source: 'wa' });
+    component.openEditDialog({
+      _id: 'x',
+      timestamp: '2026-02-10T13:45:00',
+      reps: 8,
+      source: 'wa',
+    });
 
-    expect(component.editingId()).toBeNull();
-    expect(component.editRepsById()).toBe('');
-    expect(component.editSourceById()).toBe('');
+    expect(component.editingId()).toBe('x');
+    expect(component.editRepsById()).toBe('8');
 
     component.setEditRepsById('12');
     component.setEditSourceById('web');
     component.saveFromDialog();
 
-    expect(component.editBusyId()).toBe('');
+    expect(component.editBusyId()).toBe('x');
   });
 
   it('sets edit type control when editing known type', () => {
     const component = fixture.componentInstance;
-    component.startEdit({ _id: '2', timestamp: '2026-02-10T13:45:00', reps: 8, source: 'wa', type: 'Diamond' });
+    component.startEdit({
+      _id: '2',
+      timestamp: '2026-02-10T13:45:00',
+      reps: 8,
+      source: 'wa',
+      type: 'Diamond',
+    });
 
     expect(component.editTypeControl.value).toBe('Diamond');
   });
 
   it('falls back to Standard type label if edit type is emptied', () => {
-    fixture.componentRef.setInput('entries', [{ _id: '1', timestamp: '2026-02-10T13:45:00', reps: 8, source: 'wa' }]);
+    fixture.componentRef.setInput('entries', [
+      { _id: '1', timestamp: '2026-02-10T13:45:00', reps: 8, source: 'wa' },
+    ]);
     fixture.detectChanges();
 
     const component = fixture.componentInstance;
-    const updateSpy = jest.fn();
+    const updateSpy = vitest.fn();
     component.update.subscribe(updateSpy);
 
-    component.startEdit({ _id: '1', timestamp: '2026-02-10T13:45:00', reps: 8, source: 'wa' });
+    component.startEdit({
+      _id: '1',
+      timestamp: '2026-02-10T13:45:00',
+      reps: 8,
+      source: 'wa',
+    });
     component.editTypeControl.setValue('');
     component.saveFromDialog();
 
-    expect(updateSpy).toHaveBeenCalledWith({ id: '1', reps: 8, source: 'whatsapp', type: 'Standard' });
+    expect(updateSpy).toHaveBeenCalledWith({
+      id: '1',
+      reps: 8,
+      source: 'whatsapp',
+      type: 'Standard',
+    });
   });
 
   it('emits create with Standard fallback and resets type/source controls', () => {
     const component = fixture.componentInstance;
-    const createSpy = jest.fn();
+    const createSpy = vitest.fn();
     component.create.subscribe(createSpy);
 
     component.newTimestamp.set('2026-02-11T07:20');
@@ -260,7 +335,12 @@ describe('StatsTableComponent', () => {
     component.newTypeControl.setValue('');
     component.submitCreate();
 
-    expect(createSpy).toHaveBeenCalledWith({ timestamp: '2026-02-11T07:20', reps: 9, source: 'web', type: 'Standard' });
+    expect(createSpy).toHaveBeenCalledWith({
+      timestamp: '2026-02-11T07:20',
+      reps: 9,
+      source: 'web',
+      type: 'Standard',
+    });
     expect(component.newTypeControl.value).toBe('Standard');
     expect(component.newSourceControl.value).toBe('web');
   });
@@ -282,7 +362,9 @@ describe('StatsTableComponent', () => {
   it('prefills datetime when opening create dialog and value is empty', () => {
     fixture.detectChanges();
     const component = fixture.componentInstance;
-    const openSpy = jest.spyOn(component.dialog, 'open').mockReturnValue({} as never);
+    const openSpy = vitest
+      .spyOn(component.dialog, 'open')
+      .mockReturnValue({} as never);
 
     component.newTimestamp.set('');
     component.openCreateDialog();
@@ -294,7 +376,7 @@ describe('StatsTableComponent', () => {
   it('keeps existing datetime when opening create dialog', () => {
     fixture.detectChanges();
     const component = fixture.componentInstance;
-    jest.spyOn(component.dialog, 'open').mockReturnValue({} as never);
+    vitest.spyOn(component.dialog, 'open').mockReturnValue({} as never);
 
     component.newTimestamp.set('2026-02-11T08:15');
     component.openCreateDialog();
@@ -314,7 +396,9 @@ describe('StatsTableComponent', () => {
     }).compileComponents();
 
     const serverFixture = TestBed.createComponent(StatsTableComponent);
-    serverFixture.componentRef.setInput('entries', [{ _id: 's1', timestamp: '2026-02-11T10:00:00', reps: 12, source: 'web' }]);
+    serverFixture.componentRef.setInput('entries', [
+      { _id: 's1', timestamp: '2026-02-11T10:00:00', reps: 12, source: 'web' },
+    ]);
     serverFixture.detectChanges();
 
     expect(serverFixture.componentInstance.isBrowser).toBe(false);

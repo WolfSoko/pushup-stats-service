@@ -10,7 +10,7 @@ export class StatsController {
     return this.statsService.getHealth();
   }
 
-  @Get('api/stats')
+  @Get('stats')
   @Header('Cache-Control', 'no-store')
   async getStats(@Query('from') from?: string, @Query('to') to?: string) {
     return this.statsService.getStats(from ?? null, to ?? null);

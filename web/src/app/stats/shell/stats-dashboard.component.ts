@@ -1,19 +1,44 @@
 import { DatePipe, DOCUMENT, isPlatformBrowser } from '@angular/common';
-import { Component, PLATFORM_ID, REQUEST, computed, effect, inject, resource, signal } from '@angular/core';
+import {
+  Component,
+  PLATFORM_ID,
+  REQUEST,
+  computed,
+  effect,
+  inject,
+  resource,
+  signal,
+} from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { firstValueFrom } from 'rxjs';
-import { PushupRecord, StatsGranularity, StatsResponse, StatsSeriesEntry } from '@nx-temp/stats-models';
-import { PushupLiveService, StatsApiService, UserConfigApiService } from '@nx-temp/stats-data-access';
+import {
+  PushupRecord,
+  StatsGranularity,
+  StatsResponse,
+  StatsSeriesEntry,
+} from '@pu-stats/models';
+import {
+  PushupLiveService,
+  StatsApiService,
+  UserConfigApiService,
+} from '@pu-stats/data-access';
 import { UserContextService } from '../../user-context.service';
 import { FilterBarComponent } from '../components/filter-bar/filter-bar.component';
 import { StatsChartComponent } from '../components/stats-chart/stats-chart.component';
 import { StatsTableComponent } from '../components/stats-table/stats-table.component';
 
 const EMPTY_STATS: StatsResponse = {
-  meta: { from: null, to: null, entries: 0, days: 0, total: 0, granularity: 'daily' },
+  meta: {
+    from: null,
+    to: null,
+    entries: 0,
+    days: 0,
+    total: 0,
+    granularity: 'daily',
+  },
   series: [],
 };
 
@@ -82,7 +107,9 @@ export class StatsDashboardComponent {
   private readonly api = inject(StatsApiService);
   private readonly platformId = inject(PLATFORM_ID);
   private readonly document = inject(DOCUMENT);
-  private readonly request = inject(REQUEST, { optional: true }) as { url?: string } | null;
+  private readonly request = inject(REQUEST, { optional: true }) as {
+    url?: string;
+  } | null;
   private readonly live = inject(PushupLiveService);
 
   private readonly defaultRange = createDefaultRange();
@@ -90,7 +117,9 @@ export class StatsDashboardComponent {
 
   readonly from = signal(this.initialRange.from);
   readonly to = signal(this.initialRange.to);
-  readonly rangeMode = signal<'day' | 'week' | 'month'>(inferRangeMode(this.initialRange.from, this.initialRange.to));
+  readonly rangeMode = signal<'day' | 'week' | 'month'>(
+    inferRangeMode(this.initialRange.from, this.initialRange.to),
+  );
   readonly busyAction = signal<'create' | 'update' | 'delete' | null>(null);
   readonly busyId = signal<string | null>(null);
 
@@ -114,22 +143,32 @@ export class StatsDashboardComponent {
   });
 
   readonly stats = computed(() => this.statsResource.value() ?? EMPTY_STATS);
-  readonly allTimeStats = computed(() => this.allTimeResource.value() ?? EMPTY_STATS);
+  readonly allTimeStats = computed(
+    () => this.allTimeResource.value() ?? EMPTY_STATS,
+  );
 
   readonly total = computed(() => this.stats().meta.total);
   readonly days = computed(() => this.stats().meta.days);
   readonly entries = computed(() => this.stats().meta.entries);
-  readonly avg = computed(() => (this.days() ? (this.total() / this.days()).toFixed(1) : '0'));
+  readonly avg = computed(() =>
+    this.days() ? (this.total() / this.days()).toFixed(1) : '0',
+  );
 
   readonly allTimeTotal = computed(() => this.allTimeStats().meta.total);
   readonly allTimeDays = computed(() => this.allTimeStats().meta.days);
   readonly allTimeEntries = computed(() => this.allTimeStats().meta.entries);
   readonly allTimeAvg = computed(() =>
-    this.allTimeDays() ? (this.allTimeTotal() / this.allTimeDays()).toFixed(1) : '0',
+    this.allTimeDays()
+      ? (this.allTimeTotal() / this.allTimeDays()).toFixed(1)
+      : '0',
   );
-  readonly granularity = computed<StatsGranularity>(() => this.stats().meta.granularity);
+  readonly granularity = computed<StatsGranularity>(
+    () => this.stats().meta.granularity,
+  );
   readonly rows = computed<StatsSeriesEntry[]>(() => this.stats().series);
-  readonly entryRows = computed<PushupRecord[]>(() => this.entriesResource.value() ?? []);
+  readonly entryRows = computed<PushupRecord[]>(
+    () => this.entriesResource.value() ?? [],
+  );
   private readonly user = inject(UserContextService);
   private readonly userConfigApi = inject(UserConfigApiService);
 
@@ -137,7 +176,8 @@ export class StatsDashboardComponent {
 
   readonly userConfigResource = resource({
     params: () => ({ userId: this.user.userIdSafe() }),
-    loader: async ({ params }) => firstValueFrom(this.userConfigApi.getConfig(params.userId)),
+    loader: async ({ params }) =>
+      firstValueFrom(this.userConfigApi.getConfig(params.userId)),
   });
 
   readonly selectedDayTotal = computed(() => {
@@ -154,12 +194,18 @@ export class StatsDashboardComponent {
   });
 
   readonly periodGoal = computed(() => {
-    const multiplier = this.rangeMode() === 'day' ? 1 : Math.max(1, this.days());
+    const multiplier =
+      this.rangeMode() === 'day' ? 1 : Math.max(1, this.days());
     return this.dailyGoal() * multiplier;
   });
 
   readonly goalProgressPercent = computed(() =>
-    this.periodGoal() ? Math.min(100, Math.round((this.periodTotal() / this.periodGoal()) * 100)) : 0,
+    this.periodGoal()
+      ? Math.min(
+          100,
+          Math.round((this.periodTotal() / this.periodGoal()) * 100),
+        )
+      : 0,
   );
 
   readonly periodTitle = computed(() => {
@@ -172,11 +218,19 @@ export class StatsDashboardComponent {
   readonly lastEntry = computed<PushupRecord | null>(() => {
     const rows = this.entryRows();
     if (!rows.length) return null;
-    return [...rows].sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())[0] ?? null;
+    return (
+      [...rows].sort(
+        (a, b) =>
+          new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime(),
+      )[0] ?? null
+    );
   });
   readonly latestEntries = computed<PushupRecord[]>(() => {
     return [...this.entryRows()]
-      .sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())
+      .sort(
+        (a, b) =>
+          new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime(),
+      )
       .slice(0, 10);
   });
   readonly loading = computed(() => {
@@ -222,7 +276,12 @@ export class StatsDashboardComponent {
     });
   }
 
-  async onCreateEntry(payload: { timestamp: string; reps: number; source?: string; type?: string }) {
+  async onCreateEntry(payload: {
+    timestamp: string;
+    reps: number;
+    source?: string;
+    type?: string;
+  }) {
     this.busyAction.set('create');
     this.busyId.set(null);
     try {
@@ -234,11 +293,22 @@ export class StatsDashboardComponent {
     }
   }
 
-  async onUpdateEntry(payload: { id: string; reps: number; source?: string; type?: string }) {
+  async onUpdateEntry(payload: {
+    id: string;
+    reps: number;
+    source?: string;
+    type?: string;
+  }) {
     this.busyAction.set('update');
     this.busyId.set(payload.id);
     try {
-      await firstValueFrom(this.api.updatePushup(payload.id, { reps: payload.reps, source: payload.source, type: payload.type }));
+      await firstValueFrom(
+        this.api.updatePushup(payload.id, {
+          reps: payload.reps,
+          source: payload.source,
+          type: payload.type,
+        }),
+      );
       this.refreshAll();
     } finally {
       this.busyAction.set(null);

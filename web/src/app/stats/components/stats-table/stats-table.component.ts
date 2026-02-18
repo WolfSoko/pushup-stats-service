@@ -1,5 +1,21 @@
-import { AsyncPipe, DatePipe, NgTemplateOutlet, isPlatformBrowser } from '@angular/common';
-import { AfterViewInit, Component, PLATFORM_ID, TemplateRef, ViewChild, computed, effect, inject, input, output, signal } from '@angular/core';
+import {
+  AsyncPipe,
+  DatePipe,
+  NgTemplateOutlet,
+  isPlatformBrowser,
+} from '@angular/common';
+import {
+  Component,
+  PLATFORM_ID,
+  TemplateRef,
+  computed,
+  effect,
+  inject,
+  input,
+  output,
+  signal,
+  viewChild,
+} from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { map, startWith } from 'rxjs';
 import { MatButtonModule } from '@angular/material/button';
@@ -14,9 +30,9 @@ import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { ScrollingModule } from '@angular/cdk/scrolling';
-import { PushupRecord } from '@nx-temp/stats-models';
+import { PushupRecord } from '@pu-stats/models';
 import { UserContextService } from '../../../user-context.service';
-import { UserConfigApiService } from '@nx-temp/stats-data-access';
+import { UserConfigApiService } from '@pu-stats/data-access';
 import { firstValueFrom } from 'rxjs';
 
 @Component({
@@ -45,15 +61,27 @@ import { firstValueFrom } from 'rxjs';
         <mat-card-title>Einträge</mat-card-title>
         <mat-card-subtitle>{{ entries().length }} Einträge</mat-card-subtitle>
         <span class="header-spacer"></span>
-        <button type="button" mat-button class="toggle-source" (click)="toggleSourceColumn()">
-          <mat-icon>{{ showSourceColumn() ? 'visibility' : 'visibility_off' }}</mat-icon>
+        <button
+          type="button"
+          mat-button
+          class="toggle-source"
+          (click)="toggleSourceColumn()"
+        >
+          <mat-icon>{{
+            showSourceColumn() ? 'visibility' : 'visibility_off'
+          }}</mat-icon>
           Quelle
         </button>
       </mat-card-header>
 
       <mat-card-content>
         @if (isBrowser) {
-          <cdk-virtual-scroll-viewport class="table-wrap" [itemSize]="56" [minBufferPx]="280" [maxBufferPx]="560">
+          <cdk-virtual-scroll-viewport
+            class="table-wrap"
+            [itemSize]="56"
+            [minBufferPx]="280"
+            [maxBufferPx]="560"
+          >
             <ng-container *ngTemplateOutlet="entriesTable"></ng-container>
           </cdk-virtual-scroll-viewport>
         } @else {
@@ -68,7 +96,12 @@ import { firstValueFrom } from 'rxjs';
       </mat-card-content>
 
       <mat-card-actions align="end">
-        <button type="button" class="add-btn" mat-flat-button (click)="openCreateDialog()">
+        <button
+          type="button"
+          class="add-btn"
+          mat-flat-button
+          (click)="openCreateDialog()"
+        >
           <mat-icon>add</mat-icon>
           Neu
         </button>
@@ -84,29 +117,51 @@ import { firstValueFrom } from 'rxjs';
         class="mat-elevation-z8"
       >
         <ng-container matColumnDef="timestamp">
-          <mat-header-cell *matHeaderCellDef mat-sort-header>Zeit</mat-header-cell>
-          <mat-cell *matCellDef="let entry">{{ entry.timestamp | date: 'dd.MM.yyyy, HH:mm' }}</mat-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header
+            >Zeit</mat-header-cell
+          >
+          <mat-cell *matCellDef="let entry">{{
+            entry.timestamp | date: 'dd.MM.yyyy, HH:mm'
+          }}</mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="reps">
-          <mat-header-cell *matHeaderCellDef mat-sort-header>Reps</mat-header-cell>
-          <mat-cell *matCellDef="let entry"><span>{{ entry.reps }}</span></mat-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header
+            >Reps</mat-header-cell
+          >
+          <mat-cell *matCellDef="let entry"
+            ><span>{{ entry.reps }}</span></mat-cell
+          >
         </ng-container>
 
         <ng-container matColumnDef="type">
-          <mat-header-cell *matHeaderCellDef mat-sort-header>Typ</mat-header-cell>
-          <mat-cell *matCellDef="let entry"><span>{{ entry.type || 'Standard' }}</span></mat-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header
+            >Typ</mat-header-cell
+          >
+          <mat-cell *matCellDef="let entry"
+            ><span>{{ entry.type || 'Standard' }}</span></mat-cell
+          >
         </ng-container>
 
         <ng-container matColumnDef="source">
-          <mat-header-cell *matHeaderCellDef mat-sort-header>Quelle</mat-header-cell>
-          <mat-cell *matCellDef="let entry"><span>{{ entry.source }}</span></mat-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header
+            >Quelle</mat-header-cell
+          >
+          <mat-cell *matCellDef="let entry"
+            ><span>{{ entry.source }}</span></mat-cell
+          >
         </ng-container>
 
         <ng-container matColumnDef="actions">
           <mat-header-cell *matHeaderCellDef>Aktion</mat-header-cell>
           <mat-cell *matCellDef="let entry" class="actions">
-            <button type="button" mat-mini-fab aria-label="Bearbeiten" title="Bearbeiten" (click)="openEditDialog(entry)">
+            <button
+              type="button"
+              mat-mini-fab
+              aria-label="Bearbeiten"
+              title="Bearbeiten"
+              (click)="openEditDialog(entry)"
+            >
               <mat-icon>edit</mat-icon>
             </button>
             <button
@@ -127,8 +182,13 @@ import { firstValueFrom } from 'rxjs';
           </mat-cell>
         </ng-container>
 
-        <mat-header-row *matHeaderRowDef="displayedColumns(); sticky: true"></mat-header-row>
-        <mat-row matRipple *matRowDef="let row; columns: displayedColumns()"></mat-row>
+        <mat-header-row
+          *matHeaderRowDef="displayedColumns(); sticky: true"
+        ></mat-header-row>
+        <mat-row
+          matRipple
+          *matRowDef="let row; columns: displayedColumns()"
+        ></mat-row>
       </mat-table>
     </ng-template>
 
@@ -138,12 +198,25 @@ import { firstValueFrom } from 'rxjs';
       <mat-dialog-content class="create-dialog-content">
         <mat-form-field appearance="outline">
           <mat-label>Zeitpunkt</mat-label>
-          <input matInput type="datetime-local" [value]="newTimestamp()" (input)="newTimestamp.set(asValue($event))" required />
+          <input
+            matInput
+            type="datetime-local"
+            [value]="newTimestamp()"
+            (input)="newTimestamp.set(asValue($event))"
+            required
+          />
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>Reps</mat-label>
-          <input matInput type="number" min="1" [value]="newReps()" (input)="newReps.set(asValue($event))" required />
+          <input
+            matInput
+            type="number"
+            min="1"
+            [value]="newReps()"
+            (input)="newReps.set(asValue($event))"
+            required
+          />
         </mat-form-field>
 
         <mat-form-field appearance="outline">
@@ -180,8 +253,15 @@ import { firstValueFrom } from 'rxjs';
       </mat-dialog-content>
 
       <mat-dialog-actions align="end">
-        <button type="button" mat-button (click)="dialog.closeAll()">Abbrechen</button>
-        <button type="button" mat-flat-button [disabled]="isCreateBusy()" (click)="submitCreate()">
+        <button type="button" mat-button (click)="dialog.closeAll()">
+          Abbrechen
+        </button>
+        <button
+          type="button"
+          mat-flat-button
+          [disabled]="isCreateBusy()"
+          (click)="submitCreate()"
+        >
           @if (isCreateBusy()) {
             <mat-spinner diameter="14"></mat-spinner>
           } @else {
@@ -197,7 +277,14 @@ import { firstValueFrom } from 'rxjs';
       <mat-dialog-content class="create-dialog-content">
         <mat-form-field appearance="outline">
           <mat-label>Reps</mat-label>
-          <input matInput type="number" min="1" [value]="editRepsById()" (input)="setEditRepsById(asValue($event))" required />
+          <input
+            matInput
+            type="number"
+            min="1"
+            [value]="editRepsById()"
+            (input)="setEditRepsById(asValue($event))"
+            required
+          />
         </mat-form-field>
 
         <mat-form-field appearance="outline">
@@ -234,8 +321,15 @@ import { firstValueFrom } from 'rxjs';
       </mat-dialog-content>
 
       <mat-dialog-actions align="end">
-        <button type="button" mat-button (click)="cancelEdit()">Abbrechen</button>
-        <button type="button" mat-flat-button [disabled]="!editingId() || isBusy('update', editBusyId())" (click)="saveFromDialog()">
+        <button type="button" mat-button (click)="cancelEdit()">
+          Abbrechen
+        </button>
+        <button
+          type="button"
+          mat-flat-button
+          [disabled]="!editingId() || isBusy('update', editBusyId())"
+          (click)="saveFromDialog()"
+        >
           @if (editingId() && isBusy('update', editBusyId())) {
             <mat-spinner diameter="14"></mat-spinner>
           } @else {
@@ -247,31 +341,54 @@ import { firstValueFrom } from 'rxjs';
   `,
   styleUrl: './stats-table.component.scss',
 })
-export class StatsTableComponent implements AfterViewInit {
+export class StatsTableComponent {
   readonly dialog = inject(MatDialog);
   private readonly platformId = inject(PLATFORM_ID);
   readonly isBrowser = isPlatformBrowser(this.platformId);
 
-  @ViewChild('createDialog') createDialog?: TemplateRef<unknown>;
-  @ViewChild('editDialog') editDialog?: TemplateRef<unknown>;
-  @ViewChild(MatSort) sort?: MatSort;
+  readonly createDialog = viewChild<TemplateRef<unknown>>('createDialog');
+  readonly editDialog = viewChild<TemplateRef<unknown>>('editDialog');
+  readonly sort = viewChild(MatSort);
 
   readonly entries = input<PushupRecord[]>([]);
   readonly busyAction = input<'create' | 'update' | 'delete' | null>(null);
   readonly busyId = input<string | null>(null);
 
-  readonly create = output<{ timestamp: string; reps: number; source?: string; type?: string }>();
-  readonly update = output<{ id: string; reps: number; source: string; type?: string }>();
+  readonly create = output<{
+    timestamp: string;
+    reps: number;
+    source?: string;
+    type?: string;
+  }>();
+  readonly update = output<{
+    id: string;
+    reps: number;
+    source: string;
+    type?: string;
+  }>();
   readonly remove = output<string>();
 
   readonly newTimestamp = signal('');
   readonly newReps = signal('');
 
   // Autocomplete inputs (allow selecting from options OR entering custom text).
-  readonly newTypeControl = new FormControl<string>('Standard', { nonNullable: true });
-  readonly newSourceControl = new FormControl<string>('web', { nonNullable: true });
+  readonly newTypeControl = new FormControl<string>('Standard', {
+    nonNullable: true,
+  });
+  readonly newSourceControl = new FormControl<string>('web', {
+    nonNullable: true,
+  });
 
-  readonly typeOptions = ['Standard', 'Diamond', 'Wide', 'Archer', 'Decline', 'Incline', 'Pike', 'Knuckle'];
+  readonly typeOptions = [
+    'Standard',
+    'Diamond',
+    'Wide',
+    'Archer',
+    'Decline',
+    'Incline',
+    'Pike',
+    'Knuckle',
+  ];
   // Canonical source values ("wa" is legacy; use "whatsapp").
   readonly sourceOptions = ['web', 'whatsapp'];
 
@@ -303,18 +420,23 @@ export class StatsTableComponent implements AfterViewInit {
   private readonly editedType = signal<Record<string, string>>({});
   readonly editingId = signal<string | null>(null);
 
-  readonly editTypeControl = new FormControl<string>('Standard', { nonNullable: true });
-  readonly editSourceControl = new FormControl<string>('web', { nonNullable: true });
+  readonly editTypeControl = new FormControl<string>('Standard', {
+    nonNullable: true,
+  });
+  readonly editSourceControl = new FormControl<string>('web', {
+    nonNullable: true,
+  });
 
   readonly filteredEditTypeOptions$ = this.editTypeControl.valueChanges.pipe(
     startWith(this.editTypeControl.value),
     map((value) => this.filterOptions(value, this.typeOptions)),
   );
 
-  readonly filteredEditSourceOptions$ = this.editSourceControl.valueChanges.pipe(
-    startWith(this.editSourceControl.value),
-    map((value) => this.filterOptions(value, this.sourceOptions)),
-  );
+  readonly filteredEditSourceOptions$ =
+    this.editSourceControl.valueChanges.pipe(
+      startWith(this.editSourceControl.value),
+      map((value) => this.filterOptions(value, this.sourceOptions)),
+    );
 
   constructor() {
     this.dataSource.sortingDataAccessor = (item, property) => {
@@ -333,20 +455,25 @@ export class StatsTableComponent implements AfterViewInit {
     effect(() => {
       this.dataSource.data = this.entries();
     });
-  }
 
-  ngAfterViewInit(): void {
-    if (this.sort) {
-      this.dataSource.sort = this.sort;
-    }
+    effect(() => {
+      const s = this.sort();
+      if (s) {
+        this.dataSource.sort = s;
+      }
+    });
   }
 
   openCreateDialog(): void {
-    if (!this.createDialog) return;
+    const dialogTpl = this.createDialog();
+    if (!dialogTpl) return;
     if (!this.newTimestamp()) {
       this.newTimestamp.set(this.defaultDateTimeLocal());
     }
-    this.dialog.open(this.createDialog, { width: 'min(92vw, 420px)', maxWidth: '92vw' });
+    this.dialog.open(dialogTpl, {
+      width: 'min(92vw, 420px)',
+      maxWidth: '92vw',
+    });
   }
 
   asValue(event: Event): string {
@@ -370,14 +497,21 @@ export class StatsTableComponent implements AfterViewInit {
   }
 
   openEditDialog(entry: PushupRecord): void {
-    if (!this.editDialog) return;
+    const dialogTpl = this.editDialog();
+    if (!dialogTpl) return;
     this.startEdit(entry);
-    this.dialog.open(this.editDialog, { width: 'min(92vw, 420px)', maxWidth: '92vw' });
+    this.dialog.open(dialogTpl, {
+      width: 'min(92vw, 420px)',
+      maxWidth: '92vw',
+    });
   }
 
   startEdit(entry: PushupRecord): void {
     this.editingId.set(entry._id);
-    this.editedReps.update((prev) => ({ ...prev, [entry._id]: String(entry.reps) }));
+    this.editedReps.update((prev) => ({
+      ...prev,
+      [entry._id]: String(entry.reps),
+    }));
 
     const rawSource = entry.source || 'web';
     const source = this.normalizeSource(rawSource);
@@ -422,7 +556,7 @@ export class StatsTableComponent implements AfterViewInit {
     const id = this.editingId();
     if (!id) return '';
     const entry = this.entries().find((row) => row._id === id);
-    return id ? this.editedReps()[id] ?? String(entry?.reps ?? '') : '';
+    return id ? (this.editedReps()[id] ?? String(entry?.reps ?? '')) : '';
   }
 
   setEditRepsById(value: string): void {
@@ -453,7 +587,9 @@ export class StatsTableComponent implements AfterViewInit {
     const type = (this.editTypeControl.value || '').trim() || 'Standard';
     this.setEditType(entry, type);
 
-    const source = this.normalizeSource((this.editSourceControl.value || '').trim() || 'web');
+    const source = this.normalizeSource(
+      (this.editSourceControl.value || '').trim() || 'web',
+    );
     this.setEditSource(entry, source);
 
     this.save(entry);
@@ -465,7 +601,9 @@ export class StatsTableComponent implements AfterViewInit {
     if (!this.newTimestamp() || Number.isNaN(reps) || reps <= 0) return;
 
     const type = (this.newTypeControl.value || '').trim() || 'Standard';
-    const source = this.normalizeSource((this.newSourceControl.value || '').trim() || 'web');
+    const source = this.normalizeSource(
+      (this.newSourceControl.value || '').trim() || 'web',
+    );
 
     this.create.emit({
       timestamp: this.newTimestamp(),
@@ -498,7 +636,10 @@ export class StatsTableComponent implements AfterViewInit {
     this.editingId.set(null);
   }
 
-  private filterOptions(value: string | null | undefined, options: string[]): string[] {
+  private filterOptions(
+    value: string | null | undefined,
+    options: string[],
+  ): string[] {
     const needle = (value ?? '').toLowerCase().trim();
     if (!needle) return options;
     return options.filter((opt) => opt.toLowerCase().includes(needle));
@@ -523,7 +664,9 @@ export class StatsTableComponent implements AfterViewInit {
 
   private async loadShowSourceFromDb(): Promise<void> {
     try {
-      const cfg = await firstValueFrom(this.userConfigApi.getConfig(this.user.userIdSafe()));
+      const cfg = await firstValueFrom(
+        this.userConfigApi.getConfig(this.user.userIdSafe()),
+      );
       this.showSourceColumn.set(!!cfg.ui?.showSourceColumn);
     } catch {
       // ignore; keep default

@@ -1,0 +1,18 @@
+# Example systemd --user push-up-stats reverse proxy
+# Install as: ~/.config/systemd/user/pushup-stats-reverse-proxy.service
+
+[Unit]
+Description=Pushup stats reverse proxy
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=%h/.openclaw/workspace/pushup-stats-service
+Environment=NODE_ENV=production
+Environment=PORT=8787
+ExecStart=/usr/bin/node dist/reverse-proxy/main.js
+Restart=on-failure
+RestartSec=2
+
+[Install]
+WantedBy=default.target

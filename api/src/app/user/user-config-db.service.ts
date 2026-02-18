@@ -16,7 +16,7 @@ export type UserConfigDoc = {
 };
 
 const DEFAULT_DB_PATH =
-  process.env.USER_CONFIG_DB_PATH || path.join(process.cwd(), 'data', 'user-config.db');
+  process.env.USER_CONFIG_DB_PATH || path.join(process.cwd(), 'data', `user-config${process.env.NODE_ENV === 'development' ? '-dev' : ''}.db`);
 
 @Injectable()
 export class UserConfigDbService {

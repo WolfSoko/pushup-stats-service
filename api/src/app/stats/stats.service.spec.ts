@@ -1,5 +1,5 @@
 import { StatsService } from './stats.service';
-import { PushupDbService } from './pushup-db.service';
+import { PushupDbService } from '../pushups/pushup-db.service';
 
 describe('StatsService', () => {
   const db: Pick<PushupDbService, 'findAll'> = {

@@ -5,10 +5,7 @@
   "prefix": "app",
   "sourceRoot": "web/src",
   "i18n": {
-    "sourceLocale": {
-      "code": "de",
-      "subPath": ""
-    },
+    "sourceLocale": "de",
     "locales": {
       "en": {
         "translation": "web/src/locale/messages.en.xlf",
@@ -20,15 +17,18 @@
   "targets": {
     "build": {
       "executor": "@angular/build:application",
-      "outputs": [
-        "{options.outputPath}"
-      ],
+      "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/web",
         "browser": "web/src/main.ts",
         "server": "web/src/main.server.ts",
+        "outputMode": "server",
+        "localize": true,
+
+        "allowedCommonJsDependencies": ["pino", "pino-http"],
         "ssr": {
-          "entry": "web/src/server.ts"
+          "entry": "web/src/server.ts",
+          "experimentalPlatform": "node"
         },
         "polyfills": ["@angular/localize/init"],
         "tsConfig": "web/tsconfig.app.json",
@@ -39,9 +39,7 @@
             "input": "web/public"
           }
         ],
-        "styles": [
-          "web/src/styles.scss"
-        ]
+        "styles": ["web/src/styles.scss"]
       },
       "configurations": {
         "production": {
@@ -89,13 +87,12 @@
       "executor": "@nx/eslint:lint"
     },
     "test": {
-      "executor": "@nx/jest:jest",
-      "outputs": [
-        "{workspaceRoot}/coverage/{projectRoot}"
-      ],
+      "executor": "@angular/build:unit-test",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "web/jest.config.cts",
-        "tsConfig": "web/tsconfig.spec.json"
+        "tsConfig": "web/tsconfig.spec.json",
+        "coverage": true,
+        "browsers": ["chromiumHeadless"]
       }
     },
     "extract-i18n": {

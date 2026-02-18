@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Param, Put } from '@nestjs/common';
 import { UserConfigDbService } from './user-config-db.service';
 
-@Controller('api/users/:userId/config')
+@Controller('users/:userId/config')
 export class UserConfigController {
   constructor(private readonly db: UserConfigDbService) {}
 

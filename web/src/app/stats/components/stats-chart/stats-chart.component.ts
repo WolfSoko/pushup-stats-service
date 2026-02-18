@@ -4,16 +4,16 @@ import {
   ElementRef,
   NgZone,
   PLATFORM_ID,
-  ViewChild,
   effect,
   inject,
   input,
   signal,
+  viewChild,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { Chart, ChartConfiguration, registerables } from 'chart.js';
-import { StatsGranularity, StatsSeriesEntry } from '@nx-temp/stats-models';
+import { StatsGranularity, StatsSeriesEntry } from '@pu-stats/models';
 
 Chart.register(...registerables);
 
@@ -23,8 +23,15 @@ Chart.register(...registerables);
   template: `
     <mat-card class="chart">
       <mat-card-header>
-        <mat-card-title>{{ granularity() === 'hourly' ? 'Verlauf (Stundenwerte)' : 'Verlauf (Tageswerte)' }}</mat-card-title>
-        <mat-card-subtitle>Intervallwerte als Balken, Tages-Integral + gleitender Durchschnitt als Trendlinien</mat-card-subtitle>
+        <mat-card-title>{{
+          granularity() === 'hourly'
+            ? 'Verlauf (Stundenwerte)'
+            : 'Verlauf (Tageswerte)'
+        }}</mat-card-title>
+        <mat-card-subtitle
+          >Intervallwerte als Balken, Tages-Integral + gleitender Durchschnitt
+          als Trendlinien</mat-card-subtitle
+        >
       </mat-card-header>
 
       <mat-card-content>
@@ -46,7 +53,8 @@ export class StatsChartComponent implements AfterViewInit {
   private readonly platformId = inject(PLATFORM_ID);
   private readonly zone = inject(NgZone);
 
-  @ViewChild('chartCanvas') private chartCanvas?: ElementRef<HTMLCanvasElement>;
+  private readonly chartCanvas =
+    viewChild<ElementRef<HTMLCanvasElement>>('chartCanvas');
 
   readonly granularity = input<StatsGranularity>('daily');
   readonly rangeMode = input<'day' | 'week' | 'month'>('week');
@@ -70,11 +78,12 @@ export class StatsChartComponent implements AfterViewInit {
   }
 
   private renderChart(series: StatsSeriesEntry[]): void {
-    const element = this.chartCanvas?.nativeElement;
+    const element = this.chartCanvas()?.nativeElement;
     if (!element) return;
 
-    const isJestJsdom = typeof navigator !== 'undefined' && /jsdom/i.test(navigator.userAgent);
-    if (isJestJsdom) return;
+    const isVitestJsdom =
+      typeof navigator !== 'undefined' && /jsdom/i.test(navigator.userAgent);
+    if (isVitestJsdom) return;
 
     let context: CanvasRenderingContext2D | null = null;
     try {
@@ -152,11 +161,15 @@ export class StatsChartComponent implements AfterViewInit {
                     return bucket; // e.g. 08
                   }
                   // daily buckets are ISO dates (YYYY-MM-DD)
-                  const parsed = /^\d{4}-\d{2}-\d{2}$/.test(bucket) ? new Date(`${bucket}T00:00:00`) : null;
+                  const parsed = /^\d{4}-\d{2}-\d{2}$/.test(bucket)
+                    ? new Date(`${bucket}T00:00:00`)
+                    : null;
                   if (!parsed || Number.isNaN(parsed.getTime())) return bucket;
 
                   if (this.rangeMode() === 'week') {
-                    const weekday = parsed.toLocaleDateString('de-DE', { weekday: 'short' });
+                    const weekday = parsed.toLocaleDateString('de-DE', {
+                      weekday: 'short',
+                    });
                     return `${weekday}`;
                   }
 

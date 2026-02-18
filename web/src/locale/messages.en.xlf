@@ -1,73 +1,102 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<xliff version="2.0" xmlns="urn:oasis:names:tc:xliff:document:2.0" srcLang="de" trgLang="en">
+<xliff version="2.0"
+  xmlns="urn:oasis:names:tc:xliff:document:2.0" srcLang="de">
   <file id="ngi18n" original="ng.template">
     <unit id="app.title">
+      <notes>
+        <note category="location">web/src/app/app.html:11,12</note>
+        <note category="location">web/src/app/app.html:105,106</note>
+      </notes>
       <segment>
         <source>Pushups</source>
-        <target>Pushups</target>
       </segment>
     </unit>
-
     <unit id="nav.dashboard">
+      <notes>
+        <note category="location">web/src/app/app.html:23,26</note>
+      </notes>
       <segment>
         <source>Dashboard</source>
-        <target>Dashboard</target>
       </segment>
     </unit>
-
     <unit id="nav.data">
+      <notes>
+        <note category="location">web/src/app/app.html:33,36</note>
+      </notes>
       <segment>
-        <source>Daten</source>
-        <target>Data</target>
+        <source>Data</source>
       </segment>
     </unit>
-
     <unit id="nav.analysis">
+      <notes>
+        <note category="location">web/src/app/app.html:43,46</note>
+      </notes>
       <segment>
-        <source>Analyse</source>
-        <target>Analysis</target>
+        <source>Analysis</source>
       </segment>
     </unit>
-
     <unit id="nav.settings">
+      <notes>
+        <note category="location">web/src/app/app.html:55,58</note>
+      </notes>
       <segment>
-        <source>Einstellungen</source>
-        <target>Settings</target>
+        <source>Settings</source>
       </segment>
     </unit>
-
     <unit id="nav.language">
+      <notes>
+        <note category="location">web/src/app/app.html:65,68</note>
+      </notes>
       <segment>
-        <source>Sprache</source>
-        <target>Language</target>
+        <source>Language</source>
       </segment>
     </unit>
-
     <unit id="nav.lang.de">
+      <notes>
+        <note category="location">web/src/app/app.html:74,77</note>
+      </notes>
       <segment>
-        <source>Deutsch</source>
-        <target>Deutsch</target>
+        <source>German</source>
       </segment>
     </unit>
-
     <unit id="nav.lang.en">
+      <notes>
+        <note category="location">web/src/app/app.html:83,85</note>
+      </notes>
       <segment>
         <source>English</source>
-        <target>English</target>
       </segment>
     </unit>
-
     <unit id="nav.aria">
+      <notes>
+        <note category="location">web/src/app/app.html:92,93</note>
+      </notes>
       <segment>
         <source>Pushup Navigation</source>
-        <target>Push-up navigation</target>
       </segment>
     </unit>
-
     <unit id="nav.openMenu">
+      <notes>
+        <note category="location">web/src/app/app.html:98,99</note>
+      </notes>
       <segment>
-        <source>Menü öffnen</source>
-        <target>Open menu</target>
+        <source>Open menu</source>
+      </segment>
+    </unit>
+    <unit id="1713004850888488155">
+      <notes>
+        <note category="location">web/src/app/app.ts:61</note>
+      </notes>
+      <segment>
+        <source>New version available</source>
+      </segment>
+    </unit>
+    <unit id="5889607835368180076">
+      <notes>
+        <note category="location">web/src/app/app.ts:61</note>
+      </notes>
+      <segment>
+        <source>Reload</source>
       </segment>
     </unit>
   </file>

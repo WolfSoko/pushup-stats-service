@@ -32,13 +32,10 @@ npx nx run-many -t lint test build
 
 ## Production / Daemon (systemd --user)
 
-### i18n Deployment (de: `/`, en: `/en`)
+### i18n Deployment (de: `/de`, en: `/en`) - DE is default `/` handled das redirect
 
-Für die i18n-Variante werden **zwei SSR-Backends** gestartet und vorne dran **nginx** (oder alternativ der Node-Proxy unter `proxy/server.cjs`) geschaltet.
-
-- **DE SSR**: `node dist/web/server/server.mjs` (PORT=8788)
-- **EN SSR**: `node dist/web/server/en/server.mjs` (PORT=8789)
-- **Front Proxy**: nginx, Routing nach Cookie/Header (siehe `proxy/nginx-pushup-stats-service.conf`)
+- **SSR**: `node dist/web/server/server.mjs` (PORT=8789)
+- **Front Proxy**: epress, Routing nach api/ssr
 
 Routing-Anforderungen:
 - Cookie `language` hat Priorität vor `Accept-Language`

@@ -31,8 +31,8 @@ describe('FilterBarComponent', () => {
   });
 
   it('emits ISO dates when reactive range controls change', () => {
-    const fromSpy = jest.fn();
-    const toSpy = jest.fn();
+    const fromSpy = vitest.fn();
+    const toSpy = vitest.fn();
     component.fromChange.subscribe(fromSpy);
     component.toChange.subscribe(toSpy);
 
@@ -64,8 +64,8 @@ describe('FilterBarComponent', () => {
   });
 
   it('emits empty string when date controls are cleared', () => {
-    const fromSpy = jest.fn();
-    const toSpy = jest.fn();
+    const fromSpy = vitest.fn();
+    const toSpy = vitest.fn();
     component.fromChange.subscribe(fromSpy);
     component.toChange.subscribe(toSpy);
 
@@ -77,7 +77,10 @@ describe('FilterBarComponent', () => {
   });
 
   it('sets day range from anchor date', () => {
-    component.range.patchValue({ start: new Date(2026, 1, 11), end: new Date(2026, 1, 11) });
+    component.range.patchValue({
+      start: new Date(2026, 1, 11),
+      end: new Date(2026, 1, 11),
+    });
 
     component.setMode('day');
 
@@ -86,7 +89,10 @@ describe('FilterBarComponent', () => {
   });
 
   it('sets week range (Mon-Sun) from anchor date', () => {
-    component.range.patchValue({ start: new Date(2026, 1, 11), end: new Date(2026, 1, 11) }); // Wed
+    component.range.patchValue({
+      start: new Date(2026, 1, 11),
+      end: new Date(2026, 1, 11),
+    }); // Wed
 
     component.setMode('week');
 
@@ -96,8 +102,8 @@ describe('FilterBarComponent', () => {
 
   it('shifts week range forward and backward', () => {
     component.setMode('week');
-    const fromSpy = jest.fn();
-    const toSpy = jest.fn();
+    const fromSpy = vitest.fn();
+    const toSpy = vitest.fn();
     component.fromChange.subscribe(fromSpy);
     component.toChange.subscribe(toSpy);
 

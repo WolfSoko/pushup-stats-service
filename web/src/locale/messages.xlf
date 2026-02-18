@@ -4,7 +4,7 @@
     <unit id="app.title">
       <notes>
         <note category="location">web/src/app/app.html:11,12</note>
-        <note category="location">web/src/app/app.html:71,72</note>
+        <note category="location">web/src/app/app.html:105,106</note>
       </notes>
       <segment>
         <source>Pushups</source>
@@ -20,7 +20,7 @@
     </unit>
     <unit id="nav.data">
       <notes>
-        <note category="location">web/src/app/app.html:28,31</note>
+        <note category="location">web/src/app/app.html:33,36</note>
       </notes>
       <segment>
         <source>Daten</source>
@@ -28,7 +28,7 @@
     </unit>
     <unit id="nav.analysis">
       <notes>
-        <note category="location">web/src/app/app.html:33,36</note>
+        <note category="location">web/src/app/app.html:43,46</note>
       </notes>
       <segment>
         <source>Analyse</source>
@@ -36,7 +36,7 @@
     </unit>
     <unit id="nav.settings">
       <notes>
-        <note category="location">web/src/app/app.html:40,43</note>
+        <note category="location">web/src/app/app.html:55,58</note>
       </notes>
       <segment>
         <source>Einstellungen</source>
@@ -44,15 +44,15 @@
     </unit>
     <unit id="nav.language">
       <notes>
-        <note category="location">web/src/app/app.html:45,47</note>
+        <note category="location">web/src/app/app.html:65,68</note>
       </notes>
       <segment>
-        <source>Sprache</source>
+        <source> Sprache </source>
       </segment>
     </unit>
     <unit id="nav.lang.de">
       <notes>
-        <note category="location">web/src/app/app.html:49,52</note>
+        <note category="location">web/src/app/app.html:74,77</note>
       </notes>
       <segment>
         <source>Deutsch</source>
@@ -60,7 +60,7 @@
     </unit>
     <unit id="nav.lang.en">
       <notes>
-        <note category="location">web/src/app/app.html:54,56</note>
+        <note category="location">web/src/app/app.html:83,85</note>
       </notes>
       <segment>
         <source>English</source>
@@ -68,7 +68,7 @@
     </unit>
     <unit id="nav.aria">
       <notes>
-        <note category="location">web/src/app/app.html:60</note>
+        <note category="location">web/src/app/app.html:92,93</note>
       </notes>
       <segment>
         <source>Pushup Navigation</source>
@@ -76,10 +76,26 @@
     </unit>
     <unit id="nav.openMenu">
       <notes>
-        <note category="location">web/src/app/app.html:64,65</note>
+        <note category="location">web/src/app/app.html:98,99</note>
       </notes>
       <segment>
         <source>Menü öffnen</source>
+      </segment>
+    </unit>
+    <unit id="1713004850888488155">
+      <notes>
+        <note category="location">web/src/app/app.ts:61</note>
+      </notes>
+      <segment>
+        <source>Neue Version verfügbar</source>
+      </segment>
+    </unit>
+    <unit id="5889607835368180076">
+      <notes>
+        <note category="location">web/src/app/app.ts:61</note>
+      </notes>
+      <segment>
+        <source>Neu laden</source>
       </segment>
     </unit>
   </file>

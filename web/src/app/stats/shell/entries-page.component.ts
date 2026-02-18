@@ -1,15 +1,28 @@
-import { Component, computed, effect, inject, resource, signal } from '@angular/core';
+import {
+  Component,
+  computed,
+  effect,
+  inject,
+  resource,
+  signal,
+} from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { firstValueFrom } from 'rxjs';
-import { StatsApiService } from '@nx-temp/stats-data-access';
+import { StatsApiService } from '@pu-stats/data-access';
 import { StatsTableComponent } from '../components/stats-table/stats-table.component';
 
 @Component({
   selector: 'app-entries-page',
-  imports: [MatCardModule, MatFormFieldModule, MatInputModule, MatSelectModule, StatsTableComponent],
+  imports: [
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    StatsTableComponent,
+  ],
   template: `
     <main class="page-wrap">
       <mat-card>
@@ -22,12 +35,22 @@ import { StatsTableComponent } from '../components/stats-table/stats-table.compo
           <section class="filters">
             <mat-form-field appearance="outline">
               <mat-label>Datum von</mat-label>
-              <input matInput type="date" [value]="from()" (input)="from.set(asValue($event))" />
+              <input
+                matInput
+                type="date"
+                [value]="from()"
+                (input)="from.set(asValue($event))"
+              />
             </mat-form-field>
 
             <mat-form-field appearance="outline">
               <mat-label>Datum bis</mat-label>
-              <input matInput type="date" [value]="to()" (input)="to.set(asValue($event))" />
+              <input
+                matInput
+                type="date"
+                [value]="to()"
+                (input)="to.set(asValue($event))"
+              />
             </mat-form-field>
 
             <mat-form-field appearance="outline">
@@ -52,12 +75,24 @@ import { StatsTableComponent } from '../components/stats-table/stats-table.compo
 
             <mat-form-field appearance="outline">
               <mat-label>Reps min</mat-label>
-              <input matInput type="number" min="1" [value]="repsMin() ?? ''" (input)="repsMin.set(asNumber($event))" />
+              <input
+                matInput
+                type="number"
+                min="1"
+                [value]="repsMin() ?? ''"
+                (input)="repsMin.set(asNumber($event))"
+              />
             </mat-form-field>
 
             <mat-form-field appearance="outline">
               <mat-label>Reps max</mat-label>
-              <input matInput type="number" min="1" [value]="repsMax() ?? ''" (input)="repsMax.set(asNumber($event))" />
+              <input
+                matInput
+                type="number"
+                min="1"
+                [value]="repsMax() ?? ''"
+                (input)="repsMax.set(asNumber($event))"
+              />
             </mat-form-field>
           </section>
         </mat-card-content>
@@ -74,8 +109,18 @@ import { StatsTableComponent } from '../components/stats-table/stats-table.compo
     </main>
   `,
   styles: `
-    .page-wrap { max-width: 1200px; margin: 0 auto; padding: 16px; display: grid; gap: 12px; }
-    .filters { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); }
+    .page-wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 16px;
+      display: grid;
+      gap: 12px;
+    }
+    .filters {
+      display: grid;
+      gap: 12px;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    }
   `,
 })
 export class EntriesPageComponent {
@@ -91,18 +136,33 @@ export class EntriesPageComponent {
   readonly busyId = signal<string | null>(null);
 
   readonly entriesResource = resource({
-    params: () => ({ from: this.from() || undefined, to: this.to() || undefined }),
+    params: () => ({
+      from: this.from() || undefined,
+      to: this.to() || undefined,
+    }),
     loader: async ({ params }) => firstValueFrom(this.api.listPushups(params)),
   });
 
   readonly rows = computed(() => this.entriesResource.value() ?? []);
 
   readonly sourceOptions = computed(() => {
-    return [...new Set(this.rows().map((x) => x.source).filter(Boolean))].sort((a, b) => a.localeCompare(b));
+    return [
+      ...new Set(
+        this.rows()
+          .map((x) => x.source)
+          .filter(Boolean),
+      ),
+    ].sort((a, b) => a.localeCompare(b));
   });
 
   readonly typeOptions = computed(() => {
-    return [...new Set(this.rows().map((x) => x.type || 'Standard').filter(Boolean))].sort((a, b) => a.localeCompare(b));
+    return [
+      ...new Set(
+        this.rows()
+          .map((x) => x.type || 'Standard')
+          .filter(Boolean),
+      ),
+    ].sort((a, b) => a.localeCompare(b));
   });
 
   readonly filteredRows = computed(() => {
@@ -131,7 +191,10 @@ export class EntriesPageComponent {
       if (!rows.length || this.from() || this.to()) return;
 
       const oldest = [...rows]
-        .sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime())[0]
+        .sort(
+          (a, b) =>
+            new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime(),
+        )[0]
         ?.timestamp.slice(0, 10);
       const today = this.todayIso();
       if (oldest) {
@@ -152,7 +215,12 @@ export class EntriesPageComponent {
     return Number.isNaN(num) ? null : num;
   }
 
-  async onCreateEntry(payload: { timestamp: string; reps: number; source?: string; type?: string }) {
+  async onCreateEntry(payload: {
+    timestamp: string;
+    reps: number;
+    source?: string;
+    type?: string;
+  }) {
     this.busyAction.set('create');
     this.busyId.set(null);
     try {
@@ -164,11 +232,22 @@ export class EntriesPageComponent {
     }
   }
 
-  async onUpdateEntry(payload: { id: string; reps: number; source?: string; type?: string }) {
+  async onUpdateEntry(payload: {
+    id: string;
+    reps: number;
+    source?: string;
+    type?: string;
+  }) {
     this.busyAction.set('update');
     this.busyId.set(payload.id);
     try {
-      await firstValueFrom(this.api.updatePushup(payload.id, { reps: payload.reps, source: payload.source, type: payload.type }));
+      await firstValueFrom(
+        this.api.updatePushup(payload.id, {
+          reps: payload.reps,
+          source: payload.source,
+          type: payload.type,
+        }),
+      );
       this.entriesResource.reload();
     } finally {
       this.busyAction.set(null);

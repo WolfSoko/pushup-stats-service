@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
@@ -9,6 +9,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatDividerModule } from '@angular/material/divider';
 import { SwUpdate, VersionReadyEvent } from '@angular/service-worker';
 import { filter } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-root',
@@ -30,6 +31,7 @@ import { filter } from 'rxjs';
 export class App {
   private readonly swUpdate = inject(SwUpdate, { optional: true });
   private readonly snackBar = inject(MatSnackBar);
+  private readonly destroyRef = inject(DestroyRef);
 
   setLanguage(lang: 'de' | 'en', ev?: Event): void {
     ev?.preventDefault();
@@ -39,24 +41,9 @@ export class App {
     const maxAge = 180 * 24 * 60 * 60; // 180 days
     document.cookie = `lang=${encodeURIComponent(lang)}; Path=/; Max-Age=${maxAge}; SameSite=Lax`;
 
-    // Keep the current route when switching languages.
-    // Supports both deployments:
-    //   A) locale proxy:   /de/* and /en/*
-    //   B) angular default: /      and /en/*
-    const pathname = window.location.pathname || '/';
-    const hasLocalePrefix = /^\/(de|en)(?=\/|$)/.test(pathname);
-
-    if (hasLocalePrefix) {
-      const rest = pathname.replace(/^\/(de|en)(?=\/|$)/, '') || '/';
-      const prefix = lang === 'en' ? '/en' : '/de';
-      const target = rest === '/' ? `${prefix}/` : `${prefix}${rest}`;
-      window.location.assign(target);
-      return;
-    }
-
     // No /de prefix in URL → DE is root.
-    const target = lang === 'en' ? '/en/' : '/';
-    window.location.assign(target);
+    const target = lang === 'en' ? '/en/' : '/de';
+    window.location.replace(target);
   }
 
   /** Whether the sidenav is open (same behavior on all screen sizes). */
@@ -66,12 +53,15 @@ export class App {
     if (!this.swUpdate?.isEnabled) return;
 
     this.swUpdate.versionUpdates
-      .pipe(filter((event): event is VersionReadyEvent => event.type === 'VERSION_READY'))
+      .pipe(
+        filter((event): event is VersionReadyEvent => event.type === 'VERSION_READY'),
+        takeUntilDestroyed(this.destroyRef),
+      )
       .subscribe(() => {
-        const ref = this.snackBar.open('Neue Version verfügbar', 'Neu laden', {
-          duration: 12_000,
+        const ref = this.snackBar.open($localize`Neue Version verfügbar`, $localize`Neu laden`, {
+          duration: 20_000,
           horizontalPosition: 'center',
-          verticalPosition: 'top',
+          verticalPosition: 'bottom',
         });
 
         ref.onAction().subscribe(() => {

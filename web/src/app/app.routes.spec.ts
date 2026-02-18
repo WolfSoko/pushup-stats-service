@@ -1,32 +1,37 @@
 import { appRoutes } from './app.routes';
+import { StatsDashboardComponent } from './stats/shell/stats-dashboard.component';
+import { EntriesPageComponent } from './stats/shell/entries-page.component';
+import { AnalysisPageComponent } from './stats/shell/analysis-page.component';
+import { SettingsPageComponent } from './stats/shell/settings-page.component';
 
 describe('appRoutes', () => {
   it('defines dashboard, data and analysis routes', () => {
     const paths = appRoutes.map((r) => r.path);
-    expect(paths).toEqual(['', 'daten', 'eintraege', 'analyse', 'settings', '**']);
+    expect(paths).toEqual(['', 'data', 'analysis', 'settings', '**']);
   });
 
   it('lazy-loads dashboard component', async () => {
     const route = appRoutes.find((r) => r.path === '');
     const component = await route?.loadComponent?.();
-    expect((component as { name?: string })?.name).toBe('StatsDashboardComponent');
+    expect(component).toBe(StatsDashboardComponent);
   });
 
-  it('lazy-loads data component on /daten', async () => {
-    const route = appRoutes.find((r) => r.path === 'daten');
+  it('lazy-loads data component on /data', async () => {
+    const route = appRoutes.find((r) => r.path === 'data');
     const component = await route?.loadComponent?.();
-    expect((component as { name?: string })?.name).toBe('EntriesPageComponent');
-  });
-
-  it('redirects /eintraege to /daten', () => {
-    const route = appRoutes.find((r) => r.path === 'eintraege');
-    expect(route?.redirectTo).toBe('daten');
+    expect(component).toBe(EntriesPageComponent);
   });
 
   it('lazy-loads analysis component', async () => {
-    const route = appRoutes.find((r) => r.path === 'analyse');
+    const route = appRoutes.find((r) => r.path === 'analysis');
     const component = await route?.loadComponent?.();
-    expect((component as { name?: string })?.name).toBe('AnalysisPageComponent');
+    expect(component).toBe(AnalysisPageComponent);
+  });
+
+  it('lazy-loads settings component', async () => {
+    const route = appRoutes.find((r) => r.path === 'settings');
+    const component = await route?.loadComponent?.();
+    expect(component).toBe(SettingsPageComponent);
   });
 
   it('redirects wildcard route to dashboard', () => {

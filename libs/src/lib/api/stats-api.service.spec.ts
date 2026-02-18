@@ -1,8 +1,11 @@
 import { PLATFORM_ID, TransferState, makeStateKey } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { provideHttpClient } from '@angular/common/http';
-import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
-import { StatsResponse } from '@nx-temp/stats-models';
+import {
+  HttpTestingController,
+  provideHttpClientTesting,
+} from '@angular/common/http/testing';
+import { StatsResponse } from '@pu-stats/models';
 import { StatsApiService } from './stats-api.service';
 
 describe('StatsApiService', () => {
@@ -61,16 +64,27 @@ describe('StatsApiService', () => {
   it('reuses TransferState payload on browser without extra HTTP call', () => {
     const { service, httpMock } = setup('browser');
     const transferState = TestBed.inject(TransferState);
-    const key = makeStateKey<StatsResponse>('stats:from=2026-02-01&to=2026-02-10');
+    const key = makeStateKey<StatsResponse>(
+      'stats:from=2026-02-01&to=2026-02-10',
+    );
     const cachedPayload = {
-      meta: { from: '2026-02-01', to: '2026-02-10', entries: 2, days: 1, total: 15, granularity: 'daily' },
+      meta: {
+        from: '2026-02-01',
+        to: '2026-02-10',
+        entries: 2,
+        days: 1,
+        total: 15,
+        granularity: 'daily',
+      },
       series: [{ bucket: '2026-02-10', total: 15, dayIntegral: 15 }],
     };
 
     transferState.set(key, cachedPayload);
 
     let value: StatsResponse | null = null;
-    service.load({ from: '2026-02-01', to: '2026-02-10' }).subscribe((v) => (value = v));
+    service
+      .load({ from: '2026-02-01', to: '2026-02-10' })
+      .subscribe((v) => (value = v));
 
     expect(value).toEqual(cachedPayload);
     httpMock.expectNone('/api/stats?from=2026-02-01&to=2026-02-10');
@@ -85,7 +99,9 @@ describe('StatsApiService', () => {
     try {
       service.load({ to: '2026-02-10' }).subscribe();
 
-      const req = httpMock.expectOne('http://127.0.0.1:9999/api/stats?to=2026-02-10');
+      const req = httpMock.expectOne(
+        'http://127.0.0.1:9999/api/stats?to=2026-02-10',
+      );
       expect(req.request.method).toBe('GET');
       req.flush({ meta: {}, series: [] });
       httpMock.verify();
@@ -123,7 +139,9 @@ describe('StatsApiService', () => {
     const { service, httpMock } = setup('browser');
 
     let rows: Array<{ _id: string }> = [];
-    service.listPushups({ from: '2026-02-10', to: '2026-02-10' }).subscribe((v) => (rows = v));
+    service
+      .listPushups({ from: '2026-02-10', to: '2026-02-10' })
+      .subscribe((v) => (rows = v));
 
     const req = httpMock.expectOne('/api/pushups');
     expect(req.request.method).toBe('GET');
@@ -139,12 +157,23 @@ describe('StatsApiService', () => {
   it('creates pushup via POST', () => {
     const { service, httpMock } = setup('browser');
 
-    service.createPushup({ timestamp: '2026-02-11T07:00', reps: 15, source: 'web' }).subscribe();
+    service
+      .createPushup({ timestamp: '2026-02-11T07:00', reps: 15, source: 'web' })
+      .subscribe();
 
     const req = httpMock.expectOne('/api/pushups');
     expect(req.request.method).toBe('POST');
-    expect(req.request.body).toEqual({ timestamp: '2026-02-11T07:00', reps: 15, source: 'web' });
-    req.flush({ _id: '1', timestamp: '2026-02-11T07:00', reps: 15, source: 'web' });
+    expect(req.request.body).toEqual({
+      timestamp: '2026-02-11T07:00',
+      reps: 15,
+      source: 'web',
+    });
+    req.flush({
+      _id: '1',
+      timestamp: '2026-02-11T07:00',
+      reps: 15,
+      source: 'web',
+    });
     httpMock.verify();
   });
 
@@ -156,7 +185,12 @@ describe('StatsApiService', () => {
     const req = httpMock.expectOne('/api/pushups/abc');
     expect(req.request.method).toBe('PUT');
     expect(req.request.body).toEqual({ reps: 20 });
-    req.flush({ _id: 'abc', timestamp: '2026-02-11T07:00', reps: 20, source: 'web' });
+    req.flush({
+      _id: 'abc',
+      timestamp: '2026-02-11T07:00',
+      reps: 20,
+      source: 'web',
+    });
     httpMock.verify();
   });
 
