@@ -2,10 +2,14 @@
  * Locale proxy for pushup-stats-service.
  *
  * Routes:
- *   /de/* -> http://127.0.0.1:8788/*
- *   /en/* -> http://127.0.0.1:8789/*
+ *   /      -> DE backend (8788) (default)
+ *   /en/*  -> EN backend (8789)
  *   /api/*, /socket.io/*, /health -> DE backend (8788)
- *   /      -> 302 /de/
+ *
+ * Locale selection for unprefixed URLs:
+ *   1) cookie "language" (highest prio)
+ *   2) Accept-Language header
+ * If the resolved locale is EN, we redirect to /en/... for canonical URLs.
  */
 
 const http = require('http');
@@ -33,32 +37,60 @@ proxy.on('error', (err, _req, res) => {
   }
 });
 
-function pickTarget(reqUrl) {
+function parseCookies(headerValue) {
+  const out = {};
+  if (!headerValue) return out;
+  for (const part of String(headerValue).split(';')) {
+    const [k, ...rest] = part.trim().split('=');
+    if (!k) continue;
+    out[k] = decodeURIComponent(rest.join('=') || '');
+  }
+  return out;
+}
+
+function pickLocale(req) {
+  const cookies = parseCookies(req.headers?.cookie);
+  const cookieLang = String(cookies.language || '').toLowerCase();
+  if (cookieLang.startsWith('en')) return 'en';
+  if (cookieLang.startsWith('de')) return 'de';
+
+  const al = String(req.headers?.['accept-language'] || '').toLowerCase();
+  // Very small heuristic: if "en" appears as a language tag, prefer EN.
+  if (/\ben\b/.test(al) || al.startsWith('en-') || al.startsWith('en,')) return 'en';
+  return 'de';
+}
+
+function pickTarget(req, reqUrl) {
   if (!reqUrl) return { target: DE_TARGET, stripPrefix: '' };
 
-  if (reqUrl === '/' || reqUrl === '') {
-    return { redirect: '/de/' };
-  }
-
-  // Language-scoped paths
-  if (reqUrl === '/de' || reqUrl.startsWith('/de/')) {
+  // Unscoped infra/API routes go to DE backend.
+  if (
+    reqUrl === '/health' ||
+    reqUrl.startsWith('/api/') ||
+    reqUrl.startsWith('/socket.io')
+  ) {
     return { target: DE_TARGET, stripPrefix: '' };
   }
+
+  // English prefix
   if (reqUrl === '/en' || reqUrl.startsWith('/en/')) {
     return { target: EN_TARGET, stripPrefix: '' };
   }
 
-  // Unscoped infra/API routes go to DE backend.
-  if (reqUrl.startsWith('/api/') || reqUrl.startsWith('/socket.io') || reqUrl === '/health') {
-    return { target: DE_TARGET, stripPrefix: '' };
+  // Root & other unprefixed routes: choose locale by cookie/header.
+  const locale = pickLocale(req);
+  if (locale === 'en') {
+    // Canonicalize to /en/...
+    if (reqUrl === '/' || reqUrl === '') return { redirect: '/en/' };
+    return { redirect: `/en${reqUrl.startsWith('/') ? '' : '/'}${reqUrl}` };
   }
 
-  // Anything else: default to DE locale.
-  return { redirect: `/de${reqUrl.startsWith('/') ? '' : '/'}${reqUrl}` };
+  // Default DE at /
+  return { target: DE_TARGET, stripPrefix: '' };
 }
 
 const server = http.createServer((req, res) => {
-  const route = pickTarget(req.url);
+  const route = pickTarget(req, req.url);
 
   if (route.redirect) {
     res.statusCode = 302;
@@ -77,7 +109,7 @@ const server = http.createServer((req, res) => {
 
 server.on('upgrade', (req, socket, head) => {
   // Websocket upgrades (socket.io).
-  const route = pickTarget(req.url);
+  const route = pickTarget(req, req.url);
   if (route.redirect) {
     socket.destroy();
     return;

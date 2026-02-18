@@ -39,6 +39,22 @@ export class App {
     const maxAge = 180 * 24 * 60 * 60; // 180 days
     document.cookie = `lang=${encodeURIComponent(lang)}; Path=/; Max-Age=${maxAge}; SameSite=Lax`;
 
+    // Keep the current route when switching languages.
+    // Supports both deployments:
+    //   A) locale proxy:   /de/* and /en/*
+    //   B) angular default: /      and /en/*
+    const pathname = window.location.pathname || '/';
+    const hasLocalePrefix = /^\/(de|en)(?=\/|$)/.test(pathname);
+
+    if (hasLocalePrefix) {
+      const rest = pathname.replace(/^\/(de|en)(?=\/|$)/, '') || '/';
+      const prefix = lang === 'en' ? '/en' : '/de';
+      const target = rest === '/' ? `${prefix}/` : `${prefix}${rest}`;
+      window.location.assign(target);
+      return;
+    }
+
+    // No /de prefix in URL → DE is root.
     const target = lang === 'en' ? '/en/' : '/';
     window.location.assign(target);
   }

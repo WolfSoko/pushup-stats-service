@@ -32,11 +32,21 @@ npx nx run-many -t lint test build
 
 ## Production / Daemon (systemd --user)
 
-Der SSR-Service läuft als systemd User-Service: **`pushup-service.service`**.
+### i18n Deployment (de: `/`, en: `/en`)
 
-- Unit-Datei: `~/.config/systemd/user/pushup-service.service`
-- Startkommando: `node dist/web/server/server.mjs`
-- Port: `8787`
+Für die i18n-Variante werden **zwei SSR-Backends** gestartet und vorne dran **nginx** (oder alternativ der Node-Proxy unter `proxy/server.cjs`) geschaltet.
+
+- **DE SSR**: `node dist/web/server/server.mjs` (PORT=8788)
+- **EN SSR**: `node dist/web/server/en/server.mjs` (PORT=8789)
+- **Front Proxy**: nginx, Routing nach Cookie/Header (siehe `proxy/nginx-pushup-stats-service.conf`)
+
+Routing-Anforderungen:
+- Cookie `language` hat Priorität vor `Accept-Language`
+- Deutsch ist Default auf `/`
+- Englisch liegt auf `/en`
+- `/api`, `/socket.io`, `/health` gehen immer an das DE-Backend
+
+> Hinweis: Die bisherige Einzel-Unit `pushup-service.service` (Port 8787) ist damit obsolet bzw. wird durch nginx ersetzt.
 
 Nützliche Befehle:
 

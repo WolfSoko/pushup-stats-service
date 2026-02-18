@@ -1,0 +1,18 @@
+# Example systemd --user unit for DE SSR backend
+# Install as: ~/.config/systemd/user/pushup-ssr-de.service
+
+[Unit]
+Description=Pushup Stats SSR (de)
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=%h/.openclaw/workspace/pushup-stats-service
+Environment=NODE_ENV=production
+Environment=PORT=8788
+ExecStart=/usr/bin/node dist/web/server/server.mjs
+Restart=on-failure
+RestartSec=2
+
+[Install]
+WantedBy=default.target
