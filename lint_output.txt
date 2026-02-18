@@ -1,0 +1,100 @@
+
+> @nx-temp/source@0.0.0 lint
+> nx run-many -t lint web
+
+
+[7m[1m[36m NX [39m[22m[27m  [36mRunning target [1mlint[22m for 4 projects:[39m
+
+[2m-[22m stats-models
+[2m-[22m stats-data-access
+[2m-[22m api
+[2m-[22m web
+
+[2m[36m[39m[22m
+
+[2m> [22m[2mnx run[22m stats-models:lint  [2m[existing outputs match the cache, left as is][22m
+
+
+Linting "stats-models"...
+
+Ô£ö All files pass linting
+
+
+[2m> [22m[2mnx run[22m stats-data-access:lint  [2m[existing outputs match the cache, left as is][22m
+
+
+Linting "stats-data-access"...
+
+Ô£ö All files pass linting
+
+
+[2m> [22m[2mnx run[22m api:lint  [2m[existing outputs match the cache, left as is][22m
+
+
+Linting "api"...
+[0m[0m
+[0m[4m/home/workflows/workspace/api/src/app/pushups/pushup-db.service.spec.ts[24m[0m
+[0m   [2m15:19[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m   [2m28:19[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m   [2m34:26[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m   [2m55:19[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m   [2m82:19[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m102:56[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m106:19[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m125:19[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m144:19[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4m/home/workflows/workspace/api/src/app/user/user-config-db.service.spec.ts[24m[0m
+[0m  [2m15:19[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m26:19[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m43:19[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m57:19[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m81:19[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4m/home/workflows/workspace/api/src/app/user/user-config-db.service.ts[24m[0m
+[0m  [2m46:12[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4m/home/workflows/workspace/api/src/app/user/user-config.controller.spec.ts[24m[0m
+[0m  [2m10:49[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m20:49[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m35:49[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m57:49[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m59:49[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[33m[1mÔ£û 20 problems (0 errors, 20 warnings)[22m[39m[0m
+[0m[33m[1m[22m[39m[0m
+Ô£û 20 problems (0 errors, 20 warnings)
+
+
+[2m> [22m[2mnx run[22m web:lint
+
+
+Linting "web"...
+[0m[0m
+[0m[4mE:\antigravity-workspaces\pushup-stats-service\web\src\app\app.config.ts[24m[0m
+[0m  [2m31:75[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mE:\antigravity-workspaces\pushup-stats-service\web\src\app\stats\shell\analysis-page.component.spec.ts[24m[0m
+[0m    [2m1:10[22m  [31merror[39m    'Component' is defined but never used. Allowed unused vars must match /^_/u  [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m   [2m14:18[22m  [33mwarning[39m  Unexpected any. Specify a different type                                     [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m   [2m15:18[22m  [33mwarning[39m  Unexpected any. Specify a different type                                     [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m   [2m16:21[22m  [33mwarning[39m  Unexpected any. Specify a different type                                     [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m   [2m83:45[22m  [33mwarning[39m  Unexpected any. Specify a different type                                     [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m   [2m95:50[22m  [33mwarning[39m  Unexpected any. Specify a different type                                     [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m100:36[22m  [33mwarning[39m  Unexpected any. Specify a different type                                     [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[31m[1mÔ£û 8 problems (1 error, 7 warnings)[22m[39m[0m
+[0m[31m[1m[22m[39m[0m
+Ô£û 8 problems (1 error, 7 warnings)
+
+
+[2m[31m[39m[22m
+
+[7m[1m[31m NX [39m[22m[27m  [31mRunning target [1mlint[22m for 4 projects failed[39m
+
+[2mFailed tasks:[22m
+
+[2m-[22m web:lint
+
+[2mView structured, searchable error logs at https://nx.app/runs/G0uUOvIWcK[22m
+

@@ -1,4 +1,4 @@
-import { Component, Input, Directive } from '@angular/core';
+import { Input, Directive } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 import { AnalysisPageComponent } from './analysis-page.component';
@@ -11,9 +11,9 @@ import { BaseChartDirective } from 'ng2-charts';
   standalone: true,
 })
 class MockBaseChartDirective {
-  @Input() data: any;
-  @Input() type: any;
-  @Input() options: any;
+  @Input() data: unknown;
+  @Input() type: unknown;
+  @Input() options: unknown;
 }
 
 describe('AnalysisPageComponent', () => {
@@ -28,7 +28,7 @@ describe('AnalysisPageComponent', () => {
         { _id: '4', timestamp: '2026-02-12T08:00:00', reps: 8, source: 'web' }, // Do
         { _id: '5', timestamp: '2026-02-13T08:00:00', reps: 25, source: 'wa' }, // Fr
         { _id: '6', timestamp: '2026-02-15T08:00:00', reps: 18, source: 'web' }, // So
-      ]),
+      ])
     ),
   };
 
@@ -80,6 +80,7 @@ describe('AnalysisPageComponent', () => {
     expect(data.datasets[0].data.length).toBe(24 * 7); // 24 hours * 7 days
 
     // Check if data points exist
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const points = data.datasets[0].data as any[];
     // Find entry for Monday 08:00 (id 1, reps 10)
     // 2026-02-09 is Monday. 08:00.
@@ -92,11 +93,13 @@ describe('AnalysisPageComponent', () => {
   it('shows datalabels only for non-zero heatmap cells', () => {
     const component = fixture.componentInstance;
     const data = component.heatmapChartData();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const dl = (component.heatmapChartOptions as any).plugins.datalabels;
 
     const dataset = data.datasets[0];
 
     // Find one non-zero and one zero cell.
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const points = dataset.data as any[];
     const nonZeroIndex = points.findIndex((p) => p.v > 0);
     const zeroIndex = points.findIndex((p) => p.v === 0);
@@ -111,7 +114,7 @@ describe('AnalysisPageComponent', () => {
     expect(dl.display(zeroCtx)).toBe(false);
 
     expect(dl.formatter(points[nonZeroIndex])).toBe(
-      String(points[nonZeroIndex].v),
+      String(points[nonZeroIndex].v)
     );
     expect(dl.formatter(points[zeroIndex])).toBe('');
   });
