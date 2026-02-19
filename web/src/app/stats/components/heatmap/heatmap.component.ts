@@ -105,11 +105,16 @@ export class HeatmapComponent {
           backgroundColor: (context: any) => {
             const raw = context.raw as HeatmapCell;
             const value = raw?.v ?? 0;
-            if (value <= 0) return 'rgba(0,0,0,0.04)';
-            const alpha = 0.15 + (value / max) * 0.85;
+            // zero cells should still be visible against the dark card background
+            if (value <= 0) return 'rgba(255,255,255,0.04)';
+
+            // perceptual boost for small values
+            const ratio = Math.max(0, Math.min(1, value / max));
+            const t = Math.pow(ratio, 0.6);
+            const alpha = 0.2 + t * 0.8;
             return `rgba(69, 137, 255, ${alpha})`;
           },
-          borderColor: 'rgba(0,0,0,0)',
+          borderColor: 'rgba(255,255,255,0.05)',
           borderWidth: 1,
           width: ({ chartArea }: { chartArea: { width: number } }) =>
             (chartArea || { width: 0 }).width / 7 - 1,
@@ -147,13 +152,7 @@ export class HeatmapComponent {
         anchor: 'center',
         align: 'center',
         clamp: true,
-        color: (ctx: any) => {
-          const raw = ctx.dataset.data?.[ctx.dataIndex] as
-            | HeatmapCell
-            | undefined;
-          const v = typeof raw?.v === 'number' ? raw.v : 0;
-          return v >= 10 ? 'rgba(10,12,18,0.95)' : 'rgba(230,237,249,0.95)';
-        },
+        color: () => 'rgba(230,237,249,0.95)',
         font: (ctx: any) => {
           const raw = ctx.dataset.data?.[ctx.dataIndex] as
             | HeatmapCell
