@@ -18,7 +18,8 @@ docker compose up -d --build
 
 Then open (default):
 
-- http://127.0.0.1:18787
+- http://127.0.0.1:18787 (redirects to /de)
+- http://127.0.0.1:18787/en
 
 If you want to bind to 8787 on the host:
 
