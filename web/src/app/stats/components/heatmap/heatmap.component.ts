@@ -116,10 +116,16 @@ export class HeatmapComponent {
           },
           borderColor: 'rgba(255,255,255,0.05)',
           borderWidth: 1,
-          width: ({ chartArea }: { chartArea: { width: number } }) =>
-            (chartArea || { width: 0 }).width / 7 - 1,
-          height: ({ chartArea }: { chartArea: { height: number } }) =>
-            (chartArea || { height: 0 }).height / 24 - 1,
+          // chartjs-chart-matrix provides the chart instance via ctx.chart
+          // Using chart.chartArea avoids 0px cells during initial layout.
+          width: (ctx: any) => {
+            const area = ctx?.chart?.chartArea;
+            return area ? area.width / 7 - 1 : 18;
+          },
+          height: (ctx: any) => {
+            const area = ctx?.chart?.chartArea;
+            return area ? area.height / 24 - 1 : 18;
+          },
         },
       ],
     };
