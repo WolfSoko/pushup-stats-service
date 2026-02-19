@@ -37,6 +37,8 @@ jobs:
 
       - name: Verify build artifacts
         run: |
-          test -f dist/web/browser/index.csr.html
+          # i18n build outputs per-locale directories (sourceLocale=de)
+          test -f dist/web/browser/de/index.csr.html
+          test -f dist/web/browser/en/index.csr.html
           test -f dist/web/server/server.mjs
           test -f dist/api/main.js
