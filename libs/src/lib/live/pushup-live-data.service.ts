@@ -37,11 +37,11 @@ export class PushupLiveDataService {
       this.connectedState.set(false);
     });
 
-    socket.on('pushups:initial', (rows: PushupRecord[]) => {
+    socket.on('pushups:initial', (rows: PushupRecord[] | null | undefined) => {
       this.entriesState.set(rows ?? []);
     });
 
-    socket.on('pushups:changed', (rows: PushupRecord[]) => {
+    socket.on('pushups:changed', (rows: PushupRecord[] | null | undefined) => {
       this.entriesState.set(rows ?? []);
     });
   }
