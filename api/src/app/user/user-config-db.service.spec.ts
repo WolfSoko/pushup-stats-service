@@ -16,7 +16,9 @@ describe('UserConfigDbService', () => {
   });
 
   it('creates db, ensures dir exists, and sets unique index on userId', () => {
-    const mkdirSpy = jest.spyOn(fs, 'mkdirSync').mockImplementation(() => undefined as never);
+    const mkdirSpy = jest
+      .spyOn(fs, 'mkdirSync')
+      .mockImplementation(() => undefined as never);
 
     const fakeDb = {
       ensureIndex: jest.fn().mockResolvedValue(undefined),
@@ -28,8 +30,13 @@ describe('UserConfigDbService', () => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const svc = new UserConfigDbService();
 
-    expect(mkdirSpy).toHaveBeenCalledWith(expect.any(String), { recursive: true });
-    expect(fakeDb.ensureIndex).toHaveBeenCalledWith({ fieldName: 'userId', unique: true });
+    expect(mkdirSpy).toHaveBeenCalledWith(expect.any(String), {
+      recursive: true,
+    });
+    expect(fakeDb.ensureIndex).toHaveBeenCalledWith({
+      fieldName: 'userId',
+      unique: true,
+    });
   });
 
   it('getByUserId returns existing doc', async () => {
@@ -43,7 +50,10 @@ describe('UserConfigDbService', () => {
     (Datastore as any).create.mockReturnValue(fakeDb);
 
     const svc = new UserConfigDbService();
-    await expect(svc.getByUserId('u1')).resolves.toEqual({ userId: 'u1', dailyGoal: 123 });
+    await expect(svc.getByUserId('u1')).resolves.toEqual({
+      userId: 'u1',
+      dailyGoal: 123,
+    });
   });
 
   it('upsert updates and returns the stored doc', async () => {
@@ -51,7 +61,9 @@ describe('UserConfigDbService', () => {
 
     const fakeDb = {
       ensureIndex: jest.fn(),
-      findOne: jest.fn().mockResolvedValue({ userId: 'u1', displayName: 'Wolf' }),
+      findOne: jest
+        .fn()
+        .mockResolvedValue({ userId: 'u1', displayName: 'Wolf' }),
       update: jest.fn().mockResolvedValue(1),
     };
     (Datastore as any).create.mockReturnValue(fakeDb);
@@ -62,10 +74,9 @@ describe('UserConfigDbService', () => {
     expect(fakeDb.update).toHaveBeenCalledWith(
       { userId: 'u1' },
       {
-        $set: { displayName: 'Wolf' },
-        $setOnInsert: { userId: 'u1' },
+        $set: { userId: 'u1', displayName: 'Wolf' },
       },
-      { upsert: true },
+      { upsert: true }
     );
     expect(out).toEqual({ userId: 'u1', displayName: 'Wolf' });
   });
@@ -81,6 +92,8 @@ describe('UserConfigDbService', () => {
     (Datastore as any).create.mockReturnValue(fakeDb);
 
     const svc = new UserConfigDbService();
-    await expect(svc.upsert('u-missing', { dailyGoal: 50 })).resolves.toEqual({ userId: 'u-missing' });
+    await expect(svc.upsert('u-missing', { dailyGoal: 50 })).resolves.toEqual({
+      userId: 'u-missing',
+    });
   });
 });

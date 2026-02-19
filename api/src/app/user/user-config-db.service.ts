@@ -16,7 +16,12 @@ export type UserConfigDoc = {
 };
 
 const DEFAULT_DB_PATH =
-  process.env.USER_CONFIG_DB_PATH || path.join(process.cwd(), 'data', `user-config${process.env.NODE_ENV === 'development' ? '-dev' : ''}.db`);
+  process.env.USER_CONFIG_DB_PATH ||
+  path.join(
+    process.cwd(),
+    'data',
+    `user-config${process.env.NODE_ENV === 'development' ? '-dev' : ''}.db`
+  );
 
 @Injectable()
 export class UserConfigDbService {
@@ -25,7 +30,11 @@ export class UserConfigDbService {
   constructor() {
     const dir = path.dirname(DEFAULT_DB_PATH);
     fs.mkdirSync(dir, { recursive: true });
-    this.db = Datastore.create({ filename: DEFAULT_DB_PATH, autoload: true, timestampData: true }) as Datastore<UserConfigDoc>;
+    this.db = Datastore.create({
+      filename: DEFAULT_DB_PATH,
+      autoload: true,
+      timestampData: true,
+    }) as Datastore<UserConfigDoc>;
 
     // Ensure we have at most one config per user.
     void this.db.ensureIndex({ fieldName: 'userId', unique: true });
@@ -35,16 +44,22 @@ export class UserConfigDbService {
     return this.db.findOne({ userId });
   }
 
-  async upsert(userId: string, patch: Partial<Omit<UserConfigDoc, '_id' | 'userId' | 'createdAt' | 'updatedAt'>>): Promise<UserConfigDoc> {
+  async upsert(
+    userId: string,
+    patch: Partial<
+      Omit<UserConfigDoc, '_id' | 'userId' | 'createdAt' | 'updatedAt'>
+    >
+  ): Promise<UserConfigDoc> {
     await this.db.update(
       { userId },
       {
+        // NeDB doesn't support $setOnInsert; include userId in $set so upsert works.
         $set: {
+          userId,
           ...patch,
         },
-        $setOnInsert: { userId },
       } as any,
-      { upsert: true },
+      { upsert: true }
     );
 
     const doc = await this.getByUserId(userId);
