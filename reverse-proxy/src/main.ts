@@ -24,6 +24,8 @@ console.log(`  Web Target: http://${host}:${webPort}`);
 // 1. API Proxy
 const apiProxy = createProxyMiddleware<Request, Response>({
   logger: logger,
+  // note: we mount at /api, so Express strips the prefix before proxying.
+  // Therefore the target must include /api.
   target: `http://${host}:${apiPort}/api`,
   changeOrigin: true,
   on: {
@@ -38,10 +40,13 @@ const apiProxy = createProxyMiddleware<Request, Response>({
 });
 
 // 2. Socket.io Proxy (Goes to API Port 8788)
+// Note: with ws:true we MUST forward the server's 'upgrade' event to this proxy.
 const wsProxy = createProxyMiddleware({
   pathFilter: (path: string) => {
     return path.startsWith('/socket.io');
   },
+  // note: we mount at /socket.io, so Express strips the prefix before proxying.
+  // Therefore the target must include /socket.io.
   target: `http://${host}:${apiPort}/socket.io`,
   logger: logger,
   changeOrigin: true,
@@ -86,6 +91,9 @@ const server = app.listen(port, host, () => {
   logger.info(`[PushUp Reverse Proxy] Listening on http://${host}:${port}`);
 });
 
-server.on('upgrade', (_req, _socket, _head) => {
+server.on('upgrade', (req, socket, head) => {
   logger.info('WebSocket upgrade');
+  // forward upgrade so socket.io can connect through the reverse proxy
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  (wsProxy as any).upgrade(req, socket, head);
 });

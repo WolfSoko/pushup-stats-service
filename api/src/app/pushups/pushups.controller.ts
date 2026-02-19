@@ -1,9 +1,13 @@
 import { Body, Controller, Delete, Get, NotFoundException, Param, Post, Put } from '@nestjs/common';
+import { PushupLiveGateway } from '../live/pushup-live.gateway';
 import { PushupDbService } from './pushup-db.service';
 
 @Controller('pushups')
 export class PushupsController {
-  constructor(private readonly db: PushupDbService) {}
+  constructor(
+    private readonly db: PushupDbService,
+    private readonly live: PushupLiveGateway,
+  ) {}
 
   @Get()
   async list() {
@@ -19,12 +23,15 @@ export class PushupsController {
 
   @Post()
   async create(@Body() body: { timestamp: string; reps: number; source?: string; type?: string }) {
-    return this.db.create({
+    const created = await this.db.create({
       timestamp: body.timestamp,
       reps: Number(body.reps),
       source: body.source ?? 'api',
       type: body.type ?? 'Standard',
     });
+
+    this.live.emitPushupsChanged();
+    return created;
   }
 
   @Put(':id')
@@ -37,6 +44,8 @@ export class PushupsController {
     });
 
     if (!updated) throw new NotFoundException('Pushup entry not found');
+
+    this.live.emitPushupsChanged();
     return updated;
   }
 
@@ -44,6 +53,8 @@ export class PushupsController {
   async remove(@Param('id') id: string) {
     const removed = await this.db.remove(id);
     if (!removed) throw new NotFoundException('Pushup entry not found');
+
+    this.live.emitPushupsChanged();
     return { ok: true };
   }
 }

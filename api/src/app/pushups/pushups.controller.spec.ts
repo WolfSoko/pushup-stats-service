@@ -1,4 +1,5 @@
 import { NotFoundException } from '@nestjs/common';
+import { PushupLiveGateway } from '../live/pushup-live.gateway';
 import { PushupsController } from './pushups.controller';
 import { PushupDbService } from './pushup-db.service';
 
@@ -11,7 +12,11 @@ describe('PushupsController', () => {
     remove: jest.fn(),
   };
 
-  const controller = new PushupsController(db as PushupDbService);
+  const live: Pick<PushupLiveGateway, 'emitPushupsChanged'> = {
+    emitPushupsChanged: jest.fn(),
+  };
+
+  const controller = new PushupsController(db as PushupDbService, live as PushupLiveGateway);
 
   beforeEach(() => {
     jest.clearAllMocks();

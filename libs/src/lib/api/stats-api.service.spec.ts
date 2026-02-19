@@ -91,10 +91,10 @@ describe('StatsApiService', () => {
     httpMock.verify();
   });
 
-  it('uses server-local base url and respects PORT in SSR', () => {
+  it('uses server-local base url and respects API_PORT in SSR', () => {
     const { service, httpMock } = setup('server');
-    const previousPort = process.env.PORT;
-    process.env.PORT = '9999';
+    const previousPort = process.env.API_PORT;
+    process.env.API_PORT = '9999';
 
     try {
       service.load({ to: '2026-02-10' }).subscribe();
@@ -107,17 +107,17 @@ describe('StatsApiService', () => {
       httpMock.verify();
     } finally {
       if (previousPort === undefined) {
-        delete process.env.PORT;
+        delete process.env.API_PORT;
       } else {
-        process.env.PORT = previousPort;
+        process.env.API_PORT = previousPort;
       }
     }
   });
 
-  it('falls back to port 8787 on server when PORT is missing', () => {
+  it('falls back to port 8787 on server when API_PORT is missing', () => {
     const { service, httpMock } = setup('server');
-    const previousPort = process.env.PORT;
-    delete process.env.PORT;
+    const previousPort = process.env.API_PORT;
+    delete process.env.API_PORT;
 
     try {
       service.load().subscribe();
@@ -128,9 +128,9 @@ describe('StatsApiService', () => {
       httpMock.verify();
     } finally {
       if (previousPort === undefined) {
-        delete process.env.PORT;
+        delete process.env.API_PORT;
       } else {
-        process.env.PORT = previousPort;
+        process.env.API_PORT = previousPort;
       }
     }
   });
