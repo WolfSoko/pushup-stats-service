@@ -1,23 +1,10 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { isPlatformBrowser } from '@angular/common';
-import {
-  Component,
-  computed,
-  inject,
-  PLATFORM_ID,
-  resource,
-} from '@angular/core';
+import { Component, computed, inject, resource } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
-import { Chart, ChartConfiguration } from 'chart.js';
-import { MatrixController, MatrixElement } from 'chartjs-chart-matrix';
-import { BaseChartDirective } from 'ng2-charts';
 import { firstValueFrom } from 'rxjs';
 import { StatsApiService } from '@pu-stats/data-access';
 import { PushupRecord } from '@pu-stats/models';
-
-// Register the matrix controller and element
-Chart.register(MatrixController, MatrixElement);
+import { HeatmapComponent } from '../components/heatmap/heatmap.component';
 
 interface TrendPoint {
   label: string;
@@ -26,7 +13,7 @@ interface TrendPoint {
 
 @Component({
   selector: 'app-analysis-page',
-  imports: [MatCardModule, MatTableModule, BaseChartDirective],
+  imports: [MatCardModule, MatTableModule, HeatmapComponent],
   template: `
     <main class="page-wrap">
       <section class="grid">
@@ -102,17 +89,7 @@ interface TrendPoint {
           <mat-card-title>Heatmap (Wochentag/Uhrzeit)</mat-card-title>
         </mat-card-header>
         <mat-card-content class="heatmap-wrap">
-          @if (isBrowser) {
-            <canvas
-              baseChart
-              [data]="heatmapChartData()"
-              [options]="heatmapChartOptions"
-              [type]="'matrix'"
-            >
-            </canvas>
-          } @else {
-            <div class="ssr-note">Heatmap wird im Browser geladen…</div>
-          }
+          <app-heatmap [entries]="rows()" />
         </mat-card-content>
       </mat-card>
     </main>
@@ -152,11 +129,6 @@ interface TrendPoint {
       width: 100%;
       min-height: 400px;
     }
-    .ssr-note {
-      padding: 12px;
-      color: rgba(230, 237, 249, 0.7);
-      font-size: 0.9rem;
-    }
 
     @media (max-width: 900px) {
       .page-wrap {
@@ -181,7 +153,6 @@ interface TrendPoint {
 })
 export class AnalysisPageComponent {
   private readonly api = inject(StatsApiService);
-  readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
 
   readonly trendColumns = ['label', 'total'];
 
@@ -217,122 +188,6 @@ export class AnalysisPageComponent {
       .slice(-12)
       .map(([label, total]) => ({ label, total }));
   });
-
-  readonly heatmapChartData = computed<any>(() => {
-    const days = ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'];
-    const hours = Array.from({ length: 24 }, (_, i) =>
-      `${24 - i}`.padStart(2, '0'),
-    );
-
-    // Use 'any' to bypass strict MatrixDataPoint type check for now, as chartjs-chart-matrix types are tricky with string axes
-    const dataPoints: { x: string; y: string; v: number }[] = [];
-
-    // Initialize grid with 0
-    for (const day of days) {
-      for (const hour of hours) {
-        dataPoints.push({ x: day, y: hour, v: 0 });
-      }
-    }
-
-    const map = new Map<string, number>();
-    for (const row of this.rows()) {
-      const date = new Date(row.timestamp);
-      // getDay(): 0 = Sun, 1 = Mon...
-      // We need 0 = Mon, 6 = Sun to match 'days' array index
-      const dayIndex = (date.getDay() + 6) % 7;
-      const dayLabel = days[dayIndex];
-      const hourLabel = String(date.getHours()).padStart(2, '0');
-
-      const key = `${dayLabel}-${hourLabel}`;
-      map.set(key, (map.get(key) ?? 0) + row.reps);
-    }
-
-    const data = dataPoints.map((p) => {
-      const key = `${p.x}-${p.y}`;
-      return { x: p.x, y: p.y, v: map.get(key) ?? 0 } as any;
-    });
-
-    return {
-      datasets: [
-        {
-          label: 'Pushups',
-          data: data,
-          backgroundColor: (context: any) => {
-            const raw = context.raw as { v: number };
-            const value = raw.v;
-            if (value === 0) return 'rgba(0,0,0,0.02)';
-            const max = Math.max(...data.map((d) => d.v)) || 1;
-            const alpha = 0.2 + (value / max) * 0.8;
-            return `rgba(69, 137, 255, ${alpha})`;
-          },
-          borderColor: 'rgba(0,0,0,0)',
-          borderWidth: 1,
-          width: ({ chartArea }: { chartArea: { width: number } }) =>
-            (chartArea || { width: 0 }).width / 7 - 1,
-          height: ({ chartArea }: { chartArea: { height: number } }) =>
-            (chartArea || { height: 0 }).height / 24 - 1,
-        },
-      ],
-    };
-  });
-
-  readonly heatmapChartOptions: ChartConfiguration['options'] = {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      legend: { display: false },
-      tooltip: {
-        callbacks: {
-          title: () => '',
-          label: (context: any) => {
-            const v = context.raw as { v: number; x: string; y: string };
-            return `${v.x} ${v.y}:00 - ${v.v} Reps`;
-          },
-        },
-      },
-      datalabels: {
-        display: (ctx: any) => {
-          const raw = ctx.dataset.data?.[ctx.dataIndex] as unknown as {
-            v: number;
-          };
-          return !!raw && typeof raw.v === 'number' && raw.v > 0;
-        },
-        formatter: (value: { v: number }) => (value?.v ? String(value.v) : ''),
-        anchor: 'center',
-        align: 'center',
-        clamp: true,
-        color: (ctx: any) => {
-          const raw = ctx.dataset.data?.[ctx.dataIndex] as unknown as {
-            v: number;
-          };
-          const v = typeof raw?.v === 'number' ? raw.v : 0;
-          return v >= 10 ? 'rgba(10,12,18,0.95)' : 'rgba(230,237,249,0.95)';
-        },
-        font: (ctx: any) => {
-          const raw = ctx.dataset.data?.[ctx.dataIndex] as unknown as {
-            v: number;
-          };
-          const v = typeof raw?.v === 'number' ? raw.v : 0;
-          return { size: v >= 10 ? 11 : 10, weight: 700 };
-        },
-      },
-    } as any,
-    scales: {
-      x: {
-        type: 'category',
-        labels: ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'],
-        position: 'top',
-        grid: { display: false },
-      },
-      y: {
-        type: 'category',
-        labels: Array.from({ length: 24 }, (_, i) => `${i}`.padStart(2, '0')),
-        offset: true,
-        reverse: true,
-        grid: { display: false },
-      },
-    },
-  };
 
   readonly bestSingleEntry = computed<PushupRecord | null>(() => {
     if (!this.rows().length) return null;
@@ -376,7 +231,7 @@ export class AnalysisPageComponent {
 
   private sortedUniqueDates(): string[] {
     return [...new Set(this.rows().map((x) => x.timestamp.slice(0, 10)))].sort(
-      (a, b) => a.localeCompare(b),
+      (a, b) => a.localeCompare(b)
     );
   }
 
@@ -388,19 +243,19 @@ export class AnalysisPageComponent {
 
   private isoWeek(date: Date): number {
     const d = new Date(
-      Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()),
+      Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())
     );
     const day = d.getUTCDay() || 7;
     d.setUTCDate(d.getUTCDate() + 4 - day);
     const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
     return Math.ceil(
-      ((d.getTime() - yearStart.getTime()) / 86_400_000 + 1) / 7,
+      ((d.getTime() - yearStart.getTime()) / 86_400_000 + 1) / 7
     );
   }
 
   private isoWeekYear(date: Date): number {
     const d = new Date(
-      Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()),
+      Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())
     );
     const day = d.getUTCDay() || 7;
     d.setUTCDate(d.getUTCDate() + 4 - day);

@@ -1,19 +1,19 @@
-import { Input, Directive } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 import { AnalysisPageComponent } from './analysis-page.component';
 import { StatsApiService } from '@pu-stats/data-access';
-import { BaseChartDirective } from 'ng2-charts';
+import { HeatmapComponent } from '../components/heatmap/heatmap.component';
 
-@Directive({
-  // eslint-disable-next-line @angular-eslint/directive-selector
-  selector: '[baseChart]',
+// We don't want to render a real Chart.js canvas in unit tests.
+import { Component, input } from '@angular/core';
+
+@Component({
+  selector: 'app-heatmap',
   standalone: true,
+  template: '',
 })
-class MockBaseChartDirective {
-  @Input() data: unknown;
-  @Input() type: unknown;
-  @Input() options: unknown;
+class MockHeatmapComponent {
+  readonly entries = input<any[]>([]);
 }
 
 describe('AnalysisPageComponent', () => {
@@ -38,8 +38,8 @@ describe('AnalysisPageComponent', () => {
       providers: [{ provide: StatsApiService, useValue: apiMock }],
     })
       .overrideComponent(AnalysisPageComponent, {
-        remove: { imports: [BaseChartDirective] },
-        add: { imports: [MockBaseChartDirective] },
+        remove: { imports: [HeatmapComponent] },
+        add: { imports: [MockHeatmapComponent] },
       })
       .compileComponents();
 
@@ -57,65 +57,13 @@ describe('AnalysisPageComponent', () => {
 
   it('computes best values', () => {
     const component = fixture.componentInstance;
-    // best single is 25 (id 5)
     expect(component.bestSingleEntry()?.reps).toBe(25);
-    // best day is also 25 (id 5, date 2026-02-13)
     expect(component.bestDay()?.total).toBe(25);
   });
 
   it('computes streak stats', () => {
     const component = fixture.componentInstance;
-    // Dates: 9, 10, 11, 12, 13 (streak 5), then skip 14, then 15
-    // Longest streak: 5 (9-13)
     expect(component.longestStreak()).toBe(5);
-    // Current streak: 1 (15, gap before)
     expect(component.currentStreak()).toBe(1);
-  });
-
-  it('builds heatmap chart data', () => {
-    const component = fixture.componentInstance;
-    const data = component.heatmapChartData();
-
-    expect(data.datasets.length).toBe(1);
-    expect(data.datasets[0].data.length).toBe(24 * 7); // 24 hours * 7 days
-
-    // Check if data points exist
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const points = data.datasets[0].data as any[];
-    // Find entry for Monday 08:00 (id 1, reps 10)
-    // 2026-02-09 is Monday. 08:00.
-    // x should be 'Mo', y should be '08'
-    const entry = points.find((p) => p.x === 'Mo' && p.y === '08');
-    expect(entry).toBeDefined();
-    expect(entry.v).toBe(10);
-  });
-
-  it('shows datalabels only for non-zero heatmap cells', () => {
-    const component = fixture.componentInstance;
-    const data = component.heatmapChartData();
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const dl = (component.heatmapChartOptions as any).plugins.datalabels;
-
-    const dataset = data.datasets[0];
-
-    // Find one non-zero and one zero cell.
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const points = dataset.data as any[];
-    const nonZeroIndex = points.findIndex((p) => p.v > 0);
-    const zeroIndex = points.findIndex((p) => p.v === 0);
-
-    expect(nonZeroIndex).toBeGreaterThanOrEqual(0);
-    expect(zeroIndex).toBeGreaterThanOrEqual(0);
-
-    const nonZeroCtx = { dataset, dataIndex: nonZeroIndex };
-    const zeroCtx = { dataset, dataIndex: zeroIndex };
-
-    expect(dl.display(nonZeroCtx)).toBe(true);
-    expect(dl.display(zeroCtx)).toBe(false);
-
-    expect(dl.formatter(points[nonZeroIndex])).toBe(
-      String(points[nonZeroIndex].v)
-    );
-    expect(dl.formatter(points[zeroIndex])).toBe('');
   });
 });
