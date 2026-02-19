@@ -1,40 +1,79 @@
+x-logging: &default-logging
+  driver: json-file
+  options:
+    max-size: 10m
+    max-file: '3'
+
+x-defaults: &service-defaults
+  restart: unless-stopped
+  init: true
+  logging: *default-logging
+
 services:
   api:
+    <<: *service-defaults
     build:
       context: .
       dockerfile: Dockerfile
     command: ['node', 'dist/api/main.js']
     environment:
-      NODE_ENV: production
+      NODE_ENV: ${NODE_ENV:-production}
       PORT: '8788'
-      # Persist data in bind mount
+      # Persist data
       PUSHUPS_DB_PATH: /app/data/pushups.db
       USER_CONFIG_DB_PATH: /app/data/user-config.db
       WORKSPACE_DIR: /app/data
       PUSHUPS_CSV_PATH: /app/data/pushups.csv
     volumes:
+      # For production, prefer an absolute path here.
       - ./data:/app/data
     expose:
       - '8788'
+    healthcheck:
+      test:
+        [
+          'CMD',
+          'node',
+          '-e',
+          "require('http').get('http://127.0.0.1:8788/api/health',r=>process.exit(r.statusCode===200?0:1)).on('error',()=>process.exit(1));",
+        ]
+      interval: 10s
+      timeout: 3s
+      retries: 10
+      start_period: 20s
 
   ssr:
+    <<: *service-defaults
     build:
       context: .
       dockerfile: Dockerfile
     command: ['node', 'dist/web/server/server.mjs']
     environment:
-      NODE_ENV: production
+      NODE_ENV: ${NODE_ENV:-production}
       PORT: '8789'
     expose:
       - '8789'
+    healthcheck:
+      test:
+        [
+          'CMD',
+          'node',
+          '-e',
+          "require('http').get('http://127.0.0.1:8789/de',r=>process.exit((r.statusCode||0)<500?0:1)).on('error',()=>process.exit(1));",
+        ]
+      interval: 10s
+      timeout: 3s
+      retries: 10
+      start_period: 20s
 
   proxy:
+    <<: *service-defaults
     build:
       context: .
       dockerfile: Dockerfile
     command: ['node', 'dist/reverse-proxy/main.js']
     environment:
-      NODE_ENV: production
+      NODE_ENV: ${NODE_ENV:-production}
       HOST: 0.0.0.0
       PORT: '8787'
       API_HOST: api
@@ -42,9 +81,22 @@ services:
       WEB_HOST: ssr
       WEB_PORT: '8789'
     ports:
-      # Use 18787 on the host by default to avoid clashing with an existing local/systemd instance.
-      # If you want the classic port, change this to "8787:8787" (and stop anything else using 8787).
-      - '18787:8787'
+      # Default host port avoids clashing with an existing local instance on 8787.
+      - '${PROXY_HOST_PORT:-18787}:8787'
     depends_on:
-      - api
-      - ssr
+      api:
+        condition: service_healthy
+      ssr:
+        condition: service_healthy
+    healthcheck:
+      test:
+        [
+          'CMD',
+          'node',
+          '-e',
+          "require('http').get('http://127.0.0.1:8787/api/health',r=>process.exit(r.statusCode===200?0:1)).on('error',()=>process.exit(1));",
+        ]
+      interval: 10s
+      timeout: 3s
+      retries: 10
+      start_period: 20s

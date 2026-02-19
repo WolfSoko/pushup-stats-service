@@ -11,16 +11,31 @@ This repo runs three Node servers:
 ```bash
 # from repo root
 mkdir -p data
-docker compose up --build
+cp .env.example .env
+
+docker compose up -d --build
 ```
 
-Then open:
+Then open (default):
 
 - http://127.0.0.1:18787
+
+If you want to bind to 8787 on the host:
+
+```bash
+# edit .env
+PROXY_HOST_PORT=8787
+
+# stop anything else using 8787 first
+docker compose up -d
+```
 
 ## Data persistence
 
 `./data` is mounted into the API container at `/app/data` and stores:
+
+- Keep this folder backed up (this is the durable state).
+- For production, consider switching the bind mount to an absolute path.
 
 - `pushups.db`
 - `user-config.db`
