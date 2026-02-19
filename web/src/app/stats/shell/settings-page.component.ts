@@ -28,46 +28,56 @@ import { UserContextService } from '../../user-context.service';
     <main class="page-wrap">
       <mat-card>
         <mat-card-header>
-          <mat-card-title>Einstellungen</mat-card-title>
-          <mat-card-subtitle>User-Profil & Tagesziel</mat-card-subtitle>
+          <mat-card-title i18n="@@settingsTitle">Einstellungen</mat-card-title>
+          <mat-card-subtitle i18n="@@settingsSubtitle"
+            >User-Profil & Tagesziel</mat-card-subtitle
+          >
         </mat-card-header>
 
         <mat-card-content>
           <section class="grid">
             <mat-form-field appearance="outline">
-              <mat-label>User ID</mat-label>
+              <mat-label i18n="@@userIdLabel">User ID</mat-label>
               <input
                 matInput
                 [value]="userIdDraft()"
                 (input)="userIdDraft.set(asValue($event))"
                 placeholder="z.B. wolf"
+                i18n-placeholder="@@userIdPlaceholder"
               />
-              <mat-hint
-                >Wird für Multi-User-Zuordnung genutzt (Auth kommt
-                später).</mat-hint
-              >
+              <mat-hint i18n="@@userIdHint">
+                Wird für Multi-User-Zuordnung genutzt (Auth kommt später).
+              </mat-hint>
             </mat-form-field>
 
             <div class="row">
-              <button type="button" mat-stroked-button (click)="applyUserId()">
+              <button
+                type="button"
+                mat-stroked-button
+                (click)="applyUserId()"
+                i18n="@@switchUser"
+              >
                 <mat-icon>switch_account</mat-icon>
                 User wechseln
               </button>
-              <span class="pill">Aktiv: {{ activeUserId() }}</span>
+              <span class="pill" i18n="@@activeUser"
+                >Aktiv: {{ activeUserId() }}</span
+              >
             </div>
 
             <mat-form-field appearance="outline">
-              <mat-label>Anzeigename</mat-label>
+              <mat-label i18n="@@displayNameLabel">Anzeigename</mat-label>
               <input
                 matInput
                 [value]="displayNameDraft()"
                 (input)="displayNameDraft.set(asValue($event))"
                 placeholder="Wolf"
+                i18n-placeholder="@@displayNamePlaceholder"
               />
             </mat-form-field>
 
             <mat-form-field appearance="outline">
-              <mat-label>Tagesziel (Reps)</mat-label>
+              <mat-label i18n="@@dailyGoalLabel">Tagesziel (Reps)</mat-label>
               <input
                 matInput
                 type="number"
@@ -75,6 +85,7 @@ import { UserContextService } from '../../user-context.service';
                 [value]="dailyGoalDraft()"
                 (input)="dailyGoalDraft.set(asNumber($event))"
                 placeholder="100"
+                i18n-placeholder="@@dailyGoalPlaceholder"
               />
             </mat-form-field>
           </section>
@@ -89,15 +100,16 @@ import { UserContextService } from '../../user-context.service';
               mat-flat-button
               [disabled]="saving()"
               (click)="save()"
+              i18n="@@saveSettings"
             >
               <mat-icon>save</mat-icon>
               Speichern
             </button>
             @if (saving()) {
-              <span class="muted">Speichert…</span>
+              <span class="muted" i18n="@@saving">Speichert…</span>
             }
             @if (saved()) {
-              <span class="muted">Gespeichert.</span>
+              <span class="muted" i18n="@@saved">Gespeichert.</span>
             }
           </div>
         </mat-card-content>
@@ -202,7 +214,7 @@ export class SettingsPageComponent {
         this.api.updateConfig(userId, {
           displayName: this.displayNameDraft().trim(),
           dailyGoal,
-        }),
+        })
       );
       this.saved.set(true);
       this.configResource.reload();

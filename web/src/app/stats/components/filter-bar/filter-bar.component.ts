@@ -26,25 +26,53 @@ type RangeMode = 'day' | 'week' | 'month';
   template: `
     <section class="controls">
       <div class="heading">
-        <h2>Zeitraum auswählen</h2>
+        <h2 i18n="@@selectRangeTitle">Zeitraum auswählen</h2>
       </div>
 
-      <section class="quick-range" aria-label="Schnellwahl Zeitraum">
-        <mat-button-toggle-group [value]="mode()" (valueChange)="setMode($event)">
-          <mat-button-toggle value="day">Tag</mat-button-toggle>
-          <mat-button-toggle value="week">Woche</mat-button-toggle>
-          <mat-button-toggle value="month">Monat</mat-button-toggle>
+      <section
+        class="quick-range"
+        aria-label="Schnellwahl Zeitraum"
+        i18n-aria-label="@@quickRangeAria"
+      >
+        <mat-button-toggle-group
+          [value]="mode()"
+          (valueChange)="setMode($event)"
+        >
+          <mat-button-toggle value="day" i18n="@@rangeModeDay"
+            >Tag</mat-button-toggle
+          >
+          <mat-button-toggle value="week" i18n="@@rangeModeWeek"
+            >Woche</mat-button-toggle
+          >
+          <mat-button-toggle value="month" i18n="@@rangeModeMonth"
+            >Monat</mat-button-toggle
+          >
         </mat-button-toggle-group>
 
         <div class="step-actions">
-          <button type="button" mat-stroked-button (click)="shiftRange(-1)">
+          <button
+            type="button"
+            mat-stroked-button
+            (click)="shiftRange(-1)"
+            i18n="@@rangeBack"
+          >
             <mat-icon>chevron_left</mat-icon>
             Zurück
           </button>
-          <button type="button" mat-stroked-button (click)="jumpToToday()">
+          <button
+            type="button"
+            mat-stroked-button
+            (click)="jumpToToday()"
+            i18n="@@rangeToday"
+          >
             Heute
           </button>
-          <button type="button" mat-stroked-button (click)="shiftRange(1)">
+          <button
+            type="button"
+            mat-stroked-button
+            (click)="shiftRange(1)"
+            i18n="@@rangeForward"
+          >
             Vor
             <mat-icon>chevron_right</mat-icon>
           </button>
@@ -52,12 +80,25 @@ type RangeMode = 'day' | 'week' | 'month';
       </section>
 
       <mat-form-field appearance="outline">
-        <mat-label>Zeitraum</mat-label>
+        <mat-label i18n="@@rangeLabel">Zeitraum</mat-label>
         <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
-          <input matStartDate formControlName="start" placeholder="Von" />
-          <input matEndDate formControlName="end" placeholder="Bis" />
+          <input
+            matStartDate
+            formControlName="start"
+            placeholder="Von"
+            i18n-placeholder="@@rangeFrom"
+          />
+          <input
+            matEndDate
+            formControlName="end"
+            placeholder="Bis"
+            i18n-placeholder="@@rangeTo"
+          />
         </mat-date-range-input>
-        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="picker"
+        ></mat-datepicker-toggle>
         <mat-date-range-picker #picker></mat-date-range-picker>
       </mat-form-field>
     </section>
@@ -80,13 +121,17 @@ export class FilterBarComponent implements OnChanges {
   });
 
   constructor() {
-    this.range.controls.start.valueChanges.pipe(takeUntilDestroyed()).subscribe((value) => {
-      this.fromChange.emit(this.toIsoDate(value));
-    });
+    this.range.controls.start.valueChanges
+      .pipe(takeUntilDestroyed())
+      .subscribe((value) => {
+        this.fromChange.emit(this.toIsoDate(value));
+      });
 
-    this.range.controls.end.valueChanges.pipe(takeUntilDestroyed()).subscribe((value) => {
-      this.toChange.emit(this.toIsoDate(value));
-    });
+    this.range.controls.end.valueChanges
+      .pipe(takeUntilDestroyed())
+      .subscribe((value) => {
+        this.toChange.emit(this.toIsoDate(value));
+      });
   }
 
   ngOnChanges(): void {
@@ -98,7 +143,7 @@ export class FilterBarComponent implements OnChanges {
         start,
         end,
       },
-      { emitEvent: false },
+      { emitEvent: false }
     );
 
     // Keep toggle state in sync when range is changed from outside (e.g. initial URL params).
@@ -151,14 +196,20 @@ export class FilterBarComponent implements OnChanges {
     } else {
       nextStart.setMonth(nextStart.getMonth() + direction);
       nextEnd.setMonth(nextEnd.getMonth() + direction);
-      nextEnd.setDate(new Date(nextEnd.getFullYear(), nextEnd.getMonth() + 1, 0).getDate());
+      nextEnd.setDate(
+        new Date(nextEnd.getFullYear(), nextEnd.getMonth() + 1, 0).getDate()
+      );
     }
 
     this.range.patchValue({ start: nextStart, end: nextEnd });
   }
 
   private applyModeRange(anchorDate?: Date): void {
-    const anchor = anchorDate ?? this.range.controls.end.value ?? this.range.controls.start.value ?? new Date();
+    const anchor =
+      anchorDate ??
+      this.range.controls.end.value ??
+      this.range.controls.start.value ??
+      new Date();
 
     if (this.mode() === 'day') {
       const day = this.startOfDay(anchor);
@@ -201,7 +252,10 @@ export class FilterBarComponent implements OnChanges {
 
     const isMonthStart = s.getDate() === 1;
     const lastDay = new Date(s.getFullYear(), s.getMonth() + 1, 0).getDate();
-    const isMonthEnd = e.getFullYear() === s.getFullYear() && e.getMonth() === s.getMonth() && e.getDate() === lastDay;
+    const isMonthEnd =
+      e.getFullYear() === s.getFullYear() &&
+      e.getMonth() === s.getMonth() &&
+      e.getDate() === lastDay;
     if (isMonthStart && isMonthEnd) return 'month';
 
     return 'week';
