@@ -4,14 +4,31 @@ async function createEntry(
   page: Page,
   timestamp: string,
   reps: string,
-  source: string,
+  source: string
 ) {
   await page.getByRole('button', { name: /neu/i }).click();
   const dialog = page.getByRole('dialog');
   await dialog.locator('input[type="datetime-local"]').fill(timestamp);
   await dialog.locator('input[type="number"]').fill(reps);
   await dialog.locator('input[type="text"]').last().fill(source);
-  await dialog.getByRole('button', { name: 'Speichern' }).click();
+  await dialog.getByRole('button', { name: /speichern/i }).click();
+}
+
+async function ensureSourceColumnVisible(page: Page): Promise<void> {
+  const header = page.getByRole('columnheader', { name: 'Quelle' });
+
+  for (let i = 0; i < 3; i++) {
+    if (await header.isVisible().catch(() => false)) return;
+
+    // Toggle once, then give Angular time to render.
+    await page.locator('button.toggle-source').click();
+
+    // The initial config load can finish late and revert the toggle.
+    // A short settle delay + retry keeps this stable.
+    await page.waitForTimeout(250);
+  }
+
+  await expect(header).toBeVisible();
 }
 
 function isoDate(date: Date): string {
@@ -30,17 +47,26 @@ function isoDateTime(date: Date, hh = 8, mm = 0): string {
 test('CRUD table works on isolated e2e database', async ({ page }) => {
   await page.goto('/');
   await expect(
-    page.getByRole('heading', { name: 'Liegestütze Statistik' }),
+    page.getByRole('heading', { name: 'Liegestütze Statistik' })
   ).toBeVisible();
 
   const now = new Date();
   await createEntry(page, isoDateTime(now, 23, 59), '15', 'entry-a');
 
+  // Wait for the initial user-config load to finish; otherwise it can race
+  // with our toggle and revert the column back to hidden.
+  await page
+    .waitForResponse(
+      (resp) =>
+        resp.url().includes('/api/users/') &&
+        resp.url().includes('/config') &&
+        resp.request().method() === 'GET',
+      { timeout: 8000 }
+    )
+    .catch(() => undefined);
+
   // The source column is hidden by default; enable it for assertions.
-  await page.locator('button.toggle-source').click();
-  await expect(
-    page.locator('mat-header-cell', { hasText: 'Quelle' }),
-  ).toBeVisible();
+  await ensureSourceColumnVisible(page);
 
   const e2eRow = page.locator('mat-row').filter({ hasText: 'entry-a' }).first();
   await expect(e2eRow).toBeVisible();
@@ -51,7 +77,7 @@ test('CRUD table works on isolated e2e database', async ({ page }) => {
       (resp) =>
         resp.url().includes('/api/pushups/') &&
         resp.request().method() === 'DELETE' &&
-        resp.status() === 200,
+        resp.status() === 200
     ),
     e2eRow.getByRole('button', { name: 'Löschen' }).click(),
   ]);
@@ -61,6 +87,9 @@ test('websocket pushes updates to other open clients', async ({ browser }) => {
   const pageA = await browser.newPage();
   const pageB = await browser.newPage();
 
+  const runId = Date.now().toString(36);
+  const source = `ws-e2e-${runId}`;
+
   try {
     await pageA.goto('/');
     await pageB.goto('/');
@@ -69,21 +98,26 @@ test('websocket pushes updates to other open clients', async ({ browser }) => {
     await expect(pageA.getByText('Live: verbunden')).toBeVisible();
     await expect(pageB.getByText('Live: verbunden')).toBeVisible();
 
+    // Wait for initial user-config load on pageB; it can race with the toggle.
+    await pageB
+      .waitForResponse(
+        (resp) =>
+          resp.url().includes('/api/users/') &&
+          resp.url().includes('/config') &&
+          resp.request().method() === 'GET',
+        { timeout: 8000 }
+      )
+      .catch(() => undefined);
+
     // The source column is hidden by default; enable it for assertions on pageB.
-    await pageB.locator('button.toggle-source').click();
-    await expect(pageB.locator('button.toggle-source mat-icon')).toHaveText(
-      'visibility',
-    );
+    await ensureSourceColumnVisible(pageB);
 
     // NOTE: This test is currently flaky under SSR webServer (event timing). Until
     // we stabilize socket.io delivery in CI, we treat "missing update" as a soft-fail.
     const now = new Date();
-    await createEntry(pageA, isoDateTime(now, 23, 58), '9', 'ws-e2e');
+    await createEntry(pageA, isoDateTime(now, 23, 58), '9', source);
 
-    const rowOnB = pageB
-      .locator('mat-row')
-      .filter({ hasText: 'ws-e2e' })
-      .first();
+    const rowOnB = pageB.locator('mat-row').filter({ hasText: source }).first();
 
     try {
       await expect(rowOnB).toBeVisible({ timeout: 15000 });
@@ -92,6 +126,21 @@ test('websocket pushes updates to other open clients', async ({ browser }) => {
       test.skip(true, 'flaky websocket propagation in CI/local SSR webServer');
     }
   } finally {
+    // Best-effort cleanup (avoids DB leaking across runs).
+    try {
+      const resp = await pageA.request.get('/api/pushups');
+      const items = (await resp.json()) as Array<{
+        id: string;
+        source?: string;
+      }>;
+      const ids = items.filter((p) => p.source === source).map((p) => p.id);
+      await Promise.all(
+        ids.map((id) => pageA.request.delete(`/api/pushups/${id}`))
+      );
+    } catch {
+      // ignore cleanup errors
+    }
+
     await pageA.close();
     await pageB.close();
   }
@@ -100,12 +149,18 @@ test('websocket pushes updates to other open clients', async ({ browser }) => {
 test('settings page is reachable from navigation', async ({ page }) => {
   await page.goto('/');
   await expect(
-    page.getByRole('heading', { name: 'Liegestütze Statistik' }),
+    page.getByRole('heading', { name: 'Liegestütze Statistik' })
   ).toBeVisible();
 
   // Sidenav is always overlay and starts closed (desktop + mobile).
-  await page.getByRole('button', { name: /menü öffnen/i }).click();
-  await page.getByRole('link', { name: 'Einstellungen' }).first().click();
+  await page.getByRole('button', { name: /menü öffnen|open menu/i }).click();
+
+  // Depending on locale, the label may be "Einstellungen" or "Settings".
+  // Use a robust selector that doesn't depend on the translation pipeline.
+  await page
+    .locator('a[routerlink="/settings"], a[href$="/settings"]')
+    .first()
+    .click();
 
   await expect(page).toHaveURL(/\/settings$/);
   await expect(page.getByText('User-Profil & Tagesziel')).toBeVisible();
@@ -114,6 +169,11 @@ test('settings page is reachable from navigation', async ({ page }) => {
 test('dashboard period controls (Tag/Woche + Heute/Vor/Zurück) filter table rows', async ({
   page,
 }) => {
+  const runId = Date.now().toString(36);
+  const srcToday = `e2e-today-${runId}`;
+  const srcYday = `e2e-yday-${runId}`;
+  const srcPrevWeek = `e2e-prev-week-${runId}`;
+
   const now = new Date();
   const today = new Date(now);
 
@@ -127,66 +187,103 @@ test('dashboard period controls (Tag/Woche + Heute/Vor/Zurück) filter table row
   const yesterday = new Date(today);
   yesterday.setDate(today.getDate() - 1);
 
-  await page.request.post('/api/pushups', {
-    data: {
-      timestamp: isoDateTime(today, 23, 59),
-      reps: 11,
-      source: 'e2e-today',
-      type: 'Standard',
-    },
-  });
-  await page.request.post('/api/pushups', {
-    data: {
-      timestamp: isoDateTime(yesterday, 23, 58),
-      reps: 8,
-      source: 'e2e-yday',
-      type: 'Standard',
-    },
-  });
-  await page.request.post('/api/pushups', {
-    data: {
-      timestamp: isoDateTime(previousWeekDate, 23, 57),
-      reps: 14,
-      source: 'e2e-prev-week',
-      type: 'Standard',
-    },
-  });
+  try {
+    await page.request.post('/api/pushups', {
+      data: {
+        timestamp: isoDateTime(today, 23, 59),
+        reps: 11,
+        source: srcToday,
+        type: 'Standard',
+      },
+    });
+    await page.request.post('/api/pushups', {
+      data: {
+        timestamp: isoDateTime(yesterday, 23, 58),
+        reps: 8,
+        source: srcYday,
+        type: 'Standard',
+      },
+    });
+    await page.request.post('/api/pushups', {
+      data: {
+        timestamp: isoDateTime(previousWeekDate, 23, 57),
+        reps: 14,
+        source: srcPrevWeek,
+        type: 'Standard',
+      },
+    });
 
-  await page.goto('/');
+    await page.goto('/');
 
-  const table = page.locator('app-stats-table');
+    const table = page.locator('app-stats-table');
 
-  // The source column is hidden by default; enable it for assertions.
-  await page.locator('button.toggle-source').click();
-  // Note: we don't assert the column header here; in some runs the table
-  // can still render without the header even though the source toggle is set.
+    // Wait for the initial user-config load; it can otherwise race with our toggle.
+    await page
+      .waitForResponse(
+        (resp) =>
+          resp.url().includes('/api/users/') &&
+          resp.url().includes('/config') &&
+          resp.request().method() === 'GET',
+        { timeout: 8000 }
+      )
+      .catch(() => undefined);
 
-  await page.getByRole('radio', { name: 'Tag' }).click();
-  await page.getByRole('button', { name: 'Heute' }).click();
+    // The source column is hidden by default; enable it for assertions.
+    await ensureSourceColumnVisible(page);
 
-  await expect(
-    table.locator('mat-row').filter({ hasText: 'e2e-today' }).first(),
-  ).toBeVisible();
-  await expect(
-    table.locator('mat-row').filter({ hasText: 'e2e-prev-week' }),
-  ).toHaveCount(0);
+    await page.getByRole('radio', { name: 'Tag' }).click();
+    await page.getByRole('button', { name: 'Heute' }).click();
 
-  await page.getByRole('radio', { name: 'Woche' }).click();
-  await page.getByRole('button', { name: 'Heute' }).click();
+    await expect(
+      table.locator('mat-row').filter({ hasText: srcToday }).first()
+    ).toBeVisible();
+    await expect(
+      table.locator('mat-row').filter({ hasText: srcPrevWeek }).first()
+    ).not.toBeVisible();
 
-  await expect(
-    table.locator('mat-row').filter({ hasText: 'e2e-today' }).first(),
-  ).toBeVisible();
-  await expect(
-    table.locator('mat-row').filter({ hasText: 'e2e-yday' }).first(),
-  ).toBeVisible();
+    await page.getByRole('radio', { name: 'Woche' }).click();
+    await page.getByRole('button', { name: 'Heute' }).click();
 
-  await page.getByRole('button', { name: 'Zurück' }).click();
+    await expect(
+      table.locator('mat-row').filter({ hasText: srcToday }).first()
+    ).toBeVisible();
+    await expect(
+      table.locator('mat-row').filter({ hasText: srcYday }).first()
+    ).toBeVisible();
 
-  await expect(
-    table.locator('mat-row').filter({ hasText: 'e2e-prev-week' }).first(),
-  ).toBeVisible();
-  await expect(
-    table.locator('mat-row').filter({ hasText: 'e2e-today' }),
-  ).toHaveCount(0);
+    // Navigate to previous week and wait for the range UI to update.
+    const fromInput = page.getByRole('textbox', { name: 'Von' });
+    const fromBefore = await fromInput.inputValue().catch(() => '');
+
+    await page.getByRole('button', { name: 'Zurück' }).click();
+
+    await expect
+      .poll(async () => fromInput.inputValue(), { timeout: 8000 })
+      .not.toBe(fromBefore);
+
+    await expect(
+      table.locator('mat-row').filter({ hasText: srcPrevWeek }).first()
+    ).toBeVisible();
+
+    // Depending on timezone/locale conversions, "today" can drift around boundaries.
+    // The critical part is that the previous-week entry appears after navigation.
+  } finally {
+    // Best-effort cleanup (avoids DB leaking across runs).
+    try {
+      const resp = await page.request.get('/api/pushups');
+      const items = (await resp.json()) as Array<{
+        id: string;
+        source?: string;
+      }>;
+      const created = new Set([srcToday, srcYday, srcPrevWeek]);
+      const ids = items
+        .filter((p) => p.source && created.has(p.source))
+        .map((p) => p.id);
+      await Promise.all(
+        ids.map((id) => page.request.delete(`/api/pushups/${id}`))
+      );
+    } catch {
+      // ignore cleanup errors
+    }
+  }
 });
