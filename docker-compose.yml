@@ -1,0 +1,50 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: ['node', 'dist/api/main.js']
+    environment:
+      NODE_ENV: production
+      PORT: '8788'
+      # Persist data in bind mount
+      PUSHUPS_DB_PATH: /app/data/pushups.db
+      USER_CONFIG_DB_PATH: /app/data/user-config.db
+      WORKSPACE_DIR: /app/data
+      PUSHUPS_CSV_PATH: /app/data/pushups.csv
+    volumes:
+      - ./data:/app/data
+    expose:
+      - '8788'
+
+  ssr:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: ['node', 'dist/web/server/server.mjs']
+    environment:
+      NODE_ENV: production
+      PORT: '8789'
+    expose:
+      - '8789'
+
+  proxy:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: ['node', 'dist/reverse-proxy/main.js']
+    environment:
+      NODE_ENV: production
+      HOST: 0.0.0.0
+      PORT: '8787'
+      API_HOST: api
+      API_PORT: '8788'
+      WEB_HOST: ssr
+      WEB_PORT: '8789'
+    ports:
+      # Use 18787 on the host by default to avoid clashing with an existing local/systemd instance.
+      # If you want the classic port, change this to "8787:8787" (and stop anything else using 8787).
+      - '18787:8787'
+    depends_on:
+      - api
+      - ssr

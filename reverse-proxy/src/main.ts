@@ -8,8 +8,13 @@ const logger = pino({
   level: 'warn',
 });
 
+// Host to bind the reverse-proxy listener to (0.0.0.0 inside Docker).
 const host = process.env.HOST ?? '127.0.0.1';
 const port = process.env.PORT ? Number(process.env.PORT) : 8787;
+
+// Targets (can be service names in docker-compose).
+const apiHost = process.env.API_HOST ?? '127.0.0.1';
+const webHost = process.env.WEB_HOST ?? '127.0.0.1';
 const apiPort = process.env.API_PORT ? Number(process.env.API_PORT) : 8788;
 const webPort = process.env.WEB_PORT ? Number(process.env.WEB_PORT) : 8789;
 
@@ -18,15 +23,15 @@ app.use(pinoHttp({ logger }));
 
 console.log(`[PushUp Reverse Proxy] Configuration:`);
 console.log(`  Proxy Port: ${port}`);
-console.log(`  API Target: http://${host}:${apiPort}`);
-console.log(`  Web Target: http://${host}:${webPort}`);
+console.log(`  API Target: http://${apiHost}:${apiPort}`);
+console.log(`  Web Target: http://${webHost}:${webPort}`);
 
 // 1. API Proxy
 const apiProxy = createProxyMiddleware<Request, Response>({
   logger: logger,
   // note: we mount at /api, so Express strips the prefix before proxying.
   // Therefore the target must include /api.
-  target: `http://${host}:${apiPort}/api`,
+  target: `http://${apiHost}:${apiPort}/api`,
   changeOrigin: true,
   on: {
     error: (err) => {
@@ -47,7 +52,7 @@ const wsProxy = createProxyMiddleware({
   },
   // note: we mount at /socket.io, so Express strips the prefix before proxying.
   // Therefore the target must include /socket.io.
-  target: `http://${host}:${apiPort}/socket.io`,
+  target: `http://${apiHost}:${apiPort}/socket.io`,
   logger: logger,
   changeOrigin: true,
   autoRewrite: true,
@@ -69,7 +74,7 @@ const webProxy = createProxyMiddleware<Request, Response>({
     return !path.startsWith('/socket.io') && !path.startsWith('/api');
   },
   logger: logger,
-  target: `http://${host}:${webPort}`,
+  target: `http://${webHost}:${webPort}`,
   changeOrigin: true,
   autoRewrite: true,
   on: {
