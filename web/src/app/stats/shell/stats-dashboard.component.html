@@ -1,15 +1,33 @@
 <main class="container">
   <header class="page-header">
-    <img class="brand-logo" src="assets/pushup-logo.svg" alt="Pushup Tracker Logo" />
+    <img
+      class="brand-logo"
+      src="assets/pushup-logo.svg"
+      alt="Pushup Tracker Logo"
+      i18n-alt="@@brandLogoAlt"
+    />
     <div>
-      <p class="eyebrow">Pushup Stats</p>
-      <h1>Liegestütze Statistik</h1>
-      <p class="subtitle">Behalte Trainingsvolumen und Verlauf im Blick – klar, schnell und mobil optimiert.</p>
-      <p class="live-state" [class.offline]="!liveConnected()">Live: {{ liveConnected() ? 'verbunden' : 'getrennt' }}</p>
+      <p class="eyebrow" i18n="@@eyebrowTitle">Pushup Stats</p>
+      <h1 i18n="@@dashboardTitle">Liegestütze Statistik</h1>
+      <p class="subtitle" i18n="@@dashboardSubtitle">
+        Behalte Trainingsvolumen und Verlauf im Blick – klar, schnell und mobil
+        optimiert.
+      </p>
+      <p
+        class="live-state"
+        [class.offline]="!liveConnected()"
+        i18n="@@liveStateLabel"
+      >
+        Live: {{ liveConnected() ? 'verbunden' : 'getrennt' }}
+      </p>
     </div>
   </header>
 
-  <section class="today-focus" aria-label="Tagesfokus">
+  <section
+    class="today-focus"
+    aria-label="Tagesfokus"
+    i18n-aria-label="@@todayFocusAria"
+  >
     <mat-card>
       <mat-card-header>
         <mat-card-title>{{ periodTitle() }}</mat-card-title>
@@ -21,51 +39,94 @@
 
     <mat-card>
       <mat-card-header>
-        <mat-card-title>Zielfortschritt</mat-card-title>
+        <mat-card-title i18n="@@goalProgressTitle"
+          >Zielfortschritt</mat-card-title
+        >
       </mat-card-header>
       <mat-card-content>
         <p>{{ periodTotal() }} / {{ periodGoal() }}</p>
-        <mat-progress-bar mode="determinate" [value]="goalProgressPercent()"></mat-progress-bar>
+        <mat-progress-bar
+          mode="determinate"
+          [value]="goalProgressPercent()"
+        ></mat-progress-bar>
       </mat-card-content>
     </mat-card>
 
     <mat-card>
       <mat-card-header>
-        <mat-card-title>Letzter Eintrag</mat-card-title>
+        <mat-card-title i18n="@@lastEntryTitle">Letzter Eintrag</mat-card-title>
       </mat-card-header>
       <mat-card-content>
         @if (lastEntry(); as latest) {
           <p>{{ latest.reps }} Reps · {{ latest.type || 'Standard' }}</p>
           <small>{{ latest.timestamp | date: 'dd.MM.yyyy, HH:mm' }}</small>
         } @else {
-          <p>Noch kein Eintrag für diesen Zeitraum.</p>
+          <p i18n="@@noEntryInPeriod">Noch kein Eintrag für diesen Zeitraum.</p>
         }
       </mat-card-content>
     </mat-card>
   </section>
 
-  <section class="mini-badges" aria-label="All-Time Kurzübersicht">
-    <span class="badge"><small>All-Time Gesamt</small><b>{{ allTimeTotal() }}</b></span>
-    <span class="badge"><small>All-Time Tage</small><b>{{ allTimeDays() }}</b></span>
-    <span class="badge"><small>All-Time Einträge</small><b>{{ allTimeEntries() }}</b></span>
-    <span class="badge"><small>All-Time Ø/Tag</small><b>{{ allTimeAvg() }}</b></span>
+  <section
+    class="mini-badges"
+    aria-label="All-Time Kurzübersicht"
+    i18n-aria-label="@@allTimeSummaryAria"
+  >
+    <span class="badge"
+      ><small i18n="@@allTimeTotal">All-Time Gesamt</small
+      ><b>{{ allTimeTotal() }}</b></span
+    >
+    <span class="badge"
+      ><small i18n="@@allTimeDays">All-Time Tage</small
+      ><b>{{ allTimeDays() }}</b></span
+    >
+    <span class="badge"
+      ><small i18n="@@allTimeEntries">All-Time Einträge</small
+      ><b>{{ allTimeEntries() }}</b></span
+    >
+    <span class="badge"
+      ><small i18n="@@allTimeAvg">All-Time Ø/Tag</small
+      ><b>{{ allTimeAvg() }}</b></span
+    >
   </section>
 
   <mat-card class="quick-actions">
     <mat-card-header>
-      <mat-card-title>Schnellaktionen</mat-card-title>
-      <mat-card-subtitle>Schnell eintragen ohne Dialog</mat-card-subtitle>
+      <mat-card-title i18n="@@quickActionsTitle"
+        >Schnellaktionen</mat-card-title
+      >
+      <mat-card-subtitle i18n="@@quickActionsSubtitle"
+        >Schnell eintragen ohne Dialog</mat-card-subtitle
+      >
     </mat-card-header>
     <mat-card-content>
-      <button type="button" mat-flat-button class="quick-btn quick-btn--ten" (click)="addQuickEntry(10)">
+      <button
+        type="button"
+        mat-flat-button
+        class="quick-btn quick-btn--ten"
+        (click)="addQuickEntry(10)"
+        i18n="@@quickAdd10"
+      >
         <mat-icon>bolt</mat-icon>
         +10 Reps
       </button>
-      <button type="button" mat-flat-button class="quick-btn quick-btn--twenty" (click)="addQuickEntry(20)">
+      <button
+        type="button"
+        mat-flat-button
+        class="quick-btn quick-btn--twenty"
+        (click)="addQuickEntry(20)"
+        i18n="@@quickAdd20"
+      >
         <mat-icon>flash_on</mat-icon>
         +20 Reps
       </button>
-      <button type="button" mat-flat-button class="quick-btn quick-btn--thirty" (click)="addQuickEntry(30)">
+      <button
+        type="button"
+        mat-flat-button
+        class="quick-btn quick-btn--thirty"
+        (click)="addQuickEntry(30)"
+        i18n="@@quickAdd30"
+      >
         <mat-icon>whatshot</mat-icon>
         +30 Reps
       </button>
@@ -89,15 +150,25 @@
   }
 
   @if (loading()) {
-    <section class="status-banner loading" aria-live="polite">Lade Statistikdaten…</section>
+    <section
+      class="status-banner loading"
+      aria-live="polite"
+      i18n="@@loadingStats"
+    >
+      Lade Statistikdaten…
+    </section>
   }
 
   <section class="mid-grid">
-    <app-stats-chart [series]="rows()" [granularity]="granularity()" [rangeMode]="rangeMode()" />
+    <app-stats-chart
+      [series]="rows()"
+      [granularity]="granularity()"
+      [rangeMode]="rangeMode()"
+    />
   </section>
 
   <section class="latest-entries">
-    <h2>Einträge im gewählten Zeitraum</h2>
+    <h2 i18n="@@entriesInSelectedRange">Einträge im gewählten Zeitraum</h2>
     <app-stats-table
       [entries]="entryRows()"
       [busyAction]="busyAction()"

@@ -58,14 +58,17 @@ import { firstValueFrom } from 'rxjs';
   template: `
     <mat-card class="table-card">
       <mat-card-header>
-        <mat-card-title>Einträge</mat-card-title>
-        <mat-card-subtitle>{{ entries().length }} Einträge</mat-card-subtitle>
+        <mat-card-title i18n="@@entriesTitle">Einträge</mat-card-title>
+        <mat-card-subtitle i18n="@@entriesCount"
+          >{{ entries().length }} Einträge</mat-card-subtitle
+        >
         <span class="header-spacer"></span>
         <button
           type="button"
           mat-button
           class="toggle-source"
           (click)="toggleSourceColumn()"
+          i18n="@@sourceColumnToggle"
         >
           <mat-icon>{{
             showSourceColumn() ? 'visibility' : 'visibility_off'
@@ -91,7 +94,9 @@ import { firstValueFrom } from 'rxjs';
         }
 
         @if (!entries().length) {
-          <p class="empty">Keine Einträge im gewählten Zeitraum.</p>
+          <p class="empty" i18n="@@noEntriesInSelectedRange">
+            Keine Einträge im gewählten Zeitraum.
+          </p>
         }
       </mat-card-content>
 
@@ -101,6 +106,7 @@ import { firstValueFrom } from 'rxjs';
           class="add-btn"
           mat-flat-button
           (click)="openCreateDialog()"
+          i18n="@@createNewEntry"
         >
           <mat-icon>add</mat-icon>
           Neu
@@ -117,7 +123,7 @@ import { firstValueFrom } from 'rxjs';
         class="mat-elevation-z8"
       >
         <ng-container matColumnDef="timestamp">
-          <mat-header-cell *matHeaderCellDef mat-sort-header
+          <mat-header-cell *matHeaderCellDef mat-sort-header i18n="@@colTime"
             >Zeit</mat-header-cell
           >
           <mat-cell *matCellDef="let entry">{{
@@ -126,7 +132,7 @@ import { firstValueFrom } from 'rxjs';
         </ng-container>
 
         <ng-container matColumnDef="reps">
-          <mat-header-cell *matHeaderCellDef mat-sort-header
+          <mat-header-cell *matHeaderCellDef mat-sort-header i18n="@@colReps"
             >Reps</mat-header-cell
           >
           <mat-cell *matCellDef="let entry"
@@ -135,7 +141,7 @@ import { firstValueFrom } from 'rxjs';
         </ng-container>
 
         <ng-container matColumnDef="type">
-          <mat-header-cell *matHeaderCellDef mat-sort-header
+          <mat-header-cell *matHeaderCellDef mat-sort-header i18n="@@colType"
             >Typ</mat-header-cell
           >
           <mat-cell *matCellDef="let entry"
@@ -144,7 +150,7 @@ import { firstValueFrom } from 'rxjs';
         </ng-container>
 
         <ng-container matColumnDef="source">
-          <mat-header-cell *matHeaderCellDef mat-sort-header
+          <mat-header-cell *matHeaderCellDef mat-sort-header i18n="@@colSource"
             >Quelle</mat-header-cell
           >
           <mat-cell *matCellDef="let entry"
@@ -153,13 +159,17 @@ import { firstValueFrom } from 'rxjs';
         </ng-container>
 
         <ng-container matColumnDef="actions">
-          <mat-header-cell *matHeaderCellDef>Aktion</mat-header-cell>
+          <mat-header-cell *matHeaderCellDef i18n="@@colActions"
+            >Aktion</mat-header-cell
+          >
           <mat-cell *matCellDef="let entry" class="actions">
             <button
               type="button"
               mat-mini-fab
               aria-label="Bearbeiten"
+              i18n-aria-label="@@editAria"
               title="Bearbeiten"
+              i18n-title="@@editTitle"
               (click)="openEditDialog(entry)"
             >
               <mat-icon>edit</mat-icon>
@@ -169,7 +179,9 @@ import { firstValueFrom } from 'rxjs';
               class="danger"
               mat-mini-fab
               aria-label="Löschen"
+              i18n-aria-label="@@deleteAria"
               title="Löschen"
+              i18n-title="@@deleteTitle"
               [disabled]="isBusy('delete', entry._id)"
               (click)="remove.emit(entry._id)"
             >
@@ -193,11 +205,11 @@ import { firstValueFrom } from 'rxjs';
     </ng-template>
 
     <ng-template #createDialog>
-      <h2 mat-dialog-title>Neuen Eintrag anlegen</h2>
+      <h2 mat-dialog-title i18n="@@createDialogTitle">Neuen Eintrag anlegen</h2>
 
       <mat-dialog-content class="create-dialog-content">
         <mat-form-field appearance="outline">
-          <mat-label>Zeitpunkt</mat-label>
+          <mat-label i18n="@@timestampLabel">Zeitpunkt</mat-label>
           <input
             matInput
             type="datetime-local"
@@ -208,7 +220,7 @@ import { firstValueFrom } from 'rxjs';
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Reps</mat-label>
+          <mat-label i18n="@@repsLabel">Reps</mat-label>
           <input
             matInput
             type="number"
@@ -220,13 +232,14 @@ import { firstValueFrom } from 'rxjs';
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Typ</mat-label>
+          <mat-label i18n="@@typeLabel">Typ</mat-label>
           <input
             type="text"
             matInput
             [formControl]="newTypeControl"
             [matAutocomplete]="typeAuto"
             placeholder="Pick one / Custom"
+            i18n-placeholder="@@typePlaceholder"
           />
           <mat-autocomplete #typeAuto="matAutocomplete">
             @for (option of filteredTypeOptions$ | async; track option) {
@@ -236,13 +249,14 @@ import { firstValueFrom } from 'rxjs';
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Quelle</mat-label>
+          <mat-label i18n="@@sourceLabel">Quelle</mat-label>
           <input
             type="text"
             matInput
             [formControl]="newSourceControl"
             [matAutocomplete]="sourceAuto"
             placeholder="web / whatsapp / Custom"
+            i18n-placeholder="@@sourcePlaceholder"
           />
           <mat-autocomplete #sourceAuto="matAutocomplete">
             @for (option of filteredSourceOptions$ | async; track option) {
@@ -253,7 +267,12 @@ import { firstValueFrom } from 'rxjs';
       </mat-dialog-content>
 
       <mat-dialog-actions align="end">
-        <button type="button" mat-button (click)="dialog.closeAll()">
+        <button
+          type="button"
+          mat-button
+          (click)="dialog.closeAll()"
+          i18n="@@cancel"
+        >
           Abbrechen
         </button>
         <button
@@ -261,6 +280,7 @@ import { firstValueFrom } from 'rxjs';
           mat-flat-button
           [disabled]="isCreateBusy()"
           (click)="submitCreate()"
+          i18n="@@saveEntry"
         >
           @if (isCreateBusy()) {
             <mat-spinner diameter="14"></mat-spinner>
@@ -272,11 +292,11 @@ import { firstValueFrom } from 'rxjs';
     </ng-template>
 
     <ng-template #editDialog>
-      <h2 mat-dialog-title>Eintrag bearbeiten</h2>
+      <h2 mat-dialog-title i18n="@@editDialogTitle">Eintrag bearbeiten</h2>
 
       <mat-dialog-content class="create-dialog-content">
         <mat-form-field appearance="outline">
-          <mat-label>Reps</mat-label>
+          <mat-label i18n="@@repsLabel">Reps</mat-label>
           <input
             matInput
             type="number"
@@ -288,13 +308,14 @@ import { firstValueFrom } from 'rxjs';
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Typ</mat-label>
+          <mat-label i18n="@@typeLabel">Typ</mat-label>
           <input
             type="text"
             matInput
             [formControl]="editTypeControl"
             [matAutocomplete]="editTypeAuto"
             placeholder="Pick one / Custom"
+            i18n-placeholder="@@typePlaceholder"
           />
           <mat-autocomplete #editTypeAuto="matAutocomplete">
             @for (option of filteredEditTypeOptions$ | async; track option) {
@@ -304,13 +325,14 @@ import { firstValueFrom } from 'rxjs';
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Quelle</mat-label>
+          <mat-label i18n="@@sourceLabel">Quelle</mat-label>
           <input
             type="text"
             matInput
             [formControl]="editSourceControl"
             [matAutocomplete]="editSourceAuto"
             placeholder="web / whatsapp / Custom"
+            i18n-placeholder="@@sourcePlaceholder"
           />
           <mat-autocomplete #editSourceAuto="matAutocomplete">
             @for (option of filteredEditSourceOptions$ | async; track option) {
@@ -321,7 +343,7 @@ import { firstValueFrom } from 'rxjs';
       </mat-dialog-content>
 
       <mat-dialog-actions align="end">
-        <button type="button" mat-button (click)="cancelEdit()">
+        <button type="button" mat-button (click)="cancelEdit()" i18n="@@cancel">
           Abbrechen
         </button>
         <button
@@ -329,6 +351,7 @@ import { firstValueFrom } from 'rxjs';
           mat-flat-button
           [disabled]="!editingId() || isBusy('update', editBusyId())"
           (click)="saveFromDialog()"
+          i18n="@@saveChanges"
         >
           @if (editingId() && isBusy('update', editBusyId())) {
             <mat-spinner diameter="14"></mat-spinner>
@@ -394,12 +417,12 @@ export class StatsTableComponent {
 
   readonly filteredTypeOptions$ = this.newTypeControl.valueChanges.pipe(
     startWith(this.newTypeControl.value),
-    map((value) => this.filterOptions(value, this.typeOptions)),
+    map((value) => this.filterOptions(value, this.typeOptions))
   );
 
   readonly filteredSourceOptions$ = this.newSourceControl.valueChanges.pipe(
     startWith(this.newSourceControl.value),
-    map((value) => this.filterOptions(value, this.sourceOptions)),
+    map((value) => this.filterOptions(value, this.sourceOptions))
   );
 
   private readonly user = inject(UserContextService);
@@ -429,13 +452,13 @@ export class StatsTableComponent {
 
   readonly filteredEditTypeOptions$ = this.editTypeControl.valueChanges.pipe(
     startWith(this.editTypeControl.value),
-    map((value) => this.filterOptions(value, this.typeOptions)),
+    map((value) => this.filterOptions(value, this.typeOptions))
   );
 
   readonly filteredEditSourceOptions$ =
     this.editSourceControl.valueChanges.pipe(
       startWith(this.editSourceControl.value),
-      map((value) => this.filterOptions(value, this.sourceOptions)),
+      map((value) => this.filterOptions(value, this.sourceOptions))
     );
 
   constructor() {
@@ -588,7 +611,7 @@ export class StatsTableComponent {
     this.setEditType(entry, type);
 
     const source = this.normalizeSource(
-      (this.editSourceControl.value || '').trim() || 'web',
+      (this.editSourceControl.value || '').trim() || 'web'
     );
     this.setEditSource(entry, source);
 
@@ -602,7 +625,7 @@ export class StatsTableComponent {
 
     const type = (this.newTypeControl.value || '').trim() || 'Standard';
     const source = this.normalizeSource(
-      (this.newSourceControl.value || '').trim() || 'web',
+      (this.newSourceControl.value || '').trim() || 'web'
     );
 
     this.create.emit({
@@ -638,7 +661,7 @@ export class StatsTableComponent {
 
   private filterOptions(
     value: string | null | undefined,
-    options: string[],
+    options: string[]
   ): string[] {
     const needle = (value ?? '').toLowerCase().trim();
     if (!needle) return options;
@@ -655,7 +678,7 @@ export class StatsTableComponent {
       await firstValueFrom(
         this.userConfigApi.updateConfig(this.user.userIdSafe(), {
           ui: { showSourceColumn: next },
-        }),
+        })
       );
     } catch {
       // If saving fails, keep UI responsive; we'll try again on next toggle.
@@ -665,7 +688,7 @@ export class StatsTableComponent {
   private async loadShowSourceFromDb(): Promise<void> {
     try {
       const cfg = await firstValueFrom(
-        this.userConfigApi.getConfig(this.user.userIdSafe()),
+        this.userConfigApi.getConfig(this.user.userIdSafe())
       );
       this.showSourceColumn.set(!!cfg.ui?.showSourceColumn);
     } catch {
