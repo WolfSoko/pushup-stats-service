@@ -56,4 +56,32 @@ describe('PushupLiveDataService', () => {
     handlers['disconnect']?.();
     expect(service.connected()).toBe(false);
   });
+
+  it('handles null/undefined rows in pushups:initial', () => {
+    TestBed.configureTestingModule({
+      providers: [{ provide: PLATFORM_ID, useValue: 'browser' }],
+    });
+
+    const service = TestBed.inject(PushupLiveDataService);
+
+    handlers['pushups:initial']?.(null);
+    expect(service.entries()).toEqual([]);
+
+    handlers['pushups:initial']?.(undefined);
+    expect(service.entries()).toEqual([]);
+  });
+
+  it('handles null/undefined rows in pushups:changed', () => {
+    TestBed.configureTestingModule({
+      providers: [{ provide: PLATFORM_ID, useValue: 'browser' }],
+    });
+
+    const service = TestBed.inject(PushupLiveDataService);
+
+    handlers['pushups:changed']?.(null);
+    expect(service.entries()).toEqual([]);
+
+    handlers['pushups:changed']?.(undefined);
+    expect(service.entries()).toEqual([]);
+  });
 });
