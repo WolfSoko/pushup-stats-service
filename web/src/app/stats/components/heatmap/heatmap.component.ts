@@ -1,27 +1,17 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { isPlatformBrowser } from '@angular/common';
 import { Component, PLATFORM_ID, computed, inject, input } from '@angular/core';
-import {
-  CategoryScale,
-  Chart,
-  type ChartConfiguration,
-  LinearScale,
-  Tooltip,
-  Legend,
-} from 'chart.js';
-import { MatrixController, MatrixElement } from 'chartjs-chart-matrix';
+import type { ChartConfiguration } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 import { PushupRecord } from '@pu-stats/models';
+import { ensureHeatmapChartRegistered } from './chart-setup';
+import {
+  buildHeatmapCells,
+  defaultHeatmapDays,
+  defaultHeatmapHoursTopDown,
+  heatmapCellColor,
+} from './heatmap.utils';
 
-// Register required Chart.js pieces (safe to call multiple times)
-Chart.register(
-  CategoryScale,
-  LinearScale,
-  Tooltip,
-  Legend,
-  MatrixController,
-  MatrixElement
-);
+ensureHeatmapChartRegistered();
 
 export interface HeatmapCell {
   x: string; // weekday label
@@ -63,37 +53,17 @@ export class HeatmapComponent {
 
   readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
 
-  private readonly days = ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'] as const;
-  // top -> bottom: 23, 22, ... 00
-  private readonly hoursTopDown = Array.from({ length: 24 }, (_, i) =>
-    String(23 - i).padStart(2, '0')
-  );
+  private readonly days = defaultHeatmapDays;
+  private readonly hoursTopDown = defaultHeatmapHoursTopDown;
 
+  // Matrix chart typing is tricky with string category axes; keep this loosely typed.
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   readonly chartData = computed<any>(() => {
-    const dataPoints: HeatmapCell[] = [];
-
-    for (const day of this.days) {
-      for (const hour of this.hoursTopDown) {
-        dataPoints.push({ x: day, y: hour, v: 0 });
-      }
-    }
-
-    const map = new Map<string, number>();
-    for (const row of this.entries()) {
-      const date = new Date(row.timestamp);
-      // getDay(): 0=Sun, 1=Mon... -> convert to 0=Mon, 6=Sun
-      const dayIndex = (date.getDay() + 6) % 7;
-      const dayLabel = this.days[dayIndex];
-      const hourLabel = String(date.getHours()).padStart(2, '0');
-      const key = `${dayLabel}-${hourLabel}`;
-      map.set(key, (map.get(key) ?? 0) + row.reps);
-    }
-
-    const data: HeatmapCell[] = dataPoints.map((p) => ({
-      x: p.x,
-      y: p.y,
-      v: map.get(`${p.x}-${p.y}`) ?? 0,
-    }));
+    const data = buildHeatmapCells({
+      entries: this.entries(),
+      days: this.days,
+      hoursTopDown: this.hoursTopDown,
+    });
 
     const max = Math.max(0, ...data.map((d) => d.v)) || 1;
 
@@ -102,28 +72,22 @@ export class HeatmapComponent {
         {
           label: 'Pushups',
           data,
-          backgroundColor: (context: any) => {
-            const raw = context.raw as HeatmapCell;
-            const value = raw?.v ?? 0;
-            // zero cells should still be visible against the dark card background
-            if (value <= 0) return 'rgba(255,255,255,0.04)';
-
-            // perceptual boost for small values
-            const ratio = Math.max(0, Math.min(1, value / max));
-            const t = Math.pow(ratio, 0.6);
-            const alpha = 0.2 + t * 0.8;
-            return `rgba(69, 137, 255, ${alpha})`;
+          backgroundColor: (context: unknown) => {
+            const raw = (context as { raw?: HeatmapCell }).raw;
+            return heatmapCellColor({ value: raw?.v ?? 0, max });
           },
           borderColor: 'rgba(255,255,255,0.05)',
           borderWidth: 1,
           // chartjs-chart-matrix provides the chart instance via ctx.chart
           // Using chart.chartArea avoids 0px cells during initial layout.
-          width: (ctx: any) => {
-            const area = ctx?.chart?.chartArea;
+          width: (ctx: unknown) => {
+            const area = (ctx as { chart?: { chartArea?: { width: number } } })
+              ?.chart?.chartArea;
             return area ? area.width / 7 - 1 : 18;
           },
-          height: (ctx: any) => {
-            const area = ctx?.chart?.chartArea;
+          height: (ctx: unknown) => {
+            const area = (ctx as { chart?: { chartArea?: { height: number } } })
+              ?.chart?.chartArea;
             return area ? area.height / 24 - 1 : 18;
           },
         },
@@ -140,18 +104,18 @@ export class HeatmapComponent {
       tooltip: {
         callbacks: {
           title: () => '',
-          label: (context: any) => {
-            const v = context.raw as HeatmapCell;
-            return `${v.x} ${v.y}:00 - ${v.v} Reps`;
+          label: (context: unknown) => {
+            const v = (context as { raw?: HeatmapCell }).raw;
+            return `${v?.x ?? ''} ${v?.y ?? ''}:00 - ${v?.v ?? 0} Reps`;
           },
         },
       },
       // chartjs-plugin-datalabels is referenced via options in this project.
       datalabels: {
-        display: (ctx: any) => {
-          const raw = ctx.dataset.data?.[ctx.dataIndex] as
-            | HeatmapCell
-            | undefined;
+        display: (ctx: unknown) => {
+          const raw = (
+            ctx as { dataset?: { data?: HeatmapCell[] }; dataIndex?: number }
+          )?.dataset?.data?.[(ctx as { dataIndex: number }).dataIndex];
           return !!raw && typeof raw.v === 'number' && raw.v > 0;
         },
         formatter: (value: HeatmapCell) => (value?.v ? String(value.v) : ''),
@@ -159,14 +123,16 @@ export class HeatmapComponent {
         align: 'center',
         clamp: true,
         color: () => 'rgba(230,237,249,0.95)',
-        font: (ctx: any) => {
-          const raw = ctx.dataset.data?.[ctx.dataIndex] as
-            | HeatmapCell
-            | undefined;
+        font: (ctx: unknown) => {
+          const raw = (
+            ctx as { dataset?: { data?: HeatmapCell[] }; dataIndex?: number }
+          )?.dataset?.data?.[(ctx as { dataIndex: number }).dataIndex];
           const v = typeof raw?.v === 'number' ? raw.v : 0;
           return { size: v >= 10 ? 11 : 10, weight: 700 };
         },
       },
+      // chartjs-plugin-datalabels typings are not included in ChartConfiguration by default
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } as any,
     scales: {
       x: {
