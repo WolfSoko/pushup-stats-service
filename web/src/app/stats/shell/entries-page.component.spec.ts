@@ -1,7 +1,8 @@
+import { signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 import { EntriesPageComponent } from './entries-page.component';
-import { StatsApiService } from '@pu-stats/data-access';
+import { PushupLiveDataService, StatsApiService } from '@pu-stats/data-access';
 
 describe('EntriesPageComponent', () => {
   let fixture: ComponentFixture<EntriesPageComponent>;
@@ -37,12 +38,20 @@ describe('EntriesPageComponent', () => {
     updatePushup: vitest.fn().mockReturnValue(of({ _id: '1' })),
   };
 
+  const liveMock = {
+    connected: signal(true),
+    entries: signal(rows),
+  };
+
   beforeEach(async () => {
     vitest.clearAllMocks();
 
     await TestBed.configureTestingModule({
       imports: [EntriesPageComponent],
-      providers: [{ provide: StatsApiService, useValue: apiMock }],
+      providers: [
+        { provide: StatsApiService, useValue: apiMock },
+        { provide: PushupLiveDataService, useValue: liveMock },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(EntriesPageComponent);
@@ -51,7 +60,7 @@ describe('EntriesPageComponent', () => {
     fixture.detectChanges();
   });
 
-  it('prefills date range with oldest and today', () => {
+  it('prefills date range with oldest and today (browser uses live entries)', () => {
     const component = fixture.componentInstance;
     expect(component.from()).toBe('2026-02-10');
     expect(component.to()).toMatch(/^\d{4}-\d{2}-\d{2}$/);

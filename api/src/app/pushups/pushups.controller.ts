@@ -1,4 +1,13 @@
-import { Body, Controller, Delete, Get, NotFoundException, Param, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  NotFoundException,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
 import { PushupLiveGateway } from '../live/pushup-live.gateway';
 import { PushupDbService } from './pushup-db.service';
 
@@ -6,7 +15,7 @@ import { PushupDbService } from './pushup-db.service';
 export class PushupsController {
   constructor(
     private readonly db: PushupDbService,
-    private readonly live: PushupLiveGateway,
+    private readonly live: PushupLiveGateway
   ) {}
 
   @Get()
@@ -22,7 +31,15 @@ export class PushupsController {
   }
 
   @Post()
-  async create(@Body() body: { timestamp: string; reps: number; source?: string; type?: string }) {
+  async create(
+    @Body()
+    body: {
+      timestamp: string;
+      reps: number;
+      source?: string;
+      type?: string;
+    }
+  ) {
     const created = await this.db.create({
       timestamp: body.timestamp,
       reps: Number(body.reps),
@@ -30,12 +47,16 @@ export class PushupsController {
       type: body.type ?? 'Standard',
     });
 
-    this.live.emitPushupsChanged();
+    await this.live.emitPushupsChanged();
     return created;
   }
 
   @Put(':id')
-  async update(@Param('id') id: string, @Body() body: { timestamp?: string; reps?: number; source?: string; type?: string }) {
+  async update(
+    @Param('id') id: string,
+    @Body()
+    body: { timestamp?: string; reps?: number; source?: string; type?: string }
+  ) {
     const updated = await this.db.update(id, {
       ...(body.timestamp ? { timestamp: body.timestamp } : {}),
       ...(typeof body.reps !== 'undefined' ? { reps: Number(body.reps) } : {}),
@@ -45,7 +66,7 @@ export class PushupsController {
 
     if (!updated) throw new NotFoundException('Pushup entry not found');
 
-    this.live.emitPushupsChanged();
+    await this.live.emitPushupsChanged();
     return updated;
   }
 
@@ -54,7 +75,7 @@ export class PushupsController {
     const removed = await this.db.remove(id);
     if (!removed) throw new NotFoundException('Pushup entry not found');
 
-    this.live.emitPushupsChanged();
+    await this.live.emitPushupsChanged();
     return { ok: true };
   }
 }

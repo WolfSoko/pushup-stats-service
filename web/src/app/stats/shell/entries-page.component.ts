@@ -6,12 +6,14 @@ import {
   resource,
   signal,
 } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { PLATFORM_ID } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { firstValueFrom } from 'rxjs';
-import { StatsApiService } from '@pu-stats/data-access';
+import { PushupLiveDataService, StatsApiService } from '@pu-stats/data-access';
 import { StatsTableComponent } from '../components/stats-table/stats-table.component';
 
 @Component({
@@ -125,6 +127,8 @@ import { StatsTableComponent } from '../components/stats-table/stats-table.compo
 })
 export class EntriesPageComponent {
   private readonly api = inject(StatsApiService);
+  private readonly live = inject(PushupLiveDataService);
+  private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
 
   readonly from = signal('');
   readonly to = signal('');
@@ -135,6 +139,7 @@ export class EntriesPageComponent {
   readonly busyAction = signal<'create' | 'update' | 'delete' | null>(null);
   readonly busyId = signal<string | null>(null);
 
+  // SSR should keep using REST.
   readonly entriesResource = resource({
     params: () => ({
       from: this.from() || undefined,
@@ -143,14 +148,18 @@ export class EntriesPageComponent {
     loader: async ({ params }) => firstValueFrom(this.api.listPushups(params)),
   });
 
-  readonly rows = computed(() => this.entriesResource.value() ?? []);
+  readonly rows = computed(() => {
+    return this.isBrowser
+      ? this.live.entries()
+      : (this.entriesResource.value() ?? []);
+  });
 
   readonly sourceOptions = computed(() => {
     return [
       ...new Set(
         this.rows()
           .map((x) => x.source)
-          .filter(Boolean),
+          .filter(Boolean)
       ),
     ].sort((a, b) => a.localeCompare(b));
   });
@@ -160,7 +169,7 @@ export class EntriesPageComponent {
       ...new Set(
         this.rows()
           .map((x) => x.type || 'Standard')
-          .filter(Boolean),
+          .filter(Boolean)
       ),
     ].sort((a, b) => a.localeCompare(b));
   });
@@ -193,7 +202,7 @@ export class EntriesPageComponent {
       const oldest = [...rows]
         .sort(
           (a, b) =>
-            new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime(),
+            new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()
         )[0]
         ?.timestamp.slice(0, 10);
       const today = this.todayIso();
@@ -225,7 +234,7 @@ export class EntriesPageComponent {
     this.busyId.set(null);
     try {
       await firstValueFrom(this.api.createPushup(payload));
-      this.entriesResource.reload();
+      if (!this.isBrowser) this.entriesResource.reload();
     } finally {
       this.busyAction.set(null);
       this.busyId.set(null);
@@ -246,9 +255,9 @@ export class EntriesPageComponent {
           reps: payload.reps,
           source: payload.source,
           type: payload.type,
-        }),
+        })
       );
-      this.entriesResource.reload();
+      if (!this.isBrowser) this.entriesResource.reload();
     } finally {
       this.busyAction.set(null);
       this.busyId.set(null);
@@ -260,7 +269,7 @@ export class EntriesPageComponent {
     this.busyId.set(id);
     try {
       await firstValueFrom(this.api.deletePushup(id));
-      this.entriesResource.reload();
+      if (!this.isBrowser) this.entriesResource.reload();
     } finally {
       this.busyAction.set(null);
       this.busyId.set(null);
