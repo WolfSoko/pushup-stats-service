@@ -21,3 +21,11 @@
 - The `nx-generate` skill handles generator discovery internally - don't call nx_docs just to look up generator syntax
 
 <!-- nx configuration end-->
+
+# Development Flow (Project Board)
+
+- Create/triage issue → add to **PUS Roadmap** project → Status = **Todo**.
+- When work starts: set Status = **In Progress**.
+- Open PR and link the issue using GitHub keywords (`Fixes #ID` / `Closes #ID`).
+- Add the PR to the project and set Status = **Review**.
+- On merge: issue auto-closes → set Status = **Done**.
