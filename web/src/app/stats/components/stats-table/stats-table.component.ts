@@ -693,8 +693,16 @@ export class StatsTableComponent {
   }
 
   save(entry: PushupRecord): void {
-    const timestamp = this.editTimestamp(entry);
-    if (!timestamp) return;
+    const editedLocal = this.editTimestamp(entry);
+    if (!editedLocal) return;
+
+    // Preserve original timestamp string (including seconds/timezone) unless the
+    // user actually changed the datetime-local input.
+    const defaultLocal = (entry.timestamp || '').slice(0, 16);
+    const timestamp =
+      entry.timestamp && editedLocal === defaultLocal
+        ? entry.timestamp
+        : editedLocal;
 
     const reps = Number(this.editReps(entry));
     if (Number.isNaN(reps) || reps <= 0) return;

@@ -165,7 +165,7 @@ describe('StatsTableComponent', () => {
 
     expect(updateSpy).toHaveBeenCalledWith({
       id: '1',
-      timestamp: '2026-02-10T13:45',
+      timestamp: '2026-02-10T13:45:00',
       reps: 15,
       source: 'web',
       type: 'Standard',
@@ -241,7 +241,7 @@ describe('StatsTableComponent', () => {
 
     expect(updateSpy).toHaveBeenCalledWith({
       id: '1',
-      timestamp: '2026-02-10T13:45',
+      timestamp: '2026-02-10T13:45:00',
       reps: 14,
       source: 'web',
       type: 'Diamond',
@@ -320,7 +320,7 @@ describe('StatsTableComponent', () => {
 
     expect(updateSpy).toHaveBeenCalledWith({
       id: '1',
-      timestamp: '2026-02-10T13:45',
+      timestamp: '2026-02-10T13:45:00',
       reps: 8,
       source: 'whatsapp',
       type: 'Standard',
