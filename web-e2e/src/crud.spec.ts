@@ -147,6 +147,9 @@ test('websocket pushes updates to other open clients', async ({ browser }) => {
 });
 
 test('settings page is reachable from navigation', async ({ page }) => {
+  // Reduce animations/transitions (Material sidenav) to avoid "element is not stable" flakiness.
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+
   await page.goto('/');
   await expect(
     page.getByRole('heading', { name: 'Liegestütze Statistik' })
@@ -157,10 +160,16 @@ test('settings page is reachable from navigation', async ({ page }) => {
 
   // Depending on locale, the label may be "Einstellungen" or "Settings".
   // Use a robust selector that doesn't depend on the translation pipeline.
-  await page
+  const settingsLink = page
     .locator('a[routerlink="/settings"], a[href$="/settings"]')
-    .first()
-    .click();
+    .first();
+
+  await settingsLink.scrollIntoViewIfNeeded();
+  await expect(settingsLink).toBeVisible();
+
+  // Material sidenav + list-item ripple can cause "element is not stable" in CI.
+  // We already asserted visibility; force click avoids stability flakiness.
+  await settingsLink.click({ force: true });
 
   await expect(page).toHaveURL(/\/settings$/);
   await expect(page.getByText('User-Profil & Tagesziel')).toBeVisible();

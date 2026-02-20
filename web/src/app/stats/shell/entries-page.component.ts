@@ -243,6 +243,7 @@ export class EntriesPageComponent {
 
   async onUpdateEntry(payload: {
     id: string;
+    timestamp: string;
     reps: number;
     source?: string;
     type?: string;
@@ -252,6 +253,7 @@ export class EntriesPageComponent {
     try {
       await firstValueFrom(
         this.api.updatePushup(payload.id, {
+          timestamp: payload.timestamp,
           reps: payload.reps,
           source: payload.source,
           type: payload.type,

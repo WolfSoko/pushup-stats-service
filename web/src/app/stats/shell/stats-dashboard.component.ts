@@ -118,7 +118,7 @@ export class StatsDashboardComponent {
   readonly from = signal(this.initialRange.from);
   readonly to = signal(this.initialRange.to);
   readonly rangeMode = signal<'day' | 'week' | 'month'>(
-    inferRangeMode(this.initialRange.from, this.initialRange.to),
+    inferRangeMode(this.initialRange.from, this.initialRange.to)
   );
   readonly busyAction = signal<'create' | 'update' | 'delete' | null>(null);
   readonly busyId = signal<string | null>(null);
@@ -144,14 +144,14 @@ export class StatsDashboardComponent {
 
   readonly stats = computed(() => this.statsResource.value() ?? EMPTY_STATS);
   readonly allTimeStats = computed(
-    () => this.allTimeResource.value() ?? EMPTY_STATS,
+    () => this.allTimeResource.value() ?? EMPTY_STATS
   );
 
   readonly total = computed(() => this.stats().meta.total);
   readonly days = computed(() => this.stats().meta.days);
   readonly entries = computed(() => this.stats().meta.entries);
   readonly avg = computed(() =>
-    this.days() ? (this.total() / this.days()).toFixed(1) : '0',
+    this.days() ? (this.total() / this.days()).toFixed(1) : '0'
   );
 
   readonly allTimeTotal = computed(() => this.allTimeStats().meta.total);
@@ -160,14 +160,14 @@ export class StatsDashboardComponent {
   readonly allTimeAvg = computed(() =>
     this.allTimeDays()
       ? (this.allTimeTotal() / this.allTimeDays()).toFixed(1)
-      : '0',
+      : '0'
   );
   readonly granularity = computed<StatsGranularity>(
-    () => this.stats().meta.granularity,
+    () => this.stats().meta.granularity
   );
   readonly rows = computed<StatsSeriesEntry[]>(() => this.stats().series);
   readonly entryRows = computed<PushupRecord[]>(
-    () => this.entriesResource.value() ?? [],
+    () => this.entriesResource.value() ?? []
   );
   private readonly user = inject(UserContextService);
   private readonly userConfigApi = inject(UserConfigApiService);
@@ -203,9 +203,9 @@ export class StatsDashboardComponent {
     this.periodGoal()
       ? Math.min(
           100,
-          Math.round((this.periodTotal() / this.periodGoal()) * 100),
+          Math.round((this.periodTotal() / this.periodGoal()) * 100)
         )
-      : 0,
+      : 0
   );
 
   readonly periodTitle = computed(() => {
@@ -221,7 +221,7 @@ export class StatsDashboardComponent {
     return (
       [...rows].sort(
         (a, b) =>
-          new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime(),
+          new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
       )[0] ?? null
     );
   });
@@ -229,7 +229,7 @@ export class StatsDashboardComponent {
     return [...this.entryRows()]
       .sort(
         (a, b) =>
-          new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime(),
+          new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
       )
       .slice(0, 10);
   });
@@ -295,6 +295,7 @@ export class StatsDashboardComponent {
 
   async onUpdateEntry(payload: {
     id: string;
+    timestamp: string;
     reps: number;
     source?: string;
     type?: string;
@@ -304,10 +305,11 @@ export class StatsDashboardComponent {
     try {
       await firstValueFrom(
         this.api.updatePushup(payload.id, {
+          timestamp: payload.timestamp,
           reps: payload.reps,
           source: payload.source,
           type: payload.type,
-        }),
+        })
       );
       this.refreshAll();
     } finally {

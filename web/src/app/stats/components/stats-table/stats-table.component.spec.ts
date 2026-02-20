@@ -16,7 +16,7 @@ describe('StatsTableComponent', () => {
     getConfig: vitest
       .fn()
       .mockReturnValue(
-        of({ userId: 'u1', dailyGoal: 100, ui: { showSourceColumn: false } }),
+        of({ userId: 'u1', dailyGoal: 100, ui: { showSourceColumn: false } })
       ),
     updateConfig: vitest
       .fn()
@@ -165,6 +165,7 @@ describe('StatsTableComponent', () => {
 
     expect(updateSpy).toHaveBeenCalledWith({
       id: '1',
+      timestamp: '2026-02-10T13:45:00',
       reps: 15,
       source: 'web',
       type: 'Standard',
@@ -240,6 +241,7 @@ describe('StatsTableComponent', () => {
 
     expect(updateSpy).toHaveBeenCalledWith({
       id: '1',
+      timestamp: '2026-02-10T13:45:00',
       reps: 14,
       source: 'web',
       type: 'Diamond',
@@ -318,6 +320,7 @@ describe('StatsTableComponent', () => {
 
     expect(updateSpy).toHaveBeenCalledWith({
       id: '1',
+      timestamp: '2026-02-10T13:45:00',
       reps: 8,
       source: 'whatsapp',
       type: 'Standard',

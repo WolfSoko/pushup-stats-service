@@ -66,7 +66,7 @@ describe('StatsDashboardComponent', () => {
           source: 'web',
           type: 'Diamond',
         },
-      ]),
+      ])
     ),
     createPushup: vitest.fn().mockReturnValue(of({ _id: '1' })),
     updatePushup: vitest.fn().mockReturnValue(of({ _id: '1' })),
@@ -100,7 +100,7 @@ describe('StatsDashboardComponent', () => {
                 userId: 'u1',
                 dailyGoal: 100,
                 ui: { showSourceColumn: false },
-              }),
+              })
             ),
           },
         },
@@ -182,8 +182,14 @@ describe('StatsDashboardComponent', () => {
     });
     expect(serviceMock.createPushup).toHaveBeenCalled();
 
-    await component.onUpdateEntry({ id: '1', reps: 14, source: 'wa' });
+    await component.onUpdateEntry({
+      id: '1',
+      timestamp: todayTs.slice(0, 16),
+      reps: 14,
+      source: 'wa',
+    });
     expect(serviceMock.updatePushup).toHaveBeenCalledWith('1', {
+      timestamp: todayTs.slice(0, 16),
       reps: 14,
       source: 'wa',
       type: undefined,
@@ -199,7 +205,7 @@ describe('StatsDashboardComponent', () => {
     await component.addQuickEntry(10);
 
     expect(serviceMock.createPushup).toHaveBeenCalledWith(
-      expect.objectContaining({ reps: 10, source: 'web', type: 'Standard' }),
+      expect.objectContaining({ reps: 10, source: 'web', type: 'Standard' })
     );
   });
 
@@ -211,7 +217,7 @@ describe('StatsDashboardComponent', () => {
     await fixture.whenStable();
 
     expect(serviceMock.load.mock.calls.length).toBeGreaterThan(
-      initialLoadCalls,
+      initialLoadCalls
     );
     expect(serviceMock.listPushups.mock.calls.length).toBeGreaterThan(0);
   });
