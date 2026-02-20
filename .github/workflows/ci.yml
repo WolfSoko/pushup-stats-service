@@ -21,6 +21,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v6
+        with:
+          filter: tree:0
+          fetch-depth: 0
 
       - name: Setup Node
         uses: actions/setup-node@v6
@@ -31,11 +34,13 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - uses: nrwl/nx-set-shas@v4
+
       - name: Nx Cloud distributed run starten
-        run: npx nx-cloud start-ci-run --distribute-on="3 linux-medium-js" --stop-agents-after="lint,test,build,e2e-ci"
+        run: npx nx-cloud start-ci-run --stop-agents-after="lint,test,build,e2e-ci"
 
       - name: Nx chain (lint + test + build + e2e-ci)
-        run: npx nx run-many -t lint test build e2e-ci --projects=stats-models,stats-data-access,api,web,web-e2e --parallel=3 --configuration=ci
+      - run: nx affected -t=build -c=production --localize & nx affected -t lint & nx affected -t test & nx affected -t=e2e-ci -c=ci
 
       - name: Nx fix-ci (always)
         if: always()
