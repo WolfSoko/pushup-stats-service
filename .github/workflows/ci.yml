@@ -40,7 +40,11 @@ jobs:
         run: npx nx-cloud start-ci-run --stop-agents-after="lint,test,build,e2e-ci"
 
       - name: Nx chain (lint + test + build + e2e-ci)
-      - run: nx affected -t=build -c=production --localize & nx affected -t lint & nx affected -t test & nx affected -t=e2e-ci -c=ci
+        run: |
+          nx affected -t=build -c=production --localize & \
+          nx affected -t lint & \
+          nx affected -t test & \
+          nx affected -t=e2e-ci -c=ci
 
       - name: Nx fix-ci (always)
         if: always()
