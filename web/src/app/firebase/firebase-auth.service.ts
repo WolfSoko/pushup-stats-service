@@ -9,6 +9,8 @@ import {
   OAuthProvider,
   onAuthStateChanged,
   getAuth,
+  signInWithPopup,
+  signOut,
 } from 'firebase/auth';
 import { initializeApp, type FirebaseApp } from 'firebase/app';
 import {
@@ -50,6 +52,19 @@ export class FirebaseAuthService {
 
   getAuth(): Auth | null {
     return this.auth;
+  }
+
+  async signInWithProvider(
+    providerKey: keyof FirebaseAuthService['providers']
+  ): Promise<void> {
+    if (!this.auth) return;
+    const provider = this.providers[providerKey];
+    await signInWithPopup(this.auth, provider);
+  }
+
+  async signOut(): Promise<void> {
+    if (!this.auth) return;
+    await signOut(this.auth);
   }
 
   getConfig(): FirebaseConfig {
