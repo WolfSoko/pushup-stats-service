@@ -21,6 +21,7 @@ describe('UserContextService', () => {
 
     const service = TestBed.inject(UserContextService);
     firebaseAuth.user.set({ uid: 'firebase-user' });
+    TestBed.flushEffects();
 
     expect(service.userIdSafe()).toBe('firebase-user');
   });
@@ -36,9 +37,11 @@ describe('UserContextService', () => {
 
     const service = TestBed.inject(UserContextService);
     firebaseAuth.user.set({ uid: 'firebase-user' });
+    TestBed.flushEffects();
     expect(service.userIdSafe()).toBe('firebase-user');
 
     firebaseAuth.user.set(null);
+    TestBed.flushEffects();
     expect(service.userIdSafe()).toBe('default');
   });
 });
