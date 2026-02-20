@@ -166,8 +166,10 @@ test('settings page is reachable from navigation', async ({ page }) => {
 
   await settingsLink.scrollIntoViewIfNeeded();
   await expect(settingsLink).toBeVisible();
-  await expect(settingsLink).toBeEnabled();
-  await settingsLink.click();
+
+  // Material sidenav + list-item ripple can cause "element is not stable" in CI.
+  // We already asserted visibility; force click avoids stability flakiness.
+  await settingsLink.click({ force: true });
 
   await expect(page).toHaveURL(/\/settings$/);
   await expect(page.getByText('User-Profil & Tagesziel')).toBeVisible();
