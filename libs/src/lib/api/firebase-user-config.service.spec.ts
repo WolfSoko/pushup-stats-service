@@ -20,12 +20,13 @@ jest.mock('firebase/firestore', () => ({
 
 describe('FirebaseUserConfigService', () => {
   beforeEach(() => {
-    (globalThis as unknown as { __PUS_FIREBASE__?: unknown }).__PUS_FIREBASE__ = {
-      apiKey: 'key',
-      authDomain: 'domain',
-      projectId: 'project',
-      appId: 'app',
-    };
+    (globalThis as unknown as { __PUS_FIREBASE__?: unknown }).__PUS_FIREBASE__ =
+      {
+        apiKey: 'key',
+        authDomain: 'domain',
+        projectId: 'project',
+        appId: 'app',
+      };
   });
 
   it('returns empty config when disabled', (done) => {
@@ -38,6 +39,18 @@ describe('FirebaseUserConfigService', () => {
       expect(cfg).toEqual({});
       done();
     });
+  });
+
+  it('is disabled when config missing in browser', () => {
+    (globalThis as unknown as { __PUS_FIREBASE__?: unknown }).__PUS_FIREBASE__ =
+      undefined;
+
+    TestBed.configureTestingModule({
+      providers: [{ provide: PLATFORM_ID, useValue: 'browser' }],
+    });
+
+    const service = TestBed.inject(FirebaseUserConfigService);
+    expect(service.enabled).toBe(false);
   });
 
   it('returns empty config from updateConfig when disabled', (done) => {
@@ -66,7 +79,7 @@ describe('FirebaseUserConfigService', () => {
         'users',
         'u1',
         'config',
-        'default',
+        'default'
       );
       expect(cfg).toEqual({ dailyGoal: 123 });
 

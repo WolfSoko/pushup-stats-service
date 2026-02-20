@@ -15,6 +15,7 @@ describe('firebase-config (libs)', () => {
       projectId: '',
       appId: '',
     });
+    expect(isFirebaseConfigured(cfg)).toBe(false);
   });
 
   it('reads config from window on browser', () => {
