@@ -14,16 +14,20 @@ export class UserContextService {
   private static readonly USER_ID_STORAGE_KEY = 'pushups.userId';
 
   private readonly platformId = inject(PLATFORM_ID);
-  private readonly firebaseAuth = inject(FirebaseAuthService, { optional: true });
+  private readonly firebaseAuth = inject(FirebaseAuthService, {
+    optional: true,
+  });
   readonly isBrowser = isPlatformBrowser(this.platformId);
 
   readonly userId = signal('default');
-  readonly userIdSafe = computed(() => (this.userId().trim() || 'default'));
+  readonly userIdSafe = computed(() => this.userId().trim() || 'default');
 
   constructor() {
     if (!this.isBrowser) return;
 
-    const stored = window.localStorage.getItem(UserContextService.USER_ID_STORAGE_KEY);
+    const stored = window.localStorage.getItem(
+      UserContextService.USER_ID_STORAGE_KEY
+    );
     if (stored && stored.trim()) {
       this.userId.set(stored.trim());
     }
@@ -31,7 +35,10 @@ export class UserContextService {
     if (this.firebaseAuth?.enabled) {
       effect(() => {
         const user = this.firebaseAuth?.user();
-        if (!user) return;
+        if (!user) {
+          this.setUserId('default');
+          return;
+        }
         this.setUserId(user.uid);
       });
     }
@@ -41,7 +48,10 @@ export class UserContextService {
     const value = (next || '').trim() || 'default';
     this.userId.set(value);
     if (this.isBrowser) {
-      window.localStorage.setItem(UserContextService.USER_ID_STORAGE_KEY, value);
+      window.localStorage.setItem(
+        UserContextService.USER_ID_STORAGE_KEY,
+        value
+      );
     }
   }
 }

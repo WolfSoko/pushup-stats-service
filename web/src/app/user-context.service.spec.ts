@@ -24,4 +24,21 @@ describe('UserContextService', () => {
 
     expect(service.userIdSafe()).toBe('firebase-user');
   });
+
+  it('resets userId to default on logout', () => {
+    const firebaseAuth = new FirebaseAuthStub();
+    TestBed.configureTestingModule({
+      providers: [
+        { provide: PLATFORM_ID, useValue: 'browser' },
+        { provide: FirebaseAuthService, useValue: firebaseAuth },
+      ],
+    });
+
+    const service = TestBed.inject(UserContextService);
+    firebaseAuth.user.set({ uid: 'firebase-user' });
+    expect(service.userIdSafe()).toBe('firebase-user');
+
+    firebaseAuth.user.set(null);
+    expect(service.userIdSafe()).toBe('default');
+  });
 });
