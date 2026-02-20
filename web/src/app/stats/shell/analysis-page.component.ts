@@ -5,6 +5,7 @@ import { firstValueFrom } from 'rxjs';
 import { StatsApiService } from '@pu-stats/data-access';
 import { PushupRecord } from '@pu-stats/models';
 import { HeatmapComponent } from '../components/heatmap/heatmap.component';
+import { TypePieComponent } from '../components/type-pie/type-pie.component';
 
 interface TrendPoint {
   label: string;
@@ -13,7 +14,7 @@ interface TrendPoint {
 
 @Component({
   selector: 'app-analysis-page',
-  imports: [MatCardModule, MatTableModule, HeatmapComponent],
+  imports: [MatCardModule, MatTableModule, HeatmapComponent, TypePieComponent],
   template: `
     <main class="page-wrap">
       <section class="grid">
@@ -80,6 +81,15 @@ interface TrendPoint {
               <strong>Längste Streak:</strong>
               <div>{{ longestStreak() }} Tage</div>
             </div>
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title>Typen (Anteile)</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <app-type-pie [data]="typeBreakdown()" />
           </mat-card-content>
         </mat-card>
       </section>
@@ -187,6 +197,17 @@ export class AnalysisPageComponent {
       .sort(([a], [b]) => a.localeCompare(b))
       .slice(-12)
       .map(([label, total]) => ({ label, total }));
+  });
+
+  readonly typeBreakdown = computed(() => {
+    const byType = new Map<string, number>();
+    for (const row of this.rows()) {
+      const type = (row.type || 'Standard').trim() || 'Standard';
+      byType.set(type, (byType.get(type) ?? 0) + row.reps);
+    }
+    return [...byType.entries()]
+      .sort((a, b) => b[1] - a[1])
+      .map(([label, value]) => ({ label, value }));
   });
 
   readonly bestSingleEntry = computed<PushupRecord | null>(() => {

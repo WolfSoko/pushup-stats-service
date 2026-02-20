@@ -97,12 +97,14 @@ describe('EntriesPageComponent', () => {
 
     await component.onUpdateEntry({
       id: '1',
+      timestamp: '2026-02-11T20:00',
       reps: 14,
       source: 'web',
       type: 'Diamond',
     });
 
     expect(apiMock.updatePushup).toHaveBeenCalledWith('1', {
+      timestamp: '2026-02-11T20:00',
       reps: 14,
       source: 'web',
       type: 'Diamond',

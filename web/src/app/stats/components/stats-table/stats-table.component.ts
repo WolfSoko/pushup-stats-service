@@ -296,6 +296,17 @@ import { firstValueFrom } from 'rxjs';
 
       <mat-dialog-content class="create-dialog-content">
         <mat-form-field appearance="outline">
+          <mat-label i18n="@@timestampLabel">Zeitpunkt</mat-label>
+          <input
+            matInput
+            type="datetime-local"
+            [value]="editTimestampById()"
+            (input)="setEditTimestampById(asValue($event))"
+            required
+          />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
           <mat-label i18n="@@repsLabel">Reps</mat-label>
           <input
             matInput
@@ -385,6 +396,7 @@ export class StatsTableComponent {
   }>();
   readonly update = output<{
     id: string;
+    timestamp: string;
     reps: number;
     source: string;
     type?: string;
@@ -438,6 +450,7 @@ export class StatsTableComponent {
 
   readonly dataSource = new MatTableDataSource<PushupRecord>([]);
 
+  private readonly editedTimestamp = signal<Record<string, string>>({});
   private readonly editedReps = signal<Record<string, string>>({});
   private readonly editedSource = signal<Record<string, string>>({});
   private readonly editedType = signal<Record<string, string>>({});
@@ -531,6 +544,12 @@ export class StatsTableComponent {
 
   startEdit(entry: PushupRecord): void {
     this.editingId.set(entry._id);
+
+    // Prefer preserving existing timestamp format for <input type="datetime-local">
+    // Value must be like YYYY-MM-DDTHH:mm.
+    const ts = (entry.timestamp || '').slice(0, 16);
+    this.editedTimestamp.update((prev) => ({ ...prev, [entry._id]: ts }));
+
     this.editedReps.update((prev) => ({
       ...prev,
       [entry._id]: String(entry.reps),
@@ -551,12 +570,22 @@ export class StatsTableComponent {
     this.dialog.closeAll();
   }
 
+  editTimestamp(entry: PushupRecord): string {
+    return (
+      this.editedTimestamp()[entry._id] ?? (entry.timestamp || '').slice(0, 16)
+    );
+  }
+
   editReps(entry: PushupRecord): string {
     return this.editedReps()[entry._id] ?? String(entry.reps);
   }
 
   editSource(entry: PushupRecord): string {
     return this.editedSource()[entry._id] ?? entry.source;
+  }
+
+  setEditTimestamp(entry: PushupRecord, value: string): void {
+    this.editedTimestamp.update((prev) => ({ ...prev, [entry._id]: value }));
   }
 
   setEditReps(entry: PushupRecord, value: string): void {
@@ -573,6 +602,19 @@ export class StatsTableComponent {
 
   setEditType(entry: PushupRecord, value: string): void {
     this.editedType.update((prev) => ({ ...prev, [entry._id]: value }));
+  }
+
+  editTimestampById(): string {
+    const id = this.editingId();
+    if (!id) return '';
+    const entry = this.entries().find((row) => row._id === id);
+    return this.editedTimestamp()[id] ?? (entry?.timestamp || '').slice(0, 16);
+  }
+
+  setEditTimestampById(value: string): void {
+    const id = this.editingId();
+    if (!id) return;
+    this.editedTimestamp.update((prev) => ({ ...prev, [id]: value }));
   }
 
   editRepsById(): string {
@@ -606,6 +648,9 @@ export class StatsTableComponent {
     if (!id) return;
     const entry = this.entries().find((row) => row._id === id);
     if (!entry) return;
+
+    const timestamp = this.editTimestampById();
+    this.setEditTimestamp(entry, timestamp);
 
     const type = (this.editTypeControl.value || '').trim() || 'Standard';
     this.setEditType(entry, type);
@@ -648,10 +693,15 @@ export class StatsTableComponent {
   }
 
   save(entry: PushupRecord): void {
+    const timestamp = this.editTimestamp(entry);
+    if (!timestamp) return;
+
     const reps = Number(this.editReps(entry));
     if (Number.isNaN(reps) || reps <= 0) return;
+
     this.update.emit({
       id: entry._id,
+      timestamp,
       reps,
       source: this.editSource(entry) || 'web',
       type: this.editType(entry) || 'Standard',
