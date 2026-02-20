@@ -2,22 +2,22 @@ import { TestBed } from '@angular/core/testing';
 import { PLATFORM_ID } from '@angular/core';
 import { FirebaseAuthService } from './firebase-auth.service';
 
-const signInWithPopupMock = jest.fn(async () => undefined);
-const signOutMock = jest.fn(async () => undefined);
-const onAuthStateChangedMock = jest.fn((_: unknown, cb: (u: null) => void) =>
+const signInWithPopupMock = vi.fn(async () => undefined);
+const signOutMock = vi.fn(async () => undefined);
+const onAuthStateChangedMock = vi.fn((_: unknown, cb: (u: null) => void) =>
   cb(null)
 );
 
-jest.mock('firebase/app', () => ({
-  initializeApp: jest.fn(() => ({ name: 'app' })),
+vi.mock('firebase/app', () => ({
+  initializeApp: vi.fn(() => ({ name: 'app' })),
 }));
 
-jest.mock('firebase/auth', () => ({
-  GoogleAuthProvider: jest.fn(() => ({ providerId: 'google' })),
-  GithubAuthProvider: jest.fn(() => ({ providerId: 'github' })),
-  OAuthProvider: jest.fn((id: string) => ({ providerId: id })),
-  EmailAuthProvider: jest.fn(() => ({ providerId: 'email' })),
-  getAuth: jest.fn(() => ({ name: 'auth' })),
+vi.mock('firebase/auth', () => ({
+  GoogleAuthProvider: vi.fn(() => ({ providerId: 'google' })),
+  GithubAuthProvider: vi.fn(() => ({ providerId: 'github' })),
+  OAuthProvider: vi.fn((id: string) => ({ providerId: id })),
+  EmailAuthProvider: vi.fn(() => ({ providerId: 'email' })),
+  getAuth: vi.fn(() => ({ name: 'auth' })),
   onAuthStateChanged: (...args: unknown[]) => onAuthStateChangedMock(...args),
   signInWithPopup: (...args: unknown[]) => signInWithPopupMock(...args),
   signOut: (...args: unknown[]) => signOutMock(...args),
