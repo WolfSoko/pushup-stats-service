@@ -1,30 +1,52 @@
 import { TestBed } from '@angular/core/testing';
 import { PLATFORM_ID } from '@angular/core';
-import { FirebaseAuthService } from './firebase-auth.service';
+
+let FirebaseAuthService: typeof import('./firebase-auth.service').FirebaseAuthService;
 
 const signInWithPopupMock = vi.fn(async () => undefined);
 const signOutMock = vi.fn(async () => undefined);
-const onAuthStateChangedMock = vi.fn((_: unknown, cb: (u: null) => void) =>
-  cb(null)
-);
+const onAuthStateChangedMock = vi.fn();
 
 vi.mock('firebase/app', () => ({
   initializeApp: vi.fn(() => ({ name: 'app' })),
 }));
 
+class GoogleAuthProvider {
+  providerId = 'google';
+}
+
+class GithubAuthProvider {
+  providerId = 'github';
+}
+
+class OAuthProvider {
+  providerId: string;
+
+  constructor(id: string) {
+    this.providerId = id;
+  }
+}
+
+class EmailAuthProvider {
+  providerId = 'email';
+}
+
 vi.mock('firebase/auth', () => ({
-  GoogleAuthProvider: vi.fn(() => ({ providerId: 'google' })),
-  GithubAuthProvider: vi.fn(() => ({ providerId: 'github' })),
-  OAuthProvider: vi.fn((id: string) => ({ providerId: id })),
-  EmailAuthProvider: vi.fn(() => ({ providerId: 'email' })),
+  GoogleAuthProvider,
+  GithubAuthProvider,
+  OAuthProvider,
+  EmailAuthProvider,
   getAuth: vi.fn(() => ({ name: 'auth' })),
-  onAuthStateChanged: (...args: unknown[]) => onAuthStateChangedMock(...args),
-  signInWithPopup: (...args: unknown[]) => signInWithPopupMock(...args),
-  signOut: (...args: unknown[]) => signOutMock(...args),
+  onAuthStateChanged: (_auth: unknown, cb: (u: null) => void) => {
+    onAuthStateChangedMock();
+    cb(null);
+  },
+  signInWithPopup: () => signInWithPopupMock(),
+  signOut: () => signOutMock(),
 }));
 
 describe('FirebaseAuthService', () => {
-  beforeEach(() => {
+  beforeEach(async () => {
     (globalThis as unknown as { __PUS_FIREBASE__?: unknown }).__PUS_FIREBASE__ =
       {
         apiKey: 'key',
@@ -32,6 +54,8 @@ describe('FirebaseAuthService', () => {
         projectId: 'project',
         appId: 'app',
       };
+
+    ({ FirebaseAuthService } = await import('./firebase-auth.service'));
   });
 
   it('is disabled on server', () => {

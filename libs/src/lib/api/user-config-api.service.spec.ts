@@ -62,6 +62,27 @@ describe('UserConfigApiService', () => {
     req.flush(mockConfig);
   });
 
+  it('uses http backend when firebase service missing', (done) => {
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
+      providers: [{ provide: PLATFORM_ID, useValue: 'browser' }],
+    });
+
+    const service = TestBed.inject(UserConfigApiService);
+    const httpMock = TestBed.inject(HttpTestingController);
+
+    const mockConfig: UserConfig = { colorTheme: 'dark' };
+
+    service.getConfig('u4').subscribe((config) => {
+      expect(config).toEqual(mockConfig);
+      done();
+    });
+
+    const req = httpMock.expectOne('/api/users/u4/config');
+    expect(req.request.method).toBe('GET');
+    req.flush(mockConfig);
+  });
+
   it('delegates updateConfig to firebase when enabled', (done) => {
     const firebaseMock = {
       enabled: true,
@@ -80,7 +101,9 @@ describe('UserConfigApiService', () => {
     const httpMock = TestBed.inject(HttpTestingController);
 
     service.updateConfig('u1', { colorTheme: 'dark' }).subscribe(() => {
-      expect(firebaseMock.updateConfig).toHaveBeenCalledWith('u1', { colorTheme: 'dark' });
+      expect(firebaseMock.updateConfig).toHaveBeenCalledWith('u1', {
+        colorTheme: 'dark',
+      });
       httpMock.expectNone(/\/api\/users\/u1\/config/);
       done();
     });
@@ -113,5 +136,30 @@ describe('UserConfigApiService', () => {
     expect(req.request.method).toBe('PUT');
     expect(req.request.body).toEqual({ colorTheme: 'dark' });
     req.flush(mockConfig);
+  });
+
+  it('uses server baseUrl when platform is server', (done) => {
+    const firebaseMock = {
+      enabled: false,
+    } as unknown as FirebaseUserConfigService;
+
+    process.env['API_PORT'] = '9999';
+
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
+      providers: [
+        { provide: PLATFORM_ID, useValue: 'server' },
+        { provide: FirebaseUserConfigService, useValue: firebaseMock },
+      ],
+    });
+
+    const service = TestBed.inject(UserConfigApiService);
+    const httpMock = TestBed.inject(HttpTestingController);
+
+    service.getConfig('u5').subscribe(() => done());
+
+    const req = httpMock.expectOne('http://127.0.0.1:9999/api/users/u5/config');
+    expect(req.request.method).toBe('GET');
+    req.flush({});
   });
 });

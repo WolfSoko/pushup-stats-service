@@ -90,4 +90,18 @@ describe('FirebaseUserConfigService', () => {
       });
     });
   });
+
+  it('handles empty snapshot data', (done) => {
+    getDocMock.mockResolvedValueOnce({ data: () => null });
+
+    TestBed.configureTestingModule({
+      providers: [{ provide: PLATFORM_ID, useValue: 'browser' }],
+    });
+
+    const service = TestBed.inject(FirebaseUserConfigService);
+    service.getConfig('u2').subscribe((cfg) => {
+      expect(cfg).toEqual({});
+      done();
+    });
+  });
 });
