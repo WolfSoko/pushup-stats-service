@@ -24,6 +24,21 @@ npx nx serve api
 npx nx serve web
 ```
 
+## Firebase (Phase 1 Scaffold)
+
+Im Browser kann die Firebase-Konfiguration über `window.__PUS_FIREBASE__` gesetzt werden:
+
+```js
+window.__PUS_FIREBASE__ = {
+  apiKey: '... ',
+  authDomain: '... ',
+  projectId: '... ',
+  appId: '... '
+};
+```
+
+Sobald konfiguriert, übernimmt `UserContextService` den Firebase `uid` als `userId`.
+
 ## Qualitätssicherung
 
 ```bash

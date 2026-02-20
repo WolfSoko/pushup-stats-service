@@ -120,7 +120,8 @@
     "reflect-metadata": "0.2.2",
     "rxjs": "7.8.0",
     "socket.io": "4.8.3",
-    "socket.io-client": "4.8.3"
+    "socket.io-client": "4.8.3",
+    "firebase": "11.6.0"
   },
   "packageManager": "npm@11.10.0+sha256.43c653384c39617756846ad405705061a78fb6bbddb2ced57ab79fb92e8af2a7"
 }
