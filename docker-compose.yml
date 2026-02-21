@@ -51,6 +51,8 @@ services:
     environment:
       NODE_ENV: ${NODE_ENV:-production}
       PORT: '8789'
+      API_HOST: api
+      API_PORT: '8788'
     expose:
       - '8789'
     healthcheck:
