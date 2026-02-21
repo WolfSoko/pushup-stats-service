@@ -9,7 +9,19 @@ import { StatsResponse } from '@pu-stats/models';
 import { StatsApiService } from './stats-api.service';
 
 describe('StatsApiService', () => {
+  let previousEnv: NodeJS.ProcessEnv;
+
+  beforeEach(() => {
+    previousEnv = { ...process.env };
+  });
+
   afterEach(() => {
+    // Restore any env mutations done in tests
+    for (const key of Object.keys(process.env)) {
+      if (!(key in previousEnv)) delete process.env[key];
+    }
+    Object.assign(process.env, previousEnv);
+
     TestBed.resetTestingModule();
   });
 
@@ -65,7 +77,7 @@ describe('StatsApiService', () => {
     const { service, httpMock } = setup('browser');
     const transferState = TestBed.inject(TransferState);
     const key = makeStateKey<StatsResponse>(
-      'stats:from=2026-02-01&to=2026-02-10',
+      'stats:from=2026-02-01&to=2026-02-10'
     );
     const cachedPayload = {
       meta: {
@@ -93,90 +105,43 @@ describe('StatsApiService', () => {
 
   it('uses server-local base url and respects API_PORT in SSR', () => {
     const { service, httpMock } = setup('server');
-    const previousPort = process.env.API_PORT;
-    const previousHost = process.env.API_HOST;
     process.env.API_PORT = '9999';
     delete process.env.API_HOST;
 
-    try {
-      service.load({ to: '2026-02-10' }).subscribe();
+    service.load({ to: '2026-02-10' }).subscribe();
 
-      const req = httpMock.expectOne(
-        'http://127.0.0.1:9999/api/stats?to=2026-02-10',
-      );
-      expect(req.request.method).toBe('GET');
-      req.flush({ meta: {}, series: [] });
-      httpMock.verify();
-    } finally {
-      if (previousPort === undefined) {
-        delete process.env.API_PORT;
-      } else {
-        process.env.API_PORT = previousPort;
-      }
-      if (previousHost === undefined) {
-        delete process.env.API_HOST;
-      } else {
-        process.env.API_HOST = previousHost;
-      }
-    }
+    const req = httpMock.expectOne(
+      'http://127.0.0.1:9999/api/stats?to=2026-02-10'
+    );
+    expect(req.request.method).toBe('GET');
+    req.flush({ meta: {}, series: [] });
+    httpMock.verify();
   });
 
   it('respects API_HOST on server', () => {
     const { service, httpMock } = setup('server');
-    const previousPort = process.env.API_PORT;
-    const previousHost = process.env.API_HOST;
     process.env.API_PORT = '8788';
     process.env.API_HOST = 'api';
 
-    try {
-      service.load({ to: '2026-02-10' }).subscribe();
+    service.load({ to: '2026-02-10' }).subscribe();
 
-      const req = httpMock.expectOne(
-        'http://api:8788/api/stats?to=2026-02-10',
-      );
-      expect(req.request.method).toBe('GET');
-      req.flush({ meta: {}, series: [] });
-      httpMock.verify();
-    } finally {
-      if (previousPort === undefined) {
-        delete process.env.API_PORT;
-      } else {
-        process.env.API_PORT = previousPort;
-      }
-      if (previousHost === undefined) {
-        delete process.env.API_HOST;
-      } else {
-        process.env.API_HOST = previousHost;
-      }
-    }
+    const req = httpMock.expectOne('http://api:8788/api/stats?to=2026-02-10');
+    expect(req.request.method).toBe('GET');
+    req.flush({ meta: {}, series: [] });
+    httpMock.verify();
   });
 
   it('falls back to port 8787 on server when API_PORT is missing', () => {
     const { service, httpMock } = setup('server');
-    const previousPort = process.env.API_PORT;
-    const previousHost = process.env.API_HOST;
     delete process.env.API_PORT;
     delete process.env.API_HOST;
 
-    try {
-      service.load().subscribe();
+    service.load().subscribe();
 
-      const req = httpMock.expectOne('http://127.0.0.1:8787/api/stats');
-      expect(req.request.method).toBe('GET');
-      req.flush({ meta: {}, series: [] });
-      httpMock.verify();
-    } finally {
-      if (previousPort === undefined) {
-        delete process.env.API_PORT;
-      } else {
-        process.env.API_PORT = previousPort;
-      }
-      if (previousHost === undefined) {
-        delete process.env.API_HOST;
-      } else {
-        process.env.API_HOST = previousHost;
-      }
-    }
+    const req = httpMock.expectOne('http://127.0.0.1:8787/api/stats');
+    expect(req.request.method).toBe('GET');
+    req.flush({ meta: {}, series: [] });
+    httpMock.verify();
   });
 
   it('lists pushups and filters by date range client-side', () => {

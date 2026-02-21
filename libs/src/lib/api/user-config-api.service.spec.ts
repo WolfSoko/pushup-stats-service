@@ -10,6 +10,22 @@ import { of } from 'rxjs';
 import { UserConfig } from '@pu-stats/models';
 
 describe('UserConfigApiService', () => {
+  let previousEnv: NodeJS.ProcessEnv;
+
+  beforeEach(() => {
+    previousEnv = { ...process.env };
+  });
+
+  afterEach(() => {
+    // Restore any env mutations done in tests
+    for (const key of Object.keys(process.env)) {
+      if (!(key in previousEnv)) delete process.env[key];
+    }
+    Object.assign(process.env, previousEnv);
+
+    TestBed.resetTestingModule();
+  });
+
   it('delegates to firebase when enabled', (done) => {
     const firebaseMock = {
       enabled: true,
@@ -143,8 +159,6 @@ describe('UserConfigApiService', () => {
       enabled: false,
     } as unknown as FirebaseUserConfigService;
 
-    const previousPort = process.env.API_PORT;
-    const previousHost = process.env.API_HOST;
     process.env['API_PORT'] = '9999';
     delete process.env.API_HOST;
 
@@ -159,11 +173,7 @@ describe('UserConfigApiService', () => {
     const service = TestBed.inject(UserConfigApiService);
     const httpMock = TestBed.inject(HttpTestingController);
 
-    service.getConfig('u5').subscribe(() => {
-      process.env.API_PORT = previousPort;
-      process.env.API_HOST = previousHost;
-      done();
-    });
+    service.getConfig('u5').subscribe(() => done());
 
     const req = httpMock.expectOne('http://127.0.0.1:9999/api/users/u5/config');
     expect(req.request.method).toBe('GET');
@@ -175,8 +185,6 @@ describe('UserConfigApiService', () => {
       enabled: false,
     } as unknown as FirebaseUserConfigService;
 
-    const previousPort = process.env.API_PORT;
-    const previousHost = process.env.API_HOST;
     process.env['API_PORT'] = '8788';
     process.env['API_HOST'] = 'api';
 
@@ -191,11 +199,7 @@ describe('UserConfigApiService', () => {
     const service = TestBed.inject(UserConfigApiService);
     const httpMock = TestBed.inject(HttpTestingController);
 
-    service.getConfig('u6').subscribe(() => {
-      process.env.API_PORT = previousPort;
-      process.env.API_HOST = previousHost;
-      done();
-    });
+    service.getConfig('u6').subscribe(() => done());
 
     const req = httpMock.expectOne('http://api:8788/api/users/u6/config');
     expect(req.request.method).toBe('GET');
