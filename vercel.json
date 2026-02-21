@@ -1,0 +1,25 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "npx nx build web --configuration=production",
+  "outputDirectory": "dist/web/browser",
+  "devCommand": "npx nx serve web",
+  "installCommand": "npm install",
+  "framework": null,
+  "regions": ["fra1"],
+  "functions": {
+    "dist/web/server/**/*.mjs": {
+      "runtime": "nodejs22.x",
+      "maxDuration": 10
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "https://pushups.tail433f94.ts.net/api/:path*"
+    },
+    {
+      "source": "/socket.io/:path*",
+      "destination": "https://pushups.tail433f94.ts.net/socket.io/:path*"
+    }
+  ]
+}
