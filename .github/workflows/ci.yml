@@ -45,7 +45,7 @@ jobs:
 
       - name: Nx chain (lint + test + build + e2e-ci)
         run: |
-          npx nx affected -t=build -c=production --localize & \
+          npx nx affected -t=build -c=production & \
           npx nx affected -t lint & \
           npx nx affected -t test & \
           npx nx affected -t=e2e-ci -c=ci
