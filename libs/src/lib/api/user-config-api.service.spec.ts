@@ -143,7 +143,10 @@ describe('UserConfigApiService', () => {
       enabled: false,
     } as unknown as FirebaseUserConfigService;
 
+    const previousPort = process.env.API_PORT;
+    const previousHost = process.env.API_HOST;
     process.env['API_PORT'] = '9999';
+    delete process.env.API_HOST;
 
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
@@ -156,9 +159,45 @@ describe('UserConfigApiService', () => {
     const service = TestBed.inject(UserConfigApiService);
     const httpMock = TestBed.inject(HttpTestingController);
 
-    service.getConfig('u5').subscribe(() => done());
+    service.getConfig('u5').subscribe(() => {
+      process.env.API_PORT = previousPort;
+      process.env.API_HOST = previousHost;
+      done();
+    });
 
     const req = httpMock.expectOne('http://127.0.0.1:9999/api/users/u5/config');
+    expect(req.request.method).toBe('GET');
+    req.flush({});
+  });
+
+  it('respects API_HOST on the server', (done) => {
+    const firebaseMock = {
+      enabled: false,
+    } as unknown as FirebaseUserConfigService;
+
+    const previousPort = process.env.API_PORT;
+    const previousHost = process.env.API_HOST;
+    process.env['API_PORT'] = '8788';
+    process.env['API_HOST'] = 'api';
+
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
+      providers: [
+        { provide: PLATFORM_ID, useValue: 'server' },
+        { provide: FirebaseUserConfigService, useValue: firebaseMock },
+      ],
+    });
+
+    const service = TestBed.inject(UserConfigApiService);
+    const httpMock = TestBed.inject(HttpTestingController);
+
+    service.getConfig('u6').subscribe(() => {
+      process.env.API_PORT = previousPort;
+      process.env.API_HOST = previousHost;
+      done();
+    });
+
+    const req = httpMock.expectOne('http://api:8788/api/users/u6/config');
     expect(req.request.method).toBe('GET');
     req.flush({});
   });

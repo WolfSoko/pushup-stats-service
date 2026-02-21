@@ -94,7 +94,9 @@ describe('StatsApiService', () => {
   it('uses server-local base url and respects API_PORT in SSR', () => {
     const { service, httpMock } = setup('server');
     const previousPort = process.env.API_PORT;
+    const previousHost = process.env.API_HOST;
     process.env.API_PORT = '9999';
+    delete process.env.API_HOST;
 
     try {
       service.load({ to: '2026-02-10' }).subscribe();
@@ -111,13 +113,50 @@ describe('StatsApiService', () => {
       } else {
         process.env.API_PORT = previousPort;
       }
+      if (previousHost === undefined) {
+        delete process.env.API_HOST;
+      } else {
+        process.env.API_HOST = previousHost;
+      }
+    }
+  });
+
+  it('respects API_HOST on server', () => {
+    const { service, httpMock } = setup('server');
+    const previousPort = process.env.API_PORT;
+    const previousHost = process.env.API_HOST;
+    process.env.API_PORT = '8788';
+    process.env.API_HOST = 'api';
+
+    try {
+      service.load({ to: '2026-02-10' }).subscribe();
+
+      const req = httpMock.expectOne(
+        'http://api:8788/api/stats?to=2026-02-10',
+      );
+      expect(req.request.method).toBe('GET');
+      req.flush({ meta: {}, series: [] });
+      httpMock.verify();
+    } finally {
+      if (previousPort === undefined) {
+        delete process.env.API_PORT;
+      } else {
+        process.env.API_PORT = previousPort;
+      }
+      if (previousHost === undefined) {
+        delete process.env.API_HOST;
+      } else {
+        process.env.API_HOST = previousHost;
+      }
     }
   });
 
   it('falls back to port 8787 on server when API_PORT is missing', () => {
     const { service, httpMock } = setup('server');
     const previousPort = process.env.API_PORT;
+    const previousHost = process.env.API_HOST;
     delete process.env.API_PORT;
+    delete process.env.API_HOST;
 
     try {
       service.load().subscribe();
@@ -131,6 +170,11 @@ describe('StatsApiService', () => {
         delete process.env.API_PORT;
       } else {
         process.env.API_PORT = previousPort;
+      }
+      if (previousHost === undefined) {
+        delete process.env.API_HOST;
+      } else {
+        process.env.API_HOST = previousHost;
       }
     }
   });

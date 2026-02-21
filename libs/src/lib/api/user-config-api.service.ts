@@ -34,8 +34,9 @@ export class UserConfigApiService {
   }
 
   private baseUrl(): string {
-    return isPlatformServer(this.platformId)
-      ? `http://127.0.0.1:${process?.env?.['API_PORT'] || '8787'}`
-      : '';
+    if (!isPlatformServer(this.platformId)) return '';
+    const host = process?.env?.['API_HOST'] || '127.0.0.1';
+    const port = process?.env?.['API_PORT'] || '8787';
+    return `http://${host}:${port}`;
   }
 }
