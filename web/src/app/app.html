@@ -82,6 +82,33 @@
         <mat-icon matListItemIcon>language</mat-icon>
         <span matListItemTitle i18n="@@nav.lang.en">English</span>
       </a>
+
+      @if (auth.enabled) {
+      <mat-divider></mat-divider>
+      <div
+        class="mat-subtitle-2"
+        style="padding: 8px 16px"
+        i18n="@@nav.account"
+      >
+        Account
+      </div>
+
+      @if (auth.user(); as user) {
+      <div mat-list-item>
+        <span matListItemTitle class="mat-caption" style="opacity: 0.7">
+          {{ user.email || user.uid }}
+        </span>
+      </div>
+      <a mat-list-item (click)="logout()">
+        <mat-icon matListItemIcon>logout</mat-icon>
+        <span matListItemTitle i18n="@@nav.logout">Logout</span>
+      </a>
+      } @else {
+      <a mat-list-item routerLink="/settings" (click)="navOpen.set(false)">
+        <mat-icon matListItemIcon>login</mat-icon>
+        <span matListItemTitle i18n="@@nav.login">Login</span>
+      </a>
+      } }
     </mat-nav-list>
   </mat-sidenav>
 
