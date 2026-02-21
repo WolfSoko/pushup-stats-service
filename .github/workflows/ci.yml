@@ -41,10 +41,10 @@ jobs:
 
       - name: Nx chain (lint + test + build + e2e-ci)
         run: |
-          nx affected -t=build -c=production --localize & \
-          nx affected -t lint & \
-          nx affected -t test & \
-          nx affected -t=e2e-ci -c=ci
+          npx nx affected -t=build -c=production --localize & \
+          npx nx affected -t lint & \
+          npx nx affected -t test & \
+          npx nx affected -t=e2e-ci -c=ci
 
       - name: Nx fix-ci (always)
         if: always()
