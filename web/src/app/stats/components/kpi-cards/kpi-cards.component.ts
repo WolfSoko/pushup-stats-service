@@ -8,7 +8,7 @@ import { MatCardModule } from '@angular/material/card';
     <section class="kpis">
       <mat-card class="kpi-card primary">
         <mat-card-header>
-          <mat-card-title>Gesamt</mat-card-title>
+          <mat-card-title i18n="@@kpi.total">Gesamt</mat-card-title>
         </mat-card-header>
         <mat-card-content>
           <b>{{ total() }}</b>
@@ -16,7 +16,7 @@ import { MatCardModule } from '@angular/material/card';
       </mat-card>
       <mat-card class="kpi-card">
         <mat-card-header>
-          <mat-card-title>Tage</mat-card-title>
+          <mat-card-title i18n="@@kpi.days">Tage</mat-card-title>
         </mat-card-header>
         <mat-card-content>
           <b>{{ days() }}</b>
@@ -24,7 +24,7 @@ import { MatCardModule } from '@angular/material/card';
       </mat-card>
       <mat-card class="kpi-card">
         <mat-card-header>
-          <mat-card-title>Einträge</mat-card-title>
+          <mat-card-title i18n="@@kpi.entries">Einträge</mat-card-title>
         </mat-card-header>
         <mat-card-content>
           <b>{{ entries() }}</b>
@@ -32,7 +32,7 @@ import { MatCardModule } from '@angular/material/card';
       </mat-card>
       <mat-card class="kpi-card accent">
         <mat-card-header>
-          <mat-card-title>Ø / Tag</mat-card-title>
+          <mat-card-title i18n="@@kpi.avg">Ø / Tag</mat-card-title>
         </mat-card-header>
         <mat-card-content>
           <b>{{ avg() }}</b>

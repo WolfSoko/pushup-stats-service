@@ -29,14 +29,16 @@ import { StatsTableComponent } from '../components/stats-table/stats-table.compo
     <main class="page-wrap">
       <mat-card>
         <mat-card-header>
-          <mat-card-title>Daten</mat-card-title>
-          <mat-card-subtitle>Filter und Verwaltung</mat-card-subtitle>
+          <mat-card-title i18n="@@entries.title">Daten</mat-card-title>
+          <mat-card-subtitle i18n="@@entries.subtitle"
+            >Filter und Verwaltung</mat-card-subtitle
+          >
         </mat-card-header>
 
         <mat-card-content>
           <section class="filters">
             <mat-form-field appearance="outline">
-              <mat-label>Datum von</mat-label>
+              <mat-label i18n="@@entries.dateFrom">Datum von</mat-label>
               <input
                 matInput
                 type="date"
@@ -46,7 +48,7 @@ import { StatsTableComponent } from '../components/stats-table/stats-table.compo
             </mat-form-field>
 
             <mat-form-field appearance="outline">
-              <mat-label>Datum bis</mat-label>
+              <mat-label i18n="@@entries.dateTo">Datum bis</mat-label>
               <input
                 matInput
                 type="date"
@@ -56,9 +58,11 @@ import { StatsTableComponent } from '../components/stats-table/stats-table.compo
             </mat-form-field>
 
             <mat-form-field appearance="outline">
-              <mat-label>Quelle</mat-label>
+              <mat-label i18n="@@entries.sourceFilter">Quelle</mat-label>
               <mat-select [value]="source()" (valueChange)="source.set($event)">
-                <mat-option value="">Alle</mat-option>
+                <mat-option value="" i18n="@@entries.allOption"
+                  >Alle</mat-option
+                >
                 @for (option of sourceOptions(); track option) {
                   <mat-option [value]="option">{{ option }}</mat-option>
                 }
@@ -66,9 +70,11 @@ import { StatsTableComponent } from '../components/stats-table/stats-table.compo
             </mat-form-field>
 
             <mat-form-field appearance="outline">
-              <mat-label>Typ</mat-label>
+              <mat-label i18n="@@entries.typeFilter">Typ</mat-label>
               <mat-select [value]="type()" (valueChange)="type.set($event)">
-                <mat-option value="">Alle</mat-option>
+                <mat-option value="" i18n="@@entries.allOption"
+                  >Alle</mat-option
+                >
                 @for (option of typeOptions(); track option) {
                   <mat-option [value]="option">{{ option }}</mat-option>
                 }
@@ -76,7 +82,7 @@ import { StatsTableComponent } from '../components/stats-table/stats-table.compo
             </mat-form-field>
 
             <mat-form-field appearance="outline">
-              <mat-label>Reps min</mat-label>
+              <mat-label i18n="@@entries.repsMin">Reps min</mat-label>
               <input
                 matInput
                 type="number"
@@ -87,7 +93,7 @@ import { StatsTableComponent } from '../components/stats-table/stats-table.compo
             </mat-form-field>
 
             <mat-form-field appearance="outline">
-              <mat-label>Reps max</mat-label>
+              <mat-label i18n="@@entries.repsMax">Reps max</mat-label>
               <input
                 matInput
                 type="number"

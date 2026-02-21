@@ -43,7 +43,7 @@ export interface PieDatum {
         </div>
       </div>
     } @else {
-      <div class="empty">Keine Daten</div>
+      <div class="empty" i18n="@@pie.noData">Keine Daten</div>
     }
   `,
   styles: `

@@ -108,7 +108,7 @@
     </unit>
     <unit id="quickRangeAria">
       <notes>
-        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:32</note>
+        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:34,35</note>
       </notes>
       <segment>
         <source>Schnellwahl Zeitraum</source>
@@ -116,7 +116,7 @@
     </unit>
     <unit id="rangeModeDay">
       <notes>
-        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:34,35</note>
+        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:42,43</note>
       </notes>
       <segment>
         <source>Tag</source>
@@ -124,7 +124,7 @@
     </unit>
     <unit id="rangeModeWeek">
       <notes>
-        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:35,36</note>
+        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:45,46</note>
       </notes>
       <segment>
         <source>Woche</source>
@@ -132,7 +132,7 @@
     </unit>
     <unit id="rangeModeMonth">
       <notes>
-        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:36,37</note>
+        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:48,49</note>
       </notes>
       <segment>
         <source>Monat</source>
@@ -140,7 +140,7 @@
     </unit>
     <unit id="rangeBack">
       <notes>
-        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:41,43</note>
+        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:59,61</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">chevron_left</pc> Zurück </source>
@@ -148,7 +148,7 @@
     </unit>
     <unit id="rangeToday">
       <notes>
-        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:45,46</note>
+        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:68,69</note>
       </notes>
       <segment>
         <source> Heute </source>
@@ -156,7 +156,7 @@
     </unit>
     <unit id="rangeForward">
       <notes>
-        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:48,51</note>
+        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:76,79</note>
       </notes>
       <segment>
         <source> Vor <pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">chevron_right</pc></source>
@@ -164,7 +164,7 @@
     </unit>
     <unit id="rangeLabel">
       <notes>
-        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:55,56</note>
+        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:83,84</note>
       </notes>
       <segment>
         <source>Zeitraum</source>
@@ -172,7 +172,7 @@
     </unit>
     <unit id="rangeFrom">
       <notes>
-        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:57</note>
+        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:89</note>
       </notes>
       <segment>
         <source>Von</source>
@@ -180,10 +180,74 @@
     </unit>
     <unit id="rangeTo">
       <notes>
-        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:58</note>
+        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:95</note>
       </notes>
       <segment>
         <source>Bis</source>
+      </segment>
+    </unit>
+    <unit id="heatmap.loading">
+      <notes>
+        <note category="location">web/src/app/stats/components/heatmap/heatmap.component.ts:35,39</note>
+      </notes>
+      <segment>
+        <source>Heatmap wird im Browser geladen…</source>
+      </segment>
+    </unit>
+    <unit id="chart.subtitle">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:32,33</note>
+      </notes>
+      <segment>
+        <source>Intervallwerte als Balken, Tages-Integral + gleitender Durchschnitt als Trendlinien</source>
+      </segment>
+    </unit>
+    <unit id="chart.legendAria">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:42</note>
+      </notes>
+      <segment>
+        <source>Legende</source>
+      </segment>
+    </unit>
+    <unit id="chart.interval">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:43,44</note>
+      </notes>
+      <segment>
+        <source>Intervallwert</source>
+      </segment>
+    </unit>
+    <unit id="chart.dayIntegral">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:44,45</note>
+      </notes>
+      <segment>
+        <source>Tages-Integral</source>
+      </segment>
+    </unit>
+    <unit id="chart.movingAvg">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:45,46</note>
+      </notes>
+      <segment>
+        <source>Gleitender Durchschnitt</source>
+      </segment>
+    </unit>
+    <unit id="chart.titleHourly">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:63</note>
+      </notes>
+      <segment>
+        <source>Verlauf (Stundenwerte)</source>
+      </segment>
+    </unit>
+    <unit id="chart.titleDaily">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:64</note>
+      </notes>
+      <segment>
+        <source>Verlauf (Tageswerte)</source>
       </segment>
     </unit>
     <unit id="entriesTitle">
@@ -196,7 +260,7 @@
     </unit>
     <unit id="entriesCount">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:62</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:63</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="INTERPOLATION" disp="{{ entries().length }}"/> Einträge</source>
@@ -204,7 +268,7 @@
     </unit>
     <unit id="sourceColumnToggle">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:71,75</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:73,77</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;"><ph id="1" equiv="INTERPOLATION" disp="{{
@@ -214,15 +278,15 @@
     </unit>
     <unit id="noEntriesInSelectedRange">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:95,97</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:98,101</note>
       </notes>
       <segment>
-        <source>Keine Einträge im gewählten Zeitraum.</source>
+        <source> Keine Einträge im gewählten Zeitraum. </source>
       </segment>
     </unit>
     <unit id="createNewEntry">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:107,109</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:111,113</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">add</pc> Neu </source>
@@ -230,7 +294,7 @@
     </unit>
     <unit id="colTime">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:122,123</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:127,128</note>
       </notes>
       <segment>
         <source>Zeit</source>
@@ -238,7 +302,7 @@
     </unit>
     <unit id="colReps">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:129,130</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:136,137</note>
       </notes>
       <segment>
         <source>Reps</source>
@@ -246,7 +310,7 @@
     </unit>
     <unit id="colType">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:136,137</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:145,146</note>
       </notes>
       <segment>
         <source>Typ</source>
@@ -254,7 +318,7 @@
     </unit>
     <unit id="colSource">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:143,144</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:154,155</note>
       </notes>
       <segment>
         <source>Quelle</source>
@@ -262,7 +326,7 @@
     </unit>
     <unit id="colActions">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:150,151</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:163,164</note>
       </notes>
       <segment>
         <source>Aktion</source>
@@ -270,7 +334,7 @@
     </unit>
     <unit id="editAria">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:155,156</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:169,170</note>
       </notes>
       <segment>
         <source>Bearbeiten</source>
@@ -278,7 +342,7 @@
     </unit>
     <unit id="editTitle">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:157,158</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:171,172</note>
       </notes>
       <segment>
         <source>Bearbeiten</source>
@@ -286,7 +350,7 @@
     </unit>
     <unit id="deleteAria">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:168</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:182</note>
       </notes>
       <segment>
         <source>Löschen</source>
@@ -294,7 +358,7 @@
     </unit>
     <unit id="deleteTitle">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:170</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:184</note>
       </notes>
       <segment>
         <source>Löschen</source>
@@ -302,7 +366,7 @@
     </unit>
     <unit id="createDialogTitle">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:194,196</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:208,210</note>
       </notes>
       <segment>
         <source>Neuen Eintrag anlegen</source>
@@ -310,7 +374,8 @@
     </unit>
     <unit id="timestampLabel">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:198,199</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:212,213</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:299,300</note>
       </notes>
       <segment>
         <source>Zeitpunkt</source>
@@ -318,8 +383,8 @@
     </unit>
     <unit id="repsLabel">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:209,210</note>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:280,281</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:223,224</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:310,311</note>
       </notes>
       <segment>
         <source>Reps</source>
@@ -327,8 +392,8 @@
     </unit>
     <unit id="typeLabel">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:221,222</note>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:292,293</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:235,236</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:322,323</note>
       </notes>
       <segment>
         <source>Typ</source>
@@ -336,8 +401,8 @@
     </unit>
     <unit id="typePlaceholder">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:227,228</note>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:298,299</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:241,242</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:328,329</note>
       </notes>
       <segment>
         <source>Pick one / Custom</source>
@@ -345,8 +410,8 @@
     </unit>
     <unit id="sourceLabel">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:238,239</note>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:309,310</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:252,253</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:339,340</note>
       </notes>
       <segment>
         <source>Quelle</source>
@@ -354,8 +419,8 @@
     </unit>
     <unit id="sourcePlaceholder">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:244,245</note>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:315,316</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:258,259</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:345,346</note>
       </notes>
       <segment>
         <source>web / whatsapp / Custom</source>
@@ -363,8 +428,8 @@
     </unit>
     <unit id="cancel">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:257,258</note>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:328,329</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:276,277</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:358,359</note>
       </notes>
       <segment>
         <source> Abbrechen </source>
@@ -372,7 +437,7 @@
     </unit>
     <unit id="saveEntry">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:266,272</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:285,291</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_BLOCK_IF" equivEnd="CLOSE_BLOCK_IF" type="other" dispStart="@if (isCreateBusy()) {" dispEnd="}"><pc id="1" equivStart="START_TAG_MAT_SPINNER" equivEnd="CLOSE_TAG_MAT_SPINNER" type="other" dispStart="&lt;mat-spinner diameter=&quot;14&quot;&gt;" dispEnd="&lt;/mat-spinner&gt;"></pc></pc><pc id="2" equivStart="START_BLOCK_ELSE" equivEnd="CLOSE_BLOCK_ELSE" type="other" dispStart="@else {" dispEnd="}"> Speichern </pc></source>
@@ -380,7 +445,7 @@
     </unit>
     <unit id="editDialogTitle">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:276,278</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:295,297</note>
       </notes>
       <segment>
         <source>Eintrag bearbeiten</source>
@@ -388,15 +453,202 @@
     </unit>
     <unit id="saveChanges">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:337,343</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:367,373</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_BLOCK_IF" equivEnd="CLOSE_BLOCK_IF" type="other" dispStart="@if (editingId() &amp;&amp; isBusy(&apos;update&apos;, editBusyId())) {" dispEnd="}"><pc id="1" equivStart="START_TAG_MAT_SPINNER" equivEnd="CLOSE_TAG_MAT_SPINNER" type="other" dispStart="&lt;mat-spinner diameter=&quot;14&quot;&gt;" dispEnd="&lt;/mat-spinner&gt;"></pc></pc><pc id="2" equivStart="START_BLOCK_ELSE" equivEnd="CLOSE_BLOCK_ELSE" type="other" dispStart="@else {" dispEnd="}"> Speichern </pc></source>
       </segment>
     </unit>
+    <unit id="pie.noData">
+      <notes>
+        <note category="location">web/src/app/stats/components/type-pie/type-pie.component.ts:46,49</note>
+      </notes>
+      <segment>
+        <source>Keine Daten</source>
+      </segment>
+    </unit>
+    <unit id="analysis.weekTrendTitle">
+      <notes>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:23,24</note>
+      </notes>
+      <segment>
+        <source>Wochentrend</source>
+      </segment>
+    </unit>
+    <unit id="analysis.weekCol">
+      <notes>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:28,29</note>
+      </notes>
+      <segment>
+        <source>Woche</source>
+      </segment>
+    </unit>
+    <unit id="analysis.repsCol">
+      <notes>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:32,33</note>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:52,53</note>
+      </notes>
+      <segment>
+        <source>Reps</source>
+      </segment>
+    </unit>
+    <unit id="analysis.monthTrendTitle">
+      <notes>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:43,44</note>
+      </notes>
+      <segment>
+        <source>Monatstrend</source>
+      </segment>
+    </unit>
+    <unit id="analysis.monthCol">
+      <notes>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:48,49</note>
+      </notes>
+      <segment>
+        <source>Monat</source>
+      </segment>
+    </unit>
+    <unit id="analysis.bestStreaksTitle">
+      <notes>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:63,64</note>
+      </notes>
+      <segment>
+        <source>Bestwerte &amp; Streaks</source>
+      </segment>
+    </unit>
+    <unit id="analysis.bestSingleEntry">
+      <notes>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:67,68</note>
+      </notes>
+      <segment>
+        <source>Bestwert Einzel-Eintrag:</source>
+      </segment>
+    </unit>
+    <unit id="analysis.bestDay">
+      <notes>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:71,73</note>
+      </notes>
+      <segment>
+        <source>Bester Tag:</source>
+      </segment>
+    </unit>
+    <unit id="analysis.currentStreak">
+      <notes>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:77,78</note>
+      </notes>
+      <segment>
+        <source>Aktuelle Streak:</source>
+      </segment>
+    </unit>
+    <unit id="analysis.streakDays">
+      <notes>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:78</note>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:82</note>
+      </notes>
+      <segment>
+        <source><ph id="0" equiv="INTERPOLATION" disp="{{ currentStreak() }}"/> Tage</source>
+      </segment>
+    </unit>
+    <unit id="analysis.longestStreak">
+      <notes>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:81,82</note>
+      </notes>
+      <segment>
+        <source>Längste Streak:</source>
+      </segment>
+    </unit>
+    <unit id="analysis.typesTitle">
+      <notes>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:89,90</note>
+      </notes>
+      <segment>
+        <source>Typen (Anteile)</source>
+      </segment>
+    </unit>
+    <unit id="analysis.heatmapTitle">
+      <notes>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:99,100</note>
+      </notes>
+      <segment>
+        <source>Heatmap (Wochentag/Uhrzeit)</source>
+      </segment>
+    </unit>
+    <unit id="entries.title">
+      <notes>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts:32,33</note>
+      </notes>
+      <segment>
+        <source>Daten</source>
+      </segment>
+    </unit>
+    <unit id="entries.subtitle">
+      <notes>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts:33,34</note>
+      </notes>
+      <segment>
+        <source>Filter und Verwaltung</source>
+      </segment>
+    </unit>
+    <unit id="entries.dateFrom">
+      <notes>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts:39,40</note>
+      </notes>
+      <segment>
+        <source>Datum von</source>
+      </segment>
+    </unit>
+    <unit id="entries.dateTo">
+      <notes>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts:49,50</note>
+      </notes>
+      <segment>
+        <source>Datum bis</source>
+      </segment>
+    </unit>
+    <unit id="entries.sourceFilter">
+      <notes>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts:59,60</note>
+      </notes>
+      <segment>
+        <source>Quelle</source>
+      </segment>
+    </unit>
+    <unit id="entries.allOption">
+      <notes>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts:61,62</note>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts:71,72</note>
+      </notes>
+      <segment>
+        <source>Alle</source>
+      </segment>
+    </unit>
+    <unit id="entries.typeFilter">
+      <notes>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts:69,70</note>
+      </notes>
+      <segment>
+        <source>Typ</source>
+      </segment>
+    </unit>
+    <unit id="entries.repsMin">
+      <notes>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts:79,80</note>
+      </notes>
+      <segment>
+        <source>Reps min</source>
+      </segment>
+    </unit>
+    <unit id="entries.repsMax">
+      <notes>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts:90,91</note>
+      </notes>
+      <segment>
+        <source>Reps max</source>
+      </segment>
+    </unit>
     <unit id="settingsTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:31,32</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:32,33</note>
       </notes>
       <segment>
         <source>Einstellungen</source>
@@ -404,7 +656,7 @@
     </unit>
     <unit id="settingsSubtitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:32,33</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:34,35</note>
       </notes>
       <segment>
         <source>User-Profil &amp; Tagesziel</source>
@@ -412,7 +664,7 @@
     </unit>
     <unit id="userIdLabel">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:38,39</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:41,42</note>
       </notes>
       <segment>
         <source>User ID</source>
@@ -420,7 +672,7 @@
     </unit>
     <unit id="userIdPlaceholder">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:43,44</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:47,48</note>
       </notes>
       <segment>
         <source>z.B. wolf</source>
@@ -428,15 +680,15 @@
     </unit>
     <unit id="userIdHint">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:47,48</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:51,56</note>
       </notes>
       <segment>
-        <source> Wird für Multi-User-Zuordnung genutzt (Auth kommt später). </source>
+        <source><pc id="0" equivStart="START_BLOCK_IF" equivEnd="CLOSE_BLOCK_IF" type="other" dispStart="@if (authEnabled()) {" dispEnd="}"> Wird durch Login gesetzt. </pc><pc id="1" equivStart="START_BLOCK_ELSE" equivEnd="CLOSE_BLOCK_ELSE" type="other" dispStart="@else {" dispEnd="}"> Wird für Multi-User-Zuordnung genutzt (Auth kommt später). </pc></source>
       </segment>
     </unit>
     <unit id="switchUser">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:53,55</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:67,69</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">switch_account</pc> User wechseln </source>
@@ -444,15 +696,23 @@
     </unit>
     <unit id="activeUser">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:56,57</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:71,72</note>
       </notes>
       <segment>
         <source>Aktiv: <ph id="0" equiv="INTERPOLATION" disp="{{ activeUserId() }}"/></source>
       </segment>
     </unit>
+    <unit id="authStatus">
+      <notes>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:79,80</note>
+      </notes>
+      <segment>
+        <source>Auth: <ph id="0" equiv="INTERPOLATION" disp="{{ authUser() ? &apos;angemeldet&apos; : &apos;abgemeldet&apos; }}"/></source>
+      </segment>
+    </unit>
     <unit id="displayNameLabel">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:60,61</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:134,135</note>
       </notes>
       <segment>
         <source>Anzeigename</source>
@@ -460,7 +720,7 @@
     </unit>
     <unit id="displayNamePlaceholder">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:66</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:140</note>
       </notes>
       <segment>
         <source>Wolf</source>
@@ -468,7 +728,7 @@
     </unit>
     <unit id="dailyGoalLabel">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:71,72</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:145,146</note>
       </notes>
       <segment>
         <source>Tagesziel (Reps)</source>
@@ -476,7 +736,7 @@
     </unit>
     <unit id="dailyGoalPlaceholder">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:79</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:153</note>
       </notes>
       <segment>
         <source>100</source>
@@ -484,7 +744,7 @@
     </unit>
     <unit id="saveSettings">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:96,98</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:170,172</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">save</pc> Speichern </source>
@@ -492,7 +752,7 @@
     </unit>
     <unit id="saving">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:100,101</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:174,175</note>
       </notes>
       <segment>
         <source>Speichert…</source>
@@ -500,7 +760,7 @@
     </unit>
     <unit id="saved">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:103,104</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:177,178</note>
       </notes>
       <segment>
         <source>Gespeichert.</source>
@@ -508,7 +768,7 @@
     </unit>
     <unit id="brandLogoAlt">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:3</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:6,7</note>
       </notes>
       <segment>
         <source>Pushup Tracker Logo</source>
@@ -516,7 +776,7 @@
     </unit>
     <unit id="eyebrowTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:5,6</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:10,11</note>
       </notes>
       <segment>
         <source>Pushup Stats</source>
@@ -524,7 +784,7 @@
     </unit>
     <unit id="dashboardTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:6,7</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:11,12</note>
       </notes>
       <segment>
         <source>Liegestütze Statistik</source>
@@ -532,7 +792,7 @@
     </unit>
     <unit id="dashboardSubtitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:8,10</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:13,16</note>
       </notes>
       <segment>
         <source> Behalte Trainingsvolumen und Verlauf im Blick – klar, schnell und mobil optimiert. </source>
@@ -540,7 +800,7 @@
     </unit>
     <unit id="liveStateLabel">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:11,13</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:21,23</note>
       </notes>
       <segment>
         <source> Live: <ph id="0" equiv="INTERPOLATION" disp="{{ liveConnected() ? &apos;verbunden&apos; : &apos;getrennt&apos; }}"/> </source>
@@ -548,7 +808,7 @@
     </unit>
     <unit id="todayFocusAria">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:16</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:28,29</note>
       </notes>
       <segment>
         <source>Tagesfokus</source>
@@ -556,7 +816,7 @@
     </unit>
     <unit id="goalProgressTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:28,29</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:43,45</note>
       </notes>
       <segment>
         <source>Zielfortschritt</source>
@@ -564,7 +824,7 @@
     </unit>
     <unit id="lastEntryTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:38,39</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:57,58</note>
       </notes>
       <segment>
         <source>Letzter Eintrag</source>
@@ -572,7 +832,7 @@
     </unit>
     <unit id="noEntryInPeriod">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:45,47</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:64,66</note>
       </notes>
       <segment>
         <source>Noch kein Eintrag für diesen Zeitraum.</source>
@@ -580,7 +840,7 @@
     </unit>
     <unit id="allTimeSummaryAria">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:51</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:72,73</note>
       </notes>
       <segment>
         <source>All-Time Kurzübersicht</source>
@@ -588,7 +848,7 @@
     </unit>
     <unit id="allTimeTotal">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:52</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:76,77</note>
       </notes>
       <segment>
         <source>All-Time Gesamt</source>
@@ -596,7 +856,7 @@
     </unit>
     <unit id="allTimeDays">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:53</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:80,81</note>
       </notes>
       <segment>
         <source>All-Time Tage</source>
@@ -604,7 +864,7 @@
     </unit>
     <unit id="allTimeEntries">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:54</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:84,85</note>
       </notes>
       <segment>
         <source>All-Time Einträge</source>
@@ -612,7 +872,7 @@
     </unit>
     <unit id="allTimeAvg">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:55</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:88,89</note>
       </notes>
       <segment>
         <source>All-Time Ø/Tag</source>
@@ -620,7 +880,7 @@
     </unit>
     <unit id="quickActionsTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:60,61</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:96,98</note>
       </notes>
       <segment>
         <source>Schnellaktionen</source>
@@ -628,7 +888,7 @@
     </unit>
     <unit id="quickActionsSubtitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:61,62</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:99,101</note>
       </notes>
       <segment>
         <source>Schnell eintragen ohne Dialog</source>
@@ -636,7 +896,7 @@
     </unit>
     <unit id="quickAdd10">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:65,67</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:110,112</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">bolt</pc> +10 Reps </source>
@@ -644,7 +904,7 @@
     </unit>
     <unit id="quickAdd20">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:69,71</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:120,122</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">flash_on</pc> +20 Reps </source>
@@ -652,7 +912,7 @@
     </unit>
     <unit id="quickAdd30">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:73,75</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:130,132</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">whatshot</pc> +30 Reps </source>
@@ -660,7 +920,7 @@
     </unit>
     <unit id="loadingStats">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:97,101</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:158,162</note>
       </notes>
       <segment>
         <source> Lade Statistikdaten… </source>
@@ -668,7 +928,7 @@
     </unit>
     <unit id="entriesInSelectedRange">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:106,108</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:171,173</note>
       </notes>
       <segment>
         <source>Einträge im gewählten Zeitraum</source>
