@@ -964,5 +964,14 @@
         <target>Auth: {$INTERPOLATION}</target>
       </segment>
     </unit>
+    <unit id="title.fallback">
+      <notes>
+        <note category="location">web/src/app/app.ts</note>
+      </notes>
+      <segment>
+        <source>Dein Name 💪</source>
+        <target>Your Name 💪</target>
+      </segment>
+    </unit>
   </file>
 </xliff>
