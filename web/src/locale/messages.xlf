@@ -934,5 +934,13 @@
         <source>Einträge im gewählten Zeitraum</source>
       </segment>
     </unit>
+    <unit id="title.fallback">
+      <notes>
+        <note category="location">web/src/app/app.ts</note>
+      </notes>
+      <segment>
+        <source>Dein Name 💪</source>
+      </segment>
+    </unit>
   </file>
 </xliff>

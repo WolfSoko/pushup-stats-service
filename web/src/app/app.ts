@@ -1,5 +1,6 @@
-import { Component, DestroyRef, inject, signal } from '@angular/core';
+import { Component, DestroyRef, effect, inject, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
@@ -10,6 +11,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { SwUpdate, VersionReadyEvent } from '@angular/service-worker';
 import { filter } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { UserContextService } from './user-context.service';
 
 @Component({
   selector: 'app-root',
@@ -32,6 +34,8 @@ export class App {
   private readonly swUpdate = inject(SwUpdate, { optional: true });
   private readonly snackBar = inject(MatSnackBar);
   private readonly destroyRef = inject(DestroyRef);
+  private readonly titleService = inject(Title);
+  private readonly user = inject(UserContextService);
 
   setLanguage(lang: 'de' | 'en', ev?: Event): void {
     ev?.preventDefault();
@@ -50,19 +54,34 @@ export class App {
   readonly navOpen = signal(false);
 
   constructor() {
+    effect(() => {
+      const userId = this.user.userIdSafe();
+      const name =
+        userId === 'default'
+          ? $localize`:@@title.fallback:Dein Name 💪`
+          : userId;
+      this.titleService.setTitle(`Pushup Tracker – ${name}`);
+    });
+
     if (!this.swUpdate?.isEnabled) return;
 
     this.swUpdate.versionUpdates
       .pipe(
-        filter((event): event is VersionReadyEvent => event.type === 'VERSION_READY'),
-        takeUntilDestroyed(this.destroyRef),
+        filter(
+          (event): event is VersionReadyEvent => event.type === 'VERSION_READY'
+        ),
+        takeUntilDestroyed(this.destroyRef)
       )
       .subscribe(() => {
-        const ref = this.snackBar.open($localize`Neue Version verfügbar`, $localize`Neu laden`, {
-          duration: 20_000,
-          horizontalPosition: 'center',
-          verticalPosition: 'bottom',
-        });
+        const ref = this.snackBar.open(
+          $localize`Neue Version verfügbar`,
+          $localize`Neu laden`,
+          {
+            duration: 20_000,
+            horizontalPosition: 'center',
+            verticalPosition: 'bottom',
+          }
+        );
 
         ref.onAction().subscribe(() => {
           window.location.reload();
