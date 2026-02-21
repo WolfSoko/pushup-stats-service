@@ -12,6 +12,7 @@ import { SwUpdate, VersionReadyEvent } from '@angular/service-worker';
 import { filter } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { UserContextService } from './user-context.service';
+import { FirebaseAuthService } from './firebase/firebase-auth.service';
 
 @Component({
   selector: 'app-root',
@@ -36,6 +37,7 @@ export class App {
   private readonly destroyRef = inject(DestroyRef);
   private readonly titleService = inject(Title);
   private readonly user = inject(UserContextService);
+  readonly auth = inject(FirebaseAuthService);
 
   setLanguage(lang: 'de' | 'en', ev?: Event): void {
     ev?.preventDefault();
@@ -87,5 +89,10 @@ export class App {
           window.location.reload();
         });
       });
+  }
+
+  async logout(): Promise<void> {
+    await this.auth.signOut();
+    this.navOpen.set(false);
   }
 }
