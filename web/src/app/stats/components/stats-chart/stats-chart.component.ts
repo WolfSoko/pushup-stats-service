@@ -24,11 +24,9 @@ Chart.register(...registerables);
     <mat-card class="chart">
       <mat-card-header>
         <mat-card-title>{{
-          granularity() === 'hourly'
-            ? 'Verlauf (Stundenwerte)'
-            : 'Verlauf (Tageswerte)'
+          granularity() === 'hourly' ? hourlyTitle : dailyTitle
         }}</mat-card-title>
-        <mat-card-subtitle
+        <mat-card-subtitle i18n="@@chart.subtitle"
           >Intervallwerte als Balken, Tages-Integral + gleitender Durchschnitt
           als Trendlinien</mat-card-subtitle
         >
@@ -39,10 +37,29 @@ Chart.register(...registerables);
           <canvas #chartCanvas></canvas>
         </div>
 
-        <div class="legend" aria-label="Legende">
-          <span><i class="dot dot-bar"></i>Intervallwert</span>
-          <span><i class="dot dot-line"></i>Tages-Integral</span>
-          <span><i class="dot dot-avg"></i>Gleitender Durchschnitt</span>
+        <div
+          class="legend"
+          aria-label="Legende"
+          i18n-aria-label="@@chart.legendAria"
+        >
+          <span
+            ><i class="dot dot-bar"></i
+            ><ng-container i18n="@@chart.interval"
+              >Intervallwert</ng-container
+            ></span
+          >
+          <span
+            ><i class="dot dot-line"></i
+            ><ng-container i18n="@@chart.dayIntegral"
+              >Tages-Integral</ng-container
+            ></span
+          >
+          <span
+            ><i class="dot dot-avg"></i
+            ><ng-container i18n="@@chart.movingAvg"
+              >Gleitender Durchschnitt</ng-container
+            ></span
+          >
         </div>
       </mat-card-content>
     </mat-card>
@@ -59,6 +76,9 @@ export class StatsChartComponent implements AfterViewInit {
   readonly granularity = input<StatsGranularity>('daily');
   readonly rangeMode = input<'day' | 'week' | 'month'>('week');
   readonly series = input<StatsSeriesEntry[]>([]);
+
+  readonly hourlyTitle = $localize`:@@chart.titleHourly:Verlauf (Stundenwerte)`;
+  readonly dailyTitle = $localize`:@@chart.titleDaily:Verlauf (Tageswerte)`;
 
   private readonly viewReady = signal(false);
   private chart?: Chart;

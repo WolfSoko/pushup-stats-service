@@ -426,11 +426,12 @@
     </unit>
     <unit id="userIdHint">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:47,48</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:51,56</note>
       </notes>
       <segment>
-        <source> Wird für Multi-User-Zuordnung genutzt (Auth kommt später). </source>
-      <target>Used for multi-user mapping (auth comes later).</target></segment>
+        <source><pc id="0" equivStart="START_BLOCK_IF" equivEnd="CLOSE_BLOCK_IF" type="other" dispStart="@if (authEnabled()) {" dispEnd="}"> Wird durch Login gesetzt. </pc><pc id="1" equivStart="START_BLOCK_ELSE" equivEnd="CLOSE_BLOCK_ELSE" type="other" dispStart="@else {" dispEnd="}"> Wird für Multi-User-Zuordnung genutzt (Auth kommt später). </pc></source>
+        <target><pc id="0" equivStart="START_BLOCK_IF" equivEnd="CLOSE_BLOCK_IF" type="other" dispStart="@if (authEnabled()) {" dispEnd="}"> Set by login. </pc><pc id="1" equivStart="START_BLOCK_ELSE" equivEnd="CLOSE_BLOCK_ELSE" type="other" dispStart="@else {" dispEnd="}"> Used for multi-user mapping (auth comes later). </pc></target>
+      </segment>
     </unit>
     <unit id="switchUser">
       <notes>
@@ -671,6 +672,297 @@
       <segment>
         <source>Einträge im gewählten Zeitraum</source>
       <target>Entries in selected period</target></segment>
+    </unit>
+    <unit id="heatmap.loading">
+      <notes>
+        <note category="location">web/src/app/stats/components/heatmap/heatmap.component.ts:35</note>
+      </notes>
+      <segment>
+        <source>Heatmap wird im Browser geladen…</source>
+        <target>Heatmap is loading in the browser…</target>
+      </segment>
+    </unit>
+    <unit id="chart.subtitle">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:33,35</note>
+      </notes>
+      <segment>
+        <source>Intervallwerte als Balken, Tages-Integral + gleitender Durchschnitt als Trendlinien</source>
+        <target>Interval values as bars, daily integral + moving average as trend lines</target>
+      </segment>
+    </unit>
+    <unit id="chart.legendAria">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:42</note>
+      </notes>
+      <segment>
+        <source>Legende</source>
+        <target>Legend</target>
+      </segment>
+    </unit>
+    <unit id="chart.interval">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:43</note>
+      </notes>
+      <segment>
+        <source>Intervallwert</source>
+        <target>Interval value</target>
+      </segment>
+    </unit>
+    <unit id="chart.dayIntegral">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:44</note>
+      </notes>
+      <segment>
+        <source>Tages-Integral</source>
+        <target>Daily integral</target>
+      </segment>
+    </unit>
+    <unit id="chart.movingAvg">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:45</note>
+      </notes>
+      <segment>
+        <source>Gleitender Durchschnitt</source>
+        <target>Moving average</target>
+      </segment>
+    </unit>
+    <unit id="chart.titleHourly">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:62</note>
+      </notes>
+      <segment>
+        <source>Verlauf (Stundenwerte)</source>
+        <target>History (hourly values)</target>
+      </segment>
+    </unit>
+    <unit id="chart.titleDaily">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:63</note>
+      </notes>
+      <segment>
+        <source>Verlauf (Tageswerte)</source>
+        <target>History (daily values)</target>
+      </segment>
+    </unit>
+    <unit id="pie.noData">
+      <notes>
+        <note category="location">web/src/app/stats/components/type-pie/type-pie.component.ts:46</note>
+      </notes>
+      <segment>
+        <source>Keine Daten</source>
+        <target>No data</target>
+      </segment>
+    </unit>
+    <unit id="analysis.weekTrendTitle">
+      <notes>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:23</note>
+      </notes>
+      <segment>
+        <source>Wochentrend</source>
+        <target>Weekly trend</target>
+      </segment>
+    </unit>
+    <unit id="analysis.weekCol">
+      <notes>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:28</note>
+      </notes>
+      <segment>
+        <source>Woche</source>
+        <target>Week</target>
+      </segment>
+    </unit>
+    <unit id="analysis.repsCol">
+      <notes>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:32</note>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:52</note>
+      </notes>
+      <segment>
+        <source>Reps</source>
+        <target>Reps</target>
+      </segment>
+    </unit>
+    <unit id="analysis.monthTrendTitle">
+      <notes>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:43</note>
+      </notes>
+      <segment>
+        <source>Monatstrend</source>
+        <target>Monthly trend</target>
+      </segment>
+    </unit>
+    <unit id="analysis.monthCol">
+      <notes>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:48</note>
+      </notes>
+      <segment>
+        <source>Monat</source>
+        <target>Month</target>
+      </segment>
+    </unit>
+    <unit id="analysis.bestStreaksTitle">
+      <notes>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:62</note>
+      </notes>
+      <segment>
+        <source>Bestwerte &amp; Streaks</source>
+        <target>Best values &amp; Streaks</target>
+      </segment>
+    </unit>
+    <unit id="analysis.bestSingleEntry">
+      <notes>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:66</note>
+      </notes>
+      <segment>
+        <source>Bestwert Einzel-Eintrag:</source>
+        <target>Best single entry:</target>
+      </segment>
+    </unit>
+    <unit id="analysis.bestDay">
+      <notes>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:71</note>
+      </notes>
+      <segment>
+        <source>Bester Tag:</source>
+        <target>Best day:</target>
+      </segment>
+    </unit>
+    <unit id="analysis.currentStreak">
+      <notes>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:76</note>
+      </notes>
+      <segment>
+        <source>Aktuelle Streak:</source>
+        <target>Current streak:</target>
+      </segment>
+    </unit>
+    <unit id="analysis.streakDays">
+      <notes>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:78</note>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:82</note>
+      </notes>
+      <segment>
+        <source><ph id="0" equiv="INTERPOLATION" disp="{{ currentStreak() }}"/> Tage</source>
+        <target><ph id="0" equiv="INTERPOLATION" disp="{{ currentStreak() }}"/> days</target>
+      </segment>
+    </unit>
+    <unit id="analysis.longestStreak">
+      <notes>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:81</note>
+      </notes>
+      <segment>
+        <source>Längste Streak:</source>
+        <target>Longest streak:</target>
+      </segment>
+    </unit>
+    <unit id="analysis.typesTitle">
+      <notes>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:88</note>
+      </notes>
+      <segment>
+        <source>Typen (Anteile)</source>
+        <target>Types (shares)</target>
+      </segment>
+    </unit>
+    <unit id="analysis.heatmapTitle">
+      <notes>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:97</note>
+      </notes>
+      <segment>
+        <source>Heatmap (Wochentag/Uhrzeit)</source>
+        <target>Heatmap (weekday/time)</target>
+      </segment>
+    </unit>
+    <unit id="entries.title">
+      <notes>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts:32</note>
+      </notes>
+      <segment>
+        <source>Daten</source>
+        <target>Data</target>
+      </segment>
+    </unit>
+    <unit id="entries.subtitle">
+      <notes>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts:33</note>
+      </notes>
+      <segment>
+        <source>Filter und Verwaltung</source>
+        <target>Filter and management</target>
+      </segment>
+    </unit>
+    <unit id="entries.dateFrom">
+      <notes>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts:39</note>
+      </notes>
+      <segment>
+        <source>Datum von</source>
+        <target>Date from</target>
+      </segment>
+    </unit>
+    <unit id="entries.dateTo">
+      <notes>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts:48</note>
+      </notes>
+      <segment>
+        <source>Datum bis</source>
+        <target>Date to</target>
+      </segment>
+    </unit>
+    <unit id="entries.sourceFilter">
+      <notes>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts:58</note>
+      </notes>
+      <segment>
+        <source>Quelle</source>
+        <target>Source</target>
+      </segment>
+    </unit>
+    <unit id="entries.allOption">
+      <notes>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts:60</note>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts:70</note>
+      </notes>
+      <segment>
+        <source>Alle</source>
+        <target>All</target>
+      </segment>
+    </unit>
+    <unit id="entries.typeFilter">
+      <notes>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts:68</note>
+      </notes>
+      <segment>
+        <source>Typ</source>
+        <target>Type</target>
+      </segment>
+    </unit>
+    <unit id="entries.repsMin">
+      <notes>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts:78</note>
+      </notes>
+      <segment>
+        <source>Reps min</source>
+        <target>Reps min</target>
+      </segment>
+    </unit>
+    <unit id="entries.repsMax">
+      <notes>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts:89</note>
+      </notes>
+      <segment>
+        <source>Reps max</source>
+        <target>Reps max</target>
+      </segment>
+    </unit>
+    <unit id="authStatus">
+      <notes>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:78</note>
+      </notes>
+      <segment>
+        <source>Auth: <ph id="0" equiv="INTERPOLATION" disp="{{ authUser() ? 'angemeldet' : 'abgemeldet' }}" /></source>
+        <target>Auth: {$INTERPOLATION}</target>
+      </segment>
     </unit>
   </file>
 </xliff>

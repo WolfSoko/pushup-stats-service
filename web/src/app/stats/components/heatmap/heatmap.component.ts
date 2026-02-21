@@ -32,7 +32,9 @@ export interface HeatmapCell {
         [type]="'matrix'"
       ></canvas>
     } @else {
-      <div class="ssr-note">Heatmap wird im Browser geladen…</div>
+      <div class="ssr-note" i18n="@@heatmap.loading">
+        Heatmap wird im Browser geladen…
+      </div>
     }
   `,
   styles: `

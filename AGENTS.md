@@ -22,6 +22,32 @@
 
 <!-- nx configuration end-->
 
+# i18n (Internationalization)
+
+**Default language**: German (`de`). Supported locales: `de`, `en`.
+**Translation files**: `web/src/locale/messages.xlf` (source/de) and `web/src/locale/messages.en.xlf` (English).
+
+## Workflow for adding/changing translatable strings
+
+1. **Mark strings** in templates with `i18n="@@your.id"` (elements) or `i18n-attr="@@your.id"` (attributes).  
+   For programmatic strings use `` $localize`:@@your.id:German text` ``.
+2. **Extract** updated source strings:
+   ```bash
+   npx nx extract-i18n web --build-target=web:build:development
+   ```
+3. **Add English translations** to `web/src/locale/messages.en.xlf` — copy the new `<unit>` blocks from `messages.xlf` and add a `<target>` with the English text inside each `<segment>`.
+4. **Verify** no missing-translation warnings:
+   ```bash
+   npx nx build web --configuration=development
+   ```
+   → Build must complete with **no `[WARNING] No translation found`** lines.
+
+## Tips
+
+- Reuse IDs (`@@shared.id`) for identical strings in multiple places.
+- Use `<ng-container i18n="@@id">…</ng-container>` to wrap text nodes without adding DOM elements.
+- For interpolated strings: `<span i18n="@@id">Hello {{ name }}</span>` — the placeholder becomes `{$INTERPOLATION}` in the translation target.
+
 # Development Flow (Project Board)
 
 - Create/triage issue → add to **PUS Roadmap** project → Status = **Todo**.

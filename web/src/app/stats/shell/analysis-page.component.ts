@@ -20,16 +20,22 @@ interface TrendPoint {
       <section class="grid">
         <mat-card>
           <mat-card-header>
-            <mat-card-title>Wochentrend</mat-card-title>
+            <mat-card-title i18n="@@analysis.weekTrendTitle"
+              >Wochentrend</mat-card-title
+            >
           </mat-card-header>
           <mat-card-content>
             <mat-table [dataSource]="weekTrend()">
               <ng-container matColumnDef="label">
-                <mat-header-cell *matHeaderCellDef>Woche</mat-header-cell>
+                <mat-header-cell *matHeaderCellDef i18n="@@analysis.weekCol"
+                  >Woche</mat-header-cell
+                >
                 <mat-cell *matCellDef="let row">{{ row.label }}</mat-cell>
               </ng-container>
               <ng-container matColumnDef="total">
-                <mat-header-cell *matHeaderCellDef>Reps</mat-header-cell>
+                <mat-header-cell *matHeaderCellDef i18n="@@analysis.repsCol"
+                  >Reps</mat-header-cell
+                >
                 <mat-cell *matCellDef="let row">{{ row.total }}</mat-cell>
               </ng-container>
               <mat-header-row *matHeaderRowDef="trendColumns"></mat-header-row>
@@ -40,16 +46,22 @@ interface TrendPoint {
 
         <mat-card>
           <mat-card-header>
-            <mat-card-title>Monatstrend</mat-card-title>
+            <mat-card-title i18n="@@analysis.monthTrendTitle"
+              >Monatstrend</mat-card-title
+            >
           </mat-card-header>
           <mat-card-content>
             <mat-table [dataSource]="monthTrend()">
               <ng-container matColumnDef="label">
-                <mat-header-cell *matHeaderCellDef>Monat</mat-header-cell>
+                <mat-header-cell *matHeaderCellDef i18n="@@analysis.monthCol"
+                  >Monat</mat-header-cell
+                >
                 <mat-cell *matCellDef="let row">{{ row.label }}</mat-cell>
               </ng-container>
               <ng-container matColumnDef="total">
-                <mat-header-cell *matHeaderCellDef>Reps</mat-header-cell>
+                <mat-header-cell *matHeaderCellDef i18n="@@analysis.repsCol"
+                  >Reps</mat-header-cell
+                >
                 <mat-cell *matCellDef="let row">{{ row.total }}</mat-cell>
               </ng-container>
               <mat-header-row *matHeaderRowDef="trendColumns"></mat-header-row>
@@ -60,33 +72,47 @@ interface TrendPoint {
 
         <mat-card>
           <mat-card-header>
-            <mat-card-title>Bestwerte & Streaks</mat-card-title>
+            <mat-card-title i18n="@@analysis.bestStreaksTitle"
+              >Bestwerte & Streaks</mat-card-title
+            >
           </mat-card-header>
           <mat-card-content class="best-grid">
             <div>
-              <strong>Bestwert Einzel-Eintrag:</strong>
+              <strong i18n="@@analysis.bestSingleEntry"
+                >Bestwert Einzel-Eintrag:</strong
+              >
               <div>{{ bestSingleEntry()?.reps ?? 0 }} Reps</div>
             </div>
             <div>
-              <strong>Bester Tag:</strong>
+              <strong i18n="@@analysis.bestDay">Bester Tag:</strong>
               <div>
                 {{ bestDay()?.date ?? '—' }} · {{ bestDay()?.total ?? 0 }} Reps
               </div>
             </div>
             <div>
-              <strong>Aktuelle Streak:</strong>
-              <div>{{ currentStreak() }} Tage</div>
+              <strong i18n="@@analysis.currentStreak">Aktuelle Streak:</strong>
+              <div>
+                <ng-container i18n="@@analysis.streakDays"
+                  >{{ currentStreak() }} Tage</ng-container
+                >
+              </div>
             </div>
             <div>
-              <strong>Längste Streak:</strong>
-              <div>{{ longestStreak() }} Tage</div>
+              <strong i18n="@@analysis.longestStreak">Längste Streak:</strong>
+              <div>
+                <ng-container i18n="@@analysis.streakDays"
+                  >{{ longestStreak() }} Tage</ng-container
+                >
+              </div>
             </div>
           </mat-card-content>
         </mat-card>
 
         <mat-card>
           <mat-card-header>
-            <mat-card-title>Typen (Anteile)</mat-card-title>
+            <mat-card-title i18n="@@analysis.typesTitle"
+              >Typen (Anteile)</mat-card-title
+            >
           </mat-card-header>
           <mat-card-content>
             <app-type-pie [data]="typeBreakdown()" />
@@ -96,7 +122,9 @@ interface TrendPoint {
 
       <mat-card class="heatmap-full">
         <mat-card-header>
-          <mat-card-title>Heatmap (Wochentag/Uhrzeit)</mat-card-title>
+          <mat-card-title i18n="@@analysis.heatmapTitle"
+            >Heatmap (Wochentag/Uhrzeit)</mat-card-title
+          >
         </mat-card-header>
         <mat-card-content class="heatmap-wrap">
           <app-heatmap [entries]="rows()" />
