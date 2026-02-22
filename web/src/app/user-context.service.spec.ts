@@ -6,7 +6,11 @@ import { signal } from '@angular/core';
 import { AuthService } from '@pu-auth/auth';
 
 class FirebaseAuthStub {
-  user = signal<{ uid: string } | null>(null);
+  user = signal<{
+    uid: string;
+    displayName?: string | null;
+    email?: string | null;
+  } | null>(null);
 }
 
 describe('UserContextService', () => {
@@ -29,7 +33,27 @@ describe('UserContextService', () => {
     expect(service.userIdSafe()).toBe('firebase-user');
   });
 
-  it('resets userId to default on logout', () => {
+  it('uses firebase auth user.displayName when available', () => {
+    const service = TestBed.inject(UserContextService);
+    firebaseAuth.user.set({ uid: '123', displayName: 'firebase-user' });
+    TestBed.tick();
+    expect(service.userNameSafe()).toBe('firebase-user');
+  });
+
+  it('uses firebase auth user.displayName when available', () => {
+    const service = TestBed.inject(UserContextService);
+    firebaseAuth.user.set({ uid: '123', displayName: 'firebase-user' });
+    TestBed.tick();
+    expect(service.userNameSafe()).toBe('firebase-user');
+  });
+  it('uses firebase auth user.email when user.displayName is not available', () => {
+    const service = TestBed.inject(UserContextService);
+    firebaseAuth.user.set({ uid: '123', email: 'firebase@user' });
+    TestBed.tick();
+    expect(service.userNameSafe()).toBe('firebase@user');
+  });
+
+  it('resets userId and userName to default on logout', () => {
     const service = TestBed.inject(UserContextService);
     firebaseAuth.user.set({ uid: 'firebase-user' });
     TestBed.tick();
@@ -38,5 +62,6 @@ describe('UserContextService', () => {
     firebaseAuth.user.set(null);
     TestBed.tick();
     expect(service.userIdSafe()).toBe('default');
+    expect(service.userNameSafe()).toBe('default');
   });
 });

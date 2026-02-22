@@ -62,10 +62,10 @@ describe('App', () => {
   });
 
   describe('HTML title', () => {
-    const userIdSignal = signal('default');
+    const userNameSignal = signal('default');
 
     beforeEach(async () => {
-      userIdSignal.set('default');
+      userNameSignal.set('default');
 
       await TestBed.configureTestingModule({
         imports: [App],
@@ -80,7 +80,7 @@ describe('App', () => {
           },
           {
             provide: UserContextService,
-            useValue: { userIdSafe: userIdSignal.asReadonly() },
+            useValue: { userNameSafe: userNameSignal.asReadonly() },
           },
         ],
       }).compileComponents();
@@ -95,7 +95,7 @@ describe('App', () => {
     });
 
     it('shows username in title when user is set', () => {
-      userIdSignal.set('wolf');
+      userNameSignal.set('wolf');
       const fixture = TestBed.createComponent(App);
       fixture.detectChanges();
 
@@ -110,7 +110,7 @@ describe('App', () => {
       const title = TestBed.inject(Title);
       expect(title.getTitle()).toBe('Pushup Tracker – Dein Name 💪');
 
-      userIdSignal.set('anna');
+      userNameSignal.set('anna');
       fixture.detectChanges();
       await fixture.whenStable();
 

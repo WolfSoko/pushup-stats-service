@@ -21,7 +21,9 @@ export class UserContextService {
   readonly isBrowser = isPlatformBrowser(this.platformId);
 
   readonly userId = signal('default');
+  readonly userName = signal('default');
   readonly userIdSafe = computed(() => this.userId().trim() || 'default');
+  readonly userNameSafe = computed(() => this.userName().trim() || 'default');
 
   constructor() {
     if (!this.isBrowser) return;
@@ -37,9 +39,11 @@ export class UserContextService {
       const user = this.firebaseAuth?.user();
       if (!user) {
         this.setUserId('default');
+        this.userName.set('default');
         return;
       }
       this.setUserId(user.uid);
+      this.userName.set(user.displayName ?? user.email ?? '');
     });
   }
 

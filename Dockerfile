@@ -12,17 +12,27 @@ COPY . .
 RUN npx nx run-many -t build --projects=api,reverse-proxy,web --configuration=production
 
 
-FROM node:24-alpine AS runner
+# API runtime
+FROM node:24-alpine AS api-runner
 WORKDIR /app
 ENV NODE_ENV=production
+COPY --from=builder  /app/node_modules ./node_modules
+COPY --from=builder /app/data ./data
+COPY --from=builder /app/dist/api ./dist/api
+CMD ["node", "dist/api/main.js"]
 
-# Bring runtime deps + build artifacts
-COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/dist ./dist
-COPY package.json ./package.json
+# SSR runtime
+FROM node:24-alpine AS ssr-runner
+WORKDIR /app
+ENV NODE_ENV=production
+COPY --from=builder /app/dist/web ./dist/web
+CMD ["node", "dist/web/server/server.mjs"]
 
-# Data directory (bind mount in compose)
-RUN mkdir -p /app/data
-
-# Default command is overridden by docker-compose services
+# Proxy runtime
+FROM node:24-alpine AS proxy-runner
+WORKDIR /app
+ENV NODE_ENV=production
+COPY --from=builder  /app/node_modules ./node_modules
+COPY --from=builder /app/dist/reverse-proxy ./dist/reverse-proxy
 CMD ["node", "dist/reverse-proxy/main.js"]
+

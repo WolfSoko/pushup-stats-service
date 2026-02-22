@@ -58,11 +58,11 @@ export class App {
 
   constructor() {
     effect(() => {
-      const userId = this.user.userIdSafe();
+      const userName = this.user.userNameSafe();
       const name =
-        userId === 'default'
+        userName === 'default'
           ? $localize`:@@title.fallback:Dein Name 💪`
-          : userId;
+          : userName;
       this.titleService.setTitle(`Pushup Tracker – ${name}`);
     });
 
