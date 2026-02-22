@@ -30,7 +30,9 @@
   >
     <mat-card>
       <mat-card-header>
-        <mat-card-title>{{ periodTitle() }}</mat-card-title>
+        <mat-card-title
+          >{{ periodTitle() }} <span i18n>Gesamt</span></mat-card-title
+        >
       </mat-card-header>
       <mat-card-content>
         <p class="focus-number">{{ periodTotal() }}</p>
@@ -58,8 +60,10 @@
       </mat-card-header>
       <mat-card-content>
         @if (lastEntry(); as latest) {
-          <p>{{ latest.reps }} Reps · {{ latest.type || 'Standard' }}</p>
-          <small>{{ latest.timestamp | date: 'dd.MM.yyyy, HH:mm' }}</small>
+          <p i18n="@@latEntryReps">
+            {{ latest.reps }} Reps · {{ latest.type || 'Standard' }}
+          </p>
+          <small>{{ latest.timestamp | date: 'short' }}</small>
         } @else {
           <p i18n="@@noEntryInPeriod">Noch kein Eintrag für diesen Zeitraum.</p>
         }

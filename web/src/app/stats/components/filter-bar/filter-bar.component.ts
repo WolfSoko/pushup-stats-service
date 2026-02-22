@@ -1,15 +1,15 @@
-import { Component, OnChanges, input, output, signal } from '@angular/core';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { Component, input, OnChanges, output, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-
-type RangeMode = 'day' | 'week' | 'month';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { inferRangeMode } from '../../../util/date/infer-range-mode';
+import { RangeModes } from '../../../util/date/range-modes.type';
 
 @Component({
   selector: 'app-filter-bar',
@@ -111,9 +111,9 @@ export class FilterBarComponent implements OnChanges {
 
   readonly fromChange = output<string>();
   readonly toChange = output<string>();
-  readonly modeChange = output<RangeMode>();
+  readonly modeChange = output<RangeModes>();
 
-  readonly mode = signal<RangeMode>('week');
+  readonly mode = signal<RangeModes>('week');
 
   readonly range = new FormGroup({
     start: new FormControl<Date | null>(null),
@@ -147,11 +147,11 @@ export class FilterBarComponent implements OnChanges {
     );
 
     // Keep toggle state in sync when range is changed from outside (e.g. initial URL params).
-    const inferred = this.inferMode(start, end);
+    const inferred = inferRangeMode(this.from(), this.to());
     this.mode.set(inferred);
   }
 
-  setMode(value: RangeMode): void {
+  setMode(value: RangeModes): void {
     if (!value) return;
 
     const previousStart = this.range.controls.start.value;
@@ -239,26 +239,6 @@ export class FilterBarComponent implements OnChanges {
 
   private startOfDay(value: Date): Date {
     return new Date(value.getFullYear(), value.getMonth(), value.getDate());
-  }
-
-  private inferMode(start: Date | null, end: Date | null): RangeMode {
-    if (!start || !end) return 'week';
-    const s = this.startOfDay(start);
-    const e = this.startOfDay(end);
-    if (s.getTime() === e.getTime()) return 'day';
-
-    const diffDays = Math.round((e.getTime() - s.getTime()) / 86_400_000) + 1;
-    if (diffDays === 7 && s.getDay() === 1) return 'week'; // Monday
-
-    const isMonthStart = s.getDate() === 1;
-    const lastDay = new Date(s.getFullYear(), s.getMonth() + 1, 0).getDate();
-    const isMonthEnd =
-      e.getFullYear() === s.getFullYear() &&
-      e.getMonth() === s.getMonth() &&
-      e.getDate() === lastDay;
-    if (isMonthStart && isMonthEnd) return 'month';
-
-    return 'week';
   }
 
   private parseIsoDate(value: string): Date | null {

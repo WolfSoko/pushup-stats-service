@@ -1,11 +1,12 @@
 import { DatePipe, DOCUMENT, isPlatformBrowser } from '@angular/common';
 import {
   Component,
-  PLATFORM_ID,
-  REQUEST,
   computed,
   effect,
   inject,
+  linkedSignal,
+  PLATFORM_ID,
+  REQUEST,
   resource,
   signal,
 } from '@angular/core';
@@ -13,19 +14,23 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { firstValueFrom } from 'rxjs';
+import {
+  PushupLiveService,
+  StatsApiService,
+  UserConfigApiService,
+} from '@pu-stats/data-access';
 import {
   PushupRecord,
   StatsGranularity,
   StatsResponse,
   StatsSeriesEntry,
 } from '@pu-stats/models';
-import {
-  PushupLiveService,
-  StatsApiService,
-  UserConfigApiService,
-} from '@pu-stats/data-access';
+import { firstValueFrom } from 'rxjs';
 import { UserContextService } from '../../user-context.service';
+import { createWeekRange } from '../../util/date/create-week-range';
+import { inferRangeMode } from '../../util/date/infer-range-mode';
+import { RangeModes } from '../../util/date/range-modes.type';
+import { toLocalIsoDate } from '../../util/date/to-local-iso-date';
 import { FilterBarComponent } from '../components/filter-bar/filter-bar.component';
 import { StatsChartComponent } from '../components/stats-chart/stats-chart.component';
 import { StatsTableComponent } from '../components/stats-table/stats-table.component';
@@ -42,51 +47,14 @@ const EMPTY_STATS: StatsResponse = {
   series: [],
 };
 
-function toLocalIsoDate(date: Date): string {
-  const y = date.getFullYear();
-  const m = String(date.getMonth() + 1).padStart(2, '0');
-  const d = String(date.getDate()).padStart(2, '0');
-  return `${y}-${m}-${d}`;
-}
-
-function createDefaultRange(): { from: string; to: string } {
-  const now = new Date();
-  const to = toLocalIsoDate(now);
-  const fromDate = new Date(now);
-  fromDate.setDate(fromDate.getDate() - 6);
-  const from = toLocalIsoDate(fromDate);
-  return { from, to };
-}
-
-function parseIsoDate(value: string): Date | null {
-  if (!value) return null;
-  const [y, m, d] = value.split('-').map(Number);
-  if (!y || !m || !d) return null;
-  return new Date(y, m - 1, d);
-}
-
-function inferRangeMode(from: string, to: string): 'day' | 'week' | 'month' {
-  const start = parseIsoDate(from);
-  const end = parseIsoDate(to);
-  if (!start || !end) return 'week';
-  const s = new Date(start.getFullYear(), start.getMonth(), start.getDate());
-  const e = new Date(end.getFullYear(), end.getMonth(), end.getDate());
-
-  if (s.getTime() === e.getTime()) return 'day';
-
-  const diffDays = Math.round((e.getTime() - s.getTime()) / 86_400_000) + 1;
-  if (diffDays === 7 && s.getDay() === 1) return 'week';
-
-  const isMonthStart = s.getDate() === 1;
-  const lastDay = new Date(s.getFullYear(), s.getMonth() + 1, 0).getDate();
-  const isMonthEnd =
-    e.getFullYear() === s.getFullYear() &&
-    e.getMonth() === s.getMonth() &&
-    e.getDate() === lastDay;
-
-  if (isMonthStart && isMonthEnd) return 'month';
-  return 'week';
-}
+const PERIOD_TITLE_MAP: Record<RangeModes | 'today', string> = {
+  today: $localize`:@@period.today:Heute`,
+  day: $localize`:@@period.day:Tag`,
+  week: $localize`:@@period.week:Woche`,
+  month: $localize`:@@period.month:Monat`,
+  year: $localize`:@@period.year:Jahr`,
+  custom: $localize`:@@period.range:Zeitraum`,
+};
 
 @Component({
   selector: 'app-stats-dashboard',
@@ -112,12 +80,12 @@ export class StatsDashboardComponent {
   } | null;
   private readonly live = inject(PushupLiveService);
 
-  private readonly defaultRange = createDefaultRange();
+  private readonly defaultRange = createWeekRange();
   private readonly initialRange = this.resolveInitialRange();
 
   readonly from = signal(this.initialRange.from);
   readonly to = signal(this.initialRange.to);
-  readonly rangeMode = signal<'day' | 'week' | 'month'>(
+  readonly rangeMode = linkedSignal<RangeModes>(() =>
     inferRangeMode(this.initialRange.from, this.initialRange.to)
   );
   readonly busyAction = signal<'create' | 'update' | 'delete' | null>(null);
@@ -209,12 +177,15 @@ export class StatsDashboardComponent {
   );
 
   readonly periodTitle = computed(() => {
-    if (this.rangeMode() === 'day') {
-      const today = toLocalIsoDate(new Date());
-      return this.from() === today ? 'Heute gesamt' : 'Tag gesamt';
+    if (
+      this.rangeMode() === 'day' &&
+      toLocalIsoDate(new Date()) === this.from()
+    ) {
+      return PERIOD_TITLE_MAP['today'];
     }
-    return this.rangeMode() === 'week' ? 'Woche gesamt' : 'Monat gesamt';
+    return PERIOD_TITLE_MAP[this.rangeMode()];
   });
+
   readonly lastEntry = computed<PushupRecord | null>(() => {
     const rows = this.entryRows();
     if (!rows.length) return null;
@@ -244,11 +215,6 @@ export class StatsDashboardComponent {
   readonly liveConnected = computed(() => this.live.connected());
 
   constructor() {
-    effect(() => {
-      // Keep derived range mode in sync even when the user picks dates manually.
-      this.rangeMode.set(inferRangeMode(this.from(), this.to()));
-    });
-
     effect(() => {
       if (!isPlatformBrowser(this.platformId)) return;
       const params = new URLSearchParams();
