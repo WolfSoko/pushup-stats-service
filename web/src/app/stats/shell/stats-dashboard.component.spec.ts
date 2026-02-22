@@ -121,7 +121,7 @@ describe('StatsDashboardComponent', () => {
     const text = fixture.nativeElement.textContent;
     expect(text).toContain('Liegestütze Statistik');
     // Title depends on selected range mode.
-    expect(text).toContain('gesamt');
+    expect(text).toContain('Gesamt');
     expect(text).toContain('Zielfortschritt');
     expect(text).toContain('Letzter Eintrag');
   });

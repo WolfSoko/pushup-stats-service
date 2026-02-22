@@ -8,8 +8,9 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { inferRangeMode } from '../../../util/date/infer-range-mode';
+import { parseIsoDate } from '../../../util/date/parse-iso-date';
 import { RangeModes } from '../../../util/date/range-modes.type';
+import { toLocalIsoDate } from '../../../util/date/to-local-iso-date';
 
 @Component({
   selector: 'app-filter-bar',
@@ -135,8 +136,8 @@ export class FilterBarComponent implements OnChanges {
   }
 
   ngOnChanges(): void {
-    const start = this.parseIsoDate(this.from());
-    const end = this.parseIsoDate(this.to());
+    const start = parseIsoDate(this.from());
+    const end = parseIsoDate(this.to());
 
     this.range.patchValue(
       {
@@ -147,7 +148,7 @@ export class FilterBarComponent implements OnChanges {
     );
 
     // Keep toggle state in sync when range is changed from outside (e.g. initial URL params).
-    const inferred = inferRangeMode(this.from(), this.to());
+    const inferred = this.inferMode(start, end);
     this.mode.set(inferred);
   }
 
@@ -174,6 +175,26 @@ export class FilterBarComponent implements OnChanges {
 
   jumpToToday(): void {
     this.applyModeRange(new Date());
+  }
+
+  private inferMode(start: Date | null, end: Date | null): RangeModes {
+    if (!start || !end) return 'week';
+    const s = this.startOfDay(start);
+    const e = this.startOfDay(end);
+    if (s.getTime() === e.getTime()) return 'day';
+
+    const diffDays = Math.round((e.getTime() - s.getTime()) / 86_400_000) + 1;
+    if (diffDays === 7 && s.getDay() === 1) return 'week'; // Monday
+
+    const isMonthStart = s.getDate() === 1;
+    const lastDay = new Date(s.getFullYear(), s.getMonth() + 1, 0).getDate();
+    const isMonthEnd =
+      e.getFullYear() === s.getFullYear() &&
+      e.getMonth() === s.getMonth() &&
+      e.getDate() === lastDay;
+    if (isMonthStart && isMonthEnd) return 'month';
+
+    return 'week';
   }
 
   shiftRange(direction: -1 | 1): void {
@@ -241,18 +262,8 @@ export class FilterBarComponent implements OnChanges {
     return new Date(value.getFullYear(), value.getMonth(), value.getDate());
   }
 
-  private parseIsoDate(value: string): Date | null {
-    if (!value) return null;
-    const [y, m, d] = value.split('-').map(Number);
-    if (!y || !m || !d) return null;
-    return new Date(y, m - 1, d);
-  }
-
   private toIsoDate(value: Date | null): string {
     if (!value) return '';
-    const y = value.getFullYear();
-    const m = String(value.getMonth() + 1).padStart(2, '0');
-    const d = String(value.getDate()).padStart(2, '0');
-    return `${y}-${m}-${d}`;
+    return toLocalIsoDate(value);
   }
 }
