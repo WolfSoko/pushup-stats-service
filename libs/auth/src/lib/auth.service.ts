@@ -5,6 +5,7 @@ import {
   Injectable,
   PLATFORM_ID,
   signal,
+  OnDestroy,
 } from '@angular/core';
 import {
   FIREBASE_AUTH_CONFIG,
@@ -25,7 +26,7 @@ async function getFirebaseAuth() {
 @Injectable({
   providedIn: 'root',
 })
-export class AuthService {
+export class AuthService implements OnDestroy {
   private readonly platformId = inject(PLATFORM_ID);
   private readonly config = inject(FIREBASE_AUTH_CONFIG);
 
@@ -160,7 +161,7 @@ export class AuthService {
     }
   }
 
-  /** Sign in with Microsoft */
+  /** Sign in with Email/Password */
   async signInWithMicrosoft(): Promise<void> {
     if (!this.isBrowser || !this.authInstance) {
       throw new Error('Auth not initialized');
