@@ -16,7 +16,8 @@
     "baseUrl": ".",
     "paths": {
       "@pu-stats/models": ["libs/stats/src/index.ts"],
-      "@pu-stats/data-access": ["libs/src/index.ts"]
+      "@pu-stats/data-access": ["libs/data-access/src/index.ts"],
+      "@pu-auth/auth": ["libs/auth/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

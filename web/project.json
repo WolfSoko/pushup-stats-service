@@ -92,6 +92,7 @@
       "options": {
         "tsConfig": "web/tsconfig.spec.json",
         "coverage": true,
+        "watch": false,
         "browsers": ["chromiumHeadless"]
       }
     },

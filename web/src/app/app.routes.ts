@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import { AuthGuard } from './auth.guard'; // Import the AuthGuard
 
 export const appRoutes: Routes = [
   {
@@ -9,6 +8,10 @@ export const appRoutes: Routes = [
       import('./stats/shell/stats-dashboard.component').then(
         (m) => m.StatsDashboardComponent
       ),
+  },
+  {
+    path: 'login',
+    loadComponent: () => import('@pu-auth/auth').then((m) => m.LoginComponent),
   },
   {
     path: 'data',
@@ -30,7 +33,6 @@ export const appRoutes: Routes = [
       import('./stats/shell/settings-page.component').then(
         (m) => m.SettingsPageComponent
       ),
-    canActivate: [AuthGuard], // Apply the AuthGuard here
   },
   { path: '**', redirectTo: '' },
 ];

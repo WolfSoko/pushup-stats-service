@@ -47,6 +47,10 @@
     "@swc-node/register": "1.11.1",
     "@swc/core": "1.15.8",
     "@swc/helpers": "0.5.18",
+    "@testing-library/angular": "^19.1.0",
+    "@testing-library/dom": "^10.4.1",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/user-event": "^14.6.1",
     "@types/chart.js": "4.0.1",
     "@types/cors": "2.8.19",
     "@types/express": "5.0.6",
@@ -82,6 +86,7 @@
     "vite": "^7.0.0",
     "vitest": "^4.0.18",
     "webpack-cli": "6.0.1",
+    "whatwg-fetch": "^3.6.20",
     "yaml": "2.8.2"
   },
   "dependencies": {
@@ -111,6 +116,7 @@
     "cors": "2.8.6",
     "date-fns": "4.1.0",
     "express": "4.22.1",
+    "firebase": "^11.6.0",
     "http-proxy": "1.18.1",
     "http-proxy-middleware": "3.0.5",
     "nedb-promises": "6.2.3",
@@ -120,8 +126,7 @@
     "reflect-metadata": "0.2.2",
     "rxjs": "7.8.0",
     "socket.io": "4.8.3",
-    "socket.io-client": "4.8.3",
-    "firebase": "11.6.0"
+    "socket.io-client": "4.8.3"
   },
   "packageManager": "npm@11.10.0+sha256.43c653384c39617756846ad405705061a78fb6bbddb2ced57ab79fb92e8af2a7"
 }

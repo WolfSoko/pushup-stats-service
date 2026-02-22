@@ -7,14 +7,15 @@ import {
   signal,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { FirebaseAuthService } from './firebase/firebase-auth.service';
+// eslint-disable-next-line @nx/enforce-module-boundaries
+import { AuthService } from '@pu-auth/auth';
 
 @Injectable({ providedIn: 'root' })
 export class UserContextService {
   private static readonly USER_ID_STORAGE_KEY = 'pushups.userId';
 
   private readonly platformId = inject(PLATFORM_ID);
-  private readonly firebaseAuth = inject(FirebaseAuthService, {
+  private readonly firebaseAuth = inject(AuthService, {
     optional: true,
   });
   readonly isBrowser = isPlatformBrowser(this.platformId);
@@ -32,16 +33,14 @@ export class UserContextService {
       this.userId.set(stored.trim());
     }
 
-    if (this.firebaseAuth?.enabled) {
-      effect(() => {
-        const user = this.firebaseAuth?.user();
-        if (!user) {
-          this.setUserId('default');
-          return;
-        }
-        this.setUserId(user.uid);
-      });
-    }
+    effect(() => {
+      const user = this.firebaseAuth?.user();
+      if (!user) {
+        this.setUserId('default');
+        return;
+      }
+      this.setUserId(user.uid);
+    });
   }
 
   setUserId(next: string): void {

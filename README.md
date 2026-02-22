@@ -20,24 +20,9 @@ Produktionsnahe Nx-Architektur mit:
 
 ```bash
 npm install
-npx nx serve api
-npx nx serve web
+npx nx serve api (achtung continous tasks)
+npx nx serve web (achtung continous tasks)
 ```
-
-## Firebase (Phase 1 Scaffold)
-
-Im Browser kann die Firebase-Konfiguration über `window.__PUS_FIREBASE__` gesetzt werden:
-
-```js
-window.__PUS_FIREBASE__ = {
-  apiKey: '... ',
-  authDomain: '... ',
-  projectId: '... ',
-  appId: '... '
-};
-```
-
-Sobald konfiguriert, übernimmt `UserContextService` den Firebase `uid` als `userId`.
 
 ## Qualitätssicherung
 
@@ -53,6 +38,7 @@ npx nx run-many -t lint test build
 - **Front Proxy**: epress, Routing nach api/ssr
 
 Routing-Anforderungen:
+
 - Cookie `language` hat Priorität vor `Accept-Language`
 - Deutsch ist Default auf `/`
 - Englisch liegt auf `/en`
@@ -80,9 +66,7 @@ Für neue Features gilt ab jetzt verbindlich:
 
 - [ ] Für jede neue/angepasste public Methode gibt es einen passenden Testfall
 - [ ] Bei Bugfix: Test reproduziert den Bug zuerst (RED)
-- [ ] `npx nx run stats-data-access:test --codeCoverage` (bei Data-Access-Änderungen)
-- [ ] `npx nx run web:test --codeCoverage` (bei Web-Änderungen)
-- [ ] `npx nx run api:test --codeCoverage` (bei API-Änderungen)
+- [ ] `npx nx affected -t test --codeCoverage`
 - [ ] Erst danach refactoren und committen
 
 ## API

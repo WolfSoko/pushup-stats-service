@@ -14,7 +14,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { firstValueFrom } from 'rxjs';
 import { UserConfigApiService } from '@pu-stats/data-access';
 import { UserContextService } from '../../user-context.service';
-import { FirebaseAuthService } from '../../firebase/firebase-auth.service';
 
 @Component({
   selector: 'app-settings-page',
@@ -41,18 +40,13 @@ import { FirebaseAuthService } from '../../firebase/firebase-auth.service';
               <mat-label i18n="@@userIdLabel">User ID</mat-label>
               <input
                 matInput
-                [disabled]="authEnabled()"
                 [value]="userIdDraft()"
                 (input)="userIdDraft.set(asValue($event))"
                 placeholder="z.B. wolf"
                 i18n-placeholder="@@userIdPlaceholder"
               />
               <mat-hint i18n="@@userIdHint">
-                @if (authEnabled()) {
-                  Wird durch Login gesetzt.
-                } @else {
-                  Wird für Multi-User-Zuordnung genutzt (Auth kommt später).
-                }
+                Wird für Multi-User-Zuordnung genutzt (Auth kommt später).
               </mat-hint>
             </mat-form-field>
 
@@ -60,7 +54,6 @@ import { FirebaseAuthService } from '../../firebase/firebase-auth.service';
               <button
                 type="button"
                 mat-stroked-button
-                [disabled]="authEnabled()"
                 (click)="applyUserId()"
                 i18n="@@switchUser"
               >
@@ -71,64 +64,6 @@ import { FirebaseAuthService } from '../../firebase/firebase-auth.service';
                 >Aktiv: {{ activeUserId() }}</span
               >
             </div>
-
-            @if (authEnabled()) {
-              <section class="auth-block">
-                <div class="row">
-                  <span class="pill" i18n="@@authStatus"
-                    >Auth: {{ authUser() ? 'angemeldet' : 'abgemeldet' }}</span
-                  >
-                  @if (authUser()) {
-                    <span class="muted">{{
-                      authUser()?.email ?? authUser()?.uid
-                    }}</span>
-                  }
-                </div>
-                <div class="row">
-                  <button
-                    type="button"
-                    mat-stroked-button
-                    (click)="signIn('google')"
-                  >
-                    Google
-                  </button>
-                  <button
-                    type="button"
-                    mat-stroked-button
-                    (click)="signIn('github')"
-                  >
-                    GitHub
-                  </button>
-                  <button
-                    type="button"
-                    mat-stroked-button
-                    (click)="signIn('microsoft')"
-                  >
-                    Microsoft
-                  </button>
-                  <button
-                    type="button"
-                    mat-stroked-button
-                    (click)="signIn('apple')"
-                  >
-                    Apple
-                  </button>
-                  <button type="button" mat-stroked-button disabled>
-                    E‑Mail (coming soon)
-                  </button>
-                  @if (authUser()) {
-                    <button
-                      type="button"
-                      mat-flat-button
-                      color="warn"
-                      (click)="signOut()"
-                    >
-                      Logout
-                    </button>
-                  }
-                </div>
-              </section>
-            }
 
             <mat-form-field appearance="outline">
               <mat-label i18n="@@displayNameLabel">Anzeigename</mat-label>
@@ -226,11 +161,8 @@ import { FirebaseAuthService } from '../../firebase/firebase-auth.service';
 export class SettingsPageComponent {
   private readonly api = inject(UserConfigApiService);
   private readonly user = inject(UserContextService);
-  private readonly auth = inject(FirebaseAuthService, { optional: true });
 
   readonly activeUserId = this.user.userIdSafe;
-  readonly authEnabled = computed(() => Boolean(this.auth?.enabled));
-  readonly authUser = computed(() => this.auth?.user() ?? null);
 
   readonly userIdDraft = signal(this.activeUserId());
   readonly displayNameDraft = signal('');
@@ -275,22 +207,6 @@ export class SettingsPageComponent {
   applyUserId(): void {
     this.user.setUserId(this.userIdDraft());
     this.configResource.reload();
-  }
-
-  async signIn(
-    provider: 'google' | 'github' | 'microsoft' | 'apple'
-  ): Promise<void> {
-    if (!this.auth?.enabled) return;
-    try {
-      await this.auth.signInWithProvider(provider);
-    } catch {
-      this.errorMessage.set('Login fehlgeschlagen.');
-    }
-  }
-
-  async signOut(): Promise<void> {
-    if (!this.auth?.enabled) return;
-    await this.auth.signOut();
   }
 
   async save(): Promise<void> {

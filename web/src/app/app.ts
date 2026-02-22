@@ -9,10 +9,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatDividerModule } from '@angular/material/divider';
 import { SwUpdate, VersionReadyEvent } from '@angular/service-worker';
+// eslint-disable-next-line @nx/enforce-module-boundaries
+import { AuthService } from '@pu-auth/auth';
 import { filter } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { UserContextService } from './user-context.service';
-import { FirebaseAuthService } from './firebase/firebase-auth.service';
 
 @Component({
   selector: 'app-root',
@@ -37,7 +38,7 @@ export class App {
   private readonly destroyRef = inject(DestroyRef);
   private readonly titleService = inject(Title);
   private readonly user = inject(UserContextService);
-  readonly auth = inject(FirebaseAuthService);
+  readonly auth = inject(AuthService);
 
   setLanguage(lang: 'de' | 'en', ev?: Event): void {
     ev?.preventDefault();
