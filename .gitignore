@@ -47,3 +47,5 @@ data/*.db
 test-results
 
 vite.config.*.timestamp*
+
+.env

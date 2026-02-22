@@ -1,11 +1,10 @@
 node_modules
 .nx
 .tmp
-.tmp/**
 dist
 coverage
 test-results
 tmp
 .git
-.git/**
 **/*.log
+.env
