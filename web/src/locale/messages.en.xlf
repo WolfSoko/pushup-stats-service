@@ -1,5 +1,5 @@
-<?xml version='1.0' encoding='utf-8'?>
-<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="de" trgLang="en">
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="2.0" xmlns="urn:oasis:names:tc:xliff:document:2.0" srcLang="de" trgLang="en">
   <file id="ngi18n" original="ng.template">
     <unit id="app.title">
       <notes>
@@ -24,7 +24,7 @@
       <notes>
         <note category="location">web/src/app/app.html:33,36</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source>Daten</source>
         <target>Data</target>
       </segment>
@@ -33,7 +33,7 @@
       <notes>
         <note category="location">web/src/app/app.html:43,46</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source>Analyse</source>
         <target>Analysis</target>
       </segment>
@@ -42,7 +42,7 @@
       <notes>
         <note category="location">web/src/app/app.html:55,58</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source>Einstellungen</source>
         <target>Settings</target>
       </segment>
@@ -51,7 +51,7 @@
       <notes>
         <note category="location">web/src/app/app.html:65,68</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source> Sprache </source>
         <target> Language </target>
       </segment>
@@ -60,7 +60,7 @@
       <notes>
         <note category="location">web/src/app/app.html:74,77</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source>Deutsch</source>
         <target>German</target>
       </segment>
@@ -114,7 +114,7 @@
       <notes>
         <note category="location">web/src/app/app.html:126,127</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source>Menü öffnen</source>
         <target>Open menu</target>
       </segment>
@@ -123,7 +123,7 @@
       <notes>
         <note category="location">web/src/app/app.ts:64</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source>Dein Name 💪</source>
         <target>Your name 💪</target>
       </segment>
@@ -132,7 +132,7 @@
       <notes>
         <note category="location">web/src/app/app.ts:80</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source>Neue Version verfügbar</source>
         <target>New version available</target>
       </segment>
@@ -141,106 +141,106 @@
       <notes>
         <note category="location">web/src/app/app.ts:81</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source>Neu laden</source>
         <target>Reload</target>
       </segment>
     </unit>
     <unit id="selectRangeTitle">
       <notes>
-        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:29,32</note>
+        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:30,33</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source>Zeitraum auswählen</source>
-        <target>Select time range</target>
+        <target>Select period</target>
       </segment>
     </unit>
     <unit id="quickRangeAria">
       <notes>
-        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:34,35</note>
+        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:35,36</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source>Schnellwahl Zeitraum</source>
-        <target>Quick time range selection</target>
+        <target>Quick select period</target>
       </segment>
     </unit>
     <unit id="rangeModeDay">
       <notes>
-        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:42,43</note>
+        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:43,44</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source>Tag</source>
         <target>Day</target>
       </segment>
     </unit>
     <unit id="rangeModeWeek">
       <notes>
-        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:45,46</note>
+        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:46,47</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source>Woche</source>
         <target>Week</target>
       </segment>
     </unit>
     <unit id="rangeModeMonth">
       <notes>
-        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:48,49</note>
+        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:49,50</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source>Monat</source>
         <target>Month</target>
       </segment>
     </unit>
     <unit id="rangeBack">
       <notes>
-        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:59,61</note>
+        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:60,62</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">chevron_left</pc> Zurück </source>
         <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">chevron_left</pc> Back </target>
       </segment>
     </unit>
     <unit id="rangeToday">
       <notes>
-        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:68,69</note>
+        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:69,70</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source> Heute </source>
         <target> Today </target>
       </segment>
     </unit>
     <unit id="rangeForward">
       <notes>
-        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:76,79</note>
+        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:77,80</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source> Vor <pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">chevron_right</pc></source>
         <target> Forward <pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">chevron_right</pc></target>
       </segment>
     </unit>
     <unit id="rangeLabel">
       <notes>
-        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:83,84</note>
+        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:84,85</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source>Zeitraum</source>
-        <target>Time range</target>
+        <target>Period</target>
       </segment>
     </unit>
     <unit id="rangeFrom">
       <notes>
-        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:89</note>
+        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:90</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source>Von</source>
         <target>From</target>
       </segment>
     </unit>
     <unit id="rangeTo">
       <notes>
-        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:95</note>
+        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:96</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source>Bis</source>
         <target>To</target>
       </segment>
@@ -249,52 +249,52 @@
       <notes>
         <note category="location">web/src/app/stats/components/heatmap/heatmap.component.ts:36,39</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source> Heatmap wird im Browser geladen… </source>
-        <target> Heatmap is loading in the browser… </target>
+        <target> Loading heatmap in browser… </target>
       </segment>
     </unit>
     <unit id="chart.subtitle">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:30,31</note>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:29,30</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source>Intervallwerte als Balken, Tages-Integral + gleitender Durchschnitt als Trendlinien</source>
         <target>Interval values as bars, daily integral + moving average as trend lines</target>
       </segment>
     </unit>
     <unit id="chart.legendAria">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:43</note>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:42</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source>Legende</source>
         <target>Legend</target>
       </segment>
     </unit>
     <unit id="chart.interval">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:48,49</note>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:47,48</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source>Intervallwert</source>
         <target>Interval value</target>
       </segment>
     </unit>
     <unit id="chart.dayIntegral">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:54,55</note>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:53,54</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source>Tages-Integral</source>
         <target>Daily integral</target>
       </segment>
     </unit>
     <unit id="chart.movingAvg">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:60,61</note>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:59,60</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source>Gleitender Durchschnitt</source>
         <target>Moving average</target>
       </segment>
@@ -303,77 +303,81 @@
       <notes>
         <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:80</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source>Verlauf (Stundenwerte)</source>
-        <target>Progression (hourly values)</target>
+        <target>Progress (hourly values)</target>
       </segment>
     </unit>
     <unit id="chart.titleDaily">
       <notes>
         <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:81</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source>Verlauf (Tageswerte)</source>
-        <target>Progression (daily values)</target>
+        <target>Progress (daily values)</target>
       </segment>
     </unit>
     <unit id="entriesTitle">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:61,62</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:3,4</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source>Einträge</source>
         <target>Entries</target>
       </segment>
     </unit>
     <unit id="entriesCount">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:63</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:5</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source><ph id="0" equiv="INTERPOLATION" disp="{{ entries().length }}"/> Einträge</source>
         <target><ph id="0" equiv="INTERPOLATION" disp="{{ entries().length }}"/> entries</target>
       </segment>
     </unit>
     <unit id="sourceColumnToggle">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:73,77</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:15,20</note>
       </notes>
-      <segment>
-        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;"><ph id="1" equiv="INTERPOLATION" disp="{{ showSourceColumn() ? 'visibility' : 'visibility_off' }}"/></pc> Quelle </source>
-        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;"><ph id="1" equiv="INTERPOLATION" disp="{{ showSourceColumn() ? 'visibility' : 'visibility_off' }}"/></pc> Source </target>
-      </segment>
-    </unit>
-    <unit id="noEntriesInSelectedRange">
-      <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:98,101</note>
-      </notes>
-      <segment>
-        <source> Keine Einträge im gewählten Zeitraum. </source>
-        <target> No entries in the selected time range. </target>
+      <segment state="translated">
+        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;"><ph id="1" equiv="INTERPOLATION" disp="{{
+        showSourceColumn() ? &apos;visibility&apos; : &apos;visibility_off&apos;
+      }}"/></pc> Quelle </source>
+        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;"><ph id="1" equiv="INTERPOLATION" disp="{{
+        showSourceColumn() ? &apos;visibility&apos; : &apos;visibility_off&apos;
+      }}"/></pc> Source </target>
       </segment>
     </unit>
     <unit id="createNewEntry">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:111,113</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:27,30</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">add</pc> Neu </source>
         <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">add</pc> New </target>
       </segment>
     </unit>
+    <unit id="noEntriesInSelectedRange">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:50,53</note>
+      </notes>
+      <segment state="translated">
+        <source> Keine Einträge im gewählten Zeitraum. </source>
+        <target> No entries in the selected period. </target>
+      </segment>
+    </unit>
     <unit id="colTime">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:127,128</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:66,67</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source>Zeit</source>
         <target>Time</target>
       </segment>
     </unit>
     <unit id="colReps">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:136,137</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:75,76</note>
       </notes>
       <segment state="translated">
         <source>Reps</source>
@@ -382,90 +386,90 @@
     </unit>
     <unit id="colType">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:145,146</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:84,85</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source>Typ</source>
         <target>Type</target>
       </segment>
     </unit>
     <unit id="colSource">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:154,155</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:93,94</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source>Quelle</source>
         <target>Source</target>
       </segment>
     </unit>
     <unit id="colActions">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:163,164</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:102,103</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source>Aktion</source>
         <target>Action</target>
       </segment>
     </unit>
     <unit id="editAria">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:169,170</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:108,109</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source>Bearbeiten</source>
         <target>Edit</target>
       </segment>
     </unit>
     <unit id="editTitle">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:171,172</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:110,111</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source>Bearbeiten</source>
         <target>Edit</target>
       </segment>
     </unit>
     <unit id="deleteAria">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:182</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:121</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source>Löschen</source>
         <target>Delete</target>
       </segment>
     </unit>
     <unit id="deleteTitle">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:184</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:123</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source>Löschen</source>
         <target>Delete</target>
       </segment>
     </unit>
     <unit id="createDialogTitle">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:208,210</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:147,149</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source>Neuen Eintrag anlegen</source>
         <target>Create new entry</target>
       </segment>
     </unit>
     <unit id="timestampLabel">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:212,213</note>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:299,300</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:151,153</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:238,240</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source>Zeitpunkt</source>
         <target>Timestamp</target>
       </segment>
     </unit>
     <unit id="repsLabel">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:223,224</note>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:310,311</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:162,163</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:249,250</note>
       </notes>
       <segment state="translated">
         <source>Reps</source>
@@ -474,18 +478,18 @@
     </unit>
     <unit id="typeLabel">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:235,236</note>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:322,323</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:174,175</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:261,262</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source>Typ</source>
         <target>Type</target>
       </segment>
     </unit>
     <unit id="typePlaceholder">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:241,242</note>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:328,329</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:180,181</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:267,268</note>
       </notes>
       <segment state="translated">
         <source>Pick one / Custom</source>
@@ -494,18 +498,18 @@
     </unit>
     <unit id="sourceLabel">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:252,253</note>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:339,340</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:191,193</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:278,280</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source>Quelle</source>
         <target>Source</target>
       </segment>
     </unit>
     <unit id="sourcePlaceholder">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:258,259</note>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:345,346</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:197,198</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:284,285</note>
       </notes>
       <segment state="translated">
         <source>web / whatsapp / Custom</source>
@@ -514,46 +518,46 @@
     </unit>
     <unit id="cancel">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:276,277</note>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:358,359</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:215,217</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:297,299</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source> Abbrechen </source>
         <target> Cancel </target>
       </segment>
     </unit>
     <unit id="saveEntry">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:285,291</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:224,230</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source><pc id="0" equivStart="START_BLOCK_IF" equivEnd="CLOSE_BLOCK_IF" type="other" dispStart="@if (isCreateBusy()) {" dispEnd="}"><pc id="1" equivStart="START_TAG_MAT_SPINNER" equivEnd="CLOSE_TAG_MAT_SPINNER" type="other" dispStart="&lt;mat-spinner diameter=&quot;14&quot;&gt;" dispEnd="&lt;/mat-spinner&gt;"></pc></pc><pc id="2" equivStart="START_BLOCK_ELSE" equivEnd="CLOSE_BLOCK_ELSE" type="other" dispStart="@else {" dispEnd="}"> Speichern </pc></source>
         <target><pc id="0" equivStart="START_BLOCK_IF" equivEnd="CLOSE_BLOCK_IF" type="other" dispStart="@if (isCreateBusy()) {" dispEnd="}"><pc id="1" equivStart="START_TAG_MAT_SPINNER" equivEnd="CLOSE_TAG_MAT_SPINNER" type="other" dispStart="&lt;mat-spinner diameter=&quot;14&quot;&gt;" dispEnd="&lt;/mat-spinner&gt;"></pc></pc><pc id="2" equivStart="START_BLOCK_ELSE" equivEnd="CLOSE_BLOCK_ELSE" type="other" dispStart="@else {" dispEnd="}"> Save </pc></target>
       </segment>
     </unit>
     <unit id="editDialogTitle">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:295,297</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:234,236</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source>Eintrag bearbeiten</source>
         <target>Edit entry</target>
       </segment>
     </unit>
     <unit id="saveChanges">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:367,373</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:306,312</note>
       </notes>
-      <segment>
-        <source><pc id="0" equivStart="START_BLOCK_IF" equivEnd="CLOSE_BLOCK_IF" type="other" dispStart="@if (editingId() &amp;&amp; isBusy('update', editBusyId())) {" dispEnd="}"><pc id="1" equivStart="START_TAG_MAT_SPINNER" equivEnd="CLOSE_TAG_MAT_SPINNER" type="other" dispStart="&lt;mat-spinner diameter=&quot;14&quot;&gt;" dispEnd="&lt;/mat-spinner&gt;"></pc></pc><pc id="2" equivStart="START_BLOCK_ELSE" equivEnd="CLOSE_BLOCK_ELSE" type="other" dispStart="@else {" dispEnd="}"> Speichern </pc></source>
-        <target><pc id="0" equivStart="START_BLOCK_IF" equivEnd="CLOSE_BLOCK_IF" type="other" dispStart="@if (editingId() &amp;&amp; isBusy('update', editBusyId())) {" dispEnd="}"><pc id="1" equivStart="START_TAG_MAT_SPINNER" equivEnd="CLOSE_TAG_MAT_SPINNER" type="other" dispStart="&lt;mat-spinner diameter=&quot;14&quot;&gt;" dispEnd="&lt;/mat-spinner&gt;"></pc></pc><pc id="2" equivStart="START_BLOCK_ELSE" equivEnd="CLOSE_BLOCK_ELSE" type="other" dispStart="@else {" dispEnd="}"> Save </pc></target>
+      <segment state="translated">
+        <source><pc id="0" equivStart="START_BLOCK_IF" equivEnd="CLOSE_BLOCK_IF" type="other" dispStart="@if (editingId() &amp;&amp; isBusy(&apos;update&apos;, editBusyId())) {" dispEnd="}"><pc id="1" equivStart="START_TAG_MAT_SPINNER" equivEnd="CLOSE_TAG_MAT_SPINNER" type="other" dispStart="&lt;mat-spinner diameter=&quot;14&quot;&gt;" dispEnd="&lt;/mat-spinner&gt;"></pc></pc><pc id="2" equivStart="START_BLOCK_ELSE" equivEnd="CLOSE_BLOCK_ELSE" type="other" dispStart="@else {" dispEnd="}"> Speichern </pc></source>
+        <target><pc id="0" equivStart="START_BLOCK_IF" equivEnd="CLOSE_BLOCK_IF" type="other" dispStart="@if (editingId() &amp;&amp; isBusy(&apos;update&apos;, editBusyId())) {" dispEnd="}"><pc id="1" equivStart="START_TAG_MAT_SPINNER" equivEnd="CLOSE_TAG_MAT_SPINNER" type="other" dispStart="&lt;mat-spinner diameter=&quot;14&quot;&gt;" dispEnd="&lt;/mat-spinner&gt;"></pc></pc><pc id="2" equivStart="START_BLOCK_ELSE" equivEnd="CLOSE_BLOCK_ELSE" type="other" dispStart="@else {" dispEnd="}"> Save </pc></target>
       </segment>
     </unit>
     <unit id="pie.noData">
       <notes>
         <note category="location">web/src/app/stats/components/type-pie/type-pie.component.ts:46,49</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source>Keine Daten</source>
         <target>No data</target>
       </segment>
@@ -562,7 +566,7 @@
       <notes>
         <note category="location">web/src/app/stats/shell/analysis-page.component.ts:24,26</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source>Wochentrend</source>
         <target>Weekly trend</target>
       </segment>
@@ -571,7 +575,7 @@
       <notes>
         <note category="location">web/src/app/stats/shell/analysis-page.component.ts:31,32</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source>Woche</source>
         <target>Week</target>
       </segment>
@@ -590,7 +594,7 @@
       <notes>
         <note category="location">web/src/app/stats/shell/analysis-page.component.ts:50,52</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source>Monatstrend</source>
         <target>Monthly trend</target>
       </segment>
@@ -599,7 +603,7 @@
       <notes>
         <note category="location">web/src/app/stats/shell/analysis-page.component.ts:57,58</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source>Monat</source>
         <target>Month</target>
       </segment>
@@ -608,7 +612,7 @@
       <notes>
         <note category="location">web/src/app/stats/shell/analysis-page.component.ts:76,78</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source>Bestwerte &amp; Streaks</source>
         <target>Best values &amp; streaks</target>
       </segment>
@@ -617,7 +621,7 @@
       <notes>
         <note category="location">web/src/app/stats/shell/analysis-page.component.ts:82,84</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source>Bestwert Einzel-Eintrag:</source>
         <target>Best single entry:</target>
       </segment>
@@ -626,7 +630,7 @@
       <notes>
         <note category="location">web/src/app/stats/shell/analysis-page.component.ts:87,89</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source>Bester Tag:</source>
         <target>Best day:</target>
       </segment>
@@ -635,7 +639,7 @@
       <notes>
         <note category="location">web/src/app/stats/shell/analysis-page.component.ts:93,95</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source>Aktuelle Streak:</source>
         <target>Current streak:</target>
       </segment>
@@ -645,7 +649,7 @@
         <note category="location">web/src/app/stats/shell/analysis-page.component.ts:96,97</note>
         <note category="location">web/src/app/stats/shell/analysis-page.component.ts:104,105</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source><ph id="0" equiv="INTERPOLATION" disp="{{ currentStreak() }}"/> Tage</source>
         <target><ph id="0" equiv="INTERPOLATION" disp="{{ currentStreak() }}"/> days</target>
       </segment>
@@ -654,7 +658,7 @@
       <notes>
         <note category="location">web/src/app/stats/shell/analysis-page.component.ts:101,103</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source>Längste Streak:</source>
         <target>Longest streak:</target>
       </segment>
@@ -663,7 +667,7 @@
       <notes>
         <note category="location">web/src/app/stats/shell/analysis-page.component.ts:114,116</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source>Typen (Anteile)</source>
         <target>Types (shares)</target>
       </segment>
@@ -672,7 +676,7 @@
       <notes>
         <note category="location">web/src/app/stats/shell/analysis-page.component.ts:126,128</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source>Heatmap (Wochentag/Uhrzeit)</source>
         <target>Heatmap (weekday/time)</target>
       </segment>
@@ -681,7 +685,7 @@
       <notes>
         <note category="location">web/src/app/stats/shell/entries-page.component.ts:32,33</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source>Daten</source>
         <target>Data</target>
       </segment>
@@ -690,7 +694,7 @@
       <notes>
         <note category="location">web/src/app/stats/shell/entries-page.component.ts:34,35</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source>Filter und Verwaltung</source>
         <target>Filter and management</target>
       </segment>
@@ -699,7 +703,7 @@
       <notes>
         <note category="location">web/src/app/stats/shell/entries-page.component.ts:41,42</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source>Datum von</source>
         <target>Date from</target>
       </segment>
@@ -708,7 +712,7 @@
       <notes>
         <note category="location">web/src/app/stats/shell/entries-page.component.ts:51,52</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source>Datum bis</source>
         <target>Date to</target>
       </segment>
@@ -717,7 +721,7 @@
       <notes>
         <note category="location">web/src/app/stats/shell/entries-page.component.ts:61,62</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source>Quelle</source>
         <target>Source</target>
       </segment>
@@ -727,7 +731,7 @@
         <note category="location">web/src/app/stats/shell/entries-page.component.ts:64,66</note>
         <note category="location">web/src/app/stats/shell/entries-page.component.ts:76,78</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source>Alle</source>
         <target>All</target>
       </segment>
@@ -736,7 +740,7 @@
       <notes>
         <note category="location">web/src/app/stats/shell/entries-page.component.ts:73,74</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source>Typ</source>
         <target>Type</target>
       </segment>
@@ -763,7 +767,7 @@
       <notes>
         <note category="location">web/src/app/stats/shell/settings-page.component.ts:31,32</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source>Einstellungen</source>
         <target>Settings</target>
       </segment>
@@ -772,7 +776,7 @@
       <notes>
         <note category="location">web/src/app/stats/shell/settings-page.component.ts:33,34</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source>User-Profil &amp; Tagesziel</source>
         <target>User profile &amp; daily goal</target>
       </segment>
@@ -790,7 +794,7 @@
       <notes>
         <note category="location">web/src/app/stats/shell/settings-page.component.ts:45,46</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source>z.B. wolf</source>
         <target>e.g. wolf</target>
       </segment>
@@ -799,16 +803,16 @@
       <notes>
         <note category="location">web/src/app/stats/shell/settings-page.component.ts:49,50</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source> Wird für Multi-User-Zuordnung genutzt (Auth kommt später). </source>
-        <target> Used for multi-user assignment (auth comes later). </target>
+        <target> Used for multi-user assignment (auth coming later). </target>
       </segment>
     </unit>
     <unit id="switchUser">
       <notes>
         <note category="location">web/src/app/stats/shell/settings-page.component.ts:60,62</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">switch_account</pc> User wechseln </source>
         <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">switch_account</pc> Switch user </target>
       </segment>
@@ -817,7 +821,7 @@
       <notes>
         <note category="location">web/src/app/stats/shell/settings-page.component.ts:64,65</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source>Aktiv: <ph id="0" equiv="INTERPOLATION" disp="{{ activeUserId() }}"/></source>
         <target>Active: <ph id="0" equiv="INTERPOLATION" disp="{{ activeUserId() }}"/></target>
       </segment>
@@ -826,7 +830,7 @@
       <notes>
         <note category="location">web/src/app/stats/shell/settings-page.component.ts:69,70</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source>Anzeigename</source>
         <target>Display name</target>
       </segment>
@@ -844,7 +848,7 @@
       <notes>
         <note category="location">web/src/app/stats/shell/settings-page.component.ts:80,81</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source>Tagesziel (Reps)</source>
         <target>Daily goal (reps)</target>
       </segment>
@@ -862,7 +866,7 @@
       <notes>
         <note category="location">web/src/app/stats/shell/settings-page.component.ts:105,107</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">save</pc> Speichern </source>
         <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">save</pc> Save </target>
       </segment>
@@ -871,7 +875,7 @@
       <notes>
         <note category="location">web/src/app/stats/shell/settings-page.component.ts:109,110</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source>Speichert…</source>
         <target>Saving…</target>
       </segment>
@@ -880,7 +884,7 @@
       <notes>
         <note category="location">web/src/app/stats/shell/settings-page.component.ts:112,113</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source>Gespeichert.</source>
         <target>Saved.</target>
       </segment>
@@ -907,16 +911,16 @@
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:11,12</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source>Liegestütze Statistik</source>
-        <target>Pushup statistics</target>
+        <target>Pushup Statistics</target>
       </segment>
     </unit>
     <unit id="dashboardSubtitle">
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:13,16</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source> Behalte Trainingsvolumen und Verlauf im Blick – klar, schnell und mobil optimiert. </source>
         <target> Keep an eye on training volume and progress – clear, fast, and mobile optimized. </target>
       </segment>
@@ -925,155 +929,226 @@
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:21,23</note>
       </notes>
-      <segment>
-        <source> Live: <ph id="0" equiv="INTERPOLATION" disp="{{ liveConnected() ? 'verbunden' : 'getrennt' }}"/> </source>
-        <target> Live: <ph id="0" equiv="INTERPOLATION" disp="{{ liveConnected() ? 'connected' : 'disconnected' }}"/> </target>
+      <segment state="translated">
+        <source> Live: <ph id="0" equiv="INTERPOLATION" disp="{{ liveConnected() ? &apos;verbunden&apos; : &apos;getrennt&apos; }}"/> </source>
+        <target> Live: <ph id="0" equiv="INTERPOLATION" disp="{{ liveConnected() ? &apos;connected&apos; : &apos;disconnected&apos; }}"/> </target>
       </segment>
     </unit>
     <unit id="todayFocusAria">
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:28,29</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source>Tagesfokus</source>
-        <target>Daily focus</target>
+        <target>Today's focus</target>
+      </segment>
+    </unit>
+    <unit id="1933013871016789910">
+      <notes>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:34</note>
+      </notes>
+      <segment state="translated">
+        <source>Gesamt</source>
+        <target>Total</target>
       </segment>
     </unit>
     <unit id="goalProgressTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:43,45</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:45,47</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source>Zielfortschritt</source>
         <target>Goal progress</target>
       </segment>
     </unit>
     <unit id="lastEntryTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:57,58</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:59,60</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source>Letzter Eintrag</source>
         <target>Last entry</target>
       </segment>
     </unit>
-    <unit id="noEntryInPeriod">
+    <unit id="latEntryReps">
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:64,66</note>
       </notes>
-      <segment>
+      <segment state="translated">
+        <source> <ph id="0" equiv="INTERPOLATION" disp="{{ latest.reps }}"/> Reps · <ph id="1" equiv="INTERPOLATION_1" disp="{{ latest.type || &apos;Standard&apos; }}"/> </source>
+        <target> <ph id="0" equiv="INTERPOLATION" disp="{{ latest.reps }}"/> reps · <ph id="1" equiv="INTERPOLATION_1" disp="{{ latest.type || &apos;Standard&apos; }}"/> </target>
+      </segment>
+    </unit>
+    <unit id="noEntryInPeriod">
+      <notes>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:68,70</note>
+      </notes>
+      <segment state="translated">
         <source>Noch kein Eintrag für diesen Zeitraum.</source>
         <target>No entry for this period yet.</target>
       </segment>
     </unit>
     <unit id="allTimeSummaryAria">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:72,73</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:76,77</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source>All-Time Kurzübersicht</source>
         <target>All-time summary</target>
       </segment>
     </unit>
     <unit id="allTimeTotal">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:76,77</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:80,81</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source>All-Time Gesamt</source>
         <target>All-time total</target>
       </segment>
     </unit>
     <unit id="allTimeDays">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:80,81</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:84,85</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source>All-Time Tage</source>
         <target>All-time days</target>
       </segment>
     </unit>
     <unit id="allTimeEntries">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:84,85</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:88,89</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source>All-Time Einträge</source>
         <target>All-time entries</target>
       </segment>
     </unit>
     <unit id="allTimeAvg">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:88,89</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:92,93</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source>All-Time Ø/Tag</source>
         <target>All-time avg/day</target>
       </segment>
     </unit>
     <unit id="quickActionsTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:96,98</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:100,102</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source>Schnellaktionen</source>
         <target>Quick actions</target>
       </segment>
     </unit>
     <unit id="quickActionsSubtitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:99,101</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:103,105</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source>Schnell eintragen ohne Dialog</source>
         <target>Quick entry without dialog</target>
       </segment>
     </unit>
     <unit id="quickAdd10">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:110,112</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:114,116</note>
       </notes>
       <segment state="translated">
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">bolt</pc> +10 Reps </source>
-        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">bolt</pc> +10 Reps </target>
+        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">bolt</pc> +10 reps </target>
       </segment>
     </unit>
     <unit id="quickAdd20">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:120,122</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:124,126</note>
       </notes>
       <segment state="translated">
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">flash_on</pc> +20 Reps </source>
-        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">flash_on</pc> +20 Reps </target>
+        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">flash_on</pc> +20 reps </target>
       </segment>
     </unit>
     <unit id="quickAdd30">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:130,132</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:134,136</note>
       </notes>
       <segment state="translated">
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">whatshot</pc> +30 Reps </source>
-        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">whatshot</pc> +30 Reps </target>
+        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">whatshot</pc> +30 reps </target>
       </segment>
     </unit>
     <unit id="loadingStats">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:158,162</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:162,166</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source> Lade Statistikdaten… </source>
         <target> Loading statistics data… </target>
       </segment>
     </unit>
     <unit id="entriesInSelectedRange">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:171,173</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:175,177</note>
       </notes>
-      <segment>
+      <segment state="translated">
         <source>Einträge im gewählten Zeitraum</source>
-        <target>Entries in the selected time range</target>
+        <target>Entries in selected period</target>
+      </segment>
+    </unit>
+    <unit id="period.today">
+      <notes>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:51</note>
+      </notes>
+      <segment state="translated">
+        <source>Heute</source>
+        <target>Today</target>
+      </segment>
+    </unit>
+    <unit id="period.day">
+      <notes>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:52</note>
+      </notes>
+      <segment state="translated">
+        <source>Tag</source>
+        <target>Day</target>
+      </segment>
+    </unit>
+    <unit id="period.week">
+      <notes>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:53</note>
+      </notes>
+      <segment state="translated">
+        <source>Woche</source>
+        <target>Week</target>
+      </segment>
+    </unit>
+    <unit id="period.month">
+      <notes>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:54</note>
+      </notes>
+      <segment state="translated">
+        <source>Monat</source>
+        <target>Month</target>
+      </segment>
+    </unit>
+    <unit id="period.year">
+      <notes>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:55</note>
+      </notes>
+      <segment state="translated">
+        <source>Jahr</source>
+        <target>Year</target>
+      </segment>
+    </unit>
+    <unit id="period.range">
+      <notes>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:56</note>
+      </notes>
+      <segment state="translated">
+        <source>Zeitraum</source>
+        <target>Period</target>
       </segment>
     </unit>
   </file>
 </xliff>
-
