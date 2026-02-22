@@ -13,6 +13,7 @@ import {
 import { MatCardModule } from '@angular/material/card';
 import { StatsGranularity, StatsSeriesEntry } from '@pu-stats/models';
 import { Chart, ChartConfiguration, registerables } from 'chart.js';
+import 'chartjs-adapter-date-fns';
 
 Chart.register(...registerables);
 
@@ -124,18 +125,23 @@ export class StatsChartComponent implements AfterViewInit {
     });
 
     const data: ChartConfiguration<'bar' | 'line'>['data'] = {
-      labels: series.map((d) => d.bucket),
       datasets: [
         {
           label: 'Intervallwert',
-          data: totals,
+          data: series.map((d) => ({
+            x: new Date(d.bucket).getTime(),
+            y: d.total,
+          })),
           backgroundColor: '#5e8eff99',
           borderRadius: 6,
           maxBarThickness: 34,
         },
         {
           label: 'Tages-Integral',
-          data: series.map((d) => d.dayIntegral),
+          data: series.map((d) => ({
+            x: new Date(d.bucket).getTime(),
+            y: d.dayIntegral,
+          })),
           type: 'line',
           borderColor: '#ffbe66',
           backgroundColor: '#ffbe66',
@@ -146,7 +152,10 @@ export class StatsChartComponent implements AfterViewInit {
         },
         {
           label: 'Gleitender Durchschnitt',
-          data: movingAvg,
+          data: movingAvg.map((avg, index) => ({
+            x: new Date(series[index].bucket).getTime(),
+            y: avg,
+          })),
           type: 'line',
           borderColor: '#7ef0c8',
           backgroundColor: '#7ef0c8',
@@ -169,32 +178,15 @@ export class StatsChartComponent implements AfterViewInit {
         interaction: { intersect: false, mode: 'index' },
         scales: {
           x: {
+            type: 'time',
+            time: {
+              unit: this.granularity() === 'hourly' ? 'hour' : 'day',
+            },
             ticks: {
               color: '#c8d3ea',
               maxRotation: 0,
               autoSkip: this.rangeMode() !== 'day',
               maxTicksLimit: 12,
-              callback: (value, index) => {
-                const bucket = series[index]?.bucket ?? '';
-                if (this.rangeMode() === 'day') {
-                  return bucket; // e.g. 08
-                }
-                // daily buckets are ISO dates (YYYY-MM-DD)
-                const parsed = /^\d{4}-\d{2}-\d{2}$/.test(bucket)
-                  ? new Date(`${bucket}T00:00:00`)
-                  : null;
-                if (!parsed || Number.isNaN(parsed.getTime())) return bucket;
-
-                if (this.rangeMode() === 'week') {
-                  const weekday = parsed.toLocaleDateString('de-DE', {
-                    weekday: 'short',
-                  });
-                  return `${weekday}`;
-                }
-
-                // month
-                return String(parsed.getDate());
-              },
             },
             grid: { color: 'rgba(116, 140, 190, 0.15)' },
           },
