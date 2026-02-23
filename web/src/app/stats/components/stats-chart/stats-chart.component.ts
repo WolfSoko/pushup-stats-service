@@ -129,7 +129,7 @@ export class StatsChartComponent implements AfterViewInit {
         {
           label: 'Intervallwert',
           data: series.map((d) => ({
-            x: new Date(d.bucket).getTime(),
+            x: new Date(d.bucket + 'T00:00:00').getTime(),
             y: d.total,
           })),
           backgroundColor: '#5e8eff99',
@@ -139,7 +139,7 @@ export class StatsChartComponent implements AfterViewInit {
         {
           label: 'Tages-Integral',
           data: series.map((d) => ({
-            x: new Date(d.bucket).getTime(),
+            x: new Date(d.bucket + 'T00:00:00').getTime(),
             y: d.dayIntegral,
           })),
           type: 'line',
@@ -153,7 +153,7 @@ export class StatsChartComponent implements AfterViewInit {
         {
           label: 'Gleitender Durchschnitt',
           data: movingAvg.map((avg, index) => ({
-            x: new Date(series[index].bucket).getTime(),
+            x: new Date(series[index].bucket + 'T00:00:00').getTime(),
             y: avg,
           })),
           type: 'line',
