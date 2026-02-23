@@ -1,14 +1,13 @@
+import { registerLocaleData } from '@angular/common';
+import { provideHttpClient, withFetch } from '@angular/common/http';
+import localeDe from '@angular/common/locales/de';
 import {
   ApplicationConfig,
+  isDevMode,
   LOCALE_ID,
   provideBrowserGlobalErrorListeners,
   provideZonelessChangeDetection,
-  isDevMode,
 } from '@angular/core';
-import { registerLocaleData } from '@angular/common';
-import { provideHttpClient, withFetch } from '@angular/common/http';
-import { provideRouter } from '@angular/router';
-import localeDe from '@angular/common/locales/de';
 import {
   MAT_DATE_LOCALE,
   provideNativeDateAdapter,
@@ -19,10 +18,13 @@ import {
   withI18nSupport,
   withIncrementalHydration,
 } from '@angular/platform-browser';
+import { provideRouter } from '@angular/router';
 import { provideServiceWorker } from '@angular/service-worker';
-import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
+// eslint-disable-next-line @nx/enforce-module-boundaries
+import { provideAuth } from '@pu-auth/auth';
 import { MatrixController, MatrixElement } from 'chartjs-chart-matrix';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
+import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 import { appRoutes } from './app.routes';
 
 registerLocaleData(localeDe);
@@ -50,5 +52,6 @@ export const appConfig: ApplicationConfig = {
       enabled: !isDevMode(),
       registrationStrategy: 'registerWhenStable:30000',
     }),
+    provideAuth(),
   ],
 };
