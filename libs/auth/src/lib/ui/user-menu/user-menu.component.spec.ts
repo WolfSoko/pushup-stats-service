@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/angular';
 import userEvent from '@testing-library/user-event';
 import { UserMenuComponent } from './user-menu.component';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../../core/auth.service';
 import { Router } from '@angular/router';
 import { signal } from '@angular/core';
 

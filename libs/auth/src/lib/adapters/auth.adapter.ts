@@ -1,5 +1,18 @@
-import { InjectionToken } from '@angular/core';
-import { User } from '../user/user.model';
+import { computed, inject, signal } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
+import {
+  Auth,
+  authState,
+  deleteUser,
+  GoogleAuthProvider,
+  idToken,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  signOut,
+  user,
+  UserCredential,
+} from '@angular/fire/auth';
+import { mapAuthUserToPUSUser } from '../map-auth-user-to-user';
 
 export type AuthProvider =
   | 'google'
@@ -13,44 +26,33 @@ export interface AuthCredentials {
   password: string;
 }
 
-export interface AuthAdapter {
-  /** Initialize the auth instance */
-  initialize(config: Record<string, string>): Promise<void>;
-
-  /** Subscribe to auth state changes */
-  onAuthStateChanged(callback: (user: User | null) => void): () => void;
+export class AuthAdapter {
+  private auth = inject(Auth);
+  // Public computed signals
+  readonly authUser = toSignal(user(this.auth));
+  readonly authState = toSignal(authState(this.auth));
+  readonly loading = signal(false);
+  readonly error = signal<null | Error>(null);
+  readonly isAuthenticated = computed(() => this.authState() != null);
+  readonly idToken = toSignal(idToken(this.auth));
 
   /** Sign in with Google */
-  signInWithGoogle(): Promise<void>;
-
-  /** Sign in with Microsoft */
-  signInWithMicrosoft(): Promise<void>;
-
-  /** Sign in with GitHub */
-  signInWithGitHub(): Promise<void>;
-
-  /** Sign in with Apple */
-  signInWithApple(): Promise<void>;
-
-  /** Sign in with email/password */
-  signInWithEmail(email: string, password: string): Promise<void>;
-
-  /** Sign up with email/password */
-  signUpWithEmail(email: string, password: string): Promise<void>;
+  async signInWithGoogle(): Promise<UserCredential> {
+    const provider = new GoogleAuthProvider();
+    provider.addScope('email');
+    provider.addScope('profile');
+    return await signInWithPopup(this.auth, provider);
+  }
 
   /** Sign out */
-  signOut(): Promise<void>;
+  signOut(): Promise<void> {
+    return signOut(this.auth);
+  }
 
   /** Delete current user */
-  deleteUser(): Promise<void>;
-
-  /** Get ID token */
-  getIdToken(forceRefresh?: boolean): Promise<string | null>;
-
-  /** Check if initialized */
-  readonly isInitialized: boolean;
+  async deleteUser(): Promise<void> {
+    if (this.auth.currentUser) {
+      return await deleteUser(this.auth.currentUser);
+    }
+  }
 }
-
-export const FIREBASE_AUTH_ADAPTER = new InjectionToken<AuthAdapter>(
-  'FIREBASE_AUTH_ADAPTER'
-);

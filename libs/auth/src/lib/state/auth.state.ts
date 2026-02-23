@@ -10,13 +10,11 @@ export interface User {
 
 export type AuthProvider =
   | 'google'
-  | 'microsoft'
-  | 'github'
-  | 'apple'
   | 'email';
 
-export interface AuthState {
+export interface UserState {
   user: User | null;
   loading: boolean;
   error: Error | null;
+  isAuthenticated: boolean;
 }
