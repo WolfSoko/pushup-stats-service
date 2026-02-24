@@ -1,5 +1,6 @@
 import { inject } from '@angular/core';
 import {
+  patchState,
   signalStore,
   withComputed,
   withMethods,
@@ -22,41 +23,34 @@ export const AuthStore = signalStore(
   withProps(() => ({
     _authService: inject(AuthService),
   })),
-  withComputed((_authService) => ({
-    user: _authService.user,
-    isAuthenticated: _authService.isAuthenticated,
-    idToken: _authService.idToken,
+  withComputed((store) => ({
+    isAuthenticated: store._authService.isAuthenticated,
+    idToken: store._authService.idToken,
   })),
-  withMethods(({ _authService }) => ({
+  withMethods((store) => ({
     login: async () => {
-      patch({ loading: true, error: null });
+      patchState(store, { loading: true, error: null });
       try {
-        await _authService.signInWithGoogle();
+        await store._authService.signInWithGoogle();
       } catch (e) {
-        patch({ error: e });
+        patchState(store, {
+          error: e instanceof Error ? e : new Error(String(e)),
+        });
       } finally {
-        patch({ loading: false });
+        patchState(store, { loading: false });
       }
     },
     logout: async () => {
-      patch({ loading: true, error: null });
+      patchState(store, { loading: true, error: null });
       try {
-        await _authService.logout();
+        await store._authService.logout();
       } catch (e) {
-        patch({ error: e });
+        patchState(store, {
+          error: e instanceof Error ? e : new Error(String(e)),
+        });
       } finally {
-        patch({ loading: false });
+        patchState(store, { loading: false });
       }
     },
   }))
 );
-
-/*
-(withProps(() => ({
-  _auth: inject(AuthService),
-})),
-  withComputed(({ _auth }) => ({
-    user: _auth.user,
-    isAuthenticated: _auth.isAuthenticated,
-  })));
-*/
