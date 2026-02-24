@@ -1,5 +1,5 @@
 import { User as FbUser } from '@firebase/auth';
-import { User } from './state/auth.state';
+import { User } from './core/state/user.type';
 
 export function mapAuthUserToPUSUser(
   fbUser?: FbUser | null | undefined
