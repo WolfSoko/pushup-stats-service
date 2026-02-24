@@ -1,0 +1,114 @@
+<div class="login-container">
+  <mat-card class="login-card">
+    <mat-card-header>
+      <mat-card-title>Willkommen bei PushUp Stats</mat-card-title>
+      <mat-card-subtitle>Bitte melde dich an</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      @if (authState.error()) {
+        <div class="error-message">
+          <mat-icon color="warn">error</mat-icon>
+          <span>{{ authState.error()?.message }}</span>
+        </div>
+      }
+
+      @if (authState.loading()) {
+        <div class="loading" aria-busy="true">
+          <mat-spinner diameter="40" aria-label="Anmelden..."></mat-spinner>
+          <span>Anmelden...</span>
+        </div>
+      } @else {
+        <!-- Email/Password Form -->
+        <form
+          [formGroup]="loginForm"
+          (ngSubmit)="authState.signInWithEmail()"
+          class="login-form"
+        >
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Email</mat-label>
+            <input
+              matInput
+              type="email"
+              formControlName="email"
+              placeholder="deine@email.de"
+            />
+            <mat-icon matSuffix>email</mat-icon>
+            @if (loginForm.get('email')?.hasError('required')) {
+              <mat-error>Email ist erforderlich</mat-error>
+            }
+            @if (loginForm.get('email')?.hasError('email')) {
+              <mat-error>Ungültige Email-Adresse</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Passwort</mat-label>
+            <input
+              matInput
+              [type]="hidePassword() ? 'password' : 'text'"
+              formControlName="password"
+            />
+            <button
+              mat-icon-button
+              type="button"
+              matSuffix
+              (click)="togglePasswordVisibility()"
+              tabindex="-1"
+            >
+              <mat-icon>{{
+                hidePassword() ? 'visibility_off' : 'visibility'
+              }}</mat-icon>
+            </button>
+            @if (loginForm.get('password')?.hasError('required')) {
+              <mat-error>Passwort ist erforderlich</mat-error>
+            }
+            @if (loginForm.get('password')?.hasError('minlength')) {
+              <mat-error>Mindestens 6 Zeichen</mat-error>
+            }
+          </mat-form-field>
+
+          <button
+            mat-raised-button
+            color="primary"
+            type="submit"
+            [disabled]="loginForm.invalid || authState.loading()"
+            class="full-width login-button"
+          >
+            <mat-icon>login</mat-icon>
+            Anmelden
+          </button>
+        </form>
+
+        <div class="divider">
+          <span>oder</span>
+        </div>
+
+        <!-- Google Sign In -->
+        <button
+          mat-raised-button
+          (click)="signInWithGoogle()"
+          [disabled]="authState.loading()"
+          class="full-width google-button"
+        >
+          <mat-icon svgIcon="google"></mat-icon>
+          Mit Google anmelden
+        </button>
+
+        <!-- Toggle Register/Login -->
+        <div class="toggle-mode">
+          @if (isRegisterMode()) {
+            <span>Bereits registriert?</span>
+            <button mat-button type="button" (click)="toggleMode()">
+              Zum Login
+            </button>
+          } @else {
+            <span>Noch kein Account?</span>
+            <button mat-button type="button" (click)="toggleMode()">
+              Registrieren
+            </button>
+          }
+        </div>
+      }
+    </mat-card-content>
+  </mat-card>
+</div>

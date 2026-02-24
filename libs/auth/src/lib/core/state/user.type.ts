@@ -1,10 +1,10 @@
-export interface User {
+export type User = {
   uid: string;
   email: string | null;
   displayName: string | null;
   photoURL: string | null;
   emailVerified: boolean;
-  providerId: string;
+  providerId: AuthProvider;
   isAnonymous: boolean;
 }
 
@@ -12,9 +12,3 @@ export type AuthProvider =
   | 'google'
   | 'email';
 
-export interface UserState {
-  user: User | null;
-  loading: boolean;
-  error: Error | null;
-  isAuthenticated: boolean;
-}
