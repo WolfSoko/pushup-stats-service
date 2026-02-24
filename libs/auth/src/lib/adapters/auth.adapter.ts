@@ -12,14 +12,8 @@ import {
   user,
   UserCredential,
 } from '@angular/fire/auth';
-import { mapAuthUserToPUSUser } from '../map-auth-user-to-user';
 
-export type AuthProvider =
-  | 'google'
-  | 'microsoft'
-  | 'github'
-  | 'apple'
-  | 'email';
+export type AuthProvider = 'google' | 'email';
 
 export interface AuthCredentials {
   email: string;
@@ -42,6 +36,22 @@ export class AuthAdapter {
     provider.addScope('email');
     provider.addScope('profile');
     return await signInWithPopup(this.auth, provider);
+  }
+
+  /** Sign in with email and password */
+  async signInWithEmail(
+    email: string,
+    password: string
+  ): Promise<UserCredential> {
+    return await signInWithEmailAndPassword(this.auth, email, password);
+  }
+
+  /** Sign up with email and password */
+  async signUpWithEmail(
+    email: string,
+    password: string
+  ): Promise<UserCredential> {
+    return await createUserWithEmailAndPassword(this.auth, email, password);
   }
 
   /** Sign out */
