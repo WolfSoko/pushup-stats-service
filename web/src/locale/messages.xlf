@@ -3,7 +3,7 @@
   <file id="ngi18n" original="ng.template">
     <unit id="7638356697128454089">
       <notes>
-        <note category="location">libs/auth/src/lib/ui/login/login.component.html:25,26</note>
+        <note category="location">libs/auth/src/lib/ui/login/login.component.html:24,25</note>
       </notes>
       <segment>
         <source>Anmeldung erfolgreich!</source>
@@ -11,7 +11,7 @@
     </unit>
     <unit id="2361265238320887165">
       <notes>
-        <note category="location">libs/auth/src/lib/ui/login/login.component.html:26,27</note>
+        <note category="location">libs/auth/src/lib/ui/login/login.component.html:25,26</note>
       </notes>
       <segment>
         <source>Abmelden</source>
@@ -19,7 +19,7 @@
     </unit>
     <unit id="validate.email.required">
       <notes>
-        <note category="location">libs/auth/src/lib/ui/login/login.component.ts:66</note>
+        <note category="location">libs/auth/src/lib/ui/login/login.component.ts:65</note>
       </notes>
       <segment>
         <source>Bitte E-Mail eingeben!</source>
@@ -27,7 +27,7 @@
     </unit>
     <unit id="validate.email.email">
       <notes>
-        <note category="location">libs/auth/src/lib/ui/login/login.component.ts:69</note>
+        <note category="location">libs/auth/src/lib/ui/login/login.component.ts:68</note>
       </notes>
       <segment>
         <source>Bitte gültige E-Mail eingeben!</source>
@@ -35,7 +35,7 @@
     </unit>
     <unit id="validate.password.required">
       <notes>
-        <note category="location">libs/auth/src/lib/ui/login/login.component.ts:72</note>
+        <note category="location">libs/auth/src/lib/ui/login/login.component.ts:71</note>
       </notes>
       <segment>
         <source>Bitte Passwort eingeben!</source>
@@ -43,7 +43,7 @@
     </unit>
     <unit id="validate.password.minLength">
       <notes>
-        <note category="location">libs/auth/src/lib/ui/login/login.component.ts:75</note>
+        <note category="location">libs/auth/src/lib/ui/login/login.component.ts:74</note>
       </notes>
       <segment>
         <source>Passwort muss mindestens 6 Zeichen lang sein!</source>

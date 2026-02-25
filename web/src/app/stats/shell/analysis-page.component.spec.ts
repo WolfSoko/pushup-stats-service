@@ -14,7 +14,7 @@ import { Component, input } from '@angular/core';
   template: '',
 })
 class MockHeatmapComponent {
-  readonly entries = input<any[]>([]);
+  readonly entries = input<unknown[]>([]);
 }
 
 @Component({
@@ -23,7 +23,7 @@ class MockHeatmapComponent {
   template: '',
 })
 class MockTypePieComponent {
-  readonly data = input<any[]>([]);
+  readonly data = input<unknown[]>([]);
 }
 
 describe('AnalysisPageComponent', () => {

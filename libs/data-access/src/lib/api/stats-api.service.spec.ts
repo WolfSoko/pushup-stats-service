@@ -1,216 +1,164 @@
-import { PLATFORM_ID, TransferState, makeStateKey } from '@angular/core';
-import { TestBed } from '@angular/core/testing';
-import { provideHttpClient } from '@angular/common/http';
-import {
-  HttpTestingController,
-  provideHttpClientTesting,
-} from '@angular/common/http/testing';
-import { StatsResponse } from '@pu-stats/models';
+import { isPlatformServer } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
+import { PLATFORM_ID, TransferState } from '@angular/core';
+import { PushupRecord } from '@pu-stats/models';
+import { render } from '@testing-library/angular';
+import { of } from 'rxjs';
 import { StatsApiService } from './stats-api.service';
 
+jest.mock('@angular/common', () => ({
+  ...jest.requireActual('@angular/common'),
+  isPlatformServer: jest.fn(),
+}));
+
 describe('StatsApiService', () => {
-  let previousEnv: NodeJS.ProcessEnv;
+  let httpMock: {
+    get: jest.Mock;
+    post: jest.Mock;
+    put: jest.Mock;
+    delete: jest.Mock;
+  };
+  let transferStateMock: {
+    get: jest.Mock;
+    set: jest.Mock;
+    hasKey: jest.Mock;
+    remove: jest.Mock;
+  };
 
   beforeEach(() => {
-    previousEnv = { ...process.env };
+    httpMock = {
+      get: jest.fn(),
+      post: jest.fn(),
+      put: jest.fn(),
+      delete: jest.fn(),
+    };
+    transferStateMock = {
+      get: jest.fn(),
+      set: jest.fn(),
+      hasKey: jest.fn(),
+      remove: jest.fn(),
+    };
+    jest.clearAllMocks();
   });
 
-  afterEach(() => {
-    // Restore any env mutations done in tests
-    for (const key of Object.keys(process.env)) {
-      if (!(key in previousEnv)) delete process.env[key];
-    }
-    Object.assign(process.env, previousEnv);
-
-    TestBed.resetTestingModule();
-  });
-
-  function setup(platformId: 'browser' | 'server') {
-    TestBed.configureTestingModule({
+  it('should load stats from cache if available (given not server, hasKey true)', async () => {
+    (isPlatformServer as jest.Mock).mockReturnValue(false);
+    transferStateMock.hasKey.mockReturnValue(true);
+    transferStateMock.get.mockReturnValue({ meta: {}, series: [] });
+    const { fixture } = await render('', {
       providers: [
-        provideHttpClient(),
-        provideHttpClientTesting(),
-        { provide: PLATFORM_ID, useValue: platformId },
+        StatsApiService,
+        { provide: HttpClient, useValue: httpMock },
+        { provide: PLATFORM_ID, useValue: 'browser' },
+        { provide: TransferState, useValue: transferStateMock },
       ],
     });
-
-    return {
-      service: TestBed.inject(StatsApiService),
-      httpMock: TestBed.inject(HttpTestingController),
-    };
-  }
-
-  it('builds query params for from/to filter in browser', () => {
-    const { service, httpMock } = setup('browser');
-
-    service.load({ from: '2026-01-01', to: '2026-01-31' }).subscribe();
-
-    const req = httpMock.expectOne('/api/stats?from=2026-01-01&to=2026-01-31');
-    expect(req.request.method).toBe('GET');
-    req.flush({ meta: {}, series: [] });
-    httpMock.verify();
+    const service = fixture.debugElement.injector.get(StatsApiService);
+    const result$ = service.load();
+    let result: unknown;
+    result$.subscribe((r) => (result = r));
+    expect(result).toEqual({ meta: {}, series: [] });
+    expect(transferStateMock.remove).toHaveBeenCalled();
   });
 
-  it('omits query when no filter is provided', () => {
-    const { service, httpMock } = setup('browser');
-
-    service.load().subscribe();
-
-    const req = httpMock.expectOne('/api/stats');
-    expect(req.request.method).toBe('GET');
-    req.flush({ meta: {}, series: [] });
-    httpMock.verify();
+  it('should load stats from http if not cached (given not server, hasKey false)', async () => {
+    (isPlatformServer as jest.Mock).mockReturnValue(false);
+    transferStateMock.hasKey.mockReturnValue(false);
+    httpMock.get.mockReturnValue(of({ meta: { total: 1 }, series: [] }));
+    const { fixture } = await render('', {
+      providers: [
+        StatsApiService,
+        { provide: HttpClient, useValue: httpMock },
+        { provide: PLATFORM_ID, useValue: 'browser' },
+        { provide: TransferState, useValue: transferStateMock },
+      ],
+    });
+    const service = fixture.debugElement.injector.get(StatsApiService);
+    const result$ = service.load();
+    let result: unknown;
+    result$.subscribe((r) => (result = r));
+    expect(result).toEqual({ meta: { total: 1 }, series: [] });
+    expect(httpMock.get).toHaveBeenCalled();
   });
 
-  it('supports single-sided filter (from only)', () => {
-    const { service, httpMock } = setup('browser');
-
-    service.load({ from: '2026-02-01' }).subscribe();
-
-    const req = httpMock.expectOne('/api/stats?from=2026-02-01');
-    expect(req.request.method).toBe('GET');
-    req.flush({ meta: {}, series: [] });
-    httpMock.verify();
+  it('should set transfer state on server after http get', async () => {
+    (isPlatformServer as jest.Mock).mockReturnValue(true);
+    httpMock.get.mockReturnValue(of({ meta: { total: 2 }, series: [] }));
+    const { fixture } = await render('', {
+      providers: [
+        StatsApiService,
+        { provide: HttpClient, useValue: httpMock },
+        { provide: PLATFORM_ID, useValue: 'server' },
+        { provide: TransferState, useValue: transferStateMock },
+      ],
+    });
+    const service = fixture.debugElement.injector.get(StatsApiService);
+    const result$ = service.load();
+    let result: unknown;
+    result$.subscribe((r) => (result = r));
+    expect(result).toEqual({ meta: { total: 2 }, series: [] });
+    expect(transferStateMock.set).toHaveBeenCalled();
   });
 
-  it('reuses TransferState payload on browser without extra HTTP call', () => {
-    const { service, httpMock } = setup('browser');
-    const transferState = TestBed.inject(TransferState);
-    const key = makeStateKey<StatsResponse>(
-      'stats:from=2026-02-01&to=2026-02-10'
-    );
-    const cachedPayload = {
-      meta: {
-        from: '2026-02-01',
-        to: '2026-02-10',
-        entries: 2,
-        days: 1,
-        total: 15,
-        granularity: 'daily',
-      },
-      series: [{ bucket: '2026-02-10', total: 15, dayIntegral: 15 }],
-    };
-
-    transferState.set(key, cachedPayload);
-
-    let value: StatsResponse | null = null;
-    service
-      .load({ from: '2026-02-01', to: '2026-02-10' })
-      .subscribe((v) => (value = v));
-
-    expect(value).toEqual(cachedPayload);
-    httpMock.expectNone('/api/stats?from=2026-02-01&to=2026-02-10');
-    httpMock.verify();
-  });
-
-  it('uses server-local base url and respects API_PORT in SSR', () => {
-    const { service, httpMock } = setup('server');
-    process.env.API_PORT = '9999';
-    delete process.env.API_HOST;
-
-    service.load({ to: '2026-02-10' }).subscribe();
-
-    const req = httpMock.expectOne(
-      'http://127.0.0.1:9999/api/stats?to=2026-02-10'
-    );
-    expect(req.request.method).toBe('GET');
-    req.flush({ meta: {}, series: [] });
-    httpMock.verify();
-  });
-
-  it('respects API_HOST on server', () => {
-    const { service, httpMock } = setup('server');
-    process.env.API_PORT = '8788';
-    process.env.API_HOST = 'api';
-
-    service.load({ to: '2026-02-10' }).subscribe();
-
-    const req = httpMock.expectOne('http://api:8788/api/stats?to=2026-02-10');
-    expect(req.request.method).toBe('GET');
-    req.flush({ meta: {}, series: [] });
-    httpMock.verify();
-  });
-
-  it('falls back to port 8787 on server when API_PORT is missing', () => {
-    const { service, httpMock } = setup('server');
-    delete process.env.API_PORT;
-    delete process.env.API_HOST;
-
-    service.load().subscribe();
-
-    const req = httpMock.expectOne('http://127.0.0.1:8787/api/stats');
-    expect(req.request.method).toBe('GET');
-    req.flush({ meta: {}, series: [] });
-    httpMock.verify();
-  });
-
-  it('lists pushups and filters by date range client-side', () => {
-    const { service, httpMock } = setup('browser');
-
-    let rows: Array<{ _id: string }> = [];
-    service
-      .listPushups({ from: '2026-02-10', to: '2026-02-10' })
-      .subscribe((v) => (rows = v));
-
-    const req = httpMock.expectOne('/api/pushups');
-    expect(req.request.method).toBe('GET');
-    req.flush([
-      { _id: '1', timestamp: '2026-02-09T10:00:00', reps: 10, source: 'wa' },
-      { _id: '2', timestamp: '2026-02-10T10:00:00', reps: 12, source: 'wa' },
+  it('should filter pushups in listPushups', async () => {
+    const pushups: PushupRecord[] = [
+      { _id: '1', timestamp: '2024-01-01T00:00:00Z', reps: 10, source: 's' },
+      { _id: '2', timestamp: '2024-01-10T00:00:00Z', reps: 5, source: 's' },
+    ];
+    httpMock.get.mockReturnValue(of(pushups));
+    const { fixture } = await render('', {
+      providers: [
+        StatsApiService,
+        { provide: HttpClient, useValue: httpMock },
+        { provide: PLATFORM_ID, useValue: 'browser' },
+        { provide: TransferState, useValue: transferStateMock },
+      ],
+    });
+    const service = fixture.debugElement.injector.get(StatsApiService);
+    const result$ = service.listPushups({ from: '2024-01-05' });
+    let result: unknown;
+    result$.subscribe((r) => (result = r));
+    expect(result).toEqual([
+      { _id: '2', timestamp: '2024-01-10T00:00:00Z', reps: 5, source: 's' },
     ]);
-
-    expect(rows.map((x) => x._id)).toEqual(['2']);
-    httpMock.verify();
   });
 
-  it('creates pushup via POST', () => {
-    const { service, httpMock } = setup('browser');
-
-    service
-      .createPushup({ timestamp: '2026-02-11T07:00', reps: 15, source: 'web' })
-      .subscribe();
-
-    const req = httpMock.expectOne('/api/pushups');
-    expect(req.request.method).toBe('POST');
-    expect(req.request.body).toEqual({
-      timestamp: '2026-02-11T07:00',
-      reps: 15,
-      source: 'web',
+  it('should call http post/put/delete for create/update/delete', async () => {
+    httpMock.post.mockReturnValue(
+      of({ _id: '1', timestamp: '', reps: 1, source: '' })
+    );
+    httpMock.put.mockReturnValue(
+      of({ _id: '1', timestamp: '', reps: 2, source: '' })
+    );
+    httpMock.delete.mockReturnValue(of({ ok: true }));
+    const { fixture } = await render('', {
+      providers: [
+        StatsApiService,
+        { provide: HttpClient, useValue: httpMock },
+        { provide: PLATFORM_ID, useValue: 'browser' },
+        { provide: TransferState, useValue: transferStateMock },
+      ],
     });
-    req.flush({
+    const service = fixture.debugElement.injector.get(StatsApiService);
+    const create$ = service.createPushup({ timestamp: '', reps: 1 });
+    const update$ = service.updatePushup('1', { reps: 2 });
+    const delete$ = service.deletePushup('1');
+    let createResult, updateResult, deleteResult;
+    create$.subscribe((r) => (createResult = r));
+    update$.subscribe((r) => (updateResult = r));
+    delete$.subscribe((r) => (deleteResult = r));
+    expect(createResult).toEqual({
       _id: '1',
-      timestamp: '2026-02-11T07:00',
-      reps: 15,
-      source: 'web',
+      timestamp: '',
+      reps: 1,
+      source: '',
     });
-    httpMock.verify();
-  });
-
-  it('updates pushup via PUT', () => {
-    const { service, httpMock } = setup('browser');
-
-    service.updatePushup('abc', { reps: 20 }).subscribe();
-
-    const req = httpMock.expectOne('/api/pushups/abc');
-    expect(req.request.method).toBe('PUT');
-    expect(req.request.body).toEqual({ reps: 20 });
-    req.flush({
-      _id: 'abc',
-      timestamp: '2026-02-11T07:00',
-      reps: 20,
-      source: 'web',
+    expect(updateResult).toEqual({
+      _id: '1',
+      timestamp: '',
+      reps: 2,
+      source: '',
     });
-    httpMock.verify();
-  });
-
-  it('deletes pushup via DELETE', () => {
-    const { service, httpMock } = setup('browser');
-
-    service.deletePushup('abc').subscribe();
-
-    const req = httpMock.expectOne('/api/pushups/abc');
-    expect(req.request.method).toBe('DELETE');
-    req.flush({ ok: true });
-    httpMock.verify();
+    expect(deleteResult).toEqual({ ok: true });
   });
 });

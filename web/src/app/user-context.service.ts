@@ -6,7 +6,8 @@ import { AuthStore } from '@pu-auth/auth';
 export class UserContextService {
   private readonly authStore = inject(AuthStore);
   readonly userNameSafe = computed(() => {
-    return this.authStore.user()?.displayName ?? 'default';
+    const user = this.authStore.user();
+    return user?.displayName || user?.email || 'default';
   });
 
   userIdSafe() {

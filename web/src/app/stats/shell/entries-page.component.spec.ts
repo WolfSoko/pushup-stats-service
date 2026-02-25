@@ -1,3 +1,4 @@
+import { Auth } from '@angular/fire/auth';
 import { signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
@@ -51,6 +52,7 @@ describe('EntriesPageComponent', () => {
       providers: [
         { provide: StatsApiService, useValue: apiMock },
         { provide: PushupLiveDataService, useValue: liveMock },
+        { provide: Auth, useValue: {} },
       ],
     }).compileComponents();
 

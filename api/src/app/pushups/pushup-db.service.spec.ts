@@ -2,36 +2,48 @@ import fs from 'node:fs';
 import Datastore from 'nedb-promises';
 import { PushupDbService } from './pushup-db.service';
 
-jest.mock('nedb-promises', () => ({
-  __esModule: true,
-  default: {
-    create: jest.fn(),
-  },
-}));
+jest.mock('nedb-promises', () => {
+  const actual = jest.requireActual('nedb-promises');
+  return {
+    __esModule: true,
+    default: {
+      ...actual.default,
+      create: jest.fn(),
+    },
+  };
+});
+
+type FakeDb = {
+  find: jest.Mock;
+  findOne: jest.Mock;
+  insert: jest.Mock;
+  update: jest.Mock;
+  remove: jest.Mock;
+};
 
 describe('PushupDbService', () => {
   afterEach(() => {
     jest.restoreAllMocks();
-    (Datastore as any).create.mockReset?.();
+    (Datastore as unknown as { create: jest.Mock }).create.mockReset?.();
   });
 
   it('creates db and ensures data dir exists', async () => {
     const mkdirSpy = jest.spyOn(fs, 'mkdirSync').mockImplementation(() => undefined as never);
 
-    const fakeDb = {
+    const fakeDb: FakeDb = {
       find: jest.fn(),
       findOne: jest.fn(),
       insert: jest.fn(),
       update: jest.fn(),
       remove: jest.fn(),
     };
-    (Datastore as any).create.mockReturnValue(fakeDb);
+    (Datastore as unknown as { create: jest.Mock }).create.mockReturnValue(fakeDb);
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const svc = new PushupDbService();
 
     expect(mkdirSpy).toHaveBeenCalledWith(expect.any(String), { recursive: true });
-    expect((Datastore as any).create).toHaveBeenCalledWith(
+    expect((Datastore as unknown as { create: jest.Mock }).create).toHaveBeenCalledWith(
       expect.objectContaining({ filename: expect.any(String), autoload: true, timestampData: true }),
     );
   });
@@ -45,14 +57,14 @@ describe('PushupDbService', () => {
     ];
 
     const sort = jest.fn().mockResolvedValue(rows);
-    const fakeDb = {
+    const fakeDb: FakeDb = {
       find: jest.fn().mockReturnValue({ sort }),
       findOne: jest.fn(),
       insert: jest.fn(),
       update: jest.fn(),
       remove: jest.fn(),
     };
-    (Datastore as any).create.mockReturnValue(fakeDb);
+    (Datastore as unknown as { create: jest.Mock }).create.mockReturnValue(fakeDb);
 
     const svc = new PushupDbService();
     const all = await svc.findAll();
@@ -69,7 +81,7 @@ describe('PushupDbService', () => {
   it('findById returns null when missing and fills default type when present', async () => {
     jest.spyOn(fs, 'mkdirSync').mockImplementation(() => undefined as never);
 
-    const fakeDb = {
+    const fakeDb: FakeDb = {
       find: jest.fn(),
       findOne: jest
         .fn()
@@ -79,7 +91,7 @@ describe('PushupDbService', () => {
       update: jest.fn(),
       remove: jest.fn(),
     };
-    (Datastore as any).create.mockReturnValue(fakeDb);
+    (Datastore as unknown as { create: jest.Mock }).create.mockReturnValue(fakeDb);
 
     const svc = new PushupDbService();
 
@@ -96,14 +108,14 @@ describe('PushupDbService', () => {
   it('create inserts and applies default type', async () => {
     jest.spyOn(fs, 'mkdirSync').mockImplementation(() => undefined as never);
 
-    const fakeDb = {
+    const fakeDb: FakeDb = {
       find: jest.fn(),
       findOne: jest.fn(),
       insert: jest.fn().mockImplementation(async (doc: any) => ({ ...doc, _id: '1' })),
       update: jest.fn(),
       remove: jest.fn(),
     };
-    (Datastore as any).create.mockReturnValue(fakeDb);
+    (Datastore as unknown as { create: jest.Mock }).create.mockReturnValue(fakeDb);
 
     const svc = new PushupDbService();
 
@@ -115,14 +127,14 @@ describe('PushupDbService', () => {
   it('update patches and returns the updated row', async () => {
     jest.spyOn(fs, 'mkdirSync').mockImplementation(() => undefined as never);
 
-    const fakeDb = {
+    const fakeDb: FakeDb = {
       find: jest.fn().mockReturnValue({ sort: jest.fn() }),
       findOne: jest.fn().mockResolvedValue({ _id: '1', timestamp: 't', reps: 11, source: 'wa' }),
       insert: jest.fn(),
       update: jest.fn().mockResolvedValue(1),
       remove: jest.fn(),
     };
-    (Datastore as any).create.mockReturnValue(fakeDb);
+    (Datastore as unknown as { create: jest.Mock }).create.mockReturnValue(fakeDb);
 
     const svc = new PushupDbService();
     const out = await svc.update('1', { reps: 11 });
@@ -134,14 +146,14 @@ describe('PushupDbService', () => {
   it('remove deletes by id', async () => {
     jest.spyOn(fs, 'mkdirSync').mockImplementation(() => undefined as never);
 
-    const fakeDb = {
+    const fakeDb: FakeDb = {
       find: jest.fn(),
       findOne: jest.fn(),
       insert: jest.fn(),
       update: jest.fn(),
       remove: jest.fn().mockResolvedValue(1),
     };
-    (Datastore as any).create.mockReturnValue(fakeDb);
+    (Datastore as unknown as { create: jest.Mock }).create.mockReturnValue(fakeDb);
 
     const svc = new PushupDbService();
     await expect(svc.remove('1')).resolves.toBe(1);

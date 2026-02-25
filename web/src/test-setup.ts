@@ -1,4 +1,5 @@
 import '@angular/localize/init';
 
-// Polyfill Node.js globals for Firebase SDK in browser tests
-globalThis.process = globalThis.process || ({ env: {} } as any);
+// Polyfill Node.js globals für Firebase SDK in Browser-Tests
+globalThis.process = globalThis.process || ({ env: {} } as { env: Record<string, unknown> });
+// Ersetze 'any' durch einen spezifischeren Typ für bessere Lint-Konformität

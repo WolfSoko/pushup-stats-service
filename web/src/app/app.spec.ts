@@ -1,120 +1,82 @@
 import { TestBed } from '@angular/core/testing';
+import { render, screen } from '@testing-library/angular';
+import { signal, WritableSignal } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { Title } from '@angular/platform-browser';
-import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
-import { of } from 'rxjs';
-import { signal } from '@angular/core';
+// eslint-disable-next-line @nx/enforce-module-boundaries
+import { AuthStore } from '@pu-auth/auth';
 import { App } from './app';
 import { UserContextService } from './user-context.service';
 
-describe('App', () => {
+describe('App (testing-library)', () => {
+  let userNameSignal: WritableSignal<string>;
+  const authMock = {
+    user: signal({ uid: 'default', displayName: 'default', email: 'default' }),
+    loading: () => false,
+    isAuthenticated: () => true,
+    error: () => null,
+    logout: () => Promise.resolve(),
+  };
+
+  beforeEach(() => {
+    userNameSignal = signal('default');
+  });
+
   it('should create app shell', async () => {
-    await TestBed.configureTestingModule({
-      imports: [App],
+    const { fixture } = await render(App, {
       providers: [
         provideRouter([]),
-        {
-          provide: BreakpointObserver,
-          useValue: {
-            observe: () =>
-              of<BreakpointState>({ matches: false, breakpoints: {} }),
-          },
-        },
+        { provide: UserContextService, useValue: { userNameSafe: userNameSignal.asReadonly() } },
+        { provide: AuthStore, useValue: authMock },
       ],
-    }).compileComponents();
-
-    const fixture = TestBed.createComponent(App);
-    fixture.detectChanges();
-
+    });
     expect(fixture.componentInstance).toBeTruthy();
   });
 
   it('renders sidenav navigation links', async () => {
-    await TestBed.configureTestingModule({
-      imports: [App],
+    await render(App, {
       providers: [
         provideRouter([]),
-        {
-          provide: BreakpointObserver,
-          useValue: {
-            observe: () =>
-              of<BreakpointState>({ matches: false, breakpoints: {} }),
-          },
-        },
+        { provide: UserContextService, useValue: { userNameSafe: userNameSignal.asReadonly() } },
+        { provide: AuthStore, useValue: authMock },
       ],
-    }).compileComponents();
-
-    const fixture = TestBed.createComponent(App);
-    fixture.detectChanges();
-
-    const root: HTMLElement = fixture.nativeElement;
-
-    // Sidenav links
-    expect(root.textContent).toContain('Dashboard');
-    expect(root.textContent).toContain('Daten');
-    expect(root.textContent).toContain('Analyse');
-    expect(root.textContent).toContain('Einstellungen');
-
-    // Language switch
-    expect(root.textContent).toContain('Sprache');
-    expect(root.textContent).toContain('Deutsch');
-    expect(root.textContent).toContain('English');
+    });
+    expect(screen.getByText('Dashboard')).toBeTruthy();
+    expect(screen.getByText('Daten')).toBeTruthy();
+    expect(screen.getByText('Analyse')).toBeTruthy();
+    expect(screen.getByText('Einstellungen')).toBeTruthy();
+    expect(screen.getByText('Sprache')).toBeTruthy();
+    expect(screen.getByText('Deutsch')).toBeTruthy();
+    expect(screen.getByText('English')).toBeTruthy();
   });
 
   describe('HTML title', () => {
-    const userNameSignal = signal('default');
-
-    beforeEach(async () => {
-      userNameSignal.set('default');
-
-      await TestBed.configureTestingModule({
-        imports: [App],
+    async function setup() {
+      return render(App, {
         providers: [
           provideRouter([]),
-          {
-            provide: BreakpointObserver,
-            useValue: {
-              observe: () =>
-                of<BreakpointState>({ matches: false, breakpoints: {} }),
-            },
-          },
-          {
-            provide: UserContextService,
-            useValue: { userNameSafe: userNameSignal.asReadonly() },
-          },
+          { provide: UserContextService, useValue: { userNameSafe: userNameSignal.asReadonly() } },
+          { provide: AuthStore, useValue: authMock },
         ],
-      }).compileComponents();
-    });
+      });
+    }
 
-    it('shows fallback text in title when user is default', () => {
-      const fixture = TestBed.createComponent(App);
-      fixture.detectChanges();
-
+    it('shows fallback text in title when user is default', async () => {
+      await setup();
       const title = TestBed.inject(Title);
       expect(title.getTitle()).toBe('Pushup Tracker – Dein Name 💪');
     });
 
-    it('shows username in title when user is set', () => {
+    it('shows username in title when user is set', async () => {
+      const { fixture } = await setup();
       userNameSignal.set('wolf');
-      const fixture = TestBed.createComponent(App);
       fixture.detectChanges();
-
       const title = TestBed.inject(Title);
       expect(title.getTitle()).toBe('Pushup Tracker – wolf');
-    });
-
-    it('updates title reactively when user changes', async () => {
-      const fixture = TestBed.createComponent(App);
-      fixture.detectChanges();
-
-      const title = TestBed.inject(Title);
-      expect(title.getTitle()).toBe('Pushup Tracker – Dein Name 💪');
-
       userNameSignal.set('anna');
-      fixture.detectChanges();
-      await fixture.whenStable();
-
+      fixture.detectChanges()
       expect(title.getTitle()).toBe('Pushup Tracker – anna');
     });
+
   });
 });

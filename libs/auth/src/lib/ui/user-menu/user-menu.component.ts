@@ -19,80 +19,8 @@ import { AuthStore } from '../../core/state/auth.store';
     MatDividerModule,
     MatProgressSpinner,
   ],
-  template: `
-    @if (loading()) {
-      <mat-spinner diameter="24"></mat-spinner>
-    } @else if (isAuthenticated()) {
-      <button
-        mat-icon-button
-        [matMenuTriggerFor]="userMenu"
-        aria-label="User menu"
-      >
-        @if (user()?.photoURL) {
-          <img [src]="user()!.photoURL" alt="Avatar" class="avatar-img" />
-        } @else {
-          <mat-icon>account_circle</mat-icon>
-        }
-      </button>
-
-      <mat-menu #userMenu="matMenu">
-        <div class="user-info">
-          <span class="display-name">{{
-            user()?.displayName || user()?.email || 'Benutzer'
-          }}</span>
-          <span class="email">{{ user()?.email }}</span>
-        </div>
-        <mat-divider></mat-divider>
-        <button mat-menu-item (click)="signOut()">
-          <mat-icon>logout</mat-icon>
-          <span>Abmelden</span>
-        </button>
-      </mat-menu>
-    } @else {
-      <button mat-raised-button color="primary" (click)="signIn()">
-        <mat-icon>login</mat-icon>
-        Anmelden
-      </button>
-    }
-  `,
-  styles: [
-    `
-      :host {
-        display: flex;
-        align-items: center;
-      }
-
-      .avatar-img {
-        width: 32px;
-        height: 32px;
-        border-radius: 50%;
-        object-fit: cover;
-      }
-
-      .user-info {
-        padding: 12px 16px;
-        display: flex;
-        flex-direction: column;
-        min-width: 200px;
-      }
-
-      .display-name {
-        font-weight: 500;
-        margin-bottom: 4px;
-      }
-
-      .email {
-        font-size: 12px;
-        opacity: 0.7;
-      }
-
-      button {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-      }
-    `,
-  ],
+  templateUrl: './user-menu.component.html',
+  styleUrl: './user-menu.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserMenuComponent {
