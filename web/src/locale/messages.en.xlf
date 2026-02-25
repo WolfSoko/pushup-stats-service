@@ -1,10 +1,64 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <xliff version="2.0" xmlns="urn:oasis:names:tc:xliff:document:2.0" srcLang="de" trgLang="en">
   <file id="ngi18n" original="ng.template">
+    <unit id="7638356697128454089">
+      <notes>
+        <note category="location">libs/auth/src/lib/ui/login/login.component.html:25,26</note>
+      </notes>
+      <segment state="translated">
+        <source>Anmeldung erfolgreich!</source>
+        <target>Login successful!</target>
+      </segment>
+    </unit>
+    <unit id="2361265238320887165">
+      <notes>
+        <note category="location">libs/auth/src/lib/ui/login/login.component.html:26,27</note>
+      </notes>
+      <segment state="translated">
+        <source>Abmelden</source>
+        <target>Logout</target>
+      </segment>
+    </unit>
+    <unit id="validate.email.required">
+      <notes>
+        <note category="location">libs/auth/src/lib/ui/login/login.component.ts:66</note>
+      </notes>
+      <segment state="translated">
+        <source>Bitte E-Mail eingeben!</source>
+        <target>Please enter email!</target>
+      </segment>
+    </unit>
+    <unit id="validate.email.email">
+      <notes>
+        <note category="location">libs/auth/src/lib/ui/login/login.component.ts:69</note>
+      </notes>
+      <segment state="translated">
+        <source>Bitte gültige E-Mail eingeben!</source>
+        <target>Please enter a valid email!</target>
+      </segment>
+    </unit>
+    <unit id="validate.password.required">
+      <notes>
+        <note category="location">libs/auth/src/lib/ui/login/login.component.ts:72</note>
+      </notes>
+      <segment state="translated">
+        <source>Bitte Passwort eingeben!</source>
+        <target>Please enter password!</target>
+      </segment>
+    </unit>
+    <unit id="validate.password.minLength">
+      <notes>
+        <note category="location">libs/auth/src/lib/ui/login/login.component.ts:75</note>
+      </notes>
+      <segment state="translated">
+        <source>Passwort muss mindestens 6 Zeichen lang sein!</source>
+        <target>Password must be at least 6 characters long!</target>
+      </segment>
+    </unit>
     <unit id="app.title">
       <notes>
         <note category="location">web/src/app/app.html:11,12</note>
-        <note category="location">web/src/app/app.html:133,134</note>
+        <note category="location">web/src/app/app.html:114,115</note>
       </notes>
       <segment state="translated">
         <source>Pushups</source>
@@ -67,7 +121,7 @@
     </unit>
     <unit id="nav.lang.en">
       <notes>
-        <note category="location">web/src/app/app.html:83,86</note>
+        <note category="location">web/src/app/app.html:83,85</note>
       </notes>
       <segment state="translated">
         <source>English</source>
@@ -76,7 +130,7 @@
     </unit>
     <unit id="nav.account">
       <notes>
-        <note category="location">web/src/app/app.html:93,96</note>
+        <note category="location">web/src/app/app.html:91,93</note>
       </notes>
       <segment state="translated">
         <source> Account </source>
@@ -103,7 +157,7 @@
     </unit>
     <unit id="nav.aria">
       <notes>
-        <note category="location">web/src/app/app.html:120,121</note>
+        <note category="location">web/src/app/app.html:101,102</note>
       </notes>
       <segment state="translated">
         <source>Pushup Navigation</source>
@@ -112,7 +166,7 @@
     </unit>
     <unit id="nav.openMenu">
       <notes>
-        <note category="location">web/src/app/app.html:126,127</note>
+        <note category="location">web/src/app/app.html:107,108</note>
       </notes>
       <segment state="translated">
         <source>Menü öffnen</source>
@@ -121,7 +175,7 @@
     </unit>
     <unit id="title.fallback">
       <notes>
-        <note category="location">web/src/app/app.ts:64</note>
+        <note category="location">web/src/app/app.ts:65</note>
       </notes>
       <segment state="translated">
         <source>Dein Name 💪</source>
@@ -130,7 +184,7 @@
     </unit>
     <unit id="1713004850888488155">
       <notes>
-        <note category="location">web/src/app/app.ts:80</note>
+        <note category="location">web/src/app/app.ts:81</note>
       </notes>
       <segment state="translated">
         <source>Neue Version verfügbar</source>
@@ -139,7 +193,7 @@
     </unit>
     <unit id="5889607835368180076">
       <notes>
-        <note category="location">web/src/app/app.ts:81</note>
+        <note category="location">web/src/app/app.ts:82</note>
       </notes>
       <segment state="translated">
         <source>Neu laden</source>
@@ -256,7 +310,7 @@
     </unit>
     <unit id="chart.subtitle">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:29,30</note>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:30,31</note>
       </notes>
       <segment state="translated">
         <source>Intervallwerte als Balken, Tages-Integral + gleitender Durchschnitt als Trendlinien</source>
@@ -265,7 +319,7 @@
     </unit>
     <unit id="chart.legendAria">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:42</note>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:43</note>
       </notes>
       <segment state="translated">
         <source>Legende</source>
@@ -274,7 +328,7 @@
     </unit>
     <unit id="chart.interval">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:47,48</note>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:48,49</note>
       </notes>
       <segment state="translated">
         <source>Intervallwert</source>
@@ -283,7 +337,7 @@
     </unit>
     <unit id="chart.dayIntegral">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:53,54</note>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:54,55</note>
       </notes>
       <segment state="translated">
         <source>Tages-Integral</source>
@@ -292,7 +346,7 @@
     </unit>
     <unit id="chart.movingAvg">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:59,60</note>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:60,61</note>
       </notes>
       <segment state="translated">
         <source>Gleitender Durchschnitt</source>
@@ -301,7 +355,7 @@
     </unit>
     <unit id="chart.titleHourly">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:80</note>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:81</note>
       </notes>
       <segment state="translated">
         <source>Verlauf (Stundenwerte)</source>
@@ -310,7 +364,7 @@
     </unit>
     <unit id="chart.titleDaily">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:81</note>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:82</note>
       </notes>
       <segment state="translated">
         <source>Verlauf (Tageswerte)</source>
