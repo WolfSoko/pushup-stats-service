@@ -5,20 +5,21 @@ import {
   inject,
   signal,
 } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { form, minLength, required, email } from '@angular/forms/signals';
+import { ReactiveFormsModule } from '@angular/forms';
+import {
+  email,
+  form,
+  FormField,
+  minLength,
+  required,
+} from '@angular/forms/signals';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Router } from '@angular/router';
-import {
-  patchState,
-  signalStore,
-  withMethods,
-  withState,
-} from '@ngrx/signals';
+import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
 import { AuthStore } from '../../core/state/auth.store';
 
 const LoginState = signalStore(
@@ -26,10 +27,12 @@ const LoginState = signalStore(
     hidePassword: true,
     isRegisterMode: false,
   }),
-  withMethods(state => ({
-    toggleHidePassword: () => (patchState(state, { hidePassword: !state.hidePassword() })),
-    toggleIsRegisterMode: () => (patchState(state, { isRegisterMode: !state.isRegisterMode() })),
-  })),
+  withMethods((state) => ({
+    toggleHidePassword: () =>
+      patchState(state, { hidePassword: !state.hidePassword() }),
+    toggleIsRegisterMode: () =>
+      patchState(state, { isRegisterMode: !state.isRegisterMode() }),
+  }))
 );
 
 @Component({
@@ -43,6 +46,7 @@ const LoginState = signalStore(
     MatIconModule,
     MatInputModule,
     MatProgressSpinnerModule,
+    FormField,
   ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
@@ -51,17 +55,24 @@ const LoginState = signalStore(
 })
 export class LoginComponent {
   private readonly router = inject(Router);
-  private readonly fb = inject(FormBuilder);
   readonly authState = inject(AuthStore);
   readonly loginState = inject(LoginState);
 
   loginData = signal({ email: '', password: '' });
 
   loginForm = form(this.loginData, ({ email: emailAd, password }) => {
-    required(emailAd);
-    email(emailAd);
-    required(password);
-    minLength(password, 6);
+    required(emailAd, {
+      message: $localize`:@@validate.email.required:Bitte Email eingeben!`,
+    });
+    email(emailAd, {
+      message: $localize`:@@validate.email.email:Bitte gültige Email eingeben!`,
+    });
+    required(password, {
+      message: $localize`:@@validate.password.required:Bitte Passwort eingeben!`,
+    });
+    minLength(password, 6, {
+      message: $localize`:@@validate.password.minLength:Passwort muss mindestens 6 Zeichen lang sein!`,
+    });
   });
 
   togglePasswordVisibility(): void {
@@ -91,7 +102,7 @@ export class LoginComponent {
 
   async signInWithGoogle(): Promise<void> {
     try {
-      await this.authService.signInWithGoogle();
+      await this.authState.login();
       await this.router.navigate(['/']);
     } catch {
       // Error already handled by service

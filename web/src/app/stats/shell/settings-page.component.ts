@@ -136,14 +136,6 @@ import { UserContextService } from '../../user-context.service';
       align-items: center;
       flex-wrap: wrap;
     }
-    .auth-block {
-      display: grid;
-      gap: 8px;
-      grid-column: 1 / -1;
-      padding: 8px;
-      border-radius: 12px;
-      border: 1px solid rgba(123, 159, 255, 0.2);
-    }
     .pill {
       padding: 6px 10px;
       border-radius: 999px;
@@ -205,7 +197,7 @@ export class SettingsPageComponent {
   }
 
   applyUserId(): void {
-    this.user.setUserId(this.userIdDraft());
+    // this.user.setUserId(this.userIdDraft());
     this.configResource.reload();
   }
 

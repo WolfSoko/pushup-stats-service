@@ -17,27 +17,27 @@
           <mat-spinner diameter="40" aria-label="Anmelden..."></mat-spinner>
           <span>Anmelden...</span>
         </div>
+      }
+      @if (authState.isAuthenticated()) {
+        <div class="success-message">
+          <mat-icon color="accent">check_circle</mat-icon>
+          <span i18n>Anmeldung erfolgreich!</span>
+          <button i18n mat-button (click)="authState.logout()">Abmelden</button>
+        </div>
       } @else {
         <!-- Email/Password Form -->
-        <form
-          [formGroup]="loginForm"
-          (ngSubmit)="authState.signInWithEmail()"
-          class="login-form"
-        >
+        <form (submit)="signInWithEmail()" class="login-form">
           <mat-form-field appearance="outline" class="full-width">
             <mat-label>Email</mat-label>
             <input
               matInput
               type="email"
-              formControlName="email"
+              [formField]="loginForm.email"
               placeholder="deine@email.de"
             />
             <mat-icon matSuffix>email</mat-icon>
-            @if (loginForm.get('email')?.hasError('required')) {
-              <mat-error>Email ist erforderlich</mat-error>
-            }
-            @if (loginForm.get('email')?.hasError('email')) {
-              <mat-error>Ungültige Email-Adresse</mat-error>
+            @for (error of loginForm.email().errors(); track $index) {
+              <mat-error>{{ error }}</mat-error>
             }
           </mat-form-field>
 
@@ -45,8 +45,9 @@
             <mat-label>Passwort</mat-label>
             <input
               matInput
-              [type]="hidePassword() ? 'password' : 'text'"
-              formControlName="password"
+              type="password"
+              [placeholder]="'********'"
+              [formField]="loginForm.password"
             />
             <button
               mat-icon-button
@@ -56,22 +57,18 @@
               tabindex="-1"
             >
               <mat-icon>{{
-                hidePassword() ? 'visibility_off' : 'visibility'
+                loginState.hidePassword() ? 'visibility_off' : 'visibility'
               }}</mat-icon>
             </button>
-            @if (loginForm.get('password')?.hasError('required')) {
-              <mat-error>Passwort ist erforderlich</mat-error>
-            }
-            @if (loginForm.get('password')?.hasError('minlength')) {
-              <mat-error>Mindestens 6 Zeichen</mat-error>
+            @for (error of loginForm.password().errors(); track $index) {
+              <mat-error>{{ error }}</mat-error>
             }
           </mat-form-field>
-
           <button
             mat-raised-button
             color="primary"
             type="submit"
-            [disabled]="loginForm.invalid || authState.loading()"
+            [disabled]="loginForm().invalid || authState.loading()"
             class="full-width login-button"
           >
             <mat-icon>login</mat-icon>
@@ -90,13 +87,13 @@
           [disabled]="authState.loading()"
           class="full-width google-button"
         >
-          <mat-icon svgIcon="google"></mat-icon>
+          <!-- <mat-icon svgIcon="google"></mat-icon> -->
           Mit Google anmelden
         </button>
 
         <!-- Toggle Register/Login -->
         <div class="toggle-mode">
-          @if (isRegisterMode()) {
+          @if (loginState.isRegisterMode()) {
             <span>Bereits registriert?</span>
             <button mat-button type="button" (click)="toggleMode()">
               Zum Login

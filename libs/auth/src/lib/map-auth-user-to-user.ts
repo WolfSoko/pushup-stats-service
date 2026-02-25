@@ -1,5 +1,5 @@
 import { User as FbUser } from '@firebase/auth';
-import { User } from './core/state/user.type';
+import { AuthProvider, User } from './core/state/user.type';
 
 export function mapAuthUserToPUSUser(
   fbUser?: FbUser | null | undefined
@@ -12,7 +12,7 @@ export function mapAuthUserToPUSUser(
     displayName: fbUser.displayName,
     photoURL: fbUser.photoURL,
     emailVerified: fbUser.emailVerified,
-    providerId: fbUser.providerId || 'unknown',
+    providerId: (fbUser.providerId as AuthProvider) || 'unknown',
     isAnonymous: fbUser.isAnonymous,
   };
 }

@@ -10,7 +10,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatDividerModule } from '@angular/material/divider';
 import { SwUpdate, VersionReadyEvent } from '@angular/service-worker';
 // eslint-disable-next-line @nx/enforce-module-boundaries
-import { AuthService } from '@pu-auth/auth';
+import { AuthStore, UserMenuComponent } from '@pu-auth/auth';
 import { filter } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { UserContextService } from './user-context.service';
@@ -28,6 +28,7 @@ import { UserContextService } from './user-context.service';
     MatIconModule,
     MatListModule,
     MatDividerModule,
+    UserMenuComponent,
   ],
   templateUrl: './app.html',
   styleUrl: './app.scss',
@@ -38,7 +39,7 @@ export class App {
   private readonly destroyRef = inject(DestroyRef);
   private readonly titleService = inject(Title);
   private readonly user = inject(UserContextService);
-  readonly auth = inject(AuthService);
+  private readonly auth = inject(AuthStore);
 
   setLanguage(lang: 'de' | 'en', ev?: Event): void {
     ev?.preventDefault();
@@ -93,7 +94,7 @@ export class App {
   }
 
   async logout(): Promise<void> {
-    await this.auth.signOut();
+    await this.auth.logout();
     this.navOpen.set(false);
   }
 }

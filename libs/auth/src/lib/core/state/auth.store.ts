@@ -1,4 +1,4 @@
-import { effect, inject } from '@angular/core';
+import { inject } from '@angular/core';
 import {
   patchState,
   signalStore,
@@ -8,7 +8,7 @@ import {
   withProps,
   withState,
 } from '@ngrx/signals';
-import { event, on } from '@ngrx/signals/events';
+import { event } from '@ngrx/signals/events';
 import { AuthService } from '../auth.service';
 
 export type AuthState = {
@@ -41,11 +41,11 @@ export const AuthStore = signalStore(
     isAuthenticated: store._authService.isAuthenticated,
     idToken: store._authService.idToken,
   })),
-  withMethods((store) => ({
+  withMethods(({ _authService, ...store }) => ({
     login: async () => {
       patchState(store, { loading: true, error: null });
       try {
-        await store._authService.signInWithGoogle();
+        await _authService.signInWithGoogle();
       } catch (e) {
         patchState(store, {
           error: e instanceof Error ? e : new Error(String(e)),
@@ -57,7 +57,7 @@ export const AuthStore = signalStore(
     logout: async () => {
       patchState(store, { loading: true, error: null });
       try {
-        await store._authService.logout();
+        await _authService.logout();
       } catch (e) {
         patchState(store, {
           error: e instanceof Error ? e : new Error(String(e)),
@@ -66,8 +66,29 @@ export const AuthStore = signalStore(
         patchState(store, { loading: false });
       }
     },
-  })),
-effect(() => {(on(registerWithEmailEvent.opened, () => ({ isLoading: true })),
-  on(registerWithEmailEvent, async ({ email, passwort }) => {}));
-})
+    signInWithEmail: async (email: string, password: string) => {
+      patchState(store, { loading: true, error: null });
+      try {
+        await _authService.signInWithEmail(email, password);
+      } catch (e) {
+        patchState(store, {
+          error: e instanceof Error ? e : new Error(String(e)),
+        });
+      } finally {
+        patchState(store, { loading: false });
+      }
+    },
+    signUpWithEmail: async (email: string, password: string) => {
+      patchState(store, { loading: true, error: null });
+      try {
+        await _authService.signUpWithEmail(email, password);
+      } catch (e) {
+        patchState(store, {
+          error: e instanceof Error ? e : new Error(String(e)),
+        });
+      } finally {
+        patchState(store, { loading: false });
+      }
+    },
+  }))
 );
