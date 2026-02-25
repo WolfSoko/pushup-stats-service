@@ -1,3 +1,4 @@
+import { Auth } from '@angular/fire/auth';
 import { PLATFORM_ID } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
@@ -38,6 +39,7 @@ describe('EntriesPageComponent (SSR/REST)', () => {
         { provide: PLATFORM_ID, useValue: 'server' },
         { provide: StatsApiService, useValue: apiMock },
         { provide: PushupLiveDataService, useValue: liveMock },
+        { provide: Auth, useValue: {} },
       ],
     }).compileComponents();
 

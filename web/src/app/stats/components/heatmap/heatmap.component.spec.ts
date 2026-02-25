@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HeatmapComponent } from './heatmap.component';
 
@@ -16,7 +17,12 @@ describe('HeatmapComponent', () => {
     fixture.componentRef.setInput('entries', [
       { _id: '1', timestamp: '2026-02-09T08:00:00', reps: 10, source: 'wa' }, // Mo
       { _id: '2', timestamp: '2026-02-10T23:00:00', reps: 12, source: 'web' }, // Di
-    ] as any);
+    ] as Array<{
+      _id: string;
+      timestamp: string;
+      reps: number;
+      source: string;
+    }>);
 
     fixture.detectChanges();
 
@@ -26,16 +32,20 @@ describe('HeatmapComponent', () => {
     expect(data.datasets.length).toBe(1);
     expect(data.datasets[0].data.length).toBe(24 * 7);
 
-    const points = data.datasets[0].data as any[];
+    const points = data.datasets[0].data as Array<{
+      x: string;
+      y: string;
+      v: number;
+    }>;
     const mo8 = points.find((p) => p.x === 'Mo' && p.y === '08');
-    expect(mo8).toBeDefined();
-    expect(mo8.v).toBe(10);
+    expect(mo8?.v).toBe(10);
 
     const di23 = points.find((p) => p.x === 'Di' && p.y === '23');
-    expect(di23).toBeDefined();
-    expect(di23.v).toBe(12);
+    expect(di23?.v).toBe(12);
 
-    const yLabels = (component.chartOptions as any).scales.y.labels;
+    const yLabels = (
+      component.chartOptions as { scales: { y: { labels: string[] } } }
+    ).scales.y.labels;
     expect(yLabels[0]).toBe('23');
     expect(yLabels[yLabels.length - 1]).toBe('00');
   });
@@ -43,16 +53,24 @@ describe('HeatmapComponent', () => {
   it('shows datalabels only for non-zero heatmap cells', () => {
     fixture.componentRef.setInput('entries', [
       { _id: '1', timestamp: '2026-02-09T08:00:00', reps: 10, source: 'wa' },
-    ] as any);
+    ] as Array<{
+      _id: string;
+      timestamp: string;
+      reps: number;
+      source: string;
+    }>);
 
     fixture.detectChanges();
 
     const component = fixture.componentInstance;
     const data = component.chartData();
-    const dl = (component.chartOptions as any).plugins.datalabels;
+    const dl = (component.chartOptions?.plugins as any).datalabels as unknown as {
+      display: (ctx: { dataset: unknown; dataIndex: number }) => boolean;
+      formatter: (value: unknown) => string;
+    };
 
     const dataset = data.datasets[0];
-    const points = dataset.data as any[];
+    const points = dataset.data as Array<{ x: string; y: string; v: number }>;
     const nonZeroIndex = points.findIndex((p) => p.v > 0);
     const zeroIndex = points.findIndex((p) => p.v === 0);
 

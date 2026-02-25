@@ -3,7 +3,8 @@ import { PLATFORM_ID } from '@angular/core';
 import { UserContextService } from './user-context.service';
 import { signal } from '@angular/core';
 // eslint-disable-next-line @nx/enforce-module-boundaries
-import { AuthService } from '@pu-auth/auth';
+import { AuthStore } from '@pu-auth/auth';
+import { Auth } from '@angular/fire/auth';
 
 class FirebaseAuthStub {
   user = signal<{
@@ -21,7 +22,8 @@ describe('UserContextService', () => {
     TestBed.configureTestingModule({
       providers: [
         { provide: PLATFORM_ID, useValue: 'browser' },
-        { provide: AuthService, useValue: firebaseAuth },
+        { provide: AuthStore, useValue: firebaseAuth },
+        { provide: Auth, useValue: {} },
       ],
     });
   });

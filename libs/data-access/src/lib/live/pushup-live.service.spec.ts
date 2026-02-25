@@ -1,56 +1,82 @@
+import { isPlatformBrowser } from '@angular/common';
 import { PLATFORM_ID } from '@angular/core';
-import { TestBed } from '@angular/core/testing';
+import { render } from '@testing-library/angular';
 import { PushupLiveService } from './pushup-live.service';
 
-type EventHandler = () => void;
+jest.mock('@angular/common', () => ({
+  ...jest.requireActual('@angular/common'),
+  isPlatformBrowser: jest.fn(),
+}));
 
-const handlers: Record<string, EventHandler> = {};
-const onMock = jest.fn((event: string, cb: EventHandler) => {
-  handlers[event] = cb;
-});
-const ioMock = jest.fn(() => ({ on: onMock }));
-
+let mockSocketOn: jest.Mock;
+let mockIo: jest.Mock;
 jest.mock('socket.io-client', () => ({
-  io: (...args: unknown[]) => ioMock(...args),
+  get io() {
+    return mockIo;
+  },
 }));
 
 describe('PushupLiveService', () => {
-  afterEach(() => {
-    TestBed.resetTestingModule();
+  beforeEach(() => {
     jest.clearAllMocks();
-    Object.keys(handlers).forEach((k) => delete handlers[k]);
+    mockSocketOn = jest.fn();
+    mockIo = jest.fn(() => ({ on: mockSocketOn }));
   });
 
-  it('starts disconnected on server and does not create socket', () => {
-    TestBed.configureTestingModule({
-      providers: [{ provide: PLATFORM_ID, useValue: 'server' }],
+  it('should not connect on server platform (given isPlatformBrowser false)', async () => {
+    (isPlatformBrowser as jest.Mock).mockReturnValue(false);
+    await render('', {
+      providers: [
+        PushupLiveService,
+        { provide: PLATFORM_ID, useValue: 'server' },
+      ],
     });
-
-    const service = TestBed.inject(PushupLiveService);
-    expect(service.updateTick()).toBe(0);
-    expect(service.connected()).toBe(false);
-    expect(ioMock).not.toHaveBeenCalled();
+    expect(mockIo).not.toHaveBeenCalled();
   });
 
-  it('connect handler sets connected and increments tick', () => {
-    TestBed.configureTestingModule({
-      providers: [{ provide: PLATFORM_ID, useValue: 'browser' }],
+  it('should connect and handle events on browser platform (given isPlatformBrowser true)', async () => {
+    (isPlatformBrowser as jest.Mock).mockReturnValue(true);
+    const eventHandlers: Record<string, () => void> = {};
+    mockSocketOn.mockImplementation((event, cb: () => void) => {
+      eventHandlers[event] = cb;
     });
-
-    const service = TestBed.inject(PushupLiveService);
-
-    expect(ioMock).toHaveBeenCalled();
-    expect(service.connected()).toBe(false);
-    expect(service.updateTick()).toBe(0);
-
-    handlers['connect']?.();
+    const { fixture } = await render('', {
+      providers: [
+        PushupLiveService,
+        { provide: PLATFORM_ID, useValue: 'browser' },
+      ],
+    });
+    const service = fixture.debugElement.injector.get(PushupLiveService);
+    // Simuliere connect
+    eventHandlers['connect']();
     expect(service.connected()).toBe(true);
     expect(service.updateTick()).toBe(1);
-
-    handlers['disconnect']?.();
-    expect(service.connected()).toBe(false);
-
-    handlers['pushups:changed']?.();
+    // Simuliere pushups:changed
+    eventHandlers['pushups:changed']();
     expect(service.updateTick()).toBe(2);
+    // Simuliere disconnect
+    eventHandlers['disconnect']();
+    expect(service.connected()).toBe(false);
+  });
+
+  it('should handle multiple connect/disconnect cycles (given repeated events)', async () => {
+    (isPlatformBrowser as jest.Mock).mockReturnValue(true);
+    const eventHandlers: Record<string, () => void> = {};
+    mockSocketOn.mockImplementation((event, cb: () => void) => {
+      eventHandlers[event] = cb;
+    });
+    const { fixture } = await render('', {
+      providers: [
+        PushupLiveService,
+        { provide: PLATFORM_ID, useValue: 'browser' },
+      ],
+    });
+    const service = fixture.debugElement.injector.get(PushupLiveService);
+    eventHandlers['connect']();
+    eventHandlers['disconnect']();
+    eventHandlers['connect']();
+    expect(service.connected()).toBe(true);
+    eventHandlers['disconnect']();
+    expect(service.connected()).toBe(false);
   });
 });

@@ -55,3 +55,23 @@
 - Open PR and link the issue using GitHub keywords (`Fixes #ID` / `Closes #ID`).
 - Add the PR to the project and set Status = **Review**.
 - On merge: issue auto-closes → set Status = **Done**.
+
+# AGENTS.md
+
+## Teststrategie für Angular-Libs und Web-Projekte
+
+- **Services, Guards, Komponenten, die Angular Signals oder `inject()` verwenden, dürfen niemals mit direktem Mocking von `inject` getestet werden.**
+- **Instanziierung immer über Angulars Dependency Injection (DI):**
+  - Nutze `TestBed`, `@testing-library/angular` (`render`), oder Angulars DI-System für alle Tests.
+  - Keine Instanziierung mit `new` für Services, die Angular DI benötigen.
+- **Guards:**
+  - Guards immer in einem echten Angular-Testkontext testen, z.B. mit einer Test-Komponente und Angulars Router/TestBed.
+- **Mocking:**
+  - Provider über Angulars DI injizieren (`{ provide: ..., useValue: ... }`).
+  - Externe Funktionen (wie z.B. `deleteUser` von Firebase) direkt am importierten Modul mocken, nicht mit dynamischem `import()`.
+- **Nie require oder import() für Mocks verwenden.**
+- **Testabdeckung:**
+  - Schreibe immer Given-When-Then-Tests mit `@testing-library/angular` oder `TestBed`.
+  - Ziel: Maximale Testabdeckung und robuste, zukunftssichere Tests.
+
+**Diese Strategie ist verbindlich für alle Angular-Libs und Web-Projekte in diesem Repository.**
