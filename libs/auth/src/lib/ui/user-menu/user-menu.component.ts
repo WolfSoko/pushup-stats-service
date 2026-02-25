@@ -6,7 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { Router } from '@angular/router';
-import { AuthService } from '../../core/auth.service';
+import { AuthStore } from '../../core/state/auth.store';
 
 @Component({
   selector: 'pus-user-menu',
@@ -96,24 +96,19 @@ import { AuthService } from '../../core/auth.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserMenuComponent {
-  private readonly authService = inject(AuthService);
+  private readonly state = inject(AuthStore);
   private readonly router = inject(Router);
 
-  readonly user = this.authService.user;
-  readonly loading = this.authService.loading;
-  readonly isAuthenticated = this.authService.isAuthenticated;
-  readonly error = this.authService.error;
+  readonly user = this.state.user;
+  readonly loading = this.state.loading;
+  readonly isAuthenticated = this.state.isAuthenticated;
+  readonly error = this.state.error;
 
   async signIn(): Promise<boolean> {
     return this.router.navigate(['/login']);
   }
 
   async signOut(): Promise<void> {
-    try {
-      await this.authService.signOut();
-      // Stay on current page after logout
-    } catch (err) {
-      console.error('Logout failed:', err);
-    }
+    await this.state.logout();
   }
 }
