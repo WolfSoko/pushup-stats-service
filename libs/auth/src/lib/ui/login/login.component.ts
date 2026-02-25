@@ -62,10 +62,10 @@ export class LoginComponent {
 
   loginForm = form(this.loginData, ({ email: emailAd, password }) => {
     required(emailAd, {
-      message: $localize`:@@validate.email.required:Bitte Email eingeben!`,
+      message: $localize`:@@validate.email.required:Bitte E-Mail eingeben!`,
     });
     email(emailAd, {
-      message: $localize`:@@validate.email.email:Bitte gültige Email eingeben!`,
+      message: $localize`:@@validate.email.email:Bitte gültige E-Mail eingeben!`,
     });
     required(password, {
       message: $localize`:@@validate.password.required:Bitte Passwort eingeben!`,

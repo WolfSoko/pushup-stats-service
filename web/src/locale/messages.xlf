@@ -22,7 +22,7 @@
         <note category="location">libs/auth/src/lib/ui/login/login.component.ts:66</note>
       </notes>
       <segment>
-        <source>Bitte Email eingeben!</source>
+        <source>Bitte E-Mail eingeben!</source>
       </segment>
     </unit>
     <unit id="validate.email.email">
@@ -30,7 +30,7 @@
         <note category="location">libs/auth/src/lib/ui/login/login.component.ts:69</note>
       </notes>
       <segment>
-        <source>Bitte gültige Email eingeben!</source>
+        <source>Bitte gültige E-Mail eingeben!</source>
       </segment>
     </unit>
     <unit id="validate.password.required">

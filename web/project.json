@@ -11,7 +11,8 @@
         "translation": "web/src/locale/messages.en.xlf",
         "subPath": "en"
       }
-    }
+    },
+    "defaultLocale": "de"
   },
   "tags": [],
   "targets": {
@@ -24,7 +25,6 @@
         "server": "web/src/main.server.ts",
         "outputMode": "server",
         "localize": true,
-
         "allowedCommonJsDependencies": ["pino", "pino-http"],
         "ssr": {
           "entry": "web/src/server.ts",
