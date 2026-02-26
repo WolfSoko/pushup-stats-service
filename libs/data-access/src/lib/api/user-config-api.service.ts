@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { UserConfig, UserConfigUpdate } from '@pu-stats/models';
 import { Observable } from 'rxjs';
+import { buildServerApiBaseUrl } from './base-url.util';
 
 @Injectable({ providedIn: 'root' })
 export class UserConfigApiService {
@@ -27,8 +28,6 @@ export class UserConfigApiService {
 
   private baseUrl(): string {
     if (!isPlatformServer(this.platformId)) return '';
-    const host = process?.env?.['API_HOST'] || 'localhost';
-    const port = process?.env?.['API_PORT'] || '4200';
-    return `http://${host}:${port}`;
+    return buildServerApiBaseUrl(this.platformId, 'UserConfigApiService');
   }
 }

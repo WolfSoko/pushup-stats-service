@@ -15,6 +15,7 @@ import {
   StatsResponse,
 } from '@pu-stats/models';
 import { map, Observable, of, tap } from 'rxjs';
+import { buildServerApiBaseUrl } from './base-url.util';
 
 const PUSHUPS_ENDPOINT = `/api/pushups`;
 
@@ -91,8 +92,6 @@ export class StatsApiService {
 
   private baseUrl(): string {
     if (!isPlatformServer(this.platformId)) return '';
-    const host = process?.env?.['API_HOST'] || 'localhost';
-    const port = process?.env?.['API_PORT'] || 4200;
-    return `http://${host}:${port}`;
+    return buildServerApiBaseUrl(this.platformId, 'StatsApiService');
   }
 }

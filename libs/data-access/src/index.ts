@@ -1,4 +1,5 @@
 export * from './lib/api/stats-api.service';
 export * from './lib/api/user-config-api.service';
+export * from './lib/api/base-url.util';
 export * from './lib/live/pushup-live.service';
 export * from './lib/live/pushup-live-data.service';
