@@ -1,14 +1,14 @@
 {
   "/api": {
-    "target": "http://127.0.0.1:8788",
+    "target": "http://localhost:8788/",
     "secure": false,
-    "changeOrigin": false,
+    "changeOrigin": true,
     "logLevel": "warn"
   },
   "/socket.io": {
-    "target": "http://127.0.0.1:8788",
+    "target": "http://localhost:8788/",
     "secure": false,
-    "changeOrigin": false,
+    "changeOrigin": true,
     "ws": true,
     "logLevel": "warn"
   }

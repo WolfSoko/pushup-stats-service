@@ -26,7 +26,10 @@ describe('App (testing-library)', () => {
     const { fixture } = await render(App, {
       providers: [
         provideRouter([]),
-        { provide: UserContextService, useValue: { userNameSafe: userNameSignal.asReadonly() } },
+        {
+          provide: UserContextService,
+          useValue: { userNameSafe: userNameSignal.asReadonly() },
+        },
         { provide: AuthStore, useValue: authMock },
       ],
     });
@@ -37,7 +40,10 @@ describe('App (testing-library)', () => {
     await render(App, {
       providers: [
         provideRouter([]),
-        { provide: UserContextService, useValue: { userNameSafe: userNameSignal.asReadonly() } },
+        {
+          provide: UserContextService,
+          useValue: { userNameSafe: userNameSignal.asReadonly() },
+        },
         { provide: AuthStore, useValue: authMock },
       ],
     });
@@ -55,7 +61,10 @@ describe('App (testing-library)', () => {
       return render(App, {
         providers: [
           provideRouter([]),
-          { provide: UserContextService, useValue: { userNameSafe: userNameSignal.asReadonly() } },
+          {
+            provide: UserContextService,
+            useValue: { userNameSafe: userNameSignal.asReadonly() },
+          },
           { provide: AuthStore, useValue: authMock },
         ],
       });
@@ -70,13 +79,12 @@ describe('App (testing-library)', () => {
     it('shows username in title when user is set', async () => {
       const { fixture } = await setup();
       userNameSignal.set('wolf');
-      fixture.detectChanges();
+      await fixture.whenStable();
       const title = TestBed.inject(Title);
       expect(title.getTitle()).toBe('Pushup Tracker – wolf');
       userNameSignal.set('anna');
-      fixture.detectChanges()
+      await fixture.whenStable();
       expect(title.getTitle()).toBe('Pushup Tracker – anna');
     });
-
   });
 });

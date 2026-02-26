@@ -1,3 +1,5 @@
+Either running on WSL or Linux. Find out if there are related issues.
+
 <!-- nx configuration start-->
 <!-- Leave the start & end comments to automatically receive updates. -->
 
@@ -33,12 +35,12 @@
    For programmatic strings use `` $localize`:@@your.id:German text` ``.
 2. **Extract** updated source strings:
    ```bash
-   npx nx extract-i18n web --build-target=web:build:development
+   npx nx run web:extract-i18n
    ```
 3. **Add English translations** to `web/src/locale/messages.en.xlf` — copy the new `<unit>` blocks from `messages.xlf` and add a `<target>` with the English text inside each `<segment>`.
 4. **Verify** no missing-translation warnings:
    ```bash
-   npx nx build web --configuration=development
+   npx nx build web
    ```
    → Build must complete with **no `[WARNING] No translation found`** lines.
 

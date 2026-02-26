@@ -13,7 +13,7 @@ describe('HeatmapComponent', () => {
     fixture = TestBed.createComponent(HeatmapComponent);
   });
 
-  it('builds heatmap chart data with top-down hours and correct values', () => {
+  it('builds heatmap chart data with top-down hours and correct values', async () => {
     fixture.componentRef.setInput('entries', [
       { _id: '1', timestamp: '2026-02-09T08:00:00', reps: 10, source: 'wa' }, // Mo
       { _id: '2', timestamp: '2026-02-10T23:00:00', reps: 12, source: 'web' }, // Di
@@ -24,7 +24,7 @@ describe('HeatmapComponent', () => {
       source: string;
     }>);
 
-    fixture.detectChanges();
+    await fixture.whenStable();
 
     const component = fixture.componentInstance;
     const data = component.chartData();
@@ -50,7 +50,7 @@ describe('HeatmapComponent', () => {
     expect(yLabels[yLabels.length - 1]).toBe('00');
   });
 
-  it('shows datalabels only for non-zero heatmap cells', () => {
+  it('shows datalabels only for non-zero heatmap cells', async () => {
     fixture.componentRef.setInput('entries', [
       { _id: '1', timestamp: '2026-02-09T08:00:00', reps: 10, source: 'wa' },
     ] as Array<{
@@ -60,11 +60,12 @@ describe('HeatmapComponent', () => {
       source: string;
     }>);
 
-    fixture.detectChanges();
+    await fixture.whenStable();
 
     const component = fixture.componentInstance;
     const data = component.chartData();
-    const dl = (component.chartOptions?.plugins as any).datalabels as unknown as {
+    const dl = (component.chartOptions?.plugins as any)
+      .datalabels as unknown as {
       display: (ctx: { dataset: unknown; dataIndex: number }) => boolean;
       formatter: (value: unknown) => string;
     };

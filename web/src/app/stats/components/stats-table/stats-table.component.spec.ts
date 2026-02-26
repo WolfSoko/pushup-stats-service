@@ -35,17 +35,17 @@ describe('StatsTableComponent', () => {
     fixture = TestBed.createComponent(StatsTableComponent);
   });
 
-  it('binds entry data to table dataSource', () => {
+  it('binds entry data to table dataSource', async () => {
     const entries = [
       { _id: '1', timestamp: '2026-02-10T13:45:00', reps: 8, source: 'wa' },
     ];
     fixture.componentRef.setInput('entries', entries);
-    fixture.detectChanges();
+    await fixture.whenStable();
 
     expect(fixture.componentInstance.dataSource.data).toEqual(entries);
   });
 
-  it('binds all entries to dataSource for virtual viewport rendering', () => {
+  it('binds all entries to dataSource for virtual viewport rendering', async () => {
     const component = fixture.componentInstance;
     const entries = Array.from({ length: 60 }).map((_, i) => ({
       _id: String(i + 1),
@@ -55,7 +55,7 @@ describe('StatsTableComponent', () => {
     }));
 
     fixture.componentRef.setInput('entries', entries);
-    fixture.detectChanges();
+    await fixture.whenStable();
 
     expect(component.dataSource.data.length).toBe(60);
   });
@@ -191,11 +191,11 @@ describe('StatsTableComponent', () => {
     expect(updateSpy).not.toHaveBeenCalled();
   });
 
-  it('opens edit dialog and stores edit values', () => {
+  it('opens edit dialog and stores edit values', async () => {
     fixture.componentRef.setInput('entries', [
       { _id: '1', timestamp: '2026-02-10T13:45:00', reps: 8, source: 'wa' },
     ]);
-    fixture.detectChanges();
+    await fixture.whenStable();
 
     const component = fixture.componentInstance;
     const openSpy = vitest
@@ -216,11 +216,11 @@ describe('StatsTableComponent', () => {
     expect(openSpy).toHaveBeenCalled();
   });
 
-  it('submits update via dialog using selected type', () => {
+  it('submits update via dialog using selected type', async () => {
     fixture.componentRef.setInput('entries', [
       { _id: '1', timestamp: '2026-02-10T13:45:00', reps: 8, source: 'wa' },
     ]);
-    fixture.detectChanges();
+    await fixture.whenStable();
 
     const component = fixture.componentInstance;
     const updateSpy = vitest.fn();
@@ -299,11 +299,11 @@ describe('StatsTableComponent', () => {
     expect(component.editTypeControl.value).toBe('Diamond');
   });
 
-  it('falls back to Standard type label if edit type is emptied', () => {
+  it('falls back to Standard type label if edit type is emptied', async () => {
     fixture.componentRef.setInput('entries', [
       { _id: '1', timestamp: '2026-02-10T13:45:00', reps: 8, source: 'wa' },
     ]);
-    fixture.detectChanges();
+    await fixture.whenStable();
 
     const component = fixture.componentInstance;
     const updateSpy = vitest.fn();
@@ -348,22 +348,22 @@ describe('StatsTableComponent', () => {
     expect(component.newSourceControl.value).toBe('web');
   });
 
-  it('exposes busy helper state for spinner rendering', () => {
+  it('exposes busy helper state for spinner rendering', async () => {
     fixture.componentRef.setInput('busyAction', 'delete');
     fixture.componentRef.setInput('busyId', '1');
-    fixture.detectChanges();
+    await fixture.whenStable();
 
     const component = fixture.componentInstance;
     expect(component.isBusy('delete', '1')).toBe(true);
     expect(component.isBusy('update', '1')).toBe(false);
 
     fixture.componentRef.setInput('busyAction', 'create');
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(component.isCreateBusy()).toBe(true);
   });
 
-  it('prefills datetime when opening create dialog and value is empty', () => {
-    fixture.detectChanges();
+  it('prefills datetime when opening create dialog and value is empty', async () => {
+    await fixture.whenStable();
     const component = fixture.componentInstance;
     const openSpy = vitest
       .spyOn(component.dialog, 'open')
@@ -376,8 +376,8 @@ describe('StatsTableComponent', () => {
     expect(openSpy).toHaveBeenCalled();
   });
 
-  it('keeps existing datetime when opening create dialog', () => {
-    fixture.detectChanges();
+  it('keeps existing datetime when opening create dialog', async () => {
+    await fixture.whenStable();
     const component = fixture.componentInstance;
     vitest.spyOn(component.dialog, 'open').mockReturnValue({} as never);
 
@@ -402,7 +402,8 @@ describe('StatsTableComponent', () => {
     serverFixture.componentRef.setInput('entries', [
       { _id: 's1', timestamp: '2026-02-11T10:00:00', reps: 12, source: 'web' },
     ]);
-    serverFixture.detectChanges();
+
+    await serverFixture.whenStable();
 
     expect(serverFixture.componentInstance.isBrowser).toBe(false);
     const host = serverFixture.nativeElement as HTMLElement;

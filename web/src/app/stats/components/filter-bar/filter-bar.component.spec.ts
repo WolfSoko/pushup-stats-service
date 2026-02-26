@@ -14,7 +14,7 @@ describe('FilterBarComponent', () => {
     component = fixture.componentInstance;
     fixture.componentRef.setInput('from', '2026-02-01');
     fixture.componentRef.setInput('to', '2026-02-07');
-    fixture.detectChanges();
+    await fixture.whenStable();
   });
 
   it('normalizes initial range to week mode (Mon-Sun)', () => {
@@ -54,10 +54,10 @@ describe('FilterBarComponent', () => {
     expect(text).toContain('Vor');
   });
 
-  it('maps empty and invalid ISO input values to null dates', () => {
+  it('maps empty and invalid ISO input values to null dates', async () => {
     fixture.componentRef.setInput('from', '');
     fixture.componentRef.setInput('to', '2026-xx-07');
-    fixture.detectChanges();
+    await fixture.whenStable();
 
     expect(component.range.controls.start.value).toBeNull();
     expect(component.range.controls.end.value).toBeNull();

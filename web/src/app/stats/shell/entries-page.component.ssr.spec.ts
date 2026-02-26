@@ -44,9 +44,7 @@ describe('EntriesPageComponent (SSR/REST)', () => {
     }).compileComponents();
 
     fixture = TestBed.createComponent(EntriesPageComponent);
-    fixture.detectChanges();
     await fixture.whenStable();
-    fixture.detectChanges();
   });
 
   it('loads rows via REST on server', () => {

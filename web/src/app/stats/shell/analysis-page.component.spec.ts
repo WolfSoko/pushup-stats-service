@@ -89,9 +89,7 @@ describe('AnalysisPageComponent', () => {
       .compileComponents();
 
     fixture = TestBed.createComponent(AnalysisPageComponent);
-    fixture.detectChanges();
     await fixture.whenStable();
-    fixture.detectChanges();
   });
 
   it('builds week and month trend series', () => {

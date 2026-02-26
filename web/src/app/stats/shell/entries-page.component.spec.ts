@@ -57,9 +57,7 @@ describe('EntriesPageComponent', () => {
     }).compileComponents();
 
     fixture = TestBed.createComponent(EntriesPageComponent);
-    fixture.detectChanges();
     await fixture.whenStable();
-    fixture.detectChanges();
   });
 
   it('prefills date range with oldest and today (browser uses live entries)', () => {

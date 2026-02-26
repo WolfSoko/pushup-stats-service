@@ -2,13 +2,11 @@ import { inject } from '@angular/core';
 import {
   patchState,
   signalStore,
-  type,
   withComputed,
   withMethods,
   withProps,
   withState,
 } from '@ngrx/signals';
-import { event } from '@ngrx/signals/events';
 import { AuthService } from '../auth.service';
 
 export type AuthState = {
@@ -20,15 +18,6 @@ const initialState: AuthState = {
   loading: false,
   error: null,
 };
-
-export const registerWithEmailEvent = event(
-  'registerWithEmail',
-  type<{ email: string; passwort: string }>()
-);
-export const loginWithEmailEvent = event(
-  'loginWithEmail',
-  type<{ email: string; passwort: string }>()
-);
 
 export const AuthStore = signalStore(
   { providedIn: 'root' },

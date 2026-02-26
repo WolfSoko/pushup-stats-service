@@ -1,5 +1,6 @@
 import { DatePipe, DOCUMENT, isPlatformBrowser } from '@angular/common';
 import {
+  ChangeDetectionStrategy,
   Component,
   computed,
   effect,
@@ -70,6 +71,7 @@ const PERIOD_TITLE_MAP: Record<RangeModes | 'today', string> = {
   ],
   templateUrl: './stats-dashboard.component.html',
   styleUrl: './stats-dashboard.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StatsDashboardComponent {
   private readonly api = inject(StatsApiService);

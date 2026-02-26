@@ -108,9 +108,7 @@ describe('StatsDashboardComponent', () => {
     }).compileComponents();
 
     fixture = TestBed.createComponent(StatsDashboardComponent);
-    fixture.detectChanges();
     await fixture.whenStable();
-    fixture.detectChanges();
   });
 
   afterEach(() => {
@@ -163,7 +161,7 @@ describe('StatsDashboardComponent', () => {
     const today = todayTs.slice(0, 10);
     component.from.set(today);
     component.to.set(today);
-    fixture.detectChanges();
+
     await fixture.whenStable();
 
     expect(component.selectedDayTotal()).toBe(12);
@@ -213,7 +211,7 @@ describe('StatsDashboardComponent', () => {
     const initialLoadCalls = serviceMock.load.mock.calls.length;
 
     liveTick.set(1);
-    fixture.detectChanges();
+
     await fixture.whenStable();
 
     expect(serviceMock.load.mock.calls.length).toBeGreaterThan(
@@ -222,13 +220,16 @@ describe('StatsDashboardComponent', () => {
     expect(serviceMock.listPushups.mock.calls.length).toBeGreaterThan(0);
   });
 
-  it('shows live connection state', () => {
+  it('shows live connection state', async () => {
     liveConnected.set(true);
-    fixture.detectChanges();
+
+    await fixture.whenStable();
+
     expect(fixture.nativeElement.textContent).toContain('Live: verbunden');
 
     liveConnected.set(false);
-    fixture.detectChanges();
+
+    await fixture.whenStable();
     expect(fixture.nativeElement.textContent).toContain('Live: getrennt');
   });
 });

@@ -1,12 +1,20 @@
+import { signal } from '@angular/core';
 import { computed, inject, Injectable } from '@angular/core';
 import { AuthAdapter } from '../adapters/auth.adapter';
 import { mapAuthUserToPUSUser } from '../map-auth-user-to-user';
+import { UserConfigApiService } from '@pu-stats/data-access';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   private readonly authAdapter = inject(AuthAdapter);
+  private readonly userConfigApi = inject(UserConfigApiService);
+
+  // Signal für den Status der User-DB-Synchronisation
+  readonly userDbSyncState = signal<'idle' | 'syncing' | 'success' | 'error'>(
+    'idle'
+  );
 
   readonly user = computed(() =>
     mapAuthUserToPUSUser(this.authAdapter.authUser())
@@ -16,26 +24,29 @@ export class AuthService {
 
   /** Sign in with Google */
   async signInWithGoogle(): Promise<void> {
-    await this.wrapAsync(
-      () => this.authAdapter.signInWithGoogle(),
-      'Google sign-in'
-    );
+    await this.wrapAsync(async () => {
+      const cred = await this.authAdapter.signInWithGoogle();
+      await this.syncUserDb();
+      return cred;
+    }, 'Google sign-in');
   }
 
   /** Sign in with email and password */
   async signInWithEmail(email: string, password: string): Promise<void> {
-    await this.wrapAsync(
-      () => this.authAdapter.signInWithEmail(email, password),
-      'Email sign-in'
-    );
+    await this.wrapAsync(async () => {
+      const cred = await this.authAdapter.signInWithEmail(email, password);
+      await this.syncUserDb();
+      return cred;
+    }, 'Email sign-in');
   }
 
   /** Sign up with email and password */
   async signUpWithEmail(email: string, password: string): Promise<void> {
-    await this.wrapAsync(
-      () => this.authAdapter.signUpWithEmail(email, password),
-      'Email sign-up'
-    );
+    await this.wrapAsync(async () => {
+      const cred = await this.authAdapter.signUpWithEmail(email, password);
+      await this.syncUserDb();
+      return cred;
+    }, 'Email sign-up');
   }
 
   /** Sign out (alias for logout) */
@@ -46,6 +57,26 @@ export class AuthService {
   /** Logout */
   async logout(): Promise<void> {
     await this.wrapAsync(() => this.authAdapter.signOut(), 'Sign-out');
+  }
+
+  /**
+   * Synchronisiert den User-Eintrag in der DB nach Authentifizierung
+   */
+  private async syncUserDb(): Promise<void> {
+    const user = this.user();
+    if (!user) return;
+    this.userDbSyncState.set('syncing');
+    try {
+      // Nur erlaubte Felder an updateConfig übergeben
+      this.userConfigApi.updateConfig(user.uid, {
+        displayName: user.displayName ?? undefined,
+        // Weitere Felder wie dailyGoal oder ui können hier ergänzt werden, falls benötigt
+      });
+      this.userDbSyncState.set('success');
+    } catch (e) {
+      this.userDbSyncState.set('error');
+      throw e;
+    }
   }
 
   private async wrapAsync<T>(
@@ -60,5 +91,4 @@ export class AuthService {
       throw error;
     }
   }
-
 }
