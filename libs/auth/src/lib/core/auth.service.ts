@@ -1,5 +1,7 @@
+import { firstValueFrom } from 'rxjs';
 import { signal } from '@angular/core';
-import { computed, inject, Injectable } from '@angular/core';
+import { computed, inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { isPlatformServer } from '@angular/common';
 import { AuthAdapter } from '../adapters/auth.adapter';
 import { mapAuthUserToPUSUser } from '../map-auth-user-to-user';
 import { UserConfigApiService } from '@pu-stats/data-access';
@@ -10,6 +12,7 @@ import { UserConfigApiService } from '@pu-stats/data-access';
 export class AuthService {
   private readonly authAdapter = inject(AuthAdapter);
   private readonly userConfigApi = inject(UserConfigApiService);
+  private readonly platformId = inject(PLATFORM_ID);
 
   // Signal für den Status der User-DB-Synchronisation
   readonly userDbSyncState = signal<'idle' | 'syncing' | 'success' | 'error'>(
@@ -63,15 +66,17 @@ export class AuthService {
    * Synchronisiert den User-Eintrag in der DB nach Authentifizierung
    */
   private async syncUserDb(): Promise<void> {
+    if (isPlatformServer(this.platformId)) return;
     const user = this.user();
     if (!user) return;
     this.userDbSyncState.set('syncing');
     try {
       // Nur erlaubte Felder an updateConfig übergeben
-      this.userConfigApi.updateConfig(user.uid, {
-        displayName: user.displayName ?? undefined,
-        // Weitere Felder wie dailyGoal oder ui können hier ergänzt werden, falls benötigt
-      });
+      await firstValueFrom(
+        this.userConfigApi.updateConfig(user.uid, {
+          displayName: user.displayName ?? undefined,
+        })
+      );
       this.userDbSyncState.set('success');
     } catch (e) {
       this.userDbSyncState.set('error');

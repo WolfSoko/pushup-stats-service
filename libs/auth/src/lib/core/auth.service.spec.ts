@@ -1,11 +1,14 @@
 import { Signal } from '@angular/core';
 import { User as FirebaseUser } from '@angular/fire/auth';
 import { render } from '@testing-library/angular';
+import { of } from 'rxjs';
+import { UserConfigApiService } from '@pu-stats/data-access';
 import { AuthAdapter } from '../adapters/auth.adapter';
 import { AuthService } from './auth.service';
 
 describe('AuthService', () => {
   let adapter: Partial<AuthAdapter>;
+  let userConfigApi: Partial<UserConfigApiService>;
 
   beforeEach(() => {
     const mockFirebaseUser: Partial<FirebaseUser> = {
@@ -27,11 +30,18 @@ describe('AuthService', () => {
       signInWithEmail: jest.fn(),
       signUpWithEmail: jest.fn(),
     };
+    userConfigApi = {
+      updateConfig: jest.fn().mockReturnValue(of({})),
+    };
   });
 
   it('should map user correctly (given authUser returns value)', async () => {
     const { fixture } = await render('', {
-      providers: [AuthService, { provide: AuthAdapter, useValue: adapter }],
+      providers: [
+        AuthService,
+        { provide: AuthAdapter, useValue: adapter },
+        { provide: UserConfigApiService, useValue: userConfigApi },
+      ],
     });
     const service = fixture.debugElement.injector.get(AuthService);
     const user = service.user();
@@ -41,7 +51,11 @@ describe('AuthService', () => {
 
   it('should call signInWithGoogle when signing in with Google', async () => {
     const { fixture } = await render('', {
-      providers: [AuthService, { provide: AuthAdapter, useValue: adapter }],
+      providers: [
+        AuthService,
+        { provide: AuthAdapter, useValue: adapter },
+        { provide: UserConfigApiService, useValue: userConfigApi },
+      ],
     });
     const service = fixture.debugElement.injector.get(AuthService);
     await service.signInWithGoogle();
@@ -50,7 +64,11 @@ describe('AuthService', () => {
 
   it('should call signInWithEmail when signing in with email', async () => {
     const { fixture } = await render('', {
-      providers: [AuthService, { provide: AuthAdapter, useValue: adapter }],
+      providers: [
+        AuthService,
+        { provide: AuthAdapter, useValue: adapter },
+        { provide: UserConfigApiService, useValue: userConfigApi },
+      ],
     });
     const service = fixture.debugElement.injector.get(AuthService);
     await service.signInWithEmail('test@test.de', 'pw');
@@ -59,7 +77,11 @@ describe('AuthService', () => {
 
   it('should call signUpWithEmail when signing up with email', async () => {
     const { fixture } = await render('', {
-      providers: [AuthService, { provide: AuthAdapter, useValue: adapter }],
+      providers: [
+        AuthService,
+        { provide: AuthAdapter, useValue: adapter },
+        { provide: UserConfigApiService, useValue: userConfigApi },
+      ],
     });
     const service = fixture.debugElement.injector.get(AuthService);
     await service.signUpWithEmail('test@test.de', 'pw');
