@@ -56,7 +56,7 @@ services:
       PORT: '8789'
       NX_CLOUD_ACCESS_TOKEN: ${NX_CLOUD_ACCESS_TOKEN}
       API_HOST: api
-      API_PORT: '8787'
+      API_PORT: '8788'
     expose:
       - '8789'
     healthcheck:
