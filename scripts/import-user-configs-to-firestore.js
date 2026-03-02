@@ -1,5 +1,5 @@
 // Script to import user configs from JSON to Firestore Emulator
-const { initializeApp, applicationDefault } = require('firebase-admin/app');
+const { initializeApp } = require('firebase-admin/app');
 const { getFirestore } = require('firebase-admin/firestore');
 const fs = require('node:fs');
 const path = require('node:path');
@@ -8,8 +8,7 @@ const path = require('node:path');
 process.env.FIRESTORE_EMULATOR_HOST = 'localhost:8080';
 
 initializeApp({
-  projectId: 'pushup-stats-service-local',
-  credential: applicationDefault(),
+  projectId: 'pushup-stats',
 });
 
 const db = getFirestore();
