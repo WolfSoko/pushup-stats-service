@@ -4,6 +4,7 @@
   "projectType": "application",
   "prefix": "app",
   "sourceRoot": "web/src",
+  "implicitDependencies": ["api", "data-store"],
   "i18n": {
     "sourceLocale": "de",
     "locales": {
@@ -63,6 +64,27 @@
           "optimization": false,
           "extractLicenses": false,
           "sourceMap": true
+        },
+        "development-emulator": {
+          "optimization": false,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "fileReplacements": [
+            {
+              "replace": "web/src/env/firebase-runtime.ts",
+              "with": "web/src/env/firebase-runtime.emulator.ts"
+            }
+          ]
+        },
+        "staging": {
+          "localize": ["de", "en"],
+          "outputHashing": "all",
+          "fileReplacements": [
+            {
+              "replace": "web/src/env/fire.config.ts",
+              "with": "web/src/env/fire.config.staging.ts"
+            }
+          ]
         }
       },
       "defaultConfiguration": "production"
@@ -79,6 +101,12 @@
         },
         "development": {
           "buildTarget": "web:build:development"
+        },
+        "development-emulator": {
+          "buildTarget": "web:build:development-emulator"
+        },
+        "staging": {
+          "buildTarget": "web:build:staging"
         }
       },
       "defaultConfiguration": "development"
@@ -92,8 +120,7 @@
       "options": {
         "tsConfig": "web/tsconfig.spec.json",
         "coverage": true,
-        "watch": false,
-        "browsers": ["chromiumHeadless"]
+        "watch": false
       }
     },
     "extract-i18n": {

@@ -21,7 +21,12 @@ import {
 import { provideRouter } from '@angular/router';
 import { provideServiceWorker } from '@angular/service-worker';
 // eslint-disable-next-line @nx/enforce-module-boundaries
-import { provideAuth } from '@pu-auth/auth';
+import { provideAuth, withEmulator as withAuthEmulator } from '@pu-auth/auth';
+import {
+  provideFireStore,
+  withEmulator as withFirestoreEmulator,
+} from '@pu-stats/data-access';
+import { firebaseRuntime } from '../env/firebase-runtime';
 import { MatrixController, MatrixElement } from 'chartjs-chart-matrix';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
@@ -52,6 +57,13 @@ export const appConfig: ApplicationConfig = {
       enabled: !isDevMode(),
       registrationStrategy: 'registerWhenStable:30000',
     }),
-    provideAuth(),
+    ...(firebaseRuntime.useEmulators
+      ? [
+          provideAuth(() => withAuthEmulator(firebaseRuntime.authEmulatorUrl)),
+          provideFireStore(
+            withFirestoreEmulator(firebaseRuntime.firestoreEmulatorUrl)
+          ),
+        ]
+      : [provideAuth(), provideFireStore()]),
   ],
 };

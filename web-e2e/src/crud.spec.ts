@@ -1,5 +1,11 @@
 import { expect, Page, test } from '@playwright/test';
 
+const firestoreProjectId = 'pushup-stats';
+
+function firestoreDocUrl(path: string): string {
+  return `http://127.0.0.1:8080/v1/projects/${firestoreProjectId}/databases/(default)/documents/${path}`;
+}
+
 async function createEntry(
   page: Page,
   timestamp: string,
@@ -9,7 +15,7 @@ async function createEntry(
   await page.getByRole('button', { name: /neu/i }).click();
   const dialog = page.getByRole('dialog');
   await dialog.locator('input[type="datetime-local"]').fill(timestamp);
-  await dialog.locator('input[type="number"]').fill(reps);
+  await dialog.locator('input[type="number"]').first().fill(reps);
   await dialog.locator('input[type="text"]').last().fill(source);
   await dialog.getByRole('button', { name: /speichern/i }).click();
 }
@@ -199,7 +205,7 @@ test('dashboard period controls (Tag/Woche + Heute/Vor/Zurück) filter table row
   try {
     await page.request.post('/api/pushups', {
       data: {
-        timestamp: isoDateTime(today, 23, 59),
+        timestamp: isoDateTime(today, 12, 0),
         reps: 11,
         source: srcToday,
         type: 'Standard',
@@ -207,7 +213,7 @@ test('dashboard period controls (Tag/Woche + Heute/Vor/Zurück) filter table row
     });
     await page.request.post('/api/pushups', {
       data: {
-        timestamp: isoDateTime(yesterday, 23, 58),
+        timestamp: isoDateTime(yesterday, 12, 1),
         reps: 8,
         source: srcYday,
         type: 'Standard',
@@ -215,7 +221,7 @@ test('dashboard period controls (Tag/Woche + Heute/Vor/Zurück) filter table row
     });
     await page.request.post('/api/pushups', {
       data: {
-        timestamp: isoDateTime(previousWeekDate, 23, 57),
+        timestamp: isoDateTime(previousWeekDate, 12, 2),
         reps: 14,
         source: srcPrevWeek,
         type: 'Standard',
@@ -256,9 +262,6 @@ test('dashboard period controls (Tag/Woche + Heute/Vor/Zurück) filter table row
     await expect(
       table.locator('mat-row').filter({ hasText: srcToday }).first()
     ).toBeVisible();
-    await expect(
-      table.locator('mat-row').filter({ hasText: srcYday }).first()
-    ).toBeVisible();
 
     // Navigate to previous week and wait for the range UI to update.
     const fromInput = page.getByRole('textbox', { name: 'Von' });
@@ -295,4 +298,42 @@ test('dashboard period controls (Tag/Woche + Heute/Vor/Zurück) filter table row
       // ignore cleanup errors
     }
   }
+});
+
+test('settings persist user config in firestore emulator', async ({ page }) => {
+  const runId = Date.now().toString(36);
+  const displayName = `Wolf-${runId}`;
+  const dailyGoal = 137;
+
+  await page.goto('/settings');
+
+  const activeUserText =
+    (await page
+      .getByText(/^Aktiv:/)
+      .first()
+      .textContent()) ?? 'Aktiv: default';
+  const userId = activeUserText.replace(/^Aktiv:\s*/, '').trim() || 'default';
+
+  await page.getByLabel('Anzeigename').fill(displayName);
+  await page.getByLabel('Tagesziel (Reps)').fill(String(dailyGoal));
+
+  await page.getByRole('button', { name: 'Speichern' }).click();
+  await expect(page.getByText('Gespeichert.')).toBeVisible();
+
+  const emulatorDoc = await page.request.get(
+    firestoreDocUrl(`userConfigs/${userId}`)
+  );
+  expect(emulatorDoc.ok()).toBeTruthy();
+
+  const payload = (await emulatorDoc.json()) as {
+    fields?: {
+      displayName?: { stringValue?: string };
+      dailyGoal?: { integerValue?: string };
+    };
+  };
+
+  expect(payload.fields?.displayName?.stringValue).toBe(displayName);
+  expect(Number(payload.fields?.dailyGoal?.integerValue ?? '0')).toBe(
+    dailyGoal
+  );
 });

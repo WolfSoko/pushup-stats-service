@@ -3,6 +3,8 @@
   "$schema": "../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
   "sourceRoot": "web-e2e/src",
+  "implicitDependencies": ["web", "api"],
+
   "targets": {
     "e2e": {
       "executor": "@nx/playwright:playwright",
