@@ -217,10 +217,7 @@ export class SettingsPageComponent {
     this.saved.set(false);
     this.errorMessage.set('');
     const userId = this.activeUserId();
-    const dailyGoal = Math.max(
-      1,
-      Number(this.dailyGoalDraft() as unknown as number)
-    );
+    const dailyGoal = Math.max(1, this.dailyGoalDraft());
     try {
       await this.api.updateConfig(userId, {
         displayName: this.displayNameDraft().trim(),
