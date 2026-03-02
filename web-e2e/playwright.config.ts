@@ -21,19 +21,19 @@ export default defineConfig({
   webServer: [
     {
       command:
-        'cd ../data-store && npx firebase emulators:start --only auth,firestore --project demo-pushup-stats',
+        'bash -lc \'set -euo pipefail; ROOT=$(pwd); while [ ! -f "$ROOT/nx.json" ] && [ "$ROOT" != "/" ]; do ROOT=$(dirname "$ROOT"); done; cd "$ROOT/data-store"; npx firebase emulators:start --only auth,firestore --project pushup-stats\'',
       url: 'http://127.0.0.1:4000',
       reuseExistingServer,
       timeout: 180_000,
     },
     {
-      command: `PORT=${apiPort} npx nx serve api -c development`,
+      command: `bash -lc 'set -euo pipefail; ROOT=$(pwd); while [ ! -f "$ROOT/nx.json" ] && [ "$ROOT" != "/" ]; do ROOT=$(dirname "$ROOT"); done; cd "$ROOT"; PORT=${apiPort} npx nx serve api -c development'`,
       url: `http://127.0.0.1:${apiPort}/api/health`,
       reuseExistingServer,
       timeout: 180_000,
     },
     {
-      command: `API_HOST=127.0.0.1 API_PORT=${apiPort} npx nx serve web -c development-emulator --host=127.0.0.1 --port=${webPort} --proxy-config=web/proxy.e2e.conf.json`,
+      command: `bash -lc 'set -euo pipefail; ROOT=$(pwd); while [ ! -f "$ROOT/nx.json" ] && [ "$ROOT" != "/" ]; do ROOT=$(dirname "$ROOT"); done; cd "$ROOT"; API_HOST=127.0.0.1 API_PORT=${apiPort} npx nx serve web -c development-emulator --host=127.0.0.1 --port=${webPort} --proxy-config=web/proxy.e2e.conf.json'`,
       url: `http://127.0.0.1:${webPort}`,
       reuseExistingServer,
       timeout: 180_000,

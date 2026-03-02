@@ -307,6 +307,16 @@ test('settings persist user config in firestore emulator', async ({ page }) => {
 
   await page.goto('/settings');
 
+  await page
+    .waitForResponse(
+      (resp) =>
+        resp.url().includes('/api/users/') &&
+        resp.url().includes('/config') &&
+        resp.request().method() === 'GET',
+      { timeout: 8000 }
+    )
+    .catch(() => undefined);
+
   const activeUserText =
     (await page
       .getByText(/^Aktiv:/)
