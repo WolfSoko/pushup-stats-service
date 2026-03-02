@@ -1,0 +1,23 @@
+{
+  "name": "tools",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "tools/src",
+  "projectType": "library",
+  "tags": ["scope:tools"],
+  "targets": {
+    "import-user-configs": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node tools/src/import-user-configs-to-firestore.js",
+        "cwd": "{workspaceRoot}"
+      }
+    },
+    "export-nedb-user-configs": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node tools/src/export-nedb-user-configs.js",
+        "cwd": "{workspaceRoot}"
+      }
+    }
+  }
+}
