@@ -2,6 +2,7 @@ import { defineConfig, devices } from '@playwright/test';
 
 const apiPort = 4212;
 const webPort = 4211;
+const reuseExistingServer = !process.env['CI'];
 
 export default defineConfig({
   testDir: './src',
@@ -22,19 +23,19 @@ export default defineConfig({
       command:
         'cd ../data-store && npx firebase emulators:start --only auth,firestore --project pushup-stats',
       url: 'http://127.0.0.1:4000',
-      reuseExistingServer: !process.env['CI'],
+      reuseExistingServer,
       timeout: 180_000,
     },
     {
       command: `PORT=${apiPort} npx nx serve api -c development`,
       url: `http://127.0.0.1:${apiPort}/api/health`,
-      reuseExistingServer: !process.env['CI'],
+      reuseExistingServer,
       timeout: 180_000,
     },
     {
       command: `API_HOST=127.0.0.1 API_PORT=${apiPort} npx nx serve web -c development-emulator --host=127.0.0.1 --port=${webPort} --proxy-config=web/proxy.e2e.conf.json`,
       url: `http://127.0.0.1:${webPort}`,
-      reuseExistingServer: !process.env['CI'],
+      reuseExistingServer,
       timeout: 180_000,
     },
   ],
