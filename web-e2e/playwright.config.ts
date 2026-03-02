@@ -21,7 +21,7 @@ export default defineConfig({
   webServer: [
     {
       command:
-        'cd ../data-store && npx firebase emulators:start --only auth,firestore --project pushup-stats',
+        'cd ../data-store && npx firebase emulators:start --only auth,firestore --project demo-pushup-stats',
       url: 'http://127.0.0.1:4000',
       reuseExistingServer,
       timeout: 180_000,
