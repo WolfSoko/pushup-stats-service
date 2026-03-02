@@ -1,0 +1,23 @@
+{
+  "name": "data-store",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "data-store/src",
+  "targets": {
+    "emulate": {
+      "executor": "nx:run-commands",
+      "continuous": true,
+      "options": {
+        "cwd": "data-store",
+        "command": "npx firebase emulators:start --project pushup-stats --only auth,firestore"
+      }
+    },
+    "emulate:smoke": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "data-store",
+        "command": "npx firebase emulators:exec --project pushup-stats --only auth,firestore \"echo emulator-ok\""
+      }
+    }
+  }
+}

@@ -12,7 +12,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { firstValueFrom } from 'rxjs';
-import { UserConfigApiService } from '@pu-stats/data-access';
+import { UserConfigFirestoreService } from '@pu-stats/data-access';
 import { UserContextService } from '../../user-context.service';
 
 @Component({
@@ -151,7 +151,8 @@ import { UserContextService } from '../../user-context.service';
   `,
 })
 export class SettingsPageComponent {
-  private readonly api = inject(UserConfigApiService);
+  // Switch to Firestore-based service for local/dev
+  private readonly api = inject(UserConfigFirestoreService);
   private readonly user = inject(UserContextService);
 
   readonly activeUserId = this.user.userIdSafe;
@@ -166,11 +167,21 @@ export class SettingsPageComponent {
 
   readonly configResource = resource({
     params: () => ({ userId: this.activeUserId() }),
-    loader: async ({ params }) =>
-      firstValueFrom(this.api.getConfig(params.userId)),
+    loader: async ({ params }) => {
+      const result = await firstValueFrom(this.api.getConfig(params.userId));
+      return (result ?? {}) as { displayName?: string; dailyGoal?: number };
+    },
   });
 
-  readonly config = computed(() => this.configResource.value());
+  readonly config = computed(() => {
+    const val = this.configResource.value();
+    if (!val || typeof val !== 'object')
+      return { displayName: '', dailyGoal: 100 };
+    return {
+      displayName: (val as { displayName?: string }).displayName ?? '',
+      dailyGoal: (val as { dailyGoal?: number }).dailyGoal ?? 100,
+    };
+  });
 
   constructor() {
     effect(() => {
@@ -205,17 +216,16 @@ export class SettingsPageComponent {
     this.saving.set(true);
     this.saved.set(false);
     this.errorMessage.set('');
-
     const userId = this.activeUserId();
-    const dailyGoal = Math.max(1, Number(this.dailyGoalDraft()));
-
+    const dailyGoal = Math.max(
+      1,
+      Number(this.dailyGoalDraft() as unknown as number)
+    );
     try {
-      await firstValueFrom(
-        this.api.updateConfig(userId, {
-          displayName: this.displayNameDraft().trim(),
-          dailyGoal,
-        })
-      );
+      await this.api.updateConfig(userId, {
+        displayName: this.displayNameDraft().trim(),
+        dailyGoal,
+      });
       this.saved.set(true);
       this.configResource.reload();
     } catch {

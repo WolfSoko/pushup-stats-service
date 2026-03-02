@@ -19,15 +19,22 @@ export default defineConfig({
   // Angular dev-server provides the /api + /socket.io proxy.
   webServer: [
     {
-      command: `bash -lc "set -euo pipefail; cd ..; PORT=${apiPort} NODE_ENV=development npx nx serve api -c development"`,
-      url: `http://127.0.0.1:${apiPort}/api/health`,
-      reuseExistingServer: false,
+      command:
+        'cd ../data-store && npx firebase emulators:start --only auth,firestore --project pushup-stats',
+      url: 'http://127.0.0.1:4000',
+      reuseExistingServer: true,
       timeout: 180_000,
     },
     {
-      command: `bash -lc "set -euo pipefail; cd ..; npx nx serve web -c development --host=127.0.0.1 --port=${webPort} --proxy-config=web/proxy.e2e.conf.json"`,
+      command: `PORT=${apiPort} npx nx serve api -c development`,
+      url: `http://127.0.0.1:${apiPort}/api/health`,
+      reuseExistingServer: true,
+      timeout: 180_000,
+    },
+    {
+      command: `API_HOST=127.0.0.1 API_PORT=${apiPort} npx nx serve web -c development-emulator --host=127.0.0.1 --port=${webPort} --proxy-config=web/proxy.e2e.conf.json`,
       url: `http://127.0.0.1:${webPort}`,
-      reuseExistingServer: false,
+      reuseExistingServer: true,
       timeout: 180_000,
     },
   ],
