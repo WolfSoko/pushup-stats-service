@@ -1,13 +1,15 @@
 import { FirebaseOptions } from '@angular/fire/app';
 
-// Dedicated non-prod Firebase project (for branch/PR deploys).
-// Replace with your real staging project values.
+// Placeholder for a dedicated staging Firebase project (for branch/PR deploys).
+// Replace ALL values below with credentials from a real, separate staging project
+// before enabling staging builds. Leaving these empty strings here intentionally
+// causes staging builds to fail fast rather than silently targeting the production project.
 export const fireConfig: FirebaseOptions = {
-  apiKey: 'AIzaSyBKJuLP0MfxgZLg96Ik7BcM2WduzhabYVw',
-  authDomain: 'pushup-stats.firebaseapp.com',
-  projectId: 'pushup-stats',
-  storageBucket: 'pushup-stats.firebasestorage.app',
-  messagingSenderId: '1037629324370',
-  appId: '1:1037629324370:web:12382b21590a4fba71738b',
-  measurementId: 'G-5D32B9B1S6',
+  apiKey: '',
+  authDomain: '',
+  projectId: '',
+  storageBucket: '',
+  messagingSenderId: '',
+  appId: '',
+  measurementId: '',
 };
