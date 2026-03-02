@@ -1,9 +1,10 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
+    // Emulator-only rules for local/e2e workflows.
+    // Production rules are managed in the real Firebase project.
     match /{document=**} {
-      // Restrict access to authenticated users to avoid public read/write in production.
-      allow read, write: if request.auth != null;
+      allow read, write: if true;
     }
   }
 }
