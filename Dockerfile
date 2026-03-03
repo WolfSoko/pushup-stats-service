@@ -11,6 +11,13 @@ RUN npm ci
 COPY . .
 RUN npx nx run-many -t build --projects=api,reverse-proxy,web --configuration=production
 
+# Dev runner (for local live Firebase throughstich in container)
+FROM node:24-alpine AS dev-runner
+WORKDIR /app
+ENV NODE_ENV=development
+COPY package.json package-lock.json ./
+RUN npm ci
+COPY . .
 
 # API runtime
 FROM node:24-alpine AS api-runner
