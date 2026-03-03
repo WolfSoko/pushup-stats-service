@@ -2,12 +2,25 @@
 
 ## Runtime modes
 
-- **Real Firebase (default):**
+- **Real Firebase (default / Durchstich):**
+  - `nx run web:serve-live`
   - `nx serve web -c development`
   - `nx build web -c production`
-- **Local emulator mode:**
-  - `nx serve web -c development-emulator`
-  - `nx run data-store:emulate`
+- **Local emulator mode (one command):**
+  - `nx run web:serve-local`
+  - (optional direct) `nx serve web -c development-emulator`
+
+`web:serve-local` startet über NX automatisch die Emulatoren (`data-store:serve`) als Dependency.
+
+## Emulator control
+
+- Start emulator manually: `nx run data-store:emulate`
+- Smoke test: `nx run data-store:emulate:smoke`
+- Stop running emulator stack: `nx run data-store:emulate:stop`
+
+`emulate:stop` beendet den laufenden Emulator-Prozess über PID-Datei (`data-store/.firebase-emulators.pid`) und hat einen `pkill`-Fallback.
+
+## Runtime toggle implementation
 
 The toggle is implemented via file replacement of:
 

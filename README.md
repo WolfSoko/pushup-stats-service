@@ -20,8 +20,15 @@ Produktionsnahe Nx-Architektur mit:
 
 ```bash
 npm install
-npx nx serve api (achtung continous tasks)
-npx nx serve web (achtung continous tasks)
+
+# One-command local stack (Web + Firebase Emulator)
+npx nx run web:serve-local
+
+# Emulator wieder stoppen
+npx nx run data-store:emulate:stop
+
+# Durchstich gegen Live-Firebase (ohne Emulator)
+npx nx run web:serve-live
 ```
 
 ## Qualitätssicherung

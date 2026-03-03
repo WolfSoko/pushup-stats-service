@@ -43,6 +43,12 @@ Thumbs.db
 
 .angular
 data/*.db
+data-store/firestore-debug.log
+data-store/firebase-debug.log
+data-store/.firebase-emulators.pid
+data-store/firebase-emulator-data/
+web-e2e/firestore-debug.log
+web-e2e/data/
 
 test-results
 
