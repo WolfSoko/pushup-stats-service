@@ -11,6 +11,7 @@ export class UserConfigController {
     return (
       existing ?? {
         userId,
+        email: null,
         displayName: '',
         dailyGoal: 100,
         ui: { showSourceColumn: false },
@@ -23,15 +24,22 @@ export class UserConfigController {
     @Param('userId') userId: string,
     @Body()
     body: {
+      email?: string | null;
       displayName?: string;
       dailyGoal?: number;
       ui?: { showSourceColumn?: boolean };
-    },
+    }
   ) {
-    const dailyGoal = typeof body.dailyGoal === 'number' ? Number(body.dailyGoal) : undefined;
+    const dailyGoal =
+      typeof body.dailyGoal === 'number' ? Number(body.dailyGoal) : undefined;
 
     return this.db.upsert(userId, {
-      ...(typeof body.displayName !== 'undefined' ? { displayName: String(body.displayName) } : {}),
+      ...(typeof body.email !== 'undefined'
+        ? { email: body.email ? String(body.email) : null }
+        : {}),
+      ...(typeof body.displayName !== 'undefined'
+        ? { displayName: String(body.displayName) }
+        : {}),
       ...(typeof dailyGoal !== 'undefined' ? { dailyGoal } : {}),
       ...(typeof body.ui !== 'undefined' ? { ui: body.ui } : {}),
     });

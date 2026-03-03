@@ -3,12 +3,22 @@ import { UserConfigController } from './user-config.controller';
 describe('UserConfigController', () => {
   it('GET returns existing config when present', async () => {
     const db = {
-      getByUserId: jest.fn().mockResolvedValue({ userId: 'u1', displayName: 'Wolf', dailyGoal: 10 }),
+      getByUserId: jest
+        .fn()
+        .mockResolvedValue({
+          userId: 'u1',
+          displayName: 'Wolf',
+          dailyGoal: 10,
+        }),
       upsert: jest.fn(),
     };
 
     const ctrl = new UserConfigController(db as any);
-    await expect(ctrl.get('u1')).resolves.toEqual({ userId: 'u1', displayName: 'Wolf', dailyGoal: 10 });
+    await expect(ctrl.get('u1')).resolves.toEqual({
+      userId: 'u1',
+      displayName: 'Wolf',
+      dailyGoal: 10,
+    });
   });
 
   it('GET returns default config when none exists', async () => {
@@ -20,6 +30,7 @@ describe('UserConfigController', () => {
     const ctrl = new UserConfigController(db as any);
     await expect(ctrl.get('u1')).resolves.toEqual({
       userId: 'u1',
+      email: null,
       displayName: '',
       dailyGoal: 100,
       ui: { showSourceColumn: false },
@@ -29,7 +40,13 @@ describe('UserConfigController', () => {
   it('PUT normalizes body and forwards only provided fields', async () => {
     const db = {
       getByUserId: jest.fn(),
-      upsert: jest.fn().mockResolvedValue({ userId: 'u1', displayName: 'Wolf', dailyGoal: 200 }),
+      upsert: jest
+        .fn()
+        .mockResolvedValue({
+          userId: 'u1',
+          displayName: 'Wolf',
+          dailyGoal: 200,
+        }),
     };
 
     const ctrl = new UserConfigController(db as any);

@@ -74,6 +74,7 @@ export class AuthService {
       // Nur erlaubte Felder an updateConfig übergeben
       await firstValueFrom(
         this.userConfigApi.updateConfig(user.uid, {
+          email: user.email ?? undefined,
           displayName: user.displayName ?? undefined,
         })
       );

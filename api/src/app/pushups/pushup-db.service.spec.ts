@@ -1,162 +1,107 @@
 import fs from 'node:fs';
-import Datastore from 'nedb-promises';
 import { PushupDbService } from './pushup-db.service';
 
-jest.mock('nedb-promises', () => {
-  const actual = jest.requireActual('nedb-promises');
-  return {
-    __esModule: true,
-    default: {
-      ...actual.default,
-      create: jest.fn(),
-    },
-  };
-});
+const setMock = jest.fn();
+const getMock = jest.fn();
+const deleteMock = jest.fn();
+const docMock = jest.fn();
+const orderByGetMock = jest.fn();
+const orderByMock = jest.fn();
+const collectionMock = jest.fn();
+const getAppsMock = jest.fn();
+const initializeAppMock = jest.fn();
+const certMock = jest.fn();
+const applicationDefaultMock = jest.fn();
 
-type FakeDb = {
-  find: jest.Mock;
-  findOne: jest.Mock;
-  insert: jest.Mock;
-  update: jest.Mock;
-  remove: jest.Mock;
-};
+jest.mock('firebase-admin/app', () => ({
+  getApps: () => getAppsMock(),
+  initializeApp: (...args: unknown[]) => initializeAppMock(...args),
+  cert: (...args: unknown[]) => certMock(...args),
+  applicationDefault: (...args: unknown[]) => applicationDefaultMock(...args),
+}));
 
-describe('PushupDbService', () => {
-  afterEach(() => {
+jest.mock('firebase-admin/firestore', () => ({
+  getFirestore: () => ({
+    collection: (...args: unknown[]) => collectionMock(...args),
+  }),
+}));
+
+describe('PushupDbService (Firestore)', () => {
+  beforeEach(() => {
     jest.restoreAllMocks();
-    (Datastore as unknown as { create: jest.Mock }).create.mockReset?.();
+    jest.clearAllMocks();
+
+    orderByMock.mockReturnValue({ get: orderByGetMock });
+    collectionMock.mockReturnValue({ orderBy: orderByMock, doc: docMock });
+    getAppsMock.mockReturnValue([]);
+    applicationDefaultMock.mockReturnValue('adc');
+    certMock.mockReturnValue('cert');
+    jest.spyOn(fs, 'existsSync').mockReturnValue(false);
   });
 
-  it('creates db and ensures data dir exists', async () => {
-    const mkdirSpy = jest.spyOn(fs, 'mkdirSync').mockImplementation(() => undefined as never);
-
-    const fakeDb: FakeDb = {
-      find: jest.fn(),
-      findOne: jest.fn(),
-      insert: jest.fn(),
-      update: jest.fn(),
-      remove: jest.fn(),
-    };
-    (Datastore as unknown as { create: jest.Mock }).create.mockReturnValue(fakeDb);
-
+  it('initializes firebase app once', () => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const svc = new PushupDbService();
-
-    expect(mkdirSpy).toHaveBeenCalledWith(expect.any(String), { recursive: true });
-    expect((Datastore as unknown as { create: jest.Mock }).create).toHaveBeenCalledWith(
-      expect.objectContaining({ filename: expect.any(String), autoload: true, timestampData: true }),
-    );
+    expect(initializeAppMock).toHaveBeenCalledTimes(1);
   });
 
-  it('findAll returns rows sorted and fills default type', async () => {
-    jest.spyOn(fs, 'mkdirSync').mockImplementation(() => undefined as never);
-
-    const rows = [
-      { _id: '1', timestamp: '2026-02-10T10:00:00.000Z', reps: 10, source: 'wa' },
-      { _id: '2', timestamp: '2026-02-10T11:00:00.000Z', reps: 5, source: 'wa', type: 'Knee' },
-    ];
-
-    const sort = jest.fn().mockResolvedValue(rows);
-    const fakeDb: FakeDb = {
-      find: jest.fn().mockReturnValue({ sort }),
-      findOne: jest.fn(),
-      insert: jest.fn(),
-      update: jest.fn(),
-      remove: jest.fn(),
-    };
-    (Datastore as unknown as { create: jest.Mock }).create.mockReturnValue(fakeDb);
+  it('findAll maps firestore docs', async () => {
+    orderByGetMock.mockResolvedValue({
+      docs: [
+        {
+          id: 'a',
+          data: () => ({
+            timestamp: '2026-03-01T10:00',
+            reps: 10,
+            source: 'web',
+          }),
+        },
+      ],
+    });
 
     const svc = new PushupDbService();
-    const all = await svc.findAll();
+    const out = await svc.findAll();
 
-    expect(fakeDb.find).toHaveBeenCalledWith({});
-    expect(sort).toHaveBeenCalledWith({ timestamp: 1 });
-
-    expect(all).toEqual([
-      { ...rows[0], type: 'Standard' },
-      { ...rows[1], type: 'Knee' },
+    expect(collectionMock).toHaveBeenCalledWith('pushups');
+    expect(orderByMock).toHaveBeenCalledWith('timestamp', 'asc');
+    expect(out).toEqual([
+      {
+        _id: 'a',
+        userId: 'default',
+        timestamp: '2026-03-01T10:00',
+        reps: 10,
+        source: 'web',
+        type: 'Standard',
+      },
     ]);
   });
 
-  it('findById returns null when missing and fills default type when present', async () => {
-    jest.spyOn(fs, 'mkdirSync').mockImplementation(() => undefined as never);
-
-    const fakeDb: FakeDb = {
-      find: jest.fn(),
-      findOne: jest
-        .fn()
-        .mockResolvedValueOnce(null)
-        .mockResolvedValueOnce({ _id: '1', timestamp: 't', reps: 1, source: 'wa' }),
-      insert: jest.fn(),
-      update: jest.fn(),
-      remove: jest.fn(),
-    };
-    (Datastore as unknown as { create: jest.Mock }).create.mockReturnValue(fakeDb);
+  it('create writes document with defaults', async () => {
+    docMock.mockReturnValue({ id: 'new1', set: setMock });
 
     const svc = new PushupDbService();
+    const out = await svc.create({ timestamp: 't', reps: 12, source: 'api' });
 
-    await expect(svc.findById('missing')).resolves.toBeNull();
-    await expect(svc.findById('1')).resolves.toEqual({
-      _id: '1',
-      timestamp: 't',
-      reps: 1,
-      source: 'wa',
-      type: 'Standard',
-    });
+    expect(setMock).toHaveBeenCalled();
+    expect(out._id).toBe('new1');
+    expect(out.type).toBe('Standard');
+    expect(out.userId).toBe('default');
   });
 
-  it('create inserts and applies default type', async () => {
-    jest.spyOn(fs, 'mkdirSync').mockImplementation(() => undefined as never);
-
-    const fakeDb: FakeDb = {
-      find: jest.fn(),
-      findOne: jest.fn(),
-      insert: jest.fn().mockImplementation(async (doc: any) => ({ ...doc, _id: '1' })),
-      update: jest.fn(),
-      remove: jest.fn(),
-    };
-    (Datastore as unknown as { create: jest.Mock }).create.mockReturnValue(fakeDb);
+  it('update returns null when not found', async () => {
+    docMock.mockReturnValue({ get: getMock });
+    getMock.mockResolvedValue({ exists: false });
 
     const svc = new PushupDbService();
-
-    const out = await svc.create({ timestamp: 't', reps: 10, source: 'wa' });
-    expect(fakeDb.insert).toHaveBeenCalledWith({ timestamp: 't', reps: 10, source: 'wa', type: 'Standard' });
-    expect(out).toEqual({ _id: '1', timestamp: 't', reps: 10, source: 'wa', type: 'Standard' });
+    await expect(svc.update('id', { reps: 1 })).resolves.toBeNull();
   });
 
-  it('update patches and returns the updated row', async () => {
-    jest.spyOn(fs, 'mkdirSync').mockImplementation(() => undefined as never);
-
-    const fakeDb: FakeDb = {
-      find: jest.fn().mockReturnValue({ sort: jest.fn() }),
-      findOne: jest.fn().mockResolvedValue({ _id: '1', timestamp: 't', reps: 11, source: 'wa' }),
-      insert: jest.fn(),
-      update: jest.fn().mockResolvedValue(1),
-      remove: jest.fn(),
-    };
-    (Datastore as unknown as { create: jest.Mock }).create.mockReturnValue(fakeDb);
+  it('remove deletes existing document', async () => {
+    docMock.mockReturnValue({ get: getMock, delete: deleteMock });
+    getMock.mockResolvedValue({ exists: true });
 
     const svc = new PushupDbService();
-    const out = await svc.update('1', { reps: 11 });
-
-    expect(fakeDb.update).toHaveBeenCalledWith({ _id: '1' }, { $set: { reps: 11 } });
-    expect(out).toEqual({ _id: '1', timestamp: 't', reps: 11, source: 'wa', type: 'Standard' });
-  });
-
-  it('remove deletes by id', async () => {
-    jest.spyOn(fs, 'mkdirSync').mockImplementation(() => undefined as never);
-
-    const fakeDb: FakeDb = {
-      find: jest.fn(),
-      findOne: jest.fn(),
-      insert: jest.fn(),
-      update: jest.fn(),
-      remove: jest.fn().mockResolvedValue(1),
-    };
-    (Datastore as unknown as { create: jest.Mock }).create.mockReturnValue(fakeDb);
-
-    const svc = new PushupDbService();
-    await expect(svc.remove('1')).resolves.toBe(1);
-    expect(fakeDb.remove).toHaveBeenCalledWith({ _id: '1' }, {});
+    await expect(svc.remove('id')).resolves.toBe(1);
+    expect(deleteMock).toHaveBeenCalled();
   });
 });

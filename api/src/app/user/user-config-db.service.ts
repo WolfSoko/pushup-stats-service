@@ -6,6 +6,7 @@ import path from 'node:path';
 export type UserConfigDoc = {
   _id?: string;
   userId: string;
+  email?: string | null;
   displayName?: string;
   dailyGoal?: number;
   ui?: {

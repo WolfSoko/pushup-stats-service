@@ -7,11 +7,19 @@ export class StatsService {
   constructor(private readonly db: PushupDbService) {}
 
   getHealth() {
-    return { ok: true, storage: 'nedb' };
+    return { ok: true, storage: 'firestore' };
   }
 
   async getStats(from: string | null, to: string | null) {
     const rows = await this.db.findAll();
-    return buildStats(rows.map((r) => ({ timestamp: r.timestamp, reps: r.reps, source: r.source })), from, to);
+    return buildStats(
+      rows.map((r) => ({
+        timestamp: r.timestamp,
+        reps: r.reps,
+        source: r.source,
+      })),
+      from,
+      to
+    );
   }
 }

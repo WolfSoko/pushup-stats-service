@@ -34,6 +34,7 @@ export class PushupsController {
   async create(
     @Body()
     body: {
+      userId?: string;
       timestamp: string;
       reps: number;
       source?: string;
@@ -41,6 +42,7 @@ export class PushupsController {
     }
   ) {
     const created = await this.db.create({
+      userId: body.userId ?? 'default',
       timestamp: body.timestamp,
       reps: Number(body.reps),
       source: body.source ?? 'api',
