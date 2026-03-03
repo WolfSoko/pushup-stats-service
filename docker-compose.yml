@@ -10,21 +10,6 @@ x-defaults: &service-defaults
   logging: *default-logging
 
 services:
-  web-live:
-    <<: *service-defaults
-    profiles: ['dev']
-    build:
-      context: .
-      dockerfile: Dockerfile
-      target: dev-runner
-    command: ['npx', 'nx', 'run', 'web:serve-live']
-    environment:
-      NODE_ENV: development
-      CHOKIDAR_USEPOLLING: 'true'
-      NX_DAEMON: 'false'
-    ports:
-      - '${WEB_LIVE_HOST_PORT:-4200}:4200'
-
   api:
     <<: *service-defaults
     build:

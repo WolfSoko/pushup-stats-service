@@ -46,13 +46,3 @@ docker compose up -d
 
 This compose setup is production-like (built artifacts under `dist/`).
 For local dev (HMR etc.), use `nx serve`.
-
-### Live-Firebase Durchstich im Container
-
-```bash
-# nur den Dev-Service starten (Profile dev)
-docker compose --profile dev up web-live --build
-```
-
-Dann ist die App unter `http://127.0.0.1:4200` erreichbar und läuft mit `web:serve-live`
-(also ohne Emulator, gegen Live-Firebase).
