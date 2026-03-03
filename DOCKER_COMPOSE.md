@@ -1,10 +1,10 @@
 # pushup-stats-service — docker-compose
 
-This repo runs three Node servers:
+This repo can run three Node servers:
 
-- **api** (Nest) on `8788`
+- **api** (Nest) on `8788` _(optional for browser-only Firebase runtime; required for SSR REST fallback)_
 - **ssr** (Angular SSR) on `8789`
-- **proxy** (reverse proxy) on `8787` (public entry)
+- **proxy** (reverse proxy) on `8787` _(optional when serving web directly)_
 
 ## Quick start
 

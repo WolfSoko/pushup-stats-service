@@ -5,7 +5,7 @@ Produktionsnahe Nx-Architektur mit:
 - **web**: Angular App (deutsche UI, Dark Theme)
 - **api**: Node.js API mit kompatiblem Vertrag auf `GET /api/stats`
 - **libs/stats-models**: Shared Models/Typen
-- **libs/stats-data-access**: API Service (Datenzugriff)
+- **libs/stats-data-access**: Datenzugriff (Browser: Firestore direkt, SSR: REST-Fallback)
 
 ## UI-Architektur (Smart/Presentational)
 
@@ -76,13 +76,16 @@ Für neue Features gilt ab jetzt verbindlich:
 - [ ] `npx nx affected -t test --codeCoverage`
 - [ ] Erst danach refactoren und committen
 
-## API
+## Datenzugriff (neu)
 
-`GET /api/stats?from=YYYY-MM-DD&to=YYYY-MM-DD`
+- **Browser-Runtime:** Pushups, Stats-Aggregation und User-Config laufen direkt über Firestore (`libs/data-access`).
+- **SSR-Runtime:** nutzt weiterhin REST (`/api/...`) als Fallback, damit Server-Side-Rendering stabil bleibt.
 
-Kompatibel zu vorher:
+## Services, die optional geworden sind
 
-- `meta` (`entries`, `days`, `total`, `granularity`, ...)
-- `series`
-- `daily`
-- `entries`
+Wenn nur Browser + Firebase genutzt wird (kein SSR/Legacy-Clients), können diese Dienste deaktiviert werden:
+
+- `api` (Nest REST)
+- `reverse-proxy`
+
+Für SSR-Deployments bleiben sie weiterhin nutzbar (insb. `/api` im Server-Kontext).

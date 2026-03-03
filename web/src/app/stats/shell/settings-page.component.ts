@@ -12,7 +12,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { firstValueFrom } from 'rxjs';
-import { UserConfigFirestoreService } from '@pu-stats/data-access';
+import { UserConfigApiService } from '@pu-stats/data-access';
 import { UserContextService } from '../../user-context.service';
 
 @Component({
@@ -151,8 +151,7 @@ import { UserContextService } from '../../user-context.service';
   `,
 })
 export class SettingsPageComponent {
-  // Switch to Firestore-based service for local/dev
-  private readonly api = inject(UserConfigFirestoreService);
+  private readonly api = inject(UserConfigApiService);
   private readonly user = inject(UserContextService);
 
   readonly activeUserId = this.user.userIdSafe;
