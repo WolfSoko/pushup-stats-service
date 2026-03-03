@@ -8,38 +8,37 @@ import {
   TransferState,
 } from '@angular/core';
 import {
-  collection,
-  deleteDoc,
-  doc,
-  Firestore,
-  getDoc,
-  getDocs,
-  orderBy,
-  query,
-  setDoc,
-  updateDoc,
-  where,
-} from '@angular/fire/firestore';
+  firstValueFrom,
+  from,
+  map,
+  Observable,
+  of,
+  switchMap,
+  tap,
+} from 'rxjs';
 import {
   PushupCreate,
   PushupRecord,
   PushupUpdate,
   StatsFilter,
   StatsResponse,
-  UserConfig,
 } from '@pu-stats/models';
-import { from, map, Observable, of, switchMap, tap } from 'rxjs';
 import { buildServerApiBaseUrl } from './base-url.util';
+import { PushupFirestoreService } from './pushup-firestore.service';
+import { UserConfigFirestoreService } from './user-config-firestore.service';
 
 const PUSHUPS_ENDPOINT = `/api/pushups`;
 const STATS_ENDPOINT = `/api/stats`;
-const USER_CONFIGS_COLLECTION = 'userConfigs';
-const PUSHUPS_COLLECTION = 'pushups';
 
 @Injectable({ providedIn: 'root' })
 export class StatsApiService {
   private readonly http = inject(HttpClient);
-  private readonly firestore = inject(Firestore, { optional: true });
+  private readonly pushupFirestore = inject(PushupFirestoreService, {
+    optional: true,
+  });
+  private readonly userConfigFirestore = inject(UserConfigFirestoreService, {
+    optional: true,
+  });
   private readonly platformId = inject(PLATFORM_ID);
   private readonly transferState = inject(TransferState);
 
@@ -90,25 +89,9 @@ export class StatsApiService {
     }
 
     const userId = this.resolveUserId();
-    const firestore = this.requireFirestore();
-    const pushupsRef = collection(firestore, PUSHUPS_COLLECTION);
-    const constraints = [
-      where('userId', '==', userId),
-      orderBy('timestamp', 'asc'),
-    ];
-    const q = query(pushupsRef, ...constraints);
-
-    return from(getDocs(q)).pipe(
-      map((snapshot) =>
-        this.applyDateFilter(
-          snapshot.docs.map((d) => {
-            const data = d.data() as Omit<PushupRecord, '_id'>;
-            return { _id: d.id, ...data } as PushupRecord;
-          }),
-          filter
-        )
-      )
-    );
+    return this.requirePushupFirestore()
+      .listPushups(userId)
+      .pipe(map((rows) => this.applyDateFilter(rows, filter)));
   }
 
   createPushup(payload: PushupCreate): Observable<PushupRecord> {
@@ -119,33 +102,10 @@ export class StatsApiService {
       );
     }
 
-    const firestore = this.requireFirestore();
-    const pushupsRef = collection(firestore, PUSHUPS_COLLECTION);
-    const newRef = doc(pushupsRef);
-    const nowIso = new Date().toISOString();
-    const userId = this.resolveUserId();
-    const record: PushupRecord & { userId: string } = {
-      _id: newRef.id,
-      timestamp: payload.timestamp,
-      reps: payload.reps,
-      source: payload.source ?? 'web',
-      type: payload.type,
-      createdAt: nowIso,
-      updatedAt: nowIso,
-      userId,
-    };
-
-    return from(
-      setDoc(newRef, {
-        timestamp: record.timestamp,
-        reps: record.reps,
-        source: record.source,
-        type: record.type ?? 'Standard',
-        createdAt: record.createdAt,
-        updatedAt: record.updatedAt,
-        userId,
-      })
-    ).pipe(map(() => record));
+    return this.requirePushupFirestore().createPushup(
+      this.resolveUserId(),
+      payload
+    );
   }
 
   updatePushup(id: string, payload: PushupUpdate): Observable<PushupRecord> {
@@ -156,24 +116,20 @@ export class StatsApiService {
       );
     }
 
-    const rowRef = doc(this.requireFirestore(), PUSHUPS_COLLECTION, id);
-    const patch = {
-      ...payload,
-      updatedAt: new Date().toISOString(),
-    };
-
-    return from(updateDoc(rowRef, patch)).pipe(
-      switchMap(() => this.listPushups({})),
-      map(
-        (rows) =>
-          rows.find((x) => x._id === id) ?? {
-            _id: id,
-            timestamp: '',
-            reps: 0,
-            source: 'web',
-          }
-      )
-    );
+    return this.requirePushupFirestore()
+      .updatePushup(id, payload)
+      .pipe(
+        switchMap(() => this.listPushups({})),
+        map(
+          (rows) =>
+            rows.find((x) => x._id === id) ?? {
+              _id: id,
+              timestamp: '',
+              reps: 0,
+              source: 'web',
+            }
+        )
+      );
   }
 
   deletePushup(id: string): Observable<{ ok: true }> {
@@ -183,8 +139,7 @@ export class StatsApiService {
       );
     }
 
-    const rowRef = doc(this.requireFirestore(), PUSHUPS_COLLECTION, id);
-    return from(deleteDoc(rowRef)).pipe(map(() => ({ ok: true as const })));
+    return this.requirePushupFirestore().deletePushup(id);
   }
 
   private baseUrl(): string {
@@ -196,11 +151,11 @@ export class StatsApiService {
     return 'default';
   }
 
-  private requireFirestore(): Firestore {
-    if (!this.firestore) {
-      throw new Error('Firestore provider missing');
+  private requirePushupFirestore(): PushupFirestoreService {
+    if (!this.pushupFirestore) {
+      throw new Error('PushupFirestoreService provider missing');
     }
-    return this.firestore;
+    return this.pushupFirestore;
   }
 
   private applyDateFilter(
@@ -218,15 +173,12 @@ export class StatsApiService {
 
   private async resolveDailyGoal(userId: string): Promise<number> {
     try {
-      const cfgRef = doc(
-        this.requireFirestore(),
-        USER_CONFIGS_COLLECTION,
-        userId
+      if (!this.userConfigFirestore) return 100;
+      const cfg = await firstValueFrom(
+        this.userConfigFirestore.getConfig(userId)
       );
-      const cfgSnapshot = await getDoc(cfgRef);
-      const docData = cfgSnapshot.data() as UserConfig | undefined;
-      if (docData?.dailyGoal && Number.isFinite(docData.dailyGoal)) {
-        return Math.max(1, docData.dailyGoal);
+      if (cfg?.dailyGoal && Number.isFinite(cfg.dailyGoal)) {
+        return Math.max(1, cfg.dailyGoal);
       }
       return 100;
     } catch {
