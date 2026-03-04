@@ -51,9 +51,37 @@ async function getOrCreateTestUserId(page: Page): Promise<string> {
 async function signInTestUser(page: Page): Promise<string> {
   const uid = await getOrCreateTestUserId(page);
   await page.goto('/login');
-  await page.getByLabel('Email').fill(TEST_USER_EMAIL);
-  await page.getByLabel('Passwort').fill(TEST_USER_PASSWORD);
-  await page.getByRole('button', { name: 'Anmelden', exact: true }).click();
+
+  // Wait for the login form to be fully rendered and interactive
+  await page.waitForSelector('input[type="email"]', { state: 'visible' });
+
+  // Fill the email field and trigger Angular's change detection
+  const emailInput = page.getByLabel('Email');
+  await emailInput.fill(TEST_USER_EMAIL);
+  // Blur to trigger validation in zoneless mode
+  await emailInput.blur();
+
+  // Fill the password field and trigger Angular's change detection
+  const passwordInput = page.getByLabel('Passwort');
+  await passwordInput.fill(TEST_USER_PASSWORD);
+  // Blur to trigger validation in zoneless mode
+  await passwordInput.blur();
+
+  // Wait for the form to become valid and the button to be enabled
+  const loginButton = page.getByRole('button', { name: 'Anmelden', exact: true });
+  await loginButton.waitFor({ state: 'visible', timeout: 10000 });
+
+  // Wait for the button to be enabled (form becomes valid)
+  await page.waitForFunction(
+    (buttonSelector) => {
+      const button = document.querySelector(buttonSelector);
+      return button && !(button as HTMLButtonElement).disabled;
+    },
+    'button.login-button[type="submit"]',
+    { timeout: 10000 }
+  );
+
+  await loginButton.click();
   await page.waitForURL('/');
   return uid;
 }
