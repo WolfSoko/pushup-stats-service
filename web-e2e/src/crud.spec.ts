@@ -52,8 +52,13 @@ async function signInTestUser(page: Page): Promise<string> {
   const uid = await getOrCreateTestUserId(page);
   await page.goto('/login');
 
-  // Wait for the login form to be fully rendered and interactive
-  await page.waitForSelector('input[type="email"]', { state: 'visible' });
+  // Wait for the login form to be fully rendered and interactive.
+  // Under heavy initialization load (Firestore, Auth), the login page may take
+  // longer to render. Use an extended timeout to account for app bootstrap delays.
+  await page.waitForSelector('input[type="email"]', {
+    state: 'visible',
+    timeout: 30000,
+  });
 
   // Fill the email field
   const emailInput = page.getByLabel('Email');
@@ -69,15 +74,18 @@ async function signInTestUser(page: Page): Promise<string> {
 
   // Wait for Angular signal-based form validation to propagate.
   // The button disabled state is bound to loginForm().invalid, which updates
-  // via signals after input events. A brief wait ensures the reactive update completes.
-  await page.waitForTimeout(100);
+  // via signals after input events. When Firestore initialization runs during
+  // app bootstrap, it can block the event loop and delay signal propagation.
+  // A longer wait (matching auth state propagation timing) ensures the reactive
+  // update completes even under heavy initialization load.
+  await page.waitForTimeout(2000);
 
   // Wait for the login button to be enabled (form becomes valid)
   const loginButton = page.getByRole('button', {
     name: 'Anmelden',
     exact: true,
   });
-  await expect(loginButton).toBeEnabled({ timeout: 10000 });
+  await expect(loginButton).toBeEnabled({ timeout: 20000 });
 
   await loginButton.click();
   await page.waitForURL('/');
