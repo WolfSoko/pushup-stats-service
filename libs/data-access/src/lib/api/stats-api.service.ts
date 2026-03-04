@@ -89,9 +89,7 @@ export class StatsApiService {
     }
 
     const userId = this.resolveUserId();
-    return this.requirePushupFirestore()
-      .listPushups(userId)
-      .pipe(map((rows) => this.applyDateFilter(rows, filter)));
+    return this.requirePushupFirestore().listPushups(userId, filter);
   }
 
   createPushup(payload: PushupCreate): Observable<PushupRecord> {
