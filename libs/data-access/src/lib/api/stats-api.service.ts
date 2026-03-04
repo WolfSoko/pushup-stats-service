@@ -1,7 +1,4 @@
-import {
-  inject,
-  Injectable,
-} from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Auth } from '@angular/fire/auth';
 import {
   firstValueFrom,
@@ -10,6 +7,7 @@ import {
   Observable,
   of,
   switchMap,
+  throwError,
 } from 'rxjs';
 import {
   PushupCreate,
@@ -42,14 +40,19 @@ export class StatsApiService {
   }
 
   listPushups(filter: StatsFilter = {}): Observable<PushupRecord[]> {
-    const userId = this.resolveUserId();
-    if (!this.pushupFirestore) {
+    if (!this.auth?.currentUser || !this.pushupFirestore) {
       return of([]);
     }
+    const userId = this.resolveUserId();
     return this.pushupFirestore.listPushups(userId, filter);
   }
 
   createPushup(payload: PushupCreate): Observable<PushupRecord> {
+    if (!this.auth?.currentUser) {
+      return throwError(
+        () => new Error('Authentication required to create pushup')
+      );
+    }
     return this.requirePushupFirestore().createPushup(
       this.resolveUserId(),
       payload
@@ -57,10 +60,20 @@ export class StatsApiService {
   }
 
   updatePushup(id: string, payload: PushupUpdate): Observable<void> {
+    if (!this.auth?.currentUser) {
+      return throwError(
+        () => new Error('Authentication required to update pushup')
+      );
+    }
     return this.requirePushupFirestore().updatePushup(id, payload);
   }
 
   deletePushup(id: string): Observable<{ ok: true }> {
+    if (!this.auth?.currentUser) {
+      return throwError(
+        () => new Error('Authentication required to delete pushup')
+      );
+    }
     return this.requirePushupFirestore().deletePushup(id);
   }
 
@@ -77,7 +90,7 @@ export class StatsApiService {
 
   private async resolveDailyGoal(userId: string): Promise<number> {
     try {
-      if (!this.userConfigFirestore) return 100;
+      if (!this.auth?.currentUser || !this.userConfigFirestore) return 100;
       const cfg = await firstValueFrom(
         this.userConfigFirestore.getConfig(userId)
       );

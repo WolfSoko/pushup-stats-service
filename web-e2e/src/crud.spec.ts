@@ -114,6 +114,7 @@ async function cleanupPushupsBySource(
 /**
  * Sign in anonymously via Firebase Auth emulator using the exposed test helper.
  * This provides the request.auth context required by Firestore security rules.
+ * No-op if the page already has an authenticated user.
  */
 async function ensureAuthenticated(page: Page): Promise<void> {
   // Navigate to page if needed
@@ -124,10 +125,24 @@ async function ensureAuthenticated(page: Page): Promise<void> {
     await page.waitForSelector('app-root', { timeout: 10000 });
   }
 
+  // Skip anonymous sign-in if the user is already authenticated
+  const isAlreadyAuthenticated = await page
+    .evaluate(() => {
+      if (typeof (window as any).isAuthenticatedForE2E === 'function') {
+        return (window as any).isAuthenticatedForE2E() as boolean;
+      }
+      return false;
+    })
+    .catch(() => false);
+
+  if (isAlreadyAuthenticated) return;
+
   // Call the exposed signInAnonymouslyForE2E function from the window
   await page.evaluate(async () => {
     if (typeof (window as any).signInAnonymouslyForE2E !== 'function') {
-      throw new Error('signInAnonymouslyForE2E not exposed on window. Check app.config.ts');
+      throw new Error(
+        'signInAnonymouslyForE2E not exposed on window. Check app.config.ts'
+      );
     }
     await (window as any).signInAnonymouslyForE2E();
   });
@@ -371,7 +386,10 @@ test('dashboard period controls (Tag/Woche + Heute/Vor/Zurück) filter table row
     // The critical part is that the previous-week entry appears after navigation.
   } finally {
     // Best-effort cleanup (avoids DB leaking across runs).
-    await cleanupPushupsBySource(page, new Set([srcToday, srcYday, srcPrevWeek]));
+    await cleanupPushupsBySource(
+      page,
+      new Set([srcToday, srcYday, srcPrevWeek])
+    );
   }
 });
 
