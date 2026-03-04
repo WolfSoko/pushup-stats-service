@@ -32,7 +32,8 @@ describe('PushupsController', () => {
     (db.findAll as jest.Mock).mockResolvedValue([
       { _id: '1', timestamp: '2026-02-11T10:00:00', reps: 10, source: 'wa' },
     ]);
-    const out = await controller.list();
+    const out = await controller.list('default');
+    expect(db.findAll).toHaveBeenCalledWith('default');
     expect(out).toHaveLength(1);
   });
 

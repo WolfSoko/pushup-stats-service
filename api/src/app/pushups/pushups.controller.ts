@@ -7,6 +7,7 @@ import {
   Param,
   Post,
   Put,
+  Query,
 } from '@nestjs/common';
 import { PushupLiveGateway } from '../live/pushup-live.gateway';
 import { PushupDbService } from './pushup-db.service';
@@ -19,8 +20,8 @@ export class PushupsController {
   ) {}
 
   @Get()
-  async list() {
-    return this.db.findAll();
+  async list(@Query('userId') userId = 'default') {
+    return this.db.findAll(userId);
   }
 
   @Get(':id')
