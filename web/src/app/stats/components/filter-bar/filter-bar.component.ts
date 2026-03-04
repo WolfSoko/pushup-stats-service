@@ -1,6 +1,5 @@
 import {
   Component,
-  computed,
   input,
   linkedSignal,
   OnChanges,
@@ -119,17 +118,14 @@ export class FilterBarComponent implements OnChanges {
   readonly to = input('');
 
   private readonly hasUserModeOverride = signal(false);
+  private readonly inferredModeSource = signal<RangeModes>('week');
 
   readonly fromChange = output<string>();
   readonly toChange = output<string>();
   readonly modeChange = output<RangeModes>();
 
-  private readonly inferredMode = computed<RangeModes>(() =>
-    this.inferMode(parseIsoDate(this.from()), parseIsoDate(this.to()))
-  );
-
   readonly mode = linkedSignal<RangeModes, RangeModes>({
-    source: () => this.inferredMode(),
+    source: () => this.inferredModeSource(),
     computation: (inferred, previous) => {
       if (!this.hasUserModeOverride()) return inferred;
       return previous?.value ?? inferred;
@@ -166,6 +162,12 @@ export class FilterBarComponent implements OnChanges {
       },
       { emitEvent: false }
     );
+
+    // Update inferred mode source when inputs change (only if user hasn't overridden)
+    if (!this.hasUserModeOverride()) {
+      const inferred = this.inferMode(start, end);
+      this.inferredModeSource.set(inferred);
+    }
   }
 
   setMode(value: RangeModes): void {
