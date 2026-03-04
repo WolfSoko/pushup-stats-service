@@ -111,6 +111,31 @@ async function cleanupPushupsBySource(
   }
 }
 
+/**
+ * Sign in anonymously via Firebase Auth emulator using the exposed test helper.
+ * This provides the request.auth context required by Firestore security rules.
+ */
+async function ensureAuthenticated(page: Page): Promise<void> {
+  // Navigate to page if needed
+  const currentUrl = page.url();
+  if (!currentUrl || currentUrl === 'about:blank') {
+    await page.goto('/');
+    // Wait for Angular to bootstrap
+    await page.waitForSelector('app-root', { timeout: 10000 });
+  }
+
+  // Call the exposed signInAnonymouslyForE2E function from the window
+  await page.evaluate(async () => {
+    if (typeof (window as any).signInAnonymouslyForE2E !== 'function') {
+      throw new Error('signInAnonymouslyForE2E not exposed on window. Check app.config.ts');
+    }
+    await (window as any).signInAnonymouslyForE2E();
+  });
+
+  // Wait for auth state to fully propagate through Firebase and Angular
+  await page.waitForTimeout(1000);
+}
+
 async function createEntry(
   page: Page,
   timestamp: string,
@@ -159,6 +184,7 @@ test('CRUD table works on isolated e2e database', async ({ page }) => {
   await signInTestUser(page);
 
   await page.goto('/');
+  await ensureAuthenticated(page);
   await expect(
     page.getByRole('heading', { name: 'Liegestütze Statistik' })
   ).toBeVisible();
@@ -258,6 +284,8 @@ test('settings page is reachable from navigation', async ({ page }) => {
 test('dashboard period controls (Tag/Woche + Heute/Vor/Zurück) filter table rows', async ({
   page,
 }) => {
+  await ensureAuthenticated(page);
+
   const runId = Date.now().toString(36);
   const srcToday = `e2e-today-${runId}`;
   const srcYday = `e2e-yday-${runId}`;
@@ -348,6 +376,8 @@ test('dashboard period controls (Tag/Woche + Heute/Vor/Zurück) filter table row
 });
 
 test('settings persist user config in firestore emulator', async ({ page }) => {
+  await ensureAuthenticated(page);
+
   const runId = Date.now().toString(36);
   const displayName = `Wolf-${runId}`;
   const dailyGoal = 137;

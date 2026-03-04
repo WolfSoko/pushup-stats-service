@@ -52,6 +52,15 @@ export class AuthService {
     }, 'Email sign-up');
   }
 
+  /** Sign in anonymously (mainly for e2e testing) */
+  async signInAnonymously(): Promise<void> {
+    await this.wrapAsync(async () => {
+      const cred = await this.authAdapter.signInAnonymously();
+      // Anonymous users don't sync to userConfig DB
+      return cred;
+    }, 'Anonymous sign-in');
+  }
+
   /** Sign out (alias for logout) */
   async signOut(): Promise<void> {
     await this.logout();
