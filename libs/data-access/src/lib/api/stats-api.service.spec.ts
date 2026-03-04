@@ -8,6 +8,10 @@ import { StatsApiService } from './stats-api.service';
 import { PushupFirestoreService } from './pushup-firestore.service';
 import { UserConfigFirestoreService } from './user-config-firestore.service';
 
+jest.mock('@angular/fire/auth', () => ({
+  Auth: jest.fn(),
+}));
+
 jest.mock('@angular/fire/firestore', () => ({
   Firestore: jest.fn(),
   collection: jest.fn(() => ({})),
@@ -22,7 +26,8 @@ jest.mock('@angular/fire/firestore', () => ({
   deleteDoc: jest.fn(() => Promise.resolve()),
 }));
 
-const authMock = { currentUser: null };
+const authMock = { currentUser: { uid: 'test-uid' } };
+const unauthMock = { currentUser: null };
 
 describe('StatsApiService', () => {
   beforeEach(() => {
@@ -76,7 +81,7 @@ describe('StatsApiService', () => {
     const { fixture } = await render('', {
       providers: [
         StatsApiService,
-        { provide: Auth, useValue: authMock },
+        { provide: Auth, useValue: unauthMock },
         {
           provide: PushupFirestoreService,
           useValue: {
@@ -94,6 +99,20 @@ describe('StatsApiService', () => {
     const result = await firstValueFrom(service.load());
     expect(result.meta.total).toBe(0);
     expect(result.series).toEqual([]);
+  });
+
+  it('returns empty list when unauthenticated', async () => {
+    const { fixture } = await render('', {
+      providers: [
+        StatsApiService,
+        { provide: Auth, useValue: unauthMock },
+        { provide: Firestore, useValue: {} },
+        { provide: PLATFORM_ID, useValue: 'browser' },
+      ],
+    });
+    const service = fixture.debugElement.injector.get(StatsApiService);
+    const result = await firstValueFrom(service.listPushups());
+    expect(result).toEqual([]);
   });
 
   it('filters pushups in browser list mode by passing constraints to Firestore', async () => {
