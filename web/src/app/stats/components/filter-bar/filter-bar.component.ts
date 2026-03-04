@@ -1,4 +1,11 @@
-import { Component, input, OnChanges, output, signal } from '@angular/core';
+import {
+  Component,
+  input,
+  linkedSignal,
+  OnChanges,
+  output,
+  signal,
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -110,11 +117,20 @@ export class FilterBarComponent implements OnChanges {
   readonly from = input('');
   readonly to = input('');
 
+  private readonly hasUserModeOverride = signal(false);
+  private readonly inferredModeSource = signal<RangeModes>('week');
+
   readonly fromChange = output<string>();
   readonly toChange = output<string>();
   readonly modeChange = output<RangeModes>();
 
-  readonly mode = signal<RangeModes>('week');
+  readonly mode = linkedSignal<RangeModes, RangeModes>({
+    source: () => this.inferredModeSource(),
+    computation: (inferred, previous) => {
+      if (!this.hasUserModeOverride()) return inferred;
+      return previous?.value ?? inferred;
+    },
+  });
 
   readonly range = new FormGroup({
     start: new FormControl<Date | null>(null),
@@ -147,9 +163,11 @@ export class FilterBarComponent implements OnChanges {
       { emitEvent: false }
     );
 
-    // Keep toggle state in sync when range is changed from outside (e.g. initial URL params).
-    const inferred = this.inferMode(start, end);
-    this.mode.set(inferred);
+    // Update inferred mode source when inputs change (only if user hasn't overridden)
+    if (!this.hasUserModeOverride()) {
+      const inferred = this.inferMode(start, end);
+      this.inferredModeSource.set(inferred);
+    }
   }
 
   setMode(value: RangeModes): void {
@@ -159,18 +177,26 @@ export class FilterBarComponent implements OnChanges {
     const previousEnd = this.range.controls.end.value;
     const today = this.startOfDay(new Date());
 
+    this.hasUserModeOverride.set(true);
     this.mode.set(value);
     this.modeChange.emit(value);
 
-    // UX: when switching from week/month to day (or month to week), pick "today" if it's inside the current range.
-    const shouldPreferToday =
-      !!previousStart &&
-      !!previousEnd &&
+    let anchor: Date | undefined;
+    if (
+      (value === 'day' || value === 'week') &&
+      previousStart &&
+      previousEnd &&
       today.getTime() >= this.startOfDay(previousStart).getTime() &&
-      today.getTime() <= this.startOfDay(previousEnd).getTime() &&
-      (value === 'day' || value === 'week');
+      today.getTime() <= this.startOfDay(previousEnd).getTime()
+    ) {
+      // If today is inside current selection, use it as anchor.
+      anchor = today;
+    } else if (previousStart) {
+      // Otherwise use the first day of current selection (never the end day).
+      anchor = this.startOfDay(previousStart);
+    }
 
-    this.applyModeRange(shouldPreferToday ? today : undefined);
+    this.applyModeRange(anchor);
   }
 
   jumpToToday(): void {
