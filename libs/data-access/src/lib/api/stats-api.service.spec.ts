@@ -12,6 +12,10 @@ jest.mock('@angular/common', () => ({
   isPlatformServer: jest.fn(),
 }));
 
+jest.mock('@angular/fire/auth', () => ({
+  Auth: jest.fn(),
+}));
+
 jest.mock('@angular/fire/firestore', () => ({
   Firestore: jest.fn(),
   collection: jest.fn(() => ({})),

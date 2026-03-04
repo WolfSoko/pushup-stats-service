@@ -1,7 +1,6 @@
 import { expect, Page, test } from '@playwright/test';
 
 const firestoreProjectId = 'pushup-stats';
-const authEmulatorUrl = 'http://127.0.0.1:9099';
 
 function firestoreDocUrl(path: string): string {
   return `http://127.0.0.1:8080/v1/projects/${firestoreProjectId}/databases/(default)/documents/${path}`;
@@ -23,7 +22,9 @@ async function ensureAuthenticated(page: Page): Promise<void> {
   // Call the exposed signInAnonymouslyForE2E function from the window
   await page.evaluate(async () => {
     if (typeof (window as any).signInAnonymouslyForE2E !== 'function') {
-      throw new Error('signInAnonymouslyForE2E not exposed on window. Check app.config.ts');
+      throw new Error(
+        'signInAnonymouslyForE2E not exposed on window. Check app.config.ts'
+      );
     }
     await (window as any).signInAnonymouslyForE2E();
   });
@@ -104,15 +105,8 @@ test('CRUD table works on isolated e2e database', async ({ page }) => {
   await expect(e2eRow).toBeVisible();
   await expect(e2eRow).toContainText('15');
 
-  await Promise.all([
-    page.waitForResponse(
-      (resp) =>
-        resp.url().includes('/api/pushups/') &&
-        resp.request().method() === 'DELETE' &&
-        resp.status() === 200
-    ),
-    e2eRow.getByRole('button', { name: 'Löschen' }).click(),
-  ]);
+  await e2eRow.getByRole('button', { name: 'Löschen' }).click();
+  await expect(e2eRow).not.toBeVisible({ timeout: 10000 });
 });
 
 test('websocket pushes updates to other open clients', async ({ browser }) => {
@@ -212,6 +206,12 @@ test('dashboard period controls (Tag/Woche + Heute/Vor/Zurück) filter table row
 }) => {
   await ensureAuthenticated(page);
 
+  // Get the authenticated user's UID so REST API pushups are stored with the
+  // same userId that the browser-side Firestore queries will use.
+  const userId = await page.evaluate(
+    () => (window as any).getE2EUserId?.() ?? 'default'
+  );
+
   const runId = Date.now().toString(36);
   const srcToday = `e2e-today-${runId}`;
   const srcYday = `e2e-yday-${runId}`;
@@ -233,6 +233,7 @@ test('dashboard period controls (Tag/Woche + Heute/Vor/Zurück) filter table row
   try {
     await page.request.post('/api/pushups', {
       data: {
+        userId,
         timestamp: isoDateTime(today, 12, 0),
         reps: 11,
         source: srcToday,
@@ -241,6 +242,7 @@ test('dashboard period controls (Tag/Woche + Heute/Vor/Zurück) filter table row
     });
     await page.request.post('/api/pushups', {
       data: {
+        userId,
         timestamp: isoDateTime(yesterday, 12, 1),
         reps: 8,
         source: srcYday,
@@ -249,6 +251,7 @@ test('dashboard period controls (Tag/Woche + Heute/Vor/Zurück) filter table row
     });
     await page.request.post('/api/pushups', {
       data: {
+        userId,
         timestamp: isoDateTime(previousWeekDate, 12, 2),
         reps: 14,
         source: srcPrevWeek,
@@ -310,7 +313,9 @@ test('dashboard period controls (Tag/Woche + Heute/Vor/Zurück) filter table row
   } finally {
     // Best-effort cleanup (avoids DB leaking across runs).
     try {
-      const resp = await page.request.get('/api/pushups');
+      const resp = await page.request.get(
+        `/api/pushups?userId=${encodeURIComponent(userId)}`
+      );
       const items = (await resp.json()) as Array<{
         id: string;
         source?: string;

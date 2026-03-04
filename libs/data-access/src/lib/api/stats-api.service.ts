@@ -7,6 +7,7 @@ import {
   PLATFORM_ID,
   TransferState,
 } from '@angular/core';
+import { Auth } from '@angular/fire/auth';
 import {
   firstValueFrom,
   from,
@@ -39,6 +40,7 @@ export class StatsApiService {
   private readonly userConfigFirestore = inject(UserConfigFirestoreService, {
     optional: true,
   });
+  private readonly auth = inject(Auth, { optional: true });
   private readonly platformId = inject(PLATFORM_ID);
   private readonly transferState = inject(TransferState);
 
@@ -126,7 +128,7 @@ export class StatsApiService {
   }
 
   private resolveUserId(): string {
-    return 'default';
+    return this.auth?.currentUser?.uid ?? 'default';
   }
 
   private requirePushupFirestore(): PushupFirestoreService {
