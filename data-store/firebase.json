@@ -16,5 +16,26 @@
   "firestore": {
     "rules": "firestore.rules",
     "indexes": "firestore.indexes.json"
+  },
+  "hosting": {
+    "public": "hosting-public",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "redirects": [
+      {
+        "source": "/",
+        "destination": "/de",
+        "type": 302
+      }
+    ],
+    "rewrites": [
+      {
+        "source": "/de{,/**}",
+        "destination": "/de/index.html"
+      },
+      {
+        "source": "/en{,/**}",
+        "destination": "/en/index.html"
+      }
+    ]
   }
 }
