@@ -79,7 +79,7 @@ Für neue Features gilt ab jetzt verbindlich:
 ## Datenzugriff (neu)
 
 - **Browser-Runtime:** Pushups, Stats-Aggregation und User-Config laufen direkt über Firestore (`libs/data-access`).
-- **SSR-Runtime:** nutzt weiterhin REST (`/api/...`) als Fallback, damit Server-Side-Rendering stabil bleibt.
+- **SSR-Runtime:** nutzt ebenfalls Firestore direkt. Da im SSR-Kontext keine Authentifizierung vorliegt, werden keine Nutzerdaten geladen – die Services geben leere Ergebnisse zurück.
 
 ## Services, die optional geworden sind
 
@@ -87,5 +87,3 @@ Wenn nur Browser + Firebase genutzt wird (kein SSR/Legacy-Clients), können dies
 
 - `api` (Nest REST)
 - `reverse-proxy`
-
-Für SSR-Deployments bleiben sie weiterhin nutzbar (insb. `/api` im Server-Kontext).
