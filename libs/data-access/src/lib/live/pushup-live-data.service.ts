@@ -1,16 +1,32 @@
 import { isPlatformBrowser } from '@angular/common';
-import { Injectable, PLATFORM_ID, Signal, inject, signal } from '@angular/core';
-import { io } from 'socket.io-client';
+import {
+  DestroyRef,
+  Injectable,
+  PLATFORM_ID,
+  Signal,
+  inject,
+  signal,
+} from '@angular/core';
+import { Auth, authState } from '@angular/fire/auth';
+import {
+  Firestore,
+  collection,
+  collectionData,
+  orderBy,
+  query,
+  where,
+} from '@angular/fire/firestore';
 import { PushupRecord } from '@pu-stats/models';
+import { EMPTY, switchMap } from 'rxjs';
 
 /**
- * Browser-only live data stream for pushups.
- *
- * SSR keeps using REST; this service is guarded via isPlatformBrowser.
+ * Browser-only live data stream for pushups via Firestore real-time updates.
  */
 @Injectable({ providedIn: 'root' })
 export class PushupLiveDataService {
   private readonly platformId = inject(PLATFORM_ID);
+  private readonly auth = inject(Auth, { optional: true });
+  private readonly firestore = inject(Firestore, { optional: true });
   private readonly connectedState = signal(false);
   private readonly entriesState = signal<PushupRecord[]>([]);
 
@@ -18,31 +34,39 @@ export class PushupLiveDataService {
   readonly entries: Signal<PushupRecord[]> = this.entriesState.asReadonly();
 
   constructor() {
-    if (!isPlatformBrowser(this.platformId)) return;
+    if (!isPlatformBrowser(this.platformId) || !this.auth || !this.firestore) {
+      return;
+    }
 
-    const socket = io('/', {
-      path: '/socket.io',
-      transports: ['websocket', 'polling'],
-      reconnection: true,
-      reconnectionAttempts: Infinity,
-      reconnectionDelay: 1000,
-      reconnectionDelayMax: 10000,
-    });
+    const destroyRef = inject(DestroyRef);
+    const firestore = this.firestore;
 
-    socket.on('connect', () => {
-      this.connectedState.set(true);
-    });
+    const sub = authState(this.auth)
+      .pipe(
+        switchMap((user) => {
+          if (!user) {
+            this.connectedState.set(false);
+            this.entriesState.set([]);
+            return EMPTY;
+          }
+          const q = query(
+            collection(firestore, 'pushups'),
+            where('userId', '==', user.uid),
+            orderBy('timestamp', 'asc')
+          );
+          return collectionData<PushupRecord>(q, { idField: '_id' });
+        })
+      )
+      .subscribe({
+        next: (records) => {
+          this.connectedState.set(true);
+          this.entriesState.set(records);
+        },
+        error: () => {
+          this.connectedState.set(false);
+        },
+      });
 
-    socket.on('disconnect', () => {
-      this.connectedState.set(false);
-    });
-
-    socket.on('pushups:initial', (rows: PushupRecord[] | null | undefined) => {
-      this.entriesState.set(rows ?? []);
-    });
-
-    socket.on('pushups:changed', (rows: PushupRecord[] | null | undefined) => {
-      this.entriesState.set(rows ?? []);
-    });
+    destroyRef.onDestroy(() => sub.unsubscribe());
   }
 }

@@ -1,6 +1,9 @@
 import { isPlatformBrowser } from '@angular/common';
 import { PLATFORM_ID } from '@angular/core';
+import { Auth } from '@angular/fire/auth';
+import { Firestore } from '@angular/fire/firestore';
 import { render } from '@testing-library/angular';
+import { BehaviorSubject, of, Subject } from 'rxjs';
 import { PushupLiveService } from './pushup-live.service';
 
 jest.mock('@angular/common', () => ({
@@ -8,75 +11,120 @@ jest.mock('@angular/common', () => ({
   isPlatformBrowser: jest.fn(),
 }));
 
-let mockSocketOn: jest.Mock;
-let mockIo: jest.Mock;
-jest.mock('socket.io-client', () => ({
-  get io() {
-    return mockIo;
-  },
+jest.mock('@angular/fire/auth', () => ({
+  Auth: jest.fn(),
+  authState: jest.fn(),
+}));
+
+jest.mock('@angular/fire/firestore', () => ({
+  Firestore: jest.fn(),
+  collection: jest.fn(() => ({})),
+  collectionData: jest.fn(),
+  orderBy: jest.fn(() => ({})),
+  query: jest.fn(() => ({})),
+  where: jest.fn(() => ({})),
 }));
 
 describe('PushupLiveService', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    mockSocketOn = jest.fn();
-    mockIo = jest.fn(() => ({ on: mockSocketOn }));
   });
 
-  it('should not connect on server platform (given isPlatformBrowser false)', async () => {
+  it('does not subscribe on server platform', async () => {
     (isPlatformBrowser as jest.Mock).mockReturnValue(false);
+    const authMod = await import('@angular/fire/auth');
     await render('', {
       providers: [
         PushupLiveService,
         { provide: PLATFORM_ID, useValue: 'server' },
+        { provide: Auth, useValue: {} },
+        { provide: Firestore, useValue: {} },
       ],
     });
-    expect(mockIo).not.toHaveBeenCalled();
+    expect(authMod.authState).not.toHaveBeenCalled();
   });
 
-  it('should connect and handle events on browser platform (given isPlatformBrowser true)', async () => {
+  it('does not subscribe when auth/firestore are not provided', async () => {
     (isPlatformBrowser as jest.Mock).mockReturnValue(true);
-    const eventHandlers: Record<string, () => void> = {};
-    mockSocketOn.mockImplementation((event, cb: () => void) => {
-      eventHandlers[event] = cb;
+    const authMod = await import('@angular/fire/auth');
+    await render('', {
+      providers: [
+        PushupLiveService,
+        { provide: PLATFORM_ID, useValue: 'browser' },
+        { provide: Auth, useValue: null },
+        { provide: Firestore, useValue: null },
+      ],
     });
+    expect(authMod.authState).not.toHaveBeenCalled();
+  });
+
+  it('connects and increments tick when Firestore emits data for authenticated user', async () => {
+    (isPlatformBrowser as jest.Mock).mockReturnValue(true);
+
+    const authMod = await import('@angular/fire/auth');
+    const firestoreMod = await import('@angular/fire/firestore');
+
+    const userSubject = new BehaviorSubject<{ uid: string } | null>({
+      uid: 'u1',
+    });
+    (authMod.authState as jest.Mock).mockReturnValue(userSubject.asObservable());
+
+    const dataSubject = new Subject<unknown[]>();
+    (firestoreMod.collectionData as jest.Mock).mockReturnValue(
+      dataSubject.asObservable()
+    );
+
     const { fixture } = await render('', {
       providers: [
         PushupLiveService,
         { provide: PLATFORM_ID, useValue: 'browser' },
+        { provide: Auth, useValue: {} },
+        { provide: Firestore, useValue: {} },
       ],
     });
     const service = fixture.debugElement.injector.get(PushupLiveService);
-    // Simuliere connect
-    eventHandlers['connect']();
+
+    expect(service.connected()).toBe(false);
+    expect(service.updateTick()).toBe(0);
+
+    dataSubject.next([]);
     expect(service.connected()).toBe(true);
     expect(service.updateTick()).toBe(1);
-    // Simuliere pushups:changed
-    eventHandlers['pushups:changed']();
+
+    dataSubject.next([{}]);
     expect(service.updateTick()).toBe(2);
-    // Simuliere disconnect
-    eventHandlers['disconnect']();
-    expect(service.connected()).toBe(false);
   });
 
-  it('should handle multiple connect/disconnect cycles (given repeated events)', async () => {
+  it('disconnects when user signs out', async () => {
     (isPlatformBrowser as jest.Mock).mockReturnValue(true);
-    const eventHandlers: Record<string, () => void> = {};
-    mockSocketOn.mockImplementation((event, cb: () => void) => {
-      eventHandlers[event] = cb;
+
+    const authMod = await import('@angular/fire/auth');
+    const firestoreMod = await import('@angular/fire/firestore');
+
+    const userSubject = new BehaviorSubject<{ uid: string } | null>({
+      uid: 'u1',
     });
+    (authMod.authState as jest.Mock).mockReturnValue(userSubject.asObservable());
+
+    const dataSubject = new Subject<unknown[]>();
+    (firestoreMod.collectionData as jest.Mock).mockReturnValue(
+      dataSubject.asObservable()
+    );
+
     const { fixture } = await render('', {
       providers: [
         PushupLiveService,
         { provide: PLATFORM_ID, useValue: 'browser' },
+        { provide: Auth, useValue: {} },
+        { provide: Firestore, useValue: {} },
       ],
     });
     const service = fixture.debugElement.injector.get(PushupLiveService);
-    eventHandlers['connect']();
-    eventHandlers['disconnect']();
-    eventHandlers['connect']();
+
+    dataSubject.next([]);
     expect(service.connected()).toBe(true);
-    eventHandlers['disconnect']();
+
+    userSubject.next(null);
     expect(service.connected()).toBe(false);
   });
 });
