@@ -10,10 +10,11 @@ bootstrapApplication(
   App,
   mergeApplicationConfig(appConfig, appBrowserConfig)
 ).then(async (appRef) => {
-  // Expose auth helper for e2e tests when using emulators
+  // Expose auth helpers for e2e tests when using emulators
   if (firebaseRuntime.useEmulators) {
     const { AuthService } = await import('@pu-auth/auth');
     const authService = appRef.injector.get(AuthService);
     (window as any).signInAnonymouslyForE2E = () => authService.signInAnonymously();
+    (window as any).isAuthenticatedForE2E = () => authService.isAuthenticated();
   }
 }).catch((err) => console.error(err));
