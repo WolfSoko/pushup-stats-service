@@ -57,7 +57,6 @@ describe('UserConfigApiService', () => {
     const { fixture } = await render('', {
       providers: [
         UserConfigApiService,
-        { provide: HttpClient, useValue: httpMock },
         { provide: PLATFORM_ID, useValue: 'browser' },
         { provide: Firestore, useValue: {} },
         { provide: Auth, useValue: { currentUser: { uid: 'actual-uid' } } },
@@ -84,7 +83,6 @@ describe('UserConfigApiService', () => {
     const { fixture } = await render('', {
       providers: [
         UserConfigApiService,
-        { provide: HttpClient, useValue: httpMock },
         { provide: PLATFORM_ID, useValue: 'browser' },
         { provide: Firestore, useValue: {} },
         { provide: Auth, useValue: { currentUser: { uid: 'actual-uid' } } },
@@ -109,13 +107,7 @@ describe('UserConfigApiService', () => {
     );
   });
 
-  it('reads config from HTTP when unauthenticated in browser', async () => {
-    const common = await import('@angular/common');
-    (common.isPlatformServer as jest.Mock).mockReturnValue(false);
-
-    const config: UserConfig = { userId: 'u', dailyGoal: 55 };
-    httpMock.get.mockReturnValue(of(config));
-
+  it('returns default config when unauthenticated', async () => {
     const { fixture } = await render('', {
       providers: [
         UserConfigApiService,
