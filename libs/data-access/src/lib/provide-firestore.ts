@@ -25,6 +25,7 @@ export function provideFireStore(
       try {
         firestore = initializeFirestore(app, {
           localCache: persistentLocalCache({}),
+          ignoreUndefinedProperties: true,
         }) as unknown as Firestore;
       } catch {
         firestore = getFirestore(app);
