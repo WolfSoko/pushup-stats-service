@@ -1,6 +1,5 @@
 import { defineConfig, devices } from '@playwright/test';
 
-const apiPort = 4212;
 const webPort = 4211;
 const reuseExistingServer = !process.env['CI'];
 
@@ -16,8 +15,7 @@ export default defineConfig({
     ...devices['Desktop Chrome'],
   },
 
-  // Run e2e against `nx serve` in development mode.
-  // Angular dev-server provides the /api + /socket.io proxy.
+  // Run e2e against `nx serve` in development mode using Firebase emulators.
   webServer: [
     {
       command:
@@ -27,13 +25,7 @@ export default defineConfig({
       timeout: 180_000,
     },
     {
-      command: `bash -lc 'set -euo pipefail; ROOT=$(pwd); while [ ! -f "$ROOT/nx.json" ] && [ "$ROOT" != "/" ]; do ROOT=$(dirname "$ROOT"); done; cd "$ROOT"; PORT=${apiPort} npx nx serve api -c development'`,
-      url: `http://127.0.0.1:${apiPort}/api/health`,
-      reuseExistingServer,
-      timeout: 180_000,
-    },
-    {
-      command: `bash -lc 'set -euo pipefail; ROOT=$(pwd); while [ ! -f "$ROOT/nx.json" ] && [ "$ROOT" != "/" ]; do ROOT=$(dirname "$ROOT"); done; cd "$ROOT"; API_HOST=127.0.0.1 API_PORT=${apiPort} npx nx serve web -c development-emulator --host=127.0.0.1 --port=${webPort} --proxy-config=web/proxy.e2e.conf.json'`,
+      command: `bash -lc 'set -euo pipefail; ROOT=$(pwd); while [ ! -f "$ROOT/nx.json" ] && [ "$ROOT" != "/" ]; do ROOT=$(dirname "$ROOT"); done; cd "$ROOT"; npx nx serve web -c development-emulator --host=127.0.0.1 --port=${webPort}'`,
       url: `http://127.0.0.1:${webPort}`,
       reuseExistingServer,
       timeout: 180_000,

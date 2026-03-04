@@ -5,7 +5,7 @@ Produktionsnahe Nx-Architektur mit:
 - **web**: Angular App (deutsche UI, Dark Theme)
 - **api**: Node.js API mit kompatiblem Vertrag auf `GET /api/stats`
 - **libs/stats-models**: Shared Models/Typen
-- **libs/stats-data-access**: API Service (Datenzugriff)
+- **libs/stats-data-access**: Datenzugriff (Browser: Firestore direkt; SSR: liefert leere Daten ohne Auth)
 
 ## UI-Architektur (Smart/Presentational)
 
@@ -20,8 +20,15 @@ Produktionsnahe Nx-Architektur mit:
 
 ```bash
 npm install
-npx nx serve api (achtung continous tasks)
-npx nx serve web (achtung continous tasks)
+
+# One-command local stack (Web + Firebase Emulator)
+npx nx run web:serve-local
+
+# Emulator wieder stoppen
+npx nx run data-store:emulate:stop
+
+# Durchstich gegen Live-Firebase (ohne Emulator)
+npx nx run web:serve-live
 ```
 
 ## Qualitätssicherung
@@ -69,13 +76,16 @@ Für neue Features gilt ab jetzt verbindlich:
 - [ ] `npx nx affected -t test --codeCoverage`
 - [ ] Erst danach refactoren und committen
 
-## API
+## Datenzugriff (neu)
 
-`GET /api/stats?from=YYYY-MM-DD&to=YYYY-MM-DD`
+- **Browser-Runtime:** Pushups, Stats-Aggregation und User-Config laufen direkt über Firestore (`libs/data-access`).
+- **SSR-Runtime:** Kein REST-Fallback. Ohne authentifizierten User werden leere Daten zurückgegeben; die eigentliche Datenlast findet nach dem Hydratisieren im Browser statt.
 
-Kompatibel zu vorher:
+## Services, die optional geworden sind
 
-- `meta` (`entries`, `days`, `total`, `granularity`, ...)
-- `series`
-- `daily`
-- `entries`
+Wenn nur Browser + Firebase genutzt wird (kein SSR/Legacy-Clients), können diese Dienste deaktiviert werden:
+
+- `api` (Nest REST)
+- `reverse-proxy`
+
+Diese Dienste werden für den reinen Firebase-Betrieb nicht mehr benötigt.

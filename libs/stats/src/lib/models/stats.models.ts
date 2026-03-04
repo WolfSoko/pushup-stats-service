@@ -51,6 +51,7 @@ export interface PushupUpdate {
 
 export interface UserConfig {
   userId: string;
+  email?: string | null;
   displayName?: string;
   dailyGoal?: number;
   ui?: {
@@ -60,4 +61,6 @@ export interface UserConfig {
   updatedAt?: string;
 }
 
-export type UserConfigUpdate = Partial<Pick<UserConfig, 'displayName' | 'dailyGoal' | 'ui'>>;
+export type UserConfigUpdate = Partial<
+  Pick<UserConfig, 'email' | 'displayName' | 'dailyGoal' | 'ui'>
+>;

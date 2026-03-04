@@ -1,16 +1,16 @@
 # pushup-stats-service — docker-compose
 
-This repo runs three Node servers:
+This repo runs two Node servers:
 
-- **api** (Nest) on `8788`
 - **ssr** (Angular SSR) on `8789`
-- **proxy** (reverse proxy) on `8787` (public entry)
+- **proxy** (reverse proxy) on `8787` _(optional when serving web directly)_
+
+Data is stored in Firebase / Firestore (no local database required).
 
 ## Quick start
 
 ```bash
 # from repo root
-mkdir -p data
 cp .env.example .env
 
 docker compose up -d --build
@@ -31,18 +31,7 @@ PROXY_HOST_PORT=8787
 docker compose up -d
 ```
 
-## Data persistence
-
-`./data` is mounted into the API container at `/app/data` and stores:
-
-- Keep this folder backed up (this is the durable state).
-- For production, consider switching the bind mount to an absolute path.
-
-- `pushups.db`
-- `user-config.db`
-- `pushups.csv` (optional)
-
 ## Dev mode
 
 This compose setup is production-like (built artifacts under `dist/`).
-For local dev (HMR etc.), use `nx serve`.
+For local dev (HMR etc.), use `nx serve` or `nx run web:serve-local` (starts Firebase emulators).

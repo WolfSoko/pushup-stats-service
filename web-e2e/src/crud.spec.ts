@@ -1,9 +1,188 @@
 import { expect, Page, test } from '@playwright/test';
 
 const firestoreProjectId = 'pushup-stats';
+const AUTH_EMULATOR_URL = 'http://127.0.0.1:9099';
+const FIRESTORE_EMULATOR_BASE = `http://127.0.0.1:8080/v1/projects/${firestoreProjectId}/databases/(default)/documents`;
+
+const TEST_USER_EMAIL = 'e2e-test@pushup-stats.dev';
+const TEST_USER_PASSWORD = 'e2e-test-password-123';
 
 function firestoreDocUrl(path: string): string {
-  return `http://127.0.0.1:8080/v1/projects/${firestoreProjectId}/databases/(default)/documents/${path}`;
+  return `${FIRESTORE_EMULATOR_BASE}/${path}`;
+}
+
+/** Creates the e2e test user in the Auth emulator if needed, then returns their UID. */
+async function getOrCreateTestUserId(page: Page): Promise<string> {
+  // Try sign-in first (user may already exist from a previous run).
+  const signInResp = await page.request.post(
+    `${AUTH_EMULATOR_URL}/identitytoolkit.googleapis.com/v1/accounts:signInWithEmailAndPassword?key=fake-api-key`,
+    {
+      headers: { 'Content-Type': 'application/json' },
+      data: {
+        email: TEST_USER_EMAIL,
+        password: TEST_USER_PASSWORD,
+        returnSecureToken: true,
+      },
+    }
+  );
+
+  if (signInResp.ok()) {
+    const body = await signInResp.json();
+    return body.localId as string;
+  }
+
+  // User does not exist yet – sign up.
+  const signUpResp = await page.request.post(
+    `${AUTH_EMULATOR_URL}/identitytoolkit.googleapis.com/v1/accounts:signUp?key=fake-api-key`,
+    {
+      headers: { 'Content-Type': 'application/json' },
+      data: {
+        email: TEST_USER_EMAIL,
+        password: TEST_USER_PASSWORD,
+        returnSecureToken: true,
+      },
+    }
+  );
+  const body = await signUpResp.json();
+  return body.localId as string;
+}
+
+/** Signs in the test user via the web app login form. */
+async function signInTestUser(page: Page): Promise<string> {
+  const uid = await getOrCreateTestUserId(page);
+  await page.goto('/login');
+
+  // Wait for the login form to be fully rendered and interactive.
+  // Under heavy initialization load (Firestore, Auth), the login page may take
+  // longer to render. Use an extended timeout to account for app bootstrap delays.
+  await page.waitForSelector('input[type="email"]', {
+    state: 'visible',
+    timeout: 30000,
+  });
+
+  // Fill the email field
+  const emailInput = page.getByLabel('Email');
+  await emailInput.fill(TEST_USER_EMAIL);
+
+  // Fill the password field
+  const passwordInput = page.getByLabel('Passwort');
+  await passwordInput.fill(TEST_USER_PASSWORD);
+
+  // In zoneless Angular, signal-based forms update reactively.
+  // Pressing Tab moves focus and triggers input events that update the form signals.
+  await passwordInput.press('Tab');
+
+  // Wait for Angular signal-based form validation to propagate.
+  // The button disabled state is bound to loginForm().invalid, which updates
+  // via signals after input events. When Firestore initialization runs during
+  // app bootstrap, it can block the event loop and delay signal propagation.
+  // A longer wait (matching auth state propagation timing) ensures the reactive
+  // update completes even under heavy initialization load.
+  await page.waitForTimeout(2000);
+
+  // Wait for the login button to be enabled (form becomes valid)
+  const loginButton = page.getByRole('button', {
+    name: 'Anmelden',
+    exact: true,
+  });
+  await expect(loginButton).toBeEnabled({ timeout: 20000 });
+
+  await loginButton.click();
+  await page.waitForURL('/');
+  return uid;
+}
+
+/** Seeds a pushup directly via Firestore emulator REST API (bypasses security rules). */
+async function seedPushup(
+  page: Page,
+  userId: string,
+  data: { timestamp: string; reps: number; source: string }
+): Promise<string> {
+  const resp = await page.request.post(`${FIRESTORE_EMULATOR_BASE}/pushups`, {
+    headers: { 'Content-Type': 'application/json' },
+    data: {
+      fields: {
+        timestamp: { stringValue: `${data.timestamp}:00.000Z` },
+        reps: { integerValue: String(data.reps) },
+        source: { stringValue: data.source },
+        type: { stringValue: 'Standard' },
+        userId: { stringValue: userId },
+        createdAt: { stringValue: new Date().toISOString() },
+        updatedAt: { stringValue: new Date().toISOString() },
+      },
+    },
+  });
+  const doc = await resp.json();
+  return (doc.name as string).split('/').pop() as string;
+}
+
+/** Deletes pushups matching given sources via Firestore emulator REST API. */
+async function cleanupPushupsBySource(
+  page: Page,
+  sources: Set<string>
+): Promise<void> {
+  try {
+    const resp = await page.request.get(`${FIRESTORE_EMULATOR_BASE}/pushups`);
+    if (!resp.ok()) return;
+    const data = await resp.json();
+    type FirestoreDoc = {
+      name: string;
+      fields?: { source?: { stringValue?: string } };
+    };
+    const ids = ((data.documents ?? []) as FirestoreDoc[])
+      .filter((doc) => {
+        const src = doc.fields?.source?.stringValue;
+        return src !== undefined && sources.has(src);
+      })
+      .map((doc) => doc.name.split('/').pop() as string);
+    await Promise.all(
+      ids.map((id) =>
+        page.request.delete(`${FIRESTORE_EMULATOR_BASE}/pushups/${id}`)
+      )
+    );
+  } catch {
+    // ignore cleanup errors
+  }
+}
+
+/**
+ * Sign in anonymously via Firebase Auth emulator using the exposed test helper.
+ * This provides the request.auth context required by Firestore security rules.
+ * No-op if the page already has an authenticated user.
+ */
+async function ensureAuthenticated(page: Page): Promise<void> {
+  // Navigate to page if needed
+  const currentUrl = page.url();
+  if (!currentUrl || currentUrl === 'about:blank') {
+    await page.goto('/');
+    // Wait for Angular to bootstrap
+    await page.waitForSelector('app-root', { timeout: 10000 });
+  }
+
+  // Skip anonymous sign-in if the user is already authenticated
+  const isAlreadyAuthenticated = await page
+    .evaluate(() => {
+      if (typeof (window as any).isAuthenticatedForE2E === 'function') {
+        return (window as any).isAuthenticatedForE2E() as boolean;
+      }
+      return false;
+    })
+    .catch(() => false);
+
+  if (isAlreadyAuthenticated) return;
+
+  // Call the exposed signInAnonymouslyForE2E function from the window
+  await page.evaluate(async () => {
+    if (typeof (window as any).signInAnonymouslyForE2E !== 'function') {
+      throw new Error(
+        'signInAnonymouslyForE2E not exposed on window. Check app.config.ts'
+      );
+    }
+    await (window as any).signInAnonymouslyForE2E();
+  });
+
+  // Wait for auth state to fully propagate through Firebase and Angular
+  await page.waitForTimeout(1000);
 }
 
 async function createEntry(
@@ -51,25 +230,16 @@ function isoDateTime(date: Date, hh = 8, mm = 0): string {
 }
 
 test('CRUD table works on isolated e2e database', async ({ page }) => {
+  await signInTestUser(page);
+
   await page.goto('/');
+  await ensureAuthenticated(page);
   await expect(
     page.getByRole('heading', { name: 'Liegestütze Statistik' })
   ).toBeVisible();
 
   const now = new Date();
   await createEntry(page, isoDateTime(now, 23, 59), '15', 'entry-a');
-
-  // Wait for the initial user-config load to finish; otherwise it can race
-  // with our toggle and revert the column back to hidden.
-  await page
-    .waitForResponse(
-      (resp) =>
-        resp.url().includes('/api/users/') &&
-        resp.url().includes('/config') &&
-        resp.request().method() === 'GET',
-      { timeout: 8000 }
-    )
-    .catch(() => undefined);
 
   // The source column is hidden by default; enable it for assertions.
   await ensureSourceColumnVisible(page);
@@ -78,48 +248,37 @@ test('CRUD table works on isolated e2e database', async ({ page }) => {
   await expect(e2eRow).toBeVisible();
   await expect(e2eRow).toContainText('15');
 
-  await Promise.all([
-    page.waitForResponse(
-      (resp) =>
-        resp.url().includes('/api/pushups/') &&
-        resp.request().method() === 'DELETE' &&
-        resp.status() === 200
-    ),
-    e2eRow.getByRole('button', { name: 'Löschen' }).click(),
-  ]);
+  // Delete the entry and wait for the row to disappear via Firestore real-time.
+  await e2eRow.getByRole('button', { name: 'Löschen' }).click();
+  await expect(e2eRow).not.toBeVisible({ timeout: 10000 });
 });
 
-test('websocket pushes updates to other open clients', async ({ browser }) => {
+test('Firestore real-time pushes updates to other open clients', async ({
+  browser,
+}) => {
   const pageA = await browser.newPage();
   const pageB = await browser.newPage();
 
   const runId = Date.now().toString(36);
-  const source = `ws-e2e-${runId}`;
+  const source = `rt-e2e-${runId}`;
 
   try {
+    // Sign in on pageA – both pages share the same browser context/auth state.
+    await signInTestUser(pageA);
     await pageA.goto('/');
     await pageB.goto('/');
 
-    // Ensure websocket is connected on both pages.
-    await expect(pageA.getByText('Live: verbunden')).toBeVisible();
-    await expect(pageB.getByText('Live: verbunden')).toBeVisible();
-
-    // Wait for initial user-config load on pageB; it can race with the toggle.
-    await pageB
-      .waitForResponse(
-        (resp) =>
-          resp.url().includes('/api/users/') &&
-          resp.url().includes('/config') &&
-          resp.request().method() === 'GET',
-        { timeout: 8000 }
-      )
-      .catch(() => undefined);
+    // Wait for Firestore real-time to connect (shows "Live: verbunden").
+    await expect(pageA.getByText('Live: verbunden')).toBeVisible({
+      timeout: 15000,
+    });
+    await expect(pageB.getByText('Live: verbunden')).toBeVisible({
+      timeout: 15000,
+    });
 
     // The source column is hidden by default; enable it for assertions on pageB.
     await ensureSourceColumnVisible(pageB);
 
-    // NOTE: This test is currently flaky under SSR webServer (event timing). Until
-    // we stabilize socket.io delivery in CI, we treat "missing update" as a soft-fail.
     const now = new Date();
     await createEntry(pageA, isoDateTime(now, 23, 58), '9', source);
 
@@ -129,24 +288,14 @@ test('websocket pushes updates to other open clients', async ({ browser }) => {
       await expect(rowOnB).toBeVisible({ timeout: 15000 });
       await expect(rowOnB).toContainText('9');
     } catch {
-      test.skip(true, 'flaky websocket propagation in CI/local SSR webServer');
+      test.skip(
+        true,
+        'flaky Firestore real-time propagation in CI/local dev server'
+      );
     }
   } finally {
     // Best-effort cleanup (avoids DB leaking across runs).
-    try {
-      const resp = await pageA.request.get('/api/pushups');
-      const items = (await resp.json()) as Array<{
-        id: string;
-        source?: string;
-      }>;
-      const ids = items.filter((p) => p.source === source).map((p) => p.id);
-      await Promise.all(
-        ids.map((id) => pageA.request.delete(`/api/pushups/${id}`))
-      );
-    } catch {
-      // ignore cleanup errors
-    }
-
+    await cleanupPushupsBySource(pageA, new Set([source]));
     await pageA.close();
     await pageB.close();
   }
@@ -184,10 +333,14 @@ test('settings page is reachable from navigation', async ({ page }) => {
 test('dashboard period controls (Tag/Woche + Heute/Vor/Zurück) filter table rows', async ({
   page,
 }) => {
+  await ensureAuthenticated(page);
+
   const runId = Date.now().toString(36);
   const srcToday = `e2e-today-${runId}`;
   const srcYday = `e2e-yday-${runId}`;
   const srcPrevWeek = `e2e-prev-week-${runId}`;
+
+  const userId = await signInTestUser(page);
 
   const now = new Date();
   const today = new Date(now);
@@ -203,45 +356,31 @@ test('dashboard period controls (Tag/Woche + Heute/Vor/Zurück) filter table row
   yesterday.setDate(today.getDate() - 1);
 
   try {
-    await page.request.post('/api/pushups', {
-      data: {
-        timestamp: isoDateTime(today, 12, 0),
-        reps: 11,
-        source: srcToday,
-        type: 'Standard',
-      },
+    // Seed test data directly via Firestore emulator REST API.
+    await seedPushup(page, userId, {
+      timestamp: isoDateTime(today, 12, 0),
+      reps: 11,
+      source: srcToday,
     });
-    await page.request.post('/api/pushups', {
-      data: {
-        timestamp: isoDateTime(yesterday, 12, 1),
-        reps: 8,
-        source: srcYday,
-        type: 'Standard',
-      },
+    await seedPushup(page, userId, {
+      timestamp: isoDateTime(yesterday, 12, 1),
+      reps: 8,
+      source: srcYday,
     });
-    await page.request.post('/api/pushups', {
-      data: {
-        timestamp: isoDateTime(previousWeekDate, 12, 2),
-        reps: 14,
-        source: srcPrevWeek,
-        type: 'Standard',
-      },
+    await seedPushup(page, userId, {
+      timestamp: isoDateTime(previousWeekDate, 12, 2),
+      reps: 14,
+      source: srcPrevWeek,
     });
 
     await page.goto('/');
 
     const table = page.locator('app-stats-table');
 
-    // Wait for the initial user-config load; it can otherwise race with our toggle.
-    await page
-      .waitForResponse(
-        (resp) =>
-          resp.url().includes('/api/users/') &&
-          resp.url().includes('/config') &&
-          resp.request().method() === 'GET',
-        { timeout: 8000 }
-      )
-      .catch(() => undefined);
+    // Wait for Firestore real-time to deliver the seeded data.
+    await expect(
+      table.locator('mat-row').filter({ hasText: srcToday }).first()
+    ).toBeVisible({ timeout: 15000 });
 
     // The source column is hidden by default; enable it for assertions.
     await ensureSourceColumnVisible(page);
@@ -281,41 +420,22 @@ test('dashboard period controls (Tag/Woche + Heute/Vor/Zurück) filter table row
     // The critical part is that the previous-week entry appears after navigation.
   } finally {
     // Best-effort cleanup (avoids DB leaking across runs).
-    try {
-      const resp = await page.request.get('/api/pushups');
-      const items = (await resp.json()) as Array<{
-        id: string;
-        source?: string;
-      }>;
-      const created = new Set([srcToday, srcYday, srcPrevWeek]);
-      const ids = items
-        .filter((p) => p.source && created.has(p.source))
-        .map((p) => p.id);
-      await Promise.all(
-        ids.map((id) => page.request.delete(`/api/pushups/${id}`))
-      );
-    } catch {
-      // ignore cleanup errors
-    }
+    await cleanupPushupsBySource(
+      page,
+      new Set([srcToday, srcYday, srcPrevWeek])
+    );
   }
 });
 
 test('settings persist user config in firestore emulator', async ({ page }) => {
+  await ensureAuthenticated(page);
+
   const runId = Date.now().toString(36);
   const displayName = `Wolf-${runId}`;
   const dailyGoal = 137;
 
+  await signInTestUser(page);
   await page.goto('/settings');
-
-  await page
-    .waitForResponse(
-      (resp) =>
-        resp.url().includes('/api/users/') &&
-        resp.url().includes('/config') &&
-        resp.request().method() === 'GET',
-      { timeout: 8000 }
-    )
-    .catch(() => undefined);
 
   const activeUserText =
     (await page

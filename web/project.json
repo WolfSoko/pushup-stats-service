@@ -4,7 +4,7 @@
   "projectType": "application",
   "prefix": "app",
   "sourceRoot": "web/src",
-  "implicitDependencies": ["api", "data-store"],
+  "implicitDependencies": ["data-store"],
   "i18n": {
     "sourceLocale": "de",
     "locales": {
@@ -110,6 +110,21 @@
         }
       },
       "defaultConfiguration": "development"
+    },
+    "serve-local": {
+      "continuous": true,
+      "executor": "nx:run-commands",
+      "dependsOn": ["data-store:serve"],
+      "options": {
+        "command": "npx nx run web:serve:development-emulator"
+      }
+    },
+    "serve-live": {
+      "continuous": true,
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx nx run web:serve:development"
+      }
     },
     "lint": {
       "executor": "@nx/eslint:lint"

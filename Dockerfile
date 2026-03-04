@@ -7,19 +7,10 @@ WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm ci
 
-# Copy sources and build the three services
+# Copy sources and build the two services
 COPY . .
-RUN npx nx run-many -t build --projects=api,reverse-proxy,web --configuration=production
+RUN npx nx run-many -t build --projects=reverse-proxy,web --configuration=production
 
-
-# API runtime
-FROM node:24-alpine AS api-runner
-WORKDIR /app
-ENV NODE_ENV=production
-COPY --from=builder  /app/node_modules ./node_modules
-COPY --from=builder /app/data ./data
-COPY --from=builder /app/dist/api ./dist/api
-CMD ["node", "dist/api/main.js"]
 
 # SSR runtime
 FROM node:24-alpine AS ssr-runner
