@@ -67,6 +67,11 @@ async function signInTestUser(page: Page): Promise<string> {
   // Pressing Tab moves focus and triggers input events that update the form signals.
   await passwordInput.press('Tab');
 
+  // Wait for Angular signal-based form validation to propagate.
+  // The button disabled state is bound to loginForm().invalid, which updates
+  // via signals after input events. A brief wait ensures the reactive update completes.
+  await page.waitForTimeout(100);
+
   // Wait for the login button to be enabled (form becomes valid)
   const loginButton = page.getByRole('button', {
     name: 'Anmelden',
