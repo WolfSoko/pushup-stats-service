@@ -1,5 +1,6 @@
 import {
   Component,
+  computed,
   input,
   linkedSignal,
   OnChanges,
@@ -117,14 +118,23 @@ export class FilterBarComponent implements OnChanges {
   readonly from = input('');
   readonly to = input('');
 
-  private didInitializeMode = false;
-  private readonly initialMode = signal<RangeModes>('week');
+  private readonly hasUserModeOverride = signal(false);
 
   readonly fromChange = output<string>();
   readonly toChange = output<string>();
   readonly modeChange = output<RangeModes>();
 
-  readonly mode = linkedSignal<RangeModes>(() => this.initialMode());
+  private readonly inferredMode = computed<RangeModes>(() =>
+    this.inferMode(parseIsoDate(this.from()), parseIsoDate(this.to()))
+  );
+
+  readonly mode = linkedSignal<RangeModes, RangeModes>({
+    source: () => this.inferredMode(),
+    computation: (inferred, previous) => {
+      if (!this.hasUserModeOverride()) return inferred;
+      return previous?.value ?? inferred;
+    },
+  });
 
   readonly range = new FormGroup({
     start: new FormControl<Date | null>(null),
@@ -156,14 +166,6 @@ export class FilterBarComponent implements OnChanges {
       },
       { emitEvent: false }
     );
-
-    // Infer once from external initial inputs (URL/bootstrap). After that,
-    // mode is user-driven and should not flip while from/to propagate.
-    if (!this.didInitializeMode) {
-      const inferred = this.inferMode(start, end);
-      this.initialMode.set(inferred);
-      this.didInitializeMode = true;
-    }
   }
 
   setMode(value: RangeModes): void {
@@ -173,6 +175,7 @@ export class FilterBarComponent implements OnChanges {
     const previousEnd = this.range.controls.end.value;
     const today = this.startOfDay(new Date());
 
+    this.hasUserModeOverride.set(true);
     this.mode.set(value);
     this.modeChange.emit(value);
 
