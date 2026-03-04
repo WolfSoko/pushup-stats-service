@@ -107,15 +107,6 @@ export class StatsApiService {
   }
 
   updatePushup(id: string, payload: PushupUpdate): Observable<void> {
-    if (isPlatformServer(this.platformId)) {
-      return this.http
-        .put<PushupRecord>(
-          `${this.baseUrl()}${PUSHUPS_ENDPOINT}/${id}`,
-          payload
-        )
-        .pipe(map(() => void 0));
-    }
-
     return this.requirePushupFirestore().updatePushup(id, payload);
   }
 
