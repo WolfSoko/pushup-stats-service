@@ -103,7 +103,7 @@ describe('UserConfigApiService', () => {
     );
   });
 
-  it('returns default config when unauthenticated', async () => {
+  it('reads config from HTTP when unauthenticated in browser', async () => {
     const { fixture } = await render('', {
       providers: [
         UserConfigApiService,
