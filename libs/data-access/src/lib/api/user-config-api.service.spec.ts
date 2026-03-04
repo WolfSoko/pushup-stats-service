@@ -62,6 +62,70 @@ describe('UserConfigApiService', () => {
     expect(httpMock.get).not.toHaveBeenCalled();
   });
 
+  it('uses currentUser.uid (not passed-in userId) for Firestore getConfig doc path', async () => {
+    const common = await import('@angular/common');
+    const firestoreFns = await import('@angular/fire/firestore');
+    (common.isPlatformServer as jest.Mock).mockReturnValue(false);
+    (firestoreFns.doc as jest.Mock).mockReturnValue({ id: 'actual-uid' });
+    (firestoreFns.getDoc as jest.Mock).mockResolvedValue({
+      data: () => undefined,
+    });
+
+    const { fixture } = await render('', {
+      providers: [
+        UserConfigApiService,
+        { provide: HttpClient, useValue: httpMock },
+        { provide: PLATFORM_ID, useValue: 'browser' },
+        { provide: Firestore, useValue: {} },
+        { provide: Auth, useValue: { currentUser: { uid: 'actual-uid' } } },
+      ],
+    });
+
+    const service = fixture.debugElement.injector.get(UserConfigApiService);
+    service.getConfig('different-id').subscribe();
+
+    await Promise.resolve();
+    expect(firestoreFns.doc).toHaveBeenCalledWith(
+      expect.anything(),
+      'userConfigs',
+      'actual-uid'
+    );
+  });
+
+  it('uses currentUser.uid (not passed-in userId) for Firestore updateConfig doc path', async () => {
+    const common = await import('@angular/common');
+    const firestoreFns = await import('@angular/fire/firestore');
+    (common.isPlatformServer as jest.Mock).mockReturnValue(false);
+    (firestoreFns.doc as jest.Mock).mockReturnValue({ id: 'actual-uid' });
+
+    const { fixture } = await render('', {
+      providers: [
+        UserConfigApiService,
+        { provide: HttpClient, useValue: httpMock },
+        { provide: PLATFORM_ID, useValue: 'browser' },
+        { provide: Firestore, useValue: {} },
+        { provide: Auth, useValue: { currentUser: { uid: 'actual-uid' } } },
+      ],
+    });
+
+    const service = fixture.debugElement.injector.get(UserConfigApiService);
+    service
+      .updateConfig('different-id', { dailyGoal: 5 } as UserConfigUpdate)
+      .subscribe();
+
+    await Promise.resolve();
+    expect(firestoreFns.doc).toHaveBeenCalledWith(
+      expect.anything(),
+      'userConfigs',
+      'actual-uid'
+    );
+    expect(firestoreFns.setDoc).toHaveBeenCalledWith(
+      expect.anything(),
+      { dailyGoal: 5, userId: 'actual-uid' },
+      { merge: true }
+    );
+  });
+
   it('reads config from HTTP when unauthenticated in browser', async () => {
     const common = await import('@angular/common');
     (common.isPlatformServer as jest.Mock).mockReturnValue(false);
