@@ -4,9 +4,8 @@
   "projectType": "application",
   "prefix": "app",
   "sourceRoot": "web/src",
-  "implicitDependencies": ["api", "data-store"],
+  "implicitDependencies": ["data-store"],
   "i18n": {
-    "sourceLocale": "de",
     "locales": {
       "en": {
         "translation": "web/src/locale/messages.en.xlf",

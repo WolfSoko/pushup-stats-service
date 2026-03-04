@@ -8,6 +8,10 @@ import { StatsApiService } from './stats-api.service';
 import { PushupFirestoreService } from './pushup-firestore.service';
 import { UserConfigFirestoreService } from './user-config-firestore.service';
 
+jest.mock('@angular/fire/auth', () => ({
+  Auth: jest.fn(),
+}));
+
 jest.mock('@angular/fire/firestore', () => ({
   Firestore: jest.fn(),
   collection: jest.fn(() => ({})),
@@ -23,6 +27,7 @@ jest.mock('@angular/fire/firestore', () => ({
 }));
 
 const authMock = { currentUser: null };
+const authenticatedAuthMock = { currentUser: { uid: 'user1' } };
 
 describe('StatsApiService', () => {
   beforeEach(() => {
@@ -58,7 +63,7 @@ describe('StatsApiService', () => {
     const { fixture } = await render('', {
       providers: [
         StatsApiService,
-        { provide: Auth, useValue: authMock },
+        { provide: Auth, useValue: authenticatedAuthMock },
         { provide: Firestore, useValue: {} },
         { provide: PLATFORM_ID, useValue: 'browser' },
       ],
@@ -115,7 +120,7 @@ describe('StatsApiService', () => {
     const { fixture } = await render('', {
       providers: [
         StatsApiService,
-        { provide: Auth, useValue: authMock },
+        { provide: Auth, useValue: authenticatedAuthMock },
         { provide: Firestore, useValue: {} },
         { provide: PLATFORM_ID, useValue: 'browser' },
       ],
@@ -164,7 +169,7 @@ describe('StatsApiService', () => {
     const { fixture } = await render('', {
       providers: [
         StatsApiService,
-        { provide: Auth, useValue: authMock },
+        { provide: Auth, useValue: authenticatedAuthMock },
         { provide: Firestore, useValue: {} },
         { provide: PLATFORM_ID, useValue: 'browser' },
       ],
@@ -190,7 +195,7 @@ describe('StatsApiService', () => {
     const { fixture } = await render('', {
       providers: [
         StatsApiService,
-        { provide: Auth, useValue: authMock },
+        { provide: Auth, useValue: authenticatedAuthMock },
         { provide: Firestore, useValue: {} },
         { provide: PLATFORM_ID, useValue: 'browser' },
       ],
@@ -212,7 +217,7 @@ describe('StatsApiService', () => {
     const { fixture } = await render('', {
       providers: [
         StatsApiService,
-        { provide: Auth, useValue: authMock },
+        { provide: Auth, useValue: authenticatedAuthMock },
         { provide: Firestore, useValue: {} },
         { provide: PLATFORM_ID, useValue: 'server' },
       ],
@@ -222,5 +227,88 @@ describe('StatsApiService', () => {
     await firstValueFrom(service.updatePushup('id1', { reps: 5 }));
 
     expect(firestoreFns.updateDoc).toHaveBeenCalled();
+  });
+
+  it('returns empty array for listPushups when not authenticated', async () => {
+    const { fixture } = await render('', {
+      providers: [
+        StatsApiService,
+        { provide: Auth, useValue: authMock },
+        { provide: Firestore, useValue: {} },
+        { provide: PLATFORM_ID, useValue: 'browser' },
+      ],
+    });
+
+    const service = fixture.debugElement.injector.get(StatsApiService);
+    const result = await firstValueFrom(service.listPushups());
+
+    expect(result).toEqual([]);
+  });
+
+  it('returns empty stats from load() when not authenticated', async () => {
+    const { fixture } = await render('', {
+      providers: [
+        StatsApiService,
+        { provide: Auth, useValue: authMock },
+        { provide: Firestore, useValue: {} },
+        { provide: PLATFORM_ID, useValue: 'browser' },
+      ],
+    });
+
+    const service = fixture.debugElement.injector.get(StatsApiService);
+    const result = await firstValueFrom(service.load());
+
+    expect(result.meta.total).toBe(0);
+    expect(result.series).toEqual([]);
+  });
+
+  it('createPushup errors when not authenticated', async () => {
+    const { fixture } = await render('', {
+      providers: [
+        StatsApiService,
+        { provide: Auth, useValue: authMock },
+        { provide: Firestore, useValue: {} },
+        { provide: PLATFORM_ID, useValue: 'browser' },
+      ],
+    });
+
+    const service = fixture.debugElement.injector.get(StatsApiService);
+    await expect(
+      firstValueFrom(
+        service.createPushup({ timestamp: '2024-01-01T00:00:00Z', reps: 5 })
+      )
+    ).rejects.toThrow('User not authenticated');
+  });
+
+  it('updatePushup errors when not authenticated', async () => {
+    const { fixture } = await render('', {
+      providers: [
+        StatsApiService,
+        { provide: Auth, useValue: authMock },
+        { provide: Firestore, useValue: {} },
+        { provide: PLATFORM_ID, useValue: 'browser' },
+      ],
+    });
+
+    const service = fixture.debugElement.injector.get(StatsApiService);
+    await expect(
+      firstValueFrom(service.updatePushup('id1', { reps: 5 }))
+    ).rejects.toThrow('User not authenticated');
+  });
+
+  it('deletePushup errors when not authenticated', async () => {
+    const { fixture } = await render('', {
+      providers: [
+        StatsApiService,
+        { provide: Auth, useValue: authMock },
+        { provide: Firestore, useValue: {} },
+        { provide: PLATFORM_ID, useValue: 'browser' },
+      ],
+    });
+
+    const service = fixture.debugElement.injector.get(StatsApiService);
+    await expect(firstValueFrom(service.deletePushup('id1'))).rejects.toThrow(
+      'User not authenticated'
+    );
   });
 });

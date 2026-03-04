@@ -1,7 +1,4 @@
-import {
-  inject,
-  Injectable,
-} from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Auth } from '@angular/fire/auth';
 import {
   firstValueFrom,
@@ -10,6 +7,7 @@ import {
   Observable,
   of,
   switchMap,
+  throwError,
 } from 'rxjs';
 import {
   PushupCreate,
@@ -43,29 +41,38 @@ export class StatsApiService {
 
   listPushups(filter: StatsFilter = {}): Observable<PushupRecord[]> {
     const userId = this.resolveUserId();
-    if (!this.pushupFirestore) {
+    if (!userId || !this.pushupFirestore) {
       return of([]);
     }
     return this.pushupFirestore.listPushups(userId, filter);
   }
 
   createPushup(payload: PushupCreate): Observable<PushupRecord> {
-    return this.requirePushupFirestore().createPushup(
-      this.resolveUserId(),
-      payload
-    );
+    const userId = this.resolveUserId();
+    if (!userId) {
+      return throwError(() => new Error('User not authenticated'));
+    }
+    return this.requirePushupFirestore().createPushup(userId, payload);
   }
 
   updatePushup(id: string, payload: PushupUpdate): Observable<void> {
+    const userId = this.resolveUserId();
+    if (!userId) {
+      return throwError(() => new Error('User not authenticated'));
+    }
     return this.requirePushupFirestore().updatePushup(id, payload);
   }
 
   deletePushup(id: string): Observable<{ ok: true }> {
+    const userId = this.resolveUserId();
+    if (!userId) {
+      return throwError(() => new Error('User not authenticated'));
+    }
     return this.requirePushupFirestore().deletePushup(id);
   }
 
-  private resolveUserId(): string {
-    return this.auth?.currentUser?.uid ?? 'default';
+  private resolveUserId(): string | null {
+    return this.auth?.currentUser?.uid ?? null;
   }
 
   private requirePushupFirestore(): PushupFirestoreService {
@@ -75,9 +82,9 @@ export class StatsApiService {
     return this.pushupFirestore;
   }
 
-  private async resolveDailyGoal(userId: string): Promise<number> {
+  private async resolveDailyGoal(userId: string | null): Promise<number> {
     try {
-      if (!this.userConfigFirestore) return 100;
+      if (!userId || !this.userConfigFirestore) return 100;
       const cfg = await firstValueFrom(
         this.userConfigFirestore.getConfig(userId)
       );
