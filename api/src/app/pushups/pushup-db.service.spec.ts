@@ -1,4 +1,3 @@
-import fs from 'node:fs';
 import { PushupDbService } from './pushup-db.service';
 
 const setMock = jest.fn();
@@ -10,13 +9,11 @@ const orderByMock = jest.fn();
 const collectionMock = jest.fn();
 const getAppsMock = jest.fn();
 const initializeAppMock = jest.fn();
-const certMock = jest.fn();
 const applicationDefaultMock = jest.fn();
 
 jest.mock('firebase-admin/app', () => ({
   getApps: () => getAppsMock(),
   initializeApp: (...args: unknown[]) => initializeAppMock(...args),
-  cert: (...args: unknown[]) => certMock(...args),
   applicationDefault: (...args: unknown[]) => applicationDefaultMock(...args),
 }));
 
@@ -35,8 +32,6 @@ describe('PushupDbService (Firestore)', () => {
     collectionMock.mockReturnValue({ orderBy: orderByMock, doc: docMock });
     getAppsMock.mockReturnValue([]);
     applicationDefaultMock.mockReturnValue('adc');
-    certMock.mockReturnValue('cert');
-    jest.spyOn(fs, 'existsSync').mockReturnValue(false);
   });
 
   it('initializes firebase app once', () => {
