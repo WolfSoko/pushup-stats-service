@@ -50,7 +50,7 @@ export class PushupFirestoreService {
       timestamp: payload.timestamp,
       reps: payload.reps,
       source: payload.source ?? 'web',
-      type: payload.type,
+      type: payload.type ?? 'Standard',
       createdAt: nowIso,
       updatedAt: nowIso,
       userId,
