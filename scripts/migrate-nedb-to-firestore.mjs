@@ -93,7 +93,7 @@ async function main() {
   );
   console.log(`User configs: ${userConfigs.length}`);
   console.log(`Pushups: ${pushups.length}`);
-  console.log(`Default pushup owner: ${primaryUserId}`);
+  console.log('Default pushup owner is set (user ID redacted).');
 
   for (const config of userConfigs) {
     const userId = config.userId;
