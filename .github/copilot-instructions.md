@@ -15,6 +15,7 @@ Nx monorepo: Angular SSR frontend, NestJS API, Firebase (Firestore + Auth). Defa
 
 ### Testing
 
+- **Always do Red Green Refactor 
 - **Always use `TestBed` or `@testing-library/angular`** (`render`) for Angular services, guards, and components — never instantiate with `new`.
 - Write **Given-When-Then** style tests.
 - Guards must be tested in a real Angular router/TestBed context.
