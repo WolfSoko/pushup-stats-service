@@ -66,7 +66,7 @@ export class PushupDbService {
 
   async update(
     id: string,
-    patch: Partial<Omit<PushupDoc, '_id' | 'createdAt' | 'updatedAt'>>
+    patch: Partial<Omit<PushupDoc, '_id' | 'userId' | 'createdAt' | 'updatedAt'>>
   ): Promise<PushupDoc | null> {
     const ref = this.db.collection('pushups').doc(id);
     const current = await ref.get();
