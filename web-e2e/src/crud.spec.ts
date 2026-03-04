@@ -53,7 +53,7 @@ async function signInTestUser(page: Page): Promise<string> {
   await page.goto('/login');
   await page.getByLabel('Email').fill(TEST_USER_EMAIL);
   await page.getByLabel('Passwort').fill(TEST_USER_PASSWORD);
-  await page.getByRole('button', { name: 'Anmelden' }).click();
+  await page.getByRole('button', { name: 'Anmelden', exact: true }).click();
   await page.waitForURL('/');
   return uid;
 }
