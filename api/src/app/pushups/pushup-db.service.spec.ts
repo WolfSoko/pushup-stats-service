@@ -6,6 +6,7 @@ const deleteMock = jest.fn();
 const docMock = jest.fn();
 const orderByGetMock = jest.fn();
 const orderByMock = jest.fn();
+const whereMock = jest.fn();
 const collectionMock = jest.fn();
 const getAppsMock = jest.fn();
 const initializeAppMock = jest.fn();
@@ -29,7 +30,8 @@ describe('PushupDbService (Firestore)', () => {
     jest.clearAllMocks();
 
     orderByMock.mockReturnValue({ get: orderByGetMock });
-    collectionMock.mockReturnValue({ orderBy: orderByMock, doc: docMock });
+    whereMock.mockReturnValue({ orderBy: orderByMock });
+    collectionMock.mockReturnValue({ where: whereMock, doc: docMock });
     getAppsMock.mockReturnValue([]);
     applicationDefaultMock.mockReturnValue('adc');
   });
@@ -40,12 +42,13 @@ describe('PushupDbService (Firestore)', () => {
     expect(initializeAppMock).toHaveBeenCalledTimes(1);
   });
 
-  it('findAll maps firestore docs', async () => {
+  it('findAll filters by userId and maps firestore docs', async () => {
     orderByGetMock.mockResolvedValue({
       docs: [
         {
           id: 'a',
           data: () => ({
+            userId: 'user1',
             timestamp: '2026-03-01T10:00',
             reps: 10,
             source: 'web',
@@ -55,20 +58,30 @@ describe('PushupDbService (Firestore)', () => {
     });
 
     const svc = new PushupDbService();
-    const out = await svc.findAll();
+    const out = await svc.findAll('user1');
 
     expect(collectionMock).toHaveBeenCalledWith('pushups');
+    expect(whereMock).toHaveBeenCalledWith('userId', '==', 'user1');
     expect(orderByMock).toHaveBeenCalledWith('timestamp', 'asc');
     expect(out).toEqual([
       {
         _id: 'a',
-        userId: 'default',
+        userId: 'user1',
         timestamp: '2026-03-01T10:00',
         reps: 10,
         source: 'web',
         type: 'Standard',
       },
     ]);
+  });
+
+  it('findAll defaults to userId "default"', async () => {
+    orderByGetMock.mockResolvedValue({ docs: [] });
+
+    const svc = new PushupDbService();
+    await svc.findAll();
+
+    expect(whereMock).toHaveBeenCalledWith('userId', '==', 'default');
   });
 
   it('create writes document with defaults', async () => {

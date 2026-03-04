@@ -30,9 +30,10 @@ export class PushupDbService {
     this.db = getFirestore();
   }
 
-  async findAll(): Promise<PushupDoc[]> {
+  async findAll(userId = 'default'): Promise<PushupDoc[]> {
     const snap = await this.db
       .collection('pushups')
+      .where('userId', '==', userId)
       .orderBy('timestamp', 'asc')
       .get();
     return snap.docs.map((d) => this.mapDoc(d.id, d.data()));
