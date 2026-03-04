@@ -14,11 +14,12 @@ export class UserConfigApiService {
       return of({ userId } as UserConfig);
     }
 
-    const ref = doc(this.requireFirestore(), 'userConfigs', userId);
+    const currentUid = this.auth.currentUser.uid;
+    const ref = doc(this.requireFirestore(), 'userConfigs', currentUid);
     return from(getDoc(ref)).pipe(
       map((snapshot) => {
         const data = snapshot.data() as UserConfig | undefined;
-        return data ?? ({ userId } as UserConfig);
+        return data ?? ({ userId: currentUid } as UserConfig);
       })
     );
   }
@@ -31,10 +32,13 @@ export class UserConfigApiService {
       return of({ userId, ...patch } as UserConfig);
     }
 
-    const ref = doc(this.requireFirestore(), 'userConfigs', userId);
+    const currentUid = this.auth.currentUser.uid;
+    const ref = doc(this.requireFirestore(), 'userConfigs', currentUid);
     return from(
-      setDoc(ref, { ...patch, userId } as Partial<UserConfig>, { merge: true })
-    ).pipe(map(() => ({ userId, ...patch }) as UserConfig));
+      setDoc(ref, { ...patch, userId: currentUid } as Partial<UserConfig>, {
+        merge: true,
+      })
+    ).pipe(map(() => ({ userId: currentUid, ...patch }) as UserConfig));
   }
 
   private requireFirestore(): Firestore {
