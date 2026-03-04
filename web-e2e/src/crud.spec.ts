@@ -55,31 +55,24 @@ async function signInTestUser(page: Page): Promise<string> {
   // Wait for the login form to be fully rendered and interactive
   await page.waitForSelector('input[type="email"]', { state: 'visible' });
 
-  // Fill the email field and trigger Angular's change detection
+  // Fill the email field
   const emailInput = page.getByLabel('Email');
   await emailInput.fill(TEST_USER_EMAIL);
-  // Blur to trigger validation in zoneless mode
-  await emailInput.blur();
 
-  // Fill the password field and trigger Angular's change detection
+  // Fill the password field
   const passwordInput = page.getByLabel('Passwort');
   await passwordInput.fill(TEST_USER_PASSWORD);
-  // Blur to trigger validation in zoneless mode
-  await passwordInput.blur();
 
-  // Wait for the form to become valid and the button to be enabled
-  const loginButton = page.getByRole('button', { name: 'Anmelden', exact: true });
-  await loginButton.waitFor({ state: 'visible', timeout: 10000 });
+  // In zoneless Angular, signal-based forms update reactively.
+  // Pressing Tab moves focus and triggers input events that update the form signals.
+  await passwordInput.press('Tab');
 
-  // Wait for the button to be enabled (form becomes valid)
-  await page.waitForFunction(
-    (buttonSelector) => {
-      const button = document.querySelector(buttonSelector);
-      return button && !(button as HTMLButtonElement).disabled;
-    },
-    'button.login-button[type="submit"]',
-    { timeout: 10000 }
-  );
+  // Wait for the login button to be enabled (form becomes valid)
+  const loginButton = page.getByRole('button', {
+    name: 'Anmelden',
+    exact: true,
+  });
+  await expect(loginButton).toBeEnabled({ timeout: 10000 });
 
   await loginButton.click();
   await page.waitForURL('/');
