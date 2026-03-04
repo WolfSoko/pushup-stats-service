@@ -1,23 +1,23 @@
 import { isPlatformBrowser } from '@angular/common';
 import {
-  DestroyRef,
+  effect,
   Injectable,
   PLATFORM_ID,
   Signal,
   inject,
   signal,
 } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { Auth, authState } from '@angular/fire/auth';
 import {
   Firestore,
   collection,
-  collectionData,
+  onSnapshot,
   orderBy,
   query,
   where,
 } from '@angular/fire/firestore';
 import { PushupRecord } from '@pu-stats/models';
-import { EMPTY, switchMap } from 'rxjs';
 
 /**
  * Browser-only live data stream for pushups via Firestore real-time updates.
@@ -27,6 +27,7 @@ export class PushupLiveDataService {
   private readonly platformId = inject(PLATFORM_ID);
   private readonly auth = inject(Auth, { optional: true });
   private readonly firestore = inject(Firestore, { optional: true });
+
   private readonly connectedState = signal(false);
   private readonly entriesState = signal<PushupRecord[]>([]);
 
@@ -38,35 +39,32 @@ export class PushupLiveDataService {
       return;
     }
 
-    const destroyRef = inject(DestroyRef);
-    const firestore = this.firestore;
+    const fs = this.firestore;
+    const user = toSignal(authState(this.auth));
 
-    const sub = authState(this.auth)
-      .pipe(
-        switchMap((user) => {
-          if (!user) {
-            this.connectedState.set(false);
-            this.entriesState.set([]);
-            return EMPTY;
-          }
-          const q = query(
-            collection(firestore, 'pushups'),
-            where('userId', '==', user.uid),
-            orderBy('timestamp', 'asc')
-          );
-          return collectionData<PushupRecord>(q, { idField: '_id' });
-        })
-      )
-      .subscribe({
-        next: (records) => {
+    effect((onCleanup) => {
+      const u = user();
+      if (!u) {
+        this.connectedState.set(false);
+        this.entriesState.set([]);
+        return;
+      }
+      const q = query(
+        collection(fs, 'pushups'),
+        where('userId', '==', u.uid),
+        orderBy('timestamp', 'asc')
+      );
+      const unsub = onSnapshot(
+        q,
+        (snapshot) => {
           this.connectedState.set(true);
-          this.entriesState.set(records);
+          this.entriesState.set(
+            snapshot.docs.map((d) => ({ _id: d.id, ...d.data() } as PushupRecord))
+          );
         },
-        error: () => {
-          this.connectedState.set(false);
-        },
-      });
-
-    destroyRef.onDestroy(() => sub.unsubscribe());
+        () => this.connectedState.set(false)
+      );
+      onCleanup(unsub);
+    });
   }
 }

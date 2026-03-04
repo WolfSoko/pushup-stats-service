@@ -1,22 +1,22 @@
 import { isPlatformBrowser } from '@angular/common';
 import {
-  DestroyRef,
+  effect,
   Injectable,
   PLATFORM_ID,
   Signal,
   inject,
   signal,
 } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { Auth, authState } from '@angular/fire/auth';
 import {
   Firestore,
   collection,
-  collectionData,
+  onSnapshot,
   orderBy,
   query,
   where,
 } from '@angular/fire/firestore';
-import { EMPTY, switchMap } from 'rxjs';
 
 /**
  * Browser-only live update ticker for pushups via Firestore real-time updates.
@@ -26,6 +26,7 @@ export class PushupLiveService {
   private readonly platformId = inject(PLATFORM_ID);
   private readonly auth = inject(Auth, { optional: true });
   private readonly firestore = inject(Firestore, { optional: true });
+
   private readonly tick = signal(0);
   private readonly connectedState = signal(false);
 
@@ -37,34 +38,29 @@ export class PushupLiveService {
       return;
     }
 
-    const destroyRef = inject(DestroyRef);
-    const firestore = this.firestore;
+    const fs = this.firestore;
+    const user = toSignal(authState(this.auth));
 
-    const sub = authState(this.auth)
-      .pipe(
-        switchMap((user) => {
-          if (!user) {
-            this.connectedState.set(false);
-            return EMPTY;
-          }
-          const q = query(
-            collection(firestore, 'pushups'),
-            where('userId', '==', user.uid),
-            orderBy('timestamp', 'asc')
-          );
-          return collectionData(q);
-        })
-      )
-      .subscribe({
-        next: () => {
+    effect((onCleanup) => {
+      const u = user();
+      if (!u) {
+        this.connectedState.set(false);
+        return;
+      }
+      const q = query(
+        collection(fs, 'pushups'),
+        where('userId', '==', u.uid),
+        orderBy('timestamp', 'asc')
+      );
+      const unsub = onSnapshot(
+        q,
+        () => {
           this.connectedState.set(true);
           this.tick.update((v) => v + 1);
         },
-        error: () => {
-          this.connectedState.set(false);
-        },
-      });
-
-    destroyRef.onDestroy(() => sub.unsubscribe());
+        () => this.connectedState.set(false)
+      );
+      onCleanup(unsub);
+    });
   }
 }
