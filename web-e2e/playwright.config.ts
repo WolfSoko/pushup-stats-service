@@ -27,7 +27,7 @@ export default defineConfig({
       timeout: 180_000,
     },
     {
-      command: `bash -lc 'set -euo pipefail; ROOT=$(pwd); while [ ! -f "$ROOT/nx.json" ] && [ "$ROOT" != "/" ]; do ROOT=$(dirname "$ROOT"); done; cd "$ROOT"; PORT=${apiPort} npx nx serve api -c development'`,
+      command: `bash -lc 'set -euo pipefail; ROOT=$(pwd); while [ ! -f "$ROOT/nx.json" ] && [ "$ROOT" != "/" ]; do ROOT=$(dirname "$ROOT"); done; cd "$ROOT"; PORT=${apiPort} FIRESTORE_EMULATOR_HOST=127.0.0.1:8080 npx nx serve api -c development'`,
       url: `http://127.0.0.1:${apiPort}/api/health`,
       reuseExistingServer,
       timeout: 180_000,
