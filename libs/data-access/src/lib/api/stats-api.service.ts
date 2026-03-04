@@ -119,16 +119,7 @@ export class StatsApiService {
     return this.requirePushupFirestore()
       .updatePushup(id, payload)
       .pipe(
-        switchMap(() => this.listPushups({})),
-        map(
-          (rows) =>
-            rows.find((x) => x._id === id) ?? {
-              _id: id,
-              timestamp: '',
-              reps: 0,
-              source: 'web',
-            }
-        )
+        map(() => ({ _id: id, ...(payload as any) } as PushupRecord))
       );
   }
 
