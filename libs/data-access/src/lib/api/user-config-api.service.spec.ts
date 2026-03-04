@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { PLATFORM_ID } from '@angular/core';
+import { Auth } from '@angular/fire/auth';
 import { Firestore } from '@angular/fire/firestore';
 import { UserConfig, UserConfigUpdate } from '@pu-stats/models';
 import { render } from '@testing-library/angular';
@@ -9,6 +10,10 @@ import { UserConfigApiService } from './user-config-api.service';
 jest.mock('@angular/common', () => ({
   ...jest.requireActual('@angular/common'),
   isPlatformServer: jest.fn(),
+}));
+
+jest.mock('@angular/fire/auth', () => ({
+  Auth: jest.fn(),
 }));
 
 jest.mock('@angular/fire/firestore', () => ({
@@ -29,7 +34,7 @@ describe('UserConfigApiService', () => {
     jest.clearAllMocks();
   });
 
-  it('reads config from Firestore in browser', async () => {
+  it('reads config from Firestore when authenticated in browser', async () => {
     const common = await import('@angular/common');
     const firestoreFns = await import('@angular/fire/firestore');
     (common.isPlatformServer as jest.Mock).mockReturnValue(false);
@@ -44,6 +49,7 @@ describe('UserConfigApiService', () => {
         { provide: HttpClient, useValue: httpMock },
         { provide: PLATFORM_ID, useValue: 'browser' },
         { provide: Firestore, useValue: {} },
+        { provide: Auth, useValue: { currentUser: { uid: 'u' } } },
       ],
     });
 
@@ -56,7 +62,32 @@ describe('UserConfigApiService', () => {
     expect(httpMock.get).not.toHaveBeenCalled();
   });
 
-  it('updates config in Firestore in browser', async () => {
+  it('reads config from HTTP when unauthenticated in browser', async () => {
+    const common = await import('@angular/common');
+    (common.isPlatformServer as jest.Mock).mockReturnValue(false);
+
+    const config: UserConfig = { userId: 'u', dailyGoal: 55 };
+    httpMock.get.mockReturnValue(of(config));
+
+    const { fixture } = await render('', {
+      providers: [
+        UserConfigApiService,
+        { provide: HttpClient, useValue: httpMock },
+        { provide: PLATFORM_ID, useValue: 'browser' },
+        { provide: Firestore, useValue: {} },
+        { provide: Auth, useValue: { currentUser: null } },
+      ],
+    });
+
+    const service = fixture.debugElement.injector.get(UserConfigApiService);
+    let result: UserConfig | undefined;
+    service.getConfig('u').subscribe((r) => (result = r));
+
+    expect(result).toEqual(config);
+    expect(httpMock.get).toHaveBeenCalledWith('/api/users/u/config');
+  });
+
+  it('updates config in Firestore when authenticated in browser', async () => {
     const common = await import('@angular/common');
     const firestoreFns = await import('@angular/fire/firestore');
     (common.isPlatformServer as jest.Mock).mockReturnValue(false);
@@ -68,6 +99,7 @@ describe('UserConfigApiService', () => {
         { provide: HttpClient, useValue: httpMock },
         { provide: PLATFORM_ID, useValue: 'browser' },
         { provide: Firestore, useValue: {} },
+        { provide: Auth, useValue: { currentUser: { uid: 'u' } } },
       ],
     });
 
@@ -87,6 +119,37 @@ describe('UserConfigApiService', () => {
     expect(httpMock.put).not.toHaveBeenCalled();
   });
 
+  it('updates config via HTTP when unauthenticated in browser', async () => {
+    const common = await import('@angular/common');
+    const firestoreFns = await import('@angular/fire/firestore');
+    (common.isPlatformServer as jest.Mock).mockReturnValue(false);
+
+    const updated: UserConfig = { userId: 'u', dailyGoal: 120 };
+    httpMock.put.mockReturnValue(of(updated));
+
+    const { fixture } = await render('', {
+      providers: [
+        UserConfigApiService,
+        { provide: HttpClient, useValue: httpMock },
+        { provide: PLATFORM_ID, useValue: 'browser' },
+        { provide: Firestore, useValue: {} },
+        { provide: Auth, useValue: { currentUser: null } },
+      ],
+    });
+
+    const service = fixture.debugElement.injector.get(UserConfigApiService);
+    let result: UserConfig | undefined;
+    service
+      .updateConfig('u', { dailyGoal: 120 } as UserConfigUpdate)
+      .subscribe((r) => (result = r));
+
+    expect(result).toEqual(updated);
+    expect(httpMock.put).toHaveBeenCalledWith('/api/users/u/config', {
+      dailyGoal: 120,
+    });
+    expect(firestoreFns.setDoc).not.toHaveBeenCalled();
+  });
+
   it('uses HTTP on server', async () => {
     const common = await import('@angular/common');
     (common.isPlatformServer as jest.Mock).mockReturnValue(true);
@@ -101,6 +164,7 @@ describe('UserConfigApiService', () => {
         { provide: HttpClient, useValue: httpMock },
         { provide: PLATFORM_ID, useValue: 'server' },
         { provide: Firestore, useValue: {} },
+        { provide: Auth, useValue: { currentUser: { uid: 'u' } } },
       ],
     });
 
