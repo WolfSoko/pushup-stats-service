@@ -1,6 +1,7 @@
 import { isPlatformServer } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { Auth } from '@angular/fire/auth';
 import { doc, Firestore, getDoc, setDoc } from '@angular/fire/firestore';
 import { UserConfig, UserConfigUpdate } from '@pu-stats/models';
 import { from, map, Observable } from 'rxjs';
@@ -10,10 +11,11 @@ import { buildServerApiBaseUrl } from './base-url.util';
 export class UserConfigApiService {
   private readonly http = inject(HttpClient);
   private readonly firestore = inject(Firestore, { optional: true });
+  private readonly auth = inject(Auth, { optional: true });
   private readonly platformId = inject(PLATFORM_ID);
 
   getConfig(userId: string): Observable<UserConfig> {
-    if (isPlatformServer(this.platformId)) {
+    if (isPlatformServer(this.platformId) || !this.auth?.currentUser) {
       return this.http.get<UserConfig>(
         `${this.baseUrl()}/api/users/${encodeURIComponent(userId)}/config`
       );
@@ -32,7 +34,7 @@ export class UserConfigApiService {
     userId: string,
     patch: UserConfigUpdate
   ): Observable<UserConfig> {
-    if (isPlatformServer(this.platformId)) {
+    if (isPlatformServer(this.platformId) || !this.auth?.currentUser) {
       return this.http.put<UserConfig>(
         `${this.baseUrl()}/api/users/${encodeURIComponent(userId)}/config`,
         patch
