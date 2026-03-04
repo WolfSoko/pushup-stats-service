@@ -7,7 +7,6 @@ import {
   getFirestore,
   provideFirestore,
 } from '@angular/fire/firestore';
-import { initializeFirestore, persistentLocalCache } from 'firebase/firestore';
 
 type ProvideFireStoreWithFunc = ReturnType<typeof withEmulator>;
 
@@ -18,18 +17,14 @@ export function provideFireStore(
     const app = inject(FirebaseApp);
     const platformId = inject(PLATFORM_ID);
 
-    // Enable IndexedDB-backed offline cache in browser.
-    // Fallback to default Firestore instance on unsupported runtimes.
+    // Use default Firestore instance. The persistent cache initialization
+    // was causing timing issues that blocked Angular's reactive form signals
+    // from updating during app bootstrap, particularly affecting E2E tests.
+    // TODO: Re-enable persistent cache with deferred initialization after
+    // app bootstrap is complete.
     let firestore: Firestore;
     if (isPlatformBrowser(platformId)) {
-      try {
-        firestore = initializeFirestore(app, {
-          localCache: persistentLocalCache({}),
-          ignoreUndefinedProperties: true,
-        }) as unknown as Firestore;
-      } catch {
-        firestore = getFirestore(app);
-      }
+      firestore = getFirestore(app);
     } else {
       firestore = getFirestore(app);
     }
