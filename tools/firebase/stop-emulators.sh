@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -u
 
-PID_FILE="data-store/.firebase-emulators.pid"
+PID_FILE=".firebase-emulators.pid"
 PATTERN="firebase emulators:start --project demo-pushup-stats --only auth,firestore"
 
 if [[ -f "$PID_FILE" ]]; then
