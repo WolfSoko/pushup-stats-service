@@ -99,7 +99,7 @@ describe('PushupFirestoreService', () => {
       expect(firestoreFns.where).toHaveBeenCalledWith(
         'timestamp',
         '>=',
-        '2024-01-05'
+        '2024-01-05T00:00:00.000Z'
       );
     });
 
