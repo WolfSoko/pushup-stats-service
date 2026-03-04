@@ -36,7 +36,9 @@ export class PushupFirestoreService {
       orderBy('timestamp', 'asc'),
     ];
     if (filter.from) {
-      constraints.push(where('timestamp', '>=', filter.from));
+      constraints.push(
+        where('timestamp', '>=', `${filter.from}T00:00:00.000Z`)
+      );
     }
     if (filter.to) {
       constraints.push(where('timestamp', '<=', `${filter.to}T23:59:59.999Z`));
