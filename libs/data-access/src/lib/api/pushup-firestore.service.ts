@@ -31,23 +31,33 @@ export class PushupFirestoreService {
     filter?: StatsFilter
   ): Observable<PushupRecord[]> {
     const pushupsRef = collection(this.firestore, PUSHUPS_COLLECTION);
-    const constraints: QueryConstraint[] = [where('userId', '==', userId)];
+    const constraints: QueryConstraint[] = [
+      where('userId', '==', userId),
+      orderBy('timestamp', 'asc'),
+    ];
     if (filter?.from) {
       constraints.push(where('timestamp', '>=', filter.from));
     }
-    if (filter?.to) {
-      // Append end-of-day time so all timestamps on the "to" date are included
-      constraints.push(where('timestamp', '<=', filter.to + 'T23:59:59.999Z'));
+    if (filter.to) {
+      constraints.push(where('timestamp', '<=', `${filter.to}T23:59:59.999Z`));
     }
-    constraints.push(orderBy('timestamp', 'asc'));
+
     const q = query(pushupsRef, ...constraints);
 
     return from(getDocs(q)).pipe(
       map((snapshot) =>
-        snapshot.docs.map((d) => {
-          const data = d.data() as Omit<PushupRecord, '_id'>;
-          return { _id: d.id, ...data } as PushupRecord;
-        })
+        snapshot.docs
+          .map((d) => {
+            const data = d.data() as Omit<PushupRecord, '_id'>;
+            return { _id: d.id, ...data } as PushupRecord;
+          })
+          .filter((record) => {
+            const date = record.timestamp.slice(0, 10);
+            return (
+              (!filter.from || date >= filter.from) &&
+              (!filter.to || date <= filter.to)
+            );
+          })
       )
     );
   }

@@ -211,5 +211,53 @@ describe('StatsApiService', () => {
     expect(firestoreFns.updateDoc).toHaveBeenCalled();
     expect(firestoreFns.deleteDoc).toHaveBeenCalled();
     expect(httpMock.post).not.toHaveBeenCalled();
+    expect(httpMock.put).not.toHaveBeenCalled();
+  });
+
+  it('updatePushup always uses Firestore and returns void', async () => {
+    const firestoreFns = await import('@angular/fire/firestore');
+    (isPlatformServer as jest.Mock).mockReturnValue(false);
+    (firestoreFns.doc as jest.Mock).mockReturnValue({ id: 'id1' });
+
+    const { fixture } = await render('', {
+      providers: [
+        StatsApiService,
+        { provide: HttpClient, useValue: httpMock },
+        { provide: Firestore, useValue: {} },
+        { provide: PLATFORM_ID, useValue: 'browser' },
+        { provide: TransferState, useValue: transferStateMock },
+      ],
+    });
+
+    const service = fixture.debugElement.injector.get(StatsApiService);
+    const result = await firstValueFrom(
+      service.updatePushup('id1', { reps: 5 })
+    );
+
+    expect(result).toBeUndefined();
+    expect(firestoreFns.updateDoc).toHaveBeenCalled();
+    expect(httpMock.put).not.toHaveBeenCalled();
+  });
+
+  it('updatePushup uses Firestore even on server (no HTTP PUT)', async () => {
+    const firestoreFns = await import('@angular/fire/firestore');
+    (isPlatformServer as jest.Mock).mockReturnValue(true);
+    (firestoreFns.doc as jest.Mock).mockReturnValue({ id: 'id1' });
+
+    const { fixture } = await render('', {
+      providers: [
+        StatsApiService,
+        { provide: HttpClient, useValue: httpMock },
+        { provide: Firestore, useValue: {} },
+        { provide: PLATFORM_ID, useValue: 'server' },
+        { provide: TransferState, useValue: transferStateMock },
+      ],
+    });
+
+    const service = fixture.debugElement.injector.get(StatsApiService);
+    await firstValueFrom(service.updatePushup('id1', { reps: 5 }));
+
+    expect(firestoreFns.updateDoc).toHaveBeenCalled();
+    expect(httpMock.put).not.toHaveBeenCalled();
   });
 });

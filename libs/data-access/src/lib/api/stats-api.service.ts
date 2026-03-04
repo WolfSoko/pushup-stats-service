@@ -106,19 +106,8 @@ export class StatsApiService {
     );
   }
 
-  updatePushup(id: string, payload: PushupUpdate): Observable<PushupRecord> {
-    if (isPlatformServer(this.platformId)) {
-      return this.http.put<PushupRecord>(
-        `${this.baseUrl()}${PUSHUPS_ENDPOINT}/${id}`,
-        payload
-      );
-    }
-
-    return this.requirePushupFirestore()
-      .updatePushup(id, payload)
-      .pipe(
-        map(() => ({ _id: id, ...(payload as any) } as PushupRecord))
-      );
+  updatePushup(id: string, payload: PushupUpdate): Observable<void> {
+    return this.requirePushupFirestore().updatePushup(id, payload);
   }
 
   deletePushup(id: string): Observable<{ ok: true }> {
