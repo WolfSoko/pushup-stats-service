@@ -9,7 +9,7 @@
       "executor": "nx:run-commands",
       "options": {
         "cwd": "data-store",
-        "command": "bash -lc 'echo $$ > .firebase-emulators.pid; exec npx firebase emulators:start --project demo-pushup-stats --only auth,firestore'"
+        "command": "bash -lc 'echo $$ > .firebase-emulators.pid; exec npx firebase emulators:start --only auth,firestore'"
       }
     },
     "emulate": {
@@ -17,7 +17,7 @@
       "executor": "nx:run-commands",
       "options": {
         "cwd": "data-store",
-        "command": "bash -lc 'echo $$ > .firebase-emulators.pid; exec npx firebase emulators:start --project demo-pushup-stats --only auth,firestore'"
+        "command": "bash -lc 'echo $$ > .firebase-emulators.pid; exec npx firebase emulators:start --only auth,firestore'"
       }
     },
     "emulate:stop": {
@@ -31,7 +31,7 @@
       "executor": "nx:run-commands",
       "options": {
         "cwd": "data-store",
-        "command": "npx firebase emulators:exec --project demo-pushup-stats --only auth,firestore \"echo emulator-ok\""
+        "command": "npx firebase emulators:exec --only auth,firestore \"echo emulator-ok\""
       }
     }
   }
