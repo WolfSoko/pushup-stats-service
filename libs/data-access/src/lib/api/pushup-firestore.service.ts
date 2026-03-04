@@ -7,11 +7,17 @@ import {
   getDocs,
   orderBy,
   query,
+  QueryConstraint,
   setDoc,
   updateDoc,
   where,
 } from '@angular/fire/firestore';
-import { PushupCreate, PushupRecord, PushupUpdate } from '@pu-stats/models';
+import {
+  PushupCreate,
+  PushupRecord,
+  PushupUpdate,
+  StatsFilter,
+} from '@pu-stats/models';
 import { from, map, Observable } from 'rxjs';
 
 const PUSHUPS_COLLECTION = 'pushups';
@@ -20,20 +26,37 @@ const PUSHUPS_COLLECTION = 'pushups';
 export class PushupFirestoreService {
   private readonly firestore = inject(Firestore);
 
-  listPushups(userId: string): Observable<PushupRecord[]> {
+  listPushups(
+    userId: string,
+    filter: StatsFilter = {}
+  ): Observable<PushupRecord[]> {
     const pushupsRef = collection(this.firestore, PUSHUPS_COLLECTION);
-    const q = query(
-      pushupsRef,
+    const constraints: QueryConstraint[] = [
       where('userId', '==', userId),
-      orderBy('timestamp', 'asc')
-    );
+      orderBy('timestamp', 'asc'),
+    ];
+    if (filter.from) {
+      constraints.push(where('timestamp', '>=', filter.from));
+    }
+    if (filter.to) {
+      constraints.push(where('timestamp', '<=', `${filter.to}T23:59:59.999Z`));
+    }
+    const q = query(pushupsRef, ...constraints);
 
     return from(getDocs(q)).pipe(
       map((snapshot) =>
-        snapshot.docs.map((d) => {
-          const data = d.data() as Omit<PushupRecord, '_id'>;
-          return { _id: d.id, ...data } as PushupRecord;
-        })
+        snapshot.docs
+          .map((d) => {
+            const data = d.data() as Omit<PushupRecord, '_id'>;
+            return { _id: d.id, ...data } as PushupRecord;
+          })
+          .filter((record) => {
+            const date = record.timestamp.slice(0, 10);
+            return (
+              (!filter.from || date >= filter.from) &&
+              (!filter.to || date <= filter.to)
+            );
+          })
       )
     );
   }
