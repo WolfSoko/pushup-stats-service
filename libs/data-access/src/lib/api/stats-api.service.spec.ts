@@ -121,19 +121,12 @@ describe('StatsApiService', () => {
     expect(transferStateMock.set).toHaveBeenCalled();
   });
 
-  it('filters pushups in browser list mode', async () => {
+  it('filters pushups in browser list mode by passing constraints to Firestore', async () => {
     const firestoreFns = await import('@angular/fire/firestore');
     (isPlatformServer as jest.Mock).mockReturnValue(false);
+    // Simulate Firestore returning only records that match the server-side filter
     (firestoreFns.getDocs as jest.Mock).mockResolvedValue({
       docs: [
-        {
-          id: '1',
-          data: () => ({
-            timestamp: '2024-01-01T00:00:00Z',
-            reps: 10,
-            source: 's',
-          }),
-        },
         {
           id: '2',
           data: () => ({
@@ -156,11 +149,24 @@ describe('StatsApiService', () => {
     });
     const service = fixture.debugElement.injector.get(StatsApiService);
     let result: PushupRecord[] | undefined;
-    service.listPushups({ from: '2024-01-05' }).subscribe((r) => (result = r));
+    service
+      .listPushups({ from: '2024-01-05', to: '2024-01-15' })
+      .subscribe((r) => (result = r));
     await Promise.resolve();
     expect(result).toEqual([
       { _id: '2', timestamp: '2024-01-10T00:00:00Z', reps: 5, source: 's' },
     ]);
+    // Verify the timestamp filters were pushed into the Firestore query
+    expect(firestoreFns.where).toHaveBeenCalledWith(
+      'timestamp',
+      '>=',
+      '2024-01-05'
+    );
+    expect(firestoreFns.where).toHaveBeenCalledWith(
+      'timestamp',
+      '<=',
+      '2024-01-15T23:59:59.999Z'
+    );
   });
 
   it('uses firestore writes in browser for create/update/delete', async () => {

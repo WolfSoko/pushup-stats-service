@@ -28,21 +28,20 @@ export class PushupFirestoreService {
 
   listPushups(
     userId: string,
-    filter: StatsFilter = {}
+    filter?: StatsFilter
   ): Observable<PushupRecord[]> {
     const pushupsRef = collection(this.firestore, PUSHUPS_COLLECTION);
     const constraints: QueryConstraint[] = [
       where('userId', '==', userId),
       orderBy('timestamp', 'asc'),
     ];
-    if (filter.from) {
-      constraints.push(
-        where('timestamp', '>=', `${filter.from}T00:00:00.000Z`)
-      );
+    if (filter?.from) {
+      constraints.push(where('timestamp', '>=', filter.from));
     }
     if (filter.to) {
       constraints.push(where('timestamp', '<=', `${filter.to}T23:59:59.999Z`));
     }
+
     const q = query(pushupsRef, ...constraints);
 
     return from(getDocs(q)).pipe(
