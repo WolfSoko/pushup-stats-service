@@ -135,36 +135,44 @@ describe('FilterBarComponent', () => {
 
   it('switches to day mode using today when today is inside current range', () => {
     vitest.useFakeTimers();
-    vitest.setSystemTime(new Date(2026, 1, 14));
+    try {
+      vitest.setSystemTime(new Date(2026, 1, 14));
 
-    component.range.patchValue({
-      start: new Date(2026, 1, 10),
-      end: new Date(2026, 1, 16),
-    });
+      component.range.patchValue({
+        start: new Date(2026, 1, 10),
+        end: new Date(2026, 1, 16),
+      });
 
-    component.setMode('day');
+      component.setMode('day');
 
-    expect(component.range.controls.start.value).toEqual(new Date(2026, 1, 14));
-    expect(component.range.controls.end.value).toEqual(new Date(2026, 1, 14));
-
-    vitest.useRealTimers();
+      expect(component.range.controls.start.value).toEqual(
+        new Date(2026, 1, 14)
+      );
+      expect(component.range.controls.end.value).toEqual(new Date(2026, 1, 14));
+    } finally {
+      vitest.useRealTimers();
+    }
   });
 
   it('switches to week mode using first day when today is outside current range', () => {
     vitest.useFakeTimers();
-    vitest.setSystemTime(new Date(2026, 2, 14)); // today not inside February range
+    try {
+      vitest.setSystemTime(new Date(2026, 2, 14)); // today not inside February range
 
-    component.range.patchValue({
-      start: new Date(2026, 1, 1),
-      end: new Date(2026, 1, 28),
-    });
+      component.range.patchValue({
+        start: new Date(2026, 1, 1),
+        end: new Date(2026, 1, 28),
+      });
 
-    component.setMode('week');
+      component.setMode('week');
 
-    // week of first day (01.02.2026 -> Monday 26.01.2026)
-    expect(component.range.controls.start.value).toEqual(new Date(2026, 0, 26));
-    expect(component.range.controls.end.value).toEqual(new Date(2026, 1, 1));
-
-    vitest.useRealTimers();
+      // week of first day (01.02.2026 -> Monday 26.01.2026)
+      expect(component.range.controls.start.value).toEqual(
+        new Date(2026, 0, 26)
+      );
+      expect(component.range.controls.end.value).toEqual(new Date(2026, 1, 1));
+    } finally {
+      vitest.useRealTimers();
+    }
   });
 });
