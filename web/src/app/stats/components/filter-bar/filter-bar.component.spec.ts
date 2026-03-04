@@ -17,17 +17,18 @@ describe('FilterBarComponent', () => {
     await fixture.whenStable();
   });
 
-  it('normalizes initial range to week mode (Mon-Sun)', () => {
+  it('normalizes initial range to week mode using first selected day as anchor', () => {
     const start = component.range.controls.start.value;
     const end = component.range.controls.end.value;
 
+    // from=2026-02-01 (Sunday) -> week anchor on first selected day => Mon 2026-01-26 .. Sun 2026-02-01
     expect(start?.getFullYear()).toBe(2026);
-    expect(start?.getMonth()).toBe(1);
-    expect(start?.getDate()).toBe(2);
+    expect(start?.getMonth()).toBe(0);
+    expect(start?.getDate()).toBe(26);
 
     expect(end?.getFullYear()).toBe(2026);
     expect(end?.getMonth()).toBe(1);
-    expect(end?.getDate()).toBe(8);
+    expect(end?.getDate()).toBe(1);
   });
 
   it('emits ISO dates when reactive range controls change', () => {
@@ -114,11 +115,56 @@ describe('FilterBarComponent', () => {
     expect(toSpy).toHaveBeenCalled();
   });
 
+  it('keeps month mode when navigating month range forward/backward', () => {
+    component.setMode('month');
+
+    component.shiftRange(1);
+    expect(component.mode()).toBe('month');
+
+    component.shiftRange(-1);
+    expect(component.mode()).toBe('month');
+  });
+
   it('jumps to current week with today button helper', () => {
     component.setMode('week');
     component.jumpToToday();
 
     expect(component.range.controls.start.value?.getDay()).toBe(1);
     expect(component.range.controls.end.value?.getDay()).toBe(0);
+  });
+
+  it('switches to day mode using today when today is inside current range', () => {
+    vitest.useFakeTimers();
+    vitest.setSystemTime(new Date(2026, 1, 14));
+
+    component.range.patchValue({
+      start: new Date(2026, 1, 10),
+      end: new Date(2026, 1, 16),
+    });
+
+    component.setMode('day');
+
+    expect(component.range.controls.start.value).toEqual(new Date(2026, 1, 14));
+    expect(component.range.controls.end.value).toEqual(new Date(2026, 1, 14));
+
+    vitest.useRealTimers();
+  });
+
+  it('switches to week mode using first day when today is outside current range', () => {
+    vitest.useFakeTimers();
+    vitest.setSystemTime(new Date(2026, 2, 14)); // today not inside February range
+
+    component.range.patchValue({
+      start: new Date(2026, 1, 1),
+      end: new Date(2026, 1, 28),
+    });
+
+    component.setMode('week');
+
+    // week of first day (01.02.2026 -> Monday 26.01.2026)
+    expect(component.range.controls.start.value).toEqual(new Date(2026, 0, 26));
+    expect(component.range.controls.end.value).toEqual(new Date(2026, 1, 1));
+
+    vitest.useRealTimers();
   });
 });

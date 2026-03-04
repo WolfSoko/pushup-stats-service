@@ -110,6 +110,8 @@ export class FilterBarComponent implements OnChanges {
   readonly from = input('');
   readonly to = input('');
 
+  private didInitializeMode = false;
+
   readonly fromChange = output<string>();
   readonly toChange = output<string>();
   readonly modeChange = output<RangeModes>();
@@ -147,9 +149,13 @@ export class FilterBarComponent implements OnChanges {
       { emitEvent: false }
     );
 
-    // Keep toggle state in sync when range is changed from outside (e.g. initial URL params).
-    const inferred = this.inferMode(start, end);
-    this.mode.set(inferred);
+    // Infer once from external initial inputs (URL/bootstrap). After that,
+    // mode is user-driven and should not flip while from/to propagate.
+    if (!this.didInitializeMode) {
+      const inferred = this.inferMode(start, end);
+      this.mode.set(inferred);
+      this.didInitializeMode = true;
+    }
   }
 
   setMode(value: RangeModes): void {
@@ -162,15 +168,22 @@ export class FilterBarComponent implements OnChanges {
     this.mode.set(value);
     this.modeChange.emit(value);
 
-    // UX: when switching from week/month to day (or month to week), pick "today" if it's inside the current range.
-    const shouldPreferToday =
-      !!previousStart &&
-      !!previousEnd &&
+    let anchor: Date | undefined;
+    if (
+      (value === 'day' || value === 'week') &&
+      previousStart &&
+      previousEnd &&
       today.getTime() >= this.startOfDay(previousStart).getTime() &&
-      today.getTime() <= this.startOfDay(previousEnd).getTime() &&
-      (value === 'day' || value === 'week');
+      today.getTime() <= this.startOfDay(previousEnd).getTime()
+    ) {
+      // If today is inside current selection, use it as anchor.
+      anchor = today;
+    } else if (previousStart) {
+      // Otherwise use the first day of current selection (never the end day).
+      anchor = this.startOfDay(previousStart);
+    }
 
-    this.applyModeRange(shouldPreferToday ? today : undefined);
+    this.applyModeRange(anchor);
   }
 
   jumpToToday(): void {

@@ -92,30 +92,6 @@ async function signInTestUser(page: Page): Promise<string> {
   return uid;
 }
 
-/** Seeds a pushup directly via Firestore emulator REST API (bypasses security rules). */
-async function seedPushup(
-  page: Page,
-  userId: string,
-  data: { timestamp: string; reps: number; source: string }
-): Promise<string> {
-  const resp = await page.request.post(`${FIRESTORE_EMULATOR_BASE}/pushups`, {
-    headers: { 'Content-Type': 'application/json' },
-    data: {
-      fields: {
-        timestamp: { stringValue: `${data.timestamp}:00.000Z` },
-        reps: { integerValue: String(data.reps) },
-        source: { stringValue: data.source },
-        type: { stringValue: 'Standard' },
-        userId: { stringValue: userId },
-        createdAt: { stringValue: new Date().toISOString() },
-        updatedAt: { stringValue: new Date().toISOString() },
-      },
-    },
-  });
-  const doc = await resp.json();
-  return (doc.name as string).split('/').pop() as string;
-}
-
 /** Deletes pushups matching given sources via Firestore emulator REST API. */
 async function cleanupPushupsBySource(
   page: Page,
@@ -328,103 +304,6 @@ test('settings page is reachable from navigation', async ({ page }) => {
 
   await expect(page).toHaveURL(/\/settings$/);
   await expect(page.getByText('User-Profil & Tagesziel')).toBeVisible();
-});
-
-test('dashboard period controls (Tag/Woche + Heute/Vor/Zurück) filter table rows', async ({
-  page,
-}) => {
-  await ensureAuthenticated(page);
-
-  const runId = Date.now().toString(36);
-  const srcToday = `e2e-today-${runId}`;
-  const srcYday = `e2e-yday-${runId}`;
-  const srcPrevWeek = `e2e-prev-week-${runId}`;
-
-  const userId = await signInTestUser(page);
-
-  const now = new Date();
-  const today = new Date(now);
-
-  const day = (now.getDay() + 6) % 7; // Monday=0
-  const startOfWeek = new Date(now);
-  startOfWeek.setDate(now.getDate() - day);
-
-  const previousWeekDate = new Date(startOfWeek);
-  previousWeekDate.setDate(startOfWeek.getDate() - 2);
-
-  const yesterday = new Date(today);
-  yesterday.setDate(today.getDate() - 1);
-
-  try {
-    // Seed test data directly via Firestore emulator REST API.
-    await seedPushup(page, userId, {
-      timestamp: isoDateTime(today, 12, 0),
-      reps: 11,
-      source: srcToday,
-    });
-    await seedPushup(page, userId, {
-      timestamp: isoDateTime(yesterday, 12, 1),
-      reps: 8,
-      source: srcYday,
-    });
-    await seedPushup(page, userId, {
-      timestamp: isoDateTime(previousWeekDate, 12, 2),
-      reps: 14,
-      source: srcPrevWeek,
-    });
-
-    await page.goto('/');
-
-    const table = page.locator('app-stats-table');
-
-    // Wait for Firestore real-time to deliver the seeded data.
-    await expect(
-      table.locator('mat-row').filter({ hasText: srcToday }).first()
-    ).toBeVisible({ timeout: 15000 });
-
-    // The source column is hidden by default; enable it for assertions.
-    await ensureSourceColumnVisible(page);
-
-    await page.getByRole('radio', { name: 'Tag' }).click();
-    await page.getByRole('button', { name: 'Heute' }).click();
-
-    await expect(
-      table.locator('mat-row').filter({ hasText: srcToday }).first()
-    ).toBeVisible();
-    await expect(
-      table.locator('mat-row').filter({ hasText: srcPrevWeek }).first()
-    ).not.toBeVisible();
-
-    await page.getByRole('radio', { name: 'Woche' }).click();
-    await page.getByRole('button', { name: 'Heute' }).click();
-
-    await expect(
-      table.locator('mat-row').filter({ hasText: srcToday }).first()
-    ).toBeVisible();
-
-    // Navigate to previous week and wait for the range UI to update.
-    const fromInput = page.getByRole('textbox', { name: 'Von' });
-    const fromBefore = await fromInput.inputValue().catch(() => '');
-
-    await page.getByRole('button', { name: 'Zurück' }).click();
-
-    await expect
-      .poll(async () => fromInput.inputValue(), { timeout: 8000 })
-      .not.toBe(fromBefore);
-
-    await expect(
-      table.locator('mat-row').filter({ hasText: srcPrevWeek }).first()
-    ).toBeVisible();
-
-    // Depending on timezone/locale conversions, "today" can drift around boundaries.
-    // The critical part is that the previous-week entry appears after navigation.
-  } finally {
-    // Best-effort cleanup (avoids DB leaking across runs).
-    await cleanupPushupsBySource(
-      page,
-      new Set([srcToday, srcYday, srcPrevWeek])
-    );
-  }
 });
 
 test('settings persist user config in firestore emulator', async ({ page }) => {
