@@ -7,6 +7,7 @@ import {
   deleteUser,
   GoogleAuthProvider,
   idToken,
+  signInAnonymously,
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
@@ -53,6 +54,10 @@ export class AuthAdapter {
     password: string
   ): Promise<UserCredential> {
     return await createUserWithEmailAndPassword(this.auth, email, password);
+  }
+
+  async signInAnonymously(): Promise<UserCredential> {
+    return await signInAnonymously(this.auth);
   }
 
   signOut(): Promise<void> {
