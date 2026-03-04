@@ -1,61 +1,8 @@
 # Copilot Instructions for pushup-stats-service
 
-This is an **Nx monorepo** for tracking push-up statistics. The primary frontend is an Angular SSR app with a NestJS API, backed by Firebase (Firestore + Auth). The default UI language is German.
+Be as concise as possible; sacrifice grammar for the sake of conciseness.
 
-## Repository Structure
-
-```
-web/          Angular SSR app (i18n: de + en)
-api/          NestJS REST API  (GET /api/stats)
-libs/
-  auth/               Firebase Auth providers
-  data-access/        Firestore data-access providers
-  stats-models/       Shared TypeScript types/models
-data-store/   Firebase emulator config & Firestore rules
-reverse-proxy/ Express front-proxy (language routing)
-tools/        Custom Nx executors and scripts
-docs/         Architecture and environment documentation
-```
-
-## Development Commands
-
-```bash
-# Install dependencies
-npm install
-
-# Serve locally (starts Firebase emulators + web dev server)
-npx nx run web:serve-local
-
-# Serve individual apps
-npx nx serve api
-npx nx serve web
-
-# Build all projects
-npx nx run-many -t build
-
-# Run all tests
-npx nx run-many -t test
-
-# Run affected tests only
-npx nx affected -t test
-
-# Lint
-npx nx run-many -t lint
-npx nx run-many -t lint --fix
-
-# Build with coverage
-npx nx run web:test --codeCoverage
-```
-
-Always prefix `nx` commands with `npx` (or the package manager) to avoid relying on a globally installed CLI.
-
-## Build & Test Before Committing
-
-Run this to verify your changes before committing:
-
-```bash
-npx nx affected -t lint test build
-```
+Nx monorepo: Angular SSR frontend, NestJS API, Firebase (Firestore + Auth). Default UI language: German.
 
 ## Coding Standards
 
@@ -90,12 +37,6 @@ Default locale: **`de`** (German). English translations live in `web/src/locale/
 2. Extract: `npx nx run web:extract-i18n`
 3. Add English `<target>` entries in `web/src/locale/messages.en.xlf`.
 4. Verify: `npx nx build web` — must complete with **no** `[WARNING] No translation found` lines.
-
-## Firebase / Emulators
-
-Local development uses Firebase Auth + Firestore emulators via the `data-store:serve` Nx target (started automatically by `web:serve-local`).
-
-The `web` app switches between real Firebase and emulators via Nx `fileReplacements` in the `development-emulator` build configuration (`web/src/env/firebase-runtime.ts` → `firebase-runtime.emulator.ts`).
 
 ## Development Flow
 
