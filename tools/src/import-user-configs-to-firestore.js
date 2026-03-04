@@ -32,7 +32,7 @@ if (require.main === module) {
   process.env.FIRESTORE_EMULATOR_HOST = 'localhost:8080';
 
   initializeApp({
-    projectId: 'pushup-stats-service-local',
+    projectId: 'pushup-stats',
     credential: applicationDefault(),
   });
 
