@@ -7,11 +7,17 @@ import {
   getDocs,
   orderBy,
   query,
+  QueryConstraint,
   setDoc,
   updateDoc,
   where,
 } from '@angular/fire/firestore';
-import { PushupCreate, PushupRecord, PushupUpdate } from '@pu-stats/models';
+import {
+  PushupCreate,
+  PushupRecord,
+  PushupUpdate,
+  StatsFilter,
+} from '@pu-stats/models';
 import { from, map, Observable } from 'rxjs';
 
 const PUSHUPS_COLLECTION = 'pushups';
@@ -20,13 +26,21 @@ const PUSHUPS_COLLECTION = 'pushups';
 export class PushupFirestoreService {
   private readonly firestore = inject(Firestore);
 
-  listPushups(userId: string): Observable<PushupRecord[]> {
+  listPushups(
+    userId: string,
+    filter?: StatsFilter
+  ): Observable<PushupRecord[]> {
     const pushupsRef = collection(this.firestore, PUSHUPS_COLLECTION);
-    const q = query(
-      pushupsRef,
-      where('userId', '==', userId),
-      orderBy('timestamp', 'asc')
-    );
+    const constraints: QueryConstraint[] = [where('userId', '==', userId)];
+    if (filter?.from) {
+      constraints.push(where('timestamp', '>=', filter.from));
+    }
+    if (filter?.to) {
+      // Append end-of-day time so all timestamps on the "to" date are included
+      constraints.push(where('timestamp', '<=', filter.to + 'T23:59:59.999Z'));
+    }
+    constraints.push(orderBy('timestamp', 'asc'));
+    const q = query(pushupsRef, ...constraints);
 
     return from(getDocs(q)).pipe(
       map((snapshot) =>
