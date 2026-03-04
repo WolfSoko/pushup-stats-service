@@ -1,4 +1,11 @@
-import { Component, input, OnChanges, output, signal } from '@angular/core';
+import {
+  Component,
+  input,
+  linkedSignal,
+  OnChanges,
+  output,
+  signal,
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -111,12 +118,13 @@ export class FilterBarComponent implements OnChanges {
   readonly to = input('');
 
   private didInitializeMode = false;
+  private readonly initialMode = signal<RangeModes>('week');
 
   readonly fromChange = output<string>();
   readonly toChange = output<string>();
   readonly modeChange = output<RangeModes>();
 
-  readonly mode = signal<RangeModes>('week');
+  readonly mode = linkedSignal<RangeModes>(() => this.initialMode());
 
   readonly range = new FormGroup({
     start: new FormControl<Date | null>(null),
@@ -153,7 +161,7 @@ export class FilterBarComponent implements OnChanges {
     // mode is user-driven and should not flip while from/to propagate.
     if (!this.didInitializeMode) {
       const inferred = this.inferMode(start, end);
-      this.mode.set(inferred);
+      this.initialMode.set(inferred);
       this.didInitializeMode = true;
     }
   }
