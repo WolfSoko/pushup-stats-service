@@ -1,16 +1,12 @@
-import { isPlatformServer } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
-import { PLATFORM_ID, TransferState } from '@angular/core';
+import { PLATFORM_ID } from '@angular/core';
+import { Auth } from '@angular/fire/auth';
 import { Firestore } from '@angular/fire/firestore';
 import { PushupRecord } from '@pu-stats/models';
 import { render } from '@testing-library/angular';
 import { firstValueFrom, of } from 'rxjs';
 import { StatsApiService } from './stats-api.service';
-
-jest.mock('@angular/common', () => ({
-  ...jest.requireActual('@angular/common'),
-  isPlatformServer: jest.fn(),
-}));
+import { PushupFirestoreService } from './pushup-firestore.service';
+import { UserConfigFirestoreService } from './user-config-firestore.service';
 
 jest.mock('@angular/fire/firestore', () => ({
   Firestore: jest.fn(),
@@ -26,39 +22,15 @@ jest.mock('@angular/fire/firestore', () => ({
   deleteDoc: jest.fn(() => Promise.resolve()),
 }));
 
-describe('StatsApiService', () => {
-  let httpMock: {
-    get: jest.Mock;
-    post: jest.Mock;
-    put: jest.Mock;
-    delete: jest.Mock;
-  };
-  let transferStateMock: {
-    get: jest.Mock;
-    set: jest.Mock;
-    hasKey: jest.Mock;
-    remove: jest.Mock;
-  };
+const authMock = { currentUser: null };
 
+describe('StatsApiService', () => {
   beforeEach(() => {
-    httpMock = {
-      get: jest.fn(),
-      post: jest.fn(),
-      put: jest.fn(),
-      delete: jest.fn(),
-    };
-    transferStateMock = {
-      get: jest.fn(),
-      set: jest.fn(),
-      hasKey: jest.fn(),
-      remove: jest.fn(),
-    };
     jest.clearAllMocks();
   });
 
   it('loads stats from Firestore in browser', async () => {
     const firestoreFns = await import('@angular/fire/firestore');
-    (isPlatformServer as jest.Mock).mockReturnValue(false);
     (firestoreFns.getDocs as jest.Mock).mockResolvedValueOnce({
       docs: [
         {
@@ -86,10 +58,9 @@ describe('StatsApiService', () => {
     const { fixture } = await render('', {
       providers: [
         StatsApiService,
-        { provide: HttpClient, useValue: httpMock },
+        { provide: Auth, useValue: authMock },
         { provide: Firestore, useValue: {} },
         { provide: PLATFORM_ID, useValue: 'browser' },
-        { provide: TransferState, useValue: transferStateMock },
       ],
     });
 
@@ -99,31 +70,34 @@ describe('StatsApiService', () => {
     );
 
     expect(result.meta.total).toBe(15);
-    expect(httpMock.get).not.toHaveBeenCalled();
   });
 
-  it('uses transferState/http on server', async () => {
-    (isPlatformServer as jest.Mock).mockReturnValue(true);
-    httpMock.get.mockReturnValue(of({ meta: { total: 2 }, series: [] }));
+  it('returns empty stats when pushup firestore is unavailable', async () => {
     const { fixture } = await render('', {
       providers: [
         StatsApiService,
-        { provide: HttpClient, useValue: httpMock },
-        { provide: Firestore, useValue: {} },
+        { provide: Auth, useValue: authMock },
+        {
+          provide: PushupFirestoreService,
+          useValue: {
+            listPushups: jest.fn().mockReturnValue(of([])),
+            createPushup: jest.fn(),
+            updatePushup: jest.fn(),
+            deletePushup: jest.fn(),
+          },
+        },
+        { provide: UserConfigFirestoreService, useValue: null },
         { provide: PLATFORM_ID, useValue: 'server' },
-        { provide: TransferState, useValue: transferStateMock },
       ],
     });
     const service = fixture.debugElement.injector.get(StatsApiService);
-    let result: unknown;
-    service.load().subscribe((r) => (result = r));
-    expect(result).toEqual({ meta: { total: 2 }, series: [] });
-    expect(transferStateMock.set).toHaveBeenCalled();
+    const result = await firstValueFrom(service.load());
+    expect(result.meta.total).toBe(0);
+    expect(result.series).toEqual([]);
   });
 
   it('filters pushups in browser list mode by passing constraints to Firestore', async () => {
     const firestoreFns = await import('@angular/fire/firestore');
-    (isPlatformServer as jest.Mock).mockReturnValue(false);
     // Simulate Firestore returning only records that match the server-side filter
     (firestoreFns.getDocs as jest.Mock).mockResolvedValue({
       docs: [
@@ -141,10 +115,9 @@ describe('StatsApiService', () => {
     const { fixture } = await render('', {
       providers: [
         StatsApiService,
-        { provide: HttpClient, useValue: httpMock },
+        { provide: Auth, useValue: authMock },
         { provide: Firestore, useValue: {} },
         { provide: PLATFORM_ID, useValue: 'browser' },
-        { provide: TransferState, useValue: transferStateMock },
       ],
     });
     const service = fixture.debugElement.injector.get(StatsApiService);
@@ -171,7 +144,6 @@ describe('StatsApiService', () => {
 
   it('uses firestore writes in browser for create/update/delete', async () => {
     const firestoreFns = await import('@angular/fire/firestore');
-    (isPlatformServer as jest.Mock).mockReturnValue(false);
     (firestoreFns.doc as jest.Mock)
       .mockReturnValueOnce({ id: 'new1' })
       .mockReturnValueOnce({ id: 'new1' })
@@ -192,10 +164,9 @@ describe('StatsApiService', () => {
     const { fixture } = await render('', {
       providers: [
         StatsApiService,
-        { provide: HttpClient, useValue: httpMock },
+        { provide: Auth, useValue: authMock },
         { provide: Firestore, useValue: {} },
         { provide: PLATFORM_ID, useValue: 'browser' },
-        { provide: TransferState, useValue: transferStateMock },
       ],
     });
 
@@ -210,22 +181,18 @@ describe('StatsApiService', () => {
     expect(firestoreFns.setDoc).toHaveBeenCalled();
     expect(firestoreFns.updateDoc).toHaveBeenCalled();
     expect(firestoreFns.deleteDoc).toHaveBeenCalled();
-    expect(httpMock.post).not.toHaveBeenCalled();
-    expect(httpMock.put).not.toHaveBeenCalled();
   });
 
   it('updatePushup always uses Firestore and returns void', async () => {
     const firestoreFns = await import('@angular/fire/firestore');
-    (isPlatformServer as jest.Mock).mockReturnValue(false);
     (firestoreFns.doc as jest.Mock).mockReturnValue({ id: 'id1' });
 
     const { fixture } = await render('', {
       providers: [
         StatsApiService,
-        { provide: HttpClient, useValue: httpMock },
+        { provide: Auth, useValue: authMock },
         { provide: Firestore, useValue: {} },
         { provide: PLATFORM_ID, useValue: 'browser' },
-        { provide: TransferState, useValue: transferStateMock },
       ],
     });
 
@@ -236,21 +203,18 @@ describe('StatsApiService', () => {
 
     expect(result).toBeUndefined();
     expect(firestoreFns.updateDoc).toHaveBeenCalled();
-    expect(httpMock.put).not.toHaveBeenCalled();
   });
 
   it('updatePushup uses Firestore even on server (no HTTP PUT)', async () => {
     const firestoreFns = await import('@angular/fire/firestore');
-    (isPlatformServer as jest.Mock).mockReturnValue(true);
     (firestoreFns.doc as jest.Mock).mockReturnValue({ id: 'id1' });
 
     const { fixture } = await render('', {
       providers: [
         StatsApiService,
-        { provide: HttpClient, useValue: httpMock },
+        { provide: Auth, useValue: authMock },
         { provide: Firestore, useValue: {} },
         { provide: PLATFORM_ID, useValue: 'server' },
-        { provide: TransferState, useValue: transferStateMock },
       ],
     });
 
@@ -258,6 +222,5 @@ describe('StatsApiService', () => {
     await firstValueFrom(service.updatePushup('id1', { reps: 5 }));
 
     expect(firestoreFns.updateDoc).toHaveBeenCalled();
-    expect(httpMock.put).not.toHaveBeenCalled();
   });
 });

@@ -1,12 +1,8 @@
-import { isPlatformServer } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
 import {
   inject,
   Injectable,
-  makeStateKey,
-  PLATFORM_ID,
-  TransferState,
 } from '@angular/core';
+import { Auth } from '@angular/fire/auth';
 import {
   firstValueFrom,
   from,
@@ -14,7 +10,6 @@ import {
   Observable,
   of,
   switchMap,
-  tap,
 } from 'rxjs';
 import {
   PushupCreate,
@@ -23,83 +18,38 @@ import {
   StatsFilter,
   StatsResponse,
 } from '@pu-stats/models';
-import { buildServerApiBaseUrl } from './base-url.util';
 import { PushupFirestoreService } from './pushup-firestore.service';
 import { UserConfigFirestoreService } from './user-config-firestore.service';
 
-const PUSHUPS_ENDPOINT = `/api/pushups`;
-const STATS_ENDPOINT = `/api/stats`;
-
 @Injectable({ providedIn: 'root' })
 export class StatsApiService {
-  private readonly http = inject(HttpClient);
+  private readonly auth = inject(Auth, { optional: true });
   private readonly pushupFirestore = inject(PushupFirestoreService, {
     optional: true,
   });
   private readonly userConfigFirestore = inject(UserConfigFirestoreService, {
     optional: true,
   });
-  private readonly platformId = inject(PLATFORM_ID);
-  private readonly transferState = inject(TransferState);
 
   load(filter: StatsFilter = {}): Observable<StatsResponse> {
-    if (!isPlatformServer(this.platformId)) {
-      return this.listPushups(filter).pipe(
-        switchMap((rows) =>
-          from(this.resolveDailyGoal(this.resolveUserId())).pipe(
-            map((goal) => this.toStatsResponse(rows, filter, goal))
-          )
+    return this.listPushups(filter).pipe(
+      switchMap((rows) =>
+        from(this.resolveDailyGoal(this.resolveUserId())).pipe(
+          map((goal) => this.toStatsResponse(rows, filter, goal))
         )
-      );
-    }
-
-    const params = new URLSearchParams();
-    if (filter.from) params.set('from', filter.from);
-    if (filter.to) params.set('to', filter.to);
-    const query = params.toString();
-    const key = makeStateKey<StatsResponse>(`stats:${query || 'all'}`);
-
-    if (this.transferState.hasKey(key)) {
-      const cached = this.transferState.get<StatsResponse>(
-        key,
-        {} as StatsResponse
-      );
-      this.transferState.remove(key);
-      return of(cached);
-    }
-
-    return this.http
-      .get<StatsResponse>(
-        `${this.baseUrl()}${STATS_ENDPOINT}${query ? `?${query}` : ''}`
       )
-      .pipe(
-        tap((payload) => {
-          if (isPlatformServer(this.platformId)) {
-            this.transferState.set(key, payload);
-          }
-        })
-      );
+    );
   }
 
   listPushups(filter: StatsFilter = {}): Observable<PushupRecord[]> {
-    if (isPlatformServer(this.platformId)) {
-      return this.http
-        .get<PushupRecord[]>(`${this.baseUrl()}${PUSHUPS_ENDPOINT}`)
-        .pipe(map((rows) => this.applyDateFilter(rows, filter)));
-    }
-
     const userId = this.resolveUserId();
-    return this.requirePushupFirestore().listPushups(userId, filter);
+    if (!this.pushupFirestore) {
+      return of([]);
+    }
+    return this.pushupFirestore.listPushups(userId, filter);
   }
 
   createPushup(payload: PushupCreate): Observable<PushupRecord> {
-    if (isPlatformServer(this.platformId)) {
-      return this.http.post<PushupRecord>(
-        `${this.baseUrl()}${PUSHUPS_ENDPOINT}`,
-        payload
-      );
-    }
-
     return this.requirePushupFirestore().createPushup(
       this.resolveUserId(),
       payload
@@ -111,22 +61,11 @@ export class StatsApiService {
   }
 
   deletePushup(id: string): Observable<{ ok: true }> {
-    if (isPlatformServer(this.platformId)) {
-      return this.http.delete<{ ok: true }>(
-        `${this.baseUrl()}${PUSHUPS_ENDPOINT}/${id}`
-      );
-    }
-
     return this.requirePushupFirestore().deletePushup(id);
   }
 
-  private baseUrl(): string {
-    if (!isPlatformServer(this.platformId)) return '';
-    return buildServerApiBaseUrl(this.platformId, 'StatsApiService');
-  }
-
   private resolveUserId(): string {
-    return 'default';
+    return this.auth?.currentUser?.uid ?? 'default';
   }
 
   private requirePushupFirestore(): PushupFirestoreService {
@@ -134,19 +73,6 @@ export class StatsApiService {
       throw new Error('PushupFirestoreService provider missing');
     }
     return this.pushupFirestore;
-  }
-
-  private applyDateFilter(
-    rows: PushupRecord[],
-    filter: StatsFilter
-  ): PushupRecord[] {
-    return rows.filter((row) => {
-      const date = row.timestamp.slice(0, 10);
-      return (
-        (!filter.from || date >= filter.from) &&
-        (!filter.to || date <= filter.to)
-      );
-    });
   }
 
   private async resolveDailyGoal(userId: string): Promise<number> {
