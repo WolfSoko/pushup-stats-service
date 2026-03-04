@@ -1,12 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import fs from 'node:fs';
-import path from 'node:path';
-import {
-  applicationDefault,
-  cert,
-  getApps,
-  initializeApp,
-} from 'firebase-admin/app';
+import { applicationDefault, getApps, initializeApp } from 'firebase-admin/app';
 import { getFirestore, type Firestore } from 'firebase-admin/firestore';
 
 export type PushupDoc = {
@@ -21,13 +14,6 @@ export type PushupDoc = {
 };
 
 const DEFAULT_PROJECT_ID = process.env.FIREBASE_PROJECT_ID || 'pushup-stats';
-const DEFAULT_SERVICE_ACCOUNT_PATH =
-  process.env.GOOGLE_APPLICATION_CREDENTIALS ||
-  path.join(
-    process.env.HOME || '/home/wolf',
-    '.firebase',
-    'pushup-stats-firebase-adminsdk-fbsvc-e502979fa7.json'
-  );
 
 @Injectable()
 export class PushupDbService {
@@ -35,14 +21,8 @@ export class PushupDbService {
 
   constructor() {
     if (getApps().length === 0) {
-      const credential = fs.existsSync(DEFAULT_SERVICE_ACCOUNT_PATH)
-        ? cert(
-            JSON.parse(fs.readFileSync(DEFAULT_SERVICE_ACCOUNT_PATH, 'utf8'))
-          )
-        : applicationDefault();
-
       initializeApp({
-        credential,
+        credential: applicationDefault(),
         projectId: DEFAULT_PROJECT_ID,
       });
     }
