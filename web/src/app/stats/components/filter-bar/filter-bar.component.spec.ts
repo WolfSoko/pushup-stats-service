@@ -125,6 +125,24 @@ describe('FilterBarComponent', () => {
     expect(component.mode()).toBe('month');
   });
 
+  it('shifts month ranges by exactly one full month without overflow', () => {
+    component.setMode('month');
+    component.range.patchValue({
+      start: new Date(2026, 0, 1),
+      end: new Date(2026, 0, 31),
+    });
+
+    component.shiftRange(1);
+
+    expect(component.range.controls.start.value).toEqual(new Date(2026, 1, 1));
+    expect(component.range.controls.end.value).toEqual(new Date(2026, 1, 28));
+
+    component.shiftRange(-1);
+
+    expect(component.range.controls.start.value).toEqual(new Date(2026, 0, 1));
+    expect(component.range.controls.end.value).toEqual(new Date(2026, 0, 31));
+  });
+
   it('jumps to current week with today button helper', () => {
     component.setMode('week');
     component.jumpToToday();

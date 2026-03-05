@@ -241,11 +241,15 @@ export class FilterBarComponent implements OnChanges {
       nextStart.setDate(nextStart.getDate() + direction * 7);
       nextEnd.setDate(nextEnd.getDate() + direction * 7);
     } else {
-      nextStart.setMonth(nextStart.getMonth() + direction);
-      nextEnd.setMonth(nextEnd.getMonth() + direction);
-      nextEnd.setDate(
-        new Date(nextEnd.getFullYear(), nextEnd.getMonth() + 1, 0).getDate()
+      // Always keep full month boundaries and avoid JS date overflow
+      // (e.g. Jan 31 + 1 month becoming March).
+      const anchor = new Date(
+        start.getFullYear(),
+        start.getMonth() + direction,
+        1
       );
+      nextStart.setFullYear(anchor.getFullYear(), anchor.getMonth(), 1);
+      nextEnd.setFullYear(anchor.getFullYear(), anchor.getMonth() + 1, 0);
     }
 
     this.range.patchValue({ start: nextStart, end: nextEnd });

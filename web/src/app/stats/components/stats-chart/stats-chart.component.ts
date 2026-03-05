@@ -77,6 +77,8 @@ export class StatsChartComponent implements AfterViewInit {
     'week'
   );
   readonly series = input<StatsSeriesEntry[]>([]);
+  readonly from = input<string | null>(null);
+  readonly to = input<string | null>(null);
 
   readonly hourlyTitle = $localize`:@@chart.titleHourly:Verlauf (Stundenwerte)`;
   readonly dailyTitle = $localize`:@@chart.titleDaily:Verlauf (Tageswerte)`;
@@ -179,6 +181,12 @@ export class StatsChartComponent implements AfterViewInit {
         scales: {
           x: {
             type: 'time',
+            min: this.from()
+              ? new Date(`${this.from()}T00:00:00`).getTime()
+              : undefined,
+            max: this.to()
+              ? new Date(`${this.to()}T23:59:59`).getTime()
+              : undefined,
             time: {
               unit: this.granularity() === 'hourly' ? 'hour' : 'day',
             },
