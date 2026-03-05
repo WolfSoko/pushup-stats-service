@@ -65,11 +65,11 @@ describe('appRoutes', () => {
       expect(route?.canActivate).toEqual([authGuard]);
     }
 
-    const publicPaths = ['', 'login'];
-    for (const path of publicPaths) {
-      const route = appRoutes.find((r) => r.path === path);
-      expect(route?.canActivate).toEqual([publicOnlyGuard]);
-    }
+    const rootRoute = appRoutes.find((r) => r.path === '');
+    expect(rootRoute?.canActivate).toBeUndefined();
+
+    const loginRoute = appRoutes.find((r) => r.path === 'login');
+    expect(loginRoute?.canActivate).toEqual([publicOnlyGuard]);
   });
 
   it('redirects legacy /landing and wildcard to /', () => {

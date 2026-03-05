@@ -6,7 +6,6 @@ export const appRoutes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    canActivate: [publicOnlyGuard],
     loadComponent: () =>
       import('./marketing/shell/landing-page.component').then(
         (m) => m.LandingPageComponent
