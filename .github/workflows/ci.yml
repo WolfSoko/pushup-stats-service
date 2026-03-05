@@ -90,6 +90,6 @@ jobs:
       - name: Install Firebase CLI
         run: npm i -g firebase-tools
 
-      - name: Deploy Functions
-        run: firebase deploy --only functions --project "${{ secrets.FIREBASE_PROJECT_ID }}" --non-interactive
+      - name: Deploy Functions + Firestore Rules
+        run: firebase deploy --only functions,firestore:rules --project "${{ secrets.FIREBASE_PROJECT_ID }}" --non-interactive
         working-directory: data-store
