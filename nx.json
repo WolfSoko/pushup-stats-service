@@ -67,6 +67,7 @@
       "unitTestRunner": "jest"
     }
   },
+  "defaultProject": "web",
   "nxCloudId": "698bc9d62038843e829c77dd",
   "plugins": [
     {
