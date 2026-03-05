@@ -1,9 +1,7 @@
 name: Deploy SSR (Cloud Run) + Firebase Hosting
 
 on:
-  push:
-    branches:
-      - main
+  workflow_call:
   workflow_dispatch:
 
 env:

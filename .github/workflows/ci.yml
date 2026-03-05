@@ -53,3 +53,10 @@ jobs:
       - name: Nx fix-ci (always)
         if: always()
         run: npx nx fix-ci
+
+  deploy:
+    name: Deploy (after green CI on main)
+    needs: lint-test-build
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    uses: ./.github/workflows/deploy-ssr-firebase.yml
+    secrets: inherit
