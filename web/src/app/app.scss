@@ -53,6 +53,21 @@ mat-card-content + mat-card-footer {
     flex: 1 1 auto;
   }
 
+  .brand-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+
+    img {
+      width: 28px;
+      height: 28px;
+      display: block;
+    }
+  }
+
   .app-title {
     font-weight: 700;
   }

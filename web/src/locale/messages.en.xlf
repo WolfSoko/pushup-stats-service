@@ -173,6 +173,15 @@
         <target>Open menu</target>
       </segment>
     </unit>
+    <unit id="nav.toLanding">
+      <notes>
+        <note category="location">web/src/app/app.html</note>
+      </notes>
+      <segment state="translated">
+        <source>Zur Landingpage</source>
+        <target>Go to landing page</target>
+      </segment>
+    </unit>
     <unit id="title.fallback">
       <notes>
         <note category="location">web/src/app/app.ts:65</note>
