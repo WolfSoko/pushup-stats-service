@@ -98,6 +98,7 @@ test('settings page is reachable from navigation', async ({ page }) => {
   // Reduce animations/transitions (Material sidenav) to avoid "element is not stable" flakiness.
   await page.emulateMedia({ reducedMotion: 'reduce' });
 
+  await signInTestUser(page);
   await page.goto('/');
   await expect(
     page.getByRole('heading', { name: 'Liegestütze Statistik' })
