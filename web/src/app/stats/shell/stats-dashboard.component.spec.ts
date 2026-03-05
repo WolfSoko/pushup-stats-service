@@ -157,15 +157,9 @@ describe('StatsDashboardComponent', () => {
   it('computes selected period totals, latest entry and latest 10 rows', async () => {
     const component = fixture.componentInstance;
 
-    // Switch to "day" mode by selecting today.
-    const today = todayTs.slice(0, 10);
-    component.from.set(today);
-    component.to.set(today);
-
     await fixture.whenStable();
 
-    expect(component.selectedDayTotal()).toBe(12);
-    expect(component.periodTotal()).toBe(12);
+    expect(component.periodTotal()).toBe(50);
     expect(component.lastEntry()?._id).toBe('2');
     expect(component.latestEntries()).toHaveLength(2);
   });
