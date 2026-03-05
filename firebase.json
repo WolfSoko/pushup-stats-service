@@ -1,0 +1,47 @@
+{
+  "hosting": {
+    "public": "dist/web/browser",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "headers": [
+      {
+        "source": "**/*.@(js|css|png|jpg|jpeg|gif|svg|webp|ico|woff|woff2)",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public,max-age=31536000,immutable"
+          }
+        ]
+      }
+    ],
+    "rewrites": [
+      {
+        "source": "/api/**",
+        "run": {
+          "serviceId": "__CLOUD_RUN_SERVICE__",
+          "region": "__GCP_REGION__"
+        }
+      },
+      {
+        "source": "/socket.io/**",
+        "run": {
+          "serviceId": "__CLOUD_RUN_SERVICE__",
+          "region": "__GCP_REGION__"
+        }
+      },
+      {
+        "source": "/health",
+        "run": {
+          "serviceId": "__CLOUD_RUN_SERVICE__",
+          "region": "__GCP_REGION__"
+        }
+      },
+      {
+        "source": "**",
+        "run": {
+          "serviceId": "__CLOUD_RUN_SERVICE__",
+          "region": "__GCP_REGION__"
+        }
+      }
+    ]
+  }
+}
