@@ -13,10 +13,9 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatDividerModule } from '@angular/material/divider';
-import { SwUpdate, VersionReadyEvent } from '@angular/service-worker';
+import { SwUpdate, VersionDetectedEvent } from '@angular/service-worker';
 // eslint-disable-next-line @nx/enforce-module-boundaries
 import { AuthStore, UserMenuComponent } from '@pu-auth/auth';
-import { filter } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { UserContextService } from './user-context.service';
 
@@ -76,13 +75,15 @@ export class App {
     if (!this.swUpdate?.isEnabled) return;
 
     this.swUpdate.versionUpdates
-      .pipe(
-        filter(
-          (event): event is VersionReadyEvent => event.type === 'VERSION_READY'
-        ),
-        takeUntilDestroyed(this.destroyRef)
-      )
-      .subscribe(() => {
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((event) => {
+        if (event.type === 'VERSION_DETECTED') {
+          this.showBackgroundUpdateToast(event);
+          return;
+        }
+
+        if (event.type !== 'VERSION_READY') return;
+
         const ref = this.snackBar.open(
           $localize`Neue Version verfügbar`,
           $localize`Neu laden`,
@@ -103,5 +104,13 @@ export class App {
     await this.auth.logout();
     this.navOpen.set(false);
     await this.router.navigateByUrl('/login');
+  }
+
+  private showBackgroundUpdateToast(_event: VersionDetectedEvent): void {
+    this.snackBar.open($localize`Update wird im Hintergrund geladen …`, '', {
+      duration: 5000,
+      horizontalPosition: 'center',
+      verticalPosition: 'bottom',
+    });
   }
 }
