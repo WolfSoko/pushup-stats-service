@@ -1,5 +1,5 @@
 // eslint-disable-next-line @nx/enforce-module-boundaries
-import { LoginComponent } from '@pu-auth/auth';
+import { authGuard, LoginComponent, publicOnlyGuard } from '@pu-auth/auth';
 import { appRoutes } from './app.routes';
 import { AnalysisPageComponent } from './stats/shell/analysis-page.component';
 import { EntriesPageComponent } from './stats/shell/entries-page.component';
@@ -40,6 +40,17 @@ describe('appRoutes', () => {
     const route = appRoutes.find((r) => r.path === 'login');
     const component = await route?.loadComponent?.();
     expect(component).toBe(LoginComponent);
+  });
+
+  it('protects app routes with authGuard and keeps login public-only', () => {
+    const protectedPaths = ['', 'data', 'analysis', 'settings'];
+    for (const path of protectedPaths) {
+      const route = appRoutes.find((r) => r.path === path);
+      expect(route?.canActivate).toEqual([authGuard]);
+    }
+
+    const loginRoute = appRoutes.find((r) => r.path === 'login');
+    expect(loginRoute?.canActivate).toEqual([publicOnlyGuard]);
   });
 
   it('redirects wildcard route to dashboard', () => {
