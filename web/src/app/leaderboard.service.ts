@@ -1,4 +1,5 @@
 import { inject, Injectable } from '@angular/core';
+import { Auth } from '@angular/fire/auth';
 import {
   collection,
   doc,
@@ -15,9 +16,18 @@ export type LeaderboardPeriod = 'daily' | 'weekly' | 'monthly';
 export type LeaderboardEntry = {
   alias: string;
   reps: number;
+  rank: number;
+  isCurrent?: boolean;
 };
 
-export type LeaderboardData = Record<LeaderboardPeriod, LeaderboardEntry[]>;
+export type LeaderboardBucket = {
+  top: LeaderboardEntry[];
+  current: LeaderboardEntry | null;
+};
+
+export type LeaderboardData = Record<LeaderboardPeriod, LeaderboardBucket>;
+
+const TOP_N = 10;
 
 type PushupRow = {
   userId: string;
@@ -28,37 +38,59 @@ type PushupRow = {
 @Injectable({ providedIn: 'root' })
 export class LeaderboardService {
   private readonly firestore = inject(Firestore, { optional: true });
+  private readonly auth = inject(Auth, { optional: true });
 
   async load(): Promise<LeaderboardData> {
-    const cached = await this.loadSnapshot();
-    if (cached) return cached;
-
+    const currentUserId = this.auth?.currentUser?.uid ?? null;
     const start = this.startOfMonthIso();
     const rows = await this.fetchRows(start);
+
+    const fallback = {
+      daily: this.aggregate(rows, 'daily', currentUserId),
+      weekly: this.aggregate(rows, 'weekly', currentUserId),
+      monthly: this.aggregate(rows, 'monthly', currentUserId),
+    };
+
+    const cached = await this.loadSnapshot(currentUserId);
+    if (!cached) return fallback;
+
     return {
-      daily: this.aggregate(rows, 'daily'),
-      weekly: this.aggregate(rows, 'weekly'),
-      monthly: this.aggregate(rows, 'monthly'),
+      daily: { top: cached.daily.top, current: fallback.daily.current },
+      weekly: { top: cached.weekly.top, current: fallback.weekly.current },
+      monthly: { top: cached.monthly.top, current: fallback.monthly.current },
     };
   }
 
-  private async loadSnapshot(): Promise<LeaderboardData | null> {
+  private async loadSnapshot(
+    currentUserId: string | null
+  ): Promise<LeaderboardData | null> {
     if (!this.firestore) return null;
 
     const snap = await getDoc(doc(this.firestore, 'leaderboards', 'current'));
     if (!snap.exists()) return null;
 
     const data = snap.data() as {
-      periods?: Partial<LeaderboardData>;
+      periods?: Partial<
+        Record<LeaderboardPeriod, Array<{ alias: string; reps: number }>>
+      >;
     };
 
     const periods = data?.periods;
     if (!periods) return null;
 
+    const mapTop = (arr: Array<{ alias: string; reps: number }> | undefined) =>
+      (Array.isArray(arr) ? arr : []).slice(0, TOP_N).map((entry, i) => ({
+        alias: entry.alias,
+        reps: entry.reps,
+        rank: i + 1,
+        isCurrent:
+          !!currentUserId && entry.alias === this.toAlias(currentUserId),
+      }));
+
     return {
-      daily: Array.isArray(periods.daily) ? periods.daily : [],
-      weekly: Array.isArray(periods.weekly) ? periods.weekly : [],
-      monthly: Array.isArray(periods.monthly) ? periods.monthly : [],
+      daily: { top: mapTop(periods.daily), current: null },
+      weekly: { top: mapTop(periods.weekly), current: null },
+      monthly: { top: mapTop(periods.monthly), current: null },
     };
   }
 
@@ -87,8 +119,9 @@ export class LeaderboardService {
 
   private aggregate(
     rows: PushupRow[],
-    period: LeaderboardPeriod
-  ): LeaderboardEntry[] {
+    period: LeaderboardPeriod,
+    currentUserId: string | null
+  ): LeaderboardBucket {
     const bucket = this.bucketOf(new Date(), period);
     const totals = new Map<string, number>();
 
@@ -98,10 +131,24 @@ export class LeaderboardService {
       totals.set(row.userId, (totals.get(row.userId) ?? 0) + row.reps);
     }
 
-    return [...totals.entries()]
-      .map(([userId, reps]) => ({ alias: this.toAlias(userId), reps }))
+    const ranked = [...totals.entries()]
+      .map(([userId, reps]) => ({
+        userId,
+        alias: this.toAlias(userId),
+        reps,
+      }))
       .sort((a, b) => b.reps - a.reps)
-      .slice(0, 10);
+      .map((entry, index) => ({
+        alias: entry.alias,
+        reps: entry.reps,
+        rank: index + 1,
+        isCurrent: !!currentUserId && entry.userId === currentUserId,
+      }));
+
+    return {
+      top: ranked.slice(0, TOP_N),
+      current: ranked.find((entry) => entry.isCurrent) ?? null,
+    };
   }
 
   private toAlias(userId: string): string {

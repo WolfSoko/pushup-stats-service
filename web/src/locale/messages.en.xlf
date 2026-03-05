@@ -1402,6 +1402,15 @@
         <target>No data yet</target>
       </segment>
     </unit>
+    <unit id="landing.leaderboard.ownPosition">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+      </notes>
+      <segment state="translated">
+        <source>Deine Position: #<x id="INTERPOLATION" equiv-text="{{ me.rank }}"/> · <x id="INTERPOLATION_1" equiv-text="{{ me.reps }}"/> Reps</source>
+        <target>Your position: #<x id="INTERPOLATION" equiv-text="{{ me.rank }}"/> · <x id="INTERPOLATION_1" equiv-text="{{ me.reps }}"/> reps</target>
+      </segment>
+    </unit>
     <unit id="dashboard.leaderboard.title">
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html</note>

@@ -123,7 +123,11 @@ export class StatsDashboardComponent {
   readonly leaderboardResource = resource({
     loader: async () => {
       if (!this.leaderboardApi) {
-        return { daily: [], weekly: [], monthly: [] };
+        return {
+          daily: { top: [], current: null },
+          weekly: { top: [], current: null },
+          monthly: { top: [], current: null },
+        };
       }
       return this.leaderboardApi.load();
     },
@@ -226,7 +230,25 @@ export class StatsDashboardComponent {
   readonly leaderboardEntries = computed(() => {
     const data = this.leaderboardResource.value();
     if (!data) return [];
-    return data[this.leaderboardPeriod()];
+    return data[this.leaderboardPeriod()].top;
+  });
+  readonly currentUserLeaderboardEntry = computed(() => {
+    const data = this.leaderboardResource.value();
+    if (!data) return null;
+    return data[this.leaderboardPeriod()].current;
+  });
+  readonly leaderboardSlots = computed(() => {
+    const top = this.leaderboardEntries();
+    return Array.from({ length: 10 }, (_, index) => {
+      const entry = top[index];
+      return (
+        entry ?? {
+          alias: '—',
+          reps: 0,
+          rank: index + 1,
+        }
+      );
+    });
   });
   readonly loading = computed(() => {
     const status = this.statsResource.status();

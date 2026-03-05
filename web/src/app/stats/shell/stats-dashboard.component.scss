@@ -95,10 +95,22 @@ h1 {
   gap: 6px;
 
   li {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
     gap: 10px;
   }
+
+  .rank {
+    color: #9ab4ea;
+    min-width: 2.5rem;
+  }
+}
+
+.own-rank {
+  margin-top: 10px;
+  color: #9bd8c3;
+  font-weight: 600;
 }
 
 .mini-badges {

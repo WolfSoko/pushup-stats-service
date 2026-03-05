@@ -68,18 +68,23 @@
       </div>
 
       <ol class="leaderboard-list">
-        @for (entry of leaderboardEntries(); track entry.alias) {
+        @for (entry of leaderboardSlots(); track entry.rank) {
           <li>
+            <span class="rank">#{{ entry.rank }}</span>
             <span>{{ entry.alias }}</span>
             <strong
               >{{ entry.reps }}
               <span i18n="@@landing.leaderboard.reps">Reps</span></strong
             >
           </li>
-        } @empty {
-          <li i18n="@@landing.leaderboard.empty">Noch keine Daten</li>
         }
       </ol>
+
+      @if (currentUserLeaderboardEntry(); as me) {
+        <p class="own-rank" i18n="@@landing.leaderboard.ownPosition">
+          Deine Position: #{{ me.rank }} · {{ me.reps }} Reps
+        </p>
+      }
     </mat-card-content>
   </mat-card>
 

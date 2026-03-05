@@ -100,15 +100,27 @@ h1 {
   }
 
   li {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
     gap: 12px;
     font-variant-numeric: tabular-nums;
+  }
+
+  .rank {
+    color: #9ab4ea;
+    min-width: 2.5rem;
   }
 
   .alias {
     color: #d8e5ff;
     letter-spacing: 0.02em;
+  }
+
+  .own-rank {
+    margin: 12px 0 0;
+    color: #9bd8c3;
+    font-weight: 600;
   }
 }
 

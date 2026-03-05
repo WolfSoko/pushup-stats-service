@@ -30,7 +30,11 @@ export class LandingPageComponent {
   readonly leaderboardResource = resource({
     loader: async () => {
       if (!this.leaderboardApi) {
-        return { daily: [], weekly: [], monthly: [] };
+        return {
+          daily: { top: [], current: null },
+          weekly: { top: [], current: null },
+          monthly: { top: [], current: null },
+        };
       }
       return this.leaderboardApi.load();
     },
@@ -39,6 +43,26 @@ export class LandingPageComponent {
   readonly leaderboardEntries = computed(() => {
     const data = this.leaderboardResource.value();
     if (!data) return [];
-    return data[this.period()];
+    return data[this.period()].top;
+  });
+
+  readonly currentUserEntry = computed(() => {
+    const data = this.leaderboardResource.value();
+    if (!data) return null;
+    return data[this.period()].current;
+  });
+
+  readonly leaderboardSlots = computed(() => {
+    const top = this.leaderboardEntries();
+    return Array.from({ length: 10 }, (_, index) => {
+      const entry = top[index];
+      return (
+        entry ?? {
+          alias: '—',
+          reps: 0,
+          rank: index + 1,
+        }
+      );
+    });
   });
 }
