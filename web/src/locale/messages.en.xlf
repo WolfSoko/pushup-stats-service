@@ -1276,6 +1276,15 @@
         <target>Log in</target>
       </segment>
     </unit>
+    <unit id="landing.cta.dashboard">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+      </notes>
+      <segment state="translated">
+        <source>Zum Dashboard</source>
+        <target>Go to dashboard</target>
+      </segment>
+    </unit>
     <unit id="landing.leaderboard.title">
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>

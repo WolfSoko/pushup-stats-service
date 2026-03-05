@@ -14,6 +14,7 @@ describe('LandingPageComponent', () => {
       screen.getByRole('link', { name: 'Jetzt registrieren' })
     ).toBeTruthy();
     expect(screen.getByRole('link', { name: 'Einloggen' })).toBeTruthy();
+    expect(screen.getByRole('link', { name: 'Zum Dashboard' })).toBeTruthy();
     expect(screen.getByText('Bestenliste')).toBeTruthy();
   });
 });
