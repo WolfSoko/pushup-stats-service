@@ -1,5 +1,10 @@
 import { Component, DestroyRef, effect, inject, signal } from '@angular/core';
-import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import {
+  Router,
+  RouterLink,
+  RouterLinkActive,
+  RouterOutlet,
+} from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
@@ -38,6 +43,7 @@ export class App {
   private readonly snackBar = inject(MatSnackBar);
   private readonly destroyRef = inject(DestroyRef);
   private readonly titleService = inject(Title);
+  private readonly router = inject(Router);
   private readonly user = inject(UserContextService);
   private readonly auth = inject(AuthStore);
 
@@ -96,5 +102,6 @@ export class App {
   async logout(): Promise<void> {
     await this.auth.logout();
     this.navOpen.set(false);
+    await this.router.navigateByUrl('/login');
   }
 }
