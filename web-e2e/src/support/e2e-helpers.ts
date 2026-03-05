@@ -126,26 +126,27 @@ export async function getOrCreateTestUserId(page: Page): Promise<string> {
 export async function signInTestUser(page: Page): Promise<string> {
   const uid = await getOrCreateTestUserId(page);
   await page.goto('/login');
+  await page.waitForLoadState('domcontentloaded');
+  await page.waitForTimeout(300);
 
-  await page.waitForSelector('input[type="email"]', {
-    state: 'visible',
-    timeout: 30000,
-  });
+  // Already authenticated users are redirected away from /login by guard.
+  if (!page.url().includes('/login')) return uid;
 
-  await page.getByLabel('Email').fill(TEST_USER_EMAIL);
-  const passwordInput = page.getByLabel('Passwort');
-  await passwordInput.fill(TEST_USER_PASSWORD);
+  const emailInput = page.locator('input[type="email"]').first();
+  await expect(emailInput).toBeVisible({ timeout: 30000 });
+  await emailInput.click();
+  await emailInput.pressSequentially(TEST_USER_EMAIL, { delay: 20 });
+
+  const passwordInput = page.locator('input[type="password"]').first();
+  await passwordInput.click();
+  await passwordInput.pressSequentially(TEST_USER_PASSWORD, { delay: 20 });
   await passwordInput.press('Tab');
-  await page.waitForTimeout(2000);
 
-  const loginButton = page.getByRole('button', {
-    name: 'Anmelden',
-    exact: true,
-  });
+  const loginButton = page.locator('button.login-button').first();
   await expect(loginButton).toBeEnabled({ timeout: 20000 });
 
   await loginButton.click();
-  await page.waitForURL('/');
+  await page.waitForURL((url) => !url.pathname.endsWith('/login'));
   return uid;
 }
 
