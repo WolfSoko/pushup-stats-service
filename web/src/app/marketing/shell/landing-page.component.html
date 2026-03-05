@@ -30,6 +30,27 @@
     />
   </section>
 
+  <section class="leaderboard" aria-labelledby="leaderboard-title">
+    <h2 id="leaderboard-title" i18n="@@landing.leaderboard.title">
+      Tages-Bestenliste
+    </h2>
+    <p i18n="@@landing.leaderboard.privacy">
+      Privacy-first: Nur anonymisierte Alias-Namen werden angezeigt.
+    </p>
+
+    <ol>
+      @for (entry of dailyLeaderboard; track entry.alias) {
+        <li>
+          <span class="alias">{{ entry.alias }}</span>
+          <strong
+            >{{ entry.reps }}
+            <span i18n="@@landing.leaderboard.reps">Reps</span></strong
+          >
+        </li>
+      }
+    </ol>
+  </section>
+
   <section class="feature-grid">
     <mat-card>
       <mat-card-header>

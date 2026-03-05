@@ -61,6 +61,45 @@ h1 {
   }
 }
 
+.leaderboard {
+  border: 1px solid rgba(123, 159, 255, 0.25);
+  border-radius: 20px;
+  padding: 16px 18px;
+  background: linear-gradient(
+    155deg,
+    rgba(21, 33, 58, 0.86),
+    rgba(11, 17, 30, 0.9)
+  );
+
+  h2 {
+    margin: 0 0 6px;
+  }
+
+  p {
+    margin: 0 0 14px;
+    color: #b9c9ea;
+  }
+
+  ol {
+    margin: 0;
+    padding-left: 20px;
+    display: grid;
+    gap: 8px;
+  }
+
+  li {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .alias {
+    color: #d8e5ff;
+    letter-spacing: 0.02em;
+  }
+}
+
 .feature-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
