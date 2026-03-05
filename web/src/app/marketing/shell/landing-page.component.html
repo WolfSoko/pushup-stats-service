@@ -1,0 +1,64 @@
+<main class="landing">
+  <section class="hero">
+    <p class="eyebrow" i18n="@@landing.eyebrow">Pushup Tracker</p>
+    <h1 i18n="@@landing.title">Dein Training. Klar visualisiert.</h1>
+    <p class="subtitle" i18n="@@landing.subtitle">
+      Tracke Reps, Trends und Streaks in Sekunden – mobil, schnell und mit Live-
+      Updates.
+    </p>
+
+    <div class="cta-row">
+      <a
+        mat-flat-button
+        color="primary"
+        routerLink="/login"
+        i18n="@@landing.cta.login"
+        >Jetzt anmelden</a
+      >
+      <a mat-button routerLink="/analysis" i18n="@@landing.cta.features"
+        >Features ansehen</a
+      >
+    </div>
+  </section>
+
+  <section class="feature-grid">
+    <mat-card>
+      <mat-card-header>
+        <mat-icon aria-hidden="true">insights</mat-icon>
+        <mat-card-title i18n="@@landing.feature.analytics.title"
+          >Smarter Überblick</mat-card-title
+        >
+      </mat-card-header>
+      <mat-card-content i18n="@@landing.feature.analytics.body"
+        >Woche, Monat und Custom-Ranges mit klaren KPIs und
+        Charts.</mat-card-content
+      >
+    </mat-card>
+
+    <mat-card>
+      <mat-card-header>
+        <mat-icon aria-hidden="true">bolt</mat-icon>
+        <mat-card-title i18n="@@landing.feature.quick.title"
+          >Quick Logging</mat-card-title
+        >
+      </mat-card-header>
+      <mat-card-content i18n="@@landing.feature.quick.body"
+        >Neue Einträge in Sekunden per Schnellaktionen oder
+        Tabelle.</mat-card-content
+      >
+    </mat-card>
+
+    <mat-card>
+      <mat-card-header>
+        <mat-icon aria-hidden="true">sync</mat-icon>
+        <mat-card-title i18n="@@landing.feature.live.title"
+          >Live & überall</mat-card-title
+        >
+      </mat-card-header>
+      <mat-card-content i18n="@@landing.feature.live.body"
+        >Firestore Live-Sync hält deine Daten auf allen Geräten
+        aktuell.</mat-card-content
+      >
+    </mat-card>
+  </section>
+</main>

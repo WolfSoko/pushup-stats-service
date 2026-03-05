@@ -13,6 +13,13 @@ export const appRoutes: Routes = [
       ),
   },
   {
+    path: 'landing',
+    loadComponent: () =>
+      import('./marketing/shell/landing-page.component').then(
+        (m) => m.LandingPageComponent
+      ),
+  },
+  {
     path: 'login',
     canActivate: [publicOnlyGuard],
     loadComponent: () => import('@pu-auth/auth').then((m) => m.LoginComponent),
