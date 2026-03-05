@@ -56,11 +56,11 @@ describe('auth.guard', () => {
     expect(result).toBe(true);
   });
 
-  it('publicOnlyGuard should return UrlTree to / when authenticated (given isAuthenticated true)', () => {
+  it('publicOnlyGuard should return UrlTree to /app when authenticated (given isAuthenticated true)', () => {
     authStore.isAuthenticated.mockReturnValue(true);
     const result = TestBed.runInInjectionContext(() =>
       publicOnlyGuard(mockedRoute, mockedRouterState)
     ) as UrlTree;
-    expect(result.toString()).toEqual('/');
+    expect(result.toString()).toEqual('/app');
   });
 });

@@ -6,6 +6,14 @@ export const appRoutes: Routes = [
   {
     path: '',
     pathMatch: 'full',
+    canActivate: [publicOnlyGuard],
+    loadComponent: () =>
+      import('./marketing/shell/landing-page.component').then(
+        (m) => m.LandingPageComponent
+      ),
+  },
+  {
+    path: 'app',
     canActivate: [authGuard],
     loadComponent: () =>
       import('./stats/shell/stats-dashboard.component').then(
@@ -14,10 +22,8 @@ export const appRoutes: Routes = [
   },
   {
     path: 'landing',
-    loadComponent: () =>
-      import('./marketing/shell/landing-page.component').then(
-        (m) => m.LandingPageComponent
-      ),
+    redirectTo: '',
+    pathMatch: 'full',
   },
   {
     path: 'login',

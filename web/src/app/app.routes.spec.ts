@@ -8,10 +8,11 @@ import { SettingsPageComponent } from './stats/shell/settings-page.component';
 import { StatsDashboardComponent } from './stats/shell/stats-dashboard.component';
 
 describe('appRoutes', () => {
-  it('defines dashboard, data and analysis routes', () => {
+  it('defines landing, app and feature routes', () => {
     const paths = appRoutes.map((r) => r.path);
     expect(paths).toEqual([
       '',
+      'app',
       'landing',
       'login',
       'data',
@@ -21,8 +22,14 @@ describe('appRoutes', () => {
     ]);
   });
 
-  it('lazy-loads dashboard component', async () => {
+  it('lazy-loads landing component on /', async () => {
     const route = appRoutes.find((r) => r.path === '');
+    const component = await route?.loadComponent?.();
+    expect(component).toBe(LandingPageComponent);
+  });
+
+  it('lazy-loads dashboard component on /app', async () => {
+    const route = appRoutes.find((r) => r.path === 'app');
     const component = await route?.loadComponent?.();
     expect(component).toBe(StatsDashboardComponent);
   });
@@ -45,30 +52,30 @@ describe('appRoutes', () => {
     expect(component).toBe(SettingsPageComponent);
   });
 
-  it('lazy-loads landing page component', async () => {
-    const route = appRoutes.find((r) => r.path === 'landing');
-    const component = await route?.loadComponent?.();
-    expect(component).toBe(LandingPageComponent);
-  });
-
   it('lazy-routes login component', async () => {
     const route = appRoutes.find((r) => r.path === 'login');
     const component = await route?.loadComponent?.();
     expect(component).toBe(LoginComponent);
   });
 
-  it('protects app routes with authGuard and keeps login public-only', () => {
-    const protectedPaths = ['', 'data', 'analysis', 'settings'];
+  it('protects app routes and keeps landing/login public-only', () => {
+    const protectedPaths = ['app', 'data', 'analysis', 'settings'];
     for (const path of protectedPaths) {
       const route = appRoutes.find((r) => r.path === path);
       expect(route?.canActivate).toEqual([authGuard]);
     }
 
-    const loginRoute = appRoutes.find((r) => r.path === 'login');
-    expect(loginRoute?.canActivate).toEqual([publicOnlyGuard]);
+    const publicPaths = ['', 'login'];
+    for (const path of publicPaths) {
+      const route = appRoutes.find((r) => r.path === path);
+      expect(route?.canActivate).toEqual([publicOnlyGuard]);
+    }
   });
 
-  it('redirects wildcard route to dashboard', () => {
+  it('redirects legacy /landing and wildcard to /', () => {
+    const legacyLanding = appRoutes.find((r) => r.path === 'landing');
+    expect(legacyLanding?.redirectTo).toBe('');
+
     const wildcard = appRoutes.find((r) => r.path === '**');
     expect(wildcard?.redirectTo).toBe('');
   });
