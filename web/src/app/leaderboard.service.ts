@@ -55,9 +55,24 @@ export class LeaderboardService {
     if (!cached) return fallback;
 
     return {
-      daily: { top: cached.daily.top, current: fallback.daily.current },
-      weekly: { top: cached.weekly.top, current: fallback.weekly.current },
-      monthly: { top: cached.monthly.top, current: fallback.monthly.current },
+      daily: {
+        top: cached.daily.top,
+        current:
+          cached.daily.top.find((entry) => entry.isCurrent) ??
+          fallback.daily.current,
+      },
+      weekly: {
+        top: cached.weekly.top,
+        current:
+          cached.weekly.top.find((entry) => entry.isCurrent) ??
+          fallback.weekly.current,
+      },
+      monthly: {
+        top: cached.monthly.top,
+        current:
+          cached.monthly.top.find((entry) => entry.isCurrent) ??
+          fallback.monthly.current,
+      },
     };
   }
 
@@ -96,25 +111,30 @@ export class LeaderboardService {
 
   private async fetchRows(startIso: string): Promise<PushupRow[]> {
     if (!this.firestore) return [];
-    const ref = collection(this.firestore, 'pushups');
-    const q = query(
-      ref,
-      where('timestamp', '>=', startIso),
-      orderBy('timestamp', 'desc')
-    );
-    const snap = await getDocs(q);
 
-    return snap.docs
-      .map((d) => d.data() as Partial<PushupRow>)
-      .filter(
-        (d): d is PushupRow =>
-          !!d.userId && !!d.timestamp && Number.isFinite(d.reps)
-      )
-      .map((d) => ({
-        userId: d.userId,
-        timestamp: d.timestamp,
-        reps: Number(d.reps),
-      }));
+    try {
+      const ref = collection(this.firestore, 'pushups');
+      const q = query(
+        ref,
+        where('timestamp', '>=', startIso),
+        orderBy('timestamp', 'desc')
+      );
+      const snap = await getDocs(q);
+
+      return snap.docs
+        .map((d) => d.data() as Partial<PushupRow>)
+        .filter(
+          (d): d is PushupRow =>
+            !!d.userId && !!d.timestamp && Number.isFinite(d.reps)
+        )
+        .map((d) => ({
+          userId: d.userId,
+          timestamp: d.timestamp,
+          reps: Number(d.reps),
+        }));
+    } catch {
+      return [];
+    }
   }
 
   private aggregate(
