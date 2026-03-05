@@ -1204,5 +1204,149 @@
         <target>Period</target>
       </segment>
     </unit>
+    <unit id="sw.update.downloading">
+      <notes>
+        <note category="location">web/src/app/app.ts</note>
+      </notes>
+      <segment state="translated">
+        <source>Update wird im Hintergrund geladen …</source>
+        <target>Update is downloading in the background …</target>
+      </segment>
+    </unit>
+    <unit id="landing.preview.alt">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+      </notes>
+      <segment state="translated">
+        <source>Vorschau der Statistikansicht</source>
+        <target>Preview of the stats view</target>
+      </segment>
+    </unit>
+    <unit id="landing.eyebrow">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+      </notes>
+      <segment state="translated">
+        <source>Pushup Tracker</source>
+        <target>Pushup Tracker</target>
+      </segment>
+    </unit>
+    <unit id="landing.title">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+      </notes>
+      <segment state="translated">
+        <source>Dein Training. Klar visualisiert.</source>
+        <target>Your training. Clearly visualized.</target>
+      </segment>
+    </unit>
+    <unit id="landing.subtitle">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+      </notes>
+      <segment state="translated">
+        <source> Tracke Reps, Trends und Streaks in Sekunden – mobil, schnell und mit Live- Updates. </source>
+        <target> Track reps, trends, and streaks in seconds — mobile, fast, and live-updated. </target>
+      </segment>
+    </unit>
+    <unit id="landing.cta.signup">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+      </notes>
+      <segment state="translated">
+        <source>Jetzt registrieren</source>
+        <target>Sign up now</target>
+      </segment>
+    </unit>
+    <unit id="landing.cta.login">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+      </notes>
+      <segment state="translated">
+        <source>Einloggen</source>
+        <target>Log in</target>
+      </segment>
+    </unit>
+    <unit id="landing.leaderboard.title">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+      </notes>
+      <segment state="translated">
+        <source>Tages-Bestenliste</source>
+        <target>Daily leaderboard</target>
+      </segment>
+    </unit>
+    <unit id="landing.leaderboard.privacy">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+      </notes>
+      <segment state="translated">
+        <source>Privacy-first: Nur anonymisierte Alias-Namen werden angezeigt.</source>
+        <target>Privacy-first: Only anonymized alias names are shown.</target>
+      </segment>
+    </unit>
+    <unit id="landing.leaderboard.reps">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+      </notes>
+      <segment state="translated">
+        <source>Reps</source>
+        <target>Reps</target>
+      </segment>
+    </unit>
+    <unit id="landing.feature.analytics.title">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+      </notes>
+      <segment state="translated">
+        <source>Smarter Überblick</source>
+        <target>Smarter overview</target>
+      </segment>
+    </unit>
+    <unit id="landing.feature.analytics.body">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+      </notes>
+      <segment state="translated">
+        <source>Woche, Monat und Custom-Ranges mit klaren KPIs und Charts.</source>
+        <target>Week, month, and custom ranges with clear KPIs and charts.</target>
+      </segment>
+    </unit>
+    <unit id="landing.feature.quick.title">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+      </notes>
+      <segment state="translated">
+        <source>Quick Logging</source>
+        <target>Quick logging</target>
+      </segment>
+    </unit>
+    <unit id="landing.feature.quick.body">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+      </notes>
+      <segment state="translated">
+        <source>Neue Einträge in Sekunden per Schnellaktionen oder Tabelle.</source>
+        <target>Add new entries in seconds via quick actions or table.</target>
+      </segment>
+    </unit>
+    <unit id="landing.feature.live.title">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+      </notes>
+      <segment state="translated">
+        <source>Live &amp; überall</source>
+        <target>Live &amp; everywhere</target>
+      </segment>
+    </unit>
+    <unit id="landing.feature.live.body">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+      </notes>
+      <segment state="translated">
+        <source>Firestore Live-Sync hält deine Daten auf allen Geräten aktuell.</source>
+        <target>Firestore live sync keeps your data current across devices.</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

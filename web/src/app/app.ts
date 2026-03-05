@@ -107,10 +107,14 @@ export class App {
   }
 
   private showBackgroundUpdateToast(_event: VersionDetectedEvent): void {
-    this.snackBar.open($localize`Update wird im Hintergrund geladen …`, '', {
-      duration: 5000,
-      horizontalPosition: 'center',
-      verticalPosition: 'bottom',
-    });
+    this.snackBar.open(
+      $localize`:@@sw.update.downloading:Update wird im Hintergrund geladen …`,
+      '',
+      {
+        duration: 5000,
+        horizontalPosition: 'center',
+        verticalPosition: 'bottom',
+      }
+    );
   }
 }
