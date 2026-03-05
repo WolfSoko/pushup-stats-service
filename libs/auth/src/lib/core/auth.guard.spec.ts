@@ -20,7 +20,7 @@ describe('auth.guard', () => {
 
   beforeEach(() => {
     mockedRoute = {} as ActivatedRouteSnapshot;
-    mockedRouterState = {} as RouterStateSnapshot;
+    mockedRouterState = { url: '/settings' } as RouterStateSnapshot;
 
     TestBed.configureTestingModule({
       imports: [
@@ -40,12 +40,12 @@ describe('auth.guard', () => {
     expect(result).toBe(true);
   });
 
-  it('should return UrlTree to /login when not authenticated (given isAuthenticated false)', () => {
+  it('should return UrlTree to /login with returnUrl when not authenticated', () => {
     authStore.isAuthenticated.mockReturnValue(false);
     const result = TestBed.runInInjectionContext(() =>
       authGuard(mockedRoute, mockedRouterState)
     ) as UrlTree;
-    expect(result.toString()).toEqual('/login');
+    expect(result.toString()).toEqual('/login?returnUrl=%2Fsettings');
   });
 
   it('publicOnlyGuard should return true when not authenticated (given isAuthenticated false)', () => {

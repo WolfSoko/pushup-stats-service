@@ -12,10 +12,15 @@
         mat-flat-button
         color="primary"
         routerLink="/login"
+        [queryParams]="{ returnUrl: '/app' }"
         i18n="@@landing.cta.signup"
         >Jetzt registrieren</a
       >
-      <a mat-stroked-button routerLink="/login" i18n="@@landing.cta.login"
+      <a
+        mat-stroked-button
+        routerLink="/login"
+        [queryParams]="{ returnUrl: '/app' }"
+        i18n="@@landing.cta.login"
         >Einloggen</a
       >
       <a mat-button routerLink="/app" i18n="@@landing.cta.dashboard"

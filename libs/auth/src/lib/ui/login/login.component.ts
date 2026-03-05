@@ -18,7 +18,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
 import { AuthStore } from '../../core/state/auth.store';
 
@@ -55,6 +55,7 @@ const LoginState = signalStore(
 })
 export class LoginComponent {
   private readonly router = inject(Router);
+  private readonly route = inject(ActivatedRoute);
   readonly authState = inject(AuthStore);
   readonly loginState = inject(LoginState);
 
@@ -94,7 +95,7 @@ export class LoginComponent {
       } else {
         await this.authState.signInWithEmail(email, password);
       }
-      await this.router.navigate(['/']);
+      await this.router.navigateByUrl(this.targetUrl());
     } catch {
       // Error already handled by service
     }
@@ -103,9 +104,13 @@ export class LoginComponent {
   async signInWithGoogle(): Promise<void> {
     try {
       await this.authState.login();
-      await this.router.navigate(['/']);
+      await this.router.navigateByUrl(this.targetUrl());
     } catch {
       // Error already handled by service
     }
+  }
+
+  private targetUrl(): string {
+    return this.route.snapshot.queryParamMap.get('returnUrl') ?? '/app';
   }
 }
