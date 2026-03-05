@@ -1,7 +1,9 @@
 import { inject, Injectable } from '@angular/core';
 import {
   collection,
+  doc,
   Firestore,
+  getDoc,
   getDocs,
   orderBy,
   query,
@@ -28,12 +30,35 @@ export class LeaderboardService {
   private readonly firestore = inject(Firestore, { optional: true });
 
   async load(): Promise<LeaderboardData> {
+    const cached = await this.loadSnapshot();
+    if (cached) return cached;
+
     const start = this.startOfMonthIso();
     const rows = await this.fetchRows(start);
     return {
       daily: this.aggregate(rows, 'daily'),
       weekly: this.aggregate(rows, 'weekly'),
       monthly: this.aggregate(rows, 'monthly'),
+    };
+  }
+
+  private async loadSnapshot(): Promise<LeaderboardData | null> {
+    if (!this.firestore) return null;
+
+    const snap = await getDoc(doc(this.firestore, 'leaderboards', 'current'));
+    if (!snap.exists()) return null;
+
+    const data = snap.data() as {
+      periods?: Partial<LeaderboardData>;
+    };
+
+    const periods = data?.periods;
+    if (!periods) return null;
+
+    return {
+      daily: Array.isArray(periods.daily) ? periods.daily : [],
+      weekly: Array.isArray(periods.weekly) ? periods.weekly : [],
+      monthly: Array.isArray(periods.monthly) ? periods.monthly : [],
     };
   }
 
