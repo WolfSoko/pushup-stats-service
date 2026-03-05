@@ -55,7 +55,7 @@ async function postAuthWithRetry(
 export async function getOrCreateTestUserId(page: Page): Promise<string> {
   const signInResp = await postAuthWithRetry(
     page,
-    'identitytoolkit.googleapis.com/v1/accounts:signInWithEmailAndPassword?key=fake-api-key',
+    'identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=fake-api-key',
     {
       email: TEST_USER_EMAIL,
       password: TEST_USER_PASSWORD,
