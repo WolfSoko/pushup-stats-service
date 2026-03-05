@@ -48,6 +48,19 @@ h1 {
   flex-wrap: wrap;
 }
 
+.preview {
+  border: 1px solid rgba(123, 159, 255, 0.25);
+  border-radius: 20px;
+  background: #0f1628;
+  overflow: hidden;
+
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+}
+
 .feature-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));

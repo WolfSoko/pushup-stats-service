@@ -10,7 +10,9 @@ describe('LandingPageComponent', () => {
 
     expect(screen.getByText('Pushup Tracker')).toBeTruthy();
     expect(screen.getByText('Dein Training. Klar visualisiert.')).toBeTruthy();
-    expect(screen.getByRole('link', { name: 'Jetzt anmelden' })).toBeTruthy();
-    expect(screen.getByRole('link', { name: 'Features ansehen' })).toBeTruthy();
+    expect(
+      screen.getByRole('link', { name: 'Jetzt registrieren' })
+    ).toBeTruthy();
+    expect(screen.getByRole('link', { name: 'Einloggen' })).toBeTruthy();
   });
 });

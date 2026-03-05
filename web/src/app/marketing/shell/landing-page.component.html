@@ -12,13 +12,22 @@
         mat-flat-button
         color="primary"
         routerLink="/login"
-        i18n="@@landing.cta.login"
-        >Jetzt anmelden</a
+        i18n="@@landing.cta.signup"
+        >Jetzt registrieren</a
       >
-      <a mat-button routerLink="/analysis" i18n="@@landing.cta.features"
-        >Features ansehen</a
+      <a mat-stroked-button routerLink="/login" i18n="@@landing.cta.login"
+        >Einloggen</a
       >
     </div>
+  </section>
+
+  <section class="preview">
+    <img
+      src="assets/landing-stats-screenshot.svg"
+      alt="Vorschau der Statistikansicht"
+      i18n-alt="@@landing.preview.alt"
+      loading="lazy"
+    />
   </section>
 
   <section class="feature-grid">
