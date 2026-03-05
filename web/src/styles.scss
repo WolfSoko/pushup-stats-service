@@ -10,8 +10,10 @@ html {
         theme-type: dark,
       ),
       typography: (
-        brand-family: 'Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif',
-        plain-family: 'Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif',
+        brand-family:
+          'Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif',
+        plain-family:
+          'Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif',
         regular-weight: 400,
         medium-weight: 500,
         bold-weight: 700,
@@ -29,27 +31,47 @@ body {
   margin: 0;
   min-height: 100vh;
   background:
-    radial-gradient(circle at 10% -10%, rgba(67, 110, 217, 0.25) 0%, rgba(67, 110, 217, 0) 35%),
-    radial-gradient(circle at 100% 0%, rgba(103, 72, 188, 0.2) 0%, rgba(103, 72, 188, 0) 30%),
+    radial-gradient(
+      circle at 10% -10%,
+      rgba(67, 110, 217, 0.25) 0%,
+      rgba(67, 110, 217, 0) 35%
+    ),
+    radial-gradient(
+      circle at 100% 0%,
+      rgba(103, 72, 188, 0.2) 0%,
+      rgba(103, 72, 188, 0) 30%
+    ),
     linear-gradient(180deg, #0b1120 0%, #090d19 45%, #070a13 100%);
   color: #ebeff8;
-  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  font-family:
+    Inter,
+    system-ui,
+    -apple-system,
+    Segoe UI,
+    Roboto,
+    sans-serif;
   line-height: 1.45;
 }
 
 mat-card {
-  background: linear-gradient(165deg, rgba(24, 33, 55, 0.92), rgba(13, 18, 31, 0.95));
+  background: linear-gradient(
+    165deg,
+    rgba(24, 33, 55, 0.92),
+    rgba(13, 18, 31, 0.95)
+  );
   border: 1px solid rgba(133, 164, 243, 0.2);
   box-shadow: 0 14px 34px rgba(1, 5, 16, 0.45);
 }
 
-/* Ensure consistent spacing between card title area and content. */
+/* Ensure consistent spacing between card title area and following sections. */
 mat-card-header {
-  padding-bottom: 8px;
+  padding-bottom: 4px;
 }
 
-mat-card-header + mat-card-content {
-  padding-top: 0;
+mat-card-header + mat-card-content,
+mat-card-header + mat-card-actions,
+mat-card-header + mat-card-footer {
+  margin-top: 10px;
 }
 
 .mdc-text-field--outlined {
