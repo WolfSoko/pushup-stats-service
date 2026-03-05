@@ -1348,5 +1348,59 @@
         <target>Firestore live sync keeps your data current across devices.</target>
       </segment>
     </unit>
+    <unit id="landing.leaderboard.daily">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+      </notes>
+      <segment state="translated">
+        <source>Tag</source>
+        <target>Day</target>
+      </segment>
+    </unit>
+    <unit id="landing.leaderboard.weekly">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+      </notes>
+      <segment state="translated">
+        <source>Woche</source>
+        <target>Week</target>
+      </segment>
+    </unit>
+    <unit id="landing.leaderboard.monthly">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+      </notes>
+      <segment state="translated">
+        <source>Monat</source>
+        <target>Month</target>
+      </segment>
+    </unit>
+    <unit id="landing.leaderboard.empty">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+      </notes>
+      <segment state="translated">
+        <source>Noch keine Daten</source>
+        <target>No data yet</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.leaderboard.title">
+      <notes>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html</note>
+      </notes>
+      <segment state="translated">
+        <source>Bestenliste</source>
+        <target>Leaderboard</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.leaderboard.subtitle">
+      <notes>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html</note>
+      </notes>
+      <segment state="translated">
+        <source>Daily · Weekly · Monthly (anonymisiert)</source>
+        <target>Daily · Weekly · Monthly (anonymized)</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

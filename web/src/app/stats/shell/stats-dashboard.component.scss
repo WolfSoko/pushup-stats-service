@@ -20,7 +20,11 @@
   padding: clamp(16px, 2vw, 24px);
   border: 1px solid rgba(123, 159, 255, 0.25);
   border-radius: 20px;
-  background: linear-gradient(150deg, rgba(26, 35, 58, 0.75), rgba(13, 18, 32, 0.75));
+  background: linear-gradient(
+    150deg,
+    rgba(26, 35, 58, 0.75),
+    rgba(13, 18, 32, 0.75)
+  );
   backdrop-filter: blur(4px);
   display: flex;
   align-items: center;
@@ -64,6 +68,39 @@ h1 {
   }
 }
 
+.leaderboard-card {
+  border: 1px solid rgba(123, 159, 255, 0.3);
+  background: linear-gradient(
+    155deg,
+    rgba(20, 32, 58, 0.8),
+    rgba(11, 17, 31, 0.9)
+  );
+}
+
+.leaderboard-switch {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+
+  .active {
+    border-color: #8fb4ff;
+    background: rgba(83, 130, 220, 0.22);
+  }
+}
+
+.leaderboard-list {
+  margin: 12px 0 0;
+  padding-left: 20px;
+  display: grid;
+  gap: 6px;
+
+  li {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+  }
+}
+
 .mini-badges {
   display: flex;
   flex-wrap: wrap;
@@ -97,7 +134,11 @@ h1 {
   border: 1px solid rgba(123, 159, 255, 0.24);
   border-radius: 18px;
   padding: 14px;
-  background: linear-gradient(170deg, rgba(22, 30, 49, 0.86), rgba(14, 19, 33, 0.9));
+  background: linear-gradient(
+    170deg,
+    rgba(22, 30, 49, 0.86),
+    rgba(14, 19, 33, 0.9)
+  );
 }
 
 .status-banner {
@@ -142,7 +183,11 @@ h1 {
 
 .quick-actions {
   border: 1px solid rgba(123, 159, 255, 0.24);
-  background: linear-gradient(170deg, rgba(22, 30, 49, 0.86), rgba(14, 19, 33, 0.9));
+  background: linear-gradient(
+    170deg,
+    rgba(22, 30, 49, 0.86),
+    rgba(14, 19, 33, 0.9)
+  );
 
   gap: 8px;
 
@@ -167,17 +212,29 @@ h1 {
   }
 
   .quick-btn--ten {
-    background: linear-gradient(135deg, rgba(63, 128, 255, 0.92), rgba(58, 92, 213, 0.92));
+    background: linear-gradient(
+      135deg,
+      rgba(63, 128, 255, 0.92),
+      rgba(58, 92, 213, 0.92)
+    );
     color: #f4f8ff;
   }
 
   .quick-btn--twenty {
-    background: linear-gradient(135deg, rgba(109, 86, 255, 0.92), rgba(71, 63, 215, 0.92));
+    background: linear-gradient(
+      135deg,
+      rgba(109, 86, 255, 0.92),
+      rgba(71, 63, 215, 0.92)
+    );
     color: #f6f3ff;
   }
 
   .quick-btn--thirty {
-    background: linear-gradient(135deg, rgba(255, 132, 92, 0.92), rgba(214, 69, 94, 0.92));
+    background: linear-gradient(
+      135deg,
+      rgba(255, 132, 92, 0.92),
+      rgba(214, 69, 94, 0.92)
+    );
     color: #fff3f0;
   }
 }

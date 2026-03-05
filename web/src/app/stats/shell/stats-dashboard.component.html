@@ -23,6 +23,66 @@
     </div>
   </header>
 
+  <mat-card class="leaderboard-card">
+    <mat-card-header>
+      <mat-card-title i18n="@@dashboard.leaderboard.title"
+        >Bestenliste</mat-card-title
+      >
+      <mat-card-subtitle i18n="@@dashboard.leaderboard.subtitle"
+        >Daily · Weekly · Monthly (anonymisiert)</mat-card-subtitle
+      >
+    </mat-card-header>
+    <mat-card-content>
+      <div
+        class="leaderboard-switch"
+        role="tablist"
+        aria-label="Leaderboard Zeitraum"
+      >
+        <button
+          mat-stroked-button
+          type="button"
+          (click)="leaderboardPeriod.set('daily')"
+          [class.active]="leaderboardPeriod() === 'daily'"
+          i18n="@@landing.leaderboard.daily"
+        >
+          Tag
+        </button>
+        <button
+          mat-stroked-button
+          type="button"
+          (click)="leaderboardPeriod.set('weekly')"
+          [class.active]="leaderboardPeriod() === 'weekly'"
+          i18n="@@landing.leaderboard.weekly"
+        >
+          Woche
+        </button>
+        <button
+          mat-stroked-button
+          type="button"
+          (click)="leaderboardPeriod.set('monthly')"
+          [class.active]="leaderboardPeriod() === 'monthly'"
+          i18n="@@landing.leaderboard.monthly"
+        >
+          Monat
+        </button>
+      </div>
+
+      <ol class="leaderboard-list">
+        @for (entry of leaderboardEntries(); track entry.alias) {
+          <li>
+            <span>{{ entry.alias }}</span>
+            <strong
+              >{{ entry.reps }}
+              <span i18n="@@landing.leaderboard.reps">Reps</span></strong
+            >
+          </li>
+        } @empty {
+          <li i18n="@@landing.leaderboard.empty">Noch keine Daten</li>
+        }
+      </ol>
+    </mat-card-content>
+  </mat-card>
+
   <section
     class="today-focus"
     aria-label="Tagesfokus"

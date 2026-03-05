@@ -32,20 +32,54 @@
 
   <section class="leaderboard" aria-labelledby="leaderboard-title">
     <h2 id="leaderboard-title" i18n="@@landing.leaderboard.title">
-      Tages-Bestenliste
+      Bestenliste
     </h2>
     <p i18n="@@landing.leaderboard.privacy">
       Privacy-first: Nur anonymisierte Alias-Namen werden angezeigt.
     </p>
 
+    <div class="period-switch" role="tablist" aria-label="Leaderboard Zeitraum">
+      <button
+        mat-stroked-button
+        type="button"
+        (click)="period.set('daily')"
+        [class.active]="period() === 'daily'"
+        i18n="@@landing.leaderboard.daily"
+      >
+        Tag
+      </button>
+      <button
+        mat-stroked-button
+        type="button"
+        (click)="period.set('weekly')"
+        [class.active]="period() === 'weekly'"
+        i18n="@@landing.leaderboard.weekly"
+      >
+        Woche
+      </button>
+      <button
+        mat-stroked-button
+        type="button"
+        (click)="period.set('monthly')"
+        [class.active]="period() === 'monthly'"
+        i18n="@@landing.leaderboard.monthly"
+      >
+        Monat
+      </button>
+    </div>
+
     <ol>
-      @for (entry of dailyLeaderboard; track entry.alias) {
+      @for (entry of leaderboardEntries(); track entry.alias) {
         <li>
           <span class="alias">{{ entry.alias }}</span>
           <strong
             >{{ entry.reps }}
             <span i18n="@@landing.leaderboard.reps">Reps</span></strong
           >
+        </li>
+      } @empty {
+        <li class="empty" i18n="@@landing.leaderboard.empty">
+          Noch keine Daten
         </li>
       }
     </ol>

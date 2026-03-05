@@ -1,13 +1,18 @@
-import { Component } from '@angular/core';
+import {
+  Component,
+  computed,
+  inject,
+  linkedSignal,
+  resource,
+} from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
-
-type LeaderboardEntry = {
-  alias: string;
-  reps: number;
-};
+import {
+  LeaderboardPeriod,
+  LeaderboardService,
+} from '../../leaderboard.service';
 
 @Component({
   selector: 'app-landing-page',
@@ -16,11 +21,24 @@ type LeaderboardEntry = {
   styleUrl: './landing-page.component.scss',
 })
 export class LandingPageComponent {
-  readonly dailyLeaderboard: LeaderboardEntry[] = [
-    { alias: 'Iron•••', reps: 220 },
-    { alias: 'Core•••', reps: 180 },
-    { alias: 'Power•••', reps: 150 },
-    { alias: 'Focus•••', reps: 120 },
-    { alias: 'Swift•••', reps: 95 },
-  ];
+  private readonly leaderboardApi = inject(LeaderboardService, {
+    optional: true,
+  });
+
+  readonly period = linkedSignal<LeaderboardPeriod>(() => 'daily');
+
+  readonly leaderboardResource = resource({
+    loader: async () => {
+      if (!this.leaderboardApi) {
+        return { daily: [], weekly: [], monthly: [] };
+      }
+      return this.leaderboardApi.load();
+    },
+  });
+
+  readonly leaderboardEntries = computed(() => {
+    const data = this.leaderboardResource.value();
+    if (!data) return [];
+    return data[this.period()];
+  });
 }
