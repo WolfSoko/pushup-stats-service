@@ -87,7 +87,10 @@ export class LoginComponent {
 
   loginData = signal({ email: '', password: '', repeatPassword: '' });
   recaptchaError = signal<string | null>(null);
-  registerStep = signal<1 | 2>(1);
+  registerStep = signal<1 | 2 | 3 | 4 | 5>(1);
+  registerDisplayName = signal('');
+  registerDailyGoal = signal(100);
+  registerConsentAccepted = signal(false);
 
   googleDisplayName = signal('');
   googleDailyGoal = signal(100);
@@ -135,25 +138,58 @@ export class LoginComponent {
   toggleMode(): void {
     this.loginState.toggleIsRegisterMode();
     this.registerStep.set(1);
+    this.registerDisplayName.set('');
+    this.registerDailyGoal.set(100);
+    this.registerConsentAccepted.set(false);
     this.recaptchaError.set(null);
   }
 
   nextRegisterStep(): void {
-    if (this.loginForm.email().invalid()) return;
-    this.registerStep.set(2);
+    const step = this.registerStep();
+    if (step === 1) {
+      if (this.loginForm.email().invalid()) return;
+      this.registerStep.set(2);
+      return;
+    }
+    if (step === 2) {
+      if (this.loginForm.password().invalid()) return;
+      if (!this.passwordPolicyValid() || !this.passwordsMatch()) return;
+      this.registerStep.set(3);
+      return;
+    }
+    if (step === 3) {
+      if (this.registerDisplayName().trim().length < 2) return;
+      this.registerStep.set(4);
+      return;
+    }
+    if (step === 4) {
+      if (this.registerDailyGoal() < 1) return;
+      this.registerStep.set(5);
+    }
   }
 
   backRegisterStep(): void {
-    this.registerStep.set(1);
+    this.registerStep.update((s) => Math.max(1, s - 1) as 1 | 2 | 3 | 4 | 5);
   }
 
   async signInWithEmail(): Promise<void> {
-    if (this.loginForm.email().invalid() || this.loginForm.password().invalid())
+    if (
+      this.loginForm.email().invalid() ||
+      this.loginForm.password().invalid()
+    ) {
       return;
+    }
 
     if (this.loginState.isRegisterMode()) {
+      if (this.registerStep() !== 5) {
+        this.nextRegisterStep();
+        return;
+      }
       if (!this.passwordPolicyValid()) return;
       if (!this.passwordsMatch()) return;
+      if (this.registerDisplayName().trim().length < 2) return;
+      if (this.registerDailyGoal() < 1) return;
+      if (!this.registerConsentAccepted()) return;
     }
 
     const { email, password } = this.loginForm().value();
@@ -170,6 +206,21 @@ export class LoginComponent {
     try {
       if (this.loginState.isRegisterMode()) {
         await this.authState.signUpWithEmail(email, password);
+        const user = this.authState.user();
+        if (user?.uid) {
+          await firstValueFrom(
+            this.userConfigApi.updateConfig(user.uid, {
+              displayName: this.registerDisplayName().trim(),
+              dailyGoal: Math.max(1, Number(this.registerDailyGoal() || 100)),
+              consent: {
+                dataProcessing: true,
+                statistics: true,
+                targetedAds: true,
+                acceptedAt: new Date().toISOString(),
+              },
+            })
+          );
+        }
       } else {
         await this.authState.signInWithEmail(email, password);
       }
@@ -333,6 +384,19 @@ export class LoginComponent {
     );
     this.googleWizardDialogRef = null;
     return result === 'completed';
+  }
+
+  validationMessage(error: unknown): string {
+    if (typeof error === 'string') return error;
+    if (
+      typeof error === 'object' &&
+      error !== null &&
+      'message' in error &&
+      typeof (error as { message?: unknown }).message === 'string'
+    ) {
+      return (error as { message: string }).message;
+    }
+    return String(error ?? 'Ungültiger Wert');
   }
 
   private targetUrl(): string {

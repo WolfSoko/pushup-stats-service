@@ -38,7 +38,13 @@
         </div>
       } @else {
         <form (submit)="signInWithEmail()" class="login-form">
-          @if (loginState.isRegisterMode() && registerStep() === 1) {
+          @if (loginState.isRegisterMode()) {
+            <p class="step-indicator" i18n="@@auth.register.stepIndicator">
+              Schritt {{ registerStep() }} von 5
+            </p>
+          }
+
+          @if (!loginState.isRegisterMode() || registerStep() === 1) {
             <mat-form-field appearance="outline" class="full-width">
               <mat-label i18n="@@auth.email">E-Mail</mat-label>
               <input
@@ -49,36 +55,12 @@
               />
               <mat-icon matSuffix>email</mat-icon>
               @for (error of loginForm.email().errors(); track $index) {
-                <mat-error>{{ error }}</mat-error>
+                <mat-error>{{ validationMessage(error) }}</mat-error>
               }
             </mat-form-field>
+          }
 
-            <button
-              mat-raised-button
-              color="primary"
-              type="button"
-              [disabled]="loginForm.email().invalid()"
-              class="full-width login-button"
-              (click)="nextRegisterStep()"
-              i18n="@@auth.register.step1.next"
-            >
-              Weiter
-            </button>
-          } @else {
-            <mat-form-field appearance="outline" class="full-width">
-              <mat-label i18n="@@auth.email">E-Mail</mat-label>
-              <input
-                matInput
-                type="email"
-                [formField]="loginForm.email"
-                placeholder="deine@email.de"
-              />
-              <mat-icon matSuffix>email</mat-icon>
-              @for (error of loginForm.email().errors(); track $index) {
-                <mat-error>{{ error }}</mat-error>
-              }
-            </mat-form-field>
-
+          @if (!loginState.isRegisterMode() || registerStep() === 2) {
             <mat-form-field appearance="outline" class="full-width">
               <mat-label i18n="@@auth.password">Passwort</mat-label>
               <input
@@ -99,7 +81,7 @@
                 }}</mat-icon>
               </button>
               @for (error of loginForm.password().errors(); track $index) {
-                <mat-error>{{ error }}</mat-error>
+                <mat-error>{{ validationMessage(error) }}</mat-error>
               }
               @if (loginState.isRegisterMode()) {
                 <mat-hint i18n="@@auth.register.password.hint"
@@ -131,18 +113,78 @@
                 }
               </mat-form-field>
             }
+          }
 
-            <div class="form-actions">
-              @if (loginState.isRegisterMode()) {
-                <button
-                  mat-stroked-button
-                  type="button"
-                  (click)="backRegisterStep()"
-                  i18n="@@auth.register.back"
-                >
-                  Zurück
-                </button>
-              }
+          @if (loginState.isRegisterMode() && registerStep() === 3) {
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label i18n="@@auth.onboarding.google.username"
+                >Benutzername</mat-label
+              >
+              <input
+                matInput
+                [value]="registerDisplayName()"
+                (input)="registerDisplayName.set($any($event.target).value)"
+              />
+              <mat-hint i18n="@@auth.onboarding.google.username.hint"
+                >Mindestens 2 Zeichen.</mat-hint
+              >
+            </mat-form-field>
+          }
+
+          @if (loginState.isRegisterMode() && registerStep() === 4) {
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label i18n="@@auth.onboarding.google.goal"
+                >Tagesziel</mat-label
+              >
+              <input
+                matInput
+                type="number"
+                min="1"
+                [value]="registerDailyGoal()"
+                (input)="registerDailyGoal.set(+$any($event.target).value || 1)"
+              />
+            </mat-form-field>
+          }
+
+          @if (loginState.isRegisterMode() && registerStep() === 5) {
+            <p i18n="@@auth.onboarding.google.consent.text">
+              Ich willige in die Datenverarbeitung zum Erheben technisch
+              notwendiger Daten, statistischer Auswertungen und zum Ausspielen
+              gezielter Werbung ein.
+            </p>
+            <mat-checkbox
+              [checked]="registerConsentAccepted()"
+              (change)="registerConsentAccepted.set($event.checked)"
+              i18n="@@auth.onboarding.google.consent.checkbox"
+            >
+              Einwilligung erteilen
+            </mat-checkbox>
+          }
+
+          <div class="form-actions">
+            @if (loginState.isRegisterMode() && registerStep() > 1) {
+              <button
+                mat-stroked-button
+                type="button"
+                (click)="backRegisterStep()"
+                i18n="@@auth.register.back"
+              >
+                Zurück
+              </button>
+            }
+
+            @if (loginState.isRegisterMode() && registerStep() < 5) {
+              <button
+                mat-raised-button
+                color="primary"
+                type="button"
+                class="full-width login-button"
+                (click)="nextRegisterStep()"
+                i18n="@@auth.next"
+              >
+                Weiter
+              </button>
+            } @else {
               <button
                 mat-raised-button
                 color="primary"
@@ -151,7 +193,11 @@
                   loginForm.email().invalid() ||
                   loginForm.password().invalid() ||
                   (loginState.isRegisterMode() &&
-                    (!passwordPolicyValid() || !passwordsMatch())) ||
+                    (!passwordPolicyValid() ||
+                      !passwordsMatch() ||
+                      registerDisplayName().trim().length < 2 ||
+                      registerDailyGoal() < 1 ||
+                      !registerConsentAccepted())) ||
                   authState.loading()
                 "
                 class="full-width login-button"
@@ -163,8 +209,8 @@
                   <span i18n="@@auth.login.submit">Anmelden</span>
                 }
               </button>
-            </div>
-          }
+            }
+          </div>
         </form>
 
         <div class="divider">
