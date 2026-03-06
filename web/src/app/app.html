@@ -55,18 +55,6 @@
 
       <mat-divider></mat-divider>
 
-      <a
-        mat-list-item
-        routerLink="/settings"
-        routerLinkActive="active"
-        (click)="navOpen.set(false)"
-      >
-        <mat-icon matListItemIcon>settings</mat-icon>
-        <span matListItemTitle i18n="@@nav.settings">Einstellungen</span>
-      </a>
-
-      <mat-divider></mat-divider>
-
       <div
         class="mat-subtitle-2"
         style="padding: 8px 16px"
@@ -100,6 +88,15 @@
       >
         Account
       </div>
+      <a
+        mat-list-item
+        routerLink="/settings"
+        routerLinkActive="active"
+        (click)="navOpen.set(false)"
+      >
+        <mat-icon matListItemIcon>settings</mat-icon>
+        <span matListItemTitle i18n="@@nav.settings">Einstellungen</span>
+      </a>
       <pus-user-menu />
     </mat-nav-list>
   </mat-sidenav>
