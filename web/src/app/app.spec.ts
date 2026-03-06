@@ -4,7 +4,7 @@ import { signal, WritableSignal } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { of } from 'rxjs';
-import { UserConfigApiService } from '@pu-stats/data-access';
+import { StatsApiService, UserConfigApiService } from '@pu-stats/data-access';
 // eslint-disable-next-line @nx/enforce-module-boundaries
 import { AuthStore } from '@pu-auth/auth';
 import { App } from './app';
@@ -22,6 +22,22 @@ describe('App (testing-library)', () => {
 
   const userConfigApiMock = {
     getConfig: vitest.fn().mockReturnValue(of({ dailyGoal: 100 })),
+  };
+
+  const statsApiMock = {
+    load: vitest.fn().mockReturnValue(
+      of({
+        meta: {
+          from: null,
+          to: null,
+          entries: 0,
+          days: 1,
+          total: 0,
+          granularity: 'daily',
+        },
+        series: [],
+      })
+    ),
   };
 
   beforeEach(() => {
@@ -42,6 +58,7 @@ describe('App (testing-library)', () => {
         },
         { provide: AuthStore, useValue: authMock },
         { provide: UserConfigApiService, useValue: userConfigApiMock },
+        { provide: StatsApiService, useValue: statsApiMock },
       ],
     });
     expect(fixture.componentInstance).toBeTruthy();
@@ -60,6 +77,7 @@ describe('App (testing-library)', () => {
         },
         { provide: AuthStore, useValue: authMock },
         { provide: UserConfigApiService, useValue: userConfigApiMock },
+        { provide: StatsApiService, useValue: statsApiMock },
       ],
     });
     expect(screen.getByText('Dashboard')).toBeTruthy();
@@ -71,8 +89,21 @@ describe('App (testing-library)', () => {
     expect(screen.getByText('English')).toBeTruthy();
   });
 
-  it('shows daily goal in toolbar', async () => {
+  it('shows daily progress and goal in toolbar', async () => {
     userConfigApiMock.getConfig.mockReturnValueOnce(of({ dailyGoal: 137 }));
+    statsApiMock.load.mockReturnValueOnce(
+      of({
+        meta: {
+          from: null,
+          to: null,
+          entries: 2,
+          days: 1,
+          total: 42,
+          granularity: 'daily',
+        },
+        series: [],
+      })
+    );
 
     await render(App, {
       providers: [
@@ -86,12 +117,13 @@ describe('App (testing-library)', () => {
         },
         { provide: AuthStore, useValue: authMock },
         { provide: UserConfigApiService, useValue: userConfigApiMock },
+        { provide: StatsApiService, useValue: statsApiMock },
       ],
     });
 
     expect(screen.getByText('Tagesziel')).toBeTruthy();
     expect(
-      await screen.findByText((content) => content.includes('137'))
+      await screen.findByText((content) => content.includes('42 / 137'))
     ).toBeTruthy();
   });
 
@@ -108,6 +140,7 @@ describe('App (testing-library)', () => {
         },
         { provide: AuthStore, useValue: authMock },
         { provide: UserConfigApiService, useValue: userConfigApiMock },
+        { provide: StatsApiService, useValue: statsApiMock },
       ],
     });
 

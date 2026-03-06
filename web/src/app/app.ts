@@ -27,7 +27,7 @@ import { SwUpdate, VersionDetectedEvent } from '@angular/service-worker';
 import { AuthStore, UserMenuComponent } from '@pu-auth/auth';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { UserContextService } from './user-context.service';
-import { UserConfigApiService } from '@pu-stats/data-access';
+import { StatsApiService, UserConfigApiService } from '@pu-stats/data-access';
 import { firstValueFrom, filter } from 'rxjs';
 import { SeoService } from './seo.service';
 import { Analytics, logEvent } from '@angular/fire/analytics';
@@ -58,6 +58,7 @@ export class App {
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly user = inject(UserContextService);
   private readonly userConfigApi = inject(UserConfigApiService);
+  private readonly statsApi = inject(StatsApiService);
   private readonly seo = inject(SeoService);
   private readonly analytics = inject(Analytics, { optional: true });
   private readonly auth = inject(AuthStore);
@@ -86,6 +87,21 @@ export class App {
 
   readonly dailyGoal = computed(
     () => this.userGoalResource.value()?.dailyGoal ?? 100
+  );
+
+  readonly dailyProgressResource = resource({
+    params: () => ({ userId: this.user.userIdSafe() }),
+    loader: async () => {
+      const today = new Date().toISOString().slice(0, 10);
+      const stats = await firstValueFrom(
+        this.statsApi.load({ from: today, to: today })
+      );
+      return stats?.meta?.total ?? 0;
+    },
+  });
+
+  readonly todayProgress = computed(
+    () => this.dailyProgressResource.value() ?? 0
   );
 
   constructor() {
