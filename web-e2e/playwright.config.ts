@@ -8,6 +8,8 @@ export default defineConfig({
   timeout: 45_000,
   expect: { timeout: 8_000 },
   retries: process.env.CI ? 2 : 0,
+  fullyParallel: true,
+  workers: process.env.CI ? 4 : undefined,
   reporter: [['list']],
   use: {
     baseURL: `http://127.0.0.1:${webPort}`,

@@ -43,12 +43,13 @@ jobs:
       - name: Nx Cloud distributed run starten
         run: npx nx-cloud start-ci-run --distribute-on="4 linux-medium-js" --stop-agents-after="lint,test,build,e2e-ci"
 
-      - name: Nx chain (lint + test + build + e2e-ci)
+      - name: Nx affected (lint + test + build)
         run: |
-          npx nx affected -t=build -c=production & \
-          npx nx affected -t lint & \
-          npx nx affected -t test & \
-          npx nx affected -t=e2e-ci -c=ci
+          npx nx affected -t=lint,test,build -c=production --parallel=3
+
+      - name: Nx affected e2e-ci (parallel)
+        run: |
+          npx nx affected -t=e2e-ci --parallel=4
 
       - name: Nx fix-ci (always)
         if: always()
