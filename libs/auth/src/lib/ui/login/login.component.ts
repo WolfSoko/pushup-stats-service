@@ -1,7 +1,10 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
+  OnDestroy,
+  OnInit,
+  PLATFORM_ID,
   inject,
   signal,
 } from '@angular/core';
@@ -53,9 +56,10 @@ const LoginState = signalStore(
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [LoginState],
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit, OnDestroy {
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
+  private readonly platformId = inject(PLATFORM_ID);
   readonly authState = inject(AuthStore);
   readonly loginState = inject(LoginState);
 
@@ -75,6 +79,21 @@ export class LoginComponent {
       message: $localize`:@@validate.password.minLength:Passwort muss mindestens 6 Zeichen lang sein!`,
     });
   });
+
+  ngOnInit(): void {
+    if (!isPlatformBrowser(this.platformId)) return;
+    (window as Window & { onSubmit?: () => void }).onSubmit = () => {
+      void this.signInWithEmail();
+    };
+  }
+
+  ngOnDestroy(): void {
+    if (!isPlatformBrowser(this.platformId)) return;
+    const win = window as Window & { onSubmit?: () => void };
+    if (win.onSubmit) {
+      delete win.onSubmit;
+    }
+  }
 
   togglePasswordVisibility(): void {
     this.loginState.toggleHidePassword();
