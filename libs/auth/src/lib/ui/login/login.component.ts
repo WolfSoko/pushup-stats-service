@@ -41,13 +41,10 @@ export function hasStrongPasswordPolicy(value: string): boolean {
 const LoginState = signalStore(
   withState({
     hidePassword: true,
-    isRegisterMode: false,
   }),
   withMethods((state) => ({
     toggleHidePassword: () =>
       patchState(state, { hidePassword: !state.hidePassword() }),
-    toggleIsRegisterMode: () =>
-      patchState(state, { isRegisterMode: !state.isRegisterMode() }),
   }))
 );
 
@@ -93,17 +90,16 @@ export class LoginComponent {
   googleWizardStep = signal(0);
   googleWizardError = signal<string | null>(null);
   private googleWizardDialogRef: MatDialogRef<unknown> | null = null;
+  private registerDialogRef: MatDialogRef<unknown> | null = null;
 
   passwordPolicyValid = computed(() =>
     hasStrongPasswordPolicy(this.loginForm.password().value() || '')
   );
-  passwordsMatch = computed(() => {
-    if (!this.loginState.isRegisterMode()) return true;
-    return (
+  passwordsMatch = computed(
+    () =>
       this.loginForm.password().value() ===
       this.loginForm.repeatPassword().value()
-    );
-  });
+  );
 
   loginForm = form(
     this.loginData,
@@ -130,12 +126,25 @@ export class LoginComponent {
     this.loginState.toggleHidePassword();
   }
 
-  toggleMode(): void {
-    this.loginState.toggleIsRegisterMode();
+  openRegisterDialog(registerTemplate: TemplateRef<unknown>): void {
     this.registerDisplayName.set('');
     this.registerDailyGoal.set(100);
     this.registerConsentAccepted.set(false);
     this.registerAccountReady.set(false);
+    this.loginData.set({ email: '', password: '', repeatPassword: '' });
+
+    this.registerDialogRef = this.dialog.open(registerTemplate, {
+      disableClose: true,
+      width: '640px',
+    });
+  }
+
+  async cancelRegisterDialog(): Promise<void> {
+    if (this.registerAccountReady()) {
+      await this.authState.logout();
+    }
+    this.registerDialogRef?.close();
+    this.registerDialogRef = null;
   }
 
   async completeCredentialStep(stepper: MatStepper): Promise<void> {
@@ -157,43 +166,47 @@ export class LoginComponent {
       return;
     }
 
-    if (this.loginState.isRegisterMode()) {
-      if (!this.registerAccountReady()) return;
-      if (!this.passwordPolicyValid()) return;
-      if (!this.passwordsMatch()) return;
-      if (this.registerDisplayName().trim().length < 2) return;
-      if (this.registerDailyGoal() < 1) return;
-      if (!this.registerConsentAccepted()) return;
-    }
-
     const { email, password } = this.loginForm().value();
 
     try {
-      if (this.loginState.isRegisterMode()) {
-        const uid = this.auth?.currentUser?.uid || this.authState.user()?.uid;
-        if (!uid) {
-          // Keep user on flow when auth state is unexpectedly missing.
-          return;
-        }
-
-        await firstValueFrom(
-          this.userConfigApi.updateConfig(uid, {
-            displayName: this.registerDisplayName().trim(),
-            dailyGoal: Math.max(1, Number(this.registerDailyGoal() || 100)),
-            consent: {
-              dataProcessing: true,
-              statistics: true,
-              targetedAds: true,
-              acceptedAt: new Date().toISOString(),
-            },
-          })
-        );
-      } else {
-        await this.authState.signInWithEmail(email, password);
-        if (!this.authState.isAuthenticated()) {
-          return;
-        }
+      await this.authState.signInWithEmail(email, password);
+      if (!this.authState.isAuthenticated()) {
+        return;
       }
+      await this.router.navigateByUrl(this.targetUrl());
+    } catch {
+      // Error already handled by service
+    }
+  }
+
+  async submitEmailRegistration(): Promise<void> {
+    if (!this.registerAccountReady()) return;
+    if (this.loginForm.email().invalid() || this.loginForm.password().invalid())
+      return;
+    if (!this.passwordPolicyValid() || !this.passwordsMatch()) return;
+    if (this.registerDisplayName().trim().length < 2) return;
+    if (this.registerDailyGoal() < 1) return;
+    if (!this.registerConsentAccepted()) return;
+
+    try {
+      const uid = this.auth?.currentUser?.uid || this.authState.user()?.uid;
+      if (!uid) return;
+
+      await firstValueFrom(
+        this.userConfigApi.updateConfig(uid, {
+          displayName: this.registerDisplayName().trim(),
+          dailyGoal: Math.max(1, Number(this.registerDailyGoal() || 100)),
+          consent: {
+            dataProcessing: true,
+            statistics: true,
+            targetedAds: true,
+            acceptedAt: new Date().toISOString(),
+          },
+        })
+      );
+
+      this.registerDialogRef?.close('completed');
+      this.registerDialogRef = null;
       await this.router.navigateByUrl(this.targetUrl());
     } catch {
       // Error already handled by service
