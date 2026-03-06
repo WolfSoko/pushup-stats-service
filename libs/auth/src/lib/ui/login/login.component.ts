@@ -82,7 +82,7 @@ export class LoginComponent {
   registerDisplayName = signal('');
   registerDailyGoal = signal(100);
   registerConsentAccepted = signal(false);
-  registerAccountReady = signal(false);
+  registerSuccess = signal(false);
 
   googleDisplayName = signal('');
   googleDailyGoal = signal(100);
@@ -90,7 +90,10 @@ export class LoginComponent {
   googleWizardStep = signal(0);
   googleWizardError = signal<string | null>(null);
   private googleWizardDialogRef: MatDialogRef<unknown> | null = null;
-  private registerDialogRef: MatDialogRef<unknown> | null = null;
+  readonly isRegisterPage = signal(
+    this.route.snapshot.routeConfig?.path === 'register'
+  );
+  registeringCredentials = signal(false);
 
   passwordPolicyValid = computed(() =>
     hasStrongPasswordPolicy(this.loginForm.password().value() || '')
@@ -126,25 +129,21 @@ export class LoginComponent {
     this.loginState.toggleHidePassword();
   }
 
-  openRegisterDialog(registerTemplate: TemplateRef<unknown>): void {
+  async goToRegister(): Promise<void> {
     this.registerDisplayName.set('');
     this.registerDailyGoal.set(100);
     this.registerConsentAccepted.set(false);
-    this.registerAccountReady.set(false);
+    this.registerSuccess.set(false);
     this.loginData.set({ email: '', password: '', repeatPassword: '' });
-
-    this.registerDialogRef = this.dialog.open(registerTemplate, {
-      disableClose: true,
-      width: '640px',
-    });
+    await this.router.navigateByUrl('/register');
   }
 
-  async cancelRegisterDialog(): Promise<void> {
-    if (this.registerAccountReady()) {
+  async goToLogin(): Promise<void> {
+    if (this.authState.isAuthenticated()) {
       await this.authState.logout();
     }
-    this.registerDialogRef?.close();
-    this.registerDialogRef = null;
+    this.registerSuccess.set(false);
+    await this.router.navigateByUrl('/login');
   }
 
   async completeCredentialStep(stepper: MatStepper): Promise<void> {
@@ -152,8 +151,9 @@ export class LoginComponent {
       return;
     if (!this.passwordPolicyValid() || !this.passwordsMatch()) return;
 
-    const registered = await this.registerEmailAccountIfNeeded();
-    if (!registered) return;
+    this.registeringCredentials.set(true);
+    await new Promise((resolve) => setTimeout(resolve, 450));
+    this.registeringCredentials.set(false);
 
     stepper.next();
   }
@@ -180,7 +180,6 @@ export class LoginComponent {
   }
 
   async submitEmailRegistration(): Promise<void> {
-    if (!this.registerAccountReady()) return;
     if (this.loginForm.email().invalid() || this.loginForm.password().invalid())
       return;
     if (!this.passwordPolicyValid() || !this.passwordsMatch()) return;
@@ -188,9 +187,23 @@ export class LoginComponent {
     if (this.registerDailyGoal() < 1) return;
     if (!this.registerConsentAccepted()) return;
 
+    const { email, password } = this.loginForm().value();
+
     try {
+      this.registeringCredentials.set(true);
+      this.registerSuccess.set(false);
+
+      await this.authState.signUpWithEmail(email, password);
+      if (!this.authState.isAuthenticated()) {
+        this.registeringCredentials.set(false);
+        return;
+      }
+
       const uid = this.auth?.currentUser?.uid || this.authState.user()?.uid;
-      if (!uid) return;
+      if (!uid) {
+        this.registeringCredentials.set(false);
+        return;
+      }
 
       await firstValueFrom(
         this.userConfigApi.updateConfig(uid, {
@@ -205,10 +218,10 @@ export class LoginComponent {
         })
       );
 
-      this.registerDialogRef?.close('completed');
-      this.registerDialogRef = null;
-      await this.router.navigateByUrl(this.targetUrl());
+      this.registerSuccess.set(true);
+      this.registeringCredentials.set(false);
     } catch {
+      this.registeringCredentials.set(false);
       // Error already handled by service
     }
   }
@@ -286,19 +299,8 @@ export class LoginComponent {
     }
   }
 
-  private async registerEmailAccountIfNeeded(): Promise<boolean> {
-    if (this.registerAccountReady()) return true;
-
-    const { email, password } = this.loginForm().value();
-    if (!email || !password) return false;
-
-    await this.authState.signUpWithEmail(email, password);
-    if (!this.authState.isAuthenticated()) {
-      return false;
-    }
-
-    this.registerAccountReady.set(true);
-    return true;
+  async goToDashboard(): Promise<void> {
+    await this.router.navigateByUrl(this.targetUrl());
   }
 
   private async isGoogleOnboardingRequired(): Promise<boolean> {

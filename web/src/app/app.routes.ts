@@ -45,6 +45,16 @@ export const appRoutes: Routes = [
     loadComponent: () => import('@pu-auth/auth').then((m) => m.LoginComponent),
   },
   {
+    path: 'register',
+    canActivate: [publicOnlyGuard],
+    data: {
+      seoTitle: 'Registrierung – Pushup Tracker',
+      seoDescription:
+        'Erstelle dein Konto und richte Profil, Tagesziel und Einwilligungen ein.',
+    },
+    loadComponent: () => import('@pu-auth/auth').then((m) => m.LoginComponent),
+  },
+  {
     path: 'data',
     canActivate: [authGuard],
     data: {
