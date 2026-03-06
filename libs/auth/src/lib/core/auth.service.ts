@@ -29,7 +29,7 @@ export class AuthService {
   async signInWithGoogle(): Promise<void> {
     await this.wrapAsync(async () => {
       const cred = await this.authAdapter.signInWithGoogle();
-      await this.syncUserDb();
+      await this.syncUserDbSafe();
       return cred;
     }, 'Google sign-in');
   }
@@ -38,7 +38,7 @@ export class AuthService {
   async signInWithEmail(email: string, password: string): Promise<void> {
     await this.wrapAsync(async () => {
       const cred = await this.authAdapter.signInWithEmail(email, password);
-      await this.syncUserDb();
+      await this.syncUserDbSafe();
       return cred;
     }, 'Email sign-in');
   }
@@ -47,7 +47,7 @@ export class AuthService {
   async signUpWithEmail(email: string, password: string): Promise<void> {
     await this.wrapAsync(async () => {
       const cred = await this.authAdapter.signUpWithEmail(email, password);
-      await this.syncUserDb();
+      await this.syncUserDbSafe();
       return cred;
     }, 'Email sign-up');
   }
@@ -96,6 +96,15 @@ export class AuthService {
     } catch (e) {
       this.userDbSyncState.set('error');
       throw e;
+    }
+  }
+
+  private async syncUserDbSafe(): Promise<void> {
+    try {
+      await this.syncUserDb();
+    } catch (e) {
+      // Do not fail login if user profile sync fails after successful auth.
+      console.warn('[AuthService] user DB sync failed after auth:', e);
     }
   }
 
