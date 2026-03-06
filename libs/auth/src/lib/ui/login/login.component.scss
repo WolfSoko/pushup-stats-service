@@ -8,6 +8,11 @@
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
 
+.login-container.register-page .login-card {
+  max-width: 680px; /* Breite geben für den Stepper auf Desktop */
+  width: 100%;
+}
+
 .login-card {
   max-width: 400px;
   width: 100%;
@@ -20,9 +25,27 @@
   margin-top: 16px;
 }
 
+.register-stepper {
+  width: 100%;
+  margin-top: 16px;
+}
+
+.step-field {
+  width: 100%;
+  margin-bottom: 24px; /* Mehr Platz für Error/Hint-Texte drunter */
+}
+
+.step-loading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 16px;
+  margin-bottom: 24px;
+}
+
 .form-actions {
   display: flex;
-  gap: 8px;
+  gap: 12px;
   align-items: center;
 }
 
@@ -35,7 +58,9 @@ mat-dialog-actions {
 }
 
 mat-checkbox {
-  margin-top: 8px;
+  margin-top: 12px;
+  margin-bottom: 16px;
+  display: block;
 }
 
 .error-message p {
@@ -45,6 +70,7 @@ mat-checkbox {
 @media (max-width: 480px) {
   .form-actions {
     flex-direction: column;
+    align-items: stretch;
   }
 }
 
