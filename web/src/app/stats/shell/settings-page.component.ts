@@ -18,7 +18,7 @@ import { UserContextService } from '../../user-context.service';
 // eslint-disable-next-line @nx/enforce-module-boundaries
 import { AuthStore } from '@pu-auth/auth';
 import { Router } from '@angular/router';
-import { AnalyticsService } from '../../analytics.service';
+import { Analytics, logEvent } from '@angular/fire/analytics';
 
 @Component({
   selector: 'app-settings-page',
@@ -191,7 +191,7 @@ export class SettingsPageComponent {
   private readonly user = inject(UserContextService);
   private readonly auth = inject(AuthStore);
   private readonly router = inject(Router);
-  private readonly analytics = inject(AnalyticsService);
+  private readonly analytics = inject(Analytics, { optional: true });
 
   readonly activeUserId = this.user.userIdSafe;
 
@@ -265,7 +265,7 @@ export class SettingsPageComponent {
       });
       this.saved.set(true);
       this.configResource.reload();
-      this.analytics.track('settings_saved', {
+      this.trackAnalytics('settings_saved', {
         hideFromLeaderboard: this.leaderboardOptOutDraft(),
         dailyGoal,
       });
@@ -296,12 +296,27 @@ export class SettingsPageComponent {
         },
       });
       await this.auth.deleteAccount();
-      this.analytics.track('account_anonymized_and_deleted');
+      this.trackAnalytics('account_anonymized_and_deleted', { success: true });
       await this.router.navigateByUrl('/');
     } catch {
       this.errorMessage.set('Konnte Account nicht anonymisieren/löschen.');
     } finally {
       this.deletingAccount.set(false);
     }
+  }
+
+  private trackAnalytics(
+    eventName: string,
+    params: Record<string, string | number | boolean>
+  ): void {
+    if (!this.analytics || !this.analyticsConsentGranted()) return;
+    logEvent(this.analytics, eventName, params);
+  }
+
+  private analyticsConsentGranted(): boolean {
+    const storage = globalThis.localStorage;
+    const hasGetItem = typeof storage?.getItem === 'function';
+    if (!hasGetItem) return false;
+    return storage.getItem('pus_analytics_consent') === 'granted';
   }
 }

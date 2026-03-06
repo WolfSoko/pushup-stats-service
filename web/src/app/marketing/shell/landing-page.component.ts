@@ -13,7 +13,7 @@ import {
   LeaderboardPeriod,
   LeaderboardService,
 } from '../../leaderboard.service';
-import { AnalyticsService } from '../../analytics.service';
+import { Analytics, logEvent } from '@angular/fire/analytics';
 
 @Component({
   selector: 'app-landing-page',
@@ -25,7 +25,7 @@ export class LandingPageComponent {
   private readonly leaderboardApi = inject(LeaderboardService, {
     optional: true,
   });
-  private readonly analytics = inject(AnalyticsService);
+  private readonly analytics = inject(Analytics, { optional: true });
 
   readonly period = linkedSignal<LeaderboardPeriod>(() => 'daily');
 
@@ -69,11 +69,26 @@ export class LandingPageComponent {
   });
 
   onCtaClick(target: 'signup' | 'login' | 'dashboard'): void {
-    this.analytics.track('landing_cta_click', { target });
+    this.track('landing_cta_click', { target });
   }
 
   onPeriodChange(period: LeaderboardPeriod): void {
     this.period.set(period);
-    this.analytics.track('landing_leaderboard_period_change', { period });
+    this.track('landing_leaderboard_period_change', { period });
+  }
+
+  private track(
+    eventName: string,
+    params: Record<string, string | number | boolean>
+  ): void {
+    if (!this.analytics || !this.analyticsConsentGranted()) return;
+    logEvent(this.analytics, eventName, params);
+  }
+
+  private analyticsConsentGranted(): boolean {
+    const storage = globalThis.localStorage;
+    const hasGetItem = typeof storage?.getItem === 'function';
+    if (!hasGetItem) return false;
+    return storage.getItem('pus_analytics_consent') === 'granted';
   }
 }

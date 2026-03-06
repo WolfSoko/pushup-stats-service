@@ -30,7 +30,7 @@ import { UserContextService } from './user-context.service';
 import { UserConfigApiService } from '@pu-stats/data-access';
 import { firstValueFrom, filter } from 'rxjs';
 import { SeoService } from './seo.service';
-import { AnalyticsService } from './analytics.service';
+import { Analytics, logEvent } from '@angular/fire/analytics';
 
 @Component({
   selector: 'app-root',
@@ -59,7 +59,7 @@ export class App {
   private readonly user = inject(UserContextService);
   private readonly userConfigApi = inject(UserConfigApiService);
   private readonly seo = inject(SeoService);
-  private readonly analytics = inject(AnalyticsService);
+  private readonly analytics = inject(Analytics, { optional: true });
   private readonly auth = inject(AuthStore);
 
   setLanguage(lang: 'de' | 'en', ev?: Event): void {
@@ -89,12 +89,6 @@ export class App {
   );
 
   constructor() {
-    const storage = globalThis.localStorage;
-    const hasGetItem = typeof storage?.getItem === 'function';
-    if (hasGetItem && storage.getItem('pus_analytics_consent') == null) {
-      this.analytics.setConsent(false);
-    }
-
     this.router.events
       .pipe(
         filter((event) => event instanceof NavigationEnd),
@@ -113,8 +107,9 @@ export class App {
           data.seoDescription ??
           'Tracke Reps, Trends und Streaks mit Pushup Tracker.';
 
-        this.seo.update(title, description, nav.urlAfterRedirects || nav.url);
-        this.analytics.trackPageView(nav.urlAfterRedirects || nav.url);
+        const path = nav.urlAfterRedirects || nav.url;
+        this.seo.update(title, description, path);
+        this.trackAnalytics('page_view', { page_path: path });
       });
 
     if (this.swUpdate?.isEnabled) {
@@ -155,6 +150,21 @@ export class App {
     let route = this.activatedRoute;
     while (route.firstChild) route = route.firstChild;
     return route;
+  }
+
+  private analyticsConsentGranted(): boolean {
+    const storage = globalThis.localStorage;
+    const hasGetItem = typeof storage?.getItem === 'function';
+    if (!hasGetItem) return false;
+    return storage.getItem('pus_analytics_consent') === 'granted';
+  }
+
+  private trackAnalytics(
+    eventName: string,
+    params: Record<string, string | number | boolean>
+  ): void {
+    if (!this.analytics || !this.analyticsConsentGranted()) return;
+    logEvent(this.analytics, eventName, params);
   }
 
   private showBackgroundUpdateToast(_event: VersionDetectedEvent): void {

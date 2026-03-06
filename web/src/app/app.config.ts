@@ -20,6 +20,7 @@ import {
 } from '@angular/platform-browser';
 import { provideRouter } from '@angular/router';
 import { provideServiceWorker } from '@angular/service-worker';
+import { getAnalytics, provideAnalytics } from '@angular/fire/analytics';
 // eslint-disable-next-line @nx/enforce-module-boundaries
 import { provideAuth, withEmulator as withAuthEmulator } from '@pu-auth/auth';
 import {
@@ -64,6 +65,10 @@ export const appConfig: ApplicationConfig = {
             withFirestoreEmulator(firebaseRuntime.firestoreEmulatorUrl)
           ),
         ]
-      : [provideAuth(), provideFireStore()]),
+      : [
+          provideAuth(),
+          provideFireStore(),
+          provideAnalytics(() => getAnalytics()),
+        ]),
   ],
 };
