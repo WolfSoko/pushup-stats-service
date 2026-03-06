@@ -29,6 +29,47 @@
     </div>
   </section>
 
+  <section class="feature-grid">
+    <mat-card>
+      <mat-card-header>
+        <mat-icon aria-hidden="true">insights</mat-icon>
+        <mat-card-title i18n="@@landing.feature.analytics.title"
+          >Smarter Überblick</mat-card-title
+        >
+      </mat-card-header>
+      <mat-card-content i18n="@@landing.feature.analytics.body"
+        >Woche, Monat und Custom-Ranges mit klaren KPIs und
+        Charts.</mat-card-content
+      >
+    </mat-card>
+
+    <mat-card>
+      <mat-card-header>
+        <mat-icon aria-hidden="true">bolt</mat-icon>
+        <mat-card-title i18n="@@landing.feature.quick.title"
+          >Quick Logging</mat-card-title
+        >
+      </mat-card-header>
+      <mat-card-content i18n="@@landing.feature.quick.body"
+        >Neue Einträge in Sekunden per Schnellaktionen oder
+        Tabelle.</mat-card-content
+      >
+    </mat-card>
+
+    <mat-card>
+      <mat-card-header>
+        <mat-icon aria-hidden="true">sync</mat-icon>
+        <mat-card-title i18n="@@landing.feature.live.title"
+          >Live & überall</mat-card-title
+        >
+      </mat-card-header>
+      <mat-card-content i18n="@@landing.feature.live.body"
+        >Firestore Live-Sync hält deine Daten auf allen Geräten
+        aktuell.</mat-card-content
+      >
+    </mat-card>
+  </section>
+
   <section class="preview">
     <img
       src="assets/landing-stats-screenshot.svg"
@@ -94,46 +135,5 @@
         Deine Position: #{{ me.rank }} · {{ me.reps }} Reps
       </p>
     }
-  </section>
-
-  <section class="feature-grid">
-    <mat-card>
-      <mat-card-header>
-        <mat-icon aria-hidden="true">insights</mat-icon>
-        <mat-card-title i18n="@@landing.feature.analytics.title"
-          >Smarter Überblick</mat-card-title
-        >
-      </mat-card-header>
-      <mat-card-content i18n="@@landing.feature.analytics.body"
-        >Woche, Monat und Custom-Ranges mit klaren KPIs und
-        Charts.</mat-card-content
-      >
-    </mat-card>
-
-    <mat-card>
-      <mat-card-header>
-        <mat-icon aria-hidden="true">bolt</mat-icon>
-        <mat-card-title i18n="@@landing.feature.quick.title"
-          >Quick Logging</mat-card-title
-        >
-      </mat-card-header>
-      <mat-card-content i18n="@@landing.feature.quick.body"
-        >Neue Einträge in Sekunden per Schnellaktionen oder
-        Tabelle.</mat-card-content
-      >
-    </mat-card>
-
-    <mat-card>
-      <mat-card-header>
-        <mat-icon aria-hidden="true">sync</mat-icon>
-        <mat-card-title i18n="@@landing.feature.live.title"
-          >Live & überall</mat-card-title
-        >
-      </mat-card-header>
-      <mat-card-content i18n="@@landing.feature.live.body"
-        >Firestore Live-Sync hält deine Daten auf allen Geräten
-        aktuell.</mat-card-content
-      >
-    </mat-card>
   </section>
 </main>
