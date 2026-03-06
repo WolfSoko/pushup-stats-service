@@ -201,10 +201,18 @@ exports.assessRecaptchaToken = onCall(
     const recaptchaAction = String(request.data?.action || '').trim();
 
     if (!token || !recaptchaAction) {
-      throw new HttpsError(
-        'invalid-argument',
-        'token und action sind erforderlich.'
-      );
+      logger.warn('reCAPTCHA skipped due to missing token/action', {
+        hasToken: Boolean(token),
+        hasAction: Boolean(recaptchaAction),
+        uid: request.auth?.uid || 'anonymous',
+      });
+      return {
+        ok: false,
+        skipped: true,
+        score: 0,
+        reasons: ['missing-token-or-action'],
+        minScore: RECAPTCHA_MIN_SCORE,
+      };
     }
 
     try {

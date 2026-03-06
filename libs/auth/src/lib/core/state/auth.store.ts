@@ -47,6 +47,7 @@ function toFriendlyAuthError(error: unknown): Error {
     'email-already-in-use': $localize`:@@auth.error.emailInUse:Für diese E-Mail existiert bereits ein Konto.`,
     'weak-password': $localize`:@@auth.error.weakPassword:Das Passwort ist zu schwach (mindestens 6 Zeichen).`,
     'too-many-requests': $localize`:@@auth.error.tooManyRequests:Zu viele Versuche. Bitte kurz warten und erneut versuchen.`,
+    'internal-error': $localize`:@@auth.error.internalError:Ein technischer Fehler ist aufgetreten. Bitte gleich erneut versuchen.`,
   };
 
   if (normalized && map[normalized]) {
