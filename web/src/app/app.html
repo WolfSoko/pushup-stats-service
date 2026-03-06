@@ -43,6 +43,16 @@
         <span matListItemTitle i18n="@@nav.analysis">Analyse</span>
       </a>
 
+      <a
+        mat-list-item
+        routerLink="/leaderboard"
+        routerLinkActive="active"
+        (click)="navOpen.set(false)"
+      >
+        <mat-icon matListItemIcon>leaderboard</mat-icon>
+        <span matListItemTitle i18n="@@nav.leaderboard">Bestenliste</span>
+      </a>
+
       <mat-divider></mat-divider>
 
       <a

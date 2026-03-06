@@ -21,7 +21,12 @@ mat-card-content + mat-card-footer {
 }
 
 .app-shell {
-  min-height: 100vh;
+  height: 100vh;
+}
+
+mat-sidenav-content {
+  height: 100vh;
+  overflow: auto;
 }
 
 .app-sidenav {

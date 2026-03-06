@@ -17,9 +17,6 @@
 }
 
 .page-header {
-  position: sticky;
-  top: 72px;
-  z-index: 5;
   padding: clamp(16px, 2vw, 24px);
   border: 1px solid rgba(123, 159, 255, 0.25);
   border-radius: 20px;

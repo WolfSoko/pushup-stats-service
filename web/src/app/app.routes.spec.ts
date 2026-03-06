@@ -6,6 +6,7 @@ import { AnalysisPageComponent } from './stats/shell/analysis-page.component';
 import { EntriesPageComponent } from './stats/shell/entries-page.component';
 import { SettingsPageComponent } from './stats/shell/settings-page.component';
 import { StatsDashboardComponent } from './stats/shell/stats-dashboard.component';
+import { LeaderboardPageComponent } from './leaderboard/shell/leaderboard-page.component';
 
 describe('appRoutes', () => {
   it('defines landing, app and feature routes', () => {
@@ -18,6 +19,7 @@ describe('appRoutes', () => {
       'data',
       'analysis',
       'settings',
+      'leaderboard',
       '**',
     ]);
   });
@@ -50,6 +52,12 @@ describe('appRoutes', () => {
     const route = appRoutes.find((r) => r.path === 'settings');
     const component = await route?.loadComponent?.();
     expect(component).toBe(SettingsPageComponent);
+  });
+
+  it('lazy-loads public leaderboard component', async () => {
+    const route = appRoutes.find((r) => r.path === 'leaderboard');
+    const component = await route?.loadComponent?.();
+    expect(component).toBe(LeaderboardPageComponent);
   });
 
   it('lazy-routes login component', async () => {

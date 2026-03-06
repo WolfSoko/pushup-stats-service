@@ -83,5 +83,17 @@ export const appRoutes: Routes = [
         (m) => m.SettingsPageComponent
       ),
   },
+  {
+    path: 'leaderboard',
+    data: {
+      seoTitle: 'Bestenliste – Pushup Tracker',
+      seoDescription:
+        'Öffentliche Bestenliste für tägliche, wöchentliche und monatliche Pushup-Reps.',
+    },
+    loadComponent: () =>
+      import('./leaderboard/shell/leaderboard-page.component').then(
+        (m) => m.LeaderboardPageComponent
+      ),
+  },
   { path: '**', redirectTo: '' },
 ];
