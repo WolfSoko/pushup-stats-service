@@ -1,6 +1,10 @@
 const { onDocumentWritten } = require('firebase-functions/v2/firestore');
 const { onSchedule } = require('firebase-functions/v2/scheduler');
+const { onCall, HttpsError } = require('firebase-functions/v2/https');
 const { logger } = require('firebase-functions');
+const {
+  RecaptchaEnterpriseServiceClient,
+} = require('@google-cloud/recaptcha-enterprise');
 const admin = require('firebase-admin');
 
 admin.initializeApp();
@@ -8,6 +12,11 @@ admin.initializeApp();
 const db = admin.firestore();
 const TZ = 'Europe/Berlin';
 const TOP_N = 10;
+
+const recaptchaClient = new RecaptchaEnterpriseServiceClient();
+const RECAPTCHA_PROJECT_ID = 'pushup-stats';
+const RECAPTCHA_SITE_KEY = '6LdIVoEsAAAAAMk4rJwg2DYHfM7ud_as7V5rUf4g';
+const RECAPTCHA_MIN_SCORE = 0.5;
 
 function berlinDateParts(date = new Date()) {
   const parts = new Intl.DateTimeFormat('en-CA', {
@@ -86,6 +95,48 @@ function rankEntries(rows, periodKey, targetKey, userProfiles) {
     .slice(0, TOP_N);
 }
 
+async function createRecaptchaAssessment({
+  token,
+  recaptchaAction,
+  projectID = RECAPTCHA_PROJECT_ID,
+  recaptchaKey = RECAPTCHA_SITE_KEY,
+}) {
+  const projectPath = recaptchaClient.projectPath(projectID);
+
+  const request = {
+    assessment: {
+      event: {
+        token,
+        siteKey: recaptchaKey,
+      },
+    },
+    parent: projectPath,
+  };
+
+  const [response] = await recaptchaClient.createAssessment(request);
+
+  if (!response.tokenProperties?.valid) {
+    return {
+      ok: false,
+      score: 0,
+      reason: `invalid-token:${response.tokenProperties?.invalidReason || 'unknown'}`,
+      actionMatched: false,
+    };
+  }
+
+  const actionMatched = response.tokenProperties?.action === recaptchaAction;
+  const score = Number(response.riskAnalysis?.score || 0);
+  const reasons = (response.riskAnalysis?.reasons || []).map(String);
+
+  return {
+    ok: actionMatched && score >= RECAPTCHA_MIN_SCORE,
+    score,
+    reasons,
+    actionMatched,
+    action: response.tokenProperties?.action || null,
+  };
+}
+
 async function rebuildLeaderboardsCore() {
   const now = new Date();
   const today = berlinDateParts(now);
@@ -138,6 +189,47 @@ async function rebuildLeaderboardsCore() {
     monthly: monthly.length,
   });
 }
+
+exports.assessRecaptchaToken = onCall(
+  {
+    region: 'europe-west3',
+  },
+  async (request) => {
+    const token = String(request.data?.token || '').trim();
+    const recaptchaAction = String(request.data?.action || '').trim();
+
+    if (!token || !recaptchaAction) {
+      throw new HttpsError(
+        'invalid-argument',
+        'token und action sind erforderlich.'
+      );
+    }
+
+    try {
+      const assessment = await createRecaptchaAssessment({
+        token,
+        recaptchaAction,
+      });
+
+      if (!assessment.actionMatched) {
+        logger.warn('reCAPTCHA action mismatch', {
+          expectedAction: recaptchaAction,
+          actualAction: assessment.action,
+        });
+      }
+
+      return {
+        ok: assessment.ok,
+        score: assessment.score,
+        reasons: assessment.reasons || [],
+        minScore: RECAPTCHA_MIN_SCORE,
+      };
+    } catch (error) {
+      logger.error('reCAPTCHA assessment failed', { error });
+      throw new HttpsError('internal', 'reCAPTCHA Prüfung fehlgeschlagen.');
+    }
+  }
+);
 
 exports.rebuildLeaderboards = onSchedule(
   {
