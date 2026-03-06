@@ -6,6 +6,7 @@ import {
   RouterStateSnapshot,
   UrlTree,
 } from '@angular/router';
+import { Auth } from '@angular/fire/auth';
 import { authGuard, publicOnlyGuard } from './auth.guard';
 import { AuthStore } from './state/auth.store';
 
@@ -13,8 +14,15 @@ import { AuthStore } from './state/auth.store';
 class MockAuthStore {
   isAuthenticated = jest.fn();
 }
+
+@Injectable()
+class MockFirebaseAuth {
+  currentUser: unknown = null;
+}
+
 describe('auth.guard', () => {
   let authStore: MockAuthStore;
+  let firebaseAuth: MockFirebaseAuth;
   let mockedRoute: ActivatedRouteSnapshot;
   let mockedRouterState: RouterStateSnapshot;
 
@@ -26,9 +34,13 @@ describe('auth.guard', () => {
       imports: [
         RouterModule.forRoot([{ path: 'login', component: {} as never }]),
       ],
-      providers: [{ provide: AuthStore, useClass: MockAuthStore }],
+      providers: [
+        { provide: AuthStore, useClass: MockAuthStore },
+        { provide: Auth, useClass: MockFirebaseAuth },
+      ],
     });
     authStore = TestBed.inject(AuthStore) as unknown as MockAuthStore;
+    firebaseAuth = TestBed.inject(Auth) as unknown as MockFirebaseAuth;
   });
 
   it('should return true when authenticated (given isAuthenticated true)', () => {
@@ -40,8 +52,19 @@ describe('auth.guard', () => {
     expect(result).toBe(true);
   });
 
+  it('should return true when firebase currentUser exists (even if signal auth lags)', () => {
+    authStore.isAuthenticated.mockReturnValue(false);
+    firebaseAuth.currentUser = { uid: 'u1' };
+
+    const result = TestBed.runInInjectionContext(() =>
+      authGuard(mockedRoute, mockedRouterState)
+    );
+    expect(result).toBe(true);
+  });
+
   it('should return UrlTree to /login with returnUrl when not authenticated', () => {
     authStore.isAuthenticated.mockReturnValue(false);
+    firebaseAuth.currentUser = null;
     const result = TestBed.runInInjectionContext(() =>
       authGuard(mockedRoute, mockedRouterState)
     ) as UrlTree;
