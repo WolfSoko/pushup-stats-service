@@ -58,6 +58,16 @@ describe('appRoutes', () => {
     expect(component).toBe(LoginComponent);
   });
 
+  it('adds seo metadata to primary routes', () => {
+    const landing = appRoutes.find((r) => r.path === '');
+    const app = appRoutes.find((r) => r.path === 'app');
+    const settings = appRoutes.find((r) => r.path === 'settings');
+
+    expect(landing?.data?.['seoTitle']).toContain('Pushup Tracker');
+    expect(app?.data?.['seoDescription']).toBeTruthy();
+    expect(settings?.data?.['seoDescription']).toContain('Tagesziel');
+  });
+
   it('protects app routes and keeps landing/login public-only', () => {
     const protectedPaths = ['app', 'data', 'analysis', 'settings'];
     for (const path of protectedPaths) {

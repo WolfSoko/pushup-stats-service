@@ -18,6 +18,7 @@ import { UserContextService } from '../../user-context.service';
 // eslint-disable-next-line @nx/enforce-module-boundaries
 import { AuthStore } from '@pu-auth/auth';
 import { Router } from '@angular/router';
+import { AnalyticsService } from '../../analytics.service';
 
 @Component({
   selector: 'app-settings-page',
@@ -190,6 +191,7 @@ export class SettingsPageComponent {
   private readonly user = inject(UserContextService);
   private readonly auth = inject(AuthStore);
   private readonly router = inject(Router);
+  private readonly analytics = inject(AnalyticsService);
 
   readonly activeUserId = this.user.userIdSafe;
 
@@ -263,6 +265,10 @@ export class SettingsPageComponent {
       });
       this.saved.set(true);
       this.configResource.reload();
+      this.analytics.track('settings_saved', {
+        hideFromLeaderboard: this.leaderboardOptOutDraft(),
+        dailyGoal,
+      });
     } catch {
       this.errorMessage.set('Konnte nicht speichern.');
     } finally {
@@ -290,6 +296,7 @@ export class SettingsPageComponent {
         },
       });
       await this.auth.deleteAccount();
+      this.analytics.track('account_anonymized_and_deleted');
       await this.router.navigateByUrl('/');
     } catch {
       this.errorMessage.set('Konnte Account nicht anonymisieren/löschen.');

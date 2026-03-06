@@ -75,5 +75,7 @@ Either running on WSL or Linux. Find out if there are related issues.
 - **Testabdeckung:**
   - Schreibe immer Given-When-Then-Tests mit `@testing-library/angular` oder `TestBed`.
   - Ziel: Maximale Testabdeckung und robuste, zukunftssichere Tests.
+- **Architecture**
+  - Verwende @ngrx/signalStore um State zu handeln und die Architektur sauber zu halten.
 
 **Diese Strategie ist verbindlich für alle Angular-Libs und Web-Projekte in diesem Repository.**

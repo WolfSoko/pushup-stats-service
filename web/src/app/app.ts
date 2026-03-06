@@ -2,18 +2,19 @@ import {
   Component,
   DestroyRef,
   computed,
-  effect,
   inject,
   resource,
   signal,
 } from '@angular/core';
 import {
+  ActivatedRoute,
+  NavigationEnd,
   Router,
   RouterLink,
   RouterLinkActive,
   RouterOutlet,
 } from '@angular/router';
-import { Title } from '@angular/platform-browser';
+
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
@@ -27,7 +28,9 @@ import { AuthStore, UserMenuComponent } from '@pu-auth/auth';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { UserContextService } from './user-context.service';
 import { UserConfigApiService } from '@pu-stats/data-access';
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom, filter } from 'rxjs';
+import { SeoService } from './seo.service';
+import { AnalyticsService } from './analytics.service';
 
 @Component({
   selector: 'app-root',
@@ -51,10 +54,12 @@ export class App {
   private readonly swUpdate = inject(SwUpdate, { optional: true });
   private readonly snackBar = inject(MatSnackBar);
   private readonly destroyRef = inject(DestroyRef);
-  private readonly titleService = inject(Title);
   private readonly router = inject(Router);
+  private readonly activatedRoute = inject(ActivatedRoute);
   private readonly user = inject(UserContextService);
   private readonly userConfigApi = inject(UserConfigApiService);
+  private readonly seo = inject(SeoService);
+  private readonly analytics = inject(AnalyticsService);
   private readonly auth = inject(AuthStore);
 
   setLanguage(lang: 'de' | 'en', ev?: Event): void {
@@ -84,47 +89,72 @@ export class App {
   );
 
   constructor() {
-    effect(() => {
-      const userName = this.user.userNameSafe();
-      const name =
-        userName === 'default'
-          ? $localize`:@@title.fallback:Dein Name 💪`
-          : userName;
-      this.titleService.setTitle(`Pushup Tracker – ${name}`);
-    });
+    const storage = globalThis.localStorage;
+    const hasGetItem = typeof storage?.getItem === 'function';
+    if (hasGetItem && storage.getItem('pus_analytics_consent') == null) {
+      this.analytics.setConsent(false);
+    }
 
-    if (!this.swUpdate?.isEnabled) return;
-
-    this.swUpdate.versionUpdates
-      .pipe(takeUntilDestroyed(this.destroyRef))
+    this.router.events
+      .pipe(
+        filter((event) => event instanceof NavigationEnd),
+        takeUntilDestroyed(this.destroyRef)
+      )
       .subscribe((event) => {
-        if (event.type === 'VERSION_DETECTED') {
-          this.showBackgroundUpdateToast(event);
-          return;
-        }
+        const nav = event as NavigationEnd;
+        const leaf = this.currentLeafRoute();
+        const data = leaf.snapshot.data as {
+          seoTitle?: string;
+          seoDescription?: string;
+        };
 
-        if (event.type !== 'VERSION_READY') return;
+        const title = data.seoTitle ?? 'Pushup Tracker';
+        const description =
+          data.seoDescription ??
+          'Tracke Reps, Trends und Streaks mit Pushup Tracker.';
 
-        const ref = this.snackBar.open(
-          $localize`Neue Version verfügbar`,
-          $localize`Neu laden`,
-          {
-            duration: 20_000,
-            horizontalPosition: 'center',
-            verticalPosition: 'bottom',
-          }
-        );
-
-        ref.onAction().subscribe(() => {
-          window.location.reload();
-        });
+        this.seo.update(title, description, nav.urlAfterRedirects || nav.url);
+        this.analytics.trackPageView(nav.urlAfterRedirects || nav.url);
       });
+
+    if (this.swUpdate?.isEnabled) {
+      this.swUpdate.versionUpdates
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe((event) => {
+          if (event.type === 'VERSION_DETECTED') {
+            this.showBackgroundUpdateToast(event);
+            return;
+          }
+
+          if (event.type !== 'VERSION_READY') return;
+
+          const ref = this.snackBar.open(
+            $localize`Neue Version verfügbar`,
+            $localize`Neu laden`,
+            {
+              duration: 20_000,
+              horizontalPosition: 'center',
+              verticalPosition: 'bottom',
+            }
+          );
+
+          ref.onAction().subscribe(() => {
+            window.location.reload();
+          });
+        });
+    }
   }
 
   async logout(): Promise<void> {
     await this.auth.logout();
     this.navOpen.set(false);
     await this.router.navigateByUrl('/login');
+  }
+
+  private currentLeafRoute(): ActivatedRoute {
+    let route = this.activatedRoute;
+    while (route.firstChild) route = route.firstChild;
+    return route;
   }
 
   private showBackgroundUpdateToast(_event: VersionDetectedEvent): void {

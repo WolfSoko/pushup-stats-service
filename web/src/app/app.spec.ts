@@ -95,39 +95,23 @@ describe('App (testing-library)', () => {
     ).toBeTruthy();
   });
 
-  describe('HTML title', () => {
-    async function setup() {
-      return render(App, {
-        providers: [
-          provideRouter([]),
-          {
-            provide: UserContextService,
-            useValue: {
-              userNameSafe: userNameSignal.asReadonly(),
-              userIdSafe: () => 'u1',
-            },
+  it('keeps base document title when no seo route data is active', async () => {
+    await render(App, {
+      providers: [
+        provideRouter([]),
+        {
+          provide: UserContextService,
+          useValue: {
+            userNameSafe: userNameSignal.asReadonly(),
+            userIdSafe: () => 'u1',
           },
-          { provide: AuthStore, useValue: authMock },
-          { provide: UserConfigApiService, useValue: userConfigApiMock },
-        ],
-      });
-    }
-
-    it('shows fallback text in title when user is default', async () => {
-      await setup();
-      const title = TestBed.inject(Title);
-      expect(title.getTitle()).toBe('Pushup Tracker – Dein Name 💪');
+        },
+        { provide: AuthStore, useValue: authMock },
+        { provide: UserConfigApiService, useValue: userConfigApiMock },
+      ],
     });
 
-    it('shows username in title when user is set', async () => {
-      const { fixture } = await setup();
-      userNameSignal.set('wolf');
-      await fixture.whenStable();
-      const title = TestBed.inject(Title);
-      expect(title.getTitle()).toBe('Pushup Tracker – wolf');
-      userNameSignal.set('anna');
-      await fixture.whenStable();
-      expect(title.getTitle()).toBe('Pushup Tracker – anna');
-    });
+    const title = TestBed.inject(Title);
+    expect(title.getTitle()).toContain('Pushup Tracker');
   });
 });

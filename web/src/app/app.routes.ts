@@ -6,6 +6,11 @@ export const appRoutes: Routes = [
   {
     path: '',
     pathMatch: 'full',
+    data: {
+      seoTitle: 'Pushup Tracker – Dein Training. Klar visualisiert.',
+      seoDescription:
+        'Tracke Reps, Trends und Streaks in Sekunden – mobil, schnell und mit Live-Updates.',
+    },
     loadComponent: () =>
       import('./marketing/shell/landing-page.component').then(
         (m) => m.LandingPageComponent
@@ -14,6 +19,11 @@ export const appRoutes: Routes = [
   {
     path: 'app',
     canActivate: [authGuard],
+    data: {
+      seoTitle: 'Dashboard – Pushup Tracker',
+      seoDescription:
+        'Behalte Trainingsvolumen und Verlauf im Blick – klar, schnell und mobil optimiert.',
+    },
     loadComponent: () =>
       import('./stats/shell/stats-dashboard.component').then(
         (m) => m.StatsDashboardComponent
@@ -27,11 +37,21 @@ export const appRoutes: Routes = [
   {
     path: 'login',
     canActivate: [publicOnlyGuard],
+    data: {
+      seoTitle: 'Login – Pushup Tracker',
+      seoDescription:
+        'Melde dich an und tracke dein Pushup-Training über alle Geräte.',
+    },
     loadComponent: () => import('@pu-auth/auth').then((m) => m.LoginComponent),
   },
   {
     path: 'data',
     canActivate: [authGuard],
+    data: {
+      seoTitle: 'Daten – Pushup Tracker',
+      seoDescription:
+        'Verwalte Einträge, filtere nach Zeitraum und behalte deine Trainingsdaten im Griff.',
+    },
     loadComponent: () =>
       import('./stats/shell/entries-page.component').then(
         (m) => m.EntriesPageComponent
@@ -40,6 +60,11 @@ export const appRoutes: Routes = [
   {
     path: 'analysis',
     canActivate: [authGuard],
+    data: {
+      seoTitle: 'Analyse – Pushup Tracker',
+      seoDescription:
+        'Analysiere Trends, Verteilungen und Streaks deines Trainings.',
+    },
     loadComponent: () =>
       import('./stats/shell/analysis-page.component').then(
         (m) => m.AnalysisPageComponent
@@ -48,6 +73,11 @@ export const appRoutes: Routes = [
   {
     path: 'settings',
     canActivate: [authGuard],
+    data: {
+      seoTitle: 'Einstellungen – Pushup Tracker',
+      seoDescription:
+        'Verwalte Profil, Leaderboard-Sichtbarkeit und Tagesziel-Einstellungen.',
+    },
     loadComponent: () =>
       import('./stats/shell/settings-page.component').then(
         (m) => m.SettingsPageComponent

@@ -13,6 +13,7 @@ import {
   LeaderboardPeriod,
   LeaderboardService,
 } from '../../leaderboard.service';
+import { AnalyticsService } from '../../analytics.service';
 
 @Component({
   selector: 'app-landing-page',
@@ -24,6 +25,7 @@ export class LandingPageComponent {
   private readonly leaderboardApi = inject(LeaderboardService, {
     optional: true,
   });
+  private readonly analytics = inject(AnalyticsService);
 
   readonly period = linkedSignal<LeaderboardPeriod>(() => 'daily');
 
@@ -65,4 +67,13 @@ export class LandingPageComponent {
       );
     });
   });
+
+  onCtaClick(target: 'signup' | 'login' | 'dashboard'): void {
+    this.analytics.track('landing_cta_click', { target });
+  }
+
+  onPeriodChange(period: LeaderboardPeriod): void {
+    this.period.set(period);
+    this.analytics.track('landing_leaderboard_period_change', { period });
+  }
 }

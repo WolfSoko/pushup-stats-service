@@ -13,6 +13,7 @@
         color="primary"
         routerLink="/login"
         [queryParams]="{ returnUrl: '/app' }"
+        (click)="onCtaClick('signup')"
         i18n="@@landing.cta.signup"
         >Jetzt registrieren</a
       >
@@ -20,10 +21,15 @@
         mat-stroked-button
         routerLink="/login"
         [queryParams]="{ returnUrl: '/app' }"
+        (click)="onCtaClick('login')"
         i18n="@@landing.cta.login"
         >Einloggen</a
       >
-      <a mat-button routerLink="/app" i18n="@@landing.cta.dashboard"
+      <a
+        mat-button
+        routerLink="/app"
+        (click)="onCtaClick('dashboard')"
+        i18n="@@landing.cta.dashboard"
         >Zum Dashboard</a
       >
     </div>
@@ -91,7 +97,7 @@
       <button
         mat-stroked-button
         type="button"
-        (click)="period.set('daily')"
+        (click)="onPeriodChange('daily')"
         [class.active]="period() === 'daily'"
         i18n="@@landing.leaderboard.daily"
       >
@@ -100,7 +106,7 @@
       <button
         mat-stroked-button
         type="button"
-        (click)="period.set('weekly')"
+        (click)="onPeriodChange('weekly')"
         [class.active]="period() === 'weekly'"
         i18n="@@landing.leaderboard.weekly"
       >
@@ -109,7 +115,7 @@
       <button
         mat-stroked-button
         type="button"
-        (click)="period.set('monthly')"
+        (click)="onPeriodChange('monthly')"
         [class.active]="period() === 'monthly'"
         i18n="@@landing.leaderboard.monthly"
       >
