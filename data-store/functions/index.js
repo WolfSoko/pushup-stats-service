@@ -37,15 +37,22 @@ function isoWeekFromYmd(year, month, day) {
   return { year: d.getUTCFullYear(), week };
 }
 
-function toAlias(userId) {
-  const clean = (userId || '').trim();
-  if (!clean) return 'A...X';
-  const first = clean[0].toUpperCase();
-  const last = clean[clean.length - 1].toUpperCase();
-  return `${first}...${last}`;
+function toAnonymousLabel() {
+  return 'anonym';
 }
 
-function rankEntries(rows, periodKey, targetKey) {
+function toPublicDisplayName(profile) {
+  const name = String(profile?.displayName || '').trim();
+  if (!name) return toAnonymousLabel();
+  return name;
+}
+
+function isLeaderboardNameAllowed(profile) {
+  // Privacy-first default: only show usernames when explicit opt-in is set.
+  return profile?.ui?.hideFromLeaderboard === false;
+}
+
+function rankEntries(rows, periodKey, targetKey, userProfiles) {
   const totals = new Map();
   for (const row of rows) {
     if (!row.timestamp || !row.userId) continue;
@@ -68,7 +75,13 @@ function rankEntries(rows, periodKey, targetKey) {
   }
 
   return [...totals.entries()]
-    .map(([userId, reps]) => ({ alias: toAlias(userId), reps }))
+    .map(([userId, reps]) => {
+      const profile = userProfiles.get(userId);
+      const alias = isLeaderboardNameAllowed(profile)
+        ? toPublicDisplayName(profile)
+        : toAnonymousLabel();
+      return { alias, reps };
+    })
     .sort((a, b) => b.reps - a.reps)
     .slice(0, TOP_N);
 }
@@ -87,13 +100,24 @@ async function rebuildLeaderboardsCore() {
 
   const rows = snap.docs.map((d) => d.data());
 
+  const userIds = [...new Set(rows.map((r) => r.userId).filter(Boolean))];
+  const userProfiles = new Map();
+  if (userIds.length > 0) {
+    const cfgSnaps = await Promise.all(
+      userIds.map((userId) => db.collection('userConfigs').doc(userId).get())
+    );
+    for (const cfg of cfgSnaps) {
+      userProfiles.set(cfg.id, cfg.exists ? cfg.data() || {} : {});
+    }
+  }
+
   const dailyKey = today.isoDate;
   const weeklyKey = `${week.year}-W${String(week.week).padStart(2, '0')}`;
   const monthlyKey = `${today.year}-${String(today.month).padStart(2, '0')}`;
 
-  const daily = rankEntries(rows, 'daily', dailyKey);
-  const weekly = rankEntries(rows, 'weekly', weeklyKey);
-  const monthly = rankEntries(rows, 'monthly', monthlyKey);
+  const daily = rankEntries(rows, 'daily', dailyKey, userProfiles);
+  const weekly = rankEntries(rows, 'weekly', weeklyKey, userProfiles);
+  const monthly = rankEntries(rows, 'monthly', monthlyKey, userProfiles);
 
   await db
     .collection('leaderboards')
