@@ -11,6 +11,12 @@
           <span>{{ authState.error()?.message }}</span>
         </div>
       }
+      @if (recaptchaError()) {
+        <div class="error-message">
+          <mat-icon color="warn">security</mat-icon>
+          <span>{{ recaptchaError() }}</span>
+        </div>
+      }
 
       @if (authState.loading()) {
         <div class="loading" aria-busy="true">
@@ -69,10 +75,7 @@
             color="primary"
             type="submit"
             [disabled]="loginForm().invalid || authState.loading()"
-            class="full-width login-button g-recaptcha"
-            data-sitekey="6LdIVoEsAAAAAMk4rJwg2DYHfM7ud_as7V5rUf4g"
-            data-callback="onSubmit"
-            data-action="submit"
+            class="full-width login-button"
           >
             <mat-icon>login</mat-icon>
             Anmelden

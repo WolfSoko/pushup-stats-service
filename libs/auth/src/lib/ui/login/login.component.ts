@@ -2,8 +2,6 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
-  OnDestroy,
-  OnInit,
   PLATFORM_ID,
   inject,
   signal,
@@ -22,6 +20,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Functions, httpsCallable } from '@angular/fire/functions';
 import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
 import { AuthStore } from '../../core/state/auth.store';
 
@@ -56,14 +55,20 @@ const LoginState = signalStore(
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [LoginState],
 })
-export class LoginComponent implements OnInit, OnDestroy {
+export class LoginComponent {
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
   private readonly platformId = inject(PLATFORM_ID);
+  private readonly functions = inject(Functions, { optional: true });
   readonly authState = inject(AuthStore);
   readonly loginState = inject(LoginState);
 
+  private readonly recaptchaSiteKey =
+    '6LdIVoEsAAAAAMk4rJwg2DYHfM7ud_as7V5rUf4g';
+  private readonly recaptchaAction = 'submit';
+
   loginData = signal({ email: '', password: '' });
+  recaptchaError = signal<string | null>(null);
 
   loginForm = form(this.loginData, ({ email: emailAd, password }) => {
     required(emailAd, {
@@ -80,21 +85,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     });
   });
 
-  ngOnInit(): void {
-    if (!isPlatformBrowser(this.platformId)) return;
-    (window as Window & { onSubmit?: () => void }).onSubmit = () => {
-      void this.signInWithEmail();
-    };
-  }
-
-  ngOnDestroy(): void {
-    if (!isPlatformBrowser(this.platformId)) return;
-    const win = window as Window & { onSubmit?: () => void };
-    if (win.onSubmit) {
-      delete win.onSubmit;
-    }
-  }
-
   togglePasswordVisibility(): void {
     this.loginState.toggleHidePassword();
   }
@@ -107,6 +97,15 @@ export class LoginComponent implements OnInit, OnDestroy {
     if (this.loginForm().invalid()) return;
 
     const { email, password } = this.loginForm().value();
+
+    this.recaptchaError.set(null);
+    const recaptchaOk = await this.verifyRecaptcha();
+    if (!recaptchaOk) {
+      this.recaptchaError.set(
+        $localize`:@@recaptcha.failed:reCAPTCHA-Prüfung fehlgeschlagen. Bitte erneut versuchen.`
+      );
+      return;
+    }
 
     try {
       if (this.loginState.isRegisterMode()) {
@@ -127,6 +126,57 @@ export class LoginComponent implements OnInit, OnDestroy {
     } catch {
       // Error already handled by service
     }
+  }
+
+  private async verifyRecaptcha(): Promise<boolean> {
+    if (!isPlatformBrowser(this.platformId) || !this.functions) {
+      return false;
+    }
+
+    try {
+      const token = await this.executeRecaptcha(this.recaptchaAction);
+      const callAssessment = httpsCallable<
+        { token: string; action: string },
+        { ok: boolean; score: number; minScore: number; reasons?: string[] }
+      >(this.functions, 'assessRecaptchaToken');
+
+      const response = await callAssessment({
+        token,
+        action: this.recaptchaAction,
+      });
+
+      return response.data?.ok === true;
+    } catch {
+      return false;
+    }
+  }
+
+  private async executeRecaptcha(action: string): Promise<string> {
+    const win = window as Window & {
+      grecaptcha?: {
+        enterprise?: {
+          ready: (cb: () => void) => void;
+          execute: (
+            siteKey: string,
+            options: { action: string }
+          ) => Promise<string>;
+        };
+      };
+    };
+
+    const enterprise = win.grecaptcha?.enterprise;
+    if (!enterprise) {
+      throw new Error('reCAPTCHA Enterprise nicht verfügbar');
+    }
+
+    return new Promise<string>((resolve, reject) => {
+      enterprise.ready(() => {
+        enterprise
+          .execute(this.recaptchaSiteKey, { action })
+          .then(resolve)
+          .catch(reject);
+      });
+    });
   }
 
   private targetUrl(): string {

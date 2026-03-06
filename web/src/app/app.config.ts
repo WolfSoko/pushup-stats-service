@@ -21,6 +21,11 @@ import {
 import { provideRouter } from '@angular/router';
 import { provideServiceWorker } from '@angular/service-worker';
 import { getAnalytics, provideAnalytics } from '@angular/fire/analytics';
+import {
+  connectFunctionsEmulator,
+  getFunctions,
+  provideFunctions,
+} from '@angular/fire/functions';
 // eslint-disable-next-line @nx/enforce-module-boundaries
 import { provideAuth, withEmulator as withAuthEmulator } from '@pu-auth/auth';
 import {
@@ -64,10 +69,16 @@ export const appConfig: ApplicationConfig = {
           provideFireStore(
             withFirestoreEmulator(firebaseRuntime.firestoreEmulatorUrl)
           ),
+          provideFunctions(() => {
+            const functions = getFunctions(undefined, 'europe-west3');
+            connectFunctionsEmulator(functions, '127.0.0.1', 5001);
+            return functions;
+          }),
         ]
       : [
           provideAuth(),
           provideFireStore(),
+          provideFunctions(() => getFunctions(undefined, 'europe-west3')),
           provideAnalytics(() => getAnalytics()),
         ]),
   ],
