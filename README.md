@@ -2,10 +2,9 @@
 
 Produktionsnahe Nx-Architektur mit:
 
-- **web**: Angular App (deutsche UI, Dark Theme)
-- **api**: Node.js API mit kompatiblem Vertrag auf `GET /api/stats`
-- **libs/stats-models**: Shared Models/Typen
-- **libs/stats-data-access**: Datenzugriff (Browser: Firestore direkt; SSR: liefert leere Daten ohne Auth)
+- **web**: Angular App (deutsche UI, SSR, PWA, i18n + en, Dark Theme)
+- **libs/stats**: Shared Models/Typen
+- **libs/data-access**: Datenzugriff (Browser: Firestore direkt; SSR: liefert leere Daten ohne Auth)
 
 ## UI-Architektur (Smart/Presentational)
 
@@ -41,8 +40,7 @@ npx nx run-many -t lint test build
 
 ### i18n Deployment (de: `/de`, en: `/en`) - DE is default `/` handled das redirect
 
-- **SSR**: `node dist/web/server/server.mjs` (PORT=8789)
-- **Front Proxy**: epress, Routing nach api/ssr
+- **SSR**: `node dist/web/server/server.mjs` (PORT=8787)
 
 Routing-Anforderungen:
 
@@ -52,14 +50,6 @@ Routing-Anforderungen:
 - `/api`, `/socket.io`, `/health` gehen immer an das DE-Backend
 
 > Hinweis: Die bisherige Einzel-Unit `pushup-service.service` (Port 8787) ist damit obsolet bzw. wird durch nginx ersetzt.
-
-Nützliche Befehle:
-
-```bash
-systemctl --user status pushup-service.service
-systemctl --user restart pushup-service.service
-journalctl --user -u pushup-service.service -f
-```
 
 ## TDD-Guardrails (RED/GREEN/REFACTOR)
 
@@ -74,18 +64,9 @@ Für neue Features gilt ab jetzt verbindlich:
 - [ ] Für jede neue/angepasste public Methode gibt es einen passenden Testfall
 - [ ] Bei Bugfix: Test reproduziert den Bug zuerst (RED)
 - [ ] `npx nx affected -t test --codeCoverage`
-- [ ] Erst danach refactoren und committen
+- [ ] Erst danach fixen, refactoren und committen
 
 ## Datenzugriff (neu)
 
-- **Browser-Runtime:** Pushups, Stats-Aggregation und User-Config laufen direkt über Firestore (`libs/data-access`).
+- **Browser-Runtime:** Über Firestore (`libs/data-access`).
 - **SSR-Runtime:** Kein REST-Fallback. Ohne authentifizierten User werden leere Daten zurückgegeben; die eigentliche Datenlast findet nach dem Hydratisieren im Browser statt.
-
-## Services, die optional geworden sind
-
-Wenn nur Browser + Firebase genutzt wird (kein SSR/Legacy-Clients), können diese Dienste deaktiviert werden:
-
-- `api` (Nest REST)
-- `reverse-proxy`
-
-Diese Dienste werden für den reinen Firebase-Betrieb nicht mehr benötigt.
