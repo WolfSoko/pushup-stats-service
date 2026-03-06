@@ -19,11 +19,4 @@ ENV NODE_ENV=production
 COPY --from=builder /app/dist/web ./dist/web
 CMD ["node", "dist/web/server/server.mjs"]
 
-# Proxy runtime
-FROM node:24-alpine AS proxy-runner
-WORKDIR /app
-ENV NODE_ENV=production
-COPY --from=builder  /app/node_modules ./node_modules
-COPY --from=builder /app/dist/reverse-proxy ./dist/reverse-proxy
-CMD ["node", "dist/reverse-proxy/main.js"]
 

@@ -1,11 +1,10 @@
 # pushup-stats-service — docker-compose
 
-This repo runs two Node servers:
+This repo runs following servers:
 
 - **ssr** (Angular SSR) on `8789`
-- **proxy** (reverse proxy) on `8787` _(optional when serving web directly)_
 
-Data is stored in Firebase / Firestore (no local database required).
+Data is stored in Firebase / Firestore.
 
 ## Quick start
 
@@ -25,7 +24,7 @@ If you want to bind to 8787 on the host:
 
 ```bash
 # edit .env
-PROXY_HOST_PORT=8787
+SSR_PORT=8787
 
 # stop anything else using 8787 first
 docker compose up -d

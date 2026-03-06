@@ -19,50 +19,17 @@ services:
     command: ['node', 'dist/web/server/server.mjs']
     environment:
       NODE_ENV: ${NODE_ENV:-production}
-      PORT: '8789'
+      PORT: ${HOST_PORT:-8787}
       NX_CLOUD_ACCESS_TOKEN: ${NX_CLOUD_ACCESS_TOKEN}
     expose:
-      - '8789'
+      - '8787'
     healthcheck:
       test:
         [
           'CMD',
           'node',
           '-e',
-          "require('http').get('http://127.0.0.1:8789/de',r=>process.exit((r.statusCode||0)<500?0:1)).on('error',()=>process.exit(1));",
-        ]
-      interval: 10s
-      timeout: 3s
-      retries: 10
-      start_period: 20s
-
-  proxy:
-    <<: *service-defaults
-    build:
-      context: .
-      dockerfile: Dockerfile
-      target: proxy-runner
-    command: ['node', 'dist/reverse-proxy/main.js']
-    environment:
-      NODE_ENV: ${NODE_ENV:-production}
-      HOST: 0.0.0.0
-      PORT: '8787'
-      NX_CLOUD_ACCESS_TOKEN: ${NX_CLOUD_ACCESS_TOKEN}
-      WEB_HOST: ssr
-      WEB_PORT: '8789'
-    ports:
-      # Default host port avoids clashing with an existing local instance on 8787.
-      - '${PROXY_HOST_PORT:-18787}:8787'
-    depends_on:
-      ssr:
-        condition: service_healthy
-    healthcheck:
-      test:
-        [
-          'CMD',
-          'node',
-          '-e',
-          "require('http').get('http://127.0.0.1:8787/de',r=>process.exit((r.statusCode||0)<500?0:1)).on('error',()=>process.exit(1));",
+          "require('http').get('http://127.0.0.1:${process.env.PORT}/de',r=>process.exit((r.statusCode||0)<500?0:1)).on('error',()=>process.exit(1));",
         ]
       interval: 10s
       timeout: 3s
