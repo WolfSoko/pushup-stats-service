@@ -115,8 +115,8 @@ import { Analytics, logEvent } from '@angular/fire/analytics';
           <section class="danger-zone">
             <h3 i18n="@@settings.dangerZoneTitle">Danger Zone</h3>
             <p i18n="@@settings.dangerZoneBody">
-              Account löschen anonymisiert dein Profil in der Datenbank. Deine
-              Trainingsdaten bleiben für statistische Auswertung erhalten.
+              Konto löschen entfernt dein Konto. Trainingsdaten bleiben für
+              statistische Auswertung erhalten.
             </p>
             <button
               type="button"
@@ -127,11 +127,11 @@ import { Analytics, logEvent } from '@angular/fire/analytics';
               i18n="@@settings.deleteAccount"
             >
               <mat-icon>warning</mat-icon>
-              Account löschen (anonymisieren)
+              Konto löschen
             </button>
             @if (deletingAccount()) {
               <span class="muted" i18n="@@settings.deletingAccount"
-                >Account wird anonymisiert…</span
+                >Konto wird gelöscht…</span
               >
             }
           </section>
@@ -145,7 +145,7 @@ import { Analytics, logEvent } from '@angular/fire/analytics';
                 Achtung: Diese Aktion ist nicht rückgängig.
               </p>
               <p i18n="@@settings.deleteDialogInfo">
-                Dein Account wird anonymisiert. Trainingsdaten bleiben für
+                Dein Konto wird gelöscht. Trainingsdaten bleiben für
                 statistische Auswertung erhalten.
               </p>
               <mat-form-field appearance="outline">
@@ -370,7 +370,7 @@ export class SettingsPageComponent {
       this.trackAnalytics('account_anonymized_and_deleted', { success: true });
       await this.router.navigateByUrl('/');
     } catch {
-      this.errorMessage.set('Konnte Account nicht anonymisieren/löschen.');
+      this.errorMessage.set('Konnte Konto nicht löschen.');
     } finally {
       this.deletingAccount.set(false);
     }
