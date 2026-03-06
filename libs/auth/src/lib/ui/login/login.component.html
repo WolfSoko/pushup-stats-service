@@ -118,7 +118,12 @@
             </button>
           </div>
         } @else {
-          <mat-stepper linear class="register-stepper" #registerStepper>
+          <mat-stepper
+            linear
+            class="register-stepper"
+            #registerStepper
+            [orientation]="(stepperOrientation | async) ?? 'horizontal'"
+          >
             <mat-step [completed]="!loginForm.email().invalid()">
               <ng-template matStepLabel i18n="@@auth.email">E-Mail</ng-template>
               <mat-form-field

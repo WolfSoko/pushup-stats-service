@@ -1,4 +1,6 @@
 import { CommonModule } from '@angular/common';
+import { BreakpointObserver } from '@angular/cdk/layout';
+import { StepperOrientation } from '@angular/material/stepper';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -30,7 +32,7 @@ import { MatStepper, MatStepperModule } from '@angular/material/stepper';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Auth } from '@angular/fire/auth';
 import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom, map, Observable } from 'rxjs';
 import { UserConfigApiService } from '@pu-stats/data-access';
 import { AuthStore } from '../../core/state/auth.store';
 
@@ -75,6 +77,7 @@ export class LoginComponent {
   private readonly auth = inject(Auth, { optional: true });
   private readonly dialog = inject(MatDialog);
   private readonly userConfigApi = inject(UserConfigApiService);
+  private readonly breakpointObserver = inject(BreakpointObserver);
   readonly authState = inject(AuthStore);
   readonly loginState = inject(LoginState);
 
@@ -94,6 +97,9 @@ export class LoginComponent {
     this.route.snapshot.routeConfig?.path === 'register'
   );
   registeringCredentials = signal(false);
+  stepperOrientation: Observable<StepperOrientation> = this.breakpointObserver
+    .observe('(min-width: 800px)')
+    .pipe(map(({ matches }) => (matches ? 'horizontal' : 'vertical')));
 
   passwordPolicyValid = computed(() =>
     hasStrongPasswordPolicy(this.loginForm.password().value() || '')
