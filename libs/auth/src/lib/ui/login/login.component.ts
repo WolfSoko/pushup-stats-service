@@ -28,6 +28,7 @@ import {
 } from '@angular/material/dialog';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Auth } from '@angular/fire/auth';
 import { Functions, httpsCallable } from '@angular/fire/functions';
 import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
 import { firstValueFrom } from 'rxjs';
@@ -75,6 +76,7 @@ export class LoginComponent {
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
   private readonly platformId = inject(PLATFORM_ID);
+  private readonly auth = inject(Auth, { optional: true });
   private readonly functions = inject(Functions, { optional: true });
   private readonly dialog = inject(MatDialog);
   private readonly userConfigApi = inject(UserConfigApiService);
@@ -91,6 +93,7 @@ export class LoginComponent {
   registerDisplayName = signal('');
   registerDailyGoal = signal(100);
   registerConsentAccepted = signal(false);
+  registerAccountReady = signal(false);
 
   googleDisplayName = signal('');
   googleDailyGoal = signal(100);
@@ -141,10 +144,11 @@ export class LoginComponent {
     this.registerDisplayName.set('');
     this.registerDailyGoal.set(100);
     this.registerConsentAccepted.set(false);
+    this.registerAccountReady.set(false);
     this.recaptchaError.set(null);
   }
 
-  nextRegisterStep(): void {
+  async nextRegisterStep(): Promise<void> {
     const step = this.registerStep();
     if (step === 1) {
       if (this.loginForm.email().invalid()) return;
@@ -154,6 +158,10 @@ export class LoginComponent {
     if (step === 2) {
       if (this.loginForm.password().invalid()) return;
       if (!this.passwordPolicyValid() || !this.passwordsMatch()) return;
+
+      const registered = await this.registerEmailAccountIfNeeded();
+      if (!registered) return;
+
       this.registerStep.set(3);
       return;
     }
@@ -182,9 +190,10 @@ export class LoginComponent {
 
     if (this.loginState.isRegisterMode()) {
       if (this.registerStep() !== 5) {
-        this.nextRegisterStep();
+        await this.nextRegisterStep();
         return;
       }
+      if (!this.registerAccountReady()) return;
       if (!this.passwordPolicyValid()) return;
       if (!this.passwordsMatch()) return;
       if (this.registerDisplayName().trim().length < 2) return;
@@ -205,13 +214,16 @@ export class LoginComponent {
 
     try {
       if (this.loginState.isRegisterMode()) {
-        await this.authState.signUpWithEmail(email, password);
-        const user = this.authState.user();
-        if (!user?.uid) {
+        const uid = this.auth?.currentUser?.uid || this.authState.user()?.uid;
+        if (!uid) {
+          this.recaptchaError.set(
+            $localize`:@@auth.register.error.noAuth:Registrierung unvollständig. Bitte erneut versuchen.`
+          );
           return;
         }
+
         await firstValueFrom(
-          this.userConfigApi.updateConfig(user.uid, {
+          this.userConfigApi.updateConfig(uid, {
             displayName: this.registerDisplayName().trim(),
             dailyGoal: Math.max(1, Number(this.registerDailyGoal() || 100)),
             consent: {
@@ -237,6 +249,9 @@ export class LoginComponent {
   async signInWithGoogle(wizardTemplate: TemplateRef<unknown>): Promise<void> {
     try {
       await this.authState.login();
+      if (!this.authState.isAuthenticated()) {
+        return;
+      }
 
       const shouldShowWizard = await this.isGoogleOnboardingRequired();
       if (shouldShowWizard) {
@@ -302,6 +317,30 @@ export class LoginComponent {
         $localize`:@@auth.onboarding.google.error.saveFailed:Onboarding konnte nicht gespeichert werden. Bitte erneut versuchen.`
       );
     }
+  }
+
+  private async registerEmailAccountIfNeeded(): Promise<boolean> {
+    if (this.registerAccountReady()) return true;
+
+    const { email, password } = this.loginForm().value();
+    if (!email || !password) return false;
+
+    this.recaptchaError.set(null);
+    const recaptchaOk = await this.verifyRecaptcha();
+    if (!recaptchaOk) {
+      this.recaptchaError.set(
+        $localize`:@@recaptcha.failed:reCAPTCHA-Prüfung fehlgeschlagen. Bitte erneut versuchen.`
+      );
+      return false;
+    }
+
+    await this.authState.signUpWithEmail(email, password);
+    if (!this.authState.isAuthenticated()) {
+      return false;
+    }
+
+    this.registerAccountReady.set(true);
+    return true;
   }
 
   private async verifyRecaptcha(): Promise<boolean> {

@@ -51,6 +51,7 @@
                 matInput
                 type="email"
                 [formField]="loginForm.email"
+                (input)="registerAccountReady.set(false)"
                 placeholder="deine@email.de"
               />
               <mat-icon matSuffix>email</mat-icon>
