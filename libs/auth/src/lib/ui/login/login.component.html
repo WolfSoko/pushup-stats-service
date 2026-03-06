@@ -24,7 +24,7 @@
         </div>
       }
 
-      @if (!isRegisterPage) {
+      @if (!isRegisterPage()) {
         <form (submit)="signInWithEmail()" class="login-form">
           <mat-form-field appearance="outline" class="full-width">
             <mat-label i18n="@@auth.email">E-Mail</mat-label>
