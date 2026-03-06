@@ -15,6 +15,9 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { firstValueFrom } from 'rxjs';
 import { UserConfigFirestoreService } from '@pu-stats/data-access';
 import { UserContextService } from '../../user-context.service';
+// eslint-disable-next-line @nx/enforce-module-boundaries
+import { AuthStore } from '@pu-auth/auth';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-settings-page',
@@ -104,6 +107,30 @@ import { UserContextService } from '../../user-context.service';
               <span class="muted" i18n="@@saved">Gespeichert.</span>
             }
           </div>
+
+          <section class="danger-zone">
+            <h3 i18n="@@settings.dangerZoneTitle">Danger Zone</h3>
+            <p i18n="@@settings.dangerZoneBody">
+              Account löschen anonymisiert dein Profil in der Datenbank. Deine
+              Trainingsdaten bleiben für statistische Auswertung erhalten.
+            </p>
+            <button
+              type="button"
+              mat-stroked-button
+              color="warn"
+              [disabled]="deletingAccount()"
+              (click)="anonymizeAndDeleteAccount()"
+              i18n="@@settings.deleteAccount"
+            >
+              <mat-icon>warning</mat-icon>
+              Account löschen (anonymisieren)
+            </button>
+            @if (deletingAccount()) {
+              <span class="muted" i18n="@@settings.deletingAccount"
+                >Account wird anonymisiert…</span
+              >
+            }
+          </section>
         </mat-card-content>
       </mat-card>
     </main>
@@ -136,6 +163,22 @@ import { UserContextService } from '../../user-context.service';
       font-size: 0.9rem;
       margin: 0;
     }
+    .danger-zone {
+      margin-top: 16px;
+      padding-top: 12px;
+      border-top: 1px dashed rgba(255, 120, 120, 0.45);
+      display: grid;
+      gap: 8px;
+
+      h3 {
+        margin: 0;
+        color: #ffb2b2;
+      }
+
+      p {
+        margin: 0;
+      }
+    }
     .error {
       color: #ffd8d8;
     }
@@ -145,6 +188,8 @@ export class SettingsPageComponent {
   // Switch to Firestore-based service for local/dev
   private readonly api = inject(UserConfigFirestoreService);
   private readonly user = inject(UserContextService);
+  private readonly auth = inject(AuthStore);
+  private readonly router = inject(Router);
 
   readonly activeUserId = this.user.userIdSafe;
 
@@ -154,6 +199,7 @@ export class SettingsPageComponent {
 
   readonly saving = signal(false);
   readonly saved = signal(false);
+  readonly deletingAccount = signal(false);
   readonly errorMessage = signal('');
 
   readonly configResource = resource({
@@ -222,6 +268,33 @@ export class SettingsPageComponent {
     } finally {
       this.saving.set(false);
       setTimeout(() => this.saved.set(false), 1500);
+    }
+  }
+
+  async anonymizeAndDeleteAccount(): Promise<void> {
+    const confirmed = window.confirm(
+      'Account wirklich löschen? Dein Profil wird anonymisiert, Trainingsdaten bleiben für Statistiken erhalten.'
+    );
+    if (!confirmed) return;
+
+    this.deletingAccount.set(true);
+    this.errorMessage.set('');
+
+    const userId = this.activeUserId();
+    try {
+      await this.api.updateConfig(userId, {
+        displayName: 'Gelöschter Benutzer',
+        email: null,
+        ui: {
+          hideFromLeaderboard: true,
+        },
+      });
+      await this.auth.deleteAccount();
+      await this.router.navigateByUrl('/');
+    } catch {
+      this.errorMessage.set('Konnte Account nicht anonymisieren/löschen.');
+    } finally {
+      this.deletingAccount.set(false);
     }
   }
 }

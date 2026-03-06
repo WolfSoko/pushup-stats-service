@@ -66,6 +66,11 @@ export class AuthService {
     await this.logout();
   }
 
+  /** Permanently deletes current auth user */
+  async deleteAccount(): Promise<void> {
+    await this.wrapAsync(() => this.authAdapter.deleteUser(), 'Delete account');
+  }
+
   /** Logout */
   async logout(): Promise<void> {
     await this.wrapAsync(() => this.authAdapter.signOut(), 'Sign-out');

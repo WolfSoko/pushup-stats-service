@@ -55,6 +55,18 @@ export const AuthStore = signalStore(
         patchState(store, { loading: false });
       }
     },
+    deleteAccount: async () => {
+      patchState(store, { loading: true, error: null });
+      try {
+        await _authService.deleteAccount();
+      } catch (e) {
+        patchState(store, {
+          error: e instanceof Error ? e : new Error(String(e)),
+        });
+      } finally {
+        patchState(store, { loading: false });
+      }
+    },
     signInWithEmail: async (email: string, password: string) => {
       patchState(store, { loading: true, error: null });
       try {
