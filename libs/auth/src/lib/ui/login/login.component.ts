@@ -26,6 +26,7 @@ import {
   MatDialogRef,
 } from '@angular/material/dialog';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatStepper, MatStepperModule } from '@angular/material/stepper';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Auth } from '@angular/fire/auth';
 import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
@@ -63,6 +64,7 @@ const LoginState = signalStore(
     MatProgressSpinnerModule,
     MatDialogModule,
     MatCheckboxModule,
+    MatStepperModule,
     FormField,
   ],
   templateUrl: './login.component.html',
@@ -80,7 +82,6 @@ export class LoginComponent {
   readonly loginState = inject(LoginState);
 
   loginData = signal({ email: '', password: '', repeatPassword: '' });
-  registerStep = signal<1 | 2 | 3 | 4 | 5>(1);
   registerDisplayName = signal('');
   registerDailyGoal = signal(100);
   registerConsentAccepted = signal(false);
@@ -131,43 +132,21 @@ export class LoginComponent {
 
   toggleMode(): void {
     this.loginState.toggleIsRegisterMode();
-    this.registerStep.set(1);
     this.registerDisplayName.set('');
     this.registerDailyGoal.set(100);
     this.registerConsentAccepted.set(false);
     this.registerAccountReady.set(false);
   }
 
-  async nextRegisterStep(): Promise<void> {
-    const step = this.registerStep();
-    if (step === 1) {
-      if (this.loginForm.email().invalid()) return;
-      this.registerStep.set(2);
+  async completeCredentialStep(stepper: MatStepper): Promise<void> {
+    if (this.loginForm.email().invalid() || this.loginForm.password().invalid())
       return;
-    }
-    if (step === 2) {
-      if (this.loginForm.password().invalid()) return;
-      if (!this.passwordPolicyValid() || !this.passwordsMatch()) return;
+    if (!this.passwordPolicyValid() || !this.passwordsMatch()) return;
 
-      const registered = await this.registerEmailAccountIfNeeded();
-      if (!registered) return;
+    const registered = await this.registerEmailAccountIfNeeded();
+    if (!registered) return;
 
-      this.registerStep.set(3);
-      return;
-    }
-    if (step === 3) {
-      if (this.registerDisplayName().trim().length < 2) return;
-      this.registerStep.set(4);
-      return;
-    }
-    if (step === 4) {
-      if (this.registerDailyGoal() < 1) return;
-      this.registerStep.set(5);
-    }
-  }
-
-  backRegisterStep(): void {
-    this.registerStep.update((s) => Math.max(1, s - 1) as 1 | 2 | 3 | 4 | 5);
+    stepper.next();
   }
 
   async signInWithEmail(): Promise<void> {
@@ -179,10 +158,6 @@ export class LoginComponent {
     }
 
     if (this.loginState.isRegisterMode()) {
-      if (this.registerStep() !== 5) {
-        await this.nextRegisterStep();
-        return;
-      }
       if (!this.registerAccountReady()) return;
       if (!this.passwordPolicyValid()) return;
       if (!this.passwordsMatch()) return;

@@ -32,20 +32,13 @@
         </div>
       } @else {
         <form (submit)="signInWithEmail()" class="login-form">
-          @if (loginState.isRegisterMode()) {
-            <p class="step-indicator" i18n="@@auth.register.stepIndicator">
-              Schritt {{ registerStep() }} von 5
-            </p>
-          }
-
-          @if (!loginState.isRegisterMode() || registerStep() === 1) {
+          @if (!loginState.isRegisterMode()) {
             <mat-form-field appearance="outline" class="full-width">
               <mat-label i18n="@@auth.email">E-Mail</mat-label>
               <input
                 matInput
                 type="email"
                 [formField]="loginForm.email"
-                (input)="registerAccountReady.set(false)"
                 placeholder="deine@email.de"
               />
               <mat-icon matSuffix>email</mat-icon>
@@ -53,9 +46,7 @@
                 <mat-error>{{ validationMessage(error) }}</mat-error>
               }
             </mat-form-field>
-          }
 
-          @if (!loginState.isRegisterMode() || registerStep() === 2) {
             <mat-form-field appearance="outline" class="full-width">
               <mat-label i18n="@@auth.password">Passwort</mat-label>
               <input
@@ -78,134 +69,262 @@
               @for (error of loginForm.password().errors(); track $index) {
                 <mat-error>{{ validationMessage(error) }}</mat-error>
               }
-              @if (loginState.isRegisterMode()) {
-                <mat-hint i18n="@@auth.register.password.hint"
-                  >Mind. 8 Zeichen, 1 Zahl und 1 Sonderzeichen.</mat-hint
-                >
-              }
-              @if (loginState.isRegisterMode() && !passwordPolicyValid()) {
-                <mat-error i18n="@@auth.register.password.invalid"
-                  >Passwort erfüllt die Anforderungen nicht.</mat-error
-                >
-              }
             </mat-form-field>
 
-            @if (loginState.isRegisterMode()) {
-              <mat-form-field appearance="outline" class="full-width">
-                <mat-label i18n="@@auth.register.password.repeat"
-                  >Passwort wiederholen</mat-label
-                >
-                <input
-                  matInput
-                  [type]="loginState.hidePassword() ? 'password' : 'text'"
-                  [placeholder]="'********'"
-                  [formField]="loginForm.repeatPassword"
-                />
-                @if (!passwordsMatch()) {
-                  <mat-error i18n="@@auth.register.password.repeat.invalid"
-                    >Passwörter stimmen nicht überein.</mat-error
-                  >
-                }
-              </mat-form-field>
-            }
-          }
-
-          @if (loginState.isRegisterMode() && registerStep() === 3) {
-            <mat-form-field appearance="outline" class="full-width">
-              <mat-label i18n="@@auth.onboarding.google.username"
-                >Benutzername</mat-label
-              >
-              <input
-                matInput
-                [value]="registerDisplayName()"
-                (input)="registerDisplayName.set($any($event.target).value)"
-              />
-              <mat-hint i18n="@@auth.onboarding.google.username.hint"
-                >Mindestens 2 Zeichen.</mat-hint
-              >
-            </mat-form-field>
-          }
-
-          @if (loginState.isRegisterMode() && registerStep() === 4) {
-            <mat-form-field appearance="outline" class="full-width">
-              <mat-label i18n="@@auth.onboarding.google.goal"
-                >Tagesziel</mat-label
-              >
-              <input
-                matInput
-                type="number"
-                min="1"
-                [value]="registerDailyGoal()"
-                (input)="registerDailyGoal.set(+$any($event.target).value || 1)"
-              />
-            </mat-form-field>
-          }
-
-          @if (loginState.isRegisterMode() && registerStep() === 5) {
-            <p i18n="@@auth.onboarding.google.consent.text">
-              Ich willige in die Datenverarbeitung zum Erheben technisch
-              notwendiger Daten, statistischer Auswertungen und zum Ausspielen
-              gezielter Werbung ein.
-            </p>
-            <mat-checkbox
-              [checked]="registerConsentAccepted()"
-              (change)="registerConsentAccepted.set($event.checked)"
-              i18n="@@auth.onboarding.google.consent.checkbox"
+            <button
+              mat-raised-button
+              color="primary"
+              type="submit"
+              [disabled]="
+                loginForm.email().invalid() ||
+                loginForm.password().invalid() ||
+                authState.loading()
+              "
+              class="full-width login-button"
             >
-              Einwilligung erteilen
-            </mat-checkbox>
-          }
+              <mat-icon>login</mat-icon>
+              <span i18n="@@auth.login.submit">Anmelden</span>
+            </button>
+          } @else {
+            <mat-stepper linear #registerStepper>
+              <mat-step [completed]="!loginForm.email().invalid()">
+                <ng-template matStepLabel i18n="@@auth.email"
+                  >E-Mail</ng-template
+                >
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label i18n="@@auth.email">E-Mail</mat-label>
+                  <input
+                    matInput
+                    type="email"
+                    [formField]="loginForm.email"
+                    (input)="registerAccountReady.set(false)"
+                    placeholder="deine@email.de"
+                  />
+                  <mat-icon matSuffix>email</mat-icon>
+                  @for (error of loginForm.email().errors(); track $index) {
+                    <mat-error>{{ validationMessage(error) }}</mat-error>
+                  }
+                </mat-form-field>
+                <div class="form-actions">
+                  <button
+                    mat-raised-button
+                    color="primary"
+                    matStepperNext
+                    type="button"
+                    [disabled]="loginForm.email().invalid()"
+                    i18n="@@auth.next"
+                  >
+                    Weiter
+                  </button>
+                </div>
+              </mat-step>
 
-          <div class="form-actions">
-            @if (loginState.isRegisterMode() && registerStep() > 1) {
-              <button
-                mat-stroked-button
-                type="button"
-                (click)="backRegisterStep()"
-                i18n="@@auth.register.back"
-              >
-                Zurück
-              </button>
-            }
+              <mat-step [completed]="registerAccountReady()">
+                <ng-template matStepLabel i18n="@@auth.password"
+                  >Passwort</ng-template
+                >
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label i18n="@@auth.password">Passwort</mat-label>
+                  <input
+                    matInput
+                    [type]="loginState.hidePassword() ? 'password' : 'text'"
+                    [placeholder]="'********'"
+                    [formField]="loginForm.password"
+                  />
+                  <button
+                    mat-icon-button
+                    type="button"
+                    matSuffix
+                    (click)="togglePasswordVisibility()"
+                    tabindex="-1"
+                  >
+                    <mat-icon>{{
+                      loginState.hidePassword()
+                        ? 'visibility_off'
+                        : 'visibility'
+                    }}</mat-icon>
+                  </button>
+                  @for (error of loginForm.password().errors(); track $index) {
+                    <mat-error>{{ validationMessage(error) }}</mat-error>
+                  }
+                  <mat-hint i18n="@@auth.register.password.hint"
+                    >Mind. 8 Zeichen, 1 Zahl und 1 Sonderzeichen.</mat-hint
+                  >
+                  @if (!passwordPolicyValid()) {
+                    <mat-error i18n="@@auth.register.password.invalid"
+                      >Passwort erfüllt die Anforderungen nicht.</mat-error
+                    >
+                  }
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label i18n="@@auth.register.password.repeat"
+                    >Passwort wiederholen</mat-label
+                  >
+                  <input
+                    matInput
+                    [type]="loginState.hidePassword() ? 'password' : 'text'"
+                    [placeholder]="'********'"
+                    [formField]="loginForm.repeatPassword"
+                  />
+                  @if (!passwordsMatch()) {
+                    <mat-error i18n="@@auth.register.password.repeat.invalid"
+                      >Passwörter stimmen nicht überein.</mat-error
+                    >
+                  }
+                </mat-form-field>
+                <div class="form-actions">
+                  <button
+                    mat-stroked-button
+                    matStepperPrevious
+                    type="button"
+                    i18n="@@auth.register.back"
+                  >
+                    Zurück
+                  </button>
+                  <button
+                    mat-raised-button
+                    color="primary"
+                    type="button"
+                    (click)="completeCredentialStep(registerStepper)"
+                    i18n="@@auth.next"
+                  >
+                    Weiter
+                  </button>
+                </div>
+              </mat-step>
 
-            @if (loginState.isRegisterMode() && registerStep() < 5) {
-              <button
-                mat-raised-button
-                color="primary"
-                type="button"
-                class="full-width login-button"
-                (click)="nextRegisterStep()"
-                i18n="@@auth.next"
-              >
-                Weiter
-              </button>
-            } @else {
-              <button
-                mat-raised-button
-                color="primary"
-                type="submit"
-                [disabled]="
-                  loginForm.email().invalid() ||
-                  loginForm.password().invalid() ||
-                  (loginState.isRegisterMode() &&
-                    (!passwordPolicyValid() ||
+              <mat-step [completed]="registerDisplayName().trim().length >= 2">
+                <ng-template
+                  matStepLabel
+                  i18n="@@auth.onboarding.google.username"
+                  >Benutzername</ng-template
+                >
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label i18n="@@auth.onboarding.google.username"
+                    >Benutzername</mat-label
+                  >
+                  <input
+                    matInput
+                    [value]="registerDisplayName()"
+                    (input)="registerDisplayName.set($any($event.target).value)"
+                  />
+                  <mat-hint i18n="@@auth.onboarding.google.username.hint"
+                    >Mindestens 2 Zeichen.</mat-hint
+                  >
+                </mat-form-field>
+                <div class="form-actions">
+                  <button
+                    mat-stroked-button
+                    matStepperPrevious
+                    type="button"
+                    i18n="@@auth.register.back"
+                  >
+                    Zurück
+                  </button>
+                  <button
+                    mat-raised-button
+                    color="primary"
+                    matStepperNext
+                    type="button"
+                    [disabled]="registerDisplayName().trim().length < 2"
+                    i18n="@@auth.next"
+                  >
+                    Weiter
+                  </button>
+                </div>
+              </mat-step>
+
+              <mat-step [completed]="registerDailyGoal() >= 1">
+                <ng-template matStepLabel i18n="@@auth.onboarding.google.goal"
+                  >Tagesziel</ng-template
+                >
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label i18n="@@auth.onboarding.google.goal"
+                    >Tagesziel</mat-label
+                  >
+                  <input
+                    matInput
+                    type="number"
+                    min="1"
+                    [value]="registerDailyGoal()"
+                    (input)="
+                      registerDailyGoal.set(+$any($event.target).value || 1)
+                    "
+                  />
+                </mat-form-field>
+                <div class="form-actions">
+                  <button
+                    mat-stroked-button
+                    matStepperPrevious
+                    type="button"
+                    i18n="@@auth.register.back"
+                  >
+                    Zurück
+                  </button>
+                  <button
+                    mat-raised-button
+                    color="primary"
+                    matStepperNext
+                    type="button"
+                    [disabled]="registerDailyGoal() < 1"
+                    i18n="@@auth.next"
+                  >
+                    Weiter
+                  </button>
+                </div>
+              </mat-step>
+
+              <mat-step>
+                <ng-template
+                  matStepLabel
+                  i18n="@@auth.onboarding.google.consent.checkbox"
+                  >Einwilligung erteilen</ng-template
+                >
+                <p i18n="@@auth.onboarding.google.consent.text">
+                  Ich willige in die Datenverarbeitung zum Erheben technisch
+                  notwendiger Daten, statistischer Auswertungen und zum
+                  Ausspielen gezielter Werbung ein.
+                </p>
+                <mat-checkbox
+                  [checked]="registerConsentAccepted()"
+                  (change)="registerConsentAccepted.set($event.checked)"
+                  i18n="@@auth.onboarding.google.consent.checkbox"
+                >
+                  Einwilligung erteilen
+                </mat-checkbox>
+                <div class="form-actions">
+                  <button
+                    mat-stroked-button
+                    matStepperPrevious
+                    type="button"
+                    i18n="@@auth.register.back"
+                  >
+                    Zurück
+                  </button>
+                  <button
+                    mat-raised-button
+                    color="primary"
+                    type="submit"
+                    [disabled]="
+                      loginForm.email().invalid() ||
+                      loginForm.password().invalid() ||
+                      !registerAccountReady() ||
+                      !passwordPolicyValid() ||
                       !passwordsMatch() ||
                       registerDisplayName().trim().length < 2 ||
                       registerDailyGoal() < 1 ||
-                      !registerConsentAccepted())) ||
-                  authState.loading()
-                "
-                class="full-width login-button"
-              >
-                <mat-icon>login</mat-icon>
-                @if (loginState.isRegisterMode()) {
-                  <span i18n="@@auth.register.submit">Registrieren</span>
-                } @else {
-                  <span i18n="@@auth.login.submit">Anmelden</span>
-                }
-              </button>
-            }
-          </div>
+                      !registerConsentAccepted() ||
+                      authState.loading()
+                    "
+                    class="full-width login-button"
+                    i18n="@@auth.register.submit"
+                  >
+                    Registrieren
+                  </button>
+                </div>
+              </mat-step>
+            </mat-stepper>
+          }
         </form>
 
         <div class="divider">
