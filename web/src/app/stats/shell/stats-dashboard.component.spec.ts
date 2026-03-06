@@ -214,6 +214,18 @@ describe('StatsDashboardComponent', () => {
     expect(serviceMock.listPushups.mock.calls.length).toBeGreaterThan(0);
   });
 
+  it('renders range filter panel directly above the chart in mid-grid', () => {
+    const host = fixture.nativeElement as HTMLElement;
+    const panel = host.querySelector('.mid-grid .panel');
+    const chart = host.querySelector('.mid-grid app-stats-chart');
+
+    expect(panel).toBeTruthy();
+    expect(chart).toBeTruthy();
+    expect(
+      panel!.compareDocumentPosition(chart!) & Node.DOCUMENT_POSITION_FOLLOWING
+    ).toBeTruthy();
+  });
+
   it('shows live connection state', async () => {
     liveConnected.set(true);
 
