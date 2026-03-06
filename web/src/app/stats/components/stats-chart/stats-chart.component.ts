@@ -6,6 +6,7 @@ import {
   ElementRef,
   inject,
   input,
+  LOCALE_ID,
   PLATFORM_ID,
   signal,
   viewChild,
@@ -68,6 +69,7 @@ Chart.register(...registerables);
 })
 export class StatsChartComponent implements AfterViewInit {
   private readonly platformId = inject(PLATFORM_ID);
+  private readonly localeId = inject(LOCALE_ID);
 
   private readonly chartCanvas =
     viewChild<ElementRef<HTMLCanvasElement>>('chartCanvas');
@@ -82,6 +84,9 @@ export class StatsChartComponent implements AfterViewInit {
 
   readonly hourlyTitle = $localize`:@@chart.titleHourly:Verlauf (Stundenwerte)`;
   readonly dailyTitle = $localize`:@@chart.titleDaily:Verlauf (Tageswerte)`;
+  readonly intervalLabel = $localize`:@@chart.interval:Intervallwert`;
+  readonly dayIntegralLabel = $localize`:@@chart.dayIntegral:Tages-Integral`;
+  readonly movingAvgLabel = $localize`:@@chart.movingAvg:Gleitender Durchschnitt`;
 
   private readonly viewReady = signal(false);
   private chart?: Chart;
@@ -129,7 +134,7 @@ export class StatsChartComponent implements AfterViewInit {
     const data: ChartConfiguration<'bar' | 'line'>['data'] = {
       datasets: [
         {
-          label: 'Intervallwert',
+          label: this.intervalLabel,
           data: series.map((d) => ({
             x: new Date(d.bucket + 'T00:00:00').getTime(),
             y: d.total,
@@ -139,7 +144,7 @@ export class StatsChartComponent implements AfterViewInit {
           maxBarThickness: 34,
         },
         {
-          label: 'Tages-Integral',
+          label: this.dayIntegralLabel,
           data: series.map((d) => ({
             x: new Date(d.bucket + 'T00:00:00').getTime(),
             y: d.dayIntegral,
@@ -153,7 +158,7 @@ export class StatsChartComponent implements AfterViewInit {
           yAxisID: 'y',
         },
         {
-          label: 'Gleitender Durchschnitt',
+          label: this.movingAvgLabel,
           data: movingAvg.map((avg, index) => ({
             x: new Date(series[index].bucket + 'T00:00:00').getTime(),
             y: avg,
@@ -169,6 +174,29 @@ export class StatsChartComponent implements AfterViewInit {
         },
       ],
     };
+
+    const xTickFormatter = new Intl.DateTimeFormat(
+      this.localeId,
+      this.granularity() === 'hourly'
+        ? { hour: '2-digit' }
+        : { day: '2-digit', month: '2-digit' }
+    );
+    const tooltipTitleFormatter = new Intl.DateTimeFormat(
+      this.localeId,
+      this.granularity() === 'hourly'
+        ? {
+            day: '2-digit',
+            month: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+          }
+        : {
+            weekday: 'short',
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+          }
+    );
 
     this.chart = new Chart(context, {
       type: 'bar',
@@ -195,6 +223,12 @@ export class StatsChartComponent implements AfterViewInit {
               maxRotation: 0,
               autoSkip: this.rangeMode() !== 'day',
               maxTicksLimit: 12,
+              callback: (value) => {
+                const ts = Number(value);
+                return Number.isFinite(ts)
+                  ? xTickFormatter.format(new Date(ts))
+                  : '';
+              },
             },
             grid: { color: 'rgba(116, 140, 190, 0.15)' },
           },
@@ -211,6 +245,16 @@ export class StatsChartComponent implements AfterViewInit {
             bodyColor: '#dbe6ff',
             borderColor: 'rgba(125, 154, 219, 0.35)',
             borderWidth: 1,
+            callbacks: {
+              title: (items) => {
+                const first = items[0];
+                if (!first) return '';
+                const ts = Number(first.parsed.x);
+                return Number.isFinite(ts)
+                  ? tooltipTitleFormatter.format(new Date(ts))
+                  : '';
+              },
+            },
           },
         },
       },
