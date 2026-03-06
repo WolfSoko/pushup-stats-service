@@ -1,4 +1,12 @@
-import { Component, DestroyRef, effect, inject, signal } from '@angular/core';
+import {
+  Component,
+  DestroyRef,
+  computed,
+  effect,
+  inject,
+  resource,
+  signal,
+} from '@angular/core';
 import {
   Router,
   RouterLink,
@@ -18,6 +26,8 @@ import { SwUpdate, VersionDetectedEvent } from '@angular/service-worker';
 import { AuthStore, UserMenuComponent } from '@pu-auth/auth';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { UserContextService } from './user-context.service';
+import { UserConfigApiService } from '@pu-stats/data-access';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -44,6 +54,7 @@ export class App {
   private readonly titleService = inject(Title);
   private readonly router = inject(Router);
   private readonly user = inject(UserContextService);
+  private readonly userConfigApi = inject(UserConfigApiService);
   private readonly auth = inject(AuthStore);
 
   setLanguage(lang: 'de' | 'en', ev?: Event): void {
@@ -61,6 +72,16 @@ export class App {
 
   /** Whether the sidenav is open (same behavior on all screen sizes). */
   readonly navOpen = signal(false);
+
+  readonly userGoalResource = resource({
+    params: () => ({ userId: this.user.userIdSafe() }),
+    loader: async ({ params }) =>
+      firstValueFrom(this.userConfigApi.getConfig(params.userId)),
+  });
+
+  readonly dailyGoal = computed(
+    () => this.userGoalResource.value()?.dailyGoal ?? 100
+  );
 
   constructor() {
     effect(() => {

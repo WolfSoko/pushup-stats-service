@@ -3,6 +3,8 @@ import { render, screen } from '@testing-library/angular';
 import { signal, WritableSignal } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { Title } from '@angular/platform-browser';
+import { of } from 'rxjs';
+import { UserConfigApiService } from '@pu-stats/data-access';
 // eslint-disable-next-line @nx/enforce-module-boundaries
 import { AuthStore } from '@pu-auth/auth';
 import { App } from './app';
@@ -18,8 +20,13 @@ describe('App (testing-library)', () => {
     logout: () => Promise.resolve(),
   };
 
+  const userConfigApiMock = {
+    getConfig: vitest.fn().mockReturnValue(of({ dailyGoal: 100 })),
+  };
+
   beforeEach(() => {
     userNameSignal = signal('default');
+    vitest.clearAllMocks();
   });
 
   it('should create app shell', async () => {
@@ -28,9 +35,13 @@ describe('App (testing-library)', () => {
         provideRouter([]),
         {
           provide: UserContextService,
-          useValue: { userNameSafe: userNameSignal.asReadonly() },
+          useValue: {
+            userNameSafe: userNameSignal.asReadonly(),
+            userIdSafe: () => 'u1',
+          },
         },
         { provide: AuthStore, useValue: authMock },
+        { provide: UserConfigApiService, useValue: userConfigApiMock },
       ],
     });
     expect(fixture.componentInstance).toBeTruthy();
@@ -42,9 +53,13 @@ describe('App (testing-library)', () => {
         provideRouter([]),
         {
           provide: UserContextService,
-          useValue: { userNameSafe: userNameSignal.asReadonly() },
+          useValue: {
+            userNameSafe: userNameSignal.asReadonly(),
+            userIdSafe: () => 'u1',
+          },
         },
         { provide: AuthStore, useValue: authMock },
+        { provide: UserConfigApiService, useValue: userConfigApiMock },
       ],
     });
     expect(screen.getByText('Dashboard')).toBeTruthy();
@@ -56,6 +71,30 @@ describe('App (testing-library)', () => {
     expect(screen.getByText('English')).toBeTruthy();
   });
 
+  it('shows daily goal in toolbar', async () => {
+    userConfigApiMock.getConfig.mockReturnValueOnce(of({ dailyGoal: 137 }));
+
+    await render(App, {
+      providers: [
+        provideRouter([]),
+        {
+          provide: UserContextService,
+          useValue: {
+            userNameSafe: userNameSignal.asReadonly(),
+            userIdSafe: () => 'u1',
+          },
+        },
+        { provide: AuthStore, useValue: authMock },
+        { provide: UserConfigApiService, useValue: userConfigApiMock },
+      ],
+    });
+
+    expect(screen.getByText('Tagesziel')).toBeTruthy();
+    expect(
+      await screen.findByText((content) => content.includes('137'))
+    ).toBeTruthy();
+  });
+
   describe('HTML title', () => {
     async function setup() {
       return render(App, {
@@ -63,9 +102,13 @@ describe('App (testing-library)', () => {
           provideRouter([]),
           {
             provide: UserContextService,
-            useValue: { userNameSafe: userNameSignal.asReadonly() },
+            useValue: {
+              userNameSafe: userNameSignal.asReadonly(),
+              userIdSafe: () => 'u1',
+            },
           },
           { provide: AuthStore, useValue: authMock },
+          { provide: UserConfigApiService, useValue: userConfigApiMock },
         ],
       });
     }

@@ -131,19 +131,12 @@ test('settings persist user config in firestore emulator', async ({ page }) => {
   const displayName = `Wolf-${runId}`;
   const dailyGoal = 137;
 
-  await signInTestUser(page);
+  const userId = await signInTestUser(page);
   await page.goto('/settings');
-
-  const activeUserText =
-    (await page
-      .getByText(/^Aktiv:/)
-      .first()
-      .textContent()) ?? 'Aktiv: default';
-  const userId = activeUserText.replace(/^Aktiv:\s*/, '').trim() || 'default';
 
   await page.getByLabel('Anzeigename').fill(displayName);
   await page.getByLabel('Tagesziel (Reps)').fill(String(dailyGoal));
-
+  await page.getByLabel('In Bestenliste anzeigen').uncheck();
   await page.getByRole('button', { name: 'Speichern' }).click();
   await expect(page.getByText('Gespeichert.')).toBeVisible();
 
@@ -156,6 +149,13 @@ test('settings persist user config in firestore emulator', async ({ page }) => {
     fields?: {
       displayName?: { stringValue?: string };
       dailyGoal?: { integerValue?: string };
+      ui?: {
+        mapValue?: {
+          fields?: {
+            hideFromLeaderboard?: { booleanValue?: boolean };
+          };
+        };
+      };
     };
   };
 
@@ -163,4 +163,7 @@ test('settings persist user config in firestore emulator', async ({ page }) => {
   expect(Number(payload.fields?.dailyGoal?.integerValue ?? '0')).toBe(
     dailyGoal
   );
+  expect(
+    payload.fields?.ui?.mapValue?.fields?.hideFromLeaderboard?.booleanValue
+  ).toBe(true);
 });

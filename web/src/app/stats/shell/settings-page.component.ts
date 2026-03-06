@@ -11,6 +11,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { firstValueFrom } from 'rxjs';
 import { UserConfigFirestoreService } from '@pu-stats/data-access';
 import { UserContextService } from '../../user-context.service';
@@ -23,6 +24,7 @@ import { UserContextService } from '../../user-context.service';
     MatInputModule,
     MatButtonModule,
     MatIconModule,
+    MatSlideToggleModule,
   ],
   template: `
     <main class="page-wrap">
@@ -37,35 +39,6 @@ import { UserContextService } from '../../user-context.service';
         <mat-card-content>
           <section class="grid">
             <mat-form-field appearance="outline">
-              <mat-label i18n="@@userIdLabel">User ID</mat-label>
-              <input
-                matInput
-                [value]="userIdDraft()"
-                (input)="userIdDraft.set(asValue($event))"
-                placeholder="z.B. wolf"
-                i18n-placeholder="@@userIdPlaceholder"
-              />
-              <mat-hint i18n="@@userIdHint">
-                Wird für Multi-User-Zuordnung genutzt (Auth kommt später).
-              </mat-hint>
-            </mat-form-field>
-
-            <div class="row">
-              <button
-                type="button"
-                mat-stroked-button
-                (click)="applyUserId()"
-                i18n="@@switchUser"
-              >
-                <mat-icon>switch_account</mat-icon>
-                User wechseln
-              </button>
-              <span class="pill" i18n="@@activeUser"
-                >Aktiv: {{ activeUserId() }}</span
-              >
-            </div>
-
-            <mat-form-field appearance="outline">
               <mat-label i18n="@@displayNameLabel">Anzeigename</mat-label>
               <input
                 matInput
@@ -74,9 +47,25 @@ import { UserContextService } from '../../user-context.service';
                 placeholder="Wolf"
                 i18n-placeholder="@@displayNamePlaceholder"
               />
+              <mat-hint i18n="@@settings.displayNameHint"
+                >Kann in der Bestenliste angezeigt werden.</mat-hint
+              >
             </mat-form-field>
 
-            <mat-form-field appearance="outline">
+            <mat-slide-toggle
+              [checked]="!leaderboardOptOutDraft()"
+              (change)="leaderboardOptOutDraft.set(!$event.checked)"
+              i18n="@@settings.leaderboardOptIn"
+            >
+              In Bestenliste anzeigen
+            </mat-slide-toggle>
+
+            <p class="muted" i18n="@@settings.leaderboardOptOutHint">
+              Wenn deaktiviert, wird dein Profil in der Bestenliste nicht
+              angezeigt.
+            </p>
+
+            <mat-form-field appearance="outline" class="goal-field">
               <mat-label i18n="@@dailyGoalLabel">Tagesziel (Reps)</mat-label>
               <input
                 matInput
@@ -87,6 +76,9 @@ import { UserContextService } from '../../user-context.service';
                 placeholder="100"
                 i18n-placeholder="@@dailyGoalPlaceholder"
               />
+              <mat-hint i18n="@@settings.goalHint"
+                >Wird prominent in der Toolbar angezeigt.</mat-hint
+              >
             </mat-form-field>
           </section>
 
@@ -136,14 +128,13 @@ import { UserContextService } from '../../user-context.service';
       align-items: center;
       flex-wrap: wrap;
     }
-    .pill {
-      padding: 6px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(123, 159, 255, 0.24);
+    .goal-field {
+      grid-column: 1 / -1;
     }
     .muted {
       opacity: 0.8;
       font-size: 0.9rem;
+      margin: 0;
     }
     .error {
       color: #ffd8d8;
@@ -157,9 +148,9 @@ export class SettingsPageComponent {
 
   readonly activeUserId = this.user.userIdSafe;
 
-  readonly userIdDraft = signal(this.activeUserId());
   readonly displayNameDraft = signal('');
   readonly dailyGoalDraft = signal<number>(100);
+  readonly leaderboardOptOutDraft = signal(false);
 
   readonly saving = signal(false);
   readonly saved = signal(false);
@@ -169,31 +160,34 @@ export class SettingsPageComponent {
     params: () => ({ userId: this.activeUserId() }),
     loader: async ({ params }) => {
       const result = await firstValueFrom(this.api.getConfig(params.userId));
-      return (result ?? {}) as { displayName?: string; dailyGoal?: number };
+      return (result ?? {}) as {
+        displayName?: string;
+        dailyGoal?: number;
+        ui?: { hideFromLeaderboard?: boolean };
+      };
     },
   });
 
   readonly config = computed(() => {
     const val = this.configResource.value();
     if (!val || typeof val !== 'object')
-      return { displayName: '', dailyGoal: 100 };
+      return { displayName: '', dailyGoal: 100, hideFromLeaderboard: false };
     return {
       displayName: (val as { displayName?: string }).displayName ?? '',
       dailyGoal: (val as { dailyGoal?: number }).dailyGoal ?? 100,
+      hideFromLeaderboard:
+        (val as { ui?: { hideFromLeaderboard?: boolean } }).ui
+          ?.hideFromLeaderboard ?? false,
     };
   });
 
   constructor() {
     effect(() => {
-      // keep draft user id in sync on user switches
-      this.userIdDraft.set(this.activeUserId());
-    });
-
-    effect(() => {
       const cfg = this.config();
       if (!cfg) return;
       this.displayNameDraft.set(cfg.displayName ?? '');
       this.dailyGoalDraft.set(cfg.dailyGoal ?? 100);
+      this.leaderboardOptOutDraft.set(cfg.hideFromLeaderboard ?? false);
     });
   }
 
@@ -207,11 +201,6 @@ export class SettingsPageComponent {
     return Number.isNaN(n) ? 100 : n;
   }
 
-  applyUserId(): void {
-    // this.user.setUserId(this.userIdDraft());
-    this.configResource.reload();
-  }
-
   async save(): Promise<void> {
     this.saving.set(true);
     this.saved.set(false);
@@ -222,6 +211,9 @@ export class SettingsPageComponent {
       await this.api.updateConfig(userId, {
         displayName: this.displayNameDraft().trim(),
         dailyGoal,
+        ui: {
+          hideFromLeaderboard: this.leaderboardOptOutDraft(),
+        },
       });
       this.saved.set(true);
       this.configResource.reload();

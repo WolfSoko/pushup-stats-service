@@ -56,6 +56,7 @@ export interface UserConfig {
   dailyGoal?: number;
   ui?: {
     showSourceColumn?: boolean;
+    hideFromLeaderboard?: boolean;
   };
   createdAt?: string;
   updatedAt?: string;

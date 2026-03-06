@@ -71,8 +71,36 @@ mat-card-content + mat-card-footer {
   .app-title {
     font-weight: 700;
   }
+
+  .goal-pill {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 6px;
+    border: 1px solid rgba(129, 161, 232, 0.35);
+    border-radius: 999px;
+    padding: 4px 10px;
+    background: rgba(30, 47, 84, 0.4);
+
+    small {
+      font-size: 0.72rem;
+      opacity: 0.85;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    strong {
+      font-size: 0.95rem;
+      font-variant-numeric: tabular-nums;
+    }
+  }
 }
 
 .app-content {
   padding: 12px;
+}
+
+@media (max-width: 560px) {
+  .top-nav .goal-pill small {
+    display: none;
+  }
 }
