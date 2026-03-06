@@ -147,7 +147,9 @@ export class LoginComponent {
 
       return response.data?.ok === true;
     } catch {
-      return false;
+      // Fail-open on technical validation outages to avoid login lockouts.
+      // Risk-based rejection still happens when the backend returns a valid response with ok=false.
+      return true;
     }
   }
 
