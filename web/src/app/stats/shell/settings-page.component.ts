@@ -1,5 +1,6 @@
 import {
   Component,
+  TemplateRef,
   computed,
   effect,
   inject,
@@ -12,6 +13,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { firstValueFrom } from 'rxjs';
 import { UserConfigFirestoreService } from '@pu-stats/data-access';
 import { UserContextService } from '../../user-context.service';
@@ -29,6 +31,7 @@ import { Analytics, logEvent } from '@angular/fire/analytics';
     MatButtonModule,
     MatIconModule,
     MatSlideToggleModule,
+    MatDialogModule,
   ],
   template: `
     <main class="page-wrap">
@@ -120,7 +123,7 @@ import { Analytics, logEvent } from '@angular/fire/analytics';
               mat-stroked-button
               color="warn"
               [disabled]="deletingAccount()"
-              (click)="anonymizeAndDeleteAccount()"
+              (click)="openDeleteDialog(deleteDialogTpl)"
               i18n="@@settings.deleteAccount"
             >
               <mat-icon>warning</mat-icon>
@@ -132,6 +135,51 @@ import { Analytics, logEvent } from '@angular/fire/analytics';
               >
             }
           </section>
+
+          <ng-template #deleteDialogTpl>
+            <h2 mat-dialog-title i18n="@@settings.deleteDialogTitle">
+              Account wirklich löschen?
+            </h2>
+            <mat-dialog-content class="delete-dialog-content">
+              <p i18n="@@settings.deleteDialogWarning">
+                Achtung: Diese Aktion ist nicht rückgängig.
+              </p>
+              <p i18n="@@settings.deleteDialogInfo">
+                Dein Account wird anonymisiert. Trainingsdaten bleiben für
+                statistische Auswertung erhalten.
+              </p>
+              <mat-form-field appearance="outline">
+                <mat-label i18n="@@settings.deleteDialogPhraseLabel"
+                  >Bestätigungswort eingeben</mat-label
+                >
+                <input
+                  matInput
+                  [value]="deletePhraseInput()"
+                  (input)="deletePhraseInput.set(asValue($event))"
+                  placeholder="löscchen"
+                />
+                <mat-hint i18n="@@settings.deleteDialogPhraseHint"
+                  >Bitte exakt „löscchen“ eingeben.</mat-hint
+                >
+              </mat-form-field>
+              @if (deleteDialogError()) {
+                <p class="error" role="alert">{{ deleteDialogError() }}</p>
+              }
+            </mat-dialog-content>
+            <mat-dialog-actions align="end">
+              <button mat-button mat-dialog-close i18n="@@cancel">
+                Abbrechen
+              </button>
+              <button
+                mat-flat-button
+                color="warn"
+                (click)="confirmDeleteFromDialog()"
+                i18n="@@settings.deleteConfirmFinal"
+              >
+                Final löschen
+              </button>
+            </mat-dialog-actions>
+          </ng-template>
         </mat-card-content>
       </mat-card>
     </main>
@@ -146,7 +194,7 @@ import { Analytics, logEvent } from '@angular/fire/analytics';
     }
     .grid {
       display: grid;
-      gap: 12px;
+      gap: 18px;
       grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
       align-items: start;
     }
@@ -180,6 +228,15 @@ import { Analytics, logEvent } from '@angular/fire/analytics';
         margin: 0;
       }
     }
+    .delete-dialog-content {
+      display: grid;
+      gap: 10px;
+      min-width: min(92vw, 460px);
+
+      p {
+        margin: 0;
+      }
+    }
     .error {
       color: #ffd8d8;
     }
@@ -191,6 +248,7 @@ export class SettingsPageComponent {
   private readonly user = inject(UserContextService);
   private readonly auth = inject(AuthStore);
   private readonly router = inject(Router);
+  private readonly dialog = inject(MatDialog);
   private readonly analytics = inject(Analytics, { optional: true });
 
   readonly activeUserId = this.user.userIdSafe;
@@ -203,6 +261,8 @@ export class SettingsPageComponent {
   readonly saved = signal(false);
   readonly deletingAccount = signal(false);
   readonly errorMessage = signal('');
+  readonly deletePhraseInput = signal('');
+  readonly deleteDialogError = signal('');
 
   readonly configResource = resource({
     params: () => ({ userId: this.activeUserId() }),
@@ -277,11 +337,22 @@ export class SettingsPageComponent {
     }
   }
 
-  async anonymizeAndDeleteAccount(): Promise<void> {
-    const confirmed = window.confirm(
-      'Account wirklich löschen? Dein Profil wird anonymisiert, Trainingsdaten bleiben für Statistiken erhalten.'
-    );
-    if (!confirmed) return;
+  openDeleteDialog(dialogTemplate: TemplateRef<unknown>): void {
+    this.deletePhraseInput.set('');
+    this.deleteDialogError.set('');
+    this.dialog.open(dialogTemplate, {
+      width: '520px',
+      disableClose: true,
+    });
+  }
+
+  async confirmDeleteFromDialog(): Promise<void> {
+    if (this.deletePhraseInput().trim().toLowerCase() !== 'löscchen') {
+      this.deleteDialogError.set('Bitte exakt „löscchen“ eingeben.');
+      return;
+    }
+
+    this.dialog.closeAll();
 
     this.deletingAccount.set(true);
     this.errorMessage.set('');
