@@ -22,7 +22,7 @@
           <span i18n="@@auth.login.loading">Anmelden...</span>
         </div>
       }
-      @if (authState.isAuthenticated()) {
+      @if (authState.isAuthenticated() && !loginState.isRegisterMode()) {
         <div class="success-message">
           <mat-icon color="accent">check_circle</mat-icon>
           <span i18n="@@auth.login.success">Anmeldung erfolgreich!</span>
