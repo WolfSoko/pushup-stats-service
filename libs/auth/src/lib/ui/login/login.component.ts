@@ -207,22 +207,26 @@ export class LoginComponent {
       if (this.loginState.isRegisterMode()) {
         await this.authState.signUpWithEmail(email, password);
         const user = this.authState.user();
-        if (user?.uid) {
-          await firstValueFrom(
-            this.userConfigApi.updateConfig(user.uid, {
-              displayName: this.registerDisplayName().trim(),
-              dailyGoal: Math.max(1, Number(this.registerDailyGoal() || 100)),
-              consent: {
-                dataProcessing: true,
-                statistics: true,
-                targetedAds: true,
-                acceptedAt: new Date().toISOString(),
-              },
-            })
-          );
+        if (!user?.uid) {
+          return;
         }
+        await firstValueFrom(
+          this.userConfigApi.updateConfig(user.uid, {
+            displayName: this.registerDisplayName().trim(),
+            dailyGoal: Math.max(1, Number(this.registerDailyGoal() || 100)),
+            consent: {
+              dataProcessing: true,
+              statistics: true,
+              targetedAds: true,
+              acceptedAt: new Date().toISOString(),
+            },
+          })
+        );
       } else {
         await this.authState.signInWithEmail(email, password);
+        if (!this.authState.isAuthenticated()) {
+          return;
+        }
       }
       await this.router.navigateByUrl(this.targetUrl());
     } catch {
