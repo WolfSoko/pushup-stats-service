@@ -120,7 +120,9 @@ async function createRecaptchaAssessment({
       ok: false,
       score: 0,
       reason: `invalid-token:${response.tokenProperties?.invalidReason || 'unknown'}`,
+      reasons: [],
       actionMatched: false,
+      action: response.tokenProperties?.action || null,
     };
   }
 
@@ -211,10 +213,35 @@ exports.assessRecaptchaToken = onCall(
         recaptchaAction,
       });
 
+      const uid = request.auth?.uid || 'anonymous';
+      logger.info('reCAPTCHA assessment completed', {
+        uid,
+        expectedAction: recaptchaAction,
+        actualAction: assessment.action,
+        actionMatched: assessment.actionMatched,
+        ok: assessment.ok,
+        score: assessment.score,
+        minScore: RECAPTCHA_MIN_SCORE,
+        reasons: assessment.reasons || [],
+        invalidReason: assessment.reason || null,
+      });
+
       if (!assessment.actionMatched) {
         logger.warn('reCAPTCHA action mismatch', {
+          uid,
           expectedAction: recaptchaAction,
           actualAction: assessment.action,
+        });
+      }
+
+      if (!assessment.ok) {
+        logger.warn('reCAPTCHA blocked request', {
+          uid,
+          expectedAction: recaptchaAction,
+          score: assessment.score,
+          minScore: RECAPTCHA_MIN_SCORE,
+          reasons: assessment.reasons || [],
+          invalidReason: assessment.reason || null,
         });
       }
 
