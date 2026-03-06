@@ -1,0 +1,79 @@
+.register-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.register-card {
+  max-width: 680px;
+  width: 100%;
+}
+
+.register-stepper {
+  width: 100%;
+  margin-top: 16px;
+}
+
+.step-field {
+  width: 100%;
+  margin-bottom: 24px;
+}
+
+.step-loading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 16px;
+  margin-bottom: 24px;
+}
+
+.form-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.register-success {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 0;
+}
+
+.register-success h3,
+.register-success p {
+  margin: 0;
+}
+
+mat-checkbox {
+  margin-top: 12px;
+  margin-bottom: 16px;
+  display: block;
+}
+
+.error-message {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #f44336;
+  padding: 12px;
+  background: #ffebee;
+  border-radius: 4px;
+  margin-bottom: 16px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+@media (max-width: 480px) {
+  .form-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}

@@ -52,7 +52,8 @@ export const appRoutes: Routes = [
       seoDescription:
         'Erstelle dein Konto und richte Profil, Tagesziel und Einwilligungen ein.',
     },
-    loadComponent: () => import('@pu-auth/auth').then((m) => m.LoginComponent),
+    loadComponent: () =>
+      import('@pu-auth/auth').then((m) => m.RegisterComponent),
   },
   {
     path: 'data',

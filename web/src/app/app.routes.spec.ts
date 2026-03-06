@@ -1,5 +1,10 @@
 // eslint-disable-next-line @nx/enforce-module-boundaries
-import { authGuard, LoginComponent, publicOnlyGuard } from '@pu-auth/auth';
+import {
+  authGuard,
+  LoginComponent,
+  publicOnlyGuard,
+  RegisterComponent,
+} from '@pu-auth/auth';
 import { appRoutes } from './app.routes';
 import { LandingPageComponent } from './marketing/shell/landing-page.component';
 import { AnalysisPageComponent } from './stats/shell/analysis-page.component';
@@ -16,6 +21,7 @@ describe('appRoutes', () => {
       'app',
       'landing',
       'login',
+      'register',
       'data',
       'analysis',
       'settings',
@@ -66,6 +72,12 @@ describe('appRoutes', () => {
     expect(component).toBe(LoginComponent);
   });
 
+  it('lazy-routes register component', async () => {
+    const route = appRoutes.find((r) => r.path === 'register');
+    const component = await route?.loadComponent?.();
+    expect(component).toBe(RegisterComponent);
+  });
+
   it('adds seo metadata to primary routes', () => {
     const landing = appRoutes.find((r) => r.path === '');
     const app = appRoutes.find((r) => r.path === 'app');
@@ -76,7 +88,7 @@ describe('appRoutes', () => {
     expect(settings?.data?.['seoDescription']).toContain('Tagesziel');
   });
 
-  it('protects app routes and keeps landing/login public-only', () => {
+  it('protects app routes and keeps landing/login/register public-only', () => {
     const protectedPaths = ['app', 'data', 'analysis', 'settings'];
     for (const path of protectedPaths) {
       const route = appRoutes.find((r) => r.path === path);
@@ -88,6 +100,9 @@ describe('appRoutes', () => {
 
     const loginRoute = appRoutes.find((r) => r.path === 'login');
     expect(loginRoute?.canActivate).toEqual([publicOnlyGuard]);
+
+    const registerRoute = appRoutes.find((r) => r.path === 'register');
+    expect(registerRoute?.canActivate).toEqual([publicOnlyGuard]);
   });
 
   it('redirects legacy /landing and wildcard to /', () => {

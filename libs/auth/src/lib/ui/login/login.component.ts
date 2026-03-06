@@ -1,11 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { BreakpointObserver } from '@angular/cdk/layout';
-import { StepperOrientation } from '@angular/material/stepper';
 import {
   ChangeDetectionStrategy,
   Component,
   TemplateRef,
-  computed,
   inject,
   signal,
 } from '@angular/core';
@@ -19,21 +16,19 @@ import {
 } from '@angular/forms/signals';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import {
   MatDialog,
   MatDialogModule,
   MatDialogRef,
 } from '@angular/material/dialog';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatStepper, MatStepperModule } from '@angular/material/stepper';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Auth } from '@angular/fire/auth';
 import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
-import { firstValueFrom, map, Observable } from 'rxjs';
 import { UserConfigApiService } from '@pu-stats/data-access';
+import { firstValueFrom } from 'rxjs';
 import { AuthStore } from '../../core/state/auth.store';
 
 export function hasStrongPasswordPolicy(value: string): boolean {
@@ -63,7 +58,6 @@ const LoginState = signalStore(
     MatProgressSpinnerModule,
     MatDialogModule,
     MatCheckboxModule,
-    MatStepperModule,
     FormField,
   ],
   templateUrl: './login.component.html',
@@ -74,18 +68,12 @@ const LoginState = signalStore(
 export class LoginComponent {
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
-  private readonly auth = inject(Auth, { optional: true });
   private readonly dialog = inject(MatDialog);
   private readonly userConfigApi = inject(UserConfigApiService);
-  private readonly breakpointObserver = inject(BreakpointObserver);
   readonly authState = inject(AuthStore);
   readonly loginState = inject(LoginState);
 
-  loginData = signal({ email: '', password: '', repeatPassword: '' });
-  registerDisplayName = signal('');
-  registerDailyGoal = signal(100);
-  registerConsentAccepted = signal(false);
-  registerSuccess = signal(false);
+  loginData = signal({ email: '', password: '' });
 
   googleDisplayName = signal('');
   googleDailyGoal = signal(100);
@@ -93,75 +81,28 @@ export class LoginComponent {
   googleWizardStep = signal(0);
   googleWizardError = signal<string | null>(null);
   private googleWizardDialogRef: MatDialogRef<unknown> | null = null;
-  readonly isRegisterPage = signal(
-    this.route.snapshot.routeConfig?.path === 'register'
-  );
-  registeringCredentials = signal(false);
-  stepperOrientation: Observable<StepperOrientation> = this.breakpointObserver
-    .observe('(min-width: 800px)')
-    .pipe(map(({ matches }) => (matches ? 'horizontal' : 'vertical')));
 
-  passwordPolicyValid = computed(() =>
-    hasStrongPasswordPolicy(this.loginForm.password().value() || '')
-  );
-  passwordsMatch = computed(
-    () =>
-      this.loginForm.password().value() ===
-      this.loginForm.repeatPassword().value()
-  );
-
-  loginForm = form(
-    this.loginData,
-    ({ email: emailAd, password, repeatPassword }) => {
-      required(emailAd, {
-        message: $localize`:@@validate.email.required:Bitte E-Mail eingeben!`,
-      });
-      email(emailAd, {
-        message: $localize`:@@validate.email.email:Bitte gültige E-Mail eingeben!`,
-      });
-      required(password, {
-        message: $localize`:@@validate.password.required:Bitte Passwort eingeben!`,
-      });
-      minLength(password, 8, {
-        message: $localize`:@@validate.password.minLength:Passwort muss mindestens 8 Zeichen lang sein!`,
-      });
-
-      // Keep repeatPassword wired to form state (validation done context-aware in component).
-      void repeatPassword;
-    }
-  );
+  loginForm = form(this.loginData, ({ email: emailAd, password }) => {
+    required(emailAd, {
+      message: $localize`:@@validate.email.required:Bitte E-Mail eingeben!`,
+    });
+    email(emailAd, {
+      message: $localize`:@@validate.email.email:Bitte gültige E-Mail eingeben!`,
+    });
+    required(password, {
+      message: $localize`:@@validate.password.required:Bitte Passwort eingeben!`,
+    });
+    minLength(password, 8, {
+      message: $localize`:@@validate.password.minLength:Passwort muss mindestens 8 Zeichen lang sein!`,
+    });
+  });
 
   togglePasswordVisibility(): void {
     this.loginState.toggleHidePassword();
   }
 
   async goToRegister(): Promise<void> {
-    this.registerDisplayName.set('');
-    this.registerDailyGoal.set(100);
-    this.registerConsentAccepted.set(false);
-    this.registerSuccess.set(false);
-    this.loginData.set({ email: '', password: '', repeatPassword: '' });
     await this.router.navigateByUrl('/register');
-  }
-
-  async goToLogin(): Promise<void> {
-    if (this.authState.isAuthenticated()) {
-      await this.authState.logout();
-    }
-    this.registerSuccess.set(false);
-    await this.router.navigateByUrl('/login');
-  }
-
-  async completeCredentialStep(stepper: MatStepper): Promise<void> {
-    if (this.loginForm.email().invalid() || this.loginForm.password().invalid())
-      return;
-    if (!this.passwordPolicyValid() || !this.passwordsMatch()) return;
-
-    this.registeringCredentials.set(true);
-    await new Promise((resolve) => setTimeout(resolve, 450));
-    this.registeringCredentials.set(false);
-
-    stepper.next();
   }
 
   async signInWithEmail(): Promise<void> {
@@ -181,53 +122,6 @@ export class LoginComponent {
       }
       await this.router.navigateByUrl(this.targetUrl());
     } catch {
-      // Error already handled by service
-    }
-  }
-
-  async submitEmailRegistration(): Promise<void> {
-    if (this.loginForm.email().invalid() || this.loginForm.password().invalid())
-      return;
-    if (!this.passwordPolicyValid() || !this.passwordsMatch()) return;
-    if (this.registerDisplayName().trim().length < 2) return;
-    if (this.registerDailyGoal() < 1) return;
-    if (!this.registerConsentAccepted()) return;
-
-    const { email, password } = this.loginForm().value();
-
-    try {
-      this.registeringCredentials.set(true);
-      this.registerSuccess.set(false);
-
-      await this.authState.signUpWithEmail(email, password);
-      if (!this.authState.isAuthenticated()) {
-        this.registeringCredentials.set(false);
-        return;
-      }
-
-      const uid = this.auth?.currentUser?.uid || this.authState.user()?.uid;
-      if (!uid) {
-        this.registeringCredentials.set(false);
-        return;
-      }
-
-      await firstValueFrom(
-        this.userConfigApi.updateConfig(uid, {
-          displayName: this.registerDisplayName().trim(),
-          dailyGoal: Math.max(1, Number(this.registerDailyGoal() || 100)),
-          consent: {
-            dataProcessing: true,
-            statistics: true,
-            targetedAds: true,
-            acceptedAt: new Date().toISOString(),
-          },
-        })
-      );
-
-      this.registerSuccess.set(true);
-      this.registeringCredentials.set(false);
-    } catch {
-      this.registeringCredentials.set(false);
       // Error already handled by service
     }
   }
@@ -303,10 +197,6 @@ export class LoginComponent {
         $localize`:@@auth.onboarding.google.error.saveFailed:Onboarding konnte nicht gespeichert werden. Bitte erneut versuchen.`
       );
     }
-  }
-
-  async goToDashboard(): Promise<void> {
-    await this.router.navigateByUrl(this.targetUrl());
   }
 
   private async isGoogleOnboardingRequired(): Promise<boolean> {
