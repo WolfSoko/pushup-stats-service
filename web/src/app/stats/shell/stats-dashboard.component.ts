@@ -35,10 +35,6 @@ import { toLocalIsoDate } from '../../util/date/to-local-iso-date';
 import { FilterBarComponent } from '../components/filter-bar/filter-bar.component';
 import { StatsChartComponent } from '../components/stats-chart/stats-chart.component';
 import { StatsTableComponent } from '../components/stats-table/stats-table.component';
-import {
-  LeaderboardPeriod,
-  LeaderboardService,
-} from '../../leaderboard.service';
 
 const EMPTY_STATS: StatsResponse = {
   meta: {
@@ -85,9 +81,6 @@ export class StatsDashboardComponent {
     url?: string;
   } | null;
   private readonly live = inject(PushupLiveService);
-  private readonly leaderboardApi = inject(LeaderboardService, {
-    optional: true,
-  });
 
   private readonly defaultRange = createWeekRange();
   private readonly initialRange = this.resolveInitialRange();
@@ -97,7 +90,6 @@ export class StatsDashboardComponent {
   readonly rangeMode = linkedSignal<RangeModes>(() =>
     inferRangeMode(this.initialRange.from, this.initialRange.to)
   );
-  readonly leaderboardPeriod = signal<LeaderboardPeriod>('daily');
   readonly busyAction = signal<'create' | 'update' | 'delete' | null>(null);
   readonly busyId = signal<string | null>(null);
 
@@ -118,19 +110,6 @@ export class StatsDashboardComponent {
 
   readonly allTimeResource = resource({
     loader: async () => firstValueFrom(this.api.load({})),
-  });
-
-  readonly leaderboardResource = resource({
-    loader: async () => {
-      if (!this.leaderboardApi) {
-        return {
-          daily: { top: [], current: null },
-          weekly: { top: [], current: null },
-          monthly: { top: [], current: null },
-        };
-      }
-      return this.leaderboardApi.load();
-    },
   });
 
   readonly stats = computed(() => this.statsResource.value() ?? EMPTY_STATS);
@@ -226,29 +205,6 @@ export class StatsDashboardComponent {
           new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
       )
       .slice(0, 10);
-  });
-  readonly leaderboardEntries = computed(() => {
-    const data = this.leaderboardResource.value();
-    if (!data) return [];
-    return data[this.leaderboardPeriod()].top;
-  });
-  readonly currentUserLeaderboardEntry = computed(() => {
-    const data = this.leaderboardResource.value();
-    if (!data) return null;
-    return data[this.leaderboardPeriod()].current;
-  });
-  readonly leaderboardSlots = computed(() => {
-    const top = this.leaderboardEntries();
-    return Array.from({ length: 10 }, (_, index) => {
-      const entry = top[index];
-      return (
-        entry ?? {
-          alias: '—',
-          reps: 0,
-          rank: index + 1,
-        }
-      );
-    });
   });
   readonly loading = computed(() => {
     const status = this.statsResource.status();
@@ -362,7 +318,6 @@ export class StatsDashboardComponent {
     this.statsResource.reload();
     this.allTimeResource.reload();
     this.entriesResource.reload();
-    this.leaderboardResource.reload();
   }
 
   private resolveInitialRange(): { from: string; to: string } {
