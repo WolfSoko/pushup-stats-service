@@ -1,8 +1,7 @@
-import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
-  PLATFORM_ID,
   TemplateRef,
   computed,
   inject,
@@ -29,7 +28,6 @@ import {
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Auth } from '@angular/fire/auth';
-import { Functions, httpsCallable } from '@angular/fire/functions';
 import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
 import { firstValueFrom } from 'rxjs';
 import { UserConfigApiService } from '@pu-stats/data-access';
@@ -75,20 +73,13 @@ const LoginState = signalStore(
 export class LoginComponent {
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
-  private readonly platformId = inject(PLATFORM_ID);
   private readonly auth = inject(Auth, { optional: true });
-  private readonly functions = inject(Functions, { optional: true });
   private readonly dialog = inject(MatDialog);
   private readonly userConfigApi = inject(UserConfigApiService);
   readonly authState = inject(AuthStore);
   readonly loginState = inject(LoginState);
 
-  private readonly recaptchaSiteKey =
-    '6LdIVoEsAAAAAMk4rJwg2DYHfM7ud_as7V5rUf4g';
-  private readonly recaptchaAction = 'submit';
-
   loginData = signal({ email: '', password: '', repeatPassword: '' });
-  recaptchaError = signal<string | null>(null);
   registerStep = signal<1 | 2 | 3 | 4 | 5>(1);
   registerDisplayName = signal('');
   registerDailyGoal = signal(100);
@@ -145,7 +136,6 @@ export class LoginComponent {
     this.registerDailyGoal.set(100);
     this.registerConsentAccepted.set(false);
     this.registerAccountReady.set(false);
-    this.recaptchaError.set(null);
   }
 
   async nextRegisterStep(): Promise<void> {
@@ -203,22 +193,11 @@ export class LoginComponent {
 
     const { email, password } = this.loginForm().value();
 
-    this.recaptchaError.set(null);
-    const recaptchaOk = await this.verifyRecaptcha();
-    if (!recaptchaOk) {
-      this.recaptchaError.set(
-        $localize`:@@recaptcha.failed:reCAPTCHA-Prüfung fehlgeschlagen. Bitte erneut versuchen.`
-      );
-      return;
-    }
-
     try {
       if (this.loginState.isRegisterMode()) {
         const uid = this.auth?.currentUser?.uid || this.authState.user()?.uid;
         if (!uid) {
-          this.recaptchaError.set(
-            $localize`:@@auth.register.error.noAuth:Registrierung unvollständig. Bitte erneut versuchen.`
-          );
+          // Keep user on flow when auth state is unexpectedly missing.
           return;
         }
 
@@ -325,15 +304,6 @@ export class LoginComponent {
     const { email, password } = this.loginForm().value();
     if (!email || !password) return false;
 
-    this.recaptchaError.set(null);
-    const recaptchaOk = await this.verifyRecaptcha();
-    if (!recaptchaOk) {
-      this.recaptchaError.set(
-        $localize`:@@recaptcha.failed:reCAPTCHA-Prüfung fehlgeschlagen. Bitte erneut versuchen.`
-      );
-      return false;
-    }
-
     await this.authState.signUpWithEmail(email, password);
     if (!this.authState.isAuthenticated()) {
       return false;
@@ -341,59 +311,6 @@ export class LoginComponent {
 
     this.registerAccountReady.set(true);
     return true;
-  }
-
-  private async verifyRecaptcha(): Promise<boolean> {
-    if (!isPlatformBrowser(this.platformId) || !this.functions) {
-      return false;
-    }
-
-    try {
-      const token = await this.executeRecaptcha(this.recaptchaAction);
-      const callAssessment = httpsCallable<
-        { token: string; action: string },
-        { ok: boolean; score: number; minScore: number; reasons?: string[] }
-      >(this.functions, 'assessRecaptchaToken');
-
-      const response = await callAssessment({
-        token,
-        action: this.recaptchaAction,
-      });
-
-      return response.data?.ok === true;
-    } catch {
-      // Fail-open on technical validation outages to avoid login lockouts.
-      // Risk-based rejection still happens when the backend returns a valid response with ok=false.
-      return true;
-    }
-  }
-
-  private async executeRecaptcha(action: string): Promise<string> {
-    const win = window as Window & {
-      grecaptcha?: {
-        enterprise?: {
-          ready: (cb: () => void) => void;
-          execute: (
-            siteKey: string,
-            options: { action: string }
-          ) => Promise<string>;
-        };
-      };
-    };
-
-    const enterprise = win.grecaptcha?.enterprise;
-    if (!enterprise) {
-      throw new Error('reCAPTCHA Enterprise nicht verfügbar');
-    }
-
-    return new Promise<string>((resolve, reject) => {
-      enterprise.ready(() => {
-        enterprise
-          .execute(this.recaptchaSiteKey, { action })
-          .then(resolve)
-          .catch(reject);
-      });
-    });
   }
 
   private async isGoogleOnboardingRequired(): Promise<boolean> {

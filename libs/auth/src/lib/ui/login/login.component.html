@@ -15,12 +15,6 @@
           <span>{{ authState.error()?.message }}</span>
         </div>
       }
-      @if (recaptchaError()) {
-        <div class="error-message">
-          <mat-icon color="warn">security</mat-icon>
-          <span>{{ recaptchaError() }}</span>
-        </div>
-      }
 
       @if (authState.loading()) {
         <div class="loading" aria-busy="true">
