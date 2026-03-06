@@ -54,6 +54,12 @@ export interface UserConfig {
   email?: string | null;
   displayName?: string;
   dailyGoal?: number;
+  consent?: {
+    dataProcessing?: boolean;
+    statistics?: boolean;
+    targetedAds?: boolean;
+    acceptedAt?: string;
+  };
   ui?: {
     showSourceColumn?: boolean;
     hideFromLeaderboard?: boolean;
@@ -63,5 +69,5 @@ export interface UserConfig {
 }
 
 export type UserConfigUpdate = Partial<
-  Pick<UserConfig, 'email' | 'displayName' | 'dailyGoal' | 'ui'>
+  Pick<UserConfig, 'email' | 'displayName' | 'dailyGoal' | 'consent' | 'ui'>
 >;

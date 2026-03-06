@@ -3,6 +3,8 @@ import {
   ChangeDetectionStrategy,
   Component,
   PLATFORM_ID,
+  TemplateRef,
+  computed,
   inject,
   signal,
 } from '@angular/core';
@@ -19,10 +21,22 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import {
+  MatDialog,
+  MatDialogModule,
+  MatDialogRef,
+} from '@angular/material/dialog';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Functions, httpsCallable } from '@angular/fire/functions';
 import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
+import { firstValueFrom } from 'rxjs';
+import { UserConfigApiService } from '@pu-stats/data-access';
 import { AuthStore } from '../../core/state/auth.store';
+
+export function hasStrongPasswordPolicy(value: string): boolean {
+  return /^(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/.test(value);
+}
 
 const LoginState = signalStore(
   withState({
@@ -48,6 +62,8 @@ const LoginState = signalStore(
     MatIconModule,
     MatInputModule,
     MatProgressSpinnerModule,
+    MatDialogModule,
+    MatCheckboxModule,
     FormField,
   ],
   templateUrl: './login.component.html',
@@ -60,6 +76,8 @@ export class LoginComponent {
   private readonly route = inject(ActivatedRoute);
   private readonly platformId = inject(PLATFORM_ID);
   private readonly functions = inject(Functions, { optional: true });
+  private readonly dialog = inject(MatDialog);
+  private readonly userConfigApi = inject(UserConfigApiService);
   readonly authState = inject(AuthStore);
   readonly loginState = inject(LoginState);
 
@@ -67,23 +85,48 @@ export class LoginComponent {
     '6LdIVoEsAAAAAMk4rJwg2DYHfM7ud_as7V5rUf4g';
   private readonly recaptchaAction = 'submit';
 
-  loginData = signal({ email: '', password: '' });
+  loginData = signal({ email: '', password: '', repeatPassword: '' });
   recaptchaError = signal<string | null>(null);
+  registerStep = signal<1 | 2>(1);
 
-  loginForm = form(this.loginData, ({ email: emailAd, password }) => {
-    required(emailAd, {
-      message: $localize`:@@validate.email.required:Bitte E-Mail eingeben!`,
-    });
-    email(emailAd, {
-      message: $localize`:@@validate.email.email:Bitte gültige E-Mail eingeben!`,
-    });
-    required(password, {
-      message: $localize`:@@validate.password.required:Bitte Passwort eingeben!`,
-    });
-    minLength(password, 6, {
-      message: $localize`:@@validate.password.minLength:Passwort muss mindestens 6 Zeichen lang sein!`,
-    });
+  googleDisplayName = signal('');
+  googleDailyGoal = signal(100);
+  googleConsentAccepted = signal(false);
+  googleWizardStep = signal(0);
+  googleWizardError = signal<string | null>(null);
+  private googleWizardDialogRef: MatDialogRef<unknown> | null = null;
+
+  passwordPolicyValid = computed(() =>
+    hasStrongPasswordPolicy(this.loginForm.password().value() || '')
+  );
+  passwordsMatch = computed(() => {
+    if (!this.loginState.isRegisterMode()) return true;
+    return (
+      this.loginForm.password().value() ===
+      this.loginForm.repeatPassword().value()
+    );
   });
+
+  loginForm = form(
+    this.loginData,
+    ({ email: emailAd, password, repeatPassword }) => {
+      required(emailAd, {
+        message: $localize`:@@validate.email.required:Bitte E-Mail eingeben!`,
+      });
+      email(emailAd, {
+        message: $localize`:@@validate.email.email:Bitte gültige E-Mail eingeben!`,
+      });
+      required(password, {
+        message: $localize`:@@validate.password.required:Bitte Passwort eingeben!`,
+      });
+      minLength(password, 8, {
+        message: $localize`:@@validate.password.minLength:Passwort muss mindestens 8 Zeichen lang sein!`,
+      });
+
+      // Keep repeatPassword wired to form state (validation done context-aware in component).
+      void repeatPassword;
+    }
+  );
 
   togglePasswordVisibility(): void {
     this.loginState.toggleHidePassword();
@@ -91,10 +134,27 @@ export class LoginComponent {
 
   toggleMode(): void {
     this.loginState.toggleIsRegisterMode();
+    this.registerStep.set(1);
+    this.recaptchaError.set(null);
+  }
+
+  nextRegisterStep(): void {
+    if (this.loginForm.email().invalid()) return;
+    this.registerStep.set(2);
+  }
+
+  backRegisterStep(): void {
+    this.registerStep.set(1);
   }
 
   async signInWithEmail(): Promise<void> {
-    if (this.loginForm().invalid()) return;
+    if (this.loginForm.email().invalid() || this.loginForm.password().invalid())
+      return;
+
+    if (this.loginState.isRegisterMode()) {
+      if (!this.passwordPolicyValid()) return;
+      if (!this.passwordsMatch()) return;
+    }
 
     const { email, password } = this.loginForm().value();
 
@@ -119,12 +179,73 @@ export class LoginComponent {
     }
   }
 
-  async signInWithGoogle(): Promise<void> {
+  async signInWithGoogle(wizardTemplate: TemplateRef<unknown>): Promise<void> {
     try {
       await this.authState.login();
+
+      const shouldShowWizard = await this.isGoogleOnboardingRequired();
+      if (shouldShowWizard) {
+        const completed = await this.openGoogleOnboardingWizard(wizardTemplate);
+        if (!completed) {
+          await this.authState.logout();
+          return;
+        }
+      }
+
       await this.router.navigateByUrl(this.targetUrl());
     } catch {
       // Error already handled by service
+    }
+  }
+
+  googleWizardNextFromName(): void {
+    if (this.googleDisplayName().trim().length < 2) return;
+    this.googleWizardStep.set(1);
+  }
+
+  googleWizardNextFromGoal(): void {
+    if (this.googleDailyGoal() < 1) return;
+    this.googleWizardStep.set(2);
+  }
+
+  googleWizardBack(): void {
+    this.googleWizardStep.update((s) => Math.max(0, s - 1));
+  }
+
+  async completeGoogleOnboarding(): Promise<void> {
+    this.googleWizardError.set(null);
+    const user = this.authState.user();
+    if (!user?.uid) {
+      this.googleWizardError.set(
+        $localize`:@@auth.onboarding.google.error.noUser:Kein eingeloggter Nutzer gefunden.`
+      );
+      return;
+    }
+    if (!this.googleConsentAccepted()) {
+      this.googleWizardError.set(
+        $localize`:@@auth.onboarding.google.error.consentRequired:Bitte stimme der Datenverarbeitung zu.`
+      );
+      return;
+    }
+
+    try {
+      await firstValueFrom(
+        this.userConfigApi.updateConfig(user.uid, {
+          displayName: this.googleDisplayName().trim(),
+          dailyGoal: Math.max(1, Number(this.googleDailyGoal() || 100)),
+          consent: {
+            dataProcessing: true,
+            statistics: true,
+            targetedAds: true,
+            acceptedAt: new Date().toISOString(),
+          },
+        })
+      );
+      this.googleWizardDialogRef?.close('completed');
+    } catch {
+      this.googleWizardError.set(
+        $localize`:@@auth.onboarding.google.error.saveFailed:Onboarding konnte nicht gespeichert werden. Bitte erneut versuchen.`
+      );
     }
   }
 
@@ -179,6 +300,39 @@ export class LoginComponent {
           .catch(reject);
       });
     });
+  }
+
+  private async isGoogleOnboardingRequired(): Promise<boolean> {
+    const user = this.authState.user();
+    if (!user?.uid) return false;
+
+    try {
+      const cfg = await firstValueFrom(this.userConfigApi.getConfig(user.uid));
+      return !cfg.displayName || !cfg.dailyGoal || !cfg.consent?.acceptedAt;
+    } catch {
+      return true;
+    }
+  }
+
+  private async openGoogleOnboardingWizard(
+    wizardTemplate: TemplateRef<unknown>
+  ): Promise<boolean> {
+    this.googleDisplayName.set(this.authState.user()?.displayName || '');
+    this.googleDailyGoal.set(100);
+    this.googleConsentAccepted.set(false);
+    this.googleWizardStep.set(0);
+    this.googleWizardError.set(null);
+
+    this.googleWizardDialogRef = this.dialog.open(wizardTemplate, {
+      disableClose: true,
+      width: '540px',
+    });
+
+    const result = await firstValueFrom(
+      this.googleWizardDialogRef.afterClosed()
+    );
+    this.googleWizardDialogRef = null;
+    return result === 'completed';
   }
 
   private targetUrl(): string {

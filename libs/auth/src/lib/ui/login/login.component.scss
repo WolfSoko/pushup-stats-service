@@ -20,6 +20,34 @@
   margin-top: 16px;
 }
 
+.form-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+mat-dialog-content {
+  min-width: 320px;
+}
+
+mat-dialog-actions {
+  margin-top: 8px;
+}
+
+mat-checkbox {
+  margin-top: 8px;
+}
+
+.error-message p {
+  margin: 0;
+}
+
+@media (max-width: 480px) {
+  .form-actions {
+    flex-direction: column;
+  }
+}
+
 .full-width {
   width: 100%;
 }
@@ -91,4 +119,3 @@
   color: #666;
   font-size: 14px;
 }
-
