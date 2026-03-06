@@ -116,7 +116,7 @@ import { Analytics, logEvent } from '@angular/fire/analytics';
             <h3 i18n="@@settings.dangerZoneTitle">Danger Zone</h3>
             <p i18n="@@settings.dangerZoneBody">
               Konto löschen entfernt dein Konto. Trainingsdaten bleiben für
-              statistische Auswertung erhalten.
+              statistische Auswertung anonymisiert erhalten.
             </p>
             <button
               type="button"
@@ -146,7 +146,7 @@ import { Analytics, logEvent } from '@angular/fire/analytics';
               </p>
               <p i18n="@@settings.deleteDialogInfo">
                 Dein Konto wird gelöscht. Trainingsdaten bleiben für
-                statistische Auswertung erhalten.
+                statistische Auswertung anonymisiert erhalten.
               </p>
               <mat-form-field appearance="outline">
                 <mat-label i18n="@@settings.deleteDialogPhraseLabel"
