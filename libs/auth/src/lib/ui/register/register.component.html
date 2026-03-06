@@ -40,7 +40,11 @@
           #registerStepper
           [orientation]="(stepperOrientation | async) ?? 'horizontal'"
         >
-          <mat-step [completed]="!registerForm.email().invalid()">
+          <mat-step
+            [completed]="
+              !registerForm.email().invalid() || isGoogleRegistration()
+            "
+          >
             <ng-template matStepLabel i18n="@@auth.email">E-Mail</ng-template>
             <mat-form-field appearance="outline" class="full-width step-field">
               <mat-label i18n="@@auth.email">E-Mail</mat-label>
@@ -67,90 +71,144 @@
                 Weiter
               </button>
             </div>
+
+            <div class="divider">
+              <span i18n="@@auth.or">oder</span>
+            </div>
+
+            <button
+              mat-raised-button
+              type="button"
+              class="full-width google-button"
+              [disabled]="registeringCredentials()"
+              (click)="registerWithGoogle(registerStepper)"
+              i18n="@@auth.google.signup"
+            >
+              Mit Google registrieren
+            </button>
           </mat-step>
 
-          <mat-step [completed]="passwordPolicyValid() && passwordsMatch()">
+          <mat-step
+            [optional]="isGoogleRegistration()"
+            [completed]="
+              isGoogleRegistration() ||
+              (passwordPolicyValid() && passwordsMatch())
+            "
+          >
             <ng-template matStepLabel i18n="@@auth.password"
               >Passwort</ng-template
             >
-            <mat-form-field appearance="outline" class="full-width step-field">
-              <mat-label i18n="@@auth.password">Passwort</mat-label>
-              <input
-                matInput
-                [type]="registerState.hidePassword() ? 'password' : 'text'"
-                [placeholder]="'********'"
-                [formField]="registerForm.password"
-              />
-              <button
-                mat-icon-button
-                type="button"
-                matSuffix
-                (click)="togglePasswordVisibility()"
-                tabindex="-1"
-              >
-                <mat-icon>{{
-                  registerState.hidePassword() ? 'visibility_off' : 'visibility'
-                }}</mat-icon>
-              </button>
-              @for (error of registerForm.password().errors(); track $index) {
-                <mat-error>{{ validationMessage(error) }}</mat-error>
-              }
-              <mat-hint i18n="@@auth.register.password.hint"
-                >Mind. 8 Zeichen, 1 Zahl und 1 Sonderzeichen.</mat-hint
-              >
-              @if (!passwordPolicyValid()) {
-                <mat-error i18n="@@auth.register.password.invalid"
-                  >Passwort erfüllt die Anforderungen nicht.</mat-error
+            @if (isGoogleRegistration()) {
+              <p class="muted" i18n="@@auth.register.google.skipPassword">
+                Passwort-Schritt übersprungen (Google Registrierung).
+              </p>
+              <div class="form-actions">
+                <button
+                  mat-stroked-button
+                  matStepperPrevious
+                  type="button"
+                  i18n="@@auth.register.back"
                 >
-              }
-            </mat-form-field>
+                  Zurück
+                </button>
+                <button
+                  mat-raised-button
+                  color="primary"
+                  matStepperNext
+                  type="button"
+                  i18n="@@auth.next"
+                >
+                  Weiter
+                </button>
+              </div>
+            } @else {
+              <mat-form-field
+                appearance="outline"
+                class="full-width step-field"
+              >
+                <mat-label i18n="@@auth.password">Passwort</mat-label>
+                <input
+                  matInput
+                  [type]="registerState.hidePassword() ? 'password' : 'text'"
+                  [placeholder]="'********'"
+                  [formField]="registerForm.password"
+                />
+                <button
+                  mat-icon-button
+                  type="button"
+                  matSuffix
+                  (click)="togglePasswordVisibility()"
+                  tabindex="-1"
+                >
+                  <mat-icon>{{
+                    registerState.hidePassword()
+                      ? 'visibility_off'
+                      : 'visibility'
+                  }}</mat-icon>
+                </button>
+                @for (error of registerForm.password().errors(); track $index) {
+                  <mat-error>{{ validationMessage(error) }}</mat-error>
+                }
+                <mat-hint i18n="@@auth.register.password.hint"
+                  >Mind. 8 Zeichen, 1 Zahl und 1 Sonderzeichen.</mat-hint
+                >
+                @if (!passwordPolicyValid()) {
+                  <mat-error i18n="@@auth.register.password.invalid"
+                    >Passwort erfüllt die Anforderungen nicht.</mat-error
+                  >
+                }
+              </mat-form-field>
 
-            <mat-form-field appearance="outline" class="full-width step-field">
-              <mat-label i18n="@@auth.register.password.repeat"
-                >Passwort wiederholen</mat-label
+              <mat-form-field
+                appearance="outline"
+                class="full-width step-field"
               >
-              <input
-                matInput
-                [type]="registerState.hidePassword() ? 'password' : 'text'"
-                [placeholder]="'********'"
-                [formField]="registerForm.repeatPassword"
-              />
-              @if (!passwordsMatch()) {
-                <mat-error i18n="@@auth.register.password.repeat.invalid"
-                  >Passwörter stimmen nicht überein.</mat-error
+                <mat-label i18n="@@auth.register.password.repeat"
+                  >Passwort wiederholen</mat-label
                 >
-              }
-            </mat-form-field>
+                <input
+                  matInput
+                  [type]="registerState.hidePassword() ? 'password' : 'text'"
+                  [placeholder]="'********'"
+                  [formField]="registerForm.repeatPassword"
+                />
+                @if (!passwordsMatch()) {
+                  <mat-error i18n="@@auth.register.password.repeat.invalid"
+                    >Passwörter stimmen nicht überein.</mat-error
+                  >
+                }
+              </mat-form-field>
 
-            @if (registeringCredentials()) {
-              <div class="step-loading" aria-busy="true">
-                <mat-spinner diameter="28"></mat-spinner>
-                <span i18n="@@auth.register.processing"
-                  >Registrierung wird vorbereitet...</span
+              @if (registeringCredentials()) {
+                <div class="step-loading" aria-busy="true">
+                  <mat-spinner diameter="28"></mat-spinner>
+                  <span i18n="@@auth.register.processing"
+                    >Registrierung wird vorbereitet...</span
+                  >
+                </div>
+              }
+
+              <div class="form-actions">
+                <button
+                  mat-stroked-button
+                  matStepperPrevious
+                  type="button"
+                  i18n="@@auth.register.back"
                 >
+                  Zurück
+                </button>
+                <button
+                  mat-raised-button
+                  color="primary"
+                  type="button"
+                  [disabled]="registeringCredentials()"
+                  (click)="completeCredentialStep(registerStepper)"
+                  i18n="@@auth.next"
+                >
+                  Weiter
+                </button>
               </div>
             }
-
-            <div class="form-actions">
-              <button
-                mat-stroked-button
-                matStepperPrevious
-                type="button"
-                i18n="@@auth.register.back"
-              >
-                Zurück
-              </button>
-              <button
-                mat-raised-button
-                color="primary"
-                type="button"
-                [disabled]="registeringCredentials()"
-                (click)="completeCredentialStep(registerStepper)"
-                i18n="@@auth.next"
-              >
-                Weiter
-              </button>
-            </div>
           </mat-step>
 
           <mat-step [completed]="registerDisplayName().trim().length >= 2">
@@ -272,10 +330,11 @@
                 color="primary"
                 type="button"
                 [disabled]="
-                  registerForm.email().invalid() ||
-                  registerForm.password().invalid() ||
-                  !passwordPolicyValid() ||
-                  !passwordsMatch() ||
+                  (!isGoogleRegistration() && registerForm.email().invalid()) ||
+                  (!isGoogleRegistration() &&
+                    registerForm.password().invalid()) ||
+                  (!isGoogleRegistration() && !passwordPolicyValid()) ||
+                  (!isGoogleRegistration() && !passwordsMatch()) ||
                   registerDisplayName().trim().length < 2 ||
                   registerDailyGoal() < 1 ||
                   !registerConsentAccepted() ||

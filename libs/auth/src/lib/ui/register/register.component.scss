@@ -67,6 +67,40 @@ mat-checkbox {
   margin-bottom: 16px;
 }
 
+.divider {
+  display: flex;
+  align-items: center;
+  margin: 20px 0;
+  color: #666;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #ddd;
+}
+
+.divider span {
+  padding: 0 12px;
+  font-size: 14px;
+}
+
+.google-button {
+  background-color: #fff;
+  color: #444;
+  border: 1px solid #ddd;
+}
+
+.google-button:hover {
+  background-color: #f8f8f8;
+}
+
+.muted {
+  color: #666;
+}
+
 .full-width {
   width: 100%;
 }

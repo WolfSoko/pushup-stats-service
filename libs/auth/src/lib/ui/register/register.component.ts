@@ -75,6 +75,7 @@ export class RegisterComponent {
   registerDisplayName = signal('');
   registerDailyGoal = signal(100);
   registerConsentAccepted = signal(false);
+  isGoogleRegistration = signal(false);
   registeringCredentials = signal(false);
   registerSuccess = signal(false);
 
@@ -130,20 +131,44 @@ export class RegisterComponent {
       return;
     }
 
+    this.isGoogleRegistration.set(false);
     this.registeringCredentials.set(true);
     await new Promise((resolve) => setTimeout(resolve, 450));
     this.registeringCredentials.set(false);
     stepper.next();
   }
 
-  async submitEmailRegistration(): Promise<void> {
-    if (
-      this.registerForm.email().invalid() ||
-      this.registerForm.password().invalid()
-    ) {
-      return;
+  async registerWithGoogle(stepper: MatStepper): Promise<void> {
+    try {
+      this.registeringCredentials.set(true);
+      await this.authState.login();
+      if (!this.authState.isAuthenticated()) {
+        this.registeringCredentials.set(false);
+        return;
+      }
+
+      this.isGoogleRegistration.set(true);
+      this.registerDisplayName.set(this.authState.user()?.displayName || '');
+      this.registeringCredentials.set(false);
+      stepper.selectedIndex = 2;
+    } catch {
+      this.registeringCredentials.set(false);
+      // Error already handled by service
     }
-    if (!this.passwordPolicyValid() || !this.passwordsMatch()) return;
+  }
+
+  async submitEmailRegistration(): Promise<void> {
+    const isGoogleRegistration = this.isGoogleRegistration();
+
+    if (!isGoogleRegistration) {
+      if (
+        this.registerForm.email().invalid() ||
+        this.registerForm.password().invalid()
+      ) {
+        return;
+      }
+      if (!this.passwordPolicyValid() || !this.passwordsMatch()) return;
+    }
     if (this.registerDisplayName().trim().length < 2) return;
     if (this.registerDailyGoal() < 1) return;
     if (!this.registerConsentAccepted()) return;
@@ -154,10 +179,12 @@ export class RegisterComponent {
       this.registeringCredentials.set(true);
       this.registerSuccess.set(false);
 
-      await this.authState.signUpWithEmail(email, password);
-      if (!this.authState.isAuthenticated()) {
-        this.registeringCredentials.set(false);
-        return;
+      if (!isGoogleRegistration) {
+        await this.authState.signUpWithEmail(email, password);
+        if (!this.authState.isAuthenticated()) {
+          this.registeringCredentials.set(false);
+          return;
+        }
       }
 
       const uid = this.authState.user()?.uid;
