@@ -30,6 +30,7 @@ jobs:
 
       - run: npm ci && npx nx run web:build -c production
       - uses: FirebaseExtended/action-hosting-deploy@v0
+        working-directory: data-store
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_PUSHUP_STATS }}
