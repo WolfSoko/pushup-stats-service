@@ -26,6 +26,7 @@ import {
   MatStepperModule,
   StepperOrientation,
 } from '@angular/material/stepper';
+import { Auth } from '@angular/fire/auth';
 import { ActivatedRoute, Router } from '@angular/router';
 import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
 import { UserConfigApiService } from '@pu-stats/data-access';
@@ -68,6 +69,7 @@ export class RegisterComponent {
   private readonly route = inject(ActivatedRoute);
   private readonly userConfigApi = inject(UserConfigApiService);
   private readonly breakpointObserver = inject(BreakpointObserver);
+  private readonly auth = inject(Auth, { optional: true });
   readonly authState = inject(AuthStore);
   readonly registerState = inject(RegisterState);
 
@@ -168,6 +170,8 @@ export class RegisterComponent {
   }
 
   async submitEmailRegistration(): Promise<void> {
+    if (this.registeringCredentials()) return;
+
     const isGoogleRegistration = this.isGoogleRegistration();
 
     if (!isGoogleRegistration) {
@@ -191,13 +195,9 @@ export class RegisterComponent {
 
       if (!isGoogleRegistration) {
         await this.authState.signUpWithEmail(email, password);
-        if (!this.authState.isAuthenticated()) {
-          this.registeringCredentials.set(false);
-          return;
-        }
       }
 
-      const uid = this.authState.user()?.uid;
+      const uid = await this.waitForUserUid();
       if (!uid) {
         this.registeringCredentials.set(false);
         return;
@@ -238,6 +238,15 @@ export class RegisterComponent {
       return (error as { message: string }).message;
     }
     return String(error ?? 'Ungültiger Wert');
+  }
+
+  private async waitForUserUid(): Promise<string | null> {
+    for (let i = 0; i < 20; i += 1) {
+      const uid = this.auth?.currentUser?.uid || this.authState.user()?.uid;
+      if (uid) return uid;
+      await new Promise((resolve) => setTimeout(resolve, 100));
+    }
+    return null;
   }
 
   private targetUrl(): string {
