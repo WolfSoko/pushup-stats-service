@@ -31,6 +31,7 @@ describe('AuthService', () => {
       signUpWithEmail: jest.fn(),
     };
     userConfigApi = {
+      getConfig: jest.fn().mockReturnValue(of({ userId: '123' })),
       updateConfig: jest.fn().mockReturnValue(of({})),
     };
   });
@@ -86,5 +87,30 @@ describe('AuthService', () => {
     const service = fixture.debugElement.injector.get(AuthService);
     await service.signUpWithEmail('test@test.de', 'pw');
     expect(adapter.signUpWithEmail).toHaveBeenCalledWith('test@test.de', 'pw');
+  });
+
+  it('keeps existing config displayName on repeated Google login', async () => {
+    userConfigApi.getConfig = jest.fn().mockReturnValue(
+      of({
+        userId: '123',
+        displayName: 'CustomName',
+      })
+    );
+
+    const { fixture } = await render('', {
+      providers: [
+        AuthService,
+        { provide: AuthAdapter, useValue: adapter },
+        { provide: UserConfigApiService, useValue: userConfigApi },
+      ],
+    });
+
+    const service = fixture.debugElement.injector.get(AuthService);
+    await service.signInWithGoogle();
+
+    expect(userConfigApi.updateConfig).toHaveBeenCalledWith(
+      '123',
+      expect.objectContaining({ displayName: 'CustomName' })
+    );
   });
 });

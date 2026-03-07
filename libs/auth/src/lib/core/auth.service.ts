@@ -85,11 +85,18 @@ export class AuthService {
     if (!user) return;
     this.userDbSyncState.set('syncing');
     try {
-      // Nur erlaubte Felder an updateConfig übergeben
+      const existingConfig = await firstValueFrom(
+        this.userConfigApi.getConfig(user.uid)
+      );
+
+      // Wichtig: bereits gesetzten Anzeigenamen nicht mit Provider-DisplayName überschreiben.
+      const nextDisplayName =
+        existingConfig?.displayName?.trim() || user.displayName || undefined;
+
       await firstValueFrom(
         this.userConfigApi.updateConfig(user.uid, {
           email: user.email ?? undefined,
-          displayName: user.displayName ?? undefined,
+          displayName: nextDisplayName,
         })
       );
       this.userDbSyncState.set('success');
