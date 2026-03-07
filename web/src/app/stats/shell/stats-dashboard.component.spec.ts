@@ -221,8 +221,12 @@ describe('StatsDashboardComponent', () => {
 
     expect(panel).toBeTruthy();
     expect(chart).toBeTruthy();
+    if (!panel || !chart) {
+      throw new Error('Expected filter panel and chart in mid-grid');
+    }
+
     expect(
-      panel!.compareDocumentPosition(chart!) & Node.DOCUMENT_POSITION_FOLLOWING
+      panel.compareDocumentPosition(chart) & Node.DOCUMENT_POSITION_FOLLOWING
     ).toBeTruthy();
   });
 

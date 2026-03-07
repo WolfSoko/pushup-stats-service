@@ -32,12 +32,16 @@ describe('LandingPageComponent', () => {
     expect(preview).toBeTruthy();
     expect(leaderboard).toBeTruthy();
 
+    if (!features || !preview || !leaderboard) {
+      throw new Error('Expected all landing sections to exist');
+    }
+
     expect(
-      features!.compareDocumentPosition(preview!) &
+      features.compareDocumentPosition(preview) &
         Node.DOCUMENT_POSITION_FOLLOWING
     ).toBeTruthy();
     expect(
-      preview!.compareDocumentPosition(leaderboard!) &
+      preview.compareDocumentPosition(leaderboard) &
         Node.DOCUMENT_POSITION_FOLLOWING
     ).toBeTruthy();
   });
