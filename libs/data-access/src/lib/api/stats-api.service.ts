@@ -32,8 +32,10 @@ export class StatsApiService {
   load(filter: StatsFilter = {}): Observable<StatsResponse> {
     return this.listPushups(filter).pipe(
       switchMap((rows) =>
-        from(this.resolveDailyGoal(this.resolveUserId())).pipe(
-          map((goal) => this.toStatsResponse(rows, filter, goal))
+        from(this.resolveUserChartSettings(this.resolveUserId())).pipe(
+          map(({ dailyGoal, dayChartMode }) =>
+            this.toStatsResponse(rows, filter, dailyGoal, dayChartMode)
+          )
         )
       )
     );
@@ -88,26 +90,97 @@ export class StatsApiService {
     return this.pushupFirestore;
   }
 
-  private async resolveDailyGoal(userId: string): Promise<number> {
+  private async resolveUserChartSettings(userId: string): Promise<{
+    dailyGoal: number;
+    dayChartMode: '24h' | '14h';
+  }> {
     try {
-      if (!this.auth?.currentUser || !this.userConfigFirestore) return 100;
+      if (!this.auth?.currentUser || !this.userConfigFirestore) {
+        return { dailyGoal: 100, dayChartMode: '14h' };
+      }
       const cfg = await firstValueFrom(
         this.userConfigFirestore.getConfig(userId)
       );
-      if (cfg?.dailyGoal && Number.isFinite(cfg.dailyGoal)) {
-        return Math.max(1, cfg.dailyGoal);
-      }
-      return 100;
+      const dailyGoal =
+        cfg?.dailyGoal && Number.isFinite(cfg.dailyGoal)
+          ? Math.max(1, cfg.dailyGoal)
+          : 100;
+      const dayChartMode = cfg?.ui?.dayChartMode === '24h' ? '24h' : '14h';
+      return { dailyGoal, dayChartMode };
     } catch {
-      return 100;
+      return { dailyGoal: 100, dayChartMode: '14h' };
     }
   }
 
   private toStatsResponse(
     rows: PushupRecord[],
     filter: StatsFilter,
-    dailyGoal: number
+    dailyGoal: number,
+    dayChartMode: '24h' | '14h'
   ): StatsResponse {
+    const from = filter.from ?? null;
+    const to = filter.to ?? null;
+    const isDayRange = !!from && !!to && from === to;
+
+    if (isDayRange) {
+      const hourTotals = Array.from({ length: 24 }, () => 0);
+      for (const row of rows) {
+        const hour = new Date(row.timestamp).getHours();
+        if (hour >= 0 && hour <= 23) hourTotals[hour] += row.reps;
+      }
+
+      let cumulative = 0;
+      const series =
+        dayChartMode === '24h'
+          ? hourTotals.map((total, hour) => {
+              cumulative += total;
+              return {
+                bucket: `${from}T${String(hour).padStart(2, '0')}:00:00`,
+                total,
+                dayIntegral: Math.round((cumulative / dailyGoal) * 100) / 100,
+              };
+            })
+          : (() => {
+              const result: StatsResponse['series'] = [];
+              const nightTotal = hourTotals
+                .slice(0, 8)
+                .reduce((sum, value) => sum + value, 0);
+              cumulative += nightTotal;
+              result.push({
+                bucket: `${from}T00:00:00`,
+                bucketLabel: '00-07',
+                total: nightTotal,
+                dayIntegral: Math.round((cumulative / dailyGoal) * 100) / 100,
+              });
+
+              for (let hour = 8; hour <= 21; hour++) {
+                const total = hourTotals[hour] ?? 0;
+                cumulative += total;
+                result.push({
+                  bucket: `${from}T${String(hour).padStart(2, '0')}:00:00`,
+                  total,
+                  dayIntegral: Math.round((cumulative / dailyGoal) * 100) / 100,
+                });
+              }
+
+              return result;
+            })();
+
+      const total = rows.reduce((sum, row) => sum + row.reps, 0);
+
+      return {
+        meta: {
+          from,
+          to,
+          entries: rows.length,
+          days: from ? 1 : 0,
+          total,
+          granularity: 'hourly',
+        },
+        series,
+      };
+    }
+
     const totals = new Map<string, number>();
     for (const row of rows) {
       const day = row.timestamp.slice(0, 10);
@@ -126,14 +199,12 @@ export class StatsApiService {
       };
     });
 
-    const from = filter.from ?? sortedDays[0] ?? null;
-    const to = filter.to ?? sortedDays[sortedDays.length - 1] ?? null;
     const total = rows.reduce((sum, row) => sum + row.reps, 0);
 
     return {
       meta: {
-        from,
-        to,
+        from: filter.from ?? sortedDays[0] ?? null,
+        to: filter.to ?? sortedDays[sortedDays.length - 1] ?? null,
         entries: rows.length,
         days: sortedDays.length,
         total,

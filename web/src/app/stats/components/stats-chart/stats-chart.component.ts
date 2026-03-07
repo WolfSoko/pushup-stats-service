@@ -81,6 +81,7 @@ export class StatsChartComponent implements AfterViewInit {
   readonly series = input<StatsSeriesEntry[]>([]);
   readonly from = input<string | null>(null);
   readonly to = input<string | null>(null);
+  readonly dayChartMode = input<'24h' | '14h'>('14h');
 
   readonly hourlyTitle = $localize`:@@chart.titleHourly:Verlauf (Stundenwerte)`;
   readonly dailyTitle = $localize`:@@chart.titleDaily:Verlauf (Tageswerte)`;
@@ -131,12 +132,19 @@ export class StatsChartComponent implements AfterViewInit {
       return Number((sum / window.length).toFixed(2));
     });
 
+    const bucketLabelByTs = new Map<number, string>();
+    for (const entry of series) {
+      if (!entry.bucketLabel) continue;
+      const ts = this.bucketToTs(entry.bucket);
+      if (Number.isFinite(ts)) bucketLabelByTs.set(ts, entry.bucketLabel);
+    }
+
     const data: ChartConfiguration<'bar' | 'line'>['data'] = {
       datasets: [
         {
           label: this.intervalLabel,
           data: series.map((d) => ({
-            x: new Date(d.bucket + 'T00:00:00').getTime(),
+            x: this.bucketToTs(d.bucket),
             y: d.total,
           })),
           backgroundColor: '#5e8eff99',
@@ -146,7 +154,7 @@ export class StatsChartComponent implements AfterViewInit {
         {
           label: this.dayIntegralLabel,
           data: series.map((d) => ({
-            x: new Date(d.bucket + 'T00:00:00').getTime(),
+            x: this.bucketToTs(d.bucket),
             y: d.dayIntegral,
           })),
           type: 'line',
@@ -160,7 +168,7 @@ export class StatsChartComponent implements AfterViewInit {
         {
           label: this.movingAvgLabel,
           data: movingAvg.map((avg, index) => ({
-            x: new Date(series[index].bucket + 'T00:00:00').getTime(),
+            x: this.bucketToTs(series[index].bucket),
             y: avg,
           })),
           type: 'line',
@@ -175,12 +183,16 @@ export class StatsChartComponent implements AfterViewInit {
       ],
     };
 
+    const isCompactDayMode =
+      this.granularity() === 'hourly' && this.dayChartMode() === '14h';
+
     const xTickFormatter = new Intl.DateTimeFormat(
       this.localeId,
       this.granularity() === 'hourly'
         ? { hour: '2-digit' }
         : { day: '2-digit', month: '2-digit' }
     );
+    const isGermanLocale = this.localeId.toLowerCase().startsWith('de');
     const tooltipTitleFormatter = new Intl.DateTimeFormat(
       this.localeId,
       this.granularity() === 'hourly'
@@ -209,12 +221,18 @@ export class StatsChartComponent implements AfterViewInit {
         scales: {
           x: {
             type: 'time',
-            min: this.from()
-              ? new Date(`${this.from()}T00:00:00`).getTime()
-              : undefined,
-            max: this.to()
-              ? new Date(`${this.to()}T23:59:59`).getTime()
-              : undefined,
+            min:
+              this.rangeMode() === 'day'
+                ? undefined
+                : this.from()
+                  ? new Date(`${this.from()}T00:00:00`).getTime()
+                  : undefined,
+            max:
+              this.rangeMode() === 'day'
+                ? undefined
+                : this.to()
+                  ? new Date(`${this.to()}T23:59:59`).getTime()
+                  : undefined,
             time: {
               unit: this.granularity() === 'hourly' ? 'hour' : 'day',
             },
@@ -222,12 +240,17 @@ export class StatsChartComponent implements AfterViewInit {
               color: '#c8d3ea',
               maxRotation: 0,
               autoSkip: this.rangeMode() !== 'day',
-              maxTicksLimit: 12,
+              maxTicksLimit: isCompactDayMode ? 15 : 12,
               callback: (value) => {
                 const ts = Number(value);
-                return Number.isFinite(ts)
-                  ? xTickFormatter.format(new Date(ts))
-                  : '';
+                if (!Number.isFinite(ts)) return '';
+                const custom = bucketLabelByTs.get(ts);
+                if (custom)
+                  return this.formatCustomHourBlock(custom, isGermanLocale);
+                if (this.granularity() === 'hourly') {
+                  return this.formatHourLabel(new Date(ts), isGermanLocale);
+                }
+                return xTickFormatter.format(new Date(ts));
               },
             },
             grid: { color: 'rgba(116, 140, 190, 0.15)' },
@@ -250,14 +273,38 @@ export class StatsChartComponent implements AfterViewInit {
                 const first = items[0];
                 if (!first) return '';
                 const ts = Number(first.parsed.x);
-                return Number.isFinite(ts)
-                  ? tooltipTitleFormatter.format(new Date(ts))
-                  : '';
+                if (!Number.isFinite(ts)) return '';
+                const custom = bucketLabelByTs.get(ts);
+                if (custom)
+                  return this.formatCustomHourBlock(custom, isGermanLocale);
+                if (this.granularity() === 'hourly') {
+                  return this.formatHourLabel(new Date(ts), isGermanLocale);
+                }
+                return tooltipTitleFormatter.format(new Date(ts));
               },
             },
           },
         },
       },
     });
+  }
+
+  private formatHourLabel(value: Date, isGermanLocale: boolean): string {
+    const hour = value.getHours();
+    if (isGermanLocale) return `${String(hour).padStart(2, '0')}h`;
+
+    const suffix = hour < 12 ? 'AM' : 'PM';
+    const hour12 = hour % 12 === 0 ? 12 : hour % 12;
+    return `${hour12}${suffix}`;
+  }
+
+  private formatCustomHourBlock(raw: string, isGermanLocale: boolean): string {
+    if (raw !== '00-07') return raw;
+    return isGermanLocale ? '00-07h' : '12AM-7AM';
+  }
+
+  private bucketToTs(bucket: string): number {
+    const normalized = bucket.length === 10 ? `${bucket}T00:00:00` : bucket;
+    return new Date(normalized).getTime();
   }
 }

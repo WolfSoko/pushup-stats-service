@@ -13,6 +13,7 @@ export interface StatsSeriesEntry {
   bucket: string;
   total: number;
   dayIntegral: number;
+  bucketLabel?: string;
 }
 
 export interface StatsResponse {
@@ -63,6 +64,7 @@ export interface UserConfig {
   ui?: {
     showSourceColumn?: boolean;
     hideFromLeaderboard?: boolean;
+    dayChartMode?: '24h' | '14h';
   };
   createdAt?: string;
   updatedAt?: string;

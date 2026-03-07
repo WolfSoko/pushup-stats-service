@@ -12,6 +12,7 @@ import {
   signal,
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
@@ -62,6 +63,7 @@ const PERIOD_TITLE_MAP: Record<RangeModes | 'today', string> = {
   imports: [
     MatCardModule,
     MatButtonModule,
+    MatButtonToggleModule,
     MatIconModule,
     MatProgressBarModule,
     DatePipe,
@@ -143,6 +145,8 @@ export class StatsDashboardComponent {
   private readonly userConfigApi = inject(UserConfigApiService);
 
   readonly dailyGoal = signal(100);
+  readonly dayChartMode = signal<'24h' | '14h'>('14h');
+  readonly savingDayChartMode = signal(false);
 
   readonly userConfigResource = resource({
     params: () => ({ userId: this.user.userIdSafe() }),
@@ -234,6 +238,7 @@ export class StatsDashboardComponent {
       const cfg = this.userConfigResource.value();
       if (!cfg) return;
       this.dailyGoal.set(cfg.dailyGoal ?? 100);
+      this.dayChartMode.set(cfg.ui?.dayChartMode === '24h' ? '24h' : '14h');
     });
 
     effect(() => {
@@ -295,6 +300,25 @@ export class StatsDashboardComponent {
     } finally {
       this.busyAction.set(null);
       this.busyId.set(null);
+    }
+  }
+
+  async onDayChartModeChange(mode: '24h' | '14h') {
+    if (!mode || mode === this.dayChartMode()) return;
+    this.dayChartMode.set(mode);
+    this.savingDayChartMode.set(true);
+    try {
+      await firstValueFrom(
+        this.userConfigApi.updateConfig(this.user.userIdSafe(), {
+          ui: {
+            dayChartMode: mode,
+          },
+        })
+      );
+      this.userConfigResource.reload();
+      this.statsResource.reload();
+    } finally {
+      this.savingDayChartMode.set(false);
     }
   }
 

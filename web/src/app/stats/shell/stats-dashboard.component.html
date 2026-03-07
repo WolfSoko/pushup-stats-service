@@ -164,12 +164,31 @@
       />
     </section>
 
+    @if (rangeMode() === 'day') {
+      <section class="day-chart-mode" aria-label="Tagesansicht Modus">
+        <span i18n="@@dayChartModeLabel">Tagesansicht</span>
+        <mat-button-toggle-group
+          [value]="dayChartMode()"
+          (valueChange)="onDayChartModeChange($event)"
+          [disabled]="savingDayChartMode()"
+        >
+          <mat-button-toggle value="24h" i18n="@@dayChartMode24h"
+            >24h</mat-button-toggle
+          >
+          <mat-button-toggle value="14h" i18n="@@dayChartMode14h"
+            >14h Day Mode</mat-button-toggle
+          >
+        </mat-button-toggle-group>
+      </section>
+    }
+
     <app-stats-chart
       [series]="rows()"
       [granularity]="granularity()"
       [rangeMode]="rangeMode()"
       [from]="from()"
       [to]="to()"
+      [dayChartMode]="dayChartMode()"
     />
   </section>
 
