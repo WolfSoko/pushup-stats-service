@@ -163,7 +163,7 @@ export class StatsChartComponent implements AfterViewInit {
           pointRadius: 2,
           pointHoverRadius: 4,
           tension: 0.24,
-          yAxisID: 'y',
+          yAxisID: 'yIntegral',
         },
         {
           label: this.movingAvgLabel,
@@ -258,6 +258,11 @@ export class StatsChartComponent implements AfterViewInit {
           y: {
             ticks: { color: '#c8d3ea', precision: 0 },
             grid: { color: 'rgba(116, 140, 190, 0.2)' },
+          },
+          yIntegral: {
+            position: 'right',
+            ticks: { color: '#ffbe66', precision: 0 },
+            grid: { drawOnChartArea: false },
           },
         },
         plugins: {
