@@ -33,8 +33,8 @@ export class StatsApiService {
     return this.listPushups(filter).pipe(
       switchMap((rows) =>
         from(this.resolveUserChartSettings(this.resolveUserId())).pipe(
-          map(({ dailyGoal, dayChartMode }) =>
-            this.toStatsResponse(rows, filter, dailyGoal, dayChartMode)
+          map(({ dayChartMode }) =>
+            this.toStatsResponse(rows, filter, dayChartMode)
           )
         )
       )
@@ -91,31 +91,25 @@ export class StatsApiService {
   }
 
   private async resolveUserChartSettings(userId: string): Promise<{
-    dailyGoal: number;
     dayChartMode: '24h' | '14h';
   }> {
     try {
       if (!this.auth?.currentUser || !this.userConfigFirestore) {
-        return { dailyGoal: 100, dayChartMode: '14h' };
+        return { dayChartMode: '14h' };
       }
       const cfg = await firstValueFrom(
         this.userConfigFirestore.getConfig(userId)
       );
-      const dailyGoal =
-        cfg?.dailyGoal && Number.isFinite(cfg.dailyGoal)
-          ? Math.max(1, cfg.dailyGoal)
-          : 100;
       const dayChartMode = cfg?.ui?.dayChartMode === '24h' ? '24h' : '14h';
-      return { dailyGoal, dayChartMode };
+      return { dayChartMode };
     } catch {
-      return { dailyGoal: 100, dayChartMode: '14h' };
+      return { dayChartMode: '14h' };
     }
   }
 
   private toStatsResponse(
     rows: PushupRecord[],
     filter: StatsFilter,
-    dailyGoal: number,
     dayChartMode: '24h' | '14h'
   ): StatsResponse {
     const from = filter.from ?? null;
@@ -137,7 +131,7 @@ export class StatsApiService {
               return {
                 bucket: `${from}T${String(hour).padStart(2, '0')}:00:00`,
                 total,
-                dayIntegral: Math.round((cumulative / dailyGoal) * 100) / 100,
+                dayIntegral: cumulative,
               };
             })
           : (() => {
@@ -150,7 +144,7 @@ export class StatsApiService {
                 bucket: `${from}T00:00:00`,
                 bucketLabel: '00-07',
                 total: nightTotal,
-                dayIntegral: Math.round((cumulative / dailyGoal) * 100) / 100,
+                dayIntegral: cumulative,
               });
 
               for (let hour = 8; hour <= 21; hour++) {
@@ -159,7 +153,7 @@ export class StatsApiService {
                 result.push({
                   bucket: `${from}T${String(hour).padStart(2, '0')}:00:00`,
                   total,
-                  dayIntegral: Math.round((cumulative / dailyGoal) * 100) / 100,
+                  dayIntegral: cumulative,
                 });
               }
 
@@ -195,7 +189,7 @@ export class StatsApiService {
       return {
         bucket: day,
         total,
-        dayIntegral: Math.round((cumulative / dailyGoal) * 100) / 100,
+        dayIntegral: cumulative,
       };
     });
 
