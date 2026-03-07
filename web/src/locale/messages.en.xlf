@@ -1299,8 +1299,8 @@
         <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
       </notes>
       <segment state="translated">
-        <source>Privacy-first: Nur anonymisierte Alias-Namen werden angezeigt.</source>
-        <target>Privacy-first: Only anonymized alias names are shown.</target>
+        <source>Privacy-first: Es werden Alias-Namen angezeigt.</source>
+        <target>Privacy-first: Alias names are shown.</target>
       </segment>
     </unit>
     <unit id="landing.leaderboard.reps">
@@ -1425,8 +1425,8 @@
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html</note>
       </notes>
       <segment state="translated">
-        <source>Daily · Weekly · Monthly (anonymisiert)</source>
-        <target>Daily · Weekly · Monthly (anonymized)</target>
+        <source>Daily · Weekly · Monthly (Alias-Namen)</source>
+        <target>Daily · Weekly · Monthly (alias names)</target>
       </segment>
     </unit>
   </file>
