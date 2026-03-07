@@ -29,6 +29,16 @@ jobs:
           cache: npm
 
       - run: npm ci && npx nx run web:build -c production
+
+      - name: Prepare Hosting artifact
+        run: |
+          rm -rf data-store/hosting-public
+          mkdir -p data-store/hosting-public
+          cp -R dist/web/browser/. data-store/hosting-public/
+          find data-store/hosting-public -type f -name 'index.csr.html' -print0 | while IFS= read -r -d '' f; do
+            cp "$f" "${f%index.csr.html}index.html"
+          done
+
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
