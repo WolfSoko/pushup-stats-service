@@ -1,3 +1,4 @@
+import playwright from 'eslint-plugin-playwright';
 import nx from '@nx/eslint-plugin';
 import baseConfig from '../eslint.config.mjs';
 
@@ -28,6 +29,18 @@ export default [
   },
   {
     files: ['**/*.html'],
+    // Override or add rules here
+    rules: {},
+  },
+  {
+    files: ['web-e2e/**/*.ts', 'web-e2e/**/*.js'],
+    ...playwright.configs['flat/recommended'],
+    rules: {
+      ...playwright.configs['flat/recommended'].rules,
+    },
+  },
+  {
+    files: ['**/*.ts', '**/*.js'],
     // Override or add rules here
     rules: {},
   },
