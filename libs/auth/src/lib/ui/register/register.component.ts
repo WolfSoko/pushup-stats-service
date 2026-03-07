@@ -147,10 +147,20 @@ export class RegisterComponent {
         return;
       }
 
+      const user = this.authState.user();
       this.isGoogleRegistration.set(true);
-      this.registerDisplayName.set(this.authState.user()?.displayName || '');
+      this.registerDisplayName.set(user?.displayName || '');
+      this.registerData.update((v) => ({
+        ...v,
+        email: user?.email || v.email,
+      }));
+
       this.registeringCredentials.set(false);
-      stepper.selectedIndex = 2;
+
+      // Linear stepper: move step-by-step to guarantee transition to username step.
+      stepper.selectedIndex = 0;
+      stepper.next();
+      stepper.next();
     } catch {
       this.registeringCredentials.set(false);
       // Error already handled by service
