@@ -1,8 +1,11 @@
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import {
   ApplicationConfig,
+  effect,
+  inject,
   isDevMode,
   LOCALE_ID,
+  provideAppInitializer,
   provideBrowserGlobalErrorListeners,
   provideZonelessChangeDetection,
 } from '@angular/core';
@@ -39,6 +42,8 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 import { adsConfig } from '../env/ads.config';
 import { firebaseRuntime } from '../env/firebase-runtime';
+import { AdsConfigService } from './ads/ads-config.service';
+import { GoogleAdsService } from './ads/google-ads.service';
 import { appRoutes } from './app.routes';
 
 export const appConfig: ApplicationConfig = {
@@ -85,6 +90,17 @@ export const appConfig: ApplicationConfig = {
             const remoteConfig = getRemoteConfig();
             remoteConfig.defaultConfig = adsConfig;
             return remoteConfig;
+          }),
+          provideAppInitializer(() => {
+            const effectRef = effect(async () => {
+              const adsConfig = inject(AdsConfigService);
+              const googleAds = inject(GoogleAdsService);
+              const adClient = adsConfig.adClient();
+              if (adsConfig.enabled() && adClient) {
+                await googleAds.initialize(adClient);
+                effectRef.destroy();
+              }
+            });
           }),
         ]),
   ],
