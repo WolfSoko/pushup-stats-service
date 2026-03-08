@@ -1,6 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import {
+  fetchAndActivate,
   getBooleanChanges,
   getStringChanges,
   RemoteConfig,
@@ -9,6 +10,10 @@ import {
 @Injectable({ providedIn: 'root' })
 export class AdsConfigService {
   private readonly remoteConfig = inject(RemoteConfig);
+
+  constructor() {
+    void fetchAndActivate(this.remoteConfig);
+  }
 
   readonly enabled = toSignal(
     getBooleanChanges(this.remoteConfig, 'ads_enabled')

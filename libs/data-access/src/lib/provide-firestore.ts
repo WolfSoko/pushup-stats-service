@@ -2,8 +2,8 @@ import { isPlatformBrowser } from '@angular/common';
 import { EnvironmentProviders, inject, PLATFORM_ID } from '@angular/core';
 import { FirebaseApp } from '@angular/fire/app';
 import {
-  Firestore,
   connectFirestoreEmulator,
+  Firestore,
   getFirestore,
   provideFirestore,
 } from '@angular/fire/firestore';
