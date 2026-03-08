@@ -7,9 +7,8 @@ export const appRoutes: Routes = [
     path: '',
     pathMatch: 'full',
     data: {
-      seoTitle: 'Pushup Tracker – Dein Training. Klar visualisiert.',
-      seoDescription:
-        'Tracke Reps, Trends und Streaks in Sekunden – mobil, schnell und mit Live-Updates.',
+      seoTitle: $localize`:@@seo.landing.title:Pushup Tracker – Dein Training. Klar visualisiert.`,
+      seoDescription: $localize`:@@seo.landing.description:Tracke Reps, Trends und Streaks in Sekunden – mobil, schnell und mit Live-Updates.`,
     },
     loadComponent: () =>
       import('./marketing/shell/landing-page.component').then(
@@ -20,9 +19,8 @@ export const appRoutes: Routes = [
     path: 'app',
     canActivate: [authGuard],
     data: {
-      seoTitle: 'Dashboard – Pushup Tracker',
-      seoDescription:
-        'Behalte Trainingsvolumen und Verlauf im Blick – klar, schnell und mobil optimiert.',
+      seoTitle: $localize`:@@seo.dashboard.title:Dashboard – Pushup Tracker`,
+      seoDescription: $localize`:@@seo.dashboard.description:Behalte Trainingsvolumen und Verlauf im Blick – klar, schnell und mobil optimiert.`,
     },
     loadComponent: () =>
       import('./stats/shell/stats-dashboard.component').then(
@@ -38,9 +36,8 @@ export const appRoutes: Routes = [
     path: 'login',
     canActivate: [publicOnlyGuard],
     data: {
-      seoTitle: 'Login – Pushup Tracker',
-      seoDescription:
-        'Melde dich an und tracke dein Pushup-Training über alle Geräte.',
+      seoTitle: $localize`:@@seo.login.title:Login – Pushup Tracker`,
+      seoDescription: $localize`:@@seo.login.description:Melde dich an und tracke dein Pushup-Training über alle Geräte.`,
     },
     loadComponent: () => import('@pu-auth/auth').then((m) => m.LoginComponent),
   },
@@ -48,9 +45,8 @@ export const appRoutes: Routes = [
     path: 'register',
     canActivate: [publicOnlyGuard],
     data: {
-      seoTitle: 'Registrierung – Pushup Tracker',
-      seoDescription:
-        'Erstelle dein Konto und richte Profil, Tagesziel und Einwilligungen ein.',
+      seoTitle: $localize`:@@seo.register.title:Registrierung – Pushup Tracker`,
+      seoDescription: $localize`:@@seo.register.description:Erstelle dein Konto und richte Profil, Tagesziel und Einwilligungen ein.`,
     },
     loadComponent: () =>
       import('@pu-auth/auth').then((m) => m.RegisterComponent),
@@ -59,9 +55,8 @@ export const appRoutes: Routes = [
     path: 'data',
     canActivate: [authGuard],
     data: {
-      seoTitle: 'Daten – Pushup Tracker',
-      seoDescription:
-        'Verwalte Einträge, filtere nach Zeitraum und behalte deine Trainingsdaten im Griff.',
+      seoTitle: $localize`:@@seo.data.title:Daten – Pushup Tracker`,
+      seoDescription: $localize`:@@seo.data.description:Verwalte Einträge, filtere nach Zeitraum und behalte deine Trainingsdaten im Griff.`,
     },
     loadComponent: () =>
       import('./stats/shell/entries-page.component').then(
@@ -72,9 +67,8 @@ export const appRoutes: Routes = [
     path: 'analysis',
     canActivate: [authGuard],
     data: {
-      seoTitle: 'Analyse – Pushup Tracker',
-      seoDescription:
-        'Analysiere Trends, Verteilungen und Streaks deines Trainings.',
+      seoTitle: $localize`:@@seo.analysis.title:Analyse – Pushup Tracker`,
+      seoDescription: $localize`:@@seo.analysis.description:Analysiere Trends, Verteilungen und Streaks deines Trainings.`,
     },
     loadComponent: () =>
       import('./stats/shell/analysis-page.component').then(
@@ -85,9 +79,8 @@ export const appRoutes: Routes = [
     path: 'settings',
     canActivate: [authGuard],
     data: {
-      seoTitle: 'Einstellungen – Pushup Tracker',
-      seoDescription:
-        'Verwalte Profil, Leaderboard-Sichtbarkeit und Tagesziel-Einstellungen.',
+      seoTitle: $localize`:@@seo.settings.title:Einstellungen – Pushup Tracker`,
+      seoDescription: $localize`:@@seo.settings.description:Verwalte Profil, Leaderboard-Sichtbarkeit und Tagesziel-Einstellungen.`,
     },
     loadComponent: () =>
       import('./stats/shell/settings-page.component').then(
@@ -97,9 +90,8 @@ export const appRoutes: Routes = [
   {
     path: 'leaderboard',
     data: {
-      seoTitle: 'Bestenliste – Pushup Tracker',
-      seoDescription:
-        'Öffentliche Bestenliste für tägliche, wöchentliche und monatliche Pushup-Reps.',
+      seoTitle: $localize`:@@seo.leaderboard.title:Bestenliste – Pushup Tracker`,
+      seoDescription: $localize`:@@seo.leaderboard.description:Öffentliche Bestenliste für tägliche, wöchentliche und monatliche Pushup-Reps.`,
     },
     loadComponent: () =>
       import('./leaderboard/shell/leaderboard-page.component').then(

@@ -121,10 +121,11 @@ export class App {
           seoDescription?: string;
         };
 
-        const title = data.seoTitle ?? 'Pushup Tracker';
+        const title =
+          data.seoTitle ?? $localize`:@@seo.default.title:Pushup Tracker`;
         const description =
           data.seoDescription ??
-          'Tracke Reps, Trends und Streaks mit Pushup Tracker.';
+          $localize`:@@seo.default.description:Tracke Reps, Trends und Streaks mit Pushup Tracker.`;
 
         const path = nav.urlAfterRedirects || nav.url;
         this.seo.update(title, description, path);
