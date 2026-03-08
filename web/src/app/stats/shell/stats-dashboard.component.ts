@@ -37,6 +37,7 @@ import { FilterBarComponent } from '../components/filter-bar/filter-bar.componen
 import { StatsChartComponent } from '../components/stats-chart/stats-chart.component';
 import { StatsTableComponent } from '../components/stats-table/stats-table.component';
 import { AdSlotComponent } from '../../ads/ad-slot.component';
+import { AdsConfigService } from '../../ads/ads-config.service';
 
 const EMPTY_STATS: StatsResponse = {
   meta: {
@@ -85,6 +86,7 @@ export class StatsDashboardComponent {
     url?: string;
   } | null;
   private readonly live = inject(PushupLiveService);
+  private readonly adsConfig = inject(AdsConfigService);
 
   private readonly defaultRange = createWeekRange();
   private readonly initialRange = this.resolveInitialRange();
@@ -150,8 +152,10 @@ export class StatsDashboardComponent {
   readonly dayChartMode = signal<'24h' | '14h'>('14h');
   readonly savingDayChartMode = signal(false);
 
-  readonly adClient = 'ca-pub-xxxxxxxxxxxxxxxx';
-  readonly adSlotDashboardInline = '1234567890';
+  readonly adClient = this.adsConfig.adClient;
+  readonly adSlotDashboardInline = this.adsConfig.dashboardInlineSlot;
+  readonly adsEnabled = this.adsConfig.enabled;
+  readonly dashboardInlineAdsEnabled = this.adsConfig.dashboardInlineEnabled;
 
   readonly userConfigResource = resource({
     params: () => ({ userId: this.user.userIdSafe() }),

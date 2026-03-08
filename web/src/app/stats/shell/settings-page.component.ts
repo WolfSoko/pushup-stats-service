@@ -72,6 +72,18 @@ import { Analytics, logEvent } from '@angular/fire/analytics';
               angezeigt.
             </p>
 
+            <mat-slide-toggle
+              [checked]="adsConsentDraft()"
+              (change)="adsConsentDraft.set($event.checked)"
+              i18n="@@settings.adsConsentOptIn"
+            >
+              Personalisierte Werbung aktivieren
+            </mat-slide-toggle>
+
+            <p class="muted" i18n="@@settings.adsConsentHint">
+              Steuert, ob Werbe-Slots im Dashboard geladen werden dürfen.
+            </p>
+
             <mat-form-field appearance="outline" class="goal-field">
               <mat-label i18n="@@dailyGoalLabel">Tagesziel (Reps)</mat-label>
               <input
@@ -256,6 +268,7 @@ export class SettingsPageComponent {
   readonly displayNameDraft = signal('');
   readonly dailyGoalDraft = signal<number>(100);
   readonly leaderboardOptOutDraft = signal(false);
+  readonly adsConsentDraft = signal(false);
 
   readonly saving = signal(false);
   readonly saved = signal(false);
@@ -296,6 +309,7 @@ export class SettingsPageComponent {
       this.displayNameDraft.set(cfg.displayName ?? '');
       this.dailyGoalDraft.set(cfg.dailyGoal ?? 100);
       this.leaderboardOptOutDraft.set(cfg.hideFromLeaderboard ?? false);
+      this.adsConsentDraft.set(this.readAdsConsent());
     });
   }
 
@@ -324,10 +338,12 @@ export class SettingsPageComponent {
         },
       });
       this.saved.set(true);
+      this.writeAdsConsent(this.adsConsentDraft());
       this.configResource.reload();
       this.trackAnalytics('settings_saved', {
         hideFromLeaderboard: this.leaderboardOptOutDraft(),
         dailyGoal,
+        adsConsent: this.adsConsentDraft(),
       });
     } catch {
       this.errorMessage.set('Konnte nicht speichern.');
@@ -389,5 +405,19 @@ export class SettingsPageComponent {
     const hasGetItem = typeof storage?.getItem === 'function';
     if (!hasGetItem) return false;
     return storage.getItem('pus_analytics_consent') === 'granted';
+  }
+
+  private readAdsConsent(): boolean {
+    const storage = globalThis.localStorage;
+    const hasGetItem = typeof storage?.getItem === 'function';
+    if (!hasGetItem) return false;
+    return storage.getItem('pus_ads_consent') === 'granted';
+  }
+
+  private writeAdsConsent(enabled: boolean): void {
+    const storage = globalThis.localStorage;
+    const hasSetItem = typeof storage?.setItem === 'function';
+    if (!hasSetItem) return;
+    storage.setItem('pus_ads_consent', enabled ? 'granted' : 'denied');
   }
 }

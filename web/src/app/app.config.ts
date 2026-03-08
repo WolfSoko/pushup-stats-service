@@ -2,6 +2,7 @@ import { registerLocaleData } from '@angular/common';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import localeDe from '@angular/common/locales/de';
 import {
+  APP_INITIALIZER,
   ApplicationConfig,
   isDevMode,
   LOCALE_ID,
@@ -22,6 +23,10 @@ import { provideRouter } from '@angular/router';
 import { provideServiceWorker } from '@angular/service-worker';
 import { getAnalytics, provideAnalytics } from '@angular/fire/analytics';
 import {
+  getRemoteConfig,
+  provideRemoteConfig,
+} from '@angular/fire/remote-config';
+import {
   connectFunctionsEmulator,
   getFunctions,
   provideFunctions,
@@ -37,6 +42,7 @@ import { MatrixController, MatrixElement } from 'chartjs-chart-matrix';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 import { appRoutes } from './app.routes';
+import { AdsConfigService } from './ads/ads-config.service';
 
 registerLocaleData(localeDe);
 
@@ -80,6 +86,13 @@ export const appConfig: ApplicationConfig = {
           provideFireStore(),
           provideFunctions(() => getFunctions(undefined, 'europe-west3')),
           provideAnalytics(() => getAnalytics()),
+          provideRemoteConfig(() => getRemoteConfig()),
         ]),
+    {
+      provide: APP_INITIALIZER,
+      multi: true,
+      deps: [AdsConfigService],
+      useFactory: (ads: AdsConfigService) => () => ads.init(),
+    },
   ],
 };
