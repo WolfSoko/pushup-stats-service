@@ -1,62 +1,60 @@
 # Dependabot configuration for Nx monorepo
 # See documentation: https://docs.github.com/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
-
 version: 2
 updates:
-  # NPM dependencies - grouped for Nx workspace efficiency
-  - package-ecosystem: "npm"
-    directory: "/"
+  # pnpm dependencies - grouped for Nx workspace efficiency
+  - package-ecosystem: 'pnpm'
+    directory: '/'
     schedule:
-      interval: "weekly"
-      day: "monday"
+      interval: 'weekly'
+      day: 'monday'
     open-pull-requests-limit: 5
     labels:
-      - "dependencies"
-      - "npm"
+      - 'dependencies'
+      - 'pnpm'
     groups:
       # Group all Nx-related packages together
       nx:
         patterns:
-          - "@nx/*"
-          - "nx"
+          - '@nx/*'
+          - 'nx'
       # Group all Angular-related packages together
       angular:
         patterns:
-          - "@angular/*"
-          - "@angular-devkit/*"
-          - "@schematics/*"
-          - "angular-eslint"
-          - "jest-preset-angular"
-          - "ng2-charts"
+          - '@angular/*'
+          - '@angular-devkit/*'
+          - '@schematics/*'
+          - 'angular-eslint'
+          - 'jest-preset-angular'
+          - 'ng2-charts'
       # Group ESLint and TypeScript-related packages
       linting:
         patterns:
-          - "eslint*"
-          - "@eslint/*"
-          - "typescript-eslint"
-          - "@typescript-eslint/*"
-          - "prettier"
+          - 'eslint*'
+          - '@eslint/*'
+          - 'typescript-eslint'
+          - '@typescript-eslint/*'
+          - 'prettier'
       # Group testing frameworks
       testing:
         patterns:
-          - "jest*"
-          - "@types/jest"
-          - "ts-jest"
+          - 'jest*'
+          - '@types/jest'
+          - 'ts-jest'
       # Group build tools
       build-tools:
         patterns:
-          - "esbuild"
-          - "@swc/*"
-          - "tslib"
-          - "typescript"
-
+          - 'esbuild'
+          - '@swc/*'
+          - 'tslib'
+          - 'typescript'
   # GitHub Actions workflow dependencies
-  - package-ecosystem: "github-actions"
-    directory: "/"
+  - package-ecosystem: 'github-actions'
+    directory: '/'
     schedule:
-      interval: "weekly"
-      day: "monday"
+      interval: 'weekly'
+      day: 'monday'
     open-pull-requests-limit: 3
     labels:
-      - "dependencies"
-      - "github-actions"
+      - 'dependencies'
+      - 'github-actions'

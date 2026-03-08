@@ -1,9 +1,6 @@
 {
   "name": "pus-leaderboard-functions",
   "private": true,
-  "engines": {
-    "node": "22"
-  },
   "main": "index.js",
   "scripts": {
     "serve": "firebase emulators:start --only functions",
