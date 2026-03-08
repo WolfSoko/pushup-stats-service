@@ -35,10 +35,6 @@
     </div>
   </section>
 
-  <!--  <section aria-label="Werbung" i18n-aria-label="@@ads.landing.aria">-->
-  <!--    <app-ad-slot [client]="adClient()" [slot]="landingAdSlot()" />-->
-  <!--  </section>-->
-
   <section class="feature-grid">
     <mat-card>
       <mat-card-header class="key-features-header">
@@ -79,7 +75,9 @@
       >
     </mat-card>
   </section>
-
+  <section aria-label="Werbung" i18n-aria-label="@@ads.landing.aria">
+    <app-ad-slot [client]="adClient()" [slot]="landingAdSlot()" />
+  </section>
   <section class="preview">
     <img
       src="assets/landing-stats-screenshot.svg"

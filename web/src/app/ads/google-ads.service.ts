@@ -14,16 +14,16 @@ export class GoogleAdsService {
     if (!client || this.initializedForClient.has(client)) return;
 
     const existing = document.querySelector<HTMLScriptElement>(
-      'script#data-ads-client'
+      'script#ads-client-script'
     );
     if (!existing) {
       const script = document.createElement('script');
+      script.id = 'ads-client-script';
       script.async = true;
       script.src = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${encodeURIComponent(
         client
       )}`;
       script.crossOrigin = 'anonymous';
-      script.id = 'data-ads-client';
       document.head.appendChild(script);
     }
 

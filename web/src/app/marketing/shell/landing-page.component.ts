@@ -10,6 +10,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
+import { AdSlotComponent } from '../../ads/ad-slot.component';
 import { AdsConfigService } from '../../ads/ads-config.service';
 import {
   LeaderboardPeriod,
@@ -18,7 +19,13 @@ import {
 
 @Component({
   selector: 'app-landing-page',
-  imports: [RouterLink, MatButtonModule, MatCardModule, MatIconModule],
+  imports: [
+    RouterLink,
+    MatButtonModule,
+    MatCardModule,
+    MatIconModule,
+    AdSlotComponent,
+  ],
   templateUrl: './landing-page.component.html',
   styleUrl: './landing-page.component.scss',
 })

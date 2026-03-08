@@ -1,7 +1,7 @@
 export const adsConfig = {
   adClient: 'ca-pub-6346271540341424',
-  dashboardInlineSlot: '1234567890',
-  landingInlineSlot: '1234567890',
+  dashboardInlineSlot: 'dashboard-inline-slot',
+  landingInlineSlot: 'landing-inline-slot',
   enabled: false,
   dashboardInlineEnabled: false,
 };

@@ -28,6 +28,7 @@ import {
   StatsSeriesEntry,
 } from '@pu-stats/models';
 import { firstValueFrom } from 'rxjs';
+import { AdSlotComponent } from '../../ads/ad-slot.component';
 import { AdsConfigService } from '../../ads/ads-config.service';
 import { UserContextService } from '../../user-context.service';
 import { createWeekRange } from '../../util/date/create-week-range';
@@ -71,6 +72,7 @@ const PERIOD_TITLE_MAP: Record<RangeModes | 'today', string> = {
     FilterBarComponent,
     StatsChartComponent,
     StatsTableComponent,
+    AdSlotComponent,
   ],
   templateUrl: './stats-dashboard.component.html',
   styleUrl: './stats-dashboard.component.scss',
