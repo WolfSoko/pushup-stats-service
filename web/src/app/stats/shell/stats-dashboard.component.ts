@@ -17,6 +17,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import {
+  PushupEntitiesStore,
   PushupLiveService,
   StatsApiService,
   UserConfigApiService,
@@ -83,6 +84,7 @@ export class StatsDashboardComponent {
     url?: string;
   } | null;
   private readonly live = inject(PushupLiveService);
+  private readonly pushups = inject(PushupEntitiesStore);
 
   private readonly defaultRange = createWeekRange();
   private readonly initialRange = this.resolveInitialRange();
@@ -92,8 +94,8 @@ export class StatsDashboardComponent {
   readonly rangeMode = linkedSignal<RangeModes>(() =>
     inferRangeMode(this.initialRange.from, this.initialRange.to)
   );
-  readonly busyAction = signal<'create' | 'update' | 'delete' | null>(null);
-  readonly busyId = signal<string | null>(null);
+  readonly busyAction = this.pushups.busyAction;
+  readonly busyId = this.pushups.busyId;
 
   private readonly filter = computed(() => ({
     from: this.from() || undefined,
@@ -103,11 +105,6 @@ export class StatsDashboardComponent {
   readonly statsResource = resource({
     params: () => this.filter(),
     loader: async ({ params }) => firstValueFrom(this.api.load(params)),
-  });
-
-  readonly entriesResource = resource({
-    params: () => this.filter(),
-    loader: async ({ params }) => firstValueFrom(this.api.listPushups(params)),
   });
 
   readonly allTimeResource = resource({
@@ -138,9 +135,7 @@ export class StatsDashboardComponent {
     () => this.stats().meta.granularity
   );
   readonly rows = computed<StatsSeriesEntry[]>(() => this.stats().series);
-  readonly entryRows = computed<PushupRecord[]>(
-    () => this.entriesResource.value() ?? []
-  );
+  readonly entryRows = computed<PushupRecord[]>(() => this.pushups.entries());
   private readonly user = inject(UserContextService);
   private readonly userConfigApi = inject(UserConfigApiService);
 
@@ -242,6 +237,10 @@ export class StatsDashboardComponent {
     });
 
     effect(() => {
+      void this.pushups.setFilterAndLoad(this.filter());
+    });
+
+    effect(() => {
       if (!isPlatformBrowser(this.platformId)) return;
       const tick = this.live.updateTick();
       if (!tick) return;
@@ -255,15 +254,8 @@ export class StatsDashboardComponent {
     source?: string;
     type?: string;
   }) {
-    this.busyAction.set('create');
-    this.busyId.set(null);
-    try {
-      await firstValueFrom(this.api.createPushup(payload));
-      this.refreshAll();
-    } finally {
-      this.busyAction.set(null);
-      this.busyId.set(null);
-    }
+    await this.pushups.create(payload);
+    this.refreshStatsOnly();
   }
 
   async onUpdateEntry(payload: {
@@ -273,34 +265,18 @@ export class StatsDashboardComponent {
     source?: string;
     type?: string;
   }) {
-    this.busyAction.set('update');
-    this.busyId.set(payload.id);
-    try {
-      await firstValueFrom(
-        this.api.updatePushup(payload.id, {
-          timestamp: payload.timestamp,
-          reps: payload.reps,
-          source: payload.source,
-          type: payload.type,
-        })
-      );
-      this.refreshAll();
-    } finally {
-      this.busyAction.set(null);
-      this.busyId.set(null);
-    }
+    await this.pushups.update(payload.id, {
+      timestamp: payload.timestamp,
+      reps: payload.reps,
+      source: payload.source,
+      type: payload.type,
+    });
+    this.refreshStatsOnly();
   }
 
   async onDeleteEntry(id: string) {
-    this.busyAction.set('delete');
-    this.busyId.set(id);
-    try {
-      await firstValueFrom(this.api.deletePushup(id));
-      this.refreshAll();
-    } finally {
-      this.busyAction.set(null);
-      this.busyId.set(null);
-    }
+    await this.pushups.remove(id);
+    this.refreshStatsOnly();
   }
 
   async onDayChartModeChange(mode: '24h' | '14h') {
@@ -339,9 +315,13 @@ export class StatsDashboardComponent {
   }
 
   private refreshAll() {
+    this.refreshStatsOnly();
+    void this.pushups.reload();
+  }
+
+  private refreshStatsOnly() {
     this.statsResource.reload();
     this.allTimeResource.reload();
-    this.entriesResource.reload();
   }
 
   private resolveInitialRange(): { from: string; to: string } {

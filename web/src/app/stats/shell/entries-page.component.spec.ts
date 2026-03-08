@@ -1,9 +1,8 @@
-import { Auth } from '@angular/fire/auth';
-import { signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { of } from 'rxjs';
+import { signal } from '@angular/core';
+import { Auth } from '@angular/fire/auth';
 import { EntriesPageComponent } from './entries-page.component';
-import { PushupLiveDataService, StatsApiService } from '@pu-stats/data-access';
+import { PushupEntitiesStore } from '@pu-stats/data-access';
 
 describe('EntriesPageComponent', () => {
   let fixture: ComponentFixture<EntriesPageComponent>;
@@ -32,16 +31,18 @@ describe('EntriesPageComponent', () => {
     },
   ];
 
-  const apiMock = {
-    listPushups: vitest.fn().mockReturnValue(of(rows)),
-    deletePushup: vitest.fn().mockReturnValue(of({ ok: true })),
-    createPushup: vitest.fn().mockReturnValue(of({ _id: 'x' })),
-    updatePushup: vitest.fn().mockReturnValue(of({ _id: '1' })),
-  };
-
-  const liveMock = {
-    connected: signal(true),
-    entries: signal(rows),
+  const storeMock = {
+    entriesDesc: signal(rows),
+    sourceOptions: signal(['wa', 'web']),
+    typeOptions: signal(['Diamond', 'Standard', 'Wide']),
+    busyAction: signal<'create' | 'update' | 'delete' | null>(null),
+    busyId: signal<string | null>(null),
+    load: vitest.fn().mockResolvedValue(undefined),
+    setFilterAndLoad: vitest.fn().mockResolvedValue(undefined),
+    create: vitest.fn().mockResolvedValue(undefined),
+    update: vitest.fn().mockResolvedValue(undefined),
+    remove: vitest.fn().mockResolvedValue(undefined),
+    reload: vitest.fn().mockResolvedValue(undefined),
   };
 
   beforeEach(async () => {
@@ -50,8 +51,7 @@ describe('EntriesPageComponent', () => {
     await TestBed.configureTestingModule({
       imports: [EntriesPageComponent],
       providers: [
-        { provide: StatsApiService, useValue: apiMock },
-        { provide: PushupLiveDataService, useValue: liveMock },
+        { provide: PushupEntitiesStore, useValue: storeMock },
         { provide: Auth, useValue: {} },
       ],
     }).compileComponents();
@@ -60,7 +60,7 @@ describe('EntriesPageComponent', () => {
     await fixture.whenStable();
   });
 
-  it('prefills date range with oldest and today (browser uses live entries)', () => {
+  it('prefills date range with oldest and today', () => {
     const component = fixture.componentInstance;
     expect(component.from()).toBe('2026-02-10');
     expect(component.to()).toMatch(/^\d{4}-\d{2}-\d{2}$/);
@@ -76,7 +76,7 @@ describe('EntriesPageComponent', () => {
     expect(component.filteredRows().map((x) => x._id)).toEqual(['3']);
   });
 
-  it('creates an entry via api', async () => {
+  it('creates an entry via global store', async () => {
     const component = fixture.componentInstance;
 
     await component.onCreateEntry({
@@ -85,14 +85,14 @@ describe('EntriesPageComponent', () => {
       source: 'web',
     });
 
-    expect(apiMock.createPushup).toHaveBeenCalledWith({
+    expect(storeMock.create).toHaveBeenCalledWith({
       timestamp: '2026-02-11T20:00',
       reps: 12,
       source: 'web',
     });
   });
 
-  it('updates an entry via api', async () => {
+  it('updates an entry via global store', async () => {
     const component = fixture.componentInstance;
 
     await component.onUpdateEntry({
@@ -103,7 +103,7 @@ describe('EntriesPageComponent', () => {
       type: 'Diamond',
     });
 
-    expect(apiMock.updatePushup).toHaveBeenCalledWith('1', {
+    expect(storeMock.update).toHaveBeenCalledWith('1', {
       timestamp: '2026-02-11T20:00',
       reps: 14,
       source: 'web',
@@ -111,11 +111,11 @@ describe('EntriesPageComponent', () => {
     });
   });
 
-  it('deletes a single row via api', async () => {
+  it('deletes a single row via global store', async () => {
     const component = fixture.componentInstance;
 
     await component.onDeleteEntry('2');
 
-    expect(apiMock.deletePushup).toHaveBeenCalledWith('2');
+    expect(storeMock.remove).toHaveBeenCalledWith('2');
   });
 });
