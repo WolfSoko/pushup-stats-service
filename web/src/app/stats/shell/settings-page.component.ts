@@ -284,6 +284,12 @@ export class SettingsPageComponent {
       return (result ?? {}) as {
         displayName?: string;
         dailyGoal?: number;
+        consent?: {
+          dataProcessing?: boolean;
+          statistics?: boolean;
+          targetedAds?: boolean;
+          acceptedAt?: string;
+        };
         ui?: { hideFromLeaderboard?: boolean };
       };
     },
@@ -292,13 +298,21 @@ export class SettingsPageComponent {
   readonly config = computed(() => {
     const val = this.configResource.value();
     if (!val || typeof val !== 'object')
-      return { displayName: '', dailyGoal: 100, hideFromLeaderboard: false };
+      return {
+        displayName: '',
+        dailyGoal: 100,
+        hideFromLeaderboard: false,
+        consent: { targetedAds: true },
+      };
     return {
       displayName: (val as { displayName?: string }).displayName ?? '',
       dailyGoal: (val as { dailyGoal?: number }).dailyGoal ?? 100,
       hideFromLeaderboard:
         (val as { ui?: { hideFromLeaderboard?: boolean } }).ui
           ?.hideFromLeaderboard ?? false,
+      consent: (val as { consent?: { targetedAds?: boolean } }).consent ?? {
+        targetedAds: true,
+      },
     };
   });
 
@@ -309,7 +323,7 @@ export class SettingsPageComponent {
       this.displayNameDraft.set(cfg.displayName ?? '');
       this.dailyGoalDraft.set(cfg.dailyGoal ?? 100);
       this.leaderboardOptOutDraft.set(cfg.hideFromLeaderboard ?? false);
-      this.adsConsentDraft.set(this.readAdsConsent());
+      this.adsConsentDraft.set(cfg.consent?.targetedAds ?? true);
     });
   }
 
@@ -330,15 +344,19 @@ export class SettingsPageComponent {
     const userId = this.activeUserId();
     const dailyGoal = Math.max(1, this.dailyGoalDraft());
     try {
+      const current = this.config();
       await this.api.updateConfig(userId, {
         displayName: this.displayNameDraft().trim(),
         dailyGoal,
+        consent: {
+          ...(current.consent ?? {}),
+          targetedAds: this.adsConsentDraft(),
+        },
         ui: {
           hideFromLeaderboard: this.leaderboardOptOutDraft(),
         },
       });
       this.saved.set(true);
-      this.writeAdsConsent(this.adsConsentDraft());
       this.configResource.reload();
       this.trackAnalytics('settings_saved', {
         hideFromLeaderboard: this.leaderboardOptOutDraft(),
@@ -405,21 +423,5 @@ export class SettingsPageComponent {
     const hasGetItem = typeof storage?.getItem === 'function';
     if (!hasGetItem) return false;
     return storage.getItem('pus_analytics_consent') === 'granted';
-  }
-
-  private readAdsConsent(): boolean {
-    const storage = globalThis.localStorage;
-    const hasGetItem = typeof storage?.getItem === 'function';
-    if (!hasGetItem) return true;
-    const value = storage.getItem('pus_ads_consent');
-    if (value === null) return true;
-    return value === 'granted';
-  }
-
-  private writeAdsConsent(enabled: boolean): void {
-    const storage = globalThis.localStorage;
-    const hasSetItem = typeof storage?.setItem === 'function';
-    if (!hasSetItem) return;
-    storage.setItem('pus_ads_consent', enabled ? 'granted' : 'denied');
   }
 }

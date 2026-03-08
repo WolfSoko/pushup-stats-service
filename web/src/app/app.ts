@@ -2,6 +2,7 @@ import {
   Component,
   DestroyRef,
   computed,
+  effect,
   inject,
   resource,
   signal,
@@ -127,6 +128,15 @@ export class App {
         this.seo.update(title, description, path);
         this.trackAnalytics('page_view', { page_path: path });
       });
+
+    effect(() => {
+      const cfg = this.userGoalResource.value();
+      const targetedAds = cfg?.consent?.targetedAds;
+      if (typeof targetedAds !== 'boolean') return;
+      const storage = globalThis.localStorage;
+      if (typeof storage?.setItem !== 'function') return;
+      storage.setItem('pus_ads_consent', targetedAds ? 'granted' : 'denied');
+    });
 
     if (this.swUpdate?.isEnabled) {
       this.swUpdate.versionUpdates
