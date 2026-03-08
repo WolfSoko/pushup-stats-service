@@ -13,7 +13,12 @@ import {
 } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { StatsGranularity, StatsSeriesEntry } from '@pu-stats/models';
-import { Chart, ChartConfiguration, registerables } from 'chart.js';
+import {
+  Chart,
+  ChartConfiguration,
+  TooltipItem,
+  registerables,
+} from 'chart.js';
 import 'chartjs-adapter-date-fns';
 
 Chart.register(...registerables);
@@ -265,8 +270,11 @@ export class StatsChartComponent implements AfterViewInit {
             grid: { drawOnChartArea: false },
           },
         },
+        // chartjs-plugin-datalabels is globally registered in app.config.ts.
+        // Disable it for this chart to avoid gray object debug labels.
         plugins: {
           legend: { display: false },
+          datalabels: { display: false },
           tooltip: {
             backgroundColor: 'rgba(14,20,35,0.95)',
             titleColor: '#eff4ff',
@@ -274,7 +282,7 @@ export class StatsChartComponent implements AfterViewInit {
             borderColor: 'rgba(125, 154, 219, 0.35)',
             borderWidth: 1,
             callbacks: {
-              title: (items) => {
+              title: (items: TooltipItem<'bar' | 'line'>[]) => {
                 const first = items[0];
                 if (!first) return '';
                 const ts = Number(first.parsed.x);
@@ -289,7 +297,8 @@ export class StatsChartComponent implements AfterViewInit {
               },
             },
           },
-        },
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } as any,
       },
     });
   }
