@@ -2,13 +2,24 @@ import { registerLocaleData } from '@angular/common';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import localeDe from '@angular/common/locales/de';
 import {
-  APP_INITIALIZER,
   ApplicationConfig,
+  inject,
   isDevMode,
   LOCALE_ID,
+  provideAppInitializer,
   provideBrowserGlobalErrorListeners,
   provideZonelessChangeDetection,
 } from '@angular/core';
+import { getAnalytics, provideAnalytics } from '@angular/fire/analytics';
+import {
+  connectFunctionsEmulator,
+  getFunctions,
+  provideFunctions,
+} from '@angular/fire/functions';
+import {
+  getRemoteConfig,
+  provideRemoteConfig,
+} from '@angular/fire/remote-config';
 import {
   MAT_DATE_LOCALE,
   provideNativeDateAdapter,
@@ -21,28 +32,18 @@ import {
 } from '@angular/platform-browser';
 import { provideRouter } from '@angular/router';
 import { provideServiceWorker } from '@angular/service-worker';
-import { getAnalytics, provideAnalytics } from '@angular/fire/analytics';
-import {
-  getRemoteConfig,
-  provideRemoteConfig,
-} from '@angular/fire/remote-config';
-import {
-  connectFunctionsEmulator,
-  getFunctions,
-  provideFunctions,
-} from '@angular/fire/functions';
 // eslint-disable-next-line @nx/enforce-module-boundaries
 import { provideAuth, withEmulator as withAuthEmulator } from '@pu-auth/auth';
 import {
   provideFireStore,
   withEmulator as withFirestoreEmulator,
 } from '@pu-stats/data-access';
-import { firebaseRuntime } from '../env/firebase-runtime';
 import { MatrixController, MatrixElement } from 'chartjs-chart-matrix';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
-import { appRoutes } from './app.routes';
+import { firebaseRuntime } from '../env/firebase-runtime';
 import { AdsConfigService } from './ads/ads-config.service';
+import { appRoutes } from './app.routes';
 
 registerLocaleData(localeDe);
 
@@ -76,7 +77,7 @@ export const appConfig: ApplicationConfig = {
             withFirestoreEmulator(firebaseRuntime.firestoreEmulatorUrl)
           ),
           provideFunctions(() => {
-            const functions = getFunctions(undefined, 'europe-west3');
+            const functions = getFunctions();
             connectFunctionsEmulator(functions, '127.0.0.1', 5001);
             return functions;
           }),
@@ -84,15 +85,12 @@ export const appConfig: ApplicationConfig = {
       : [
           provideAuth(),
           provideFireStore(),
-          provideFunctions(() => getFunctions(undefined, 'europe-west3')),
+          provideFunctions(() => getFunctions()),
           provideAnalytics(() => getAnalytics()),
           provideRemoteConfig(() => getRemoteConfig()),
         ]),
-    {
-      provide: APP_INITIALIZER,
-      multi: true,
-      deps: [AdsConfigService],
-      useFactory: (ads: AdsConfigService) => () => ads.init(),
-    },
+    provideAppInitializer(() => {
+      return inject(AdsConfigService).init();
+    }),
   ],
 };
