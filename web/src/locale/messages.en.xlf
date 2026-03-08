@@ -1,946 +1,445 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml version="1.0" encoding="UTF-8"?>
 <xliff version="2.0" xmlns="urn:oasis:names:tc:xliff:document:2.0" srcLang="de" trgLang="en">
   <file id="ngi18n" original="ng.template">
-    <unit id="auth.error.generic">
+    <unit id="1713004850888488155">
       <notes>
-        <note category="location">libs/auth/src/lib/core/state/auth.store.ts:27</note>
+        <note category="location">web/src/app/app.ts:81</note>
 
         
             </notes>
       <segment state="translated">
-        <source>Anmeldung fehlgeschlagen. Bitte versuche es erneut.</source>
+        <source>Neue Version verfügbar</source>
+        <target>New version available</target>
 
         
-              <target>Anmeldung fehlgeschlagen. Bitte versuche es erneut.</target>
-      </segment>
+        
+            </segment>
 
       
       
         </unit>
-    <unit id="auth.error.popupClosed">
+    <unit id="1933013871016789910">
       <notes>
-        <note category="location">libs/auth/src/lib/core/state/auth.store.ts:39</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:34</note>
 
         
             </notes>
       <segment state="translated">
-        <source>Google-Anmeldung abgebrochen. Das Anmelde-Fenster wurde geschlossen.</source>
+        <source>Gesamt</source>
+        <target>Total</target>
 
         
-              <target>Google-Anmeldung abgebrochen. Das Anmelde-Fenster wurde geschlossen.</target>
-      </segment>
+        
+            </segment>
 
       
       
         </unit>
-    <unit id="auth.error.popupBlocked">
+    <unit id="2361265238320887165">
       <notes>
-        <note category="location">libs/auth/src/lib/core/state/auth.store.ts:40</note>
+        <note category="location">libs/auth/src/lib/ui/login/login.component.html:26,27</note>
 
         
             </notes>
       <segment state="translated">
-        <source>Pop-up wurde blockiert. Bitte Pop-ups erlauben und erneut versuchen.</source>
+        <source>Abmelden</source>
+        <target>Logout</target>
 
         
-              <target>Pop-up wurde blockiert. Bitte Pop-ups erlauben und erneut versuchen.</target>
-      </segment>
+        
+            </segment>
 
       
       
         </unit>
-    <unit id="auth.error.network">
+    <unit id="5889607835368180076">
       <notes>
-        <note category="location">libs/auth/src/lib/core/state/auth.store.ts:41</note>
+        <note category="location">web/src/app/app.ts:82</note>
 
         
             </notes>
       <segment state="translated">
-        <source>Netzwerkfehler. Bitte Internetverbindung prüfen und erneut versuchen.</source>
+        <source>Neu laden</source>
+        <target>Reload</target>
 
         
-              <target>Netzwerkfehler. Bitte Internetverbindung prüfen und erneut versuchen.</target>
-      </segment>
+        
+            </segment>
 
       
       
         </unit>
-    <unit id="auth.error.invalidCredential">
+    <unit id="7638356697128454089">
       <notes>
-        <note category="location">libs/auth/src/lib/core/state/auth.store.ts:42</note>
+        <note category="location">libs/auth/src/lib/ui/login/login.component.html:25,26</note>
 
         
             </notes>
       <segment state="translated">
-        <source>E-Mail oder Passwort ist nicht korrekt.</source>
+        <source>Anmeldung erfolgreich!</source>
+        <target>Login successful!</target>
 
         
-              <target>E-Mail oder Passwort ist nicht korrekt.</target>
-      </segment>
+        
+            </segment>
 
       
       
         </unit>
-    <unit id="auth.error.invalidEmail">
+    <unit id="activeUser">
       <notes>
-        <note category="location">libs/auth/src/lib/core/state/auth.store.ts:43</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:64,65</note>
 
         
             </notes>
       <segment state="translated">
-        <source>Bitte eine gültige E-Mail-Adresse eingeben.</source>
+        <source>
+          <ph id="0" equiv="INTERPOLATION" disp="{{ activeUserId() }}"/>
+Aktiv:         </source>
+        <target>
+          <ph id="0" equiv="INTERPOLATION" disp="{{ activeUserId() }}"/>
+Active:         </target>
 
         
-              <target>Bitte eine gültige E-Mail-Adresse eingeben.</target>
-      </segment>
+        
+            </segment>
 
       
       
         </unit>
-    <unit id="auth.error.userDisabled">
+    <unit id="ads.dashboard.aria">
+      <segment state="translated">
+        <source>Werbung</source>
+        <target>Advertisement</target>
+
+        
+        
+            </segment>
+
+      
+        </unit>
+    <unit id="ads.landing.aria">
+      <segment state="translated">
+        <source>Werbung</source>
+        <target>Advertisement</target>
+
+        
+        
+            </segment>
+
+      
+        </unit>
+    <unit id="allTimeAvg">
       <notes>
-        <note category="location">libs/auth/src/lib/core/state/auth.store.ts:44</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:92,93</note>
 
         
             </notes>
       <segment state="translated">
-        <source>Dieses Konto ist deaktiviert.</source>
+        <source>All-Time Ø/Tag</source>
+        <target>All-time avg/day</target>
 
         
-              <target>Dieses Konto ist deaktiviert.</target>
-      </segment>
+        
+            </segment>
 
       
       
         </unit>
-    <unit id="auth.error.userNotFound">
+    <unit id="allTimeDays">
       <notes>
-        <note category="location">libs/auth/src/lib/core/state/auth.store.ts:45</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:84,85</note>
 
         
             </notes>
       <segment state="translated">
-        <source>Kein Konto mit dieser E-Mail gefunden.</source>
+        <source>All-Time Tage</source>
+        <target>All-time days</target>
 
         
-              <target>Kein Konto mit dieser E-Mail gefunden.</target>
-      </segment>
+        
+            </segment>
 
       
       
         </unit>
-    <unit id="auth.error.wrongPassword">
+    <unit id="allTimeEntries">
       <notes>
-        <note category="location">libs/auth/src/lib/core/state/auth.store.ts:46</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:88,89</note>
 
         
             </notes>
       <segment state="translated">
-        <source>E-Mail oder Passwort ist nicht korrekt.</source>
+        <source>All-Time Einträge</source>
+        <target>All-time entries</target>
 
         
-              <target>E-Mail oder Passwort ist nicht korrekt.</target>
-      </segment>
+        
+            </segment>
 
       
       
         </unit>
-    <unit id="auth.error.emailInUse">
+    <unit id="allTimeSummaryAria">
       <notes>
-        <note category="location">libs/auth/src/lib/core/state/auth.store.ts:47</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:76,77</note>
 
         
             </notes>
       <segment state="translated">
-        <source>Für diese E-Mail existiert bereits ein Konto.</source>
+        <source>All-Time Kurzübersicht</source>
+        <target>All-time summary</target>
 
         
-              <target>Für diese E-Mail existiert bereits ein Konto.</target>
-      </segment>
+        
+            </segment>
 
       
       
         </unit>
-    <unit id="auth.error.weakPassword">
+    <unit id="allTimeTotal">
       <notes>
-        <note category="location">libs/auth/src/lib/core/state/auth.store.ts:48</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:80,81</note>
 
         
             </notes>
       <segment state="translated">
-        <source>Das Passwort ist zu schwach (mindestens 6 Zeichen).</source>
+        <source>All-Time Gesamt</source>
+        <target>All-time total</target>
 
         
-              <target>Das Passwort ist zu schwach (mindestens 6 Zeichen).</target>
-      </segment>
+        
+            </segment>
 
       
       
         </unit>
-    <unit id="auth.error.tooManyRequests">
+    <unit id="analysis.bestDay">
       <notes>
-        <note category="location">libs/auth/src/lib/core/state/auth.store.ts:49</note>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:87,89</note>
 
         
             </notes>
       <segment state="translated">
-        <source>Zu viele Versuche. Bitte kurz warten und erneut versuchen.</source>
+        <source>Bester Tag:</source>
+        <target>Best day:</target>
 
         
-              <target>Zu viele Versuche. Bitte kurz warten und erneut versuchen.</target>
-      </segment>
+        
+            </segment>
 
       
       
         </unit>
-    <unit id="auth.error.internalError">
+    <unit id="analysis.bestSingleEntry">
       <notes>
-        <note category="location">libs/auth/src/lib/core/state/auth.store.ts:50</note>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:82,84</note>
 
         
             </notes>
       <segment state="translated">
-        <source>Ein technischer Fehler ist aufgetreten. Bitte gleich erneut versuchen.</source>
+        <source>Bestwert Einzel-Eintrag:</source>
+        <target>Best single entry:</target>
 
         
-              <target>Ein technischer Fehler ist aufgetreten. Bitte gleich erneut versuchen.</target>
-      </segment>
+        
+            </segment>
 
       
       
         </unit>
-    <unit id="auth.login.title">
+    <unit id="analysis.bestStreaksTitle">
       <notes>
-        <note category="location">libs/auth/src/lib/ui/login/login.component.html:5,7</note>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:76,78</note>
 
         
             </notes>
       <segment state="translated">
-        <source>Willkommen bei PushUp Stats</source>
+        <source>Bestwerte &amp; Streaks</source>
+        <target>Best values &amp; streaks</target>
 
         
-              <target>Willkommen bei PushUp Stats</target>
-      </segment>
+        
+            </segment>
 
       
       
         </unit>
-    <unit id="auth.login.subtitle">
+    <unit id="analysis.currentStreak">
       <notes>
-        <note category="location">libs/auth/src/lib/ui/login/login.component.html:8,10</note>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:93,95</note>
 
         
             </notes>
       <segment state="translated">
-        <source>Bitte melde dich an</source>
+        <source>Aktuelle Streak:</source>
+        <target>Current streak:</target>
 
         
-              <target>Bitte melde dich an</target>
-      </segment>
+        
+            </segment>
 
       
       
         </unit>
-    <unit id="auth.login.loading">
+    <unit id="analysis.heatmapTitle">
       <notes>
-        <note category="location">libs/auth/src/lib/ui/login/login.component.html:22,26</note>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:126,128</note>
 
         
             </notes>
       <segment state="translated">
-        <source>Anmelden...</source>
+        <source>Heatmap (Wochentag/Uhrzeit)</source>
+        <target>Heatmap (weekday/time)</target>
 
         
-              <target>Anmelden...</target>
-      </segment>
+        
+            </segment>
 
       
       
         </unit>
-    <unit id="auth.email">
+    <unit id="analysis.longestStreak">
       <notes>
-        <note category="location">libs/auth/src/lib/ui/login/login.component.html:28,29</note>
-        <note category="location">libs/auth/src/lib/ui/register/register.component.html:48,49</note>
-        <note category="location">libs/auth/src/lib/ui/register/register.component.html:50,51</note>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:101,103</note>
 
-        
-        
         
             </notes>
       <segment state="translated">
-        <source>E-Mail</source>
+        <source>Längste Streak:</source>
+        <target>Longest streak:</target>
 
         
-              <target>E-Mail</target>
-      </segment>
+        
+            </segment>
 
       
       
         </unit>
-    <unit id="auth.password">
+    <unit id="analysis.monthCol">
       <notes>
-        <note category="location">libs/auth/src/lib/ui/login/login.component.html:42,43</note>
-        <note category="location">libs/auth/src/lib/ui/register/register.component.html:99,101</note>
-        <note category="location">libs/auth/src/lib/ui/register/register.component.html:129,130</note>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:57,58</note>
 
-        
-        
         
             </notes>
       <segment state="translated">
-        <source>Passwort</source>
+        <source>Monat</source>
+        <target>Month</target>
 
         
-              <target>Passwort</target>
-      </segment>
+        
+            </segment>
 
       
       
         </unit>
-    <unit id="auth.login.submit">
+    <unit id="analysis.monthTrendTitle">
       <notes>
-        <note category="location">libs/auth/src/lib/ui/login/login.component.html:77,79</note>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:50,52</note>
 
         
             </notes>
       <segment state="translated">
-        <source>Anmelden</source>
+        <source>Monatstrend</source>
+        <target>Monthly trend</target>
 
         
-              <target>Anmelden</target>
-      </segment>
+        
+            </segment>
 
       
       
         </unit>
-    <unit id="auth.or">
+    <unit id="analysis.repsCol">
       <notes>
-        <note category="location">libs/auth/src/lib/ui/login/login.component.html:82,85</note>
-        <note category="location">libs/auth/src/lib/ui/register/register.component.html:76,77</note>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:37,38</note>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:63,64</note>
 
         
         
             </notes>
       <segment state="translated">
-        <source>oder</source>
+        <source>Reps</source>
+        <target>Reps</target>
 
         
-              <target>oder</target>
-      </segment>
+        
+            </segment>
 
       
       
         </unit>
-    <unit id="auth.google.signin">
+    <unit id="analysis.streakDays">
       <notes>
-        <note category="location">libs/auth/src/lib/ui/login/login.component.html:92,95</note>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:96,97</note>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:104,105</note>
 
+        
         
             </notes>
       <segment state="translated">
-        <source> Mit Google anmelden </source>
+        <source>
+          <ph id="0" equiv="INTERPOLATION" disp="{{ currentStreak() }}"/>
+ Tage        </source>
+        <target>
+          <ph id="0" equiv="INTERPOLATION" disp="{{ currentStreak() }}"/>
+ days        </target>
 
         
-              <target> Mit Google anmelden </target>
-      </segment>
+        
+            </segment>
 
       
       
         </unit>
-    <unit id="auth.register.noAccount">
+    <unit id="analysis.typesTitle">
       <notes>
-        <note category="location">libs/auth/src/lib/ui/login/login.component.html:96,97</note>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:114,116</note>
 
         
             </notes>
       <segment state="translated">
-        <source>Noch kein Account?</source>
+        <source>Typen (Anteile)</source>
+        <target>Types (shares)</target>
 
         
-              <target>Noch kein Account?</target>
-      </segment>
+        
+            </segment>
 
       
       
         </unit>
-    <unit id="2721806142807617942">
+    <unit id="analysis.weekCol">
       <notes>
-        <note category="location">libs/auth/src/lib/ui/login/login.component.html:98,99</note>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:31,32</note>
 
         
             </notes>
       <segment state="translated">
-        <source> Registrieren </source>
+        <source>Woche</source>
+        <target>Week</target>
 
         
-              <target> Registrieren </target>
-      </segment>
+        
+            </segment>
 
       
       
         </unit>
-    <unit id="auth.onboarding.google.title">
+    <unit id="analysis.weekTrendTitle">
       <notes>
-        <note category="location">libs/auth/src/lib/ui/login/login.component.html:106,109</note>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:24,26</note>
 
         
             </notes>
       <segment state="translated">
-        <source> Einrichtung abschließen </source>
+        <source>Wochentrend</source>
+        <target>Weekly trend</target>
 
         
-              <target> Einrichtung abschließen </target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="auth.onboarding.google.username">
-      <notes>
-        <note category="location">libs/auth/src/lib/ui/login/login.component.html:112,115</note>
-        <note category="location">libs/auth/src/lib/ui/register/register.component.html:216,218</note>
-        <note category="location">libs/auth/src/lib/ui/register/register.component.html:220,222</note>
-
-        
-        
-        
-            </notes>
-      <segment state="translated">
-        <source>Benutzername</source>
-
-        
-              <target>Benutzername</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="auth.onboarding.google.username.hint">
-      <notes>
-        <note category="location">libs/auth/src/lib/ui/login/login.component.html:120,123</note>
-        <note category="location">libs/auth/src/lib/ui/register/register.component.html:228,230</note>
-
-        
-        
-            </notes>
-      <segment state="translated">
-        <source>Mindestens 2 Zeichen.</source>
-
-        
-              <target>Mindestens 2 Zeichen.</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="auth.onboarding.google.goal">
-      <notes>
-        <note category="location">libs/auth/src/lib/ui/login/login.component.html:127,129</note>
-        <note category="location">libs/auth/src/lib/ui/register/register.component.html:255,257</note>
-        <note category="location">libs/auth/src/lib/ui/register/register.component.html:259,261</note>
-
-        
-        
-        
-            </notes>
-      <segment state="translated">
-        <source>Tagesziel</source>
-
-        
-              <target>Tagesziel</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="auth.onboarding.google.consent.text">
-      <notes>
-        <note category="location">libs/auth/src/lib/ui/login/login.component.html:140,144</note>
-        <note category="location">libs/auth/src/lib/ui/register/register.component.html:298,301</note>
-
-        
-        
-            </notes>
-      <segment state="translated">
-        <source> Ich willige in die Datenverarbeitung zum Erheben technisch notwendiger Daten, statistischer Auswertungen und zum Ausspielen gezielter Werbung ein. </source>
-
-        
-              <target> Ich willige in die Datenverarbeitung zum Erheben technisch notwendiger Daten, statistischer Auswertungen und zum Ausspielen gezielter Werbung ein. </target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="auth.onboarding.google.consent.checkbox">
-      <notes>
-        <note category="location">libs/auth/src/lib/ui/login/login.component.html:149,153</note>
-        <note category="location">libs/auth/src/lib/ui/register/register.component.html:295,297</note>
-        <note category="location">libs/auth/src/lib/ui/register/register.component.html:307,310</note>
-
-        
-        
-        
-            </notes>
-      <segment state="translated">
-        <source> Einwilligung erteilen </source>
-
-        
-              <target> Einwilligung erteilen </target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="6031063121455734122">
-      <notes>
-        <note category="location">libs/auth/src/lib/ui/login/login.component.html:161,162</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source> Zurück </source>
-
-        
-              <target> Zurück </target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="auth.next">
-      <notes>
-        <note category="location">libs/auth/src/lib/ui/login/login.component.html:174,175</note>
-        <note category="location">libs/auth/src/lib/ui/login/login.component.html:187,188</note>
-        <note category="location">libs/auth/src/lib/ui/register/register.component.html:71,72</note>
-        <note category="location">libs/auth/src/lib/ui/register/register.component.html:121,122</note>
-        <note category="location">libs/auth/src/lib/ui/register/register.component.html:208,209</note>
-        <note category="location">libs/auth/src/lib/ui/register/register.component.html:248,249</note>
-        <note category="location">libs/auth/src/lib/ui/register/register.component.html:286,287</note>
-
-        
-        
-        
-        
-        
-        
-        
-            </notes>
-      <segment state="translated">
-        <source> Weiter </source>
-
-        
-              <target> Weiter </target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="cancel">
-      <notes>
-        <note category="location">libs/auth/src/lib/ui/login/login.component.html:193,194</note>
-        <note category="location">libs/auth/src/lib/ui/register/register.component.html:355,356</note>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:215,217</note>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:297,299</note>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:183,184</note>
-
-        
-        
-        
-        
-        
-            </notes>
-      <segment state="translated">
-        <source> Abbrechen </source>
-
-        
-              <target> Cancel </target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="auth.onboarding.google.finish">
-      <notes>
-        <note category="location">libs/auth/src/lib/ui/login/login.component.html:203,206</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source> Abschließen </source>
-
-        
-              <target> Abschließen </target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="validate.email.required">
-      <notes>
-        <note category="location">libs/auth/src/lib/ui/login/login.component.ts:87</note>
-        <note category="location">libs/auth/src/lib/ui/register/register.component.ts:100</note>
-
-        
-        
-            </notes>
-      <segment state="translated">
-        <source>Bitte E-Mail eingeben!</source>
-
-        
-              <target>Please enter email!</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="validate.email.email">
-      <notes>
-        <note category="location">libs/auth/src/lib/ui/login/login.component.ts:90</note>
-        <note category="location">libs/auth/src/lib/ui/register/register.component.ts:103</note>
-
-        
-        
-            </notes>
-      <segment state="translated">
-        <source>Bitte gültige E-Mail eingeben!</source>
-
-        
-              <target>Please enter a valid email!</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="validate.password.required">
-      <notes>
-        <note category="location">libs/auth/src/lib/ui/login/login.component.ts:93</note>
-        <note category="location">libs/auth/src/lib/ui/register/register.component.ts:106</note>
-
-        
-        
-            </notes>
-      <segment state="translated">
-        <source>Bitte Passwort eingeben!</source>
-
-        
-              <target>Please enter password!</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="validate.password.minLength">
-      <notes>
-        <note category="location">libs/auth/src/lib/ui/login/login.component.ts:96</note>
-        <note category="location">libs/auth/src/lib/ui/register/register.component.ts:109</note>
-
-        
-        
-            </notes>
-      <segment state="translated">
-        <source>Passwort muss mindestens 8 Zeichen lang sein!</source>
-
-        
-              <target>Password must be at least 6 characters long!</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="auth.onboarding.google.error.noUser">
-      <notes>
-        <note category="location">libs/auth/src/lib/ui/login/login.component.ts:170</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Kein eingeloggter Nutzer gefunden.</source>
-
-        
-              <target>Kein eingeloggter Nutzer gefunden.</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="auth.onboarding.google.error.consentRequired">
-      <notes>
-        <note category="location">libs/auth/src/lib/ui/login/login.component.ts:176</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Bitte stimme der Datenverarbeitung zu.</source>
-
-        
-              <target>Bitte stimme der Datenverarbeitung zu.</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="auth.onboarding.google.error.saveFailed">
-      <notes>
-        <note category="location">libs/auth/src/lib/ui/login/login.component.ts:197</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Onboarding konnte nicht gespeichert werden. Bitte erneut versuchen.</source>
-
-        
-              <target>Onboarding konnte nicht gespeichert werden. Bitte erneut versuchen.</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="auth.register.title">
-      <notes>
-        <note category="location">libs/auth/src/lib/ui/register/register.component.html:5,7</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Registrierung</source>
-
-        
-              <target>Registrierung</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="auth.register.subtitle">
-      <notes>
-        <note category="location">libs/auth/src/lib/ui/register/register.component.html:8,10</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Erstelle dein Konto</source>
-
-        
-              <target>Erstelle dein Konto</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="auth.register.success.title">
-      <notes>
-        <note category="location">libs/auth/src/lib/ui/register/register.component.html:22,23</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Geschafft! 🎉</source>
-
-        
-              <target>Geschafft! 🎉</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="auth.register.success.text">
-      <notes>
-        <note category="location">libs/auth/src/lib/ui/register/register.component.html:24,26</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source> Dein Account ist bereit. Zeit für die ersten Liegestütze 💪 </source>
-
-        
-              <target> Dein Account ist bereit. Zeit für die ersten Liegestütze 💪 </target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="auth.register.success.dashboard">
-      <notes>
-        <note category="location">libs/auth/src/lib/ui/register/register.component.html:33,35</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source> Zum Dashboard </source>
-
-        
-              <target> Zum Dashboard </target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="auth.google.signup">
-      <notes>
-        <note category="location">libs/auth/src/lib/ui/register/register.component.html:87,88</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source> Mit Google registrieren </source>
-
-        
-              <target> Mit Google registrieren </target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="auth.register.google.skipPassword">
-      <notes>
-        <note category="location">libs/auth/src/lib/ui/register/register.component.html:103,105</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source> Passwort-Schritt übersprungen (Google Registrierung). </source>
-
-        
-              <target> Passwort-Schritt übersprungen (Google Registrierung). </target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="auth.register.back">
-      <notes>
-        <note category="location">libs/auth/src/lib/ui/register/register.component.html:112,113</note>
-        <note category="location">libs/auth/src/lib/ui/register/register.component.html:198,199</note>
-        <note category="location">libs/auth/src/lib/ui/register/register.component.html:238,239</note>
-        <note category="location">libs/auth/src/lib/ui/register/register.component.html:276,277</note>
-        <note category="location">libs/auth/src/lib/ui/register/register.component.html:326,327</note>
-
-        
-        
-        
-        
-        
-            </notes>
-      <segment state="translated">
-        <source> Zurück </source>
-
-        
-              <target> Zurück </target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="auth.register.password.hint">
-      <notes>
-        <note category="location">libs/auth/src/lib/ui/register/register.component.html:153,155</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Mind. 8 Zeichen, 1 Zahl und 1 Sonderzeichen.</source>
-
-        
-              <target>Mind. 8 Zeichen, 1 Zahl und 1 Sonderzeichen.</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="auth.register.password.invalid">
-      <notes>
-        <note category="location">libs/auth/src/lib/ui/register/register.component.html:157,159</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Passwort erfüllt die Anforderungen nicht.</source>
-
-        
-              <target>Passwort erfüllt die Anforderungen nicht.</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="auth.register.password.repeat">
-      <notes>
-        <note category="location">libs/auth/src/lib/ui/register/register.component.html:167,169</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Passwort wiederholen</source>
-
-        
-              <target>Passwort wiederholen</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="auth.register.password.repeat.invalid">
-      <notes>
-        <note category="location">libs/auth/src/lib/ui/register/register.component.html:177,180</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Passwörter stimmen nicht überein.</source>
-
-        
-              <target>Passwörter stimmen nicht überein.</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="auth.register.processing">
-      <notes>
-        <note category="location">libs/auth/src/lib/ui/register/register.component.html:186,188</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Registrierung wird vorbereitet...</source>
-
-        
-              <target>Registrierung wird vorbereitet...</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="auth.register.finalizing">
-      <notes>
-        <note category="location">libs/auth/src/lib/ui/register/register.component.html:314,316</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Account wird erstellt und Profil gespeichert...</source>
-
-        
-              <target>Account wird erstellt und Profil gespeichert...</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="auth.register.submit">
-      <notes>
-        <note category="location">libs/auth/src/lib/ui/register/register.component.html:347,348</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source> Registrieren </source>
-
         
-              <target> Registrieren </target>
-      </segment>
+            </segment>
 
       
       
@@ -948,1269 +447,672 @@
     <unit id="app.title">
       <notes>
         <note category="location">web/src/app/app.html:11,12</note>
-        <note category="location">web/src/app/app.html:129,130</note>
+        <note category="location">web/src/app/app.html:114,115</note>
 
         
         
             </notes>
       <segment state="translated">
         <source>Pushups</source>
+        <target>Pushups</target>
 
         
-              <target>Pushups</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="nav.dashboard">
-      <notes>
-        <note category="location">web/src/app/app.html:23,26</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Dashboard</source>
-
-        
-              <target>Dashboard</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="nav.data">
-      <notes>
-        <note category="location">web/src/app/app.html:33,36</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Daten</source>
-
-        
-              <target>Data</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="nav.analysis">
-      <notes>
-        <note category="location">web/src/app/app.html:43,46</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Analyse</source>
-
-        
-              <target>Analysis</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="nav.leaderboard">
-      <notes>
-        <note category="location">web/src/app/app.html:53,56</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Bestenliste</source>
-
-        
-              <target>Bestenliste</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="nav.language">
-      <notes>
-        <note category="location">web/src/app/app.html:63,66</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source> Sprache </source>
-
-        
-              <target> Language </target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="nav.lang.de">
-      <notes>
-        <note category="location">web/src/app/app.html:72,75</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Deutsch</source>
-
-        
-              <target>German</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="nav.lang.en">
-      <notes>
-        <note category="location">web/src/app/app.html:81,83</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>English</source>
-
-        
-              <target>English</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="nav.account">
-      <notes>
-        <note category="location">web/src/app/app.html:89,91</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source> Account </source>
-
-        
-              <target> Account </target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="nav.settings">
-      <notes>
-        <note category="location">web/src/app/app.html:98,100</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Einstellungen</source>
-
-        
-              <target>Settings</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="nav.aria">
-      <notes>
-        <note category="location">web/src/app/app.html:108,109</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Pushup Navigation</source>
-
-        
-              <target>Pushup Navigation</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="nav.openMenu">
-      <notes>
-        <note category="location">web/src/app/app.html:114,115</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Menü öffnen</source>
-
-        
-              <target>Open menu</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="nav.toLanding">
-      <notes>
-        <note category="location">web/src/app/app.html:124,125</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Zur Landingpage</source>
-
-        
-              <target>Go to landing page</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="toolbarDailyGoal">
-      <notes>
-        <note category="location">web/src/app/app.html:132,133</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Tagesziel</source>
-
-        
-              <target>Tagesziel</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="seo.landing.title">
-      <notes>
-        <note category="location">web/src/app/app.routes.ts:10</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Pushup Tracker – Dein Training. Klar visualisiert.</source>
-
-        
-              <target>Pushup Tracker – Your training. Clearly visualized.</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="seo.landing.description">
-      <notes>
-        <note category="location">web/src/app/app.routes.ts:11</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Tracke Reps, Trends und Streaks in Sekunden – mobil, schnell und mit Live-Updates.</source>
-
-        
-              <target>Track reps, trends, and streaks in seconds – mobile, fast, and with live updates.</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="seo.dashboard.title">
-      <notes>
-        <note category="location">web/src/app/app.routes.ts:22</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Dashboard – Pushup Tracker</source>
-
-        
-              <target>Dashboard – Pushup Tracker</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="seo.dashboard.description">
-      <notes>
-        <note category="location">web/src/app/app.routes.ts:23</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Behalte Trainingsvolumen und Verlauf im Blick – klar, schnell und mobil optimiert.</source>
-
-        
-              <target>Keep training volume and progress in view – clear, fast, and mobile optimized.</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="seo.login.title">
-      <notes>
-        <note category="location">web/src/app/app.routes.ts:39</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Login – Pushup Tracker</source>
-
-        
-              <target>Login – Pushup Tracker</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="seo.login.description">
-      <notes>
-        <note category="location">web/src/app/app.routes.ts:40</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Melde dich an und tracke dein Pushup-Training über alle Geräte.</source>
-
-        
-              <target>Sign in and track your pushup training across all devices.</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="seo.register.title">
-      <notes>
-        <note category="location">web/src/app/app.routes.ts:48</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Registrierung – Pushup Tracker</source>
-
-        
-              <target>Sign up – Pushup Tracker</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="seo.register.description">
-      <notes>
-        <note category="location">web/src/app/app.routes.ts:49</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Erstelle dein Konto und richte Profil, Tagesziel und Einwilligungen ein.</source>
-
-        
-              <target>Create your account and set up profile, daily goal, and consent settings.</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="seo.data.title">
-      <notes>
-        <note category="location">web/src/app/app.routes.ts:58</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Daten – Pushup Tracker</source>
-
-        
-              <target>Data – Pushup Tracker</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="seo.data.description">
-      <notes>
-        <note category="location">web/src/app/app.routes.ts:59</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Verwalte Einträge, filtere nach Zeitraum und behalte deine Trainingsdaten im Griff.</source>
-
-        
-              <target>Manage entries, filter by time range, and stay in control of your training data.</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="seo.analysis.title">
-      <notes>
-        <note category="location">web/src/app/app.routes.ts:70</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Analyse – Pushup Tracker</source>
-
-        
-              <target>Analysis – Pushup Tracker</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="seo.analysis.description">
-      <notes>
-        <note category="location">web/src/app/app.routes.ts:71</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Analysiere Trends, Verteilungen und Streaks deines Trainings.</source>
-
-        
-              <target>Analyze trends, distributions, and streaks in your training.</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="seo.settings.title">
-      <notes>
-        <note category="location">web/src/app/app.routes.ts:82</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Einstellungen – Pushup Tracker</source>
-
-        
-              <target>Settings – Pushup Tracker</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="seo.settings.description">
-      <notes>
-        <note category="location">web/src/app/app.routes.ts:83</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Verwalte Profil, Leaderboard-Sichtbarkeit und Tagesziel-Einstellungen.</source>
-
-        
-              <target>Manage profile, leaderboard visibility, and daily goal settings.</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="seo.leaderboard.title">
-      <notes>
-        <note category="location">web/src/app/app.routes.ts:93</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Bestenliste – Pushup Tracker</source>
-
-        
-              <target>Leaderboard – Pushup Tracker</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="seo.leaderboard.description">
-      <notes>
-        <note category="location">web/src/app/app.routes.ts:94</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Öffentliche Bestenliste für tägliche, wöchentliche und monatliche Pushup-Reps.</source>
-
-        
-              <target>Public leaderboard for daily, weekly, and monthly pushup reps.</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="seo.default.title">
-      <notes>
-        <note category="location">web/src/app/app.ts:125</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Pushup Tracker</source>
-
-        
-              <target>Pushup Tracker</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="seo.default.description">
-      <notes>
-        <note category="location">web/src/app/app.ts:128</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Tracke Reps, Trends und Streaks mit Pushup Tracker.</source>
-
-        
-              <target>Track reps, trends, and streaks with Pushup Tracker.</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="1713004850888488155">
-      <notes>
-        <note category="location">web/src/app/app.ts:152</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Neue Version verfügbar</source>
-
-        
-              <target>New version available</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="5889607835368180076">
-      <notes>
-        <note category="location">web/src/app/app.ts:153</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Neu laden</source>
-
-        
-              <target>Reload</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="sw.update.downloading">
-      <notes>
-        <note category="location">web/src/app/app.ts:197</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Update wird im Hintergrund geladen …</source>
-
-        
-              <target>Update is downloading in the background …</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="leaderboard.page.title">
-      <notes>
-        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:5,7</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Bestenliste</source>
-
-        
-              <target>Bestenliste</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="leaderboard.page.subtitle">
-      <notes>
-        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:8,10</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Daily · Weekly · Monthly</source>
-
-        
-              <target>Daily · Weekly · Monthly</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="landing.leaderboard.daily">
-      <notes>
-        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:24,26</note>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:109,112</note>
-
-        
-        
-            </notes>
-      <segment state="translated">
-        <source> Tag </source>
-
-        
-              <target>Day</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="landing.leaderboard.weekly">
-      <notes>
-        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:33,35</note>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:118,121</note>
-
-        
-        
-            </notes>
-      <segment state="translated">
-        <source> Woche </source>
-
-        
-              <target>Week</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="landing.leaderboard.monthly">
-      <notes>
-        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:42,46</note>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:127,131</note>
-
-        
-        
-            </notes>
-      <segment state="translated">
-        <source> Monat </source>
-
-        
-              <target>Month</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="landing.leaderboard.reps">
-      <notes>
-        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:53,55</note>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:138,140</note>
-
-        
-        
-            </notes>
-      <segment state="translated">
-        <source>Reps</source>
-
-        
-              <target>Reps</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="landing.leaderboard.ownPosition">
-      <notes>
-        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:61,63</note>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:146,149</note>
-      </notes>
-      <segment state="translated">
-        <source> Deine Position: #<ph id="0" equiv="INTERPOLATION" disp="{{ me.rank }}"/> · <ph id="1" equiv="INTERPOLATION_1" disp="{{ me.reps }}"/> Reps </source>
-        <target> Your position: #<ph id="0" equiv="INTERPOLATION" disp="{{ me.rank }}"/> · <ph id="1" equiv="INTERPOLATION_1" disp="{{ me.reps }}"/> reps </target>
-      </segment>
-    </unit>
-    <unit id="landing.eyebrow">
-      <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:3,4</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Pushup Tracker</source>
-
-        
-              <target>Pushup Tracker</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="landing.title">
-      <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:4,5</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Dein Training. Klar visualisiert.</source>
-
-        
-              <target>Your training. Clearly visualized.</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="landing.subtitle">
-      <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:6,10</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source> Tracke Reps, Trends und Streaks in Sekunden – mobil, schnell und mit Live- Updates. </source>
-
-        
-              <target> Track reps, trends, and streaks in seconds — mobile, fast, and live-updated. </target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="landing.cta.signup">
-      <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:18,21</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Jetzt registrieren</source>
-
-        
-              <target>Sign up now</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="landing.cta.login">
-      <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:26,29</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Einloggen</source>
-
-        
-              <target>Log in</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="landing.cta.dashboard">
-      <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:33,37</note>
-
         
-            </notes>
-      <segment state="translated">
-        <source>Zum Dashboard</source>
-
-        
-              <target>Go to dashboard</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="ads.landing.aria">
-      <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:38</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Werbung</source>
-
-        
-              <target>Advertisement</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="landing.feature.analytics.title">
-      <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:47,49</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Smarter Überblick</source>
-
-        
-              <target>Smarter overview</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="landing.feature.analytics.body">
-      <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:51,54</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Woche, Monat und Custom-Ranges mit klaren KPIs und Charts.</source>
-
-        
-              <target>Week, month, and custom ranges with clear KPIs and charts.</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="landing.feature.quick.title">
-      <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:60,62</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Quick Logging</source>
-
-        
-              <target>Quick logging</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="landing.feature.quick.body">
-      <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:64,67</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Neue Einträge in Sekunden per Schnellaktionen oder Tabelle.</source>
-
-        
-              <target>Add new entries in seconds via quick actions or table.</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="landing.feature.live.title">
-      <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:73,75</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Live &amp; überall</source>
-
-        
-              <target>Live &amp; everywhere</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="landing.feature.live.body">
-      <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:77,80</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Firestore Live-Sync hält deine Daten auf allen Geräten aktuell.</source>
-
-        
-              <target>Firestore live sync keeps your data current across devices.</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="landing.preview.alt">
-      <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:86,87</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Vorschau der Statistikansicht</source>
-
-        
-              <target>Preview of the stats view</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="landing.leaderboard.title">
-      <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:94,96</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source> Bestenliste </source>
-
-        
-              <target>Daily leaderboard</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="landing.leaderboard.privacy">
-      <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:97,101</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source> Privacy first: Dein Nutzername wird nicht angezeigt, wenn du es nicht möchtest. </source>
-
-        
-              <target>Privacy first: Your username is not shown if you do not want it.</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="selectRangeTitle">
-      <notes>
-        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:37,40</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Zeitraum auswählen</source>
-
-        
-              <target>Select period</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="quickRangeAria">
-      <notes>
-        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:42,43</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Schnellwahl Zeitraum</source>
-
-        
-              <target>Quick select period</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="rangeModeDay">
-      <notes>
-        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:50,51</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Tag</source>
-
-        
-              <target>Day</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="rangeModeWeek">
-      <notes>
-        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:53,54</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Woche</source>
-
-        
-              <target>Week</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="rangeModeMonth">
-      <notes>
-        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:56,57</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Monat</source>
-
-        
-              <target>Month</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="rangeBack">
-      <notes>
-        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:67,69</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>
-          <pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">chevron_left</pc>
- Zurück         </source>
-
-        
-              <target>
-          <pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">chevron_left</pc>
-
-          
- Back                 </target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="rangeToday">
-      <notes>
-        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:76,77</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source> Heute </source>
-
-        
-              <target> Today </target>
-      </segment>
+            </segment>
 
       
       
         </unit>
-    <unit id="rangeForward">
+    <unit id="brandLogoAlt">
       <notes>
-        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:84,87</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:6,7</note>
 
         
             </notes>
       <segment state="translated">
-        <source>
-          <pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">chevron_right</pc>
- Vor         </source>
+        <source>Pushup Tracker Logo</source>
+        <target>Pushup Tracker Logo</target>
 
         
-              <target>
-          <pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">chevron_right</pc>
-
-          
- Forward                 </target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="rangeLabel">
-      <notes>
-        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:91,92</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Zeitraum</source>
-
-        
-              <target>Period</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="rangeFrom">
-      <notes>
-        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:97</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Von</source>
-
-        
-              <target>From</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="rangeTo">
-      <notes>
-        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:103</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Bis</source>
-
-        
-              <target>To</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="heatmap.loading">
-      <notes>
-        <note category="location">web/src/app/stats/components/heatmap/heatmap.component.ts:36,39</note>
-
         
-            </notes>
-      <segment state="translated">
-        <source> Heatmap wird im Browser geladen… </source>
-
-        
-              <target> Loading heatmap in browser… </target>
-      </segment>
+            </segment>
 
       
       
         </unit>
-    <unit id="chart.subtitle">
+    <unit id="cancel">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:31,32</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Intervallwerte als Balken, Tages-Integral + gleitender Durchschnitt als Trendlinien</source>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:215,217</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:297,299</note>
 
         
-              <target>Interval values as bars, daily integral + moving average as trend lines</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="chart.legendAria">
-      <notes>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:44</note>
-
         
             </notes>
       <segment state="translated">
-        <source>Legende</source>
-
-        
-              <target>Legend</target>
-      </segment>
+        <source> Abbrechen </source>
+        <target> Cancel </target>
 
-      
-      
-        </unit>
-    <unit id="chart.interval">
-      <notes>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:49,50</note>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:88</note>
-
-        
         
-            </notes>
-      <segment state="translated">
-        <source>Intervallwert</source>
-
         
-              <target>Interval value</target>
-      </segment>
+            </segment>
 
       
       
         </unit>
     <unit id="chart.dayIntegral">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:55,56</note>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:89</note>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:54,55</note>
 
-        
         
             </notes>
       <segment state="translated">
         <source>Tages-Integral</source>
+        <target>Daily integral</target>
 
         
-              <target>Daily integral</target>
-      </segment>
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="chart.interval">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:48,49</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>Intervallwert</source>
+        <target>Interval value</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="chart.legendAria">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:43</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>Legende</source>
+        <target>Legend</target>
+
+        
+        
+            </segment>
 
       
       
         </unit>
     <unit id="chart.movingAvg">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:61,62</note>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:90</note>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:60,61</note>
 
-        
         
             </notes>
       <segment state="translated">
         <source>Gleitender Durchschnitt</source>
+        <target>Moving average</target>
 
         
-              <target>Moving average</target>
-      </segment>
+        
+            </segment>
 
       
       
         </unit>
-    <unit id="chart.titleHourly">
+    <unit id="chart.subtitle">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:86</note>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:30,31</note>
 
         
             </notes>
       <segment state="translated">
-        <source>Verlauf (Stundenwerte)</source>
+        <source>Intervallwerte als Balken, Tages-Integral + gleitender Durchschnitt als Trendlinien</source>
+        <target>Interval values as bars, daily integral + moving average as trend lines</target>
 
         
-              <target>Progress (hourly values)</target>
-      </segment>
+        
+            </segment>
 
       
       
         </unit>
     <unit id="chart.titleDaily">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:87</note>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:82</note>
 
         
             </notes>
       <segment state="translated">
         <source>Verlauf (Tageswerte)</source>
+        <target>Progress (daily values)</target>
 
         
-              <target>Progress (daily values)</target>
-      </segment>
+        
+            </segment>
 
       
       
         </unit>
-    <unit id="entriesTitle">
+    <unit id="chart.titleHourly">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:3,4</note>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:81</note>
 
         
             </notes>
       <segment state="translated">
-        <source>Einträge</source>
+        <source>Verlauf (Stundenwerte)</source>
+        <target>Progress (hourly values)</target>
 
         
-              <target>Entries</target>
-      </segment>
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="colActions">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:102,103</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>Aktion</source>
+        <target>Action</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="colReps">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:75,76</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>Reps</source>
+        <target>Reps</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="colSource">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:93,94</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>Quelle</source>
+        <target>Source</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="colTime">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:66,67</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>Zeit</source>
+        <target>Time</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="colType">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:84,85</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>Typ</source>
+        <target>Type</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="createDialogTitle">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:147,149</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>Neuen Eintrag anlegen</source>
+        <target>Create new entry</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="createNewEntry">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:27,30</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>
+          <pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">add</pc>
+ Neu         </source>
+        <target>
+          <pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">add</pc>
+ New         </target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="dailyGoalLabel">
+      <notes>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:80,81</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>Tagesziel (Reps)</source>
+        <target>Daily goal (reps)</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="dailyGoalPlaceholder">
+      <notes>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:88</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>100</source>
+        <target>100</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="dashboard.leaderboard.subtitle">
+      <notes>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>Daily · Weekly · Monthly</source>
+        <target>Daily · Weekly · Monthly</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="dashboard.leaderboard.title">
+      <notes>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>Bestenliste</source>
+        <target>Leaderboard</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="dashboardSubtitle">
+      <notes>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:13,16</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source> Behalte Trainingsvolumen und Verlauf im Blick – klar, schnell und mobil optimiert. </source>
+        <target> Keep an eye on training volume and progress – clear, fast, and mobile optimized. </target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="dashboardTitle">
+      <notes>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:11,12</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>Liegestütze Statistik</source>
+        <target>Pushup Statistics</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="deleteAria">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:121</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>Löschen</source>
+        <target>Delete</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="deleteTitle">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:123</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>Löschen</source>
+        <target>Delete</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="displayNameLabel">
+      <notes>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:69,70</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>Anzeigename</source>
+        <target>Display name</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="displayNamePlaceholder">
+      <notes>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:75</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>Wolf</source>
+        <target>Wolf</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="editAria">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:108,109</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>Bearbeiten</source>
+        <target>Edit</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="editDialogTitle">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:234,236</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>Eintrag bearbeiten</source>
+        <target>Edit entry</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="editTitle">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:110,111</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>Bearbeiten</source>
+        <target>Edit</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="entries.allOption">
+      <notes>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts:64,66</note>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts:76,78</note>
+
+        
+        
+            </notes>
+      <segment state="translated">
+        <source>Alle</source>
+        <target>All</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="entries.dateFrom">
+      <notes>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts:41,42</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>Datum von</source>
+        <target>Date from</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="entries.dateTo">
+      <notes>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts:51,52</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>Datum bis</source>
+        <target>Date to</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="entries.repsMax">
+      <notes>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts:96,97</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>Reps max</source>
+        <target>Reps max</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="entries.repsMin">
+      <notes>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts:85,86</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>Reps min</source>
+        <target>Reps min</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="entries.sourceFilter">
+      <notes>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts:61,62</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>Quelle</source>
+        <target>Source</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="entries.subtitle">
+      <notes>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts:34,35</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>Filter und Verwaltung</source>
+        <target>Filter and management</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="entries.title">
+      <notes>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts:32,33</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>Daten</source>
+        <target>Data</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="entries.typeFilter">
+      <notes>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts:73,74</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>Typ</source>
+        <target>Type</target>
+
+        
+        
+            </segment>
 
       
       
@@ -2225,14 +1127,1565 @@
         <source>
           <ph id="0" equiv="INTERPOLATION" disp="{{ entries().length }}"/>
  Einträge        </source>
+        <target>
+          <ph id="0" equiv="INTERPOLATION" disp="{{ entries().length }}"/>
+ entries        </target>
 
         
-              <target>
-          <ph id="0" equiv="INTERPOLATION" disp="{{ entries().length }}"/>
+        
+            </segment>
 
-          
- entries                </target>
-      </segment>
+      
+      
+        </unit>
+    <unit id="entriesInSelectedRange">
+      <notes>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:175,177</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>Einträge im gewählten Zeitraum</source>
+        <target>Entries in selected period</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="entriesTitle">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:3,4</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>Einträge</source>
+        <target>Entries</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="eyebrowTitle">
+      <notes>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:10,11</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>Pushup Stats</source>
+        <target>Pushup Stats</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="goalProgressTitle">
+      <notes>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:45,47</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>Zielfortschritt</source>
+        <target>Goal progress</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="heatmap.loading">
+      <notes>
+        <note category="location">web/src/app/stats/components/heatmap/heatmap.component.ts:36,39</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source> Heatmap wird im Browser geladen… </source>
+        <target> Loading heatmap in browser… </target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="landing.cta.dashboard">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>Zum Dashboard</source>
+        <target>Go to dashboard</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="landing.cta.login">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>Einloggen</source>
+        <target>Log in</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="landing.cta.signup">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>Jetzt registrieren</source>
+        <target>Sign up now</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="landing.eyebrow">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>Pushup Tracker</source>
+        <target>Pushup Tracker</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="landing.feature.analytics.body">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>Woche, Monat und Custom-Ranges mit klaren KPIs und Charts.</source>
+        <target>Week, month, and custom ranges with clear KPIs and charts.</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="landing.feature.analytics.title">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>Smarter Überblick</source>
+        <target>Smarter overview</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="landing.feature.live.body">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>Firestore Live-Sync hält deine Daten auf allen Geräten aktuell.</source>
+        <target>Firestore live sync keeps your data current across devices.</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="landing.feature.live.title">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>Live &amp; überall</source>
+        <target>Live &amp; everywhere</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="landing.feature.quick.body">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>Neue Einträge in Sekunden per Schnellaktionen oder Tabelle.</source>
+        <target>Add new entries in seconds via quick actions or table.</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="landing.feature.quick.title">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>Quick Logging</source>
+        <target>Quick logging</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="landing.leaderboard.daily">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>Tag</source>
+        <target>Day</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="landing.leaderboard.empty">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>Noch keine Daten</source>
+        <target>No data yet</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="landing.leaderboard.monthly">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>Monat</source>
+        <target>Month</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="landing.leaderboard.ownPosition">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>
+          <x id="INTERPOLATION" equiv-text="{{ me.rank }}"/>
+          <x id="INTERPOLATION_1" equiv-text="{{ me.reps }}"/>
+Deine Position: # ·  Reps        </source>
+        <target>
+          <x id="INTERPOLATION" equiv-text="{{ me.rank }}"/>
+          <x id="INTERPOLATION_1" equiv-text="{{ me.reps }}"/>
+Your position: # ·  reps        </target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="landing.leaderboard.privacy">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>Privacy first: Dein Nutzername wird nicht angezeigt, wenn du es nicht möchtest.</source>
+        <target>Privacy first: Your username is not shown if you do not want it.</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="landing.leaderboard.reps">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>Reps</source>
+        <target>Reps</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="landing.leaderboard.title">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>Tages-Bestenliste</source>
+        <target>Daily leaderboard</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="landing.leaderboard.weekly">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>Woche</source>
+        <target>Week</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="landing.preview.alt">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>Vorschau der Statistikansicht</source>
+        <target>Preview of the stats view</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="landing.subtitle">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source> Tracke Reps, Trends und Streaks in Sekunden – mobil, schnell und mit Live- Updates. </source>
+        <target> Track reps, trends, and streaks in seconds — mobile, fast, and live-updated. </target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="landing.title">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>Dein Training. Klar visualisiert.</source>
+        <target>Your training. Clearly visualized.</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="lastEntryTitle">
+      <notes>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:59,60</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>Letzter Eintrag</source>
+        <target>Last entry</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="latEntryReps">
+      <notes>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:64,66</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>
+          <ph id="0" equiv="INTERPOLATION" disp="{{ latest.reps }}"/>
+          <ph id="1" equiv="INTERPOLATION_1" disp="{{ latest.type || &apos;Standard&apos; }}"/>
+  Reps ·          </source>
+        <target>
+          <ph id="0" equiv="INTERPOLATION" disp="{{ latest.reps }}"/>
+          <ph id="1" equiv="INTERPOLATION_1" disp="{{ latest.type || &apos;Standard&apos; }}"/>
+  reps ·          </target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="liveStateLabel">
+      <notes>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:21,23</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>
+          <ph id="0" equiv="INTERPOLATION" disp="{{ liveConnected() ? &apos;verbunden&apos; : &apos;getrennt&apos; }}"/>
+ Live:          </source>
+        <target>
+          <ph id="0" equiv="INTERPOLATION" disp="{{ liveConnected() ? &apos;connected&apos; : &apos;disconnected&apos; }}"/>
+ Live:          </target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="loadingStats">
+      <notes>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:162,166</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source> Lade Statistikdaten… </source>
+        <target> Loading statistics data… </target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="nav.account">
+      <notes>
+        <note category="location">web/src/app/app.html:91,93</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source> Account </source>
+        <target> Account </target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="nav.analysis">
+      <notes>
+        <note category="location">web/src/app/app.html:43,46</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>Analyse</source>
+        <target>Analysis</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="nav.aria">
+      <notes>
+        <note category="location">web/src/app/app.html:101,102</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>Pushup Navigation</source>
+        <target>Pushup Navigation</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="nav.dashboard">
+      <notes>
+        <note category="location">web/src/app/app.html:23,26</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>Dashboard</source>
+        <target>Dashboard</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="nav.data">
+      <notes>
+        <note category="location">web/src/app/app.html:33,36</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>Daten</source>
+        <target>Data</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="nav.lang.de">
+      <notes>
+        <note category="location">web/src/app/app.html:74,77</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>Deutsch</source>
+        <target>German</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="nav.lang.en">
+      <notes>
+        <note category="location">web/src/app/app.html:83,85</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>English</source>
+        <target>English</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="nav.language">
+      <notes>
+        <note category="location">web/src/app/app.html:65,68</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source> Sprache </source>
+        <target> Language </target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="nav.login">
+      <notes>
+        <note category="location">web/src/app/app.html:109,111</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>Login</source>
+        <target>Login</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="nav.logout">
+      <notes>
+        <note category="location">web/src/app/app.html:104,106</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>Logout</source>
+        <target>Logout</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="nav.openMenu">
+      <notes>
+        <note category="location">web/src/app/app.html:107,108</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>Menü öffnen</source>
+        <target>Open menu</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="nav.settings">
+      <notes>
+        <note category="location">web/src/app/app.html:55,58</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>Einstellungen</source>
+        <target>Settings</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="nav.toLanding">
+      <notes>
+        <note category="location">web/src/app/app.html</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>Zur Landingpage</source>
+        <target>Go to landing page</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="noEntriesInSelectedRange">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:50,53</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source> Keine Einträge im gewählten Zeitraum. </source>
+        <target> No entries in the selected period. </target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="noEntryInPeriod">
+      <notes>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:68,70</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>Noch kein Eintrag für diesen Zeitraum.</source>
+        <target>No entry for this period yet.</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="period.day">
+      <notes>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:52</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>Tag</source>
+        <target>Day</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="period.month">
+      <notes>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:54</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>Monat</source>
+        <target>Month</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="period.range">
+      <notes>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:56</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>Zeitraum</source>
+        <target>Period</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="period.today">
+      <notes>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:51</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>Heute</source>
+        <target>Today</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="period.week">
+      <notes>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:53</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>Woche</source>
+        <target>Week</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="period.year">
+      <notes>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:55</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>Jahr</source>
+        <target>Year</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="pie.noData">
+      <notes>
+        <note category="location">web/src/app/stats/components/type-pie/type-pie.component.ts:46,49</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>Keine Daten</source>
+        <target>No data</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="quickActionsSubtitle">
+      <notes>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:103,105</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>Schnell eintragen ohne Dialog</source>
+        <target>Quick entry without dialog</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="quickActionsTitle">
+      <notes>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:100,102</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>Schnellaktionen</source>
+        <target>Quick actions</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="quickAdd10">
+      <notes>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:114,116</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>
+          <pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">bolt</pc>
+ +10 Reps         </source>
+        <target>
+          <pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">bolt</pc>
+ +10 reps         </target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="quickAdd20">
+      <notes>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:124,126</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>
+          <pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">flash_on</pc>
+ +20 Reps         </source>
+        <target>
+          <pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">flash_on</pc>
+ +20 reps         </target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="quickAdd30">
+      <notes>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:134,136</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>
+          <pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">whatshot</pc>
+ +30 Reps         </source>
+        <target>
+          <pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">whatshot</pc>
+ +30 reps         </target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="quickRangeAria">
+      <notes>
+        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:35,36</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>Schnellwahl Zeitraum</source>
+        <target>Quick select period</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="rangeBack">
+      <notes>
+        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:60,62</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>
+          <pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">chevron_left</pc>
+ Zurück         </source>
+        <target>
+          <pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">chevron_left</pc>
+ Back         </target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="rangeForward">
+      <notes>
+        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:77,80</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>
+          <pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">chevron_right</pc>
+ Vor         </source>
+        <target>
+          <pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">chevron_right</pc>
+ Forward         </target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="rangeFrom">
+      <notes>
+        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:90</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>Von</source>
+        <target>From</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="rangeLabel">
+      <notes>
+        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:84,85</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>Zeitraum</source>
+        <target>Period</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="rangeModeDay">
+      <notes>
+        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:43,44</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>Tag</source>
+        <target>Day</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="rangeModeMonth">
+      <notes>
+        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:49,50</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>Monat</source>
+        <target>Month</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="rangeModeWeek">
+      <notes>
+        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:46,47</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>Woche</source>
+        <target>Week</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="rangeTo">
+      <notes>
+        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:96</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>Bis</source>
+        <target>To</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="rangeToday">
+      <notes>
+        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:69,70</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source> Heute </source>
+        <target> Today </target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="repsLabel">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:162,163</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:249,250</note>
+
+        
+        
+            </notes>
+      <segment state="translated">
+        <source>Reps</source>
+        <target>Reps</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="saveChanges">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:306,312</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>
+          <pc id="0" equivStart="START_BLOCK_IF" equivEnd="CLOSE_BLOCK_IF" type="other" dispStart="@if (editingId() &amp;&amp; isBusy(&apos;update&apos;, editBusyId())) {" dispEnd="}">
+            <pc id="1" equivStart="START_TAG_MAT_SPINNER" equivEnd="CLOSE_TAG_MAT_SPINNER" type="other" dispStart="&lt;mat-spinner diameter=&quot;14&quot;&gt;" dispEnd="&lt;/mat-spinner&gt;"/>
+          </pc>
+          <pc id="2" equivStart="START_BLOCK_ELSE" equivEnd="CLOSE_BLOCK_ELSE" type="other" dispStart="@else {" dispEnd="}"> Speichern </pc>
+        </source>
+        <target>
+          <pc id="0" equivStart="START_BLOCK_IF" equivEnd="CLOSE_BLOCK_IF" type="other" dispStart="@if (editingId() &amp;&amp; isBusy(&apos;update&apos;, editBusyId())) {" dispEnd="}">
+            <pc id="1" equivStart="START_TAG_MAT_SPINNER" equivEnd="CLOSE_TAG_MAT_SPINNER" type="other" dispStart="&lt;mat-spinner diameter=&quot;14&quot;&gt;" dispEnd="&lt;/mat-spinner&gt;"/>
+          </pc>
+          <pc id="2" equivStart="START_BLOCK_ELSE" equivEnd="CLOSE_BLOCK_ELSE" type="other" dispStart="@else {" dispEnd="}"> Save </pc>
+        </target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="saved">
+      <notes>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:112,113</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>Gespeichert.</source>
+        <target>Saved.</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="saveEntry">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:224,230</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>
+          <pc id="0" equivStart="START_BLOCK_IF" equivEnd="CLOSE_BLOCK_IF" type="other" dispStart="@if (isCreateBusy()) {" dispEnd="}">
+            <pc id="1" equivStart="START_TAG_MAT_SPINNER" equivEnd="CLOSE_TAG_MAT_SPINNER" type="other" dispStart="&lt;mat-spinner diameter=&quot;14&quot;&gt;" dispEnd="&lt;/mat-spinner&gt;"/>
+          </pc>
+          <pc id="2" equivStart="START_BLOCK_ELSE" equivEnd="CLOSE_BLOCK_ELSE" type="other" dispStart="@else {" dispEnd="}"> Speichern </pc>
+        </source>
+        <target>
+          <pc id="0" equivStart="START_BLOCK_IF" equivEnd="CLOSE_BLOCK_IF" type="other" dispStart="@if (isCreateBusy()) {" dispEnd="}">
+            <pc id="1" equivStart="START_TAG_MAT_SPINNER" equivEnd="CLOSE_TAG_MAT_SPINNER" type="other" dispStart="&lt;mat-spinner diameter=&quot;14&quot;&gt;" dispEnd="&lt;/mat-spinner&gt;"/>
+          </pc>
+          <pc id="2" equivStart="START_BLOCK_ELSE" equivEnd="CLOSE_BLOCK_ELSE" type="other" dispStart="@else {" dispEnd="}"> Save </pc>
+        </target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="saveSettings">
+      <notes>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:105,107</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>
+          <pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">save</pc>
+ Speichern         </source>
+        <target>
+          <pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">save</pc>
+ Save         </target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="saving">
+      <notes>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:109,110</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>Speichert…</source>
+        <target>Saving…</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="selectRangeTitle">
+      <notes>
+        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:30,33</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>Zeitraum auswählen</source>
+        <target>Select period</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="seo.analysis.description">
+      <segment state="translated">
+        <source>Analysiere Trends, Verteilungen und Streaks deines Trainings.</source>
+        <target>Analyze trends, distributions, and streaks in your training.</target>
+
+        
+        
+            </segment>
+
+      
+        </unit>
+    <unit id="seo.analysis.title">
+      <segment state="translated">
+        <source>Analyse – Pushup Tracker</source>
+        <target>Analysis – Pushup Tracker</target>
+
+        
+        
+            </segment>
+
+      
+        </unit>
+    <unit id="seo.dashboard.description">
+      <segment state="translated">
+        <source>Behalte Trainingsvolumen und Verlauf im Blick – klar, schnell und mobil optimiert.</source>
+        <target>Keep training volume and progress in view – clear, fast, and mobile optimized.</target>
+
+        
+        
+            </segment>
+
+      
+        </unit>
+    <unit id="seo.dashboard.title">
+      <segment state="translated">
+        <source>Dashboard – Pushup Tracker</source>
+        <target>Dashboard – Pushup Tracker</target>
+
+        
+        
+            </segment>
+
+      
+        </unit>
+    <unit id="seo.data.description">
+      <segment state="translated">
+        <source>Verwalte Einträge, filtere nach Zeitraum und behalte deine Trainingsdaten im Griff.</source>
+        <target>Manage entries, filter by time range, and stay in control of your training data.</target>
+
+        
+        
+            </segment>
+
+      
+        </unit>
+    <unit id="seo.data.title">
+      <segment state="translated">
+        <source>Daten – Pushup Tracker</source>
+        <target>Data – Pushup Tracker</target>
+
+        
+        
+            </segment>
+
+      
+        </unit>
+    <unit id="seo.default.description">
+      <segment state="translated">
+        <source>Tracke Reps, Trends und Streaks mit Pushup Tracker.</source>
+        <target>Track reps, trends, and streaks with Pushup Tracker.</target>
+
+        
+        
+            </segment>
+
+      
+        </unit>
+    <unit id="seo.default.title">
+      <segment state="translated">
+        <source>Pushup Tracker</source>
+        <target>Pushup Tracker</target>
+
+        
+        
+            </segment>
+
+      
+        </unit>
+    <unit id="seo.landing.description">
+      <segment state="translated">
+        <source>Tracke Reps, Trends und Streaks in Sekunden – mobil, schnell und mit Live-Updates.</source>
+        <target>Track reps, trends, and streaks in seconds – mobile, fast, and with live updates.</target>
+
+        
+        
+            </segment>
+
+      
+        </unit>
+    <unit id="seo.landing.title">
+      <segment state="translated">
+        <source>Pushup Tracker – Dein Training. Klar visualisiert.</source>
+        <target>Pushup Tracker – Your training. Clearly visualized.</target>
+
+        
+        
+            </segment>
+
+      
+        </unit>
+    <unit id="seo.leaderboard.description">
+      <segment state="translated">
+        <source>Öffentliche Bestenliste für tägliche, wöchentliche und monatliche Pushup-Reps.</source>
+        <target>Public leaderboard for daily, weekly, and monthly pushup reps.</target>
+
+        
+        
+            </segment>
+
+      
+        </unit>
+    <unit id="seo.leaderboard.title">
+      <segment state="translated">
+        <source>Bestenliste – Pushup Tracker</source>
+        <target>Leaderboard – Pushup Tracker</target>
+
+        
+        
+            </segment>
+
+      
+        </unit>
+    <unit id="seo.login.description">
+      <segment state="translated">
+        <source>Melde dich an und tracke dein Pushup-Training über alle Geräte.</source>
+        <target>Sign in and track your pushup training across all devices.</target>
+
+        
+        
+            </segment>
+
+      
+        </unit>
+    <unit id="seo.login.title">
+      <segment state="translated">
+        <source>Login – Pushup Tracker</source>
+        <target>Login – Pushup Tracker</target>
+
+        
+        
+            </segment>
+
+      
+        </unit>
+    <unit id="seo.register.description">
+      <segment state="translated">
+        <source>Erstelle dein Konto und richte Profil, Tagesziel und Einwilligungen ein.</source>
+        <target>Create your account and set up profile, daily goal, and consent settings.</target>
+
+        
+        
+            </segment>
+
+      
+        </unit>
+    <unit id="seo.register.title">
+      <segment state="translated">
+        <source>Registrierung – Pushup Tracker</source>
+        <target>Sign up – Pushup Tracker</target>
+
+        
+        
+            </segment>
+
+      
+        </unit>
+    <unit id="seo.settings.description">
+      <segment state="translated">
+        <source>Verwalte Profil, Leaderboard-Sichtbarkeit und Tagesziel-Einstellungen.</source>
+        <target>Manage profile, leaderboard visibility, and daily goal settings.</target>
+
+        
+        
+            </segment>
+
+      
+        </unit>
+    <unit id="seo.settings.title">
+      <segment state="translated">
+        <source>Einstellungen – Pushup Tracker</source>
+        <target>Settings – Pushup Tracker</target>
+
+        
+        
+            </segment>
+
+      
+        </unit>
+    <unit id="settingsSubtitle">
+      <notes>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:33,34</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>User-Profil &amp; Tagesziel</source>
+        <target>User profile &amp; daily goal</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="settingsTitle">
+      <notes>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:31,32</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>Einstellungen</source>
+        <target>Settings</target>
+
+        
+        
+            </segment>
 
       
       
@@ -2251,290 +2704,17 @@
       }}"/>
           </pc>
  Quelle         </source>
-
-        
-              <target>
+        <target>
           <pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">
             <ph id="1" equiv="INTERPOLATION" disp="{{
         showSourceColumn() ? &apos;visibility&apos; : &apos;visibility_off&apos;
       }}"/>
-
-            
-                    </pc>
-
-          
- Source                 </target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="createNewEntry">
-      <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:27,30</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>
-          <pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">add</pc>
- Neu         </source>
-
-        
-              <target>
-          <pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">add</pc>
-
-          
- New                 </target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="noEntriesInSelectedRange">
-      <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:50,53</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source> Keine Einträge im gewählten Zeitraum. </source>
-
-        
-              <target> No entries in the selected period. </target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="colTime">
-      <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:66,67</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Zeit</source>
-
-        
-              <target>Time</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="colReps">
-      <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:75,76</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Reps</source>
-
-        
-              <target>Reps</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="colType">
-      <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:84,85</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Typ</source>
-
-        
-              <target>Type</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="colSource">
-      <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:93,94</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Quelle</source>
-
-        
-              <target>Source</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="colActions">
-      <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:102,103</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Aktion</source>
-
-        
-              <target>Action</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="editAria">
-      <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:108,109</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Bearbeiten</source>
-
-        
-              <target>Edit</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="editTitle">
-      <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:110,111</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Bearbeiten</source>
-
-        
-              <target>Edit</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="deleteAria">
-      <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:121</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Löschen</source>
-
-        
-              <target>Delete</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="deleteTitle">
-      <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:123</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Löschen</source>
-
-        
-              <target>Delete</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="createDialogTitle">
-      <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:147,149</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Neuen Eintrag anlegen</source>
-
-        
-              <target>Create new entry</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="timestampLabel">
-      <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:151,153</note>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:238,240</note>
+          </pc>
+ Source         </target>
 
         
         
-            </notes>
-      <segment state="translated">
-        <source>Zeitpunkt</source>
-
-        
-              <target>Timestamp</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="repsLabel">
-      <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:162,163</note>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:249,250</note>
-
-        
-        
-            </notes>
-      <segment state="translated">
-        <source>Reps</source>
-
-        
-              <target>Reps</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="typeLabel">
-      <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:174,175</note>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:261,262</note>
-
-        
-        
-            </notes>
-      <segment state="translated">
-        <source>Typ</source>
-
-        
-              <target>Type</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="typePlaceholder">
-      <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:180,181</note>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:267,268</note>
-
-        
-        
-            </notes>
-      <segment state="translated">
-        <source>Pick one / Custom</source>
-
-        
-              <target>Pick one / Custom</target>
-      </segment>
+            </segment>
 
       
       
@@ -2549,10 +2729,11 @@
             </notes>
       <segment state="translated">
         <source>Quelle</source>
+        <target>Source</target>
 
         
-              <target>Source</target>
-      </segment>
+        
+            </segment>
 
       
       
@@ -2567,964 +2748,85 @@
             </notes>
       <segment state="translated">
         <source>web / whatsapp / Custom</source>
+        <target>web / whatsapp / Custom</target>
 
         
-              <target>web / whatsapp / Custom</target>
-      </segment>
+        
+            </segment>
 
       
       
         </unit>
-    <unit id="saveEntry">
+    <unit id="sw.update.downloading">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:224,230</note>
+        <note category="location">web/src/app/app.ts</note>
+
+        
+            </notes>
+      <segment state="translated">
+        <source>Update wird im Hintergrund geladen …</source>
+        <target>Update is downloading in the background …</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="switchUser">
+      <notes>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:60,62</note>
 
         
             </notes>
       <segment state="translated">
         <source>
-          <pc id="0" equivStart="START_BLOCK_IF" equivEnd="CLOSE_BLOCK_IF" type="other" dispStart="@if (isCreateBusy()) {" dispEnd="}">
-            <pc id="1" equivStart="START_TAG_MAT_SPINNER" equivEnd="CLOSE_TAG_MAT_SPINNER" type="other" dispStart="&lt;mat-spinner diameter=&quot;14&quot;&gt;" dispEnd="&lt;/mat-spinner&gt;"/>
-          </pc>
-          <pc id="2" equivStart="START_BLOCK_ELSE" equivEnd="CLOSE_BLOCK_ELSE" type="other" dispStart="@else {" dispEnd="}"> Speichern </pc>
-        </source>
+          <pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">switch_account</pc>
+ User wechseln         </source>
+        <target>
+          <pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">switch_account</pc>
+ Switch user         </target>
 
         
-              <target>
-          <pc id="0" equivStart="START_BLOCK_IF" equivEnd="CLOSE_BLOCK_IF" type="other" dispStart="@if (isCreateBusy()) {" dispEnd="}">
-            <pc id="1" equivStart="START_TAG_MAT_SPINNER" equivEnd="CLOSE_TAG_MAT_SPINNER" type="other" dispStart="&lt;mat-spinner diameter=&quot;14&quot;&gt;" dispEnd="&lt;/mat-spinner&gt;"/>
-
-            
-                    </pc>
-          <pc id="2" equivStart="START_BLOCK_ELSE" equivEnd="CLOSE_BLOCK_ELSE" type="other" dispStart="@else {" dispEnd="}"> Save </pc>
-
-          
-          
-                </target>
-      </segment>
+        
+            </segment>
 
       
       
         </unit>
-    <unit id="editDialogTitle">
+    <unit id="timestampLabel">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:234,236</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Eintrag bearbeiten</source>
-
-        
-              <target>Edit entry</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="saveChanges">
-      <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:306,312</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>
-          <pc id="0" equivStart="START_BLOCK_IF" equivEnd="CLOSE_BLOCK_IF" type="other" dispStart="@if (editingId() &amp;&amp; isBusy(&apos;update&apos;, editBusyId())) {" dispEnd="}">
-            <pc id="1" equivStart="START_TAG_MAT_SPINNER" equivEnd="CLOSE_TAG_MAT_SPINNER" type="other" dispStart="&lt;mat-spinner diameter=&quot;14&quot;&gt;" dispEnd="&lt;/mat-spinner&gt;"/>
-          </pc>
-          <pc id="2" equivStart="START_BLOCK_ELSE" equivEnd="CLOSE_BLOCK_ELSE" type="other" dispStart="@else {" dispEnd="}"> Speichern </pc>
-        </source>
-
-        
-              <target>
-          <pc id="0" equivStart="START_BLOCK_IF" equivEnd="CLOSE_BLOCK_IF" type="other" dispStart="@if (editingId() &amp;&amp; isBusy(&apos;update&apos;, editBusyId())) {" dispEnd="}">
-            <pc id="1" equivStart="START_TAG_MAT_SPINNER" equivEnd="CLOSE_TAG_MAT_SPINNER" type="other" dispStart="&lt;mat-spinner diameter=&quot;14&quot;&gt;" dispEnd="&lt;/mat-spinner&gt;"/>
-
-            
-                    </pc>
-          <pc id="2" equivStart="START_BLOCK_ELSE" equivEnd="CLOSE_BLOCK_ELSE" type="other" dispStart="@else {" dispEnd="}"> Save </pc>
-
-          
-          
-                </target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="pie.noData">
-      <notes>
-        <note category="location">web/src/app/stats/components/type-pie/type-pie.component.ts:46,49</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Keine Daten</source>
-
-        
-              <target>No data</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="analysis.weekTrendTitle">
-      <notes>
-        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:24,26</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Wochentrend</source>
-
-        
-              <target>Weekly trend</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="analysis.weekCol">
-      <notes>
-        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:31,32</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Woche</source>
-
-        
-              <target>Week</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="analysis.repsCol">
-      <notes>
-        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:37,38</note>
-        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:63,64</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:151,153</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:238,240</note>
 
         
         
             </notes>
       <segment state="translated">
-        <source>Reps</source>
+        <source>Zeitpunkt</source>
+        <target>Timestamp</target>
 
         
-              <target>Reps</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="analysis.monthTrendTitle">
-      <notes>
-        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:50,52</note>
-
         
-            </notes>
-      <segment state="translated">
-        <source>Monatstrend</source>
-
-        
-              <target>Monthly trend</target>
-      </segment>
+            </segment>
 
       
       
         </unit>
-    <unit id="analysis.monthCol">
+    <unit id="title.fallback">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:57,58</note>
+        <note category="location">web/src/app/app.ts:65</note>
 
         
             </notes>
       <segment state="translated">
-        <source>Monat</source>
+        <source>Dein Name 💪</source>
+        <target>Your name 💪</target>
 
         
-              <target>Month</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="analysis.bestStreaksTitle">
-      <notes>
-        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:76,78</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Bestwerte &amp; Streaks</source>
-
-        
-              <target>Best values &amp; streaks</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="analysis.bestSingleEntry">
-      <notes>
-        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:82,84</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Bestwert Einzel-Eintrag:</source>
-
-        
-              <target>Best single entry:</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="analysis.bestDay">
-      <notes>
-        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:87,89</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Bester Tag:</source>
-
-        
-              <target>Best day:</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="analysis.currentStreak">
-      <notes>
-        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:93,95</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Aktuelle Streak:</source>
-
-        
-              <target>Current streak:</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="analysis.streakDays">
-      <notes>
-        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:96,97</note>
-        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:104,105</note>
-
-        
-        
-            </notes>
-      <segment state="translated">
-        <source>
-          <ph id="0" equiv="INTERPOLATION" disp="{{ currentStreak() }}"/>
- Tage        </source>
-
-        
-              <target>
-          <ph id="0" equiv="INTERPOLATION" disp="{{ currentStreak() }}"/>
-
-          
- days                </target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="analysis.longestStreak">
-      <notes>
-        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:101,103</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Längste Streak:</source>
-
-        
-              <target>Longest streak:</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="analysis.typesTitle">
-      <notes>
-        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:114,116</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Typen (Anteile)</source>
-
-        
-              <target>Types (shares)</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="analysis.heatmapTitle">
-      <notes>
-        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:126,128</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Heatmap (Wochentag/Uhrzeit)</source>
-
-        
-              <target>Heatmap (weekday/time)</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="entries.title">
-      <notes>
-        <note category="location">web/src/app/stats/shell/entries-page.component.ts:32,33</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Daten</source>
-
-        
-              <target>Data</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="entries.subtitle">
-      <notes>
-        <note category="location">web/src/app/stats/shell/entries-page.component.ts:34,35</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Filter und Verwaltung</source>
-
-        
-              <target>Filter and management</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="entries.dateFrom">
-      <notes>
-        <note category="location">web/src/app/stats/shell/entries-page.component.ts:41,42</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Datum von</source>
-
-        
-              <target>Date from</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="entries.dateTo">
-      <notes>
-        <note category="location">web/src/app/stats/shell/entries-page.component.ts:51,52</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Datum bis</source>
-
-        
-              <target>Date to</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="entries.sourceFilter">
-      <notes>
-        <note category="location">web/src/app/stats/shell/entries-page.component.ts:61,62</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Quelle</source>
-
-        
-              <target>Source</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="entries.allOption">
-      <notes>
-        <note category="location">web/src/app/stats/shell/entries-page.component.ts:64,66</note>
-        <note category="location">web/src/app/stats/shell/entries-page.component.ts:76,78</note>
-
-        
-        
-            </notes>
-      <segment state="translated">
-        <source>Alle</source>
-
-        
-              <target>All</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="entries.typeFilter">
-      <notes>
-        <note category="location">web/src/app/stats/shell/entries-page.component.ts:73,74</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Typ</source>
-
-        
-              <target>Type</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="entries.repsMin">
-      <notes>
-        <note category="location">web/src/app/stats/shell/entries-page.component.ts:85,86</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Reps min</source>
-
-        
-              <target>Reps min</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="entries.repsMax">
-      <notes>
-        <note category="location">web/src/app/stats/shell/entries-page.component.ts:96,97</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Reps max</source>
-
-        
-              <target>Reps max</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="settingsTitle">
-      <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:40,41</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Einstellungen</source>
-
-        
-              <target>Settings</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="settingsSubtitle">
-      <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:42,43</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>User-Profil &amp; Tagesziel</source>
-
-        
-              <target>User profile &amp; daily goal</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="displayNameLabel">
-      <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:49,50</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Anzeigename</source>
-
-        
-              <target>Display name</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="displayNamePlaceholder">
-      <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:55</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Wolf</source>
-
-        
-              <target>Wolf</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="settings.displayNameHint">
-      <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:58,60</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Kann in der Bestenliste angezeigt werden.</source>
-
-        
-              <target>Kann in der Bestenliste angezeigt werden.</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="settings.leaderboardOptIn">
-      <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:67,68</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source> In Bestenliste anzeigen </source>
-
-        
-              <target> In Bestenliste anzeigen </target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="settings.leaderboardOptOutHint">
-      <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:71,74</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source> Wenn deaktiviert, wird dein Profil in der Bestenliste nicht angezeigt. </source>
-
-        
-              <target> Wenn deaktiviert, wird dein Profil in der Bestenliste nicht angezeigt. </target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="settings.adsConsentOptIn">
-      <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:80,81</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source> Personalisierte Werbung aktivieren </source>
-
-        
-              <target> Personalisierte Werbung aktivieren </target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="settings.adsConsentHint">
-      <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:84,87</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source> Steuert, ob Werbe-Slots im Dashboard geladen werden dürfen. </source>
-
-        
-              <target> Steuert, ob Werbe-Slots im Dashboard geladen werden dürfen. </target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="dailyGoalLabel">
-      <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:88,89</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Tagesziel (Reps)</source>
-
-        
-              <target>Daily goal (reps)</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="dailyGoalPlaceholder">
-      <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:96</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>100</source>
-
-        
-              <target>100</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="settings.goalHint">
-      <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:99,101</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Wird prominent in der Toolbar angezeigt.</source>
-
-        
-              <target>Wird prominent in der Toolbar angezeigt.</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="saveSettings">
-      <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:116,118</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>
-          <pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">save</pc>
- Speichern         </source>
-
-        
-              <target>
-          <pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">save</pc>
-
-          
- Save                 </target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="saving">
-      <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:120,121</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Speichert…</source>
-
-        
-              <target>Saving…</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="saved">
-      <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:123,124</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Gespeichert.</source>
-
-        
-              <target>Saved.</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="settings.dangerZoneTitle">
-      <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:128,129</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Danger Zone</source>
-
-        
-              <target>Danger Zone</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="settings.dangerZoneBody">
-      <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:130,132</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source> Konto löschen entfernt dein Konto. Trainingsdaten bleiben für statistische Auswertung anonymisiert erhalten. </source>
-
-        
-              <target> Konto löschen entfernt dein Konto. Trainingsdaten bleiben für statistische Auswertung anonymisiert erhalten. </target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="settings.deleteAccount">
-      <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:141,143</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>
-          <pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">warning</pc>
- Konto löschen         </source>
-
-        
-              <target>
-          <pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">warning</pc>
- Konto löschen         </target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="settings.deletingAccount">
-      <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:146,149</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Konto wird gelöscht…</source>
-
-        
-              <target>Konto wird gelöscht…</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="settings.deleteDialogTitle">
-      <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:153,155</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source> Account wirklich löschen? </source>
-
-        
-              <target> Account wirklich löschen? </target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="settings.deleteDialogWarning">
-      <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:157,159</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source> Achtung: Diese Aktion ist nicht rückgängig. </source>
-
-        
-              <target> Achtung: Diese Aktion ist nicht rückgängig. </target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="settings.deleteDialogInfo">
-      <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:160,162</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source> Dein Konto wird gelöscht. Trainingsdaten bleiben für statistische Auswertung anonymisiert erhalten. </source>
-
-        
-              <target> Dein Konto wird gelöscht. Trainingsdaten bleiben für statistische Auswertung anonymisiert erhalten. </target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="settings.deleteDialogPhraseLabel">
-      <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:165,167</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Bestätigungswort eingeben</source>
-
-        
-              <target>Bestätigungswort eingeben</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="settings.deleteDialogPhraseHint">
-      <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:174,176</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Bitte exakt „löscchen“ eingeben.</source>
-
-        
-              <target>Bitte exakt „löscchen“ eingeben.</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="settings.deleteConfirmFinal">
-      <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:191,193</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source> Final löschen </source>
-
-        
-              <target> Final löschen </target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="brandLogoAlt">
-      <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:6,7</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Pushup Tracker Logo</source>
-
-        
-              <target>Pushup Tracker Logo</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="eyebrowTitle">
-      <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:10,11</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Pushup Stats</source>
-
-        
-              <target>Pushup Stats</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="dashboardTitle">
-      <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:11,12</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Liegestütze Statistik</source>
-
-        
-              <target>Pushup Statistics</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="dashboardSubtitle">
-      <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:13,16</note>
-
         
-            </notes>
-      <segment state="translated">
-        <source> Behalte Trainingsvolumen und Verlauf im Blick – klar, schnell und mobil optimiert. </source>
-
-        
-              <target> Keep an eye on training volume and progress – clear, fast, and mobile optimized. </target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="liveStateLabel">
-      <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:21,23</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>
-          <ph id="0" equiv="INTERPOLATION" disp="{{ liveConnected() ? &apos;verbunden&apos; : &apos;getrennt&apos; }}"/>
- Live:          </source>
-
-        
-              <target>
-          <ph id="0" equiv="INTERPOLATION" disp="{{ liveConnected() ? &apos;connected&apos; : &apos;disconnected&apos; }}"/>
-
-          
- Live:                  </target>
-      </segment>
+            </segment>
 
       
       
@@ -3537,469 +2839,168 @@
             </notes>
       <segment state="translated">
         <source>Tagesfokus</source>
+        <target>Today&apos;s focus</target>
 
         
-              <target>Today&apos;s focus</target>
-      </segment>
+        
+            </segment>
 
       
       
         </unit>
-    <unit id="1933013871016789910">
+    <unit id="typeLabel">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:34</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:174,175</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:261,262</note>
+
+        
+        
+            </notes>
+      <segment state="translated">
+        <source>Typ</source>
+        <target>Type</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="typePlaceholder">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:180,181</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:267,268</note>
+
+        
+        
+            </notes>
+      <segment state="translated">
+        <source>Pick one / Custom</source>
+        <target>Pick one / Custom</target>
+
+        
+        
+            </segment>
+
+      
+      
+        </unit>
+    <unit id="userIdHint">
+      <notes>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:49,50</note>
 
         
             </notes>
       <segment state="translated">
-        <source>Gesamt</source>
+        <source> Wird für Multi-User-Zuordnung genutzt (Auth kommt später). </source>
+        <target> Used for multi-user assignment (auth coming later). </target>
 
         
-              <target>Total</target>
-      </segment>
+        
+            </segment>
 
       
       
         </unit>
-    <unit id="goalProgressTitle">
+    <unit id="userIdLabel">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:45,47</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:40,41</note>
 
         
             </notes>
       <segment state="translated">
-        <source>Zielfortschritt</source>
+        <source>User ID</source>
+        <target>User ID</target>
 
         
-              <target>Goal progress</target>
-      </segment>
+        
+            </segment>
 
       
       
         </unit>
-    <unit id="lastEntryTitle">
+    <unit id="userIdPlaceholder">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:59,60</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:45,46</note>
 
         
             </notes>
       <segment state="translated">
-        <source>Letzter Eintrag</source>
+        <source>z.B. wolf</source>
+        <target>e.g. wolf</target>
 
         
-              <target>Last entry</target>
-      </segment>
+        
+            </segment>
 
       
       
         </unit>
-    <unit id="latEntryReps">
+    <unit id="validate.email.email">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:64,66</note>
+        <note category="location">libs/auth/src/lib/ui/login/login.component.ts:69</note>
 
         
             </notes>
       <segment state="translated">
-        <source>
-          <ph id="0" equiv="INTERPOLATION" disp="{{ latest.reps }}"/>
-          <ph id="1" equiv="INTERPOLATION_1" disp="{{ latest.type || &apos;Standard&apos; }}"/>
-  Reps ·          </source>
+        <source>Bitte gültige E-Mail eingeben!</source>
+        <target>Please enter a valid email!</target>
 
         
-              <target>
-          <ph id="0" equiv="INTERPOLATION" disp="{{ latest.reps }}"/>
-          <ph id="1" equiv="INTERPOLATION_1" disp="{{ latest.type || &apos;Standard&apos; }}"/>
-
-          
-          
-  reps ·                  </target>
-      </segment>
+        
+            </segment>
 
       
       
         </unit>
-    <unit id="noEntryInPeriod">
+    <unit id="validate.email.required">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:68,70</note>
+        <note category="location">libs/auth/src/lib/ui/login/login.component.ts:66</note>
 
         
             </notes>
       <segment state="translated">
-        <source>Noch kein Eintrag für diesen Zeitraum.</source>
+        <source>Bitte E-Mail eingeben!</source>
+        <target>Please enter email!</target>
 
         
-              <target>No entry for this period yet.</target>
-      </segment>
+        
+            </segment>
 
       
       
         </unit>
-    <unit id="allTimeSummaryAria">
+    <unit id="validate.password.minLength">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:76,77</note>
+        <note category="location">libs/auth/src/lib/ui/login/login.component.ts:75</note>
 
         
             </notes>
       <segment state="translated">
-        <source>All-Time Kurzübersicht</source>
+        <source>Passwort muss mindestens 6 Zeichen lang sein!</source>
+        <target>Password must be at least 6 characters long!</target>
 
         
-              <target>All-time summary</target>
-      </segment>
+        
+            </segment>
 
       
       
         </unit>
-    <unit id="allTimeTotal">
+    <unit id="validate.password.required">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:80,81</note>
+        <note category="location">libs/auth/src/lib/ui/login/login.component.ts:72</note>
 
         
             </notes>
       <segment state="translated">
-        <source>All-Time Gesamt</source>
+        <source>Bitte Passwort eingeben!</source>
+        <target>Please enter password!</target>
 
         
-              <target>All-time total</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="allTimeDays">
-      <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:84,85</note>
-
         
-            </notes>
-      <segment state="translated">
-        <source>All-Time Tage</source>
-
-        
-              <target>All-time days</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="allTimeEntries">
-      <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:88,89</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>All-Time Einträge</source>
-
-        
-              <target>All-time entries</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="allTimeAvg">
-      <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:92,93</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>All-Time Ø/Tag</source>
-
-        
-              <target>All-time avg/day</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="quickActionsTitle">
-      <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:100,102</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Schnellaktionen</source>
-
-        
-              <target>Quick actions</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="quickActionsSubtitle">
-      <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:103,105</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Schnell eintragen ohne Dialog</source>
-
-        
-              <target>Quick entry without dialog</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="quickAdd10">
-      <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:114,116</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>
-          <pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">bolt</pc>
- +10 Reps         </source>
-
-        
-              <target>
-          <pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">bolt</pc>
-
-          
- +10 reps                 </target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="quickAdd20">
-      <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:124,126</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>
-          <pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">flash_on</pc>
- +20 Reps         </source>
-
-        
-              <target>
-          <pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">flash_on</pc>
-
-          
- +20 reps                 </target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="quickAdd30">
-      <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:134,136</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>
-          <pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">whatshot</pc>
- +30 Reps         </source>
-
-        
-              <target>
-          <pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">whatshot</pc>
-
-          
- +30 reps                 </target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="loadingStats">
-      <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:152,156</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source> Lade Statistikdaten… </source>
-
-        
-              <target> Loading statistics data… </target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="dayChartModeLabel">
-      <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:169,170</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Tagesansicht</source>
-
-        
-              <target>Tagesansicht</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="dayChartMode24h">
-      <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:176,177</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>24h</source>
-
-        
-              <target>24h</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="dayChartMode14h">
-      <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:179,180</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>14h Day Mode</source>
-
-        
-              <target>14h Day Mode</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="entriesInSelectedRange">
-      <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:196,198</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Einträge im gewählten Zeitraum</source>
-
-        
-              <target>Entries in selected period</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="ads.dashboard.aria">
-      <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:208</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Werbung</source>
-
-        
-              <target>Advertisement</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="period.today">
-      <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:55</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Heute</source>
-
-        
-              <target>Today</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="period.day">
-      <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:56</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Tag</source>
-
-        
-              <target>Day</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="period.week">
-      <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:57</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Woche</source>
-
-        
-              <target>Week</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="period.month">
-      <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:58</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Monat</source>
-
-        
-              <target>Month</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="period.year">
-      <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:59</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Jahr</source>
-
-        
-              <target>Year</target>
-      </segment>
-
-      
-      
-        </unit>
-    <unit id="period.range">
-      <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:60</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Zeitraum</source>
-
-        
-              <target>Period</target>
-      </segment>
+            </segment>
 
       
       
@@ -4182,188 +3183,7 @@
     
     
     
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-      </file>
-
-  
+    </file>
 
   
 </xliff>
-
