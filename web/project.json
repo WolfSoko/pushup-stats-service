@@ -21,7 +21,6 @@
       "executor": "@angular/build:application",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "allowedHosts": "*",
         "outputPath": "dist/web",
         "browser": "web/src/main.ts",
         "server": "web/src/main.server.ts",
