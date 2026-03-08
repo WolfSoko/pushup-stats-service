@@ -410,8 +410,10 @@ export class SettingsPageComponent {
   private readAdsConsent(): boolean {
     const storage = globalThis.localStorage;
     const hasGetItem = typeof storage?.getItem === 'function';
-    if (!hasGetItem) return false;
-    return storage.getItem('pus_ads_consent') === 'granted';
+    if (!hasGetItem) return true;
+    const value = storage.getItem('pus_ads_consent');
+    if (value === null) return true;
+    return value === 'granted';
   }
 
   private writeAdsConsent(enabled: boolean): void {

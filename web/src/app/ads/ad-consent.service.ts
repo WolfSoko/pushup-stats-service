@@ -5,6 +5,8 @@ export class AdConsentService {
   hasConsent(): boolean {
     const storage = globalThis.localStorage;
     if (!storage || typeof storage.getItem !== 'function') return false;
-    return storage.getItem('pus_ads_consent') === 'granted';
+    const value = storage.getItem('pus_ads_consent');
+    if (value === null) return true;
+    return value === 'granted';
   }
 }

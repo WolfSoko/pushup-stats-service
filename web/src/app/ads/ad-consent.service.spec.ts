@@ -7,9 +7,9 @@ describe('AdConsentService', () => {
     globalThis.localStorage?.removeItem('pus_ads_consent');
   });
 
-  it('returns false when no consent exists', () => {
+  it('returns true when no consent exists (initial default)', () => {
     const service = TestBed.runInInjectionContext(() => new AdConsentService());
-    expect(service.hasConsent()).toBe(false);
+    expect(service.hasConsent()).toBe(true);
   });
 
   it('returns true when consent is granted', () => {
