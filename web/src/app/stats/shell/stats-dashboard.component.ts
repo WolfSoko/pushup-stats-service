@@ -28,6 +28,7 @@ import {
   StatsSeriesEntry,
 } from '@pu-stats/models';
 import { firstValueFrom } from 'rxjs';
+import { AdsConfigService } from '../../ads/ads-config.service';
 import { UserContextService } from '../../user-context.service';
 import { createWeekRange } from '../../util/date/create-week-range';
 import { inferRangeMode } from '../../util/date/infer-range-mode';
@@ -36,8 +37,6 @@ import { toLocalIsoDate } from '../../util/date/to-local-iso-date';
 import { FilterBarComponent } from '../components/filter-bar/filter-bar.component';
 import { StatsChartComponent } from '../components/stats-chart/stats-chart.component';
 import { StatsTableComponent } from '../components/stats-table/stats-table.component';
-import { AdSlotComponent } from '../../ads/ad-slot.component';
-import { AdsConfigService } from '../../ads/ads-config.service';
 
 const EMPTY_STATS: StatsResponse = {
   meta: {
@@ -72,7 +71,6 @@ const PERIOD_TITLE_MAP: Record<RangeModes | 'today', string> = {
     FilterBarComponent,
     StatsChartComponent,
     StatsTableComponent,
-    AdSlotComponent,
   ],
   templateUrl: './stats-dashboard.component.html',
   styleUrl: './stats-dashboard.component.scss',

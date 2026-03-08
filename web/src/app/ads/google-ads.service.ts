@@ -14,7 +14,7 @@ export class GoogleAdsService {
     if (!client || this.initializedForClient.has(client)) return;
 
     const existing = document.querySelector<HTMLScriptElement>(
-      'script[data-ads-client]'
+      'script#data-ads-client'
     );
     if (!existing) {
       const script = document.createElement('script');
@@ -23,7 +23,7 @@ export class GoogleAdsService {
         client
       )}`;
       script.crossOrigin = 'anonymous';
-      script.setAttribute('data-ads-client', client);
+      script.id = 'data-ads-client';
       document.head.appendChild(script);
     }
 

@@ -5,27 +5,20 @@ import {
   linkedSignal,
   resource,
 } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Analytics, logEvent } from '@angular/fire/analytics';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
+import { RouterLink } from '@angular/router';
+import { AdsConfigService } from '../../ads/ads-config.service';
 import {
   LeaderboardPeriod,
   LeaderboardService,
 } from '../../leaderboard.service';
-import { Analytics, logEvent } from '@angular/fire/analytics';
-import { AdSlotComponent } from '../../ads/ad-slot.component';
-import { AdsConfigService } from '../../ads/ads-config.service';
 
 @Component({
   selector: 'app-landing-page',
-  imports: [
-    RouterLink,
-    MatButtonModule,
-    MatCardModule,
-    MatIconModule,
-    AdSlotComponent,
-  ],
+  imports: [RouterLink, MatButtonModule, MatCardModule, MatIconModule],
   templateUrl: './landing-page.component.html',
   styleUrl: './landing-page.component.scss',
 })
