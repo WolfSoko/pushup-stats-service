@@ -32,6 +32,7 @@ import { StatsApiService, UserConfigApiService } from '@pu-stats/data-access';
 import { firstValueFrom, filter } from 'rxjs';
 import { SeoService } from './seo.service';
 import { Analytics, logEvent } from '@angular/fire/analytics';
+import { AdsConsentStateService } from './ads/ads-consent-state.service';
 
 @Component({
   selector: 'app-root',
@@ -63,6 +64,7 @@ export class App {
   private readonly seo = inject(SeoService);
   private readonly analytics = inject(Analytics, { optional: true });
   private readonly auth = inject(AuthStore);
+  private readonly adsConsentState = inject(AdsConsentStateService);
 
   setLanguage(lang: 'de' | 'en', ev?: Event): void {
     ev?.preventDefault();
@@ -131,11 +133,7 @@ export class App {
 
     effect(() => {
       const cfg = this.userGoalResource.value();
-      const targetedAds = cfg?.consent?.targetedAds;
-      if (typeof targetedAds !== 'boolean') return;
-      const storage = globalThis.localStorage;
-      if (typeof storage?.setItem !== 'function') return;
-      storage.setItem('pus_ads_consent', targetedAds ? 'granted' : 'denied');
+      this.adsConsentState.setTargetedAdsConsent(cfg?.consent?.targetedAds);
     });
 
     if (this.swUpdate?.isEnabled) {

@@ -1,12 +1,11 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
+import { AdsConsentStateService } from './ads-consent-state.service';
 
 @Injectable({ providedIn: 'root' })
 export class AdConsentService {
+  private readonly consentState = inject(AdsConsentStateService);
+
   hasConsent(): boolean {
-    const storage = globalThis.localStorage;
-    if (!storage || typeof storage.getItem !== 'function') return false;
-    const value = storage.getItem('pus_ads_consent');
-    if (value === null) return true;
-    return value === 'granted';
+    return this.consentState.targetedAdsConsent();
   }
 }
