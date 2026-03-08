@@ -158,9 +158,9 @@
       <app-filter-bar
         [from]="from()"
         [to]="to()"
-        (fromChange)="from.set($event)"
-        (toChange)="to.set($event)"
-        (modeChange)="rangeMode.set($event)"
+        (fromChange)="onFromChange($event)"
+        (toChange)="onToChange($event)"
+        (modeChange)="onModeChange($event)"
       />
     </section>
 
