@@ -11,8 +11,8 @@ import {
 export class AdsConfigService {
   private readonly remoteConfig = inject(RemoteConfig);
 
-  constructor() {
-    void fetchAndActivate(this.remoteConfig);
+  init() {
+    return fetchAndActivate(this.remoteConfig);
   }
 
   readonly enabled = toSignal(

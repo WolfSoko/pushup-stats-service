@@ -94,8 +94,11 @@ export const appConfig: ApplicationConfig = {
           provideAppInitializer(() => {
             const effectRef = effect(async () => {
               const adsConfig = inject(AdsConfigService);
+              await adsConfig.init();
               const googleAds = inject(GoogleAdsService);
+
               const adClient = adsConfig.adClient();
+
               if (adsConfig.enabled() && adClient) {
                 await googleAds.initialize(adClient);
                 effectRef.destroy();
