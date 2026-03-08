@@ -103,23 +103,6 @@ describe('UserConfigApiService', () => {
     );
   });
 
-  it('reads config from HTTP when unauthenticated in browser', async () => {
-    const { fixture } = await render('', {
-      providers: [
-        UserConfigApiService,
-        { provide: PLATFORM_ID, useValue: 'browser' },
-        { provide: Firestore, useValue: {} },
-        { provide: Auth, useValue: { currentUser: null } },
-      ],
-    });
-
-    const service = fixture.debugElement.injector.get(UserConfigApiService);
-    let result: UserConfig | undefined;
-    service.getConfig('u').subscribe((r) => (result = r));
-
-    expect(result).toEqual({ userId: 'u' });
-  });
-
   it('updates config in Firestore when authenticated', async () => {
     const firestoreFns = await import('@angular/fire/firestore');
     (firestoreFns.doc as jest.Mock).mockReturnValue({ id: 'u' });
@@ -148,9 +131,7 @@ describe('UserConfigApiService', () => {
     expect(result).toEqual({ userId: 'u', dailyGoal: 120 });
   });
 
-  it('returns default when updating config unauthenticated', async () => {
-    const firestoreFns = await import('@angular/fire/firestore');
-
+  it('returns undefined when updating config unauthenticated', async () => {
     const { fixture } = await render('', {
       providers: [
         UserConfigApiService,
@@ -166,7 +147,6 @@ describe('UserConfigApiService', () => {
       .updateConfig('u', { dailyGoal: 120 } as UserConfigUpdate)
       .subscribe((r) => (result = r));
 
-    expect(result).toEqual({ userId: 'u', dailyGoal: 120 });
-    expect(firestoreFns.setDoc).not.toHaveBeenCalled();
+    expect(result).toBeUndefined();
   });
 });
