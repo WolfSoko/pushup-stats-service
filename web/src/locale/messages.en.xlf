@@ -1429,5 +1429,125 @@
         <target>Daily · Weekly · Monthly</target>
       </segment>
     </unit>
+    <unit id="seo.default.title">
+      <segment state="translated">
+        <source>Pushup Tracker</source>
+        <target>Pushup Tracker</target>
+      </segment>
+    </unit>
+    <unit id="seo.default.description">
+      <segment state="translated">
+        <source>Tracke Reps, Trends und Streaks mit Pushup Tracker.</source>
+        <target>Track reps, trends, and streaks with Pushup Tracker.</target>
+      </segment>
+    </unit>
+    <unit id="seo.landing.title">
+      <segment state="translated">
+        <source>Pushup Tracker – Dein Training. Klar visualisiert.</source>
+        <target>Pushup Tracker – Your training. Clearly visualized.</target>
+      </segment>
+    </unit>
+    <unit id="seo.landing.description">
+      <segment state="translated">
+        <source>Tracke Reps, Trends und Streaks in Sekunden – mobil, schnell und mit Live-Updates.</source>
+        <target>Track reps, trends, and streaks in seconds – mobile, fast, and with live updates.</target>
+      </segment>
+    </unit>
+    <unit id="seo.dashboard.title">
+      <segment state="translated">
+        <source>Dashboard – Pushup Tracker</source>
+        <target>Dashboard – Pushup Tracker</target>
+      </segment>
+    </unit>
+    <unit id="seo.dashboard.description">
+      <segment state="translated">
+        <source>Behalte Trainingsvolumen und Verlauf im Blick – klar, schnell und mobil optimiert.</source>
+        <target>Keep training volume and progress in view – clear, fast, and mobile optimized.</target>
+      </segment>
+    </unit>
+    <unit id="seo.login.title">
+      <segment state="translated">
+        <source>Login – Pushup Tracker</source>
+        <target>Login – Pushup Tracker</target>
+      </segment>
+    </unit>
+    <unit id="seo.login.description">
+      <segment state="translated">
+        <source>Melde dich an und tracke dein Pushup-Training über alle Geräte.</source>
+        <target>Sign in and track your pushup training across all devices.</target>
+      </segment>
+    </unit>
+    <unit id="seo.register.title">
+      <segment state="translated">
+        <source>Registrierung – Pushup Tracker</source>
+        <target>Sign up – Pushup Tracker</target>
+      </segment>
+    </unit>
+    <unit id="seo.register.description">
+      <segment state="translated">
+        <source>Erstelle dein Konto und richte Profil, Tagesziel und Einwilligungen ein.</source>
+        <target>Create your account and set up profile, daily goal, and consent settings.</target>
+      </segment>
+    </unit>
+    <unit id="seo.data.title">
+      <segment state="translated">
+        <source>Daten – Pushup Tracker</source>
+        <target>Data – Pushup Tracker</target>
+      </segment>
+    </unit>
+    <unit id="seo.data.description">
+      <segment state="translated">
+        <source>Verwalte Einträge, filtere nach Zeitraum und behalte deine Trainingsdaten im Griff.</source>
+        <target>Manage entries, filter by time range, and stay in control of your training data.</target>
+      </segment>
+    </unit>
+    <unit id="seo.analysis.title">
+      <segment state="translated">
+        <source>Analyse – Pushup Tracker</source>
+        <target>Analysis – Pushup Tracker</target>
+      </segment>
+    </unit>
+    <unit id="seo.analysis.description">
+      <segment state="translated">
+        <source>Analysiere Trends, Verteilungen und Streaks deines Trainings.</source>
+        <target>Analyze trends, distributions, and streaks in your training.</target>
+      </segment>
+    </unit>
+    <unit id="seo.settings.title">
+      <segment state="translated">
+        <source>Einstellungen – Pushup Tracker</source>
+        <target>Settings – Pushup Tracker</target>
+      </segment>
+    </unit>
+    <unit id="seo.settings.description">
+      <segment state="translated">
+        <source>Verwalte Profil, Leaderboard-Sichtbarkeit und Tagesziel-Einstellungen.</source>
+        <target>Manage profile, leaderboard visibility, and daily goal settings.</target>
+      </segment>
+    </unit>
+    <unit id="seo.leaderboard.title">
+      <segment state="translated">
+        <source>Bestenliste – Pushup Tracker</source>
+        <target>Leaderboard – Pushup Tracker</target>
+      </segment>
+    </unit>
+    <unit id="seo.leaderboard.description">
+      <segment state="translated">
+        <source>Öffentliche Bestenliste für tägliche, wöchentliche und monatliche Pushup-Reps.</source>
+        <target>Public leaderboard for daily, weekly, and monthly pushup reps.</target>
+      </segment>
+    </unit>
+    <unit id="ads.landing.aria">
+      <segment state="translated">
+        <source>Werbung</source>
+        <target>Advertisement</target>
+      </segment>
+    </unit>
+    <unit id="ads.dashboard.aria">
+      <segment state="translated">
+        <source>Werbung</source>
+        <target>Advertisement</target>
+      </segment>
+    </unit>
   </file>
 </xliff>
