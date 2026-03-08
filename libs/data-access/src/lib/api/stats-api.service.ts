@@ -17,7 +17,7 @@ import {
   StatsResponse,
 } from '@pu-stats/models';
 import { PushupFirestoreService } from './pushup-firestore.service';
-import { UserConfigFirestoreService } from './user-config-firestore.service';
+import { UserConfigApiService } from './user-config-api.service';
 
 @Injectable({ providedIn: 'root' })
 export class StatsApiService {
@@ -25,7 +25,7 @@ export class StatsApiService {
   private readonly pushupFirestore = inject(PushupFirestoreService, {
     optional: true,
   });
-  private readonly userConfigFirestore = inject(UserConfigFirestoreService, {
+  private readonly userConfigApi = inject(UserConfigApiService, {
     optional: true,
   });
 
@@ -94,12 +94,10 @@ export class StatsApiService {
     dayChartMode: '24h' | '14h';
   }> {
     try {
-      if (!this.auth?.currentUser || !this.userConfigFirestore) {
+      if (!this.auth?.currentUser || !this.userConfigApi) {
         return { dayChartMode: '14h' };
       }
-      const cfg = await firstValueFrom(
-        this.userConfigFirestore.getConfig(userId)
-      );
+      const cfg = await firstValueFrom(this.userConfigApi.getConfig(userId));
       const dayChartMode = cfg?.ui?.dayChartMode === '24h' ? '24h' : '14h';
       return { dayChartMode };
     } catch {

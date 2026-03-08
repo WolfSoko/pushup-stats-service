@@ -6,7 +6,7 @@ import { render } from '@testing-library/angular';
 import { firstValueFrom, of } from 'rxjs';
 import { StatsApiService } from './stats-api.service';
 import { PushupFirestoreService } from './pushup-firestore.service';
-import { UserConfigFirestoreService } from './user-config-firestore.service';
+import { UserConfigApiService } from './user-config-api.service';
 
 jest.mock('@angular/fire/auth', () => ({
   Auth: jest.fn(),
@@ -91,7 +91,7 @@ describe('StatsApiService', () => {
             deletePushup: jest.fn(),
           },
         },
-        { provide: UserConfigFirestoreService, useValue: null },
+        { provide: UserConfigApiService, useValue: null },
         { provide: PLATFORM_ID, useValue: 'server' },
       ],
     });

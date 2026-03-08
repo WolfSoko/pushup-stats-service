@@ -15,7 +15,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { firstValueFrom } from 'rxjs';
-import { UserConfigFirestoreService } from '@pu-stats/data-access';
+import { UserConfigApiService } from '@pu-stats/data-access';
 import { UserContextService } from '../../user-context.service';
 // eslint-disable-next-line @nx/enforce-module-boundaries
 import { AuthStore } from '@pu-auth/auth';
@@ -255,8 +255,7 @@ import { Analytics, logEvent } from '@angular/fire/analytics';
   `,
 })
 export class SettingsPageComponent {
-  // Switch to Firestore-based service for local/dev
-  private readonly api = inject(UserConfigFirestoreService);
+  private readonly api = inject(UserConfigApiService);
   private readonly user = inject(UserContextService);
   private readonly auth = inject(AuthStore);
   private readonly router = inject(Router);
@@ -345,17 +344,19 @@ export class SettingsPageComponent {
     const dailyGoal = Math.max(1, this.dailyGoalDraft());
     try {
       const current = this.config();
-      await this.api.updateConfig(userId, {
-        displayName: this.displayNameDraft().trim(),
-        dailyGoal,
-        consent: {
-          ...(current.consent ?? {}),
-          targetedAds: this.adsConsentDraft(),
-        },
-        ui: {
-          hideFromLeaderboard: this.leaderboardOptOutDraft(),
-        },
-      });
+      await firstValueFrom(
+        this.api.updateConfig(userId, {
+          displayName: this.displayNameDraft().trim(),
+          dailyGoal,
+          consent: {
+            ...(current.consent ?? {}),
+            targetedAds: this.adsConsentDraft(),
+          },
+          ui: {
+            hideFromLeaderboard: this.leaderboardOptOutDraft(),
+          },
+        })
+      );
       this.saved.set(true);
       this.configResource.reload();
       this.trackAnalytics('settings_saved', {
@@ -393,13 +394,15 @@ export class SettingsPageComponent {
 
     const userId = this.activeUserId();
     try {
-      await this.api.updateConfig(userId, {
-        displayName: 'Gelöschter Benutzer',
-        email: null,
-        ui: {
-          hideFromLeaderboard: true,
-        },
-      });
+      await firstValueFrom(
+        this.api.updateConfig(userId, {
+          displayName: 'Gelöschter Benutzer',
+          email: null,
+          ui: {
+            hideFromLeaderboard: true,
+          },
+        })
+      );
       await this.auth.deleteAccount();
       this.trackAnalytics('account_anonymized_and_deleted', { success: true });
       await this.router.navigateByUrl('/');
