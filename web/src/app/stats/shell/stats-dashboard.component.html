@@ -203,4 +203,8 @@
       (remove)="onDeleteEntry($event)"
     />
   </section>
+
+  <section aria-label="Werbung" i18n-aria-label="@@ads.dashboard.aria">
+    <app-ad-slot [client]="adClient" [slot]="adSlotDashboardInline" />
+  </section>
 </main>

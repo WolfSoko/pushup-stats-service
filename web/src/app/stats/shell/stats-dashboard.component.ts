@@ -36,6 +36,7 @@ import { toLocalIsoDate } from '../../util/date/to-local-iso-date';
 import { FilterBarComponent } from '../components/filter-bar/filter-bar.component';
 import { StatsChartComponent } from '../components/stats-chart/stats-chart.component';
 import { StatsTableComponent } from '../components/stats-table/stats-table.component';
+import { AdSlotComponent } from '../../ads/ad-slot.component';
 
 const EMPTY_STATS: StatsResponse = {
   meta: {
@@ -70,6 +71,7 @@ const PERIOD_TITLE_MAP: Record<RangeModes | 'today', string> = {
     FilterBarComponent,
     StatsChartComponent,
     StatsTableComponent,
+    AdSlotComponent,
   ],
   templateUrl: './stats-dashboard.component.html',
   styleUrl: './stats-dashboard.component.scss',
@@ -147,6 +149,9 @@ export class StatsDashboardComponent {
   readonly dailyGoal = signal(100);
   readonly dayChartMode = signal<'24h' | '14h'>('14h');
   readonly savingDayChartMode = signal(false);
+
+  readonly adClient = 'ca-pub-xxxxxxxxxxxxxxxx';
+  readonly adSlotDashboardInline = '1234567890';
 
   readonly userConfigResource = resource({
     params: () => ({ userId: this.user.userIdSafe() }),
