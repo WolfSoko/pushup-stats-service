@@ -14,10 +14,18 @@ import {
   LeaderboardService,
 } from '../../leaderboard.service';
 import { Analytics, logEvent } from '@angular/fire/analytics';
+import { AdSlotComponent } from '../../ads/ad-slot.component';
+import { AdsConfigService } from '../../ads/ads-config.service';
 
 @Component({
   selector: 'app-landing-page',
-  imports: [RouterLink, MatButtonModule, MatCardModule, MatIconModule],
+  imports: [
+    RouterLink,
+    MatButtonModule,
+    MatCardModule,
+    MatIconModule,
+    AdSlotComponent,
+  ],
   templateUrl: './landing-page.component.html',
   styleUrl: './landing-page.component.scss',
 })
@@ -26,8 +34,11 @@ export class LandingPageComponent {
     optional: true,
   });
   private readonly analytics = inject(Analytics, { optional: true });
+  private readonly adsConfig = inject(AdsConfigService);
 
   readonly period = linkedSignal<LeaderboardPeriod>(() => 'daily');
+  readonly adClient = this.adsConfig.adClient;
+  readonly landingAdSlot = this.adsConfig.dashboardInlineSlot;
 
   readonly leaderboardResource = resource({
     loader: async () => {
