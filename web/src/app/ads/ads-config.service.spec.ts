@@ -21,6 +21,7 @@ describe('AdsConfigService', () => {
         ads_dashboard_inline_enabled: { asBoolean: () => true },
         ads_client: { asString: () => 'ca-pub-9999999999999999' },
         ads_dashboard_inline_slot: { asString: () => '7777777777' },
+        ads_landing_inline_slot: { asString: () => '8888888888' },
       }),
     };
 
@@ -35,5 +36,6 @@ describe('AdsConfigService', () => {
     expect(service.dashboardInlineEnabled()).toBe(true);
     expect(service.adClient()).toBe('ca-pub-9999999999999999');
     expect(service.dashboardInlineSlot()).toBe('7777777777');
+    expect(service.landingInlineSlot()).toBe('8888888888');
   });
 });

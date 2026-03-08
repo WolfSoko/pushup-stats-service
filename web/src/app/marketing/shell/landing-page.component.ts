@@ -38,7 +38,7 @@ export class LandingPageComponent {
 
   readonly period = linkedSignal<LeaderboardPeriod>(() => 'daily');
   readonly adClient = this.adsConfig.adClient;
-  readonly landingAdSlot = this.adsConfig.dashboardInlineSlot;
+  readonly landingAdSlot = this.adsConfig.landingInlineSlot;
 
   readonly leaderboardResource = resource({
     loader: async () => {

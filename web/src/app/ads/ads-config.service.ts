@@ -15,6 +15,7 @@ export class AdsConfigService {
   readonly dashboardInlineEnabled = signal(adsConfig.dashboardInlineEnabled);
   readonly adClient = signal(adsConfig.adClient);
   readonly dashboardInlineSlot = signal(adsConfig.dashboardInlineSlot);
+  readonly landingInlineSlot = signal(adsConfig.landingInlineSlot);
 
   async init(): Promise<void> {
     if (!this.remoteConfig) return;
@@ -41,5 +42,8 @@ export class AdsConfigService {
     const dashboardInlineSlot =
       values['ads_dashboard_inline_slot']?.asString?.();
     if (dashboardInlineSlot) this.dashboardInlineSlot.set(dashboardInlineSlot);
+
+    const landingInlineSlot = values['ads_landing_inline_slot']?.asString?.();
+    if (landingInlineSlot) this.landingInlineSlot.set(landingInlineSlot);
   }
 }
