@@ -19,8 +19,9 @@ export class GoogleAdsService {
     if (!existing) {
       const script = document.createElement('script');
       script.async = true;
-      script.src =
-        'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js';
+      script.src = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${encodeURIComponent(
+        client
+      )}`;
       script.crossOrigin = 'anonymous';
       script.setAttribute('data-ads-client', client);
       document.head.appendChild(script);
