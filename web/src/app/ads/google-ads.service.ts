@@ -1,11 +1,5 @@
 import { Injectable } from '@angular/core';
 
-declare global {
-  interface Window {
-    adsbygoogle?: unknown[];
-  }
-}
-
 @Injectable({ providedIn: 'root' })
 export class GoogleAdsService {
   private initializedForClient = new Set<string>();

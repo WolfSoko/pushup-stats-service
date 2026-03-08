@@ -3,20 +3,25 @@ import { provideHttpClient, withFetch } from '@angular/common/http';
 import localeDe from '@angular/common/locales/de';
 import {
   ApplicationConfig,
+  inject,
   isDevMode,
   LOCALE_ID,
+  provideAppInitializer,
   provideBrowserGlobalErrorListeners,
   provideZonelessChangeDetection,
 } from '@angular/core';
 import { getAnalytics, provideAnalytics } from '@angular/fire/analytics';
+import { FirebaseApp } from '@angular/fire/app';
 import {
   connectFunctionsEmulator,
   getFunctions,
   provideFunctions,
 } from '@angular/fire/functions';
 import {
+  fetchAndActivate,
   getRemoteConfig,
   provideRemoteConfig,
+  RemoteConfig,
 } from '@angular/fire/remote-config';
 import {
   MAT_DATE_LOCALE,
@@ -84,7 +89,8 @@ export const appConfig: ApplicationConfig = {
           provideFireStore(),
           provideFunctions(() => getFunctions()),
           provideAnalytics(() => getAnalytics()),
-          provideRemoteConfig(() => getRemoteConfig()),
+          provideRemoteConfig(() => getRemoteConfig(inject(FirebaseApp))),
+          provideAppInitializer(() => fetchAndActivate(inject(RemoteConfig))),
         ]),
   ],
 };
