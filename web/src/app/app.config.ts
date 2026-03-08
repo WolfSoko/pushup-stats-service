@@ -3,10 +3,8 @@ import { provideHttpClient, withFetch } from '@angular/common/http';
 import localeDe from '@angular/common/locales/de';
 import {
   ApplicationConfig,
-  inject,
   isDevMode,
   LOCALE_ID,
-  provideAppInitializer,
   provideBrowserGlobalErrorListeners,
   provideZonelessChangeDetection,
 } from '@angular/core';
@@ -42,7 +40,6 @@ import { MatrixController, MatrixElement } from 'chartjs-chart-matrix';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 import { firebaseRuntime } from '../env/firebase-runtime';
-import { AdsConfigService } from './ads/ads-config.service';
 import { appRoutes } from './app.routes';
 
 registerLocaleData(localeDe);
@@ -89,8 +86,5 @@ export const appConfig: ApplicationConfig = {
           provideAnalytics(() => getAnalytics()),
           provideRemoteConfig(() => getRemoteConfig()),
         ]),
-    provideAppInitializer(() => {
-      return inject(AdsConfigService).init();
-    }),
   ],
 };

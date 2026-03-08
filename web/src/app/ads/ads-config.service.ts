@@ -1,49 +1,28 @@
-import { Injectable, inject, signal } from '@angular/core';
-import { RemoteConfig } from '@angular/fire/remote-config';
-import { adsConfig } from '../../env/ads.config';
-
-type RemoteValue = {
-  asBoolean?: () => boolean;
-  asString?: () => string;
-};
+import { inject, Injectable } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
+import {
+  getBooleanChanges,
+  getStringChanges,
+  RemoteConfig,
+} from '@angular/fire/remote-config';
 
 @Injectable({ providedIn: 'root' })
 export class AdsConfigService {
-  private readonly remoteConfig = inject(RemoteConfig, { optional: true });
+  private readonly remoteConfig = inject(RemoteConfig);
 
-  readonly enabled = signal(adsConfig.enabled);
-  readonly dashboardInlineEnabled = signal(adsConfig.dashboardInlineEnabled);
-  readonly adClient = signal(adsConfig.adClient);
-  readonly dashboardInlineSlot = signal(adsConfig.dashboardInlineSlot);
-  readonly landingInlineSlot = signal(adsConfig.landingInlineSlot);
-
-  async init(): Promise<void> {
-    if (!this.remoteConfig) return;
-
-    const values =
-      (
-        this.remoteConfig as unknown as {
-          getAll?: () => Record<string, RemoteValue>;
-        }
-      ).getAll?.() ?? {};
-
-    const enabled = values['ads_enabled']?.asBoolean?.();
-    if (typeof enabled === 'boolean') this.enabled.set(enabled);
-
-    const dashboardInlineEnabled =
-      values['ads_dashboard_inline_enabled']?.asBoolean?.();
-    if (typeof dashboardInlineEnabled === 'boolean') {
-      this.dashboardInlineEnabled.set(dashboardInlineEnabled);
-    }
-
-    const adClient = values['ads_client']?.asString?.();
-    if (adClient) this.adClient.set(adClient);
-
-    const dashboardInlineSlot =
-      values['ads_dashboard_inline_slot']?.asString?.();
-    if (dashboardInlineSlot) this.dashboardInlineSlot.set(dashboardInlineSlot);
-
-    const landingInlineSlot = values['ads_landing_inline_slot']?.asString?.();
-    if (landingInlineSlot) this.landingInlineSlot.set(landingInlineSlot);
-  }
+  readonly enabled = toSignal(
+    getBooleanChanges(this.remoteConfig, 'ads_enabled')
+  );
+  readonly dashboardInlineEnabled = toSignal(
+    getBooleanChanges(this.remoteConfig, 'ads_dashboard_inline_enabled')
+  );
+  readonly adClient = toSignal(
+    getStringChanges(this.remoteConfig, 'ads_client')
+  );
+  readonly dashboardInlineSlot = toSignal(
+    getStringChanges(this.remoteConfig, 'ads_dashboard_inline_slot')
+  );
+  readonly landingInlineSlot = toSignal(
+    getStringChanges(this.remoteConfig, 'ads_landing_inline_slot')
+  );
 }

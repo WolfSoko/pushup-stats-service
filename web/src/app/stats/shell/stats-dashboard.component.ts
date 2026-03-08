@@ -154,7 +154,6 @@ export class StatsDashboardComponent {
 
   readonly adClient = this.adsConfig.adClient;
   readonly adSlotDashboardInline = this.adsConfig.dashboardInlineSlot;
-  readonly adsEnabled = this.adsConfig.enabled;
   readonly dashboardInlineAdsEnabled = this.adsConfig.dashboardInlineEnabled;
 
   readonly userConfigResource = resource({

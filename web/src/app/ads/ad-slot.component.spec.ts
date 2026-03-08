@@ -1,8 +1,9 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { signal } from '@angular/core';
-import { AdSlotComponent } from './ad-slot.component';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import { AdConsentService } from './ad-consent.service';
-import { GoogleAdsService } from './google-ads.service';
+import { AdSlotComponent } from './ad-slot.component';
+import { AdsConfigService } from './ads-config.service';
 
 describe('AdSlotComponent', () => {
   let fixture: ComponentFixture<AdSlotComponent>;
@@ -12,9 +13,9 @@ describe('AdSlotComponent', () => {
     hasConsent: () => consent(),
   };
 
-  const adsMock = {
-    initialize: vitest.fn().mockResolvedValue(undefined),
-    renderSlot: vitest.fn(),
+  const adsConfigMock = {
+    enabled: () => true,
+    adClient: () => undefined,
   };
 
   beforeEach(async () => {
@@ -25,30 +26,27 @@ describe('AdSlotComponent', () => {
       imports: [AdSlotComponent],
       providers: [
         { provide: AdConsentService, useValue: consentMock },
-        { provide: GoogleAdsService, useValue: adsMock },
+        { provide: AdsConfigService, useValue: adsConfigMock },
       ],
     }).compileComponents();
-
     fixture = TestBed.createComponent(AdSlotComponent);
-    fixture.componentInstance.client = 'ca-pub-123';
-    fixture.componentInstance.slot = '1234567890';
+    fixture.componentRef.setInput('client', 'ca-pub-123');
+    fixture.componentRef.setInput('slot', '1234567890');
   });
 
   it('does not initialize ads without consent', async () => {
     fixture.detectChanges();
     await fixture.whenStable();
 
-    expect(adsMock.initialize).not.toHaveBeenCalled();
-    expect(adsMock.renderSlot).not.toHaveBeenCalled();
+    expect(fixture.debugElement.query(By.css('ins'))).toBeNull();
   });
 
   it('initializes and renders ad slot when consent is granted', async () => {
     consent.set(true);
-
     fixture.detectChanges();
+
     await fixture.whenStable();
 
-    expect(adsMock.initialize).toHaveBeenCalledWith('ca-pub-123');
-    expect(adsMock.renderSlot).toHaveBeenCalled();
+    expect(fixture.debugElement.query(By.css('ins'))).toBeTruthy();
   });
 });

@@ -7,6 +7,7 @@ import {
   UserConfigApiService,
 } from '@pu-stats/data-access';
 import { UserContextService } from '../../user-context.service';
+import { AdsConfigService } from '../../ads/ads-config.service';
 import { signal } from '@angular/core';
 
 function nowLocalMinuteIso(): string {
@@ -80,6 +81,14 @@ describe('StatsDashboardComponent', () => {
     connected: liveConnected.asReadonly(),
   };
 
+  const adsConfigMock = {
+    enabled: () => false,
+    dashboardInlineEnabled: () => false,
+    adClient: () => '',
+    dashboardInlineSlot: () => '',
+    landingInlineSlot: () => '',
+  };
+
   beforeEach(async () => {
     vitest.clearAllMocks();
     liveTick.set(0);
@@ -92,6 +101,7 @@ describe('StatsDashboardComponent', () => {
         { provide: StatsApiService, useValue: serviceMock },
         { provide: PushupLiveService, useValue: liveMock },
         { provide: UserContextService, useValue: { userIdSafe: () => 'u1' } },
+        { provide: AdsConfigService, useValue: adsConfigMock },
         {
           provide: UserConfigApiService,
           useValue: {

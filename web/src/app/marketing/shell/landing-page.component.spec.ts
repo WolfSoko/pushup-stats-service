@@ -1,11 +1,23 @@
-import { render, screen } from '@testing-library/angular';
 import { provideRouter } from '@angular/router';
+import { render, screen } from '@testing-library/angular';
+import { AdsConfigService } from '../../ads/ads-config.service';
 import { LandingPageComponent } from './landing-page.component';
+
+const adsConfigMock = {
+  enabled: () => false,
+  dashboardInlineEnabled: () => false,
+  adClient: () => '',
+  dashboardInlineSlot: () => '',
+  landingInlineSlot: () => '',
+};
 
 describe('LandingPageComponent', () => {
   it('renders product pitch and call-to-action buttons', async () => {
     await render(LandingPageComponent, {
-      providers: [provideRouter([])],
+      providers: [
+        provideRouter([]),
+        { provide: AdsConfigService, useValue: adsConfigMock },
+      ],
     });
 
     expect(screen.getByText('Pushup Tracker')).toBeTruthy();
@@ -20,7 +32,10 @@ describe('LandingPageComponent', () => {
 
   it('orders landing sections as feature grid, preview, leaderboard', async () => {
     const view = await render(LandingPageComponent, {
-      providers: [provideRouter([])],
+      providers: [
+        provideRouter([]),
+        { provide: AdsConfigService, useValue: adsConfigMock },
+      ],
     });
 
     const host = view.fixture.nativeElement as HTMLElement;

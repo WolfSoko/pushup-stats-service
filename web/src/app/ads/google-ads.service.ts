@@ -29,11 +29,4 @@ export class GoogleAdsService {
 
     this.initializedForClient.add(client);
   }
-
-  renderSlot(host: HTMLElement): void {
-    if (!host) return;
-    const w = window as Window;
-    w.adsbygoogle = w.adsbygoogle || [];
-    w.adsbygoogle.push({});
-  }
 }

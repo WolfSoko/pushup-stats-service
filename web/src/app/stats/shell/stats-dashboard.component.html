@@ -204,9 +204,9 @@
     />
   </section>
 
-  @if (adsEnabled() && dashboardInlineAdsEnabled()) {
+  @if (dashboardInlineAdsEnabled()) {
     <section aria-label="Werbung" i18n-aria-label="@@ads.dashboard.aria">
-      <app-ad-slot [client]="adClient()" [slot]="adSlotDashboardInline()" />
+      <app-ad-slot [slot]="adSlotDashboardInline()" />
     </section>
   }
 </main>
