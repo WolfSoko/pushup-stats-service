@@ -92,13 +92,11 @@ export const appConfig: ApplicationConfig = {
             return remoteConfig;
           }),
           provideAppInitializer(() => {
+            const adsConfig = inject(AdsConfigService);
+            const googleAds = inject(GoogleAdsService);
             const effectRef = effect(async () => {
-              const adsConfig = inject(AdsConfigService);
               await adsConfig.init();
-              const googleAds = inject(GoogleAdsService);
-
               const adClient = adsConfig.adClient();
-
               if (adsConfig.enabled() && adClient) {
                 await googleAds.initialize(adClient);
                 effectRef.destroy();
