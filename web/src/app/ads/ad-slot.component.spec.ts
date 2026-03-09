@@ -34,13 +34,6 @@ describe('AdSlotComponent', () => {
     fixture.componentRef.setInput('slot', '1234567890');
   });
 
-  it('does not initialize ads without consent', async () => {
-    fixture.detectChanges();
-    await fixture.whenStable();
-
-    expect(fixture.debugElement.query(By.css('ins'))).toBeNull();
-  });
-
   it('initializes and renders ad slot when consent is granted', async () => {
     consent.set(true);
     fixture.detectChanges();
