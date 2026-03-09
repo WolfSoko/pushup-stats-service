@@ -8,7 +8,9 @@ export class UserContextService {
 
   readonly userNameSafe = computed(() => {
     const user = this.authStore.user();
-    return user?.displayName || user?.email || 'Gast';
+    return (
+      user?.displayName || user?.email || $localize`:@@user.guestName:Gast`
+    );
   });
 
   readonly userIdSafe = computed(() => this.authStore.user()?.uid ?? '');
