@@ -1,12 +1,21 @@
 import {
   Component,
-  DestroyRef,
   computed,
-  effect,
+  DestroyRef,
   inject,
   resource,
   signal,
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Analytics, logEvent } from '@angular/fire/analytics';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+
+import { MatToolbarModule } from '@angular/material/toolbar';
 import {
   ActivatedRoute,
   NavigationEnd,
@@ -15,24 +24,14 @@ import {
   RouterLinkActive,
   RouterOutlet,
 } from '@angular/router';
-
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatButtonModule } from '@angular/material/button';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatIconModule } from '@angular/material/icon';
-import { MatListModule } from '@angular/material/list';
-import { MatDividerModule } from '@angular/material/divider';
 import { SwUpdate, VersionDetectedEvent } from '@angular/service-worker';
 // eslint-disable-next-line @nx/enforce-module-boundaries
 import { AuthStore, UserMenuComponent } from '@pu-auth/auth';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { UserContextService } from './user-context.service';
 import { StatsApiService, UserConfigApiService } from '@pu-stats/data-access';
-import { firstValueFrom, filter } from 'rxjs';
-import { SeoService } from './seo.service';
-import { Analytics, logEvent } from '@angular/fire/analytics';
+import { filter, firstValueFrom } from 'rxjs';
 import { AdsConsentStateService } from './ads/ads-consent-state.service';
+import { SeoService } from './seo.service';
+import { UserContextService } from './user-context.service';
 
 @Component({
   selector: 'app-root',
@@ -131,11 +130,6 @@ export class App {
         this.seo.update(title, description, path);
         this.trackAnalytics('page_view', { page_path: path });
       });
-
-    effect(() => {
-      const cfg = this.userGoalResource.value();
-      this.adsConsentState.setTargetedAdsConsent(cfg?.consent?.targetedAds);
-    });
 
     if (this.swUpdate?.isEnabled) {
       this.swUpdate.versionUpdates
