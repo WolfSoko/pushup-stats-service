@@ -1054,5 +1054,13 @@
         <source>Zeitraum</source>
       </segment>
     </unit>
+    <unit id="user.guestName">
+      <notes>
+        <note category="location">web/src/app/user-context.service.ts:14</note>
+      </notes>
+      <segment>
+        <source>Gast</source>
+      </segment>
+    </unit>
   </file>
 </xliff>

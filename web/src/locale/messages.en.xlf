@@ -3618,7 +3618,16 @@ Deine Position: # ·  Reps        </source>
     
     
     
-    </file>
+        <unit id="user.guestName">
+      <notes>
+        <note category="location">web/src/app/user-context.service.ts:14</note>
+      </notes>
+      <segment state="translated">
+        <source>Gast</source>
+        <target>Guest</target>
+      </segment>
+    </unit>
+  </file>
 
   
 </xliff>

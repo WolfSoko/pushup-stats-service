@@ -80,7 +80,7 @@ export class StatsApiService {
   }
 
   private resolveUserId(): string {
-    return this.auth?.currentUser?.uid ?? 'default';
+    return this.auth?.currentUser?.uid ?? '';
   }
 
   private requirePushupFirestore(): PushupFirestoreService {
