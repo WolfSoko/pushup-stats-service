@@ -56,6 +56,6 @@ export class AdSlotComponent {
   );
 
   enabled = computed(() => {
-    return this.consent.hasConsent() && this.adsConfig.enabled();
+    return this.adsConfig.enabled();
   });
 }
