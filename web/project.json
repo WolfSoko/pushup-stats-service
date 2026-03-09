@@ -61,6 +61,24 @@
           "sourceMap": true,
           "serviceWorker": "web/ngsw-config.json"
         },
+        "production-preview": {
+          "localize": ["de", "en"],
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "1755kb",
+              "maximumError": "2048kb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "4kb",
+              "maximumError": "8kb"
+            }
+          ],
+          "optimization": false,
+          "sourceMap": true,
+          "serviceWorker": "web/ngsw-config.json"
+        },
         "development": {
           "optimization": false,
           "extractLicenses": false,
