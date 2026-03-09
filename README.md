@@ -70,3 +70,7 @@ Für neue Features gilt ab jetzt verbindlich:
 
 - **Browser-Runtime:** Über Firestore (`libs/data-access`).
 - **SSR-Runtime:** Kein REST-Fallback. Ohne authentifizierten User werden leere Daten zurückgegeben; die eigentliche Datenlast findet nach dem Hydratisieren im Browser statt.
+
+## Known Linux/WSL issues
+
+- See `docs/linux-wsl-known-issues.md` for currently observed SSR/build caveats in Linux/WSL environments.

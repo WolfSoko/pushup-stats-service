@@ -9,17 +9,16 @@
       >
     </mat-card-header>
     <mat-card-content>
-      @if (authState.error()) {
+      @if (loginUiStore.error()) {
         <div class="error-message">
-          <mat-icon color="warn">error</mat-icon>
-          <span>{{ authState.error()?.message }}</span>
+          <mat-icon color="warn">error</mat-icon
+          ><span>{{ loginUiStore.error()?.message }}</span>
         </div>
       }
-
-      @if (authState.loading()) {
+      @if (loginUiStore.loading()) {
         <div class="loading" aria-busy="true">
-          <mat-spinner diameter="40" aria-label="Anmelden..."></mat-spinner>
-          <span i18n="@@auth.login.loading">Anmelden...</span>
+          <mat-spinner diameter="40" aria-label="Anmelden..."></mat-spinner
+          ><span i18n="@@auth.login.loading">Anmelden...</span>
         </div>
       }
 
@@ -42,7 +41,7 @@
           <mat-label i18n="@@auth.password">Passwort</mat-label>
           <input
             matInput
-            [type]="loginState.hidePassword() ? 'password' : 'text'"
+            [type]="loginUiStore.hidePassword() ? 'password' : 'text'"
             [placeholder]="'********'"
             [formField]="loginForm.password"
           />
@@ -50,11 +49,11 @@
             mat-icon-button
             type="button"
             matSuffix
-            (click)="togglePasswordVisibility()"
+            (click)="loginUiStore.toggleHidePassword()"
             tabindex="-1"
           >
             <mat-icon>{{
-              loginState.hidePassword() ? 'visibility_off' : 'visibility'
+              loginUiStore.hidePassword() ? 'visibility_off' : 'visibility'
             }}</mat-icon>
           </button>
           @for (error of loginForm.password().errors(); track $index) {
@@ -69,140 +68,31 @@
           [disabled]="
             loginForm.email().invalid() ||
             loginForm.password().invalid() ||
-            authState.loading()
+            loginUiStore.loading()
           "
           class="full-width login-button"
         >
-          <mat-icon>login</mat-icon>
-          <span i18n="@@auth.login.submit">Anmelden</span>
+          <mat-icon>login</mat-icon
+          ><span i18n="@@auth.login.submit">Anmelden</span>
         </button>
       </form>
 
-      <div class="divider">
-        <span i18n="@@auth.or">oder</span>
-      </div>
-
+      <div class="divider"><span i18n="@@auth.or">oder</span></div>
       <button
         mat-raised-button
-        (click)="signInWithGoogle(googleOnboardingTpl)"
-        [disabled]="authState.loading()"
+        (click)="signInWithGoogle()"
+        [disabled]="loginUiStore.loading()"
         class="full-width google-button"
         i18n="@@auth.google.signin"
       >
         Mit Google anmelden
       </button>
-
       <div class="toggle-mode">
-        <span i18n="@@auth.register.noAccount">Noch kein Account?</span>
-        <button mat-button type="button" (click)="goToRegister()" i18n>
+        <span i18n="@@auth.register.noAccount">Noch kein Account?</span
+        ><button mat-button type="button" (click)="goToRegister()" i18n>
           Registrieren
         </button>
       </div>
     </mat-card-content>
   </mat-card>
-
-  <ng-template #googleOnboardingTpl>
-    <h2 mat-dialog-title i18n="@@auth.onboarding.google.title">
-      Einrichtung abschließen
-    </h2>
-    <mat-dialog-content>
-      @if (googleWizardStep() === 0) {
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label i18n="@@auth.onboarding.google.username"
-            >Benutzername</mat-label
-          >
-          <input
-            matInput
-            [value]="googleDisplayName()"
-            (input)="googleDisplayName.set($any($event.target).value)"
-          />
-          <mat-hint i18n="@@auth.onboarding.google.username.hint"
-            >Mindestens 2 Zeichen.</mat-hint
-          >
-        </mat-form-field>
-      }
-
-      @if (googleWizardStep() === 1) {
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label i18n="@@auth.onboarding.google.goal">Tagesziel</mat-label>
-          <input
-            matInput
-            type="number"
-            min="1"
-            [value]="googleDailyGoal()"
-            (input)="googleDailyGoal.set(+$any($event.target).value || 1)"
-          />
-        </mat-form-field>
-      }
-
-      @if (googleWizardStep() === 2) {
-        <p i18n="@@auth.onboarding.google.consent.text">
-          Ich willige in die Datenverarbeitung zum Erheben technisch notwendiger
-          Daten, statistischer Auswertungen und zum Ausspielen gezielter Werbung
-          ein.
-        </p>
-        <mat-checkbox
-          [checked]="googleConsentAccepted()"
-          (change)="googleConsentAccepted.set($event.checked)"
-          i18n="@@auth.onboarding.google.consent.checkbox"
-        >
-          Einwilligung erteilen
-        </mat-checkbox>
-      }
-
-      @if (googleWizardError()) {
-        <p class="error-message">{{ googleWizardError() }}</p>
-      }
-    </mat-dialog-content>
-
-    <mat-dialog-actions align="end">
-      @if (googleWizardStep() > 0) {
-        <button mat-button type="button" (click)="googleWizardBack()" i18n>
-          Zurück
-        </button>
-      }
-
-      @if (googleWizardStep() === 0) {
-        <button
-          mat-flat-button
-          color="primary"
-          type="button"
-          (click)="googleWizardNextFromName()"
-          [disabled]="googleDisplayName().trim().length < 2"
-          i18n="@@auth.next"
-        >
-          Weiter
-        </button>
-      }
-
-      @if (googleWizardStep() === 1) {
-        <button
-          mat-flat-button
-          color="primary"
-          type="button"
-          (click)="googleWizardNextFromGoal()"
-          [disabled]="googleDailyGoal() < 1"
-          i18n="@@auth.next"
-        >
-          Weiter
-        </button>
-      }
-
-      @if (googleWizardStep() === 2) {
-        <button mat-button type="button" mat-dialog-close i18n="@@cancel">
-          Abbrechen
-        </button>
-        <button
-          mat-flat-button
-          color="primary"
-          type="button"
-          [disabled]="!googleConsentAccepted()"
-          (click)="completeGoogleOnboarding()"
-          i18n="@@auth.onboarding.google.finish"
-        >
-          Abschließen
-        </button>
-      }
-    </mat-dialog-actions>
-  </ng-template>
 </div>
