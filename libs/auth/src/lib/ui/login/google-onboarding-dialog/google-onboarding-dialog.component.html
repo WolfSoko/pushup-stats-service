@@ -1,0 +1,80 @@
+<h2 mat-dialog-title i18n="@@auth.onboarding.google.title">
+  Einrichtung abschließen
+</h2>
+<mat-dialog-content>
+  @if (loginUiStore.googleWizardStep() === 0) {
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label i18n="@@auth.onboarding.google.username"
+        >Benutzername</mat-label
+      >
+      <input
+        matInput
+        [value]="loginUiStore.googleDisplayName()"
+        (input)="loginUiStore.setGoogleDisplayName($any($event.target).value)"
+      />
+    </mat-form-field>
+  }
+  @if (loginUiStore.googleWizardStep() === 1) {
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label i18n="@@auth.onboarding.google.goal">Tagesziel</mat-label>
+      <input
+        matInput
+        type="number"
+        min="1"
+        [value]="loginUiStore.googleDailyGoal()"
+        (input)="
+          loginUiStore.setGoogleDailyGoal(+$any($event.target).value || 1)
+        "
+      />
+    </mat-form-field>
+  }
+  @if (loginUiStore.googleWizardStep() === 2) {
+    <mat-checkbox
+      [checked]="loginUiStore.googleConsentAccepted()"
+      (change)="loginUiStore.setGoogleConsentAccepted($event.checked)"
+      i18n="@@auth.onboarding.google.consent.checkbox"
+      >Einwilligung erteilen</mat-checkbox
+    >
+  }
+  @if (loginUiStore.googleWizardError()) {
+    <p class="error-message">{{ loginUiStore.googleWizardError() }}</p>
+  }
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  @if (loginUiStore.googleWizardStep() > 0) {
+    <button
+      mat-button
+      type="button"
+      (click)="loginUiStore.previousWizardStep()"
+      i18n
+    >
+      Zurück
+    </button>
+  }
+  @if (loginUiStore.googleWizardStep() < 2) {
+    <button
+      mat-flat-button
+      color="primary"
+      type="button"
+      (click)="loginUiStore.nextWizardStep()"
+      i18n="@@auth.next"
+    >
+      Weiter
+    </button>
+  }
+  @if (loginUiStore.googleWizardStep() === 2) {
+    <button mat-button type="button" mat-dialog-close i18n="@@cancel">
+      Abbrechen
+    </button>
+    <button
+      mat-flat-button
+      color="primary"
+      type="button"
+      [disabled]="!loginUiStore.googleConsentAccepted()"
+      (click)="finish()"
+      i18n="@@auth.onboarding.google.finish"
+    >
+      Abschließen
+    </button>
+  }
+</mat-dialog-actions>

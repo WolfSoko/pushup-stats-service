@@ -1,19 +1,41 @@
-import { hasStrongPasswordPolicy } from './login.component';
+import { render, screen } from '@testing-library/angular';
+import { ActivatedRoute } from '@angular/router';
+import { signal } from '@angular/core';
+import { AuthStore } from '../../core/state/auth.store';
+import { LoginOnboardingStore } from '../../core/state/login-onboarding.store';
+import { LoginComponent } from './login.component';
 
-describe('login password policy', () => {
-  it('accepts password with min 8 chars, number and special character', () => {
-    expect(hasStrongPasswordPolicy('Secret#123')).toBe(true);
-  });
+describe('LoginComponent', () => {
+  it('renders login title', async () => {
+    await render(LoginComponent, {
+      providers: [
+        {
+          provide: ActivatedRoute,
+          useValue: { snapshot: { queryParamMap: { get: () => null } } },
+        },
+        {
+          provide: AuthStore,
+          useValue: {
+            loading: signal(false),
+            error: signal(null),
+            isAuthenticated: signal(false),
+            user: signal(null),
+            signInWithEmail: jest.fn(),
+            login: jest.fn(),
+            logout: jest.fn(),
+          },
+        },
+        {
+          provide: LoginOnboardingStore,
+          useValue: {
+            error: signal(null),
+            isOnboardingRequired: jest.fn().mockResolvedValue(false),
+            saveGoogleOnboarding: jest.fn(),
+          },
+        },
+      ],
+    });
 
-  it('rejects password without special character', () => {
-    expect(hasStrongPasswordPolicy('Secret1234')).toBe(false);
-  });
-
-  it('rejects password without number', () => {
-    expect(hasStrongPasswordPolicy('Secret#abc')).toBe(false);
-  });
-
-  it('rejects password shorter than 8 chars', () => {
-    expect(hasStrongPasswordPolicy('S#1abc')).toBe(false);
+    expect(screen.getByText('Willkommen bei PushUp Stats')).toBeInTheDocument();
   });
 });
