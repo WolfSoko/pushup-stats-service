@@ -55,7 +55,7 @@ describe('UserContextService', () => {
     expect(service.userNameSafe()).toBe('firebase@user');
   });
 
-  it('resets userId and userName to default on logout', () => {
+  it('resets user context to guest values on logout', () => {
     const service = TestBed.inject(UserContextService);
     firebaseAuth.user.set({ uid: 'firebase-user' });
     TestBed.tick();
@@ -63,7 +63,7 @@ describe('UserContextService', () => {
 
     firebaseAuth.user.set(null);
     TestBed.tick();
-    expect(service.userIdSafe()).toBe('default');
-    expect(service.userNameSafe()).toBe('default');
+    expect(service.userIdSafe()).toBe('');
+    expect(service.userNameSafe()).toBe('Gast');
   });
 });

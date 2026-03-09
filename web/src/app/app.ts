@@ -83,8 +83,10 @@ export class App {
 
   readonly userGoalResource = resource({
     params: () => ({ userId: this.user.userIdSafe() }),
-    loader: async ({ params }) =>
-      firstValueFrom(this.userConfigApi.getConfig(params.userId)),
+    loader: async ({ params }) => {
+      if (!params.userId) return { dailyGoal: 100 };
+      return firstValueFrom(this.userConfigApi.getConfig(params.userId));
+    },
   });
 
   readonly dailyGoal = computed(
@@ -93,7 +95,8 @@ export class App {
 
   readonly dailyProgressResource = resource({
     params: () => ({ userId: this.user.userIdSafe() }),
-    loader: async () => {
+    loader: async ({ params }) => {
+      if (!params.userId) return 0;
       const today = new Date().toISOString().slice(0, 10);
       const stats = await firstValueFrom(
         this.statsApi.load({ from: today, to: today })

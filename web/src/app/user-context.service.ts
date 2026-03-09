@@ -8,8 +8,8 @@ export class UserContextService {
 
   readonly userNameSafe = computed(() => {
     const user = this.authStore.user();
-    return user?.displayName || user?.email || 'default';
+    return user?.displayName || user?.email || 'Gast';
   });
 
-  readonly userIdSafe = computed(() => this.authStore.user()?.uid ?? 'default');
+  readonly userIdSafe = computed(() => this.authStore.user()?.uid ?? '');
 }
