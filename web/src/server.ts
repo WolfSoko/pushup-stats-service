@@ -22,6 +22,10 @@ app.use(pinoHttp({ logger }));
 
 const angularApp = new AngularNodeAppEngine();
 
+app.get('/ads.txt', (req, res) => {
+  res.sendFile(join(browserDistFolder, 'de/ads.txt'));
+});
+
 /**
  * Serve static files from /browser
  */
