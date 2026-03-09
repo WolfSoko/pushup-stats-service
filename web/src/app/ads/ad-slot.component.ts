@@ -9,6 +9,12 @@ import {
 import { AdConsentService } from './ad-consent.service';
 import { AdsConfigService } from './ads-config.service';
 
+declare global {
+  interface Window {
+    adsbygoogle: object[];
+  }
+}
+
 @Component({
   selector: 'app-ad-slot',
   imports: [CommonModule],
