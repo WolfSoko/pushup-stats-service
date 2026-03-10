@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
-  computed,
   inject,
   signal,
 } from '@angular/core';
@@ -26,24 +25,11 @@ import {
   MatStepperModule,
   StepperOrientation,
 } from '@angular/material/stepper';
-import { Auth } from '@angular/fire/auth';
 import { ActivatedRoute, Router } from '@angular/router';
-import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
-import { UserConfigApiService } from '@pu-stats/data-access';
-import { firstValueFrom, map, Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { AuthStore } from '../../core/state/auth.store';
-import { hasStrongPasswordPolicy } from '../login/login.component';
-
-const RegisterState = signalStore(
-  withState({
-    hidePassword: true,
-  }),
-  withMethods((state) => ({
-    toggleHidePassword: () =>
-      patchState(state, { hidePassword: !state.hidePassword() }),
-  }))
-);
-
+import { RegisterSuccessComponent } from './components/register-success';
+import { RegisterUiStore } from './register-ui.store';
 @Component({
   selector: 'pus-register',
   standalone: true,
@@ -52,204 +38,112 @@ const RegisterState = signalStore(
     ReactiveFormsModule,
     MatButtonModule,
     MatCardModule,
+    MatCheckboxModule,
     MatIconModule,
     MatInputModule,
     MatProgressSpinnerModule,
-    MatCheckboxModule,
     MatStepperModule,
     FormField,
+    RegisterSuccessComponent,
   ],
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [RegisterState],
+  providers: [RegisterUiStore],
 })
 export class RegisterComponent {
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
-  private readonly userConfigApi = inject(UserConfigApiService);
   private readonly breakpointObserver = inject(BreakpointObserver);
-  private readonly auth = inject(Auth, { optional: true });
   readonly authState = inject(AuthStore);
-  readonly registerState = inject(RegisterState);
+  readonly registerUiStore = inject(RegisterUiStore);
 
-  registerData = signal({ email: '', password: '', repeatPassword: '' });
-  registerDisplayName = signal('');
-  registerDailyGoal = signal(100);
-  registerConsentAccepted = signal(false);
-  isGoogleRegistration = signal(false);
-  registeringCredentials = signal(false);
-  registerSuccess = signal(false);
-
-  stepperOrientation: Observable<StepperOrientation> = this.breakpointObserver
-    .observe('(min-width: 800px)')
-    .pipe(map(({ matches }) => (matches ? 'horizontal' : 'vertical')));
-
-  passwordPolicyValid = computed(() =>
-    hasStrongPasswordPolicy(this.registerForm.password().value() || '')
-  );
-
-  passwordsMatch = computed(
-    () =>
-      this.registerForm.password().value() ===
-      this.registerForm.repeatPassword().value()
-  );
-
-  registerForm = form(this.registerData, ({ email: emailAd, password }) => {
-    required(emailAd, {
-      message: $localize`:@@validate.email.required:Bitte E-Mail eingeben!`,
-    });
-    email(emailAd, {
-      message: $localize`:@@validate.email.email:Bitte gültige E-Mail eingeben!`,
-    });
-    required(password, {
-      message: $localize`:@@validate.password.required:Bitte Passwort eingeben!`,
-    });
-    minLength(password, 8, {
-      message: $localize`:@@validate.password.minLength:Passwort muss mindestens 8 Zeichen lang sein!`,
-    });
+  private readonly registerData = signal({
+    email: '',
+    password: '',
+    repeatPassword: '',
   });
+  readonly registerForm = form(
+    this.registerData,
+    ({ email: emailControl, password }) => {
+      required(emailControl, {
+        message: $localize`:@@validate.email.required:Bitte E-Mail eingeben!`,
+      });
+      email(emailControl, {
+        message: $localize`:@@validate.email.email:Bitte gültige E-Mail eingeben!`,
+      });
+      required(password, {
+        message: $localize`:@@validate.password.required:Bitte Passwort eingeben!`,
+      });
+      minLength(password, 8, {
+        message: $localize`:@@validate.password.minLength:Passwort muss mindestens 8 Zeichen lang sein!`,
+      });
+    }
+  );
+
+  readonly stepperOrientation: Observable<StepperOrientation> =
+    this.breakpointObserver
+      .observe('(min-width: 800px)')
+      .pipe(map(({ matches }) => (matches ? 'horizontal' : 'vertical')));
 
   togglePasswordVisibility(): void {
-    this.registerState.toggleHidePassword();
+    this.registerUiStore.toggleHidePassword();
   }
 
   async goToLogin(): Promise<void> {
-    if (this.authState.isAuthenticated()) {
-      await this.authState.logout();
-    }
-    this.registerSuccess.set(false);
+    if (this.authState.isAuthenticated()) await this.authState.logout();
+    this.registerUiStore.resetSuccess();
     await this.router.navigateByUrl('/login');
   }
 
   async completeCredentialStep(stepper: MatStepper): Promise<void> {
+    const { password, repeatPassword } = this.registerForm().value();
     if (
-      this.registerForm.email().invalid() ||
-      this.registerForm.password().invalid()
-    ) {
+      !this.registerUiStore.isCredentialStepValid(
+        this.registerForm.email().invalid(),
+        password,
+        repeatPassword
+      )
+    )
       return;
-    }
-    if (!this.passwordPolicyValid() || !this.passwordsMatch()) {
-      return;
-    }
-
-    this.isGoogleRegistration.set(false);
-    this.registeringCredentials.set(true);
-    await new Promise((resolve) => setTimeout(resolve, 450));
-    this.registeringCredentials.set(false);
     stepper.next();
   }
 
   async registerWithGoogle(stepper: MatStepper): Promise<void> {
-    try {
-      this.registeringCredentials.set(true);
-      await this.authState.login();
-      if (!this.authState.isAuthenticated()) {
-        this.registeringCredentials.set(false);
-        return;
-      }
-
-      const user = this.authState.user();
-      this.isGoogleRegistration.set(true);
-      this.registerDisplayName.set(user?.displayName || '');
-      this.registerData.update((v) => ({
-        ...v,
-        email: user?.email || v.email,
-      }));
-
-      this.registeringCredentials.set(false);
-
-      // Linear stepper: move step-by-step to guarantee transition to username step.
-      stepper.selectedIndex = 0;
-      stepper.next();
-      stepper.next();
-    } catch {
-      this.registeringCredentials.set(false);
-      // Error already handled by service
-    }
+    if (!(await this.registerUiStore.signInWithGoogle())) return;
+    this.registerData.update((v) => ({
+      ...v,
+      email: this.registerUiStore.prepareGoogleRegistration() || v.email,
+    }));
+    stepper.selectedIndex = 0;
+    stepper.next();
+    stepper.next();
   }
 
-  async submitEmailRegistration(): Promise<void> {
-    if (this.registeringCredentials()) return;
-
-    const isGoogleRegistration = this.isGoogleRegistration();
-
-    if (!isGoogleRegistration) {
-      if (
-        this.registerForm.email().invalid() ||
-        this.registerForm.password().invalid()
-      ) {
-        return;
-      }
-      if (!this.passwordPolicyValid() || !this.passwordsMatch()) return;
-    }
-    if (this.registerDisplayName().trim().length < 2) return;
-    if (this.registerDailyGoal() < 1) return;
-    if (!this.registerConsentAccepted()) return;
-
-    const { email, password } = this.registerForm().value();
-
-    try {
-      this.registeringCredentials.set(true);
-      this.registerSuccess.set(false);
-
-      if (!isGoogleRegistration) {
-        await this.authState.signUpWithEmail(email, password);
-      }
-
-      const uid = await this.waitForUserUid();
-      if (!uid) {
-        this.registeringCredentials.set(false);
-        return;
-      }
-
-      await firstValueFrom(
-        this.userConfigApi.updateConfig(uid, {
-          displayName: this.registerDisplayName().trim(),
-          dailyGoal: Math.max(1, Number(this.registerDailyGoal() || 100)),
-          consent: {
-            dataProcessing: true,
-            statistics: true,
-            targetedAds: true,
-            acceptedAt: new Date().toISOString(),
-          },
-        })
+  async submitRegistration(): Promise<void> {
+    const { email, password, repeatPassword } = this.registerForm().value();
+    if (
+      !this.registerUiStore.canSubmit(
+        this.registerForm.email().invalid(),
+        this.registerForm.password().invalid(),
+        password,
+        repeatPassword
+      )
+    )
+      return;
+    if (!this.registerUiStore.isGoogleRegistration()) {
+      const signedUp = await this.registerUiStore.signUpWithEmail(
+        email,
+        password
       );
-
-      this.registerSuccess.set(true);
-      this.registeringCredentials.set(false);
-    } catch {
-      this.registeringCredentials.set(false);
+      if (!signedUp) return;
     }
+    await this.registerUiStore.persistProfile();
   }
 
   async goToDashboard(): Promise<void> {
-    await this.router.navigateByUrl(this.targetUrl());
-  }
-
-  validationMessage(error: unknown): string {
-    if (typeof error === 'string') return error;
-    if (
-      typeof error === 'object' &&
-      error !== null &&
-      'message' in error &&
-      typeof (error as { message?: unknown }).message === 'string'
-    ) {
-      return (error as { message: string }).message;
-    }
-    return String(error ?? 'Ungültiger Wert');
-  }
-
-  private async waitForUserUid(): Promise<string | null> {
-    for (let i = 0; i < 20; i += 1) {
-      const uid = this.auth?.currentUser?.uid || this.authState.user()?.uid;
-      if (uid) return uid;
-      await new Promise((resolve) => setTimeout(resolve, 100));
-    }
-    return null;
-  }
-
-  private targetUrl(): string {
-    return this.route.snapshot.queryParamMap.get('returnUrl') ?? '/app';
+    await this.router.navigateByUrl(
+      this.route.snapshot.queryParamMap.get('returnUrl') ?? '/app'
+    );
   }
 }

@@ -1,0 +1,15 @@
+<div class="register-success">
+  <h3 i18n="@@auth.register.success.title">Geschafft! 🎉</h3>
+  <p i18n="@@auth.register.success.text">
+    Dein Account ist bereit. Zeit für die ersten Liegestütze 💪
+  </p>
+  <button
+    mat-raised-button
+    color="primary"
+    type="button"
+    (click)="dashboard.emit()"
+    i18n="@@auth.register.success.dashboard"
+  >
+    Zum Dashboard
+  </button>
+</div>
