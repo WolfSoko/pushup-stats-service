@@ -46,6 +46,7 @@ export const RegisterUiStore = signalStore(
         onboardingStore.saving() ||
         store.registeringCredentials()
     ),
+    onboardingError: computed(() => onboardingStore.error?.() ?? null),
   })),
   withMethods(({ authStore, onboardingStore, auth, ...store }) => ({
     toggleHidePassword: () =>
