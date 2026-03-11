@@ -77,4 +77,16 @@ describe('RegisterUiStore', () => {
       })
     );
   });
+
+  it('Given profile save failure When persisting profile Then method returns false and keeps success unset', async () => {
+    onboardingMock.saveProfile.mockRejectedValueOnce(new Error('api-failed'));
+    const store = await setup();
+    store.setDisplayName('Alex');
+    store.setDailyGoal(120);
+
+    const persisted = await store.persistProfile();
+
+    expect(persisted).toBe(false);
+    expect(store.registerSuccess()).toBe(false);
+  });
 });
