@@ -138,7 +138,12 @@ export class RegisterComponent {
       );
       if (!signedUp) return;
     }
-    await this.registerUiStore.persistProfile();
+    try {
+      await this.registerUiStore.persistProfile();
+    } catch {
+      // RegisterOnboardingStore already exposes a localized error state.
+      // Prevent unhandled promise rejections in the click handler.
+    }
   }
 
   async goToDashboard(): Promise<void> {
