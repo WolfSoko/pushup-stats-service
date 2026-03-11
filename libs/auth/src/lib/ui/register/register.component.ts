@@ -97,7 +97,7 @@ export class RegisterComponent {
   }
 
   async completeCredentialStep(stepper: MatStepper): Promise<void> {
-    const { email, password, repeatPassword } = this.registerForm().value();
+    const { password, repeatPassword } = this.registerForm().value();
     if (
       !this.registerUiStore.isCredentialStepValid(
         this.registerForm.email().invalid(),
@@ -106,8 +106,7 @@ export class RegisterComponent {
       )
     )
       return;
-    await this.registerUiStore.signUpWithEmail(email, password);
-    if (this.authState.isAuthenticated()) stepper.next();
+    stepper.next();
   }
 
   async registerWithGoogle(stepper: MatStepper): Promise<void> {

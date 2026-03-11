@@ -46,6 +46,7 @@ export const RegisterUiStore = signalStore(
         onboardingStore.saving() ||
         store.registeringCredentials()
     ),
+    onboardingError: computed(() => onboardingStore.error()),
   })),
   withMethods(({ authStore, onboardingStore, auth, ...store }) => ({
     toggleHidePassword: () =>
@@ -111,13 +112,17 @@ export const RegisterUiStore = signalStore(
     persistProfile: async (): Promise<boolean> => {
       const uid = auth?.currentUser?.uid ?? authStore.user()?.uid;
       if (!uid) return false;
-      await onboardingStore.saveProfile({
-        uid,
-        displayName: store.displayName(),
-        dailyGoal: store.dailyGoal(),
-      });
-      patchState(store, { registerSuccess: true });
-      return true;
+      try {
+        await onboardingStore.saveProfile({
+          uid,
+          displayName: store.displayName(),
+          dailyGoal: store.dailyGoal(),
+        });
+        patchState(store, { registerSuccess: true });
+        return true;
+      } catch {
+        return false;
+      }
     },
   }))
 );

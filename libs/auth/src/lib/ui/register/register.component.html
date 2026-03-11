@@ -17,6 +17,13 @@
         </div>
       }
 
+      @if (registerUiStore.onboardingError()) {
+        <div class="error-message">
+          <mat-icon color="warn">error</mat-icon
+          ><span>{{ registerUiStore.onboardingError() }}</span>
+        </div>
+      }
+
       @if (registerUiStore.registerSuccess()) {
         <pus-register-success (dashboard)="goToDashboard()" />
       } @else {
