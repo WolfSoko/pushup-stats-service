@@ -9,3 +9,5 @@ export * from './lib/core/model/user.type';
 export * from './lib/core/state/auth.store';
 export * from './lib/core/state/login-onboarding.store';
 export * from './lib/ui/login/login-ui.store';
+export * from './lib/core/state/register-onboarding.store';
+export * from './lib/ui/register/register-ui.store';

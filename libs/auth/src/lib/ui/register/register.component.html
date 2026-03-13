@@ -12,27 +12,20 @@
     <mat-card-content>
       @if (authState.error()) {
         <div class="error-message">
-          <mat-icon color="warn">error</mat-icon>
-          <span>{{ authState.error()?.message }}</span>
+          <mat-icon color="warn">error</mat-icon
+          ><span>{{ authState.error()?.message }}</span>
         </div>
       }
 
-      @if (registerSuccess()) {
-        <div class="register-success">
-          <h3 i18n="@@auth.register.success.title">Geschafft! 🎉</h3>
-          <p i18n="@@auth.register.success.text">
-            Dein Account ist bereit. Zeit für die ersten Liegestütze 💪
-          </p>
-          <button
-            mat-raised-button
-            color="primary"
-            type="button"
-            (click)="goToDashboard()"
-            i18n="@@auth.register.success.dashboard"
-          >
-            Zum Dashboard
-          </button>
+      @if (registerUiStore.onboardingError()) {
+        <div class="error-message">
+          <mat-icon color="warn">error</mat-icon
+          ><span>{{ registerUiStore.onboardingError() }}</span>
         </div>
+      }
+
+      @if (registerUiStore.registerSuccess()) {
+        <pus-register-success (dashboard)="goToDashboard()" />
       } @else {
         <mat-stepper
           linear
@@ -42,7 +35,8 @@
         >
           <mat-step
             [completed]="
-              !registerForm.email().invalid() || isGoogleRegistration()
+              !registerForm.email().invalid() ||
+              registerUiStore.isGoogleRegistration()
             "
           >
             <ng-template matStepLabel i18n="@@auth.email">E-Mail</ng-template>
@@ -56,7 +50,7 @@
               />
               <mat-icon matSuffix>email</mat-icon>
               @for (error of registerForm.email().errors(); track $index) {
-                <mat-error>{{ validationMessage(error) }}</mat-error>
+                <mat-error>{{ error }}</mat-error>
               }
             </mat-form-field>
             <div class="form-actions">
@@ -71,16 +65,12 @@
                 Weiter
               </button>
             </div>
-
-            <div class="divider">
-              <span i18n="@@auth.or">oder</span>
-            </div>
-
+            <div class="divider"><span i18n="@@auth.or">oder</span></div>
             <button
               mat-raised-button
               type="button"
               class="full-width google-button"
-              [disabled]="registeringCredentials()"
+              [disabled]="registerUiStore.loading()"
               (click)="registerWithGoogle(registerStepper)"
               i18n="@@auth.google.signup"
             >
@@ -89,16 +79,20 @@
           </mat-step>
 
           <mat-step
-            [optional]="isGoogleRegistration()"
+            [optional]="registerUiStore.isGoogleRegistration()"
             [completed]="
-              isGoogleRegistration() ||
-              (passwordPolicyValid() && passwordsMatch())
+              registerUiStore.isGoogleRegistration() ||
+              registerUiStore.isCredentialStepValid(
+                registerForm.email().invalid(),
+                registerForm.password().value() || '',
+                registerForm.repeatPassword().value() || ''
+              )
             "
           >
             <ng-template matStepLabel i18n="@@auth.password"
               >Passwort</ng-template
             >
-            @if (isGoogleRegistration()) {
+            @if (registerUiStore.isGoogleRegistration()) {
               <p class="muted" i18n="@@auth.register.google.skipPassword">
                 Passwort-Schritt übersprungen (Google Registrierung).
               </p>
@@ -109,9 +103,8 @@
                   type="button"
                   i18n="@@auth.register.back"
                 >
-                  Zurück
-                </button>
-                <button
+                  Zurück</button
+                ><button
                   mat-raised-button
                   color="primary"
                   matStepperNext
@@ -129,8 +122,7 @@
                 <mat-label i18n="@@auth.password">Passwort</mat-label>
                 <input
                   matInput
-                  [type]="registerState.hidePassword() ? 'password' : 'text'"
-                  [placeholder]="'********'"
+                  [type]="registerUiStore.hidePassword() ? 'password' : 'text'"
                   [formField]="registerForm.password"
                 />
                 <button
@@ -141,24 +133,12 @@
                   tabindex="-1"
                 >
                   <mat-icon>{{
-                    registerState.hidePassword()
+                    registerUiStore.hidePassword()
                       ? 'visibility_off'
                       : 'visibility'
                   }}</mat-icon>
                 </button>
-                @for (error of registerForm.password().errors(); track $index) {
-                  <mat-error>{{ validationMessage(error) }}</mat-error>
-                }
-                <mat-hint i18n="@@auth.register.password.hint"
-                  >Mind. 8 Zeichen, 1 Zahl und 1 Sonderzeichen.</mat-hint
-                >
-                @if (!passwordPolicyValid()) {
-                  <mat-error i18n="@@auth.register.password.invalid"
-                    >Passwort erfüllt die Anforderungen nicht.</mat-error
-                  >
-                }
               </mat-form-field>
-
               <mat-form-field
                 appearance="outline"
                 class="full-width step-field"
@@ -168,26 +148,10 @@
                 >
                 <input
                   matInput
-                  [type]="registerState.hidePassword() ? 'password' : 'text'"
-                  [placeholder]="'********'"
+                  [type]="registerUiStore.hidePassword() ? 'password' : 'text'"
                   [formField]="registerForm.repeatPassword"
                 />
-                @if (!passwordsMatch()) {
-                  <mat-error i18n="@@auth.register.password.repeat.invalid"
-                    >Passwörter stimmen nicht überein.</mat-error
-                  >
-                }
               </mat-form-field>
-
-              @if (registeringCredentials()) {
-                <div class="step-loading" aria-busy="true">
-                  <mat-spinner diameter="28"></mat-spinner>
-                  <span i18n="@@auth.register.processing"
-                    >Registrierung wird vorbereitet...</span
-                  >
-                </div>
-              }
-
               <div class="form-actions">
                 <button
                   mat-stroked-button
@@ -195,13 +159,12 @@
                   type="button"
                   i18n="@@auth.register.back"
                 >
-                  Zurück
-                </button>
-                <button
+                  Zurück</button
+                ><button
                   mat-raised-button
                   color="primary"
                   type="button"
-                  [disabled]="registeringCredentials()"
+                  [disabled]="registerUiStore.loading()"
                   (click)="completeCredentialStep(registerStepper)"
                   i18n="@@auth.next"
                 >
@@ -211,23 +174,22 @@
             }
           </mat-step>
 
-          <mat-step [completed]="registerDisplayName().trim().length >= 2">
+          <mat-step
+            [completed]="registerUiStore.displayName().trim().length >= 2"
+          >
             <ng-template matStepLabel i18n="@@auth.onboarding.google.username"
               >Benutzername</ng-template
             >
-            <mat-form-field appearance="outline" class="full-width step-field">
-              <mat-label i18n="@@auth.onboarding.google.username"
+            <mat-form-field appearance="outline" class="full-width step-field"
+              ><mat-label i18n="@@auth.onboarding.google.username"
                 >Benutzername</mat-label
-              >
-              <input
+              ><input
                 matInput
-                [value]="registerDisplayName()"
-                (input)="registerDisplayName.set($any($event.target).value)"
-              />
-              <mat-hint i18n="@@auth.onboarding.google.username.hint"
-                >Mindestens 2 Zeichen.</mat-hint
-              >
-            </mat-form-field>
+                [value]="registerUiStore.displayName()"
+                (input)="
+                  registerUiStore.setDisplayName($any($event.target).value)
+                "
+            /></mat-form-field>
             <div class="form-actions">
               <button
                 mat-stroked-button
@@ -235,14 +197,13 @@
                 type="button"
                 i18n="@@auth.register.back"
               >
-                Zurück
-              </button>
-              <button
+                Zurück</button
+              ><button
                 mat-raised-button
                 color="primary"
                 matStepperNext
                 type="button"
-                [disabled]="registerDisplayName().trim().length < 2"
+                [disabled]="registerUiStore.displayName().trim().length < 2"
                 i18n="@@auth.next"
               >
                 Weiter
@@ -250,22 +211,22 @@
             </div>
           </mat-step>
 
-          <mat-step [completed]="registerDailyGoal() >= 1">
+          <mat-step [completed]="registerUiStore.dailyGoal() >= 1">
             <ng-template matStepLabel i18n="@@auth.onboarding.google.goal"
               >Tagesziel</ng-template
             >
-            <mat-form-field appearance="outline" class="full-width step-field">
-              <mat-label i18n="@@auth.onboarding.google.goal"
+            <mat-form-field appearance="outline" class="full-width step-field"
+              ><mat-label i18n="@@auth.onboarding.google.goal"
                 >Tagesziel</mat-label
-              >
-              <input
+              ><input
                 matInput
                 type="number"
                 min="1"
-                [value]="registerDailyGoal()"
-                (input)="registerDailyGoal.set(+$any($event.target).value || 1)"
-              />
-            </mat-form-field>
+                [value]="registerUiStore.dailyGoal()"
+                (input)="
+                  registerUiStore.setDailyGoal(+$any($event.target).value || 1)
+                "
+            /></mat-form-field>
             <div class="form-actions">
               <button
                 mat-stroked-button
@@ -273,14 +234,13 @@
                 type="button"
                 i18n="@@auth.register.back"
               >
-                Zurück
-              </button>
-              <button
+                Zurück</button
+              ><button
                 mat-raised-button
                 color="primary"
                 matStepperNext
                 type="button"
-                [disabled]="registerDailyGoal() < 1"
+                [disabled]="registerUiStore.dailyGoal() < 1"
                 i18n="@@auth.next"
               >
                 Weiter
@@ -300,22 +260,11 @@
               gezielter Werbung ein.
             </p>
             <mat-checkbox
-              [checked]="registerConsentAccepted()"
-              (change)="registerConsentAccepted.set($event.checked)"
+              [checked]="registerUiStore.consentAccepted()"
+              (change)="registerUiStore.setConsentAccepted($event.checked)"
               i18n="@@auth.onboarding.google.consent.checkbox"
+              >Einwilligung erteilen</mat-checkbox
             >
-              Einwilligung erteilen
-            </mat-checkbox>
-
-            @if (registeringCredentials()) {
-              <div class="step-loading" aria-busy="true">
-                <mat-spinner diameter="28"></mat-spinner>
-                <span i18n="@@auth.register.finalizing"
-                  >Account wird erstellt und Profil gespeichert...</span
-                >
-              </div>
-            }
-
             <div class="form-actions">
               <button
                 mat-stroked-button
@@ -330,18 +279,14 @@
                 color="primary"
                 type="button"
                 [disabled]="
-                  (!isGoogleRegistration() && registerForm.email().invalid()) ||
-                  (!isGoogleRegistration() &&
-                    registerForm.password().invalid()) ||
-                  (!isGoogleRegistration() && !passwordPolicyValid()) ||
-                  (!isGoogleRegistration() && !passwordsMatch()) ||
-                  registerDisplayName().trim().length < 2 ||
-                  registerDailyGoal() < 1 ||
-                  !registerConsentAccepted() ||
-                  authState.loading() ||
-                  registeringCredentials()
+                  !registerUiStore.canSubmit(
+                    registerForm.email().invalid(),
+                    registerForm.password().invalid(),
+                    registerForm.password().value() || '',
+                    registerForm.repeatPassword().value() || ''
+                  ) || registerUiStore.loading()
                 "
-                (click)="submitEmailRegistration()"
+                (click)="submitRegistration()"
                 i18n="@@auth.register.submit"
               >
                 Registrieren
