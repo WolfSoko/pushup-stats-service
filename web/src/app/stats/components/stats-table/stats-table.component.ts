@@ -31,7 +31,7 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { PushupRecord } from '@pu-stats/models';
-import { UserContextService } from '../../../user-context.service';
+import { UserContextService } from '@pu-auth/auth';
 import { UserConfigApiService } from '@pu-stats/data-access';
 import { firstValueFrom } from 'rxjs';
 

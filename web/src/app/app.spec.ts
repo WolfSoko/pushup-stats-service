@@ -5,10 +5,8 @@ import { provideRouter } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { of } from 'rxjs';
 import { StatsApiService, UserConfigApiService } from '@pu-stats/data-access';
-// eslint-disable-next-line @nx/enforce-module-boundaries
-import { AuthStore } from '@pu-auth/auth';
+import { AuthStore, UserContextService } from '@pu-auth/auth';
 import { App } from './app';
-import { UserContextService } from './user-context.service';
 
 describe('App (testing-library)', () => {
   let userNameSignal: WritableSignal<string>;

@@ -1,9 +1,7 @@
 import { TestBed } from '@angular/core/testing';
-import { PLATFORM_ID } from '@angular/core';
+import { PLATFORM_ID, signal } from '@angular/core';
 import { UserContextService } from './user-context.service';
-import { signal } from '@angular/core';
-// eslint-disable-next-line @nx/enforce-module-boundaries
-import { AuthStore } from '@pu-auth/auth';
+import { AuthStore } from './state/auth.store';
 import { Auth } from '@angular/fire/auth';
 
 class FirebaseAuthStub {
@@ -43,12 +41,6 @@ describe('UserContextService', () => {
     expect(service.userNameSafe()).toBe('firebase-user');
   });
 
-  it('uses firebase auth user.displayName when available', () => {
-    const service = TestBed.inject(UserContextService);
-    firebaseAuth.user.set({ uid: '123', displayName: 'firebase-user' });
-    TestBed.tick();
-    expect(service.userNameSafe()).toBe('firebase-user');
-  });
   it('uses firebase auth user.email when user.displayName is not available', () => {
     const service = TestBed.inject(UserContextService);
     firebaseAuth.user.set({ uid: '123', email: 'firebase@user' });

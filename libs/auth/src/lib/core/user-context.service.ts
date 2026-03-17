@@ -1,6 +1,5 @@
 import { computed, inject, Injectable } from '@angular/core';
-// eslint-disable-next-line @nx/enforce-module-boundaries
-import { AuthStore } from '@pu-auth/auth';
+import { AuthStore } from './state/auth.store';
 
 @Injectable({ providedIn: 'root' })
 export class UserContextService {

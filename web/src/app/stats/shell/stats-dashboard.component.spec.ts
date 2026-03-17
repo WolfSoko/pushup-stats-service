@@ -6,7 +6,7 @@ import {
   StatsApiService,
   UserConfigApiService,
 } from '@pu-stats/data-access';
-import { UserContextService } from '../../user-context.service';
+import { UserContextService } from '@pu-auth/auth';
 import { AdsConfigService } from '../../ads/ads-config.service';
 import { signal } from '@angular/core';
 

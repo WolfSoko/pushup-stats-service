@@ -1,6 +1,10 @@
 import { Routes } from '@angular/router';
-// eslint-disable-next-line @nx/enforce-module-boundaries
-import { authGuard, publicOnlyGuard } from '@pu-auth/auth';
+import {
+  authGuard,
+  LoginComponent,
+  publicOnlyGuard,
+  RegisterComponent,
+} from '@pu-auth/auth';
 
 export const appRoutes: Routes = [
   {
@@ -39,7 +43,7 @@ export const appRoutes: Routes = [
       seoTitle: $localize`:@@seo.login.title:Login – Pushup Tracker`,
       seoDescription: $localize`:@@seo.login.description:Melde dich an und tracke dein Pushup-Training über alle Geräte.`,
     },
-    loadComponent: () => import('@pu-auth/auth').then((m) => m.LoginComponent),
+    component: LoginComponent,
   },
   {
     path: 'register',
@@ -48,8 +52,7 @@ export const appRoutes: Routes = [
       seoTitle: $localize`:@@seo.register.title:Registrierung – Pushup Tracker`,
       seoDescription: $localize`:@@seo.register.description:Erstelle dein Konto und richte Profil, Tagesziel und Einwilligungen ein.`,
     },
-    loadComponent: () =>
-      import('@pu-auth/auth').then((m) => m.RegisterComponent),
+    component: RegisterComponent,
   },
   {
     path: 'data',

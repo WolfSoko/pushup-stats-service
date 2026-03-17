@@ -17,9 +17,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { RouterLink } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { UserConfigApiService } from '@pu-stats/data-access';
-import { UserContextService } from '../../user-context.service';
-// eslint-disable-next-line @nx/enforce-module-boundaries
-import { AuthStore } from '@pu-auth/auth';
+import { AuthStore, UserContextService } from '@pu-auth/auth';
 import { Router } from '@angular/router';
 import { Analytics, logEvent } from '@angular/fire/analytics';
 
