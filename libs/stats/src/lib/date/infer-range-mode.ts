@@ -14,7 +14,11 @@ export function inferRangeMode(from: string, to: string): RangeModes {
   if (diffDays === 7 && s.getDay() === 1) return 'week';
 
   const isMonthStart = s.getDate() === 1;
-  const lastDayOfMonth = new Date(s.getFullYear(), s.getMonth(), 0).getDate();
+  const lastDayOfMonth = new Date(
+    s.getFullYear(),
+    s.getMonth() + 1,
+    0
+  ).getDate();
   const isMonthEnd = e.getDate() === lastDayOfMonth;
 
   if (isMonthStart && isMonthEnd) return 'month';
