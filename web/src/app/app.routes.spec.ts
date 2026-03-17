@@ -1,4 +1,3 @@
-// eslint-disable-next-line @nx/enforce-module-boundaries
 import {
   authGuard,
   LoginComponent,
@@ -66,16 +65,14 @@ describe('appRoutes', () => {
     expect(component).toBe(LeaderboardPageComponent);
   });
 
-  it('lazy-routes login component', async () => {
+  it('statically loads login component', () => {
     const route = appRoutes.find((r) => r.path === 'login');
-    const component = await route?.loadComponent?.();
-    expect(component).toBe(LoginComponent);
+    expect(route?.component).toBe(LoginComponent);
   });
 
-  it('lazy-routes register component', async () => {
+  it('statically loads register component', () => {
     const route = appRoutes.find((r) => r.path === 'register');
-    const component = await route?.loadComponent?.();
-    expect(component).toBe(RegisterComponent);
+    expect(route?.component).toBe(RegisterComponent);
   });
 
   it('adds seo metadata to primary routes', () => {
