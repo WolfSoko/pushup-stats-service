@@ -23,9 +23,7 @@ export const publicOnlyGuard: CanActivateFn = (): boolean | UrlTree => {
   const auth = inject(AuthStore);
   const router = inject(Router);
 
-  if (!auth.isAuthenticated()) {
-    return true;
-  }
+  if (!auth.isAuthenticated() || auth.isGuest()) return true;
 
   return router.createUrlTree(['/app']);
 };

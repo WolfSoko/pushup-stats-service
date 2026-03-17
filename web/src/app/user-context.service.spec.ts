@@ -11,6 +11,7 @@ class FirebaseAuthStub {
     uid: string;
     displayName?: string | null;
     email?: string | null;
+    isAnonymous?: boolean;
   } | null>(null);
 }
 
@@ -53,6 +54,27 @@ describe('UserContextService', () => {
     firebaseAuth.user.set({ uid: '123', email: 'firebase@user' });
     TestBed.tick();
     expect(service.userNameSafe()).toBe('firebase@user');
+  });
+
+  it('isGuest returns true when user.isAnonymous is true', () => {
+    const service = TestBed.inject(UserContextService);
+    firebaseAuth.user.set({ uid: 'anon-123', isAnonymous: true });
+    TestBed.tick();
+    expect(service.isGuest()).toBe(true);
+  });
+
+  it('isGuest returns false when user.isAnonymous is false', () => {
+    const service = TestBed.inject(UserContextService);
+    firebaseAuth.user.set({ uid: 'real-user', isAnonymous: false });
+    TestBed.tick();
+    expect(service.isGuest()).toBe(false);
+  });
+
+  it('isGuest returns false when user is null', () => {
+    const service = TestBed.inject(UserContextService);
+    firebaseAuth.user.set(null);
+    TestBed.tick();
+    expect(service.isGuest()).toBe(false);
   });
 
   it('resets user context to guest values on logout', () => {

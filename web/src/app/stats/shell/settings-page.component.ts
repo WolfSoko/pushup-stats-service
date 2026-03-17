@@ -14,6 +14,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { RouterLink } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { UserConfigApiService } from '@pu-stats/data-access';
 import { UserContextService } from '../../user-context.service';
@@ -32,6 +33,7 @@ import { Analytics, logEvent } from '@angular/fire/analytics';
     MatIconModule,
     MatSlideToggleModule,
     MatDialogModule,
+    RouterLink,
   ],
   template: `
     <main class="page-wrap">
@@ -44,6 +46,21 @@ import { Analytics, logEvent } from '@angular/fire/analytics';
         </mat-card-header>
 
         <mat-card-content>
+          @if (isGuest()) {
+            <div class="guest-banner">
+              <mat-icon>info</mat-icon>
+              <span i18n="@@guest.banner.text"
+                >Du nutzt PUS als Gast. Erstelle ein Konto um alle Funktionen zu
+                nutzen.</span
+              >
+              <a
+                mat-stroked-button
+                routerLink="/register"
+                i18n="@@guest.banner.cta"
+                >Konto erstellen</a
+              >
+            </div>
+          }
           <section class="grid">
             <mat-form-field appearance="outline">
               <mat-label i18n="@@displayNameLabel">Anzeigename</mat-label>
@@ -252,6 +269,17 @@ import { Analytics, logEvent } from '@angular/fire/analytics';
     .error {
       color: #ffd8d8;
     }
+    .guest-banner {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      margin-bottom: 16px;
+      border-radius: 6px;
+      background: rgba(100, 160, 255, 0.1);
+      border: 1px solid rgba(100, 160, 255, 0.3);
+      flex-wrap: wrap;
+    }
   `,
 })
 export class SettingsPageComponent {
@@ -263,6 +291,7 @@ export class SettingsPageComponent {
   private readonly analytics = inject(Analytics, { optional: true });
 
   readonly activeUserId = this.user.userIdSafe;
+  readonly isGuest = this.user.isGuest;
 
   readonly displayNameDraft = signal('');
   readonly dailyGoalDraft = signal<number>(100);

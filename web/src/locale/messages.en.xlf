@@ -3627,7 +3627,67 @@ Deine Position: # ·  Reps        </source>
         <target>Guest</target>
       </segment>
     </unit>
+    <unit id="user.menu.settings">
+      <segment state="translated">
+        <source>Einstellungen</source>
+        <target>Settings</target>
+      </segment>
+    </unit>
+    <unit id="user.menu.logout">
+      <segment state="translated">
+        <source>Abmelden</source>
+        <target>Sign out</target>
+      </segment>
+    </unit>
+    <unit id="user.menu.convertAccount">
+      <segment state="translated">
+        <source>Umwandeln in Nutzerkonto</source>
+        <target>Convert to account</target>
+      </segment>
+    </unit>
+    <unit id="user.menu.guestHint">
+      <segment state="translated">
+        <source>Du nutzt PUS als Gast</source>
+        <target>You are using PUS as a guest</target>
+      </segment>
+    </unit>
+    <unit id="user.menu.signIn">
+      <segment state="translated">
+        <source>Anmelden</source>
+        <target>Sign in</target>
+      </segment>
+    </unit>
+    <unit id="user.menu.aria">
+      <segment state="translated">
+        <source>Nutzerkonto-Menü</source>
+        <target>User account menu</target>
+      </segment>
+    </unit>
+    <unit id="user.menu.guestAria">
+      <segment state="translated">
+        <source>Gast-Menü</source>
+        <target>Guest menu</target>
+      </segment>
+    </unit>
+    <unit id="guest.banner.text">
+      <segment state="translated">
+        <source>Du nutzt PUS als Gast. Erstelle ein Konto um alle Funktionen zu nutzen.</source>
+        <target>You are using PUS as a guest. Create an account to use all features.</target>
+      </segment>
+    </unit>
+    <unit id="guest.banner.cta">
+      <segment state="translated">
+        <source>Konto erstellen</source>
+        <target>Create account</target>
+      </segment>
+    </unit>
+    <unit id="nav.desktop.aria">
+      <segment state="translated">
+        <source>Hauptnavigation</source>
+        <target>Main navigation</target>
+      </segment>
+    </unit>
   </file>
 
-  
+
 </xliff>
