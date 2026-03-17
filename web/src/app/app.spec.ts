@@ -16,6 +16,7 @@ describe('App (testing-library)', () => {
     user: signal({ uid: 'default', displayName: 'default', email: 'default' }),
     loading: () => false,
     isAuthenticated: () => true,
+    isGuest: () => false,
     error: () => null,
     logout: () => Promise.resolve(),
   };
