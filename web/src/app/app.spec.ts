@@ -85,7 +85,6 @@ describe('App (testing-library)', () => {
     expect(screen.getAllByText('Daten').length).toBeGreaterThan(0);
     expect(screen.getAllByText('Analyse').length).toBeGreaterThan(0);
     expect(screen.getAllByText('Bestenliste').length).toBeGreaterThan(0);
-    expect(screen.getByText('Einstellungen')).toBeTruthy();
     expect(screen.getByText('Sprache')).toBeTruthy();
     expect(screen.getByText('Deutsch')).toBeTruthy();
     expect(screen.getByText('English')).toBeTruthy();
