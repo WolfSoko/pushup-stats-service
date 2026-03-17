@@ -10,8 +10,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
-import { AdSlotComponent } from '../../ads/ad-slot.component';
-import { AdsConfigService } from '../../ads/ads-config.service';
+import { AdSlotComponent, AdsConfigService } from '@pu-stats/ads';
 import { LeaderboardPeriod, LeaderboardService } from '@pu-stats/data-access';
 
 @Component({

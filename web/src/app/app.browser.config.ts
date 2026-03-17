@@ -6,8 +6,7 @@ import {
 } from '@angular/core';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { fireConfig } from '../env/fire.config';
-import { AdsConfigService } from './ads/ads-config.service';
-import { GoogleAdsService } from './ads/google-ads.service';
+import { AdsConfigService, GoogleAdsService } from '@pu-stats/ads';
 
 export const appBrowserConfig: ApplicationConfig = {
   providers: [

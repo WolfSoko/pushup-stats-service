@@ -28,8 +28,7 @@ import {
   StatsSeriesEntry,
 } from '@pu-stats/models';
 import { firstValueFrom } from 'rxjs';
-import { AdSlotComponent } from '../../ads/ad-slot.component';
-import { AdsConfigService } from '../../ads/ads-config.service';
+import { AdSlotComponent, AdsConfigService } from '@pu-stats/ads';
 import { UserContextService } from '@pu-auth/auth';
 import { createWeekRange } from '../../util/date/create-week-range';
 import { inferRangeMode } from '../../util/date/infer-range-mode';

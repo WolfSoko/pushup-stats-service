@@ -28,7 +28,7 @@ import { SwUpdate, VersionDetectedEvent } from '@angular/service-worker';
 import { AuthStore, UserMenuComponent } from '@pu-auth/auth';
 import { StatsApiService, UserConfigApiService } from '@pu-stats/data-access';
 import { filter, firstValueFrom } from 'rxjs';
-import { AdsConsentStateService } from './ads/ads-consent-state.service';
+import { AdsConsentStateService } from '@pu-stats/ads';
 import { SeoService } from './core/seo.service';
 import { UserContextService } from '@pu-auth/auth';
 

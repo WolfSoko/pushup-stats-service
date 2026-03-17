@@ -1,6 +1,6 @@
 import { provideRouter } from '@angular/router';
 import { render, screen } from '@testing-library/angular';
-import { AdsConfigService } from '../../ads/ads-config.service';
+import { AdsConfigService } from '@pu-stats/ads';
 import { LandingPageComponent } from './landing-page.component';
 
 const adsConfigMock = {
