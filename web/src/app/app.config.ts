@@ -30,7 +30,6 @@ import {
 } from '@angular/platform-browser';
 import { provideRouter } from '@angular/router';
 import { provideServiceWorker } from '@angular/service-worker';
-// eslint-disable-next-line @nx/enforce-module-boundaries
 import {
   AuthService,
   provideAuth,
