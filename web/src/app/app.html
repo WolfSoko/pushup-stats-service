@@ -80,24 +80,6 @@
         <mat-icon matListItemIcon>language</mat-icon>
         <span matListItemTitle i18n="@@nav.lang.en">English</span>
       </a>
-      <mat-divider></mat-divider>
-      <div
-        class="mat-subtitle-2"
-        style="padding: 8px 16px"
-        i18n="@@nav.account"
-      >
-        Account
-      </div>
-      <a
-        mat-list-item
-        routerLink="/settings"
-        routerLinkActive="active"
-        (click)="navOpen.set(false)"
-      >
-        <mat-icon matListItemIcon>settings</mat-icon>
-        <span matListItemTitle i18n="@@nav.settings">Einstellungen</span>
-      </a>
-      <pus-user-menu />
     </mat-nav-list>
   </mat-sidenav>
 
@@ -132,7 +114,34 @@
         ><small i18n="@@toolbarDailyGoal">Tagesziel</small>
         <strong>{{ todayProgress() }} / {{ dailyGoal() }}</strong></span
       >
+      <pus-user-menu />
     </mat-toolbar>
+
+    <nav
+      class="desktop-nav"
+      aria-label="Hauptnavigation"
+      i18n-aria-label="@@nav.desktop.aria"
+    >
+      <a
+        routerLink="/app"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{exact:true}"
+        i18n="@@nav.dashboard"
+        >Dashboard</a
+      >
+      <a routerLink="/data" routerLinkActive="active" i18n="@@nav.data"
+        >Daten</a
+      >
+      <a routerLink="/analysis" routerLinkActive="active" i18n="@@nav.analysis"
+        >Analyse</a
+      >
+      <a
+        routerLink="/leaderboard"
+        routerLinkActive="active"
+        i18n="@@nav.leaderboard"
+        >Bestenliste</a
+      >
+    </nav>
 
     <main class="app-content">
       <router-outlet />

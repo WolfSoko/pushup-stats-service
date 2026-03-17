@@ -1,4 +1,4 @@
-import { inject } from '@angular/core';
+import { computed, inject } from '@angular/core';
 import {
   patchState,
   signalStore,
@@ -67,6 +67,7 @@ export const AuthStore = signalStore(
     user: store._authService.user,
     isAuthenticated: store._authService.isAuthenticated,
     idToken: store._authService.idToken,
+    isGuest: computed(() => store._authService.user()?.isAnonymous ?? false),
   })),
   withMethods(({ _authService, ...store }) => ({
     login: async () => {

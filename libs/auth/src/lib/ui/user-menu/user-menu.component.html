@@ -1,30 +1,56 @@
 @if (loading()) {
   <mat-spinner diameter="24"></mat-spinner>
-} @else if (isAuthenticated()) {
-  <button mat-icon-button [matMenuTriggerFor]="userMenu" aria-label="User menu">
+} @else if (isAuthenticated() && !isGuest()) {
+  <button
+    mat-icon-button
+    [matMenuTriggerFor]="userMenu"
+    [attr.aria-label]="ariaUserMenu"
+  >
     @if (user()?.photoURL) {
-      <img [src]="user()!.photoURL" alt="Avatar" class="avatar-img" />
+      <img [src]="user()!.photoURL" alt="" class="avatar-img" />
     } @else {
       <mat-icon>account_circle</mat-icon>
     }
   </button>
-
   <mat-menu #userMenu="matMenu">
     <div class="user-info">
       <span class="display-name">{{
-        user()?.displayName || user()?.email || 'Benutzer'
+        user()?.displayName || user()?.email || guestLabel
       }}</span>
       <span class="email">{{ user()?.email }}</span>
     </div>
     <mat-divider></mat-divider>
+    <button mat-menu-item (click)="goToSettings()">
+      <mat-icon>settings</mat-icon>
+      <span i18n="@@user.menu.settings">Einstellungen</span>
+    </button>
     <button mat-menu-item (click)="signOut()">
       <mat-icon>logout</mat-icon>
-      <span>Abmelden</span>
+      <span i18n="@@user.menu.logout">Abmelden</span>
     </button>
   </mat-menu>
 } @else {
-  <button mat-raised-button color="primary" (click)="signIn()">
-    <mat-icon>login</mat-icon>
-    Anmelden
+  <button
+    mat-icon-button
+    [matMenuTriggerFor]="guestMenu"
+    [attr.aria-label]="ariaGuestMenu"
+  >
+    <mat-icon>person_outline</mat-icon>
   </button>
+  <mat-menu #guestMenu="matMenu">
+    <div class="user-info">
+      <span class="display-name" i18n="@@user.menu.guestHint"
+        >Du nutzt PUS als Gast</span
+      >
+    </div>
+    <mat-divider></mat-divider>
+    <button mat-menu-item (click)="convertToAccount()">
+      <mat-icon>person_add</mat-icon>
+      <span i18n="@@user.menu.convertAccount">Umwandeln in Nutzerkonto</span>
+    </button>
+    <button mat-menu-item (click)="signIn()">
+      <mat-icon>login</mat-icon>
+      <span i18n="@@user.menu.signIn">Anmelden</span>
+    </button>
+  </mat-menu>
 }

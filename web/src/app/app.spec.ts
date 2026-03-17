@@ -16,6 +16,7 @@ describe('App (testing-library)', () => {
     user: signal({ uid: 'default', displayName: 'default', email: 'default' }),
     loading: () => false,
     isAuthenticated: () => true,
+    isGuest: () => false,
     error: () => null,
     logout: () => Promise.resolve(),
   };
@@ -80,11 +81,10 @@ describe('App (testing-library)', () => {
         { provide: StatsApiService, useValue: statsApiMock },
       ],
     });
-    expect(screen.getByText('Dashboard')).toBeTruthy();
-    expect(screen.getByText('Daten')).toBeTruthy();
-    expect(screen.getByText('Analyse')).toBeTruthy();
-    expect(screen.getByText('Bestenliste')).toBeTruthy();
-    expect(screen.getByText('Einstellungen')).toBeTruthy();
+    expect(screen.getAllByText('Dashboard').length).toBeGreaterThan(0);
+    expect(screen.getAllByText('Daten').length).toBeGreaterThan(0);
+    expect(screen.getAllByText('Analyse').length).toBeGreaterThan(0);
+    expect(screen.getAllByText('Bestenliste').length).toBeGreaterThan(0);
     expect(screen.getByText('Sprache')).toBeTruthy();
     expect(screen.getByText('Deutsch')).toBeTruthy();
     expect(screen.getByText('English')).toBeTruthy();
