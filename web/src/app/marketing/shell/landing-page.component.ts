@@ -12,10 +12,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 import { AdSlotComponent } from '../../ads/ad-slot.component';
 import { AdsConfigService } from '../../ads/ads-config.service';
-import {
-  LeaderboardPeriod,
-  LeaderboardService,
-} from '../../leaderboard.service';
+import { LeaderboardPeriod, LeaderboardService } from '@pu-stats/data-access';
 
 @Component({
   selector: 'app-landing-page',
