@@ -57,11 +57,15 @@ export const RegisterUiStore = signalStore(
     setConsentAccepted: (value: boolean) =>
       patchState(store, { consentAccepted: value }),
     prepareGoogleRegistration: () => {
+      // Prefer auth.currentUser (synchronous, immediately available after the
+      // Google popup closes) over the signal-based authStore.user() which is
+      // backed by toSignal() and may still hold stale anonymous-user data.
+      const currentUser = auth?.currentUser ?? authStore.user();
       patchState(store, {
         isGoogleRegistration: true,
-        displayName: authStore.user()?.displayName ?? '',
+        displayName: currentUser?.displayName ?? '',
       });
-      return authStore.user()?.email ?? '';
+      return currentUser?.email ?? '';
     },
     resetSuccess: () => patchState(store, { registerSuccess: false }),
     isCredentialStepValid: (

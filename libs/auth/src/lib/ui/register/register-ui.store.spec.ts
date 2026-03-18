@@ -33,7 +33,15 @@ describe('RegisterUiStore', () => {
         { provide: RegisterOnboardingStore, useValue: onboardingMock },
         {
           provide: Auth,
-          useValue: { currentUser: currentUid ? { uid: currentUid } : null },
+          useValue: {
+            currentUser: currentUid
+              ? {
+                  uid: currentUid,
+                  email: 'user@test.de',
+                  displayName: 'Tester',
+                }
+              : null,
+          },
         },
       ],
     });
