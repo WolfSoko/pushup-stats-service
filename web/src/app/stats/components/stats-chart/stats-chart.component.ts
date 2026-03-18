@@ -119,7 +119,7 @@ export class StatsChartComponent implements AfterViewInit {
       typeof navigator !== 'undefined' && /jsdom/i.test(navigator.userAgent);
     if (isVitestJsdom) return;
 
-    let context: CanvasRenderingContext2D | null = null;
+    let context: CanvasRenderingContext2D | null;
     try {
       context = element.getContext('2d');
     } catch {
