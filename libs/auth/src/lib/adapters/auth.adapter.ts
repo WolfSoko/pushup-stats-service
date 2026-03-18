@@ -5,8 +5,11 @@ import {
   authState,
   createUserWithEmailAndPassword,
   deleteUser,
+  EmailAuthProvider,
   GoogleAuthProvider,
   idToken,
+  linkWithCredential,
+  linkWithPopup,
   signInAnonymously,
   signInWithEmailAndPassword,
   signInWithPopup,
@@ -58,6 +61,33 @@ export class AuthAdapter {
 
   async signInAnonymously(): Promise<UserCredential> {
     return await signInAnonymously(this.auth);
+  }
+
+  /**
+   * Links the current anonymous user to an email/password credential.
+   * Keeps the same UID → no data migration needed.
+   */
+  async linkWithEmail(
+    email: string,
+    password: string
+  ): Promise<UserCredential> {
+    const current = this.auth.currentUser;
+    if (!current) throw new Error('No current user to link');
+    const credential = EmailAuthProvider.credential(email, password);
+    return await linkWithCredential(current, credential);
+  }
+
+  /**
+   * Links the current anonymous user to a Google credential.
+   * Keeps the same UID → no data migration needed.
+   */
+  async linkWithGoogle(): Promise<UserCredential> {
+    const current = this.auth.currentUser;
+    if (!current) throw new Error('No current user to link');
+    const provider = new GoogleAuthProvider();
+    provider.addScope('email');
+    provider.addScope('profile');
+    return await linkWithPopup(current, provider);
   }
 
   signOut(): Promise<void> {

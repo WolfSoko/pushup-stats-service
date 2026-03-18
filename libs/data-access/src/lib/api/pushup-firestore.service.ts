@@ -11,6 +11,7 @@ import {
   setDoc,
   updateDoc,
   where,
+  writeBatch,
 } from '@angular/fire/firestore';
 import {
   PushupCreate,
@@ -108,5 +109,36 @@ export class PushupFirestoreService {
   deletePushup(id: string): Observable<{ ok: true }> {
     const rowRef = doc(this.firestore, PUSHUPS_COLLECTION, id);
     return from(deleteDoc(rowRef)).pipe(map(() => ({ ok: true as const })));
+  }
+
+  /**
+   * Migrates all pushup documents from `fromUserId` to `toUserId`.
+   * Used when a guest signs into an existing account (UIDs differ).
+   * Reads docs as `fromUserId`, batch-writes them under `toUserId`,
+   * then deletes the originals.
+   *
+   * Firestore batch limit is 500 ops. Each doc = 1 write + 1 delete = 2 ops,
+   * so we process up to 250 docs per batch.
+   */
+  async migrateUserData(fromUserId: string, toUserId: string): Promise<void> {
+    if (fromUserId === toUserId) return;
+    const pushupsRef = collection(this.firestore, PUSHUPS_COLLECTION);
+    const q = query(pushupsRef, where('userId', '==', fromUserId));
+    const snapshot = await getDocs(q);
+    if (snapshot.empty) return;
+
+    const BATCH_SIZE = 250;
+    const docs = snapshot.docs;
+
+    for (let i = 0; i < docs.length; i += BATCH_SIZE) {
+      const chunk = docs.slice(i, i + BATCH_SIZE);
+      const batch = writeBatch(this.firestore);
+      for (const d of chunk) {
+        const newRef = doc(pushupsRef);
+        batch.set(newRef, { ...d.data(), userId: toUserId });
+        batch.delete(d.ref);
+      }
+      await batch.commit();
+    }
   }
 }

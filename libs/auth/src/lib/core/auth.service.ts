@@ -4,7 +4,10 @@ import { computed, inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { isPlatformServer } from '@angular/common';
 import { AuthAdapter } from '../adapters/auth.adapter';
 import { mapAuthUserToPUSUser } from '../map-auth-user-to-user';
-import { UserConfigApiService } from '@pu-stats/data-access';
+import {
+  PushupFirestoreService,
+  UserConfigApiService,
+} from '@pu-stats/data-access';
 
 @Injectable({
   providedIn: 'root',
@@ -12,6 +15,9 @@ import { UserConfigApiService } from '@pu-stats/data-access';
 export class AuthService {
   private readonly authAdapter = inject(AuthAdapter);
   private readonly userConfigApi = inject(UserConfigApiService);
+  private readonly pushupFirestore = inject(PushupFirestoreService, {
+    optional: true,
+  });
   private readonly platformId = inject(PLATFORM_ID);
 
   // Signal für den Status der User-DB-Synchronisation
@@ -68,6 +74,81 @@ export class AuthService {
     }, 'Anonymous sign-in');
   }
 
+  /**
+   * Upgrades an anonymous guest to a permanent email/password account.
+   * If the user is currently anonymous, links the credential (keeps same UID).
+   * Otherwise falls back to normal sign-up.
+   */
+  async upgradeWithEmail(email: string, password: string): Promise<void> {
+    await this.wrapAsync(async () => {
+      if (this.authAdapter.authUser()?.isAnonymous) {
+        const cred = await this.authAdapter.linkWithEmail(email, password);
+        await this.syncUserDbSafe();
+        return cred;
+      }
+      const cred = await this.authAdapter.signUpWithEmail(email, password);
+      await this.syncUserDbSafe();
+      return cred;
+    }, 'Upgrade with email');
+  }
+
+  /**
+   * Upgrades an anonymous guest to a permanent Google account.
+   * If the user is currently anonymous, links the credential (keeps same UID).
+   * Otherwise falls back to normal Google sign-in.
+   */
+  async upgradeWithGoogle(): Promise<void> {
+    await this.wrapAsync(async () => {
+      if (this.authAdapter.authUser()?.isAnonymous) {
+        const cred = await this.authAdapter.linkWithGoogle();
+        await this.syncUserDbSafe();
+        return cred;
+      }
+      const cred = await this.authAdapter.signInWithGoogle();
+      await this.syncUserDbSafe();
+      return cred;
+    }, 'Upgrade with Google');
+  }
+
+  /**
+   * Signs a guest into an EXISTING account (email/password).
+   * Captures the guest UID first, signs in, then migrates orphaned pushup data.
+   */
+  async signInWithEmailAndMigrateGuest(
+    email: string,
+    password: string
+  ): Promise<void> {
+    await this.wrapAsync(async () => {
+      const guestUid = this.authAdapter.authUser()?.isAnonymous
+        ? (this.authAdapter.authUser()?.uid ?? null)
+        : null;
+      const cred = await this.authAdapter.signInWithEmail(email, password);
+      await this.syncUserDbSafe();
+      if (guestUid && cred.user.uid !== guestUid) {
+        await this.migrateGuestDataSafe(guestUid, cred.user.uid);
+      }
+      return cred;
+    }, 'Email sign-in with guest migration');
+  }
+
+  /**
+   * Signs a guest into an EXISTING Google account.
+   * Captures the guest UID first, signs in, then migrates orphaned pushup data.
+   */
+  async signInWithGoogleAndMigrateGuest(): Promise<void> {
+    await this.wrapAsync(async () => {
+      const guestUid = this.authAdapter.authUser()?.isAnonymous
+        ? (this.authAdapter.authUser()?.uid ?? null)
+        : null;
+      const cred = await this.authAdapter.signInWithGoogle();
+      await this.syncUserDbSafe();
+      if (guestUid && cred.user.uid !== guestUid) {
+        await this.migrateGuestDataSafe(guestUid, cred.user.uid);
+      }
+      return cred;
+    }, 'Google sign-in with guest migration');
+  }
+
   /** Sign out (alias for logout) */
   async signOut(): Promise<void> {
     await this.logout();
@@ -119,6 +200,19 @@ export class AuthService {
     } catch (e) {
       // Do not fail login if user profile sync fails after successful auth.
       console.warn('[AuthService] user DB sync failed after auth:', e);
+    }
+  }
+
+  private async migrateGuestDataSafe(
+    fromUid: string,
+    toUid: string
+  ): Promise<void> {
+    if (!this.pushupFirestore) return;
+    try {
+      await this.pushupFirestore.migrateUserData(fromUid, toUid);
+    } catch (e) {
+      // Migration failure must not block the sign-in itself.
+      console.warn('[AuthService] guest data migration failed:', e);
     }
   }
 

@@ -103,7 +103,7 @@ export const RegisterUiStore = signalStore(
     signInWithGoogle: async (): Promise<boolean> => {
       patchState(store, { registeringCredentials: true });
       try {
-        await authStore.login();
+        await authStore.upgradeWithGoogle();
         return authStore.isAuthenticated();
       } finally {
         patchState(store, { registeringCredentials: false });
