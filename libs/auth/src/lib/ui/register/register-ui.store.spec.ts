@@ -9,12 +9,14 @@ describe('RegisterUiStore', () => {
   const authStoreMock = {
     loading: signal(false),
     isAuthenticated: signal(true),
+    error: signal<Error | null>(null),
     user: signal<{ uid: string; email?: string; displayName?: string } | null>({
       uid: 'uid-1',
       email: 'user@test.de',
       displayName: 'Tester',
     }),
     signUpWithEmail: jest.fn().mockResolvedValue(undefined),
+    upgradeWithGoogle: jest.fn().mockResolvedValue(undefined),
     login: jest.fn().mockResolvedValue(undefined),
   };
 

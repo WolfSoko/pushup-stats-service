@@ -95,7 +95,8 @@ export const RegisterUiStore = signalStore(
       patchState(store, { registeringCredentials: true });
       try {
         await authStore.signUpWithEmail(email, password);
-        return authStore.isAuthenticated();
+        // Must also check that no auth error occurred (e.g. link failed for guest).
+        return authStore.isAuthenticated() && !authStore.error();
       } finally {
         patchState(store, { registeringCredentials: false });
       }

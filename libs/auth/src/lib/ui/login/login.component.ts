@@ -26,7 +26,7 @@ import { GoogleOnboardingDialogComponent } from './google-onboarding-dialog/goog
 import { LoginUiStore } from './login-ui.store';
 
 export function hasStrongPasswordPolicy(value: string): boolean {
-  return /^(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/.test(value);
+  return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/.test(value);
 }
 
 @Component({
