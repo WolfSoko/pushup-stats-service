@@ -58,10 +58,17 @@ export class AuthService {
     }, 'Email sign-up');
   }
 
-  /** Sign in as anonymous guest if no session exists yet */
+  /** Sign in as anonymous guest if no session exists yet.
+   *
+   * Checks both the synchronous `currentUser` (available immediately after
+   * Firebase initialises) and the signal-based `authState()` to avoid the
+   * startup race where `authState()` is still `undefined` while a real
+   * persisted session already exists.  Mirrors the same dual-source pattern
+   * used in `authGuard`.
+   */
   async signInGuestIfNeeded(): Promise<void> {
     if (isPlatformServer(this.platformId)) return;
-    if (this.authAdapter.authState()) return; // already signed in
+    if (this.authAdapter.currentUser || this.authAdapter.authState()) return;
     await this.signInAnonymously();
   }
 

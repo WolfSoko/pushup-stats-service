@@ -29,6 +29,16 @@ export interface AuthCredentials {
 })
 export class AuthAdapter {
   private auth = inject(Auth);
+
+  /**
+   * Synchronous Firebase current user — available immediately after Firebase
+   * initializes, before the signal-based authState() has settled.
+   * Use this for startup-race-safe checks (mirrors the pattern in authGuard).
+   */
+  get currentUser() {
+    return this.auth.currentUser;
+  }
+
   // Public computed signals
   readonly authUser = toSignal(user(this.auth));
   readonly authState = toSignal(authState(this.auth));
