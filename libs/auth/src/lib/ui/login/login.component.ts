@@ -25,8 +25,17 @@ import { firstValueFrom } from 'rxjs';
 import { GoogleOnboardingDialogComponent } from './google-onboarding-dialog/google-onboarding-dialog.component';
 import { LoginUiStore } from './login-ui.store';
 
+/**
+ * Validate that a string meets the project's strong password policy.
+ *
+ * The policy requires at least one lowercase letter, one uppercase letter, one digit,
+ * one non-alphanumeric character, and a minimum length of 8 characters.
+ *
+ * @param value - The password string to validate
+ * @returns `true` if `value` satisfies the policy, `false` otherwise.
+ */
 export function hasStrongPasswordPolicy(value: string): boolean {
-  return /^(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/.test(value);
+  return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/.test(value);
 }
 
 @Component({
