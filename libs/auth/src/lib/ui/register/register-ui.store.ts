@@ -109,7 +109,7 @@ export const RegisterUiStore = signalStore(
       patchState(store, { registeringCredentials: true });
       try {
         await authStore.upgradeWithGoogle();
-        return authStore.isAuthenticated();
+        return authStore.isAuthenticated() && !authStore.error();
       } finally {
         patchState(store, { registeringCredentials: false });
       }

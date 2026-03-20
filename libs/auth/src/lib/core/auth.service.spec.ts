@@ -16,6 +16,7 @@ function makeCredential(uid: string): UserCredential {
 describe('AuthService', () => {
   let adapter: Partial<AuthAdapter>;
   let userConfigApi: Partial<UserConfigApiService>;
+  let pushupFirestore: Partial<PushupFirestoreService>;
 
   beforeEach(() => {
     const mockFirebaseUser: Partial<FirebaseUser> = {
@@ -28,7 +29,7 @@ describe('AuthService', () => {
       isAnonymous: false,
     };
     adapter = {
-      currentUser: null,
+      currentUser: mockFirebaseUser as FirebaseUser,
       authUser: (() => mockFirebaseUser as FirebaseUser) as Signal<
         FirebaseUser | null | undefined
       >,
@@ -41,6 +42,9 @@ describe('AuthService', () => {
     userConfigApi = {
       getConfig: jest.fn().mockReturnValue(of({ userId: '123' })),
       updateConfig: jest.fn().mockReturnValue(of({})),
+    };
+    pushupFirestore = {
+      migrateUserData: jest.fn().mockResolvedValue(undefined),
     };
   });
 
@@ -215,7 +219,7 @@ describe('AuthService', () => {
     });
 
     it('falls back to signInWithGoogle when no user is anonymous', async () => {
-      // Given: currentUser is null and signal is also not anonymous
+      // Given: currentUser is non-anonymous and signal is also not anonymous
       const { fixture } = await render('', {
         providers: [
           AuthService,
@@ -233,108 +237,107 @@ describe('AuthService', () => {
     });
   });
 
-  describe('signInWithEmailAndMigrateGuest', () => {
-    it('captures guest UID from currentUser when signal is stale and migrates data', async () => {
-      // Given: currentUser reflects anonymous guest; signal is stale/null
-      const guestUser = { uid: 'guest-uid', isAnonymous: true } as FirebaseUser;
-      const migrateAdapter = {
-        ...adapter,
-        currentUser: guestUser,
-        authUser: (() => null) as Signal<FirebaseUser | null | undefined>,
-        signInWithEmail: jest
-          .fn()
-          .mockResolvedValue(makeCredential('real-uid')),
-      };
-      const pushupFirestore: Partial<PushupFirestoreService> = {
-        migrateUserData: jest.fn().mockResolvedValue(undefined),
-      };
+  describe('guest data migration', () => {
+    function makeProviders() {
+      return [
+        AuthService,
+        { provide: AuthAdapter, useValue: adapter },
+        { provide: UserConfigApiService, useValue: userConfigApi },
+        { provide: PushupFirestoreService, useValue: pushupFirestore },
+      ];
+    }
 
-      const { fixture } = await render('', {
-        providers: [
-          AuthService,
-          { provide: AuthAdapter, useValue: migrateAdapter },
-          { provide: UserConfigApiService, useValue: userConfigApi },
-          { provide: PushupFirestoreService, useValue: pushupFirestore },
-        ],
-      });
-      const service = fixture.debugElement.injector.get(AuthService);
+    it('signInWithEmailAndMigrateGuest: migrates guest data when currentUser is anonymous (even if authUser() signal is null)', async () => {
+      // Given: currentUser is anonymous (auth settled synchronously),
+      // but authUser() signal hasn't resolved yet (startup race condition)
+      const guestUser: Partial<FirebaseUser> = {
+        uid: 'guest-uid',
+        isAnonymous: true,
+      };
+      adapter.currentUser = guestUser as FirebaseUser;
+      adapter.authUser = (() => null) as Signal<
+        FirebaseUser | null | undefined
+      >;
+      const realCredential = {
+        user: { uid: 'real-uid' } as FirebaseUser,
+      } as UserCredential;
+      adapter.signInWithEmail = jest.fn().mockResolvedValue(realCredential);
+      userConfigApi.getConfig = jest
+        .fn()
+        .mockReturnValue(of({ userId: 'real-uid' }));
 
       // When
-      await service.signInWithEmailAndMigrateGuest('real@test.de', 'pw');
+      const { fixture } = await render('', { providers: makeProviders() });
+      const service = fixture.debugElement.injector.get(AuthService);
+      await service.signInWithEmailAndMigrateGuest('a@b.de', 'pw');
 
-      // Then: guest data migrated to the new UID
+      // Then: guest data is migrated using the UID from currentUser
       expect(pushupFirestore.migrateUserData).toHaveBeenCalledWith(
         'guest-uid',
         'real-uid'
       );
     });
 
-    it('skips migration when currentUser is not anonymous', async () => {
-      // Given: no anonymous guest
-      const signedInAdapter = {
-        ...adapter,
-        currentUser: null,
-        authUser: (() => null) as Signal<FirebaseUser | null | undefined>,
-        signInWithEmail: jest
-          .fn()
-          .mockResolvedValue(makeCredential('real-uid')),
-      };
-      const pushupFirestore: Partial<PushupFirestoreService> = {
-        migrateUserData: jest.fn(),
-      };
-
-      const { fixture } = await render('', {
-        providers: [
-          AuthService,
-          { provide: AuthAdapter, useValue: signedInAdapter },
-          { provide: UserConfigApiService, useValue: userConfigApi },
-          { provide: PushupFirestoreService, useValue: pushupFirestore },
-        ],
-      });
-      const service = fixture.debugElement.injector.get(AuthService);
+    it('signInWithEmailAndMigrateGuest: skips migration when currentUser is not anonymous', async () => {
+      // Given: non-anonymous currentUser (no guest session)
+      const realCredential = {
+        user: { uid: 'real-uid' } as FirebaseUser,
+      } as UserCredential;
+      adapter.signInWithEmail = jest.fn().mockResolvedValue(realCredential);
 
       // When
-      await service.signInWithEmailAndMigrateGuest('real@test.de', 'pw');
+      const { fixture } = await render('', { providers: makeProviders() });
+      const service = fixture.debugElement.injector.get(AuthService);
+      await service.signInWithEmailAndMigrateGuest('a@b.de', 'pw');
 
-      // Then: no migration
+      // Then: no migration attempted
       expect(pushupFirestore.migrateUserData).not.toHaveBeenCalled();
     });
-  });
 
-  describe('signInWithGoogleAndMigrateGuest', () => {
-    it('captures guest UID from currentUser when signal is stale and migrates data', async () => {
-      // Given: currentUser reflects anonymous guest; signal is stale/null
-      const guestUser = { uid: 'guest-uid', isAnonymous: true } as FirebaseUser;
-      const migrateAdapter = {
-        ...adapter,
-        currentUser: guestUser,
-        authUser: (() => null) as Signal<FirebaseUser | null | undefined>,
-        signInWithGoogle: jest
-          .fn()
-          .mockResolvedValue(makeCredential('real-uid')),
+    it('signInWithGoogleAndMigrateGuest: migrates guest data when currentUser is anonymous (even if authUser() signal is null)', async () => {
+      // Given: currentUser is anonymous, authUser() signal hasn't resolved yet
+      const guestUser: Partial<FirebaseUser> = {
+        uid: 'guest-uid',
+        isAnonymous: true,
       };
-      const pushupFirestore: Partial<PushupFirestoreService> = {
-        migrateUserData: jest.fn().mockResolvedValue(undefined),
-      };
-
-      const { fixture } = await render('', {
-        providers: [
-          AuthService,
-          { provide: AuthAdapter, useValue: migrateAdapter },
-          { provide: UserConfigApiService, useValue: userConfigApi },
-          { provide: PushupFirestoreService, useValue: pushupFirestore },
-        ],
-      });
-      const service = fixture.debugElement.injector.get(AuthService);
+      adapter.currentUser = guestUser as FirebaseUser;
+      adapter.authUser = (() => null) as Signal<
+        FirebaseUser | null | undefined
+      >;
+      const realCredential = {
+        user: { uid: 'real-uid' } as FirebaseUser,
+      } as UserCredential;
+      adapter.signInWithGoogle = jest.fn().mockResolvedValue(realCredential);
+      userConfigApi.getConfig = jest
+        .fn()
+        .mockReturnValue(of({ userId: 'real-uid' }));
 
       // When
+      const { fixture } = await render('', { providers: makeProviders() });
+      const service = fixture.debugElement.injector.get(AuthService);
       await service.signInWithGoogleAndMigrateGuest();
 
-      // Then: guest data migrated to the new UID
+      // Then: guest data is migrated using the UID from currentUser
       expect(pushupFirestore.migrateUserData).toHaveBeenCalledWith(
         'guest-uid',
         'real-uid'
       );
+    });
+
+    it('signInWithGoogleAndMigrateGuest: skips migration when currentUser is not anonymous', async () => {
+      // Given: non-anonymous currentUser
+      const realCredential = {
+        user: { uid: 'real-uid' } as FirebaseUser,
+      } as UserCredential;
+      adapter.signInWithGoogle = jest.fn().mockResolvedValue(realCredential);
+
+      // When
+      const { fixture } = await render('', { providers: makeProviders() });
+      const service = fixture.debugElement.injector.get(AuthService);
+      await service.signInWithGoogleAndMigrateGuest();
+
+      // Then: no migration attempted
+      expect(pushupFirestore.migrateUserData).not.toHaveBeenCalled();
     });
   });
 });
