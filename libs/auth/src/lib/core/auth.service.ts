@@ -88,7 +88,12 @@ export class AuthService {
    */
   async upgradeWithEmail(email: string, password: string): Promise<void> {
     await this.wrapAsync(async () => {
-      if (this.authAdapter.authUser()?.isAnonymous) {
+      // Prefer auth.currentUser (synchronous, immediately available after
+      // signInGuestIfNeeded()) over the signal-based authUser() which may
+      // still hold stale data and cause the link path to be skipped.
+      const currentUser =
+        this.authAdapter.currentUser ?? this.authAdapter.authUser();
+      if (currentUser?.isAnonymous) {
         const cred = await this.authAdapter.linkWithEmail(email, password);
         await this.syncUserDbSafe();
         return cred;
@@ -106,7 +111,12 @@ export class AuthService {
    */
   async upgradeWithGoogle(): Promise<void> {
     await this.wrapAsync(async () => {
-      if (this.authAdapter.authUser()?.isAnonymous) {
+      // Prefer auth.currentUser (synchronous, immediately available after
+      // signInGuestIfNeeded()) over the signal-based authUser() which may
+      // still hold stale data and cause the link path to be skipped.
+      const currentUser =
+        this.authAdapter.currentUser ?? this.authAdapter.authUser();
+      if (currentUser?.isAnonymous) {
         const cred = await this.authAdapter.linkWithGoogle();
         await this.syncUserDbSafe();
         return cred;
