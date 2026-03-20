@@ -88,7 +88,12 @@ export class AuthService {
    */
   async upgradeWithEmail(email: string, password: string): Promise<void> {
     await this.wrapAsync(async () => {
-      if (this.authAdapter.authUser()?.isAnonymous) {
+      // Prefer auth.currentUser (synchronous, immediately available after
+      // signInGuestIfNeeded()) over the signal-based authUser() which may
+      // still hold stale data and cause the link path to be skipped.
+      const currentUser =
+        this.authAdapter.currentUser ?? this.authAdapter.authUser();
+      if (currentUser?.isAnonymous) {
         const cred = await this.authAdapter.linkWithEmail(email, password);
         await this.syncUserDbSafe();
         return cred;
@@ -106,7 +111,12 @@ export class AuthService {
    */
   async upgradeWithGoogle(): Promise<void> {
     await this.wrapAsync(async () => {
-      if (this.authAdapter.authUser()?.isAnonymous) {
+      // Prefer auth.currentUser (synchronous, immediately available after
+      // signInGuestIfNeeded()) over the signal-based authUser() which may
+      // still hold stale data and cause the link path to be skipped.
+      const currentUser =
+        this.authAdapter.currentUser ?? this.authAdapter.authUser();
+      if (currentUser?.isAnonymous) {
         const cred = await this.authAdapter.linkWithGoogle();
         await this.syncUserDbSafe();
         return cred;
@@ -126,8 +136,12 @@ export class AuthService {
     password: string
   ): Promise<void> {
     await this.wrapAsync(async () => {
-      const guestUid = this.authAdapter.authUser()?.isAnonymous
-        ? (this.authAdapter.authUser()?.uid ?? null)
+      // Prefer auth.currentUser (synchronous) over the stale signal for the
+      // same startup-race reason as upgradeWithEmail/upgradeWithGoogle.
+      const preSignInUser =
+        this.authAdapter.currentUser ?? this.authAdapter.authUser();
+      const guestUid = preSignInUser?.isAnonymous
+        ? (preSignInUser.uid ?? null)
         : null;
       const cred = await this.authAdapter.signInWithEmail(email, password);
       await this.syncUserDbSafe();
@@ -144,8 +158,12 @@ export class AuthService {
    */
   async signInWithGoogleAndMigrateGuest(): Promise<void> {
     await this.wrapAsync(async () => {
-      const guestUid = this.authAdapter.authUser()?.isAnonymous
-        ? (this.authAdapter.authUser()?.uid ?? null)
+      // Prefer auth.currentUser (synchronous) over the stale signal for the
+      // same startup-race reason as upgradeWithEmail/upgradeWithGoogle.
+      const preSignInUser =
+        this.authAdapter.currentUser ?? this.authAdapter.authUser();
+      const guestUid = preSignInUser?.isAnonymous
+        ? (preSignInUser.uid ?? null)
         : null;
       const cred = await this.authAdapter.signInWithGoogle();
       await this.syncUserDbSafe();
