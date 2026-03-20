@@ -84,8 +84,6 @@ export class LandingPageComponent {
 
   async onTryAsGuest(): Promise<void> {
     this.track('landing_cta_click', { target: 'guest' });
-    // signInGuestIfNeeded() checks both auth.currentUser (sync, startup-safe)
-    // and the signal-based authState() — it's a no-op when any session exists.
     await this.authService.signInGuestIfNeeded();
     await this.router.navigate(['/app']);
   }
