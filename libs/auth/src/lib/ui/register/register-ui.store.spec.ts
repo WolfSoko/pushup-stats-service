@@ -50,6 +50,7 @@ describe('RegisterUiStore', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+    authStoreMock.error.set(null);
   });
 
   it('Given Google registration When prepared Then profile defaults are hydrated from auth user', async () => {
@@ -86,6 +87,27 @@ describe('RegisterUiStore', () => {
         dailyGoal: 120,
       })
     );
+  });
+
+  it('Given Google upgrade fails When signing in with Google Then returns false due to auth error', async () => {
+    authStoreMock.upgradeWithGoogle.mockImplementationOnce(() => {
+      authStoreMock.error.set(new Error('credential-already-in-use'));
+      return Promise.resolve();
+    });
+    const store = await setup();
+
+    const result = await store.signInWithGoogle();
+
+    expect(result).toBe(false);
+  });
+
+  it('Given Google upgrade succeeds When signing in with Google Then returns true', async () => {
+    const store = await setup();
+
+    const result = await store.signInWithGoogle();
+
+    expect(result).toBe(true);
+    expect(authStoreMock.upgradeWithGoogle).toHaveBeenCalled();
   });
 
   it('Given profile save failure When persisting profile Then method returns false and keeps success unset', async () => {
