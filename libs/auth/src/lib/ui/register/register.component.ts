@@ -15,7 +15,7 @@ import {
   required,
   validate,
 } from '@angular/forms/signals';
-import { hasStrongPasswordPolicy } from '../login/login.component';
+import { hasStrongPasswordPolicy } from '../password-policy';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';

@@ -24,10 +24,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { GoogleOnboardingDialogComponent } from './google-onboarding-dialog/google-onboarding-dialog.component';
 import { LoginUiStore } from './login-ui.store';
-
-export function hasStrongPasswordPolicy(value: string): boolean {
-  return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/.test(value);
-}
+export { hasStrongPasswordPolicy } from '../password-policy';
 
 @Component({
   selector: 'pus-login',

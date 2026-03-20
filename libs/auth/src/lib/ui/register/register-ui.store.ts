@@ -10,7 +10,7 @@ import {
 } from '@ngrx/signals';
 import { AuthStore } from '../../core/state/auth.store';
 import { RegisterOnboardingStore } from '../../core/state/register-onboarding.store';
-import { hasStrongPasswordPolicy } from '../login/login.component';
+import { hasStrongPasswordPolicy } from '../password-policy';
 
 type RegisterUiState = {
   hidePassword: boolean;
