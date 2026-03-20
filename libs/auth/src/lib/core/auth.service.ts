@@ -126,8 +126,9 @@ export class AuthService {
     password: string
   ): Promise<void> {
     await this.wrapAsync(async () => {
-      const guestUid = this.authAdapter.authUser()?.isAnonymous
-        ? (this.authAdapter.authUser()?.uid ?? null)
+      const currentUser = this.authAdapter.currentUser;
+      const guestUid = currentUser?.isAnonymous
+        ? (currentUser.uid ?? null)
         : null;
       const cred = await this.authAdapter.signInWithEmail(email, password);
       await this.syncUserDbSafe();
@@ -144,8 +145,9 @@ export class AuthService {
    */
   async signInWithGoogleAndMigrateGuest(): Promise<void> {
     await this.wrapAsync(async () => {
-      const guestUid = this.authAdapter.authUser()?.isAnonymous
-        ? (this.authAdapter.authUser()?.uid ?? null)
+      const currentUser = this.authAdapter.currentUser;
+      const guestUid = currentUser?.isAnonymous
+        ? (currentUser.uid ?? null)
         : null;
       const cred = await this.authAdapter.signInWithGoogle();
       await this.syncUserDbSafe();
