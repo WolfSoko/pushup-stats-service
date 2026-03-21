@@ -1,4 +1,6 @@
 /// <reference types="@angular/localize" />
+export { AuthAdapter } from './lib/adapters/auth.adapter';
+export type { AuthCredentials } from './lib/adapters/auth.adapter';
 export * from './lib/core/auth.guard';
 export * from './lib/core/auth.service';
 export * from './lib/provide-auth';

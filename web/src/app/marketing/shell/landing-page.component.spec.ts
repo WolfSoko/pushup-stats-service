@@ -1,9 +1,9 @@
-import { signal } from '@angular/core';
 import { provideRouter, Router } from '@angular/router';
 import { render, screen } from '@testing-library/angular';
 import userEvent from '@testing-library/user-event';
 import { AdsConfigService } from '@pu-stats/ads';
 import { AuthService, AuthStore } from '@pu-auth/auth';
+import { makeAuthServiceMock, makeAuthStoreMock } from '@pu-stats/testing';
 import { LandingPageComponent } from './landing-page.component';
 
 const adsConfigMock = {
@@ -14,17 +14,6 @@ const adsConfigMock = {
   landingInlineSlot: () => '',
 };
 
-function makeAuthServiceMock() {
-  return { signInGuestIfNeeded: vitest.fn().mockResolvedValue(undefined) };
-}
-
-function makeAuthStoreMock(isAuthenticated = false, isGuest = false) {
-  return {
-    isAuthenticated: signal(isAuthenticated),
-    isGuest: signal(isGuest),
-  };
-}
-
 describe('LandingPageComponent', () => {
   describe('unauthenticated', () => {
     it('renders product pitch and all CTA buttons', async () => {
@@ -33,7 +22,7 @@ describe('LandingPageComponent', () => {
           provideRouter([]),
           { provide: AdsConfigService, useValue: adsConfigMock },
           { provide: AuthService, useValue: makeAuthServiceMock() },
-          { provide: AuthStore, useValue: makeAuthStoreMock(false) },
+          { provide: AuthStore, useValue: makeAuthStoreMock() },
         ],
       });
 
@@ -59,7 +48,10 @@ describe('LandingPageComponent', () => {
           provideRouter([]),
           { provide: AdsConfigService, useValue: adsConfigMock },
           { provide: AuthService, useValue: makeAuthServiceMock() },
-          { provide: AuthStore, useValue: makeAuthStoreMock(true, false) },
+          {
+            provide: AuthStore,
+            useValue: makeAuthStoreMock({ isAuthenticated: true }),
+          },
         ],
       });
 
@@ -81,7 +73,10 @@ describe('LandingPageComponent', () => {
           provideRouter([]),
           { provide: AdsConfigService, useValue: adsConfigMock },
           { provide: AuthService, useValue: makeAuthServiceMock() },
-          { provide: AuthStore, useValue: makeAuthStoreMock(true, true) },
+          {
+            provide: AuthStore,
+            useValue: makeAuthStoreMock({ isAuthenticated: true, isGuest: true }),
+          },
         ],
       });
 
@@ -102,7 +97,7 @@ describe('LandingPageComponent', () => {
         provideRouter([]),
         { provide: AdsConfigService, useValue: adsConfigMock },
         { provide: AuthService, useValue: makeAuthServiceMock() },
-        { provide: AuthStore, useValue: makeAuthStoreMock(false) },
+        { provide: AuthStore, useValue: makeAuthStoreMock() },
       ],
     });
 
@@ -130,13 +125,16 @@ describe('LandingPageComponent', () => {
   });
 
   it('clicking "Als Gast ausprobieren" calls signInGuestIfNeeded and navigates to /app', async () => {
-    const authServiceMock = makeAuthServiceMock();
+    const signInGuestIfNeeded = vitest.fn().mockResolvedValue(undefined);
     const view = await render(LandingPageComponent, {
       providers: [
         provideRouter([{ path: 'app', component: LandingPageComponent }]),
         { provide: AdsConfigService, useValue: adsConfigMock },
-        { provide: AuthService, useValue: authServiceMock },
-        { provide: AuthStore, useValue: makeAuthStoreMock(false) },
+        {
+          provide: AuthService,
+          useValue: makeAuthServiceMock({ overrides: { signInGuestIfNeeded } }),
+        },
+        { provide: AuthStore, useValue: makeAuthStoreMock() },
       ],
     });
 
@@ -151,7 +149,7 @@ describe('LandingPageComponent', () => {
     );
 
     // Then
-    expect(authServiceMock.signInGuestIfNeeded).toHaveBeenCalled();
+    expect(signInGuestIfNeeded).toHaveBeenCalled();
     expect(navigateSpy).toHaveBeenCalledWith(['/app']);
   });
 });
