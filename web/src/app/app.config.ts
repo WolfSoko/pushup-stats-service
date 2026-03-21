@@ -1,8 +1,6 @@
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import {
-  APP_INITIALIZER,
   ApplicationConfig,
-  inject,
   isDevMode,
   LOCALE_ID,
   provideBrowserGlobalErrorListeners,
@@ -30,11 +28,7 @@ import {
 } from '@angular/platform-browser';
 import { provideRouter } from '@angular/router';
 import { provideServiceWorker } from '@angular/service-worker';
-import {
-  AuthService,
-  provideAuth,
-  withEmulator as withAuthEmulator,
-} from '@pu-auth/auth';
+import { provideAuth, withEmulator as withAuthEmulator } from '@pu-auth/auth';
 import {
   provideFireStore,
   withEmulator as withFirestoreEmulator,
@@ -49,14 +43,6 @@ import { appRoutes } from './app.routes';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
-    {
-      provide: APP_INITIALIZER,
-      useFactory: () => {
-        const authService = inject(AuthService);
-        return () => authService.signInGuestIfNeeded();
-      },
-      multi: true,
-    },
     provideHttpClient(withFetch()),
     provideRouter(appRoutes),
     provideClientHydration(
