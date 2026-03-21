@@ -25,13 +25,14 @@
         i18n="@@landing.cta.login"
         >Einloggen</a
       >
-      <a
+      <button
         mat-button
-        routerLink="/app"
-        (click)="onCtaClick('dashboard')"
-        i18n="@@landing.cta.dashboard"
-        >Zum Dashboard</a
+        type="button"
+        (click)="onTryAsGuest()"
+        i18n="@@landing.cta.guest"
       >
+        Als Gast ausprobieren
+      </button>
     </div>
   </section>
 
@@ -76,7 +77,7 @@
     </mat-card>
   </section>
   <section aria-label="Werbung" i18n-aria-label="@@ads.landing.aria">
-    <app-ad-slot [slot]="landingAdSlot()" />
+    <lib-ad-slot [slot]="landingAdSlot()" />
   </section>
   <section class="preview">
     <img

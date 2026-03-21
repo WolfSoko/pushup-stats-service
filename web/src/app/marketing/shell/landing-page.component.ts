@@ -9,13 +9,10 @@ import { Analytics, logEvent } from '@angular/fire/analytics';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
-import { RouterLink } from '@angular/router';
-import { AdSlotComponent } from '../../ads/ad-slot.component';
-import { AdsConfigService } from '../../ads/ads-config.service';
-import {
-  LeaderboardPeriod,
-  LeaderboardService,
-} from '../../leaderboard.service';
+import { Router, RouterLink } from '@angular/router';
+import { AdSlotComponent, AdsConfigService } from '@pu-stats/ads';
+import { AuthService } from '@pu-auth/auth';
+import { LeaderboardPeriod, LeaderboardService } from '@pu-stats/data-access';
 
 @Component({
   selector: 'app-landing-page',
@@ -35,6 +32,8 @@ export class LandingPageComponent {
   });
   private readonly analytics = inject(Analytics, { optional: true });
   private readonly adsConfig = inject(AdsConfigService);
+  private readonly authService = inject(AuthService);
+  private readonly router = inject(Router);
 
   readonly period = linkedSignal<LeaderboardPeriod>(() => 'daily');
   readonly adClient = this.adsConfig.adClient;
@@ -79,8 +78,14 @@ export class LandingPageComponent {
     });
   });
 
-  onCtaClick(target: 'signup' | 'login' | 'dashboard'): void {
+  onCtaClick(target: 'signup' | 'login' | 'dashboard' | 'guest'): void {
     this.track('landing_cta_click', { target });
+  }
+
+  async onTryAsGuest(): Promise<void> {
+    this.track('landing_cta_click', { target: 'guest' });
+    await this.authService.signInGuestIfNeeded();
+    await this.router.navigate(['/app']);
   }
 
   onPeriodChange(period: LeaderboardPeriod): void {

@@ -13,6 +13,7 @@ import { AuthStore } from './state/auth.store';
 @Injectable()
 class MockAuthStore {
   isAuthenticated = jest.fn();
+  isGuest = jest.fn().mockReturnValue(false);
 }
 
 @Injectable()
@@ -81,9 +82,19 @@ describe('auth.guard', () => {
 
   it('publicOnlyGuard should return UrlTree to /app when authenticated (given isAuthenticated true)', () => {
     authStore.isAuthenticated.mockReturnValue(true);
+    authStore.isGuest.mockReturnValue(false);
     const result = TestBed.runInInjectionContext(() =>
       publicOnlyGuard(mockedRoute, mockedRouterState)
     ) as UrlTree;
     expect(result.toString()).toEqual('/app');
+  });
+
+  it('publicOnlyGuard should return true when authenticated but isGuest (anonymous user)', () => {
+    authStore.isAuthenticated.mockReturnValue(true);
+    authStore.isGuest.mockReturnValue(true);
+    const result = TestBed.runInInjectionContext(() =>
+      publicOnlyGuard(mockedRoute, mockedRouterState)
+    );
+    expect(result).toBe(true);
   });
 });

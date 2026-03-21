@@ -19,7 +19,6 @@ describe('AdSlotComponent', () => {
   };
 
   beforeEach(async () => {
-    vitest.clearAllMocks();
     consent.set(false);
 
     await TestBed.configureTestingModule({

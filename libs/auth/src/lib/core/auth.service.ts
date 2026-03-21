@@ -52,6 +52,13 @@ export class AuthService {
     }, 'Email sign-up');
   }
 
+  /** Sign in as anonymous guest if no session exists yet */
+  async signInGuestIfNeeded(): Promise<void> {
+    if (isPlatformServer(this.platformId)) return;
+    if (this.authAdapter.authState()) return; // already signed in
+    await this.signInAnonymously();
+  }
+
   /** Sign in anonymously (mainly for e2e testing) */
   async signInAnonymously(): Promise<void> {
     await this.wrapAsync(async () => {

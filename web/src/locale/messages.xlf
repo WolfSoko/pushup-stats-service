@@ -1062,5 +1062,55 @@
         <source>Gast</source>
       </segment>
     </unit>
+    <unit id="user.menu.settings">
+      <segment>
+        <source>Einstellungen</source>
+      </segment>
+    </unit>
+    <unit id="user.menu.logout">
+      <segment>
+        <source>Abmelden</source>
+      </segment>
+    </unit>
+    <unit id="user.menu.convertAccount">
+      <segment>
+        <source>Umwandeln in Nutzerkonto</source>
+      </segment>
+    </unit>
+    <unit id="user.menu.guestHint">
+      <segment>
+        <source>Du nutzt PUS als Gast</source>
+      </segment>
+    </unit>
+    <unit id="user.menu.signIn">
+      <segment>
+        <source>Anmelden</source>
+      </segment>
+    </unit>
+    <unit id="user.menu.aria">
+      <segment>
+        <source>Nutzerkonto-Menü</source>
+      </segment>
+    </unit>
+    <unit id="user.menu.guestAria">
+      <segment>
+        <source>Gast-Menü</source>
+      </segment>
+    </unit>
+    <unit id="guest.banner.text">
+      <segment>
+        <source>Du nutzt PUS als Gast. Erstelle ein Konto um alle Funktionen zu nutzen.</source>
+      </segment>
+    </unit>
+    <unit id="guest.banner.cta">
+      <segment>
+        <source>Konto erstellen</source>
+      </segment>
+    </unit>
+    <unit id="nav.desktop.aria">
+      <segment>
+        <source>Hauptnavigation</source>
+      </segment>
+    </unit>
   </file>
 </xliff>

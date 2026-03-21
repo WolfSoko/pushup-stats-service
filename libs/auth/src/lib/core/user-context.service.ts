@@ -1,10 +1,13 @@
 import { computed, inject, Injectable } from '@angular/core';
-// eslint-disable-next-line @nx/enforce-module-boundaries
-import { AuthStore } from '@pu-auth/auth';
+import { AuthStore } from './state/auth.store';
 
 @Injectable({ providedIn: 'root' })
 export class UserContextService {
   private readonly authStore = inject(AuthStore);
+
+  readonly isGuest = computed(
+    () => this.authStore.user()?.isAnonymous ?? false
+  );
 
   readonly userNameSafe = computed(() => {
     const user = this.authStore.user();

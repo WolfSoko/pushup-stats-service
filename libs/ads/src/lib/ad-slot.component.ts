@@ -16,7 +16,7 @@ declare global {
 }
 
 @Component({
-  selector: 'app-ad-slot',
+  selector: 'lib-ad-slot',
   imports: [CommonModule],
   template: `
     @if (enabled()) {

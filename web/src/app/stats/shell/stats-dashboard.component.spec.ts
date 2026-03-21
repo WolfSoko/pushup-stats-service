@@ -6,8 +6,8 @@ import {
   StatsApiService,
   UserConfigApiService,
 } from '@pu-stats/data-access';
-import { UserContextService } from '../../user-context.service';
-import { AdsConfigService } from '../../ads/ads-config.service';
+import { UserContextService } from '@pu-auth/auth';
+import { AdsConfigService } from '@pu-stats/ads';
 import { signal } from '@angular/core';
 
 function nowLocalMinuteIso(): string {

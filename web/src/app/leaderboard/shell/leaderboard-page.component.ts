@@ -7,10 +7,7 @@ import {
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import {
-  LeaderboardPeriod,
-  LeaderboardService,
-} from '../../leaderboard.service';
+import { LeaderboardPeriod, LeaderboardService } from '@pu-stats/data-access';
 
 @Component({
   selector: 'app-leaderboard-page',

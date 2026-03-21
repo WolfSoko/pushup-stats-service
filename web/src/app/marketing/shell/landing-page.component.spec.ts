@@ -1,6 +1,7 @@
 import { provideRouter } from '@angular/router';
 import { render, screen } from '@testing-library/angular';
-import { AdsConfigService } from '../../ads/ads-config.service';
+import { AdsConfigService } from '@pu-stats/ads';
+import { AuthService } from '@pu-auth/auth';
 import { LandingPageComponent } from './landing-page.component';
 
 const adsConfigMock = {
@@ -11,12 +12,17 @@ const adsConfigMock = {
   landingInlineSlot: () => '',
 };
 
+const authServiceMock = {
+  signInGuestIfNeeded: () => Promise.resolve(),
+};
+
 describe('LandingPageComponent', () => {
   it('renders product pitch and call-to-action buttons', async () => {
     await render(LandingPageComponent, {
       providers: [
         provideRouter([]),
         { provide: AdsConfigService, useValue: adsConfigMock },
+        { provide: AuthService, useValue: authServiceMock },
       ],
     });
 
@@ -26,7 +32,9 @@ describe('LandingPageComponent', () => {
       screen.getByRole('link', { name: 'Jetzt registrieren' })
     ).toBeTruthy();
     expect(screen.getByRole('link', { name: 'Einloggen' })).toBeTruthy();
-    expect(screen.getByRole('link', { name: 'Zum Dashboard' })).toBeTruthy();
+    expect(
+      screen.getByRole('button', { name: 'Als Gast ausprobieren' })
+    ).toBeTruthy();
     expect(screen.getByText('Bestenliste')).toBeTruthy();
   });
 
@@ -35,6 +43,7 @@ describe('LandingPageComponent', () => {
       providers: [
         provideRouter([]),
         { provide: AdsConfigService, useValue: adsConfigMock },
+        { provide: AuthService, useValue: authServiceMock },
       ],
     });
 
