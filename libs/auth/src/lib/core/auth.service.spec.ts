@@ -126,6 +126,88 @@ describe('AuthService', () => {
     );
   });
 
+  describe('signInGuestIfNeeded', () => {
+    it('is a no-op when auth.currentUser is already set', async () => {
+      // Given: adapter.currentUser is set (synchronous, persisted session)
+      // authState() doesn't matter - short-circuits on currentUser
+      const noopAdapter = {
+        ...adapter,
+        signInAnonymously: jest.fn(),
+      };
+
+      const { fixture } = await render('', {
+        providers: [
+          AuthService,
+          { provide: AuthAdapter, useValue: noopAdapter },
+          { provide: UserConfigApiService, useValue: userConfigApi },
+        ],
+      });
+      const service = fixture.debugElement.injector.get(AuthService);
+
+      // When
+      await service.signInGuestIfNeeded();
+
+      // Then: no new anonymous sign-in
+      expect(noopAdapter.signInAnonymously).not.toHaveBeenCalled();
+    });
+
+    it('is a no-op when authState() signal returns a user', async () => {
+      // Given: currentUser is null but authState() signal already resolved
+      const mockUser = { uid: 'signal-uid', isAnonymous: false } as FirebaseUser;
+      const noopAdapter = {
+        ...adapter,
+        currentUser: null,
+        authState: (() => mockUser) as Signal<FirebaseUser | null | undefined>,
+        signInAnonymously: jest.fn(),
+      };
+
+      const { fixture } = await render('', {
+        providers: [
+          AuthService,
+          { provide: AuthAdapter, useValue: noopAdapter },
+          { provide: UserConfigApiService, useValue: userConfigApi },
+        ],
+      });
+      const service = fixture.debugElement.injector.get(AuthService);
+
+      // When
+      await service.signInGuestIfNeeded();
+
+      // Then: no new anonymous sign-in
+      expect(noopAdapter.signInAnonymously).not.toHaveBeenCalled();
+    });
+
+    it('calls signInAnonymously when no session exists', async () => {
+      // Given: no currentUser and no authState() signal value
+      const noSessionAdapter = {
+        ...adapter,
+        currentUser: null,
+        authState: (() => null) as Signal<FirebaseUser | null | undefined>,
+        signInAnonymously: jest
+          .fn()
+          .mockResolvedValue({ user: { uid: 'anon-uid' } }),
+      };
+      userConfigApi.getConfig = jest
+        .fn()
+        .mockReturnValue(of({ userId: 'anon-uid' }));
+
+      const { fixture } = await render('', {
+        providers: [
+          AuthService,
+          { provide: AuthAdapter, useValue: noSessionAdapter },
+          { provide: UserConfigApiService, useValue: userConfigApi },
+        ],
+      });
+      const service = fixture.debugElement.injector.get(AuthService);
+
+      // When
+      await service.signInGuestIfNeeded();
+
+      // Then: anonymous sign-in was triggered
+      expect(noSessionAdapter.signInAnonymously).toHaveBeenCalled();
+    });
+  });
+
   describe('upgradeWithEmail', () => {
     it('links credential when currentUser is anonymous even when authUser signal is stale', async () => {
       // Given: currentUser is set to anonymous (race: signal is still null/stale)

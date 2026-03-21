@@ -139,7 +139,7 @@
                   }}</mat-icon>
                 </button>
                 @for (error of registerForm.password().errors(); track $index) {
-                  <mat-error>{{ error }}</mat-error>
+                  <mat-error>{{ $any(error)?.message ?? error }}</mat-error>
                 }
               </mat-form-field>
               <p class="password-hint" i18n="@@auth.register.password.hint">

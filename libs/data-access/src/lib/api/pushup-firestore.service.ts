@@ -11,7 +11,6 @@ import {
   setDoc,
   updateDoc,
   where,
-  writeBatch,
 } from '@angular/fire/firestore';
 import {
   PushupCreate,
@@ -112,33 +111,20 @@ export class PushupFirestoreService {
   }
 
   /**
-   * Migrates all pushup documents from `fromUserId` to `toUserId`.
-   * Used when a guest signs into an existing account (UIDs differ).
-   * Reads docs as `fromUserId`, batch-writes them under `toUserId`,
-   * then deletes the originals.
+   * Client-side migration of pushup documents between different userIds is
+   * intentionally disabled.
    *
-   * Firestore batch limit is 500 ops. Each doc = 1 write + 1 delete = 2 ops,
-   * so we process up to 250 docs per batch.
+   * With strict Firestore rules (`resource.data.userId == request.auth.uid`
+   * and `request.resource.data.userId == request.auth.uid`), a client
+   * authenticated as `toUserId` cannot read `fromUserId`'s documents or write
+   * documents owned by a different uid. Any cross-user migration must be
+   * performed in a trusted backend (e.g. Cloud Function / Admin SDK).
+   *
+   * Kept as a no-op for API compatibility; `AuthService.migrateGuestDataSafe`
+   * wraps calls in a try/catch and only console.warns on failure.
    */
-  async migrateUserData(fromUserId: string, toUserId: string): Promise<void> {
-    if (fromUserId === toUserId) return;
-    const pushupsRef = collection(this.firestore, PUSHUPS_COLLECTION);
-    const q = query(pushupsRef, where('userId', '==', fromUserId));
-    const snapshot = await getDocs(q);
-    if (snapshot.empty) return;
-
-    const BATCH_SIZE = 250;
-    const docs = snapshot.docs;
-
-    for (let i = 0; i < docs.length; i += BATCH_SIZE) {
-      const chunk = docs.slice(i, i + BATCH_SIZE);
-      const batch = writeBatch(this.firestore);
-      for (const d of chunk) {
-        const newRef = doc(pushupsRef);
-        batch.set(newRef, { ...d.data(), userId: toUserId });
-        batch.delete(d.ref);
-      }
-      await batch.commit();
-    }
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  async migrateUserData(_fromUserId: string, _toUserId: string): Promise<void> {
+    // No-op by design. See comment above.
   }
 }
