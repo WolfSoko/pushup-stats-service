@@ -1541,6 +1541,15 @@ Active:         </target>
       
       
         </unit>
+    <unit id="landing.cta.dashboard">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+      </notes>
+      <segment state="translated">
+        <source>Zum Dashboard</source>
+        <target>Go to Dashboard</target>
+      </segment>
+    </unit>
     <unit id="landing.cta.guest">
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>

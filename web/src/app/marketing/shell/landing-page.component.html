@@ -8,31 +8,55 @@
     </p>
 
     <div class="cta-row">
-      <a
-        mat-flat-button
-        color="primary"
-        routerLink="/register"
-        [queryParams]="{ returnUrl: '/app' }"
-        (click)="onCtaClick('signup')"
-        i18n="@@landing.cta.signup"
-        >Jetzt registrieren</a
-      >
-      <a
-        mat-stroked-button
-        routerLink="/login"
-        [queryParams]="{ returnUrl: '/app' }"
-        (click)="onCtaClick('login')"
-        i18n="@@landing.cta.login"
-        >Einloggen</a
-      >
-      <button
-        mat-button
-        type="button"
-        (click)="onTryAsGuest()"
-        i18n="@@landing.cta.guest"
-      >
-        Als Gast ausprobieren
-      </button>
+      @if (isAuthenticated()) {
+        <!-- Already logged in: go to dashboard -->
+        <a
+          mat-flat-button
+          color="primary"
+          routerLink="/app"
+          (click)="onCtaClick('dashboard')"
+          i18n="@@landing.cta.dashboard"
+          >Zum Dashboard</a
+        >
+        @if (isGuest()) {
+          <!-- Guest: offer to create a real account -->
+          <a
+            mat-stroked-button
+            routerLink="/register"
+            [queryParams]="{ returnUrl: '/app' }"
+            (click)="onCtaClick('signup')"
+            i18n="@@landing.cta.signup"
+            >Konto erstellen</a
+          >
+        }
+      } @else {
+        <!-- Not logged in: show all options -->
+        <a
+          mat-flat-button
+          color="primary"
+          routerLink="/register"
+          [queryParams]="{ returnUrl: '/app' }"
+          (click)="onCtaClick('signup')"
+          i18n="@@landing.cta.signup"
+          >Jetzt registrieren</a
+        >
+        <a
+          mat-stroked-button
+          routerLink="/login"
+          [queryParams]="{ returnUrl: '/app' }"
+          (click)="onCtaClick('login')"
+          i18n="@@landing.cta.login"
+          >Einloggen</a
+        >
+        <button
+          mat-button
+          type="button"
+          (click)="onTryAsGuest()"
+          i18n="@@landing.cta.guest"
+        >
+          Als Gast ausprobieren
+        </button>
+      }
     </div>
   </section>
 

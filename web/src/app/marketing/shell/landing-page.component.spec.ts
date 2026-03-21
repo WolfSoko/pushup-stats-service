@@ -1,8 +1,9 @@
+import { signal } from '@angular/core';
 import { provideRouter, Router } from '@angular/router';
 import { render, screen } from '@testing-library/angular';
 import userEvent from '@testing-library/user-event';
 import { AdsConfigService } from '@pu-stats/ads';
-import { AuthService } from '@pu-auth/auth';
+import { AuthService, AuthStore } from '@pu-auth/auth';
 import { LandingPageComponent } from './landing-page.component';
 
 const adsConfigMock = {
@@ -17,26 +18,82 @@ function makeAuthServiceMock() {
   return { signInGuestIfNeeded: jest.fn().mockResolvedValue(undefined) };
 }
 
-describe('LandingPageComponent', () => {
-  it('renders product pitch and call-to-action buttons', async () => {
-    await render(LandingPageComponent, {
-      providers: [
-        provideRouter([]),
-        { provide: AdsConfigService, useValue: adsConfigMock },
-        { provide: AuthService, useValue: makeAuthServiceMock() },
-      ],
-    });
+function makeAuthStoreMock(isAuthenticated = false, isGuest = false) {
+  return {
+    isAuthenticated: signal(isAuthenticated),
+    isGuest: signal(isGuest),
+  };
+}
 
-    expect(screen.getByText('Pushup Tracker')).toBeTruthy();
-    expect(screen.getByText('Dein Training. Klar visualisiert.')).toBeTruthy();
-    expect(
-      screen.getByRole('link', { name: 'Jetzt registrieren' })
-    ).toBeTruthy();
-    expect(screen.getByRole('link', { name: 'Einloggen' })).toBeTruthy();
-    expect(
-      screen.getByRole('button', { name: 'Als Gast ausprobieren' })
-    ).toBeTruthy();
-    expect(screen.getByText('Bestenliste')).toBeTruthy();
+describe('LandingPageComponent', () => {
+  describe('unauthenticated', () => {
+    it('renders product pitch and all CTA buttons', async () => {
+      await render(LandingPageComponent, {
+        providers: [
+          provideRouter([]),
+          { provide: AdsConfigService, useValue: adsConfigMock },
+          { provide: AuthService, useValue: makeAuthServiceMock() },
+          { provide: AuthStore, useValue: makeAuthStoreMock(false) },
+        ],
+      });
+
+      expect(screen.getByText('Pushup Tracker')).toBeTruthy();
+      expect(
+        screen.getByText('Dein Training. Klar visualisiert.')
+      ).toBeTruthy();
+      expect(
+        screen.getByRole('link', { name: 'Jetzt registrieren' })
+      ).toBeTruthy();
+      expect(screen.getByRole('link', { name: 'Einloggen' })).toBeTruthy();
+      expect(
+        screen.getByRole('button', { name: 'Als Gast ausprobieren' })
+      ).toBeTruthy();
+      expect(screen.getByText('Bestenliste')).toBeTruthy();
+    });
+  });
+
+  describe('authenticated as real user', () => {
+    it('shows only dashboard button', async () => {
+      await render(LandingPageComponent, {
+        providers: [
+          provideRouter([]),
+          { provide: AdsConfigService, useValue: adsConfigMock },
+          { provide: AuthService, useValue: makeAuthServiceMock() },
+          { provide: AuthStore, useValue: makeAuthStoreMock(true, false) },
+        ],
+      });
+
+      expect(screen.getByRole('link', { name: 'Zum Dashboard' })).toBeTruthy();
+      expect(
+        screen.queryByRole('link', { name: 'Jetzt registrieren' })
+      ).toBeNull();
+      expect(screen.queryByRole('link', { name: 'Einloggen' })).toBeNull();
+      expect(
+        screen.queryByRole('button', { name: 'Als Gast ausprobieren' })
+      ).toBeNull();
+    });
+  });
+
+  describe('authenticated as guest', () => {
+    it('shows dashboard button and "Konto erstellen"', async () => {
+      await render(LandingPageComponent, {
+        providers: [
+          provideRouter([]),
+          { provide: AdsConfigService, useValue: adsConfigMock },
+          { provide: AuthService, useValue: makeAuthServiceMock() },
+          { provide: AuthStore, useValue: makeAuthStoreMock(true, true) },
+        ],
+      });
+
+      expect(screen.getByRole('link', { name: 'Zum Dashboard' })).toBeTruthy();
+      expect(
+        screen.getByRole('link', { name: 'Konto erstellen' })
+      ).toBeTruthy();
+      expect(screen.queryByRole('link', { name: 'Einloggen' })).toBeNull();
+      expect(
+        screen.queryByRole('button', { name: 'Als Gast ausprobieren' })
+      ).toBeNull();
+    });
   });
 
   it('orders landing sections as feature grid, preview, leaderboard', async () => {
@@ -45,6 +102,7 @@ describe('LandingPageComponent', () => {
         provideRouter([]),
         { provide: AdsConfigService, useValue: adsConfigMock },
         { provide: AuthService, useValue: makeAuthServiceMock() },
+        { provide: AuthStore, useValue: makeAuthStoreMock(false) },
       ],
     });
 
@@ -78,6 +136,7 @@ describe('LandingPageComponent', () => {
         provideRouter([{ path: 'app', component: LandingPageComponent }]),
         { provide: AdsConfigService, useValue: adsConfigMock },
         { provide: AuthService, useValue: authServiceMock },
+        { provide: AuthStore, useValue: makeAuthStoreMock(false) },
       ],
     });
 
