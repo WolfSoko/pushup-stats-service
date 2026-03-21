@@ -15,17 +15,29 @@
 
 import { Signal, signal } from '@angular/core';
 import { User as FirebaseUser, UserCredential } from '@angular/fire/auth';
-import { AuthAdapter } from '@pu-auth/auth';
-import { AuthService } from '@pu-auth/auth';
-import { AuthStore } from '@pu-auth/auth';
-import { User } from '@pu-auth/auth';
+
+/**
+ * Structural shape of the auth User model.
+ * Defined locally to avoid a circular dependency: testing → auth → testing.
+ */
+interface AuthUserShape {
+  uid: string;
+  email: string | null;
+  displayName: string | null;
+  photoURL: string | null;
+  emailVerified: boolean;
+  providerId: string;
+  isAnonymous: boolean;
+}
 
 // ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
 
 /** Creates a minimal FirebaseUser-shaped object for testing. */
-export function makeFirebaseUser(overrides: Partial<FirebaseUser> = {}): FirebaseUser {
+export function makeFirebaseUser(
+  overrides: Partial<FirebaseUser> = {}
+): FirebaseUser {
   return {
     uid: 'test-uid',
     email: 'test@test.de',
@@ -55,7 +67,7 @@ export function makeUserCredential(uid = 'test-uid'): UserCredential {
  * @example
  * const adapter = makeAuthAdapterMock({ signInWithGoogle: jest.fn().mockResolvedValue(makeUserCredential()) });
  */
-export function makeAuthAdapterMock(overrides: Partial<AuthAdapter> = {}): Partial<AuthAdapter> {
+export function makeAuthAdapterMock(overrides: Record<string, unknown> = {}) {
   const mockUser = makeFirebaseUser();
   return {
     currentUser: mockUser,
@@ -95,11 +107,11 @@ export function makeAuthAdapterMock(overrides: Partial<AuthAdapter> = {}): Parti
  */
 export function makeAuthServiceMock(opts?: {
   isAnonymous?: boolean | null;
-  overrides?: Partial<AuthService>;
-}): Partial<AuthService> {
+  overrides?: Record<string, unknown>;
+}) {
   const isAnonymous = opts?.isAnonymous ?? false;
 
-  const user: User | null =
+  const user: AuthUserShape | null =
     isAnonymous === null
       ? null
       : {
@@ -108,12 +120,12 @@ export function makeAuthServiceMock(opts?: {
           displayName: null,
           photoURL: null,
           emailVerified: false,
-          providerId: 'unknown' as const,
+          providerId: 'unknown',
           isAnonymous: isAnonymous === true,
         };
 
   return {
-    user: (() => user) as Signal<User | null>,
+    user: (() => user) as Signal<AuthUserShape | null>,
     isAuthenticated: (() => isAnonymous !== null) as Signal<boolean>,
     idToken: (() => null) as Signal<string | null | undefined>,
     userDbSyncState: signal('idle' as const),
@@ -144,7 +156,7 @@ export function makeAuthServiceMock(opts?: {
 export function makeAuthStoreMock(opts?: {
   isAuthenticated?: boolean;
   isGuest?: boolean;
-}): Pick<InstanceType<typeof AuthStore>, 'isAuthenticated' | 'isGuest'> {
+}): { isAuthenticated: Signal<boolean>; isGuest: Signal<boolean> } {
   return {
     isAuthenticated: signal(opts?.isAuthenticated ?? false),
     isGuest: signal(opts?.isGuest ?? false),
