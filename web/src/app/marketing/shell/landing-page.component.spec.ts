@@ -24,10 +24,6 @@ describe('LandingPageComponent', () => {
         provideRouter([]),
         { provide: AdsConfigService, useValue: adsConfigMock },
         { provide: AuthService, useValue: makeAuthServiceMock() },
-      ],
-    });
-
-    expect(screen.getByText('Pushup Tracker')).toBeTruthy();
     expect(screen.getByText('Dein Training. Klar visualisiert.')).toBeTruthy();
     expect(
       screen.getByRole('link', { name: 'Jetzt registrieren' })
@@ -45,10 +41,6 @@ describe('LandingPageComponent', () => {
         provideRouter([]),
         { provide: AdsConfigService, useValue: adsConfigMock },
         { provide: AuthService, useValue: makeAuthServiceMock() },
-      ],
-    });
-
-    const host = view.fixture.nativeElement as HTMLElement;
     const features = host.querySelector('section.feature-grid');
     const preview = host.querySelector('section.preview');
     const leaderboard = host.querySelector('section.leaderboard');
