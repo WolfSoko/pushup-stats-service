@@ -38,6 +38,7 @@ describe('AuthService', () => {
       signInWithGoogle: jest.fn().mockResolvedValue(makeCredential('123')),
       signInWithEmail: jest.fn().mockResolvedValue(makeCredential('123')),
       signUpWithEmail: jest.fn().mockResolvedValue(makeCredential('123')),
+      authStateReady: jest.fn().mockResolvedValue(undefined),
     };
     userConfigApi = {
       getConfig: jest.fn().mockReturnValue(of({ userId: '123' })),
@@ -151,13 +152,15 @@ describe('AuthService', () => {
       expect(noopAdapter.signInAnonymously).not.toHaveBeenCalled();
     });
 
-    it('is a no-op when authState() signal returns a user', async () => {
-      // Given: currentUser is null but authState() signal already resolved
-      const mockUser = { uid: 'signal-uid', isAnonymous: false } as FirebaseUser;
+    it('is a no-op when currentUser is set after authStateReady()', async () => {
+      // Given: authStateReady() resolves and currentUser reflects a real session
+      const mockUser = {
+        uid: 'signal-uid',
+        isAnonymous: false,
+      } as FirebaseUser;
       const noopAdapter = {
         ...adapter,
-        currentUser: null,
-        authState: (() => mockUser) as Signal<FirebaseUser | null | undefined>,
+        currentUser: mockUser,
         signInAnonymously: jest.fn(),
       };
 

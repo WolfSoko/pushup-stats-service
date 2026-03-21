@@ -14,7 +14,7 @@ const adsConfigMock = {
 };
 
 function makeAuthServiceMock() {
-  return { signInGuestIfNeeded: jest.fn().mockResolvedValue(undefined) };
+  return { signInGuestIfNeeded: vitest.fn().mockResolvedValue(undefined) };
 }
 
 describe('LandingPageComponent', () => {
@@ -82,7 +82,9 @@ describe('LandingPageComponent', () => {
     });
 
     const router = view.fixture.debugElement.injector.get(Router);
-    const navigateSpy = jest.spyOn(router, 'navigate').mockResolvedValue(true);
+    const navigateSpy = vitest
+      .spyOn(router, 'navigate')
+      .mockResolvedValue(true);
 
     // When
     await userEvent.click(
