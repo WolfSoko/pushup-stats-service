@@ -55,3 +55,9 @@ test-results
 vite.config.*.timestamp*
 
 .env
+.claude/
+.claude-backup-*/
+.director-mode/
+CLAUDE.md
+docs/superpowers/
+firebase-debug.log
