@@ -19,6 +19,7 @@ class MockAuthStore {
 @Injectable()
 class MockFirebaseAuth {
   currentUser: unknown = null;
+  authStateReady = jest.fn().mockResolvedValue(undefined);
 }
 
 describe('auth.guard', () => {
@@ -44,55 +45,55 @@ describe('auth.guard', () => {
     firebaseAuth = TestBed.inject(Auth) as unknown as MockFirebaseAuth;
   });
 
-  it('should return true when authenticated (given isAuthenticated true)', () => {
+  it('should return true when authenticated (given isAuthenticated true)', async () => {
     authStore.isAuthenticated.mockReturnValue(true);
 
-    const result = TestBed.runInInjectionContext(() =>
+    const result = await TestBed.runInInjectionContext(() =>
       authGuard(mockedRoute, mockedRouterState)
     );
     expect(result).toBe(true);
   });
 
-  it('should return true when firebase currentUser exists (even if signal auth lags)', () => {
+  it('should return true when firebase currentUser exists (even if signal auth lags)', async () => {
     authStore.isAuthenticated.mockReturnValue(false);
     firebaseAuth.currentUser = { uid: 'u1' };
 
-    const result = TestBed.runInInjectionContext(() =>
+    const result = await TestBed.runInInjectionContext(() =>
       authGuard(mockedRoute, mockedRouterState)
     );
     expect(result).toBe(true);
   });
 
-  it('should return UrlTree to /login with returnUrl when not authenticated', () => {
+  it('should return UrlTree to /login with returnUrl when not authenticated', async () => {
     authStore.isAuthenticated.mockReturnValue(false);
     firebaseAuth.currentUser = null;
-    const result = TestBed.runInInjectionContext(() =>
+    const result = (await TestBed.runInInjectionContext(() =>
       authGuard(mockedRoute, mockedRouterState)
-    ) as UrlTree;
+    )) as UrlTree;
     expect(result.toString()).toEqual('/login?returnUrl=%2Fsettings');
   });
 
-  it('publicOnlyGuard should return true when not authenticated (given isAuthenticated false)', () => {
+  it('publicOnlyGuard should return true when not authenticated (given isAuthenticated false)', async () => {
     authStore.isAuthenticated.mockReturnValue(false);
-    const result = TestBed.runInInjectionContext(() =>
+    const result = await TestBed.runInInjectionContext(() =>
       publicOnlyGuard(mockedRoute, mockedRouterState)
     );
     expect(result).toBe(true);
   });
 
-  it('publicOnlyGuard should return UrlTree to /app when authenticated (given isAuthenticated true)', () => {
+  it('publicOnlyGuard should return UrlTree to /app when authenticated (given isAuthenticated true)', async () => {
     authStore.isAuthenticated.mockReturnValue(true);
     authStore.isGuest.mockReturnValue(false);
-    const result = TestBed.runInInjectionContext(() =>
+    const result = (await TestBed.runInInjectionContext(() =>
       publicOnlyGuard(mockedRoute, mockedRouterState)
-    ) as UrlTree;
+    )) as UrlTree;
     expect(result.toString()).toEqual('/app');
   });
 
-  it('publicOnlyGuard should return true when authenticated but isGuest (anonymous user)', () => {
+  it('publicOnlyGuard should return true when authenticated but isGuest (anonymous user)', async () => {
     authStore.isAuthenticated.mockReturnValue(true);
     authStore.isGuest.mockReturnValue(true);
-    const result = TestBed.runInInjectionContext(() =>
+    const result = await TestBed.runInInjectionContext(() =>
       publicOnlyGuard(mockedRoute, mockedRouterState)
     );
     expect(result).toBe(true);
