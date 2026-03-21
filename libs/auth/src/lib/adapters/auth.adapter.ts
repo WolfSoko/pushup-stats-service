@@ -39,6 +39,16 @@ export class AuthAdapter {
     return this.auth.currentUser;
   }
 
+  /**
+   * Resolves once Firebase has determined the initial auth state
+   * (persisted session restored or confirmed absent).
+   * Must be awaited before making guest-sign-in decisions to avoid
+   * overwriting a real session during the startup race window.
+   */
+  authStateReady(): Promise<void> {
+    return this.auth.authStateReady();
+  }
+
   // Public computed signals
   readonly authUser = toSignal(user(this.auth));
   readonly authState = toSignal(authState(this.auth));
