@@ -1,7 +1,7 @@
 import { expect, test } from './fixtures/test-fixtures';
 
 test.describe('Landing page – unauthenticated state', () => {
-  test('shows all three CTAs for unauthenticated visitors', async ({
+  test('shows all three CTAs for unauthenticated visitors @smoke', async ({
     landingPage,
   }) => {
     await landingPage.goto();

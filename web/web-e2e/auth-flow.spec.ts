@@ -1,7 +1,7 @@
 import { expect, test } from './fixtures/test-fixtures';
 
 test.describe('Login page', () => {
-  test('renders essential structure', async ({ loginPage }) => {
+  test('renders essential structure @smoke', async ({ loginPage }) => {
     await loginPage.goto();
     await loginPage.expectLoaded();
   });
@@ -30,7 +30,7 @@ test.describe('Login page', () => {
 });
 
 test.describe('Register page', () => {
-  test('renders essential structure', async ({ registerPage }) => {
+  test('renders essential structure @smoke', async ({ registerPage }) => {
     await registerPage.goto();
     await registerPage.expectLoaded();
   });
