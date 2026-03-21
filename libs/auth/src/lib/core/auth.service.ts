@@ -4,7 +4,10 @@ import { computed, inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { isPlatformServer } from '@angular/common';
 import { AuthAdapter } from '../adapters/auth.adapter';
 import { mapAuthUserToPUSUser } from '../map-auth-user-to-user';
-import { UserConfigApiService } from '@pu-stats/data-access';
+import {
+  PushupFirestoreService,
+  UserConfigApiService,
+} from '@pu-stats/data-access';
 
 @Injectable({
   providedIn: 'root',
@@ -12,6 +15,9 @@ import { UserConfigApiService } from '@pu-stats/data-access';
 export class AuthService {
   private readonly authAdapter = inject(AuthAdapter);
   private readonly userConfigApi = inject(UserConfigApiService);
+  private readonly pushupFirestore = inject(PushupFirestoreService, {
+    optional: true,
+  });
   private readonly platformId = inject(PLATFORM_ID);
 
   // Signal für den Status der User-DB-Synchronisation
@@ -52,10 +58,17 @@ export class AuthService {
     }, 'Email sign-up');
   }
 
-  /** Sign in as anonymous guest if no session exists yet */
+  /** Sign in as anonymous guest if no session exists yet.
+   *
+   * Checks both the synchronous `currentUser` (available immediately after
+   * Firebase initialises) and the signal-based `authState()` to avoid the
+   * startup race where `authState()` is still `undefined` while a real
+   * persisted session already exists.  Mirrors the same dual-source pattern
+   * used in `authGuard`.
+   */
   async signInGuestIfNeeded(): Promise<void> {
     if (isPlatformServer(this.platformId)) return;
-    if (this.authAdapter.authState()) return; // already signed in
+    if (this.authAdapter.currentUser || this.authAdapter.authState()) return;
     await this.signInAnonymously();
   }
 
@@ -66,6 +79,93 @@ export class AuthService {
       // Anonymous users don't sync to userConfig DB
       return cred;
     }, 'Anonymous sign-in');
+  }
+
+  /**
+   * Upgrades an anonymous guest to a permanent email/password account.
+   * If the user is currently anonymous, links the credential (keeps same UID).
+   * Otherwise falls back to normal sign-up.
+   */
+  async upgradeWithEmail(email: string, password: string): Promise<void> {
+    await this.wrapAsync(async () => {
+      // Prefer auth.currentUser (synchronous, immediately available after
+      // signInGuestIfNeeded()) over the signal-based authUser() which may
+      // still hold stale data and cause the link path to be skipped.
+      const currentUser =
+        this.authAdapter.currentUser ?? this.authAdapter.authUser();
+      if (currentUser?.isAnonymous) {
+        const cred = await this.authAdapter.linkWithEmail(email, password);
+        await this.syncUserDbSafe();
+        return cred;
+      }
+      const cred = await this.authAdapter.signUpWithEmail(email, password);
+      await this.syncUserDbSafe();
+      return cred;
+    }, 'Upgrade with email');
+  }
+
+  /**
+   * Upgrades an anonymous guest to a permanent Google account.
+   * If the user is currently anonymous, links the credential (keeps same UID).
+   * Otherwise falls back to normal Google sign-in.
+   */
+  async upgradeWithGoogle(): Promise<void> {
+    await this.wrapAsync(async () => {
+      // Prefer auth.currentUser (synchronous, immediately available after
+      // signInGuestIfNeeded()) over the signal-based authUser() which may
+      // still hold stale data and cause the link path to be skipped.
+      const currentUser =
+        this.authAdapter.currentUser ?? this.authAdapter.authUser();
+      if (currentUser?.isAnonymous) {
+        const cred = await this.authAdapter.linkWithGoogle();
+        await this.syncUserDbSafe();
+        return cred;
+      }
+      const cred = await this.authAdapter.signInWithGoogle();
+      await this.syncUserDbSafe();
+      return cred;
+    }, 'Upgrade with Google');
+  }
+
+  /**
+   * Signs a guest into an EXISTING account (email/password).
+   * Captures the guest UID first, signs in, then migrates orphaned pushup data.
+   */
+  async signInWithEmailAndMigrateGuest(
+    email: string,
+    password: string
+  ): Promise<void> {
+    await this.wrapAsync(async () => {
+      const currentUser = this.authAdapter.currentUser;
+      const guestUid = currentUser?.isAnonymous
+        ? (currentUser.uid ?? null)
+        : null;
+      const cred = await this.authAdapter.signInWithEmail(email, password);
+      await this.syncUserDbSafe();
+      if (guestUid && cred.user.uid !== guestUid) {
+        await this.migrateGuestDataSafe(guestUid, cred.user.uid);
+      }
+      return cred;
+    }, 'Email sign-in with guest migration');
+  }
+
+  /**
+   * Signs a guest into an EXISTING Google account.
+   * Captures the guest UID first, signs in, then migrates orphaned pushup data.
+   */
+  async signInWithGoogleAndMigrateGuest(): Promise<void> {
+    await this.wrapAsync(async () => {
+      const currentUser = this.authAdapter.currentUser;
+      const guestUid = currentUser?.isAnonymous
+        ? (currentUser.uid ?? null)
+        : null;
+      const cred = await this.authAdapter.signInWithGoogle();
+      await this.syncUserDbSafe();
+      if (guestUid && cred.user.uid !== guestUid) {
+        await this.migrateGuestDataSafe(guestUid, cred.user.uid);
+      }
+      return cred;
+    }, 'Google sign-in with guest migration');
   }
 
   /** Sign out (alias for logout) */
@@ -119,6 +219,19 @@ export class AuthService {
     } catch (e) {
       // Do not fail login if user profile sync fails after successful auth.
       console.warn('[AuthService] user DB sync failed after auth:', e);
+    }
+  }
+
+  private async migrateGuestDataSafe(
+    fromUid: string,
+    toUid: string
+  ): Promise<void> {
+    if (!this.pushupFirestore) return;
+    try {
+      await this.pushupFirestore.migrateUserData(fromUid, toUid);
+    } catch (e) {
+      // Migration failure must not block the sign-in itself.
+      console.warn('[AuthService] guest data migration failed:', e);
     }
   }
 

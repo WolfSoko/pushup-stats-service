@@ -10,7 +10,7 @@ import {
 } from '@ngrx/signals';
 import { AuthStore } from '../../core/state/auth.store';
 import { RegisterOnboardingStore } from '../../core/state/register-onboarding.store';
-import { hasStrongPasswordPolicy } from '../login/login.component';
+import { hasStrongPasswordPolicy } from '../password-policy';
 
 type RegisterUiState = {
   hidePassword: boolean;
@@ -57,11 +57,15 @@ export const RegisterUiStore = signalStore(
     setConsentAccepted: (value: boolean) =>
       patchState(store, { consentAccepted: value }),
     prepareGoogleRegistration: () => {
+      // Prefer auth.currentUser (synchronous, immediately available after the
+      // Google popup closes) over the signal-based authStore.user() which is
+      // backed by toSignal() and may still hold stale anonymous-user data.
+      const currentUser = auth?.currentUser ?? authStore.user();
       patchState(store, {
         isGoogleRegistration: true,
-        displayName: authStore.user()?.displayName ?? '',
+        displayName: currentUser?.displayName ?? '',
       });
-      return authStore.user()?.email ?? '';
+      return currentUser?.email ?? '';
     },
     resetSuccess: () => patchState(store, { registerSuccess: false }),
     isCredentialStepValid: (
@@ -95,7 +99,8 @@ export const RegisterUiStore = signalStore(
       patchState(store, { registeringCredentials: true });
       try {
         await authStore.signUpWithEmail(email, password);
-        return authStore.isAuthenticated();
+        // Must also check that no auth error occurred (e.g. link failed for guest).
+        return authStore.isAuthenticated() && !authStore.error();
       } finally {
         patchState(store, { registeringCredentials: false });
       }
@@ -103,8 +108,8 @@ export const RegisterUiStore = signalStore(
     signInWithGoogle: async (): Promise<boolean> => {
       patchState(store, { registeringCredentials: true });
       try {
-        await authStore.login();
-        return authStore.isAuthenticated();
+        await authStore.upgradeWithGoogle();
+        return authStore.isAuthenticated() && !authStore.error();
       } finally {
         patchState(store, { registeringCredentials: false });
       }

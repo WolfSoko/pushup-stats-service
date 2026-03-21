@@ -5,8 +5,11 @@ import {
   authState,
   createUserWithEmailAndPassword,
   deleteUser,
+  EmailAuthProvider,
   GoogleAuthProvider,
   idToken,
+  linkWithCredential,
+  linkWithPopup,
   signInAnonymously,
   signInWithEmailAndPassword,
   signInWithPopup,
@@ -26,6 +29,16 @@ export interface AuthCredentials {
 })
 export class AuthAdapter {
   private auth = inject(Auth);
+
+  /**
+   * Synchronous Firebase current user — available immediately after Firebase
+   * initializes, before the signal-based authState() has settled.
+   * Use this for startup-race-safe checks (mirrors the pattern in authGuard).
+   */
+  get currentUser() {
+    return this.auth.currentUser;
+  }
+
   // Public computed signals
   readonly authUser = toSignal(user(this.auth));
   readonly authState = toSignal(authState(this.auth));
@@ -58,6 +71,33 @@ export class AuthAdapter {
 
   async signInAnonymously(): Promise<UserCredential> {
     return await signInAnonymously(this.auth);
+  }
+
+  /**
+   * Links the current anonymous user to an email/password credential.
+   * Keeps the same UID → no data migration needed.
+   */
+  async linkWithEmail(
+    email: string,
+    password: string
+  ): Promise<UserCredential> {
+    const current = this.auth.currentUser;
+    if (!current) throw new Error('No current user to link');
+    const credential = EmailAuthProvider.credential(email, password);
+    return await linkWithCredential(current, credential);
+  }
+
+  /**
+   * Links the current anonymous user to a Google credential.
+   * Keeps the same UID → no data migration needed.
+   */
+  async linkWithGoogle(): Promise<UserCredential> {
+    const current = this.auth.currentUser;
+    if (!current) throw new Error('No current user to link');
+    const provider = new GoogleAuthProvider();
+    provider.addScope('email');
+    provider.addScope('profile');
+    return await linkWithPopup(current, provider);
   }
 
   signOut(): Promise<void> {

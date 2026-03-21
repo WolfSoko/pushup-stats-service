@@ -3440,6 +3440,15 @@ Deine Position: # ·  Reps        </source>
       
       
         </unit>
+    <unit id="validate.password.policy">
+      <notes>
+        <note category="location">libs/auth/src/lib/ui/register/register.component.ts</note>
+            </notes>
+      <segment state="translated">
+        <source>Passwort braucht Groß-/Kleinbuchstaben, Zahl und Sonderzeichen.</source>
+        <target>Password must contain upper and lowercase letters, a number and a special character.</target>
+            </segment>
+        </unit>
 
     
     

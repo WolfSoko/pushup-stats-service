@@ -13,7 +13,9 @@ import {
   FormField,
   minLength,
   required,
+  validate,
 } from '@angular/forms/signals';
+import { hasStrongPasswordPolicy } from '../password-policy';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -78,6 +80,14 @@ export class RegisterComponent {
       minLength(password, 8, {
         message: $localize`:@@validate.password.minLength:Passwort muss mindestens 8 Zeichen lang sein!`,
       });
+      validate(password, ({ value }) =>
+        !hasStrongPasswordPolicy(String(value() ?? ''))
+          ? {
+              kind: 'password-policy',
+              message: $localize`:@@validate.password.policy:Passwort braucht Groß-/Kleinbuchstaben, Zahl und Sonderzeichen.`,
+            }
+          : undefined
+      );
     }
   );
 

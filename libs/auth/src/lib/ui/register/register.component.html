@@ -138,7 +138,14 @@
                       : 'visibility'
                   }}</mat-icon>
                 </button>
+                @for (error of registerForm.password().errors(); track $index) {
+                  <mat-error>{{ $any(error)?.message ?? error }}</mat-error>
+                }
               </mat-form-field>
+              <p class="password-hint" i18n="@@auth.register.password.hint">
+                Mindestens 8 Zeichen, Groß- und Kleinbuchstaben, Zahl und
+                Sonderzeichen.
+              </p>
               <mat-form-field
                 appearance="outline"
                 class="full-width step-field"
@@ -164,7 +171,14 @@
                   mat-raised-button
                   color="primary"
                   type="button"
-                  [disabled]="registerUiStore.loading()"
+                  [disabled]="
+                    registerUiStore.loading() ||
+                    !registerUiStore.isCredentialStepValid(
+                      registerForm.email().invalid(),
+                      registerForm.password().value() || '',
+                      registerForm.repeatPassword().value() || ''
+                    )
+                  "
                   (click)="completeCredentialStep(registerStepper)"
                   i18n="@@auth.next"
                 >

@@ -73,7 +73,7 @@ export const AuthStore = signalStore(
     login: async () => {
       patchState(store, { loading: true, error: null });
       try {
-        await _authService.signInWithGoogle();
+        await _authService.signInWithGoogleAndMigrateGuest();
       } catch (e) {
         patchState(store, {
           error: toFriendlyAuthError(e),
@@ -109,7 +109,7 @@ export const AuthStore = signalStore(
     signInWithEmail: async (email: string, password: string) => {
       patchState(store, { loading: true, error: null });
       try {
-        await _authService.signInWithEmail(email, password);
+        await _authService.signInWithEmailAndMigrateGuest(email, password);
       } catch (e) {
         patchState(store, {
           error: toFriendlyAuthError(e),
@@ -121,7 +121,19 @@ export const AuthStore = signalStore(
     signUpWithEmail: async (email: string, password: string) => {
       patchState(store, { loading: true, error: null });
       try {
-        await _authService.signUpWithEmail(email, password);
+        await _authService.upgradeWithEmail(email, password);
+      } catch (e) {
+        patchState(store, {
+          error: toFriendlyAuthError(e),
+        });
+      } finally {
+        patchState(store, { loading: false });
+      }
+    },
+    upgradeWithGoogle: async () => {
+      patchState(store, { loading: true, error: null });
+      try {
+        await _authService.upgradeWithGoogle();
       } catch (e) {
         patchState(store, {
           error: toFriendlyAuthError(e),
