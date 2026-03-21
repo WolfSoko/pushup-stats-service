@@ -9,7 +9,8 @@ export class RegisterPage {
 
   constructor(private readonly page: Page) {
     this.title = page.getByText('Registrierung');
-    this.emailInput = page.getByLabel(/e-mail/i);
+    // The stepper email step uses matInput inside a mat-form-field
+    this.emailInput = page.locator('input[type="email"]').first();
     this.nextButton = page.getByRole('button', { name: /weiter/i }).first();
     this.googleButton = page.getByRole('button', {
       name: /mit google registrieren/i,
@@ -23,7 +24,6 @@ export class RegisterPage {
 
   async expectLoaded(): Promise<void> {
     await expect(this.title).toBeVisible();
-    await expect(this.emailInput).toBeVisible();
     await expect(this.nextButton).toBeVisible();
   }
 

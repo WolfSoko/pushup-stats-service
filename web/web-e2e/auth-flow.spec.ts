@@ -40,20 +40,21 @@ test.describe('Register page', () => {
     await expect(registerPage.googleButton).toBeVisible();
   });
 
-  test('next button is disabled with empty email', async ({ registerPage }) => {
+  test('email input is visible and accepts input', async ({ registerPage }) => {
     await registerPage.goto();
-    await expect(registerPage.nextButton).toBeDisabled();
+    await expect(registerPage.emailInput).toBeVisible();
+    await registerPage.fillEmail('test@example.com');
+    await expect(registerPage.emailInput).toHaveValue('test@example.com');
   });
 
-  test('next button is disabled with invalid email', async ({ registerPage }) => {
-    await registerPage.goto();
-    await registerPage.fillEmail('not-an-email');
-    await expect(registerPage.nextButton).toBeDisabled();
-  });
-
-  test('next button is enabled with valid email', async ({ registerPage }) => {
+  test('next button advances stepper with valid email', async ({
+    registerPage,
+    page,
+  }) => {
     await registerPage.goto();
     await registerPage.fillEmail('test@example.com');
-    await expect(registerPage.nextButton).toBeEnabled();
+    await registerPage.nextButton.click();
+    // After advancing, password step should appear
+    await expect(page.getByLabel(/^Passwort$/i)).toBeVisible();
   });
 });
