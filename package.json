@@ -10,6 +10,7 @@
     "lint": "nx run-many -t lint",
     "lint:fix": "nx run-many -t lint --fix",
     "coverage:web": "nx run web:test --codeCoverage",
+    "seed:demo": "ts-node scripts/seed-demo-data.ts",
     "prepare": "husky"
   },
   "private": true,

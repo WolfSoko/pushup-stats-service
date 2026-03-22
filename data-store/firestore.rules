@@ -10,8 +10,12 @@ service cloud.firestore {
     }
 
     // Pushup entries are user-owned.
+    // Public read is allowed for the SEO demo user so SSR can render preview pages.
+    // Public read for SEO demo user (UID: aqgzwSbhudRLrluz1zBSW3XQx013).
     match /pushups/{pushupId} {
-      allow read, delete: if request.auth != null && resource.data.userId == request.auth.uid;
+      allow read: if resource.data.userId == 'aqgzwSbhudRLrluz1zBSW3XQx013'
+                  || (request.auth != null && resource.data.userId == request.auth.uid);
+      allow delete: if request.auth != null && resource.data.userId == request.auth.uid;
       allow update: if request.auth != null
                     && resource.data.userId == request.auth.uid
                     && request.resource.data.userId == request.auth.uid

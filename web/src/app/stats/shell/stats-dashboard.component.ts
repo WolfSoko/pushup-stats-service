@@ -37,6 +37,7 @@ import {
   toLocalIsoDate,
 } from '@pu-stats/models';
 import { FilterBarComponent } from '../components/filter-bar/filter-bar.component';
+import { PreviewBannerComponent } from '../components/preview-banner/preview-banner.component';
 import { StatsChartComponent } from '../components/stats-chart/stats-chart.component';
 import { StatsTableComponent } from '../components/stats-table/stats-table.component';
 
@@ -71,6 +72,7 @@ const PERIOD_TITLE_MAP: Record<RangeModes | 'today', string> = {
     MatProgressBarModule,
     DatePipe,
     FilterBarComponent,
+    PreviewBannerComponent,
     StatsChartComponent,
     StatsTableComponent,
     AdSlotComponent,

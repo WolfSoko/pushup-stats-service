@@ -1,4 +1,5 @@
-import { inject } from '@angular/core';
+import { isPlatformServer } from '@angular/common';
+import { inject, PLATFORM_ID } from '@angular/core';
 import { Auth } from '@angular/fire/auth';
 import { Router, type CanActivateFn, type UrlTree } from '@angular/router';
 import { AuthStore } from './state/auth.store';
@@ -7,6 +8,12 @@ export const authGuard: CanActivateFn = async (
   _route,
   state
 ): Promise<boolean | UrlTree> => {
+  // SSR: allow all — the page will render with demo data for search engines
+  const platformId = inject(PLATFORM_ID);
+  if (isPlatformServer(platformId)) {
+    return true;
+  }
+
   const auth = inject(AuthStore);
   const firebaseAuth = inject(Auth, { optional: true });
   const router = inject(Router);
