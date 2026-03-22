@@ -1,4 +1,5 @@
-import { inject, Injectable } from '@angular/core';
+import { isPlatformServer } from '@angular/common';
+import { inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { Auth } from '@angular/fire/auth';
 import {
   firstValueFrom,
@@ -18,10 +19,13 @@ import {
 } from '@pu-stats/models';
 import { PushupFirestoreService } from './pushup-firestore.service';
 import { UserConfigApiService } from './user-config-api.service';
+import { DEMO_USER_ID } from '../demo-user.token';
 
 @Injectable({ providedIn: 'root' })
 export class StatsApiService {
   private readonly auth = inject(Auth, { optional: true });
+  private readonly platformId = inject(PLATFORM_ID);
+  private readonly demoUserId = inject(DEMO_USER_ID);
   private readonly pushupFirestore = inject(PushupFirestoreService, {
     optional: true,
   });
@@ -42,7 +46,14 @@ export class StatsApiService {
   }
 
   listPushups(filter: StatsFilter = {}): Observable<PushupRecord[]> {
-    if (!this.auth?.currentUser || !this.pushupFirestore) {
+    if (!this.pushupFirestore) {
+      return of([]);
+    }
+    // SSR with no authenticated user: serve demo data for SEO preview
+    if (isPlatformServer(this.platformId) && !this.auth?.currentUser) {
+      return this.pushupFirestore.listPushups(this.demoUserId, filter);
+    }
+    if (!this.auth?.currentUser) {
       return of([]);
     }
     const userId = this.resolveUserId();

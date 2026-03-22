@@ -57,6 +57,7 @@ export class App {
   private readonly router = inject(Router);
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly user = inject(UserContextService);
+  readonly isAdmin = computed(() => this.user.isAdmin());
   private readonly userConfigApi = inject(UserConfigApiService);
   private readonly statsApi = inject(StatsApiService);
   private readonly seo = inject(SeoService);
@@ -145,8 +146,8 @@ export class App {
           if (event.type !== 'VERSION_READY') return;
 
           const ref = this.snackBar.open(
-            $localize`Neue Version verfügbar`,
-            $localize`Neu laden`,
+            $localize`:@@sw.update.available:Neue Version verfügbar`,
+            $localize`:@@sw.update.reload:Neu laden`,
             {
               duration: 20_000,
               horizontalPosition: 'center',

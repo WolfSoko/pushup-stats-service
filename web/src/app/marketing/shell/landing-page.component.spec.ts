@@ -1,7 +1,9 @@
-import { provideRouter } from '@angular/router';
+import { provideRouter, Router } from '@angular/router';
 import { render, screen } from '@testing-library/angular';
+import userEvent from '@testing-library/user-event';
 import { AdsConfigService } from '@pu-stats/ads';
-import { AuthService } from '@pu-auth/auth';
+import { AuthService, AuthStore } from '@pu-auth/auth';
+import { makeAuthServiceMock, makeAuthStoreMock } from '@pu-stats/testing';
 import { LandingPageComponent } from './landing-page.component';
 
 const adsConfigMock = {
@@ -12,30 +14,81 @@ const adsConfigMock = {
   landingInlineSlot: () => '',
 };
 
-const authServiceMock = {
-  signInGuestIfNeeded: () => Promise.resolve(),
-};
-
 describe('LandingPageComponent', () => {
-  it('renders product pitch and call-to-action buttons', async () => {
-    await render(LandingPageComponent, {
-      providers: [
-        provideRouter([]),
-        { provide: AdsConfigService, useValue: adsConfigMock },
-        { provide: AuthService, useValue: authServiceMock },
-      ],
-    });
+  describe('unauthenticated', () => {
+    it('renders product pitch and all CTA buttons', async () => {
+      await render(LandingPageComponent, {
+        providers: [
+          provideRouter([]),
+          { provide: AdsConfigService, useValue: adsConfigMock },
+          { provide: AuthService, useValue: makeAuthServiceMock() },
+          { provide: AuthStore, useValue: makeAuthStoreMock() },
+        ],
+      });
 
-    expect(screen.getByText('Pushup Tracker')).toBeTruthy();
-    expect(screen.getByText('Dein Training. Klar visualisiert.')).toBeTruthy();
-    expect(
-      screen.getByRole('link', { name: 'Jetzt registrieren' })
-    ).toBeTruthy();
-    expect(screen.getByRole('link', { name: 'Einloggen' })).toBeTruthy();
-    expect(
-      screen.getByRole('button', { name: 'Als Gast ausprobieren' })
-    ).toBeTruthy();
-    expect(screen.getByText('Bestenliste')).toBeTruthy();
+      expect(screen.getByText('Pushup Tracker')).toBeTruthy();
+      expect(
+        screen.getByText('Dein Training. Klar visualisiert.')
+      ).toBeTruthy();
+      expect(
+        screen.getByRole('link', { name: 'Jetzt registrieren' })
+      ).toBeTruthy();
+      expect(screen.getByRole('link', { name: 'Einloggen' })).toBeTruthy();
+      expect(
+        screen.getByRole('button', { name: 'Als Gast ausprobieren' })
+      ).toBeTruthy();
+      expect(screen.getByText('Bestenliste')).toBeTruthy();
+    });
+  });
+
+  describe('authenticated as real user', () => {
+    it('shows only dashboard button', async () => {
+      await render(LandingPageComponent, {
+        providers: [
+          provideRouter([]),
+          { provide: AdsConfigService, useValue: adsConfigMock },
+          { provide: AuthService, useValue: makeAuthServiceMock() },
+          {
+            provide: AuthStore,
+            useValue: makeAuthStoreMock({ isAuthenticated: true }),
+          },
+        ],
+      });
+
+      expect(screen.getByRole('link', { name: 'Zum Dashboard' })).toBeTruthy();
+      expect(
+        screen.queryByRole('link', { name: 'Jetzt registrieren' })
+      ).toBeNull();
+      expect(screen.queryByRole('link', { name: 'Einloggen' })).toBeNull();
+      expect(
+        screen.queryByRole('button', { name: 'Als Gast ausprobieren' })
+      ).toBeNull();
+    });
+  });
+
+  describe('authenticated as guest', () => {
+    it('shows dashboard button and "Konto erstellen"', async () => {
+      await render(LandingPageComponent, {
+        providers: [
+          provideRouter([]),
+          { provide: AdsConfigService, useValue: adsConfigMock },
+          { provide: AuthService, useValue: makeAuthServiceMock() },
+          {
+            provide: AuthStore,
+            useValue: makeAuthStoreMock({ isAuthenticated: true, isGuest: true }),
+          },
+        ],
+      });
+
+      expect(screen.getByRole('link', { name: 'Zum Dashboard' })).toBeTruthy();
+      expect(
+        screen.getByRole('link', { name: 'Konto erstellen' })
+      ).toBeTruthy();
+      expect(screen.queryByRole('link', { name: 'Einloggen' })).toBeNull();
+      expect(
+        screen.queryByRole('button', { name: 'Als Gast ausprobieren' })
+      ).toBeNull();
+    });
   });
 
   it('orders landing sections as feature grid, preview, leaderboard', async () => {
@@ -43,7 +96,8 @@ describe('LandingPageComponent', () => {
       providers: [
         provideRouter([]),
         { provide: AdsConfigService, useValue: adsConfigMock },
-        { provide: AuthService, useValue: authServiceMock },
+        { provide: AuthService, useValue: makeAuthServiceMock() },
+        { provide: AuthStore, useValue: makeAuthStoreMock() },
       ],
     });
 
@@ -68,5 +122,34 @@ describe('LandingPageComponent', () => {
       preview.compareDocumentPosition(leaderboard) &
         Node.DOCUMENT_POSITION_FOLLOWING
     ).toBeTruthy();
+  });
+
+  it('clicking "Als Gast ausprobieren" calls signInGuestIfNeeded and navigates to /app', async () => {
+    const signInGuestIfNeeded = vitest.fn().mockResolvedValue(undefined);
+    const view = await render(LandingPageComponent, {
+      providers: [
+        provideRouter([{ path: 'app', component: LandingPageComponent }]),
+        { provide: AdsConfigService, useValue: adsConfigMock },
+        {
+          provide: AuthService,
+          useValue: makeAuthServiceMock({ overrides: { signInGuestIfNeeded } }),
+        },
+        { provide: AuthStore, useValue: makeAuthStoreMock() },
+      ],
+    });
+
+    const router = view.fixture.debugElement.injector.get(Router);
+    const navigateSpy = vitest
+      .spyOn(router, 'navigate')
+      .mockResolvedValue(true);
+
+    // When
+    await userEvent.click(
+      screen.getByRole('button', { name: 'Als Gast ausprobieren' })
+    );
+
+    // Then
+    expect(signInGuestIfNeeded).toHaveBeenCalled();
+    expect(navigateSpy).toHaveBeenCalledWith(['/app']);
   });
 });

@@ -2,6 +2,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 import { AnalysisPageComponent } from './analysis-page.component';
 import { StatsApiService } from '@pu-stats/data-access';
+import { AuthStore } from '@pu-auth/auth';
+import { makeAuthStoreMock } from '@pu-stats/testing';
 import { HeatmapComponent } from '../components/heatmap/heatmap.component';
 import { TypePieComponent } from '../components/type-pie/type-pie.component';
 
@@ -80,7 +82,10 @@ describe('AnalysisPageComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [AnalysisPageComponent],
-      providers: [{ provide: StatsApiService, useValue: apiMock }],
+      providers: [
+        { provide: StatsApiService, useValue: apiMock },
+        { provide: AuthStore, useValue: makeAuthStoreMock() },
+      ],
     })
       .overrideComponent(AnalysisPageComponent, {
         remove: { imports: [HeatmapComponent, TypePieComponent] },

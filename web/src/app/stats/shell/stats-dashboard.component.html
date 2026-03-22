@@ -1,4 +1,6 @@
 <main class="container">
+  <app-preview-banner />
+
   <header class="page-header">
     <img
       class="brand-logo"
@@ -31,7 +33,8 @@
     <mat-card>
       <mat-card-header>
         <mat-card-title
-          >{{ periodTitle() }} <span i18n>Gesamt</span></mat-card-title
+          >{{ periodTitle() }}
+          <span i18n="@@period.total">Gesamt</span></mat-card-title
         >
       </mat-card-header>
       <mat-card-content>

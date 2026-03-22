@@ -6,9 +6,10 @@ import {
   StatsApiService,
   UserConfigApiService,
 } from '@pu-stats/data-access';
-import { UserContextService } from '@pu-auth/auth';
+import { AuthStore, UserContextService } from '@pu-auth/auth';
 import { AdsConfigService } from '@pu-stats/ads';
 import { signal } from '@angular/core';
+import { makeAuthStoreMock } from '@pu-stats/testing';
 
 function nowLocalMinuteIso(): string {
   const now = new Date();
@@ -102,6 +103,7 @@ describe('StatsDashboardComponent', () => {
         { provide: PushupLiveService, useValue: liveMock },
         { provide: UserContextService, useValue: { userIdSafe: () => 'u1' } },
         { provide: AdsConfigService, useValue: adsConfigMock },
+        { provide: AuthStore, useValue: makeAuthStoreMock() },
         {
           provide: UserConfigApiService,
           useValue: {

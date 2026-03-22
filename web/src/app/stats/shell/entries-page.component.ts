@@ -14,6 +14,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { firstValueFrom } from 'rxjs';
 import { PushupLiveDataService, StatsApiService } from '@pu-stats/data-access';
+import { PreviewBannerComponent } from '../components/preview-banner/preview-banner.component';
 import { StatsTableComponent } from '../components/stats-table/stats-table.component';
 
 @Component({
@@ -23,10 +24,12 @@ import { StatsTableComponent } from '../components/stats-table/stats-table.compo
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
+    PreviewBannerComponent,
     StatsTableComponent,
   ],
   template: `
     <main class="page-wrap">
+      <app-preview-banner />
       <mat-card>
         <mat-card-header>
           <mat-card-title i18n="@@entries.title">Daten</mat-card-title>

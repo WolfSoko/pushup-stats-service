@@ -1541,6 +1541,15 @@ Active:         </target>
       
       
         </unit>
+    <unit id="landing.cta.dashboard">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+      </notes>
+      <segment state="translated">
+        <source>Zum Dashboard</source>
+        <target>Go to Dashboard</target>
+      </segment>
+    </unit>
     <unit id="landing.cta.guest">
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
@@ -3440,6 +3449,15 @@ Deine Position: # ·  Reps        </source>
       
       
         </unit>
+    <unit id="validate.password.policy">
+      <notes>
+        <note category="location">libs/auth/src/lib/ui/register/register.component.ts</note>
+            </notes>
+      <segment state="translated">
+        <source>Passwort braucht Groß-/Kleinbuchstaben, Zahl und Sonderzeichen.</source>
+        <target>Password must contain upper and lowercase letters, a number and a special character.</target>
+            </segment>
+        </unit>
 
     
     
@@ -3685,6 +3703,210 @@ Deine Position: # ·  Reps        </source>
       <segment state="translated">
         <source>Hauptnavigation</source>
         <target>Main navigation</target>
+      </segment>
+    </unit>
+    <unit id="auth.register.error.profileSaveFailed">
+      <segment state="translated">
+        <source>Profil konnte nicht gespeichert werden. Bitte erneut versuchen.</source>
+        <target>Profile could not be saved. Please try again.</target>
+      </segment>
+    </unit>
+    <unit id="admin.title">
+      <segment state="translated">
+        <source>Admin-Bereich</source>
+        <target>Admin Panel</target>
+      </segment>
+    </unit>
+    <unit id="admin.bulk.title">
+      <segment state="translated">
+        <source>Anonyme Benutzer aufräumen</source>
+        <target>Clean up anonymous users</target>
+      </segment>
+    </unit>
+    <unit id="admin.bulk.daysLabel">
+      <segment state="translated">
+        <source>Inaktiv seit (Tage)</source>
+        <target>Inactive for (days)</target>
+      </segment>
+    </unit>
+    <unit id="admin.bulk.hint">
+      <segment state="translated">
+        <source> Löscht anonyme Benutzer ohne Pushups in den letzten <ph id="0" equiv="INTERPOLATION" disp="{{ inactiveDays }}"/> Tagen. </source>
+        <target>Deletes anonymous users without pushups in the last  days.</target>
+      </segment>
+    </unit>
+    <unit id="admin.bulk.button">
+      <segment state="translated">
+        <source>Inaktive löschen</source>
+        <target>Delete inactive</target>
+      </segment>
+    </unit>
+    <unit id="admin.bulk.deleted">
+      <segment state="translated">
+        <source>Gelöscht:</source>
+        <target>Deleted:</target>
+      </segment>
+    </unit>
+    <unit id="admin.bulk.skipped">
+      <segment state="translated">
+        <source>Übersprungen:</source>
+        <target>Skipped:</target>
+      </segment>
+    </unit>
+    <unit id="admin.filter.anonymous">
+      <segment state="translated">
+        <source> Nur anonyme Benutzer </source>
+        <target>Anonymous users only</target>
+      </segment>
+    </unit>
+    <unit id="admin.col.uid">
+      <segment state="translated">
+        <source>UID</source>
+        <target>UID</target>
+      </segment>
+    </unit>
+    <unit id="admin.col.name">
+      <segment state="translated">
+        <source>Name</source>
+        <target>Name</target>
+      </segment>
+    </unit>
+    <unit id="admin.col.email">
+      <segment state="translated">
+        <source>E-Mail</source>
+        <target>Email</target>
+      </segment>
+    </unit>
+    <unit id="admin.col.anon">
+      <segment state="translated">
+        <source>Anon</source>
+        <target>Anon</target>
+      </segment>
+    </unit>
+    <unit id="admin.col.pushups">
+      <segment state="translated">
+        <source>Pushups</source>
+        <target>Pushups</target>
+      </segment>
+    </unit>
+    <unit id="admin.col.lastEntry">
+      <segment state="translated">
+        <source>Letzter Eintrag</source>
+        <target>Last entry</target>
+      </segment>
+    </unit>
+    <unit id="admin.col.createdAt">
+      <segment state="translated">
+        <source>Erstellt</source>
+        <target>Created</target>
+      </segment>
+    </unit>
+    <unit id="admin.refresh">
+      <segment state="translated">
+        <source>Neu laden</source>
+        <target>Reload</target>
+      </segment>
+    </unit>
+    <unit id="admin.delete.title">
+      <segment state="translated">
+        <source>Benutzer löschen</source>
+        <target>Delete user</target>
+      </segment>
+    </unit>
+    <unit id="admin.delete.anonymize">
+      <segment state="translated">
+        <source>Daten anonymisieren (Pushups behalten)</source>
+        <target>Anonymize data (keep pushups)</target>
+      </segment>
+    </unit>
+    <unit id="admin.delete.cancel">
+      <segment state="translated">
+        <source> Abbrechen </source>
+        <target>Cancel</target>
+      </segment>
+    </unit>
+    <unit id="admin.delete.confirm">
+      <segment state="translated">
+        <source> Löschen </source>
+        <target>Delete</target>
+      </segment>
+    </unit>
+    <unit id="nav.admin">
+      <segment state="translated">
+        <source>Admin-Bereich</source>
+        <target>Admin Panel</target>
+      </segment>
+    </unit>
+    <unit id="sw.update.available">
+      <segment state="translated">
+        <source>Neue Version verfügbar</source>
+        <target>New version available</target>
+      </segment>
+    </unit>
+    <unit id="sw.update.reload">
+      <segment state="translated">
+        <source>Neu laden</source>
+        <target>Reload</target>
+      </segment>
+    </unit>
+    <unit id="previewBanner.text">
+      <segment state="translated">
+        <source>Demo-Ansicht – Starte jetzt und zeichne deine eigenen Pushups auf</source>
+        <target>Demo view – Start now and record your own pushups</target>
+      </segment>
+    </unit>
+    <unit id="previewBanner.cta">
+      <segment state="translated">
+        <source> Jetzt starten </source>
+        <target>Get started</target>
+      </segment>
+    </unit>
+    <unit id="period.total">
+      <segment state="translated">
+        <source>Gesamt</source>
+        <target>Total</target>
+      </segment>
+    </unit>
+    <unit id="landing.free.badge">
+      <segment state="translated">
+        <source>Kostenlos &amp; ohne Kreditkarte</source>
+        <target>Free &amp; no credit card required</target>
+      </segment>
+    </unit>
+    <unit id="landing.cta.hint">
+      <segment state="translated">
+        <source> Kostenlos · Kein Abo · Jederzeit kündbar </source>
+        <target> Free · No subscription · Cancel anytime </target>
+      </segment>
+    </unit>
+    <unit id="landing.trust.bar">
+      <segment state="translated">
+        <source> ✓ Kostenlos · ✓ Kein Abo · ✓ Keine Kreditkarte · ✓ Datenschutz first </source>
+        <target> ✓ Free · ✓ No subscription · ✓ No credit card · ✓ Privacy first </target>
+      </segment>
+    </unit>
+    <unit id="landing.feature.streak.title">
+      <segment state="translated">
+        <source>Streaks &amp; Bestenliste</source>
+        <target>Streaks &amp; Leaderboard</target>
+      </segment>
+    </unit>
+    <unit id="landing.feature.streak.body">
+      <segment state="translated">
+        <source>Täglich dabei bleiben. Verfolge deine Streak und miss dich mit der Community.</source>
+        <target>Stay consistent. Track your streak and compete with the community.</target>
+      </segment>
+    </unit>
+    <unit id="landing.feature.free.title">
+      <segment state="translated">
+        <source>100% Kostenlos</source>
+        <target>100% Free</target>
+      </segment>
+    </unit>
+    <unit id="landing.feature.free.body">
+      <segment state="translated">
+        <source>Keine Kreditkarte. Kein Abo. Einfach registrieren und loslegen – für immer kostenlos.</source>
+        <target>No credit card. No subscription. Just sign up and start – free forever.</target>
       </segment>
     </unit>
   </file>

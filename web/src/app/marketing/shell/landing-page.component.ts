@@ -11,7 +11,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { Router, RouterLink } from '@angular/router';
 import { AdSlotComponent, AdsConfigService } from '@pu-stats/ads';
-import { AuthService } from '@pu-auth/auth';
+import { AuthService, AuthStore } from '@pu-auth/auth';
 import { LeaderboardPeriod, LeaderboardService } from '@pu-stats/data-access';
 
 @Component({
@@ -33,7 +33,11 @@ export class LandingPageComponent {
   private readonly analytics = inject(Analytics, { optional: true });
   private readonly adsConfig = inject(AdsConfigService);
   private readonly authService = inject(AuthService);
+  private readonly authStore = inject(AuthStore);
   private readonly router = inject(Router);
+
+  readonly isAuthenticated = this.authStore.isAuthenticated;
+  readonly isGuest = this.authStore.isGuest;
 
   readonly period = linkedSignal<LeaderboardPeriod>(() => 'daily');
   readonly adClient = this.adsConfig.adClient;

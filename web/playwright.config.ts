@@ -30,8 +30,12 @@ export default defineConfig({
     cwd: workspaceRoot,
     timeout: 180_000,
   },
+  /* Run all specs in parallel within each file. For sharding across CI machines,
+   * split by spec file using `--shard=1/N` CLI flag — each shard receives a
+   * deterministic subset of files and runs them with the worker count below. */
+  fullyParallel: true,
   retries: process.env['CI'] ? 2 : 0,
-  workers: process.env['CI'] ? 1 : undefined,
+  workers: process.env['CI'] ? 2 : undefined,
   projects: [
     {
       name: 'chromium',

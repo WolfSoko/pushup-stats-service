@@ -30,7 +30,7 @@
       {
         "source": "/",
         "destination": "/de",
-        "type": 302
+        "type": 301
       }
     ],
     "rewrites": [

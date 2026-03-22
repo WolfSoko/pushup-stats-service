@@ -109,4 +109,22 @@ export class PushupFirestoreService {
     const rowRef = doc(this.firestore, PUSHUPS_COLLECTION, id);
     return from(deleteDoc(rowRef)).pipe(map(() => ({ ok: true as const })));
   }
+
+  /**
+   * Client-side migration of pushup documents between different userIds is
+   * intentionally disabled.
+   *
+   * With strict Firestore rules (`resource.data.userId == request.auth.uid`
+   * and `request.resource.data.userId == request.auth.uid`), a client
+   * authenticated as `toUserId` cannot read `fromUserId`'s documents or write
+   * documents owned by a different uid. Any cross-user migration must be
+   * performed in a trusted backend (e.g. Cloud Function / Admin SDK).
+   *
+   * Kept as a no-op for API compatibility; `AuthService.migrateGuestDataSafe`
+   * wraps calls in a try/catch and only console.warns on failure.
+   */
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  async migrateUserData(_fromUserId: string, _toUserId: string): Promise<void> {
+    // No-op by design. See comment above.
+  }
 }

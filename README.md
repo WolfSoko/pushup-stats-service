@@ -1,24 +1,22 @@
-# Push-up Stats Service (Nx Monorepo)
+# Push-up Stats Service
 
-Produktionsnahe Nx-Architektur mit:
+**Live:** https://pushup-stats.de
 
-- **web**: Angular App (deutsche UI, SSR, PWA, i18n + en, Dark Theme)
+Angular SSR Monorepo (Nx) mit Firebase Backend.
+
+## Stack
+
+- **web**: Angular 19, SSR, PWA, i18n (DE default `/de`, EN unter `/en`)
 - **libs/stats**: Shared Models/Typen
-- **libs/data-access**: Datenzugriff (Browser: Firestore direkt; SSR: liefert leere Daten ohne Auth)
-
-## UI-Architektur (Smart/Presentational)
-
-- **Smart Container**: `StatsDashboardComponent`
-- **Presentational Components**:
-  - `FilterBarComponent`
-  - `KpiCardsComponent`
-  - `StatsChartComponent` (Chart.js statt Canvas-Handcode)
-  - `StatsTableComponent`
+- **libs/auth**: Firebase Auth (Google, Email/PW, anonym/Gast)
+- **libs/data-access**: Firestore-Zugriff (Browser: direkt mit Auth; SSR: Demo-User für SEO-Preview)
+- **libs/ads**: Google AdSense Integration
+- **data-store**: Firestore Rules, Cloud Functions (Leaderboard, Admin)
 
 ## Lokale Entwicklung
 
 ```bash
-npm install
+pnpm install
 
 # One-command local stack (Web + Firebase Emulator)
 npx nx run web:serve-local
@@ -26,51 +24,82 @@ npx nx run web:serve-local
 # Emulator wieder stoppen
 npx nx run data-store:emulate:stop
 
-# Durchstich gegen Live-Firebase (ohne Emulator)
+# Gegen Live-Firebase (ohne Emulator)
 npx nx run web:serve-live
 ```
 
-## Qualitätssicherung
+## Tests & Qualität
 
 ```bash
 npx nx run-many -t lint test build
 ```
 
-## Production / Daemon (systemd --user)
+## Production (systemd --user)
 
-### i18n Deployment (de: `/de`, en: `/en`) - DE is default `/` handled das redirect
+Drei Services laufen als User-Units:
 
-- **SSR**: `node dist/web/server/server.mjs` (PORT=8787)
+| Service                      | Port | Beschreibung                                            |
+| ---------------------------- | ---- | ------------------------------------------------------- |
+| `pushup-stats-reverse-proxy` | 8787 | Nginx – Entry Point, `/api` + `/socket.io` weiterleiten |
+| `pushup-stats-api`           | 8788 | API-Backend                                             |
+| `pushup-stats-ssr`           | 8789 | Angular SSR (server.mjs)                                |
 
-Routing-Anforderungen:
+```bash
+# Status prüfen
+systemctl --user status pushup-stats-reverse-proxy pushup-stats-api pushup-stats-ssr
 
-- Cookie `language` hat Priorität vor `Accept-Language`
-- Deutsch ist Default auf `/`
-- Englisch liegt auf `/en`
-- `/api`, `/socket.io`, `/health` gehen immer an das DE-Backend
+# Deployment
+git pull && docker compose build && docker compose up -d
+```
 
-> Hinweis: Die bisherige Einzel-Unit `pushup-service.service` (Port 8787) ist damit obsolet bzw. wird durch nginx ersetzt.
+## Firebase Deployment
 
-## TDD-Guardrails (RED/GREEN/REFACTOR)
+```bash
+# Firestore Rules
+cd data-store && firebase deploy --only firestore:rules
 
-Für neue Features gilt ab jetzt verbindlich:
+# Cloud Functions
+cd data-store && firebase deploy --only functions
 
-1. **RED**: zuerst Test schreiben, der fehlschlägt
-2. **GREEN**: minimalen Code schreiben, bis der Test grün ist
-3. **REFACTOR**: aufräumen, ohne Verhalten zu ändern
+# Hosting (wird automatisch via App Hosting deployed)
+```
 
-### Mini-Checkliste vor Commit
+## i18n
 
-- [ ] Für jede neue/angepasste public Methode gibt es einen passenden Testfall
-- [ ] Bei Bugfix: Test reproduziert den Bug zuerst (RED)
-- [ ] `npx nx affected -t test --codeCoverage`
-- [ ] Erst danach fixen, refactoren und committen
+- DE ist Default → `/` redirected 301 zu `/de`
+- EN unter `/en`
+- Sprachumschaltung via Cookie `lang`
 
-## Datenzugriff (neu)
+## SEO
 
-- **Browser-Runtime:** Über Firestore (`libs/data-access`).
-- **SSR-Runtime:** Kein REST-Fallback. Ohne authentifizierten User werden leere Daten zurückgegeben; die eigentliche Datenlast findet nach dem Hydratisieren im Browser statt.
+- SSR für alle öffentlichen und privaten Routen aktiv
+- Private Routen (`/app`, `/data`, `/analysis`) rendern Demo-Daten für Crawler
+- `hreflang` Tags dynamisch via `SeoService`
 
-## Known Linux/WSL issues
+## Admin-Bereich
 
-- See `docs/linux-wsl-known-issues.md` for currently observed SSR/build caveats in Linux/WSL environments.
+Unter `/admin` (nur für Admin-User sichtbar). Funktionen:
+
+- User-Liste mit Pushup-Statistiken
+- Einzelne User löschen (mit Datenschutz-Option)
+- Anonyme inaktive User in Bulk löschen
+
+Admin-Rolle setzen (einmalig):
+
+```bash
+GOOGLE_APPLICATION_CREDENTIALS=~/.firebase/pushup-stats-firebase-adminsdk-fbsvc-e502979fa7.json npx tsx scripts/set-admin-role.ts
+```
+
+## TDD
+
+1. **RED**: Test schreiben der fehlschlägt
+2. **GREEN**: Minimaler Code bis Test grün
+3. **REFACTOR**: Aufräumen ohne Verhalten zu ändern
+
+```bash
+npx nx affected -t test --codeCoverage
+```
+
+## Bekannte Probleme
+
+→ `docs/linux-wsl-known-issues.md`

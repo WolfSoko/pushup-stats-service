@@ -5,6 +5,7 @@ import { firstValueFrom } from 'rxjs';
 import { StatsApiService } from '@pu-stats/data-access';
 import { PushupRecord } from '@pu-stats/models';
 import { HeatmapComponent } from '../components/heatmap/heatmap.component';
+import { PreviewBannerComponent } from '../components/preview-banner/preview-banner.component';
 import { TypePieComponent } from '../components/type-pie/type-pie.component';
 
 interface TrendPoint {
@@ -14,9 +15,17 @@ interface TrendPoint {
 
 @Component({
   selector: 'app-analysis-page',
-  imports: [MatCardModule, MatTableModule, HeatmapComponent, TypePieComponent],
+  imports: [
+    MatCardModule,
+    MatTableModule,
+    HeatmapComponent,
+    PreviewBannerComponent,
+    TypePieComponent,
+  ],
   template: `
     <main class="page-wrap">
+      <app-preview-banner />
+
       <section class="grid">
         <mat-card>
           <mat-card-header>
