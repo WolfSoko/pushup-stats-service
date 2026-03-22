@@ -348,7 +348,7 @@ exports.adminListUsers = onCall(
 // ─── adminDeleteUser ───────────────────────────────────────────────────────────
 
 exports.adminDeleteUser = onCall(
-  { region: 'europe-west3' },
+  { region: 'europe-west3', timeoutSeconds: 120 },
   async (request) => {
     await assertAdmin(request.auth?.uid);
 
@@ -407,7 +407,7 @@ exports.adminDeleteUser = onCall(
 // ─── adminBulkDeleteInactiveAnonymous ─────────────────────────────────────────
 
 exports.adminBulkDeleteInactiveAnonymous = onCall(
-  { region: 'europe-west3' },
+  { region: 'europe-west3', timeoutSeconds: 300 },
   async (request) => {
     await assertAdmin(request.auth?.uid);
 

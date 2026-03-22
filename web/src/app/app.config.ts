@@ -73,7 +73,7 @@ export const appConfig: ApplicationConfig = {
             withFirestoreEmulator(firebaseRuntime.firestoreEmulatorUrl)
           ),
           provideFunctions(() => {
-            const functions = getFunctions();
+            const functions = getFunctions(undefined, 'europe-west3');
             connectFunctionsEmulator(functions, '127.0.0.1', 5001);
             return functions;
           }),
@@ -81,7 +81,7 @@ export const appConfig: ApplicationConfig = {
       : [
           provideAuth(),
           provideFireStore(),
-          provideFunctions(() => getFunctions()),
+          provideFunctions(() => getFunctions(undefined, 'europe-west3')),
           provideAnalytics(() => getAnalytics()),
           provideRemoteConfig(() => {
             const remoteConfig = getRemoteConfig();
