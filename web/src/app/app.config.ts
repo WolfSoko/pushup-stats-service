@@ -63,7 +63,7 @@ export const appConfig: ApplicationConfig = {
           },
           {
             provide: APP_INITIALIZER,
-            useFactory: () => () => {},
+            useFactory: () => () => undefined,
             deps: [Sentry.TraceService],
             multi: true,
           },
