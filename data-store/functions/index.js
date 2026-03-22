@@ -281,63 +281,69 @@ async function assertAdmin(uid) {
 
 // ─── adminListUsers ────────────────────────────────────────────────────────────
 
-exports.adminListUsers = onCall({ region: 'europe-west3' }, async (request) => {
-  await assertAdmin(request.auth?.uid);
+exports.adminListUsers = onCall(
+  { region: 'europe-west3', timeoutSeconds: 120 },
+  async (request) => {
+    await assertAdmin(request.auth?.uid);
 
-  // Collect all Auth users (paginate through all pages)
-  const authUsers = [];
-  let pageToken;
-  do {
-    const result = await admin.auth().listUsers(1000, pageToken);
-    authUsers.push(...result.users);
-    pageToken = result.pageToken;
-  } while (pageToken);
+    // Collect all Auth users (paginate through all pages)
+    const authUsers = [];
+    let pageToken;
+    do {
+      const result = await admin.auth().listUsers(1000, pageToken);
+      authUsers.push(...result.users);
+      pageToken = result.pageToken;
+    } while (pageToken);
 
-  // Fetch all userConfigs in batches of 10 (Firestore in-query limit)
-  const uids = authUsers.map((u) => u.uid);
-  const configMap = new Map();
-  for (let i = 0; i < uids.length; i += 10) {
-    const batch = uids.slice(i, i + 10);
-    const snaps = await db
-      .collection('userConfigs')
-      .where(admin.firestore.FieldPath.documentId(), 'in', batch)
-      .get();
-    for (const snap of snaps.docs) {
-      configMap.set(snap.id, snap.data());
+    // Fetch all userConfigs in batches of 10 (Firestore in-query limit)
+    const uids = authUsers.map((u) => u.uid);
+    const configMap = new Map();
+    for (let i = 0; i < uids.length; i += 10) {
+      const batch = uids.slice(i, i + 10);
+      const snaps = await db
+        .collection('userConfigs')
+        .where(admin.firestore.FieldPath.documentId(), 'in', batch)
+        .get();
+      for (const snap of snaps.docs) {
+        configMap.set(snap.id, snap.data());
+      }
     }
-  }
 
-  // Count pushups per user and get last pushup timestamp
-  const pushupCountMap = new Map();
-  const lastPushupMap = new Map();
-  const pushupSnap = await db.collection('pushups').get();
-  for (const doc of pushupSnap.docs) {
-    const data = doc.data();
-    if (!data.userId) continue;
-    pushupCountMap.set(data.userId, (pushupCountMap.get(data.userId) || 0) + 1);
-    const ts = data.timestamp;
-    if (
-      !lastPushupMap.has(data.userId) ||
-      ts > lastPushupMap.get(data.userId)
-    ) {
-      lastPushupMap.set(data.userId, ts);
+    // Count pushups per user and get last pushup timestamp
+    const pushupCountMap = new Map();
+    const lastPushupMap = new Map();
+    const pushupSnap = await db.collection('pushups').get();
+    for (const doc of pushupSnap.docs) {
+      const data = doc.data();
+      if (!data.userId) continue;
+      pushupCountMap.set(
+        data.userId,
+        (pushupCountMap.get(data.userId) || 0) + 1
+      );
+      const ts = data.timestamp;
+      if (
+        !lastPushupMap.has(data.userId) ||
+        ts > lastPushupMap.get(data.userId)
+      ) {
+        lastPushupMap.set(data.userId, ts);
+      }
     }
-  }
 
-  return authUsers.map((user) => {
-    const config = configMap.get(user.uid) || {};
-    return {
-      uid: user.uid,
-      displayName: config.displayName || user.displayName || null,
-      email: config.email || user.email || null,
-      anonymous: user.providerData.length === 0,
-      pushupCount: pushupCountMap.get(user.uid) || 0,
-      lastEntry: lastPushupMap.get(user.uid) || null,
-      createdAt: user.metadata.creationTime || null,
-      role: config.role || null,
-    };
-  });
-});
+    return authUsers.map((user) => {
+      const config = configMap.get(user.uid) || {};
+      return {
+        uid: user.uid,
+        displayName: config.displayName || user.displayName || null,
+        email: config.email || user.email || null,
+        anonymous: user.providerData.length === 0,
+        pushupCount: pushupCountMap.get(user.uid) || 0,
+        lastEntry: lastPushupMap.get(user.uid) || null,
+        createdAt: user.metadata.creationTime || null,
+        role: config.role || null,
+      };
+    });
+  }
+);
 
 // ─── adminDeleteUser ───────────────────────────────────────────────────────────
 
