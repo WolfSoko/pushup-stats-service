@@ -11,7 +11,8 @@
     "lint:fix": "nx run-many -t lint --fix",
     "coverage:web": "nx run web:test --codeCoverage",
     "seed:demo": "ts-node scripts/seed-demo-data.ts",
-    "prepare": "husky"
+    "prepare": "husky",
+    "sentry:sourcemaps": "bash scripts/upload-sentry-sourcemaps.sh"
   },
   "private": true,
   "engines": {
@@ -47,6 +48,7 @@
     "@nx/workspace": "22.5.4",
     "@playwright/test": "^1.36.0",
     "@schematics/angular": "21.2.1",
+    "@sentry/cli": "^3.3.3",
     "@swc-node/register": "1.11.1",
     "@swc/core": "1.15.18",
     "@swc/helpers": "0.5.19",
@@ -115,6 +117,8 @@
     "@nestjs/platform-socket.io": "^11.1.14",
     "@nestjs/websockets": "^11.1.14",
     "@ngrx/signals": "^21.0.1",
+    "@sentry/angular": "^10.45.0",
+    "@sentry/node": "^10.45.0",
     "axios": "1.13.5",
     "chart.js": "4.5.1",
     "chartjs-adapter-date-fns": "^3.0.0",
