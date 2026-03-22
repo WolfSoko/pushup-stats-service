@@ -12,7 +12,10 @@ export class LoginPage {
     this.title = page.getByText('Willkommen bei PushUp Stats');
     this.emailInput = page.getByLabel(/e-mail/i);
     this.passwordInput = page.getByLabel(/passwort/i).first();
-    this.submitButton = page.getByRole('button', { name: /anmelden/i });
+    this.submitButton = page.getByRole('button', {
+      name: 'Anmelden',
+      exact: true,
+    });
     this.googleButton = page.getByRole('button', {
       name: /mit google anmelden/i,
     });
