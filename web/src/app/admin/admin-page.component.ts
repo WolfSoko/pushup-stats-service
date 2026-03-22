@@ -124,7 +124,7 @@ export interface AdminUser {
         <button
           mat-icon-button
           (click)="loadUsers()"
-          [matTooltip]="'Neu laden'"
+          [matTooltip]="refreshTooltip"
         >
           <mat-icon>refresh</mat-icon>
         </button>
@@ -297,6 +297,7 @@ export class AdminPageComponent {
     'actions',
   ];
 
+  readonly refreshTooltip = $localize`:@@admin.refresh:Neu laden`;
   readonly loading = signal(false);
   readonly error = signal<string | null>(null);
   readonly users = signal<AdminUser[]>([]);
