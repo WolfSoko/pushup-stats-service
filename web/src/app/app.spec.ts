@@ -53,6 +53,7 @@ describe('App (testing-library)', () => {
           useValue: {
             userNameSafe: userNameSignal.asReadonly(),
             userIdSafe: () => 'u1',
+            isAdmin: () => false,
           },
         },
         { provide: AuthStore, useValue: authMock },
@@ -72,6 +73,7 @@ describe('App (testing-library)', () => {
           useValue: {
             userNameSafe: userNameSignal.asReadonly(),
             userIdSafe: () => 'u1',
+            isAdmin: () => false,
           },
         },
         { provide: AuthStore, useValue: authMock },
@@ -112,6 +114,7 @@ describe('App (testing-library)', () => {
           useValue: {
             userNameSafe: userNameSignal.asReadonly(),
             userIdSafe: () => 'u1',
+            isAdmin: () => false,
           },
         },
         { provide: AuthStore, useValue: authMock },
@@ -135,6 +138,7 @@ describe('App (testing-library)', () => {
           useValue: {
             userNameSafe: userNameSignal.asReadonly(),
             userIdSafe: () => 'u1',
+            isAdmin: () => false,
           },
         },
         { provide: AuthStore, useValue: authMock },
