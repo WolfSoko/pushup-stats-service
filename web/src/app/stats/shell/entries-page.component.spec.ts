@@ -1,9 +1,10 @@
-import { Auth } from '@angular/fire/auth';
 import { signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 import { EntriesPageComponent } from './entries-page.component';
 import { PushupLiveDataService, StatsApiService } from '@pu-stats/data-access';
+import { AuthStore } from '@pu-auth/auth';
+import { makeAuthStoreMock } from '@pu-stats/testing';
 
 describe('EntriesPageComponent', () => {
   let fixture: ComponentFixture<EntriesPageComponent>;
@@ -52,7 +53,7 @@ describe('EntriesPageComponent', () => {
       providers: [
         { provide: StatsApiService, useValue: apiMock },
         { provide: PushupLiveDataService, useValue: liveMock },
-        { provide: Auth, useValue: {} },
+        { provide: AuthStore, useValue: makeAuthStoreMock() },
       ],
     }).compileComponents();
 
