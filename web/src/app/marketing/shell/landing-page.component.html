@@ -1,10 +1,13 @@
 <main class="landing">
   <section class="hero">
     <p class="eyebrow" i18n="@@landing.eyebrow">Pushup Tracker</p>
+    <span class="free-badge" i18n="@@landing.free.badge"
+      >Kostenlos & ohne Kreditkarte</span
+    >
     <h1 i18n="@@landing.title">Dein Training. Klar visualisiert.</h1>
     <p class="subtitle" i18n="@@landing.subtitle">
-      Tracke Reps, Trends und Streaks in Sekunden – mobil, schnell und mit Live-
-      Updates.
+      Kostenlos tracken: Reps, Trends und Streaks in Sekunden – mobil, schnell
+      und mit Live-Updates.
     </p>
 
     <div class="cta-row">
@@ -58,7 +61,14 @@
         </button>
       }
     </div>
+    <p class="cta-hint" i18n="@@landing.cta.hint">
+      Kostenlos · Kein Abo · Jederzeit kündbar
+    </p>
   </section>
+
+  <p class="trust-bar" i18n="@@landing.trust.bar">
+    ✓ Kostenlos · ✓ Kein Abo · ✓ Keine Kreditkarte · ✓ Datenschutz first
+  </p>
 
   <section class="feature-grid">
     <mat-card>
@@ -69,8 +79,8 @@
         >
       </mat-card-header>
       <mat-card-content i18n="@@landing.feature.analytics.body"
-        >Woche, Monat und Custom-Ranges mit klaren KPIs und
-        Charts.</mat-card-content
+        >KPIs, Charts und Custom-Zeiträume. Sieh auf einen Blick wie sich dein
+        Training entwickelt.</mat-card-content
       >
     </mat-card>
 
@@ -82,8 +92,8 @@
         >
       </mat-card-header>
       <mat-card-content i18n="@@landing.feature.quick.body"
-        >Neue Einträge in Sekunden per Schnellaktionen oder
-        Tabelle.</mat-card-content
+        >Eintrag in 2 Sekunden. Schnellaktionen für 10, 20, 30 Reps oder freie
+        Eingabe.</mat-card-content
       >
     </mat-card>
 
@@ -95,8 +105,34 @@
         >
       </mat-card-header>
       <mat-card-content i18n="@@landing.feature.live.body"
-        >Firestore Live-Sync hält deine Daten auf allen Geräten
-        aktuell.</mat-card-content
+        >Alle Geräte. Echtzeit-Sync hält deine Daten überall aktuell – kein
+        Refresh nötig.</mat-card-content
+      >
+    </mat-card>
+
+    <mat-card>
+      <mat-card-header class="key-features-header">
+        <mat-icon aria-hidden="true">emoji_events</mat-icon>
+        <mat-card-title i18n="@@landing.feature.streak.title"
+          >Streaks & Bestenliste</mat-card-title
+        >
+      </mat-card-header>
+      <mat-card-content i18n="@@landing.feature.streak.body"
+        >Täglich dabei bleiben. Verfolge deine Streak und miss dich mit der
+        Community.</mat-card-content
+      >
+    </mat-card>
+
+    <mat-card>
+      <mat-card-header class="key-features-header">
+        <mat-icon aria-hidden="true">lock_open</mat-icon>
+        <mat-card-title i18n="@@landing.feature.free.title"
+          >100% Kostenlos</mat-card-title
+        >
+      </mat-card-header>
+      <mat-card-content i18n="@@landing.feature.free.body"
+        >Keine Kreditkarte. Kein Abo. Einfach registrieren und loslegen – für
+        immer kostenlos.</mat-card-content
       >
     </mat-card>
   </section>
