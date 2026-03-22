@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import {
+  adminGuard,
   authGuard,
   LoginComponent,
   publicOnlyGuard,
@@ -100,6 +101,12 @@ export const appRoutes: Routes = [
       import('./leaderboard/shell/leaderboard-page.component').then(
         (m) => m.LeaderboardPageComponent
       ),
+  },
+  {
+    path: 'admin',
+    canActivate: [adminGuard],
+    loadComponent: () =>
+      import('./admin/admin-page.component').then((m) => m.AdminPageComponent),
   },
   { path: '**', redirectTo: '' },
 ];

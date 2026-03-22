@@ -269,6 +269,223 @@ exports.assessRecaptchaToken = onCall(
   }
 );
 
+// ─── Admin helpers ────────────────────────────────────────────────────────────
+
+async function assertAdmin(uid) {
+  if (!uid) throw new HttpsError('unauthenticated', 'Nicht angemeldet.');
+  const snap = await db.collection('userConfigs').doc(uid).get();
+  if (!snap.exists || snap.data()?.role !== 'admin') {
+    throw new HttpsError('permission-denied', 'Kein Admin-Zugriff.');
+  }
+}
+
+// ─── adminListUsers ────────────────────────────────────────────────────────────
+
+exports.adminListUsers = onCall({ region: 'europe-west3' }, async (request) => {
+  await assertAdmin(request.auth?.uid);
+
+  // Collect all Auth users (paginate through all pages)
+  const authUsers = [];
+  let pageToken;
+  do {
+    const result = await admin.auth().listUsers(1000, pageToken);
+    authUsers.push(...result.users);
+    pageToken = result.pageToken;
+  } while (pageToken);
+
+  // Fetch all userConfigs in batches of 10 (Firestore in-query limit)
+  const uids = authUsers.map((u) => u.uid);
+  const configMap = new Map();
+  for (let i = 0; i < uids.length; i += 10) {
+    const batch = uids.slice(i, i + 10);
+    const snaps = await db
+      .collection('userConfigs')
+      .where(admin.firestore.FieldPath.documentId(), 'in', batch)
+      .get();
+    for (const snap of snaps.docs) {
+      configMap.set(snap.id, snap.data());
+    }
+  }
+
+  // Count pushups per user and get last pushup timestamp
+  const pushupCountMap = new Map();
+  const lastPushupMap = new Map();
+  const pushupSnap = await db.collection('pushups').get();
+  for (const doc of pushupSnap.docs) {
+    const data = doc.data();
+    if (!data.userId) continue;
+    pushupCountMap.set(data.userId, (pushupCountMap.get(data.userId) || 0) + 1);
+    const ts = data.timestamp;
+    if (
+      !lastPushupMap.has(data.userId) ||
+      ts > lastPushupMap.get(data.userId)
+    ) {
+      lastPushupMap.set(data.userId, ts);
+    }
+  }
+
+  return authUsers.map((user) => {
+    const config = configMap.get(user.uid) || {};
+    return {
+      uid: user.uid,
+      displayName: config.displayName || user.displayName || null,
+      email: config.email || user.email || null,
+      anonymous: user.providerData.length === 0,
+      pushupCount: pushupCountMap.get(user.uid) || 0,
+      lastEntry: lastPushupMap.get(user.uid) || null,
+      createdAt: user.metadata.creationTime || null,
+      role: config.role || null,
+    };
+  });
+});
+
+// ─── adminDeleteUser ───────────────────────────────────────────────────────────
+
+exports.adminDeleteUser = onCall(
+  { region: 'europe-west3' },
+  async (request) => {
+    await assertAdmin(request.auth?.uid);
+
+    const uid = String(request.data?.uid || '').trim();
+    const anonymize = Boolean(request.data?.anonymize ?? true);
+
+    if (!uid) throw new HttpsError('invalid-argument', 'uid erforderlich.');
+    if (uid === DEMO_USER_ID) {
+      throw new HttpsError(
+        'failed-precondition',
+        'Demo-Benutzer kann nicht gelöscht werden.'
+      );
+    }
+
+    // Delete Firebase Auth user
+    await admin.auth().deleteUser(uid);
+
+    if (anonymize) {
+      // Keep pushups but anonymise the userConfig
+      await db
+        .collection('userConfigs')
+        .doc(uid)
+        .set(
+          {
+            displayName: 'Gelöschter Benutzer',
+            email: null,
+            role: admin.firestore.FieldValue.delete(),
+            ui: { hideFromLeaderboard: true },
+          },
+          { merge: true }
+        );
+    } else {
+      // Hard delete: remove userConfig + all pushups
+      await db.collection('userConfigs').doc(uid).delete();
+
+      const pushupSnap = await db
+        .collection('pushups')
+        .where('userId', '==', uid)
+        .get();
+
+      const BATCH_SIZE = 500;
+      for (let i = 0; i < pushupSnap.docs.length; i += BATCH_SIZE) {
+        const batch = db.batch();
+        for (const doc of pushupSnap.docs.slice(i, i + BATCH_SIZE)) {
+          batch.delete(doc.ref);
+        }
+        await batch.commit();
+      }
+    }
+
+    logger.info('adminDeleteUser', { uid, anonymize, by: request.auth?.uid });
+    return { ok: true };
+  }
+);
+
+// ─── adminBulkDeleteInactiveAnonymous ─────────────────────────────────────────
+
+exports.adminBulkDeleteInactiveAnonymous = onCall(
+  { region: 'europe-west3' },
+  async (request) => {
+    await assertAdmin(request.auth?.uid);
+
+    const inactiveDays = Number(request.data?.inactiveDays ?? 20);
+    const cutoff = new Date(Date.now() - inactiveDays * 24 * 60 * 60 * 1000)
+      .toISOString()
+      .slice(0, 10);
+
+    // Collect anonymous Auth users
+    const anonymousUsers = [];
+    let pageToken;
+    do {
+      const result = await admin.auth().listUsers(1000, pageToken);
+      for (const user of result.users) {
+        if (user.providerData.length === 0 && user.uid !== DEMO_USER_ID) {
+          anonymousUsers.push(user.uid);
+        }
+      }
+      pageToken = result.pageToken;
+    } while (pageToken);
+
+    // Find the last pushup timestamp per anonymous user
+    const lastPushupMap = new Map();
+    if (anonymousUsers.length > 0) {
+      const pushupSnap = await db.collection('pushups').get();
+      for (const doc of pushupSnap.docs) {
+        const data = doc.data();
+        if (!data.userId || !anonymousUsers.includes(data.userId)) continue;
+        const ts = String(data.timestamp || '').slice(0, 10);
+        if (
+          !lastPushupMap.has(data.userId) ||
+          ts > lastPushupMap.get(data.userId)
+        ) {
+          lastPushupMap.set(data.userId, ts);
+        }
+      }
+    }
+
+    let deleted = 0;
+    let skipped = 0;
+
+    for (const uid of anonymousUsers) {
+      const lastTs = lastPushupMap.get(uid);
+      if (lastTs && lastTs >= cutoff) {
+        skipped++;
+        continue;
+      }
+
+      // Delete Auth user
+      await admin.auth().deleteUser(uid);
+
+      // Delete userConfig
+      await db.collection('userConfigs').doc(uid).delete();
+
+      // Delete pushups
+      const pushupSnap = await db
+        .collection('pushups')
+        .where('userId', '==', uid)
+        .get();
+
+      if (!pushupSnap.empty) {
+        const batch = db.batch();
+        for (const doc of pushupSnap.docs) {
+          batch.delete(doc.ref);
+        }
+        await batch.commit();
+      }
+
+      deleted++;
+    }
+
+    logger.info('adminBulkDeleteInactiveAnonymous', {
+      inactiveDays,
+      cutoff,
+      deleted,
+      skipped,
+      by: request.auth?.uid,
+    });
+    return { deleted, skipped };
+  }
+);
+
+// ─── Leaderboard functions ────────────────────────────────────────────────────
+
 exports.rebuildLeaderboards = onSchedule(
   {
     schedule: 'every 15 minutes',
