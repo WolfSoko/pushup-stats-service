@@ -1,72 +1,66 @@
-# Firebase Deployment Guide
+# Firebase Deployment
 
-This guide describes deploying the frontend and minimal backend to Firebase hosting and Cloud Functions, aligned with the Firebase-first phase of the migration.
+**Projekt:** `pushup-stats`
+**Live-URL:** https://pushup-stats.de
 
-## Overview
+## Voraussetzungen
 
-- Frontend hosting on Firebase Hosting (or SSR via Cloud Functions if SSR is required)
-- Authentication via Firebase Auth
-- Data storage in Cloud Firestore
-- Optional serverless API via Cloud Functions
-- CI/CD via GitHub Actions to deploy Firebase hosting and functions
+- Firebase CLI: `npm install -g firebase-tools`
+- Eingeloggt: `firebase login`
+- Service Account Key: `~/.firebase/pushup-stats-firebase-adminsdk-fbsvc-*.json`
 
-## Prerequisites
+## Firestore Rules deployen
 
-- A Firebase project (recommended: pushup-stats-firebase)
-- Firebase CLI installed and authenticated
-- Firebase Hosting configured for the project
-- Optional: Cloud Firestore enabled
-- Node.js >= 14 (or as required by Firebase tooling)
+```bash
+cd data-store
+firebase deploy --only firestore:rules
+```
 
-## Step-by-step Deployment
+## Cloud Functions deployen
 
-1. Initialize Firebase in the project
+```bash
+cd data-store
+firebase deploy --only functions
+# oder einzelne Function:
+firebase deploy --only functions:adminListUsers
+```
 
-- Run: firebase login
-- Run: firebase init
-  - Choose Hosting: Configure and deploy Firebase Hosting
-  - Choose Functions (optional): if you plan to host API with Cloud Functions
-  - Associate with project: select pushup-stats-firebase
-  - Set public directory: dist/web/browser (or as configured by your build output)
-  - Configure as a single-page app: yes (redirect all urls to index.html)
-  - Do not overwrite existing index.html if you have a framework build
+## App Hosting (SSR)
 
-2. Build your frontend
+Das Deployment läuft über Firebase App Hosting (automatisch via GitHub Push auf `main`).
+Manuell triggern über die Firebase Console → App Hosting.
 
-- Ensure your build outputs to the directory configured in Firebase.json
-- Example: npx nx build web --configuration=production
+## Umgebungen
 
-3. Deploy
+| Umgebung   | Firebase Projekt       | URL                            |
+| ---------- | ---------------------- | ------------------------------ |
+| Production | `pushup-stats`         | https://pushup-stats.de        |
+| Staging    | `pushup-stats-staging` | (via `fire.config.staging.ts`) |
+| Lokal      | Firebase Emulator      | http://localhost:4200          |
 
-- Run: firebase deploy
-- Verify hosting URL and, if using functions, API endpoints under /api/
+## Nützliche Befehle
 
-4. CI/CD
+```bash
+# Logs ansehen
+firebase functions:log
 
-- Create a GitHub Actions workflow to deploy on push to main:
-  - Install Firebase tools
-  - Build frontend with your Nx commands
-  - Run firebase deploy --only hosting (and functions if used)
+# Emulator starten
+npx nx run data-store:emulate
 
-## Environment Configuration
+# Admin-Rolle setzen
+GOOGLE_APPLICATION_CREDENTIALS=~/.firebase/pushup-stats-firebase-adminsdk-fbsvc-e502979fa7.json npx tsx scripts/set-admin-role.ts
 
-- Firebase config (apiKey, authDomain, etc.) should be injected client-side in the app or via environment configs if you use hosting rewrites
-- If you need server-side secrets, use Firebase Functions config and Firebase environment config
+# Demo-Daten seeden
+DEMO_USER_ID=aqgzwSbhudRLrluz1zBSW3XQx013 \
+GOOGLE_APPLICATION_CREDENTIALS=~/.firebase/pushup-stats-firebase-adminsdk-fbsvc-e502979fa7.json \
+npx tsx scripts/seed-demo-data.ts
+```
 
-## Observability & Security
+## Rollback
 
-- Monitor Firebase Hosting and Functions logs in Firebase Console
-- Use Firebase Security Rules for Firestore
-- Consider enabling Analytics for frontend insights
-
-## Rollback Strategy
-
-- Use Git history and Firebase hosting versioning (deployments) to rollback to a previous release
-
-## Conversion Notes
-
-- This guide replaces the Vercel-specific setup for the frontend path. The API remains behind a private endpoint (e.g., Tail network) and can be accessed via configured rewrites or Cloud Run endpoints in future phases.
+Firebase Hosting: Console → App Hosting → vorherigen Release aktivieren.
+Cloud Functions: Git Revert + erneut deployen.
 
 ---
 
-_Last updated: 2026-02-21_
+_Zuletzt aktualisiert: 2026-03-22_

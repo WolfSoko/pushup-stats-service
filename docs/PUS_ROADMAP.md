@@ -1,34 +1,49 @@
-# PUS Roadmap (Todo)
+# PUS Roadmap
 
-**Phase 0 – Stabilität/UX**
+**Live:** https://pushup-stats.de
+**Project Board:** https://github.com/users/WolfSoko/projects/6/views/3
 
-- [ ] bug(config): investigate failing request (details TBD)
-- [ ] fix: user name in html title
-- [ ] feat(inputs): autocomplete selection works when prefilled
+---
 
-**Phase 1 – Multiuser + Cloud**
+## ✅ Abgeschlossen
 
-- [ ] feat(db): integrate Firebase, replace local DB, consider multiuser
-- [ ] feat(auth): add Firebase auth providers (Google, Microsoft, GitHub, Apple, email)
-- [ ] feat(user): complete multiuser
-- [ ] ci(deploy): host on Firebase; domain on Amazon
+- Firebase Auth (Google, Email/PW, anonym/Gast)
+- Firestore Datenzugriff
+- SSR + PWA
+- i18n (DE/EN)
+- Leaderboard (öffentlich, Cloud Function)
+- SEO Preview Mode für private Pages (Demo-User)
+- Admin-Bereich (User-Verwaltung, Rollen-System)
+- hreflang + 301 Redirect (in Progress)
 
-**Phase 2 – i18n + Monitoring**
+---
 
-- [ ] feat(i18n): finish translations for all shares/parts
-- [ ] feat(tracking): add Google Analytics
-- [ ] feat(connection): health APIs anbinden
+## 🔄 In Arbeit
 
-**Phase 3 – Ziele & Motivation**
+- feat(seo): 302→301 Redirect + dynamische hreflang (#138)
+- feat: SEO Preview Mode (#135)
+- feat: Admin-Bereich (#137)
 
-- [ ] feat: weekly/monthly goals in user config
-- [ ] feat: complex goals (e.g., 50 Knuckle)
-- [ ] feat: show goal completion progress in motivating way
-- [ ] feat: notifications + motivation at 80% goal; fireworks on completion
-- [ ] feat: motivating animations/notifications on entry
+---
 
-**Phase 4 – Analyse/UX**
+## 📋 Geplant
 
-- [ ] feat: cake diagram for types
-- [ ] feat(analysis): hover cake filters heatmap + info (type + amount) + title/filter
-- [ ] feat(analysis): hover heatmap shows cake; click pins cake + title updates
+### UX / Settings
+
+- [ ] Settings UX aufräumen (Issue #101): technische IDs entfernen, Username-Flow
+- [ ] Tagesziel prominenter in Toolbar
+- [ ] Notifications / Motivations-Animationen bei 80% + 100% Ziel
+
+### Analyse
+
+- [ ] Hover auf Kuchendiagramm filtert Heatmap
+- [ ] Hover auf Heatmap zeigt Kuchendiagramm
+
+### Admin
+
+- [ ] Rollen-Editor im Admin-Bereich (Phase 6, #136)
+
+### Technisch
+
+- [ ] i18n: verbleibende fehlende Übersetzungen abschließen
+- [ ] E2E Tests ausbauen
