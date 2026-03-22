@@ -75,20 +75,27 @@ export interface AdminUser {
               min="1"
             />
           </mat-form-field>
-          <p class="bulk-hint" i18n="@@admin.bulk.hint">
+          <p class="bulk-hint">
             Löscht anonyme Benutzer ohne Pushups in den letzten
-            {{ inactiveDays }} Tagen.
+            {{ inactiveDays() }} Tagen.
+            @if (inactiveUserCount() > 0) {
+              <strong class="inactive-count">
+                ({{ inactiveUserCount() }} betroffene User)
+              </strong>
+            }
           </p>
         </mat-card-content>
         <mat-card-actions>
           <button
             mat-flat-button
             color="warn"
+            class="bulk-btn"
             [disabled]="bulkLoading()"
             (click)="bulkDelete()"
           >
             @if (bulkLoading()) {
-              <mat-spinner diameter="20" />
+              <mat-spinner diameter="18" class="btn-spinner" />
+              <span i18n="@@admin.bulk.button">Inaktive löschen</span>
             } @else {
               <mat-icon>delete_sweep</mat-icon>
               <span i18n="@@admin.bulk.button">Inaktive löschen</span>
@@ -97,17 +104,15 @@ export interface AdminUser {
         </mat-card-actions>
         @if (bulkResult()) {
           <mat-card-content>
-            <p class="bulk-result">
-              <span i18n="@@admin.bulk.deleted">Gelöscht:</span>
-              {{ bulkResult()!.deleted }},
-              <span i18n="@@admin.bulk.skipped">Übersprungen:</span>
+            <p class="bulk-result success-text">
+              ✓ Gelöscht: {{ bulkResult()!.deleted }} | Übersprungen:
               {{ bulkResult()!.skipped }}
             </p>
           </mat-card-content>
         }
         @if (bulkError()) {
           <mat-card-content>
-            <p class="error-text">{{ bulkError() }}</p>
+            <p class="error-text">⚠ {{ bulkError() }}</p>
           </mat-card-content>
         }
       </mat-card>
@@ -253,8 +258,22 @@ export interface AdminUser {
       font-size: 0.85em;
       margin-top: 8px;
     }
+    .inactive-count {
+      color: var(--mat-sys-error);
+    }
+    .bulk-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-spinner {
+      display: inline-block;
+    }
     .bulk-result {
       font-weight: 500;
+    }
+    .success-text {
+      color: #4caf50;
     }
     .filter-row {
       display: flex;
@@ -313,6 +332,16 @@ export class AdminPageComponent {
       ? this.users().filter((u) => u.anonymous)
       : this.users()
   );
+
+  readonly inactiveUserCount = computed(() => {
+    const cutoff = new Date();
+    cutoff.setDate(cutoff.getDate() - this.inactiveDays());
+    return this.users().filter((u) => {
+      if (!u.anonymous) return false;
+      if (!u.lastEntry) return true;
+      return new Date(u.lastEntry) < cutoff;
+    }).length;
+  });
 
   constructor() {
     this.loadUsers();
