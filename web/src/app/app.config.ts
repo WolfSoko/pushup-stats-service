@@ -50,8 +50,8 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideHttpClient(withFetch()),
     provideRouter(appRoutes),
-    // Sentry error monitoring (production only)
-    ...(!firebaseRuntime.useEmulators
+    // Sentry error monitoring – production only (not in dev mode or emulator)
+    ...(!firebaseRuntime.useEmulators && !isDevMode()
       ? [
           {
             provide: ErrorHandler,

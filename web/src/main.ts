@@ -1,6 +1,6 @@
 /// <reference types="@angular/localize" />
 import * as Sentry from '@sentry/angular';
-import { mergeApplicationConfig } from '@angular/core';
+import { isDevMode, mergeApplicationConfig } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { App } from './app/app';
 import { appConfig } from './app/app.config';
@@ -8,18 +8,21 @@ import { appBrowserConfig } from './app/app.browser.config';
 import { firebaseRuntime } from './env/firebase-runtime';
 import { AuthService } from '@pu-auth/auth';
 
-if (!firebaseRuntime.useEmulators) {
+if (!firebaseRuntime.useEmulators && !isDevMode()) {
   Sentry.init({
     dsn: 'https://084cd4acd3e626148eba3a831d0e4bee@o1384048.ingest.us.sentry.io/4511089937219584',
     sendDefaultPii: true,
+    release: (globalThis as Record<string, unknown>)['SENTRY_RELEASE'] as
+      | string
+      | undefined,
+    environment: 'production',
     integrations: [
       Sentry.browserTracingIntegration(),
-      Sentry.replayIntegration({ maskAllText: false, blockAllMedia: false }),
+      Sentry.replayIntegration(),
     ],
     tracesSampleRate: 0.2,
     replaysSessionSampleRate: 0.05,
     replaysOnErrorSampleRate: 1.0,
-    environment: 'production',
   });
 }
 

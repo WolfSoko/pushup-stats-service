@@ -12,12 +12,19 @@ import { join } from 'node:path';
 import { pino } from 'pino';
 import { pinoHttp } from 'pino-http';
 
-if (process.env['NODE_ENV'] === 'production') {
+const isProduction = process.env['NODE_ENV'] === 'production';
+
+if (isProduction) {
+  const gitSha = process.env['GIT_SHA'] ?? '';
+  const version = process.env['npm_package_version'] ?? '';
+  const release = gitSha ? `${version}-${gitSha}` : version;
+
   Sentry.init({
     dsn: 'https://084cd4acd3e626148eba3a831d0e4bee@o1384048.ingest.us.sentry.io/4511089937219584',
     sendDefaultPii: true,
+    release,
+    environment: process.env['SENTRY_ENVIRONMENT'] ?? 'production',
     tracesSampleRate: 0.1,
-    environment: 'production',
   });
 }
 
@@ -60,8 +67,8 @@ app.use((req, res, next) => {
     .catch(next);
 });
 
-// Sentry error handler must be after routes
-if (process.env['NODE_ENV'] === 'production') {
+// Sentry error handler must be registered after all routes
+if (isProduction) {
   Sentry.setupExpressErrorHandler(app);
 }
 
