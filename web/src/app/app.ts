@@ -57,6 +57,7 @@ export class App {
   private readonly router = inject(Router);
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly user = inject(UserContextService);
+  readonly isAdmin = computed(() => this.user.isAdmin());
   private readonly userConfigApi = inject(UserConfigApiService);
   private readonly statsApi = inject(StatsApiService);
   private readonly seo = inject(SeoService);

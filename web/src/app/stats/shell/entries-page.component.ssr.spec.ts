@@ -4,6 +4,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 import { EntriesPageComponent } from './entries-page.component';
 import { PushupLiveDataService, StatsApiService } from '@pu-stats/data-access';
+import { AuthStore } from '@pu-auth/auth';
+import { makeAuthStoreMock } from '@pu-stats/testing';
 
 describe('EntriesPageComponent (SSR/REST)', () => {
   let fixture: ComponentFixture<EntriesPageComponent>;
@@ -40,6 +42,7 @@ describe('EntriesPageComponent (SSR/REST)', () => {
         { provide: StatsApiService, useValue: apiMock },
         { provide: PushupLiveDataService, useValue: liveMock },
         { provide: Auth, useValue: {} },
+        { provide: AuthStore, useValue: makeAuthStoreMock() },
       ],
     }).compileComponents();
 

@@ -1,5 +1,7 @@
 export type StatsGranularity = 'daily' | 'hourly';
 
+export type UserRole = 'user' | 'admin';
+
 export interface StatsMeta {
   from: string | null;
   to: string | null;
@@ -66,10 +68,14 @@ export interface UserConfig {
     hideFromLeaderboard?: boolean;
     dayChartMode?: '24h' | '14h';
   };
+  role?: UserRole;
   createdAt?: string;
   updatedAt?: string;
 }
 
 export type UserConfigUpdate = Partial<
-  Pick<UserConfig, 'email' | 'displayName' | 'dailyGoal' | 'consent' | 'ui'>
+  Pick<
+    UserConfig,
+    'email' | 'displayName' | 'dailyGoal' | 'consent' | 'ui' | 'role'
+  >
 >;
