@@ -1,3 +1,5 @@
+import * as Sentry from '@sentry/node';
+
 import {
   AngularNodeAppEngine,
   createNodeRequestHandler,
@@ -9,6 +11,15 @@ import { join } from 'node:path';
 
 import { pino } from 'pino';
 import { pinoHttp } from 'pino-http';
+
+if (process.env['NODE_ENV'] === 'production') {
+  Sentry.init({
+    dsn: 'https://084cd4acd3e626148eba3a831d0e4bee@o1384048.ingest.us.sentry.io/4511089937219584',
+    sendDefaultPii: true,
+    tracesSampleRate: 0.1,
+    environment: 'production',
+  });
+}
 
 const logger = pino({
   name: 'pushup-ssr',
@@ -48,6 +59,11 @@ app.use((req, res, next) => {
     )
     .catch(next);
 });
+
+// Sentry error handler must be after routes
+if (process.env['NODE_ENV'] === 'production') {
+  Sentry.setupExpressErrorHandler(app);
+}
 
 /**
  * Start the server if this module is the main entry point, or it is ran via PM2.
