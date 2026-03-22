@@ -975,7 +975,7 @@
     <unit id="landing.leaderboard.daily">
       <notes>
         <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:24,26</note>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:132,135</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:168,171</note>
       </notes>
       <segment>
         <source> Tag </source>
@@ -984,7 +984,7 @@
     <unit id="landing.leaderboard.weekly">
       <notes>
         <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:33,35</note>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:141,144</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:177,180</note>
       </notes>
       <segment>
         <source> Woche </source>
@@ -993,7 +993,7 @@
     <unit id="landing.leaderboard.monthly">
       <notes>
         <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:42,46</note>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:150,154</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:186,190</note>
       </notes>
       <segment>
         <source> Monat </source>
@@ -1002,7 +1002,7 @@
     <unit id="landing.leaderboard.reps">
       <notes>
         <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:53,55</note>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:161,163</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:197,199</note>
       </notes>
       <segment>
         <source>Reps</source>
@@ -1011,7 +1011,7 @@
     <unit id="landing.leaderboard.ownPosition">
       <notes>
         <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:61,63</note>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:169,172</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:205,208</note>
       </notes>
       <segment>
         <source> Deine Position: #<ph id="0" equiv="INTERPOLATION" disp="{{ me.rank }}"/> · <ph id="1" equiv="INTERPOLATION_1" disp="{{ me.reps }}"/> Reps </source>
@@ -1025,9 +1025,17 @@
         <source>Pushup Tracker</source>
       </segment>
     </unit>
+    <unit id="landing.free.badge">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:5,7</note>
+      </notes>
+      <segment>
+        <source>Kostenlos &amp; ohne Kreditkarte</source>
+      </segment>
+    </unit>
     <unit id="landing.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:4,5</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:7,8</note>
       </notes>
       <segment>
         <source>Dein Training. Klar visualisiert.</source>
@@ -1035,15 +1043,15 @@
     </unit>
     <unit id="landing.subtitle">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:6,10</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:9,13</note>
       </notes>
       <segment>
-        <source> Tracke Reps, Trends und Streaks in Sekunden – mobil, schnell und mit Live- Updates. </source>
+        <source> Kostenlos tracken: Reps, Trends und Streaks in Sekunden – mobil, schnell und mit Live-Updates. </source>
       </segment>
     </unit>
     <unit id="landing.cta.dashboard">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:19,21</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:22,24</note>
       </notes>
       <segment>
         <source>Zum Dashboard</source>
@@ -1051,8 +1059,8 @@
     </unit>
     <unit id="landing.cta.signup">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:29,32</note>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:41,44</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:32,35</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:44,47</note>
       </notes>
       <segment>
         <source>Konto erstellen</source>
@@ -1060,7 +1068,7 @@
     </unit>
     <unit id="landing.cta.login">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:49,52</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:52,55</note>
       </notes>
       <segment>
         <source>Einloggen</source>
@@ -1068,15 +1076,31 @@
     </unit>
     <unit id="landing.cta.guest">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:57,59</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:60,62</note>
       </notes>
       <segment>
         <source> Als Gast ausprobieren </source>
       </segment>
     </unit>
+    <unit id="landing.cta.hint">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:65,69</note>
+      </notes>
+      <segment>
+        <source> Kostenlos · Kein Abo · Jederzeit kündbar </source>
+      </segment>
+    </unit>
+    <unit id="landing.trust.bar">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:70,73</note>
+      </notes>
+      <segment>
+        <source> ✓ Kostenlos · ✓ Kein Abo · ✓ Keine Kreditkarte · ✓ Datenschutz first </source>
+      </segment>
+    </unit>
     <unit id="landing.feature.analytics.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:68,70</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:78,80</note>
       </notes>
       <segment>
         <source>Smarter Überblick</source>
@@ -1084,15 +1108,15 @@
     </unit>
     <unit id="landing.feature.analytics.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:72,75</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:82,85</note>
       </notes>
       <segment>
-        <source>Woche, Monat und Custom-Ranges mit klaren KPIs und Charts.</source>
+        <source>KPIs, Charts und Custom-Zeiträume. Sieh auf einen Blick wie sich dein Training entwickelt.</source>
       </segment>
     </unit>
     <unit id="landing.feature.quick.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:81,83</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:91,93</note>
       </notes>
       <segment>
         <source>Quick Logging</source>
@@ -1100,15 +1124,15 @@
     </unit>
     <unit id="landing.feature.quick.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:85,88</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:95,98</note>
       </notes>
       <segment>
-        <source>Neue Einträge in Sekunden per Schnellaktionen oder Tabelle.</source>
+        <source>Eintrag in 2 Sekunden. Schnellaktionen für 10, 20, 30 Reps oder freie Eingabe.</source>
       </segment>
     </unit>
     <unit id="landing.feature.live.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:94,96</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:104,106</note>
       </notes>
       <segment>
         <source>Live &amp; überall</source>
@@ -1116,15 +1140,47 @@
     </unit>
     <unit id="landing.feature.live.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:98,101</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:108,111</note>
       </notes>
       <segment>
-        <source>Firestore Live-Sync hält deine Daten auf allen Geräten aktuell.</source>
+        <source>Alle Geräte. Echtzeit-Sync hält deine Daten überall aktuell – kein Refresh nötig.</source>
+      </segment>
+    </unit>
+    <unit id="landing.feature.streak.title">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:117,119</note>
+      </notes>
+      <segment>
+        <source>Streaks &amp; Bestenliste</source>
+      </segment>
+    </unit>
+    <unit id="landing.feature.streak.body">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:121,124</note>
+      </notes>
+      <segment>
+        <source>Täglich dabei bleiben. Verfolge deine Streak und miss dich mit der Community.</source>
+      </segment>
+    </unit>
+    <unit id="landing.feature.free.title">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:130,132</note>
+      </notes>
+      <segment>
+        <source>100% Kostenlos</source>
+      </segment>
+    </unit>
+    <unit id="landing.feature.free.body">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:134,137</note>
+      </notes>
+      <segment>
+        <source>Keine Kreditkarte. Kein Abo. Einfach registrieren und loslegen – für immer kostenlos.</source>
       </segment>
     </unit>
     <unit id="ads.landing.aria">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:103</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:139</note>
       </notes>
       <segment>
         <source>Werbung</source>
@@ -1132,7 +1188,7 @@
     </unit>
     <unit id="landing.preview.alt">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:109,110</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:145,146</note>
       </notes>
       <segment>
         <source>Vorschau der Statistikansicht</source>
@@ -1140,7 +1196,7 @@
     </unit>
     <unit id="landing.leaderboard.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:117,119</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:153,155</note>
       </notes>
       <segment>
         <source> Bestenliste </source>
@@ -1148,7 +1204,7 @@
     </unit>
     <unit id="landing.leaderboard.privacy">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:120,124</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:156,160</note>
       </notes>
       <segment>
         <source> Privacy first: Dein Nutzername wird nicht angezeigt, wenn du es nicht möchtest. </source>
@@ -1978,7 +2034,7 @@
     </unit>
     <unit id="period.total">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:36,37</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:37,38</note>
       </notes>
       <segment>
         <source>Gesamt</source>
@@ -1986,7 +2042,7 @@
     </unit>
     <unit id="goalProgressTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:47,49</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:48,50</note>
       </notes>
       <segment>
         <source>Zielfortschritt</source>
@@ -1994,7 +2050,7 @@
     </unit>
     <unit id="lastEntryTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:61,62</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:62,63</note>
       </notes>
       <segment>
         <source>Letzter Eintrag</source>
@@ -2002,7 +2058,7 @@
     </unit>
     <unit id="latEntryReps">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:66,68</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:67,69</note>
       </notes>
       <segment>
         <source> <ph id="0" equiv="INTERPOLATION" disp="{{ latest.reps }}"/> Reps · <ph id="1" equiv="INTERPOLATION_1" disp="{{ latest.type || &apos;Standard&apos; }}"/> </source>
@@ -2010,7 +2066,7 @@
     </unit>
     <unit id="noEntryInPeriod">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:70,72</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:71,73</note>
       </notes>
       <segment>
         <source>Noch kein Eintrag für diesen Zeitraum.</source>
@@ -2018,7 +2074,7 @@
     </unit>
     <unit id="allTimeSummaryAria">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:78,79</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:79,80</note>
       </notes>
       <segment>
         <source>All-Time Kurzübersicht</source>
@@ -2026,7 +2082,7 @@
     </unit>
     <unit id="allTimeTotal">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:82,83</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:83,84</note>
       </notes>
       <segment>
         <source>All-Time Gesamt</source>
@@ -2034,7 +2090,7 @@
     </unit>
     <unit id="allTimeDays">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:86,87</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:87,88</note>
       </notes>
       <segment>
         <source>All-Time Tage</source>
@@ -2042,7 +2098,7 @@
     </unit>
     <unit id="allTimeEntries">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:90,91</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:91,92</note>
       </notes>
       <segment>
         <source>All-Time Einträge</source>
@@ -2050,7 +2106,7 @@
     </unit>
     <unit id="allTimeAvg">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:94,95</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:95,96</note>
       </notes>
       <segment>
         <source>All-Time Ø/Tag</source>
@@ -2058,7 +2114,7 @@
     </unit>
     <unit id="quickActionsTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:102,104</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:103,105</note>
       </notes>
       <segment>
         <source>Schnellaktionen</source>
@@ -2066,7 +2122,7 @@
     </unit>
     <unit id="quickActionsSubtitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:105,107</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:106,108</note>
       </notes>
       <segment>
         <source>Schnell eintragen ohne Dialog</source>
@@ -2074,7 +2130,7 @@
     </unit>
     <unit id="quickAdd10">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:116,118</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:117,119</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">bolt</pc> +10 Reps </source>
@@ -2082,7 +2138,7 @@
     </unit>
     <unit id="quickAdd20">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:126,128</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:127,129</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">flash_on</pc> +20 Reps </source>
@@ -2090,7 +2146,7 @@
     </unit>
     <unit id="quickAdd30">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:136,138</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:137,139</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">whatshot</pc> +30 Reps </source>
@@ -2098,7 +2154,7 @@
     </unit>
     <unit id="loadingStats">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:154,158</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:155,159</note>
       </notes>
       <segment>
         <source> Lade Statistikdaten… </source>
@@ -2106,7 +2162,7 @@
     </unit>
     <unit id="dayChartModeLabel">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:171,172</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:172,173</note>
       </notes>
       <segment>
         <source>Tagesansicht</source>
@@ -2114,7 +2170,7 @@
     </unit>
     <unit id="dayChartMode24h">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:178,179</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:179,180</note>
       </notes>
       <segment>
         <source>24h</source>
@@ -2122,7 +2178,7 @@
     </unit>
     <unit id="dayChartMode14h">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:181,182</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:182,183</note>
       </notes>
       <segment>
         <source>14h Day Mode</source>
@@ -2130,7 +2186,7 @@
     </unit>
     <unit id="entriesInSelectedRange">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:198,200</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:199,201</note>
       </notes>
       <segment>
         <source>Einträge im gewählten Zeitraum</source>
@@ -2138,7 +2194,7 @@
     </unit>
     <unit id="ads.dashboard.aria">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:210</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:211</note>
       </notes>
       <segment>
         <source>Werbung</source>
