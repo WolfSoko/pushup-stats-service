@@ -1112,5 +1112,61 @@
         <source>Hauptnavigation</source>
       </segment>
     </unit>
+    <unit id="landing.free.badge">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+      </notes>
+      <segment>
+        <source>Kostenlos &amp; ohne Kreditkarte</source>
+      </segment>
+    </unit>
+    <unit id="landing.trust.bar">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+      </notes>
+      <segment>
+        <source>✓ Kostenlos  ·  ✓ Kein Abo  ·  ✓ Keine Kreditkarte  ·  ✓ Datenschutz first</source>
+      </segment>
+    </unit>
+    <unit id="landing.cta.hint">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+      </notes>
+      <segment>
+        <source>Kostenlos · Kein Abo · Jederzeit kündbar</source>
+      </segment>
+    </unit>
+    <unit id="landing.feature.streak.title">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+      </notes>
+      <segment>
+        <source>Streaks &amp; Bestenliste</source>
+      </segment>
+    </unit>
+    <unit id="landing.feature.streak.body">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+      </notes>
+      <segment>
+        <source>Täglich dabei bleiben. Verfolge deine Streak und miss dich mit der Community.</source>
+      </segment>
+    </unit>
+    <unit id="landing.feature.free.title">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+      </notes>
+      <segment>
+        <source>100% Kostenlos</source>
+      </segment>
+    </unit>
+    <unit id="landing.feature.free.body">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+      </notes>
+      <segment>
+        <source>Keine Kreditkarte. Kein Abo. Einfach registrieren und loslegen – für immer kostenlos.</source>
+      </segment>
+    </unit>
   </file>
 </xliff>

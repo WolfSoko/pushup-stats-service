@@ -1727,5 +1727,47 @@ Active:         </target>
         <target>Main navigation</target>
       </segment>
     </unit>
+    <unit id="landing.free.badge">
+      <segment state="translated">
+        <source>Kostenlos &amp; ohne Kreditkarte</source>
+        <target>Free &amp; no credit card required</target>
+      </segment>
+    </unit>
+    <unit id="landing.trust.bar">
+      <segment state="translated">
+        <source>✓ Kostenlos  ·  ✓ Kein Abo  ·  ✓ Keine Kreditkarte  ·  ✓ Datenschutz first</source>
+        <target>✓ Free  ·  ✓ No subscription  ·  ✓ No credit card  ·  ✓ Privacy first</target>
+      </segment>
+    </unit>
+    <unit id="landing.cta.hint">
+      <segment state="translated">
+        <source>Kostenlos · Kein Abo · Jederzeit kündbar</source>
+        <target>Free · No subscription · Cancel anytime</target>
+      </segment>
+    </unit>
+    <unit id="landing.feature.streak.title">
+      <segment state="translated">
+        <source>Streaks &amp; Bestenliste</source>
+        <target>Streaks &amp; Leaderboard</target>
+      </segment>
+    </unit>
+    <unit id="landing.feature.streak.body">
+      <segment state="translated">
+        <source>Täglich dabei bleiben. Verfolge deine Streak und miss dich mit der Community.</source>
+        <target>Stay consistent. Track your streak and compete with the community.</target>
+      </segment>
+    </unit>
+    <unit id="landing.feature.free.title">
+      <segment state="translated">
+        <source>100% Kostenlos</source>
+        <target>100% Free</target>
+      </segment>
+    </unit>
+    <unit id="landing.feature.free.body">
+      <segment state="translated">
+        <source>Keine Kreditkarte. Kein Abo. Einfach registrieren und loslegen – für immer kostenlos.</source>
+        <target>No credit card. No subscription. Just sign up and start – free forever.</target>
+      </segment>
+    </unit>
   </file>
 </xliff>
