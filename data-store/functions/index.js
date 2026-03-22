@@ -12,6 +12,7 @@ admin.initializeApp();
 const db = admin.firestore();
 const TZ = 'Europe/Berlin';
 const TOP_N = 10;
+const DEMO_USER_ID = 'aqgzwSbhudRLrluz1zBSW3XQx013';
 
 const recaptchaClient = new RecaptchaEnterpriseServiceClient();
 const RECAPTCHA_PROJECT_ID = 'pushup-stats';
@@ -151,7 +152,9 @@ async function rebuildLeaderboardsCore() {
     .orderBy('timestamp', 'desc')
     .get();
 
-  const rows = snap.docs.map((d) => d.data());
+  const rows = snap.docs
+    .map((d) => d.data())
+    .filter((r) => r.userId !== DEMO_USER_ID);
 
   const userIds = [...new Set(rows.map((r) => r.userId).filter(Boolean))];
   const userProfiles = new Map();
