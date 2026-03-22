@@ -38,6 +38,8 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 import { adsConfig } from '../env/ads.config';
 import { firebaseRuntime } from '../env/firebase-runtime';
+import { demoUserId } from '../env/demo.config';
+import { DEMO_USER_ID } from '@pu-stats/data-access';
 import { appRoutes } from './app.routes';
 
 export const appConfig: ApplicationConfig = {
@@ -59,6 +61,7 @@ export const appConfig: ApplicationConfig = {
     }),
     { provide: LOCALE_ID, useValue: 'de-DE' },
     { provide: MAT_DATE_LOCALE, useValue: 'de-DE' },
+    { provide: DEMO_USER_ID, useValue: demoUserId },
     provideServiceWorker('ngsw-worker.js', {
       enabled: !isDevMode(),
       registrationStrategy: 'registerWhenStable:30000',
