@@ -20,6 +20,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { GoogleOnboardingDialogComponent } from './google-onboarding-dialog/google-onboarding-dialog.component';
@@ -49,6 +50,7 @@ export class LoginComponent {
   private readonly route = inject(ActivatedRoute);
   private readonly dialog = inject(MatDialog);
   private readonly injector = inject(Injector);
+  private readonly snackBar = inject(MatSnackBar);
   readonly loginUiStore = inject(LoginUiStore);
 
   private readonly loginData = signal({ email: '', password: '' });
@@ -79,7 +81,7 @@ export class LoginComponent {
       return;
     const { email, password } = this.loginForm().value();
     if (await this.loginUiStore.signInWithEmail(email, password)) {
-      await this.router.navigateByUrl(this.targetUrl());
+      await this.showSuccessToastAndNavigate();
     }
   }
 
@@ -98,6 +100,15 @@ export class LoginComponent {
         return;
       }
     }
+    await this.showSuccessToastAndNavigate();
+  }
+
+  private async showSuccessToastAndNavigate(): Promise<void> {
+    this.snackBar.open(
+      $localize`:@@auth.login.success:Erfolgreich angemeldet! 👋`,
+      undefined,
+      { duration: 3000, panelClass: 'snack-success' }
+    );
     await this.router.navigateByUrl(this.targetUrl());
   }
 
