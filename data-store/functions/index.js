@@ -5,6 +5,7 @@ const { logger } = require('firebase-functions');
 const {
   RecaptchaEnterpriseServiceClient,
 } = require('@google-cloud/recaptcha-enterprise');
+const { GoogleGenerativeAI } = require('@google/generative-ai');
 const admin = require('firebase-admin');
 
 admin.initializeApp();
@@ -512,5 +513,100 @@ exports.refreshLeaderboardsOnPushupWrite = onDocumentWritten(
   },
   async () => {
     await rebuildLeaderboardsCore();
+  }
+);
+
+// ─── generateMotivationQuotes ─────────────────────────────────────────────────
+
+const QUOTE_CACHE_HOURS = 12;
+
+const FALLBACK_QUOTES_DE = [
+  'Du schaffst das! Jede Liegestütze bringt dich weiter.',
+  'Stark sein heißt, auch wenn es schwer fällt, weiterzumachen.',
+  'Dein Körper kann mehr, als dein Kopf glaubt.',
+  'Fortschritt entsteht außerhalb der Komfortzone.',
+  'Heute der beste Tag für eine neue Bestleistung!',
+];
+
+const FALLBACK_QUOTES_EN = [
+  'You can do it! Every push-up gets you closer to your goal.',
+  'Being strong means pushing through even when it gets tough.',
+  'Your body can do more than your mind thinks.',
+  'Progress happens outside the comfort zone.',
+  'Today is the best day for a new personal best!',
+];
+
+exports.generateMotivationQuotes = onCall(
+  { region: 'europe-west3' },
+  async (request) => {
+    if (!request.auth) {
+      throw new HttpsError('unauthenticated', 'Nicht angemeldet.');
+    }
+
+    const uid = request.auth.uid;
+    const language = String(request.data?.language || 'de');
+    const totalToday = Number(request.data?.totalToday ?? 0);
+    const dailyGoal = Number(request.data?.dailyGoal ?? 100);
+    const displayName = String(request.data?.displayName || '').trim() || 'Champ';
+
+    // ── Rate-limit: return cached quotes if < 12 h old ──────────────────────
+    const cacheRef = db.collection('motivationQuotes').doc(uid);
+    const cacheSnap = await cacheRef.get();
+    if (cacheSnap.exists) {
+      const cached = cacheSnap.data();
+      const generatedAt = cached.generatedAt ? new Date(cached.generatedAt) : null;
+      if (generatedAt) {
+        const ageHours = (Date.now() - generatedAt.getTime()) / (1000 * 60 * 60);
+        if (ageHours < QUOTE_CACHE_HOURS) {
+          const cachedQuotes = (cached.quotes || []).map((q) => q.text || q);
+          return { quotes: cachedQuotes };
+        }
+      }
+    }
+
+    // ── Build Gemini prompt ──────────────────────────────────────────────────
+    let quotes = language === 'en' ? [...FALLBACK_QUOTES_EN] : [...FALLBACK_QUOTES_DE];
+
+    try {
+      const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+      const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash-lite' });
+
+      let prompt;
+      if (language === 'en') {
+        prompt =
+          `Generate exactly 10 short motivating sentences (max 120 chars each) in English for {{name}} who already did ${totalToday} of ${dailyGoal} push-ups today. Use '{{name}}' as placeholder where fitting. Vary tone (sporty, funny, serious). Return only a JSON array: ["..."]`
+            .replace(/\{\{name\}\}/g, displayName);
+      } else {
+        prompt =
+          `Generiere genau 10 kurze motivierende Sätze (je max. 120 Zeichen) auf Deutsch für {{name}}, der heute schon ${totalToday} von ${dailyGoal} Liegestützen gemacht hat. Verwende '{{name}}' als Platzhalter wo passend. Variiere Ton (sportlich, humorvoll, ernst). Gib nur ein JSON-Array zurück: ["..."]`
+            .replace(/\{\{name\}\}/g, displayName);
+      }
+
+      const result = await model.generateContent(prompt);
+      const text = result.response.text().trim();
+
+      // Extract JSON array from response (may be wrapped in markdown code fences)
+      const jsonMatch = text.match(/\[[\s\S]*\]/);
+      if (jsonMatch) {
+        const parsed = JSON.parse(jsonMatch[0]);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          quotes = parsed.map(String).filter((q) => q.trim().length > 0);
+        }
+      }
+    } catch (err) {
+      logger.warn('generateMotivationQuotes: Gemini call failed, using fallback', { err });
+    }
+
+    // ── Persist to Firestore ─────────────────────────────────────────────────
+    const generatedAt = new Date().toISOString();
+    await cacheRef.set({
+      uid,
+      quotes: quotes.map((text) => ({ text, lang: language })),
+      generatedAt,
+      totalToday,
+      dailyGoal,
+    });
+
+    return { quotes };
   }
 );
