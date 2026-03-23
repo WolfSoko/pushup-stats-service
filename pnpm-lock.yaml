@@ -366,6 +366,9 @@ importers:
       '@google-cloud/recaptcha-enterprise':
         specifier: ^6.4.0
         version: 6.4.0
+      '@google/generative-ai':
+        specifier: ^0.21.0
+        version: 0.21.0
       firebase-admin:
         specifier: ^13.5.0
         version: 13.7.0(encoding@0.1.13)
@@ -2115,6 +2118,10 @@ packages:
   '@google-cloud/storage@7.19.0':
     resolution: {integrity: sha512-n2FjE7NAOYyshogdc7KQOl/VZb4sneqPjWouSyia9CMDdMhRX5+RIbqalNmC7LOLzuLAN89VlF2HvG8na9G+zQ==}
     engines: {node: '>=14'}
+
+  '@google/generative-ai@0.21.0':
+    resolution: {integrity: sha512-7XhUbtnlkSEZK15kN3t+tzIMxsbKm/dSkKBFalj+20NvPKe1kBY7mR2P7vuijEn+f06z5+A8bVGKO0v39cr6Wg==}
+    engines: {node: '>=18.0.0'}
 
   '@googleapis/sqladmin@35.2.0':
     resolution: {integrity: sha512-ajR9EGLs1pCkKfsXxfbVRnQ7ZPyktKNAuahHoU06CVKguWwQo3b9aFmq06PYnGk1oXc0+tlW+XEamNa/HF4pbQ==}
@@ -13350,6 +13357,8 @@ snapshots:
       - encoding
       - supports-color
     optional: true
+
+  '@google/generative-ai@0.21.0': {}
 
   '@googleapis/sqladmin@35.2.0':
     dependencies:
