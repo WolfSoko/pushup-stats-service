@@ -55,10 +55,11 @@ export const appConfig: ApplicationConfig = {
       ? [
           {
             provide: ErrorHandler,
-            useValue: Sentry.createErrorHandler(),
+            useFactory: () => Sentry.createErrorHandler(),
           },
           {
             provide: Sentry.TraceService,
+            useClass: Sentry.TraceService,
             deps: [Router],
           },
           {

@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { render, screen } from '@testing-library/angular';
 import { signal, WritableSignal } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { provideRouter, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { of } from 'rxjs';
 import { StatsApiService, UserConfigApiService } from '@pu-stats/data-access';
@@ -149,5 +149,31 @@ describe('App (testing-library)', () => {
 
     const title = TestBed.inject(Title);
     expect(title.getTitle()).toContain('Pushup Tracker');
+  });
+
+  it('navigates to / after logout', async () => {
+    const { fixture } = await render(App, {
+      providers: [
+        provideRouter([]),
+        {
+          provide: UserContextService,
+          useValue: {
+            userNameSafe: userNameSignal.asReadonly(),
+            userIdSafe: () => 'u1',
+            isAdmin: () => false,
+          },
+        },
+        { provide: AuthStore, useValue: authMock },
+        { provide: UserConfigApiService, useValue: userConfigApiMock },
+        { provide: StatsApiService, useValue: statsApiMock },
+      ],
+    });
+
+    const router = TestBed.inject(Router);
+    const navigateSpy = vitest.spyOn(router, 'navigateByUrl');
+
+    await fixture.componentInstance.logout();
+
+    expect(navigateSpy).toHaveBeenCalledWith('/');
   });
 });
