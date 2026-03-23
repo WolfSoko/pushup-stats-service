@@ -9,7 +9,7 @@ import { firebaseRuntime } from './env/firebase-runtime';
 import { AuthService } from '@pu-auth/auth';
 
 if (!firebaseRuntime.useEmulators && !isDevMode()) {
-  const sentryRelease = (import.meta as Record<string, unknown> & { env?: Record<string, string> }).env?.['SENTRY_RELEASE'];
+  const sentryRelease = ((import.meta as unknown) as { env?: Record<string, string> }).env?.['SENTRY_RELEASE'];
 
   Sentry.init({
     dsn: 'https://084cd4acd3e626148eba3a831d0e4bee@o1384048.ingest.us.sentry.io/4511089937219584',
