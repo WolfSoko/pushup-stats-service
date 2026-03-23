@@ -46,6 +46,11 @@ export class ReminderService {
   private quoteIndex = 0;
 
   start(): void {
+    if (this.intervalId !== null) {
+      clearInterval(this.intervalId);
+      this.intervalId = null;
+    }
+
     const config = this.store.config();
     if (!config?.enabled) return;
     if (this.permissionService.status() !== 'granted') return;

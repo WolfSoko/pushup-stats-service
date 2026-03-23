@@ -26,7 +26,19 @@ function setNotification(
 }
 
 describe('ReminderPermissionService', () => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let originalNotification: any;
+
+  beforeEach(() => {
+    originalNotification = window.Notification;
+  });
+
   afterEach(() => {
+    Object.defineProperty(window, 'Notification', {
+      value: originalNotification,
+      configurable: true,
+      writable: true,
+    });
     vitest.restoreAllMocks();
   });
 

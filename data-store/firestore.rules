@@ -29,11 +29,9 @@ service cloud.firestore {
       allow write: if false;
     }
 
-    // Motivation quotes are user-owned; admin may read all. Writes are server-only (Admin SDK).
+    // Motivation quotes are owner-only. Writes are server-only (Admin SDK).
     match /motivationQuotes/{userId} {
-      allow read: if request.auth != null
-                  && (request.auth.uid == userId
-                      || get(/databases/$(database)/documents/userConfigs/$(request.auth.uid)).data.role == 'admin');
+      allow read: if request.auth != null && request.auth.uid == userId;
       allow write: if false;
     }
 

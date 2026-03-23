@@ -161,17 +161,26 @@ import type { ReminderConfig } from '@pu-stats/models';
               </mat-slide-toggle>
 
               @if (reminderStore.permissionStatus() === 'denied') {
-                <span class="permission-hint" i18n="@@reminder.permission.denied.hint">
+                <span
+                  class="permission-hint"
+                  i18n="@@reminder.permission.denied.hint"
+                >
                   <mat-icon>warning</mat-icon>
-                  Benachrichtigungen sind im Browser blockiert. Bitte in den Browser-Einstellungen erlauben.
+                  Benachrichtigungen sind im Browser blockiert. Bitte in den
+                  Browser-Einstellungen erlauben.
                 </span>
               } @else if (reminderStore.permissionStatus() === 'granted') {
                 <span class="permission-ok">
                   <mat-icon>check_circle</mat-icon>
-                  <span i18n="@@reminder.permission.granted">Benachrichtigungen erlaubt</span>
+                  <span i18n="@@reminder.permission.granted"
+                    >Benachrichtigungen erlaubt</span
+                  >
                 </span>
               } @else if (reminderStore.permissionStatus() === 'unsupported') {
-                <span class="permission-hint" i18n="@@reminder.permission.unsupported">
+                <span
+                  class="permission-hint"
+                  i18n="@@reminder.permission.unsupported"
+                >
                   <mat-icon>info</mat-icon>
                   Dein Browser unterstützt keine Benachrichtigungen.
                 </span>
@@ -181,21 +190,35 @@ import type { ReminderConfig } from '@pu-stats/models';
             @if (reminderEnabledDraft()) {
               <div class="reminder-grid">
                 <div>
-                  <p class="field-label" i18n="@@reminder.interval.label">Erinnerungsintervall</p>
+                  <p class="field-label" i18n="@@reminder.interval.label">
+                    Erinnerungsintervall
+                  </p>
                   <mat-chip-listbox
                     [value]="reminderIntervalDraft()"
                     (change)="reminderIntervalDraft.set($event.value)"
                     aria-label="Interval presets"
                     i18n-aria-label="@@reminder.interval.aria"
                   >
-                    <mat-chip-option [value]="30" i18n="@@reminder.interval.30min">30 Min</mat-chip-option>
-                    <mat-chip-option [value]="60" i18n="@@reminder.interval.1h">1 Std</mat-chip-option>
-                    <mat-chip-option [value]="120" i18n="@@reminder.interval.2h">2 Std</mat-chip-option>
-                    <mat-chip-option [value]="240" i18n="@@reminder.interval.4h">4 Std</mat-chip-option>
+                    <mat-chip-option
+                      [value]="30"
+                      i18n="@@reminder.interval.30min"
+                      >30 Min</mat-chip-option
+                    >
+                    <mat-chip-option [value]="60" i18n="@@reminder.interval.1h"
+                      >1 Std</mat-chip-option
+                    >
+                    <mat-chip-option [value]="120" i18n="@@reminder.interval.2h"
+                      >2 Std</mat-chip-option
+                    >
+                    <mat-chip-option [value]="240" i18n="@@reminder.interval.4h"
+                      >4 Std</mat-chip-option
+                    >
                   </mat-chip-listbox>
 
                   <mat-form-field appearance="outline" class="interval-custom">
-                    <mat-label i18n="@@reminder.interval.custom.label">Benutzerdefiniert (Min)</mat-label>
+                    <mat-label i18n="@@reminder.interval.custom.label"
+                      >Benutzerdefiniert (Min)</mat-label
+                    >
                     <input
                       matInput
                       type="number"
@@ -204,43 +227,61 @@ import type { ReminderConfig } from '@pu-stats/models';
                       [value]="reminderIntervalDraft()"
                       (input)="reminderIntervalDraft.set(clampInterval(asNumber($event))); reminderDirty.set(true)"
                     />
-                    <mat-hint i18n="@@reminder.interval.hint">15–480 Minuten</mat-hint>
+                    <mat-hint i18n="@@reminder.interval.hint"
+                      >15–480 Minuten</mat-hint
+                    >
                   </mat-form-field>
                 </div>
 
                 <div>
-                  <p class="field-label" i18n="@@reminder.language.label">Sprache der Zitate</p>
+                  <p class="field-label" i18n="@@reminder.language.label">
+                    Sprache der Zitate
+                  </p>
                   <mat-button-toggle-group
                     [value]="reminderLanguageDraft()"
                     (change)="reminderLanguageDraft.set($event.value)"
                     aria-label="Reminder language"
                     i18n-aria-label="@@reminder.language.aria"
                   >
-                    <mat-button-toggle value="de" i18n="@@reminder.language.de">DE</mat-button-toggle>
-                    <mat-button-toggle value="en" i18n="@@reminder.language.en">EN</mat-button-toggle>
+                    <mat-button-toggle value="de" i18n="@@reminder.language.de"
+                      >DE</mat-button-toggle
+                    >
+                    <mat-button-toggle value="en" i18n="@@reminder.language.en"
+                      >EN</mat-button-toggle
+                    >
                   </mat-button-toggle-group>
                 </div>
 
                 <div class="quiet-hours-section">
-                  <p class="field-label" i18n="@@reminder.quietHours.label">Ruhezeiten</p>
+                  <p class="field-label" i18n="@@reminder.quietHours.label">
+                    Ruhezeiten
+                  </p>
                   @for (qh of reminderQuietHoursDraft(); track $index) {
                     <div class="quiet-hour-row">
                       <mat-form-field appearance="outline" class="time-field">
-                        <mat-label i18n="@@reminder.quietHours.from">Von</mat-label>
+                        <mat-label i18n="@@reminder.quietHours.from"
+                          >Von</mat-label
+                        >
                         <input
                           matInput
                           type="time"
                           [value]="qh.from"
-                          (change)="updateQuietHour($index, 'from', asValue($event))"
+                          (change)="
+                            updateQuietHour($index, 'from', asValue($event))
+                          "
                         />
                       </mat-form-field>
                       <mat-form-field appearance="outline" class="time-field">
-                        <mat-label i18n="@@reminder.quietHours.to">Bis</mat-label>
+                        <mat-label i18n="@@reminder.quietHours.to"
+                          >Bis</mat-label
+                        >
                         <input
                           matInput
                           type="time"
                           [value]="qh.to"
-                          (change)="updateQuietHour($index, 'to', asValue($event))"
+                          (change)="
+                            updateQuietHour($index, 'to', asValue($event))
+                          "
                         />
                       </mat-form-field>
                       <button
@@ -278,7 +319,7 @@ import type { ReminderConfig } from '@pu-stats/models';
                   Erinnerungen speichern
                 </button>
                 @if (reminderSaved()) {
-                  <span class="muted" i18n="@@reminder.saved">Gespeichert.</span>
+                  <span class="muted" i18n="@@saved">Gespeichert.</span>
                 }
               </div>
             }
@@ -572,7 +613,9 @@ export class SettingsPageComponent {
       this.reminderEnabledDraft.set(rc?.enabled ?? false);
       this.reminderIntervalDraft.set(rc?.intervalMinutes ?? 60);
       this.reminderLanguageDraft.set(rc?.language ?? 'de');
-      this.reminderQuietHoursDraft.set(rc?.quietHours ? [...rc.quietHours] : []);
+      this.reminderQuietHoursDraft.set(
+        rc?.quietHours ? [...rc.quietHours] : []
+      );
       this.reminderDirty.set(false);
     });
   }
