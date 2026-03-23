@@ -32,7 +32,7 @@ jobs:
           cache: pnpm
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
-      - uses: nrwl/nx-set-shas@v4
+      - uses: nrwl/nx-set-shas@v5
       - name: Nx Cloud distributed run starten
         run: pnpm nx-cloud start-ci-run --distribute-on="4 linux-medium-js" --stop-agents-after="lint,test,build,e2e-ci"
       - name: Nx affected (lint + test + build)
