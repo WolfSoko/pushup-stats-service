@@ -9,20 +9,17 @@ import { firebaseRuntime } from './env/firebase-runtime';
 import { AuthService } from '@pu-auth/auth';
 
 if (!firebaseRuntime.useEmulators && !isDevMode()) {
+  const sentryRelease = (import.meta as Record<string, unknown> & { env?: Record<string, string> }).env?.['SENTRY_RELEASE'];
+
   Sentry.init({
     dsn: 'https://084cd4acd3e626148eba3a831d0e4bee@o1384048.ingest.us.sentry.io/4511089937219584',
-    sendDefaultPii: true,
-    release: (globalThis as Record<string, unknown>)['SENTRY_RELEASE'] as
-      | string
-      | undefined,
+    sendDefaultPii: false,
+    release: sentryRelease,
     environment: 'production',
     integrations: [
       Sentry.browserTracingIntegration(),
-      Sentry.replayIntegration(),
     ],
     tracesSampleRate: 0.2,
-    replaysSessionSampleRate: 0.05,
-    replaysOnErrorSampleRate: 1.0,
   });
 }
 
