@@ -165,7 +165,7 @@ export class App {
   async logout(): Promise<void> {
     await this.auth.logout();
     this.navOpen.set(false);
-    await this.router.navigateByUrl('/login');
+    await this.router.navigateByUrl('/');
   }
 
   private currentLeafRoute(): ActivatedRoute {
