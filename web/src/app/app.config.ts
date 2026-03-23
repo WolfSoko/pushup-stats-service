@@ -1,14 +1,11 @@
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import {
-  APP_INITIALIZER,
   ApplicationConfig,
-  ErrorHandler,
   isDevMode,
   LOCALE_ID,
   provideBrowserGlobalErrorListeners,
   provideZonelessChangeDetection,
 } from '@angular/core';
-import * as Sentry from '@sentry/angular';
 import { getAnalytics, provideAnalytics } from '@angular/fire/analytics';
 import {
   connectFunctionsEmulator,
@@ -29,7 +26,7 @@ import {
   withI18nSupport,
   withIncrementalHydration,
 } from '@angular/platform-browser';
-import { provideRouter, Router } from '@angular/router';
+import { provideRouter } from '@angular/router';
 import { provideServiceWorker } from '@angular/service-worker';
 import { provideAuth, withEmulator as withAuthEmulator } from '@pu-auth/auth';
 import {
@@ -50,26 +47,6 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideHttpClient(withFetch()),
     provideRouter(appRoutes),
-    // Sentry error monitoring – production only (not in dev mode or emulator)
-    ...(!firebaseRuntime.useEmulators && !isDevMode()
-      ? [
-          {
-            provide: ErrorHandler,
-            useFactory: () => Sentry.createErrorHandler(),
-          },
-          {
-            provide: Sentry.TraceService,
-            useClass: Sentry.TraceService,
-            deps: [Router],
-          },
-          {
-            provide: APP_INITIALIZER,
-            useFactory: () => () => undefined,
-            deps: [Sentry.TraceService],
-            multi: true,
-          },
-        ]
-      : []),
     provideClientHydration(
       withIncrementalHydration(),
       withEventReplay(),
