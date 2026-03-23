@@ -202,7 +202,7 @@ import type { ReminderConfig } from '@pu-stats/models';
                       min="15"
                       max="480"
                       [value]="reminderIntervalDraft()"
-                      (input)="reminderIntervalDraft.set(clampInterval(asNumber($event)))"
+                      (input)="reminderIntervalDraft.set(clampInterval(asNumber($event))); reminderDirty.set(true)"
                     />
                     <mat-hint i18n="@@reminder.interval.hint">15–480 Minuten</mat-hint>
                   </mat-form-field>
