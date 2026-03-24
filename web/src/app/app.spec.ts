@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { render, screen } from '@testing-library/angular';
-import { signal, WritableSignal } from '@angular/core';
+import { signal, WritableSignal, PLATFORM_ID } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { of } from 'rxjs';
@@ -48,6 +48,7 @@ describe('App (testing-library)', () => {
     const { fixture } = await render(App, {
       providers: [
         provideRouter([]),
+        { provide: PLATFORM_ID, useValue: 'browser' },
         {
           provide: UserContextService,
           useValue: {
@@ -68,6 +69,7 @@ describe('App (testing-library)', () => {
     await render(App, {
       providers: [
         provideRouter([]),
+        { provide: PLATFORM_ID, useValue: 'browser' },
         {
           provide: UserContextService,
           useValue: {
@@ -109,6 +111,7 @@ describe('App (testing-library)', () => {
     await render(App, {
       providers: [
         provideRouter([]),
+        { provide: PLATFORM_ID, useValue: 'browser' },
         {
           provide: UserContextService,
           useValue: {
@@ -133,6 +136,7 @@ describe('App (testing-library)', () => {
     await render(App, {
       providers: [
         provideRouter([]),
+        { provide: PLATFORM_ID, useValue: 'browser' },
         {
           provide: UserContextService,
           useValue: {
