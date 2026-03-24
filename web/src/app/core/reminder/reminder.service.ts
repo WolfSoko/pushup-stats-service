@@ -1,4 +1,5 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { Functions, httpsCallable } from '@angular/fire/functions';
 import { ReminderStore } from './reminder.store';
 import { ReminderPermissionService } from './reminder-permission.service';
@@ -39,7 +40,13 @@ export class ReminderService {
   private readonly store = inject(ReminderStore);
   private readonly permissionService = inject(ReminderPermissionService);
   private readonly auth = inject(AuthStore);
-  private readonly functions = inject(Functions, { optional: true });
+  private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
+  // Only inject Functions in the browser — calling getFunctions() with a
+  // server-side Firebase app (initializeServerApp) is unsupported and causes
+  // the SSR dev server to crash before Playwright can connect.
+  private readonly functions: Functions | null = this.isBrowser
+    ? inject(Functions, { optional: true })
+    : null;
 
   private intervalId: ReturnType<typeof setInterval> | null = null;
   private quoteCache: string[] = [];
