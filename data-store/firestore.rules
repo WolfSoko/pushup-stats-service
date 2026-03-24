@@ -35,6 +35,13 @@ service cloud.firestore {
       allow write: if false;
     }
 
+    // Web Push subscriptions — owner-only, no public access.
+    // Writes are handled exclusively by Cloud Functions (Admin SDK).
+    match /pushSubscriptions/{userId}/subs/{subId} {
+      allow read, delete: if request.auth != null && request.auth.uid == userId;
+      allow write: if false; // Only Cloud Functions (Admin SDK) write here
+    }
+
     // Deny everything else by default.
     match /{document=**} {
       allow read, write: if false;

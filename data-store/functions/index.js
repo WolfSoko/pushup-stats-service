@@ -630,3 +630,83 @@ exports.generateMotivationQuotes = onCall(
     return { quotes };
   }
 );
+
+// ─── savePushSubscription ──────────────────────────────────────────────────
+// Saves a Web Push subscription for the authenticated user.
+// Collection: pushSubscriptions/{uid}/subs/{subId}
+// subId is derived from the endpoint via a simple hash.
+exports.savePushSubscription = onCall(
+  { region: 'europe-west3' },
+  async (request) => {
+    if (!request.auth) {
+      throw new HttpsError('unauthenticated', 'Nicht angemeldet.');
+    }
+
+    const uid = request.auth.uid;
+    const { endpoint, keys, userAgent, locale } = request.data ?? {};
+
+    if (!endpoint || typeof endpoint !== 'string') {
+      throw new HttpsError('invalid-argument', 'endpoint fehlt.');
+    }
+    if (!keys?.p256dh || !keys?.auth) {
+      throw new HttpsError('invalid-argument', 'keys fehlen.');
+    }
+
+    // Derive a stable doc id from the endpoint URL
+    const subId = Buffer.from(endpoint).toString('base64url').slice(0, 60);
+
+    const now = new Date().toISOString();
+    const ref = db
+      .collection('pushSubscriptions')
+      .doc(uid)
+      .collection('subs')
+      .doc(subId);
+
+    await ref.set({
+      endpoint,
+      keys: { p256dh: keys.p256dh, auth: keys.auth },
+      userAgent: userAgent || null,
+      locale: locale || null,
+      updatedAt: now,
+    }, { merge: true });
+
+    // Set createdAt only on first write
+    const snap = await ref.get();
+    if (!snap.data()?.createdAt) {
+      await ref.update({ createdAt: now });
+    }
+
+    logger.info('savePushSubscription: saved', { uid, subId });
+    return { ok: true, subId };
+  }
+);
+
+// ─── deletePushSubscription ────────────────────────────────────────────────
+// Removes a Web Push subscription for the authenticated user.
+exports.deletePushSubscription = onCall(
+  { region: 'europe-west3' },
+  async (request) => {
+    if (!request.auth) {
+      throw new HttpsError('unauthenticated', 'Nicht angemeldet.');
+    }
+
+    const uid = request.auth.uid;
+    const { endpoint } = request.data ?? {};
+
+    if (!endpoint || typeof endpoint !== 'string') {
+      throw new HttpsError('invalid-argument', 'endpoint fehlt.');
+    }
+
+    const subId = Buffer.from(endpoint).toString('base64url').slice(0, 60);
+
+    await db
+      .collection('pushSubscriptions')
+      .doc(uid)
+      .collection('subs')
+      .doc(subId)
+      .delete();
+
+    logger.info('deletePushSubscription: removed', { uid, subId });
+    return { ok: true };
+  }
+);
