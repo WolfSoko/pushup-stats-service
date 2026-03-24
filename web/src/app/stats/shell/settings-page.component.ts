@@ -26,6 +26,7 @@ import { Analytics, logEvent } from '@angular/fire/analytics';
 import { ReminderStore } from '../../core/reminder/reminder.store';
 import { ReminderPermissionService } from '../../core/reminder/reminder-permission.service';
 import { ReminderService } from '../../core/reminder/reminder.service';
+import { PushSubscriptionService } from '../../core/push/push-subscription.service';
 import type { ReminderConfig } from '@pu-stats/models';
 
 @Component({
@@ -340,6 +341,56 @@ import type { ReminderConfig } from '@pu-stats/models';
             </div>
           </section>
 
+          <!-- Web Push Subscription Panel -->
+          <section class="reminder-section">
+            <h3 i18n="@@push.section.title">📱 Browser-Push-Benachrichtigungen</h3>
+            <p class="muted" i18n="@@push.section.desc">
+              Empfange Erinnerungen auch wenn PUS im Hintergrund läuft
+              (solange der Browser geöffnet ist).
+            </p>
+
+            @if (pushService.status() === 'unsupported') {
+              <p class="permission-hint" i18n="@@push.status.unsupported">
+                <mat-icon>info</mat-icon>
+                Dein Browser unterstützt keine Push-Benachrichtigungen.
+              </p>
+            } @else if (pushService.status() === 'denied') {
+              <p class="permission-hint" i18n="@@push.status.denied">
+                <mat-icon>warning</mat-icon>
+                Push-Benachrichtigungen sind im Browser blockiert.
+                Bitte in den Browser-Einstellungen erlauben.
+              </p>
+            } @else if (pushService.status() === 'subscribed') {
+              <div class="row">
+                <span class="permission-ok">
+                  <mat-icon>notifications_active</mat-icon>
+                  <span i18n="@@push.status.subscribed">Push aktiv</span>
+                </span>
+                <button
+                  type="button"
+                  mat-stroked-button
+                  (click)="onPushUnsubscribe()"
+                  [disabled]="pushService.status() === 'loading'"
+                  i18n="@@push.unsubscribe"
+                >
+                  <mat-icon>notifications_off</mat-icon>
+                  Push deaktivieren
+                </button>
+              </div>
+            } @else {
+              <button
+                type="button"
+                mat-flat-button
+                (click)="onPushSubscribe()"
+                [disabled]="pushService.status() === 'loading'"
+                i18n="@@push.subscribe"
+              >
+                <mat-icon>notifications</mat-icon>
+                Push aktivieren
+              </button>
+            }
+          </section>
+
           <section class="danger-zone">
             <h3 i18n="@@settings.dangerZoneTitle">Danger Zone</h3>
             <p i18n="@@settings.dangerZoneBody">
@@ -549,6 +600,7 @@ export class SettingsPageComponent {
   readonly reminderStore = inject(ReminderStore);
   private readonly reminderPermission = inject(ReminderPermissionService);
   private readonly reminderService = inject(ReminderService);
+  readonly pushService = inject(PushSubscriptionService);
 
   readonly activeUserId = this.user.userIdSafe;
   readonly isGuest = this.user.isGuest;
@@ -614,6 +666,9 @@ export class SettingsPageComponent {
   });
 
   constructor() {
+    // Init push subscription status (browser-only)
+    void this.pushService.init();
+
     effect(() => {
       const cfg = this.config();
       if (!cfg) return;
@@ -637,6 +692,21 @@ export class SettingsPageComponent {
   }
 
   // ── Reminder methods ─────────────────────────────────────────────────────
+
+  async onPushSubscribe(): Promise<void> {
+    const ok = await this.pushService.subscribe();
+    if (!ok && this.pushService.status() !== 'denied') {
+      this.snackBar.open(
+        $localize`:@@push.subscribe.error:Push konnte nicht aktiviert werden.`,
+        $localize`:@@snackbar.close:Schließen`,
+        { duration: 4000 }
+      );
+    }
+  }
+
+  async onPushUnsubscribe(): Promise<void> {
+    await this.pushService.unsubscribe();
+  }
 
   async onReminderToggle(enabled: boolean): Promise<void> {
     if (enabled && this.reminderPermission.status() !== 'granted') {
@@ -790,6 +860,7 @@ export class SettingsPageComponent {
           },
         })
       );
+      await this.pushService.unsubscribe();
       await this.auth.deleteAccount();
       this.trackAnalytics('account_anonymized_and_deleted', { success: true });
       await this.router.navigateByUrl('/');

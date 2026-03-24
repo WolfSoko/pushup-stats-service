@@ -1,3 +1,4 @@
+const crypto = require('node:crypto');
 const { onDocumentWritten } = require('firebase-functions/v2/firestore');
 const { onSchedule } = require('firebase-functions/v2/scheduler');
 const { onCall, HttpsError } = require('firebase-functions/v2/https');
@@ -400,6 +401,9 @@ exports.adminDeleteUser = onCall(
       }
     }
 
+    // Always clean up push subscriptions on delete/anonymize
+    await deleteAllPushSubscriptions(uid);
+
     logger.info('adminDeleteUser', { uid, anonymize, by: request.auth?.uid });
     return { ok: true };
   }
@@ -476,6 +480,9 @@ exports.adminBulkDeleteInactiveAnonymous = onCall(
         }
         await batch.commit();
       }
+
+      // Clean up push subscriptions
+      await deleteAllPushSubscriptions(uid);
 
       deleted++;
     }
@@ -628,5 +635,102 @@ exports.generateMotivationQuotes = onCall(
     });
 
     return { quotes };
+  }
+);
+
+// ─── helpers ──────────────────────────────────────────────────────────────
+function pushSubscriptionId(endpoint) {
+  return crypto.createHash('sha256').update(endpoint).digest('hex');
+}
+
+async function deleteAllPushSubscriptions(uid) {
+  const userRef = db.collection('pushSubscriptions').doc(uid);
+  const subs = await userRef.collection('subs').listDocuments();
+  const batch = db.batch();
+  subs.forEach((doc) => batch.delete(doc));
+  batch.delete(userRef);
+  await batch.commit();
+  logger.info('deleteAllPushSubscriptions: cleaned up', { uid, count: subs.length });
+}
+
+// ─── savePushSubscription ──────────────────────────────────────────────────
+// Saves a Web Push subscription for the authenticated user.
+// Collection: pushSubscriptions/{uid}/subs/{subId}
+// subId is derived from the endpoint via a simple hash.
+exports.savePushSubscription = onCall(
+  { region: 'europe-west3' },
+  async (request) => {
+    if (!request.auth) {
+      throw new HttpsError('unauthenticated', 'Nicht angemeldet.');
+    }
+
+    const uid = request.auth.uid;
+    const { endpoint, keys, userAgent, locale } = request.data ?? {};
+
+    if (!endpoint || typeof endpoint !== 'string') {
+      throw new HttpsError('invalid-argument', 'endpoint fehlt.');
+    }
+    if (!keys?.p256dh || !keys?.auth) {
+      throw new HttpsError('invalid-argument', 'keys fehlen.');
+    }
+
+    // Derive a stable doc id from the endpoint URL
+    const subId = pushSubscriptionId(endpoint);
+
+    const now = new Date().toISOString();
+    const ref = db
+      .collection('pushSubscriptions')
+      .doc(uid)
+      .collection('subs')
+      .doc(subId);
+
+    await db.runTransaction(async (tx) => {
+      const snap = await tx.get(ref);
+      tx.set(
+        ref,
+        {
+          endpoint,
+          keys: { p256dh: keys.p256dh, auth: keys.auth },
+          userAgent: userAgent || null,
+          locale: locale || null,
+          updatedAt: now,
+          ...(snap.data()?.createdAt ? {} : { createdAt: now }),
+        },
+        { merge: true }
+      );
+    });
+
+    logger.info('savePushSubscription: saved', { uid, subId });
+    return { ok: true, subId };
+  }
+);
+
+// ─── deletePushSubscription ────────────────────────────────────────────────
+// Removes a Web Push subscription for the authenticated user.
+exports.deletePushSubscription = onCall(
+  { region: 'europe-west3' },
+  async (request) => {
+    if (!request.auth) {
+      throw new HttpsError('unauthenticated', 'Nicht angemeldet.');
+    }
+
+    const uid = request.auth.uid;
+    const { endpoint } = request.data ?? {};
+
+    if (!endpoint || typeof endpoint !== 'string') {
+      throw new HttpsError('invalid-argument', 'endpoint fehlt.');
+    }
+
+    const subId = pushSubscriptionId(endpoint);
+
+    await db
+      .collection('pushSubscriptions')
+      .doc(uid)
+      .collection('subs')
+      .doc(subId)
+      .delete();
+
+    logger.info('deletePushSubscription: removed', { uid, subId });
+    return { ok: true };
   }
 );
