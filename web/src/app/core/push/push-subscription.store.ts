@@ -169,6 +169,10 @@ export const PushSubscriptionStore = signalStore(
         }
       },
 
+      async snooze(snoozeMinutes = 30): Promise<void> {
+        await snoozeReminder(snoozeMinutes);
+      },
+
       async unsubscribe(): Promise<void> {
         if (!isSupported()) return;
 
