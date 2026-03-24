@@ -1,4 +1,5 @@
 import {
+  afterNextRender,
   Component,
   computed,
   DestroyRef,
@@ -34,6 +35,7 @@ import { SeoService } from './core/seo.service';
 import { UserContextService } from '@pu-auth/auth';
 import { ReminderService } from './core/reminder/reminder.service';
 import { ReminderStore } from './core/reminder/reminder.store';
+import { PushSubscriptionService } from './core/push/push-subscription.service';
 
 @Component({
   selector: 'app-root',
@@ -61,6 +63,24 @@ export class App {
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly user = inject(UserContextService);
   readonly isAdmin = computed(() => this.user.isAdmin());
+  readonly isLoggedIn = computed(() => !!this.user.userIdSafe() && !this.user.isGuest());
+  private readonly pushService = inject(PushSubscriptionService);
+  private readonly _initPushBridge = afterNextRender(() => {
+    // Register SW→App message bridge at startup, not just when settings page is visited
+    this.pushService.registerSwListener();
+  });
+  private readonly _handleSnoozeParam = afterNextRender(() => {
+    const snooze = this.activatedRoute.snapshot.queryParamMap.get('snooze');
+    const snoozeMinutes = snooze ? parseInt(snooze, 10) : NaN;
+    if (!isNaN(snoozeMinutes) && snoozeMinutes > 0) {
+      void this.router.navigate([], {
+        queryParams: { snooze: null },
+        queryParamsHandling: 'merge',
+        replaceUrl: true,
+      });
+      void this.pushService.snooze(snoozeMinutes);
+    }
+  });
   private readonly userConfigApi = inject(UserConfigApiService);
   private readonly statsApi = inject(StatsApiService);
   private readonly seo = inject(SeoService);

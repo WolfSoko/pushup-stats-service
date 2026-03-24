@@ -10,6 +10,7 @@ import { AuthStore, UserContextService } from '@pu-auth/auth';
 import { AdsConfigService } from '@pu-stats/ads';
 import { signal } from '@angular/core';
 import { makeAuthStoreMock } from '@pu-stats/testing';
+import { ActivatedRoute, Router } from '@angular/router';
 
 function nowLocalMinuteIso(): string {
   const now = new Date();
@@ -104,6 +105,16 @@ describe('StatsDashboardComponent', () => {
         { provide: UserContextService, useValue: { userIdSafe: () => 'u1' } },
         { provide: AdsConfigService, useValue: adsConfigMock },
         { provide: AuthStore, useValue: makeAuthStoreMock() },
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            snapshot: { queryParamMap: { get: () => null } },
+          },
+        },
+        {
+          provide: Router,
+          useValue: { navigate: () => Promise.resolve(true) },
+        },
         {
           provide: UserConfigApiService,
           useValue: {

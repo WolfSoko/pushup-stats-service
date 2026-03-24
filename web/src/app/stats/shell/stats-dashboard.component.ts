@@ -1,5 +1,6 @@
 import { DatePipe, DOCUMENT, isPlatformBrowser } from '@angular/common';
 import {
+  afterNextRender,
   ChangeDetectionStrategy,
   Component,
   computed,
@@ -12,6 +13,7 @@ import {
   signal,
   viewChild,
 } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCardModule } from '@angular/material/card';
@@ -85,6 +87,8 @@ const PERIOD_TITLE_MAP: Record<RangeModes | 'today', string> = {
 export class StatsDashboardComponent {
   private readonly api = inject(StatsApiService);
   private readonly platformId = inject(PLATFORM_ID);
+  private readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router);
   private readonly document = inject(DOCUMENT);
   private readonly request = inject(REQUEST, { optional: true }) as {
     url?: string;
@@ -339,6 +343,21 @@ export class StatsDashboardComponent {
   openCreateDialog(): void {
     this.statsTable()?.openCreateDialog();
   }
+
+  /** Called after render — opens create dialog if ?log=1 is in the URL */
+  private readonly _handleLogParam = afterNextRender(() => {
+    const log = this.route.snapshot.queryParamMap.get('log');
+    if (log === '1') {
+      // Clean up URL without re-navigating
+      void this.router.navigate([], {
+        relativeTo: this.route,
+        queryParams: { log: null },
+        queryParamsHandling: 'merge',
+        replaceUrl: true,
+      });
+      this.openCreateDialog();
+    }
+  });
 
   async addQuickEntry(reps: number) {
     const now = new Date();

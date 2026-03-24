@@ -27,6 +27,10 @@ self.addEventListener('push', (event) => {
     tag: data.tag || 'reminder',
     renotify: data.renotify ?? true,
     data: data.data || {},
+    actions: [
+      { action: 'snooze', title: '⏰ 30 Min snoozen' },
+      { action: 'log', title: '✅ Eintragen' },
+    ],
   };
 
   event.waitUntil(self.registration.showNotification(title, options));
@@ -35,6 +39,32 @@ self.addEventListener('push', (event) => {
 self.addEventListener('notificationclick', (event) => {
   event.notification.close();
 
+  const action = event.action;
+
+  if (action === 'snooze') {
+    // Call snoozeReminder Firebase Function via postMessage to app
+    event.waitUntil(
+      clients
+        .matchAll({ type: 'window', includeUncontrolled: true })
+        .then((clientList) => {
+          if (clientList.length > 0) {
+            clientList[0].postMessage({ type: 'SNOOZE_REMINDER', snoozeMinutes: 30 });
+          } else {
+            // App not open — open it with snooze param so it can call the function
+            return clients.openWindow('/?snooze=30');
+          }
+        })
+    );
+    return;
+  }
+
+  if (action === 'log') {
+    // Open app at dashboard to log push-ups
+    event.waitUntil(clients.openWindow('/dashboard?log=1'));
+    return;
+  }
+
+  // Default: open/focus app
   const targetUrl = event.notification.data?.url || '/dashboard';
   const fullUrl = new URL(targetUrl, self.location.origin).href;
 
@@ -42,13 +72,11 @@ self.addEventListener('notificationclick', (event) => {
     clients
       .matchAll({ type: 'window', includeUncontrolled: true })
       .then((clientList) => {
-        // Focus existing window if open
         for (const client of clientList) {
           if (client.url === fullUrl && 'focus' in client) {
             return client.focus();
           }
         }
-        // Otherwise open new window
         if (clients.openWindow) {
           return clients.openWindow(fullUrl);
         }

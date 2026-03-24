@@ -20,12 +20,15 @@ export type PushStatus =
 
 type PushSubscriptionState = {
   status: PushStatus;
+  /** Number of active push subscriptions across all devices for this user */
+  deviceCount: number;
 };
 
 export const PushSubscriptionStore = signalStore(
   { providedIn: 'root' },
   withState<PushSubscriptionState>({
     status: 'not-subscribed',
+    deviceCount: 0,
   }),
   withProps(() => ({
     _isBrowser: isPlatformBrowser(inject(PLATFORM_ID)),
@@ -56,31 +59,64 @@ export const PushSubscriptionStore = signalStore(
       return buffer.buffer;
     }
 
-    async function saveSubscription(sub: PushSubscription): Promise<void> {
+    async function saveSubscription(
+      sub: PushSubscription
+    ): Promise<{ deviceCount: number }> {
       if (!store._functions) {
         throw new Error('Firebase Functions is not available');
       }
       const json = sub.toJSON();
-      const callable = httpsCallable(store._functions, 'savePushSubscription');
-      await callable({
+      const callable = httpsCallable<
+        unknown,
+        { ok: boolean; subId: string; deviceCount: number }
+      >(store._functions, 'savePushSubscription');
+      const result = await callable({
         endpoint: json.endpoint,
         keys: json.keys,
         userAgent: navigator.userAgent,
         locale: navigator.language,
       });
+      return { deviceCount: result.data.deviceCount ?? 1 };
     }
 
-    async function deleteSubscription(endpoint: string): Promise<void> {
+    async function deleteSubscription(
+      endpoint: string
+    ): Promise<{ deviceCount: number }> {
+      if (!store._functions) return { deviceCount: 0 };
+      const callable = httpsCallable<
+        unknown,
+        { ok: boolean; deviceCount: number }
+      >(store._functions, 'deletePushSubscription');
+      const result = await callable({ endpoint });
+      return { deviceCount: result.data.deviceCount ?? 0 };
+    }
+
+    async function snoozeReminder(snoozeMinutes: number): Promise<void> {
       if (!store._functions) return;
-      const callable = httpsCallable(
-        store._functions,
-        'deletePushSubscription'
-      );
-      await callable({ endpoint });
+      const callable = httpsCallable(store._functions, 'snoozeReminder');
+      await callable({ snoozeMinutes });
+    }
+
+    // Register SW message listener once (guard prevents duplicate registrations)
+    let swListenerRegistered = false;
+    function ensureSwListener(): void {
+      if (swListenerRegistered || !store._isBrowser || !('serviceWorker' in navigator)) return;
+      swListenerRegistered = true;
+      navigator.serviceWorker.addEventListener('message', (event) => {
+        if (event.data?.type === 'SNOOZE_REMINDER') {
+          void snoozeReminder(event.data.snoozeMinutes ?? 30);
+        }
+      });
     }
 
     return {
+      /** Register SW message listener — safe to call multiple times, idempotent. */
+      registerSwListener(): void {
+        ensureSwListener();
+      },
+
       async init(): Promise<void> {
+        ensureSwListener();
         if (!isSupported()) {
           patchState(store, { status: 'unsupported' });
           return;
@@ -94,12 +130,12 @@ export const PushSubscriptionStore = signalStore(
           const reg = await navigator.serviceWorker.ready;
           const sub = await reg.pushManager.getSubscription();
           if (!sub) {
-            patchState(store, { status: 'not-subscribed' });
+            patchState(store, { status: 'not-subscribed', deviceCount: 0 });
             return;
           }
           // Re-register with backend to ensure server-side record is current
-          await saveSubscription(sub);
-          patchState(store, { status: 'subscribed' });
+          const { deviceCount } = await saveSubscription(sub);
+          patchState(store, { status: 'subscribed', deviceCount });
         } catch {
           patchState(store, { status: 'error' });
         }
@@ -129,13 +165,17 @@ export const PushSubscriptionStore = signalStore(
               ),
             }));
 
-          await saveSubscription(subToSave);
-          patchState(store, { status: 'subscribed' });
+          const { deviceCount } = await saveSubscription(subToSave);
+          patchState(store, { status: 'subscribed', deviceCount });
           return true;
         } catch {
           patchState(store, { status: 'error' });
           return false;
         }
+      },
+
+      async snooze(snoozeMinutes = 30): Promise<void> {
+        await snoozeReminder(snoozeMinutes);
       },
 
       async unsubscribe(): Promise<void> {
@@ -148,9 +188,12 @@ export const PushSubscriptionStore = signalStore(
           if (sub) {
             const endpoint = sub.endpoint;
             await sub.unsubscribe();
-            await deleteSubscription(endpoint);
+            const { deviceCount } = await deleteSubscription(endpoint);
+            // Always not-subscribed on this device, deviceCount shows other devices
+            patchState(store, { status: 'not-subscribed', deviceCount });
+            return;
           }
-          patchState(store, { status: 'not-subscribed' });
+          patchState(store, { status: 'not-subscribed', deviceCount: 0 });
         } catch {
           patchState(store, { status: 'error' });
         }
