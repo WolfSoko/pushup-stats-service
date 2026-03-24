@@ -4185,6 +4185,12 @@ Deine Position: # ·  Reps        </source>
         <target>Reminders</target>
       </segment>
     </unit>
+    <unit id="push.subscribe.error">
+      <segment state="translated">
+        <source>Push konnte nicht aktiviert werden.</source>
+        <target>Could not enable push notifications.</target>
+      </segment>
+    </unit>
     <unit id="push.section.title">
       <segment state="translated">
         <source>🔔 Erinnerungen</source>
