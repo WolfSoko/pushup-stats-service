@@ -4179,6 +4179,60 @@ Deine Position: # ·  Reps        </source>
         <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">edit_note</pc> New </target>
       </segment>
     </unit>
+    <unit id="push.section.title">
+      <segment state="translated">
+        <source>🔔 Erinnerungen</source>
+        <target>🔔 Reminders</target>
+      </segment>
+    </unit>
+    <unit id="push.section.desc">
+      <segment state="translated">
+        <source>Wir tippen dir auf die Schulter, wenn es Zeit für Liegestütze ist.</source>
+        <target>We'll tap you on the shoulder when it's time for push-ups.</target>
+      </segment>
+    </unit>
+    <unit id="push.status.unsupported">
+      <segment state="translated">
+        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">info</pc> Dein Browser unterstützt keine Push-Benachrichtigungen.</source>
+        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">info</pc> Your browser doesn't support push notifications.</target>
+      </segment>
+    </unit>
+    <unit id="push.status.denied">
+      <segment state="translated">
+        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">warning</pc> Push-Benachrichtigungen sind blockiert. Bitte in den Browser-Einstellungen erlauben.</source>
+        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">warning</pc> Push notifications are blocked. Please allow them in your browser settings.</target>
+      </segment>
+    </unit>
+    <unit id="push.status.subscribed">
+      <segment state="translated">
+        <source>Erinnerungen aktiv ✓</source>
+        <target>Reminders active ✓</target>
+      </segment>
+    </unit>
+    <unit id="push.unsubscribe">
+      <segment state="translated">
+        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">notifications_off</pc> Deaktivieren</source>
+        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">notifications_off</pc> Turn off</target>
+      </segment>
+    </unit>
+    <unit id="push.device.count">
+      <segment state="translated">
+        <source>Aktiv auf <ph id="0" equiv="INTERPOLATION" disp="{{ pushService.deviceCount() }}"/> Geräten</source>
+        <target>Active on <ph id="0" equiv="INTERPOLATION" disp="{{ pushService.deviceCount() }}"/> devices</target>
+      </segment>
+    </unit>
+    <unit id="push.cta.desc">
+      <segment state="translated">
+        <source>Nie wieder eine Einheit verpassen.</source>
+        <target>Never miss a workout again.</target>
+      </segment>
+    </unit>
+    <unit id="push.subscribe">
+      <segment state="translated">
+        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">notifications</pc> Push aktivieren</source>
+        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">notifications</pc> Enable reminders</target>
+      </segment>
+    </unit>
   </file>
 
 
