@@ -343,10 +343,9 @@ import type { ReminderConfig } from '@pu-stats/models';
 
           <!-- Web Push Subscription Panel -->
           <section class="reminder-section">
-            <h3 i18n="@@push.section.title">🔔 Push-Erinnerungen</h3>
+            <h3 i18n="@@push.section.title">🔔 Erinnerungen</h3>
             <p class="muted" i18n="@@push.section.desc">
-              Zuverlässige Erinnerungen direkt vom Server — funktionieren auch
-              wenn PUS nicht geöffnet ist.
+              Wir tippen dir auf die Schulter, wenn es Zeit für Liegestütze ist.
             </p>
 
             @if (pushService.status() === 'unsupported') {
@@ -364,7 +363,7 @@ import type { ReminderConfig } from '@pu-stats/models';
               <div class="row">
                 <span class="permission-ok">
                   <mat-icon>notifications_active</mat-icon>
-                  <span i18n="@@push.status.subscribed">Push aktiv</span>
+                  <span i18n="@@push.status.subscribed">Erinnerungen aktiv ✓</span>
                 </span>
                 <button
                   type="button"
@@ -387,7 +386,7 @@ import type { ReminderConfig } from '@pu-stats/models';
               }
             } @else {
               <p class="muted" i18n="@@push.cta.desc">
-                Aktiviere Push-Erinnerungen um Liegestütze nie mehr zu vergessen.
+                Nie wieder eine Einheit verpassen.
               </p>
               <button
                 type="button"
