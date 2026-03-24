@@ -1,10 +1,13 @@
 /**
- * Custom push handler extending ngsw-worker.js.
- * This script is registered as an additional service worker script.
+ * Custom root service worker that extends ngsw-worker.js with push support.
+ *
+ * MUST be registered instead of ngsw-worker.js (at scope '/').
+ * Imports ngsw first, then adds push/notificationclick handlers.
  *
  * push event: Shows the notification from the payload
  * notificationclick: Opens or focuses the app
  */
+importScripts('ngsw-worker.js');
 
 self.addEventListener('push', (event) => {
   if (!event.data) return;

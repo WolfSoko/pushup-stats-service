@@ -650,7 +650,10 @@ async function deleteAllPushSubscriptions(uid) {
   subs.forEach((doc) => batch.delete(doc));
   batch.delete(userRef);
   await batch.commit();
-  logger.info('deleteAllPushSubscriptions: cleaned up', { uid, count: subs.length });
+  logger.info('deleteAllPushSubscriptions: cleaned up', {
+    uid,
+    count: subs.length,
+  });
 }
 
 // ─── savePushSubscription ──────────────────────────────────────────────────
@@ -846,7 +849,9 @@ exports.dispatchPushReminders = onSchedule(
 
     // Load all users with push subscriptions
     const subsSnap = await db.collection('pushSubscriptions').listDocuments();
-    logger.info('dispatchPushReminders: checking users', { count: subsSnap.length });
+    logger.info('dispatchPushReminders: checking users', {
+      count: subsSnap.length,
+    });
 
     const results = { sent: 0, skipped: 0, errors: 0, expired: 0 };
 
@@ -855,15 +860,36 @@ exports.dispatchPushReminders = onSchedule(
 
       try {
         // Load user reminder config
-        const userConfigSnap = await db.collection('userConfigs').doc(uid).get();
+        const userConfigSnap = await db
+          .collection('userConfigs')
+          .doc(uid)
+          .get();
         const reminder = userConfigSnap.data()?.reminder;
 
-        // Load last dispatch state
+        // Acquire lease transactionally — prevents duplicate sends on overlapping invocations
         const dispatchRef = db.collection('reminderDispatchState').doc(uid);
-        const dispatchSnap = await dispatchRef.get();
-        const lastSentAt = dispatchSnap.data()?.lastSentAt || null;
+        let leaseAcquired = false;
 
-        if (!shouldSendReminder(reminder, lastSentAt, nowMs)) {
+        await db.runTransaction(async (tx) => {
+          const dispatchSnap = await tx.get(dispatchRef);
+          const lastSentAt = dispatchSnap.data()?.lastSentAt || null;
+
+          if (!shouldSendReminder(reminder, lastSentAt, nowMs)) return;
+
+          // Mark slot as claimed with a lease timestamp
+          tx.set(
+            dispatchRef,
+            {
+              lastSentAt: admin.firestore.FieldValue.serverTimestamp(),
+              uid,
+              inProgress: true,
+            },
+            { merge: true }
+          );
+          leaseAcquired = true;
+        });
+
+        if (!leaseAcquired) {
           results.skipped++;
           continue;
         }
@@ -871,6 +897,8 @@ exports.dispatchPushReminders = onSchedule(
         // Load subscriptions for this user
         const subsCol = await userRef.collection('subs').get();
         if (subsCol.empty) {
+          // Release lease — nothing to send
+          await dispatchRef.update({ inProgress: false });
           results.skipped++;
           continue;
         }
@@ -907,7 +935,11 @@ exports.dispatchPushReminders = onSchedule(
               expiredSubs.push(subDoc.ref);
               results.expired++;
             } else {
-              logger.warn('dispatchPushReminders: send failed', { uid, endpoint: endpoint.slice(-20), status: err.statusCode });
+              logger.warn('dispatchPushReminders: send failed', {
+                uid,
+                endpoint: endpoint.slice(-20),
+                status: err.statusCode,
+              });
               results.errors++;
             }
           }
@@ -920,16 +952,17 @@ exports.dispatchPushReminders = onSchedule(
           await batch.commit();
         }
 
-        // Update dispatch state only if at least one send succeeded
+        // Release lease
+        await dispatchRef.update({ inProgress: false });
+
         if (sentToUser) {
-          await dispatchRef.set({
-            lastSentAt: admin.firestore.FieldValue.serverTimestamp(),
-            uid,
-          }, { merge: true });
           results.sent++;
         }
       } catch (err) {
-        logger.error('dispatchPushReminders: error for user', { uid, err: err.message });
+        logger.error('dispatchPushReminders: error for user', {
+          uid,
+          err: err.message,
+        });
         results.errors++;
       }
     }
