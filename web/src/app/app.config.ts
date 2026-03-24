@@ -3,6 +3,7 @@ import {
   APP_INITIALIZER,
   ApplicationConfig,
   ErrorHandler,
+  inject,
   isDevMode,
   LOCALE_ID,
   provideBrowserGlobalErrorListeners,
@@ -15,6 +16,7 @@ import {
   getFunctions,
   provideFunctions,
 } from '@angular/fire/functions';
+import { FirebaseApp } from '@angular/fire/app';
 import {
   getRemoteConfig,
   provideRemoteConfig,
@@ -95,7 +97,7 @@ export const appConfig: ApplicationConfig = {
             withFirestoreEmulator(firebaseRuntime.firestoreEmulatorUrl)
           ),
           provideFunctions(() => {
-            const functions = getFunctions(undefined, 'europe-west3');
+            const functions = getFunctions(inject(FirebaseApp), 'europe-west3');
             connectFunctionsEmulator(functions, '127.0.0.1', 5001);
             return functions;
           }),
@@ -103,7 +105,7 @@ export const appConfig: ApplicationConfig = {
       : [
           provideAuth(),
           provideFireStore(),
-          provideFunctions(() => getFunctions(undefined, 'europe-west3')),
+          provideFunctions(() => getFunctions(inject(FirebaseApp), 'europe-west3')),
           provideAnalytics(() => getAnalytics()),
           provideRemoteConfig(() => {
             const remoteConfig = getRemoteConfig();
