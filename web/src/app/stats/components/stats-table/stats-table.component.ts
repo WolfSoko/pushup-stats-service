@@ -406,6 +406,9 @@ export class StatsTableComponent {
   ): string[] {
     const needle = (value ?? '').toLowerCase().trim();
     if (!needle) return options;
+    // If the value exactly matches an option (selected/pre-filled), show all
+    // so the dropdown is not trapped showing only one option on open.
+    if (options.some((opt) => opt.toLowerCase() === needle)) return options;
     return options.filter((opt) => opt.toLowerCase().includes(needle));
   }
 

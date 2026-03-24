@@ -10,6 +10,7 @@ import {
   REQUEST,
   resource,
   signal,
+  viewChild,
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
@@ -101,6 +102,8 @@ export class StatsDashboardComponent {
   );
   readonly busyAction = signal<'create' | 'update' | 'delete' | null>(null);
   readonly busyId = signal<string | null>(null);
+
+  readonly statsTable = viewChild(StatsTableComponent);
 
   private readonly filter = computed(() => ({
     from: this.from() || undefined,
@@ -331,6 +334,10 @@ export class StatsDashboardComponent {
     } finally {
       this.savingDayChartMode.set(false);
     }
+  }
+
+  openCreateDialog(): void {
+    this.statsTable()?.openCreateDialog();
   }
 
   async addQuickEntry(reps: number) {
