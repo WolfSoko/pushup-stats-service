@@ -343,10 +343,10 @@ import type { ReminderConfig } from '@pu-stats/models';
 
           <!-- Web Push Subscription Panel -->
           <section class="reminder-section">
-            <h3 i18n="@@push.section.title">📱 Browser-Push-Benachrichtigungen</h3>
+            <h3 i18n="@@push.section.title">🔔 Push-Erinnerungen</h3>
             <p class="muted" i18n="@@push.section.desc">
-              Empfange Erinnerungen auch wenn PUS im Hintergrund läuft
-              (solange der Browser geöffnet ist).
+              Zuverlässige Erinnerungen direkt vom Server — funktionieren auch
+              wenn PUS nicht geöffnet ist.
             </p>
 
             @if (pushService.status() === 'unsupported') {
@@ -357,8 +357,8 @@ import type { ReminderConfig } from '@pu-stats/models';
             } @else if (pushService.status() === 'denied') {
               <p class="permission-hint" i18n="@@push.status.denied">
                 <mat-icon>warning</mat-icon>
-                Push-Benachrichtigungen sind im Browser blockiert.
-                Bitte in den Browser-Einstellungen erlauben.
+                Push-Benachrichtigungen sind blockiert. Bitte in den
+                Browser-Einstellungen erlauben.
               </p>
             } @else if (pushService.status() === 'subscribed') {
               <div class="row">
@@ -374,21 +374,25 @@ import type { ReminderConfig } from '@pu-stats/models';
                   i18n="@@push.unsubscribe"
                 >
                   <mat-icon>notifications_off</mat-icon>
-                  Push deaktivieren
+                  Deaktivieren
                 </button>
               </div>
               @if (pushService.deviceCount() > 1) {
                 <p class="device-count-hint muted">
                   <mat-icon>devices</mat-icon>
                   <span i18n="@@push.device.count">
-                    {{ pushService.deviceCount() }} Gerät(e) aktiv
+                    Aktiv auf {{ pushService.deviceCount() }} Geräten
                   </span>
                 </p>
               }
             } @else {
+              <p class="muted" i18n="@@push.cta.desc">
+                Aktiviere Push-Erinnerungen um Liegestütze nie mehr zu vergessen.
+              </p>
               <button
                 type="button"
                 mat-flat-button
+                color="primary"
                 (click)="onPushSubscribe()"
                 [disabled]="pushService.status() === 'loading'"
                 i18n="@@push.subscribe"
