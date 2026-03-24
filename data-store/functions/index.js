@@ -889,17 +889,16 @@ exports.dispatchPushReminders = onSchedule(
         await db.runTransaction(async (tx) => {
           const dispatchSnap = await tx.get(dispatchRef);
           const lastSentAt = dispatchSnap.data()?.lastSentAt || null;
+          const alreadyInProgress = dispatchSnap.data()?.inProgress === true;
 
+          if (alreadyInProgress) return; // Another invocation is already sending
           if (!shouldSendReminder(reminder, lastSentAt, nowMs)) return;
 
-          // Mark slot as claimed with a lease timestamp
+          // Claim the slot — only set inProgress, NOT lastSentAt yet
+          // lastSentAt is set after successful send so a failed dispatch can retry
           tx.set(
             dispatchRef,
-            {
-              lastSentAt: admin.firestore.FieldValue.serverTimestamp(),
-              uid,
-              inProgress: true,
-            },
+            { uid, inProgress: true },
             { merge: true }
           );
           leaseAcquired = true;
@@ -968,11 +967,17 @@ exports.dispatchPushReminders = onSchedule(
           await batch.commit();
         }
 
-        // Release lease
-        await dispatchRef.update({ inProgress: false });
-
         if (sentToUser) {
+          // Only set lastSentAt after confirmed send — failed dispatch can retry
+          await dispatchRef.set({
+            lastSentAt: admin.firestore.FieldValue.serverTimestamp(),
+            inProgress: false,
+            uid,
+          }, { merge: true });
           results.sent++;
+        } else {
+          // Release lease without updating lastSentAt so next invocation retries
+          await dispatchRef.update({ inProgress: false });
         }
       } catch (err) {
         logger.error('dispatchPushReminders: error for user', {
@@ -1002,14 +1007,15 @@ exports.snoozeReminder = onCall(
     }
 
     const snoozeMs = snoozeMinutes * 60 * 1000;
-    const snoozeUntil = new Date(Date.now() + snoozeMs);
+    const snoozeUntil = admin.firestore.Timestamp.fromMillis(Date.now() + snoozeMs);
 
     const dispatchRef = db.collection('reminderDispatchState').doc(uid);
     await dispatchRef.set({
-      lastSentAt: snoozeUntil,
+      lastSentAt: snoozeUntil, // Firestore Timestamp — compatible with shouldSendReminder
       uid,
       snoozedAt: admin.firestore.FieldValue.serverTimestamp(),
       snoozeMinutes,
+      inProgress: false,
     }, { merge: true });
 
     logger.info('snoozeReminder', { uid, snoozeMinutes });

@@ -97,16 +97,21 @@ export const PushSubscriptionStore = signalStore(
       await callable({ snoozeMinutes });
     }
 
+    // Register SW message listener once (guard prevents duplicate registrations)
+    let swListenerRegistered = false;
+    function ensureSwListener(): void {
+      if (swListenerRegistered || !store._isBrowser || !('serviceWorker' in navigator)) return;
+      swListenerRegistered = true;
+      navigator.serviceWorker.addEventListener('message', (event) => {
+        if (event.data?.type === 'SNOOZE_REMINDER') {
+          void snoozeReminder(event.data.snoozeMinutes ?? 30);
+        }
+      });
+    }
+
     return {
       async init(): Promise<void> {
-        // Listen for snooze requests from service worker
-        if (store._isBrowser && 'serviceWorker' in navigator) {
-          navigator.serviceWorker.addEventListener('message', (event) => {
-            if (event.data?.type === 'SNOOZE_REMINDER') {
-              void snoozeReminder(event.data.snoozeMinutes ?? 30);
-            }
-          });
-        }
+        ensureSwListener();
         if (!isSupported()) {
           patchState(store, { status: 'unsupported' });
           return;
@@ -175,7 +180,8 @@ export const PushSubscriptionStore = signalStore(
             const endpoint = sub.endpoint;
             await sub.unsubscribe();
             const { deviceCount } = await deleteSubscription(endpoint);
-            patchState(store, { status: deviceCount > 0 ? 'subscribed' : 'not-subscribed', deviceCount });
+            // Always not-subscribed on this device, deviceCount shows other devices
+            patchState(store, { status: 'not-subscribed', deviceCount });
             return;
           }
           patchState(store, { status: 'not-subscribed', deviceCount: 0 });
