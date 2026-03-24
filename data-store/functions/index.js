@@ -734,3 +734,206 @@ exports.deletePushSubscription = onCall(
     return { ok: true };
   }
 );
+
+// ─── Web Push Reminder Dispatch ───────────────────────────────────────────────
+const webpush = require('web-push');
+const { defineSecret } = require('firebase-functions/params');
+
+const VAPID_PRIVATE_KEY = defineSecret('VAPID_PRIVATE_KEY');
+const VAPID_PUBLIC_KEY = defineSecret('VAPID_PUBLIC_KEY');
+
+/**
+ * Checks if a user should receive a push reminder right now.
+ * Returns true if:
+ * - reminders are enabled
+ * - current time (in user timezone) is NOT in any quiet hour window
+ * - enough time has passed since last reminder (intervalMinutes)
+ */
+function shouldSendReminder(reminder, lastSentAt, nowMs) {
+  if (!reminder?.enabled) return false;
+
+  const tz = reminder.timezone || TZ;
+  const nowDate = new Date(nowMs);
+
+  // Format current time in user's timezone as HH:MM
+  const timeStr = nowDate.toLocaleTimeString('de-DE', {
+    hour: '2-digit',
+    minute: '2-digit',
+    timeZone: tz,
+    hour12: false,
+  });
+  const [hh, mm] = timeStr.split(':').map(Number);
+  const currentMinutes = hh * 60 + mm;
+
+  // Check quiet hours
+  const quietHours = reminder.quietHours || [];
+  for (const { from, to } of quietHours) {
+    const [fh, fm] = from.split(':').map(Number);
+    const [th, tm] = to.split(':').map(Number);
+    const fromMin = fh * 60 + fm;
+    const toMin = th * 60 + tm;
+    if (fromMin <= toMin) {
+      if (currentMinutes >= fromMin && currentMinutes < toMin) return false;
+    } else {
+      // wraps midnight
+      if (currentMinutes >= fromMin || currentMinutes < toMin) return false;
+    }
+  }
+
+  // Check interval
+  if (lastSentAt) {
+    const lastMs = lastSentAt.toMillis
+      ? lastSentAt.toMillis()
+      : new Date(lastSentAt).getTime();
+    const intervalMs = (reminder.intervalMinutes || 60) * 60 * 1000;
+    if (nowMs - lastMs < intervalMs) return false;
+  }
+
+  return true;
+}
+
+/**
+ * Generates a motivational push notification body.
+ */
+function buildNotificationPayload(language) {
+  const messages = {
+    de: [
+      'Zeit für Liegestütze! 💪',
+      'Kurze Pause? Perfekt für Liegestütze!',
+      'Du schaffst das – ein paar Liegestütze!',
+      'Beweg dich! Liegestütze warten auf dich. 🔥',
+      'Dein Körper ruft: Liegestütze, los!',
+    ],
+    en: [
+      'Time for push-ups! 💪',
+      'Quick break? Perfect for push-ups!',
+      'You got this – a few push-ups!',
+      'Move it! Push-ups are waiting for you. 🔥',
+      'Your body calls: push-ups, go!',
+    ],
+  };
+  const lang = language === 'en' ? 'en' : 'de';
+  const list = messages[lang];
+  return list[Math.floor(Math.random() * list.length)];
+}
+
+/**
+ * Scheduled: runs every 5 minutes, dispatches push reminders to eligible users.
+ */
+exports.dispatchPushReminders = onSchedule(
+  {
+    schedule: 'every 5 minutes',
+    timeZone: TZ,
+    region: 'europe-west3',
+    secrets: [VAPID_PRIVATE_KEY, VAPID_PUBLIC_KEY],
+  },
+  async () => {
+    const vapidPrivate = VAPID_PRIVATE_KEY.value();
+    const vapidPublic = VAPID_PUBLIC_KEY.value();
+
+    if (!vapidPrivate || !vapidPublic) {
+      logger.warn('dispatchPushReminders: VAPID secrets not set, skipping');
+      return;
+    }
+
+    webpush.setVapidDetails(
+      'mailto:einstein-openclaw@gmail.com',
+      vapidPublic,
+      vapidPrivate
+    );
+
+    const nowMs = Date.now();
+
+    // Load all users with push subscriptions
+    const subsSnap = await db.collection('pushSubscriptions').listDocuments();
+    logger.info('dispatchPushReminders: checking users', { count: subsSnap.length });
+
+    const results = { sent: 0, skipped: 0, errors: 0, expired: 0 };
+
+    for (const userRef of subsSnap) {
+      const uid = userRef.id;
+
+      try {
+        // Load user reminder config
+        const userConfigSnap = await db.collection('userConfigs').doc(uid).get();
+        const reminder = userConfigSnap.data()?.reminder;
+
+        // Load last dispatch state
+        const dispatchRef = db.collection('reminderDispatchState').doc(uid);
+        const dispatchSnap = await dispatchRef.get();
+        const lastSentAt = dispatchSnap.data()?.lastSentAt || null;
+
+        if (!shouldSendReminder(reminder, lastSentAt, nowMs)) {
+          results.skipped++;
+          continue;
+        }
+
+        // Load subscriptions for this user
+        const subsCol = await userRef.collection('subs').get();
+        if (subsCol.empty) {
+          results.skipped++;
+          continue;
+        }
+
+        const body = buildNotificationPayload(reminder?.language);
+        const payload = JSON.stringify({
+          title: 'PushUp Stats',
+          body,
+          icon: '/icons/icon-192x192.png',
+          badge: '/icons/badge-72x72.png',
+          tag: 'reminder',
+          renotify: true,
+          data: { url: '/dashboard' },
+        });
+
+        let sentToUser = false;
+        const expiredSubs = [];
+
+        for (const subDoc of subsCol.docs) {
+          const { endpoint, keys } = subDoc.data();
+          if (!endpoint || !keys?.p256dh || !keys?.auth) continue;
+
+          const pushSub = {
+            endpoint,
+            keys: { p256dh: keys.p256dh, auth: keys.auth },
+          };
+
+          try {
+            await webpush.sendNotification(pushSub, payload);
+            sentToUser = true;
+          } catch (err) {
+            if (err.statusCode === 410 || err.statusCode === 404) {
+              // Subscription expired — queue for cleanup
+              expiredSubs.push(subDoc.ref);
+              results.expired++;
+            } else {
+              logger.warn('dispatchPushReminders: send failed', { uid, endpoint: endpoint.slice(-20), status: err.statusCode });
+              results.errors++;
+            }
+          }
+        }
+
+        // Clean up expired subscriptions
+        if (expiredSubs.length > 0) {
+          const batch = db.batch();
+          expiredSubs.forEach((ref) => batch.delete(ref));
+          await batch.commit();
+        }
+
+        // Update dispatch state only if at least one send succeeded
+        if (sentToUser) {
+          await dispatchRef.set({
+            lastSentAt: admin.firestore.FieldValue.serverTimestamp(),
+            uid,
+          }, { merge: true });
+          results.sent++;
+        }
+      } catch (err) {
+        logger.error('dispatchPushReminders: error for user', { uid, err: err.message });
+        results.errors++;
+      }
+    }
+
+    logger.info('dispatchPushReminders: done', results);
+  }
+);

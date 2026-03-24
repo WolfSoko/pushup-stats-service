@@ -91,6 +91,8 @@ export const PushSubscriptionStore = signalStore(
         }
         patchState(store, { status: 'loading' });
         try {
+          // Register custom push handler alongside ngsw-worker.js
+          await navigator.serviceWorker.register('/sw-push.js', { scope: '/' });
           const reg = await navigator.serviceWorker.ready;
           const sub = await reg.pushManager.getSubscription();
           if (!sub) {

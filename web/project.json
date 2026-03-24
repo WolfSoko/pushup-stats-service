@@ -38,6 +38,11 @@
           {
             "glob": "**/*",
             "input": "web/public"
+          },
+          {
+            "glob": "sw-push.js",
+            "input": "web/src",
+            "output": "/"
           }
         ],
         "styles": ["web/src/styles.scss"]
