@@ -53,7 +53,9 @@ export const PushSubscriptionStore = signalStore(
     }
 
     async function saveSubscription(sub: PushSubscription): Promise<void> {
-      if (!store._functions) return;
+      if (!store._functions) {
+        throw new Error('Firebase Functions is not available');
+      }
       const json = sub.toJSON();
       const callable = httpsCallable(store._functions, 'savePushSubscription');
       await callable({
@@ -106,7 +108,9 @@ export const PushSubscriptionStore = signalStore(
         try {
           const permission = await Notification.requestPermission();
           if (permission !== 'granted') {
-            patchState(store, { status: 'denied' });
+            patchState(store, {
+              status: permission === 'denied' ? 'denied' : 'not-subscribed',
+            });
             return false;
           }
 

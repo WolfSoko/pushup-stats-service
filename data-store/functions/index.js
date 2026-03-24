@@ -684,19 +684,21 @@ exports.savePushSubscription = onCall(
       .collection('subs')
       .doc(subId);
 
-    await ref.set({
-      endpoint,
-      keys: { p256dh: keys.p256dh, auth: keys.auth },
-      userAgent: userAgent || null,
-      locale: locale || null,
-      updatedAt: now,
-    }, { merge: true });
-
-    // Set createdAt only on first write
-    const snap = await ref.get();
-    if (!snap.data()?.createdAt) {
-      await ref.update({ createdAt: now });
-    }
+    await db.runTransaction(async (tx) => {
+      const snap = await tx.get(ref);
+      tx.set(
+        ref,
+        {
+          endpoint,
+          keys: { p256dh: keys.p256dh, auth: keys.auth },
+          userAgent: userAgent || null,
+          locale: locale || null,
+          updatedAt: now,
+          ...(snap.data()?.createdAt ? {} : { createdAt: now }),
+        },
+        { merge: true }
+      );
+    });
 
     logger.info('savePushSubscription: saved', { uid, subId });
     return { ok: true, subId };
