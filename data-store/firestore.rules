@@ -29,6 +29,12 @@ service cloud.firestore {
       allow write: if false;
     }
 
+    // Motivation quotes are owner-only. Writes are server-only (Admin SDK).
+    match /motivationQuotes/{userId} {
+      allow read: if request.auth != null && request.auth.uid == userId;
+      allow write: if false;
+    }
+
     // Deny everything else by default.
     match /{document=**} {
       allow read, write: if false;

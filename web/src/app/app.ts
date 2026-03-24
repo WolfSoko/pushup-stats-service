@@ -2,6 +2,7 @@ import {
   Component,
   computed,
   DestroyRef,
+  effect,
   inject,
   resource,
   signal,
@@ -31,6 +32,8 @@ import { filter, firstValueFrom } from 'rxjs';
 import { AdsConsentStateService } from '@pu-stats/ads';
 import { SeoService } from './core/seo.service';
 import { UserContextService } from '@pu-auth/auth';
+import { ReminderService } from './core/reminder/reminder.service';
+import { ReminderStore } from './core/reminder/reminder.store';
 
 @Component({
   selector: 'app-root',
@@ -64,6 +67,8 @@ export class App {
   private readonly analytics = inject(Analytics, { optional: true });
   private readonly auth = inject(AuthStore);
   private readonly adsConsentState = inject(AdsConsentStateService);
+  private readonly reminderService = inject(ReminderService);
+  private readonly reminderStore = inject(ReminderStore);
 
   setLanguage(lang: 'de' | 'en', ev?: Event): void {
     ev?.preventDefault();
@@ -110,6 +115,21 @@ export class App {
   );
 
   constructor() {
+    // Load reminder config and start/stop service on auth state change
+    effect(() => {
+      const user = this.auth.user();
+      if (user && !user.isAnonymous) {
+        const uid = user.uid;
+        this.reminderStore.loadConfig(uid).then(() => {
+          if (this.auth.user()?.uid === uid) {
+            this.reminderService.start();
+          }
+        });
+      } else {
+        this.reminderService.stop();
+      }
+    });
+
     this.router.events
       .pipe(
         filter((event) => event instanceof NavigationEnd),
@@ -163,6 +183,7 @@ export class App {
   }
 
   async logout(): Promise<void> {
+    this.reminderService.stop();
     await this.auth.logout();
     this.navOpen.set(false);
     await this.router.navigateByUrl('/');

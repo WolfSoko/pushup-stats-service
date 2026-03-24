@@ -8,11 +8,14 @@ import {
   signal,
 } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
+import { MatChipsModule } from '@angular/material/chips';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { RouterLink } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
@@ -20,16 +23,22 @@ import { UserConfigApiService } from '@pu-stats/data-access';
 import { AuthStore, UserContextService } from '@pu-auth/auth';
 import { Router } from '@angular/router';
 import { Analytics, logEvent } from '@angular/fire/analytics';
+import { ReminderStore } from '../../core/reminder/reminder.store';
+import { ReminderPermissionService } from '../../core/reminder/reminder-permission.service';
+import type { ReminderConfig } from '@pu-stats/models';
 
 @Component({
   selector: 'app-settings-page',
   imports: [
     MatCardModule,
+    MatChipsModule,
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
+    MatButtonToggleModule,
     MatIconModule,
     MatSlideToggleModule,
+    MatSnackBarModule,
     MatDialogModule,
     RouterLink,
   ],
@@ -139,6 +148,197 @@ import { Analytics, logEvent } from '@angular/fire/analytics';
             }
           </div>
 
+          <section class="reminder-section">
+            <h3 i18n="@@reminder.section.title">🔔 Erinnerungen / Reminders</h3>
+
+            <div class="reminder-row">
+              <mat-slide-toggle
+                [checked]="reminderEnabledDraft()"
+                (change)="onReminderToggle($event.checked)"
+                i18n="@@reminder.enabled.label"
+              >
+                Liegestütz-Erinnerungen aktivieren
+              </mat-slide-toggle>
+
+              @if (reminderStore.permissionStatus() === 'denied') {
+                <span
+                  class="permission-hint"
+                  i18n="@@reminder.permission.denied.hint"
+                >
+                  <mat-icon>warning</mat-icon>
+                  Benachrichtigungen sind im Browser blockiert. Bitte in den
+                  Browser-Einstellungen erlauben.
+                </span>
+              } @else if (reminderStore.permissionStatus() === 'granted') {
+                <span class="permission-ok">
+                  <mat-icon>check_circle</mat-icon>
+                  <span i18n="@@reminder.permission.granted"
+                    >Benachrichtigungen erlaubt</span
+                  >
+                </span>
+              } @else if (reminderStore.permissionStatus() === 'unsupported') {
+                <span
+                  class="permission-hint"
+                  i18n="@@reminder.permission.unsupported"
+                >
+                  <mat-icon>info</mat-icon>
+                  Dein Browser unterstützt keine Benachrichtigungen.
+                </span>
+              }
+            </div>
+
+            @if (reminderEnabledDraft()) {
+              <div class="reminder-grid">
+                <div>
+                  <p class="field-label" i18n="@@reminder.interval.label">
+                    Erinnerungsintervall
+                  </p>
+                  <mat-chip-listbox
+                    [value]="reminderIntervalDraft()"
+                    (change)="
+                      reminderIntervalDraft.set($event.value);
+                      reminderDirty.set(true)
+                    "
+                    aria-label="Intervall-Voreinstellungen"
+                    i18n-aria-label="@@reminder.interval.aria"
+                  >
+                    <mat-chip-option
+                      [value]="30"
+                      i18n="@@reminder.interval.30min"
+                      >30 Min</mat-chip-option
+                    >
+                    <mat-chip-option [value]="60" i18n="@@reminder.interval.1h"
+                      >1 Std</mat-chip-option
+                    >
+                    <mat-chip-option [value]="120" i18n="@@reminder.interval.2h"
+                      >2 Std</mat-chip-option
+                    >
+                    <mat-chip-option [value]="240" i18n="@@reminder.interval.4h"
+                      >4 Std</mat-chip-option
+                    >
+                  </mat-chip-listbox>
+
+                  <mat-form-field appearance="outline" class="interval-custom">
+                    <mat-label i18n="@@reminder.interval.custom.label"
+                      >Benutzerdefiniert (Min)</mat-label
+                    >
+                    <input
+                      matInput
+                      type="number"
+                      min="15"
+                      max="480"
+                      [value]="reminderIntervalDraft()"
+                      (input)="
+                        reminderIntervalDraft.set(asNumber($event));
+                        reminderDirty.set(true)
+                      "
+                      (blur)="
+                        reminderIntervalDraft.set(
+                          clampInterval(reminderIntervalDraft())
+                        )
+                      "
+                    />
+                    <mat-hint i18n="@@reminder.interval.hint"
+                      >15–480 Minuten</mat-hint
+                    >
+                  </mat-form-field>
+                </div>
+
+                <div>
+                  <p class="field-label" i18n="@@reminder.language.label">
+                    Sprache der Zitate
+                  </p>
+                  <mat-button-toggle-group
+                    [value]="reminderLanguageDraft()"
+                    (change)="
+                      reminderLanguageDraft.set($event.value);
+                      reminderDirty.set(true)
+                    "
+                    aria-label="Erinnerungssprache"
+                    i18n-aria-label="@@reminder.language.aria"
+                  >
+                    <mat-button-toggle value="de" i18n="@@reminder.language.de"
+                      >DE</mat-button-toggle
+                    >
+                    <mat-button-toggle value="en" i18n="@@reminder.language.en"
+                      >EN</mat-button-toggle
+                    >
+                  </mat-button-toggle-group>
+                </div>
+
+                <div class="quiet-hours-section">
+                  <p class="field-label" i18n="@@reminder.quietHours.label">
+                    Ruhezeiten
+                  </p>
+                  @for (qh of reminderQuietHoursDraft(); track $index) {
+                    <div class="quiet-hour-row">
+                      <mat-form-field appearance="outline" class="time-field">
+                        <mat-label i18n="@@reminder.quietHours.from"
+                          >Von</mat-label
+                        >
+                        <input
+                          matInput
+                          type="time"
+                          [value]="qh.from"
+                          (change)="
+                            updateQuietHour($index, 'from', asValue($event))
+                          "
+                        />
+                      </mat-form-field>
+                      <mat-form-field appearance="outline" class="time-field">
+                        <mat-label i18n="@@reminder.quietHours.to"
+                          >Bis</mat-label
+                        >
+                        <input
+                          matInput
+                          type="time"
+                          [value]="qh.to"
+                          (change)="
+                            updateQuietHour($index, 'to', asValue($event))
+                          "
+                        />
+                      </mat-form-field>
+                      <button
+                        type="button"
+                        mat-icon-button
+                        (click)="removeQuietHour($index)"
+                        aria-label="Remove quiet hour"
+                        i18n-aria-label="@@reminder.quietHours.remove.aria"
+                      >
+                        <mat-icon>remove_circle_outline</mat-icon>
+                      </button>
+                    </div>
+                  }
+                  <button
+                    type="button"
+                    mat-stroked-button
+                    (click)="addQuietHour()"
+                    i18n="@@reminder.quietHours.add"
+                  >
+                    <mat-icon>add</mat-icon>
+                    Ruhezeit hinzufügen
+                  </button>
+                </div>
+              </div>
+            }
+
+            <div class="row">
+              <button
+                type="button"
+                mat-flat-button
+                [disabled]="!reminderDirty() || reminderSaving()"
+                (click)="saveReminderSettings()"
+                i18n="@@reminder.save"
+              >
+                <mat-icon>save</mat-icon>
+                Erinnerungen speichern
+              </button>
+              @if (reminderSaved()) {
+                <span class="muted" i18n="@@reminder.saved">Gespeichert.</span>
+              }
+            </div>
+          </section>
+
           <section class="danger-zone">
             <h3 i18n="@@settings.dangerZoneTitle">Danger Zone</h3>
             <p i18n="@@settings.dangerZoneBody">
@@ -239,6 +439,63 @@ import { Analytics, logEvent } from '@angular/fire/analytics';
       font-size: 0.9rem;
       margin: 0;
     }
+    .reminder-section {
+      margin-top: 16px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      display: grid;
+      gap: 14px;
+
+      h3 {
+        margin: 0;
+      }
+    }
+    .reminder-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .reminder-grid {
+      display: grid;
+      gap: 18px;
+    }
+    .field-label {
+      margin: 0 0 6px;
+      font-size: 0.85rem;
+      opacity: 0.75;
+    }
+    .interval-custom {
+      margin-top: 8px;
+      max-width: 180px;
+    }
+    .quiet-hours-section {
+      display: grid;
+      gap: 8px;
+    }
+    .quiet-hour-row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .time-field {
+      max-width: 130px;
+    }
+    .permission-hint {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.85rem;
+      color: #ffb2b2;
+    }
+    .permission-ok {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.85rem;
+      color: #90ee90;
+    }
     .danger-zone {
       margin-top: 16px;
       padding-top: 12px;
@@ -287,6 +544,9 @@ export class SettingsPageComponent {
   private readonly router = inject(Router);
   private readonly dialog = inject(MatDialog);
   private readonly analytics = inject(Analytics, { optional: true });
+  private readonly snackBar = inject(MatSnackBar);
+  readonly reminderStore = inject(ReminderStore);
+  private readonly reminderPermission = inject(ReminderPermissionService);
 
   readonly activeUserId = this.user.userIdSafe;
   readonly isGuest = this.user.isGuest;
@@ -302,6 +562,15 @@ export class SettingsPageComponent {
   readonly errorMessage = signal('');
   readonly deletePhraseInput = signal('');
   readonly deleteDialogError = signal('');
+
+  // ── Reminder draft signals ────────────────────────────────────────────────
+  readonly reminderEnabledDraft = signal(false);
+  readonly reminderIntervalDraft = signal(60);
+  readonly reminderLanguageDraft = signal<'de' | 'en'>('de');
+  readonly reminderQuietHoursDraft = signal<{ from: string; to: string }[]>([]);
+  readonly reminderSaving = signal(false);
+  readonly reminderSaved = signal(false);
+  readonly reminderDirty = signal(false);
 
   readonly configResource = resource({
     params: () => ({ userId: this.activeUserId() }),
@@ -351,6 +620,90 @@ export class SettingsPageComponent {
       this.leaderboardOptOutDraft.set(cfg.hideFromLeaderboard ?? false);
       this.adsConsentDraft.set(cfg.consent?.targetedAds ?? true);
     });
+
+    // Sync reminder draft from store
+    effect(() => {
+      const rc = this.reminderStore.config();
+      this.reminderEnabledDraft.set(rc?.enabled ?? false);
+      this.reminderIntervalDraft.set(rc?.intervalMinutes ?? 60);
+      this.reminderLanguageDraft.set(rc?.language ?? 'de');
+      this.reminderQuietHoursDraft.set(
+        rc?.quietHours ? [...rc.quietHours] : []
+      );
+      this.reminderDirty.set(false);
+    });
+  }
+
+  // ── Reminder methods ─────────────────────────────────────────────────────
+
+  async onReminderToggle(enabled: boolean): Promise<void> {
+    if (enabled && this.reminderPermission.status() !== 'granted') {
+      const result = await this.reminderPermission.requestPermission();
+      if (result !== 'granted') {
+        this.snackBar.open(
+          $localize`:@@reminder.permission.snackbar:Benachrichtigungen sind blockiert. Bitte in den Browser-Einstellungen erlauben.`,
+          $localize`:@@snackbar.close:Schließen`,
+          { duration: 5000 }
+        );
+        return;
+      }
+    }
+    this.reminderEnabledDraft.set(enabled);
+    this.reminderDirty.set(true);
+  }
+
+  addQuietHour(): void {
+    this.reminderQuietHoursDraft.update((qhs) => [
+      ...qhs,
+      { from: '22:00', to: '07:00' },
+    ]);
+    this.reminderDirty.set(true);
+  }
+
+  removeQuietHour(index: number): void {
+    this.reminderQuietHoursDraft.update((qhs) =>
+      qhs.filter((_, i) => i !== index)
+    );
+    this.reminderDirty.set(true);
+  }
+
+  updateQuietHour(index: number, field: 'from' | 'to', value: string): void {
+    this.reminderQuietHoursDraft.update((qhs) => {
+      const copy = [...qhs];
+      copy[index] = { ...copy[index], [field]: value };
+      return copy;
+    });
+    this.reminderDirty.set(true);
+  }
+
+  clampInterval(value: number): number {
+    if (Number.isNaN(value)) return 60;
+    return Math.min(480, Math.max(15, value));
+  }
+
+  async saveReminderSettings(): Promise<void> {
+    const userId = this.activeUserId();
+    const config: ReminderConfig = {
+      enabled: this.reminderEnabledDraft(),
+      intervalMinutes: this.reminderIntervalDraft(),
+      quietHours: this.reminderQuietHoursDraft(),
+      timezone:
+        this.reminderStore.config()?.timezone ||
+        Intl.DateTimeFormat().resolvedOptions().timeZone ||
+        'Europe/Berlin',
+      language: this.reminderLanguageDraft(),
+    };
+    this.reminderSaving.set(true);
+    try {
+      await this.reminderStore.saveConfig(userId, config);
+      if (!this.reminderStore.error()) {
+        this.reminderSaved.set(true);
+        this.reminderDirty.set(false);
+        setTimeout(() => this.reminderSaved.set(false), 1500);
+      }
+    } finally {
+      this.reminderSaving.set(false);
+    }
   }
 
   asValue(event: Event): string {

@@ -52,6 +52,18 @@ export interface PushupUpdate {
   type?: string;
 }
 
+export interface ReminderConfig {
+  enabled: boolean;
+  intervalMinutes: number;
+  quietHours: {
+    from: string;
+    to: string;
+  }[];
+  timezone: string;
+  language: 'de' | 'en';
+  lastQuoteFetchAt?: string;
+}
+
 export interface UserConfig {
   userId: string;
   email?: string | null;
@@ -71,11 +83,12 @@ export interface UserConfig {
   role?: UserRole;
   createdAt?: string;
   updatedAt?: string;
+  reminder?: ReminderConfig;
 }
 
 export type UserConfigUpdate = Partial<
   Pick<
     UserConfig,
-    'email' | 'displayName' | 'dailyGoal' | 'consent' | 'ui' | 'role'
+    'email' | 'displayName' | 'dailyGoal' | 'consent' | 'ui' | 'role' | 'reminder'
   >
 >;
