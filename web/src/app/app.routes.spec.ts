@@ -25,6 +25,7 @@ describe('appRoutes', () => {
       'analysis',
       'settings',
       'leaderboard',
+      'blog',
       'admin',
       '**',
     ]);
