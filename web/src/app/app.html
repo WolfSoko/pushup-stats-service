@@ -175,6 +175,14 @@
         >Bestenliste</a
       >
       <a routerLink="/blog" routerLinkActive="active" i18n="@@nav.blog">Blog</a>
+      @if (isLoggedIn()) {
+        <a
+          routerLink="/settings"
+          fragment="reminders"
+          routerLinkActive="active"
+          i18n="@@nav.reminders"
+        >Erinnerungen</a>
+      }
     </nav>
 
     <main class="app-content">

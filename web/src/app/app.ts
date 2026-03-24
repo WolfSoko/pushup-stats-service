@@ -65,6 +65,10 @@ export class App {
   readonly isAdmin = computed(() => this.user.isAdmin());
   readonly isLoggedIn = computed(() => !!this.user.userIdSafe() && !this.user.isGuest());
   private readonly pushService = inject(PushSubscriptionService);
+  private readonly _initPushBridge = afterNextRender(() => {
+    // Register SW→App message bridge at startup, not just when settings page is visited
+    this.pushService.registerSwListener();
+  });
   private readonly _handleSnoozeParam = afterNextRender(() => {
     const snooze = this.activatedRoute.snapshot.queryParamMap.get('snooze');
     const snoozeMinutes = snooze ? parseInt(snooze, 10) : NaN;

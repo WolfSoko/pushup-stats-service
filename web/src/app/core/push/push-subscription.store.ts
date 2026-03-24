@@ -110,6 +110,11 @@ export const PushSubscriptionStore = signalStore(
     }
 
     return {
+      /** Register SW message listener — safe to call multiple times, idempotent. */
+      registerSwListener(): void {
+        ensureSwListener();
+      },
+
       async init(): Promise<void> {
         ensureSwListener();
         if (!isSupported()) {

@@ -768,7 +768,7 @@ const VAPID_PUBLIC_KEY = defineSecret('VAPID_PUBLIC_KEY');
  * - current time (in user timezone) is NOT in any quiet hour window
  * - enough time has passed since last reminder (intervalMinutes)
  */
-function shouldSendReminder(reminder, lastSentAt, nowMs) {
+function shouldSendReminder(reminder, lastSentAt, nowMs, snoozedUntil) {
   if (!reminder?.enabled) return false;
 
   const tz = reminder.timezone || TZ;
@@ -799,7 +799,15 @@ function shouldSendReminder(reminder, lastSentAt, nowMs) {
     }
   }
 
-  // Check interval
+  // Check snooze — independent of intervalMinutes
+  if (snoozedUntil) {
+    const snoozeMs = snoozedUntil.toMillis
+      ? snoozedUntil.toMillis()
+      : new Date(snoozedUntil).getTime();
+    if (nowMs < snoozeMs) return false;
+  }
+
+  // Check interval since last send
   if (lastSentAt) {
     const lastMs = lastSentAt.toMillis
       ? lastSentAt.toMillis()
@@ -889,10 +897,11 @@ exports.dispatchPushReminders = onSchedule(
         await db.runTransaction(async (tx) => {
           const dispatchSnap = await tx.get(dispatchRef);
           const lastSentAt = dispatchSnap.data()?.lastSentAt || null;
+          const snoozedUntil = dispatchSnap.data()?.snoozedUntil || null;
           const alreadyInProgress = dispatchSnap.data()?.inProgress === true;
 
           if (alreadyInProgress) return; // Another invocation is already sending
-          if (!shouldSendReminder(reminder, lastSentAt, nowMs)) return;
+          if (!shouldSendReminder(reminder, lastSentAt, nowMs, snoozedUntil)) return;
 
           // Claim the slot — only set inProgress, NOT lastSentAt yet
           // lastSentAt is set after successful send so a failed dispatch can retry
@@ -909,75 +918,86 @@ exports.dispatchPushReminders = onSchedule(
           continue;
         }
 
-        // Load subscriptions for this user
-        const subsCol = await userRef.collection('subs').get();
-        if (subsCol.empty) {
-          // Release lease — nothing to send
-          await dispatchRef.update({ inProgress: false });
-          results.skipped++;
-          continue;
-        }
-
-        const body = buildNotificationPayload(reminder?.language);
-        const payload = JSON.stringify({
-          title: 'PushUp Stats',
-          body,
-          icon: '/icons/icon-192x192.png',
-          badge: '/icons/badge-72x72.png',
-          tag: 'reminder',
-          renotify: true,
-          data: { url: '/dashboard' },
-        });
-
         let sentToUser = false;
-        const expiredSubs = [];
+        try {
+          // Load subscriptions for this user
+          const subsCol = await userRef.collection('subs').get();
+          if (subsCol.empty) {
+            results.skipped++;
+            continue;
+          }
 
-        for (const subDoc of subsCol.docs) {
-          const { endpoint, keys } = subDoc.data();
-          if (!endpoint || !keys?.p256dh || !keys?.auth) continue;
+          const body = buildNotificationPayload(reminder?.language);
+          const lang = reminder?.language === 'en' ? 'en' : 'de';
+          const actions =
+            lang === 'en'
+              ? [
+                  { action: 'snooze', title: '⏰ Snooze 30 min' },
+                  { action: 'log', title: '✅ Log push-ups' },
+                ]
+              : [
+                  { action: 'snooze', title: '⏰ 30 Min snoozen' },
+                  { action: 'log', title: '✅ Eintragen' },
+                ];
+          const payload = JSON.stringify({
+            title: 'PushUp Stats',
+            body,
+            icon: '/icons/icon-192x192.png',
+            badge: '/icons/badge-72x72.png',
+            tag: 'reminder',
+            renotify: true,
+            data: { url: '/dashboard' },
+            actions,
+          });
 
-          const pushSub = {
-            endpoint,
-            keys: { p256dh: keys.p256dh, auth: keys.auth },
-          };
+          const expiredSubs = [];
 
-          try {
-            await webpush.sendNotification(pushSub, payload);
-            sentToUser = true;
-          } catch (err) {
-            if (err.statusCode === 410 || err.statusCode === 404) {
-              // Subscription expired — queue for cleanup
-              expiredSubs.push(subDoc.ref);
-              results.expired++;
-            } else {
-              logger.warn('dispatchPushReminders: send failed', {
-                uid,
-                endpoint: endpoint.slice(-20),
-                status: err.statusCode,
-              });
-              results.errors++;
+          for (const subDoc of subsCol.docs) {
+            const { endpoint, keys } = subDoc.data();
+            if (!endpoint || !keys?.p256dh || !keys?.auth) continue;
+
+            const pushSub = {
+              endpoint,
+              keys: { p256dh: keys.p256dh, auth: keys.auth },
+            };
+
+            try {
+              await webpush.sendNotification(pushSub, payload);
+              sentToUser = true;
+            } catch (err) {
+              if (err.statusCode === 410 || err.statusCode === 404) {
+                expiredSubs.push(subDoc.ref);
+                results.expired++;
+              } else {
+                logger.warn('dispatchPushReminders: send failed', {
+                  uid,
+                  endpoint: endpoint.slice(-20),
+                  status: err.statusCode,
+                });
+                results.errors++;
+              }
             }
           }
-        }
 
-        // Clean up expired subscriptions
-        if (expiredSubs.length > 0) {
-          const batch = db.batch();
-          expiredSubs.forEach((ref) => batch.delete(ref));
-          await batch.commit();
-        }
+          // Clean up expired subscriptions
+          if (expiredSubs.length > 0) {
+            const batch = db.batch();
+            expiredSubs.forEach((ref) => batch.delete(ref));
+            await batch.commit();
+          }
 
-        if (sentToUser) {
-          // Only set lastSentAt after confirmed send — failed dispatch can retry
-          await dispatchRef.set({
-            lastSentAt: admin.firestore.FieldValue.serverTimestamp(),
-            inProgress: false,
-            uid,
-          }, { merge: true });
-          results.sent++;
-        } else {
-          // Release lease without updating lastSentAt so next invocation retries
-          await dispatchRef.update({ inProgress: false });
+          if (sentToUser) {
+            await dispatchRef.set({
+              lastSentAt: admin.firestore.FieldValue.serverTimestamp(),
+              uid,
+            }, { merge: true });
+            results.sent++;
+          }
+        } finally {
+          // Always release lease — prevents permanent deadlock on any error
+          await dispatchRef.update({ inProgress: false }).catch((e) =>
+            logger.warn('dispatchPushReminders: failed to release lease', { uid, err: e.message })
+          );
         }
       } catch (err) {
         logger.error('dispatchPushReminders: error for user', {
@@ -1011,7 +1031,7 @@ exports.snoozeReminder = onCall(
 
     const dispatchRef = db.collection('reminderDispatchState').doc(uid);
     await dispatchRef.set({
-      lastSentAt: snoozeUntil, // Firestore Timestamp — compatible with shouldSendReminder
+      snoozedUntil: snoozeUntil, // separate field — does not interfere with lastSentAt/intervalMinutes
       uid,
       snoozedAt: admin.firestore.FieldValue.serverTimestamp(),
       snoozeMinutes,
