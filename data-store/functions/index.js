@@ -1,3 +1,4 @@
+const crypto = require('node:crypto');
 const { onDocumentWritten } = require('firebase-functions/v2/firestore');
 const { onSchedule } = require('firebase-functions/v2/scheduler');
 const { onCall, HttpsError } = require('firebase-functions/v2/https');
@@ -400,6 +401,9 @@ exports.adminDeleteUser = onCall(
       }
     }
 
+    // Always clean up push subscriptions on delete/anonymize
+    await deleteAllPushSubscriptions(uid);
+
     logger.info('adminDeleteUser', { uid, anonymize, by: request.auth?.uid });
     return { ok: true };
   }
@@ -476,6 +480,9 @@ exports.adminBulkDeleteInactiveAnonymous = onCall(
         }
         await batch.commit();
       }
+
+      // Clean up push subscriptions
+      await deleteAllPushSubscriptions(uid);
 
       deleted++;
     }
@@ -631,6 +638,21 @@ exports.generateMotivationQuotes = onCall(
   }
 );
 
+// ─── helpers ──────────────────────────────────────────────────────────────
+function pushSubscriptionId(endpoint) {
+  return crypto.createHash('sha256').update(endpoint).digest('hex');
+}
+
+async function deleteAllPushSubscriptions(uid) {
+  const userRef = db.collection('pushSubscriptions').doc(uid);
+  const subs = await userRef.collection('subs').listDocuments();
+  const batch = db.batch();
+  subs.forEach((doc) => batch.delete(doc));
+  batch.delete(userRef);
+  await batch.commit();
+  logger.info('deleteAllPushSubscriptions: cleaned up', { uid, count: subs.length });
+}
+
 // ─── savePushSubscription ──────────────────────────────────────────────────
 // Saves a Web Push subscription for the authenticated user.
 // Collection: pushSubscriptions/{uid}/subs/{subId}
@@ -653,7 +675,7 @@ exports.savePushSubscription = onCall(
     }
 
     // Derive a stable doc id from the endpoint URL
-    const subId = Buffer.from(endpoint).toString('base64url').slice(0, 60);
+    const subId = pushSubscriptionId(endpoint);
 
     const now = new Date().toISOString();
     const ref = db
@@ -697,7 +719,7 @@ exports.deletePushSubscription = onCall(
       throw new HttpsError('invalid-argument', 'endpoint fehlt.');
     }
 
-    const subId = Buffer.from(endpoint).toString('base64url').slice(0, 60);
+    const subId = pushSubscriptionId(endpoint);
 
     await db
       .collection('pushSubscriptions')

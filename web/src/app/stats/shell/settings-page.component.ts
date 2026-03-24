@@ -860,6 +860,7 @@ export class SettingsPageComponent {
           },
         })
       );
+      await this.pushService.unsubscribe();
       await this.auth.deleteAccount();
       this.trackAnalytics('account_anonymized_and_deleted', { success: true });
       await this.router.navigateByUrl('/');
