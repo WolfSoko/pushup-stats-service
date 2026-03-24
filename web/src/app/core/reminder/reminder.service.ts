@@ -49,6 +49,7 @@ export class ReminderService {
     : null;
 
   private intervalId: ReturnType<typeof setInterval> | null = null;
+  private initialTickTimeoutId: ReturnType<typeof setTimeout> | null = null;
   private quoteCache: string[] = [];
   private quoteIndex = 0;
 
@@ -57,10 +58,20 @@ export class ReminderService {
       clearInterval(this.intervalId);
       this.intervalId = null;
     }
+    if (this.initialTickTimeoutId !== null) {
+      clearTimeout(this.initialTickTimeoutId);
+      this.initialTickTimeoutId = null;
+    }
 
     const config = this.store.config();
     if (!config?.enabled) return;
     if (this.permissionService.status() !== 'granted') return;
+
+    // Fire once after a short delay so the user gets immediate feedback
+    this.initialTickTimeoutId = setTimeout(() => {
+      this.initialTickTimeoutId = null;
+      this.tick();
+    }, 5_000);
 
     const intervalMs = (config.intervalMinutes ?? 60) * 60 * 1000;
     this.intervalId = setInterval(() => this.tick(), intervalMs);
@@ -71,11 +82,21 @@ export class ReminderService {
       clearInterval(this.intervalId);
       this.intervalId = null;
     }
+    if (this.initialTickTimeoutId !== null) {
+      clearTimeout(this.initialTickTimeoutId);
+      this.initialTickTimeoutId = null;
+    }
   }
 
   private async tick(): Promise<void> {
     const config = this.store.config();
     if (!config?.enabled) return;
+
+    // Stop if permission was revoked since start() was called
+    if (this.permissionService.status() !== 'granted') {
+      this.stop();
+      return;
+    }
 
     if (isInQuietHours(config.quietHours ?? [], config.timezone ?? 'UTC')) {
       return;
