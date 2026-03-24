@@ -195,8 +195,11 @@ import type { ReminderConfig } from '@pu-stats/models';
                   </p>
                   <mat-chip-listbox
                     [value]="reminderIntervalDraft()"
-                    (change)="reminderIntervalDraft.set($event.value)"
-                    aria-label="Interval presets"
+                    (change)="
+                      reminderIntervalDraft.set($event.value);
+                      reminderDirty.set(true)
+                    "
+                    aria-label="Intervall-Voreinstellungen"
                     i18n-aria-label="@@reminder.interval.aria"
                   >
                     <mat-chip-option
@@ -225,7 +228,15 @@ import type { ReminderConfig } from '@pu-stats/models';
                       min="15"
                       max="480"
                       [value]="reminderIntervalDraft()"
-                      (input)="reminderIntervalDraft.set(clampInterval(asNumber($event))); reminderDirty.set(true)"
+                      (input)="
+                        reminderIntervalDraft.set(asNumber($event));
+                        reminderDirty.set(true)
+                      "
+                      (blur)="
+                        reminderIntervalDraft.set(
+                          clampInterval(reminderIntervalDraft())
+                        )
+                      "
                     />
                     <mat-hint i18n="@@reminder.interval.hint"
                       >15–480 Minuten</mat-hint
@@ -239,8 +250,11 @@ import type { ReminderConfig } from '@pu-stats/models';
                   </p>
                   <mat-button-toggle-group
                     [value]="reminderLanguageDraft()"
-                    (change)="reminderLanguageDraft.set($event.value)"
-                    aria-label="Reminder language"
+                    (change)="
+                      reminderLanguageDraft.set($event.value);
+                      reminderDirty.set(true)
+                    "
+                    aria-label="Erinnerungssprache"
                     i18n-aria-label="@@reminder.language.aria"
                   >
                     <mat-button-toggle value="de" i18n="@@reminder.language.de"
@@ -306,23 +320,23 @@ import type { ReminderConfig } from '@pu-stats/models';
                   </button>
                 </div>
               </div>
-
-              <div class="row">
-                <button
-                  type="button"
-                  mat-flat-button
-                  [disabled]="!reminderDirty() || reminderSaving()"
-                  (click)="saveReminderSettings()"
-                  i18n="@@reminder.save"
-                >
-                  <mat-icon>save</mat-icon>
-                  Erinnerungen speichern
-                </button>
-                @if (reminderSaved()) {
-                  <span class="muted" i18n="@@saved">Gespeichert.</span>
-                }
-              </div>
             }
+
+            <div class="row">
+              <button
+                type="button"
+                mat-flat-button
+                [disabled]="!reminderDirty() || reminderSaving()"
+                (click)="saveReminderSettings()"
+                i18n="@@reminder.save"
+              >
+                <mat-icon>save</mat-icon>
+                Erinnerungen speichern
+              </button>
+              @if (reminderSaved()) {
+                <span class="muted" i18n="@@reminder.saved">Gespeichert.</span>
+              }
+            </div>
           </section>
 
           <section class="danger-zone">
@@ -680,11 +694,16 @@ export class SettingsPageComponent {
       language: this.reminderLanguageDraft(),
     };
     this.reminderSaving.set(true);
-    await this.reminderStore.saveConfig(userId, config);
-    this.reminderSaving.set(false);
-    this.reminderSaved.set(true);
-    this.reminderDirty.set(false);
-    setTimeout(() => this.reminderSaved.set(false), 1500);
+    try {
+      await this.reminderStore.saveConfig(userId, config);
+      if (!this.reminderStore.error()) {
+        this.reminderSaved.set(true);
+        this.reminderDirty.set(false);
+        setTimeout(() => this.reminderSaved.set(false), 1500);
+      }
+    } finally {
+      this.reminderSaving.set(false);
+    }
   }
 
   asValue(event: Event): string {

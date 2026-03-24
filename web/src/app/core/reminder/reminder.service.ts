@@ -88,10 +88,16 @@ export class ReminderService {
     const title =
       lang === 'en' ? '💪 Time for push-ups!' : '💪 Zeit für Liegestütze!';
 
-    new Notification(title, {
-      body: quote,
-      icon: '/assets/pushup-logo.svg',
-    });
+    if (Notification.permission === 'granted') {
+      try {
+        new Notification(title, {
+          body: quote,
+          icon: '/assets/pushup-logo.svg',
+        });
+      } catch {
+        // Notification creation failed silently
+      }
+    }
   }
 
   private async getNextQuote(): Promise<string | null> {
@@ -131,10 +137,7 @@ export class ReminderService {
         displayName,
       });
 
-      const rawQuotes: string[] = result.data?.quotes ?? [];
-      this.quoteCache = rawQuotes.map((q) =>
-        q.replace(/\{\{name\}\}/g, displayName)
-      );
+      this.quoteCache = result.data?.quotes ?? [];
       this.quoteIndex = 0;
     } catch {
       // Keep existing cache on failure

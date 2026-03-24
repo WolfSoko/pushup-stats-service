@@ -547,8 +547,12 @@ exports.generateMotivationQuotes = onCall(
     const language = String(request.data?.language || 'de');
     const totalToday = Number(request.data?.totalToday ?? 0);
     const dailyGoal = Number(request.data?.dailyGoal ?? 100);
+    const rawName = String(request.data?.displayName || '').trim();
     const displayName =
-      String(request.data?.displayName || '').trim() || 'Champ';
+      rawName
+        .replace(/[^a-zA-Z0-9\u00C0-\u024F\u0400-\u04FF .,'!?-]/g, '')
+        .slice(0, 50)
+        .trim() || 'Champ';
 
     // ── Rate-limit: return cached quotes if < 12 h old ──────────────────────
     const cacheRef = db

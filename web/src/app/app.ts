@@ -119,8 +119,11 @@ export class App {
     effect(() => {
       const user = this.auth.user();
       if (user && !user.isAnonymous) {
-        this.reminderStore.loadConfig(user.uid).then(() => {
-          this.reminderService.start();
+        const uid = user.uid;
+        this.reminderStore.loadConfig(uid).then(() => {
+          if (this.auth.user()?.uid === uid) {
+            this.reminderService.start();
+          }
         });
       } else {
         this.reminderService.stop();
