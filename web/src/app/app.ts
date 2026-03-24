@@ -61,6 +61,7 @@ export class App {
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly user = inject(UserContextService);
   readonly isAdmin = computed(() => this.user.isAdmin());
+  readonly isLoggedIn = computed(() => !!this.user.userIdSafe() && !this.user.isGuest());
   private readonly userConfigApi = inject(UserConfigApiService);
   private readonly statsApi = inject(StatsApiService);
   private readonly seo = inject(SeoService);

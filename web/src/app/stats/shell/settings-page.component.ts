@@ -342,7 +342,7 @@ import type { ReminderConfig } from '@pu-stats/models';
           </section>
 
           <!-- Web Push Subscription Panel -->
-          <section class="reminder-section">
+          <section id="reminders" class="reminder-section">
             <h3 i18n="@@push.section.title">🔔 Erinnerungen</h3>
             <p class="muted" i18n="@@push.section.desc">
               Wir tippen dir auf die Schulter, wenn es Zeit für Liegestütze ist.
