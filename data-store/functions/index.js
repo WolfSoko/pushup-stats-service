@@ -703,8 +703,16 @@ exports.savePushSubscription = onCall(
       );
     });
 
-    logger.info('savePushSubscription: saved', { uid, subId });
-    return { ok: true, subId };
+    const allSubs = await db
+      .collection('pushSubscriptions')
+      .doc(uid)
+      .collection('subs')
+      .count()
+      .get();
+    const deviceCount = allSubs.data().count;
+
+    logger.info('savePushSubscription: saved', { uid, subId, deviceCount });
+    return { ok: true, subId, deviceCount };
   }
 );
 
@@ -733,8 +741,16 @@ exports.deletePushSubscription = onCall(
       .doc(subId)
       .delete();
 
-    logger.info('deletePushSubscription: removed', { uid, subId });
-    return { ok: true };
+    const remainingSubs = await db
+      .collection('pushSubscriptions')
+      .doc(uid)
+      .collection('subs')
+      .count()
+      .get();
+    const deviceCount = remainingSubs.data().count;
+
+    logger.info('deletePushSubscription: removed', { uid, subId, deviceCount });
+    return { ok: true, deviceCount };
   }
 );
 
@@ -968,5 +984,35 @@ exports.dispatchPushReminders = onSchedule(
     }
 
     logger.info('dispatchPushReminders: done', results);
+  }
+);
+
+// ─── snoozeReminder ────────────────────────────────────────────────────────
+// Delays the next push reminder by snoozeMinutes (default: 30).
+exports.snoozeReminder = onCall(
+  { region: 'europe-west3' },
+  async (request) => {
+    if (!request.auth) throw new HttpsError('unauthenticated', 'Auth required.');
+
+    const uid = request.auth.uid;
+    const snoozeMinutes = request.data?.snoozeMinutes ?? 30;
+
+    if (typeof snoozeMinutes !== 'number' || snoozeMinutes < 1 || snoozeMinutes > 1440) {
+      throw new HttpsError('invalid-argument', 'snoozeMinutes must be 1–1440.');
+    }
+
+    const snoozeMs = snoozeMinutes * 60 * 1000;
+    const snoozeUntil = new Date(Date.now() + snoozeMs);
+
+    const dispatchRef = db.collection('reminderDispatchState').doc(uid);
+    await dispatchRef.set({
+      lastSentAt: snoozeUntil,
+      uid,
+      snoozedAt: admin.firestore.FieldValue.serverTimestamp(),
+      snoozeMinutes,
+    }, { merge: true });
+
+    logger.info('snoozeReminder', { uid, snoozeMinutes });
+    return { ok: true, snoozeUntil: snoozeUntil.toISOString() };
   }
 );

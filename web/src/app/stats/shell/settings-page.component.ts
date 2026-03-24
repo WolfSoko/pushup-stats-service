@@ -377,6 +377,14 @@ import type { ReminderConfig } from '@pu-stats/models';
                   Push deaktivieren
                 </button>
               </div>
+              @if (pushService.deviceCount() > 1) {
+                <p class="device-count-hint muted">
+                  <mat-icon>devices</mat-icon>
+                  <span i18n="@@push.device.count">
+                    {{ pushService.deviceCount() }} Gerät(e) aktiv
+                  </span>
+                </p>
+              }
             } @else {
               <button
                 type="button"
