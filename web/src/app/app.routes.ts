@@ -103,6 +103,28 @@ export const appRoutes: Routes = [
       ),
   },
   {
+    path: 'blog',
+    children: [
+      {
+        path: '',
+        pathMatch: 'full',
+        data: {
+          seoTitle: $localize`:@@seo.blog.title:Blog – Liegestütze Tipps & Guides | Pushup Tracker`,
+          seoDescription: $localize`:@@seo.blog.description:Tipps, Trainingspläne und Motivation rund um Liegestütze – von Einsteiger bis Fortgeschritten.`,
+        },
+        loadComponent: () =>
+          import('./blog/blog-list.component').then((m) => m.BlogListComponent),
+      },
+      {
+        path: ':slug',
+        loadComponent: () =>
+          import('./blog/blog-article.component').then(
+            (m) => m.BlogArticleComponent
+          ),
+      },
+    ],
+  },
+  {
     path: 'admin',
     canActivate: [adminGuard],
     loadComponent: () =>

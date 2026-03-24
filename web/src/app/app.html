@@ -53,6 +53,16 @@
         <span matListItemTitle i18n="@@nav.leaderboard">Bestenliste</span>
       </a>
 
+      <a
+        mat-list-item
+        routerLink="/blog"
+        routerLinkActive="active"
+        (click)="navOpen.set(false)"
+      >
+        <mat-icon matListItemIcon>article</mat-icon>
+        <span matListItemTitle i18n="@@nav.blog">Blog</span>
+      </a>
+
       <mat-divider></mat-divider>
 
       <div
@@ -151,6 +161,7 @@
         i18n="@@nav.leaderboard"
         >Bestenliste</a
       >
+      <a routerLink="/blog" routerLinkActive="active" i18n="@@nav.blog">Blog</a>
     </nav>
 
     <main class="app-content">

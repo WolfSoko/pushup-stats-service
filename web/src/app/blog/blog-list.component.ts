@@ -1,0 +1,96 @@
+import { DatePipe } from '@angular/common';
+import { Component } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { RouterLink } from '@angular/router';
+import { BLOG_POSTS } from './blog-posts.data';
+
+@Component({
+  selector: 'app-blog-list',
+  imports: [RouterLink, MatCardModule, MatButtonModule, DatePipe],
+  template: `
+    <main class="blog-list">
+      <h1 i18n="@@blog.list.title">Blog</h1>
+      <p class="blog-intro" i18n="@@blog.list.intro">
+        Tipps, Guides und Motivation rund um Liegestütze und Krafttraining.
+      </p>
+
+      <div class="articles">
+        @for (post of posts; track post.slug) {
+          <mat-card class="article-card">
+            <mat-card-header>
+              <mat-card-title>{{ post.title }}</mat-card-title>
+              <mat-card-subtitle>
+                <time [attr.datetime]="post.publishedAt">{{
+                  post.publishedAt | date: 'd. MMMM yyyy' : '' : 'de'
+                }}</time>
+              </mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+              <p>{{ post.description }}</p>
+            </mat-card-content>
+            <mat-card-actions>
+              <a
+                mat-stroked-button
+                [routerLink]="['/blog', post.slug]"
+                i18n="@@blog.list.readArticle"
+                >Artikel lesen</a
+              >
+            </mat-card-actions>
+          </mat-card>
+        }
+      </div>
+    </main>
+  `,
+  styles: [
+    `
+      :host {
+        display: block;
+      }
+
+      .blog-list {
+        max-width: 860px;
+        margin: 0 auto;
+        padding: clamp(20px, 4vw, 44px);
+      }
+
+      h1 {
+        margin: 0 0 8px;
+        font-size: clamp(1.8rem, 4vw, 2.6rem);
+      }
+
+      .blog-intro {
+        margin: 0 0 32px;
+        color: #b9c9ea;
+        font-size: 1rem;
+      }
+
+      .articles {
+        display: grid;
+        gap: 16px;
+      }
+
+      .article-card {
+        border: 1px solid rgba(123, 159, 255, 0.25);
+        border-radius: 16px;
+      }
+
+      mat-card-content p {
+        color: #b9c9ea;
+        margin: 0;
+      }
+
+      mat-card-actions {
+        padding: 0 16px 16px;
+      }
+
+      time {
+        font-size: 0.85rem;
+        color: #7a8fbb;
+      }
+    `,
+  ],
+})
+export class BlogListComponent {
+  readonly posts = BLOG_POSTS;
+}

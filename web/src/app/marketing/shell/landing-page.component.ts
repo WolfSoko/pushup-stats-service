@@ -13,6 +13,7 @@ import { Router, RouterLink } from '@angular/router';
 import { AdSlotComponent, AdsConfigService } from '@pu-stats/ads';
 import { AuthService, AuthStore } from '@pu-auth/auth';
 import { LeaderboardPeriod, LeaderboardService } from '@pu-stats/data-access';
+import { ReminderFeatureSectionComponent } from '../components/reminder-feature-section/reminder-feature-section.component';
 
 @Component({
   selector: 'app-landing-page',
@@ -22,6 +23,7 @@ import { LeaderboardPeriod, LeaderboardService } from '@pu-stats/data-access';
     MatCardModule,
     MatIconModule,
     AdSlotComponent,
+    ReminderFeatureSectionComponent,
   ],
   templateUrl: './landing-page.component.html',
   styleUrl: './landing-page.component.scss',
