@@ -86,7 +86,7 @@ export const appConfig: ApplicationConfig = {
     { provide: LOCALE_ID, useValue: 'de-DE' },
     { provide: MAT_DATE_LOCALE, useValue: 'de-DE' },
     { provide: DEMO_USER_ID, useValue: demoUserId },
-    provideServiceWorker('ngsw-worker.js', {
+    provideServiceWorker('sw-push.js', {
       enabled: !isDevMode(),
       registrationStrategy: 'registerWhenStable:30000',
     }),
@@ -105,7 +105,9 @@ export const appConfig: ApplicationConfig = {
       : [
           provideAuth(),
           provideFireStore(),
-          provideFunctions(() => getFunctions(inject(FirebaseApp), 'europe-west3')),
+          provideFunctions(() =>
+            getFunctions(inject(FirebaseApp), 'europe-west3')
+          ),
           provideAnalytics(() => getAnalytics()),
           provideRemoteConfig(() => {
             const remoteConfig = getRemoteConfig();
