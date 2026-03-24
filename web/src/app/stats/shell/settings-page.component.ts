@@ -25,6 +25,7 @@ import { Router } from '@angular/router';
 import { Analytics, logEvent } from '@angular/fire/analytics';
 import { ReminderStore } from '../../core/reminder/reminder.store';
 import { ReminderPermissionService } from '../../core/reminder/reminder-permission.service';
+import { ReminderService } from '../../core/reminder/reminder.service';
 import type { ReminderConfig } from '@pu-stats/models';
 
 @Component({
@@ -547,6 +548,7 @@ export class SettingsPageComponent {
   private readonly snackBar = inject(MatSnackBar);
   readonly reminderStore = inject(ReminderStore);
   private readonly reminderPermission = inject(ReminderPermissionService);
+  private readonly reminderService = inject(ReminderService);
 
   readonly activeUserId = this.user.userIdSafe;
   readonly isGuest = this.user.isGuest;
@@ -697,6 +699,11 @@ export class SettingsPageComponent {
     try {
       await this.reminderStore.saveConfig(userId, config);
       if (!this.reminderStore.error()) {
+        if (config.enabled) {
+          this.reminderService.start();
+        } else {
+          this.reminderService.stop();
+        }
         this.reminderSaved.set(true);
         this.reminderDirty.set(false);
         setTimeout(() => this.reminderSaved.set(false), 1500);

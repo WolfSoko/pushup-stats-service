@@ -2,6 +2,7 @@ import { DOCUMENT, DatePipe } from '@angular/common';
 import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { Meta } from '@angular/platform-browser';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SeoService } from '../core/seo.service';
 import { BLOG_POSTS, BlogPost } from './blog-posts.data';
@@ -143,6 +144,7 @@ export class BlogArticleComponent implements OnInit {
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly seo = inject(SeoService);
+  private readonly meta = inject(Meta);
   private readonly document = inject(DOCUMENT);
   private readonly destroyRef = inject(DestroyRef);
 
@@ -163,6 +165,8 @@ export class BlogArticleComponent implements OnInit {
 
     this.post = found;
     this.seo.update(found.title, found.description, `/blog/${found.slug}`);
+    this.meta.updateTag({ property: 'og:type', content: 'article' });
+    this.meta.updateTag({ name: 'keywords', content: found.keywords.join(', ') });
     this.injectJsonLd(found);
   }
 
