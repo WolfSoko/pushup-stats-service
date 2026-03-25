@@ -178,6 +178,7 @@ import {
                         <input
                           matInput
                           type="time"
+                          [disabled]="reminderSaving()"
                           [value]="qh.from"
                           (change)="
                             updateQuietHour($index, 'from', asValue($event))
@@ -191,6 +192,7 @@ import {
                         <input
                           matInput
                           type="time"
+                          [disabled]="reminderSaving()"
                           [value]="qh.to"
                           (change)="
                             updateQuietHour($index, 'to', asValue($event))
@@ -497,7 +499,6 @@ export class RemindersPageComponent {
     const intervalMinutes = this.clampInterval(this.reminderIntervalDraft());
     this.reminderIntervalDraft.set(intervalMinutes);
     if (!userId) {
-      this.reminderSaving.set(false);
       this.snackBar.open(
         $localize`:@@reminder.save.error:Einstellungen konnten nicht gespeichert werden.`,
         $localize`:@@snackbar.close:Schließen`,
