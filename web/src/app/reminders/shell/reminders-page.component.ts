@@ -486,9 +486,11 @@ export class RemindersPageComponent {
 
   async saveReminderSettings(): Promise<void> {
     const userId = this.activeUserId();
+    const intervalMinutes = this.clampInterval(this.reminderIntervalDraft());
+    this.reminderIntervalDraft.set(intervalMinutes);
     const config: ReminderConfig = {
       enabled: this.reminderEnabledDraft(),
-      intervalMinutes: this.reminderIntervalDraft(),
+      intervalMinutes,
       quietHours: this.reminderQuietHoursDraft(),
       timezone:
         this.reminderStore.config()?.timezone ||

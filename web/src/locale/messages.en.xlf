@@ -4181,7 +4181,7 @@ Deine Position: # ·  Reps        </source>
     </unit>
     <unit id="reminder.quietHours.remove.aria">
       <segment state="translated">
-        <source>Remove quiet hour</source>
+        <source>Ruhezeit entfernen</source>
         <target>Remove quiet hour</target>
       </segment>
     </unit>

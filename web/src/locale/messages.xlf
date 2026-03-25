@@ -2244,9 +2244,10 @@
     <unit id="reminder.quietHours.remove.aria">
       <notes>
         <note category="location">web/src/app/stats/shell/settings-page.component.ts:305,306</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:202</note>
       </notes>
       <segment>
-        <source>Remove quiet hour</source>
+        <source>Ruhezeit entfernen</source>
       </segment>
     </unit>
     <unit id="reminder.quietHours.add">
