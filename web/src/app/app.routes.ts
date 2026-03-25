@@ -92,6 +92,18 @@ export const appRoutes: Routes = [
       ),
   },
   {
+    path: 'reminders',
+    canActivate: [authGuard],
+    data: {
+      seoTitle: $localize`:@@seo.reminders.title:Erinnerungen – Pushup Tracker`,
+      seoDescription: $localize`:@@seo.reminders.description:Konfiguriere Liegestütz-Erinnerungen und Push-Benachrichtigungen.`,
+    },
+    loadComponent: () =>
+      import('./reminders/shell/reminders-page.component').then(
+        (m) => m.RemindersPageComponent
+      ),
+  },
+  {
     path: 'leaderboard',
     data: {
       seoTitle: $localize`:@@seo.leaderboard.title:Bestenliste – Pushup Tracker`,

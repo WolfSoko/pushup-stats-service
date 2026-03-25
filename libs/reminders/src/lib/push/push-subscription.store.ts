@@ -8,7 +8,7 @@ import {
   withProps,
   withState,
 } from '@ngrx/signals';
-import { firebaseRuntime } from '../../../env/firebase-runtime';
+import { VAPID_PUBLIC_KEY } from './vapid-key.token';
 
 export type PushStatus =
   | 'unsupported'
@@ -35,6 +35,7 @@ export const PushSubscriptionStore = signalStore(
     _functions: isPlatformBrowser(inject(PLATFORM_ID))
       ? inject(Functions, { optional: true })
       : null,
+    _vapidPublicKey: inject(VAPID_PUBLIC_KEY),
   })),
   withMethods((store) => {
     function isSupported(): boolean {
@@ -100,7 +101,12 @@ export const PushSubscriptionStore = signalStore(
     // Register SW message listener once (guard prevents duplicate registrations)
     let swListenerRegistered = false;
     function ensureSwListener(): void {
-      if (swListenerRegistered || !store._isBrowser || !('serviceWorker' in navigator)) return;
+      if (
+        swListenerRegistered ||
+        !store._isBrowser ||
+        !('serviceWorker' in navigator)
+      )
+        return;
       swListenerRegistered = true;
       navigator.serviceWorker.addEventListener('message', (event) => {
         if (event.data?.type === 'SNOOZE_REMINDER') {
@@ -161,7 +167,7 @@ export const PushSubscriptionStore = signalStore(
             (await reg.pushManager.subscribe({
               userVisibleOnly: true,
               applicationServerKey: urlBase64ToUint8Array(
-                firebaseRuntime.vapidPublicKey
+                store._vapidPublicKey
               ),
             }));
 

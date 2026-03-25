@@ -18,12 +18,14 @@ function makeApiMock(
   getResult: ReminderConfig | null = defaultReminder
 ): Partial<UserConfigApiService> {
   return {
-    getConfig: vitest.fn().mockReturnValue(
-      of(getResult ? { userId: 'u1', reminder: getResult } : { userId: 'u1' })
-    ),
-    updateConfig: vitest.fn().mockReturnValue(
-      of({ userId: 'u1', reminder: getResult ?? undefined })
-    ),
+    getConfig: vitest
+      .fn()
+      .mockReturnValue(
+        of(getResult ? { userId: 'u1', reminder: getResult } : { userId: 'u1' })
+      ),
+    updateConfig: vitest
+      .fn()
+      .mockReturnValue(of({ userId: 'u1', reminder: getResult ?? undefined })),
   };
 }
 
@@ -94,7 +96,10 @@ describe('ReminderStore', () => {
   });
 
   it('saveConfig calls updateConfig and updates store state', async () => {
-    const updated: ReminderConfig = { ...defaultReminder, intervalMinutes: 120 };
+    const updated: ReminderConfig = {
+      ...defaultReminder,
+      intervalMinutes: 120,
+    };
     const apiMock = makeApiMock(defaultReminder);
     (apiMock.updateConfig as ReturnType<typeof vitest.fn>).mockReturnValue(
       of({ userId: 'u1', reminder: updated })
@@ -114,7 +119,9 @@ describe('ReminderStore', () => {
 
     await store.saveConfig('u1', updated);
 
-    expect(apiMock.updateConfig).toHaveBeenCalledWith('u1', { reminder: updated });
+    expect(apiMock.updateConfig).toHaveBeenCalledWith('u1', {
+      reminder: updated,
+    });
     expect(store.config()).toEqual(updated);
   });
 
@@ -135,15 +142,16 @@ describe('ReminderStore', () => {
     await store.resetConfig('u1');
 
     expect(apiMock.updateConfig).toHaveBeenCalled();
-    const call = (apiMock.updateConfig as ReturnType<typeof vitest.fn>).mock.calls[0];
+    const call = (apiMock.updateConfig as ReturnType<typeof vitest.fn>).mock
+      .calls[0];
     expect(call[1].reminder.enabled).toBe(false);
   });
 
   it('loadConfig sets error on API failure', async () => {
     const apiMock = {
-      getConfig: vitest.fn().mockReturnValue(
-        throwError(() => new Error('Network error'))
-      ),
+      getConfig: vitest
+        .fn()
+        .mockReturnValue(throwError(() => new Error('Network error'))),
       updateConfig: vitest.fn(),
     };
     const { fixture } = await render('', {
