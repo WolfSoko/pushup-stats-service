@@ -91,6 +91,7 @@ import {
                   </p>
                   <mat-chip-listbox
                     [value]="reminderIntervalDraft()"
+                    [disabled]="reminderSaving()"
                     (change)="
                       reminderIntervalDraft.set($event.value);
                       reminderDirty.set(true)
@@ -123,6 +124,7 @@ import {
                       type="number"
                       min="15"
                       max="480"
+                      [disabled]="reminderSaving()"
                       [value]="reminderIntervalDraft()"
                       (input)="
                         reminderIntervalDraft.set(asNumber($event));
@@ -146,6 +148,7 @@ import {
                   </p>
                   <mat-button-toggle-group
                     [value]="reminderLanguageDraft()"
+                    [disabled]="reminderSaving()"
                     (change)="
                       reminderLanguageDraft.set($event.value);
                       reminderDirty.set(true)
@@ -197,6 +200,7 @@ import {
                       <button
                         type="button"
                         mat-icon-button
+                        [disabled]="reminderSaving()"
                         (click)="removeQuietHour($index)"
                         aria-label="Ruhezeit entfernen"
                         i18n-aria-label="@@reminder.quietHours.remove.aria"
@@ -208,6 +212,7 @@ import {
                   <button
                     type="button"
                     mat-stroked-button
+                    [disabled]="reminderSaving()"
                     (click)="addQuietHour()"
                     i18n="@@reminder.quietHours.add"
                   >
@@ -492,6 +497,12 @@ export class RemindersPageComponent {
     const intervalMinutes = this.clampInterval(this.reminderIntervalDraft());
     this.reminderIntervalDraft.set(intervalMinutes);
     if (!userId) {
+      this.reminderSaving.set(false);
+      this.snackBar.open(
+        $localize`:@@reminder.save.error:Einstellungen konnten nicht gespeichert werden.`,
+        $localize`:@@snackbar.close:Schließen`,
+        { duration: 5000 }
+      );
       return;
     }
     const config: ReminderConfig = {

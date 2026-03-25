@@ -98,6 +98,8 @@ export const PushSubscriptionStore = signalStore(
       await callable({ snoozeMinutes });
     }
 
+    // Guard: prevent duplicate init() runs (e.g. from re-mounted components)
+    let initStarted = false;
     // Register SW message listener once (guard prevents duplicate registrations)
     let swListenerRegistered = false;
     function ensureSwListener(): void {
@@ -122,6 +124,8 @@ export const PushSubscriptionStore = signalStore(
       },
 
       async init(): Promise<void> {
+        if (initStarted) return;
+        initStarted = true;
         ensureSwListener();
         if (!isSupported()) {
           patchState(store, { status: 'unsupported' });
