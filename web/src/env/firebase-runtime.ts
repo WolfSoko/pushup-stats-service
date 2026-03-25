@@ -6,5 +6,6 @@ export const firebaseRuntime: FirebaseRuntimeConfig = {
   authEmulatorUrl: 'http://127.0.0.1:9099',
   // REPLACE with real public key from: npx web-push generate-vapid-keys
   // The private key goes into Firebase Functions secret: VAPID_PRIVATE_KEY
-  vapidPublicKey: 'REPLACE_WITH_REAL_VAPID_PUBLIC_KEY',
+  vapidPublicKey:
+    'BBp-PE0hiVURKzipoaVod65stDFsrkyACSSHARu52hVYSC3aqPVae9iEpm-DZxfyrudH5ZBo5_5UEhc5TQCl40M',
 };
