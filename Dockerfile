@@ -3,13 +3,19 @@
 FROM node:24-alpine AS builder
 WORKDIR /app
 
-# Install deps
-COPY package.json package-lock.json ./
-RUN npm ci
+# Install pnpm
+RUN corepack enable && corepack prepare pnpm@latest --activate
 
-# Copy sources and build the two services
+# Copy workspace config + all package.json files for proper hoisting
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml .npmrc ./
+COPY data-store/functions/package.json ./data-store/functions/
+
+# Install deps (with workspace packages)
+RUN pnpm install --frozen-lockfile
+
+# Copy sources and build
 COPY . .
-RUN npx nx run-many -t build --projects=web --configuration=production
+RUN pnpm nx run web:build --configuration=production
 
 # SSR runtime
 FROM node:24-alpine AS ssr-runner
