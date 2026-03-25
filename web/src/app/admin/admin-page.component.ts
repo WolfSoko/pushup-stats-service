@@ -77,7 +77,7 @@ export interface AdminUser {
           </mat-form-field>
           <p class="bulk-hint" i18n="@@admin.bulk.hint">
             Löscht anonyme Benutzer ohne Pushups in den letzten
-            {{ inactiveDays }} Tagen.
+            {{ inactiveDays() }} Tagen.
           </p>
         </mat-card-content>
         <mat-card-actions>
