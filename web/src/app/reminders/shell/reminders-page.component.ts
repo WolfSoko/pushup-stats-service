@@ -491,6 +491,9 @@ export class RemindersPageComponent {
     const userId = this.activeUserId();
     const intervalMinutes = this.clampInterval(this.reminderIntervalDraft());
     this.reminderIntervalDraft.set(intervalMinutes);
+    if (!userId) {
+      return;
+    }
     const config: ReminderConfig = {
       enabled: this.reminderEnabledDraft(),
       intervalMinutes,
