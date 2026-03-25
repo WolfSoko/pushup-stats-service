@@ -196,7 +196,7 @@
         <note category="location">libs/auth/src/lib/ui/register/register.component.html:314,315</note>
         <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:215,217</note>
         <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:297,299</note>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:398,399</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:216,217</note>
       </notes>
       <segment>
         <source> Abbrechen </source>
@@ -682,7 +682,7 @@
     <unit id="app.title">
       <notes>
         <note category="location">web/src/app/app.html:11,12</note>
-        <note category="location">web/src/app/app.html:121,122</note>
+        <note category="location">web/src/app/app.html:133,134</note>
       </notes>
       <segment>
         <source>Pushups</source>
@@ -691,7 +691,7 @@
     <unit id="nav.dashboard">
       <notes>
         <note category="location">web/src/app/app.html:23,26</note>
-        <note category="location">web/src/app/app.html:150,152</note>
+        <note category="location">web/src/app/app.html:162,164</note>
       </notes>
       <segment>
         <source>Dashboard</source>
@@ -700,7 +700,7 @@
     <unit id="nav.data">
       <notes>
         <note category="location">web/src/app/app.html:33,36</note>
-        <note category="location">web/src/app/app.html:154,155</note>
+        <note category="location">web/src/app/app.html:166,167</note>
       </notes>
       <segment>
         <source>Daten</source>
@@ -709,7 +709,7 @@
     <unit id="nav.analysis">
       <notes>
         <note category="location">web/src/app/app.html:43,46</note>
-        <note category="location">web/src/app/app.html:156,159</note>
+        <note category="location">web/src/app/app.html:168,171</note>
       </notes>
       <segment>
         <source>Analyse</source>
@@ -718,7 +718,7 @@
     <unit id="nav.leaderboard">
       <notes>
         <note category="location">web/src/app/app.html:53,57</note>
-        <note category="location">web/src/app/app.html:162,164</note>
+        <note category="location">web/src/app/app.html:174,176</note>
       </notes>
       <segment>
         <source>Bestenliste</source>
@@ -727,15 +727,24 @@
     <unit id="nav.blog">
       <notes>
         <note category="location">web/src/app/app.html:63,66</note>
-        <note category="location">web/src/app/app.html:165,167</note>
+        <note category="location">web/src/app/app.html:177</note>
       </notes>
       <segment>
         <source>Blog</source>
       </segment>
     </unit>
+    <unit id="nav.reminders">
+      <notes>
+        <note category="location">web/src/app/app.html:74,78</note>
+        <note category="location">web/src/app/app.html:182,185</note>
+      </notes>
+      <segment>
+        <source>Erinnerungen</source>
+      </segment>
+    </unit>
     <unit id="nav.language">
       <notes>
-        <note category="location">web/src/app/app.html:73,76</note>
+        <note category="location">web/src/app/app.html:85,88</note>
       </notes>
       <segment>
         <source> Sprache </source>
@@ -743,7 +752,7 @@
     </unit>
     <unit id="nav.lang.de">
       <notes>
-        <note category="location">web/src/app/app.html:82,85</note>
+        <note category="location">web/src/app/app.html:94,97</note>
       </notes>
       <segment>
         <source>Deutsch</source>
@@ -751,7 +760,7 @@
     </unit>
     <unit id="nav.lang.en">
       <notes>
-        <note category="location">web/src/app/app.html:91,93</note>
+        <note category="location">web/src/app/app.html:103,105</note>
       </notes>
       <segment>
         <source>English</source>
@@ -759,7 +768,7 @@
     </unit>
     <unit id="nav.aria">
       <notes>
-        <note category="location">web/src/app/app.html:100,101</note>
+        <note category="location">web/src/app/app.html:112,113</note>
       </notes>
       <segment>
         <source>Pushup Navigation</source>
@@ -767,7 +776,7 @@
     </unit>
     <unit id="nav.openMenu">
       <notes>
-        <note category="location">web/src/app/app.html:106,107</note>
+        <note category="location">web/src/app/app.html:118,119</note>
       </notes>
       <segment>
         <source>Menü öffnen</source>
@@ -775,7 +784,7 @@
     </unit>
     <unit id="nav.toLanding">
       <notes>
-        <note category="location">web/src/app/app.html:116,117</note>
+        <note category="location">web/src/app/app.html:128,129</note>
       </notes>
       <segment>
         <source>Zur Landingpage</source>
@@ -783,7 +792,7 @@
     </unit>
     <unit id="toolbarDailyGoal">
       <notes>
-        <note category="location">web/src/app/app.html:124,125</note>
+        <note category="location">web/src/app/app.html:136,137</note>
       </notes>
       <segment>
         <source>Tagesziel</source>
@@ -791,7 +800,7 @@
     </unit>
     <unit id="nav.admin">
       <notes>
-        <note category="location">web/src/app/app.html:131,132</note>
+        <note category="location">web/src/app/app.html:143,144</note>
       </notes>
       <segment>
         <source>Admin-Bereich</source>
@@ -799,7 +808,7 @@
     </unit>
     <unit id="nav.desktop.aria">
       <notes>
-        <note category="location">web/src/app/app.html:142,143</note>
+        <note category="location">web/src/app/app.html:154,155</note>
       </notes>
       <segment>
         <source>Hauptnavigation</source>
@@ -917,22 +926,6 @@
         <source>Verwalte Profil, Leaderboard-Sichtbarkeit und Tagesziel-Einstellungen.</source>
       </segment>
     </unit>
-    <unit id="seo.leaderboard.title">
-      <notes>
-        <note category="location">web/src/app/app.routes.ts:97</note>
-      </notes>
-      <segment>
-        <source>Bestenliste – Pushup Tracker</source>
-      </segment>
-    </unit>
-    <unit id="seo.leaderboard.description">
-      <notes>
-        <note category="location">web/src/app/app.routes.ts:98</note>
-      </notes>
-      <segment>
-        <source>Öffentliche Bestenliste für tägliche, wöchentliche und monatliche Pushup-Reps.</source>
-      </segment>
-    </unit>
     <unit id="seo.reminders.title">
       <notes>
         <note category="location">web/src/app/app.routes.ts:98</note>
@@ -949,9 +942,25 @@
         <source>Konfiguriere Liegestütz-Erinnerungen und Push-Benachrichtigungen.</source>
       </segment>
     </unit>
+    <unit id="seo.leaderboard.title">
+      <notes>
+        <note category="location">web/src/app/app.routes.ts:109</note>
+      </notes>
+      <segment>
+        <source>Bestenliste – Pushup Tracker</source>
+      </segment>
+    </unit>
+    <unit id="seo.leaderboard.description">
+      <notes>
+        <note category="location">web/src/app/app.routes.ts:110</note>
+      </notes>
+      <segment>
+        <source>Öffentliche Bestenliste für tägliche, wöchentliche und monatliche Pushup-Reps.</source>
+      </segment>
+    </unit>
     <unit id="seo.blog.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:112</note>
+        <note category="location">web/src/app/app.routes.ts:124</note>
       </notes>
       <segment>
         <source>Blog – Liegestütze Tipps &amp; Guides | Pushup Tracker</source>
@@ -959,7 +968,7 @@
     </unit>
     <unit id="seo.blog.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:113</note>
+        <note category="location">web/src/app/app.routes.ts:125</note>
       </notes>
       <segment>
         <source>Tipps, Trainingspläne und Motivation rund um Liegestütze – von Einsteiger bis Fortgeschritten.</source>
@@ -967,7 +976,7 @@
     </unit>
     <unit id="seo.default.title">
       <notes>
-        <note category="location">web/src/app/app.ts:147</note>
+        <note category="location">web/src/app/app.ts:171</note>
       </notes>
       <segment>
         <source>Pushup Tracker</source>
@@ -975,7 +984,7 @@
     </unit>
     <unit id="seo.default.description">
       <notes>
-        <note category="location">web/src/app/app.ts:150</note>
+        <note category="location">web/src/app/app.ts:174</note>
       </notes>
       <segment>
         <source>Tracke Reps, Trends und Streaks mit Pushup Tracker.</source>
@@ -983,7 +992,7 @@
     </unit>
     <unit id="sw.update.available">
       <notes>
-        <note category="location">web/src/app/app.ts:169</note>
+        <note category="location">web/src/app/app.ts:193</note>
       </notes>
       <segment>
         <source>Neue Version verfügbar</source>
@@ -991,7 +1000,7 @@
     </unit>
     <unit id="sw.update.reload">
       <notes>
-        <note category="location">web/src/app/app.ts:170</note>
+        <note category="location">web/src/app/app.ts:194</note>
       </notes>
       <segment>
         <source>Neu laden</source>
@@ -999,7 +1008,7 @@
     </unit>
     <unit id="sw.update.downloading">
       <notes>
-        <note category="location">web/src/app/app.ts:215</note>
+        <note category="location">web/src/app/app.ts:239</note>
       </notes>
       <segment>
         <source>Update wird im Hintergrund geladen …</source>
@@ -1007,7 +1016,7 @@
     </unit>
     <unit id="blog.article.back">
       <notes>
-        <note category="location">web/src/app/blog/blog-article.component.ts:24,26</note>
+        <note category="location">web/src/app/blog/blog-article.component.ts:25,27</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">arrow_back</pc> Blog </source>
@@ -1015,7 +1024,7 @@
     </unit>
     <unit id="blog.article.cta">
       <notes>
-        <note category="location">web/src/app/blog/blog-article.component.ts:43,45</note>
+        <note category="location">web/src/app/blog/blog-article.component.ts:44,46</note>
       </notes>
       <segment>
         <source> Kostenlos tracken – Jetzt registrieren </source>
@@ -1023,7 +1032,7 @@
     </unit>
     <unit id="blog.article.notFound">
       <notes>
-        <note category="location">web/src/app/blog/blog-article.component.ts:49,50</note>
+        <note category="location">web/src/app/blog/blog-article.component.ts:50,51</note>
       </notes>
       <segment>
         <source>Artikel nicht gefunden.</source>
@@ -1031,7 +1040,7 @@
     </unit>
     <unit id="blog.article.toList">
       <notes>
-        <note category="location">web/src/app/blog/blog-article.component.ts:51,55</note>
+        <note category="location">web/src/app/blog/blog-article.component.ts:52,56</note>
       </notes>
       <segment>
         <source>Zur Übersicht</source>
@@ -1369,6 +1378,320 @@
       </notes>
       <segment>
         <source> Privacy first: Dein Nutzername wird nicht angezeigt, wenn du es nicht möchtest. </source>
+      </segment>
+    </unit>
+    <unit id="reminders.page.title">
+      <notes>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:38,40</note>
+      </notes>
+      <segment>
+        <source>🔔 Erinnerungen</source>
+      </segment>
+    </unit>
+    <unit id="reminders.page.subtitle">
+      <notes>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:41,43</note>
+      </notes>
+      <segment>
+        <source>Liegestütz-Erinnerungen &amp; Push-Benachrichtigungen</source>
+      </segment>
+    </unit>
+    <unit id="reminder.section.title">
+      <notes>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:48,50</note>
+      </notes>
+      <segment>
+        <source>🔔 Erinnerungen / Reminders</source>
+      </segment>
+    </unit>
+    <unit id="reminder.enabled.label">
+      <notes>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:56,57</note>
+      </notes>
+      <segment>
+        <source> Liegestütz-Erinnerungen aktivieren </source>
+      </segment>
+    </unit>
+    <unit id="reminder.permission.denied.hint">
+      <notes>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:64,66</note>
+      </notes>
+      <segment>
+        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">warning</pc> Benachrichtigungen sind im Browser blockiert. Bitte in den Browser-Einstellungen erlauben. </source>
+      </segment>
+    </unit>
+    <unit id="reminder.permission.granted">
+      <notes>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:72,74</note>
+      </notes>
+      <segment>
+        <source>Benachrichtigungen erlaubt</source>
+      </segment>
+    </unit>
+    <unit id="reminder.permission.unsupported">
+      <notes>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:80,82</note>
+      </notes>
+      <segment>
+        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">info</pc> Dein Browser unterstützt keine Benachrichtigungen. </source>
+      </segment>
+    </unit>
+    <unit id="reminder.interval.label">
+      <notes>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:90,91</note>
+      </notes>
+      <segment>
+        <source> Erinnerungsintervall </source>
+      </segment>
+    </unit>
+    <unit id="reminder.interval.aria">
+      <notes>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:98,99</note>
+      </notes>
+      <segment>
+        <source>Intervall-Voreinstellungen</source>
+      </segment>
+    </unit>
+    <unit id="reminder.interval.30min">
+      <notes>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:104,105</note>
+      </notes>
+      <segment>
+        <source>30 Min</source>
+      </segment>
+    </unit>
+    <unit id="reminder.interval.1h">
+      <notes>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:107,108</note>
+      </notes>
+      <segment>
+        <source>1 Std</source>
+      </segment>
+    </unit>
+    <unit id="reminder.interval.2h">
+      <notes>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:110,111</note>
+      </notes>
+      <segment>
+        <source>2 Std</source>
+      </segment>
+    </unit>
+    <unit id="reminder.interval.4h">
+      <notes>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:113,114</note>
+      </notes>
+      <segment>
+        <source>4 Std</source>
+      </segment>
+    </unit>
+    <unit id="reminder.interval.custom.label">
+      <notes>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:119,121</note>
+      </notes>
+      <segment>
+        <source>Benutzerdefiniert (Min)</source>
+      </segment>
+    </unit>
+    <unit id="reminder.interval.hint">
+      <notes>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:138,140</note>
+      </notes>
+      <segment>
+        <source>15–480 Minuten</source>
+      </segment>
+    </unit>
+    <unit id="reminder.language.label">
+      <notes>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:145,146</note>
+      </notes>
+      <segment>
+        <source> Sprache der Zitate </source>
+      </segment>
+    </unit>
+    <unit id="reminder.language.aria">
+      <notes>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:153,154</note>
+      </notes>
+      <segment>
+        <source>Erinnerungssprache</source>
+      </segment>
+    </unit>
+    <unit id="reminder.language.de">
+      <notes>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:157,158</note>
+      </notes>
+      <segment>
+        <source>DE</source>
+      </segment>
+    </unit>
+    <unit id="reminder.language.en">
+      <notes>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:160,161</note>
+      </notes>
+      <segment>
+        <source>EN</source>
+      </segment>
+    </unit>
+    <unit id="reminder.quietHours.label">
+      <notes>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:167,168</note>
+      </notes>
+      <segment>
+        <source> Ruhezeiten </source>
+      </segment>
+    </unit>
+    <unit id="reminder.quietHours.from">
+      <notes>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:173,175</note>
+      </notes>
+      <segment>
+        <source>Von</source>
+      </segment>
+    </unit>
+    <unit id="reminder.quietHours.to">
+      <notes>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:186,187</note>
+      </notes>
+      <segment>
+        <source>Bis</source>
+      </segment>
+    </unit>
+    <unit id="reminder.quietHours.remove.aria">
+      <notes>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:201,202</note>
+      </notes>
+      <segment>
+        <source>Ruhezeit entfernen</source>
+      </segment>
+    </unit>
+    <unit id="reminder.quietHours.add">
+      <notes>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:214,216</note>
+      </notes>
+      <segment>
+        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">add</pc> Ruhezeit hinzufügen </source>
+      </segment>
+    </unit>
+    <unit id="reminder.save">
+      <notes>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:229,231</note>
+      </notes>
+      <segment>
+        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">save</pc> Erinnerungen speichern </source>
+      </segment>
+    </unit>
+    <unit id="reminder.saved">
+      <notes>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:233,235</note>
+      </notes>
+      <segment>
+        <source>Gespeichert.</source>
+      </segment>
+    </unit>
+    <unit id="push.section.title">
+      <notes>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:240,241</note>
+      </notes>
+      <segment>
+        <source>🔔 Erinnerungen</source>
+      </segment>
+    </unit>
+    <unit id="push.section.desc">
+      <notes>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:242,245</note>
+      </notes>
+      <segment>
+        <source> Wir tippen dir auf die Schulter, wenn es Zeit für Liegestütze ist. </source>
+      </segment>
+    </unit>
+    <unit id="push.status.unsupported">
+      <notes>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:247,249</note>
+      </notes>
+      <segment>
+        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">info</pc> Dein Browser unterstützt keine Push-Benachrichtigungen. </source>
+      </segment>
+    </unit>
+    <unit id="push.status.denied">
+      <notes>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:252,254</note>
+      </notes>
+      <segment>
+        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">warning</pc> Push-Benachrichtigungen sind blockiert. Bitte in den Browser-Einstellungen erlauben. </source>
+      </segment>
+    </unit>
+    <unit id="push.status.subscribed">
+      <notes>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:261,263</note>
+      </notes>
+      <segment>
+        <source>Erinnerungen aktiv ✓</source>
+      </segment>
+    </unit>
+    <unit id="push.unsubscribe">
+      <notes>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:271,273</note>
+      </notes>
+      <segment>
+        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">notifications_off</pc> Deaktivieren </source>
+      </segment>
+    </unit>
+    <unit id="push.device.count">
+      <notes>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:279,280</note>
+      </notes>
+      <segment>
+        <source> Aktiv auf <ph id="0" equiv="INTERPOLATION" disp="{{ pushService.deviceCount() }}"/> Geräten </source>
+      </segment>
+    </unit>
+    <unit id="push.cta.desc">
+      <notes>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:285,286</note>
+      </notes>
+      <segment>
+        <source> Nie wieder eine Einheit verpassen. </source>
+      </segment>
+    </unit>
+    <unit id="push.subscribe">
+      <notes>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:295,297</note>
+      </notes>
+      <segment>
+        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">notifications</pc> Push aktivieren </source>
+      </segment>
+    </unit>
+    <unit id="push.subscribe.error">
+      <notes>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:429</note>
+      </notes>
+      <segment>
+        <source>Push konnte nicht aktiviert werden.</source>
+      </segment>
+    </unit>
+    <unit id="snackbar.close">
+      <notes>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:430</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:450</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:511</note>
+      </notes>
+      <segment>
+        <source>Schließen</source>
+      </segment>
+    </unit>
+    <unit id="reminder.permission.snackbar">
+      <notes>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:449</note>
+      </notes>
+      <segment>
+        <source>Benachrichtigungen sind blockiert. Bitte in den Browser-Einstellungen erlauben.</source>
+      </segment>
+    </unit>
+    <unit id="reminder.save.error">
+      <notes>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:510</note>
+      </notes>
+      <segment>
+        <source>Einstellungen konnten nicht gespeichert werden.</source>
       </segment>
     </unit>
     <unit id="selectRangeTitle">
@@ -1931,7 +2254,7 @@
     </unit>
     <unit id="settingsTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:49,50</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:43,44</note>
       </notes>
       <segment>
         <source>Einstellungen</source>
@@ -1939,7 +2262,7 @@
     </unit>
     <unit id="settingsSubtitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:51,52</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:45,46</note>
       </notes>
       <segment>
         <source>User-Profil &amp; Tagesziel</source>
@@ -1947,7 +2270,7 @@
     </unit>
     <unit id="guest.banner.text">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:60,62</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:54,56</note>
       </notes>
       <segment>
         <source>Du nutzt PUS als Gast. Erstelle ein Konto um alle Funktionen zu nutzen.</source>
@@ -1955,7 +2278,7 @@
     </unit>
     <unit id="guest.banner.cta">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:67,69</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:61,63</note>
       </notes>
       <segment>
         <source>Konto erstellen</source>
@@ -1963,7 +2286,7 @@
     </unit>
     <unit id="displayNameLabel">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:73,74</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:67,68</note>
       </notes>
       <segment>
         <source>Anzeigename</source>
@@ -1971,7 +2294,7 @@
     </unit>
     <unit id="displayNamePlaceholder">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:79</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:73</note>
       </notes>
       <segment>
         <source>Wolf</source>
@@ -1979,7 +2302,7 @@
     </unit>
     <unit id="settings.displayNameHint">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:82,84</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:76,78</note>
       </notes>
       <segment>
         <source>Kann in der Bestenliste angezeigt werden.</source>
@@ -1987,7 +2310,7 @@
     </unit>
     <unit id="settings.leaderboardOptIn">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:91,92</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:85,86</note>
       </notes>
       <segment>
         <source> In Bestenliste anzeigen </source>
@@ -1995,7 +2318,7 @@
     </unit>
     <unit id="settings.leaderboardOptOutHint">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:95,98</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:89,92</note>
       </notes>
       <segment>
         <source> Wenn deaktiviert, wird dein Profil in der Bestenliste nicht angezeigt. </source>
@@ -2003,7 +2326,7 @@
     </unit>
     <unit id="settings.adsConsentOptIn">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:104,105</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:98,99</note>
       </notes>
       <segment>
         <source> Personalisierte Werbung aktivieren </source>
@@ -2011,7 +2334,7 @@
     </unit>
     <unit id="settings.adsConsentHint">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:108,111</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:102,105</note>
       </notes>
       <segment>
         <source> Steuert, ob Werbe-Slots im Dashboard geladen werden dürfen. </source>
@@ -2019,7 +2342,7 @@
     </unit>
     <unit id="dailyGoalLabel">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:112,113</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:106,107</note>
       </notes>
       <segment>
         <source>Tagesziel (Reps)</source>
@@ -2027,7 +2350,7 @@
     </unit>
     <unit id="dailyGoalPlaceholder">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:120</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:114</note>
       </notes>
       <segment>
         <source>100</source>
@@ -2035,7 +2358,7 @@
     </unit>
     <unit id="settings.goalHint">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:123,125</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:117,119</note>
       </notes>
       <segment>
         <source>Wird prominent in der Toolbar angezeigt.</source>
@@ -2043,7 +2366,7 @@
     </unit>
     <unit id="saveSettings">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:140,142</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:134,136</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">save</pc> Speichern </source>
@@ -2051,7 +2374,7 @@
     </unit>
     <unit id="saving">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:144,145</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:138,139</note>
       </notes>
       <segment>
         <source>Speichert…</source>
@@ -2059,216 +2382,7 @@
     </unit>
     <unit id="saved">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:147,148</note>
-      </notes>
-      <segment>
-        <source>Gespeichert.</source>
-      </segment>
-    </unit>
-    <unit id="reminders.page.title">
-      <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:38</note>
-      </notes>
-      <segment>
-        <source>🔔 Erinnerungen</source>
-      </segment>
-    </unit>
-    <unit id="reminders.page.subtitle">
-      <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:40</note>
-      </notes>
-      <segment>
-        <source>Liegestütz-Erinnerungen &amp; Push-Benachrichtigungen</source>
-      </segment>
-    </unit>
-    <unit id="reminder.section.title">
-      <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:152,154</note>
-      </notes>
-      <segment>
-        <source>🔔 Erinnerungen / Reminders</source>
-      </segment>
-    </unit>
-    <unit id="reminder.enabled.label">
-      <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:160,161</note>
-      </notes>
-      <segment>
-        <source> Liegestütz-Erinnerungen aktivieren </source>
-      </segment>
-    </unit>
-    <unit id="reminder.permission.denied.hint">
-      <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:168,170</note>
-      </notes>
-      <segment>
-        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">warning</pc> Benachrichtigungen sind im Browser blockiert. Bitte in den Browser-Einstellungen erlauben. </source>
-      </segment>
-    </unit>
-    <unit id="reminder.permission.granted">
-      <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:176,178</note>
-      </notes>
-      <segment>
-        <source>Benachrichtigungen erlaubt</source>
-      </segment>
-    </unit>
-    <unit id="reminder.permission.unsupported">
-      <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:184,186</note>
-      </notes>
-      <segment>
-        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">info</pc> Dein Browser unterstützt keine Benachrichtigungen. </source>
-      </segment>
-    </unit>
-    <unit id="reminder.interval.label">
-      <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:194,195</note>
-      </notes>
-      <segment>
-        <source> Erinnerungsintervall </source>
-      </segment>
-    </unit>
-    <unit id="reminder.interval.aria">
-      <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:202,203</note>
-      </notes>
-      <segment>
-        <source>Intervall-Voreinstellungen</source>
-      </segment>
-    </unit>
-    <unit id="reminder.interval.30min">
-      <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:208,209</note>
-      </notes>
-      <segment>
-        <source>30 Min</source>
-      </segment>
-    </unit>
-    <unit id="reminder.interval.1h">
-      <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:211,212</note>
-      </notes>
-      <segment>
-        <source>1 Std</source>
-      </segment>
-    </unit>
-    <unit id="reminder.interval.2h">
-      <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:214,215</note>
-      </notes>
-      <segment>
-        <source>2 Std</source>
-      </segment>
-    </unit>
-    <unit id="reminder.interval.4h">
-      <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:217,218</note>
-      </notes>
-      <segment>
-        <source>4 Std</source>
-      </segment>
-    </unit>
-    <unit id="reminder.interval.custom.label">
-      <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:223,225</note>
-      </notes>
-      <segment>
-        <source>Benutzerdefiniert (Min)</source>
-      </segment>
-    </unit>
-    <unit id="reminder.interval.hint">
-      <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:242,244</note>
-      </notes>
-      <segment>
-        <source>15–480 Minuten</source>
-      </segment>
-    </unit>
-    <unit id="reminder.language.label">
-      <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:249,250</note>
-      </notes>
-      <segment>
-        <source> Sprache der Zitate </source>
-      </segment>
-    </unit>
-    <unit id="reminder.language.aria">
-      <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:257,258</note>
-      </notes>
-      <segment>
-        <source>Erinnerungssprache</source>
-      </segment>
-    </unit>
-    <unit id="reminder.language.de">
-      <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:261,262</note>
-      </notes>
-      <segment>
-        <source>DE</source>
-      </segment>
-    </unit>
-    <unit id="reminder.language.en">
-      <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:264,265</note>
-      </notes>
-      <segment>
-        <source>EN</source>
-      </segment>
-    </unit>
-    <unit id="reminder.quietHours.label">
-      <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:271,272</note>
-      </notes>
-      <segment>
-        <source> Ruhezeiten </source>
-      </segment>
-    </unit>
-    <unit id="reminder.quietHours.from">
-      <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:277,279</note>
-      </notes>
-      <segment>
-        <source>Von</source>
-      </segment>
-    </unit>
-    <unit id="reminder.quietHours.to">
-      <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:290,291</note>
-      </notes>
-      <segment>
-        <source>Bis</source>
-      </segment>
-    </unit>
-    <unit id="reminder.quietHours.remove.aria">
-      <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:305,306</note>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:202</note>
-      </notes>
-      <segment>
-        <source>Ruhezeit entfernen</source>
-      </segment>
-    </unit>
-    <unit id="reminder.quietHours.add">
-      <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:318,320</note>
-      </notes>
-      <segment>
-        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">add</pc> Ruhezeit hinzufügen </source>
-      </segment>
-    </unit>
-    <unit id="reminder.save">
-      <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:333,335</note>
-      </notes>
-      <segment>
-        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">save</pc> Erinnerungen speichern </source>
-      </segment>
-    </unit>
-    <unit id="reminder.saved">
-      <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:337,339</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:141,142</note>
       </notes>
       <segment>
         <source>Gespeichert.</source>
@@ -2276,7 +2390,7 @@
     </unit>
     <unit id="settings.remindersLinkTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:146</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:146,147</note>
       </notes>
       <segment>
         <source>🔔 Erinnerungen</source>
@@ -2284,23 +2398,23 @@
     </unit>
     <unit id="settings.remindersLinkDesc">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:147</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:148,150</note>
       </notes>
       <segment>
-        <source>Liegestütz-Erinnerungen und Push-Benachrichtigungen konfigurieren.</source>
+        <source> Liegestütz-Erinnerungen und Push-Benachrichtigungen konfigurieren. </source>
       </segment>
     </unit>
     <unit id="settings.remindersLinkCta">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:153</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:155,157</note>
       </notes>
       <segment>
-        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">notifications</pc> Erinnerungen verwalten</source>
+        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">notifications</pc> Erinnerungen verwalten </source>
       </segment>
     </unit>
     <unit id="settings.dangerZoneTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:343,344</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:161,162</note>
       </notes>
       <segment>
         <source>Danger Zone</source>
@@ -2308,7 +2422,7 @@
     </unit>
     <unit id="settings.dangerZoneBody">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:345,347</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:163,165</note>
       </notes>
       <segment>
         <source> Konto löschen entfernt dein Konto. Trainingsdaten bleiben für statistische Auswertung anonymisiert erhalten. </source>
@@ -2316,7 +2430,7 @@
     </unit>
     <unit id="settings.deleteAccount">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:356,358</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:174,176</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">warning</pc> Konto löschen </source>
@@ -2324,7 +2438,7 @@
     </unit>
     <unit id="settings.deletingAccount">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:361,364</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:179,182</note>
       </notes>
       <segment>
         <source>Konto wird gelöscht…</source>
@@ -2332,7 +2446,7 @@
     </unit>
     <unit id="settings.deleteDialogTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:368,370</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:186,188</note>
       </notes>
       <segment>
         <source> Account wirklich löschen? </source>
@@ -2340,7 +2454,7 @@
     </unit>
     <unit id="settings.deleteDialogWarning">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:372,374</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:190,192</note>
       </notes>
       <segment>
         <source> Achtung: Diese Aktion ist nicht rückgängig. </source>
@@ -2348,7 +2462,7 @@
     </unit>
     <unit id="settings.deleteDialogInfo">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:375,377</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:193,195</note>
       </notes>
       <segment>
         <source> Dein Konto wird gelöscht. Trainingsdaten bleiben für statistische Auswertung anonymisiert erhalten. </source>
@@ -2356,7 +2470,7 @@
     </unit>
     <unit id="settings.deleteDialogPhraseLabel">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:380,382</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:198,200</note>
       </notes>
       <segment>
         <source>Bestätigungswort eingeben</source>
@@ -2364,7 +2478,7 @@
     </unit>
     <unit id="settings.deleteDialogPhraseHint">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:389,391</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:207,209</note>
       </notes>
       <segment>
         <source>Bitte exakt „löscchen“ eingeben.</source>
@@ -2372,26 +2486,10 @@
     </unit>
     <unit id="settings.deleteConfirmFinal">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:406,408</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:224,226</note>
       </notes>
       <segment>
         <source> Final löschen </source>
-      </segment>
-    </unit>
-    <unit id="reminder.permission.snackbar">
-      <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:644</note>
-      </notes>
-      <segment>
-        <source>Benachrichtigungen sind blockiert. Bitte in den Browser-Einstellungen erlauben.</source>
-      </segment>
-    </unit>
-    <unit id="snackbar.close">
-      <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:645</note>
-      </notes>
-      <segment>
-        <source>Schließen</source>
       </segment>
     </unit>
     <unit id="brandLogoAlt">
@@ -2620,7 +2718,7 @@
     </unit>
     <unit id="period.today">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:58</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:60</note>
       </notes>
       <segment>
         <source>Heute</source>
@@ -2628,7 +2726,7 @@
     </unit>
     <unit id="period.day">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:59</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:61</note>
       </notes>
       <segment>
         <source>Tag</source>
@@ -2636,7 +2734,7 @@
     </unit>
     <unit id="period.week">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:60</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:62</note>
       </notes>
       <segment>
         <source>Woche</source>
@@ -2644,7 +2742,7 @@
     </unit>
     <unit id="period.month">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:61</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:63</note>
       </notes>
       <segment>
         <source>Monat</source>
@@ -2652,7 +2750,7 @@
     </unit>
     <unit id="period.year">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:62</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:64</note>
       </notes>
       <segment>
         <source>Jahr</source>
@@ -2660,7 +2758,7 @@
     </unit>
     <unit id="period.range">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:63</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:65</note>
       </notes>
       <segment>
         <source>Zeitraum</source>

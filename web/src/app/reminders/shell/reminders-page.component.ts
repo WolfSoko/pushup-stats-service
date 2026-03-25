@@ -443,11 +443,14 @@ export class RemindersPageComponent {
     if (enabled && this.reminderPermission.status() !== 'granted') {
       const result = await this.reminderPermission.requestPermission();
       if (result !== 'granted') {
-        this.snackBar.open(
-          $localize`:@@reminder.permission.snackbar:Benachrichtigungen sind blockiert. Bitte in den Browser-Einstellungen erlauben.`,
-          $localize`:@@snackbar.close:Schließen`,
-          { duration: 5000 }
-        );
+        const status = this.reminderPermission.status();
+        if (status !== 'unsupported') {
+          this.snackBar.open(
+            $localize`:@@reminder.permission.snackbar:Benachrichtigungen sind blockiert. Bitte in den Browser-Einstellungen erlauben.`,
+            $localize`:@@snackbar.close:Schließen`,
+            { duration: 5000 }
+          );
+        }
         return;
       }
     }
@@ -501,16 +504,23 @@ export class RemindersPageComponent {
     this.reminderSaving.set(true);
     try {
       await this.reminderStore.saveConfig(userId, config);
-      if (!this.reminderStore.error()) {
-        if (config.enabled) {
-          this.reminderService.start();
-        } else {
-          this.reminderService.stop();
-        }
-        this.reminderSaved.set(true);
-        this.reminderDirty.set(false);
-        setTimeout(() => this.reminderSaved.set(false), 1500);
+      const err = this.reminderStore.error();
+      if (err) {
+        this.snackBar.open(
+          $localize`:@@reminder.save.error:Einstellungen konnten nicht gespeichert werden.`,
+          $localize`:@@snackbar.close:Schließen`,
+          { duration: 5000 }
+        );
+        return;
       }
+      if (config.enabled) {
+        this.reminderService.start();
+      } else {
+        this.reminderService.stop();
+      }
+      this.reminderSaved.set(true);
+      this.reminderDirty.set(false);
+      setTimeout(() => this.reminderSaved.set(false), 1500);
     } finally {
       this.reminderSaving.set(false);
     }

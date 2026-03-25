@@ -4209,6 +4209,12 @@ Deine Position: # ·  Reps        </source>
         <target>Notifications are blocked. Please allow them in your browser settings.</target>
       </segment>
     </unit>
+    <unit id="reminder.save.error">
+      <segment state="translated">
+        <source>Einstellungen konnten nicht gespeichert werden.</source>
+        <target>Settings could not be saved.</target>
+      </segment>
+    </unit>
     <unit id="snackbar.close">
       <segment state="translated">
         <source>Schließen</source>
