@@ -16,8 +16,7 @@ function setNotification(
     Object.defineProperty(window, 'Notification', {
       value: {
         permission,
-        requestPermission:
-          requestFn ?? vitest.fn().mockResolvedValue(permission),
+        requestPermission: requestFn ?? jest.fn().mockResolvedValue(permission),
       },
       configurable: true,
       writable: true,
@@ -39,7 +38,7 @@ describe('ReminderPermissionService', () => {
       configurable: true,
       writable: true,
     });
-    vitest.restoreAllMocks();
+    jest.restoreAllMocks();
   });
 
   it('returns "unsupported" when Notification API is not available', async () => {
@@ -79,7 +78,7 @@ describe('ReminderPermissionService', () => {
   });
 
   it('updates status signal to "granted" after requestPermission resolves granted', async () => {
-    const requestFn = vitest.fn().mockResolvedValue('granted');
+    const requestFn = jest.fn().mockResolvedValue('granted');
     setNotification(true, 'default', requestFn);
     const { fixture } = await render('', {
       providers: [ReminderPermissionService],
@@ -92,7 +91,7 @@ describe('ReminderPermissionService', () => {
   });
 
   it('updates status signal to "denied" after requestPermission resolves denied', async () => {
-    const requestFn = vitest.fn().mockResolvedValue('denied');
+    const requestFn = jest.fn().mockResolvedValue('denied');
     setNotification(true, 'default', requestFn);
     const { fixture } = await render('', {
       providers: [ReminderPermissionService],

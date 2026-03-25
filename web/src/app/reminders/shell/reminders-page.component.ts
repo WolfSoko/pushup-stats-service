@@ -198,7 +198,7 @@ import {
                         type="button"
                         mat-icon-button
                         (click)="removeQuietHour($index)"
-                        aria-label="Remove quiet hour"
+                        aria-label="Ruhezeit entfernen"
                         i18n-aria-label="@@reminder.quietHours.remove.aria"
                       >
                         <mat-icon>remove_circle_outline</mat-icon>

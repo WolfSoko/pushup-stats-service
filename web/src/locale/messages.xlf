@@ -933,6 +933,22 @@
         <source>Öffentliche Bestenliste für tägliche, wöchentliche und monatliche Pushup-Reps.</source>
       </segment>
     </unit>
+    <unit id="seo.reminders.title">
+      <notes>
+        <note category="location">web/src/app/app.routes.ts:98</note>
+      </notes>
+      <segment>
+        <source>Erinnerungen – Pushup Tracker</source>
+      </segment>
+    </unit>
+    <unit id="seo.reminders.description">
+      <notes>
+        <note category="location">web/src/app/app.routes.ts:99</note>
+      </notes>
+      <segment>
+        <source>Konfiguriere Liegestütz-Erinnerungen und Push-Benachrichtigungen.</source>
+      </segment>
+    </unit>
     <unit id="seo.blog.title">
       <notes>
         <note category="location">web/src/app/app.routes.ts:112</note>
@@ -2049,6 +2065,22 @@
         <source>Gespeichert.</source>
       </segment>
     </unit>
+    <unit id="reminders.page.title">
+      <notes>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:38</note>
+      </notes>
+      <segment>
+        <source>🔔 Erinnerungen</source>
+      </segment>
+    </unit>
+    <unit id="reminders.page.subtitle">
+      <notes>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:40</note>
+      </notes>
+      <segment>
+        <source>Liegestütz-Erinnerungen &amp; Push-Benachrichtigungen</source>
+      </segment>
+    </unit>
     <unit id="reminder.section.title">
       <notes>
         <note category="location">web/src/app/stats/shell/settings-page.component.ts:152,154</note>
@@ -2239,6 +2271,30 @@
       </notes>
       <segment>
         <source>Gespeichert.</source>
+      </segment>
+    </unit>
+    <unit id="settings.remindersLinkTitle">
+      <notes>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:146</note>
+      </notes>
+      <segment>
+        <source>🔔 Erinnerungen</source>
+      </segment>
+    </unit>
+    <unit id="settings.remindersLinkDesc">
+      <notes>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:147</note>
+      </notes>
+      <segment>
+        <source>Liegestütz-Erinnerungen und Push-Benachrichtigungen konfigurieren.</source>
+      </segment>
+    </unit>
+    <unit id="settings.remindersLinkCta">
+      <notes>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:153</note>
+      </notes>
+      <segment>
+        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">notifications</pc> Erinnerungen verwalten</source>
       </segment>
     </unit>
     <unit id="settings.dangerZoneTitle">

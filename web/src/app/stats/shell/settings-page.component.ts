@@ -204,7 +204,7 @@ import { PushSubscriptionService } from '@pu-reminders/reminders';
                   placeholder="löscchen"
                 />
                 <mat-hint i18n="@@settings.deleteDialogPhraseHint"
-                  >Bitte exakt „löscchen" eingeben.</mat-hint
+                  >Bitte exakt „löscchen“ eingeben.</mat-hint
                 >
               </mat-form-field>
               @if (deleteDialogError()) {
@@ -441,7 +441,7 @@ export class SettingsPageComponent {
 
   async confirmDeleteFromDialog(): Promise<void> {
     if (this.deletePhraseInput().trim().toLowerCase() !== 'löscchen') {
-      this.deleteDialogError.set('Bitte exakt „löscchen" eingeben.');
+      this.deleteDialogError.set('Bitte exakt „löscchen“ eingeben.');
       return;
     }
 
