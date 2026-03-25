@@ -64,16 +64,15 @@
       </a>
 
       @if (isLoggedIn()) {
-        <a
-          mat-list-item
-          routerLink="/settings"
-          fragment="reminders"
-          routerLinkActive="active"
-          (click)="navOpen.set(false)"
-        >
-          <mat-icon matListItemIcon>notifications</mat-icon>
-          <span matListItemTitle i18n="@@nav.reminders">Erinnerungen</span>
-        </a>
+      <a
+        mat-list-item
+        routerLink="/reminders"
+        routerLinkActive="active"
+        (click)="navOpen.set(false)"
+      >
+        <mat-icon matListItemIcon>notifications</mat-icon>
+        <span matListItemTitle i18n="@@nav.reminders">Erinnerungen</span>
+      </a>
       }
 
       <mat-divider></mat-divider>
@@ -176,12 +175,12 @@
       >
       <a routerLink="/blog" routerLinkActive="active" i18n="@@nav.blog">Blog</a>
       @if (isLoggedIn()) {
-        <a
-          routerLink="/settings"
-          fragment="reminders"
-          routerLinkActive="active"
-          i18n="@@nav.reminders"
-        >Erinnerungen</a>
+      <a
+        routerLink="/reminders"
+        routerLinkActive="active"
+        i18n="@@nav.reminders"
+        >Erinnerungen</a
+      >
       }
     </nav>
 

@@ -6,6 +6,7 @@ import { Title } from '@angular/platform-browser';
 import { of } from 'rxjs';
 import { StatsApiService, UserConfigApiService } from '@pu-stats/data-access';
 import { AuthStore, UserContextService } from '@pu-auth/auth';
+import { VAPID_PUBLIC_KEY } from '@pu-reminders/reminders';
 import { App } from './app';
 
 describe('App (testing-library)', () => {
@@ -61,6 +62,7 @@ describe('App (testing-library)', () => {
         { provide: AuthStore, useValue: authMock },
         { provide: UserConfigApiService, useValue: userConfigApiMock },
         { provide: StatsApiService, useValue: statsApiMock },
+        { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
       ],
     });
     expect(fixture.componentInstance).toBeTruthy();
@@ -83,6 +85,7 @@ describe('App (testing-library)', () => {
         { provide: AuthStore, useValue: authMock },
         { provide: UserConfigApiService, useValue: userConfigApiMock },
         { provide: StatsApiService, useValue: statsApiMock },
+        { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
       ],
     });
     expect(screen.getAllByText('Dashboard').length).toBeGreaterThan(0);
@@ -126,6 +129,7 @@ describe('App (testing-library)', () => {
         { provide: AuthStore, useValue: authMock },
         { provide: UserConfigApiService, useValue: userConfigApiMock },
         { provide: StatsApiService, useValue: statsApiMock },
+        { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
       ],
     });
 
@@ -152,6 +156,7 @@ describe('App (testing-library)', () => {
         { provide: AuthStore, useValue: authMock },
         { provide: UserConfigApiService, useValue: userConfigApiMock },
         { provide: StatsApiService, useValue: statsApiMock },
+        { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
       ],
     });
 

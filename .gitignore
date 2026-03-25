@@ -60,3 +60,4 @@ vite.config.*.timestamp*
 CLAUDE.md
 docs/superpowers/
 firebase-debug.log
+package-lock.json

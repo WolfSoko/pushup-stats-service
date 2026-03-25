@@ -33,9 +33,11 @@ import { filter, firstValueFrom } from 'rxjs';
 import { AdsConsentStateService } from '@pu-stats/ads';
 import { SeoService } from './core/seo.service';
 import { UserContextService } from '@pu-auth/auth';
-import { ReminderService } from './core/reminder/reminder.service';
-import { ReminderStore } from './core/reminder/reminder.store';
-import { PushSubscriptionService } from './core/push/push-subscription.service';
+import {
+  ReminderService,
+  ReminderStore,
+  PushSubscriptionService,
+} from '@pu-reminders/reminders';
 
 @Component({
   selector: 'app-root',
@@ -63,7 +65,9 @@ export class App {
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly user = inject(UserContextService);
   readonly isAdmin = computed(() => this.user.isAdmin());
-  readonly isLoggedIn = computed(() => !!this.user.userIdSafe() && !this.user.isGuest());
+  readonly isLoggedIn = computed(
+    () => !!this.user.userIdSafe() && !this.user.isGuest()
+  );
   private readonly pushService = inject(PushSubscriptionService);
   private readonly _initPushBridge = afterNextRender(() => {
     // Register SW→App message bridge at startup, not just when settings page is visited

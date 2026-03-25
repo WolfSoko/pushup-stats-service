@@ -3016,6 +3016,24 @@ Deine Position: # ·  Reps        </source>
         <target> Deleting your account removes your account. Training data remains anonymized for statistical analysis. </target>
       </segment>
     </unit>
+    <unit id="settings.remindersLinkTitle">
+      <segment state="translated">
+        <source>🔔 Erinnerungen</source>
+        <target>🔔 Reminders</target>
+      </segment>
+    </unit>
+    <unit id="settings.remindersLinkDesc">
+      <segment state="translated">
+        <source>Liegestütz-Erinnerungen und Push-Benachrichtigungen konfigurieren.</source>
+        <target>Configure push-up reminders and push notifications.</target>
+      </segment>
+    </unit>
+    <unit id="settings.remindersLinkCta">
+      <segment state="translated">
+        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">notifications</pc> Erinnerungen verwalten</source>
+        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">notifications</pc> Manage reminders</target>
+      </segment>
+    </unit>
     <unit id="settings.dangerZoneTitle">
       <segment state="translated">
         <source/>
@@ -3921,6 +3939,18 @@ Deine Position: # ·  Reps        </source>
         <target>Blog</target>
       </segment>
     </unit>
+    <unit id="seo.reminders.title">
+      <segment state="translated">
+        <source>Erinnerungen – Pushup Tracker</source>
+        <target>Reminders – Pushup Tracker</target>
+      </segment>
+    </unit>
+    <unit id="seo.reminders.description">
+      <segment state="translated">
+        <source>Konfiguriere Liegestütz-Erinnerungen und Push-Benachrichtigungen.</source>
+        <target>Configure push-up reminders and push notifications.</target>
+      </segment>
+    </unit>
     <unit id="seo.blog.title">
       <segment state="translated">
         <source>Blog – Liegestütze Tipps &amp; Guides | Pushup Tracker</source>
@@ -4015,6 +4045,18 @@ Deine Position: # ·  Reps        </source>
       <segment state="translated">
         <source> Jede Wiederholung bringt dich näher ans Ziel. Dein nächstes Set wartet auf dich! </source>
         <target> Every rep brings you closer to your goal. Your next set is waiting for you! </target>
+      </segment>
+    </unit>
+    <unit id="reminders.page.title">
+      <segment state="translated">
+        <source>🔔 Erinnerungen</source>
+        <target>🔔 Reminders</target>
+      </segment>
+    </unit>
+    <unit id="reminders.page.subtitle">
+      <segment state="translated">
+        <source>Liegestütz-Erinnerungen &amp; Push-Benachrichtigungen</source>
+        <target>Push-up reminders &amp; push notifications</target>
       </segment>
     </unit>
     <unit id="reminder.section.title">
@@ -4139,7 +4181,7 @@ Deine Position: # ·  Reps        </source>
     </unit>
     <unit id="reminder.quietHours.remove.aria">
       <segment state="translated">
-        <source>Remove quiet hour</source>
+        <source>Ruhezeit entfernen</source>
         <target>Remove quiet hour</target>
       </segment>
     </unit>
@@ -4165,6 +4207,12 @@ Deine Position: # ·  Reps        </source>
       <segment state="translated">
         <source>Benachrichtigungen sind blockiert. Bitte in den Browser-Einstellungen erlauben.</source>
         <target>Notifications are blocked. Please allow them in your browser settings.</target>
+      </segment>
+    </unit>
+    <unit id="reminder.save.error">
+      <segment state="translated">
+        <source>Einstellungen konnten nicht gespeichert werden.</source>
+        <target>Settings could not be saved.</target>
       </segment>
     </unit>
     <unit id="snackbar.close">
