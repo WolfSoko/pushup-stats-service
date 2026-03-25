@@ -90,8 +90,10 @@ export interface AdminUser {
             @if (bulkLoading()) {
               <mat-spinner diameter="20" />
             } @else {
-              <mat-icon>delete_sweep</mat-icon>
-              <span i18n="@@admin.bulk.button">Inaktive löschen</span>
+              <ng-container>
+                <mat-icon>delete_sweep</mat-icon>
+                <span i18n="@@admin.bulk.button">Inaktive löschen</span>
+              </ng-container>
             }
           </button>
         </mat-card-actions>
