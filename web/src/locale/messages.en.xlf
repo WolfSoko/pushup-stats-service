@@ -4293,6 +4293,54 @@ Deine Position: # ·  Reps        </source>
         <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">notifications</pc> Enable reminders</target>
       </segment>
     </unit>
+    <unit id="quickAdd.fab.open">
+      <segment state="translated">
+        <source>Schnellerfassung öffnen</source>
+        <target>Open quick-add</target>
+      </segment>
+    </unit>
+    <unit id="quickAdd.fab.close">
+      <segment state="translated">
+        <source>Schnellerfassung schließen</source>
+        <target>Close quick-add</target>
+      </segment>
+    </unit>
+    <unit id="quickAdd.fab.customValue">
+      <segment state="translated">
+        <source>Eigener Wert</source>
+        <target>Custom value</target>
+      </segment>
+    </unit>
+    <unit id="quickAdd.fab.customValueAria">
+      <segment state="translated">
+        <source>Eigenen Wert eingeben</source>
+        <target>Enter custom value</target>
+      </segment>
+    </unit>
+    <unit id="quickAdd.fab.repAria">
+      <segment state="translated">
+        <source><ph id="0" equiv="REPS" disp="reps"/> Liegestütze hinzufügen</source>
+        <target>Add <ph id="0" equiv="REPS" disp="reps"/> push-ups</target>
+      </segment>
+    </unit>
+    <unit id="quickAdd.error.create">
+      <segment state="translated">
+        <source>Eintrag konnte nicht gespeichert werden.</source>
+        <target>Failed to save entry.</target>
+      </segment>
+    </unit>
+    <unit id="landing.feature.adaptive.title">
+      <segment state="translated">
+        <source>Smarte Schnellaktionen</source>
+        <target>Smart Quick Actions</target>
+      </segment>
+    </unit>
+    <unit id="landing.feature.adaptive.body">
+      <segment state="translated">
+        <source>Basierend auf deiner Trainingshistory schlägt die App automatisch passende Wiederholungszahlen vor. Ein Tap genügt.</source>
+        <target>Based on your training history, the app automatically suggests fitting rep counts. One tap is all it takes.</target>
+      </segment>
+    </unit>
   </file>
 
 

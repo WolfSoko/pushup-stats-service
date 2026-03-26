@@ -2764,5 +2764,69 @@
         <source>Zeitraum</source>
       </segment>
     </unit>
+    <unit id="quickAdd.fab.open">
+      <notes>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts</note>
+      </notes>
+      <segment>
+        <source>Schnellerfassung öffnen</source>
+      </segment>
+    </unit>
+    <unit id="quickAdd.fab.close">
+      <notes>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts</note>
+      </notes>
+      <segment>
+        <source>Schnellerfassung schließen</source>
+      </segment>
+    </unit>
+    <unit id="quickAdd.fab.customValue">
+      <notes>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.html</note>
+      </notes>
+      <segment>
+        <source>Eigener Wert</source>
+      </segment>
+    </unit>
+    <unit id="quickAdd.fab.customValueAria">
+      <notes>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.html</note>
+      </notes>
+      <segment>
+        <source>Eigenen Wert eingeben</source>
+      </segment>
+    </unit>
+    <unit id="quickAdd.fab.repAria">
+      <notes>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts</note>
+      </notes>
+      <segment>
+        <source><ph id="0" equiv="REPS" disp="reps"/> Liegestütze hinzufügen</source>
+      </segment>
+    </unit>
+    <unit id="quickAdd.error.create">
+      <notes>
+        <note category="location">web/src/app/app.ts</note>
+      </notes>
+      <segment>
+        <source>Eintrag konnte nicht gespeichert werden.</source>
+      </segment>
+    </unit>
+    <unit id="landing.feature.adaptive.title">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+      </notes>
+      <segment>
+        <source>Smarte Schnellaktionen</source>
+      </segment>
+    </unit>
+    <unit id="landing.feature.adaptive.body">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+      </notes>
+      <segment>
+        <source>Basierend auf deiner Trainingshistory schlägt die App automatisch passende Wiederholungszahlen vor. Ein Tap genügt.</source>
+      </segment>
+    </unit>
   </file>
 </xliff>
