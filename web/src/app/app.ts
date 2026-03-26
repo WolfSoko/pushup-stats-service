@@ -38,6 +38,10 @@ import {
   ReminderStore,
   PushSubscriptionService,
 } from '@pu-reminders/reminders';
+import {
+  AdaptiveQuickAddService,
+  QuickAddFabComponent,
+} from '@pu-stats/quick-add';
 
 @Component({
   selector: 'app-root',
@@ -53,6 +57,7 @@ import {
     MatListModule,
     MatDividerModule,
     UserMenuComponent,
+    QuickAddFabComponent,
   ],
   templateUrl: './app.html',
   styleUrl: './app.scss',
@@ -93,6 +98,22 @@ export class App {
   private readonly adsConsentState = inject(AdsConsentStateService);
   private readonly reminderService = inject(ReminderService);
   private readonly reminderStore = inject(ReminderStore);
+  private readonly adaptiveQuickAdd = inject(AdaptiveQuickAddService);
+
+  readonly recentEntriesResource = resource({
+    params: () => ({ userId: this.user.userIdSafe() }),
+    loader: async ({ params }) => {
+      if (!params.userId) return [];
+      const sevenDaysAgo = new Date();
+      sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+      const from = sevenDaysAgo.toISOString().slice(0, 10);
+      return firstValueFrom(this.statsApi.listPushups({ from }));
+    },
+  });
+
+  readonly quickAddSuggestions = computed(() =>
+    this.adaptiveQuickAdd.compute(this.recentEntriesResource.value() ?? [])
+  );
 
   setLanguage(lang: 'de' | 'en', ev?: Event): void {
     ev?.preventDefault();
@@ -204,6 +225,50 @@ export class App {
           });
         });
     }
+  }
+
+  handleQuickAdd(reps: number): void {
+    const now = new Date();
+    const y = now.getFullYear();
+    const m = String(now.getMonth() + 1).padStart(2, '0');
+    const d = String(now.getDate()).padStart(2, '0');
+    const hh = String(now.getHours()).padStart(2, '0');
+    const mm = String(now.getMinutes()).padStart(2, '0');
+    const timestamp = `${y}-${m}-${d}T${hh}:${mm}`;
+    this.statsApi
+      .createPushup({ timestamp, reps, source: 'quick-add' })
+      .subscribe({
+        next: () => {
+          this.snackBar.open(
+            $localize`:@@quickAdd.success.create:Eintrag gespeichert.`,
+            '',
+            {
+              duration: 2000,
+              horizontalPosition: 'center',
+              verticalPosition: 'bottom',
+            }
+          );
+          this.recentEntriesResource.reload();
+          this.dailyProgressResource.reload();
+        },
+        error: () =>
+          this.snackBar.open(
+            $localize`:@@quickAdd.error.create:Eintrag konnte nicht gespeichert werden.`,
+            '',
+            {
+              duration: 4000,
+              horizontalPosition: 'center',
+              verticalPosition: 'bottom',
+            }
+          ),
+      });
+  }
+
+  handleOpenDialog(): void {
+    void this.router.navigate(['/app'], {
+      queryParams: { log: '1' },
+      queryParamsHandling: 'merge',
+    });
   }
 
   async logout(): Promise<void> {

@@ -38,6 +38,7 @@ describe('App (testing-library)', () => {
         series: [],
       })
     ),
+    listPushups: vitest.fn().mockReturnValue(of([])),
   };
 
   beforeEach(() => {
