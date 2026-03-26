@@ -228,7 +228,13 @@ export class App {
   }
 
   handleQuickAdd(reps: number): void {
-    const timestamp = new Date().toISOString();
+    const now = new Date();
+    const y = now.getFullYear();
+    const m = String(now.getMonth() + 1).padStart(2, '0');
+    const d = String(now.getDate()).padStart(2, '0');
+    const hh = String(now.getHours()).padStart(2, '0');
+    const mm = String(now.getMinutes()).padStart(2, '0');
+    const timestamp = `${y}-${m}-${d}T${hh}:${mm}`;
     this.statsApi
       .createPushup({ timestamp, reps, source: 'quick-add' })
       .subscribe({
@@ -243,6 +249,7 @@ export class App {
             }
           );
           this.recentEntriesResource.reload();
+          this.dailyProgressResource.reload();
         },
         error: () =>
           this.snackBar.open(
@@ -258,7 +265,10 @@ export class App {
   }
 
   handleOpenDialog(): void {
-    void this.router.navigate(['/app'], { queryParams: { log: '1' } });
+    void this.router.navigate(['/app'], {
+      queryParams: { log: '1' },
+      queryParamsHandling: 'merge',
+    });
   }
 
   async logout(): Promise<void> {

@@ -8,25 +8,23 @@ export class AdaptiveQuickAddService {
    * Suggestions are rounded to the nearest 5, minimum 1.
    * Falls back to [1, 5, 10] when no history is available.
    */
-  compute(records: PushupRecord[]): number[] {
+  compute(records: PushupRecord[]): [number, number, number] {
     const recent = records.slice(-5);
     if (recent.length === 0) {
       return [1, 5, 10];
     }
     const avg = recent.reduce((sum, r) => sum + r.reps, 0) / recent.length;
-    const roundToFive = (v: number): number =>
-      Math.max(1, Math.round(v / 5) * 5);
-    const half = roundToFive(avg * 0.5);
-    const mid = roundToFive(avg);
-    const high = roundToFive(avg * 1.25);
-    const origOrder = [half, mid, high];
-    const deduped = [...new Set(origOrder)];
-    // Pad back to 3 if deduplication removed items — prefer duplicates over <3 items
-    while (deduped.length < 3) {
-      deduped.push(
-        origOrder[deduped.length] ?? origOrder[origOrder.length - 1]
-      );
+    const raw: [number, number, number] = [
+      Math.max(1, Math.round((avg * 0.5) / 5) * 5),
+      Math.max(1, Math.round(avg / 5) * 5),
+      Math.max(1, Math.round((avg * 1.25) / 5) * 5),
+    ];
+    const result: number[] = [];
+    for (const v of raw) {
+      if (!result.includes(v)) result.push(v);
     }
-    return deduped.slice(0, 3);
+    let i = 0;
+    while (result.length < 3) result.push(raw[i++ % raw.length]);
+    return result.slice(0, 3) as [number, number, number];
   }
 }

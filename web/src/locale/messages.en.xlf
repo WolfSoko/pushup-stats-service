@@ -4343,7 +4343,7 @@ Deine Position: # ·  Reps        </source>
     </unit>
     <unit id="landing.feature.adaptive.body">
       <segment state="translated">
-        <source>Basierend auf deiner Trainingshistory schlägt die App automatisch passende Wiederholungszahlen vor. Ein Tap genügt.</source>
+        <source>Basierend auf deiner Trainingshistorie schlägt die App automatisch passende Wiederholungszahlen vor. Ein Tap genügt.</source>
         <target>Based on your training history, the app automatically suggests fitting rep counts. One tap is all it takes.</target>
       </segment>
     </unit>

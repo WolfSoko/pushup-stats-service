@@ -1,7 +1,7 @@
 <div class="speed-dial">
   @if (fabState.open()) {
     <div class="dial-actions">
-      @for (item of dialItems(); track item.value + item.type) {
+      @for (item of dialItems(); track $index) {
         @if (item.type === 'custom') {
           <div class="dial-row">
             <span class="dial-label" i18n="@@quickAdd.fab.customValue"

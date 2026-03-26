@@ -25,13 +25,9 @@ export class QuickAddFabComponent {
 
   protected readonly dialItems = computed<DialItem[]>(() => {
     if (!this.fabState.open()) return [];
-    const suggs = this.suggestions().slice(0, 3);
-    const quickItems: DialItem[] = suggs.map(
-      (s): DialItem => ({ value: s, type: 'quick' })
-    );
-    while (quickItems.length < 3) {
-      quickItems.push({ value: 0, type: 'quick' });
-    }
+    const quickItems: DialItem[] = this.suggestions()
+      .slice(0, 3)
+      .map((s): DialItem => ({ value: s, type: 'quick' }));
     return [...quickItems, { value: 0, type: 'custom' }];
   });
 
