@@ -16,12 +16,17 @@ export class AdaptiveQuickAddService {
     const avg = recent.reduce((sum, r) => sum + r.reps, 0) / recent.length;
     const roundToFive = (v: number): number =>
       Math.max(1, Math.round(v / 5) * 5);
-    const suggestions = [
-      roundToFive(avg * 0.5),
-      roundToFive(avg),
-      roundToFive(avg * 1.25),
-    ];
-    // Deduplicate while preserving order
-    return [...new Set(suggestions)];
+    const half = roundToFive(avg * 0.5);
+    const mid = roundToFive(avg);
+    const high = roundToFive(avg * 1.25);
+    const origOrder = [half, mid, high];
+    const deduped = [...new Set(origOrder)];
+    // Pad back to 3 if deduplication removed items — prefer duplicates over <3 items
+    while (deduped.length < 3) {
+      deduped.push(
+        origOrder[deduped.length] ?? origOrder[origOrder.length - 1]
+      );
+    }
+    return deduped.slice(0, 3);
   }
 }

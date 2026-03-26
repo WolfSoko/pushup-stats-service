@@ -25,10 +25,14 @@ export class QuickAddFabComponent {
 
   protected readonly dialItems = computed<DialItem[]>(() => {
     if (!this.fabState.open()) return [];
-    return [
-      ...this.suggestions().map((s): DialItem => ({ value: s, type: 'quick' })),
-      { value: 0, type: 'custom' },
-    ];
+    const suggs = this.suggestions().slice(0, 3);
+    const quickItems: DialItem[] = suggs.map(
+      (s): DialItem => ({ value: s, type: 'quick' })
+    );
+    while (quickItems.length < 3) {
+      quickItems.push({ value: 0, type: 'quick' });
+    }
+    return [...quickItems, { value: 0, type: 'custom' }];
   });
 
   protected readonly openAriaLabel = $localize`:@@quickAdd.fab.open:Schnellerfassung öffnen`;

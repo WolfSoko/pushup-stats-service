@@ -232,7 +232,18 @@ export class App {
     this.statsApi
       .createPushup({ timestamp, reps, source: 'quick-add' })
       .subscribe({
-        next: () => this.recentEntriesResource.reload(),
+        next: () => {
+          this.snackBar.open(
+            $localize`:@@quickAdd.success.create:Eintrag gespeichert.`,
+            '',
+            {
+              duration: 2000,
+              horizontalPosition: 'center',
+              verticalPosition: 'bottom',
+            }
+          );
+          this.recentEntriesResource.reload();
+        },
         error: () =>
           this.snackBar.open(
             $localize`:@@quickAdd.error.create:Eintrag konnte nicht gespeichert werden.`,

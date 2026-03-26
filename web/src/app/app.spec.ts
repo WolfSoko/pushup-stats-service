@@ -21,11 +21,11 @@ describe('App (testing-library)', () => {
   };
 
   const userConfigApiMock = {
-    getConfig: vitest.fn().mockReturnValue(of({ dailyGoal: 100 })),
+    getConfig: jest.fn().mockReturnValue(of({ dailyGoal: 100 })),
   };
 
   const statsApiMock = {
-    load: vitest.fn().mockReturnValue(
+    load: jest.fn().mockReturnValue(
       of({
         meta: {
           from: null,
@@ -38,11 +38,12 @@ describe('App (testing-library)', () => {
         series: [],
       })
     ),
+    listPushups: jest.fn().mockReturnValue(of([])),
   };
 
   beforeEach(() => {
     userNameSignal = signal('default');
-    vitest.clearAllMocks();
+    jest.clearAllMocks();
   });
 
   it('should create app shell', async () => {

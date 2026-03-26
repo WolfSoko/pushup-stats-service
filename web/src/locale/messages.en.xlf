@@ -4323,6 +4323,12 @@ Deine Position: # ·  Reps        </source>
         <target>Add <ph id="0" equiv="REPS" disp="reps"/> push-ups</target>
       </segment>
     </unit>
+    <unit id="quickAdd.success.create">
+      <segment state="translated">
+        <source>Eintrag gespeichert.</source>
+        <target>Entry saved.</target>
+      </segment>
+    </unit>
     <unit id="quickAdd.error.create">
       <segment state="translated">
         <source>Eintrag konnte nicht gespeichert werden.</source>
