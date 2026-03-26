@@ -189,3 +189,11 @@
     </main>
   </mat-sidenav-content>
 </mat-sidenav-container>
+
+@if (isLoggedIn()) {
+<lib-quick-add-fab
+  [suggestions]="quickAddSuggestions()"
+  (quickAdd)="handleQuickAdd($event)"
+  (openDialog)="handleOpenDialog()"
+/>
+}
