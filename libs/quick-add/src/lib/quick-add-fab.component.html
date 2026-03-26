@@ -1,0 +1,46 @@
+<div class="speed-dial">
+  @if (fabState.open()) {
+    <div class="dial-actions">
+      @for (item of dialItems(); track item.value + item.type) {
+        @if (item.type === 'custom') {
+          <div class="dial-row">
+            <span class="dial-label" i18n="@@quickAdd.fab.customValue"
+              >Eigener Wert</span
+            >
+            <button
+              mat-mini-fab
+              aria-label="Eigenen Wert eingeben"
+              i18n-aria-label="@@quickAdd.fab.customValueAria"
+              (click)="onOpenDialog()"
+            >
+              <mat-icon>edit</mat-icon>
+            </button>
+          </div>
+        } @else {
+          <div class="dial-row">
+            <span class="dial-label">{{ item.value }}</span>
+            <button
+              mat-mini-fab
+              [attr.aria-label]="repAriaLabel(item.value)"
+              (click)="onQuickAdd(item.value)"
+            >
+              <span class="dial-reps">{{ item.value }}</span>
+            </button>
+          </div>
+        }
+      }
+    </div>
+  }
+
+  <button
+    mat-fab
+    color="primary"
+    class="main-fab"
+    [class.open]="fabState.open()"
+    [attr.aria-expanded]="fabState.open()"
+    [attr.aria-label]="fabState.open() ? closeAriaLabel : openAriaLabel"
+    (click)="toggle()"
+  >
+    <mat-icon>add</mat-icon>
+  </button>
+</div>

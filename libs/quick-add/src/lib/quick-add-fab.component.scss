@@ -1,0 +1,84 @@
+:host {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 1000;
+  display: block;
+}
+
+.speed-dial {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.dial-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.dial-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  animation: dialItemIn 180ms cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+.dial-row:nth-child(1) {
+  animation-delay: 0ms;
+}
+.dial-row:nth-child(2) {
+  animation-delay: 60ms;
+}
+.dial-row:nth-child(3) {
+  animation-delay: 120ms;
+}
+.dial-row:nth-child(4) {
+  animation-delay: 180ms;
+}
+
+@keyframes dialItemIn {
+  from {
+    opacity: 0;
+    transform: scale(0.5) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.dial-label {
+  background: rgba(0, 0, 0, 0.65);
+  color: #fff;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.dial-reps {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.main-fab {
+  transition: transform 200ms ease;
+
+  &.open {
+    mat-icon {
+      transform: rotate(45deg);
+    }
+  }
+
+  mat-icon {
+    transition: transform 200ms ease;
+  }
+}
