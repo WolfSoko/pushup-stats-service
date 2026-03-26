@@ -9,22 +9,24 @@
             >
             <button
               mat-mini-fab
+              class="custom-mini-fab"
               aria-label="Eigenen Wert eingeben"
               i18n-aria-label="@@quickAdd.fab.customValueAria"
               (click)="onOpenDialog()"
             >
-              <mat-icon>edit</mat-icon>
+              <mat-icon>{{ item.icon }}</mat-icon>
             </button>
           </div>
         } @else {
           <div class="dial-row">
-            <span class="dial-label">{{ item.value }}</span>
+            <span class="dial-label" i18n="@@quickAdd.fab.quickAddReps">+{{ item.value }} Reps</span>
             <button
               mat-mini-fab
+              class="quick-mini-fab"
               [attr.aria-label]="repAriaLabel(item.value)"
               (click)="onQuickAdd(item.value)"
             >
-              <span class="dial-reps">{{ item.value }}</span>
+              <mat-icon>{{ item.icon }}</mat-icon>
             </button>
           </div>
         }

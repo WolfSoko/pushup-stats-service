@@ -40,6 +40,7 @@ import {
 } from '@pu-reminders/reminders';
 import {
   AdaptiveQuickAddService,
+  QuickAddBridgeService,
   QuickAddFabComponent,
 } from '@pu-stats/quick-add';
 
@@ -99,6 +100,7 @@ export class App {
   private readonly reminderService = inject(ReminderService);
   private readonly reminderStore = inject(ReminderStore);
   private readonly adaptiveQuickAdd = inject(AdaptiveQuickAddService);
+  private readonly quickAddBridge = inject(QuickAddBridgeService);
 
   readonly recentEntriesResource = resource({
     params: () => ({ userId: this.user.userIdSafe() }),
@@ -265,10 +267,21 @@ export class App {
   }
 
   handleOpenDialog(): void {
-    void this.router.navigate(['/app'], {
-      queryParams: { log: '1' },
-      queryParamsHandling: 'merge',
-    });
+    const currentPath = this.router.url.split('?')[0];
+    if (currentPath === '/app' || currentPath.startsWith('/app/')) {
+      this.quickAddBridge.requestOpenDialog();
+    } else {
+      void this.router.navigate(['/app']).then(
+        (navigated) => {
+          if (navigated) {
+            this.quickAddBridge.requestOpenDialog();
+          }
+        },
+        () => {
+          // Navigation failed or was cancelled; do not open the dialog.
+        }
+      );
+    }
   }
 
   async logout(): Promise<void> {

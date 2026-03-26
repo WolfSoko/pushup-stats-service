@@ -529,7 +529,7 @@
     </unit>
     <unit id="quickAdd.fab.customValueAria">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.html:12,13</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.html:13,14</note>
       </notes>
       <segment>
         <source>Eigenen Wert eingeben</source>
@@ -537,7 +537,7 @@
     </unit>
     <unit id="quickAdd.fab.open">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:36</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:37</note>
       </notes>
       <segment>
         <source>Schnellerfassung öffnen</source>
@@ -545,7 +545,7 @@
     </unit>
     <unit id="quickAdd.fab.close">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:37</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:38</note>
       </notes>
       <segment>
         <source>Schnellerfassung schließen</source>
@@ -553,7 +553,7 @@
     </unit>
     <unit id="quickAdd.fab.repAria">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:40</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:41</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="REPS" disp="reps"/> Liegestütze hinzufügen</source>
@@ -1016,7 +1016,7 @@
     </unit>
     <unit id="seo.default.title">
       <notes>
-        <note category="location">web/src/app/app.ts:192</note>
+        <note category="location">web/src/app/app.ts:194</note>
       </notes>
       <segment>
         <source>Pushup Tracker</source>
@@ -1024,7 +1024,7 @@
     </unit>
     <unit id="seo.default.description">
       <notes>
-        <note category="location">web/src/app/app.ts:195</note>
+        <note category="location">web/src/app/app.ts:197</note>
       </notes>
       <segment>
         <source>Tracke Reps, Trends und Streaks mit Pushup Tracker.</source>
@@ -1032,7 +1032,7 @@
     </unit>
     <unit id="sw.update.available">
       <notes>
-        <note category="location">web/src/app/app.ts:214</note>
+        <note category="location">web/src/app/app.ts:216</note>
       </notes>
       <segment>
         <source>Neue Version verfügbar</source>
@@ -1040,7 +1040,7 @@
     </unit>
     <unit id="sw.update.reload">
       <notes>
-        <note category="location">web/src/app/app.ts:215</note>
+        <note category="location">web/src/app/app.ts:217</note>
       </notes>
       <segment>
         <source>Neu laden</source>
@@ -1048,7 +1048,7 @@
     </unit>
     <unit id="quickAdd.success.create">
       <notes>
-        <note category="location">web/src/app/app.ts:237</note>
+        <note category="location">web/src/app/app.ts:245</note>
       </notes>
       <segment>
         <source>Eintrag gespeichert.</source>
@@ -1056,7 +1056,7 @@
     </unit>
     <unit id="quickAdd.error.create">
       <notes>
-        <note category="location">web/src/app/app.ts:249</note>
+        <note category="location">web/src/app/app.ts:258</note>
       </notes>
       <segment>
         <source>Eintrag konnte nicht gespeichert werden.</source>
@@ -1064,7 +1064,7 @@
     </unit>
     <unit id="sw.update.downloading">
       <notes>
-        <note category="location">web/src/app/app.ts:294</note>
+        <note category="location">web/src/app/app.ts:310</note>
       </notes>
       <segment>
         <source>Update wird im Hintergrund geladen …</source>
@@ -2792,7 +2792,7 @@
     </unit>
     <unit id="period.today">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:60</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:62</note>
       </notes>
       <segment>
         <source>Heute</source>
@@ -2800,7 +2800,7 @@
     </unit>
     <unit id="period.day">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:61</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:63</note>
       </notes>
       <segment>
         <source>Tag</source>
@@ -2808,7 +2808,7 @@
     </unit>
     <unit id="period.week">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:62</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:64</note>
       </notes>
       <segment>
         <source>Woche</source>
@@ -2816,7 +2816,7 @@
     </unit>
     <unit id="period.month">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:63</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:65</note>
       </notes>
       <segment>
         <source>Monat</source>
@@ -2824,7 +2824,7 @@
     </unit>
     <unit id="period.year">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:64</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:66</note>
       </notes>
       <segment>
         <source>Jahr</source>
@@ -2832,7 +2832,7 @@
     </unit>
     <unit id="period.range">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:65</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:67</note>
       </notes>
       <segment>
         <source>Zeitraum</source>
