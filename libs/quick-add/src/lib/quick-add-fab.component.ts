@@ -6,7 +6,10 @@ import { patchState, signalState } from '@ngrx/signals';
 interface DialItem {
   readonly value: number;
   readonly type: 'quick' | 'custom';
+  readonly icon: string;
 }
+
+const QUICK_ICONS = ['bolt', 'flash_on', 'whatshot'] as const;
 
 @Component({
   selector: 'lib-quick-add-fab',
@@ -27,8 +30,14 @@ export class QuickAddFabComponent {
     if (!this.fabState.open()) return [];
     const quickItems: DialItem[] = this.suggestions()
       .slice(0, 3)
-      .map((s): DialItem => ({ value: s, type: 'quick' }));
-    return [...quickItems, { value: 0, type: 'custom' }];
+      .map(
+        (s, i): DialItem => ({
+          value: s,
+          type: 'quick',
+          icon: QUICK_ICONS[i] ?? 'bolt',
+        })
+      );
+    return [...quickItems, { value: 0, type: 'custom', icon: 'edit_note' }];
   });
 
   protected readonly openAriaLabel = $localize`:@@quickAdd.fab.open:Schnellerfassung öffnen`;

@@ -63,10 +63,40 @@
   pointer-events: none;
 }
 
-.dial-reps {
-  font-size: 14px;
-  font-weight: 600;
-  line-height: 1;
+.dial-row:nth-child(1) .quick-mini-fab {
+  background: linear-gradient(
+    135deg,
+    rgba(63, 128, 255, 0.92),
+    rgba(58, 92, 213, 0.92)
+  ) !important;
+  color: #f4f8ff !important;
+}
+
+.dial-row:nth-child(2) .quick-mini-fab {
+  background: linear-gradient(
+    135deg,
+    rgba(109, 86, 255, 0.92),
+    rgba(71, 63, 215, 0.92)
+  ) !important;
+  color: #f6f3ff !important;
+}
+
+.dial-row:nth-child(3) .quick-mini-fab {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 132, 92, 0.92),
+    rgba(214, 69, 94, 0.92)
+  ) !important;
+  color: #fff3f0 !important;
+}
+
+.dial-row:last-child .custom-mini-fab {
+  background: linear-gradient(
+    135deg,
+    rgba(32, 180, 155, 0.92),
+    rgba(18, 140, 110, 0.92)
+  ) !important;
+  color: #f0fff9 !important;
 }
 
 .main-fab {

@@ -31,6 +31,8 @@ import {
   StatsSeriesEntry,
 } from '@pu-stats/models';
 import { firstValueFrom } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { QuickAddBridgeService } from '@pu-stats/quick-add';
 import { AdSlotComponent, AdsConfigService } from '@pu-stats/ads';
 import { UserContextService } from '@pu-auth/auth';
 import {
@@ -239,6 +241,10 @@ export class StatsDashboardComponent {
   readonly liveConnected = computed(() => this.live.connected());
 
   constructor() {
+    inject(QuickAddBridgeService)
+      .openDialog$.pipe(takeUntilDestroyed())
+      .subscribe(() => this.openCreateDialog());
+
     effect(() => {
       if (!isPlatformBrowser(this.platformId)) return;
       const params = new URLSearchParams();
