@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class QuickAddBridgeService {
-  readonly openDialog$ = new Subject<void>();
+  private readonly openDialogSubject = new Subject<void>();
+  readonly openDialog$: Observable<void> = this.openDialogSubject.asObservable();
 
   requestOpenDialog(): void {
-    this.openDialog$.next();
+    this.openDialogSubject.next();
   }
 }

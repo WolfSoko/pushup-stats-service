@@ -271,9 +271,16 @@ export class App {
     if (currentPath === '/app' || currentPath.startsWith('/app/')) {
       this.quickAddBridge.requestOpenDialog();
     } else {
-      void this.router.navigate(['/app']).then(() => {
-        this.quickAddBridge.requestOpenDialog();
-      });
+      void this.router.navigate(['/app']).then(
+        (navigated) => {
+          if (navigated) {
+            this.quickAddBridge.requestOpenDialog();
+          }
+        },
+        () => {
+          // Navigation failed or was cancelled; do not open the dialog.
+        }
+      );
     }
   }
 

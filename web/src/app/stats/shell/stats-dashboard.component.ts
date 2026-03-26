@@ -241,9 +241,26 @@ export class StatsDashboardComponent {
   readonly liveConnected = computed(() => this.live.connected());
 
   constructor() {
+    let viewReady = false;
+    let pendingOpenCreateDialog = false;
+
+    afterNextRender(() => {
+      viewReady = true;
+      if (pendingOpenCreateDialog) {
+        pendingOpenCreateDialog = false;
+        this.openCreateDialog();
+      }
+    });
+
     inject(QuickAddBridgeService)
       .openDialog$.pipe(takeUntilDestroyed())
-      .subscribe(() => this.openCreateDialog());
+      .subscribe(() => {
+        if (viewReady) {
+          this.openCreateDialog();
+        } else {
+          pendingOpenCreateDialog = true;
+        }
+      });
 
     effect(() => {
       if (!isPlatformBrowser(this.platformId)) return;
