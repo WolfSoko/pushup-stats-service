@@ -18,12 +18,12 @@ function makeApiMock(
   getResult: ReminderConfig | null = defaultReminder
 ): Partial<UserConfigApiService> {
   return {
-    getConfig: jest
+    getConfig: vi
       .fn()
       .mockReturnValue(
         of(getResult ? { userId: 'u1', reminder: getResult } : { userId: 'u1' })
       ),
-    updateConfig: jest
+    updateConfig: vi
       .fn()
       .mockReturnValue(of({ userId: 'u1', reminder: getResult ?? undefined })),
   };
@@ -34,7 +34,7 @@ function makePermissionMock(
 ): Partial<ReminderPermissionService> {
   return {
     status: signal(status),
-    requestPermission: jest.fn().mockResolvedValue(status),
+    requestPermission: vi.fn().mockResolvedValue(status),
   };
 }
 
@@ -101,7 +101,7 @@ describe('ReminderStore', () => {
       intervalMinutes: 120,
     };
     const apiMock = makeApiMock(defaultReminder);
-    (apiMock.updateConfig as jest.Mock).mockReturnValue(
+    (apiMock.updateConfig as any).mockReturnValue(
       of({ userId: 'u1', reminder: updated })
     );
 
@@ -142,16 +142,16 @@ describe('ReminderStore', () => {
     await store.resetConfig('u1');
 
     expect(apiMock.updateConfig).toHaveBeenCalled();
-    const call = (apiMock.updateConfig as jest.Mock).mock.calls[0];
+    const call = (apiMock.updateConfig as any).mock.calls[0];
     expect(call[1].reminder.enabled).toBe(false);
   });
 
   it('loadConfig sets error on API failure', async () => {
     const apiMock = {
-      getConfig: jest
+      getConfig: vi
         .fn()
         .mockReturnValue(throwError(() => new Error('Network error'))),
-      updateConfig: jest.fn(),
+      updateConfig: vi.fn(),
     };
     const { fixture } = await render('', {
       providers: [

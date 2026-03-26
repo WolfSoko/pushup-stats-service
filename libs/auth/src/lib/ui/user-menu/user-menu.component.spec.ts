@@ -10,22 +10,20 @@ function makeStore(opts: {
   loading?: boolean;
 }) {
   return {
-    isAuthenticated: jest.fn().mockReturnValue(opts.isAuthenticated),
-    isGuest: jest.fn().mockReturnValue(opts.isGuest),
-    loading: jest.fn().mockReturnValue(opts.loading ?? false),
-    error: jest.fn().mockReturnValue(null),
-    user: jest
-      .fn()
-      .mockReturnValue(
-        opts.isAuthenticated
-          ? {
-              displayName: 'Test User',
-              email: 'test@example.com',
-              photoURL: null,
-            }
-          : null
-      ),
-    logout: jest.fn().mockResolvedValue(undefined),
+    isAuthenticated: vi.fn().mockReturnValue(opts.isAuthenticated),
+    isGuest: vi.fn().mockReturnValue(opts.isGuest),
+    loading: vi.fn().mockReturnValue(opts.loading ?? false),
+    error: vi.fn().mockReturnValue(null),
+    user: vi.fn().mockReturnValue(
+      opts.isAuthenticated
+        ? {
+            displayName: 'Test User',
+            email: 'test@example.com',
+            photoURL: null,
+          }
+        : null
+    ),
+    logout: vi.fn().mockResolvedValue(undefined),
   };
 }
 

@@ -13,15 +13,15 @@ describe('LoginUiStore', () => {
       uid: 'u1',
       displayName: 'Tester',
     }),
-    signInWithEmail: jest.fn().mockResolvedValue(undefined),
-    login: jest.fn().mockResolvedValue(undefined),
-    logout: jest.fn().mockResolvedValue(undefined),
+    signInWithEmail: vi.fn().mockResolvedValue(undefined),
+    login: vi.fn().mockResolvedValue(undefined),
+    logout: vi.fn().mockResolvedValue(undefined),
   };
 
   const onboardingMock = {
     error: signal<string | null>(null),
-    isOnboardingRequired: jest.fn().mockResolvedValue(true),
-    saveGoogleOnboarding: jest.fn().mockResolvedValue(undefined),
+    isOnboardingRequired: vi.fn().mockResolvedValue(true),
+    saveGoogleOnboarding: vi.fn().mockResolvedValue(undefined),
   };
 
   async function setup() {

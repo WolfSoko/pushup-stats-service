@@ -6,12 +6,24 @@
   "projectType": "library",
   "tags": [],
   "targets": {
+    "build": {
+      "executor": "@angular/build:ng-packagr",
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
+      "options": {
+        "tsConfig": "libs/ads/tsconfig.lib.json"
+      },
+      "configurations": {
+        "production": {},
+        "development": {}
+      }
+    },
     "test": {
-      "executor": "@nx/jest:jest",
+      "executor": "@angular/build:unit-test",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "libs/ads/jest.config.cts",
-        "tsConfig": "libs/ads/tsconfig.spec.json"
+        "tsConfig": "libs/ads/tsconfig.spec.json",
+        "coverage": true,
+        "watch": false
       }
     },
     "lint": {

@@ -35,17 +35,17 @@ describe('AuthService', () => {
       >,
       isAuthenticated: (() => true) as Signal<boolean>,
       idToken: (() => 'token') as Signal<string | null | undefined>,
-      signInWithGoogle: jest.fn().mockResolvedValue(makeCredential('123')),
-      signInWithEmail: jest.fn().mockResolvedValue(makeCredential('123')),
-      signUpWithEmail: jest.fn().mockResolvedValue(makeCredential('123')),
-      authStateReady: jest.fn().mockResolvedValue(undefined),
+      signInWithGoogle: vi.fn().mockResolvedValue(makeCredential('123')),
+      signInWithEmail: vi.fn().mockResolvedValue(makeCredential('123')),
+      signUpWithEmail: vi.fn().mockResolvedValue(makeCredential('123')),
+      authStateReady: vi.fn().mockResolvedValue(undefined),
     };
     userConfigApi = {
-      getConfig: jest.fn().mockReturnValue(of({ userId: '123' })),
-      updateConfig: jest.fn().mockReturnValue(of({})),
+      getConfig: vi.fn().mockReturnValue(of({ userId: '123' })),
+      updateConfig: vi.fn().mockReturnValue(of({})),
     };
     pushupFirestore = {
-      migrateUserData: jest.fn().mockResolvedValue(undefined),
+      migrateUserData: vi.fn().mockResolvedValue(undefined),
     };
   });
 
@@ -103,7 +103,7 @@ describe('AuthService', () => {
   });
 
   it('keeps existing config displayName on repeated Google login', async () => {
-    userConfigApi.getConfig = jest.fn().mockReturnValue(
+    userConfigApi.getConfig = vi.fn().mockReturnValue(
       of({
         userId: '123',
         displayName: 'CustomName',
@@ -133,7 +133,7 @@ describe('AuthService', () => {
       // authState() doesn't matter - short-circuits on currentUser
       const noopAdapter = {
         ...adapter,
-        signInAnonymously: jest.fn(),
+        signInAnonymously: vi.fn(),
       };
 
       const { fixture } = await render('', {
@@ -161,7 +161,7 @@ describe('AuthService', () => {
       const noopAdapter = {
         ...adapter,
         currentUser: mockUser,
-        signInAnonymously: jest.fn(),
+        signInAnonymously: vi.fn(),
       };
 
       const { fixture } = await render('', {
@@ -186,11 +186,11 @@ describe('AuthService', () => {
         ...adapter,
         currentUser: null,
         authState: (() => null) as Signal<FirebaseUser | null | undefined>,
-        signInAnonymously: jest
+        signInAnonymously: vi
           .fn()
           .mockResolvedValue({ user: { uid: 'anon-uid' } }),
       };
-      userConfigApi.getConfig = jest
+      userConfigApi.getConfig = vi
         .fn()
         .mockReturnValue(of({ userId: 'anon-uid' }));
 
@@ -219,8 +219,8 @@ describe('AuthService', () => {
         ...adapter,
         currentUser: guestUser,
         authUser: (() => null) as Signal<FirebaseUser | null | undefined>,
-        linkWithEmail: jest.fn().mockResolvedValue(makeCredential('guest-uid')),
-        signUpWithEmail: jest.fn(),
+        linkWithEmail: vi.fn().mockResolvedValue(makeCredential('guest-uid')),
+        signUpWithEmail: vi.fn(),
       };
 
       const { fixture } = await render('', {
@@ -249,7 +249,7 @@ describe('AuthService', () => {
         ...adapter,
         currentUser: null,
         authUser: (() => null) as Signal<FirebaseUser | null | undefined>,
-        signUpWithEmail: jest.fn().mockResolvedValue(makeCredential('new-uid')),
+        signUpWithEmail: vi.fn().mockResolvedValue(makeCredential('new-uid')),
       };
 
       const { fixture } = await render('', {
@@ -280,10 +280,8 @@ describe('AuthService', () => {
         ...adapter,
         currentUser: guestUser,
         authUser: (() => null) as Signal<FirebaseUser | null | undefined>,
-        linkWithGoogle: jest
-          .fn()
-          .mockResolvedValue(makeCredential('guest-uid')),
-        signInWithGoogle: jest.fn(),
+        linkWithGoogle: vi.fn().mockResolvedValue(makeCredential('guest-uid')),
+        signInWithGoogle: vi.fn(),
       };
 
       const { fixture } = await render('', {
@@ -339,15 +337,15 @@ describe('AuthService', () => {
         uid: 'guest-uid',
         isAnonymous: true,
       };
-      adapter.currentUser = guestUser as FirebaseUser;
-      adapter.authUser = (() => null) as Signal<
+      (adapter as any).currentUser = guestUser as FirebaseUser;
+      (adapter as any).authUser = (() => null) as Signal<
         FirebaseUser | null | undefined
       >;
       const realCredential = {
         user: { uid: 'real-uid' } as FirebaseUser,
       } as UserCredential;
-      adapter.signInWithEmail = jest.fn().mockResolvedValue(realCredential);
-      userConfigApi.getConfig = jest
+      adapter.signInWithEmail = vi.fn().mockResolvedValue(realCredential);
+      userConfigApi.getConfig = vi
         .fn()
         .mockReturnValue(of({ userId: 'real-uid' }));
 
@@ -368,7 +366,7 @@ describe('AuthService', () => {
       const realCredential = {
         user: { uid: 'real-uid' } as FirebaseUser,
       } as UserCredential;
-      adapter.signInWithEmail = jest.fn().mockResolvedValue(realCredential);
+      adapter.signInWithEmail = vi.fn().mockResolvedValue(realCredential);
 
       // When
       const { fixture } = await render('', { providers: makeProviders() });
@@ -385,15 +383,15 @@ describe('AuthService', () => {
         uid: 'guest-uid',
         isAnonymous: true,
       };
-      adapter.currentUser = guestUser as FirebaseUser;
-      adapter.authUser = (() => null) as Signal<
+      (adapter as any).currentUser = guestUser as FirebaseUser;
+      (adapter as any).authUser = (() => null) as Signal<
         FirebaseUser | null | undefined
       >;
       const realCredential = {
         user: { uid: 'real-uid' } as FirebaseUser,
       } as UserCredential;
-      adapter.signInWithGoogle = jest.fn().mockResolvedValue(realCredential);
-      userConfigApi.getConfig = jest
+      adapter.signInWithGoogle = vi.fn().mockResolvedValue(realCredential);
+      userConfigApi.getConfig = vi
         .fn()
         .mockReturnValue(of({ userId: 'real-uid' }));
 
@@ -414,7 +412,7 @@ describe('AuthService', () => {
       const realCredential = {
         user: { uid: 'real-uid' } as FirebaseUser,
       } as UserCredential;
-      adapter.signInWithGoogle = jest.fn().mockResolvedValue(realCredential);
+      adapter.signInWithGoogle = vi.fn().mockResolvedValue(realCredential);
 
       // When
       const { fixture } = await render('', { providers: makeProviders() });

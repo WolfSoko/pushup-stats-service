@@ -2,22 +2,46 @@ import { Auth, deleteUser as deleteUserFn } from '@angular/fire/auth';
 import { render } from '@testing-library/angular';
 import { AuthAdapter } from './auth.adapter';
 
-jest.mock('@angular/fire/auth', () => {
-  const actual = jest.requireActual('@angular/fire/auth');
+vi.mock('@angular/fire/auth', () => {
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  const noop = () => {};
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const makeObs = () => {
+    const o: any = {
+      subscribe: () => ({ unsubscribe: noop }),
+      pipe: (..._: any[]) => o,
+    };
+    return o;
+  };
   return {
-    ...actual,
-    deleteUser: jest.fn(),
+    Auth: vi.fn(),
+    authState: vi.fn(makeObs),
+    user: vi.fn(makeObs),
+    idToken: vi.fn(makeObs),
+    deleteUser: vi.fn(),
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    signOut: vi.fn((auth: any) => auth.signOut()),
+    signInWithPopup: vi.fn(),
+    signInWithEmailAndPassword: vi.fn(),
+    createUserWithEmailAndPassword: vi.fn(),
+    signInAnonymously: vi.fn(),
+    linkWithCredential: vi.fn(),
+    linkWithPopup: vi.fn(),
+    GoogleAuthProvider: vi
+      .fn()
+      .mockImplementation(() => ({ addScope: vi.fn() })),
+    EmailAuthProvider: { credential: vi.fn() },
   };
 });
 
-const deleteUserMock = jest.mocked(deleteUserFn);
+const deleteUserMock = vi.mocked(deleteUserFn);
 
 describe('AuthAdapter', () => {
   let mockAuth: Partial<Auth>;
   beforeEach(() => {
     mockAuth = {
       currentUser: { uid: 'u' } as unknown as Auth['currentUser'],
-      signOut: jest.fn(),
+      signOut: vi.fn(),
     };
     deleteUserMock.mockReset();
   });

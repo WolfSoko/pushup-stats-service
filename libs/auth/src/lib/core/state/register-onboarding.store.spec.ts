@@ -5,7 +5,7 @@ import { RegisterOnboardingStore } from './register-onboarding.store';
 
 describe('RegisterOnboardingStore', () => {
   const userConfigApiMock = {
-    updateConfig: jest.fn(),
+    updateConfig: vi.fn(),
   };
 
   async function setup() {
@@ -19,7 +19,7 @@ describe('RegisterOnboardingStore', () => {
   }
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('saves profile data via data-access service', async () => {

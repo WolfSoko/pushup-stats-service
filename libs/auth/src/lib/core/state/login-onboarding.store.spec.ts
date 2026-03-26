@@ -5,8 +5,8 @@ import { LoginOnboardingStore } from './login-onboarding.store';
 
 describe('LoginOnboardingStore', () => {
   const userConfigApiMock = {
-    getConfig: jest.fn(),
-    updateConfig: jest.fn(),
+    getConfig: vi.fn(),
+    updateConfig: vi.fn(),
   };
 
   async function setup() {

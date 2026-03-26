@@ -6,33 +6,33 @@ import { Firestore } from '@angular/fire/firestore';
 import { BehaviorSubject } from 'rxjs';
 import { PushupLiveService } from './pushup-live.service';
 
-jest.mock('@angular/common', () => ({
-  ...jest.requireActual('@angular/common'),
-  isPlatformBrowser: jest.fn(),
+vi.mock('@angular/common', async () => ({
+  ...((await vi.importActual('@angular/common')) as object),
+  isPlatformBrowser: vi.fn(),
 }));
 
-jest.mock('@angular/fire/auth', () => ({
-  Auth: jest.fn(),
-  authState: jest.fn(),
+vi.mock('@angular/fire/auth', () => ({
+  Auth: vi.fn(),
+  authState: vi.fn(),
 }));
 
-jest.mock('@angular/fire/firestore', () => ({
-  Firestore: jest.fn(),
-  collection: jest.fn(() => ({})),
-  onSnapshot: jest.fn(),
-  orderBy: jest.fn(() => ({})),
-  query: jest.fn(() => ({})),
-  where: jest.fn(() => ({})),
+vi.mock('@angular/fire/firestore', () => ({
+  Firestore: vi.fn(),
+  collection: vi.fn(() => ({})),
+  onSnapshot: vi.fn(),
+  orderBy: vi.fn(() => ({})),
+  query: vi.fn(() => ({})),
+  where: vi.fn(() => ({})),
 }));
 
 describe('PushupLiveService', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
     TestBed.resetTestingModule();
   });
 
   it('does not set up listener on server platform', async () => {
-    (isPlatformBrowser as jest.Mock).mockReturnValue(false);
+    (isPlatformBrowser as any).mockReturnValue(false);
     const firestoreMod = await import('@angular/fire/firestore');
 
     TestBed.configureTestingModule({
@@ -50,7 +50,7 @@ describe('PushupLiveService', () => {
   });
 
   it('does not set up listener when auth/firestore are not provided', async () => {
-    (isPlatformBrowser as jest.Mock).mockReturnValue(true);
+    (isPlatformBrowser as any).mockReturnValue(true);
     const firestoreMod = await import('@angular/fire/firestore');
 
     TestBed.configureTestingModule({
@@ -68,7 +68,7 @@ describe('PushupLiveService', () => {
   });
 
   it('connects and increments tick when Firestore emits data for authenticated user', async () => {
-    (isPlatformBrowser as jest.Mock).mockReturnValue(true);
+    (isPlatformBrowser as any).mockReturnValue(true);
 
     const authMod = await import('@angular/fire/auth');
     const firestoreMod = await import('@angular/fire/firestore');
@@ -76,13 +76,15 @@ describe('PushupLiveService', () => {
     const userSubject = new BehaviorSubject<{ uid: string } | null>({
       uid: 'u1',
     });
-    (authMod.authState as jest.Mock).mockReturnValue(userSubject.asObservable());
+    (authMod.authState as any).mockReturnValue(userSubject.asObservable());
 
     let snapshotNext!: () => void;
-    (firestoreMod.onSnapshot as jest.Mock).mockImplementation((_q, next) => {
-      snapshotNext = next;
-      return jest.fn();
-    });
+    (firestoreMod.onSnapshot as any).mockImplementation(
+      (_q: unknown, next: (...args: unknown[]) => void) => {
+        snapshotNext = next;
+        return vi.fn();
+      }
+    );
 
     TestBed.configureTestingModule({
       providers: [
@@ -107,7 +109,7 @@ describe('PushupLiveService', () => {
   });
 
   it('disconnects when user signs out', async () => {
-    (isPlatformBrowser as jest.Mock).mockReturnValue(true);
+    (isPlatformBrowser as any).mockReturnValue(true);
 
     const authMod = await import('@angular/fire/auth');
     const firestoreMod = await import('@angular/fire/firestore');
@@ -115,13 +117,15 @@ describe('PushupLiveService', () => {
     const userSubject = new BehaviorSubject<{ uid: string } | null>({
       uid: 'u1',
     });
-    (authMod.authState as jest.Mock).mockReturnValue(userSubject.asObservable());
+    (authMod.authState as any).mockReturnValue(userSubject.asObservable());
 
     let snapshotNext!: () => void;
-    (firestoreMod.onSnapshot as jest.Mock).mockImplementation((_q, next) => {
-      snapshotNext = next;
-      return jest.fn();
-    });
+    (firestoreMod.onSnapshot as any).mockImplementation(
+      (_q: unknown, next: (...args: unknown[]) => void) => {
+        snapshotNext = next;
+        return vi.fn();
+      }
+    );
 
     TestBed.configureTestingModule({
       providers: [

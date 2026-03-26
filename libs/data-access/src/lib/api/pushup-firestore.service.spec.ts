@@ -1,15 +1,15 @@
 // Minimal mock for @angular/fire/firestore to avoid loading the real SDK
-jest.mock('@angular/fire/firestore', () => ({
-  Firestore: jest.fn(),
-  collection: jest.fn(() => ({})),
-  doc: jest.fn(() => ({ id: 'new-id' })),
-  query: jest.fn((_ref, ...constraints) => ({ constraints })),
-  where: jest.fn((field, op, value) => ({ field, op, value })),
-  orderBy: jest.fn((field, dir) => ({ field, dir })),
-  getDocs: jest.fn(async () => ({ docs: [] })),
-  setDoc: jest.fn(async () => undefined),
-  updateDoc: jest.fn(async () => undefined),
-  deleteDoc: jest.fn(async () => undefined),
+vi.mock('@angular/fire/firestore', () => ({
+  Firestore: vi.fn(),
+  collection: vi.fn(() => ({})),
+  doc: vi.fn(() => ({ id: 'new-id' })),
+  query: vi.fn((_ref, ...constraints) => ({ constraints })),
+  where: vi.fn((field, op, value) => ({ field, op, value })),
+  orderBy: vi.fn((field, dir) => ({ field, dir })),
+  getDocs: vi.fn(async () => ({ docs: [] })),
+  setDoc: vi.fn(async () => undefined),
+  updateDoc: vi.fn(async () => undefined),
+  deleteDoc: vi.fn(async () => undefined),
 }));
 
 import { TestBed } from '@angular/core/testing';
@@ -22,7 +22,7 @@ describe('PushupFirestoreService', () => {
   let service: PushupFirestoreService;
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
     TestBed.configureTestingModule({
       providers: [PushupFirestoreService, { provide: Firestore, useValue: {} }],
     });
@@ -35,7 +35,7 @@ describe('PushupFirestoreService', () => {
 
   describe('listPushups', () => {
     it('returns mapped records without filter', async () => {
-      jest.spyOn(firestoreFns, 'getDocs').mockResolvedValueOnce({
+      vi.spyOn(firestoreFns, 'getDocs').mockResolvedValueOnce({
         docs: [
           {
             id: 'a1',
@@ -79,7 +79,7 @@ describe('PushupFirestoreService', () => {
     });
 
     it('adds userId and orderBy constraints to query', async () => {
-      jest.spyOn(firestoreFns, 'getDocs').mockResolvedValueOnce({
+      vi.spyOn(firestoreFns, 'getDocs').mockResolvedValueOnce({
         docs: [],
       } as any);
 
@@ -90,7 +90,7 @@ describe('PushupFirestoreService', () => {
     });
 
     it('adds a from constraint when filter.from is provided', async () => {
-      jest.spyOn(firestoreFns, 'getDocs').mockResolvedValueOnce({
+      vi.spyOn(firestoreFns, 'getDocs').mockResolvedValueOnce({
         docs: [],
       } as any);
 
@@ -104,7 +104,7 @@ describe('PushupFirestoreService', () => {
     });
 
     it('adds a to constraint when filter.to is provided', async () => {
-      jest.spyOn(firestoreFns, 'getDocs').mockResolvedValueOnce({
+      vi.spyOn(firestoreFns, 'getDocs').mockResolvedValueOnce({
         docs: [],
       } as any);
 
@@ -118,13 +118,13 @@ describe('PushupFirestoreService', () => {
     });
 
     it('does not add from/to constraints when filter is empty', async () => {
-      jest.spyOn(firestoreFns, 'getDocs').mockResolvedValueOnce({
+      vi.spyOn(firestoreFns, 'getDocs').mockResolvedValueOnce({
         docs: [],
       } as any);
 
       await firstValueFrom(service.listPushups('u1', {}));
 
-      const whereCalls = (firestoreFns.where as jest.Mock).mock.calls;
+      const whereCalls = vi.mocked(firestoreFns.where).mock.calls;
       const timestampCalls = whereCalls.filter(
         ([field]) => field === 'timestamp'
       );
@@ -132,7 +132,7 @@ describe('PushupFirestoreService', () => {
     });
 
     it('client-side filters out records before filter.from', async () => {
-      jest.spyOn(firestoreFns, 'getDocs').mockResolvedValueOnce({
+      vi.spyOn(firestoreFns, 'getDocs').mockResolvedValueOnce({
         docs: [
           {
             id: 'before',
@@ -169,7 +169,7 @@ describe('PushupFirestoreService', () => {
     });
 
     it('client-side filters out records after filter.to', async () => {
-      jest.spyOn(firestoreFns, 'getDocs').mockResolvedValueOnce({
+      vi.spyOn(firestoreFns, 'getDocs').mockResolvedValueOnce({
         docs: [
           {
             id: 'before',
@@ -206,7 +206,7 @@ describe('PushupFirestoreService', () => {
     });
 
     it('client-side filters using both from and to', async () => {
-      jest.spyOn(firestoreFns, 'getDocs').mockResolvedValueOnce({
+      vi.spyOn(firestoreFns, 'getDocs').mockResolvedValueOnce({
         docs: [
           {
             id: 'too-early',
@@ -246,8 +246,8 @@ describe('PushupFirestoreService', () => {
   describe('createPushup', () => {
     it('calls setDoc and returns a PushupRecord with the new id', async () => {
       const newRef = { id: 'created-id' };
-      jest.spyOn(firestoreFns, 'doc').mockReturnValueOnce(newRef as any);
-      const setDocSpy = jest
+      vi.spyOn(firestoreFns, 'doc').mockReturnValueOnce(newRef as any);
+      const setDocSpy = vi
         .spyOn(firestoreFns, 'setDoc')
         .mockResolvedValueOnce(undefined as any);
 
@@ -275,10 +275,8 @@ describe('PushupFirestoreService', () => {
 
     it('defaults source to "web" and type to "Standard" when omitted', async () => {
       const newRef = { id: 'default-id' };
-      jest.spyOn(firestoreFns, 'doc').mockReturnValueOnce(newRef as any);
-      jest
-        .spyOn(firestoreFns, 'setDoc')
-        .mockResolvedValueOnce(undefined as any);
+      vi.spyOn(firestoreFns, 'doc').mockReturnValueOnce(newRef as any);
+      vi.spyOn(firestoreFns, 'setDoc').mockResolvedValueOnce(undefined as any);
 
       const result = await firstValueFrom(
         service.createPushup('u1', {
@@ -295,8 +293,8 @@ describe('PushupFirestoreService', () => {
   describe('updatePushup', () => {
     it('calls updateDoc with the patch and updatedAt timestamp', async () => {
       const rowRef = {};
-      jest.spyOn(firestoreFns, 'doc').mockReturnValueOnce(rowRef as any);
-      const updateDocSpy = jest
+      vi.spyOn(firestoreFns, 'doc').mockReturnValueOnce(rowRef as any);
+      const updateDocSpy = vi
         .spyOn(firestoreFns, 'updateDoc')
         .mockResolvedValueOnce(undefined as any);
 
@@ -313,8 +311,8 @@ describe('PushupFirestoreService', () => {
   describe('deletePushup', () => {
     it('calls deleteDoc and returns { ok: true }', async () => {
       const rowRef = {};
-      jest.spyOn(firestoreFns, 'doc').mockReturnValueOnce(rowRef as any);
-      const deleteDocSpy = jest
+      vi.spyOn(firestoreFns, 'doc').mockReturnValueOnce(rowRef as any);
+      const deleteDocSpy = vi
         .spyOn(firestoreFns, 'deleteDoc')
         .mockResolvedValueOnce(undefined as any);
 

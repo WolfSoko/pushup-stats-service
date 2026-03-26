@@ -5,26 +5,26 @@ import { UserConfig, UserConfigUpdate } from '@pu-stats/models';
 import { render } from '@testing-library/angular';
 import { UserConfigApiService } from './user-config-api.service';
 
-jest.mock('@angular/fire/auth', () => ({
-  Auth: jest.fn(),
+vi.mock('@angular/fire/auth', () => ({
+  Auth: vi.fn(),
 }));
 
-jest.mock('@angular/fire/firestore', () => ({
-  Firestore: jest.fn(),
-  doc: jest.fn(),
-  getDoc: jest.fn(),
-  setDoc: jest.fn(() => Promise.resolve()),
+vi.mock('@angular/fire/firestore', () => ({
+  Firestore: vi.fn(),
+  doc: vi.fn(),
+  getDoc: vi.fn(),
+  setDoc: vi.fn(() => Promise.resolve()),
 }));
 
 describe('UserConfigApiService', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('reads config from Firestore when authenticated', async () => {
     const firestoreFns = await import('@angular/fire/firestore');
-    (firestoreFns.doc as jest.Mock).mockReturnValue({ id: 'u' });
-    (firestoreFns.getDoc as jest.Mock).mockResolvedValue({
+    (firestoreFns.doc as any).mockReturnValue({ id: 'u' });
+    (firestoreFns.getDoc as any).mockResolvedValue({
       data: () => ({ userId: 'u', dailyGoal: 99 }),
     });
 
@@ -47,8 +47,8 @@ describe('UserConfigApiService', () => {
 
   it('uses currentUser.uid (not passed-in userId) for Firestore getConfig doc path', async () => {
     const firestoreFns = await import('@angular/fire/firestore');
-    (firestoreFns.doc as jest.Mock).mockReturnValue({ id: 'actual-uid' });
-    (firestoreFns.getDoc as jest.Mock).mockResolvedValue({
+    (firestoreFns.doc as any).mockReturnValue({ id: 'actual-uid' });
+    (firestoreFns.getDoc as any).mockResolvedValue({
       data: () => undefined,
     });
 
@@ -74,7 +74,7 @@ describe('UserConfigApiService', () => {
 
   it('uses currentUser.uid (not passed-in userId) for Firestore updateConfig doc path', async () => {
     const firestoreFns = await import('@angular/fire/firestore');
-    (firestoreFns.doc as jest.Mock).mockReturnValue({ id: 'actual-uid' });
+    (firestoreFns.doc as any).mockReturnValue({ id: 'actual-uid' });
 
     const { fixture } = await render('', {
       providers: [
@@ -105,7 +105,7 @@ describe('UserConfigApiService', () => {
 
   it('updates config in Firestore when authenticated', async () => {
     const firestoreFns = await import('@angular/fire/firestore');
-    (firestoreFns.doc as jest.Mock).mockReturnValue({ id: 'u' });
+    (firestoreFns.doc as any).mockReturnValue({ id: 'u' });
 
     const { fixture } = await render('', {
       providers: [

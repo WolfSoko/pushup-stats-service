@@ -15,14 +15,14 @@ describe('RegisterUiStore', () => {
       email: 'user@test.de',
       displayName: 'Tester',
     }),
-    signUpWithEmail: jest.fn().mockResolvedValue(undefined),
-    upgradeWithGoogle: jest.fn().mockResolvedValue(undefined),
-    login: jest.fn().mockResolvedValue(undefined),
+    signUpWithEmail: vi.fn().mockResolvedValue(undefined),
+    upgradeWithGoogle: vi.fn().mockResolvedValue(undefined),
+    login: vi.fn().mockResolvedValue(undefined),
   };
 
   const onboardingMock = {
     saving: signal(false),
-    saveProfile: jest.fn().mockResolvedValue(undefined),
+    saveProfile: vi.fn().mockResolvedValue(undefined),
   };
 
   async function setup(currentUid = 'uid-1') {
@@ -49,7 +49,7 @@ describe('RegisterUiStore', () => {
   }
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
     authStoreMock.error.set(null);
   });
 

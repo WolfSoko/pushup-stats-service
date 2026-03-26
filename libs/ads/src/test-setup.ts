@@ -1,6 +1,1 @@
-import { setupZonelessTestEnv } from 'jest-preset-angular/setup-env/zoneless';
-
-setupZonelessTestEnv({
-  errorOnUnknownElements: true,
-  errorOnUnknownProperties: true,
-});
+// Angular TestBed is initialized automatically by @angular/build:unit-test

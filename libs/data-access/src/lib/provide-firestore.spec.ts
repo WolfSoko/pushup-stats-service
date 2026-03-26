@@ -1,8 +1,8 @@
-jest.mock('@angular/fire/firestore', () => ({
-  Firestore: jest.fn(),
-  getFirestore: jest.fn(),
-  provideFirestore: jest.fn(),
-  connectFirestoreEmulator: jest.fn(),
+vi.mock('@angular/fire/firestore', () => ({
+  Firestore: vi.fn(),
+  getFirestore: vi.fn(),
+  provideFirestore: vi.fn(),
+  connectFirestoreEmulator: vi.fn(),
 }));
 
 import { withEmulator } from './provide-firestore';
@@ -10,7 +10,7 @@ import { connectFirestoreEmulator } from '@angular/fire/firestore';
 
 describe('withEmulator', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('uses hostname/port from a full emulator URL', () => {
