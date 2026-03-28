@@ -1,108 +1,132 @@
-import { render } from '@testing-library/angular';
-import { Auth } from '@angular/fire/auth';
-import { provideRouter } from '@angular/router';
-import { AuthStore } from '../../core/state/auth.store';
+import { render, screen } from '@testing-library/angular';
+import userEvent from '@testing-library/user-event';
 import { UserMenuComponent } from './user-menu.component';
+import { Router } from '@angular/router';
+import { signal } from '@angular/core';
+import { AuthStore } from '../../core/state/auth.store';
 
-function makeStore(opts: {
-  isAuthenticated: boolean;
-  isGuest: boolean;
-  loading?: boolean;
-}) {
-  return {
-    isAuthenticated: vi.fn().mockReturnValue(opts.isAuthenticated),
-    isGuest: vi.fn().mockReturnValue(opts.isGuest),
-    loading: vi.fn().mockReturnValue(opts.loading ?? false),
-    error: vi.fn().mockReturnValue(null),
-    user: vi.fn().mockReturnValue(
-      opts.isAuthenticated
-        ? {
-            displayName: 'Test User',
-            email: 'test@example.com',
-            photoURL: null,
-          }
-        : null
-    ),
-    logout: vi.fn().mockResolvedValue(undefined),
-  };
-}
+type User = {
+  uid: string;
+  email: string;
+  displayName: string;
+  photoURL: string | null;
+};
+
+const mockState = {
+  user: signal<User | null>(null),
+  loading: signal(false),
+  isAuthenticated: signal(false),
+  idToken: signal<string | null>(null),
+  error: signal<Error | null>(null),
+  logout: jest.fn(),
+};
+
+const mockRouter = {
+  navigate: jest.fn(),
+};
 
 describe('UserMenuComponent', () => {
-  it('shows guest menu (person_outline icon) when isGuest is true', async () => {
-    await render(UserMenuComponent, {
-      providers: [
-        provideRouter([]),
-        {
-          provide: AuthStore,
-          useValue: makeStore({ isAuthenticated: true, isGuest: true }),
-        },
-        { provide: Auth, useValue: {} },
-      ],
-    });
-    // person_outline icon appears in guest menu button
-    expect(document.body.innerHTML).toContain('person_outline');
+  beforeEach(() => {
+    mockState.user.set(null);
+    mockState.loading.set(false);
+    mockState.isAuthenticated.set(false);
+    mockState.error.set(null);
+    jest.clearAllMocks();
   });
 
-  it('shows convert-to-account CTA in guest menu', async () => {
+  it('should render login button when not authenticated', async () => {
     await render(UserMenuComponent, {
       providers: [
-        provideRouter([]),
-        {
-          provide: AuthStore,
-          useValue: makeStore({ isAuthenticated: true, isGuest: true }),
-        },
-        { provide: Auth, useValue: {} },
+        { provide: AuthStore, useValue: mockState },
+        { provide: Router, useValue: mockRouter },
       ],
     });
-    // The guest menu button should be present (mat-icon-button with guestMenu trigger)
-    // The mat-menu items are in the DOM but may be hidden – check innerHTML
-    expect(document.body.innerHTML).toContain('person_outline');
+
+    expect(
+      screen.getByRole('button', { name: /anmelden/i })
+    ).toBeInTheDocument();
   });
 
-  it('shows user menu (account_circle icon) when authenticated and not guest', async () => {
+  it('should render user avatar when authenticated with photo', async () => {
+    mockState.isAuthenticated.set(true);
+    mockState.user.set({
+      uid: '123',
+      email: 'test@example.com',
+      displayName: 'Test User',
+      photoURL: 'https://example.com/avatar.png',
+    });
+
     await render(UserMenuComponent, {
       providers: [
-        provideRouter([]),
-        {
-          provide: AuthStore,
-          useValue: makeStore({ isAuthenticated: true, isGuest: false }),
-        },
-        { provide: Auth, useValue: {} },
+        { provide: AuthStore, useValue: mockState },
+        { provide: Router, useValue: mockRouter },
       ],
     });
-    expect(document.body.innerHTML).toContain('account_circle');
+
+    const avatarImg = screen.getByAltText('Avatar');
+    expect(avatarImg).toBeInTheDocument();
+    expect(avatarImg).toHaveAttribute(
+      'src',
+      expect.stringContaining('avatar.png')
+    );
   });
 
-  it('shows person_outline sign-in button when not authenticated and not guest', async () => {
+  it('should render fallback icon when no photo', async () => {
+    mockState.isAuthenticated.set(true);
+    mockState.user.set({
+      uid: '123',
+      email: 'test@example.com',
+      displayName: 'Test User',
+      photoURL: null,
+    });
+
     await render(UserMenuComponent, {
       providers: [
-        provideRouter([]),
-        {
-          provide: AuthStore,
-          useValue: makeStore({ isAuthenticated: false, isGuest: false }),
-        },
-        { provide: Auth, useValue: {} },
+        { provide: AuthStore, useValue: mockState },
+        { provide: Router, useValue: mockRouter },
       ],
     });
-    // When not authenticated and not guest → falls into else branch with person_outline + guestMenu
-    expect(document.body.innerHTML).toContain('person_outline');
+
+    expect(screen.getByText('account_circle')).toBeInTheDocument();
   });
 
-  it('shows spinner when loading', async () => {
+  it('should navigate to login on signIn', async () => {
     await render(UserMenuComponent, {
       providers: [
-        provideRouter([]),
-        {
-          provide: AuthStore,
-          useValue: makeStore({
-            isAuthenticated: false,
-            isGuest: false,
-            loading: true,
-          }),
-        },
-        { provide: Auth, useValue: {} },
+        { provide: AuthStore, useValue: mockState },
+        { provide: Router, useValue: mockRouter },
       ],
     });
-    expect(document.body.querySelector('mat-spinner')).toBeTruthy();
+
+    const loginBtn = screen.getByRole('button', { name: /anmelden/i });
+    await userEvent.click(loginBtn);
+
+    expect(mockRouter.navigate).toHaveBeenCalledWith(['/login']);
+  });
+
+  it('should call authStore.logout on logout click', async () => {
+    mockState.isAuthenticated.set(true);
+    mockState.user.set({
+      uid: '123',
+      email: 'test@example.com',
+      displayName: 'Test User',
+      photoURL: null,
+    });
+    mockState.logout.mockResolvedValue(undefined);
+
+    await render(UserMenuComponent, {
+      providers: [
+        { provide: AuthStore, useValue: mockState },
+        { provide: Router, useValue: mockRouter },
+      ],
+    });
+
+    const menuBtn = screen.getByLabelText('User menu');
+    await userEvent.click(menuBtn);
+
+    const logoutBtn = screen.getByRole('menuitem', { name: /abmelden/i });
+    await userEvent.click(logoutBtn);
+
+    expect(mockState.logout).toHaveBeenCalled();
   });
 });

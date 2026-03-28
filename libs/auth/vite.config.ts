@@ -7,7 +7,7 @@ const repoRoot = resolve(__dirname, '../..');
 
 export default defineConfig({
   resolve: {
-    conditions: ['import', 'default', 'browser', 'node'],
+    conditions: ['browser', 'import', 'default'],
     alias: {
       '@pu-stats/data-access': resolve(
         repoRoot,
@@ -21,13 +21,6 @@ export default defineConfig({
         repoRoot,
         'libs/reminders/src/index.ts'
       ),
-    },
-  },
-  ssr: {
-    resolve: {
-      // Remove 'module-sync' from default ['node', 'module-sync'] to prevent
-      // generator-function from resolving to require.mjs via CJS require()
-      externalConditions: ['node'],
     },
   },
   plugins: [
@@ -48,15 +41,7 @@ export default defineConfig({
     },
     server: {
       deps: {
-        // Inline ESM-only packages that Vitest cannot handle otherwise
-        inline: [
-          /rxfire/,
-          /@firebase/,
-          /firebase/,
-          /@angular\/fire/,
-          'generator-function',
-          'is-generator-function',
-        ],
+        inline: [/rxfire/, /@firebase/, /firebase/, /@angular\/fire/],
       },
     },
   },

@@ -7,16 +7,16 @@ describe('AdConsentService', () => {
   let state: AdsConsentStateService;
 
   beforeEach(() => {
-    TestBed.resetTestingModule();
+    TestBed.configureTestingModule({});
     service = TestBed.inject(AdConsentService);
     state = TestBed.inject(AdsConsentStateService);
   });
 
-  it('returns true by default', () => {
+  it('Given default state, When hasConsent() is called, Then returns true', () => {
     expect(service.hasConsent()).toBe(true);
   });
 
-  it('returns false when consent state is denied', () => {
+  it('Given targeted ads consent is denied, When hasConsent() is called, Then returns false', () => {
     state.setTargetedAdsConsent(false);
     expect(service.hasConsent()).toBe(false);
   });

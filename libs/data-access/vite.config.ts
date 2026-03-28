@@ -3,8 +3,26 @@ import angular from '@analogjs/vite-plugin-angular';
 import { resolve } from 'path';
 
 const root = resolve(__dirname);
+const repoRoot = resolve(__dirname, '../..');
 
 export default defineConfig({
+  resolve: {
+    conditions: ['browser', 'import', 'default'],
+    alias: {
+      '@pu-stats/data-access': resolve(
+        repoRoot,
+        'libs/data-access/src/index.ts'
+      ),
+      '@pu-stats/models': resolve(repoRoot, 'libs/stats/src/index.ts'),
+      '@pu-stats/testing': resolve(repoRoot, 'libs/testing/src/index.ts'),
+      '@pu-stats/ads': resolve(repoRoot, 'libs/ads/src/index.ts'),
+      '@pu-auth/auth': resolve(repoRoot, 'libs/auth/src/index.ts'),
+      '@pu-reminders/reminders': resolve(
+        repoRoot,
+        'libs/reminders/src/index.ts'
+      ),
+    },
+  },
   plugins: [
     angular({
       tsconfig: resolve(root, 'tsconfig.spec.json'),
@@ -23,15 +41,7 @@ export default defineConfig({
     },
     server: {
       deps: {
-        // Inline ESM-only packages that Vitest cannot handle otherwise
-        inline: [
-          /rxfire/,
-          /@firebase/,
-          /firebase/,
-          /@angular\/fire/,
-          'generator-function',
-          'is-generator-function',
-        ],
+        inline: [/rxfire/, /@firebase/, /firebase/, /@angular\/fire/],
       },
     },
   },

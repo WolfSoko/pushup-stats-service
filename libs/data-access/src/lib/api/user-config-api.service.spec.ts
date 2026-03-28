@@ -1,148 +1,128 @@
+import { TestBed } from '@angular/core/testing';
+import {
+  HttpClientTestingModule,
+  HttpTestingController,
+} from '@angular/common/http/testing';
 import { PLATFORM_ID } from '@angular/core';
-import { Auth } from '@angular/fire/auth';
-import { Firestore } from '@angular/fire/firestore';
-import { UserConfig, UserConfigUpdate } from '@pu-stats/models';
-import { render } from '@testing-library/angular';
 import { UserConfigApiService } from './user-config-api.service';
-
-vi.mock('@angular/fire/firestore', () => ({
-  Firestore: vi.fn(),
-  doc: vi.fn(),
-  getDoc: vi.fn(),
-  setDoc: vi.fn(() => Promise.resolve()),
-}));
+import { UserConfig } from '@pu-stats/models';
 
 describe('UserConfigApiService', () => {
+  let previousEnv: NodeJS.ProcessEnv;
+
   beforeEach(() => {
-    vi.clearAllMocks();
+    previousEnv = { ...process.env };
   });
 
-  it('reads config from Firestore when authenticated', async () => {
-    const firestoreFns = await import('@angular/fire/firestore');
-    (firestoreFns.doc as any).mockReturnValue({ id: 'u' });
-    (firestoreFns.getDoc as any).mockResolvedValue({
-      data: () => ({ userId: 'u', dailyGoal: 99 }),
-    });
+  afterEach(() => {
+    // Restore any env mutations done in tests
+    for (const key of Object.keys(process.env)) {
+      if (!(key in previousEnv)) delete process.env[key];
+    }
+    Object.assign(process.env, previousEnv);
 
-    const { fixture } = await render('', {
-      providers: [
-        UserConfigApiService,
-        { provide: PLATFORM_ID, useValue: 'browser' },
-        { provide: Firestore, useValue: {} },
-        { provide: Auth, useValue: { currentUser: { uid: 'u' } } },
-      ],
-    });
-
-    const service = fixture.debugElement.injector.get(UserConfigApiService);
-    let result: UserConfig | undefined;
-    service.getConfig('u').subscribe((r) => (result = r));
-
-    await Promise.resolve();
-    expect(result).toEqual({ userId: 'u', dailyGoal: 99 });
+    TestBed.resetTestingModule();
   });
 
-  it('uses currentUser.uid (not passed-in userId) for Firestore getConfig doc path', async () => {
-    const firestoreFns = await import('@angular/fire/firestore');
-    (firestoreFns.doc as any).mockReturnValue({ id: 'actual-uid' });
-    (firestoreFns.getDoc as any).mockResolvedValue({
-      data: () => undefined,
+  it('uses http backend in browser', (done) => {
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
+      providers: [{ provide: PLATFORM_ID, useValue: 'browser' }],
     });
 
-    const { fixture } = await render('', {
-      providers: [
-        UserConfigApiService,
-        { provide: PLATFORM_ID, useValue: 'browser' },
-        { provide: Firestore, useValue: {} },
-        { provide: Auth, useValue: { currentUser: { uid: 'actual-uid' } } },
-      ],
+    const service = TestBed.inject(UserConfigApiService);
+    const httpMock = TestBed.inject(HttpTestingController);
+
+    const mockConfig: UserConfig = { colorTheme: 'light' };
+
+    service.getConfig('u2').subscribe((config) => {
+      expect(config).toEqual(mockConfig);
+      done();
     });
 
-    const service = fixture.debugElement.injector.get(UserConfigApiService);
-    service.getConfig('different-id').subscribe();
-
-    await Promise.resolve();
-    expect(firestoreFns.doc).toHaveBeenCalledWith(
-      expect.anything(),
-      'userConfigs',
-      'actual-uid'
-    );
+    const req = httpMock.expectOne('/api/users/u2/config');
+    expect(req.request.method).toBe('GET');
+    req.flush(mockConfig);
   });
 
-  it('uses currentUser.uid (not passed-in userId) for Firestore updateConfig doc path', async () => {
-    const firestoreFns = await import('@angular/fire/firestore');
-    (firestoreFns.doc as any).mockReturnValue({ id: 'actual-uid' });
-
-    const { fixture } = await render('', {
-      providers: [
-        UserConfigApiService,
-        { provide: PLATFORM_ID, useValue: 'browser' },
-        { provide: Firestore, useValue: {} },
-        { provide: Auth, useValue: { currentUser: { uid: 'actual-uid' } } },
-      ],
+  it('uses http backend when firebase service missing', (done) => {
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
+      providers: [{ provide: PLATFORM_ID, useValue: 'browser' }],
     });
 
-    const service = fixture.debugElement.injector.get(UserConfigApiService);
-    service
-      .updateConfig('different-id', { dailyGoal: 5 } as UserConfigUpdate)
-      .subscribe();
+    const service = TestBed.inject(UserConfigApiService);
+    const httpMock = TestBed.inject(HttpTestingController);
 
-    await Promise.resolve();
-    expect(firestoreFns.doc).toHaveBeenCalledWith(
-      expect.anything(),
-      'userConfigs',
-      'actual-uid'
-    );
-    expect(firestoreFns.setDoc).toHaveBeenCalledWith(
-      expect.anything(),
-      { dailyGoal: 5, userId: 'actual-uid' },
-      { merge: true }
-    );
+    const mockConfig: UserConfig = { colorTheme: 'dark' };
+
+    service.getConfig('u4').subscribe((config) => {
+      expect(config).toEqual(mockConfig);
+      done();
+    });
+
+    const req = httpMock.expectOne('/api/users/u4/config');
+    expect(req.request.method).toBe('GET');
+    req.flush(mockConfig);
   });
 
-  it('updates config in Firestore when authenticated', async () => {
-    const firestoreFns = await import('@angular/fire/firestore');
-    (firestoreFns.doc as any).mockReturnValue({ id: 'u' });
-
-    const { fixture } = await render('', {
-      providers: [
-        UserConfigApiService,
-        { provide: PLATFORM_ID, useValue: 'browser' },
-        { provide: Firestore, useValue: {} },
-        { provide: Auth, useValue: { currentUser: { uid: 'u' } } },
-      ],
+  it('uses http backend for updateConfig in browser', (done) => {
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
+      providers: [{ provide: PLATFORM_ID, useValue: 'browser' }],
     });
 
-    const service = fixture.debugElement.injector.get(UserConfigApiService);
-    let result: UserConfig | undefined;
-    service
-      .updateConfig('u', { dailyGoal: 120 } as UserConfigUpdate)
-      .subscribe((r) => (result = r));
+    const service = TestBed.inject(UserConfigApiService);
+    const httpMock = TestBed.inject(HttpTestingController);
 
-    await Promise.resolve();
-    expect(firestoreFns.setDoc).toHaveBeenCalledWith(
-      { id: 'u' },
-      { userId: 'u', dailyGoal: 120 },
-      { merge: true }
-    );
-    expect(result).toEqual({ userId: 'u', dailyGoal: 120 });
+    const mockConfig: UserConfig = { colorTheme: 'dark' };
+
+    service.updateConfig('u3', { colorTheme: 'dark' }).subscribe((config) => {
+      expect(config).toEqual(mockConfig);
+      done();
+    });
+
+    const req = httpMock.expectOne('/api/users/u3/config');
+    expect(req.request.method).toBe('PUT');
+    expect(req.request.body).toEqual({ colorTheme: 'dark' });
+    req.flush(mockConfig);
   });
 
-  it('returns undefined when updating config unauthenticated', async () => {
-    const { fixture } = await render('', {
-      providers: [
-        UserConfigApiService,
-        { provide: PLATFORM_ID, useValue: 'browser' },
-        { provide: Firestore, useValue: {} },
-        { provide: Auth, useValue: { currentUser: null } },
-      ],
+  it('uses server baseUrl when platform is server', (done) => {
+    process.env['API_PORT'] = '9999';
+    delete process.env.API_HOST;
+
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
+      providers: [{ provide: PLATFORM_ID, useValue: 'server' }],
     });
 
-    const service = fixture.debugElement.injector.get(UserConfigApiService);
-    let result: UserConfig | undefined;
-    service
-      .updateConfig('u', { dailyGoal: 120 } as UserConfigUpdate)
-      .subscribe((r) => (result = r));
+    const service = TestBed.inject(UserConfigApiService);
+    const httpMock = TestBed.inject(HttpTestingController);
 
-    expect(result).toBeUndefined();
+    service.getConfig('u5').subscribe(() => done());
+
+    const req = httpMock.expectOne('http://127.0.0.1:9999/api/users/u5/config');
+    expect(req.request.method).toBe('GET');
+    req.flush({});
+  });
+
+  it('respects API_HOST on the server', (done) => {
+    process.env['API_PORT'] = '8788';
+    process.env['API_HOST'] = 'api';
+
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
+      providers: [{ provide: PLATFORM_ID, useValue: 'server' }],
+    });
+
+    const service = TestBed.inject(UserConfigApiService);
+    const httpMock = TestBed.inject(HttpTestingController);
+
+    service.getConfig('u6').subscribe(() => done());
+
+    const req = httpMock.expectOne('http://api:8788/api/users/u6/config');
+    expect(req.request.method).toBe('GET');
+    req.flush({});
   });
 });
