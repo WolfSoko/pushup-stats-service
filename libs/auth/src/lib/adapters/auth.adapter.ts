@@ -13,6 +13,7 @@ import {
   user,
   UserCredential,
 } from '@angular/fire/auth';
+import { EMPTY } from 'rxjs';
 
 export type AuthProvider = 'google' | 'email';
 
@@ -26,20 +27,21 @@ export interface AuthCredentials {
 export class AuthAdapter {
   private auth = inject(Auth, { optional: true });
   // Public computed signals
-  readonly authUser = toSignal(this.auth ? user(this.auth) : undefined, {
+  readonly authUser = toSignal(this.auth ? user(this.auth) : EMPTY, {
     initialValue: null,
   });
-  readonly authState = toSignal(this.auth ? authState(this.auth) : undefined, {
+  readonly authState = toSignal(this.auth ? authState(this.auth) : EMPTY, {
     initialValue: null,
   });
   readonly loading = signal(false);
   readonly error = signal<null | Error>(null);
   readonly isAuthenticated = computed(() => this.authState() != null);
-  readonly idToken = toSignal(this.auth ? idToken(this.auth) : undefined, {
+  readonly idToken = toSignal(this.auth ? idToken(this.auth) : EMPTY, {
     initialValue: null,
   });
 
   async signInWithGoogle(): Promise<UserCredential> {
+    if (!this.auth) throw new Error('Auth not available');
     const provider = new GoogleAuthProvider();
     provider.addScope('email');
     provider.addScope('profile');
@@ -51,6 +53,7 @@ export class AuthAdapter {
     email: string,
     password: string
   ): Promise<UserCredential> {
+    if (!this.auth) throw new Error('Auth not available');
     return await signInWithEmailAndPassword(this.auth, email, password);
   }
 
@@ -58,15 +61,17 @@ export class AuthAdapter {
     email: string,
     password: string
   ): Promise<UserCredential> {
+    if (!this.auth) throw new Error('Auth not available');
     return await createUserWithEmailAndPassword(this.auth, email, password);
   }
 
   signOut(): Promise<void> {
+    if (!this.auth) return Promise.resolve();
     return signOut(this.auth);
   }
 
   async deleteUser(): Promise<void> {
-    if (this.auth.currentUser) {
+    if (this.auth?.currentUser) {
       return await deleteUser(this.auth.currentUser);
     }
   }
