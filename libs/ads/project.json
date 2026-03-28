@@ -6,24 +6,11 @@
   "projectType": "library",
   "tags": [],
   "targets": {
-    "build": {
-      "executor": "@angular/build:ng-packagr",
-      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
-      "options": {
-        "project": "libs/ads/ng-package.json",
-        "tsConfig": "libs/ads/tsconfig.lib.json"
-      },
-      "configurations": {
-        "development": {}
-      }
-    },
     "test": {
-      "executor": "@angular/build:unit-test",
+      "executor": "@nx/vitest:test",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "tsConfig": "libs/ads/tsconfig.spec.json",
-        "coverage": true,
-        "watch": false
+        "configFile": "libs/ads/vite.config.ts"
       }
     },
     "lint": {

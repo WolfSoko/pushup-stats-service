@@ -6,24 +6,11 @@
   "projectType": "library",
   "tags": [],
   "targets": {
-    "build": {
-      "executor": "@angular/build:ng-packagr",
-      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
-      "options": {
-        "project": "libs/reminders/ng-package.json",
-        "tsConfig": "libs/reminders/tsconfig.lib.json"
-      },
-      "configurations": {
-        "development": {}
-      }
-    },
     "test": {
-      "executor": "@angular/build:unit-test",
+      "executor": "@nx/vitest:test",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "tsConfig": "libs/reminders/tsconfig.spec.json",
-        "coverage": true,
-        "watch": false
+        "configFile": "libs/reminders/vite.config.ts"
       }
     },
     "lint": {
