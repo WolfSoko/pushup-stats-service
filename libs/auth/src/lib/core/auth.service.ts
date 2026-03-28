@@ -58,28 +58,15 @@ export class AuthService {
     }, 'Email sign-up');
   }
 
-  /** Sign in as anonymous guest if no session exists yet.
-   *
-   * Awaits `authStateReady()` so Firebase has fully restored any persisted
-   * session from IndexedDB before we decide whether a guest sign-in is
-   * needed. Without this, the APP_INITIALIZER runs before Firebase has
-   * restored a real (Google/email) session, `currentUser` is still `null`,
-   * and an anonymous sign-in would silently overwrite the real session.
-   */
+  /** Sign in as anonymous guest if no session exists yet. */
   async signInGuestIfNeeded(): Promise<void> {
     if (isPlatformServer(this.platformId)) return;
-    await this.authAdapter.authStateReady();
-    if (this.authAdapter.currentUser) return;
-    await this.signInAnonymously();
+    if (this.authAdapter.authUser()) return;
   }
 
   /** Sign in anonymously (mainly for e2e testing) */
   async signInAnonymously(): Promise<void> {
-    await this.wrapAsync(async () => {
-      const cred = await this.authAdapter.signInAnonymously();
-      // Anonymous users don't sync to userConfig DB
-      return cred;
-    }, 'Anonymous sign-in');
+    // Anonymous sign-in removed from AuthAdapter; no-op.
   }
 
   /**
@@ -89,16 +76,6 @@ export class AuthService {
    */
   async upgradeWithEmail(email: string, password: string): Promise<void> {
     await this.wrapAsync(async () => {
-      // Prefer auth.currentUser (synchronous, immediately available after
-      // signInGuestIfNeeded()) over the signal-based authUser() which may
-      // still hold stale data and cause the link path to be skipped.
-      const currentUser =
-        this.authAdapter.currentUser ?? this.authAdapter.authUser();
-      if (currentUser?.isAnonymous) {
-        const cred = await this.authAdapter.linkWithEmail(email, password);
-        await this.syncUserDbSafe();
-        return cred;
-      }
       const cred = await this.authAdapter.signUpWithEmail(email, password);
       await this.syncUserDbSafe();
       return cred;
@@ -112,16 +89,6 @@ export class AuthService {
    */
   async upgradeWithGoogle(): Promise<void> {
     await this.wrapAsync(async () => {
-      // Prefer auth.currentUser (synchronous, immediately available after
-      // signInGuestIfNeeded()) over the signal-based authUser() which may
-      // still hold stale data and cause the link path to be skipped.
-      const currentUser =
-        this.authAdapter.currentUser ?? this.authAdapter.authUser();
-      if (currentUser?.isAnonymous) {
-        const cred = await this.authAdapter.linkWithGoogle();
-        await this.syncUserDbSafe();
-        return cred;
-      }
       const cred = await this.authAdapter.signInWithGoogle();
       await this.syncUserDbSafe();
       return cred;
@@ -137,7 +104,7 @@ export class AuthService {
     password: string
   ): Promise<void> {
     await this.wrapAsync(async () => {
-      const currentUser = this.authAdapter.currentUser;
+      const currentUser = this.authAdapter.authUser();
       const guestUid = currentUser?.isAnonymous
         ? (currentUser.uid ?? null)
         : null;
@@ -156,7 +123,7 @@ export class AuthService {
    */
   async signInWithGoogleAndMigrateGuest(): Promise<void> {
     await this.wrapAsync(async () => {
-      const currentUser = this.authAdapter.currentUser;
+      const currentUser = this.authAdapter.authUser();
       const guestUid = currentUser?.isAnonymous
         ? (currentUser.uid ?? null)
         : null;

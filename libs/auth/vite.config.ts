@@ -41,7 +41,14 @@ export default defineConfig({
     },
     server: {
       deps: {
-        inline: [/rxfire/, /@firebase/, /firebase/, /@angular\/fire/],
+        inline: [
+          /rxfire/,
+          /@firebase/,
+          /firebase/,
+          /@angular\/fire/,
+          /generator-function/,
+          /is-generator-function/,
+        ],
       },
     },
   },
