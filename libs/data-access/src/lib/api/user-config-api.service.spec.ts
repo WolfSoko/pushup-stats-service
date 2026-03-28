@@ -5,10 +5,6 @@ import { UserConfig, UserConfigUpdate } from '@pu-stats/models';
 import { render } from '@testing-library/angular';
 import { UserConfigApiService } from './user-config-api.service';
 
-vi.mock('@angular/fire/auth', () => ({
-  Auth: vi.fn(),
-}));
-
 vi.mock('@angular/fire/firestore', () => ({
   Firestore: vi.fn(),
   doc: vi.fn(),

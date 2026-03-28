@@ -7,10 +7,10 @@ import { PushupRecord } from '@pu-stats/models';
 import { BehaviorSubject } from 'rxjs';
 import { PushupLiveDataService } from './pushup-live-data.service';
 
-vi.mock('@angular/common', async () => ({
-  ...((await vi.importActual('@angular/common')) as object),
-  isPlatformBrowser: vi.fn(),
-}));
+vi.mock('@angular/common', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@angular/common')>();
+  return { ...actual, isPlatformBrowser: vi.fn() };
+});
 
 vi.mock('@angular/fire/auth', () => ({
   Auth: vi.fn(),

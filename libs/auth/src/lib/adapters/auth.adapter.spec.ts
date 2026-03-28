@@ -2,10 +2,11 @@ import { Auth, deleteUser as deleteUserFn } from '@angular/fire/auth';
 import { render } from '@testing-library/angular';
 import { AuthAdapter } from './auth.adapter';
 
-vi.mock('@angular/fire/auth', () => {
+vi.mock('@angular/fire/auth', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@angular/fire/auth')>();
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   const noop = () => {};
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+
   const makeObs = () => {
     const o: any = {
       subscribe: () => ({ unsubscribe: noop }),
@@ -14,7 +15,7 @@ vi.mock('@angular/fire/auth', () => {
     return o;
   };
   return {
-    Auth: vi.fn(),
+    ...actual,
     authState: vi.fn(makeObs),
     user: vi.fn(makeObs),
     idToken: vi.fn(makeObs),

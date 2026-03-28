@@ -6,10 +6,10 @@ import { Firestore } from '@angular/fire/firestore';
 import { BehaviorSubject } from 'rxjs';
 import { PushupLiveService } from './pushup-live.service';
 
-vi.mock('@angular/common', async () => ({
-  ...((await vi.importActual('@angular/common')) as object),
-  isPlatformBrowser: vi.fn(),
-}));
+vi.mock('@angular/common', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@angular/common')>();
+  return { ...actual, isPlatformBrowser: vi.fn() };
+});
 
 vi.mock('@angular/fire/auth', () => ({
   Auth: vi.fn(),
