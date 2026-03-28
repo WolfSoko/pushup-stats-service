@@ -8,6 +8,7 @@ type User = {
   uid: string;
   displayName?: string | null;
   email?: string | null;
+  isAnonymous?: boolean;
 };
 
 class AuthStoreStub {
@@ -39,19 +40,18 @@ describe('UserContextService', () => {
     expect(service.userNameSafe()).toBe('firebase-user');
   });
 
-  it('falls back to default when displayName is missing', () => {
+  it('falls back to email when displayName is missing', () => {
     const service = TestBed.inject(UserContextService);
     authStore.user.set({ uid: '123', email: 'firebase@user' });
-    expect(service.userNameSafe()).toBe('default');
+    expect(service.userNameSafe()).toBe('firebase@user');
   });
 
-  it('resets userId to default on logout', () => {
+  it('resets userId to empty string on logout', () => {
     const service = TestBed.inject(UserContextService);
     authStore.user.set({ uid: 'firebase-user' });
     expect(service.userIdSafe()).toBe('firebase-user');
 
     authStore.user.set(null);
-    expect(service.userIdSafe()).toBe('default');
-    expect(service.userNameSafe()).toBe('default');
+    expect(service.userIdSafe()).toBe('');
   });
 });

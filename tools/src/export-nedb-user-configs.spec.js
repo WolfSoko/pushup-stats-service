@@ -1,21 +1,21 @@
 const fs = require('node:fs');
 const { exportNedbUserConfigs } = require('./export-nedb-user-configs');
 
-jest.mock('nedb-promises', () => ({
-  create: jest.fn(),
+vi.mock('nedb-promises', () => ({
+  create: vi.fn(),
 }));
 
 describe('exportNedbUserConfigs', () => {
   let mockDb;
 
   beforeEach(() => {
-    mockDb = { find: jest.fn() };
-    jest.spyOn(fs, 'writeFileSync').mockImplementation(() => undefined);
-    jest.spyOn(console, 'log').mockImplementation(() => undefined);
+    mockDb = { find: vi.fn() };
+    vi.spyOn(fs, 'writeFileSync').mockImplementation(() => undefined);
+    vi.spyOn(console, 'log').mockImplementation(() => undefined);
   });
 
   afterEach(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
   });
 
   it('writes all configs as formatted JSON to the output path', async () => {

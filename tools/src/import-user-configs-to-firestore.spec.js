@@ -4,19 +4,19 @@ const {
   importUserConfigs,
 } = require('./import-user-configs-to-firestore');
 
-jest.mock('firebase-admin/app', () => ({
-  initializeApp: jest.fn(),
-  applicationDefault: jest.fn(),
+vi.mock('firebase-admin/app', () => ({
+  initializeApp: vi.fn(),
+  applicationDefault: vi.fn(),
 }));
 
-jest.mock('firebase-admin/firestore', () => ({
-  getFirestore: jest.fn(),
+vi.mock('firebase-admin/firestore', () => ({
+  getFirestore: vi.fn(),
 }));
 
 describe('readConfigsFromFile', () => {
   it('parses valid JSON from the given file path', () => {
     const configs = [{ userId: 'u1', goal: 10 }];
-    jest.spyOn(fs, 'readFileSync').mockReturnValue(JSON.stringify(configs));
+    vi.spyOn(fs, 'readFileSync').mockReturnValue(JSON.stringify(configs));
 
     const result = readConfigsFromFile('/some/path.json');
 
@@ -25,7 +25,7 @@ describe('readConfigsFromFile', () => {
   });
 
   it('throws if the file does not exist', () => {
-    jest.spyOn(fs, 'readFileSync').mockImplementation(() => {
+    vi.spyOn(fs, 'readFileSync').mockImplementation(() => {
       throw new Error('ENOENT');
     });
 
@@ -33,7 +33,7 @@ describe('readConfigsFromFile', () => {
   });
 
   afterEach(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
   });
 });
 
@@ -44,15 +44,15 @@ describe('importUserConfigs', () => {
   let mockDb;
 
   beforeEach(() => {
-    mockSet = jest.fn().mockResolvedValue(undefined);
-    mockDoc = jest.fn().mockReturnValue({ set: mockSet });
-    mockCollection = jest.fn().mockReturnValue({ doc: mockDoc });
+    mockSet = vi.fn().mockResolvedValue(undefined);
+    mockDoc = vi.fn().mockReturnValue({ set: mockSet });
+    mockCollection = vi.fn().mockReturnValue({ doc: mockDoc });
     mockDb = { collection: mockCollection };
-    jest.spyOn(console, 'log').mockImplementation(() => undefined);
+    vi.spyOn(console, 'log').mockImplementation(() => undefined);
   });
 
   afterEach(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
   });
 
   it('writes each config document to the userConfigs collection', async () => {

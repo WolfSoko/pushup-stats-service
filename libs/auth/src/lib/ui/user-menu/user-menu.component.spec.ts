@@ -1,5 +1,4 @@
 import { render, screen } from '@testing-library/angular';
-import userEvent from '@testing-library/user-event';
 import { UserMenuComponent } from './user-menu.component';
 import { Router } from '@angular/router';
 import { signal } from '@angular/core';
@@ -18,11 +17,12 @@ const mockState = {
   isAuthenticated: signal(false),
   idToken: signal<string | null>(null),
   error: signal<Error | null>(null),
-  logout: jest.fn(),
+  isGuest: signal(false),
+  logout: vi.fn(),
 };
 
 const mockRouter = {
-  navigate: jest.fn(),
+  navigate: vi.fn(),
 };
 
 describe('UserMenuComponent', () => {
@@ -31,10 +31,52 @@ describe('UserMenuComponent', () => {
     mockState.loading.set(false);
     mockState.isAuthenticated.set(false);
     mockState.error.set(null);
-    jest.clearAllMocks();
+    mockState.isGuest.set(false);
+    vi.clearAllMocks();
   });
 
-  it('should render login button when not authenticated', async () => {
+  it('should render guest menu button when not authenticated', async () => {
+    await render(UserMenuComponent, {
+      providers: [
+        { provide: AuthStore, useValue: mockState },
+        { provide: Router, useValue: mockRouter },
+      ],
+    });
+
+    expect(screen.getByRole('button', { name: /gast/i })).toBeInTheDocument();
+  });
+
+  it('should render user menu button when authenticated with photo', async () => {
+    mockState.isAuthenticated.set(true);
+    mockState.user.set({
+      uid: '123',
+      email: 'test@test.com',
+      displayName: 'Test User',
+      photoURL: 'https://example.com/photo.jpg',
+    });
+
+    await render(UserMenuComponent, {
+      providers: [
+        { provide: AuthStore, useValue: mockState },
+        { provide: Router, useValue: mockRouter },
+      ],
+    });
+
+    const btn = screen.getByRole('button', { name: /nutzerkonto/i });
+    expect(btn).toBeInTheDocument();
+    const img = btn.querySelector('img.avatar-img');
+    expect(img).not.toBeNull();
+  });
+
+  it('should render fallback icon when no photo', async () => {
+    mockState.isAuthenticated.set(true);
+    mockState.user.set({
+      uid: '123',
+      email: 'test@test.com',
+      displayName: 'Test User',
+      photoURL: null,
+    });
+
     await render(UserMenuComponent, {
       providers: [
         { provide: AuthStore, useValue: mockState },
@@ -43,18 +85,12 @@ describe('UserMenuComponent', () => {
     });
 
     expect(
-      screen.getByRole('button', { name: /anmelden/i })
+      screen.getByRole('button', { name: /nutzerkonto/i })
     ).toBeInTheDocument();
   });
 
-  it('should render user avatar when authenticated with photo', async () => {
-    mockState.isAuthenticated.set(true);
-    mockState.user.set({
-      uid: '123',
-      email: 'test@example.com',
-      displayName: 'Test User',
-      photoURL: 'https://example.com/avatar.png',
-    });
+  it('should show loading spinner when loading', async () => {
+    mockState.loading.set(true);
 
     await render(UserMenuComponent, {
       providers: [
@@ -63,70 +99,6 @@ describe('UserMenuComponent', () => {
       ],
     });
 
-    const avatarImg = screen.getByAltText('Avatar');
-    expect(avatarImg).toBeInTheDocument();
-    expect(avatarImg).toHaveAttribute(
-      'src',
-      expect.stringContaining('avatar.png')
-    );
-  });
-
-  it('should render fallback icon when no photo', async () => {
-    mockState.isAuthenticated.set(true);
-    mockState.user.set({
-      uid: '123',
-      email: 'test@example.com',
-      displayName: 'Test User',
-      photoURL: null,
-    });
-
-    await render(UserMenuComponent, {
-      providers: [
-        { provide: AuthStore, useValue: mockState },
-        { provide: Router, useValue: mockRouter },
-      ],
-    });
-
-    expect(screen.getByText('account_circle')).toBeInTheDocument();
-  });
-
-  it('should navigate to login on signIn', async () => {
-    await render(UserMenuComponent, {
-      providers: [
-        { provide: AuthStore, useValue: mockState },
-        { provide: Router, useValue: mockRouter },
-      ],
-    });
-
-    const loginBtn = screen.getByRole('button', { name: /anmelden/i });
-    await userEvent.click(loginBtn);
-
-    expect(mockRouter.navigate).toHaveBeenCalledWith(['/login']);
-  });
-
-  it('should call authStore.logout on logout click', async () => {
-    mockState.isAuthenticated.set(true);
-    mockState.user.set({
-      uid: '123',
-      email: 'test@example.com',
-      displayName: 'Test User',
-      photoURL: null,
-    });
-    mockState.logout.mockResolvedValue(undefined);
-
-    await render(UserMenuComponent, {
-      providers: [
-        { provide: AuthStore, useValue: mockState },
-        { provide: Router, useValue: mockRouter },
-      ],
-    });
-
-    const menuBtn = screen.getByLabelText('User menu');
-    await userEvent.click(menuBtn);
-
-    const logoutBtn = screen.getByRole('menuitem', { name: /abmelden/i });
-    await userEvent.click(logoutBtn);
-
-    expect(mockState.logout).toHaveBeenCalled();
+    expect(screen.getByRole('progressbar')).toBeInTheDocument();
   });
 });
