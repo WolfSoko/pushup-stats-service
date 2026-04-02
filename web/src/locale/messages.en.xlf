@@ -4347,6 +4347,60 @@ Deine Position: # ·  Reps        </source>
         <target>Based on your training history, the app automatically suggests fitting rep counts. One tap is all it takes.</target>
       </segment>
     </unit>
+    <unit id="dashboard.analysisTeaserLinkAria">
+      <segment state="translated">
+        <source>Zur Analyse-Seite</source>
+        <target>Go to analysis page</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.analysisTeaserTitle">
+      <segment state="translated">
+        <source>Analyse</source>
+        <target>Analysis</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.analysisTeaserStreak">
+      <segment state="translated">
+        <source>Streak: {$INTERPOLATION} Tage</source>
+        <target>Streak: {$INTERPOLATION} days</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.analysisTeaserWeekReps">
+      <segment state="translated">
+        <source>Diese Woche: {$INTERPOLATION} Reps</source>
+        <target>This week: {$INTERPOLATION} reps</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.analysisTeaserCta">
+      <segment state="translated">
+        <source>Zur Analyse</source>
+        <target>Go to Analysis</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.todayTotal">
+      <segment state="translated">
+        <source>Heute Gesamt</source>
+        <target>Today Total</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.latestEntries">
+      <segment state="translated">
+        <source>Letzte Einträge</source>
+        <target>Recent Entries</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.noEntryYet">
+      <segment state="translated">
+        <source>Noch kein Eintrag.</source>
+        <target>No entries yet.</target>
+      </segment>
+    </unit>
+    <unit id="analysis.chartTitle">
+      <segment state="translated">
+        <source>Verlauf</source>
+        <target>Progress</target>
+      </segment>
+    </unit>
   </file>
 
 
