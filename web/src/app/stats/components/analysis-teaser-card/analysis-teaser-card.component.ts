@@ -7,7 +7,6 @@ import {
   resource,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { StatsApiService } from '@pu-stats/data-access';
@@ -29,7 +28,7 @@ const EMPTY_STATS: StatsResponse = {
 
 @Component({
   selector: 'app-analysis-teaser-card',
-  imports: [MatCardModule, MatButtonModule, MatIconModule, StatsChartComponent],
+  imports: [MatCardModule, MatIconModule, StatsChartComponent],
   template: `
     <mat-card
       class="teaser-card"
@@ -73,16 +72,10 @@ const EMPTY_STATS: StatsResponse = {
         }
       </mat-card-content>
       <mat-card-actions align="end">
-        <button
-          mat-button
-          color="primary"
-          type="button"
-          aria-label="Zur Analyse navigieren"
-          i18n-aria-label="@@dashboard.analysisTeaserCtaAriaLabel"
-        >
+        <span class="teaser-cta">
           <mat-icon>bar_chart</mat-icon>
           <span i18n="@@dashboard.analysisTeaserCta">Zur Analyse</span>
-        </button>
+        </span>
       </mat-card-actions>
     </mat-card>
   `,
@@ -98,7 +91,7 @@ const EMPTY_STATS: StatsResponse = {
     .teaser-card:focus {
       box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
       transform: translateY(-2px);
-      outline: 2px solid var(--mat-primary-color, #3f51b5);
+      outline: 2px solid var(--mat-sys-primary, #3f51b5);
       outline-offset: 2px;
     }
 
@@ -113,11 +106,14 @@ const EMPTY_STATS: StatsResponse = {
       display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--mat-error-color, #f44336);
+      color: var(--mat-sys-error, #f44336);
     }
 
-    mat-card-actions button {
-      pointer-events: none;
+    .teaser-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--mat-sys-primary);
     }
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,

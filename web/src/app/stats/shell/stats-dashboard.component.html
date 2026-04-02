@@ -166,7 +166,7 @@
 
   <section class="latest-entries">
     <h2 i18n="@@dashboard.latestEntries">Letzte Einträge</h2>
-    <app-stats-table [entries]="latestEntries()" />
+    <app-stats-table [entries]="latestEntries()" [readOnly]="true" />
   </section>
 
   @if (dashboardInlineAdsEnabled()) {

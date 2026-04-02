@@ -4317,6 +4317,12 @@ Deine Position: # ·  Reps        </source>
         <target>Enter custom value</target>
       </segment>
     </unit>
+    <unit id="quickAdd.fab.quickAddReps">
+      <segment state="translated">
+        <source>+<ph id="0" equiv="INTERPOLATION" disp="{{ item.value }}"/> Reps</source>
+        <target>+<ph id="0" equiv="INTERPOLATION" disp="{{ item.value }}"/> Reps</target>
+      </segment>
+    </unit>
     <unit id="quickAdd.fab.repAria">
       <segment state="translated">
         <source><ph id="0" equiv="REPS" disp="reps"/> Liegestütze hinzufügen</source>

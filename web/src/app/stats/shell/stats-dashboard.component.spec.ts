@@ -220,6 +220,7 @@ describe('StatsDashboardComponent', () => {
       it('Then it should reload data', async () => {
         // Given
         const initialLoadCalls = serviceMock.load.mock.calls.length;
+        const initialListCalls = serviceMock.listPushups.mock.calls.length;
 
         // When
         liveTick.set(1);
@@ -229,7 +230,9 @@ describe('StatsDashboardComponent', () => {
         expect(serviceMock.load.mock.calls.length).toBeGreaterThan(
           initialLoadCalls
         );
-        expect(serviceMock.listPushups.mock.calls.length).toBeGreaterThan(0);
+        expect(serviceMock.listPushups.mock.calls.length).toBeGreaterThan(
+          initialListCalls
+        );
       });
     });
 

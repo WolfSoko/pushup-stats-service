@@ -173,6 +173,7 @@ describe('AnalysisTeaserCardComponent', () => {
 
     it('Then chartSeries should contain the loaded data', async () => {
       // Given / When
+      fixture.detectChanges();
       await fixture.whenStable();
 
       // Then
@@ -183,24 +184,24 @@ describe('AnalysisTeaserCardComponent', () => {
   describe('Given the week range computation', () => {
     it('Then from should be a Monday date string', () => {
       // Given / When
-      const from = component.from();
+      const dateStr = component.from();
 
       // Then
-      expect(from).toMatch(/^\d{4}-\d{2}-\d{2}$/);
-      const date = new Date(from);
-      // getDay() returns 1 for Monday
-      expect(date.getDay()).toBe(1);
+      expect(dateStr).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+      const [y, m, d] = dateStr.split('-').map(Number);
+      // getUTCDay() returns 1 for Monday
+      expect(new Date(Date.UTC(y, m - 1, d)).getUTCDay()).toBe(1);
     });
 
     it('Then to should be a Sunday date string', () => {
       // Given / When
-      const to = component.to();
+      const dateStr = component.to();
 
       // Then
-      expect(to).toMatch(/^\d{4}-\d{2}-\d{2}$/);
-      const date = new Date(to);
-      // getDay() returns 0 for Sunday
-      expect(date.getDay()).toBe(0);
+      expect(dateStr).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+      const [y, m, d] = dateStr.split('-').map(Number);
+      // getUTCDay() returns 0 for Sunday
+      expect(new Date(Date.UTC(y, m - 1, d)).getUTCDay()).toBe(0);
     });
   });
 });

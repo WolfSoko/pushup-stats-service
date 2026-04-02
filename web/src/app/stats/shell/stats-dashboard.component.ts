@@ -124,9 +124,15 @@ export class StatsDashboardComponent {
     const monday = new Date(today);
     monday.setDate(today.getDate() - dayOfWeek);
     const mondayStr = toLocalIsoDate(monday);
+    const sunday = new Date(monday);
+    sunday.setDate(monday.getDate() + 6);
+    const sundayStr = toLocalIsoDate(sunday);
 
     return this.entryRows()
-      .filter((entry) => entry.timestamp.slice(0, 10) >= mondayStr)
+      .filter((entry) => {
+        const day = entry.timestamp.slice(0, 10);
+        return day >= mondayStr && day <= sundayStr;
+      })
       .reduce((sum, entry) => sum + entry.reps, 0);
   });
 

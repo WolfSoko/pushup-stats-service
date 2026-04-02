@@ -4,7 +4,6 @@ import {
   computed,
   effect,
   inject,
-  linkedSignal,
   PLATFORM_ID,
   REQUEST,
   resource,
@@ -18,7 +17,6 @@ import {
   createWeekRange,
   inferRangeMode,
   PushupRecord,
-  RangeModes,
   StatsGranularity,
   StatsResponse,
   StatsSeriesEntry,
@@ -67,7 +65,6 @@ interface TrendPoint {
           [to]="to()"
           (fromChange)="from.set($event)"
           (toChange)="to.set($event)"
-          (modeChange)="rangeMode.set($event)"
         />
       </section>
 
@@ -279,9 +276,7 @@ export class AnalysisPageComponent {
 
   readonly from = signal(this.initialRange.from);
   readonly to = signal(this.initialRange.to);
-  readonly rangeMode = linkedSignal<RangeModes>(() =>
-    inferRangeMode(this.initialRange.from, this.initialRange.to)
-  );
+  readonly rangeMode = computed(() => inferRangeMode(this.from(), this.to()));
 
   private readonly filter = computed(() => ({
     from: this.from() || undefined,
