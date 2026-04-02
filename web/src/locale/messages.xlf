@@ -1813,7 +1813,7 @@
         <note category="location">web/src/app/stats/components/analysis-teaser-card/analysis-teaser-card.component.ts:61,63</note>
       </notes>
       <segment>
-        <source> Daten konnten nicht geladen werden. </source>
+        <source>Daten konnten nicht geladen werden.</source>
       </segment>
     </unit>
     <unit id="dashboard.analysisTeaserCtaAriaLabel">
