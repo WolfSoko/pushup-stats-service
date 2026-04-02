@@ -44,3 +44,18 @@ li {
   color: #9bd8c3;
   font-weight: 600;
 }
+
+:host-context(html.light-theme) {
+  .rank {
+    color: #3b5a99;
+  }
+
+  .own-rank {
+    color: #047857;
+  }
+
+  .period-switch .active {
+    border-color: #2563eb;
+    background: rgba(59, 130, 246, 0.15);
+  }
+}
