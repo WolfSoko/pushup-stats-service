@@ -21,13 +21,16 @@ import { ThemeService } from './theme.service';
 export class ThemeToggleComponent {
   protected readonly theme = inject(ThemeService);
 
-  /** Show auto icon in auto mode; otherwise light_mode icon when dark, dark_mode when light */
+  /** Icon based on current mode setting */
   protected readonly icon = computed(() => {
-    const mode = this.theme.currentMode();
-    if (mode === 'auto') {
-      return 'brightness_auto';
+    switch (this.theme.currentMode()) {
+      case 'auto':
+        return 'brightness_auto';
+      case 'light':
+        return 'light_mode';
+      case 'dark':
+        return 'dark_mode';
     }
-    return this.theme.resolvedTheme() === 'dark' ? 'light_mode' : 'dark_mode';
   });
 
   /** Aria label based on current mode */

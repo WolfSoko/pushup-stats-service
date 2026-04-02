@@ -4441,18 +4441,27 @@ Deine Position: # ·  Reps        </source>
       </segment>
     </unit>
     <unit id="theme.toggle.auto">
+      <notes>
+        <note category="location">web/src/app/core/theme/theme-toggle.component.ts:41</note>
+      </notes>
       <segment state="translated">
         <source>Automatisches Design aktiv. Klicken zum Wechseln</source>
         <target>Auto theme active. Click to switch</target>
       </segment>
     </unit>
     <unit id="theme.toggle.light">
+      <notes>
+        <note category="location">web/src/app/core/theme/theme-toggle.component.ts:43</note>
+      </notes>
       <segment state="translated">
         <source>Helles Design aktiv. Klicken zum Wechseln</source>
         <target>Light theme active. Click to switch</target>
       </segment>
     </unit>
     <unit id="theme.toggle.dark">
+      <notes>
+        <note category="location">web/src/app/core/theme/theme-toggle.component.ts:45</note>
+      </notes>
       <segment state="translated">
         <source>Dunkles Design aktiv. Klicken zum Wechseln</source>
         <target>Dark theme active. Click to switch</target>
