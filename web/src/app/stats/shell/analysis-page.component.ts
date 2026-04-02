@@ -68,20 +68,13 @@ interface TrendPoint {
         />
       </section>
 
-      <mat-card class="chart-card">
-        <mat-card-header>
-          <mat-card-title i18n="@@analysis.chartTitle">Verlauf</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <app-stats-chart
-            [series]="chartSeries()"
-            [granularity]="granularity()"
-            [rangeMode]="rangeMode()"
-            [from]="from()"
-            [to]="to()"
-          />
-        </mat-card-content>
-      </mat-card>
+      <app-stats-chart
+        [series]="chartSeries()"
+        [granularity]="granularity()"
+        [rangeMode]="rangeMode()"
+        [from]="from()"
+        [to]="to()"
+      />
 
       <section class="grid">
         <mat-card>
@@ -299,7 +292,8 @@ export class AnalysisPageComponent {
   readonly trendColumns = ['label', 'total'];
 
   readonly entriesResource = resource({
-    loader: async () => firstValueFrom(this.api.listPushups({})),
+    params: () => this.filter(),
+    loader: async ({ params }) => firstValueFrom(this.api.listPushups(params)),
   });
   readonly rows = computed(() => this.entriesResource.value() ?? []);
 

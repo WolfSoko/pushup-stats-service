@@ -36,7 +36,7 @@ const EMPTY_STATS: StatsResponse = {
       tabindex="0"
       (click)="navigateToAnalysis()"
       (keydown.enter)="navigateToAnalysis()"
-      (keyup.space)="navigateToAnalysis()"
+      (keyup.space)="navigateToAnalysis(); $event.preventDefault()"
       aria-label="Analyse öffnen"
       i18n-aria-label="@@dashboard.analysisTeaserAriaLabel"
     >
@@ -72,7 +72,11 @@ const EMPTY_STATS: StatsResponse = {
         }
       </mat-card-content>
       <mat-card-actions align="end">
-        <span class="teaser-cta">
+        <span
+          class="teaser-cta"
+          aria-label="Zur Analyse navigieren"
+          i18n-aria-label="@@dashboard.analysisTeaserCtaAriaLabel"
+        >
           <mat-icon>bar_chart</mat-icon>
           <span i18n="@@dashboard.analysisTeaserCta">Zur Analyse</span>
         </span>
@@ -125,7 +129,7 @@ export class AnalysisTeaserCardComponent {
   readonly streak = input(0);
   readonly weekReps = input(0);
 
-  private getWeekRange(): { from: string; to: string } {
+  private readonly weekRange = computed(() => {
     const today = new Date();
     const dayOfWeek = (today.getDay() + 6) % 7; // Monday = 0
     const monday = new Date(today);
@@ -133,13 +137,13 @@ export class AnalysisTeaserCardComponent {
     const sunday = new Date(monday);
     sunday.setDate(monday.getDate() + 6);
     return { from: toLocalIsoDate(monday), to: toLocalIsoDate(sunday) };
-  }
+  });
 
-  readonly from = computed(() => this.getWeekRange().from);
-  readonly to = computed(() => this.getWeekRange().to);
+  readonly from = computed(() => this.weekRange().from);
+  readonly to = computed(() => this.weekRange().to);
 
   readonly statsResource = resource({
-    params: () => this.getWeekRange(),
+    params: () => this.weekRange(),
     loader: async ({ params }) => firstValueFrom(this.api.load(params)),
   });
 

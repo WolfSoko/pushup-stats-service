@@ -129,7 +129,7 @@ export class StatsTableComponent {
   readonly displayedColumns = computed(() => {
     const base = ['timestamp', 'reps', 'type'];
     const cols = this.showSourceColumn() ? [...base, 'source'] : base;
-    return [...cols, 'actions'];
+    return this.readOnly() ? cols : [...cols, 'actions'];
   });
 
   readonly dataSource = new MatTableDataSource<PushupRecord>([]);
