@@ -136,28 +136,33 @@ mat-sidenav-content {
 
 // Light theme overrides
 html.light-theme {
-  .top-nav.mat-toolbar {
-    --mat-toolbar-container-background-color: #f8fafc;
+  // Override toolbar: use tag selector for higher specificity
+  mat-toolbar.top-nav {
+    --mat-toolbar-container-background-color: #ffffff;
     --mat-toolbar-container-text-color: #1e293b;
-    background: #f8fafc;
-    color: #1e293b;
+    background: #ffffff !important;
+    color: #1e293b !important;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.3);
+
+    .goal-pill {
+      background: rgba(240, 245, 255, 0.9);
+      border-color: rgba(59, 130, 246, 0.35);
+      color: #1e293b;
+    }
   }
 
   .desktop-nav {
-    background: #f8fafc;
+    background: #f1f5f9 !important;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.25);
     a {
-      color: #1e293b;
+      color: #334155;
     }
     a.active {
-      background: rgba(0, 0, 0, 0.08);
+      background: rgba(59, 130, 246, 0.1);
+      color: #1d4ed8;
     }
     a:hover {
       background: rgba(0, 0, 0, 0.05);
     }
-  }
-
-  .top-nav .goal-pill {
-    background: rgba(240, 245, 255, 0.8);
-    border-color: rgba(59, 130, 246, 0.35);
   }
 }

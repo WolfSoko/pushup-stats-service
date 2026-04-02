@@ -138,6 +138,10 @@ import { RouterLink } from '@angular/router';
           color: #3b82f6;
         }
 
+        h2 {
+          color: #1e293b;
+        }
+
         .reminder-desc {
           color: #475569;
         }

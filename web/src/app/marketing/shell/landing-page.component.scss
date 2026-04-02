@@ -174,9 +174,13 @@ mat-card-header mat-icon {
     border-color: rgba(59, 130, 246, 0.25);
     background: linear-gradient(
       155deg,
-      rgba(248, 250, 252, 0.95),
+      rgba(239, 246, 255, 0.95),
       rgba(255, 255, 255, 0.98)
     );
+
+    h1 {
+      color: #1e293b;
+    }
   }
 
   .eyebrow {

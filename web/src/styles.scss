@@ -73,6 +73,12 @@ body {
   line-height: 1.45;
 }
 
+// Light theme Angular Material toolbar overrides
+html.light-theme {
+  --mat-toolbar-container-background-color: #ffffff;
+  --mat-toolbar-container-text-color: #1e293b;
+}
+
 // Light theme body styles
 html.light-theme body {
   background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 50%, #e2e8f0 100%);
