@@ -168,3 +168,75 @@ mat-card-header mat-icon {
   margin-right: 1rem;
   color: #94b1ff;
 }
+
+:host-context(html.light-theme) {
+  .hero {
+    border-color: rgba(59, 130, 246, 0.25);
+    background: linear-gradient(
+      155deg,
+      rgba(248, 250, 252, 0.95),
+      rgba(255, 255, 255, 0.98)
+    );
+  }
+
+  .eyebrow {
+    color: #3b82f6;
+  }
+
+  .subtitle {
+    color: #475569;
+  }
+
+  .free-badge {
+    background: rgba(16, 185, 129, 0.12);
+    border-color: rgba(16, 185, 129, 0.4);
+    color: #047857;
+  }
+
+  .cta-hint {
+    color: #64748b;
+  }
+
+  .trust-bar {
+    color: #64748b;
+  }
+
+  .preview {
+    border-color: rgba(59, 130, 246, 0.25);
+    background: #f8fafc;
+  }
+
+  .leaderboard {
+    border-color: rgba(59, 130, 246, 0.25);
+    background: linear-gradient(
+      155deg,
+      rgba(248, 250, 252, 0.95),
+      rgba(255, 255, 255, 0.98)
+    );
+
+    p {
+      color: #475569;
+    }
+
+    .period-switch .active {
+      border-color: #3b82f6;
+      background: rgba(59, 130, 246, 0.12);
+    }
+
+    .rank {
+      color: #3b82f6;
+    }
+
+    .alias {
+      color: #1e293b;
+    }
+
+    .own-rank {
+      color: #047857;
+    }
+  }
+
+  mat-card-header mat-icon {
+    color: #3b82f6;
+  }
+}
