@@ -4,11 +4,27 @@ import { AnalysisPageComponent } from './analysis-page.component';
 import { StatsApiService } from '@pu-stats/data-access';
 import { AuthStore } from '@pu-auth/auth';
 import { makeAuthStoreMock } from '@pu-stats/testing';
+import { FilterBarComponent } from '../components/filter-bar/filter-bar.component';
 import { HeatmapComponent } from '../components/heatmap/heatmap.component';
 import { TypePieComponent } from '../components/type-pie/type-pie.component';
+import { StatsChartComponent } from '../components/stats-chart/stats-chart.component';
 
-// We don't want to render real chart components in unit tests.
-import { Component, input } from '@angular/core';
+// We don't want to render real components in unit tests.
+import { Component, input, output } from '@angular/core';
+import { RangeModes } from '@pu-stats/models';
+
+@Component({
+  selector: 'app-filter-bar',
+  standalone: true,
+  template: '',
+})
+class MockFilterBarComponent {
+  readonly from = input<string>('');
+  readonly to = input<string>('');
+  readonly fromChange = output<string>();
+  readonly toChange = output<string>();
+  readonly modeChange = output<RangeModes>();
+}
 
 @Component({
   selector: 'app-heatmap',
@@ -28,10 +44,36 @@ class MockTypePieComponent {
   readonly data = input<unknown[]>([]);
 }
 
+@Component({
+  selector: 'app-stats-chart',
+  standalone: true,
+  template: '',
+})
+class MockStatsChartComponent {
+  readonly series = input<unknown[]>([]);
+  readonly granularity = input<string>('daily');
+  readonly rangeMode = input<string>('week');
+  readonly from = input<string>('');
+  readonly to = input<string>('');
+}
+
 describe('AnalysisPageComponent', () => {
   let fixture: ComponentFixture<AnalysisPageComponent>;
 
   const apiMock = {
+    load: vitest.fn().mockReturnValue(
+      of({
+        meta: {
+          from: null,
+          to: null,
+          entries: 6,
+          days: 6,
+          total: 93,
+          granularity: 'daily',
+        },
+        series: [],
+      })
+    ),
     listPushups: vitest.fn().mockReturnValue(
       of([
         {
@@ -88,8 +130,22 @@ describe('AnalysisPageComponent', () => {
       ],
     })
       .overrideComponent(AnalysisPageComponent, {
-        remove: { imports: [HeatmapComponent, TypePieComponent] },
-        add: { imports: [MockHeatmapComponent, MockTypePieComponent] },
+        remove: {
+          imports: [
+            FilterBarComponent,
+            HeatmapComponent,
+            TypePieComponent,
+            StatsChartComponent,
+          ],
+        },
+        add: {
+          imports: [
+            MockFilterBarComponent,
+            MockHeatmapComponent,
+            MockTypePieComponent,
+            MockStatsChartComponent,
+          ],
+        },
       })
       .compileComponents();
 

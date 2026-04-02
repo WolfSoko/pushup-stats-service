@@ -68,6 +68,7 @@ export class StatsTableComponent {
   readonly sort = viewChild(MatSort);
 
   readonly entries = input<PushupRecord[]>([]);
+  readonly readOnly = input(false);
   readonly busyAction = input<'create' | 'update' | 'delete' | null>(null);
   readonly busyId = input<string | null>(null);
 

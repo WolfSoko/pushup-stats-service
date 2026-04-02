@@ -95,7 +95,7 @@ describe('StatsDashboardComponent', () => {
     vitest.clearAllMocks();
     liveTick.set(0);
     liveConnected.set(false);
-    window.history.replaceState({}, '', '/?from=2026-02-01&to=2026-02-10');
+    window.history.replaceState({}, '', '/');
 
     await TestBed.configureTestingModule({
       imports: [StatsDashboardComponent],
@@ -138,131 +138,178 @@ describe('StatsDashboardComponent', () => {
     window.history.replaceState({}, '', '/');
   });
 
-  it('shows german title and today focus section', () => {
-    const text = fixture.nativeElement.textContent;
-    expect(text).toContain('Liegestütze Statistik');
-    // Title depends on selected range mode.
-    expect(text).toContain('Gesamt');
-    expect(text).toContain('Zielfortschritt');
-    expect(text).toContain('Letzter Eintrag');
-  });
+  describe('Given the dashboard is rendered', () => {
+    describe('When checking the page content', () => {
+      it('Then it should show german title and today focus section', () => {
+        // Given
+        const text = fixture.nativeElement.textContent;
 
-  it('offers quick add buttons for 10, 20 and 30 reps', () => {
-    const text = fixture.nativeElement.textContent;
-    expect(text).toContain('+10 Reps');
-    expect(text).toContain('+20 Reps');
-    expect(text).toContain('+30 Reps');
-  });
+        // Then
+        expect(text).toContain('Liegestütze Statistik');
+        expect(text).toContain('Gesamt');
+        expect(text).toContain('Zielfortschritt');
+        expect(text).toContain('Letzter Eintrag');
+      });
 
-  it('initializes filter from URL params and triggers first load with those values', () => {
-    const component = fixture.componentInstance;
+      it('Then it should offer quick add buttons for 10, 20 and 30 reps', () => {
+        // Given
+        const text = fixture.nativeElement.textContent;
 
-    expect(serviceMock.load).toHaveBeenCalledWith({
-      from: '2026-02-01',
-      to: '2026-02-10',
+        // Then
+        expect(text).toContain('+10 Reps');
+        expect(text).toContain('+20 Reps');
+        expect(text).toContain('+30 Reps');
+      });
     });
-    expect(serviceMock.listPushups).toHaveBeenCalledWith({
-      from: '2026-02-01',
-      to: '2026-02-10',
-    });
-    expect(component.from()).toMatch(/^\d{4}-\d{2}-\d{2}$/);
-    expect(component.to()).toMatch(/^\d{4}-\d{2}-\d{2}$/);
   });
 
-  it('loads all-time stats separately for badges', () => {
-    const component = fixture.componentInstance;
-    expect(component.allTimeTotal()).toBe(1200);
-    expect(component.allTimeDays()).toBe(25);
-    expect(component.allTimeEntries()).toBe(100);
-    expect(component.allTimeAvg()).toBe('48.0');
-  });
-
-  it('computes selected period totals, latest entry and latest 10 rows', async () => {
-    const component = fixture.componentInstance;
-
-    await fixture.whenStable();
-
-    expect(component.periodTotal()).toBe(50);
-    expect(component.lastEntry()?._id).toBe('2');
-    expect(component.latestEntries()).toHaveLength(2);
-  });
-
-  it('runs CRUD handlers and refreshes resources', async () => {
-    const component = fixture.componentInstance;
-
-    await component.onCreateEntry({
-      timestamp: '2026-02-11T07:00',
-      reps: 12,
-      source: 'web',
-    });
-    expect(serviceMock.createPushup).toHaveBeenCalled();
-
-    await component.onUpdateEntry({
-      id: '1',
-      timestamp: todayTs.slice(0, 16),
-      reps: 14,
-      source: 'wa',
-    });
-    expect(serviceMock.updatePushup).toHaveBeenCalledWith('1', {
-      timestamp: todayTs.slice(0, 16),
-      reps: 14,
-      source: 'wa',
-      type: undefined,
+  describe('Given the component initializes', () => {
+    describe('When the API is called', () => {
+      it('Then it should load all-time stats and entries without filters', () => {
+        // Then
+        expect(serviceMock.load).toHaveBeenCalledWith({});
+        expect(serviceMock.listPushups).toHaveBeenCalledWith({});
+      });
     });
 
-    await component.onDeleteEntry('1');
-    expect(serviceMock.deletePushup).toHaveBeenCalledWith('1');
+    describe('When all-time stats are loaded', () => {
+      it('Then it should compute the correct badge values', () => {
+        // Given
+        const component = fixture.componentInstance;
+
+        // Then
+        expect(component.allTimeTotal()).toBe(1200);
+        expect(component.allTimeDays()).toBe(25);
+        expect(component.allTimeEntries()).toBe(100);
+        expect(component.allTimeAvg()).toBe('48.0');
+      });
+    });
+
+    describe('When entries are loaded', () => {
+      it('Then it should compute latest entry and latest entries list', async () => {
+        // Given
+        const component = fixture.componentInstance;
+        await fixture.whenStable();
+
+        // Then
+        expect(component.lastEntry()?._id).toBe('2');
+        expect(component.latestEntries()).toHaveLength(2);
+      });
+    });
   });
 
-  it('adds quick entry via create API helper', async () => {
-    const component = fixture.componentInstance;
+  describe('Given a quick entry is added', () => {
+    describe('When addQuickEntry is called with 10 reps', () => {
+      it('Then it should call createPushup with correct parameters', async () => {
+        // Given
+        const component = fixture.componentInstance;
 
-    await component.addQuickEntry(10);
+        // When
+        await component.addQuickEntry(10);
 
-    expect(serviceMock.createPushup).toHaveBeenCalledWith(
-      expect.objectContaining({ reps: 10, source: 'web', type: 'Standard' })
-    );
+        // Then
+        expect(serviceMock.createPushup).toHaveBeenCalledWith(
+          expect.objectContaining({ reps: 10, source: 'web', type: 'Standard' })
+        );
+      });
+    });
   });
 
-  it('reloads data when live websocket tick changes', async () => {
-    const initialLoadCalls = serviceMock.load.mock.calls.length;
+  describe('Given live websocket updates', () => {
+    describe('When the live tick changes', () => {
+      it('Then it should reload data', async () => {
+        // Given
+        const initialLoadCalls = serviceMock.load.mock.calls.length;
+        const initialListCalls = serviceMock.listPushups.mock.calls.length;
 
-    liveTick.set(1);
+        // When
+        liveTick.set(1);
+        await fixture.whenStable();
 
-    await fixture.whenStable();
+        // Then
+        expect(serviceMock.load.mock.calls.length).toBeGreaterThan(
+          initialLoadCalls
+        );
+        expect(serviceMock.listPushups.mock.calls.length).toBeGreaterThan(
+          initialListCalls
+        );
+      });
+    });
 
-    expect(serviceMock.load.mock.calls.length).toBeGreaterThan(
-      initialLoadCalls
-    );
-    expect(serviceMock.listPushups.mock.calls.length).toBeGreaterThan(0);
+    describe('When the connection state changes', () => {
+      it('Then it should show the correct connection state', async () => {
+        // When connected
+        liveConnected.set(true);
+        await fixture.whenStable();
+
+        // Then
+        expect(fixture.nativeElement.textContent).toContain('Live: verbunden');
+
+        // When disconnected
+        liveConnected.set(false);
+        await fixture.whenStable();
+
+        // Then
+        expect(fixture.nativeElement.textContent).toContain('Live: getrennt');
+      });
+    });
   });
 
-  it('renders range filter panel directly above the chart in mid-grid', () => {
-    const host = fixture.nativeElement as HTMLElement;
-    const panel = host.querySelector('.mid-grid .panel');
-    const chart = host.querySelector('.mid-grid app-stats-chart');
+  describe('Given entries exist for the current week', () => {
+    describe('When weekReps is computed', () => {
+      it('Then it should sum reps from entries within the current week', async () => {
+        // Given
+        const component = fixture.componentInstance;
+        await fixture.whenStable();
 
-    expect(panel).toBeTruthy();
-    expect(chart).toBeTruthy();
-    if (!panel || !chart) {
-      throw new Error('Expected filter panel and chart in mid-grid');
-    }
+        // When
+        const weekReps = component.weekReps();
 
-    expect(
-      panel.compareDocumentPosition(chart) & Node.DOCUMENT_POSITION_FOLLOWING
-    ).toBeTruthy();
+        // Then - todayTs is in current week, so at minimum we have 12 reps from entry 2
+        // Entry 1 (2026-02-10) may or may not be in current week depending on test run date
+        expect(weekReps).toBeGreaterThanOrEqual(12);
+      });
+    });
   });
 
-  it('shows live connection state', async () => {
-    liveConnected.set(true);
+  describe('Given entries with consecutive dates', () => {
+    describe('When currentStreak is computed with no recent entries', () => {
+      it('Then it should return 0 when last entry is more than 1 day ago', async () => {
+        // Given - mock with old entries only
+        serviceMock.listPushups.mockReturnValueOnce(
+          of([
+            {
+              _id: '1',
+              timestamp: '2026-01-01T10:00:00',
+              reps: 10,
+              source: 'wa',
+              type: 'Standard',
+            },
+          ])
+        );
 
-    await fixture.whenStable();
+        // When - create fresh component with old data
+        const freshFixture = TestBed.createComponent(StatsDashboardComponent);
+        await freshFixture.whenStable();
+        const component = freshFixture.componentInstance;
 
-    expect(fixture.nativeElement.textContent).toContain('Live: verbunden');
+        // Then
+        expect(component.currentStreak()).toBe(0);
+      });
+    });
 
-    liveConnected.set(false);
+    describe('When currentStreak is computed with today entry', () => {
+      it('Then it should count consecutive days ending today', async () => {
+        // Given - component has entry for today (todayTs)
+        const component = fixture.componentInstance;
+        await fixture.whenStable();
 
-    await fixture.whenStable();
-    expect(fixture.nativeElement.textContent).toContain('Live: getrennt');
+        // When
+        const streak = component.currentStreak();
+
+        // Then - at minimum 1 day (today)
+        expect(streak).toBeGreaterThanOrEqual(1);
+      });
+    });
   });
 });

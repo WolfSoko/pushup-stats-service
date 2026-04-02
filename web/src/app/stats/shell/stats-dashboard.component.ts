@@ -1,4 +1,4 @@
-import { DatePipe, DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { DatePipe, isPlatformBrowser } from '@angular/common';
 import {
   afterNextRender,
   ChangeDetectionStrategy,
@@ -6,16 +6,13 @@ import {
   computed,
   effect,
   inject,
-  linkedSignal,
   PLATFORM_ID,
-  REQUEST,
   resource,
   signal,
   viewChild,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
-import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
@@ -24,26 +21,15 @@ import {
   StatsApiService,
   UserConfigApiService,
 } from '@pu-stats/data-access';
-import {
-  PushupRecord,
-  StatsGranularity,
-  StatsResponse,
-  StatsSeriesEntry,
-} from '@pu-stats/models';
+import { PushupRecord, StatsResponse } from '@pu-stats/models';
 import { firstValueFrom } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { QuickAddBridgeService } from '@pu-stats/quick-add';
 import { AdSlotComponent, AdsConfigService } from '@pu-stats/ads';
 import { UserContextService } from '@pu-auth/auth';
-import {
-  createWeekRange,
-  inferRangeMode,
-  RangeModes,
-  toLocalIsoDate,
-} from '@pu-stats/models';
-import { FilterBarComponent } from '../components/filter-bar/filter-bar.component';
+import { toLocalIsoDate } from '@pu-stats/models';
+import { AnalysisTeaserCardComponent } from '../components/analysis-teaser-card/analysis-teaser-card.component';
 import { PreviewBannerComponent } from '../components/preview-banner/preview-banner.component';
-import { StatsChartComponent } from '../components/stats-chart/stats-chart.component';
 import { StatsTableComponent } from '../components/stats-table/stats-table.component';
 
 const EMPTY_STATS: StatsResponse = {
@@ -58,27 +44,16 @@ const EMPTY_STATS: StatsResponse = {
   series: [],
 };
 
-const PERIOD_TITLE_MAP: Record<RangeModes | 'today', string> = {
-  today: $localize`:@@period.today:Heute`,
-  day: $localize`:@@period.day:Tag`,
-  week: $localize`:@@period.week:Woche`,
-  month: $localize`:@@period.month:Monat`,
-  year: $localize`:@@period.year:Jahr`,
-  custom: $localize`:@@period.range:Zeitraum`,
-};
-
 @Component({
   selector: 'app-stats-dashboard',
   imports: [
     MatCardModule,
     MatButtonModule,
-    MatButtonToggleModule,
     MatIconModule,
     MatProgressBarModule,
     DatePipe,
-    FilterBarComponent,
+    AnalysisTeaserCardComponent,
     PreviewBannerComponent,
-    StatsChartComponent,
     StatsTableComponent,
     AdSlotComponent,
   ],
@@ -91,55 +66,21 @@ export class StatsDashboardComponent {
   private readonly platformId = inject(PLATFORM_ID);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
-  private readonly document = inject(DOCUMENT);
-  private readonly request = inject(REQUEST, { optional: true }) as {
-    url?: string;
-  } | null;
   private readonly live = inject(PushupLiveService);
   private readonly adsConfig = inject(AdsConfigService);
 
-  private readonly defaultRange = createWeekRange();
-  private readonly initialRange = this.resolveInitialRange();
-
-  readonly from = signal(this.initialRange.from);
-  readonly to = signal(this.initialRange.to);
-  readonly rangeMode = linkedSignal<RangeModes>(() =>
-    inferRangeMode(this.initialRange.from, this.initialRange.to)
-  );
-  readonly busyAction = signal<'create' | 'update' | 'delete' | null>(null);
-  readonly busyId = signal<string | null>(null);
-
   readonly statsTable = viewChild(StatsTableComponent);
 
-  private readonly filter = computed(() => ({
-    from: this.from() || undefined,
-    to: this.to() || undefined,
-  }));
-
-  readonly statsResource = resource({
-    params: () => this.filter(),
-    loader: async ({ params }) => firstValueFrom(this.api.load(params)),
-  });
-
   readonly entriesResource = resource({
-    params: () => this.filter(),
-    loader: async ({ params }) => firstValueFrom(this.api.listPushups(params)),
+    loader: async () => firstValueFrom(this.api.listPushups({})),
   });
 
   readonly allTimeResource = resource({
     loader: async () => firstValueFrom(this.api.load({})),
   });
 
-  readonly stats = computed(() => this.statsResource.value() ?? EMPTY_STATS);
   readonly allTimeStats = computed(
     () => this.allTimeResource.value() ?? EMPTY_STATS
-  );
-
-  readonly total = computed(() => this.stats().meta.total);
-  readonly days = computed(() => this.stats().meta.days);
-  readonly entries = computed(() => this.stats().meta.entries);
-  readonly avg = computed(() =>
-    this.days() ? (this.total() / this.days()).toFixed(1) : '0'
   );
 
   readonly allTimeTotal = computed(() => this.allTimeStats().meta.total);
@@ -150,19 +91,55 @@ export class StatsDashboardComponent {
       ? (this.allTimeTotal() / this.allTimeDays()).toFixed(1)
       : '0'
   );
-  readonly granularity = computed<StatsGranularity>(
-    () => this.stats().meta.granularity
-  );
-  readonly rows = computed<StatsSeriesEntry[]>(() => this.stats().series);
+
   readonly entryRows = computed<PushupRecord[]>(
     () => this.entriesResource.value() ?? []
   );
+
+  readonly currentStreak = computed(() => {
+    const dates = this.sortedUniqueDates();
+    if (!dates.length) return 0;
+
+    const today = toLocalIsoDate(new Date());
+    const lastDate = dates[dates.length - 1];
+
+    // If last entry is not today or yesterday (or is in the future), streak is 0
+    const daysDiff = this.daysBetween(lastDate, today);
+    if (daysDiff > 1 || daysDiff < 0) return 0;
+
+    let streak = 1;
+    for (let i = dates.length - 1; i > 0; i--) {
+      if (this.daysBetween(dates[i - 1], dates[i]) === 1) {
+        streak += 1;
+      } else {
+        break;
+      }
+    }
+    return streak;
+  });
+
+  readonly weekReps = computed(() => {
+    const today = new Date();
+    const dayOfWeek = (today.getDay() + 6) % 7; // Monday = 0
+    const monday = new Date(today);
+    monday.setDate(today.getDate() - dayOfWeek);
+    const mondayStr = toLocalIsoDate(monday);
+    const sunday = new Date(monday);
+    sunday.setDate(monday.getDate() + 6);
+    const sundayStr = toLocalIsoDate(sunday);
+
+    return this.entryRows()
+      .filter((entry) => {
+        const day = entry.timestamp.slice(0, 10);
+        return day >= mondayStr && day <= sundayStr;
+      })
+      .reduce((sum, entry) => sum + entry.reps, 0);
+  });
+
   private readonly user = inject(UserContextService);
   private readonly userConfigApi = inject(UserConfigApiService);
 
   readonly dailyGoal = signal(100);
-  readonly dayChartMode = signal<'24h' | '14h'>('14h');
-  readonly savingDayChartMode = signal(false);
 
   readonly adClient = this.adsConfig.adClient;
   readonly adSlotDashboardInline = this.adsConfig.dashboardInlineSlot;
@@ -174,43 +151,18 @@ export class StatsDashboardComponent {
       firstValueFrom(this.userConfigApi.getConfig(params.userId)),
   });
 
-  readonly selectedDayTotal = computed(() => {
-    const day = this.from() || toLocalIsoDate(new Date());
+  readonly todayTotal = computed(() => {
+    const today = toLocalIsoDate(new Date());
     return this.entryRows()
-      .filter((entry) => entry.timestamp.slice(0, 10) === day)
+      .filter((entry) => entry.timestamp.slice(0, 10) === today)
       .reduce((sum, entry) => sum + entry.reps, 0);
   });
 
-  readonly periodTotal = computed(() => {
-    // Use entry data for day view (more robust when user browses non-today days)
-    if (this.rangeMode() === 'day') return this.selectedDayTotal();
-    return this.total();
-  });
-
-  readonly periodGoal = computed(() => {
-    const multiplier =
-      this.rangeMode() === 'day' ? 1 : Math.max(1, this.days());
-    return this.dailyGoal() * multiplier;
-  });
-
   readonly goalProgressPercent = computed(() =>
-    this.periodGoal()
-      ? Math.min(
-          100,
-          Math.round((this.periodTotal() / this.periodGoal()) * 100)
-        )
+    this.dailyGoal()
+      ? Math.min(100, Math.round((this.todayTotal() / this.dailyGoal()) * 100))
       : 0
   );
-
-  readonly periodTitle = computed(() => {
-    if (
-      this.rangeMode() === 'day' &&
-      toLocalIsoDate(new Date()) === this.from()
-    ) {
-      return PERIOD_TITLE_MAP['today'];
-    }
-    return PERIOD_TITLE_MAP[this.rangeMode()];
-  });
 
   readonly lastEntry = computed<PushupRecord | null>(() => {
     const rows = this.entryRows();
@@ -222,22 +174,21 @@ export class StatsDashboardComponent {
       )[0] ?? null
     );
   });
+
   readonly latestEntries = computed<PushupRecord[]>(() => {
     return [...this.entryRows()]
       .sort(
         (a, b) =>
           new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
       )
-      .slice(0, 10);
+      .slice(0, 5);
   });
+
   readonly loading = computed(() => {
-    const status = this.statsResource.status();
+    const status = this.entriesResource.status();
     return status === 'loading' || status === 'reloading';
   });
-  readonly errorMessage = computed(() => {
-    if (!this.statsResource.error()) return '';
-    return 'Daten konnten nicht geladen werden. Bitte Zeitraum prüfen oder die Seite neu laden.';
-  });
+
   readonly liveConnected = computed(() => this.live.connected());
 
   constructor() {
@@ -263,23 +214,9 @@ export class StatsDashboardComponent {
       });
 
     effect(() => {
-      if (!isPlatformBrowser(this.platformId)) return;
-      const params = new URLSearchParams();
-      const from = this.from();
-      const to = this.to();
-      if (from) params.set('from', from);
-      if (to) params.set('to', to);
-
-      const query = params.toString();
-      const nextUrl = `${this.document.location.pathname}${query ? `?${query}` : ''}`;
-      window.history.replaceState(window.history.state, '', nextUrl);
-    });
-
-    effect(() => {
       const cfg = this.userConfigResource.value();
       if (!cfg) return;
       this.dailyGoal.set(cfg.dailyGoal ?? 100);
-      this.dayChartMode.set(cfg.ui?.dayChartMode === '24h' ? '24h' : '14h');
     });
 
     effect(() => {
@@ -288,79 +225,6 @@ export class StatsDashboardComponent {
       if (!tick) return;
       this.refreshAll();
     });
-  }
-
-  async onCreateEntry(payload: {
-    timestamp: string;
-    reps: number;
-    source?: string;
-    type?: string;
-  }) {
-    this.busyAction.set('create');
-    this.busyId.set(null);
-    try {
-      await firstValueFrom(this.api.createPushup(payload));
-      this.refreshAll();
-    } finally {
-      this.busyAction.set(null);
-      this.busyId.set(null);
-    }
-  }
-
-  async onUpdateEntry(payload: {
-    id: string;
-    timestamp: string;
-    reps: number;
-    source?: string;
-    type?: string;
-  }) {
-    this.busyAction.set('update');
-    this.busyId.set(payload.id);
-    try {
-      await firstValueFrom(
-        this.api.updatePushup(payload.id, {
-          timestamp: payload.timestamp,
-          reps: payload.reps,
-          source: payload.source,
-          type: payload.type,
-        })
-      );
-      this.refreshAll();
-    } finally {
-      this.busyAction.set(null);
-      this.busyId.set(null);
-    }
-  }
-
-  async onDeleteEntry(id: string) {
-    this.busyAction.set('delete');
-    this.busyId.set(id);
-    try {
-      await firstValueFrom(this.api.deletePushup(id));
-      this.refreshAll();
-    } finally {
-      this.busyAction.set(null);
-      this.busyId.set(null);
-    }
-  }
-
-  async onDayChartModeChange(mode: '24h' | '14h') {
-    if (!mode || mode === this.dayChartMode()) return;
-    this.dayChartMode.set(mode);
-    this.savingDayChartMode.set(true);
-    try {
-      await firstValueFrom(
-        this.userConfigApi.updateConfig(this.user.userIdSafe(), {
-          ui: {
-            dayChartMode: mode,
-          },
-        })
-      );
-      this.userConfigResource.reload();
-      this.statsResource.reload();
-    } finally {
-      this.savingDayChartMode.set(false);
-    }
   }
 
   openCreateDialog(): void {
@@ -390,36 +254,31 @@ export class StatsDashboardComponent {
     const hh = String(now.getHours()).padStart(2, '0');
     const mm = String(now.getMinutes()).padStart(2, '0');
 
-    await this.onCreateEntry({
-      timestamp: `${y}-${m}-${d}T${hh}:${mm}`,
-      reps,
-      source: 'web',
-      type: 'Standard',
-    });
+    await firstValueFrom(
+      this.api.createPushup({
+        timestamp: `${y}-${m}-${d}T${hh}:${mm}`,
+        reps,
+        source: 'web',
+        type: 'Standard',
+      })
+    );
+    this.refreshAll();
   }
 
   private refreshAll() {
-    this.statsResource.reload();
     this.allTimeResource.reload();
     this.entriesResource.reload();
   }
 
-  private resolveInitialRange(): { from: string; to: string } {
-    const search = this.resolveSearchString();
-    const params = new URLSearchParams(search);
-    const from = params.get('from') ?? this.defaultRange.from;
-    const to = params.get('to') ?? this.defaultRange.to;
-    return { from, to };
+  private sortedUniqueDates(): string[] {
+    return [
+      ...new Set(this.entryRows().map((x) => x.timestamp.slice(0, 10))),
+    ].sort((a, b) => a.localeCompare(b));
   }
 
-  private resolveSearchString(): string {
-    if (isPlatformBrowser(this.platformId)) {
-      return this.document.location.search || '';
-    }
-
-    const url = this.request?.url || '';
-    const qIndex = url.indexOf('?');
-    if (qIndex === -1) return '';
-    return url.slice(qIndex);
+  private daysBetween(a: string, b: string): number {
+    const ad = new Date(`${a}T00:00:00`).getTime();
+    const bd = new Date(`${b}T00:00:00`).getTime();
+    return Math.round((bd - ad) / 86_400_000);
   }
 }

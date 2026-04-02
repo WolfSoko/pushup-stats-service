@@ -4317,6 +4317,12 @@ Deine Position: # ·  Reps        </source>
         <target>Enter custom value</target>
       </segment>
     </unit>
+    <unit id="quickAdd.fab.quickAddReps">
+      <segment state="translated">
+        <source>+<ph id="0" equiv="INTERPOLATION" disp="{{ item.value }}"/> Reps</source>
+        <target>+<ph id="0" equiv="INTERPOLATION" disp="{{ item.value }}"/> Reps</target>
+      </segment>
+    </unit>
     <unit id="quickAdd.fab.repAria">
       <segment state="translated">
         <source><ph id="0" equiv="REPS" disp="reps"/> Liegestütze hinzufügen</source>
@@ -4345,6 +4351,93 @@ Deine Position: # ·  Reps        </source>
       <segment state="translated">
         <source>Basierend auf deiner Trainingshistorie schlägt die App automatisch passende Wiederholungszahlen vor. Ein Tap genügt.</source>
         <target>Based on your training history, the app automatically suggests fitting rep counts. One tap is all it takes.</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.analysisTeaserAriaLabel">
+      <notes>
+        <note category="location">web/src/app/stats/components/analysis-teaser-card/analysis-teaser-card.component.ts</note>
+      </notes>
+      <segment state="translated">
+        <source>Analyse öffnen</source>
+        <target>Open analysis</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.analysisTeaserTitle">
+      <notes>
+        <note category="location">web/src/app/stats/components/analysis-teaser-card/analysis-teaser-card.component.ts</note>
+      </notes>
+      <segment state="translated">
+        <source>Analyse</source>
+        <target>Analysis</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.analysisTeaserStreak">
+      <notes>
+        <note category="location">web/src/app/stats/components/analysis-teaser-card/analysis-teaser-card.component.ts</note>
+      </notes>
+      <segment state="translated">
+        <source>Streak: <ph id="0" equiv="INTERPOLATION" disp="{{ streak() }}"/> Tage</source>
+        <target>Streak: <ph id="0" equiv="INTERPOLATION" disp="{{ streak() }}"/> days</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.analysisTeaserWeekReps">
+      <notes>
+        <note category="location">web/src/app/stats/components/analysis-teaser-card/analysis-teaser-card.component.ts</note>
+      </notes>
+      <segment state="translated">
+        <source>Diese Woche: <ph id="0" equiv="INTERPOLATION" disp="{{ weekReps() }}"/> Reps</source>
+        <target>This week: <ph id="0" equiv="INTERPOLATION" disp="{{ weekReps() }}"/> reps</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.analysisTeaserError">
+      <notes>
+        <note category="location">web/src/app/stats/components/analysis-teaser-card/analysis-teaser-card.component.ts</note>
+      </notes>
+      <segment state="translated">
+        <source>Daten konnten nicht geladen werden.</source>
+        <target>Failed to load data.</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.analysisTeaserCtaAriaLabel">
+      <notes>
+        <note category="location">web/src/app/stats/components/analysis-teaser-card/analysis-teaser-card.component.ts</note>
+      </notes>
+      <segment state="translated">
+        <source>Zur Analyse navigieren</source>
+        <target>Navigate to analysis</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.analysisTeaserCta">
+      <notes>
+        <note category="location">web/src/app/stats/components/analysis-teaser-card/analysis-teaser-card.component.ts</note>
+      </notes>
+      <segment state="translated">
+        <source>Zur Analyse</source>
+        <target>Go to Analysis</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.todayTotal">
+      <segment state="translated">
+        <source>Heute Gesamt</source>
+        <target>Today Total</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.latestEntries">
+      <segment state="translated">
+        <source>Letzte Einträge</source>
+        <target>Recent Entries</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.noEntryYet">
+      <segment state="translated">
+        <source>Noch kein Eintrag.</source>
+        <target>No entries yet.</target>
+      </segment>
+    </unit>
+    <unit id="analysis.chartTitle">
+      <segment state="translated">
+        <source>Verlauf</source>
+        <target>Progress</target>
       </segment>
     </unit>
   </file>
