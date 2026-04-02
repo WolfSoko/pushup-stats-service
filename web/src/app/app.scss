@@ -133,3 +133,21 @@ mat-sidenav-content {
     display: none;
   }
 }
+
+// Light theme overrides
+html.light-theme {
+  .desktop-nav {
+    background: var(--mat-toolbar-container-background-color, #f8fafc);
+    a.active {
+      background: rgba(0, 0, 0, 0.08);
+    }
+    a:hover {
+      background: rgba(0, 0, 0, 0.05);
+    }
+  }
+
+  .top-nav .goal-pill {
+    background: rgba(240, 245, 255, 0.8);
+    border-color: rgba(59, 130, 246, 0.35);
+  }
+}
