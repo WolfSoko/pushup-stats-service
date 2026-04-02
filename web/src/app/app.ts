@@ -43,6 +43,7 @@ import {
   QuickAddBridgeService,
   QuickAddFabComponent,
 } from '@pu-stats/quick-add';
+import { ThemeToggleComponent } from './core/theme';
 
 @Component({
   selector: 'app-root',
@@ -59,6 +60,7 @@ import {
     MatDividerModule,
     UserMenuComponent,
     QuickAddFabComponent,
+    ThemeToggleComponent,
   ],
   templateUrl: './app.html',
   styleUrl: './app.scss',

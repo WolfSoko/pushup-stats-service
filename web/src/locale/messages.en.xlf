@@ -4440,6 +4440,24 @@ Deine Position: # ·  Reps        </source>
         <target>Progress</target>
       </segment>
     </unit>
+    <unit id="theme.toggle.auto">
+      <segment state="translated">
+        <source>Automatisches Design aktiv. Klicken zum Wechseln</source>
+        <target>Auto theme active. Click to switch</target>
+      </segment>
+    </unit>
+    <unit id="theme.toggle.light">
+      <segment state="translated">
+        <source>Helles Design aktiv. Klicken zum Wechseln</source>
+        <target>Light theme active. Click to switch</target>
+      </segment>
+    </unit>
+    <unit id="theme.toggle.dark">
+      <segment state="translated">
+        <source>Dunkles Design aktiv. Klicken zum Wechseln</source>
+        <target>Dark theme active. Click to switch</target>
+      </segment>
+    </unit>
   </file>
 
 
