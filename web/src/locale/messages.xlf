@@ -1776,17 +1776,17 @@
         <source>Einstellungen konnten nicht gespeichert werden.</source>
       </segment>
     </unit>
-    <unit id="dashboard.analysisTeaserLinkAria">
+    <unit id="dashboard.analysisTeaserAriaLabel">
       <notes>
-        <note category="location">web/src/app/stats/components/analysis-teaser-card/analysis-teaser-card.component.ts:40</note>
+        <note category="location">web/src/app/stats/components/analysis-teaser-card/analysis-teaser-card.component.ts:41,42</note>
       </notes>
       <segment>
-        <source>Zur Analyse-Seite</source>
+        <source>Analyse öffnen</source>
       </segment>
     </unit>
     <unit id="dashboard.analysisTeaserTitle">
       <notes>
-        <note category="location">web/src/app/stats/components/analysis-teaser-card/analysis-teaser-card.component.ts:43,44</note>
+        <note category="location">web/src/app/stats/components/analysis-teaser-card/analysis-teaser-card.component.ts:46,48</note>
       </notes>
       <segment>
         <source>Analyse</source>
@@ -1794,7 +1794,7 @@
     </unit>
     <unit id="dashboard.analysisTeaserStreak">
       <notes>
-        <note category="location">web/src/app/stats/components/analysis-teaser-card/analysis-teaser-card.component.ts:45,46</note>
+        <note category="location">web/src/app/stats/components/analysis-teaser-card/analysis-teaser-card.component.ts:50,51</note>
       </notes>
       <segment>
         <source>Streak: <ph id="0" equiv="INTERPOLATION" disp="{{ streak() }}"/> Tage</source>
@@ -1802,15 +1802,31 @@
     </unit>
     <unit id="dashboard.analysisTeaserWeekReps">
       <notes>
-        <note category="location">web/src/app/stats/components/analysis-teaser-card/analysis-teaser-card.component.ts:47,48</note>
+        <note category="location">web/src/app/stats/components/analysis-teaser-card/analysis-teaser-card.component.ts:54,55</note>
       </notes>
       <segment>
         <source>Diese Woche: <ph id="0" equiv="INTERPOLATION" disp="{{ weekReps() }}"/> Reps</source>
       </segment>
     </unit>
+    <unit id="dashboard.analysisTeaserError">
+      <notes>
+        <note category="location">web/src/app/stats/components/analysis-teaser-card/analysis-teaser-card.component.ts:61,63</note>
+      </notes>
+      <segment>
+        <source> Daten konnten nicht geladen werden. </source>
+      </segment>
+    </unit>
+    <unit id="dashboard.analysisTeaserCtaAriaLabel">
+      <notes>
+        <note category="location">web/src/app/stats/components/analysis-teaser-card/analysis-teaser-card.component.ts:80,81</note>
+      </notes>
+      <segment>
+        <source>Zur Analyse navigieren</source>
+      </segment>
+    </unit>
     <unit id="dashboard.analysisTeaserCta">
       <notes>
-        <note category="location">web/src/app/stats/components/analysis-teaser-card/analysis-teaser-card.component.ts:64,66</note>
+        <note category="location">web/src/app/stats/components/analysis-teaser-card/analysis-teaser-card.component.ts:84,86</note>
       </notes>
       <segment>
         <source>Zur Analyse</source>

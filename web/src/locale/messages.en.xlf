@@ -4347,31 +4347,64 @@ Deine Position: # ·  Reps        </source>
         <target>Based on your training history, the app automatically suggests fitting rep counts. One tap is all it takes.</target>
       </segment>
     </unit>
-    <unit id="dashboard.analysisTeaserLinkAria">
+    <unit id="dashboard.analysisTeaserAriaLabel">
+      <notes>
+        <note category="location">web/src/app/stats/components/analysis-teaser-card/analysis-teaser-card.component.ts</note>
+      </notes>
       <segment state="translated">
-        <source>Zur Analyse-Seite</source>
-        <target>Go to analysis page</target>
+        <source>Analyse öffnen</source>
+        <target>Open analysis</target>
       </segment>
     </unit>
     <unit id="dashboard.analysisTeaserTitle">
+      <notes>
+        <note category="location">web/src/app/stats/components/analysis-teaser-card/analysis-teaser-card.component.ts</note>
+      </notes>
       <segment state="translated">
         <source>Analyse</source>
         <target>Analysis</target>
       </segment>
     </unit>
     <unit id="dashboard.analysisTeaserStreak">
+      <notes>
+        <note category="location">web/src/app/stats/components/analysis-teaser-card/analysis-teaser-card.component.ts</note>
+      </notes>
       <segment state="translated">
-        <source>Streak: {$INTERPOLATION} Tage</source>
-        <target>Streak: {$INTERPOLATION} days</target>
+        <source>Streak: <ph id="0" equiv="INTERPOLATION" disp="{{ streak() }}"/> Tage</source>
+        <target>Streak: <ph id="0" equiv="INTERPOLATION" disp="{{ streak() }}"/> days</target>
       </segment>
     </unit>
     <unit id="dashboard.analysisTeaserWeekReps">
+      <notes>
+        <note category="location">web/src/app/stats/components/analysis-teaser-card/analysis-teaser-card.component.ts</note>
+      </notes>
       <segment state="translated">
-        <source>Diese Woche: {$INTERPOLATION} Reps</source>
-        <target>This week: {$INTERPOLATION} reps</target>
+        <source>Diese Woche: <ph id="0" equiv="INTERPOLATION" disp="{{ weekReps() }}"/> Reps</source>
+        <target>This week: <ph id="0" equiv="INTERPOLATION" disp="{{ weekReps() }}"/> reps</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.analysisTeaserError">
+      <notes>
+        <note category="location">web/src/app/stats/components/analysis-teaser-card/analysis-teaser-card.component.ts</note>
+      </notes>
+      <segment state="translated">
+        <source>Daten konnten nicht geladen werden.</source>
+        <target>Failed to load data.</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.analysisTeaserCtaAriaLabel">
+      <notes>
+        <note category="location">web/src/app/stats/components/analysis-teaser-card/analysis-teaser-card.component.ts</note>
+      </notes>
+      <segment state="translated">
+        <source>Zur Analyse navigieren</source>
+        <target>Navigate to analysis</target>
       </segment>
     </unit>
     <unit id="dashboard.analysisTeaserCta">
+      <notes>
+        <note category="location">web/src/app/stats/components/analysis-teaser-card/analysis-teaser-card.component.ts</note>
+      </notes>
       <segment state="translated">
         <source>Zur Analyse</source>
         <target>Go to Analysis</target>
