@@ -136,8 +136,18 @@ mat-sidenav-content {
 
 // Light theme overrides
 html.light-theme {
+  .top-nav.mat-toolbar {
+    --mat-toolbar-container-background-color: #f8fafc;
+    --mat-toolbar-container-text-color: #1e293b;
+    background: #f8fafc;
+    color: #1e293b;
+  }
+
   .desktop-nav {
-    background: var(--mat-toolbar-container-background-color, #f8fafc);
+    background: #f8fafc;
+    a {
+      color: #1e293b;
+    }
     a.active {
       background: rgba(0, 0, 0, 0.08);
     }

@@ -123,6 +123,37 @@ import { RouterLink } from '@angular/router';
         color: #d8e5ff;
         font-size: 0.95rem;
       }
+
+      :host-context(html.light-theme) {
+        .reminder-section {
+          border-color: rgba(59, 130, 246, 0.25);
+          background: linear-gradient(
+            155deg,
+            rgba(248, 250, 252, 0.95),
+            rgba(255, 255, 255, 0.98)
+          );
+        }
+
+        .eyebrow {
+          color: #3b82f6;
+        }
+
+        .reminder-desc {
+          color: #475569;
+        }
+
+        .notification-mock {
+          border-color: rgba(59, 130, 246, 0.25);
+        }
+
+        .quote-icon {
+          color: #3b82f6;
+        }
+
+        .quote-text {
+          color: #334155;
+        }
+      }
     `,
   ],
 })
