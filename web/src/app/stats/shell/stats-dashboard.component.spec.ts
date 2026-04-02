@@ -95,7 +95,7 @@ describe('StatsDashboardComponent', () => {
     vitest.clearAllMocks();
     liveTick.set(0);
     liveConnected.set(false);
-    window.history.replaceState({}, '', '/?from=2026-02-01&to=2026-02-10');
+    window.history.replaceState({}, '', '/');
 
     await TestBed.configureTestingModule({
       imports: [StatsDashboardComponent],
@@ -154,19 +154,9 @@ describe('StatsDashboardComponent', () => {
     expect(text).toContain('+30 Reps');
   });
 
-  it('initializes filter from URL params and triggers first load with those values', () => {
-    const component = fixture.componentInstance;
-
-    expect(serviceMock.load).toHaveBeenCalledWith({
-      from: '2026-02-01',
-      to: '2026-02-10',
-    });
-    expect(serviceMock.listPushups).toHaveBeenCalledWith({
-      from: '2026-02-01',
-      to: '2026-02-10',
-    });
-    expect(component.from()).toMatch(/^\d{4}-\d{2}-\d{2}$/);
-    expect(component.to()).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+  it('loads all-time stats and entries on init without filters', () => {
+    expect(serviceMock.load).toHaveBeenCalledWith({});
+    expect(serviceMock.listPushups).toHaveBeenCalledWith({});
   });
 
   it('loads all-time stats separately for badges', () => {
@@ -177,41 +167,13 @@ describe('StatsDashboardComponent', () => {
     expect(component.allTimeAvg()).toBe('48.0');
   });
 
-  it('computes selected period totals, latest entry and latest 10 rows', async () => {
+  it('computes latest entry and latest entries list', async () => {
     const component = fixture.componentInstance;
 
     await fixture.whenStable();
 
-    expect(component.periodTotal()).toBe(50);
     expect(component.lastEntry()?._id).toBe('2');
     expect(component.latestEntries()).toHaveLength(2);
-  });
-
-  it('runs CRUD handlers and refreshes resources', async () => {
-    const component = fixture.componentInstance;
-
-    await component.onCreateEntry({
-      timestamp: '2026-02-11T07:00',
-      reps: 12,
-      source: 'web',
-    });
-    expect(serviceMock.createPushup).toHaveBeenCalled();
-
-    await component.onUpdateEntry({
-      id: '1',
-      timestamp: todayTs.slice(0, 16),
-      reps: 14,
-      source: 'wa',
-    });
-    expect(serviceMock.updatePushup).toHaveBeenCalledWith('1', {
-      timestamp: todayTs.slice(0, 16),
-      reps: 14,
-      source: 'wa',
-      type: undefined,
-    });
-
-    await component.onDeleteEntry('1');
-    expect(serviceMock.deletePushup).toHaveBeenCalledWith('1');
   });
 
   it('adds quick entry via create API helper', async () => {
@@ -235,22 +197,6 @@ describe('StatsDashboardComponent', () => {
       initialLoadCalls
     );
     expect(serviceMock.listPushups.mock.calls.length).toBeGreaterThan(0);
-  });
-
-  it('renders range filter panel directly above the chart in mid-grid', () => {
-    const host = fixture.nativeElement as HTMLElement;
-    const panel = host.querySelector('.mid-grid .panel');
-    const chart = host.querySelector('.mid-grid app-stats-chart');
-
-    expect(panel).toBeTruthy();
-    expect(chart).toBeTruthy();
-    if (!panel || !chart) {
-      throw new Error('Expected filter panel and chart in mid-grid');
-    }
-
-    expect(
-      panel.compareDocumentPosition(chart) & Node.DOCUMENT_POSITION_FOLLOWING
-    ).toBeTruthy();
   });
 
   it('shows live connection state', async () => {

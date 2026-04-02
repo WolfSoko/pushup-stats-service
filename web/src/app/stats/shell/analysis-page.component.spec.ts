@@ -6,6 +6,7 @@ import { AuthStore } from '@pu-auth/auth';
 import { makeAuthStoreMock } from '@pu-stats/testing';
 import { HeatmapComponent } from '../components/heatmap/heatmap.component';
 import { TypePieComponent } from '../components/type-pie/type-pie.component';
+import { StatsChartComponent } from '../components/stats-chart/stats-chart.component';
 
 // We don't want to render real chart components in unit tests.
 import { Component, input } from '@angular/core';
@@ -28,10 +29,36 @@ class MockTypePieComponent {
   readonly data = input<unknown[]>([]);
 }
 
+@Component({
+  selector: 'app-stats-chart',
+  standalone: true,
+  template: '',
+})
+class MockStatsChartComponent {
+  readonly series = input<unknown[]>([]);
+  readonly granularity = input<string>('daily');
+  readonly rangeMode = input<string>('week');
+  readonly from = input<string>('');
+  readonly to = input<string>('');
+}
+
 describe('AnalysisPageComponent', () => {
   let fixture: ComponentFixture<AnalysisPageComponent>;
 
   const apiMock = {
+    load: vitest.fn().mockReturnValue(
+      of({
+        meta: {
+          from: null,
+          to: null,
+          entries: 6,
+          days: 6,
+          total: 93,
+          granularity: 'daily',
+        },
+        series: [],
+      })
+    ),
     listPushups: vitest.fn().mockReturnValue(
       of([
         {
@@ -88,8 +115,16 @@ describe('AnalysisPageComponent', () => {
       ],
     })
       .overrideComponent(AnalysisPageComponent, {
-        remove: { imports: [HeatmapComponent, TypePieComponent] },
-        add: { imports: [MockHeatmapComponent, MockTypePieComponent] },
+        remove: {
+          imports: [HeatmapComponent, TypePieComponent, StatsChartComponent],
+        },
+        add: {
+          imports: [
+            MockHeatmapComponent,
+            MockTypePieComponent,
+            MockStatsChartComponent,
+          ],
+        },
       })
       .compileComponents();
 
