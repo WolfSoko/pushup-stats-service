@@ -32,13 +32,12 @@
   >
     <mat-card>
       <mat-card-header>
-        <mat-card-title
-          >{{ periodTitle() }}
-          <span i18n="@@period.total">Gesamt</span></mat-card-title
+        <mat-card-title i18n="@@dashboard.todayTotal"
+          >Heute Gesamt</mat-card-title
         >
       </mat-card-header>
       <mat-card-content>
-        <p class="focus-number">{{ periodTotal() }}</p>
+        <p class="focus-number">{{ todayTotal() }}</p>
       </mat-card-content>
     </mat-card>
 
@@ -49,7 +48,7 @@
         >
       </mat-card-header>
       <mat-card-content>
-        <p>{{ periodTotal() }} / {{ periodGoal() }}</p>
+        <p>{{ todayTotal() }} / {{ dailyGoal() }}</p>
         <mat-progress-bar
           mode="determinate"
           [value]="goalProgressPercent()"
@@ -68,7 +67,7 @@
           </p>
           <small>{{ latest.timestamp | date: 'short' }}</small>
         } @else {
-          <p i18n="@@noEntryInPeriod">Noch kein Eintrag für diesen Zeitraum.</p>
+          <p i18n="@@dashboard.noEntryYet">Noch kein Eintrag.</p>
         }
       </mat-card-content>
     </mat-card>
@@ -96,6 +95,11 @@
       ><b>{{ allTimeAvg() }}</b></span
     >
   </section>
+
+  <app-analysis-teaser-card
+    [streak]="currentStreak()"
+    [weekReps]="weekReps()"
+  />
 
   <mat-card class="quick-actions">
     <mat-card-header>
@@ -150,12 +154,6 @@
     </mat-card-content>
   </mat-card>
 
-  @if (errorMessage()) {
-    <section class="status-banner error" role="alert" aria-live="polite">
-      {{ errorMessage() }}
-    </section>
-  }
-
   @if (loading()) {
     <section
       class="status-banner loading"
@@ -166,55 +164,9 @@
     </section>
   }
 
-  <section class="mid-grid">
-    <section class="panel">
-      <app-filter-bar
-        [from]="from()"
-        [to]="to()"
-        (fromChange)="from.set($event)"
-        (toChange)="to.set($event)"
-        (modeChange)="rangeMode.set($event)"
-      />
-    </section>
-
-    @if (rangeMode() === 'day') {
-      <section class="day-chart-mode" aria-label="Tagesansicht Modus">
-        <span i18n="@@dayChartModeLabel">Tagesansicht</span>
-        <mat-button-toggle-group
-          [value]="dayChartMode()"
-          (valueChange)="onDayChartModeChange($event)"
-          [disabled]="savingDayChartMode()"
-        >
-          <mat-button-toggle value="24h" i18n="@@dayChartMode24h"
-            >24h</mat-button-toggle
-          >
-          <mat-button-toggle value="14h" i18n="@@dayChartMode14h"
-            >14h Day Mode</mat-button-toggle
-          >
-        </mat-button-toggle-group>
-      </section>
-    }
-
-    <app-stats-chart
-      [series]="rows()"
-      [granularity]="granularity()"
-      [rangeMode]="rangeMode()"
-      [from]="from()"
-      [to]="to()"
-      [dayChartMode]="dayChartMode()"
-    />
-  </section>
-
   <section class="latest-entries">
-    <h2 i18n="@@entriesInSelectedRange">Einträge im gewählten Zeitraum</h2>
-    <app-stats-table
-      [entries]="entryRows()"
-      [busyAction]="busyAction()"
-      [busyId]="busyId()"
-      (create)="onCreateEntry($event)"
-      (update)="onUpdateEntry($event)"
-      (remove)="onDeleteEntry($event)"
-    />
+    <h2 i18n="@@dashboard.latestEntries">Letzte Einträge</h2>
+    <app-stats-table [entries]="latestEntries()" />
   </section>
 
   @if (dashboardInlineAdsEnabled()) {
