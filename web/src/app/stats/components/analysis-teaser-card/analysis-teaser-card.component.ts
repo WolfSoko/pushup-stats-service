@@ -37,7 +37,7 @@ const EMPTY_STATS: StatsResponse = {
       tabindex="0"
       (click)="navigateToAnalysis()"
       (keydown.enter)="navigateToAnalysis()"
-      (keydown.space)="navigateToAnalysis()"
+      (keyup.space)="navigateToAnalysis()"
       aria-label="Analyse öffnen"
       i18n-aria-label="@@dashboard.analysisTeaserAriaLabel"
     >

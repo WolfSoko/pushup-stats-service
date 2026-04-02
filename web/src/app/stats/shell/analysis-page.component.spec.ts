@@ -61,7 +61,7 @@ describe('AnalysisPageComponent', () => {
   let fixture: ComponentFixture<AnalysisPageComponent>;
 
   const apiMock = {
-    load: vitest.fn().mockReturnValue(
+    load: jest.fn().mockReturnValue(
       of({
         meta: {
           from: null,
@@ -74,7 +74,7 @@ describe('AnalysisPageComponent', () => {
         series: [],
       })
     ),
-    listPushups: vitest.fn().mockReturnValue(
+    listPushups: jest.fn().mockReturnValue(
       of([
         {
           _id: '1',

@@ -24,10 +24,10 @@ class StubStatsChartComponent {
 describe('AnalysisTeaserCardComponent', () => {
   let fixture: ComponentFixture<AnalysisTeaserCardComponent>;
   let component: AnalysisTeaserCardComponent;
-  let routerSpy: { navigate: ReturnType<typeof vitest.fn> };
+  let routerSpy: { navigate: jest.Mock };
 
   const apiMock = {
-    load: vitest.fn().mockReturnValue(
+    load: jest.fn().mockReturnValue(
       of({
         meta: {
           from: null,
@@ -43,8 +43,8 @@ describe('AnalysisTeaserCardComponent', () => {
   };
 
   beforeEach(async () => {
-    vitest.clearAllMocks();
-    routerSpy = { navigate: vitest.fn() };
+    jest.clearAllMocks();
+    routerSpy = { navigate: jest.fn() };
 
     await TestBed.configureTestingModule({
       imports: [AnalysisTeaserCardComponent],

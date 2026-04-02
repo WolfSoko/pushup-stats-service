@@ -26,7 +26,7 @@ describe('StatsDashboardComponent', () => {
   let fixture: ComponentFixture<StatsDashboardComponent>;
   const todayTs = nowLocalMinuteIso();
   const serviceMock = {
-    load: vitest.fn((filter?: { from?: string; to?: string }) => {
+    load: jest.fn((filter?: { from?: string; to?: string }) => {
       if (!filter?.from && !filter?.to) {
         return of({
           meta: {
@@ -53,7 +53,7 @@ describe('StatsDashboardComponent', () => {
         series: [{ bucket: '2026-01-10', total: 50, dayIntegral: 50 }],
       });
     }),
-    listPushups: vitest.fn().mockReturnValue(
+    listPushups: jest.fn().mockReturnValue(
       of([
         {
           _id: '1',
@@ -71,9 +71,9 @@ describe('StatsDashboardComponent', () => {
         },
       ])
     ),
-    createPushup: vitest.fn().mockReturnValue(of({ _id: '1' })),
-    updatePushup: vitest.fn().mockReturnValue(of({ _id: '1' })),
-    deletePushup: vitest.fn().mockReturnValue(of({ ok: true })),
+    createPushup: jest.fn().mockReturnValue(of({ _id: '1' })),
+    updatePushup: jest.fn().mockReturnValue(of({ _id: '1' })),
+    deletePushup: jest.fn().mockReturnValue(of({ ok: true })),
   };
 
   const liveTick = signal(0);
@@ -92,7 +92,7 @@ describe('StatsDashboardComponent', () => {
   };
 
   beforeEach(async () => {
-    vitest.clearAllMocks();
+    jest.clearAllMocks();
     liveTick.set(0);
     liveConnected.set(false);
     window.history.replaceState({}, '', '/');
@@ -118,7 +118,7 @@ describe('StatsDashboardComponent', () => {
         {
           provide: UserConfigApiService,
           useValue: {
-            getConfig: vitest.fn().mockReturnValue(
+            getConfig: jest.fn().mockReturnValue(
               of({
                 userId: 'u1',
                 dailyGoal: 100,
