@@ -12,19 +12,11 @@ import { signal } from '@angular/core';
 import { makeAuthStoreMock } from '@pu-stats/testing';
 import { ActivatedRoute, Router } from '@angular/router';
 
-function nowLocalMinuteIso(): string {
-  const now = new Date();
-  const y = now.getFullYear();
-  const m = String(now.getMonth() + 1).padStart(2, '0');
-  const d = String(now.getDate()).padStart(2, '0');
-  const hh = String(now.getHours()).padStart(2, '0');
-  const mm = String(now.getMinutes()).padStart(2, '0');
-  return `${y}-${m}-${d}T${hh}:${mm}`;
-}
-
 describe('StatsDashboardComponent', () => {
   let fixture: ComponentFixture<StatsDashboardComponent>;
-  const todayTs = nowLocalMinuteIso();
+  // Freeze time for deterministic tests
+  const frozenDate = new Date(2025, 0, 15, 12, 0); // Jan 15, 2025 12:00
+  const todayTs = '2025-01-15T12:00';
   const serviceMock = {
     load: vitest.fn((filter?: { from?: string; to?: string }) => {
       if (!filter?.from && !filter?.to) {
@@ -57,7 +49,7 @@ describe('StatsDashboardComponent', () => {
       of([
         {
           _id: '1',
-          timestamp: '2026-02-10T13:45:00',
+          timestamp: '2025-01-14T13:45:00', // Yesterday (within same week)
           reps: 8,
           source: 'wa',
           type: 'Standard',
@@ -92,7 +84,9 @@ describe('StatsDashboardComponent', () => {
   };
 
   beforeEach(async () => {
-    vitest.clearAllMocks();
+    vi.useFakeTimers({ shouldAdvanceTime: true });
+    vi.setSystemTime(frozenDate);
+    vi.clearAllMocks();
     liveTick.set(0);
     liveConnected.set(false);
     window.history.replaceState({}, '', '/');
@@ -135,6 +129,7 @@ describe('StatsDashboardComponent', () => {
   });
 
   afterEach(() => {
+    vi.useRealTimers();
     window.history.replaceState({}, '', '/');
   });
 
@@ -265,9 +260,9 @@ describe('StatsDashboardComponent', () => {
         // When
         const weekReps = component.weekReps();
 
-        // Then - todayTs is in current week, so at minimum we have 12 reps from entry 2
-        // Entry 1 (2026-02-10) may or may not be in current week depending on test run date
-        expect(weekReps).toBeGreaterThanOrEqual(12);
+        // Then - both entries are in current week (Jan 13-19, 2025)
+        // Entry 1 (2025-01-14): 8 reps, Entry 2 (2025-01-15): 12 reps = 20 total
+        expect(weekReps).toBe(20);
       });
     });
   });
@@ -275,12 +270,12 @@ describe('StatsDashboardComponent', () => {
   describe('Given entries with consecutive dates', () => {
     describe('When currentStreak is computed with no recent entries', () => {
       it('Then it should return 0 when last entry is more than 1 day ago', async () => {
-        // Given - mock with old entries only
+        // Given - mock with old entries only (more than 1 day before frozen date)
         serviceMock.listPushups.mockReturnValueOnce(
           of([
             {
               _id: '1',
-              timestamp: '2026-01-01T10:00:00',
+              timestamp: '2025-01-10T10:00:00',
               reps: 10,
               source: 'wa',
               type: 'Standard',
