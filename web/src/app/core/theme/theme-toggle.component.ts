@@ -21,10 +21,14 @@ import { ThemeService } from './theme.service';
 export class ThemeToggleComponent {
   protected readonly theme = inject(ThemeService);
 
-  /** Show light_mode icon when dark, dark_mode when light */
-  protected readonly icon = computed(() =>
-    this.theme.resolvedTheme() === 'dark' ? 'light_mode' : 'dark_mode'
-  );
+  /** Show auto icon in auto mode; otherwise light_mode icon when dark, dark_mode when light */
+  protected readonly icon = computed(() => {
+    const mode = this.theme.currentMode();
+    if (mode === 'auto') {
+      return 'brightness_auto';
+    }
+    return this.theme.resolvedTheme() === 'dark' ? 'light_mode' : 'dark_mode';
+  });
 
   /** Aria label based on current mode */
   protected readonly ariaLabel = computed(() => {
