@@ -65,16 +65,24 @@ export class ThemeService {
     if (typeof localStorage === 'undefined') {
       return 'auto';
     }
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored === 'light' || stored === 'dark' || stored === 'auto') {
-      return stored;
+    try {
+      const stored = localStorage.getItem(STORAGE_KEY);
+      if (stored === 'light' || stored === 'dark' || stored === 'auto') {
+        return stored;
+      }
+    } catch {
+      return 'auto';
     }
     return 'auto';
   }
 
   private persistMode(mode: ThemeMode): void {
     if (typeof localStorage !== 'undefined') {
-      localStorage.setItem(STORAGE_KEY, mode);
+      try {
+        localStorage.setItem(STORAGE_KEY, mode);
+      } catch {
+        // ignore persistence errors (e.g. storage disabled or quota exceeded)
+      }
     }
   }
 
