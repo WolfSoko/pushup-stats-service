@@ -100,7 +100,7 @@ describe('AnalysisTeaserCardComponent', () => {
 
         // When
         card.dispatchEvent(
-          new KeyboardEvent('keydown', { key: ' ', bubbles: true })
+          new KeyboardEvent('keyup', { key: ' ', bubbles: true })
         );
 
         // Then
