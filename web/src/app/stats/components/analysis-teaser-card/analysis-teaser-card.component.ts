@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { StatsApiService } from '@pu-stats/data-access';
-import { StatsResponse } from '@pu-stats/models';
+import { StatsResponse, toLocalIsoDate } from '@pu-stats/models';
 import { firstValueFrom } from 'rxjs';
 import { StatsChartComponent } from '../stats-chart/stats-chart.component';
 
@@ -125,26 +125,21 @@ export class AnalysisTeaserCardComponent {
   readonly streak = input(0);
   readonly weekReps = input(0);
 
-  readonly from = computed(() => {
-    const today = new Date();
-    const dayOfWeek = (today.getDay() + 6) % 7; // Monday = 0
-    const monday = new Date(today);
-    monday.setDate(today.getDate() - dayOfWeek);
-    return this.toLocalIsoDate(monday);
-  });
-
-  readonly to = computed(() => {
+  private getWeekRange(): { from: string; to: string } {
     const today = new Date();
     const dayOfWeek = (today.getDay() + 6) % 7; // Monday = 0
     const monday = new Date(today);
     monday.setDate(today.getDate() - dayOfWeek);
     const sunday = new Date(monday);
     sunday.setDate(monday.getDate() + 6);
-    return this.toLocalIsoDate(sunday);
-  });
+    return { from: toLocalIsoDate(monday), to: toLocalIsoDate(sunday) };
+  }
+
+  readonly from = computed(() => this.getWeekRange().from);
+  readonly to = computed(() => this.getWeekRange().to);
 
   readonly statsResource = resource({
-    params: () => ({ from: this.from(), to: this.to() }),
+    params: () => this.getWeekRange(),
     loader: async ({ params }) => firstValueFrom(this.api.load(params)),
   });
 
@@ -154,12 +149,5 @@ export class AnalysisTeaserCardComponent {
 
   navigateToAnalysis(): void {
     this.router.navigate(['/analysis']);
-  }
-
-  private toLocalIsoDate(date: Date): string {
-    const y = date.getFullYear();
-    const m = String(date.getMonth() + 1).padStart(2, '0');
-    const d = String(date.getDate()).padStart(2, '0');
-    return `${y}-${m}-${d}`;
   }
 }

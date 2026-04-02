@@ -103,9 +103,9 @@ export class StatsDashboardComponent {
     const today = toLocalIsoDate(new Date());
     const lastDate = dates[dates.length - 1];
 
-    // If last entry is not today or yesterday, streak is 0
+    // If last entry is not today or yesterday (or is in the future), streak is 0
     const daysDiff = this.daysBetween(lastDate, today);
-    if (daysDiff > 1) return 0;
+    if (daysDiff > 1 || daysDiff < 0) return 0;
 
     let streak = 1;
     for (let i = dates.length - 1; i > 0; i--) {
