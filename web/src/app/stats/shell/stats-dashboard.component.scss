@@ -184,6 +184,23 @@ h1 {
   margin: 0;
 }
 
+.motivational-quote {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  color: var(--mat-sys-on-surface-variant, rgba(255, 255, 255, 0.6));
+  margin-top: 8px;
+  font-style: italic;
+
+  .ai-icon {
+    font-size: 1rem;
+    width: 1rem;
+    height: 1rem;
+    color: var(--mat-sys-secondary, #7c4dff);
+  }
+}
+
 .mid-grid {
   display: grid;
   gap: 18px;
@@ -364,5 +381,9 @@ h1 {
       rgba(255, 255, 255, 0.95),
       rgba(248, 250, 252, 0.98)
     );
+  }
+
+  .motivational-quote {
+    color: var(--mat-sys-on-surface-variant, rgba(0, 0, 0, 0.6));
   }
 }
