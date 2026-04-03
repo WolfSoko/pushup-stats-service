@@ -5,7 +5,6 @@ import {
   ErrorHandler,
   inject,
   isDevMode,
-  LOCALE_ID,
   provideBrowserGlobalErrorListeners,
   provideZonelessChangeDetection,
 } from '@angular/core';
@@ -21,10 +20,7 @@ import {
   getRemoteConfig,
   provideRemoteConfig,
 } from '@angular/fire/remote-config';
-import {
-  MAT_DATE_LOCALE,
-  provideNativeDateAdapter,
-} from '@angular/material/core';
+import { provideNativeDateAdapter } from '@angular/material/core';
 import {
   provideClientHydration,
   withEventReplay,
@@ -84,8 +80,8 @@ export const appConfig: ApplicationConfig = {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       registerables: [MatrixController, MatrixElement, ChartDataLabels as any],
     }),
-    { provide: LOCALE_ID, useValue: 'de-DE' },
-    { provide: MAT_DATE_LOCALE, useValue: 'de-DE' },
+    // LOCALE_ID is automatically set by Angular i18n based on the build locale
+    // MAT_DATE_LOCALE follows LOCALE_ID by default when not explicitly set
     { provide: DEMO_USER_ID, useValue: demoUserId },
     { provide: VAPID_PUBLIC_KEY, useValue: firebaseRuntime.vapidPublicKey },
     provideServiceWorker('sw-push.js', {
