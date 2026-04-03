@@ -38,12 +38,6 @@
       </mat-card-header>
       <mat-card-content>
         <p class="focus-number">{{ todayTotal() }}</p>
-        @if (todayQuote(); as quote) {
-          <p class="motivational-quote">
-            <mat-icon class="ai-icon">auto_awesome</mat-icon>
-            {{ quote }}
-          </p>
-        }
       </mat-card-content>
     </mat-card>
 
@@ -59,6 +53,12 @@
           mode="determinate"
           [value]="goalProgressPercent()"
         ></mat-progress-bar>
+        @if (todayQuote(); as quote) {
+          <p class="motivational-quote">
+            <mat-icon class="ai-icon">auto_awesome</mat-icon>
+            {{ quote }}
+          </p>
+        }
       </mat-card-content>
     </mat-card>
 
