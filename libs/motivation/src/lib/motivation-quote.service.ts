@@ -1,16 +1,25 @@
 import { inject, Injectable, LOCALE_ID, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
+import { doc, Firestore, getDoc, setDoc } from '@angular/fire/firestore';
 import { Functions, httpsCallable } from '@angular/fire/functions';
+import { UserContextService } from '@pu-auth/auth';
 
 const CACHE_PREFIX = 'motivation-quotes';
+const FIRESTORE_COLLECTION = 'motivation-quotes';
 
 @Injectable({ providedIn: 'root' })
 export class MotivationQuoteService {
   private readonly locale = inject(LOCALE_ID) as string;
   private readonly platformId = inject(PLATFORM_ID);
   private readonly isBrowser = isPlatformBrowser(this.platformId);
+  private readonly firestore: Firestore | null = this.isBrowser
+    ? inject(Firestore, { optional: true })
+    : null;
   private readonly functions: Functions | null = this.isBrowser
     ? inject(Functions, { optional: true })
+    : null;
+  private readonly userContext = this.isBrowser
+    ? inject(UserContextService, { optional: true })
     : null;
 
   private inFlightFetch: Promise<string[]> | null = null;
@@ -28,10 +37,10 @@ export class MotivationQuoteService {
   async getTodayQuotes(
     opts: { totalToday?: number; dailyGoal?: number; displayName?: string } = {}
   ): Promise<string[]> {
-    const cached = this.loadCache();
+    const cached = await this.loadCache();
     if (cached) return cached;
     const fresh = await this.fetchQuotes(opts);
-    this.saveCache(fresh);
+    await this.saveCache(fresh);
     return fresh;
   }
 
@@ -39,15 +48,86 @@ export class MotivationQuoteService {
     return this.locale.startsWith('en') ? 'en' : 'de';
   }
 
-  private cacheKey(): string {
-    const today = new Date().toISOString().slice(0, 10);
-    return `${CACHE_PREFIX}-${today}-${this.lang}`;
+  private todayStr(): string {
+    return new Date().toISOString().slice(0, 10);
   }
 
-  private loadCache(): string[] | null {
+  private localStorageKey(): string {
+    return `${CACHE_PREFIX}-${this.todayStr()}-${this.lang}`;
+  }
+
+  private firestoreDocId(userId: string): string {
+    return `${userId}_${this.todayStr()}_${this.lang}`;
+  }
+
+  private async loadCache(): Promise<string[] | null> {
     if (!this.isBrowser) return null;
+
+    const userId = this.userContext?.userIdSafe();
+    if (userId && this.firestore) {
+      return this.loadFromFirestore(userId);
+    }
+    return this.loadFromLocalStorage();
+  }
+
+  private async saveCache(quotes: string[]): Promise<void> {
+    if (!this.isBrowser || !quotes.length) return;
+
+    const userId = this.userContext?.userIdSafe();
+    if (userId && this.firestore) {
+      await this.saveToFirestore(userId, quotes);
+    } else {
+      this.saveToLocalStorage(quotes);
+    }
+  }
+
+  private async loadFromFirestore(userId: string): Promise<string[] | null> {
+    if (!this.firestore) return null;
     try {
-      const raw = localStorage.getItem(this.cacheKey());
+      const docRef = doc(
+        this.firestore,
+        FIRESTORE_COLLECTION,
+        this.firestoreDocId(userId)
+      );
+      const snap = await getDoc(docRef);
+      if (snap.exists()) {
+        const data = snap.data() as { quotes?: string[] };
+        if (Array.isArray(data.quotes) && data.quotes.length > 0) {
+          return data.quotes;
+        }
+      }
+    } catch {
+      /* ignore */
+    }
+    return null;
+  }
+
+  private async saveToFirestore(
+    userId: string,
+    quotes: string[]
+  ): Promise<void> {
+    if (!this.firestore) return;
+    try {
+      const docRef = doc(
+        this.firestore,
+        FIRESTORE_COLLECTION,
+        this.firestoreDocId(userId)
+      );
+      await setDoc(docRef, {
+        quotes,
+        userId,
+        date: this.todayStr(),
+        lang: this.lang,
+        createdAt: new Date().toISOString(),
+      });
+    } catch {
+      /* ignore */
+    }
+  }
+
+  private loadFromLocalStorage(): string[] | null {
+    try {
+      const raw = localStorage.getItem(this.localStorageKey());
       if (!raw) return null;
       const parsed: unknown = JSON.parse(raw);
       if (Array.isArray(parsed) && parsed.length > 0) return parsed as string[];
@@ -57,10 +137,9 @@ export class MotivationQuoteService {
     return null;
   }
 
-  private saveCache(quotes: string[]): void {
-    if (!this.isBrowser || !quotes.length) return;
+  private saveToLocalStorage(quotes: string[]): void {
     try {
-      localStorage.setItem(this.cacheKey(), JSON.stringify(quotes));
+      localStorage.setItem(this.localStorageKey(), JSON.stringify(quotes));
     } catch {
       /* ignore */
     }
