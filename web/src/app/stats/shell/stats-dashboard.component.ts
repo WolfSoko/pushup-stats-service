@@ -31,7 +31,7 @@ import { toLocalIsoDate } from '@pu-stats/models';
 import { AnalysisTeaserCardComponent } from '../components/analysis-teaser-card/analysis-teaser-card.component';
 import { PreviewBannerComponent } from '../components/preview-banner/preview-banner.component';
 import { StatsTableComponent } from '../components/stats-table/stats-table.component';
-import { MotivationalQuoteService } from '../services/motivational-quote.service';
+import { MotivationQuoteService } from '@pu-stats/motivation';
 
 const EMPTY_STATS: StatsResponse = {
   meta: {
@@ -69,7 +69,7 @@ export class StatsDashboardComponent {
   private readonly router = inject(Router);
   private readonly live = inject(PushupLiveService);
   private readonly adsConfig = inject(AdsConfigService);
-  private readonly quoteService = inject(MotivationalQuoteService);
+  private readonly motivationService = inject(MotivationQuoteService);
 
   readonly statsTable = viewChild(StatsTableComponent);
 
@@ -142,7 +142,7 @@ export class StatsDashboardComponent {
   private readonly userConfigApi = inject(UserConfigApiService);
 
   readonly dailyGoal = signal(100);
-  readonly todayQuote = computed(() => this.quoteService.getTodayQuote());
+  readonly todayQuote = signal<string | null>(null);
 
   readonly adClient = this.adsConfig.adClient;
   readonly adSlotDashboardInline = this.adsConfig.dashboardInlineSlot;
@@ -228,6 +228,8 @@ export class StatsDashboardComponent {
       if (!tick) return;
       this.refreshAll();
     });
+
+    this.motivationService.getTodayQuote().then((q) => this.todayQuote.set(q));
   }
 
   openCreateDialog(): void {

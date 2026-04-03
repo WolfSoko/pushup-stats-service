@@ -21,7 +21,8 @@
       "@pu-stats/ads": ["libs/ads/src/index.ts"],
       "@pu-stats/testing": ["libs/testing/src/index.ts"],
       "@pu-reminders/reminders": ["libs/reminders/src/index.ts"],
-      "@pu-stats/quick-add": ["libs/quick-add/src/index.ts"]
+      "@pu-stats/quick-add": ["libs/quick-add/src/index.ts"],
+      "@pu-stats/motivation": ["libs/motivation/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

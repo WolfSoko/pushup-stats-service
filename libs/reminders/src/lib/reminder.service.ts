@@ -1,9 +1,9 @@
 import { inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { Functions, httpsCallable } from '@angular/fire/functions';
 import { ReminderStore } from './reminder.store';
 import { ReminderPermissionService } from './reminder-permission.service';
 import { AuthStore } from '@pu-auth/auth';
+import { MotivationQuoteService } from '@pu-stats/motivation';
 
 export function isInQuietHours(
   quietHours: { from: string; to: string }[],
@@ -41,16 +41,10 @@ export class ReminderService {
   private readonly permissionService = inject(ReminderPermissionService);
   private readonly auth = inject(AuthStore);
   private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
-  // Only inject Functions in the browser — calling getFunctions() with a
-  // server-side Firebase app (initializeServerApp) is unsupported and causes
-  // the SSR dev server to crash before Playwright can connect.
-  private readonly functions: Functions | null = this.isBrowser
-    ? inject(Functions, { optional: true })
-    : null;
+  private readonly motivationService = inject(MotivationQuoteService);
 
   private intervalId: ReturnType<typeof setInterval> | null = null;
   private initialTickTimeoutId: ReturnType<typeof setTimeout> | null = null;
-  private quoteCache: string[] = [];
   private quoteIndex = 0;
 
   start(): void {
@@ -122,46 +116,17 @@ export class ReminderService {
   }
 
   private async getNextQuote(): Promise<string | null> {
-    if (this.quoteCache.length - this.quoteIndex < 2) {
-      await this.fetchQuotes();
-    }
-
-    if (!this.quoteCache.length) return null;
-
-    const quote = this.quoteCache[this.quoteIndex % this.quoteCache.length];
-    this.quoteIndex = (this.quoteIndex + 1) % this.quoteCache.length;
-    return quote;
-  }
-
-  private async fetchQuotes(): Promise<void> {
-    if (!this.functions) return;
-
-    const config = this.store.config();
     const user = this.auth.user();
     const displayName = user?.displayName || 'Champ';
 
-    try {
-      const callable = httpsCallable<
-        {
-          language: string;
-          totalToday: number;
-          dailyGoal: number;
-          displayName: string;
-        },
-        { quotes: string[] }
-      >(this.functions, 'generateMotivationQuotes');
+    const quotes = await this.motivationService.getTodayQuotes({
+      displayName,
+    });
 
-      const result = await callable({
-        language: config?.language ?? 'de',
-        totalToday: 0,
-        dailyGoal: 100,
-        displayName,
-      });
+    if (!quotes.length) return null;
 
-      this.quoteCache = result.data?.quotes ?? [];
-      this.quoteIndex = 0;
-    } catch {
-      // Keep existing cache on failure
-    }
+    const quote = quotes[this.quoteIndex % quotes.length];
+    this.quoteIndex++;
+    return quote;
   }
 }
