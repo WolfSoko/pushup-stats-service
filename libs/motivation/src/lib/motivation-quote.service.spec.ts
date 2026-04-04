@@ -26,13 +26,8 @@ describe('MotivationQuoteService', () => {
       service = TestBed.inject(MotivationQuoteService);
     });
 
-    it('should return null for getTodayQuote on SSR', async () => {
-      const result = await service.getTodayQuote();
-      expect(result).toBeNull();
-    });
-
-    it('should return empty array for getTodayQuotes on SSR', async () => {
-      const result = await service.getTodayQuotes();
+    it('should return empty array for fetchQuotes on SSR', async () => {
+      const result = await service.fetchQuotes('de');
       expect(result).toEqual([]);
     });
   });
@@ -59,22 +54,22 @@ describe('MotivationQuoteService', () => {
         data: () => ({ quotes: ['Firestore Quote 1', 'Firestore Quote 2'] }),
       } as any);
 
-      const result = await service.getTodayQuotes({ userId: 'test-user-123' });
+      const result = await service.fetchQuotes('de', 'test-user-123');
 
       expect(result).toEqual(['Firestore Quote 1', 'Firestore Quote 2']);
       expect(firestoreFns.doc).toHaveBeenCalled();
       expect(firestoreFns.getDoc).toHaveBeenCalled();
     });
 
-    it('should return first quote from Firestore cache for getTodayQuote', async () => {
+    it('should return first quote from Firestore cache', async () => {
       jest.spyOn(firestoreFns, 'getDoc').mockResolvedValueOnce({
         exists: () => true,
         data: () => ({ quotes: ['First Quote', 'Second'] }),
       } as any);
 
-      const result = await service.getTodayQuote({ userId: 'test-user-123' });
+      const result = await service.fetchQuotes('de', 'test-user-123');
 
-      expect(result).toBe('First Quote');
+      expect(result[0]).toBe('First Quote');
     });
 
     it('should save quotes to Firestore after fetch', async () => {
@@ -86,7 +81,7 @@ describe('MotivationQuoteService', () => {
         .mockResolvedValueOnce(undefined as any);
 
       // Without Functions provider, service returns [] on cache miss
-      await service.getTodayQuotes({ userId: 'test-user-123' });
+      await service.fetchQuotes('de', 'test-user-123');
 
       // setDoc won't be called because fetchQuotes returns [] without Functions
       expect(setDocSpy).not.toHaveBeenCalled();
@@ -100,7 +95,7 @@ describe('MotivationQuoteService', () => {
         data: () => ({ quotes: ['Quote'] }),
       } as any);
 
-      await service.getTodayQuotes({ userId: 'test-user-123' });
+      await service.fetchQuotes('de', 'test-user-123');
 
       expect(docSpy).toHaveBeenCalledWith(
         expect.anything(),
@@ -128,7 +123,7 @@ describe('MotivationQuoteService', () => {
         data: () => ({ quotes: ['English Quote'] }),
       } as any);
 
-      const result = await enService.getTodayQuotes({ userId: 'en-user' });
+      const result = await enService.fetchQuotes('en', 'en-user');
 
       expect(result).toEqual(['English Quote']);
       expect(docSpy).toHaveBeenCalledWith(
@@ -139,30 +134,11 @@ describe('MotivationQuoteService', () => {
     });
   });
 
-  describe('Browser platform without userId (localStorage fallback)', () => {
+  describe('Browser platform without userId', () => {
     let service: MotivationQuoteService;
-    const mockLocalStorage: Record<string, string> = {};
 
     beforeEach(() => {
       jest.clearAllMocks();
-
-      Object.defineProperty(window, 'localStorage', {
-        value: {
-          getItem: jest.fn((key: string) => mockLocalStorage[key] ?? null),
-          setItem: jest.fn((key: string, value: string) => {
-            mockLocalStorage[key] = value;
-          }),
-          removeItem: jest.fn((key: string) => {
-            delete mockLocalStorage[key];
-          }),
-          clear: jest.fn(() => {
-            Object.keys(mockLocalStorage).forEach(
-              (k) => delete mockLocalStorage[k]
-            );
-          }),
-        },
-        writable: true,
-      });
 
       TestBed.configureTestingModule({
         providers: [
@@ -174,48 +150,13 @@ describe('MotivationQuoteService', () => {
       service = TestBed.inject(MotivationQuoteService);
     });
 
-    afterEach(() => {
-      Object.keys(mockLocalStorage).forEach((k) => delete mockLocalStorage[k]);
-    });
+    it('should skip Firestore when no userId is provided', async () => {
+      const result = await service.fetchQuotes('de');
 
-    it('should fall back to localStorage when no userId', async () => {
-      const today = new Date().toISOString().slice(0, 10);
-      const cacheKey = `motivation-quotes-${today}-de`;
-      mockLocalStorage[cacheKey] = JSON.stringify(['LocalStorage Quote']);
-
-      const result = await service.getTodayQuotes();
-
-      expect(result).toEqual(['LocalStorage Quote']);
-      // Firestore should NOT be called
+      // Without Functions provider, cloud function returns []
+      expect(result).toEqual([]);
+      // Firestore should NOT be called without userId
       expect(firestoreFns.getDoc).not.toHaveBeenCalled();
-    });
-
-    it('should return first quote from localStorage for getTodayQuote', async () => {
-      const today = new Date().toISOString().slice(0, 10);
-      const cacheKey = `motivation-quotes-${today}-de`;
-      mockLocalStorage[cacheKey] = JSON.stringify(['First', 'Second']);
-
-      const result = await service.getTodayQuote();
-
-      expect(result).toBe('First');
-    });
-
-    it('should return empty array when localStorage cache is invalid JSON', async () => {
-      const today = new Date().toISOString().slice(0, 10);
-      const cacheKey = `motivation-quotes-${today}-de`;
-      mockLocalStorage[cacheKey] = 'invalid json';
-
-      const result = await service.getTodayQuotes();
-      expect(result).toEqual([]);
-    });
-
-    it('should return empty array when localStorage cache is empty array', async () => {
-      const today = new Date().toISOString().slice(0, 10);
-      const cacheKey = `motivation-quotes-${today}-de`;
-      mockLocalStorage[cacheKey] = JSON.stringify([]);
-
-      const result = await service.getTodayQuotes();
-      expect(result).toEqual([]);
     });
   });
 });
