@@ -10,7 +10,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { Router, RouterLink } from '@angular/router';
-import { AdSlotComponent, AdsConfigService } from '@pu-stats/ads';
+import { AdSlotComponent, AdsStore } from '@pu-stats/ads';
 import { AuthService, AuthStore } from '@pu-auth/auth';
 import { LeaderboardPeriod, LeaderboardService } from '@pu-stats/data-access';
 import { ReminderFeatureSectionComponent } from '../components/reminder-feature-section/reminder-feature-section.component';
@@ -33,7 +33,7 @@ export class LandingPageComponent {
     optional: true,
   });
   private readonly analytics = inject(Analytics, { optional: true });
-  private readonly adsConfig = inject(AdsConfigService);
+  private readonly adsStore = inject(AdsStore);
   private readonly authService = inject(AuthService);
   private readonly authStore = inject(AuthStore);
   private readonly router = inject(Router);
@@ -42,8 +42,8 @@ export class LandingPageComponent {
   readonly isGuest = this.authStore.isGuest;
 
   readonly period = linkedSignal<LeaderboardPeriod>(() => 'daily');
-  readonly adClient = this.adsConfig.adClient;
-  readonly landingAdSlot = this.adsConfig.landingInlineSlot;
+  readonly adClient = this.adsStore.adClient;
+  readonly landingAdSlot = this.adsStore.landingInlineSlot;
 
   readonly leaderboardResource = resource({
     loader: async () => {

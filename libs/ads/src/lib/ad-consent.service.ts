@@ -1,11 +1,11 @@
 import { Injectable, inject } from '@angular/core';
-import { AdsConsentStateService } from './ads-consent-state.service';
+import { AdsStore } from './ads.store';
 
 @Injectable({ providedIn: 'root' })
 export class AdConsentService {
-  private readonly consentState = inject(AdsConsentStateService);
+  private readonly adsStore = inject(AdsStore);
 
   hasConsent(): boolean {
-    return this.consentState.targetedAdsConsent();
+    return this.adsStore.targetedAdsConsent();
   }
 }

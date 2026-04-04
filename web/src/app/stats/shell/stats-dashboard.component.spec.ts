@@ -7,7 +7,7 @@ import {
   UserConfigApiService,
 } from '@pu-stats/data-access';
 import { AuthStore, UserContextService } from '@pu-auth/auth';
-import { AdsConfigService } from '@pu-stats/ads';
+import { AdsStore } from '@pu-stats/ads';
 import { signal } from '@angular/core';
 import { makeAuthStoreMock } from '@pu-stats/testing';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -97,7 +97,7 @@ describe('StatsDashboardComponent', () => {
         { provide: StatsApiService, useValue: serviceMock },
         { provide: PushupLiveService, useValue: liveMock },
         { provide: UserContextService, useValue: { userIdSafe: () => 'u1' } },
-        { provide: AdsConfigService, useValue: adsConfigMock },
+        { provide: AdsStore, useValue: adsConfigMock },
         { provide: AuthStore, useValue: makeAuthStoreMock() },
         {
           provide: ActivatedRoute,

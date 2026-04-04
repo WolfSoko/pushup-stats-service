@@ -1,15 +1,15 @@
 import { TestBed } from '@angular/core/testing';
 import { AdConsentService } from './ad-consent.service';
-import { AdsConsentStateService } from './ads-consent-state.service';
+import { AdsStore } from './ads.store';
 
 describe('AdConsentService', () => {
   let service: AdConsentService;
-  let state: AdsConsentStateService;
+  let adsStore: InstanceType<typeof AdsStore>;
 
   beforeEach(() => {
     TestBed.resetTestingModule();
     service = TestBed.inject(AdConsentService);
-    state = TestBed.inject(AdsConsentStateService);
+    adsStore = TestBed.inject(AdsStore);
   });
 
   it('returns true by default', () => {
@@ -17,7 +17,7 @@ describe('AdConsentService', () => {
   });
 
   it('returns false when consent state is denied', () => {
-    state.setTargetedAdsConsent(false);
+    adsStore.setTargetedAdsConsent(false);
     expect(service.hasConsent()).toBe(false);
   });
 });
