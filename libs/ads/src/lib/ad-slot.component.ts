@@ -6,7 +6,6 @@ import {
   inject,
   input,
 } from '@angular/core';
-import { AdConsentService } from './ad-consent.service';
 import { AdsStore } from './ads.store';
 
 declare global {
@@ -49,7 +48,6 @@ export class AdSlotComponent {
   readonly responsive = input<boolean>(true);
   readonly client = input<string>();
 
-  private readonly consent = inject(AdConsentService);
   private readonly adsStore = inject(AdsStore);
   readonly usedClient = computed(
     () => this.client || this.adsStore.adClient()
