@@ -1,11 +1,17 @@
 import { DOCUMENT, DatePipe } from '@angular/common';
-import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import {
+  Component,
+  DestroyRef,
+  inject,
+  LOCALE_ID,
+  OnInit,
+} from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { Meta } from '@angular/platform-browser';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SeoService } from '../core/seo.service';
-import { BLOG_POSTS, BlogPost } from './blog-posts.data';
+import { BlogPost, findBlogPost } from './blog-posts.data';
 
 const BASE_URL = 'https://pushup-stats.de';
 
@@ -28,7 +34,7 @@ const BASE_URL = 'https://pushup-stats.de';
           <h1>{{ post.title }}</h1>
           <p class="article-meta">
             <time [attr.datetime]="post.publishedAt">{{
-              post.publishedAt | date: 'd. MMMM yyyy' : '' : 'de'
+              post.publishedAt | date: 'longDate'
             }}</time>
           </p>
         </header>
@@ -146,6 +152,7 @@ export class BlogArticleComponent implements OnInit {
   private readonly seo = inject(SeoService);
   private readonly meta = inject(Meta);
   private readonly document = inject(DOCUMENT);
+  private readonly locale = inject(LOCALE_ID) as string;
   private readonly destroyRef = inject(DestroyRef);
 
   post: BlogPost | null = null;
@@ -156,7 +163,7 @@ export class BlogArticleComponent implements OnInit {
 
   ngOnInit(): void {
     const slug = this.route.snapshot.paramMap.get('slug');
-    const found = BLOG_POSTS.find((p) => p.slug === slug) ?? null;
+    const found = (slug && findBlogPost(slug, this.locale)) ?? null;
 
     if (!found) {
       this.router.navigateByUrl('/blog');
@@ -166,7 +173,10 @@ export class BlogArticleComponent implements OnInit {
     this.post = found;
     this.seo.update(found.title, found.description, `/blog/${found.slug}`);
     this.meta.updateTag({ property: 'og:type', content: 'article' });
-    this.meta.updateTag({ name: 'keywords', content: found.keywords.join(', ') });
+    this.meta.updateTag({
+      name: 'keywords',
+      content: found.keywords.join(', '),
+    });
     this.injectJsonLd(found);
   }
 

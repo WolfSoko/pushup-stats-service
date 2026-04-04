@@ -1,9 +1,9 @@
 import { DatePipe } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject, LOCALE_ID } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { RouterLink } from '@angular/router';
-import { BLOG_POSTS } from './blog-posts.data';
+import { getBlogPostsByLocale } from './blog-posts.data';
 
 @Component({
   selector: 'app-blog-list',
@@ -22,7 +22,7 @@ import { BLOG_POSTS } from './blog-posts.data';
               <mat-card-title>{{ post.title }}</mat-card-title>
               <mat-card-subtitle>
                 <time [attr.datetime]="post.publishedAt">{{
-                  post.publishedAt | date: 'd. MMMM yyyy' : '' : 'de'
+                  post.publishedAt | date: 'longDate'
                 }}</time>
               </mat-card-subtitle>
             </mat-card-header>
@@ -92,5 +92,6 @@ import { BLOG_POSTS } from './blog-posts.data';
   ],
 })
 export class BlogListComponent {
-  readonly posts = BLOG_POSTS;
+  private readonly locale = inject(LOCALE_ID) as string;
+  readonly posts = getBlogPostsByLocale(this.locale);
 }
