@@ -8,6 +8,8 @@
  *   makeFirebaseAuthMock(opts?)      – raw Firebase Auth token stub
  *   makeFirebaseUser(overrides?)     – FirebaseUser-shaped object
  *   makeUserCredential(uid?)         – UserCredential stub
+ *   makePostAuthHookMock(overrides?) – PostAuthHook stub
+ *   makeUserProfilePortMock(overrides?) – UserProfilePort stub
  *
  * ## Data-access mocks
  *   makePushupFirestoreMock(overrides?)  – Partial<PushupFirestoreService>

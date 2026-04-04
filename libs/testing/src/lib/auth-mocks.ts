@@ -188,3 +188,37 @@ export function makeFirebaseAuthMock(opts?: {
     authStateReady: opts?.authStateReady ?? (() => Promise.resolve()),
   };
 }
+
+// ---------------------------------------------------------------------------
+// PostAuthHook mock
+// ---------------------------------------------------------------------------
+
+/**
+ * Creates a mock PostAuthHook for testing auth-to-data-access wiring.
+ * Use with `{ provide: POST_AUTH_HOOKS, useValue: makePostAuthHookMock(), multi: true }`.
+ */
+export function makePostAuthHookMock(overrides: Record<string, unknown> = {}) {
+  return {
+    onAuthenticated: () => Promise.resolve(),
+    onGuestMigration: () => Promise.resolve(),
+    ...overrides,
+  };
+}
+
+// ---------------------------------------------------------------------------
+// UserProfilePort mock
+// ---------------------------------------------------------------------------
+
+/**
+ * Creates a mock UserProfilePort for testing onboarding stores.
+ * Use with `{ provide: USER_PROFILE_PORT, useValue: makeUserProfilePortMock() }`.
+ */
+export function makeUserProfilePortMock(
+  overrides: Record<string, unknown> = {}
+) {
+  return {
+    getConfig: () => ({ subscribe: () => ({}) }),
+    updateConfig: () => ({ subscribe: () => ({}) }),
+    ...overrides,
+  };
+}

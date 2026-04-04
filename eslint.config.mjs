@@ -31,14 +31,14 @@ export default [
               sourceTag: 'scope:data-access',
               onlyDependOnLibsWithTags: ['scope:models'],
             },
-            // reminders can depend on data-access, auth, and models
+            // reminders depends on data-access and motivation (NOT auth)
             {
               sourceTag: 'scope:reminders',
               onlyDependOnLibsWithTags: [
                 'scope:models',
                 'scope:data-access',
-                'scope:auth',
                 'scope:motivation',
+                'scope:testing',
               ],
             },
             // quick-add depends on models (+ testing for specs)

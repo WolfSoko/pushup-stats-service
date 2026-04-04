@@ -2,7 +2,6 @@ import { inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { ReminderStore } from './reminder.store';
 import { ReminderPermissionService } from './reminder-permission.service';
-import { AuthStore } from '@pu-auth/auth';
 import { MotivationQuoteService } from '@pu-stats/motivation';
 
 export function isInQuietHours(
@@ -35,19 +34,26 @@ export function isInQuietHours(
   });
 }
 
+export interface ReminderUserContext {
+  userId?: string;
+  displayName?: string;
+}
+
 @Injectable({ providedIn: 'root' })
 export class ReminderService {
   private readonly store = inject(ReminderStore);
   private readonly permissionService = inject(ReminderPermissionService);
-  private readonly auth = inject(AuthStore);
   private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
   private readonly motivationService = inject(MotivationQuoteService);
 
   private intervalId: ReturnType<typeof setInterval> | null = null;
   private initialTickTimeoutId: ReturnType<typeof setTimeout> | null = null;
   private quoteIndex = 0;
+  private userContext: ReminderUserContext = {};
 
-  start(): void {
+  start(userContext: ReminderUserContext = {}): void {
+    this.userContext = userContext;
+
     if (this.intervalId !== null) {
       clearInterval(this.intervalId);
       this.intervalId = null;
@@ -80,6 +86,7 @@ export class ReminderService {
       clearTimeout(this.initialTickTimeoutId);
       this.initialTickTimeoutId = null;
     }
+    this.userContext = {};
   }
 
   private async tick(): Promise<void> {
@@ -116,9 +123,8 @@ export class ReminderService {
   }
 
   private async getNextQuote(): Promise<string | null> {
-    const user = this.auth.user();
-    const displayName = user?.displayName || 'Champ';
-    const userId = user?.uid;
+    const displayName = this.userContext.displayName || 'Champ';
+    const userId = this.userContext.userId;
 
     const quotes = await this.motivationService.getTodayQuotes({
       userId,

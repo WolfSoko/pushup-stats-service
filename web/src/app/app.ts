@@ -26,18 +26,15 @@ import {
 } from '@angular/router';
 import { SwUpdate, VersionDetectedEvent } from '@angular/service-worker';
 import { AuthStore, UserMenuComponent } from '@pu-auth/auth';
-import { StatsApiService } from '@pu-stats/data-access';
 import { filter } from 'rxjs';
 import { SeoService } from './core/seo.service';
 import { UserContextService } from '@pu-auth/auth';
 import { PushSubscriptionService } from '@pu-reminders/reminders';
-import {
-  QuickAddBridgeService,
-  QuickAddFabComponent,
-} from '@pu-stats/quick-add';
+import { QuickAddFabComponent } from '@pu-stats/quick-add';
 import { ThemeToggleComponent } from './core/theme';
 import { ReminderOrchestrationService } from './core/reminder-orchestration.service';
 import { AppDataFacade } from './core/app-data.facade';
+import { QuickAddOrchestrationService } from './core/quick-add-orchestration.service';
 
 @Component({
   selector: 'app-root',
@@ -86,12 +83,11 @@ export class App {
       void this.pushService.snooze(snoozeMinutes);
     }
   });
-  private readonly statsApi = inject(StatsApiService);
   private readonly seo = inject(SeoService);
   private readonly analytics = inject(Analytics, { optional: true });
   private readonly auth = inject(AuthStore);
   private readonly reminderOrchestration = inject(ReminderOrchestrationService);
-  private readonly quickAddBridge = inject(QuickAddBridgeService);
+  private readonly quickAdd = inject(QuickAddOrchestrationService);
   private readonly appData = inject(AppDataFacade);
 
   // Delegate to facade
@@ -164,57 +160,11 @@ export class App {
   }
 
   handleQuickAdd(reps: number): void {
-    const now = new Date();
-    const y = now.getFullYear();
-    const m = String(now.getMonth() + 1).padStart(2, '0');
-    const d = String(now.getDate()).padStart(2, '0');
-    const hh = String(now.getHours()).padStart(2, '0');
-    const mm = String(now.getMinutes()).padStart(2, '0');
-    const timestamp = `${y}-${m}-${d}T${hh}:${mm}`;
-    this.statsApi
-      .createPushup({ timestamp, reps, source: 'quick-add' })
-      .subscribe({
-        next: () => {
-          this.snackBar.open(
-            $localize`:@@quickAdd.success.create:Eintrag gespeichert.`,
-            '',
-            {
-              duration: 2000,
-              horizontalPosition: 'center',
-              verticalPosition: 'bottom',
-            }
-          );
-          this.appData.reloadAfterQuickAdd();
-        },
-        error: () =>
-          this.snackBar.open(
-            $localize`:@@quickAdd.error.create:Eintrag konnte nicht gespeichert werden.`,
-            '',
-            {
-              duration: 4000,
-              horizontalPosition: 'center',
-              verticalPosition: 'bottom',
-            }
-          ),
-      });
+    this.quickAdd.add(reps);
   }
 
   handleOpenDialog(): void {
-    const currentPath = this.router.url.split('?')[0];
-    if (currentPath === '/app' || currentPath.startsWith('/app/')) {
-      this.quickAddBridge.requestOpenDialog();
-    } else {
-      void this.router.navigate(['/app']).then(
-        (navigated) => {
-          if (navigated) {
-            this.quickAddBridge.requestOpenDialog();
-          }
-        },
-        () => {
-          // Navigation failed or was cancelled; do not open the dialog.
-        }
-      );
-    }
+    this.quickAdd.openDialog();
   }
 
   async logout(): Promise<void> {

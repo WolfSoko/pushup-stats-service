@@ -23,7 +23,7 @@ Angular 21 / Nx monorepo for tracking pushup statistics with Firebase backend.
     |--- @pu-stats/motivation   (quote service, no auth dependency)
     |--- @pu-stats/quick-add    (FAB + adaptive suggestions)
     |--- @pu-stats/ads          (isolated, no lib dependencies)
-    |--- @pu-reminders/reminders (depends on data-access, auth, motivation)
+    |--- @pu-reminders/reminders (depends on data-access + motivation, NOT auth)
 ```
 
 ### Key Architectural Patterns
@@ -45,6 +45,7 @@ Angular 21 / Nx monorepo for tracking pushup statistics with Firebase backend.
 **App Root Delegation:**
 - `ReminderOrchestrationService` handles reminder lifecycle (auth -> config load -> start/stop)
 - `AppDataFacade` consolidates app-level resources (recent entries, daily goal, progress)
+- `QuickAddOrchestrationService` handles quick-add entry creation and dialog routing
 - App component handles only layout, navigation, and UI events
 
 ### Module Boundary Rules
@@ -53,6 +54,7 @@ Enforced via `@nx/enforce-module-boundaries` in `eslint.config.mjs`:
 - `scope:auth` -> `scope:models` only (no data-access!)
 - `scope:motivation` -> `scope:models` only (no auth!)
 - `scope:data-access` -> `scope:models` only
+- `scope:reminders` -> `scope:models`, `scope:data-access`, `scope:motivation` (no auth!)
 - `scope:app` -> everything
 
 ### Domain Models

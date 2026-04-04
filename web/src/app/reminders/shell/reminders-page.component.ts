@@ -470,7 +470,10 @@ export class RemindersPageComponent {
         return;
       }
       if (config.enabled) {
-        this.reminderService.start();
+        this.reminderService.start({
+          userId,
+          displayName: this.user.userNameSafe() || undefined,
+        });
       } else {
         this.reminderService.stop();
       }
