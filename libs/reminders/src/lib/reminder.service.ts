@@ -2,7 +2,7 @@ import { inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { ReminderStore } from './reminder.store';
 import { ReminderPermissionService } from './reminder-permission.service';
-import { MotivationQuoteService } from '@pu-stats/motivation';
+import { MotivationStore } from '@pu-stats/motivation';
 
 export function isInQuietHours(
   quietHours: { from: string; to: string }[],
@@ -44,7 +44,7 @@ export class ReminderService {
   private readonly store = inject(ReminderStore);
   private readonly permissionService = inject(ReminderPermissionService);
   private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
-  private readonly motivationService = inject(MotivationQuoteService);
+  private readonly motivationStore = inject(MotivationStore);
 
   private intervalId: ReturnType<typeof setInterval> | null = null;
   private initialTickTimeoutId: ReturnType<typeof setTimeout> | null = null;
@@ -123,13 +123,12 @@ export class ReminderService {
   }
 
   private async getNextQuote(): Promise<string | null> {
-    const displayName = this.userContext.displayName || 'Champ';
     const userId = this.userContext.userId;
 
-    const quotes = await this.motivationService.getTodayQuotes({
-      userId,
-      displayName,
-    });
+    // Ensure quotes are loaded (store deduplicates in-flight requests)
+    await this.motivationStore.loadQuotes(userId);
+
+    const quotes = this.motivationStore.quotes();
 
     if (!quotes.length) return null;
 
