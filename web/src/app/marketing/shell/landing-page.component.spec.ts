@@ -12,6 +12,8 @@ const adsConfigMock = {
   adClient: () => '',
   dashboardInlineSlot: () => '',
   landingInlineSlot: () => '',
+  adsAllowed: () => false,
+  targetedAdsConsent: () => true,
 };
 
 describe('LandingPageComponent', () => {
@@ -75,7 +77,10 @@ describe('LandingPageComponent', () => {
           { provide: AuthService, useValue: makeAuthServiceMock() },
           {
             provide: AuthStore,
-            useValue: makeAuthStoreMock({ isAuthenticated: true, isGuest: true }),
+            useValue: makeAuthStoreMock({
+              isAuthenticated: true,
+              isGuest: true,
+            }),
           },
         ],
       });

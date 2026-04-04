@@ -20,6 +20,7 @@ type EntriesState = {
   repsMax: number | null;
   busyAction: 'create' | 'update' | 'delete' | null;
   busyId: string | null;
+  error: string | null;
 };
 
 const initialState: EntriesState = {
@@ -31,6 +32,7 @@ const initialState: EntriesState = {
   repsMax: null,
   busyAction: null,
   busyId: null,
+  error: null,
 };
 
 export const EntriesStore = signalStore(
@@ -123,10 +125,14 @@ export const EntriesStore = signalStore(
       source?: string;
       type?: string;
     }): Promise<void> {
-      patchState(store, { busyAction: 'create', busyId: null });
+      patchState(store, { busyAction: 'create', busyId: null, error: null });
       try {
         await firstValueFrom(_api.createPushup(payload));
         if (!_isBrowser) _entriesResource.reload();
+      } catch (err) {
+        patchState(store, {
+          error: err instanceof Error ? err.message : String(err),
+        });
       } finally {
         patchState(store, { busyAction: null, busyId: null });
       }
@@ -138,7 +144,11 @@ export const EntriesStore = signalStore(
       source?: string;
       type?: string;
     }): Promise<void> {
-      patchState(store, { busyAction: 'update', busyId: payload.id });
+      patchState(store, {
+        busyAction: 'update',
+        busyId: payload.id,
+        error: null,
+      });
       try {
         await firstValueFrom(
           _api.updatePushup(payload.id, {
@@ -149,15 +159,23 @@ export const EntriesStore = signalStore(
           })
         );
         if (!_isBrowser) _entriesResource.reload();
+      } catch (err) {
+        patchState(store, {
+          error: err instanceof Error ? err.message : String(err),
+        });
       } finally {
         patchState(store, { busyAction: null, busyId: null });
       }
     },
     async deleteEntry(id: string): Promise<void> {
-      patchState(store, { busyAction: 'delete', busyId: id });
+      patchState(store, { busyAction: 'delete', busyId: id, error: null });
       try {
         await firstValueFrom(_api.deletePushup(id));
         if (!_isBrowser) _entriesResource.reload();
+      } catch (err) {
+        patchState(store, {
+          error: err instanceof Error ? err.message : String(err),
+        });
       } finally {
         patchState(store, { busyAction: null, busyId: null });
       }

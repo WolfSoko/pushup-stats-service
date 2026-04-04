@@ -1,4 +1,4 @@
-import { inject } from '@angular/core';
+import { computed, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import {
   fetchAndActivate,
@@ -9,6 +9,7 @@ import {
 import {
   patchState,
   signalStore,
+  withComputed,
   withMethods,
   withProps,
   withState,
@@ -44,6 +45,9 @@ export const AdsStore = signalStore(
       ),
     };
   }),
+  withComputed((store) => ({
+    adsAllowed: computed(() => !!store.enabled() && store.targetedAdsConsent()),
+  })),
   withMethods((store) => ({
     init: () => fetchAndActivate(store._remoteConfig),
     setTargetedAdsConsent: (value: boolean | undefined) => {

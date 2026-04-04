@@ -60,7 +60,7 @@ describe('EntriesPageComponent', () => {
     }).compileComponents();
 
     fixture = TestBed.createComponent(EntriesPageComponent);
-    store = (fixture.componentInstance as any).store;
+    store = fixture.debugElement.injector.get(EntriesStore);
     await fixture.whenStable();
   });
 

@@ -18,6 +18,7 @@ type MotivationState = {
   loading: boolean;
   error: string | null;
   cacheDate: string | null;
+  cachedUserId: string | null;
 };
 
 const initialState: MotivationState = {
@@ -25,6 +26,7 @@ const initialState: MotivationState = {
   loading: false,
   error: null,
   cacheDate: null,
+  cachedUserId: null,
 };
 
 function todayStr(): string {
@@ -52,20 +54,32 @@ export const MotivationStore = signalStore(
     hasCachedQuotes: computed(() => store.cacheDate() === todayStr()),
   })),
   withMethods(({ _api, _lang, _isBrowser, ...store }) => {
-    function localStorageKey(): string {
-      return `${CACHE_PREFIX}-${todayStr()}-${_lang}`;
+    let _inFlightPromise: Promise<void> | null = null;
+
+    function localStorageKey(userId?: string): string {
+      const userSuffix = userId ? `-${userId}` : '';
+      return `${CACHE_PREFIX}-${todayStr()}-${_lang}${userSuffix}`;
     }
 
-    function restoreFromCache(): void {
+    function isCacheFresh(userId?: string): boolean {
+      return (
+        store.cacheDate() === todayStr() &&
+        store.cachedUserId() === (userId ?? null) &&
+        store.quotes().length > 0
+      );
+    }
+
+    function restoreFromCache(userId?: string): void {
       if (!_isBrowser) return;
       try {
-        const raw = localStorage.getItem(localStorageKey());
+        const raw = localStorage.getItem(localStorageKey(userId));
         if (!raw) return;
         const parsed: unknown = JSON.parse(raw);
         if (Array.isArray(parsed) && parsed.length > 0) {
           patchState(store, {
             quotes: parsed as string[],
             cacheDate: todayStr(),
+            cachedUserId: userId ?? null,
           });
         }
       } catch {
@@ -73,10 +87,10 @@ export const MotivationStore = signalStore(
       }
     }
 
-    function saveToCache(quotes: string[]): void {
+    function saveToCache(quotes: string[], userId?: string): void {
       if (!_isBrowser || !quotes.length) return;
       try {
-        localStorage.setItem(localStorageKey(), JSON.stringify(quotes));
+        localStorage.setItem(localStorageKey(userId), JSON.stringify(quotes));
       } catch {
         /* ignore */
       }
@@ -86,34 +100,39 @@ export const MotivationStore = signalStore(
       restoreFromCache,
 
       async loadQuotes(userId?: string): Promise<void> {
-        // Already loading - deduplicate
-        if (store.loading()) return;
+        // Cache is fresh for today and same user
+        if (isCacheFresh(userId)) return;
 
-        // Cache is fresh for today
-        if (store.cacheDate() === todayStr() && store.quotes().length > 0) {
-          return;
-        }
+        // Deduplicate in-flight requests: wait for existing load
+        if (_inFlightPromise) return _inFlightPromise;
 
         patchState(store, { loading: true, error: null });
 
-        try {
-          const quotes = await _api.fetchQuotes(_lang, userId);
-          if (quotes.length > 0) {
-            saveToCache(quotes);
+        _inFlightPromise = (async () => {
+          try {
+            const quotes = await _api.fetchQuotes(_lang, userId);
+            if (quotes.length > 0) {
+              saveToCache(quotes, userId);
+              patchState(store, {
+                quotes,
+                loading: false,
+                cacheDate: todayStr(),
+                cachedUserId: userId ?? null,
+              });
+            } else {
+              patchState(store, { loading: false });
+            }
+          } catch (err) {
             patchState(store, {
-              quotes,
               loading: false,
-              cacheDate: todayStr(),
+              error: err instanceof Error ? err.message : String(err),
             });
-          } else {
-            patchState(store, { loading: false });
+          } finally {
+            _inFlightPromise = null;
           }
-        } catch (err) {
-          patchState(store, {
-            loading: false,
-            error: err instanceof Error ? err.message : String(err),
-          });
-        }
+        })();
+
+        return _inFlightPromise;
       },
     };
   }),

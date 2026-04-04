@@ -6,6 +6,7 @@ import { EntriesPageComponent } from './entries-page.component';
 import { LiveDataStore, StatsApiService } from '@pu-stats/data-access';
 import { AuthStore } from '@pu-auth/auth';
 import { makeAuthStoreMock } from '@pu-stats/testing';
+import { EntriesStore } from '../entries.store';
 
 describe('EntriesPageComponent (SSR/REST)', () => {
   let fixture: ComponentFixture<EntriesPageComponent>;
@@ -51,8 +52,8 @@ describe('EntriesPageComponent (SSR/REST)', () => {
   });
 
   it('loads rows via REST on server', () => {
-    const store = (fixture.componentInstance as any).store;
+    const store = fixture.debugElement.injector.get(EntriesStore);
     expect(apiMock.listPushups).toHaveBeenCalled();
-    expect(store.rows().map((x: any) => x._id)).toEqual(['1']);
+    expect(store.rows().map((x) => x._id)).toEqual(['1']);
   });
 });

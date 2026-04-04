@@ -10,6 +10,7 @@ describe('AdSlotComponent', () => {
     enabled: () => true,
     adClient: () => undefined,
     targetedAdsConsent: () => true,
+    adsAllowed: () => true,
   };
 
   beforeEach(async () => {

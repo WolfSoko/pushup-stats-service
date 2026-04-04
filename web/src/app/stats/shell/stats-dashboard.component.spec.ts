@@ -81,6 +81,8 @@ describe('StatsDashboardComponent', () => {
     adClient: () => '',
     dashboardInlineSlot: () => '',
     landingInlineSlot: () => '',
+    adsAllowed: () => false,
+    targetedAdsConsent: () => true,
   };
 
   beforeEach(async () => {
