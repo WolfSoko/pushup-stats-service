@@ -13,7 +13,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { firstValueFrom } from 'rxjs';
-import { PushupLiveDataService, StatsApiService } from '@pu-stats/data-access';
+import { LiveDataStore, StatsApiService } from '@pu-stats/data-access';
 import { PreviewBannerComponent } from '../components/preview-banner/preview-banner.component';
 import { StatsTableComponent } from '../components/stats-table/stats-table.component';
 
@@ -136,7 +136,7 @@ import { StatsTableComponent } from '../components/stats-table/stats-table.compo
 })
 export class EntriesPageComponent {
   private readonly api = inject(StatsApiService);
-  private readonly live = inject(PushupLiveDataService);
+  private readonly live = inject(LiveDataStore);
   private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
 
   readonly from = signal('');

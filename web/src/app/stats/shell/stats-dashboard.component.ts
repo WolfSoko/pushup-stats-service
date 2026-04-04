@@ -17,7 +17,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import {
-  PushupLiveService,
+  LiveDataStore,
   StatsApiService,
   UserConfigApiService,
 } from '@pu-stats/data-access';
@@ -67,7 +67,7 @@ export class StatsDashboardComponent {
   private readonly platformId = inject(PLATFORM_ID);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
-  private readonly live = inject(PushupLiveService);
+  private readonly live = inject(LiveDataStore);
   private readonly adsConfig = inject(AdsConfigService);
   private readonly motivationService = inject(MotivationQuoteService);
 

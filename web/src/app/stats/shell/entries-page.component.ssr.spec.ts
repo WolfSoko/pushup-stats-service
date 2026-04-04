@@ -3,7 +3,7 @@ import { PLATFORM_ID } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 import { EntriesPageComponent } from './entries-page.component';
-import { PushupLiveDataService, StatsApiService } from '@pu-stats/data-access';
+import { LiveDataStore, StatsApiService } from '@pu-stats/data-access';
 import { AuthStore } from '@pu-auth/auth';
 import { makeAuthStoreMock } from '@pu-stats/testing';
 
@@ -40,7 +40,7 @@ describe('EntriesPageComponent (SSR/REST)', () => {
       providers: [
         { provide: PLATFORM_ID, useValue: 'server' },
         { provide: StatsApiService, useValue: apiMock },
-        { provide: PushupLiveDataService, useValue: liveMock },
+        { provide: LiveDataStore, useValue: liveMock },
         { provide: Auth, useValue: {} },
         { provide: AuthStore, useValue: makeAuthStoreMock() },
       ],
