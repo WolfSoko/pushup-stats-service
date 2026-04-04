@@ -25,7 +25,7 @@ import { PushupRecord, StatsResponse } from '@pu-stats/models';
 import { firstValueFrom } from 'rxjs';
 import { QuickAddBridgeService } from '@pu-stats/quick-add';
 import { untracked } from '@angular/core';
-import { AdSlotComponent, AdsConfigService } from '@pu-stats/ads';
+import { AdSlotComponent, AdsStore } from '@pu-stats/ads';
 import { UserContextService } from '@pu-auth/auth';
 import { toLocalIsoDate } from '@pu-stats/models';
 import { AnalysisTeaserCardComponent } from '../components/analysis-teaser-card/analysis-teaser-card.component';
@@ -68,7 +68,7 @@ export class StatsDashboardComponent {
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly live = inject(PushupLiveService);
-  private readonly adsConfig = inject(AdsConfigService);
+  private readonly adsStore = inject(AdsStore);
   private readonly motivationService = inject(MotivationQuoteService);
 
   readonly statsTable = viewChild(StatsTableComponent);
@@ -144,9 +144,9 @@ export class StatsDashboardComponent {
   readonly dailyGoal = signal(100);
   readonly todayQuote = signal<string | null>(null);
 
-  readonly adClient = this.adsConfig.adClient;
-  readonly adSlotDashboardInline = this.adsConfig.dashboardInlineSlot;
-  readonly dashboardInlineAdsEnabled = this.adsConfig.dashboardInlineEnabled;
+  readonly adClient = this.adsStore.adClient;
+  readonly adSlotDashboardInline = this.adsStore.dashboardInlineSlot;
+  readonly dashboardInlineAdsEnabled = this.adsStore.dashboardInlineEnabled;
 
   readonly userConfigResource = resource({
     params: () => ({ userId: this.user.userIdSafe() }),
