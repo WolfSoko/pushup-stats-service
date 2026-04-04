@@ -88,3 +88,16 @@ pnpm nx run-many --target=lint   # Lint all projects
 | ads | `stats-ads` |
 | testing | `testing` |
 | web app | `web` |
+
+## i18n / Internationalization
+
+- **Source locale:** German (`de`), **Translation:** English (`en`)
+- **Format:** XLIFF 2.0 (`web/src/locale/messages.xlf` / `messages.en.xlf`)
+- Templates: `i18n="@@your.id"` attribute; programmatic: `` $localize`:@@your.id:German text` ``
+- `LOCALE_ID` is set automatically by Angular i18n at build time – NEVER provide it manually in `app.config.ts`
+- Dynamic data (e.g. blog posts, feature descriptions) must be locale-aware too – XLIFF only covers templates and `$localize`. Use `inject(LOCALE_ID)` to select the right data at runtime.
+- Date pipes: use locale-aware formats (`'longDate'`, `'short'`) – never hardcode a locale parameter like `'de'`
+
+## Workflow
+
+- After completing a feature or bugfix, review whether any new broadly applicable knowledge should be added to this file (general conventions, architectural decisions, i18n rules, etc.). Do NOT add low-level details about individual files unless they are a recurring pitfall.
