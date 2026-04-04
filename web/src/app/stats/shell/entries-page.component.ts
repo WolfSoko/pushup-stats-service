@@ -1,24 +1,15 @@
-import {
-  Component,
-  computed,
-  effect,
-  inject,
-  resource,
-  signal,
-} from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
-import { PLATFORM_ID } from '@angular/core';
+import { Component, effect, inject } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { firstValueFrom } from 'rxjs';
-import { LiveDataStore, StatsApiService } from '@pu-stats/data-access';
 import { PreviewBannerComponent } from '../components/preview-banner/preview-banner.component';
 import { StatsTableComponent } from '../components/stats-table/stats-table.component';
+import { EntriesStore } from '../entries.store';
 
 @Component({
   selector: 'app-entries-page',
+  providers: [EntriesStore],
   imports: [
     MatCardModule,
     MatFormFieldModule,
@@ -45,8 +36,8 @@ import { StatsTableComponent } from '../components/stats-table/stats-table.compo
               <input
                 matInput
                 type="date"
-                [value]="from()"
-                (input)="from.set(asValue($event))"
+                [value]="store.from()"
+                (input)="store.setFrom(asValue($event))"
               />
             </mat-form-field>
 
@@ -55,18 +46,21 @@ import { StatsTableComponent } from '../components/stats-table/stats-table.compo
               <input
                 matInput
                 type="date"
-                [value]="to()"
-                (input)="to.set(asValue($event))"
+                [value]="store.to()"
+                (input)="store.setTo(asValue($event))"
               />
             </mat-form-field>
 
             <mat-form-field appearance="outline">
               <mat-label i18n="@@entries.sourceFilter">Quelle</mat-label>
-              <mat-select [value]="source()" (valueChange)="source.set($event)">
+              <mat-select
+                [value]="store.source()"
+                (valueChange)="store.setSource($event)"
+              >
                 <mat-option value="" i18n="@@entries.allOption"
                   >Alle</mat-option
                 >
-                @for (option of sourceOptions(); track option) {
+                @for (option of store.sourceOptions(); track option) {
                   <mat-option [value]="option">{{ option }}</mat-option>
                 }
               </mat-select>
@@ -74,11 +68,14 @@ import { StatsTableComponent } from '../components/stats-table/stats-table.compo
 
             <mat-form-field appearance="outline">
               <mat-label i18n="@@entries.typeFilter">Typ</mat-label>
-              <mat-select [value]="type()" (valueChange)="type.set($event)">
+              <mat-select
+                [value]="store.type()"
+                (valueChange)="store.setType($event)"
+              >
                 <mat-option value="" i18n="@@entries.allOption"
                   >Alle</mat-option
                 >
-                @for (option of typeOptions(); track option) {
+                @for (option of store.typeOptions(); track option) {
                   <mat-option [value]="option">{{ option }}</mat-option>
                 }
               </mat-select>
@@ -90,8 +87,8 @@ import { StatsTableComponent } from '../components/stats-table/stats-table.compo
                 matInput
                 type="number"
                 min="1"
-                [value]="repsMin() ?? ''"
-                (input)="repsMin.set(asNumber($event))"
+                [value]="store.repsMin() ?? ''"
+                (input)="store.setRepsMin(asNumber($event))"
               />
             </mat-form-field>
 
@@ -101,8 +98,8 @@ import { StatsTableComponent } from '../components/stats-table/stats-table.compo
                 matInput
                 type="number"
                 min="1"
-                [value]="repsMax() ?? ''"
-                (input)="repsMax.set(asNumber($event))"
+                [value]="store.repsMax() ?? ''"
+                (input)="store.setRepsMax(asNumber($event))"
               />
             </mat-form-field>
           </section>
@@ -110,12 +107,12 @@ import { StatsTableComponent } from '../components/stats-table/stats-table.compo
       </mat-card>
 
       <app-stats-table
-        [entries]="filteredRows()"
-        [busyAction]="busyAction()"
-        [busyId]="busyId()"
-        (create)="onCreateEntry($event)"
-        (update)="onUpdateEntry($event)"
-        (remove)="onDeleteEntry($event)"
+        [entries]="store.filteredRows()"
+        [busyAction]="store.busyAction()"
+        [busyId]="store.busyId()"
+        (create)="store.createEntry($event)"
+        (update)="store.updateEntry($event)"
+        (remove)="store.deleteEntry($event)"
       />
     </main>
   `,
@@ -135,78 +132,12 @@ import { StatsTableComponent } from '../components/stats-table/stats-table.compo
   `,
 })
 export class EntriesPageComponent {
-  private readonly api = inject(StatsApiService);
-  private readonly live = inject(LiveDataStore);
-  private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
-
-  readonly from = signal('');
-  readonly to = signal('');
-  readonly source = signal('');
-  readonly type = signal('');
-  readonly repsMin = signal<number | null>(null);
-  readonly repsMax = signal<number | null>(null);
-  readonly busyAction = signal<'create' | 'update' | 'delete' | null>(null);
-  readonly busyId = signal<string | null>(null);
-
-  // SSR should keep using REST.
-  readonly entriesResource = resource({
-    params: () => ({
-      from: this.from() || undefined,
-      to: this.to() || undefined,
-    }),
-    loader: async ({ params }) => firstValueFrom(this.api.listPushups(params)),
-  });
-
-  readonly rows = computed(() => {
-    return this.isBrowser
-      ? this.live.entries()
-      : (this.entriesResource.value() ?? []);
-  });
-
-  readonly sourceOptions = computed(() => {
-    return [
-      ...new Set(
-        this.rows()
-          .map((x) => x.source)
-          .filter(Boolean)
-      ),
-    ].sort((a, b) => a.localeCompare(b));
-  });
-
-  readonly typeOptions = computed(() => {
-    return [
-      ...new Set(
-        this.rows()
-          .map((x) => x.type || 'Standard')
-          .filter(Boolean)
-      ),
-    ].sort((a, b) => a.localeCompare(b));
-  });
-
-  readonly filteredRows = computed(() => {
-    const source = this.source();
-    const type = this.type();
-    const repsMin = this.repsMin();
-    const repsMax = this.repsMax();
-    const from = this.from();
-    const to = this.to();
-
-    return this.rows().filter((row) => {
-      const date = row.timestamp.slice(0, 10);
-      if (from && date < from) return false;
-      if (to && date > to) return false;
-      if (source && row.source !== source) return false;
-      if (type && (row.type || 'Standard') !== type) return false;
-      if (repsMin !== null && row.reps < repsMin) return false;
-      if (repsMax !== null && row.reps > repsMax) return false;
-      return true;
-    });
-  });
+  protected readonly store = inject(EntriesStore);
 
   constructor() {
     effect(() => {
-      const rows = this.rows();
-      if (!rows.length || this.from() || this.to()) return;
+      const rows = this.store.rows();
+      if (!rows.length || this.store.from() || this.store.to()) return;
 
       const oldest = [...rows]
         .sort(
@@ -216,8 +147,8 @@ export class EntriesPageComponent {
         ?.timestamp.slice(0, 10);
       const today = this.todayIso();
       if (oldest) {
-        this.from.set(oldest);
-        this.to.set(today);
+        this.store.setFrom(oldest);
+        this.store.setTo(today);
       }
     });
   }
@@ -231,60 +162,6 @@ export class EntriesPageComponent {
     if (!value) return null;
     const num = Number(value);
     return Number.isNaN(num) ? null : num;
-  }
-
-  async onCreateEntry(payload: {
-    timestamp: string;
-    reps: number;
-    source?: string;
-    type?: string;
-  }) {
-    this.busyAction.set('create');
-    this.busyId.set(null);
-    try {
-      await firstValueFrom(this.api.createPushup(payload));
-      if (!this.isBrowser) this.entriesResource.reload();
-    } finally {
-      this.busyAction.set(null);
-      this.busyId.set(null);
-    }
-  }
-
-  async onUpdateEntry(payload: {
-    id: string;
-    timestamp: string;
-    reps: number;
-    source?: string;
-    type?: string;
-  }) {
-    this.busyAction.set('update');
-    this.busyId.set(payload.id);
-    try {
-      await firstValueFrom(
-        this.api.updatePushup(payload.id, {
-          timestamp: payload.timestamp,
-          reps: payload.reps,
-          source: payload.source,
-          type: payload.type,
-        })
-      );
-      if (!this.isBrowser) this.entriesResource.reload();
-    } finally {
-      this.busyAction.set(null);
-      this.busyId.set(null);
-    }
-  }
-
-  async onDeleteEntry(id: string) {
-    this.busyAction.set('delete');
-    this.busyId.set(id);
-    try {
-      await firstValueFrom(this.api.deletePushup(id));
-      if (!this.isBrowser) this.entriesResource.reload();
-    } finally {
-      this.busyAction.set(null);
-      this.busyId.set(null);
-    }
   }
 
   private todayIso(): string {
