@@ -1,4 +1,4 @@
-import { Component, effect, inject, signal } from '@angular/core';
+import { Component, effect, inject } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -9,16 +9,17 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { UserContextService } from '@pu-auth/auth';
-import type { ReminderConfig } from '@pu-stats/models';
 import {
   ReminderStore,
   ReminderService,
   ReminderPermissionService,
   PushSubscriptionService,
 } from '@pu-reminders/reminders';
+import { ReminderFormStore } from './reminder-form.store';
 
 @Component({
   selector: 'app-reminders-page',
+  providers: [ReminderFormStore],
   imports: [
     MatCardModule,
     MatChipsModule,
@@ -49,7 +50,7 @@ import {
 
             <div class="reminder-row">
               <mat-slide-toggle
-                [checked]="reminderEnabledDraft()"
+                [checked]="form.enabled()"
                 (change)="onReminderToggle($event.checked)"
                 i18n="@@reminder.enabled.label"
               >
@@ -83,19 +84,16 @@ import {
               }
             </div>
 
-            @if (reminderEnabledDraft()) {
+            @if (form.enabled()) {
               <div class="reminder-grid">
                 <div>
                   <p class="field-label" i18n="@@reminder.interval.label">
                     Erinnerungsintervall
                   </p>
                   <mat-chip-listbox
-                    [value]="reminderIntervalDraft()"
-                    [disabled]="reminderSaving()"
-                    (change)="
-                      reminderIntervalDraft.set($event.value);
-                      reminderDirty.set(true)
-                    "
+                    [value]="form.intervalMinutes()"
+                    [disabled]="form.saving()"
+                    (change)="form.setInterval($event.value)"
                     aria-label="Intervall-Voreinstellungen"
                     i18n-aria-label="@@reminder.interval.aria"
                   >
@@ -124,17 +122,10 @@ import {
                       type="number"
                       min="15"
                       max="480"
-                      [disabled]="reminderSaving()"
-                      [value]="reminderIntervalDraft()"
-                      (input)="
-                        reminderIntervalDraft.set(asNumber($event));
-                        reminderDirty.set(true)
-                      "
-                      (blur)="
-                        reminderIntervalDraft.set(
-                          clampInterval(reminderIntervalDraft())
-                        )
-                      "
+                      [disabled]="form.saving()"
+                      [value]="form.intervalMinutes()"
+                      (input)="form.setInterval(asNumber($event))"
+                      (blur)="form.clampInterval()"
                     />
                     <mat-hint i18n="@@reminder.interval.hint"
                       >15–480 Minuten</mat-hint
@@ -147,12 +138,9 @@ import {
                     Sprache der Zitate
                   </p>
                   <mat-button-toggle-group
-                    [value]="reminderLanguageDraft()"
-                    [disabled]="reminderSaving()"
-                    (change)="
-                      reminderLanguageDraft.set($event.value);
-                      reminderDirty.set(true)
-                    "
+                    [value]="form.language()"
+                    [disabled]="form.saving()"
+                    (change)="form.setLanguage($event.value)"
                     aria-label="Erinnerungssprache"
                     i18n-aria-label="@@reminder.language.aria"
                   >
@@ -169,7 +157,7 @@ import {
                   <p class="field-label" i18n="@@reminder.quietHours.label">
                     Ruhezeiten
                   </p>
-                  @for (qh of reminderQuietHoursDraft(); track $index) {
+                  @for (qh of form.quietHours(); track $index) {
                     <div class="quiet-hour-row">
                       <mat-form-field appearance="outline" class="time-field">
                         <mat-label i18n="@@reminder.quietHours.from"
@@ -178,10 +166,14 @@ import {
                         <input
                           matInput
                           type="time"
-                          [disabled]="reminderSaving()"
+                          [disabled]="form.saving()"
                           [value]="qh.from"
                           (change)="
-                            updateQuietHour($index, 'from', asValue($event))
+                            form.updateQuietHour(
+                              $index,
+                              'from',
+                              asValue($event)
+                            )
                           "
                         />
                       </mat-form-field>
@@ -192,18 +184,18 @@ import {
                         <input
                           matInput
                           type="time"
-                          [disabled]="reminderSaving()"
+                          [disabled]="form.saving()"
                           [value]="qh.to"
                           (change)="
-                            updateQuietHour($index, 'to', asValue($event))
+                            form.updateQuietHour($index, 'to', asValue($event))
                           "
                         />
                       </mat-form-field>
                       <button
                         type="button"
                         mat-icon-button
-                        [disabled]="reminderSaving()"
-                        (click)="removeQuietHour($index)"
+                        [disabled]="form.saving()"
+                        (click)="form.removeQuietHour($index)"
                         aria-label="Ruhezeit entfernen"
                         i18n-aria-label="@@reminder.quietHours.remove.aria"
                       >
@@ -214,8 +206,8 @@ import {
                   <button
                     type="button"
                     mat-stroked-button
-                    [disabled]="reminderSaving()"
-                    (click)="addQuietHour()"
+                    [disabled]="form.saving()"
+                    (click)="form.addQuietHour()"
                     i18n="@@reminder.quietHours.add"
                   >
                     <mat-icon>add</mat-icon>
@@ -229,14 +221,14 @@ import {
               <button
                 type="button"
                 mat-flat-button
-                [disabled]="!reminderDirty() || reminderSaving()"
+                [disabled]="!form.canSave()"
                 (click)="saveReminderSettings()"
                 i18n="@@reminder.save"
               >
                 <mat-icon>save</mat-icon>
                 Erinnerungen speichern
               </button>
-              @if (reminderSaved()) {
+              @if (form.saved()) {
                 <span class="muted" i18n="@@reminder.saved">Gespeichert.</span>
               }
             </div>
@@ -398,32 +390,17 @@ export class RemindersPageComponent {
   private readonly reminderPermission = inject(ReminderPermissionService);
   private readonly reminderService = inject(ReminderService);
   readonly pushService = inject(PushSubscriptionService);
+  readonly form = inject(ReminderFormStore);
 
   readonly activeUserId = this.user.userIdSafe;
 
-  // ── Reminder draft signals ────────────────────────────────────────────────
-  readonly reminderEnabledDraft = signal(false);
-  readonly reminderIntervalDraft = signal(60);
-  readonly reminderLanguageDraft = signal<'de' | 'en'>('de');
-  readonly reminderQuietHoursDraft = signal<{ from: string; to: string }[]>([]);
-  readonly reminderSaving = signal(false);
-  readonly reminderSaved = signal(false);
-  readonly reminderDirty = signal(false);
-
   constructor() {
-    // Init push subscription status (browser-only)
     void this.pushService.init();
 
-    // Sync reminder draft from store
+    // Sync form draft from global store
     effect(() => {
       const rc = this.reminderStore.config();
-      this.reminderEnabledDraft.set(rc?.enabled ?? false);
-      this.reminderIntervalDraft.set(rc?.intervalMinutes ?? 60);
-      this.reminderLanguageDraft.set(rc?.language ?? 'de');
-      this.reminderQuietHoursDraft.set(
-        rc?.quietHours ? [...rc.quietHours] : []
-      );
-      this.reminderDirty.set(false);
+      this.form.syncFromConfig(rc);
     });
   }
 
@@ -461,43 +438,12 @@ export class RemindersPageComponent {
         return;
       }
     }
-    this.reminderEnabledDraft.set(enabled);
-    this.reminderDirty.set(true);
-  }
-
-  addQuietHour(): void {
-    this.reminderQuietHoursDraft.update((qhs) => [
-      ...qhs,
-      { from: '22:00', to: '07:00' },
-    ]);
-    this.reminderDirty.set(true);
-  }
-
-  removeQuietHour(index: number): void {
-    this.reminderQuietHoursDraft.update((qhs) =>
-      qhs.filter((_, i) => i !== index)
-    );
-    this.reminderDirty.set(true);
-  }
-
-  updateQuietHour(index: number, field: 'from' | 'to', value: string): void {
-    this.reminderQuietHoursDraft.update((qhs) => {
-      const copy = [...qhs];
-      copy[index] = { ...copy[index], [field]: value };
-      return copy;
-    });
-    this.reminderDirty.set(true);
-  }
-
-  clampInterval(value: number): number {
-    if (Number.isNaN(value)) return 60;
-    return Math.min(480, Math.max(15, value));
+    this.form.setEnabled(enabled);
   }
 
   async saveReminderSettings(): Promise<void> {
     const userId = this.activeUserId();
-    const intervalMinutes = this.clampInterval(this.reminderIntervalDraft());
-    this.reminderIntervalDraft.set(intervalMinutes);
+    this.form.clampInterval();
     if (!userId) {
       this.snackBar.open(
         $localize`:@@reminder.save.error:Einstellungen konnten nicht gespeichert werden.`,
@@ -506,17 +452,12 @@ export class RemindersPageComponent {
       );
       return;
     }
-    const config: ReminderConfig = {
-      enabled: this.reminderEnabledDraft(),
-      intervalMinutes,
-      quietHours: this.reminderQuietHoursDraft(),
-      timezone:
-        this.reminderStore.config()?.timezone ||
-        Intl.DateTimeFormat().resolvedOptions().timeZone ||
-        'Europe/Berlin',
-      language: this.reminderLanguageDraft(),
-    };
-    this.reminderSaving.set(true);
+    const timezone =
+      this.reminderStore.config()?.timezone ||
+      Intl.DateTimeFormat().resolvedOptions().timeZone ||
+      'Europe/Berlin';
+    const config = this.form.toConfig(timezone);
+    this.form.setSaving(true);
     try {
       await this.reminderStore.saveConfig(userId, config);
       const err = this.reminderStore.error();
@@ -533,11 +474,10 @@ export class RemindersPageComponent {
       } else {
         this.reminderService.stop();
       }
-      this.reminderSaved.set(true);
-      this.reminderDirty.set(false);
-      setTimeout(() => this.reminderSaved.set(false), 1500);
+      this.form.markSaved();
+      setTimeout(() => this.form.clearSaved(), 1500);
     } finally {
-      this.reminderSaving.set(false);
+      this.form.setSaving(false);
     }
   }
 

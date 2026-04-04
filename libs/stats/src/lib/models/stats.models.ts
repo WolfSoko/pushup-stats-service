@@ -1,6 +1,5 @@
+// Domain-specific statistics types
 export type StatsGranularity = 'daily' | 'hourly';
-
-export type UserRole = 'user' | 'admin';
 
 export interface StatsMeta {
   from: string | null;
@@ -28,67 +27,7 @@ export interface StatsFilter {
   to?: string;
 }
 
-export interface PushupRecord {
-  _id: string;
-  timestamp: string;
-  reps: number;
-  source: string;
-  type?: string;
-  createdAt?: string;
-  updatedAt?: string;
-}
-
-export interface PushupCreate {
-  timestamp: string;
-  reps: number;
-  source?: string;
-  type?: string;
-}
-
-export interface PushupUpdate {
-  timestamp?: string;
-  reps?: number;
-  source?: string;
-  type?: string;
-}
-
-export interface ReminderConfig {
-  enabled: boolean;
-  intervalMinutes: number;
-  quietHours: {
-    from: string;
-    to: string;
-  }[];
-  timezone: string;
-  language: 'de' | 'en';
-  lastQuoteFetchAt?: string;
-}
-
-export interface UserConfig {
-  userId: string;
-  email?: string | null;
-  displayName?: string;
-  dailyGoal?: number;
-  consent?: {
-    dataProcessing?: boolean;
-    statistics?: boolean;
-    targetedAds?: boolean;
-    acceptedAt?: string;
-  };
-  ui?: {
-    showSourceColumn?: boolean;
-    hideFromLeaderboard?: boolean;
-    dayChartMode?: '24h' | '14h';
-  };
-  role?: UserRole;
-  createdAt?: string;
-  updatedAt?: string;
-  reminder?: ReminderConfig;
-}
-
-export type UserConfigUpdate = Partial<
-  Pick<
-    UserConfig,
-    'email' | 'displayName' | 'dailyGoal' | 'consent' | 'ui' | 'role' | 'reminder'
-  >
->;
+// Re-export all domain models for backward compatibility
+export * from './pushup.models';
+export * from './user-config.models';
+export * from './reminder-config.models';

@@ -15,3 +15,5 @@ export * from './lib/ui/login/login-ui.store';
 export * from './lib/core/state/register-onboarding.store';
 export * from './lib/ui/register/register-ui.store';
 export * from './lib/core/user-context.service';
+export * from './lib/core/ports/post-auth.hook';
+export * from './lib/core/ports/user-profile.port';

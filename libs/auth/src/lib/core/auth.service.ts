@@ -1,23 +1,17 @@
-import { firstValueFrom } from 'rxjs';
 import { signal } from '@angular/core';
 import { computed, inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { isPlatformServer } from '@angular/common';
 import { AuthAdapter } from '../adapters/auth.adapter';
 import { mapAuthUserToPUSUser } from '../map-auth-user-to-user';
-import {
-  PushupFirestoreService,
-  UserConfigApiService,
-} from '@pu-stats/data-access';
+import { POST_AUTH_HOOKS } from './ports/post-auth.hook';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   private readonly authAdapter = inject(AuthAdapter);
-  private readonly userConfigApi = inject(UserConfigApiService);
-  private readonly pushupFirestore = inject(PushupFirestoreService, {
-    optional: true,
-  });
+  private readonly postAuthHooks =
+    inject(POST_AUTH_HOOKS, { optional: true }) ?? [];
   private readonly platformId = inject(PLATFORM_ID);
 
   // Signal für den Status der User-DB-Synchronisation
@@ -35,7 +29,7 @@ export class AuthService {
   async signInWithGoogle(): Promise<void> {
     await this.wrapAsync(async () => {
       const cred = await this.authAdapter.signInWithGoogle();
-      await this.syncUserDbSafe();
+      await this.runPostAuthHooks();
       return cred;
     }, 'Google sign-in');
   }
@@ -44,7 +38,7 @@ export class AuthService {
   async signInWithEmail(email: string, password: string): Promise<void> {
     await this.wrapAsync(async () => {
       const cred = await this.authAdapter.signInWithEmail(email, password);
-      await this.syncUserDbSafe();
+      await this.runPostAuthHooks();
       return cred;
     }, 'Email sign-in');
   }
@@ -53,7 +47,7 @@ export class AuthService {
   async signUpWithEmail(email: string, password: string): Promise<void> {
     await this.wrapAsync(async () => {
       const cred = await this.authAdapter.signUpWithEmail(email, password);
-      await this.syncUserDbSafe();
+      await this.runPostAuthHooks();
       return cred;
     }, 'Email sign-up');
   }
@@ -96,11 +90,11 @@ export class AuthService {
         this.authAdapter.currentUser ?? this.authAdapter.authUser();
       if (currentUser?.isAnonymous) {
         const cred = await this.authAdapter.linkWithEmail(email, password);
-        await this.syncUserDbSafe();
+        await this.runPostAuthHooks();
         return cred;
       }
       const cred = await this.authAdapter.signUpWithEmail(email, password);
-      await this.syncUserDbSafe();
+      await this.runPostAuthHooks();
       return cred;
     }, 'Upgrade with email');
   }
@@ -119,11 +113,11 @@ export class AuthService {
         this.authAdapter.currentUser ?? this.authAdapter.authUser();
       if (currentUser?.isAnonymous) {
         const cred = await this.authAdapter.linkWithGoogle();
-        await this.syncUserDbSafe();
+        await this.runPostAuthHooks();
         return cred;
       }
       const cred = await this.authAdapter.signInWithGoogle();
-      await this.syncUserDbSafe();
+      await this.runPostAuthHooks();
       return cred;
     }, 'Upgrade with Google');
   }
@@ -142,9 +136,9 @@ export class AuthService {
         ? (currentUser.uid ?? null)
         : null;
       const cred = await this.authAdapter.signInWithEmail(email, password);
-      await this.syncUserDbSafe();
+      await this.runPostAuthHooks();
       if (guestUid && cred.user.uid !== guestUid) {
-        await this.migrateGuestDataSafe(guestUid, cred.user.uid);
+        await this.runGuestMigrationHooks(guestUid, cred.user.uid);
       }
       return cred;
     }, 'Email sign-in with guest migration');
@@ -161,9 +155,9 @@ export class AuthService {
         ? (currentUser.uid ?? null)
         : null;
       const cred = await this.authAdapter.signInWithGoogle();
-      await this.syncUserDbSafe();
+      await this.runPostAuthHooks();
       if (guestUid && cred.user.uid !== guestUid) {
-        await this.migrateGuestDataSafe(guestUid, cred.user.uid);
+        await this.runGuestMigrationHooks(guestUid, cred.user.uid);
       }
       return cred;
     }, 'Google sign-in with guest migration');
@@ -185,54 +179,38 @@ export class AuthService {
   }
 
   /**
-   * Synchronisiert den User-Eintrag in der DB nach Authentifizierung
+   * Runs all registered post-auth hooks after successful authentication.
    */
-  private async syncUserDb(): Promise<void> {
+  private async runPostAuthHooks(): Promise<void> {
     if (isPlatformServer(this.platformId)) return;
     const user = this.user();
     if (!user) return;
     this.userDbSyncState.set('syncing');
     try {
-      const existingConfig = await firstValueFrom(
-        this.userConfigApi.getConfig(user.uid)
-      );
-
-      // Wichtig: bereits gesetzten Anzeigenamen nicht mit Provider-DisplayName überschreiben.
-      const nextDisplayName =
-        existingConfig?.displayName?.trim() || user.displayName || undefined;
-
-      await firstValueFrom(
-        this.userConfigApi.updateConfig(user.uid, {
-          email: user.email ?? undefined,
-          displayName: nextDisplayName,
-        })
+      await Promise.all(
+        this.postAuthHooks.map((hook) => hook.onAuthenticated(user))
       );
       this.userDbSyncState.set('success');
     } catch (e) {
       this.userDbSyncState.set('error');
-      throw e;
+      // Do not fail login if post-auth hooks fail after successful auth.
+      console.warn('[AuthService] post-auth hook failed:', e);
     }
   }
 
-  private async syncUserDbSafe(): Promise<void> {
-    try {
-      await this.syncUserDb();
-    } catch (e) {
-      // Do not fail login if user profile sync fails after successful auth.
-      console.warn('[AuthService] user DB sync failed after auth:', e);
-    }
-  }
-
-  private async migrateGuestDataSafe(
+  private async runGuestMigrationHooks(
     fromUid: string,
     toUid: string
   ): Promise<void> {
-    if (!this.pushupFirestore) return;
     try {
-      await this.pushupFirestore.migrateUserData(fromUid, toUid);
+      await Promise.all(
+        this.postAuthHooks
+          .filter((hook) => hook.onGuestMigration)
+          .map((hook) => hook.onGuestMigration!(fromUid, toUid))
+      );
     } catch (e) {
       // Migration failure must not block the sign-in itself.
-      console.warn('[AuthService] guest data migration failed:', e);
+      console.warn('[AuthService] guest data migration hook failed:', e);
     }
   }
 

@@ -6,8 +6,8 @@ import {
   withProps,
   withState,
 } from '@ngrx/signals';
-import { UserConfigApiService } from '@pu-stats/data-access';
 import { firstValueFrom } from 'rxjs';
+import { USER_PROFILE_PORT } from '../ports/user-profile.port';
 
 export type RegisterProfileInput = {
   uid: string;
@@ -29,14 +29,14 @@ export const RegisterOnboardingStore = signalStore(
   { providedIn: 'root' },
   withState(initialState),
   withProps(() => ({
-    userConfigApi: inject(UserConfigApiService),
+    userProfileApi: inject(USER_PROFILE_PORT),
   })),
-  withMethods(({ userConfigApi, ...store }) => ({
+  withMethods(({ userProfileApi, ...store }) => ({
     async saveProfile(input: RegisterProfileInput): Promise<void> {
       patchState(store, { saving: true, error: null });
       try {
         await firstValueFrom(
-          userConfigApi.updateConfig(input.uid, {
+          userProfileApi.updateConfig(input.uid, {
             displayName: input.displayName.trim(),
             dailyGoal: Math.max(1, Number(input.dailyGoal || 100)),
             consent: {

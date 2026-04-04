@@ -15,7 +15,7 @@
     },
     "defaultLocale": "de"
   },
-  "tags": [],
+  "tags": ["scope:app"],
   "targets": {
     "build": {
       "executor": "@angular/build:application",

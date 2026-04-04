@@ -13,35 +13,19 @@ describe('QuickAddBridgeService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('Given a subscriber, When requestOpenDialog() is called once, Then emits exactly one value', () => {
-    let count = 0;
-    service.openDialog$.subscribe(() => count++);
-    service.requestOpenDialog();
-    expect(count).toBe(1);
+  it('should start with tick 0', () => {
+    expect(service.openDialogTick()).toBe(0);
   });
 
-  it('Given a subscriber, When requestOpenDialog() is called multiple times, Then emits once per call', () => {
-    let count = 0;
-    service.openDialog$.subscribe(() => count++);
+  it('Given requestOpenDialog() is called once, Then tick increments to 1', () => {
     service.requestOpenDialog();
-    service.requestOpenDialog();
-    service.requestOpenDialog();
-    expect(count).toBe(3);
+    expect(service.openDialogTick()).toBe(1);
   });
 
-  it('Given no prior emissions, When a new subscriber subscribes, Then does not receive any replayed value', () => {
+  it('Given requestOpenDialog() is called multiple times, Then tick increments each time', () => {
     service.requestOpenDialog();
-    let received = false;
-    service.openDialog$.subscribe(() => (received = true));
-    expect(received).toBe(false);
-  });
-
-  it('Given a completed subscription, When requestOpenDialog() is called, Then does not cause memory leaks (subscription cleanup works)', () => {
-    let count = 0;
-    const sub = service.openDialog$.subscribe(() => count++);
     service.requestOpenDialog();
-    sub.unsubscribe();
     service.requestOpenDialog();
-    expect(count).toBe(1);
+    expect(service.openDialogTick()).toBe(3);
   });
 });

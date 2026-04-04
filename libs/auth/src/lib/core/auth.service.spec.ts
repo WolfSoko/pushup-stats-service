@@ -1,13 +1,9 @@
 import { Signal } from '@angular/core';
 import { User as FirebaseUser, UserCredential } from '@angular/fire/auth';
 import { render } from '@testing-library/angular';
-import { of } from 'rxjs';
-import {
-  PushupFirestoreService,
-  UserConfigApiService,
-} from '@pu-stats/data-access';
 import { AuthAdapter } from '../adapters/auth.adapter';
 import { AuthService } from './auth.service';
+import { POST_AUTH_HOOKS, PostAuthHook } from './ports/post-auth.hook';
 
 function makeCredential(uid: string): UserCredential {
   return { user: { uid } as FirebaseUser } as UserCredential;
@@ -15,8 +11,8 @@ function makeCredential(uid: string): UserCredential {
 
 describe('AuthService', () => {
   let adapter: Partial<AuthAdapter>;
-  let userConfigApi: Partial<UserConfigApiService>;
-  let pushupFirestore: Partial<PushupFirestoreService>;
+  let profileSyncHook: PostAuthHook;
+  let migrationHook: PostAuthHook;
 
   beforeEach(() => {
     const mockFirebaseUser: Partial<FirebaseUser> = {
@@ -40,23 +36,31 @@ describe('AuthService', () => {
       signUpWithEmail: jest.fn().mockResolvedValue(makeCredential('123')),
       authStateReady: jest.fn().mockResolvedValue(undefined),
     };
-    userConfigApi = {
-      getConfig: jest.fn().mockReturnValue(of({ userId: '123' })),
-      updateConfig: jest.fn().mockReturnValue(of({})),
+    profileSyncHook = {
+      onAuthenticated: jest.fn().mockResolvedValue(undefined),
     };
-    pushupFirestore = {
-      migrateUserData: jest.fn().mockResolvedValue(undefined),
+    migrationHook = {
+      onAuthenticated: jest.fn().mockResolvedValue(undefined),
+      onGuestMigration: jest.fn().mockResolvedValue(undefined),
     };
   });
 
+  function makeProviders(
+    hooks: PostAuthHook[] = [profileSyncHook, migrationHook]
+  ) {
+    return [
+      AuthService,
+      { provide: AuthAdapter, useValue: adapter },
+      ...hooks.map((hook) => ({
+        provide: POST_AUTH_HOOKS,
+        useValue: hook,
+        multi: true,
+      })),
+    ];
+  }
+
   it('should map user correctly (given authUser returns value)', async () => {
-    const { fixture } = await render('', {
-      providers: [
-        AuthService,
-        { provide: AuthAdapter, useValue: adapter },
-        { provide: UserConfigApiService, useValue: userConfigApi },
-      ],
-    });
+    const { fixture } = await render('', { providers: makeProviders() });
     const service = fixture.debugElement.injector.get(AuthService);
     const user = service.user();
     expect(user).toBeDefined();
@@ -64,73 +68,35 @@ describe('AuthService', () => {
   });
 
   it('should call signInWithGoogle when signing in with Google', async () => {
-    const { fixture } = await render('', {
-      providers: [
-        AuthService,
-        { provide: AuthAdapter, useValue: adapter },
-        { provide: UserConfigApiService, useValue: userConfigApi },
-      ],
-    });
+    const { fixture } = await render('', { providers: makeProviders() });
     const service = fixture.debugElement.injector.get(AuthService);
     await service.signInWithGoogle();
     expect(adapter.signInWithGoogle).toHaveBeenCalled();
   });
 
+  it('should run post-auth hooks after Google sign-in', async () => {
+    const { fixture } = await render('', { providers: makeProviders() });
+    const service = fixture.debugElement.injector.get(AuthService);
+    await service.signInWithGoogle();
+    expect(profileSyncHook.onAuthenticated).toHaveBeenCalled();
+  });
+
   it('should call signInWithEmail when signing in with email', async () => {
-    const { fixture } = await render('', {
-      providers: [
-        AuthService,
-        { provide: AuthAdapter, useValue: adapter },
-        { provide: UserConfigApiService, useValue: userConfigApi },
-      ],
-    });
+    const { fixture } = await render('', { providers: makeProviders() });
     const service = fixture.debugElement.injector.get(AuthService);
     await service.signInWithEmail('test@test.de', 'pw');
     expect(adapter.signInWithEmail).toHaveBeenCalledWith('test@test.de', 'pw');
   });
 
   it('should call signUpWithEmail when signing up with email', async () => {
-    const { fixture } = await render('', {
-      providers: [
-        AuthService,
-        { provide: AuthAdapter, useValue: adapter },
-        { provide: UserConfigApiService, useValue: userConfigApi },
-      ],
-    });
+    const { fixture } = await render('', { providers: makeProviders() });
     const service = fixture.debugElement.injector.get(AuthService);
     await service.signUpWithEmail('test@test.de', 'pw');
     expect(adapter.signUpWithEmail).toHaveBeenCalledWith('test@test.de', 'pw');
   });
 
-  it('keeps existing config displayName on repeated Google login', async () => {
-    userConfigApi.getConfig = jest.fn().mockReturnValue(
-      of({
-        userId: '123',
-        displayName: 'CustomName',
-      })
-    );
-
-    const { fixture } = await render('', {
-      providers: [
-        AuthService,
-        { provide: AuthAdapter, useValue: adapter },
-        { provide: UserConfigApiService, useValue: userConfigApi },
-      ],
-    });
-
-    const service = fixture.debugElement.injector.get(AuthService);
-    await service.signInWithGoogle();
-
-    expect(userConfigApi.updateConfig).toHaveBeenCalledWith(
-      '123',
-      expect.objectContaining({ displayName: 'CustomName' })
-    );
-  });
-
   describe('signInGuestIfNeeded', () => {
     it('is a no-op when auth.currentUser is already set', async () => {
-      // Given: adapter.currentUser is set (synchronous, persisted session)
-      // authState() doesn't matter - short-circuits on currentUser
       const noopAdapter = {
         ...adapter,
         signInAnonymously: jest.fn(),
@@ -140,48 +106,14 @@ describe('AuthService', () => {
         providers: [
           AuthService,
           { provide: AuthAdapter, useValue: noopAdapter },
-          { provide: UserConfigApiService, useValue: userConfigApi },
         ],
       });
       const service = fixture.debugElement.injector.get(AuthService);
-
-      // When
       await service.signInGuestIfNeeded();
-
-      // Then: no new anonymous sign-in
-      expect(noopAdapter.signInAnonymously).not.toHaveBeenCalled();
-    });
-
-    it('is a no-op when currentUser is set after authStateReady()', async () => {
-      // Given: authStateReady() resolves and currentUser reflects a real session
-      const mockUser = {
-        uid: 'signal-uid',
-        isAnonymous: false,
-      } as FirebaseUser;
-      const noopAdapter = {
-        ...adapter,
-        currentUser: mockUser,
-        signInAnonymously: jest.fn(),
-      };
-
-      const { fixture } = await render('', {
-        providers: [
-          AuthService,
-          { provide: AuthAdapter, useValue: noopAdapter },
-          { provide: UserConfigApiService, useValue: userConfigApi },
-        ],
-      });
-      const service = fixture.debugElement.injector.get(AuthService);
-
-      // When
-      await service.signInGuestIfNeeded();
-
-      // Then: no new anonymous sign-in
       expect(noopAdapter.signInAnonymously).not.toHaveBeenCalled();
     });
 
     it('calls signInAnonymously when no session exists', async () => {
-      // Given: no currentUser and no authState() signal value
       const noSessionAdapter = {
         ...adapter,
         currentUser: null,
@@ -190,30 +122,21 @@ describe('AuthService', () => {
           .fn()
           .mockResolvedValue({ user: { uid: 'anon-uid' } }),
       };
-      userConfigApi.getConfig = jest
-        .fn()
-        .mockReturnValue(of({ userId: 'anon-uid' }));
 
       const { fixture } = await render('', {
         providers: [
           AuthService,
           { provide: AuthAdapter, useValue: noSessionAdapter },
-          { provide: UserConfigApiService, useValue: userConfigApi },
         ],
       });
       const service = fixture.debugElement.injector.get(AuthService);
-
-      // When
       await service.signInGuestIfNeeded();
-
-      // Then: anonymous sign-in was triggered
       expect(noSessionAdapter.signInAnonymously).toHaveBeenCalled();
     });
   });
 
   describe('upgradeWithEmail', () => {
     it('links credential when currentUser is anonymous even when authUser signal is stale', async () => {
-      // Given: currentUser is set to anonymous (race: signal is still null/stale)
       const guestUser = { uid: 'guest-uid', isAnonymous: true } as FirebaseUser;
       const anonymousAdapter = {
         ...adapter,
@@ -227,15 +150,10 @@ describe('AuthService', () => {
         providers: [
           AuthService,
           { provide: AuthAdapter, useValue: anonymousAdapter },
-          { provide: UserConfigApiService, useValue: userConfigApi },
         ],
       });
       const service = fixture.debugElement.injector.get(AuthService);
-
-      // When
       await service.upgradeWithEmail('new@test.de', 'pw');
-
-      // Then: links (preserves UID) instead of creating a new account
       expect(anonymousAdapter.linkWithEmail).toHaveBeenCalledWith(
         'new@test.de',
         'pw'
@@ -244,7 +162,6 @@ describe('AuthService', () => {
     });
 
     it('falls back to signUpWithEmail when no user is anonymous', async () => {
-      // Given: no anonymous user in either currentUser or signal
       const nonAnonAdapter = {
         ...adapter,
         currentUser: null,
@@ -256,15 +173,10 @@ describe('AuthService', () => {
         providers: [
           AuthService,
           { provide: AuthAdapter, useValue: nonAnonAdapter },
-          { provide: UserConfigApiService, useValue: userConfigApi },
         ],
       });
       const service = fixture.debugElement.injector.get(AuthService);
-
-      // When
       await service.upgradeWithEmail('new@test.de', 'pw');
-
-      // Then: creates a new account
       expect(nonAnonAdapter.signUpWithEmail).toHaveBeenCalledWith(
         'new@test.de',
         'pw'
@@ -274,7 +186,6 @@ describe('AuthService', () => {
 
   describe('upgradeWithGoogle', () => {
     it('links credential when currentUser is anonymous even when authUser signal is stale', async () => {
-      // Given: currentUser is set to anonymous (race: signal is still null/stale)
       const guestUser = { uid: 'guest-uid', isAnonymous: true } as FirebaseUser;
       const anonymousAdapter = {
         ...adapter,
@@ -290,51 +201,26 @@ describe('AuthService', () => {
         providers: [
           AuthService,
           { provide: AuthAdapter, useValue: anonymousAdapter },
-          { provide: UserConfigApiService, useValue: userConfigApi },
         ],
       });
       const service = fixture.debugElement.injector.get(AuthService);
-
-      // When
       await service.upgradeWithGoogle();
-
-      // Then: links (preserves UID) instead of a fresh Google sign-in
       expect(anonymousAdapter.linkWithGoogle).toHaveBeenCalled();
       expect(anonymousAdapter.signInWithGoogle).not.toHaveBeenCalled();
     });
 
     it('falls back to signInWithGoogle when no user is anonymous', async () => {
-      // Given: currentUser is non-anonymous and signal is also not anonymous
       const { fixture } = await render('', {
-        providers: [
-          AuthService,
-          { provide: AuthAdapter, useValue: adapter },
-          { provide: UserConfigApiService, useValue: userConfigApi },
-        ],
+        providers: [AuthService, { provide: AuthAdapter, useValue: adapter }],
       });
       const service = fixture.debugElement.injector.get(AuthService);
-
-      // When
       await service.upgradeWithGoogle();
-
-      // Then: regular Google sign-in
       expect(adapter.signInWithGoogle).toHaveBeenCalled();
     });
   });
 
   describe('guest data migration', () => {
-    function makeProviders() {
-      return [
-        AuthService,
-        { provide: AuthAdapter, useValue: adapter },
-        { provide: UserConfigApiService, useValue: userConfigApi },
-        { provide: PushupFirestoreService, useValue: pushupFirestore },
-      ];
-    }
-
-    it('signInWithEmailAndMigrateGuest: migrates guest data when currentUser is anonymous (even if authUser() signal is null)', async () => {
-      // Given: currentUser is anonymous (auth settled synchronously),
-      // but authUser() signal hasn't resolved yet (startup race condition)
+    it('signInWithEmailAndMigrateGuest: runs migration hook when currentUser is anonymous', async () => {
       const guestUser: Partial<FirebaseUser> = {
         uid: 'guest-uid',
         isAnonymous: true,
@@ -347,40 +233,31 @@ describe('AuthService', () => {
         user: { uid: 'real-uid' } as FirebaseUser,
       } as UserCredential;
       adapter.signInWithEmail = jest.fn().mockResolvedValue(realCredential);
-      userConfigApi.getConfig = jest
-        .fn()
-        .mockReturnValue(of({ userId: 'real-uid' }));
 
-      // When
       const { fixture } = await render('', { providers: makeProviders() });
       const service = fixture.debugElement.injector.get(AuthService);
       await service.signInWithEmailAndMigrateGuest('a@b.de', 'pw');
 
-      // Then: guest data is migrated using the UID from currentUser
-      expect(pushupFirestore.migrateUserData).toHaveBeenCalledWith(
+      expect(migrationHook.onGuestMigration).toHaveBeenCalledWith(
         'guest-uid',
         'real-uid'
       );
     });
 
     it('signInWithEmailAndMigrateGuest: skips migration when currentUser is not anonymous', async () => {
-      // Given: non-anonymous currentUser (no guest session)
       const realCredential = {
         user: { uid: 'real-uid' } as FirebaseUser,
       } as UserCredential;
       adapter.signInWithEmail = jest.fn().mockResolvedValue(realCredential);
 
-      // When
       const { fixture } = await render('', { providers: makeProviders() });
       const service = fixture.debugElement.injector.get(AuthService);
       await service.signInWithEmailAndMigrateGuest('a@b.de', 'pw');
 
-      // Then: no migration attempted
-      expect(pushupFirestore.migrateUserData).not.toHaveBeenCalled();
+      expect(migrationHook.onGuestMigration).not.toHaveBeenCalled();
     });
 
-    it('signInWithGoogleAndMigrateGuest: migrates guest data when currentUser is anonymous (even if authUser() signal is null)', async () => {
-      // Given: currentUser is anonymous, authUser() signal hasn't resolved yet
+    it('signInWithGoogleAndMigrateGuest: runs migration hook when currentUser is anonymous', async () => {
       const guestUser: Partial<FirebaseUser> = {
         uid: 'guest-uid',
         isAnonymous: true,
@@ -393,36 +270,28 @@ describe('AuthService', () => {
         user: { uid: 'real-uid' } as FirebaseUser,
       } as UserCredential;
       adapter.signInWithGoogle = jest.fn().mockResolvedValue(realCredential);
-      userConfigApi.getConfig = jest
-        .fn()
-        .mockReturnValue(of({ userId: 'real-uid' }));
 
-      // When
       const { fixture } = await render('', { providers: makeProviders() });
       const service = fixture.debugElement.injector.get(AuthService);
       await service.signInWithGoogleAndMigrateGuest();
 
-      // Then: guest data is migrated using the UID from currentUser
-      expect(pushupFirestore.migrateUserData).toHaveBeenCalledWith(
+      expect(migrationHook.onGuestMigration).toHaveBeenCalledWith(
         'guest-uid',
         'real-uid'
       );
     });
 
     it('signInWithGoogleAndMigrateGuest: skips migration when currentUser is not anonymous', async () => {
-      // Given: non-anonymous currentUser
       const realCredential = {
         user: { uid: 'real-uid' } as FirebaseUser,
       } as UserCredential;
       adapter.signInWithGoogle = jest.fn().mockResolvedValue(realCredential);
 
-      // When
       const { fixture } = await render('', { providers: makeProviders() });
       const service = fixture.debugElement.injector.get(AuthService);
       await service.signInWithGoogleAndMigrateGuest();
 
-      // Then: no migration attempted
-      expect(pushupFirestore.migrateUserData).not.toHaveBeenCalled();
+      expect(migrationHook.onGuestMigration).not.toHaveBeenCalled();
     });
   });
 });

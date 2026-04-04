@@ -118,8 +118,10 @@ export class ReminderService {
   private async getNextQuote(): Promise<string | null> {
     const user = this.auth.user();
     const displayName = user?.displayName || 'Champ';
+    const userId = user?.uid;
 
     const quotes = await this.motivationService.getTodayQuotes({
+      userId,
       displayName,
     });
 

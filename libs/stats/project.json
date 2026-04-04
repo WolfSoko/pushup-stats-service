@@ -4,7 +4,7 @@
   "sourceRoot": "libs/stats/src",
   "prefix": "lib",
   "projectType": "library",
-  "tags": [],
+  "tags": ["scope:models"],
   "targets": {
     "test": {
       "executor": "@nx/jest:jest",

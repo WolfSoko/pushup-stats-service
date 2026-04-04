@@ -7,7 +7,7 @@ import {
   withState,
 } from '@ngrx/signals';
 import { firstValueFrom } from 'rxjs';
-import { UserConfigApiService } from '@pu-stats/data-access';
+import { USER_PROFILE_PORT } from '../ports/user-profile.port';
 
 type LoginOnboardingState = {
   loading: boolean;
@@ -30,13 +30,13 @@ export const LoginOnboardingStore = signalStore(
   { providedIn: 'root' },
   withState(initialState),
   withProps(() => ({
-    userConfigApi: inject(UserConfigApiService),
+    userProfileApi: inject(USER_PROFILE_PORT),
   })),
-  withMethods(({ userConfigApi, ...store }) => ({
+  withMethods(({ userProfileApi, ...store }) => ({
     async isOnboardingRequired(uid: string): Promise<boolean> {
       patchState(store, { loading: true, error: null });
       try {
-        const config = await firstValueFrom(userConfigApi.getConfig(uid));
+        const config = await firstValueFrom(userProfileApi.getConfig(uid));
         return (
           !config.displayName ||
           !config.dailyGoal ||
@@ -55,7 +55,7 @@ export const LoginOnboardingStore = signalStore(
       patchState(store, { saving: true, error: null });
       try {
         await firstValueFrom(
-          userConfigApi.updateConfig(uid, {
+          userProfileApi.updateConfig(uid, {
             displayName: input.displayName.trim(),
             dailyGoal: Math.max(1, Number(input.dailyGoal || 100)),
             consent: {

@@ -16,9 +16,68 @@ export default [
           enforceBuildableLibDependency: true,
           allow: ['^.*/eslint(\\.base)?\\.config\\.[cm]?[jt]s$'],
           depConstraints: [
+            // auth must NOT depend on data-access (decoupled via ports)
             {
-              sourceTag: '*',
-              onlyDependOnLibsWithTags: ['*'],
+              sourceTag: 'scope:auth',
+              onlyDependOnLibsWithTags: ['scope:models', 'scope:testing'],
+            },
+            // motivation must NOT depend on auth (userId passed as param)
+            {
+              sourceTag: 'scope:motivation',
+              onlyDependOnLibsWithTags: ['scope:models'],
+            },
+            // data-access depends only on models
+            {
+              sourceTag: 'scope:data-access',
+              onlyDependOnLibsWithTags: ['scope:models'],
+            },
+            // reminders can depend on data-access, auth, and models
+            {
+              sourceTag: 'scope:reminders',
+              onlyDependOnLibsWithTags: [
+                'scope:models',
+                'scope:data-access',
+                'scope:auth',
+                'scope:motivation',
+              ],
+            },
+            // quick-add depends on models (+ testing for specs)
+            {
+              sourceTag: 'scope:quick-add',
+              onlyDependOnLibsWithTags: ['scope:models', 'scope:testing'],
+            },
+            // ads is isolated
+            {
+              sourceTag: 'scope:ads',
+              onlyDependOnLibsWithTags: ['scope:models'],
+            },
+            // testing can depend on anything (test utilities)
+            {
+              sourceTag: 'scope:testing',
+              onlyDependOnLibsWithTags: [
+                'scope:models',
+                'scope:data-access',
+                'scope:auth',
+              ],
+            },
+            // models has no dependencies
+            {
+              sourceTag: 'scope:models',
+              onlyDependOnLibsWithTags: [],
+            },
+            // app can depend on everything
+            {
+              sourceTag: 'scope:app',
+              onlyDependOnLibsWithTags: [
+                'scope:auth',
+                'scope:data-access',
+                'scope:models',
+                'scope:reminders',
+                'scope:quick-add',
+                'scope:ads',
+                'scope:motivation',
+                'scope:testing',
+              ],
             },
           ],
         },

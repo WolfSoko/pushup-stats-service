@@ -99,8 +99,8 @@ describe('App (testing-library)', () => {
   });
 
   it('shows daily progress and goal in toolbar', async () => {
-    userConfigApiMock.getConfig.mockReturnValueOnce(of({ dailyGoal: 137 }));
-    statsApiMock.load.mockReturnValueOnce(
+    userConfigApiMock.getConfig.mockReturnValue(of({ dailyGoal: 137 }));
+    statsApiMock.load.mockReturnValue(
       of({
         meta: {
           from: null,

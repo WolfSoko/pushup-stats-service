@@ -7,17 +7,12 @@ jest.mock('@angular/fire/firestore', () => ({
 }));
 
 import { TestBed } from '@angular/core/testing';
-import { LOCALE_ID, PLATFORM_ID, signal } from '@angular/core';
+import { LOCALE_ID, PLATFORM_ID } from '@angular/core';
 import { Firestore } from '@angular/fire/firestore';
 import * as firestoreFns from '@angular/fire/firestore';
 import { MotivationQuoteService } from './motivation-quote.service';
-import { UserContextService } from '@pu-auth/auth';
 
 describe('MotivationQuoteService', () => {
-  const mockUserContext = {
-    userIdSafe: signal(''),
-  };
-
   describe('SSR (server platform)', () => {
     let service: MotivationQuoteService;
 
@@ -47,14 +42,12 @@ describe('MotivationQuoteService', () => {
 
     beforeEach(() => {
       jest.clearAllMocks();
-      mockUserContext.userIdSafe = signal('test-user-123');
 
       TestBed.configureTestingModule({
         providers: [
           { provide: PLATFORM_ID, useValue: 'browser' },
           { provide: LOCALE_ID, useValue: 'de' },
           { provide: Firestore, useValue: {} },
-          { provide: UserContextService, useValue: mockUserContext },
         ],
       });
       service = TestBed.inject(MotivationQuoteService);
@@ -66,7 +59,7 @@ describe('MotivationQuoteService', () => {
         data: () => ({ quotes: ['Firestore Quote 1', 'Firestore Quote 2'] }),
       } as any);
 
-      const result = await service.getTodayQuotes();
+      const result = await service.getTodayQuotes({ userId: 'test-user-123' });
 
       expect(result).toEqual(['Firestore Quote 1', 'Firestore Quote 2']);
       expect(firestoreFns.doc).toHaveBeenCalled();
@@ -79,7 +72,7 @@ describe('MotivationQuoteService', () => {
         data: () => ({ quotes: ['First Quote', 'Second'] }),
       } as any);
 
-      const result = await service.getTodayQuote();
+      const result = await service.getTodayQuote({ userId: 'test-user-123' });
 
       expect(result).toBe('First Quote');
     });
@@ -93,7 +86,7 @@ describe('MotivationQuoteService', () => {
         .mockResolvedValueOnce(undefined as any);
 
       // Without Functions provider, service returns [] on cache miss
-      await service.getTodayQuotes();
+      await service.getTodayQuotes({ userId: 'test-user-123' });
 
       // setDoc won't be called because fetchQuotes returns [] without Functions
       expect(setDocSpy).not.toHaveBeenCalled();
@@ -107,7 +100,7 @@ describe('MotivationQuoteService', () => {
         data: () => ({ quotes: ['Quote'] }),
       } as any);
 
-      await service.getTodayQuotes();
+      await service.getTodayQuotes({ userId: 'test-user-123' });
 
       expect(docSpy).toHaveBeenCalledWith(
         expect.anything(),
@@ -118,14 +111,12 @@ describe('MotivationQuoteService', () => {
 
     it('should use "en" lang for English locale in Firestore doc ID', async () => {
       TestBed.resetTestingModule();
-      mockUserContext.userIdSafe = signal('en-user');
 
       TestBed.configureTestingModule({
         providers: [
           { provide: PLATFORM_ID, useValue: 'browser' },
           { provide: LOCALE_ID, useValue: 'en-US' },
           { provide: Firestore, useValue: {} },
-          { provide: UserContextService, useValue: mockUserContext },
         ],
       });
       const enService = TestBed.inject(MotivationQuoteService);
@@ -137,7 +128,7 @@ describe('MotivationQuoteService', () => {
         data: () => ({ quotes: ['English Quote'] }),
       } as any);
 
-      const result = await enService.getTodayQuotes();
+      const result = await enService.getTodayQuotes({ userId: 'en-user' });
 
       expect(result).toEqual(['English Quote']);
       expect(docSpy).toHaveBeenCalledWith(
@@ -154,7 +145,6 @@ describe('MotivationQuoteService', () => {
 
     beforeEach(() => {
       jest.clearAllMocks();
-      mockUserContext.userIdSafe = signal(''); // No user logged in
 
       Object.defineProperty(window, 'localStorage', {
         value: {
@@ -179,7 +169,6 @@ describe('MotivationQuoteService', () => {
           { provide: PLATFORM_ID, useValue: 'browser' },
           { provide: LOCALE_ID, useValue: 'de' },
           { provide: Firestore, useValue: {} },
-          { provide: UserContextService, useValue: mockUserContext },
         ],
       });
       service = TestBed.inject(MotivationQuoteService);

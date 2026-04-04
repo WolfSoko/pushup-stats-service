@@ -29,11 +29,19 @@ import {
 } from '@angular/platform-browser';
 import { provideRouter, Router } from '@angular/router';
 import { provideServiceWorker } from '@angular/service-worker';
-import { provideAuth, withEmulator as withAuthEmulator } from '@pu-auth/auth';
+import {
+  provideAuth,
+  withEmulator as withAuthEmulator,
+  POST_AUTH_HOOKS,
+  USER_PROFILE_PORT,
+} from '@pu-auth/auth';
 import {
   provideFireStore,
+  UserConfigApiService,
   withEmulator as withFirestoreEmulator,
 } from '@pu-stats/data-access';
+import { UserProfileSyncHook } from './core/auth/user-profile-sync.hook';
+import { GuestDataMigrationHook } from './core/auth/guest-data-migration.hook';
 import { MatrixController, MatrixElement } from 'chartjs-chart-matrix';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
@@ -83,6 +91,10 @@ export const appConfig: ApplicationConfig = {
     // LOCALE_ID is automatically set by Angular i18n based on the build locale
     // MAT_DATE_LOCALE follows LOCALE_ID by default when not explicitly set
     { provide: DEMO_USER_ID, useValue: demoUserId },
+    // Auth ↔ Data-Access wiring: ports & adapters
+    { provide: USER_PROFILE_PORT, useExisting: UserConfigApiService },
+    { provide: POST_AUTH_HOOKS, useClass: UserProfileSyncHook, multi: true },
+    { provide: POST_AUTH_HOOKS, useClass: GuestDataMigrationHook, multi: true },
     { provide: VAPID_PUBLIC_KEY, useValue: firebaseRuntime.vapidPublicKey },
     provideServiceWorker('sw-push.js', {
       enabled: !isDevMode(),

@@ -2,7 +2,6 @@ import { inject, Injectable, LOCALE_ID, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { doc, Firestore, getDoc, setDoc } from '@angular/fire/firestore';
 import { Functions, httpsCallable } from '@angular/fire/functions';
-import { UserContextService } from '@pu-auth/auth';
 
 const CACHE_PREFIX = 'motivation-quotes';
 const FIRESTORE_COLLECTION = 'motivation-quotes';
@@ -18,15 +17,17 @@ export class MotivationQuoteService {
   private readonly functions: Functions | null = this.isBrowser
     ? inject(Functions, { optional: true })
     : null;
-  private readonly userContext = this.isBrowser
-    ? inject(UserContextService, { optional: true })
-    : null;
 
   private inFlightFetch: Promise<string[]> | null = null;
 
   /** Returns today's first quote (deterministic, cached). Null on SSR/error. */
   async getTodayQuote(
-    opts: { totalToday?: number; dailyGoal?: number; displayName?: string } = {}
+    opts: {
+      userId?: string;
+      totalToday?: number;
+      dailyGoal?: number;
+      displayName?: string;
+    } = {}
   ): Promise<string | null> {
     const quotes = await this.getTodayQuotes(opts);
     if (!quotes.length) return null;
@@ -35,12 +36,17 @@ export class MotivationQuoteService {
 
   /** Returns all cached quotes for today. Fetches if cache is empty/stale. */
   async getTodayQuotes(
-    opts: { totalToday?: number; dailyGoal?: number; displayName?: string } = {}
+    opts: {
+      userId?: string;
+      totalToday?: number;
+      dailyGoal?: number;
+      displayName?: string;
+    } = {}
   ): Promise<string[]> {
-    const cached = await this.loadCache();
+    const cached = await this.loadCache(opts.userId);
     if (cached) return cached;
     const fresh = await this.fetchQuotes(opts);
-    await this.saveCache(fresh);
+    await this.saveCache(fresh, opts.userId);
     return fresh;
   }
 
@@ -60,20 +66,18 @@ export class MotivationQuoteService {
     return `${userId}_${this.todayStr()}_${this.lang}`;
   }
 
-  private async loadCache(): Promise<string[] | null> {
+  private async loadCache(userId?: string): Promise<string[] | null> {
     if (!this.isBrowser) return null;
 
-    const userId = this.userContext?.userIdSafe();
     if (userId && this.firestore) {
       return this.loadFromFirestore(userId);
     }
     return this.loadFromLocalStorage();
   }
 
-  private async saveCache(quotes: string[]): Promise<void> {
+  private async saveCache(quotes: string[], userId?: string): Promise<void> {
     if (!this.isBrowser || !quotes.length) return;
 
-    const userId = this.userContext?.userIdSafe();
     if (userId && this.firestore) {
       await this.saveToFirestore(userId, quotes);
     } else {

@@ -1,7 +1,7 @@
 import { render } from '@testing-library/angular';
 import { of, throwError } from 'rxjs';
-import { UserConfigApiService } from '@pu-stats/data-access';
 import { RegisterOnboardingStore } from './register-onboarding.store';
+import { USER_PROFILE_PORT } from '../ports/user-profile.port';
 
 describe('RegisterOnboardingStore', () => {
   const userConfigApiMock = {
@@ -12,7 +12,7 @@ describe('RegisterOnboardingStore', () => {
     const { fixture } = await render('', {
       providers: [
         RegisterOnboardingStore,
-        { provide: UserConfigApiService, useValue: userConfigApiMock },
+        { provide: USER_PROFILE_PORT, useValue: userConfigApiMock },
       ],
     });
     return fixture.debugElement.injector.get(RegisterOnboardingStore);

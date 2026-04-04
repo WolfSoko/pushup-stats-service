@@ -23,8 +23,8 @@ import {
 } from '@pu-stats/data-access';
 import { PushupRecord, StatsResponse } from '@pu-stats/models';
 import { firstValueFrom } from 'rxjs';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { QuickAddBridgeService } from '@pu-stats/quick-add';
+import { untracked } from '@angular/core';
 import { AdSlotComponent, AdsConfigService } from '@pu-stats/ads';
 import { UserContextService } from '@pu-auth/auth';
 import { toLocalIsoDate } from '@pu-stats/models';
@@ -206,15 +206,18 @@ export class StatsDashboardComponent {
       }
     });
 
-    inject(QuickAddBridgeService)
-      .openDialog$.pipe(takeUntilDestroyed())
-      .subscribe(() => {
+    const quickAddBridge = inject(QuickAddBridgeService);
+    effect(() => {
+      const tick = quickAddBridge.openDialogTick();
+      if (!tick) return; // skip initial value (0)
+      untracked(() => {
         if (viewReady) {
           this.openCreateDialog();
         } else {
           pendingOpenCreateDialog = true;
         }
       });
+    });
 
     effect(() => {
       const cfg = this.userConfigResource.value();
@@ -229,7 +232,9 @@ export class StatsDashboardComponent {
       this.refreshAll();
     });
 
-    this.motivationService.getTodayQuote().then((q) => this.todayQuote.set(q));
+    this.motivationService
+      .getTodayQuote({ userId: this.user.userIdSafe() })
+      .then((q) => this.todayQuote.set(q));
   }
 
   openCreateDialog(): void {

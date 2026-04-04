@@ -1,12 +1,11 @@
-import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Injectable, signal } from '@angular/core';
 
 @Injectable({ providedIn: 'root' })
 export class QuickAddBridgeService {
-  private readonly openDialogSubject = new Subject<void>();
-  readonly openDialog$: Observable<void> = this.openDialogSubject.asObservable();
+  /** Incremented each time a dialog open is requested. Watch with effect(). */
+  readonly openDialogTick = signal(0);
 
   requestOpenDialog(): void {
-    this.openDialogSubject.next();
+    this.openDialogTick.update((t) => t + 1);
   }
 }

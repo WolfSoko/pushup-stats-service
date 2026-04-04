@@ -4,7 +4,7 @@
   "sourceRoot": "libs/quick-add/src",
   "prefix": "lib",
   "projectType": "library",
-  "tags": [],
+  "tags": ["scope:quick-add"],
   "targets": {
     "test": {
       "executor": "@nx/jest:jest",

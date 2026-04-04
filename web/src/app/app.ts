@@ -3,9 +3,7 @@ import {
   Component,
   computed,
   DestroyRef,
-  effect,
   inject,
-  resource,
   signal,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -28,22 +26,18 @@ import {
 } from '@angular/router';
 import { SwUpdate, VersionDetectedEvent } from '@angular/service-worker';
 import { AuthStore, UserMenuComponent } from '@pu-auth/auth';
-import { StatsApiService, UserConfigApiService } from '@pu-stats/data-access';
-import { filter, firstValueFrom } from 'rxjs';
-import { AdsConsentStateService } from '@pu-stats/ads';
+import { StatsApiService } from '@pu-stats/data-access';
+import { filter } from 'rxjs';
 import { SeoService } from './core/seo.service';
 import { UserContextService } from '@pu-auth/auth';
+import { PushSubscriptionService } from '@pu-reminders/reminders';
 import {
-  ReminderService,
-  ReminderStore,
-  PushSubscriptionService,
-} from '@pu-reminders/reminders';
-import {
-  AdaptiveQuickAddService,
   QuickAddBridgeService,
   QuickAddFabComponent,
 } from '@pu-stats/quick-add';
 import { ThemeToggleComponent } from './core/theme';
+import { ReminderOrchestrationService } from './core/reminder-orchestration.service';
+import { AppDataFacade } from './core/app-data.facade';
 
 @Component({
   selector: 'app-root',
@@ -78,7 +72,6 @@ export class App {
   );
   private readonly pushService = inject(PushSubscriptionService);
   private readonly _initPushBridge = afterNextRender(() => {
-    // Register SW→App message bridge at startup, not just when settings page is visited
     this.pushService.registerSwListener();
   });
   private readonly _handleSnoozeParam = afterNextRender(() => {
@@ -93,41 +86,23 @@ export class App {
       void this.pushService.snooze(snoozeMinutes);
     }
   });
-  private readonly userConfigApi = inject(UserConfigApiService);
   private readonly statsApi = inject(StatsApiService);
   private readonly seo = inject(SeoService);
   private readonly analytics = inject(Analytics, { optional: true });
   private readonly auth = inject(AuthStore);
-  private readonly adsConsentState = inject(AdsConsentStateService);
-  private readonly reminderService = inject(ReminderService);
-  private readonly reminderStore = inject(ReminderStore);
-  private readonly adaptiveQuickAdd = inject(AdaptiveQuickAddService);
+  private readonly reminderOrchestration = inject(ReminderOrchestrationService);
   private readonly quickAddBridge = inject(QuickAddBridgeService);
+  private readonly appData = inject(AppDataFacade);
 
-  readonly recentEntriesResource = resource({
-    params: () => ({ userId: this.user.userIdSafe() }),
-    loader: async ({ params }) => {
-      if (!params.userId) return [];
-      const sevenDaysAgo = new Date();
-      sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
-      const from = sevenDaysAgo.toISOString().slice(0, 10);
-      return firstValueFrom(this.statsApi.listPushups({ from }));
-    },
-  });
-
-  readonly quickAddSuggestions = computed(() =>
-    this.adaptiveQuickAdd.compute(this.recentEntriesResource.value() ?? [])
-  );
+  // Delegate to facade
+  readonly quickAddSuggestions = this.appData.quickAddSuggestions;
+  readonly dailyGoal = this.appData.dailyGoal;
+  readonly todayProgress = this.appData.todayProgress;
 
   setLanguage(lang: 'de' | 'en', ev?: Event): void {
     ev?.preventDefault();
-
-    // Pin the language choice client-side. This avoids issues with service worker
-    // navigation caching swallowing Set-Cookie headers.
     const maxAge = 180 * 24 * 60 * 60; // 180 days
     document.cookie = `lang=${encodeURIComponent(lang)}; Path=/; Max-Age=${maxAge}; SameSite=Lax`;
-
-    // No /de prefix in URL → DE is root.
     const target = lang === 'en' ? '/en/' : '/de';
     window.location.replace(target);
   }
@@ -135,50 +110,7 @@ export class App {
   /** Whether the sidenav is open (same behavior on all screen sizes). */
   readonly navOpen = signal(false);
 
-  readonly userGoalResource = resource({
-    params: () => ({ userId: this.user.userIdSafe() }),
-    loader: async ({ params }) => {
-      if (!params.userId) return { dailyGoal: 100 };
-      return firstValueFrom(this.userConfigApi.getConfig(params.userId));
-    },
-  });
-
-  readonly dailyGoal = computed(
-    () => this.userGoalResource.value()?.dailyGoal ?? 100
-  );
-
-  readonly dailyProgressResource = resource({
-    params: () => ({ userId: this.user.userIdSafe() }),
-    loader: async ({ params }) => {
-      if (!params.userId) return 0;
-      const today = new Date().toISOString().slice(0, 10);
-      const stats = await firstValueFrom(
-        this.statsApi.load({ from: today, to: today })
-      );
-      return stats?.meta?.total ?? 0;
-    },
-  });
-
-  readonly todayProgress = computed(
-    () => this.dailyProgressResource.value() ?? 0
-  );
-
   constructor() {
-    // Load reminder config and start/stop service on auth state change
-    effect(() => {
-      const user = this.auth.user();
-      if (user && !user.isAnonymous) {
-        const uid = user.uid;
-        this.reminderStore.loadConfig(uid).then(() => {
-          if (this.auth.user()?.uid === uid) {
-            this.reminderService.start();
-          }
-        });
-      } else {
-        this.reminderService.stop();
-      }
-    });
-
     this.router.events
       .pipe(
         filter((event) => event instanceof NavigationEnd),
@@ -252,8 +184,7 @@ export class App {
               verticalPosition: 'bottom',
             }
           );
-          this.recentEntriesResource.reload();
-          this.dailyProgressResource.reload();
+          this.appData.reloadAfterQuickAdd();
         },
         error: () =>
           this.snackBar.open(
@@ -287,7 +218,7 @@ export class App {
   }
 
   async logout(): Promise<void> {
-    this.reminderService.stop();
+    this.reminderOrchestration.stop();
     await this.auth.logout();
     this.navOpen.set(false);
     await this.router.navigateByUrl('/');
