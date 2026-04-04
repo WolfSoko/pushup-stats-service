@@ -3,12 +3,9 @@ import {
   afterNextRender,
   ChangeDetectionStrategy,
   Component,
-  computed,
   effect,
   inject,
   PLATFORM_ID,
-  resource,
-  signal,
   viewChild,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -19,31 +16,15 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import {
   LiveDataStore,
   StatsApiService,
-  UserConfigApiService,
 } from '@pu-stats/data-access';
-import { PushupRecord, StatsResponse } from '@pu-stats/models';
 import { firstValueFrom } from 'rxjs';
 import { QuickAddBridgeService } from '@pu-stats/quick-add';
 import { untracked } from '@angular/core';
-import { AdSlotComponent, AdsStore } from '@pu-stats/ads';
-import { UserContextService } from '@pu-auth/auth';
-import { toLocalIsoDate } from '@pu-stats/models';
+import { AdSlotComponent } from '@pu-stats/ads';
 import { AnalysisTeaserCardComponent } from '../components/analysis-teaser-card/analysis-teaser-card.component';
 import { PreviewBannerComponent } from '../components/preview-banner/preview-banner.component';
 import { StatsTableComponent } from '../components/stats-table/stats-table.component';
-import { MotivationStore } from '@pu-stats/motivation';
-
-const EMPTY_STATS: StatsResponse = {
-  meta: {
-    from: null,
-    to: null,
-    entries: 0,
-    days: 0,
-    total: 0,
-    granularity: 'daily',
-  },
-  series: [],
-};
+import { DashboardStore } from '../dashboard.store';
 
 @Component({
   selector: 'app-stats-dashboard',
@@ -58,6 +39,7 @@ const EMPTY_STATS: StatsResponse = {
     StatsTableComponent,
     AdSlotComponent,
   ],
+  providers: [DashboardStore],
   templateUrl: './stats-dashboard.component.html',
   styleUrl: './stats-dashboard.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -68,131 +50,27 @@ export class StatsDashboardComponent {
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly live = inject(LiveDataStore);
-  private readonly adsStore = inject(AdsStore);
-  private readonly motivationStore = inject(MotivationStore);
 
+  readonly store = inject(DashboardStore);
   readonly statsTable = viewChild(StatsTableComponent);
 
-  readonly entriesResource = resource({
-    loader: async () => firstValueFrom(this.api.listPushups({})),
-  });
-
-  readonly allTimeResource = resource({
-    loader: async () => firstValueFrom(this.api.load({})),
-  });
-
-  readonly allTimeStats = computed(
-    () => this.allTimeResource.value() ?? EMPTY_STATS
-  );
-
-  readonly allTimeTotal = computed(() => this.allTimeStats().meta.total);
-  readonly allTimeDays = computed(() => this.allTimeStats().meta.days);
-  readonly allTimeEntries = computed(() => this.allTimeStats().meta.entries);
-  readonly allTimeAvg = computed(() =>
-    this.allTimeDays()
-      ? (this.allTimeTotal() / this.allTimeDays()).toFixed(1)
-      : '0'
-  );
-
-  readonly entryRows = computed<PushupRecord[]>(
-    () => this.entriesResource.value() ?? []
-  );
-
-  readonly currentStreak = computed(() => {
-    const dates = this.sortedUniqueDates();
-    if (!dates.length) return 0;
-
-    const today = toLocalIsoDate(new Date());
-    const lastDate = dates[dates.length - 1];
-
-    // If last entry is not today or yesterday (or is in the future), streak is 0
-    const daysDiff = this.daysBetween(lastDate, today);
-    if (daysDiff > 1 || daysDiff < 0) return 0;
-
-    let streak = 1;
-    for (let i = dates.length - 1; i > 0; i--) {
-      if (this.daysBetween(dates[i - 1], dates[i]) === 1) {
-        streak += 1;
-      } else {
-        break;
-      }
-    }
-    return streak;
-  });
-
-  readonly weekReps = computed(() => {
-    const today = new Date();
-    const dayOfWeek = (today.getDay() + 6) % 7; // Monday = 0
-    const monday = new Date(today);
-    monday.setDate(today.getDate() - dayOfWeek);
-    const mondayStr = toLocalIsoDate(monday);
-    const sunday = new Date(monday);
-    sunday.setDate(monday.getDate() + 6);
-    const sundayStr = toLocalIsoDate(sunday);
-
-    return this.entryRows()
-      .filter((entry) => {
-        const day = entry.timestamp.slice(0, 10);
-        return day >= mondayStr && day <= sundayStr;
-      })
-      .reduce((sum, entry) => sum + entry.reps, 0);
-  });
-
-  private readonly user = inject(UserContextService);
-  private readonly userConfigApi = inject(UserConfigApiService);
-
-  readonly dailyGoal = signal(100);
-  readonly todayQuote = this.motivationStore.todayQuote;
-
-  readonly adClient = this.adsStore.adClient;
-  readonly adSlotDashboardInline = this.adsStore.dashboardInlineSlot;
-  readonly dashboardInlineAdsEnabled = this.adsStore.dashboardInlineEnabled;
-
-  readonly userConfigResource = resource({
-    params: () => ({ userId: this.user.userIdSafe() }),
-    loader: async ({ params }) =>
-      firstValueFrom(this.userConfigApi.getConfig(params.userId)),
-  });
-
-  readonly todayTotal = computed(() => {
-    const today = toLocalIsoDate(new Date());
-    return this.entryRows()
-      .filter((entry) => entry.timestamp.slice(0, 10) === today)
-      .reduce((sum, entry) => sum + entry.reps, 0);
-  });
-
-  readonly goalProgressPercent = computed(() =>
-    this.dailyGoal()
-      ? Math.min(100, Math.round((this.todayTotal() / this.dailyGoal()) * 100))
-      : 0
-  );
-
-  readonly lastEntry = computed<PushupRecord | null>(() => {
-    const rows = this.entryRows();
-    if (!rows.length) return null;
-    return (
-      [...rows].sort(
-        (a, b) =>
-          new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
-      )[0] ?? null
-    );
-  });
-
-  readonly latestEntries = computed<PushupRecord[]>(() => {
-    return [...this.entryRows()]
-      .sort(
-        (a, b) =>
-          new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
-      )
-      .slice(0, 5);
-  });
-
-  readonly loading = computed(() => {
-    const status = this.entriesResource.status();
-    return status === 'loading' || status === 'reloading';
-  });
-
-  readonly liveConnected = computed(() => this.live.connected());
+  // Delegate store signals for template access
+  readonly allTimeTotal = this.store.allTimeTotal;
+  readonly allTimeDays = this.store.allTimeDays;
+  readonly allTimeEntries = this.store.allTimeEntries;
+  readonly allTimeAvg = this.store.allTimeAvg;
+  readonly todayTotal = this.store.todayTotal;
+  readonly dailyGoal = this.store.dailyGoal;
+  readonly goalProgressPercent = this.store.goalProgressPercent;
+  readonly todayQuote = this.store.todayQuote;
+  readonly lastEntry = this.store.lastEntry;
+  readonly latestEntries = this.store.latestEntries;
+  readonly currentStreak = this.store.currentStreak;
+  readonly weekReps = this.store.weekReps;
+  readonly loading = this.store.loading;
+  readonly liveConnected = this.store.liveConnected;
+  readonly adSlotDashboardInline = this.store.adSlotDashboardInline;
+  readonly dashboardInlineAdsEnabled = this.store.dashboardInlineAdsEnabled;
 
   constructor() {
     let viewReady = false;
@@ -220,19 +98,19 @@ export class StatsDashboardComponent {
     });
 
     effect(() => {
-      const cfg = this.userConfigResource.value();
+      const cfg = this.store.userConfigResource.value();
       if (!cfg) return;
-      this.dailyGoal.set(cfg.dailyGoal ?? 100);
+      this.store.setDailyGoal(cfg.dailyGoal ?? 100);
     });
 
     effect(() => {
       if (!isPlatformBrowser(this.platformId)) return;
       const tick = this.live.updateTick();
       if (!tick) return;
-      this.refreshAll();
+      this.store.refreshAll();
     });
 
-    void this.motivationStore.loadQuotes(this.user.userIdSafe());
+    this.store.loadQuote();
   }
 
   openCreateDialog(): void {
@@ -270,25 +148,6 @@ export class StatsDashboardComponent {
         type: 'Standard',
       })
     );
-    this.refreshAll();
-  }
-
-  private refreshAll() {
-    this.allTimeResource.reload();
-    this.entriesResource.reload();
-  }
-
-  private sortedUniqueDates(): string[] {
-    return [
-      ...new Set(this.entryRows().map((x) => x.timestamp.slice(0, 10))),
-    ].sort((a, b) => a.localeCompare(b));
-  }
-
-  private daysBetween(a: string, b: string): number {
-    const ad = new Date(`${a}T00:00:00`);
-    const bd = new Date(`${b}T00:00:00`);
-    ad.setHours(0, 0, 0, 0);
-    bd.setHours(0, 0, 0, 0);
-    return Math.round((bd.getTime() - ad.getTime()) / 86_400_000);
+    this.store.refreshAll();
   }
 }
