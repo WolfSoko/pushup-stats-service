@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 import { StatsDashboardComponent } from './stats-dashboard.component';
 import {
-  PushupLiveService,
+  LiveDataStore,
   StatsApiService,
   UserConfigApiService,
 } from '@pu-stats/data-access';
@@ -95,7 +95,7 @@ describe('StatsDashboardComponent', () => {
       imports: [StatsDashboardComponent],
       providers: [
         { provide: StatsApiService, useValue: serviceMock },
-        { provide: PushupLiveService, useValue: liveMock },
+        { provide: LiveDataStore, useValue: liveMock },
         { provide: UserContextService, useValue: { userIdSafe: () => 'u1' } },
         { provide: AdsStore, useValue: adsConfigMock },
         { provide: AuthStore, useValue: makeAuthStoreMock() },
