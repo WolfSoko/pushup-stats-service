@@ -3,7 +3,6 @@ import {
   computed,
   inject,
   linkedSignal,
-  resource,
 } from '@angular/core';
 import { Analytics, logEvent } from '@angular/fire/analytics';
 import { MatButtonModule } from '@angular/material/button';
@@ -12,7 +11,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { Router, RouterLink } from '@angular/router';
 import { AdSlotComponent, AdsConfigService } from '@pu-stats/ads';
 import { AuthService, AuthStore } from '@pu-auth/auth';
-import { LeaderboardPeriod, LeaderboardService } from '@pu-stats/data-access';
+import { LeaderboardPeriod, LeaderboardStore } from '@pu-stats/data-access';
 import { ReminderFeatureSectionComponent } from '../components/reminder-feature-section/reminder-feature-section.component';
 
 @Component({
@@ -29,9 +28,7 @@ import { ReminderFeatureSectionComponent } from '../components/reminder-feature-
   styleUrl: './landing-page.component.scss',
 })
 export class LandingPageComponent {
-  private readonly leaderboardApi = inject(LeaderboardService, {
-    optional: true,
-  });
+  private readonly store = inject(LeaderboardStore);
   private readonly analytics = inject(Analytics, { optional: true });
   private readonly adsConfig = inject(AdsConfigService);
   private readonly authService = inject(AuthService);
@@ -45,30 +42,8 @@ export class LandingPageComponent {
   readonly adClient = this.adsConfig.adClient;
   readonly landingAdSlot = this.adsConfig.landingInlineSlot;
 
-  readonly leaderboardResource = resource({
-    loader: async () => {
-      if (!this.leaderboardApi) {
-        return {
-          daily: { top: [], current: null },
-          weekly: { top: [], current: null },
-          monthly: { top: [], current: null },
-        };
-      }
-      return this.leaderboardApi.load();
-    },
-  });
-
-  readonly leaderboardEntries = computed(() => {
-    const data = this.leaderboardResource.value();
-    if (!data) return [];
-    return data[this.period()].top;
-  });
-
-  readonly currentUserEntry = computed(() => {
-    const data = this.leaderboardResource.value();
-    if (!data) return null;
-    return data[this.period()].current;
-  });
+  readonly leaderboardEntries = this.store.entriesForPeriod(this.period);
+  readonly currentUserEntry = this.store.currentUserForPeriod(this.period);
 
   readonly leaderboardSlots = computed(() => {
     const top = this.leaderboardEntries();
@@ -83,6 +58,10 @@ export class LandingPageComponent {
       );
     });
   });
+
+  constructor() {
+    this.store.load();
+  }
 
   onCtaClick(target: 'signup' | 'login' | 'dashboard' | 'guest'): void {
     this.track('landing_cta_click', { target });

@@ -5,4 +5,5 @@ export * from './lib/live/pushup-live-data.service';
 export * from './lib/api/pushup-firestore.service';
 export * from './lib/provide-firestore';
 export * from './lib/api/leaderboard.service';
+export * from './lib/leaderboard/leaderboard.store';
 export * from './lib/demo-user.token';
