@@ -1,51 +1,24 @@
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import {
   Component,
-  computed,
   effect,
   inject,
   PLATFORM_ID,
   REQUEST,
-  resource,
-  signal,
 } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
-import { firstValueFrom } from 'rxjs';
-import { StatsApiService } from '@pu-stats/data-access';
-import {
-  createWeekRange,
-  inferRangeMode,
-  PushupRecord,
-  StatsGranularity,
-  StatsResponse,
-  StatsSeriesEntry,
-} from '@pu-stats/models';
+import { createWeekRange } from '@pu-stats/models';
 import { FilterBarComponent } from '../components/filter-bar/filter-bar.component';
 import { HeatmapComponent } from '../components/heatmap/heatmap.component';
 import { PreviewBannerComponent } from '../components/preview-banner/preview-banner.component';
 import { StatsChartComponent } from '../components/stats-chart/stats-chart.component';
 import { TypePieComponent } from '../components/type-pie/type-pie.component';
-
-const EMPTY_STATS: StatsResponse = {
-  meta: {
-    from: null,
-    to: null,
-    entries: 0,
-    days: 0,
-    total: 0,
-    granularity: 'daily',
-  },
-  series: [],
-};
-
-interface TrendPoint {
-  label: string;
-  total: number;
-}
+import { AnalysisStore } from '../analysis.store';
 
 @Component({
   selector: 'app-analysis-page',
+  providers: [AnalysisStore],
   imports: [
     MatCardModule,
     MatTableModule,
@@ -61,19 +34,19 @@ interface TrendPoint {
 
       <section class="filter-section">
         <app-filter-bar
-          [from]="from()"
-          [to]="to()"
-          (fromChange)="from.set($event)"
-          (toChange)="to.set($event)"
+          [from]="store.from()"
+          [to]="store.to()"
+          (fromChange)="store.setFrom($event)"
+          (toChange)="store.setTo($event)"
         />
       </section>
 
       <app-stats-chart
-        [series]="chartSeries()"
-        [granularity]="granularity()"
-        [rangeMode]="rangeMode()"
-        [from]="from()"
-        [to]="to()"
+        [series]="store.chartSeries()"
+        [granularity]="store.granularity()"
+        [rangeMode]="store.rangeMode()"
+        [from]="store.from()"
+        [to]="store.to()"
       />
 
       <section class="grid">
@@ -84,7 +57,7 @@ interface TrendPoint {
             >
           </mat-card-header>
           <mat-card-content>
-            <mat-table [dataSource]="weekTrend()">
+            <mat-table [dataSource]="store.weekTrend()">
               <ng-container matColumnDef="label">
                 <mat-header-cell *matHeaderCellDef i18n="@@analysis.weekCol"
                   >Woche</mat-header-cell
@@ -110,7 +83,7 @@ interface TrendPoint {
             >
           </mat-card-header>
           <mat-card-content>
-            <mat-table [dataSource]="monthTrend()">
+            <mat-table [dataSource]="store.monthTrend()">
               <ng-container matColumnDef="label">
                 <mat-header-cell *matHeaderCellDef i18n="@@analysis.monthCol"
                   >Monat</mat-header-cell
@@ -140,19 +113,20 @@ interface TrendPoint {
               <strong i18n="@@analysis.bestSingleEntry"
                 >Bestwert Einzel-Eintrag:</strong
               >
-              <div>{{ bestSingleEntry()?.reps ?? 0 }} Reps</div>
+              <div>{{ store.bestSingleEntry()?.reps ?? 0 }} Reps</div>
             </div>
             <div>
               <strong i18n="@@analysis.bestDay">Bester Tag:</strong>
               <div>
-                {{ bestDay()?.date ?? '—' }} · {{ bestDay()?.total ?? 0 }} Reps
+                {{ store.bestDay()?.date ?? '—' }} ·
+                {{ store.bestDay()?.total ?? 0 }} Reps
               </div>
             </div>
             <div>
               <strong i18n="@@analysis.currentStreak">Aktuelle Streak:</strong>
               <div>
                 <ng-container i18n="@@analysis.streakDays"
-                  >{{ currentStreak() }} Tage</ng-container
+                  >{{ store.currentStreak() }} Tage</ng-container
                 >
               </div>
             </div>
@@ -160,7 +134,7 @@ interface TrendPoint {
               <strong i18n="@@analysis.longestStreak">Längste Streak:</strong>
               <div>
                 <ng-container i18n="@@analysis.streakDays"
-                  >{{ longestStreak() }} Tage</ng-container
+                  >{{ store.longestStreak() }} Tage</ng-container
                 >
               </div>
             </div>
@@ -174,7 +148,7 @@ interface TrendPoint {
             >
           </mat-card-header>
           <mat-card-content>
-            <app-type-pie [data]="typeBreakdown()" />
+            <app-type-pie [data]="store.typeBreakdown()" />
           </mat-card-content>
         </mat-card>
       </section>
@@ -186,7 +160,7 @@ interface TrendPoint {
           >
         </mat-card-header>
         <mat-card-content class="heatmap-wrap">
-          <app-heatmap [entries]="rows()" />
+          <app-heatmap [entries]="store.rows()" />
         </mat-card-content>
       </mat-card>
     </main>
@@ -257,52 +231,27 @@ interface TrendPoint {
   `,
 })
 export class AnalysisPageComponent {
-  private readonly api = inject(StatsApiService);
+  readonly store = inject(AnalysisStore);
+
   private readonly platformId = inject(PLATFORM_ID);
   private readonly document = inject(DOCUMENT);
   private readonly request = inject(REQUEST, { optional: true }) as {
     url?: string;
   } | null;
 
-  private readonly defaultRange = createWeekRange();
-  private readonly initialRange = this.resolveInitialRange();
-
-  readonly from = signal(this.initialRange.from);
-  readonly to = signal(this.initialRange.to);
-  readonly rangeMode = computed(() => inferRangeMode(this.from(), this.to()));
-
-  private readonly filter = computed(() => ({
-    from: this.from() || undefined,
-    to: this.to() || undefined,
-  }));
-
-  readonly statsResource = resource({
-    params: () => this.filter(),
-    loader: async ({ params }) => firstValueFrom(this.api.load(params)),
-  });
-
-  readonly stats = computed(() => this.statsResource.value() ?? EMPTY_STATS);
-  readonly chartSeries = computed<StatsSeriesEntry[]>(
-    () => this.stats().series
-  );
-  readonly granularity = computed<StatsGranularity>(
-    () => this.stats().meta.granularity
-  );
-
   readonly trendColumns = ['label', 'total'];
 
-  readonly entriesResource = resource({
-    params: () => this.filter(),
-    loader: async ({ params }) => firstValueFrom(this.api.listPushups(params)),
-  });
-  readonly rows = computed(() => this.entriesResource.value() ?? []);
-
   constructor() {
+    // Resolve initial range from URL query params (SSR-aware)
+    const initialRange = this.resolveInitialRange();
+    this.store.setRange(initialRange.from, initialRange.to);
+
+    // URL history tracking effect (UI side effect, stays in component)
     effect(() => {
       if (!isPlatformBrowser(this.platformId)) return;
       const params = new URLSearchParams();
-      const from = this.from();
-      const to = this.to();
+      const from = this.store.from();
+      const to = this.store.to();
       if (from) params.set('from', from);
       if (to) params.set('to', to);
 
@@ -312,123 +261,12 @@ export class AnalysisPageComponent {
     });
   }
 
-  readonly weekTrend = computed(() => {
-    const byWeek = new Map<string, number>();
-    for (const row of this.rows()) {
-      const date = new Date(row.timestamp);
-      const year = this.isoWeekYear(date);
-      const week = String(this.isoWeek(date)).padStart(2, '0');
-      const key = `${year}-W${week}`;
-      byWeek.set(key, (byWeek.get(key) ?? 0) + row.reps);
-    }
-    return [...byWeek.entries()]
-      .sort(([a], [b]) => a.localeCompare(b))
-      .slice(-8)
-      .map(([label, total]) => ({ label, total }));
-  });
-
-  readonly monthTrend = computed<TrendPoint[]>(() => {
-    const byMonth = new Map<string, number>();
-    for (const row of this.rows()) {
-      const date = new Date(row.timestamp);
-      const label = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
-      byMonth.set(label, (byMonth.get(label) ?? 0) + row.reps);
-    }
-    return [...byMonth.entries()]
-      .sort(([a], [b]) => a.localeCompare(b))
-      .slice(-12)
-      .map(([label, total]) => ({ label, total }));
-  });
-
-  readonly typeBreakdown = computed(() => {
-    const byType = new Map<string, number>();
-    for (const row of this.rows()) {
-      const type = (row.type || 'Standard').trim() || 'Standard';
-      byType.set(type, (byType.get(type) ?? 0) + row.reps);
-    }
-    return [...byType.entries()]
-      .sort((a, b) => b[1] - a[1])
-      .map(([label, value]) => ({ label, value }));
-  });
-
-  readonly bestSingleEntry = computed<PushupRecord | null>(() => {
-    if (!this.rows().length) return null;
-    return [...this.rows()].sort((a, b) => b.reps - a.reps)[0] ?? null;
-  });
-
-  readonly bestDay = computed<{ date: string; total: number } | null>(() => {
-    const byDay = new Map<string, number>();
-    for (const row of this.rows()) {
-      const key = row.timestamp.slice(0, 10);
-      byDay.set(key, (byDay.get(key) ?? 0) + row.reps);
-    }
-    if (!byDay.size) return null;
-    const [date, total] = [...byDay.entries()].sort((a, b) => b[1] - a[1])[0];
-    return { date, total };
-  });
-
-  readonly longestStreak = computed(() => {
-    const dates = this.sortedUniqueDates();
-    if (!dates.length) return 0;
-    let best = 1;
-    let current = 1;
-    for (let i = 1; i < dates.length; i++) {
-      if (this.daysBetween(dates[i - 1], dates[i]) === 1) current += 1;
-      else current = 1;
-      best = Math.max(best, current);
-    }
-    return best;
-  });
-
-  readonly currentStreak = computed(() => {
-    const dates = this.sortedUniqueDates();
-    if (!dates.length) return 0;
-    let streak = 1;
-    for (let i = dates.length - 1; i > 0; i--) {
-      if (this.daysBetween(dates[i - 1], dates[i]) === 1) streak += 1;
-      else break;
-    }
-    return streak;
-  });
-
-  private sortedUniqueDates(): string[] {
-    return [...new Set(this.rows().map((x) => x.timestamp.slice(0, 10)))].sort(
-      (a, b) => a.localeCompare(b)
-    );
-  }
-
-  private daysBetween(a: string, b: string): number {
-    const ad = new Date(`${a}T00:00:00`).getTime();
-    const bd = new Date(`${b}T00:00:00`).getTime();
-    return Math.round((bd - ad) / 86_400_000);
-  }
-
-  private isoWeek(date: Date): number {
-    const d = new Date(
-      Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())
-    );
-    const day = d.getUTCDay() || 7;
-    d.setUTCDate(d.getUTCDate() + 4 - day);
-    const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
-    return Math.ceil(
-      ((d.getTime() - yearStart.getTime()) / 86_400_000 + 1) / 7
-    );
-  }
-
-  private isoWeekYear(date: Date): number {
-    const d = new Date(
-      Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())
-    );
-    const day = d.getUTCDay() || 7;
-    d.setUTCDate(d.getUTCDate() + 4 - day);
-    return d.getUTCFullYear();
-  }
-
   private resolveInitialRange(): { from: string; to: string } {
+    const defaultRange = createWeekRange();
     const search = this.resolveSearchString();
     const params = new URLSearchParams(search);
-    const from = params.get('from') ?? this.defaultRange.from;
-    const to = params.get('to') ?? this.defaultRange.to;
+    const from = params.get('from') ?? defaultRange.from;
+    const to = params.get('to') ?? defaultRange.to;
     return { from, to };
   }
 
