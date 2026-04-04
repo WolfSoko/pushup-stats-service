@@ -17,12 +17,10 @@ import {
 
 type AdsState = {
   targetedAdsConsent: boolean;
-  initialized: boolean;
 };
 
 const initialState: AdsState = {
   targetedAdsConsent: true,
-  initialized: false,
 };
 
 export const AdsStore = signalStore(

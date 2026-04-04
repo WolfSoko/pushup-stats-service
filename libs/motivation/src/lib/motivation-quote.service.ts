@@ -28,7 +28,11 @@ export class MotivationQuoteService {
    * Fetches quotes from the Cloud Function, with Firestore cache fallback
    * for authenticated users. Pure API call - no localStorage caching.
    */
-  async fetchQuotes(locale: string, userId?: string): Promise<string[]> {
+  async fetchQuotes(
+    locale: string,
+    userId?: string,
+    context?: { totalToday?: number; dailyGoal?: number; displayName?: string }
+  ): Promise<string[]> {
     if (!this.isBrowser) return [];
 
     // Try Firestore cache first for authenticated users
@@ -38,7 +42,7 @@ export class MotivationQuoteService {
     }
 
     // Fetch from Cloud Function
-    const quotes = await this.callCloudFunction(locale);
+    const quotes = await this.callCloudFunction(locale, context);
 
     // Save to Firestore for authenticated users
     if (userId && this.firestore && quotes.length > 0) {
@@ -96,7 +100,10 @@ export class MotivationQuoteService {
     }
   }
 
-  private async callCloudFunction(lang: string): Promise<string[]> {
+  private async callCloudFunction(
+    lang: string,
+    context?: { totalToday?: number; dailyGoal?: number; displayName?: string }
+  ): Promise<string[]> {
     if (!this.functions) return [];
     try {
       const callable = httpsCallable<
@@ -111,9 +118,9 @@ export class MotivationQuoteService {
 
       const result = await callable({
         language: lang,
-        totalToday: 0,
-        dailyGoal: 100,
-        displayName: 'Champ',
+        totalToday: context?.totalToday ?? 0,
+        dailyGoal: context?.dailyGoal ?? 100,
+        displayName: context?.displayName ?? 'Champ',
       });
       return result.data?.quotes ?? [];
     } catch {

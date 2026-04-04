@@ -49,7 +49,9 @@ export class AdSlotComponent {
   readonly client = input<string>();
 
   private readonly adsStore = inject(AdsStore);
-  readonly usedClient = computed(() => this.client || this.adsStore.adClient());
+  readonly usedClient = computed(
+    () => this.client() || this.adsStore.adClient()
+  );
 
   enabled = computed(() => this.adsStore.adsAllowed());
 }

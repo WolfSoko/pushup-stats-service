@@ -38,8 +38,9 @@ export const LeaderboardStore = signalStore(
     loaded: computed(() => store.data() !== null),
   })),
   withMethods(({ _api, ...store }) => ({
-    async load(): Promise<void> {
+    async load(options?: { force?: boolean }): Promise<void> {
       if (store.loading()) return;
+      if (store.loaded() && !options?.force) return;
       patchState(store, { loading: true, error: null });
       try {
         if (!_api) {
@@ -63,7 +64,9 @@ export const LeaderboardStore = signalStore(
       }
     },
 
-    entriesForPeriod(period: () => LeaderboardPeriod): () => LeaderboardEntry[] {
+    entriesForPeriod(
+      period: () => LeaderboardPeriod
+    ): () => LeaderboardEntry[] {
       return computed(() => {
         const data = store.data();
         if (!data) return EMPTY_ENTRIES;
@@ -71,7 +74,9 @@ export const LeaderboardStore = signalStore(
       });
     },
 
-    currentUserForPeriod(period: () => LeaderboardPeriod): () => LeaderboardEntry | null {
+    currentUserForPeriod(
+      period: () => LeaderboardPeriod
+    ): () => LeaderboardEntry | null {
       return computed(() => {
         const data = store.data();
         if (!data) return null;

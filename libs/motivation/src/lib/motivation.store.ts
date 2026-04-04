@@ -99,7 +99,19 @@ export const MotivationStore = signalStore(
     return {
       restoreFromCache,
 
-      async loadQuotes(userId?: string): Promise<void> {
+      async loadQuotes(
+        userId?: string,
+        context?: {
+          totalToday?: number;
+          dailyGoal?: number;
+          displayName?: string;
+        }
+      ): Promise<void> {
+        // Try localStorage first for this user
+        if (!isCacheFresh(userId)) {
+          restoreFromCache(userId);
+        }
+
         // Cache is fresh for today and same user
         if (isCacheFresh(userId)) return;
 
@@ -110,7 +122,7 @@ export const MotivationStore = signalStore(
 
         _inFlightPromise = (async () => {
           try {
-            const quotes = await _api.fetchQuotes(_lang, userId);
+            const quotes = await _api.fetchQuotes(_lang, userId, context);
             if (quotes.length > 0) {
               saveToCache(quotes, userId);
               patchState(store, {

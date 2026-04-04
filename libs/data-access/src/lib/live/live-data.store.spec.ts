@@ -36,6 +36,12 @@ describe('LiveDataStore', () => {
 
   describe('initial state', () => {
     it('starts disconnected with empty entries', () => {
+      TestBed.configureTestingModule({
+        providers: [
+          LiveDataStore,
+          { provide: PLATFORM_ID, useValue: 'browser' },
+        ],
+      });
       const store = TestBed.inject(LiveDataStore);
 
       expect(store.connected()).toBe(false);
