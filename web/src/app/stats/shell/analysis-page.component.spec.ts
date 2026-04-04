@@ -154,14 +154,14 @@ describe('AnalysisPageComponent', () => {
   });
 
   it('builds week and month trend series', () => {
-    const component = fixture.componentInstance;
-    expect(component.weekTrend().length).toBeGreaterThan(0);
-    expect(component.monthTrend().length).toBeGreaterThan(0);
+    const { store } = fixture.componentInstance;
+    expect(store.weekTrend().length).toBeGreaterThan(0);
+    expect(store.monthTrend().length).toBeGreaterThan(0);
   });
 
   it('computes type breakdown, treating missing type as Standard', () => {
-    const component = fixture.componentInstance;
-    const breakdown = component.typeBreakdown();
+    const { store } = fixture.componentInstance;
+    const breakdown = store.typeBreakdown();
 
     // Standard: 10 + 25 + 18 = 53
     // Diamond: 12 + 20 = 32
@@ -174,14 +174,14 @@ describe('AnalysisPageComponent', () => {
   });
 
   it('computes best values', () => {
-    const component = fixture.componentInstance;
-    expect(component.bestSingleEntry()?.reps).toBe(25);
-    expect(component.bestDay()?.total).toBe(25);
+    const { store } = fixture.componentInstance;
+    expect(store.bestSingleEntry()?.reps).toBe(25);
+    expect(store.bestDay()?.total).toBe(25);
   });
 
   it('computes streak stats', () => {
-    const component = fixture.componentInstance;
-    expect(component.longestStreak()).toBe(5);
-    expect(component.currentStreak()).toBe(1);
+    const { store } = fixture.componentInstance;
+    expect(store.longestStreak()).toBe(5);
+    expect(store.currentStreak()).toBe(1);
   });
 });

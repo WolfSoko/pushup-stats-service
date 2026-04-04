@@ -51,8 +51,8 @@ describe('EntriesPageComponent (SSR/REST)', () => {
   });
 
   it('loads rows via REST on server', () => {
-    const component = fixture.componentInstance;
+    const store = (fixture.componentInstance as any).store;
     expect(apiMock.listPushups).toHaveBeenCalled();
-    expect(component.rows().map((x) => x._id)).toEqual(['1']);
+    expect(store.rows().map((x: any) => x._id)).toEqual(['1']);
   });
 });
