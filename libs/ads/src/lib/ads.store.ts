@@ -1,4 +1,5 @@
-import { computed, inject } from '@angular/core';
+import { computed, inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { toSignal } from '@angular/core/rxjs-interop';
 import {
   fetchAndActivate,
@@ -10,6 +11,7 @@ import {
   patchState,
   signalStore,
   withComputed,
+  withHooks,
   withMethods,
   withProps,
   withState,
@@ -25,15 +27,19 @@ function readStoredConsent(): Pick<
   AdsState,
   'targetedAdsConsent' | 'consentAnswered'
 > {
-  if (typeof globalThis.localStorage === 'undefined') {
+  try {
+    if (typeof globalThis.localStorage === 'undefined') {
+      return { targetedAdsConsent: false, consentAnswered: false };
+    }
+    const value = globalThis.localStorage.getItem(COOKIE_CONSENT_KEY);
+    if (value === 'all')
+      return { targetedAdsConsent: true, consentAnswered: true };
+    if (value === 'necessary')
+      return { targetedAdsConsent: false, consentAnswered: true };
+    return { targetedAdsConsent: false, consentAnswered: false };
+  } catch {
     return { targetedAdsConsent: false, consentAnswered: false };
   }
-  const value = globalThis.localStorage.getItem(COOKIE_CONSENT_KEY);
-  if (value === 'all')
-    return { targetedAdsConsent: true, consentAnswered: true };
-  if (value === 'necessary')
-    return { targetedAdsConsent: false, consentAnswered: true };
-  return { targetedAdsConsent: false, consentAnswered: false };
 }
 
 const initialState: AdsState = readStoredConsent();
@@ -68,5 +74,17 @@ export const AdsStore = signalStore(
       if (typeof value !== 'boolean') return;
       patchState(store, { targetedAdsConsent: value, consentAnswered: true });
     },
-  }))
+    /** Re-read consent from localStorage after SSR hydration. */
+    hydrateConsent: () => patchState(store, readStoredConsent()),
+  })),
+  withHooks((store) => {
+    const isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
+    return {
+      onInit() {
+        if (isBrowser) {
+          store.hydrateConsent();
+        }
+      },
+    };
+  })
 );

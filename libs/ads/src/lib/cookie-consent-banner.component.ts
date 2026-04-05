@@ -15,15 +15,23 @@ import { COOKIE_CONSENT_KEY } from './consent.constants';
 export type CookieConsentChoice = 'all' | 'necessary' | null;
 
 function readConsent(): CookieConsentChoice {
-  if (typeof globalThis.localStorage === 'undefined') return null;
-  const value = globalThis.localStorage.getItem(COOKIE_CONSENT_KEY);
-  if (value === 'all' || value === 'necessary') return value;
+  try {
+    if (typeof globalThis.localStorage === 'undefined') return null;
+    const value = globalThis.localStorage.getItem(COOKIE_CONSENT_KEY);
+    if (value === 'all' || value === 'necessary') return value;
+  } catch {
+    /* storage blocked (e.g. private browsing) */
+  }
   return null;
 }
 
 function writeConsent(choice: 'all' | 'necessary'): void {
-  if (typeof globalThis.localStorage === 'undefined') return;
-  globalThis.localStorage.setItem(COOKIE_CONSENT_KEY, choice);
+  try {
+    if (typeof globalThis.localStorage === 'undefined') return;
+    globalThis.localStorage.setItem(COOKIE_CONSENT_KEY, choice);
+  } catch {
+    /* storage blocked */
+  }
 }
 
 @Component({

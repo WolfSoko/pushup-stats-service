@@ -38,22 +38,34 @@ function extractBlogSlugs() {
   const blogDataPath = resolve(ROOT, 'web/src/app/blog/blog-posts.data.ts');
   const source = readFileSync(blogDataPath, 'utf-8');
 
-  // Match all slug values – only German slugs (de blog posts define the canonical URL)
-  const slugs = [];
-  const regex = /slug:\s*'([^']+)',\s*\n\s*lang:\s*'de'/g;
-  let match;
-  while ((match = regex.exec(source)) !== null) {
-    slugs.push(match[1]);
+  const slugsByLang = { de: [], en: [] };
+  for (const lang of ['de', 'en']) {
+    const regex = new RegExp(
+      `slug:\\s*'([^']+)',\\s*\\n\\s*lang:\\s*'${lang}'`,
+      'g'
+    );
+    let match;
+    while ((match = regex.exec(source)) !== null) {
+      slugsByLang[lang].push(match[1]);
+    }
   }
-  return slugs;
+
+  if (slugsByLang.de.length === 0) {
+    console.warn(
+      '⚠ No German blog slugs found – verify blog-posts.data.ts format'
+    );
+  }
+
+  return slugsByLang;
 }
 
 // ── Build XML ───────────────────────────────────────────────────────────
-function buildUrl({ path, changefreq, priority }) {
+function buildUrl({ path, changefreq, priority, locale }) {
   // Normalise: '/' -> '', '/blog' -> '/blog'
   const suffix = path === '/' ? '' : path;
+  const primaryLocale = locale ?? 'de';
 
-  const loc = `${BASE_URL}/de${suffix}`;
+  const loc = `${BASE_URL}/${primaryLocale}${suffix}`;
   const hreflangLinks = LOCALES.map(
     (lang) =>
       `    <xhtml:link rel="alternate" hreflang="${lang}" href="${BASE_URL}/${lang}${suffix}"/>`
@@ -68,14 +80,22 @@ ${hreflangLinks}
 }
 
 function generate() {
-  const slugs = extractBlogSlugs();
-  const blogRoutes = slugs.map((slug) => ({
+  const slugsByLang = extractBlogSlugs();
+
+  // Blog routes: each locale's posts get listed under their locale prefix
+  const deBlogRoutes = slugsByLang.de.map((slug) => ({
     path: `/blog/${slug}`,
     changefreq: 'monthly',
     priority: '0.8',
   }));
+  const enBlogRoutes = slugsByLang.en.map((slug) => ({
+    path: `/blog/${slug}`,
+    changefreq: 'monthly',
+    priority: '0.8',
+    locale: 'en', // override default locale
+  }));
 
-  const allRoutes = [...staticRoutes, ...blogRoutes];
+  const allRoutes = [...staticRoutes, ...deBlogRoutes, ...enBlogRoutes];
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
