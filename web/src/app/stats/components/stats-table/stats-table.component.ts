@@ -28,6 +28,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatRippleModule } from '@angular/material/core';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { PushupRecord } from '@pu-stats/models';
@@ -57,6 +58,7 @@ import {
     MatAutocompleteModule,
     ReactiveFormsModule,
     MatRippleModule,
+    MatTooltipModule,
     ScrollingModule,
     CreateEntryDialogComponent,
   ],
