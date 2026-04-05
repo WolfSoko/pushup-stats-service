@@ -1,7 +1,7 @@
 import { provideRouter, Router } from '@angular/router';
 import { render, screen } from '@testing-library/angular';
 import userEvent from '@testing-library/user-event';
-import { AdsConfigService } from '@pu-stats/ads';
+import { AdsStore } from '@pu-stats/ads';
 import { AuthService, AuthStore } from '@pu-auth/auth';
 import { makeAuthServiceMock, makeAuthStoreMock } from '@pu-stats/testing';
 import { LandingPageComponent } from './landing-page.component';
@@ -12,6 +12,8 @@ const adsConfigMock = {
   adClient: () => '',
   dashboardInlineSlot: () => '',
   landingInlineSlot: () => '',
+  adsAllowed: () => false,
+  targetedAdsConsent: () => true,
 };
 
 describe('LandingPageComponent', () => {
@@ -20,7 +22,7 @@ describe('LandingPageComponent', () => {
       await render(LandingPageComponent, {
         providers: [
           provideRouter([]),
-          { provide: AdsConfigService, useValue: adsConfigMock },
+          { provide: AdsStore, useValue: adsConfigMock },
           { provide: AuthService, useValue: makeAuthServiceMock() },
           { provide: AuthStore, useValue: makeAuthStoreMock() },
         ],
@@ -46,7 +48,7 @@ describe('LandingPageComponent', () => {
       await render(LandingPageComponent, {
         providers: [
           provideRouter([]),
-          { provide: AdsConfigService, useValue: adsConfigMock },
+          { provide: AdsStore, useValue: adsConfigMock },
           { provide: AuthService, useValue: makeAuthServiceMock() },
           {
             provide: AuthStore,
@@ -71,11 +73,14 @@ describe('LandingPageComponent', () => {
       await render(LandingPageComponent, {
         providers: [
           provideRouter([]),
-          { provide: AdsConfigService, useValue: adsConfigMock },
+          { provide: AdsStore, useValue: adsConfigMock },
           { provide: AuthService, useValue: makeAuthServiceMock() },
           {
             provide: AuthStore,
-            useValue: makeAuthStoreMock({ isAuthenticated: true, isGuest: true }),
+            useValue: makeAuthStoreMock({
+              isAuthenticated: true,
+              isGuest: true,
+            }),
           },
         ],
       });
@@ -95,7 +100,7 @@ describe('LandingPageComponent', () => {
     const view = await render(LandingPageComponent, {
       providers: [
         provideRouter([]),
-        { provide: AdsConfigService, useValue: adsConfigMock },
+        { provide: AdsStore, useValue: adsConfigMock },
         { provide: AuthService, useValue: makeAuthServiceMock() },
         { provide: AuthStore, useValue: makeAuthStoreMock() },
       ],
@@ -129,7 +134,7 @@ describe('LandingPageComponent', () => {
     const view = await render(LandingPageComponent, {
       providers: [
         provideRouter([{ path: 'app', component: LandingPageComponent }]),
-        { provide: AdsConfigService, useValue: adsConfigMock },
+        { provide: AdsStore, useValue: adsConfigMock },
         {
           provide: AuthService,
           useValue: makeAuthServiceMock({ overrides: { signInGuestIfNeeded } }),

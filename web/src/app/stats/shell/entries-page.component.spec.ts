@@ -2,12 +2,14 @@ import { signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 import { EntriesPageComponent } from './entries-page.component';
-import { PushupLiveDataService, StatsApiService } from '@pu-stats/data-access';
+import { LiveDataStore, StatsApiService } from '@pu-stats/data-access';
 import { AuthStore } from '@pu-auth/auth';
 import { makeAuthStoreMock } from '@pu-stats/testing';
+import { EntriesStore } from '../entries.store';
 
 describe('EntriesPageComponent', () => {
   let fixture: ComponentFixture<EntriesPageComponent>;
+  let store: InstanceType<typeof EntriesStore>;
 
   const rows = [
     {
@@ -52,35 +54,31 @@ describe('EntriesPageComponent', () => {
       imports: [EntriesPageComponent],
       providers: [
         { provide: StatsApiService, useValue: apiMock },
-        { provide: PushupLiveDataService, useValue: liveMock },
+        { provide: LiveDataStore, useValue: liveMock },
         { provide: AuthStore, useValue: makeAuthStoreMock() },
       ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(EntriesPageComponent);
+    store = fixture.debugElement.injector.get(EntriesStore);
     await fixture.whenStable();
   });
 
   it('prefills date range with oldest and today (browser uses live entries)', () => {
-    const component = fixture.componentInstance;
-    expect(component.from()).toBe('2026-02-10');
-    expect(component.to()).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+    expect(store.from()).toBe('2026-02-10');
+    expect(store.to()).toMatch(/^\d{4}-\d{2}-\d{2}$/);
   });
 
   it('applies source, type and reps filter', () => {
-    const component = fixture.componentInstance;
+    store.setSource('wa');
+    store.setType('Wide');
+    store.setRepsMin(11);
 
-    component.source.set('wa');
-    component.type.set('Wide');
-    component.repsMin.set(11);
-
-    expect(component.filteredRows().map((x) => x._id)).toEqual(['3']);
+    expect(store.filteredRows().map((x: any) => x._id)).toEqual(['3']);
   });
 
   it('creates an entry via api', async () => {
-    const component = fixture.componentInstance;
-
-    await component.onCreateEntry({
+    await store.createEntry({
       timestamp: '2026-02-11T20:00',
       reps: 12,
       source: 'web',
@@ -94,9 +92,7 @@ describe('EntriesPageComponent', () => {
   });
 
   it('updates an entry via api', async () => {
-    const component = fixture.componentInstance;
-
-    await component.onUpdateEntry({
+    await store.updateEntry({
       id: '1',
       timestamp: '2026-02-11T20:00',
       reps: 14,
@@ -113,9 +109,7 @@ describe('EntriesPageComponent', () => {
   });
 
   it('deletes a single row via api', async () => {
-    const component = fixture.componentInstance;
-
-    await component.onDeleteEntry('2');
+    await store.deleteEntry('2');
 
     expect(apiMock.deletePushup).toHaveBeenCalledWith('2');
   });

@@ -36,11 +36,30 @@ Angular 21 / Nx monorepo for tracking pushup statistics with Firebase backend.
 
 **State Management Conventions:**
 - **Global state:** `@ngrx/signals` signalStore with `providedIn: 'root'`
-- **Feature/form state:** signalStore with component-level DI (e.g., `ReminderFormStore`)
-- **Async data loading:** Angular `resource()` API
-- **Derived state:** `computed()`
-- **Side effects:** `effect()`
+  - `AdsStore` - Remote Config + consent (ads module)
+  - `MotivationStore` - quote cache with user-keyed localStorage (motivation module)
+  - `LiveDataStore` - Firestore real-time entries + tick (data-access, browser-only)
+  - `LeaderboardStore` - shared leaderboard data with `load({ force })` (data-access)
+  - `AuthStore`, `ReminderStore`, `PushSubscriptionStore`, `ThemeService` (existing)
+- **Feature/form state:** signalStore with component-level DI
+  - `DashboardStore` - stats, goals, ads, motivation for dashboard page
+  - `AnalysisStore` - date filters, trends, breakdowns for analysis page
+  - `EntriesStore` - CRUD, filters, browser/SSR hybrid for entries page
+  - `ReminderFormStore`, `LoginUiStore`, `RegisterUiStore` (existing)
+- **Resources:** Live inside stores via `withProps`, not in components
+- **Derived state:** `computed()` inside `withComputed`
+- **Side effects:** `effect()` in components or `withHooks`
+- **API Services:** Stateless, return Promises/Observables - no signals, no state
 - **No RxJS for state** - only in data-access layer for Firestore Observables + `toSignal()`
+
+**Three-Layer Architecture:**
+```
+UI Component  →  Signal Store  →  API Service
+(Template)       (State + Logic)   (Database)
+```
+- Components only do template binding + user event delegation
+- Stores own all state, resources, computed signals, and domain logic
+- API services are pure data access with no state
 
 **App Root Delegation:**
 - `ReminderOrchestrationService` handles reminder lifecycle (auth -> config load -> start/stop)

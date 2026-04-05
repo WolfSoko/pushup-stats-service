@@ -1,14 +1,12 @@
-import { inject, Injectable, LOCALE_ID, PLATFORM_ID } from '@angular/core';
+import { inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { doc, Firestore, getDoc, setDoc } from '@angular/fire/firestore';
 import { Functions, httpsCallable } from '@angular/fire/functions';
 
-const CACHE_PREFIX = 'motivation-quotes';
 const FIRESTORE_COLLECTION = 'motivation-quotes';
 
 @Injectable({ providedIn: 'root' })
 export class MotivationQuoteService {
-  private readonly locale = inject(LOCALE_ID) as string;
   private readonly platformId = inject(PLATFORM_ID);
   private readonly isBrowser = isPlatformBrowser(this.platformId);
   private readonly firestore: Firestore | null = this.isBrowser
@@ -18,80 +16,52 @@ export class MotivationQuoteService {
     ? inject(Functions, { optional: true })
     : null;
 
-  private inFlightFetch: Promise<string[]> | null = null;
-
-  /** Returns today's first quote (deterministic, cached). Null on SSR/error. */
-  async getTodayQuote(
-    opts: {
-      userId?: string;
-      totalToday?: number;
-      dailyGoal?: number;
-      displayName?: string;
-    } = {}
-  ): Promise<string | null> {
-    const quotes = await this.getTodayQuotes(opts);
-    if (!quotes.length) return null;
-    return quotes[0];
-  }
-
-  /** Returns all cached quotes for today. Fetches if cache is empty/stale. */
-  async getTodayQuotes(
-    opts: {
-      userId?: string;
-      totalToday?: number;
-      dailyGoal?: number;
-      displayName?: string;
-    } = {}
-  ): Promise<string[]> {
-    const cached = await this.loadCache(opts.userId);
-    if (cached) return cached;
-    const fresh = await this.fetchQuotes(opts);
-    await this.saveCache(fresh, opts.userId);
-    return fresh;
-  }
-
-  private get lang(): string {
-    return this.locale.startsWith('en') ? 'en' : 'de';
-  }
-
   private todayStr(): string {
     return new Date().toISOString().slice(0, 10);
   }
 
-  private localStorageKey(): string {
-    return `${CACHE_PREFIX}-${this.todayStr()}-${this.lang}`;
+  private firestoreDocId(userId: string, lang: string): string {
+    return `${userId}_${this.todayStr()}_${lang}`;
   }
 
-  private firestoreDocId(userId: string): string {
-    return `${userId}_${this.todayStr()}_${this.lang}`;
-  }
+  /**
+   * Fetches quotes from the Cloud Function, with Firestore cache fallback
+   * for authenticated users. Pure API call - no localStorage caching.
+   */
+  async fetchQuotes(
+    locale: string,
+    userId?: string,
+    context?: { totalToday?: number; dailyGoal?: number; displayName?: string }
+  ): Promise<string[]> {
+    if (!this.isBrowser) return [];
 
-  private async loadCache(userId?: string): Promise<string[] | null> {
-    if (!this.isBrowser) return null;
-
+    // Try Firestore cache first for authenticated users
     if (userId && this.firestore) {
-      return this.loadFromFirestore(userId);
+      const cached = await this.loadFromFirestore(userId, locale);
+      if (cached) return cached;
     }
-    return this.loadFromLocalStorage();
+
+    // Fetch from Cloud Function
+    const quotes = await this.callCloudFunction(locale, context);
+
+    // Save to Firestore for authenticated users
+    if (userId && this.firestore && quotes.length > 0) {
+      await this.saveToFirestore(userId, locale, quotes);
+    }
+
+    return quotes;
   }
 
-  private async saveCache(quotes: string[], userId?: string): Promise<void> {
-    if (!this.isBrowser || !quotes.length) return;
-
-    if (userId && this.firestore) {
-      await this.saveToFirestore(userId, quotes);
-    } else {
-      this.saveToLocalStorage(quotes);
-    }
-  }
-
-  private async loadFromFirestore(userId: string): Promise<string[] | null> {
+  private async loadFromFirestore(
+    userId: string,
+    lang: string
+  ): Promise<string[] | null> {
     if (!this.firestore) return null;
     try {
       const docRef = doc(
         this.firestore,
         FIRESTORE_COLLECTION,
-        this.firestoreDocId(userId)
+        this.firestoreDocId(userId, lang)
       );
       const snap = await getDoc(docRef);
       if (snap.exists()) {
@@ -108,6 +78,7 @@ export class MotivationQuoteService {
 
   private async saveToFirestore(
     userId: string,
+    lang: string,
     quotes: string[]
   ): Promise<void> {
     if (!this.firestore) return;
@@ -115,13 +86,13 @@ export class MotivationQuoteService {
       const docRef = doc(
         this.firestore,
         FIRESTORE_COLLECTION,
-        this.firestoreDocId(userId)
+        this.firestoreDocId(userId, lang)
       );
       await setDoc(docRef, {
         quotes,
         userId,
         date: this.todayStr(),
-        lang: this.lang,
+        lang,
         createdAt: new Date().toISOString(),
       });
     } catch {
@@ -129,60 +100,38 @@ export class MotivationQuoteService {
     }
   }
 
-  private loadFromLocalStorage(): string[] | null {
+  private async callCloudFunction(
+    lang: string,
+    context?: { totalToday?: number; dailyGoal?: number; displayName?: string }
+  ): Promise<string[]> {
+    if (!this.functions) return [];
+    const callable = httpsCallable<
+      {
+        language: string;
+        totalToday: number;
+        dailyGoal: number;
+        displayName: string;
+      },
+      { quotes: string[] }
+    >(this.functions, 'generateMotivationQuotes');
+
+    const payload = {
+      language: lang,
+      totalToday: context?.totalToday ?? 0,
+      dailyGoal: context?.dailyGoal ?? 100,
+      displayName: context?.displayName ?? 'Champ',
+    };
+
     try {
-      const raw = localStorage.getItem(this.localStorageKey());
-      if (!raw) return null;
-      const parsed: unknown = JSON.parse(raw);
-      if (Array.isArray(parsed) && parsed.length > 0) return parsed as string[];
-    } catch {
-      /* ignore */
+      const result = await callable(payload);
+      return result.data?.quotes ?? [];
+    } catch (err) {
+      console.warn(
+        'callCloudFunction(generateMotivationQuotes) failed',
+        { lang, context: payload },
+        err
+      );
+      throw err;
     }
-    return null;
-  }
-
-  private saveToLocalStorage(quotes: string[]): void {
-    try {
-      localStorage.setItem(this.localStorageKey(), JSON.stringify(quotes));
-    } catch {
-      /* ignore */
-    }
-  }
-
-  private fetchQuotes(opts: {
-    totalToday?: number;
-    dailyGoal?: number;
-    displayName?: string;
-  }): Promise<string[]> {
-    if (this.inFlightFetch) return this.inFlightFetch;
-    if (!this.functions) return Promise.resolve([]);
-
-    this.inFlightFetch = (async () => {
-      try {
-        const callable = httpsCallable<
-          {
-            language: string;
-            totalToday: number;
-            dailyGoal: number;
-            displayName: string;
-          },
-          { quotes: string[] }
-        >(this.functions!, 'generateMotivationQuotes');
-
-        const result = await callable({
-          language: this.lang,
-          totalToday: opts.totalToday ?? 0,
-          dailyGoal: opts.dailyGoal ?? 100,
-          displayName: opts.displayName ?? 'Champ',
-        });
-        return result.data?.quotes ?? [];
-      } catch {
-        return [];
-      } finally {
-        this.inFlightFetch = null;
-      }
-    })();
-
-    return this.inFlightFetch;
   }
 }

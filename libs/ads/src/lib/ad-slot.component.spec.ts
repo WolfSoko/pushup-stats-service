@@ -1,40 +1,29 @@
-import { signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { AdConsentService } from './ad-consent.service';
 import { AdSlotComponent } from './ad-slot.component';
-import { AdsConfigService } from './ads-config.service';
+import { AdsStore } from './ads.store';
 
 describe('AdSlotComponent', () => {
   let fixture: ComponentFixture<AdSlotComponent>;
 
-  const consent = signal(false);
-  const consentMock = {
-    hasConsent: () => consent(),
-  };
-
-  const adsConfigMock = {
+  const adsStoreMock = {
     enabled: () => true,
     adClient: () => undefined,
+    targetedAdsConsent: () => true,
+    adsAllowed: () => true,
   };
 
   beforeEach(async () => {
-    consent.set(false);
-
     await TestBed.configureTestingModule({
       imports: [AdSlotComponent],
-      providers: [
-        { provide: AdConsentService, useValue: consentMock },
-        { provide: AdsConfigService, useValue: adsConfigMock },
-      ],
+      providers: [{ provide: AdsStore, useValue: adsStoreMock }],
     }).compileComponents();
     fixture = TestBed.createComponent(AdSlotComponent);
     fixture.componentRef.setInput('client', 'ca-pub-123');
     fixture.componentRef.setInput('slot', '1234567890');
   });
 
-  it('initializes and renders ad slot when consent is granted', async () => {
-    consent.set(true);
+  it('initializes and renders ad slot when ads are enabled', async () => {
     fixture.detectChanges();
 
     await fixture.whenStable();
