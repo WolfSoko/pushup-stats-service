@@ -14,35 +14,19 @@ import { applyDelta, rebuildFromEntries, emptyUserStats } from './user-stats-del
 // Module imports
 import { berlinDateParts, isoWeekFromYmd } from './datetime';
 import {
-  toAnonymousLabel,
-  toPublicDisplayName,
-  isLeaderboardNameAllowed,
-  UserProfile,
-} from './profile';
-import {
-  rankEntries,
-  calculateCurrentPeriodKeys,
-  getMonthStartForQuery,
-  filterOutDemoUser,
-} from './leaderboard';
-import { parseRecaptchaResponse, validateRecaptchaPayload } from './authentication';
-import {
   QUOTE_CACHE_HOURS,
   FALLBACK_QUOTES_DE,
   FALLBACK_QUOTES_EN,
   getFallbackQuotes,
-  sanitizeDisplayName,
-  extractJsonArray,
-  filterValidQuotes,
   isCacheValid,
 } from './motivation';
-import { pushSubscriptionId, validateSubscriptionPayload } from './push/subscription';
+import { pushSubscriptionId } from './push/subscription';
 import {
   shouldSendReminder,
   buildNotificationPayload,
 } from './push/reminders';
 import type { ReminderConfig } from './push/reminders';
-import { validateDeleteUserPayload, isDemoUser, batchArray } from './admin';
+import { parseRecaptchaResponse } from './authentication';
 
 admin.initializeApp();
 
@@ -457,24 +441,6 @@ export const refreshLeaderboardsOnPushupWrite = onDocumentWritten(
 
 // ─── generateMotivationQuotes ─────────────────────────────────────────────────
 
-const QUOTE_CACHE_HOURS = 12;
-
-const FALLBACK_QUOTES_DE = [
-  'Du schaffst das! Jede Liegestütze bringt dich weiter.',
-  'Stark sein heißt, auch wenn es schwer fällt, weiterzumachen.',
-  'Dein Körper kann mehr, als dein Kopf glaubt.',
-  'Fortschritt entsteht außerhalb der Komfortzone.',
-  'Heute der beste Tag für eine neue Bestleistung!',
-];
-
-const FALLBACK_QUOTES_EN = [
-  'You can do it! Every push-up gets you closer to your goal.',
-  'Being strong means pushing through even when it gets tough.',
-  'Your body can do more than your mind thinks.',
-  'Progress happens outside the comfort zone.',
-  'Today is the best day for a new personal best!',
-];
-
 export const generateMotivationQuotes = onCall(
   { region: 'europe-west3' },
   async (request) => {
@@ -571,10 +537,6 @@ export const generateMotivationQuotes = onCall(
 );
 
 // ─── helpers ──────────────────────────────────────────────────────────────
-
-function pushSubscriptionId(endpoint: string): string {
-  return crypto.createHash('sha256').update(endpoint).digest('hex');
-}
 
 async function deleteAllPushSubscriptions(uid: string) {
   const userRef = db.collection('pushSubscriptions').doc(uid);

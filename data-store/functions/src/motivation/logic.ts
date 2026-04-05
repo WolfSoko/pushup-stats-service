@@ -68,8 +68,23 @@ export function extractJsonArray(text: string): unknown[] | null {
  */
 export function filterValidQuotes(quotes: unknown[]): string[] {
   return quotes
-    .map(String)
-    .filter((q: string) => q.trim().length > 0);
+    .map((quote): string | null => {
+      if (typeof quote === 'string') {
+        return quote;
+      }
+
+      if (
+        typeof quote === 'object' &&
+        quote !== null &&
+        'text' in quote &&
+        typeof quote.text === 'string'
+      ) {
+        return quote.text;
+      }
+
+      return null;
+    })
+    .filter((q): q is string => q !== null && q.trim().length > 0);
 }
 
 /**

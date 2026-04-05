@@ -14,7 +14,7 @@ export interface ReminderConfig {
 }
 
 export interface FirestoreTimestamp {
-  toMillis(): number;
+  toMillis?: () => number;
 }
 
 /**
