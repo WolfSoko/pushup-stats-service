@@ -457,6 +457,8 @@ export class RemindersPageComponent {
       Intl.DateTimeFormat().resolvedOptions().timeZone ||
       'Europe/Berlin';
     const config = this.form.toConfig(timezone);
+    // Capture before saveConfig() overwrites the store state
+    const wasEnabled = this.reminderStore.config()?.enabled ?? false;
     this.form.setSaving(true);
     try {
       await this.reminderStore.saveConfig(userId, config);
@@ -473,7 +475,6 @@ export class RemindersPageComponent {
         // Auto-subscribe to server-side push only when reminders are being
         // newly enabled — not on every save. This preserves an explicit
         // push opt-out (user unsubscribed via the push toggle).
-        const wasEnabled = this.reminderStore.config()?.enabled;
         if (!wasEnabled && this.pushService.status() === 'not-subscribed') {
           await this.pushService.subscribe();
           const pushStatus = this.pushService.status();
