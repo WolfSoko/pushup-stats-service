@@ -60,7 +60,6 @@ import {
     MatRippleModule,
     MatTooltipModule,
     ScrollingModule,
-    CreateEntryDialogComponent,
   ],
   templateUrl: './stats-table.component.html',
   styleUrl: './stats-table.component.scss',
