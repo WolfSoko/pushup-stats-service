@@ -82,6 +82,11 @@ export function filterValidQuotes(quotes: unknown[]): string[] {
         return quote.text;
       }
 
+      // Convert other types (numbers, etc.) to strings
+      if (quote !== null && quote !== undefined) {
+        return String(quote);
+      }
+
       return null;
     })
     .filter((q): q is string => q !== null && q.trim().length > 0);
