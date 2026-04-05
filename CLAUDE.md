@@ -133,6 +133,14 @@ pnpm nx run-many --target=lint   # Lint all projects
 - Dynamic data (e.g. blog posts, feature descriptions) must be locale-aware too – XLIFF only covers templates and `$localize`. Use `inject(LOCALE_ID)` to select the right data at runtime.
 - Date pipes: use locale-aware formats (`'longDate'`, `'short'`) – never hardcode a locale parameter like `'de'`
 
+## CI/CD & Deployment
+
+- **CI Pipeline** (`.github/workflows/ci.yml`): Runs lint, test, build, e2e on every push to `main` and on PRs.
+- **Firebase Hosting** (static, `.github/workflows/firebase-hosting-merge.yml`): Deploys via `workflow_run` — only after CI succeeds on `main` (push events only). Checks out `workflow_run.head_sha` to deploy the exact validated commit.
+- **Firebase App Hosting** (SSR/Cloud Run, `apphosting.yaml`): Auto-deploys when the `deploy` branch is updated. The `deploy` branch is fast-forwarded from `main` by the `promote-to-deploy` CI job only after all checks pass.
+- **PR Previews** (`.github/workflows/firebase-hosting-pull-request.yml`): Deploys a preview channel on every PR (same-repo only).
+- **Rule:** No deployment path should bypass CI. Both Hosting and App Hosting are gated on green CI.
+
 ## Workflow
 
 - After completing a feature or bugfix, review whether any new broadly applicable knowledge should be added to this file (general conventions, architectural decisions, i18n rules, etc.). Do NOT add low-level details about individual files unless they are a recurring pitfall.
