@@ -81,7 +81,7 @@ const BASE_URL = 'https://pushup-stats.de';
         align-items: center;
         gap: 4px;
         margin: 0 0 16px -8px;
-        color: #93adea;
+        color: var(--text-muted);
         font-size: 0.9rem;
       }
 
@@ -93,18 +93,18 @@ const BASE_URL = 'https://pushup-stats.de';
 
       .article-meta time {
         font-size: 0.85rem;
-        color: #7a8fbb;
+        color: var(--text-subtle);
       }
 
       .article-body {
         line-height: 1.75;
-        color: #d8e5ff;
+        color: var(--text-body-secondary);
 
         ::ng-deep {
           h2 {
             margin: 32px 0 12px;
             font-size: clamp(1.15rem, 2.5vw, 1.4rem);
-            color: #ebeff8;
+            color: var(--text-heading-secondary);
           }
 
           p {
@@ -122,7 +122,7 @@ const BASE_URL = 'https://pushup-stats.de';
           }
 
           strong {
-            color: #ebeff8;
+            color: var(--text-heading-secondary);
           }
         }
       }
@@ -130,7 +130,7 @@ const BASE_URL = 'https://pushup-stats.de';
       .article-footer {
         margin-top: 48px;
         padding-top: 24px;
-        border-top: 1px solid rgba(123, 159, 255, 0.2);
+        border-top: 1px solid var(--border-subtle);
       }
 
       .not-found {
@@ -141,7 +141,7 @@ const BASE_URL = 'https://pushup-stats.de';
         flex-direction: column;
         gap: 16px;
         align-items: flex-start;
-        color: #b9c9ea;
+        color: var(--text-muted);
       }
     `,
   ],

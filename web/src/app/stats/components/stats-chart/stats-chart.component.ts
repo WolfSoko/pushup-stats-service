@@ -128,6 +128,25 @@ export class StatsChartComponent implements AfterViewInit {
     if (!context) return;
 
     this.chart?.destroy();
+
+    // Read theme-aware colors from CSS custom properties
+    const cs = getComputedStyle(document.documentElement);
+    const chartTick = cs.getPropertyValue('--chart-tick').trim() || '#c8d3ea';
+    const chartGrid =
+      cs.getPropertyValue('--chart-grid').trim() || 'rgba(116,140,190,0.2)';
+    const chartGridLight =
+      cs.getPropertyValue('--chart-grid-light').trim() ||
+      'rgba(116,140,190,0.15)';
+    const tooltipBg =
+      cs.getPropertyValue('--tooltip-bg').trim() || 'rgba(14,20,35,0.95)';
+    const tooltipTitle =
+      cs.getPropertyValue('--tooltip-title').trim() || '#eff4ff';
+    const tooltipBody =
+      cs.getPropertyValue('--tooltip-body').trim() || '#dbe6ff';
+    const tooltipBorder =
+      cs.getPropertyValue('--tooltip-border').trim() ||
+      'rgba(125,154,219,0.35)';
+
     const totals = series.map((d) => d.total);
     const windowSize = this.granularity() === 'hourly' ? 3 : 7;
     const movingAvg = totals.map((_, index) => {
@@ -242,7 +261,7 @@ export class StatsChartComponent implements AfterViewInit {
               unit: this.granularity() === 'hourly' ? 'hour' : 'day',
             },
             ticks: {
-              color: '#c8d3ea',
+              color: chartTick,
               maxRotation: 0,
               autoSkip: this.rangeMode() !== 'day',
               maxTicksLimit: isCompactDayMode ? 15 : 12,
@@ -258,11 +277,11 @@ export class StatsChartComponent implements AfterViewInit {
                 return xTickFormatter.format(new Date(ts));
               },
             },
-            grid: { color: 'rgba(116, 140, 190, 0.15)' },
+            grid: { color: chartGridLight },
           },
           y: {
-            ticks: { color: '#c8d3ea', precision: 0 },
-            grid: { color: 'rgba(116, 140, 190, 0.2)' },
+            ticks: { color: chartTick, precision: 0 },
+            grid: { color: chartGrid },
           },
           yIntegral: {
             position: 'right',
@@ -276,10 +295,10 @@ export class StatsChartComponent implements AfterViewInit {
           legend: { display: false },
           datalabels: { display: false },
           tooltip: {
-            backgroundColor: 'rgba(14,20,35,0.95)',
-            titleColor: '#eff4ff',
-            bodyColor: '#dbe6ff',
-            borderColor: 'rgba(125, 154, 219, 0.35)',
+            backgroundColor: tooltipBg,
+            titleColor: tooltipTitle,
+            bodyColor: tooltipBody,
+            borderColor: tooltipBorder,
             borderWidth: 1,
             callbacks: {
               title: (items: TooltipItem<'bar' | 'line'>[]) => {

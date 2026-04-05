@@ -61,7 +61,7 @@ import { getBlogPostsByLocale } from './blog-posts.data';
 
       .blog-intro {
         margin: 0 0 32px;
-        color: #b9c9ea;
+        color: var(--text-muted);
         font-size: 1rem;
       }
 
@@ -71,12 +71,12 @@ import { getBlogPostsByLocale } from './blog-posts.data';
       }
 
       .article-card {
-        border: 1px solid rgba(123, 159, 255, 0.25);
+        border: 1px solid var(--border-subtle);
         border-radius: 16px;
       }
 
       mat-card-content p {
-        color: #b9c9ea;
+        color: var(--text-muted);
         margin: 0;
       }
 
@@ -86,7 +86,7 @@ import { getBlogPostsByLocale } from './blog-posts.data';
 
       time {
         font-size: 0.85rem;
-        color: #7a8fbb;
+        color: var(--text-subtle);
       }
     `,
   ],
