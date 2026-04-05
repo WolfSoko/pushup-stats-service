@@ -45,6 +45,7 @@ describe('LandingPageComponent', () => {
 
   describe('auth not yet resolved', () => {
     it('hides guest CTA and login buttons while auth state is pending', async () => {
+      // Given – auth state has not yet been determined by Firebase
       await render(LandingPageComponent, {
         providers: [
           provideRouter([]),
@@ -57,6 +58,7 @@ describe('LandingPageComponent', () => {
         ],
       });
 
+      // Then – no CTA buttons should be visible
       expect(
         screen.queryByRole('button', { name: 'Als Gast ausprobieren' })
       ).toBeNull();

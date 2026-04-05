@@ -111,7 +111,7 @@ export class App {
     document.cookie = `lang=${encodeURIComponent(lang)}; Path=/; Max-Age=${maxAge}; SameSite=Lax`;
     // Preserve current page path when switching language
     const subPath = window.location.pathname.replace(/^\/(de|en)(\/|$)/, '/');
-    const suffix = subPath === '/' ? '' : subPath;
+    const suffix = subPath === '/' ? '/' : subPath;
     const prefix = lang === 'en' ? '/en' : '/de';
     const target = `${prefix}${suffix}${window.location.search}${window.location.hash}`;
     window.location.replace(target);

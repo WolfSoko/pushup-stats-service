@@ -2723,8 +2723,8 @@ Deine Position: # ·  Reps        </source>
         <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:107</note>
       </notes>
       <segment state="translated">
-        <source> Speichern </source>
-        <target> Save </target>
+        <source>Speichern</source>
+        <target>Save</target>
       </segment>
     </unit>
     <unit id="saveSettings">

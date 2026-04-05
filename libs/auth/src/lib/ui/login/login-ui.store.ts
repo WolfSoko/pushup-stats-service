@@ -1,4 +1,5 @@
 import { computed, inject } from '@angular/core';
+import { Auth } from '@angular/fire/auth';
 import {
   patchState,
   signalStore,
@@ -33,13 +34,18 @@ export const LoginUiStore = signalStore(
   withProps(() => ({
     authStore: inject(AuthStore),
     onboardingStore: inject(LoginOnboardingStore),
+    auth: inject(Auth, { optional: true }),
   })),
   withComputed(({ authStore }) => ({
     loading: computed(() => authStore.loading()),
     error: computed(() => authStore.error()),
   })),
-  withMethods(({ authStore, onboardingStore, ...store }) => ({
-    currentUserDisplayName: (): string => authStore.user()?.displayName ?? '',
+  withMethods(({ authStore, onboardingStore, auth, ...store }) => ({
+    // Prefer auth.currentUser (synchronous, immediately available after
+    // Google popup closes) over the signal-based authStore.user() which
+    // may still hold stale data due to toSignal() microtask delay.
+    currentUserDisplayName: (): string =>
+      auth?.currentUser?.displayName ?? authStore.user()?.displayName ?? '',
     toggleHidePassword: () =>
       patchState(store, { hidePassword: !store.hidePassword() }),
     setGoogleDisplayName: (value: string) =>
@@ -80,12 +86,12 @@ export const LoginUiStore = signalStore(
       await authStore.logout();
     },
     isGoogleOnboardingRequired: async (): Promise<boolean> => {
-      const uid = authStore.user()?.uid;
+      const uid = auth?.currentUser?.uid ?? authStore.user()?.uid;
       if (!uid) return false;
       return onboardingStore.isOnboardingRequired(uid);
     },
     completeGoogleOnboarding: async (): Promise<boolean> => {
-      const uid = authStore.user()?.uid;
+      const uid = auth?.currentUser?.uid ?? authStore.user()?.uid;
       if (!uid) {
         patchState(store, {
           googleWizardError: $localize`:@@auth.onboarding.google.error.noUser:Kein eingeloggter Nutzer gefunden.`,
