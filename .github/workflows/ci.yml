@@ -42,3 +42,25 @@ jobs:
       - name: Nx fix-ci (always)
         if: always()
         run: pnpm nx fix-ci
+
+  # After successful CI on main, fast-forward the deploy branch.
+  # Firebase App Hosting watches this branch instead of main,
+  # so it only deploys code that passed lint + test + build + e2e.
+  promote-to-deploy:
+    needs: lint-test-build
+    if: github.ref == 'refs/heads/main'
+    # A push failure here must not block the Firebase Hosting deploy
+    # (which gates on the overall CI workflow conclusion).
+    continue-on-error: true
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - name: Fast-forward deploy branch
+        run: |
+          git fetch origin deploy || true
+          git push origin HEAD:refs/heads/deploy
