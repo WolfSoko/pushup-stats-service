@@ -12,8 +12,8 @@ env:
   NODE_OPTIONS: --max-old-space-size=6144
 jobs:
   build_and_deploy:
-    # Only deploy when CI succeeded (not on failure/cancellation)
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    # Only deploy when CI succeeded on a push (not on PR runs)
+    if: ${{ github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
