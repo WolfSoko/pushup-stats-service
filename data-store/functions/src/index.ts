@@ -1,4 +1,3 @@
-import crypto from 'node:crypto';
 import { onDocumentWritten } from 'firebase-functions/v2/firestore';
 import { onSchedule } from 'firebase-functions/v2/scheduler';
 import { onCall, HttpsError } from 'firebase-functions/v2/https';
@@ -11,6 +10,39 @@ import { defineSecret } from 'firebase-functions/params';
 import type { UserStats } from '@pu-stats/models';
 import { applyDelta, rebuildFromEntries } from './user-stats-delta';
 
+// Module imports
+import { berlinDateParts, isoWeekFromYmd } from './datetime';
+import {
+  toAnonymousLabel,
+  toPublicDisplayName,
+  isLeaderboardNameAllowed,
+  UserProfile,
+} from './profile';
+import {
+  rankEntries,
+  calculateCurrentPeriodKeys,
+  getMonthStartForQuery,
+  filterOutDemoUser,
+} from './leaderboard';
+import { parseRecaptchaResponse, validateRecaptchaPayload } from './authentication';
+import {
+  QUOTE_CACHE_HOURS,
+  FALLBACK_QUOTES_DE,
+  FALLBACK_QUOTES_EN,
+  getFallbackQuotes,
+  sanitizeDisplayName,
+  extractJsonArray,
+  filterValidQuotes,
+  isCacheValid,
+} from './motivation';
+import { pushSubscriptionId, validateSubscriptionPayload } from './push/subscription';
+import {
+  shouldSendReminder,
+  buildNotificationPayload,
+  ReminderConfig,
+} from './push/reminders';
+import { validateDeleteUserPayload, isDemoUser, batchArray } from './admin';
+
 admin.initializeApp();
 
 const db = admin.firestore();
@@ -22,101 +54,6 @@ const recaptchaClient = new RecaptchaEnterpriseServiceClient();
 const RECAPTCHA_PROJECT_ID = 'pushup-stats';
 const RECAPTCHA_SITE_KEY = '6LdIVoEsAAAAAMk4rJwg2DYHfM7ud_as7V5rUf4g';
 const RECAPTCHA_MIN_SCORE = 0.5;
-
-function berlinDateParts(date = new Date()) {
-  const parts = new Intl.DateTimeFormat('en-CA', {
-    timeZone: TZ,
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-  })
-    .formatToParts(date)
-    .reduce<Record<string, string>>((acc, p) => {
-      if (p.type !== 'literal') acc[p.type] = p.value;
-      return acc;
-    }, {});
-  return {
-    year: Number(parts['year']),
-    month: Number(parts['month']),
-    day: Number(parts['day']),
-    isoDate: `${parts['year']}-${parts['month']}-${parts['day']}`,
-  };
-}
-
-function isoWeekFromYmd(year: number, month: number, day: number) {
-  const d = new Date(Date.UTC(year, month - 1, day));
-  d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7));
-  const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
-  const week = Math.ceil(
-    ((d.getTime() - yearStart.getTime()) / 86400000 + 1) / 7
-  );
-  return { year: d.getUTCFullYear(), week };
-}
-
-function toAnonymousLabel(): string {
-  return 'anonym';
-}
-
-interface UserProfile {
-  displayName?: string;
-  ui?: { hideFromLeaderboard?: boolean };
-  role?: string;
-}
-
-function toPublicDisplayName(profile?: UserProfile): string {
-  const name = String(profile?.displayName || '').trim();
-  if (!name) return toAnonymousLabel();
-  return name;
-}
-
-function isLeaderboardNameAllowed(profile?: UserProfile): boolean {
-  return profile?.ui?.hideFromLeaderboard === false;
-}
-
-interface PushupRow {
-  timestamp?: string;
-  userId?: string;
-  reps?: number;
-}
-
-function rankEntries(
-  rows: PushupRow[],
-  periodKey: string,
-  targetKey: string,
-  userProfiles: Map<string, UserProfile>
-) {
-  const totals = new Map<string, number>();
-  for (const row of rows) {
-    if (!row.timestamp || !row.userId) continue;
-    const datePart = String(row.timestamp).slice(0, 10);
-    const d = new Date(`${datePart}T00:00:00Z`);
-    const p = berlinDateParts(d);
-    let key: string;
-    if (periodKey === 'daily') key = p.isoDate;
-    else if (periodKey === 'monthly')
-      key = `${p.year}-${String(p.month).padStart(2, '0')}`;
-    else {
-      const wk = isoWeekFromYmd(p.year, p.month, p.day);
-      key = `${wk.year}-W${String(wk.week).padStart(2, '0')}`;
-    }
-    if (key !== targetKey) continue;
-    totals.set(
-      row.userId,
-      (totals.get(row.userId) || 0) + Number(row.reps || 0)
-    );
-  }
-
-  return [...totals.entries()]
-    .map(([userId, reps]) => {
-      const profile = userProfiles.get(userId);
-      const alias = isLeaderboardNameAllowed(profile)
-        ? toPublicDisplayName(profile)
-        : toAnonymousLabel();
-      return { alias, reps };
-    })
-    .sort((a, b) => b.reps - a.reps)
-    .slice(0, TOP_N);
-}
 
 async function createRecaptchaAssessment({
   token,
@@ -142,36 +79,14 @@ async function createRecaptchaAssessment({
   };
 
   const [response] = await recaptchaClient.createAssessment(request);
-
-  if (!response.tokenProperties?.valid) {
-    return {
-      ok: false,
-      score: 0,
-      reason: `invalid-token:${response.tokenProperties?.invalidReason || 'unknown'}`,
-      reasons: [] as string[],
-      actionMatched: false,
-      action: response.tokenProperties?.action || null,
-    };
-  }
-
-  const actionMatched = response.tokenProperties?.action === recaptchaAction;
-  const score = Number(response.riskAnalysis?.score || 0);
-  const reasons = (response.riskAnalysis?.reasons || []).map(String);
-
-  return {
-    ok: actionMatched && score >= RECAPTCHA_MIN_SCORE,
-    score,
-    reasons,
-    actionMatched,
-    action: response.tokenProperties?.action || null,
-  };
+  return parseRecaptchaResponse(response, recaptchaAction, RECAPTCHA_MIN_SCORE);
 }
 
 async function rebuildLeaderboardsCore() {
   const now = new Date();
   const today = berlinDateParts(now);
   const week = isoWeekFromYmd(today.year, today.month, today.day);
-  const monthStart = `${today.year}-${String(today.month).padStart(2, '0')}-01`;
+  const monthStart = getMonthStartForQuery(today);
 
   const snap = await db
     .collection('pushups')
