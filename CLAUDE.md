@@ -24,7 +24,7 @@ When making changes, always write or update relevant tests as part of the same c
 - **Build:** Nx 22, pnpm
 - **Backend:** Firebase (Firestore, Cloud Functions, Auth)
 - **State:** @ngrx/signals (signal stores)
-- **UI:** Angular Material 21, Chart.js
+- **UI:** Angular Material 21, Chart.js – **always prefer Material components** (`mat-button`, `mat-icon`, etc.) over plain HTML elements for buttons, inputs, dialogs, and other interactive controls
 - **Testing:** Vitest (web), Jest (libs), Playwright (e2e)
 
 ## Architecture

@@ -101,8 +101,7 @@ export class App {
   private readonly consentBanner =
     viewChild<CookieConsentBannerComponent>('consentBanner');
 
-  openCookieSettings(ev: Event): void {
-    ev.preventDefault();
+  openCookieSettings(): void {
     this.consentBanner()?.reopen();
   }
 
