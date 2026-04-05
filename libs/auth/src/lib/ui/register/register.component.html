@@ -50,7 +50,7 @@
               />
               <mat-icon matSuffix>email</mat-icon>
               @for (error of registerForm.email().errors(); track $index) {
-                <mat-error>{{ error }}</mat-error>
+                <mat-error>{{ $any(error)?.message ?? error }}</mat-error>
               }
             </mat-form-field>
             <div class="form-actions">
