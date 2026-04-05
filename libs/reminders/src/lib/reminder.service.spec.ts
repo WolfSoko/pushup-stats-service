@@ -4,6 +4,8 @@ import { ReminderStore } from './reminder.store';
 import { ReminderPermissionService } from './reminder-permission.service';
 import { MotivationStore } from '@pu-stats/motivation';
 import { isInQuietHours, ReminderService } from './reminder.service';
+import { PushSubscriptionStore } from './push/push-subscription.store';
+import type { PushStatus } from './push/push-subscription.store';
 import type { ReminderConfig } from '@pu-stats/models';
 
 async function flushMicrotasks(): Promise<void> {
@@ -38,7 +40,8 @@ describe('ReminderService', () => {
   };
 
   function createService(
-    configOverride?: Partial<ReminderConfig>
+    configOverride?: Partial<ReminderConfig>,
+    pushStatus: PushStatus = 'not-subscribed'
   ): ReminderService {
     const config = { ...defaultConfig, ...configOverride };
     TestBed.configureTestingModule({
@@ -58,6 +61,10 @@ describe('ReminderService', () => {
             loadQuotes: jest.fn().mockResolvedValue(undefined),
             quotes: signal(['Stay strong!']),
           },
+        },
+        {
+          provide: PushSubscriptionStore,
+          useValue: { status: signal(pushStatus) },
         },
       ],
     });
@@ -230,6 +237,18 @@ describe('ReminderService', () => {
     } else {
       delete (document as Record<string, unknown>)['baseURI'];
     }
+
+    service.stop();
+  });
+
+  it('should not show notification when push subscription is active', async () => {
+    const service = createService(undefined, 'subscribed');
+    service.start({ userId: 'u1' });
+    jest.advanceTimersByTime(5_000);
+    await flushMicrotasks();
+
+    // Server-side push handles delivery — client-side must stay silent
+    expect(showNotificationSpy).not.toHaveBeenCalled();
 
     service.stop();
   });
