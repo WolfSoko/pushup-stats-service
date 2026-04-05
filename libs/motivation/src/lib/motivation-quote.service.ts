@@ -105,26 +105,33 @@ export class MotivationQuoteService {
     context?: { totalToday?: number; dailyGoal?: number; displayName?: string }
   ): Promise<string[]> {
     if (!this.functions) return [];
-    try {
-      const callable = httpsCallable<
-        {
-          language: string;
-          totalToday: number;
-          dailyGoal: number;
-          displayName: string;
-        },
-        { quotes: string[] }
-      >(this.functions, 'generateMotivationQuotes');
+    const callable = httpsCallable<
+      {
+        language: string;
+        totalToday: number;
+        dailyGoal: number;
+        displayName: string;
+      },
+      { quotes: string[] }
+    >(this.functions, 'generateMotivationQuotes');
 
-      const result = await callable({
-        language: lang,
-        totalToday: context?.totalToday ?? 0,
-        dailyGoal: context?.dailyGoal ?? 100,
-        displayName: context?.displayName ?? 'Champ',
-      });
+    const payload = {
+      language: lang,
+      totalToday: context?.totalToday ?? 0,
+      dailyGoal: context?.dailyGoal ?? 100,
+      displayName: context?.displayName ?? 'Champ',
+    };
+
+    try {
+      const result = await callable(payload);
       return result.data?.quotes ?? [];
-    } catch {
-      return [];
+    } catch (err) {
+      console.warn(
+        'callCloudFunction(generateMotivationQuotes) failed',
+        { lang, context: payload },
+        err
+      );
+      throw err;
     }
   }
 }
