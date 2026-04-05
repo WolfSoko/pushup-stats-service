@@ -117,7 +117,7 @@ export const RegisterUiStore = signalStore(
       const uid = auth?.currentUser?.uid ?? authStore.user()?.uid;
       if (!uid) return false;
       try {
-        const daily = store.dailyGoal();
+        const daily = Math.max(1, Math.trunc(store.dailyGoal()));
         await onboardingStore.saveProfile({
           uid,
           displayName: store.displayName(),
