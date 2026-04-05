@@ -6,6 +6,7 @@ import {
   effect,
   inject,
   PLATFORM_ID,
+  signal,
   untracked,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -77,6 +78,8 @@ export class StatsDashboardComponent {
   readonly liveConnected = this.store.liveConnected;
   readonly adSlotDashboardInline = this.store.adSlotDashboardInline;
   readonly dashboardInlineAdsEnabled = this.store.dashboardInlineAdsEnabled;
+  /** Counter that increments on every data refresh to trigger child component reloads. */
+  readonly refreshCounter = signal(0);
 
   constructor() {
     let viewReady = false;
@@ -116,6 +119,7 @@ export class StatsDashboardComponent {
       const tick = this.live.updateTick();
       if (!tick) return;
       this.store.refreshAll();
+      this.refreshCounter.update((c) => c + 1);
     });
 
     this.store.loadQuote();
@@ -156,6 +160,7 @@ export class StatsDashboardComponent {
   }) {
     await firstValueFrom(this.api.createPushup(entry));
     this.store.refreshAll();
+    this.refreshCounter.update((c) => c + 1);
   }
 
   async addQuickEntry(reps: number) {
@@ -175,5 +180,6 @@ export class StatsDashboardComponent {
       })
     );
     this.store.refreshAll();
+    this.refreshCounter.update((c) => c + 1);
   }
 }

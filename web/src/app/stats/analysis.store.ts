@@ -242,5 +242,10 @@ export const AnalysisStore = signalStore(
     setTo(to: string): void {
       patchState(store, { to });
     },
+    refreshAll(): void {
+      store.statsResource.reload();
+      store.entriesResource.reload();
+      store.userStatsResource.reload();
+    },
   }))
 );

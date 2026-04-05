@@ -130,6 +130,8 @@ export class AnalysisTeaserCardComponent {
   readonly streak = input(0);
   readonly weekReps = input(0);
   readonly weeklyGoal = input(0);
+  /** Increment to trigger a data reload (e.g. after entry creation). */
+  readonly refreshTrigger = input(0);
 
   private readonly weekRange = computed(() => {
     const today = new Date();
@@ -145,8 +147,9 @@ export class AnalysisTeaserCardComponent {
   readonly to = computed(() => this.weekRange().to);
 
   readonly statsResource = resource({
-    params: () => this.weekRange(),
-    loader: async ({ params }) => firstValueFrom(this.api.load(params)),
+    params: () => ({ ...this.weekRange(), _refresh: this.refreshTrigger() }),
+    loader: async ({ params }) =>
+      firstValueFrom(this.api.load({ from: params.from, to: params.to })),
   });
 
   readonly chartSeries = computed(

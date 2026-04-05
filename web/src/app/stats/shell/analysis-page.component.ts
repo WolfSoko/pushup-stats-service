@@ -1,14 +1,9 @@
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
-import {
-  Component,
-  effect,
-  inject,
-  PLATFORM_ID,
-  REQUEST,
-} from '@angular/core';
+import { Component, effect, inject, PLATFORM_ID, REQUEST } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
 import { createWeekRange } from '@pu-stats/models';
+import { LiveDataStore } from '@pu-stats/data-access';
 import { FilterBarComponent } from '../components/filter-bar/filter-bar.component';
 import { HeatmapComponent } from '../components/heatmap/heatmap.component';
 import { PreviewBannerComponent } from '../components/preview-banner/preview-banner.component';
@@ -241,10 +236,20 @@ export class AnalysisPageComponent {
 
   readonly trendColumns = ['label', 'total'];
 
+  private readonly live = inject(LiveDataStore);
+
   constructor() {
     // Resolve initial range from URL query params (SSR-aware)
     const initialRange = this.resolveInitialRange();
     this.store.setRange(initialRange.from, initialRange.to);
+
+    // Reload stats when live data changes (new entries via websocket)
+    effect(() => {
+      if (!isPlatformBrowser(this.platformId)) return;
+      const tick = this.live.updateTick();
+      if (!tick) return;
+      this.store.refreshAll();
+    });
 
     // URL history tracking effect (UI side effect, stays in component)
     effect(() => {
