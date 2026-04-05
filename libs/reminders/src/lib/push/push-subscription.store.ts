@@ -137,7 +137,13 @@ export const PushSubscriptionStore = signalStore(
         }
         patchState(store, { status: 'loading' });
         try {
-          const reg = await navigator.serviceWorker.ready;
+          // Use getRegistration() instead of .ready which hangs forever
+          // when no SW is registered (e.g. dev mode).
+          const reg = await navigator.serviceWorker.getRegistration();
+          if (!reg) {
+            patchState(store, { status: 'not-subscribed', deviceCount: 0 });
+            return;
+          }
           const sub = await reg.pushManager.getSubscription();
           if (!sub) {
             patchState(store, { status: 'not-subscribed', deviceCount: 0 });
@@ -164,7 +170,11 @@ export const PushSubscriptionStore = signalStore(
             return false;
           }
 
-          const reg = await navigator.serviceWorker.ready;
+          const reg = await navigator.serviceWorker.getRegistration();
+          if (!reg) {
+            patchState(store, { status: 'error' });
+            return false;
+          }
           const existingSub = await reg.pushManager.getSubscription();
           const subToSave =
             existingSub ??
@@ -193,8 +203,10 @@ export const PushSubscriptionStore = signalStore(
 
         patchState(store, { status: 'loading' });
         try {
-          const reg = await navigator.serviceWorker.ready;
-          const sub = await reg.pushManager.getSubscription();
+          const reg = await navigator.serviceWorker.getRegistration();
+          const sub = reg
+            ? await reg.pushManager.getSubscription()
+            : null;
           if (sub) {
             const endpoint = sub.endpoint;
             await sub.unsubscribe();
