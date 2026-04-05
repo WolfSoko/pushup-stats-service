@@ -17,9 +17,11 @@ async function flushMicrotasks(): Promise<void> {
 describe('ReminderService', () => {
   let showNotificationSpy: jest.Mock;
 
-  // Save originals to restore after each test (prevent global leaks)
-  const originalServiceWorker = navigator.serviceWorker;
-  const originalNotification = window.Notification;
+  // Save original property descriptors to restore after each test.
+  // Using descriptors (not values) so we can delete the property when
+  // it didn't originally exist, preventing false 'in' checks.
+  const swDescriptor = Object.getOwnPropertyDescriptor(navigator, 'serviceWorker');
+  const notifDescriptor = Object.getOwnPropertyDescriptor(window, 'Notification');
 
   const defaultConfig: ReminderConfig = {
     enabled: true,
@@ -80,17 +82,18 @@ describe('ReminderService', () => {
 
   afterEach(() => {
     jest.useRealTimers();
-    // Restore originals to prevent global state leaks
-    Object.defineProperty(navigator, 'serviceWorker', {
-      value: originalServiceWorker,
-      configurable: true,
-      writable: true,
-    });
-    Object.defineProperty(window, 'Notification', {
-      value: originalNotification,
-      configurable: true,
-      writable: true,
-    });
+    // Restore original descriptors to prevent global state leaks.
+    // Delete then re-define so 'prop in obj' checks stay accurate.
+    if (swDescriptor) {
+      Object.defineProperty(navigator, 'serviceWorker', swDescriptor);
+    } else {
+      delete (navigator as Record<string, unknown>)['serviceWorker'];
+    }
+    if (notifDescriptor) {
+      Object.defineProperty(window, 'Notification', notifDescriptor);
+    } else {
+      delete (window as Record<string, unknown>)['Notification'];
+    }
   });
 
   it('should use ServiceWorker showNotification instead of new Notification()', async () => {
@@ -157,6 +160,37 @@ describe('ReminderService', () => {
       expect.objectContaining({ body: 'Stay strong!' })
     );
     expect(showNotificationSpy).not.toHaveBeenCalled();
+
+    service.stop();
+  });
+
+  it('should fall back to new Notification() when SW showNotification rejects', async () => {
+    const notificationCtorSpy = jest.fn();
+    Object.defineProperty(window, 'Notification', {
+      value: Object.assign(notificationCtorSpy, { permission: 'granted' }),
+      configurable: true,
+      writable: true,
+    });
+    // SW exists but showNotification fails
+    Object.defineProperty(navigator, 'serviceWorker', {
+      value: {
+        getRegistration: jest.fn().mockResolvedValue({
+          showNotification: jest.fn().mockRejectedValue(new Error('SW error')),
+        }),
+      },
+      configurable: true,
+      writable: true,
+    });
+
+    const service = createService();
+    service.start({ userId: 'u1' });
+    jest.advanceTimersByTime(5_000);
+    await flushMicrotasks();
+
+    expect(notificationCtorSpy).toHaveBeenCalledWith(
+      expect.stringContaining('Liegestütze'),
+      expect.objectContaining({ body: 'Stay strong!' })
+    );
 
     service.stop();
   });

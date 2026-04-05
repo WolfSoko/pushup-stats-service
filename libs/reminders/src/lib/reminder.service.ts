@@ -111,11 +111,12 @@ export class ReminderService {
       lang === 'en' ? '💪 Time for push-ups!' : '💪 Zeit für Liegestütze!';
 
     if (Notification.permission === 'granted') {
+      // Prefer ServiceWorker notification — `new Notification()` is not
+      // supported on Android Chrome and throws "Illegal constructor".
+      // Use getRegistration() instead of .ready which hangs forever
+      // when no SW is registered (e.g. dev mode).
+      let shown = false;
       try {
-        // Prefer ServiceWorker notification — `new Notification()` is not
-        // supported on Android Chrome and throws "Illegal constructor".
-        // Use getRegistration() instead of .ready which hangs forever
-        // when no SW is registered (e.g. dev mode).
         const reg = await navigator.serviceWorker?.getRegistration();
         if (reg) {
           await reg.showNotification(title, {
@@ -124,15 +125,20 @@ export class ReminderService {
             tag: 'reminder',
             renotify: true,
           } as NotificationOptions);
-        } else {
-          // Fallback for desktop browsers without SW (dev mode)
+          shown = true;
+        }
+      } catch {
+        // SW notification failed — fall through to Notification() fallback
+      }
+      if (!shown) {
+        try {
           new Notification(title, {
             body: quote,
             icon: '/assets/pushup-logo.svg',
           });
+        } catch {
+          // Fallback also failed (e.g. Android Chrome) — give up silently
         }
-      } catch {
-        // Notification display failed silently
       }
     }
   }

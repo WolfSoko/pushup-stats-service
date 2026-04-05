@@ -481,7 +481,7 @@ export class RemindersPageComponent {
           if (pushStatus !== 'subscribed') {
             if (pushStatus !== 'denied') {
               this.snackBar.open(
-                $localize`:@@reminder.push.subscribe.error:Push-Benachrichtigungen konnten nicht aktiviert werden.`,
+                $localize`:@@push.subscribe.error:Push konnte nicht aktiviert werden.`,
                 $localize`:@@snackbar.close:Schließen`,
                 { duration: 5000 }
               );
