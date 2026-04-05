@@ -178,6 +178,16 @@ Do NOT push if any of these fail. Fix first, then push.
 - `robots.txt` is a static file in `web/public/`.
 - **`sitemap.xml` is auto-generated** from blog posts + static routes via `node tools/src/generate-sitemap.mjs` (Nx target: `pnpm nx run tools:generate-sitemap`). It runs automatically before every `web:build`. When adding new **public** routes, add them to the `staticRoutes` array in the script. Blog posts are picked up automatically from `blog-posts.data.ts`.
 
+## Push Notifications & Service Workers
+
+- **Two-tier reminder system:** In-app (`ReminderService` with `setInterval`) + server-side (`dispatchPushReminders` Cloud Function every 5 min via Web Push).
+- **Android Chrome does NOT support `new Notification()`** — always use `ServiceWorkerRegistration.showNotification()` with a `new Notification()` fallback for desktop/dev.
+- **Never use `navigator.serviceWorker.ready`** in async code paths — it hangs forever when no SW is registered (dev mode: `enabled: !isDevMode()`). Use `navigator.serviceWorker.getRegistration()` which resolves immediately with `undefined`.
+- **`renotify: true`** is not in the TypeScript `NotificationOptions` type — cast with `as NotificationOptions`.
+- **Push subscription ≠ reminder toggle:** They are separate actions. Auto-subscribing to push when enabling reminders must only happen on first enable (not every save) to respect explicit push opt-out.
+- **VAPID keys:** Public key in `web/src/env/firebase-runtime.ts`, private key in Firebase Secrets (`VAPID_PRIVATE_KEY`).
+- **Cloud Function `dispatchPushReminders`:** Uses transactional lease (`inProgress` flag) to prevent duplicate sends. Always release lease in `finally`.
+
 ## Workflow
 
 - **Before pushing:** Run the pre-push checklist above.
