@@ -1,20 +1,35 @@
 import { RenderMode, ServerRoute } from '@angular/ssr';
+import { BLOG_POSTS } from './blog/blog-posts.data';
 
 export const serverRoutes: ServerRoute[] = [
+  // --- Prerendered (static content, built at compile time) ---
+  {
+    path: 'login',
+    renderMode: RenderMode.Prerender,
+  },
+  {
+    path: 'register',
+    renderMode: RenderMode.Prerender,
+  },
+  {
+    path: 'blog',
+    renderMode: RenderMode.Prerender,
+  },
+  {
+    path: 'blog/:slug',
+    renderMode: RenderMode.Prerender,
+    async getPrerenderParams() {
+      return BLOG_POSTS.map((post) => ({ slug: post.slug }));
+    },
+  },
+
+  // --- Server-rendered (dynamic data per request) ---
   {
     path: '',
     renderMode: RenderMode.Server,
   },
   {
     path: 'landing',
-    renderMode: RenderMode.Server,
-  },
-  {
-    path: 'login',
-    renderMode: RenderMode.Server,
-  },
-  {
-    path: 'register',
     renderMode: RenderMode.Server,
   },
   {
@@ -34,13 +49,15 @@ export const serverRoutes: ServerRoute[] = [
     renderMode: RenderMode.Server,
   },
   {
-    path: 'blog',
+    path: 'settings',
     renderMode: RenderMode.Server,
   },
   {
-    path: 'blog/:slug',
+    path: 'reminders',
     renderMode: RenderMode.Server,
   },
+
+  // --- Client-only ---
   {
     path: 'admin',
     renderMode: RenderMode.Client,
