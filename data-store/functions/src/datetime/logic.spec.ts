@@ -59,8 +59,8 @@ describe('datetime/logic', () => {
       expect(week.week).toBe(1);
     });
 
-    it('handles week 53 at year boundary', () => {
-      // 2023-12-28 is in week 52 of 2023
+    it('handles week 52 at year boundary', () => {
+      // 2023-12-28 is in ISO week 52 of 2023
       const week = isoWeekFromYmd(2023, 12, 28);
       expect(week.year).toBe(2023);
       expect(week.week).toBe(52);

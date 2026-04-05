@@ -12,7 +12,7 @@ describe('push/reminders', () => {
       toMillis: () => ms,
     });
 
-    const baseTime = new Date('2024-03-15T10:00:00Z').getTime(); // Noon Berlin time
+    const baseTime = new Date('2024-03-15T10:00:00Z').getTime(); // 11:00 Berlin time (UTC+1)
 
     it('returns false when reminder is not enabled', () => {
       const reminder: ReminderConfig = { enabled: false };
@@ -165,7 +165,7 @@ describe('push/reminders', () => {
         quietHours: [{ from: '22:00', to: '06:00' }],
       };
 
-      const now = baseTime; // 12:00 Berlin, during day
+      const now = baseTime; // 11:00 Berlin, during day
       const lastSent = mockFirestoreTime(now - 1000 * 60 * 120); // 2 hours ago
 
       // Should send: enabled, not in quiet hours, interval elapsed

@@ -238,7 +238,7 @@ if (existingStats.version < USERSTATS_VERSION) {
 ### Pure Business Logic Modules
 
 Decomposed from monolithic index.ts (1220 → ~500 lines wrapper):
-- **datetime/:** Berlin timezone utilities (`berlinParts`, `isoWeekFromYmd`)
+- **datetime/:** Berlin timezone utilities (`berlinDateParts`, `isoWeekFromYmd`)
 - **profile/:** Display name sanitization & leaderboard privacy logic
 - **leaderboard/:** Ranking aggregation, period key calculations
 - **authentication/:** Recaptcha response parsing & validation
