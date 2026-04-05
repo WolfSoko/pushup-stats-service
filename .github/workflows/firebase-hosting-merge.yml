@@ -1,7 +1,9 @@
-# Firebase Hosting deployment – gated by CI.
+# Firebase deployment – gated by CI.
+# Deploys: Hosting, Cloud Functions, Firestore rules & indexes.
+# App Hosting (SSR/Cloud Run) is deployed separately via apphosting.yaml.
 # The deploy branch is only updated after CI succeeds on main
 # (see promote-to-deploy job in ci.yml).
-name: Deploy to Firebase Hosting on merge
+name: Deploy Firebase (Hosting + Functions + Firestore) on merge
 on:
   push:
     branches:
@@ -26,6 +28,8 @@ jobs:
         run: pnpm install --frozen-lockfile
       - name: Build web app
         run: pnpm nx run web:build -c production
+      - name: Build Cloud Functions
+        run: pnpm nx run cloud-functions:build
       - name: Prepare Hosting artifact
         run: |
           rm -rf data-store/hosting-public
@@ -34,6 +38,14 @@ jobs:
           find data-store/hosting-public -type f -name 'index.csr.html' -print0 | while IFS= read -r -d '' f; do
             cp "$f" "${f%index.csr.html}index.html"
           done
+      - name: Authenticate Firebase CLI
+        run: |
+          echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT_PUSHUP_STATS }}' > "$RUNNER_TEMP/firebase-sa.json"
+      - name: Deploy Cloud Functions + Firestore rules & indexes
+        run: npx firebase-tools deploy --only functions,firestore --project pushup-stats
+        working-directory: data-store
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ runner.temp }}/firebase-sa.json
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
