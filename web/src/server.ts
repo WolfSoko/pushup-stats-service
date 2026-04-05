@@ -46,7 +46,8 @@ const rootFiles = new Set(['ads.txt', 'robots.txt', 'sitemap.xml']);
 app.use((req, res, next) => {
   const file = req.path.slice(1);
   if (rootFiles.has(file)) {
-    req.url = `/de/${file}`;
+    const originalSuffix = req.url.slice(req.path.length);
+    req.url = `/de/${file}${originalSuffix}`;
     // Short cache – crawlers need fresh robots/sitemap, not the 1y static default
     res.setHeader('Cache-Control', 'public, max-age=3600');
   }
