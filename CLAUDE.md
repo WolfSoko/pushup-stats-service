@@ -16,7 +16,7 @@ If a bug reaches production, the CI pipeline wasn't good enough. Every change mu
 - **Regression tests:** Every bugfix must include a test that reproduces the bug first (TDD red-green).
 - **Rule of thumb:** If you can't prove a change works via CI, it's not ready to merge.
 
-When making changes, always write or update relevant tests as part of the same commit. Do not push untested code to `main`.
+When making changes, always write or update relevant tests as part of the same commit. **Never push new or changed code without corresponding tests — this applies to all branches, not just `main`.** If tests for the changed code don't exist yet, write them before pushing.
 
 ## Tech Stack
 
@@ -26,7 +26,7 @@ When making changes, always write or update relevant tests as part of the same c
 - **State:** @ngrx/signals (signal stores)
 - **UI:** Angular Material 21, Chart.js – **always prefer Material components** (`mat-button`, `mat-icon`, etc.) over plain HTML elements for buttons, inputs, dialogs, and other interactive controls
 - **Testing:** Vitest (web), Jest (libs), Playwright (e2e)
-- **Animations:** `@angular/animations` is **not** a project dependency (deprecated). Material components work without it. Do NOT use `NoopAnimationsModule` in tests.
+- **Deprecated:** `@angular/animations` is deprecated and NOT a project dependency — do not use or import it. Use CSS animations/transitions instead.
 
 ## Architecture
 
@@ -133,6 +133,7 @@ pnpm nx run-many --target=lint   # Lint all projects
 
 - **Source locale:** German (`de`), **Translation:** English (`en`)
 - **Format:** XLIFF 2.0 (`web/src/locale/messages.xlf` / `messages.en.xlf`)
+- **Source XLIFF (`messages.xlf`)** is auto-generated — **never edit it manually**. After changing `i18n`-marked templates, run `pnpm nx run web:extract-i18n` to regenerate it. Only manually edit the English translation file (`messages.en.xlf`).
 - Templates: `i18n="@@your.id"` attribute; programmatic: `` $localize`:@@your.id:German text` ``
 - `LOCALE_ID` is set automatically by Angular i18n at build time – NEVER provide it manually in `app.config.ts`
 - Dynamic data (e.g. blog posts, feature descriptions) must be locale-aware too – XLIFF only covers templates and `$localize`. Use `inject(LOCALE_ID)` to select the right data at runtime.

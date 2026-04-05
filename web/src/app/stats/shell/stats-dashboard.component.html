@@ -48,11 +48,33 @@
         >
       </mat-card-header>
       <mat-card-content>
-        <p>{{ todayTotal() }} / {{ dailyGoal() }}</p>
+        <div class="goal-row">
+          <small i18n="@@dashboard.dailyGoalLabel">Tag</small>
+          <span>{{ todayTotal() }} / {{ dailyGoal() }}</span>
+        </div>
         <mat-progress-bar
           mode="determinate"
           [value]="goalProgressPercent()"
         ></mat-progress-bar>
+
+        <div class="goal-row">
+          <small i18n="@@dashboard.weeklyGoalLabel">Woche</small>
+          <span>{{ weekReps() }} / {{ weeklyGoal() }}</span>
+        </div>
+        <mat-progress-bar
+          mode="determinate"
+          [value]="weeklyGoalProgressPercent()"
+        ></mat-progress-bar>
+
+        <div class="goal-row">
+          <small i18n="@@dashboard.monthlyGoalLabel">Monat</small>
+          <span>{{ monthReps() }} / {{ monthlyGoal() }}</span>
+        </div>
+        <mat-progress-bar
+          mode="determinate"
+          [value]="monthlyGoalProgressPercent()"
+        ></mat-progress-bar>
+
         @if (todayQuote(); as quote) {
           <p class="motivational-quote">
             <mat-icon class="ai-icon">auto_awesome</mat-icon>
@@ -105,6 +127,7 @@
   <app-analysis-teaser-card
     [streak]="currentStreak()"
     [weekReps]="weekReps()"
+    [weeklyGoal]="weeklyGoal()"
   />
 
   <mat-card class="quick-actions">

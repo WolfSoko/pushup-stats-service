@@ -7,6 +7,8 @@ export interface UserConfig {
   email?: string | null;
   displayName?: string;
   dailyGoal?: number;
+  weeklyGoal?: number;
+  monthlyGoal?: number;
   consent?: {
     dataProcessing?: boolean;
     statistics?: boolean;
@@ -30,6 +32,8 @@ export type UserConfigUpdate = Partial<
     | 'email'
     | 'displayName'
     | 'dailyGoal'
+    | 'weeklyGoal'
+    | 'monthlyGoal'
     | 'consent'
     | 'ui'
     | 'role'

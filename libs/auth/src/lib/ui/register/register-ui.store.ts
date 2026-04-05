@@ -25,7 +25,7 @@ type RegisterUiState = {
 const initialState: RegisterUiState = {
   hidePassword: true,
   displayName: '',
-  dailyGoal: 100,
+  dailyGoal: 10,
   consentAccepted: false,
   isGoogleRegistration: false,
   registeringCredentials: false,
@@ -117,10 +117,13 @@ export const RegisterUiStore = signalStore(
       const uid = auth?.currentUser?.uid ?? authStore.user()?.uid;
       if (!uid) return false;
       try {
+        const daily = Math.max(1, Math.trunc(store.dailyGoal()));
         await onboardingStore.saveProfile({
           uid,
           displayName: store.displayName(),
-          dailyGoal: store.dailyGoal(),
+          dailyGoal: daily,
+          weeklyGoal: daily * 5,
+          monthlyGoal: daily * 20,
         });
         patchState(store, { registerSuccess: true });
         return true;

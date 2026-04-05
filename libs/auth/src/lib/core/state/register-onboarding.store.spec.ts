@@ -30,11 +30,18 @@ describe('RegisterOnboardingStore', () => {
       uid: 'uid-1',
       displayName: ' Ana ',
       dailyGoal: 0,
+      weeklyGoal: 0,
+      monthlyGoal: 0,
     });
 
     expect(userConfigApiMock.updateConfig).toHaveBeenCalledWith(
       'uid-1',
-      expect.objectContaining({ displayName: 'Ana', dailyGoal: 100 })
+      expect.objectContaining({
+        displayName: 'Ana',
+        dailyGoal: 10,
+        weeklyGoal: 50,
+        monthlyGoal: 200,
+      })
     );
     expect(store.saving()).toBe(false);
   });
@@ -46,7 +53,13 @@ describe('RegisterOnboardingStore', () => {
     const store = await setup();
 
     await expect(
-      store.saveProfile({ uid: 'uid-1', displayName: 'Ana', dailyGoal: 10 })
+      store.saveProfile({
+        uid: 'uid-1',
+        displayName: 'Ana',
+        dailyGoal: 10,
+        weeklyGoal: 50,
+        monthlyGoal: 200,
+      })
     ).rejects.toThrow('save-register-profile-failed');
 
     expect(store.error()).toContain('Profil konnte nicht gespeichert');

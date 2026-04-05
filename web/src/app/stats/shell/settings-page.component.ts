@@ -102,19 +102,57 @@ import { PushSubscriptionService } from '@pu-reminders/reminders';
               Steuert, ob Werbe-Slots im Dashboard geladen werden dürfen.
             </p>
 
-            <mat-form-field appearance="outline" class="goal-field">
+            <mat-form-field appearance="outline">
               <mat-label i18n="@@dailyGoalLabel">Tagesziel (Reps)</mat-label>
               <input
                 matInput
                 type="number"
                 min="1"
                 [value]="dailyGoalDraft()"
-                (input)="dailyGoalDraft.set(asNumber($event))"
-                placeholder="100"
+                (input)="
+                  dailyGoalDraft.set(asNumberOr($event, dailyGoalDraft()))
+                "
+                placeholder="10"
                 i18n-placeholder="@@dailyGoalPlaceholder"
               />
               <mat-hint i18n="@@settings.goalHint"
                 >Wird prominent in der Toolbar angezeigt.</mat-hint
+              >
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label i18n="@@weeklyGoalLabel">Wochenziel (Reps)</mat-label>
+              <input
+                matInput
+                type="number"
+                min="1"
+                [value]="weeklyGoalDraft()"
+                (input)="
+                  weeklyGoalDraft.set(asNumberOr($event, weeklyGoalDraft()))
+                "
+                placeholder="50"
+                i18n-placeholder="@@weeklyGoalPlaceholder"
+              />
+              <mat-hint i18n="@@settings.weeklyGoalHint"
+                >Gesamtziel pro Woche (Mo–So).</mat-hint
+              >
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label i18n="@@monthlyGoalLabel">Monatsziel (Reps)</mat-label>
+              <input
+                matInput
+                type="number"
+                min="1"
+                [value]="monthlyGoalDraft()"
+                (input)="
+                  monthlyGoalDraft.set(asNumberOr($event, monthlyGoalDraft()))
+                "
+                placeholder="200"
+                i18n-placeholder="@@monthlyGoalPlaceholder"
+              />
+              <mat-hint i18n="@@settings.monthlyGoalHint"
+                >Gesamtziel pro Monat.</mat-hint
               >
             </mat-form-field>
           </section>
@@ -249,9 +287,6 @@ import { PushSubscriptionService } from '@pu-reminders/reminders';
       align-items: center;
       flex-wrap: wrap;
     }
-    .goal-field {
-      grid-column: 1 / -1;
-    }
     .muted {
       opacity: 0.8;
       font-size: 0.9rem;
@@ -323,7 +358,9 @@ export class SettingsPageComponent {
   readonly isGuest = this.user.isGuest;
 
   readonly displayNameDraft = signal('');
-  readonly dailyGoalDraft = signal<number>(100);
+  readonly dailyGoalDraft = signal<number>(10);
+  readonly weeklyGoalDraft = signal<number>(50);
+  readonly monthlyGoalDraft = signal<number>(200);
   readonly leaderboardOptOutDraft = signal(false);
   readonly adsConsentDraft = signal(false);
 
@@ -341,6 +378,8 @@ export class SettingsPageComponent {
       return (result ?? {}) as {
         displayName?: string;
         dailyGoal?: number;
+        weeklyGoal?: number;
+        monthlyGoal?: number;
         consent?: {
           dataProcessing?: boolean;
           statistics?: boolean;
@@ -357,13 +396,26 @@ export class SettingsPageComponent {
     if (!val || typeof val !== 'object')
       return {
         displayName: '',
-        dailyGoal: 100,
+        dailyGoal: 10,
+        weeklyGoal: 50,
+        monthlyGoal: 200,
         hideFromLeaderboard: false,
         consent: { targetedAds: true },
       };
     return {
       displayName: (val as { displayName?: string }).displayName ?? '',
-      dailyGoal: (val as { dailyGoal?: number }).dailyGoal ?? 100,
+      dailyGoal: Math.max(
+        1,
+        Math.trunc((val as { dailyGoal?: number }).dailyGoal || 10)
+      ),
+      weeklyGoal: Math.max(
+        1,
+        Math.trunc((val as { weeklyGoal?: number }).weeklyGoal || 50)
+      ),
+      monthlyGoal: Math.max(
+        1,
+        Math.trunc((val as { monthlyGoal?: number }).monthlyGoal || 200)
+      ),
       hideFromLeaderboard:
         (val as { ui?: { hideFromLeaderboard?: boolean } }).ui
           ?.hideFromLeaderboard ?? false,
@@ -377,9 +429,11 @@ export class SettingsPageComponent {
     effect(() => {
       const cfg = this.config();
       if (!cfg) return;
-      this.displayNameDraft.set(cfg.displayName ?? '');
-      this.dailyGoalDraft.set(cfg.dailyGoal ?? 100);
-      this.leaderboardOptOutDraft.set(cfg.hideFromLeaderboard ?? false);
+      this.displayNameDraft.set(cfg.displayName);
+      this.dailyGoalDraft.set(cfg.dailyGoal);
+      this.weeklyGoalDraft.set(cfg.weeklyGoal);
+      this.monthlyGoalDraft.set(cfg.monthlyGoal);
+      this.leaderboardOptOutDraft.set(cfg.hideFromLeaderboard);
       this.adsConsentDraft.set(cfg.consent?.targetedAds ?? true);
     });
   }
@@ -388,10 +442,11 @@ export class SettingsPageComponent {
     return (event.target as HTMLInputElement).value;
   }
 
-  asNumber(event: Event): number {
+  asNumberOr(event: Event, fallback: number): number {
     const raw = (event.target as HTMLInputElement).value;
+    if (raw === '') return fallback;
     const n = Number(raw);
-    return Number.isNaN(n) ? 100 : n;
+    return Number.isNaN(n) ? fallback : n;
   }
 
   async save(): Promise<void> {
@@ -399,13 +454,17 @@ export class SettingsPageComponent {
     this.saved.set(false);
     this.errorMessage.set('');
     const userId = this.activeUserId();
-    const dailyGoal = Math.max(1, this.dailyGoalDraft());
+    const dailyGoal = Math.max(1, Math.trunc(this.dailyGoalDraft()));
+    const weeklyGoal = Math.max(1, Math.trunc(this.weeklyGoalDraft()));
+    const monthlyGoal = Math.max(1, Math.trunc(this.monthlyGoalDraft()));
     try {
       const current = this.config();
       await firstValueFrom(
         this.api.updateConfig(userId, {
           displayName: this.displayNameDraft().trim(),
           dailyGoal,
+          weeklyGoal,
+          monthlyGoal,
           consent: {
             ...(current.consent ?? {}),
             targetedAds: this.adsConsentDraft(),
@@ -420,6 +479,8 @@ export class SettingsPageComponent {
       this.trackAnalytics('settings_saved', {
         hideFromLeaderboard: this.leaderboardOptOutDraft(),
         dailyGoal,
+        weeklyGoal,
+        monthlyGoal,
         adsConsent: this.adsConsentDraft(),
       });
     } catch {

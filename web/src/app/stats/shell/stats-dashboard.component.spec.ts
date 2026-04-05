@@ -119,6 +119,8 @@ describe('StatsDashboardComponent', () => {
               of({
                 userId: 'u1',
                 dailyGoal: 100,
+                weeklyGoal: 500,
+                monthlyGoal: 2000,
                 ui: { showSourceColumn: false },
               })
             ),
@@ -227,6 +229,7 @@ describe('StatsDashboardComponent', () => {
           source: 'web',
           type: 'Diamond',
         });
+        await fixture.whenStable();
 
         // Then
         expect(serviceMock.createPushup).toHaveBeenCalledWith({
@@ -260,7 +263,6 @@ describe('StatsDashboardComponent', () => {
     describe('When openCreateDialog is called', () => {
       it('Then MatDialog.open is invoked with CreateEntryDialogComponent', () => {
         // Given — access the same MatDialog instance used by the component
-        // The component's dialog is injected at root level (providedIn: 'root')
         const dialog = fixture.debugElement.injector.get(MatDialog);
         const openSpy = vitest.spyOn(dialog, 'open').mockReturnValue({
           afterClosed: () => of(undefined),
@@ -332,6 +334,134 @@ describe('StatsDashboardComponent', () => {
         // Entry 1 (2025-01-14): 8 reps, Entry 2 (2025-01-15): 12 reps = 20 total
         expect(weekReps).toBe(20);
       });
+    });
+  });
+
+  describe('Given weekly and monthly goals are configured', () => {
+    describe('When goals are loaded from user config', () => {
+      it('Then it should set weekly and monthly goals from config', async () => {
+        // Given
+        const component = fixture.componentInstance;
+        await fixture.whenStable();
+
+        // Then
+        expect(component.weeklyGoal()).toBe(500);
+        expect(component.monthlyGoal()).toBe(2000);
+      });
+    });
+
+    describe('When weeklyGoalProgressPercent is computed', () => {
+      it('Then it should calculate the percentage correctly', async () => {
+        // Given
+        const component = fixture.componentInstance;
+        await fixture.whenStable();
+
+        // When
+        const percent = component.weeklyGoalProgressPercent();
+
+        // Then - weekReps is 20, weeklyGoal is 500 => 4%
+        expect(percent).toBe(4);
+      });
+    });
+
+    describe('When monthReps is computed', () => {
+      it('Then it should sum reps from entries in current month only', async () => {
+        // Given - add an out-of-month entry
+        serviceMock.listPushups.mockReturnValueOnce(
+          of([
+            {
+              _id: '1',
+              timestamp: '2025-01-14T13:45:00',
+              reps: 8,
+              source: 'wa',
+              type: 'Standard',
+            },
+            {
+              _id: '2',
+              timestamp: '2025-01-15T12:00',
+              reps: 12,
+              source: 'web',
+              type: 'Diamond',
+            },
+            {
+              _id: '3',
+              timestamp: '2024-12-20T10:00:00',
+              reps: 50,
+              source: 'web',
+              type: 'Standard',
+            },
+          ])
+        );
+        const freshFixture = TestBed.createComponent(StatsDashboardComponent);
+        await freshFixture.whenStable();
+
+        // When
+        const monthReps = freshFixture.componentInstance.monthReps();
+
+        // Then - only Jan 2025 entries count (8 + 12 = 20), Dec 2024 entry excluded
+        expect(monthReps).toBe(20);
+      });
+    });
+
+    describe('When monthlyGoalProgressPercent is computed', () => {
+      it('Then it should calculate the percentage correctly', async () => {
+        // Given
+        const component = fixture.componentInstance;
+        await fixture.whenStable();
+
+        // When
+        const percent = component.monthlyGoalProgressPercent();
+
+        // Then - monthReps is 20, monthlyGoal is 2000 => 1%
+        expect(percent).toBe(1);
+      });
+    });
+
+    describe('When reps exceed the goal', () => {
+      it('Then progress percent should be capped at 100', async () => {
+        // Given - entries with reps exceeding goals
+        serviceMock.listPushups.mockReturnValueOnce(
+          of([
+            {
+              _id: '1',
+              timestamp: '2025-01-15T10:00',
+              reps: 9999,
+              source: 'web',
+              type: 'Standard',
+            },
+          ])
+        );
+        const configApi = TestBed.inject(UserConfigApiService);
+        (configApi.getConfig as ReturnType<typeof vitest.fn>).mockReturnValue(
+          of({ userId: 'u1', dailyGoal: 10, weeklyGoal: 10, monthlyGoal: 10 })
+        );
+        const freshFixture = TestBed.createComponent(StatsDashboardComponent);
+        await freshFixture.whenStable();
+        const component = freshFixture.componentInstance;
+
+        // Then - all progress percents capped at 100
+        expect(component.goalProgressPercent()).toBe(100);
+        expect(component.weeklyGoalProgressPercent()).toBe(100);
+        expect(component.monthlyGoalProgressPercent()).toBe(100);
+      });
+    });
+  });
+
+  describe('Given goal config has zero or falsy values', () => {
+    it('Then it should fall back to defaults instead of using 0', async () => {
+      // Given - config returns 0 for goals
+      const configApi = TestBed.inject(UserConfigApiService);
+      (configApi.getConfig as ReturnType<typeof vitest.fn>).mockReturnValue(
+        of({ userId: 'u1', dailyGoal: 0, weeklyGoal: 0, monthlyGoal: 0 })
+      );
+      const freshFixture = TestBed.createComponent(StatsDashboardComponent);
+      await freshFixture.whenStable();
+      const component = freshFixture.componentInstance;
+
+      // Then - should use defaults, not 0
+      expect(component.dailyGoal()).toBe(10);
+      expect(component.weeklyGoal()).toBe(50);
+      expect(component.monthlyGoal()).toBe(200);
     });
   });
 

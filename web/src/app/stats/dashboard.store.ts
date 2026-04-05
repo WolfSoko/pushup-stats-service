@@ -31,8 +31,8 @@ const EMPTY_STATS: StatsResponse = {
 };
 
 function sortedUniqueDates(rows: PushupRecord[]): string[] {
-  return [...new Set(rows.map((x) => x.timestamp.slice(0, 10)))].sort(
-    (a, b) => a.localeCompare(b)
+  return [...new Set(rows.map((x) => x.timestamp.slice(0, 10)))].sort((a, b) =>
+    a.localeCompare(b)
   );
 }
 
@@ -46,7 +46,9 @@ function daysBetween(a: string, b: string): number {
 
 export const DashboardStore = signalStore(
   withState({
-    dailyGoal: 100,
+    dailyGoal: 10,
+    weeklyGoal: 50,
+    monthlyGoal: 200,
   }),
   withProps(() => ({
     _api: inject(StatsApiService),
@@ -82,9 +84,7 @@ export const DashboardStore = signalStore(
     const allTimeDays = computed(() => allTimeStats().meta.days);
     const allTimeEntries = computed(() => allTimeStats().meta.entries);
     const allTimeAvg = computed(() =>
-      allTimeDays()
-        ? (allTimeTotal() / allTimeDays()).toFixed(1)
-        : '0'
+      allTimeDays() ? (allTimeTotal() / allTimeDays()).toFixed(1) : '0'
     );
 
     const todayTotal = computed(() => {
@@ -96,10 +96,7 @@ export const DashboardStore = signalStore(
 
     const goalProgressPercent = computed(() =>
       store.dailyGoal()
-        ? Math.min(
-            100,
-            Math.round((todayTotal() / store.dailyGoal()) * 100)
-          )
+        ? Math.min(100, Math.round((todayTotal() / store.dailyGoal()) * 100))
         : 0
     );
 
@@ -162,6 +159,29 @@ export const DashboardStore = signalStore(
         .reduce((sum, entry) => sum + entry.reps, 0);
     });
 
+    const monthReps = computed(() => {
+      const today = new Date();
+      const yearStr = String(today.getFullYear());
+      const monthStr = String(today.getMonth() + 1).padStart(2, '0');
+      const prefix = `${yearStr}-${monthStr}`;
+
+      return entryRows()
+        .filter((entry) => entry.timestamp.startsWith(prefix))
+        .reduce((sum, entry) => sum + entry.reps, 0);
+    });
+
+    const weeklyGoalProgressPercent = computed(() =>
+      store.weeklyGoal()
+        ? Math.min(100, Math.round((weekReps() / store.weeklyGoal()) * 100))
+        : 0
+    );
+
+    const monthlyGoalProgressPercent = computed(() =>
+      store.monthlyGoal()
+        ? Math.min(100, Math.round((monthReps() / store.monthlyGoal()) * 100))
+        : 0
+    );
+
     const loading = computed(() => {
       const status = store.entriesResource.status();
       return status === 'loading' || status === 'reloading';
@@ -170,11 +190,11 @@ export const DashboardStore = signalStore(
     const liveConnected = computed(() => store._live.connected());
 
     const adClient = computed(() => store._ads.adClient());
-    const adSlotDashboardInline = computed(
-      () => store._ads.dashboardInlineSlot()
+    const adSlotDashboardInline = computed(() =>
+      store._ads.dashboardInlineSlot()
     );
-    const dashboardInlineAdsEnabled = computed(
-      () => store._ads.dashboardInlineEnabled()
+    const dashboardInlineAdsEnabled = computed(() =>
+      store._ads.dashboardInlineEnabled()
     );
 
     const todayQuote = store._motivation.todayQuote;
@@ -188,6 +208,9 @@ export const DashboardStore = signalStore(
       entryRows,
       currentStreak,
       weekReps,
+      monthReps,
+      weeklyGoalProgressPercent,
+      monthlyGoalProgressPercent,
       todayTotal,
       goalProgressPercent,
       lastEntry,
@@ -209,7 +232,13 @@ export const DashboardStore = signalStore(
       await store._motivation.loadQuotes(store._user.userIdSafe());
     },
     setDailyGoal(goal: number): void {
-      patchState(store, { dailyGoal: goal });
+      patchState(store, { dailyGoal: Math.max(1, Math.trunc(goal || 1)) });
+    },
+    setWeeklyGoal(goal: number): void {
+      patchState(store, { weeklyGoal: Math.max(1, Math.trunc(goal || 1)) });
+    },
+    setMonthlyGoal(goal: number): void {
+      patchState(store, { monthlyGoal: Math.max(1, Math.trunc(goal || 1)) });
     },
   }))
 );

@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<?xml version="1.0" encoding="UTF-8"?>
 <xliff version="2.0" xmlns="urn:oasis:names:tc:xliff:document:2.0" srcLang="de" trgLang="en">
   <file id="ngi18n" original="ng.template">
     <unit id="1713004850888488155">
@@ -1065,8 +1064,8 @@ Active:         </target>
         
             </notes>
       <segment state="translated">
-        <source>100</source>
-        <target>100</target>
+        <source>10</source>
+        <target>10</target>
 
         
         
@@ -1075,6 +1074,60 @@ Active:         </target>
       
       
         </unit>
+    <unit id="weeklyGoalLabel">
+      <segment state="translated">
+        <source>Wochenziel (Reps)</source>
+        <target>Weekly goal (reps)</target>
+      </segment>
+    </unit>
+    <unit id="weeklyGoalPlaceholder">
+      <segment state="translated">
+        <source>50</source>
+        <target>50</target>
+      </segment>
+    </unit>
+    <unit id="settings.weeklyGoalHint">
+      <segment state="translated">
+        <source>Gesamtziel pro Woche (Mo–So).</source>
+        <target>Total goal per week (Mon–Sun).</target>
+      </segment>
+    </unit>
+    <unit id="monthlyGoalLabel">
+      <segment state="translated">
+        <source>Monatsziel (Reps)</source>
+        <target>Monthly goal (reps)</target>
+      </segment>
+    </unit>
+    <unit id="monthlyGoalPlaceholder">
+      <segment state="translated">
+        <source>200</source>
+        <target>200</target>
+      </segment>
+    </unit>
+    <unit id="settings.monthlyGoalHint">
+      <segment state="translated">
+        <source>Gesamtziel pro Monat.</source>
+        <target>Total goal per month.</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.dailyGoalLabel">
+      <segment state="translated">
+        <source>Tag</source>
+        <target>Day</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.weeklyGoalLabel">
+      <segment state="translated">
+        <source>Woche</source>
+        <target>Week</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.monthlyGoalLabel">
+      <segment state="translated">
+        <source>Monat</source>
+        <target>Month</target>
+      </segment>
+    </unit>
     <unit id="dashboard.leaderboard.subtitle">
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html</note>
@@ -4367,8 +4420,8 @@ Deine Position: # ·  Reps        </source>
         <note category="location">web/src/app/stats/components/analysis-teaser-card/analysis-teaser-card.component.ts</note>
       </notes>
       <segment state="translated">
-        <source>Diese Woche: <ph id="0" equiv="INTERPOLATION" disp="{{ weekReps() }}"/> Reps</source>
-        <target>This week: <ph id="0" equiv="INTERPOLATION" disp="{{ weekReps() }}"/> reps</target>
+        <source>Diese Woche: <ph id="0" equiv="INTERPOLATION" disp="{{ weekReps() }}"/> / <ph id="1" equiv="INTERPOLATION_1" disp="{{ weeklyGoal() }}"/> Reps</source>
+        <target>This week: <ph id="0" equiv="INTERPOLATION" disp="{{ weekReps() }}"/> / <ph id="1" equiv="INTERPOLATION_1" disp="{{ weeklyGoal() }}"/> reps</target>
       </segment>
     </unit>
     <unit id="dashboard.analysisTeaserError">
