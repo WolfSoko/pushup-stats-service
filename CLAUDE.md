@@ -7,6 +7,17 @@ Angular 21 / Nx monorepo for tracking pushup statistics with Firebase backend.
 - **Trunk-based development:** Push directly to `main`. No feature branches by default.
 - Feature branches or worktrees only when explicitly requested.
 
+## Quality Philosophy
+
+If a bug reaches production, the CI pipeline wasn't good enough. Every change must be backed by tests **before** pushing to `main`:
+
+- **Unit tests:** Cover all new/changed logic. High coverage is mandatory, not optional.
+- **Smoke tests:** Ensure critical user flows don't break (dashboard loads, entries CRUD, auth flow).
+- **Regression tests:** Every bugfix must include a test that reproduces the bug first (TDD red-green).
+- **Rule of thumb:** If you can't prove a change works via CI, it's not ready to merge.
+
+When making changes, always write or update relevant tests as part of the same commit. Do not push untested code to `main`.
+
 ## Tech Stack
 
 - **Frontend:** Angular 21 (standalone, zoneless, SSR)
