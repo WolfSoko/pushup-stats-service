@@ -25,6 +25,18 @@
         "command": "node tools/src/export-nedb-user-configs.js",
         "cwd": "{workspaceRoot}"
       }
+    },
+    "generate-sitemap": {
+      "executor": "nx:run-commands",
+      "inputs": [
+        "{workspaceRoot}/web/src/app/blog/blog-posts.data.ts",
+        "{workspaceRoot}/tools/src/generate-sitemap.mjs"
+      ],
+      "outputs": ["{workspaceRoot}/web/public/sitemap.xml"],
+      "options": {
+        "command": "node tools/src/generate-sitemap.mjs",
+        "cwd": "{workspaceRoot}"
+      }
     }
   }
 }

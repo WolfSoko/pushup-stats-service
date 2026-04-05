@@ -19,6 +19,7 @@
   "targets": {
     "build": {
       "executor": "@angular/build:application",
+      "dependsOn": ["tools:generate-sitemap"],
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/web",
