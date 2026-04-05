@@ -7,7 +7,6 @@ import {
   berlinDateParts,
   isoWeekFromYmd,
   BerlinDateParts,
-  IsoWeekParts,
 } from '../datetime';
 import {
   toPublicDisplayName,
@@ -47,7 +46,6 @@ export interface LeaderboardDocument {
 }
 
 const TOP_N = 10;
-const TZ = 'Europe/Berlin';
 
 /**
  * Ranks pushup entries for a specific period and target key
@@ -70,8 +68,8 @@ export function rankEntries(
   for (const row of rows) {
     if (!row.timestamp || !row.userId) continue;
 
-    const datePart = String(row.timestamp).slice(0, 10);
-    const d = new Date(`${datePart}T00:00:00Z`);
+    const d = new Date(String(row.timestamp));
+    if (Number.isNaN(d.getTime())) continue;
     const p = berlinDateParts(d);
 
     // Calculate which period this entry belongs to

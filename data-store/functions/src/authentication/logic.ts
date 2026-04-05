@@ -84,11 +84,11 @@ export function validateRecaptchaPayload(
   token: unknown,
   action: unknown
 ): { valid: boolean; error?: string } {
-  if (!token || typeof token !== 'string') {
+  if (typeof token !== 'string' || !token.trim()) {
     return { valid: false, error: 'token missing or invalid' };
   }
 
-  if (!action || typeof action !== 'string') {
+  if (typeof action !== 'string' || !action.trim()) {
     return { valid: false, error: 'action missing or invalid' };
   }
 

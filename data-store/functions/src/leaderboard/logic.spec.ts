@@ -5,7 +5,6 @@ import {
   getMonthStartForQuery,
   filterOutDemoUser,
   PushupRow,
-  LeaderboardEntry,
 } from './logic';
 import { UserProfile } from '../profile';
 

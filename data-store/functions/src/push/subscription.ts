@@ -49,7 +49,7 @@ export function validateSubscriptionPayload(
 ): { valid: boolean; error?: string } {
   const obj = data as Record<string, unknown>;
 
-  if (!obj?.endpoint || typeof obj.endpoint !== 'string') {
+  if (typeof obj?.endpoint !== 'string' || obj.endpoint.trim().length === 0) {
     return { valid: false, error: 'endpoint missing or invalid' };
   }
 
@@ -58,11 +58,11 @@ export function validateSubscriptionPayload(
   }
 
   const keys = obj.keys as Record<string, unknown>;
-  if (!keys.p256dh || typeof keys.p256dh !== 'string') {
+  if (typeof keys.p256dh !== 'string' || keys.p256dh.trim().length === 0) {
     return { valid: false, error: 'keys.p256dh missing or invalid' };
   }
 
-  if (!keys.auth || typeof keys.auth !== 'string') {
+  if (typeof keys.auth !== 'string' || keys.auth.trim().length === 0) {
     return { valid: false, error: 'keys.auth missing or invalid' };
   }
 

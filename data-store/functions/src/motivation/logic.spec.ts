@@ -41,7 +41,7 @@ describe('motivation/logic', () => {
     });
 
     it('removes special characters', () => {
-      expect(sanitizeDisplayName('Alice@123#!")).toBe('Alice123');
+      expect(sanitizeDisplayName('Alice@123#!')).toBe('Alice123');
       expect(sanitizeDisplayName('José')).toBe('José'); // Unicode allowed
     });
 

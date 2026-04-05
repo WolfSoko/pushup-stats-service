@@ -52,7 +52,7 @@ export function sanitizeDisplayName(rawName: string): string {
  */
 export function extractJsonArray(text: string): unknown[] | null {
   try {
-    const jsonMatch = text.match(/\[[\s\S]*\]/);
+    const jsonMatch = text.match(/\[[\s\S]*?\]/);
     if (!jsonMatch) return null;
     const parsed = JSON.parse(jsonMatch[0]);
     return Array.isArray(parsed) ? parsed : null;
