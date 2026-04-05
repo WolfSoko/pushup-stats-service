@@ -1,0 +1,222 @@
+{
+  "learning_version": "2.1",
+  "timestamp": "2026-04-05T00:00:00Z",
+  "session_focus": "AdSense approval fix (PR #176) - Legal pages, GDPR consent, sitemap, and SSR hydration",
+  "status": "complete",
+  "evidence_verified": true,
+  "patterns_found": [
+    {
+      "id": "app-shell-store-injection",
+      "name": "App Shell Component Store Injection",
+      "frequency": 1,
+      "severity": "high",
+      "symptoms": "Test failures in app.spec.ts when a new store-dependent component is added to app shell",
+      "root_cause": "All existing app shell tests fail because the new component requires a store mock, but the test module instantiation doesn't provide it",
+      "category": "test_maintenance",
+      "evidence": {
+        "issue": "CookieConsentBannerComponent injection into app shell caused app.spec.ts to fail",
+        "fix_pattern": "Add AdsStore provider mock to TestBed setup"
+      },
+      "impact": "Immediate - blocks all tests when new stores are injected into root component"
+    },
+    {
+      "id": "edit-tool-replace-collisions",
+      "name": "Edit Tool Replace String Collisions",
+      "frequency": 1,
+      "severity": "medium",
+      "symptoms": "Unintended string replacements in import paths and token names from replace_all with short search strings",
+      "root_cause": "Short search strings like 'COOKIE_CONSENT_KEY' match multiple locations beyond the intended target",
+      "category": "execution_safety",
+      "evidence": {
+        "issue": "COOKIE_COOKIE_CONSENT_KEY (double-prefix) caused by replace_all operation",
+        "solution": "Manual verification required; consider more specific replacement patterns"
+      },
+      "impact": "Medium - requires manual fixing after replace operations"
+    },
+    {
+      "id": "ssr-hydration-store-state",
+      "name": "SSR Hydration: Server vs Client Store State Divergence",
+      "frequency": 1,
+      "severity": "high",
+      "symptoms": "Store state (e.g., consentAnswered: false) differs between server render and client, causing hydration mismatch",
+      "root_cause": "Store initialization happens on server with browser APIs unavailable (localStorage). Client doesn't re-sync initial state.",
+      "category": "execution_issue",
+      "evidence": {
+        "issue": "AdsStore consentAnswered was false on server (no localStorage), never updated on client",
+        "solution": "Use withHooks onInit to detect browser environment and update state after SSR hydration"
+      },
+      "impact": "High - silent failures, ads don't render despite user consent"
+    },
+    {
+      "id": "angular-test-context-api-mismatch",
+      "name": "Angular Testing Framework Context API Mismatch",
+      "frequency": 3,
+      "severity": "medium",
+      "symptoms": "Test fails with undefined function error (vitest.fn() in Jest context, $localize not defined in Jest)",
+      "root_cause": "Testing APIs differ between Vitest and Jest; Vitest and Jest have different setup files",
+      "category": "execution_issue",
+      "evidence": [
+        "vitest.fn() → use jest.fn() in Jest-based tests",
+        "Missing import '@angular/localize/init' in Jest test files",
+        "TestBed.overrideProvider after module instantiation causes state leakage"
+      ],
+      "impact": "Medium - test setup overhead"
+    },
+    {
+      "id": "static-file-serving-patterns",
+      "name": "Static File Serving: URL Rewrite vs sendFile Trade-offs",
+      "frequency": 1,
+      "severity": "low",
+      "symptoms": "Choice between Express sendFile (security concerns) and URL rewrite middleware for serving root-level static files",
+      "root_cause": "sendFile requires careful rate limiting; rewrite + express.static is simpler but requires localized path structure",
+      "category": "architectural_pattern",
+      "evidence": {
+        "issue": "CodeQL flagged sendFile without rate limiting for robots.txt",
+        "solution": "Express middleware rewrite: /robots.txt → /de/robots.txt, let express.static serve; add Cache-Control: 1h"
+      },
+      "pattern": "For i18n + static files, prefer rewrite middleware + express.static over sendFile"
+    },
+    {
+      "id": "blog-hreflang-multilang-issue",
+      "name": "Blog hreflang Alternates with Different Language Slugs",
+      "frequency": 1,
+      "severity": "low",
+      "symptoms": "hreflang alternates point to non-existent routes when DE and EN blog posts have different slugs",
+      "root_cause": "Blog slugs are language-specific (DE: 'mein-post', EN: 'my-post'), so hreflang alternates for blog routes 404",
+      "category": "architectural_pattern",
+      "evidence": {
+        "issue": "Sitemap includes hreflang for /blog/* routes, but EN slug doesn't exist",
+        "solution": "Disable hreflang for blog routes; only add for static pages with matching i18n URLs"
+      },
+      "pattern": "Only use hreflang for routes with identical structure in all languages"
+    },
+    {
+      "id": "ai-review-comment-false-positives",
+      "name": "AI Review Comments on German Typography",
+      "frequency": 1,
+      "severity": "low",
+      "symptoms": "False positive review comments about German quotation marks and dashes being unusual characters",
+      "root_cause": "AI reviewers may not recognize German typography as intentional localization",
+      "category": "process_overhead",
+      "evidence": {
+        "issue": "Comments flagging German quotation marks and dashes as non-ASCII characters in XLIFF",
+        "solution": "Expected for German locale; can be dismissed"
+      },
+      "pattern": "German i18n will trigger false positives on German typography"
+    }
+  ],
+  "skill_adjustments": [
+    {
+      "skill": "testing",
+      "section": "Jest vs Vitest Compatibility",
+      "action": "add",
+      "content": "## Testing Framework Compatibility\n\nWhen writing tests for projects using different testing frameworks:\n\n### Jest Context (libs, e2e)\n- Use `jest.fn()` instead of `vitest.fn()`\n- Import `'@angular/localize/init'` in test files that use $localize\n- TestBed providers should be set up once per describe block, not overridden after instantiation\n\n### Vitest Context (web app)\n- Can use `vitest.fn()`, `vitest.vi.spy()`, etc.\n- Locale initialization may differ\n\n### Best Practice\n- Check `project.json` under test configuration to determine framework\n- For multi-framework projects, maintain separate test setup patterns per framework",
+      "reasoning": "Prevents test setup errors and speeds up debugging when working across Nx projects with different test frameworks"
+    },
+    {
+      "skill": "ssr-patterns",
+      "section": "Browser-Only State Initialization",
+      "action": "add",
+      "content": "## SSR Hydration: Syncing Browser State\n\n### Pattern: withHooks onInit for Browser-Only APIs\n\nWhen a signalStore uses browser-only APIs (localStorage, window, document), use `withHooks` to ensure state syncs after SSR hydration:\n\n```typescript\nwithHooks({\n  onInit() {\n    // This runs both on server AND client, but browser APIs are\n    // unavailable on server, so check environment:\n    if (typeof window !== 'undefined') {\n      // Client-side only: read from localStorage\n      const stored = localStorage.getItem('pus_cookie_consent');\n      patchState({\n        consentAnswered: stored ? true : false,\n        consent: stored as 'all' | 'necessary',\n      });\n    }\n  },\n})\n```\n\n### Why This Matters\n- Server renders with false/default state (no localStorage)\n- Client needs to sync actual browser state during hydration\n- Without onInit, client never updates, causing ads/features to be invisible\n- Place this hook EARLY in the withHooks chain, before other effects\n\n### Symptoms to Watch For\n- Feature works on dev (client-only) but not in production (SSR)\n- State differs between server render and client inspection\n- Silent failures with no console errors",
+      "reasoning": "SSR hydration bugs are hard to debug in production. This pattern prevents silent state divergence."
+    },
+    {
+      "skill": "app-shell-testing",
+      "section": "Mock Dependencies for Root Component Tests",
+      "action": "add",
+      "content": "## App Shell Testing: Store Injection Ripple Effect\n\n### Pattern: Mock All Injected Stores\n\nWhen a store is injected into the root app component (or any shell component), ALL tests that instantiate the app component must provide that store in TestBed:\n\n```typescript\nconst mockAdsStore = {\n  consentAnswered: signal(true),\n  targetedAdsConsent: signal(false),\n  // ... other signals\n};\n\nTestBed.configureTestingModule({\n  providers: [\n    { provide: AdsStore, useValue: mockAdsStore },\n  ],\n});\n```\n\n### Why This Matters\n- Root component injection affects ALL tests that mount that component\n- Missing mock → provider not found error → test fails\n- This includes indirect tests that render the app (layout tests, routing tests)\n\n### Prevention\n- When adding a new store to app root, immediately update app.spec.ts\n- Consider: can this store be lazy-loaded instead? (Often yes for non-critical stores)\n- If lazy: inject in a feature component, not app root",
+      "reasoning": "Prevents cascading test failures when modifying the root component"
+    },
+    {
+      "skill": "edit-tool-safety",
+      "section": "Replace String Collision Risks",
+      "action": "add",
+      "content": "## Edit Tool Safety: Replace String Collisions\n\n### Risk Pattern: Short String Replacements\n\nWhen using the Edit tool's replace_all feature with short strings, unintended replacements can occur:\n\n```\nBAD: Search 'CONSENT_KEY', Replace 'COOKIE_CONSENT_KEY'\n     → 'pus_CONSENT_KEY' becomes 'pus_COOKIE_CONSENT_KEY' ✓ (correct)\n     → 'OLD_CONSENT_KEY' becomes 'OLD_COOKIE_CONSENT_KEY' ✗ (unintended)\n\nGOOD: Search 'pus_CONSENT_KEY', Replace 'pus_COOKIE_CONSENT_KEY'\n      → More specific, fewer collisions\n```\n\n### Best Practices\n- Always include context (module name, prefix, scope)\n- For token names, include the full path from root: 'COOKIE_CONSENT_KEY'\n- Test replace on a small file first before large-scale replacement\n- Review diff carefully after replace_all operations\n\n### When to Use Manual Fix\n- If collision is discovered, manually revert and use more specific pattern\n- Don't rely on replace_all for refactoring token names across many files",
+      "reasoning": "Prevents subtle bugs from unintended string replacements that are hard to spot in review"
+    },
+    {
+      "skill": "sitemap-multilingual",
+      "section": "hreflang for Multi-Language Sites",
+      "action": "add",
+      "content": "## Sitemap & hreflang: Language Slug Considerations\n\n### Pattern: Only Add hreflang for Parallel Routes\n\nhreflang alternates only work when the URL structure is identical across languages:\n\n```\nGOOD:\n  DE: /de/about → EN: /en/about (parallel structure)\n  → hreflang link: <de> links to /de/about, <en> links to /en/about\n\nBAD:\n  DE: /de/blog/mein-post → EN: /en/blog/my-post (different slugs)\n  → hreflang would link DE post to EN post with different slug (404)\n```\n\n### For Content with Different Slugs (Blog Posts)\n- Disable hreflang for blog routes\n- Allow each language version to rank independently\n- Consider: translating slugs to maintain parallel structure (more effort, better SEO)\n\n### Implementation\n```typescript\nconst routes = sitemap.routes\n  .filter(r => !r.url.includes('/blog/')); // Exclude blog from hreflang\n\n// Add hreflang only for static pages\nif (hasParallelStructure(route)) {\n  addHreflang(route);\n}\n```\n\n### Impact\n- Missing hreflang: Search engines may not index both language versions\n- Broken hreflang (404): Confuses search engines, hurts ranking\n- No hreflang for blog: Each language version ranks independently (acceptable)",
+      "reasoning": "Prevents broken hreflang links that confuse search engines and hurt SEO for localized sites"
+    }
+  ],
+  "process_improvements": [
+    {
+      "phase": "EXECUTE",
+      "category": "test-maintenance",
+      "suggestion": "When injecting a store into app root, immediately run app tests and update mocks. Consider: can this store be lazy-loaded instead? Root component dependencies ripple across all tests.",
+      "impact": "Prevents cascading test failures during subsequent development"
+    },
+    {
+      "phase": "EXECUTE",
+      "category": "string-replacement-safety",
+      "suggestion": "Before running large replace_all operations, test on a single file or limited scope. Review full diff for unintended replacements.",
+      "impact": "Catches collision bugs before they spread across codebase"
+    },
+    {
+      "phase": "ANALYZE",
+      "category": "ssr-awareness",
+      "suggestion": "When designing state management for SSR apps, explicitly document which signals depend on browser APIs. Mark these with comments and use withHooks onInit for hydration sync.",
+      "impact": "Prevents silent SSR hydration bugs that are hard to debug in production"
+    },
+    {
+      "phase": "GENERATE",
+      "category": "legal-compliance-checklist",
+      "suggestion": "For ads/monetization features: checklist should include sitemap generation, legal pages (Impressum, Datenschutz), GDPR consent banner, and NPA mode. Auto-generate sitemap via build dependency.",
+      "impact": "Ensures compliance + SEO requirements are not missed in future monetization work"
+    }
+  ],
+  "architectural_patterns": [
+    {
+      "name": "SSR Hydration Pattern: Browser State Sync",
+      "description": "For signals that depend on browser APIs (localStorage, window), use withHooks onInit to detect browser environment and update state after hydration",
+      "success_example": "AdsStore now syncs consent state on client after SSR",
+      "when_to_use": "Any store signal that reads from localStorage, sessionStorage, window, or document",
+      "when_not_to_use": "Server-side only state (e.g., Firestore real-time listeners that are already browser-gated)"
+    },
+    {
+      "name": "Static File Serving Pattern: URL Rewrite vs sendFile",
+      "description": "For i18n + static files at root (robots.txt, sitemap.xml), prefer Express middleware rewrite + express.static over sendFile. Rewrite /robots.txt → /de/robots.txt, let express.static serve with 1h Cache-Control.",
+      "success_example": "robots.txt served at root without security concerns, CodeQL clean",
+      "when_to_use": "Static files that need to be served at root path in i18n apps",
+      "when_not_to_use": "Large files that need streaming (use sendFile with rate limiting)"
+    },
+    {
+      "name": "Sitemap Multi-Language Pattern",
+      "description": "Generate sitemap with hreflang only for routes with parallel structure across languages. Skip hreflang for routes with language-specific slugs (blog).",
+      "success_example": "Sitemap successfully generated with hreflang for static pages, excluded for blog",
+      "when_to_use": "Multi-language sites with some parallel routes and some content-specific routes",
+      "when_not_to_use": "Single-language sites"
+    }
+  ],
+  "technical_insights": [
+    {
+      "topic": "Cookie Consent Implementation",
+      "insight": "Separate cookie consent (pus_cookie_consent) from analytics consent (pus_analytics_consent). Cookie consent gates ad rendering via consentAnswered signal; analytics consent gates GTM/GA4. AdsStore hydrates consent on browser init via withHooks.",
+      "source": "AdsStore implementation in PR #176"
+    },
+    {
+      "topic": "GDPR Compliance for Ads",
+      "insight": "Non-personalized ads (NPA) don't require GDPR opt-in but require a consent notice. Banner alone satisfies this. Personalized ads require explicit consent (consentAnswered + targetedAdsConsent).",
+      "source": "AdSense approval requirements"
+    },
+    {
+      "topic": "i18n File Serving",
+      "insight": "For i18n + static files (robots.txt, sitemap.xml), store files in locale folder (/de/robots.txt) and use Express rewrite middleware. Simpler and more secure than sendFile.",
+      "source": "Express middleware implementation for root file serving"
+    },
+    {
+      "topic": "Nx Build Dependencies",
+      "insight": "Sitemap generation can be wired as a dependsOn in Nx build configuration, ensuring it runs before web:build. This keeps generated files in sync automatically.",
+      "source": "Sitemap generation script integration"
+    }
+  ],
+  "memory_updates": {
+    "patterns_recorded": 7,
+    "skills_adjusted": 5,
+    "architectural_patterns_documented": 3,
+    "technical_insights_added": 4
+  }
+}
