@@ -42,11 +42,14 @@ const angularApp = new AngularNodeAppEngine();
 
 // Serve root-level well-known files from the /de build output
 // so they are available at the domain root for crawlers.
-for (const file of ['ads.txt', 'robots.txt', 'sitemap.xml']) {
-  app.get(`/${file}`, (_req, res) =>
-    res.sendFile(join(browserDistFolder, 'de', file))
-  );
-}
+const rootFiles = new Set(['ads.txt', 'robots.txt', 'sitemap.xml']);
+app.use((req, res, next) => {
+  const file = req.path.slice(1);
+  if (rootFiles.has(file)) {
+    req.url = `/de/${file}`;
+  }
+  next();
+});
 
 /**
  * Serve static files from /browser
