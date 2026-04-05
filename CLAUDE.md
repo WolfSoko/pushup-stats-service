@@ -26,7 +26,7 @@ When making changes, always write or update relevant tests as part of the same c
 - **State:** @ngrx/signals (signal stores)
 - **UI:** Angular Material 21, Chart.js – **always prefer Material components** (`mat-button`, `mat-icon`, etc.) over plain HTML elements for buttons, inputs, dialogs, and other interactive controls
 - **Testing:** Vitest (web), Jest (libs), Playwright (e2e)
-- **Animations:** `@angular/animations` is **not** a project dependency (deprecated). Material components work without it. Do NOT use `NoopAnimationsModule` in tests.
+- **Deprecated:** `@angular/animations` is deprecated and NOT a project dependency — do not use or import it. Use CSS animations/transitions instead.
 
 ## Architecture
 
