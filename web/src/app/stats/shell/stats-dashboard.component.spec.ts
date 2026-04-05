@@ -460,8 +460,8 @@ describe('StatsDashboardComponent', () => {
 
       // Then - should use defaults, not 0
       expect(component.dailyGoal()).toBe(100);
-      expect(component.weeklyGoal()).toBe(700);
-      expect(component.monthlyGoal()).toBe(3000);
+      expect(component.weeklyGoal()).toBe(500);
+      expect(component.monthlyGoal()).toBe(2000);
     });
   });
 

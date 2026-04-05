@@ -107,8 +107,8 @@ export class StatsDashboardComponent {
       const cfg = this.store.userConfigResource.value();
       if (!cfg) return;
       this.store.setDailyGoal(cfg.dailyGoal || 100);
-      this.store.setWeeklyGoal(cfg.weeklyGoal || 700);
-      this.store.setMonthlyGoal(cfg.monthlyGoal || 3000);
+      this.store.setWeeklyGoal(cfg.weeklyGoal || 500);
+      this.store.setMonthlyGoal(cfg.monthlyGoal || 2000);
     });
 
     effect(() => {

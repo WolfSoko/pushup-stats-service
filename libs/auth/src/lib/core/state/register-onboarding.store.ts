@@ -13,6 +13,8 @@ export type RegisterProfileInput = {
   uid: string;
   displayName: string;
   dailyGoal: number;
+  weeklyGoal: number;
+  monthlyGoal: number;
 };
 
 type RegisterOnboardingState = {
@@ -39,6 +41,20 @@ export const RegisterOnboardingStore = signalStore(
           userProfileApi.updateConfig(input.uid, {
             displayName: input.displayName.trim(),
             dailyGoal: Math.max(1, Number(input.dailyGoal || 100)),
+            weeklyGoal: Math.max(
+              1,
+              Number(
+                input.weeklyGoal ||
+                  Math.max(1, Number(input.dailyGoal || 100)) * 5
+              )
+            ),
+            monthlyGoal: Math.max(
+              1,
+              Number(
+                input.monthlyGoal ||
+                  Math.max(1, Number(input.dailyGoal || 100)) * 20
+              )
+            ),
             consent: {
               dataProcessing: true,
               statistics: true,

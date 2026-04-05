@@ -47,8 +47,8 @@ function daysBetween(a: string, b: string): number {
 export const DashboardStore = signalStore(
   withState({
     dailyGoal: 100,
-    weeklyGoal: 700,
-    monthlyGoal: 3000,
+    weeklyGoal: 500,
+    monthlyGoal: 2000,
   }),
   withProps(() => ({
     _api: inject(StatsApiService),

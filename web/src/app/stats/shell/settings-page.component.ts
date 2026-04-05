@@ -130,7 +130,7 @@ import { PushSubscriptionService } from '@pu-reminders/reminders';
                 (input)="
                   weeklyGoalDraft.set(asNumberOr($event, weeklyGoalDraft()))
                 "
-                placeholder="700"
+                placeholder="500"
                 i18n-placeholder="@@weeklyGoalPlaceholder"
               />
               <mat-hint i18n="@@settings.weeklyGoalHint"
@@ -148,7 +148,7 @@ import { PushSubscriptionService } from '@pu-reminders/reminders';
                 (input)="
                   monthlyGoalDraft.set(asNumberOr($event, monthlyGoalDraft()))
                 "
-                placeholder="3000"
+                placeholder="2000"
                 i18n-placeholder="@@monthlyGoalPlaceholder"
               />
               <mat-hint i18n="@@settings.monthlyGoalHint"
@@ -359,8 +359,8 @@ export class SettingsPageComponent {
 
   readonly displayNameDraft = signal('');
   readonly dailyGoalDraft = signal<number>(100);
-  readonly weeklyGoalDraft = signal<number>(700);
-  readonly monthlyGoalDraft = signal<number>(3000);
+  readonly weeklyGoalDraft = signal<number>(500);
+  readonly monthlyGoalDraft = signal<number>(2000);
   readonly leaderboardOptOutDraft = signal(false);
   readonly adsConsentDraft = signal(false);
 
@@ -397,8 +397,8 @@ export class SettingsPageComponent {
       return {
         displayName: '',
         dailyGoal: 100,
-        weeklyGoal: 700,
-        monthlyGoal: 3000,
+        weeklyGoal: 500,
+        monthlyGoal: 2000,
         hideFromLeaderboard: false,
         consent: { targetedAds: true },
       };
@@ -410,11 +410,11 @@ export class SettingsPageComponent {
       ),
       weeklyGoal: Math.max(
         1,
-        Math.trunc((val as { weeklyGoal?: number }).weeklyGoal || 700)
+        Math.trunc((val as { weeklyGoal?: number }).weeklyGoal || 500)
       ),
       monthlyGoal: Math.max(
         1,
-        Math.trunc((val as { monthlyGoal?: number }).monthlyGoal || 3000)
+        Math.trunc((val as { monthlyGoal?: number }).monthlyGoal || 2000)
       ),
       hideFromLeaderboard:
         (val as { ui?: { hideFromLeaderboard?: boolean } }).ui

@@ -85,6 +85,8 @@ describe('RegisterUiStore', () => {
         uid: 'uid-1',
         displayName: 'Alex',
         dailyGoal: 120,
+        weeklyGoal: 600,
+        monthlyGoal: 2400,
       })
     );
   });

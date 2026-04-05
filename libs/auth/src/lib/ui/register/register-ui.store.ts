@@ -117,10 +117,13 @@ export const RegisterUiStore = signalStore(
       const uid = auth?.currentUser?.uid ?? authStore.user()?.uid;
       if (!uid) return false;
       try {
+        const daily = store.dailyGoal();
         await onboardingStore.saveProfile({
           uid,
           displayName: store.displayName(),
-          dailyGoal: store.dailyGoal(),
+          dailyGoal: daily,
+          weeklyGoal: daily * 5,
+          monthlyGoal: daily * 20,
         });
         patchState(store, { registerSuccess: true });
         return true;

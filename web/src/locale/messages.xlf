@@ -155,7 +155,7 @@
     </unit>
     <unit id="auth.register.error.profileSaveFailed">
       <notes>
-        <note category="location">libs/auth/src/lib/core/state/register-onboarding.store.ts:52</note>
+        <note category="location">libs/auth/src/lib/core/state/register-onboarding.store.ts:56</note>
       </notes>
       <segment>
         <source>Profil konnte nicht gespeichert werden. Bitte erneut versuchen.</source>
@@ -2907,7 +2907,7 @@
         <note category="location">web/src/app/stats/shell/settings-page.component.ts:134</note>
       </notes>
       <segment>
-        <source>700</source>
+        <source>500</source>
       </segment>
     </unit>
     <unit id="settings.weeklyGoalHint">
@@ -2931,7 +2931,7 @@
         <note category="location">web/src/app/stats/shell/settings-page.component.ts:152</note>
       </notes>
       <segment>
-        <source>3000</source>
+        <source>2000</source>
       </segment>
     </unit>
     <unit id="settings.monthlyGoalHint">
