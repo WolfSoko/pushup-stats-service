@@ -119,6 +119,8 @@ describe('StatsDashboardComponent', () => {
               of({
                 userId: 'u1',
                 dailyGoal: 100,
+                weeklyGoal: 500,
+                monthlyGoal: 2000,
                 ui: { showSourceColumn: false },
               })
             ),
@@ -331,6 +333,62 @@ describe('StatsDashboardComponent', () => {
         // Then - both entries are in current week (Jan 13-19, 2025)
         // Entry 1 (2025-01-14): 8 reps, Entry 2 (2025-01-15): 12 reps = 20 total
         expect(weekReps).toBe(20);
+      });
+    });
+  });
+
+  describe('Given weekly and monthly goals are configured', () => {
+    describe('When goals are loaded from user config', () => {
+      it('Then it should set weekly and monthly goals from config', async () => {
+        // Given
+        const component = fixture.componentInstance;
+        await fixture.whenStable();
+
+        // Then
+        expect(component.weeklyGoal()).toBe(500);
+        expect(component.monthlyGoal()).toBe(2000);
+      });
+    });
+
+    describe('When weeklyGoalProgressPercent is computed', () => {
+      it('Then it should calculate the percentage correctly', async () => {
+        // Given
+        const component = fixture.componentInstance;
+        await fixture.whenStable();
+
+        // When
+        const percent = component.weeklyGoalProgressPercent();
+
+        // Then - weekReps is 20, weeklyGoal is 500 => 4%
+        expect(percent).toBe(4);
+      });
+    });
+
+    describe('When monthReps is computed', () => {
+      it('Then it should sum reps from entries in current month', async () => {
+        // Given
+        const component = fixture.componentInstance;
+        await fixture.whenStable();
+
+        // When
+        const monthReps = component.monthReps();
+
+        // Then - both entries are in January 2025 => 8 + 12 = 20
+        expect(monthReps).toBe(20);
+      });
+    });
+
+    describe('When monthlyGoalProgressPercent is computed', () => {
+      it('Then it should calculate the percentage correctly', async () => {
+        // Given
+        const component = fixture.componentInstance;
+        await fixture.whenStable();
+
+        // When
+        const percent = component.monthlyGoalProgressPercent();
+
+        // Then - monthReps is 20, monthlyGoal is 2000 => 1%
+        expect(percent).toBe(1);
       });
     });
   });

@@ -1075,6 +1075,60 @@ Active:         </target>
       
       
         </unit>
+    <unit id="weeklyGoalLabel">
+      <segment state="translated">
+        <source>Wochenziel (Reps)</source>
+        <target>Weekly goal (reps)</target>
+      </segment>
+    </unit>
+    <unit id="weeklyGoalPlaceholder">
+      <segment state="translated">
+        <source>700</source>
+        <target>700</target>
+      </segment>
+    </unit>
+    <unit id="settings.weeklyGoalHint">
+      <segment state="translated">
+        <source>Gesamtziel pro Woche (Mo–So).</source>
+        <target>Total goal per week (Mon–Sun).</target>
+      </segment>
+    </unit>
+    <unit id="monthlyGoalLabel">
+      <segment state="translated">
+        <source>Monatsziel (Reps)</source>
+        <target>Monthly goal (reps)</target>
+      </segment>
+    </unit>
+    <unit id="monthlyGoalPlaceholder">
+      <segment state="translated">
+        <source>3000</source>
+        <target>3000</target>
+      </segment>
+    </unit>
+    <unit id="settings.monthlyGoalHint">
+      <segment state="translated">
+        <source>Gesamtziel pro Monat.</source>
+        <target>Total goal per month.</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.dailyGoalLabel">
+      <segment state="translated">
+        <source>Tag</source>
+        <target>Day</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.weeklyGoalLabel">
+      <segment state="translated">
+        <source>Woche</source>
+        <target>Week</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.monthlyGoalLabel">
+      <segment state="translated">
+        <source>Monat</source>
+        <target>Month</target>
+      </segment>
+    </unit>
     <unit id="dashboard.leaderboard.subtitle">
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html</note>

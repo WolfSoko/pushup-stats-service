@@ -14,10 +14,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import {
-  LiveDataStore,
-  StatsApiService,
-} from '@pu-stats/data-access';
+import { LiveDataStore, StatsApiService } from '@pu-stats/data-access';
 import { firstValueFrom } from 'rxjs';
 import { QuickAddBridgeService } from '@pu-stats/quick-add';
 import { AdSlotComponent } from '@pu-stats/ads';
@@ -66,6 +63,11 @@ export class StatsDashboardComponent {
   readonly todayTotal = this.store.todayTotal;
   readonly dailyGoal = this.store.dailyGoal;
   readonly goalProgressPercent = this.store.goalProgressPercent;
+  readonly weeklyGoal = this.store.weeklyGoal;
+  readonly weeklyGoalProgressPercent = this.store.weeklyGoalProgressPercent;
+  readonly monthReps = this.store.monthReps;
+  readonly monthlyGoal = this.store.monthlyGoal;
+  readonly monthlyGoalProgressPercent = this.store.monthlyGoalProgressPercent;
   readonly todayQuote = this.store.todayQuote;
   readonly lastEntry = this.store.lastEntry;
   readonly latestEntries = this.store.latestEntries;
@@ -105,6 +107,8 @@ export class StatsDashboardComponent {
       const cfg = this.store.userConfigResource.value();
       if (!cfg) return;
       this.store.setDailyGoal(cfg.dailyGoal ?? 100);
+      this.store.setWeeklyGoal(cfg.weeklyGoal ?? 700);
+      this.store.setMonthlyGoal(cfg.monthlyGoal ?? 3000);
     });
 
     effect(() => {

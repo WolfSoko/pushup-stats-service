@@ -50,7 +50,11 @@ const EMPTY_STATS: StatsResponse = {
           >
           ·
           <ng-container i18n="@@dashboard.analysisTeaserWeekReps"
-            >Diese Woche: {{ weekReps() }} Reps</ng-container
+            >Diese Woche: {{ weekReps() }}
+            @if (weeklyGoal()) {
+              / {{ weeklyGoal() }}
+            }
+            Reps</ng-container
           >
         </mat-card-subtitle>
       </mat-card-header>
@@ -128,6 +132,7 @@ export class AnalysisTeaserCardComponent {
 
   readonly streak = input(0);
   readonly weekReps = input(0);
+  readonly weeklyGoal = input(0);
 
   private readonly weekRange = computed(() => {
     const today = new Date();
