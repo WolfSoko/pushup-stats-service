@@ -1,4 +1,138 @@
-import { isInQuietHours } from './reminder.service';
+import { signal } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
+import { ReminderStore } from './reminder.store';
+import { ReminderPermissionService } from './reminder-permission.service';
+import { MotivationStore } from '@pu-stats/motivation';
+import { isInQuietHours, ReminderService } from './reminder.service';
+import type { ReminderConfig } from '@pu-stats/models';
+
+async function flushMicrotasks(): Promise<void> {
+  // Several ticks to flush chained async operations
+  // (SW ready → loadQuotes → showNotification)
+  for (let i = 0; i < 10; i++) await Promise.resolve();
+}
+
+// ── ReminderService.tick() – uses SW showNotification ────────────────────────
+
+describe('ReminderService', () => {
+  let showNotificationSpy: jest.Mock;
+
+  const defaultConfig: ReminderConfig = {
+    enabled: true,
+    intervalMinutes: 60,
+    quietHours: [],
+    timezone: 'UTC',
+    language: 'de',
+  };
+
+  function createService(
+    configOverride?: Partial<ReminderConfig>
+  ): ReminderService {
+    const config = { ...defaultConfig, ...configOverride };
+    TestBed.configureTestingModule({
+      providers: [
+        ReminderService,
+        {
+          provide: ReminderStore,
+          useValue: { config: signal(config) },
+        },
+        {
+          provide: ReminderPermissionService,
+          useValue: { status: signal('granted') },
+        },
+        {
+          provide: MotivationStore,
+          useValue: {
+            loadQuotes: jest.fn().mockResolvedValue(undefined),
+            quotes: signal(['Stay strong!']),
+          },
+        },
+      ],
+    });
+    return TestBed.inject(ReminderService);
+  }
+
+  beforeEach(() => {
+    jest.useFakeTimers();
+
+    showNotificationSpy = jest.fn().mockResolvedValue(undefined);
+
+    Object.defineProperty(navigator, 'serviceWorker', {
+      value: {
+        ready: Promise.resolve({
+          showNotification: showNotificationSpy,
+        }),
+      },
+      configurable: true,
+      writable: true,
+    });
+
+    Object.defineProperty(window, 'Notification', {
+      value: { permission: 'granted' },
+      configurable: true,
+      writable: true,
+    });
+  });
+
+  afterEach(() => {
+    jest.useRealTimers();
+  });
+
+  it('should use ServiceWorker showNotification instead of new Notification()', async () => {
+    const service = createService();
+    service.start({ userId: 'u1' });
+
+    // Advance past the initial 5s delay
+    jest.advanceTimersByTime(5_000);
+    await flushMicrotasks();
+
+    expect(showNotificationSpy).toHaveBeenCalledWith(
+      expect.stringContaining('Liegestütze'),
+      expect.objectContaining({
+        body: 'Stay strong!',
+        tag: 'reminder',
+        renotify: true,
+      })
+    );
+
+    service.stop();
+  });
+
+  it('should NOT call new Notification() (Android compatibility)', async () => {
+    const notificationCtorSpy = jest.fn();
+    Object.defineProperty(window, 'Notification', {
+      value: Object.assign(notificationCtorSpy, { permission: 'granted' }),
+      configurable: true,
+      writable: true,
+    });
+
+    const service = createService();
+    service.start({ userId: 'u1' });
+    jest.advanceTimersByTime(5_000);
+    await flushMicrotasks();
+
+    // The constructor should never be called — only SW showNotification
+    expect(notificationCtorSpy).not.toHaveBeenCalled();
+    expect(showNotificationSpy).toHaveBeenCalled();
+
+    service.stop();
+  });
+
+  it('should not show notification when in quiet hours', async () => {
+    const service = createService({
+      quietHours: [{ from: '00:00', to: '23:59' }],
+    });
+    service.start({ userId: 'u1' });
+    jest.advanceTimersByTime(5_000);
+    await flushMicrotasks();
+
+    expect(showNotificationSpy).not.toHaveBeenCalled();
+
+    service.stop();
+  });
+});
+
+// ── isInQuietHours ───────────────────────────────────────────────────────────
 
 describe('isInQuietHours', () => {
   // Helper: build a Date in a given timezone at a given local HH:MM

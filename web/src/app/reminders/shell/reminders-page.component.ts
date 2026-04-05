@@ -470,6 +470,12 @@ export class RemindersPageComponent {
         return;
       }
       if (config.enabled) {
+        // Auto-subscribe to server-side push notifications so reminders
+        // work in the background (especially on Android where client-side
+        // `new Notification()` is not supported).
+        if (this.pushService.status() === 'not-subscribed') {
+          await this.pushService.subscribe();
+        }
         this.reminderService.start({
           userId,
           displayName: this.user.userNameSafe() || undefined,
