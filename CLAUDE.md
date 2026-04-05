@@ -104,7 +104,8 @@ Split into focused files under `libs/stats/src/lib/models/`:
 - `stats.models.ts` - StatsResponse, StatsMeta, StatsFilter
 - `user-config.models.ts` - UserConfig, UserConfigUpdate, UserRole
 - `reminder-config.models.ts` - ReminderConfig
-- `user-stats.models.ts` - UserStats (server-side precomputed), emptyUserStats
+- `user-stats.models.ts` - UserStats (server-side precomputed), emptyUserStats, USERSTATS_VERSION
+  - **Note:** UserStats includes `version` field for migration support. See Cloud Functions section for versioning strategy.
 
 ## Commands
 
@@ -208,6 +209,46 @@ Do NOT push if any of these fail. Fix first, then push.
   - Fields that can't be maintained incrementally (like `totalDays` — counting unique days) require heuristic tracking or periodic `rebuildFromEntries()` to stay accurate.
   - `bestDay` and `bestSingleEntry` can only grow via deltas. When entries are deleted, a rebuild is needed to find the true new best.
 
+### UserStats Versioning System
+
+**Version tracking enables automatic rebuilds when calculation logic changes:**
+- Every `UserStats` rebuild sets `version: USERSTATS_VERSION` (current v2)
+- Cloud Function checks: `if (stored.version < USERSTATS_VERSION) → auto-rebuild`
+- New users: Auto-rebuild on first entry ensures correct initialization with today's period keys
+
+**Version changelog:**
+- **v1:** Legacy (no versioning)
+- **v2:** Fixed period keys to use TODAY (not last entry date in rebuild)
+
+**How it works:**
+```typescript
+// In updateUserStatsOnPushupWrite:
+if (existingStats.version < USERSTATS_VERSION) {
+  // Fetch all entries and call rebuildFromEntries
+  // automatically applies calculation improvements
+  logger.info('Auto-rebuild on version upgrade', {
+    oldVersion: existingStats.version,
+    newVersion: USERSTATS_VERSION,
+  });
+}
+```
+
+**Future deployments:** Increment `USERSTATS_VERSION` in `@pu-stats/models`. Affected users automatically rebuild on next entry without manual intervention.
+
+### Pure Business Logic Modules
+
+Decomposed from monolithic index.ts (1220 → ~500 lines wrapper):
+- **datetime/:** Berlin timezone utilities (`berlinParts`, `isoWeekFromYmd`)
+- **profile/:** Display name sanitization & leaderboard privacy logic
+- **leaderboard/:** Ranking aggregation, period key calculations
+- **authentication/:** Recaptcha response parsing & validation
+- **motivation/:** Quote cache logic, Gemini fallback, name sanitization
+- **push/subscription:** Subscription ID generation, payload validation
+- **push/reminders:** Reminder scheduling (quiet hours, snooze, intervals)
+- **admin/:** User privilege checks, deletion validation, batch helpers
+
+All modules include comprehensive Jest tests (no Firebase dependencies for pure logic).
+
 ## Precomputed Data Staleness
 
 When stores consume server-side precomputed data (e.g. `UserStats`), **always validate period keys before trusting the values:**
@@ -218,6 +259,8 @@ When stores consume server-side precomputed data (e.g. `UserStats`), **always va
 
 Fall back to client-side computation when keys are stale. The precomputed doc is only updated on writes — it goes stale on period rollover without new entries.
 
+**Note on period key calculations:** UserStats now rebuilds with `version: USERSTATS_VERSION` to ensure period keys are calculated for TODAY (not the last entry date). Period keys in newly built stats reflect the current period, allowing proper validation with client-side "today" calculations. Old stats (v1) may have incorrect period keys; they auto-rebuild on next entry when version is detected as outdated.
+
 ## Testing Pitfalls
 
 - **Shared signal mocks:** When tests mutate shared `signal()` mocks (e.g. `authStoreMock.error.set(...)`), always reset them in `beforeEach`. Otherwise tests become order-dependent.
@@ -226,6 +269,8 @@ Fall back to client-side computation when keys are stale. The precomputed doc is
 - **`MatDialog.open` spy:** Use `fixture.debugElement.injector.get(MatDialog)` (component injector) instead of `TestBed.inject(MatDialog)` to ensure you spy on the same instance the component uses.
 - **Dialog components in `imports`:** Components only opened via `MatDialog.open()` do NOT belong in the host component's `imports` array (causes NG8113 warning). Keep them as TypeScript imports only.
 - **`@angular/fire/firestore` import in Jest:** Importing the module at all triggers `fetch is not defined`. Always `jest.mock('@angular/fire/firestore', () => ({...}))` at the top of the file — see `pushup-firestore.service.spec.ts` for the pattern. Use `jest.mocked(getDoc)` instead of `jest.requireMock()` for type safety.
+- **Cloud Function pure logic testing:** Extract business logic to separate modules (not in Cloud Function triggers) for testability. See `user-stats-delta.ts` pattern: pure functions tested separately via Jest without Firebase mocks, triggers are thin wrappers that call the logic. This enables testing calculation correctness without mocking Firestore.
+- **Version-based migrations:** When updating server-side calculation logic (e.g. UserStats), increment `USERSTATS_VERSION` constant. This triggers automatic rebuilds for affected users on their next entry. Tests must validate version is set correctly in rebuilt stats.
 
 ## Workflow
 
