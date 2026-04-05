@@ -125,7 +125,9 @@ import { PushSubscriptionService } from '@pu-reminders/reminders';
                 type="number"
                 min="1"
                 [value]="weeklyGoalDraft()"
-                (input)="weeklyGoalDraft.set(asNumber($event))"
+                (input)="
+                  weeklyGoalDraft.set(asNumberOr($event, weeklyGoalDraft()))
+                "
                 placeholder="700"
                 i18n-placeholder="@@weeklyGoalPlaceholder"
               />
@@ -141,7 +143,9 @@ import { PushSubscriptionService } from '@pu-reminders/reminders';
                 type="number"
                 min="1"
                 [value]="monthlyGoalDraft()"
-                (input)="monthlyGoalDraft.set(asNumber($event))"
+                (input)="
+                  monthlyGoalDraft.set(asNumberOr($event, monthlyGoalDraft()))
+                "
                 placeholder="3000"
                 i18n-placeholder="@@monthlyGoalPlaceholder"
               />
@@ -431,6 +435,13 @@ export class SettingsPageComponent {
     const raw = (event.target as HTMLInputElement).value;
     const n = Number(raw);
     return Number.isNaN(n) ? 100 : n;
+  }
+
+  asNumberOr(event: Event, fallback: number): number {
+    const raw = (event.target as HTMLInputElement).value;
+    if (raw === '') return fallback;
+    const n = Number(raw);
+    return Number.isNaN(n) ? fallback : n;
   }
 
   async save(): Promise<void> {
