@@ -236,7 +236,7 @@
         <note category="location">libs/auth/src/lib/ui/register/register.component.html:314,315</note>
         <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:105,106</note>
         <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:214,216</note>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:252,253</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:254,255</note>
       </notes>
       <segment>
         <source> Abbrechen </source>
@@ -252,7 +252,7 @@
     </unit>
     <unit id="auth.onboarding.google.error.noUser">
       <notes>
-        <note category="location">libs/auth/src/lib/ui/login/login-ui.store.ts:91</note>
+        <note category="location">libs/auth/src/lib/ui/login/login-ui.store.ts:97</note>
       </notes>
       <segment>
         <source>Kein eingeloggter Nutzer gefunden.</source>
@@ -260,7 +260,7 @@
     </unit>
     <unit id="auth.onboarding.google.error.consentRequired">
       <notes>
-        <note category="location">libs/auth/src/lib/ui/login/login-ui.store.ts:97</note>
+        <note category="location">libs/auth/src/lib/ui/login/login-ui.store.ts:103</note>
       </notes>
       <segment>
         <source>Bitte stimme der Datenverarbeitung zu.</source>
@@ -1128,7 +1128,7 @@
     </unit>
     <unit id="seo.default.title">
       <notes>
-        <note category="location">web/src/app/app.ts:134</note>
+        <note category="location">web/src/app/app.ts:138</note>
       </notes>
       <segment>
         <source>Pushup Tracker</source>
@@ -1136,7 +1136,7 @@
     </unit>
     <unit id="seo.default.description">
       <notes>
-        <note category="location">web/src/app/app.ts:137</note>
+        <note category="location">web/src/app/app.ts:141</note>
       </notes>
       <segment>
         <source>Tracke Reps, Trends und Streaks mit Pushup Tracker.</source>
@@ -1144,7 +1144,7 @@
     </unit>
     <unit id="sw.update.available">
       <notes>
-        <note category="location">web/src/app/app.ts:156</note>
+        <note category="location">web/src/app/app.ts:160</note>
       </notes>
       <segment>
         <source>Neue Version verfügbar</source>
@@ -1152,7 +1152,7 @@
     </unit>
     <unit id="sw.update.reload">
       <notes>
-        <note category="location">web/src/app/app.ts:157</note>
+        <note category="location">web/src/app/app.ts:161</note>
       </notes>
       <segment>
         <source>Neu laden</source>
@@ -1160,7 +1160,7 @@
     </unit>
     <unit id="sw.update.downloading">
       <notes>
-        <note category="location">web/src/app/app.ts:210</note>
+        <note category="location">web/src/app/app.ts:214</note>
       </notes>
       <segment>
         <source>Update wird im Hintergrund geladen …</source>
@@ -2880,7 +2880,7 @@
     </unit>
     <unit id="dailyGoalPlaceholder">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:114</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:116</note>
       </notes>
       <segment>
         <source>100</source>
@@ -2888,7 +2888,7 @@
     </unit>
     <unit id="settings.goalHint">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:117,119</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:119,121</note>
       </notes>
       <segment>
         <source>Wird prominent in der Toolbar angezeigt.</source>
@@ -2896,7 +2896,7 @@
     </unit>
     <unit id="weeklyGoalLabel">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:122,123</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:124,125</note>
       </notes>
       <segment>
         <source>Wochenziel (Reps)</source>
@@ -2904,7 +2904,7 @@
     </unit>
     <unit id="weeklyGoalPlaceholder">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:132</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:134</note>
       </notes>
       <segment>
         <source>700</source>
@@ -2912,7 +2912,7 @@
     </unit>
     <unit id="settings.weeklyGoalHint">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:135,137</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:137,139</note>
       </notes>
       <segment>
         <source>Gesamtziel pro Woche (Mo–So).</source>
@@ -2920,7 +2920,7 @@
     </unit>
     <unit id="monthlyGoalLabel">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:140,141</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:142,143</note>
       </notes>
       <segment>
         <source>Monatsziel (Reps)</source>
@@ -2928,7 +2928,7 @@
     </unit>
     <unit id="monthlyGoalPlaceholder">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:150</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:152</note>
       </notes>
       <segment>
         <source>3000</source>
@@ -2936,7 +2936,7 @@
     </unit>
     <unit id="settings.monthlyGoalHint">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:153,155</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:155,157</note>
       </notes>
       <segment>
         <source>Gesamtziel pro Monat.</source>
@@ -2944,7 +2944,7 @@
     </unit>
     <unit id="saveSettings">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:170,172</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:172,174</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">save</pc> Speichern </source>
@@ -2952,7 +2952,7 @@
     </unit>
     <unit id="saving">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:174,175</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:176,177</note>
       </notes>
       <segment>
         <source>Speichert…</source>
@@ -2960,7 +2960,7 @@
     </unit>
     <unit id="saved">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:177,178</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:179,180</note>
       </notes>
       <segment>
         <source>Gespeichert.</source>
@@ -2968,7 +2968,7 @@
     </unit>
     <unit id="settings.remindersLinkTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:182,183</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:184,185</note>
       </notes>
       <segment>
         <source>🔔 Erinnerungen</source>
@@ -2976,7 +2976,7 @@
     </unit>
     <unit id="settings.remindersLinkDesc">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:184,186</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:186,188</note>
       </notes>
       <segment>
         <source> Liegestütz-Erinnerungen und Push-Benachrichtigungen konfigurieren. </source>
@@ -2984,7 +2984,7 @@
     </unit>
     <unit id="settings.remindersLinkCta">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:191,193</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:193,195</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">notifications</pc> Erinnerungen verwalten </source>
@@ -2992,7 +2992,7 @@
     </unit>
     <unit id="settings.dangerZoneTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:197,198</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:199,200</note>
       </notes>
       <segment>
         <source>Danger Zone</source>
@@ -3000,7 +3000,7 @@
     </unit>
     <unit id="settings.dangerZoneBody">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:199,201</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:201,203</note>
       </notes>
       <segment>
         <source> Konto löschen entfernt dein Konto. Trainingsdaten bleiben für statistische Auswertung anonymisiert erhalten. </source>
@@ -3008,7 +3008,7 @@
     </unit>
     <unit id="settings.deleteAccount">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:210,212</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:212,214</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">warning</pc> Konto löschen </source>
@@ -3016,7 +3016,7 @@
     </unit>
     <unit id="settings.deletingAccount">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:215,218</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:217,220</note>
       </notes>
       <segment>
         <source>Konto wird gelöscht…</source>
@@ -3024,7 +3024,7 @@
     </unit>
     <unit id="settings.deleteDialogTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:222,224</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:224,226</note>
       </notes>
       <segment>
         <source> Account wirklich löschen? </source>
@@ -3032,7 +3032,7 @@
     </unit>
     <unit id="settings.deleteDialogWarning">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:226,228</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:228,230</note>
       </notes>
       <segment>
         <source> Achtung: Diese Aktion ist nicht rückgängig. </source>
@@ -3040,7 +3040,7 @@
     </unit>
     <unit id="settings.deleteDialogInfo">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:229,231</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:231,233</note>
       </notes>
       <segment>
         <source> Dein Konto wird gelöscht. Trainingsdaten bleiben für statistische Auswertung anonymisiert erhalten. </source>
@@ -3048,7 +3048,7 @@
     </unit>
     <unit id="settings.deleteDialogPhraseLabel">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:234,236</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:236,238</note>
       </notes>
       <segment>
         <source>Bestätigungswort eingeben</source>
@@ -3056,7 +3056,7 @@
     </unit>
     <unit id="settings.deleteDialogPhraseHint">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:243,245</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:245,247</note>
       </notes>
       <segment>
         <source>Bitte exakt „löscchen“ eingeben.</source>
@@ -3064,7 +3064,7 @@
     </unit>
     <unit id="settings.deleteConfirmFinal">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:260,262</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:262,264</note>
       </notes>
       <segment>
         <source> Final löschen </source>
