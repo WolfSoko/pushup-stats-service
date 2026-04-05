@@ -785,7 +785,7 @@
         <source>Dashboard</source>
       </segment>
     </unit>
-    <unit id="nav.data">
+    <unit id="nav.history">
       <notes>
         <note category="location">web/src/app/app.html:33,36</note>
         <note category="location">web/src/app/app.html:167,168</note>
@@ -998,7 +998,7 @@
         <source>Erstelle dein Konto und richte Profil, Tagesziel und Einwilligungen ein.</source>
       </segment>
     </unit>
-    <unit id="seo.data.title">
+    <unit id="seo.history.title">
       <notes>
         <note category="location">web/src/app/app.routes.ts:62</note>
       </notes>
@@ -1006,7 +1006,7 @@
         <source>Daten – Pushup Tracker</source>
       </segment>
     </unit>
-    <unit id="seo.data.description">
+    <unit id="seo.history.description">
       <notes>
         <note category="location">web/src/app/app.routes.ts:63</note>
       </notes>
