@@ -60,6 +60,9 @@ jobs:
         uses: actions/checkout@v6
         with:
           fetch-depth: 0
+          # Use a PAT so the push triggers downstream workflows
+          # (pushes with GITHUB_TOKEN don't trigger further workflows).
+          token: ${{ secrets.DEPLOY_PUSH_TOKEN }}
       - name: Fast-forward deploy branch
         run: |
           git fetch origin deploy || true
