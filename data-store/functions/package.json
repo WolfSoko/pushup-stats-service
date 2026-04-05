@@ -1,10 +1,10 @@
 {
-  "name": "pus-leaderboard-functions",
+  "name": "cloud-functions",
   "engines": {
-    "node": "22"
+    "node": "24"
   },
   "private": true,
-  "main": "index.js",
+  "main": "index.cjs",
   "scripts": {
     "serve": "firebase emulators:start --only functions",
     "deploy": "firebase deploy --only functions",

@@ -1,6 +1,7 @@
 {
   "functions": {
-    "source": "functions"
+    "source": "../dist/cloud-functions",
+    "runtime": "nodejs24"
   },
   "emulators": {
     "auth": {
