@@ -946,7 +946,7 @@ exports.dispatchPushReminders = onSchedule(
             badge: '/icons/badge-72x72.png',
             tag: 'reminder',
             renotify: true,
-            data: { url: '/dashboard' },
+            data: { url: '/app' },
             actions,
           });
 
