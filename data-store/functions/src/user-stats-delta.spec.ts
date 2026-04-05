@@ -624,6 +624,50 @@ describe('applyDelta', () => {
       expect(result.dailyReps).toBe(50);
       expect(result.bestDay).toEqual({ date: '2026-04-05', total: 50 });
     });
+
+    it('preserves version from existing stats', () => {
+      const existing = {
+        ...emptyUserStats('u1'),
+        version: 2, // Set to version 2
+        total: 20,
+        totalEntries: 1,
+      };
+
+      const result = applyDelta(existing, {
+        userId: 'u1',
+        repsDelta: 10,
+        entriesDelta: 0,
+        timestamp: TIMESTAMP,
+        newReps: 10,
+        nowIso: NOW,
+      });
+
+      // Version should be preserved from existing stats
+      expect(result.version).toBe(2);
+    });
+
+    it('resets to empty stats with current version when all entries deleted', () => {
+      const existing = {
+        ...emptyUserStats('u1'),
+        version: 2,
+        total: 20,
+        totalEntries: 1,
+      };
+
+      const result = applyDelta(existing, {
+        userId: 'u1',
+        repsDelta: -20,
+        entriesDelta: -1,
+        timestamp: TIMESTAMP,
+        newReps: 0,
+        nowIso: NOW,
+      });
+
+      // Should reset to empty but keep version
+      expect(result.totalEntries).toBe(0);
+      expect(result.total).toBe(0);
+      expect(result.version).toBeDefined();
+    });
   });
 });
 
@@ -768,5 +812,16 @@ describe('rebuildFromEntries', () => {
 
     // ✅ Streak is 1 (only March 15 itself, gap of 4 days before it)
     expect(stats.currentStreak).toBe(1); // March 11 → 15 is NOT consecutive (gap on 12-14)
+  });
+
+  it('sets correct version on rebuild', () => {
+    // Import USERSTATS_VERSION from the test file
+    // This test ensures version is always updated when rebuilding
+    const entries = [{ timestamp: '2026-04-05T10:00:00.000Z', reps: 20 }];
+    const stats = rebuildFromEntries('u1', entries, NOW);
+
+    expect(stats.version).toBeDefined();
+    expect(typeof stats.version).toBe('number');
+    expect(stats.version).toBeGreaterThan(0);
   });
 });

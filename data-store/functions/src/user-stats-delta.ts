@@ -6,7 +6,7 @@
  * these helpers and writes the result to Firestore.
  */
 
-import { type UserStats, emptyUserStats } from '@pu-stats/models';
+import { type UserStats, USERSTATS_VERSION, emptyUserStats } from '@pu-stats/models';
 
 const TZ = 'Europe/Berlin';
 
@@ -279,6 +279,7 @@ export function applyDelta(
     heatmap,
     bestDay,
     bestSingleEntry,
+    version: base.version,
     updatedAt: nowIso,
   };
 }
@@ -388,6 +389,7 @@ export function rebuildFromEntries(
     heatmap,
     bestDay,
     bestSingleEntry,
+    version: USERSTATS_VERSION,
     updatedAt: nowIso,
   };
 }

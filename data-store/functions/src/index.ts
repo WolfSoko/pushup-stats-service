@@ -8,6 +8,7 @@ import * as admin from 'firebase-admin';
 import webpush from 'web-push';
 import { defineSecret } from 'firebase-functions/params';
 import type { UserStats } from '@pu-stats/models';
+import { USERSTATS_VERSION } from '@pu-stats/models';
 import { applyDelta, rebuildFromEntries } from './user-stats-delta';
 
 // Module imports
@@ -1019,42 +1020,58 @@ export const updateUserStatsOnPushupWrite = onDocumentWritten(
     const statsRef = db.collection('userStats').doc(userId);
 
     // IMPORTANT: Check if this is the first entry (no userStats yet)
+    // OR if version is outdated (calculation logic changed)
     // If so, we'll do a full rebuild to ensure correct initialization
     let firstEntryAllEntries: Array<{ timestamp: string; reps: number }> | null =
       null;
-    if (isCreate) {
-      const statsSnap = await statsRef.get();
-      if (!statsSnap.exists) {
-        // First entry for this user: fetch all entries for rebuild
-        const allEntriesSnap = await db
-          .collection('pushups')
-          .where('userId', '==', userId)
-          .orderBy('timestamp', 'asc')
-          .get();
+    let versionOutdated = false;
 
-        firstEntryAllEntries = allEntriesSnap.docs.map((d) => {
-          const data = d.data();
-          return {
-            timestamp: data.timestamp as string,
-            reps: Number(data.reps ?? 0),
-          };
-        });
-      }
+    const statsSnap = await statsRef.get();
+    const existingStats = statsSnap.exists ? (statsSnap.data() as UserStats) : null;
+
+    // Check version: if stored version < current version, trigger rebuild
+    if (existingStats && (!existingStats.version || existingStats.version < USERSTATS_VERSION)) {
+      versionOutdated = true;
+      logger.info('updateUserStatsOnPushupWrite: version upgrade detected', {
+        userId,
+        oldVersion: existingStats.version ?? 1,
+        newVersion: USERSTATS_VERSION,
+      });
+    }
+
+    // Collect entries for rebuild if needed
+    if ((isCreate && !existingStats) || versionOutdated) {
+      const allEntriesSnap = await db
+        .collection('pushups')
+        .where('userId', '==', userId)
+        .orderBy('timestamp', 'asc')
+        .get();
+
+      firstEntryAllEntries = allEntriesSnap.docs.map((d) => {
+        const data = d.data();
+        return {
+          timestamp: data.timestamp as string,
+          reps: Number(data.reps ?? 0),
+        };
+      });
     }
 
     await db.runTransaction(async (tx) => {
       const statsSnap = await tx.get(statsRef);
       let current = statsSnap.exists ? (statsSnap.data() as UserStats) : null;
 
-      // Full rebuild on first entry
-      if (firstEntryAllEntries !== null && !current && isCreate) {
+      // Full rebuild on first entry or version upgrade
+      if (firstEntryAllEntries !== null && ((isCreate && !current) || versionOutdated)) {
         current = rebuildFromEntries(userId, firstEntryAllEntries, nowIso);
-        logger.info('updateUserStatsOnPushupWrite: full rebuild on first entry', {
+        const reason = versionOutdated ? 'version upgrade' : 'first entry';
+        logger.info('updateUserStatsOnPushupWrite: full rebuild', {
           userId,
+          reason,
           entries: firstEntryAllEntries.length,
+          newVersion: USERSTATS_VERSION,
         });
-      } else {
-        // Existing userStats: use delta for efficiency
+      } else if (current) {
+        // Existing userStats with current version: use delta for efficiency
         if (timestampChanged) {
           // Timestamp changed: undo old entry, then apply new entry
           current = applyDelta(current, {
