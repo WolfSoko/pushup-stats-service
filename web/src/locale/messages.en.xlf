@@ -4467,7 +4467,290 @@ Deine Position: # ·  Reps        </source>
         <target>Dark theme active. Click to switch</target>
       </segment>
     </unit>
+    <!-- Footer -->
+    <unit id="footer.aria">
+      <segment state="translated">
+        <source>Rechtliches</source>
+        <target>Legal</target>
+      </segment>
+    </unit>
+    <unit id="footer.impressum">
+      <segment state="translated">
+        <source>Impressum</source>
+        <target>Legal Notice</target>
+      </segment>
+    </unit>
+    <unit id="footer.datenschutz">
+      <segment state="translated">
+        <source>Datenschutz</source>
+        <target>Privacy Policy</target>
+      </segment>
+    </unit>
+
+    <!-- Cookie Consent Banner -->
+    <unit id="consent.banner.aria">
+      <segment state="translated">
+        <source>Cookie-Einstellungen</source>
+        <target>Cookie Settings</target>
+      </segment>
+    </unit>
+    <unit id="consent.banner.text">
+      <segment state="translated">
+        <source>Wir verwenden Cookies für die Funktion der Website. Zusätzlich nutzen wir Google Analytics und Google AdSense. Sie können wählen, ob Sie personalisierte Werbung und Analyse zulassen möchten.</source>
+        <target>We use cookies for website functionality. We also use Google Analytics and Google AdSense. You can choose whether to allow personalized advertising and analytics.</target>
+      </segment>
+    </unit>
+    <unit id="consent.banner.acceptAll">
+      <segment state="translated">
+        <source>Alle akzeptieren</source>
+        <target>Accept all</target>
+      </segment>
+    </unit>
+    <unit id="consent.banner.necessaryOnly">
+      <segment state="translated">
+        <source>Nur notwendige</source>
+        <target>Necessary only</target>
+      </segment>
+    </unit>
+    <unit id="consent.banner.privacyLink">
+      <segment state="translated">
+        <source>Mehr in unserer Datenschutzerklärung</source>
+        <target>More in our Privacy Policy</target>
+      </segment>
+    </unit>
+
+    <!-- SEO: Legal pages -->
+    <unit id="seo.impressum.title">
+      <segment state="translated">
+        <source>Impressum – Pushup Tracker</source>
+        <target>Legal Notice – Pushup Tracker</target>
+      </segment>
+    </unit>
+    <unit id="seo.impressum.description">
+      <segment state="translated">
+        <source>Impressum und Anbieterkennzeichnung von Pushup Tracker.</source>
+        <target>Legal notice and provider identification of Pushup Tracker.</target>
+      </segment>
+    </unit>
+    <unit id="seo.datenschutz.title">
+      <segment state="translated">
+        <source>Datenschutzerklärung – Pushup Tracker</source>
+        <target>Privacy Policy – Pushup Tracker</target>
+      </segment>
+    </unit>
+    <unit id="seo.datenschutz.description">
+      <segment state="translated">
+        <source>Datenschutzerklärung von Pushup Tracker – Informationen zu Datenverarbeitung, Cookies und Ihren Rechten.</source>
+        <target>Privacy policy of Pushup Tracker – information about data processing, cookies, and your rights.</target>
+      </segment>
+    </unit>
+
+    <!-- Impressum page -->
+    <unit id="impressum.title">
+      <segment state="translated">
+        <source>Impressum</source>
+        <target>Legal Notice</target>
+      </segment>
+    </unit>
+    <unit id="impressum.info.title">
+      <segment state="translated">
+        <source>Angaben gemäß § 5 TMG</source>
+        <target>Information pursuant to § 5 TMG</target>
+      </segment>
+    </unit>
+    <unit id="impressum.contact.title">
+      <segment state="translated">
+        <source>Kontakt</source>
+        <target>Contact</target>
+      </segment>
+    </unit>
+    <unit id="impressum.contact.email">
+      <segment state="translated">
+        <source>E-Mail:</source>
+        <target>Email:</target>
+      </segment>
+    </unit>
+    <unit id="impressum.contact.phone">
+      <segment state="translated">
+        <source>Telefon:</source>
+        <target>Phone:</target>
+      </segment>
+    </unit>
+    <unit id="impressum.liability.content.title">
+      <segment state="translated">
+        <source>Haftung für Inhalte</source>
+        <target>Liability for Content</target>
+      </segment>
+    </unit>
+    <unit id="impressum.liability.content.body">
+      <segment state="translated">
+        <source>Als Diensteanbieter sind wir gemäß § 7 Abs. 1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG sind wir als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen.</source>
+        <target>As a service provider, we are responsible for our own content on these pages in accordance with § 7 (1) TMG and general laws. However, according to §§ 8 to 10 TMG, we are not obligated to monitor transmitted or stored third-party information or to investigate circumstances that indicate illegal activity.</target>
+      </segment>
+    </unit>
+    <unit id="impressum.liability.links.title">
+      <segment state="translated">
+        <source>Haftung für Links</source>
+        <target>Liability for Links</target>
+      </segment>
+    </unit>
+    <unit id="impressum.liability.links.body">
+      <segment state="translated">
+        <source>Unser Angebot enthält Links zu externen Websites Dritter, auf deren Inhalte wir keinen Einfluss haben. Deshalb können wir für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich.</source>
+        <target>Our website contains links to external third-party websites over whose content we have no influence. Therefore, we cannot accept any liability for this external content. The respective provider or operator of the linked pages is always responsible for their content.</target>
+      </segment>
+    </unit>
+    <unit id="impressum.copyright.title">
+      <segment state="translated">
+        <source>Urheberrecht</source>
+        <target>Copyright</target>
+      </segment>
+    </unit>
+    <unit id="impressum.copyright.body">
+      <segment state="translated">
+        <source>Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der Grenzen des Urheberrechtes bedürfen der schriftlichen Zustimmung des jeweiligen Autors bzw. Erstellers.</source>
+        <target>The content and works on these pages created by the site operators are subject to German copyright law. Reproduction, editing, distribution, and any kind of use beyond the limits of copyright law require the written consent of the respective author or creator.</target>
+      </segment>
+    </unit>
+
+    <!-- Datenschutz page -->
+    <unit id="datenschutz.title">
+      <segment state="translated">
+        <source>Datenschutzerklärung</source>
+        <target>Privacy Policy</target>
+      </segment>
+    </unit>
+    <unit id="datenschutz.overview.title">
+      <segment state="translated">
+        <source>1. Datenschutz auf einen Blick</source>
+        <target>1. Privacy at a Glance</target>
+      </segment>
+    </unit>
+    <unit id="datenschutz.overview.general.title">
+      <segment state="translated">
+        <source>Allgemeine Hinweise</source>
+        <target>General Information</target>
+      </segment>
+    </unit>
+    <unit id="datenschutz.overview.general.body">
+      <segment state="translated">
+        <source>Die folgenden Hinweise geben einen einfachen Überblick darüber, was mit Ihren personenbezogenen Daten passiert, wenn Sie diese Website besuchen. Personenbezogene Daten sind alle Daten, mit denen Sie persönlich identifiziert werden können.</source>
+        <target>The following information provides a simple overview of what happens to your personal data when you visit this website. Personal data is any data that can be used to personally identify you.</target>
+      </segment>
+    </unit>
+    <unit id="datenschutz.responsible.title">
+      <segment state="translated">
+        <source>2. Verantwortliche Stelle</source>
+        <target>2. Responsible Party</target>
+      </segment>
+    </unit>
+    <unit id="datenschutz.responsible.body">
+      <segment state="translated">
+        <source>Die verantwortliche Stelle für die Datenverarbeitung auf dieser Website ist:</source>
+        <target>The responsible party for data processing on this website is:</target>
+      </segment>
+    </unit>
+    <unit id="datenschutz.responsible.email">
+      <segment state="translated">
+        <source>E-Mail:</source>
+        <target>Email:</target>
+      </segment>
+    </unit>
+    <unit id="datenschutz.hosting.title">
+      <segment state="translated">
+        <source>3. Hosting</source>
+        <target>3. Hosting</target>
+      </segment>
+    </unit>
+    <unit id="datenschutz.hosting.body">
+      <segment state="translated">
+        <source>Diese Website wird bei Google Firebase (Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland) gehostet. Wenn Sie diese Website besuchen, werden Server-Log-Dateien automatisch erhoben und für kurze Zeit gespeichert. Details entnehmen Sie der Datenschutzerklärung von Google: https://policies.google.com/privacy</source>
+        <target>This website is hosted on Google Firebase (Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Ireland). When you visit this website, server log files are automatically collected and stored for a short time. For details, see Google's privacy policy: https://policies.google.com/privacy</target>
+      </segment>
+    </unit>
+    <unit id="datenschutz.account.title">
+      <segment state="translated">
+        <source>4. Registrierung und Nutzerkonto</source>
+        <target>4. Registration and User Account</target>
+      </segment>
+    </unit>
+    <unit id="datenschutz.account.body">
+      <segment state="translated">
+        <source>Sie können ein Nutzerkonto anlegen, um Trainingseinträge zu speichern. Dabei werden E-Mail-Adresse, ein Anzeigename sowie Ihre Trainingseinträge in Google Cloud Firestore gespeichert. Die Authentifizierung erfolgt über Firebase Authentication. Sie können Ihr Konto und alle zugehörigen Daten jederzeit in den Einstellungen löschen.</source>
+        <target>You can create a user account to save workout entries. Your email address, display name, and workout entries are stored in Google Cloud Firestore. Authentication is handled via Firebase Authentication. You can delete your account and all associated data at any time in the settings.</target>
+      </segment>
+    </unit>
+    <unit id="datenschutz.analytics.title">
+      <segment state="translated">
+        <source>5. Google Analytics</source>
+        <target>5. Google Analytics</target>
+      </segment>
+    </unit>
+    <unit id="datenschutz.analytics.body">
+      <segment state="translated">
+        <source>Diese Website nutzt Google Analytics 4 (Mess-ID: G-5D32B9B1S6), einen Webanalysedienst der Google Ireland Limited. Google Analytics verwendet Cookies und ähnliche Technologien, um Ihre Nutzung der Website zu analysieren. Die erzeugten Informationen werden in der Regel an einen Server von Google übertragen und dort gespeichert. Die IP-Anonymisierung ist aktiviert. Google Analytics wird nur aktiviert, wenn Sie dem zugestimmt haben.</source>
+        <target>This website uses Google Analytics 4 (Measurement ID: G-5D32B9B1S6), a web analytics service provided by Google Ireland Limited. Google Analytics uses cookies and similar technologies to analyze your use of the website. The generated information is typically transferred to and stored on a Google server. IP anonymization is enabled. Google Analytics is only activated with your consent.</target>
+      </segment>
+    </unit>
+    <unit id="datenschutz.ads.title">
+      <segment state="translated">
+        <source>6. Google AdSense</source>
+        <target>6. Google AdSense</target>
+      </segment>
+    </unit>
+    <unit id="datenschutz.ads.body">
+      <segment state="translated">
+        <source>Diese Website nutzt Google AdSense (Publisher-ID: ca-pub-6346271540341424), einen Dienst der Google Ireland Limited, zur Einbindung von Werbeanzeigen. Google AdSense verwendet Cookies, um relevante Anzeigen zu schalten und die Anzeigenleistung zu messen.</source>
+        <target>This website uses Google AdSense (Publisher ID: ca-pub-6346271540341424), a service by Google Ireland Limited, to display advertisements. Google AdSense uses cookies to serve relevant ads and measure ad performance.</target>
+      </segment>
+    </unit>
+    <unit id="datenschutz.ads.personalized.title">
+      <segment state="translated">
+        <source>Personalisierte und nicht-personalisierte Werbung</source>
+        <target>Personalized and Non-Personalized Advertising</target>
+      </segment>
+    </unit>
+    <unit id="datenschutz.ads.personalized.body">
+      <segment state="translated">
+        <source>Beim ersten Besuch der Website werden Sie über einen Consent-Banner gefragt, ob Sie personalisierte Werbung zulassen möchten. Wenn Sie nur „Notwendige" wählen, werden ausschließlich nicht-personalisierte Anzeigen ausgeliefert, die keine Tracking-Cookies für Werbeprofile setzen. Sie können Ihre Einwilligung jederzeit widerrufen, indem Sie Ihre Browser-Cookies löschen und die Seite neu laden.</source>
+        <target>On your first visit, a consent banner will ask whether you allow personalized advertising. If you choose "Necessary only", only non-personalized ads will be served, which do not set tracking cookies for advertising profiles. You can revoke your consent at any time by clearing your browser cookies and reloading the page.</target>
+      </segment>
+    </unit>
+    <unit id="datenschutz.cookies.title">
+      <segment state="translated">
+        <source>7. Cookies</source>
+        <target>7. Cookies</target>
+      </segment>
+    </unit>
+    <unit id="datenschutz.cookies.body">
+      <segment state="translated">
+        <source>Diese Website verwendet Cookies. Technisch notwendige Cookies (Session, Spracheinstellung) werden ohne Einwilligung gesetzt. Cookies für Analyse (Google Analytics) und personalisierte Werbung (Google AdSense) werden erst nach Ihrer ausdrücklichen Einwilligung aktiviert. Sie können Ihre Einwilligung jederzeit über den Cookie-Banner widerrufen (erscheint erneut nach Löschen der Browser-Cookies).</source>
+        <target>This website uses cookies. Technically necessary cookies (session, language preference) are set without consent. Cookies for analytics (Google Analytics) and personalized advertising (Google AdSense) are only activated after your explicit consent. You can revoke your consent at any time via the cookie banner (which reappears after clearing your browser cookies).</target>
+      </segment>
+    </unit>
+    <unit id="datenschutz.rights.title">
+      <segment state="translated">
+        <source>8. Ihre Rechte</source>
+        <target>8. Your Rights</target>
+      </segment>
+    </unit>
+    <unit id="datenschutz.rights.body">
+      <segment state="translated">
+        <source>Sie haben jederzeit das Recht auf Auskunft, Berichtigung, Löschung und Einschränkung der Verarbeitung Ihrer personenbezogenen Daten sowie das Recht auf Datenübertragbarkeit. Außerdem haben Sie das Recht, eine erteilte Einwilligung jederzeit zu widerrufen und sich bei einer Aufsichtsbehörde zu beschweren.</source>
+        <target>You have the right to access, rectify, delete, and restrict the processing of your personal data at any time, as well as the right to data portability. You also have the right to revoke any given consent at any time and to lodge a complaint with a supervisory authority.</target>
+      </segment>
+    </unit>
+    <unit id="datenschutz.deletion.title">
+      <segment state="translated">
+        <source>9. Datenlöschung</source>
+        <target>9. Data Deletion</target>
+      </segment>
+    </unit>
+    <unit id="datenschutz.deletion.body">
+      <segment state="translated">
+        <source>Sie können Ihr Nutzerkonto und alle damit verbundenen Daten jederzeit über die Einstellungsseite der Anwendung löschen. Nach der Löschung werden alle personenbezogenen Daten unverzüglich aus unseren Systemen entfernt.</source>
+        <target>You can delete your user account and all associated data at any time via the application's settings page. After deletion, all personal data will be promptly removed from our systems.</target>
+      </segment>
+    </unit>
   </file>
-
-
 </xliff>

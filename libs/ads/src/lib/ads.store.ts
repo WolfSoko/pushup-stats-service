@@ -14,6 +14,7 @@ import {
   withProps,
   withState,
 } from '@ngrx/signals';
+import { COOKIE_CONSENT_KEY } from './consent.constants';
 
 type AdsState = {
   targetedAdsConsent: boolean;
@@ -27,7 +28,7 @@ function readStoredConsent(): Pick<
   if (typeof globalThis.localStorage === 'undefined') {
     return { targetedAdsConsent: false, consentAnswered: false };
   }
-  const value = globalThis.localStorage.getItem('pus_cookie_consent');
+  const value = globalThis.localStorage.getItem(COOKIE_CONSENT_KEY);
   if (value === 'all')
     return { targetedAdsConsent: true, consentAnswered: true };
   if (value === 'necessary')

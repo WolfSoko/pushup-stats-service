@@ -7,6 +7,9 @@
  *
  * The script reads blog post slugs from blog-posts.data.ts so the sitemap
  * stays in sync automatically when posts are added or removed.
+ *
+ * All URLs are generated with /de and /en locale prefixes (matching the
+ * deployed app structure) and include hreflang alternate links.
  */
 
 import { readFileSync, writeFileSync } from 'node:fs';
@@ -16,11 +19,12 @@ import { fileURLToPath } from 'node:url';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '../..');
 const BASE_URL = 'https://pushup-stats.de';
+const LOCALES = ['de', 'en'];
 
-// ── Static public routes ────────────────────────────────────────────────
+// ── Static public routes (paths WITHOUT locale prefix) ──────────────────
 // Keep this list in sync with app.routes.ts (public, non-guarded routes).
 const staticRoutes = [
-  { path: '/', changefreq: 'weekly', priority: '1.0', hreflang: true },
+  { path: '/', changefreq: 'weekly', priority: '1.0' },
   { path: '/blog', changefreq: 'weekly', priority: '0.9' },
   { path: '/leaderboard', changefreq: 'daily', priority: '0.7' },
   { path: '/impressum', changefreq: 'yearly', priority: '0.3' },
@@ -45,18 +49,21 @@ function extractBlogSlugs() {
 }
 
 // ── Build XML ───────────────────────────────────────────────────────────
-function buildUrl({ path, changefreq, priority, hreflang }) {
-  const loc = `${BASE_URL}${path}`;
-  let extra = '';
-  if (hreflang) {
-    extra = `
-    <xhtml:link rel="alternate" hreflang="de" href="${BASE_URL}/de"/>
-    <xhtml:link rel="alternate" hreflang="en" href="${BASE_URL}/en"/>`;
-  }
+function buildUrl({ path, changefreq, priority }) {
+  // Normalise: '/' -> '', '/blog' -> '/blog'
+  const suffix = path === '/' ? '' : path;
+
+  const loc = `${BASE_URL}/de${suffix}`;
+  const hreflangLinks = LOCALES.map(
+    (lang) =>
+      `    <xhtml:link rel="alternate" hreflang="${lang}" href="${BASE_URL}/${lang}${suffix}"/>`
+  ).join('\n');
+
   return `  <url>
     <loc>${loc}</loc>
     <changefreq>${changefreq}</changefreq>
-    <priority>${priority}</priority>${extra}
+    <priority>${priority}</priority>
+${hreflangLinks}
   </url>`;
 }
 

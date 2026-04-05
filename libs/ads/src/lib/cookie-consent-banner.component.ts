@@ -3,26 +3,27 @@ import {
   Component,
   computed,
   inject,
+  PLATFORM_ID,
   signal,
 } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
 import { AdsStore } from './ads.store';
-
-const CONSENT_KEY = 'pus_cookie_consent';
+import { COOKIE_CONSENT_KEY } from './consent.constants';
 
 export type CookieConsentChoice = 'all' | 'necessary' | null;
 
 function readConsent(): CookieConsentChoice {
   if (typeof globalThis.localStorage === 'undefined') return null;
-  const value = globalThis.localStorage.getItem(CONSENT_KEY);
+  const value = globalThis.localStorage.getItem(COOKIE_CONSENT_KEY);
   if (value === 'all' || value === 'necessary') return value;
   return null;
 }
 
 function writeConsent(choice: 'all' | 'necessary'): void {
   if (typeof globalThis.localStorage === 'undefined') return;
-  globalThis.localStorage.setItem(CONSENT_KEY, choice);
+  globalThis.localStorage.setItem(COOKIE_CONSENT_KEY, choice);
 }
 
 @Component({
@@ -115,9 +116,11 @@ function writeConsent(choice: 'all' | 'necessary'): void {
 })
 export class CookieConsentBannerComponent {
   private readonly adsStore = inject(AdsStore);
+  private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
   private readonly choice = signal<CookieConsentChoice>(readConsent());
 
-  readonly visible = computed(() => this.choice() === null);
+  /** Only show in browser – on SSR localStorage is unavailable. */
+  readonly visible = computed(() => this.isBrowser && this.choice() === null);
 
   accept(choice: 'all' | 'necessary'): void {
     writeConsent(choice);

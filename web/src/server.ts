@@ -44,6 +44,15 @@ app.get('/ads.txt', (req, res) => {
   res.sendFile(join(browserDistFolder, 'de', 'ads.txt'));
 });
 
+app.get('/robots.txt', (req, res) => {
+  res.sendFile(join(browserDistFolder, 'de', 'robots.txt'));
+});
+
+app.get('/sitemap.xml', (req, res) => {
+  res.type('application/xml');
+  res.sendFile(join(browserDistFolder, 'de', 'sitemap.xml'));
+});
+
 /**
  * Serve static files from /browser
  */

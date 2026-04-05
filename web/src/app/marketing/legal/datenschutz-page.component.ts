@@ -93,8 +93,8 @@ import { Component } from '@angular/core';
           m&ouml;chten. Wenn Sie nur &bdquo;Notwendige&ldquo; w&auml;hlen,
           werden ausschlie&szlig;lich nicht-personalisierte Anzeigen
           ausgeliefert, die keine Tracking-Cookies f&uuml;r Werbeprofile setzen.
-          Sie k&ouml;nnen Ihre Einwilligung jederzeit in den Einstellungen
-          &auml;ndern.
+          Sie k&ouml;nnen Ihre Einwilligung jederzeit widerrufen, indem Sie Ihre
+          Browser-Cookies l&ouml;schen und die Seite neu laden.
         </p>
       </section>
 
@@ -106,7 +106,8 @@ import { Component } from '@angular/core';
           f&uuml;r Analyse (Google Analytics) und personalisierte Werbung
           (Google AdSense) werden erst nach Ihrer ausdr&uuml;cklichen
           Einwilligung aktiviert. Sie k&ouml;nnen Ihre Einwilligung jederzeit
-          &uuml;ber den Cookie-Banner oder in den Einstellungen widerrufen.
+          &uuml;ber den Cookie-Banner widerrufen (erscheint erneut nach
+          L&ouml;schen der Browser-Cookies).
         </p>
       </section>
 
