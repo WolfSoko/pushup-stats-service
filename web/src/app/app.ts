@@ -30,6 +30,7 @@ import { filter } from 'rxjs';
 import { SeoService } from './core/seo.service';
 import { UserContextService } from '@pu-auth/auth';
 import { PushSubscriptionService } from '@pu-reminders/reminders';
+import { CookieConsentBannerComponent } from '@pu-stats/ads';
 import { QuickAddFabComponent } from '@pu-stats/quick-add';
 import { ThemeToggleComponent } from './core/theme';
 import { ReminderOrchestrationService } from './core/reminder-orchestration.service';
@@ -52,6 +53,7 @@ import { QuickAddOrchestrationService } from './core/quick-add-orchestration.ser
     UserMenuComponent,
     QuickAddFabComponent,
     ThemeToggleComponent,
+    CookieConsentBannerComponent,
   ],
   templateUrl: './app.html',
   styleUrl: './app.scss',

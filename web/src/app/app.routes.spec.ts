@@ -27,6 +27,8 @@ describe('appRoutes', () => {
       'reminders',
       'leaderboard',
       'blog',
+      'impressum',
+      'datenschutz',
       'admin',
       '**',
     ]);

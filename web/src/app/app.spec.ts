@@ -6,6 +6,7 @@ import { Title } from '@angular/platform-browser';
 import { of } from 'rxjs';
 import { StatsApiService, UserConfigApiService } from '@pu-stats/data-access';
 import { AuthStore, UserContextService } from '@pu-auth/auth';
+import { AdsStore } from '@pu-stats/ads';
 import { VAPID_PUBLIC_KEY } from '@pu-reminders/reminders';
 import { App } from './app';
 
@@ -22,6 +23,19 @@ describe('App (testing-library)', () => {
 
   const userConfigApiMock = {
     getConfig: vitest.fn().mockReturnValue(of({ dailyGoal: 100 })),
+  };
+
+  const adsStoreMock = {
+    enabled: () => true,
+    adClient: () => undefined,
+    targetedAdsConsent: () => true,
+    consentAnswered: () => true,
+    adsAllowed: () => true,
+    landingInlineSlot: () => undefined,
+    dashboardInlineSlot: () => undefined,
+    dashboardInlineEnabled: () => false,
+    setTargetedAdsConsent: vitest.fn(),
+    init: () => Promise.resolve(),
   };
 
   const statsApiMock = {
@@ -63,6 +77,7 @@ describe('App (testing-library)', () => {
         { provide: AuthStore, useValue: authMock },
         { provide: UserConfigApiService, useValue: userConfigApiMock },
         { provide: StatsApiService, useValue: statsApiMock },
+        { provide: AdsStore, useValue: adsStoreMock },
         { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
       ],
     });
@@ -86,6 +101,7 @@ describe('App (testing-library)', () => {
         { provide: AuthStore, useValue: authMock },
         { provide: UserConfigApiService, useValue: userConfigApiMock },
         { provide: StatsApiService, useValue: statsApiMock },
+        { provide: AdsStore, useValue: adsStoreMock },
         { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
       ],
     });
@@ -130,6 +146,7 @@ describe('App (testing-library)', () => {
         { provide: AuthStore, useValue: authMock },
         { provide: UserConfigApiService, useValue: userConfigApiMock },
         { provide: StatsApiService, useValue: statsApiMock },
+        { provide: AdsStore, useValue: adsStoreMock },
         { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
       ],
     });
@@ -157,6 +174,7 @@ describe('App (testing-library)', () => {
         { provide: AuthStore, useValue: authMock },
         { provide: UserConfigApiService, useValue: userConfigApiMock },
         { provide: StatsApiService, useValue: statsApiMock },
+        { provide: AdsStore, useValue: adsStoreMock },
         { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
       ],
     });

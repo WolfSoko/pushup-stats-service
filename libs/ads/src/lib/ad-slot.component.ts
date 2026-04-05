@@ -34,6 +34,7 @@ declare global {
         [attr.data-ad-slot]="slot()"
         [attr.data-ad-format]="format()"
         [attr.data-full-width-responsive]="responsive() ? 'true' : 'false'"
+        [attr.data-npa]="npa()"
       ></ins>
       <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
@@ -54,4 +55,8 @@ export class AdSlotComponent {
   );
 
   enabled = computed(() => this.adsStore.adsAllowed());
+  /** Serve non-personalized ads when targeted consent is not given. */
+  readonly npa = computed(() =>
+    this.adsStore.targetedAdsConsent() ? undefined : '1'
+  );
 }
