@@ -457,6 +457,8 @@ export class RemindersPageComponent {
       Intl.DateTimeFormat().resolvedOptions().timeZone ||
       'Europe/Berlin';
     const config = this.form.toConfig(timezone);
+    // Capture before saveConfig() overwrites the store state
+    const wasEnabled = this.reminderStore.config()?.enabled ?? false;
     this.form.setSaving(true);
     try {
       await this.reminderStore.saveConfig(userId, config);
@@ -470,6 +472,24 @@ export class RemindersPageComponent {
         return;
       }
       if (config.enabled) {
+        // Auto-subscribe to server-side push only when reminders are being
+        // newly enabled — not on every save. This preserves an explicit
+        // push opt-out (user unsubscribed via the push toggle).
+        if (!wasEnabled && this.pushService.status() === 'not-subscribed') {
+          await this.pushService.subscribe();
+          const pushStatus = this.pushService.status();
+          if (pushStatus !== 'subscribed') {
+            if (pushStatus !== 'denied') {
+              this.snackBar.open(
+                $localize`:@@push.subscribe.error:Push konnte nicht aktiviert werden.`,
+                $localize`:@@snackbar.close:Schließen`,
+                { duration: 5000 }
+              );
+            }
+            // Still allow reminders to be saved — in-app notifications
+            // will work as fallback even without push subscription.
+          }
+        }
         this.reminderService.start({
           userId,
           displayName: this.user.userNameSafe() || undefined,
