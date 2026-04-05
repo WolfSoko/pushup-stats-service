@@ -156,14 +156,17 @@ export function makeAuthServiceMock(opts?: {
 export function makeAuthStoreMock(opts?: {
   isAuthenticated?: boolean;
   isGuest?: boolean;
+  authResolved?: boolean;
 }): {
   user: Signal<AuthUserShape | null>;
   isAuthenticated: Signal<boolean>;
+  authResolved: Signal<boolean>;
   isGuest: Signal<boolean>;
 } {
   return {
     user: signal(null) as Signal<AuthUserShape | null>,
     isAuthenticated: signal(opts?.isAuthenticated ?? false),
+    authResolved: signal(opts?.authResolved ?? true),
     isGuest: signal(opts?.isGuest ?? false),
   };
 }

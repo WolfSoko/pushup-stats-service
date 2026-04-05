@@ -66,6 +66,7 @@ export const AuthStore = signalStore(
   withComputed((store) => ({
     user: store._authService.user,
     isAuthenticated: store._authService.isAuthenticated,
+    authResolved: store._authService.authResolved,
     idToken: store._authService.idToken,
     isGuest: computed(() => store._authService.user()?.isAnonymous ?? false),
   })),

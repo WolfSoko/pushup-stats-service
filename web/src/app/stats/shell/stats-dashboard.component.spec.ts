@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatDialog } from '@angular/material/dialog';
 import { of } from 'rxjs';
 import { StatsDashboardComponent } from './stats-dashboard.component';
 import {
@@ -214,7 +215,7 @@ describe('StatsDashboardComponent', () => {
 
   describe('Given the manual entry dialog is submitted (regression: create event was silently dropped)', () => {
     describe('When createEntry is called with a valid entry', () => {
-      it('Then it should call createPushup and refresh the store', async () => {
+      it('Then it should call createPushup', async () => {
         // Given — createEntry() is the handler called after the dialog closes
         const component = fixture.componentInstance;
         vi.clearAllMocks();
@@ -234,19 +235,36 @@ describe('StatsDashboardComponent', () => {
           source: 'web',
           type: 'Diamond',
         });
-        // Verify data is reloaded after creation
+      });
+
+      it('Then it should refresh the store after creation', async () => {
+        // Given
+        const component = fixture.componentInstance;
+        vi.clearAllMocks();
+
+        // When
+        await component.createEntry({
+          timestamp: todayTs,
+          reps: 15,
+          source: 'web',
+          type: 'Diamond',
+        });
+        // refreshAll() triggers async resource reload — wait for it
+        await fixture.whenStable();
+
+        // Then
         expect(serviceMock.listPushups).toHaveBeenCalled();
       });
     });
 
     describe('When openCreateDialog is called', () => {
       it('Then MatDialog.open is invoked with CreateEntryDialogComponent', () => {
-        // Given
-        const { MatDialog } = require('@angular/material/dialog');
-        const dialog = TestBed.inject(MatDialog);
-        const openSpy = vitest
-          .spyOn(dialog, 'open')
-          .mockReturnValue({ afterClosed: () => ({ subscribe: vitest.fn() }) });
+        // Given — access the same MatDialog instance used by the component
+        // The component's dialog is injected at root level (providedIn: 'root')
+        const dialog = fixture.debugElement.injector.get(MatDialog);
+        const openSpy = vitest.spyOn(dialog, 'open').mockReturnValue({
+          afterClosed: () => of(undefined),
+        } as unknown as ReturnType<typeof dialog.open>);
 
         // When
         fixture.componentInstance.openCreateDialog();

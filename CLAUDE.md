@@ -26,6 +26,7 @@ When making changes, always write or update relevant tests as part of the same c
 - **State:** @ngrx/signals (signal stores)
 - **UI:** Angular Material 21, Chart.js – **always prefer Material components** (`mat-button`, `mat-icon`, etc.) over plain HTML elements for buttons, inputs, dialogs, and other interactive controls
 - **Testing:** Vitest (web), Jest (libs), Playwright (e2e)
+- **Animations:** `@angular/animations` is **not** a project dependency (deprecated). Material components work without it. Do NOT use `NoopAnimationsModule` in tests.
 
 ## Architecture
 
@@ -67,6 +68,8 @@ When making changes, always write or update relevant tests as part of the same c
 - **Side effects:** `effect()` in components or `withHooks`
 - **API Services:** Stateless, return Promises/Observables - no signals, no state
 - **No RxJS for state** - only in data-access layer for Firestore Observables + `toSignal()`
+- **Signal timing pitfall (`toSignal`):** `toSignal()` starts with `undefined` and updates via microtask. After async operations (e.g. `signInWithPopup`), signals may not yet reflect the new state. Use `auth.currentUser` (synchronous) as fallback where immediate access is needed — see `LoginUiStore`, `RegisterUiStore`, `AuthService.upgradeWithEmail()` for the pattern. For templates, use `authResolved` (= `authState() !== undefined`) to distinguish "loading" from "not authenticated".
+- **Success checks after auth operations:** Check `!authStore.error()` instead of `authStore.isAuthenticated()` — the signal may lag behind Firebase's synchronous state update.
 
 **Three-Layer Architecture:**
 ```
@@ -134,6 +137,8 @@ pnpm nx run-many --target=lint   # Lint all projects
 - `LOCALE_ID` is set automatically by Angular i18n at build time – NEVER provide it manually in `app.config.ts`
 - Dynamic data (e.g. blog posts, feature descriptions) must be locale-aware too – XLIFF only covers templates and `$localize`. Use `inject(LOCALE_ID)` to select the right data at runtime.
 - Date pipes: use locale-aware formats (`'longDate'`, `'short'`) – never hardcode a locale parameter like `'de'`
+- **XLF maintenance:** When moving i18n-annotated text between components, update the `<source>` in both XLF files to match the new template structure. Stale `<source>` with old placeholder names (`START_BLOCK_IF`, etc.) causes production build errors.
+- **Language switching:** Implemented in `app.ts` `setLanguage()` via `window.location.replace()` with locale prefix (`/de/…`, `/en/…`). Must preserve current path, query params, and hash. Root paths need trailing slash (`/de/`, `/en/`) to match Firebase hosting rewrites.
 
 ## CI/CD & Deployment
 
@@ -187,6 +192,13 @@ Do NOT push if any of these fail. Fix first, then push.
 - **Push subscription ≠ reminder toggle:** They are separate actions. Auto-subscribing to push when enabling reminders must only happen on first enable (not every save) to respect explicit push opt-out.
 - **VAPID keys:** Public key in `web/src/env/firebase-runtime.ts`, private key in Firebase Secrets (`VAPID_PRIVATE_KEY`).
 - **Cloud Function `dispatchPushReminders`:** Uses transactional lease (`inProgress` flag) to prevent duplicate sends. Always release lease in `finally`.
+## Testing Pitfalls
+
+- **Shared signal mocks:** When tests mutate shared `signal()` mocks (e.g. `authStoreMock.error.set(...)`), always reset them in `beforeEach`. Otherwise tests become order-dependent.
+- **`window.location` spies:** `vitest.spyOn(window, 'location', 'get')` is NOT restored by `clearAllMocks()`. Add `afterEach(() => vitest.restoreAllMocks())` when using getter spies.
+- **Angular `resource()` reload:** `resource.reload()` is async. After calling it, use `await fixture.whenStable()` before asserting on the reloaded data.
+- **`MatDialog.open` spy:** Use `fixture.debugElement.injector.get(MatDialog)` (component injector) instead of `TestBed.inject(MatDialog)` to ensure you spy on the same instance the component uses.
+- **Dialog components in `imports`:** Components only opened via `MatDialog.open()` do NOT belong in the host component's `imports` array (causes NG8113 warning). Keep them as TypeScript imports only.
 
 ## Workflow
 
