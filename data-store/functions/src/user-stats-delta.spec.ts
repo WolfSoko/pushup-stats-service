@@ -1,3 +1,4 @@
+import { USERSTATS_VERSION } from '@pu-stats/models';
 import {
   berlinParts,
   isoWeekFromYmd,
@@ -666,7 +667,7 @@ describe('applyDelta', () => {
       // Should reset to empty but keep version
       expect(result.totalEntries).toBe(0);
       expect(result.total).toBe(0);
-      expect(result.version).toBeDefined();
+      expect(result.version).toBe(USERSTATS_VERSION);
     });
   });
 });
@@ -815,13 +816,10 @@ describe('rebuildFromEntries', () => {
   });
 
   it('sets correct version on rebuild', () => {
-    // Import USERSTATS_VERSION from the test file
-    // This test ensures version is always updated when rebuilding
+    // This test ensures version is always set to USERSTATS_VERSION when rebuilding
     const entries = [{ timestamp: '2026-04-05T10:00:00.000Z', reps: 20 }];
     const stats = rebuildFromEntries('u1', entries, NOW);
 
-    expect(stats.version).toBeDefined();
-    expect(typeof stats.version).toBe('number');
-    expect(stats.version).toBeGreaterThan(0);
+    expect(stats.version).toBe(USERSTATS_VERSION);
   });
 });

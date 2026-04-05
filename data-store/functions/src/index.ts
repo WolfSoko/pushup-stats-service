@@ -9,11 +9,7 @@ import webpush from 'web-push';
 import { defineSecret } from 'firebase-functions/params';
 import type { UserStats } from '@pu-stats/models';
 import { USERSTATS_VERSION } from '@pu-stats/models';
-import {
-  applyDelta,
-  rebuildFromEntries,
-  emptyUserStats,
-} from './user-stats-delta';
+import { applyDelta, rebuildFromEntries } from './user-stats-delta';
 
 // Module imports
 import { berlinDateParts, isoWeekFromYmd } from './datetime';
@@ -1008,18 +1004,25 @@ export const updateUserStatsOnPushupWrite = onDocumentWritten(
           });
         }
       } else {
-        // BUG FIX P2: Handle missing userStats on non-create writes
-        // If we reach here without a rebuild decision, create empty stats
-        // This recovers missing userStats for update/delete operations
+        // Missing userStats on a non-first-create write: rebuild from source of truth
+        // Writing empty stats here would permanently wipe totals for update/delete events
+        const userPushupsQuery = db
+          .collection('pushups')
+          .where('userId', '==', userId);
+        const userPushupsSnap = await tx.get(userPushupsQuery);
+        const userEntries = userPushupsSnap.docs.map((doc) =>
+          doc.data()
+        ) as Parameters<typeof rebuildFromEntries>[1];
+
         logger.warn(
-          'updateUserStatsOnPushupWrite: missing userStats, creating empty',
+          'updateUserStatsOnPushupWrite: missing userStats, rebuilding from entries',
           {
             userId,
             isCreate,
+            entries: userEntries.length,
           }
         );
-        current = emptyUserStats(userId);
-        current.updatedAt = nowIso;
+        current = rebuildFromEntries(userId, userEntries, nowIso);
       }
 
       tx.set(statsRef, current);
