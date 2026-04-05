@@ -7,9 +7,29 @@ jest.mock('@angular/fire/firestore', () => ({
 }));
 
 import { TestBed } from '@angular/core/testing';
-import { Firestore } from '@angular/fire/firestore';
+import { Firestore, getDoc } from '@angular/fire/firestore';
 import { UserStatsApiService } from './user-stats-api.service';
+import { UserStats } from '@pu-stats/models';
 import { firstValueFrom } from 'rxjs';
+
+const fullMockStats: UserStats = {
+  userId: 'test-uid',
+  total: 500,
+  totalEntries: 25,
+  totalDays: 15,
+  dailyReps: 30,
+  dailyKey: '2026-04-05',
+  weeklyReps: 200,
+  weeklyKey: '2026-W14',
+  monthlyReps: 500,
+  monthlyKey: '2026-04',
+  currentStreak: 5,
+  lastEntryDate: '2026-04-05',
+  heatmap: { 'Mo-08': 100 },
+  bestDay: { date: '2026-03-15', total: 120 },
+  bestSingleEntry: { reps: 50, timestamp: '2026-03-15T10:00:00.000Z' },
+  updatedAt: '2026-04-05T12:00:00.000Z',
+};
 
 describe('UserStatsApiService', () => {
   let service: UserStatsApiService;
@@ -31,20 +51,12 @@ describe('UserStatsApiService', () => {
   });
 
   it('returns UserStats when document exists', async () => {
-    const { getDoc } = jest.requireMock('@angular/fire/firestore');
-    const mockStats = {
-      userId: 'test-uid',
-      total: 500,
-      totalEntries: 25,
-      dailyReps: 30,
-      dailyKey: '2026-04-05',
-    };
-    getDoc.mockResolvedValueOnce({
+    jest.mocked(getDoc).mockResolvedValueOnce({
       exists: () => true,
-      data: () => mockStats,
-    });
+      data: () => fullMockStats,
+    } as never);
 
     const result = await firstValueFrom(service.getUserStats('test-uid'));
-    expect(result).toEqual(mockStats);
+    expect(result).toEqual(fullMockStats);
   });
 });

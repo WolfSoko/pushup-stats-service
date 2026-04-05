@@ -6,7 +6,7 @@
  * these helpers and writes the result to Firestore.
  */
 
-import type { UserStats } from '@pu-stats/models';
+import { type UserStats, emptyUserStats } from '@pu-stats/models';
 
 const TZ = 'Europe/Berlin';
 
@@ -222,7 +222,7 @@ export function applyDelta(
 
   // ── Best day ────────────────────────────────────────────────────────
   let bestDay = base.bestDay ? { ...base.bestDay } : null;
-  if (dailyReps > 0 && keys.dailyKey === (base.dailyKey || keys.dailyKey)) {
+  if (dailyReps > 0) {
     if (!bestDay || dailyReps > bestDay.total) {
       bestDay = { date: keys.dailyKey, total: dailyReps };
     }
@@ -238,8 +238,14 @@ export function applyDelta(
     }
   }
 
-  // totalDays: only accurate via rebuild; delta keeps existing value
-  const totalDays = base.totalDays;
+  // totalDays: increment when a new day appears, decrement when a day goes to 0
+  let totalDays = base.totalDays;
+  const isNewDay = base.dailyKey !== keys.dailyKey;
+  if (isNewDay && dailyReps > 0) {
+    totalDays += 1;
+  } else if (!isNewDay && dailyReps === 0 && base.dailyReps > 0) {
+    totalDays = Math.max(0, totalDays - 1);
+  }
 
   return {
     userId,
@@ -369,26 +375,5 @@ export function rebuildFromEntries(
   };
 }
 
-/**
- * Return an empty UserStats object.
- */
-export function emptyUserStats(userId: string): UserStats {
-  return {
-    userId,
-    total: 0,
-    totalEntries: 0,
-    totalDays: 0,
-    dailyReps: 0,
-    dailyKey: '',
-    weeklyReps: 0,
-    weeklyKey: '',
-    monthlyReps: 0,
-    monthlyKey: '',
-    currentStreak: 0,
-    lastEntryDate: null,
-    heatmap: {},
-    bestDay: null,
-    bestSingleEntry: null,
-    updatedAt: new Date().toISOString(),
-  };
-}
+// Re-export for consumers
+export { emptyUserStats } from '@pu-stats/models';

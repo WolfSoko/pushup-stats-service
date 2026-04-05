@@ -50,6 +50,29 @@ function daysBetween(a: string, b: string): number {
   return Math.round((bd.getTime() - ad.getTime()) / 86_400_000);
 }
 
+function currentIsoWeekKey(): string {
+  const d = new Date();
+  d.setHours(0, 0, 0, 0);
+  const day = (d.getDay() + 6) % 7;
+  d.setDate(d.getDate() + 3 - day);
+  const isoYear = d.getFullYear();
+  const firstThursday = new Date(isoYear, 0, 4);
+  firstThursday.setHours(0, 0, 0, 0);
+  const ftDay = (firstThursday.getDay() + 6) % 7;
+  firstThursday.setDate(firstThursday.getDate() + 3 - ftDay);
+  const week =
+    1 +
+    Math.round(
+      (d.getTime() - firstThursday.getTime()) / (7 * 24 * 60 * 60 * 1000)
+    );
+  return `${isoYear}-W${String(week).padStart(2, '0')}`;
+}
+
+function currentMonthKey(): string {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+}
+
 export const DashboardStore = signalStore(
   withState({
     dailyGoal: 10,
@@ -80,7 +103,9 @@ export const DashboardStore = signalStore(
     userStatsResource: resource({
       params: () => ({ userId: store._user.userIdSafe() }),
       loader: async ({ params }) =>
-        firstValueFrom(store._userStatsApi.getUserStats(params.userId)),
+        params.userId
+          ? firstValueFrom(store._userStatsApi.getUserStats(params.userId))
+          : null,
     }),
   })),
   withComputed((store) => {
@@ -150,7 +175,11 @@ export const DashboardStore = signalStore(
 
     const currentStreak = computed(() => {
       const us = userStats();
-      if (us) return us.currentStreak;
+      if (us) {
+        if (!us.lastEntryDate) return 0;
+        const diff = daysBetween(us.lastEntryDate, toLocalIsoDate(new Date()));
+        return diff >= 0 && diff <= 1 ? us.currentStreak : 0;
+      }
 
       // Fallback: client-side computation
       const dates = sortedUniqueDates(entryRows());
@@ -175,7 +204,7 @@ export const DashboardStore = signalStore(
 
     const weekReps = computed(() => {
       const us = userStats();
-      if (us) return us.weeklyReps;
+      if (us && us.weeklyKey === currentIsoWeekKey()) return us.weeklyReps;
 
       // Fallback: client-side computation
       const today = new Date();
@@ -197,7 +226,7 @@ export const DashboardStore = signalStore(
 
     const monthReps = computed(() => {
       const us = userStats();
-      if (us) return us.monthlyReps;
+      if (us && us.monthlyKey === currentMonthKey()) return us.monthlyReps;
 
       // Fallback: client-side computation
       const today = new Date();

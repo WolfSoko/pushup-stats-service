@@ -112,7 +112,9 @@ export const AnalysisStore = signalStore(
     const userStatsResource = resource({
       params: () => ({ userId: store._user.userIdSafe() }),
       loader: async ({ params }) =>
-        firstValueFrom(store._userStatsApi.getUserStats(params.userId)),
+        params.userId
+          ? firstValueFrom(store._userStatsApi.getUserStats(params.userId))
+          : null,
     });
 
     return { statsResource, entriesResource, userStatsResource };

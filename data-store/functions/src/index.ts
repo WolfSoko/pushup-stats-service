@@ -1086,21 +1086,16 @@ export const updateUserStatsOnPushupWrite = onDocumentWritten(
 
     const oldReps = (beforeData?.reps ?? 0) as number;
     const newReps = (afterData?.reps ?? 0) as number;
-    const repsDelta = newReps - oldReps;
+    const oldTimestamp = beforeData?.timestamp as string | undefined;
+    const newTimestamp = afterData?.timestamp as string | undefined;
 
-    let entriesDelta: number;
-    if (!beforeData && afterData) {
-      entriesDelta = 1; // create
-    } else if (beforeData && !afterData) {
-      entriesDelta = -1; // delete
-    } else {
-      entriesDelta = 0; // update
-    }
+    const isCreate = !beforeData && !!afterData;
+    const isDelete = !!beforeData && !afterData;
+    const isUpdate = !!beforeData && !!afterData;
+    const timestampChanged =
+      isUpdate && oldTimestamp && newTimestamp && oldTimestamp !== newTimestamp;
 
-    const timestamp = (afterData?.timestamp ?? beforeData?.timestamp) as
-      | string
-      | undefined;
-    if (!timestamp) {
+    if (!newTimestamp && !oldTimestamp) {
       logger.warn('updateUserStatsOnPushupWrite: no timestamp found, skipping');
       return;
     }
@@ -1110,26 +1105,49 @@ export const updateUserStatsOnPushupWrite = onDocumentWritten(
 
     await db.runTransaction(async (tx) => {
       const statsSnap = await tx.get(statsRef);
-      const existing = statsSnap.exists
-        ? (statsSnap.data() as UserStats)
-        : null;
+      let current = statsSnap.exists ? (statsSnap.data() as UserStats) : null;
 
-      const updated = applyDelta(existing, {
-        userId,
-        repsDelta,
-        entriesDelta,
-        timestamp,
-        newReps,
-        nowIso,
-      });
+      if (timestampChanged) {
+        // Timestamp changed: undo old entry, then apply new entry
+        current = applyDelta(current, {
+          userId,
+          repsDelta: -oldReps,
+          entriesDelta: -1,
+          timestamp: oldTimestamp,
+          newReps: 0,
+          nowIso,
+        });
+        current = applyDelta(current, {
+          userId,
+          repsDelta: newReps,
+          entriesDelta: 1,
+          timestamp: newTimestamp,
+          newReps,
+          nowIso,
+        });
+      } else {
+        const repsDelta = newReps - oldReps;
+        const entriesDelta = isCreate ? 1 : isDelete ? -1 : 0;
+        const timestamp = (newTimestamp ?? oldTimestamp)!;
 
-      tx.set(statsRef, updated);
+        current = applyDelta(current, {
+          userId,
+          repsDelta,
+          entriesDelta,
+          timestamp,
+          newReps,
+          nowIso,
+        });
+      }
+
+      tx.set(statsRef, current);
     });
 
     logger.info('updateUserStatsOnPushupWrite', {
       userId,
-      repsDelta,
-      entriesDelta,
+      oldReps,
+      newReps,
+      timestampChanged,
       pushupId: event.params?.pushupId,
     });
   }

@@ -491,6 +491,35 @@ describe('applyDelta', () => {
       // dailyReps = 50 + 20 = 70 > 40 → new bestDay
       expect(result.bestDay).toEqual({ date: '2026-04-05', total: 70 });
     });
+
+    it('updates bestDay on a NEW day that exceeds the previous best', () => {
+      const existing = {
+        ...emptyUserStats('u1'),
+        total: 100,
+        totalEntries: 3,
+        dailyReps: 40,
+        dailyKey: '2026-04-04', // yesterday
+        weeklyKey: '2026-W14',
+        weeklyReps: 100,
+        monthlyKey: '2026-04',
+        monthlyReps: 100,
+        bestDay: { date: '2026-04-04', total: 40 },
+      };
+
+      const result = applyDelta(existing, {
+        userId: 'u1',
+        repsDelta: 50,
+        entriesDelta: 1,
+        timestamp: TIMESTAMP, // 2026-04-05
+        newReps: 50,
+        nowIso: NOW,
+      });
+
+      // New day with 50 reps > old best of 40 → updated
+      expect(result.dailyKey).toBe('2026-04-05');
+      expect(result.dailyReps).toBe(50);
+      expect(result.bestDay).toEqual({ date: '2026-04-05', total: 50 });
+    });
   });
 });
 

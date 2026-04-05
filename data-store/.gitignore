@@ -1,3 +1,6 @@
+# Build output (Cloud Functions)
+functions-dist/
+
 # Logs
 logs
 *.log

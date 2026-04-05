@@ -9,7 +9,7 @@
       "executor": "@nx/esbuild:esbuild",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/cloud-functions",
+        "outputPath": "data-store/functions-dist",
         "main": "data-store/functions/src/index.ts",
         "tsConfig": "data-store/functions/tsconfig.app.json",
         "platform": "node",

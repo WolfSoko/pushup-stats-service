@@ -1,6 +1,6 @@
 {
   "functions": {
-    "source": "../dist/cloud-functions",
+    "source": "functions-dist",
     "runtime": "nodejs24"
   },
   "emulators": {
