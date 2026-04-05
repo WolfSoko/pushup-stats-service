@@ -40,19 +40,19 @@ export const RegisterOnboardingStore = signalStore(
         await firstValueFrom(
           userProfileApi.updateConfig(input.uid, {
             displayName: input.displayName.trim(),
-            dailyGoal: Math.max(1, Number(input.dailyGoal || 100)),
+            dailyGoal: Math.max(1, Number(input.dailyGoal || 10)),
             weeklyGoal: Math.max(
               1,
               Number(
                 input.weeklyGoal ||
-                  Math.max(1, Number(input.dailyGoal || 100)) * 5
+                  Math.max(1, Number(input.dailyGoal || 10)) * 5
               )
             ),
             monthlyGoal: Math.max(
               1,
               Number(
                 input.monthlyGoal ||
-                  Math.max(1, Number(input.dailyGoal || 100)) * 20
+                  Math.max(1, Number(input.dailyGoal || 10)) * 20
               )
             ),
             consent: {

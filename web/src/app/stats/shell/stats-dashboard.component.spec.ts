@@ -459,9 +459,9 @@ describe('StatsDashboardComponent', () => {
       const component = freshFixture.componentInstance;
 
       // Then - should use defaults, not 0
-      expect(component.dailyGoal()).toBe(100);
-      expect(component.weeklyGoal()).toBe(500);
-      expect(component.monthlyGoal()).toBe(2000);
+      expect(component.dailyGoal()).toBe(10);
+      expect(component.weeklyGoal()).toBe(50);
+      expect(component.monthlyGoal()).toBe(200);
     });
   });
 

@@ -112,7 +112,7 @@ import { PushSubscriptionService } from '@pu-reminders/reminders';
                 (input)="
                   dailyGoalDraft.set(asNumberOr($event, dailyGoalDraft()))
                 "
-                placeholder="100"
+                placeholder="10"
                 i18n-placeholder="@@dailyGoalPlaceholder"
               />
               <mat-hint i18n="@@settings.goalHint"
@@ -130,7 +130,7 @@ import { PushSubscriptionService } from '@pu-reminders/reminders';
                 (input)="
                   weeklyGoalDraft.set(asNumberOr($event, weeklyGoalDraft()))
                 "
-                placeholder="500"
+                placeholder="50"
                 i18n-placeholder="@@weeklyGoalPlaceholder"
               />
               <mat-hint i18n="@@settings.weeklyGoalHint"
@@ -148,7 +148,7 @@ import { PushSubscriptionService } from '@pu-reminders/reminders';
                 (input)="
                   monthlyGoalDraft.set(asNumberOr($event, monthlyGoalDraft()))
                 "
-                placeholder="2000"
+                placeholder="200"
                 i18n-placeholder="@@monthlyGoalPlaceholder"
               />
               <mat-hint i18n="@@settings.monthlyGoalHint"
@@ -358,9 +358,9 @@ export class SettingsPageComponent {
   readonly isGuest = this.user.isGuest;
 
   readonly displayNameDraft = signal('');
-  readonly dailyGoalDraft = signal<number>(100);
-  readonly weeklyGoalDraft = signal<number>(500);
-  readonly monthlyGoalDraft = signal<number>(2000);
+  readonly dailyGoalDraft = signal<number>(10);
+  readonly weeklyGoalDraft = signal<number>(50);
+  readonly monthlyGoalDraft = signal<number>(200);
   readonly leaderboardOptOutDraft = signal(false);
   readonly adsConsentDraft = signal(false);
 
@@ -396,9 +396,9 @@ export class SettingsPageComponent {
     if (!val || typeof val !== 'object')
       return {
         displayName: '',
-        dailyGoal: 100,
-        weeklyGoal: 500,
-        monthlyGoal: 2000,
+        dailyGoal: 10,
+        weeklyGoal: 50,
+        monthlyGoal: 200,
         hideFromLeaderboard: false,
         consent: { targetedAds: true },
       };
@@ -406,15 +406,15 @@ export class SettingsPageComponent {
       displayName: (val as { displayName?: string }).displayName ?? '',
       dailyGoal: Math.max(
         1,
-        Math.trunc((val as { dailyGoal?: number }).dailyGoal || 100)
+        Math.trunc((val as { dailyGoal?: number }).dailyGoal || 10)
       ),
       weeklyGoal: Math.max(
         1,
-        Math.trunc((val as { weeklyGoal?: number }).weeklyGoal || 500)
+        Math.trunc((val as { weeklyGoal?: number }).weeklyGoal || 50)
       ),
       monthlyGoal: Math.max(
         1,
-        Math.trunc((val as { monthlyGoal?: number }).monthlyGoal || 2000)
+        Math.trunc((val as { monthlyGoal?: number }).monthlyGoal || 200)
       ),
       hideFromLeaderboard:
         (val as { ui?: { hideFromLeaderboard?: boolean } }).ui

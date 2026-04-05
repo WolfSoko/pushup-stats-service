@@ -25,7 +25,7 @@ type RegisterUiState = {
 const initialState: RegisterUiState = {
   hidePassword: true,
   displayName: '',
-  dailyGoal: 100,
+  dailyGoal: 10,
   consentAccepted: false,
   isGoogleRegistration: false,
   registeringCredentials: false,

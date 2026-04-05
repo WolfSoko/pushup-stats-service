@@ -38,9 +38,9 @@ describe('RegisterOnboardingStore', () => {
       'uid-1',
       expect.objectContaining({
         displayName: 'Ana',
-        dailyGoal: 100,
-        weeklyGoal: 500,
-        monthlyGoal: 2000,
+        dailyGoal: 10,
+        weeklyGoal: 50,
+        monthlyGoal: 200,
       })
     );
     expect(store.saving()).toBe(false);

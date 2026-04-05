@@ -1064,8 +1064,8 @@ Active:         </target>
         
             </notes>
       <segment state="translated">
-        <source>100</source>
-        <target>100</target>
+        <source>10</source>
+        <target>10</target>
 
         
         
@@ -1082,8 +1082,8 @@ Active:         </target>
     </unit>
     <unit id="weeklyGoalPlaceholder">
       <segment state="translated">
-        <source>700</source>
-        <target>700</target>
+        <source>50</source>
+        <target>50</target>
       </segment>
     </unit>
     <unit id="settings.weeklyGoalHint">
@@ -1100,8 +1100,8 @@ Active:         </target>
     </unit>
     <unit id="monthlyGoalPlaceholder">
       <segment state="translated">
-        <source>3000</source>
-        <target>3000</target>
+        <source>200</source>
+        <target>200</target>
       </segment>
     </unit>
     <unit id="settings.monthlyGoalHint">
