@@ -142,6 +142,26 @@ pnpm nx run-many --target=lint   # Lint all projects
 - **PR Previews** (`.github/workflows/firebase-hosting-pull-request.yml`): Deploys a preview channel on every PR (same-repo only).
 - **Rule:** No deployment path should bypass CI. Both Hosting and App Hosting are gated on green CI.
 
+## Pre-Push Checklist
+
+**Before every push to `main`**, run these checks locally and ensure they pass:
+
+```bash
+pnpm nx affected -t=lint,test,build -c=production --parallel=3
+```
+
+If only specific projects were changed, targeted checks are acceptable:
+
+```bash
+pnpm nx run-many --target=lint    # Lint all projects
+pnpm nx run-many --target=test    # Run all tests
+pnpm nx run web:build -c production  # Production build (includes prerender)
+```
+
+Do NOT push if any of these fail. Fix first, then push.
+
 ## Workflow
 
-- After completing a feature or bugfix, review whether any new broadly applicable knowledge should be added to this file (general conventions, architectural decisions, i18n rules, etc.). Do NOT add low-level details about individual files unless they are a recurring pitfall.
+- **Before pushing:** Run the pre-push checklist above.
+- **After completing a feature or bugfix:** Review whether any new broadly applicable knowledge should be added to this file (general conventions, architectural decisions, i18n rules, etc.). Do NOT add low-level details about individual files unless they are a recurring pitfall.
+- **After every session:** Capture reusable learnings (patterns, pitfalls, conventions discovered) via the `/evolving-loop` skill or the experience-extractor agent.
