@@ -353,11 +353,12 @@ export function rebuildFromEntries(
   }
   const lastEntryDate = uniqueDates[uniqueDates.length - 1];
 
-  // Period keys from last entry
-  const lastParts = berlinParts(sorted[sorted.length - 1].timestamp);
-  const keys = periodKeys(lastParts);
+  // Period keys from TODAY (not from last entry!)
+  // Use the provided nowIso timestamp to calculate current period keys
+  const nowParts = berlinParts(new Date(nowIso));
+  const keys = periodKeys(nowParts);
 
-  // Period reps: sum entries matching the last entry's period
+  // Period reps: sum entries matching TODAY's period
   let dailyReps = 0;
   let weeklyReps = 0;
   let monthlyReps = 0;
