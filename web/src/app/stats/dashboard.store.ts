@@ -232,13 +232,13 @@ export const DashboardStore = signalStore(
       await store._motivation.loadQuotes(store._user.userIdSafe());
     },
     setDailyGoal(goal: number): void {
-      patchState(store, { dailyGoal: goal });
+      patchState(store, { dailyGoal: Math.max(1, Math.trunc(goal || 1)) });
     },
     setWeeklyGoal(goal: number): void {
-      patchState(store, { weeklyGoal: goal });
+      patchState(store, { weeklyGoal: Math.max(1, Math.trunc(goal || 1)) });
     },
     setMonthlyGoal(goal: number): void {
-      patchState(store, { monthlyGoal: goal });
+      patchState(store, { monthlyGoal: Math.max(1, Math.trunc(goal || 1)) });
     },
   }))
 );
