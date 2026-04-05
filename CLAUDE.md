@@ -2,6 +2,11 @@
 
 Angular 21 / Nx monorepo for tracking pushup statistics with Firebase backend.
 
+## Git Workflow
+
+- **Trunk-based development:** Push directly to `main`. No feature branches by default.
+- Feature branches or worktrees only when explicitly requested.
+
 ## Tech Stack
 
 - **Frontend:** Angular 21 (standalone, zoneless, SSR)
