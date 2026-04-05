@@ -172,6 +172,29 @@ describe('FilterBarComponent', () => {
     }
   });
 
+  it('switches from week to month using today when today is inside current week', () => {
+    vitest.useFakeTimers();
+    try {
+      // Today is April 2, current week spans March 30 – April 5
+      vitest.setSystemTime(new Date(2026, 3, 2));
+
+      component.range.patchValue({
+        start: new Date(2026, 2, 30), // Monday March 30
+        end: new Date(2026, 3, 5), // Sunday April 5
+      });
+
+      component.setMode('month');
+
+      // Should show April (today's month), not March (start of week's month)
+      expect(component.range.controls.start.value).toEqual(
+        new Date(2026, 3, 1)
+      );
+      expect(component.range.controls.end.value).toEqual(new Date(2026, 3, 30));
+    } finally {
+      vitest.useRealTimers();
+    }
+  });
+
   it('switches to week mode using first day when today is outside current range', () => {
     vitest.useFakeTimers();
     try {

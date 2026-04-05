@@ -181,7 +181,6 @@ export class FilterBarComponent implements OnChanges {
 
     let anchor: Date | undefined;
     if (
-      (value === 'day' || value === 'week') &&
       previousStart &&
       previousEnd &&
       today.getTime() >= this.startOfDay(previousStart).getTime() &&
