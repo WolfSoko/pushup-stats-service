@@ -138,11 +138,15 @@ export class CookieConsentBannerComponent {
     this.adsStore.setTargetedAdsConsent(choice === 'all');
 
     // Update analytics consent
-    if (typeof globalThis.localStorage !== 'undefined') {
-      globalThis.localStorage.setItem(
-        'pus_analytics_consent',
-        choice === 'all' ? 'granted' : 'denied'
-      );
+    try {
+      if (typeof globalThis.localStorage !== 'undefined') {
+        globalThis.localStorage.setItem(
+          'pus_analytics_consent',
+          choice === 'all' ? 'granted' : 'denied'
+        );
+      }
+    } catch {
+      /* storage blocked */
     }
   }
 }

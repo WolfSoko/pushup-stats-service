@@ -40,10 +40,12 @@ app.use(pinoHttp({ logger }));
 
 const angularApp = new AngularNodeAppEngine();
 
-// Serve root-level well-known files (ads.txt, robots.txt, sitemap.xml)
-// from the /de build output so they are available at the domain root.
+// Serve root-level well-known files from the /de build output
+// so they are available at the domain root for crawlers.
 for (const file of ['ads.txt', 'robots.txt', 'sitemap.xml']) {
-  app.use(`/${file}`, express.static(join(browserDistFolder, 'de', file)));
+  app.get(`/${file}`, (_req, res) =>
+    res.sendFile(join(browserDistFolder, 'de', file))
+  );
 }
 
 /**
