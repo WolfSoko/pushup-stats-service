@@ -212,6 +212,34 @@ describe('StatsDashboardComponent', () => {
     });
   });
 
+  describe('Given the manual entry dialog is submitted (regression: create event was silently dropped)', () => {
+    describe('When createEntry is called with a valid entry', () => {
+      it('Then it should call createPushup and refresh the store', async () => {
+        // Given
+        const component = fixture.componentInstance;
+        vi.clearAllMocks();
+
+        // When
+        await component.createEntry({
+          timestamp: todayTs,
+          reps: 15,
+          source: 'web',
+          type: 'Diamond',
+        });
+
+        // Then
+        expect(serviceMock.createPushup).toHaveBeenCalledWith({
+          timestamp: todayTs,
+          reps: 15,
+          source: 'web',
+          type: 'Diamond',
+        });
+        // Verify data is reloaded after creation
+        expect(serviceMock.listPushups).toHaveBeenCalled();
+      });
+    });
+  });
+
   describe('Given live websocket updates', () => {
     describe('When the live tick changes', () => {
       it('Then it should reload data', async () => {

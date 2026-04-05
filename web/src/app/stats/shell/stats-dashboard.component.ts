@@ -132,6 +132,16 @@ export class StatsDashboardComponent {
     }
   });
 
+  async createEntry(entry: {
+    timestamp: string;
+    reps: number;
+    source?: string;
+    type?: string;
+  }) {
+    await firstValueFrom(this.api.createPushup(entry));
+    this.store.refreshAll();
+  }
+
   async addQuickEntry(reps: number) {
     const now = new Date();
     const y = now.getFullYear();
