@@ -42,6 +42,12 @@ service cloud.firestore {
       allow write: if false; // Only Cloud Functions (Admin SDK) write here
     }
 
+    // Precomputed user statistics — readable by owner, writable only via Admin SDK (Cloud Functions).
+    match /userStats/{userId} {
+      allow read: if request.auth != null && request.auth.uid == userId;
+      allow write: if false; // Only Cloud Functions (Admin SDK) write here
+    }
+
     // Reminder dispatch state — internal only, no client access.
     match /reminderDispatchState/{userId} {
       allow read, write: if false; // Cloud Functions (Admin SDK) only

@@ -8,7 +8,8 @@ import {
   withState,
 } from '@ngrx/signals';
 import { firstValueFrom } from 'rxjs';
-import { StatsApiService } from '@pu-stats/data-access';
+import { StatsApiService, UserStatsApiService } from '@pu-stats/data-access';
+import { UserContextService } from '@pu-auth/auth';
 import {
   createWeekRange,
   inferRangeMode,
@@ -16,6 +17,7 @@ import {
   StatsGranularity,
   StatsResponse,
   StatsSeriesEntry,
+  UserStats,
 } from '@pu-stats/models';
 
 const EMPTY_STATS: StatsResponse = {
@@ -47,9 +49,7 @@ function isoWeek(date: Date): number {
   const day = d.getUTCDay() || 7;
   d.setUTCDate(d.getUTCDate() + 4 - day);
   const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
-  return Math.ceil(
-    ((d.getTime() - yearStart.getTime()) / 86_400_000 + 1) / 7
-  );
+  return Math.ceil(((d.getTime() - yearStart.getTime()) / 86_400_000 + 1) / 7);
 }
 
 function isoWeekYear(date: Date): number {
@@ -68,8 +68,8 @@ function daysBetween(a: string, b: string): number {
 }
 
 function sortedUniqueDates(rows: PushupRecord[]): string[] {
-  return [...new Set(rows.map((x) => x.timestamp.slice(0, 10)))].sort(
-    (a, b) => a.localeCompare(b)
+  return [...new Set(rows.map((x) => x.timestamp.slice(0, 10)))].sort((a, b) =>
+    a.localeCompare(b)
   );
 }
 
@@ -83,7 +83,9 @@ export const AnalysisStore = signalStore(
   }),
   withProps(() => {
     const api = inject(StatsApiService);
-    return { _api: api };
+    const userStatsApi = inject(UserStatsApiService);
+    const user = inject(UserContextService);
+    return { _api: api, _userStatsApi: userStatsApi, _user: user };
   }),
   withComputed((store) => {
     const filter = computed(() => ({
@@ -98,8 +100,7 @@ export const AnalysisStore = signalStore(
   withProps((store) => {
     const statsResource = resource({
       params: () => store.filter(),
-      loader: async ({ params }) =>
-        firstValueFrom(store._api.load(params)),
+      loader: async ({ params }) => firstValueFrom(store._api.load(params)),
     });
 
     const entriesResource = resource({
@@ -108,7 +109,15 @@ export const AnalysisStore = signalStore(
         firstValueFrom(store._api.listPushups(params)),
     });
 
-    return { statsResource, entriesResource };
+    const userStatsResource = resource({
+      params: () => ({ userId: store._user.userIdSafe() }),
+      loader: async ({ params }) =>
+        params.userId
+          ? firstValueFrom(store._userStatsApi.getUserStats(params.userId))
+          : null,
+    });
+
+    return { statsResource, entriesResource, userStatsResource };
   }),
   withComputed((store) => {
     const stats = computed(() => store.statsResource.value() ?? EMPTY_STATS);
@@ -169,9 +178,7 @@ export const AnalysisStore = signalStore(
         byDay.set(key, (byDay.get(key) ?? 0) + row.reps);
       }
       if (!byDay.size) return null;
-      const [date, total] = [...byDay.entries()].sort(
-        (a, b) => b[1] - a[1]
-      )[0];
+      const [date, total] = [...byDay.entries()].sort((a, b) => b[1] - a[1])[0];
       return { date, total };
     });
 
@@ -199,6 +206,16 @@ export const AnalysisStore = signalStore(
       return streak;
     });
 
+    /** Precomputed server-side stats (null if not yet available). */
+    const userStats = computed<UserStats | null>(
+      () => store.userStatsResource.value() ?? null
+    );
+
+    /** Server-side heatmap data (weekday-hour → cumulative reps). */
+    const heatmapData = computed<Record<string, number>>(
+      () => userStats()?.heatmap ?? {}
+    );
+
     return {
       stats,
       chartSeries,
@@ -211,6 +228,8 @@ export const AnalysisStore = signalStore(
       bestDay,
       longestStreak,
       currentStreak,
+      userStats,
+      heatmapData,
     };
   }),
   withMethods((store) => ({
@@ -222,6 +241,11 @@ export const AnalysisStore = signalStore(
     },
     setTo(to: string): void {
       patchState(store, { to });
+    },
+    refreshAll(): void {
+      store.statsResource.reload();
+      store.entriesResource.reload();
+      store.userStatsResource.reload();
     },
   }))
 );

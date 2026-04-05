@@ -1,6 +1,7 @@
 {
   "functions": {
-    "source": "functions"
+    "source": "functions-dist",
+    "runtime": "nodejs24"
   },
   "emulators": {
     "auth": {

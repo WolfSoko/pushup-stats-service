@@ -31,3 +31,4 @@ export interface StatsFilter {
 export * from './pushup.models';
 export * from './user-config.models';
 export * from './reminder-config.models';
+export * from './user-stats.models';

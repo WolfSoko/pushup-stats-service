@@ -4,21 +4,24 @@
   "projectType": "application",
   "sourceRoot": "data-store/src",
   "tags": ["scope:data-store"],
+  "implicitDependencies": ["cloud-functions"],
   "targets": {
     "serve": {
       "continuous": true,
       "executor": "nx:run-commands",
+      "dependsOn": ["cloud-functions:build"],
       "options": {
         "cwd": "data-store",
-        "command": "bash -lc 'echo $$ > .firebase-emulators.pid; exec npx firebase emulators:start --only auth,firestore'"
+        "command": "bash -lc 'echo $$ > .firebase-emulators.pid; exec npx firebase emulators:start --only auth,firestore,functions'"
       }
     },
     "emulate": {
       "continuous": true,
       "executor": "nx:run-commands",
+      "dependsOn": ["cloud-functions:build"],
       "options": {
         "cwd": "data-store",
-        "command": "bash -lc 'echo $$ > .firebase-emulators.pid; exec npx firebase emulators:start --only auth,firestore'"
+        "command": "bash -lc 'echo $$ > .firebase-emulators.pid; exec npx firebase emulators:start --only auth,firestore,functions'"
       }
     },
     "emulate:stop": {
@@ -30,9 +33,18 @@
     },
     "emulate:smoke": {
       "executor": "nx:run-commands",
+      "dependsOn": ["cloud-functions:build"],
       "options": {
         "cwd": "data-store",
-        "command": "npx firebase emulators:exec --only auth,firestore \"echo emulator-ok\""
+        "command": "npx firebase emulators:exec --only auth,firestore,functions \"echo emulator-ok\""
+      }
+    },
+    "deploy:functions": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["cloud-functions:build"],
+      "options": {
+        "cwd": "data-store",
+        "command": "npx firebase deploy --only functions"
       }
     }
   }

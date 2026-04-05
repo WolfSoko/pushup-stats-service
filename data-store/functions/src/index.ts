@@ -1,13 +1,15 @@
-const crypto = require('node:crypto');
-const { onDocumentWritten } = require('firebase-functions/v2/firestore');
-const { onSchedule } = require('firebase-functions/v2/scheduler');
-const { onCall, HttpsError } = require('firebase-functions/v2/https');
-const { logger } = require('firebase-functions');
-const {
-  RecaptchaEnterpriseServiceClient,
-} = require('@google-cloud/recaptcha-enterprise');
-const { GoogleGenerativeAI } = require('@google/generative-ai');
-const admin = require('firebase-admin');
+import crypto from 'node:crypto';
+import { onDocumentWritten } from 'firebase-functions/v2/firestore';
+import { onSchedule } from 'firebase-functions/v2/scheduler';
+import { onCall, HttpsError } from 'firebase-functions/v2/https';
+import { logger } from 'firebase-functions';
+import { RecaptchaEnterpriseServiceClient } from '@google-cloud/recaptcha-enterprise';
+import { GoogleGenerativeAI } from '@google/generative-ai';
+import * as admin from 'firebase-admin';
+import webpush from 'web-push';
+import { defineSecret } from 'firebase-functions/params';
+import type { UserStats } from '@pu-stats/models';
+import { applyDelta, rebuildFromEntries } from './user-stats-delta';
 
 admin.initializeApp();
 
@@ -29,49 +31,67 @@ function berlinDateParts(date = new Date()) {
     day: '2-digit',
   })
     .formatToParts(date)
-    .reduce((acc, p) => {
+    .reduce<Record<string, string>>((acc, p) => {
       if (p.type !== 'literal') acc[p.type] = p.value;
       return acc;
     }, {});
   return {
-    year: Number(parts.year),
-    month: Number(parts.month),
-    day: Number(parts.day),
-    isoDate: `${parts.year}-${parts.month}-${parts.day}`,
+    year: Number(parts['year']),
+    month: Number(parts['month']),
+    day: Number(parts['day']),
+    isoDate: `${parts['year']}-${parts['month']}-${parts['day']}`,
   };
 }
 
-function isoWeekFromYmd(year, month, day) {
+function isoWeekFromYmd(year: number, month: number, day: number) {
   const d = new Date(Date.UTC(year, month - 1, day));
   d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7));
   const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
-  const week = Math.ceil(((d - yearStart) / 86400000 + 1) / 7);
+  const week = Math.ceil(
+    ((d.getTime() - yearStart.getTime()) / 86400000 + 1) / 7
+  );
   return { year: d.getUTCFullYear(), week };
 }
 
-function toAnonymousLabel() {
+function toAnonymousLabel(): string {
   return 'anonym';
 }
 
-function toPublicDisplayName(profile) {
+interface UserProfile {
+  displayName?: string;
+  ui?: { hideFromLeaderboard?: boolean };
+  role?: string;
+}
+
+function toPublicDisplayName(profile?: UserProfile): string {
   const name = String(profile?.displayName || '').trim();
   if (!name) return toAnonymousLabel();
   return name;
 }
 
-function isLeaderboardNameAllowed(profile) {
-  // Privacy-first default: only show usernames when explicit opt-in is set.
+function isLeaderboardNameAllowed(profile?: UserProfile): boolean {
   return profile?.ui?.hideFromLeaderboard === false;
 }
 
-function rankEntries(rows, periodKey, targetKey, userProfiles) {
-  const totals = new Map();
+interface PushupRow {
+  timestamp?: string;
+  userId?: string;
+  reps?: number;
+}
+
+function rankEntries(
+  rows: PushupRow[],
+  periodKey: string,
+  targetKey: string,
+  userProfiles: Map<string, UserProfile>
+) {
+  const totals = new Map<string, number>();
   for (const row of rows) {
     if (!row.timestamp || !row.userId) continue;
     const datePart = String(row.timestamp).slice(0, 10);
     const d = new Date(`${datePart}T00:00:00Z`);
     const p = berlinDateParts(d);
-    let key;
+    let key: string;
     if (periodKey === 'daily') key = p.isoDate;
     else if (periodKey === 'monthly')
       key = `${p.year}-${String(p.month).padStart(2, '0')}`;
@@ -103,6 +123,11 @@ async function createRecaptchaAssessment({
   recaptchaAction,
   projectID = RECAPTCHA_PROJECT_ID,
   recaptchaKey = RECAPTCHA_SITE_KEY,
+}: {
+  token: string;
+  recaptchaAction: string;
+  projectID?: string;
+  recaptchaKey?: string;
 }) {
   const projectPath = recaptchaClient.projectPath(projectID);
 
@@ -123,7 +148,7 @@ async function createRecaptchaAssessment({
       ok: false,
       score: 0,
       reason: `invalid-token:${response.tokenProperties?.invalidReason || 'unknown'}`,
-      reasons: [],
+      reasons: [] as string[],
       actionMatched: false,
       action: response.tokenProperties?.action || null,
     };
@@ -158,14 +183,19 @@ async function rebuildLeaderboardsCore() {
     .map((d) => d.data())
     .filter((r) => r.userId !== DEMO_USER_ID);
 
-  const userIds = [...new Set(rows.map((r) => r.userId).filter(Boolean))];
-  const userProfiles = new Map();
+  const userIds = [
+    ...new Set(rows.map((r) => r.userId).filter(Boolean)),
+  ] as string[];
+  const userProfiles = new Map<string, UserProfile>();
   if (userIds.length > 0) {
     const cfgSnaps = await Promise.all(
       userIds.map((userId) => db.collection('userConfigs').doc(userId).get())
     );
     for (const cfg of cfgSnaps) {
-      userProfiles.set(cfg.id, cfg.exists ? cfg.data() || {} : {});
+      userProfiles.set(
+        cfg.id,
+        cfg.exists ? (cfg.data() as UserProfile) || {} : {}
+      );
     }
   }
 
@@ -197,10 +227,8 @@ async function rebuildLeaderboardsCore() {
   });
 }
 
-exports.assessRecaptchaToken = onCall(
-  {
-    region: 'europe-west3',
-  },
+export const assessRecaptchaToken = onCall(
+  { region: 'europe-west3' },
   async (request) => {
     const token = String(request.data?.token || '').trim();
     const recaptchaAction = String(request.data?.action || '').trim();
@@ -273,7 +301,7 @@ exports.assessRecaptchaToken = onCall(
 
 // ─── Admin helpers ────────────────────────────────────────────────────────────
 
-async function assertAdmin(uid) {
+async function assertAdmin(uid?: string) {
   if (!uid) throw new HttpsError('unauthenticated', 'Nicht angemeldet.');
   const snap = await db.collection('userConfigs').doc(uid).get();
   if (!snap.exists || snap.data()?.role !== 'admin') {
@@ -283,23 +311,21 @@ async function assertAdmin(uid) {
 
 // ─── adminListUsers ────────────────────────────────────────────────────────────
 
-exports.adminListUsers = onCall(
+export const adminListUsers = onCall(
   { region: 'europe-west3', timeoutSeconds: 120 },
   async (request) => {
     await assertAdmin(request.auth?.uid);
 
-    // Collect all Auth users (paginate through all pages)
-    const authUsers = [];
-    let pageToken;
+    const authUsers: admin.auth.UserRecord[] = [];
+    let pageToken: string | undefined;
     do {
       const result = await admin.auth().listUsers(1000, pageToken);
       authUsers.push(...result.users);
       pageToken = result.pageToken;
     } while (pageToken);
 
-    // Fetch all userConfigs in batches of 10 (Firestore in-query limit)
     const uids = authUsers.map((u) => u.uid);
-    const configMap = new Map();
+    const configMap = new Map<string, Record<string, unknown>>();
     for (let i = 0; i < uids.length; i += 10) {
       const batch = uids.slice(i, i + 10);
       const snaps = await db
@@ -311,9 +337,8 @@ exports.adminListUsers = onCall(
       }
     }
 
-    // Count pushups per user and get last pushup timestamp
-    const pushupCountMap = new Map();
-    const lastPushupMap = new Map();
+    const pushupCountMap = new Map<string, number>();
+    const lastPushupMap = new Map<string, string>();
     const pushupSnap = await db.collection('pushups').get();
     for (const doc of pushupSnap.docs) {
       const data = doc.data();
@@ -322,10 +347,10 @@ exports.adminListUsers = onCall(
         data.userId,
         (pushupCountMap.get(data.userId) || 0) + 1
       );
-      const ts = data.timestamp;
+      const ts = data.timestamp as string;
       if (
         !lastPushupMap.has(data.userId) ||
-        ts > lastPushupMap.get(data.userId)
+        ts > (lastPushupMap.get(data.userId) ?? '')
       ) {
         lastPushupMap.set(data.userId, ts);
       }
@@ -335,13 +360,16 @@ exports.adminListUsers = onCall(
       const config = configMap.get(user.uid) || {};
       return {
         uid: user.uid,
-        displayName: config.displayName || user.displayName || null,
-        email: config.email || user.email || null,
+        displayName:
+          (config as Record<string, unknown>).displayName ||
+          user.displayName ||
+          null,
+        email: (config as Record<string, unknown>).email || user.email || null,
         anonymous: user.providerData.length === 0,
         pushupCount: pushupCountMap.get(user.uid) || 0,
         lastEntry: lastPushupMap.get(user.uid) || null,
         createdAt: user.metadata.creationTime || null,
-        role: config.role || null,
+        role: (config as Record<string, unknown>).role || null,
       };
     });
   }
@@ -349,7 +377,7 @@ exports.adminListUsers = onCall(
 
 // ─── adminDeleteUser ───────────────────────────────────────────────────────────
 
-exports.adminDeleteUser = onCall(
+export const adminDeleteUser = onCall(
   { region: 'europe-west3', timeoutSeconds: 120 },
   async (request) => {
     await assertAdmin(request.auth?.uid);
@@ -365,11 +393,9 @@ exports.adminDeleteUser = onCall(
       );
     }
 
-    // Delete Firebase Auth user
     await admin.auth().deleteUser(uid);
 
     if (anonymize) {
-      // Keep pushups but anonymise the userConfig
       await db
         .collection('userConfigs')
         .doc(uid)
@@ -383,7 +409,6 @@ exports.adminDeleteUser = onCall(
           { merge: true }
         );
     } else {
-      // Hard delete: remove userConfig + all pushups
       await db.collection('userConfigs').doc(uid).delete();
 
       const pushupSnap = await db
@@ -401,7 +426,6 @@ exports.adminDeleteUser = onCall(
       }
     }
 
-    // Always clean up push subscriptions on delete/anonymize
     await deleteAllPushSubscriptions(uid);
 
     logger.info('adminDeleteUser', { uid, anonymize, by: request.auth?.uid });
@@ -411,7 +435,7 @@ exports.adminDeleteUser = onCall(
 
 // ─── adminBulkDeleteInactiveAnonymous ─────────────────────────────────────────
 
-exports.adminBulkDeleteInactiveAnonymous = onCall(
+export const adminBulkDeleteInactiveAnonymous = onCall(
   { region: 'europe-west3', timeoutSeconds: 300 },
   async (request) => {
     await assertAdmin(request.auth?.uid);
@@ -421,9 +445,8 @@ exports.adminBulkDeleteInactiveAnonymous = onCall(
       .toISOString()
       .slice(0, 10);
 
-    // Collect anonymous Auth users
-    const anonymousUsers = [];
-    let pageToken;
+    const anonymousUsers: string[] = [];
+    let pageToken: string | undefined;
     do {
       const result = await admin.auth().listUsers(1000, pageToken);
       for (const user of result.users) {
@@ -434,8 +457,7 @@ exports.adminBulkDeleteInactiveAnonymous = onCall(
       pageToken = result.pageToken;
     } while (pageToken);
 
-    // Find the last pushup timestamp per anonymous user
-    const lastPushupMap = new Map();
+    const lastPushupMap = new Map<string, string>();
     if (anonymousUsers.length > 0) {
       const pushupSnap = await db.collection('pushups').get();
       for (const doc of pushupSnap.docs) {
@@ -444,7 +466,7 @@ exports.adminBulkDeleteInactiveAnonymous = onCall(
         const ts = String(data.timestamp || '').slice(0, 10);
         if (
           !lastPushupMap.has(data.userId) ||
-          ts > lastPushupMap.get(data.userId)
+          ts > (lastPushupMap.get(data.userId) ?? '')
         ) {
           lastPushupMap.set(data.userId, ts);
         }
@@ -461,13 +483,9 @@ exports.adminBulkDeleteInactiveAnonymous = onCall(
         continue;
       }
 
-      // Delete Auth user
       await admin.auth().deleteUser(uid);
-
-      // Delete userConfig
       await db.collection('userConfigs').doc(uid).delete();
 
-      // Delete pushups
       const pushupSnap = await db
         .collection('pushups')
         .where('userId', '==', uid)
@@ -481,9 +499,7 @@ exports.adminBulkDeleteInactiveAnonymous = onCall(
         await batch.commit();
       }
 
-      // Clean up push subscriptions
       await deleteAllPushSubscriptions(uid);
-
       deleted++;
     }
 
@@ -500,7 +516,7 @@ exports.adminBulkDeleteInactiveAnonymous = onCall(
 
 // ─── Leaderboard functions ────────────────────────────────────────────────────
 
-exports.rebuildLeaderboards = onSchedule(
+export const rebuildLeaderboards = onSchedule(
   {
     schedule: 'every 15 minutes',
     timeZone: TZ,
@@ -512,7 +528,7 @@ exports.rebuildLeaderboards = onSchedule(
   }
 );
 
-exports.refreshLeaderboardsOnPushupWrite = onDocumentWritten(
+export const refreshLeaderboardsOnPushupWrite = onDocumentWritten(
   {
     document: 'pushups/{pushupId}',
     region: 'europe-west3',
@@ -543,7 +559,7 @@ const FALLBACK_QUOTES_EN = [
   'Today is the best day for a new personal best!',
 ];
 
-exports.generateMotivationQuotes = onCall(
+export const generateMotivationQuotes = onCall(
   { region: 'europe-west3' },
   async (request) => {
     if (!request.auth) {
@@ -561,13 +577,12 @@ exports.generateMotivationQuotes = onCall(
         .slice(0, 50)
         .trim() || 'Champ';
 
-    // ── Rate-limit: return cached quotes if < 12 h old ──────────────────────
     const cacheRef = db
       .collection('motivationQuotes')
       .doc(`${uid}__${language}`);
     const cacheSnap = await cacheRef.get();
     if (cacheSnap.exists) {
-      const cached = cacheSnap.data();
+      const cached = cacheSnap.data() ?? {};
       const generatedAt = cached.generatedAt
         ? new Date(cached.generatedAt)
         : null;
@@ -575,23 +590,24 @@ exports.generateMotivationQuotes = onCall(
         const ageHours =
           (Date.now() - generatedAt.getTime()) / (1000 * 60 * 60);
         if (ageHours < QUOTE_CACHE_HOURS) {
-          const cachedQuotes = (cached.quotes || []).map((q) => q.text || q);
+          const cachedQuotes = (
+            (cached.quotes || []) as Array<{ text?: string }>
+          ).map((q) => q.text || q);
           return { quotes: cachedQuotes };
         }
       }
     }
 
-    // ── Build Gemini prompt ──────────────────────────────────────────────────
-    let quotes =
+    let quotes: string[] =
       language === 'en' ? [...FALLBACK_QUOTES_EN] : [...FALLBACK_QUOTES_DE];
 
     try {
-      const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+      const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY ?? '');
       const model = genAI.getGenerativeModel({
         model: 'gemini-2.0-flash-lite',
       });
 
-      let prompt;
+      let prompt: string;
       if (language === 'en') {
         prompt =
           `Generate exactly 10 short motivating sentences (max 120 chars each) in English for {{name}} who already did ${totalToday} of ${dailyGoal} push-ups today. Use '{{name}}' as placeholder where fitting. Vary tone (sporty, funny, serious). Return only a JSON array: ["..."]`.replace(
@@ -609,12 +625,13 @@ exports.generateMotivationQuotes = onCall(
       const result = await model.generateContent(prompt);
       const text = result.response.text().trim();
 
-      // Extract JSON array from response (may be wrapped in markdown code fences)
       const jsonMatch = text.match(/\[[\s\S]*\]/);
       if (jsonMatch) {
         const parsed = JSON.parse(jsonMatch[0]);
         if (Array.isArray(parsed) && parsed.length > 0) {
-          quotes = parsed.map(String).filter((q) => q.trim().length > 0);
+          quotes = parsed
+            .map(String)
+            .filter((q: string) => q.trim().length > 0);
         }
       }
     } catch (err) {
@@ -624,7 +641,6 @@ exports.generateMotivationQuotes = onCall(
       );
     }
 
-    // ── Persist to Firestore ─────────────────────────────────────────────────
     const generatedAt = new Date().toISOString();
     await cacheRef.set({
       uid,
@@ -639,11 +655,12 @@ exports.generateMotivationQuotes = onCall(
 );
 
 // ─── helpers ──────────────────────────────────────────────────────────────
-function pushSubscriptionId(endpoint) {
+
+function pushSubscriptionId(endpoint: string): string {
   return crypto.createHash('sha256').update(endpoint).digest('hex');
 }
 
-async function deleteAllPushSubscriptions(uid) {
+async function deleteAllPushSubscriptions(uid: string) {
   const userRef = db.collection('pushSubscriptions').doc(uid);
   const subs = await userRef.collection('subs').listDocuments();
   const batch = db.batch();
@@ -657,10 +674,8 @@ async function deleteAllPushSubscriptions(uid) {
 }
 
 // ─── savePushSubscription ──────────────────────────────────────────────────
-// Saves a Web Push subscription for the authenticated user.
-// Collection: pushSubscriptions/{uid}/subs/{subId}
-// subId is derived from the endpoint via a simple hash.
-exports.savePushSubscription = onCall(
+
+export const savePushSubscription = onCall(
   { region: 'europe-west3' },
   async (request) => {
     if (!request.auth) {
@@ -677,7 +692,6 @@ exports.savePushSubscription = onCall(
       throw new HttpsError('invalid-argument', 'keys fehlen.');
     }
 
-    // Derive a stable doc id from the endpoint URL
     const subId = pushSubscriptionId(endpoint);
 
     const now = new Date().toISOString();
@@ -717,8 +731,8 @@ exports.savePushSubscription = onCall(
 );
 
 // ─── deletePushSubscription ────────────────────────────────────────────────
-// Removes a Web Push subscription for the authenticated user.
-exports.deletePushSubscription = onCall(
+
+export const deletePushSubscription = onCall(
   { region: 'europe-west3' },
   async (request) => {
     if (!request.auth) {
@@ -755,26 +769,33 @@ exports.deletePushSubscription = onCall(
 );
 
 // ─── Web Push Reminder Dispatch ───────────────────────────────────────────────
-const webpush = require('web-push');
-const { defineSecret } = require('firebase-functions/params');
 
 const VAPID_PRIVATE_KEY = defineSecret('VAPID_PRIVATE_KEY');
 const VAPID_PUBLIC_KEY = defineSecret('VAPID_PUBLIC_KEY');
 
-/**
- * Checks if a user should receive a push reminder right now.
- * Returns true if:
- * - reminders are enabled
- * - current time (in user timezone) is NOT in any quiet hour window
- * - enough time has passed since last reminder (intervalMinutes)
- */
-function shouldSendReminder(reminder, lastSentAt, nowMs, snoozedUntil) {
+interface ReminderConfig {
+  enabled?: boolean;
+  timezone?: string;
+  quietHours?: Array<{ from: string; to: string }>;
+  intervalMinutes?: number;
+  language?: string;
+}
+
+interface FirestoreTimestamp {
+  toMillis(): number;
+}
+
+function shouldSendReminder(
+  reminder: ReminderConfig | undefined,
+  lastSentAt: FirestoreTimestamp | null,
+  nowMs: number,
+  snoozedUntil: FirestoreTimestamp | null
+): boolean {
   if (!reminder?.enabled) return false;
 
   const tz = reminder.timezone || TZ;
   const nowDate = new Date(nowMs);
 
-  // Format current time in user's timezone as HH:MM
   const timeStr = nowDate.toLocaleTimeString('de-DE', {
     hour: '2-digit',
     minute: '2-digit',
@@ -784,7 +805,6 @@ function shouldSendReminder(reminder, lastSentAt, nowMs, snoozedUntil) {
   const [hh, mm] = timeStr.split(':').map(Number);
   const currentMinutes = hh * 60 + mm;
 
-  // Check quiet hours
   const quietHours = reminder.quietHours || [];
   for (const { from, to } of quietHours) {
     const [fh, fm] = from.split(':').map(Number);
@@ -794,24 +814,21 @@ function shouldSendReminder(reminder, lastSentAt, nowMs, snoozedUntil) {
     if (fromMin <= toMin) {
       if (currentMinutes >= fromMin && currentMinutes < toMin) return false;
     } else {
-      // wraps midnight
       if (currentMinutes >= fromMin || currentMinutes < toMin) return false;
     }
   }
 
-  // Check snooze — independent of intervalMinutes
   if (snoozedUntil) {
     const snoozeMs = snoozedUntil.toMillis
       ? snoozedUntil.toMillis()
-      : new Date(snoozedUntil).getTime();
+      : new Date(snoozedUntil as unknown as string).getTime();
     if (nowMs < snoozeMs) return false;
   }
 
-  // Check interval since last send
   if (lastSentAt) {
     const lastMs = lastSentAt.toMillis
       ? lastSentAt.toMillis()
-      : new Date(lastSentAt).getTime();
+      : new Date(lastSentAt as unknown as string).getTime();
     const intervalMs = (reminder.intervalMinutes || 60) * 60 * 1000;
     if (nowMs - lastMs < intervalMs) return false;
   }
@@ -819,11 +836,8 @@ function shouldSendReminder(reminder, lastSentAt, nowMs, snoozedUntil) {
   return true;
 }
 
-/**
- * Generates a motivational push notification body.
- */
-function buildNotificationPayload(language) {
-  const messages = {
+function buildNotificationPayload(language?: string): string {
+  const messages: Record<string, string[]> = {
     de: [
       'Zeit für Liegestütze! 💪',
       'Kurze Pause? Perfekt für Liegestütze!',
@@ -844,10 +858,7 @@ function buildNotificationPayload(language) {
   return list[Math.floor(Math.random() * list.length)];
 }
 
-/**
- * Scheduled: runs every 5 minutes, dispatches push reminders to eligible users.
- */
-exports.dispatchPushReminders = onSchedule(
+export const dispatchPushReminders = onSchedule(
   {
     schedule: 'every 5 minutes',
     timeZone: TZ,
@@ -871,7 +882,6 @@ exports.dispatchPushReminders = onSchedule(
 
     const nowMs = Date.now();
 
-    // Load all users with push subscriptions
     const subsSnap = await db.collection('pushSubscriptions').listDocuments();
     logger.info('dispatchPushReminders: checking users', {
       count: subsSnap.length,
@@ -883,14 +893,14 @@ exports.dispatchPushReminders = onSchedule(
       const uid = userRef.id;
 
       try {
-        // Load user reminder config
         const userConfigSnap = await db
           .collection('userConfigs')
           .doc(uid)
           .get();
-        const reminder = userConfigSnap.data()?.reminder;
+        const reminder = userConfigSnap.data()?.reminder as
+          | ReminderConfig
+          | undefined;
 
-        // Acquire lease transactionally — prevents duplicate sends on overlapping invocations
         const dispatchRef = db.collection('reminderDispatchState').doc(uid);
         let leaseAcquired = false;
 
@@ -900,16 +910,11 @@ exports.dispatchPushReminders = onSchedule(
           const snoozedUntil = dispatchSnap.data()?.snoozedUntil || null;
           const alreadyInProgress = dispatchSnap.data()?.inProgress === true;
 
-          if (alreadyInProgress) return; // Another invocation is already sending
-          if (!shouldSendReminder(reminder, lastSentAt, nowMs, snoozedUntil)) return;
+          if (alreadyInProgress) return;
+          if (!shouldSendReminder(reminder, lastSentAt, nowMs, snoozedUntil))
+            return;
 
-          // Claim the slot — only set inProgress, NOT lastSentAt yet
-          // lastSentAt is set after successful send so a failed dispatch can retry
-          tx.set(
-            dispatchRef,
-            { uid, inProgress: true },
-            { merge: true }
-          );
+          tx.set(dispatchRef, { uid, inProgress: true }, { merge: true });
           leaseAcquired = true;
         });
 
@@ -920,7 +925,6 @@ exports.dispatchPushReminders = onSchedule(
 
         let sentToUser = false;
         try {
-          // Load subscriptions for this user
           const subsCol = await userRef.collection('subs').get();
           if (subsCol.empty) {
             results.skipped++;
@@ -950,7 +954,7 @@ exports.dispatchPushReminders = onSchedule(
             actions,
           });
 
-          const expiredSubs = [];
+          const expiredSubs: FirebaseFirestore.DocumentReference[] = [];
 
           for (const subDoc of subsCol.docs) {
             const { endpoint, keys } = subDoc.data();
@@ -964,22 +968,22 @@ exports.dispatchPushReminders = onSchedule(
             try {
               await webpush.sendNotification(pushSub, payload);
               sentToUser = true;
-            } catch (err) {
-              if (err.statusCode === 410 || err.statusCode === 404) {
+            } catch (err: unknown) {
+              const pushErr = err as { statusCode?: number };
+              if (pushErr.statusCode === 410 || pushErr.statusCode === 404) {
                 expiredSubs.push(subDoc.ref);
                 results.expired++;
               } else {
                 logger.warn('dispatchPushReminders: send failed', {
                   uid,
                   endpoint: endpoint.slice(-20),
-                  status: err.statusCode,
+                  status: pushErr.statusCode,
                 });
                 results.errors++;
               }
             }
           }
 
-          // Clean up expired subscriptions
           if (expiredSubs.length > 0) {
             const batch = db.batch();
             expiredSubs.forEach((ref) => batch.delete(ref));
@@ -987,22 +991,28 @@ exports.dispatchPushReminders = onSchedule(
           }
 
           if (sentToUser) {
-            await dispatchRef.set({
-              lastSentAt: admin.firestore.FieldValue.serverTimestamp(),
-              uid,
-            }, { merge: true });
+            await dispatchRef.set(
+              {
+                lastSentAt: admin.firestore.FieldValue.serverTimestamp(),
+                uid,
+              },
+              { merge: true }
+            );
             results.sent++;
           }
         } finally {
-          // Always release lease — prevents permanent deadlock on any error
-          await dispatchRef.update({ inProgress: false }).catch((e) =>
-            logger.warn('dispatchPushReminders: failed to release lease', { uid, err: e.message })
+          await dispatchRef.update({ inProgress: false }).catch((e: Error) =>
+            logger.warn('dispatchPushReminders: failed to release lease', {
+              uid,
+              err: e.message,
+            })
           );
         }
-      } catch (err) {
+      } catch (err: unknown) {
+        const error = err as Error;
         logger.error('dispatchPushReminders: error for user', {
           uid,
-          err: err.message,
+          err: error.message,
         });
         results.errors++;
       }
@@ -1013,32 +1023,198 @@ exports.dispatchPushReminders = onSchedule(
 );
 
 // ─── snoozeReminder ────────────────────────────────────────────────────────
-// Delays the next push reminder by snoozeMinutes (default: 30).
-exports.snoozeReminder = onCall(
+
+export const snoozeReminder = onCall(
   { region: 'europe-west3' },
   async (request) => {
-    if (!request.auth) throw new HttpsError('unauthenticated', 'Auth required.');
+    if (!request.auth)
+      throw new HttpsError('unauthenticated', 'Auth required.');
 
     const uid = request.auth.uid;
     const snoozeMinutes = request.data?.snoozeMinutes ?? 30;
 
-    if (typeof snoozeMinutes !== 'number' || snoozeMinutes < 1 || snoozeMinutes > 1440) {
+    if (
+      typeof snoozeMinutes !== 'number' ||
+      snoozeMinutes < 1 ||
+      snoozeMinutes > 1440
+    ) {
       throw new HttpsError('invalid-argument', 'snoozeMinutes must be 1–1440.');
     }
 
     const snoozeMs = snoozeMinutes * 60 * 1000;
-    const snoozeUntil = admin.firestore.Timestamp.fromMillis(Date.now() + snoozeMs);
+    const snoozeUntil = admin.firestore.Timestamp.fromMillis(
+      Date.now() + snoozeMs
+    );
 
     const dispatchRef = db.collection('reminderDispatchState').doc(uid);
-    await dispatchRef.set({
-      snoozedUntil: snoozeUntil, // separate field — does not interfere with lastSentAt/intervalMinutes
-      uid,
-      snoozedAt: admin.firestore.FieldValue.serverTimestamp(),
-      snoozeMinutes,
-      inProgress: false,
-    }, { merge: true });
+    await dispatchRef.set(
+      {
+        snoozedUntil: snoozeUntil,
+        uid,
+        snoozedAt: admin.firestore.FieldValue.serverTimestamp(),
+        snoozeMinutes,
+        inProgress: false,
+      },
+      { merge: true }
+    );
 
     logger.info('snoozeReminder', { uid, snoozeMinutes });
-    return { ok: true, snoozeUntil: snoozeUntil.toISOString() };
+    return { ok: true, snoozeUntil: snoozeUntil.toDate().toISOString() };
+  }
+);
+
+// ─── updateUserStatsOnPushupWrite ─────────────────────────────────────────────
+// Delta-based user statistics: atomically updates userStats/{userId} on every
+// pushup create/update/delete.
+
+export const updateUserStatsOnPushupWrite = onDocumentWritten(
+  {
+    document: 'pushups/{pushupId}',
+    region: 'europe-west3',
+  },
+  async (event) => {
+    const beforeData = event.data?.before?.data();
+    const afterData = event.data?.after?.data();
+
+    const userId = (afterData?.userId ?? beforeData?.userId) as
+      | string
+      | undefined;
+    if (!userId) {
+      logger.warn('updateUserStatsOnPushupWrite: no userId found, skipping');
+      return;
+    }
+
+    const oldReps = (beforeData?.reps ?? 0) as number;
+    const newReps = (afterData?.reps ?? 0) as number;
+    const oldTimestamp = beforeData?.timestamp as string | undefined;
+    const newTimestamp = afterData?.timestamp as string | undefined;
+
+    const isCreate = !beforeData && !!afterData;
+    const isDelete = !!beforeData && !afterData;
+    const isUpdate = !!beforeData && !!afterData;
+    const timestampChanged =
+      isUpdate && oldTimestamp && newTimestamp && oldTimestamp !== newTimestamp;
+
+    if (!newTimestamp && !oldTimestamp) {
+      logger.warn('updateUserStatsOnPushupWrite: no timestamp found, skipping');
+      return;
+    }
+
+    const nowIso = new Date().toISOString();
+    const statsRef = db.collection('userStats').doc(userId);
+
+    await db.runTransaction(async (tx) => {
+      const statsSnap = await tx.get(statsRef);
+      let current = statsSnap.exists ? (statsSnap.data() as UserStats) : null;
+
+      if (timestampChanged) {
+        // Timestamp changed: undo old entry, then apply new entry
+        current = applyDelta(current, {
+          userId,
+          repsDelta: -oldReps,
+          entriesDelta: -1,
+          timestamp: oldTimestamp,
+          newReps: 0,
+          nowIso,
+        });
+        current = applyDelta(current, {
+          userId,
+          repsDelta: newReps,
+          entriesDelta: 1,
+          timestamp: newTimestamp,
+          newReps,
+          nowIso,
+        });
+      } else {
+        const repsDelta = newReps - oldReps;
+        const entriesDelta = isCreate ? 1 : isDelete ? -1 : 0;
+        const timestamp = (newTimestamp ?? oldTimestamp)!;
+
+        current = applyDelta(current, {
+          userId,
+          repsDelta,
+          entriesDelta,
+          timestamp,
+          newReps,
+          nowIso,
+        });
+      }
+
+      tx.set(statsRef, current);
+    });
+
+    logger.info('updateUserStatsOnPushupWrite', {
+      userId,
+      oldReps,
+      newReps,
+      timestampChanged,
+      pushupId: event.params?.pushupId,
+    });
+  }
+);
+
+// ─── rebuildUserStats ─────────────────────────────────────────────────────────
+// Admin-callable backfill: recomputes userStats/{userId} from all pushup entries.
+// Accepts { userId?: string }. If userId is omitted, rebuilds for ALL users.
+
+export const rebuildUserStats = onCall(
+  { region: 'europe-west3', timeoutSeconds: 540 },
+  async (request) => {
+    await assertAdmin(request.auth?.uid);
+
+    const targetUserId = request.data?.userId
+      ? String(request.data.userId).trim()
+      : null;
+    const nowIso = new Date().toISOString();
+
+    async function rebuildForUser(userId: string) {
+      const snap = await db
+        .collection('pushups')
+        .where('userId', '==', userId)
+        .orderBy('timestamp', 'asc')
+        .get();
+
+      const entries = snap.docs.map((d) => {
+        const data = d.data();
+        return {
+          timestamp: data.timestamp as string,
+          reps: Number(data.reps ?? 0),
+        };
+      });
+
+      const stats = rebuildFromEntries(userId, entries, nowIso);
+      await db.collection('userStats').doc(userId).set(stats);
+      return entries.length;
+    }
+
+    if (targetUserId) {
+      const count = await rebuildForUser(targetUserId);
+      logger.info('rebuildUserStats: single user', {
+        userId: targetUserId,
+        entries: count,
+        by: request.auth?.uid,
+      });
+      return { rebuilt: 1, entries: count };
+    }
+
+    // Rebuild for ALL users
+    const allPushups = await db.collection('pushups').get();
+    const userIds = new Set<string>();
+    for (const doc of allPushups.docs) {
+      const uid = doc.data().userId;
+      if (uid) userIds.add(uid);
+    }
+
+    let totalRebuilt = 0;
+    for (const userId of userIds) {
+      await rebuildForUser(userId);
+      totalRebuilt++;
+    }
+
+    logger.info('rebuildUserStats: all users', {
+      rebuilt: totalRebuilt,
+      by: request.auth?.uid,
+    });
+    return { rebuilt: totalRebuilt };
   }
 );

@@ -1,0 +1,35 @@
+{
+  "name": "cloud-functions",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "data-store/functions/src",
+  "tags": ["scope:cloud-functions"],
+  "targets": {
+    "build": {
+      "executor": "@nx/esbuild:esbuild",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "data-store/functions-dist",
+        "main": "data-store/functions/src/index.ts",
+        "tsConfig": "data-store/functions/tsconfig.app.json",
+        "platform": "node",
+        "target": "node24",
+        "format": ["cjs"],
+        "bundle": true,
+        "thirdParty": false,
+        "generatePackageJson": true,
+        "assets": []
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/data-store/functions"],
+      "options": {
+        "jestConfig": "data-store/functions/jest.config.cts"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}

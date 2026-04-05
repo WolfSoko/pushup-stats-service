@@ -60,6 +60,11 @@ export default [
                 'scope:auth',
               ],
             },
+            // cloud-functions depends on models only
+            {
+              sourceTag: 'scope:cloud-functions',
+              onlyDependOnLibsWithTags: ['scope:models'],
+            },
             // models has no dependencies
             {
               sourceTag: 'scope:models',

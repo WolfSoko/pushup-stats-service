@@ -6,6 +6,7 @@ import {
   LiveDataStore,
   StatsApiService,
   UserConfigApiService,
+  UserStatsApiService,
 } from '@pu-stats/data-access';
 import { AuthStore, UserContextService } from '@pu-auth/auth';
 import { AdsStore } from '@pu-stats/ads';
@@ -98,6 +99,12 @@ describe('StatsDashboardComponent', () => {
       imports: [StatsDashboardComponent],
       providers: [
         { provide: StatsApiService, useValue: serviceMock },
+        {
+          provide: UserStatsApiService,
+          useValue: {
+            getUserStats: vitest.fn().mockReturnValue(of(null)),
+          },
+        },
         { provide: LiveDataStore, useValue: liveMock },
         { provide: UserContextService, useValue: { userIdSafe: () => 'u1' } },
         { provide: AdsStore, useValue: adsConfigMock },
