@@ -393,6 +393,24 @@ describe('StatsDashboardComponent', () => {
     });
   });
 
+  describe('Given goal config has zero or falsy values', () => {
+    it('Then it should fall back to defaults instead of using 0', async () => {
+      // Given - config returns 0 for goals
+      const configApi = TestBed.inject(UserConfigApiService);
+      (configApi.getConfig as ReturnType<typeof vitest.fn>).mockReturnValue(
+        of({ userId: 'u1', dailyGoal: 0, weeklyGoal: 0, monthlyGoal: 0 })
+      );
+      const freshFixture = TestBed.createComponent(StatsDashboardComponent);
+      await freshFixture.whenStable();
+      const component = freshFixture.componentInstance;
+
+      // Then - should use defaults, not 0
+      expect(component.dailyGoal()).toBe(100);
+      expect(component.weeklyGoal()).toBe(700);
+      expect(component.monthlyGoal()).toBe(3000);
+    });
+  });
+
   describe('Given entries with consecutive dates', () => {
     describe('When currentStreak is computed with no recent entries', () => {
       it('Then it should return 0 when last entry is more than 1 day ago', async () => {

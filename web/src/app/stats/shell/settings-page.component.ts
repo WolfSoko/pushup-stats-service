@@ -398,9 +398,9 @@ export class SettingsPageComponent {
       };
     return {
       displayName: (val as { displayName?: string }).displayName ?? '',
-      dailyGoal: (val as { dailyGoal?: number }).dailyGoal ?? 100,
-      weeklyGoal: (val as { weeklyGoal?: number }).weeklyGoal ?? 700,
-      monthlyGoal: (val as { monthlyGoal?: number }).monthlyGoal ?? 3000,
+      dailyGoal: (val as { dailyGoal?: number }).dailyGoal || 100,
+      weeklyGoal: (val as { weeklyGoal?: number }).weeklyGoal || 700,
+      monthlyGoal: (val as { monthlyGoal?: number }).monthlyGoal || 3000,
       hideFromLeaderboard:
         (val as { ui?: { hideFromLeaderboard?: boolean } }).ui
           ?.hideFromLeaderboard ?? false,
