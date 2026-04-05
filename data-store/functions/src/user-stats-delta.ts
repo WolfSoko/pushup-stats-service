@@ -356,7 +356,7 @@ export function rebuildFromEntries(
 
   // Period keys from TODAY (not from last entry!)
   // Use the provided nowIso timestamp to calculate current period keys
-  const nowParts = berlinParts(new Date(nowIso));
+  const nowParts = berlinParts(nowIso);
   const keys = periodKeys(nowParts);
 
   // Period reps: sum entries matching TODAY's period

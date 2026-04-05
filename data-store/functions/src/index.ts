@@ -40,8 +40,8 @@ import { pushSubscriptionId, validateSubscriptionPayload } from './push/subscrip
 import {
   shouldSendReminder,
   buildNotificationPayload,
-  ReminderConfig,
 } from './push/reminders';
+import type { ReminderConfig, FirestoreTimestamp } from './push/reminders';
 import { validateDeleteUserPayload, isDemoUser, batchArray } from './admin';
 
 admin.initializeApp();
@@ -688,91 +688,6 @@ export const deletePushSubscription = onCall(
 
 const VAPID_PRIVATE_KEY = defineSecret('VAPID_PRIVATE_KEY');
 const VAPID_PUBLIC_KEY = defineSecret('VAPID_PUBLIC_KEY');
-
-interface ReminderConfig {
-  enabled?: boolean;
-  timezone?: string;
-  quietHours?: Array<{ from: string; to: string }>;
-  intervalMinutes?: number;
-  language?: string;
-}
-
-interface FirestoreTimestamp {
-  toMillis(): number;
-}
-
-function shouldSendReminder(
-  reminder: ReminderConfig | undefined,
-  lastSentAt: FirestoreTimestamp | null,
-  nowMs: number,
-  snoozedUntil: FirestoreTimestamp | null
-): boolean {
-  if (!reminder?.enabled) return false;
-
-  const tz = reminder.timezone || TZ;
-  const nowDate = new Date(nowMs);
-
-  const timeStr = nowDate.toLocaleTimeString('de-DE', {
-    hour: '2-digit',
-    minute: '2-digit',
-    timeZone: tz,
-    hour12: false,
-  });
-  const [hh, mm] = timeStr.split(':').map(Number);
-  const currentMinutes = hh * 60 + mm;
-
-  const quietHours = reminder.quietHours || [];
-  for (const { from, to } of quietHours) {
-    const [fh, fm] = from.split(':').map(Number);
-    const [th, tm] = to.split(':').map(Number);
-    const fromMin = fh * 60 + fm;
-    const toMin = th * 60 + tm;
-    if (fromMin <= toMin) {
-      if (currentMinutes >= fromMin && currentMinutes < toMin) return false;
-    } else {
-      if (currentMinutes >= fromMin || currentMinutes < toMin) return false;
-    }
-  }
-
-  if (snoozedUntil) {
-    const snoozeMs = snoozedUntil.toMillis
-      ? snoozedUntil.toMillis()
-      : new Date(snoozedUntil as unknown as string).getTime();
-    if (nowMs < snoozeMs) return false;
-  }
-
-  if (lastSentAt) {
-    const lastMs = lastSentAt.toMillis
-      ? lastSentAt.toMillis()
-      : new Date(lastSentAt as unknown as string).getTime();
-    const intervalMs = (reminder.intervalMinutes || 60) * 60 * 1000;
-    if (nowMs - lastMs < intervalMs) return false;
-  }
-
-  return true;
-}
-
-function buildNotificationPayload(language?: string): string {
-  const messages: Record<string, string[]> = {
-    de: [
-      'Zeit für Liegestütze! 💪',
-      'Kurze Pause? Perfekt für Liegestütze!',
-      'Du schaffst das – ein paar Liegestütze!',
-      'Beweg dich! Liegestütze warten auf dich. 🔥',
-      'Dein Körper ruft: Liegestütze, los!',
-    ],
-    en: [
-      'Time for push-ups! 💪',
-      'Quick break? Perfect for push-ups!',
-      'You got this – a few push-ups!',
-      'Move it! Push-ups are waiting for you. 🔥',
-      'Your body calls: push-ups, go!',
-    ],
-  };
-  const lang = language === 'en' ? 'en' : 'de';
-  const list = messages[lang];
-  return list[Math.floor(Math.random() * list.length)];
-}
 
 export const dispatchPushReminders = onSchedule(
   {

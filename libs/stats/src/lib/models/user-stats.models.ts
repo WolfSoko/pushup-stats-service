@@ -60,7 +60,7 @@ export interface UserStats {
 
   // ── Metadata ────────────────────────────────────────────────────────
   /** Version of the calculation logic (used to detect when rebuild is needed) */
-  version: number;
+  version?: number;
   updatedAt: string;
 }
 
