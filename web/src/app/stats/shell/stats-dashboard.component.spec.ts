@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatDialog } from '@angular/material/dialog';
 import { of } from 'rxjs';
 import { StatsDashboardComponent } from './stats-dashboard.component';
 import {
@@ -242,11 +243,12 @@ describe('StatsDashboardComponent', () => {
     describe('When openCreateDialog is called', () => {
       it('Then MatDialog.open is invoked with CreateEntryDialogComponent', () => {
         // Given
-        const { MatDialog } = require('@angular/material/dialog');
         const dialog = TestBed.inject(MatDialog);
         const openSpy = vitest
           .spyOn(dialog, 'open')
-          .mockReturnValue({ afterClosed: () => ({ subscribe: vitest.fn() }) });
+          .mockReturnValue({
+            afterClosed: () => ({ subscribe: vitest.fn() }),
+          } as unknown as ReturnType<typeof dialog.open>);
 
         // When
         fixture.componentInstance.openCreateDialog();

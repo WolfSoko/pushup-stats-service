@@ -43,6 +43,30 @@ describe('LandingPageComponent', () => {
     });
   });
 
+  describe('auth not yet resolved', () => {
+    it('hides guest CTA and login buttons while auth state is pending', async () => {
+      await render(LandingPageComponent, {
+        providers: [
+          provideRouter([]),
+          { provide: AdsStore, useValue: adsConfigMock },
+          { provide: AuthService, useValue: makeAuthServiceMock() },
+          {
+            provide: AuthStore,
+            useValue: makeAuthStoreMock({ authResolved: false }),
+          },
+        ],
+      });
+
+      expect(
+        screen.queryByRole('button', { name: 'Als Gast ausprobieren' })
+      ).toBeNull();
+      expect(
+        screen.queryByRole('link', { name: 'Jetzt registrieren' })
+      ).toBeNull();
+      expect(screen.queryByRole('link', { name: 'Einloggen' })).toBeNull();
+    });
+  });
+
   describe('authenticated as real user', () => {
     it('shows only dashboard button', async () => {
       await render(LandingPageComponent, {

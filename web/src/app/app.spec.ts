@@ -158,6 +158,119 @@ describe('App (testing-library)', () => {
     ).toBeTruthy();
   });
 
+  describe('setLanguage', () => {
+    it('preserves current page path when switching from de to en', async () => {
+      const { fixture } = await render(App, {
+        providers: [
+          provideRouter([]),
+          { provide: PLATFORM_ID, useValue: 'browser' },
+          {
+            provide: UserContextService,
+            useValue: {
+              userNameSafe: userNameSignal.asReadonly(),
+              userIdSafe: () => 'u1',
+              isAdmin: () => false,
+              isGuest: () => false,
+            },
+          },
+          { provide: AuthStore, useValue: authMock },
+          { provide: UserConfigApiService, useValue: userConfigApiMock },
+          { provide: StatsApiService, useValue: statsApiMock },
+          { provide: AdsStore, useValue: adsStoreMock },
+          { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
+        ],
+      });
+
+      const replaceSpy = vitest.fn();
+      const locationMock = {
+        pathname: '/de/app',
+        search: '',
+        hash: '',
+        replace: replaceSpy,
+      };
+      vitest
+        .spyOn(window, 'location', 'get')
+        .mockReturnValue(locationMock as unknown as Location);
+
+      fixture.componentInstance.setLanguage('en');
+      expect(replaceSpy).toHaveBeenCalledWith('/en/app');
+    });
+
+    it('preserves current page path when switching from en to de', async () => {
+      const { fixture } = await render(App, {
+        providers: [
+          provideRouter([]),
+          { provide: PLATFORM_ID, useValue: 'browser' },
+          {
+            provide: UserContextService,
+            useValue: {
+              userNameSafe: userNameSignal.asReadonly(),
+              userIdSafe: () => 'u1',
+              isAdmin: () => false,
+              isGuest: () => false,
+            },
+          },
+          { provide: AuthStore, useValue: authMock },
+          { provide: UserConfigApiService, useValue: userConfigApiMock },
+          { provide: StatsApiService, useValue: statsApiMock },
+          { provide: AdsStore, useValue: adsStoreMock },
+          { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
+        ],
+      });
+
+      const replaceSpy = vitest.fn();
+      const locationMock = {
+        pathname: '/en/settings',
+        search: '?tab=profile',
+        hash: '',
+        replace: replaceSpy,
+      };
+      vitest
+        .spyOn(window, 'location', 'get')
+        .mockReturnValue(locationMock as unknown as Location);
+
+      fixture.componentInstance.setLanguage('de');
+      expect(replaceSpy).toHaveBeenCalledWith('/de/settings?tab=profile');
+    });
+
+    it('navigates to locale root when on landing page', async () => {
+      const { fixture } = await render(App, {
+        providers: [
+          provideRouter([]),
+          { provide: PLATFORM_ID, useValue: 'browser' },
+          {
+            provide: UserContextService,
+            useValue: {
+              userNameSafe: userNameSignal.asReadonly(),
+              userIdSafe: () => 'u1',
+              isAdmin: () => false,
+              isGuest: () => false,
+            },
+          },
+          { provide: AuthStore, useValue: authMock },
+          { provide: UserConfigApiService, useValue: userConfigApiMock },
+          { provide: StatsApiService, useValue: statsApiMock },
+          { provide: AdsStore, useValue: adsStoreMock },
+          { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
+        ],
+      });
+
+      const replaceSpy = vitest.fn();
+      const locationMock = {
+        pathname: '/de',
+        search: '',
+        hash: '',
+        replace: replaceSpy,
+      };
+      vitest
+        .spyOn(window, 'location', 'get')
+        .mockReturnValue(locationMock as unknown as Location);
+
+      fixture.componentInstance.setLanguage('en');
+      expect(replaceSpy).toHaveBeenCalledWith('/en');
+    });
+  });
+
   it('keeps base document title when no seo route data is active', async () => {
     await render(App, {
       providers: [
