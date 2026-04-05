@@ -26,6 +26,8 @@ jobs:
         run: pnpm install --frozen-lockfile
       - name: Build web app
         run: pnpm nx run web:build -c production
+      - name: Build Cloud Functions
+        run: pnpm nx run cloud-functions:build
       - name: Prepare Hosting artifact
         run: |
           rm -rf data-store/hosting-public
