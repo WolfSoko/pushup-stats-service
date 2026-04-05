@@ -29,6 +29,17 @@ describe('LoginUiStore', () => {
     currentUser: { uid: 'u1', displayName: 'Tester' },
   };
 
+  beforeEach(() => {
+    authStoreMock.loading.set(false);
+    authStoreMock.error.set(null);
+    authStoreMock.isAuthenticated.set(true);
+    authStoreMock.user.set({ uid: 'u1', displayName: 'Tester' });
+    authStoreMock.signInWithEmail.mockResolvedValue(undefined);
+    authStoreMock.login.mockResolvedValue(undefined);
+    authStoreMock.logout.mockResolvedValue(undefined);
+    onboardingMock.error.set(null);
+  });
+
   async function setup() {
     const { fixture } = await render('', {
       providers: [
@@ -75,9 +86,6 @@ describe('LoginUiStore', () => {
     const result = await store.signInWithEmail('mail@test.de', 'wrong');
     // Then
     expect(result).toBe(false);
-    // Reset
-    authStoreMock.signInWithEmail.mockResolvedValue(undefined);
-    authStoreMock.error.set(null);
   });
 
   it('returns true on successful Google sign-in (even before isAuthenticated signal updates)', async () => {
