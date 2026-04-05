@@ -181,6 +181,34 @@ describe('AnalysisTeaserCardComponent', () => {
     });
   });
 
+  describe('Given the mini-chart container sizing', () => {
+    it('Then .mini-chart should be rendered when data loads', async () => {
+      // Given
+      await fixture.whenStable();
+      fixture.detectChanges();
+
+      // When
+      const miniChart: HTMLElement =
+        fixture.nativeElement.querySelector('.mini-chart');
+
+      // Then
+      expect(miniChart).toBeTruthy();
+    });
+
+    it('Then .mini-chart height must use responsive clamp, not a fixed 180px', () => {
+      // Regression guard: the old 180px height cut off the chart.
+      // We verify the component's compiled styles contain the correct clamp().
+      const cmpDef = (AnalysisTeaserCardComponent as any).ɵcmp;
+      const allStyles: string[] = cmpDef?.styles ?? [];
+      const joined = allStyles.join(' ');
+
+      // The compiled styles must reference the responsive height
+      expect(joined).toContain('clamp(260px');
+      // Must NOT contain the old fixed 180px for mini-chart
+      expect(joined).not.toMatch(/\.mini-chart[^}]*height:\s*180px/);
+    });
+  });
+
   describe('Given the week range computation', () => {
     it('Then from should be a Monday date string', () => {
       // Given / When
