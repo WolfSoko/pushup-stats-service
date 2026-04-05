@@ -81,4 +81,13 @@ describe('CookieConsentBannerComponent', () => {
     expect(localStorage.getItem(COOKIE_CONSENT_KEY)).toBe('necessary');
     expect(localStorage.getItem(ANALYTICS_CONSENT_KEY)).toBe('denied');
   });
+
+  it('re-shows after reopen() is called', () => {
+    setup();
+    component.accept('all');
+    expect(component.visible()).toBe(false);
+
+    component.reopen();
+    expect(component.visible()).toBe(true);
+  });
 });

@@ -5,6 +5,7 @@ import {
   DestroyRef,
   inject,
   signal,
+  viewChild,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Analytics, logEvent } from '@angular/fire/analytics';
@@ -96,6 +97,14 @@ export class App {
   readonly quickAddSuggestions = this.appData.quickAddSuggestions;
   readonly dailyGoal = this.appData.dailyGoal;
   readonly todayProgress = this.appData.todayProgress;
+
+  private readonly consentBanner =
+    viewChild<CookieConsentBannerComponent>('consentBanner');
+
+  openCookieSettings(ev: Event): void {
+    ev.preventDefault();
+    this.consentBanner()?.reopen();
+  }
 
   setLanguage(lang: 'de' | 'en', ev?: Event): void {
     ev?.preventDefault();

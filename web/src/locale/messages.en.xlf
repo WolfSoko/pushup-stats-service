@@ -4486,6 +4486,12 @@ Deine Position: # ·  Reps        </source>
         <target>Privacy Policy</target>
       </segment>
     </unit>
+    <unit id="footer.cookies">
+      <segment state="translated">
+        <source>Cookie-Einstellungen</source>
+        <target>Cookie Settings</target>
+      </segment>
+    </unit>
 
     <!-- Cookie Consent Banner -->
     <unit id="consent.banner.aria">
@@ -4712,8 +4718,8 @@ Deine Position: # ·  Reps        </source>
     </unit>
     <unit id="datenschutz.ads.personalized.body">
       <segment state="translated">
-        <source>Beim ersten Besuch der Website werden Sie über einen Consent-Banner gefragt, ob Sie personalisierte Werbung zulassen möchten. Wenn Sie nur „Notwendige" wählen, werden ausschließlich nicht-personalisierte Anzeigen ausgeliefert, die keine Tracking-Cookies für Werbeprofile setzen. Sie können Ihre Einwilligung jederzeit widerrufen, indem Sie Ihre Browser-Cookies löschen und die Seite neu laden.</source>
-        <target>On your first visit, a consent banner will ask whether you allow personalized advertising. If you choose "Necessary only", only non-personalized ads will be served, which do not set tracking cookies for advertising profiles. You can revoke your consent at any time by clearing your browser cookies and reloading the page.</target>
+        <source>Beim ersten Besuch der Website werden Sie über einen Consent-Banner gefragt, ob Sie personalisierte Werbung zulassen möchten. Wenn Sie nur „Notwendige" wählen, werden ausschließlich nicht-personalisierte Anzeigen ausgeliefert, die keine Tracking-Cookies für Werbeprofile setzen. Sie können Ihre Einwilligung jederzeit über den Link „Cookie-Einstellungen" im Footer der Seite ändern.</source>
+        <target>On your first visit, a consent banner will ask whether you allow personalized advertising. If you choose "Necessary only", only non-personalized ads will be served, which do not set tracking cookies for advertising profiles. You can change your consent at any time via the "Cookie Settings" link in the page footer.</target>
       </segment>
     </unit>
     <unit id="datenschutz.cookies.title">
@@ -4724,8 +4730,8 @@ Deine Position: # ·  Reps        </source>
     </unit>
     <unit id="datenschutz.cookies.body">
       <segment state="translated">
-        <source>Diese Website verwendet Cookies. Technisch notwendige Cookies (Session, Spracheinstellung) werden ohne Einwilligung gesetzt. Cookies für Analyse (Google Analytics) und personalisierte Werbung (Google AdSense) werden erst nach Ihrer ausdrücklichen Einwilligung aktiviert. Sie können Ihre Einwilligung jederzeit über den Cookie-Banner widerrufen (erscheint erneut nach Löschen der Browser-Cookies).</source>
-        <target>This website uses cookies. Technically necessary cookies (session, language preference) are set without consent. Cookies for analytics (Google Analytics) and personalized advertising (Google AdSense) are only activated after your explicit consent. You can revoke your consent at any time via the cookie banner (which reappears after clearing your browser cookies).</target>
+        <source>Diese Website verwendet Cookies. Technisch notwendige Cookies (Session, Spracheinstellung) werden ohne Einwilligung gesetzt. Cookies für Analyse (Google Analytics) und personalisierte Werbung (Google AdSense) werden erst nach Ihrer ausdrücklichen Einwilligung aktiviert. Sie können Ihre Einwilligung jederzeit über den Link „Cookie-Einstellungen" im Footer widerrufen.</source>
+        <target>This website uses cookies. Technically necessary cookies (session, language preference) are set without consent. Cookies for analytics (Google Analytics) and personalized advertising (Google AdSense) are only activated after your explicit consent. You can revoke your consent at any time via the "Cookie Settings" link in the footer.</target>
       </segment>
     </unit>
     <unit id="datenschutz.rights.title">

@@ -130,6 +130,11 @@ export class CookieConsentBannerComponent {
   /** Only show in browser – on SSR localStorage is unavailable. */
   readonly visible = computed(() => this.isBrowser && this.choice() === null);
 
+  /** Re-show the banner so the user can change their consent. */
+  reopen(): void {
+    this.choice.set(null);
+  }
+
   accept(choice: 'all' | 'necessary'): void {
     writeConsent(choice);
     this.choice.set(choice);
