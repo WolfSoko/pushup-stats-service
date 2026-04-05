@@ -75,12 +75,10 @@ export const LoginUiStore = signalStore(
       email: string,
       password: string
     ): Promise<boolean> => {
-      await authStore.signInWithEmail(email, password);
-      return !authStore.error();
+      return authStore.signInWithEmail(email, password);
     },
     signInWithGoogle: async (): Promise<boolean> => {
-      await authStore.login();
-      return !authStore.error();
+      return authStore.login();
     },
     logout: async (): Promise<void> => {
       await authStore.logout();

@@ -71,14 +71,16 @@ export const AuthStore = signalStore(
     isGuest: computed(() => store._authService.user()?.isAnonymous ?? false),
   })),
   withMethods(({ _authService, ...store }) => ({
-    login: async () => {
+    login: async (): Promise<boolean> => {
       patchState(store, { loading: true, error: null });
       try {
         await _authService.signInWithGoogleAndMigrateGuest();
+        return true;
       } catch (e) {
         patchState(store, {
           error: toFriendlyAuthError(e),
         });
+        return false;
       } finally {
         patchState(store, { loading: false });
       }
@@ -107,38 +109,50 @@ export const AuthStore = signalStore(
         patchState(store, { loading: false });
       }
     },
-    signInWithEmail: async (email: string, password: string) => {
+    signInWithEmail: async (
+      email: string,
+      password: string
+    ): Promise<boolean> => {
       patchState(store, { loading: true, error: null });
       try {
         await _authService.signInWithEmailAndMigrateGuest(email, password);
+        return true;
       } catch (e) {
         patchState(store, {
           error: toFriendlyAuthError(e),
         });
+        return false;
       } finally {
         patchState(store, { loading: false });
       }
     },
-    signUpWithEmail: async (email: string, password: string) => {
+    signUpWithEmail: async (
+      email: string,
+      password: string
+    ): Promise<boolean> => {
       patchState(store, { loading: true, error: null });
       try {
         await _authService.upgradeWithEmail(email, password);
+        return true;
       } catch (e) {
         patchState(store, {
           error: toFriendlyAuthError(e),
         });
+        return false;
       } finally {
         patchState(store, { loading: false });
       }
     },
-    upgradeWithGoogle: async () => {
+    upgradeWithGoogle: async (): Promise<boolean> => {
       patchState(store, { loading: true, error: null });
       try {
         await _authService.upgradeWithGoogle();
+        return true;
       } catch (e) {
         patchState(store, {
           error: toFriendlyAuthError(e),
         });
+        return false;
       } finally {
         patchState(store, { loading: false });
       }
