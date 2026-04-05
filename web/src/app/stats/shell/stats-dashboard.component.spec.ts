@@ -10,7 +10,6 @@ import {
 import { AuthStore, UserContextService } from '@pu-auth/auth';
 import { AdsStore } from '@pu-stats/ads';
 import { signal } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { makeAuthStoreMock } from '@pu-stats/testing';
 import { ActivatedRoute, Router } from '@angular/router';
 

@@ -429,11 +429,11 @@ export class SettingsPageComponent {
     effect(() => {
       const cfg = this.config();
       if (!cfg) return;
-      this.displayNameDraft.set(cfg.displayName ?? '');
-      this.dailyGoalDraft.set(cfg.dailyGoal ?? 100);
-      this.weeklyGoalDraft.set(cfg.weeklyGoal ?? 700);
-      this.monthlyGoalDraft.set(cfg.monthlyGoal ?? 3000);
-      this.leaderboardOptOutDraft.set(cfg.hideFromLeaderboard ?? false);
+      this.displayNameDraft.set(cfg.displayName);
+      this.dailyGoalDraft.set(cfg.dailyGoal);
+      this.weeklyGoalDraft.set(cfg.weeklyGoal);
+      this.monthlyGoalDraft.set(cfg.monthlyGoal);
+      this.leaderboardOptOutDraft.set(cfg.hideFromLeaderboard);
       this.adsConsentDraft.set(cfg.consent?.targetedAds ?? true);
     });
   }
