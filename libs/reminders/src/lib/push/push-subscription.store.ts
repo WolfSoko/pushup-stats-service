@@ -98,6 +98,27 @@ export const PushSubscriptionStore = signalStore(
       await callable({ snoozeMinutes });
     }
 
+    /**
+     * Get the SW registration, waiting briefly for it if not yet available.
+     * The app uses `registerWhenStable:30000`, so the SW may not be registered
+     * immediately. Falls back to `.ready` with a timeout so dev mode (no SW)
+     * doesn't hang forever.
+     */
+    async function getSwRegistration(): Promise<
+      ServiceWorkerRegistration | undefined
+    > {
+      const reg = await navigator.serviceWorker.getRegistration();
+      if (reg) return reg;
+      // SW not yet registered — wait up to 5s for it
+      const raced = await Promise.race([
+        navigator.serviceWorker.ready,
+        new Promise<undefined>((resolve) =>
+          setTimeout(() => resolve(undefined), 5_000)
+        ),
+      ]);
+      return raced ?? undefined;
+    }
+
     // Guard: prevent duplicate init() runs (e.g. from re-mounted components)
     let initStarted = false;
     // Register SW message listener once (guard prevents duplicate registrations)
@@ -137,9 +158,7 @@ export const PushSubscriptionStore = signalStore(
         }
         patchState(store, { status: 'loading' });
         try {
-          // Use getRegistration() instead of .ready which hangs forever
-          // when no SW is registered (e.g. dev mode).
-          const reg = await navigator.serviceWorker.getRegistration();
+          const reg = await getSwRegistration();
           if (!reg) {
             patchState(store, { status: 'not-subscribed', deviceCount: 0 });
             return;
@@ -170,9 +189,8 @@ export const PushSubscriptionStore = signalStore(
             return false;
           }
 
-          const reg = await navigator.serviceWorker.getRegistration();
+          const reg = await getSwRegistration();
           if (!reg) {
-            // No SW registered (e.g. dev mode) — not an error, just unavailable
             patchState(store, { status: 'not-subscribed' });
             return false;
           }
@@ -204,7 +222,7 @@ export const PushSubscriptionStore = signalStore(
 
         patchState(store, { status: 'loading' });
         try {
-          const reg = await navigator.serviceWorker.getRegistration();
+          const reg = await getSwRegistration();
           const sub = reg
             ? await reg.pushManager.getSubscription()
             : null;

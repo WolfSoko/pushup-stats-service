@@ -113,11 +113,19 @@ export class ReminderService {
     if (Notification.permission === 'granted') {
       // Prefer ServiceWorker notification — `new Notification()` is not
       // supported on Android Chrome and throws "Illegal constructor".
-      // Use getRegistration() instead of .ready which hangs forever
-      // when no SW is registered (e.g. dev mode).
+      // Try getRegistration() first; if SW isn't registered yet
+      // (registerWhenStable:30000), wait up to 5s via .ready with timeout.
       let shown = false;
       try {
-        const reg = await navigator.serviceWorker?.getRegistration();
+        let reg = await navigator.serviceWorker?.getRegistration();
+        if (!reg) {
+          reg = await Promise.race([
+            navigator.serviceWorker?.ready,
+            new Promise<undefined>((resolve) =>
+              setTimeout(() => resolve(undefined), 5_000)
+            ),
+          ]);
+        }
         if (reg) {
           await reg.showNotification(title, {
             body: quote,
