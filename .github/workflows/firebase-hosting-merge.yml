@@ -1,7 +1,7 @@
 # Firebase Hosting deployment – gated by CI.
 # The deploy branch is only updated after CI succeeds on main
 # (see promote-to-deploy job in ci.yml).
-name: Deploy to Firebase Hosting on merge
+name: Deploy to Firebase (Hosting + Functions) on merge
 on:
   push:
     branches:
@@ -36,6 +36,14 @@ jobs:
           find data-store/hosting-public -type f -name 'index.csr.html' -print0 | while IFS= read -r -d '' f; do
             cp "$f" "${f%index.csr.html}index.html"
           done
+      - name: Authenticate Firebase CLI
+        run: |
+          echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT_PUSHUP_STATS }}' > "$RUNNER_TEMP/firebase-sa.json"
+      - name: Deploy Cloud Functions
+        run: npx firebase-tools deploy --only functions --project pushup-stats
+        working-directory: data-store
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ runner.temp }}/firebase-sa.json
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
