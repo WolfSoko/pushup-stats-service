@@ -257,6 +257,111 @@ export function applyDelta(
   };
 }
 
+export interface PushupEntry {
+  timestamp: string;
+  reps: number;
+}
+
+/**
+ * Rebuild UserStats from scratch given all pushup entries for a user.
+ * Entries are sorted by timestamp before processing.
+ * Used for backfill and streak recalculation after deletes.
+ */
+export function rebuildFromEntries(
+  userId: string,
+  entries: PushupEntry[],
+  nowIso: string
+): UserStats {
+  if (entries.length === 0) {
+    return { ...emptyUserStats(userId), updatedAt: nowIso };
+  }
+
+  const sorted = [...entries].sort((a, b) =>
+    a.timestamp.localeCompare(b.timestamp)
+  );
+
+  // Compute all per-entry data
+  const total = sorted.reduce((sum, e) => sum + e.reps, 0);
+  const totalEntries = sorted.length;
+
+  // Heatmap + per-day aggregation
+  const heatmap: Record<string, number> = {};
+  const dayTotals = new Map<string, number>();
+
+  for (const entry of sorted) {
+    const parts = berlinParts(entry.timestamp);
+    const slot = heatmapSlot(parts.weekday, parts.hour);
+    heatmap[slot] = (heatmap[slot] ?? 0) + entry.reps;
+
+    dayTotals.set(
+      parts.isoDate,
+      (dayTotals.get(parts.isoDate) ?? 0) + entry.reps
+    );
+  }
+
+  // Best day
+  let bestDay: { date: string; total: number } | null = null;
+  for (const [date, dayTotal] of dayTotals) {
+    if (!bestDay || dayTotal > bestDay.total) {
+      bestDay = { date, total: dayTotal };
+    }
+  }
+
+  // Best single entry
+  let bestSingleEntry: { reps: number; timestamp: string } | null = null;
+  for (const entry of sorted) {
+    if (!bestSingleEntry || entry.reps > bestSingleEntry.reps) {
+      bestSingleEntry = { reps: entry.reps, timestamp: entry.timestamp };
+    }
+  }
+
+  // Streak (from sorted unique dates)
+  const uniqueDates = [...dayTotals.keys()].sort();
+  let currentStreak = 1;
+  for (let i = uniqueDates.length - 1; i > 0; i--) {
+    if (daysBetween(uniqueDates[i - 1], uniqueDates[i]) === 1) {
+      currentStreak++;
+    } else {
+      break;
+    }
+  }
+  const lastEntryDate = uniqueDates[uniqueDates.length - 1];
+
+  // Period keys from last entry
+  const lastParts = berlinParts(sorted[sorted.length - 1].timestamp);
+  const keys = periodKeys(lastParts);
+
+  // Period reps: sum entries matching the last entry's period
+  let dailyReps = 0;
+  let weeklyReps = 0;
+  let monthlyReps = 0;
+  for (const entry of sorted) {
+    const parts = berlinParts(entry.timestamp);
+    const entryKeys = periodKeys(parts);
+    if (entryKeys.dailyKey === keys.dailyKey) dailyReps += entry.reps;
+    if (entryKeys.weeklyKey === keys.weeklyKey) weeklyReps += entry.reps;
+    if (entryKeys.monthlyKey === keys.monthlyKey) monthlyReps += entry.reps;
+  }
+
+  return {
+    userId,
+    total,
+    totalEntries,
+    dailyReps,
+    dailyKey: keys.dailyKey,
+    weeklyReps,
+    weeklyKey: keys.weeklyKey,
+    monthlyReps,
+    monthlyKey: keys.monthlyKey,
+    currentStreak,
+    lastEntryDate,
+    heatmap,
+    bestDay,
+    bestSingleEntry,
+    updatedAt: nowIso,
+  };
+}
+
 /**
  * Return an empty UserStats object.
  */

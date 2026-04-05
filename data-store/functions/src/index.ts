@@ -9,7 +9,7 @@ import * as admin from 'firebase-admin';
 import webpush from 'web-push';
 import { defineSecret } from 'firebase-functions/params';
 import type { UserStats } from '@pu-stats/models';
-import { applyDelta } from './user-stats-delta';
+import { applyDelta, rebuildFromEntries } from './user-stats-delta';
 
 admin.initializeApp();
 
@@ -1001,14 +1001,12 @@ export const dispatchPushReminders = onSchedule(
             results.sent++;
           }
         } finally {
-          await dispatchRef
-            .update({ inProgress: false })
-            .catch((e: Error) =>
-              logger.warn('dispatchPushReminders: failed to release lease', {
-                uid,
-                err: e.message,
-              })
-            );
+          await dispatchRef.update({ inProgress: false }).catch((e: Error) =>
+            logger.warn('dispatchPushReminders: failed to release lease', {
+              uid,
+              err: e.message,
+            })
+          );
         }
       } catch (err: unknown) {
         const error = err as Error;
@@ -1134,5 +1132,71 @@ export const updateUserStatsOnPushupWrite = onDocumentWritten(
       entriesDelta,
       pushupId: event.params?.pushupId,
     });
+  }
+);
+
+// ─── rebuildUserStats ─────────────────────────────────────────────────────────
+// Admin-callable backfill: recomputes userStats/{userId} from all pushup entries.
+// Accepts { userId?: string }. If userId is omitted, rebuilds for ALL users.
+
+export const rebuildUserStats = onCall(
+  { region: 'europe-west3', timeoutSeconds: 540 },
+  async (request) => {
+    await assertAdmin(request.auth?.uid);
+
+    const targetUserId = request.data?.userId
+      ? String(request.data.userId).trim()
+      : null;
+    const nowIso = new Date().toISOString();
+
+    async function rebuildForUser(userId: string) {
+      const snap = await db
+        .collection('pushups')
+        .where('userId', '==', userId)
+        .orderBy('timestamp', 'asc')
+        .get();
+
+      const entries = snap.docs.map((d) => {
+        const data = d.data();
+        return {
+          timestamp: data.timestamp as string,
+          reps: Number(data.reps ?? 0),
+        };
+      });
+
+      const stats = rebuildFromEntries(userId, entries, nowIso);
+      await db.collection('userStats').doc(userId).set(stats);
+      return entries.length;
+    }
+
+    if (targetUserId) {
+      const count = await rebuildForUser(targetUserId);
+      logger.info('rebuildUserStats: single user', {
+        userId: targetUserId,
+        entries: count,
+        by: request.auth?.uid,
+      });
+      return { rebuilt: 1, entries: count };
+    }
+
+    // Rebuild for ALL users
+    const allPushups = await db.collection('pushups').get();
+    const userIds = new Set<string>();
+    for (const doc of allPushups.docs) {
+      const uid = doc.data().userId;
+      if (uid) userIds.add(uid);
+    }
+
+    let totalRebuilt = 0;
+    for (const userId of userIds) {
+      await rebuildForUser(userId);
+      totalRebuilt++;
+    }
+
+    logger.info('rebuildUserStats: all users', {
+      rebuilt: totalRebuilt,
+      by: request.auth?.uid,
+    });
+    return { rebuilt: totalRebuilt };
   }
 );

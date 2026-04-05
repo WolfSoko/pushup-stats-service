@@ -7,6 +7,7 @@ import {
   updateStreak,
   applyDelta,
   emptyUserStats,
+  rebuildFromEntries,
 } from './user-stats-delta';
 
 // ─── berlinParts ──────────────────────────────────────────────────────────────
@@ -504,5 +505,96 @@ describe('emptyUserStats', () => {
     expect(stats.heatmap).toEqual({});
     expect(stats.bestDay).toBeNull();
     expect(stats.bestSingleEntry).toBeNull();
+  });
+});
+
+// ─── rebuildFromEntries ──────────────────────────────────────────────────────
+
+describe('rebuildFromEntries', () => {
+  const NOW = '2026-04-05T16:00:00.000Z';
+
+  it('returns empty stats for zero entries', () => {
+    const stats = rebuildFromEntries('u1', [], NOW);
+    expect(stats.total).toBe(0);
+    expect(stats.totalEntries).toBe(0);
+    expect(stats.heatmap).toEqual({});
+    expect(stats.bestDay).toBeNull();
+    expect(stats.bestSingleEntry).toBeNull();
+    expect(stats.currentStreak).toBe(0);
+  });
+
+  it('correctly computes stats from a list of entries', () => {
+    const entries = [
+      { timestamp: '2026-04-03T08:00:00.000Z', reps: 20 }, // Fri, 10:00 CEST
+      { timestamp: '2026-04-03T14:00:00.000Z', reps: 30 }, // Fri, 16:00 CEST
+      { timestamp: '2026-04-04T09:00:00.000Z', reps: 15 }, // Sat, 11:00 CEST
+      { timestamp: '2026-04-05T14:30:00.000Z', reps: 25 }, // Sun, 16:30 CEST
+    ];
+
+    const stats = rebuildFromEntries('u1', entries, NOW);
+
+    expect(stats.userId).toBe('u1');
+    expect(stats.total).toBe(90); // 20+30+15+25
+    expect(stats.totalEntries).toBe(4);
+
+    // Daily: last entry is 2026-04-05
+    expect(stats.dailyKey).toBe('2026-04-05');
+    expect(stats.dailyReps).toBe(25);
+
+    // Weekly: all in W14
+    expect(stats.weeklyKey).toBe('2026-W14');
+    expect(stats.weeklyReps).toBe(90);
+
+    // Monthly: all in April
+    expect(stats.monthlyKey).toBe('2026-04');
+    expect(stats.monthlyReps).toBe(90);
+
+    // Streak: Apr 3 → 4 → 5 = 3 consecutive days
+    expect(stats.currentStreak).toBe(3);
+    expect(stats.lastEntryDate).toBe('2026-04-05');
+
+    // Best day: Apr 3 has 50 reps (20+30)
+    expect(stats.bestDay).toEqual({ date: '2026-04-03', total: 50 });
+
+    // Best single entry: 30 reps
+    expect(stats.bestSingleEntry).toEqual({
+      reps: 30,
+      timestamp: '2026-04-03T14:00:00.000Z',
+    });
+
+    // Heatmap
+    expect(stats.heatmap['Fr-10']).toBe(20); // Apr 3 08:00 UTC = 10:00 CEST
+    expect(stats.heatmap['Fr-16']).toBe(30); // Apr 3 14:00 UTC = 16:00 CEST
+    expect(stats.heatmap['Sa-11']).toBe(15); // Apr 4 09:00 UTC = 11:00 CEST
+    expect(stats.heatmap['So-16']).toBe(25); // Apr 5 14:30 UTC = 16:30 CEST
+
+    expect(stats.updatedAt).toBe(NOW);
+  });
+
+  it('handles streak with gap (non-consecutive days)', () => {
+    const entries = [
+      { timestamp: '2026-04-01T10:00:00.000Z', reps: 10 }, // Wed
+      { timestamp: '2026-04-02T10:00:00.000Z', reps: 10 }, // Thu
+      // Gap: Apr 3
+      { timestamp: '2026-04-04T10:00:00.000Z', reps: 10 }, // Sat
+      { timestamp: '2026-04-05T10:00:00.000Z', reps: 10 }, // Sun
+    ];
+
+    const stats = rebuildFromEntries('u1', entries, NOW);
+    expect(stats.currentStreak).toBe(2); // Apr 4-5
+    expect(stats.total).toBe(40);
+    expect(stats.totalEntries).toBe(4);
+  });
+
+  it('correctly identifies best day across multiple days', () => {
+    const entries = [
+      { timestamp: '2026-04-01T10:00:00.000Z', reps: 50 },
+      { timestamp: '2026-04-02T10:00:00.000Z', reps: 20 },
+      { timestamp: '2026-04-02T14:00:00.000Z', reps: 40 },
+    ];
+
+    const stats = rebuildFromEntries('u1', entries, NOW);
+    // Apr 2: 20+40=60 > Apr 1: 50
+    expect(stats.bestDay).toEqual({ date: '2026-04-02', total: 60 });
   });
 });
