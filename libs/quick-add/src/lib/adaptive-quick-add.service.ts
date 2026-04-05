@@ -23,8 +23,7 @@ export class AdaptiveQuickAddService {
     for (const v of raw) {
       if (!result.includes(v)) result.push(v);
     }
-    let i = 0;
-    while (result.length < 3) result.push(raw[i++ % raw.length]);
+    while (result.length < 3) result.push(Math.max(...result) + 5);
     return result.slice(0, 3) as [number, number, number];
   }
 }

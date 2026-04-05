@@ -184,7 +184,14 @@ export class AuthService {
    */
   private async runPostAuthHooks(): Promise<void> {
     if (isPlatformServer(this.platformId)) return;
-    const user = this.user();
+    // Prefer synchronous auth.currentUser over the signal-based user() which
+    // is backed by toSignal() and may still hold stale data (e.g. the old
+    // anonymous user) due to the microtask delay between the auth operation
+    // completing and the observable emission settling into the signal.
+    const firebaseUser = this.authAdapter.currentUser;
+    const user = firebaseUser
+      ? mapAuthUserToPUSUser(firebaseUser)
+      : this.user();
     if (!user) return;
     this.userDbSyncState.set('syncing');
     try {

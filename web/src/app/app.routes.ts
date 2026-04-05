@@ -56,11 +56,11 @@ export const appRoutes: Routes = [
     component: RegisterComponent,
   },
   {
-    path: 'data',
+    path: 'history',
     canActivate: [authGuard],
     data: {
-      seoTitle: $localize`:@@seo.data.title:Daten – Pushup Tracker`,
-      seoDescription: $localize`:@@seo.data.description:Verwalte Einträge, filtere nach Zeitraum und behalte deine Trainingsdaten im Griff.`,
+      seoTitle: $localize`:@@seo.history.title:Daten – Pushup Tracker`,
+      seoDescription: $localize`:@@seo.history.description:Verwalte Einträge, filtere nach Zeitraum und behalte deine Trainingsdaten im Griff.`,
     },
     loadComponent: () =>
       import('./stats/shell/entries-page.component').then(

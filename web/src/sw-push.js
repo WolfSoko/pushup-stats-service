@@ -60,12 +60,12 @@ self.addEventListener('notificationclick', (event) => {
 
   if (action === 'log') {
     // Open app at dashboard to log push-ups
-    event.waitUntil(clients.openWindow('/dashboard?log=1'));
+    event.waitUntil(clients.openWindow('/app?log=1'));
     return;
   }
 
   // Default: open/focus app
-  const targetUrl = event.notification.data?.url || '/dashboard';
+  const targetUrl = event.notification.data?.url || '/app';
   const fullUrl = new URL(targetUrl, self.location.origin).href;
 
   event.waitUntil(

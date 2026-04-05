@@ -3,32 +3,28 @@
     <div class="dial-actions">
       @for (item of dialItems(); track $index) {
         @if (item.type === 'custom') {
-          <div class="dial-row">
-            <span class="dial-label" i18n="@@quickAdd.fab.customValue"
-              >Eigener Wert</span
-            >
-            <button
-              mat-mini-fab
-              class="custom-mini-fab"
-              aria-label="Eigenen Wert eingeben"
-              i18n-aria-label="@@quickAdd.fab.customValueAria"
-              (click)="onOpenDialog()"
-            >
-              <mat-icon>{{ item.icon }}</mat-icon>
-            </button>
-          </div>
+          <button
+            mat-fab
+            extended
+            class="custom-fab"
+            aria-label="Eigenen Wert eingeben"
+            i18n-aria-label="@@quickAdd.fab.customValueAria"
+            (click)="onOpenDialog()"
+          >
+            <mat-icon>{{ item.icon }}</mat-icon>
+            <span i18n="@@quickAdd.fab.customValue">Eigener Wert</span>
+          </button>
         } @else {
-          <div class="dial-row">
-            <span class="dial-label" i18n="@@quickAdd.fab.quickAddReps">+{{ item.value }} Reps</span>
-            <button
-              mat-mini-fab
-              class="quick-mini-fab"
-              [attr.aria-label]="repAriaLabel(item.value)"
-              (click)="onQuickAdd(item.value)"
-            >
-              <mat-icon>{{ item.icon }}</mat-icon>
-            </button>
-          </div>
+          <button
+            mat-fab
+            extended
+            class="quick-fab"
+            [attr.aria-label]="repAriaLabel(item.value)"
+            (click)="onQuickAdd(item.value)"
+          >
+            <mat-icon>{{ item.icon }}</mat-icon>
+            <span i18n="@@quickAdd.fab.quickAddReps">+{{ item.value }} Reps</span>
+          </button>
         }
       }
     </div>

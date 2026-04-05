@@ -4,6 +4,8 @@ import { ReminderStore } from './reminder.store';
 import { ReminderPermissionService } from './reminder-permission.service';
 import { MotivationStore } from '@pu-stats/motivation';
 import { isInQuietHours, ReminderService } from './reminder.service';
+import { PushSubscriptionStore } from './push/push-subscription.store';
+import type { PushStatus } from './push/push-subscription.store';
 import type { ReminderConfig } from '@pu-stats/models';
 
 async function flushMicrotasks(): Promise<void> {
@@ -20,8 +22,14 @@ describe('ReminderService', () => {
   // Save original property descriptors to restore after each test.
   // Using descriptors (not values) so we can delete the property when
   // it didn't originally exist, preventing false 'in' checks.
-  const swDescriptor = Object.getOwnPropertyDescriptor(navigator, 'serviceWorker');
-  const notifDescriptor = Object.getOwnPropertyDescriptor(window, 'Notification');
+  const swDescriptor = Object.getOwnPropertyDescriptor(
+    navigator,
+    'serviceWorker'
+  );
+  const notifDescriptor = Object.getOwnPropertyDescriptor(
+    window,
+    'Notification'
+  );
 
   const defaultConfig: ReminderConfig = {
     enabled: true,
@@ -32,7 +40,8 @@ describe('ReminderService', () => {
   };
 
   function createService(
-    configOverride?: Partial<ReminderConfig>
+    configOverride?: Partial<ReminderConfig>,
+    pushStatus: PushStatus = 'not-subscribed'
   ): ReminderService {
     const config = { ...defaultConfig, ...configOverride };
     TestBed.configureTestingModule({
@@ -52,6 +61,10 @@ describe('ReminderService', () => {
             loadQuotes: jest.fn().mockResolvedValue(undefined),
             quotes: signal(['Stay strong!']),
           },
+        },
+        {
+          provide: PushSubscriptionStore,
+          useValue: { status: signal(pushStatus) },
         },
       ],
     });
@@ -191,6 +204,51 @@ describe('ReminderService', () => {
       expect.stringContaining('Liegestütze'),
       expect.objectContaining({ body: 'Stay strong!' })
     );
+
+    service.stop();
+  });
+
+  it('should resolve notification icon relative to document.baseURI', async () => {
+    // Simulate a locale-prefixed base URI (e.g. /de/)
+    const originalBaseURI = Object.getOwnPropertyDescriptor(
+      Document.prototype,
+      'baseURI'
+    );
+    Object.defineProperty(document, 'baseURI', {
+      value: 'http://localhost/de/',
+      configurable: true,
+    });
+
+    const service = createService();
+    service.start({ userId: 'u1' });
+    jest.advanceTimersByTime(5_000);
+    await flushMicrotasks();
+
+    expect(showNotificationSpy).toHaveBeenCalledWith(
+      expect.any(String),
+      expect.objectContaining({
+        icon: 'http://localhost/de/assets/pushup-logo.svg',
+      })
+    );
+
+    // Restore
+    if (originalBaseURI) {
+      Object.defineProperty(Document.prototype, 'baseURI', originalBaseURI);
+    } else {
+      delete (document as Record<string, unknown>)['baseURI'];
+    }
+
+    service.stop();
+  });
+
+  it('should not show notification when push subscription is active', async () => {
+    const service = createService(undefined, 'subscribed');
+    service.start({ userId: 'u1' });
+    jest.advanceTimersByTime(5_000);
+    await flushMicrotasks();
+
+    // Server-side push handles delivery — client-side must stay silent
+    expect(showNotificationSpy).not.toHaveBeenCalled();
 
     service.stop();
   });

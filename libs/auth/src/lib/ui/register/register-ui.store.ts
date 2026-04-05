@@ -98,8 +98,7 @@ export const RegisterUiStore = signalStore(
     ): Promise<boolean> => {
       patchState(store, { registeringCredentials: true });
       try {
-        await authStore.signUpWithEmail(email, password);
-        return !authStore.error();
+        return await authStore.signUpWithEmail(email, password);
       } finally {
         patchState(store, { registeringCredentials: false });
       }
@@ -107,8 +106,7 @@ export const RegisterUiStore = signalStore(
     signInWithGoogle: async (): Promise<boolean> => {
       patchState(store, { registeringCredentials: true });
       try {
-        await authStore.upgradeWithGoogle();
-        return !authStore.error();
+        return await authStore.upgradeWithGoogle();
       } finally {
         patchState(store, { registeringCredentials: false });
       }

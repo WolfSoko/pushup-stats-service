@@ -34,9 +34,10 @@ describe('auth.guard', () => {
         {
           provide: Auth,
           useValue: makeFirebaseAuthMock({
-            currentUser: opts.currentUser !== undefined
-              ? (opts.currentUser as never)
-              : null,
+            currentUser:
+              opts.currentUser !== undefined
+                ? (opts.currentUser as never)
+                : null,
           }),
         },
       ],
@@ -94,6 +95,39 @@ describe('auth.guard', () => {
     const result = await TestBed.runInInjectionContext(() =>
       publicOnlyGuard(mockedRoute, mockedRouterState)
     );
+    expect(result).toBe(true);
+  });
+
+  // Regression tests for Bug 1: publicOnlyGuard must use synchronous currentUser
+  // as fallback (same as authGuard) to avoid toSignal() lag.
+
+  it('publicOnlyGuard should redirect authenticated non-guest user even when signal lags (currentUser fallback)', async () => {
+    // Signal says "not authenticated" (toSignal lag), but Firebase already has a real user
+    setup({
+      isAuthenticated: false,
+      isGuest: false,
+      currentUser: { uid: 'u1', isAnonymous: false },
+    });
+
+    const result = (await TestBed.runInInjectionContext(() =>
+      publicOnlyGuard(mockedRoute, mockedRouterState)
+    )) as UrlTree;
+
+    expect(result.toString()).toEqual('/app');
+  });
+
+  it('publicOnlyGuard should allow access when currentUser is an anonymous user (guest)', async () => {
+    // Signal says "not authenticated", and currentUser is anonymous → guest, allow access
+    setup({
+      isAuthenticated: false,
+      isGuest: true,
+      currentUser: { uid: 'anon-1', isAnonymous: true },
+    });
+
+    const result = await TestBed.runInInjectionContext(() =>
+      publicOnlyGuard(mockedRoute, mockedRouterState)
+    );
+
     expect(result).toBe(true);
   });
 });

@@ -3,6 +3,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { ReminderStore } from './reminder.store';
 import { ReminderPermissionService } from './reminder-permission.service';
 import { MotivationStore } from '@pu-stats/motivation';
+import { PushSubscriptionStore } from './push/push-subscription.store';
 
 export function isInQuietHours(
   quietHours: { from: string; to: string }[],
@@ -45,6 +46,7 @@ export class ReminderService {
   private readonly permissionService = inject(ReminderPermissionService);
   private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
   private readonly motivationStore = inject(MotivationStore);
+  private readonly pushStore = inject(PushSubscriptionStore);
 
   private intervalId: ReturnType<typeof setInterval> | null = null;
   private initialTickTimeoutId: ReturnType<typeof setTimeout> | null = null;
@@ -103,6 +105,10 @@ export class ReminderService {
       return;
     }
 
+    // Skip in-app notification when server-side push is active — the Cloud
+    // Function already handles delivery, showing both causes duplicate sounds.
+    if (this.pushStore.status() === 'subscribed') return;
+
     const quote = await this.getNextQuote();
     if (!quote) return;
 
@@ -127,9 +133,11 @@ export class ReminderService {
           ]);
         }
         if (reg) {
+          const iconUrl = new URL('assets/pushup-logo.svg', document.baseURI)
+            .href;
           await reg.showNotification(title, {
             body: quote,
-            icon: '/assets/pushup-logo.svg',
+            icon: iconUrl,
             tag: 'reminder',
             renotify: true,
           } as NotificationOptions);
@@ -140,9 +148,11 @@ export class ReminderService {
       }
       if (!shown) {
         try {
+          const iconUrl = new URL('assets/pushup-logo.svg', document.baseURI)
+            .href;
           new Notification(title, {
             body: quote,
-            icon: '/assets/pushup-logo.svg',
+            icon: iconUrl,
           });
         } catch {
           // Fallback also failed (e.g. Android Chrome) — give up silently

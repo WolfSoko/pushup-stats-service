@@ -14,8 +14,8 @@ describe('LoginUiStore', () => {
       uid: 'u1',
       displayName: 'Tester',
     }),
-    signInWithEmail: jest.fn().mockResolvedValue(undefined),
-    login: jest.fn().mockResolvedValue(undefined),
+    signInWithEmail: jest.fn().mockResolvedValue(true),
+    login: jest.fn().mockResolvedValue(true),
     logout: jest.fn().mockResolvedValue(undefined),
   };
 
@@ -34,8 +34,8 @@ describe('LoginUiStore', () => {
     authStoreMock.error.set(null);
     authStoreMock.isAuthenticated.set(true);
     authStoreMock.user.set({ uid: 'u1', displayName: 'Tester' });
-    authStoreMock.signInWithEmail.mockResolvedValue(undefined);
-    authStoreMock.login.mockResolvedValue(undefined);
+    authStoreMock.signInWithEmail.mockResolvedValue(true);
+    authStoreMock.login.mockResolvedValue(true);
     authStoreMock.logout.mockResolvedValue(undefined);
     onboardingMock.error.set(null);
   });
@@ -64,10 +64,9 @@ describe('LoginUiStore', () => {
     );
   });
 
-  it('returns true on successful email sign-in (even before isAuthenticated signal updates)', async () => {
-    // Given – isAuthenticated hasn't updated yet, but no error occurred
-    authStoreMock.isAuthenticated.set(false);
-    authStoreMock.error.set(null);
+  it('returns true when authStore.signInWithEmail resolves with true', async () => {
+    // Given – authStore returns true (success, no error)
+    authStoreMock.signInWithEmail.mockResolvedValue(true);
     const store = await setup();
     // When
     const result = await store.signInWithEmail('mail@test.de', 'Secret#123');
@@ -75,28 +74,34 @@ describe('LoginUiStore', () => {
     expect(result).toBe(true);
   });
 
-  it('returns false when email sign-in fails with error', async () => {
-    // Given
-    authStoreMock.error.set(null);
-    authStoreMock.signInWithEmail.mockImplementation(async () => {
-      authStoreMock.error.set(new Error('Invalid credentials'));
-    });
+  it('returns false when authStore.signInWithEmail resolves with false (auth error)', async () => {
+    // Given – authStore returns false (login failed, error signal already set internally)
+    authStoreMock.signInWithEmail.mockResolvedValue(false);
     const store = await setup();
     // When
     const result = await store.signInWithEmail('mail@test.de', 'wrong');
-    // Then
+    // Then – result directly reflects authStore outcome, no signal-read race
     expect(result).toBe(false);
   });
 
-  it('returns true on successful Google sign-in (even before isAuthenticated signal updates)', async () => {
+  it('returns true when authStore.login resolves with true (Google sign-in)', async () => {
     // Given
-    authStoreMock.isAuthenticated.set(false);
-    authStoreMock.error.set(null);
+    authStoreMock.login.mockResolvedValue(true);
     const store = await setup();
     // When
     const result = await store.signInWithGoogle();
     // Then
     expect(result).toBe(true);
+  });
+
+  it('returns false when authStore.login resolves with false (Google sign-in failed)', async () => {
+    // Given
+    authStoreMock.login.mockResolvedValue(false);
+    const store = await setup();
+    // When
+    const result = await store.signInWithGoogle();
+    // Then
+    expect(result).toBe(false);
   });
 
   it('requires consent before completing google onboarding', async () => {

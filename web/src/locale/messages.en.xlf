@@ -2121,7 +2121,7 @@ Deine Position: # ·  Reps        </source>
       
       
         </unit>
-    <unit id="nav.data">
+    <unit id="nav.history">
       <notes>
         <note category="location">web/src/app/app.html:33,36</note>
 
@@ -2879,7 +2879,7 @@ Deine Position: # ·  Reps        </source>
 
       
         </unit>
-    <unit id="seo.data.description">
+    <unit id="seo.history.description">
       <segment state="translated">
         <source>Verwalte Einträge, filtere nach Zeitraum und behalte deine Trainingsdaten im Griff.</source>
         <target>Manage entries, filter by time range, and stay in control of your training data.</target>
@@ -2890,7 +2890,7 @@ Deine Position: # ·  Reps        </source>
 
       
         </unit>
-    <unit id="seo.data.title">
+    <unit id="seo.history.title">
       <segment state="translated">
         <source>Daten – Pushup Tracker</source>
         <target>Data – Pushup Tracker</target>

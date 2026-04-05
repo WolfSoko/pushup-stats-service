@@ -42,16 +42,15 @@ describe('AdaptiveQuickAddService', () => {
       result.forEach((s) => expect(s).toBeGreaterThanOrEqual(1));
     });
 
-    it('Given records that collapse to fewer than 3 unique values, When compute() is called, Then returns exactly 3 items (padding with duplicates if needed)', () => {
+    it('Given records that collapse to fewer than 3 unique values, When compute() is called, Then fills remaining slots by incrementing max by 5', () => {
       // avg = 4: 0.5×4=2→round(2/5)×5=0→max(1,0)=1
       // 1×4=4→round(4/5)×5=1×5=5
       // 1.25×4=5→round(5/5)×5=5
-      // raw=[1,5,5] → deduped=[1,5] → padded back to [1,5,5]
+      // raw=[1,5,5] → deduped=[1,5] → padded: max(5)+5=10 → [1,5,10]
       const records = Array.from({ length: 3 }, () =>
         makePushupRecord({ reps: 4 })
       );
-      const result = service.compute(records);
-      expect(result.length).toBe(3);
+      expect(service.compute(records)).toEqual([1, 5, 10]);
     });
 
     it('Given 15 records (10 old with 100 reps + 5 recent with 10 reps), When compute() is called, Then uses only the last 5 entries giving [5, 10, 15]', () => {
