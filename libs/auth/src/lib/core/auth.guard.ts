@@ -45,7 +45,16 @@ export const publicOnlyGuard: CanActivateFn = async (): Promise<
     await firebaseAuth.authStateReady();
   }
 
-  if (!auth.isAuthenticated() || auth.isGuest()) return true;
+  // Use synchronous currentUser as authoritative fallback to avoid toSignal()
+  // lag — the same pattern used in authGuard. Without this, an authenticated
+  // user can slip through to /login or /register during the brief window
+  // between authStateReady() resolving and the signal settling, causing
+  // unexpected navigation loops or mid-flow redirects.
+  const currentUser = firebaseAuth?.currentUser ?? null;
+  const isAuthenticated = auth.isAuthenticated() || !!currentUser;
+  const isGuest = currentUser ? currentUser.isAnonymous : auth.isGuest();
+
+  if (!isAuthenticated || isGuest) return true;
 
   return router.createUrlTree(['/app']);
 };

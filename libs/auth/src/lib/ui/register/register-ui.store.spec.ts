@@ -15,9 +15,9 @@ describe('RegisterUiStore', () => {
       email: 'user@test.de',
       displayName: 'Tester',
     }),
-    signUpWithEmail: jest.fn().mockResolvedValue(undefined),
-    upgradeWithGoogle: jest.fn().mockResolvedValue(undefined),
-    login: jest.fn().mockResolvedValue(undefined),
+    signUpWithEmail: jest.fn().mockResolvedValue(true),
+    upgradeWithGoogle: jest.fn().mockResolvedValue(true),
+    login: jest.fn().mockResolvedValue(true),
   };
 
   const onboardingMock = {
@@ -92,10 +92,7 @@ describe('RegisterUiStore', () => {
   });
 
   it('Given Google upgrade fails When signing in with Google Then returns false due to auth error', async () => {
-    authStoreMock.upgradeWithGoogle.mockImplementationOnce(() => {
-      authStoreMock.error.set(new Error('credential-already-in-use'));
-      return Promise.resolve();
-    });
+    authStoreMock.upgradeWithGoogle.mockResolvedValueOnce(false);
     const store = await setup();
 
     const result = await store.signInWithGoogle();
@@ -110,6 +107,15 @@ describe('RegisterUiStore', () => {
 
     expect(result).toBe(true);
     expect(authStoreMock.upgradeWithGoogle).toHaveBeenCalled();
+  });
+
+  it('Given signUpWithEmail fails When signing up Then returns false', async () => {
+    authStoreMock.signUpWithEmail.mockResolvedValueOnce(false);
+    const store = await setup();
+
+    const result = await store.signUpWithEmail('mail@test.de', 'Secret#123');
+
+    expect(result).toBe(false);
   });
 
   it('Given profile save failure When persisting profile Then method returns false and keeps success unset', async () => {

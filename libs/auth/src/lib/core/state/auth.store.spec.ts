@@ -26,6 +26,77 @@ function makeAuthServiceMock(
   };
 }
 
+// ---------------------------------------------------------------------------
+// AuthStore – signInWithEmail return value
+// Regression for Bug 2: auth methods must return false on failure so callers
+// don't need to check !authStore.error() externally (which could race against
+// signal settling).
+// ---------------------------------------------------------------------------
+describe('AuthStore – signInWithEmail return value', () => {
+  function makeFailingAuthServiceMock(): Partial<AuthService> {
+    return {
+      user: (() => null) as Signal<ReturnType<AuthService['user']>>,
+      isAuthenticated: (() => false) as Signal<boolean>,
+      idToken: (() => null) as Signal<string | null | undefined>,
+      userDbSyncState: signal('idle' as const),
+      signInWithEmailAndMigrateGuest: () =>
+        Promise.reject(new Error('auth/invalid-credential')),
+    };
+  }
+
+  function makeSucceedingAuthServiceMock(): Partial<AuthService> {
+    return {
+      user: (() => ({
+        uid: 'u1',
+        isAnonymous: false,
+        email: 'test@test.de',
+        displayName: null,
+        photoURL: null,
+        emailVerified: true,
+        providerId: 'password' as const,
+      })) as Signal<ReturnType<AuthService['user']>>,
+      isAuthenticated: (() => true) as Signal<boolean>,
+      idToken: (() => 'token') as Signal<string | null | undefined>,
+      userDbSyncState: signal('success' as const),
+      signInWithEmailAndMigrateGuest: () => Promise.resolve(),
+    };
+  }
+
+  it('returns false and sets error when login fails', async () => {
+    const { fixture } = await render('', {
+      providers: [
+        AuthStore,
+        { provide: AuthService, useValue: makeFailingAuthServiceMock() },
+        { provide: Auth, useValue: {} },
+      ],
+    });
+    const store = fixture.debugElement.injector.get(AuthStore);
+
+    const result = await store.signInWithEmail('bad@test.de', 'wrong');
+
+    expect(result).toBe(false);
+    expect(store.error()).not.toBeNull();
+    expect(store.loading()).toBe(false);
+  });
+
+  it('returns true and clears error when login succeeds', async () => {
+    const { fixture } = await render('', {
+      providers: [
+        AuthStore,
+        { provide: AuthService, useValue: makeSucceedingAuthServiceMock() },
+        { provide: Auth, useValue: {} },
+      ],
+    });
+    const store = fixture.debugElement.injector.get(AuthStore);
+
+    const result = await store.signInWithEmail('test@test.de', 'Secret#1');
+
+    expect(result).toBe(true);
+    expect(store.error()).toBeNull();
+    expect(store.loading()).toBe(false);
+  });
+});
+
 describe('AuthStore – isGuest', () => {
   it('isGuest is false for a non-anonymous user', async () => {
     const { fixture } = await render('', {
