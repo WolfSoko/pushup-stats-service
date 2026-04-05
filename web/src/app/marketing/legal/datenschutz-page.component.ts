@@ -28,12 +28,11 @@ import { Component } from '@angular/core';
           Website ist:
         </p>
         <p>
-          <!-- TODO: Replace placeholders with your real data -->
-          <strong>[Vor- und Nachname]</strong><br />
-          [Stra&szlig;e und Hausnummer]<br />
-          [PLZ Ort]<br />
+          <strong>Wolfram Sokollek</strong><br />
+          Korte Asper 8<br />
+          21465 Wentorf<br />
           <span i18n="@@datenschutz.responsible.email">E-Mail:</span>
-          [deine&#64;email.de]
+          contact&#64;pushup-stats.de
         </p>
       </section>
 

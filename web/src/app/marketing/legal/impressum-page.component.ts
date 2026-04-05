@@ -11,10 +11,9 @@ import { Component } from '@angular/core';
           Angaben gem&auml;&szlig; &sect; 5 TMG
         </h2>
         <p>
-          <!-- TODO: Replace placeholders with your real data -->
-          <strong>[Vor- und Nachname]</strong><br />
-          [Stra&szlig;e und Hausnummer]<br />
-          [PLZ Ort]
+          <strong>Wolfram Sokollek</strong><br />
+          Korte Asper 8<br />
+          21465 Wentorf
         </p>
       </section>
 
@@ -22,11 +21,7 @@ import { Component } from '@angular/core';
         <h2 i18n="@@impressum.contact.title">Kontakt</h2>
         <p>
           <span i18n="@@impressum.contact.email">E-Mail:</span>
-          [deine&#64;email.de]
-        </p>
-        <p>
-          <span i18n="@@impressum.contact.phone">Telefon:</span>
-          [+49 XXX XXXXXXX]
+          contact&#64;pushup-stats.de
         </p>
       </section>
 
