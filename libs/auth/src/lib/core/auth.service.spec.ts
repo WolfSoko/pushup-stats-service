@@ -294,4 +294,75 @@ describe('AuthService', () => {
       expect(migrationHook.onGuestMigration).not.toHaveBeenCalled();
     });
   });
+
+  // ---------------------------------------------------------------------------
+  // Regression: runPostAuthHooks must prefer synchronous currentUser over the
+  // signal-based user() which may still hold the stale anonymous user due to
+  // the toSignal() microtask delay after an auth operation.
+  // ---------------------------------------------------------------------------
+  describe('runPostAuthHooks user-source precedence', () => {
+    it('hooks receive the real user from currentUser, not the stale anonymous signal user', async () => {
+      const staleAnonUser: Partial<FirebaseUser> = {
+        uid: 'anon-uid',
+        isAnonymous: true,
+        email: null,
+        displayName: null,
+        photoURL: null,
+        emailVerified: false,
+        providerId: 'firebase',
+      };
+      const realUser: Partial<FirebaseUser> = {
+        uid: 'real-uid',
+        isAnonymous: false,
+        email: 'real@test.de',
+        displayName: 'Real User',
+        photoURL: null,
+        emailVerified: true,
+        providerId: 'google',
+      };
+
+      // Simulate toSignal() lag: authUser signal still returns the stale
+      // anonymous user even though Firebase has already updated currentUser.
+      const staleAdapter = {
+        ...adapter,
+        // After sign-in, Firebase synchronously updates currentUser to the
+        // real user, but the signal (toSignal(authState)) still holds stale data.
+        currentUser: realUser as FirebaseUser,
+        authUser: (() => staleAnonUser as FirebaseUser) as Signal<
+          FirebaseUser | null | undefined
+        >,
+        signInWithGoogle: jest
+          .fn()
+          .mockResolvedValue(makeCredential('real-uid')),
+      };
+
+      const { fixture } = await render('', {
+        providers: [
+          AuthService,
+          { provide: AuthAdapter, useValue: staleAdapter },
+          {
+            provide: POST_AUTH_HOOKS,
+            useValue: profileSyncHook,
+            multi: true,
+          },
+        ],
+      });
+      const service = fixture.debugElement.injector.get(AuthService);
+      await service.signInWithGoogleAndMigrateGuest();
+
+      // The hook must receive the REAL user (from currentUser), not the stale
+      // anonymous user from the signal.
+      expect(profileSyncHook.onAuthenticated).toHaveBeenCalledWith(
+        expect.objectContaining({
+          uid: 'real-uid',
+          email: 'real@test.de',
+          isAnonymous: false,
+        })
+      );
+      // Verify it was NOT called with the stale anonymous user
+      expect(profileSyncHook.onAuthenticated).not.toHaveBeenCalledWith(
+        expect.objectContaining({ uid: 'anon-uid' })
+      );
+    });
+  });
 });
