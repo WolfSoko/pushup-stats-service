@@ -9,7 +9,11 @@ import webpush from 'web-push';
 import { defineSecret } from 'firebase-functions/params';
 import type { UserStats } from '@pu-stats/models';
 import { USERSTATS_VERSION } from '@pu-stats/models';
-import { applyDelta, rebuildFromEntries, emptyUserStats } from './user-stats-delta';
+import {
+  applyDelta,
+  rebuildFromEntries,
+  emptyUserStats,
+} from './user-stats-delta';
 
 // Module imports
 import { berlinDateParts, isoWeekFromYmd } from './datetime';
@@ -19,14 +23,9 @@ import {
   QUOTE_CACHE_HOURS,
   FALLBACK_QUOTES_DE,
   FALLBACK_QUOTES_EN,
-  getFallbackQuotes,
-  isCacheValid,
 } from './motivation';
 import { pushSubscriptionId } from './push/subscription';
-import {
-  shouldSendReminder,
-  buildNotificationPayload,
-} from './push/reminders';
+import { shouldSendReminder, buildNotificationPayload } from './push/reminders';
 import type { ReminderConfig } from './push/reminders';
 import { parseRecaptchaResponse } from './authentication';
 
@@ -34,7 +33,6 @@ admin.initializeApp();
 
 const db = admin.firestore();
 const TZ = 'Europe/Berlin';
-const TOP_N = 10;
 const DEMO_USER_ID = 'aqgzwSbhudRLrluz1zBSW3XQx013';
 
 const recaptchaClient = new RecaptchaEnterpriseServiceClient();
@@ -901,15 +899,22 @@ export const updateUserStatsOnPushupWrite = onDocumentWritten(
     // IMPORTANT: Check if this is the first entry (no userStats yet)
     // OR if version is outdated (calculation logic changed)
     // If so, we'll do a full rebuild to ensure correct initialization
-    let firstEntryAllEntries: Array<{ timestamp: string; reps: number }> | null =
-      null;
+    let firstEntryAllEntries: Array<{
+      timestamp: string;
+      reps: number;
+    }> | null = null;
     let versionOutdated = false;
 
     const statsSnap = await statsRef.get();
-    const existingStats = statsSnap.exists ? (statsSnap.data() as UserStats) : null;
+    const existingStats = statsSnap.exists
+      ? (statsSnap.data() as UserStats)
+      : null;
 
     // Check version: if stored version < current version, trigger rebuild
-    if (existingStats && (!existingStats.version || existingStats.version < USERSTATS_VERSION)) {
+    if (
+      existingStats &&
+      (!existingStats.version || existingStats.version < USERSTATS_VERSION)
+    ) {
       versionOutdated = true;
       logger.info('updateUserStatsOnPushupWrite: version upgrade detected', {
         userId,
@@ -945,7 +950,11 @@ export const updateUserStatsOnPushupWrite = onDocumentWritten(
       if (firstEntryAllEntries !== null && isCreate && !current) {
         // First entry case: confirmed by transaction read
         shouldRebuild = true;
-      } else if (firstEntryAllEntries !== null && current && (!current.version || current.version < USERSTATS_VERSION)) {
+      } else if (
+        firstEntryAllEntries !== null &&
+        current &&
+        (!current.version || current.version < USERSTATS_VERSION)
+      ) {
         // Version upgrade case: confirmed by transaction read
         shouldRebuild = true;
       }
@@ -953,13 +962,17 @@ export const updateUserStatsOnPushupWrite = onDocumentWritten(
       if (shouldRebuild) {
         // Full rebuild: ensures atomicity and prevents double-counting from concurrent triggers
         current = rebuildFromEntries(userId, firstEntryAllEntries!, nowIso);
-        const reason = (isCreate && !statsSnap.exists) ? 'first entry' : 'version upgrade';
-        logger.info('updateUserStatsOnPushupWrite: full rebuild (transaction-confirmed)', {
-          userId,
-          reason,
-          entries: firstEntryAllEntries!.length,
-          newVersion: USERSTATS_VERSION,
-        });
+        const reason =
+          isCreate && !statsSnap.exists ? 'first entry' : 'version upgrade';
+        logger.info(
+          'updateUserStatsOnPushupWrite: full rebuild (transaction-confirmed)',
+          {
+            userId,
+            reason,
+            entries: firstEntryAllEntries!.length,
+            newVersion: USERSTATS_VERSION,
+          }
+        );
       } else if (current) {
         // Existing userStats with current version: use delta for efficiency
         if (timestampChanged) {
@@ -998,10 +1011,13 @@ export const updateUserStatsOnPushupWrite = onDocumentWritten(
         // BUG FIX P2: Handle missing userStats on non-create writes
         // If we reach here without a rebuild decision, create empty stats
         // This recovers missing userStats for update/delete operations
-        logger.warn('updateUserStatsOnPushupWrite: missing userStats, creating empty', {
-          userId,
-          isCreate,
-        });
+        logger.warn(
+          'updateUserStatsOnPushupWrite: missing userStats, creating empty',
+          {
+            userId,
+            isCreate,
+          }
+        );
         current = emptyUserStats(userId);
         current.updatedAt = nowIso;
       }

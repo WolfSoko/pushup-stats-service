@@ -39,7 +39,7 @@ export function getFallbackQuotes(language: string): string[] {
 export function sanitizeDisplayName(rawName: string): string {
   const trimmed = String(rawName || '').trim();
   const sanitized = trimmed
-    .replace(/[^a-zA-Z0-9\u00C0-\u024F\u0400-\u04FF .,'!?-]/g, '')
+    .replace(/[^a-zA-Z0-9\u00C0-\u024F\u0400-\u04FF .,?'-]/g, '')
     .slice(0, 50)
     .trim();
   return sanitized || 'Champ';

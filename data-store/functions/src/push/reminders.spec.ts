@@ -49,7 +49,9 @@ describe('push/reminders', () => {
 
       // 05:00 Berlin time (inside quiet hours) -> should not send
       const earlyMorning = new Date('2024-03-15T04:00:00Z').getTime();
-      expect(shouldSendReminder(reminder, null, earlyMorning, null)).toBe(false);
+      expect(shouldSendReminder(reminder, null, earlyMorning, null)).toBe(
+        false
+      );
     });
 
     it('respects quiet hours (simple daytime range)', () => {
@@ -85,7 +87,9 @@ describe('push/reminders', () => {
 
       // 08:30 Berlin -> should not send (in first quiet hour)
       const morningQuiet = new Date('2024-03-15T07:30:00Z').getTime();
-      expect(shouldSendReminder(reminder, null, morningQuiet, null)).toBe(false);
+      expect(shouldSendReminder(reminder, null, morningQuiet, null)).toBe(
+        false
+      );
 
       // 10:00 Berlin -> should send (between quiet hours)
       const between = new Date('2024-03-15T09:00:00Z').getTime();
@@ -93,7 +97,9 @@ describe('push/reminders', () => {
 
       // 21:00 Berlin -> should not send (in second quiet hour)
       const eveningQuiet = new Date('2024-03-15T20:00:00Z').getTime();
-      expect(shouldSendReminder(reminder, null, eveningQuiet, null)).toBe(false);
+      expect(shouldSendReminder(reminder, null, eveningQuiet, null)).toBe(
+        false
+      );
     });
 
     it('respects snooze time', () => {
@@ -107,7 +113,12 @@ describe('push/reminders', () => {
 
       // Should send after snooze expires
       const afterSnooze = now + 1000 * 60 * 11;
-      const resultAfter = shouldSendReminder(reminder, null, afterSnooze, snoozeUntil);
+      const resultAfter = shouldSendReminder(
+        reminder,
+        null,
+        afterSnooze,
+        snoozeUntil
+      );
       expect(resultAfter).toBe(true);
     });
 
@@ -122,7 +133,12 @@ describe('push/reminders', () => {
 
       // Should send after interval elapses
       const afterInterval = now + 1000 * 60 * 31;
-      const resultAfter = shouldSendReminder(reminder, lastSent, afterInterval, null);
+      const resultAfter = shouldSendReminder(
+        reminder,
+        lastSent,
+        afterInterval,
+        null
+      );
       expect(resultAfter).toBe(true);
     });
 
@@ -138,7 +154,12 @@ describe('push/reminders', () => {
 
       // Should send after 1 hour elapses
       const afterInterval = now + 2000;
-      const resultAfter = shouldSendReminder(reminder, lastSent, afterInterval, null);
+      const resultAfter = shouldSendReminder(
+        reminder,
+        lastSent,
+        afterInterval,
+        null
+      );
       expect(resultAfter).toBe(true);
     });
 
@@ -173,11 +194,16 @@ describe('push/reminders', () => {
 
       // Should not send: in quiet hours
       const nightTime = new Date('2024-03-15T23:00:00Z').getTime();
-      expect(shouldSendReminder(reminder, lastSent, nightTime, null)).toBe(false);
+      expect(shouldSendReminder(reminder, lastSent, nightTime, null)).toBe(
+        false
+      );
 
       // Should not send: interval not elapsed
-      const soonAfter = now + 1000 * 60 * 30;
-      expect(shouldSendReminder(reminder, lastSent, soonAfter, null)).toBe(false);
+      const lastSentRecent = mockFirestoreTime(now - 1000 * 60 * 30); // 30 min ago
+      const soonAfter = now + 1000 * 60 * 5; // 5 minutes later
+      expect(
+        shouldSendReminder(reminder, lastSentRecent, soonAfter, null)
+      ).toBe(false);
     });
   });
 
@@ -256,7 +282,9 @@ describe('push/reminders', () => {
 
       // Test multiple times to check randomness
       for (let i = 0; i < 20; i++) {
-        const message = buildNotificationPayload(Math.random() > 0.5 ? 'en' : 'de');
+        const message = buildNotificationPayload(
+          Math.random() > 0.5 ? 'en' : 'de'
+        );
         expect(allMessages).toContain(message);
       }
     });

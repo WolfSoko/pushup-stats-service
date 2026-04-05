@@ -53,7 +53,7 @@ describe('leaderboard/logic', () => {
         { userId: 'user1', timestamp: '2024-03-16T10:00:00Z', reps: 20 }, // Different day
       ];
       const profiles = new Map<string, UserProfile>([
-        ['user1', { displayName: 'Alice' }],
+        ['user1', { displayName: 'Alice', ui: { hideFromLeaderboard: false } }],
       ]);
 
       const result = rankEntries(rows, 'daily', '2024-03-15', profiles);
@@ -111,7 +111,7 @@ describe('leaderboard/logic', () => {
         { userId: 'user1', timestamp: '2024-03-15T10:00:00Z', reps: 20 },
       ];
       const profiles = new Map<string, UserProfile>([
-        ['user1', { displayName: 'Alice' }],
+        ['user1', { displayName: 'Alice', ui: { hideFromLeaderboard: false } }],
       ]);
 
       const result = rankEntries(rows, 'daily', '2024-03-15', profiles);
@@ -142,7 +142,7 @@ describe('leaderboard/logic', () => {
         { userId: 'user1', timestamp: '2024-03-15T10:00:00Z', reps: 5 }, // Friday of week 11
       ];
       const profiles = new Map<string, UserProfile>([
-        ['user1', { displayName: 'Alice' }],
+        ['user1', { displayName: 'Alice', ui: { hideFromLeaderboard: false } }],
       ]);
 
       const result = rankEntries(rows, 'weekly', '2024-W11', profiles);
@@ -157,7 +157,7 @@ describe('leaderboard/logic', () => {
         { userId: 'user1', timestamp: '2024-03-31T10:00:00Z', reps: 5 },
       ];
       const profiles = new Map<string, UserProfile>([
-        ['user1', { displayName: 'Alice' }],
+        ['user1', { displayName: 'Alice', ui: { hideFromLeaderboard: false } }],
       ]);
 
       const result = rankEntries(rows, 'monthly', '2024-03', profiles);

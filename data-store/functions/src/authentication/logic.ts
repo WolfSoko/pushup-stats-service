@@ -4,19 +4,19 @@
  */
 
 export interface RecaptchaTokenProperties {
-  valid?: boolean;
-  invalidReason?: string;
-  action?: string;
+  valid?: boolean | null;
+  invalidReason?: unknown;
+  action?: string | null;
 }
 
 export interface RecaptchaRiskAnalysis {
-  score?: number;
-  reasons?: string[];
+  score?: number | null;
+  reasons?: unknown;
 }
 
 export interface RecaptchaResponse {
-  tokenProperties?: RecaptchaTokenProperties;
-  riskAnalysis?: RecaptchaRiskAnalysis;
+  tokenProperties?: RecaptchaTokenProperties | null;
+  riskAnalysis?: RecaptchaRiskAnalysis | null;
 }
 
 export interface AssessmentResult {
@@ -63,7 +63,11 @@ export function parseRecaptchaResponse(
 
   const actionMatched = response.tokenProperties?.action === recaptchaAction;
   const score = Number(response.riskAnalysis?.score || 0);
-  const reasons = (response.riskAnalysis?.reasons || []).map(String);
+  const reasons = (
+    Array.isArray(response.riskAnalysis?.reasons)
+      ? response.riskAnalysis.reasons
+      : []
+  ).map(String);
 
   return {
     ok: actionMatched && score >= minScore,
