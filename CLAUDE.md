@@ -122,6 +122,8 @@ pnpm nx run-many --target=lint   # Lint all projects
 | quick-add | `stats-quick-add` |
 | ads | `stats-ads` |
 | testing | `testing` |
+| tools | `tools` |
+| data-store | `data-store` |
 | web app | `web` |
 
 ## i18n / Internationalization
