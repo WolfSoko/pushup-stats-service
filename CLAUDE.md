@@ -16,7 +16,7 @@ If a bug reaches production, the CI pipeline wasn't good enough. Every change mu
 - **Regression tests:** Every bugfix must include a test that reproduces the bug first (TDD red-green).
 - **Rule of thumb:** If you can't prove a change works via CI, it's not ready to merge.
 
-When making changes, always write or update relevant tests as part of the same commit. Do not push untested code to `main`.
+When making changes, always write or update relevant tests as part of the same commit. **Never push new or changed code without corresponding tests — this applies to all branches, not just `main`.** If tests for the changed code don't exist yet, write them before pushing.
 
 ## Tech Stack
 
