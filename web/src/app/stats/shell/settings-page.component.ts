@@ -404,9 +404,18 @@ export class SettingsPageComponent {
       };
     return {
       displayName: (val as { displayName?: string }).displayName ?? '',
-      dailyGoal: (val as { dailyGoal?: number }).dailyGoal || 100,
-      weeklyGoal: (val as { weeklyGoal?: number }).weeklyGoal || 700,
-      monthlyGoal: (val as { monthlyGoal?: number }).monthlyGoal || 3000,
+      dailyGoal: Math.max(
+        1,
+        Math.trunc((val as { dailyGoal?: number }).dailyGoal || 100)
+      ),
+      weeklyGoal: Math.max(
+        1,
+        Math.trunc((val as { weeklyGoal?: number }).weeklyGoal || 700)
+      ),
+      monthlyGoal: Math.max(
+        1,
+        Math.trunc((val as { monthlyGoal?: number }).monthlyGoal || 3000)
+      ),
       hideFromLeaderboard:
         (val as { ui?: { hideFromLeaderboard?: boolean } }).ui
           ?.hideFromLeaderboard ?? false,
@@ -445,9 +454,9 @@ export class SettingsPageComponent {
     this.saved.set(false);
     this.errorMessage.set('');
     const userId = this.activeUserId();
-    const dailyGoal = Math.max(1, this.dailyGoalDraft());
-    const weeklyGoal = Math.max(1, this.weeklyGoalDraft());
-    const monthlyGoal = Math.max(1, this.monthlyGoalDraft());
+    const dailyGoal = Math.max(1, Math.trunc(this.dailyGoalDraft()));
+    const weeklyGoal = Math.max(1, Math.trunc(this.weeklyGoalDraft()));
+    const monthlyGoal = Math.max(1, Math.trunc(this.monthlyGoalDraft()));
     try {
       const current = this.config();
       await firstValueFrom(
