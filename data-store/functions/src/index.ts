@@ -13,6 +13,8 @@ import { applyDelta, rebuildFromEntries, emptyUserStats } from './user-stats-del
 
 // Module imports
 import { berlinDateParts, isoWeekFromYmd } from './datetime';
+import { rankEntries, getMonthStartForQuery } from './leaderboard';
+import { UserProfile } from './profile';
 import {
   QUOTE_CACHE_HOURS,
   FALLBACK_QUOTES_DE,

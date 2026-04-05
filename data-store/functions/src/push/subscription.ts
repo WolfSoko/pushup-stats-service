@@ -47,9 +47,12 @@ export interface PushSubscriptionPayload {
 export function validateSubscriptionPayload(
   data: unknown
 ): { valid: boolean; error?: string } {
+  if (!data || typeof data !== 'object') {
+    return { valid: false, error: 'payload must be an object' };
+  }
   const obj = data as Record<string, unknown>;
 
-  if (typeof obj?.endpoint !== 'string' || obj.endpoint.trim().length === 0) {
+  if (typeof obj.endpoint !== 'string' || obj.endpoint.trim().length === 0) {
     return { valid: false, error: 'endpoint missing or invalid' };
   }
 
