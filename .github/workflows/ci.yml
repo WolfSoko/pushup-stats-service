@@ -49,6 +49,9 @@ jobs:
   promote-to-deploy:
     needs: lint-test-build
     if: github.ref == 'refs/heads/main'
+    # A push failure here must not block the Firebase Hosting deploy
+    # (which gates on the overall CI workflow conclusion).
+    continue-on-error: true
     runs-on: ubuntu-latest
     permissions:
       contents: write
