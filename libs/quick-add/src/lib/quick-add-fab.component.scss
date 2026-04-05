@@ -21,23 +21,20 @@
   margin-bottom: 4px;
 }
 
-.dial-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+.dial-actions > button {
   animation: dial-item-in 180ms cubic-bezier(0.4, 0, 0.2, 1) both;
 }
 
-.dial-row:nth-child(1) {
+.dial-actions > button:nth-child(1) {
   animation-delay: 0ms;
 }
-.dial-row:nth-child(2) {
+.dial-actions > button:nth-child(2) {
   animation-delay: 60ms;
 }
-.dial-row:nth-child(3) {
+.dial-actions > button:nth-child(3) {
   animation-delay: 120ms;
 }
-.dial-row:nth-child(4) {
+.dial-actions > button:nth-child(4) {
   animation-delay: 180ms;
 }
 
@@ -52,18 +49,7 @@
   }
 }
 
-.dial-label {
-  background: rgba(0, 0, 0, 0.65);
-  color: #fff;
-  padding: 4px 10px;
-  border-radius: 4px;
-  font-size: 13px;
-  font-weight: 500;
-  white-space: nowrap;
-  pointer-events: none;
-}
-
-.dial-row:nth-child(1) .quick-mini-fab {
+.dial-actions > .quick-fab:nth-child(1) {
   background: linear-gradient(
     135deg,
     rgba(63, 128, 255, 0.92),
@@ -72,7 +58,7 @@
   color: #f4f8ff !important;
 }
 
-.dial-row:nth-child(2) .quick-mini-fab {
+.dial-actions > .quick-fab:nth-child(2) {
   background: linear-gradient(
     135deg,
     rgba(109, 86, 255, 0.92),
@@ -81,7 +67,7 @@
   color: #f6f3ff !important;
 }
 
-.dial-row:nth-child(3) .quick-mini-fab {
+.dial-actions > .quick-fab:nth-child(3) {
   background: linear-gradient(
     135deg,
     rgba(255, 132, 92, 0.92),
@@ -90,7 +76,7 @@
   color: #fff3f0 !important;
 }
 
-.dial-row:last-child .custom-mini-fab {
+.custom-fab {
   background: linear-gradient(
     135deg,
     rgba(32, 180, 155, 0.92),
