@@ -172,7 +172,8 @@ export const PushSubscriptionStore = signalStore(
 
           const reg = await navigator.serviceWorker.getRegistration();
           if (!reg) {
-            patchState(store, { status: 'error' });
+            // No SW registered (e.g. dev mode) — not an error, just unavailable
+            patchState(store, { status: 'not-subscribed' });
             return false;
           }
           const existingSub = await reg.pushManager.getSubscription();
