@@ -4,7 +4,6 @@ import {
   CreateEntryDialogComponent,
   CreateEntryResult,
 } from './create-entry-dialog.component';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('CreateEntryDialogComponent', () => {
   let fixture: ComponentFixture<CreateEntryDialogComponent>;
@@ -17,7 +16,7 @@ describe('CreateEntryDialogComponent', () => {
     vi.clearAllMocks();
 
     await TestBed.configureTestingModule({
-      imports: [CreateEntryDialogComponent, NoopAnimationsModule],
+      imports: [CreateEntryDialogComponent],
       providers: [
         {
           provide: MatDialogRef,
