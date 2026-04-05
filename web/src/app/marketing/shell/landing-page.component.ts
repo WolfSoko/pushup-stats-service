@@ -1,9 +1,4 @@
-import {
-  Component,
-  computed,
-  inject,
-  linkedSignal,
-} from '@angular/core';
+import { Component, computed, inject, linkedSignal } from '@angular/core';
 import { Analytics, logEvent } from '@angular/fire/analytics';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -36,6 +31,7 @@ export class LandingPageComponent {
   private readonly router = inject(Router);
 
   readonly isAuthenticated = this.authStore.isAuthenticated;
+  readonly authResolved = this.authStore.authResolved;
   readonly isGuest = this.authStore.isGuest;
 
   readonly period = linkedSignal<LeaderboardPeriod>(() => 'daily');

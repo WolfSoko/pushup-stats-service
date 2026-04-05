@@ -32,8 +32,8 @@
             >Konto erstellen</a
           >
         }
-      } @else {
-        <!-- Not logged in: show all options -->
+      } @else if (authResolved()) {
+        <!-- Not logged in (auth state confirmed): show all options -->
         <a
           mat-flat-button
           color="primary"

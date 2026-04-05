@@ -30,6 +30,14 @@ describe('AuthAdapter', () => {
     expect(typeof adapter.isAuthenticated()).toBe('boolean');
   });
 
+  it('should expose authResolved signal', async () => {
+    const { fixture } = await render('', {
+      providers: [{ provide: Auth, useValue: mockAuth }, AuthAdapter],
+    });
+    const adapter = fixture.debugElement.injector.get(AuthAdapter);
+    expect(typeof adapter.authResolved()).toBe('boolean');
+  });
+
   it('should call signOut on auth', async () => {
     const { fixture } = await render('', {
       providers: [{ provide: Auth, useValue: mockAuth }, AuthAdapter],

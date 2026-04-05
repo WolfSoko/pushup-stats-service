@@ -55,6 +55,8 @@ export class AuthAdapter {
   readonly loading = signal(false);
   readonly error = signal<null | Error>(null);
   readonly isAuthenticated = computed(() => this.authState() != null);
+  /** `true` once the initial Firebase auth state has been determined (session restored or confirmed absent). */
+  readonly authResolved = computed(() => this.authState() !== undefined);
   readonly idToken = toSignal(idToken(this.auth));
 
   async signInWithGoogle(): Promise<UserCredential> {
