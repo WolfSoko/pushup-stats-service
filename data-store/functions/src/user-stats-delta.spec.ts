@@ -361,7 +361,109 @@ describe('applyDelta', () => {
       expect(result.currentStreak).toBe(2);
     });
 
-    it('floors values at zero to prevent negatives', () => {
+    it('preserves current period reps when deleting entry from a PAST period', () => {
+      const existing = {
+        ...emptyUserStats('u1'),
+        total: 200,
+        totalEntries: 10,
+        dailyReps: 50,
+        dailyKey: '2026-04-05', // current day (Sunday W14)
+        weeklyReps: 150,
+        weeklyKey: '2026-W14', // current week
+        monthlyReps: 200,
+        monthlyKey: '2026-04', // current month
+        currentStreak: 3,
+        lastEntryDate: '2026-04-05',
+        heatmap: { 'So-16': 50 },
+      };
+
+      // Delete an entry from LAST week (2026-03-28 = W13, March)
+      const result = applyDelta(existing, {
+        userId: 'u1',
+        repsDelta: -20,
+        entriesDelta: -1,
+        timestamp: '2026-03-28T10:00:00.000Z', // past week + past month
+        newReps: 0,
+        nowIso: NOW,
+      });
+
+      // Total decreases, but current period reps stay UNCHANGED
+      expect(result.total).toBe(180);
+      expect(result.totalEntries).toBe(9);
+      expect(result.dailyReps).toBe(50); // NOT reset to 0
+      expect(result.dailyKey).toBe('2026-04-05'); // NOT overwritten
+      expect(result.weeklyReps).toBe(150); // NOT reset to 0
+      expect(result.weeklyKey).toBe('2026-W14'); // NOT overwritten
+      expect(result.monthlyReps).toBe(200); // NOT reset to 0
+      expect(result.monthlyKey).toBe('2026-04'); // NOT overwritten
+    });
+
+    it('returns empty stats when last entry is deleted (totalEntries → 0)', () => {
+      const existing = {
+        ...emptyUserStats('u1'),
+        total: 20,
+        totalEntries: 1,
+        totalDays: 1,
+        dailyReps: 20,
+        dailyKey: '2026-04-05',
+        weeklyReps: 20,
+        weeklyKey: '2026-W14',
+        monthlyReps: 20,
+        monthlyKey: '2026-04',
+        currentStreak: 1,
+        lastEntryDate: '2026-04-05',
+        heatmap: { 'So-16': 20 },
+        bestDay: { date: '2026-04-05', total: 20 },
+        bestSingleEntry: { reps: 20, timestamp: TIMESTAMP },
+      };
+
+      const result = applyDelta(existing, {
+        userId: 'u1',
+        repsDelta: -20,
+        entriesDelta: -1,
+        timestamp: TIMESTAMP,
+        newReps: 0,
+        nowIso: NOW,
+      });
+
+      expect(result.totalEntries).toBe(0);
+      expect(result.total).toBe(0);
+      expect(result.currentStreak).toBe(0);
+      expect(result.bestDay).toBeNull();
+      expect(result.bestSingleEntry).toBeNull();
+      expect(result.heatmap).toEqual({});
+    });
+
+    it('does not corrupt streak when editing a backdated entry', () => {
+      const existing = {
+        ...emptyUserStats('u1'),
+        total: 100,
+        totalEntries: 5,
+        currentStreak: 5,
+        lastEntryDate: '2026-04-05',
+        dailyReps: 20,
+        dailyKey: '2026-04-05',
+        weeklyReps: 100,
+        weeklyKey: '2026-W14',
+        monthlyReps: 100,
+        monthlyKey: '2026-04',
+      };
+
+      // Update an old entry (2026-04-01) — should NOT reset streak
+      const result = applyDelta(existing, {
+        userId: 'u1',
+        repsDelta: 5, // increased from 10 to 15
+        entriesDelta: 0,
+        timestamp: '2026-04-01T10:00:00.000Z', // 4 days ago
+        newReps: 15,
+        nowIso: NOW,
+      });
+
+      expect(result.currentStreak).toBe(5); // preserved
+      expect(result.lastEntryDate).toBe('2026-04-05'); // NOT rewound
+    });
+
+    it('floors values at zero to prevent negatives (overshoot → empty)', () => {
       const existing = {
         ...emptyUserStats('u1'),
         total: 10,
@@ -386,11 +488,13 @@ describe('applyDelta', () => {
         nowIso: NOW,
       });
 
-      expect(result.total).toBe(0);
+      // totalEntries → 0 triggers full reset to empty
       expect(result.totalEntries).toBe(0);
+      expect(result.total).toBe(0);
       expect(result.dailyReps).toBe(0);
       expect(result.weeklyReps).toBe(0);
       expect(result.monthlyReps).toBe(0);
+      expect(result.bestDay).toBeNull();
     });
   });
 

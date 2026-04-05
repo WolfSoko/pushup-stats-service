@@ -180,24 +180,38 @@ export function applyDelta(
   const total = Math.max(0, base.total + repsDelta);
   const totalEntries = Math.max(0, base.totalEntries + entriesDelta);
 
-  const dailyReps =
-    base.dailyKey === keys.dailyKey
-      ? Math.max(0, base.dailyReps + repsDelta)
-      : repsDelta > 0
-        ? repsDelta
-        : 0;
-  const weeklyReps =
-    base.weeklyKey === keys.weeklyKey
-      ? Math.max(0, base.weeklyReps + repsDelta)
-      : repsDelta > 0
-        ? repsDelta
-        : 0;
-  const monthlyReps =
-    base.monthlyKey === keys.monthlyKey
-      ? Math.max(0, base.monthlyReps + repsDelta)
-      : repsDelta > 0
-        ? repsDelta
-        : 0;
+  // Early exit: reset to empty when all entries are gone
+  if (totalEntries === 0) {
+    return { ...emptyUserStats(userId), updatedAt: nowIso };
+  }
+
+  // Period reps: only apply delta when entry belongs to the SAME period.
+  // If the entry is from a different period, keep stored values unchanged.
+  const sameDay = base.dailyKey === keys.dailyKey;
+  const sameWeek = base.weeklyKey === keys.weeklyKey;
+  const sameMonth = base.monthlyKey === keys.monthlyKey;
+
+  const dailyReps = sameDay
+    ? Math.max(0, base.dailyReps + repsDelta)
+    : repsDelta > 0
+      ? repsDelta // new period starts with this entry's reps
+      : base.dailyReps; // different period delete/update → keep current
+  const dailyKey = sameDay || repsDelta > 0 ? keys.dailyKey : base.dailyKey;
+
+  const weeklyReps = sameWeek
+    ? Math.max(0, base.weeklyReps + repsDelta)
+    : repsDelta > 0
+      ? repsDelta
+      : base.weeklyReps;
+  const weeklyKey = sameWeek || repsDelta > 0 ? keys.weeklyKey : base.weeklyKey;
+
+  const monthlyReps = sameMonth
+    ? Math.max(0, base.monthlyReps + repsDelta)
+    : repsDelta > 0
+      ? repsDelta
+      : base.monthlyReps;
+  const monthlyKey =
+    sameMonth || repsDelta > 0 ? keys.monthlyKey : base.monthlyKey;
 
   // ── Heatmap ─────────────────────────────────────────────────────────
   const heatmap = { ...base.heatmap };
@@ -205,15 +219,18 @@ export function applyDelta(
   if (heatmap[slot] === 0) delete heatmap[slot];
 
   // ── Streak ──────────────────────────────────────────────────────────
+  // Only advance streak for chronological (non-backdated) creates/updates.
   let streakState: { currentStreak: number; lastEntryDate: string | null };
-  if (entriesDelta >= 0) {
+  const isChronological =
+    base.lastEntryDate === null || parts.isoDate >= base.lastEntryDate;
+  if (entriesDelta >= 0 && isChronological) {
     streakState = updateStreak(
       base.currentStreak,
       base.lastEntryDate,
       parts.isoDate
     );
   } else {
-    // Delete — streak recalculation requires full scan (handled by backfill).
+    // Delete or backdated write — keep streak as-is (rebuild corrects it).
     streakState = {
       currentStreak: base.currentStreak,
       lastEntryDate: base.lastEntryDate,
@@ -224,7 +241,7 @@ export function applyDelta(
   let bestDay = base.bestDay ? { ...base.bestDay } : null;
   if (dailyReps > 0) {
     if (!bestDay || dailyReps > bestDay.total) {
-      bestDay = { date: keys.dailyKey, total: dailyReps };
+      bestDay = { date: dailyKey, total: dailyReps };
     }
   }
 
@@ -238,13 +255,12 @@ export function applyDelta(
     }
   }
 
-  // totalDays: increment when a new day appears, decrement when a day goes to 0
+  // totalDays: increment when a new day appears, decrement when current day goes to 0
   let totalDays = base.totalDays;
-  const isNewDay = base.dailyKey !== keys.dailyKey;
-  if (isNewDay && dailyReps > 0) {
-    totalDays += 1;
-  } else if (!isNewDay && dailyReps === 0 && base.dailyReps > 0) {
+  if (sameDay && dailyReps === 0 && base.dailyReps > 0) {
     totalDays = Math.max(0, totalDays - 1);
+  } else if (!sameDay && repsDelta > 0) {
+    totalDays += 1;
   }
 
   return {
@@ -253,11 +269,11 @@ export function applyDelta(
     totalEntries,
     totalDays,
     dailyReps,
-    dailyKey: keys.dailyKey,
+    dailyKey,
     weeklyReps,
-    weeklyKey: keys.weeklyKey,
+    weeklyKey,
     monthlyReps,
-    monthlyKey: keys.monthlyKey,
+    monthlyKey,
     currentStreak: streakState.currentStreak,
     lastEntryDate: streakState.lastEntryDate,
     heatmap,
