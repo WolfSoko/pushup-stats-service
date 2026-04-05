@@ -1,4 +1,3 @@
-import crypto from 'node:crypto';
 import { onDocumentWritten } from 'firebase-functions/v2/firestore';
 import { onSchedule } from 'firebase-functions/v2/scheduler';
 import { onCall, HttpsError } from 'firebase-functions/v2/https';
@@ -9,114 +8,33 @@ import * as admin from 'firebase-admin';
 import webpush from 'web-push';
 import { defineSecret } from 'firebase-functions/params';
 import type { UserStats } from '@pu-stats/models';
+import { USERSTATS_VERSION } from '@pu-stats/models';
 import { applyDelta, rebuildFromEntries } from './user-stats-delta';
+
+// Module imports
+import { berlinDateParts, isoWeekFromYmd } from './datetime';
+import { rankEntries, getMonthStartForQuery } from './leaderboard';
+import { UserProfile } from './profile';
+import {
+  QUOTE_CACHE_HOURS,
+  FALLBACK_QUOTES_DE,
+  FALLBACK_QUOTES_EN,
+} from './motivation';
+import { pushSubscriptionId } from './push/subscription';
+import { shouldSendReminder, buildNotificationPayload } from './push/reminders';
+import type { ReminderConfig } from './push/reminders';
+import { parseRecaptchaResponse } from './authentication';
 
 admin.initializeApp();
 
 const db = admin.firestore();
 const TZ = 'Europe/Berlin';
-const TOP_N = 10;
 const DEMO_USER_ID = 'aqgzwSbhudRLrluz1zBSW3XQx013';
 
 const recaptchaClient = new RecaptchaEnterpriseServiceClient();
 const RECAPTCHA_PROJECT_ID = 'pushup-stats';
 const RECAPTCHA_SITE_KEY = '6LdIVoEsAAAAAMk4rJwg2DYHfM7ud_as7V5rUf4g';
 const RECAPTCHA_MIN_SCORE = 0.5;
-
-function berlinDateParts(date = new Date()) {
-  const parts = new Intl.DateTimeFormat('en-CA', {
-    timeZone: TZ,
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-  })
-    .formatToParts(date)
-    .reduce<Record<string, string>>((acc, p) => {
-      if (p.type !== 'literal') acc[p.type] = p.value;
-      return acc;
-    }, {});
-  return {
-    year: Number(parts['year']),
-    month: Number(parts['month']),
-    day: Number(parts['day']),
-    isoDate: `${parts['year']}-${parts['month']}-${parts['day']}`,
-  };
-}
-
-function isoWeekFromYmd(year: number, month: number, day: number) {
-  const d = new Date(Date.UTC(year, month - 1, day));
-  d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7));
-  const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
-  const week = Math.ceil(
-    ((d.getTime() - yearStart.getTime()) / 86400000 + 1) / 7
-  );
-  return { year: d.getUTCFullYear(), week };
-}
-
-function toAnonymousLabel(): string {
-  return 'anonym';
-}
-
-interface UserProfile {
-  displayName?: string;
-  ui?: { hideFromLeaderboard?: boolean };
-  role?: string;
-}
-
-function toPublicDisplayName(profile?: UserProfile): string {
-  const name = String(profile?.displayName || '').trim();
-  if (!name) return toAnonymousLabel();
-  return name;
-}
-
-function isLeaderboardNameAllowed(profile?: UserProfile): boolean {
-  return profile?.ui?.hideFromLeaderboard === false;
-}
-
-interface PushupRow {
-  timestamp?: string;
-  userId?: string;
-  reps?: number;
-}
-
-function rankEntries(
-  rows: PushupRow[],
-  periodKey: string,
-  targetKey: string,
-  userProfiles: Map<string, UserProfile>
-) {
-  const totals = new Map<string, number>();
-  for (const row of rows) {
-    if (!row.timestamp || !row.userId) continue;
-    const datePart = String(row.timestamp).slice(0, 10);
-    const d = new Date(`${datePart}T00:00:00Z`);
-    const p = berlinDateParts(d);
-    let key: string;
-    if (periodKey === 'daily') key = p.isoDate;
-    else if (periodKey === 'monthly')
-      key = `${p.year}-${String(p.month).padStart(2, '0')}`;
-    else {
-      const wk = isoWeekFromYmd(p.year, p.month, p.day);
-      key = `${wk.year}-W${String(wk.week).padStart(2, '0')}`;
-    }
-    if (key !== targetKey) continue;
-    totals.set(
-      row.userId,
-      (totals.get(row.userId) || 0) + Number(row.reps || 0)
-    );
-  }
-
-  return [...totals.entries()]
-    .map(([userId, reps]) => {
-      const profile = userProfiles.get(userId);
-      const alias = isLeaderboardNameAllowed(profile)
-        ? toPublicDisplayName(profile)
-        : toAnonymousLabel();
-      return { alias, reps };
-    })
-    .sort((a, b) => b.reps - a.reps)
-    .slice(0, TOP_N);
-}
 
 async function createRecaptchaAssessment({
   token,
@@ -142,36 +60,14 @@ async function createRecaptchaAssessment({
   };
 
   const [response] = await recaptchaClient.createAssessment(request);
-
-  if (!response.tokenProperties?.valid) {
-    return {
-      ok: false,
-      score: 0,
-      reason: `invalid-token:${response.tokenProperties?.invalidReason || 'unknown'}`,
-      reasons: [] as string[],
-      actionMatched: false,
-      action: response.tokenProperties?.action || null,
-    };
-  }
-
-  const actionMatched = response.tokenProperties?.action === recaptchaAction;
-  const score = Number(response.riskAnalysis?.score || 0);
-  const reasons = (response.riskAnalysis?.reasons || []).map(String);
-
-  return {
-    ok: actionMatched && score >= RECAPTCHA_MIN_SCORE,
-    score,
-    reasons,
-    actionMatched,
-    action: response.tokenProperties?.action || null,
-  };
+  return parseRecaptchaResponse(response, recaptchaAction, RECAPTCHA_MIN_SCORE);
 }
 
 async function rebuildLeaderboardsCore() {
   const now = new Date();
   const today = berlinDateParts(now);
   const week = isoWeekFromYmd(today.year, today.month, today.day);
-  const monthStart = `${today.year}-${String(today.month).padStart(2, '0')}-01`;
+  const monthStart = getMonthStartForQuery(today);
 
   const snap = await db
     .collection('pushups')
@@ -541,24 +437,6 @@ export const refreshLeaderboardsOnPushupWrite = onDocumentWritten(
 
 // ─── generateMotivationQuotes ─────────────────────────────────────────────────
 
-const QUOTE_CACHE_HOURS = 12;
-
-const FALLBACK_QUOTES_DE = [
-  'Du schaffst das! Jede Liegestütze bringt dich weiter.',
-  'Stark sein heißt, auch wenn es schwer fällt, weiterzumachen.',
-  'Dein Körper kann mehr, als dein Kopf glaubt.',
-  'Fortschritt entsteht außerhalb der Komfortzone.',
-  'Heute der beste Tag für eine neue Bestleistung!',
-];
-
-const FALLBACK_QUOTES_EN = [
-  'You can do it! Every push-up gets you closer to your goal.',
-  'Being strong means pushing through even when it gets tough.',
-  'Your body can do more than your mind thinks.',
-  'Progress happens outside the comfort zone.',
-  'Today is the best day for a new personal best!',
-];
-
 export const generateMotivationQuotes = onCall(
   { region: 'europe-west3' },
   async (request) => {
@@ -655,10 +533,6 @@ export const generateMotivationQuotes = onCall(
 );
 
 // ─── helpers ──────────────────────────────────────────────────────────────
-
-function pushSubscriptionId(endpoint: string): string {
-  return crypto.createHash('sha256').update(endpoint).digest('hex');
-}
 
 async function deleteAllPushSubscriptions(uid: string) {
   const userRef = db.collection('pushSubscriptions').doc(uid);
@@ -772,91 +646,6 @@ export const deletePushSubscription = onCall(
 
 const VAPID_PRIVATE_KEY = defineSecret('VAPID_PRIVATE_KEY');
 const VAPID_PUBLIC_KEY = defineSecret('VAPID_PUBLIC_KEY');
-
-interface ReminderConfig {
-  enabled?: boolean;
-  timezone?: string;
-  quietHours?: Array<{ from: string; to: string }>;
-  intervalMinutes?: number;
-  language?: string;
-}
-
-interface FirestoreTimestamp {
-  toMillis(): number;
-}
-
-function shouldSendReminder(
-  reminder: ReminderConfig | undefined,
-  lastSentAt: FirestoreTimestamp | null,
-  nowMs: number,
-  snoozedUntil: FirestoreTimestamp | null
-): boolean {
-  if (!reminder?.enabled) return false;
-
-  const tz = reminder.timezone || TZ;
-  const nowDate = new Date(nowMs);
-
-  const timeStr = nowDate.toLocaleTimeString('de-DE', {
-    hour: '2-digit',
-    minute: '2-digit',
-    timeZone: tz,
-    hour12: false,
-  });
-  const [hh, mm] = timeStr.split(':').map(Number);
-  const currentMinutes = hh * 60 + mm;
-
-  const quietHours = reminder.quietHours || [];
-  for (const { from, to } of quietHours) {
-    const [fh, fm] = from.split(':').map(Number);
-    const [th, tm] = to.split(':').map(Number);
-    const fromMin = fh * 60 + fm;
-    const toMin = th * 60 + tm;
-    if (fromMin <= toMin) {
-      if (currentMinutes >= fromMin && currentMinutes < toMin) return false;
-    } else {
-      if (currentMinutes >= fromMin || currentMinutes < toMin) return false;
-    }
-  }
-
-  if (snoozedUntil) {
-    const snoozeMs = snoozedUntil.toMillis
-      ? snoozedUntil.toMillis()
-      : new Date(snoozedUntil as unknown as string).getTime();
-    if (nowMs < snoozeMs) return false;
-  }
-
-  if (lastSentAt) {
-    const lastMs = lastSentAt.toMillis
-      ? lastSentAt.toMillis()
-      : new Date(lastSentAt as unknown as string).getTime();
-    const intervalMs = (reminder.intervalMinutes || 60) * 60 * 1000;
-    if (nowMs - lastMs < intervalMs) return false;
-  }
-
-  return true;
-}
-
-function buildNotificationPayload(language?: string): string {
-  const messages: Record<string, string[]> = {
-    de: [
-      'Zeit für Liegestütze! 💪',
-      'Kurze Pause? Perfekt für Liegestütze!',
-      'Du schaffst das – ein paar Liegestütze!',
-      'Beweg dich! Liegestütze warten auf dich. 🔥',
-      'Dein Körper ruft: Liegestütze, los!',
-    ],
-    en: [
-      'Time for push-ups! 💪',
-      'Quick break? Perfect for push-ups!',
-      'You got this – a few push-ups!',
-      'Move it! Push-ups are waiting for you. 🔥',
-      'Your body calls: push-ups, go!',
-    ],
-  };
-  const lang = language === 'en' ? 'en' : 'de';
-  const list = messages[lang];
-  return list[Math.floor(Math.random() * list.length)];
-}
 
 export const dispatchPushReminders = onSchedule(
   {
@@ -1103,41 +892,137 @@ export const updateUserStatsOnPushupWrite = onDocumentWritten(
     const nowIso = new Date().toISOString();
     const statsRef = db.collection('userStats').doc(userId);
 
+    // IMPORTANT: Check if this is the first entry (no userStats yet)
+    // OR if version is outdated (calculation logic changed)
+    // If so, we'll do a full rebuild to ensure correct initialization
+    let firstEntryAllEntries: Array<{
+      timestamp: string;
+      reps: number;
+    }> | null = null;
+    let versionOutdated = false;
+
+    const statsSnap = await statsRef.get();
+    const existingStats = statsSnap.exists
+      ? (statsSnap.data() as UserStats)
+      : null;
+
+    // Check version: if stored version < current version, trigger rebuild
+    if (
+      existingStats &&
+      (!existingStats.version || existingStats.version < USERSTATS_VERSION)
+    ) {
+      versionOutdated = true;
+      logger.info('updateUserStatsOnPushupWrite: version upgrade detected', {
+        userId,
+        oldVersion: existingStats.version ?? 1,
+        newVersion: USERSTATS_VERSION,
+      });
+    }
+
+    // Collect entries for rebuild if needed
+    if ((isCreate && !existingStats) || versionOutdated) {
+      const allEntriesSnap = await db
+        .collection('pushups')
+        .where('userId', '==', userId)
+        .orderBy('timestamp', 'asc')
+        .get();
+
+      firstEntryAllEntries = allEntriesSnap.docs.map((d) => {
+        const data = d.data();
+        return {
+          timestamp: data.timestamp as string,
+          reps: Number(data.reps ?? 0),
+        };
+      });
+    }
+
     await db.runTransaction(async (tx) => {
       const statsSnap = await tx.get(statsRef);
       let current = statsSnap.exists ? (statsSnap.data() as UserStats) : null;
 
-      if (timestampChanged) {
-        // Timestamp changed: undo old entry, then apply new entry
-        current = applyDelta(current, {
-          userId,
-          repsDelta: -oldReps,
-          entriesDelta: -1,
-          timestamp: oldTimestamp,
-          newReps: 0,
-          nowIso,
-        });
-        current = applyDelta(current, {
-          userId,
-          repsDelta: newReps,
-          entriesDelta: 1,
-          timestamp: newTimestamp,
-          newReps,
-          nowIso,
-        });
-      } else {
-        const repsDelta = newReps - oldReps;
-        const entriesDelta = isCreate ? 1 : isDelete ? -1 : 0;
-        const timestamp = (newTimestamp ?? oldTimestamp)!;
+      // BUG FIX P1: Re-check version in transaction to avoid double-counting
+      // The snapshot outside transaction may be stale; transaction sees latest state
+      let shouldRebuild = false;
+      if (firstEntryAllEntries !== null && isCreate && !current) {
+        // First entry case: confirmed by transaction read
+        shouldRebuild = true;
+      } else if (
+        firstEntryAllEntries !== null &&
+        current &&
+        (!current.version || current.version < USERSTATS_VERSION)
+      ) {
+        // Version upgrade case: confirmed by transaction read
+        shouldRebuild = true;
+      }
 
-        current = applyDelta(current, {
-          userId,
-          repsDelta,
-          entriesDelta,
-          timestamp,
-          newReps,
-          nowIso,
-        });
+      if (shouldRebuild) {
+        // Full rebuild: ensures atomicity and prevents double-counting from concurrent triggers
+        current = rebuildFromEntries(userId, firstEntryAllEntries!, nowIso);
+        const reason =
+          isCreate && !statsSnap.exists ? 'first entry' : 'version upgrade';
+        logger.info(
+          'updateUserStatsOnPushupWrite: full rebuild (transaction-confirmed)',
+          {
+            userId,
+            reason,
+            entries: firstEntryAllEntries!.length,
+            newVersion: USERSTATS_VERSION,
+          }
+        );
+      } else if (current) {
+        // Existing userStats with current version: use delta for efficiency
+        if (timestampChanged) {
+          // Timestamp changed: undo old entry, then apply new entry
+          current = applyDelta(current, {
+            userId,
+            repsDelta: -oldReps,
+            entriesDelta: -1,
+            timestamp: oldTimestamp,
+            newReps: 0,
+            nowIso,
+          });
+          current = applyDelta(current, {
+            userId,
+            repsDelta: newReps,
+            entriesDelta: 1,
+            timestamp: newTimestamp,
+            newReps,
+            nowIso,
+          });
+        } else {
+          const repsDelta = newReps - oldReps;
+          const entriesDelta = isCreate ? 1 : isDelete ? -1 : 0;
+          const timestamp = (newTimestamp ?? oldTimestamp)!;
+
+          current = applyDelta(current, {
+            userId,
+            repsDelta,
+            entriesDelta,
+            timestamp,
+            newReps,
+            nowIso,
+          });
+        }
+      } else {
+        // Missing userStats on a non-first-create write: rebuild from source of truth
+        // Writing empty stats here would permanently wipe totals for update/delete events
+        const userPushupsQuery = db
+          .collection('pushups')
+          .where('userId', '==', userId);
+        const userPushupsSnap = await tx.get(userPushupsQuery);
+        const userEntries = userPushupsSnap.docs.map((doc) =>
+          doc.data()
+        ) as Parameters<typeof rebuildFromEntries>[1];
+
+        logger.warn(
+          'updateUserStatsOnPushupWrite: missing userStats, rebuilding from entries',
+          {
+            userId,
+            isCreate,
+            entries: userEntries.length,
+          }
+        );
+        current = rebuildFromEntries(userId, userEntries, nowIso);
       }
 
       tx.set(statsRef, current);

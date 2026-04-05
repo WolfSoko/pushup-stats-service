@@ -8,6 +8,16 @@
 /** Heatmap slot key: weekday + hour bucket, e.g. "Mo-08", "Fr-14" */
 export type HeatmapSlot = string;
 
+/**
+ * Current version of UserStats calculation logic.
+ * Increment this when changing rebuildFromEntries, applyDelta, or period key logic.
+ *
+ * Changelog:
+ * - v1: Initial version (legacy, before versioning)
+ * - v2: Fixed period keys to use TODAY (not last entry date) in rebuildFromEntries
+ */
+export const USERSTATS_VERSION = 2;
+
 export interface UserStats {
   /** Firestore owner */
   userId: string;
@@ -49,6 +59,8 @@ export interface UserStats {
   bestSingleEntry: { reps: number; timestamp: string } | null;
 
   // ── Metadata ────────────────────────────────────────────────────────
+  /** Version of the calculation logic (used to detect when rebuild is needed) */
+  version?: number;
   updatedAt: string;
 }
 
@@ -70,6 +82,7 @@ export function emptyUserStats(userId: string): UserStats {
     heatmap: {},
     bestDay: null,
     bestSingleEntry: null,
+    version: USERSTATS_VERSION,
     updatedAt: new Date().toISOString(),
   };
 }

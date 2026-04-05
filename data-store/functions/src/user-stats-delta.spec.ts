@@ -1,3 +1,4 @@
+import { USERSTATS_VERSION } from '@pu-stats/models';
 import {
   berlinParts,
   isoWeekFromYmd,
@@ -624,6 +625,50 @@ describe('applyDelta', () => {
       expect(result.dailyReps).toBe(50);
       expect(result.bestDay).toEqual({ date: '2026-04-05', total: 50 });
     });
+
+    it('preserves version from existing stats', () => {
+      const existing = {
+        ...emptyUserStats('u1'),
+        version: 2, // Set to version 2
+        total: 20,
+        totalEntries: 1,
+      };
+
+      const result = applyDelta(existing, {
+        userId: 'u1',
+        repsDelta: 10,
+        entriesDelta: 0,
+        timestamp: TIMESTAMP,
+        newReps: 10,
+        nowIso: NOW,
+      });
+
+      // Version should be preserved from existing stats
+      expect(result.version).toBe(2);
+    });
+
+    it('resets to empty stats with current version when all entries deleted', () => {
+      const existing = {
+        ...emptyUserStats('u1'),
+        version: 2,
+        total: 20,
+        totalEntries: 1,
+      };
+
+      const result = applyDelta(existing, {
+        userId: 'u1',
+        repsDelta: -20,
+        entriesDelta: -1,
+        timestamp: TIMESTAMP,
+        newReps: 0,
+        nowIso: NOW,
+      });
+
+      // Should reset to empty but keep version
+      expect(result.totalEntries).toBe(0);
+      expect(result.total).toBe(0);
+      expect(result.version).toBe(USERSTATS_VERSION);
+    });
   });
 });
 
@@ -729,5 +774,52 @@ describe('rebuildFromEntries', () => {
     const stats = rebuildFromEntries('u1', entries, NOW);
     // Apr 2: 20+40=60 > Apr 1: 50
     expect(stats.bestDay).toEqual({ date: '2026-04-02', total: 60 });
+  });
+
+  it('CRITICAL: uses TODAY for period keys, not the last entry date', () => {
+    // Scenario: user has old entries, rebuilding today (much later)
+    // Last entry: March 15
+    // Today: April 5 (20 days later)
+    // Expected: Period keys should be for April 5, NOT March 15
+
+    const lastEntryDate = '2026-03-15T10:00:00.000Z';
+    const entries = [
+      { timestamp: '2026-03-10T10:00:00.000Z', reps: 20 },
+      { timestamp: '2026-03-11T10:00:00.000Z', reps: 25 },
+      { timestamp: lastEntryDate, reps: 30 },
+    ];
+
+    const nowToday = '2026-04-05T16:00:00.000Z'; // TODAY is April 5
+
+    const stats = rebuildFromEntries('u1', entries, nowToday);
+
+    // ✅ Period keys should be for TODAY (April 5), not March 15
+    expect(stats.dailyKey).toBe('2026-04-05'); // TODAY
+    expect(stats.monthlyKey).toBe('2026-04'); // THIS MONTH
+
+    // ✅ Period reps should be 0 (no entries today or this month)
+    expect(stats.dailyReps).toBe(0); // No entry on April 5
+    expect(stats.monthlyReps).toBe(0); // No entries in April
+
+    // ✅ But total stats are still correct
+    expect(stats.total).toBe(75); // All entries: 20+25+30
+    expect(stats.totalEntries).toBe(3);
+
+    // ✅ Best day is still March 15 (historical)
+    expect(stats.bestDay).toEqual({ date: '2026-03-15', total: 30 });
+
+    // ✅ Last entry date is preserved
+    expect(stats.lastEntryDate).toBe('2026-03-15');
+
+    // ✅ Streak is 1 (only March 15 itself, gap of 4 days before it)
+    expect(stats.currentStreak).toBe(1); // March 11 → 15 is NOT consecutive (gap on 12-14)
+  });
+
+  it('sets correct version on rebuild', () => {
+    // This test ensures version is always set to USERSTATS_VERSION when rebuilding
+    const entries = [{ timestamp: '2026-04-05T10:00:00.000Z', reps: 20 }];
+    const stats = rebuildFromEntries('u1', entries, NOW);
+
+    expect(stats.version).toBe(USERSTATS_VERSION);
   });
 });

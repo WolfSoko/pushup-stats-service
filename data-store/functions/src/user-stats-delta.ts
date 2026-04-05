@@ -6,7 +6,7 @@
  * these helpers and writes the result to Firestore.
  */
 
-import { type UserStats, emptyUserStats } from '@pu-stats/models';
+import { type UserStats, USERSTATS_VERSION, emptyUserStats } from '@pu-stats/models';
 
 const TZ = 'Europe/Berlin';
 
@@ -279,6 +279,7 @@ export function applyDelta(
     heatmap,
     bestDay,
     bestSingleEntry,
+    version: base.version,
     updatedAt: nowIso,
   };
 }
@@ -353,11 +354,12 @@ export function rebuildFromEntries(
   }
   const lastEntryDate = uniqueDates[uniqueDates.length - 1];
 
-  // Period keys from last entry
-  const lastParts = berlinParts(sorted[sorted.length - 1].timestamp);
-  const keys = periodKeys(lastParts);
+  // Period keys from TODAY (not from last entry!)
+  // Use the provided nowIso timestamp to calculate current period keys
+  const nowParts = berlinParts(nowIso);
+  const keys = periodKeys(nowParts);
 
-  // Period reps: sum entries matching the last entry's period
+  // Period reps: sum entries matching TODAY's period
   let dailyReps = 0;
   let weeklyReps = 0;
   let monthlyReps = 0;
@@ -387,6 +389,7 @@ export function rebuildFromEntries(
     heatmap,
     bestDay,
     bestSingleEntry,
+    version: USERSTATS_VERSION,
     updatedAt: nowIso,
   };
 }
