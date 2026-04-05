@@ -4421,8 +4421,8 @@ Deine Position: # ·  Reps        </source>
         <note category="location">web/src/app/stats/components/analysis-teaser-card/analysis-teaser-card.component.ts</note>
       </notes>
       <segment state="translated">
-        <source>Diese Woche: <ph id="0" equiv="INTERPOLATION" disp="{{ weekReps() }}"/> Reps</source>
-        <target>This week: <ph id="0" equiv="INTERPOLATION" disp="{{ weekReps() }}"/> reps</target>
+        <source>Diese Woche: <ph id="0" equiv="INTERPOLATION" disp="{{ weekReps() }}"/> / <ph id="1" equiv="INTERPOLATION_1" disp="{{ weeklyGoal() }}"/> Reps</source>
+        <target>This week: <ph id="0" equiv="INTERPOLATION" disp="{{ weekReps() }}"/> / <ph id="1" equiv="INTERPOLATION_1" disp="{{ weeklyGoal() }}"/> reps</target>
       </segment>
     </unit>
     <unit id="dashboard.analysisTeaserError">

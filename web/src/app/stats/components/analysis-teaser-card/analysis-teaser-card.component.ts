@@ -50,11 +50,8 @@ const EMPTY_STATS: StatsResponse = {
           >
           ·
           <ng-container i18n="@@dashboard.analysisTeaserWeekReps"
-            >Diese Woche: {{ weekReps() }}
-            @if (weeklyGoal()) {
-              / {{ weeklyGoal() }}
-            }
-            Reps</ng-container
+            >Diese Woche: {{ weekReps() }} /
+            {{ weeklyGoal() }} Reps</ng-container
           >
         </mat-card-subtitle>
       </mat-card-header>

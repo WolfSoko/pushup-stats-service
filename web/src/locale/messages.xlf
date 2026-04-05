@@ -2526,51 +2526,6 @@
         <source>Wird prominent in der Toolbar angezeigt.</source>
       </segment>
     </unit>
-    <unit id="weeklyGoalLabel">
-      <segment>
-        <source>Wochenziel (Reps)</source>
-      </segment>
-    </unit>
-    <unit id="weeklyGoalPlaceholder">
-      <segment>
-        <source>700</source>
-      </segment>
-    </unit>
-    <unit id="settings.weeklyGoalHint">
-      <segment>
-        <source>Gesamtziel pro Woche (Mo–So).</source>
-      </segment>
-    </unit>
-    <unit id="monthlyGoalLabel">
-      <segment>
-        <source>Monatsziel (Reps)</source>
-      </segment>
-    </unit>
-    <unit id="monthlyGoalPlaceholder">
-      <segment>
-        <source>3000</source>
-      </segment>
-    </unit>
-    <unit id="settings.monthlyGoalHint">
-      <segment>
-        <source>Gesamtziel pro Monat.</source>
-      </segment>
-    </unit>
-    <unit id="dashboard.dailyGoalLabel">
-      <segment>
-        <source>Tag</source>
-      </segment>
-    </unit>
-    <unit id="dashboard.weeklyGoalLabel">
-      <segment>
-        <source>Woche</source>
-      </segment>
-    </unit>
-    <unit id="dashboard.monthlyGoalLabel">
-      <segment>
-        <source>Monat</source>
-      </segment>
-    </unit>
     <unit id="saveSettings">
       <notes>
         <note category="location">web/src/app/stats/shell/settings-page.component.ts:134,136</note>
