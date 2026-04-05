@@ -9,7 +9,7 @@ import webpush from 'web-push';
 import { defineSecret } from 'firebase-functions/params';
 import type { UserStats } from '@pu-stats/models';
 import { USERSTATS_VERSION } from '@pu-stats/models';
-import { applyDelta, rebuildFromEntries } from './user-stats-delta';
+import { applyDelta, rebuildFromEntries, emptyUserStats } from './user-stats-delta';
 
 // Module imports
 import { berlinDateParts, isoWeekFromYmd } from './datetime';
@@ -1060,14 +1060,25 @@ export const updateUserStatsOnPushupWrite = onDocumentWritten(
       const statsSnap = await tx.get(statsRef);
       let current = statsSnap.exists ? (statsSnap.data() as UserStats) : null;
 
-      // Full rebuild on first entry or version upgrade
-      if (firstEntryAllEntries !== null && ((isCreate && !current) || versionOutdated)) {
-        current = rebuildFromEntries(userId, firstEntryAllEntries, nowIso);
-        const reason = versionOutdated ? 'version upgrade' : 'first entry';
-        logger.info('updateUserStatsOnPushupWrite: full rebuild', {
+      // BUG FIX P1: Re-check version in transaction to avoid double-counting
+      // The snapshot outside transaction may be stale; transaction sees latest state
+      let shouldRebuild = false;
+      if (firstEntryAllEntries !== null && isCreate && !current) {
+        // First entry case: confirmed by transaction read
+        shouldRebuild = true;
+      } else if (firstEntryAllEntries !== null && current && (!current.version || current.version < USERSTATS_VERSION)) {
+        // Version upgrade case: confirmed by transaction read
+        shouldRebuild = true;
+      }
+
+      if (shouldRebuild) {
+        // Full rebuild: ensures atomicity and prevents double-counting from concurrent triggers
+        current = rebuildFromEntries(userId, firstEntryAllEntries!, nowIso);
+        const reason = (isCreate && !statsSnap.exists) ? 'first entry' : 'version upgrade';
+        logger.info('updateUserStatsOnPushupWrite: full rebuild (transaction-confirmed)', {
           userId,
           reason,
-          entries: firstEntryAllEntries.length,
+          entries: firstEntryAllEntries!.length,
           newVersion: USERSTATS_VERSION,
         });
       } else if (current) {
@@ -1104,6 +1115,16 @@ export const updateUserStatsOnPushupWrite = onDocumentWritten(
             nowIso,
           });
         }
+      } else {
+        // BUG FIX P2: Handle missing userStats on non-create writes
+        // If we reach here without a rebuild decision, create empty stats
+        // This recovers missing userStats for update/delete operations
+        logger.warn('updateUserStatsOnPushupWrite: missing userStats, creating empty', {
+          userId,
+          isCreate,
+        });
+        current = emptyUserStats(userId);
+        current.updatedAt = nowIso;
       }
 
       tx.set(statsRef, current);
