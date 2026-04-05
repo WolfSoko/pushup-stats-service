@@ -21,7 +21,7 @@ describe('appRoutes', () => {
       'landing',
       'login',
       'register',
-      'data',
+      'history',
       'analysis',
       'settings',
       'reminders',
@@ -46,8 +46,8 @@ describe('appRoutes', () => {
     expect(component).toBe(StatsDashboardComponent);
   });
 
-  it('lazy-loads data component on /data', async () => {
-    const route = appRoutes.find((r) => r.path === 'data');
+  it('lazy-loads history component on /history', async () => {
+    const route = appRoutes.find((r) => r.path === 'history');
     const component = await route?.loadComponent?.();
     expect(component).toBe(EntriesPageComponent);
   });
@@ -91,7 +91,7 @@ describe('appRoutes', () => {
   });
 
   it('protects app routes and keeps landing/login/register public-only', () => {
-    const protectedPaths = ['app', 'data', 'analysis', 'settings'];
+    const protectedPaths = ['app', 'history', 'analysis', 'settings'];
     for (const path of protectedPaths) {
       const route = appRoutes.find((r) => r.path === path);
       expect(route?.canActivate).toEqual([authGuard]);

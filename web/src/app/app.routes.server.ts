@@ -49,7 +49,7 @@ export const serverRoutes: ServerRoute[] = [
     renderMode: RenderMode.Server,
   },
   {
-    path: 'data',
+    path: 'history',
     renderMode: RenderMode.Server,
   },
   {
