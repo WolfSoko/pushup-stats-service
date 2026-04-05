@@ -17,8 +17,8 @@ describe('leaderboard/logic', () => {
         { userId: 'user2', timestamp: '2024-03-15T15:00:00Z', reps: 20 },
       ];
       const profiles = new Map<string, UserProfile>([
-        ['user1', { displayName: 'Alice' }],
-        ['user2', { displayName: 'Bob' }],
+        ['user1', { displayName: 'Alice', ui: { hideFromLeaderboard: false } }],
+        ['user2', { displayName: 'Bob', ui: { hideFromLeaderboard: false } }],
       ]);
 
       const result = rankEntries(rows, 'daily', '2024-03-15', profiles);
@@ -126,8 +126,8 @@ describe('leaderboard/logic', () => {
         { userId: 'user2', timestamp: '2024-03-15T10:00:00Z', reps: 20 },
       ];
       const profiles = new Map<string, UserProfile>([
-        ['user1', { displayName: 'Alice' }],
-        ['user2', { displayName: 'Bob' }],
+        ['user1', { displayName: 'Alice', ui: { hideFromLeaderboard: false } }],
+        ['user2', { displayName: 'Bob', ui: { hideFromLeaderboard: false } }],
       ]);
 
       const result = rankEntries(rows, 'daily', '2024-03-15', profiles);
