@@ -99,8 +99,7 @@ export const RegisterUiStore = signalStore(
       patchState(store, { registeringCredentials: true });
       try {
         await authStore.signUpWithEmail(email, password);
-        // Must also check that no auth error occurred (e.g. link failed for guest).
-        return authStore.isAuthenticated() && !authStore.error();
+        return !authStore.error();
       } finally {
         patchState(store, { registeringCredentials: false });
       }
@@ -109,7 +108,7 @@ export const RegisterUiStore = signalStore(
       patchState(store, { registeringCredentials: true });
       try {
         await authStore.upgradeWithGoogle();
-        return authStore.isAuthenticated() && !authStore.error();
+        return !authStore.error();
       } finally {
         patchState(store, { registeringCredentials: false });
       }

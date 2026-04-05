@@ -23,6 +23,7 @@ export class AuthService {
     mapAuthUserToPUSUser(this.authAdapter.authUser())
   );
   readonly isAuthenticated = this.authAdapter.isAuthenticated;
+  readonly authResolved = this.authAdapter.authResolved;
   readonly idToken = this.authAdapter.idToken;
 
   /** Sign in with Google */
