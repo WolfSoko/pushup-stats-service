@@ -69,8 +69,6 @@ When making changes, always write or update relevant tests as part of the same c
 - **API Services:** Stateless, return Promises/Observables - no signals, no state
 - **No RxJS for state** - only in data-access layer for Firestore Observables + `toSignal()`
 - **Signal timing pitfall (`toSignal`):** `toSignal()` starts with `undefined` and updates via microtask. After async operations (e.g. `signInWithPopup`), signals may not yet reflect the new state. Use `auth.currentUser` (synchronous) as fallback where immediate access is needed — see `LoginUiStore`, `RegisterUiStore`, `AuthService.upgradeWithEmail()` for the pattern. For templates, use `authResolved` (= `authState() !== undefined`) to distinguish "loading" from "not authenticated".
-- **`toSignal` lag in guards and post-auth hooks:** Promise-based `CanActivateFn` guards are NOT reactive. Always call `await firebaseAuth.authStateReady()` then read `firebaseAuth.currentUser` synchronously — never rely solely on `auth.isAuthenticated()`. Same applies to `runPostAuthHooks()`: prefer `authAdapter.currentUser` over the signal-based `user()`.
-- **Auth store methods return `boolean`:** `login()`, `signInWithEmail()`, `signUpWithEmail()`, `upgradeWithGoogle()` return `Promise<boolean>`. Use the returned value — do NOT check `!authStore.error()` as a success signal.
 
 **Three-Layer Architecture:**
 ```
