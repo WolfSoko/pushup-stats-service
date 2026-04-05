@@ -1,25 +1,20 @@
 # Firebase Hosting deployment – gated by CI.
-# Runs only after the "CI" workflow succeeds on main.
+# The deploy branch is only updated after CI succeeds on main
+# (see promote-to-deploy job in ci.yml).
 name: Deploy to Firebase Hosting on merge
 on:
-  workflow_run:
-    workflows: ["CI"]
-    types: [completed]
-    branches: [main]
+  push:
+    branches:
+      - deploy
 env:
   NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN_WRITE }}
   # More heap for Angular SSR build + Playwright webServer in CI.
   NODE_OPTIONS: --max-old-space-size=6144
 jobs:
   build_and_deploy:
-    # Only deploy when CI succeeded on a push (not on PR runs)
-    if: ${{ github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-        with:
-          ref: ${{ github.event.workflow_run.head_sha }}
-          fetch-depth: 0
       - name: Setup pnpm
         uses: pnpm/action-setup@v5
       - name: Setup Node
