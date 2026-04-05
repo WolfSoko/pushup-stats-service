@@ -41,7 +41,7 @@ import {
   shouldSendReminder,
   buildNotificationPayload,
 } from './push/reminders';
-import type { ReminderConfig, FirestoreTimestamp } from './push/reminders';
+import type { ReminderConfig } from './push/reminders';
 import { validateDeleteUserPayload, isDemoUser, batchArray } from './admin';
 
 admin.initializeApp();
