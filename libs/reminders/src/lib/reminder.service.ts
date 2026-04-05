@@ -127,9 +127,11 @@ export class ReminderService {
           ]);
         }
         if (reg) {
+          const iconUrl = new URL('assets/pushup-logo.svg', document.baseURI)
+            .href;
           await reg.showNotification(title, {
             body: quote,
-            icon: '/assets/pushup-logo.svg',
+            icon: iconUrl,
             tag: 'reminder',
             renotify: true,
           } as NotificationOptions);
@@ -140,9 +142,11 @@ export class ReminderService {
       }
       if (!shown) {
         try {
+          const iconUrl = new URL('assets/pushup-logo.svg', document.baseURI)
+            .href;
           new Notification(title, {
             body: quote,
-            icon: '/assets/pushup-logo.svg',
+            icon: iconUrl,
           });
         } catch {
           // Fallback also failed (e.g. Android Chrome) — give up silently

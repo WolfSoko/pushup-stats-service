@@ -20,8 +20,14 @@ describe('ReminderService', () => {
   // Save original property descriptors to restore after each test.
   // Using descriptors (not values) so we can delete the property when
   // it didn't originally exist, preventing false 'in' checks.
-  const swDescriptor = Object.getOwnPropertyDescriptor(navigator, 'serviceWorker');
-  const notifDescriptor = Object.getOwnPropertyDescriptor(window, 'Notification');
+  const swDescriptor = Object.getOwnPropertyDescriptor(
+    navigator,
+    'serviceWorker'
+  );
+  const notifDescriptor = Object.getOwnPropertyDescriptor(
+    window,
+    'Notification'
+  );
 
   const defaultConfig: ReminderConfig = {
     enabled: true,
@@ -191,6 +197,39 @@ describe('ReminderService', () => {
       expect.stringContaining('Liegestütze'),
       expect.objectContaining({ body: 'Stay strong!' })
     );
+
+    service.stop();
+  });
+
+  it('should resolve notification icon relative to document.baseURI', async () => {
+    // Simulate a locale-prefixed base URI (e.g. /de/)
+    const originalBaseURI = Object.getOwnPropertyDescriptor(
+      Document.prototype,
+      'baseURI'
+    );
+    Object.defineProperty(document, 'baseURI', {
+      value: 'http://localhost/de/',
+      configurable: true,
+    });
+
+    const service = createService();
+    service.start({ userId: 'u1' });
+    jest.advanceTimersByTime(5_000);
+    await flushMicrotasks();
+
+    expect(showNotificationSpy).toHaveBeenCalledWith(
+      expect.any(String),
+      expect.objectContaining({
+        icon: 'http://localhost/de/assets/pushup-logo.svg',
+      })
+    );
+
+    // Restore
+    if (originalBaseURI) {
+      Object.defineProperty(Document.prototype, 'baseURI', originalBaseURI);
+    } else {
+      delete (document as Record<string, unknown>)['baseURI'];
+    }
 
     service.stop();
   });
