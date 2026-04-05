@@ -1,0 +1,123 @@
+{
+  "version": "2.1",
+  "last_updated": "2026-04-05T00:00:00Z",
+  "patterns": [
+    {
+      "id": "app-shell-store-injection",
+      "name": "App Shell Store Injection Ripple Effect",
+      "category": "test-maintenance",
+      "severity": "high",
+      "occurrences": 1,
+      "last_seen": "2026-04-05",
+      "description": "When a store is injected into app root, all tests fail until the store is mocked in TestBed",
+      "fix_pattern": "Add store mock to TestBed.configureTestingModule providers",
+      "prevention": "Consider lazy-loading stores instead of root injection"
+    },
+    {
+      "id": "ssr-hydration-store-state",
+      "name": "SSR Hydration: Browser State Divergence",
+      "category": "ssr-issue",
+      "severity": "high",
+      "occurrences": 1,
+      "last_seen": "2026-04-05",
+      "description": "Store state differs between server (no browser APIs) and client (has localStorage), causing hydration mismatch",
+      "fix_pattern": "Use withHooks onInit to sync browser state after SSR hydration",
+      "prevention": "Document browser-only signals; use withHooks systematically for browser APIs"
+    },
+    {
+      "id": "edit-tool-replace-collisions",
+      "name": "Edit Tool Replace String Collisions",
+      "category": "execution-safety",
+      "severity": "medium",
+      "occurrences": 1,
+      "last_seen": "2026-04-05",
+      "description": "Short search strings in replace_all match unintended locations in import paths and names",
+      "fix_pattern": "Use more specific search patterns; review diff after replace",
+      "prevention": "Always include context (module name, scope) in search string"
+    },
+    {
+      "id": "angular-test-api-mismatch",
+      "name": "Angular Testing Framework API Mismatch",
+      "category": "testing",
+      "severity": "medium",
+      "occurrences": 3,
+      "last_seen": "2026-04-05",
+      "description": "Jest and Vitest have different APIs (jest.fn vs vitest.fn, $localize setup)",
+      "fix_pattern": "Check project.json test config; use framework-specific APIs",
+      "prevention": "Maintain separate test setup patterns per framework"
+    },
+    {
+      "id": "blog-hreflang-multilang-issue",
+      "name": "Blog hreflang with Different Language Slugs",
+      "category": "multilingual-seo",
+      "severity": "low",
+      "occurrences": 1,
+      "last_seen": "2026-04-05",
+      "description": "hreflang alternates point to non-existent routes when blog slugs differ per language",
+      "fix_pattern": "Exclude blog routes from hreflang; only add for parallel structure",
+      "prevention": "Only use hreflang for routes with identical URL structure across languages"
+    },
+    {
+      "id": "ai-review-german-typography",
+      "name": "AI Review False Positives on German Typography",
+      "category": "process-overhead",
+      "severity": "low",
+      "occurrences": 1,
+      "last_seen": "2026-04-05",
+      "description": "AI reviewers flag German quotation marks and dashes as unusual",
+      "fix_pattern": "Expected for German XLIFF; can be dismissed",
+      "prevention": "Document that German typography is intentional localization"
+    }
+  ],
+  "tool_dependencies": {
+    "Edit+Bash": {
+      "tools": ["Edit", "Bash"],
+      "co_usage_count": 5,
+      "first_seen": "2026-04-05",
+      "last_seen": "2026-04-05",
+      "description": "Edit tool for file changes, followed by Bash to verify/test"
+    },
+    "Bash+Read": {
+      "tools": ["Bash", "Read"],
+      "co_usage_count": 8,
+      "first_seen": "2026-04-05",
+      "last_seen": "2026-04-05",
+      "description": "Run commands, then read output or related files"
+    },
+    "Read+Grep": {
+      "tools": ["Read", "Grep"],
+      "co_usage_count": 3,
+      "first_seen": "2026-04-05",
+      "last_seen": "2026-04-05",
+      "description": "Search for pattern, then read related files"
+    }
+  },
+  "recurring_issues": [
+    {
+      "issue": "Test setup errors when dependencies change",
+      "solutions": [
+        "Always update TestBed mocks when injecting new stores/services",
+        "Consider lazy-loading vs root injection"
+      ],
+      "affected_projects": ["web", "all libs with app-level tests"]
+    },
+    {
+      "issue": "SSR hydration state divergence",
+      "solutions": [
+        "Document browser-only signals",
+        "Use withHooks onInit for localStorage/window access",
+        "Test SSR builds locally before deployment"
+      ],
+      "affected_projects": ["web"]
+    },
+    {
+      "issue": "Multi-language SEO issues",
+      "solutions": [
+        "Only use hreflang for parallel routes",
+        "Keep blog slugs synchronized across languages (or disable hreflang)",
+        "Test sitemap generation locally"
+      ],
+      "affected_projects": ["web"]
+    }
+  ]
+}

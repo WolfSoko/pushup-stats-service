@@ -1,0 +1,149 @@
+{
+  "version": "2.1",
+  "last_updated": "2026-04-05T00:00:00Z",
+  "session": "AdSense approval fix (PR #176)",
+  "template_improvements": [
+    {
+      "skill": "testing",
+      "section": "Jest vs Vitest Compatibility",
+      "change": "Added guidance on framework-specific APIs (jest.fn vs vitest.fn, $localize setup)",
+      "reasoning": "Prevents test setup errors when working across Nx projects with different testing frameworks",
+      "confidence": 0.95,
+      "recorded_at": "2026-04-05T00:00:00Z"
+    },
+    {
+      "skill": "ssr-patterns",
+      "section": "Browser-Only State Initialization",
+      "change": "Documented withHooks onInit pattern for syncing browser state after SSR hydration; included localStorage example",
+      "reasoning": "SSR hydration bugs are hard to debug in production; this pattern prevents silent state divergence",
+      "confidence": 0.95,
+      "recorded_at": "2026-04-05T00:00:00Z"
+    },
+    {
+      "skill": "app-shell-testing",
+      "section": "Mock Dependencies for Root Component Tests",
+      "change": "Added pattern for mocking all injected stores in TestBed; explained ripple effect",
+      "reasoning": "Prevents cascading test failures when modifying the root component",
+      "confidence": 0.9,
+      "recorded_at": "2026-04-05T00:00:00Z"
+    },
+    {
+      "skill": "edit-tool-safety",
+      "section": "Replace String Collision Risks",
+      "change": "Documented risks of short string replacements with examples; added best practices for specific patterns",
+      "reasoning": "Prevents subtle bugs from unintended string replacements that are hard to spot in review",
+      "confidence": 0.85,
+      "recorded_at": "2026-04-05T00:00:00Z"
+    },
+    {
+      "skill": "sitemap-multilingual",
+      "section": "hreflang for Multi-Language Sites",
+      "change": "Added guidance on when to use hreflang (parallel routes only); documented blog slug issue",
+      "reasoning": "Prevents broken hreflang links that confuse search engines and hurt SEO for localized sites",
+      "confidence": 0.9,
+      "recorded_at": "2026-04-05T00:00:00Z"
+    }
+  ],
+  "process_improvements_applied": [
+    {
+      "phase": "EXECUTE",
+      "category": "test-maintenance",
+      "improvement": "When injecting a store into app root, immediately run app tests and update mocks",
+      "status": "documented",
+      "impact": "Prevents cascading test failures during subsequent development"
+    },
+    {
+      "phase": "EXECUTE",
+      "category": "string-replacement-safety",
+      "improvement": "Before running large replace_all operations, test on a single file or limited scope",
+      "status": "documented",
+      "impact": "Catches collision bugs before they spread across codebase"
+    },
+    {
+      "phase": "ANALYZE",
+      "category": "ssr-awareness",
+      "improvement": "Explicitly document which signals depend on browser APIs; mark with comments",
+      "status": "documented",
+      "impact": "Prevents silent SSR hydration bugs"
+    },
+    {
+      "phase": "GENERATE",
+      "category": "legal-compliance-checklist",
+      "improvement": "Ads/monetization features should include: sitemap generation, legal pages, GDPR consent, NPA mode",
+      "status": "documented",
+      "impact": "Ensures compliance + SEO requirements are not missed in future work"
+    }
+  ],
+  "architectural_patterns_documented": [
+    {
+      "name": "SSR Hydration Pattern: Browser State Sync",
+      "description": "For signals that depend on browser APIs, use withHooks onInit to detect browser environment and update state after hydration",
+      "success_example": "AdsStore now syncs consent state on client after SSR",
+      "when_to_use": "Any store signal that reads from localStorage, sessionStorage, window, or document",
+      "applicability": "core",
+      "documented_at": "2026-04-05T00:00:00Z"
+    },
+    {
+      "name": "Static File Serving Pattern: URL Rewrite vs sendFile",
+      "description": "For i18n + static files at root, prefer Express middleware rewrite + express.static over sendFile",
+      "success_example": "robots.txt served at root without security concerns, CodeQL clean",
+      "when_to_use": "Static files that need to be served at root path in i18n apps",
+      "applicability": "backend-infrastructure",
+      "documented_at": "2026-04-05T00:00:00Z"
+    },
+    {
+      "name": "Sitemap Multi-Language Pattern",
+      "description": "Generate sitemap with hreflang only for routes with parallel structure. Skip hreflang for routes with language-specific slugs",
+      "success_example": "Sitemap generated with hreflang for static pages, excluded for blog",
+      "when_to_use": "Multi-language sites with some parallel routes and some content-specific routes",
+      "applicability": "seo-multilingual",
+      "documented_at": "2026-04-05T00:00:00Z"
+    }
+  ],
+  "technical_insights_recorded": [
+    {
+      "topic": "Cookie Consent Implementation",
+      "insight": "Separate cookie consent (pus_cookie_consent) from analytics consent (pus_analytics_consent). AdsStore hydrates consent on browser init via withHooks.",
+      "applicability": "gdpr-compliance",
+      "source": "AdsStore implementation in PR #176",
+      "recorded_at": "2026-04-05T00:00:00Z"
+    },
+    {
+      "topic": "GDPR Compliance for Ads",
+      "insight": "Non-personalized ads (NPA) don't require GDPR opt-in but require a consent notice. Banner alone satisfies this.",
+      "applicability": "ads-monetization",
+      "source": "AdSense approval requirements",
+      "recorded_at": "2026-04-05T00:00:00Z"
+    },
+    {
+      "topic": "i18n File Serving",
+      "insight": "For i18n + static files, store files in locale folder and use Express rewrite middleware. Simpler and more secure than sendFile.",
+      "applicability": "backend-infrastructure",
+      "source": "Express middleware implementation",
+      "recorded_at": "2026-04-05T00:00:00Z"
+    },
+    {
+      "topic": "Nx Build Dependencies",
+      "insight": "Sitemap generation can be wired as a dependsOn in Nx build configuration, ensuring it runs before web:build",
+      "applicability": "build-system",
+      "source": "Sitemap generation script integration",
+      "recorded_at": "2026-04-05T00:00:00Z"
+    }
+  ],
+  "skills_with_updates": [
+    "testing",
+    "ssr-patterns",
+    "app-shell-testing",
+    "edit-tool-safety",
+    "sitemap-multilingual"
+  ],
+  "summary": {
+    "patterns_found": 7,
+    "skills_adjusted": 5,
+    "architectural_patterns_documented": 3,
+    "technical_insights_added": 4,
+    "process_improvements_identified": 4,
+    "high_confidence_items": 5,
+    "medium_confidence_items": 2
+  }
+}

@@ -22,6 +22,14 @@ export const serverRoutes: ServerRoute[] = [
       return BLOG_POSTS.map((post) => ({ slug: post.slug }));
     },
   },
+  {
+    path: 'impressum',
+    renderMode: RenderMode.Prerender,
+  },
+  {
+    path: 'datenschutz',
+    renderMode: RenderMode.Prerender,
+  },
 
   // --- Server-rendered (dynamic data per request) ---
   {

@@ -188,8 +188,24 @@
     <main class="app-content">
       <router-outlet />
     </main>
+
+    <footer class="app-footer">
+      <nav aria-label="Rechtliches" i18n-aria-label="@@footer.aria">
+        <a routerLink="/impressum" i18n="@@footer.impressum">Impressum</a>
+        <a routerLink="/datenschutz" i18n="@@footer.datenschutz">Datenschutz</a>
+        <button
+          mat-button
+          (click)="openCookieSettings()"
+          i18n="@@footer.cookies"
+        >
+          Cookie-Einstellungen
+        </button>
+      </nav>
+    </footer>
   </mat-sidenav-content>
 </mat-sidenav-container>
+
+<lib-cookie-consent-banner #consentBanner />
 
 @if (isLoggedIn()) {
 <lib-quick-add-fab

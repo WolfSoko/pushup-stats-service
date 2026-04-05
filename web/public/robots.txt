@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+
+Disallow: /admin
+Disallow: /de/admin
+Disallow: /en/admin
+Disallow: /settings
+Disallow: /de/settings
+Disallow: /en/settings
+Disallow: /reminders
+Disallow: /de/reminders
+Disallow: /en/reminders
+
+Sitemap: https://pushup-stats.de/sitemap.xml

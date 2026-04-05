@@ -40,8 +40,18 @@ app.use(pinoHttp({ logger }));
 
 const angularApp = new AngularNodeAppEngine();
 
-app.get('/ads.txt', (req, res) => {
-  res.sendFile(join(browserDistFolder, 'de', 'ads.txt'));
+// Serve root-level well-known files from the /de build output
+// so they are available at the domain root for crawlers.
+const rootFiles = new Set(['ads.txt', 'robots.txt', 'sitemap.xml']);
+app.use((req, res, next) => {
+  const file = req.path.slice(1);
+  if (rootFiles.has(file)) {
+    const originalSuffix = req.url.slice(req.path.length);
+    req.url = `/de/${file}${originalSuffix}`;
+    // Short cache – crawlers need fresh robots/sitemap, not the 1y static default
+    res.setHeader('Cache-Control', 'public, max-age=3600');
+  }
+  next();
 });
 
 /**

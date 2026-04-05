@@ -5,6 +5,7 @@ import {
   DestroyRef,
   inject,
   signal,
+  viewChild,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Analytics, logEvent } from '@angular/fire/analytics';
@@ -30,6 +31,7 @@ import { filter } from 'rxjs';
 import { SeoService } from './core/seo.service';
 import { UserContextService } from '@pu-auth/auth';
 import { PushSubscriptionService } from '@pu-reminders/reminders';
+import { CookieConsentBannerComponent } from '@pu-stats/ads';
 import { QuickAddFabComponent } from '@pu-stats/quick-add';
 import { ThemeToggleComponent } from './core/theme';
 import { ReminderOrchestrationService } from './core/reminder-orchestration.service';
@@ -52,6 +54,7 @@ import { QuickAddOrchestrationService } from './core/quick-add-orchestration.ser
     UserMenuComponent,
     QuickAddFabComponent,
     ThemeToggleComponent,
+    CookieConsentBannerComponent,
   ],
   templateUrl: './app.html',
   styleUrl: './app.scss',
@@ -94,6 +97,13 @@ export class App {
   readonly quickAddSuggestions = this.appData.quickAddSuggestions;
   readonly dailyGoal = this.appData.dailyGoal;
   readonly todayProgress = this.appData.todayProgress;
+
+  private readonly consentBanner =
+    viewChild<CookieConsentBannerComponent>('consentBanner');
+
+  openCookieSettings(): void {
+    this.consentBanner()?.reopen();
+  }
 
   setLanguage(lang: 'de' | 'en', ev?: Event): void {
     ev?.preventDefault();

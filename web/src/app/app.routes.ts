@@ -137,6 +137,28 @@ export const appRoutes: Routes = [
     ],
   },
   {
+    path: 'impressum',
+    data: {
+      seoTitle: $localize`:@@seo.impressum.title:Impressum – Pushup Tracker`,
+      seoDescription: $localize`:@@seo.impressum.description:Impressum und Anbieterkennzeichnung von Pushup Tracker.`,
+    },
+    loadComponent: () =>
+      import('./marketing/legal/impressum-page.component').then(
+        (m) => m.ImpressumPageComponent
+      ),
+  },
+  {
+    path: 'datenschutz',
+    data: {
+      seoTitle: $localize`:@@seo.datenschutz.title:Datenschutzerklärung – Pushup Tracker`,
+      seoDescription: $localize`:@@seo.datenschutz.description:Datenschutzerklärung von Pushup Tracker – Informationen zu Datenverarbeitung, Cookies und Ihren Rechten.`,
+    },
+    loadComponent: () =>
+      import('./marketing/legal/datenschutz-page.component').then(
+        (m) => m.DatenschutzPageComponent
+      ),
+  },
+  {
     path: 'admin',
     canActivate: [adminGuard],
     loadComponent: () =>

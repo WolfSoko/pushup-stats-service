@@ -24,7 +24,7 @@ When making changes, always write or update relevant tests as part of the same c
 - **Build:** Nx 22, pnpm
 - **Backend:** Firebase (Firestore, Cloud Functions, Auth)
 - **State:** @ngrx/signals (signal stores)
-- **UI:** Angular Material 21, Chart.js
+- **UI:** Angular Material 21, Chart.js – **always prefer Material components** (`mat-button`, `mat-icon`, etc.) over plain HTML elements for buttons, inputs, dialogs, and other interactive controls
 - **Testing:** Vitest (web), Jest (libs), Playwright (e2e)
 
 ## Architecture
@@ -159,6 +159,22 @@ pnpm nx run web:build -c production  # Production build (includes prerender)
 ```
 
 Do NOT push if any of these fail. Fix first, then push.
+
+## Consent & Ads
+
+- **Cookie consent** is stored in `localStorage` key `pus_cookie_consent` (`'all'` | `'necessary'` | absent).
+- **AdsStore** reads this on init: `consentAnswered` gates whether any ads render; `targetedAdsConsent` controls personalized vs. non-personalized (NPA) mode.
+- **Analytics consent** lives in `pus_analytics_consent` (`'granted'` | `'denied'`), set by the consent banner alongside the cookie consent.
+- **Non-personalized ads** don't require GDPR opt-in but still need a consent *notice*. The banner satisfies this.
+- When testing ads components, mock `AdsStore` (not `RemoteConfig`) – see `ad-slot.component.spec.ts` for the pattern.
+
+## Legal Pages
+
+- `/impressum` and `/datenschutz` live under `web/src/app/marketing/legal/`.
+- Both are prerendered (SSG) for crawler visibility.
+- Footer links are in the app shell (`app.html`), visible on every page.
+- `robots.txt` is a static file in `web/public/`.
+- **`sitemap.xml` is auto-generated** from blog posts + static routes via `node tools/src/generate-sitemap.mjs` (Nx target: `pnpm nx run tools:generate-sitemap`). It runs automatically before every `web:build`. When adding new **public** routes, add them to the `staticRoutes` array in the script. Blog posts are picked up automatically from `blog-posts.data.ts`.
 
 ## Workflow
 
