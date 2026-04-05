@@ -112,9 +112,11 @@ export class ReminderService {
 
     if (Notification.permission === 'granted') {
       try {
-        // Use ServiceWorker notification — `new Notification()` is not
+        // Prefer ServiceWorker notification — `new Notification()` is not
         // supported on Android Chrome and throws "Illegal constructor".
-        const reg = await navigator.serviceWorker?.ready;
+        // Use getRegistration() instead of .ready which hangs forever
+        // when no SW is registered (e.g. dev mode).
+        const reg = await navigator.serviceWorker?.getRegistration();
         if (reg) {
           await reg.showNotification(title, {
             body: quote,
@@ -122,9 +124,15 @@ export class ReminderService {
             tag: 'reminder',
             renotify: true,
           } as NotificationOptions);
+        } else {
+          // Fallback for desktop browsers without SW (dev mode)
+          new Notification(title, {
+            body: quote,
+            icon: '/assets/pushup-logo.svg',
+          });
         }
       } catch {
-        // Notification display failed silently (e.g. SW not ready)
+        // Notification display failed silently
       }
     }
   }

@@ -470,11 +470,24 @@ export class RemindersPageComponent {
         return;
       }
       if (config.enabled) {
-        // Auto-subscribe to server-side push notifications so reminders
-        // work in the background (especially on Android where client-side
-        // `new Notification()` is not supported).
-        if (this.pushService.status() === 'not-subscribed') {
+        // Auto-subscribe to server-side push only when reminders are being
+        // newly enabled — not on every save. This preserves an explicit
+        // push opt-out (user unsubscribed via the push toggle).
+        const wasEnabled = this.reminderStore.config()?.enabled;
+        if (!wasEnabled && this.pushService.status() === 'not-subscribed') {
           await this.pushService.subscribe();
+          const pushStatus = this.pushService.status();
+          if (pushStatus !== 'subscribed') {
+            if (pushStatus !== 'denied') {
+              this.snackBar.open(
+                $localize`:@@reminder.push.subscribe.error:Push-Benachrichtigungen konnten nicht aktiviert werden.`,
+                $localize`:@@snackbar.close:Schließen`,
+                { duration: 5000 }
+              );
+            }
+            // Still allow reminders to be saved — in-app notifications
+            // will work as fallback even without push subscription.
+          }
         }
         this.reminderService.start({
           userId,
