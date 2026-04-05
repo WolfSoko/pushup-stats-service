@@ -4,7 +4,7 @@ import { PLATFORM_ID } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { CookieConsentBannerComponent } from './cookie-consent-banner.component';
 import { AdsStore } from './ads.store';
-import { COOKIE_CONSENT_KEY } from './consent.constants';
+import { ANALYTICS_CONSENT_KEY, COOKIE_CONSENT_KEY } from './consent.constants';
 
 describe('CookieConsentBannerComponent', () => {
   let fixture: ComponentFixture<CookieConsentBannerComponent>;
@@ -38,12 +38,12 @@ describe('CookieConsentBannerComponent', () => {
 
   beforeEach(() => {
     localStorage.removeItem(COOKIE_CONSENT_KEY);
-    localStorage.removeItem('pus_analytics_consent');
+    localStorage.removeItem(ANALYTICS_CONSENT_KEY);
   });
 
   afterEach(() => {
     localStorage.removeItem(COOKIE_CONSENT_KEY);
-    localStorage.removeItem('pus_analytics_consent');
+    localStorage.removeItem(ANALYTICS_CONSENT_KEY);
   });
 
   it('is visible when no consent has been given', () => {
@@ -69,7 +69,7 @@ describe('CookieConsentBannerComponent', () => {
     expect(component.visible()).toBe(false);
     expect(adsStoreMock.setTargetedAdsConsent).toHaveBeenCalledWith(true);
     expect(localStorage.getItem(COOKIE_CONSENT_KEY)).toBe('all');
-    expect(localStorage.getItem('pus_analytics_consent')).toBe('granted');
+    expect(localStorage.getItem(ANALYTICS_CONSENT_KEY)).toBe('granted');
   });
 
   it('hides after accepting necessary and sets non-personalized mode', () => {
@@ -79,6 +79,6 @@ describe('CookieConsentBannerComponent', () => {
     expect(component.visible()).toBe(false);
     expect(adsStoreMock.setTargetedAdsConsent).toHaveBeenCalledWith(false);
     expect(localStorage.getItem(COOKIE_CONSENT_KEY)).toBe('necessary');
-    expect(localStorage.getItem('pus_analytics_consent')).toBe('denied');
+    expect(localStorage.getItem(ANALYTICS_CONSENT_KEY)).toBe('denied');
   });
 });

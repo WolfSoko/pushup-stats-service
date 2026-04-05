@@ -54,42 +54,30 @@
     <loc>https://pushup-stats.de/de/blog/liegestuetze-steigern</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.de/de/blog/liegestuetze-steigern"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.de/en/blog/liegestuetze-steigern"/>
   </url>
   <url>
     <loc>https://pushup-stats.de/de/blog/taeglich-liegestuetze</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.de/de/blog/taeglich-liegestuetze"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.de/en/blog/taeglich-liegestuetze"/>
   </url>
   <url>
     <loc>https://pushup-stats.de/de/blog/liegestuetze-tracker</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.de/de/blog/liegestuetze-tracker"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.de/en/blog/liegestuetze-tracker"/>
   </url>
   <url>
     <loc>https://pushup-stats.de/en/blog/pushup-progression</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.de/de/blog/pushup-progression"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.de/en/blog/pushup-progression"/>
   </url>
   <url>
     <loc>https://pushup-stats.de/en/blog/daily-pushups</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.de/de/blog/daily-pushups"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.de/en/blog/daily-pushups"/>
   </url>
   <url>
     <loc>https://pushup-stats.de/en/blog/pushup-tracker-guide</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.de/de/blog/pushup-tracker-guide"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.de/en/blog/pushup-tracker-guide"/>
   </url>
 </urlset>

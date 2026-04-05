@@ -10,7 +10,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
 import { AdsStore } from './ads.store';
-import { COOKIE_CONSENT_KEY } from './consent.constants';
+import { ANALYTICS_CONSENT_KEY, COOKIE_CONSENT_KEY } from './consent.constants';
 
 export type CookieConsentChoice = 'all' | 'necessary' | null;
 
@@ -141,7 +141,7 @@ export class CookieConsentBannerComponent {
     try {
       if (typeof globalThis.localStorage !== 'undefined') {
         globalThis.localStorage.setItem(
-          'pus_analytics_consent',
+          ANALYTICS_CONSENT_KEY,
           choice === 'all' ? 'granted' : 'denied'
         );
       }

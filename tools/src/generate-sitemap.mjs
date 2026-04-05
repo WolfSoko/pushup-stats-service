@@ -36,7 +36,13 @@ const staticRoutes = [
 // ── Extract blog slugs from source ─────────────────────────────────────
 function extractBlogSlugs() {
   const blogDataPath = resolve(ROOT, 'web/src/app/blog/blog-posts.data.ts');
-  const source = readFileSync(blogDataPath, 'utf-8');
+  let source;
+  try {
+    source = readFileSync(blogDataPath, 'utf-8');
+  } catch (err) {
+    console.error(`✖ Failed to read blog-posts.data.ts: ${err.message}`);
+    return { de: [], en: [] };
+  }
 
   const slugsByLang = { de: [], en: [] };
   for (const lang of ['de', 'en']) {
@@ -60,39 +66,45 @@ function extractBlogSlugs() {
 }
 
 // ── Build XML ───────────────────────────────────────────────────────────
-function buildUrl({ path, changefreq, priority, locale }) {
+function buildUrl({ path, changefreq, priority, locale, hreflang = true }) {
   // Normalise: '/' -> '', '/blog' -> '/blog'
   const suffix = path === '/' ? '' : path;
   const primaryLocale = locale ?? 'de';
 
   const loc = `${BASE_URL}/${primaryLocale}${suffix}`;
-  const hreflangLinks = LOCALES.map(
-    (lang) =>
-      `    <xhtml:link rel="alternate" hreflang="${lang}" href="${BASE_URL}/${lang}${suffix}"/>`
-  ).join('\n');
+  const hreflangLinks = hreflang
+    ? '\n' +
+      LOCALES.map(
+        (lang) =>
+          `    <xhtml:link rel="alternate" hreflang="${lang}" href="${BASE_URL}/${lang}${suffix}"/>`
+      ).join('\n')
+    : '';
 
   return `  <url>
     <loc>${loc}</loc>
     <changefreq>${changefreq}</changefreq>
-    <priority>${priority}</priority>
-${hreflangLinks}
+    <priority>${priority}</priority>${hreflangLinks}
   </url>`;
 }
 
 function generate() {
   const slugsByLang = extractBlogSlugs();
 
-  // Blog routes: each locale's posts get listed under their locale prefix
+  // Blog routes: each locale's posts get listed under their locale prefix.
+  // hreflang is disabled because DE and EN posts have different slugs and
+  // there is no explicit slug-mapping between translations.
   const deBlogRoutes = slugsByLang.de.map((slug) => ({
     path: `/blog/${slug}`,
     changefreq: 'monthly',
     priority: '0.8',
+    hreflang: false,
   }));
   const enBlogRoutes = slugsByLang.en.map((slug) => ({
     path: `/blog/${slug}`,
     changefreq: 'monthly',
     priority: '0.8',
-    locale: 'en', // override default locale
+    locale: 'en',
+    hreflang: false,
   }));
 
   const allRoutes = [...staticRoutes, ...deBlogRoutes, ...enBlogRoutes];
