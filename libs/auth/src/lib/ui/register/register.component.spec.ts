@@ -27,9 +27,7 @@ const onboardingStoreMock = {
 };
 
 const breakpointObserverMock = {
-  observe: jest.fn().mockReturnValue(
-    of({ matches: true } as BreakpointState)
-  ),
+  observe: jest.fn().mockReturnValue(of({ matches: true } as BreakpointState)),
 };
 
 async function renderRegister() {
@@ -67,7 +65,6 @@ describe('RegisterComponent', () => {
     await user.clear(emailInput);
     await user.tab();
 
-    const errors = screen.queryAllByRole('generic', { hidden: true });
     const matErrors = document.querySelectorAll('mat-error');
     matErrors.forEach((el) => {
       expect(el.textContent).not.toContain('[object Object]');
