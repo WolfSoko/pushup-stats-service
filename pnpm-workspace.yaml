@@ -12,5 +12,6 @@ allowBuilds:
   msgpackr-extract: true
   nx: true
   protobufjs: true
+  '@sentry/cli': true
   re2: true
   unrs-resolver: true
