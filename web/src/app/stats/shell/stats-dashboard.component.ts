@@ -6,11 +6,12 @@ import {
   effect,
   inject,
   PLATFORM_ID,
-  viewChild,
+  untracked,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import {
@@ -19,11 +20,14 @@ import {
 } from '@pu-stats/data-access';
 import { firstValueFrom } from 'rxjs';
 import { QuickAddBridgeService } from '@pu-stats/quick-add';
-import { untracked } from '@angular/core';
 import { AdSlotComponent } from '@pu-stats/ads';
 import { AnalysisTeaserCardComponent } from '../components/analysis-teaser-card/analysis-teaser-card.component';
 import { PreviewBannerComponent } from '../components/preview-banner/preview-banner.component';
 import { StatsTableComponent } from '../components/stats-table/stats-table.component';
+import {
+  CreateEntryDialogComponent,
+  CreateEntryResult,
+} from '../components/create-entry-dialog/create-entry-dialog.component';
 import { DashboardStore } from '../dashboard.store';
 
 @Component({
@@ -46,13 +50,13 @@ import { DashboardStore } from '../dashboard.store';
 })
 export class StatsDashboardComponent {
   private readonly api = inject(StatsApiService);
+  private readonly dialog = inject(MatDialog);
   private readonly platformId = inject(PLATFORM_ID);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly live = inject(LiveDataStore);
 
   readonly store = inject(DashboardStore);
-  readonly statsTable = viewChild(StatsTableComponent);
 
   // Delegate store signals for template access
   readonly allTimeTotal = this.store.allTimeTotal;
@@ -114,7 +118,15 @@ export class StatsDashboardComponent {
   }
 
   openCreateDialog(): void {
-    this.statsTable()?.openCreateDialog();
+    this.dialog
+      .open<CreateEntryDialogComponent, void, CreateEntryResult>(
+        CreateEntryDialogComponent,
+        { width: 'min(92vw, 420px)', maxWidth: '92vw' }
+      )
+      .afterClosed()
+      .subscribe((result) => {
+        if (result) void this.createEntry(result);
+      });
   }
 
   /** Called after render — opens create dialog if ?log=1 is in the URL */

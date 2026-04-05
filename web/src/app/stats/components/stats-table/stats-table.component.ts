@@ -34,6 +34,10 @@ import { PushupRecord } from '@pu-stats/models';
 import { UserContextService } from '@pu-auth/auth';
 import { UserConfigApiService } from '@pu-stats/data-access';
 import { firstValueFrom } from 'rxjs';
+import {
+  CreateEntryDialogComponent,
+  CreateEntryResult,
+} from '../create-entry-dialog/create-entry-dialog.component';
 
 @Component({
   selector: 'app-stats-table',
@@ -54,6 +58,7 @@ import { firstValueFrom } from 'rxjs';
     ReactiveFormsModule,
     MatRippleModule,
     ScrollingModule,
+    CreateEntryDialogComponent,
   ],
   templateUrl: './stats-table.component.html',
   styleUrl: './stats-table.component.scss',
@@ -63,7 +68,6 @@ export class StatsTableComponent {
   private readonly platformId = inject(PLATFORM_ID);
   readonly isBrowser = isPlatformBrowser(this.platformId);
 
-  readonly createDialog = viewChild<TemplateRef<unknown>>('createDialog');
   readonly editDialog = viewChild<TemplateRef<unknown>>('editDialog');
   readonly sort = viewChild(MatSort);
 
@@ -87,17 +91,6 @@ export class StatsTableComponent {
   }>();
   readonly remove = output<string>();
 
-  readonly newTimestamp = signal('');
-  readonly newReps = signal('');
-
-  // Autocomplete inputs (allow selecting from options OR entering custom text).
-  readonly newTypeControl = new FormControl<string>('Standard', {
-    nonNullable: true,
-  });
-  readonly newSourceControl = new FormControl<string>('web', {
-    nonNullable: true,
-  });
-
   readonly typeOptions = [
     'Standard',
     'Diamond',
@@ -110,16 +103,6 @@ export class StatsTableComponent {
   ];
   // Canonical source values ("wa" is legacy; use "whatsapp").
   readonly sourceOptions = ['web', 'whatsapp'];
-
-  readonly filteredTypeOptions$ = this.newTypeControl.valueChanges.pipe(
-    startWith(this.newTypeControl.value),
-    map((value) => this.filterOptions(value, this.typeOptions))
-  );
-
-  readonly filteredSourceOptions$ = this.newSourceControl.valueChanges.pipe(
-    startWith(this.newSourceControl.value),
-    map((value) => this.filterOptions(value, this.sourceOptions))
-  );
 
   private readonly user = inject(UserContextService);
   private readonly userConfigApi = inject(UserConfigApiService);
@@ -185,23 +168,19 @@ export class StatsTableComponent {
   }
 
   openCreateDialog(): void {
-    const dialogTpl = this.createDialog();
-    if (!dialogTpl) return;
-    if (!this.newTimestamp()) {
-      this.newTimestamp.set(this.defaultDateTimeLocal());
-    }
-    this.dialog.open(dialogTpl, {
-      width: 'min(92vw, 420px)',
-      maxWidth: '92vw',
-    });
+    this.dialog
+      .open<CreateEntryDialogComponent, void, CreateEntryResult>(
+        CreateEntryDialogComponent,
+        { width: 'min(92vw, 420px)', maxWidth: '92vw' }
+      )
+      .afterClosed()
+      .subscribe((result) => {
+        if (result) this.create.emit(result);
+      });
   }
 
   asValue(event: Event): string {
     return (event.target as HTMLInputElement).value;
-  }
-
-  isCreateBusy(): boolean {
-    return this.busyAction() === 'create';
   }
 
   isBusy(action: 'update' | 'delete', id: string): boolean {
@@ -346,34 +325,6 @@ export class StatsTableComponent {
 
     this.save(entry);
     this.dialog.closeAll();
-  }
-
-  submitCreate(): void {
-    const reps = Number(this.newReps());
-    if (!this.newTimestamp() || Number.isNaN(reps) || reps <= 0) return;
-
-    const type = (this.newTypeControl.value || '').trim() || 'Standard';
-    const source = this.normalizeSource(
-      (this.newSourceControl.value || '').trim() || 'web'
-    );
-
-    this.create.emit({
-      timestamp: this.newTimestamp(),
-      reps,
-      source,
-      type,
-    });
-
-    this.newReps.set('');
-    this.newTypeControl.setValue('Standard');
-    this.newSourceControl.setValue('web');
-    this.dialog.closeAll();
-  }
-
-  private defaultDateTimeLocal(): string {
-    const now = new Date();
-    const pad = (value: number) => String(value).padStart(2, '0');
-    return `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}T${pad(now.getHours())}:${pad(now.getMinutes())}`;
   }
 
   save(entry: PushupRecord): void {

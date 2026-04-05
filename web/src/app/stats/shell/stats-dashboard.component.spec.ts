@@ -215,7 +215,7 @@ describe('StatsDashboardComponent', () => {
   describe('Given the manual entry dialog is submitted (regression: create event was silently dropped)', () => {
     describe('When createEntry is called with a valid entry', () => {
       it('Then it should call createPushup and refresh the store', async () => {
-        // Given
+        // Given — createEntry() is the handler called after the dialog closes
         const component = fixture.componentInstance;
         vi.clearAllMocks();
 
@@ -236,6 +236,26 @@ describe('StatsDashboardComponent', () => {
         });
         // Verify data is reloaded after creation
         expect(serviceMock.listPushups).toHaveBeenCalled();
+      });
+    });
+
+    describe('When openCreateDialog is called', () => {
+      it('Then MatDialog.open is invoked with CreateEntryDialogComponent', () => {
+        // Given
+        const { MatDialog } = require('@angular/material/dialog');
+        const dialog = TestBed.inject(MatDialog);
+        const openSpy = vitest
+          .spyOn(dialog, 'open')
+          .mockReturnValue({ afterClosed: () => ({ subscribe: vitest.fn() }) });
+
+        // When
+        fixture.componentInstance.openCreateDialog();
+
+        // Then
+        expect(openSpy).toHaveBeenCalledWith(
+          expect.any(Function), // CreateEntryDialogComponent
+          expect.objectContaining({ width: 'min(92vw, 420px)' })
+        );
       });
     });
   });
