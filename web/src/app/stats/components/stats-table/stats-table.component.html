@@ -110,8 +110,8 @@
             mat-mini-fab
             aria-label="Bearbeiten"
             i18n-aria-label="@@editAria"
-            title="Bearbeiten"
-            i18n-title="@@editTitle"
+            matTooltip="Bearbeiten"
+            i18n-matTooltip="@@editTitle"
             (click)="openEditDialog(entry)"
           >
             <mat-icon>edit</mat-icon>
@@ -122,8 +122,8 @@
             mat-mini-fab
             aria-label="Löschen"
             i18n-aria-label="@@deleteAria"
-            title="Löschen"
-            i18n-title="@@deleteTitle"
+            matTooltip="Löschen"
+            i18n-matTooltip="@@deleteTitle"
             [disabled]="isBusy('delete', entry._id)"
             (click)="remove.emit(entry._id)"
           >
