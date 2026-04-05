@@ -6,6 +6,7 @@ describe('UserStats model contracts', () => {
     expect(stats.userId).toBe('user-1');
     expect(stats.total).toBe(0);
     expect(stats.totalEntries).toBe(0);
+    expect(stats.totalDays).toBe(0);
     expect(stats.dailyReps).toBe(0);
     expect(stats.dailyKey).toBe('');
     expect(stats.weeklyReps).toBe(0);
@@ -25,6 +26,7 @@ describe('UserStats model contracts', () => {
       userId: 'user-2',
       total: 5000,
       totalEntries: 150,
+      totalDays: 90,
       dailyReps: 50,
       dailyKey: '2026-04-05',
       weeklyReps: 300,

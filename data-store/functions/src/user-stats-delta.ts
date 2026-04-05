@@ -238,10 +238,14 @@ export function applyDelta(
     }
   }
 
+  // totalDays: only accurate via rebuild; delta keeps existing value
+  const totalDays = base.totalDays;
+
   return {
     userId,
     total,
     totalEntries,
+    totalDays,
     dailyReps,
     dailyKey: keys.dailyKey,
     weeklyReps,
@@ -343,10 +347,13 @@ export function rebuildFromEntries(
     if (entryKeys.monthlyKey === keys.monthlyKey) monthlyReps += entry.reps;
   }
 
+  const totalDays = dayTotals.size;
+
   return {
     userId,
     total,
     totalEntries,
+    totalDays,
     dailyReps,
     dailyKey: keys.dailyKey,
     weeklyReps,
@@ -370,6 +377,7 @@ export function emptyUserStats(userId: string): UserStats {
     userId,
     total: 0,
     totalEntries: 0,
+    totalDays: 0,
     dailyReps: 0,
     dailyKey: '',
     weeklyReps: 0,

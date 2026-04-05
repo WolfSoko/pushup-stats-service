@@ -17,6 +17,8 @@ export interface UserStats {
   total: number;
   /** Total number of entries across all time */
   totalEntries: number;
+  /** Total number of unique days with at least one entry */
+  totalDays: number;
 
   /** Reps for the current day (key: YYYY-MM-DD) */
   dailyReps: number;
@@ -56,6 +58,7 @@ export function emptyUserStats(userId: string): UserStats {
     userId,
     total: 0,
     totalEntries: 0,
+    totalDays: 0,
     dailyReps: 0,
     dailyKey: '',
     weeklyReps: 0,

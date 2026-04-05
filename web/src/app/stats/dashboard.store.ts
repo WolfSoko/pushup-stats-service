@@ -11,8 +11,14 @@ import {
   LiveDataStore,
   StatsApiService,
   UserConfigApiService,
+  UserStatsApiService,
 } from '@pu-stats/data-access';
-import { PushupRecord, StatsResponse, toLocalIsoDate } from '@pu-stats/models';
+import {
+  PushupRecord,
+  StatsResponse,
+  toLocalIsoDate,
+  UserStats,
+} from '@pu-stats/models';
 import { AdsStore } from '@pu-stats/ads';
 import { UserContextService } from '@pu-auth/auth';
 import { MotivationStore } from '@pu-stats/motivation';
@@ -53,6 +59,7 @@ export const DashboardStore = signalStore(
   withProps(() => ({
     _api: inject(StatsApiService),
     _userConfigApi: inject(UserConfigApiService),
+    _userStatsApi: inject(UserStatsApiService),
     _user: inject(UserContextService),
     _live: inject(LiveDataStore),
     _ads: inject(AdsStore),
@@ -70,6 +77,11 @@ export const DashboardStore = signalStore(
       loader: async ({ params }) =>
         firstValueFrom(store._userConfigApi.getConfig(params.userId)),
     }),
+    userStatsResource: resource({
+      params: () => ({ userId: store._user.userIdSafe() }),
+      loader: async ({ params }) =>
+        firstValueFrom(store._userStatsApi.getUserStats(params.userId)),
+    }),
   })),
   withComputed((store) => {
     const allTimeStats = computed(
@@ -80,14 +92,30 @@ export const DashboardStore = signalStore(
       () => store.entriesResource.value() ?? []
     );
 
-    const allTimeTotal = computed(() => allTimeStats().meta.total);
-    const allTimeDays = computed(() => allTimeStats().meta.days);
-    const allTimeEntries = computed(() => allTimeStats().meta.entries);
+    /** Precomputed server-side stats (null if not yet available). */
+    const userStats = computed<UserStats | null>(
+      () => store.userStatsResource.value() ?? null
+    );
+
+    const allTimeTotal = computed(
+      () => userStats()?.total ?? allTimeStats().meta.total
+    );
+    const allTimeDays = computed(
+      () => userStats()?.totalDays ?? allTimeStats().meta.days
+    );
+    const allTimeEntries = computed(
+      () => userStats()?.totalEntries ?? allTimeStats().meta.entries
+    );
     const allTimeAvg = computed(() =>
       allTimeDays() ? (allTimeTotal() / allTimeDays()).toFixed(1) : '0'
     );
 
     const todayTotal = computed(() => {
+      const us = userStats();
+      if (us && us.dailyKey === toLocalIsoDate(new Date())) {
+        return us.dailyReps;
+      }
+      // Fallback: compute from entries
       const today = toLocalIsoDate(new Date());
       return entryRows()
         .filter((entry) => entry.timestamp.slice(0, 10) === today)
@@ -121,6 +149,10 @@ export const DashboardStore = signalStore(
     });
 
     const currentStreak = computed(() => {
+      const us = userStats();
+      if (us) return us.currentStreak;
+
+      // Fallback: client-side computation
       const dates = sortedUniqueDates(entryRows());
       if (!dates.length) return 0;
 
@@ -142,6 +174,10 @@ export const DashboardStore = signalStore(
     });
 
     const weekReps = computed(() => {
+      const us = userStats();
+      if (us) return us.weeklyReps;
+
+      // Fallback: client-side computation
       const today = new Date();
       const dayOfWeek = (today.getDay() + 6) % 7; // Monday = 0
       const monday = new Date(today);
@@ -160,6 +196,10 @@ export const DashboardStore = signalStore(
     });
 
     const monthReps = computed(() => {
+      const us = userStats();
+      if (us) return us.monthlyReps;
+
+      // Fallback: client-side computation
       const today = new Date();
       const yearStr = String(today.getFullYear());
       const monthStr = String(today.getMonth() + 1).padStart(2, '0');
@@ -227,6 +267,7 @@ export const DashboardStore = signalStore(
     refreshAll(): void {
       store.allTimeResource.reload();
       store.entriesResource.reload();
+      store.userStatsResource.reload();
     },
     async loadQuote(): Promise<void> {
       await store._motivation.loadQuotes(store._user.userIdSafe());

@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 import { AnalysisPageComponent } from './analysis-page.component';
-import { StatsApiService } from '@pu-stats/data-access';
-import { AuthStore } from '@pu-auth/auth';
+import { StatsApiService, UserStatsApiService } from '@pu-stats/data-access';
+import { AuthStore, UserContextService } from '@pu-auth/auth';
 import { makeAuthStoreMock } from '@pu-stats/testing';
 import { FilterBarComponent } from '../components/filter-bar/filter-bar.component';
 import { HeatmapComponent } from '../components/heatmap/heatmap.component';
@@ -127,6 +127,13 @@ describe('AnalysisPageComponent', () => {
       providers: [
         { provide: StatsApiService, useValue: apiMock },
         { provide: AuthStore, useValue: makeAuthStoreMock() },
+        { provide: UserContextService, useValue: { userIdSafe: () => 'u1' } },
+        {
+          provide: UserStatsApiService,
+          useValue: {
+            getUserStats: vitest.fn().mockReturnValue(of(null)),
+          },
+        },
       ],
     })
       .overrideComponent(AnalysisPageComponent, {
