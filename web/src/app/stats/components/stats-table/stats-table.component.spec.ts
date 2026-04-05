@@ -4,6 +4,7 @@ import { of } from 'rxjs';
 import { StatsTableComponent } from './stats-table.component';
 import { UserConfigApiService } from '@pu-stats/data-access';
 import { UserContextService } from '@pu-auth/auth';
+import { CreateEntryResult } from '../create-entry-dialog/create-entry-dialog.component';
 
 describe('StatsTableComponent', () => {
   let fixture: ComponentFixture<StatsTableComponent>;
@@ -96,54 +97,40 @@ describe('StatsTableComponent', () => {
     expect(component.editSource(entry)).toBe('web');
   });
 
-  it('emits create event from valid form submit', () => {
-    const component = fixture.componentInstance;
-    const createSpy = vitest.fn();
-    component.create.subscribe(createSpy);
+  describe('openCreateDialog()', () => {
+    it('opens CreateEntryDialogComponent and emits create when dialog closes with result', () => {
+      const component = fixture.componentInstance;
+      const createSpy = vitest.fn();
+      component.create.subscribe(createSpy);
 
-    component.newTimestamp.set('2026-02-11T07:00');
-    component.newReps.set('12');
-    component.newSourceControl.setValue('web');
-    component.newTypeControl.setValue('Standard');
-    component.submitCreate();
+      const result: CreateEntryResult = {
+        timestamp: '2026-02-11T07:00',
+        reps: 12,
+        source: 'web',
+        type: 'Standard',
+      };
+      vitest.spyOn(component.dialog, 'open').mockReturnValue({
+        afterClosed: () => of(result),
+      } as never);
 
-    expect(createSpy).toHaveBeenCalledWith({
-      timestamp: '2026-02-11T07:00',
-      reps: 12,
-      source: 'web',
-      type: 'Standard',
+      component.openCreateDialog();
+
+      expect(createSpy).toHaveBeenCalledWith(result);
     });
-  });
 
-  it('emits custom type from create dialog state', () => {
-    const component = fixture.componentInstance;
-    const createSpy = vitest.fn();
-    component.create.subscribe(createSpy);
+    it('does not emit create when dialog is cancelled', () => {
+      const component = fixture.componentInstance;
+      const createSpy = vitest.fn();
+      component.create.subscribe(createSpy);
 
-    component.newTimestamp.set('2026-02-11T07:10');
-    component.newReps.set('8');
-    component.newSourceControl.setValue('web');
-    component.newTypeControl.setValue('Diamond Tempo');
-    component.submitCreate();
+      vitest.spyOn(component.dialog, 'open').mockReturnValue({
+        afterClosed: () => of(undefined),
+      } as never);
 
-    expect(createSpy).toHaveBeenCalledWith({
-      timestamp: '2026-02-11T07:10',
-      reps: 8,
-      source: 'web',
-      type: 'Diamond Tempo',
+      component.openCreateDialog();
+
+      expect(createSpy).not.toHaveBeenCalled();
     });
-  });
-
-  it('does not emit create on invalid input', () => {
-    const component = fixture.componentInstance;
-    const createSpy = vitest.fn();
-    component.create.subscribe(createSpy);
-
-    component.newTimestamp.set('');
-    component.newReps.set('0');
-    component.submitCreate();
-
-    expect(createSpy).not.toHaveBeenCalled();
   });
 
   it('emits update on valid save and exits edit mode', () => {
@@ -327,28 +314,7 @@ describe('StatsTableComponent', () => {
     });
   });
 
-  it('emits create with Standard fallback and resets type/source controls', () => {
-    const component = fixture.componentInstance;
-    const createSpy = vitest.fn();
-    component.create.subscribe(createSpy);
-
-    component.newTimestamp.set('2026-02-11T07:20');
-    component.newReps.set('9');
-    component.newSourceControl.setValue('web');
-    component.newTypeControl.setValue('');
-    component.submitCreate();
-
-    expect(createSpy).toHaveBeenCalledWith({
-      timestamp: '2026-02-11T07:20',
-      reps: 9,
-      source: 'web',
-      type: 'Standard',
-    });
-    expect(component.newTypeControl.value).toBe('Standard');
-    expect(component.newSourceControl.value).toBe('web');
-  });
-
-  it('exposes busy helper state for spinner rendering', async () => {
+  it('exposes busy helper state for update/delete spinner rendering', async () => {
     fixture.componentRef.setInput('busyAction', 'delete');
     fixture.componentRef.setInput('busyId', '1');
     await fixture.whenStable();
@@ -356,35 +322,6 @@ describe('StatsTableComponent', () => {
     const component = fixture.componentInstance;
     expect(component.isBusy('delete', '1')).toBe(true);
     expect(component.isBusy('update', '1')).toBe(false);
-
-    fixture.componentRef.setInput('busyAction', 'create');
-    await fixture.whenStable();
-    expect(component.isCreateBusy()).toBe(true);
-  });
-
-  it('prefills datetime when opening create dialog and value is empty', async () => {
-    await fixture.whenStable();
-    const component = fixture.componentInstance;
-    const openSpy = vitest
-      .spyOn(component.dialog, 'open')
-      .mockReturnValue({} as never);
-
-    component.newTimestamp.set('');
-    component.openCreateDialog();
-
-    expect(component.newTimestamp()).toMatch(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/);
-    expect(openSpy).toHaveBeenCalled();
-  });
-
-  it('keeps existing datetime when opening create dialog', async () => {
-    await fixture.whenStable();
-    const component = fixture.componentInstance;
-    vitest.spyOn(component.dialog, 'open').mockReturnValue({} as never);
-
-    component.newTimestamp.set('2026-02-11T08:15');
-    component.openCreateDialog();
-
-    expect(component.newTimestamp()).toBe('2026-02-11T08:15');
   });
 
   it('renders non-virtual table fallback on server platform', async () => {

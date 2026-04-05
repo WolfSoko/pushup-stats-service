@@ -73,6 +73,8 @@ export class StatsTableComponent {
 
   readonly entries = input<PushupRecord[]>([]);
   readonly readOnly = input(false);
+  // 'create' is accepted for type compatibility with EntriesStore but unused here;
+  // entry creation is handled by CreateEntryDialogComponent.
   readonly busyAction = input<'create' | 'update' | 'delete' | null>(null);
   readonly busyId = input<string | null>(null);
 

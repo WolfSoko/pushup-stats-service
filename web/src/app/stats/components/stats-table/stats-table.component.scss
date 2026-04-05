@@ -52,12 +52,3 @@ mat-table {
   --mdc-fab-container-color: var(--mat-sys-error-container);
   --mdc-fab-icon-color: var(--mat-sys-on-error-container);
 }
-
-.create-dialog-content {
-  display: grid;
-  gap: 10px;
-}
-
-.create-dialog-content mat-form-field:first-child {
-  margin-top: 8px;
-}
