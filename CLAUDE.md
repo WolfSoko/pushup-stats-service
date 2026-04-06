@@ -165,6 +165,7 @@ A separate Firebase project (`pushup-stats-staging-867b7`) provides full isolati
 - **App Hosting config:** `apphosting.staging.yaml` (reduced `maxInstances: 1`).
 - **Firebase alias:** `staging` alias in `data-store/.firebaserc`.
 - **GitHub Secret required:** `FIREBASE_SERVICE_ACCOUNT_PUSHUP_STATS_STAGING` — service account JSON for the staging project (must be added in GitHub repo settings).
+- **Firestore region:** `europe-west3` (Frankfurt). Must match when creating the database in Firebase Console.
 - **Firestore rules & indexes** are shared source files (`data-store/firestore.rules`, `data-store/firestore.indexes.json`) deployed to both projects.
 
 ## Pre-Push Checklist
