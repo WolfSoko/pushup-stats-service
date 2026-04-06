@@ -347,13 +347,14 @@ export class StatsTableComponent {
     const reps = Number(this.editReps(entry));
     if (Number.isNaN(reps) || reps <= 0) return;
 
-    // Only override sets when reps actually changed; preserve original sets otherwise.
+    // Only override sets for single-set entries; multi-set breakdowns are preserved.
     const repsChanged = reps !== entry.reps;
+    const hasMultiSets = (entry.sets?.length ?? 0) > 1;
     this.update.emit({
       id: entry._id,
       timestamp,
       reps,
-      ...(repsChanged ? { sets: [reps] } : {}),
+      ...(repsChanged && !hasMultiSets ? { sets: [reps] } : {}),
       source: this.editSource(entry) || 'web',
       type: this.editType(entry) || 'Standard',
     });

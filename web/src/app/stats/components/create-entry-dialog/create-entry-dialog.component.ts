@@ -48,33 +48,27 @@ export interface CreateEntryResult {
       mat-form-field:first-of-type {
         margin-top: 8px;
       }
-      .reps-row {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-      }
-      .reps-row mat-form-field {
-        flex: 1;
-      }
       .set-row {
         display: flex;
         align-items: center;
         gap: 8px;
+        animation: clone-set 300ms cubic-bezier(0.4, 0, 0.2, 1) both;
+        transform-origin: top center;
       }
       .set-row mat-form-field {
         flex: 1;
       }
-      .clone-in {
-        opacity: 0;
-        max-height: 0;
-        transform: scaleY(0.3) translateY(-8px);
-        transform-origin: top center;
-      }
-      .clone-in.ng-enter-active {
-        opacity: 1;
-        max-height: 80px;
-        transform: scaleY(1) translateY(0);
-        transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+      @keyframes clone-set {
+        from {
+          opacity: 0;
+          max-height: 0;
+          transform: scaleY(0.3) translateY(-8px);
+        }
+        to {
+          opacity: 1;
+          max-height: 80px;
+          transform: scaleY(1) translateY(0);
+        }
       }
       .total-reps {
         font-size: 13px;
@@ -99,7 +93,7 @@ export interface CreateEntryResult {
       </mat-form-field>
 
       @for (set of sets(); track $index) {
-        <div class="set-row" [animate.enter]="'clone-in'">
+        <div class="set-row">
           <mat-form-field appearance="outline">
             @if (hasMultipleSets()) {
               <mat-label i18n="@@setLabel">Set {{ $index + 1 }}</mat-label>
