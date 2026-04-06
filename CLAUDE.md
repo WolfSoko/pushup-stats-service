@@ -219,6 +219,7 @@ Do NOT push if any of these fail. Fix first, then push.
 **Version changelog:**
 - **v1:** Legacy (no versioning)
 - **v2:** Fixed period keys to use TODAY (not last entry date in rebuild)
+- **v3:** Fixed `berlinParts()` to treat offset-less timestamps as Berlin local time
 
 **How it works:**
 ```typescript
@@ -252,14 +253,16 @@ All modules include comprehensive Jest tests (no Firebase dependencies for pure 
 ## Precomputed Data Staleness
 
 When stores consume server-side precomputed data (e.g. `UserStats`), **always validate period keys before trusting the values:**
-- `dailyReps` → check `dailyKey === toLocalIsoDate(new Date())`
+- `dailyReps` → check `dailyKey === toBerlinIsoDate(new Date())`
 - `weeklyReps` → check `weeklyKey === currentIsoWeekKey()`
 - `monthlyReps` → check `monthlyKey === currentMonthKey()`
 - `currentStreak` → check `lastEntryDate` is today or yesterday
 
 Fall back to client-side computation when keys are stale. The precomputed doc is only updated on writes — it goes stale on period rollover without new entries.
 
-**Note on period key calculations:** UserStats now rebuilds with `version: USERSTATS_VERSION` to ensure period keys are calculated for TODAY (not the last entry date). Period keys in newly built stats reflect the current period, allowing proper validation with client-side "today" calculations. Old stats (v1) may have incorrect period keys; they auto-rebuild on next entry when version is detected as outdated.
+**Timestamp format:** Entry timestamps are stored as ISO strings. New entries include the browser's local timezone offset (e.g. `2026-04-05T22:50+02:00`). Older entries may lack the offset (e.g. `2026-04-05T22:50`). The Cloud Function's `berlinParts()` handles both: offset-less timestamps are treated as Berlin local time; timestamps with explicit offsets are converted to Berlin via `Intl`. Always use `appendLocalOffset()` when creating new timestamps from `<input type="datetime-local">` values.
+
+**Note on period key calculations:** UserStats now rebuilds with `version: USERSTATS_VERSION` to ensure period keys are calculated for TODAY (not the last entry date). Period keys in newly built stats reflect the current period, allowing proper validation with client-side "today" calculations. Old stats (v1/v2) may have incorrect period keys; they auto-rebuild on next entry when version is detected as outdated.
 
 ## Testing Pitfalls
 

@@ -57,9 +57,9 @@ describe('CreateEntryDialogComponent', () => {
       // When
       component.submit();
 
-      // Then
+      // Then — timestamp now includes local timezone offset (e.g. '+01:00')
       expect(closeSpy).toHaveBeenCalledWith<[CreateEntryResult]>({
-        timestamp: '2025-01-15T10:30',
+        timestamp: expect.stringMatching(/^2025-01-15T10:30[+-]\d{2}:\d{2}$/),
         reps: 25,
         source: 'web',
         type: 'Diamond',

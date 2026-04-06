@@ -16,6 +16,7 @@ import {
 import {
   PushupRecord,
   StatsResponse,
+  toBerlinIsoDate,
   toLocalIsoDate,
   UserStats,
 } from '@pu-stats/models';
@@ -51,10 +52,13 @@ function daysBetween(a: string, b: string): number {
 }
 
 function currentIsoWeekKey(): string {
-  const d = new Date();
+  // Use Berlin date to match server-side period key calculation
+  const berlinDate = toBerlinIsoDate(new Date());
+  const [y, m, day] = berlinDate.split('-').map(Number);
+  const d = new Date(y, m - 1, day);
   d.setHours(0, 0, 0, 0);
-  const day = (d.getDay() + 6) % 7;
-  d.setDate(d.getDate() + 3 - day);
+  const weekday = (d.getDay() + 6) % 7;
+  d.setDate(d.getDate() + 3 - weekday);
   const isoYear = d.getFullYear();
   const firstThursday = new Date(isoYear, 0, 4);
   firstThursday.setHours(0, 0, 0, 0);
@@ -69,8 +73,9 @@ function currentIsoWeekKey(): string {
 }
 
 function currentMonthKey(): string {
-  const d = new Date();
-  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+  // Use Berlin date to match server-side period key calculation
+  const berlinDate = toBerlinIsoDate(new Date());
+  return berlinDate.slice(0, 7);
 }
 
 export const DashboardStore = signalStore(
@@ -137,13 +142,13 @@ export const DashboardStore = signalStore(
 
     const todayTotal = computed(() => {
       const us = userStats();
-      if (us && us.dailyKey === toLocalIsoDate(new Date())) {
+      const berlinToday = toBerlinIsoDate(new Date());
+      if (us && us.dailyKey === berlinToday) {
         return us.dailyReps;
       }
       // Fallback: compute from entries
-      const today = toLocalIsoDate(new Date());
       return entryRows()
-        .filter((entry) => entry.timestamp.slice(0, 10) === today)
+        .filter((entry) => entry.timestamp.slice(0, 10) === berlinToday)
         .reduce((sum, entry) => sum + entry.reps, 0);
     });
 
@@ -177,7 +182,7 @@ export const DashboardStore = signalStore(
       const us = userStats();
       if (us) {
         if (!us.lastEntryDate) return 0;
-        const diff = daysBetween(us.lastEntryDate, toLocalIsoDate(new Date()));
+        const diff = daysBetween(us.lastEntryDate, toBerlinIsoDate(new Date()));
         return diff >= 0 && diff <= 1 ? us.currentStreak : 0;
       }
 
@@ -185,7 +190,7 @@ export const DashboardStore = signalStore(
       const dates = sortedUniqueDates(entryRows());
       if (!dates.length) return 0;
 
-      const today = toLocalIsoDate(new Date());
+      const today = toBerlinIsoDate(new Date());
       const lastDate = dates[dates.length - 1];
 
       const diff = daysBetween(lastDate, today);
@@ -206,11 +211,13 @@ export const DashboardStore = signalStore(
       const us = userStats();
       if (us && us.weeklyKey === currentIsoWeekKey()) return us.weeklyReps;
 
-      // Fallback: client-side computation
-      const today = new Date();
-      const dayOfWeek = (today.getDay() + 6) % 7; // Monday = 0
-      const monday = new Date(today);
-      monday.setDate(today.getDate() - dayOfWeek);
+      // Fallback: client-side computation using Berlin date
+      const berlinToday = toBerlinIsoDate(new Date());
+      const [by, bm, bd] = berlinToday.split('-').map(Number);
+      const todayDate = new Date(by, bm - 1, bd);
+      const dayOfWeek = (todayDate.getDay() + 6) % 7; // Monday = 0
+      const monday = new Date(todayDate);
+      monday.setDate(todayDate.getDate() - dayOfWeek);
       const mondayStr = toLocalIsoDate(monday);
       const sunday = new Date(monday);
       sunday.setDate(monday.getDate() + 6);
@@ -228,11 +235,8 @@ export const DashboardStore = signalStore(
       const us = userStats();
       if (us && us.monthlyKey === currentMonthKey()) return us.monthlyReps;
 
-      // Fallback: client-side computation
-      const today = new Date();
-      const yearStr = String(today.getFullYear());
-      const monthStr = String(today.getMonth() + 1).padStart(2, '0');
-      const prefix = `${yearStr}-${monthStr}`;
+      // Fallback: client-side computation using Berlin date
+      const prefix = toBerlinIsoDate(new Date()).slice(0, 7);
 
       return entryRows()
         .filter((entry) => entry.timestamp.startsWith(prefix))

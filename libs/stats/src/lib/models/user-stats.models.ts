@@ -15,8 +15,10 @@ export type HeatmapSlot = string;
  * Changelog:
  * - v1: Initial version (legacy, before versioning)
  * - v2: Fixed period keys to use TODAY (not last entry date) in rebuildFromEntries
+ * - v3: Fixed berlinParts() to treat offset-less timestamps as Berlin local time
+ *       (not UTC), preventing wrong daily bucketing for evening entries
  */
-export const USERSTATS_VERSION = 2;
+export const USERSTATS_VERSION = 3;
 
 export interface UserStats {
   /** Firestore owner */
