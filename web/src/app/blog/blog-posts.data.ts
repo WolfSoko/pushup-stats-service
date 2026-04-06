@@ -245,6 +245,262 @@ export const BLOG_POSTS: BlogPost[] = [
     `.trim(),
   },
 
+  {
+    slug: 'liegestuetze-varianten',
+    lang: 'de',
+    title: '10 Liegestütz-Varianten für jeden Trainingsstand',
+    description:
+      'Von der Knie-Liegestütze bis zur Archer Push-Up: Diese 10 Variationen trainieren gezielt Brust, Trizeps und Schultern – und brechen jedes Plateau.',
+    publishedAt: '2025-09-22',
+    keywords: [
+      'Liegestütze Varianten',
+      'Liegestütze Übungen',
+      'Liegestütze schwieriger machen',
+      'Liegestütze Muskeln',
+      'Liegestütze fortgeschritten',
+    ],
+    content: `
+<h2>Warum Variationen entscheidend sind</h2>
+<p>
+  Wer immer dieselbe Standard-Liegestütze macht, gewöhnt sich schnell an den Reiz – der Muskel
+  hört auf zu wachsen. Variationen verändern den Belastungswinkel, betonen unterschiedliche
+  Muskelgruppen und frischen den Trainingsreiz regelmäßig auf. Hier sind 10 Varianten, die für
+  jeden Trainingsstand geeignet sind.
+</p>
+
+<h2>Für Einsteiger</h2>
+<ul>
+  <li>
+    <strong>Knie-Liegestütze:</strong> Knie auf dem Boden, Körper von Knie bis Schulter gerade.
+    Perfekt zum Einstieg – reduziert das zu bewegende Körpergewicht um etwa 50 %.
+  </li>
+  <li>
+    <strong>Wandliegestütze:</strong> Hände gegen eine Wand stützen, Körper in 45°-Winkel.
+    Ideal zur Technikschulung ohne Bodenkontakt.
+  </li>
+  <li>
+    <strong>Erhöhte Liegestütze:</strong> Hände auf einer Bank oder Treppenstufe. Je höher die
+    Fläche, desto einfacher die Übung – stufenweise zum Boden absenken.
+  </li>
+</ul>
+
+<h2>Für Fortgeschrittene</h2>
+<ul>
+  <li>
+    <strong>Diamant-Liegestütze:</strong> Daumen und Zeigefinger berühren sich unter der Brust zu
+    einem Dreieck. Maximaler Trizepsfokus.
+  </li>
+  <li>
+    <strong>Weite Liegestütze:</strong> Hände deutlich breiter als schulterbreit. Betont den
+    äußeren Brustmuskel und die Schultern.
+  </li>
+  <li>
+    <strong>Decline-Liegestütze:</strong> Füße auf einer erhöhten Fläche, Kopf zeigt nach unten.
+    Verlagert den Fokus auf den oberen Brustmuskel und Schultern.
+  </li>
+  <li>
+    <strong>Archer Push-Up:</strong> Einen Arm strecken, das gesamte Körpergewicht auf den anderen
+    Arm verlagern. Vorstufe zur einarmigen Liegestütze.
+  </li>
+</ul>
+
+<h2>Für Experten</h2>
+<ul>
+  <li>
+    <strong>Einarmige Liegestütze:</strong> Die Königsdisziplin. Erfordert außergewöhnliche Rumpfstabilität
+    und Kraft. Füße dabei weit auseinander stellen, um die Balance zu vereinfachen.
+  </li>
+  <li>
+    <strong>Clap Push-Up:</strong> Explosive Aufwärtsbewegung, sodass die Hände kurz den Boden verlassen.
+    Trainiert explosive Kraft und Schnellkraft.
+  </li>
+  <li>
+    <strong>Pike Push-Up:</strong> Gesäß hoch, Körper bildet ein umgekehrtes V. Primärer Fokus auf
+    Schultern – Vorstufe zum Handstand-Liegestütz.
+  </li>
+</ul>
+
+<h2>Wie du Varianten in dein Training integrierst</h2>
+<p>
+  Tausche nicht alle Übungen auf einmal aus. Ersetze stattdessen eine Variante pro Woche oder
+  füge eine neue als Abschlussübung hinzu. Verfolge jede Variation separat im Tracker – so
+  siehst du genau, wie sich deine Stärke in den einzelnen Bewegungsmustern entwickelt.
+</p>
+
+<h2>Welche Muskeln profitieren am meisten?</h2>
+<p>
+  Standard-Liegestützen trainieren vorwiegend großen Brustmuskel (Pectoralis major), vorderen
+  Anteil des Deltamuskels und Trizeps. Durch Variation verschiebst du die Lastverteilung:
+  Diamant-Varianten maximieren den Trizeps, Decline-Varianten die Oberbrust, Pike Push-Ups
+  die Schultermuskulatur. Ein ausgewogenes Programm aus verschiedenen Varianten führt zu
+  ausgeglichener Muskelentwicklung – ohne ein einziges Gerät.
+</p>
+    `.trim(),
+  },
+  {
+    slug: '30-tage-liegestuetze-challenge',
+    lang: 'de',
+    title: '30-Tage-Liegestütz-Challenge: Dein Plan für maximalen Fortschritt',
+    description:
+      'Mit dieser strukturierten 30-Tage-Challenge steigerst du deine Liegestütz-Zahl Schritt für Schritt – von Woche 1 bis zum Endtest am Tag 30.',
+    publishedAt: '2025-11-04',
+    keywords: [
+      '30 Tage Liegestütze Challenge',
+      'Liegestütze Challenge Plan',
+      'Liegestütze in 30 Tagen',
+      'Push-Up Challenge',
+      'Liegestütze täglich steigern',
+    ],
+    content: `
+<h2>Was die 30-Tage-Challenge bewirkt</h2>
+<p>
+  Dreißig Tage konsequentes Training verändern messbar deine Kraft, Ausdauer und Körperwahrnehmung.
+  Klinische Studien zeigen, dass bereits vier Wochen progressives Krafttraining die Muskelquerschnittsfläche
+  signifikant vergrößern kann. Dieses Programm kombiniert tägliches Training mit strategischen Ruhetagen
+  und wöchentlichem Fortschrittstest.
+</p>
+
+<h2>Voraussetzungen & Starttest</h2>
+<p>
+  Mach vor Tag 1 einen Maximaltest: So viele saubere Liegestützen wie möglich ohne Pause.
+  Trage die Zahl in deinen Tracker ein – das ist dein Ausgangswert, gegen den du am Tag 30 antrittstest.
+</p>
+<ul>
+  <li><strong>Einsteiger (&lt; 10 Wdh.):</strong> Starte mit Knie-Liegestützen oder erhöhter Variante.</li>
+  <li><strong>Mittelstufe (10–30 Wdh.):</strong> Vollständige Liegestützen, ggf. mit Variationen.</li>
+  <li><strong>Fortgeschrittene (&gt; 30 Wdh.):</strong> Schwere Varianten (Archer, Decline, langsames Tempo).</li>
+</ul>
+
+<h2>Der Wochenplan</h2>
+<ol>
+  <li>
+    <strong>Woche 1 – Grundlage (Tag 1–7):</strong>
+    Montag, Mittwoch, Freitag: 3 × AMRAP mit 90 s Pause. Dienstag, Donnerstag: Leichter Tag –
+    2 × 50 % deines Maximums. Samstag: Maximaltest (nicht zählen, nur trainieren). Sonntag: Ruhe.
+  </li>
+  <li>
+    <strong>Woche 2 – Volumen (Tag 8–14):</strong>
+    Haupttage: 4 × AMRAP mit 60 s Pause. Leichttage: 3 × 60 % deines Maximums.
+  </li>
+  <li>
+    <strong>Woche 3 – Intensität (Tag 15–21):</strong>
+    Haupttage: 5 × Zielwiederholungen (z. B. 80 % deines Maximums pro Satz). Leichttage entfallen –
+    stattdessen Mobility und Dehnung der Brustmuskulatur.
+  </li>
+  <li>
+    <strong>Woche 4 – Tapering & Peak (Tag 22–29):</strong>
+    Volumen reduzieren auf 3 × 70 % – Qualität vor Quantität. Letzten zwei Tage: aktive Erholung.
+  </li>
+  <li>
+    <strong>Tag 30 – Endtest:</strong>
+    Maximale Liegestützen ohne Pause. Vergleiche mit deinem Startwert und trage das Ergebnis im
+    Tracker ein. Die Differenz ist dein 30-Tage-Erfolg.
+  </li>
+</ol>
+
+<h2>Ernährung & Regeneration während der Challenge</h2>
+<p>
+  Achte auf ausreichend Protein (mindestens 1,5 g pro kg Körpergewicht täglich) und schlafe
+  7–9 Stunden. Magnesium vor dem Schlafen kann Muskelkrämpfe reduzieren. Nach jeder Haupteinheit:
+  2 Minuten Stretching für Brust, Schultern und Trizeps.
+</p>
+
+<h2>Fortschritt täglich tracken</h2>
+<p>
+  Der psychologische Effekt eines Streaks ist enorm: Wenn Tag 17 in grüner Farbe auf dem Display
+  leuchtet, ist die Wahrscheinlichkeit gering, dass du Tag 18 abbrichst. Nutze Pushup Tracker,
+  um jeden Trainingstag einzutragen – inklusive Variante, Sätze und Gesamtwiederholungen. Die
+  Challenge-Grafik zeigt dir täglich, ob du auf Kurs bist.
+</p>
+    `.trim(),
+  },
+  {
+    slug: 'liegestuetze-ab-40',
+    lang: 'de',
+    title: 'Liegestützen ab 40: Wie du sicher und effektiv trainierst',
+    description:
+      'Ab 40 verändert sich der Körper – aber Liegestützen bleiben eine der besten Übungen. Erfahre, wie du mit der richtigen Anpassung sicher Kraft aufbaust.',
+    publishedAt: '2026-01-20',
+    keywords: [
+      'Liegestütze ab 40',
+      'Kraft Training über 40',
+      'Liegestütze Rücken schonen',
+      'Fitness über 40',
+      'Liegestütze Gelenke schonen',
+    ],
+    content: `
+<h2>Was sich ab 40 verändert</h2>
+<p>
+  Ab dem vierten Lebensjahrzehnt sinkt die Muskelmasse ohne Training um durchschnittlich 1–2 % pro
+  Jahr (Sarkopenie). Gleichzeitig nimmt die Regenerationsfähigkeit ab, Gelenke reagieren empfindlicher,
+  und der Hormonspiegel verändert sich. Das klingt nach schlechten Nachrichten – ist es aber nicht.
+  Krafttraining, insbesondere mit dem eigenen Körpergewicht, ist eine der wirksamsten Maßnahmen,
+  um diesen Prozess zu verlangsamen und umzukehren.
+</p>
+
+<h2>Die gesundheitlichen Vorteile sind größer als mit 20</h2>
+<p>
+  Studien zeigen: Wer mit 40+ regelmäßig Krafttraining betreibt, profitiert überproportional stark
+  im Vergleich zu jüngeren Sportlern. Die Gründe:
+</p>
+<ul>
+  <li><strong>Knochendichte:</strong> Belastungsübungen bremsen Osteoporose aktiv.</li>
+  <li><strong>Herzgesundheit:</strong> Widerstandstraining senkt Blutdruck und LDL-Cholesterin.</li>
+  <li><strong>Metabolismus:</strong> Jedes Kilogramm erhaltener Muskelmasse erhöht den Grundumsatz.</li>
+  <li><strong>Sturz- und Verletzungsprävention:</strong> Stärkere Rumpf- und Schultermuskulatur schützt Gelenke und verbessert die Balance.</li>
+</ul>
+
+<h2>Anpassungen für den Körper ab 40</h2>
+<p>
+  Du musst dein Training nicht revolutionieren – aber du solltest es klug anpassen:
+</p>
+<ul>
+  <li>
+    <strong>Aufwärmen ist Pflicht:</strong> 5–10 Minuten lockere Bewegung (Schulterkreisen, Arm-Swings,
+    Cat-Cow) bereiten Gelenke und Bindegewebe vor. Kalt trainieren erhöht das Verletzungsrisiko deutlich.
+  </li>
+  <li>
+    <strong>Weniger Volumen, mehr Qualität:</strong> Statt 6 Sätzen bis zum Versagen reichen 3–4 Sätze
+    mit sauberer Technik und einer Wiederholung "in Reserve". Das schont das Nervensystem.
+  </li>
+  <li>
+    <strong>Längere Pausen:</strong> 2 Minuten zwischen den Sätzen statt 60 Sekunden – die Regeneration
+    zwischen Sätzen wird ab 40 wichtiger.
+  </li>
+  <li>
+    <strong>Häufigkeit statt Intensität:</strong> 4 moderate Einheiten pro Woche sind besser als
+    2 extreme. Der Körper adaptiert besser an regelmäßige moderate Reize.
+  </li>
+  <li>
+    <strong>Handgelenke entlasten:</strong> Bei Schmerzen im Handgelenk helfen Fäuste-Liegestützen
+    (neutrale Handgelenksstellung) oder Push-Up-Griffe.
+  </li>
+</ul>
+
+<h2>Ein realistischer Einstiegsplan</h2>
+<p>
+  Wenn du länger pausiert hast, starte nicht da, wo du aufgehört hast. Woche 1–2: 3 × 8–12 saubere
+  Liegestützen (Knie-Variante wenn nötig), mit vollem Fokus auf Technik. Steigere wöchentlich um
+  maximal 10 % des Gesamtvolumens. Geduld ist keine Schwäche – sie ist die Strategie.
+</p>
+
+<h2>Schmerzen ernst nehmen</h2>
+<p>
+  Muskelkater ist normal. Gelenkschmerzen sind es nicht. Schmerzen in Schulter, Ellenbogen oder
+  Handgelenk sind ein klares Stoppsignal. Konsultiere in diesem Fall einen Physiotherapeuten,
+  bevor du weiter trainierst. Trainingspausen wegen Verletzungen kosten mehr Zeit als präventive
+  Ruhephasen.
+</p>
+
+<h2>Fortschritt sichtbar halten</h2>
+<p>
+  Gerade ab 40 ist es wichtig, Fortschritte objektiv zu dokumentieren – weil das subjektive Gefühl
+  oft trügt. Mit Pushup Tracker siehst du auf einen Blick, ob du diese Woche mehr geschafft hast
+  als letzte Woche. Das ist der Anker, der dich auch an schwierigen Tagen motiviert.
+</p>
+    `.trim(),
+  },
+
   // ── English blog posts ────────────────────────────────────────────────────
   {
     slug: 'pushup-progression',
@@ -394,6 +650,258 @@ export const BLOG_POSTS: BlogPost[] = [
   Daily push-ups are one of the most effective investments you can make in your health. No equipment,
   no excuses. Start today with a realistic number, track your progress, and experience how small
   daily steps add up to real change.
+</p>
+    `.trim(),
+  },
+  {
+    slug: 'pushup-variations',
+    lang: 'en',
+    title: '10 Push-Up Variations for Every Fitness Level',
+    description:
+      'From knee push-ups to archer push-ups: these 10 variations target chest, triceps, and shoulders – and break through any plateau.',
+    publishedAt: '2025-09-22',
+    keywords: [
+      'push-up variations',
+      'push-up exercises',
+      'harder push-ups',
+      'push-up muscles',
+      'advanced push-ups',
+    ],
+    content: `
+<h2>Why Variations Are Essential</h2>
+<p>
+  Doing the same standard push-up over and over means your body adapts quickly and stops growing.
+  Variations change the loading angle, emphasize different muscle groups, and keep the training
+  stimulus fresh. Here are 10 variations suited for every fitness level.
+</p>
+
+<h2>For Beginners</h2>
+<ul>
+  <li>
+    <strong>Knee Push-Up:</strong> Knees on the floor, body straight from knees to shoulders.
+    Perfect for getting started – reduces the weight you need to move by about 50%.
+  </li>
+  <li>
+    <strong>Wall Push-Up:</strong> Hands against a wall, body at a 45° angle.
+    Ideal for learning proper technique without floor contact.
+  </li>
+  <li>
+    <strong>Elevated Push-Up:</strong> Hands on a bench or step. The higher the surface, the easier
+    the movement – gradually work your way down to the floor.
+  </li>
+</ul>
+
+<h2>For Intermediate Athletes</h2>
+<ul>
+  <li>
+    <strong>Diamond Push-Up:</strong> Thumbs and index fingers touch under the chest to form a triangle.
+    Maximum tricep focus.
+  </li>
+  <li>
+    <strong>Wide Push-Up:</strong> Hands significantly wider than shoulder-width. Emphasizes the
+    outer chest and shoulders.
+  </li>
+  <li>
+    <strong>Decline Push-Up:</strong> Feet on an elevated surface, head pointing down. Shifts
+    focus to the upper chest and shoulders.
+  </li>
+  <li>
+    <strong>Archer Push-Up:</strong> Extend one arm to the side while shifting all the weight onto
+    the other arm. The stepping stone to a one-arm push-up.
+  </li>
+</ul>
+
+<h2>For Advanced Athletes</h2>
+<ul>
+  <li>
+    <strong>One-Arm Push-Up:</strong> The king of push-up variations. Requires exceptional core
+    stability and strength. Keep feet wide apart for easier balance.
+  </li>
+  <li>
+    <strong>Clap Push-Up:</strong> Explosive upward drive so hands briefly leave the floor.
+    Trains explosive and reactive strength.
+  </li>
+  <li>
+    <strong>Pike Push-Up:</strong> Hips raised high, body forming an inverted V. Primary focus
+    on shoulders – a stepping stone toward handstand push-ups.
+  </li>
+</ul>
+
+<h2>How to Integrate Variations into Your Training</h2>
+<p>
+  Don't swap all exercises at once. Instead, replace one variation per week or add a new one as
+  a finisher. Track each variation separately in your tracker – this shows exactly how your
+  strength develops across different movement patterns.
+</p>
+
+<h2>Which Muscles Benefit the Most?</h2>
+<p>
+  Standard push-ups primarily train the pectoralis major, the anterior deltoid, and the triceps.
+  Variations shift the load distribution: diamond variations maximize the triceps, decline
+  variations target the upper chest, and pike push-ups focus on the shoulder muscles.
+  A balanced program of different variations leads to well-rounded muscle development –
+  without a single piece of equipment.
+</p>
+    `.trim(),
+  },
+  {
+    slug: '30-day-pushup-challenge',
+    lang: 'en',
+    title: '30-Day Push-Up Challenge: Your Plan for Maximum Progress',
+    description:
+      'This structured 30-day challenge helps you increase your push-up count step by step – from week 1 to the final test on day 30.',
+    publishedAt: '2025-11-04',
+    keywords: [
+      '30 day push-up challenge',
+      'push-up challenge plan',
+      'push-ups in 30 days',
+      'push-up challenge',
+      'increase push-ups daily',
+    ],
+    content: `
+<h2>What the 30-Day Challenge Achieves</h2>
+<p>
+  Thirty days of consistent training measurably changes your strength, endurance, and body
+  awareness. Clinical studies show that even four weeks of progressive strength training can
+  significantly increase muscle cross-sectional area. This program combines daily training
+  with strategic rest days and a weekly progress test.
+</p>
+
+<h2>Prerequisites & Starting Test</h2>
+<p>
+  Before Day 1, take a max test: as many clean push-ups as possible without stopping.
+  Log the number in your tracker – that's your baseline to compare against on Day 30.
+</p>
+<ul>
+  <li><strong>Beginner (&lt; 10 reps):</strong> Start with knee push-ups or an elevated variation.</li>
+  <li><strong>Intermediate (10–30 reps):</strong> Full push-ups, optionally with variations.</li>
+  <li><strong>Advanced (&gt; 30 reps):</strong> Harder variations (archer, decline, slow tempo).</li>
+</ul>
+
+<h2>The Weekly Plan</h2>
+<ol>
+  <li>
+    <strong>Week 1 – Foundation (Days 1–7):</strong>
+    Mon, Wed, Fri: 3 × AMRAP with 90 s rest. Tue, Thu: Light day – 2 × 50% of your max.
+    Sat: Max test set (don't count toward total, just train). Sun: Rest.
+  </li>
+  <li>
+    <strong>Week 2 – Volume (Days 8–14):</strong>
+    Main days: 4 × AMRAP with 60 s rest. Light days: 3 × 60% of your max.
+  </li>
+  <li>
+    <strong>Week 3 – Intensity (Days 15–21):</strong>
+    Main days: 5 × target reps (e.g. 80% of your max per set). Light days replaced with
+    mobility work and chest stretching.
+  </li>
+  <li>
+    <strong>Week 4 – Taper & Peak (Days 22–29):</strong>
+    Reduce volume to 3 × 70% – quality over quantity. Last two days: active recovery only.
+  </li>
+  <li>
+    <strong>Day 30 – Final Test:</strong>
+    Maximum push-ups without stopping. Compare to your starting number and log the result
+    in your tracker. The difference is your 30-day achievement.
+  </li>
+</ol>
+
+<h2>Nutrition & Recovery During the Challenge</h2>
+<p>
+  Aim for adequate protein (at least 1.5 g per kg of body weight daily) and 7–9 hours of sleep.
+  Magnesium before bed can reduce muscle cramps. After each main session: 2 minutes of stretching
+  for chest, shoulders, and triceps.
+</p>
+
+<h2>Track Progress Every Day</h2>
+<p>
+  The psychological effect of a streak is enormous: when Day 17 shows up in green on your screen,
+  the chance you'll skip Day 18 drops dramatically. Use Pushup Tracker to log every training day
+  – including variation, sets, and total reps. The challenge graph shows you daily whether you're
+  on track.
+</p>
+    `.trim(),
+  },
+  {
+    slug: 'pushups-over-40',
+    lang: 'en',
+    title: 'Push-Ups After 40: How to Train Safely and Effectively',
+    description:
+      'Your body changes after 40 – but push-ups remain one of the best exercises. Learn how to build strength safely with the right adjustments.',
+    publishedAt: '2026-01-20',
+    keywords: [
+      'push-ups over 40',
+      'strength training over 40',
+      'push-ups joint friendly',
+      'fitness over 40',
+      'push-ups for older adults',
+    ],
+    content: `
+<h2>What Changes After 40</h2>
+<p>
+  From the fourth decade of life onward, muscle mass decreases by an average of 1–2% per year
+  without exercise (sarcopenia). Recovery capacity also declines, joints become more sensitive,
+  and hormone levels shift. That sounds like bad news – but it isn't. Strength training,
+  especially with bodyweight, is one of the most effective tools to slow and reverse this process.
+</p>
+
+<h2>The Health Benefits Are Greater Than at 20</h2>
+<p>
+  Studies show that people who train regularly after 40 benefit disproportionately compared to
+  younger athletes. The reasons:
+</p>
+<ul>
+  <li><strong>Bone density:</strong> Resistance exercises actively slow osteoporosis.</li>
+  <li><strong>Heart health:</strong> Resistance training lowers blood pressure and LDL cholesterol.</li>
+  <li><strong>Metabolism:</strong> Every kilogram of maintained muscle mass increases your basal metabolic rate.</li>
+  <li><strong>Injury and fall prevention:</strong> A stronger core and shoulder muscles protect joints and improve balance.</li>
+</ul>
+
+<h2>Smart Adjustments for the Body After 40</h2>
+<p>
+  You don't need to revolutionize your training – but you should adapt it intelligently:
+</p>
+<ul>
+  <li>
+    <strong>Warming up is mandatory:</strong> 5–10 minutes of light movement (shoulder circles, arm swings,
+    cat-cow) prepare joints and connective tissue. Training cold significantly increases injury risk.
+  </li>
+  <li>
+    <strong>Less volume, more quality:</strong> Instead of 6 sets to failure, 3–4 sets with clean technique
+    and one rep "in reserve" is enough. This spares the nervous system.
+  </li>
+  <li>
+    <strong>Longer rest periods:</strong> 2 minutes between sets instead of 60 seconds – inter-set
+    recovery becomes increasingly important after 40.
+  </li>
+  <li>
+    <strong>Frequency over intensity:</strong> 4 moderate sessions per week beats 2 extreme ones.
+    The body adapts better to regular moderate stimuli.
+  </li>
+  <li>
+    <strong>Relieve wrist stress:</strong> If you have wrist pain, try fist push-ups (neutral wrist
+    position) or push-up handles.
+  </li>
+</ul>
+
+<h2>A Realistic Starting Plan</h2>
+<p>
+  If you've had a long break, don't start where you left off. Weeks 1–2: 3 × 8–12 clean push-ups
+  (knee variation if needed), with full focus on technique. Increase total volume by a maximum of
+  10% per week. Patience isn't a weakness – it's the strategy.
+</p>
+
+<h2>Take Pain Seriously</h2>
+<p>
+  Muscle soreness is normal. Joint pain is not. Pain in the shoulder, elbow, or wrist is a clear
+  stop signal. Consult a physiotherapist before continuing in that case. Training breaks from
+  injuries cost more time than preventive rest periods.
+</p>
+
+<h2>Keep Progress Visible</h2>
+<p>
+  Especially after 40, it's important to document progress objectively – because the subjective
+  feeling often misleads. With Pushup Tracker you can see at a glance whether you've done more
+  this week than last week. That's the anchor that keeps you motivated even on tough days.
 </p>
     `.trim(),
   },
