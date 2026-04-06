@@ -312,7 +312,6 @@ describe('StatsTableComponent', () => {
       id: '1',
       timestamp: '2026-02-10T13:45:00',
       reps: 8,
-      sets: [8],
       source: 'whatsapp',
       type: 'Standard',
     });

@@ -156,7 +156,7 @@ export const EntriesStore = signalStore(
           _api.updatePushup(payload.id, {
             timestamp: payload.timestamp,
             reps: payload.reps,
-            sets: payload.sets,
+            ...(payload.sets !== undefined ? { sets: payload.sets } : {}),
             source: payload.source,
             type: payload.type,
           })

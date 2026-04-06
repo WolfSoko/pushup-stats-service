@@ -347,11 +347,13 @@ export class StatsTableComponent {
     const reps = Number(this.editReps(entry));
     if (Number.isNaN(reps) || reps <= 0) return;
 
+    // Only override sets when reps actually changed; preserve original sets otherwise.
+    const repsChanged = reps !== entry.reps;
     this.update.emit({
       id: entry._id,
       timestamp,
       reps,
-      sets: [reps],
+      ...(repsChanged ? { sets: [reps] } : {}),
       source: this.editSource(entry) || 'web',
       type: this.editType(entry) || 'Standard',
     });

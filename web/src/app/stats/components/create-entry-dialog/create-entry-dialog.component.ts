@@ -229,7 +229,7 @@ export class CreateEntryDialogComponent {
   }
 
   updateSet(index: number, value: string): void {
-    const num = Number(value);
+    const num = Number(value) || 0;
     this.sets.update((s) => s.map((v, i) => (i === index ? num : v)));
   }
 
