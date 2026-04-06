@@ -1,4 +1,4 @@
-import { inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { inject, Injectable, LOCALE_ID, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { ReminderStore } from './reminder.store';
 import { ReminderPermissionService } from './reminder-permission.service';
@@ -47,6 +47,7 @@ export class ReminderService {
   private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
   private readonly motivationStore = inject(MotivationStore);
   private readonly pushStore = inject(PushSubscriptionStore);
+  private readonly locale = inject(LOCALE_ID);
 
   private intervalId: ReturnType<typeof setInterval> | null = null;
   private initialTickTimeoutId: ReturnType<typeof setTimeout> | null = null;
@@ -140,6 +141,7 @@ export class ReminderService {
             icon: iconUrl,
             tag: 'reminder',
             renotify: true,
+            data: { url: `/${this.locale}/app`, locale: this.locale },
           } as NotificationOptions);
           shown = true;
         }

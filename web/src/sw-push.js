@@ -40,6 +40,7 @@ self.addEventListener('notificationclick', (event) => {
   event.notification.close();
 
   const action = event.action;
+  const locale = event.notification.data?.locale || 'de';
 
   if (action === 'snooze') {
     // Call snoozeReminder Firebase Function via postMessage to app
@@ -51,7 +52,7 @@ self.addEventListener('notificationclick', (event) => {
             clientList[0].postMessage({ type: 'SNOOZE_REMINDER', snoozeMinutes: 30 });
           } else {
             // App not open — open it with snooze param so it can call the function
-            return clients.openWindow('/?snooze=30');
+            return clients.openWindow(`/${locale}/?snooze=30`);
           }
         })
     );
@@ -60,12 +61,12 @@ self.addEventListener('notificationclick', (event) => {
 
   if (action === 'log') {
     // Open app at dashboard to log push-ups
-    event.waitUntil(clients.openWindow('/app?log=1'));
+    event.waitUntil(clients.openWindow(`/${locale}/app?log=1`));
     return;
   }
 
   // Default: open/focus app
-  const targetUrl = event.notification.data?.url || '/app';
+  const targetUrl = event.notification.data?.url || `/${locale}/app`;
   const fullUrl = new URL(targetUrl, self.location.origin).href;
 
   event.waitUntil(

@@ -739,7 +739,7 @@ export const dispatchPushReminders = onSchedule(
             badge: '/icons/badge-72x72.png',
             tag: 'reminder',
             renotify: true,
-            data: { url: '/app' },
+            data: { url: `/${lang}/app`, locale: lang },
             actions,
           });
 
