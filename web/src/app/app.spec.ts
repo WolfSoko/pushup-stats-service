@@ -112,7 +112,7 @@ describe('App (testing-library)', () => {
       ],
     });
     expect(screen.getAllByText('Dashboard').length).toBeGreaterThan(0);
-    expect(screen.getAllByText('Daten').length).toBeGreaterThan(0);
+    expect(screen.getAllByText('Historie').length).toBeGreaterThan(0);
     expect(screen.getAllByText('Analyse').length).toBeGreaterThan(0);
     expect(screen.getAllByText('Bestenliste').length).toBeGreaterThan(0);
     expect(screen.getByText('Sprache')).toBeTruthy();

@@ -805,10 +805,10 @@
     <unit id="nav.history">
       <notes>
         <note category="location">web/src/app/app.html:33,36</note>
-        <note category="location">web/src/app/app.html:167,168</note>
+        <note category="location">web/src/app/app.html:166,168</note>
       </notes>
       <segment>
-        <source>Daten</source>
+        <source>Historie</source>
       </segment>
     </unit>
     <unit id="nav.analysis">
@@ -1020,7 +1020,7 @@
         <note category="location">web/src/app/app.routes.ts:62</note>
       </notes>
       <segment>
-        <source>Daten – Pushup Tracker</source>
+        <source>Historie – Pushup Tracker</source>
       </segment>
     </unit>
     <unit id="seo.history.description">
@@ -1028,7 +1028,7 @@
         <note category="location">web/src/app/app.routes.ts:63</note>
       </notes>
       <segment>
-        <source>Verwalte Einträge, filtere nach Zeitraum und behalte deine Trainingsdaten im Griff.</source>
+        <source>Durchsuche deine Trainingshistorie, filtere nach Zeitraum und behalte den Überblick.</source>
       </segment>
     </unit>
     <unit id="seo.analysis.title">
@@ -2489,7 +2489,7 @@
         <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:3,4</note>
       </notes>
       <segment>
-        <source>Einträge</source>
+        <source>Historie</source>
       </segment>
     </unit>
     <unit id="entriesCount">
@@ -2733,7 +2733,7 @@
         <note category="location">web/src/app/stats/shell/entries-page.component.ts:26,27</note>
       </notes>
       <segment>
-        <source>Daten</source>
+        <source>Filter</source>
       </segment>
     </unit>
     <unit id="entries.subtitle">
@@ -2741,7 +2741,7 @@
         <note category="location">web/src/app/stats/shell/entries-page.component.ts:28,29</note>
       </notes>
       <segment>
-        <source>Filter und Verwaltung</source>
+        <source>Zeitraum und Kriterien</source>
       </segment>
     </unit>
     <unit id="entries.dateFrom">
