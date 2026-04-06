@@ -38,6 +38,29 @@ describe('berlinParts', () => {
     expect(parts.day).toBe(16);
     expect(parts.hour).toBe(1);
   });
+
+  it('treats offset-less timestamps as Berlin local time (not UTC)', () => {
+    // Entry created in Berlin at 22:50 — stored without offset.
+    // Must NOT be re-interpreted as UTC 22:50 → Berlin 00:50 next day.
+    const parts = berlinParts('2026-04-05T22:50');
+    expect(parts.isoDate).toBe('2026-04-05');
+    expect(parts.hour).toBe(22);
+    expect(parts.weekday).toBe('So'); // April 5, 2026 = Sunday
+  });
+
+  it('treats offset-less timestamp with seconds as Berlin local time', () => {
+    const parts = berlinParts('2026-04-06T00:17:00');
+    expect(parts.isoDate).toBe('2026-04-06');
+    expect(parts.hour).toBe(0);
+    expect(parts.weekday).toBe('Mo'); // April 6, 2026 = Monday
+  });
+
+  it('still converts UTC timestamps (with Z) to Berlin correctly', () => {
+    // 2026-04-05T20:50:00Z = 2026-04-05T22:50 Berlin (CEST)
+    const parts = berlinParts('2026-04-05T20:50:00.000Z');
+    expect(parts.isoDate).toBe('2026-04-05');
+    expect(parts.hour).toBe(22);
+  });
 });
 
 // ─── isoWeekFromYmd ───────────────────────────────────────────────────────────
@@ -229,6 +252,37 @@ describe('applyDelta', () => {
         reps: 30,
         timestamp: '2026-04-03T10:00:00.000Z',
       });
+    });
+
+    it('REGRESSION: offset-less Berlin timestamps keep correct daily buckets', () => {
+      // Simulate the exact user scenario:
+      // 1. Entry at April 5, 22:50 Berlin (10 reps) → dailyKey '2026-04-05'
+      // 2. Entry at April 6, 00:17 Berlin (15 reps) → dailyKey '2026-04-06'
+      // The second entry must NOT accumulate onto the first day.
+      const afterFirst = applyDelta(null, {
+        userId: 'u1',
+        repsDelta: 10,
+        entriesDelta: 1,
+        timestamp: '2026-04-05T22:50',
+        newReps: 10,
+        nowIso: '2026-04-05T21:00:00.000Z',
+      });
+
+      expect(afterFirst.dailyKey).toBe('2026-04-05');
+      expect(afterFirst.dailyReps).toBe(10);
+
+      const afterSecond = applyDelta(afterFirst, {
+        userId: 'u1',
+        repsDelta: 15,
+        entriesDelta: 1,
+        timestamp: '2026-04-06T00:17',
+        newReps: 15,
+        nowIso: '2026-04-05T22:30:00.000Z',
+      });
+
+      expect(afterSecond.dailyKey).toBe('2026-04-06');
+      expect(afterSecond.dailyReps).toBe(15); // NOT 25
+      expect(afterSecond.total).toBe(25);
     });
 
     it('resets period counters when period changes', () => {
@@ -813,6 +867,27 @@ describe('rebuildFromEntries', () => {
 
     // ✅ Streak is 1 (only March 15 itself, gap of 4 days before it)
     expect(stats.currentStreak).toBe(1); // March 11 → 15 is NOT consecutive (gap on 12-14)
+  });
+
+  it('REGRESSION: offset-less Berlin timestamps must not double-shift timezone', () => {
+    // Bug scenario: user in Berlin creates entries stored without offset.
+    // Entry 1: April 5, 22:50 Berlin → '2026-04-05T22:50' (10 reps)
+    // Entry 2: April 6, 00:17 Berlin → '2026-04-06T00:17' (15 reps)
+    // Expected: dailyReps for April 6 = 15 (NOT 25)
+    // Bug was: berlinParts treated '2026-04-05T22:50' as UTC, then
+    // converted to Berlin (+2h) → April 6, causing both to land on same day.
+    const entries = [
+      { timestamp: '2026-04-05T22:50', reps: 10 },
+      { timestamp: '2026-04-06T00:17', reps: 15 },
+    ];
+    const nowIso = '2026-04-06T01:00:00.000Z'; // rebuild at April 6 03:00 Berlin
+
+    const stats = rebuildFromEntries('u1', entries, nowIso);
+
+    expect(stats.dailyKey).toBe('2026-04-06');
+    expect(stats.dailyReps).toBe(15); // only today's entry
+    expect(stats.total).toBe(25); // but total is correct
+    expect(stats.totalDays).toBe(2); // two distinct days
   });
 
   it('sets correct version on rebuild', () => {

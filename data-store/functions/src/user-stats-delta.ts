@@ -6,7 +6,11 @@
  * these helpers and writes the result to Firestore.
  */
 
-import { type UserStats, USERSTATS_VERSION, emptyUserStats } from '@pu-stats/models';
+import {
+  type UserStats,
+  USERSTATS_VERSION,
+  emptyUserStats,
+} from '@pu-stats/models';
 
 const TZ = 'Europe/Berlin';
 
@@ -30,9 +34,57 @@ const WEEKDAY_MAP: Record<string, string> = {
 };
 
 /**
- * Extract Berlin-local date parts from an ISO timestamp string.
+ * Check whether a timestamp string contains an explicit timezone indicator
+ * (trailing 'Z', or a '+'/'-' offset after the time portion).
+ * Timestamps from the app's frontend are stored as Berlin local time
+ * WITHOUT any offset (e.g. '2026-04-05T22:50'), so they must NOT be
+ * re-interpreted as UTC and then converted to Berlin.
+ */
+function hasTimezoneIndicator(ts: string): boolean {
+  if (ts.endsWith('Z') || ts.endsWith('z')) return true;
+  // Look for +HH:MM or -HH:MM after the 'T' separator
+  const tIdx = ts.indexOf('T');
+  if (tIdx === -1) return false;
+  const timePart = ts.slice(tIdx + 1);
+  return /[+-]\d{2}:?\d{2}$/.test(timePart);
+}
+
+/**
+ * Extract Berlin-local date parts from a timestamp string.
+ *
+ * Two modes:
+ * 1. Timestamp WITH timezone (e.g. '…Z' or '…+02:00'): convert to Berlin via Intl.
+ * 2. Timestamp WITHOUT timezone (e.g. '2026-04-05T22:50'): already Berlin local time,
+ *    parse date/time parts directly from the string to avoid UTC mis-interpretation.
  */
 export function berlinParts(isoTimestamp: string): BerlinDateParts {
+  if (!hasTimezoneIndicator(isoTimestamp)) {
+    // Timestamp is already Berlin local time — parse directly.
+    const [datePart, timePart] = isoTimestamp.split('T');
+    const [yearStr, monthStr, dayStr] = datePart.split('-');
+    const year = Number(yearStr);
+    const month = Number(monthStr);
+    const day = Number(dayStr);
+    const hour = timePart ? Number(timePart.split(':')[0]) : 0;
+
+    // Compute weekday from a UTC-safe date (noon avoids DST edge cases)
+    const weekDate = new Date(Date.UTC(year, month - 1, day, 12));
+    const dayOfWeek = new Intl.DateTimeFormat('en-US', {
+      timeZone: 'UTC',
+      weekday: 'short',
+    }).format(weekDate);
+
+    return {
+      isoDate: `${yearStr}-${monthStr}-${dayStr}`,
+      year,
+      month,
+      day,
+      weekday: WEEKDAY_MAP[dayOfWeek] ?? dayOfWeek,
+      hour,
+    };
+  }
+
+  // Timestamp has explicit timezone → convert to Berlin via Intl.
   const d = new Date(isoTimestamp);
 
   const dateParts = new Intl.DateTimeFormat('en-CA', {

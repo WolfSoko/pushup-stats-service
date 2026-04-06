@@ -16,6 +16,7 @@ import {
 import {
   PushupRecord,
   StatsResponse,
+  toBerlinIsoDate,
   toLocalIsoDate,
   UserStats,
 } from '@pu-stats/models';
@@ -51,10 +52,13 @@ function daysBetween(a: string, b: string): number {
 }
 
 function currentIsoWeekKey(): string {
-  const d = new Date();
+  // Use Berlin date to match server-side period key calculation
+  const berlinDate = toBerlinIsoDate(new Date());
+  const [y, m, day] = berlinDate.split('-').map(Number);
+  const d = new Date(y, m - 1, day);
   d.setHours(0, 0, 0, 0);
-  const day = (d.getDay() + 6) % 7;
-  d.setDate(d.getDate() + 3 - day);
+  const weekday = (d.getDay() + 6) % 7;
+  d.setDate(d.getDate() + 3 - weekday);
   const isoYear = d.getFullYear();
   const firstThursday = new Date(isoYear, 0, 4);
   firstThursday.setHours(0, 0, 0, 0);
@@ -69,8 +73,9 @@ function currentIsoWeekKey(): string {
 }
 
 function currentMonthKey(): string {
-  const d = new Date();
-  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+  // Use Berlin date to match server-side period key calculation
+  const berlinDate = toBerlinIsoDate(new Date());
+  return berlinDate.slice(0, 7);
 }
 
 export const DashboardStore = signalStore(
