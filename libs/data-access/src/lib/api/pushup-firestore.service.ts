@@ -75,6 +75,7 @@ export class PushupFirestoreService {
       _id: newRef.id,
       timestamp: payload.timestamp,
       reps: payload.reps,
+      ...(payload.sets?.length ? { sets: payload.sets } : {}),
       source: payload.source ?? 'web',
       type: payload.type ?? 'Standard',
       createdAt: nowIso,
@@ -82,17 +83,20 @@ export class PushupFirestoreService {
       userId,
     };
 
-    return from(
-      setDoc(newRef, {
-        timestamp: record.timestamp,
-        reps: record.reps,
-        source: record.source,
-        type: record.type ?? 'Standard',
-        createdAt: record.createdAt,
-        updatedAt: record.updatedAt,
-        userId,
-      })
-    ).pipe(map(() => record));
+    const firestoreData: Record<string, unknown> = {
+      timestamp: record.timestamp,
+      reps: record.reps,
+      source: record.source,
+      type: record.type ?? 'Standard',
+      createdAt: record.createdAt,
+      updatedAt: record.updatedAt,
+      userId,
+    };
+    if (payload.sets?.length) {
+      firestoreData['sets'] = payload.sets;
+    }
+
+    return from(setDoc(newRef, firestoreData)).pipe(map(() => record));
   }
 
   updatePushup(id: string, payload: PushupUpdate): Observable<void> {
@@ -123,7 +127,7 @@ export class PushupFirestoreService {
    * Kept as a no-op for API compatibility; `AuthService.migrateGuestDataSafe`
    * wraps calls in a try/catch and only console.warns on failure.
    */
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
   async migrateUserData(_fromUserId: string, _toUserId: string): Promise<void> {
     // No-op by design. See comment above.
   }

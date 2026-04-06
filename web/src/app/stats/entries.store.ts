@@ -122,6 +122,7 @@ export const EntriesStore = signalStore(
     async createEntry(payload: {
       timestamp: string;
       reps: number;
+      sets?: number[];
       source?: string;
       type?: string;
     }): Promise<void> {

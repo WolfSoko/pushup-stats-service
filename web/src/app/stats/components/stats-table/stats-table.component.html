@@ -76,9 +76,12 @@
       <mat-header-cell *matHeaderCellDef mat-sort-header i18n="@@colReps"
         >Reps</mat-header-cell
       >
-      <mat-cell *matCellDef="let entry"
-        ><span>{{ entry.reps }}</span></mat-cell
-      >
+      <mat-cell *matCellDef="let entry">
+        <span>{{ entry.reps }}</span>
+        @if (entry.sets?.length > 1) {
+          <span class="sets-detail">({{ formatSets(entry.sets) }})</span>
+        }
+      </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="type">

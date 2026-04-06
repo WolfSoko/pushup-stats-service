@@ -48,6 +48,12 @@ mat-table {
   gap: 8px;
 }
 
+.sets-detail {
+  margin-inline-start: 4px;
+  font-size: 0.85em;
+  color: var(--mat-sys-on-surface-variant);
+}
+
 .actions .danger {
   --mdc-fab-container-color: var(--mat-sys-error-container);
   --mdc-fab-icon-color: var(--mat-sys-on-error-container);

@@ -106,6 +106,7 @@ describe('StatsTableComponent', () => {
       const result: CreateEntryResult = {
         timestamp: '2026-02-11T07:00',
         reps: 12,
+        sets: [12],
         source: 'web',
         type: 'Standard',
       };
@@ -322,6 +323,28 @@ describe('StatsTableComponent', () => {
     const component = fixture.componentInstance;
     expect(component.isBusy('delete', '1')).toBe(true);
     expect(component.isBusy('update', '1')).toBe(false);
+  });
+
+  describe('formatSets', () => {
+    it('formats uniform sets as "count×reps"', () => {
+      const component = fixture.componentInstance;
+      expect(component.formatSets([10, 10, 10])).toBe('3×10');
+    });
+
+    it('formats mixed sets as "a + b + c"', () => {
+      const component = fixture.componentInstance;
+      expect(component.formatSets([10, 15, 5])).toBe('10 + 15 + 5');
+    });
+
+    it('returns empty string for empty array', () => {
+      const component = fixture.componentInstance;
+      expect(component.formatSets([])).toBe('');
+    });
+
+    it('handles single set as "1×reps"', () => {
+      const component = fixture.componentInstance;
+      expect(component.formatSets([20])).toBe('1×20');
+    });
   });
 
   it('renders non-virtual table fallback on server platform', async () => {

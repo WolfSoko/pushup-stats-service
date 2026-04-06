@@ -2727,6 +2727,30 @@ Deine Position: # ·  Reps        </source>
       
       
         </unit>
+    <unit id="setsLabel">
+      <segment state="translated">
+        <source>Sets</source>
+        <target>Sets</target>
+      </segment>
+    </unit>
+    <unit id="addSetAria">
+      <segment state="translated">
+        <source>Set hinzufügen</source>
+        <target>Add set</target>
+      </segment>
+    </unit>
+    <unit id="removeSetAria">
+      <segment state="translated">
+        <source>Set entfernen</source>
+        <target>Remove set</target>
+      </segment>
+    </unit>
+    <unit id="totalReps">
+      <segment state="translated">
+        <source> Gesamt: <ph id="0" equiv="INTERPOLATION" disp="{{ totalReps() }}"/> Reps </source>
+        <target> Total: <ph id="0" equiv="INTERPOLATION" disp="{{ totalReps() }}"/> reps </target>
+      </segment>
+    </unit>
     <unit id="saveChanges">
       <notes>
         <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:306,312</note>

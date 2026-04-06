@@ -273,6 +273,50 @@ describe('PushupFirestoreService', () => {
       expect(result.source).toBe('web');
     });
 
+    it('persists sets array when provided', async () => {
+      const newRef = { id: 'sets-id' };
+      jest.spyOn(firestoreFns, 'doc').mockReturnValueOnce(newRef as any);
+      const setDocSpy = jest
+        .spyOn(firestoreFns, 'setDoc')
+        .mockResolvedValueOnce(undefined as any);
+
+      const result = await firstValueFrom(
+        service.createPushup('u1', {
+          timestamp: '2024-01-01T10:00:00Z',
+          reps: 30,
+          sets: [10, 10, 10],
+          source: 'web',
+        })
+      );
+
+      expect(setDocSpy).toHaveBeenCalledWith(
+        newRef,
+        expect.objectContaining({
+          reps: 30,
+          sets: [10, 10, 10],
+        })
+      );
+      expect(result.sets).toEqual([10, 10, 10]);
+    });
+
+    it('omits sets from Firestore when not provided', async () => {
+      const newRef = { id: 'no-sets-id' };
+      jest.spyOn(firestoreFns, 'doc').mockReturnValueOnce(newRef as any);
+      const setDocSpy = jest
+        .spyOn(firestoreFns, 'setDoc')
+        .mockResolvedValueOnce(undefined as any);
+
+      await firstValueFrom(
+        service.createPushup('u1', {
+          timestamp: '2024-01-01T10:00:00Z',
+          reps: 5,
+        })
+      );
+
+      const writtenData = setDocSpy.mock.calls[0][1] as Record<string, unknown>;
+      expect(writtenData).not.toHaveProperty('sets');
+    });
+
     it('defaults source to "web" and type to "Standard" when omitted', async () => {
       const newRef = { id: 'default-id' };
       jest.spyOn(firestoreFns, 'doc').mockReturnValueOnce(newRef as any);

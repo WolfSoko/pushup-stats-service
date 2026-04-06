@@ -82,6 +82,7 @@ export class StatsTableComponent {
   readonly create = output<{
     timestamp: string;
     reps: number;
+    sets?: number[];
     source?: string;
     type?: string;
   }>();
@@ -393,6 +394,12 @@ export class StatsTableComponent {
     } catch {
       // ignore; keep default
     }
+  }
+
+  formatSets(sets: number[]): string {
+    if (!sets?.length) return '';
+    const allSame = sets.every((s) => s === sets[0]);
+    return allSame ? `${sets.length}×${sets[0]}` : sets.join(' + ');
   }
 
   private normalizeSource(value: string): string {
