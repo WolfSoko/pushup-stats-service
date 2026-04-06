@@ -2727,12 +2727,6 @@ Deine Position: # ·  Reps        </source>
       
       
         </unit>
-    <unit id="setsLabel">
-      <segment state="translated">
-        <source>Sets</source>
-        <target>Sets</target>
-      </segment>
-    </unit>
     <unit id="addSetTooltip">
       <segment state="translated">
         <source>Weiteres Set hinzufügen</source>
