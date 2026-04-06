@@ -27,4 +27,20 @@ describe('appendLocalOffset', () => {
     const result = appendLocalOffset('2026-04-05T22:50:30');
     expect(result).toMatch(/^2026-04-05T22:50:30[+-]\d{2}:\d{2}$/);
   });
+
+  it('does not append to UTC timestamps (lowercase z)', () => {
+    expect(appendLocalOffset('2026-04-05T22:50:00z')).toBe(
+      '2026-04-05T22:50:00z'
+    );
+  });
+
+  it('does not double-append if offset has no colon', () => {
+    expect(appendLocalOffset('2026-04-05T22:50+0200')).toBe(
+      '2026-04-05T22:50+0200'
+    );
+  });
+
+  it('returns malformed input unchanged', () => {
+    expect(appendLocalOffset('not-a-datetime')).toBe('not-a-datetime');
+  });
 });

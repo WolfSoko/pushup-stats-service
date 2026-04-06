@@ -35,5 +35,6 @@ export function appendLocalOffset(dtLocal: string): string {
     return dtLocal;
   }
   const d = new Date(dtLocal); // parsed as browser local time
+  if (Number.isNaN(d.getTime())) return dtLocal;
   return `${dtLocal}${localOffsetString(d)}`;
 }
