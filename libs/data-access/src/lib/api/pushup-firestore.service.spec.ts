@@ -371,6 +371,28 @@ describe('PushupFirestoreService', () => {
         expect.objectContaining({ reps: 8, updatedAt: expect.any(String) })
       );
     });
+
+    it('strips undefined values from payload before calling updateDoc', async () => {
+      const rowRef = {};
+      jest.spyOn(firestoreFns, 'doc').mockReturnValueOnce(rowRef as any);
+      const updateDocSpy = jest
+        .spyOn(firestoreFns, 'updateDoc')
+        .mockResolvedValueOnce(undefined as any);
+
+      await firstValueFrom(
+        service.updatePushup('id1', {
+          reps: 8,
+          source: undefined,
+          sets: undefined,
+        })
+      );
+
+      const payload = updateDocSpy.mock.calls[0][1] as Record<string, unknown>;
+      expect(payload).toHaveProperty('reps', 8);
+      expect(payload).toHaveProperty('updatedAt');
+      expect(payload).not.toHaveProperty('source');
+      expect(payload).not.toHaveProperty('sets');
+    });
   });
 
   describe('deletePushup', () => {

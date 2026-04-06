@@ -64,21 +64,17 @@ export interface CreateEntryResult {
       .set-row mat-form-field {
         flex: 1;
       }
-      .set-row.clone-in {
-        animation: clone-set 300ms cubic-bezier(0.4, 0, 0.2, 1) both;
+      .clone-in {
+        opacity: 0;
+        max-height: 0;
+        transform: scaleY(0.3) translateY(-8px);
         transform-origin: top center;
       }
-      @keyframes clone-set {
-        from {
-          opacity: 0;
-          max-height: 0;
-          transform: scaleY(0.3) translateY(-8px);
-        }
-        to {
-          opacity: 1;
-          max-height: 80px;
-          transform: scaleY(1) translateY(0);
-        }
+      .clone-in.ng-enter-active {
+        opacity: 1;
+        max-height: 80px;
+        transform: scaleY(1) translateY(0);
+        transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
       }
       .total-reps {
         font-size: 13px;
@@ -104,7 +100,7 @@ export interface CreateEntryResult {
 
       @if (hasMultipleSets()) {
         @for (set of sets(); track $index) {
-          <div class="set-row" [class.clone-in]="newSetIndex() === $index">
+          <div class="set-row" [animate.enter]="'clone-in'">
             <mat-form-field appearance="outline">
               <mat-label i18n="@@setLabel">Set {{ $index + 1 }}</mat-label>
               <input
@@ -222,7 +218,6 @@ export class CreateEntryDialogComponent {
 
   readonly timestamp = signal(this.defaultDateTimeLocal());
   readonly sets = signal<number[]>([0]);
-  readonly newSetIndex = signal<number | null>(null);
   readonly hasMultipleSets = computed(() => this.sets().length > 1);
   readonly totalReps = computed(() =>
     this.sets().reduce((sum, s) => sum + (s > 0 ? s : 0), 0)
@@ -260,7 +255,6 @@ export class CreateEntryDialogComponent {
     const currentSets = this.sets();
     const lastValue = currentSets[currentSets.length - 1] ?? 0;
     const prefill = lastValue > 0 ? lastValue : 0;
-    this.newSetIndex.set(currentSets.length);
     this.sets.update((s) => [...s, prefill]);
   }
 
