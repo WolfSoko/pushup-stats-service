@@ -2,6 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { StatsApiService } from '@pu-stats/data-access';
+import { appendLocalOffset } from '@pu-stats/models';
 import { QuickAddBridgeService } from '@pu-stats/quick-add';
 import { AppDataFacade } from './app-data.facade';
 
@@ -20,7 +21,7 @@ export class QuickAddOrchestrationService {
     const d = String(now.getDate()).padStart(2, '0');
     const hh = String(now.getHours()).padStart(2, '0');
     const mm = String(now.getMinutes()).padStart(2, '0');
-    const timestamp = `${y}-${m}-${d}T${hh}:${mm}`;
+    const timestamp = appendLocalOffset(`${y}-${m}-${d}T${hh}:${mm}`);
     this.statsApi
       .createPushup({ timestamp, reps, source: 'quick-add' })
       .subscribe({

@@ -1,5 +1,10 @@
 import { AsyncPipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  signal,
+} from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { map, startWith } from 'rxjs';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -7,6 +12,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { appendLocalOffset } from '@pu-stats/models';
 
 export interface CreateEntryResult {
   timestamp: string;
@@ -104,16 +110,19 @@ export interface CreateEntryResult {
       <button type="button" mat-button mat-dialog-close i18n="@@cancel">
         Abbrechen
       </button>
-      <button type="button" mat-flat-button (click)="submit()" i18n="@@saveEntry">
+      <button
+        type="button"
+        mat-flat-button
+        (click)="submit()"
+        i18n="@@saveEntry"
+      >
         Speichern
       </button>
     </mat-dialog-actions>
   `,
 })
 export class CreateEntryDialogComponent {
-  private readonly dialogRef = inject(
-    MatDialogRef<CreateEntryDialogComponent>
-  );
+  private readonly dialogRef = inject(MatDialogRef<CreateEntryDialogComponent>);
 
   readonly timestamp = signal(this.defaultDateTimeLocal());
   readonly reps = signal('');
@@ -155,7 +164,12 @@ export class CreateEntryDialogComponent {
       (this.sourceControl.value || '').trim() || 'web'
     );
 
-    this.dialogRef.close({ timestamp: this.timestamp(), reps, source, type });
+    this.dialogRef.close({
+      timestamp: appendLocalOffset(this.timestamp()),
+      reps,
+      source,
+      type,
+    });
   }
 
   asValue(event: Event): string {

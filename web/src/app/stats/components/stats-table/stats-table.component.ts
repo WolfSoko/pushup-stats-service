@@ -31,7 +31,7 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { ScrollingModule } from '@angular/cdk/scrolling';
-import { PushupRecord } from '@pu-stats/models';
+import { appendLocalOffset, PushupRecord } from '@pu-stats/models';
 import { UserContextService } from '@pu-auth/auth';
 import { UserConfigApiService } from '@pu-stats/data-access';
 import { firstValueFrom } from 'rxjs';
@@ -340,7 +340,7 @@ export class StatsTableComponent {
     const timestamp =
       entry.timestamp && editedLocal === defaultLocal
         ? entry.timestamp
-        : editedLocal;
+        : appendLocalOffset(editedLocal);
 
     const reps = Number(this.editReps(entry));
     if (Number.isNaN(reps) || reps <= 0) return;
