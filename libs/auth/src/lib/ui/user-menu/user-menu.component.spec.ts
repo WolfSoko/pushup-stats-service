@@ -146,6 +146,75 @@ describe('UserMenuComponent', () => {
     expect(navigateSpy).not.toHaveBeenCalled();
   });
 
+  it('given authenticated user, when opening menu, then shows Historie and Erinnerungen', async () => {
+    // Given
+    await render(UserMenuComponent, {
+      providers: [
+        provideRouter([]),
+        {
+          provide: AuthStore,
+          useValue: makeStore({ isAuthenticated: true, isGuest: false }),
+        },
+        { provide: Auth, useValue: {} },
+      ],
+    });
+
+    // When
+    fireEvent.click(screen.getByLabelText('Nutzerkonto-Menü'));
+
+    // Then
+    expect(screen.getByText('Historie')).toBeTruthy();
+    expect(screen.getByText('Erinnerungen')).toBeTruthy();
+  });
+
+  it('given authenticated user, when clicking Historie, then navigates to /history', async () => {
+    // Given
+    const { fixture } = await render(UserMenuComponent, {
+      providers: [
+        provideRouter([{ path: 'history', children: [] }]),
+        {
+          provide: AuthStore,
+          useValue: makeStore({ isAuthenticated: true, isGuest: false }),
+        },
+        { provide: Auth, useValue: {} },
+      ],
+    });
+    const router = fixture.debugElement.injector.get(Router);
+    const navigateSpy = jest.spyOn(router, 'navigate');
+
+    // When
+    fireEvent.click(screen.getByLabelText('Nutzerkonto-Menü'));
+    fireEvent.click(screen.getByText('Historie'));
+    await fixture.whenStable();
+
+    // Then
+    expect(navigateSpy).toHaveBeenCalledWith(['/history']);
+  });
+
+  it('given authenticated user, when clicking Erinnerungen, then navigates to /reminders', async () => {
+    // Given
+    const { fixture } = await render(UserMenuComponent, {
+      providers: [
+        provideRouter([{ path: 'reminders', children: [] }]),
+        {
+          provide: AuthStore,
+          useValue: makeStore({ isAuthenticated: true, isGuest: false }),
+        },
+        { provide: Auth, useValue: {} },
+      ],
+    });
+    const router = fixture.debugElement.injector.get(Router);
+    const navigateSpy = jest.spyOn(router, 'navigate');
+
+    // When
+    fireEvent.click(screen.getByLabelText('Nutzerkonto-Menü'));
+    fireEvent.click(screen.getByText('Erinnerungen'));
+    await fixture.whenStable();
+
+    // Then
+    expect(navigateSpy).toHaveBeenCalledWith(['/reminders']);
+  });
+
   it('shows spinner when loading', async () => {
     await render(UserMenuComponent, {
       providers: [

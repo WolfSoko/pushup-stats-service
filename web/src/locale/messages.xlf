@@ -503,9 +503,25 @@
         <source>Passwort braucht Groß-/Kleinbuchstaben, Zahl und Sonderzeichen.</source>
       </segment>
     </unit>
-    <unit id="user.menu.settings">
+    <unit id="user.menu.history">
       <notes>
         <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.html:25,27</note>
+      </notes>
+      <segment>
+        <source>Historie</source>
+      </segment>
+    </unit>
+    <unit id="user.menu.reminders">
+      <notes>
+        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.html:29,31</note>
+      </notes>
+      <segment>
+        <source>Erinnerungen</source>
+      </segment>
+    </unit>
+    <unit id="user.menu.settings">
+      <notes>
+        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.html:34,36</note>
       </notes>
       <segment>
         <source>Einstellungen</source>
@@ -513,7 +529,7 @@
     </unit>
     <unit id="user.menu.logout">
       <notes>
-        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.html:29,31</note>
+        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.html:38,40</note>
       </notes>
       <segment>
         <source>Abmelden</source>
@@ -521,7 +537,7 @@
     </unit>
     <unit id="user.menu.guestHint">
       <notes>
-        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.html:43,46</note>
+        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.html:52,55</note>
       </notes>
       <segment>
         <source>Du nutzt die App als Gast</source>
@@ -529,7 +545,7 @@
     </unit>
     <unit id="user.menu.convertAccount">
       <notes>
-        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.html:49,51</note>
+        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.html:58,60</note>
       </notes>
       <segment>
         <source>Umwandeln in Nutzerkonto</source>
@@ -537,8 +553,8 @@
     </unit>
     <unit id="user.menu.signIn">
       <notes>
-        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.html:53,55</note>
-        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.html:71,73</note>
+        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.html:62,64</note>
+        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.html:80,82</note>
       </notes>
       <segment>
         <source>Anmelden</source>
@@ -546,7 +562,7 @@
     </unit>
     <unit id="user.menu.tryAsGuest">
       <notes>
-        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.html:67,69</note>
+        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.html:76,78</note>
       </notes>
       <segment>
         <source>Als Gast ausprobieren</source>
@@ -796,25 +812,18 @@
     <unit id="nav.dashboard">
       <notes>
         <note category="location">web/src/app/app.html:23,26</note>
-        <note category="location">web/src/app/app.html:163,165</note>
+        <note category="location">web/src/app/app.html:164,166</note>
+        <note category="location">web/src/app/app.html:213,215</note>
       </notes>
       <segment>
         <source>Dashboard</source>
       </segment>
     </unit>
-    <unit id="nav.history">
-      <notes>
-        <note category="location">web/src/app/app.html:33,36</note>
-        <note category="location">web/src/app/app.html:166,168</note>
-      </notes>
-      <segment>
-        <source>Historie</source>
-      </segment>
-    </unit>
     <unit id="nav.analysis">
       <notes>
-        <note category="location">web/src/app/app.html:43,46</note>
-        <note category="location">web/src/app/app.html:169,172</note>
+        <note category="location">web/src/app/app.html:33,36</note>
+        <note category="location">web/src/app/app.html:168,170</note>
+        <note category="location">web/src/app/app.html:217,219</note>
       </notes>
       <segment>
         <source>Analyse</source>
@@ -822,8 +831,9 @@
     </unit>
     <unit id="nav.leaderboard">
       <notes>
-        <note category="location">web/src/app/app.html:53,57</note>
-        <note category="location">web/src/app/app.html:175,177</note>
+        <note category="location">web/src/app/app.html:43,47</note>
+        <note category="location">web/src/app/app.html:172,174</note>
+        <note category="location">web/src/app/app.html:221,223</note>
       </notes>
       <segment>
         <source>Bestenliste</source>
@@ -831,17 +841,25 @@
     </unit>
     <unit id="nav.blog">
       <notes>
-        <note category="location">web/src/app/app.html:63,66</note>
-        <note category="location">web/src/app/app.html:178</note>
+        <note category="location">web/src/app/app.html:53,56</note>
+        <note category="location">web/src/app/app.html:176,178</note>
+        <note category="location">web/src/app/app.html:225,227</note>
       </notes>
       <segment>
         <source>Blog</source>
       </segment>
     </unit>
+    <unit id="nav.history">
+      <notes>
+        <note category="location">web/src/app/app.html:63,66</note>
+      </notes>
+      <segment>
+        <source>Historie</source>
+      </segment>
+    </unit>
     <unit id="nav.reminders">
       <notes>
         <note category="location">web/src/app/app.html:74,78</note>
-        <note category="location">web/src/app/app.html:183,186</note>
       </notes>
       <segment>
         <source>Erinnerungen</source>
@@ -921,7 +939,7 @@
     </unit>
     <unit id="footer.aria">
       <notes>
-        <note category="location">web/src/app/app.html:193</note>
+        <note category="location">web/src/app/app.html:185</note>
       </notes>
       <segment>
         <source>Rechtliches</source>
@@ -929,7 +947,7 @@
     </unit>
     <unit id="footer.impressum">
       <notes>
-        <note category="location">web/src/app/app.html:194,195</note>
+        <note category="location">web/src/app/app.html:187,189</note>
       </notes>
       <segment>
         <source>Impressum</source>
@@ -937,7 +955,7 @@
     </unit>
     <unit id="footer.datenschutz">
       <notes>
-        <note category="location">web/src/app/app.html:195,197</note>
+        <note category="location">web/src/app/app.html:190,193</note>
       </notes>
       <segment>
         <source>Datenschutz</source>
@@ -945,10 +963,18 @@
     </unit>
     <unit id="footer.cookies">
       <notes>
-        <note category="location">web/src/app/app.html:201,203</note>
+        <note category="location">web/src/app/app.html:197,199</note>
       </notes>
       <segment>
         <source> Cookie-Einstellungen </source>
+      </segment>
+    </unit>
+    <unit id="nav.bottom.aria">
+      <notes>
+        <note category="location">web/src/app/app.html:204,205</note>
+      </notes>
+      <segment>
+        <source>Mobile-Navigation</source>
       </segment>
     </unit>
     <unit id="seo.landing.title">
@@ -2632,7 +2658,7 @@
     </unit>
     <unit id="analysis.weekCol">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:58,59</note>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:61,62</note>
       </notes>
       <segment>
         <source>Woche</source>
@@ -2640,8 +2666,8 @@
     </unit>
     <unit id="analysis.repsCol">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:64,65</note>
-        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:90,91</note>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:67,68</note>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:96,97</note>
       </notes>
       <segment>
         <source>Reps</source>
@@ -2649,7 +2675,7 @@
     </unit>
     <unit id="analysis.monthTrendTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:77,79</note>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:80,82</note>
       </notes>
       <segment>
         <source>Monatstrend</source>
@@ -2657,7 +2683,7 @@
     </unit>
     <unit id="analysis.monthCol">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:84,85</note>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:90,91</note>
       </notes>
       <segment>
         <source>Monat</source>
@@ -2665,7 +2691,7 @@
     </unit>
     <unit id="analysis.bestStreaksTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:103,105</note>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:109,111</note>
       </notes>
       <segment>
         <source>Bestwerte &amp; Streaks</source>
@@ -2673,7 +2699,7 @@
     </unit>
     <unit id="analysis.bestSingleEntry">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:109,111</note>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:115,117</note>
       </notes>
       <segment>
         <source>Bestwert Einzel-Eintrag:</source>
@@ -2681,7 +2707,7 @@
     </unit>
     <unit id="analysis.bestDay">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:114,116</note>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:120,122</note>
       </notes>
       <segment>
         <source>Bester Tag:</source>
@@ -2689,7 +2715,7 @@
     </unit>
     <unit id="analysis.currentStreak">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:121,123</note>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:127,129</note>
       </notes>
       <segment>
         <source>Aktuelle Streak:</source>
@@ -2697,8 +2723,8 @@
     </unit>
     <unit id="analysis.streakDays">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:124,125</note>
-        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:132,133</note>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:130,131</note>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:138,139</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="INTERPOLATION" disp="{{ store.currentStreak() }}"/> Tage</source>
@@ -2706,7 +2732,7 @@
     </unit>
     <unit id="analysis.longestStreak">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:129,131</note>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:135,137</note>
       </notes>
       <segment>
         <source>Längste Streak:</source>
@@ -2714,7 +2740,7 @@
     </unit>
     <unit id="analysis.typesTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:142,144</note>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:148,150</note>
       </notes>
       <segment>
         <source>Typen (Anteile)</source>
@@ -2722,7 +2748,7 @@
     </unit>
     <unit id="analysis.heatmapTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:154,156</note>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:160,162</note>
       </notes>
       <segment>
         <source>Heatmap (Wochentag/Uhrzeit)</source>

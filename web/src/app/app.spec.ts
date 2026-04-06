@@ -316,6 +316,45 @@ describe('App (testing-library)', () => {
     });
   });
 
+  it('given app is rendered, when reading bottom navigation, then it exposes four primary links', async () => {
+    // Given
+    await render(App, {
+      providers: [
+        provideRouter([]),
+        { provide: PLATFORM_ID, useValue: 'browser' },
+        {
+          provide: UserContextService,
+          useValue: {
+            userNameSafe: userNameSignal.asReadonly(),
+            userIdSafe: () => 'u1',
+            isAdmin: () => false,
+            isGuest: () => false,
+          },
+        },
+        { provide: AuthStore, useValue: authMock },
+        { provide: UserConfigApiService, useValue: userConfigApiMock },
+        { provide: StatsApiService, useValue: statsApiMock },
+        { provide: AdsStore, useValue: adsStoreMock },
+        { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
+      ],
+    });
+
+    // When
+    const bottomNav = document.querySelector('.bottom-nav');
+
+    // Then
+    expect(bottomNav).toBeTruthy();
+    if (!bottomNav) {
+      throw new Error('Expected .bottom-nav to be rendered');
+    }
+    const links = bottomNav.querySelectorAll('a');
+    expect(links.length).toBe(4);
+    expect(links[0].getAttribute('href')).toBe('/app');
+    expect(links[1].getAttribute('href')).toBe('/analysis');
+    expect(links[2].getAttribute('href')).toBe('/leaderboard');
+    expect(links[3].getAttribute('href')).toBe('/blog');
+  });
+
   it('keeps base document title when no seo route data is active', async () => {
     await render(App, {
       providers: [

@@ -4,6 +4,10 @@
   bottom: 16px;
   z-index: 1000;
   display: block;
+
+  @media (max-width: 767px) {
+    bottom: 72px;
+  }
 }
 
 .speed-dial {
