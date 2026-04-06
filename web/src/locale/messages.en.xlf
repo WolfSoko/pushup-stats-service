@@ -1444,8 +1444,8 @@ Active:         </target>
         
             </notes>
       <segment state="translated">
-        <source>Filter und Verwaltung</source>
-        <target>Filter and management</target>
+        <source>Zeitraum und Kriterien</source>
+        <target>Period and criteria</target>
 
         
         
@@ -1458,11 +1458,11 @@ Active:         </target>
       <notes>
         <note category="location">web/src/app/stats/shell/entries-page.component.ts:32,33</note>
 
-        
+
             </notes>
       <segment state="translated">
-        <source>Daten</source>
-        <target>Data</target>
+        <source>Filter</source>
+        <target>Filter</target>
 
         
         
@@ -1530,11 +1530,11 @@ Active:         </target>
       <notes>
         <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:3,4</note>
 
-        
+
             </notes>
       <segment state="translated">
-        <source>Einträge</source>
-        <target>Entries</target>
+        <source>Historie</source>
+        <target>History</target>
 
         
         
@@ -2125,11 +2125,11 @@ Deine Position: # ·  Reps        </source>
       <notes>
         <note category="location">web/src/app/app.html:33,36</note>
 
-        
+
             </notes>
       <segment state="translated">
-        <source>Daten</source>
-        <target>Data</target>
+        <source>Historie</source>
+        <target>History</target>
 
         
         
@@ -2881,8 +2881,8 @@ Deine Position: # ·  Reps        </source>
         </unit>
     <unit id="seo.history.description">
       <segment state="translated">
-        <source>Verwalte Einträge, filtere nach Zeitraum und behalte deine Trainingsdaten im Griff.</source>
-        <target>Manage entries, filter by time range, and stay in control of your training data.</target>
+        <source>Durchsuche deine Trainingshistorie, filtere nach Zeitraum und behalte den Überblick.</source>
+        <target>Browse your training history, filter by time range, and stay on top of your progress.</target>
 
         
         
@@ -2892,8 +2892,8 @@ Deine Position: # ·  Reps        </source>
         </unit>
     <unit id="seo.history.title">
       <segment state="translated">
-        <source>Daten – Pushup Tracker</source>
-        <target>Data – Pushup Tracker</target>
+        <source>Historie – Pushup Tracker</source>
+        <target>History – Pushup Tracker</target>
 
         
         

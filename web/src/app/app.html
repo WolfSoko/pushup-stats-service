@@ -30,7 +30,7 @@
         (click)="navOpen.set(false)"
       >
         <mat-icon matListItemIcon>list</mat-icon>
-        <span matListItemTitle i18n="@@nav.history">Daten</span>
+        <span matListItemTitle i18n="@@nav.history">Historie</span>
       </a>
 
       <a
@@ -163,7 +163,7 @@
         >Dashboard</a
       >
       <a routerLink="/history" routerLinkActive="active" i18n="@@nav.history"
-        >Daten</a
+        >Historie</a
       >
       <a routerLink="/analysis" routerLinkActive="active" i18n="@@nav.analysis"
         >Analyse</a
@@ -191,8 +191,12 @@
 
     <footer class="app-footer">
       <nav aria-label="Rechtliches" i18n-aria-label="@@footer.aria">
-        <a mat-button routerLink="/impressum" i18n="@@footer.impressum">Impressum</a>
-        <a mat-button routerLink="/datenschutz" i18n="@@footer.datenschutz">Datenschutz</a>
+        <a mat-button routerLink="/impressum" i18n="@@footer.impressum"
+          >Impressum</a
+        >
+        <a mat-button routerLink="/datenschutz" i18n="@@footer.datenschutz"
+          >Datenschutz</a
+        >
         <button
           mat-button
           (click)="openCookieSettings()"

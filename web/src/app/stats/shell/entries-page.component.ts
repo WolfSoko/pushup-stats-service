@@ -23,9 +23,9 @@ import { EntriesStore } from '../entries.store';
       <app-preview-banner />
       <mat-card>
         <mat-card-header>
-          <mat-card-title i18n="@@entries.title">Daten</mat-card-title>
+          <mat-card-title i18n="@@entries.title">Filter</mat-card-title>
           <mat-card-subtitle i18n="@@entries.subtitle"
-            >Filter und Verwaltung</mat-card-subtitle
+            >Zeitraum und Kriterien</mat-card-subtitle
           >
         </mat-card-header>
 
