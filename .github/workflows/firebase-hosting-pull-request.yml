@@ -9,7 +9,12 @@ permissions:
 env:
   # Für PRs nur Read-Token, für main Pushes Write-Token.
   # Bei Fork-PRs sind Secrets automatisch nicht verfügbar.
-  NX_CLOUD_ACCESS_TOKEN: ${{ github.event_name == 'pull_request' && secrets.NX_CLOUD_ACCESS_TOKEN_READ || secrets.NX_CLOUD_ACCESS_TOKEN_WRITE }}
+  NX_CLOUD_ACCESS_TOKEN: >-
+    ${{
+      github.event.pull_request.head.repo.full_name == github.repository
+        && secrets.NX_CLOUD_ACCESS_TOKEN_WRITE
+      || secrets.NX_CLOUD_ACCESS_TOKEN_READ
+    }}
   # More heap for Angular SSR build + Playwright webServer in CI.
   NODE_OPTIONS: --max-old-space-size=6144
 jobs:
