@@ -316,7 +316,8 @@ describe('App (testing-library)', () => {
     });
   });
 
-  it('renders bottom navigation with primary links', async () => {
+  it('given app is rendered, when reading bottom navigation, then it exposes four primary links', async () => {
+    // Given
     await render(App, {
       providers: [
         provideRouter([]),
@@ -337,9 +338,13 @@ describe('App (testing-library)', () => {
         { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
       ],
     });
+
+    // When
     const bottomNav = document.querySelector('.bottom-nav');
-    expect(bottomNav).toBeTruthy();
     const links = bottomNav!.querySelectorAll('a');
+
+    // Then
+    expect(bottomNav).toBeTruthy();
     expect(links.length).toBe(4);
     expect(links[0].getAttribute('href')).toBe('/app');
     expect(links[1].getAttribute('href')).toBe('/history');

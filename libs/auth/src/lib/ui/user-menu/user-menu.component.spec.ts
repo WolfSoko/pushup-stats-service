@@ -146,7 +146,8 @@ describe('UserMenuComponent', () => {
     expect(navigateSpy).not.toHaveBeenCalled();
   });
 
-  it('shows Analyse and Erinnerungen in authenticated user menu', async () => {
+  it('given authenticated user, when opening menu, then shows Analyse and Erinnerungen', async () => {
+    // Given
     await render(UserMenuComponent, {
       providers: [
         provideRouter([]),
@@ -157,12 +158,17 @@ describe('UserMenuComponent', () => {
         { provide: Auth, useValue: {} },
       ],
     });
+
+    // When
     fireEvent.click(screen.getByLabelText('Nutzerkonto-Menü'));
+
+    // Then
     expect(screen.getByText('Analyse')).toBeTruthy();
     expect(screen.getByText('Erinnerungen')).toBeTruthy();
   });
 
-  it('navigates to /analysis when Analyse is clicked', async () => {
+  it('given authenticated user, when clicking Analyse, then navigates to /analysis', async () => {
+    // Given
     const { fixture } = await render(UserMenuComponent, {
       providers: [
         provideRouter([{ path: 'analysis', children: [] }]),
@@ -176,14 +182,17 @@ describe('UserMenuComponent', () => {
     const router = fixture.debugElement.injector.get(Router);
     const navigateSpy = jest.spyOn(router, 'navigate');
 
+    // When
     fireEvent.click(screen.getByLabelText('Nutzerkonto-Menü'));
     fireEvent.click(screen.getByText('Analyse'));
     await fixture.whenStable();
 
+    // Then
     expect(navigateSpy).toHaveBeenCalledWith(['/analysis']);
   });
 
-  it('navigates to /reminders when Erinnerungen is clicked', async () => {
+  it('given authenticated user, when clicking Erinnerungen, then navigates to /reminders', async () => {
+    // Given
     const { fixture } = await render(UserMenuComponent, {
       providers: [
         provideRouter([{ path: 'reminders', children: [] }]),
@@ -197,10 +206,12 @@ describe('UserMenuComponent', () => {
     const router = fixture.debugElement.injector.get(Router);
     const navigateSpy = jest.spyOn(router, 'navigate');
 
+    // When
     fireEvent.click(screen.getByLabelText('Nutzerkonto-Menü'));
     fireEvent.click(screen.getByText('Erinnerungen'));
     await fixture.whenStable();
 
+    // Then
     expect(navigateSpy).toHaveBeenCalledWith(['/reminders']);
   });
 

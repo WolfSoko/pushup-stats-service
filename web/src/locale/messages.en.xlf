@@ -3784,7 +3784,7 @@ Deine Position: # ·  Reps        </source>
     </unit>
     <unit id="nav.bottom.aria">
       <segment state="translated">
-        <source>Mobile Navigation</source>
+        <source>Mobile-Navigation</source>
         <target>Mobile navigation</target>
       </segment>
     </unit>
