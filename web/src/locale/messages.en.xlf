@@ -3698,10 +3698,10 @@ Deine Position: # ·  Reps        </source>
         <target>Guest</target>
       </segment>
     </unit>
-    <unit id="user.menu.analysis">
+    <unit id="user.menu.history">
       <segment state="translated">
-        <source>Analyse</source>
-        <target>Analysis</target>
+        <source>Historie</source>
+        <target>History</target>
       </segment>
     </unit>
     <unit id="user.menu.reminders">

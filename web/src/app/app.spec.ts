@@ -347,7 +347,7 @@ describe('App (testing-library)', () => {
     expect(bottomNav).toBeTruthy();
     expect(links.length).toBe(4);
     expect(links[0].getAttribute('href')).toBe('/app');
-    expect(links[1].getAttribute('href')).toBe('/history');
+    expect(links[1].getAttribute('href')).toBe('/analysis');
     expect(links[2].getAttribute('href')).toBe('/leaderboard');
     expect(links[3].getAttribute('href')).toBe('/blog');
   });

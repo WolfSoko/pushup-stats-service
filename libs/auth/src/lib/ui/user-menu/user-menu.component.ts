@@ -46,8 +46,8 @@ export class UserMenuComponent {
     await this.state.logout();
   }
 
-  async goToAnalysis(): Promise<void> {
-    await this.router.navigate(['/analysis']);
+  async goToHistory(): Promise<void> {
+    await this.router.navigate(['/history']);
   }
 
   async goToReminders(): Promise<void> {

@@ -25,12 +25,12 @@
 
       <a
         mat-list-item
-        routerLink="/history"
+        routerLink="/analysis"
         routerLinkActive="active"
         (click)="navOpen.set(false)"
       >
-        <mat-icon matListItemIcon>list</mat-icon>
-        <span matListItemTitle i18n="@@nav.history">Historie</span>
+        <mat-icon matListItemIcon>insights</mat-icon>
+        <span matListItemTitle i18n="@@nav.analysis">Analyse</span>
       </a>
 
       <a
@@ -55,12 +55,12 @@
 
       <a
         mat-list-item
-        routerLink="/analysis"
+        routerLink="/history"
         routerLinkActive="active"
         (click)="navOpen.set(false)"
       >
-        <mat-icon matListItemIcon>insights</mat-icon>
-        <span matListItemTitle i18n="@@nav.analysis">Analyse</span>
+        <mat-icon matListItemIcon>list</mat-icon>
+        <span matListItemTitle i18n="@@nav.history">Historie</span>
       </a>
 
       @if (isLoggedIn()) {
@@ -159,30 +159,22 @@
         routerLink="/app"
         routerLinkActive="active"
         [routerLinkActiveOptions]="{exact:true}"
-        i18n="@@nav.dashboard"
-        >Dashboard</a
       >
-      <a routerLink="/history" routerLinkActive="active" i18n="@@nav.history"
-        >Historie</a
-      >
-      <a
-        routerLink="/leaderboard"
-        routerLinkActive="active"
-        i18n="@@nav.leaderboard"
-        >Bestenliste</a
-      >
-      <a routerLink="/blog" routerLinkActive="active" i18n="@@nav.blog">Blog</a>
-      <a routerLink="/analysis" routerLinkActive="active" i18n="@@nav.analysis"
-        >Analyse</a
-      >
-      @if (isLoggedIn()) {
-      <a
-        routerLink="/reminders"
-        routerLinkActive="active"
-        i18n="@@nav.reminders"
-        >Erinnerungen</a
-      >
-      }
+        <mat-icon>dashboard</mat-icon>
+        <span i18n="@@nav.dashboard">Dashboard</span>
+      </a>
+      <a routerLink="/analysis" routerLinkActive="active">
+        <mat-icon>insights</mat-icon>
+        <span i18n="@@nav.analysis">Analyse</span>
+      </a>
+      <a routerLink="/leaderboard" routerLinkActive="active">
+        <mat-icon>leaderboard</mat-icon>
+        <span i18n="@@nav.leaderboard">Bestenliste</span>
+      </a>
+      <a routerLink="/blog" routerLinkActive="active">
+        <mat-icon>article</mat-icon>
+        <span i18n="@@nav.blog">Blog</span>
+      </a>
     </nav>
 
     <main class="app-content">
@@ -220,9 +212,9 @@
         <mat-icon>dashboard</mat-icon>
         <span i18n="@@nav.dashboard">Dashboard</span>
       </a>
-      <a routerLink="/history" routerLinkActive="active">
-        <mat-icon>list</mat-icon>
-        <span i18n="@@nav.history">Historie</span>
+      <a routerLink="/analysis" routerLinkActive="active">
+        <mat-icon>insights</mat-icon>
+        <span i18n="@@nav.analysis">Analyse</span>
       </a>
       <a routerLink="/leaderboard" routerLinkActive="active">
         <mat-icon>leaderboard</mat-icon>

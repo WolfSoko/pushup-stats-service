@@ -503,12 +503,12 @@
         <source>Passwort braucht Groß-/Kleinbuchstaben, Zahl und Sonderzeichen.</source>
       </segment>
     </unit>
-    <unit id="user.menu.analysis">
+    <unit id="user.menu.history">
       <notes>
         <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.html:25,27</note>
       </notes>
       <segment>
-        <source>Analyse</source>
+        <source>Historie</source>
       </segment>
     </unit>
     <unit id="user.menu.reminders">
@@ -812,28 +812,28 @@
     <unit id="nav.dashboard">
       <notes>
         <note category="location">web/src/app/app.html:23,26</note>
-        <note category="location">web/src/app/app.html:163,165</note>
-        <note category="location">web/src/app/app.html:221,223</note>
+        <note category="location">web/src/app/app.html:164,166</note>
+        <note category="location">web/src/app/app.html:213,215</note>
       </notes>
       <segment>
         <source>Dashboard</source>
       </segment>
     </unit>
-    <unit id="nav.history">
+    <unit id="nav.analysis">
       <notes>
         <note category="location">web/src/app/app.html:33,36</note>
-        <note category="location">web/src/app/app.html:166,169</note>
-        <note category="location">web/src/app/app.html:225,227</note>
+        <note category="location">web/src/app/app.html:168,170</note>
+        <note category="location">web/src/app/app.html:217,219</note>
       </notes>
       <segment>
-        <source>Historie</source>
+        <source>Analyse</source>
       </segment>
     </unit>
     <unit id="nav.leaderboard">
       <notes>
         <note category="location">web/src/app/app.html:43,47</note>
         <note category="location">web/src/app/app.html:172,174</note>
-        <note category="location">web/src/app/app.html:229,231</note>
+        <note category="location">web/src/app/app.html:221,223</note>
       </notes>
       <segment>
         <source>Bestenliste</source>
@@ -842,26 +842,24 @@
     <unit id="nav.blog">
       <notes>
         <note category="location">web/src/app/app.html:53,56</note>
-        <note category="location">web/src/app/app.html:175</note>
-        <note category="location">web/src/app/app.html:233,235</note>
+        <note category="location">web/src/app/app.html:176,178</note>
+        <note category="location">web/src/app/app.html:225,227</note>
       </notes>
       <segment>
         <source>Blog</source>
       </segment>
     </unit>
-    <unit id="nav.analysis">
+    <unit id="nav.history">
       <notes>
         <note category="location">web/src/app/app.html:63,66</note>
-        <note category="location">web/src/app/app.html:176,178</note>
       </notes>
       <segment>
-        <source>Analyse</source>
+        <source>Historie</source>
       </segment>
     </unit>
     <unit id="nav.reminders">
       <notes>
         <note category="location">web/src/app/app.html:74,78</note>
-        <note category="location">web/src/app/app.html:183,186</note>
       </notes>
       <segment>
         <source>Erinnerungen</source>
@@ -941,7 +939,7 @@
     </unit>
     <unit id="footer.aria">
       <notes>
-        <note category="location">web/src/app/app.html:193</note>
+        <note category="location">web/src/app/app.html:185</note>
       </notes>
       <segment>
         <source>Rechtliches</source>
@@ -949,7 +947,7 @@
     </unit>
     <unit id="footer.impressum">
       <notes>
-        <note category="location">web/src/app/app.html:195,197</note>
+        <note category="location">web/src/app/app.html:187,189</note>
       </notes>
       <segment>
         <source>Impressum</source>
@@ -957,7 +955,7 @@
     </unit>
     <unit id="footer.datenschutz">
       <notes>
-        <note category="location">web/src/app/app.html:198,201</note>
+        <note category="location">web/src/app/app.html:190,193</note>
       </notes>
       <segment>
         <source>Datenschutz</source>
@@ -965,7 +963,7 @@
     </unit>
     <unit id="footer.cookies">
       <notes>
-        <note category="location">web/src/app/app.html:205,207</note>
+        <note category="location">web/src/app/app.html:197,199</note>
       </notes>
       <segment>
         <source> Cookie-Einstellungen </source>
@@ -973,7 +971,7 @@
     </unit>
     <unit id="nav.bottom.aria">
       <notes>
-        <note category="location">web/src/app/app.html:212,213</note>
+        <note category="location">web/src/app/app.html:204,205</note>
       </notes>
       <segment>
         <source>Mobile-Navigation</source>

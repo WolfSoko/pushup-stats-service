@@ -146,7 +146,7 @@ describe('UserMenuComponent', () => {
     expect(navigateSpy).not.toHaveBeenCalled();
   });
 
-  it('given authenticated user, when opening menu, then shows Analyse and Erinnerungen', async () => {
+  it('given authenticated user, when opening menu, then shows Historie and Erinnerungen', async () => {
     // Given
     await render(UserMenuComponent, {
       providers: [
@@ -163,15 +163,15 @@ describe('UserMenuComponent', () => {
     fireEvent.click(screen.getByLabelText('Nutzerkonto-Menü'));
 
     // Then
-    expect(screen.getByText('Analyse')).toBeTruthy();
+    expect(screen.getByText('Historie')).toBeTruthy();
     expect(screen.getByText('Erinnerungen')).toBeTruthy();
   });
 
-  it('given authenticated user, when clicking Analyse, then navigates to /analysis', async () => {
+  it('given authenticated user, when clicking Historie, then navigates to /history', async () => {
     // Given
     const { fixture } = await render(UserMenuComponent, {
       providers: [
-        provideRouter([{ path: 'analysis', children: [] }]),
+        provideRouter([{ path: 'history', children: [] }]),
         {
           provide: AuthStore,
           useValue: makeStore({ isAuthenticated: true, isGuest: false }),
@@ -184,11 +184,11 @@ describe('UserMenuComponent', () => {
 
     // When
     fireEvent.click(screen.getByLabelText('Nutzerkonto-Menü'));
-    fireEvent.click(screen.getByText('Analyse'));
+    fireEvent.click(screen.getByText('Historie'));
     await fixture.whenStable();
 
     // Then
-    expect(navigateSpy).toHaveBeenCalledWith(['/analysis']);
+    expect(navigateSpy).toHaveBeenCalledWith(['/history']);
   });
 
   it('given authenticated user, when clicking Erinnerungen, then navigates to /reminders', async () => {
