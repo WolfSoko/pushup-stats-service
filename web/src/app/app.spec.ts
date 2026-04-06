@@ -5,7 +5,7 @@ import { provideRouter } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { of } from 'rxjs';
 import { StatsApiService, UserConfigApiService } from '@pu-stats/data-access';
-import { AuthStore, UserContextService } from '@pu-auth/auth';
+import { AuthService, AuthStore, UserContextService } from '@pu-auth/auth';
 import { AdsStore } from '@pu-stats/ads';
 import { VAPID_PUBLIC_KEY } from '@pu-reminders/reminders';
 import { App } from './app';
@@ -19,6 +19,10 @@ describe('App (testing-library)', () => {
     isGuest: () => false,
     error: () => null,
     logout: () => Promise.resolve(),
+  };
+
+  const authServiceMock = {
+    signInGuestIfNeeded: vitest.fn().mockResolvedValue(undefined),
   };
 
   const userConfigApiMock = {
@@ -80,6 +84,7 @@ describe('App (testing-library)', () => {
           },
         },
         { provide: AuthStore, useValue: authMock },
+        { provide: AuthService, useValue: authServiceMock },
         { provide: UserConfigApiService, useValue: userConfigApiMock },
         { provide: StatsApiService, useValue: statsApiMock },
         { provide: AdsStore, useValue: adsStoreMock },
@@ -104,6 +109,7 @@ describe('App (testing-library)', () => {
           },
         },
         { provide: AuthStore, useValue: authMock },
+        { provide: AuthService, useValue: authServiceMock },
         { provide: UserConfigApiService, useValue: userConfigApiMock },
         { provide: StatsApiService, useValue: statsApiMock },
         { provide: AdsStore, useValue: adsStoreMock },
@@ -149,6 +155,7 @@ describe('App (testing-library)', () => {
           },
         },
         { provide: AuthStore, useValue: authMock },
+        { provide: AuthService, useValue: authServiceMock },
         { provide: UserConfigApiService, useValue: userConfigApiMock },
         { provide: StatsApiService, useValue: statsApiMock },
         { provide: AdsStore, useValue: adsStoreMock },
@@ -178,6 +185,7 @@ describe('App (testing-library)', () => {
             },
           },
           { provide: AuthStore, useValue: authMock },
+          { provide: AuthService, useValue: authServiceMock },
           { provide: UserConfigApiService, useValue: userConfigApiMock },
           { provide: StatsApiService, useValue: statsApiMock },
           { provide: AdsStore, useValue: adsStoreMock },
@@ -215,6 +223,7 @@ describe('App (testing-library)', () => {
             },
           },
           { provide: AuthStore, useValue: authMock },
+          { provide: AuthService, useValue: authServiceMock },
           { provide: UserConfigApiService, useValue: userConfigApiMock },
           { provide: StatsApiService, useValue: statsApiMock },
           { provide: AdsStore, useValue: adsStoreMock },
@@ -252,6 +261,7 @@ describe('App (testing-library)', () => {
             },
           },
           { provide: AuthStore, useValue: authMock },
+          { provide: AuthService, useValue: authServiceMock },
           { provide: UserConfigApiService, useValue: userConfigApiMock },
           { provide: StatsApiService, useValue: statsApiMock },
           { provide: AdsStore, useValue: adsStoreMock },
@@ -289,6 +299,7 @@ describe('App (testing-library)', () => {
             },
           },
           { provide: AuthStore, useValue: authMock },
+          { provide: AuthService, useValue: authServiceMock },
           { provide: UserConfigApiService, useValue: userConfigApiMock },
           { provide: StatsApiService, useValue: statsApiMock },
           { provide: AdsStore, useValue: adsStoreMock },
@@ -326,6 +337,7 @@ describe('App (testing-library)', () => {
           },
         },
         { provide: AuthStore, useValue: authMock },
+        { provide: AuthService, useValue: authServiceMock },
         { provide: UserConfigApiService, useValue: userConfigApiMock },
         { provide: StatsApiService, useValue: statsApiMock },
         { provide: AdsStore, useValue: adsStoreMock },

@@ -164,7 +164,7 @@
     <unit id="user.guestName">
       <notes>
         <note category="location">libs/auth/src/lib/core/user-context.service.ts:17</note>
-        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.ts:38</note>
+        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.ts:41</note>
       </notes>
       <segment>
         <source>Gast</source>
@@ -252,7 +252,7 @@
     </unit>
     <unit id="auth.onboarding.google.error.noUser">
       <notes>
-        <note category="location">libs/auth/src/lib/ui/login/login-ui.store.ts:97</note>
+        <note category="location">libs/auth/src/lib/ui/login/login-ui.store.ts:95</note>
       </notes>
       <segment>
         <source>Kein eingeloggter Nutzer gefunden.</source>
@@ -260,7 +260,7 @@
     </unit>
     <unit id="auth.onboarding.google.error.consentRequired">
       <notes>
-        <note category="location">libs/auth/src/lib/ui/login/login-ui.store.ts:103</note>
+        <note category="location">libs/auth/src/lib/ui/login/login-ui.store.ts:101</note>
       </notes>
       <segment>
         <source>Bitte stimme der Datenverarbeitung zu.</source>
@@ -524,7 +524,7 @@
         <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.html:43,46</note>
       </notes>
       <segment>
-        <source>Du nutzt PUS als Gast</source>
+        <source>Du nutzt die App als Gast</source>
       </segment>
     </unit>
     <unit id="user.menu.convertAccount">
@@ -538,14 +538,23 @@
     <unit id="user.menu.signIn">
       <notes>
         <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.html:53,55</note>
+        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.html:71,73</note>
       </notes>
       <segment>
         <source>Anmelden</source>
       </segment>
     </unit>
+    <unit id="user.menu.tryAsGuest">
+      <notes>
+        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.html:67,69</note>
+      </notes>
+      <segment>
+        <source>Als Gast ausprobieren</source>
+      </segment>
+    </unit>
     <unit id="user.menu.aria">
       <notes>
-        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.ts:36</note>
+        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.ts:38</note>
       </notes>
       <segment>
         <source>Nutzerkonto-Menü</source>
@@ -553,31 +562,39 @@
     </unit>
     <unit id="user.menu.guestAria">
       <notes>
-        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.ts:37</note>
+        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.ts:39</note>
       </notes>
       <segment>
         <source>Gast-Menü</source>
       </segment>
     </unit>
-    <unit id="quickAdd.fab.customValue">
+    <unit id="user.menu.anonAria">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.html:8,10</note>
+        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.ts:40</note>
       </notes>
       <segment>
-        <source>Eigener Wert</source>
+        <source>Menü</source>
       </segment>
     </unit>
     <unit id="quickAdd.fab.customValueAria">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.html:13,14</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.html:10,11</note>
       </notes>
       <segment>
         <source>Eigenen Wert eingeben</source>
       </segment>
     </unit>
+    <unit id="quickAdd.fab.customValue">
+      <notes>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.html:15,17</note>
+      </notes>
+      <segment>
+        <source>Eigener Wert</source>
+      </segment>
+    </unit>
     <unit id="quickAdd.fab.quickAddReps">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.html:22,23</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.html:26,27</note>
       </notes>
       <segment>
         <source>+<ph id="0" equiv="INTERPOLATION" disp="{{ item.value }}"/> Reps</source>
@@ -2135,6 +2152,7 @@
     <unit id="push.subscribe.error">
       <notes>
         <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:413</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:484</note>
       </notes>
       <segment>
         <source>Push konnte nicht aktiviert werden.</source>
@@ -2145,7 +2163,8 @@
         <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:414</note>
         <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:434</note>
         <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:450</note>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:467</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:469</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:485</note>
       </notes>
       <segment>
         <source>Schließen</source>
@@ -2162,7 +2181,7 @@
     <unit id="reminder.save.error">
       <notes>
         <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:449</note>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:466</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:468</note>
       </notes>
       <segment>
         <source>Einstellungen konnten nicht gespeichert werden.</source>
@@ -2605,7 +2624,7 @@
     </unit>
     <unit id="analysis.weekTrendTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:56,58</note>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:51,53</note>
       </notes>
       <segment>
         <source>Wochentrend</source>
@@ -2613,7 +2632,7 @@
     </unit>
     <unit id="analysis.weekCol">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:63,64</note>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:58,59</note>
       </notes>
       <segment>
         <source>Woche</source>
@@ -2621,8 +2640,8 @@
     </unit>
     <unit id="analysis.repsCol">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:69,70</note>
-        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:95,96</note>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:64,65</note>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:90,91</note>
       </notes>
       <segment>
         <source>Reps</source>
@@ -2630,7 +2649,7 @@
     </unit>
     <unit id="analysis.monthTrendTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:82,84</note>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:77,79</note>
       </notes>
       <segment>
         <source>Monatstrend</source>
@@ -2638,7 +2657,7 @@
     </unit>
     <unit id="analysis.monthCol">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:89,90</note>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:84,85</note>
       </notes>
       <segment>
         <source>Monat</source>
@@ -2646,7 +2665,7 @@
     </unit>
     <unit id="analysis.bestStreaksTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:108,110</note>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:103,105</note>
       </notes>
       <segment>
         <source>Bestwerte &amp; Streaks</source>
@@ -2654,7 +2673,7 @@
     </unit>
     <unit id="analysis.bestSingleEntry">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:114,116</note>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:109,111</note>
       </notes>
       <segment>
         <source>Bestwert Einzel-Eintrag:</source>
@@ -2662,7 +2681,7 @@
     </unit>
     <unit id="analysis.bestDay">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:119,121</note>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:114,116</note>
       </notes>
       <segment>
         <source>Bester Tag:</source>
@@ -2670,7 +2689,7 @@
     </unit>
     <unit id="analysis.currentStreak">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:126,128</note>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:121,123</note>
       </notes>
       <segment>
         <source>Aktuelle Streak:</source>
@@ -2678,8 +2697,8 @@
     </unit>
     <unit id="analysis.streakDays">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:129,130</note>
-        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:137,138</note>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:124,125</note>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:132,133</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="INTERPOLATION" disp="{{ store.currentStreak() }}"/> Tage</source>
@@ -2687,7 +2706,7 @@
     </unit>
     <unit id="analysis.longestStreak">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:134,136</note>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:129,131</note>
       </notes>
       <segment>
         <source>Längste Streak:</source>
@@ -2695,7 +2714,7 @@
     </unit>
     <unit id="analysis.typesTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:147,149</note>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:142,144</note>
       </notes>
       <segment>
         <source>Typen (Anteile)</source>
@@ -2703,7 +2722,7 @@
     </unit>
     <unit id="analysis.heatmapTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:159,161</note>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:154,156</note>
       </notes>
       <segment>
         <source>Heatmap (Wochentag/Uhrzeit)</source>
@@ -2803,7 +2822,7 @@
         <note category="location">web/src/app/stats/shell/settings-page.component.ts:54,56</note>
       </notes>
       <segment>
-        <source>Du nutzt PUS als Gast. Erstelle ein Konto um alle Funktionen zu nutzen.</source>
+        <source>Du nutzt die App als Gast. Erstelle ein Konto um alle Funktionen zu nutzen.</source>
       </segment>
     </unit>
     <unit id="guest.banner.cta">
@@ -3224,7 +3243,7 @@
     </unit>
     <unit id="quickActionsTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:136,138</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:137,139</note>
       </notes>
       <segment>
         <source>Schnellaktionen</source>
@@ -3232,7 +3251,7 @@
     </unit>
     <unit id="quickActionsSubtitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:139,141</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:140,142</note>
       </notes>
       <segment>
         <source>Schnell eintragen ohne Dialog</source>
@@ -3240,7 +3259,7 @@
     </unit>
     <unit id="quickAdd10">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:150,152</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:151,153</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">bolt</pc> +10 Reps </source>
@@ -3248,7 +3267,7 @@
     </unit>
     <unit id="quickAdd20">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:160,162</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:161,163</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">flash_on</pc> +20 Reps </source>
@@ -3256,7 +3275,7 @@
     </unit>
     <unit id="quickAdd30">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:170,172</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:171,173</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">whatshot</pc> +30 Reps </source>
@@ -3264,7 +3283,7 @@
     </unit>
     <unit id="quickAddNew">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:180,182</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:181,183</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">edit_note</pc> Neu </source>
@@ -3272,7 +3291,7 @@
     </unit>
     <unit id="loadingStats">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:192,196</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:193,197</note>
       </notes>
       <segment>
         <source> Lade Statistikdaten… </source>
@@ -3280,7 +3299,7 @@
     </unit>
     <unit id="dashboard.latestEntries">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:197,198</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:198,199</note>
       </notes>
       <segment>
         <source>Letzte Einträge</source>
@@ -3288,7 +3307,7 @@
     </unit>
     <unit id="ads.dashboard.aria">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:202</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:203</note>
       </notes>
       <segment>
         <source>Werbung</source>

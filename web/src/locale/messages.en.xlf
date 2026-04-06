@@ -3718,8 +3718,20 @@ Deine Position: # ·  Reps        </source>
     </unit>
     <unit id="user.menu.guestHint">
       <segment state="translated">
-        <source>Du nutzt PUS als Gast</source>
-        <target>You are using PUS as a guest</target>
+        <source>Du nutzt die App als Gast</source>
+        <target>You are using the app as a guest</target>
+      </segment>
+    </unit>
+    <unit id="user.menu.tryAsGuest">
+      <segment state="translated">
+        <source>Als Gast ausprobieren</source>
+        <target>Try as guest</target>
+      </segment>
+    </unit>
+    <unit id="user.menu.anonAria">
+      <segment state="translated">
+        <source>Menü</source>
+        <target>Menu</target>
       </segment>
     </unit>
     <unit id="user.menu.signIn">
@@ -3742,8 +3754,8 @@ Deine Position: # ·  Reps        </source>
     </unit>
     <unit id="guest.banner.text">
       <segment state="translated">
-        <source>Du nutzt PUS als Gast. Erstelle ein Konto um alle Funktionen zu nutzen.</source>
-        <target>You are using PUS as a guest. Create an account to use all features.</target>
+        <source>Du nutzt die App als Gast. Erstelle ein Konto um alle Funktionen zu nutzen.</source>
+        <target>You are using the app as a guest. Create an account to use all features.</target>
       </segment>
     </unit>
     <unit id="guest.banner.cta">
