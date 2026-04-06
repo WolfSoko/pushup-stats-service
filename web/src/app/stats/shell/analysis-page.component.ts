@@ -50,6 +50,9 @@ import { AnalysisStore } from '../analysis.store';
             <mat-card-title i18n="@@analysis.weekTrendTitle"
               >Wochentrend</mat-card-title
             >
+            <mat-card-subtitle>{{
+              store.weekTrendSubtitle()
+            }}</mat-card-subtitle>
           </mat-card-header>
           <mat-card-content>
             <mat-table [dataSource]="store.weekTrend()">
@@ -76,6 +79,9 @@ import { AnalysisStore } from '../analysis.store';
             <mat-card-title i18n="@@analysis.monthTrendTitle"
               >Monatstrend</mat-card-title
             >
+            <mat-card-subtitle>{{
+              store.monthTrendSubtitle()
+            }}</mat-card-subtitle>
           </mat-card-header>
           <mat-card-content>
             <mat-table [dataSource]="store.monthTrend()">

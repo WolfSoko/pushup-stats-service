@@ -160,10 +160,40 @@ describe('AnalysisPageComponent', () => {
     await fixture.whenStable();
   });
 
-  it('builds week and month trend series', () => {
+  it('builds week and month trend series from expanded ranges', () => {
     const { store } = fixture.componentInstance;
     expect(store.weekTrend().length).toBeGreaterThan(0);
     expect(store.monthTrend().length).toBeGreaterThan(0);
+  });
+
+  it('expands filter to full calendar weeks for weekTrend', () => {
+    const { store } = fixture.componentInstance;
+    // The week filter should always start on Monday and end on Sunday
+    const wf = store.weekFilter();
+    const fromDate = new Date(`${wf.from}T00:00:00`);
+    const toDate = new Date(`${wf.to}T00:00:00`);
+    expect(fromDate.getDay()).toBe(1); // Monday
+    expect(toDate.getDay()).toBe(0); // Sunday
+  });
+
+  it('expands filter to full calendar months for monthTrend', () => {
+    const { store } = fixture.componentInstance;
+    const mf = store.monthFilter();
+    const fromDate = new Date(`${mf.from}T00:00:00`);
+    const toDate = new Date(`${mf.to}T00:00:00`);
+    expect(fromDate.getDate()).toBe(1); // first of month
+    // last day of month: next day should be 1st
+    const nextDay = new Date(toDate);
+    nextDay.setDate(nextDay.getDate() + 1);
+    expect(nextDay.getDate()).toBe(1);
+  });
+
+  it('provides subtitle strings for trend cards', () => {
+    const { store } = fixture.componentInstance;
+    expect(store.weekTrendSubtitle()).toBeTruthy();
+    expect(store.monthTrendSubtitle()).toBeTruthy();
+    // Subtitles should contain a date separator
+    expect(store.weekTrendSubtitle()).toContain('–');
   });
 
   it('computes type breakdown, treating missing type as Standard', () => {
