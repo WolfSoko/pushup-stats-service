@@ -109,6 +109,10 @@
             {
               "replace": "web/src/env/fire.config.ts",
               "with": "web/src/env/fire.config.staging.ts"
+            },
+            {
+              "replace": "web/src/env/firebase-runtime.ts",
+              "with": "web/src/env/firebase-runtime.staging.ts"
             }
           ]
         }
