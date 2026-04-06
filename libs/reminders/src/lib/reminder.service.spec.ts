@@ -1,4 +1,4 @@
-import { signal } from '@angular/core';
+import { LOCALE_ID, signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { ReminderStore } from './reminder.store';
 import { ReminderPermissionService } from './reminder-permission.service';
@@ -41,12 +41,14 @@ describe('ReminderService', () => {
 
   function createService(
     configOverride?: Partial<ReminderConfig>,
-    pushStatus: PushStatus = 'not-subscribed'
+    pushStatus: PushStatus = 'not-subscribed',
+    locale = 'de'
   ): ReminderService {
     const config = { ...defaultConfig, ...configOverride };
     TestBed.configureTestingModule({
       providers: [
         ReminderService,
+        { provide: LOCALE_ID, useValue: locale },
         {
           provide: ReminderStore,
           useValue: { config: signal(config) },
@@ -237,6 +239,54 @@ describe('ReminderService', () => {
     } else {
       delete (document as Record<string, unknown>)['baseURI'];
     }
+
+    service.stop();
+  });
+
+  it('should include locale-prefixed url in notification data (Android navigation fix)', async () => {
+    const service = createService(undefined, 'not-subscribed', 'de');
+    service.start({ userId: 'u1' });
+    jest.advanceTimersByTime(5_000);
+    await flushMicrotasks();
+
+    expect(showNotificationSpy).toHaveBeenCalledWith(
+      expect.any(String),
+      expect.objectContaining({
+        data: { url: '/de/app', locale: 'de' },
+      })
+    );
+
+    service.stop();
+  });
+
+  it('should use en locale prefix in notification data when locale is en', async () => {
+    const service = createService(undefined, 'not-subscribed', 'en');
+    service.start({ userId: 'u1' });
+    jest.advanceTimersByTime(5_000);
+    await flushMicrotasks();
+
+    expect(showNotificationSpy).toHaveBeenCalledWith(
+      expect.any(String),
+      expect.objectContaining({
+        data: { url: '/en/app', locale: 'en' },
+      })
+    );
+
+    service.stop();
+  });
+
+  it('should normalize regional locale (en-US → en) in notification data', async () => {
+    const service = createService(undefined, 'not-subscribed', 'en-US');
+    service.start({ userId: 'u1' });
+    jest.advanceTimersByTime(5_000);
+    await flushMicrotasks();
+
+    expect(showNotificationSpy).toHaveBeenCalledWith(
+      expect.any(String),
+      expect.objectContaining({
+        data: { url: '/en/app', locale: 'en' },
+      })
+    );
 
     service.stop();
   });
