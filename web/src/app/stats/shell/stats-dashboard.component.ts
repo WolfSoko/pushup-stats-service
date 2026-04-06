@@ -16,6 +16,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { LiveDataStore, StatsApiService } from '@pu-stats/data-access';
+import { appendLocalOffset } from '@pu-stats/models';
 import { firstValueFrom } from 'rxjs';
 import { QuickAddBridgeService } from '@pu-stats/quick-add';
 import { AdSlotComponent } from '@pu-stats/ads';
@@ -173,7 +174,7 @@ export class StatsDashboardComponent {
 
     await firstValueFrom(
       this.api.createPushup({
-        timestamp: `${y}-${m}-${d}T${hh}:${mm}`,
+        timestamp: appendLocalOffset(`${y}-${m}-${d}T${hh}:${mm}`),
         reps,
         source: 'web',
         type: 'Standard',
