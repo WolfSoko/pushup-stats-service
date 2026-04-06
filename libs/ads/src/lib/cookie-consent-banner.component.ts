@@ -90,6 +90,12 @@ function writeConsent(choice: 'all' | 'necessary'): void {
       box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.3);
     }
 
+    @media (max-width: 767px) {
+      .consent-banner {
+        bottom: 56px;
+      }
+    }
+
     :host-context(html.light-theme) .consent-banner {
       background: #ffffff;
       color: #1e293b;
