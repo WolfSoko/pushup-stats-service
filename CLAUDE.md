@@ -152,8 +152,22 @@ pnpm nx run-many --target=lint   # Lint all projects
 - **Deploy gate:** CI fast-forwards the `deploy` branch from `main` only after all checks pass (`promote-to-deploy` job). Both deployment targets watch this branch.
 - **Firebase Hosting** (static, `.github/workflows/firebase-hosting-merge.yml`): Triggers on push to `deploy` branch.
 - **Firebase App Hosting** (SSR/Cloud Run, `apphosting.yaml`): Auto-deploys on push to `deploy` branch (configured in Firebase Console).
-- **PR Previews** (`.github/workflows/firebase-hosting-pull-request.yml`): Deploys a preview channel on every PR (same-repo only).
+- **PR Previews** (`.github/workflows/firebase-hosting-pull-request.yml`): Full staging deployment on every PR (same-repo only) — see Staging Environment below.
 - **Rule:** No deployment path should bypass CI. Both Hosting and App Hosting are gated on green CI.
+
+### Staging Environment
+
+A separate Firebase project (`pushup-stats-staging-867b7`) provides full isolation for PR previews:
+
+- **PR workflow deploys:** Hosting preview + Cloud Functions + Firestore rules & indexes to the staging project.
+- **Web app build:** Uses `staging` configuration (`pnpm nx run web:build -c staging`) which swaps `fire.config.ts` → `fire.config.staging.ts` and `firebase-runtime.ts` → `firebase-runtime.staging.ts` (separate VAPID key for staging push notifications).
+- **Staging config:** `web/src/env/fire.config.staging.ts` points to the staging project.
+- **App Hosting config:** `apphosting.staging.yaml` (reduced `maxInstances: 1`).
+- **Firebase alias:** `staging` alias in `data-store/.firebaserc`.
+- **GitHub Secret required:** `FIREBASE_SERVICE_ACCOUNT_PUSHUP_STATS_STAGING` — service account JSON for the staging project (must be added in GitHub repo settings).
+- **Firestore region:** `europe-west3` (Frankfurt). Must match when creating the database in Firebase Console.
+- **Firestore rules & indexes** are shared source files (`data-store/firestore.rules`, `data-store/firestore.indexes.json`) deployed to both projects.
+- **Infra scripts:** `infra/setup-staging.sh` automates full project setup (APIs, SA, IAM, secrets); `infra/teardown-staging.sh` removes deploy resources. Both support `--dry-run`.
 
 ## Pre-Push Checklist
 
@@ -212,7 +226,7 @@ Do NOT push if any of these fail. Fix first, then push.
 ### UserStats Versioning System
 
 **Version tracking enables automatic rebuilds when calculation logic changes:**
-- Every `UserStats` rebuild sets `version: USERSTATS_VERSION` (current v2)
+- Every `UserStats` rebuild sets `version: USERSTATS_VERSION` (current v3)
 - Cloud Function checks: `if (stored.version < USERSTATS_VERSION) → auto-rebuild`
 - New users: Auto-rebuild on first entry ensures correct initialization with today's period keys
 
