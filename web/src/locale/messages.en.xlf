@@ -3698,6 +3698,18 @@ Deine Position: # ·  Reps        </source>
         <target>Guest</target>
       </segment>
     </unit>
+    <unit id="user.menu.analysis">
+      <segment state="translated">
+        <source>Analyse</source>
+        <target>Analysis</target>
+      </segment>
+    </unit>
+    <unit id="user.menu.reminders">
+      <segment state="translated">
+        <source>Erinnerungen</source>
+        <target>Reminders</target>
+      </segment>
+    </unit>
     <unit id="user.menu.settings">
       <segment state="translated">
         <source>Einstellungen</source>
@@ -3768,6 +3780,12 @@ Deine Position: # ·  Reps        </source>
       <segment state="translated">
         <source>Hauptnavigation</source>
         <target>Main navigation</target>
+      </segment>
+    </unit>
+    <unit id="nav.bottom.aria">
+      <segment state="translated">
+        <source>Mobile Navigation</source>
+        <target>Mobile navigation</target>
       </segment>
     </unit>
     <unit id="auth.register.error.profileSaveFailed">

@@ -20,6 +20,15 @@
       <span class="email">{{ user()?.email }}</span>
     </div>
     <mat-divider></mat-divider>
+    <button mat-menu-item (click)="goToAnalysis()">
+      <mat-icon>insights</mat-icon>
+      <span i18n="@@user.menu.analysis">Analyse</span>
+    </button>
+    <button mat-menu-item (click)="goToReminders()">
+      <mat-icon>notifications</mat-icon>
+      <span i18n="@@user.menu.reminders">Erinnerungen</span>
+    </button>
+    <mat-divider></mat-divider>
     <button mat-menu-item (click)="goToSettings()">
       <mat-icon>settings</mat-icon>
       <span i18n="@@user.menu.settings">Einstellungen</span>

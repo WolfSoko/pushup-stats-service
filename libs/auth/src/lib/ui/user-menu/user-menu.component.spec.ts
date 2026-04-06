@@ -146,6 +146,64 @@ describe('UserMenuComponent', () => {
     expect(navigateSpy).not.toHaveBeenCalled();
   });
 
+  it('shows Analyse and Erinnerungen in authenticated user menu', async () => {
+    await render(UserMenuComponent, {
+      providers: [
+        provideRouter([]),
+        {
+          provide: AuthStore,
+          useValue: makeStore({ isAuthenticated: true, isGuest: false }),
+        },
+        { provide: Auth, useValue: {} },
+      ],
+    });
+    fireEvent.click(screen.getByLabelText('Nutzerkonto-Menü'));
+    expect(screen.getByText('Analyse')).toBeTruthy();
+    expect(screen.getByText('Erinnerungen')).toBeTruthy();
+  });
+
+  it('navigates to /analysis when Analyse is clicked', async () => {
+    const { fixture } = await render(UserMenuComponent, {
+      providers: [
+        provideRouter([{ path: 'analysis', children: [] }]),
+        {
+          provide: AuthStore,
+          useValue: makeStore({ isAuthenticated: true, isGuest: false }),
+        },
+        { provide: Auth, useValue: {} },
+      ],
+    });
+    const router = fixture.debugElement.injector.get(Router);
+    const navigateSpy = jest.spyOn(router, 'navigate');
+
+    fireEvent.click(screen.getByLabelText('Nutzerkonto-Menü'));
+    fireEvent.click(screen.getByText('Analyse'));
+    await fixture.whenStable();
+
+    expect(navigateSpy).toHaveBeenCalledWith(['/analysis']);
+  });
+
+  it('navigates to /reminders when Erinnerungen is clicked', async () => {
+    const { fixture } = await render(UserMenuComponent, {
+      providers: [
+        provideRouter([{ path: 'reminders', children: [] }]),
+        {
+          provide: AuthStore,
+          useValue: makeStore({ isAuthenticated: true, isGuest: false }),
+        },
+        { provide: Auth, useValue: {} },
+      ],
+    });
+    const router = fixture.debugElement.injector.get(Router);
+    const navigateSpy = jest.spyOn(router, 'navigate');
+
+    fireEvent.click(screen.getByLabelText('Nutzerkonto-Menü'));
+    fireEvent.click(screen.getByText('Erinnerungen'));
+    await fixture.whenStable();
+
+    expect(navigateSpy).toHaveBeenCalledWith(['/reminders']);
+  });
+
   it('shows spinner when loading', async () => {
     await render(UserMenuComponent, {
       providers: [

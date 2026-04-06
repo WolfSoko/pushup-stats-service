@@ -316,6 +316,37 @@ describe('App (testing-library)', () => {
     });
   });
 
+  it('renders bottom navigation with primary links', async () => {
+    await render(App, {
+      providers: [
+        provideRouter([]),
+        { provide: PLATFORM_ID, useValue: 'browser' },
+        {
+          provide: UserContextService,
+          useValue: {
+            userNameSafe: userNameSignal.asReadonly(),
+            userIdSafe: () => 'u1',
+            isAdmin: () => false,
+            isGuest: () => false,
+          },
+        },
+        { provide: AuthStore, useValue: authMock },
+        { provide: UserConfigApiService, useValue: userConfigApiMock },
+        { provide: StatsApiService, useValue: statsApiMock },
+        { provide: AdsStore, useValue: adsStoreMock },
+        { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
+      ],
+    });
+    const bottomNav = document.querySelector('.bottom-nav');
+    expect(bottomNav).toBeTruthy();
+    const links = bottomNav!.querySelectorAll('a');
+    expect(links.length).toBe(4);
+    expect(links[0].getAttribute('href')).toBe('/app');
+    expect(links[1].getAttribute('href')).toBe('/history');
+    expect(links[2].getAttribute('href')).toBe('/leaderboard');
+    expect(links[3].getAttribute('href')).toBe('/blog');
+  });
+
   it('keeps base document title when no seo route data is active', async () => {
     await render(App, {
       providers: [
