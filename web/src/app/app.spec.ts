@@ -341,10 +341,13 @@ describe('App (testing-library)', () => {
 
     // When
     const bottomNav = document.querySelector('.bottom-nav');
-    const links = bottomNav!.querySelectorAll('a');
 
     // Then
     expect(bottomNav).toBeTruthy();
+    if (!bottomNav) {
+      throw new Error('Expected .bottom-nav to be rendered');
+    }
+    const links = bottomNav.querySelectorAll('a');
     expect(links.length).toBe(4);
     expect(links[0].getAttribute('href')).toBe('/app');
     expect(links[1].getAttribute('href')).toBe('/analysis');
