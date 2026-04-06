@@ -164,6 +164,13 @@ mat-card-header + mat-card-footer {
   margin-top: 10px;
 }
 
+// Offset snackbar above mobile bottom nav (56px height)
+@media (max-width: 767px) {
+  .mat-mdc-snack-bar-container {
+    margin-bottom: 56px !important;
+  }
+}
+
 .mdc-text-field--outlined {
   --mdc-outlined-text-field-outline-color: rgba(120, 149, 209, 0.42);
 }
