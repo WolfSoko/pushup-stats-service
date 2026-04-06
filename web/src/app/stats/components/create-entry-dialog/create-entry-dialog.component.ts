@@ -235,9 +235,10 @@ export class CreateEntryDialogComponent {
     this.data?.type || 'Standard',
     { nonNullable: true }
   );
-  readonly sourceControl = new FormControl<string>(this.data?.source || 'web', {
-    nonNullable: true,
-  });
+  readonly sourceControl = new FormControl<string>(
+    this.normalizeSource(this.data?.source || 'web'),
+    { nonNullable: true }
+  );
 
   private readonly typeOptions = [
     'Standard',
@@ -276,7 +277,7 @@ export class CreateEntryDialogComponent {
   }
 
   updateSet(index: number, value: string): void {
-    const num = Number(value) || 0;
+    const num = Math.max(0, Number(value) || 0);
     this.sets.update((s) => s.map((v, i) => (i === index ? num : v)));
   }
 
