@@ -104,6 +104,7 @@
         "staging": {
           "localize": ["de", "en"],
           "outputHashing": "all",
+          "serviceWorker": "web/ngsw-config.json",
           "fileReplacements": [
             {
               "replace": "web/src/env/fire.config.ts",
