@@ -143,7 +143,7 @@ if [[ "$DRY_RUN" == false ]]; then
   create_secret_if_missing "VAPID_PUBLIC_KEY" "$VAPID_PUBLIC"
 
   echo
-  echo "  ⚠  Update web/src/env/fire.config.staging.ts vapidPublicKey if needed:"
+  echo "  ⚠  Update web/src/env/firebase-runtime.staging.ts vapidPublicKey:"
   echo "     $VAPID_PUBLIC"
 else
   echo "▶ npx web-push generate-vapid-keys"
