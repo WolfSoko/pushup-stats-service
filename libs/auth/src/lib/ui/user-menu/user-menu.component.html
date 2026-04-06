@@ -29,7 +29,7 @@
       <span i18n="@@user.menu.logout">Abmelden</span>
     </button>
   </mat-menu>
-} @else {
+} @else if (isGuest()) {
   <button
     mat-icon-button
     [matMenuTriggerFor]="guestMenu"
@@ -40,13 +40,31 @@
   <mat-menu #guestMenu="matMenu">
     <div class="user-info">
       <span class="display-name" i18n="@@user.menu.guestHint"
-        >Du nutzt PUS als Gast</span
+        >Du nutzt die App als Gast</span
       >
     </div>
     <mat-divider></mat-divider>
     <button mat-menu-item (click)="convertToAccount()">
       <mat-icon>person_add</mat-icon>
       <span i18n="@@user.menu.convertAccount">Umwandeln in Nutzerkonto</span>
+    </button>
+    <button mat-menu-item (click)="signIn()">
+      <mat-icon>login</mat-icon>
+      <span i18n="@@user.menu.signIn">Anmelden</span>
+    </button>
+  </mat-menu>
+} @else {
+  <button
+    mat-icon-button
+    [matMenuTriggerFor]="anonMenu"
+    [attr.aria-label]="ariaAnonMenu"
+  >
+    <mat-icon>person_outline</mat-icon>
+  </button>
+  <mat-menu #anonMenu="matMenu">
+    <button mat-menu-item (click)="tryAsGuest()">
+      <mat-icon>explore</mat-icon>
+      <span i18n="@@user.menu.tryAsGuest">Als Gast ausprobieren</span>
     </button>
     <button mat-menu-item (click)="signIn()">
       <mat-icon>login</mat-icon>

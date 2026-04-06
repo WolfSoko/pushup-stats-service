@@ -51,8 +51,8 @@ import { PushSubscriptionService } from '@pu-reminders/reminders';
             <div class="guest-banner">
               <mat-icon>info</mat-icon>
               <span i18n="@@guest.banner.text"
-                >Du nutzt PUS als Gast. Erstelle ein Konto um alle Funktionen zu
-                nutzen.</span
+                >Du nutzt die App als Gast. Erstelle ein Konto um alle
+                Funktionen zu nutzen.</span
               >
               <a
                 mat-stroked-button
