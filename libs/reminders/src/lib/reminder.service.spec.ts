@@ -275,6 +275,22 @@ describe('ReminderService', () => {
     service.stop();
   });
 
+  it('should normalize regional locale (en-US → en) in notification data', async () => {
+    const service = createService(undefined, 'not-subscribed', 'en-US');
+    service.start({ userId: 'u1' });
+    jest.advanceTimersByTime(5_000);
+    await flushMicrotasks();
+
+    expect(showNotificationSpy).toHaveBeenCalledWith(
+      expect.any(String),
+      expect.objectContaining({
+        data: { url: '/en/app', locale: 'en' },
+      })
+    );
+
+    service.stop();
+  });
+
   it('should not show notification when push subscription is active', async () => {
     const service = createService(undefined, 'subscribed');
     service.start({ userId: 'u1' });

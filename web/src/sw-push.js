@@ -40,7 +40,8 @@ self.addEventListener('notificationclick', (event) => {
   event.notification.close();
 
   const action = event.action;
-  const locale = event.notification.data?.locale || 'de';
+  const rawLocale = String(event.notification.data?.locale || '').toLowerCase();
+  const locale = rawLocale.startsWith('en') ? 'en' : 'de';
 
   if (action === 'snooze') {
     // Call snoozeReminder Firebase Function via postMessage to app
@@ -52,7 +53,7 @@ self.addEventListener('notificationclick', (event) => {
             clientList[0].postMessage({ type: 'SNOOZE_REMINDER', snoozeMinutes: 30 });
           } else {
             // App not open — open it with snooze param so it can call the function
-            return clients.openWindow(`/${locale}/?snooze=30`);
+            return clients.openWindow(`/${locale}/app?snooze=30`);
           }
         })
     );

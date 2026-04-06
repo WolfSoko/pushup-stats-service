@@ -47,7 +47,10 @@ export class ReminderService {
   private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
   private readonly motivationStore = inject(MotivationStore);
   private readonly pushStore = inject(PushSubscriptionStore);
-  private readonly locale = inject(LOCALE_ID);
+  private readonly locale = (() => {
+    const l = inject(LOCALE_ID).toLowerCase();
+    return l.startsWith('en') ? 'en' : 'de';
+  })();
 
   private intervalId: ReturnType<typeof setInterval> | null = null;
   private initialTickTimeoutId: ReturnType<typeof setTimeout> | null = null;
