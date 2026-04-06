@@ -234,7 +234,7 @@
       <notes>
         <note category="location">libs/auth/src/lib/ui/login/google-onboarding-dialog/google-onboarding-dialog.component.html:67,69</note>
         <note category="location">libs/auth/src/lib/ui/register/register.component.html:314,315</note>
-        <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:173,174</note>
+        <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:191,192</note>
         <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:217,219</note>
         <note category="location">web/src/app/stats/shell/settings-page.component.ts:254,255</note>
       </notes>
@@ -2271,7 +2271,7 @@
     </unit>
     <unit id="createDialogTitle">
       <notes>
-        <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:79,82</note>
+        <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:75,78</note>
       </notes>
       <segment>
         <source>Neuen Eintrag anlegen</source>
@@ -2279,32 +2279,16 @@
     </unit>
     <unit id="timestampLabel">
       <notes>
-        <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:83,85</note>
+        <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:79,81</note>
         <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:158,160</note>
       </notes>
       <segment>
         <source>Zeitpunkt</source>
       </segment>
     </unit>
-    <unit id="setsLabel">
-      <notes>
-        <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:95,96</note>
-      </notes>
-      <segment>
-        <source>Sets</source>
-      </segment>
-    </unit>
-    <unit id="addSetAria">
-      <notes>
-        <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:101,103</note>
-      </notes>
-      <segment>
-        <source>Set hinzufügen</source>
-      </segment>
-    </unit>
     <unit id="setLabel">
       <notes>
-        <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:109,110</note>
+        <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:93,94</note>
       </notes>
       <segment>
         <source>Set <ph id="0" equiv="INTERPOLATION" disp="{{ $index + 1 }}"/></source>
@@ -2312,23 +2296,49 @@
     </unit>
     <unit id="removeSetAria">
       <notes>
-        <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:124,126</note>
+        <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:107,109</note>
       </notes>
       <segment>
         <source>Set entfernen</source>
       </segment>
     </unit>
+    <unit id="addSetAria">
+      <notes>
+        <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:119,121</note>
+        <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:145,146</note>
+      </notes>
+      <segment>
+        <source>Set hinzufügen</source>
+      </segment>
+    </unit>
     <unit id="totalReps">
       <notes>
-        <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:132,134</note>
+        <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:124,126</note>
       </notes>
       <segment>
         <source> Gesamt: <ph id="0" equiv="INTERPOLATION" disp="{{ totalReps() }}"/> Reps </source>
       </segment>
     </unit>
+    <unit id="repsLabel">
+      <notes>
+        <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:130,131</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:169,170</note>
+      </notes>
+      <segment>
+        <source>Reps</source>
+      </segment>
+    </unit>
+    <unit id="addSetTooltip">
+      <notes>
+        <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:147,149</note>
+      </notes>
+      <segment>
+        <source>Weiteres Set hinzufügen</source>
+      </segment>
+    </unit>
     <unit id="typeLabel">
       <notes>
-        <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:137,138</note>
+        <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:155,156</note>
         <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:181,182</note>
       </notes>
       <segment>
@@ -2337,7 +2347,7 @@
     </unit>
     <unit id="typePlaceholder">
       <notes>
-        <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:143,144</note>
+        <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:161,162</note>
         <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:187,188</note>
       </notes>
       <segment>
@@ -2346,7 +2356,7 @@
     </unit>
     <unit id="sourceLabel">
       <notes>
-        <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:154,155</note>
+        <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:172,173</note>
         <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:198,200</note>
       </notes>
       <segment>
@@ -2355,7 +2365,7 @@
     </unit>
     <unit id="sourcePlaceholder">
       <notes>
-        <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:160,161</note>
+        <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:178,179</note>
         <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:204,205</note>
       </notes>
       <segment>
@@ -2364,7 +2374,7 @@
     </unit>
     <unit id="saveEntry">
       <notes>
-        <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:181,183</note>
+        <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:199,201</note>
       </notes>
       <segment>
         <source> Speichern </source>
@@ -2661,14 +2671,6 @@
       </notes>
       <segment>
         <source>Eintrag bearbeiten</source>
-      </segment>
-    </unit>
-    <unit id="repsLabel">
-      <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:169,170</note>
-      </notes>
-      <segment>
-        <source>Reps</source>
       </segment>
     </unit>
     <unit id="saveChanges">

@@ -2733,6 +2733,12 @@ Deine Position: # ·  Reps        </source>
         <target>Sets</target>
       </segment>
     </unit>
+    <unit id="addSetTooltip">
+      <segment state="translated">
+        <source>Weiteres Set hinzufügen</source>
+        <target>Add another set</target>
+      </segment>
+    </unit>
     <unit id="addSetAria">
       <segment state="translated">
         <source>Set hinzufügen</source>

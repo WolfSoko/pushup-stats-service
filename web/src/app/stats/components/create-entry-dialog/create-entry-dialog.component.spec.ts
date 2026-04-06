@@ -47,12 +47,20 @@ describe('CreateEntryDialogComponent', () => {
   });
 
   describe('Given the dialog opens with sets', () => {
-    it('Then it starts with one empty set', () => {
+    it('Then it starts with one empty set and no multi-set header', () => {
       expect(component.sets()).toEqual([0]);
+      expect(component.hasMultipleSets()).toBe(false);
       expect(component.totalReps()).toBe(0);
     });
 
-    it('Then addSet adds a new set', () => {
+    it('Then addSet prefills new set with the last set value', () => {
+      component.sets.set([15]);
+      component.addSet();
+      expect(component.sets()).toEqual([15, 15]);
+      expect(component.hasMultipleSets()).toBe(true);
+    });
+
+    it('Then addSet prefills with 0 when last set is empty', () => {
       component.addSet();
       expect(component.sets()).toEqual([0, 0]);
     });
@@ -61,6 +69,12 @@ describe('CreateEntryDialogComponent', () => {
       component.sets.set([10, 15, 20]);
       component.removeSet(1);
       expect(component.sets()).toEqual([10, 20]);
+    });
+
+    it('Then removeSet keeps at least one set', () => {
+      component.sets.set([10]);
+      component.removeSet(0);
+      expect(component.sets()).toEqual([0]);
     });
 
     it('Then updateSet updates a specific set value', () => {

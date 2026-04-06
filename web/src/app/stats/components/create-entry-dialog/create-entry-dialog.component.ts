@@ -14,6 +14,7 @@ import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { appendLocalOffset } from '@pu-stats/models';
 
 export interface CreateEntryResult {
@@ -35,6 +36,7 @@ export interface CreateEntryResult {
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
+    MatTooltipModule,
     MatAutocompleteModule,
   ],
   styles: [
@@ -46,19 +48,13 @@ export interface CreateEntryResult {
       mat-form-field:first-of-type {
         margin-top: 8px;
       }
-      .sets-section {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-      }
-      .sets-header {
+      .reps-row {
         display: flex;
         align-items: center;
-        justify-content: space-between;
+        gap: 8px;
       }
-      .sets-header span {
-        font-size: 14px;
-        font-weight: 500;
+      .reps-row mat-form-field {
+        flex: 1;
       }
       .set-row {
         display: flex;
@@ -90,19 +86,7 @@ export interface CreateEntryResult {
         />
       </mat-form-field>
 
-      <div class="sets-section">
-        <div class="sets-header">
-          <span i18n="@@setsLabel">Sets</span>
-          <button
-            type="button"
-            mat-icon-button
-            (click)="addSet()"
-            i18n-aria-label="@@addSetAria"
-            aria-label="Set hinzufügen"
-          >
-            <mat-icon>add_circle_outline</mat-icon>
-          </button>
-        </div>
+      @if (hasMultipleSets()) {
         @for (set of sets(); track $index) {
           <div class="set-row">
             <mat-form-field appearance="outline">
@@ -115,23 +99,57 @@ export interface CreateEntryResult {
                 (input)="updateSet($index, asValue($event))"
               />
             </mat-form-field>
-            @if (sets().length > 1) {
-              <button
-                type="button"
-                mat-icon-button
-                (click)="removeSet($index)"
-                i18n-aria-label="@@removeSetAria"
-                aria-label="Set entfernen"
-              >
-                <mat-icon>remove_circle_outline</mat-icon>
-              </button>
-            }
+            <button
+              type="button"
+              mat-icon-button
+              (click)="removeSet($index)"
+              i18n-aria-label="@@removeSetAria"
+              aria-label="Set entfernen"
+            >
+              <mat-icon>remove_circle_outline</mat-icon>
+            </button>
           </div>
         }
-        <div class="total-reps" i18n="@@totalReps">
-          Gesamt: {{ totalReps() }} Reps
+        <div class="reps-row">
+          <button
+            type="button"
+            mat-icon-button
+            (click)="addSet()"
+            i18n-aria-label="@@addSetAria"
+            aria-label="Set hinzufügen"
+          >
+            <mat-icon>add_circle_outline</mat-icon>
+          </button>
+          <div class="total-reps" i18n="@@totalReps">
+            Gesamt: {{ totalReps() }} Reps
+          </div>
         </div>
-      </div>
+      } @else {
+        <div class="reps-row">
+          <mat-form-field appearance="outline">
+            <mat-label i18n="@@repsLabel">Reps</mat-label>
+            <input
+              matInput
+              type="number"
+              min="1"
+              [value]="sets()[0]"
+              (input)="updateSet(0, asValue($event))"
+              required
+            />
+          </mat-form-field>
+          <button
+            type="button"
+            mat-icon-button
+            (click)="addSet()"
+            i18n-aria-label="@@addSetAria"
+            aria-label="Set hinzufügen"
+            i18n-matTooltip="@@addSetTooltip"
+            matTooltip="Weiteres Set hinzufügen"
+          >
+            <mat-icon>add_circle_outline</mat-icon>
+          </button>
+        </div>
+      }
 
       <mat-form-field appearance="outline">
         <mat-label i18n="@@typeLabel">Typ</mat-label>
@@ -188,6 +206,7 @@ export class CreateEntryDialogComponent {
 
   readonly timestamp = signal(this.defaultDateTimeLocal());
   readonly sets = signal<number[]>([0]);
+  readonly hasMultipleSets = computed(() => this.sets().length > 1);
   readonly totalReps = computed(() =>
     this.sets().reduce((sum, s) => sum + (s > 0 ? s : 0), 0)
   );
@@ -221,11 +240,17 @@ export class CreateEntryDialogComponent {
   );
 
   addSet(): void {
-    this.sets.update((s) => [...s, 0]);
+    const currentSets = this.sets();
+    const lastValue = currentSets[currentSets.length - 1] ?? 0;
+    const prefill = lastValue > 0 ? lastValue : 0;
+    this.sets.update((s) => [...s, prefill]);
   }
 
   removeSet(index: number): void {
-    this.sets.update((s) => s.filter((_, i) => i !== index));
+    this.sets.update((s) => {
+      const next = s.filter((_, i) => i !== index);
+      return next.length === 0 ? [0] : next;
+    });
   }
 
   updateSet(index: number, value: string): void {
