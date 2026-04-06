@@ -101,9 +101,12 @@ export class PushupFirestoreService {
 
   updatePushup(id: string, payload: PushupUpdate): Observable<void> {
     const rowRef = doc(this.firestore, PUSHUPS_COLLECTION, id);
-    // Filter out undefined values — Firestore rejects them in updateDoc.
+    // Filter out undefined values and empty arrays — Firestore rejects undefined,
+    // and empty sets should be omitted to match createPushup behavior.
     const cleanPayload = Object.fromEntries(
-      Object.entries(payload).filter(([, v]) => v !== undefined)
+      Object.entries(payload).filter(
+        ([, v]) => v !== undefined && !(Array.isArray(v) && v.length === 0)
+      )
     );
     return from(
       updateDoc(rowRef, {

@@ -121,7 +121,7 @@ export interface CreateEntryResult {
             <input
               matInput
               type="number"
-              min="1"
+              min="0"
               [value]="set"
               (input)="updateSet($index, asValue($event))"
               required
@@ -216,6 +216,7 @@ export class CreateEntryDialogComponent {
   });
 
   readonly isEditMode = !!this.data;
+  private readonly originalTimestamp = this.data?.timestamp ?? null;
   readonly timestamp = signal(
     this.data ? this.data.timestamp.slice(0, 16) : this.defaultDateTimeLocal()
   );
@@ -289,8 +290,16 @@ export class CreateEntryDialogComponent {
       (this.sourceControl.value || '').trim() || 'web'
     );
 
+    // Preserve original timestamp when unchanged in edit mode to avoid
+    // silently altering timezone/seconds format.
+    const defaultLocal = this.originalTimestamp?.slice(0, 16) ?? '';
+    const timestamp =
+      this.originalTimestamp && this.timestamp() === defaultLocal
+        ? this.originalTimestamp
+        : appendLocalOffset(this.timestamp());
+
     this.dialogRef.close({
-      timestamp: appendLocalOffset(this.timestamp()),
+      timestamp,
       reps,
       sets: validSets,
       source,
