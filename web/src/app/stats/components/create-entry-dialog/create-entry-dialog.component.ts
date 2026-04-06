@@ -10,12 +10,24 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { map, startWith } from 'rxjs';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogModule,
+  MatDialogRef,
+} from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { appendLocalOffset } from '@pu-stats/models';
+
+export interface EntryDialogData {
+  timestamp: string;
+  reps: number;
+  sets?: number[];
+  source?: string;
+  type?: string;
+}
 
 export interface CreateEntryResult {
   timestamp: string;
@@ -78,7 +90,13 @@ export interface CreateEntryResult {
     `,
   ],
   template: `
-    <h2 mat-dialog-title i18n="@@createDialogTitle">Neuen Eintrag anlegen</h2>
+    <h2 mat-dialog-title>
+      @if (isEditMode) {
+        <span i18n="@@editDialogTitle">Eintrag bearbeiten</span>
+      } @else {
+        <span i18n="@@createDialogTitle">Neuen Eintrag anlegen</span>
+      }
+    </h2>
 
     <mat-dialog-content>
       <mat-form-field appearance="outline">
@@ -193,17 +211,30 @@ export interface CreateEntryResult {
 })
 export class CreateEntryDialogComponent {
   private readonly dialogRef = inject(MatDialogRef<CreateEntryDialogComponent>);
+  private readonly data = inject<EntryDialogData | null>(MAT_DIALOG_DATA, {
+    optional: true,
+  });
 
-  readonly timestamp = signal(this.defaultDateTimeLocal());
-  readonly sets = signal<number[]>([0]);
+  readonly isEditMode = !!this.data;
+  readonly timestamp = signal(
+    this.data ? this.data.timestamp.slice(0, 16) : this.defaultDateTimeLocal()
+  );
+  readonly sets = signal<number[]>(
+    this.data?.sets?.length
+      ? [...this.data.sets]
+      : this.data
+        ? [this.data.reps]
+        : [0]
+  );
   readonly hasMultipleSets = computed(() => this.sets().length > 1);
   readonly totalReps = computed(() =>
     this.sets().reduce((sum, s) => sum + (s > 0 ? s : 0), 0)
   );
-  readonly typeControl = new FormControl<string>('Standard', {
-    nonNullable: true,
-  });
-  readonly sourceControl = new FormControl<string>('web', {
+  readonly typeControl = new FormControl<string>(
+    this.data?.type || 'Standard',
+    { nonNullable: true }
+  );
+  readonly sourceControl = new FormControl<string>(this.data?.source || 'web', {
     nonNullable: true,
   });
 

@@ -7,7 +7,6 @@ import {
 import {
   Component,
   PLATFORM_ID,
-  TemplateRef,
   computed,
   effect,
   inject,
@@ -16,28 +15,24 @@ import {
   signal,
   viewChild,
 } from '@angular/core';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { map, startWith } from 'rxjs';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatRippleModule } from '@angular/material/core';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { ScrollingModule } from '@angular/cdk/scrolling';
-import { appendLocalOffset, PushupRecord } from '@pu-stats/models';
+import { PushupRecord } from '@pu-stats/models';
 import { UserContextService } from '@pu-auth/auth';
 import { UserConfigApiService } from '@pu-stats/data-access';
 import { firstValueFrom } from 'rxjs';
 import {
   CreateEntryDialogComponent,
   CreateEntryResult,
+  EntryDialogData,
 } from '../create-entry-dialog/create-entry-dialog.component';
 
 @Component({
@@ -50,13 +45,9 @@ import {
     NgTemplateOutlet,
     MatDialogModule,
     MatButtonModule,
-    MatFormFieldModule,
-    MatInputModule,
     MatIconModule,
     MatTableModule,
     MatSortModule,
-    MatAutocompleteModule,
-    ReactiveFormsModule,
     MatRippleModule,
     MatTooltipModule,
     ScrollingModule,
@@ -69,7 +60,6 @@ export class StatsTableComponent {
   private readonly platformId = inject(PLATFORM_ID);
   readonly isBrowser = isPlatformBrowser(this.platformId);
 
-  readonly editDialog = viewChild<TemplateRef<unknown>>('editDialog');
   readonly sort = viewChild(MatSort);
 
   readonly entries = input<PushupRecord[]>([]);
@@ -96,19 +86,6 @@ export class StatsTableComponent {
   }>();
   readonly remove = output<string>();
 
-  readonly typeOptions = [
-    'Standard',
-    'Diamond',
-    'Wide',
-    'Archer',
-    'Decline',
-    'Incline',
-    'Pike',
-    'Knuckle',
-  ];
-  // Canonical source values ("wa" is legacy; use "whatsapp").
-  readonly sourceOptions = ['web', 'whatsapp'];
-
   private readonly user = inject(UserContextService);
   private readonly userConfigApi = inject(UserConfigApiService);
 
@@ -122,30 +99,6 @@ export class StatsTableComponent {
 
   readonly dataSource = new MatTableDataSource<PushupRecord>([]);
 
-  private readonly editedTimestamp = signal<Record<string, string>>({});
-  private readonly editedReps = signal<Record<string, string>>({});
-  private readonly editedSource = signal<Record<string, string>>({});
-  private readonly editedType = signal<Record<string, string>>({});
-  readonly editingId = signal<string | null>(null);
-
-  readonly editTypeControl = new FormControl<string>('Standard', {
-    nonNullable: true,
-  });
-  readonly editSourceControl = new FormControl<string>('web', {
-    nonNullable: true,
-  });
-
-  readonly filteredEditTypeOptions$ = this.editTypeControl.valueChanges.pipe(
-    startWith(this.editTypeControl.value),
-    map((value) => this.filterOptions(value, this.typeOptions))
-  );
-
-  readonly filteredEditSourceOptions$ =
-    this.editSourceControl.valueChanges.pipe(
-      startWith(this.editSourceControl.value),
-      map((value) => this.filterOptions(value, this.sourceOptions))
-    );
-
   constructor() {
     this.dataSource.sortingDataAccessor = (item, property) => {
       if (property === 'timestamp') return new Date(item.timestamp).getTime();
@@ -156,7 +109,6 @@ export class StatsTableComponent {
     };
 
     if (this.isBrowser) {
-      // Load preference from DB based on active user.
       void this.loadShowSourceFromDb();
     }
 
@@ -184,193 +136,40 @@ export class StatsTableComponent {
       });
   }
 
-  asValue(event: Event): string {
-    return (event.target as HTMLInputElement).value;
+  openEditDialog(entry: PushupRecord): void {
+    const dialogData: EntryDialogData = {
+      timestamp: entry.timestamp,
+      reps: entry.reps,
+      sets: entry.sets,
+      source: entry.source,
+      type: entry.type,
+    };
+    this.dialog
+      .open<CreateEntryDialogComponent, EntryDialogData, CreateEntryResult>(
+        CreateEntryDialogComponent,
+        {
+          width: 'min(92vw, 420px)',
+          maxWidth: '92vw',
+          data: dialogData,
+        }
+      )
+      .afterClosed()
+      .subscribe((result) => {
+        if (result) {
+          this.update.emit({
+            id: entry._id,
+            timestamp: result.timestamp,
+            reps: result.reps,
+            sets: result.sets,
+            source: result.source,
+            type: result.type,
+          });
+        }
+      });
   }
 
   isBusy(action: 'update' | 'delete', id: string): boolean {
     return this.busyAction() === action && this.busyId() === id;
-  }
-
-  editBusyId(): string {
-    return this.editingId() ?? '';
-  }
-
-  isEditing(id: string): boolean {
-    return this.editingId() === id;
-  }
-
-  openEditDialog(entry: PushupRecord): void {
-    const dialogTpl = this.editDialog();
-    if (!dialogTpl) return;
-    this.startEdit(entry);
-    this.dialog.open(dialogTpl, {
-      width: 'min(92vw, 420px)',
-      maxWidth: '92vw',
-    });
-  }
-
-  startEdit(entry: PushupRecord): void {
-    this.editingId.set(entry._id);
-
-    // Prefer preserving existing timestamp format for <input type="datetime-local">
-    // Value must be like YYYY-MM-DDTHH:mm.
-    const ts = (entry.timestamp || '').slice(0, 16);
-    this.editedTimestamp.update((prev) => ({ ...prev, [entry._id]: ts }));
-
-    this.editedReps.update((prev) => ({
-      ...prev,
-      [entry._id]: String(entry.reps),
-    }));
-
-    const rawSource = entry.source || 'web';
-    const source = this.normalizeSource(rawSource);
-    this.editedSource.update((prev) => ({ ...prev, [entry._id]: source }));
-    this.editSourceControl.setValue(source);
-
-    const type = (entry.type || 'Standard').trim() || 'Standard';
-    this.editedType.update((prev) => ({ ...prev, [entry._id]: type }));
-    this.editTypeControl.setValue(type);
-  }
-
-  cancelEdit(): void {
-    this.editingId.set(null);
-    this.dialog.closeAll();
-  }
-
-  editTimestamp(entry: PushupRecord): string {
-    return (
-      this.editedTimestamp()[entry._id] ?? (entry.timestamp || '').slice(0, 16)
-    );
-  }
-
-  editReps(entry: PushupRecord): string {
-    return this.editedReps()[entry._id] ?? String(entry.reps);
-  }
-
-  editSource(entry: PushupRecord): string {
-    return this.editedSource()[entry._id] ?? entry.source;
-  }
-
-  setEditTimestamp(entry: PushupRecord, value: string): void {
-    this.editedTimestamp.update((prev) => ({ ...prev, [entry._id]: value }));
-  }
-
-  setEditReps(entry: PushupRecord, value: string): void {
-    this.editedReps.update((prev) => ({ ...prev, [entry._id]: value }));
-  }
-
-  setEditSource(entry: PushupRecord, value: string): void {
-    this.editedSource.update((prev) => ({ ...prev, [entry._id]: value }));
-  }
-
-  editType(entry: PushupRecord): string {
-    return this.editedType()[entry._id] ?? entry.type ?? 'Standard';
-  }
-
-  setEditType(entry: PushupRecord, value: string): void {
-    this.editedType.update((prev) => ({ ...prev, [entry._id]: value }));
-  }
-
-  editTimestampById(): string {
-    const id = this.editingId();
-    if (!id) return '';
-    const entry = this.entries().find((row) => row._id === id);
-    return this.editedTimestamp()[id] ?? (entry?.timestamp || '').slice(0, 16);
-  }
-
-  setEditTimestampById(value: string): void {
-    const id = this.editingId();
-    if (!id) return;
-    this.editedTimestamp.update((prev) => ({ ...prev, [id]: value }));
-  }
-
-  editRepsById(): string {
-    const id = this.editingId();
-    if (!id) return '';
-    const entry = this.entries().find((row) => row._id === id);
-    return id ? (this.editedReps()[id] ?? String(entry?.reps ?? '')) : '';
-  }
-
-  setEditRepsById(value: string): void {
-    const id = this.editingId();
-    if (!id) return;
-    this.editedReps.update((prev) => ({ ...prev, [id]: value }));
-  }
-
-  editSourceById(): string {
-    const id = this.editingId();
-    if (!id) return '';
-    const entry = this.entries().find((row) => row._id === id);
-    return this.editedSource()[id] ?? entry?.source ?? '';
-  }
-
-  setEditSourceById(value: string): void {
-    const id = this.editingId();
-    if (!id) return;
-    this.editedSource.update((prev) => ({ ...prev, [id]: value }));
-  }
-
-  saveFromDialog(): void {
-    const id = this.editingId();
-    if (!id) return;
-    const entry = this.entries().find((row) => row._id === id);
-    if (!entry) return;
-
-    const timestamp = this.editTimestampById();
-    this.setEditTimestamp(entry, timestamp);
-
-    const type = (this.editTypeControl.value || '').trim() || 'Standard';
-    this.setEditType(entry, type);
-
-    const source = this.normalizeSource(
-      (this.editSourceControl.value || '').trim() || 'web'
-    );
-    this.setEditSource(entry, source);
-
-    this.save(entry);
-    this.dialog.closeAll();
-  }
-
-  save(entry: PushupRecord): void {
-    const editedLocal = this.editTimestamp(entry);
-    if (!editedLocal) return;
-
-    // Preserve original timestamp string (including seconds/timezone) unless the
-    // user actually changed the datetime-local input.
-    const defaultLocal = (entry.timestamp || '').slice(0, 16);
-    const timestamp =
-      entry.timestamp && editedLocal === defaultLocal
-        ? entry.timestamp
-        : appendLocalOffset(editedLocal);
-
-    const reps = Number(this.editReps(entry));
-    if (Number.isNaN(reps) || reps <= 0) return;
-
-    // Only override sets for single-set entries; multi-set breakdowns are preserved.
-    const repsChanged = reps !== entry.reps;
-    const hasMultiSets = (entry.sets?.length ?? 0) > 1;
-    this.update.emit({
-      id: entry._id,
-      timestamp,
-      reps,
-      ...(repsChanged && !hasMultiSets ? { sets: [reps] } : {}),
-      source: this.editSource(entry) || 'web',
-      type: this.editType(entry) || 'Standard',
-    });
-    this.editingId.set(null);
-  }
-
-  private filterOptions(
-    value: string | null | undefined,
-    options: string[]
-  ): string[] {
-    const needle = (value ?? '').toLowerCase().trim();
-    if (!needle) return options;
-    // If the value exactly matches an option (selected/pre-filled), show all
-    // so the dropdown is not trapped showing only one option on open.
-    if (options.some((opt) => opt.toLowerCase() === needle)) return options;
-    return options.filter((opt) => opt.toLowerCase().includes(needle));
   }
 
   async toggleSourceColumn(): Promise<void> {
@@ -390,6 +189,12 @@ export class StatsTableComponent {
     }
   }
 
+  formatSets(sets: number[]): string {
+    if (!sets?.length) return '';
+    const allSame = sets.every((s) => s === sets[0]);
+    return allSame ? `${sets.length}×${sets[0]}` : sets.join(' + ');
+  }
+
   private async loadShowSourceFromDb(): Promise<void> {
     try {
       const cfg = await firstValueFrom(
@@ -399,18 +204,5 @@ export class StatsTableComponent {
     } catch {
       // ignore; keep default
     }
-  }
-
-  formatSets(sets: number[]): string {
-    if (!sets?.length) return '';
-    const allSame = sets.every((s) => s === sets[0]);
-    return allSame ? `${sets.length}×${sets[0]}` : sets.join(' + ');
-  }
-
-  private normalizeSource(value: string): string {
-    const v = (value || '').trim();
-    if (!v) return 'web';
-    if (v === 'wa') return 'whatsapp';
-    return v;
   }
 }
