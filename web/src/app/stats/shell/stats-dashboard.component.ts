@@ -156,6 +156,7 @@ export class StatsDashboardComponent {
   async createEntry(entry: {
     timestamp: string;
     reps: number;
+    sets?: number[];
     source?: string;
     type?: string;
   }) {
@@ -176,6 +177,7 @@ export class StatsDashboardComponent {
       this.api.createPushup({
         timestamp: appendLocalOffset(`${y}-${m}-${d}T${hh}:${mm}`),
         reps,
+        sets: [reps],
         source: 'web',
         type: 'Standard',
       })

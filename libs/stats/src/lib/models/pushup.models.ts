@@ -2,6 +2,7 @@ export interface PushupRecord {
   _id: string;
   timestamp: string;
   reps: number;
+  sets?: number[];
   source: string;
   type?: string;
   createdAt?: string;
@@ -11,6 +12,7 @@ export interface PushupRecord {
 export interface PushupCreate {
   timestamp: string;
   reps: number;
+  sets?: number[];
   source?: string;
   type?: string;
 }
@@ -18,6 +20,7 @@ export interface PushupCreate {
 export interface PushupUpdate {
   timestamp?: string;
   reps?: number;
+  sets?: number[];
   source?: string;
   type?: string;
 }

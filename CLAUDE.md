@@ -87,6 +87,13 @@ UI Component  →  Signal Store  →  API Service
 - `QuickAddOrchestrationService` handles quick-add entry creation and dialog routing
 - App component handles only layout, navigation, and UI events
 
+**Shared Entry Dialog Pattern:**
+- `CreateEntryDialogComponent` serves as the single dialog for both creating and editing entries.
+- **Create mode:** Opened without `MAT_DIALOG_DATA` — starts with empty fields, default timestamp.
+- **Edit mode:** Opened with `EntryDialogData` via `MAT_DIALOG_DATA` — pre-fills timestamp, sets, type, source from existing entry. Preserves original timestamp format when unchanged.
+- Both modes return `CreateEntryResult` on submit. The stats table's `openEditDialog()` maps the result back to an update emission.
+- **Sets UX:** Starts with a single "Reps" field. A "+" button adds sets (pre-filled from previous value). Multi-set mode shows "Set 1", "Set 2", etc. with remove buttons and a total display.
+
 ### Module Boundary Rules
 
 Enforced via `@nx/enforce-module-boundaries` in `eslint.config.mjs`:
@@ -101,6 +108,7 @@ Enforced via `@nx/enforce-module-boundaries` in `eslint.config.mjs`:
 
 Split into focused files under `libs/stats/src/lib/models/`:
 - `pushup.models.ts` - PushupRecord, PushupCreate, PushupUpdate
+  - **Sets:** `sets?: number[]` stores per-set reps (e.g. `[10, 10, 10]`). `reps` is always the total sum. `sets` is optional for backward compatibility — old entries without sets work unchanged. All aggregation (UserStats, deltas, charts) uses `reps` only.
 - `stats.models.ts` - StatsResponse, StatsMeta, StatsFilter
 - `user-config.models.ts` - UserConfig, UserConfigUpdate, UserRole
 - `reminder-config.models.ts` - ReminderConfig

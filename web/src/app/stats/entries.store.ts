@@ -122,6 +122,7 @@ export const EntriesStore = signalStore(
     async createEntry(payload: {
       timestamp: string;
       reps: number;
+      sets?: number[];
       source?: string;
       type?: string;
     }): Promise<void> {
@@ -141,6 +142,7 @@ export const EntriesStore = signalStore(
       id: string;
       timestamp: string;
       reps: number;
+      sets?: number[];
       source?: string;
       type?: string;
     }): Promise<void> {
@@ -154,6 +156,7 @@ export const EntriesStore = signalStore(
           _api.updatePushup(payload.id, {
             timestamp: payload.timestamp,
             reps: payload.reps,
+            ...(payload.sets !== undefined ? { sets: payload.sets } : {}),
             source: payload.source,
             type: payload.type,
           })

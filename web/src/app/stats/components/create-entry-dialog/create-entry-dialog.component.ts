@@ -2,6 +2,7 @@ import { AsyncPipe } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
+  computed,
   inject,
   signal,
 } from '@angular/core';
@@ -9,14 +10,29 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { map, startWith } from 'rxjs';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogModule,
+  MatDialogRef,
+} from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { appendLocalOffset } from '@pu-stats/models';
+
+export interface EntryDialogData {
+  timestamp: string;
+  reps: number;
+  sets?: number[];
+  source?: string;
+  type?: string;
+}
 
 export interface CreateEntryResult {
   timestamp: string;
   reps: number;
+  sets: number[];
   source: string;
   type: string;
 }
@@ -30,7 +46,9 @@ export interface CreateEntryResult {
     MatDialogModule,
     MatButtonModule,
     MatFormFieldModule,
+    MatIconModule,
     MatInputModule,
+    MatTooltipModule,
     MatAutocompleteModule,
   ],
   styles: [
@@ -42,10 +60,43 @@ export interface CreateEntryResult {
       mat-form-field:first-of-type {
         margin-top: 8px;
       }
+      .set-row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        animation: clone-set 300ms cubic-bezier(0.4, 0, 0.2, 1) both;
+        transform-origin: top center;
+      }
+      .set-row mat-form-field {
+        flex: 1;
+      }
+      @keyframes clone-set {
+        from {
+          opacity: 0;
+          max-height: 0;
+          transform: scaleY(0.3) translateY(-8px);
+        }
+        to {
+          opacity: 1;
+          max-height: 80px;
+          transform: scaleY(1) translateY(0);
+        }
+      }
+      .total-reps {
+        font-size: 13px;
+        color: var(--mat-sys-on-surface-variant);
+        text-align: end;
+      }
     `,
   ],
   template: `
-    <h2 mat-dialog-title i18n="@@createDialogTitle">Neuen Eintrag anlegen</h2>
+    <h2 mat-dialog-title>
+      @if (isEditMode) {
+        <span i18n="@@editDialogTitle">Eintrag bearbeiten</span>
+      } @else {
+        <span i18n="@@createDialogTitle">Neuen Eintrag anlegen</span>
+      }
+    </h2>
 
     <mat-dialog-content>
       <mat-form-field appearance="outline">
@@ -59,17 +110,54 @@ export interface CreateEntryResult {
         />
       </mat-form-field>
 
-      <mat-form-field appearance="outline">
-        <mat-label i18n="@@repsLabel">Reps</mat-label>
-        <input
-          matInput
-          type="number"
-          min="1"
-          [value]="reps()"
-          (input)="reps.set(asValue($event))"
-          required
-        />
-      </mat-form-field>
+      @for (set of sets(); track $index) {
+        <div class="set-row">
+          <mat-form-field appearance="outline">
+            @if (hasMultipleSets()) {
+              <mat-label i18n="@@setLabel">Set {{ $index + 1 }}</mat-label>
+            } @else {
+              <mat-label i18n="@@repsLabel">Reps</mat-label>
+            }
+            <input
+              matInput
+              type="number"
+              min="0"
+              [value]="set"
+              (input)="updateSet($index, asValue($event))"
+              required
+            />
+          </mat-form-field>
+          @if (hasMultipleSets()) {
+            <button
+              type="button"
+              mat-icon-button
+              (click)="removeSet($index)"
+              i18n-aria-label="@@removeSetAria"
+              aria-label="Set entfernen"
+            >
+              <mat-icon>remove_circle_outline</mat-icon>
+            </button>
+          }
+          @if ($last) {
+            <button
+              type="button"
+              mat-icon-button
+              (click)="addSet()"
+              i18n-aria-label="@@addSetAria"
+              aria-label="Set hinzufügen"
+              i18n-matTooltip="@@addSetTooltip"
+              matTooltip="Weiteres Set hinzufügen"
+            >
+              <mat-icon>add_circle_outline</mat-icon>
+            </button>
+          }
+        </div>
+      }
+      @if (hasMultipleSets()) {
+        <div class="total-reps" i18n="@@totalReps">
+          Gesamt: {{ totalReps() }} Reps
+        </div>
+      }
 
       <mat-form-field appearance="outline">
         <mat-label i18n="@@typeLabel">Typ</mat-label>
@@ -123,15 +211,34 @@ export interface CreateEntryResult {
 })
 export class CreateEntryDialogComponent {
   private readonly dialogRef = inject(MatDialogRef<CreateEntryDialogComponent>);
+  private readonly data = inject<EntryDialogData | null>(MAT_DIALOG_DATA, {
+    optional: true,
+  });
 
-  readonly timestamp = signal(this.defaultDateTimeLocal());
-  readonly reps = signal('');
-  readonly typeControl = new FormControl<string>('Standard', {
-    nonNullable: true,
-  });
-  readonly sourceControl = new FormControl<string>('web', {
-    nonNullable: true,
-  });
+  readonly isEditMode = !!this.data;
+  private readonly originalTimestamp = this.data?.timestamp ?? null;
+  readonly timestamp = signal(
+    this.data ? this.data.timestamp.slice(0, 16) : this.defaultDateTimeLocal()
+  );
+  readonly sets = signal<number[]>(
+    this.data?.sets?.length
+      ? [...this.data.sets]
+      : this.data
+        ? [this.data.reps]
+        : [0]
+  );
+  readonly hasMultipleSets = computed(() => this.sets().length > 1);
+  readonly totalReps = computed(() =>
+    this.sets().reduce((sum, s) => sum + (s > 0 ? s : 0), 0)
+  );
+  readonly typeControl = new FormControl<string>(
+    this.data?.type || 'Standard',
+    { nonNullable: true }
+  );
+  readonly sourceControl = new FormControl<string>(
+    this.normalizeSource(this.data?.source || 'web'),
+    { nonNullable: true }
+  );
 
   private readonly typeOptions = [
     'Standard',
@@ -155,18 +262,47 @@ export class CreateEntryDialogComponent {
     map((value) => this.filterOptions(value, this.sourceOptions))
   );
 
+  addSet(): void {
+    const currentSets = this.sets();
+    const lastValue = currentSets[currentSets.length - 1] ?? 0;
+    const prefill = lastValue > 0 ? lastValue : 0;
+    this.sets.update((s) => [...s, prefill]);
+  }
+
+  removeSet(index: number): void {
+    this.sets.update((s) => {
+      const next = s.filter((_, i) => i !== index);
+      return next.length === 0 ? [0] : next;
+    });
+  }
+
+  updateSet(index: number, value: string): void {
+    const num = Math.max(0, Number(value) || 0);
+    this.sets.update((s) => s.map((v, i) => (i === index ? num : v)));
+  }
+
   submit(): void {
-    const reps = Number(this.reps());
-    if (!this.timestamp() || Number.isNaN(reps) || reps <= 0) return;
+    const validSets = this.sets().filter((s) => s > 0);
+    const reps = validSets.reduce((sum, s) => sum + s, 0);
+    if (!this.timestamp() || reps <= 0) return;
 
     const type = (this.typeControl.value || '').trim() || 'Standard';
     const source = this.normalizeSource(
       (this.sourceControl.value || '').trim() || 'web'
     );
 
+    // Preserve original timestamp when unchanged in edit mode to avoid
+    // silently altering timezone/seconds format.
+    const defaultLocal = this.originalTimestamp?.slice(0, 16) ?? '';
+    const timestamp =
+      this.originalTimestamp && this.timestamp() === defaultLocal
+        ? this.originalTimestamp
+        : appendLocalOffset(this.timestamp());
+
     this.dialogRef.close({
-      timestamp: appendLocalOffset(this.timestamp()),
+      timestamp,
       reps,
+      sets: validSets,
       source,
       type,
     });

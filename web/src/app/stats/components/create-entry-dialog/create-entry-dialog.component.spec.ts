@@ -46,11 +46,54 @@ describe('CreateEntryDialogComponent', () => {
     });
   });
 
+  describe('Given the dialog opens with sets', () => {
+    it('Then it starts with one empty set and no multi-set header', () => {
+      expect(component.sets()).toEqual([0]);
+      expect(component.hasMultipleSets()).toBe(false);
+      expect(component.totalReps()).toBe(0);
+    });
+
+    it('Then addSet prefills new set with the last set value', () => {
+      component.sets.set([15]);
+      component.addSet();
+      expect(component.sets()).toEqual([15, 15]);
+      expect(component.hasMultipleSets()).toBe(true);
+    });
+
+    it('Then addSet prefills with 0 when last set is empty', () => {
+      component.addSet();
+      expect(component.sets()).toEqual([0, 0]);
+    });
+
+    it('Then removeSet removes a set by index', () => {
+      component.sets.set([10, 15, 20]);
+      component.removeSet(1);
+      expect(component.sets()).toEqual([10, 20]);
+    });
+
+    it('Then removeSet keeps at least one set', () => {
+      component.sets.set([10]);
+      component.removeSet(0);
+      expect(component.sets()).toEqual([0]);
+    });
+
+    it('Then updateSet updates a specific set value', () => {
+      component.sets.set([10, 0]);
+      component.updateSet(1, '15');
+      expect(component.sets()).toEqual([10, 15]);
+    });
+
+    it('Then totalReps computes the sum of all sets', () => {
+      component.sets.set([10, 15, 20]);
+      expect(component.totalReps()).toBe(45);
+    });
+  });
+
   describe('Given submit is called with valid data', () => {
-    it('Then dialogRef.close is called with the entry result', () => {
+    it('Then dialogRef.close is called with sets and computed reps', () => {
       // Given
       component.timestamp.set('2025-01-15T10:30');
-      component.reps.set('25');
+      component.sets.set([10, 15]);
       component.typeControl.setValue('Diamond');
       component.sourceControl.setValue('web');
 
@@ -61,6 +104,7 @@ describe('CreateEntryDialogComponent', () => {
       expect(closeSpy).toHaveBeenCalledWith<[CreateEntryResult]>({
         timestamp: expect.stringMatching(/^2025-01-15T10:30[+-]\d{2}:\d{2}$/),
         reps: 25,
+        sets: [10, 15],
         source: 'web',
         type: 'Diamond',
       });
@@ -68,7 +112,7 @@ describe('CreateEntryDialogComponent', () => {
 
     it('Then legacy source "wa" is normalized to "whatsapp"', () => {
       component.timestamp.set('2025-01-15T10:30');
-      component.reps.set('10');
+      component.sets.set([10]);
       component.sourceControl.setValue('wa');
 
       component.submit();
@@ -77,21 +121,23 @@ describe('CreateEntryDialogComponent', () => {
         expect.objectContaining({ source: 'whatsapp' })
       );
     });
-  });
 
-  describe('Given submit is called with invalid data', () => {
-    it('Then dialogRef.close is NOT called when reps is empty', () => {
+    it('Then zero-value sets are filtered out', () => {
       component.timestamp.set('2025-01-15T10:30');
-      component.reps.set('');
+      component.sets.set([10, 0, 15, 0]);
 
       component.submit();
 
-      expect(closeSpy).not.toHaveBeenCalled();
+      expect(closeSpy).toHaveBeenCalledWith(
+        expect.objectContaining({ reps: 25, sets: [10, 15] })
+      );
     });
+  });
 
-    it('Then dialogRef.close is NOT called when reps is zero', () => {
+  describe('Given submit is called with invalid data', () => {
+    it('Then dialogRef.close is NOT called when all sets are zero', () => {
       component.timestamp.set('2025-01-15T10:30');
-      component.reps.set('0');
+      component.sets.set([0]);
 
       component.submit();
 
@@ -100,7 +146,7 @@ describe('CreateEntryDialogComponent', () => {
 
     it('Then dialogRef.close is NOT called when timestamp is empty', () => {
       component.timestamp.set('');
-      component.reps.set('10');
+      component.sets.set([10]);
 
       component.submit();
 
