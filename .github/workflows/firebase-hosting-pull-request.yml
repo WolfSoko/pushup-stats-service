@@ -50,7 +50,7 @@ jobs:
         run: |
           echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT_PUSHUP_STATS_STAGING }}' > "$RUNNER_TEMP/firebase-sa.json"
       - name: Deploy Cloud Functions + Firestore rules & indexes to staging
-        run: pnpm exec firebase deploy --only functions,firestore --project pushup-stats-staging-867b7
+        run: pnpm exec firebase deploy --only functions,firestore --project staging
         working-directory: data-store
         env:
           GOOGLE_APPLICATION_CREDENTIALS: ${{ runner.temp }}/firebase-sa.json
