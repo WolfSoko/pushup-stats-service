@@ -157,5 +157,19 @@ export const AuthStore = signalStore(
         patchState(store, { loading: false });
       }
     },
+    tryAsGuest: async (): Promise<boolean> => {
+      patchState(store, { loading: true, error: null });
+      try {
+        await _authService.signInGuestIfNeeded();
+        return true;
+      } catch (e) {
+        patchState(store, {
+          error: toFriendlyAuthError(e),
+        });
+        return false;
+      } finally {
+        patchState(store, { loading: false });
+      }
+    },
   }))
 );

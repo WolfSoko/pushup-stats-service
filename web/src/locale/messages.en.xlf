@@ -3730,8 +3730,8 @@ Deine Position: # ·  Reps        </source>
     </unit>
     <unit id="user.menu.anonAria">
       <segment state="translated">
-        <source>Menü</source>
-        <target>Menu</target>
+        <source>Anmelde-Menü</source>
+        <target>Sign-in menu</target>
       </segment>
     </unit>
     <unit id="user.menu.signIn">

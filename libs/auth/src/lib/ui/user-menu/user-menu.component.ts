@@ -6,7 +6,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { Router } from '@angular/router';
-import { AuthService } from '../../core/auth.service';
 import { AuthStore } from '../../core/state/auth.store';
 
 @Component({
@@ -26,7 +25,6 @@ import { AuthStore } from '../../core/state/auth.store';
 })
 export class UserMenuComponent {
   private readonly state = inject(AuthStore);
-  private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
 
   readonly user = this.state.user;
@@ -37,7 +35,7 @@ export class UserMenuComponent {
 
   readonly ariaUserMenu = $localize`:@@user.menu.aria:Nutzerkonto-Menü`;
   readonly ariaGuestMenu = $localize`:@@user.menu.guestAria:Gast-Menü`;
-  readonly ariaAnonMenu = $localize`:@@user.menu.anonAria:Menü`;
+  readonly ariaAnonMenu = $localize`:@@user.menu.anonAria:Anmelde-Menü`;
   readonly guestLabel = $localize`:@@user.guestName:Gast`;
 
   async signIn(): Promise<boolean> {
@@ -53,8 +51,10 @@ export class UserMenuComponent {
   }
 
   async tryAsGuest(): Promise<void> {
-    await this.authService.signInGuestIfNeeded();
-    await this.router.navigate(['/app']);
+    const success = await this.state.tryAsGuest();
+    if (success) {
+      await this.router.navigate(['/app']);
+    }
   }
 
   async convertToAccount(): Promise<void> {

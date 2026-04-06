@@ -1,14 +1,14 @@
 import { render, screen, fireEvent } from '@testing-library/angular';
 import { Auth } from '@angular/fire/auth';
-import { provideRouter } from '@angular/router';
+import { provideRouter, Router } from '@angular/router';
 import { AuthStore } from '../../core/state/auth.store';
-import { AuthService } from '../../core/auth.service';
 import { UserMenuComponent } from './user-menu.component';
 
 function makeStore(opts: {
   isAuthenticated: boolean;
   isGuest: boolean;
   loading?: boolean;
+  tryAsGuest?: jest.Mock;
 }) {
   return {
     isAuthenticated: jest.fn().mockReturnValue(opts.isAuthenticated),
@@ -25,12 +25,7 @@ function makeStore(opts: {
         : null
     ),
     logout: jest.fn().mockResolvedValue(undefined),
-  };
-}
-
-function makeAuthService() {
-  return {
-    signInGuestIfNeeded: jest.fn().mockResolvedValue(undefined),
+    tryAsGuest: opts.tryAsGuest ?? jest.fn().mockResolvedValue(true),
   };
 }
 
@@ -43,7 +38,6 @@ describe('UserMenuComponent', () => {
           provide: AuthStore,
           useValue: makeStore({ isAuthenticated: true, isGuest: true }),
         },
-        { provide: AuthService, useValue: makeAuthService() },
         { provide: Auth, useValue: {} },
       ],
     });
@@ -58,11 +52,9 @@ describe('UserMenuComponent', () => {
           provide: AuthStore,
           useValue: makeStore({ isAuthenticated: true, isGuest: true }),
         },
-        { provide: AuthService, useValue: makeAuthService() },
         { provide: Auth, useValue: {} },
       ],
     });
-    // Open the guest menu
     fireEvent.click(screen.getByLabelText('Gast-Menü'));
     expect(screen.getByText('Du nutzt die App als Gast')).toBeTruthy();
     expect(screen.queryByText(/PUS/)).toBeNull();
@@ -76,7 +68,6 @@ describe('UserMenuComponent', () => {
           provide: AuthStore,
           useValue: makeStore({ isAuthenticated: true, isGuest: false }),
         },
-        { provide: AuthService, useValue: makeAuthService() },
         { provide: Auth, useValue: {} },
       ],
     });
@@ -91,35 +82,68 @@ describe('UserMenuComponent', () => {
           provide: AuthStore,
           useValue: makeStore({ isAuthenticated: false, isGuest: false }),
         },
-        { provide: AuthService, useValue: makeAuthService() },
         { provide: Auth, useValue: {} },
       ],
     });
-    // Anon menu button is shown
-    expect(screen.getByLabelText('Menü')).toBeTruthy();
-    // Open the menu
-    fireEvent.click(screen.getByLabelText('Menü'));
+    expect(screen.getByLabelText('Anmelde-Menü')).toBeTruthy();
+    fireEvent.click(screen.getByLabelText('Anmelde-Menü'));
     expect(screen.getByText('Als Gast ausprobieren')).toBeTruthy();
     expect(screen.getByText('Anmelden')).toBeTruthy();
-    expect(screen.queryByText(/Gast-Menü|Du nutzt/)).toBeNull();
+    expect(screen.queryByText(/Du nutzt/)).toBeNull();
   });
 
-  it('tryAsGuest calls signInGuestIfNeeded and navigates to /app', async () => {
-    const authService = makeAuthService();
-    await render(UserMenuComponent, {
+  it('tryAsGuest calls store.tryAsGuest and navigates to /app on success', async () => {
+    const tryAsGuestSpy = jest.fn().mockResolvedValue(true);
+    const { fixture } = await render(UserMenuComponent, {
       providers: [
         provideRouter([{ path: 'app', children: [] }]),
         {
           provide: AuthStore,
-          useValue: makeStore({ isAuthenticated: false, isGuest: false }),
+          useValue: makeStore({
+            isAuthenticated: false,
+            isGuest: false,
+            tryAsGuest: tryAsGuestSpy,
+          }),
         },
-        { provide: AuthService, useValue: authService },
         { provide: Auth, useValue: {} },
       ],
     });
-    fireEvent.click(screen.getByLabelText('Menü'));
+    const router = fixture.debugElement.injector.get(Router);
+    const navigateSpy = jest.spyOn(router, 'navigate');
+
+    fireEvent.click(screen.getByLabelText('Anmelde-Menü'));
     fireEvent.click(screen.getByText('Als Gast ausprobieren'));
-    expect(authService.signInGuestIfNeeded).toHaveBeenCalled();
+    await fixture.whenStable();
+
+    expect(tryAsGuestSpy).toHaveBeenCalled();
+    expect(navigateSpy).toHaveBeenCalledWith(['/app']);
+  });
+
+  it('tryAsGuest does not navigate on failure', async () => {
+    const tryAsGuestSpy = jest.fn().mockResolvedValue(false);
+    const { fixture } = await render(UserMenuComponent, {
+      providers: [
+        provideRouter([]),
+        {
+          provide: AuthStore,
+          useValue: makeStore({
+            isAuthenticated: false,
+            isGuest: false,
+            tryAsGuest: tryAsGuestSpy,
+          }),
+        },
+        { provide: Auth, useValue: {} },
+      ],
+    });
+    const router = fixture.debugElement.injector.get(Router);
+    const navigateSpy = jest.spyOn(router, 'navigate');
+
+    fireEvent.click(screen.getByLabelText('Anmelde-Menü'));
+    fireEvent.click(screen.getByText('Als Gast ausprobieren'));
+    await fixture.whenStable();
+
+    expect(tryAsGuestSpy).toHaveBeenCalled();
+    expect(navigateSpy).not.toHaveBeenCalled();
   });
 
   it('shows spinner when loading', async () => {
@@ -134,7 +158,6 @@ describe('UserMenuComponent', () => {
             loading: true,
           }),
         },
-        { provide: AuthService, useValue: makeAuthService() },
         { provide: Auth, useValue: {} },
       ],
     });

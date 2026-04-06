@@ -164,7 +164,7 @@
     <unit id="user.guestName">
       <notes>
         <note category="location">libs/auth/src/lib/core/user-context.service.ts:17</note>
-        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.ts:41</note>
+        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.ts:39</note>
       </notes>
       <segment>
         <source>Gast</source>
@@ -234,7 +234,7 @@
       <notes>
         <note category="location">libs/auth/src/lib/ui/login/google-onboarding-dialog/google-onboarding-dialog.component.html:67,69</note>
         <note category="location">libs/auth/src/lib/ui/register/register.component.html:314,315</note>
-        <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:105,106</note>
+        <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:111,112</note>
         <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:214,216</note>
         <note category="location">web/src/app/stats/shell/settings-page.component.ts:254,255</note>
       </notes>
@@ -554,7 +554,7 @@
     </unit>
     <unit id="user.menu.aria">
       <notes>
-        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.ts:38</note>
+        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.ts:36</note>
       </notes>
       <segment>
         <source>Nutzerkonto-Menü</source>
@@ -562,7 +562,7 @@
     </unit>
     <unit id="user.menu.guestAria">
       <notes>
-        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.ts:39</note>
+        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.ts:37</note>
       </notes>
       <segment>
         <source>Gast-Menü</source>
@@ -570,10 +570,10 @@
     </unit>
     <unit id="user.menu.anonAria">
       <notes>
-        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.ts:40</note>
+        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.ts:38</note>
       </notes>
       <segment>
-        <source>Menü</source>
+        <source>Anmelde-Menü</source>
       </segment>
     </unit>
     <unit id="quickAdd.fab.customValueAria">
@@ -1241,7 +1241,7 @@
     </unit>
     <unit id="quickAdd.success.create">
       <notes>
-        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:29</note>
+        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:30</note>
       </notes>
       <segment>
         <source>Eintrag gespeichert.</source>
@@ -1249,7 +1249,7 @@
     </unit>
     <unit id="quickAdd.error.create">
       <notes>
-        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:41</note>
+        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:42</note>
       </notes>
       <segment>
         <source>Eintrag konnte nicht gespeichert werden.</source>
@@ -2245,7 +2245,7 @@
     </unit>
     <unit id="createDialogTitle">
       <notes>
-        <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:42,45</note>
+        <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:48,51</note>
       </notes>
       <segment>
         <source>Neuen Eintrag anlegen</source>
@@ -2253,7 +2253,7 @@
     </unit>
     <unit id="timestampLabel">
       <notes>
-        <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:46,48</note>
+        <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:52,54</note>
         <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:155,157</note>
       </notes>
       <segment>
@@ -2262,7 +2262,7 @@
     </unit>
     <unit id="repsLabel">
       <notes>
-        <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:57,58</note>
+        <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:63,64</note>
         <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:166,167</note>
       </notes>
       <segment>
@@ -2271,7 +2271,7 @@
     </unit>
     <unit id="typeLabel">
       <notes>
-        <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:69,70</note>
+        <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:75,76</note>
         <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:178,179</note>
       </notes>
       <segment>
@@ -2280,7 +2280,7 @@
     </unit>
     <unit id="typePlaceholder">
       <notes>
-        <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:75,76</note>
+        <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:81,82</note>
         <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:184,185</note>
       </notes>
       <segment>
@@ -2289,7 +2289,7 @@
     </unit>
     <unit id="sourceLabel">
       <notes>
-        <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:86,87</note>
+        <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:92,93</note>
         <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:195,197</note>
       </notes>
       <segment>
@@ -2298,7 +2298,7 @@
     </unit>
     <unit id="sourcePlaceholder">
       <notes>
-        <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:92,93</note>
+        <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:98,99</note>
         <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:201,202</note>
       </notes>
       <segment>
@@ -2307,7 +2307,7 @@
     </unit>
     <unit id="saveEntry">
       <notes>
-        <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:108,110</note>
+        <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:119,121</note>
       </notes>
       <segment>
         <source> Speichern </source>
