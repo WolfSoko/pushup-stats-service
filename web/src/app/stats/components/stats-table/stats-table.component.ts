@@ -90,6 +90,7 @@ export class StatsTableComponent {
     id: string;
     timestamp: string;
     reps: number;
+    sets?: number[];
     source: string;
     type?: string;
   }>();
@@ -350,6 +351,7 @@ export class StatsTableComponent {
       id: entry._id,
       timestamp,
       reps,
+      sets: [reps],
       source: this.editSource(entry) || 'web',
       type: this.editType(entry) || 'Standard',
     });

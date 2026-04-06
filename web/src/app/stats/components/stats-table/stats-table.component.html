@@ -78,7 +78,7 @@
       >
       <mat-cell *matCellDef="let entry">
         <span>{{ entry.reps }}</span>
-        @if (entry.sets?.length > 1) {
+        @if (entry.sets?.length && entry.sets.length !== 1) {
           <span class="sets-detail">({{ formatSets(entry.sets) }})</span>
         }
       </mat-cell>

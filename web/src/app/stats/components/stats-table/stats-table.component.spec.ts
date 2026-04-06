@@ -155,6 +155,7 @@ describe('StatsTableComponent', () => {
       id: '1',
       timestamp: '2026-02-10T13:45:00',
       reps: 15,
+      sets: [15],
       source: 'web',
       type: 'Standard',
     });
@@ -231,6 +232,7 @@ describe('StatsTableComponent', () => {
       id: '1',
       timestamp: '2026-02-10T13:45:00',
       reps: 14,
+      sets: [14],
       source: 'web',
       type: 'Diamond',
     });
@@ -310,6 +312,7 @@ describe('StatsTableComponent', () => {
       id: '1',
       timestamp: '2026-02-10T13:45:00',
       reps: 8,
+      sets: [8],
       source: 'whatsapp',
       type: 'Standard',
     });
@@ -326,24 +329,40 @@ describe('StatsTableComponent', () => {
   });
 
   describe('formatSets', () => {
-    it('formats uniform sets as "count×reps"', () => {
+    it('Given uniform sets When formatSets is called Then returns "count×reps"', () => {
+      // Given
       const component = fixture.componentInstance;
-      expect(component.formatSets([10, 10, 10])).toBe('3×10');
+      // When
+      const result = component.formatSets([10, 10, 10]);
+      // Then
+      expect(result).toBe('3×10');
     });
 
-    it('formats mixed sets as "a + b + c"', () => {
+    it('Given mixed sets When formatSets is called Then returns "a + b + c"', () => {
+      // Given
       const component = fixture.componentInstance;
-      expect(component.formatSets([10, 15, 5])).toBe('10 + 15 + 5');
+      // When
+      const result = component.formatSets([10, 15, 5]);
+      // Then
+      expect(result).toBe('10 + 15 + 5');
     });
 
-    it('returns empty string for empty array', () => {
+    it('Given empty array When formatSets is called Then returns empty string', () => {
+      // Given
       const component = fixture.componentInstance;
-      expect(component.formatSets([])).toBe('');
+      // When
+      const result = component.formatSets([]);
+      // Then
+      expect(result).toBe('');
     });
 
-    it('handles single set as "1×reps"', () => {
+    it('Given single set When formatSets is called Then returns "1×reps"', () => {
+      // Given
       const component = fixture.componentInstance;
-      expect(component.formatSets([20])).toBe('1×20');
+      // When
+      const result = component.formatSets([20]);
+      // Then
+      expect(result).toBe('1×20');
     });
   });
 

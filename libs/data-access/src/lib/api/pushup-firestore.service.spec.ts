@@ -317,6 +317,25 @@ describe('PushupFirestoreService', () => {
       expect(writtenData).not.toHaveProperty('sets');
     });
 
+    it('omits sets from Firestore when empty array is provided', async () => {
+      const newRef = { id: 'empty-sets-id' };
+      jest.spyOn(firestoreFns, 'doc').mockReturnValueOnce(newRef as any);
+      const setDocSpy = jest
+        .spyOn(firestoreFns, 'setDoc')
+        .mockResolvedValueOnce(undefined as any);
+
+      await firstValueFrom(
+        service.createPushup('u1', {
+          timestamp: '2024-01-01T10:00:00Z',
+          reps: 5,
+          sets: [],
+        })
+      );
+
+      const writtenData = setDocSpy.mock.calls[0][1] as Record<string, unknown>;
+      expect(writtenData).not.toHaveProperty('sets');
+    });
+
     it('defaults source to "web" and type to "Standard" when omitted', async () => {
       const newRef = { id: 'default-id' };
       jest.spyOn(firestoreFns, 'doc').mockReturnValueOnce(newRef as any);

@@ -2739,6 +2739,12 @@ Deine Position: # ·  Reps        </source>
         <target>Add set</target>
       </segment>
     </unit>
+    <unit id="setLabel">
+      <segment state="translated">
+        <source>Set <ph id="0" equiv="INTERPOLATION" disp="{{ $index + 1 }}"/></source>
+        <target>Set <ph id="0" equiv="INTERPOLATION" disp="{{ $index + 1 }}"/></target>
+      </segment>
+    </unit>
     <unit id="removeSetAria">
       <segment state="translated">
         <source>Set entfernen</source>

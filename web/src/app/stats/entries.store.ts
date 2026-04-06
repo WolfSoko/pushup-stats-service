@@ -142,6 +142,7 @@ export const EntriesStore = signalStore(
       id: string;
       timestamp: string;
       reps: number;
+      sets?: number[];
       source?: string;
       type?: string;
     }): Promise<void> {

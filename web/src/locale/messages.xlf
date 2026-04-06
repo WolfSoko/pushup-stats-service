@@ -2302,6 +2302,14 @@
         <source>Set hinzufügen</source>
       </segment>
     </unit>
+    <unit id="setLabel">
+      <notes>
+        <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:109,110</note>
+      </notes>
+      <segment>
+        <source>Set <ph id="0" equiv="INTERPOLATION" disp="{{ $index + 1 }}"/></source>
+      </segment>
+    </unit>
     <unit id="removeSetAria">
       <notes>
         <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:124,126</note>

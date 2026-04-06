@@ -106,7 +106,7 @@ export interface CreateEntryResult {
         @for (set of sets(); track $index) {
           <div class="set-row">
             <mat-form-field appearance="outline">
-              <mat-label>Set {{ $index + 1 }}</mat-label>
+              <mat-label i18n="@@setLabel">Set {{ $index + 1 }}</mat-label>
               <input
                 matInput
                 type="number"
