@@ -66,12 +66,42 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://pushup-stats.de/de/blog/liegestuetze-varianten</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://pushup-stats.de/de/blog/30-tage-liegestuetze-challenge</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://pushup-stats.de/de/blog/liegestuetze-ab-40</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://pushup-stats.de/en/blog/pushup-progression</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://pushup-stats.de/en/blog/daily-pushups</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://pushup-stats.de/en/blog/pushup-variations</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://pushup-stats.de/en/blog/30-day-pushup-challenge</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://pushup-stats.de/en/blog/pushups-over-40</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
