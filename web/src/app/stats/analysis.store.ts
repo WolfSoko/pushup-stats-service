@@ -1,4 +1,4 @@
-import { computed, inject, resource } from '@angular/core';
+import { computed, inject, LOCALE_ID, resource } from '@angular/core';
 import {
   patchState,
   signalStore,
@@ -17,6 +17,7 @@ import {
   StatsGranularity,
   StatsResponse,
   StatsSeriesEntry,
+  toLocalIsoDate,
   UserStats,
 } from '@pu-stats/models';
 
@@ -73,6 +74,40 @@ function sortedUniqueDates(rows: PushupRecord[]): string[] {
   );
 }
 
+function expandToWeekRange(
+  from: string,
+  to: string
+): { from: string; to: string } {
+  const fromDate = new Date(`${from}T00:00:00`);
+  const day = fromDate.getDay() || 7;
+  fromDate.setDate(fromDate.getDate() - (day - 1));
+
+  const toDate = new Date(`${to}T00:00:00`);
+  const toDay = toDate.getDay() || 7;
+  toDate.setDate(toDate.getDate() + (7 - toDay));
+
+  return {
+    from: toLocalIsoDate(fromDate),
+    to: toLocalIsoDate(toDate),
+  };
+}
+
+function expandToMonthRange(
+  from: string,
+  to: string
+): { from: string; to: string } {
+  const fromDate = new Date(`${from}T00:00:00`);
+  fromDate.setDate(1);
+
+  const toDate = new Date(`${to}T00:00:00`);
+  toDate.setMonth(toDate.getMonth() + 1, 0);
+
+  return {
+    from: toLocalIsoDate(fromDate),
+    to: toLocalIsoDate(toDate),
+  };
+}
+
 export const AnalysisStore = signalStore(
   withState<AnalysisState>(() => {
     const defaultRange = createWeekRange();
@@ -85,7 +120,13 @@ export const AnalysisStore = signalStore(
     const api = inject(StatsApiService);
     const userStatsApi = inject(UserStatsApiService);
     const user = inject(UserContextService);
-    return { _api: api, _userStatsApi: userStatsApi, _user: user };
+    const locale = inject(LOCALE_ID);
+    return {
+      _api: api,
+      _userStatsApi: userStatsApi,
+      _user: user,
+      _locale: locale,
+    };
   }),
   withComputed((store) => {
     const filter = computed(() => ({
@@ -95,7 +136,20 @@ export const AnalysisStore = signalStore(
 
     const rangeMode = computed(() => inferRangeMode(store.from(), store.to()));
 
-    return { filter, rangeMode };
+    const weekFilter = computed(() => {
+      const from = store.from();
+      const to = store.to();
+      if (!from || !to) return { from, to };
+      return expandToWeekRange(from, to);
+    });
+    const monthFilter = computed(() => {
+      const from = store.from();
+      const to = store.to();
+      if (!from || !to) return { from, to };
+      return expandToMonthRange(from, to);
+    });
+
+    return { filter, rangeMode, weekFilter, monthFilter };
   }),
   withProps((store) => {
     const statsResource = resource({
@@ -117,7 +171,25 @@ export const AnalysisStore = signalStore(
           : null,
     });
 
-    return { statsResource, entriesResource, userStatsResource };
+    const weekEntriesResource = resource({
+      params: () => store.weekFilter(),
+      loader: async ({ params }) =>
+        firstValueFrom(store._api.listPushups(params)),
+    });
+
+    const monthEntriesResource = resource({
+      params: () => store.monthFilter(),
+      loader: async ({ params }) =>
+        firstValueFrom(store._api.listPushups(params)),
+    });
+
+    return {
+      statsResource,
+      entriesResource,
+      userStatsResource,
+      weekEntriesResource,
+      monthEntriesResource,
+    };
   }),
   withComputed((store) => {
     const stats = computed(() => store.statsResource.value() ?? EMPTY_STATS);
@@ -127,9 +199,10 @@ export const AnalysisStore = signalStore(
     );
     const rows = computed(() => store.entriesResource.value() ?? []);
 
+    const weekRows = computed(() => store.weekEntriesResource.value() ?? []);
     const weekTrend = computed(() => {
       const byWeek = new Map<string, number>();
-      for (const row of rows()) {
+      for (const row of weekRows()) {
         const date = new Date(row.timestamp);
         const year = isoWeekYear(date);
         const week = String(isoWeek(date)).padStart(2, '0');
@@ -142,9 +215,10 @@ export const AnalysisStore = signalStore(
         .map(([label, total]) => ({ label, total }));
     });
 
+    const monthRows = computed(() => store.monthEntriesResource.value() ?? []);
     const monthTrend = computed<TrendPoint[]>(() => {
       const byMonth = new Map<string, number>();
-      for (const row of rows()) {
+      for (const row of monthRows()) {
         const date = new Date(row.timestamp);
         const label = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
         byMonth.set(label, (byMonth.get(label) ?? 0) + row.reps);
@@ -216,6 +290,51 @@ export const AnalysisStore = signalStore(
       () => userStats()?.heatmap ?? {}
     );
 
+    const weekTrendSubtitle = computed(() => {
+      const { from, to } = store.weekFilter();
+      if (!from || !to) return '';
+      const fromDate = new Date(`${from}T00:00:00`);
+      const toDate = new Date(`${to}T00:00:00`);
+      const sameYear = fromDate.getFullYear() === toDate.getFullYear();
+      const fmtFrom = new Intl.DateTimeFormat(store._locale, {
+        day: 'numeric',
+        month: 'short',
+        ...(sameYear ? {} : { year: 'numeric' }),
+      });
+      const fmtTo = new Intl.DateTimeFormat(store._locale, {
+        day: 'numeric',
+        month: 'short',
+        year: 'numeric',
+      });
+      return `${fmtFrom.format(fromDate)} – ${fmtTo.format(toDate)}`;
+    });
+
+    const monthTrendSubtitle = computed(() => {
+      const { from, to } = store.monthFilter();
+      if (!from || !to) return '';
+      const fromDate = new Date(`${from}T00:00:00`);
+      const toDate = new Date(`${to}T00:00:00`);
+      const sameMonth =
+        fromDate.getMonth() === toDate.getMonth() &&
+        fromDate.getFullYear() === toDate.getFullYear();
+      if (sameMonth) {
+        return new Intl.DateTimeFormat(store._locale, {
+          month: 'long',
+          year: 'numeric',
+        }).format(fromDate);
+      }
+      const sameYear = fromDate.getFullYear() === toDate.getFullYear();
+      const fmtFrom = new Intl.DateTimeFormat(store._locale, {
+        month: 'long',
+        ...(sameYear ? {} : { year: 'numeric' }),
+      });
+      const fmtTo = new Intl.DateTimeFormat(store._locale, {
+        month: 'long',
+        year: 'numeric',
+      });
+      return `${fmtFrom.format(fromDate)} – ${fmtTo.format(toDate)}`;
+    });
+
     return {
       stats,
       chartSeries,
@@ -223,6 +342,8 @@ export const AnalysisStore = signalStore(
       rows,
       weekTrend,
       monthTrend,
+      weekTrendSubtitle,
+      monthTrendSubtitle,
       typeBreakdown,
       bestSingleEntry,
       bestDay,
@@ -246,6 +367,8 @@ export const AnalysisStore = signalStore(
       store.statsResource.reload();
       store.entriesResource.reload();
       store.userStatsResource.reload();
+      store.weekEntriesResource.reload();
+      store.monthEntriesResource.reload();
     },
   }))
 );
