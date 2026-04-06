@@ -61,6 +61,28 @@ describe('berlinParts', () => {
     expect(parts.isoDate).toBe('2026-04-05');
     expect(parts.hour).toBe(22);
   });
+
+  it('converts timestamps with explicit Berlin offset (+02:00)', () => {
+    // New format: entries now include the local offset
+    const parts = berlinParts('2026-04-05T22:50+02:00');
+    expect(parts.isoDate).toBe('2026-04-05');
+    expect(parts.hour).toBe(22);
+    expect(parts.weekday).toBe('So');
+  });
+
+  it('converts timestamps with negative offset (traveling user in UTC-5)', () => {
+    // User in UTC-5 at 22:50 local → UTC 03:50 Apr 6 → Berlin 05:50 Apr 6
+    const parts = berlinParts('2026-04-05T22:50-05:00');
+    expect(parts.isoDate).toBe('2026-04-06');
+    expect(parts.hour).toBe(5);
+    expect(parts.weekday).toBe('Mo');
+  });
+
+  it('converts timestamps with winter offset (+01:00 CET)', () => {
+    const parts = berlinParts('2026-01-15T23:30+01:00');
+    expect(parts.isoDate).toBe('2026-01-15');
+    expect(parts.hour).toBe(23);
+  });
 });
 
 // ─── isoWeekFromYmd ───────────────────────────────────────────────────────────
