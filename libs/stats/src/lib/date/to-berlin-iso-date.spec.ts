@@ -7,8 +7,8 @@ describe('toBerlinIsoDate', () => {
     expect(toBerlinIsoDate(date)).toBe('2026-04-06');
   });
 
-  it('returns previous Berlin date for late UTC evening that is still previous day in Berlin', () => {
-    // 2026-04-05T20:50:00Z — in Berlin (UTC+2) this is 2026-04-05 22:50
+  it('keeps same Berlin date when UTC evening maps to same day in Berlin', () => {
+    // 2026-04-05T20:50:00Z — in Berlin (UTC+2) this is 2026-04-05 22:50 (same day)
     const date = new Date('2026-04-05T20:50:00Z');
     expect(toBerlinIsoDate(date)).toBe('2026-04-05');
   });

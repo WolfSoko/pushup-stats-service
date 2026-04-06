@@ -36,8 +36,9 @@ const WEEKDAY_MAP: Record<string, string> = {
 /**
  * Check whether a timestamp string contains an explicit timezone indicator
  * (trailing 'Z', or a '+'/'-' offset after the time portion).
- * Timestamps from the app's frontend are stored as Berlin local time
- * WITHOUT any offset (e.g. '2026-04-05T22:50'), so they must NOT be
+ * Older entries may be stored as Berlin local time without offset
+ * (e.g. '2026-04-05T22:50'). Newer entries include the offset
+ * (e.g. '2026-04-05T22:50+02:00'). Offset-less timestamps must NOT be
  * re-interpreted as UTC and then converted to Berlin.
  */
 function hasTimezoneIndicator(ts: string): boolean {
