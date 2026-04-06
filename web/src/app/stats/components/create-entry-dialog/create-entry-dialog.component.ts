@@ -98,19 +98,24 @@ export interface CreateEntryResult {
         />
       </mat-form-field>
 
-      @if (hasMultipleSets()) {
-        @for (set of sets(); track $index) {
-          <div class="set-row" [animate.enter]="'clone-in'">
-            <mat-form-field appearance="outline">
+      @for (set of sets(); track $index) {
+        <div class="set-row" [animate.enter]="'clone-in'">
+          <mat-form-field appearance="outline">
+            @if (hasMultipleSets()) {
               <mat-label i18n="@@setLabel">Set {{ $index + 1 }}</mat-label>
-              <input
-                matInput
-                type="number"
-                min="1"
-                [value]="set"
-                (input)="updateSet($index, asValue($event))"
-              />
-            </mat-form-field>
+            } @else {
+              <mat-label i18n="@@repsLabel">Reps</mat-label>
+            }
+            <input
+              matInput
+              type="number"
+              min="1"
+              [value]="set"
+              (input)="updateSet($index, asValue($event))"
+              required
+            />
+          </mat-form-field>
+          @if (hasMultipleSets()) {
             <button
               type="button"
               mat-icon-button
@@ -120,46 +125,25 @@ export interface CreateEntryResult {
             >
               <mat-icon>remove_circle_outline</mat-icon>
             </button>
-          </div>
-        }
-        <div class="reps-row">
-          <button
-            type="button"
-            mat-icon-button
-            (click)="addSet()"
-            i18n-aria-label="@@addSetAria"
-            aria-label="Set hinzufügen"
-          >
-            <mat-icon>add_circle_outline</mat-icon>
-          </button>
-          <div class="total-reps" i18n="@@totalReps">
-            Gesamt: {{ totalReps() }} Reps
-          </div>
+          }
+          @if ($last) {
+            <button
+              type="button"
+              mat-icon-button
+              (click)="addSet()"
+              i18n-aria-label="@@addSetAria"
+              aria-label="Set hinzufügen"
+              i18n-matTooltip="@@addSetTooltip"
+              matTooltip="Weiteres Set hinzufügen"
+            >
+              <mat-icon>add_circle_outline</mat-icon>
+            </button>
+          }
         </div>
-      } @else {
-        <div class="reps-row">
-          <mat-form-field appearance="outline">
-            <mat-label i18n="@@repsLabel">Reps</mat-label>
-            <input
-              matInput
-              type="number"
-              min="1"
-              [value]="sets()[0]"
-              (input)="updateSet(0, asValue($event))"
-              required
-            />
-          </mat-form-field>
-          <button
-            type="button"
-            mat-icon-button
-            (click)="addSet()"
-            i18n-aria-label="@@addSetAria"
-            aria-label="Set hinzufügen"
-            i18n-matTooltip="@@addSetTooltip"
-            matTooltip="Weiteres Set hinzufügen"
-          >
-            <mat-icon>add_circle_outline</mat-icon>
-          </button>
+      }
+      @if (hasMultipleSets()) {
+        <div class="total-reps" i18n="@@totalReps">
+          Gesamt: {{ totalReps() }} Reps
         </div>
       }
 
