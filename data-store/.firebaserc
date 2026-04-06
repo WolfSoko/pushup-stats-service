@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "pushup-stats"
+    "default": "pushup-stats",
+    "staging": "pushup-stats-staging-867b7"
   }
 }

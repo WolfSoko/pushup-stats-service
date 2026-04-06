@@ -1,0 +1,16 @@
+# Staging settings for App Hosting Backend (on Cloud Run).
+# Used for PR preview deployments to pushup-stats-staging-867b7.
+# See https://firebase.google.com/docs/app-hosting/configure#cloud-run
+runConfig:
+  minInstances: 0
+  maxInstances: 1
+  concurrency: 80
+
+env:
+  - variable: NG_ALLOWED_HOSTS
+    value: '.hosted.app'
+    availability:
+      - RUNTIME
+
+scripts:
+  runCommand: node dist/web/server/server.mjs
