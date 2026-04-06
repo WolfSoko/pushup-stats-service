@@ -44,6 +44,7 @@ html.light-theme {
 // --- Theme-aware custom properties ---
 // Dark theme tokens (default)
 html {
+  --mat-sys-background: transparent;
   --text-muted: #b9c9ea;
   --text-subtle: #7a8fbb;
   --text-body-secondary: #d8e5ff;
@@ -60,6 +61,7 @@ html {
 
 // Light theme token overrides
 html.light-theme {
+  --mat-sys-background: transparent;
   --text-muted: #64748b;
   --text-subtle: #475569;
   --text-body-secondary: #334155;
