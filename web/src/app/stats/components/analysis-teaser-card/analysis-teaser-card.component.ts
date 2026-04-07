@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { StatsApiService } from '@pu-stats/data-access';
-import { StatsResponse, toLocalIsoDate } from '@pu-stats/models';
+import { PushupRecord, StatsResponse, toLocalIsoDate } from '@pu-stats/models';
 import { firstValueFrom } from 'rxjs';
 import { StatsChartComponent } from '../stats-chart/stats-chart.component';
 
@@ -68,6 +68,7 @@ const EMPTY_STATS: StatsResponse = {
               [rangeMode]="'week'"
               [from]="from()"
               [to]="to()"
+              [entries]="entries()"
             />
           </div>
         }
@@ -152,8 +153,20 @@ export class AnalysisTeaserCardComponent {
       firstValueFrom(this.api.load({ from: params.from, to: params.to })),
   });
 
+  private readonly entriesResource = resource({
+    params: () => ({ ...this.weekRange(), _refresh: this.refreshTrigger() }),
+    loader: async ({ params }) =>
+      firstValueFrom(
+        this.api.listPushups({ from: params.from, to: params.to })
+      ),
+  });
+
   readonly chartSeries = computed(
     () => (this.statsResource.value() ?? EMPTY_STATS).series
+  );
+
+  readonly entries = computed<PushupRecord[]>(
+    () => this.entriesResource.value() ?? []
   );
 
   navigateToAnalysis(): void {

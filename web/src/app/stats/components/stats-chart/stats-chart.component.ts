@@ -127,7 +127,7 @@ export class StatsChartComponent implements AfterViewInit {
   readonly movingAvgLabel = $localize`:@@chart.movingAvg:Gleitender Durchschnitt`;
 
   readonly hasSetsData = computed(() =>
-    this.entries().some((e) => e.sets?.length)
+    this.entries().some((e) => (e.sets?.length ?? 0) > 1)
   );
   private readonly viewReady = signal(false);
   private chart?: Chart;
@@ -245,10 +245,10 @@ export class StatsChartComponent implements AfterViewInit {
         sets: [],
         totalSets: 0,
       };
-      if (entry.sets?.length) {
+      if ((entry.sets?.length ?? 0) > 1) {
         info.setsReps += entry.reps;
-        info.sets.push(entry.sets);
-        info.totalSets += entry.sets.length;
+        info.sets.push(entry.sets!);
+        info.totalSets += entry.sets!.length;
       } else {
         info.noSetsReps += entry.reps;
       }
@@ -329,7 +329,7 @@ export class StatsChartComponent implements AfterViewInit {
           pointRadius: 0,
           pointHoverRadius: 3,
           tension: 0.32,
-          yAxisID: 'y',
+          yAxisID: 'yAvg',
         },
       ],
     };
@@ -372,6 +372,7 @@ export class StatsChartComponent implements AfterViewInit {
         scales: {
           x: {
             type: 'time',
+            stacked: hasSetsData,
             min:
               this.rangeMode() === 'day'
                 ? undefined
@@ -407,8 +408,13 @@ export class StatsChartComponent implements AfterViewInit {
             grid: { color: chartGridLight },
           },
           y: {
+            stacked: hasSetsData,
             ticks: { color: chartTick, precision: 0 },
             grid: { color: chartGrid },
+          },
+          yAvg: {
+            display: false,
+            stacked: false,
           },
           yIntegral: {
             position: 'right',
@@ -453,9 +459,7 @@ export class StatsChartComponent implements AfterViewInit {
                   `${info.totalSets} ${this.setsTooltipLabel}:`,
                 ];
                 for (const entrySet of info.sets) {
-                  lines.push(
-                    `   ${entrySet.join(' + ')} = ${entrySet.reduce((a, b) => a + b, 0)}`
-                  );
+                  lines.push(`   ${entrySet.join(' + ')}`);
                 }
                 return lines;
               },

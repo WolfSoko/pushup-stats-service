@@ -19,6 +19,7 @@ class StubStatsChartComponent {
   readonly rangeMode = input<string>('week');
   readonly from = input<string>('');
   readonly to = input<string>('');
+  readonly entries = input<unknown[]>([]);
 }
 
 describe('AnalysisTeaserCardComponent', () => {
@@ -40,6 +41,7 @@ describe('AnalysisTeaserCardComponent', () => {
         series: [{ bucket: '2026-03-30', total: 20, dayIntegral: 20 }],
       })
     ),
+    listPushups: vitest.fn().mockReturnValue(of([])),
   };
 
   beforeEach(async () => {
