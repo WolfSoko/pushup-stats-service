@@ -51,6 +51,9 @@ export interface SetsDistributionDatum {
       border-radius: 4px;
       overflow: hidden;
     }
+    :host-context(html.light-theme) .bar-track {
+      background: rgba(15, 23, 42, 0.08);
+    }
     .bar-fill {
       height: 100%;
       background: #5e8eff;

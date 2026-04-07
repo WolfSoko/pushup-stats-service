@@ -35,13 +35,16 @@ export class StatsApiService {
 
   load(filter: StatsFilter = {}): Observable<StatsResponse> {
     return this.listPushups(filter).pipe(
-      switchMap((rows) =>
-        from(this.resolveUserChartSettings(this.resolveUserId())).pipe(
+      switchMap((rows) => {
+        if (filter.dayChartMode) {
+          return of(this.toStatsResponse(rows, filter, filter.dayChartMode));
+        }
+        return from(this.resolveUserChartSettings(this.resolveUserId())).pipe(
           map(({ dayChartMode }) =>
             this.toStatsResponse(rows, filter, dayChartMode)
           )
-        )
-      )
+        );
+      })
     );
   }
 

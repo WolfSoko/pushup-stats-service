@@ -54,6 +54,8 @@ import { AnalysisStore } from '../analysis.store';
         [from]="store.from()"
         [to]="store.to()"
         [entries]="store.rows()"
+        [dayChartMode]="store.dayChartMode()"
+        (dayChartModeChange)="store.setDayChartMode($event)"
       />
 
       <section class="grid">
@@ -234,6 +236,8 @@ import { AnalysisStore } from '../analysis.store';
             [value]="heatmapMode()"
             (change)="heatmapMode.set($event.value)"
             class="heatmap-toggle"
+            aria-label="Heatmap-Modus auswählen"
+            i18n-aria-label="@@analysis.heatmapToggleAriaLabel"
           >
             <mat-button-toggle value="reps" i18n="@@analysis.heatmapReps"
               >Reps</mat-button-toggle

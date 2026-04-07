@@ -48,6 +48,7 @@ export interface TypeBreakdownDatum {
 type AnalysisState = {
   from: string;
   to: string;
+  dayChartMode: '24h' | '14h';
 };
 
 function isoWeek(date: Date): number {
@@ -121,6 +122,7 @@ export const AnalysisStore = signalStore(
     return {
       from: defaultRange.from,
       to: defaultRange.to,
+      dayChartMode: '14h' as const,
     };
   }),
   withProps(() => {
@@ -139,6 +141,7 @@ export const AnalysisStore = signalStore(
     const filter = computed(() => ({
       from: store.from() || undefined,
       to: store.to() || undefined,
+      dayChartMode: store.dayChartMode(),
     }));
 
     const rangeMode = computed(() => inferRangeMode(store.from(), store.to()));
@@ -455,6 +458,9 @@ export const AnalysisStore = signalStore(
     },
     setTo(to: string): void {
       patchState(store, { to });
+    },
+    setDayChartMode(dayChartMode: '24h' | '14h'): void {
+      patchState(store, { dayChartMode });
     },
     refreshAll(): void {
       store.statsResource.reload();

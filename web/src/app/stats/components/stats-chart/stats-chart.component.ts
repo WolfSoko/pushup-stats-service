@@ -48,6 +48,8 @@ Chart.register(...registerables);
             [value]="dayChartMode()"
             (change)="dayChartMode.set($event.value)"
             class="chart-mode-toggle"
+            aria-label="Zeitraum der Stundenansicht"
+            i18n-aria-label="@@chart.modeToggleAria"
           >
             <mat-button-toggle value="14h" i18n="@@chart.mode14h"
               >14h</mat-button-toggle
@@ -207,6 +209,7 @@ export class StatsChartComponent implements AfterViewInit {
 
     // Build per-bucket sets info from raw entries for stacked bars & tooltip
     const isHourly = this.granularity() === 'hourly';
+    const is14h = isHourly && this.dayChartMode() === '14h';
     const setsByBucket = new Map<
       number,
       {
@@ -218,18 +221,24 @@ export class StatsChartComponent implements AfterViewInit {
     >();
     for (const entry of entries) {
       const date = new Date(entry.timestamp);
-      const bucketTs = isHourly
-        ? new Date(
-            date.getFullYear(),
-            date.getMonth(),
-            date.getDate(),
-            date.getHours()
-          ).getTime()
-        : new Date(
-            date.getFullYear(),
-            date.getMonth(),
-            date.getDate()
-          ).getTime();
+      let bucketTs: number;
+      if (isHourly) {
+        const hour = date.getHours();
+        // In 14h mode, hours 0-7 merge into the 00:00 bucket
+        const mappedHour = is14h && hour < 8 ? 0 : hour;
+        bucketTs = new Date(
+          date.getFullYear(),
+          date.getMonth(),
+          date.getDate(),
+          mappedHour
+        ).getTime();
+      } else {
+        bucketTs = new Date(
+          date.getFullYear(),
+          date.getMonth(),
+          date.getDate()
+        ).getTime();
+      }
       const info = setsByBucket.get(bucketTs) ?? {
         setsReps: 0,
         noSetsReps: 0,

@@ -11,7 +11,7 @@ import { StatsChartComponent } from '../components/stats-chart/stats-chart.compo
 import { SetsDistributionComponent } from '../components/sets-distribution/sets-distribution.component';
 
 // We don't want to render real components in unit tests.
-import { Component, input, output } from '@angular/core';
+import { Component, input, model, output } from '@angular/core';
 import { RangeModes } from '@pu-stats/models';
 
 @Component({
@@ -58,6 +58,7 @@ class MockStatsChartComponent {
   readonly from = input<string>('');
   readonly to = input<string>('');
   readonly entries = input<unknown[]>([]);
+  readonly dayChartMode = model<string>('14h');
 }
 
 @Component({

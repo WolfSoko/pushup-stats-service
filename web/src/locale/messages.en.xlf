@@ -485,6 +485,12 @@ Active:         </target>
         <target>Sets distribution</target>
       </segment>
     </unit>
+    <unit id="analysis.heatmapToggleAriaLabel">
+      <segment state="translated">
+        <source>Heatmap-Modus auswählen</source>
+        <target>Select heatmap mode</target>
+      </segment>
+    </unit>
     <unit id="analysis.heatmapReps">
       <segment state="translated">
         <source>Reps</source>
@@ -519,6 +525,12 @@ Active:         </target>
       <segment state="translated">
         <source>&#x2300; Set-Gr&#x00F6;&#x00DF;e</source>
         <target>&#x2300; Set size</target>
+      </segment>
+    </unit>
+    <unit id="chart.modeToggleAria">
+      <segment state="translated">
+        <source>Zeitraum der Stundenansicht</source>
+        <target>Hourly view time range</target>
       </segment>
     </unit>
     <unit id="chart.mode14h">
