@@ -450,7 +450,7 @@ export class StatsChartComponent implements AfterViewInit {
                 if (!first) return '';
                 const ts = Number(first.parsed.x);
                 const info = setsByBucket.get(ts);
-                if (!info) return '';
+                if (!info || info.totalSets === 0) return '';
                 const lines: string[] = [
                   '',
                   `${info.totalSets} ${this.setsTooltipLabel}:`,

@@ -1,4 +1,4 @@
-import { DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { DecimalPipe, DOCUMENT, isPlatformBrowser } from '@angular/common';
 import {
   Component,
   effect,
@@ -27,6 +27,7 @@ import { AnalysisStore } from '../analysis.store';
     MatButtonToggleModule,
     MatCardModule,
     MatTableModule,
+    DecimalPipe,
     FilterBarComponent,
     HeatmapComponent,
     PreviewBannerComponent,
@@ -87,7 +88,10 @@ import { AnalysisStore } from '../analysis.store';
                   >&#x2300; Sets</mat-header-cell
                 >
                 <mat-cell *matCellDef="let row">{{
-                  row.avgSetsPerEntry ?? '—'
+                  row.avgSetsPerEntry !== null &&
+                  row.avgSetsPerEntry !== undefined
+                    ? (row.avgSetsPerEntry | number)
+                    : '—'
                 }}</mat-cell>
               </ng-container>
               <mat-header-row
@@ -128,7 +132,10 @@ import { AnalysisStore } from '../analysis.store';
                   >&#x2300; Sets</mat-header-cell
                 >
                 <mat-cell *matCellDef="let row">{{
-                  row.avgSetsPerEntry ?? '—'
+                  row.avgSetsPerEntry !== null &&
+                  row.avgSetsPerEntry !== undefined
+                    ? (row.avgSetsPerEntry | number)
+                    : '—'
                 }}</mat-cell>
               </ng-container>
               <mat-header-row
@@ -166,7 +173,10 @@ import { AnalysisStore } from '../analysis.store';
                 <strong i18n="@@analysis.bestSingleSet"
                   >Bestes Einzel-Set:</strong
                 >
-                <div>{{ store.bestSingleSet() }} Reps</div>
+                <div>
+                  {{ store.bestSingleSet() }}
+                  <span i18n="@@analysis.repsUnit">Wdh.</span>
+                </div>
               </div>
             }
             <div>

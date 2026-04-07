@@ -135,7 +135,7 @@ describe('HeatmapComponent', () => {
     const label = opts.plugins.tooltip.callbacks.label({
       raw: { x: 'Mo', y: '08', v: 5 },
     });
-    expect(label).toContain('Sets');
-    expect(label).not.toContain('Reps');
+    expect(label).toContain('Sätze');
+    expect(label).not.toContain('Wiederholungen');
   });
 });

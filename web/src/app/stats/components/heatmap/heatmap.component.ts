@@ -61,8 +61,8 @@ export class HeatmapComponent {
 
   private readonly unitLabel = computed(() =>
     this.mode() === 'sets'
-      ? $localize`:@@heatmap.unit.sets:Sets`
-      : $localize`:@@heatmap.unit.reps:Reps`
+      ? $localize`:@@heatmap.unit.sets:Sätze`
+      : $localize`:@@heatmap.unit.reps:Wiederholungen`
   );
 
   // Matrix chart typing is tricky with string category axes; keep this loosely typed.

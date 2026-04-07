@@ -719,7 +719,7 @@ describe('applyDelta', () => {
       expect(result.bestSingleSet).toBe(25);
     });
 
-    it('preserves bestSingleSet on delete (append-only, rebuild corrects)', () => {
+    it('preserves bestSingleSet on update when new max is lower (append-only, rebuild corrects)', () => {
       const existing = {
         ...emptyUserStats('u1'),
         total: 30,
@@ -806,9 +806,12 @@ describe('applyDelta', () => {
         newReps: 0,
         nowIso: NOW,
         setsDelta: -2,
+        oldSets: [10, 10],
       });
 
       expect(result.totalSets).toBe(3);
+      expect(result.totalSetsReps).toBe(30); // 50 - 20
+      expect(result.avgSetSize).toBe(10); // 30 / 3
     });
 
     it('works without sets params (backward compatible)', () => {

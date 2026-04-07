@@ -178,3 +178,8 @@ mat-card-header + mat-card-footer {
 .mdc-text-field--focused {
   --mdc-outlined-text-field-outline-color: rgba(122, 160, 255, 0.95);
 }
+
+.chart-mode-toggle .mat-button-toggle-label-content {
+  padding: 0 8px;
+  line-height: 28px;
+}

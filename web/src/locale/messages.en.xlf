@@ -479,6 +479,12 @@ Active:         </target>
         <target>Reps / set</target>
       </segment>
     </unit>
+    <unit id="analysis.repsUnit">
+      <segment state="translated">
+        <source>Wdh.</source>
+        <target>Reps</target>
+      </segment>
+    </unit>
     <unit id="analysis.setsDistTitle">
       <segment state="translated">
         <source>Sets-Verteilung</source>
@@ -505,13 +511,13 @@ Active:         </target>
     </unit>
     <unit id="heatmap.unit.sets">
       <segment state="translated">
-        <source>Sets</source>
+        <source>Sätze</source>
         <target>Sets</target>
       </segment>
     </unit>
     <unit id="heatmap.unit.reps">
       <segment state="translated">
-        <source>Reps</source>
+        <source>Wiederholungen</source>
         <target>Reps</target>
       </segment>
     </unit>
