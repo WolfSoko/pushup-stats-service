@@ -634,6 +634,134 @@ describe('applyDelta', () => {
     });
   });
 
+  describe('sets tracking', () => {
+    it('tracks totalSets, avgSetSize, and bestSingleSet on create', () => {
+      const result = applyDelta(null, {
+        userId: 'u1',
+        repsDelta: 30,
+        entriesDelta: 1,
+        timestamp: TIMESTAMP,
+        newReps: 30,
+        nowIso: NOW,
+        setsDelta: 3,
+        newSets: [10, 12, 8],
+      });
+
+      expect(result.totalSets).toBe(3);
+      expect(result.bestSingleSet).toBe(12);
+      // avgSetSize = total / totalSets = 30 / 3 = 10
+      expect(result.avgSetSize).toBe(10);
+    });
+
+    it('accumulates sets on existing stats', () => {
+      const existing = {
+        ...emptyUserStats('u1'),
+        total: 30,
+        totalEntries: 1,
+        totalSets: 3,
+        bestSingleSet: 12,
+        avgSetSize: 10,
+        dailyKey: '2026-04-05',
+        dailyReps: 30,
+        weeklyKey: '2026-W14',
+        weeklyReps: 30,
+        monthlyKey: '2026-04',
+        monthlyReps: 30,
+        currentStreak: 1,
+        lastEntryDate: '2026-04-05',
+      };
+
+      const result = applyDelta(existing, {
+        userId: 'u1',
+        repsDelta: 20,
+        entriesDelta: 1,
+        timestamp: TIMESTAMP,
+        newReps: 20,
+        nowIso: NOW,
+        setsDelta: 2,
+        newSets: [10, 10],
+      });
+
+      expect(result.totalSets).toBe(5);
+      // avgSetSize = 50 / 5 = 10
+      expect(result.avgSetSize).toBe(10);
+      expect(result.bestSingleSet).toBe(12); // 10 < 12
+    });
+
+    it('updates bestSingleSet when new set exceeds existing', () => {
+      const existing = {
+        ...emptyUserStats('u1'),
+        total: 30,
+        totalEntries: 1,
+        totalSets: 3,
+        bestSingleSet: 12,
+        dailyKey: '2026-04-05',
+        weeklyKey: '2026-W14',
+        monthlyKey: '2026-04',
+        currentStreak: 1,
+        lastEntryDate: '2026-04-05',
+      };
+
+      const result = applyDelta(existing, {
+        userId: 'u1',
+        repsDelta: 40,
+        entriesDelta: 1,
+        timestamp: TIMESTAMP,
+        newReps: 40,
+        nowIso: NOW,
+        setsDelta: 2,
+        newSets: [25, 15],
+      });
+
+      expect(result.bestSingleSet).toBe(25);
+    });
+
+    it('decrements totalSets on delete', () => {
+      const existing = {
+        ...emptyUserStats('u1'),
+        total: 50,
+        totalEntries: 2,
+        totalSets: 5,
+        bestSingleSet: 12,
+        dailyKey: '2026-04-05',
+        dailyReps: 50,
+        weeklyKey: '2026-W14',
+        weeklyReps: 50,
+        monthlyKey: '2026-04',
+        monthlyReps: 50,
+        currentStreak: 1,
+        lastEntryDate: '2026-04-05',
+      };
+
+      const result = applyDelta(existing, {
+        userId: 'u1',
+        repsDelta: -20,
+        entriesDelta: -1,
+        timestamp: TIMESTAMP,
+        newReps: 0,
+        nowIso: NOW,
+        setsDelta: -2,
+      });
+
+      expect(result.totalSets).toBe(3);
+    });
+
+    it('works without sets params (backward compatible)', () => {
+      const result = applyDelta(null, {
+        userId: 'u1',
+        repsDelta: 20,
+        entriesDelta: 1,
+        timestamp: TIMESTAMP,
+        newReps: 20,
+        nowIso: NOW,
+      });
+
+      expect(result.totalSets).toBe(0);
+      expect(result.avgSetSize).toBe(0);
+      expect(result.bestSingleSet).toBe(0);
+    });
+  });
+
   describe('bestDay tracking', () => {
     it('sets bestDay on first create', () => {
       const result = applyDelta(null, {
@@ -751,7 +879,7 @@ describe('applyDelta', () => {
 // ─── emptyUserStats ───────────────────────────────────────────────────────────
 
 describe('emptyUserStats', () => {
-  it('returns zeroed stats', () => {
+  it('returns zeroed stats with sets fields', () => {
     const stats = emptyUserStats('u1');
     expect(stats.userId).toBe('u1');
     expect(stats.total).toBe(0);
@@ -759,6 +887,9 @@ describe('emptyUserStats', () => {
     expect(stats.heatmap).toEqual({});
     expect(stats.bestDay).toBeNull();
     expect(stats.bestSingleEntry).toBeNull();
+    expect(stats.totalSets).toBe(0);
+    expect(stats.avgSetSize).toBe(0);
+    expect(stats.bestSingleSet).toBe(0);
   });
 });
 
@@ -918,5 +1049,35 @@ describe('rebuildFromEntries', () => {
     const stats = rebuildFromEntries('u1', entries, NOW);
 
     expect(stats.version).toBe(USERSTATS_VERSION);
+  });
+
+  it('computes sets aggregation from entries with sets', () => {
+    const entries = [
+      { timestamp: '2026-04-03T08:00:00.000Z', reps: 30, sets: [10, 10, 10] },
+      { timestamp: '2026-04-04T09:00:00.000Z', reps: 25, sets: [15, 10] },
+      { timestamp: '2026-04-05T14:30:00.000Z', reps: 20 }, // no sets
+    ];
+
+    const stats = rebuildFromEntries('u1', entries, NOW);
+
+    // totalSets: 3 + 2 = 5
+    expect(stats.totalSets).toBe(5);
+    // avgSetSize: (10+10+10+15+10) / 5 = 55/5 = 11
+    expect(stats.avgSetSize).toBe(11);
+    // bestSingleSet: max(10,10,10,15,10) = 15
+    expect(stats.bestSingleSet).toBe(15);
+  });
+
+  it('returns zero sets fields when no entries have sets', () => {
+    const entries = [
+      { timestamp: '2026-04-05T10:00:00.000Z', reps: 20 },
+      { timestamp: '2026-04-05T12:00:00.000Z', reps: 15 },
+    ];
+
+    const stats = rebuildFromEntries('u1', entries, NOW);
+
+    expect(stats.totalSets).toBe(0);
+    expect(stats.avgSetSize).toBe(0);
+    expect(stats.bestSingleSet).toBe(0);
   });
 });
