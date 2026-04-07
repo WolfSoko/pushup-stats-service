@@ -329,7 +329,8 @@ export class StatsChartComponent implements AfterViewInit {
           pointRadius: 0,
           pointHoverRadius: 3,
           tension: 0.32,
-          yAxisID: 'yAvg',
+          yAxisID: 'y',
+          stack: 'movingAvg',
         },
       ],
     };
@@ -411,10 +412,6 @@ export class StatsChartComponent implements AfterViewInit {
             stacked: hasSetsData,
             ticks: { color: chartTick, precision: 0 },
             grid: { color: chartGrid },
-          },
-          yAvg: {
-            display: false,
-            stacked: false,
           },
           yIntegral: {
             position: 'right',

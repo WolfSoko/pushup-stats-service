@@ -41,7 +41,6 @@ describe('AnalysisTeaserCardComponent', () => {
         series: [{ bucket: '2026-03-30', total: 20, dayIntegral: 20 }],
       })
     ),
-    listPushups: vitest.fn().mockReturnValue(of([])),
   };
 
   beforeEach(async () => {
