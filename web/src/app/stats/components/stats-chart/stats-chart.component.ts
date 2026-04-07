@@ -8,10 +8,12 @@ import {
   inject,
   input,
   LOCALE_ID,
+  model,
   PLATFORM_ID,
   signal,
   viewChild,
 } from '@angular/core';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCardModule } from '@angular/material/card';
 import {
   PushupRecord,
@@ -30,7 +32,7 @@ Chart.register(...registerables);
 
 @Component({
   selector: 'app-stats-chart',
-  imports: [MatCardModule],
+  imports: [MatButtonToggleModule, MatCardModule],
   template: `
     <mat-card class="chart">
       <mat-card-header>
@@ -41,6 +43,20 @@ Chart.register(...registerables);
           >Intervallwerte als Balken, Tages-Integral + gleitender Durchschnitt
           als Trendlinien</mat-card-subtitle
         >
+        @if (granularity() === 'hourly') {
+          <mat-button-toggle-group
+            [value]="dayChartMode()"
+            (change)="dayChartMode.set($event.value)"
+            class="chart-mode-toggle"
+          >
+            <mat-button-toggle value="14h" i18n="@@chart.mode14h"
+              >14h</mat-button-toggle
+            >
+            <mat-button-toggle value="24h" i18n="@@chart.mode24h"
+              >24h</mat-button-toggle
+            >
+          </mat-button-toggle-group>
+        }
       </mat-card-header>
 
       <mat-card-content>
@@ -99,7 +115,7 @@ export class StatsChartComponent implements AfterViewInit {
   readonly series = input<StatsSeriesEntry[]>([]);
   readonly from = input<string | null>(null);
   readonly to = input<string | null>(null);
-  readonly dayChartMode = input<'24h' | '14h'>('14h');
+  readonly dayChartMode = model<'24h' | '14h'>('14h');
   readonly entries = input<PushupRecord[]>([]);
 
   readonly hourlyTitle = $localize`:@@chart.titleHourly:Verlauf (Stundenwerte)`;
@@ -119,6 +135,8 @@ export class StatsChartComponent implements AfterViewInit {
       if (!isPlatformBrowser(this.platformId) || !this.viewReady()) return;
       const currentSeries = this.series();
       const currentEntries = this.entries();
+      // Track dayChartMode to re-render on toggle
+      this.dayChartMode();
       queueMicrotask(() => this.renderChart(currentSeries, currentEntries));
     });
   }

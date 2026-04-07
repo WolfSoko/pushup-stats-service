@@ -521,6 +521,18 @@ Active:         </target>
         <target>&#x2300; Set size</target>
       </segment>
     </unit>
+    <unit id="chart.mode14h">
+      <segment state="translated">
+        <source>14h</source>
+        <target>14h</target>
+      </segment>
+    </unit>
+    <unit id="chart.mode24h">
+      <segment state="translated">
+        <source>24h</source>
+        <target>24h</target>
+      </segment>
+    </unit>
     <unit id="chart.setsTooltip">
       <segment state="translated">
         <source>Sets</source>
