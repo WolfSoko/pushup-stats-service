@@ -877,8 +877,12 @@ export const updateUserStatsOnPushupWrite = onDocumentWritten(
     const newReps = (afterData?.reps ?? 0) as number;
     const oldTimestamp = beforeData?.timestamp as string | undefined;
     const newTimestamp = afterData?.timestamp as string | undefined;
-    const oldSets = (beforeData?.sets ?? []) as number[];
-    const newSets = (afterData?.sets ?? []) as number[];
+    const oldSets = Array.isArray(beforeData?.sets)
+      ? (beforeData.sets as number[])
+      : [];
+    const newSets = Array.isArray(afterData?.sets)
+      ? (afterData.sets as number[])
+      : [];
 
     const isCreate = !beforeData && !!afterData;
     const isDelete = !!beforeData && !afterData;

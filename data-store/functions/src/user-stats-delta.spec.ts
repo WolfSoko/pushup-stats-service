@@ -659,6 +659,7 @@ describe('applyDelta', () => {
         total: 30,
         totalEntries: 1,
         totalSets: 3,
+        totalSetsReps: 30,
         bestSingleSet: 12,
         avgSetSize: 10,
         dailyKey: '2026-04-05',
@@ -694,6 +695,7 @@ describe('applyDelta', () => {
         total: 30,
         totalEntries: 1,
         totalSets: 3,
+        totalSetsReps: 30,
         bestSingleSet: 12,
         avgSetSize: 10,
         dailyKey: '2026-04-05',
@@ -717,12 +719,13 @@ describe('applyDelta', () => {
       expect(result.bestSingleSet).toBe(25);
     });
 
-    it('adjusts bestSingleSet down when old best set is removed', () => {
+    it('preserves bestSingleSet on delete (append-only, rebuild corrects)', () => {
       const existing = {
         ...emptyUserStats('u1'),
         total: 30,
         totalEntries: 1,
         totalSets: 3,
+        totalSetsReps: 30,
         bestSingleSet: 15,
         avgSetSize: 10,
         dailyKey: '2026-04-05',
@@ -733,6 +736,7 @@ describe('applyDelta', () => {
       };
 
       // Update: old entry had max 15, new entry has max 10
+      // bestSingleSet is append-only — stays at 15 (rebuild corrects)
       const result = applyDelta(existing, {
         userId: 'u1',
         repsDelta: -5,
@@ -745,8 +749,7 @@ describe('applyDelta', () => {
         newSets: [10, 10, 5],
       });
 
-      // bestSingleSet was 15 which matched oldSets max → resets to newSets max 10
-      expect(result.bestSingleSet).toBe(10);
+      expect(result.bestSingleSet).toBe(15); // preserved, rebuild corrects
     });
 
     it('computes avgSetSize from sets-only reps, not total reps', () => {
@@ -783,6 +786,7 @@ describe('applyDelta', () => {
         total: 50,
         totalEntries: 2,
         totalSets: 5,
+        totalSetsReps: 50,
         bestSingleSet: 12,
         dailyKey: '2026-04-05',
         dailyReps: 50,

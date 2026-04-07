@@ -79,14 +79,6 @@ Chart.register(...registerables);
               ></span
             >
           }
-          @if (avgSetSizeTrend().length) {
-            <span
-              ><i class="dot dot-set"></i
-              ><ng-container i18n="@@chart.avgSetSize"
-                >Ø Set-Größe</ng-container
-              ></span
-            >
-          }
         </div>
       </mat-card-content>
     </mat-card>
@@ -108,7 +100,6 @@ export class StatsChartComponent implements AfterViewInit {
   readonly from = input<string | null>(null);
   readonly to = input<string | null>(null);
   readonly dayChartMode = input<'24h' | '14h'>('14h');
-  readonly avgSetSizeTrend = input<Array<{ date: string; avg: number }>>([]);
   readonly entries = input<PushupRecord[]>([]);
 
   readonly hourlyTitle = $localize`:@@chart.titleHourly:Verlauf (Stundenwerte)`;
@@ -128,10 +119,7 @@ export class StatsChartComponent implements AfterViewInit {
       if (!isPlatformBrowser(this.platformId) || !this.viewReady()) return;
       const currentSeries = this.series();
       const currentEntries = this.entries();
-      const currentSetTrend = this.avgSetSizeTrend();
-      queueMicrotask(() =>
-        this.renderChart(currentSeries, currentEntries, currentSetTrend)
-      );
+      queueMicrotask(() => this.renderChart(currentSeries, currentEntries));
     });
   }
 
@@ -141,13 +129,12 @@ export class StatsChartComponent implements AfterViewInit {
     }
   }
 
-  readonly avgSetSizeLabel = $localize`:@@chart.avgSetSize:Ø Set-Größe`;
   readonly setsTooltipLabel = $localize`:@@chart.setsTooltip:Sets`;
+  readonly withSetsLabel = $localize`:@@chart.withSets:Mit Sets`;
 
   private renderChart(
     series: StatsSeriesEntry[],
-    entries: PushupRecord[] = [],
-    setTrendInput: Array<{ date: string; avg: number }> = []
+    entries: PushupRecord[] = []
   ): void {
     const element = this.chartCanvas()?.nativeElement;
     if (!element) return;
@@ -200,83 +187,94 @@ export class StatsChartComponent implements AfterViewInit {
       if (Number.isFinite(ts)) bucketLabelByTs.set(ts, entry.bucketLabel);
     }
 
-    // Build per-bucket sets info from raw entries for bar coloring & tooltip
+    // Build per-bucket sets info from raw entries for stacked bars & tooltip
     const isHourly = this.granularity() === 'hourly';
     const setsByBucket = new Map<
       number,
-      { sets: number[][]; totalSets: number }
+      {
+        setsReps: number;
+        noSetsReps: number;
+        sets: number[][];
+        totalSets: number;
+      }
     >();
     for (const entry of entries) {
-      if (!entry.sets?.length) continue;
       const date = new Date(entry.timestamp);
-      let bucketTs: number;
-      if (isHourly) {
-        bucketTs = new Date(
-          date.getFullYear(),
-          date.getMonth(),
-          date.getDate(),
-          date.getHours()
-        ).getTime();
+      const bucketTs = isHourly
+        ? new Date(
+            date.getFullYear(),
+            date.getMonth(),
+            date.getDate(),
+            date.getHours()
+          ).getTime()
+        : new Date(
+            date.getFullYear(),
+            date.getMonth(),
+            date.getDate()
+          ).getTime();
+      const info = setsByBucket.get(bucketTs) ?? {
+        setsReps: 0,
+        noSetsReps: 0,
+        sets: [],
+        totalSets: 0,
+      };
+      if (entry.sets?.length) {
+        info.setsReps += entry.reps;
+        info.sets.push(entry.sets);
+        info.totalSets += entry.sets.length;
       } else {
-        bucketTs = new Date(
-          date.getFullYear(),
-          date.getMonth(),
-          date.getDate()
-        ).getTime();
+        info.noSetsReps += entry.reps;
       }
-      const info = setsByBucket.get(bucketTs) ?? { sets: [], totalSets: 0 };
-      info.sets.push(entry.sets);
-      info.totalSets += entry.sets.length;
       setsByBucket.set(bucketTs, info);
     }
 
-    const hasSetsData = setsByBucket.size > 0;
+    const hasSetsData = [...setsByBucket.values()].some((b) => b.setsReps > 0);
 
-    const setTrend = setTrendInput;
-    const setTrendDataset = setTrend.length
+    // Build stacked bar datasets when sets data exists
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const barDatasets: any[] = hasSetsData
       ? [
           {
-            label: this.avgSetSizeLabel,
-            data: setTrend.map((d) => ({
-              x: new Date(`${d.date}T12:00:00`).getTime(),
-              y: d.avg,
-            })),
-            type: 'line' as const,
-            borderColor: '#e040fb',
-            backgroundColor: '#e040fb',
-            borderDash: [4, 3],
-            pointRadius: 2,
-            pointHoverRadius: 4,
-            tension: 0.3,
-            yAxisID: 'ySetSize',
+            label: this.intervalLabel,
+            data: series.map((d) => {
+              const ts = this.bucketToTs(d.bucket);
+              const info = setsByBucket.get(ts);
+              return { x: ts, y: info ? info.noSetsReps : d.total };
+            }),
+            backgroundColor: '#5e8eff99',
+            borderRadius: 0,
+            maxBarThickness: 34,
+            stack: 'reps',
+          },
+          {
+            label: this.withSetsLabel,
+            data: series.map((d) => {
+              const ts = this.bucketToTs(d.bucket);
+              const info = setsByBucket.get(ts);
+              return { x: ts, y: info?.setsReps ?? 0 };
+            }),
+            backgroundColor: '#ab47bccc',
+            borderRadius: 6,
+            maxBarThickness: 34,
+            stack: 'reps',
           },
         ]
-      : [];
+      : [
+          {
+            label: this.intervalLabel,
+            data: series.map((d) => ({
+              x: this.bucketToTs(d.bucket),
+              y: d.total,
+            })),
+            backgroundColor: '#5e8eff99',
+            borderRadius: 6,
+            maxBarThickness: 34,
+          },
+        ];
 
     const data: ChartConfiguration<'bar' | 'line'>['data'] = {
       datasets: [
-        {
-          label: this.intervalLabel,
-          data: series.map((d) => ({
-            x: this.bucketToTs(d.bucket),
-            y: d.total,
-          })),
-          backgroundColor: hasSetsData
-            ? series.map((d) => {
-                const ts = this.bucketToTs(d.bucket);
-                return setsByBucket.has(ts) ? '#ab47bccc' : '#5e8eff99';
-              })
-            : '#5e8eff99',
-          borderColor: hasSetsData
-            ? series.map((d) => {
-                const ts = this.bucketToTs(d.bucket);
-                return setsByBucket.has(ts) ? '#ce93d8' : 'transparent';
-              })
-            : 'transparent',
-          borderWidth: 1,
-          borderRadius: 6,
-          maxBarThickness: 34,
-        },
+        ...barDatasets,
         {
           label: this.dayIntegralLabel,
           data: series.map((d) => ({
@@ -306,7 +304,6 @@ export class StatsChartComponent implements AfterViewInit {
           tension: 0.32,
           yAxisID: 'y',
         },
-        ...setTrendDataset,
       ],
     };
 
@@ -391,20 +388,6 @@ export class StatsChartComponent implements AfterViewInit {
             ticks: { color: '#ffbe66', precision: 0 },
             grid: { drawOnChartArea: false },
           },
-          ...(setTrend.length
-            ? {
-                ySetSize: {
-                  position: 'right' as const,
-                  ticks: { color: '#e040fb', precision: 1 },
-                  grid: { drawOnChartArea: false },
-                  title: {
-                    display: true,
-                    text: this.avgSetSizeLabel,
-                    color: '#e040fb',
-                  },
-                },
-              }
-            : {}),
         },
         // chartjs-plugin-datalabels is globally registered in app.config.ts.
         // Disable it for this chart to avoid gray object debug labels.

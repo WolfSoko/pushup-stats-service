@@ -380,28 +380,6 @@ export const AnalysisStore = signalStore(
       return Math.max(...allSets);
     });
 
-    /** Average set size per day/week for trend line overlay. */
-    const avgSetSizeTrend = computed<Array<{ date: string; avg: number }>>(
-      () => {
-        const byDate = new Map<string, number[]>();
-        for (const row of rows()) {
-          if (!row.sets?.length) continue;
-          const date = row.timestamp.slice(0, 10);
-          const sets = byDate.get(date) ?? [];
-          sets.push(...row.sets);
-          byDate.set(date, sets);
-        }
-        return [...byDate.entries()]
-          .sort(([a], [b]) => a.localeCompare(b))
-          .map(([date, sets]) => ({
-            date,
-            avg:
-              Math.round((sets.reduce((s, v) => s + v, 0) / sets.length) * 10) /
-              10,
-          }));
-      }
-    );
-
     const weekTrendSubtitle = computed(() => {
       const { from, to } = store.weekFilter();
       if (!from || !to) return '';
@@ -466,7 +444,6 @@ export const AnalysisStore = signalStore(
       avgSetSize,
       setsDistribution,
       bestSingleSet,
-      avgSetSizeTrend,
     };
   }),
   withMethods((store) => ({

@@ -333,33 +333,20 @@ export function applyDelta(
 
   // ── Sets ───────────────────────────────────────────────────────────
   const totalSets = Math.max(0, (base.totalSets ?? 0) + setsDelta);
-  // Track sets-only reps (not total reps) for accurate avgSetSize.
-  // Reverse-engineer the stored totalSetsReps from avgSetSize * totalSets.
   const oldSetsTotal = oldSets?.reduce((s, v) => s + v, 0) ?? 0;
   const newSetsTotal = newSets?.reduce((s, v) => s + v, 0) ?? 0;
-  const baseTotalSetsReps = Math.round(
-    (base.avgSetSize ?? 0) * (base.totalSets ?? 0)
-  );
   const totalSetsReps = Math.max(
     0,
-    baseTotalSetsReps - oldSetsTotal + newSetsTotal
+    (base.totalSetsReps ?? 0) - oldSetsTotal + newSetsTotal
   );
   const avgSetSize =
     totalSets > 0 ? Math.round((totalSetsReps / totalSets) * 10) / 10 : 0;
 
-  // bestSingleSet: can only grow via deltas. When the old max set is
-  // removed/changed, fall back to newSets max (rebuild corrects fully).
-  const maxOldSet = oldSets?.length ? Math.max(...oldSets) : 0;
+  // bestSingleSet: append-only via deltas (can only grow).
+  // When entries are deleted/edited, rebuild corrects the true best.
+  // Same pattern as bestSingleEntry and bestDay.
   const maxNewSet = newSets?.length ? Math.max(...newSets) : 0;
-  const baseBestSingleSet = base.bestSingleSet ?? 0;
-  let bestSingleSet = baseBestSingleSet;
-  if (maxOldSet > 0 && maxOldSet === baseBestSingleSet) {
-    // Old entry held the record — use new set max (may be lower; rebuild corrects)
-    bestSingleSet = maxNewSet;
-  }
-  if (maxNewSet > bestSingleSet) {
-    bestSingleSet = maxNewSet;
-  }
+  const bestSingleSet = Math.max(base.bestSingleSet ?? 0, maxNewSet);
 
   return {
     userId,
@@ -376,6 +363,7 @@ export function applyDelta(
     lastEntryDate: streakState.lastEntryDate,
     heatmap,
     totalSets,
+    totalSetsReps,
     avgSetSize,
     bestSingleSet,
     bestDay,
@@ -501,6 +489,7 @@ export function rebuildFromEntries(
     lastEntryDate,
     heatmap,
     totalSets,
+    totalSetsReps,
     avgSetSize,
     bestSingleSet,
     bestDay,

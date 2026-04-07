@@ -53,7 +53,6 @@ import { AnalysisStore } from '../analysis.store';
         [rangeMode]="store.rangeMode()"
         [from]="store.from()"
         [to]="store.to()"
-        [avgSetSizeTrend]="store.avgSetSizeTrend()"
         [entries]="store.rows()"
       />
 
@@ -86,7 +85,7 @@ import { AnalysisStore } from '../analysis.store';
                   >&#x2300; Sets</mat-header-cell
                 >
                 <mat-cell *matCellDef="let row">{{
-                  row.avgSetsPerEntry || '—'
+                  row.avgSetsPerEntry ?? '—'
                 }}</mat-cell>
               </ng-container>
               <mat-header-row
@@ -127,7 +126,7 @@ import { AnalysisStore } from '../analysis.store';
                   >&#x2300; Sets</mat-header-cell
                 >
                 <mat-cell *matCellDef="let row">{{
-                  row.avgSetsPerEntry || '—'
+                  row.avgSetsPerEntry ?? '—'
                 }}</mat-cell>
               </ng-container>
               <mat-header-row

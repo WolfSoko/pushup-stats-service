@@ -60,7 +60,9 @@ export class HeatmapComponent {
   private readonly hoursTopDown = defaultHeatmapHoursTopDown;
 
   private readonly unitLabel = computed(() =>
-    this.mode() === 'sets' ? 'Sets' : 'Reps'
+    this.mode() === 'sets'
+      ? $localize`:@@heatmap.unit.sets:Sets`
+      : $localize`:@@heatmap.unit.reps:Reps`
   );
 
   // Matrix chart typing is tricky with string category axes; keep this loosely typed.

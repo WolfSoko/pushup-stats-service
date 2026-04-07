@@ -58,6 +58,8 @@ export interface UserStats {
   // ── Sets ────────────────────────────────────────────────────────────
   /** Total number of individual sets across all entries */
   totalSets: number;
+  /** Total reps contributed by entries that have sets data (for accurate avgSetSize) */
+  totalSetsReps: number;
   /** Average reps per individual set (0 when no sets data) */
   avgSetSize: number;
   /** Maximum reps in a single set across all entries */
@@ -92,6 +94,7 @@ export function emptyUserStats(userId: string): UserStats {
     lastEntryDate: null,
     heatmap: {},
     totalSets: 0,
+    totalSetsReps: 0,
     avgSetSize: 0,
     bestSingleSet: 0,
     bestDay: null,

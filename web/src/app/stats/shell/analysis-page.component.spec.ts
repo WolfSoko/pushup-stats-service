@@ -57,7 +57,6 @@ class MockStatsChartComponent {
   readonly rangeMode = input<string>('week');
   readonly from = input<string>('');
   readonly to = input<string>('');
-  readonly avgSetSizeTrend = input<unknown[]>([]);
   readonly entries = input<unknown[]>([]);
 }
 
@@ -287,16 +286,5 @@ describe('AnalysisPageComponent', () => {
     expect(month.length).toBeGreaterThan(0);
     const monthHasAvg = month.some((m) => (m.avgSetsPerEntry ?? 0) > 0);
     expect(monthHasAvg).toBe(true);
-  });
-
-  it('computes avgSetSizeTrend grouped by date', () => {
-    const { store } = fixture.componentInstance;
-    const trend = store.avgSetSizeTrend();
-    expect(trend.length).toBeGreaterThan(0);
-    // Each entry should have a date and avg > 0
-    for (const point of trend) {
-      expect(point.date).toMatch(/^\d{4}-\d{2}-\d{2}$/);
-      expect(point.avg).toBeGreaterThan(0);
-    }
   });
 });

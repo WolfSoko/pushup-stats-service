@@ -497,6 +497,18 @@ Active:         </target>
         <target>Sets</target>
       </segment>
     </unit>
+    <unit id="heatmap.unit.sets">
+      <segment state="translated">
+        <source>Sets</source>
+        <target>Sets</target>
+      </segment>
+    </unit>
+    <unit id="heatmap.unit.reps">
+      <segment state="translated">
+        <source>Reps</source>
+        <target>Reps</target>
+      </segment>
+    </unit>
     <unit id="setsDistribution.noData">
       <segment state="translated">
         <source>Keine Sets-Daten vorhanden</source>
