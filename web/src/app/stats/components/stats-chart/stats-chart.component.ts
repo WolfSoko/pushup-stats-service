@@ -12,7 +12,11 @@ import {
   viewChild,
 } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
-import { StatsGranularity, StatsSeriesEntry } from '@pu-stats/models';
+import {
+  PushupRecord,
+  StatsGranularity,
+  StatsSeriesEntry,
+} from '@pu-stats/models';
 import {
   Chart,
   ChartConfiguration,
@@ -66,6 +70,22 @@ Chart.register(...registerables);
               >Gleitender Durchschnitt</ng-container
             ></span
           >
+          @if (entries().length) {
+            <span
+              ><i class="dot dot-sets-bar"></i
+              ><ng-container i18n="@@chart.withSets"
+                >Mit Sets</ng-container
+              ></span
+            >
+          }
+          @if (avgSetSizeTrend().length) {
+            <span
+              ><i class="dot dot-set"></i
+              ><ng-container i18n="@@chart.avgSetSize"
+                >&#x2300; Set-Gr&#x00F6;&#x00DF;e</ng-container
+              ></span
+            >
+          }
         </div>
       </mat-card-content>
     </mat-card>
@@ -87,6 +107,8 @@ export class StatsChartComponent implements AfterViewInit {
   readonly from = input<string | null>(null);
   readonly to = input<string | null>(null);
   readonly dayChartMode = input<'24h' | '14h'>('14h');
+  readonly avgSetSizeTrend = input<Array<{ date: string; avg: number }>>([]);
+  readonly entries = input<PushupRecord[]>([]);
 
   readonly hourlyTitle = $localize`:@@chart.titleHourly:Verlauf (Stundenwerte)`;
   readonly dailyTitle = $localize`:@@chart.titleDaily:Verlauf (Tageswerte)`;
@@ -101,7 +123,8 @@ export class StatsChartComponent implements AfterViewInit {
     effect(() => {
       if (!isPlatformBrowser(this.platformId) || !this.viewReady()) return;
       const currentSeries = this.series();
-      queueMicrotask(() => this.renderChart(currentSeries));
+      const currentEntries = this.entries();
+      queueMicrotask(() => this.renderChart(currentSeries, currentEntries));
     });
   }
 
@@ -111,7 +134,12 @@ export class StatsChartComponent implements AfterViewInit {
     }
   }
 
-  private renderChart(series: StatsSeriesEntry[]): void {
+  readonly avgSetSizeLabel = $localize`:@@chart.avgSetSize:Ø Set-Größe`;
+
+  private renderChart(
+    series: StatsSeriesEntry[],
+    entries: PushupRecord[] = []
+  ): void {
     const element = this.chartCanvas()?.nativeElement;
     if (!element) return;
 
@@ -163,6 +191,59 @@ export class StatsChartComponent implements AfterViewInit {
       if (Number.isFinite(ts)) bucketLabelByTs.set(ts, entry.bucketLabel);
     }
 
+    // Build per-bucket sets info from raw entries for bar coloring & tooltip
+    const isHourly = this.granularity() === 'hourly';
+    const setsByBucket = new Map<
+      number,
+      { sets: number[][]; totalSets: number }
+    >();
+    for (const entry of entries) {
+      if (!entry.sets?.length) continue;
+      const date = new Date(entry.timestamp);
+      let bucketTs: number;
+      if (isHourly) {
+        bucketTs = new Date(
+          date.getFullYear(),
+          date.getMonth(),
+          date.getDate(),
+          date.getHours()
+        ).getTime();
+      } else {
+        bucketTs = new Date(
+          date.getFullYear(),
+          date.getMonth(),
+          date.getDate()
+        ).getTime();
+      }
+      const info = setsByBucket.get(bucketTs) ?? { sets: [], totalSets: 0 };
+      info.sets.push(entry.sets);
+      info.totalSets += entry.sets.length;
+      setsByBucket.set(bucketTs, info);
+    }
+
+    const hasSetsData = setsByBucket.size > 0;
+
+    const setTrend = this.avgSetSizeTrend();
+    const setTrendDataset = setTrend.length
+      ? [
+          {
+            label: this.avgSetSizeLabel,
+            data: setTrend.map((d) => ({
+              x: new Date(`${d.date}T12:00:00`).getTime(),
+              y: d.avg,
+            })),
+            type: 'line' as const,
+            borderColor: '#e040fb',
+            backgroundColor: '#e040fb',
+            borderDash: [4, 3],
+            pointRadius: 2,
+            pointHoverRadius: 4,
+            tension: 0.3,
+            yAxisID: 'ySetSize',
+          },
+        ]
+      : [];
+
     const data: ChartConfiguration<'bar' | 'line'>['data'] = {
       datasets: [
         {
@@ -171,7 +252,19 @@ export class StatsChartComponent implements AfterViewInit {
             x: this.bucketToTs(d.bucket),
             y: d.total,
           })),
-          backgroundColor: '#5e8eff99',
+          backgroundColor: hasSetsData
+            ? series.map((d) => {
+                const ts = this.bucketToTs(d.bucket);
+                return setsByBucket.has(ts) ? '#ab47bccc' : '#5e8eff99';
+              })
+            : '#5e8eff99',
+          borderColor: hasSetsData
+            ? series.map((d) => {
+                const ts = this.bucketToTs(d.bucket);
+                return setsByBucket.has(ts) ? '#ce93d8' : 'transparent';
+              })
+            : 'transparent',
+          borderWidth: 1,
           borderRadius: 6,
           maxBarThickness: 34,
         },
@@ -204,6 +297,7 @@ export class StatsChartComponent implements AfterViewInit {
           tension: 0.32,
           yAxisID: 'y',
         },
+        ...setTrendDataset,
       ],
     };
 
@@ -288,6 +382,20 @@ export class StatsChartComponent implements AfterViewInit {
             ticks: { color: '#ffbe66', precision: 0 },
             grid: { drawOnChartArea: false },
           },
+          ...(setTrend.length
+            ? {
+                ySetSize: {
+                  position: 'right' as const,
+                  ticks: { color: '#e040fb', precision: 1 },
+                  grid: { drawOnChartArea: false },
+                  title: {
+                    display: true,
+                    text: this.avgSetSizeLabel,
+                    color: '#e040fb',
+                  },
+                },
+              }
+            : {}),
         },
         // chartjs-plugin-datalabels is globally registered in app.config.ts.
         // Disable it for this chart to avoid gray object debug labels.
@@ -313,6 +421,21 @@ export class StatsChartComponent implements AfterViewInit {
                   return this.formatHourLabel(new Date(ts), isGermanLocale);
                 }
                 return tooltipTitleFormatter.format(new Date(ts));
+              },
+              afterBody: (items: TooltipItem<'bar' | 'line'>[]) => {
+                if (!hasSetsData) return '';
+                const first = items[0];
+                if (!first) return '';
+                const ts = Number(first.parsed.x);
+                const info = setsByBucket.get(ts);
+                if (!info) return '';
+                const lines: string[] = ['', `🏋️ ${info.totalSets} Sets:`];
+                for (const entrySet of info.sets) {
+                  lines.push(
+                    `   ${entrySet.join(' + ')} = ${entrySet.reduce((a, b) => a + b, 0)}`
+                  );
+                }
+                return lines;
               },
             },
           },

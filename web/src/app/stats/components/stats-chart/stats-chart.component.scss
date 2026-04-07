@@ -98,6 +98,14 @@ canvas {
   background: #7ef0c8;
 }
 
+.dot-sets-bar {
+  background: #ab47bc;
+}
+
+.dot-set {
+  background: #e040fb;
+}
+
 :host-context(html.light-theme) {
   .chart {
     .mat-mdc-card-subtitle {

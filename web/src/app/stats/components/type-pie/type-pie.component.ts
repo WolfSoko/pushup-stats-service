@@ -3,6 +3,7 @@ import { Component, computed, input } from '@angular/core';
 export interface PieDatum {
   label: string;
   value: number;
+  avgSetSize?: number;
 }
 
 @Component({
@@ -39,6 +40,15 @@ export interface PieDatum {
               <span class="name">{{ seg.label }}</span>
               <span class="pct">{{ seg.percent }}%</span>
             </div>
+            @if (seg.avgSetSize) {
+              <div class="row set-detail">
+                <span></span>
+                <span class="set-label" i18n="@@pie.avgSetSize"
+                  >&#x2300; Set-Gr&#x00F6;&#x00DF;e</span
+                >
+                <span class="set-value">{{ seg.avgSetSize }}</span>
+              </div>
+            }
           }
         </div>
       </div>
@@ -95,6 +105,18 @@ export interface PieDatum {
       font-variant-numeric: tabular-nums;
       opacity: 0.8;
     }
+    .set-detail {
+      opacity: 0.6;
+      font-size: 0.8rem;
+    }
+    .set-label {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .set-value {
+      font-variant-numeric: tabular-nums;
+    }
     .empty {
       opacity: 0.7;
     }
@@ -136,6 +158,7 @@ export class TypePieComponent {
         color: string;
         dasharray: string;
         offset: number;
+        avgSetSize: number;
       }>;
 
     // Sort descending for stable, readable legend.
@@ -154,6 +177,7 @@ export class TypePieComponent {
         color: this.palette[idx % this.palette.length],
         dasharray: `${dash} ${100 - dash}`,
         offset: 25 - acc,
+        avgSetSize: row.avgSetSize ?? 0,
       };
       acc += dash;
       return seg;

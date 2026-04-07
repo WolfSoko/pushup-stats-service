@@ -52,6 +52,7 @@ export interface HeatmapCell {
 })
 export class HeatmapComponent {
   readonly entries = input<PushupRecord[]>([]);
+  readonly mode = input<'reps' | 'sets'>('reps');
 
   readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
 
@@ -61,10 +62,12 @@ export class HeatmapComponent {
   // Matrix chart typing is tricky with string category axes; keep this loosely typed.
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   readonly chartData = computed<any>(() => {
+    const currentMode = this.mode();
     const data = buildHeatmapCells({
       entries: this.entries(),
       days: this.days,
       hoursTopDown: this.hoursTopDown,
+      mode: currentMode,
     });
 
     const max = Math.max(0, ...data.map((d) => d.v)) || 1;

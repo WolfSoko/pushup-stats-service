@@ -36,6 +36,13 @@ const EMPTY_STATS: StatsResponse = {
 interface TrendPoint {
   label: string;
   total: number;
+  avgSetsPerEntry?: number;
+}
+
+export interface TypeBreakdownDatum {
+  label: string;
+  value: number;
+  avgSetSize: number;
 }
 
 type AnalysisState = {
@@ -200,44 +207,89 @@ export const AnalysisStore = signalStore(
     const rows = computed(() => store.entriesResource.value() ?? []);
 
     const weekRows = computed(() => store.weekEntriesResource.value() ?? []);
-    const weekTrend = computed(() => {
-      const byWeek = new Map<string, number>();
+    const weekTrend = computed<TrendPoint[]>(() => {
+      const byWeek = new Map<
+        string,
+        { total: number; entryCount: number; setsCount: number }
+      >();
       for (const row of weekRows()) {
         const date = new Date(row.timestamp);
         const year = isoWeekYear(date);
         const week = String(isoWeek(date)).padStart(2, '0');
         const key = `${year}-W${week}`;
-        byWeek.set(key, (byWeek.get(key) ?? 0) + row.reps);
+        const entry = byWeek.get(key) ?? {
+          total: 0,
+          entryCount: 0,
+          setsCount: 0,
+        };
+        entry.total += row.reps;
+        entry.entryCount += 1;
+        entry.setsCount += row.sets?.length ?? 0;
+        byWeek.set(key, entry);
       }
       return [...byWeek.entries()]
         .sort(([a], [b]) => a.localeCompare(b))
         .slice(-8)
-        .map(([label, total]) => ({ label, total }));
+        .map(([label, { total, entryCount, setsCount }]) => ({
+          label,
+          total,
+          avgSetsPerEntry: entryCount
+            ? Math.round((setsCount / entryCount) * 10) / 10
+            : 0,
+        }));
     });
 
     const monthRows = computed(() => store.monthEntriesResource.value() ?? []);
     const monthTrend = computed<TrendPoint[]>(() => {
-      const byMonth = new Map<string, number>();
+      const byMonth = new Map<
+        string,
+        { total: number; entryCount: number; setsCount: number }
+      >();
       for (const row of monthRows()) {
         const date = new Date(row.timestamp);
         const label = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
-        byMonth.set(label, (byMonth.get(label) ?? 0) + row.reps);
+        const entry = byMonth.get(label) ?? {
+          total: 0,
+          entryCount: 0,
+          setsCount: 0,
+        };
+        entry.total += row.reps;
+        entry.entryCount += 1;
+        entry.setsCount += row.sets?.length ?? 0;
+        byMonth.set(label, entry);
       }
       return [...byMonth.entries()]
         .sort(([a], [b]) => a.localeCompare(b))
         .slice(-12)
-        .map(([label, total]) => ({ label, total }));
+        .map(([label, { total, entryCount, setsCount }]) => ({
+          label,
+          total,
+          avgSetsPerEntry: entryCount
+            ? Math.round((setsCount / entryCount) * 10) / 10
+            : 0,
+        }));
     });
 
-    const typeBreakdown = computed(() => {
-      const byType = new Map<string, number>();
+    const typeBreakdown = computed<TypeBreakdownDatum[]>(() => {
+      const byType = new Map<string, { reps: number; allSets: number[] }>();
       for (const row of rows()) {
         const type = (row.type || 'Standard').trim() || 'Standard';
-        byType.set(type, (byType.get(type) ?? 0) + row.reps);
+        const entry = byType.get(type) ?? { reps: 0, allSets: [] };
+        entry.reps += row.reps;
+        if (row.sets?.length) entry.allSets.push(...row.sets);
+        byType.set(type, entry);
       }
       return [...byType.entries()]
-        .sort((a, b) => b[1] - a[1])
-        .map(([label, value]) => ({ label, value }));
+        .sort((a, b) => b[1].reps - a[1].reps)
+        .map(([label, { reps, allSets }]) => ({
+          label,
+          value: reps,
+          avgSetSize: allSets.length
+            ? Math.round(
+                (allSets.reduce((s, v) => s + v, 0) / allSets.length) * 10
+              ) / 10
+            : 0,
+        }));
     });
 
     const bestSingleEntry = computed<PushupRecord | null>(() => {
@@ -288,6 +340,80 @@ export const AnalysisStore = signalStore(
     /** Server-side heatmap data (weekday-hour → cumulative reps). */
     const heatmapData = computed<Record<string, number>>(
       () => userStats()?.heatmap ?? {}
+    );
+
+    /** Average reps per individual set across all entries with sets data. */
+    const avgSetSize = computed(() => {
+      const allSets = rows().flatMap((r) => r.sets ?? []);
+      if (!allSets.length) return 0;
+      return (
+        Math.round((allSets.reduce((s, v) => s + v, 0) / allSets.length) * 10) /
+        10
+      );
+    });
+
+    /** Distribution of entries by number of sets (e.g. "3 sets" → 40%). */
+    const setsDistribution = computed<
+      Array<{ setCount: number; count: number; percent: number }>
+    >(() => {
+      const entriesWithSets = rows().filter((r) => r.sets?.length);
+      if (!entriesWithSets.length) return [];
+      const byCount = new Map<number, number>();
+      for (const row of entriesWithSets) {
+        const setCount = row.sets!.length;
+        byCount.set(setCount, (byCount.get(setCount) ?? 0) + 1);
+      }
+      const total = entriesWithSets.length;
+      return [...byCount.entries()]
+        .sort((a, b) => a[0] - b[0])
+        .map(([setCount, count]) => ({
+          setCount,
+          count,
+          percent: Math.round((count / total) * 100),
+        }));
+    });
+
+    /** Maximum reps in a single set across all entries. */
+    const bestSingleSet = computed(() => {
+      const allSets = rows().flatMap((r) => r.sets ?? []);
+      if (!allSets.length) return 0;
+      return Math.max(...allSets);
+    });
+
+    /** Heatmap data counting sets instead of reps. */
+    const heatmapSetsData = computed<Record<string, number>>(() => {
+      const result: Record<string, number> = {};
+      for (const row of rows()) {
+        if (!row.sets?.length) continue;
+        const date = new Date(row.timestamp);
+        const dayIndex = (date.getDay() + 6) % 7;
+        const hour = String(date.getHours()).padStart(2, '0');
+        const key = `${dayIndex}-${hour}`;
+        result[key] = (result[key] ?? 0) + row.sets.length;
+      }
+      return result;
+    });
+
+    /** Average set size per day/week for trend line overlay. */
+    const avgSetSizeTrend = computed<Array<{ date: string; avg: number }>>(
+      () => {
+        const byDate = new Map<string, number[]>();
+        for (const row of rows()) {
+          if (!row.sets?.length) continue;
+          const date = row.timestamp.slice(0, 10);
+          const sets = byDate.get(date) ?? [];
+          sets.push(...row.sets);
+          byDate.set(date, sets);
+        }
+        return [...byDate.entries()]
+          .sort(([a], [b]) => a.localeCompare(b))
+          .map(([date, sets]) => ({
+            date,
+            avg:
+              Math.round((sets.reduce((s, v) => s + v, 0) / sets.length) * 10) /
+              10,
+          }));
+      }
     );
 
     const weekTrendSubtitle = computed(() => {
@@ -351,6 +477,11 @@ export const AnalysisStore = signalStore(
       currentStreak,
       userStats,
       heatmapData,
+      avgSetSize,
+      setsDistribution,
+      bestSingleSet,
+      heatmapSetsData,
+      avgSetSizeTrend,
     };
   }),
   withMethods((store) => ({
