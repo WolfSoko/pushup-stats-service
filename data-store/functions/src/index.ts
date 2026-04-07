@@ -985,6 +985,7 @@ export const updateUserStatsOnPushupWrite = onDocumentWritten(
             newReps: 0,
             nowIso,
             setsDelta: -(oldSets.length || 0),
+            oldSets: oldSets.length ? oldSets : undefined,
           });
           current = applyDelta(current, {
             userId,
@@ -1011,6 +1012,7 @@ export const updateUserStatsOnPushupWrite = onDocumentWritten(
             nowIso,
             setsDelta,
             newSets: newSets.length ? newSets : undefined,
+            oldSets: oldSets.length ? oldSets : undefined,
           });
         }
       } else {

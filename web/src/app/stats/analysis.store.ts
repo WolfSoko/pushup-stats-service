@@ -380,20 +380,6 @@ export const AnalysisStore = signalStore(
       return Math.max(...allSets);
     });
 
-    /** Heatmap data counting sets instead of reps. */
-    const heatmapSetsData = computed<Record<string, number>>(() => {
-      const result: Record<string, number> = {};
-      for (const row of rows()) {
-        if (!row.sets?.length) continue;
-        const date = new Date(row.timestamp);
-        const dayIndex = (date.getDay() + 6) % 7;
-        const hour = String(date.getHours()).padStart(2, '0');
-        const key = `${dayIndex}-${hour}`;
-        result[key] = (result[key] ?? 0) + row.sets.length;
-      }
-      return result;
-    });
-
     /** Average set size per day/week for trend line overlay. */
     const avgSetSizeTrend = computed<Array<{ date: string; avg: number }>>(
       () => {
@@ -480,7 +466,6 @@ export const AnalysisStore = signalStore(
       avgSetSize,
       setsDistribution,
       bestSingleSet,
-      heatmapSetsData,
       avgSetSizeTrend,
     };
   }),

@@ -509,6 +509,12 @@ Active:         </target>
         <target>&#x2300; Set size</target>
       </segment>
     </unit>
+    <unit id="chart.setsTooltip">
+      <segment state="translated">
+        <source>Sets</source>
+        <target>Sets</target>
+      </segment>
+    </unit>
     <unit id="chart.withSets">
       <segment state="translated">
         <source>Mit Sets</source>

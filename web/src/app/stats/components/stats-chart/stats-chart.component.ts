@@ -2,6 +2,7 @@ import { isPlatformBrowser } from '@angular/common';
 import {
   AfterViewInit,
   Component,
+  computed,
   effect,
   ElementRef,
   inject,
@@ -70,7 +71,7 @@ Chart.register(...registerables);
               >Gleitender Durchschnitt</ng-container
             ></span
           >
-          @if (entries().length) {
+          @if (hasSetsData()) {
             <span
               ><i class="dot dot-sets-bar"></i
               ><ng-container i18n="@@chart.withSets"
@@ -116,6 +117,9 @@ export class StatsChartComponent implements AfterViewInit {
   readonly dayIntegralLabel = $localize`:@@chart.dayIntegral:Tages-Integral`;
   readonly movingAvgLabel = $localize`:@@chart.movingAvg:Gleitender Durchschnitt`;
 
+  readonly hasSetsData = computed(() =>
+    this.entries().some((e) => e.sets?.length)
+  );
   private readonly viewReady = signal(false);
   private chart?: Chart;
 
@@ -124,7 +128,10 @@ export class StatsChartComponent implements AfterViewInit {
       if (!isPlatformBrowser(this.platformId) || !this.viewReady()) return;
       const currentSeries = this.series();
       const currentEntries = this.entries();
-      queueMicrotask(() => this.renderChart(currentSeries, currentEntries));
+      const currentSetTrend = this.avgSetSizeTrend();
+      queueMicrotask(() =>
+        this.renderChart(currentSeries, currentEntries, currentSetTrend)
+      );
     });
   }
 
@@ -135,10 +142,12 @@ export class StatsChartComponent implements AfterViewInit {
   }
 
   readonly avgSetSizeLabel = $localize`:@@chart.avgSetSize:Ø Set-Größe`;
+  readonly setsTooltipLabel = $localize`:@@chart.setsTooltip:Sets`;
 
   private renderChart(
     series: StatsSeriesEntry[],
-    entries: PushupRecord[] = []
+    entries: PushupRecord[] = [],
+    setTrendInput: Array<{ date: string; avg: number }> = []
   ): void {
     const element = this.chartCanvas()?.nativeElement;
     if (!element) return;
@@ -223,7 +232,7 @@ export class StatsChartComponent implements AfterViewInit {
 
     const hasSetsData = setsByBucket.size > 0;
 
-    const setTrend = this.avgSetSizeTrend();
+    const setTrend = setTrendInput;
     const setTrendDataset = setTrend.length
       ? [
           {
@@ -429,7 +438,10 @@ export class StatsChartComponent implements AfterViewInit {
                 const ts = Number(first.parsed.x);
                 const info = setsByBucket.get(ts);
                 if (!info) return '';
-                const lines: string[] = ['', `🏋️ ${info.totalSets} Sets:`];
+                const lines: string[] = [
+                  '',
+                  `${info.totalSets} ${this.setsTooltipLabel}:`,
+                ];
                 for (const entrySet of info.sets) {
                   lines.push(
                     `   ${entrySet.join(' + ')} = ${entrySet.reduce((a, b) => a + b, 0)}`

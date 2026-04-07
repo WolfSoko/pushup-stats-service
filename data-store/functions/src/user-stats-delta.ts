@@ -216,6 +216,8 @@ export interface ApplyDeltaParams {
   setsDelta?: number;
   /** Individual set values of the new/updated entry (for bestSingleSet tracking) */
   newSets?: number[];
+  /** Individual set values of the old entry (for accurate delta calculation) */
+  oldSets?: number[];
 }
 
 /**
@@ -235,6 +237,7 @@ export function applyDelta(
     nowIso,
     setsDelta = 0,
     newSets,
+    oldSets,
   } = params;
   const base = existing ?? emptyUserStats(userId);
   const parts = berlinParts(timestamp);
@@ -330,14 +333,32 @@ export function applyDelta(
 
   // ── Sets ───────────────────────────────────────────────────────────
   const totalSets = Math.max(0, (base.totalSets ?? 0) + setsDelta);
-  // Recompute avgSetSize from totalSets and total reps contributed by sets.
-  // For deltas this is approximate; rebuild corrects it.
+  // Track sets-only reps (not total reps) for accurate avgSetSize.
+  // Reverse-engineer the stored totalSetsReps from avgSetSize * totalSets.
+  const oldSetsTotal = oldSets?.reduce((s, v) => s + v, 0) ?? 0;
+  const newSetsTotal = newSets?.reduce((s, v) => s + v, 0) ?? 0;
+  const baseTotalSetsReps = Math.round(
+    (base.avgSetSize ?? 0) * (base.totalSets ?? 0)
+  );
+  const totalSetsReps = Math.max(
+    0,
+    baseTotalSetsReps - oldSetsTotal + newSetsTotal
+  );
   const avgSetSize =
-    totalSets > 0 ? Math.round((total / totalSets) * 10) / 10 : 0;
-  let bestSingleSet = base.bestSingleSet ?? 0;
-  if (newSets?.length) {
-    const maxNew = Math.max(...newSets);
-    if (maxNew > bestSingleSet) bestSingleSet = maxNew;
+    totalSets > 0 ? Math.round((totalSetsReps / totalSets) * 10) / 10 : 0;
+
+  // bestSingleSet: can only grow via deltas. When the old max set is
+  // removed/changed, fall back to newSets max (rebuild corrects fully).
+  const maxOldSet = oldSets?.length ? Math.max(...oldSets) : 0;
+  const maxNewSet = newSets?.length ? Math.max(...newSets) : 0;
+  const baseBestSingleSet = base.bestSingleSet ?? 0;
+  let bestSingleSet = baseBestSingleSet;
+  if (maxOldSet > 0 && maxOldSet === baseBestSingleSet) {
+    // Old entry held the record — use new set max (may be lower; rebuild corrects)
+    bestSingleSet = maxNewSet;
+  }
+  if (maxNewSet > bestSingleSet) {
+    bestSingleSet = maxNewSet;
   }
 
   return {

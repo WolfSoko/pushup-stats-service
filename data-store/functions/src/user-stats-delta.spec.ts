@@ -649,7 +649,7 @@ describe('applyDelta', () => {
 
       expect(result.totalSets).toBe(3);
       expect(result.bestSingleSet).toBe(12);
-      // avgSetSize = total / totalSets = 30 / 3 = 10
+      // avgSetSize = setsReps / totalSets = (10+12+8) / 3 = 10
       expect(result.avgSetSize).toBe(10);
     });
 
@@ -695,6 +695,7 @@ describe('applyDelta', () => {
         totalEntries: 1,
         totalSets: 3,
         bestSingleSet: 12,
+        avgSetSize: 10,
         dailyKey: '2026-04-05',
         weeklyKey: '2026-W14',
         monthlyKey: '2026-04',
@@ -714,6 +715,66 @@ describe('applyDelta', () => {
       });
 
       expect(result.bestSingleSet).toBe(25);
+    });
+
+    it('adjusts bestSingleSet down when old best set is removed', () => {
+      const existing = {
+        ...emptyUserStats('u1'),
+        total: 30,
+        totalEntries: 1,
+        totalSets: 3,
+        bestSingleSet: 15,
+        avgSetSize: 10,
+        dailyKey: '2026-04-05',
+        weeklyKey: '2026-W14',
+        monthlyKey: '2026-04',
+        currentStreak: 1,
+        lastEntryDate: '2026-04-05',
+      };
+
+      // Update: old entry had max 15, new entry has max 10
+      const result = applyDelta(existing, {
+        userId: 'u1',
+        repsDelta: -5,
+        entriesDelta: 0,
+        timestamp: TIMESTAMP,
+        newReps: 25,
+        nowIso: NOW,
+        setsDelta: 0,
+        oldSets: [15, 10, 5],
+        newSets: [10, 10, 5],
+      });
+
+      // bestSingleSet was 15 which matched oldSets max → resets to newSets max 10
+      expect(result.bestSingleSet).toBe(10);
+    });
+
+    it('computes avgSetSize from sets-only reps, not total reps', () => {
+      // First entry: with sets (30 reps from sets)
+      const afterFirst = applyDelta(null, {
+        userId: 'u1',
+        repsDelta: 30,
+        entriesDelta: 1,
+        timestamp: TIMESTAMP,
+        newReps: 30,
+        nowIso: NOW,
+        setsDelta: 3,
+        newSets: [10, 10, 10],
+      });
+      expect(afterFirst.avgSetSize).toBe(10); // 30/3
+
+      // Second entry: WITHOUT sets (20 reps, no sets)
+      const afterSecond = applyDelta(afterFirst, {
+        userId: 'u1',
+        repsDelta: 20,
+        entriesDelta: 1,
+        timestamp: '2026-04-05T15:00:00.000Z',
+        newReps: 20,
+        nowIso: NOW,
+      });
+      // avgSetSize should still be 10 (30/3), NOT (50/3)
+      expect(afterSecond.totalSets).toBe(3);
+      expect(afterSecond.avgSetSize).toBe(10);
     });
 
     it('decrements totalSets on delete', () => {
