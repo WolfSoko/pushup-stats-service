@@ -442,19 +442,133 @@ Active:         </target>
       <notes>
         <note category="location">web/src/app/stats/shell/analysis-page.component.ts:24,26</note>
 
-        
+
             </notes>
       <segment state="translated">
         <source>Wochentrend</source>
         <target>Weekly trend</target>
 
-        
-        
+
+
             </segment>
 
-      
-      
+
+
         </unit>
+    <unit id="analysis.avgSetsCol">
+      <segment state="translated">
+        <source>&#x2300; Sets</source>
+        <target>&#x2300; Sets</target>
+      </segment>
+    </unit>
+    <unit id="analysis.bestSingleSet">
+      <segment state="translated">
+        <source>Bestes Einzel-Set:</source>
+        <target>Best single set:</target>
+      </segment>
+    </unit>
+    <unit id="analysis.avgSetSizeTitle">
+      <segment state="translated">
+        <source>&#x2300; Set-Gr&#x00F6;&#x00DF;e</source>
+        <target>&#x2300; Set size</target>
+      </segment>
+    </unit>
+    <unit id="analysis.repsPerSet">
+      <segment state="translated">
+        <source>Reps / Set</source>
+        <target>Reps / set</target>
+      </segment>
+    </unit>
+    <unit id="analysis.repsUnit">
+      <segment state="translated">
+        <source>Wdh.</source>
+        <target>Reps</target>
+      </segment>
+    </unit>
+    <unit id="analysis.setsDistTitle">
+      <segment state="translated">
+        <source>Sets-Verteilung</source>
+        <target>Sets distribution</target>
+      </segment>
+    </unit>
+    <unit id="analysis.heatmapToggleAriaLabel">
+      <segment state="translated">
+        <source>Heatmap-Modus auswählen</source>
+        <target>Select heatmap mode</target>
+      </segment>
+    </unit>
+    <unit id="analysis.heatmapReps">
+      <segment state="translated">
+        <source>Reps</source>
+        <target>Reps</target>
+      </segment>
+    </unit>
+    <unit id="analysis.heatmapSets">
+      <segment state="translated">
+        <source>Sets</source>
+        <target>Sets</target>
+      </segment>
+    </unit>
+    <unit id="heatmap.unit.sets">
+      <segment state="translated">
+        <source>Sätze</source>
+        <target>Sets</target>
+      </segment>
+    </unit>
+    <unit id="heatmap.unit.reps">
+      <segment state="translated">
+        <source>Wiederholungen</source>
+        <target>Reps</target>
+      </segment>
+    </unit>
+    <unit id="setsDistribution.noData">
+      <segment state="translated">
+        <source>Keine Sets-Daten vorhanden</source>
+        <target>No sets data available</target>
+      </segment>
+    </unit>
+    <unit id="pie.avgSetSize">
+      <segment state="translated">
+        <source>&#x2300; Set-Gr&#x00F6;&#x00DF;e</source>
+        <target>&#x2300; Set size</target>
+      </segment>
+    </unit>
+    <unit id="chart.modeToggleAria">
+      <segment state="translated">
+        <source>Zeitraum der Stundenansicht</source>
+        <target>Hourly view time range</target>
+      </segment>
+    </unit>
+    <unit id="chart.mode14h">
+      <segment state="translated">
+        <source>14h</source>
+        <target>14h</target>
+      </segment>
+    </unit>
+    <unit id="chart.mode24h">
+      <segment state="translated">
+        <source>24h</source>
+        <target>24h</target>
+      </segment>
+    </unit>
+    <unit id="chart.setsTooltip">
+      <segment state="translated">
+        <source>Sets</source>
+        <target>Sets</target>
+      </segment>
+    </unit>
+    <unit id="chart.withSets">
+      <segment state="translated">
+        <source>Mit Sets</source>
+        <target>With sets</target>
+      </segment>
+    </unit>
+    <unit id="chart.avgSetSize">
+      <segment state="translated">
+        <source>&#x2300; Set-Gr&#x00F6;&#x00DF;e</source>
+        <target>&#x2300; Set size</target>
+      </segment>
+    </unit>
     <unit id="app.title">
       <notes>
         <note category="location">web/src/app/app.html:11,12</note>

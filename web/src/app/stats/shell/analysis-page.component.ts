@@ -1,5 +1,13 @@
-import { DOCUMENT, isPlatformBrowser } from '@angular/common';
-import { Component, effect, inject, PLATFORM_ID, REQUEST } from '@angular/core';
+import { DecimalPipe, DOCUMENT, isPlatformBrowser } from '@angular/common';
+import {
+  Component,
+  effect,
+  inject,
+  PLATFORM_ID,
+  REQUEST,
+  signal,
+} from '@angular/core';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
 import { createWeekRange } from '@pu-stats/models';
@@ -7,6 +15,7 @@ import { LiveDataStore } from '@pu-stats/data-access';
 import { FilterBarComponent } from '../components/filter-bar/filter-bar.component';
 import { HeatmapComponent } from '../components/heatmap/heatmap.component';
 import { PreviewBannerComponent } from '../components/preview-banner/preview-banner.component';
+import { SetsDistributionComponent } from '../components/sets-distribution/sets-distribution.component';
 import { StatsChartComponent } from '../components/stats-chart/stats-chart.component';
 import { TypePieComponent } from '../components/type-pie/type-pie.component';
 import { AnalysisStore } from '../analysis.store';
@@ -15,11 +24,14 @@ import { AnalysisStore } from '../analysis.store';
   selector: 'app-analysis-page',
   providers: [AnalysisStore],
   imports: [
+    MatButtonToggleModule,
     MatCardModule,
     MatTableModule,
+    DecimalPipe,
     FilterBarComponent,
     HeatmapComponent,
     PreviewBannerComponent,
+    SetsDistributionComponent,
     StatsChartComponent,
     TypePieComponent,
   ],
@@ -42,6 +54,9 @@ import { AnalysisStore } from '../analysis.store';
         [rangeMode]="store.rangeMode()"
         [from]="store.from()"
         [to]="store.to()"
+        [entries]="store.rows()"
+        [dayChartMode]="store.resolvedDayChartMode()"
+        (dayChartModeChange)="store.setDayChartMode($event)"
       />
 
       <section class="grid">
@@ -68,8 +83,23 @@ import { AnalysisStore } from '../analysis.store';
                 >
                 <mat-cell *matCellDef="let row">{{ row.total }}</mat-cell>
               </ng-container>
-              <mat-header-row *matHeaderRowDef="trendColumns"></mat-header-row>
-              <mat-row *matRowDef="let row; columns: trendColumns"></mat-row>
+              <ng-container matColumnDef="avgSetsPerEntry">
+                <mat-header-cell *matHeaderCellDef i18n="@@analysis.avgSetsCol"
+                  >&#x2300; Sets</mat-header-cell
+                >
+                <mat-cell *matCellDef="let row">{{
+                  row.avgSetsPerEntry !== null &&
+                  row.avgSetsPerEntry !== undefined
+                    ? (row.avgSetsPerEntry | number)
+                    : '—'
+                }}</mat-cell>
+              </ng-container>
+              <mat-header-row
+                *matHeaderRowDef="trendColumnsWithSets"
+              ></mat-header-row>
+              <mat-row
+                *matRowDef="let row; columns: trendColumnsWithSets"
+              ></mat-row>
             </mat-table>
           </mat-card-content>
         </mat-card>
@@ -97,8 +127,23 @@ import { AnalysisStore } from '../analysis.store';
                 >
                 <mat-cell *matCellDef="let row">{{ row.total }}</mat-cell>
               </ng-container>
-              <mat-header-row *matHeaderRowDef="trendColumns"></mat-header-row>
-              <mat-row *matRowDef="let row; columns: trendColumns"></mat-row>
+              <ng-container matColumnDef="avgSetsPerEntry">
+                <mat-header-cell *matHeaderCellDef i18n="@@analysis.avgSetsCol"
+                  >&#x2300; Sets</mat-header-cell
+                >
+                <mat-cell *matCellDef="let row">{{
+                  row.avgSetsPerEntry !== null &&
+                  row.avgSetsPerEntry !== undefined
+                    ? (row.avgSetsPerEntry | number)
+                    : '—'
+                }}</mat-cell>
+              </ng-container>
+              <mat-header-row
+                *matHeaderRowDef="trendColumnsWithSets"
+              ></mat-header-row>
+              <mat-row
+                *matRowDef="let row; columns: trendColumnsWithSets"
+              ></mat-row>
             </mat-table>
           </mat-card-content>
         </mat-card>
@@ -123,6 +168,17 @@ import { AnalysisStore } from '../analysis.store';
                 {{ store.bestDay()?.total ?? 0 }} Reps
               </div>
             </div>
+            @if (store.bestSingleSet()) {
+              <div>
+                <strong i18n="@@analysis.bestSingleSet"
+                  >Bestes Einzel-Set:</strong
+                >
+                <div>
+                  {{ store.bestSingleSet() }}
+                  <span i18n="@@analysis.repsUnit">Wdh.</span>
+                </div>
+              </div>
+            }
             <div>
               <strong i18n="@@analysis.currentStreak">Aktuelle Streak:</strong>
               <div>
@@ -152,6 +208,33 @@ import { AnalysisStore } from '../analysis.store';
             <app-type-pie [data]="store.typeBreakdown()" />
           </mat-card-content>
         </mat-card>
+
+        @if (store.avgSetSize()) {
+          <mat-card>
+            <mat-card-header>
+              <mat-card-title i18n="@@analysis.avgSetSizeTitle"
+                >&#x2300; Set-Gr&#x00F6;&#x00DF;e</mat-card-title
+              >
+            </mat-card-header>
+            <mat-card-content class="kpi-big">
+              <b>{{ store.avgSetSize() }}</b>
+              <span i18n="@@analysis.repsPerSet">Reps / Set</span>
+            </mat-card-content>
+          </mat-card>
+        }
+
+        @if (store.setsDistribution().length) {
+          <mat-card>
+            <mat-card-header>
+              <mat-card-title i18n="@@analysis.setsDistTitle"
+                >Sets-Verteilung</mat-card-title
+              >
+            </mat-card-header>
+            <mat-card-content>
+              <app-sets-distribution [data]="store.setsDistribution()" />
+            </mat-card-content>
+          </mat-card>
+        }
       </section>
 
       <mat-card class="heatmap-full">
@@ -159,9 +242,23 @@ import { AnalysisStore } from '../analysis.store';
           <mat-card-title i18n="@@analysis.heatmapTitle"
             >Heatmap (Wochentag/Uhrzeit)</mat-card-title
           >
+          <mat-button-toggle-group
+            [value]="heatmapMode()"
+            (change)="heatmapMode.set($event.value)"
+            class="heatmap-toggle"
+            aria-label="Heatmap-Modus auswählen"
+            i18n-aria-label="@@analysis.heatmapToggleAriaLabel"
+          >
+            <mat-button-toggle value="reps" i18n="@@analysis.heatmapReps"
+              >Reps</mat-button-toggle
+            >
+            <mat-button-toggle value="sets" i18n="@@analysis.heatmapSets"
+              >Sets</mat-button-toggle
+            >
+          </mat-button-toggle-group>
         </mat-card-header>
         <mat-card-content class="heatmap-wrap">
-          <app-heatmap [entries]="store.rows()" />
+          <app-heatmap [entries]="store.rows()" [mode]="heatmapMode()" />
         </mat-card-content>
       </mat-card>
     </main>
@@ -224,6 +321,26 @@ import { AnalysisStore } from '../analysis.store';
       }
     }
 
+    .kpi-big {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      padding: 16px 0;
+    }
+    .kpi-big b {
+      font-size: 2.5rem;
+      line-height: 1;
+    }
+    .kpi-big span {
+      opacity: 0.7;
+      font-size: 0.85rem;
+    }
+
+    .heatmap-toggle {
+      margin-left: auto;
+    }
+
     @media (max-width: 600px) {
       .best-grid {
         grid-template-columns: 1fr;
@@ -241,6 +358,9 @@ export class AnalysisPageComponent {
   } | null;
 
   readonly trendColumns = ['label', 'total'];
+  readonly trendColumnsWithSets = ['label', 'total', 'avgSetsPerEntry'];
+
+  readonly heatmapMode = signal<'reps' | 'sets'>('reps');
 
   private readonly live = inject(LiveDataStore);
 

@@ -7,7 +7,7 @@ import {
 } from './heatmap.utils';
 
 // minimal shape used by the utils
-type Entry = { timestamp: string; reps: number };
+type Entry = { timestamp: string; reps: number; sets?: number[] };
 
 describe('heatmap.utils', () => {
   it('generates 24*7 cells and aggregates reps by weekday+hour', () => {
@@ -52,6 +52,33 @@ describe('heatmap.utils', () => {
 
     const c = heatmapCellColor({ value: 5, max: 10 });
     expect(c.startsWith('rgba(69, 137, 255,')).toBe(true);
+  });
+
+  it('aggregates set count instead of reps when mode is "sets"', () => {
+    const entries: Entry[] = [
+      { timestamp: '2026-02-09T08:00:00', reps: 10, sets: [5, 5] }, // Mon
+      { timestamp: '2026-02-09T08:30:00', reps: 15, sets: [5, 5, 5] }, // Mon, same hour
+      { timestamp: '2026-02-10T23:00:00', reps: 12 }, // Tue, no sets
+    ];
+
+    const cells = buildHeatmapCells({
+      entries,
+      days: defaultHeatmapDays,
+      hoursTopDown: defaultHeatmapHoursTopDown,
+      mode: 'sets',
+    });
+
+    // Mon 08: 2 sets + 3 sets = 5
+    const mo8 = cells.find(
+      (c: { x: string; y: string; v: number }) => c.x === 'Mo' && c.y === '08'
+    );
+    expect(mo8?.v).toBe(5);
+
+    // Tue 23: no sets → 0
+    const di23 = cells.find(
+      (c: { x: string; y: string; v: number }) => c.x === 'Di' && c.y === '23'
+    );
+    expect(di23?.v).toBe(0);
   });
 
   it('exposes day/hour constants', () => {

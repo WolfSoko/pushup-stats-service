@@ -212,6 +212,12 @@ export interface ApplyDeltaParams {
   newReps: number;
   /** Current ISO timestamp for updatedAt */
   nowIso: string;
+  /** Delta for total sets count (positive for add, negative for remove) */
+  setsDelta?: number;
+  /** Individual set values of the new/updated entry (for bestSingleSet tracking) */
+  newSets?: number[];
+  /** Individual set values of the old entry (for accurate delta calculation) */
+  oldSets?: number[];
 }
 
 /**
@@ -222,8 +228,17 @@ export function applyDelta(
   existing: UserStats | null,
   params: ApplyDeltaParams
 ): UserStats {
-  const { userId, repsDelta, entriesDelta, timestamp, newReps, nowIso } =
-    params;
+  const {
+    userId,
+    repsDelta,
+    entriesDelta,
+    timestamp,
+    newReps,
+    nowIso,
+    setsDelta = 0,
+    newSets,
+    oldSets,
+  } = params;
   const base = existing ?? emptyUserStats(userId);
   const parts = berlinParts(timestamp);
   const keys = periodKeys(parts);
@@ -316,6 +331,23 @@ export function applyDelta(
     totalDays += 1;
   }
 
+  // ── Sets ───────────────────────────────────────────────────────────
+  const totalSets = Math.max(0, (base.totalSets ?? 0) + setsDelta);
+  const oldSetsTotal = oldSets?.reduce((s, v) => s + v, 0) ?? 0;
+  const newSetsTotal = newSets?.reduce((s, v) => s + v, 0) ?? 0;
+  const totalSetsReps = Math.max(
+    0,
+    (base.totalSetsReps ?? 0) - oldSetsTotal + newSetsTotal
+  );
+  const avgSetSize =
+    totalSets > 0 ? Math.round((totalSetsReps / totalSets) * 10) / 10 : 0;
+
+  // bestSingleSet: append-only via deltas (can only grow).
+  // When entries are deleted/edited, rebuild corrects the true best.
+  // Same pattern as bestSingleEntry and bestDay.
+  const maxNewSet = newSets?.length ? Math.max(...newSets) : 0;
+  const bestSingleSet = Math.max(base.bestSingleSet ?? 0, maxNewSet);
+
   return {
     userId,
     total,
@@ -330,6 +362,10 @@ export function applyDelta(
     currentStreak: streakState.currentStreak,
     lastEntryDate: streakState.lastEntryDate,
     heatmap,
+    totalSets,
+    totalSetsReps,
+    avgSetSize,
+    bestSingleSet,
     bestDay,
     bestSingleEntry,
     version: base.version,
@@ -340,6 +376,7 @@ export function applyDelta(
 export interface PushupEntry {
   timestamp: string;
   reps: number;
+  sets?: number[];
 }
 
 /**
@@ -387,13 +424,24 @@ export function rebuildFromEntries(
     }
   }
 
-  // Best single entry
+  // Best single entry + sets aggregation
   let bestSingleEntry: { reps: number; timestamp: string } | null = null;
+  let totalSets = 0;
+  let totalSetsReps = 0;
+  let bestSingleSet = 0;
   for (const entry of sorted) {
     if (!bestSingleEntry || entry.reps > bestSingleEntry.reps) {
       bestSingleEntry = { reps: entry.reps, timestamp: entry.timestamp };
     }
+    if (entry.sets?.length) {
+      totalSets += entry.sets.length;
+      totalSetsReps += entry.sets.reduce((s, v) => s + v, 0);
+      const maxSet = Math.max(...entry.sets);
+      if (maxSet > bestSingleSet) bestSingleSet = maxSet;
+    }
   }
+  const avgSetSize =
+    totalSets > 0 ? Math.round((totalSetsReps / totalSets) * 10) / 10 : 0;
 
   // Streak (from sorted unique dates)
   const uniqueDates = [...dayTotals.keys()].sort();
@@ -440,6 +488,10 @@ export function rebuildFromEntries(
     currentStreak,
     lastEntryDate,
     heatmap,
+    totalSets,
+    totalSetsReps,
+    avgSetSize,
+    bestSingleSet,
     bestDay,
     bestSingleEntry,
     version: USERSTATS_VERSION,

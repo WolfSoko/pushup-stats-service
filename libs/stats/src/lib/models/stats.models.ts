@@ -8,6 +8,7 @@ export interface StatsMeta {
   days: number;
   total: number;
   granularity: StatsGranularity;
+  dayChartMode?: '24h' | '14h';
 }
 
 export interface StatsSeriesEntry {
@@ -25,6 +26,7 @@ export interface StatsResponse {
 export interface StatsFilter {
   from?: string;
   to?: string;
+  dayChartMode?: '24h' | '14h';
 }
 
 // Re-export all domain models for backward compatibility

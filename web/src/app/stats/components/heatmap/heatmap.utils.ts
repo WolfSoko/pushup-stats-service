@@ -25,11 +25,12 @@ function weekdayLabel(date: Date): HeatmapDay {
 }
 
 export function buildHeatmapCells(params: {
-  entries: ReadonlyArray<{ timestamp: string; reps: number }>;
+  entries: ReadonlyArray<{ timestamp: string; reps: number; sets?: number[] }>;
   days: ReadonlyArray<string>;
   hoursTopDown: ReadonlyArray<string>;
+  mode?: 'reps' | 'sets';
 }): HeatmapCell[] {
-  const { entries, days, hoursTopDown } = params;
+  const { entries, days, hoursTopDown, mode = 'reps' } = params;
 
   const base: HeatmapCell[] = [];
   for (const day of days) {
@@ -44,7 +45,8 @@ export function buildHeatmapCells(params: {
     const dayLabel = weekdayLabel(date);
     const hourLabel = String(date.getHours()).padStart(2, '0');
     const key = `${dayLabel}-${hourLabel}`;
-    map.set(key, (map.get(key) ?? 0) + row.reps);
+    const value = mode === 'sets' ? (row.sets?.length ?? 0) : row.reps;
+    map.set(key, (map.get(key) ?? 0) + value);
   }
 
   return base.map((p) => ({

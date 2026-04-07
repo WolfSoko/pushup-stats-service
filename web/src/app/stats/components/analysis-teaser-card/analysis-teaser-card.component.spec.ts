@@ -19,6 +19,7 @@ class StubStatsChartComponent {
   readonly rangeMode = input<string>('week');
   readonly from = input<string>('');
   readonly to = input<string>('');
+  readonly entries = input<unknown[]>([]);
 }
 
 describe('AnalysisTeaserCardComponent', () => {

@@ -44,7 +44,7 @@ describe('HeatmapComponent', () => {
     expect(di23?.v).toBe(12);
 
     const yLabels = (
-      component.chartOptions as { scales: { y: { labels: string[] } } }
+      component.chartOptions() as { scales: { y: { labels: string[] } } }
     ).scales.y.labels;
     expect(yLabels[0]).toBe('23');
     expect(yLabels[yLabels.length - 1]).toBe('00');
@@ -64,7 +64,7 @@ describe('HeatmapComponent', () => {
 
     const component = fixture.componentInstance;
     const data = component.chartData();
-    const dl = (component.chartOptions?.plugins as any)
+    const dl = (component.chartOptions()?.plugins as any)
       .datalabels as unknown as {
       display: (ctx: { dataset: unknown; dataIndex: number }) => boolean;
       formatter: (value: unknown) => string;
@@ -85,5 +85,57 @@ describe('HeatmapComponent', () => {
       String(points[nonZeroIndex].v)
     );
     expect(dl.formatter(points[zeroIndex])).toBe('');
+  });
+
+  it('aggregates set count in sets mode and uses correct tooltip unit', async () => {
+    fixture.componentRef.setInput('entries', [
+      {
+        _id: '1',
+        timestamp: '2026-02-09T08:00:00',
+        reps: 30,
+        sets: [10, 10, 10],
+        source: 'wa',
+      }, // Mo
+      {
+        _id: '2',
+        timestamp: '2026-02-09T08:30:00',
+        reps: 20,
+        sets: [10, 10],
+        source: 'web',
+      }, // Mo, same hour
+      {
+        _id: '3',
+        timestamp: '2026-02-10T23:00:00',
+        reps: 12,
+        source: 'web',
+      }, // Di, no sets
+    ] as any[]);
+    fixture.componentRef.setInput('mode', 'sets');
+
+    await fixture.whenStable();
+
+    const component = fixture.componentInstance;
+    const data = component.chartData();
+    const points = data.datasets[0].data as Array<{
+      x: string;
+      y: string;
+      v: number;
+    }>;
+
+    // Mo 08: 3 sets + 2 sets = 5
+    const mo8 = points.find((p) => p.x === 'Mo' && p.y === '08');
+    expect(mo8?.v).toBe(5);
+
+    // Di 23: no sets → 0
+    const di23 = points.find((p) => p.x === 'Di' && p.y === '23');
+    expect(di23?.v).toBe(0);
+
+    // Tooltip should show 'Sets' not 'Reps'
+    const opts = component.chartOptions() as any;
+    const label = opts.plugins.tooltip.callbacks.label({
+      raw: { x: 'Mo', y: '08', v: 5 },
+    });
+    expect(label).toContain('Sätze');
+    expect(label).not.toContain('Wiederholungen');
   });
 });

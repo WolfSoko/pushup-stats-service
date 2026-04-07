@@ -21,6 +21,11 @@
   }
 }
 
+.chart-mode-toggle {
+  margin-left: auto;
+  align-self: center;
+}
+
 .chart-host {
   height: clamp(260px, 34vw, 360px);
   margin-top: 14px;
@@ -96,6 +101,10 @@ canvas {
 
 .dot-avg {
   background: #7ef0c8;
+}
+
+.dot-sets-bar {
+  background: #ab47bc;
 }
 
 :host-context(html.light-theme) {

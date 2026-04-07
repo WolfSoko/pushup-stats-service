@@ -17,8 +17,9 @@ export type HeatmapSlot = string;
  * - v2: Fixed period keys to use TODAY (not last entry date) in rebuildFromEntries
  * - v3: Fixed berlinParts() to treat offset-less timestamps as Berlin local time
  *       (not UTC), preventing wrong daily bucketing for evening entries
+ * - v4: Added sets aggregation fields (totalSets, avgSetSize, bestSingleSet)
  */
-export const USERSTATS_VERSION = 3;
+export const USERSTATS_VERSION = 4;
 
 export interface UserStats {
   /** Firestore owner */
@@ -54,6 +55,16 @@ export interface UserStats {
   /** Cumulative reps per weekday+hour slot, e.g. { "Mo-08": 120, "Fr-14": 45 } */
   heatmap: Record<HeatmapSlot, number>;
 
+  // ── Sets ────────────────────────────────────────────────────────────
+  /** Total number of individual sets across all entries */
+  totalSets: number;
+  /** Total reps contributed by entries that have sets data (for accurate avgSetSize) */
+  totalSetsReps: number;
+  /** Average reps per individual set (0 when no sets data) */
+  avgSetSize: number;
+  /** Maximum reps in a single set across all entries */
+  bestSingleSet: number;
+
   // ── Performance ─────────────────────────────────────────────────────
   /** Best single day: { date, total } */
   bestDay: { date: string; total: number } | null;
@@ -82,6 +93,10 @@ export function emptyUserStats(userId: string): UserStats {
     currentStreak: 0,
     lastEntryDate: null,
     heatmap: {},
+    totalSets: 0,
+    totalSetsReps: 0,
+    avgSetSize: 0,
+    bestSingleSet: 0,
     bestDay: null,
     bestSingleEntry: null,
     version: USERSTATS_VERSION,

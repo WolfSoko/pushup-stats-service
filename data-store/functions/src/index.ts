@@ -877,6 +877,12 @@ export const updateUserStatsOnPushupWrite = onDocumentWritten(
     const newReps = (afterData?.reps ?? 0) as number;
     const oldTimestamp = beforeData?.timestamp as string | undefined;
     const newTimestamp = afterData?.timestamp as string | undefined;
+    const oldSets = Array.isArray(beforeData?.sets)
+      ? (beforeData.sets as number[])
+      : [];
+    const newSets = Array.isArray(afterData?.sets)
+      ? (afterData.sets as number[])
+      : [];
 
     const isCreate = !beforeData && !!afterData;
     const isDelete = !!beforeData && !afterData;
@@ -898,6 +904,7 @@ export const updateUserStatsOnPushupWrite = onDocumentWritten(
     let firstEntryAllEntries: Array<{
       timestamp: string;
       reps: number;
+      sets?: number[];
     }> | null = null;
     let versionOutdated = false;
 
@@ -932,6 +939,7 @@ export const updateUserStatsOnPushupWrite = onDocumentWritten(
         return {
           timestamp: data.timestamp as string,
           reps: Number(data.reps ?? 0),
+          ...(Array.isArray(data.sets) ? { sets: data.sets as number[] } : {}),
         };
       });
     }
@@ -980,6 +988,8 @@ export const updateUserStatsOnPushupWrite = onDocumentWritten(
             timestamp: oldTimestamp,
             newReps: 0,
             nowIso,
+            setsDelta: -(oldSets.length || 0),
+            oldSets: oldSets.length ? oldSets : undefined,
           });
           current = applyDelta(current, {
             userId,
@@ -988,11 +998,14 @@ export const updateUserStatsOnPushupWrite = onDocumentWritten(
             timestamp: newTimestamp,
             newReps,
             nowIso,
+            setsDelta: newSets.length || 0,
+            newSets: newSets.length ? newSets : undefined,
           });
         } else {
           const repsDelta = newReps - oldReps;
           const entriesDelta = isCreate ? 1 : isDelete ? -1 : 0;
           const timestamp = (newTimestamp ?? oldTimestamp)!;
+          const setsDelta = (newSets.length || 0) - (oldSets.length || 0);
 
           current = applyDelta(current, {
             userId,
@@ -1001,6 +1014,9 @@ export const updateUserStatsOnPushupWrite = onDocumentWritten(
             timestamp,
             newReps,
             nowIso,
+            setsDelta,
+            newSets: newSets.length ? newSets : undefined,
+            oldSets: oldSets.length ? oldSets : undefined,
           });
         }
       } else {
@@ -1064,6 +1080,7 @@ export const rebuildUserStats = onCall(
         return {
           timestamp: data.timestamp as string,
           reps: Number(data.reps ?? 0),
+          ...(Array.isArray(data.sets) ? { sets: data.sets as number[] } : {}),
         };
       });
 

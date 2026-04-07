@@ -2,17 +2,24 @@ import { isPlatformBrowser } from '@angular/common';
 import {
   AfterViewInit,
   Component,
+  computed,
   effect,
   ElementRef,
   inject,
   input,
   LOCALE_ID,
+  model,
   PLATFORM_ID,
   signal,
   viewChild,
 } from '@angular/core';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCardModule } from '@angular/material/card';
-import { StatsGranularity, StatsSeriesEntry } from '@pu-stats/models';
+import {
+  PushupRecord,
+  StatsGranularity,
+  StatsSeriesEntry,
+} from '@pu-stats/models';
 import {
   Chart,
   ChartConfiguration,
@@ -25,7 +32,7 @@ Chart.register(...registerables);
 
 @Component({
   selector: 'app-stats-chart',
-  imports: [MatCardModule],
+  imports: [MatButtonToggleModule, MatCardModule],
   template: `
     <mat-card class="chart">
       <mat-card-header>
@@ -36,6 +43,22 @@ Chart.register(...registerables);
           >Intervallwerte als Balken, Tages-Integral + gleitender Durchschnitt
           als Trendlinien</mat-card-subtitle
         >
+        @if (granularity() === 'hourly') {
+          <mat-button-toggle-group
+            [value]="dayChartMode()"
+            (change)="dayChartMode.set($event.value)"
+            class="chart-mode-toggle"
+            aria-label="Zeitraum der Stundenansicht"
+            i18n-aria-label="@@chart.modeToggleAria"
+          >
+            <mat-button-toggle value="14h" i18n="@@chart.mode14h"
+              >14h</mat-button-toggle
+            >
+            <mat-button-toggle value="24h" i18n="@@chart.mode24h"
+              >24h</mat-button-toggle
+            >
+          </mat-button-toggle-group>
+        }
       </mat-card-header>
 
       <mat-card-content>
@@ -66,6 +89,14 @@ Chart.register(...registerables);
               >Gleitender Durchschnitt</ng-container
             ></span
           >
+          @if (hasSetsData()) {
+            <span
+              ><i class="dot dot-sets-bar"></i
+              ><ng-container i18n="@@chart.withSets"
+                >Mit Sets</ng-container
+              ></span
+            >
+          }
         </div>
       </mat-card-content>
     </mat-card>
@@ -86,7 +117,8 @@ export class StatsChartComponent implements AfterViewInit {
   readonly series = input<StatsSeriesEntry[]>([]);
   readonly from = input<string | null>(null);
   readonly to = input<string | null>(null);
-  readonly dayChartMode = input<'24h' | '14h'>('14h');
+  readonly dayChartMode = model<'24h' | '14h'>('14h');
+  readonly entries = input<PushupRecord[]>([]);
 
   readonly hourlyTitle = $localize`:@@chart.titleHourly:Verlauf (Stundenwerte)`;
   readonly dailyTitle = $localize`:@@chart.titleDaily:Verlauf (Tageswerte)`;
@@ -94,6 +126,9 @@ export class StatsChartComponent implements AfterViewInit {
   readonly dayIntegralLabel = $localize`:@@chart.dayIntegral:Tages-Integral`;
   readonly movingAvgLabel = $localize`:@@chart.movingAvg:Gleitender Durchschnitt`;
 
+  readonly hasSetsData = computed(() =>
+    this.entries().some((e) => (e.sets?.length ?? 0) > 1)
+  );
   private readonly viewReady = signal(false);
   private chart?: Chart;
 
@@ -101,7 +136,10 @@ export class StatsChartComponent implements AfterViewInit {
     effect(() => {
       if (!isPlatformBrowser(this.platformId) || !this.viewReady()) return;
       const currentSeries = this.series();
-      queueMicrotask(() => this.renderChart(currentSeries));
+      const currentEntries = this.entries();
+      // Track dayChartMode to re-render on toggle
+      this.dayChartMode();
+      queueMicrotask(() => this.renderChart(currentSeries, currentEntries));
     });
   }
 
@@ -111,7 +149,13 @@ export class StatsChartComponent implements AfterViewInit {
     }
   }
 
-  private renderChart(series: StatsSeriesEntry[]): void {
+  readonly setsTooltipLabel = $localize`:@@chart.setsTooltip:Sets`;
+  readonly withSetsLabel = $localize`:@@chart.withSets:Mit Sets`;
+
+  private renderChart(
+    series: StatsSeriesEntry[],
+    entries: PushupRecord[] = []
+  ): void {
     const element = this.chartCanvas()?.nativeElement;
     if (!element) return;
 
@@ -163,18 +207,101 @@ export class StatsChartComponent implements AfterViewInit {
       if (Number.isFinite(ts)) bucketLabelByTs.set(ts, entry.bucketLabel);
     }
 
+    // Build per-bucket sets info from raw entries for stacked bars & tooltip
+    const isHourly = this.granularity() === 'hourly';
+    const is14h = isHourly && this.dayChartMode() === '14h';
+    const setsByBucket = new Map<
+      number,
+      {
+        setsReps: number;
+        noSetsReps: number;
+        sets: number[][];
+        totalSets: number;
+      }
+    >();
+    for (const entry of entries) {
+      const date = new Date(entry.timestamp);
+      let bucketTs: number;
+      if (isHourly) {
+        const hour = date.getHours();
+        // In 14h mode, hours 0-7 merge into the 00:00 bucket
+        const mappedHour = is14h && hour < 8 ? 0 : hour;
+        bucketTs = new Date(
+          date.getFullYear(),
+          date.getMonth(),
+          date.getDate(),
+          mappedHour
+        ).getTime();
+      } else {
+        bucketTs = new Date(
+          date.getFullYear(),
+          date.getMonth(),
+          date.getDate()
+        ).getTime();
+      }
+      const info = setsByBucket.get(bucketTs) ?? {
+        setsReps: 0,
+        noSetsReps: 0,
+        sets: [],
+        totalSets: 0,
+      };
+      if ((entry.sets?.length ?? 0) > 1) {
+        info.setsReps += entry.reps;
+        info.sets.push(entry.sets!);
+        info.totalSets += entry.sets!.length;
+      } else {
+        info.noSetsReps += entry.reps;
+      }
+      setsByBucket.set(bucketTs, info);
+    }
+
+    const hasSetsData = [...setsByBucket.values()].some((b) => b.setsReps > 0);
+
+    // Build stacked bar datasets when sets data exists
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const barDatasets: any[] = hasSetsData
+      ? [
+          {
+            label: this.intervalLabel,
+            data: series.map((d) => {
+              const ts = this.bucketToTs(d.bucket);
+              const info = setsByBucket.get(ts);
+              return { x: ts, y: info ? info.noSetsReps : d.total };
+            }),
+            backgroundColor: '#5e8eff99',
+            borderRadius: 0,
+            maxBarThickness: 34,
+            stack: 'reps',
+          },
+          {
+            label: this.withSetsLabel,
+            data: series.map((d) => {
+              const ts = this.bucketToTs(d.bucket);
+              const info = setsByBucket.get(ts);
+              return { x: ts, y: info?.setsReps ?? 0 };
+            }),
+            backgroundColor: '#ab47bccc',
+            borderRadius: 6,
+            maxBarThickness: 34,
+            stack: 'reps',
+          },
+        ]
+      : [
+          {
+            label: this.intervalLabel,
+            data: series.map((d) => ({
+              x: this.bucketToTs(d.bucket),
+              y: d.total,
+            })),
+            backgroundColor: '#5e8eff99',
+            borderRadius: 6,
+            maxBarThickness: 34,
+          },
+        ];
+
     const data: ChartConfiguration<'bar' | 'line'>['data'] = {
       datasets: [
-        {
-          label: this.intervalLabel,
-          data: series.map((d) => ({
-            x: this.bucketToTs(d.bucket),
-            y: d.total,
-          })),
-          backgroundColor: '#5e8eff99',
-          borderRadius: 6,
-          maxBarThickness: 34,
-        },
+        ...barDatasets,
         {
           label: this.dayIntegralLabel,
           data: series.map((d) => ({
@@ -203,6 +330,7 @@ export class StatsChartComponent implements AfterViewInit {
           pointHoverRadius: 3,
           tension: 0.32,
           yAxisID: 'y',
+          stack: 'movingAvg',
         },
       ],
     };
@@ -245,6 +373,7 @@ export class StatsChartComponent implements AfterViewInit {
         scales: {
           x: {
             type: 'time',
+            stacked: hasSetsData,
             min:
               this.rangeMode() === 'day'
                 ? undefined
@@ -280,6 +409,7 @@ export class StatsChartComponent implements AfterViewInit {
             grid: { color: chartGridLight },
           },
           y: {
+            stacked: hasSetsData,
             ticks: { color: chartTick, precision: 0 },
             grid: { color: chartGrid },
           },
@@ -313,6 +443,22 @@ export class StatsChartComponent implements AfterViewInit {
                   return this.formatHourLabel(new Date(ts), isGermanLocale);
                 }
                 return tooltipTitleFormatter.format(new Date(ts));
+              },
+              afterBody: (items: TooltipItem<'bar' | 'line'>[]) => {
+                if (!hasSetsData) return '';
+                const first = items[0];
+                if (!first) return '';
+                const ts = Number(first.parsed.x);
+                const info = setsByBucket.get(ts);
+                if (!info || info.totalSets === 0) return '';
+                const lines: string[] = [
+                  '',
+                  `${info.totalSets} ${this.setsTooltipLabel}:`,
+                ];
+                for (const entrySet of info.sets) {
+                  lines.push(`   ${entrySet.join(' + ')}`);
+                }
+                return lines;
               },
             },
           },
