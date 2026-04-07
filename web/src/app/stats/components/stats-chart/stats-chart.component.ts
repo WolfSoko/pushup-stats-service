@@ -83,7 +83,7 @@ Chart.register(...registerables);
             <span
               ><i class="dot dot-set"></i
               ><ng-container i18n="@@chart.avgSetSize"
-                >&#x2300; Set-Gr&#x00F6;&#x00DF;e</ng-container
+                >Ø Set-Größe</ng-container
               ></span
             >
           }

@@ -1,4 +1,4 @@
-import { Component, computed, input } from '@angular/core';
+import { Component, input } from '@angular/core';
 
 export interface SetsDistributionDatum {
   setCount: number;
@@ -71,11 +71,7 @@ export interface SetsDistributionDatum {
 export class SetsDistributionComponent {
   readonly data = input<SetsDistributionDatum[]>([]);
 
-  private readonly maxPercent = computed(() =>
-    Math.max(1, ...this.data().map((d) => d.percent))
-  );
-
   barWidth(percent: number): number {
-    return (percent / this.maxPercent()) * 100;
+    return percent;
   }
 }

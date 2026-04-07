@@ -37,17 +37,8 @@ describe('SetsDistributionComponent', () => {
     expect(el.querySelectorAll('.bar-row').length).toBe(2);
   });
 
-  it('scales bar width relative to max percent', () => {
-    const data: SetsDistributionDatum[] = [
-      { setCount: 2, count: 6, percent: 60 },
-      { setCount: 3, count: 4, percent: 40 },
-    ];
-    fixture.componentRef.setInput('data', data);
-    fixture.detectChanges();
-
-    // 60% is max → bar width should be 100%
-    expect(component.barWidth(60)).toBe(100);
-    // 40% → bar width ≈ 66.67%
-    expect(component.barWidth(40)).toBeCloseTo(66.67, 0);
+  it('uses absolute percent for bar width', () => {
+    expect(component.barWidth(60)).toBe(60);
+    expect(component.barWidth(40)).toBe(40);
   });
 });

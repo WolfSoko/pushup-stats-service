@@ -28,7 +28,7 @@ export interface HeatmapCell {
       <canvas
         baseChart
         [data]="chartData()"
-        [options]="chartOptions"
+        [options]="chartOptions()"
         [type]="'matrix'"
       ></canvas>
     } @else {
@@ -58,6 +58,10 @@ export class HeatmapComponent {
 
   private readonly days = defaultHeatmapDays;
   private readonly hoursTopDown = defaultHeatmapHoursTopDown;
+
+  private readonly unitLabel = computed(() =>
+    this.mode() === 'sets' ? 'Sets' : 'Reps'
+  );
 
   // Matrix chart typing is tricky with string category axes; keep this loosely typed.
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -101,59 +105,62 @@ export class HeatmapComponent {
   });
 
   // Keeping this in the component to avoid leaking Chart.js typing complexity into page components.
-  readonly chartOptions: ChartConfiguration['options'] = {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      legend: { display: false },
-      tooltip: {
-        callbacks: {
-          title: () => '',
-          label: (context: unknown) => {
-            const v = (context as { raw?: HeatmapCell }).raw;
-            return `${v?.x ?? ''} ${v?.y ?? ''}:00 - ${v?.v ?? 0} Reps`;
+  readonly chartOptions = computed<ChartConfiguration['options']>(() => {
+    const unit = this.unitLabel();
+    return {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            title: () => '',
+            label: (context: unknown) => {
+              const v = (context as { raw?: HeatmapCell }).raw;
+              return `${v?.x ?? ''} ${v?.y ?? ''}:00 - ${v?.v ?? 0} ${unit}`;
+            },
           },
         },
-      },
-      // chartjs-plugin-datalabels is referenced via options in this project.
-      datalabels: {
-        display: (ctx: unknown) => {
-          const raw = (
-            ctx as { dataset?: { data?: HeatmapCell[] }; dataIndex?: number }
-          )?.dataset?.data?.[(ctx as { dataIndex: number }).dataIndex];
-          return !!raw && typeof raw.v === 'number' && raw.v > 0;
+        // chartjs-plugin-datalabels is referenced via options in this project.
+        datalabels: {
+          display: (ctx: unknown) => {
+            const raw = (
+              ctx as { dataset?: { data?: HeatmapCell[] }; dataIndex?: number }
+            )?.dataset?.data?.[(ctx as { dataIndex: number }).dataIndex];
+            return !!raw && typeof raw.v === 'number' && raw.v > 0;
+          },
+          formatter: (value: HeatmapCell) => (value?.v ? String(value.v) : ''),
+          anchor: 'center',
+          align: 'center',
+          clamp: true,
+          color: () => 'rgba(230,237,249,0.95)',
+          font: (ctx: unknown) => {
+            const raw = (
+              ctx as { dataset?: { data?: HeatmapCell[] }; dataIndex?: number }
+            )?.dataset?.data?.[(ctx as { dataIndex: number }).dataIndex];
+            const v = typeof raw?.v === 'number' ? raw.v : 0;
+            return { size: v >= 10 ? 11 : 10, weight: 700 };
+          },
         },
-        formatter: (value: HeatmapCell) => (value?.v ? String(value.v) : ''),
-        anchor: 'center',
-        align: 'center',
-        clamp: true,
-        color: () => 'rgba(230,237,249,0.95)',
-        font: (ctx: unknown) => {
-          const raw = (
-            ctx as { dataset?: { data?: HeatmapCell[] }; dataIndex?: number }
-          )?.dataset?.data?.[(ctx as { dataIndex: number }).dataIndex];
-          const v = typeof raw?.v === 'number' ? raw.v : 0;
-          return { size: v >= 10 ? 11 : 10, weight: 700 };
+        // chartjs-plugin-datalabels typings are not included in ChartConfiguration by default
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } as any,
+      scales: {
+        x: {
+          type: 'category',
+          labels: [...this.days],
+          position: 'top',
+          grid: { display: false },
+        },
+        y: {
+          type: 'category',
+          labels: [...this.hoursTopDown],
+          offset: true,
+          // labels are already top->bottom; no reverse needed.
+          reverse: false,
+          grid: { display: false },
         },
       },
-      // chartjs-plugin-datalabels typings are not included in ChartConfiguration by default
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } as any,
-    scales: {
-      x: {
-        type: 'category',
-        labels: [...this.days],
-        position: 'top',
-        grid: { display: false },
-      },
-      y: {
-        type: 'category',
-        labels: [...this.hoursTopDown],
-        offset: true,
-        // labels are already top->bottom; no reverse needed.
-        reverse: false,
-        grid: { display: false },
-      },
-    },
-  };
+    };
+  });
 }

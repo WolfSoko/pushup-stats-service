@@ -44,7 +44,7 @@ describe('HeatmapComponent', () => {
     expect(di23?.v).toBe(12);
 
     const yLabels = (
-      component.chartOptions as { scales: { y: { labels: string[] } } }
+      component.chartOptions() as { scales: { y: { labels: string[] } } }
     ).scales.y.labels;
     expect(yLabels[0]).toBe('23');
     expect(yLabels[yLabels.length - 1]).toBe('00');
@@ -64,7 +64,7 @@ describe('HeatmapComponent', () => {
 
     const component = fixture.componentInstance;
     const data = component.chartData();
-    const dl = (component.chartOptions?.plugins as any)
+    const dl = (component.chartOptions()?.plugins as any)
       .datalabels as unknown as {
       display: (ctx: { dataset: unknown; dataIndex: number }) => boolean;
       formatter: (value: unknown) => string;

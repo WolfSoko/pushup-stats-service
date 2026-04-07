@@ -1076,6 +1076,7 @@ export const rebuildUserStats = onCall(
         return {
           timestamp: data.timestamp as string,
           reps: Number(data.reps ?? 0),
+          ...(Array.isArray(data.sets) ? { sets: data.sets as number[] } : {}),
         };
       });
 
