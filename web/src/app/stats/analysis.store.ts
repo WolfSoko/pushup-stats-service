@@ -207,6 +207,10 @@ export const AnalysisStore = signalStore(
     const granularity = computed<StatsGranularity>(
       () => stats().meta.granularity
     );
+    /** Resolved dayChartMode: user's explicit toggle, or API's resolved value from user config. */
+    const resolvedDayChartMode = computed<'24h' | '14h'>(
+      () => store.dayChartMode() ?? stats().meta.dayChartMode ?? '14h'
+    );
     const rows = computed(() => store.entriesResource.value() ?? []);
 
     const weekRows = computed(() => store.weekEntriesResource.value() ?? []);
@@ -447,6 +451,7 @@ export const AnalysisStore = signalStore(
       avgSetSize,
       setsDistribution,
       bestSingleSet,
+      resolvedDayChartMode,
     };
   }),
   withMethods((store) => ({

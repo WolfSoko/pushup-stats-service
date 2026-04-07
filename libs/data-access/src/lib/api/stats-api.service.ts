@@ -182,6 +182,7 @@ export class StatsApiService {
           days: from ? 1 : 0,
           total,
           granularity: 'hourly',
+          dayChartMode,
         },
         series,
       };

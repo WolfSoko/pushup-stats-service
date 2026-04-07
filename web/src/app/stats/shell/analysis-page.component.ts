@@ -55,7 +55,7 @@ import { AnalysisStore } from '../analysis.store';
         [from]="store.from()"
         [to]="store.to()"
         [entries]="store.rows()"
-        [dayChartMode]="store.dayChartMode() ?? '14h'"
+        [dayChartMode]="store.resolvedDayChartMode()"
         (dayChartModeChange)="store.setDayChartMode($event)"
       />
 

@@ -8,6 +8,7 @@ export interface StatsMeta {
   days: number;
   total: number;
   granularity: StatsGranularity;
+  dayChartMode?: '24h' | '14h';
 }
 
 export interface StatsSeriesEntry {
