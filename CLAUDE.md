@@ -110,7 +110,7 @@ Split into focused files under `libs/stats/src/lib/models/`:
 - `pushup.models.ts` - PushupRecord, PushupCreate, PushupUpdate
   - **Sets:** `sets?: number[]` stores per-set reps (e.g. `[10, 10, 10]`). `reps` is always the total sum. `sets` is optional for backward compatibility — old entries without sets work unchanged. All aggregation (UserStats, deltas, charts) uses `reps` only.
 - `stats.models.ts` - StatsResponse, StatsMeta, StatsFilter
-- `user-config.models.ts` - UserConfig, UserConfigUpdate, UserRole
+- `user-config.models.ts` - UserConfig, UserConfigUpdate
 - `reminder-config.models.ts` - ReminderConfig
 - `user-stats.models.ts` - UserStats (server-side precomputed), emptyUserStats, USERSTATS_VERSION
   - **Note:** UserStats includes `version` field for migration support. See Cloud Functions section for versioning strategy.
@@ -268,9 +268,20 @@ Decomposed from monolithic index.ts (1220 → ~500 lines wrapper):
 - **motivation/:** Quote cache logic, Gemini fallback, name sanitization
 - **push/subscription:** Subscription ID generation, payload validation
 - **push/reminders:** Reminder scheduling (quiet hours, snooze, intervals)
-- **admin/:** User privilege checks, deletion validation, batch helpers
+- **admin/:** User privilege checks (Custom Claims validation), deletion validation, batch helpers
 
 All modules include comprehensive Jest tests (no Firebase dependencies for pure logic).
+
+### Admin Authorization
+
+Admin access uses **Firebase Custom Claims** (`{ admin: true }`) — NOT Firestore fields. This ensures only server-side Admin SDK can grant admin privileges.
+
+- **Cloud Functions:** `assertAdmin(request)` checks `request.auth.token.admin === true`
+- **Frontend guard:** `adminGuard` reads `getIdTokenResult().claims.admin`
+- **Frontend service:** `UserContextService.isAdmin` checks ID token claims via resource
+- **Firestore rules:** Client writes to `role` field are blocked as defense-in-depth
+- **Granting admin:** `node scripts/set-admin-claim.mjs <email-or-uid>` (requires Admin SDK credentials)
+- **Token refresh:** After setting claims, user must re-login (or wait ~1h) for the token to update
 
 ## Precomputed Data Staleness
 
