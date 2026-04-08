@@ -19,9 +19,9 @@ export class FeedbackService {
       name: feedback.name || null,
       email: feedback.email || null,
       message: feedback.message,
-      userId: userId || null,
+      userId: feedback.anonymous ? null : userId || null,
       createdAt: serverTimestamp(),
-      userAgent: navigator.userAgent,
+      userAgent: globalThis.navigator?.userAgent ?? null,
     });
   }
 }

@@ -4973,12 +4973,6 @@ Deine Position: # ·  Reps        </source>
         <target>Early Access – pushup-stats.de is still under development. Features and design may change at any time.</target>
       </segment>
     </unit>
-    <unit id="earlyAccess.dismiss">
-      <segment state="translated">
-        <source>Banner schließen</source>
-        <target>Dismiss banner</target>
-      </segment>
-    </unit>
     <unit id="landing.earlyAccess.badge">
       <segment state="translated">
         <source>Early Access</source>

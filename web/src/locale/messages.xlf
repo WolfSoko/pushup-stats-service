@@ -3382,18 +3382,10 @@
     </unit>
     <unit id="earlyAccess.text">
       <notes>
-        <note category="location">web/src/app/core/early-access-banner.component.ts</note>
+        <note category="location">web/src/app/app.ts</note>
       </notes>
       <segment>
         <source>Early Access – pushup-stats.de befindet sich noch im Aufbau. Funktionen und Design können sich jederzeit ändern.</source>
-      </segment>
-    </unit>
-    <unit id="earlyAccess.dismiss">
-      <notes>
-        <note category="location">web/src/app/core/early-access-banner.component.ts</note>
-      </notes>
-      <segment>
-        <source>Banner schließen</source>
       </segment>
     </unit>
     <unit id="landing.earlyAccess.badge">
@@ -3422,7 +3414,7 @@
     </unit>
     <unit id="earlyAccess.feedback">
       <notes>
-        <note category="location">web/src/app/core/early-access-banner.component.ts</note>
+        <note category="location">web/src/app/app.ts</note>
       </notes>
       <segment>
         <source>Feedback</source>

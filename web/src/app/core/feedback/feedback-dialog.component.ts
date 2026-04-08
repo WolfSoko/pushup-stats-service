@@ -134,6 +134,7 @@ export class FeedbackDialogComponent {
       name: this.anonymous() ? '' : this.name().trim(),
       email: this.anonymous() ? '' : this.email().trim(),
       message: msg,
+      anonymous: this.anonymous(),
     };
 
     this.dialogRef.close(result);

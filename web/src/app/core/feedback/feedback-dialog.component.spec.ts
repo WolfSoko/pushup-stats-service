@@ -70,6 +70,7 @@ describe('FeedbackDialogComponent', () => {
       name: '',
       email: '',
       message: 'Great app!',
+      anonymous: true,
     });
   });
 
@@ -81,6 +82,7 @@ describe('FeedbackDialogComponent', () => {
       name: 'Max',
       email: 'max@test.de',
       message: 'Nice feature',
+      anonymous: false,
     });
   });
 

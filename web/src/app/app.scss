@@ -49,9 +49,18 @@ mat-sidenav-content {
   top: 0;
   z-index: 10;
   gap: 8px;
+
   // Center content within 1200px max-width
   padding-inline: max(8px, calc((100vw - 1200px) / 2));
+
   // Fade toolbar background at the edges on wide viewports
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    black clamp(0px, calc((100vw - 1200px) / 2), 100vw),
+    black calc(100vw - clamp(0px, (100vw - 1200px) / 2, 100vw)),
+    transparent
+  );
   mask-image: linear-gradient(
     to right,
     transparent,
@@ -127,7 +136,15 @@ mat-sidenav-content {
     gap: 8px;
     padding-inline: max(16px, calc((100vw - 1200px) / 2));
     background: var(--mat-toolbar-container-background-color, #1e1e1e);
+
     // Fade background at the edges on wide viewports
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent,
+      black clamp(0px, calc((100vw - 1200px) / 2), 100vw),
+      black calc(100vw - clamp(0px, (100vw - 1200px) / 2, 100vw)),
+      transparent
+    );
     mask-image: linear-gradient(
       to right,
       transparent,

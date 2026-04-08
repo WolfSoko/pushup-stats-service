@@ -53,6 +53,15 @@ service cloud.firestore {
       allow read, write: if false; // Cloud Functions (Admin SDK) only
     }
 
+    // Feedback — create-only for authenticated users. No read/update/delete from client.
+    match /feedback/{feedbackId} {
+      allow create: if request.auth != null
+                    && request.resource.data.message is string
+                    && request.resource.data.message.size() > 0
+                    && request.resource.data.message.size() <= 5000;
+      allow read, update, delete: if false;
+    }
+
     // Deny everything else by default.
     match /{document=**} {
       allow read, write: if false;

@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { Firestore } from '@angular/fire/firestore';
+import { addDoc, Firestore } from '@angular/fire/firestore';
 import { FeedbackService } from './feedback.service';
 
 vi.mock('@angular/fire/firestore', () => ({
@@ -25,10 +25,13 @@ describe('FeedbackService', () => {
   });
 
   it('should call addDoc with feedback data', async () => {
-    const { addDoc } = await import('@angular/fire/firestore');
-
     await service.submit(
-      { name: 'Max', email: 'max@test.de', message: 'Great app!' },
+      {
+        name: 'Max',
+        email: 'max@test.de',
+        message: 'Great app!',
+        anonymous: false,
+      },
       'user-123'
     );
 
@@ -44,12 +47,10 @@ describe('FeedbackService', () => {
     );
   });
 
-  it('should send null for anonymous feedback', async () => {
-    const { addDoc } = await import('@angular/fire/firestore');
-
+  it('should omit userId for anonymous feedback', async () => {
     await service.submit(
-      { name: '', email: '', message: 'Bug report' },
-      undefined
+      { name: '', email: '', message: 'Bug report', anonymous: true },
+      'user-123'
     );
 
     expect(addDoc).toHaveBeenCalledWith(
