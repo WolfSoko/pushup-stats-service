@@ -124,13 +124,6 @@
     >
   </section>
 
-  <app-analysis-teaser-card
-    [streak]="currentStreak()"
-    [weekReps]="weekReps()"
-    [weeklyGoal]="weeklyGoal()"
-    [refreshTrigger]="refreshCounter()"
-  />
-
   <mat-card class="quick-actions">
     <mat-card-header>
       <mat-card-title i18n="@@quickActionsTitle"
@@ -183,6 +176,13 @@
       </button>
     </mat-card-content>
   </mat-card>
+
+  <app-analysis-teaser-card
+    [streak]="currentStreak()"
+    [weekReps]="weekReps()"
+    [weeklyGoal]="weeklyGoal()"
+    [refreshTrigger]="refreshCounter()"
+  />
 
   @if (loading()) {
     <section
