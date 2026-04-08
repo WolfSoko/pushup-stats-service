@@ -26,9 +26,13 @@ export const adminGuard: CanActivateFn = async (): Promise<
     return router.createUrlTree(['/']);
   }
 
-  const tokenResult = await user.getIdTokenResult();
-  if (tokenResult.claims['admin'] === true) {
-    return true;
+  try {
+    const tokenResult = await user.getIdTokenResult();
+    if (tokenResult.claims['admin'] === true) {
+      return true;
+    }
+  } catch {
+    // Token refresh failed — deny access safely
   }
 
   return router.createUrlTree(['/']);
