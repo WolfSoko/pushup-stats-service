@@ -4,6 +4,9 @@ import { UserContextService } from './user-context.service';
 import { AuthStore } from './state/auth.store';
 import { Auth } from '@angular/fire/auth';
 
+/** Flush pending microtasks (Promise callbacks) */
+const flushMicrotasks = () => new Promise((r) => process.nextTick(r));
+
 class FirebaseAuthStub {
   user = signal<{
     uid: string;
@@ -112,9 +115,9 @@ describe('UserContextService (admin claims)', () => {
     });
     firebaseAuth.user.set({ uid: 'admin-user' });
     const service = TestBed.inject(UserContextService);
-    // Flush resource params change + async loader
+    // Flush resource params change, then await microtask for async loader
     TestBed.tick();
-    await new Promise((r) => setTimeout(r, 0));
+    await flushMicrotasks();
     TestBed.tick();
     expect(service.isAdmin()).toBe(true);
   });
@@ -136,8 +139,9 @@ describe('UserContextService (admin claims)', () => {
     });
     firebaseAuth.user.set({ uid: 'regular-user' });
     const service = TestBed.inject(UserContextService);
+    // Flush resource params change, then await microtask for async loader
     TestBed.tick();
-    await new Promise((r) => setTimeout(r, 0));
+    await flushMicrotasks();
     TestBed.tick();
     expect(service.isAdmin()).toBe(false);
   });

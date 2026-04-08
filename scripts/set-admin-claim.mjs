@@ -29,6 +29,11 @@ if (!target) {
   process.exit(1);
 }
 
+if (projectFlag !== -1 && (!projectId || projectId.startsWith('--'))) {
+  console.error('Error: --project requires a non-empty project ID.');
+  process.exit(1);
+}
+
 const appOptions = projectId
   ? { projectId, credential: applicationDefault() }
   : { credential: applicationDefault() };
