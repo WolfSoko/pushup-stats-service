@@ -20,10 +20,19 @@ self.addEventListener('push', (event) => {
   }
 
   const title = data.title || 'PushUp Stats';
-  const defaultActions = [
-    { action: 'snooze', title: '⏰ 30 Min snoozen' },
-    { action: 'log', title: '✅ Eintragen' },
-  ];
+  const rawLocale = String(
+    data.data?.locale || data.locale || ''
+  ).toLowerCase();
+  const isEnglish = rawLocale.startsWith('en');
+  const defaultActions = isEnglish
+    ? [
+        { action: 'snooze', title: '⏰ Snooze 30 min' },
+        { action: 'log', title: '✅ Log push-ups' },
+      ]
+    : [
+        { action: 'snooze', title: '⏰ 30 Min snoozen' },
+        { action: 'log', title: '✅ Eintragen' },
+      ];
   const options = {
     body: data.body || '',
     icon: data.icon || '/icons/icon-192x192.png',
