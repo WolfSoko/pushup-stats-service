@@ -6,6 +6,7 @@ Angular 21 / Nx monorepo for tracking pushup statistics with Firebase backend.
 
 - **Trunk-based development:** Push directly to `main`. No feature branches by default.
 - Feature branches or worktrees only when explicitly requested.
+- **Never commit secrets or user-identifiable data** (API keys, service account JSON, database UIDs, user email addresses) to the repository. Pass them as CLI arguments, environment variables, or Firebase Secrets instead.
 
 ## Quality Philosophy
 
