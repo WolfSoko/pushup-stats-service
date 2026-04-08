@@ -3380,5 +3380,149 @@
         <source>Werbung</source>
       </segment>
     </unit>
+    <unit id="earlyAccess.text">
+      <notes>
+        <note category="location">web/src/app/app.ts</note>
+      </notes>
+      <segment>
+        <source>Early Access – pushup-stats.de befindet sich noch im Aufbau. Funktionen und Design können sich jederzeit ändern.</source>
+      </segment>
+    </unit>
+    <unit id="landing.earlyAccess.badge">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+      </notes>
+      <segment>
+        <source>Early Access</source>
+      </segment>
+    </unit>
+    <unit id="feedback.success">
+      <notes>
+        <note category="location">web/src/app/app.ts</note>
+      </notes>
+      <segment>
+        <source>Danke für dein Feedback!</source>
+      </segment>
+    </unit>
+    <unit id="feedback.error">
+      <notes>
+        <note category="location">web/src/app/app.ts</note>
+      </notes>
+      <segment>
+        <source>Feedback konnte nicht gesendet werden.</source>
+      </segment>
+    </unit>
+    <unit id="earlyAccess.feedback">
+      <notes>
+        <note category="location">web/src/app/app.ts</note>
+      </notes>
+      <segment>
+        <source>Feedback</source>
+      </segment>
+    </unit>
+    <unit id="feedback.dialog.title">
+      <notes>
+        <note category="location">web/src/app/core/feedback/feedback-dialog.component.ts</note>
+      </notes>
+      <segment>
+        <source>Feedback geben</source>
+      </segment>
+    </unit>
+    <unit id="feedback.dialog.anonymous">
+      <notes>
+        <note category="location">web/src/app/core/feedback/feedback-dialog.component.ts</note>
+      </notes>
+      <segment>
+        <source>Anonym absenden</source>
+      </segment>
+    </unit>
+    <unit id="feedback.dialog.name">
+      <notes>
+        <note category="location">web/src/app/core/feedback/feedback-dialog.component.ts</note>
+      </notes>
+      <segment>
+        <source>Name</source>
+      </segment>
+    </unit>
+    <unit id="feedback.dialog.email">
+      <notes>
+        <note category="location">web/src/app/core/feedback/feedback-dialog.component.ts</note>
+      </notes>
+      <segment>
+        <source>E-Mail (optional)</source>
+      </segment>
+    </unit>
+    <unit id="feedback.dialog.message">
+      <notes>
+        <note category="location">web/src/app/core/feedback/feedback-dialog.component.ts</note>
+      </notes>
+      <segment>
+        <source>Dein Feedback</source>
+      </segment>
+    </unit>
+    <unit id="feedback.dialog.submit">
+      <notes>
+        <note category="location">web/src/app/core/feedback/feedback-dialog.component.ts</note>
+      </notes>
+      <segment>
+        <source>Absenden</source>
+      </segment>
+    </unit>
+    <unit id="admin.feedback.title">
+      <segment>
+        <source>Feedback</source>
+      </segment>
+    </unit>
+    <unit id="admin.feedback.empty">
+      <segment>
+        <source>Noch kein Feedback vorhanden.</source>
+      </segment>
+    </unit>
+    <unit id="admin.feedback.col.date">
+      <segment>
+        <source>Datum</source>
+      </segment>
+    </unit>
+    <unit id="admin.feedback.col.name">
+      <segment>
+        <source>Name</source>
+      </segment>
+    </unit>
+    <unit id="admin.feedback.col.email">
+      <segment>
+        <source>E-Mail</source>
+      </segment>
+    </unit>
+    <unit id="admin.feedback.col.message">
+      <segment>
+        <source>Nachricht</source>
+      </segment>
+    </unit>
+    <unit id="admin.feedback.col.userId">
+      <segment>
+        <source>User</source>
+      </segment>
+    </unit>
+    <unit id="admin.feedback.anon">
+      <segment>
+        <source>Anonym</source>
+      </segment>
+    </unit>
+    <unit id="quickAdd.fab.feedbackAria">
+      <notes>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.html</note>
+      </notes>
+      <segment>
+        <source>Feedback geben</source>
+      </segment>
+    </unit>
+    <unit id="quickAdd.fab.feedback">
+      <notes>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.html</note>
+      </notes>
+      <segment>
+        <source>Feedback</source>
+      </segment>
+    </unit>
   </file>
 </xliff>

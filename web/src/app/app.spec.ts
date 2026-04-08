@@ -5,7 +5,8 @@ import { provideRouter } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { of } from 'rxjs';
 import { StatsApiService, UserConfigApiService } from '@pu-stats/data-access';
-import { AuthStore, UserContextService } from '@pu-auth/auth';
+import { Auth } from '@angular/fire/auth';
+import { AuthService, AuthStore, UserContextService } from '@pu-auth/auth';
 import { AdsStore } from '@pu-stats/ads';
 import { VAPID_PUBLIC_KEY } from '@pu-reminders/reminders';
 import { App } from './app';
@@ -16,10 +17,19 @@ describe('App (testing-library)', () => {
     user: signal({ uid: 'default', displayName: 'default', email: 'default' }),
     loading: () => false,
     isAuthenticated: () => true,
+    authResolved: () => true,
     isGuest: () => false,
     error: () => null,
     logout: () => Promise.resolve(),
     tryAsGuest: () => Promise.resolve(true),
+  };
+
+  const authServiceMock = {
+    signInGuestIfNeeded: () => Promise.resolve(),
+  };
+
+  const firebaseAuthMock = {
+    currentUser: { uid: 'u1' },
   };
 
   const userConfigApiMock = {
@@ -81,6 +91,8 @@ describe('App (testing-library)', () => {
           },
         },
         { provide: AuthStore, useValue: authMock },
+        { provide: AuthService, useValue: authServiceMock },
+        { provide: Auth, useValue: firebaseAuthMock },
         { provide: UserConfigApiService, useValue: userConfigApiMock },
         { provide: StatsApiService, useValue: statsApiMock },
         { provide: AdsStore, useValue: adsStoreMock },
@@ -105,6 +117,8 @@ describe('App (testing-library)', () => {
           },
         },
         { provide: AuthStore, useValue: authMock },
+        { provide: AuthService, useValue: authServiceMock },
+        { provide: Auth, useValue: firebaseAuthMock },
         { provide: UserConfigApiService, useValue: userConfigApiMock },
         { provide: StatsApiService, useValue: statsApiMock },
         { provide: AdsStore, useValue: adsStoreMock },
@@ -150,6 +164,8 @@ describe('App (testing-library)', () => {
           },
         },
         { provide: AuthStore, useValue: authMock },
+        { provide: AuthService, useValue: authServiceMock },
+        { provide: Auth, useValue: firebaseAuthMock },
         { provide: UserConfigApiService, useValue: userConfigApiMock },
         { provide: StatsApiService, useValue: statsApiMock },
         { provide: AdsStore, useValue: adsStoreMock },
@@ -179,6 +195,8 @@ describe('App (testing-library)', () => {
             },
           },
           { provide: AuthStore, useValue: authMock },
+          { provide: AuthService, useValue: authServiceMock },
+          { provide: Auth, useValue: firebaseAuthMock },
 
           { provide: UserConfigApiService, useValue: userConfigApiMock },
           { provide: StatsApiService, useValue: statsApiMock },
@@ -217,6 +235,8 @@ describe('App (testing-library)', () => {
             },
           },
           { provide: AuthStore, useValue: authMock },
+          { provide: AuthService, useValue: authServiceMock },
+          { provide: Auth, useValue: firebaseAuthMock },
 
           { provide: UserConfigApiService, useValue: userConfigApiMock },
           { provide: StatsApiService, useValue: statsApiMock },
@@ -255,6 +275,8 @@ describe('App (testing-library)', () => {
             },
           },
           { provide: AuthStore, useValue: authMock },
+          { provide: AuthService, useValue: authServiceMock },
+          { provide: Auth, useValue: firebaseAuthMock },
 
           { provide: UserConfigApiService, useValue: userConfigApiMock },
           { provide: StatsApiService, useValue: statsApiMock },
@@ -293,6 +315,8 @@ describe('App (testing-library)', () => {
             },
           },
           { provide: AuthStore, useValue: authMock },
+          { provide: AuthService, useValue: authServiceMock },
+          { provide: Auth, useValue: firebaseAuthMock },
 
           { provide: UserConfigApiService, useValue: userConfigApiMock },
           { provide: StatsApiService, useValue: statsApiMock },
@@ -332,6 +356,8 @@ describe('App (testing-library)', () => {
           },
         },
         { provide: AuthStore, useValue: authMock },
+        { provide: AuthService, useValue: authServiceMock },
+        { provide: Auth, useValue: firebaseAuthMock },
         { provide: UserConfigApiService, useValue: userConfigApiMock },
         { provide: StatsApiService, useValue: statsApiMock },
         { provide: AdsStore, useValue: adsStoreMock },
@@ -370,6 +396,8 @@ describe('App (testing-library)', () => {
           },
         },
         { provide: AuthStore, useValue: authMock },
+        { provide: AuthService, useValue: authServiceMock },
+        { provide: Auth, useValue: firebaseAuthMock },
         { provide: UserConfigApiService, useValue: userConfigApiMock },
         { provide: StatsApiService, useValue: statsApiMock },
         { provide: AdsStore, useValue: adsStoreMock },
