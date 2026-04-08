@@ -98,7 +98,10 @@ export class App {
     const snoozeMinutes = this._pendingSnooze();
     if (snoozeMinutes != null && this.auth.authResolved()) {
       this._pendingSnooze.set(null);
-      void this.pushService.snooze(snoozeMinutes);
+      this.pushService.snooze(snoozeMinutes).catch(() => {
+        // Best-effort: if snooze fails (e.g. not authenticated),
+        // the next reminder fires at the normal interval.
+      });
     }
   });
   private readonly reminderOrchestration = inject(ReminderOrchestrationService);
