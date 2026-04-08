@@ -397,10 +397,11 @@ export class RemindersPageComponent {
   constructor() {
     void this.pushService.init();
 
-    // Sync form draft from global store
+    // Sync form draft from global store — but don't overwrite unsaved edits
+    // (config loads async and can arrive after the user already toggled the form)
     effect(() => {
       const rc = this.reminderStore.config();
-      this.form.syncFromConfig(rc);
+      this.form.syncIfClean(rc);
     });
   }
 

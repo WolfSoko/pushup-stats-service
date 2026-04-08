@@ -100,9 +100,10 @@ export function isLeaseStale(
   nowMs: number
 ): boolean {
   if (!leaseAcquiredAt) return true; // No timestamp → legacy/missing → treat as stale
-  const leaseMs = leaseAcquiredAt.toMillis
-    ? leaseAcquiredAt.toMillis()
-    : new Date(leaseAcquiredAt as unknown as string).getTime();
+  const leaseMs =
+    typeof leaseAcquiredAt.toMillis === 'function'
+      ? leaseAcquiredAt.toMillis()
+      : new Date(leaseAcquiredAt as unknown as string).getTime();
   if (!leaseMs || isNaN(leaseMs)) return true;
   return nowMs - leaseMs >= STALE_LEASE_MS;
 }

@@ -49,6 +49,13 @@ export const ReminderFormStore = signalStore(
       });
     },
 
+    /** Sync from config only when the user has no unsaved edits. */
+    syncIfClean(config: ReminderConfig | null): void {
+      if (!store.dirty()) {
+        this.syncFromConfig(config);
+      }
+    },
+
     setEnabled(value: boolean): void {
       patchState(store, { enabled: value, dirty: true });
     },
