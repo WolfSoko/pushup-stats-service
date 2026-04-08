@@ -58,6 +58,7 @@ import { FeedbackDialogData, FeedbackResult } from './feedback.models';
           <mat-label i18n="@@feedback.dialog.name">Name</mat-label>
           <input
             matInput
+            maxlength="100"
             [ngModel]="name()"
             (ngModelChange)="name.set($event)"
           />
@@ -70,6 +71,7 @@ import { FeedbackDialogData, FeedbackResult } from './feedback.models';
           <input
             matInput
             type="email"
+            maxlength="320"
             [ngModel]="email()"
             (ngModelChange)="email.set($event)"
           />
@@ -81,6 +83,7 @@ import { FeedbackDialogData, FeedbackResult } from './feedback.models';
         <textarea
           matInput
           rows="5"
+          maxlength="5000"
           [ngModel]="message()"
           (ngModelChange)="message.set($event)"
           required

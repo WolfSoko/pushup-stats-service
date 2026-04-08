@@ -69,7 +69,13 @@ service cloud.firestore {
                     && (!request.resource.data.keys().hasAny(['email'])
                         || request.resource.data.email == null
                         || (request.resource.data.email is string
-                            && request.resource.data.email.size() <= 320));
+                            && request.resource.data.email.size() <= 320))
+                    && (!request.resource.data.keys().hasAny(['userAgent'])
+                        || request.resource.data.userAgent == null
+                        || (request.resource.data.userAgent is string
+                            && request.resource.data.userAgent.size() <= 512))
+                    && request.resource.data.createdAt is timestamp
+                    && request.resource.data.createdAt == request.time;
       allow read, update, delete: if false;
     }
 

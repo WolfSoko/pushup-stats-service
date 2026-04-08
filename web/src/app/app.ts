@@ -10,12 +10,13 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Analytics, logEvent } from '@angular/fire/analytics';
+import { Auth } from '@angular/fire/auth';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -63,6 +64,7 @@ import {
     QuickAddFabComponent,
     ThemeToggleComponent,
     CookieConsentBannerComponent,
+    MatDialogModule,
   ],
   templateUrl: './app.html',
   styleUrl: './app.scss',
@@ -71,6 +73,7 @@ export class App {
   private readonly swUpdate = inject(SwUpdate, { optional: true });
   private readonly snackBar = inject(MatSnackBar);
   private readonly dialog = inject(MatDialog);
+  private readonly firebaseAuth = inject(Auth, { optional: true });
   private readonly feedbackService = inject(FeedbackService);
   private readonly destroyRef = inject(DestroyRef);
   private readonly router = inject(Router);
@@ -257,7 +260,9 @@ export class App {
       this.authService
         .signInGuestIfNeeded()
         .then(() => {
-          const userId = this.user.userIdSafe();
+          // Use synchronous currentUser (immediately available after auth op)
+          // instead of signal-based userIdSafe() which may lag by a microtask.
+          const userId = this.firebaseAuth?.currentUser?.uid ?? '';
           return this.feedbackService.submit(result, userId);
         })
         .then(() =>
