@@ -106,8 +106,8 @@ export class App {
       $localize`:@@earlyAccess.feedback:Feedback`,
       {
         duration: 12_000,
-        horizontalPosition: 'center',
-        verticalPosition: 'top',
+        horizontalPosition: 'left',
+        verticalPosition: 'bottom',
         panelClass: 'early-access-snackbar',
       }
     );
