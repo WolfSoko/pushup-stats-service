@@ -11,22 +11,21 @@ const defaultConfig: ReminderConfig = {
 };
 
 describe('ReminderFormStore', () => {
-  function createStore() {
-    return TestBed.runInInjectionContext(() => new ReminderFormStore());
-  }
+  let store: InstanceType<typeof ReminderFormStore>;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      providers: [ReminderFormStore],
+    });
+    store = TestBed.inject(ReminderFormStore);
   });
 
   it('should initialize with enabled=false', () => {
-    const store = createStore();
     expect(store.enabled()).toBe(false);
     expect(store.dirty()).toBe(false);
   });
 
   it('should sync from config', () => {
-    const store = createStore();
     const config: ReminderConfig = {
       ...defaultConfig,
       enabled: true,
@@ -43,7 +42,6 @@ describe('ReminderFormStore', () => {
   });
 
   it('should sync from null config with defaults', () => {
-    const store = createStore();
     store.syncFromConfig(null);
     expect(store.enabled()).toBe(false);
     expect(store.intervalMinutes()).toBe(60);
@@ -52,48 +50,51 @@ describe('ReminderFormStore', () => {
   });
 
   it('should mark dirty when user changes enabled', () => {
-    const store = createStore();
     store.setEnabled(true);
     expect(store.enabled()).toBe(true);
     expect(store.dirty()).toBe(true);
   });
 
   it('should reset dirty on syncFromConfig', () => {
-    const store = createStore();
     store.setEnabled(true);
     expect(store.dirty()).toBe(true);
     store.syncFromConfig(null);
     expect(store.dirty()).toBe(false);
   });
 
-  describe('race condition: config load vs user edit', () => {
-    it('syncFromConfig overwrites user edits when called directly (the bug scenario)', () => {
-      const store = createStore();
-      // User enables reminders
-      store.setEnabled(true);
+  describe('syncIfClean (race condition guard)', () => {
+    it('syncs when form is clean', () => {
+      const config: ReminderConfig = { ...defaultConfig, enabled: true };
+      store.syncIfClean(config);
       expect(store.enabled()).toBe(true);
-      expect(store.dirty()).toBe(true);
-
-      // Async config load arrives with enabled=false — overwrites!
-      store.syncFromConfig({ ...defaultConfig, enabled: false });
-      expect(store.enabled()).toBe(false);
       expect(store.dirty()).toBe(false);
     });
 
-    it('dirty guard prevents overwrite of user edits', () => {
-      const store = createStore();
+    it('skips sync when form is dirty (user has unsaved edits)', () => {
       // User enables reminders
       store.setEnabled(true);
       expect(store.enabled()).toBe(true);
       expect(store.dirty()).toBe(true);
 
-      // Guard: only sync when not dirty (matches the component effect fix)
-      if (!store.dirty()) {
-        store.syncFromConfig({ ...defaultConfig, enabled: false });
-      }
+      // Async config load arrives with enabled=false — should be ignored
+      store.syncIfClean({ ...defaultConfig, enabled: false });
+
       // User's edit is preserved
       expect(store.enabled()).toBe(true);
       expect(store.dirty()).toBe(true);
+    });
+
+    it('syncs again after user saves (dirty resets)', () => {
+      store.setEnabled(true);
+      expect(store.dirty()).toBe(true);
+
+      // Simulate save completing → syncFromConfig resets dirty
+      store.syncFromConfig({ ...defaultConfig, enabled: true });
+      expect(store.dirty()).toBe(false);
+
+      // Now a new config load should sync
+      store.syncIfClean({ ...defaultConfig, enabled: false });
+      expect(store.enabled()).toBe(false);
     });
   });
 });

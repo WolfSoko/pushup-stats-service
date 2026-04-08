@@ -1,4 +1,4 @@
-import { Component, effect, inject, untracked } from '@angular/core';
+import { Component, effect, inject } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -401,9 +401,7 @@ export class RemindersPageComponent {
     // (config loads async and can arrive after the user already toggled the form)
     effect(() => {
       const rc = this.reminderStore.config();
-      if (!untracked(() => this.form.dirty())) {
-        this.form.syncFromConfig(rc);
-      }
+      this.form.syncIfClean(rc);
     });
   }
 
