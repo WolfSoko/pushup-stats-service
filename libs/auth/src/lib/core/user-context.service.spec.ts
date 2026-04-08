@@ -22,7 +22,7 @@ describe('UserContextService', () => {
       providers: [
         { provide: PLATFORM_ID, useValue: 'browser' },
         { provide: AuthStore, useValue: firebaseAuth },
-        { provide: Auth, useValue: {} },
+        { provide: Auth, useValue: { currentUser: null } },
       ],
     });
   });
@@ -79,5 +79,66 @@ describe('UserContextService', () => {
     TestBed.tick();
     expect(service.userIdSafe()).toBe('');
     expect(service.userNameSafe()).toBe('Gast');
+  });
+
+  it('isAdmin returns false when no user is signed in', () => {
+    const service = TestBed.inject(UserContextService);
+    expect(service.isAdmin()).toBe(false);
+  });
+});
+
+describe('UserContextService (admin claims)', () => {
+  let firebaseAuth: FirebaseAuthStub;
+
+  beforeEach(() => {
+    firebaseAuth = new FirebaseAuthStub();
+  });
+
+  it('isAdmin returns true when user has admin custom claim', async () => {
+    TestBed.configureTestingModule({
+      providers: [
+        { provide: PLATFORM_ID, useValue: 'browser' },
+        { provide: AuthStore, useValue: firebaseAuth },
+        {
+          provide: Auth,
+          useValue: {
+            currentUser: {
+              getIdTokenResult: () =>
+                Promise.resolve({ claims: { admin: true } }),
+            },
+          },
+        },
+      ],
+    });
+    firebaseAuth.user.set({ uid: 'admin-user' });
+    const service = TestBed.inject(UserContextService);
+    // Flush resource params change + async loader
+    TestBed.tick();
+    await new Promise((r) => setTimeout(r, 0));
+    TestBed.tick();
+    expect(service.isAdmin()).toBe(true);
+  });
+
+  it('isAdmin returns false when user lacks admin custom claim', async () => {
+    TestBed.configureTestingModule({
+      providers: [
+        { provide: PLATFORM_ID, useValue: 'browser' },
+        { provide: AuthStore, useValue: firebaseAuth },
+        {
+          provide: Auth,
+          useValue: {
+            currentUser: {
+              getIdTokenResult: () => Promise.resolve({ claims: {} }),
+            },
+          },
+        },
+      ],
+    });
+    firebaseAuth.user.set({ uid: 'regular-user' });
+    const service = TestBed.inject(UserContextService);
+    TestBed.tick();
+    await new Promise((r) => setTimeout(r, 0));
+    TestBed.tick();
+    expect(service.isAdmin()).toBe(false);
   });
 });

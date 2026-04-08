@@ -1,7 +1,5 @@
 import { ReminderConfig } from './reminder-config.models';
 
-export type UserRole = 'user' | 'admin';
-
 export interface UserConfig {
   userId: string;
   email?: string | null;
@@ -20,7 +18,6 @@ export interface UserConfig {
     hideFromLeaderboard?: boolean;
     dayChartMode?: '24h' | '14h';
   };
-  role?: UserRole;
   createdAt?: string;
   updatedAt?: string;
   reminder?: ReminderConfig;
@@ -36,7 +33,6 @@ export type UserConfigUpdate = Partial<
     | 'monthlyGoal'
     | 'consent'
     | 'ui'
-    | 'role'
     | 'reminder'
   >
 >;

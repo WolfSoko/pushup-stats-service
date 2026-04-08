@@ -1,5 +1,5 @@
 /**
- * Sets role: 'admin' on the admin user's userConfig document in Firestore.
+ * Sets the `admin` custom claim on Firebase Auth users.
  *
  * Usage:
  *   npx ts-node scripts/set-admin-role.ts
@@ -8,19 +8,21 @@
  */
 import * as admin from 'firebase-admin';
 
-const ADMIN_UID = 'sH2P1bJL1WPaJDr9oFQZBJrGN9v2';
+const ADMIN_UIDS = [
+  'sH2P1bJL1WPaJDr9oFQZBJrGN9v2',
+  'blq5ByiN0lXlWiT0mJMIQ4HSkbJ3',
+];
 
 admin.initializeApp();
 
-const db = admin.firestore();
-
-async function setAdminRole(): Promise<void> {
-  const ref = db.collection('userConfigs').doc(ADMIN_UID);
-  await ref.set({ role: 'admin' }, { merge: true });
-  console.log(`role: 'admin' set on userConfigs/${ADMIN_UID}`);
+async function setAdminClaims(): Promise<void> {
+  for (const uid of ADMIN_UIDS) {
+    await admin.auth().setCustomUserClaims(uid, { admin: true });
+    console.log(`Custom claim { admin: true } set on user ${uid}`);
+  }
 }
 
-setAdminRole()
+setAdminClaims()
   .then(() => process.exit(0))
   .catch((err) => {
     console.error(err);
