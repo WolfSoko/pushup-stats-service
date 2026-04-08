@@ -39,7 +39,7 @@ self.addEventListener('push', (event) => {
     badge: data.badge || '/icons/badge-72x72.png',
     tag: data.tag || 'reminder',
     renotify: data.renotify ?? true,
-    data: data.data || {},
+    data: { ...(data.data || {}), locale: rawLocale || undefined },
     actions: Array.isArray(data.actions) ? data.actions : defaultActions,
   };
 
