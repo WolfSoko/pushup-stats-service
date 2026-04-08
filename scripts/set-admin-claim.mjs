@@ -6,9 +6,9 @@
  *   node scripts/set-admin-claim.mjs <email-or-uid> [--project <project-id>]
  *
  * Examples:
- *   node scripts/set-admin-claim.mjs wolframsokollek@gmail.com
- *   node scripts/set-admin-claim.mjs blq5ByiN0lXlWiT0mJMIQ4HSkbJ3
- *   node scripts/set-admin-claim.mjs wolframsokollek@gmail.com --project pushup-stats-staging-867b7
+ *   node scripts/set-admin-claim.mjs admin@example.com
+ *   node scripts/set-admin-claim.mjs <firebase-uid>
+ *   node scripts/set-admin-claim.mjs admin@example.com --project pushup-stats-staging-867b7
  *
  * Requires:
  *   - gcloud CLI authenticated, OR
