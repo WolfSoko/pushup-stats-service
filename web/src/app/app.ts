@@ -15,6 +15,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -38,7 +39,12 @@ import { ThemeToggleComponent } from './core/theme';
 import { ReminderOrchestrationService } from './core/reminder-orchestration.service';
 import { AppDataFacade } from './core/app-data.facade';
 import { QuickAddOrchestrationService } from './core/quick-add-orchestration.service';
-import { EarlyAccessBannerComponent } from './core/early-access-banner.component';
+import { FeedbackDialogComponent } from './core/feedback/feedback-dialog.component';
+import { FeedbackService } from './core/feedback/feedback.service';
+import {
+  FeedbackDialogData,
+  FeedbackResult,
+} from './core/feedback/feedback.models';
 
 @Component({
   selector: 'app-root',
@@ -57,7 +63,6 @@ import { EarlyAccessBannerComponent } from './core/early-access-banner.component
     QuickAddFabComponent,
     ThemeToggleComponent,
     CookieConsentBannerComponent,
-    EarlyAccessBannerComponent,
   ],
   templateUrl: './app.html',
   styleUrl: './app.scss',
@@ -65,6 +70,8 @@ import { EarlyAccessBannerComponent } from './core/early-access-banner.component
 export class App {
   private readonly swUpdate = inject(SwUpdate, { optional: true });
   private readonly snackBar = inject(MatSnackBar);
+  private readonly dialog = inject(MatDialog);
+  private readonly feedbackService = inject(FeedbackService);
   private readonly destroyRef = inject(DestroyRef);
   private readonly router = inject(Router);
   private readonly activatedRoute = inject(ActivatedRoute);
@@ -81,6 +88,37 @@ export class App {
   // before calling the Cloud Function, otherwise the request goes out without
   // a Firebase Auth token and is rejected as 'unauthenticated'.
   private readonly _pendingSnooze = signal<number | null>(null);
+
+  private static readonly EA_DISMISSED_KEY = 'pus_early_access_dismissed';
+
+  private readonly _showEarlyAccessToast = afterNextRender(() => {
+    try {
+      if (localStorage.getItem(App.EA_DISMISSED_KEY) === '1') return;
+    } catch {
+      return;
+    }
+
+    const ref = this.snackBar.open(
+      $localize`:@@earlyAccess.text:Early Access – pushup-stats.de befindet sich noch im Aufbau. Funktionen und Design können sich jederzeit ändern.`,
+      $localize`:@@earlyAccess.feedback:Feedback`,
+      {
+        duration: 12_000,
+        horizontalPosition: 'center',
+        verticalPosition: 'top',
+        panelClass: 'early-access-snackbar',
+      }
+    );
+
+    ref.onAction().subscribe(() => this.openFeedbackDialog(false));
+    ref.afterDismissed().subscribe(() => {
+      try {
+        localStorage.setItem(App.EA_DISMISSED_KEY, '1');
+      } catch {
+        // localStorage unavailable
+      }
+    });
+  });
+
   private readonly _handleSnoozeParam = afterNextRender(() => {
     const snooze = this.activatedRoute.snapshot.queryParamMap.get('snooze');
     const snoozeMinutes = snooze ? parseInt(snooze, 10) : NaN;
@@ -196,6 +234,40 @@ export class App {
 
   handleOpenDialog(): void {
     this.quickAdd.openDialog();
+  }
+
+  openFeedbackDialog(prefill = true): void {
+    const data: FeedbackDialogData = prefill
+      ? {
+          name: this.auth.user()?.displayName ?? '',
+          email: this.auth.user()?.email ?? '',
+        }
+      : {};
+
+    const ref = this.dialog.open(FeedbackDialogComponent, {
+      width: 'min(92vw, 480px)',
+      maxWidth: '92vw',
+      data,
+    });
+
+    ref.afterClosed().subscribe((result: FeedbackResult | undefined) => {
+      if (!result) return;
+      const userId = this.user.userIdSafe();
+      this.feedbackService.submit(result, userId).then(
+        () =>
+          this.snackBar.open(
+            $localize`:@@feedback.success:Danke für dein Feedback!`,
+            '',
+            { duration: 4000 }
+          ),
+        () =>
+          this.snackBar.open(
+            $localize`:@@feedback.error:Feedback konnte nicht gesendet werden.`,
+            '',
+            { duration: 4000 }
+          )
+      );
+    });
   }
 
   async logout(): Promise<void> {

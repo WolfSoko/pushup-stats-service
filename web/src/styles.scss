@@ -183,3 +183,18 @@ mat-card-header + mat-card-footer {
   padding: 0 8px;
   line-height: 28px;
 }
+
+// Early Access toast — tertiary container color
+.early-access-snackbar .mdc-snackbar__surface {
+  background: var(--mat-sys-tertiary-container, #ffd8e4) !important;
+  color: var(--mat-sys-on-tertiary-container, #31111d) !important;
+}
+
+.early-access-snackbar .mdc-snackbar__label {
+  color: var(--mat-sys-on-tertiary-container, #31111d) !important;
+}
+
+.early-access-snackbar .mat-mdc-button {
+  color: var(--mat-sys-on-tertiary-container, #31111d) !important;
+  font-weight: 600;
+}

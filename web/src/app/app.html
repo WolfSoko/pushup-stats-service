@@ -177,8 +177,6 @@
       </a>
     </nav>
 
-    <app-early-access-banner />
-
     <main class="app-content">
       <router-outlet />
     </main>
@@ -237,5 +235,6 @@
   [suggestions]="quickAddSuggestions()"
   (quickAdd)="handleQuickAdd($event)"
   (openDialog)="handleOpenDialog()"
+  (openFeedback)="openFeedbackDialog()"
 />
 }

@@ -1,6 +1,6 @@
 :host {
   position: fixed;
-  right: 16px;
+  right: max(16px, calc((100vw - 1200px) / 2));
   bottom: 16px;
   z-index: 1000;
   display: block;
@@ -40,6 +40,9 @@
 }
 .dial-actions > button:nth-child(4) {
   animation-delay: 180ms;
+}
+.dial-actions > button:nth-child(5) {
+  animation-delay: 240ms;
 }
 
 @keyframes dial-item-in {
@@ -87,6 +90,15 @@
     rgba(18, 140, 110, 0.92)
   ) !important;
   color: #f0fff9 !important;
+}
+
+.feedback-fab {
+  background: linear-gradient(
+    135deg,
+    rgba(180, 140, 32, 0.92),
+    rgba(160, 110, 18, 0.92)
+  ) !important;
+  color: #fffdf0 !important;
 }
 
 .main-fab {

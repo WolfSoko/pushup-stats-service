@@ -4985,5 +4985,71 @@ Deine Position: # ·  Reps        </source>
         <target>Early Access</target>
       </segment>
     </unit>
+    <unit id="feedback.success">
+      <segment state="translated">
+        <source>Danke für dein Feedback!</source>
+        <target>Thank you for your feedback!</target>
+      </segment>
+    </unit>
+    <unit id="feedback.error">
+      <segment state="translated">
+        <source>Feedback konnte nicht gesendet werden.</source>
+        <target>Could not send feedback.</target>
+      </segment>
+    </unit>
+    <unit id="earlyAccess.feedback">
+      <segment state="translated">
+        <source>Feedback</source>
+        <target>Feedback</target>
+      </segment>
+    </unit>
+    <unit id="feedback.dialog.title">
+      <segment state="translated">
+        <source>Feedback geben</source>
+        <target>Send feedback</target>
+      </segment>
+    </unit>
+    <unit id="feedback.dialog.anonymous">
+      <segment state="translated">
+        <source>Anonym absenden</source>
+        <target>Submit anonymously</target>
+      </segment>
+    </unit>
+    <unit id="feedback.dialog.name">
+      <segment state="translated">
+        <source>Name</source>
+        <target>Name</target>
+      </segment>
+    </unit>
+    <unit id="feedback.dialog.email">
+      <segment state="translated">
+        <source>E-Mail (optional)</source>
+        <target>Email (optional)</target>
+      </segment>
+    </unit>
+    <unit id="feedback.dialog.message">
+      <segment state="translated">
+        <source>Dein Feedback</source>
+        <target>Your feedback</target>
+      </segment>
+    </unit>
+    <unit id="feedback.dialog.submit">
+      <segment state="translated">
+        <source>Absenden</source>
+        <target>Submit</target>
+      </segment>
+    </unit>
+    <unit id="quickAdd.fab.feedbackAria">
+      <segment state="translated">
+        <source>Feedback geben</source>
+        <target>Send feedback</target>
+      </segment>
+    </unit>
+    <unit id="quickAdd.fab.feedback">
+      <segment state="translated">
+        <source>Feedback</source>
+        <target>Feedback</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

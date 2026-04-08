@@ -2,7 +2,19 @@
   @if (fabState.open()) {
     <div class="dial-actions">
       @for (item of dialItems(); track $index) {
-        @if (item.type === 'custom') {
+        @if (item.type === 'feedback') {
+          <button
+            mat-fab
+            extended
+            class="feedback-fab"
+            aria-label="Feedback geben"
+            i18n-aria-label="@@quickAdd.fab.feedbackAria"
+            (click)="onOpenFeedback()"
+          >
+            <mat-icon>{{ item.icon }}</mat-icon>
+            <span i18n="@@quickAdd.fab.feedback">Feedback</span>
+          </button>
+        } @else if (item.type === 'custom') {
           <button
             mat-fab
             extended
@@ -23,7 +35,9 @@
             (click)="onQuickAdd(item.value)"
           >
             <mat-icon>{{ item.icon }}</mat-icon>
-            <span i18n="@@quickAdd.fab.quickAddReps">+{{ item.value }} Reps</span>
+            <span i18n="@@quickAdd.fab.quickAddReps"
+              >+{{ item.value }} Reps</span
+            >
           </button>
         }
       }

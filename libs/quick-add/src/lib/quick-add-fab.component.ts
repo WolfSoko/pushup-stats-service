@@ -5,7 +5,7 @@ import { patchState, signalState } from '@ngrx/signals';
 
 interface DialItem {
   readonly value: number;
-  readonly type: 'quick' | 'custom';
+  readonly type: 'quick' | 'custom' | 'feedback';
   readonly icon: string;
 }
 
@@ -23,6 +23,7 @@ export class QuickAddFabComponent {
 
   readonly quickAdd = output<number>();
   readonly openDialog = output<void>();
+  readonly openFeedback = output<void>();
 
   protected readonly fabState = signalState({ open: false });
 
@@ -37,7 +38,11 @@ export class QuickAddFabComponent {
           icon: QUICK_ICONS[i] ?? 'bolt',
         })
       );
-    return [...quickItems, { value: 0, type: 'custom', icon: 'edit_note' }];
+    return [
+      ...quickItems,
+      { value: 0, type: 'custom', icon: 'edit_note' },
+      { value: 0, type: 'feedback', icon: 'feedback' },
+    ];
   });
 
   protected readonly openAriaLabel = $localize`:@@quickAdd.fab.open:Schnellerfassung öffnen`;
@@ -59,5 +64,10 @@ export class QuickAddFabComponent {
   protected onOpenDialog(): void {
     patchState(this.fabState, { open: false });
     this.openDialog.emit();
+  }
+
+  protected onOpenFeedback(): void {
+    patchState(this.fabState, { open: false });
+    this.openFeedback.emit();
   }
 }
