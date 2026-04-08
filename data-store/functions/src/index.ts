@@ -29,6 +29,7 @@ import {
 } from './push/reminders';
 import type { ReminderConfig } from './push/reminders';
 import { parseRecaptchaResponse } from './authentication';
+import { validateAdminAccess } from './admin/logic';
 
 admin.initializeApp();
 
@@ -201,8 +202,6 @@ export const assessRecaptchaToken = onCall(
 );
 
 // ─── Admin helpers ────────────────────────────────────────────────────────────
-
-import { validateAdminAccess } from './admin/logic';
 
 function assertAdmin(request: {
   auth?: { uid: string; token: Record<string, unknown> };
