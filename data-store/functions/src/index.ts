@@ -415,6 +415,34 @@ export const adminBulkDeleteInactiveAnonymous = onCall(
   }
 );
 
+// ─── adminListFeedback ────────────────────────────────────────────────────────
+
+export const adminListFeedback = onCall(
+  { region: 'europe-west3', timeoutSeconds: 60 },
+  async (request) => {
+    await assertAdmin(request.auth?.uid);
+
+    const snap = await db
+      .collection('feedback')
+      .orderBy('createdAt', 'desc')
+      .limit(200)
+      .get();
+
+    return snap.docs.map((doc) => {
+      const d = doc.data();
+      return {
+        id: doc.id,
+        name: d.name ?? null,
+        email: d.email ?? null,
+        message: d.message ?? '',
+        userId: d.userId ?? null,
+        createdAt: d.createdAt?.toDate?.()?.toISOString?.() ?? null,
+        userAgent: d.userAgent ?? null,
+      };
+    });
+  }
+);
+
 // ─── Leaderboard functions ────────────────────────────────────────────────────
 
 export const rebuildLeaderboards = onSchedule(

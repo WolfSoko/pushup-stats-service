@@ -3468,6 +3468,41 @@
         <source>Absenden</source>
       </segment>
     </unit>
+    <unit id="admin.feedback.title">
+      <segment>
+        <source>Feedback</source>
+      </segment>
+    </unit>
+    <unit id="admin.feedback.empty">
+      <segment>
+        <source>Noch kein Feedback vorhanden.</source>
+      </segment>
+    </unit>
+    <unit id="admin.feedback.col.date">
+      <segment>
+        <source>Datum</source>
+      </segment>
+    </unit>
+    <unit id="admin.feedback.col.name">
+      <segment>
+        <source>Name</source>
+      </segment>
+    </unit>
+    <unit id="admin.feedback.col.email">
+      <segment>
+        <source>E-Mail</source>
+      </segment>
+    </unit>
+    <unit id="admin.feedback.col.message">
+      <segment>
+        <source>Nachricht</source>
+      </segment>
+    </unit>
+    <unit id="admin.feedback.col.userId">
+      <segment>
+        <source>User</source>
+      </segment>
+    </unit>
     <unit id="quickAdd.fab.feedbackAria">
       <notes>
         <note category="location">libs/quick-add/src/lib/quick-add-fab.component.html</note>

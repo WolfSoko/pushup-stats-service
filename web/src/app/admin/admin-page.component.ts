@@ -33,6 +33,16 @@ export interface AdminUser {
   role: string | null;
 }
 
+interface AdminFeedback {
+  id: string;
+  name: string | null;
+  email: string | null;
+  message: string;
+  userId: string | null;
+  createdAt: string | null;
+  userAgent: string | null;
+}
+
 @Component({
   selector: 'app-admin-page',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -233,6 +243,95 @@ export interface AdminUser {
           </mat-table>
         </mat-card>
       }
+
+      <!-- Feedback section -->
+      <h2 i18n="@@admin.feedback.title">Feedback</h2>
+
+      <div class="filter-row">
+        <button
+          mat-icon-button
+          (click)="loadFeedback()"
+          [matTooltip]="refreshTooltip"
+        >
+          <mat-icon>refresh</mat-icon>
+        </button>
+      </div>
+
+      @if (feedbackLoading()) {
+        <div class="spinner-container">
+          <mat-spinner />
+        </div>
+      } @else if (feedbackError()) {
+        <p class="error-text">{{ feedbackError() }}</p>
+      } @else if (feedbackList().length === 0) {
+        <p i18n="@@admin.feedback.empty">Noch kein Feedback vorhanden.</p>
+      } @else {
+        <mat-card>
+          <mat-table [dataSource]="feedbackList()">
+            <ng-container matColumnDef="createdAt">
+              <mat-header-cell
+                *matHeaderCellDef
+                i18n="@@admin.feedback.col.date"
+                >Datum</mat-header-cell
+              >
+              <mat-cell *matCellDef="let f">{{
+                f.createdAt | date: 'dd.MM.yy HH:mm'
+              }}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="name">
+              <mat-header-cell
+                *matHeaderCellDef
+                i18n="@@admin.feedback.col.name"
+                >Name</mat-header-cell
+              >
+              <mat-cell *matCellDef="let f">{{ f.name ?? '–' }}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="email">
+              <mat-header-cell
+                *matHeaderCellDef
+                i18n="@@admin.feedback.col.email"
+                >E-Mail</mat-header-cell
+              >
+              <mat-cell *matCellDef="let f">{{ f.email ?? '–' }}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="message">
+              <mat-header-cell
+                *matHeaderCellDef
+                i18n="@@admin.feedback.col.message"
+                >Nachricht</mat-header-cell
+              >
+              <mat-cell *matCellDef="let f" class="message-cell">{{
+                f.message
+              }}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="userId">
+              <mat-header-cell
+                *matHeaderCellDef
+                i18n="@@admin.feedback.col.userId"
+                >User</mat-header-cell
+              >
+              <mat-cell *matCellDef="let f">
+                @if (f.userId) {
+                  <span [matTooltip]="f.userId" class="uid-chip">{{
+                    f.userId.slice(0, 8)
+                  }}</span>
+                } @else {
+                  <mat-icon [matTooltip]="'Anonym'" class="anon-icon"
+                    >person_outline</mat-icon
+                  >
+                }
+              </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="feedbackColumns" />
+            <mat-row *matRowDef="let row; columns: feedbackColumns" />
+          </mat-table>
+        </mat-card>
+      }
     </div>
   `,
   styles: `
@@ -282,6 +381,18 @@ export interface AdminUser {
     mat-table {
       width: 100%;
     }
+    h2 {
+      margin-top: 48px;
+      margin-bottom: 16px;
+    }
+    .message-cell {
+      white-space: pre-wrap;
+      word-break: break-word;
+      max-width: 400px;
+    }
+    .anon-icon {
+      opacity: 0.5;
+    }
   `,
 })
 export class AdminPageComponent {
@@ -311,6 +422,17 @@ export class AdminPageComponent {
     null
   );
 
+  readonly feedbackColumns = [
+    'createdAt',
+    'name',
+    'email',
+    'message',
+    'userId',
+  ];
+  readonly feedbackLoading = signal(false);
+  readonly feedbackError = signal<string | null>(null);
+  readonly feedbackList = signal<AdminFeedback[]>([]);
+
   readonly filteredUsers = computed(() =>
     this.showOnlyAnonymous()
       ? this.users().filter((u) => u.anonymous)
@@ -319,6 +441,7 @@ export class AdminPageComponent {
 
   constructor() {
     this.loadUsers();
+    this.loadFeedback();
   }
 
   async loadUsers(): Promise<void> {
@@ -335,6 +458,23 @@ export class AdminPageComponent {
       this.error.set(err instanceof Error ? err.message : String(err));
     } finally {
       this.loading.set(false);
+    }
+  }
+
+  async loadFeedback(): Promise<void> {
+    this.feedbackLoading.set(true);
+    this.feedbackError.set(null);
+    try {
+      const fn = httpsCallable<void, AdminFeedback[]>(
+        this.functions,
+        'adminListFeedback'
+      );
+      const result = await fn();
+      this.feedbackList.set(result.data);
+    } catch (err) {
+      this.feedbackError.set(err instanceof Error ? err.message : String(err));
+    } finally {
+      this.feedbackLoading.set(false);
     }
   }
 

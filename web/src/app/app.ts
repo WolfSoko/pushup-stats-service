@@ -28,7 +28,7 @@ import {
   RouterOutlet,
 } from '@angular/router';
 import { SwUpdate, VersionDetectedEvent } from '@angular/service-worker';
-import { AuthStore, UserMenuComponent } from '@pu-auth/auth';
+import { AuthService, AuthStore, UserMenuComponent } from '@pu-auth/auth';
 import { filter } from 'rxjs';
 import { SeoService } from './core/seo.service';
 import { UserContextService } from '@pu-auth/auth';
@@ -134,6 +134,7 @@ export class App {
   private readonly seo = inject(SeoService);
   private readonly analytics = inject(Analytics, { optional: true });
   private readonly auth = inject(AuthStore);
+  private readonly authService = inject(AuthService);
   private readonly _snoozeWhenAuthReady = effect(() => {
     const snoozeMinutes = this._pendingSnooze();
     if (snoozeMinutes != null && this.auth.authResolved()) {
@@ -252,21 +253,24 @@ export class App {
 
     ref.afterClosed().subscribe((result: FeedbackResult | undefined) => {
       if (!result) return;
-      const userId = this.user.userIdSafe();
-      this.feedbackService.submit(result, userId).then(
-        () =>
-          this.snackBar.open(
-            $localize`:@@feedback.success:Danke für dein Feedback!`,
-            '',
-            { duration: 4000 }
-          ),
-        () =>
-          this.snackBar.open(
-            $localize`:@@feedback.error:Feedback konnte nicht gesendet werden.`,
-            '',
-            { duration: 4000 }
-          )
-      );
+      // Ensure at least guest auth so Firestore rules are satisfied
+      this.authService.signInGuestIfNeeded().then(() => {
+        const userId = this.user.userIdSafe();
+        this.feedbackService.submit(result, userId).then(
+          () =>
+            this.snackBar.open(
+              $localize`:@@feedback.success:Danke für dein Feedback!`,
+              '',
+              { duration: 4000 }
+            ),
+          () =>
+            this.snackBar.open(
+              $localize`:@@feedback.error:Feedback konnte nicht gesendet werden.`,
+              '',
+              { duration: 4000 }
+            )
+        );
+      });
     });
   }
 

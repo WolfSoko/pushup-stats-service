@@ -5033,6 +5033,48 @@ Deine Position: # ·  Reps        </source>
         <target>Submit</target>
       </segment>
     </unit>
+    <unit id="admin.feedback.title">
+      <segment state="translated">
+        <source>Feedback</source>
+        <target>Feedback</target>
+      </segment>
+    </unit>
+    <unit id="admin.feedback.empty">
+      <segment state="translated">
+        <source>Noch kein Feedback vorhanden.</source>
+        <target>No feedback yet.</target>
+      </segment>
+    </unit>
+    <unit id="admin.feedback.col.date">
+      <segment state="translated">
+        <source>Datum</source>
+        <target>Date</target>
+      </segment>
+    </unit>
+    <unit id="admin.feedback.col.name">
+      <segment state="translated">
+        <source>Name</source>
+        <target>Name</target>
+      </segment>
+    </unit>
+    <unit id="admin.feedback.col.email">
+      <segment state="translated">
+        <source>E-Mail</source>
+        <target>Email</target>
+      </segment>
+    </unit>
+    <unit id="admin.feedback.col.message">
+      <segment state="translated">
+        <source>Nachricht</source>
+        <target>Message</target>
+      </segment>
+    </unit>
+    <unit id="admin.feedback.col.userId">
+      <segment state="translated">
+        <source>User</source>
+        <target>User</target>
+      </segment>
+    </unit>
     <unit id="quickAdd.fab.feedbackAria">
       <segment state="translated">
         <source>Feedback geben</source>
