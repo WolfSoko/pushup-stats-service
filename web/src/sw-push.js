@@ -20,6 +20,10 @@ self.addEventListener('push', (event) => {
   }
 
   const title = data.title || 'PushUp Stats';
+  const defaultActions = [
+    { action: 'snooze', title: '⏰ 30 Min snoozen' },
+    { action: 'log', title: '✅ Eintragen' },
+  ];
   const options = {
     body: data.body || '',
     icon: data.icon || '/icons/icon-192x192.png',
@@ -27,10 +31,7 @@ self.addEventListener('push', (event) => {
     tag: data.tag || 'reminder',
     renotify: data.renotify ?? true,
     data: data.data || {},
-    actions: [
-      { action: 'snooze', title: '⏰ 30 Min snoozen' },
-      { action: 'log', title: '✅ Eintragen' },
-    ],
+    actions: data.actions || defaultActions,
   };
 
   event.waitUntil(self.registration.showNotification(title, options));
@@ -50,7 +51,10 @@ self.addEventListener('notificationclick', (event) => {
         .matchAll({ type: 'window', includeUncontrolled: true })
         .then((clientList) => {
           if (clientList.length > 0) {
-            clientList[0].postMessage({ type: 'SNOOZE_REMINDER', snoozeMinutes: 30 });
+            clientList[0].postMessage({
+              type: 'SNOOZE_REMINDER',
+              snoozeMinutes: 30,
+            });
           } else {
             // App not open — open it with snooze param so it can call the function
             return clients.openWindow(`/${locale}/app?snooze=30`);
