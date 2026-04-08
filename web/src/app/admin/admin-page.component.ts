@@ -320,7 +320,7 @@ interface AdminFeedback {
                     f.userId.slice(0, 8)
                   }}</span>
                 } @else {
-                  <mat-icon [matTooltip]="'Anonym'" class="anon-icon"
+                  <mat-icon [matTooltip]="anonymTooltip" class="anon-icon"
                     >person_outline</mat-icon
                   >
                 }
@@ -411,6 +411,7 @@ export class AdminPageComponent {
   ];
 
   readonly refreshTooltip = $localize`:@@admin.refresh:Neu laden`;
+  readonly anonymTooltip = $localize`:@@admin.feedback.anon:Anonym`;
   readonly loading = signal(false);
   readonly error = signal<string | null>(null);
   readonly users = signal<AdminUser[]>([]);

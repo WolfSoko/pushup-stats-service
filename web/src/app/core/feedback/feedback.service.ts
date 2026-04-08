@@ -12,7 +12,9 @@ export class FeedbackService {
   private readonly firestore = inject(Firestore, { optional: true });
 
   async submit(feedback: FeedbackResult, userId?: string): Promise<void> {
-    if (!this.firestore) return;
+    if (!this.firestore) {
+      throw new Error('Firestore is not available.');
+    }
 
     const feedbackRef = collection(this.firestore, 'feedback');
     await addDoc(feedbackRef, {

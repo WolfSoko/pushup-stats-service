@@ -5075,6 +5075,12 @@ Deine Position: # ·  Reps        </source>
         <target>User</target>
       </segment>
     </unit>
+    <unit id="admin.feedback.anon">
+      <segment state="translated">
+        <source>Anonym</source>
+        <target>Anonymous</target>
+      </segment>
+    </unit>
     <unit id="quickAdd.fab.feedbackAria">
       <segment state="translated">
         <source>Feedback geben</source>

@@ -3503,6 +3503,11 @@
         <source>User</source>
       </segment>
     </unit>
+    <unit id="admin.feedback.anon">
+      <segment>
+        <source>Anonym</source>
+      </segment>
+    </unit>
     <unit id="quickAdd.fab.feedbackAria">
       <notes>
         <note category="location">libs/quick-add/src/lib/quick-add-fab.component.html</note>

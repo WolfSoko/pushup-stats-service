@@ -56,9 +56,20 @@ service cloud.firestore {
     // Feedback — create-only for authenticated users. No read/update/delete from client.
     match /feedback/{feedbackId} {
       allow create: if request.auth != null
+                    && request.resource.data.keys().hasOnly(['message', 'name', 'email', 'userId', 'userAgent', 'createdAt'])
                     && request.resource.data.message is string
                     && request.resource.data.message.size() > 0
-                    && request.resource.data.message.size() <= 5000;
+                    && request.resource.data.message.size() <= 5000
+                    && (request.resource.data.userId == null
+                        || request.resource.data.userId == request.auth.uid)
+                    && (!request.resource.data.keys().hasAny(['name'])
+                        || request.resource.data.name == null
+                        || (request.resource.data.name is string
+                            && request.resource.data.name.size() <= 100))
+                    && (!request.resource.data.keys().hasAny(['email'])
+                        || request.resource.data.email == null
+                        || (request.resource.data.email is string
+                            && request.resource.data.email.size() <= 320));
       allow read, update, delete: if false;
     }
 

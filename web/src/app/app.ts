@@ -254,23 +254,26 @@ export class App {
     ref.afterClosed().subscribe((result: FeedbackResult | undefined) => {
       if (!result) return;
       // Ensure at least guest auth so Firestore rules are satisfied
-      this.authService.signInGuestIfNeeded().then(() => {
-        const userId = this.user.userIdSafe();
-        this.feedbackService.submit(result, userId).then(
-          () =>
-            this.snackBar.open(
-              $localize`:@@feedback.success:Danke für dein Feedback!`,
-              '',
-              { duration: 4000 }
-            ),
-          () =>
-            this.snackBar.open(
-              $localize`:@@feedback.error:Feedback konnte nicht gesendet werden.`,
-              '',
-              { duration: 4000 }
-            )
+      this.authService
+        .signInGuestIfNeeded()
+        .then(() => {
+          const userId = this.user.userIdSafe();
+          return this.feedbackService.submit(result, userId);
+        })
+        .then(() =>
+          this.snackBar.open(
+            $localize`:@@feedback.success:Danke für dein Feedback!`,
+            '',
+            { duration: 4000 }
+          )
+        )
+        .catch(() =>
+          this.snackBar.open(
+            $localize`:@@feedback.error:Feedback konnte nicht gesendet werden.`,
+            '',
+            { duration: 4000 }
+          )
         );
-      });
     });
   }
 
