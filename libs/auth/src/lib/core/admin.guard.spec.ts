@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { PLATFORM_ID } from '@angular/core';
 import {
   ActivatedRouteSnapshot,
-  RouterModule,
+  provideRouter,
   RouterStateSnapshot,
   UrlTree,
 } from '@angular/router';
@@ -21,8 +21,8 @@ describe('adminGuard', () => {
     authStateReady?: () => Promise<void>;
   }) {
     TestBed.configureTestingModule({
-      imports: [RouterModule.forRoot([{ path: '', component: {} as never }])],
       providers: [
+        provideRouter([]),
         { provide: PLATFORM_ID, useValue: opts.platform ?? 'browser' },
         {
           provide: Auth,
@@ -108,8 +108,8 @@ describe('adminGuard', () => {
 
   it('should redirect when Firebase Auth is not available', async () => {
     TestBed.configureTestingModule({
-      imports: [RouterModule.forRoot([{ path: '', component: {} as never }])],
       providers: [
+        provideRouter([]),
         { provide: PLATFORM_ID, useValue: 'browser' },
         { provide: Auth, useValue: null },
       ],
