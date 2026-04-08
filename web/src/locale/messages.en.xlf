@@ -4967,5 +4967,23 @@ Deine Position: # ·  Reps        </source>
         <target>You can delete your user account and all associated data at any time via the application's settings page. After deletion, all personal data will be promptly removed from our systems.</target>
       </segment>
     </unit>
+    <unit id="earlyAccess.text">
+      <segment state="translated">
+        <source>Early Access – pushup-stats.de befindet sich noch im Aufbau. Funktionen und Design können sich jederzeit ändern.</source>
+        <target>Early Access – pushup-stats.de is still under development. Features and design may change at any time.</target>
+      </segment>
+    </unit>
+    <unit id="earlyAccess.dismiss">
+      <segment state="translated">
+        <source>Banner schließen</source>
+        <target>Dismiss banner</target>
+      </segment>
+    </unit>
+    <unit id="landing.earlyAccess.badge">
+      <segment state="translated">
+        <source>Early Access</source>
+        <target>Early Access</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

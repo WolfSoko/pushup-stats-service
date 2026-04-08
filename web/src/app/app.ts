@@ -38,6 +38,7 @@ import { ThemeToggleComponent } from './core/theme';
 import { ReminderOrchestrationService } from './core/reminder-orchestration.service';
 import { AppDataFacade } from './core/app-data.facade';
 import { QuickAddOrchestrationService } from './core/quick-add-orchestration.service';
+import { EarlyAccessBannerComponent } from './core/early-access-banner.component';
 
 @Component({
   selector: 'app-root',
@@ -56,6 +57,7 @@ import { QuickAddOrchestrationService } from './core/quick-add-orchestration.ser
     QuickAddFabComponent,
     ThemeToggleComponent,
     CookieConsentBannerComponent,
+    EarlyAccessBannerComponent,
   ],
   templateUrl: './app.html',
   styleUrl: './app.scss',
