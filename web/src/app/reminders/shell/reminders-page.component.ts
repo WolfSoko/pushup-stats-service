@@ -1,4 +1,4 @@
-import { Component, effect, inject } from '@angular/core';
+import { Component, effect, inject, untracked } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -397,10 +397,13 @@ export class RemindersPageComponent {
   constructor() {
     void this.pushService.init();
 
-    // Sync form draft from global store
+    // Sync form draft from global store — but don't overwrite unsaved edits
+    // (config loads async and can arrive after the user already toggled the form)
     effect(() => {
       const rc = this.reminderStore.config();
-      this.form.syncFromConfig(rc);
+      if (!untracked(() => this.form.dirty())) {
+        this.form.syncFromConfig(rc);
+      }
     });
   }
 
