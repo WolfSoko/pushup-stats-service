@@ -85,11 +85,6 @@ export function shouldSendReminder(
 }
 
 /**
- * Builds a random motivational push notification message
- * @param language Language code ('en' or 'de', defaults to 'de')
- * @returns Random notification message for the language
- */
-/**
  * Default lease timeout: leases older than this are considered stale
  * (the Cloud Function crashed or timed out without releasing).
  */
@@ -112,6 +107,11 @@ export function isLeaseStale(
   return nowMs - leaseMs >= STALE_LEASE_MS;
 }
 
+/**
+ * Builds a random motivational push notification message
+ * @param language Language code ('en' or 'de', defaults to 'de')
+ * @returns Random notification message for the language
+ */
 export function buildNotificationPayload(language?: string): string {
   const messages: Record<string, string[]> = {
     de: [

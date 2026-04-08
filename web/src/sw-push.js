@@ -31,7 +31,7 @@ self.addEventListener('push', (event) => {
     tag: data.tag || 'reminder',
     renotify: data.renotify ?? true,
     data: data.data || {},
-    actions: data.actions || defaultActions,
+    actions: Array.isArray(data.actions) ? data.actions : defaultActions,
   };
 
   event.waitUntil(self.registration.showNotification(title, options));

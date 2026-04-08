@@ -717,6 +717,16 @@ export const dispatchPushReminders = onSchedule(
                 staleLimitMinutes: STALE_LEASE_MS / 60_000,
               }
             );
+            // Clear the stale lease so it doesn't repeat the warning every tick
+            // even when shouldSendReminder returns false (quiet hours, etc.)
+            tx.set(
+              dispatchRef,
+              {
+                inProgress: false,
+                leaseAcquiredAt: admin.firestore.FieldValue.delete(),
+              },
+              { merge: true }
+            );
           }
           if (!shouldSendReminder(reminder, lastSentAt, nowMs, snoozedUntil))
             return;
@@ -813,7 +823,7 @@ export const dispatchPushReminders = onSchedule(
           // lastSentAt write can't leave the lease open for duplicate sends.
           const releaseData: Record<string, unknown> = {
             inProgress: false,
-            leaseAcquiredAt: admin.firestore.FieldValue.deleteField(),
+            leaseAcquiredAt: admin.firestore.FieldValue.delete(),
           };
           if (sentToUser) {
             releaseData['lastSentAt'] =
