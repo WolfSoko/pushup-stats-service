@@ -20,17 +20,27 @@ self.addEventListener('push', (event) => {
   }
 
   const title = data.title || 'PushUp Stats';
+  const rawLocale = String(
+    data.data?.locale || data.locale || ''
+  ).toLowerCase();
+  const isEnglish = rawLocale.startsWith('en');
+  const defaultActions = isEnglish
+    ? [
+        { action: 'snooze', title: '⏰ Snooze 30 min' },
+        { action: 'log', title: '✅ Log push-ups' },
+      ]
+    : [
+        { action: 'snooze', title: '⏰ 30 Min snoozen' },
+        { action: 'log', title: '✅ Eintragen' },
+      ];
   const options = {
     body: data.body || '',
     icon: data.icon || '/icons/icon-192x192.png',
     badge: data.badge || '/icons/badge-72x72.png',
     tag: data.tag || 'reminder',
     renotify: data.renotify ?? true,
-    data: data.data || {},
-    actions: [
-      { action: 'snooze', title: '⏰ 30 Min snoozen' },
-      { action: 'log', title: '✅ Eintragen' },
-    ],
+    data: { ...(data.data || {}), locale: rawLocale || undefined },
+    actions: Array.isArray(data.actions) ? data.actions : defaultActions,
   };
 
   event.waitUntil(self.registration.showNotification(title, options));
@@ -50,7 +60,10 @@ self.addEventListener('notificationclick', (event) => {
         .matchAll({ type: 'window', includeUncontrolled: true })
         .then((clientList) => {
           if (clientList.length > 0) {
-            clientList[0].postMessage({ type: 'SNOOZE_REMINDER', snoozeMinutes: 30 });
+            clientList[0].postMessage({
+              type: 'SNOOZE_REMINDER',
+              snoozeMinutes: 30,
+            });
           } else {
             // App not open — open it with snooze param so it can call the function
             return clients.openWindow(`/${locale}/app?snooze=30`);

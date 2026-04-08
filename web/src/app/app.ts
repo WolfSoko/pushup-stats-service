@@ -3,6 +3,7 @@ import {
   Component,
   computed,
   DestroyRef,
+  effect,
   inject,
   signal,
   viewChild,
@@ -74,6 +75,10 @@ export class App {
   private readonly _initPushBridge = afterNextRender(() => {
     this.pushService.registerSwListener();
   });
+  // Snooze param from SW notification click — must wait for auth to resolve
+  // before calling the Cloud Function, otherwise the request goes out without
+  // a Firebase Auth token and is rejected as 'unauthenticated'.
+  private readonly _pendingSnooze = signal<number | null>(null);
   private readonly _handleSnoozeParam = afterNextRender(() => {
     const snooze = this.activatedRoute.snapshot.queryParamMap.get('snooze');
     const snoozeMinutes = snooze ? parseInt(snooze, 10) : NaN;
@@ -83,12 +88,19 @@ export class App {
         queryParamsHandling: 'merge',
         replaceUrl: true,
       });
-      void this.pushService.snooze(snoozeMinutes);
+      this._pendingSnooze.set(snoozeMinutes);
     }
   });
   private readonly seo = inject(SeoService);
   private readonly analytics = inject(Analytics, { optional: true });
   private readonly auth = inject(AuthStore);
+  private readonly _snoozeWhenAuthReady = effect(() => {
+    const snoozeMinutes = this._pendingSnooze();
+    if (snoozeMinutes != null && this.auth.authResolved()) {
+      this._pendingSnooze.set(null);
+      void this.pushService.snooze(snoozeMinutes);
+    }
+  });
   private readonly reminderOrchestration = inject(ReminderOrchestrationService);
   private readonly quickAdd = inject(QuickAddOrchestrationService);
   private readonly appData = inject(AppDataFacade);

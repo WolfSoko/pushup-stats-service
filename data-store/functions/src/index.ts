@@ -21,7 +21,12 @@ import {
   FALLBACK_QUOTES_EN,
 } from './motivation';
 import { pushSubscriptionId } from './push/subscription';
-import { shouldSendReminder, buildNotificationPayload } from './push/reminders';
+import {
+  shouldSendReminder,
+  buildNotificationPayload,
+  isLeaseStale,
+  STALE_LEASE_MS,
+} from './push/reminders';
 import type { ReminderConfig } from './push/reminders';
 import { parseRecaptchaResponse } from './authentication';
 
@@ -699,11 +704,42 @@ export const dispatchPushReminders = onSchedule(
           const snoozedUntil = dispatchSnap.data()?.snoozedUntil || null;
           const alreadyInProgress = dispatchSnap.data()?.inProgress === true;
 
-          if (alreadyInProgress) return;
+          if (alreadyInProgress) {
+            const leaseAcquiredAt =
+              dispatchSnap.data()?.leaseAcquiredAt ?? null;
+            if (!isLeaseStale(leaseAcquiredAt, nowMs)) {
+              return; // Lease is fresh — another invocation is actively sending
+            }
+            logger.warn(
+              'dispatchPushReminders: stale lease detected, resetting',
+              {
+                uid,
+                staleLimitMinutes: STALE_LEASE_MS / 60_000,
+              }
+            );
+            // Clear the stale lease so it doesn't repeat the warning every tick
+            // even when shouldSendReminder returns false (quiet hours, etc.)
+            tx.set(
+              dispatchRef,
+              {
+                inProgress: false,
+                leaseAcquiredAt: admin.firestore.FieldValue.delete(),
+              },
+              { merge: true }
+            );
+          }
           if (!shouldSendReminder(reminder, lastSentAt, nowMs, snoozedUntil))
             return;
 
-          tx.set(dispatchRef, { uid, inProgress: true }, { merge: true });
+          tx.set(
+            dispatchRef,
+            {
+              uid,
+              inProgress: true,
+              leaseAcquiredAt: admin.firestore.FieldValue.serverTimestamp(),
+            },
+            { merge: true }
+          );
           leaseAcquired = true;
         });
 
@@ -780,22 +816,27 @@ export const dispatchPushReminders = onSchedule(
           }
 
           if (sentToUser) {
-            await dispatchRef.set(
-              {
-                lastSentAt: admin.firestore.FieldValue.serverTimestamp(),
-                uid,
-              },
-              { merge: true }
-            );
             results.sent++;
           }
         } finally {
-          await dispatchRef.update({ inProgress: false }).catch((e: Error) =>
-            logger.warn('dispatchPushReminders: failed to release lease', {
-              uid,
-              err: e.message,
-            })
-          );
+          // Release lease and update lastSentAt atomically so a failed
+          // lastSentAt write can't leave the lease open for duplicate sends.
+          const releaseData: Record<string, unknown> = {
+            inProgress: false,
+            leaseAcquiredAt: admin.firestore.FieldValue.delete(),
+          };
+          if (sentToUser) {
+            releaseData['lastSentAt'] =
+              admin.firestore.FieldValue.serverTimestamp();
+          }
+          await dispatchRef
+            .set(releaseData, { merge: true })
+            .catch((e: Error) =>
+              logger.warn('dispatchPushReminders: failed to release lease', {
+                uid,
+                err: e.message,
+              })
+            );
         }
       } catch (err: unknown) {
         const error = err as Error;

@@ -85,6 +85,29 @@ export function shouldSendReminder(
 }
 
 /**
+ * Default lease timeout: leases older than this are considered stale
+ * (the Cloud Function crashed or timed out without releasing).
+ */
+export const STALE_LEASE_MS = 10 * 60 * 1000;
+
+/**
+ * Checks whether an existing dispatch lease is stale (stuck) and can be
+ * reclaimed. A lease is stale when leaseAcquiredAt is either missing or
+ * older than STALE_LEASE_MS.
+ */
+export function isLeaseStale(
+  leaseAcquiredAt: FirestoreTimestamp | null | undefined,
+  nowMs: number
+): boolean {
+  if (!leaseAcquiredAt) return true; // No timestamp → legacy/missing → treat as stale
+  const leaseMs = leaseAcquiredAt.toMillis
+    ? leaseAcquiredAt.toMillis()
+    : new Date(leaseAcquiredAt as unknown as string).getTime();
+  if (!leaseMs || isNaN(leaseMs)) return true;
+  return nowMs - leaseMs >= STALE_LEASE_MS;
+}
+
+/**
  * Builds a random motivational push notification message
  * @param language Language code ('en' or 'de', defaults to 'de')
  * @returns Random notification message for the language

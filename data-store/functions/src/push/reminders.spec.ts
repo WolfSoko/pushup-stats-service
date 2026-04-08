@@ -2,6 +2,8 @@ import { describe, it, expect } from '@jest/globals';
 import {
   shouldSendReminder,
   buildNotificationPayload,
+  isLeaseStale,
+  STALE_LEASE_MS,
   ReminderConfig,
   FirestoreTimestamp,
 } from './reminders';
@@ -287,6 +289,54 @@ describe('push/reminders', () => {
         );
         expect(allMessages).toContain(message);
       }
+    });
+  });
+
+  describe('isLeaseStale', () => {
+    const mockFirestoreTime = (ms: number): FirestoreTimestamp => ({
+      toMillis: () => ms,
+    });
+
+    const now = Date.now();
+
+    it('returns true when leaseAcquiredAt is null', () => {
+      expect(isLeaseStale(null, now)).toBe(true);
+    });
+
+    it('returns true when leaseAcquiredAt is undefined', () => {
+      expect(isLeaseStale(undefined, now)).toBe(true);
+    });
+
+    it('returns false when lease was acquired recently (1 minute ago)', () => {
+      const oneMinAgo = mockFirestoreTime(now - 60_000);
+      expect(isLeaseStale(oneMinAgo, now)).toBe(false);
+    });
+
+    it('returns false when lease was acquired just under the limit', () => {
+      const justUnder = mockFirestoreTime(now - STALE_LEASE_MS + 1);
+      expect(isLeaseStale(justUnder, now)).toBe(false);
+    });
+
+    it('returns true when lease was acquired exactly at the limit', () => {
+      const atLimit = mockFirestoreTime(now - STALE_LEASE_MS);
+      expect(isLeaseStale(atLimit, now)).toBe(true);
+    });
+
+    it('returns true when lease was acquired long ago (1 hour)', () => {
+      const oneHourAgo = mockFirestoreTime(now - 60 * 60_000);
+      expect(isLeaseStale(oneHourAgo, now)).toBe(true);
+    });
+
+    it('handles timestamp without toMillis (legacy format)', () => {
+      const legacyTimestamp = {
+        toMillis: undefined,
+      } as unknown as FirestoreTimestamp;
+      // No toMillis and invalid string → treated as stale
+      expect(isLeaseStale(legacyTimestamp, now)).toBe(true);
+    });
+
+    it('STALE_LEASE_MS is 10 minutes', () => {
+      expect(STALE_LEASE_MS).toBe(10 * 60 * 1000);
     });
   });
 });
