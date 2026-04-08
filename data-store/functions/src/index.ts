@@ -29,6 +29,7 @@ import {
 } from './push/reminders';
 import type { ReminderConfig } from './push/reminders';
 import { parseRecaptchaResponse } from './authentication';
+import { validateAdminAccess } from './admin/logic';
 
 admin.initializeApp();
 
@@ -202,12 +203,11 @@ export const assessRecaptchaToken = onCall(
 
 // ─── Admin helpers ────────────────────────────────────────────────────────────
 
-async function assertAdmin(uid?: string) {
-  if (!uid) throw new HttpsError('unauthenticated', 'Nicht angemeldet.');
-  const snap = await db.collection('userConfigs').doc(uid).get();
-  if (!snap.exists || snap.data()?.role !== 'admin') {
-    throw new HttpsError('permission-denied', 'Kein Admin-Zugriff.');
-  }
+function assertAdmin(request: {
+  auth?: { uid: string; token: Record<string, unknown> };
+}) {
+  const error = validateAdminAccess(request.auth);
+  if (error) throw new HttpsError(error.code, error.message);
 }
 
 // ─── adminListUsers ────────────────────────────────────────────────────────────
@@ -215,7 +215,7 @@ async function assertAdmin(uid?: string) {
 export const adminListUsers = onCall(
   { region: 'europe-west3', timeoutSeconds: 120 },
   async (request) => {
-    await assertAdmin(request.auth?.uid);
+    assertAdmin(request);
 
     const authUsers: admin.auth.UserRecord[] = [];
     let pageToken: string | undefined;
@@ -270,7 +270,7 @@ export const adminListUsers = onCall(
         pushupCount: pushupCountMap.get(user.uid) || 0,
         lastEntry: lastPushupMap.get(user.uid) || null,
         createdAt: user.metadata.creationTime || null,
-        role: (config as Record<string, unknown>).role || null,
+        role: user.customClaims?.admin === true ? 'admin' : null,
       };
     });
   }
@@ -281,7 +281,7 @@ export const adminListUsers = onCall(
 export const adminDeleteUser = onCall(
   { region: 'europe-west3', timeoutSeconds: 120 },
   async (request) => {
-    await assertAdmin(request.auth?.uid);
+    assertAdmin(request);
 
     const uid = String(request.data?.uid || '').trim();
     const anonymize = Boolean(request.data?.anonymize ?? true);
@@ -304,7 +304,6 @@ export const adminDeleteUser = onCall(
           {
             displayName: 'Gelöschter Benutzer',
             email: null,
-            role: admin.firestore.FieldValue.delete(),
             ui: { hideFromLeaderboard: true },
           },
           { merge: true }
@@ -339,7 +338,7 @@ export const adminDeleteUser = onCall(
 export const adminBulkDeleteInactiveAnonymous = onCall(
   { region: 'europe-west3', timeoutSeconds: 300 },
   async (request) => {
-    await assertAdmin(request.auth?.uid);
+    assertAdmin(request);
 
     const inactiveDays = Number(request.data?.inactiveDays ?? 20);
     const cutoff = new Date(Date.now() - inactiveDays * 24 * 60 * 60 * 1000)
@@ -420,7 +419,7 @@ export const adminBulkDeleteInactiveAnonymous = onCall(
 export const adminListFeedback = onCall(
   { region: 'europe-west3', timeoutSeconds: 60 },
   async (request) => {
-    await assertAdmin(request.auth?.uid);
+    assertAdmin(request);
 
     const snap = await db
       .collection('feedback')
@@ -1130,7 +1129,7 @@ export const updateUserStatsOnPushupWrite = onDocumentWritten(
 export const rebuildUserStats = onCall(
   { region: 'europe-west3', timeoutSeconds: 540 },
   async (request) => {
-    await assertAdmin(request.auth?.uid);
+    assertAdmin(request);
 
     const targetUserId = request.data?.userId
       ? String(request.data.userId).trim()

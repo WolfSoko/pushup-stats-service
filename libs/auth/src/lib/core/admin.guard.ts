@@ -1,9 +1,7 @@
 import { isPlatformServer } from '@angular/common';
 import { inject, PLATFORM_ID } from '@angular/core';
 import { Auth } from '@angular/fire/auth';
-import { doc, Firestore, getDoc } from '@angular/fire/firestore';
 import { Router, type CanActivateFn, type UrlTree } from '@angular/router';
-import { UserContextService } from './user-context.service';
 
 export const adminGuard: CanActivateFn = async (): Promise<
   boolean | UrlTree
@@ -15,25 +13,26 @@ export const adminGuard: CanActivateFn = async (): Promise<
   }
 
   const firebaseAuth = inject(Auth, { optional: true });
-  const firestore = inject(Firestore, { optional: true });
   const router = inject(Router);
-  const userContext = inject(UserContextService);
 
-  if (firebaseAuth) {
-    await firebaseAuth.authStateReady();
-  }
-
-  const uid = userContext.userIdSafe();
-  if (!uid || !firestore) {
+  if (!firebaseAuth) {
     return router.createUrlTree(['/']);
   }
 
-  // Load userConfig directly to get the authoritative role value
-  const snap = await getDoc(doc(firestore, 'userConfigs', uid));
-  const role = snap.exists() ? snap.data()?.['role'] : undefined;
+  await firebaseAuth.authStateReady();
 
-  if (role === 'admin') {
-    return true;
+  const user = firebaseAuth.currentUser;
+  if (!user) {
+    return router.createUrlTree(['/']);
+  }
+
+  try {
+    const tokenResult = await user.getIdTokenResult();
+    if (tokenResult.claims['admin'] === true) {
+      return true;
+    }
+  } catch {
+    // Token refresh failed — deny access safely
   }
 
   return router.createUrlTree(['/']);

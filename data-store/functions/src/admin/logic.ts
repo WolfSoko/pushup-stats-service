@@ -3,6 +3,24 @@
  * Pure validation and data transformation utilities
  */
 
+/**
+ * Validates that a request comes from an authenticated admin user
+ * by checking the `admin` custom claim on the auth token.
+ * Returns an error object if validation fails, or null if the request is authorized.
+ */
+export function validateAdminAccess(auth?: {
+  uid: string;
+  token: Record<string, unknown>;
+}): { code: 'unauthenticated' | 'permission-denied'; message: string } | null {
+  if (!auth?.uid) {
+    return { code: 'unauthenticated', message: 'Nicht angemeldet.' };
+  }
+  if (auth.token.admin !== true) {
+    return { code: 'permission-denied', message: 'Kein Admin-Zugriff.' };
+  }
+  return null;
+}
+
 export interface UserAccountInfo {
   uid: string;
   displayName: string | null;
@@ -31,9 +49,12 @@ export interface AdminDeletePayload {
  * @param data Payload from admin delete request
  * @returns Validation result with error if invalid
  */
-export function validateDeleteUserPayload(
-  data: unknown
-): { valid: boolean; uid?: string; anonymize?: boolean; error?: string } {
+export function validateDeleteUserPayload(data: unknown): {
+  valid: boolean;
+  uid?: string;
+  anonymize?: boolean;
+  error?: string;
+} {
   if (!data || typeof data !== 'object') {
     return { valid: false, error: 'payload must be an object' };
   }

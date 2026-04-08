@@ -1,7 +1,68 @@
 import { describe, it, expect } from '@jest/globals';
-import { validateDeleteUserPayload, isDemoUser, batchArray } from './logic';
+import {
+  validateAdminAccess,
+  validateDeleteUserPayload,
+  isDemoUser,
+  batchArray,
+} from './logic';
 
 describe('admin/logic', () => {
+  describe('validateAdminAccess', () => {
+    it('returns null for admin user', () => {
+      const result = validateAdminAccess({
+        uid: 'user1',
+        token: { admin: true },
+      });
+      expect(result).toBeNull();
+    });
+
+    it('rejects unauthenticated request (undefined auth)', () => {
+      const result = validateAdminAccess(undefined);
+      expect(result).toEqual({
+        code: 'unauthenticated',
+        message: 'Nicht angemeldet.',
+      });
+    });
+
+    it('rejects user without admin claim', () => {
+      const result = validateAdminAccess({ uid: 'user1', token: {} });
+      expect(result).toEqual({
+        code: 'permission-denied',
+        message: 'Kein Admin-Zugriff.',
+      });
+    });
+
+    it('rejects user with admin claim set to string "true"', () => {
+      const result = validateAdminAccess({
+        uid: 'user1',
+        token: { admin: 'true' },
+      });
+      expect(result).toEqual({
+        code: 'permission-denied',
+        message: 'Kein Admin-Zugriff.',
+      });
+    });
+
+    it('rejects user with admin claim set to false', () => {
+      const result = validateAdminAccess({
+        uid: 'user1',
+        token: { admin: false },
+      });
+      expect(result).toEqual({
+        code: 'permission-denied',
+        message: 'Kein Admin-Zugriff.',
+      });
+    });
+
+    it('rejects auth with empty uid', () => {
+      const result = validateAdminAccess({ uid: '', token: { admin: true } });
+      expect(result).toEqual({
+        code: 'unauthenticated',
+        message: 'Nicht angemeldet.',
+      });
+    });
+  });
+
   describe('validateDeleteUserPayload', () => {
     it('validates correct payload', () => {
       const result = validateDeleteUserPayload({ uid: 'user123' });
@@ -16,7 +77,10 @@ describe('admin/logic', () => {
     });
 
     it('respects explicit anonymize false', () => {
-      const result = validateDeleteUserPayload({ uid: 'user123', anonymize: false });
+      const result = validateDeleteUserPayload({
+        uid: 'user123',
+        anonymize: false,
+      });
       expect(result.anonymize).toBe(false);
     });
 
@@ -63,7 +127,11 @@ describe('admin/logic', () => {
     it('batches array into chunks', () => {
       const array = [1, 2, 3, 4, 5, 6];
       const batches = batchArray(array, 2);
-      expect(batches).toEqual([[1, 2], [3, 4], [5, 6]]);
+      expect(batches).toEqual([
+        [1, 2],
+        [3, 4],
+        [5, 6],
+      ]);
     });
 
     it('handles remainder batch', () => {
