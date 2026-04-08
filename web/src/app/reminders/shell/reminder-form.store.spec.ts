@@ -47,6 +47,7 @@ describe('ReminderFormStore', () => {
     expect(store.intervalMinutes()).toBe(60);
     expect(store.language()).toBe('de');
     expect(store.quietHours()).toEqual([]);
+    expect(store.dirty()).toBe(false);
   });
 
   it('should mark dirty when user changes enabled', () => {
