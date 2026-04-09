@@ -41,6 +41,8 @@ interface AdminFeedback {
   userId: string | null;
   createdAt: string | null;
   userAgent: string | null;
+  read: boolean;
+  githubIssueUrl: string | null;
 }
 
 @Component({
@@ -327,8 +329,56 @@ interface AdminFeedback {
               </mat-cell>
             </ng-container>
 
+            <ng-container matColumnDef="feedbackActions">
+              <mat-header-cell *matHeaderCellDef></mat-header-cell>
+              <mat-cell *matCellDef="let f" class="feedback-actions-cell">
+                <button
+                  mat-icon-button
+                  [matTooltip]="f.read ? markUnreadTooltip : markReadTooltip"
+                  [disabled]="isFeedbackActionLoading(f.id)"
+                  (click)="markFeedbackRead(f, !f.read)"
+                >
+                  <mat-icon>{{
+                    f.read ? 'mark_email_read' : 'mark_email_unread'
+                  }}</mat-icon>
+                </button>
+                @if (f.githubIssueUrl) {
+                  <a
+                    mat-icon-button
+                    [href]="f.githubIssueUrl"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    [matTooltip]="openIssueTooltip"
+                  >
+                    <mat-icon>open_in_new</mat-icon>
+                  </a>
+                } @else {
+                  <button
+                    mat-icon-button
+                    [matTooltip]="createIssueTooltip"
+                    [disabled]="isFeedbackActionLoading(f.id)"
+                    (click)="createGithubIssue(f)"
+                  >
+                    <mat-icon>bug_report</mat-icon>
+                  </button>
+                }
+                <button
+                  mat-icon-button
+                  color="warn"
+                  [matTooltip]="deleteFeedbackTooltip"
+                  [disabled]="isFeedbackActionLoading(f.id)"
+                  (click)="deleteFeedback(f)"
+                >
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </mat-cell>
+            </ng-container>
+
             <mat-header-row *matHeaderRowDef="feedbackColumns" />
-            <mat-row *matRowDef="let row; columns: feedbackColumns" />
+            <mat-row
+              *matRowDef="let row; columns: feedbackColumns"
+              [class.feedback-read]="row.read"
+            />
           </mat-table>
         </mat-card>
       }
@@ -393,6 +443,14 @@ interface AdminFeedback {
     .anon-icon {
       opacity: 0.5;
     }
+    .feedback-read {
+      opacity: 0.55;
+    }
+    .feedback-actions-cell {
+      display: flex;
+      gap: 4px;
+      justify-content: flex-end;
+    }
   `,
 })
 export class AdminPageComponent {
@@ -412,6 +470,11 @@ export class AdminPageComponent {
 
   readonly refreshTooltip = $localize`:@@admin.refresh:Neu laden`;
   readonly anonymTooltip = $localize`:@@admin.feedback.anon:Anonym`;
+  readonly markReadTooltip = $localize`:@@admin.feedback.markRead:Als gelesen markieren`;
+  readonly markUnreadTooltip = $localize`:@@admin.feedback.markUnread:Als ungelesen markieren`;
+  readonly createIssueTooltip = $localize`:@@admin.feedback.createIssue:GitHub-Issue erstellen`;
+  readonly openIssueTooltip = $localize`:@@admin.feedback.openIssue:GitHub-Issue öffnen`;
+  readonly deleteFeedbackTooltip = $localize`:@@admin.feedback.delete:Feedback löschen`;
   readonly loading = signal(false);
   readonly error = signal<string | null>(null);
   readonly users = signal<AdminUser[]>([]);
@@ -429,10 +492,12 @@ export class AdminPageComponent {
     'email',
     'message',
     'userId',
+    'feedbackActions',
   ];
   readonly feedbackLoading = signal(false);
   readonly feedbackError = signal<string | null>(null);
   readonly feedbackList = signal<AdminFeedback[]>([]);
+  readonly feedbackActionLoading = signal<Set<string>>(new Set());
 
   readonly filteredUsers = computed(() =>
     this.showOnlyAnonymous()
@@ -476,6 +541,77 @@ export class AdminPageComponent {
       this.feedbackError.set(err instanceof Error ? err.message : String(err));
     } finally {
       this.feedbackLoading.set(false);
+    }
+  }
+
+  isFeedbackActionLoading(id: string): boolean {
+    return this.feedbackActionLoading().has(id);
+  }
+
+  private setFeedbackLoading(id: string, loading: boolean): void {
+    this.feedbackActionLoading.update((s) => {
+      const next = new Set(s);
+      if (loading) {
+        next.add(id);
+      } else {
+        next.delete(id);
+      }
+      return next;
+    });
+  }
+
+  async markFeedbackRead(
+    feedback: AdminFeedback,
+    read: boolean
+  ): Promise<void> {
+    this.setFeedbackLoading(feedback.id, true);
+    try {
+      const fn = httpsCallable(this.functions, 'adminMarkFeedbackRead');
+      await fn({ feedbackId: feedback.id, read });
+      this.feedbackList.update((list) =>
+        list.map((f) => (f.id === feedback.id ? { ...f, read } : f))
+      );
+    } catch (err) {
+      this.feedbackError.set(err instanceof Error ? err.message : String(err));
+    } finally {
+      this.setFeedbackLoading(feedback.id, false);
+    }
+  }
+
+  async deleteFeedback(feedback: AdminFeedback): Promise<void> {
+    this.setFeedbackLoading(feedback.id, true);
+    try {
+      const fn = httpsCallable(this.functions, 'adminDeleteFeedback');
+      await fn({ feedbackId: feedback.id });
+      this.feedbackList.update((list) =>
+        list.filter((f) => f.id !== feedback.id)
+      );
+    } catch (err) {
+      this.feedbackError.set(err instanceof Error ? err.message : String(err));
+    } finally {
+      this.setFeedbackLoading(feedback.id, false);
+    }
+  }
+
+  async createGithubIssue(feedback: AdminFeedback): Promise<void> {
+    this.setFeedbackLoading(feedback.id, true);
+    try {
+      const fn = httpsCallable<unknown, { ok: boolean; issueUrl: string }>(
+        this.functions,
+        'adminCreateGithubIssue'
+      );
+      const result = await fn({ feedbackId: feedback.id });
+      this.feedbackList.update((list) =>
+        list.map((f) =>
+          f.id === feedback.id
+            ? { ...f, githubIssueUrl: result.data.issueUrl }
+            : f
+        )
+      );
+    } catch (err) {
+      this.feedbackError.set(err instanceof Error ? err.message : String(err));
+    } finally {
+      this.setFeedbackLoading(feedback.id, false);
     }
   }
 
