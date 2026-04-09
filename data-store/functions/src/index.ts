@@ -41,6 +41,7 @@ admin.initializeApp();
 const db = admin.firestore();
 const TZ = 'Europe/Berlin';
 const DEMO_USER_ID = 'aqgzwSbhudRLrluz1zBSW3XQx013';
+const GITHUB_TOKEN = defineSecret('GITHUB_TOKEN');
 
 const recaptchaClient = new RecaptchaEnterpriseServiceClient();
 const RECAPTCHA_PROJECT_ID = 'pushup-stats';
@@ -798,7 +799,6 @@ export const deletePushSubscription = onCall(
 
 const VAPID_PRIVATE_KEY = defineSecret('VAPID_PRIVATE_KEY');
 const VAPID_PUBLIC_KEY = defineSecret('VAPID_PUBLIC_KEY');
-const GITHUB_TOKEN = defineSecret('GITHUB_TOKEN');
 
 export const dispatchPushReminders = onSchedule(
   {
