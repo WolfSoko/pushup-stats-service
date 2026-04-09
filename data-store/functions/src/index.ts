@@ -462,10 +462,13 @@ export const adminMarkFeedbackRead = onCall(
       throw new HttpsError('invalid-argument', validation.error);
     }
 
-    await db
-      .collection('feedback')
-      .doc(validation.feedbackId)
-      .update({ read: validation.read });
+    const feedbackRef = db.collection('feedback').doc(validation.feedbackId);
+    const feedbackSnap = await feedbackRef.get();
+    if (!feedbackSnap.exists) {
+      throw new HttpsError('not-found', 'Feedback nicht gefunden.');
+    }
+
+    await feedbackRef.update({ read: validation.read });
 
     return { ok: true };
   }
@@ -505,7 +508,7 @@ export const adminCreateGithubIssue = onCall(
     }
 
     const token = GITHUB_TOKEN.value();
-    if (!token) {
+    if (!token || token.startsWith('placeholder')) {
       throw new HttpsError(
         'failed-precondition',
         'GITHUB_TOKEN secret ist nicht konfiguriert.'
@@ -519,28 +522,47 @@ export const adminCreateGithubIssue = onCall(
     }
 
     const d = doc.data() ?? {};
+
+    // Idempotency: return existing issue URL without creating a duplicate
+    if (d.githubIssueUrl) {
+      return { ok: true, issueUrl: d.githubIssueUrl as string };
+    }
+
     const createdAt = d.createdAt?.toDate?.()?.toISOString?.() ?? null;
     const { title, body } = buildGithubIssueBody({
-      name: d.name ?? null,
-      email: d.email ?? null,
-      message: d.message ?? '',
+      name: (d.name as string) ?? null,
+      message: (d.message as string) ?? '',
       createdAt,
-      userId: d.userId ?? null,
+      userId: (d.userId as string) ?? null,
     });
 
-    const response = await fetch(
-      `https://api.github.com/repos/${GITHUB_REPO_OWNER}/${GITHUB_REPO_NAME}/issues`,
-      {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${token}`,
-          Accept: 'application/vnd.github+json',
-          'Content-Type': 'application/json',
-          'X-GitHub-Api-Version': '2022-11-28',
-        },
-        body: JSON.stringify({ title, body, labels: ['feedback'] }),
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10_000);
+
+    let response: Response;
+    try {
+      response = await fetch(
+        `https://api.github.com/repos/${GITHUB_REPO_OWNER}/${GITHUB_REPO_NAME}/issues`,
+        {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Accept: 'application/vnd.github+json',
+            'Content-Type': 'application/json',
+            'X-GitHub-Api-Version': '2022-11-28',
+          },
+          body: JSON.stringify({ title, body, labels: ['feedback'] }),
+          signal: controller.signal,
+        }
+      );
+    } catch (err) {
+      clearTimeout(timeoutId);
+      if (err instanceof Error && err.name === 'AbortError') {
+        throw new HttpsError('deadline-exceeded', 'GitHub API Timeout.');
       }
-    );
+      throw err;
+    }
+    clearTimeout(timeoutId);
 
     if (!response.ok) {
       const text = await response.text();

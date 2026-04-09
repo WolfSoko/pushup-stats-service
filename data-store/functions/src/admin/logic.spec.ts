@@ -7,6 +7,7 @@ import {
   validateFeedbackId,
   validateMarkFeedbackReadPayload,
   buildGithubIssueBody,
+  escapeMarkdown,
 } from './logic';
 
 describe('admin/logic', () => {
@@ -209,27 +210,44 @@ describe('admin/logic', () => {
     });
   });
 
+  describe('escapeMarkdown', () => {
+    it('escapes @ to prevent mentions', () => {
+      expect(escapeMarkdown('alice@example.com')).toBe('alice&#64;example.com');
+    });
+
+    it('escapes < and >', () => {
+      expect(escapeMarkdown('<script>alert(1)</script>')).toBe(
+        '&lt;script&gt;alert(1)&lt;/script&gt;'
+      );
+    });
+
+    it('returns plain text unchanged', () => {
+      expect(escapeMarkdown('Hello World')).toBe('Hello World');
+    });
+
+    it('escapes multiple occurrences', () => {
+      expect(escapeMarkdown('@a @b')).toBe('&#64;a &#64;b');
+    });
+  });
+
   describe('buildGithubIssueBody', () => {
     it('builds title and body with all fields present', () => {
       const { title, body } = buildGithubIssueBody({
         name: 'Alice',
-        email: 'alice@example.com',
         message: 'This is great feedback!',
         createdAt: '2026-04-09T10:00:00.000Z',
         userId: 'uid_abc12345',
       });
       expect(title).toBe('Feedback: This is great feedback!');
       expect(body).toContain('Alice');
-      expect(body).toContain('alice@example.com');
       expect(body).toContain('2026-04-09T10:00:00.000Z');
       expect(body).toContain('uid_abc1...');
       expect(body).toContain('This is great feedback!');
     });
 
-    it('uses Anonym when name and email are null', () => {
+    it('uses Anonym when name is null and userId is null', () => {
       const { title, body } = buildGithubIssueBody({
         name: null,
-        email: null,
         message: 'Hello',
         createdAt: null,
         userId: null,
@@ -243,7 +261,6 @@ describe('admin/logic', () => {
       const longMessage = 'A'.repeat(100);
       const { title } = buildGithubIssueBody({
         name: null,
-        email: null,
         message: longMessage,
         createdAt: null,
         userId: null,
@@ -256,7 +273,6 @@ describe('admin/logic', () => {
       const message = 'B'.repeat(80);
       const { title } = buildGithubIssueBody({
         name: null,
-        email: null,
         message,
         createdAt: null,
         userId: null,
@@ -267,12 +283,32 @@ describe('admin/logic', () => {
     it('truncates userId to 8 chars with ellipsis', () => {
       const { body } = buildGithubIssueBody({
         name: null,
-        email: null,
         message: 'test',
         createdAt: null,
         userId: 'verylonguserid123',
       });
       expect(body).toContain('verylong...');
+    });
+
+    it('escapes @ in name to prevent GitHub mentions', () => {
+      const { body } = buildGithubIssueBody({
+        name: '@attacker',
+        message: 'test',
+        createdAt: null,
+        userId: null,
+      });
+      expect(body).toContain('&#64;attacker');
+      expect(body).not.toContain('@attacker');
+    });
+
+    it('normalizes whitespace in title', () => {
+      const { title } = buildGithubIssueBody({
+        name: null,
+        message: 'hello   world\nnewline',
+        createdAt: null,
+        userId: null,
+      });
+      expect(title).toBe('Feedback: hello world newline');
     });
   });
 

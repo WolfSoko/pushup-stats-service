@@ -128,39 +128,53 @@ export interface GithubIssueParts {
 
 export interface FeedbackForIssue {
   name: string | null;
-  email: string | null;
   message: string;
   createdAt: string | null;
   userId: string | null;
 }
 
 /**
+ * Escapes user-controlled text to prevent @mentions and Markdown injection
+ * in GitHub issue bodies.
+ */
+export function escapeMarkdown(text: string): string {
+  return text
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/@/g, '&#64;');
+}
+
+/**
  * Builds the GitHub issue title and body from a feedback document.
+ * Email is intentionally omitted to avoid publishing PII.
  */
 export function buildGithubIssueBody(
   feedback: FeedbackForIssue
 ): GithubIssueParts {
-  const name = feedback.name ?? 'Anonym';
-  const email = feedback.email ?? '–';
+  const name = escapeMarkdown(feedback.name ?? 'Anonym');
   const createdAt = feedback.createdAt ?? 'unbekannt';
   const userId = feedback.userId
-    ? feedback.userId.slice(0, 8) + '...'
+    ? escapeMarkdown(feedback.userId.slice(0, 8) + '...')
     : 'Anonym';
 
-  const truncatedMessage = feedback.message.slice(0, 80);
-  const ellipsis = feedback.message.length > 80 ? '…' : '';
+  // Normalize whitespace so the title stays on one line
+  const normalizedMessage = feedback.message.replace(/\s+/g, ' ').trim();
+  const truncatedMessage = normalizedMessage.slice(0, 80);
+  const ellipsis = normalizedMessage.length > 80 ? '…' : '';
   const title = `Feedback: ${truncatedMessage}${ellipsis}`;
+
+  const escapedMessage = escapeMarkdown(feedback.message);
 
   const body = [
     '## Feedback',
     '',
-    `**Von:** ${name} (${email})`,
+    `**Von:** ${name}`,
     `**Datum:** ${createdAt}`,
     `**User:** ${userId}`,
     '',
     '### Nachricht',
     '',
-    feedback.message,
+    escapedMessage,
   ].join('\n');
 
   return { title, body };

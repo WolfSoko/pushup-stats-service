@@ -141,7 +141,14 @@ if [[ "$DRY_RUN" == false ]]; then
 
   create_secret_if_missing "VAPID_PRIVATE_KEY" "$VAPID_PRIVATE"
   create_secret_if_missing "VAPID_PUBLIC_KEY" "$VAPID_PUBLIC"
-  create_secret_if_missing "GITHUB_TOKEN" "placeholder-not-configured"
+
+  # GITHUB_TOKEN: only create if absent — never overwrite a real token
+  if gcloud secrets describe "GITHUB_TOKEN" --project="$PROJECT_ID" &>/dev/null; then
+    echo "  Secret GITHUB_TOKEN already exists, skipping (not overwriting real token)."
+  else
+    echo -n "placeholder-not-configured" | \
+      gcloud secrets create "GITHUB_TOKEN" --data-file=- --project="$PROJECT_ID"
+  fi
 
   echo
   echo "  ⚠  Update web/src/env/firebase-runtime.staging.ts vapidPublicKey:"

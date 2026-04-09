@@ -268,6 +268,9 @@ interface AdminFeedback {
       } @else if (feedbackList().length === 0) {
         <p i18n="@@admin.feedback.empty">Noch kein Feedback vorhanden.</p>
       } @else {
+        @if (feedbackActionError()) {
+          <p class="error-text">{{ feedbackActionError() }}</p>
+        }
         <mat-card>
           <mat-table [dataSource]="feedbackList()">
             <ng-container matColumnDef="createdAt">
@@ -334,6 +337,9 @@ interface AdminFeedback {
               <mat-cell *matCellDef="let f" class="feedback-actions-cell">
                 <button
                   mat-icon-button
+                  [attr.aria-label]="
+                    f.read ? markUnreadTooltip : markReadTooltip
+                  "
                   [matTooltip]="f.read ? markUnreadTooltip : markReadTooltip"
                   [disabled]="isFeedbackActionLoading(f.id)"
                   (click)="markFeedbackRead(f, !f.read)"
@@ -348,6 +354,7 @@ interface AdminFeedback {
                     [href]="f.githubIssueUrl"
                     target="_blank"
                     rel="noopener noreferrer"
+                    [attr.aria-label]="openIssueTooltip"
                     [matTooltip]="openIssueTooltip"
                   >
                     <mat-icon>open_in_new</mat-icon>
@@ -355,6 +362,7 @@ interface AdminFeedback {
                 } @else {
                   <button
                     mat-icon-button
+                    [attr.aria-label]="createIssueTooltip"
                     [matTooltip]="createIssueTooltip"
                     [disabled]="isFeedbackActionLoading(f.id)"
                     (click)="createGithubIssue(f)"
@@ -365,6 +373,7 @@ interface AdminFeedback {
                 <button
                   mat-icon-button
                   color="warn"
+                  [attr.aria-label]="deleteFeedbackTooltip"
                   [matTooltip]="deleteFeedbackTooltip"
                   [disabled]="isFeedbackActionLoading(f.id)"
                   (click)="deleteFeedback(f)"
@@ -498,6 +507,7 @@ export class AdminPageComponent {
   readonly feedbackError = signal<string | null>(null);
   readonly feedbackList = signal<AdminFeedback[]>([]);
   readonly feedbackActionLoading = signal<Set<string>>(new Set());
+  readonly feedbackActionError = signal<string | null>(null);
 
   readonly filteredUsers = computed(() =>
     this.showOnlyAnonymous()
@@ -565,6 +575,7 @@ export class AdminPageComponent {
     read: boolean
   ): Promise<void> {
     this.setFeedbackLoading(feedback.id, true);
+    this.feedbackActionError.set(null);
     try {
       const fn = httpsCallable(this.functions, 'adminMarkFeedbackRead');
       await fn({ feedbackId: feedback.id, read });
@@ -572,7 +583,9 @@ export class AdminPageComponent {
         list.map((f) => (f.id === feedback.id ? { ...f, read } : f))
       );
     } catch (err) {
-      this.feedbackError.set(err instanceof Error ? err.message : String(err));
+      this.feedbackActionError.set(
+        err instanceof Error ? err.message : String(err)
+      );
     } finally {
       this.setFeedbackLoading(feedback.id, false);
     }
@@ -580,6 +593,7 @@ export class AdminPageComponent {
 
   async deleteFeedback(feedback: AdminFeedback): Promise<void> {
     this.setFeedbackLoading(feedback.id, true);
+    this.feedbackActionError.set(null);
     try {
       const fn = httpsCallable(this.functions, 'adminDeleteFeedback');
       await fn({ feedbackId: feedback.id });
@@ -587,7 +601,9 @@ export class AdminPageComponent {
         list.filter((f) => f.id !== feedback.id)
       );
     } catch (err) {
-      this.feedbackError.set(err instanceof Error ? err.message : String(err));
+      this.feedbackActionError.set(
+        err instanceof Error ? err.message : String(err)
+      );
     } finally {
       this.setFeedbackLoading(feedback.id, false);
     }
@@ -595,6 +611,7 @@ export class AdminPageComponent {
 
   async createGithubIssue(feedback: AdminFeedback): Promise<void> {
     this.setFeedbackLoading(feedback.id, true);
+    this.feedbackActionError.set(null);
     try {
       const fn = httpsCallable<unknown, { ok: boolean; issueUrl: string }>(
         this.functions,
@@ -609,7 +626,9 @@ export class AdminPageComponent {
         )
       );
     } catch (err) {
-      this.feedbackError.set(err instanceof Error ? err.message : String(err));
+      this.feedbackActionError.set(
+        err instanceof Error ? err.message : String(err)
+      );
     } finally {
       this.setFeedbackLoading(feedback.id, false);
     }
