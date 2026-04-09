@@ -49,6 +49,14 @@ jobs:
       - name: Authenticate Firebase CLI
         run: |
           echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT_PUSHUP_STATS_STAGING }}' > "$RUNNER_TEMP/firebase-sa.json"
+      - name: Ensure GITHUB_TOKEN secret exists in staging
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ runner.temp }}/firebase-sa.json
+        run: |
+          gcloud auth activate-service-account --key-file="$GOOGLE_APPLICATION_CREDENTIALS" --quiet
+          gcloud secrets describe GITHUB_TOKEN --project=pushup-stats-staging-867b7 2>/dev/null || \
+            echo -n "placeholder-not-configured" | \
+            gcloud secrets create GITHUB_TOKEN --data-file=- --project=pushup-stats-staging-867b7 --quiet
       - name: Deploy Cloud Functions + Firestore rules & indexes to staging
         run: pnpm exec firebase deploy --only functions,firestore --project staging --force
         working-directory: data-store

@@ -82,6 +82,105 @@ export function isDemoUser(uid: string, demoUserId: string): boolean {
 }
 
 /**
+ * Validates that a feedbackId is present in the payload.
+ * Returns { valid: true, feedbackId } on success, or { valid: false, error } on failure.
+ */
+export function validateFeedbackId(
+  data: unknown
+): { valid: true; feedbackId: string } | { valid: false; error: string } {
+  if (!data || typeof data !== 'object') {
+    return { valid: false, error: 'payload must be an object' };
+  }
+  const obj = data as Record<string, unknown>;
+  if (
+    typeof obj.feedbackId !== 'string' ||
+    obj.feedbackId.trim().length === 0
+  ) {
+    return { valid: false, error: 'feedbackId missing or empty' };
+  }
+  return { valid: true, feedbackId: obj.feedbackId.trim() };
+}
+
+/**
+ * Validates the payload for the adminMarkFeedbackRead function.
+ * Requires feedbackId; read defaults to true if omitted.
+ */
+export function validateMarkFeedbackReadPayload(
+  data: unknown
+):
+  | { valid: true; feedbackId: string; read: boolean }
+  | { valid: false; error: string } {
+  const idResult = validateFeedbackId(data);
+  if (!idResult.valid) return idResult;
+
+  const obj = data as Record<string, unknown>;
+  if (obj.read !== undefined && typeof obj.read !== 'boolean') {
+    return { valid: false, error: 'read must be boolean' };
+  }
+  const read = obj.read !== false;
+  return { valid: true, feedbackId: idResult.feedbackId, read };
+}
+
+export interface GithubIssueParts {
+  title: string;
+  body: string;
+}
+
+export interface FeedbackForIssue {
+  name: string | null;
+  message: string;
+  createdAt: string | null;
+  userId: string | null;
+}
+
+/**
+ * Escapes user-controlled text to prevent @mentions and Markdown injection
+ * in GitHub issue bodies.
+ */
+export function escapeMarkdown(text: string): string {
+  return text
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/@/g, '&#64;');
+}
+
+/**
+ * Builds the GitHub issue title and body from a feedback document.
+ * Email is intentionally omitted to avoid publishing PII.
+ */
+export function buildGithubIssueBody(
+  feedback: FeedbackForIssue
+): GithubIssueParts {
+  const name = escapeMarkdown(feedback.name ?? 'Anonym');
+  const createdAt = feedback.createdAt ?? 'unbekannt';
+  const userId = feedback.userId
+    ? escapeMarkdown(feedback.userId.slice(0, 8) + '...')
+    : 'Anonym';
+
+  // Normalize whitespace so the title stays on one line
+  const normalizedMessage = feedback.message.replace(/\s+/g, ' ').trim();
+  const truncatedMessage = normalizedMessage.slice(0, 80);
+  const ellipsis = normalizedMessage.length > 80 ? '…' : '';
+  const title = `Feedback: ${truncatedMessage}${ellipsis}`;
+
+  const escapedMessage = escapeMarkdown(feedback.message);
+
+  const body = [
+    '## Feedback',
+    '',
+    `**Von:** ${name}`,
+    `**Datum:** ${createdAt}`,
+    `**User:** ${userId}`,
+    '',
+    '### Nachricht',
+    '',
+    escapedMessage,
+  ].join('\n');
+
+  return { title, body };
+}
+
+/**
  * Batches array into chunks for processing
  * @param array Array to batch
  * @param size Batch size

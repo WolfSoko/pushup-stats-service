@@ -142,13 +142,25 @@ if [[ "$DRY_RUN" == false ]]; then
   create_secret_if_missing "VAPID_PRIVATE_KEY" "$VAPID_PRIVATE"
   create_secret_if_missing "VAPID_PUBLIC_KEY" "$VAPID_PUBLIC"
 
+  # GITHUB_TOKEN: only create if absent — never overwrite a real token
+  if gcloud secrets describe "GITHUB_TOKEN" --project="$PROJECT_ID" &>/dev/null; then
+    echo "  Secret GITHUB_TOKEN already exists, skipping (not overwriting real token)."
+  else
+    echo -n "placeholder-not-configured" | \
+      gcloud secrets create "GITHUB_TOKEN" --data-file=- --project="$PROJECT_ID"
+  fi
+
   echo
   echo "  ⚠  Update web/src/env/firebase-runtime.staging.ts vapidPublicKey:"
   echo "     $VAPID_PUBLIC"
+  echo
+  echo "  ⚠  Replace the GITHUB_TOKEN placeholder with a real PAT for issue creation:"
+  echo "     firebase functions:secrets:set GITHUB_TOKEN --project $PROJECT_ID"
 else
   echo "▶ npx web-push generate-vapid-keys"
   echo "▶ gcloud secrets create VAPID_PRIVATE_KEY ..."
   echo "▶ gcloud secrets create VAPID_PUBLIC_KEY ..."
+  echo "▶ gcloud secrets create GITHUB_TOKEN (placeholder) ..."
 fi
 echo
 

@@ -5081,6 +5081,36 @@ Deine Position: # ·  Reps        </source>
         <target>Anonymous</target>
       </segment>
     </unit>
+    <unit id="admin.feedback.markRead">
+      <segment state="translated">
+        <source>Als gelesen markieren</source>
+        <target>Mark as read</target>
+      </segment>
+    </unit>
+    <unit id="admin.feedback.markUnread">
+      <segment state="translated">
+        <source>Als ungelesen markieren</source>
+        <target>Mark as unread</target>
+      </segment>
+    </unit>
+    <unit id="admin.feedback.createIssue">
+      <segment state="translated">
+        <source>GitHub-Issue erstellen</source>
+        <target>Create GitHub issue</target>
+      </segment>
+    </unit>
+    <unit id="admin.feedback.openIssue">
+      <segment state="translated">
+        <source>GitHub-Issue öffnen</source>
+        <target>Open GitHub issue</target>
+      </segment>
+    </unit>
+    <unit id="admin.feedback.delete">
+      <segment state="translated">
+        <source>Feedback löschen</source>
+        <target>Delete feedback</target>
+      </segment>
+    </unit>
     <unit id="quickAdd.fab.feedbackAria">
       <segment state="translated">
         <source>Feedback geben</source>

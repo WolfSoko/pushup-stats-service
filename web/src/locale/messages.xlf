@@ -234,8 +234,8 @@
       <notes>
         <note category="location">libs/auth/src/lib/ui/login/google-onboarding-dialog/google-onboarding-dialog.component.html:67,69</note>
         <note category="location">libs/auth/src/lib/ui/register/register.component.html:314,315</note>
-        <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:191,192</note>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:217,219</note>
+        <note category="location">web/src/app/core/feedback/feedback-dialog.component.ts:96,97</note>
+        <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:199,200</note>
         <note category="location">web/src/app/stats/shell/settings-page.component.ts:254,255</note>
       </notes>
       <segment>
@@ -592,9 +592,25 @@
         <source>Anmelde-Menü</source>
       </segment>
     </unit>
-    <unit id="quickAdd.fab.customValueAria">
+    <unit id="quickAdd.fab.feedbackAria">
       <notes>
         <note category="location">libs/quick-add/src/lib/quick-add-fab.component.html:10,11</note>
+      </notes>
+      <segment>
+        <source>Feedback geben</source>
+      </segment>
+    </unit>
+    <unit id="quickAdd.fab.feedback">
+      <notes>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.html:15,17</note>
+      </notes>
+      <segment>
+        <source>Feedback</source>
+      </segment>
+    </unit>
+    <unit id="quickAdd.fab.customValueAria">
+      <notes>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.html:22,23</note>
       </notes>
       <segment>
         <source>Eigenen Wert eingeben</source>
@@ -602,7 +618,7 @@
     </unit>
     <unit id="quickAdd.fab.customValue">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.html:15,17</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.html:27,29</note>
       </notes>
       <segment>
         <source>Eigener Wert</source>
@@ -610,7 +626,7 @@
     </unit>
     <unit id="quickAdd.fab.quickAddReps">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.html:26,27</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.html:39,40</note>
       </notes>
       <segment>
         <source>+<ph id="0" equiv="INTERPOLATION" disp="{{ item.value }}"/> Reps</source>
@@ -618,7 +634,7 @@
     </unit>
     <unit id="quickAdd.fab.open">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:43</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:48</note>
       </notes>
       <segment>
         <source>Schnellerfassung öffnen</source>
@@ -626,7 +642,7 @@
     </unit>
     <unit id="quickAdd.fab.close">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:44</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:49</note>
       </notes>
       <segment>
         <source>Schnellerfassung schließen</source>
@@ -634,7 +650,7 @@
     </unit>
     <unit id="quickAdd.fab.repAria">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:47</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:52</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="REPS" disp="reps"/> Liegestütze hinzufügen</source>
@@ -642,7 +658,7 @@
     </unit>
     <unit id="admin.title">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:56,58</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:68,70</note>
       </notes>
       <segment>
         <source>Admin-Bereich</source>
@@ -650,7 +666,7 @@
     </unit>
     <unit id="admin.bulk.title">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:62,64</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:74,76</note>
       </notes>
       <segment>
         <source>Anonyme Benutzer aufräumen</source>
@@ -658,7 +674,7 @@
     </unit>
     <unit id="admin.bulk.daysLabel">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:68,70</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:80,82</note>
       </notes>
       <segment>
         <source>Inaktiv seit (Tage)</source>
@@ -666,7 +682,7 @@
     </unit>
     <unit id="admin.bulk.hint">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:79,82</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:91,94</note>
       </notes>
       <segment>
         <source> Löscht anonyme Benutzer ohne Pushups in den letzten <ph id="0" equiv="INTERPOLATION" disp="{{ inactiveDays() }}"/> Tagen. </source>
@@ -674,7 +690,7 @@
     </unit>
     <unit id="admin.bulk.button">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:95,96</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:107,108</note>
       </notes>
       <segment>
         <source>Inaktive löschen</source>
@@ -682,7 +698,7 @@
     </unit>
     <unit id="admin.bulk.deleted">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:103,104</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:115,116</note>
       </notes>
       <segment>
         <source>Gelöscht:</source>
@@ -690,7 +706,7 @@
     </unit>
     <unit id="admin.bulk.skipped">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:105,106</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:117,118</note>
       </notes>
       <segment>
         <source>Übersprungen:</source>
@@ -698,7 +714,7 @@
     </unit>
     <unit id="admin.filter.anonymous">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:124,125</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:136,137</note>
       </notes>
       <segment>
         <source> Nur anonyme Benutzer </source>
@@ -706,7 +722,7 @@
     </unit>
     <unit id="admin.col.uid">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:147,148</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:159,160</note>
       </notes>
       <segment>
         <source>UID</source>
@@ -714,7 +730,7 @@
     </unit>
     <unit id="admin.col.name">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:159,160</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:171,172</note>
       </notes>
       <segment>
         <source>Name</source>
@@ -722,7 +738,7 @@
     </unit>
     <unit id="admin.col.email">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:169,170</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:181,182</note>
       </notes>
       <segment>
         <source>E-Mail</source>
@@ -730,7 +746,7 @@
     </unit>
     <unit id="admin.col.anon">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:177,178</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:189,190</note>
       </notes>
       <segment>
         <source>Anon</source>
@@ -738,7 +754,7 @@
     </unit>
     <unit id="admin.col.pushups">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:191,192</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:203,204</note>
       </notes>
       <segment>
         <source>Pushups</source>
@@ -746,7 +762,7 @@
     </unit>
     <unit id="admin.col.lastEntry">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:199,201</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:211,213</note>
       </notes>
       <segment>
         <source>Letzter Eintrag</source>
@@ -754,18 +770,122 @@
     </unit>
     <unit id="admin.col.createdAt">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:209,211</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:221,223</note>
       </notes>
       <segment>
         <source>Erstellt</source>
       </segment>
     </unit>
+    <unit id="admin.feedback.title">
+      <notes>
+        <note category="location">web/src/app/admin/admin-page.component.ts:250,252</note>
+      </notes>
+      <segment>
+        <source>Feedback</source>
+      </segment>
+    </unit>
+    <unit id="admin.feedback.empty">
+      <notes>
+        <note category="location">web/src/app/admin/admin-page.component.ts:269,271</note>
+      </notes>
+      <segment>
+        <source>Noch kein Feedback vorhanden.</source>
+      </segment>
+    </unit>
+    <unit id="admin.feedback.col.date">
+      <notes>
+        <note category="location">web/src/app/admin/admin-page.component.ts:277,279</note>
+      </notes>
+      <segment>
+        <source>Datum</source>
+      </segment>
+    </unit>
+    <unit id="admin.feedback.col.name">
+      <notes>
+        <note category="location">web/src/app/admin/admin-page.component.ts:288,290</note>
+      </notes>
+      <segment>
+        <source>Name</source>
+      </segment>
+    </unit>
+    <unit id="admin.feedback.col.email">
+      <notes>
+        <note category="location">web/src/app/admin/admin-page.component.ts:297,299</note>
+      </notes>
+      <segment>
+        <source>E-Mail</source>
+      </segment>
+    </unit>
+    <unit id="admin.feedback.col.message">
+      <notes>
+        <note category="location">web/src/app/admin/admin-page.component.ts:306,308</note>
+      </notes>
+      <segment>
+        <source>Nachricht</source>
+      </segment>
+    </unit>
+    <unit id="admin.feedback.col.userId">
+      <notes>
+        <note category="location">web/src/app/admin/admin-page.component.ts:317,319</note>
+      </notes>
+      <segment>
+        <source>User</source>
+      </segment>
+    </unit>
     <unit id="admin.refresh">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:302</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:471</note>
       </notes>
       <segment>
         <source>Neu laden</source>
+      </segment>
+    </unit>
+    <unit id="admin.feedback.anon">
+      <notes>
+        <note category="location">web/src/app/admin/admin-page.component.ts:472</note>
+      </notes>
+      <segment>
+        <source>Anonym</source>
+      </segment>
+    </unit>
+    <unit id="admin.feedback.markRead">
+      <notes>
+        <note category="location">web/src/app/admin/admin-page.component.ts:473</note>
+      </notes>
+      <segment>
+        <source>Als gelesen markieren</source>
+      </segment>
+    </unit>
+    <unit id="admin.feedback.markUnread">
+      <notes>
+        <note category="location">web/src/app/admin/admin-page.component.ts:474</note>
+      </notes>
+      <segment>
+        <source>Als ungelesen markieren</source>
+      </segment>
+    </unit>
+    <unit id="admin.feedback.createIssue">
+      <notes>
+        <note category="location">web/src/app/admin/admin-page.component.ts:475</note>
+      </notes>
+      <segment>
+        <source>GitHub-Issue erstellen</source>
+      </segment>
+    </unit>
+    <unit id="admin.feedback.openIssue">
+      <notes>
+        <note category="location">web/src/app/admin/admin-page.component.ts:476</note>
+      </notes>
+      <segment>
+        <source>GitHub-Issue öffnen</source>
+      </segment>
+    </unit>
+    <unit id="admin.feedback.delete">
+      <notes>
+        <note category="location">web/src/app/admin/admin-page.component.ts:477</note>
+      </notes>
+      <segment>
+        <source>Feedback löschen</source>
       </segment>
     </unit>
     <unit id="admin.delete.title">
@@ -1169,9 +1289,25 @@
         <source>Datenschutzerklärung von Pushup Tracker – Informationen zu Datenverarbeitung, Cookies und Ihren Rechten.</source>
       </segment>
     </unit>
+    <unit id="earlyAccess.text">
+      <notes>
+        <note category="location">web/src/app/app.ts:105</note>
+      </notes>
+      <segment>
+        <source>Early Access – pushup-stats.de befindet sich noch im Aufbau. Funktionen und Design können sich jederzeit ändern.</source>
+      </segment>
+    </unit>
+    <unit id="earlyAccess.feedback">
+      <notes>
+        <note category="location">web/src/app/app.ts:106</note>
+      </notes>
+      <segment>
+        <source>Feedback</source>
+      </segment>
+    </unit>
     <unit id="seo.default.title">
       <notes>
-        <note category="location">web/src/app/app.ts:138</note>
+        <note category="location">web/src/app/app.ts:197</note>
       </notes>
       <segment>
         <source>Pushup Tracker</source>
@@ -1179,7 +1315,7 @@
     </unit>
     <unit id="seo.default.description">
       <notes>
-        <note category="location">web/src/app/app.ts:141</note>
+        <note category="location">web/src/app/app.ts:200</note>
       </notes>
       <segment>
         <source>Tracke Reps, Trends und Streaks mit Pushup Tracker.</source>
@@ -1187,7 +1323,7 @@
     </unit>
     <unit id="sw.update.available">
       <notes>
-        <note category="location">web/src/app/app.ts:160</note>
+        <note category="location">web/src/app/app.ts:219</note>
       </notes>
       <segment>
         <source>Neue Version verfügbar</source>
@@ -1195,15 +1331,31 @@
     </unit>
     <unit id="sw.update.reload">
       <notes>
-        <note category="location">web/src/app/app.ts:161</note>
+        <note category="location">web/src/app/app.ts:220</note>
       </notes>
       <segment>
         <source>Neu laden</source>
       </segment>
     </unit>
+    <unit id="feedback.success">
+      <notes>
+        <note category="location">web/src/app/app.ts:270</note>
+      </notes>
+      <segment>
+        <source>Danke für dein Feedback!</source>
+      </segment>
+    </unit>
+    <unit id="feedback.error">
+      <notes>
+        <note category="location">web/src/app/app.ts:277</note>
+      </notes>
+      <segment>
+        <source>Feedback konnte nicht gesendet werden.</source>
+      </segment>
+    </unit>
     <unit id="sw.update.downloading">
       <notes>
-        <note category="location">web/src/app/app.ts:214</note>
+        <note category="location">web/src/app/app.ts:315</note>
       </notes>
       <segment>
         <source>Update wird im Hintergrund geladen …</source>
@@ -1265,6 +1417,54 @@
         <source>Artikel lesen</source>
       </segment>
     </unit>
+    <unit id="feedback.dialog.title">
+      <notes>
+        <note category="location">web/src/app/core/feedback/feedback-dialog.component.ts:44,47</note>
+      </notes>
+      <segment>
+        <source>Feedback geben</source>
+      </segment>
+    </unit>
+    <unit id="feedback.dialog.anonymous">
+      <notes>
+        <note category="location">web/src/app/core/feedback/feedback-dialog.component.ts:52,56</note>
+      </notes>
+      <segment>
+        <source>Anonym absenden</source>
+      </segment>
+    </unit>
+    <unit id="feedback.dialog.name">
+      <notes>
+        <note category="location">web/src/app/core/feedback/feedback-dialog.component.ts:58,60</note>
+      </notes>
+      <segment>
+        <source>Name</source>
+      </segment>
+    </unit>
+    <unit id="feedback.dialog.email">
+      <notes>
+        <note category="location">web/src/app/core/feedback/feedback-dialog.component.ts:69,71</note>
+      </notes>
+      <segment>
+        <source>E-Mail (optional)</source>
+      </segment>
+    </unit>
+    <unit id="feedback.dialog.message">
+      <notes>
+        <note category="location">web/src/app/core/feedback/feedback-dialog.component.ts:82,84</note>
+      </notes>
+      <segment>
+        <source>Dein Feedback</source>
+      </segment>
+    </unit>
+    <unit id="feedback.dialog.submit">
+      <notes>
+        <note category="location">web/src/app/core/feedback/feedback-dialog.component.ts:105,107</note>
+      </notes>
+      <segment>
+        <source> Absenden </source>
+      </segment>
+    </unit>
     <unit id="quickAdd.success.create">
       <notes>
         <note category="location">web/src/app/core/quick-add-orchestration.service.ts:30</note>
@@ -1324,7 +1524,7 @@
     <unit id="landing.leaderboard.daily">
       <notes>
         <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:24,26</note>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:183,186</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:186,189</note>
       </notes>
       <segment>
         <source> Tag </source>
@@ -1333,7 +1533,7 @@
     <unit id="landing.leaderboard.weekly">
       <notes>
         <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:33,35</note>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:192,195</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:195,198</note>
       </notes>
       <segment>
         <source> Woche </source>
@@ -1342,7 +1542,7 @@
     <unit id="landing.leaderboard.monthly">
       <notes>
         <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:42,46</note>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:201,205</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:204,208</note>
       </notes>
       <segment>
         <source> Monat </source>
@@ -1351,7 +1551,7 @@
     <unit id="landing.leaderboard.reps">
       <notes>
         <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:53,55</note>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:212,214</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:215,217</note>
       </notes>
       <segment>
         <source>Reps</source>
@@ -1360,7 +1560,7 @@
     <unit id="landing.leaderboard.ownPosition">
       <notes>
         <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:61,63</note>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:220,223</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:223,226</note>
       </notes>
       <segment>
         <source> Deine Position: #<ph id="0" equiv="INTERPOLATION" disp="{{ me.rank }}"/> · <ph id="1" equiv="INTERPOLATION_1" disp="{{ me.reps }}"/> Reps </source>
@@ -1694,9 +1894,17 @@
         <source>Pushup Tracker</source>
       </segment>
     </unit>
-    <unit id="landing.free.badge">
+    <unit id="landing.earlyAccess.badge">
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:5,7</note>
+      </notes>
+      <segment>
+        <source>Early Access</source>
+      </segment>
+    </unit>
+    <unit id="landing.free.badge">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:8,10</note>
       </notes>
       <segment>
         <source>Kostenlos &amp; ohne Kreditkarte</source>
@@ -1704,7 +1912,7 @@
     </unit>
     <unit id="landing.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:7,8</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:10,11</note>
       </notes>
       <segment>
         <source>Dein Training. Klar visualisiert.</source>
@@ -1712,7 +1920,7 @@
     </unit>
     <unit id="landing.subtitle">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:9,13</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:12,16</note>
       </notes>
       <segment>
         <source> Kostenlos tracken: Reps, Trends und Streaks in Sekunden – mobil, schnell und mit Live-Updates. </source>
@@ -1720,7 +1928,7 @@
     </unit>
     <unit id="landing.cta.dashboard">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:22,24</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:25,27</note>
       </notes>
       <segment>
         <source>Zum Dashboard</source>
@@ -1728,8 +1936,8 @@
     </unit>
     <unit id="landing.cta.signup">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:32,35</note>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:44,47</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:35,38</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:47,50</note>
       </notes>
       <segment>
         <source>Konto erstellen</source>
@@ -1737,7 +1945,7 @@
     </unit>
     <unit id="landing.cta.login">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:52,55</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:55,58</note>
       </notes>
       <segment>
         <source>Einloggen</source>
@@ -1745,7 +1953,7 @@
     </unit>
     <unit id="landing.cta.guest">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:60,62</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:63,65</note>
       </notes>
       <segment>
         <source> Als Gast ausprobieren </source>
@@ -1753,7 +1961,7 @@
     </unit>
     <unit id="landing.cta.hint">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:65,69</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:68,72</note>
       </notes>
       <segment>
         <source> Kostenlos · Kein Abo · Jederzeit kündbar </source>
@@ -1761,7 +1969,7 @@
     </unit>
     <unit id="landing.trust.bar">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:72,75</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:75,78</note>
       </notes>
       <segment>
         <source> ✓ Kostenlos · ✓ Kein Abo · ✓ Keine Kreditkarte · ✓ Datenschutz first </source>
@@ -1769,7 +1977,7 @@
     </unit>
     <unit id="landing.feature.analytics.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:80,82</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:83,85</note>
       </notes>
       <segment>
         <source>Smarter Überblick</source>
@@ -1777,7 +1985,7 @@
     </unit>
     <unit id="landing.feature.analytics.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:84,87</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:87,90</note>
       </notes>
       <segment>
         <source>KPIs, Charts und Custom-Zeiträume. Sieh auf einen Blick wie sich dein Training entwickelt.</source>
@@ -1785,7 +1993,7 @@
     </unit>
     <unit id="landing.feature.quick.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:93,95</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:96,98</note>
       </notes>
       <segment>
         <source>Quick Logging</source>
@@ -1793,7 +2001,7 @@
     </unit>
     <unit id="landing.feature.quick.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:97,100</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:100,103</note>
       </notes>
       <segment>
         <source>Eintrag in 2 Sekunden. Schnellaktionen für 10, 20, 30 Reps oder freie Eingabe.</source>
@@ -1801,7 +2009,7 @@
     </unit>
     <unit id="landing.feature.live.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:106,108</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:109,111</note>
       </notes>
       <segment>
         <source>Live &amp; überall</source>
@@ -1809,7 +2017,7 @@
     </unit>
     <unit id="landing.feature.live.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:110,113</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:113,116</note>
       </notes>
       <segment>
         <source>Alle Geräte. Echtzeit-Sync hält deine Daten überall aktuell – kein Refresh nötig.</source>
@@ -1817,7 +2025,7 @@
     </unit>
     <unit id="landing.feature.streak.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:119,121</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:122,124</note>
       </notes>
       <segment>
         <source>Streaks &amp; Bestenliste</source>
@@ -1825,7 +2033,7 @@
     </unit>
     <unit id="landing.feature.streak.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:123,126</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:126,129</note>
       </notes>
       <segment>
         <source>Täglich dabei bleiben. Verfolge deine Streak und miss dich mit der Community.</source>
@@ -1833,7 +2041,7 @@
     </unit>
     <unit id="landing.feature.free.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:132,134</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:135,137</note>
       </notes>
       <segment>
         <source>100% Kostenlos</source>
@@ -1841,7 +2049,7 @@
     </unit>
     <unit id="landing.feature.free.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:136,139</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:139,142</note>
       </notes>
       <segment>
         <source>Keine Kreditkarte. Kein Abo. Einfach registrieren und loslegen – für immer kostenlos.</source>
@@ -1849,7 +2057,7 @@
     </unit>
     <unit id="landing.feature.adaptive.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:145,147</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:148,150</note>
       </notes>
       <segment>
         <source>Smarte Schnellaktionen</source>
@@ -1857,7 +2065,7 @@
     </unit>
     <unit id="landing.feature.adaptive.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:149,152</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:152,155</note>
       </notes>
       <segment>
         <source>Basierend auf deiner Trainingshistorie schlägt die App automatisch passende Wiederholungszahlen vor. Ein Tap genügt.</source>
@@ -1865,7 +2073,7 @@
     </unit>
     <unit id="ads.landing.aria">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:154</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:157</note>
       </notes>
       <segment>
         <source>Werbung</source>
@@ -1873,7 +2081,7 @@
     </unit>
     <unit id="landing.preview.alt">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:160,161</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:163,164</note>
       </notes>
       <segment>
         <source>Vorschau der Statistikansicht</source>
@@ -1881,7 +2089,7 @@
     </unit>
     <unit id="landing.leaderboard.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:168,170</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:171,173</note>
       </notes>
       <segment>
         <source> Bestenliste </source>
@@ -1889,7 +2097,7 @@
     </unit>
     <unit id="landing.leaderboard.privacy">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:171,175</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:174,178</note>
       </notes>
       <segment>
         <source> Privacy first: Dein Nutzername wird nicht angezeigt, wenn du es nicht möchtest. </source>
@@ -2177,8 +2385,8 @@
     </unit>
     <unit id="push.subscribe.error">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:413</note>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:484</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:414</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:485</note>
       </notes>
       <segment>
         <source>Push konnte nicht aktiviert werden.</source>
@@ -2186,11 +2394,11 @@
     </unit>
     <unit id="snackbar.close">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:414</note>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:434</note>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:450</note>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:469</note>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:485</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:415</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:435</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:451</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:470</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:486</note>
       </notes>
       <segment>
         <source>Schließen</source>
@@ -2198,7 +2406,7 @@
     </unit>
     <unit id="reminder.permission.snackbar">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:433</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:434</note>
       </notes>
       <segment>
         <source>Benachrichtigungen sind blockiert. Bitte in den Browser-Einstellungen erlauben.</source>
@@ -2206,8 +2414,8 @@
     </unit>
     <unit id="reminder.save.error">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:449</note>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:468</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:450</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:469</note>
       </notes>
       <segment>
         <source>Einstellungen konnten nicht gespeichert werden.</source>
@@ -2269,9 +2477,17 @@
         <source>Zur Analyse</source>
       </segment>
     </unit>
+    <unit id="editDialogTitle">
+      <notes>
+        <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:95,97</note>
+      </notes>
+      <segment>
+        <source>Eintrag bearbeiten</source>
+      </segment>
+    </unit>
     <unit id="createDialogTitle">
       <notes>
-        <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:75,78</note>
+        <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:97,101</note>
       </notes>
       <segment>
         <source>Neuen Eintrag anlegen</source>
@@ -2279,8 +2495,7 @@
     </unit>
     <unit id="timestampLabel">
       <notes>
-        <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:79,81</note>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:158,160</note>
+        <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:103,105</note>
       </notes>
       <segment>
         <source>Zeitpunkt</source>
@@ -2288,15 +2503,23 @@
     </unit>
     <unit id="setLabel">
       <notes>
-        <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:93,94</note>
+        <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:117,118</note>
       </notes>
       <segment>
         <source>Set <ph id="0" equiv="INTERPOLATION" disp="{{ $index + 1 }}"/></source>
       </segment>
     </unit>
+    <unit id="repsLabel">
+      <notes>
+        <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:119,120</note>
+      </notes>
+      <segment>
+        <source>Reps</source>
+      </segment>
+    </unit>
     <unit id="removeSetAria">
       <notes>
-        <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:107,109</note>
+        <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:136,138</note>
       </notes>
       <segment>
         <source>Set entfernen</source>
@@ -2304,42 +2527,31 @@
     </unit>
     <unit id="addSetAria">
       <notes>
-        <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:119,121</note>
-        <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:145,146</note>
+        <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:147,148</note>
       </notes>
       <segment>
         <source>Set hinzufügen</source>
       </segment>
     </unit>
-    <unit id="totalReps">
-      <notes>
-        <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:124,126</note>
-      </notes>
-      <segment>
-        <source> Gesamt: <ph id="0" equiv="INTERPOLATION" disp="{{ totalReps() }}"/> Reps </source>
-      </segment>
-    </unit>
-    <unit id="repsLabel">
-      <notes>
-        <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:130,131</note>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:169,170</note>
-      </notes>
-      <segment>
-        <source>Reps</source>
-      </segment>
-    </unit>
     <unit id="addSetTooltip">
       <notes>
-        <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:147,149</note>
+        <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:149,151</note>
       </notes>
       <segment>
         <source>Weiteres Set hinzufügen</source>
       </segment>
     </unit>
+    <unit id="totalReps">
+      <notes>
+        <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:158,160</note>
+      </notes>
+      <segment>
+        <source> Gesamt: <ph id="0" equiv="INTERPOLATION" disp="{{ totalReps() }}"/> Reps </source>
+      </segment>
+    </unit>
     <unit id="typeLabel">
       <notes>
-        <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:155,156</note>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:181,182</note>
+        <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:163,164</note>
       </notes>
       <segment>
         <source>Typ</source>
@@ -2347,8 +2559,7 @@
     </unit>
     <unit id="typePlaceholder">
       <notes>
-        <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:161,162</note>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:187,188</note>
+        <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:169,170</note>
       </notes>
       <segment>
         <source>Pick one / Custom</source>
@@ -2356,8 +2567,7 @@
     </unit>
     <unit id="sourceLabel">
       <notes>
-        <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:172,173</note>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:198,200</note>
+        <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:180,181</note>
       </notes>
       <segment>
         <source>Quelle</source>
@@ -2365,8 +2575,7 @@
     </unit>
     <unit id="sourcePlaceholder">
       <notes>
-        <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:178,179</note>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:204,205</note>
+        <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:186,187</note>
       </notes>
       <segment>
         <source>web / whatsapp / Custom</source>
@@ -2374,7 +2583,7 @@
     </unit>
     <unit id="saveEntry">
       <notes>
-        <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:199,201</note>
+        <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:207,209</note>
       </notes>
       <segment>
         <source> Speichern </source>
@@ -2476,6 +2685,22 @@
         <source> Heatmap wird im Browser geladen… </source>
       </segment>
     </unit>
+    <unit id="heatmap.unit.sets">
+      <notes>
+        <note category="location">web/src/app/stats/components/heatmap/heatmap.component.ts:64</note>
+      </notes>
+      <segment>
+        <source>Sätze</source>
+      </segment>
+    </unit>
+    <unit id="heatmap.unit.reps">
+      <notes>
+        <note category="location">web/src/app/stats/components/heatmap/heatmap.component.ts:65</note>
+      </notes>
+      <segment>
+        <source>Wiederholungen</source>
+      </segment>
+    </unit>
     <unit id="previewBanner.text">
       <notes>
         <note category="location">web/src/app/stats/components/preview-banner/preview-banner.component.ts:23,26</note>
@@ -2492,17 +2717,49 @@
         <source> Jetzt starten </source>
       </segment>
     </unit>
+    <unit id="setsDistribution.noData">
+      <notes>
+        <note category="location">web/src/app/stats/components/sets-distribution/sets-distribution.component.ts:27,31</note>
+      </notes>
+      <segment>
+        <source> Keine Sets-Daten vorhanden </source>
+      </segment>
+    </unit>
     <unit id="chart.subtitle">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:36,37</note>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:43,44</note>
       </notes>
       <segment>
         <source>Intervallwerte als Balken, Tages-Integral + gleitender Durchschnitt als Trendlinien</source>
       </segment>
     </unit>
+    <unit id="chart.modeToggleAria">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:51,52</note>
+      </notes>
+      <segment>
+        <source>Zeitraum der Stundenansicht</source>
+      </segment>
+    </unit>
+    <unit id="chart.mode14h">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:55,56</note>
+      </notes>
+      <segment>
+        <source>14h</source>
+      </segment>
+    </unit>
+    <unit id="chart.mode24h">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:58,59</note>
+      </notes>
+      <segment>
+        <source>24h</source>
+      </segment>
+    </unit>
     <unit id="chart.legendAria">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:49</note>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:72</note>
       </notes>
       <segment>
         <source>Legende</source>
@@ -2510,8 +2767,8 @@
     </unit>
     <unit id="chart.interval">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:54,55</note>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:93</note>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:77,78</note>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:125</note>
       </notes>
       <segment>
         <source>Intervallwert</source>
@@ -2519,8 +2776,8 @@
     </unit>
     <unit id="chart.dayIntegral">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:60,61</note>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:94</note>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:83,84</note>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:126</note>
       </notes>
       <segment>
         <source>Tages-Integral</source>
@@ -2528,16 +2785,25 @@
     </unit>
     <unit id="chart.movingAvg">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:66,67</note>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:95</note>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:89,90</note>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:127</note>
       </notes>
       <segment>
         <source>Gleitender Durchschnitt</source>
       </segment>
     </unit>
+    <unit id="chart.withSets">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:96,97</note>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:153</note>
+      </notes>
+      <segment>
+        <source>Mit Sets</source>
+      </segment>
+    </unit>
     <unit id="chart.titleHourly">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:91</note>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:123</note>
       </notes>
       <segment>
         <source>Verlauf (Stundenwerte)</source>
@@ -2545,10 +2811,18 @@
     </unit>
     <unit id="chart.titleDaily">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:92</note>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:124</note>
       </notes>
       <segment>
         <source>Verlauf (Tageswerte)</source>
+      </segment>
+    </unit>
+    <unit id="chart.setsTooltip">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:152</note>
+      </notes>
+      <segment>
+        <source>Sets</source>
       </segment>
     </unit>
     <unit id="entriesTitle">
@@ -2665,25 +2939,17 @@
         <source>Löschen</source>
       </segment>
     </unit>
-    <unit id="editDialogTitle">
+    <unit id="pie.avgSetSize">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:154,156</note>
+        <note category="location">web/src/app/stats/components/type-pie/type-pie.component.ts:47,48</note>
       </notes>
       <segment>
-        <source>Eintrag bearbeiten</source>
-      </segment>
-    </unit>
-    <unit id="saveChanges">
-      <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:226,232</note>
-      </notes>
-      <segment>
-        <source><pc id="0" equivStart="START_BLOCK_IF" equivEnd="CLOSE_BLOCK_IF" type="other" dispStart="@if (editingId() &amp;&amp; isBusy(&apos;update&apos;, editBusyId())) {" dispEnd="}"><pc id="1" equivStart="START_TAG_MAT_SPINNER" equivEnd="CLOSE_TAG_MAT_SPINNER" type="other" dispStart="&lt;mat-spinner diameter=&quot;14&quot;&gt;" dispEnd="&lt;/mat-spinner&gt;"></pc></pc><pc id="2" equivStart="START_BLOCK_ELSE" equivEnd="CLOSE_BLOCK_ELSE" type="other" dispStart="@else {" dispEnd="}"> Speichern </pc></source>
+        <source>⌀ Set-Größe</source>
       </segment>
     </unit>
     <unit id="pie.noData">
       <notes>
-        <note category="location">web/src/app/stats/components/type-pie/type-pie.component.ts:46,49</note>
+        <note category="location">web/src/app/stats/components/type-pie/type-pie.component.ts:56,59</note>
       </notes>
       <segment>
         <source>Keine Daten</source>
@@ -2691,7 +2957,7 @@
     </unit>
     <unit id="analysis.weekTrendTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:51,53</note>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:66,68</note>
       </notes>
       <segment>
         <source>Wochentrend</source>
@@ -2699,7 +2965,7 @@
     </unit>
     <unit id="analysis.weekCol">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:61,62</note>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:76,77</note>
       </notes>
       <segment>
         <source>Woche</source>
@@ -2707,16 +2973,25 @@
     </unit>
     <unit id="analysis.repsCol">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:67,68</note>
-        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:96,97</note>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:82,83</note>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:126,127</note>
       </notes>
       <segment>
         <source>Reps</source>
       </segment>
     </unit>
+    <unit id="analysis.avgSetsCol">
+      <notes>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:88,89</note>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:132,133</note>
+      </notes>
+      <segment>
+        <source>⌀ Sets</source>
+      </segment>
+    </unit>
     <unit id="analysis.monthTrendTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:80,82</note>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:110,112</note>
       </notes>
       <segment>
         <source>Monatstrend</source>
@@ -2724,7 +2999,7 @@
     </unit>
     <unit id="analysis.monthCol">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:90,91</note>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:120,121</note>
       </notes>
       <segment>
         <source>Monat</source>
@@ -2732,7 +3007,7 @@
     </unit>
     <unit id="analysis.bestStreaksTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:109,111</note>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:154,156</note>
       </notes>
       <segment>
         <source>Bestwerte &amp; Streaks</source>
@@ -2740,7 +3015,7 @@
     </unit>
     <unit id="analysis.bestSingleEntry">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:115,117</note>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:160,162</note>
       </notes>
       <segment>
         <source>Bestwert Einzel-Eintrag:</source>
@@ -2748,15 +3023,31 @@
     </unit>
     <unit id="analysis.bestDay">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:120,122</note>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:165,167</note>
       </notes>
       <segment>
         <source>Bester Tag:</source>
       </segment>
     </unit>
+    <unit id="analysis.bestSingleSet">
+      <notes>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:174,176</note>
+      </notes>
+      <segment>
+        <source>Bestes Einzel-Set:</source>
+      </segment>
+    </unit>
+    <unit id="analysis.repsUnit">
+      <notes>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:178,180</note>
+      </notes>
+      <segment>
+        <source>Wdh.</source>
+      </segment>
+    </unit>
     <unit id="analysis.currentStreak">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:127,129</note>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:183,185</note>
       </notes>
       <segment>
         <source>Aktuelle Streak:</source>
@@ -2764,8 +3055,8 @@
     </unit>
     <unit id="analysis.streakDays">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:130,131</note>
-        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:138,139</note>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:186,187</note>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:194,195</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="INTERPOLATION" disp="{{ store.currentStreak() }}"/> Tage</source>
@@ -2773,7 +3064,7 @@
     </unit>
     <unit id="analysis.longestStreak">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:135,137</note>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:191,193</note>
       </notes>
       <segment>
         <source>Längste Streak:</source>
@@ -2781,18 +3072,66 @@
     </unit>
     <unit id="analysis.typesTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:148,150</note>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:204,206</note>
       </notes>
       <segment>
         <source>Typen (Anteile)</source>
       </segment>
     </unit>
+    <unit id="analysis.avgSetSizeTitle">
+      <notes>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:216,217</note>
+      </notes>
+      <segment>
+        <source>⌀ Set-Größe</source>
+      </segment>
+    </unit>
+    <unit id="analysis.repsPerSet">
+      <notes>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:221,222</note>
+      </notes>
+      <segment>
+        <source>Reps / Set</source>
+      </segment>
+    </unit>
+    <unit id="analysis.setsDistTitle">
+      <notes>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:230,232</note>
+      </notes>
+      <segment>
+        <source>Sets-Verteilung</source>
+      </segment>
+    </unit>
     <unit id="analysis.heatmapTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:160,162</note>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:243,245</note>
       </notes>
       <segment>
         <source>Heatmap (Wochentag/Uhrzeit)</source>
+      </segment>
+    </unit>
+    <unit id="analysis.heatmapToggleAriaLabel">
+      <notes>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:249,250</note>
+      </notes>
+      <segment>
+        <source>Heatmap-Modus auswählen</source>
+      </segment>
+    </unit>
+    <unit id="analysis.heatmapReps">
+      <notes>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:253,255</note>
+      </notes>
+      <segment>
+        <source>Reps</source>
+      </segment>
+    </unit>
+    <unit id="analysis.heatmapSets">
+      <notes>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:256,258</note>
+      </notes>
+      <segment>
+        <source>Sets</source>
       </segment>
     </unit>
     <unit id="entries.title">
@@ -3310,7 +3649,7 @@
     </unit>
     <unit id="quickActionsTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:137,139</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:130,132</note>
       </notes>
       <segment>
         <source>Schnellaktionen</source>
@@ -3318,7 +3657,7 @@
     </unit>
     <unit id="quickActionsSubtitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:140,142</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:133,135</note>
       </notes>
       <segment>
         <source>Schnell eintragen ohne Dialog</source>
@@ -3326,7 +3665,7 @@
     </unit>
     <unit id="quickAdd10">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:151,153</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:144,146</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">bolt</pc> +10 Reps </source>
@@ -3334,7 +3673,7 @@
     </unit>
     <unit id="quickAdd20">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:161,163</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:154,156</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">flash_on</pc> +20 Reps </source>
@@ -3342,7 +3681,7 @@
     </unit>
     <unit id="quickAdd30">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:171,173</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:164,166</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">whatshot</pc> +30 Reps </source>
@@ -3350,7 +3689,7 @@
     </unit>
     <unit id="quickAddNew">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:181,183</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:174,176</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">edit_note</pc> Neu </source>
@@ -3378,150 +3717,6 @@
       </notes>
       <segment>
         <source>Werbung</source>
-      </segment>
-    </unit>
-    <unit id="earlyAccess.text">
-      <notes>
-        <note category="location">web/src/app/app.ts</note>
-      </notes>
-      <segment>
-        <source>Early Access – pushup-stats.de befindet sich noch im Aufbau. Funktionen und Design können sich jederzeit ändern.</source>
-      </segment>
-    </unit>
-    <unit id="landing.earlyAccess.badge">
-      <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
-      </notes>
-      <segment>
-        <source>Early Access</source>
-      </segment>
-    </unit>
-    <unit id="feedback.success">
-      <notes>
-        <note category="location">web/src/app/app.ts</note>
-      </notes>
-      <segment>
-        <source>Danke für dein Feedback!</source>
-      </segment>
-    </unit>
-    <unit id="feedback.error">
-      <notes>
-        <note category="location">web/src/app/app.ts</note>
-      </notes>
-      <segment>
-        <source>Feedback konnte nicht gesendet werden.</source>
-      </segment>
-    </unit>
-    <unit id="earlyAccess.feedback">
-      <notes>
-        <note category="location">web/src/app/app.ts</note>
-      </notes>
-      <segment>
-        <source>Feedback</source>
-      </segment>
-    </unit>
-    <unit id="feedback.dialog.title">
-      <notes>
-        <note category="location">web/src/app/core/feedback/feedback-dialog.component.ts</note>
-      </notes>
-      <segment>
-        <source>Feedback geben</source>
-      </segment>
-    </unit>
-    <unit id="feedback.dialog.anonymous">
-      <notes>
-        <note category="location">web/src/app/core/feedback/feedback-dialog.component.ts</note>
-      </notes>
-      <segment>
-        <source>Anonym absenden</source>
-      </segment>
-    </unit>
-    <unit id="feedback.dialog.name">
-      <notes>
-        <note category="location">web/src/app/core/feedback/feedback-dialog.component.ts</note>
-      </notes>
-      <segment>
-        <source>Name</source>
-      </segment>
-    </unit>
-    <unit id="feedback.dialog.email">
-      <notes>
-        <note category="location">web/src/app/core/feedback/feedback-dialog.component.ts</note>
-      </notes>
-      <segment>
-        <source>E-Mail (optional)</source>
-      </segment>
-    </unit>
-    <unit id="feedback.dialog.message">
-      <notes>
-        <note category="location">web/src/app/core/feedback/feedback-dialog.component.ts</note>
-      </notes>
-      <segment>
-        <source>Dein Feedback</source>
-      </segment>
-    </unit>
-    <unit id="feedback.dialog.submit">
-      <notes>
-        <note category="location">web/src/app/core/feedback/feedback-dialog.component.ts</note>
-      </notes>
-      <segment>
-        <source>Absenden</source>
-      </segment>
-    </unit>
-    <unit id="admin.feedback.title">
-      <segment>
-        <source>Feedback</source>
-      </segment>
-    </unit>
-    <unit id="admin.feedback.empty">
-      <segment>
-        <source>Noch kein Feedback vorhanden.</source>
-      </segment>
-    </unit>
-    <unit id="admin.feedback.col.date">
-      <segment>
-        <source>Datum</source>
-      </segment>
-    </unit>
-    <unit id="admin.feedback.col.name">
-      <segment>
-        <source>Name</source>
-      </segment>
-    </unit>
-    <unit id="admin.feedback.col.email">
-      <segment>
-        <source>E-Mail</source>
-      </segment>
-    </unit>
-    <unit id="admin.feedback.col.message">
-      <segment>
-        <source>Nachricht</source>
-      </segment>
-    </unit>
-    <unit id="admin.feedback.col.userId">
-      <segment>
-        <source>User</source>
-      </segment>
-    </unit>
-    <unit id="admin.feedback.anon">
-      <segment>
-        <source>Anonym</source>
-      </segment>
-    </unit>
-    <unit id="quickAdd.fab.feedbackAria">
-      <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.html</note>
-      </notes>
-      <segment>
-        <source>Feedback geben</source>
-      </segment>
-    </unit>
-    <unit id="quickAdd.fab.feedback">
-      <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.html</note>
-      </notes>
-      <segment>
-        <source>Feedback</source>
       </segment>
     </unit>
   </file>
