@@ -5111,6 +5111,36 @@ Deine Position: # ·  Reps        </source>
         <target>Delete feedback</target>
       </segment>
     </unit>
+    <unit id="admin.feedback.delete.title">
+      <segment state="translated">
+        <source>Feedback löschen</source>
+        <target>Delete feedback</target>
+      </segment>
+    </unit>
+    <unit id="admin.feedback.delete.confirm">
+      <segment state="translated">
+        <source>Möchtest du dieses Feedback wirklich endgültig löschen?</source>
+        <target>Do you really want to permanently delete this feedback?</target>
+      </segment>
+    </unit>
+    <unit id="admin.feedback.delete.cancel">
+      <segment state="translated">
+        <source>Abbrechen</source>
+        <target>Cancel</target>
+      </segment>
+    </unit>
+    <unit id="admin.feedback.delete.button">
+      <segment state="translated">
+        <source>Löschen</source>
+        <target>Delete</target>
+      </segment>
+    </unit>
+    <unit id="admin.feedback.delete.anonym">
+      <segment state="translated">
+        <source>Anonym</source>
+        <target>Anonymous</target>
+      </segment>
+    </unit>
     <unit id="quickAdd.fab.feedbackAria">
       <segment state="translated">
         <source>Feedback geben</source>
