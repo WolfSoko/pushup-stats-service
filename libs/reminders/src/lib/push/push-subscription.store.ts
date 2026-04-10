@@ -99,21 +99,30 @@ export const PushSubscriptionStore = signalStore(
     }
 
     /**
-     * Get the SW registration, waiting briefly for it if not yet available.
-     * The app uses `registerWhenStable:30000`, so the SW may not be registered
-     * immediately. Falls back to `.ready` with a timeout so dev mode (no SW)
-     * doesn't hang forever.
+     * Max time to wait for the Angular service worker to become available
+     * before giving up. Must be comfortably larger than the
+     * `registerWhenStable:<delay>` in `provideServiceWorker(...)` so the
+     * subscribe flow doesn't race the registration on first page load.
+     */
+    const SW_READY_TIMEOUT_MS = 15_000;
+
+    /**
+     * Get the SW registration, waiting for it if not yet available.
+     *
+     * The app uses `registerWhenStable:<delay>`, so on first load the SW may
+     * not be registered at the moment the user toggles push on. Falls back to
+     * `.ready` with a timeout so dev mode (no SW) doesn't hang forever.
      */
     async function getSwRegistration(): Promise<
       ServiceWorkerRegistration | undefined
     > {
       const reg = await navigator.serviceWorker.getRegistration();
       if (reg) return reg;
-      // SW not yet registered — wait up to 5s for it
+      // SW not yet registered — wait up to SW_READY_TIMEOUT_MS for it
       const raced = await Promise.race([
         navigator.serviceWorker.ready,
         new Promise<undefined>((resolve) =>
-          setTimeout(() => resolve(undefined), 5_000)
+          setTimeout(() => resolve(undefined), SW_READY_TIMEOUT_MS)
         ),
       ]);
       return raced ?? undefined;
@@ -191,7 +200,18 @@ export const PushSubscriptionStore = signalStore(
 
           const reg = await getSwRegistration();
           if (!reg) {
-            patchState(store, { status: 'not-subscribed' });
+            // The SW never became available inside the timeout. Surface this
+            // as an error instead of 'not-subscribed' so the UI can show a
+            // "try again" state — silently flipping to 'not-subscribed' makes
+            // the toggle look enabled while no real subscription exists, and
+            // users only see notifications while the app is open (via the
+            // in-app interval), not in the background.
+            console.error(
+              '[PushSubscriptionStore] Service Worker not available within ' +
+                `${SW_READY_TIMEOUT_MS}ms — cannot subscribe to push. ` +
+                'Reload the app and try again.'
+            );
+            patchState(store, { status: 'error' });
             return false;
           }
           const existingSub = await reg.pushManager.getSubscription();
@@ -207,7 +227,8 @@ export const PushSubscriptionStore = signalStore(
           const { deviceCount } = await saveSubscription(subToSave);
           patchState(store, { status: 'subscribed', deviceCount });
           return true;
-        } catch {
+        } catch (err) {
+          console.error('[PushSubscriptionStore] subscribe() failed', err);
           patchState(store, { status: 'error' });
           return false;
         }

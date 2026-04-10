@@ -98,7 +98,12 @@ export const appConfig: ApplicationConfig = {
     { provide: VAPID_PUBLIC_KEY, useValue: firebaseRuntime.vapidPublicKey },
     provideServiceWorker('sw-push.js', {
       enabled: !isDevMode(),
-      registrationStrategy: 'registerWhenStable:30000',
+      // Register the SW shortly after stabilization so push subscriptions
+      // can succeed on first visit. A long delay (previously 30s) caused a
+      // race where subscribe() timed out waiting for the SW, leaving users
+      // without a real push subscription — reminders then only fired while
+      // the app was open (via in-app interval), not in the background.
+      registrationStrategy: 'registerWhenStable:2000',
     }),
     ...(firebaseRuntime.useEmulators
       ? [
