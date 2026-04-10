@@ -21,6 +21,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { DeleteUserDialogComponent } from './delete-user-dialog.component';
+import { DeleteFeedbackDialogComponent } from './delete-feedback-dialog.component';
 
 export interface AdminUser {
   uid: string;
@@ -592,6 +593,18 @@ export class AdminPageComponent {
   }
 
   async deleteFeedback(feedback: AdminFeedback): Promise<void> {
+    const ref = this.dialog.open<
+      DeleteFeedbackDialogComponent,
+      { name: string | null; message: string },
+      boolean
+    >(DeleteFeedbackDialogComponent, {
+      data: { name: feedback.name, message: feedback.message },
+      width: '480px',
+    });
+
+    const confirmed = await firstValueFrom(ref.afterClosed());
+    if (!confirmed) return;
+
     this.setFeedbackLoading(feedback.id, true);
     this.feedbackActionError.set(null);
     try {
