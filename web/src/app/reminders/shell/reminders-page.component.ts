@@ -476,7 +476,13 @@ export class RemindersPageComponent {
         // Auto-subscribe to server-side push only when reminders are being
         // newly enabled — not on every save. This preserves an explicit
         // push opt-out (user unsubscribed via the push toggle).
-        if (!wasEnabled && this.pushService.status() === 'not-subscribed') {
+        // Retry on 'error' too so a prior SW-registration timeout doesn't
+        // lock the user out of auto-subscription forever.
+        const priorPushStatus = this.pushService.status();
+        if (
+          !wasEnabled &&
+          (priorPushStatus === 'not-subscribed' || priorPushStatus === 'error')
+        ) {
           await this.pushService.subscribe();
           const pushStatus = this.pushService.status();
           if (pushStatus !== 'subscribed') {
