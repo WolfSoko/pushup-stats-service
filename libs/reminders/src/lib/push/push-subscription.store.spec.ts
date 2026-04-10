@@ -145,87 +145,90 @@ describe('PushSubscriptionStore', () => {
   });
 
   it('subscribe() waits for a late SW registration and still succeeds', async () => {
-    // First call (initial check) returns undefined, then .ready resolves
-    // after ~3s — well inside the 15s timeout but past the old 5s limit
-    // that caused the bug on first load.
-    const subscribeMock = jest.fn().mockResolvedValue(makeMockSubscription());
-    const registration = {
-      pushManager: {
-        getSubscription: jest.fn().mockResolvedValue(null),
-        subscribe: subscribeMock,
-      },
-    } as unknown as ServiceWorkerRegistration;
-
-    const readyPromise = new Promise<ServiceWorkerRegistration>((resolve) => {
-      setTimeout(() => resolve(registration), 3_000);
-    });
-
-    Object.defineProperty(navigator, 'serviceWorker', {
-      value: {
-        getRegistration: jest.fn().mockResolvedValue(undefined),
-        // `.ready` is a getter that returns a Promise resolving when the SW
-        // becomes active. Emulate a 3s activation delay.
-        get ready() {
-          return readyPromise;
-        },
-        addEventListener: jest.fn(),
-      },
-      configurable: true,
-      writable: true,
-    });
-
+    // Enable fake timers BEFORE scheduling any timeouts so the polling
+    // loop inside getSwRegistration() and our activation-delay timer
+    // both run under Jest's control.
     jest.useFakeTimers();
-    const store = setupStore();
-    const subscribePromise = store.subscribe();
+    try {
+      // `getRegistration` returns undefined until the SW "activates"
+      // after ~3s — well inside the 15s timeout but past the old 5s
+      // limit that caused the bug on first load.
+      const subscribeMock = jest
+        .fn()
+        .mockResolvedValue(makeMockSubscription());
+      const registration = {
+        pushManager: {
+          getSubscription: jest.fn().mockResolvedValue(null),
+          subscribe: subscribeMock,
+        },
+      } as unknown as ServiceWorkerRegistration;
 
-    // Advance past the 3s SW activation delay (but well under 15s timeout)
-    await jest.advanceTimersByTimeAsync(3_000);
-    jest.useRealTimers();
+      let swActive: ServiceWorkerRegistration | undefined = undefined;
+      setTimeout(() => {
+        swActive = registration;
+      }, 3_000);
 
-    const ok = await subscribePromise;
+      Object.defineProperty(navigator, 'serviceWorker', {
+        value: {
+          getRegistration: jest.fn().mockImplementation(async () => swActive),
+          addEventListener: jest.fn(),
+        },
+        configurable: true,
+        writable: true,
+      });
 
-    expect(ok).toBe(true);
-    expect(store.status()).toBe('subscribed');
-    expect(subscribeMock).toHaveBeenCalled();
+      const store = setupStore();
+      const subscribePromise = store.subscribe();
+
+      // Advance past the 3s SW activation delay (but well under 15s timeout).
+      // Use a generous step to cover multiple 250ms poll intervals.
+      await jest.advanceTimersByTimeAsync(4_000);
+
+      const ok = await subscribePromise;
+
+      expect(ok).toBe(true);
+      expect(store.status()).toBe('subscribed');
+      expect(subscribeMock).toHaveBeenCalled();
+    } finally {
+      jest.useRealTimers();
+    }
   });
 
   it('subscribe() sets status=error (not not-subscribed) when SW never registers', async () => {
-    // Simulate the bug: SW registration never happens (e.g. dev mode, or
-    // registerWhenStable delay exceeds the subscribe timeout). The store
-    // must surface this as 'error', not silently fall back to
-    // 'not-subscribed' — otherwise the UI shows the toggle as enabled
-    // while no real subscription exists and background push never arrives.
-    const neverResolve = new Promise<never>(() => {
-      /* intentionally never resolves */
-    });
-
-    Object.defineProperty(navigator, 'serviceWorker', {
-      value: {
-        getRegistration: jest.fn().mockResolvedValue(undefined),
-        get ready() {
-          return neverResolve;
-        },
-        addEventListener: jest.fn(),
-      },
-      configurable: true,
-      writable: true,
-    });
-
     jest.useFakeTimers();
-    const store = setupStore();
-    const subscribePromise = store.subscribe();
+    try {
+      // Simulate the bug: SW registration never happens (e.g. dev mode, or
+      // registerWhenStable delay exceeds the subscribe timeout). The store
+      // must surface this as 'error', not silently fall back to
+      // 'not-subscribed' — otherwise the UI shows the toggle as enabled
+      // while no real subscription exists and background push never arrives.
+      Object.defineProperty(navigator, 'serviceWorker', {
+        value: {
+          // Always undefined — polling loop must time out cleanly.
+          getRegistration: jest.fn().mockResolvedValue(undefined),
+          addEventListener: jest.fn(),
+        },
+        configurable: true,
+        writable: true,
+      });
 
-    // Advance past the 15s timeout
-    await jest.advanceTimersByTimeAsync(15_000);
-    jest.useRealTimers();
+      const store = setupStore();
+      const subscribePromise = store.subscribe();
 
-    const ok = await subscribePromise;
+      // Advance past the 15s polling deadline (add slack for the final
+      // poll iteration).
+      await jest.advanceTimersByTimeAsync(16_000);
 
-    expect(ok).toBe(false);
-    expect(store.status()).toBe('error');
-    expect(errorSpy).toHaveBeenCalledWith(
-      expect.stringContaining('Service Worker not available')
-    );
+      const ok = await subscribePromise;
+
+      expect(ok).toBe(false);
+      expect(store.status()).toBe('error');
+      expect(errorSpy).toHaveBeenCalledWith(
+        expect.stringContaining('Service Worker not available')
+      );
+    } finally {
+      jest.useRealTimers();
+    }
   });
 
   it('init() sets status=not-subscribed when SW is registered but has no subscription', async () => {

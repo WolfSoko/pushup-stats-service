@@ -105,27 +105,34 @@ export const PushSubscriptionStore = signalStore(
      * subscribe flow doesn't race the registration on first page load.
      */
     const SW_READY_TIMEOUT_MS = 15_000;
+    /** Poll interval while waiting for the SW to register. */
+    const SW_POLL_INTERVAL_MS = 250;
 
     /**
      * Get the SW registration, waiting for it if not yet available.
      *
      * The app uses `registerWhenStable:<delay>`, so on first load the SW may
-     * not be registered at the moment the user toggles push on. Falls back to
-     * `.ready` with a timeout so dev mode (no SW) doesn't hang forever.
+     * not be registered at the moment the user toggles push on. We poll
+     * `getRegistration()` instead of awaiting `navigator.serviceWorker.ready`
+     * because `.ready` hangs forever when no SW is ever registered
+     * (dev mode, SW disabled) — see CLAUDE.md "Push Notifications" rules.
      */
     async function getSwRegistration(): Promise<
       ServiceWorkerRegistration | undefined
     > {
-      const reg = await navigator.serviceWorker.getRegistration();
+      const deadline = Date.now() + SW_READY_TIMEOUT_MS;
+      // First attempt — likely hit on re-visits where the SW is already active.
+      let reg = await navigator.serviceWorker.getRegistration();
       if (reg) return reg;
-      // SW not yet registered — wait up to SW_READY_TIMEOUT_MS for it
-      const raced = await Promise.race([
-        navigator.serviceWorker.ready,
-        new Promise<undefined>((resolve) =>
-          setTimeout(() => resolve(undefined), SW_READY_TIMEOUT_MS)
-        ),
-      ]);
-      return raced ?? undefined;
+      // Poll until the SW shows up or we hit the timeout.
+      while (Date.now() < deadline) {
+        await new Promise<void>((resolve) =>
+          setTimeout(resolve, SW_POLL_INTERVAL_MS)
+        );
+        reg = await navigator.serviceWorker.getRegistration();
+        if (reg) return reg;
+      }
+      return undefined;
     }
 
     // Guard: prevent duplicate init() runs (e.g. from re-mounted components)
