@@ -1,4 +1,4 @@
-import { computed, inject, PLATFORM_ID } from '@angular/core';
+import { computed, inject, PLATFORM_ID, signal } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { toSignal } from '@angular/core/rxjs-interop';
 import {
@@ -48,20 +48,29 @@ export const AdsStore = signalStore(
   { providedIn: 'root' },
   withState(initialState),
   withProps(() => {
-    const remoteConfig = inject(RemoteConfig);
+    const isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
+    // On SSR, RemoteConfig observables crash because the server app's
+    // _initializePromise is null. Return inert signals on the server.
+    const remoteConfig = isBrowser ? inject(RemoteConfig) : null;
     return {
       _remoteConfig: remoteConfig,
-      enabled: toSignal(getBooleanChanges(remoteConfig, 'ads_enabled')),
-      dashboardInlineEnabled: toSignal(
-        getBooleanChanges(remoteConfig, 'ads_dashboard_inline_enabled')
-      ),
-      adClient: toSignal(getStringChanges(remoteConfig, 'ads_client')),
-      dashboardInlineSlot: toSignal(
-        getStringChanges(remoteConfig, 'ads_dashboard_inline_slot')
-      ),
-      landingInlineSlot: toSignal(
-        getStringChanges(remoteConfig, 'ads_landing_inline_slot')
-      ),
+      enabled: remoteConfig
+        ? toSignal(getBooleanChanges(remoteConfig, 'ads_enabled'))
+        : signal(undefined),
+      dashboardInlineEnabled: remoteConfig
+        ? toSignal(
+            getBooleanChanges(remoteConfig, 'ads_dashboard_inline_enabled')
+          )
+        : signal(undefined),
+      adClient: remoteConfig
+        ? toSignal(getStringChanges(remoteConfig, 'ads_client'))
+        : signal(undefined),
+      dashboardInlineSlot: remoteConfig
+        ? toSignal(getStringChanges(remoteConfig, 'ads_dashboard_inline_slot'))
+        : signal(undefined),
+      landingInlineSlot: remoteConfig
+        ? toSignal(getStringChanges(remoteConfig, 'ads_landing_inline_slot'))
+        : signal(undefined),
     };
   }),
   withComputed((store) => ({
@@ -69,7 +78,10 @@ export const AdsStore = signalStore(
     adsAllowed: computed(() => !!store.enabled() && store.consentAnswered()),
   })),
   withMethods((store) => ({
-    init: () => fetchAndActivate(store._remoteConfig),
+    init: () =>
+      store._remoteConfig
+        ? fetchAndActivate(store._remoteConfig)
+        : Promise.resolve(false),
     setTargetedAdsConsent: (value: boolean | undefined) => {
       if (typeof value !== 'boolean') return;
       patchState(store, { targetedAdsConsent: value, consentAnswered: true });
