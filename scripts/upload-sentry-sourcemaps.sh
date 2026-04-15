@@ -1,35 +1,31 @@
 #!/bin/bash
 # Upload source maps to Sentry after production build.
-# Usage: SENTRY_AUTH_TOKEN=xxx bash scripts/upload-sentry-sourcemaps.sh
+# Requires SENTRY_AUTH_TOKEN env var. Org/project read from .sentryclirc.
+# Usage: pnpm sentry:sourcemaps
 set -e
 
-ORG="wolfram-sokollek-k4"
-PROJECT="pushup-stats-service"
 VERSION=$(node -p "require('./package.json').version")
 GIT_SHA=$(git rev-parse --short HEAD 2>/dev/null || echo "unknown")
 RELEASE="${VERSION}-${GIT_SHA}"
 
-echo "Uploading source maps for release $RELEASE..."
+echo "Sentry source maps -- release: $RELEASE"
 
-npx @sentry/cli releases new "$RELEASE" --org "$ORG" --project "$PROJECT"
+# Inject SENTRY_RELEASE into browser HTML so the SDK picks it up at runtime.
+# Production build outputs localized dirs (de/, en/) each with index.html
+# and possibly index.csr.html (prerendered client-side fallback pages).
+find dist/web/browser \( -name "index.html" -o -name "index.csr.html" \) \
+  -exec sed -i "s|</head>|<script>globalThis.SENTRY_RELEASE=\"${RELEASE}\";</script></head>|" {} \;
 
-# Browser source maps
-npx @sentry/cli releases files "$RELEASE" upload-sourcemaps \
-  dist/web/browser \
-  --org "$ORG" --project "$PROJECT" \
-  --url-prefix "~/" --rewrite
+# Inject debug IDs into JS bundles and their .map files.
+# This lets Sentry match errors to source maps without relying on release alone.
+npx sentry-cli sourcemaps inject dist/web
 
-# SSR/Server source maps
-if [ -d "dist/web/server" ]; then
-  npx @sentry/cli releases files "$RELEASE" upload-sourcemaps \
-    dist/web/server \
-    --org "$ORG" --project "$PROJECT" \
-    --url-prefix "~/" --rewrite
-fi
+# Upload source maps (browser + server) with release association.
+npx sentry-cli sourcemaps upload \
+  --release="$RELEASE" \
+  dist/web
 
-npx @sentry/cli releases finalize "$RELEASE" --org "$ORG" --project "$PROJECT"
+# Delete .map files so they are not shipped to production.
+find dist/web -name "*.map" -delete 2>/dev/null || true
 
-# Remove source maps from deploy artifact to prevent leaking
-find dist/web/browser -name "*.map" -delete 2>/dev/null || true
-find dist/web/server -name "*.map" -delete 2>/dev/null || true
-echo "Source maps uploaded and removed from dist."
+echo "Source maps uploaded and cleaned up."

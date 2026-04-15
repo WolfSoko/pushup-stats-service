@@ -29,6 +29,11 @@ jobs:
         run: pnpm install --frozen-lockfile
       - name: Build web app
         run: pnpm nx run web:build -c production
+      - name: Upload source maps to Sentry
+        if: env.SENTRY_AUTH_TOKEN != ''
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+        run: pnpm sentry:sourcemaps
       - name: Build Cloud Functions
         run: pnpm nx run cloud-functions:build
       - name: Prepare Hosting artifact
