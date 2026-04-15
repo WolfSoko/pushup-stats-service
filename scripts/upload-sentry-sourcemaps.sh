@@ -4,9 +4,7 @@
 # Usage: pnpm sentry:sourcemaps
 set -e
 
-VERSION=$(node -p "require('./package.json').version")
-GIT_SHA=$(git rev-parse --short HEAD 2>/dev/null || echo "unknown")
-RELEASE="${VERSION}-${GIT_SHA}"
+RELEASE=$(git rev-parse --short HEAD 2>/dev/null || echo "unknown")
 
 echo "Sentry source maps -- release: $RELEASE"
 

@@ -15,9 +15,7 @@ import { pinoHttp } from 'pino-http';
 const isProduction = process.env['NODE_ENV'] === 'production';
 
 if (isProduction) {
-  const gitSha = process.env['GIT_SHA'] ?? '';
-  const version = process.env['npm_package_version'] ?? '';
-  const release = gitSha ? `${version}-${gitSha}` : version;
+  const release = process.env['GIT_SHA'] || undefined;
 
   Sentry.init({
     dsn: 'https://084cd4acd3e626148eba3a831d0e4bee@o1384048.ingest.us.sentry.io/4511089937219584',
