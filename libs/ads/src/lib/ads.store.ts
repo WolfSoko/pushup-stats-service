@@ -51,7 +51,9 @@ export const AdsStore = signalStore(
     const isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
     // On SSR, RemoteConfig observables crash because the server app's
     // _initializePromise is null. Return inert signals on the server.
-    const remoteConfig = isBrowser ? inject(RemoteConfig) : null;
+    const remoteConfig = isBrowser
+      ? inject(RemoteConfig, { optional: true })
+      : null;
     return {
       _remoteConfig: remoteConfig,
       enabled: remoteConfig
