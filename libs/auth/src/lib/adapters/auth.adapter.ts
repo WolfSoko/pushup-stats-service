@@ -58,13 +58,12 @@ export class AuthAdapter {
   }
 
   // On SSR, Firebase Auth observables crash because the server app's
-  // _initializePromise is null. Return inert signals on the server.
-  readonly authUser = this.isBrowser
-    ? toSignal(user(this.auth))
-    : signal(undefined);
+  // _initializePromise is null. Return null (= resolved, unauthenticated)
+  // so that authResolved() is true and SSR renders the unauthenticated state.
+  readonly authUser = this.isBrowser ? toSignal(user(this.auth)) : signal(null);
   readonly authState = this.isBrowser
     ? toSignal(authState(this.auth))
-    : signal(undefined);
+    : signal(null);
   readonly loading = signal(false);
   readonly error = signal<null | Error>(null);
   readonly isAuthenticated = computed(() => this.authState() != null);
@@ -72,7 +71,7 @@ export class AuthAdapter {
   readonly authResolved = computed(() => this.authState() !== undefined);
   readonly idToken = this.isBrowser
     ? toSignal(idToken(this.auth))
-    : signal(undefined);
+    : signal(null);
 
   async signInWithGoogle(): Promise<UserCredential> {
     const provider = new GoogleAuthProvider();

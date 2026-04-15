@@ -76,11 +76,12 @@ describe('AuthAdapter', () => {
       ],
     });
     const adapter = fixture.debugElement.injector.get(AuthAdapter);
-    // On the server, signals return undefined instead of subscribing
-    expect(adapter.authUser()).toBeUndefined();
-    expect(adapter.authState()).toBeUndefined();
-    expect(adapter.idToken()).toBeUndefined();
+    // On the server, signals return null (= resolved, unauthenticated)
+    // so SSR renders the unauthenticated state, not a "loading" state
+    expect(adapter.authUser()).toBeNull();
+    expect(adapter.authState()).toBeNull();
+    expect(adapter.idToken()).toBeNull();
     expect(adapter.isAuthenticated()).toBe(false);
-    expect(adapter.authResolved()).toBe(false);
+    expect(adapter.authResolved()).toBe(true);
   });
 });
