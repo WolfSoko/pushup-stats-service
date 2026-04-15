@@ -1,3 +1,4 @@
+import { PLATFORM_ID } from '@angular/core';
 import { Auth, deleteUser as deleteUserFn } from '@angular/fire/auth';
 import { render } from '@testing-library/angular';
 import { AuthAdapter } from './auth.adapter';
@@ -64,5 +65,23 @@ describe('AuthAdapter', () => {
     const adapter = fixture.debugElement.injector.get(AuthAdapter);
     await adapter.deleteUser();
     expect(deleteUserMock).not.toHaveBeenCalled();
+  });
+
+  it('should not crash on server platform (SSR)', async () => {
+    const { fixture } = await render('', {
+      providers: [
+        { provide: Auth, useValue: mockAuth },
+        { provide: PLATFORM_ID, useValue: 'server' },
+        AuthAdapter,
+      ],
+    });
+    const adapter = fixture.debugElement.injector.get(AuthAdapter);
+    // On the server, signals return null (= resolved, unauthenticated)
+    // so SSR renders the unauthenticated state, not a "loading" state
+    expect(adapter.authUser()).toBeNull();
+    expect(adapter.authState()).toBeNull();
+    expect(adapter.idToken()).toBeNull();
+    expect(adapter.isAuthenticated()).toBe(false);
+    expect(adapter.authResolved()).toBe(true);
   });
 });

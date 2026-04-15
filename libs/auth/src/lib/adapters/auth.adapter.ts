@@ -1,4 +1,11 @@
-import { computed, inject, Injectable, signal } from '@angular/core';
+import {
+  computed,
+  inject,
+  Injectable,
+  PLATFORM_ID,
+  signal,
+} from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { toSignal } from '@angular/core/rxjs-interop';
 import {
   Auth,
@@ -29,6 +36,7 @@ export interface AuthCredentials {
 })
 export class AuthAdapter {
   private auth = inject(Auth);
+  private isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
 
   /**
    * Synchronous Firebase current user — available immediately after Firebase
@@ -49,15 +57,21 @@ export class AuthAdapter {
     return this.auth.authStateReady();
   }
 
-  // Public computed signals
-  readonly authUser = toSignal(user(this.auth));
-  readonly authState = toSignal(authState(this.auth));
+  // On SSR, Firebase Auth observables crash because the server app's
+  // _initializePromise is null. Return null (= resolved, unauthenticated)
+  // so that authResolved() is true and SSR renders the unauthenticated state.
+  readonly authUser = this.isBrowser ? toSignal(user(this.auth)) : signal(null);
+  readonly authState = this.isBrowser
+    ? toSignal(authState(this.auth))
+    : signal(null);
   readonly loading = signal(false);
   readonly error = signal<null | Error>(null);
   readonly isAuthenticated = computed(() => this.authState() != null);
   /** `true` once the initial Firebase auth state has been determined (session restored or confirmed absent). */
   readonly authResolved = computed(() => this.authState() !== undefined);
-  readonly idToken = toSignal(idToken(this.auth));
+  readonly idToken = this.isBrowser
+    ? toSignal(idToken(this.auth))
+    : signal(null);
 
   async signInWithGoogle(): Promise<UserCredential> {
     const provider = new GoogleAuthProvider();
