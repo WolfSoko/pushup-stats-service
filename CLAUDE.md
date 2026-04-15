@@ -163,6 +163,7 @@ pnpm nx run-many --target=lint   # Lint all projects
 - **Firebase App Hosting** (SSR/Cloud Run, `apphosting.yaml`): Auto-deploys on push to `deploy` branch (configured in Firebase Console).
 - **PR Previews** (`.github/workflows/firebase-hosting-pull-request.yml`): Full staging deployment on every PR (same-repo only) — see Staging Environment below.
 - **Rule:** No deployment path should bypass CI. Both Hosting and App Hosting are gated on green CI.
+- **Sentry source maps:** The deploy workflow uploads source maps to Sentry after the production build (`pnpm sentry:sourcemaps`). Requires `SENTRY_AUTH_TOKEN` GitHub secret. See Observability section below.
 
 ### Staging Environment
 
@@ -309,6 +310,16 @@ Fall back to client-side computation when keys are stale. The precomputed doc is
 - **`@angular/fire/firestore` import in Jest:** Importing the module at all triggers `fetch is not defined`. Always `jest.mock('@angular/fire/firestore', () => ({...}))` at the top of the file — see `pushup-firestore.service.spec.ts` for the pattern. Use `jest.mocked(getDoc)` instead of `jest.requireMock()` for type safety.
 - **Cloud Function pure logic testing:** Extract business logic to separate modules (not in Cloud Function triggers) for testability. See `user-stats-delta.ts` pattern: pure functions tested separately via Jest without Firebase mocks, triggers are thin wrappers that call the logic. This enables testing calculation correctness without mocking Firestore.
 - **Version-based migrations:** When updating server-side calculation logic (e.g. UserStats), increment `USERSTATS_VERSION` constant. This triggers automatic rebuilds for affected users on their next entry. Tests must validate version is set correctly in rebuilt stats.
+
+## Observability (Sentry)
+
+- **SDKs:** `@sentry/angular` (browser, `web/src/main.ts`) + `@sentry/node` (SSR server, `web/src/server.ts`). Both only active in production.
+- **Release identifier:** Short git SHA (e.g. `abc1234`). No semantic versioning.
+  - **Browser:** Injected into HTML as `globalThis.SENTRY_RELEASE` by the upload script. Read by `Sentry.init()` in `main.ts`.
+  - **Server:** Read from `process.env['GIT_SHA']` in `server.ts`.
+- **Source maps:** Uploaded to Sentry during the deploy workflow via `pnpm sentry:sourcemaps` (`scripts/upload-sentry-sourcemaps.sh`). Uses `sentry-cli sourcemaps inject` (debug IDs) + `sourcemaps upload`. Map files are deleted from `dist/` after upload so they are not shipped to production.
+- **Config:** Org and project are set in `.sentryclirc`. DSN is hardcoded in `main.ts` and `server.ts`.
+- **GitHub Secret required:** `SENTRY_AUTH_TOKEN` — Sentry auth token with scopes `org:ci`, `project:releases`, `project:write`. The deploy step is skipped gracefully when the secret is absent.
 
 ## Workflow
 
