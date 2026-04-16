@@ -317,7 +317,7 @@ Fall back to client-side computation when keys are stale. The precomputed doc is
 - **Release identifier:** Short git SHA (e.g. `abc1234`). No semantic versioning.
   - **Browser:** Injected into HTML as `globalThis.SENTRY_RELEASE` by the upload script. Read by `Sentry.init()` in `main.ts`.
   - **Server:** Read from `process.env['GIT_SHA']` in `server.ts`.
-- **Source maps:** Uploaded to Sentry during the deploy workflow via `pnpm sentry:sourcemaps` (`scripts/upload-sentry-sourcemaps.sh`). Uses `sentry-cli sourcemaps inject` (debug IDs) + `sourcemaps upload`. Map files are deleted from `dist/` after upload so they are not shipped to production.
+- **Release lifecycle:** The deploy script (`scripts/upload-sentry-sourcemaps.sh`) creates a release, links commits (`set-commits --auto` for suspect commits), uploads source maps, and finalizes the release. Map files are deleted from `dist/` after upload so they are not shipped to production.
 - **Config:** Org and project are set in `.sentryclirc`. DSN is hardcoded in `main.ts` and `server.ts`.
 - **GitHub Secret required:** `SENTRY_AUTH_TOKEN` — Sentry auth token with scopes `org:ci`, `project:releases`, `project:write`. The deploy step is skipped gracefully when the secret is absent.
 
