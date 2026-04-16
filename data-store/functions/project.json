@@ -18,6 +18,7 @@
         "bundle": true,
         "thirdParty": false,
         "generatePackageJson": true,
+        "sourceMap": true,
         "assets": []
       }
     },

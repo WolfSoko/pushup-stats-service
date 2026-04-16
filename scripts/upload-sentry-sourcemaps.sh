@@ -31,6 +31,19 @@ npx sentry-cli sourcemaps upload \
   --release="$RELEASE" \
   dist/web
 
+# Upload Cloud Functions source maps (if built).
+if [ -d "data-store/functions-dist" ]; then
+  npx sentry-cli sourcemaps inject data-store/functions-dist
+  npx sentry-cli sourcemaps upload \
+    --release="$RELEASE" \
+    data-store/functions-dist
+  find data-store/functions-dist -name "*.map" -delete 2>/dev/null || true
+  echo "Cloud Functions source maps uploaded."
+
+  # Write SENTRY_RELEASE to .env so Firebase Functions picks it up at runtime.
+  echo "SENTRY_RELEASE=$RELEASE" >> data-store/functions-dist/.env
+fi
+
 # Delete .map files so they are not shipped to production.
 find dist/web -name "*.map" -delete 2>/dev/null || true
 

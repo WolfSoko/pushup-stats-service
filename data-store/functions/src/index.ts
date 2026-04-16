@@ -1,3 +1,12 @@
+import * as Sentry from '@sentry/node';
+
+Sentry.init({
+  dsn: 'https://084cd4acd3e626148eba3a831d0e4bee@o1384048.ingest.us.sentry.io/4511089937219584',
+  release: process.env['SENTRY_RELEASE'] || undefined,
+  environment: process.env['SENTRY_ENVIRONMENT'] ?? 'production',
+  tracesSampleRate: 0.1,
+});
+
 import { onDocumentWritten } from 'firebase-functions/v2/firestore';
 import { onSchedule } from 'firebase-functions/v2/scheduler';
 import { onCall, HttpsError } from 'firebase-functions/v2/https';

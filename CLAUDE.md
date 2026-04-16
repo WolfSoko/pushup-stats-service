@@ -313,12 +313,13 @@ Fall back to client-side computation when keys are stale. The precomputed doc is
 
 ## Observability (Sentry)
 
-- **SDKs:** `@sentry/angular` (browser, `web/src/main.ts`) + `@sentry/node` (SSR server, `web/src/server.ts`). Both only active in production.
+- **SDKs:** `@sentry/angular` (browser, `web/src/main.ts`) + `@sentry/node` (SSR server, `web/src/server.ts` + Cloud Functions, `data-store/functions/src/index.ts`). Browser and SSR only active in production; Cloud Functions always active.
 - **Release identifier:** Short git SHA (e.g. `abc1234`). No semantic versioning.
   - **Browser:** Injected into HTML as `globalThis.SENTRY_RELEASE` by the upload script. Read by `Sentry.init()` in `main.ts`.
   - **Server:** Read from `process.env['GIT_SHA']` in `server.ts`.
-- **Release lifecycle:** The deploy script (`scripts/upload-sentry-sourcemaps.sh`) creates a release, links commits (`set-commits --auto` for suspect commits), uploads source maps, and finalizes the release. Map files are deleted from `dist/` after upload so they are not shipped to production.
-- **Config:** Org and project are set in `.sentryclirc`. DSN is hardcoded in `main.ts` and `server.ts`.
+  - **Cloud Functions:** Read from `process.env['SENTRY_RELEASE']` — written to `data-store/functions-dist/.env` by the upload script during CI deploy.
+- **Release lifecycle:** The deploy script (`scripts/upload-sentry-sourcemaps.sh`) creates a release, links commits (`set-commits --auto` for suspect commits), uploads source maps (web + Cloud Functions), and finalizes the release. Map files are deleted from build outputs after upload so they are not shipped to production.
+- **Config:** Org and project are set in `.sentryclirc`. DSN is hardcoded in `main.ts`, `server.ts`, and CF `index.ts`.
 - **GitHub Secret required:** `SENTRY_AUTH_TOKEN` — Sentry auth token with scopes `org:ci`, `project:releases`, `project:write`. The deploy step is skipped gracefully when the secret is absent.
 
 ## Workflow
