@@ -1,4 +1,41 @@
+import { RecaptchaEnterpriseServiceClient } from '@google-cloud/recaptcha-enterprise';
+import { GoogleGenerativeAI } from '@google/generative-ai';
+import type { UserStats } from '@pu-stats/models';
+import { USERSTATS_VERSION } from '@pu-stats/models';
 import * as Sentry from '@sentry/node';
+import * as admin from 'firebase-admin';
+import { logger } from 'firebase-functions';
+import { defineSecret } from 'firebase-functions/params';
+import { onDocumentWritten } from 'firebase-functions/v2/firestore';
+import { HttpsError, onCall } from 'firebase-functions/v2/https';
+import { onSchedule } from 'firebase-functions/v2/scheduler';
+import webpush from 'web-push';
+import {
+  buildGithubIssueBody,
+  validateAdminAccess,
+  validateFeedbackId,
+  validateMarkFeedbackReadPayload,
+} from './admin';
+import { parseRecaptchaResponse } from './authentication';
+
+// Module imports
+import { berlinDateParts, isoWeekFromYmd } from './datetime';
+import { getMonthStartForQuery, rankEntries } from './leaderboard';
+import {
+  FALLBACK_QUOTES_DE,
+  FALLBACK_QUOTES_EN,
+  QUOTE_CACHE_HOURS,
+} from './motivation';
+import { UserProfile } from './profile';
+import type { ReminderConfig } from './push';
+import {
+  buildNotificationPayload,
+  isLeaseStale,
+  pushSubscriptionId,
+  shouldSendReminder,
+  STALE_LEASE_MS,
+} from './push';
+import { applyDelta, rebuildFromEntries } from './user-stats-delta';
 
 Sentry.init({
   dsn: 'https://084cd4acd3e626148eba3a831d0e4bee@o1384048.ingest.us.sentry.io/4511089937219584',
@@ -6,44 +43,6 @@ Sentry.init({
   environment: process.env['SENTRY_ENVIRONMENT'] ?? 'production',
   tracesSampleRate: 0.1,
 });
-
-import { onDocumentWritten } from 'firebase-functions/v2/firestore';
-import { onSchedule } from 'firebase-functions/v2/scheduler';
-import { onCall, HttpsError } from 'firebase-functions/v2/https';
-import { logger } from 'firebase-functions';
-import { RecaptchaEnterpriseServiceClient } from '@google-cloud/recaptcha-enterprise';
-import { GoogleGenerativeAI } from '@google/generative-ai';
-import * as admin from 'firebase-admin';
-import webpush from 'web-push';
-import { defineSecret } from 'firebase-functions/params';
-import type { UserStats } from '@pu-stats/models';
-import { USERSTATS_VERSION } from '@pu-stats/models';
-import { applyDelta, rebuildFromEntries } from './user-stats-delta';
-
-// Module imports
-import { berlinDateParts, isoWeekFromYmd } from './datetime';
-import { rankEntries, getMonthStartForQuery } from './leaderboard';
-import { UserProfile } from './profile';
-import {
-  QUOTE_CACHE_HOURS,
-  FALLBACK_QUOTES_DE,
-  FALLBACK_QUOTES_EN,
-} from './motivation';
-import { pushSubscriptionId } from './push/subscription';
-import {
-  shouldSendReminder,
-  buildNotificationPayload,
-  isLeaseStale,
-  STALE_LEASE_MS,
-} from './push/reminders';
-import type { ReminderConfig } from './push/reminders';
-import { parseRecaptchaResponse } from './authentication';
-import {
-  validateAdminAccess,
-  validateFeedbackId,
-  validateMarkFeedbackReadPayload,
-  buildGithubIssueBody,
-} from './admin/logic';
 
 admin.initializeApp();
 
@@ -839,8 +838,8 @@ export const dispatchPushReminders = onSchedule(
     secrets: [VAPID_PRIVATE_KEY, VAPID_PUBLIC_KEY],
   },
   async () => {
-    const vapidPrivate = VAPID_PRIVATE_KEY.value();
-    const vapidPublic = VAPID_PUBLIC_KEY.value();
+    const vapidPrivate = VAPID_PRIVATE_KEY.value().trim();
+    const vapidPublic = VAPID_PUBLIC_KEY.value().trim();
 
     if (!vapidPrivate || !vapidPublic) {
       logger.warn('dispatchPushReminders: VAPID secrets not set, skipping');
