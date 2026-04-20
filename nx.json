@@ -110,5 +110,6 @@
         "targetName": "e2e"
       }
     }
-  ]
+  ],
+  "analytics": true
 }
