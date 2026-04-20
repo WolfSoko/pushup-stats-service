@@ -14,10 +14,15 @@ describe('FeedbackService', () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
+    TestBed.resetTestingModule();
     TestBed.configureTestingModule({
-      providers: [FeedbackService, { provide: Firestore, useValue: {} }],
+      providers: [{ provide: Firestore, useValue: {} }],
     });
-    service = TestBed.inject(FeedbackService);
+    // Construct inside an injection context so `inject(Firestore, …)` resolves
+    // against the test module's providers regardless of the service's
+    // `providedIn: 'root'` — avoids CI-only null-injector when the root
+    // injector is reused across test files.
+    service = TestBed.runInInjectionContext(() => new FeedbackService());
   });
 
   it('should be created', () => {
