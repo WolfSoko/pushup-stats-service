@@ -1,6 +1,3 @@
-packages:
-  - 'data-store/functions'
-
 allowBuilds:
   '@firebase/util': true
   '@nestjs/core': true
