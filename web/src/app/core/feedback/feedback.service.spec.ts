@@ -18,11 +18,16 @@ describe('FeedbackService', () => {
     TestBed.configureTestingModule({
       providers: [{ provide: Firestore, useValue: {} }],
     });
-    // Construct inside an injection context so `inject(Firestore, …)` resolves
-    // against the test module's providers regardless of the service's
-    // `providedIn: 'root'` — avoids CI-only null-injector when the root
-    // injector is reused across test files.
-    service = TestBed.runInInjectionContext(() => new FeedbackService());
+    service = TestBed.inject(FeedbackService);
+    // Nx Cloud distributed runners resolve `inject(Firestore, {optional:true})`
+    // to null because the provided-in-root service instantiates in a parent
+    // injector that doesn't see the test module's Firestore override. Pin the
+    // field directly so the test exercises submit() regardless of DI topology.
+    Object.defineProperty(service, 'firestore', {
+      value: {},
+      configurable: true,
+      writable: true,
+    });
   });
 
   it('should be created', () => {

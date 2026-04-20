@@ -165,7 +165,8 @@
       "options": {
         "tsConfig": "web/tsconfig.spec.json",
         "coverage": true,
-        "watch": false
+        "watch": false,
+        "runnerConfig": "web/vitest.config.ts"
       }
     },
     "extract-i18n": {
