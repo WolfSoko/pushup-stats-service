@@ -30,15 +30,33 @@ jobs:
         with:
           filter: tree:0
           fetch-depth: 0
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v6
-        with:
-          cache: true
 
       - name: Setup Node
         uses: actions/setup-node@v6
         with:
           node-version-file: .nvmrc
+
+      # Use corepack to install the exact pnpm version pinned in package.json's
+      # `packageManager` field. Avoids pnpm/action-setup@v6 pulling pnpm v11 RC,
+      # which rewrites pnpm-lock.yaml with two YAML docs that Nx cannot parse
+      # (see pnpm/action-setup#228).
+      - name: Enable corepack
+        env:
+          COREPACK_ENABLE_DOWNLOAD_PROMPT: '0'
+        run: |
+          corepack enable
+          pnpm --version
+
+      - name: Get pnpm store path
+        id: pnpm-store
+        run: echo "path=$(pnpm store path --silent)" >> "$GITHUB_OUTPUT"
+
+      - name: Cache pnpm store
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.pnpm-store.outputs.path }}
+          key: pnpm-store-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: pnpm-store-${{ runner.os }}-
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
