@@ -10,8 +10,15 @@ declare module 'web-push' {
     privateKey: string
   ): void;
 
+  interface RequestOptions {
+    urgency?: 'very-low' | 'low' | 'normal' | 'high';
+    TTL?: number;
+    topic?: string;
+  }
+
   function sendNotification(
     subscription: PushSubscription,
-    payload: string
+    payload: string,
+    options?: RequestOptions
   ): Promise<unknown>;
 }

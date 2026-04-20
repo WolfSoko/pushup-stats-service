@@ -32,6 +32,7 @@ import {
   buildNotificationPayload,
   isLeaseStale,
   pushSubscriptionId,
+  PUSH_SEND_OPTIONS,
   shouldSendReminder,
   STALE_LEASE_MS,
 } from './push';
@@ -969,7 +970,11 @@ export const dispatchPushReminders = onSchedule(
             };
 
             try {
-              await webpush.sendNotification(pushSub, payload);
+              await webpush.sendNotification(
+                pushSub,
+                payload,
+                PUSH_SEND_OPTIONS
+              );
               sentToUser = true;
             } catch (err: unknown) {
               const pushErr = err as { statusCode?: number };

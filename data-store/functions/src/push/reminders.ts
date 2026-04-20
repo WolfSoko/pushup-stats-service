@@ -91,6 +91,26 @@ export function shouldSendReminder(
 export const STALE_LEASE_MS = 10 * 60 * 1000;
 
 /**
+ * Web Push send options used by `dispatchPushReminders`.
+ *
+ * Why `urgency: 'high'`: without this the push service treats the message as
+ * low-priority and batches it during Android Doze/App-Standby, so messages
+ * only arrive when the browser wakes up (e.g. on app-open).
+ *
+ * Why `TTL: 1800`: a reminder older than 30 minutes is no longer useful — drop
+ * it rather than letting the default (4 weeks) pile up in the push-service
+ * queue and deliver as a burst.
+ *
+ * Why `topic: 'reminder'`: tells FCM to collapse queued messages with the same
+ * topic so at most one pending reminder exists per device.
+ */
+export const PUSH_SEND_OPTIONS = {
+  urgency: 'high',
+  TTL: 1800,
+  topic: 'reminder',
+} as const;
+
+/**
  * Checks whether an existing dispatch lease is stale (stuck) and can be
  * reclaimed. A lease is stale when leaseAcquiredAt is either missing or
  * older than STALE_LEASE_MS.

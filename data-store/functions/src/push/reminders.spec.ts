@@ -4,6 +4,7 @@ import {
   buildNotificationPayload,
   isLeaseStale,
   STALE_LEASE_MS,
+  PUSH_SEND_OPTIONS,
   ReminderConfig,
   FirestoreTimestamp,
 } from './reminders';
@@ -337,6 +338,20 @@ describe('push/reminders', () => {
 
     it('STALE_LEASE_MS is 10 minutes', () => {
       expect(STALE_LEASE_MS).toBe(10 * 60 * 1000);
+    });
+  });
+
+  describe('PUSH_SEND_OPTIONS', () => {
+    it('uses high urgency so Android wakes the SW instead of batching', () => {
+      expect(PUSH_SEND_OPTIONS.urgency).toBe('high');
+    });
+
+    it('uses a short TTL so stale reminders do not pile up in the queue', () => {
+      expect(PUSH_SEND_OPTIONS.TTL).toBe(1800);
+    });
+
+    it('uses a topic so FCM collapses queued reminders', () => {
+      expect(PUSH_SEND_OPTIONS.topic).toBe('reminder');
     });
   });
 });
