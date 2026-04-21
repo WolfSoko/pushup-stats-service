@@ -2,6 +2,7 @@ import { describe, it, expect } from '@jest/globals';
 import {
   parseRecaptchaResponse,
   validateRecaptchaPayload,
+  validateRevokeSessionsRequest,
   RecaptchaResponse,
 } from './logic';
 
@@ -127,13 +128,19 @@ describe('authentication/logic', () => {
         },
         riskAnalysis: {
           score: 0.7,
-          reasons: ['SUSPICIOUS_ENVIRONMENT', 'UNEXPECTED_ENVIRONMENT'] as unknown[] as string[],
+          reasons: [
+            'SUSPICIOUS_ENVIRONMENT',
+            'UNEXPECTED_ENVIRONMENT',
+          ] as unknown[] as string[],
         },
       };
 
       const result = parseRecaptchaResponse(response, expectedAction, minScore);
 
-      expect(result.reasons).toEqual(['SUSPICIOUS_ENVIRONMENT', 'UNEXPECTED_ENVIRONMENT']);
+      expect(result.reasons).toEqual([
+        'SUSPICIOUS_ENVIRONMENT',
+        'UNEXPECTED_ENVIRONMENT',
+      ]);
     });
 
     it('handles score of 0 correctly', () => {
@@ -225,6 +232,59 @@ describe('authentication/logic', () => {
       const result = validateRecaptchaPayload(null, null);
 
       expect(result.valid).toBe(false);
+    });
+  });
+
+  describe('validateRevokeSessionsRequest', () => {
+    it('returns null for an authenticated email/password user', () => {
+      const result = validateRevokeSessionsRequest({
+        uid: 'user1',
+        token: { firebase: { sign_in_provider: 'password' } },
+      });
+      expect(result).toBeNull();
+    });
+
+    it('returns null for an authenticated Google user', () => {
+      const result = validateRevokeSessionsRequest({
+        uid: 'user1',
+        token: { firebase: { sign_in_provider: 'google.com' } },
+      });
+      expect(result).toBeNull();
+    });
+
+    it('rejects unauthenticated request (undefined auth)', () => {
+      const result = validateRevokeSessionsRequest(undefined);
+      expect(result).toEqual({
+        code: 'unauthenticated',
+        message: 'Nicht angemeldet.',
+      });
+    });
+
+    it('rejects request with empty uid', () => {
+      const result = validateRevokeSessionsRequest({
+        uid: '',
+        token: { firebase: { sign_in_provider: 'password' } },
+      });
+      expect(result?.code).toBe('unauthenticated');
+    });
+
+    it('rejects anonymous (guest) sessions', () => {
+      const result = validateRevokeSessionsRequest({
+        uid: 'anon-uid',
+        token: { firebase: { sign_in_provider: 'anonymous' } },
+      });
+      expect(result).toEqual({
+        code: 'failed-precondition',
+        message: 'Gast-Sitzungen können nicht abgemeldet werden.',
+      });
+    });
+
+    it('treats a missing firebase claim as non-anonymous (defensive)', () => {
+      const result = validateRevokeSessionsRequest({
+        uid: 'user1',
+        token: {},
+      });
+      expect(result).toBeNull();
     });
   });
 });

@@ -16,7 +16,10 @@ import {
   validateFeedbackId,
   validateMarkFeedbackReadPayload,
 } from './admin';
-import { parseRecaptchaResponse } from './authentication';
+import {
+  parseRecaptchaResponse,
+  validateRevokeSessionsRequest,
+} from './authentication';
 
 // Module imports
 import { berlinDateParts, isoWeekFromYmd } from './datetime';
@@ -823,6 +826,31 @@ export const deletePushSubscription = onCall(
 
     logger.info('deletePushSubscription: removed', { uid, subId, deviceCount });
     return { ok: true, deviceCount };
+  }
+);
+
+// ─── revokeAllSessions ─────────────────────────────────────────────────────
+// Allows the signed-in user to revoke all of their refresh tokens (logging
+// them out of every device on next token refresh / API call) and clean up
+// all push subscriptions registered against their UID. Anonymous (guest)
+// sessions are intentionally rejected — there is nothing useful to revoke
+// and a guest has no way to recover the same UID afterwards.
+
+export const revokeAllSessions = onCall(
+  { region: 'europe-west3' },
+  async (request) => {
+    const error = validateRevokeSessionsRequest(request.auth);
+    if (error) throw new HttpsError(error.code, error.message);
+
+    // The validator above guarantees `request.auth` is set; capture the uid
+    // explicitly to keep a narrow type without a non-null assertion.
+    const uid = String(request.auth?.uid ?? '');
+
+    await admin.auth().revokeRefreshTokens(uid);
+    await deleteAllPushSubscriptions(uid);
+
+    logger.info('revokeAllSessions: revoked', { uid });
+    return { ok: true };
   }
 );
 

@@ -24,6 +24,7 @@ import {
   user,
   UserCredential,
 } from '@angular/fire/auth';
+import { Functions, httpsCallable } from '@angular/fire/functions';
 
 export type AuthProvider = 'google' | 'email';
 
@@ -37,6 +38,12 @@ export interface AuthCredentials {
 export class AuthAdapter {
   private auth = inject(Auth);
   private isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
+  // Functions is browser-only (SSR has no AngularFire Functions instance and
+  // we never invoke callables on the server). Inject as optional so SSR
+  // bootstrap doesn't blow up when no Functions provider is registered.
+  private functions = this.isBrowser
+    ? inject(Functions, { optional: true })
+    : null;
 
   /**
    * Synchronous Firebase current user — available immediately after Firebase
@@ -134,5 +141,22 @@ export class AuthAdapter {
     if (this.auth.currentUser) {
       return await deleteUser(this.auth.currentUser);
     }
+  }
+
+  /**
+   * Calls the `revokeAllSessions` Cloud Function which invalidates every
+   * refresh token issued for the current user (i.e. signs them out of all
+   * devices) and deletes all stored push subscriptions. The local session
+   * is signed out separately by the caller.
+   */
+  async revokeAllSessions(): Promise<void> {
+    if (!this.functions) {
+      throw new Error('Cloud Functions not available');
+    }
+    const callable = httpsCallable<unknown, { ok: boolean }>(
+      this.functions,
+      'revokeAllSessions'
+    );
+    await callable({});
   }
 }

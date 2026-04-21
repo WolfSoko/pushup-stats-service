@@ -97,6 +97,85 @@ describe('AuthStore – signInWithEmail return value', () => {
   });
 });
 
+describe('AuthStore – logoutAllDevices', () => {
+  function makeAuthServiceWith(
+    impl: Partial<AuthService>
+  ): Partial<AuthService> {
+    return {
+      user: (() => null) as Signal<ReturnType<AuthService['user']>>,
+      isAuthenticated: (() => true) as Signal<boolean>,
+      idToken: (() => 'token') as Signal<string | null | undefined>,
+      userDbSyncState: signal('idle' as const),
+      ...impl,
+    };
+  }
+
+  it('returns true and clears error when revoke succeeds', async () => {
+    const service = makeAuthServiceWith({
+      logoutAllDevices: () => Promise.resolve(),
+    });
+    const { fixture } = await render('', {
+      providers: [
+        AuthStore,
+        { provide: AuthService, useValue: service },
+        { provide: Auth, useValue: {} },
+      ],
+    });
+    const store = fixture.debugElement.injector.get(AuthStore);
+
+    const result = await store.logoutAllDevices();
+
+    expect(result).toBe(true);
+    expect(store.error()).toBeNull();
+    expect(store.loading()).toBe(false);
+  });
+
+  it('returns false and surfaces error when revoke fails', async () => {
+    const service = makeAuthServiceWith({
+      logoutAllDevices: () =>
+        Promise.reject(new Error('functions/internal-error')),
+    });
+    const { fixture } = await render('', {
+      providers: [
+        AuthStore,
+        { provide: AuthService, useValue: service },
+        { provide: Auth, useValue: {} },
+      ],
+    });
+    const store = fixture.debugElement.injector.get(AuthStore);
+
+    const result = await store.logoutAllDevices();
+
+    expect(result).toBe(false);
+    expect(store.error()).not.toBeNull();
+    expect(store.loading()).toBe(false);
+  });
+
+  it('toggles loading flag during the call', async () => {
+    let resolveCall: (() => void) | undefined;
+    const service = makeAuthServiceWith({
+      logoutAllDevices: () =>
+        new Promise<void>((resolve) => {
+          resolveCall = resolve;
+        }),
+    });
+    const { fixture } = await render('', {
+      providers: [
+        AuthStore,
+        { provide: AuthService, useValue: service },
+        { provide: Auth, useValue: {} },
+      ],
+    });
+    const store = fixture.debugElement.injector.get(AuthStore);
+
+    const pending = store.logoutAllDevices();
+    expect(store.loading()).toBe(true);
+    resolveCall?.();
+    await pending;
+    expect(store.loading()).toBe(false);
+  });
+});
+
 describe('AuthStore – isGuest', () => {
   it('isGuest is false for a non-anonymous user', async () => {
     const { fixture } = await render('', {

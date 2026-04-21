@@ -4256,6 +4256,60 @@ Deine Position: # ·  Reps        </source>
         <target> Every rep brings you closer to your goal. Your next set is waiting for you! </target>
       </segment>
     </unit>
+    <unit id="logoutAll.dialog.title">
+      <segment state="translated">
+        <source> Auf allen Geräten abmelden? </source>
+        <target> Sign out of all devices? </target>
+      </segment>
+    </unit>
+    <unit id="logoutAll.dialog.body">
+      <segment state="translated">
+        <source> Du wirst auf diesem und allen anderen Geräten abgemeldet. Push-Abos werden entfernt – andere Sitzungen werden spätestens nach einer Stunde ungültig. </source>
+        <target> You will be signed out on this and every other device. Push subscriptions are removed — other sessions become invalid within an hour at the latest. </target>
+      </segment>
+    </unit>
+    <unit id="logoutAll.dialog.cancel">
+      <segment state="translated">
+        <source> Abbrechen </source>
+        <target> Cancel </target>
+      </segment>
+    </unit>
+    <unit id="logoutAll.dialog.confirm">
+      <segment state="translated">
+        <source> Abmelden </source>
+        <target> Sign out </target>
+      </segment>
+    </unit>
+    <unit id="logoutAll.section.title">
+      <segment state="translated">
+        <source>🔒 Sicherheit</source>
+        <target>🔒 Security</target>
+      </segment>
+    </unit>
+    <unit id="logoutAll.section.desc">
+      <segment state="translated">
+        <source> Meldet dich von allen Geräten ab und entfernt alle aktiven Push-Abos. Andere Sitzungen werden spätestens nach einer Stunde ungültig. </source>
+        <target> Signs you out of every device and removes all active push subscriptions. Other sessions become invalid within an hour at the latest. </target>
+      </segment>
+    </unit>
+    <unit id="logoutAll.button">
+      <segment state="translated">
+        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">logout</pc> Auf allen Geräten abmelden </source>
+        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">logout</pc> Sign out everywhere </target>
+      </segment>
+    </unit>
+    <unit id="logoutAll.error">
+      <segment state="translated">
+        <source>Abmeldung von allen Geräten fehlgeschlagen.</source>
+        <target>Failed to sign out of all devices.</target>
+      </segment>
+    </unit>
+    <unit id="logoutAll.success">
+      <segment state="translated">
+        <source>Auf allen Geräten abgemeldet.</source>
+        <target>Signed out of all devices.</target>
+      </segment>
+    </unit>
     <unit id="reminders.page.title">
       <segment state="translated">
         <source>🔔 Erinnerungen</source>

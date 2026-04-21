@@ -295,6 +295,40 @@ describe('AuthService', () => {
     });
   });
 
+  describe('logoutAllDevices', () => {
+    it('revokes server-side sessions before signing out locally', async () => {
+      const order: string[] = [];
+      adapter.revokeAllSessions = jest.fn().mockImplementation(async () => {
+        order.push('revoke');
+      });
+      adapter.signOut = jest.fn().mockImplementation(async () => {
+        order.push('signOut');
+      });
+
+      const { fixture } = await render('', { providers: makeProviders() });
+      const service = fixture.debugElement.injector.get(AuthService);
+
+      await service.logoutAllDevices();
+
+      expect(order).toEqual(['revoke', 'signOut']);
+    });
+
+    it('does not sign out locally when revoke fails (token still valid on this device)', async () => {
+      adapter.revokeAllSessions = jest
+        .fn()
+        .mockRejectedValue(new Error('functions/unauthenticated'));
+      adapter.signOut = jest.fn();
+
+      const { fixture } = await render('', { providers: makeProviders() });
+      const service = fixture.debugElement.injector.get(AuthService);
+
+      await expect(service.logoutAllDevices()).rejects.toThrow(
+        'functions/unauthenticated'
+      );
+      expect(adapter.signOut).not.toHaveBeenCalled();
+    });
+  });
+
   // ---------------------------------------------------------------------------
   // Regression: runPostAuthHooks must prefer synchronous currentUser over the
   // signal-based user() which may still hold the stale anonymous user due to

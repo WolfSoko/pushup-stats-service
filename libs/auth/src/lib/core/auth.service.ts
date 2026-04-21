@@ -180,6 +180,20 @@ export class AuthService {
   }
 
   /**
+   * Revokes all refresh tokens server-side (signs the user out of every
+   * device) and signs out locally. Other devices stay signed in until their
+   * cached ID token expires (≤1h) or they make an authenticated call —
+   * whichever comes first — at which point the revoked refresh token forces
+   * re-authentication.
+   */
+  async logoutAllDevices(): Promise<void> {
+    await this.wrapAsync(async () => {
+      await this.authAdapter.revokeAllSessions();
+      await this.authAdapter.signOut();
+    }, 'Logout all devices');
+  }
+
+  /**
    * Runs all registered post-auth hooks after successful authentication.
    */
   private async runPostAuthHooks(): Promise<void> {
