@@ -110,7 +110,8 @@ describe('AuthStore – unsubscribeAllPushDevices', () => {
     };
   }
 
-  it('returns true and clears error when unsubscribe succeeds', async () => {
+  it('Given unsubscribe resolves When store.unsubscribeAllPushDevices is invoked Then it returns true and clears error', async () => {
+    // Given
     const service = makeAuthServiceWith({
       unsubscribeAllPushDevices: () => Promise.resolve(),
     });
@@ -123,14 +124,17 @@ describe('AuthStore – unsubscribeAllPushDevices', () => {
     });
     const store = fixture.debugElement.injector.get(AuthStore);
 
+    // When
     const result = await store.unsubscribeAllPushDevices();
 
+    // Then
     expect(result).toBe(true);
     expect(store.error()).toBeNull();
     expect(store.loading()).toBe(false);
   });
 
-  it('returns false and surfaces error when unsubscribe fails', async () => {
+  it('Given unsubscribe rejects When store.unsubscribeAllPushDevices is invoked Then it returns false and surfaces the error', async () => {
+    // Given
     const service = makeAuthServiceWith({
       unsubscribeAllPushDevices: () =>
         Promise.reject(new Error('functions/internal-error')),
@@ -144,14 +148,17 @@ describe('AuthStore – unsubscribeAllPushDevices', () => {
     });
     const store = fixture.debugElement.injector.get(AuthStore);
 
+    // When
     const result = await store.unsubscribeAllPushDevices();
 
+    // Then
     expect(result).toBe(false);
     expect(store.error()).not.toBeNull();
     expect(store.loading()).toBe(false);
   });
 
-  it('toggles loading flag during the call', async () => {
+  it('Given unsubscribe pends When store.unsubscribeAllPushDevices is invoked Then loading flag toggles true then false', async () => {
+    // Given
     let resolveCall: (() => void) | undefined;
     const service = makeAuthServiceWith({
       unsubscribeAllPushDevices: () =>
@@ -168,7 +175,10 @@ describe('AuthStore – unsubscribeAllPushDevices', () => {
     });
     const store = fixture.debugElement.injector.get(AuthStore);
 
+    // When
     const pending = store.unsubscribeAllPushDevices();
+
+    // Then
     expect(store.loading()).toBe(true);
     resolveCall?.();
     await pending;
