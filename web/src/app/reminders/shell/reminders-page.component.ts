@@ -9,6 +9,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { firstValueFrom } from 'rxjs';
 import { AuthStore, UserContextService } from '@pu-auth/auth';
 import {
   ReminderStore,
@@ -456,14 +457,15 @@ export class RemindersPageComponent {
   // ── Unsubscribe all devices ───────────────────────────────────────────────
 
   async onUnsubscribeAllDevices(): Promise<void> {
-    const confirmed = await this.dialog
-      .open<
-        UnsubscribeAllDevicesDialogComponent,
-        void,
-        boolean
-      >(UnsubscribeAllDevicesDialogComponent)
-      .afterClosed()
-      .toPromise();
+    const confirmed = await firstValueFrom(
+      this.dialog
+        .open<
+          UnsubscribeAllDevicesDialogComponent,
+          void,
+          boolean
+        >(UnsubscribeAllDevicesDialogComponent)
+        .afterClosed()
+    );
     if (!confirmed) return;
 
     const ok = await this.authStore.unsubscribeAllPushDevices();
