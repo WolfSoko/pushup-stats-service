@@ -7,6 +7,7 @@ Angular 21 / Nx monorepo for tracking pushup statistics with Firebase backend.
 - **Trunk-based development:** Push directly to `main`. No feature branches by default.
 - Feature branches or worktrees only when explicitly requested.
 - **Never commit secrets or user-identifiable data** (API keys, service account JSON, database UIDs, user email addresses) to the repository. Pass them as CLI arguments, environment variables, or Firebase Secrets instead.
+- **Pre-commit reformats files:** Husky + lint-staged run `eslint --fix` + `prettier --write` on every commit. Your staged files may differ from what you wrote (whitespace, line wrapping, fixable lint). Re-read the file before further edits after a commit.
 
 ## Quality Philosophy
 
@@ -162,6 +163,7 @@ pnpm nx run-many --target=lint   # Lint all projects
 - Date pipes: use locale-aware formats (`'longDate'`, `'short'`) – never hardcode a locale parameter like `'de'`
 - **XLF maintenance:** When moving i18n-annotated text between components, update the `<source>` in both XLF files to match the new template structure. Stale `<source>` with old placeholder names (`START_BLOCK_IF`, etc.) causes production build errors.
 - **Language switching:** Implemented in `app.ts` `setLanguage()` via `window.location.replace()` with locale prefix (`/de/…`, `/en/…`). Must preserve current path, query params, and hash. Root paths need trailing slash (`/de/`, `/en/`) to match Firebase hosting rewrites.
+- **Root `/` is locale-aware out of the box.** On App Hosting, `GET /` returns `302 /de` (default) or `302 /en` (when `Accept-Language: en*`) with `Vary: Accept-Language`. Angular SSR's locale middleware handles this — do NOT reimplement it in `server.ts`.
 
 ## CI/CD & Deployment
 
@@ -204,6 +206,10 @@ pnpm nx run web:build -c production  # Production build (includes prerender)
 ```
 
 Do NOT push if any of these fail. Fix first, then push.
+
+**Transient build failure:** `Inlining of fonts failed ... fonts.googleapis.com/icon?family=Material+Icons` is a network flake, not a code bug. Retry `pnpm nx run web:build -c production` after a few seconds.
+
+**One-shot node scripts needing libraries without a CLI bin** (e.g. `sharp`, `png-to-ico`): `pnpm dlx` fails with `ERR_PNPM_DLX_NO_BIN`. Install transiently instead: `mkdir /tmp/x && (cd /tmp/x && npm init -y > /dev/null && npm i --silent <pkgs>) && NODE_PATH=/tmp/x/node_modules node script.js`. See `tools/src/generate-logo-assets.js`.
 
 ## Consent & Ads
 
@@ -324,6 +330,7 @@ Fall back to client-side computation when keys are stale. The precomputed doc is
 - **Cloud Function pure logic testing:** Extract business logic to separate modules (not in Cloud Function triggers) for testability. See `user-stats-delta.ts` pattern: pure functions tested separately via Jest without Firebase mocks, triggers are thin wrappers that call the logic. This enables testing calculation correctness without mocking Firestore.
 - **Version-based migrations:** When updating server-side calculation logic (e.g. UserStats), increment `USERSTATS_VERSION` constant. This triggers automatic rebuilds for affected users on their next entry. Tests must validate version is set correctly in rebuilt stats.
 - **`web` test filter flags are not forwarded:** The `web:test` target uses the `@angular/build:unit-test` executor, which does NOT accept vitest CLI flags (`--testNamePattern`, `--testPathPattern`, `-t`). Running `pnpm exec vitest` directly inside `web/` also fails — it loses the Nx path aliases (`@pu-auth/auth`, `@pu-stats/models`, etc.) and every spec errors with `Cannot find package`. Either run the full `pnpm nx test web` suite, or move the spec into a library project whose test runner does accept filters. Use `--skip-nx-cache` to force a re-run when you just changed non-web code that a web spec depends on.
+- **`tools/` jest only transforms `.ts`/`.js`:** ESM `.mjs` scripts can be run by Nx targets but **cannot** be unit-tested by the shared jest config. When a script needs coverage, write it as CommonJS `.js` with `module.exports = {...}`. See `tools/src/generate-sitemap.js` for the pattern.
 
 ## Observability (Sentry)
 
