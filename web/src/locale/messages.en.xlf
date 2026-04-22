@@ -3098,8 +3098,8 @@ Deine Position: # ·  Reps        </source>
         </unit>
     <unit id="seo.landing.description">
       <segment state="translated">
-        <source>Tracke Reps, Trends und Streaks in Sekunden – mobil, schnell und mit Live-Updates.</source>
-        <target>Track reps, trends, and streaks in seconds – mobile, fast, and with live updates.</target>
+        <source>Liegestütze tracken mit einer kostenlosen Web-App. Tagesziel, Streaks, Bestleistungen – mobil, schnell und mit Live-Updates.</source>
+        <target>Track push-ups with a free web app. Daily goal, streaks, and personal bests – mobile, fast, and with live updates.</target>
 
         
         
@@ -3109,8 +3109,8 @@ Deine Position: # ·  Reps        </source>
         </unit>
     <unit id="seo.landing.title">
       <segment state="translated">
-        <source>Pushup Tracker – Dein Training. Klar visualisiert.</source>
-        <target>Pushup Tracker – Your training. Clearly visualized.</target>
+        <source>Liegestütze Tracker – Reps, Streaks und Fortschritt im Blick</source>
+        <target>Push-Up Tracker – Reps, Streaks, and Progress at a Glance</target>
 
         
         

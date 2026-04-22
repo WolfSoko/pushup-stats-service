@@ -85,7 +85,8 @@ describe('appRoutes', () => {
     const app = appRoutes.find((r) => r.path === 'app');
     const settings = appRoutes.find((r) => r.path === 'settings');
 
-    expect(landing?.data?.['seoTitle']).toContain('Pushup Tracker');
+    expect(landing?.data?.['seoTitle']).toContain('Liegestütze');
+    expect(landing?.data?.['seoDescription']).toContain('Liegestütze');
     expect(app?.data?.['seoDescription']).toBeTruthy();
     expect(settings?.data?.['seoDescription']).toContain('Tagesziel');
   });

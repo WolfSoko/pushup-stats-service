@@ -30,11 +30,11 @@
       "executor": "nx:run-commands",
       "inputs": [
         "{workspaceRoot}/web/src/app/blog/blog-posts.data.ts",
-        "{workspaceRoot}/tools/src/generate-sitemap.mjs"
+        "{workspaceRoot}/tools/src/generate-sitemap.js"
       ],
       "outputs": ["{workspaceRoot}/web/public/sitemap.xml"],
       "options": {
-        "command": "node tools/src/generate-sitemap.mjs",
+        "command": "node tools/src/generate-sitemap.js",
         "cwd": "{workspaceRoot}"
       }
     }

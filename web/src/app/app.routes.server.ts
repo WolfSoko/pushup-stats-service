@@ -31,11 +31,14 @@ export const serverRoutes: ServerRoute[] = [
     renderMode: RenderMode.Prerender,
   },
 
-  // --- Server-rendered (dynamic data per request) ---
+  // Landing is static marketing content — auth/ads state hydrates on the
+  // client, so prerendering is safe and saves an SSR round-trip per hit.
   {
     path: '',
-    renderMode: RenderMode.Server,
+    renderMode: RenderMode.Prerender,
   },
+
+  // --- Server-rendered (dynamic data per request) ---
   {
     path: 'landing',
     renderMode: RenderMode.Server,

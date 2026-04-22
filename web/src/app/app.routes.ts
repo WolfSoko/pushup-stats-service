@@ -12,8 +12,8 @@ export const appRoutes: Routes = [
     path: '',
     pathMatch: 'full',
     data: {
-      seoTitle: $localize`:@@seo.landing.title:Pushup Tracker – Dein Training. Klar visualisiert.`,
-      seoDescription: $localize`:@@seo.landing.description:Tracke Reps, Trends und Streaks in Sekunden – mobil, schnell und mit Live-Updates.`,
+      seoTitle: $localize`:@@seo.landing.title:Liegestütze Tracker – Reps, Streaks und Fortschritt im Blick`,
+      seoDescription: $localize`:@@seo.landing.description:Liegestütze tracken mit einer kostenlosen Web-App. Tagesziel, Streaks, Bestleistungen – mobil, schnell und mit Live-Updates.`,
     },
     loadComponent: () =>
       import('./marketing/shell/landing-page.component').then(

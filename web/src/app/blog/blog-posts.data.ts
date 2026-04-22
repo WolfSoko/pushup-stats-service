@@ -6,6 +6,8 @@ export interface BlogPost {
   publishedAt: string;
   content: string;
   keywords: string[];
+  /** Slug of the same article in the other locale — enables hreflang pairing in the sitemap. */
+  translationSlug?: string;
 }
 
 export function getBlogPostsByLocale(locale: string): BlogPost[] {
@@ -25,6 +27,7 @@ export const BLOG_POSTS: BlogPost[] = [
   {
     slug: 'liegestuetze-steigern',
     lang: 'de',
+    translationSlug: 'pushup-progression',
     title: 'Von 0 auf 100: Liegestütze systematisch steigern',
     description:
       'Praktische Anleitung zum systematischen Steigern deiner Liegestütze – mit Trainingsplan, Technik-Tipps und der richtigen Regeneration.',
@@ -101,6 +104,7 @@ export const BLOG_POSTS: BlogPost[] = [
   {
     slug: 'taeglich-liegestuetze',
     lang: 'de',
+    translationSlug: 'daily-pushups',
     title: 'Warum tägliche Liegestütze dein Leben verändern',
     description:
       'Tägliche Liegestütze verbessern Kraft, Haltung und Wohlbefinden. Erfahre die wissenschaftlich belegten Vorteile und wie du die Gewohnheit dauerhaft aufbaust.',
@@ -179,6 +183,7 @@ export const BLOG_POSTS: BlogPost[] = [
   {
     slug: 'liegestuetze-tracker',
     lang: 'de',
+    translationSlug: 'pushup-tracker-guide',
     title: 'Mit einem Tracker zur Liegestütz-Bestleistung',
     description:
       'Warum ein digitaler Liegestütze-Tracker den Unterschied macht – und wie Pushup Tracker dir hilft, Bestleistungen zu erzielen und dranzubleiben.',
@@ -248,6 +253,7 @@ export const BLOG_POSTS: BlogPost[] = [
   {
     slug: 'liegestuetze-varianten',
     lang: 'de',
+    translationSlug: 'pushup-variations',
     title: '10 Liegestütz-Varianten für jeden Trainingsstand',
     description:
       'Von der Knie-Liegestütze bis zur Archer Push-Up: Diese 10 Variationen trainieren gezielt Brust, Trizeps und Schultern – und brechen jedes Plateau.',
@@ -340,6 +346,7 @@ export const BLOG_POSTS: BlogPost[] = [
   {
     slug: '30-tage-liegestuetze-challenge',
     lang: 'de',
+    translationSlug: '30-day-pushup-challenge',
     title: '30-Tage-Liegestütz-Challenge: Dein Plan für maximalen Fortschritt',
     description:
       'Mit dieser strukturierten 30-Tage-Challenge steigerst du deine Liegestütz-Zahl Schritt für Schritt – von Woche 1 bis zum Endtest am Tag 30.',
@@ -417,6 +424,7 @@ export const BLOG_POSTS: BlogPost[] = [
   {
     slug: 'liegestuetze-ab-40',
     lang: 'de',
+    translationSlug: 'pushups-over-40',
     title: 'Liegestützen ab 40: Wie du sicher und effektiv trainierst',
     description:
       'Ab 40 verändert sich der Körper – aber Liegestützen bleiben eine der besten Übungen. Erfahre, wie du mit der richtigen Anpassung sicher Kraft aufbaust.',
@@ -505,6 +513,7 @@ export const BLOG_POSTS: BlogPost[] = [
   {
     slug: 'pushup-progression',
     lang: 'en',
+    translationSlug: 'liegestuetze-steigern',
     title: 'From 0 to 100: How to Systematically Increase Your Push-Ups',
     description:
       'A practical guide to progressively increasing your push-ups – with a training plan, technique tips, and proper recovery.',
@@ -579,6 +588,7 @@ export const BLOG_POSTS: BlogPost[] = [
   {
     slug: 'daily-pushups',
     lang: 'en',
+    translationSlug: 'taeglich-liegestuetze',
     title: 'Why Daily Push-Ups Will Change Your Life',
     description:
       'Daily push-ups improve strength, posture, and well-being. Discover the scientifically proven benefits and how to build the habit for good.',
@@ -656,6 +666,7 @@ export const BLOG_POSTS: BlogPost[] = [
   {
     slug: 'pushup-variations',
     lang: 'en',
+    translationSlug: 'liegestuetze-varianten',
     title: '10 Push-Up Variations for Every Fitness Level',
     description:
       'From knee push-ups to archer push-ups: these 10 variations target chest, triceps, and shoulders – and break through any plateau.',
@@ -747,6 +758,7 @@ export const BLOG_POSTS: BlogPost[] = [
   {
     slug: '30-day-pushup-challenge',
     lang: 'en',
+    translationSlug: '30-tage-liegestuetze-challenge',
     title: '30-Day Push-Up Challenge: Your Plan for Maximum Progress',
     description:
       'This structured 30-day challenge helps you increase your push-up count step by step – from week 1 to the final test on day 30.',
@@ -824,6 +836,7 @@ export const BLOG_POSTS: BlogPost[] = [
   {
     slug: 'pushups-over-40',
     lang: 'en',
+    translationSlug: 'liegestuetze-ab-40',
     title: 'Push-Ups After 40: How to Train Safely and Effectively',
     description:
       'Your body changes after 40 – but push-ups remain one of the best exercises. Learn how to build strength safely with the right adjustments.',
@@ -908,6 +921,7 @@ export const BLOG_POSTS: BlogPost[] = [
   {
     slug: 'pushup-tracker-guide',
     lang: 'en',
+    translationSlug: 'liegestuetze-tracker',
     title: 'How a Tracker Helps You Hit Push-Up Personal Bests',
     description:
       'Why a digital push-up tracker makes the difference – and how Pushup Tracker helps you achieve personal bests and stay consistent.',

@@ -37,77 +37,99 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.de/en/datenschutz"/>
   </url>
   <url>
-    <loc>https://pushup-stats.de/de/login</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.de/de/login"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.de/en/login"/>
-  </url>
-  <url>
-    <loc>https://pushup-stats.de/de/register</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.de/de/register"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.de/en/register"/>
-  </url>
-  <url>
     <loc>https://pushup-stats.de/de/blog/liegestuetze-steigern</loc>
+    <lastmod>2025-01-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.de/de/blog/liegestuetze-steigern"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.de/en/blog/pushup-progression"/>
   </url>
   <url>
     <loc>https://pushup-stats.de/de/blog/taeglich-liegestuetze</loc>
+    <lastmod>2025-02-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.de/de/blog/taeglich-liegestuetze"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.de/en/blog/daily-pushups"/>
   </url>
   <url>
     <loc>https://pushup-stats.de/de/blog/liegestuetze-tracker</loc>
+    <lastmod>2025-03-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.de/de/blog/liegestuetze-tracker"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.de/en/blog/pushup-tracker-guide"/>
   </url>
   <url>
     <loc>https://pushup-stats.de/de/blog/liegestuetze-varianten</loc>
+    <lastmod>2025-09-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.de/de/blog/liegestuetze-varianten"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.de/en/blog/pushup-variations"/>
   </url>
   <url>
     <loc>https://pushup-stats.de/de/blog/30-tage-liegestuetze-challenge</loc>
+    <lastmod>2025-11-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.de/de/blog/30-tage-liegestuetze-challenge"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.de/en/blog/30-day-pushup-challenge"/>
   </url>
   <url>
     <loc>https://pushup-stats.de/de/blog/liegestuetze-ab-40</loc>
+    <lastmod>2026-01-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.de/de/blog/liegestuetze-ab-40"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.de/en/blog/pushups-over-40"/>
   </url>
   <url>
     <loc>https://pushup-stats.de/en/blog/pushup-progression</loc>
+    <lastmod>2025-01-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.de/de/blog/liegestuetze-steigern"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.de/en/blog/pushup-progression"/>
   </url>
   <url>
     <loc>https://pushup-stats.de/en/blog/daily-pushups</loc>
+    <lastmod>2025-02-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.de/de/blog/taeglich-liegestuetze"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.de/en/blog/daily-pushups"/>
   </url>
   <url>
     <loc>https://pushup-stats.de/en/blog/pushup-variations</loc>
+    <lastmod>2025-09-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.de/de/blog/liegestuetze-varianten"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.de/en/blog/pushup-variations"/>
   </url>
   <url>
     <loc>https://pushup-stats.de/en/blog/30-day-pushup-challenge</loc>
+    <lastmod>2025-11-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.de/de/blog/30-tage-liegestuetze-challenge"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.de/en/blog/30-day-pushup-challenge"/>
   </url>
   <url>
     <loc>https://pushup-stats.de/en/blog/pushups-over-40</loc>
+    <lastmod>2026-01-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.de/de/blog/liegestuetze-ab-40"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.de/en/blog/pushups-over-40"/>
   </url>
   <url>
     <loc>https://pushup-stats.de/en/blog/pushup-tracker-guide</loc>
+    <lastmod>2025-03-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.de/de/blog/liegestuetze-tracker"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.de/en/blog/pushup-tracker-guide"/>
   </url>
 </urlset>

@@ -1142,7 +1142,7 @@
         <note category="location">web/src/app/app.routes.ts:15</note>
       </notes>
       <segment>
-        <source>Pushup Tracker – Dein Training. Klar visualisiert.</source>
+        <source>Liegestütze Tracker – Reps, Streaks und Fortschritt im Blick</source>
       </segment>
     </unit>
     <unit id="seo.landing.description">
@@ -1150,7 +1150,7 @@
         <note category="location">web/src/app/app.routes.ts:16</note>
       </notes>
       <segment>
-        <source>Tracke Reps, Trends und Streaks in Sekunden – mobil, schnell und mit Live-Updates.</source>
+        <source>Liegestütze tracken mit einer kostenlosen Web-App. Tagesziel, Streaks, Bestleistungen – mobil, schnell und mit Live-Updates.</source>
       </segment>
     </unit>
     <unit id="seo.dashboard.title">
