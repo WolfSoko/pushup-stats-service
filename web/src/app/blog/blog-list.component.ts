@@ -81,6 +81,7 @@ import { getBlogPostsByLocale } from './blog-posts.data';
       }
 
       mat-card-actions {
+        margin-top: 1rem;
         padding: 0 16px 16px;
       }
 

@@ -118,7 +118,17 @@ h1 {
     gap: 12px;
   }
 
+  .discover-card .key-features-header {
+    align-items: end;
+    gap: 1rem;
+  }
+
+  .discover-card mat-card-header mat-icon {
+    margin-right: 1.25rem;
+  }
+
   .discover-card mat-card-actions {
+    margin-top: 1rem;
     padding: 0 16px 12px;
   }
 }
