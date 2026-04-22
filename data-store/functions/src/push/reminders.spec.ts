@@ -2,6 +2,7 @@ import { describe, it, expect } from '@jest/globals';
 import {
   shouldSendReminder,
   buildNotificationPayload,
+  isExpiredSubscriptionError,
   isLeaseStale,
   STALE_LEASE_MS,
   PUSH_SEND_OPTIONS,
@@ -338,6 +339,80 @@ describe('push/reminders', () => {
 
     it('STALE_LEASE_MS is 10 minutes', () => {
       expect(STALE_LEASE_MS).toBe(10 * 60 * 1000);
+    });
+  });
+
+  describe('isExpiredSubscriptionError', () => {
+    const ENDPOINT_FCM =
+      'https://fcm.googleapis.com/fcm/send/fgr7FAJdyMU:APA91bEq...';
+    const ENDPOINT_ZOMBIE =
+      'https://permanently-removed.invalid/fcm/send/fgr7FAJdyMU:APA91bEq...';
+
+    it('classifies statusCode 410 Gone as expired', () => {
+      expect(
+        isExpiredSubscriptionError({ statusCode: 410 }, ENDPOINT_FCM)
+      ).toBe(true);
+    });
+
+    it('classifies statusCode 404 Not Found as expired', () => {
+      expect(
+        isExpiredSubscriptionError({ statusCode: 404 }, ENDPOINT_FCM)
+      ).toBe(true);
+    });
+
+    it('classifies any endpoint on the .invalid TLD as expired (Chromium sentinel)', () => {
+      // Chrome/Edge return `permanently-removed.invalid` as the sanitized
+      // endpoint after the push service has invalidated the subscription.
+      // DNS lookup fails (RFC 6761) so web-push throws a network error, not
+      // a WebPushError — without this classification the sub is never cleaned.
+      expect(isExpiredSubscriptionError({}, ENDPOINT_ZOMBIE)).toBe(true);
+    });
+
+    it('classifies DNS failures (ENOTFOUND) as expired', () => {
+      const err = { code: 'ENOTFOUND', message: 'getaddrinfo ENOTFOUND foo' };
+      expect(isExpiredSubscriptionError(err, ENDPOINT_ZOMBIE)).toBe(true);
+    });
+
+    it('classifies DNS failures via err.message when code is absent', () => {
+      // Some Node versions surface DNS failures only in the error message.
+      const err = {
+        message: 'getaddrinfo ENOTFOUND permanently-removed.invalid',
+      };
+      expect(isExpiredSubscriptionError(err, ENDPOINT_ZOMBIE)).toBe(true);
+    });
+
+    it('classifies transient DNS failures (EAI_AGAIN) as expired for .invalid endpoints', () => {
+      const err = { code: 'EAI_AGAIN' };
+      expect(isExpiredSubscriptionError(err, ENDPOINT_ZOMBIE)).toBe(true);
+    });
+
+    it('does NOT classify 500 Internal Server Error as expired (transient push-service failure)', () => {
+      expect(
+        isExpiredSubscriptionError({ statusCode: 500 }, ENDPOINT_FCM)
+      ).toBe(false);
+    });
+
+    it('does NOT classify 429 rate-limit as expired', () => {
+      expect(
+        isExpiredSubscriptionError({ statusCode: 429 }, ENDPOINT_FCM)
+      ).toBe(false);
+    });
+
+    it('does NOT classify a generic error with a live FCM endpoint as expired', () => {
+      // Network hiccup or unknown failure against a real endpoint — stay
+      // conservative, keep the sub, let the next tick retry.
+      const err = { message: 'socket hang up', code: 'ECONNRESET' };
+      expect(isExpiredSubscriptionError(err, ENDPOINT_FCM)).toBe(false);
+    });
+
+    it('handles null/undefined error safely', () => {
+      expect(isExpiredSubscriptionError(null, ENDPOINT_ZOMBIE)).toBe(true);
+      expect(isExpiredSubscriptionError(undefined, ENDPOINT_FCM)).toBe(false);
+    });
+
+    it('handles malformed endpoint strings without throwing', () => {
+      expect(isExpiredSubscriptionError({ statusCode: 410 }, '')).toBe(true);
+      expect(isExpiredSubscriptionError({}, 'not-a-url')).toBe(false);
     });
   });
 

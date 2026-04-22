@@ -46,6 +46,48 @@ self.addEventListener('push', (event) => {
   event.waitUntil(self.registration.showNotification(title, options));
 });
 
+/**
+ * `pushsubscriptionchange` is the W3C-spec event the browser fires when the
+ * push service invalidates a subscription (FCM endpoint rotation, battery
+ * optimiser kill, OS-level reset). Without a listener, Chrome/Edge rewrite
+ * the local endpoint to `https://permanently-removed.invalid/...` and keep
+ * returning that sentinel from `pushManager.getSubscription()` — producing
+ * the zombie subscriptions that silently killed background push for weeks.
+ *
+ * Prefer `event.newSubscription` (some browsers provide it directly); when
+ * absent, re-subscribe using the old options so the applicationServerKey
+ * stays aligned with the server's VAPID pair. Then notify any open client
+ * so it can save the new sub via the `savePushSubscription` callable.
+ */
+self.addEventListener('pushsubscriptionchange', (event) => {
+  event.waitUntil(
+    (async () => {
+      try {
+        let newSub = event.newSubscription;
+        const oldSub = event.oldSubscription;
+        if (!newSub && oldSub) {
+          newSub = await self.registration.pushManager.subscribe(
+            oldSub.options
+          );
+        }
+        if (!newSub) return;
+        const clientList = await clients.matchAll({
+          type: 'window',
+          includeUncontrolled: true,
+        });
+        for (const client of clientList) {
+          client.postMessage({
+            type: 'PUSH_SUBSCRIPTION_CHANGED',
+            sub: newSub.toJSON(),
+          });
+        }
+      } catch (err) {
+        console.error('[sw-push] pushsubscriptionchange failed', err);
+      }
+    })()
+  );
+});
+
 self.addEventListener('notificationclick', (event) => {
   event.notification.close();
 

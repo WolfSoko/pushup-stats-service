@@ -47,6 +47,21 @@ export const PushSubscriptionStore = signalStore(
       );
     }
 
+    /**
+     * Chrome/Edge replace the endpoint of an invalidated push subscription
+     * with a `*.invalid` sentinel (`permanently-removed.invalid` in practice)
+     * — RFC 6761 guarantees that hostname never resolves, so every server
+     * send DNS-fails and the sub lingers forever. Detect and drop locally.
+     */
+    function isZombieEndpoint(endpoint: string | undefined): boolean {
+      if (!endpoint) return false;
+      try {
+        return new URL(endpoint).hostname.endsWith('.invalid');
+      } catch {
+        return false;
+      }
+    }
+
     function urlBase64ToUint8Array(base64String: string): ArrayBuffer {
       const padding = '='.repeat((4 - (base64String.length % 4)) % 4);
       const base64 = (base64String + padding)
@@ -60,13 +75,13 @@ export const PushSubscriptionStore = signalStore(
       return buffer.buffer;
     }
 
-    async function saveSubscription(
-      sub: PushSubscription
-    ): Promise<{ deviceCount: number }> {
+    async function saveSubscriptionJson(json: {
+      endpoint?: string;
+      keys?: { p256dh?: string; auth?: string };
+    }): Promise<{ deviceCount: number }> {
       if (!store._functions) {
         throw new Error('Firebase Functions is not available');
       }
-      const json = sub.toJSON();
       const callable = httpsCallable<
         unknown,
         { ok: boolean; subId: string; deviceCount: number }
@@ -78,6 +93,12 @@ export const PushSubscriptionStore = signalStore(
         locale: navigator.language,
       });
       return { deviceCount: result.data.deviceCount ?? 1 };
+    }
+
+    async function saveSubscription(
+      sub: PushSubscription
+    ): Promise<{ deviceCount: number }> {
+      return saveSubscriptionJson(sub.toJSON());
     }
 
     async function deleteSubscription(
@@ -153,8 +174,26 @@ export const PushSubscriptionStore = signalStore(
         return;
       swListenerRegistered = true;
       navigator.serviceWorker.addEventListener('message', (event) => {
-        if (event.data?.type === 'SNOOZE_REMINDER') {
-          void snoozeReminder(event.data.snoozeMinutes ?? 30);
+        const data = event.data;
+        if (data?.type === 'SNOOZE_REMINDER') {
+          void snoozeReminder(data.snoozeMinutes ?? 30);
+          return;
+        }
+        if (data?.type === 'PUSH_SUBSCRIPTION_CHANGED' && data.sub) {
+          // SW fired pushsubscriptionchange and produced a fresh sub — persist
+          // it immediately so the user doesn't have to reload the app for
+          // the new endpoint to reach the backend.
+          void (async () => {
+            try {
+              const { deviceCount } = await saveSubscriptionJson(data.sub);
+              patchState(store, { status: 'subscribed', deviceCount });
+            } catch (err) {
+              console.error(
+                '[PushSubscriptionStore] failed to persist fresh subscription',
+                err
+              );
+            }
+          })();
         }
       });
     }
@@ -186,6 +225,14 @@ export const PushSubscriptionStore = signalStore(
           }
           const sub = await reg.pushManager.getSubscription();
           if (!sub) {
+            patchState(store, { status: 'not-subscribed', deviceCount: 0 });
+            return;
+          }
+          if (isZombieEndpoint(sub.endpoint)) {
+            // Drop the zombie locally; never send it to the backend (doing so
+            // kept the dead endpoint alive in Firestore for weeks and turned
+            // every 5-min dispatch into a DNS-failing WARN for this user).
+            await sub.unsubscribe().catch(() => undefined);
             patchState(store, { status: 'not-subscribed', deviceCount: 0 });
             return;
           }
@@ -231,7 +278,14 @@ export const PushSubscriptionStore = signalStore(
               patchState(store, { status: 'error' });
               return false;
             }
-            const existingSub = await reg.pushManager.getSubscription();
+            let existingSub = await reg.pushManager.getSubscription();
+            if (existingSub && isZombieEndpoint(existingSub.endpoint)) {
+              // A zombie still occupies the slot — unsubscribe it locally
+              // first, otherwise pushManager.subscribe() would short-circuit
+              // and return the same dead subscription.
+              await existingSub.unsubscribe().catch(() => undefined);
+              existingSub = null;
+            }
             const subToSave =
               existingSub ??
               (await reg.pushManager.subscribe({

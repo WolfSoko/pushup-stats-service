@@ -129,6 +129,56 @@ export function isLeaseStale(
 }
 
 /**
+ * Classifies a web-push send failure as an expired subscription that should
+ * be deleted from Firestore.
+ *
+ * The previous heuristic only looked at HTTP statusCode 410/404. That misses
+ * the zombie-subscription case on Chromium: once the push service invalidates
+ * a subscription, Chrome/Edge rewrite the stored endpoint to a sentinel like
+ * `https://permanently-removed.invalid/fcm/send/...`. The `.invalid` TLD is
+ * guaranteed by RFC 6761 to fail DNS, so `web-push` throws a network-level
+ * error (`ENOTFOUND` / `EAI_AGAIN`) with no `statusCode` — the old branch
+ * logged a WARN and left the sub alive, causing endless failed sends every
+ * 5 min until the client re-subscribed.
+ */
+export function isExpiredSubscriptionError(
+  err: unknown,
+  endpoint: string
+): boolean {
+  const e = (err ?? {}) as {
+    statusCode?: number;
+    code?: string;
+    message?: string;
+  };
+  if (e.statusCode === 410 || e.statusCode === 404) return true;
+  // If the endpoint itself is already on the `.invalid` TLD, it cannot ever
+  // resolve — delete without waiting for a retry.
+  let hostIsInvalidTld = false;
+  try {
+    if (endpoint) {
+      hostIsInvalidTld = new URL(endpoint).hostname.endsWith('.invalid');
+    }
+  } catch {
+    // Malformed endpoint — not something we classify as "expired"; keep sub
+    // so a later fix can surface the real issue. statusCode-410 check above
+    // still deletes on authoritative push-service responses.
+  }
+  if (hostIsInvalidTld) return true;
+  // DNS-level failures against a zombie endpoint are effectively expired.
+  // Gate on .invalid-TLD so we don't delete live subs during a network hiccup.
+  const dnsFailure =
+    e.code === 'ENOTFOUND' ||
+    e.code === 'EAI_AGAIN' ||
+    (typeof e.message === 'string' && e.message.includes('ENOTFOUND'));
+  if (dnsFailure && hostIsInvalidTld) return true;
+  // Also treat DNS failures surfaced without a recognisable code but with
+  // ENOTFOUND in the message, regardless of endpoint: if DNS says "no such
+  // host" we can never deliver, but only when the endpoint also fingerprints
+  // as a zombie. For live FCM we keep the sub and retry.
+  return false;
+}
+
+/**
  * Builds a random motivational push notification message
  * @param language Language code ('en' or 'de', defaults to 'de')
  * @returns Random notification message for the language

@@ -30,6 +30,7 @@ import { UserProfile } from './profile';
 import type { ReminderConfig } from './push';
 import {
   buildNotificationPayload,
+  isExpiredSubscriptionError,
   isLeaseStale,
   pushSubscriptionId,
   PUSH_SEND_OPTIONS,
@@ -859,10 +860,8 @@ export const unsubscribeAllPushDevices = onCall(
 // now performs the same safe push-only cleanup as `unsubscribeAllPushDevices`
 // and no longer revokes tokens. Can be removed once those clients are gone.
 
-export const revokeAllSessions = onCall(
-  { region: 'europe-west3' },
-  (request) =>
-    handleUnsubscribeAllPushDevices(request.auth, 'revokeAllSessions')
+export const revokeAllSessions = onCall({ region: 'europe-west3' }, (request) =>
+  handleUnsubscribeAllPushDevices(request.auth, 'revokeAllSessions')
 );
 
 // ─── Web Push Reminder Dispatch ───────────────────────────────────────────────
@@ -1016,15 +1015,25 @@ export const dispatchPushReminders = onSchedule(
               );
               sentToUser = true;
             } catch (err: unknown) {
-              const pushErr = err as { statusCode?: number };
-              if (pushErr.statusCode === 410 || pushErr.statusCode === 404) {
+              const pushErr = err as {
+                statusCode?: number;
+                code?: string;
+                message?: string;
+              };
+              if (isExpiredSubscriptionError(pushErr, endpoint)) {
                 expiredSubs.push(subDoc.ref);
                 results.expired++;
               } else {
+                // Log message+code alongside status so the next unknown
+                // failure mode (e.g. the zombie `.invalid` endpoints that
+                // silently DNS-failed for weeks) is diagnosable in one
+                // dispatch cycle instead of needing a separate investigation.
                 logger.warn('dispatchPushReminders: send failed', {
                   uid,
                   endpoint: endpoint.slice(-20),
                   status: pushErr.statusCode,
+                  code: pushErr.code,
+                  message: pushErr.message,
                 });
                 results.errors++;
               }

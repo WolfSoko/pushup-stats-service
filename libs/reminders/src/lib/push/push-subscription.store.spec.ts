@@ -559,4 +559,144 @@ describe('PushSubscriptionStore', () => {
       expect(store.status()).toBe('subscribed');
     });
   });
+
+  // ---------------------------------------------------------------------------
+  // Regression: zombie subscriptions with Chromium's `permanently-removed.invalid`
+  // sentinel endpoint.
+  //
+  // Observed in prod on Edge for Android: once the push service invalidates a
+  // subscription, `pushManager.getSubscription()` keeps returning a
+  // PushSubscription object whose endpoint has been sanitized to
+  // `https://permanently-removed.invalid/fcm/send/...`. The `.invalid` TLD
+  // cannot resolve, so every server-side send fails with a DNS error (no HTTP
+  // statusCode → not detected as expired by the 410/404 cleanup). The zombie
+  // stayed in Firestore indefinitely, silencing all background push.
+  //
+  // Fix: detect the sentinel locally, call `sub.unsubscribe()`, and treat the
+  // user as not-subscribed instead of saving the zombie to the backend.
+  // ---------------------------------------------------------------------------
+  describe('regression: zombie subscription on `permanently-removed.invalid`', () => {
+    const ZOMBIE_ENDPOINT =
+      'https://permanently-removed.invalid/fcm/send/fgr7FAJdyMU:APA91bEq';
+
+    it('init() unsubscribes a zombie, surfaces not-subscribed, and never saves it server-side', async () => {
+      const zombieSub = makeMockSubscription(ZOMBIE_ENDPOINT);
+      const registration = {
+        pushManager: {
+          getSubscription: jest.fn().mockResolvedValue(zombieSub),
+        },
+      } as unknown as ServiceWorkerRegistration;
+
+      Object.defineProperty(navigator, 'serviceWorker', {
+        value: {
+          getRegistration: jest.fn().mockResolvedValue(registration),
+          addEventListener: jest.fn(),
+        },
+        configurable: true,
+        writable: true,
+      });
+
+      // Track every callable invocation; savePushSubscription must never run.
+      const callable = jest.fn();
+      (httpsCallable as jest.Mock).mockReturnValue(callable);
+
+      const store = setupStore();
+      await store.init();
+
+      expect(zombieSub.unsubscribe).toHaveBeenCalledTimes(1);
+      expect(store.status()).toBe('not-subscribed');
+      expect(store.deviceCount()).toBe(0);
+      // No callable invoked — we must not re-save a zombie to the backend.
+      expect(callable).not.toHaveBeenCalled();
+    });
+
+    it('reacts to PUSH_SUBSCRIPTION_CHANGED from the SW by saving the fresh subscription server-side', async () => {
+      // Capture the SW message listener the store registers on init().
+      const messageListeners: Array<(ev: MessageEvent) => void> = [];
+      const registration = {
+        pushManager: {
+          getSubscription: jest.fn().mockResolvedValue(null),
+        },
+      } as unknown as ServiceWorkerRegistration;
+
+      Object.defineProperty(navigator, 'serviceWorker', {
+        value: {
+          getRegistration: jest.fn().mockResolvedValue(registration),
+          addEventListener: jest.fn(
+            (type: string, listener: (ev: MessageEvent) => void) => {
+              if (type === 'message') messageListeners.push(listener);
+            }
+          ),
+        },
+        configurable: true,
+        writable: true,
+      });
+
+      const callable = jest.fn().mockResolvedValue({
+        data: { ok: true, subId: 'sub-new', deviceCount: 1 },
+      });
+      (httpsCallable as jest.Mock).mockReturnValue(callable);
+
+      const store = setupStore();
+      await store.init();
+
+      // SW reports a fresh subscription after pushsubscriptionchange —
+      // the store must persist it without requiring a page reload.
+      const freshJson = {
+        endpoint: 'https://fcm.googleapis.com/fcm/send/fresh',
+        keys: { p256dh: 'p', auth: 'a' },
+      };
+      for (const listener of messageListeners) {
+        listener({
+          data: { type: 'PUSH_SUBSCRIPTION_CHANGED', sub: freshJson },
+        } as MessageEvent);
+      }
+      // Allow the async save to settle.
+      await Promise.resolve();
+      await Promise.resolve();
+
+      expect(callable).toHaveBeenCalledWith(
+        expect.objectContaining({
+          endpoint: freshJson.endpoint,
+          keys: freshJson.keys,
+        })
+      );
+      expect(store.status()).toBe('subscribed');
+    });
+
+    it('subscribe() discards an existing zombie and requests a fresh PushSubscription', async () => {
+      const zombieSub = makeMockSubscription(ZOMBIE_ENDPOINT);
+      const freshSub = makeMockSubscription(
+        'https://fcm.googleapis.com/fcm/send/fresh'
+      );
+      const subscribeMock = jest.fn().mockResolvedValue(freshSub);
+      const registration = {
+        pushManager: {
+          getSubscription: jest.fn().mockResolvedValue(zombieSub),
+          subscribe: subscribeMock,
+        },
+      } as unknown as ServiceWorkerRegistration;
+
+      Object.defineProperty(navigator, 'serviceWorker', {
+        value: {
+          getRegistration: jest.fn().mockResolvedValue(registration),
+          addEventListener: jest.fn(),
+        },
+        configurable: true,
+        writable: true,
+      });
+
+      const store = setupStore();
+      const ok = await store.subscribe();
+
+      expect(ok).toBe(true);
+      // The zombie must be dropped before we ask the browser for a new sub,
+      // otherwise the new subscription request is a no-op (existing sub wins).
+      expect(zombieSub.unsubscribe).toHaveBeenCalledTimes(1);
+      expect(subscribeMock).toHaveBeenCalledWith(
+        expect.objectContaining({ userVisibleOnly: true })
+      );
+      expect(store.status()).toBe('subscribed');
+    });
+  });
 });
