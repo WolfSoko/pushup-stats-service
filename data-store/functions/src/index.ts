@@ -831,19 +831,38 @@ export const deletePushSubscription = onCall(
 // all devices). The caller stays signed in — this only wipes push records so
 // no further Web Push notifications are delivered to any device.
 
+async function handleUnsubscribeAllPushDevices(
+  auth: { uid?: string } | undefined,
+  callableName: string
+): Promise<{ ok: true }> {
+  if (!auth?.uid) {
+    throw new HttpsError('unauthenticated', 'Nicht angemeldet.');
+  }
+  const uid = auth.uid;
+  await deleteAllPushSubscriptions(uid);
+  logger.info(`${callableName}: cleaned up`, { uid });
+  return { ok: true };
+}
+
 export const unsubscribeAllPushDevices = onCall(
   { region: 'europe-west3' },
-  async (request) => {
-    if (!request.auth?.uid) {
-      throw new HttpsError('unauthenticated', 'Nicht angemeldet.');
-    }
-    const uid = request.auth.uid;
+  (request) =>
+    handleUnsubscribeAllPushDevices(request.auth, 'unsubscribeAllPushDevices')
+);
 
-    await deleteAllPushSubscriptions(uid);
+// ─── revokeAllSessions (deprecated alias) ─────────────────────────────────
+// Earlier versions of this callable also called `auth().revokeRefreshTokens`,
+// which logged the user out of every device. That behavior was wrong for the
+// reminder-page action (users just wanted to drop push subs). The callable is
+// kept here purely as a backwards-compatible alias for clients that still
+// have the old handler name bundled (cached browser builds pre-refactor); it
+// now performs the same safe push-only cleanup as `unsubscribeAllPushDevices`
+// and no longer revokes tokens. Can be removed once those clients are gone.
 
-    logger.info('unsubscribeAllPushDevices: cleaned up', { uid });
-    return { ok: true };
-  }
+export const revokeAllSessions = onCall(
+  { region: 'europe-west3' },
+  (request) =>
+    handleUnsubscribeAllPushDevices(request.auth, 'revokeAllSessions')
 );
 
 // ─── Web Push Reminder Dispatch ───────────────────────────────────────────────
