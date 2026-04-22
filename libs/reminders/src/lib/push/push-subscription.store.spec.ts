@@ -494,12 +494,94 @@ describe('PushSubscriptionStore', () => {
         expect(ok1).toBe(true);
         expect(ok2).toBe(true);
         expect(store.status()).toBe('subscribed');
-        // The critical assertion: pushManager.subscribe() must be called at
-        // most once — duplicate calls mean duplicate server-side subscriptions.
-        expect(subscribeMock.mock.calls.length).toBeLessThanOrEqual(1);
+        // The critical assertion: pushManager.subscribe() must be called
+        // exactly once — duplicate calls mean duplicate server-side subscriptions.
+        expect(subscribeMock).toHaveBeenCalledTimes(1);
       } finally {
         jest.useRealTimers();
       }
+    });
+
+    /**
+     * init() re-entrancy guard: rapid component re-mounts or navigation on
+     * Android could call init() multiple times concurrently. The initStarted
+     * guard must ensure only the first call runs the async flow.
+     */
+    it('concurrent init() calls are idempotent (initStarted guard)', async () => {
+      const getRegistrationMock = jest.fn();
+      const registration = {
+        pushManager: {
+          getSubscription: jest.fn().mockResolvedValue(null),
+        },
+      } as unknown as ServiceWorkerRegistration;
+      getRegistrationMock.mockResolvedValue(registration);
+
+      Object.defineProperty(navigator, 'serviceWorker', {
+        value: {
+          getRegistration: getRegistrationMock,
+          addEventListener: jest.fn(),
+        },
+        configurable: true,
+        writable: true,
+      });
+
+      const store = setupStore();
+
+      // Fire three concurrent init() calls — simulates component re-mounts
+      // or rapid navigation that triggered the race on Android.
+      await Promise.all([store.init(), store.init(), store.init()]);
+
+      // Only the first init() should have proceeded; the guard must have
+      // blocked the subsequent ones from re-running the async flow.
+      expect(getRegistrationMock).toHaveBeenCalledTimes(1);
+      expect(store.status()).toBe('not-subscribed');
+    });
+
+    /**
+     * Status must not regress from 'subscribed' back to 'not-subscribed' if
+     * a component re-mount triggers init() again after the user has already
+     * subscribed. Pre-fix: the initStarted guard was absent, so re-entrant
+     * init() calls could race against the live subscription and overwrite it.
+     */
+    it('status does not regress from subscribed to not-subscribed on init() re-entry', async () => {
+      const mockSub = makeMockSubscription();
+      const registration = {
+        pushManager: {
+          // First call returns null (before subscribe), subsequent calls
+          // return the subscription (simulating what the browser does after
+          // a successful pushManager.subscribe()).
+          getSubscription: jest
+            .fn()
+            .mockResolvedValueOnce(null)
+            .mockResolvedValue(mockSub),
+          subscribe: jest.fn().mockResolvedValue(mockSub),
+        },
+      } as unknown as ServiceWorkerRegistration;
+
+      Object.defineProperty(navigator, 'serviceWorker', {
+        value: {
+          getRegistration: jest.fn().mockResolvedValue(registration),
+          addEventListener: jest.fn(),
+        },
+        configurable: true,
+        writable: true,
+      });
+
+      const store = setupStore();
+
+      // Initial init — SW present, no subscription yet → 'not-subscribed'
+      await store.init();
+      expect(store.status()).toBe('not-subscribed');
+
+      // User subscribes
+      const ok = await store.subscribe();
+      expect(ok).toBe(true);
+      expect(store.status()).toBe('subscribed');
+
+      // Simulate component re-mount calling init() again — the guard must
+      // block re-execution so status stays 'subscribed'.
+      await store.init();
+      expect(store.status()).toBe('subscribed');
     });
   });
 });
