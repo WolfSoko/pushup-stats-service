@@ -163,18 +163,12 @@ export function isExpiredSubscriptionError(
     // so a later fix can surface the real issue. statusCode-410 check above
     // still deletes on authoritative push-service responses.
   }
+  // Any error against a .invalid endpoint is treated as expired — RFC 6761
+  // guarantees the hostname never resolves, so delivery is impossible
+  // regardless of the specific error code (DNS, TLS, 5xx, whatever).
+  // Live-FCM endpoints that network-fail stay as-is: we keep the sub and
+  // the next 5-min tick retries.
   if (hostIsInvalidTld) return true;
-  // DNS-level failures against a zombie endpoint are effectively expired.
-  // Gate on .invalid-TLD so we don't delete live subs during a network hiccup.
-  const dnsFailure =
-    e.code === 'ENOTFOUND' ||
-    e.code === 'EAI_AGAIN' ||
-    (typeof e.message === 'string' && e.message.includes('ENOTFOUND'));
-  if (dnsFailure && hostIsInvalidTld) return true;
-  // Also treat DNS failures surfaced without a recognisable code but with
-  // ENOTFOUND in the message, regardless of endpoint: if DNS says "no such
-  // host" we can never deliver, but only when the endpoint also fingerprints
-  // as a zombie. For live FCM we keep the sub and retry.
   return false;
 }
 

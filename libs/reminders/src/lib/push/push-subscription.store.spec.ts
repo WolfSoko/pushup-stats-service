@@ -651,9 +651,11 @@ describe('PushSubscriptionStore', () => {
           data: { type: 'PUSH_SUBSCRIPTION_CHANGED', sub: freshJson },
         } as MessageEvent);
       }
-      // Allow the async save to settle.
-      await Promise.resolve();
-      await Promise.resolve();
+      // Flush all pending microtasks so the IIFE -> saveSubscriptionJson ->
+      // callable -> patchState chain settles. A zero-ms setTimeout yields
+      // after the microtask queue drains, unlike chaining N `await
+      // Promise.resolve()` which is fragile if the chain deepens.
+      await new Promise((resolve) => setTimeout(resolve, 0));
 
       expect(callable).toHaveBeenCalledWith(
         expect.objectContaining({
