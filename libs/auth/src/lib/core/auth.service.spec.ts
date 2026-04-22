@@ -295,34 +295,35 @@ describe('AuthService', () => {
     });
   });
 
-  describe('logoutAllDevices', () => {
-    it('revokes server-side sessions before signing out locally', async () => {
-      const order: string[] = [];
-      adapter.revokeAllSessions = jest.fn().mockImplementation(async () => {
-        order.push('revoke');
-      });
-      adapter.signOut = jest.fn().mockImplementation(async () => {
-        order.push('signOut');
-      });
-
+  describe('unsubscribeAllPushDevices', () => {
+    it('Given adapter resolves When service.unsubscribeAllPushDevices is called Then it delegates and does NOT sign out locally', async () => {
+      // Given
+      adapter.unsubscribeAllPushDevices = jest
+        .fn()
+        .mockResolvedValue(undefined);
+      adapter.signOut = jest.fn();
       const { fixture } = await render('', { providers: makeProviders() });
       const service = fixture.debugElement.injector.get(AuthService);
 
-      await service.logoutAllDevices();
+      // When
+      await service.unsubscribeAllPushDevices();
 
-      expect(order).toEqual(['revoke', 'signOut']);
+      // Then
+      expect(adapter.unsubscribeAllPushDevices).toHaveBeenCalled();
+      expect(adapter.signOut).not.toHaveBeenCalled();
     });
 
-    it('does not sign out locally when revoke fails (token still valid on this device)', async () => {
-      adapter.revokeAllSessions = jest
+    it('Given adapter rejects When service.unsubscribeAllPushDevices is called Then it propagates the error and does not sign out', async () => {
+      // Given
+      adapter.unsubscribeAllPushDevices = jest
         .fn()
         .mockRejectedValue(new Error('functions/unauthenticated'));
       adapter.signOut = jest.fn();
-
       const { fixture } = await render('', { providers: makeProviders() });
       const service = fixture.debugElement.injector.get(AuthService);
 
-      await expect(service.logoutAllDevices()).rejects.toThrow(
+      // When / Then
+      await expect(service.unsubscribeAllPushDevices()).rejects.toThrow(
         'functions/unauthenticated'
       );
       expect(adapter.signOut).not.toHaveBeenCalled();

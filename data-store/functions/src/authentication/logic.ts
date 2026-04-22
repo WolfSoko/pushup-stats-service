@@ -98,34 +98,3 @@ export function validateRecaptchaPayload(
 
   return { valid: true };
 }
-
-/**
- * Validates that the caller is allowed to revoke their own sessions.
- *
- * Anonymous (guest) sessions are rejected because:
- *   1. There's no recoverable identity for the user to log back in with.
- *   2. Their refresh token is the *only* way back into their data — revoking
- *      it permanently orphans their pushup history.
- *
- * @returns Error code/message if the request is invalid, otherwise null.
- */
-export function validateRevokeSessionsRequest(
-  auth: { uid: string; token: Record<string, unknown> } | undefined
-): {
-  code: 'unauthenticated' | 'failed-precondition';
-  message: string;
-} | null {
-  if (!auth?.uid) {
-    return { code: 'unauthenticated', message: 'Nicht angemeldet.' };
-  }
-  const firebaseClaim = auth.token['firebase'] as
-    | { sign_in_provider?: unknown }
-    | undefined;
-  if (firebaseClaim?.sign_in_provider === 'anonymous') {
-    return {
-      code: 'failed-precondition',
-      message: 'Gast-Sitzungen können nicht abgemeldet werden.',
-    };
-  }
-  return null;
-}

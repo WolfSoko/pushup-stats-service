@@ -16,10 +16,7 @@ import {
   validateFeedbackId,
   validateMarkFeedbackReadPayload,
 } from './admin';
-import {
-  parseRecaptchaResponse,
-  validateRevokeSessionsRequest,
-} from './authentication';
+import { parseRecaptchaResponse } from './authentication';
 
 // Module imports
 import { berlinDateParts, isoWeekFromYmd } from './datetime';
@@ -829,29 +826,43 @@ export const deletePushSubscription = onCall(
   }
 );
 
-// ─── revokeAllSessions ─────────────────────────────────────────────────────
-// Allows the signed-in user to revoke all of their refresh tokens (logging
-// them out of every device on next token refresh / API call) and clean up
-// all push subscriptions registered against their UID. Anonymous (guest)
-// sessions are intentionally rejected — there is nothing useful to revoke
-// and a guest has no way to recover the same UID afterwards.
+// ─── unsubscribeAllPushDevices ────────────────────────────────────────────
+// Removes every push subscription registered against the caller's UID (across
+// all devices). The caller stays signed in — this only wipes push records so
+// no further Web Push notifications are delivered to any device.
+
+async function handleUnsubscribeAllPushDevices(
+  auth: { uid?: string } | undefined,
+  callableName: string
+): Promise<{ ok: true }> {
+  if (!auth?.uid) {
+    throw new HttpsError('unauthenticated', 'Nicht angemeldet.');
+  }
+  const uid = auth.uid;
+  await deleteAllPushSubscriptions(uid);
+  logger.info(`${callableName}: cleaned up`, { uid });
+  return { ok: true };
+}
+
+export const unsubscribeAllPushDevices = onCall(
+  { region: 'europe-west3' },
+  (request) =>
+    handleUnsubscribeAllPushDevices(request.auth, 'unsubscribeAllPushDevices')
+);
+
+// ─── revokeAllSessions (deprecated alias) ─────────────────────────────────
+// Earlier versions of this callable also called `auth().revokeRefreshTokens`,
+// which logged the user out of every device. That behavior was wrong for the
+// reminder-page action (users just wanted to drop push subs). The callable is
+// kept here purely as a backwards-compatible alias for clients that still
+// have the old handler name bundled (cached browser builds pre-refactor); it
+// now performs the same safe push-only cleanup as `unsubscribeAllPushDevices`
+// and no longer revokes tokens. Can be removed once those clients are gone.
 
 export const revokeAllSessions = onCall(
   { region: 'europe-west3' },
-  async (request) => {
-    const error = validateRevokeSessionsRequest(request.auth);
-    if (error) throw new HttpsError(error.code, error.message);
-
-    // The validator above guarantees `request.auth` is set; capture the uid
-    // explicitly to keep a narrow type without a non-null assertion.
-    const uid = String(request.auth?.uid ?? '');
-
-    await admin.auth().revokeRefreshTokens(uid);
-    await deleteAllPushSubscriptions(uid);
-
-    logger.info('revokeAllSessions: revoked', { uid });
-    return { ok: true };
-  }
+  (request) =>
+    handleUnsubscribeAllPushDevices(request.auth, 'revokeAllSessions')
 );
 
 // ─── Web Push Reminder Dispatch ───────────────────────────────────────────────

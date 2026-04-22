@@ -4256,58 +4256,58 @@ Deine Position: # ·  Reps        </source>
         <target> Every rep brings you closer to your goal. Your next set is waiting for you! </target>
       </segment>
     </unit>
-    <unit id="logoutAll.dialog.title">
+    <unit id="unsubAll.dialog.title">
       <segment state="translated">
-        <source> Auf allen Geräten abmelden? </source>
-        <target> Sign out of all devices? </target>
+        <source> Push-Abos aller Geräte entfernen? </source>
+        <target> Remove push subscriptions on all devices? </target>
       </segment>
     </unit>
-    <unit id="logoutAll.dialog.body">
+    <unit id="unsubAll.dialog.body">
       <segment state="translated">
-        <source> Du wirst auf diesem und allen anderen Geräten abgemeldet. Push-Abos werden entfernt – andere Sitzungen werden spätestens nach einer Stunde ungültig. </source>
-        <target> You will be signed out on this and every other device. Push subscriptions are removed — other sessions become invalid within an hour at the latest. </target>
+        <source> Alle Push-Benachrichtigungs-Abos auf diesem und allen anderen Geräten werden entfernt. Du bleibst angemeldet und kannst Push jederzeit wieder aktivieren. </source>
+        <target> All push notification subscriptions on this and every other device will be removed. You stay signed in and can re-enable push any time. </target>
       </segment>
     </unit>
-    <unit id="logoutAll.dialog.cancel">
+    <unit id="unsubAll.dialog.cancel">
       <segment state="translated">
         <source> Abbrechen </source>
         <target> Cancel </target>
       </segment>
     </unit>
-    <unit id="logoutAll.dialog.confirm">
+    <unit id="unsubAll.dialog.confirm">
       <segment state="translated">
-        <source> Abmelden </source>
-        <target> Sign out </target>
+        <source> Abos entfernen </source>
+        <target> Remove subscriptions </target>
       </segment>
     </unit>
-    <unit id="logoutAll.section.title">
+    <unit id="unsubAll.section.title">
       <segment state="translated">
-        <source>🔒 Sicherheit</source>
-        <target>🔒 Security</target>
+        <source>📵 Push auf allen Geräten</source>
+        <target>📵 Push on all devices</target>
       </segment>
     </unit>
-    <unit id="logoutAll.section.desc">
+    <unit id="unsubAll.section.desc">
       <segment state="translated">
-        <source> Meldet dich von allen Geräten ab und entfernt alle aktiven Push-Abos. Andere Sitzungen werden spätestens nach einer Stunde ungültig. </source>
-        <target> Signs you out of every device and removes all active push subscriptions. Other sessions become invalid within an hour at the latest. </target>
+        <source> Entfernt alle Push-Benachrichtigungs-Abos auf diesem und allen anderen Geräten. Du bleibst angemeldet und kannst Push jederzeit wieder aktivieren. </source>
+        <target> Removes every push notification subscription on this and all other devices. You stay signed in and can re-enable push any time. </target>
       </segment>
     </unit>
-    <unit id="logoutAll.button">
+    <unit id="unsubAll.button">
       <segment state="translated">
-        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">logout</pc> Auf allen Geräten abmelden </source>
-        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">logout</pc> Sign out everywhere </target>
+        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">notifications_off</pc> Push auf allen Geräten deaktivieren </source>
+        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">notifications_off</pc> Disable push on all devices </target>
       </segment>
     </unit>
-    <unit id="logoutAll.error">
+    <unit id="unsubAll.error">
       <segment state="translated">
-        <source>Abmeldung von allen Geräten fehlgeschlagen.</source>
-        <target>Failed to sign out of all devices.</target>
+        <source>Entfernen der Push-Abos fehlgeschlagen.</source>
+        <target>Failed to remove push subscriptions.</target>
       </segment>
     </unit>
-    <unit id="logoutAll.success">
+    <unit id="unsubAll.success">
       <segment state="translated">
-        <source>Auf allen Geräten abgemeldet.</source>
-        <target>Signed out of all devices.</target>
+        <source>Push-Abos aller Geräte entfernt.</source>
+        <target>Push subscriptions removed on all devices.</target>
       </segment>
     </unit>
     <unit id="reminders.page.title">

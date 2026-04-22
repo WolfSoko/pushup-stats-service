@@ -9,7 +9,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { Router } from '@angular/router';
+import { firstValueFrom } from 'rxjs';
 import { AuthStore, UserContextService } from '@pu-auth/auth';
 import {
   ReminderStore,
@@ -17,7 +17,7 @@ import {
   ReminderPermissionService,
   PushSubscriptionService,
 } from '@pu-reminders/reminders';
-import { LogoutAllDevicesDialogComponent } from './logout-all-devices-dialog.component';
+import { UnsubscribeAllDevicesDialogComponent } from './unsubscribe-all-devices-dialog.component';
 import { ReminderFormStore } from './reminder-form.store';
 
 @Component({
@@ -237,30 +237,6 @@ import { ReminderFormStore } from './reminder-form.store';
             </div>
           </section>
 
-          @if (canLogoutAllDevices()) {
-            <section class="reminder-section">
-              <h3 i18n="@@logoutAll.section.title">🔒 Sicherheit</h3>
-              <p class="muted" i18n="@@logoutAll.section.desc">
-                Meldet dich von allen Geräten ab und entfernt alle aktiven
-                Push-Abos. Andere Sitzungen werden spätestens nach einer Stunde
-                ungültig.
-              </p>
-              <div class="row">
-                <button
-                  type="button"
-                  mat-stroked-button
-                  color="warn"
-                  [disabled]="authStore.loading()"
-                  (click)="onLogoutAllDevices()"
-                  i18n="@@logoutAll.button"
-                >
-                  <mat-icon>logout</mat-icon>
-                  Auf allen Geräten abmelden
-                </button>
-              </div>
-            </section>
-          }
-
           <!-- Web Push Subscription Panel -->
           <section id="reminders" class="reminder-section">
             <h3 i18n="@@push.section.title">🔔 Erinnerungen</h3>
@@ -323,6 +299,30 @@ import { ReminderFormStore } from './reminder-form.store';
               </button>
             }
           </section>
+
+          @if (canUnsubscribeAllDevices()) {
+            <section class="reminder-section">
+              <h3 i18n="@@unsubAll.section.title">📵 Push auf allen Geräten</h3>
+              <p class="muted" i18n="@@unsubAll.section.desc">
+                Entfernt alle Push-Benachrichtigungs-Abos auf diesem und allen
+                anderen Geräten. Du bleibst angemeldet und kannst Push jederzeit
+                wieder aktivieren.
+              </p>
+              <div class="row">
+                <button
+                  type="button"
+                  mat-stroked-button
+                  color="warn"
+                  [disabled]="authStore.loading()"
+                  (click)="onUnsubscribeAllDevices()"
+                  i18n="@@unsubAll.button"
+                >
+                  <mat-icon>notifications_off</mat-icon>
+                  Push auf allen Geräten deaktivieren
+                </button>
+              </div>
+            </section>
+          }
         </mat-card-content>
       </mat-card>
     </main>
@@ -414,7 +414,6 @@ export class RemindersPageComponent {
   private readonly user = inject(UserContextService);
   private readonly snackBar = inject(MatSnackBar);
   private readonly dialog = inject(MatDialog);
-  private readonly router = inject(Router);
   readonly reminderStore = inject(ReminderStore);
   readonly authStore = inject(AuthStore);
   private readonly reminderPermission = inject(ReminderPermissionService);
@@ -423,12 +422,8 @@ export class RemindersPageComponent {
   readonly form = inject(ReminderFormStore);
 
   readonly activeUserId = this.user.userIdSafe;
-  /**
-   * Only show the "logout all devices" action for real (non-anonymous)
-   * accounts — guests have no recoverable identity to log back in with.
-   */
-  readonly canLogoutAllDevices = computed(
-    () => this.authStore.isAuthenticated() && !this.authStore.isGuest()
+  readonly canUnsubscribeAllDevices = computed(() =>
+    this.authStore.isAuthenticated()
   );
 
   constructor() {
@@ -459,44 +454,43 @@ export class RemindersPageComponent {
     await this.pushService.unsubscribe();
   }
 
-  // ── Logout all devices ────────────────────────────────────────────────────
+  // ── Unsubscribe all devices ───────────────────────────────────────────────
 
-  async onLogoutAllDevices(): Promise<void> {
-    const confirmed = await this.dialog
-      .open<
-        LogoutAllDevicesDialogComponent,
-        void,
-        boolean
-      >(LogoutAllDevicesDialogComponent)
-      .afterClosed()
-      .toPromise();
+  async onUnsubscribeAllDevices(): Promise<void> {
+    const confirmed = await firstValueFrom(
+      this.dialog
+        .open<
+          UnsubscribeAllDevicesDialogComponent,
+          void,
+          boolean
+        >(UnsubscribeAllDevicesDialogComponent)
+        .afterClosed()
+    );
     if (!confirmed) return;
 
-    // Best-effort: drop the local push subscription before signing out so the
-    // service worker on this device doesn't keep a stale browser-side
-    // subscription around. The server-side records are wiped by the Cloud
-    // Function regardless.
-    if (this.pushService.status() === 'subscribed') {
-      await this.pushService.unsubscribe();
-    }
-
-    const ok = await this.authStore.logoutAllDevices();
+    const ok = await this.authStore.unsubscribeAllPushDevices();
     if (!ok) {
       this.snackBar.open(
-        $localize`:@@logoutAll.error:Abmeldung von allen Geräten fehlgeschlagen.`,
+        $localize`:@@unsubAll.error:Entfernen der Push-Abos fehlgeschlagen.`,
         $localize`:@@snackbar.close:Schließen`,
         { duration: 5000 }
       );
       return;
     }
 
-    this.reminderService.stop();
+    // Server-side records are wiped by the Cloud Function. Also drop the
+    // browser-side subscription on this device so the push status UI reflects
+    // reality immediately and the service worker doesn't keep a stale
+    // subscription around.
+    if (this.pushService.status() === 'subscribed') {
+      await this.pushService.unsubscribe();
+    }
+
     this.snackBar.open(
-      $localize`:@@logoutAll.success:Auf allen Geräten abgemeldet.`,
+      $localize`:@@unsubAll.success:Push-Abos aller Geräte entfernt.`,
       $localize`:@@snackbar.close:Schließen`,
       { duration: 4000 }
     );
-    await this.router.navigate(['/login']);
   }
 
   // ── Reminder methods ──────────────────────────────────────────────────────

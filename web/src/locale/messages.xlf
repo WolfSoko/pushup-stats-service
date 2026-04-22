@@ -2143,41 +2143,9 @@
         <source> Privacy first: Dein Nutzername wird nicht angezeigt, wenn du es nicht möchtest. </source>
       </segment>
     </unit>
-    <unit id="logoutAll.dialog.title">
-      <notes>
-        <note category="location">web/src/app/reminders/shell/logout-all-devices-dialog.component.ts:14,16</note>
-      </notes>
-      <segment>
-        <source> Auf allen Geräten abmelden? </source>
-      </segment>
-    </unit>
-    <unit id="logoutAll.dialog.body">
-      <notes>
-        <note category="location">web/src/app/reminders/shell/logout-all-devices-dialog.component.ts:18,22</note>
-      </notes>
-      <segment>
-        <source> Du wirst auf diesem und allen anderen Geräten abgemeldet. Push-Abos werden entfernt – andere Sitzungen werden spätestens nach einer Stunde ungültig. </source>
-      </segment>
-    </unit>
-    <unit id="logoutAll.dialog.cancel">
-      <notes>
-        <note category="location">web/src/app/reminders/shell/logout-all-devices-dialog.component.ts:25,28</note>
-      </notes>
-      <segment>
-        <source> Abbrechen </source>
-      </segment>
-    </unit>
-    <unit id="logoutAll.dialog.confirm">
-      <notes>
-        <note category="location">web/src/app/reminders/shell/logout-all-devices-dialog.component.ts:33,35</note>
-      </notes>
-      <segment>
-        <source> Abmelden </source>
-      </segment>
-    </unit>
     <unit id="reminders.page.title">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:42,44</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:41,43</note>
       </notes>
       <segment>
         <source>🔔 Erinnerungen</source>
@@ -2185,7 +2153,7 @@
     </unit>
     <unit id="reminders.page.subtitle">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:45,47</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:44,46</note>
       </notes>
       <segment>
         <source>Liegestütz-Erinnerungen &amp; Push-Benachrichtigungen</source>
@@ -2193,7 +2161,7 @@
     </unit>
     <unit id="reminder.section.title">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:52,54</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:51,53</note>
       </notes>
       <segment>
         <source>🔔 Erinnerungen / Reminders</source>
@@ -2201,7 +2169,7 @@
     </unit>
     <unit id="reminder.enabled.label">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:60,61</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:59,60</note>
       </notes>
       <segment>
         <source> Liegestütz-Erinnerungen aktivieren </source>
@@ -2209,7 +2177,7 @@
     </unit>
     <unit id="reminder.permission.denied.hint">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:68,70</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:67,69</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">warning</pc> Benachrichtigungen sind im Browser blockiert. Bitte in den Browser-Einstellungen erlauben. </source>
@@ -2217,7 +2185,7 @@
     </unit>
     <unit id="reminder.permission.granted">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:76,78</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:75,77</note>
       </notes>
       <segment>
         <source>Benachrichtigungen erlaubt</source>
@@ -2225,7 +2193,7 @@
     </unit>
     <unit id="reminder.permission.unsupported">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:84,86</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:83,85</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">info</pc> Dein Browser unterstützt keine Benachrichtigungen. </source>
@@ -2233,7 +2201,7 @@
     </unit>
     <unit id="reminder.interval.label">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:94,95</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:93,94</note>
       </notes>
       <segment>
         <source> Erinnerungsintervall </source>
@@ -2241,7 +2209,7 @@
     </unit>
     <unit id="reminder.interval.aria">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:100,101</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:99,100</note>
       </notes>
       <segment>
         <source>Intervall-Voreinstellungen</source>
@@ -2249,7 +2217,7 @@
     </unit>
     <unit id="reminder.interval.30min">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:106,107</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:105,106</note>
       </notes>
       <segment>
         <source>30 Min</source>
@@ -2257,7 +2225,7 @@
     </unit>
     <unit id="reminder.interval.1h">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:109,110</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:108,109</note>
       </notes>
       <segment>
         <source>1 Std</source>
@@ -2265,7 +2233,7 @@
     </unit>
     <unit id="reminder.interval.2h">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:112,113</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:111,112</note>
       </notes>
       <segment>
         <source>2 Std</source>
@@ -2273,7 +2241,7 @@
     </unit>
     <unit id="reminder.interval.4h">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:115,116</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:114,115</note>
       </notes>
       <segment>
         <source>4 Std</source>
@@ -2281,7 +2249,7 @@
     </unit>
     <unit id="reminder.interval.custom.label">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:121,123</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:120,122</note>
       </notes>
       <segment>
         <source>Benutzerdefiniert (Min)</source>
@@ -2289,7 +2257,7 @@
     </unit>
     <unit id="reminder.interval.hint">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:134,136</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:133,135</note>
       </notes>
       <segment>
         <source>15–480 Minuten</source>
@@ -2297,7 +2265,7 @@
     </unit>
     <unit id="reminder.language.label">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:141,142</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:140,141</note>
       </notes>
       <segment>
         <source> Sprache der Zitate </source>
@@ -2305,7 +2273,7 @@
     </unit>
     <unit id="reminder.language.aria">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:147,148</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:146,147</note>
       </notes>
       <segment>
         <source>Erinnerungssprache</source>
@@ -2313,7 +2281,7 @@
     </unit>
     <unit id="reminder.language.de">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:151,152</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:150,151</note>
       </notes>
       <segment>
         <source>DE</source>
@@ -2321,7 +2289,7 @@
     </unit>
     <unit id="reminder.language.en">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:154,155</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:153,154</note>
       </notes>
       <segment>
         <source>EN</source>
@@ -2329,7 +2297,7 @@
     </unit>
     <unit id="reminder.quietHours.label">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:161,162</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:160,161</note>
       </notes>
       <segment>
         <source> Ruhezeiten </source>
@@ -2337,7 +2305,7 @@
     </unit>
     <unit id="reminder.quietHours.from">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:167,169</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:166,168</note>
       </notes>
       <segment>
         <source>Von</source>
@@ -2345,7 +2313,7 @@
     </unit>
     <unit id="reminder.quietHours.to">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:185,186</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:184,185</note>
       </notes>
       <segment>
         <source>Bis</source>
@@ -2353,7 +2321,7 @@
     </unit>
     <unit id="reminder.quietHours.remove.aria">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:202,203</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:201,202</note>
       </notes>
       <segment>
         <source>Ruhezeit entfernen</source>
@@ -2361,7 +2329,7 @@
     </unit>
     <unit id="reminder.quietHours.add">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:216,218</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:215,217</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">add</pc> Ruhezeit hinzufügen </source>
@@ -2369,7 +2337,7 @@
     </unit>
     <unit id="reminder.save">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:231,233</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:230,232</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">save</pc> Erinnerungen speichern </source>
@@ -2377,39 +2345,15 @@
     </unit>
     <unit id="reminder.saved">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:235,237</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:234,236</note>
       </notes>
       <segment>
         <source>Gespeichert.</source>
       </segment>
     </unit>
-    <unit id="logoutAll.section.title">
-      <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:242,243</note>
-      </notes>
-      <segment>
-        <source>🔒 Sicherheit</source>
-      </segment>
-    </unit>
-    <unit id="logoutAll.section.desc">
-      <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:244,246</note>
-      </notes>
-      <segment>
-        <source> Meldet dich von allen Geräten ab und entfernt alle aktiven Push-Abos. Andere Sitzungen werden spätestens nach einer Stunde ungültig. </source>
-      </segment>
-    </unit>
-    <unit id="logoutAll.button">
-      <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:257,259</note>
-      </notes>
-      <segment>
-        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">logout</pc> Auf allen Geräten abmelden </source>
-      </segment>
-    </unit>
     <unit id="push.section.title">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:266,267</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:241,242</note>
       </notes>
       <segment>
         <source>🔔 Erinnerungen</source>
@@ -2417,7 +2361,7 @@
     </unit>
     <unit id="push.section.desc">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:268,271</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:243,246</note>
       </notes>
       <segment>
         <source> Wir tippen dir auf die Schulter, wenn es Zeit für Liegestütze ist. </source>
@@ -2425,7 +2369,7 @@
     </unit>
     <unit id="push.status.unsupported">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:273,275</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:248,250</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">info</pc> Dein Browser unterstützt keine Push-Benachrichtigungen. </source>
@@ -2433,7 +2377,7 @@
     </unit>
     <unit id="push.status.denied">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:278,280</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:253,255</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">warning</pc> Push-Benachrichtigungen sind blockiert. Bitte in den Browser-Einstellungen erlauben. </source>
@@ -2441,7 +2385,7 @@
     </unit>
     <unit id="push.status.subscribed">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:287,289</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:262,264</note>
       </notes>
       <segment>
         <source>Erinnerungen aktiv ✓</source>
@@ -2449,7 +2393,7 @@
     </unit>
     <unit id="push.unsubscribe">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:297,299</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:272,274</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">notifications_off</pc> Deaktivieren </source>
@@ -2457,7 +2401,7 @@
     </unit>
     <unit id="push.device.count">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:305,306</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:280,281</note>
       </notes>
       <segment>
         <source> Aktiv auf <ph id="0" equiv="INTERPOLATION" disp="{{ pushService.deviceCount() }}"/> Geräten </source>
@@ -2465,7 +2409,7 @@
     </unit>
     <unit id="push.cta.desc">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:311,312</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:286,287</note>
       </notes>
       <segment>
         <source> Nie wieder eine Einheit verpassen. </source>
@@ -2473,16 +2417,40 @@
     </unit>
     <unit id="push.subscribe">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:321,323</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:296,298</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">notifications</pc> Push aktivieren </source>
       </segment>
     </unit>
+    <unit id="unsubAll.section.title">
+      <notes>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:304,305</note>
+      </notes>
+      <segment>
+        <source>📵 Push auf allen Geräten</source>
+      </segment>
+    </unit>
+    <unit id="unsubAll.section.desc">
+      <notes>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:306,308</note>
+      </notes>
+      <segment>
+        <source> Entfernt alle Push-Benachrichtigungs-Abos auf diesem und allen anderen Geräten. Du bleibst angemeldet und kannst Push jederzeit wieder aktivieren. </source>
+      </segment>
+    </unit>
+    <unit id="unsubAll.button">
+      <notes>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:319,321</note>
+      </notes>
+      <segment>
+        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">notifications_off</pc> Push auf allen Geräten deaktivieren </source>
+      </segment>
+    </unit>
     <unit id="push.subscribe.error">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:451</note>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:566</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:445</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:560</note>
       </notes>
       <segment>
         <source>Push konnte nicht aktiviert werden.</source>
@@ -2490,37 +2458,37 @@
     </unit>
     <unit id="snackbar.close">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:452</note>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:485</note>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:494</note>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:510</note>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:526</note>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:545</note>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:567</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:446</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:473</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:489</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:504</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:520</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:539</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:561</note>
       </notes>
       <segment>
         <source>Schließen</source>
       </segment>
     </unit>
-    <unit id="logoutAll.error">
+    <unit id="unsubAll.error">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:484</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:472</note>
       </notes>
       <segment>
-        <source>Abmeldung von allen Geräten fehlgeschlagen.</source>
+        <source>Entfernen der Push-Abos fehlgeschlagen.</source>
       </segment>
     </unit>
-    <unit id="logoutAll.success">
+    <unit id="unsubAll.success">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:493</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:488</note>
       </notes>
       <segment>
-        <source>Auf allen Geräten abgemeldet.</source>
+        <source>Push-Abos aller Geräte entfernt.</source>
       </segment>
     </unit>
     <unit id="reminder.permission.snackbar">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:509</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:503</note>
       </notes>
       <segment>
         <source>Benachrichtigungen sind blockiert. Bitte in den Browser-Einstellungen erlauben.</source>
@@ -2528,11 +2496,43 @@
     </unit>
     <unit id="reminder.save.error">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:525</note>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:544</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:519</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:538</note>
       </notes>
       <segment>
         <source>Einstellungen konnten nicht gespeichert werden.</source>
+      </segment>
+    </unit>
+    <unit id="unsubAll.dialog.title">
+      <notes>
+        <note category="location">web/src/app/reminders/shell/unsubscribe-all-devices-dialog.component.ts:11,13</note>
+      </notes>
+      <segment>
+        <source> Push-Abos aller Geräte entfernen? </source>
+      </segment>
+    </unit>
+    <unit id="unsubAll.dialog.body">
+      <notes>
+        <note category="location">web/src/app/reminders/shell/unsubscribe-all-devices-dialog.component.ts:15,19</note>
+      </notes>
+      <segment>
+        <source> Alle Push-Benachrichtigungs-Abos auf diesem und allen anderen Geräten werden entfernt. Du bleibst angemeldet und kannst Push jederzeit wieder aktivieren. </source>
+      </segment>
+    </unit>
+    <unit id="unsubAll.dialog.cancel">
+      <notes>
+        <note category="location">web/src/app/reminders/shell/unsubscribe-all-devices-dialog.component.ts:22,24</note>
+      </notes>
+      <segment>
+        <source> Abbrechen </source>
+      </segment>
+    </unit>
+    <unit id="unsubAll.dialog.confirm">
+      <notes>
+        <note category="location">web/src/app/reminders/shell/unsubscribe-all-devices-dialog.component.ts:30,32</note>
+      </notes>
+      <segment>
+        <source> Abos entfernen </source>
       </segment>
     </unit>
     <unit id="dashboard.analysisTeaserAriaLabel">

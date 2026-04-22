@@ -75,8 +75,8 @@ describe('AuthAdapter', () => {
     expect(deleteUserMock).not.toHaveBeenCalled();
   });
 
-  describe('revokeAllSessions', () => {
-    it('invokes the revokeAllSessions callable', async () => {
+  describe('unsubscribeAllPushDevices', () => {
+    it('invokes the unsubscribeAllPushDevices callable', async () => {
       const callable = jest.fn().mockResolvedValue({ data: { ok: true } });
       httpsCallableMock.mockReturnValue(
         callable as unknown as ReturnType<typeof httpsCallable>
@@ -90,11 +90,11 @@ describe('AuthAdapter', () => {
         ],
       });
       const adapter = fixture.debugElement.injector.get(AuthAdapter);
-      await adapter.revokeAllSessions();
+      await adapter.unsubscribeAllPushDevices();
 
       expect(httpsCallableMock).toHaveBeenCalledWith(
         expect.any(Object),
-        'revokeAllSessions'
+        'unsubscribeAllPushDevices'
       );
       expect(callable).toHaveBeenCalledWith({});
     });
@@ -108,7 +108,7 @@ describe('AuthAdapter', () => {
         ],
       });
       const adapter = fixture.debugElement.injector.get(AuthAdapter);
-      await expect(adapter.revokeAllSessions()).rejects.toThrow(
+      await expect(adapter.unsubscribeAllPushDevices()).rejects.toThrow(
         'Cloud Functions not available'
       );
     });
@@ -129,7 +129,7 @@ describe('AuthAdapter', () => {
         ],
       });
       const adapter = fixture.debugElement.injector.get(AuthAdapter);
-      await expect(adapter.revokeAllSessions()).rejects.toThrow(
+      await expect(adapter.unsubscribeAllPushDevices()).rejects.toThrow(
         'functions/internal'
       );
     });

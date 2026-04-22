@@ -97,10 +97,10 @@ export const AuthStore = signalStore(
         patchState(store, { loading: false });
       }
     },
-    logoutAllDevices: async (): Promise<boolean> => {
+    unsubscribeAllPushDevices: async (): Promise<boolean> => {
       patchState(store, { loading: true, error: null });
       try {
-        await _authService.logoutAllDevices();
+        await _authService.unsubscribeAllPushDevices();
         return true;
       } catch (e) {
         patchState(store, {
