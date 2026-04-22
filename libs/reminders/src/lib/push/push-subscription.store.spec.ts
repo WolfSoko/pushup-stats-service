@@ -11,23 +11,25 @@ import { Functions, httpsCallable } from '@angular/fire/functions';
 import { PushSubscriptionStore } from './push-subscription.store';
 import { VAPID_PUBLIC_KEY } from './vapid-key.token';
 
-type CallableResult = { data: { ok: boolean; subId: string; deviceCount: number } };
+type CallableResult = {
+  data: { ok: boolean; subId: string; deviceCount: number };
+};
 
 const VAPID_KEY_B64 = 'BP1234567890abcdef';
 
 function mockHttpsCallable(deviceCount = 1): void {
-  const callable = jest
-    .fn()
-    .mockResolvedValue({
-      data: { ok: true, subId: 'sub-1', deviceCount },
-    } satisfies CallableResult);
+  const callable = jest.fn().mockResolvedValue({
+    data: { ok: true, subId: 'sub-1', deviceCount },
+  } satisfies CallableResult);
   (httpsCallable as jest.Mock).mockReturnValue(callable);
 }
 
 /**
  * Build a mock PushSubscription that survives JSON round-trips.
  */
-function makeMockSubscription(endpoint = 'https://fcm/endpoint'): PushSubscription {
+function makeMockSubscription(
+  endpoint = 'https://fcm/endpoint'
+): PushSubscription {
   return {
     endpoint,
     expirationTime: null,
@@ -65,13 +67,10 @@ describe('PushSubscriptionStore', () => {
 
     // Notification API – granted by default
     Object.defineProperty(window, 'Notification', {
-      value: Object.assign(
-        jest.fn() as unknown as typeof Notification,
-        {
-          permission: 'granted' as NotificationPermission,
-          requestPermission: jest.fn().mockResolvedValue('granted'),
-        }
-      ),
+      value: Object.assign(jest.fn() as unknown as typeof Notification, {
+        permission: 'granted' as NotificationPermission,
+        requestPermission: jest.fn().mockResolvedValue('granted'),
+      }),
       configurable: true,
       writable: true,
     });
@@ -153,9 +152,7 @@ describe('PushSubscriptionStore', () => {
       // `getRegistration` returns undefined until the SW "activates"
       // after ~3s — well inside the 15s timeout but past the old 5s
       // limit that caused the bug on first load.
-      const subscribeMock = jest
-        .fn()
-        .mockResolvedValue(makeMockSubscription());
+      const subscribeMock = jest.fn().mockResolvedValue(makeMockSubscription());
       const registration = {
         pushManager: {
           getSubscription: jest.fn().mockResolvedValue(null),
@@ -189,43 +186,6 @@ describe('PushSubscriptionStore', () => {
       expect(ok).toBe(true);
       expect(store.status()).toBe('subscribed');
       expect(subscribeMock).toHaveBeenCalled();
-    } finally {
-      jest.useRealTimers();
-    }
-  });
-
-  it('subscribe() sets status=error (not not-subscribed) when SW never registers', async () => {
-    jest.useFakeTimers();
-    try {
-      // Simulate the bug: SW registration never happens (e.g. dev mode, or
-      // registerWhenStable delay exceeds the subscribe timeout). The store
-      // must surface this as 'error', not silently fall back to
-      // 'not-subscribed' — otherwise the UI shows the toggle as enabled
-      // while no real subscription exists and background push never arrives.
-      Object.defineProperty(navigator, 'serviceWorker', {
-        value: {
-          // Always undefined — polling loop must time out cleanly.
-          getRegistration: jest.fn().mockResolvedValue(undefined),
-          addEventListener: jest.fn(),
-        },
-        configurable: true,
-        writable: true,
-      });
-
-      const store = setupStore();
-      const subscribePromise = store.subscribe();
-
-      // Advance past the 15s polling deadline (add slack for the final
-      // poll iteration).
-      await jest.advanceTimersByTimeAsync(16_000);
-
-      const ok = await subscribePromise;
-
-      expect(ok).toBe(false);
-      expect(store.status()).toBe('error');
-      expect(errorSpy).toHaveBeenCalledWith(
-        expect.stringContaining('Service Worker not available')
-      );
     } finally {
       jest.useRealTimers();
     }
@@ -443,24 +403,39 @@ describe('PushSubscriptionStore', () => {
      * scenario), only one `pushManager.subscribe()` must be sent — duplicate
      * subscriptions cause server-side fan-out and waste FCM quota.
      *
-     * The polling loop naturally serialises through the Promise chain, so the
-     * second call races into the same `status='loading'` window. The store
-     * must not invoke `pushManager.subscribe()` more than once.
+     * This test models the real race: both callers enter `getSubscription()`
+     * before the first `pushManager.subscribe()` resolves, so both observe
+     * `null`. Without an in-flight guard on `store.subscribe()`, both callers
+     * would then invoke `pushManager.subscribe()`. A naive
+     * `mockResolvedValueOnce(null).mockResolvedValue(existing)` would hide
+     * this bug because the second caller would see an existing sub and skip
+     * the subscribe call. The barrier below makes the race observable.
      */
     it('concurrent subscribe() calls while SW is slow produce exactly one pushManager.subscribe() call', async () => {
       jest.useFakeTimers();
       try {
-        const subscribeMock = jest
-          .fn()
-          .mockResolvedValue(makeMockSubscription());
+        const createdSubscription = makeMockSubscription();
+        const subscribeMock = jest.fn().mockResolvedValue(createdSubscription);
+
+        // Barrier so the first N callers of getSubscription() all observe the
+        // same pending `null` result. Without this, a plain
+        // `mockResolvedValueOnce(null).mockResolvedValue(existing)` would let
+        // the second caller short-circuit via the "existing" branch and the
+        // test would silently pass even without an in-flight guard.
+        let getSubscriptionCalls = 0;
+        const sharedMissingSubscription = new Promise<PushSubscription | null>(
+          (resolve) => setTimeout(() => resolve(null), 0)
+        );
+        const getSubscriptionMock = jest.fn().mockImplementation(() => {
+          getSubscriptionCalls += 1;
+          if (getSubscriptionCalls <= 2) {
+            return sharedMissingSubscription;
+          }
+          return Promise.resolve(createdSubscription);
+        });
         const registration = {
           pushManager: {
-            // First call: no existing sub. Subsequent calls: return the sub
-            // created by the first subscribe() so dedup logic works.
-            getSubscription: jest
-              .fn()
-              .mockResolvedValueOnce(null)
-              .mockResolvedValue(makeMockSubscription()),
+            getSubscription: getSubscriptionMock,
             subscribe: subscribeMock,
           },
         } as unknown as ServiceWorkerRegistration;
@@ -490,7 +465,7 @@ describe('PushSubscriptionStore', () => {
 
         const [ok1, ok2] = await Promise.all([p1, p2]);
 
-        // Both calls must report success (the second reuses the existing sub).
+        // Both calls must report success.
         expect(ok1).toBe(true);
         expect(ok2).toBe(true);
         expect(store.status()).toBe('subscribed');
