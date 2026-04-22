@@ -63,7 +63,7 @@ export class PushSwRegistrationService {
    * concurrent `subscribe()`/`init()`/`tick()` callers share one register.
    */
   async getRegistration(): Promise<ServiceWorkerRegistration | undefined> {
-    if (!this.isBrowser || !('serviceWorker' in navigator)) return undefined;
+    if (!this.isBrowser || !this.isSwApiUsable()) return undefined;
 
     // Fast path: already registered (e.g. from a previous visit).
     const existing = await navigator.serviceWorker.getRegistration(
@@ -89,6 +89,22 @@ export class PushSwRegistrationService {
   async forceRegister(): Promise<ServiceWorkerRegistration | undefined> {
     this.registrationPromise = null;
     return this.getRegistration();
+  }
+
+  /**
+   * Some test environments (jsdom under vitest on Nx Cloud) expose
+   * `navigator.serviceWorker` as a stub without a real `register` method.
+   * Feature-detect before touching it so we silently no-op instead of
+   * throwing `register is not a function` from the eager `afterNextRender`
+   * hook in `app.ts`.
+   */
+  private isSwApiUsable(): boolean {
+    if (!('serviceWorker' in navigator)) return false;
+    const sw = navigator.serviceWorker as Partial<ServiceWorkerContainer>;
+    return (
+      typeof sw.register === 'function' &&
+      typeof sw.getRegistration === 'function'
+    );
   }
 
   private async registerWithTimeout(): Promise<

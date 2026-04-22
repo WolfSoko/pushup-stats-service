@@ -79,6 +79,21 @@ describe('PushSwRegistrationService', () => {
     await expect(service.getRegistration()).resolves.toBeUndefined();
   });
 
+  it('returns undefined when navigator.serviceWorker is a partial stub (no register)', async () => {
+    // Regression for Nx Cloud web:test flake: jsdom exposed `serviceWorker`
+    // as an object without a real `register` method, which previously caused
+    // the eager afterNextRender() hook in app.ts to throw.
+    const { service, swDescriptor } = setup({
+      serviceWorker: {
+        getRegistration: jest.fn().mockResolvedValue(undefined),
+        // No `register` key at all.
+      },
+    });
+    descriptorToRestore = swDescriptor;
+
+    await expect(service.getRegistration()).resolves.toBeUndefined();
+  });
+
   it('returns the existing registration from the fast path without calling register()', async () => {
     const existing = {
       scope: 'https://example.com/push/',

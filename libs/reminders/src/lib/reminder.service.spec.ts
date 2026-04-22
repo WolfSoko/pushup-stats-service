@@ -6,6 +6,22 @@ import { MotivationStore } from '@pu-stats/motivation';
 import { isInQuietHours, ReminderService } from './reminder.service';
 import { PushSubscriptionStore } from './push/push-subscription.store';
 import type { PushStatus } from './push/push-subscription.store';
+import { PushSwRegistrationService } from './push/push-sw-registration.service';
+
+/**
+ * Reminder tick() now resolves the SW registration through
+ * PushSwRegistrationService instead of poking navigator.serviceWorker
+ * directly. To keep the rich existing coverage here (SW showNotification vs
+ * Notification() fallback, icon baseURI resolution, locale-prefixed data
+ * url), we inject a fake service that delegates to the same
+ * navigator.serviceWorker mock the individual tests set up.
+ */
+class FakePushSwRegistrationService {
+  async getRegistration(): Promise<ServiceWorkerRegistration | undefined> {
+    if (!('serviceWorker' in navigator)) return undefined;
+    return navigator.serviceWorker.getRegistration();
+  }
+}
 import type { ReminderConfig } from '@pu-stats/models';
 
 async function flushMicrotasks(): Promise<void> {
@@ -67,6 +83,10 @@ describe('ReminderService', () => {
         {
           provide: PushSubscriptionStore,
           useValue: { status: signal(pushStatus) },
+        },
+        {
+          provide: PushSwRegistrationService,
+          useClass: FakePushSwRegistrationService,
         },
       ],
     });
