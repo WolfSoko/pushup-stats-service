@@ -166,62 +166,53 @@
     />
   </section>
 
-  <section class="leaderboard" aria-labelledby="leaderboard-title">
-    <h2 id="leaderboard-title" i18n="@@landing.leaderboard.title">
-      Bestenliste
-    </h2>
-    <p i18n="@@landing.leaderboard.privacy">
-      Privacy first: Dein Nutzername wird nicht angezeigt, wenn du es nicht
-      möchtest.
-    </p>
-
-    <div class="period-switch" role="tablist" aria-label="Leaderboard Zeitraum">
-      <button
-        mat-stroked-button
-        type="button"
-        (click)="onPeriodChange('daily')"
-        [class.active]="period() === 'daily'"
-        i18n="@@landing.leaderboard.daily"
-      >
-        Tag
-      </button>
-      <button
-        mat-stroked-button
-        type="button"
-        (click)="onPeriodChange('weekly')"
-        [class.active]="period() === 'weekly'"
-        i18n="@@landing.leaderboard.weekly"
-      >
-        Woche
-      </button>
-      <button
-        mat-stroked-button
-        type="button"
-        (click)="onPeriodChange('monthly')"
-        [class.active]="period() === 'monthly'"
-        i18n="@@landing.leaderboard.monthly"
-      >
-        Monat
-      </button>
-    </div>
-
-    <ol>
-      @for (entry of leaderboardSlots(); track entry.rank) {
-        <li>
-          <span class="rank">#{{ entry.rank }}</span>
-          <span class="alias">{{ entry.alias }}</span>
-          <strong
-            >{{ entry.reps }}
-            <span i18n="@@landing.leaderboard.reps">Reps</span></strong
+  <section class="discover" aria-labelledby="discover-title">
+    <h2 id="discover-title" i18n="@@landing.discover.title">Mehr entdecken</h2>
+    <div class="discover-grid">
+      <mat-card class="discover-card">
+        <mat-card-header class="key-features-header">
+          <mat-icon aria-hidden="true">leaderboard</mat-icon>
+          <mat-card-title i18n="@@landing.discover.leaderboard.title"
+            >Bestenliste</mat-card-title
           >
-        </li>
-      }
-    </ol>
+        </mat-card-header>
+        <mat-card-content i18n="@@landing.discover.leaderboard.body">
+          Vergleiche dich mit der Community: tägliche, wöchentliche und
+          monatliche Top-Reps. Privacy first – dein Name erscheint nur, wenn du
+          es willst.
+        </mat-card-content>
+        <mat-card-actions>
+          <a
+            mat-stroked-button
+            routerLink="/leaderboard"
+            (click)="onDiscoverCardClick('leaderboard')"
+            i18n="@@landing.discover.leaderboard.cta"
+            >Zur Bestenliste</a
+          >
+        </mat-card-actions>
+      </mat-card>
 
-    @if (currentUserEntry(); as me) {
-      <p class="own-rank" i18n="@@landing.leaderboard.ownPosition">
-        Deine Position: #{{ me.rank }} · {{ me.reps }} Reps
-      </p>
-    }
+      <mat-card class="discover-card">
+        <mat-card-header class="key-features-header">
+          <mat-icon aria-hidden="true">menu_book</mat-icon>
+          <mat-card-title i18n="@@landing.discover.blog.title"
+            >Blog</mat-card-title
+          >
+        </mat-card-header>
+        <mat-card-content i18n="@@landing.discover.blog.body">
+          Tipps, Trainingspläne und Motivation rund um Liegestütze – von
+          Einsteiger bis Fortgeschritten.
+        </mat-card-content>
+        <mat-card-actions>
+          <a
+            mat-stroked-button
+            routerLink="/blog"
+            (click)="onDiscoverCardClick('blog')"
+            i18n="@@landing.discover.blog.cta"
+            >Zum Blog</a
+          >
+        </mat-card-actions>
+      </mat-card>
+    </div>
   </section>
 </main>

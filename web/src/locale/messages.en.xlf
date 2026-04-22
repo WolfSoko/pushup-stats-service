@@ -1887,6 +1887,69 @@ Active:         </target>
       
       
         </unit>
+    <unit id="landing.discover.title">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+      </notes>
+      <segment state="translated">
+        <source>Mehr entdecken</source>
+        <target>Discover more</target>
+      </segment>
+    </unit>
+    <unit id="landing.discover.leaderboard.title">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+      </notes>
+      <segment state="translated">
+        <source>Bestenliste</source>
+        <target>Leaderboard</target>
+      </segment>
+    </unit>
+    <unit id="landing.discover.leaderboard.body">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+      </notes>
+      <segment state="translated">
+        <source> Vergleiche dich mit der Community: tägliche, wöchentliche und monatliche Top-Reps. Privacy first – dein Name erscheint nur, wenn du es willst. </source>
+        <target> Compare yourself with the community: daily, weekly, and monthly top reps. Privacy first – your name only shows if you want it to. </target>
+      </segment>
+    </unit>
+    <unit id="landing.discover.leaderboard.cta">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+      </notes>
+      <segment state="translated">
+        <source>Zur Bestenliste</source>
+        <target>To the leaderboard</target>
+      </segment>
+    </unit>
+    <unit id="landing.discover.blog.title">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+      </notes>
+      <segment state="translated">
+        <source>Blog</source>
+        <target>Blog</target>
+      </segment>
+    </unit>
+    <unit id="landing.discover.blog.body">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+      </notes>
+      <segment state="translated">
+        <source> Tipps, Trainingspläne und Motivation rund um Liegestütze – von Einsteiger bis Fortgeschritten. </source>
+        <target> Tips, training plans, and motivation around push-ups – from beginner to advanced. </target>
+      </segment>
+    </unit>
+    <unit id="landing.discover.blog.cta">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+      </notes>
+      <segment state="translated">
+        <source>Zum Blog</source>
+        <target>To the blog</target>
+      </segment>
+    </unit>
     <unit id="landing.leaderboard.daily">
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
@@ -1958,23 +2021,6 @@ Deine Position: # ·  Reps        </source>
       
       
         </unit>
-    <unit id="landing.leaderboard.privacy">
-      <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Privacy first: Dein Nutzername wird nicht angezeigt, wenn du es nicht möchtest.</source>
-        <target>Privacy first: Your username is not shown if you do not want it.</target>
-
-        
-        
-            </segment>
-
-      
-      
-        </unit>
     <unit id="landing.leaderboard.reps">
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
@@ -1984,23 +2030,6 @@ Deine Position: # ·  Reps        </source>
       <segment state="translated">
         <source>Reps</source>
         <target>Reps</target>
-
-        
-        
-            </segment>
-
-      
-      
-        </unit>
-    <unit id="landing.leaderboard.title">
-      <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Tages-Bestenliste</source>
-        <target>Daily leaderboard</target>
 
         
         

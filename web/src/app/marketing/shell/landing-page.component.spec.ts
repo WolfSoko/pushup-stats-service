@@ -39,7 +39,10 @@ describe('LandingPageComponent', () => {
       expect(
         screen.getByRole('button', { name: 'Als Gast ausprobieren' })
       ).toBeTruthy();
-      expect(screen.getByText('Bestenliste')).toBeTruthy();
+      expect(
+        screen.getByRole('link', { name: 'Zur Bestenliste' })
+      ).toBeTruthy();
+      expect(screen.getByRole('link', { name: 'Zum Blog' })).toBeTruthy();
     });
   });
 
@@ -122,7 +125,7 @@ describe('LandingPageComponent', () => {
     });
   });
 
-  it('orders landing sections as feature grid, preview, leaderboard', async () => {
+  it('orders landing sections as feature grid, preview, discover', async () => {
     const view = await render(LandingPageComponent, {
       providers: [
         provideRouter([]),
@@ -135,13 +138,13 @@ describe('LandingPageComponent', () => {
     const host = view.fixture.nativeElement as HTMLElement;
     const features = host.querySelector('section.feature-grid');
     const preview = host.querySelector('section.preview');
-    const leaderboard = host.querySelector('section.leaderboard');
+    const discover = host.querySelector('section.discover');
 
     expect(features).toBeTruthy();
     expect(preview).toBeTruthy();
-    expect(leaderboard).toBeTruthy();
+    expect(discover).toBeTruthy();
 
-    if (!features || !preview || !leaderboard) {
+    if (!features || !preview || !discover) {
       throw new Error('Expected all landing sections to exist');
     }
 
@@ -150,9 +153,46 @@ describe('LandingPageComponent', () => {
         Node.DOCUMENT_POSITION_FOLLOWING
     ).toBeTruthy();
     expect(
-      preview.compareDocumentPosition(leaderboard) &
+      preview.compareDocumentPosition(discover) &
         Node.DOCUMENT_POSITION_FOLLOWING
     ).toBeTruthy();
+  });
+
+  it('does not render the live leaderboard section anymore', async () => {
+    const view = await render(LandingPageComponent, {
+      providers: [
+        provideRouter([]),
+        { provide: AdsStore, useValue: adsConfigMock },
+        { provide: AuthService, useValue: makeAuthServiceMock() },
+        { provide: AuthStore, useValue: makeAuthStoreMock() },
+      ],
+    });
+
+    const host = view.fixture.nativeElement as HTMLElement;
+    expect(host.querySelector('section.leaderboard')).toBeNull();
+    // Period switch buttons (Tag/Woche/Monat) are gone with the live list.
+    expect(screen.queryByRole('button', { name: 'Tag' })).toBeNull();
+    expect(screen.queryByRole('button', { name: 'Woche' })).toBeNull();
+    expect(screen.queryByRole('button', { name: 'Monat' })).toBeNull();
+  });
+
+  it('discover cards link to /leaderboard and /blog', async () => {
+    await render(LandingPageComponent, {
+      providers: [
+        provideRouter([]),
+        { provide: AdsStore, useValue: adsConfigMock },
+        { provide: AuthService, useValue: makeAuthServiceMock() },
+        { provide: AuthStore, useValue: makeAuthStoreMock() },
+      ],
+    });
+
+    const leaderboardLink = screen.getByRole('link', {
+      name: 'Zur Bestenliste',
+    });
+    const blogLink = screen.getByRole('link', { name: 'Zum Blog' });
+
+    expect(leaderboardLink.getAttribute('href')).toBe('/leaderboard');
+    expect(blogLink.getAttribute('href')).toBe('/blog');
   });
 
   it('clicking "Als Gast ausprobieren" calls signInGuestIfNeeded and navigates to /app', async () => {
