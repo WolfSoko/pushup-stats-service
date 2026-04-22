@@ -3,7 +3,13 @@ import { inject, Injectable, LOCALE_ID } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
 
 const BASE_URL = 'https://pushup-stats.de';
-const LOCALE_PREFIXES = ['de', 'en'];
+const LOCALE_PREFIXES = ['de', 'en'] as const;
+type LocalePrefix = (typeof LOCALE_PREFIXES)[number];
+const DEFAULT_LOCALE: LocalePrefix = 'de';
+
+function isKnownLocale(value: string): value is LocalePrefix {
+  return (LOCALE_PREFIXES as readonly string[]).includes(value);
+}
 
 @Injectable({ providedIn: 'root' })
 export class SeoService {
@@ -23,35 +29,38 @@ export class SeoService {
     this.setTag('name', 'twitter:title', seoTitle);
     this.setTag('name', 'twitter:description', seoDescription);
 
-    const origin = this.document.location?.origin ?? '';
-    const canonical = `${origin}${path}`;
-    this.setTag('property', 'og:url', canonical);
-    this.setCanonical(canonical);
-
     const locale = this.detectLocale(path);
     const ogLocale = locale === 'en' ? 'en_US' : 'de_DE';
     this.setTag('property', 'og:locale', ogLocale);
 
     const strippedPath = this.stripLocalePrefix(path);
-    this.setHreflang('alternate', 'de', `${BASE_URL}/de${strippedPath}`);
-    this.setHreflang('alternate', 'en', `${BASE_URL}/en${strippedPath}`);
-    this.setHreflang('alternate', 'x-default', `${BASE_URL}${strippedPath}`);
+    const deUrl = `${BASE_URL}/de${strippedPath}`;
+    const enUrl = `${BASE_URL}/en${strippedPath}`;
+    const canonical = locale === 'en' ? enUrl : deUrl;
+
+    this.setTag('property', 'og:url', canonical);
+    this.setCanonical(canonical);
+
+    this.setHreflang('alternate', 'de', deUrl);
+    this.setHreflang('alternate', 'en', enUrl);
+    this.setHreflang('alternate', 'x-default', deUrl);
   }
 
-  private detectLocale(path: string): string {
+  private detectLocale(path: string): LocalePrefix {
     const lang = this.localeId?.split('-')[0]?.split('_')[0] ?? '';
-    if (LOCALE_PREFIXES.includes(lang)) return lang;
+    if (isKnownLocale(lang)) return lang;
     const segment = path.split('/')[1] ?? '';
-    return LOCALE_PREFIXES.includes(segment) ? segment : 'de';
+    return isKnownLocale(segment) ? segment : DEFAULT_LOCALE;
   }
 
   private stripLocalePrefix(path: string): string {
-    const segment = path.split('/')[1] ?? '';
-    if (LOCALE_PREFIXES.includes(segment)) {
-      const rest = path.slice(segment.length + 1) || '/';
-      return rest.startsWith('/') ? rest : `/${rest}`;
+    const normalized = path.startsWith('/') ? path : `/${path || ''}`;
+    const segment = normalized.split('/')[1] ?? '';
+    if (isKnownLocale(segment)) {
+      const rest = normalized.slice(segment.length + 1);
+      return rest || '/';
     }
-    return path || '/';
+    return normalized || '/';
   }
 
   private setTag(
