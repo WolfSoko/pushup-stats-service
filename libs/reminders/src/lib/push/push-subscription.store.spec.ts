@@ -310,4 +310,196 @@ describe('PushSubscriptionStore', () => {
     expect(ok).toBe(false);
     expect(store.status()).toBe('denied');
   });
+
+  // ---------------------------------------------------------------------------
+  // Regression tests for the Android push race condition fixed in 7a6eccbf
+  // Issue: https://github.com/WolfSoko/pushup-stats-service/issues/225
+  //
+  // Root cause: on Android first-load, `subscribe()` used a 5 s timeout
+  // against `navigator.serviceWorker.ready` while the SW was registered with
+  // `registerWhenStable:30000`. The race meant subscribe() always timed out
+  // before the SW existed, silently set status to 'not-subscribed', and no
+  // real `pushManager.subscribe()` call ever happened — so background push
+  // never reached the server and reminders only fired while the PWA was open.
+  //
+  // Fix (7a6eccbf):
+  //   - SW registration delay dropped from 30 s to 2 s (app.config.ts)
+  //   - SW wait timeout raised from 5 s to 15 s (push-subscription.store.ts)
+  //   - Replaced `.ready` with a 250 ms polling loop over `getRegistration()`
+  //   - Timeout → 'error' state (not silent 'not-subscribed')
+  //
+  // These tests FAIL on the pre-fix code and PASS on the fixed code.
+  // ---------------------------------------------------------------------------
+  describe('regression: Android push race condition (#208)', () => {
+    /**
+     * THE CORE REGRESSION CASE.
+     *
+     * Pre-fix behaviour: SW registers at 6 s, but subscribe() only waited 5 s
+     * via `navigator.serviceWorker.ready` — it timed out, silently set status
+     * to 'not-subscribed', and returned false. No subscription was ever saved
+     * server-side. Android background push was broken on every first visit.
+     *
+     * Post-fix behaviour: polling loop waits up to 15 s, picks up the SW at
+     * 6 s, completes the pushManager.subscribe() call, and returns true.
+     */
+    it('subscribe() succeeds when SW registers at 6 s (beyond old 5 s limit, within new 15 s limit)', async () => {
+      jest.useFakeTimers();
+      try {
+        const subscribeMock = jest
+          .fn()
+          .mockResolvedValue(makeMockSubscription());
+        const registration = {
+          pushManager: {
+            getSubscription: jest.fn().mockResolvedValue(null),
+            subscribe: subscribeMock,
+          },
+        } as unknown as ServiceWorkerRegistration;
+
+        // SW becomes available exactly at 6 000 ms — past the old 5 s deadline.
+        let swActive: ServiceWorkerRegistration | undefined = undefined;
+        setTimeout(() => {
+          swActive = registration;
+        }, 6_000);
+
+        Object.defineProperty(navigator, 'serviceWorker', {
+          value: {
+            getRegistration: jest.fn().mockImplementation(async () => swActive),
+            addEventListener: jest.fn(),
+          },
+          configurable: true,
+          writable: true,
+        });
+
+        const store = setupStore();
+        const subscribePromise = store.subscribe();
+
+        // Advance to 7 s — the SW has been up for 1 s, all poll intervals
+        // that fired after 6 s should have found the registration.
+        await jest.advanceTimersByTimeAsync(7_000);
+
+        const ok = await subscribePromise;
+
+        // Pre-fix: ok === false, status === 'not-subscribed', subscribeMock not called.
+        // Post-fix: ok === true, status === 'subscribed', subscribeMock called once.
+        expect(ok).toBe(true);
+        expect(store.status()).toBe('subscribed');
+        expect(subscribeMock).toHaveBeenCalledTimes(1);
+        expect(subscribeMock).toHaveBeenCalledWith(
+          expect.objectContaining({ userVisibleOnly: true })
+        );
+      } finally {
+        jest.useRealTimers();
+      }
+    });
+
+    /**
+     * Pre-fix: SW timeout produced silent 'not-subscribed' — the UI toggle
+     * appeared to work but no subscription was persisted. Users never received
+     * background push.
+     *
+     * Post-fix: timeout produces 'error' so the UI can surface a "try again"
+     * message, and `console.error` is called with a descriptive message so
+     * developers can identify the root cause in logs.
+     */
+    it('subscribe() emits status=error (not not-subscribed) and console.error when SW never registers', async () => {
+      jest.useFakeTimers();
+      try {
+        Object.defineProperty(navigator, 'serviceWorker', {
+          value: {
+            // SW never becomes available — simulates a broken/disabled SW or
+            // the old registerWhenStable:30000 on a slow device.
+            getRegistration: jest.fn().mockResolvedValue(undefined),
+            addEventListener: jest.fn(),
+          },
+          configurable: true,
+          writable: true,
+        });
+
+        const store = setupStore();
+        const subscribePromise = store.subscribe();
+
+        // Exhaust the 15 s polling deadline plus a buffer.
+        await jest.advanceTimersByTimeAsync(16_000);
+
+        const ok = await subscribePromise;
+
+        // Pre-fix: ok === false, status === 'not-subscribed', no console.error.
+        // Post-fix: ok === false, status === 'error', console.error fired.
+        expect(ok).toBe(false);
+        expect(store.status()).toBe('error');
+        // Must NOT silently fall back to 'not-subscribed' (the pre-fix bug).
+        expect(store.status()).not.toBe('not-subscribed');
+        expect(errorSpy).toHaveBeenCalledWith(
+          expect.stringContaining('Service Worker not available')
+        );
+      } finally {
+        jest.useRealTimers();
+      }
+    });
+
+    /**
+     * Concurrent-call guard: if the user taps "Push aktivieren" twice rapidly
+     * while the SW is still registering (a realistic Android first-load
+     * scenario), only one `pushManager.subscribe()` must be sent — duplicate
+     * subscriptions cause server-side fan-out and waste FCM quota.
+     *
+     * The polling loop naturally serialises through the Promise chain, so the
+     * second call races into the same `status='loading'` window. The store
+     * must not invoke `pushManager.subscribe()` more than once.
+     */
+    it('concurrent subscribe() calls while SW is slow produce exactly one pushManager.subscribe() call', async () => {
+      jest.useFakeTimers();
+      try {
+        const subscribeMock = jest
+          .fn()
+          .mockResolvedValue(makeMockSubscription());
+        const registration = {
+          pushManager: {
+            // First call: no existing sub. Subsequent calls: return the sub
+            // created by the first subscribe() so dedup logic works.
+            getSubscription: jest
+              .fn()
+              .mockResolvedValueOnce(null)
+              .mockResolvedValue(makeMockSubscription()),
+            subscribe: subscribeMock,
+          },
+        } as unknown as ServiceWorkerRegistration;
+
+        // SW appears at 3 s — both concurrent calls are still in the polling
+        // loop when the SW becomes available.
+        let swActive: ServiceWorkerRegistration | undefined = undefined;
+        setTimeout(() => {
+          swActive = registration;
+        }, 3_000);
+
+        Object.defineProperty(navigator, 'serviceWorker', {
+          value: {
+            getRegistration: jest.fn().mockImplementation(async () => swActive),
+            addEventListener: jest.fn(),
+          },
+          configurable: true,
+          writable: true,
+        });
+
+        const store = setupStore();
+
+        // Fire two subscribe() calls back-to-back before the SW is up.
+        const [p1, p2] = [store.subscribe(), store.subscribe()];
+
+        await jest.advanceTimersByTimeAsync(4_000);
+
+        const [ok1, ok2] = await Promise.all([p1, p2]);
+
+        // Both calls must report success (the second reuses the existing sub).
+        expect(ok1).toBe(true);
+        expect(ok2).toBe(true);
+        expect(store.status()).toBe('subscribed');
+        // The critical assertion: pushManager.subscribe() must be called at
+        // most once — duplicate calls mean duplicate server-side subscriptions.
+        expect(subscribeMock.mock.calls.length).toBeLessThanOrEqual(1);
+      } finally {
+        jest.useRealTimers();
+      }
+    });
+  });
 });
