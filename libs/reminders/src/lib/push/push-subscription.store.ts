@@ -137,6 +137,11 @@ export const PushSubscriptionStore = signalStore(
 
     // Guard: prevent duplicate init() runs (e.g. from re-mounted components)
     let initStarted = false;
+    // In-flight subscribe() guard. On Android first-load a user can tap
+    // "Push aktivieren" twice before the SW is up; without this guard both
+    // callers would see no existing subscription and fire pushManager.subscribe()
+    // twice, producing duplicate server-side records.
+    let subscribeInFlight: Promise<boolean> | null = null;
     // Register SW message listener once (guard prevents duplicate registrations)
     let swListenerRegistered = false;
     function ensureSwListener(): void {
@@ -194,51 +199,60 @@ export const PushSubscriptionStore = signalStore(
 
       async subscribe(): Promise<boolean> {
         if (!isSupported()) return false;
+        // Coalesce concurrent callers onto the same in-flight promise so
+        // rapid double-taps can't produce duplicate pushManager.subscribe()
+        // calls and duplicate server-side subscription records.
+        if (subscribeInFlight) return subscribeInFlight;
 
         patchState(store, { status: 'loading' });
-        try {
-          const permission = await Notification.requestPermission();
-          if (permission !== 'granted') {
-            patchState(store, {
-              status: permission === 'denied' ? 'denied' : 'not-subscribed',
-            });
-            return false;
-          }
+        subscribeInFlight = (async (): Promise<boolean> => {
+          try {
+            const permission = await Notification.requestPermission();
+            if (permission !== 'granted') {
+              patchState(store, {
+                status: permission === 'denied' ? 'denied' : 'not-subscribed',
+              });
+              return false;
+            }
 
-          const reg = await getSwRegistration();
-          if (!reg) {
-            // The SW never became available inside the timeout. Surface this
-            // as an error instead of 'not-subscribed' so the UI can show a
-            // "try again" state — silently flipping to 'not-subscribed' makes
-            // the toggle look enabled while no real subscription exists, and
-            // users only see notifications while the app is open (via the
-            // in-app interval), not in the background.
-            console.error(
-              '[PushSubscriptionStore] Service Worker not available within ' +
-                `${SW_READY_TIMEOUT_MS}ms — cannot subscribe to push. ` +
-                'Reload the app and try again.'
-            );
+            const reg = await getSwRegistration();
+            if (!reg) {
+              // The SW never became available inside the timeout. Surface this
+              // as an error instead of 'not-subscribed' so the UI can show a
+              // "try again" state — silently flipping to 'not-subscribed' makes
+              // the toggle look enabled while no real subscription exists, and
+              // users only see notifications while the app is open (via the
+              // in-app interval), not in the background.
+              console.error(
+                '[PushSubscriptionStore] Service Worker not available within ' +
+                  `${SW_READY_TIMEOUT_MS}ms — cannot subscribe to push. ` +
+                  'Reload the app and try again.'
+              );
+              patchState(store, { status: 'error' });
+              return false;
+            }
+            const existingSub = await reg.pushManager.getSubscription();
+            const subToSave =
+              existingSub ??
+              (await reg.pushManager.subscribe({
+                userVisibleOnly: true,
+                applicationServerKey: urlBase64ToUint8Array(
+                  store._vapidPublicKey
+                ),
+              }));
+
+            const { deviceCount } = await saveSubscription(subToSave);
+            patchState(store, { status: 'subscribed', deviceCount });
+            return true;
+          } catch (err) {
+            console.error('[PushSubscriptionStore] subscribe() failed', err);
             patchState(store, { status: 'error' });
             return false;
+          } finally {
+            subscribeInFlight = null;
           }
-          const existingSub = await reg.pushManager.getSubscription();
-          const subToSave =
-            existingSub ??
-            (await reg.pushManager.subscribe({
-              userVisibleOnly: true,
-              applicationServerKey: urlBase64ToUint8Array(
-                store._vapidPublicKey
-              ),
-            }));
-
-          const { deviceCount } = await saveSubscription(subToSave);
-          patchState(store, { status: 'subscribed', deviceCount });
-          return true;
-        } catch (err) {
-          console.error('[PushSubscriptionStore] subscribe() failed', err);
-          patchState(store, { status: 'error' });
-          return false;
-        }
+        })();
+        return subscribeInFlight;
       },
 
       async snooze(snoozeMinutes = 30): Promise<void> {
@@ -251,9 +265,7 @@ export const PushSubscriptionStore = signalStore(
         patchState(store, { status: 'loading' });
         try {
           const reg = await getSwRegistration();
-          const sub = reg
-            ? await reg.pushManager.getSubscription()
-            : null;
+          const sub = reg ? await reg.pushManager.getSubscription() : null;
           if (sub) {
             const endpoint = sub.endpoint;
             await sub.unsubscribe();
