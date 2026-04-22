@@ -61,3 +61,7 @@ CLAUDE.md
 docs/superpowers/
 firebase-debug.log
 package-lock.json
+
+.nx/polygraph
+.claude/worktrees
+.claude/settings.local.json

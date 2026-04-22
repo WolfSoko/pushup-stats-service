@@ -49,12 +49,14 @@ When making changes, always write or update relevant tests as part of the same c
 ### Key Architectural Patterns
 
 **Ports & Adapters (Auth <-> Data-Access):**
+
 - Auth defines `PostAuthHook` interface and `USER_PROFILE_PORT` token
 - Concrete implementations (`UserProfileSyncHook`, `GuestDataMigrationHook`) live at app level
 - Wired in `app.config.ts` via DI providers
 - Auth has ZERO imports from `@pu-stats/data-access`
 
 **State Management Conventions:**
+
 - **Global state:** `@ngrx/signals` signalStore with `providedIn: 'root'`
   - `AdsStore` - Remote Config + consent (ads module)
   - `MotivationStore` - quote cache with user-keyed localStorage (motivation module)
@@ -74,21 +76,25 @@ When making changes, always write or update relevant tests as part of the same c
 - **Signal timing pitfall (`toSignal`):** `toSignal()` starts with `undefined` and updates via microtask. After async operations (e.g. `signInWithPopup`), signals may not yet reflect the new state. Use `auth.currentUser` (synchronous) as fallback where immediate access is needed — see `LoginUiStore`, `RegisterUiStore`, `AuthService.upgradeWithEmail()` for the pattern. For templates, use `authResolved` (= `authState() !== undefined`) to distinguish "loading" from "not authenticated".
 
 **Three-Layer Architecture:**
+
 ```
 UI Component  →  Signal Store  →  API Service
 (Template)       (State + Logic)   (Database)
 ```
+
 - Components only do template binding + user event delegation
 - Stores own all state, resources, computed signals, and domain logic
 - API services are pure data access with no state
 
 **App Root Delegation:**
+
 - `ReminderOrchestrationService` handles reminder lifecycle (auth -> config load -> start/stop)
 - `AppDataFacade` consolidates app-level resources (recent entries, daily goal, progress)
 - `QuickAddOrchestrationService` handles quick-add entry creation and dialog routing
 - App component handles only layout, navigation, and UI events
 
 **Shared Entry Dialog Pattern:**
+
 - `CreateEntryDialogComponent` serves as the single dialog for both creating and editing entries.
 - **Create mode:** Opened without `MAT_DIALOG_DATA` — starts with empty fields, default timestamp.
 - **Edit mode:** Opened with `EntryDialogData` via `MAT_DIALOG_DATA` — pre-fills timestamp, sets, type, source from existing entry. Preserves original timestamp format when unchanged.
@@ -98,6 +104,7 @@ UI Component  →  Signal Store  →  API Service
 ### Module Boundary Rules
 
 Enforced via `@nx/enforce-module-boundaries` in `eslint.config.mjs`:
+
 - `scope:auth` -> `scope:models` only (no data-access!)
 - `scope:motivation` -> `scope:models` only (no auth!)
 - `scope:data-access` -> `scope:models` only
@@ -108,6 +115,7 @@ Enforced via `@nx/enforce-module-boundaries` in `eslint.config.mjs`:
 ### Domain Models
 
 Split into focused files under `libs/stats/src/lib/models/`:
+
 - `pushup.models.ts` - PushupRecord, PushupCreate, PushupUpdate
   - **Sets:** `sets?: number[]` stores per-set reps (e.g. `[10, 10, 10]`). `reps` is always the total sum. `sets` is optional for backward compatibility — old entries without sets work unchanged. All aggregation (UserStats, deltas, charts) uses `reps` only.
 - `stats.models.ts` - StatsResponse, StatsMeta, StatsFilter
@@ -128,20 +136,20 @@ pnpm nx run-many --target=lint   # Lint all projects
 
 ## Project Names (Nx)
 
-| Library | Nx Project Name |
-|---------|----------------|
-| auth | `auth` |
-| data-access | `stats-data-access` |
-| models/stats | `stats-models` |
-| motivation | `pus-motivation` |
-| reminders | `pus-reminders` |
-| quick-add | `stats-quick-add` |
-| ads | `stats-ads` |
-| testing | `testing` |
-| tools | `tools` |
-| data-store | `data-store` |
-| cloud-functions | `cloud-functions` |
-| web app | `web` |
+| Library         | Nx Project Name     |
+| --------------- | ------------------- |
+| auth            | `auth`              |
+| data-access     | `stats-data-access` |
+| models/stats    | `stats-models`      |
+| motivation      | `pus-motivation`    |
+| reminders       | `pus-reminders`     |
+| quick-add       | `stats-quick-add`   |
+| ads             | `stats-ads`         |
+| testing         | `testing`           |
+| tools           | `tools`             |
+| data-store      | `data-store`        |
+| cloud-functions | `cloud-functions`   |
+| web app         | `web`               |
 
 ## i18n / Internationalization
 
@@ -202,7 +210,7 @@ Do NOT push if any of these fail. Fix first, then push.
 - **Cookie consent** is stored in `localStorage` key `pus_cookie_consent` (`'all'` | `'necessary'` | absent).
 - **AdsStore** reads this on init: `consentAnswered` gates whether any ads render; `targetedAdsConsent` controls personalized vs. non-personalized (NPA) mode.
 - **Analytics consent** lives in `pus_analytics_consent` (`'granted'` | `'denied'`), set by the consent banner alongside the cookie consent.
-- **Non-personalized ads** don't require GDPR opt-in but still need a consent *notice*. The banner satisfies this.
+- **Non-personalized ads** don't require GDPR opt-in but still need a consent _notice_. The banner satisfies this.
 - When testing ads components, mock `AdsStore` (not `RemoteConfig`) – see `ad-slot.component.spec.ts` for the pattern.
 
 ## Legal Pages
@@ -237,16 +245,19 @@ Do NOT push if any of these fail. Fix first, then push.
 ### UserStats Versioning System
 
 **Version tracking enables automatic rebuilds when calculation logic changes:**
+
 - Every `UserStats` rebuild sets `version: USERSTATS_VERSION` (current v3)
 - Cloud Function checks: `if (stored.version < USERSTATS_VERSION) → auto-rebuild`
 - New users: Auto-rebuild on first entry ensures correct initialization with today's period keys
 
 **Version changelog:**
+
 - **v1:** Legacy (no versioning)
 - **v2:** Fixed period keys to use TODAY (not last entry date in rebuild)
 - **v3:** Fixed `berlinParts()` to treat offset-less timestamps as Berlin local time
 
 **How it works:**
+
 ```typescript
 // In updateUserStatsOnPushupWrite:
 if (existingStats.version < USERSTATS_VERSION) {
@@ -264,6 +275,7 @@ if (existingStats.version < USERSTATS_VERSION) {
 ### Pure Business Logic Modules
 
 Decomposed from monolithic index.ts (1220 → ~500 lines wrapper):
+
 - **datetime/:** Berlin timezone utilities (`berlinDateParts`, `isoWeekFromYmd`)
 - **profile/:** Display name sanitization & leaderboard privacy logic
 - **leaderboard/:** Ranking aggregation, period key calculations
@@ -289,6 +301,7 @@ Admin access uses **Firebase Custom Claims** (`{ admin: true }`) — NOT Firesto
 ## Precomputed Data Staleness
 
 When stores consume server-side precomputed data (e.g. `UserStats`), **always validate period keys before trusting the values:**
+
 - `dailyReps` → check `dailyKey === toBerlinIsoDate(new Date())`
 - `weeklyReps` → check `weeklyKey === currentIsoWeekKey()`
 - `monthlyReps` → check `monthlyKey === currentMonthKey()`
@@ -327,3 +340,27 @@ Fall back to client-side computation when keys are stale. The precomputed doc is
 - **Before pushing:** Run the pre-push checklist above.
 - **After completing a feature or bugfix:** Review whether any new broadly applicable knowledge should be added to this file (general conventions, architectural decisions, i18n rules, etc.). Do NOT add low-level details about individual files unless they are a recurring pitfall.
 - **After every session:** Capture reusable learnings (patterns, pitfalls, conventions discovered) via the `/evolving-loop` skill or the experience-extractor agent.
+
+<!-- nx configuration start-->
+<!-- Leave the start & end comments to automatically receive updates. -->
+
+## General Guidelines for working with Nx
+
+- For navigating/exploring the workspace, invoke the `nx-workspace` skill first - it has patterns for querying projects, targets, and dependencies
+- When running tasks (for example build, lint, test, e2e, etc.), always prefer running the task through `nx` (i.e. `nx run`, `nx run-many`, `nx affected`) instead of using the underlying tooling directly
+- Prefix nx commands with the workspace's package manager (e.g., `pnpm nx build`, `npm exec nx test`) - avoids using globally installed CLI
+- You have access to the Nx MCP server and its tools, use them to help the user
+- For Nx plugin best practices, check `node_modules/@nx/<plugin>/PLUGIN.md`. Not all plugins have this file - proceed without it if unavailable.
+- NEVER guess CLI flags - always check nx_docs or `--help` first when unsure
+
+## Scaffolding & Generators
+
+- For scaffolding tasks (creating apps, libs, project structure, setup), ALWAYS invoke the `nx-generate` skill FIRST before exploring or calling MCP tools
+
+## When to use nx_docs
+
+- USE for: advanced config options, unfamiliar flags, migration guides, plugin configuration, edge cases
+- DON'T USE for: basic generator syntax (`nx g @nx/react:app`), standard commands, things you already know
+- The `nx-generate` skill handles generator discovery internally - don't call nx_docs just to look up generator syntax
+
+<!-- nx configuration end-->
