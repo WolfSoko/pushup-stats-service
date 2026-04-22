@@ -97,7 +97,7 @@ describe('AuthStore – signInWithEmail return value', () => {
   });
 });
 
-describe('AuthStore – logoutAllDevices', () => {
+describe('AuthStore – unsubscribeAllPushDevices', () => {
   function makeAuthServiceWith(
     impl: Partial<AuthService>
   ): Partial<AuthService> {
@@ -110,9 +110,9 @@ describe('AuthStore – logoutAllDevices', () => {
     };
   }
 
-  it('returns true and clears error when revoke succeeds', async () => {
+  it('returns true and clears error when unsubscribe succeeds', async () => {
     const service = makeAuthServiceWith({
-      logoutAllDevices: () => Promise.resolve(),
+      unsubscribeAllPushDevices: () => Promise.resolve(),
     });
     const { fixture } = await render('', {
       providers: [
@@ -123,16 +123,16 @@ describe('AuthStore – logoutAllDevices', () => {
     });
     const store = fixture.debugElement.injector.get(AuthStore);
 
-    const result = await store.logoutAllDevices();
+    const result = await store.unsubscribeAllPushDevices();
 
     expect(result).toBe(true);
     expect(store.error()).toBeNull();
     expect(store.loading()).toBe(false);
   });
 
-  it('returns false and surfaces error when revoke fails', async () => {
+  it('returns false and surfaces error when unsubscribe fails', async () => {
     const service = makeAuthServiceWith({
-      logoutAllDevices: () =>
+      unsubscribeAllPushDevices: () =>
         Promise.reject(new Error('functions/internal-error')),
     });
     const { fixture } = await render('', {
@@ -144,7 +144,7 @@ describe('AuthStore – logoutAllDevices', () => {
     });
     const store = fixture.debugElement.injector.get(AuthStore);
 
-    const result = await store.logoutAllDevices();
+    const result = await store.unsubscribeAllPushDevices();
 
     expect(result).toBe(false);
     expect(store.error()).not.toBeNull();
@@ -154,7 +154,7 @@ describe('AuthStore – logoutAllDevices', () => {
   it('toggles loading flag during the call', async () => {
     let resolveCall: (() => void) | undefined;
     const service = makeAuthServiceWith({
-      logoutAllDevices: () =>
+      unsubscribeAllPushDevices: () =>
         new Promise<void>((resolve) => {
           resolveCall = resolve;
         }),
@@ -168,7 +168,7 @@ describe('AuthStore – logoutAllDevices', () => {
     });
     const store = fixture.debugElement.injector.get(AuthStore);
 
-    const pending = store.logoutAllDevices();
+    const pending = store.unsubscribeAllPushDevices();
     expect(store.loading()).toBe(true);
     resolveCall?.();
     await pending;

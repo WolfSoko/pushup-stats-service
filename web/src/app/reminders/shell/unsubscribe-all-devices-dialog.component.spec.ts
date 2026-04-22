@@ -1,17 +1,19 @@
 import { TestBed } from '@angular/core/testing';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { LogoutAllDevicesDialogComponent } from './logout-all-devices-dialog.component';
+import { UnsubscribeAllDevicesDialogComponent } from './unsubscribe-all-devices-dialog.component';
 
-describe('LogoutAllDevicesDialogComponent', () => {
+describe('UnsubscribeAllDevicesDialogComponent', () => {
   let dialogRefSpy: { close: ReturnType<typeof vi.fn> };
 
   function setup() {
     dialogRefSpy = { close: vi.fn() };
     TestBed.configureTestingModule({
-      imports: [LogoutAllDevicesDialogComponent, MatDialogModule],
+      imports: [UnsubscribeAllDevicesDialogComponent, MatDialogModule],
       providers: [{ provide: MatDialogRef, useValue: dialogRefSpy }],
     });
-    const fixture = TestBed.createComponent(LogoutAllDevicesDialogComponent);
+    const fixture = TestBed.createComponent(
+      UnsubscribeAllDevicesDialogComponent
+    );
     fixture.detectChanges();
     return { fixture, component: fixture.componentInstance };
   }

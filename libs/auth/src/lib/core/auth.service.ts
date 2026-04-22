@@ -180,17 +180,16 @@ export class AuthService {
   }
 
   /**
-   * Revokes all refresh tokens server-side (signs the user out of every
-   * device) and signs out locally. Other devices stay signed in until their
-   * cached ID token expires (≤1h) or they make an authenticated call —
-   * whichever comes first — at which point the revoked refresh token forces
-   * re-authentication.
+   * Removes every push subscription stored server-side for the current user
+   * across all devices. Does NOT sign the user out — the current session
+   * (and every other signed-in device) stays active; only Web Push
+   * notifications stop being delivered.
    */
-  async logoutAllDevices(): Promise<void> {
-    await this.wrapAsync(async () => {
-      await this.authAdapter.revokeAllSessions();
-      await this.authAdapter.signOut();
-    }, 'Logout all devices');
+  async unsubscribeAllPushDevices(): Promise<void> {
+    await this.wrapAsync(
+      () => this.authAdapter.unsubscribeAllPushDevices(),
+      'Unsubscribe all push devices'
+    );
   }
 
   /**

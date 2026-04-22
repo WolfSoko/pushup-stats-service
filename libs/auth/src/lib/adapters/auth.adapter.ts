@@ -144,18 +144,18 @@ export class AuthAdapter {
   }
 
   /**
-   * Calls the `revokeAllSessions` Cloud Function which invalidates every
-   * refresh token issued for the current user (i.e. signs them out of all
-   * devices) and deletes all stored push subscriptions. The local session
-   * is signed out separately by the caller.
+   * Calls the `unsubscribeAllPushDevices` Cloud Function which removes every
+   * push subscription stored against the current user's UID across all
+   * devices. Does NOT sign the user out — the session and auth tokens stay
+   * valid.
    */
-  async revokeAllSessions(): Promise<void> {
+  async unsubscribeAllPushDevices(): Promise<void> {
     if (!this.functions) {
       throw new Error('Cloud Functions not available');
     }
     const callable = httpsCallable<unknown, { ok: boolean }>(
       this.functions,
-      'revokeAllSessions'
+      'unsubscribeAllPushDevices'
     );
     await callable({});
   }

@@ -295,26 +295,24 @@ describe('AuthService', () => {
     });
   });
 
-  describe('logoutAllDevices', () => {
-    it('revokes server-side sessions before signing out locally', async () => {
-      const order: string[] = [];
-      adapter.revokeAllSessions = jest.fn().mockImplementation(async () => {
-        order.push('revoke');
-      });
-      adapter.signOut = jest.fn().mockImplementation(async () => {
-        order.push('signOut');
-      });
+  describe('unsubscribeAllPushDevices', () => {
+    it('delegates to the adapter and does NOT sign out locally', async () => {
+      adapter.unsubscribeAllPushDevices = jest
+        .fn()
+        .mockResolvedValue(undefined);
+      adapter.signOut = jest.fn();
 
       const { fixture } = await render('', { providers: makeProviders() });
       const service = fixture.debugElement.injector.get(AuthService);
 
-      await service.logoutAllDevices();
+      await service.unsubscribeAllPushDevices();
 
-      expect(order).toEqual(['revoke', 'signOut']);
+      expect(adapter.unsubscribeAllPushDevices).toHaveBeenCalled();
+      expect(adapter.signOut).not.toHaveBeenCalled();
     });
 
-    it('does not sign out locally when revoke fails (token still valid on this device)', async () => {
-      adapter.revokeAllSessions = jest
+    it('propagates adapter errors', async () => {
+      adapter.unsubscribeAllPushDevices = jest
         .fn()
         .mockRejectedValue(new Error('functions/unauthenticated'));
       adapter.signOut = jest.fn();
@@ -322,7 +320,7 @@ describe('AuthService', () => {
       const { fixture } = await render('', { providers: makeProviders() });
       const service = fixture.debugElement.injector.get(AuthService);
 
-      await expect(service.logoutAllDevices()).rejects.toThrow(
+      await expect(service.unsubscribeAllPushDevices()).rejects.toThrow(
         'functions/unauthenticated'
       );
       expect(adapter.signOut).not.toHaveBeenCalled();
