@@ -8,6 +8,7 @@ import {
   withProps,
   withState,
 } from '@ngrx/signals';
+import { PushSwRegistrationService } from './push-sw-registration.service';
 import { VAPID_PUBLIC_KEY } from './vapid-key.token';
 
 export type PushStatus =
@@ -36,6 +37,7 @@ export const PushSubscriptionStore = signalStore(
       ? inject(Functions, { optional: true })
       : null,
     _vapidPublicKey: inject(VAPID_PUBLIC_KEY),
+    _pushSwRegistration: inject(PushSwRegistrationService),
   })),
   withMethods((store) => {
     function isSupported(): boolean {
@@ -120,40 +122,18 @@ export const PushSubscriptionStore = signalStore(
     }
 
     /**
-     * Max time to wait for the Angular service worker to become available
-     * before giving up. Must be comfortably larger than the
-     * `registerWhenStable:<delay>` in `provideServiceWorker(...)` so the
-     * subscribe flow doesn't race the registration on first page load.
-     */
-    const SW_READY_TIMEOUT_MS = 15_000;
-    /** Poll interval while waiting for the SW to register. */
-    const SW_POLL_INTERVAL_MS = 250;
-
-    /**
-     * Get the SW registration, waiting for it if not yet available.
+     * Get the dedicated push SW registration (scope `/push/`). The service
+     * memoises register() internally and already has its own timeout, so
+     * callers just `await` it.
      *
-     * The app uses `registerWhenStable:<delay>`, so on first load the SW may
-     * not be registered at the moment the user toggles push on. We poll
-     * `getRegistration()` instead of awaiting `navigator.serviceWorker.ready`
-     * because `.ready` hangs forever when no SW is ever registered
-     * (dev mode, SW disabled) — see CLAUDE.md "Push Notifications" rules.
+     * Uses `navigator.serviceWorker.getRegistration(SW_PUSH_SCOPE)` under
+     * the hood — never the ngsw registration at `/`, which doesn't handle
+     * `push`/`notificationclick` events.
      */
     async function getSwRegistration(): Promise<
       ServiceWorkerRegistration | undefined
     > {
-      const deadline = Date.now() + SW_READY_TIMEOUT_MS;
-      // First attempt — likely hit on re-visits where the SW is already active.
-      let reg = await navigator.serviceWorker.getRegistration();
-      if (reg) return reg;
-      // Poll until the SW shows up or we hit the timeout.
-      while (Date.now() < deadline) {
-        await new Promise<void>((resolve) =>
-          setTimeout(resolve, SW_POLL_INTERVAL_MS)
-        );
-        reg = await navigator.serviceWorker.getRegistration();
-        if (reg) return reg;
-      }
-      return undefined;
+      return store._pushSwRegistration.getRegistration();
     }
 
     // Guard: prevent duplicate init() runs (e.g. from re-mounted components)
@@ -271,9 +251,8 @@ export const PushSubscriptionStore = signalStore(
               // users only see notifications while the app is open (via the
               // in-app interval), not in the background.
               console.error(
-                '[PushSubscriptionStore] Service Worker not available within ' +
-                  `${SW_READY_TIMEOUT_MS}ms — cannot subscribe to push. ` +
-                  'Reload the app and try again.'
+                '[PushSubscriptionStore] Push service worker at /push/ is ' +
+                  'not available — cannot subscribe. Reload the app and try again.'
               );
               patchState(store, { status: 'error' });
               return false;

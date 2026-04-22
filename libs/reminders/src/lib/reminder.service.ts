@@ -4,6 +4,7 @@ import { ReminderStore } from './reminder.store';
 import { ReminderPermissionService } from './reminder-permission.service';
 import { MotivationStore } from '@pu-stats/motivation';
 import { PushSubscriptionStore } from './push/push-subscription.store';
+import { PushSwRegistrationService } from './push/push-sw-registration.service';
 
 export function isInQuietHours(
   quietHours: { from: string; to: string }[],
@@ -47,6 +48,7 @@ export class ReminderService {
   private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
   private readonly motivationStore = inject(MotivationStore);
   private readonly pushStore = inject(PushSubscriptionStore);
+  private readonly pushSwRegistration = inject(PushSwRegistrationService);
   private readonly locale = (() => {
     const l = inject(LOCALE_ID).toLowerCase();
     return l.startsWith('en') ? 'en' : 'de';
@@ -122,20 +124,12 @@ export class ReminderService {
 
     if (Notification.permission === 'granted') {
       // Prefer ServiceWorker notification — `new Notification()` is not
-      // supported on Android Chrome and throws "Illegal constructor".
-      // Try getRegistration() first; if SW isn't registered yet
-      // (registerWhenStable:30000), wait up to 5s via .ready with timeout.
+      // supported on Android Chrome and throws "Illegal constructor". We
+      // explicitly show via the /push/ registration so that a later
+      // notificationclick is handled by sw-push (ngsw has no listener).
       let shown = false;
       try {
-        let reg = await navigator.serviceWorker?.getRegistration();
-        if (!reg) {
-          reg = await Promise.race([
-            navigator.serviceWorker?.ready,
-            new Promise<undefined>((resolve) =>
-              setTimeout(() => resolve(undefined), 5_000)
-            ),
-          ]);
-        }
+        const reg = await this.pushSwRegistration.getRegistration();
         if (reg) {
           const iconUrl = new URL('assets/pushup-logo.svg', document.baseURI)
             .href;

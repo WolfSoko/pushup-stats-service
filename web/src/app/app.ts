@@ -33,7 +33,10 @@ import { AuthService, AuthStore, UserMenuComponent } from '@pu-auth/auth';
 import { filter } from 'rxjs';
 import { SeoService } from './core/seo.service';
 import { UserContextService } from '@pu-auth/auth';
-import { PushSubscriptionService } from '@pu-reminders/reminders';
+import {
+  PushSubscriptionService,
+  PushSwRegistrationService,
+} from '@pu-reminders/reminders';
 import { CookieConsentBannerComponent } from '@pu-stats/ads';
 import { QuickAddFabComponent } from '@pu-stats/quick-add';
 import { ThemeToggleComponent } from './core/theme';
@@ -84,8 +87,17 @@ export class App {
     () => !!this.user.userIdSafe() && !this.user.isGuest()
   );
   private readonly pushService = inject(PushSubscriptionService);
+  private readonly pushSwRegistration = inject(PushSwRegistrationService);
+  // Eagerly register the push service worker on boot so:
+  //   - fresh visitors have the SW installed before they ever open /reminders
+  //     (no cold-start race on the first `subscribe()` click), and
+  //   - existing subscribers pull the latest `sw-push.js` via the browser's
+  //     update check even when they never navigate to /reminders.
+  // Lives next to `registerSwListener()` which wires the `message` bridge
+  // for PUSH_SUBSCRIPTION_CHANGED events fired by the push SW.
   private readonly _initPushBridge = afterNextRender(() => {
     this.pushService.registerSwListener();
+    void this.pushSwRegistration.getRegistration();
   });
   // Snooze param from SW notification click — must wait for auth to resolve
   // before calling the Cloud Function, otherwise the request goes out without

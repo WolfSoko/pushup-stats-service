@@ -96,13 +96,12 @@ export const appConfig: ApplicationConfig = {
     { provide: POST_AUTH_HOOKS, useClass: UserProfileSyncHook, multi: true },
     { provide: POST_AUTH_HOOKS, useClass: GuestDataMigrationHook, multi: true },
     { provide: VAPID_PUBLIC_KEY, useValue: firebaseRuntime.vapidPublicKey },
-    provideServiceWorker('sw-push.js', {
+    // Stock ngsw at scope `/` — handles app shell + asset caching only.
+    // Push + notification logic lives in a separate worker registered at
+    // `/push/` by PushSwRegistrationService (libs/reminders). Keeping ngsw
+    // untouched means Angular updates can't accidentally break push.
+    provideServiceWorker('ngsw-worker.js', {
       enabled: !isDevMode(),
-      // Register the SW shortly after stabilization so push subscriptions
-      // can succeed on first visit. A long delay (previously 30s) caused a
-      // race where subscribe() timed out waiting for the SW, leaving users
-      // without a real push subscription — reminders then only fired while
-      // the app was open (via in-app interval), not in the background.
       registrationStrategy: 'registerWhenStable:2000',
     }),
     ...(firebaseRuntime.useEmulators

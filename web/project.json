@@ -4,7 +4,7 @@
   "projectType": "application",
   "prefix": "app",
   "sourceRoot": "web/src",
-  "implicitDependencies": ["data-store"],
+  "implicitDependencies": ["data-store", "sw-push"],
   "i18n": {
     "sourceLocale": "de",
     "locales": {
@@ -19,7 +19,7 @@
   "targets": {
     "build": {
       "executor": "@angular/build:application",
-      "dependsOn": ["tools:generate-sitemap"],
+      "dependsOn": ["tools:generate-sitemap", "sw-push:build"],
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/web",
@@ -39,11 +39,6 @@
           {
             "glob": "**/*",
             "input": "web/public"
-          },
-          {
-            "glob": "sw-push.js",
-            "input": "web/src",
-            "output": "/"
           }
         ],
         "styles": ["web/src/styles.scss"]

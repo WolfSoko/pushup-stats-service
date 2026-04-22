@@ -1,0 +1,36 @@
+{
+  "name": "sw-push",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "libs/sw-push/src",
+  "tags": ["scope:sw-push"],
+  "targets": {
+    "build": {
+      "executor": "nx:run-commands",
+      "cache": true,
+      "inputs": [
+        "production",
+        "{projectRoot}/build.mjs",
+        "{projectRoot}/tsconfig.lib.json"
+      ],
+      "outputs": [
+        "{workspaceRoot}/web/public/push/sw-push.js",
+        "{workspaceRoot}/web/public/push/sw-push.js.map"
+      ],
+      "options": {
+        "command": "node libs/sw-push/build.mjs",
+        "cwd": "{workspaceRoot}"
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/libs/sw-push"],
+      "options": {
+        "jestConfig": "libs/sw-push/jest.config.cts"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}
