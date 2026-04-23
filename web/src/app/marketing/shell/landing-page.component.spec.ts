@@ -125,6 +125,25 @@ describe('LandingPageComponent', () => {
     });
   });
 
+  it('renders a prominent brand logo inside the hero card', async () => {
+    const view = await render(LandingPageComponent, {
+      providers: [
+        provideRouter([]),
+        { provide: AdsStore, useValue: adsConfigMock },
+        { provide: AuthService, useValue: makeAuthServiceMock() },
+        { provide: AuthStore, useValue: makeAuthStoreMock() },
+      ],
+    });
+
+    const host = view.fixture.nativeElement as HTMLElement;
+    const hero = host.querySelector('section.hero');
+    expect(hero).toBeTruthy();
+    const logo = hero?.querySelector('img.hero-logo') as HTMLImageElement | null;
+    expect(logo).toBeTruthy();
+    expect(logo?.getAttribute('src')).toBe('assets/pushup-logo.png');
+    expect(logo?.getAttribute('alt')).toBe('Pushup Tracker Logo');
+  });
+
   it('orders landing sections as feature grid, preview, discover', async () => {
     const view = await render(LandingPageComponent, {
       providers: [

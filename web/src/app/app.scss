@@ -81,14 +81,15 @@ mat-sidenav-content {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 34px;
-    height: 34px;
-    border-radius: 8px;
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
 
     img {
-      width: 28px;
-      height: 28px;
+      width: 36px;
+      height: 36px;
       display: block;
+      filter: drop-shadow(0 4px 10px rgba(40, 95, 186, 0.35));
     }
   }
 
@@ -136,6 +137,12 @@ mat-sidenav-content {
     gap: 8px;
     padding-inline: max(16px, calc((100vw - 1200px) / 2));
     background: var(--mat-toolbar-container-background-color, #1e1e1e);
+
+    // Stack below the sticky toolbar (mat-toolbar desktop height = 64px)
+    position: sticky;
+    top: 64px;
+    z-index: 9;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 
     // Fade background at the edges on wide viewports
     -webkit-mask-image: linear-gradient(
@@ -268,6 +275,7 @@ html.light-theme {
 
   .desktop-nav {
     background: #f1f5f9 !important;
+    border-bottom-color: rgba(148, 163, 184, 0.3);
     a {
       color: #334155;
     }
