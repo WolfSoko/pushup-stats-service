@@ -18,6 +18,20 @@ import { getBlogPostsByLocale } from './blog-posts.data';
       <div class="articles">
         @for (post of posts; track post.slug) {
           <mat-card class="article-card">
+            @if (post.heroImage) {
+              <a
+                [routerLink]="['/blog', post.slug]"
+                class="card-media"
+                [attr.aria-label]="post.title"
+              >
+                <img
+                  [src]="post.heroImage"
+                  [alt]="post.heroImageAlt ?? post.title"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </a>
+            }
             <mat-card-header>
               <mat-card-title>{{ post.title }}</mat-card-title>
               <mat-card-subtitle>
@@ -73,6 +87,26 @@ import { getBlogPostsByLocale } from './blog-posts.data';
       .article-card {
         border: 1px solid var(--border-subtle);
         border-radius: 16px;
+        overflow: hidden;
+      }
+
+      .card-media {
+        display: block;
+        aspect-ratio: 16 / 9;
+        overflow: hidden;
+        background: var(--surface-subtle, #eee);
+      }
+
+      .card-media img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition: transform 200ms ease;
+      }
+
+      .card-media:hover img {
+        transform: scale(1.02);
       }
 
       mat-card-content p {

@@ -18,7 +18,12 @@ export class SeoService {
   private readonly document = inject(DOCUMENT);
   private readonly localeId = inject(LOCALE_ID);
 
-  update(seoTitle: string, seoDescription: string, path: string): void {
+  update(
+    seoTitle: string,
+    seoDescription: string,
+    path: string,
+    options: { imageUrl?: string; imageAlt?: string } = {}
+  ): void {
     this.title.setTitle(seoTitle);
 
     this.setTag('name', 'description', seoDescription);
@@ -44,6 +49,22 @@ export class SeoService {
     this.setHreflang('alternate', 'de', deUrl);
     this.setHreflang('alternate', 'en', enUrl);
     this.setHreflang('alternate', 'x-default', deUrl);
+
+    this.applyImage(options.imageUrl, options.imageAlt ?? seoTitle);
+  }
+
+  private applyImage(imageUrl: string | undefined, alt: string): void {
+    if (imageUrl) {
+      this.setTag('property', 'og:image', imageUrl);
+      this.setTag('property', 'og:image:alt', alt);
+      this.setTag('name', 'twitter:image', imageUrl);
+      this.setTag('name', 'twitter:image:alt', alt);
+    } else {
+      this.removeTag('property', 'og:image');
+      this.removeTag('property', 'og:image:alt');
+      this.removeTag('name', 'twitter:image');
+      this.removeTag('name', 'twitter:image:alt');
+    }
   }
 
   private detectLocale(path: string): LocalePrefix {
@@ -69,6 +90,10 @@ export class SeoService {
     content: string
   ): void {
     this.meta.updateTag({ [kind]: key, content });
+  }
+
+  private removeTag(kind: 'name' | 'property', key: string): void {
+    this.meta.removeTag(`${kind}='${key}'`);
   }
 
   private setCanonical(url: string): void {

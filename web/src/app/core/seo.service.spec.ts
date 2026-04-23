@@ -130,6 +130,59 @@ describe('SeoService', () => {
     });
   });
 
+  describe('image metadata', () => {
+    const IMAGE_URL = 'https://images.unsplash.com/photo-x?w=1200';
+    const IMAGE_ALT = 'A photo';
+
+    function getMetaContent(selector: string): string | null {
+      return (
+        document.head
+          .querySelector<HTMLMetaElement>(selector)
+          ?.getAttribute('content') ?? null
+      );
+    }
+
+    it('writes og:image and twitter:image when imageUrl is provided', () => {
+      const seo = setup('de');
+      seo.update('Title', 'Description', '/blog/hello', {
+        imageUrl: IMAGE_URL,
+        imageAlt: IMAGE_ALT,
+      });
+
+      expect(getMetaContent('meta[property="og:image"]')).toBe(IMAGE_URL);
+      expect(getMetaContent('meta[property="og:image:alt"]')).toBe(IMAGE_ALT);
+      expect(getMetaContent('meta[name="twitter:image"]')).toBe(IMAGE_URL);
+      expect(getMetaContent('meta[name="twitter:image:alt"]')).toBe(IMAGE_ALT);
+    });
+
+    it('falls back to the title as image alt when imageAlt is omitted', () => {
+      const seo = setup('de');
+      seo.update('Great Title', 'Description', '/blog/hello', {
+        imageUrl: IMAGE_URL,
+      });
+
+      expect(getMetaContent('meta[property="og:image:alt"]')).toBe(
+        'Great Title'
+      );
+    });
+
+    it('removes stale image tags when a subsequent update has no image', () => {
+      const seo = setup('de');
+      seo.update('Title', 'Description', '/blog/hello', {
+        imageUrl: IMAGE_URL,
+        imageAlt: IMAGE_ALT,
+      });
+      seo.update('Title 2', 'Description', '/');
+
+      expect(
+        document.head.querySelector('meta[property="og:image"]')
+      ).toBeNull();
+      expect(
+        document.head.querySelector('meta[name="twitter:image"]')
+      ).toBeNull();
+    });
+  });
+
   describe('idempotency', () => {
     it('updates existing canonical/hreflang links instead of appending duplicates', () => {
       const seo = setup('de');

@@ -4,10 +4,18 @@ export interface BlogPost {
   title: string;
   description: string;
   publishedAt: string;
+  /** Optional ISO date; when present the article shows "Updated on …" and sets article:modified_time. */
+  updatedAt?: string;
   content: string;
   keywords: string[];
   /** Slug of the same article in the other locale — enables hreflang pairing in the sitemap. */
   translationSlug?: string;
+  /** Absolute URL of the hero image rendered above the article body and used for og:image. */
+  heroImage?: string;
+  /** Accessible alt text for the hero image. */
+  heroImageAlt?: string;
+  /** Small credit line rendered under the hero — typically "Photo: Photographer on Unsplash". HTML allowed. */
+  heroImageCredit?: string;
 }
 
 export function getBlogPostsByLocale(locale: string): BlogPost[] {
@@ -39,6 +47,11 @@ export const BLOG_POSTS: BlogPost[] = [
       'Liegestütze Fortschritt',
       'Liegestütze lernen',
     ],
+    heroImage:
+      'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=1600&q=80',
+    heroImageAlt: 'Athlet in Plank-Position bei einer sauberen Liegestütze.',
+    heroImageCredit:
+      'Foto: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>',
     content: `
 <h2>Warum systematisches Training den Unterschied macht</h2>
 <p>
@@ -116,6 +129,11 @@ export const BLOG_POSTS: BlogPost[] = [
       'Liegestütze Gewohnheit',
       'Liegestütze Gesundheit',
     ],
+    heroImage:
+      'https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=1600&q=80',
+    heroImageAlt: 'Sportler beim Bodyweight-Training im Fitnessstudio.',
+    heroImageCredit:
+      'Foto: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>',
     content: `
 <h2>Mehr als nur ein Fitness-Trend</h2>
 <p>
@@ -195,6 +213,12 @@ export const BLOG_POSTS: BlogPost[] = [
       'Pushup Tracker',
       'Liegestütze Fortschritt verfolgen',
     ],
+    heroImage:
+      'https://images.unsplash.com/photo-1551887196-72e32bfc7bf3?auto=format&fit=crop&w=1600&q=80',
+    heroImageAlt:
+      'Smartphone mit Fitness-Tracker-App und Statistik-Diagrammen.',
+    heroImageCredit:
+      'Foto: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>',
     content: `
 <h2>Das Problem mit dem Bauchgefühl</h2>
 <p>
@@ -265,6 +289,12 @@ export const BLOG_POSTS: BlogPost[] = [
       'Liegestütze Muskeln',
       'Liegestütze fortgeschritten',
     ],
+    heroImage:
+      'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1600&q=80',
+    heroImageAlt:
+      'Athletischer Sportler bei fortgeschrittener Push-Up-Variante.',
+    heroImageCredit:
+      'Foto: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>',
     content: `
 <h2>Warum Variationen entscheidend sind</h2>
 <p>
@@ -358,6 +388,12 @@ export const BLOG_POSTS: BlogPost[] = [
       'Push-Up Challenge',
       'Liegestütze täglich steigern',
     ],
+    heroImage:
+      'https://images.unsplash.com/photo-1599058917212-d750089bc07e?auto=format&fit=crop&w=1600&q=80',
+    heroImageAlt:
+      'Sportler bei intensivem Workout mit Kalender im Hintergrund.',
+    heroImageCredit:
+      'Foto: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>',
     content: `
 <h2>Was die 30-Tage-Challenge bewirkt</h2>
 <p>
@@ -436,6 +472,12 @@ export const BLOG_POSTS: BlogPost[] = [
       'Fitness über 40',
       'Liegestütze Gelenke schonen',
     ],
+    heroImage:
+      'https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?auto=format&fit=crop&w=1600&q=80',
+    heroImageAlt:
+      'Erfahrener Sportler mittleren Alters bei konzentriertem Krafttraining.',
+    heroImageCredit:
+      'Foto: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>',
     content: `
 <h2>Was sich ab 40 verändert</h2>
 <p>
@@ -509,6 +551,261 @@ export const BLOG_POSTS: BlogPost[] = [
     `.trim(),
   },
 
+  {
+    slug: 'wim-hof-liegestuetze',
+    lang: 'de',
+    translationSlug: 'wim-hof-pushups',
+    title: 'Wim Hof Methode für Liegestützen: Atmung, Kälte & mehr Leistung',
+    description:
+      'Wie sinnvoll ist die Wim Hof Methode für deine Liegestütze? Ein forschungsbasierter Blick auf Atemprotokoll, Kälteanwendung und was die Studienlage wirklich hergibt.',
+    publishedAt: '2026-04-23',
+    keywords: [
+      'Wim Hof Methode',
+      'Liegestütze Leistung',
+      'Atmung Leistungssteigerung',
+      'Kälteanwendung Regeneration',
+      'Wim Hof Atmung Liegestütze',
+    ],
+    heroImage:
+      'https://images.unsplash.com/photo-1548690312-e3b507d8c110?auto=format&fit=crop&w=1600&q=80',
+    heroImageAlt:
+      'Sportler in verschneiter Landschaft – Sinnbild für die Wim Hof Methode.',
+    heroImageCredit:
+      'Foto: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>',
+    content: `
+<h2>Warum Wim Hof plötzlich in Fitness-Studios auftaucht</h2>
+<p>
+  Der niederländische Extremsportler Wim Hof wurde mit scheinbar unmöglichen Leistungen bekannt: Everest
+  in Shorts, Halbmarathon barfuß am Polarkreis, Atemanhalten über sechs Minuten. Was wie ein Zirkus-Trick
+  klang, ist tatsächlich ein strukturiertes Protokoll aus hyperventilationsähnlicher Atmung, Kälteexposition
+  und Konzentration – und in den letzten zehn Jahren gibt es genug peer-reviewte Studien, dass die Frage
+  für Trainierende legitim ist: Werden meine Liegestütze dadurch besser?
+</p>
+<p>
+  Die kurze Antwort: Die Wim Hof Methode (WHM) erhöht deine maximalen Wiederholungen nicht direkt. Aber sie
+  verändert zwei Dinge, die für das Liegestütz-Training zählen – den Zustand des Nervensystems, in dem du
+  trainierst, und das Tempo deiner Regeneration zwischen den Einheiten.
+</p>
+
+<h2>Was die Studienlage hergibt</h2>
+<p>
+  Die Leitstudie stammt von
+  <a href="https://pubmed.ncbi.nlm.nih.gov/24799686/" target="_blank" rel="noopener noreferrer nofollow ugc">Kox et al., 2014 (PNAS)</a>.
+  Ein Team der Radboud-Universität trainierte Probanden zehn Tage nach WHM und injizierte ihnen danach
+  bakterielles Endotoxin. Die trainierten Teilnehmer zeigten deutlich niedrigere entzündliche Marker und
+  weniger grippeähnliche Symptome als die Kontrollgruppe – der erste Nachweis am Menschen, dass freiwillige
+  Atmung und Kälte die angeborene Immunantwort modulieren können.
+</p>
+<p>
+  Ein
+  <a href="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0161749" target="_blank" rel="noopener noreferrer nofollow ugc">randomisierter PLOS ONE Trial (Buijze et al., 2016)</a>
+  zeigte, dass 30 Tage heiß-kalte Duschen die selbstberichteten Krankheitstage um 29 % reduzierten. Eine
+  <a href="https://pubmed.ncbi.nlm.nih.gov/27500826/" target="_blank" rel="noopener noreferrer nofollow ugc">Übersichtsarbeit zur Kälteexposition 2016</a>
+  dokumentiert die hormonellen und kardiovaskulären Reaktionen im Detail.
+</p>
+<p>
+  Was die Evidenz <em>nicht</em> zeigt: einen direkten, groß angelegten Effekt auf Maximalkraft oder
+  Hypertrophie. Betrachte WHM also als <strong>Regenerations- und Nervensystem-Tool</strong>, nicht als
+  Kraft-Booster.
+</p>
+
+<h2>Das Atemprotokoll kurz und sauber</h2>
+<p>
+  Die offizielle Anleitung steht auf
+  <a href="https://www.wimhofmethod.com/practice-the-method" target="_blank" rel="noopener noreferrer nofollow ugc">wimhofmethod.com</a>.
+  Eine Runde sieht so aus:
+</p>
+<ol>
+  <li><strong>30–40 tiefe Atemzüge</strong> durch Nase oder Mund ein, entspannt ausatmen. Die Ausatmung
+    wird nicht erzwungen. Effektiv eine kontrollierte Hyperventilation.</li>
+  <li><strong>Retention nach Ausatmung</strong> – nach der letzten Ausatmung halten, bis der Atemdrang
+    zurückkommt. Mit Übung oft 60–120 Sekunden.</li>
+  <li><strong>Recovery-Atem</strong> – ein voller Einatemzug, 15 Sekunden halten, loslassen.</li>
+  <li>3–4 Runden.</li>
+</ol>
+<p>
+  Andrew Huberman erklärt den Mechanismus ausführlich im
+  <a href="https://www.hubermanlab.com/episode/how-to-breathe-correctly-for-optimal-health-mood-learning-and-performance" target="_blank" rel="noopener noreferrer nofollow ugc">Huberman Lab Podcast zur Atmung</a>:
+  Das Protokoll senkt den Blut-CO₂-Spiegel, hebt kurzfristig Adrenalin und löst anschließend einen
+  parasympathischen Rebound aus. Genau dieser Rebound ist die für Regeneration relevante Phase.
+</p>
+
+<h2>Ein ernstes Sicherheits-Wort vorab</h2>
+<p>
+  Hyperventilation in Kombination mit Atemanhalten kann zu einer Ohnmacht führen (Flachwasser-Blackout).
+  Die <strong>absolute Regel der Wim Hof Organisation selbst</strong>: niemals während des Autofahrens,
+  im Pool, in der Badewanne oder an Orten praktizieren, an denen eine Ohnmacht gefährlich wäre. Schwangere,
+  Personen mit Herz-Kreislauf-Erkrankungen, Epilepsie oder Panikstörungen sollten das Protokoll auslassen
+  oder erst mit einem Arzt sprechen.
+</p>
+
+<h2>Wie du es mit Liegestütz-Training kombinierst</h2>
+<p>
+  Drei konkrete Varianten, von niedrigstem zu höchstem Risiko:
+</p>
+<ol>
+  <li>
+    <strong>Atmung als Primer vor dem Satz (sicherste Variante).</strong>
+    Am Boden 2 Runden WHM-Atmung, dann aufhören – keine Liegestütze während des Atemhaltens. Den ersten
+    Satz Liegestütze starten, sobald die Atmung normalisiert ist (~60 s). Viele berichten von einem
+    fokussierteren, ruhigeren Startsatz. Kein zusätzliches Risiko über die Atmung hinaus.
+  </li>
+  <li>
+    <strong>Kalte Dusche als Finisher.</strong>
+    Nach dem Training 60–120 s kalte Dusche auf Brust, Schultern und Oberarme. Der PLOS-ONE-Trial von 2016
+    legt nahe, dass das für die Immun- und Stimmungseffekte ausreicht. Keine Alternative zu Schlaf und
+    Protein – sondern zusätzlich.
+  </li>
+  <li>
+    <strong>"Breath-Hold Push-Ups" (fortgeschritten, optional).</strong>
+    Auf der letzten Ausatmung einer WHM-Runde Liegestütze in der Retentionsphase ausführen. Die klassische
+    "Wim Hof Liegestütze". Das sind <em>keine</em> zusätzlichen Reps – der Atemstopp maskiert lediglich den
+    Luftmangel. Nur auf einer Matte, nie an harten Kanten oder in Wassernähe, nie allein.
+  </li>
+</ol>
+
+<h2>Was du nach 30 Tagen erwarten kannst</h2>
+<p>
+  Trainierende berichten typischerweise: bessere Toleranz gegenüber dem "Brennen" in höheren
+  Wiederholungsbereichen, schnellere mentale Erholung nach harten Einheiten und deutlich weniger
+  Muskelkater 24 Stunden später. Die reinen Kraftzahlen steigen nicht plötzlich – die Kontinuität steigt.
+  Wenn du ohnehin <a href="/blog/liegestuetze-tracker">einen Liegestütz-Tracker nutzt</a>, trage die
+  Atem- und Kältesitzungen neben den Wiederholungen ein. Ein Monat Daten sagt dir mehr als jede Anekdote.
+</p>
+
+<h2>Fazit</h2>
+<p>
+  Die Wim Hof Methode hat messbare Effekte auf Entzündungswerte und vegetative Balance. Sie ersetzt keine
+  progressive Belastungssteigerung, keinen Schlaf und kein Protein – aber als Regenerationsschicht um das
+  Liegestütz-Training herum ist die Evidenz gut genug für einen Versuch, solange du die Atemhalt-Regeln
+  respektierst.
+</p>
+    `.trim(),
+  },
+  {
+    slug: 'liegestuetze-herz-studie',
+    lang: 'de',
+    translationSlug: 'pushups-heart-study',
+    title:
+      'Die Harvard-Studie, die Liegestützen berühmt machte: 40+ Reps & Herzgesundheit',
+    description:
+      'Eine Harvard-Studie in JAMA 2019 rückte die Liegestütz-Kapazität auf die Herzrisiko-Landkarte. Was die Daten wirklich zeigen, was nicht – und wie du das für dein Training nutzt.',
+    publishedAt: '2026-04-23',
+    keywords: [
+      'Liegestütze Herzgesundheit',
+      'Liegestütze Herzrisiko Studie',
+      'Harvard Liegestütze Studie',
+      'JAMA Liegestütze',
+      'Fitness Herzerkrankung',
+    ],
+    heroImage:
+      'https://images.unsplash.com/photo-1540497077202-7c8a3999166f?auto=format&fit=crop&w=1600&q=80',
+    heroImageAlt:
+      'Läufer bei Sonnenaufgang – Sinnbild für kardiovaskuläre Gesundheit.',
+    heroImageCredit:
+      'Foto: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>',
+    content: `
+<h2>Warum eine einzige Liegestütz-Studie viral ging</h2>
+<p>
+  Im Februar 2019 veröffentlichte ein Team der Harvard T.H. Chan School of Public Health zehn Jahre Daten
+  über 1.104 aktive Männer – Feuerwehrleute aus Indiana – und stellte eine sehr einfache Frage: Lässt sich
+  aus der Liegestütz-Kapazität das spätere Herzinfarkt-Risiko vorhersagen?
+</p>
+<p>
+  Das Ergebnis, publiziert in
+  <a href="https://pubmed.ncbi.nlm.nih.gov/30821806/" target="_blank" rel="noopener noreferrer nofollow ugc">JAMA Network Open (Yang et al., 2019)</a>,
+  schaffte es aus gutem Grund auf die Titelseiten. Männer, die mehr als <strong>40 Liegestütze</strong>
+  am Stück schafften, hatten ein <strong>um 96 % geringeres</strong> kardiovaskuläres Ereignisrisiko in
+  den folgenden zehn Jahren – im Vergleich zu Männern, die weniger als 10 Reps schafften. Die offizielle
+  <a href="https://www.hsph.harvard.edu/news/press-releases/push-ups-correlated-with-reduced-cardiovascular-disease-risk-study/" target="_blank" rel="noopener noreferrer nofollow ugc">Harvard-Pressemitteilung</a>
+  fasst es in einem Satz zusammen: "Liegestützen korrelieren mit reduziertem Risiko für Herz-Kreislauf-Erkrankungen."
+</p>
+
+<h2>Was die Studie tatsächlich gemessen hat</h2>
+<p>
+  Es lohnt sich, hinter die Schlagzeile zu schauen:
+</p>
+<ul>
+  <li><strong>Stichprobe:</strong> 1.104 erwachsene Männer, Medianalter 39,6 Jahre, alle beruflich aktiv
+    (Feuerwehrleute). Reiner Männer- und Berufsfeuer-Datensatz.</li>
+  <li><strong>Test:</strong> Metronom-getaktete Liegestütz-Kapazität am Baseline (2000), mit Follow-up
+    kardiovaskulärer Ereignisse bis 2010.</li>
+  <li><strong>Ergebnisse:</strong> 37 CVD-Ereignisse über zehn Jahre – Herzinfarkte, koronare
+    Todesfälle, Koronareingriffe.</li>
+  <li><strong>Vergleich:</strong> Auch die treadmill-gemessene aerobe Kapazität war mit weniger CVD
+    assoziiert – aber das Liegestütz-Signal war in dieser Kohorte stärker als das Ausdauer-Signal.</li>
+</ul>
+<p>
+  Die Autoren waren in der Diskussion vorsichtig: Die Liegestütz-Kapazität ist ein Proxy für allgemeine
+  funktionelle Fitness, keine eigenständige Ursache besserer Herzgesundheit. Sie ist aber ein
+  <em>einfacher, kostenloser, geräteloser Feldtest</em>, der eng mit dem korreliert, was zählt: Muskelmasse,
+  aerobe Reserve und Bewegungsqualität.
+</p>
+
+<h2>Grenzen, die die Medien übersprungen haben</h2>
+<p>
+  Was die Studie <strong>nicht</strong> beweist:
+</p>
+<ul>
+  <li>Sie zeigt nicht, dass <em>das Machen</em> von mehr Liegestützen das Herzrisiko <em>kausal</em> senkt.
+    Für Kausalität bräuchte es eine randomisierte Interventionsstudie, das war diese nicht.</li>
+  <li>Sie gilt nicht direkt für Frauen, nicht für sitzende Populationen, nicht für ältere Erwachsene –
+    diese Gruppen waren schlicht nicht Teil der Stichprobe.</li>
+  <li>Sie bedeutet nicht, dass Liegestütze Ausdauertraining ersetzen. Die
+    <a href="https://www.who.int/news-room/fact-sheets/detail/physical-activity" target="_blank" rel="noopener noreferrer nofollow ugc">
+      WHO-Empfehlungen zu körperlicher Aktivität</a>
+    fordern weiterhin 150–300 Minuten moderates Ausdauertraining pro Woche <strong>plus</strong>
+    Kräftigung an zwei Tagen.</li>
+</ul>
+
+<h2>Wie AHA und ACSM den Befund einordnen</h2>
+<p>
+  Die
+  <a href="https://www.heart.org/en/healthy-living/fitness/fitness-basics/aha-recs-for-physical-activity-in-adults" target="_blank" rel="noopener noreferrer nofollow ugc">American Heart Association</a>
+  stellt Kräftigungstraining schon länger ins Zentrum der kardiovaskulären Prävention – neben Ausdauer.
+  Eigengewichtsübungen wie Liegestützen zählen dazu und sind der reibungsärmste Weg, die geforderten
+  zwei Krafteinheiten pro Woche abzuhaken.
+</p>
+
+<h2>Wie du das nutzt, ohne es zu überinterpretieren</h2>
+<p>
+  Die nützliche Botschaft lautet nicht "40 Liegestützen = gesundes Herz". Sie lautet: Ein einfacher
+  Feldtest korreliert mit dem Merkmalscocktail, den du ohnehin willst. Zwei praktische Anwendungen:
+</p>
+<ol>
+  <li>
+    <strong>Nutze ihn als Benchmark, nicht als Ziel.</strong> Einmal pro Monat einen Maximalsatz bis zur
+    Erschöpfung. Die Zahl loggen. Du trackst einen Proxy für den Gesamttrend deiner Fitness, keinen
+    Performance-Endwert.
+  </li>
+  <li>
+    <strong>Rückwärts in strukturiertes Training übersetzen.</strong> Bei einem Startwert unter 10 bringt
+    dich der <a href="/blog/liegestuetze-steigern">Progressionsguide</a> in sechs Wochen auf ein solides
+    Niveau. Von 20 auf 40+ ist die
+    <a href="/blog/30-tage-liegestuetze-challenge">30-Tage-Challenge</a> dafür gemacht, dieses Plateau
+    zu durchbrechen.
+  </li>
+</ol>
+
+<h2>Ein Wort zur Technik</h2>
+<p>
+  Eine "Liegestütze" in der Yang-et-al.-Studie bedeutete einen metronom-getakteten Rep mit vollem
+  Bewegungsumfang. Ego-Reps zählen in der Forschung nicht, und sie sollten auch für dich nicht zählen.
+  Brust auf Bodenhöhe oder wenige Zentimeter darüber. Körper gerade. Ellenbogen hinter die Schulter, nicht
+  breit nach außen. Wenn 40 saubere Wiederholungen noch weit weg sind, ist das der ehrliche Startpunkt –
+  und die Daten legen nahe, dass der Weg selbst die Intervention ist.
+</p>
+
+<h2>Das größere Bild</h2>
+<p>
+  Liegestützen sind keine Wundermittel. Sie sind ein ungewöhnlich effizienter Test: eine Minute Aufwand,
+  kein Equipment, skalierbar von Knie-Variante bis einarmig. Die Harvard-Daten von 2019 haben lediglich
+  Zahlen auf das gelegt, was Kraftcoaches seit Jahrzehnten sagen – wer den eigenen Körper wiederholt vom
+  Boden drücken kann, ist in vielen anderen Dimensionen meist ebenfalls gesund.
+</p>
+    `.trim(),
+  },
+
   // ── English blog posts ────────────────────────────────────────────────────
   {
     slug: 'pushup-progression',
@@ -525,6 +822,11 @@ export const BLOG_POSTS: BlogPost[] = [
       'push-up progress',
       'learn push-ups',
     ],
+    heroImage:
+      'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=1600&q=80',
+    heroImageAlt: 'Athlete holding a clean plank during a push-up.',
+    heroImageCredit:
+      'Photo: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>',
     content: `
 <h2>Why Systematic Training Makes the Difference</h2>
 <p>
@@ -600,6 +902,11 @@ export const BLOG_POSTS: BlogPost[] = [
       'push-up habit',
       'push-up health',
     ],
+    heroImage:
+      'https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=1600&q=80',
+    heroImageAlt: 'Athlete doing bodyweight training in a gym.',
+    heroImageCredit:
+      'Photo: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>',
     content: `
 <h2>More Than Just a Fitness Trend</h2>
 <p>
@@ -678,6 +985,11 @@ export const BLOG_POSTS: BlogPost[] = [
       'push-up muscles',
       'advanced push-ups',
     ],
+    heroImage:
+      'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1600&q=80',
+    heroImageAlt: 'Muscular athlete performing an advanced push-up variation.',
+    heroImageCredit:
+      'Photo: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>',
     content: `
 <h2>Why Variations Are Essential</h2>
 <p>
@@ -770,6 +1082,11 @@ export const BLOG_POSTS: BlogPost[] = [
       'push-up challenge',
       'increase push-ups daily',
     ],
+    heroImage:
+      'https://images.unsplash.com/photo-1599058917212-d750089bc07e?auto=format&fit=crop&w=1600&q=80',
+    heroImageAlt: 'Athlete committed to an intense 30-day training plan.',
+    heroImageCredit:
+      'Photo: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>',
     content: `
 <h2>What the 30-Day Challenge Achieves</h2>
 <p>
@@ -848,6 +1165,12 @@ export const BLOG_POSTS: BlogPost[] = [
       'fitness over 40',
       'push-ups for older adults',
     ],
+    heroImage:
+      'https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?auto=format&fit=crop&w=1600&q=80',
+    heroImageAlt:
+      'Experienced middle-aged athlete in focused strength training.',
+    heroImageCredit:
+      'Photo: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>',
     content: `
 <h2>What Changes After 40</h2>
 <p>
@@ -919,6 +1242,259 @@ export const BLOG_POSTS: BlogPost[] = [
     `.trim(),
   },
   {
+    slug: 'wim-hof-pushups',
+    lang: 'en',
+    translationSlug: 'wim-hof-liegestuetze',
+    title:
+      'The Wim Hof Method for Push-Ups: Breathing, Cold Exposure & Performance',
+    description:
+      'Can the Wim Hof Method really boost push-up performance and recovery? A research-based look at the breathing protocol, cold exposure, and what the evidence actually shows.',
+    publishedAt: '2026-04-23',
+    keywords: [
+      'Wim Hof Method',
+      'push-ups performance',
+      'breathing for performance',
+      'cold exposure recovery',
+      'Wim Hof breathing push-ups',
+    ],
+    heroImage:
+      'https://images.unsplash.com/photo-1548690312-e3b507d8c110?auto=format&fit=crop&w=1600&q=80',
+    heroImageAlt:
+      'Athlete standing in a frozen landscape — Wim Hof Method imagery of breath and cold.',
+    heroImageCredit:
+      'Photo: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>',
+    content: `
+<h2>Why Wim Hof turned up in gyms</h2>
+<p>
+  Dutch extreme athlete Wim Hof became famous for feats that looked impossible: climbing Everest in shorts,
+  running a half-marathon barefoot above the Arctic Circle, holding his breath for more than six minutes.
+  What looked like a circus act is actually a structured protocol of hyperventilation-style breathing, cold
+  exposure, and concentration — and in the last decade it has drawn enough peer-reviewed attention that
+  fitness readers can reasonably ask: does it make my push-ups better?
+</p>
+<p>
+  The short answer: the Wim Hof Method (WHM) does not lift your max reps on its own. But used thoughtfully,
+  it changes two things that matter for push-up training — the nervous-system state you train in, and the
+  speed at which you recover between sessions.
+</p>
+
+<h2>What the research actually shows</h2>
+<p>
+  The headline study is
+  <a href="https://pubmed.ncbi.nlm.nih.gov/24799686/" target="_blank" rel="noopener noreferrer nofollow ugc">Kox et al., 2014 (PNAS)</a>.
+  Researchers at Radboud University trained healthy volunteers in the WHM for ten days, then injected them
+  with bacterial endotoxin. Trained subjects showed significantly lower pro-inflammatory markers and fewer
+  flu-like symptoms than untrained controls — the first demonstration in humans that voluntary breathing
+  and cold training can modulate the innate immune response.
+</p>
+<p>
+  A 2016 PLOS ONE
+  <a href="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0161749" target="_blank" rel="noopener noreferrer nofollow ugc">randomized trial (Buijze et al.)</a>
+  found that 30-day hot-to-cold showers reduced self-reported sick-days by 29%. A
+  <a href="https://pubmed.ncbi.nlm.nih.gov/27500826/" target="_blank" rel="noopener noreferrer nofollow ugc">2016 cold-exposure review</a>
+  catalogs the hormonal and cardiovascular responses in more detail.
+</p>
+<p>
+  What the evidence does <em>not</em> yet show: a direct, large-trial effect on maximal strength or
+  hypertrophy. Treat WHM as a <strong>recovery and nervous-system tool</strong>, not a strength supplement.
+</p>
+
+<h2>The breathing protocol, stripped down</h2>
+<p>
+  The official description lives on
+  <a href="https://www.wimhofmethod.com/practice-the-method" target="_blank" rel="noopener noreferrer nofollow ugc">wimhofmethod.com</a>.
+  A single round looks like this:
+</p>
+<ol>
+  <li><strong>30–40 deep breaths</strong> in through the nose or mouth, out with a relaxed exhale. Do not
+    force the exhale. This is essentially controlled hyperventilation.</li>
+  <li><strong>Retention on exhale</strong> — after the final exhale, hold until the urge to breathe returns.
+    Typically 60–120 s once you're used to it.</li>
+  <li><strong>Recovery breath</strong> — a full inhale, hold 15 s, release.</li>
+  <li>Repeat 3–4 rounds.</li>
+</ol>
+<p>
+  Andrew Huberman's
+  <a href="https://www.hubermanlab.com/episode/how-to-breathe-correctly-for-optimal-health-mood-learning-and-performance" target="_blank" rel="noopener noreferrer nofollow ugc">Huberman Lab episode on breathing</a>
+  covers the mechanism well: the protocol drops blood CO₂, temporarily raises adrenaline, and then drives a
+  sharp parasympathetic rebound. That rebound is the part that matters for recovery.
+</p>
+
+<h2>A safety note before you try this</h2>
+<p>
+  Hyperventilation plus breath-hold can cause shallow-water blackout. The
+  <strong>absolute rule from the Wim Hof organization itself</strong>: never practice the breathing while
+  driving, in a pool, in a bathtub, or anywhere a fainting spell would be dangerous. Pregnant people,
+  people with cardiovascular disease, and people with a history of seizures or panic disorder should skip
+  the protocol or consult a physician first.
+</p>
+
+<h2>How to combine it with push-up training</h2>
+<p>
+  Three concrete protocols, from lowest to highest risk:
+</p>
+<ol>
+  <li>
+    <strong>Breath-work as a pre-set primer (safest).</strong>
+    On the floor, do 2 rounds of WHM breathing, then stop — no breath-hold push-ups.
+    Start your first set of push-ups once breathing has normalized (~60 s). Most people report a calmer,
+    more focused start set. No extra danger beyond the breathing itself.
+  </li>
+  <li>
+    <strong>Cold finisher for recovery.</strong>
+    After training, a 60–120 s cold shower targeting chest, shoulders, and upper arms. The 2016 PLOS ONE
+    trial suggests this is enough to trigger the immune and mood effects. Not instead of sleep and protein —
+    in addition to them.
+  </li>
+  <li>
+    <strong>"Breath-hold push-up" set (advanced, optional).</strong>
+    On the final exhale of a WHM round, perform push-ups during the retention phase. This is the classic
+    "Wim Hof push-up" challenge. It is <em>not</em> a way to train more reps — the breath-hold just masks
+    air hunger. Only do it on a mat, never near hard edges or water, and never when alone.
+  </li>
+</ol>
+
+<h2>What to expect after 30 days</h2>
+<p>
+  Practitioners typically report: better tolerance of the "burn" in higher-rep sets, faster mood recovery
+  after a hard session, and noticeably less soreness 24 h later. Strength numbers don't jump; consistency
+  does. If you already use
+  <a href="/blog/pushup-tracker-guide">a push-up tracker</a>,
+  log the breathing + cold rounds alongside your reps — a month of data will tell you more than any
+  anecdote.
+</p>
+
+<h2>Bottom line</h2>
+<p>
+  The Wim Hof Method has real, measurable effects on inflammation and autonomic tone.
+  It is not a replacement for progressive overload, sleep, or protein — but as a recovery layer around
+  push-up training, the evidence is good enough to try, provided you respect the breath-hold rules.
+</p>
+    `.trim(),
+  },
+  {
+    slug: 'pushups-heart-study',
+    lang: 'en',
+    translationSlug: 'liegestuetze-herz-studie',
+    title:
+      'The Harvard Study That Made Push-Ups Famous: 40+ Reps and Heart Health',
+    description:
+      'A 2019 JAMA study put push-up capacity on the cardiovascular-risk map. Here is what the data actually said, what it did not, and how to use it for your own training.',
+    publishedAt: '2026-04-23',
+    keywords: [
+      'push-ups heart health',
+      'push-up capacity cardiovascular',
+      'Harvard push-up study',
+      'JAMA push-ups',
+      'fitness heart disease',
+    ],
+    heroImage:
+      'https://images.unsplash.com/photo-1540497077202-7c8a3999166f?auto=format&fit=crop&w=1600&q=80',
+    heroImageAlt:
+      'Runner at sunrise — cardiovascular health and fitness capacity.',
+    heroImageCredit:
+      'Photo: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>',
+    content: `
+<h2>Why one push-up study went viral</h2>
+<p>
+  In February 2019, a research team at the Harvard T.H. Chan School of Public Health published a decade of
+  data on 1,104 active adult men — all firefighters in Indiana — and asked a very simple question: does
+  push-up capacity predict future heart disease?
+</p>
+<p>
+  The result, published in
+  <a href="https://pubmed.ncbi.nlm.nih.gov/30821806/" target="_blank" rel="noopener noreferrer nofollow ugc">JAMA Network Open (Yang et al., 2019)</a>,
+  landed on the front page of fitness blogs for a reason. Men who could complete <strong>more than 40
+  push-ups</strong> in a single set had a <strong>96% lower risk</strong> of cardiovascular events over
+  the following ten years compared with men who could not complete 10. The Harvard press release
+  summarizes it in plain English:
+  <a href="https://www.hsph.harvard.edu/news/press-releases/push-ups-correlated-with-reduced-cardiovascular-disease-risk-study/" target="_blank" rel="noopener noreferrer nofollow ugc">
+    "Push-ups correlated with reduced cardiovascular disease risk"
+  </a>.
+</p>
+
+<h2>What the study actually measured</h2>
+<p>
+  It's worth reading past the headline. Key design points:
+</p>
+<ul>
+  <li><strong>Sample:</strong> 1,104 adult men, median age 39.6, all occupationally active (firefighters).
+    All-male, single-profession sample.</li>
+  <li><strong>Test:</strong> A metronome-paced push-up capacity test at baseline (2000), with cardiovascular
+    events tracked through 2010.</li>
+  <li><strong>Outcomes:</strong> 37 CVD events in ten years — heart attacks, CAD-related deaths,
+    coronary procedures.</li>
+  <li><strong>Comparison:</strong> Treadmill-measured aerobic capacity was <em>also</em> associated with
+    lower CVD risk — but the push-up signal was stronger than the aerobic signal in this cohort.</li>
+</ul>
+<p>
+  The authors were careful in the discussion: push-up capacity is a proxy for overall functional fitness,
+  not an independent cause of better heart health. It is <em>a simple, free, no-equipment field test</em>
+  that correlates tightly with the things that matter: muscle mass, aerobic reserve, and movement quality.
+</p>
+
+<h2>Limits the news cycle skipped</h2>
+<p>
+  A few things the study <strong>does not</strong> prove:
+</p>
+<ul>
+  <li>It does not show that <em>doing</em> more push-ups <em>causes</em> a lower heart-disease risk.
+    Causation would need a randomized intervention trial, which this was not.</li>
+  <li>It does not apply directly to women, to sedentary populations, or to older adults — those groups
+    were simply not in the sample.</li>
+  <li>It does not mean push-ups replace aerobic exercise. The
+    <a href="https://www.who.int/news-room/fact-sheets/detail/physical-activity" target="_blank" rel="noopener noreferrer nofollow ugc">
+      WHO Physical Activity Guidelines</a>
+    still recommend 150–300 min of moderate aerobic activity per week
+    <strong>in addition to</strong> muscle-strengthening twice a week.</li>
+</ul>
+
+<h2>How the AHA and ACSM frame it</h2>
+<p>
+  The
+  <a href="https://www.heart.org/en/healthy-living/fitness/fitness-basics/aha-recs-for-physical-activity-in-adults" target="_blank" rel="noopener noreferrer nofollow ugc">American Heart Association activity recommendations</a>
+  already put muscle-strengthening at the center of cardiovascular prevention — alongside aerobic work.
+  Bodyweight exercises like push-ups count, and they are the lowest-friction way to hit the "two strength
+  sessions per week" target the AHA publishes.
+</p>
+
+<h2>How to use this without over-reading it</h2>
+<p>
+  The useful takeaway isn't "40 push-ups = good heart." It's that a simple field test correlates with the
+  combination of traits you actually want. Two practical uses:
+</p>
+<ol>
+  <li>
+    <strong>Use it as a benchmark, not a goal.</strong> Once a month, do a single max-effort set to full
+    fatigue. Log the number. You are tracking a proxy for your whole-body fitness trend, not a
+    performance target.
+  </li>
+  <li>
+    <strong>Work backwards into structured training.</strong> If your baseline is under 10, the
+    <a href="/blog/pushup-progression">progression guide</a> gets you from there to a respectable capacity
+    over 6 weeks. From 20 to 40+, the <a href="/blog/30-day-pushup-challenge">30-day challenge</a> is
+    designed to push past that plateau.
+  </li>
+</ol>
+
+<h2>A word on technique</h2>
+<p>
+  A "push-up" in the Yang et al. study meant a metronome-paced, full-range rep. Ego reps don't count in
+  research and shouldn't count for you either. Chest to the floor or within an inch. Body straight.
+  Elbows tracking behind the shoulders, not flared. If 40 perfect reps feel out of reach, that's the
+  honest place to start — and the data suggest the journey itself is the intervention.
+</p>
+
+<h2>The bigger picture</h2>
+<p>
+  Push-ups are not magic. What they are is an unusually efficient test: one minute of effort,
+  no equipment, scalable from a knee variant to a one-arm variant. The 2019 Harvard data simply
+  put numbers on what strength coaches have said for decades — the people who can push their own body
+  off the floor, repeatedly, tend to be healthy in a lot of other ways too.
+</p>
+    `.trim(),
+  },
+  {
     slug: 'pushup-tracker-guide',
     lang: 'en',
     translationSlug: 'liegestuetze-tracker',
@@ -933,6 +1509,12 @@ export const BLOG_POSTS: BlogPost[] = [
       'Pushup Tracker',
       'push-up progress tracking',
     ],
+    heroImage:
+      'https://images.unsplash.com/photo-1551887196-72e32bfc7bf3?auto=format&fit=crop&w=1600&q=80',
+    heroImageAlt:
+      'Smartphone showing a fitness tracker app with statistics charts.',
+    heroImageCredit:
+      'Photo: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>',
     content: `
 <h2>The Problem with Gut Feeling</h2>
 <p>
