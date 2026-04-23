@@ -20,7 +20,9 @@ export interface BlogPost {
 
 export function getBlogPostsByLocale(locale: string): BlogPost[] {
   const lang = locale.startsWith('en') ? 'en' : 'de';
-  return BLOG_POSTS.filter((p) => p.lang === lang);
+  return BLOG_POSTS.filter((p) => p.lang === lang).sort((a, b) =>
+    b.publishedAt.localeCompare(a.publishedAt)
+  );
 }
 
 export function findBlogPost(
@@ -48,8 +50,8 @@ export const BLOG_POSTS: BlogPost[] = [
       'Liegestütze lernen',
     ],
     heroImage:
-      'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=1600&q=80',
-    heroImageAlt: 'Athlet in Plank-Position bei einer sauberen Liegestütze.',
+      'https://images.unsplash.com/photo-1598971457999-ca4ef48a9a71?auto=format&fit=crop&w=1600&q=80',
+    heroImageAlt: 'Sportler in roter Tanktop bei einer sauberen Liegestütze.',
     heroImageCredit:
       'Foto: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>',
     content: `
@@ -130,8 +132,9 @@ export const BLOG_POSTS: BlogPost[] = [
       'Liegestütze Gesundheit',
     ],
     heroImage:
-      'https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=1600&q=80',
-    heroImageAlt: 'Sportler beim Bodyweight-Training im Fitnessstudio.',
+      'https://images.unsplash.com/photo-1598971639058-fab3c3109a00?auto=format&fit=crop&w=1600&q=80',
+    heroImageAlt:
+      'Sportlerin bei einer Liegestütze – tägliches Training im Freien.',
     heroImageCredit:
       'Foto: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>',
     content: `
@@ -214,9 +217,9 @@ export const BLOG_POSTS: BlogPost[] = [
       'Liegestütze Fortschritt verfolgen',
     ],
     heroImage:
-      'https://images.unsplash.com/photo-1551887196-72e32bfc7bf3?auto=format&fit=crop&w=1600&q=80',
+      'https://images.unsplash.com/photo-1717821681365-36b0da044a75?auto=format&fit=crop&w=1600&q=80',
     heroImageAlt:
-      'Smartphone mit Fitness-Tracker-App und Statistik-Diagrammen.',
+      'Sportlerin bei einer sauberen Liegestütze auf Holzboden – Fortschritt im Blick.',
     heroImageCredit:
       'Foto: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>',
     content: `
@@ -290,9 +293,8 @@ export const BLOG_POSTS: BlogPost[] = [
       'Liegestütze fortgeschritten',
     ],
     heroImage:
-      'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1600&q=80',
-    heroImageAlt:
-      'Athletischer Sportler bei fortgeschrittener Push-Up-Variante.',
+      'https://images.unsplash.com/photo-1731341400836-baaa5535b8d5?auto=format&fit=crop&w=1600&q=80',
+    heroImageAlt: 'Sportler bei einer Liegestütz-Variante im Trainingsraum.',
     heroImageCredit:
       'Foto: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>',
     content: `
@@ -389,9 +391,9 @@ export const BLOG_POSTS: BlogPost[] = [
       'Liegestütze täglich steigern',
     ],
     heroImage:
-      'https://images.unsplash.com/photo-1599058917212-d750089bc07e?auto=format&fit=crop&w=1600&q=80',
+      'https://images.unsplash.com/photo-1596079306903-9164c205f400?auto=format&fit=crop&w=1600&q=80',
     heroImageAlt:
-      'Sportler bei intensivem Workout mit Kalender im Hintergrund.',
+      'Sportler bei einer Outdoor-Liegestütze – tägliche Challenge im Grünen.',
     heroImageCredit:
       'Foto: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>',
     content: `
@@ -473,9 +475,9 @@ export const BLOG_POSTS: BlogPost[] = [
       'Liegestütze Gelenke schonen',
     ],
     heroImage:
-      'https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?auto=format&fit=crop&w=1600&q=80',
+      'https://images.unsplash.com/photo-1638820858482-800bd51f63f1?auto=format&fit=crop&w=1600&q=80',
     heroImageAlt:
-      'Erfahrener Sportler mittleren Alters bei konzentriertem Krafttraining.',
+      'Sportlerin bei einer sauberen Liegestütze im Grünen – Training ab 40.',
     heroImageCredit:
       'Foto: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>',
     content: `
@@ -699,9 +701,9 @@ export const BLOG_POSTS: BlogPost[] = [
       'Fitness Herzerkrankung',
     ],
     heroImage:
-      'https://images.unsplash.com/photo-1540497077202-7c8a3999166f?auto=format&fit=crop&w=1600&q=80',
+      'https://images.unsplash.com/photo-1514512364185-4c2b0985be01?auto=format&fit=crop&w=1600&q=80',
     heroImageAlt:
-      'Läufer bei Sonnenaufgang – Sinnbild für kardiovaskuläre Gesundheit.',
+      'Sportlerin in Plank-Position auf Asphalt – Sinnbild für den Push-Up-Kapazitätstest.',
     heroImageCredit:
       'Foto: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>',
     content: `
@@ -823,8 +825,8 @@ export const BLOG_POSTS: BlogPost[] = [
       'learn push-ups',
     ],
     heroImage:
-      'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=1600&q=80',
-    heroImageAlt: 'Athlete holding a clean plank during a push-up.',
+      'https://images.unsplash.com/photo-1598971457999-ca4ef48a9a71?auto=format&fit=crop&w=1600&q=80',
+    heroImageAlt: 'Athlete in a red tank top performing a clean push-up.',
     heroImageCredit:
       'Photo: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>',
     content: `
@@ -903,8 +905,9 @@ export const BLOG_POSTS: BlogPost[] = [
       'push-up health',
     ],
     heroImage:
-      'https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=1600&q=80',
-    heroImageAlt: 'Athlete doing bodyweight training in a gym.',
+      'https://images.unsplash.com/photo-1598971639058-fab3c3109a00?auto=format&fit=crop&w=1600&q=80',
+    heroImageAlt:
+      'Female athlete doing a push-up — a daily training routine outdoors.',
     heroImageCredit:
       'Photo: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>',
     content: `
@@ -986,8 +989,8 @@ export const BLOG_POSTS: BlogPost[] = [
       'advanced push-ups',
     ],
     heroImage:
-      'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1600&q=80',
-    heroImageAlt: 'Muscular athlete performing an advanced push-up variation.',
+      'https://images.unsplash.com/photo-1731341400836-baaa5535b8d5?auto=format&fit=crop&w=1600&q=80',
+    heroImageAlt: 'Athlete performing a push-up variation in a training space.',
     heroImageCredit:
       'Photo: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>',
     content: `
@@ -1083,8 +1086,9 @@ export const BLOG_POSTS: BlogPost[] = [
       'increase push-ups daily',
     ],
     heroImage:
-      'https://images.unsplash.com/photo-1599058917212-d750089bc07e?auto=format&fit=crop&w=1600&q=80',
-    heroImageAlt: 'Athlete committed to an intense 30-day training plan.',
+      'https://images.unsplash.com/photo-1596079306903-9164c205f400?auto=format&fit=crop&w=1600&q=80',
+    heroImageAlt:
+      'Athlete doing an outdoor push-up — the daily challenge in the grass.',
     heroImageCredit:
       'Photo: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>',
     content: `
@@ -1166,9 +1170,8 @@ export const BLOG_POSTS: BlogPost[] = [
       'push-ups for older adults',
     ],
     heroImage:
-      'https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?auto=format&fit=crop&w=1600&q=80',
-    heroImageAlt:
-      'Experienced middle-aged athlete in focused strength training.',
+      'https://images.unsplash.com/photo-1638820858482-800bd51f63f1?auto=format&fit=crop&w=1600&q=80',
+    heroImageAlt: 'Athlete doing a clean push-up outdoors — training after 40.',
     heroImageCredit:
       'Photo: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>',
     content: `
@@ -1389,9 +1392,9 @@ export const BLOG_POSTS: BlogPost[] = [
       'fitness heart disease',
     ],
     heroImage:
-      'https://images.unsplash.com/photo-1540497077202-7c8a3999166f?auto=format&fit=crop&w=1600&q=80',
+      'https://images.unsplash.com/photo-1514512364185-4c2b0985be01?auto=format&fit=crop&w=1600&q=80',
     heroImageAlt:
-      'Runner at sunrise — cardiovascular health and fitness capacity.',
+      'Athlete in a plank position on asphalt — the push-up capacity test.',
     heroImageCredit:
       'Photo: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>',
     content: `
@@ -1510,9 +1513,9 @@ export const BLOG_POSTS: BlogPost[] = [
       'push-up progress tracking',
     ],
     heroImage:
-      'https://images.unsplash.com/photo-1551887196-72e32bfc7bf3?auto=format&fit=crop&w=1600&q=80',
+      'https://images.unsplash.com/photo-1717821681365-36b0da044a75?auto=format&fit=crop&w=1600&q=80',
     heroImageAlt:
-      'Smartphone showing a fitness tracker app with statistics charts.',
+      'Athlete doing a clean push-up on a wooden floor — progress in focus.',
     heroImageCredit:
       'Photo: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>',
     content: `
