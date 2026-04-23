@@ -137,6 +137,13 @@ h1 {
   background: #0f1628;
   overflow: hidden;
 
+  h2 {
+    margin: 0;
+    padding: clamp(14px, 2vw, 20px) clamp(16px, 2.5vw, 24px);
+    font-size: clamp(1.2rem, 2.4vw, 1.5rem);
+    border-bottom: 1px solid rgba(123, 159, 255, 0.2);
+  }
+
   img {
     display: block;
     width: 100%;
@@ -235,6 +242,11 @@ mat-card-header mat-icon {
   .preview {
     border-color: rgba(59, 130, 246, 0.25);
     background: #f8fafc;
+
+    h2 {
+      color: #1e293b;
+      border-bottom-color: rgba(59, 130, 246, 0.2);
+    }
   }
 
   mat-card-header mat-icon {

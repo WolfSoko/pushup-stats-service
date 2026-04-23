@@ -2123,9 +2123,17 @@
         <source>Werbung</source>
       </segment>
     </unit>
+    <unit id="landing.preview.title">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:170,173</note>
+      </notes>
+      <segment>
+        <source> Deine Statistik auf einen Blick </source>
+      </segment>
+    </unit>
     <unit id="landing.preview.alt">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:171,172</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:174,175</note>
       </notes>
       <segment>
         <source>Vorschau der Statistikansicht</source>
@@ -2133,7 +2141,7 @@
     </unit>
     <unit id="landing.discover.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:178,179</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:181,182</note>
       </notes>
       <segment>
         <source>Mehr entdecken</source>
@@ -2141,7 +2149,7 @@
     </unit>
     <unit id="landing.discover.leaderboard.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:184,186</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:187,189</note>
       </notes>
       <segment>
         <source>Bestenliste</source>
@@ -2149,7 +2157,7 @@
     </unit>
     <unit id="landing.discover.leaderboard.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:188,191</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:191,194</note>
       </notes>
       <segment>
         <source> Vergleiche dich mit der Community: tägliche, wöchentliche und monatliche Top-Reps. Privacy first – dein Name erscheint nur, wenn du es willst. </source>
@@ -2157,7 +2165,7 @@
     </unit>
     <unit id="landing.discover.leaderboard.cta">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:198,201</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:201,204</note>
       </notes>
       <segment>
         <source>Zur Bestenliste</source>
@@ -2165,7 +2173,7 @@
     </unit>
     <unit id="landing.discover.blog.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:207,209</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:210,212</note>
       </notes>
       <segment>
         <source>Blog</source>
@@ -2173,7 +2181,7 @@
     </unit>
     <unit id="landing.discover.blog.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:211,213</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:214,216</note>
       </notes>
       <segment>
         <source> Tipps, Trainingspläne und Motivation rund um Liegestütze – von Einsteiger bis Fortgeschritten. </source>
@@ -2181,7 +2189,7 @@
     </unit>
     <unit id="landing.discover.blog.cta">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:220,222</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:223,225</note>
       </notes>
       <segment>
         <source>Zum Blog</source>
