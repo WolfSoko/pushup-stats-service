@@ -14,6 +14,12 @@ describe('SeoService', () => {
     document.head
       .querySelectorAll('link[rel="canonical"], link[rel="alternate"]')
       .forEach((node) => node.remove());
+    // Remove image meta tags so each test starts from a clean slate.
+    document.head
+      .querySelectorAll(
+        'meta[property="og:image"], meta[property="og:image:alt"], meta[name="twitter:image"], meta[name="twitter:image:alt"]'
+      )
+      .forEach((node) => node.remove());
     return TestBed.inject(SeoService);
   }
 
@@ -127,6 +133,111 @@ describe('SeoService', () => {
         .querySelector<HTMLMetaElement>('meta[property="og:url"]')
         ?.getAttribute('content');
       expect(ogUrl).toBe(canonical);
+    });
+  });
+
+  describe('image metadata', () => {
+    const IMAGE_URL = 'https://images.unsplash.com/photo-x?w=1200';
+    const IMAGE_ALT = 'A photo';
+
+    function getMetaContent(selector: string): string | null {
+      return (
+        document.head
+          .querySelector<HTMLMetaElement>(selector)
+          ?.getAttribute('content') ?? null
+      );
+    }
+
+    it('writes og:image and twitter:image when imageUrl is provided', () => {
+      const seo = setup('de');
+      seo.update('Title', 'Description', '/blog/hello', {
+        imageUrl: IMAGE_URL,
+        imageAlt: IMAGE_ALT,
+      });
+
+      expect(getMetaContent('meta[property="og:image"]')).toBe(IMAGE_URL);
+      expect(getMetaContent('meta[property="og:image:alt"]')).toBe(IMAGE_ALT);
+      expect(getMetaContent('meta[name="twitter:image"]')).toBe(IMAGE_URL);
+      expect(getMetaContent('meta[name="twitter:image:alt"]')).toBe(IMAGE_ALT);
+    });
+
+    it('falls back to the title as image alt when imageAlt is omitted', () => {
+      const seo = setup('de');
+      seo.update('Great Title', 'Description', '/blog/hello', {
+        imageUrl: IMAGE_URL,
+      });
+
+      expect(getMetaContent('meta[property="og:image:alt"]')).toBe(
+        'Great Title'
+      );
+    });
+
+    it('removes stale image tags when a subsequent update has no image', () => {
+      const seo = setup('de');
+      seo.update('Title', 'Description', '/blog/hello', {
+        imageUrl: IMAGE_URL,
+        imageAlt: IMAGE_ALT,
+      });
+      seo.update('Title 2', 'Description', '/');
+
+      expect(
+        document.head.querySelector('meta[property="og:image"]')
+      ).toBeNull();
+      expect(
+        document.head.querySelector('meta[name="twitter:image"]')
+      ).toBeNull();
+    });
+  });
+
+  describe('article timestamps', () => {
+    function getMetaContent(selector: string): string | null {
+      return (
+        document.head
+          .querySelector<HTMLMetaElement>(selector)
+          ?.getAttribute('content') ?? null
+      );
+    }
+
+    it('emits article:published_time / modified_time as full ISO-8601 strings', () => {
+      const seo = setup('de');
+      seo.update('T', 'D', '/blog/x', {
+        publishedTime: '2026-04-01',
+        modifiedTime: '2026-04-20',
+      });
+
+      expect(getMetaContent('meta[property="article:published_time"]')).toBe(
+        '2026-04-01T00:00:00Z'
+      );
+      expect(getMetaContent('meta[property="article:modified_time"]')).toBe(
+        '2026-04-20T00:00:00Z'
+      );
+    });
+
+    it('passes through values that already contain a time component', () => {
+      const seo = setup('de');
+      seo.update('T', 'D', '/blog/x', {
+        publishedTime: '2026-04-01T12:34:56+02:00',
+      });
+
+      expect(getMetaContent('meta[property="article:published_time"]')).toBe(
+        '2026-04-01T12:34:56+02:00'
+      );
+    });
+
+    it('removes article meta tags when a subsequent update omits them', () => {
+      const seo = setup('de');
+      seo.update('T', 'D', '/blog/x', {
+        publishedTime: '2026-04-01',
+        modifiedTime: '2026-04-20',
+      });
+      seo.update('T2', 'D2', '/');
+
+      expect(
+        document.head.querySelector('meta[property="article:published_time"]')
+      ).toBeNull();
+      expect(
+        document.head.querySelector('meta[property="article:modified_time"]')
+      ).toBeNull();
     });
   });
 

@@ -85,6 +85,22 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.de/en/blog/pushups-over-40"/>
   </url>
   <url>
+    <loc>https://pushup-stats.de/de/blog/wim-hof-liegestuetze</loc>
+    <lastmod>2026-04-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.de/de/blog/wim-hof-liegestuetze"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.de/en/blog/wim-hof-pushups"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.de/de/blog/liegestuetze-herz-studie</loc>
+    <lastmod>2026-04-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.de/de/blog/liegestuetze-herz-studie"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.de/en/blog/pushups-heart-study"/>
+  </url>
+  <url>
     <loc>https://pushup-stats.de/en/blog/pushup-progression</loc>
     <lastmod>2025-01-15</lastmod>
     <changefreq>monthly</changefreq>
@@ -123,6 +139,22 @@
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.de/de/blog/liegestuetze-ab-40"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.de/en/blog/pushups-over-40"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.de/en/blog/wim-hof-pushups</loc>
+    <lastmod>2026-04-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.de/de/blog/wim-hof-liegestuetze"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.de/en/blog/wim-hof-pushups"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.de/en/blog/pushups-heart-study</loc>
+    <lastmod>2026-04-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.de/de/blog/liegestuetze-herz-studie"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.de/en/blog/pushups-heart-study"/>
   </url>
   <url>
     <loc>https://pushup-stats.de/en/blog/pushup-tracker-guide</loc>

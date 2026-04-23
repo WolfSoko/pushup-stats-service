@@ -11,6 +11,11 @@ function isKnownLocale(value: string): value is LocalePrefix {
   return (LOCALE_PREFIXES as readonly string[]).includes(value);
 }
 
+function toIsoDateTime(value: string | undefined): string | null {
+  if (!value) return null;
+  return /^\d{4}-\d{2}-\d{2}$/.test(value) ? `${value}T00:00:00Z` : value;
+}
+
 @Injectable({ providedIn: 'root' })
 export class SeoService {
   private readonly title = inject(Title);
@@ -18,7 +23,17 @@ export class SeoService {
   private readonly document = inject(DOCUMENT);
   private readonly localeId = inject(LOCALE_ID);
 
-  update(seoTitle: string, seoDescription: string, path: string): void {
+  update(
+    seoTitle: string,
+    seoDescription: string,
+    path: string,
+    options: {
+      imageUrl?: string;
+      imageAlt?: string;
+      publishedTime?: string;
+      modifiedTime?: string;
+    } = {}
+  ): void {
     this.title.setTitle(seoTitle);
 
     this.setTag('name', 'description', seoDescription);
@@ -44,6 +59,41 @@ export class SeoService {
     this.setHreflang('alternate', 'de', deUrl);
     this.setHreflang('alternate', 'en', enUrl);
     this.setHreflang('alternate', 'x-default', deUrl);
+
+    this.applyImage(options.imageUrl, options.imageAlt ?? seoTitle);
+    this.applyArticleTimes(options.publishedTime, options.modifiedTime);
+  }
+
+  private applyImage(imageUrl: string | undefined, alt: string): void {
+    if (imageUrl) {
+      this.setTag('property', 'og:image', imageUrl);
+      this.setTag('property', 'og:image:alt', alt);
+      this.setTag('name', 'twitter:image', imageUrl);
+      this.setTag('name', 'twitter:image:alt', alt);
+    } else {
+      this.removeTag('property', 'og:image');
+      this.removeTag('property', 'og:image:alt');
+      this.removeTag('name', 'twitter:image');
+      this.removeTag('name', 'twitter:image:alt');
+    }
+  }
+
+  private applyArticleTimes(
+    publishedTime: string | undefined,
+    modifiedTime: string | undefined
+  ): void {
+    const published = toIsoDateTime(publishedTime);
+    const modified = toIsoDateTime(modifiedTime);
+    if (published) {
+      this.setTag('property', 'article:published_time', published);
+    } else {
+      this.removeTag('property', 'article:published_time');
+    }
+    if (modified) {
+      this.setTag('property', 'article:modified_time', modified);
+    } else {
+      this.removeTag('property', 'article:modified_time');
+    }
   }
 
   private detectLocale(path: string): LocalePrefix {
@@ -69,6 +119,10 @@ export class SeoService {
     content: string
   ): void {
     this.meta.updateTag({ [kind]: key, content });
+  }
+
+  private removeTag(kind: 'name' | 'property', key: string): void {
+    this.meta.removeTag(`${kind}='${key}'`);
   }
 
   private setCanonical(url: string): void {
