@@ -142,6 +142,10 @@ mat-card {
   box-shadow: 0 14px 34px rgba(1, 5, 16, 0.45);
 }
 
+.mat-mdc-card {
+  gap: 0.75rem;
+}
+
 // Light theme mat-card
 html.light-theme mat-card {
   background: linear-gradient(
