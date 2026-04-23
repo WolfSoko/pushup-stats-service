@@ -33,7 +33,7 @@ const LOGO_URL = `${BASE_URL}/assets/pushup-logo.png`;
             <mat-icon>arrow_back</mat-icon>
             Blog
           </a>
-          @if (post.heroImage) {
+          @if (post.heroImage && !heroImageFailed) {
             <figure class="article-hero">
               <img
                 [src]="post.heroImage"
@@ -42,6 +42,7 @@ const LOGO_URL = `${BASE_URL}/assets/pushup-logo.png`;
                 decoding="async"
                 width="1200"
                 height="675"
+                (error)="heroImageFailed = true"
               />
               @if (post.heroImageCredit) {
                 <figcaption [innerHTML]="post.heroImageCredit"></figcaption>
@@ -249,6 +250,7 @@ export class BlogArticleComponent implements OnInit {
 
   post: BlogPost | null = null;
   readingMinutes = 0;
+  heroImageFailed = false;
 
   constructor() {
     this.destroyRef.onDestroy(() => this.removeJsonLd());

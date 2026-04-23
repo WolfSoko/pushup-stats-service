@@ -1,7 +1,7 @@
 import { readingMinutes } from './reading-time';
 
 describe('readingMinutes', () => {
-  it('returns at least 1 minute for any non-empty content', () => {
+  it('returns at least 1 minute for any content (including empty)', () => {
     expect(readingMinutes('one word')).toBe(1);
     expect(readingMinutes('')).toBe(1);
   });

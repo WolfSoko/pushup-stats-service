@@ -18,7 +18,7 @@ import { getBlogPostsByLocale } from './blog-posts.data';
       <div class="articles">
         @for (post of posts; track post.slug) {
           <mat-card class="article-card">
-            @if (post.heroImage) {
+            @if (post.heroImage && !failedImages.has(post.slug)) {
               <a
                 [routerLink]="['/blog', post.slug]"
                 class="card-media"
@@ -29,6 +29,7 @@ import { getBlogPostsByLocale } from './blog-posts.data';
                   [alt]="post.heroImageAlt ?? post.title"
                   loading="lazy"
                   decoding="async"
+                  (error)="onImageError(post.slug)"
                 />
               </a>
             }
@@ -129,4 +130,9 @@ import { getBlogPostsByLocale } from './blog-posts.data';
 export class BlogListComponent {
   private readonly locale = inject(LOCALE_ID) as string;
   readonly posts = getBlogPostsByLocale(this.locale);
+  readonly failedImages = new Set<string>();
+
+  onImageError(slug: string): void {
+    this.failedImages.add(slug);
+  }
 }

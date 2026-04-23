@@ -14,6 +14,12 @@ describe('SeoService', () => {
     document.head
       .querySelectorAll('link[rel="canonical"], link[rel="alternate"]')
       .forEach((node) => node.remove());
+    // Remove image meta tags so each test starts from a clean slate.
+    document.head
+      .querySelectorAll(
+        'meta[property="og:image"], meta[property="og:image:alt"], meta[name="twitter:image"], meta[name="twitter:image:alt"]'
+      )
+      .forEach((node) => node.remove());
     return TestBed.inject(SeoService);
   }
 
