@@ -25,6 +25,9 @@ mat-card-content + mat-card-footer {
 }
 
 mat-sidenav-content {
+  // Toolbar height — drives the sticky offset for .desktop-nav so both stay in sync.
+  --top-nav-height: 64px;
+
   height: 100svh;
   overflow: auto;
 }
@@ -138,9 +141,10 @@ mat-sidenav-content {
     padding-inline: max(16px, calc((100vw - 1200px) / 2));
     background: var(--mat-toolbar-container-background-color, #1e1e1e);
 
-    // Stack below the sticky toolbar (mat-toolbar desktop height = 64px)
+    // Stack below the sticky toolbar; offset is driven by --top-nav-height
+    // declared on mat-sidenav-content.
     position: sticky;
-    top: 64px;
+    top: var(--top-nav-height);
     z-index: 9;
     border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 

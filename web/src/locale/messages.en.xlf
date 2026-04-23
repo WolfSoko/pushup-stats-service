@@ -878,10 +878,9 @@ Active:         </target>
     </unit>
     <unit id="brandLogoAlt">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:6,7</note>
-
-        
-            </notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:6,7</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:8,9</note>
+      </notes>
       <segment state="translated">
         <source>Pushup Tracker Logo</source>
         <target>Pushup Tracker Logo</target>

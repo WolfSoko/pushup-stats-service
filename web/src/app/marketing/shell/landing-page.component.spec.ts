@@ -126,7 +126,7 @@ describe('LandingPageComponent', () => {
   });
 
   it('renders a prominent brand logo inside the hero card', async () => {
-    const view = await render(LandingPageComponent, {
+    await render(LandingPageComponent, {
       providers: [
         provideRouter([]),
         { provide: AdsStore, useValue: adsConfigMock },
@@ -135,13 +135,9 @@ describe('LandingPageComponent', () => {
       ],
     });
 
-    const host = view.fixture.nativeElement as HTMLElement;
-    const hero = host.querySelector('section.hero');
-    expect(hero).toBeTruthy();
-    const logo = hero?.querySelector('img.hero-logo') as HTMLImageElement | null;
-    expect(logo).toBeTruthy();
-    expect(logo?.getAttribute('src')).toBe('assets/pushup-logo.png');
-    expect(logo?.getAttribute('alt')).toBe('Pushup Tracker Logo');
+    const logo = screen.getByAltText('Pushup Tracker Logo') as HTMLImageElement;
+    expect(logo.getAttribute('src')).toBe('assets/pushup-logo.png');
+    expect(logo.closest('section.hero')).toBeTruthy();
   });
 
   it('orders landing sections as feature grid, preview, discover', async () => {

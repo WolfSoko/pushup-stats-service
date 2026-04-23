@@ -27,15 +27,16 @@
 
   @media (min-width: 768px) {
     flex-direction: row;
-    align-items: center;
     text-align: left;
     gap: clamp(20px, 3vw, 36px);
   }
 }
 
 .hero-logo {
+  display: block;
   width: clamp(96px, 16vw, 160px);
   height: clamp(96px, 16vw, 160px);
+  max-width: 100%;
   flex-shrink: 0;
   filter: drop-shadow(0 10px 24px rgba(40, 95, 186, 0.45));
 }

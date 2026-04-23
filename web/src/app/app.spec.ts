@@ -364,11 +364,9 @@ describe('App (testing-library)', () => {
       ],
     });
 
-    const toolbar = document.querySelector('mat-toolbar.top-nav');
-    expect(toolbar).toBeTruthy();
-    const brandLink = toolbar?.querySelector('a.brand-link');
-    expect(brandLink).toBeTruthy();
-    const logo = brandLink?.querySelector('img') as HTMLImageElement | null;
+    const brandLink = screen.getByRole('link', { name: 'Zur Landingpage' });
+    expect(brandLink.closest('mat-toolbar.top-nav')).toBeTruthy();
+    const logo = brandLink.querySelector('img') as HTMLImageElement | null;
     expect(logo).toBeTruthy();
     expect(logo?.getAttribute('src')).toBe('assets/pushup-logo.png');
   });
