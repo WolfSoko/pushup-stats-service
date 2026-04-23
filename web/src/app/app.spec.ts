@@ -340,6 +340,37 @@ describe('App (testing-library)', () => {
     });
   });
 
+  it('renders the brand logo inside the top toolbar', async () => {
+    await render(App, {
+      providers: [
+        provideRouter([]),
+        { provide: PLATFORM_ID, useValue: 'browser' },
+        {
+          provide: UserContextService,
+          useValue: {
+            userNameSafe: userNameSignal.asReadonly(),
+            userIdSafe: () => 'u1',
+            isAdmin: () => false,
+            isGuest: () => false,
+          },
+        },
+        { provide: AuthStore, useValue: authMock },
+        { provide: AuthService, useValue: authServiceMock },
+        { provide: Auth, useValue: firebaseAuthMock },
+        { provide: UserConfigApiService, useValue: userConfigApiMock },
+        { provide: StatsApiService, useValue: statsApiMock },
+        { provide: AdsStore, useValue: adsStoreMock },
+        { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
+      ],
+    });
+
+    const brandLink = screen.getByRole('link', { name: 'Zur Landingpage' });
+    expect(brandLink.closest('mat-toolbar.top-nav')).toBeTruthy();
+    const logo = brandLink.querySelector('img') as HTMLImageElement | null;
+    expect(logo).toBeTruthy();
+    expect(logo?.getAttribute('src')).toBe('assets/pushup-logo.png');
+  });
+
   it('given app is rendered, when reading bottom navigation, then it exposes four primary links', async () => {
     // Given
     await render(App, {
