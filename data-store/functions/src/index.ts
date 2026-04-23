@@ -36,6 +36,7 @@ import {
   PUSH_SEND_OPTIONS,
   shouldSendReminder,
   STALE_LEASE_MS,
+  validateSubscriptionPayload,
 } from './push';
 import { applyDelta, rebuildFromEntries } from './user-stats-delta';
 
@@ -744,11 +745,16 @@ export const savePushSubscription = onCall(
     const uid = request.auth.uid;
     const { endpoint, keys, userAgent, locale } = request.data ?? {};
 
-    if (!endpoint || typeof endpoint !== 'string') {
-      throw new HttpsError('invalid-argument', 'endpoint fehlt.');
-    }
-    if (!keys?.p256dh || !keys?.auth) {
-      throw new HttpsError('invalid-argument', 'keys fehlen.');
+    const validation = validateSubscriptionPayload(request.data);
+    if (!validation.valid) {
+      logger.warn('savePushSubscription: rejected', {
+        uid,
+        reason: validation.error,
+      });
+      throw new HttpsError(
+        'invalid-argument',
+        validation.error ?? 'subscription invalid'
+      );
     }
 
     const subId = pushSubscriptionId(endpoint);

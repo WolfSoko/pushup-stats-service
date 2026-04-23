@@ -17,7 +17,15 @@ export type PushStatus =
   | 'not-subscribed'
   | 'subscribed'
   | 'loading'
-  | 'error';
+  | 'error'
+  /**
+   * Chrome/Edge marked the browser's push channel permanently dead and rewrote
+   * the endpoint to `*.invalid` (see `isZombieEndpoint`). The user has to
+   * reset site notification settings in their browser/OS before we can
+   * resubscribe — surface this distinctly from 'not-subscribed' so the UI
+   * can tell them, instead of silently looking like they never opted in.
+   */
+  | 'browser-invalidated';
 
 type PushSubscriptionState = {
   status: PushStatus;
@@ -163,6 +171,15 @@ export const PushSubscriptionStore = signalStore(
           // SW fired pushsubscriptionchange and produced a fresh sub — persist
           // it immediately so the user doesn't have to reload the app for
           // the new endpoint to reach the backend.
+          //
+          // But if the SW's replacement is itself a zombie (Chrome re-subscribes
+          // against a dead channel and hands back another `.invalid` endpoint),
+          // saving it would write a zombie into Firestore and re-enter the
+          // delete-on-next-dispatch loop. Surface it instead.
+          if (isZombieEndpoint(data.sub.endpoint)) {
+            patchState(store, { status: 'browser-invalidated' });
+            return;
+          }
           void (async () => {
             try {
               const { deviceCount } = await saveSubscriptionJson(data.sub);
@@ -212,8 +229,14 @@ export const PushSubscriptionStore = signalStore(
             // Drop the zombie locally; never send it to the backend (doing so
             // kept the dead endpoint alive in Firestore for weeks and turned
             // every 5-min dispatch into a DNS-failing WARN for this user).
+            // Surface `browser-invalidated` so the UI can explain the device
+            // needs notification-permission reset, instead of looking like
+            // the user simply never opted in.
             await sub.unsubscribe().catch(() => undefined);
-            patchState(store, { status: 'not-subscribed', deviceCount: 0 });
+            patchState(store, {
+              status: 'browser-invalidated',
+              deviceCount: 0,
+            });
             return;
           }
           // Re-register with backend to ensure server-side record is current
@@ -273,6 +296,16 @@ export const PushSubscriptionStore = signalStore(
                   store._vapidPublicKey
                 ),
               }));
+
+            // A fresh pushManager.subscribe() can still hand back a zombie
+            // when the browser/OS has permanently invalidated push on this
+            // device (e.g. user revoked notifications at the OS level, or
+            // Play Services killed the FCM channel). Saving it would loop.
+            if (isZombieEndpoint(subToSave.endpoint)) {
+              await subToSave.unsubscribe().catch(() => undefined);
+              patchState(store, { status: 'browser-invalidated' });
+              return false;
+            }
 
             const { deviceCount } = await saveSubscription(subToSave);
             patchState(store, { status: 'subscribed', deviceCount });

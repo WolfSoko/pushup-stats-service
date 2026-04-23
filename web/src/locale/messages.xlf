@@ -2451,9 +2451,17 @@
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">warning</pc> Push-Benachrichtigungen sind blockiert. Bitte in den Browser-Einstellungen erlauben. </source>
       </segment>
     </unit>
+    <unit id="push.status.browserInvalidated">
+      <notes>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:260,264</note>
+      </notes>
+      <segment>
+        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">warning</pc> Dein Browser hat das Push-Abo für dieses Gerät als dauerhaft ungültig markiert. Bitte setze die Benachrichtigungs-Einstellungen für diese Seite in den Browser-Einstellungen zurück (Chrome → Einstellungen → Website-Einstellungen → Benachrichtigungen) und aktiviere Push danach erneut. </source>
+      </segment>
+    </unit>
     <unit id="push.status.subscribed">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:263,265</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:272,274</note>
       </notes>
       <segment>
         <source>Erinnerungen aktiv ✓</source>
@@ -2461,7 +2469,7 @@
     </unit>
     <unit id="push.unsubscribe">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:273,275</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:282,284</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">notifications_off</pc> Deaktivieren </source>
@@ -2469,7 +2477,7 @@
     </unit>
     <unit id="push.device.count">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:281,282</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:290,291</note>
       </notes>
       <segment>
         <source> Aktiv auf <ph id="0" equiv="INTERPOLATION" disp="{{ pushService.deviceCount() }}"/> Geräten </source>
@@ -2477,7 +2485,7 @@
     </unit>
     <unit id="push.cta.desc">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:287,288</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:296,297</note>
       </notes>
       <segment>
         <source> Nie wieder eine Einheit verpassen. </source>
@@ -2485,7 +2493,7 @@
     </unit>
     <unit id="push.subscribe">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:297,299</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:306,308</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">notifications</pc> Push aktivieren </source>
@@ -2493,7 +2501,7 @@
     </unit>
     <unit id="unsubAll.section.title">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:305,306</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:314,315</note>
       </notes>
       <segment>
         <source>📵 Push auf allen Geräten</source>
@@ -2501,7 +2509,7 @@
     </unit>
     <unit id="unsubAll.section.desc">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:307,309</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:316,318</note>
       </notes>
       <segment>
         <source> Entfernt alle Push-Benachrichtigungs-Abos auf diesem und allen anderen Geräten. Du bleibst angemeldet und kannst Push jederzeit wieder aktivieren. </source>
@@ -2509,7 +2517,7 @@
     </unit>
     <unit id="unsubAll.button">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:320,322</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:329,331</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">notifications_off</pc> Push auf allen Geräten deaktivieren </source>
@@ -2517,8 +2525,8 @@
     </unit>
     <unit id="push.subscribe.error">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:446</note>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:562</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:455</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:571</note>
       </notes>
       <segment>
         <source>Push konnte nicht aktiviert werden.</source>
@@ -2526,13 +2534,13 @@
     </unit>
     <unit id="snackbar.close">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:447</note>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:475</note>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:491</note>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:506</note>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:522</note>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:541</note>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:563</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:456</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:484</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:500</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:515</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:531</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:550</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:572</note>
       </notes>
       <segment>
         <source>Schließen</source>
@@ -2540,7 +2548,7 @@
     </unit>
     <unit id="unsubAll.error">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:474</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:483</note>
       </notes>
       <segment>
         <source>Entfernen der Push-Abos fehlgeschlagen.</source>
@@ -2548,7 +2556,7 @@
     </unit>
     <unit id="unsubAll.success">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:490</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:499</note>
       </notes>
       <segment>
         <source>Push-Abos aller Geräte entfernt.</source>
@@ -2556,7 +2564,7 @@
     </unit>
     <unit id="reminder.permission.snackbar">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:505</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:514</note>
       </notes>
       <segment>
         <source>Benachrichtigungen sind blockiert. Bitte in den Browser-Einstellungen erlauben.</source>
@@ -2564,8 +2572,8 @@
     </unit>
     <unit id="reminder.save.error">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:521</note>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:540</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:530</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:549</note>
       </notes>
       <segment>
         <source>Einstellungen konnten nicht gespeichert werden.</source>

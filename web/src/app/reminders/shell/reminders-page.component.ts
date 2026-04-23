@@ -255,6 +255,19 @@ import { ReminderFormStore } from './reminder-form.store';
                 Push-Benachrichtigungen sind blockiert. Bitte in den
                 Browser-Einstellungen erlauben.
               </p>
+            } @else if (pushService.status() === 'browser-invalidated') {
+              <p
+                class="permission-hint"
+                i18n="@@push.status.browserInvalidated"
+              >
+                <mat-icon>warning</mat-icon>
+                Dein Browser hat das Push-Abo für dieses Gerät als dauerhaft
+                ungültig markiert. Bitte setze die
+                Benachrichtigungs-Einstellungen für diese Seite in den
+                Browser-Einstellungen zurück (Chrome → Einstellungen →
+                Website-Einstellungen → Benachrichtigungen) und aktiviere Push
+                danach erneut.
+              </p>
             } @else if (pushService.status() === 'subscribed') {
               <div class="row">
                 <span class="permission-ok">

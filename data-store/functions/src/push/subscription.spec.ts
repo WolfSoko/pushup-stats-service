@@ -1,5 +1,8 @@
 import { describe, it, expect } from '@jest/globals';
-import { pushSubscriptionId, validateSubscriptionPayload } from './subscription';
+import {
+  pushSubscriptionId,
+  validateSubscriptionPayload,
+} from './subscription';
 
 describe('push/subscription', () => {
   describe('pushSubscriptionId', () => {
@@ -146,6 +149,41 @@ describe('push/subscription', () => {
       const result = validateSubscriptionPayload(null);
 
       expect(result.valid).toBe(false);
+    });
+
+    it('rejects zombie endpoints on the `.invalid` TLD (permanently-removed.invalid)', () => {
+      const payload = {
+        endpoint:
+          'https://permanently-removed.invalid/fcm/send/dMMpqrGleWA:APA91bEoMq9',
+        keys: { p256dh: 'key1', auth: 'key2' },
+      };
+
+      const result = validateSubscriptionPayload(payload);
+
+      expect(result.valid).toBe(false);
+      expect(result.error).toContain('invalid');
+    });
+
+    it('rejects any `.invalid` hostname, not just the permanently-removed sentinel', () => {
+      const payload = {
+        endpoint: 'https://some-other-host.invalid/fcm/send/xyz',
+        keys: { p256dh: 'key1', auth: 'key2' },
+      };
+
+      const result = validateSubscriptionPayload(payload);
+
+      expect(result.valid).toBe(false);
+    });
+
+    it('accepts live FCM endpoints', () => {
+      const payload = {
+        endpoint: 'https://fcm.googleapis.com/fcm/send/abcdef',
+        keys: { p256dh: 'key1', auth: 'key2' },
+      };
+
+      const result = validateSubscriptionPayload(payload);
+
+      expect(result.valid).toBe(true);
     });
   });
 });

@@ -4575,6 +4575,12 @@ Deine Position: # ·  Reps        </source>
         <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">warning</pc> Push notifications are blocked. Please allow them in your browser settings.</target>
       </segment>
     </unit>
+    <unit id="push.status.browserInvalidated">
+      <segment state="translated">
+        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">warning</pc> Dein Browser hat das Push-Abo für dieses Gerät als dauerhaft ungültig markiert. Bitte setze die Benachrichtigungs-Einstellungen für diese Seite in den Browser-Einstellungen zurück (Chrome → Einstellungen → Website-Einstellungen → Benachrichtigungen) und aktiviere Push danach erneut. </source>
+        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">warning</pc> Your browser has marked push notifications on this device as permanently invalid. Please reset notification settings for this site in your browser (Chrome → Settings → Site settings → Notifications) and re-enable push afterwards. </target>
+      </segment>
+    </unit>
     <unit id="push.status.subscribed">
       <segment state="translated">
         <source>Erinnerungen aktiv ✓</source>

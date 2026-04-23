@@ -44,15 +44,28 @@ export interface PushSubscriptionPayload {
  * @param data Subscription data to validate
  * @returns Object with validation result and error message if invalid
  */
-export function validateSubscriptionPayload(
-  data: unknown
-): { valid: boolean; error?: string } {
+export function validateSubscriptionPayload(data: unknown): {
+  valid: boolean;
+  error?: string;
+} {
   if (!data || typeof data !== 'object') {
     return { valid: false, error: 'payload must be an object' };
   }
   const obj = data as Record<string, unknown>;
 
   if (typeof obj.endpoint !== 'string' || obj.endpoint.trim().length === 0) {
+    return { valid: false, error: 'endpoint missing or invalid' };
+  }
+
+  // Chrome/Edge rewrite the endpoint of permanently-killed subs to the
+  // `.invalid` TLD (RFC 6761 guarantees no DNS resolution). Accepting these
+  // would persist a zombie that the 5-min dispatcher deletes on the next tick,
+  // producing the re-subscribe/expire loop. Reject at the seam.
+  try {
+    if (new URL(obj.endpoint).hostname.endsWith('.invalid')) {
+      return { valid: false, error: 'endpoint is on the .invalid TLD' };
+    }
+  } catch {
     return { valid: false, error: 'endpoint missing or invalid' };
   }
 

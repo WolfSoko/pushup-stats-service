@@ -365,7 +365,7 @@ describe('PushSubscriptionStore', () => {
     const ZOMBIE_ENDPOINT =
       'https://permanently-removed.invalid/fcm/send/fgr7FAJdyMU:APA91bEq';
 
-    it('init() unsubscribes a zombie, surfaces not-subscribed, and never saves it server-side', async () => {
+    it('init() unsubscribes a zombie, surfaces browser-invalidated, and never saves it server-side', async () => {
       const zombieSub = makeMockSubscription(ZOMBIE_ENDPOINT);
       const { registration } = makeRegistration({
         existingSubscription: zombieSub,
@@ -379,8 +379,66 @@ describe('PushSubscriptionStore', () => {
       await store.init();
 
       expect(zombieSub.unsubscribe).toHaveBeenCalledTimes(1);
-      expect(store.status()).toBe('not-subscribed');
+      expect(store.status()).toBe('browser-invalidated');
       expect(store.deviceCount()).toBe(0);
+      expect(callable).not.toHaveBeenCalled();
+    });
+
+    it('PUSH_SUBSCRIPTION_CHANGED with a zombie endpoint drops it and surfaces browser-invalidated', async () => {
+      const messageListeners: Array<(ev: MessageEvent) => void> = [];
+      Object.defineProperty(navigator, 'serviceWorker', {
+        value: {
+          addEventListener: jest.fn(
+            (type: string, listener: (ev: MessageEvent) => void) => {
+              if (type === 'message') messageListeners.push(listener);
+            }
+          ),
+        },
+        configurable: true,
+        writable: true,
+      });
+      const { registration } = makeRegistration();
+      pushSw.setRegistration(registration);
+
+      const callable = jest.fn();
+      (httpsCallable as jest.Mock).mockReturnValue(callable);
+
+      const store = setupStore();
+      await store.init();
+
+      const zombieJson = {
+        endpoint: ZOMBIE_ENDPOINT,
+        keys: { p256dh: 'p', auth: 'a' },
+      };
+      for (const listener of messageListeners) {
+        listener({
+          data: { type: 'PUSH_SUBSCRIPTION_CHANGED', sub: zombieJson },
+        } as MessageEvent);
+      }
+      await new Promise((resolve) => setTimeout(resolve, 0));
+
+      expect(callable).not.toHaveBeenCalled();
+      expect(store.status()).toBe('browser-invalidated');
+    });
+
+    it('subscribe() where the fresh pushManager.subscribe() also returns a zombie surfaces browser-invalidated and never saves it', async () => {
+      const zombieFresh = makeMockSubscription(ZOMBIE_ENDPOINT);
+      const { registration, subscribe } = makeRegistration({
+        existingSubscription: null,
+        subscribeResult: zombieFresh,
+      });
+      pushSw.setRegistration(registration);
+
+      const callable = jest.fn();
+      (httpsCallable as jest.Mock).mockReturnValue(callable);
+
+      const store = setupStore();
+      const ok = await store.subscribe();
+
+      expect(ok).toBe(false);
+      expect(subscribe).toHaveBeenCalledTimes(1);
+      expect(zombieFresh.unsubscribe).toHaveBeenCalledTimes(1);
+      expect(store.status()).toBe('browser-invalidated');
       expect(callable).not.toHaveBeenCalled();
     });
 
