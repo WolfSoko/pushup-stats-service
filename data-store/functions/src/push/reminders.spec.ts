@@ -360,6 +360,27 @@ describe('push/reminders', () => {
       ).toBe(true);
     });
 
+    it('classifies statusCode 401 Unauthorized as expired (VAPID auth permanently rejected)', () => {
+      // The push service rejects the VAPID JWT the server signed for this
+      // endpoint — the only way to recover is to re-subscribe, which produces
+      // a fresh endpoint. Keeping the old sub means every 5-min tick hammers
+      // the same dead endpoint forever; saw 286 such retries across 2 days
+      // in prod before this classification existed.
+      expect(
+        isExpiredSubscriptionError({ statusCode: 401 }, ENDPOINT_FCM)
+      ).toBe(true);
+    });
+
+    it('classifies statusCode 403 Forbidden as expired (VAPID key mismatch)', () => {
+      // 403 means the VAPID key used to sign the send does not match the
+      // applicationServerKey this subscription was created with. Permanent
+      // for this endpoint — re-subscribe is the only fix. Saw 388 such
+      // retries across 2 days in prod.
+      expect(
+        isExpiredSubscriptionError({ statusCode: 403 }, ENDPOINT_FCM)
+      ).toBe(true);
+    });
+
     it('classifies any endpoint on the .invalid TLD as expired (Chromium sentinel)', () => {
       // Chrome/Edge return `permanently-removed.invalid` as the sanitized
       // endpoint after the push service has invalidated the subscription.

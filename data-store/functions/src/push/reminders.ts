@@ -140,6 +140,17 @@ export function isLeaseStale(
  * error (`ENOTFOUND` / `EAI_AGAIN`) with no `statusCode` — the old branch
  * logged a WARN and left the sub alive, causing endless failed sends every
  * 5 min until the client re-subscribed.
+ *
+ * 401/403 are also permanent: both mean the push service rejected the VAPID
+ * pair for this endpoint (401: signature invalid; 403: applicationServerKey
+ * at subscribe-time does not match current VAPID public key). No amount of
+ * retrying recovers — the client has to re-subscribe, which produces a new
+ * endpoint. Keeping the old one just hammers the push service every 5 min.
+ *
+ * Operational note: a VAPID misconfiguration that affects *all* subs (wrong
+ * secret rolled out, prod/staging key cross-wire) will bulk-delete every
+ * push sub on the next 5-min dispatch tick. Roll back the config before the
+ * next tick, or accept that every user must re-subscribe after recovery.
  */
 export function isExpiredSubscriptionError(
   err: unknown,
@@ -150,7 +161,13 @@ export function isExpiredSubscriptionError(
     code?: string;
     message?: string;
   };
-  if (e.statusCode === 410 || e.statusCode === 404) return true;
+  if (
+    e.statusCode === 410 ||
+    e.statusCode === 404 ||
+    e.statusCode === 401 ||
+    e.statusCode === 403
+  )
+    return true;
   // If the endpoint itself is already on the `.invalid` TLD, it cannot ever
   // resolve — delete without waiting for a retry.
   let hostIsInvalidTld = false;
