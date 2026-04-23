@@ -12,7 +12,7 @@ import { Meta } from '@angular/platform-browser';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SeoService } from '../core/seo.service';
 import { BlogPost, findBlogPost } from './blog-posts.data';
-import { readingMinutes } from './reading-time';
+import { countWords, readingMinutes } from './reading-time';
 
 const BASE_URL = 'https://pushup-stats.de';
 const LOGO_URL = `${BASE_URL}/assets/pushup-logo.png`;
@@ -54,10 +54,10 @@ const LOGO_URL = `${BASE_URL}/assets/pushup-logo.png`;
             <time [attr.datetime]="post.publishedAt">{{
               post.publishedAt | date: 'longDate'
             }}</time>
-            @if (readingMinutes) {
+            @if (readingTimeMinutes) {
               <span aria-hidden="true">·</span>
               <span i18n="@@blog.article.readingTime"
-                >{{ readingMinutes }} Min. Lesezeit</span
+                >{{ readingTimeMinutes }} Min. Lesezeit</span
               >
             }
             @if (post.updatedAt) {
@@ -249,7 +249,7 @@ export class BlogArticleComponent implements OnInit {
   private readonly destroyRef = inject(DestroyRef);
 
   post: BlogPost | null = null;
-  readingMinutes = 0;
+  readingTimeMinutes = 0;
   heroImageFailed = false;
 
   constructor() {
@@ -266,32 +266,23 @@ export class BlogArticleComponent implements OnInit {
     }
 
     this.post = found;
-    this.readingMinutes = readingMinutes(found.content);
+    const wordCount = countWords(found.content);
+    this.readingTimeMinutes = readingMinutes(found.content);
     this.seo.update(found.title, found.description, `/blog/${found.slug}`, {
       imageUrl: found.heroImage,
       imageAlt: found.heroImageAlt,
+      publishedTime: found.publishedAt,
+      modifiedTime: found.updatedAt,
     });
     this.meta.updateTag({ property: 'og:type', content: 'article' });
     this.meta.updateTag({
       name: 'keywords',
       content: found.keywords.join(', '),
     });
-    this.meta.updateTag({
-      property: 'article:published_time',
-      content: found.publishedAt,
-    });
-    if (found.updatedAt) {
-      this.meta.updateTag({
-        property: 'article:modified_time',
-        content: found.updatedAt,
-      });
-    } else {
-      this.meta.removeTag('property="article:modified_time"');
-    }
-    this.injectJsonLd(found);
+    this.injectJsonLd(found, wordCount);
   }
 
-  private injectJsonLd(post: BlogPost): void {
+  private injectJsonLd(post: BlogPost, wordCount: number): void {
     const head = this.document.head;
     if (!head) return;
 
@@ -305,7 +296,7 @@ export class BlogArticleComponent implements OnInit {
       description: post.description,
       datePublished: post.publishedAt,
       dateModified: post.updatedAt ?? post.publishedAt,
-      wordCount: readingMinutes(post.content) * 200,
+      wordCount,
       inLanguage: post.lang,
       author: {
         '@type': 'Organization',

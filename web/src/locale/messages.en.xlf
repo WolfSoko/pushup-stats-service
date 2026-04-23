@@ -4217,8 +4217,8 @@ Deine Position: # ·  Reps        </source>
     </unit>
     <unit id="blog.article.readingTime">
       <segment state="translated">
-        <source><ph id="0" equiv="INTERPOLATION" disp="{{ readingMinutes }}"/> Min. Lesezeit</source>
-        <target><ph id="0" equiv="INTERPOLATION" disp="{{ readingMinutes }}"/> min read</target>
+        <source><ph id="0" equiv="INTERPOLATION" disp="{{ readingTimeMinutes }}"/> Min. Lesezeit</source>
+        <target><ph id="0" equiv="INTERPOLATION" disp="{{ readingTimeMinutes }}"/> min read</target>
       </segment>
     </unit>
     <unit id="blog.article.updated">

@@ -189,6 +189,58 @@ describe('SeoService', () => {
     });
   });
 
+  describe('article timestamps', () => {
+    function getMetaContent(selector: string): string | null {
+      return (
+        document.head
+          .querySelector<HTMLMetaElement>(selector)
+          ?.getAttribute('content') ?? null
+      );
+    }
+
+    it('emits article:published_time / modified_time as full ISO-8601 strings', () => {
+      const seo = setup('de');
+      seo.update('T', 'D', '/blog/x', {
+        publishedTime: '2026-04-01',
+        modifiedTime: '2026-04-20',
+      });
+
+      expect(getMetaContent('meta[property="article:published_time"]')).toBe(
+        '2026-04-01T00:00:00Z'
+      );
+      expect(getMetaContent('meta[property="article:modified_time"]')).toBe(
+        '2026-04-20T00:00:00Z'
+      );
+    });
+
+    it('passes through values that already contain a time component', () => {
+      const seo = setup('de');
+      seo.update('T', 'D', '/blog/x', {
+        publishedTime: '2026-04-01T12:34:56+02:00',
+      });
+
+      expect(getMetaContent('meta[property="article:published_time"]')).toBe(
+        '2026-04-01T12:34:56+02:00'
+      );
+    });
+
+    it('removes article meta tags when a subsequent update omits them', () => {
+      const seo = setup('de');
+      seo.update('T', 'D', '/blog/x', {
+        publishedTime: '2026-04-01',
+        modifiedTime: '2026-04-20',
+      });
+      seo.update('T2', 'D2', '/');
+
+      expect(
+        document.head.querySelector('meta[property="article:published_time"]')
+      ).toBeNull();
+      expect(
+        document.head.querySelector('meta[property="article:modified_time"]')
+      ).toBeNull();
+    });
+  });
+
   describe('idempotency', () => {
     it('updates existing canonical/hreflang links instead of appending duplicates', () => {
       const seo = setup('de');

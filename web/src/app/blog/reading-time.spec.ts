@@ -1,4 +1,15 @@
-import { readingMinutes } from './reading-time';
+import { countWords, readingMinutes } from './reading-time';
+
+describe('countWords', () => {
+  it('strips HTML and returns the word count', () => {
+    expect(countWords('<p>hello <strong>world</strong></p>')).toBe(2);
+  });
+
+  it('returns 0 for empty or tag-only input', () => {
+    expect(countWords('')).toBe(0);
+    expect(countWords('<p></p>')).toBe(0);
+  });
+});
 
 describe('readingMinutes', () => {
   it('returns at least 1 minute for any content (including empty)', () => {

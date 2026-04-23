@@ -669,7 +669,7 @@ export const BLOG_POSTS: BlogPost[] = [
   Trainierende berichten typischerweise: bessere Toleranz gegenüber dem "Brennen" in höheren
   Wiederholungsbereichen, schnellere mentale Erholung nach harten Einheiten und deutlich weniger
   Muskelkater 24 Stunden später. Die reinen Kraftzahlen steigen nicht plötzlich – die Kontinuität steigt.
-  Wenn du ohnehin <a href="/blog/liegestuetze-tracker">einen Liegestütz-Tracker nutzt</a>, trage die
+  Wenn du ohnehin <a href="/de/blog/liegestuetze-tracker">einen Liegestütz-Tracker nutzt</a>, trage die
   Atem- und Kältesitzungen neben den Wiederholungen ein. Ein Monat Daten sagt dir mehr als jede Anekdote.
 </p>
 
@@ -780,9 +780,9 @@ export const BLOG_POSTS: BlogPost[] = [
   </li>
   <li>
     <strong>Rückwärts in strukturiertes Training übersetzen.</strong> Bei einem Startwert unter 10 bringt
-    dich der <a href="/blog/liegestuetze-steigern">Progressionsguide</a> in sechs Wochen auf ein solides
+    dich der <a href="/de/blog/liegestuetze-steigern">Progressionsguide</a> in sechs Wochen auf ein solides
     Niveau. Von 20 auf 40+ ist die
-    <a href="/blog/30-tage-liegestuetze-challenge">30-Tage-Challenge</a> dafür gemacht, dieses Plateau
+    <a href="/de/blog/30-tage-liegestuetze-challenge">30-Tage-Challenge</a> dafür gemacht, dieses Plateau
     zu durchbrechen.
   </li>
 </ol>
@@ -1359,7 +1359,7 @@ export const BLOG_POSTS: BlogPost[] = [
   Practitioners typically report: better tolerance of the "burn" in higher-rep sets, faster mood recovery
   after a hard session, and noticeably less soreness 24 h later. Strength numbers don't jump; consistency
   does. If you already use
-  <a href="/blog/pushup-tracker-guide">a push-up tracker</a>,
+  <a href="/en/blog/pushup-tracker-guide">a push-up tracker</a>,
   log the breathing + cold rounds alongside your reps — a month of data will tell you more than any
   anecdote.
 </p>
@@ -1471,8 +1471,8 @@ export const BLOG_POSTS: BlogPost[] = [
   </li>
   <li>
     <strong>Work backwards into structured training.</strong> If your baseline is under 10, the
-    <a href="/blog/pushup-progression">progression guide</a> gets you from there to a respectable capacity
-    over 6 weeks. From 20 to 40+, the <a href="/blog/30-day-pushup-challenge">30-day challenge</a> is
+    <a href="/en/blog/pushup-progression">progression guide</a> gets you from there to a respectable capacity
+    over 6 weeks. From 20 to 40+, the <a href="/en/blog/30-day-pushup-challenge">30-day challenge</a> is
     designed to push past that plateau.
   </li>
 </ol>

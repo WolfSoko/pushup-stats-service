@@ -21,14 +21,15 @@ In scope:
 3. **SEO service:** `SeoService.update()` accepts optional image URL and
    produces `og:image`, `og:image:alt`, `twitter:image`, `article:published_time`,
    `article:modified_time`.
-4. **Article component:** Renders a 21:9 hero image, reading time, "Aktualisiert
+4. **Article component:** Renders a 16:9 hero image, reading time, "Aktualisiert
    am" (when present). Emits richer Article JSON-LD with `image`, `author`,
-   `publisher.logo`, `dateModified`, `mainEntityOfPage`, `wordCount`.
+   `publisher.logo`, `dateModified`, `mainEntityOfPage`, `wordCount` (exact).
 5. **List component:** Shows small thumbnails per card so the overview doesn't
    look bare.
-6. **Images:** All 10 existing posts plus 4 new posts get an Unsplash photo URL
-   via `images.unsplash.com/photo-…`. Photographer credit rendered in the
-   article footer.
+6. **Images:** All 12 existing posts (6 DE + 6 EN) plus 4 new posts get an
+   Unsplash photo URL via `images.unsplash.com/photo-…`. Credit rendered as a
+   small pill in the hero overlay. Graceful `onerror` fallback hides the
+   hero/thumbnail if the image fails to load.
 7. **New posts (4 total — 2 DE + 2 EN):**
    - **Wim Hof & Push-Ups** — breath, cold exposure, recovery. Cites Kox et al.
      2014 PNAS, Huberman Lab, Cleveland Clinic, official Wim Hof Method site.
