@@ -26,6 +26,26 @@
             <mat-icon>{{ item.icon }}</mat-icon>
             <span i18n="@@quickAdd.fab.customValue">Eigener Wert</span>
           </button>
+        } @else if (item.type === 'goal') {
+          <button
+            mat-fab
+            extended
+            class="goal-fab"
+            [disabled]="goalDisabled()"
+            [attr.aria-label]="
+              goalReached() ? goalReachedAria : fillToGoalAria(item.value)
+            "
+            (click)="onFillToGoal()"
+          >
+            <mat-icon>{{ item.icon }}</mat-icon>
+            @if (goalReached()) {
+              <span>{{ goalReachedLabel }}</span>
+            } @else {
+              <span i18n="@@quickAdd.fab.fillToGoal"
+                >+{{ item.value }} bis zum Ziel</span
+              >
+            }
+          </button>
         } @else {
           <button
             mat-fab
