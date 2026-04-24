@@ -67,4 +67,5 @@ package-lock.json
 
 .nx/polygraph
 .claude/worktrees
-.claude/settings.local.json.claude/scheduled_tasks.lock
+.claude/settings.local.json
+.claude/scheduled_tasks.lock
