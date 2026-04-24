@@ -47,9 +47,6 @@ Drei Services laufen als User-Units:
 ```bash
 # Status prüfen
 systemctl --user status pushup-stats-reverse-proxy pushup-stats-api pushup-stats-ssr
-
-# Deployment
-git pull && docker compose build && docker compose up -d
 ```
 
 ## Firebase Deployment
