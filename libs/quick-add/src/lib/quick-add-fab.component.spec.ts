@@ -14,6 +14,7 @@ describe('QuickAddFabComponent — goal dial item', () => {
     const openDialog = jest.fn();
     const openFeedback = jest.fn();
     const fillToGoal = jest.fn();
+    const opened = jest.fn();
 
     // Material disabled buttons set pointer-events:none; skip that check so
     // userEvent.click() doesn't throw when verifying disabled state.
@@ -28,7 +29,7 @@ describe('QuickAddFabComponent — goal dial item', () => {
         goalReached: inputs.goalReached ?? false,
         fillToGoalInFlight: inputs.fillToGoalInFlight ?? false,
       },
-      on: { quickAdd, openDialog, openFeedback, fillToGoal },
+      on: { quickAdd, openDialog, openFeedback, fillToGoal, opened },
     });
 
     const mainFab = screen.getByRole('button', {
@@ -36,7 +37,15 @@ describe('QuickAddFabComponent — goal dial item', () => {
     });
     await user.click(mainFab);
 
-    return { view, user, quickAdd, openDialog, openFeedback, fillToGoal };
+    return {
+      view,
+      user,
+      quickAdd,
+      openDialog,
+      openFeedback,
+      fillToGoal,
+      opened,
+    };
   }
 
   it('Given remainingToGoal=42 and goalReached=false, Then goal item renders with label containing 42', async () => {
@@ -101,5 +110,40 @@ describe('QuickAddFabComponent — goal dial item', () => {
     expect(screen.getByText('+5 Reps')).toBeTruthy();
     expect(screen.getByText('+10 Reps')).toBeTruthy();
     expect(screen.getByText('+15 Reps')).toBeTruthy();
+  });
+
+  it('When the main FAB opens the dial, Then opened is emitted once', async () => {
+    const { opened } = await renderFab({ remainingToGoal: 42 });
+
+    // renderFab already clicked once to open the dial.
+    expect(opened).toHaveBeenCalledTimes(1);
+  });
+
+  it('When the main FAB closes the dial, Then opened is not emitted', async () => {
+    const { user, opened } = await renderFab({ remainingToGoal: 42 });
+    opened.mockClear();
+
+    const closeFab = screen.getByRole('button', {
+      name: /Schnellerfassung schließen/i,
+    });
+    await user.click(closeFab);
+
+    expect(opened).not.toHaveBeenCalled();
+  });
+
+  it('When the dial is opened a second time, Then opened is emitted again', async () => {
+    const { user, opened } = await renderFab({ remainingToGoal: 42 });
+    // Close.
+    await user.click(
+      screen.getByRole('button', { name: /Schnellerfassung schließen/i })
+    );
+    opened.mockClear();
+
+    // Re-open.
+    await user.click(
+      screen.getByRole('button', { name: /Schnellerfassung öffnen/i })
+    );
+
+    expect(opened).toHaveBeenCalledTimes(1);
   });
 });

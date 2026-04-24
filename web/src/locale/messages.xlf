@@ -642,7 +642,7 @@
     </unit>
     <unit id="quickAdd.fab.open">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:64</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:65</note>
       </notes>
       <segment>
         <source>Schnellerfassung öffnen</source>
@@ -650,7 +650,7 @@
     </unit>
     <unit id="quickAdd.fab.close">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:65</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:66</note>
       </notes>
       <segment>
         <source>Schnellerfassung schließen</source>
@@ -658,7 +658,7 @@
     </unit>
     <unit id="quickAdd.fab.goalReached">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:66</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:67</note>
       </notes>
       <segment>
         <source>Ziel erreicht ✓</source>
@@ -666,7 +666,7 @@
     </unit>
     <unit id="quickAdd.fab.goalReachedAria">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:67</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:68</note>
       </notes>
       <segment>
         <source>Tagesziel bereits erreicht</source>
@@ -674,7 +674,7 @@
     </unit>
     <unit id="quickAdd.fab.repAria">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:70</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:71</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="REPS" disp="reps"/> Liegestütze hinzufügen</source>
@@ -682,7 +682,7 @@
     </unit>
     <unit id="quickAdd.fab.fillToGoalAria">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:74</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:75</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="GAP" disp="gap"/> Liegestütze bis zum Tagesziel hinzufügen</source>
@@ -1411,7 +1411,7 @@
     </unit>
     <unit id="feedback.success">
       <notes>
-        <note category="location">web/src/app/app.ts:289</note>
+        <note category="location">web/src/app/app.ts:293</note>
       </notes>
       <segment>
         <source>Danke für dein Feedback!</source>
@@ -1419,7 +1419,7 @@
     </unit>
     <unit id="feedback.error">
       <notes>
-        <note category="location">web/src/app/app.ts:296</note>
+        <note category="location">web/src/app/app.ts:300</note>
       </notes>
       <segment>
         <source>Feedback konnte nicht gesendet werden.</source>
@@ -1427,7 +1427,7 @@
     </unit>
     <unit id="sw.update.downloading">
       <notes>
-        <note category="location">web/src/app/app.ts:334</note>
+        <note category="location">web/src/app/app.ts:338</note>
       </notes>
       <segment>
         <source>Update wird im Hintergrund geladen …</source>

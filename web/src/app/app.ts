@@ -259,6 +259,10 @@ export class App {
     this.quickAdd.fillToGoal();
   }
 
+  handleFabOpened(): void {
+    this.appData.reloadAfterQuickAdd();
+  }
+
   openFeedbackDialog(prefill = true): void {
     const data: FeedbackDialogData = prefill
       ? {

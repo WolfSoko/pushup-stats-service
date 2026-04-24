@@ -28,6 +28,7 @@ export class QuickAddFabComponent {
   readonly openDialog = output<void>();
   readonly openFeedback = output<void>();
   readonly fillToGoal = output<void>();
+  readonly opened = output<void>();
 
   protected readonly fabState = signalState({ open: false });
 
@@ -79,7 +80,9 @@ export class QuickAddFabComponent {
   }
 
   protected toggle(): void {
-    patchState(this.fabState, { open: !this.fabState.open() });
+    const nextOpen = !this.fabState.open();
+    patchState(this.fabState, { open: nextOpen });
+    if (nextOpen) this.opened.emit();
   }
 
   protected onQuickAdd(reps: number): void {
