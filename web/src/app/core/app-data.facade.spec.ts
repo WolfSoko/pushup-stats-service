@@ -4,6 +4,7 @@ import { signal } from '@angular/core';
 import { AppDataFacade } from './app-data.facade';
 import { StatsApiService, UserConfigApiService } from '@pu-stats/data-access';
 import { UserContextService } from '@pu-auth/auth';
+import { AdaptiveQuickAddService } from '@pu-stats/quick-add';
 
 describe('AppDataFacade', () => {
   const userId = signal<string>('u1');
@@ -67,6 +68,10 @@ describe('AppDataFacade', () => {
         {
           provide: UserContextService,
           useValue: { userIdSafe: () => userId() },
+        },
+        {
+          provide: AdaptiveQuickAddService,
+          useValue: { compute: vitest.fn().mockReturnValue([1, 5, 10]) },
         },
       ],
     });
