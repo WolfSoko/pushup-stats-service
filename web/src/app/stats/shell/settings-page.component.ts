@@ -4,7 +4,6 @@ import {
   computed,
   effect,
   inject,
-  resource,
   signal,
 } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
@@ -16,12 +15,11 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDialogModule, MatDialog } from '@angular/material/dialog';
 import { RouterLink } from '@angular/router';
-import { firstValueFrom } from 'rxjs';
-import { UserConfigApiService } from '@pu-stats/data-access';
 import { AuthStore, UserContextService } from '@pu-auth/auth';
 import { Router } from '@angular/router';
 import { Analytics, logEvent } from '@angular/fire/analytics';
 import { PushSubscriptionService } from '@pu-reminders/reminders';
+import { UserConfigStore } from '../../core/user-config.store';
 
 @Component({
   selector: 'app-settings-page',
@@ -345,7 +343,6 @@ import { PushSubscriptionService } from '@pu-reminders/reminders';
   `,
 })
 export class SettingsPageComponent {
-  private readonly api = inject(UserConfigApiService);
   private readonly user = inject(UserContextService);
   private readonly auth = inject(AuthStore);
   private readonly router = inject(Router);
@@ -353,8 +350,8 @@ export class SettingsPageComponent {
   private readonly analytics = inject(Analytics, { optional: true });
   private readonly snackBar = inject(MatSnackBar);
   private readonly pushService = inject(PushSubscriptionService);
+  private readonly userConfigStore = inject(UserConfigStore);
 
-  readonly activeUserId = this.user.userIdSafe;
   readonly isGuest = this.user.isGuest;
 
   readonly displayNameDraft = signal('');
@@ -371,28 +368,8 @@ export class SettingsPageComponent {
   readonly deletePhraseInput = signal('');
   readonly deleteDialogError = signal('');
 
-  readonly configResource = resource({
-    params: () => ({ userId: this.activeUserId() }),
-    loader: async ({ params }) => {
-      const result = await firstValueFrom(this.api.getConfig(params.userId));
-      return (result ?? {}) as {
-        displayName?: string;
-        dailyGoal?: number;
-        weeklyGoal?: number;
-        monthlyGoal?: number;
-        consent?: {
-          dataProcessing?: boolean;
-          statistics?: boolean;
-          targetedAds?: boolean;
-          acceptedAt?: string;
-        };
-        ui?: { hideFromLeaderboard?: boolean };
-      };
-    },
-  });
-
   readonly config = computed(() => {
-    const val = this.configResource.value();
+    const val = this.userConfigStore.config();
     if (!val || typeof val !== 'object')
       return {
         displayName: '',
@@ -453,29 +430,25 @@ export class SettingsPageComponent {
     this.saving.set(true);
     this.saved.set(false);
     this.errorMessage.set('');
-    const userId = this.activeUserId();
     const dailyGoal = Math.max(1, Math.trunc(this.dailyGoalDraft()));
     const weeklyGoal = Math.max(1, Math.trunc(this.weeklyGoalDraft()));
     const monthlyGoal = Math.max(1, Math.trunc(this.monthlyGoalDraft()));
     try {
       const current = this.config();
-      await firstValueFrom(
-        this.api.updateConfig(userId, {
-          displayName: this.displayNameDraft().trim(),
-          dailyGoal,
-          weeklyGoal,
-          monthlyGoal,
-          consent: {
-            ...(current.consent ?? {}),
-            targetedAds: this.adsConsentDraft(),
-          },
-          ui: {
-            hideFromLeaderboard: this.leaderboardOptOutDraft(),
-          },
-        })
-      );
+      await this.userConfigStore.save({
+        displayName: this.displayNameDraft().trim(),
+        dailyGoal,
+        weeklyGoal,
+        monthlyGoal,
+        consent: {
+          ...(current.consent ?? {}),
+          targetedAds: this.adsConsentDraft(),
+        },
+        ui: {
+          hideFromLeaderboard: this.leaderboardOptOutDraft(),
+        },
+      });
       this.saved.set(true);
-      this.configResource.reload();
       this.trackAnalytics('settings_saved', {
         hideFromLeaderboard: this.leaderboardOptOutDraft(),
         dailyGoal,
@@ -511,17 +484,14 @@ export class SettingsPageComponent {
     this.deletingAccount.set(true);
     this.errorMessage.set('');
 
-    const userId = this.activeUserId();
     try {
-      await firstValueFrom(
-        this.api.updateConfig(userId, {
-          displayName: 'Gelöschter Benutzer',
-          email: null,
-          ui: {
-            hideFromLeaderboard: true,
-          },
-        })
-      );
+      await this.userConfigStore.save({
+        displayName: 'Gelöschter Benutzer',
+        email: null,
+        ui: {
+          hideFromLeaderboard: true,
+        },
+      });
       await this.pushService.unsubscribe();
       await this.auth.deleteAccount();
       this.trackAnalytics('account_anonymized_and_deleted', { success: true });

@@ -51,27 +51,6 @@
         <div class="goal-row">
           <small i18n="@@dashboard.dailyGoalLabel">Tag</small>
           <span>{{ todayTotal() }} / {{ dailyGoal() }}</span>
-          @if (
-            dailyGoalConfigured() && (remainingToGoal() > 0 || goalReached())
-          ) {
-            <button
-              mat-stroked-button
-              type="button"
-              class="goal-fill-btn"
-              data-testid="dashboard-goal-fill"
-              [disabled]="goalReached() || fillToGoalInFlight()"
-              (click)="fillToGoal()"
-            >
-              <mat-icon>{{ goalReached() ? 'check' : 'flag' }}</mat-icon>
-              @if (goalReached()) {
-                <span i18n="@@dashboard.goalFill.reached">Ziel erreicht ✓</span>
-              } @else {
-                <span i18n="@@dashboard.goalFill.fill"
-                  >+{{ remainingToGoal() }} bis zum Ziel</span
-                >
-              }
-            </button>
-          }
         </div>
         <mat-progress-bar
           mode="determinate"

@@ -1,16 +1,13 @@
 import { computed, inject, resource } from '@angular/core';
 import {
-  patchState,
   signalStore,
   withComputed,
   withMethods,
   withProps,
-  withState,
 } from '@ngrx/signals';
 import {
   LiveDataStore,
   StatsApiService,
-  UserConfigApiService,
   UserStatsApiService,
 } from '@pu-stats/data-access';
 import {
@@ -24,6 +21,7 @@ import { AdsStore } from '@pu-stats/ads';
 import { UserContextService } from '@pu-auth/auth';
 import { MotivationStore } from '@pu-stats/motivation';
 import { firstValueFrom } from 'rxjs';
+import { UserConfigStore } from '../core/user-config.store';
 
 const EMPTY_STATS: StatsResponse = {
   meta: {
@@ -79,14 +77,9 @@ function currentMonthKey(): string {
 }
 
 export const DashboardStore = signalStore(
-  withState({
-    dailyGoal: 10,
-    weeklyGoal: 50,
-    monthlyGoal: 200,
-  }),
   withProps(() => ({
     _api: inject(StatsApiService),
-    _userConfigApi: inject(UserConfigApiService),
+    _userConfig: inject(UserConfigStore),
     _userStatsApi: inject(UserStatsApiService),
     _user: inject(UserContextService),
     _live: inject(LiveDataStore),
@@ -99,11 +92,6 @@ export const DashboardStore = signalStore(
     }),
     allTimeResource: resource({
       loader: async () => firstValueFrom(store._api.load({})),
-    }),
-    userConfigResource: resource({
-      params: () => ({ userId: store._user.userIdSafe() }),
-      loader: async ({ params }) =>
-        firstValueFrom(store._userConfigApi.getConfig(params.userId)),
     }),
     userStatsResource: resource({
       params: () => ({ userId: store._user.userIdSafe() }),
@@ -152,15 +140,17 @@ export const DashboardStore = signalStore(
         .reduce((sum, entry) => sum + entry.reps, 0);
     });
 
+    const dailyGoal = computed(() => store._userConfig.dailyGoal() || 10);
+    const weeklyGoal = computed(() => store._userConfig.weeklyGoal() || 50);
+    const monthlyGoal = computed(() => store._userConfig.monthlyGoal() || 200);
+
     const goalProgressPercent = computed(() =>
-      store.dailyGoal()
-        ? Math.min(100, Math.round((todayTotal() / store.dailyGoal()) * 100))
+      dailyGoal()
+        ? Math.min(100, Math.round((todayTotal() / dailyGoal()) * 100))
         : 0
     );
 
-    const configuredDailyGoal = computed(
-      () => store.userConfigResource.value()?.dailyGoal ?? 0
-    );
+    const configuredDailyGoal = computed(() => store._userConfig.dailyGoal());
     const dailyGoalConfigured = computed(() => configuredDailyGoal() > 0);
     const remainingToGoal = computed(() =>
       Math.max(0, configuredDailyGoal() - todayTotal())
@@ -255,14 +245,14 @@ export const DashboardStore = signalStore(
     });
 
     const weeklyGoalProgressPercent = computed(() =>
-      store.weeklyGoal()
-        ? Math.min(100, Math.round((weekReps() / store.weeklyGoal()) * 100))
+      weeklyGoal()
+        ? Math.min(100, Math.round((weekReps() / weeklyGoal()) * 100))
         : 0
     );
 
     const monthlyGoalProgressPercent = computed(() =>
-      store.monthlyGoal()
-        ? Math.min(100, Math.round((monthReps() / store.monthlyGoal()) * 100))
+      monthlyGoal()
+        ? Math.min(100, Math.round((monthReps() / monthlyGoal()) * 100))
         : 0
     );
 
@@ -293,6 +283,9 @@ export const DashboardStore = signalStore(
       currentStreak,
       weekReps,
       monthReps,
+      dailyGoal,
+      weeklyGoal,
+      monthlyGoal,
       weeklyGoalProgressPercent,
       monthlyGoalProgressPercent,
       todayTotal,
@@ -318,15 +311,6 @@ export const DashboardStore = signalStore(
     },
     async loadQuote(): Promise<void> {
       await store._motivation.loadQuotes(store._user.userIdSafe());
-    },
-    setDailyGoal(goal: number): void {
-      patchState(store, { dailyGoal: Math.max(1, Math.trunc(goal || 1)) });
-    },
-    setWeeklyGoal(goal: number): void {
-      patchState(store, { weeklyGoal: Math.max(1, Math.trunc(goal || 1)) });
-    },
-    setMonthlyGoal(goal: number): void {
-      patchState(store, { monthlyGoal: Math.max(1, Math.trunc(goal || 1)) });
     },
   }))
 );

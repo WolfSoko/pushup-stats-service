@@ -114,14 +114,6 @@ export class StatsDashboardComponent {
     });
 
     effect(() => {
-      const cfg = this.store.userConfigResource.value();
-      if (!cfg) return;
-      this.store.setDailyGoal(cfg.dailyGoal || 10);
-      this.store.setWeeklyGoal(cfg.weeklyGoal || 50);
-      this.store.setMonthlyGoal(cfg.monthlyGoal || 200);
-    });
-
-    effect(() => {
       if (!isPlatformBrowser(this.platformId)) return;
       const tick = this.live.updateTick();
       if (!tick) return;

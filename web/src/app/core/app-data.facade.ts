@@ -1,8 +1,9 @@
 import { computed, inject, Injectable, resource } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { UserContextService } from '@pu-auth/auth';
-import { StatsApiService, UserConfigApiService } from '@pu-stats/data-access';
+import { StatsApiService } from '@pu-stats/data-access';
 import { AdaptiveQuickAddService } from '@pu-stats/quick-add';
+import { UserConfigStore } from './user-config.store';
 
 /**
  * Facade that consolidates app-level data resources.
@@ -12,8 +13,8 @@ import { AdaptiveQuickAddService } from '@pu-stats/quick-add';
 export class AppDataFacade {
   private readonly user = inject(UserContextService);
   private readonly statsApi = inject(StatsApiService);
-  private readonly userConfigApi = inject(UserConfigApiService);
   private readonly adaptiveQuickAdd = inject(AdaptiveQuickAddService);
+  private readonly userConfig = inject(UserConfigStore);
 
   readonly recentEntriesResource = resource({
     params: () => ({ userId: this.user.userIdSafe() }),
@@ -30,17 +31,7 @@ export class AppDataFacade {
     this.adaptiveQuickAdd.compute(this.recentEntriesResource.value() ?? [])
   );
 
-  readonly userGoalResource = resource({
-    params: () => ({ userId: this.user.userIdSafe() }),
-    loader: async ({ params }) => {
-      if (!params.userId) return { dailyGoal: 100 };
-      return firstValueFrom(this.userConfigApi.getConfig(params.userId));
-    },
-  });
-
-  readonly dailyGoal = computed(
-    () => this.userGoalResource.value()?.dailyGoal ?? 100
-  );
+  readonly dailyGoal = computed(() => this.userConfig.dailyGoal() || 100);
 
   readonly dailyProgressResource = resource({
     params: () => ({ userId: this.user.userIdSafe() }),
@@ -58,14 +49,13 @@ export class AppDataFacade {
     () => this.dailyProgressResource.value() ?? 0
   );
 
-  readonly remainingToGoal = computed(() => {
-    const configuredGoal = this.userGoalResource.value()?.dailyGoal ?? 0;
-    return Math.max(0, configuredGoal - this.todayProgress());
-  });
+  readonly remainingToGoal = computed(() =>
+    Math.max(0, this.userConfig.dailyGoal() - this.todayProgress())
+  );
 
   readonly goalReached = computed(() => {
-    const configuredGoal = this.userGoalResource.value()?.dailyGoal ?? 0;
-    return configuredGoal > 0 && this.todayProgress() >= configuredGoal;
+    const goal = this.userConfig.dailyGoal();
+    return goal > 0 && this.todayProgress() >= goal;
   });
 
   reloadAfterQuickAdd(): void {

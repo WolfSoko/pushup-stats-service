@@ -14,6 +14,7 @@ import { signal } from '@angular/core';
 import { makeAuthStoreMock } from '@pu-stats/testing';
 import { ActivatedRoute, Router } from '@angular/router';
 import { QuickAddOrchestrationService } from '../../core/quick-add-orchestration.service';
+import { UserConfigStore } from '../../core/user-config.store';
 
 describe('StatsDashboardComponent', () => {
   let fixture: ComponentFixture<StatsDashboardComponent>;
@@ -450,6 +451,7 @@ describe('StatsDashboardComponent', () => {
         (configApi.getConfig as ReturnType<typeof vitest.fn>).mockReturnValue(
           of({ userId: 'u1', dailyGoal: 10, weeklyGoal: 10, monthlyGoal: 10 })
         );
+        TestBed.inject(UserConfigStore).reload();
         const freshFixture = TestBed.createComponent(StatsDashboardComponent);
         await freshFixture.whenStable();
         const component = freshFixture.componentInstance;
@@ -469,6 +471,7 @@ describe('StatsDashboardComponent', () => {
       (configApi.getConfig as ReturnType<typeof vitest.fn>).mockReturnValue(
         of({ userId: 'u1', dailyGoal: 0, weeklyGoal: 0, monthlyGoal: 0 })
       );
+      TestBed.inject(UserConfigStore).reload();
       const freshFixture = TestBed.createComponent(StatsDashboardComponent);
       await freshFixture.whenStable();
       const component = freshFixture.componentInstance;
@@ -480,54 +483,14 @@ describe('StatsDashboardComponent', () => {
     });
   });
 
-  describe('Daily goal-fill button', () => {
-    function findGoalFillButton(
-      fixtureEl: HTMLElement
-    ): HTMLButtonElement | null {
-      return fixtureEl.querySelector<HTMLButtonElement>(
-        '[data-testid="dashboard-goal-fill"]'
-      );
-    }
-
-    it('Given goal not reached, Then the button is visible with the remaining reps in its label', async () => {
+  describe('Daily goal-fill button is removed from Zielfortschritt card', () => {
+    it('Then no [data-testid="dashboard-goal-fill"] element exists in the template', async () => {
       await fixture.whenStable();
-      const button = findGoalFillButton(fixture.nativeElement);
-      expect(button).not.toBeNull();
-      expect(button!.disabled).toBe(false);
-      expect(button!.textContent ?? '').toContain('88');
-    });
-
-    it('Given goal reached, Then the button is disabled and shows the erreicht label', async () => {
-      const configApi = TestBed.inject(UserConfigApiService);
-      (configApi.getConfig as ReturnType<typeof vitest.fn>).mockReturnValue(
-        of({ userId: 'u1', dailyGoal: 5, weeklyGoal: 10, monthlyGoal: 10 })
-      );
-      const freshFixture = TestBed.createComponent(StatsDashboardComponent);
-      await freshFixture.whenStable();
-
-      const button = findGoalFillButton(freshFixture.nativeElement);
-      expect(button).not.toBeNull();
-      expect(button!.disabled).toBe(true);
-      expect(button!.textContent ?? '').toContain('erreicht');
-    });
-
-    it('Given goal is zero, Then the button is not rendered', async () => {
-      const configApi = TestBed.inject(UserConfigApiService);
-      (configApi.getConfig as ReturnType<typeof vitest.fn>).mockReturnValue(
-        of({ userId: 'u1', dailyGoal: 0, weeklyGoal: 0, monthlyGoal: 0 })
-      );
-      const freshFixture = TestBed.createComponent(StatsDashboardComponent);
-      await freshFixture.whenStable();
-
-      expect(findGoalFillButton(freshFixture.nativeElement)).toBeNull();
-    });
-
-    it('Given the button is clicked, Then QuickAddOrchestrationService.fillToGoal is called', async () => {
-      await fixture.whenStable();
-      const svc = TestBed.inject(QuickAddOrchestrationService);
-      const button = findGoalFillButton(fixture.nativeElement);
-      button!.click();
-      expect(svc.fillToGoal).toHaveBeenCalledTimes(1);
+      expect(
+        fixture.nativeElement.querySelector(
+          '[data-testid="dashboard-goal-fill"]'
+        )
+      ).toBeNull();
     });
   });
 
@@ -553,6 +516,7 @@ describe('StatsDashboardComponent', () => {
       (configApi.getConfig as ReturnType<typeof vitest.fn>).mockReturnValue(
         of({ userId: 'u1', dailyGoal: 5, weeklyGoal: 10, monthlyGoal: 10 })
       );
+      TestBed.inject(UserConfigStore).reload();
       const freshFixture = TestBed.createComponent(StatsDashboardComponent);
       await freshFixture.whenStable();
 
@@ -567,6 +531,7 @@ describe('StatsDashboardComponent', () => {
       (configApi.getConfig as ReturnType<typeof vitest.fn>).mockReturnValue(
         of({ userId: 'u1', dailyGoal: 0, weeklyGoal: 0, monthlyGoal: 0 })
       );
+      TestBed.inject(UserConfigStore).reload();
       const freshFixture = TestBed.createComponent(StatsDashboardComponent);
       await freshFixture.whenStable();
 
