@@ -110,9 +110,6 @@ importers:
       http-proxy-middleware:
         specifier: 3.0.5
         version: 3.0.5
-      nedb-promises:
-        specifier: 6.2.3
-        version: 6.2.3
       ng2-charts:
         specifier: 10.0.0
         version: 10.0.0(@angular/cdk@21.2.7(@angular/common@21.2.9(@angular/core@21.2.9(@angular/compiler@21.2.9)(rxjs@7.8.0))(rxjs@7.8.0))(@angular/core@21.2.9(@angular/compiler@21.2.9)(rxjs@7.8.0))(@angular/platform-browser@21.2.9(@angular/common@21.2.9(@angular/core@21.2.9(@angular/compiler@21.2.9)(rxjs@7.8.0))(rxjs@7.8.0))(@angular/core@21.2.9(@angular/compiler@21.2.9)(rxjs@7.8.0)))(rxjs@7.8.0))(@angular/common@21.2.9(@angular/core@21.2.9(@angular/compiler@21.2.9)(rxjs@7.8.0))(rxjs@7.8.0))(@angular/core@21.2.9(@angular/compiler@21.2.9)(rxjs@7.8.0))(@angular/platform-browser@21.2.9(@angular/common@21.2.9(@angular/core@21.2.9(@angular/compiler@21.2.9)(rxjs@7.8.0))(rxjs@7.8.0))(@angular/core@21.2.9(@angular/compiler@21.2.9)(rxjs@7.8.0)))(chart.js@4.5.1)(rxjs@7.8.0)
@@ -318,6 +315,9 @@ importers:
       lint-staged:
         specifier: 16.2.7
         version: 16.2.7
+      nedb-promises:
+        specifier: 6.2.3
+        version: 6.2.3
       node-fetch:
         specifier: 3.3.2
         version: 3.3.2
