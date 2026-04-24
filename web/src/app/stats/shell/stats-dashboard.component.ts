@@ -19,6 +19,7 @@ import { LiveDataStore, StatsApiService } from '@pu-stats/data-access';
 import { appendLocalOffset } from '@pu-stats/models';
 import { firstValueFrom } from 'rxjs';
 import { QuickAddBridgeService } from '@pu-stats/quick-add';
+import { QuickAddOrchestrationService } from '../../core/quick-add-orchestration.service';
 import { AdSlotComponent } from '@pu-stats/ads';
 import { AnalysisTeaserCardComponent } from '../components/analysis-teaser-card/analysis-teaser-card.component';
 import { PreviewBannerComponent } from '../components/preview-banner/preview-banner.component';
@@ -54,6 +55,7 @@ export class StatsDashboardComponent {
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly live = inject(LiveDataStore);
+  private readonly quickAdd = inject(QuickAddOrchestrationService);
 
   readonly store = inject(DashboardStore);
 
@@ -77,6 +79,10 @@ export class StatsDashboardComponent {
   readonly weekReps = this.store.weekReps;
   readonly loading = this.store.loading;
   readonly liveConnected = this.store.liveConnected;
+  readonly dailyGoalConfigured = this.store.dailyGoalConfigured;
+  readonly remainingToGoal = this.store.remainingToGoal;
+  readonly goalReached = this.store.goalReached;
+  readonly fillToGoalInFlight = this.quickAdd.fillToGoalInFlight;
   readonly adSlotDashboardInline = this.store.adSlotDashboardInline;
   readonly dashboardInlineAdsEnabled = this.store.dashboardInlineAdsEnabled;
   /** Counter that increments on every data refresh to trigger child component reloads. */
@@ -124,6 +130,10 @@ export class StatsDashboardComponent {
     });
 
     this.store.loadQuote();
+  }
+
+  fillToGoal(): void {
+    this.quickAdd.fillToGoal();
   }
 
   openCreateDialog(): void {

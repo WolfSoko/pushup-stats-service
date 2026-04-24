@@ -158,6 +158,16 @@ export const DashboardStore = signalStore(
         : 0
     );
 
+    const dailyGoalConfigured = computed(
+      () => (store.userConfigResource.value()?.dailyGoal ?? 0) > 0
+    );
+    const remainingToGoal = computed(() =>
+      Math.max(0, store.dailyGoal() - todayTotal())
+    );
+    const goalReached = computed(
+      () => store.dailyGoal() > 0 && todayTotal() >= store.dailyGoal()
+    );
+
     const lastEntry = computed<PushupRecord | null>(() => {
       const rows = entryRows();
       if (!rows.length) return null;
@@ -286,6 +296,9 @@ export const DashboardStore = signalStore(
       monthlyGoalProgressPercent,
       todayTotal,
       goalProgressPercent,
+      dailyGoalConfigured,
+      remainingToGoal,
+      goalReached,
       lastEntry,
       latestEntries,
       loading,

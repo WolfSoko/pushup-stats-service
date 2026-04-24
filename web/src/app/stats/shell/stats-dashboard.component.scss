@@ -186,8 +186,9 @@ h1 {
 
 .goal-row {
   display: flex;
-  justify-content: space-between;
-  align-items: baseline;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
   margin-top: 8px;
   font-variant-numeric: tabular-nums;
 
@@ -200,6 +201,10 @@ h1 {
 
   &:first-child {
     margin-top: 0;
+  }
+
+  .goal-fill-btn {
+    margin-left: auto;
   }
 }
 
