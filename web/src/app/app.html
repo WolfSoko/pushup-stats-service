@@ -233,8 +233,12 @@
 @if (isLoggedIn()) {
 <lib-quick-add-fab
   [suggestions]="quickAddSuggestions()"
+  [remainingToGoal]="remainingToGoal()"
+  [goalReached]="goalReached()"
+  [fillToGoalInFlight]="fillToGoalInFlight()"
   (quickAdd)="handleQuickAdd($event)"
   (openDialog)="handleOpenDialog()"
   (openFeedback)="openFeedbackDialog()"
+  (fillToGoal)="handleFillToGoal()"
 />
 }

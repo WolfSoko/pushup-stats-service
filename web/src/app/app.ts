@@ -168,6 +168,9 @@ export class App {
   readonly quickAddSuggestions = this.appData.quickAddSuggestions;
   readonly dailyGoal = this.appData.dailyGoal;
   readonly todayProgress = this.appData.todayProgress;
+  readonly remainingToGoal = this.appData.remainingToGoal;
+  readonly goalReached = this.appData.goalReached;
+  readonly fillToGoalInFlight = this.quickAdd.fillToGoalInFlight;
 
   private readonly consentBanner =
     viewChild<CookieConsentBannerComponent>('consentBanner');
@@ -250,6 +253,10 @@ export class App {
 
   handleOpenDialog(): void {
     this.quickAdd.openDialog();
+  }
+
+  handleFillToGoal(): void {
+    this.quickAdd.fillToGoal();
   }
 
   openFeedbackDialog(prefill = true): void {
