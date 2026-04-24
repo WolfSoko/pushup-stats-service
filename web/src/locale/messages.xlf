@@ -624,9 +624,17 @@
         <source>Eigener Wert</source>
       </segment>
     </unit>
+    <unit id="quickAdd.fab.fillToGoal">
+      <notes>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.html:45,46</note>
+      </notes>
+      <segment>
+        <source>+<ph id="0" equiv="INTERPOLATION" disp="{{ item.value }}"/> bis zum Ziel</source>
+      </segment>
+    </unit>
     <unit id="quickAdd.fab.quickAddReps">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.html:39,40</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.html:59,60</note>
       </notes>
       <segment>
         <source>+<ph id="0" equiv="INTERPOLATION" disp="{{ item.value }}"/> Reps</source>
@@ -634,7 +642,7 @@
     </unit>
     <unit id="quickAdd.fab.open">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:48</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:64</note>
       </notes>
       <segment>
         <source>Schnellerfassung öffnen</source>
@@ -642,18 +650,42 @@
     </unit>
     <unit id="quickAdd.fab.close">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:49</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:65</note>
       </notes>
       <segment>
         <source>Schnellerfassung schließen</source>
       </segment>
     </unit>
+    <unit id="quickAdd.fab.goalReached">
+      <notes>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:66</note>
+      </notes>
+      <segment>
+        <source>Ziel erreicht ✓</source>
+      </segment>
+    </unit>
+    <unit id="quickAdd.fab.goalReachedAria">
+      <notes>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:67</note>
+      </notes>
+      <segment>
+        <source>Tagesziel bereits erreicht</source>
+      </segment>
+    </unit>
     <unit id="quickAdd.fab.repAria">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:52</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:70</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="REPS" disp="reps"/> Liegestütze hinzufügen</source>
+      </segment>
+    </unit>
+    <unit id="quickAdd.fab.fillToGoalAria">
+      <notes>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:74</note>
+      </notes>
+      <segment>
+        <source><ph id="0" equiv="GAP" disp="gap"/> Liegestütze bis zum Tagesziel hinzufügen</source>
       </segment>
     </unit>
     <unit id="admin.title">
@@ -1347,7 +1379,7 @@
     </unit>
     <unit id="seo.default.title">
       <notes>
-        <note category="location">web/src/app/app.ts:209</note>
+        <note category="location">web/src/app/app.ts:212</note>
       </notes>
       <segment>
         <source>Pushup Tracker</source>
@@ -1355,7 +1387,7 @@
     </unit>
     <unit id="seo.default.description">
       <notes>
-        <note category="location">web/src/app/app.ts:212</note>
+        <note category="location">web/src/app/app.ts:215</note>
       </notes>
       <segment>
         <source>Tracke Reps, Trends und Streaks mit Pushup Tracker.</source>
@@ -1363,7 +1395,7 @@
     </unit>
     <unit id="sw.update.available">
       <notes>
-        <note category="location">web/src/app/app.ts:231</note>
+        <note category="location">web/src/app/app.ts:234</note>
       </notes>
       <segment>
         <source>Neue Version verfügbar</source>
@@ -1371,7 +1403,7 @@
     </unit>
     <unit id="sw.update.reload">
       <notes>
-        <note category="location">web/src/app/app.ts:232</note>
+        <note category="location">web/src/app/app.ts:235</note>
       </notes>
       <segment>
         <source>Neu laden</source>
@@ -1379,7 +1411,7 @@
     </unit>
     <unit id="feedback.success">
       <notes>
-        <note category="location">web/src/app/app.ts:282</note>
+        <note category="location">web/src/app/app.ts:289</note>
       </notes>
       <segment>
         <source>Danke für dein Feedback!</source>
@@ -1387,7 +1419,7 @@
     </unit>
     <unit id="feedback.error">
       <notes>
-        <note category="location">web/src/app/app.ts:289</note>
+        <note category="location">web/src/app/app.ts:296</note>
       </notes>
       <segment>
         <source>Feedback konnte nicht gesendet werden.</source>
@@ -1395,7 +1427,7 @@
     </unit>
     <unit id="sw.update.downloading">
       <notes>
-        <note category="location">web/src/app/app.ts:327</note>
+        <note category="location">web/src/app/app.ts:334</note>
       </notes>
       <segment>
         <source>Update wird im Hintergrund geladen …</source>
@@ -1532,9 +1564,18 @@
     <unit id="quickAdd.error.create">
       <notes>
         <note category="location">web/src/app/core/quick-add-orchestration.service.ts:42</note>
+        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:81</note>
       </notes>
       <segment>
         <source>Eintrag konnte nicht gespeichert werden.</source>
+      </segment>
+    </unit>
+    <unit id="quickAdd.success.goalReached">
+      <notes>
+        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:68</note>
+      </notes>
+      <segment>
+        <source>Tagesziel erreicht 🎉</source>
       </segment>
     </unit>
     <unit id="theme.toggle.auto">
@@ -2453,7 +2494,7 @@
     </unit>
     <unit id="push.status.browserInvalidated">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:260,264</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:263,268</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">warning</pc> Dein Browser hat das Push-Abo für dieses Gerät als dauerhaft ungültig markiert. Bitte setze die Benachrichtigungs-Einstellungen für diese Seite in den Browser-Einstellungen zurück (Chrome → Einstellungen → Website-Einstellungen → Benachrichtigungen) und aktiviere Push danach erneut. </source>
@@ -2461,7 +2502,7 @@
     </unit>
     <unit id="push.status.subscribed">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:272,274</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:276,278</note>
       </notes>
       <segment>
         <source>Erinnerungen aktiv ✓</source>
@@ -2469,7 +2510,7 @@
     </unit>
     <unit id="push.unsubscribe">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:282,284</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:286,288</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">notifications_off</pc> Deaktivieren </source>
@@ -2477,7 +2518,7 @@
     </unit>
     <unit id="push.device.count">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:290,291</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:294,295</note>
       </notes>
       <segment>
         <source> Aktiv auf <ph id="0" equiv="INTERPOLATION" disp="{{ pushService.deviceCount() }}"/> Geräten </source>
@@ -2485,7 +2526,7 @@
     </unit>
     <unit id="push.cta.desc">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:296,297</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:300,301</note>
       </notes>
       <segment>
         <source> Nie wieder eine Einheit verpassen. </source>
@@ -2493,7 +2534,7 @@
     </unit>
     <unit id="push.subscribe">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:306,308</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:310,312</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">notifications</pc> Push aktivieren </source>
@@ -2501,7 +2542,7 @@
     </unit>
     <unit id="unsubAll.section.title">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:314,315</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:318,319</note>
       </notes>
       <segment>
         <source>📵 Push auf allen Geräten</source>
@@ -2509,7 +2550,7 @@
     </unit>
     <unit id="unsubAll.section.desc">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:316,318</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:320,322</note>
       </notes>
       <segment>
         <source> Entfernt alle Push-Benachrichtigungs-Abos auf diesem und allen anderen Geräten. Du bleibst angemeldet und kannst Push jederzeit wieder aktivieren. </source>
@@ -2517,7 +2558,7 @@
     </unit>
     <unit id="unsubAll.button">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:329,331</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:333,335</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">notifications_off</pc> Push auf allen Geräten deaktivieren </source>
@@ -2525,8 +2566,8 @@
     </unit>
     <unit id="push.subscribe.error">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:455</note>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:571</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:459</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:575</note>
       </notes>
       <segment>
         <source>Push konnte nicht aktiviert werden.</source>
@@ -2534,13 +2575,13 @@
     </unit>
     <unit id="snackbar.close">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:456</note>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:484</note>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:500</note>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:515</note>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:531</note>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:550</note>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:572</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:460</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:488</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:504</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:519</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:535</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:554</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:576</note>
       </notes>
       <segment>
         <source>Schließen</source>
@@ -2548,7 +2589,7 @@
     </unit>
     <unit id="unsubAll.error">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:483</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:487</note>
       </notes>
       <segment>
         <source>Entfernen der Push-Abos fehlgeschlagen.</source>
@@ -2556,7 +2597,7 @@
     </unit>
     <unit id="unsubAll.success">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:499</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:503</note>
       </notes>
       <segment>
         <source>Push-Abos aller Geräte entfernt.</source>
@@ -2564,7 +2605,7 @@
     </unit>
     <unit id="reminder.permission.snackbar">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:514</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:518</note>
       </notes>
       <segment>
         <source>Benachrichtigungen sind blockiert. Bitte in den Browser-Einstellungen erlauben.</source>
@@ -2572,8 +2613,8 @@
     </unit>
     <unit id="reminder.save.error">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:530</note>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:549</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:534</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:553</note>
       </notes>
       <segment>
         <source>Einstellungen konnten nicht gespeichert werden.</source>
@@ -3749,9 +3790,25 @@
         <source>Tag</source>
       </segment>
     </unit>
+    <unit id="dashboard.goalFill.reached">
+      <notes>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:67,69</note>
+      </notes>
+      <segment>
+        <source>Ziel erreicht ✓</source>
+      </segment>
+    </unit>
+    <unit id="dashboard.goalFill.fill">
+      <notes>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:70,71</note>
+      </notes>
+      <segment>
+        <source>+<ph id="0" equiv="INTERPOLATION" disp="{{ remainingToGoal() }}"/> bis zum Ziel</source>
+      </segment>
+    </unit>
     <unit id="dashboard.weeklyGoalLabel">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:61,62</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:82,83</note>
       </notes>
       <segment>
         <source>Woche</source>
@@ -3759,7 +3816,7 @@
     </unit>
     <unit id="dashboard.monthlyGoalLabel">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:70,71</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:91,92</note>
       </notes>
       <segment>
         <source>Monat</source>
@@ -3767,7 +3824,7 @@
     </unit>
     <unit id="lastEntryTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:89,90</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:110,111</note>
       </notes>
       <segment>
         <source>Letzter Eintrag</source>
@@ -3775,7 +3832,7 @@
     </unit>
     <unit id="latEntryReps">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:94,96</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:115,117</note>
       </notes>
       <segment>
         <source> <ph id="0" equiv="INTERPOLATION" disp="{{ latest.reps }}"/> Reps · <ph id="1" equiv="INTERPOLATION_1" disp="{{ latest.type || &apos;Standard&apos; }}"/> </source>
@@ -3783,7 +3840,7 @@
     </unit>
     <unit id="dashboard.noEntryYet">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:98,100</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:119,121</note>
       </notes>
       <segment>
         <source>Noch kein Eintrag.</source>
@@ -3791,7 +3848,7 @@
     </unit>
     <unit id="allTimeSummaryAria">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:106,107</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:127,128</note>
       </notes>
       <segment>
         <source>All-Time Kurzübersicht</source>
@@ -3799,7 +3856,7 @@
     </unit>
     <unit id="allTimeTotal">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:110,111</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:131,132</note>
       </notes>
       <segment>
         <source>All-Time Gesamt</source>
@@ -3807,7 +3864,7 @@
     </unit>
     <unit id="allTimeDays">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:114,115</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:135,136</note>
       </notes>
       <segment>
         <source>All-Time Tage</source>
@@ -3815,7 +3872,7 @@
     </unit>
     <unit id="allTimeEntries">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:118,119</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:139,140</note>
       </notes>
       <segment>
         <source>All-Time Einträge</source>
@@ -3823,7 +3880,7 @@
     </unit>
     <unit id="allTimeAvg">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:122,123</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:143,144</note>
       </notes>
       <segment>
         <source>All-Time Ø/Tag</source>
@@ -3831,7 +3888,7 @@
     </unit>
     <unit id="quickActionsTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:130,132</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:151,153</note>
       </notes>
       <segment>
         <source>Schnellaktionen</source>
@@ -3839,7 +3896,7 @@
     </unit>
     <unit id="quickActionsSubtitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:133,135</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:154,156</note>
       </notes>
       <segment>
         <source>Schnell eintragen ohne Dialog</source>
@@ -3847,7 +3904,7 @@
     </unit>
     <unit id="quickAdd10">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:144,146</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:165,167</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">bolt</pc> +10 Reps </source>
@@ -3855,7 +3912,7 @@
     </unit>
     <unit id="quickAdd20">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:154,156</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:175,177</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">flash_on</pc> +20 Reps </source>
@@ -3863,7 +3920,7 @@
     </unit>
     <unit id="quickAdd30">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:164,166</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:185,187</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">whatshot</pc> +30 Reps </source>
@@ -3871,7 +3928,7 @@
     </unit>
     <unit id="quickAddNew">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:174,176</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:195,197</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">edit_note</pc> Neu </source>
@@ -3879,7 +3936,7 @@
     </unit>
     <unit id="loadingStats">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:193,197</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:214,218</note>
       </notes>
       <segment>
         <source> Lade Statistikdaten… </source>
@@ -3887,7 +3944,7 @@
     </unit>
     <unit id="dashboard.latestEntries">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:198,199</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:219,220</note>
       </notes>
       <segment>
         <source>Letzte Einträge</source>
@@ -3895,7 +3952,7 @@
     </unit>
     <unit id="ads.dashboard.aria">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:203</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:224</note>
       </notes>
       <segment>
         <source>Werbung</source>
