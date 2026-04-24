@@ -236,7 +236,8 @@
         <note category="location">libs/auth/src/lib/ui/register/register.component.html:314,315</note>
         <note category="location">web/src/app/core/feedback/feedback-dialog.component.ts:96,97</note>
         <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:199,200</note>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:254,255</note>
+        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts:75,76</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:252,253</note>
       </notes>
       <segment>
         <source> Abbrechen </source>
@@ -2948,6 +2949,54 @@
         <source> Jetzt starten </source>
       </segment>
     </unit>
+    <unit id="quickAddConfig.title">
+      <notes>
+        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts:35,37</note>
+      </notes>
+      <segment>
+        <source> Schnellaktionen konfigurieren </source>
+      </segment>
+    </unit>
+    <unit id="quickAddConfig.hint">
+      <notes>
+        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts:39,41</note>
+      </notes>
+      <segment>
+        <source> Lege bis zu <ph id="0" equiv="INTERPOLATION" disp="{{ maxRows }}"/> eigene Reps-Buttons fest. Leere Felder werden ignoriert. </source>
+      </segment>
+    </unit>
+    <unit id="quickAddConfig.repsLabel">
+      <notes>
+        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts:45,47</note>
+      </notes>
+      <segment>
+        <source>Reps</source>
+      </segment>
+    </unit>
+    <unit id="quickAddConfig.inSpeedDial">
+      <notes>
+        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts:60,62</note>
+      </notes>
+      <segment>
+        <source>Im SpeedDial</source>
+      </segment>
+    </unit>
+    <unit id="save">
+      <notes>
+        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts:84,85</note>
+      </notes>
+      <segment>
+        <source> Speichern </source>
+      </segment>
+    </unit>
+    <unit id="quickAddConfig.clearAria">
+      <notes>
+        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts:114</note>
+      </notes>
+      <segment>
+        <source>Reps löschen</source>
+      </segment>
+    </unit>
     <unit id="setsDistribution.noData">
       <notes>
         <note category="location">web/src/app/stats/components/sets-distribution/sets-distribution.component.ts:27,31</note>
@@ -3440,7 +3489,7 @@
     </unit>
     <unit id="settingsTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:43,44</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:41,42</note>
       </notes>
       <segment>
         <source>Einstellungen</source>
@@ -3448,7 +3497,7 @@
     </unit>
     <unit id="settingsSubtitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:45,46</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:43,44</note>
       </notes>
       <segment>
         <source>User-Profil &amp; Tagesziel</source>
@@ -3456,7 +3505,7 @@
     </unit>
     <unit id="guest.banner.text">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:54,56</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:52,54</note>
       </notes>
       <segment>
         <source>Du nutzt die App als Gast. Erstelle ein Konto um alle Funktionen zu nutzen.</source>
@@ -3464,7 +3513,7 @@
     </unit>
     <unit id="guest.banner.cta">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:61,63</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:59,61</note>
       </notes>
       <segment>
         <source>Konto erstellen</source>
@@ -3472,7 +3521,7 @@
     </unit>
     <unit id="displayNameLabel">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:67,68</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:65,66</note>
       </notes>
       <segment>
         <source>Anzeigename</source>
@@ -3480,7 +3529,7 @@
     </unit>
     <unit id="displayNamePlaceholder">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:73</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:71</note>
       </notes>
       <segment>
         <source>Wolf</source>
@@ -3488,7 +3537,7 @@
     </unit>
     <unit id="settings.displayNameHint">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:76,78</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:74,76</note>
       </notes>
       <segment>
         <source>Kann in der Bestenliste angezeigt werden.</source>
@@ -3496,7 +3545,7 @@
     </unit>
     <unit id="settings.leaderboardOptIn">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:85,86</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:83,84</note>
       </notes>
       <segment>
         <source> In Bestenliste anzeigen </source>
@@ -3504,7 +3553,7 @@
     </unit>
     <unit id="settings.leaderboardOptOutHint">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:89,92</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:87,90</note>
       </notes>
       <segment>
         <source> Wenn deaktiviert, wird dein Profil in der Bestenliste nicht angezeigt. </source>
@@ -3512,7 +3561,7 @@
     </unit>
     <unit id="settings.adsConsentOptIn">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:98,99</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:96,97</note>
       </notes>
       <segment>
         <source> Personalisierte Werbung aktivieren </source>
@@ -3520,7 +3569,7 @@
     </unit>
     <unit id="settings.adsConsentHint">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:102,105</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:100,103</note>
       </notes>
       <segment>
         <source> Steuert, ob Werbe-Slots im Dashboard geladen werden dürfen. </source>
@@ -3528,7 +3577,7 @@
     </unit>
     <unit id="dailyGoalLabel">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:106,107</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:104,105</note>
       </notes>
       <segment>
         <source>Tagesziel (Reps)</source>
@@ -3536,7 +3585,7 @@
     </unit>
     <unit id="dailyGoalPlaceholder">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:116</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:114</note>
       </notes>
       <segment>
         <source>10</source>
@@ -3544,7 +3593,7 @@
     </unit>
     <unit id="settings.goalHint">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:119,121</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:117,119</note>
       </notes>
       <segment>
         <source>Wird prominent in der Toolbar angezeigt.</source>
@@ -3552,7 +3601,7 @@
     </unit>
     <unit id="weeklyGoalLabel">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:124,125</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:122,123</note>
       </notes>
       <segment>
         <source>Wochenziel (Reps)</source>
@@ -3560,7 +3609,7 @@
     </unit>
     <unit id="weeklyGoalPlaceholder">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:134</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:132</note>
       </notes>
       <segment>
         <source>50</source>
@@ -3568,7 +3617,7 @@
     </unit>
     <unit id="settings.weeklyGoalHint">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:137,139</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:135,137</note>
       </notes>
       <segment>
         <source>Gesamtziel pro Woche (Mo–So).</source>
@@ -3576,7 +3625,7 @@
     </unit>
     <unit id="monthlyGoalLabel">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:142,143</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:140,141</note>
       </notes>
       <segment>
         <source>Monatsziel (Reps)</source>
@@ -3584,7 +3633,7 @@
     </unit>
     <unit id="monthlyGoalPlaceholder">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:152</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:150</note>
       </notes>
       <segment>
         <source>200</source>
@@ -3592,7 +3641,7 @@
     </unit>
     <unit id="settings.monthlyGoalHint">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:155,157</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:153,155</note>
       </notes>
       <segment>
         <source>Gesamtziel pro Monat.</source>
@@ -3600,7 +3649,7 @@
     </unit>
     <unit id="saveSettings">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:172,174</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:170,172</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">save</pc> Speichern </source>
@@ -3608,7 +3657,7 @@
     </unit>
     <unit id="saving">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:176,177</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:174,175</note>
       </notes>
       <segment>
         <source>Speichert…</source>
@@ -3616,7 +3665,7 @@
     </unit>
     <unit id="saved">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:179,180</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:177,178</note>
       </notes>
       <segment>
         <source>Gespeichert.</source>
@@ -3624,7 +3673,7 @@
     </unit>
     <unit id="settings.remindersLinkTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:184,185</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:182,183</note>
       </notes>
       <segment>
         <source>🔔 Erinnerungen</source>
@@ -3632,7 +3681,7 @@
     </unit>
     <unit id="settings.remindersLinkDesc">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:186,188</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:184,186</note>
       </notes>
       <segment>
         <source> Liegestütz-Erinnerungen und Push-Benachrichtigungen konfigurieren. </source>
@@ -3640,7 +3689,7 @@
     </unit>
     <unit id="settings.remindersLinkCta">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:193,195</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:191,193</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">notifications</pc> Erinnerungen verwalten </source>
@@ -3648,7 +3697,7 @@
     </unit>
     <unit id="settings.dangerZoneTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:199,200</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:197,198</note>
       </notes>
       <segment>
         <source>Danger Zone</source>
@@ -3656,7 +3705,7 @@
     </unit>
     <unit id="settings.dangerZoneBody">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:201,203</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:199,201</note>
       </notes>
       <segment>
         <source> Konto löschen entfernt dein Konto. Trainingsdaten bleiben für statistische Auswertung anonymisiert erhalten. </source>
@@ -3664,7 +3713,7 @@
     </unit>
     <unit id="settings.deleteAccount">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:212,214</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:210,212</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">warning</pc> Konto löschen </source>
@@ -3672,7 +3721,7 @@
     </unit>
     <unit id="settings.deletingAccount">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:217,220</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:215,218</note>
       </notes>
       <segment>
         <source>Konto wird gelöscht…</source>
@@ -3680,7 +3729,7 @@
     </unit>
     <unit id="settings.deleteDialogTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:224,226</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:222,224</note>
       </notes>
       <segment>
         <source> Account wirklich löschen? </source>
@@ -3688,7 +3737,7 @@
     </unit>
     <unit id="settings.deleteDialogWarning">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:228,230</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:226,228</note>
       </notes>
       <segment>
         <source> Achtung: Diese Aktion ist nicht rückgängig. </source>
@@ -3696,7 +3745,7 @@
     </unit>
     <unit id="settings.deleteDialogInfo">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:231,233</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:229,231</note>
       </notes>
       <segment>
         <source> Dein Konto wird gelöscht. Trainingsdaten bleiben für statistische Auswertung anonymisiert erhalten. </source>
@@ -3704,7 +3753,7 @@
     </unit>
     <unit id="settings.deleteDialogPhraseLabel">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:236,238</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:234,236</note>
       </notes>
       <segment>
         <source>Bestätigungswort eingeben</source>
@@ -3712,7 +3761,7 @@
     </unit>
     <unit id="settings.deleteDialogPhraseHint">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:245,247</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:243,245</note>
       </notes>
       <segment>
         <source>Bitte exakt „löscchen“ eingeben.</source>
@@ -3720,7 +3769,7 @@
     </unit>
     <unit id="settings.deleteConfirmFinal">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:262,264</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:260,262</note>
       </notes>
       <segment>
         <source> Final löschen </source>
@@ -3790,27 +3839,9 @@
         <source>Tag</source>
       </segment>
     </unit>
-    <unit id="dashboard.goalFill.reached">
-      <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:67,69</note>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:199,201</note>
-      </notes>
-      <segment>
-        <source>Ziel erreicht ✓</source>
-      </segment>
-    </unit>
-    <unit id="dashboard.goalFill.fill">
-      <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:70,71</note>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:202,203</note>
-      </notes>
-      <segment>
-        <source>+<ph id="0" equiv="INTERPOLATION" disp="{{ remainingToGoal() }}"/> bis zum Ziel</source>
-      </segment>
-    </unit>
     <unit id="dashboard.weeklyGoalLabel">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:82,83</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:61,62</note>
       </notes>
       <segment>
         <source>Woche</source>
@@ -3818,7 +3849,7 @@
     </unit>
     <unit id="dashboard.monthlyGoalLabel">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:91,92</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:70,71</note>
       </notes>
       <segment>
         <source>Monat</source>
@@ -3826,7 +3857,7 @@
     </unit>
     <unit id="lastEntryTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:110,111</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:89,90</note>
       </notes>
       <segment>
         <source>Letzter Eintrag</source>
@@ -3834,7 +3865,7 @@
     </unit>
     <unit id="latEntryReps">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:115,117</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:94,96</note>
       </notes>
       <segment>
         <source> <ph id="0" equiv="INTERPOLATION" disp="{{ latest.reps }}"/> Reps · <ph id="1" equiv="INTERPOLATION_1" disp="{{ latest.type || &apos;Standard&apos; }}"/> </source>
@@ -3842,7 +3873,7 @@
     </unit>
     <unit id="dashboard.noEntryYet">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:119,121</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:98,100</note>
       </notes>
       <segment>
         <source>Noch kein Eintrag.</source>
@@ -3850,7 +3881,7 @@
     </unit>
     <unit id="allTimeSummaryAria">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:127,128</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:106,107</note>
       </notes>
       <segment>
         <source>All-Time Kurzübersicht</source>
@@ -3858,7 +3889,7 @@
     </unit>
     <unit id="allTimeTotal">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:131,132</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:110,111</note>
       </notes>
       <segment>
         <source>All-Time Gesamt</source>
@@ -3866,7 +3897,7 @@
     </unit>
     <unit id="allTimeDays">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:135,136</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:114,115</note>
       </notes>
       <segment>
         <source>All-Time Tage</source>
@@ -3874,7 +3905,7 @@
     </unit>
     <unit id="allTimeEntries">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:139,140</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:118,119</note>
       </notes>
       <segment>
         <source>All-Time Einträge</source>
@@ -3882,7 +3913,7 @@
     </unit>
     <unit id="allTimeAvg">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:143,144</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:122,123</note>
       </notes>
       <segment>
         <source>All-Time Ø/Tag</source>
@@ -3890,7 +3921,7 @@
     </unit>
     <unit id="quickActionsTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:151,153</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:130,132</note>
       </notes>
       <segment>
         <source>Schnellaktionen</source>
@@ -3898,39 +3929,47 @@
     </unit>
     <unit id="quickActionsSubtitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:154,156</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:133,135</note>
       </notes>
       <segment>
         <source>Schnell eintragen ohne Dialog</source>
       </segment>
     </unit>
-    <unit id="quickAdd10">
+    <unit id="quickActions.edit.aria">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:165,167</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:140,141</note>
       </notes>
       <segment>
-        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">bolt</pc> +10 Reps </source>
+        <source>Schnellaktionen bearbeiten</source>
       </segment>
     </unit>
-    <unit id="quickAdd20">
+    <unit id="dashboard.quickAdd.button">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:175,177</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:162,163</note>
       </notes>
       <segment>
-        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">flash_on</pc> +20 Reps </source>
+        <source>+<ph id="0" equiv="INTERPOLATION" disp="{{ reps }}"/> Reps</source>
       </segment>
     </unit>
-    <unit id="quickAdd30">
+    <unit id="dashboard.goalFill.reached">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:185,187</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:176,178</note>
       </notes>
       <segment>
-        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">whatshot</pc> +30 Reps </source>
+        <source>Ziel erreicht ✓</source>
+      </segment>
+    </unit>
+    <unit id="dashboard.goalFill.fill">
+      <notes>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:179,180</note>
+      </notes>
+      <segment>
+        <source>+<ph id="0" equiv="INTERPOLATION" disp="{{ remainingToGoal() }}"/> bis zum Ziel</source>
       </segment>
     </unit>
     <unit id="quickAddNew">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:214,216</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:191,193</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">edit_note</pc> Neu </source>
@@ -3938,7 +3977,7 @@
     </unit>
     <unit id="loadingStats">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:233,237</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:210,214</note>
       </notes>
       <segment>
         <source> Lade Statistikdaten… </source>
@@ -3946,7 +3985,7 @@
     </unit>
     <unit id="dashboard.latestEntries">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:238,239</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:215,216</note>
       </notes>
       <segment>
         <source>Letzte Einträge</source>
@@ -3954,7 +3993,7 @@
     </unit>
     <unit id="ads.dashboard.aria">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:243</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:220</note>
       </notes>
       <segment>
         <source>Werbung</source>

@@ -7,7 +7,7 @@ import {
 } from '@ngrx/signals';
 import { UserContextService } from '@pu-auth/auth';
 import { UserConfigApiService } from '@pu-stats/data-access';
-import { UserConfig, UserConfigUpdate } from '@pu-stats/models';
+import { QuickAddConfig, UserConfig, UserConfigUpdate } from '@pu-stats/models';
 import { firstValueFrom } from 'rxjs';
 
 /**
@@ -38,6 +38,9 @@ export const UserConfigStore = signalStore(
     dailyGoal: computed(() => store.configResource.value()?.dailyGoal ?? 0),
     weeklyGoal: computed(() => store.configResource.value()?.weeklyGoal ?? 0),
     monthlyGoal: computed(() => store.configResource.value()?.monthlyGoal ?? 0),
+    quickAdds: computed<QuickAddConfig[]>(
+      () => store.configResource.value()?.ui?.quickAdds ?? []
+    ),
   })),
   withMethods((store) => ({
     async save(patch: UserConfigUpdate): Promise<UserConfig> {

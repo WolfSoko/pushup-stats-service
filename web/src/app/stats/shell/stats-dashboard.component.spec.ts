@@ -176,6 +176,44 @@ describe('StatsDashboardComponent', () => {
         expect(text).toContain('+20 Reps');
         expect(text).toContain('+30 Reps');
       });
+
+      it('Then it should render the Schnellaktionen edit icon', () => {
+        expect(
+          fixture.nativeElement.querySelector(
+            '[data-testid="dashboard-quick-actions-edit"]'
+          )
+        ).toBeTruthy();
+      });
+    });
+
+    describe('When the user has configured custom quick-add buttons', () => {
+      it('Then configured reps override the defaults 10/20/30', async () => {
+        const configApi = TestBed.inject(UserConfigApiService);
+        (configApi.getConfig as ReturnType<typeof vitest.fn>).mockReturnValue(
+          of({
+            userId: 'u1',
+            dailyGoal: 100,
+            ui: {
+              quickAdds: [
+                { reps: 15, inSpeedDial: true },
+                { reps: 25, inSpeedDial: false },
+                { reps: 50, inSpeedDial: true },
+              ],
+            },
+          })
+        );
+        TestBed.inject(UserConfigStore).reload();
+        const freshFixture = TestBed.createComponent(StatsDashboardComponent);
+        await freshFixture.whenStable();
+
+        const text = freshFixture.nativeElement.textContent;
+        expect(text).toContain('+15 Reps');
+        expect(text).toContain('+25 Reps');
+        expect(text).toContain('+50 Reps');
+        expect(text).not.toContain('+10 Reps');
+        expect(text).not.toContain('+20 Reps');
+        expect(text).not.toContain('+30 Reps');
+      });
     });
   });
 

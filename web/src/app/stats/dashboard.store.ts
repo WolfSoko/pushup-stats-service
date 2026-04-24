@@ -144,6 +144,16 @@ export const DashboardStore = signalStore(
     const weeklyGoal = computed(() => store._userConfig.weeklyGoal() || 50);
     const monthlyGoal = computed(() => store._userConfig.monthlyGoal() || 200);
 
+    /** Reps values shown as quick-add buttons in the Schnellaktionen card.
+     *  When the user configured any custom buttons, those override the
+     *  defaults [10, 20, 30]. */
+    const quickAddButtons = computed<number[]>(() => {
+      const configured = store._userConfig.quickAdds();
+      return configured.length > 0
+        ? configured.map((q) => q.reps)
+        : [10, 20, 30];
+    });
+
     const goalProgressPercent = computed(() =>
       dailyGoal()
         ? Math.min(100, Math.round((todayTotal() / dailyGoal()) * 100))
@@ -286,6 +296,7 @@ export const DashboardStore = signalStore(
       dailyGoal,
       weeklyGoal,
       monthlyGoal,
+      quickAddButtons,
       weeklyGoalProgressPercent,
       monthlyGoalProgressPercent,
       todayTotal,

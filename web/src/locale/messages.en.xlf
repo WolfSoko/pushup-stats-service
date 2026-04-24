@@ -2618,69 +2618,78 @@ Deine Position: # ·  Reps        </source>
       
       
         </unit>
-    <unit id="quickAdd10">
+    <unit id="dashboard.quickAdd.button">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:114,116</note>
-
-        
-            </notes>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html</note>
+      </notes>
       <segment state="translated">
-        <source>
-          <pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">bolt</pc>
- +10 Reps         </source>
-        <target>
-          <pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">bolt</pc>
- +10 reps         </target>
-
-        
-        
-            </segment>
-
-      
-      
-        </unit>
-    <unit id="quickAdd20">
+        <source>+<ph id="0" equiv="INTERPOLATION" disp="{{ reps }}"/> Reps</source>
+        <target>+<ph id="0" equiv="INTERPOLATION" disp="{{ reps }}"/> reps</target>
+      </segment>
+    </unit>
+    <unit id="quickActions.edit.aria">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:124,126</note>
-
-        
-            </notes>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html</note>
+      </notes>
       <segment state="translated">
-        <source>
-          <pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">flash_on</pc>
- +20 Reps         </source>
-        <target>
-          <pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">flash_on</pc>
- +20 reps         </target>
-
-        
-        
-            </segment>
-
-      
-      
-        </unit>
-    <unit id="quickAdd30">
+        <source>Schnellaktionen bearbeiten</source>
+        <target>Edit quick actions</target>
+      </segment>
+    </unit>
+    <unit id="quickAddConfig.title">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:134,136</note>
-
-        
-            </notes>
+        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts</note>
+      </notes>
       <segment state="translated">
-        <source>
-          <pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">whatshot</pc>
- +30 Reps         </source>
-        <target>
-          <pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">whatshot</pc>
- +30 reps         </target>
-
-        
-        
-            </segment>
-
-      
-      
-        </unit>
+        <source> Schnellaktionen konfigurieren </source>
+        <target> Configure quick actions </target>
+      </segment>
+    </unit>
+    <unit id="quickAddConfig.hint">
+      <notes>
+        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts</note>
+      </notes>
+      <segment state="translated">
+        <source> Lege bis zu <ph id="0" equiv="INTERPOLATION" disp="{{ maxRows }}"/> eigene Reps-Buttons fest. Leere Felder werden ignoriert. </source>
+        <target> Define up to <ph id="0" equiv="INTERPOLATION" disp="{{ maxRows }}"/> custom rep buttons. Empty fields are ignored. </target>
+      </segment>
+    </unit>
+    <unit id="quickAddConfig.repsLabel">
+      <notes>
+        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts</note>
+      </notes>
+      <segment state="translated">
+        <source>Reps</source>
+        <target>Reps</target>
+      </segment>
+    </unit>
+    <unit id="quickAddConfig.inSpeedDial">
+      <notes>
+        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts</note>
+      </notes>
+      <segment state="translated">
+        <source>Im SpeedDial</source>
+        <target>In SpeedDial</target>
+      </segment>
+    </unit>
+    <unit id="quickAddConfig.clearAria">
+      <notes>
+        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts</note>
+      </notes>
+      <segment state="translated">
+        <source>Reps löschen</source>
+        <target>Clear reps</target>
+      </segment>
+    </unit>
+    <unit id="save">
+      <notes>
+        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts</note>
+      </notes>
+      <segment state="translated">
+        <source> Speichern </source>
+        <target> Save </target>
+      </segment>
+    </unit>
     <unit id="quickRangeAria">
       <notes>
         <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:35,36</note>

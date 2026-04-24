@@ -247,6 +247,20 @@ h1 {
 
   gap: 8px;
 
+  mat-card-header {
+    position: relative;
+  }
+
+  .quick-actions-edit {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    opacity: 0.75;
+  }
+  .quick-actions-edit:hover {
+    opacity: 1;
+  }
+
   mat-card-content {
     display: flex;
     flex-wrap: wrap;

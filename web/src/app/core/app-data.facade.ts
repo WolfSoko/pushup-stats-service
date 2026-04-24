@@ -27,9 +27,18 @@ export class AppDataFacade {
     },
   });
 
-  readonly quickAddSuggestions = computed(() =>
-    this.adaptiveQuickAdd.compute(this.recentEntriesResource.value() ?? [])
-  );
+  readonly quickAddSuggestions = computed(() => {
+    const configured = this.userConfig.quickAdds();
+    if (configured.length > 0) {
+      return configured
+        .filter((q) => q.inSpeedDial)
+        .map((q) => q.reps)
+        .slice(0, 3);
+    }
+    return this.adaptiveQuickAdd.compute(
+      this.recentEntriesResource.value() ?? []
+    );
+  });
 
   readonly dailyGoal = computed(() => this.userConfig.dailyGoal() || 100);
 

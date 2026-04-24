@@ -126,6 +126,54 @@ describe('AppDataFacade', () => {
     });
   });
 
+  describe('quickAddSuggestions', () => {
+    it('Given no configured quickAdds, Then adaptive suggestions are used', async () => {
+      userConfigApiMock.getConfig.mockReturnValue(
+        of({ userId: 'u1', dailyGoal: 100 })
+      );
+      const facade = setup();
+      await flushResources();
+
+      expect(facade.quickAddSuggestions()).toEqual([1, 5, 10]);
+    });
+
+    it('Given configured quickAdds, Then only entries with inSpeedDial=true are returned', async () => {
+      userConfigApiMock.getConfig.mockReturnValue(
+        of({
+          userId: 'u1',
+          dailyGoal: 100,
+          ui: {
+            quickAdds: [
+              { reps: 15, inSpeedDial: true },
+              { reps: 25, inSpeedDial: false },
+              { reps: 50, inSpeedDial: true },
+            ],
+          },
+        })
+      );
+      const facade = setup();
+      await flushResources();
+
+      expect(facade.quickAddSuggestions()).toEqual([15, 50]);
+    });
+
+    it('Given configured quickAdds with none in SpeedDial, Then returns empty array (no adaptive fallback)', async () => {
+      userConfigApiMock.getConfig.mockReturnValue(
+        of({
+          userId: 'u1',
+          dailyGoal: 100,
+          ui: {
+            quickAdds: [{ reps: 15, inSpeedDial: false }],
+          },
+        })
+      );
+      const facade = setup();
+      await flushResources();
+
+      expect(facade.quickAddSuggestions()).toEqual([]);
+    });
+  });
+
   describe('goalReached', () => {
     it('Given progress below goal, Then returns false', async () => {
       const facade = setup({ dailyGoal: 100, todayTotal: 99 });

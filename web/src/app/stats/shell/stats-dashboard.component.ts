@@ -28,6 +28,7 @@ import {
   CreateEntryDialogComponent,
   CreateEntryResult,
 } from '../components/create-entry-dialog/create-entry-dialog.component';
+import { QuickAddConfigDialogComponent } from '../components/quick-add-config-dialog/quick-add-config-dialog.component';
 import { DashboardStore } from '../dashboard.store';
 
 @Component({
@@ -83,6 +84,7 @@ export class StatsDashboardComponent {
   readonly remainingToGoal = this.store.remainingToGoal;
   readonly goalReached = this.store.goalReached;
   readonly fillToGoalInFlight = this.quickAdd.fillToGoalInFlight;
+  readonly quickAddButtons = this.store.quickAddButtons;
   readonly adSlotDashboardInline = this.store.adSlotDashboardInline;
   readonly dashboardInlineAdsEnabled = this.store.dashboardInlineAdsEnabled;
   /** Counter that increments on every data refresh to trigger child component reloads. */
@@ -138,6 +140,13 @@ export class StatsDashboardComponent {
       .subscribe((result) => {
         if (result) void this.createEntry(result);
       });
+  }
+
+  openQuickAddConfig(): void {
+    this.dialog.open(QuickAddConfigDialogComponent, {
+      width: 'min(92vw, 480px)',
+      maxWidth: '92vw',
+    });
   }
 
   /** Called after render — opens create dialog if ?log=1 is in the URL */
