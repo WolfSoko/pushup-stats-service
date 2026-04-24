@@ -6,7 +6,7 @@ Angular SSR Monorepo (Nx) mit Firebase Backend.
 
 ## Stack
 
-- **web**: Angular 19, SSR, PWA, i18n (DE default `/de`, EN unter `/en`)
+- **web**: Angular 21, SSR, PWA, i18n (DE default `/de`, EN unter `/en`)
 - **libs/stats**: Shared Models/Typen
 - **libs/auth**: Firebase Auth (Google, Email/PW, anonym/Gast)
 - **libs/data-access**: Firestore-Zugriff (Browser: direkt mit Auth; SSR: Demo-User für SEO-Preview)
@@ -34,38 +34,25 @@ npx nx run web:serve-live
 npx nx run-many -t lint test build
 ```
 
-## Production (systemd --user)
+## Deployment
 
-Drei Services laufen als User-Units:
-
-| Service                      | Port | Beschreibung                                            |
-| ---------------------------- | ---- | ------------------------------------------------------- |
-| `pushup-stats-reverse-proxy` | 8787 | Nginx – Entry Point, `/api` + `/socket.io` weiterleiten |
-| `pushup-stats-api`           | 8788 | API-Backend                                             |
-| `pushup-stats-ssr`           | 8789 | Angular SSR (server.mjs)                                |
+Deployment ist CI-gated: nach grünem Build auf `main` fast-forwardet CI den `deploy` branch; Firebase Hosting (static) und Firebase App Hosting (SSR/Cloud Run) deployen automatisch von dort.
 
 ```bash
-# Status prüfen
-systemctl --user status pushup-stats-reverse-proxy pushup-stats-api pushup-stats-ssr
-```
-
-## Firebase Deployment
-
-```bash
-# Firestore Rules
+# Firestore Rules manuell deployen (Notfall)
 cd data-store && firebase deploy --only firestore:rules
 
-# Cloud Functions
+# Cloud Functions manuell deployen (Notfall)
 cd data-store && firebase deploy --only functions
-
-# Hosting (wird automatisch via App Hosting deployed)
 ```
+
+Details + PR-Preview-Setup: siehe [`AGENTS.md`](AGENTS.md) Abschnitt _CI/CD & Deployment_.
 
 ## i18n
 
-- DE ist Default → `/` redirected 301 zu `/de`
+- DE ist Default → `/` redirected 302 zu `/de` (oder `/en` bei `Accept-Language: en*`)
 - EN unter `/en`
-- Sprachumschaltung via Cookie `lang`
+- Sprachumschaltung im UI preserved Pfad, Query und Hash
 
 ## SEO
 
@@ -81,10 +68,10 @@ Unter `/admin` (nur für Admin-User sichtbar). Funktionen:
 - Einzelne User löschen (mit Datenschutz-Option)
 - Anonyme inaktive User in Bulk löschen
 
-Admin-Rolle setzen (einmalig):
+Admin-Rolle setzen (einmalig, nutzt Firebase Custom Claims):
 
 ```bash
-GOOGLE_APPLICATION_CREDENTIALS=~/.firebase/pushup-stats-firebase-adminsdk-fbsvc-e502979fa7.json npx tsx scripts/set-admin-role.ts
+node scripts/set-admin-claim.mjs <email-or-uid>
 ```
 
 ## TDD
@@ -96,6 +83,10 @@ GOOGLE_APPLICATION_CREDENTIALS=~/.firebase/pushup-stats-firebase-adminsdk-fbsvc-
 ```bash
 npx nx affected -t test --codeCoverage
 ```
+
+## Agent instructions
+
+AI-Agent-Anweisungen (Architektur, Konventionen, Gotchas, Workflow) leben in [`AGENTS.md`](AGENTS.md). Claude Code und Copilot referenzieren diese Datei als Single Source of Truth.
 
 ## Bekannte Probleme
 
