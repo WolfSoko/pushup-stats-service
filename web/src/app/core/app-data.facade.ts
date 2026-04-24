@@ -58,6 +58,14 @@ export class AppDataFacade {
     () => this.dailyProgressResource.value() ?? 0
   );
 
+  readonly remainingToGoal = computed(() =>
+    Math.max(0, this.dailyGoal() - this.todayProgress())
+  );
+
+  readonly goalReached = computed(
+    () => this.dailyGoal() > 0 && this.todayProgress() >= this.dailyGoal()
+  );
+
   reloadAfterQuickAdd(): void {
     this.recentEntriesResource.reload();
     this.dailyProgressResource.reload();
