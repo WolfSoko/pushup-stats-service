@@ -26,3 +26,15 @@ Any `toSignal()` wrapping an observable that emits objects which may be mutated 
 
 - `{ equal: () => false }` plus downstream dedup, OR
 - A `.pipe(map(x => ({ ...x })))` to break reference equality
+
+## Display-defaulted signals vs "is this configured?"
+
+Several signals in the app return defaulted values for display convenience:
+
+- `AppDataFacade.dailyGoal` returns `?? 100` when no user config.
+- `DashboardStore.setDailyGoal(0)` coerces `0 → 1` (via `Math.max(1, ...)`).
+- `stats-dashboard.component.ts` substitutes `cfg.dailyGoal || 10` on load.
+
+Don't use these signals as a "goal is configured" guard — they always look configured. Derive visibility from the **raw resource value**: `userConfigResource.value()?.dailyGoal ?? 0` (falsy ⇒ hide). Display math can still use the defaulted signal.
+
+Applies to any other settings signal with similar defaulting (weekly/monthly goals, reminder interval, etc.).

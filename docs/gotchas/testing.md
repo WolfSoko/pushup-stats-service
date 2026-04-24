@@ -10,6 +10,8 @@
 - **`resource()` reload is async:** After calling `resource.reload()`, use `await fixture.whenStable()` before asserting on the reloaded data.
 - **`MatDialog.open` spy:** Use `fixture.debugElement.injector.get(MatDialog)` (component injector) instead of `TestBed.inject(MatDialog)` to ensure you spy on the same instance the component uses.
 - **Dialog components in `imports`:** Components only opened via `MatDialog.open()` do NOT belong in the host component's `imports` array (causes NG8113 warning). Keep them as TypeScript imports only.
+- **Material disabled buttons + `user-event`:** Material adds `pointer-events: none` to disabled buttons, so `userEvent.click` throws. To assert "disabled button does not emit", set up the user once with the check disabled: `const user = userEvent.setup({ pointerEventsCheck: PointerEventsCheckLevel.Never })` and reuse `user` across the test.
+- **`$localize` in Jest component tests:** Any Jest-test-runner lib whose components use `$localize` tagged templates needs `import '@angular/localize/init'` at the top of its `test-setup.ts`. Without it, all component specs in the lib crash. See `libs/auth/src/test-setup.ts` and `libs/quick-add/src/test-setup.ts`.
 
 ## Jest ↔ Firebase
 
