@@ -185,6 +185,25 @@
         <mat-icon>whatshot</mat-icon>
         +30 Reps
       </button>
+      @if (dailyGoalConfigured() && (remainingToGoal() > 0 || goalReached())) {
+        <button
+          type="button"
+          mat-flat-button
+          class="quick-btn quick-btn--goal"
+          data-testid="dashboard-quick-actions-goal-fill"
+          [disabled]="goalReached() || fillToGoalInFlight()"
+          (click)="fillToGoal()"
+        >
+          <mat-icon>{{ goalReached() ? 'check' : 'flag' }}</mat-icon>
+          @if (goalReached()) {
+            <span i18n="@@dashboard.goalFill.reached">Ziel erreicht ✓</span>
+          } @else {
+            <span i18n="@@dashboard.goalFill.fill"
+              >+{{ remainingToGoal() }} bis zum Ziel</span
+            >
+          }
+        </button>
+      }
       <button
         type="button"
         mat-flat-button

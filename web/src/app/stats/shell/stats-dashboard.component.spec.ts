@@ -531,6 +531,57 @@ describe('StatsDashboardComponent', () => {
     });
   });
 
+  describe('Daily goal-fill button in Schnellaktionen card', () => {
+    function findQuickActionsGoalButton(
+      fixtureEl: HTMLElement
+    ): HTMLButtonElement | null {
+      return fixtureEl.querySelector<HTMLButtonElement>(
+        '[data-testid="dashboard-quick-actions-goal-fill"]'
+      );
+    }
+
+    it('Given goal not reached, Then the button is visible with remaining reps', async () => {
+      await fixture.whenStable();
+      const button = findQuickActionsGoalButton(fixture.nativeElement);
+      expect(button).not.toBeNull();
+      expect(button!.disabled).toBe(false);
+      expect(button!.textContent ?? '').toContain('88');
+    });
+
+    it('Given goal reached, Then the button is disabled with erreicht label', async () => {
+      const configApi = TestBed.inject(UserConfigApiService);
+      (configApi.getConfig as ReturnType<typeof vitest.fn>).mockReturnValue(
+        of({ userId: 'u1', dailyGoal: 5, weeklyGoal: 10, monthlyGoal: 10 })
+      );
+      const freshFixture = TestBed.createComponent(StatsDashboardComponent);
+      await freshFixture.whenStable();
+
+      const button = findQuickActionsGoalButton(freshFixture.nativeElement);
+      expect(button).not.toBeNull();
+      expect(button!.disabled).toBe(true);
+      expect(button!.textContent ?? '').toContain('erreicht');
+    });
+
+    it('Given goal is zero, Then the button is not rendered', async () => {
+      const configApi = TestBed.inject(UserConfigApiService);
+      (configApi.getConfig as ReturnType<typeof vitest.fn>).mockReturnValue(
+        of({ userId: 'u1', dailyGoal: 0, weeklyGoal: 0, monthlyGoal: 0 })
+      );
+      const freshFixture = TestBed.createComponent(StatsDashboardComponent);
+      await freshFixture.whenStable();
+
+      expect(findQuickActionsGoalButton(freshFixture.nativeElement)).toBeNull();
+    });
+
+    it('Given the button is clicked, Then QuickAddOrchestrationService.fillToGoal is called', async () => {
+      await fixture.whenStable();
+      const svc = TestBed.inject(QuickAddOrchestrationService);
+      const button = findQuickActionsGoalButton(fixture.nativeElement);
+      button!.click();
+      expect(svc.fillToGoal).toHaveBeenCalledTimes(1);
+    });
+  });
+
   describe('Given entries with consecutive dates', () => {
     describe('When currentStreak is computed with no recent entries', () => {
       it('Then it should return 0 when last entry is more than 1 day ago', async () => {
