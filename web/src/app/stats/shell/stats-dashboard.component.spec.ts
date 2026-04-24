@@ -13,6 +13,7 @@ import { AdsStore } from '@pu-stats/ads';
 import { signal } from '@angular/core';
 import { makeAuthStoreMock } from '@pu-stats/testing';
 import { ActivatedRoute, Router } from '@angular/router';
+import { QuickAddOrchestrationService } from '../../core/quick-add-orchestration.service';
 
 describe('StatsDashboardComponent', () => {
   let fixture: ComponentFixture<StatsDashboardComponent>;
@@ -131,6 +132,13 @@ describe('StatsDashboardComponent', () => {
                 ui: { showSourceColumn: false },
               })
             ),
+          },
+        },
+        {
+          provide: QuickAddOrchestrationService,
+          useValue: {
+            fillToGoal: vitest.fn(),
+            fillToGoalInFlight: signal(false).asReadonly(),
           },
         },
       ],
@@ -516,13 +524,10 @@ describe('StatsDashboardComponent', () => {
 
     it('Given the button is clicked, Then QuickAddOrchestrationService.fillToGoal is called', async () => {
       await fixture.whenStable();
-      const component = fixture.componentInstance as unknown as {
-        fillToGoal: () => void;
-      };
-      const spy = vitest.spyOn(component, 'fillToGoal');
+      const svc = TestBed.inject(QuickAddOrchestrationService);
       const button = findGoalFillButton(fixture.nativeElement);
       button!.click();
-      expect(spy).toHaveBeenCalledTimes(1);
+      expect(svc.fillToGoal).toHaveBeenCalledTimes(1);
     });
   });
 

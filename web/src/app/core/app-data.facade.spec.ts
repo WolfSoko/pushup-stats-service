@@ -113,6 +113,14 @@ describe('AppDataFacade', () => {
 
       expect(facade.remainingToGoal()).toBe(0);
     });
+
+    it('Given config has no dailyGoal field, Then returns 0 (does not use 100 default)', async () => {
+      userConfigApiMock.getConfig.mockReturnValue(of({ userId: 'u1' }));
+      const facade = setup();
+      await flushResources();
+
+      expect(facade.remainingToGoal()).toBe(0);
+    });
   });
 
   describe('goalReached', () => {
@@ -139,6 +147,14 @@ describe('AppDataFacade', () => {
 
     it('Given goal is zero even with progress, Then returns false', async () => {
       const facade = setup({ dailyGoal: 0, todayTotal: 50 });
+      await flushResources();
+
+      expect(facade.goalReached()).toBe(false);
+    });
+
+    it('Given config has no dailyGoal field, Then returns false (does not use 100 default)', async () => {
+      userConfigApiMock.getConfig.mockReturnValue(of({ userId: 'u1' }));
+      const facade = setup();
       await flushResources();
 
       expect(facade.goalReached()).toBe(false);
