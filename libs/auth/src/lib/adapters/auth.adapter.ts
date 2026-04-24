@@ -25,6 +25,7 @@ import {
   UserCredential,
 } from '@angular/fire/auth';
 import { Functions, httpsCallable } from '@angular/fire/functions';
+import { toAuthUserSignal } from './to-auth-user-signal';
 
 export type AuthProvider = 'google' | 'email';
 
@@ -67,7 +68,9 @@ export class AuthAdapter {
   // On SSR, Firebase Auth observables crash because the server app's
   // _initializePromise is null. Return null (= resolved, unauthenticated)
   // so that authResolved() is true and SSR renders the unauthenticated state.
-  readonly authUser = this.isBrowser ? toSignal(user(this.auth)) : signal(null);
+  readonly authUser = this.isBrowser
+    ? toAuthUserSignal(user(this.auth))
+    : signal(null);
   readonly authState = this.isBrowser
     ? toSignal(authState(this.auth))
     : signal(null);

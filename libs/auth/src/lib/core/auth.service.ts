@@ -3,7 +3,29 @@ import { computed, inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { isPlatformServer } from '@angular/common';
 import { AuthAdapter } from '../adapters/auth.adapter';
 import { mapAuthUserToPUSUser } from '../map-auth-user-to-user';
+import { User } from './model/user.type';
 import { POST_AUTH_HOOKS } from './ports/post-auth.hook';
+
+/**
+ * Identity-aware equality for the user signal: the adapter's authUser signal
+ * fires on every Firebase token refresh, but downstream consumers only care
+ * when the user identity actually changes (uid, anonymous flag, primary
+ * profile fields). This keeps `effect()` callers (e.g. reminder orchestration)
+ * from re-running on every token refresh.
+ */
+function sameUserIdentity(a: User | null, b: User | null): boolean {
+  if (a === b) return true;
+  if (!a || !b) return false;
+  return (
+    a.uid === b.uid &&
+    a.isAnonymous === b.isAnonymous &&
+    a.email === b.email &&
+    a.displayName === b.displayName &&
+    a.emailVerified === b.emailVerified &&
+    a.photoURL === b.photoURL &&
+    a.providerId === b.providerId
+  );
+}
 
 @Injectable({
   providedIn: 'root',
@@ -19,8 +41,9 @@ export class AuthService {
     'idle'
   );
 
-  readonly user = computed(() =>
-    mapAuthUserToPUSUser(this.authAdapter.authUser())
+  readonly user = computed(
+    () => mapAuthUserToPUSUser(this.authAdapter.authUser()),
+    { equal: sameUserIdentity }
   );
   readonly isAuthenticated = this.authAdapter.isAuthenticated;
   readonly authResolved = this.authAdapter.authResolved;
