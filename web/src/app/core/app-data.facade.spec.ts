@@ -79,7 +79,10 @@ describe('AppDataFacade', () => {
   }
 
   async function flushResources(): Promise<void> {
-    // Flush reactive context, then let async loaders resolve, then flush again.
+    // Three resources with `firstValueFrom(of(...))` loaders: each needs one
+    // microtask to resolve + one for the resource to propagate the value.
+    // Tick before and after so zoneless change detection picks up the new
+    // resource values and re-evaluates any dependent computed signals.
     TestBed.tick();
     for (let i = 0; i < 4; i++) await Promise.resolve();
     TestBed.tick();

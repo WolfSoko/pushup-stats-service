@@ -158,14 +158,15 @@ export const DashboardStore = signalStore(
         : 0
     );
 
-    const dailyGoalConfigured = computed(
-      () => (store.userConfigResource.value()?.dailyGoal ?? 0) > 0
+    const configuredDailyGoal = computed(
+      () => store.userConfigResource.value()?.dailyGoal ?? 0
     );
+    const dailyGoalConfigured = computed(() => configuredDailyGoal() > 0);
     const remainingToGoal = computed(() =>
-      Math.max(0, store.dailyGoal() - todayTotal())
+      Math.max(0, configuredDailyGoal() - todayTotal())
     );
     const goalReached = computed(
-      () => store.dailyGoal() > 0 && todayTotal() >= store.dailyGoal()
+      () => configuredDailyGoal() > 0 && todayTotal() >= configuredDailyGoal()
     );
 
     const lastEntry = computed<PushupRecord | null>(() => {
