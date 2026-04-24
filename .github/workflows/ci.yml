@@ -67,10 +67,10 @@ jobs:
         # scale up to 10 so the 5-shard e2e-ci target finishes in one round
         # instead of two. Config: .nx/workflows/distribution-config.yaml
         run: pnpm nx-cloud start-ci-run --distribute-on=".nx/workflows/distribution-config.yaml" --stop-agents-after="e2e-ci"
+
       - name: Nx affected (lint + test + build)
-        run: pnpm nx affected -t=lint,test,build -c=production --parallel=4
-      - name: Nx affected e2e-ci (parallel)
-        run: pnpm nx affected -t=e2e-ci --parallel=5
+        run: pnpm nx affected -t=lint,test,build,e2e-ci -c=production
+
       - name: Nx fix-ci (always)
         if: always()
         run: pnpm nx fix-ci
