@@ -74,7 +74,7 @@ When making changes, always write or update relevant tests as part of the same c
 - **Side effects:** `effect()` in components or `withHooks`
 - **API Services:** Stateless, return Promises/Observables - no signals, no state
 - **No RxJS for state** - only in data-access layer for Firestore Observables + `toSignal()`
-- **Signal timing pitfall (`toSignal`):** `toSignal()` starts with `undefined` and updates via microtask. After async operations (e.g. `signInWithPopup`), signals may not yet reflect the new state. Use `auth.currentUser` (synchronous) as fallback where immediate access is needed — see `LoginUiStore`, `RegisterUiStore`, `AuthService.upgradeWithEmail()` for the pattern. For templates, use `authResolved` (= `authState() !== undefined`) to distinguish "loading" from "not authenticated".
+- **Signal timing and equality caveats** — see [`docs/gotchas/signals.md`](docs/gotchas/signals.md).
 
 **Three-Layer Architecture:**
 
@@ -123,7 +123,7 @@ Split into focused files under `libs/stats/src/lib/models/`:
 - `user-config.models.ts` - UserConfig, UserConfigUpdate
 - `reminder-config.models.ts` - ReminderConfig
 - `user-stats.models.ts` - UserStats (server-side precomputed), emptyUserStats, USERSTATS_VERSION
-  - **Note:** UserStats includes `version` field for migration support. See Cloud Functions section for versioning strategy.
+  - UserStats includes a `version` field for migration support. See [`docs/gotchas/cloud-functions.md`](docs/gotchas/cloud-functions.md) for the versioning strategy.
 
 ## Commands
 
@@ -156,18 +156,13 @@ pnpm nx run-many --target=lint   # Lint all projects
 
 - **Source locale:** German (`de`), **Translation:** English (`en`)
 - **Format:** XLIFF 2.0 (`web/src/locale/messages.xlf` / `messages.en.xlf`)
-- **Source XLIFF (`messages.xlf`)** is auto-generated — **never edit it manually**. After changing `i18n`-marked templates, run `pnpm nx run web:extract-i18n` to regenerate it. Only manually edit the English translation file (`messages.en.xlf`).
-- Templates: `i18n="@@your.id"` attribute; programmatic: `` $localize`:@@your.id:German text` ``
-- `LOCALE_ID` is set automatically by Angular i18n at build time – NEVER provide it manually in `app.config.ts`
-- Dynamic data (e.g. blog posts, feature descriptions) must be locale-aware too – XLIFF only covers templates and `$localize`. Use `inject(LOCALE_ID)` to select the right data at runtime.
-- Date pipes: use locale-aware formats (`'longDate'`, `'short'`) – never hardcode a locale parameter like `'de'`
-- **XLF maintenance:** When moving i18n-annotated text between components, update the `<source>` in both XLF files to match the new template structure. Stale `<source>` with old placeholder names (`START_BLOCK_IF`, etc.) causes production build errors.
-- **Language switching:** Implemented in `app.ts` `setLanguage()` via `window.location.replace()` with locale prefix (`/de/…`, `/en/…`). Must preserve current path, query params, and hash. Root paths need trailing slash (`/de/`, `/en/`) to match Firebase hosting rewrites.
-- **Root `/` is locale-aware out of the box.** On App Hosting, `GET /` returns `302 /de` (default) or `302 /en` (when `Accept-Language: en*`) with `Vary: Accept-Language`. Angular SSR's locale middleware handles this — do NOT reimplement it in `server.ts`.
+- **Templates:** `i18n="@@your.id"` attribute; programmatic: `` $localize`:@@your.id:German text` ``
+- **XLIFF maintenance, locale switching, root `/` handling, and dynamic data localisation** — see [`docs/gotchas/i18n.md`](docs/gotchas/i18n.md).
 
 ## CI/CD & Deployment
 
 - **CI Pipeline** (`.github/workflows/ci.yml`): Runs lint, test, build, e2e on every push to `main` and on PRs.
+- **Agent pool:** Nx Cloud dynamic distribution — see `.nx/workflows/distribution-config.yaml`. Details in [`docs/gotchas/build-and-tooling.md`](docs/gotchas/build-and-tooling.md).
 - **Deploy gate:** CI fast-forwards the `deploy` branch from `main` only after all checks pass (`promote-to-deploy` job). Both deployment targets watch this branch.
 - **Firebase Hosting** (static, `.github/workflows/firebase-hosting-merge.yml`): Triggers on push to `deploy` branch.
 - **Firebase App Hosting** (SSR/Cloud Run, `apphosting.yaml`): Auto-deploys on push to `deploy` branch (configured in Firebase Console).
@@ -205,11 +200,7 @@ pnpm nx run-many --target=test    # Run all tests
 pnpm nx run web:build -c production  # Production build (includes prerender)
 ```
 
-Do NOT push if any of these fail. Fix first, then push.
-
-**Transient build failure:** `Inlining of fonts failed ... fonts.googleapis.com/icon?family=Material+Icons` is a network flake, not a code bug. Retry `pnpm nx run web:build -c production` after a few seconds.
-
-**One-shot node scripts needing libraries without a CLI bin** (e.g. `sharp`, `png-to-ico`): `pnpm dlx` fails with `ERR_PNPM_DLX_NO_BIN`. Install transiently instead: `mkdir /tmp/x && (cd /tmp/x && npm init -y > /dev/null && npm i --silent <pkgs>) && NODE_PATH=/tmp/x/node_modules node script.js`. See `tools/src/generate-logo-assets.js`.
+Do NOT push if any of these fail. Fix first, then push. Common build/tooling flakes and one-shot script recipes: [`docs/gotchas/build-and-tooling.md`](docs/gotchas/build-and-tooling.md).
 
 ## Consent & Ads
 
@@ -227,71 +218,26 @@ Do NOT push if any of these fail. Fix first, then push.
 - `robots.txt` is a static file in `web/public/`.
 - **`sitemap.xml` is auto-generated** from blog posts + static routes via `node tools/src/generate-sitemap.mjs` (Nx target: `pnpm nx run tools:generate-sitemap`). It runs automatically before every `web:build`. When adding new **public** routes, add them to the `staticRoutes` array in the script. Blog posts are picked up automatically from `blog-posts.data.ts`.
 
-## Push Notifications & Service Workers
+## Push Notifications
 
 - **Two-tier reminder system:** In-app (`ReminderService` with `setInterval`) + server-side (`dispatchPushReminders` Cloud Function every 5 min via Web Push).
-- **Android Chrome does NOT support `new Notification()`** — always use `ServiceWorkerRegistration.showNotification()` with a `new Notification()` fallback for desktop/dev.
-- **Never use `navigator.serviceWorker.ready`** in async code paths — it hangs forever when no SW is registered (dev mode: `enabled: !isDevMode()`). Use `navigator.serviceWorker.getRegistration()` which resolves immediately with `undefined`.
-- **`renotify: true`** is not in the TypeScript `NotificationOptions` type — cast with `as NotificationOptions`.
-- **Push subscription ≠ reminder toggle:** They are separate actions. Auto-subscribing to push when enabling reminders must only happen on first enable (not every save) to respect explicit push opt-out.
-- **VAPID keys:** Public key in `web/src/env/firebase-runtime.ts`, private key in Firebase Secrets (`VAPID_PRIVATE_KEY`).
-- **Cloud Function `dispatchPushReminders`:** Uses transactional lease (`inProgress` flag) to prevent duplicate sends. Always release lease in `finally`.
+- **Browser API quirks, VAPID keys, subscription vs reminder toggle, Cloud Function lease handling** — see [`docs/gotchas/push-and-service-workers.md`](docs/gotchas/push-and-service-workers.md).
 
 ## Cloud Functions (data-store/functions/)
 
 - **Nx project `cloud-functions`:** TypeScript source in `data-store/functions/src/`, esbuild bundles to `data-store/functions-dist/`. Jest tests with `ts-jest`.
-- **Firebase deploy path:** `functions.source` in `firebase.json` **must** be inside the Firebase project directory (`data-store/`). Parent-relative paths (`../dist/...`) are rejected by Firebase CLI.
 - **Pure logic extraction:** Keep Cloud Function business logic in separate pure modules (e.g. `user-stats-delta.ts`) for unit testing without Firestore mocks. The trigger functions in `index.ts` are thin wrappers.
-- **`defineSecret()` requires IAM setup** — when introducing a new `defineSecret('FOO')` in `data-store/functions/src/**`, the prod Cloud Functions deploy WILL fail until the runtime SA (`<project-number>-compute@developer.gserviceaccount.com`) has `roles/secretmanager.secretAccessor` on the secret. A freshly created Secret Manager secret has **zero IAM bindings** (`gcloud secrets get-iam-policy NAME` returns only `etag: ACAB`), and the prod deploy SA intentionally does NOT have `secretmanager.admin` to grant it automatically. **Fix:** add the secret name to the `SECRETS=(…)` array in `infra/setup-prod-secrets.sh` and run the script. It's idempotent and resolves the runtime SA dynamically from the project number.
-- **Delta-based aggregation pitfalls:**
-  - When an entry's **timestamp changes** on update, a single delta is wrong — it must be split into undo-old + apply-new. Otherwise the old day/week/month/heatmap bucket is never decremented.
-  - Fields that can't be maintained incrementally (like `totalDays` — counting unique days) require heuristic tracking or periodic `rebuildFromEntries()` to stay accurate.
-  - `bestDay` and `bestSingleEntry` can only grow via deltas. When entries are deleted, a rebuild is needed to find the true new best.
-
-### UserStats Versioning System
-
-**Version tracking enables automatic rebuilds when calculation logic changes:**
-
-- Every `UserStats` rebuild sets `version: USERSTATS_VERSION` (current v3)
-- Cloud Function checks: `if (stored.version < USERSTATS_VERSION) → auto-rebuild`
-- New users: Auto-rebuild on first entry ensures correct initialization with today's period keys
-
-**Version changelog:**
-
-- **v1:** Legacy (no versioning)
-- **v2:** Fixed period keys to use TODAY (not last entry date in rebuild)
-- **v3:** Fixed `berlinParts()` to treat offset-less timestamps as Berlin local time
-
-**How it works:**
-
-```typescript
-// In updateUserStatsOnPushupWrite:
-if (existingStats.version < USERSTATS_VERSION) {
-  // Fetch all entries and call rebuildFromEntries
-  // automatically applies calculation improvements
-  logger.info('Auto-rebuild on version upgrade', {
-    oldVersion: existingStats.version,
-    newVersion: USERSTATS_VERSION,
-  });
-}
-```
-
-**Future deployments:** Increment `USERSTATS_VERSION` in `@pu-stats/models`. Affected users automatically rebuild on next entry without manual intervention.
-
-### Pure Business Logic Modules
-
-Decomposed from monolithic index.ts (1220 → ~500 lines wrapper):
-
-- **datetime/:** Berlin timezone utilities (`berlinDateParts`, `isoWeekFromYmd`)
-- **profile/:** Display name sanitization & leaderboard privacy logic
-- **leaderboard/:** Ranking aggregation, period key calculations
-- **authentication/:** Recaptcha response parsing & validation
-- **motivation/:** Quote cache logic, Gemini fallback, name sanitization
-- **push/subscription:** Subscription ID generation, payload validation
-- **push/reminders:** Reminder scheduling (quiet hours, snooze, intervals)
-- **admin/:** User privilege checks (Custom Claims validation), deletion validation, batch helpers
-
-All modules include comprehensive Jest tests (no Firebase dependencies for pure logic).
+- **Pure business logic modules** (decomposed from the monolithic `index.ts`):
+  - **datetime/:** Berlin timezone utilities (`berlinDateParts`, `isoWeekFromYmd`)
+  - **profile/:** Display name sanitization & leaderboard privacy logic
+  - **leaderboard/:** Ranking aggregation, period key calculations
+  - **authentication/:** Recaptcha response parsing & validation
+  - **motivation/:** Quote cache logic, Gemini fallback, name sanitization
+  - **push/subscription:** Subscription ID generation, payload validation
+  - **push/reminders:** Reminder scheduling (quiet hours, snooze, intervals)
+  - **admin/:** User privilege checks (Custom Claims validation), deletion validation, batch helpers
+- All modules include comprehensive Jest tests (no Firebase dependencies for pure logic).
+- **Deploy-path rule, `defineSecret()` IAM requirements, delta-aggregation pitfalls, UserStats versioning system** — see [`docs/gotchas/cloud-functions.md`](docs/gotchas/cloud-functions.md).
 
 ### Admin Authorization
 
@@ -304,33 +250,9 @@ Admin access uses **Firebase Custom Claims** (`{ admin: true }`) — NOT Firesto
 - **Granting admin:** `node scripts/set-admin-claim.mjs <email-or-uid>` (requires Admin SDK credentials)
 - **Token refresh:** After setting claims, user must re-login (or wait ~1h) for the token to update
 
-## Precomputed Data Staleness
+## Precomputed Data
 
-When stores consume server-side precomputed data (e.g. `UserStats`), **always validate period keys before trusting the values:**
-
-- `dailyReps` → check `dailyKey === toBerlinIsoDate(new Date())`
-- `weeklyReps` → check `weeklyKey === currentIsoWeekKey()`
-- `monthlyReps` → check `monthlyKey === currentMonthKey()`
-- `currentStreak` → check `lastEntryDate` is today or yesterday
-
-Fall back to client-side computation when keys are stale. The precomputed doc is only updated on writes — it goes stale on period rollover without new entries.
-
-**Timestamp format:** Entry timestamps are stored as ISO strings. New entries include the browser's local timezone offset (e.g. `2026-04-05T22:50+02:00`). Older entries may lack the offset (e.g. `2026-04-05T22:50`). The Cloud Function's `berlinParts()` handles both: offset-less timestamps are treated as Berlin local time; timestamps with explicit offsets are converted to Berlin via `Intl`. Always use `appendLocalOffset()` when creating new timestamps from `<input type="datetime-local">` values.
-
-**Note on period key calculations:** UserStats now rebuilds with `version: USERSTATS_VERSION` to ensure period keys are calculated for TODAY (not the last entry date). Period keys in newly built stats reflect the current period, allowing proper validation with client-side "today" calculations. Old stats (v1/v2) may have incorrect period keys; they auto-rebuild on next entry when version is detected as outdated.
-
-## Testing Pitfalls
-
-- **Shared signal mocks:** When tests mutate shared `signal()` mocks (e.g. `authStoreMock.error.set(...)`), always reset them in `beforeEach`. Otherwise tests become order-dependent.
-- **`window.location` spies:** `vitest.spyOn(window, 'location', 'get')` is NOT restored by `clearAllMocks()`. Add `afterEach(() => vitest.restoreAllMocks())` when using getter spies.
-- **Angular `resource()` reload:** `resource.reload()` is async. After calling it, use `await fixture.whenStable()` before asserting on the reloaded data.
-- **`MatDialog.open` spy:** Use `fixture.debugElement.injector.get(MatDialog)` (component injector) instead of `TestBed.inject(MatDialog)` to ensure you spy on the same instance the component uses.
-- **Dialog components in `imports`:** Components only opened via `MatDialog.open()` do NOT belong in the host component's `imports` array (causes NG8113 warning). Keep them as TypeScript imports only.
-- **`@angular/fire/firestore` import in Jest:** Importing the module at all triggers `fetch is not defined`. Always `jest.mock('@angular/fire/firestore', () => ({...}))` at the top of the file — see `pushup-firestore.service.spec.ts` for the pattern. Use `jest.mocked(getDoc)` instead of `jest.requireMock()` for type safety.
-- **Cloud Function pure logic testing:** Extract business logic to separate modules (not in Cloud Function triggers) for testability. See `user-stats-delta.ts` pattern: pure functions tested separately via Jest without Firebase mocks, triggers are thin wrappers that call the logic. This enables testing calculation correctness without mocking Firestore.
-- **Version-based migrations:** When updating server-side calculation logic (e.g. UserStats), increment `USERSTATS_VERSION` constant. This triggers automatic rebuilds for affected users on their next entry. Tests must validate version is set correctly in rebuilt stats.
-- **`web` test filter flags are not forwarded:** The `web:test` target uses the `@angular/build:unit-test` executor, which does NOT accept vitest CLI flags (`--testNamePattern`, `--testPathPattern`, `-t`). Running `pnpm exec vitest` directly inside `web/` also fails — it loses the Nx path aliases (`@pu-auth/auth`, `@pu-stats/models`, etc.) and every spec errors with `Cannot find package`. Either run the full `pnpm nx test web` suite, or move the spec into a library project whose test runner does accept filters. Use `--skip-nx-cache` to force a re-run when you just changed non-web code that a web spec depends on.
-- **`tools/` jest only transforms `.ts`/`.js`:** ESM `.mjs` scripts can be run by Nx targets but **cannot** be unit-tested by the shared jest config. When a script needs coverage, write it as CommonJS `.js` with `module.exports = {...}`. See `tools/src/generate-sitemap.js` for the pattern.
+Stores consuming server-side precomputed data (e.g. `UserStats`) must validate period keys and handle timestamp-offset variations. See [`docs/gotchas/precomputed-data.md`](docs/gotchas/precomputed-data.md).
 
 ## Observability (Sentry)
 
@@ -343,10 +265,24 @@ Fall back to client-side computation when keys are stale. The precomputed doc is
 - **Config:** Org and project are set in `.sentryclirc`. DSN is hardcoded in `main.ts`, `server.ts`, and CF `index.ts`.
 - **GitHub Secret required:** `SENTRY_AUTH_TOKEN` — Sentry auth token with scopes `org:ci`, `project:releases`, `project:write`. The deploy step is skipped gracefully when the secret is absent.
 
+## Gotchas & Pitfalls
+
+Detailed pitfalls and their fixes live under [`docs/gotchas/`](docs/gotchas/). Check the relevant file **before** debugging a class of problem:
+
+| Area | File |
+|------|------|
+| Angular signals (`toSignal`, same-reference emissions) | [`docs/gotchas/signals.md`](docs/gotchas/signals.md) |
+| Tests (mocks, spies, `resource.reload`, Jest/Vitest quirks) | [`docs/gotchas/testing.md`](docs/gotchas/testing.md) |
+| Cloud Functions (secrets IAM, delta aggregation, versioning) | [`docs/gotchas/cloud-functions.md`](docs/gotchas/cloud-functions.md) |
+| Push notifications & Service Workers | [`docs/gotchas/push-and-service-workers.md`](docs/gotchas/push-and-service-workers.md) |
+| i18n (XLIFF, locale switching, `LOCALE_ID`) | [`docs/gotchas/i18n.md`](docs/gotchas/i18n.md) |
+| Build & tooling (font flakes, pnpm dlx, Nx Cloud agents) | [`docs/gotchas/build-and-tooling.md`](docs/gotchas/build-and-tooling.md) |
+| Precomputed data (period-key staleness, timestamp formats) | [`docs/gotchas/precomputed-data.md`](docs/gotchas/precomputed-data.md) |
+
 ## Workflow
 
 - **Before pushing:** Run the pre-push checklist above.
-- **After completing a feature or bugfix:** Review whether any new broadly applicable knowledge should be added to this file (general conventions, architectural decisions, i18n rules, etc.). Do NOT add low-level details about individual files unless they are a recurring pitfall.
+- **After completing a feature or bugfix:** Review whether any new broadly applicable knowledge should be added. General conventions and architectural decisions belong in this file; specific pitfalls belong in `docs/gotchas/<topic>.md`. Do NOT add low-level details about individual files unless they are a recurring pitfall.
 - **After every session:** Capture reusable learnings (patterns, pitfalls, conventions discovered) via the `/evolving-loop` skill or the experience-extractor agent.
 
 <!-- nx configuration start-->
