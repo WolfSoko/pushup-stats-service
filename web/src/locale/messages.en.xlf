@@ -5262,5 +5262,47 @@ Deine Position: # ·  Reps        </source>
         <target>Feedback</target>
       </segment>
     </unit>
+    <unit id="quickAdd.fab.fillToGoal">
+      <segment state="translated">
+        <source>+<ph id="0" equiv="INTERPOLATION" disp="{{ item.value }}"/> bis zum Ziel</source>
+        <target>+<ph id="0" equiv="INTERPOLATION" disp="{{ item.value }}"/> to goal</target>
+      </segment>
+    </unit>
+    <unit id="quickAdd.fab.fillToGoalAria">
+      <segment state="translated">
+        <source><ph id="0" equiv="GAP" disp="gap"/> Liegestütze bis zum Tagesziel hinzufügen</source>
+        <target>Add <ph id="0" equiv="GAP" disp="gap"/> pushups to reach the daily goal</target>
+      </segment>
+    </unit>
+    <unit id="quickAdd.fab.goalReached">
+      <segment state="translated">
+        <source>Ziel erreicht ✓</source>
+        <target>Goal reached ✓</target>
+      </segment>
+    </unit>
+    <unit id="quickAdd.fab.goalReachedAria">
+      <segment state="translated">
+        <source>Tagesziel bereits erreicht</source>
+        <target>Daily goal already reached</target>
+      </segment>
+    </unit>
+    <unit id="quickAdd.success.goalReached">
+      <segment state="translated">
+        <source>Tagesziel erreicht 🎉</source>
+        <target>Daily goal reached 🎉</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.goalFill.fill">
+      <segment state="translated">
+        <source>+<ph id="0" equiv="INTERPOLATION" disp="{{ remainingToGoal() }}"/> bis zum Ziel</source>
+        <target>+<ph id="0" equiv="INTERPOLATION" disp="{{ remainingToGoal() }}"/> to goal</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.goalFill.reached">
+      <segment state="translated">
+        <source>Ziel erreicht ✓</source>
+        <target>Goal reached ✓</target>
+      </segment>
+    </unit>
   </file>
 </xliff>
