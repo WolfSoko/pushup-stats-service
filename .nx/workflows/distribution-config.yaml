@@ -1,0 +1,13 @@
+# Nx Cloud dynamic agent allocation.
+# Nx Cloud picks one of these buckets based on the percentage of workspace
+# projects affected by the change. Small PRs stay cheap; main-branch pushes
+# and large refactors get enough agents to parallelise the 5-shard e2e-ci
+# target and 11+ unit-test targets without a single agent doubling up.
+#
+# Referenced from .github/workflows/ci.yml via
+#   pnpm nx-cloud start-ci-run --distribute-on=.nx/workflows/distribution-config.yaml
+distribute-on:
+  small-changeset: 4 linux-medium-js
+  medium-changeset: 6 linux-medium-js
+  large-changeset: 8 linux-medium-js
+  extra-large-changeset: 10 linux-medium-js
