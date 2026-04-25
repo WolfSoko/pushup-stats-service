@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { QuickAddConfig, UserConfigUpdate } from '@pu-stats/models';
 import { QuickAddConfigDialogComponent } from './quick-add-config-dialog.component';
 import { UserConfigStore } from '../../../core/user-config.store';
@@ -9,21 +10,27 @@ describe('QuickAddConfigDialogComponent', () => {
   let fixture: ComponentFixture<QuickAddConfigDialogComponent>;
   let closeSpy: ReturnType<typeof vitest.fn>;
   let saveSpy: ReturnType<typeof vitest.fn>;
+  let snackBarSpy: ReturnType<typeof vitest.fn>;
 
   const quickAdds = signal<QuickAddConfig[]>([]);
 
-  function setup(initial: QuickAddConfig[] = []): void {
-    quickAdds.set(initial);
-    closeSpy = vitest.fn();
-    saveSpy = vitest.fn((patch: UserConfigUpdate) => {
+  function setup(
+    initial: QuickAddConfig[] = [],
+    saveImpl: (patch: UserConfigUpdate) => Promise<unknown> = (patch) => {
       if (patch.ui?.quickAdds) quickAdds.set(patch.ui.quickAdds);
       return Promise.resolve({ userId: 'u1', ...patch });
-    });
+    }
+  ): void {
+    quickAdds.set(initial);
+    closeSpy = vitest.fn();
+    saveSpy = vitest.fn(saveImpl);
+    snackBarSpy = vitest.fn();
 
     TestBed.configureTestingModule({
       imports: [QuickAddConfigDialogComponent],
       providers: [
         { provide: MatDialogRef, useValue: { close: closeSpy } },
+        { provide: MatSnackBar, useValue: { open: snackBarSpy } },
         {
           provide: UserConfigStore,
           useValue: {
@@ -95,6 +102,25 @@ describe('QuickAddConfigDialogComponent', () => {
         { reps: 40, inSpeedDial: false },
       ]);
       expect(closeSpy).toHaveBeenCalled();
+    });
+
+    it('Given save fails, Then a snackbar error is shown and the dialog stays open', async () => {
+      setup([], () => Promise.reject(new Error('network')));
+      const inputs = fixture.nativeElement.querySelectorAll(
+        'input[type="number"]'
+      ) as NodeListOf<HTMLInputElement>;
+      inputs[0].value = '20';
+      inputs[0].dispatchEvent(new Event('input'));
+      fixture.detectChanges();
+
+      const saveBtn = fixture.nativeElement.querySelector(
+        '[data-testid="quick-add-config-save"]'
+      ) as HTMLButtonElement;
+      saveBtn.click();
+      await fixture.whenStable();
+
+      expect(snackBarSpy).toHaveBeenCalled();
+      expect(closeSpy).not.toHaveBeenCalled();
     });
 
     it('Then clearing all rows saves an empty array (revert to defaults)', async () => {

@@ -2951,7 +2951,7 @@
     </unit>
     <unit id="quickAddConfig.title">
       <notes>
-        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts:35,37</note>
+        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts:36,38</note>
       </notes>
       <segment>
         <source> Schnellaktionen konfigurieren </source>
@@ -2959,7 +2959,7 @@
     </unit>
     <unit id="quickAddConfig.hint">
       <notes>
-        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts:39,41</note>
+        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts:40,42</note>
       </notes>
       <segment>
         <source> Lege bis zu <ph id="0" equiv="INTERPOLATION" disp="{{ maxRows }}"/> eigene Reps-Buttons fest. Leere Felder werden ignoriert. </source>
@@ -2967,7 +2967,7 @@
     </unit>
     <unit id="quickAddConfig.repsLabel">
       <notes>
-        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts:45,47</note>
+        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts:46,48</note>
       </notes>
       <segment>
         <source>Reps</source>
@@ -2975,7 +2975,7 @@
     </unit>
     <unit id="quickAddConfig.inSpeedDial">
       <notes>
-        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts:60,62</note>
+        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts:61,63</note>
       </notes>
       <segment>
         <source>Im SpeedDial</source>
@@ -2991,10 +2991,18 @@
     </unit>
     <unit id="quickAddConfig.clearAria">
       <notes>
-        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts:114</note>
+        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts:117</note>
       </notes>
       <segment>
         <source>Reps löschen</source>
+      </segment>
+    </unit>
+    <unit id="quickAddConfig.saveError">
+      <notes>
+        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts:171</note>
+      </notes>
+      <segment>
+        <source>Speichern fehlgeschlagen</source>
       </segment>
     </unit>
     <unit id="setsDistribution.noData">

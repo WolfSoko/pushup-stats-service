@@ -2681,6 +2681,15 @@ Deine Position: # ·  Reps        </source>
         <target>Clear reps</target>
       </segment>
     </unit>
+    <unit id="quickAddConfig.saveError">
+      <notes>
+        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts</note>
+      </notes>
+      <segment state="translated">
+        <source>Speichern fehlgeschlagen</source>
+        <target>Save failed</target>
+      </segment>
+    </unit>
     <unit id="save">
       <notes>
         <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts</note>

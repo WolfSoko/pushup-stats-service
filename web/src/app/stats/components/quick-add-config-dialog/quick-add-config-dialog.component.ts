@@ -11,6 +11,7 @@ import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MAX_QUICK_ADDS, QuickAddConfig } from '@pu-stats/models';
 import { UserConfigStore } from '../../../core/user-config.store';
 
@@ -64,7 +65,6 @@ interface DraftRow {
             mat-icon-button
             (click)="clearRow($index)"
             [attr.aria-label]="clearAria"
-            i18n-aria-label="@@quickAddConfig.clearAria"
           >
             <mat-icon>backspace</mat-icon>
           </button>
@@ -111,6 +111,7 @@ export class QuickAddConfigDialogComponent {
     MatDialogRef<QuickAddConfigDialogComponent>
   );
   private readonly userConfig = inject(UserConfigStore);
+  private readonly snackBar = inject(MatSnackBar);
 
   protected readonly maxRows = MAX_QUICK_ADDS;
   protected readonly clearAria = $localize`:@@quickAddConfig.clearAria:Reps löschen`;
@@ -166,6 +167,11 @@ export class QuickAddConfigDialogComponent {
       });
       this.dialogRef.close(quickAdds);
     } catch {
+      this.snackBar.open(
+        $localize`:@@quickAddConfig.saveError:Speichern fehlgeschlagen`,
+        undefined,
+        { duration: 3000 }
+      );
       this.saving.set(false);
     }
   }
