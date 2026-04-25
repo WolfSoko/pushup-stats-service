@@ -1,30 +1,43 @@
 import { TestBed } from '@angular/core/testing';
-import { addDoc, Firestore } from '@angular/fire/firestore';
+import { Firestore } from '@angular/fire/firestore';
 import { FeedbackService } from './feedback.service';
-
-vi.mock('@angular/fire/firestore', () => ({
-  Firestore: class {},
-  collection: vi.fn(() => 'feedback-collection-ref'),
-  addDoc: vi.fn(() => Promise.resolve()),
-  serverTimestamp: vi.fn(() => 'SERVER_TIMESTAMP'),
-}));
 
 describe('FeedbackService', () => {
   let service: FeedbackService;
+  let mockCollection: ReturnType<typeof vi.fn>;
+  let mockAddDoc: ReturnType<typeof vi.fn>;
+  let mockServerTimestamp: ReturnType<typeof vi.fn>;
 
   beforeEach(() => {
-    vi.clearAllMocks();
+    mockCollection = vi.fn().mockReturnValue('feedback-collection-ref');
+    mockAddDoc = vi.fn().mockResolvedValue(undefined);
+    mockServerTimestamp = vi.fn().mockReturnValue('SERVER_TIMESTAMP');
+
     TestBed.resetTestingModule();
     TestBed.configureTestingModule({
       providers: [{ provide: Firestore, useValue: {} }],
     });
     service = TestBed.inject(FeedbackService);
-    // Nx Cloud distributed runners resolve `inject(Firestore, {optional:true})`
-    // to null because the provided-in-root service instantiates in a parent
-    // injector that doesn't see the test module's Firestore override. Pin the
-    // field directly so the test exercises submit() regardless of DI topology.
+    // Pin Firestore and Firebase functions directly on the instance to bypass
+    // DI topology issues on Nx Cloud runners and avoid unreliable vi.mock
+    // module interception (Angular's esbuild resolves imports at compile time).
     Object.defineProperty(service, 'firestore', {
       value: {},
+      configurable: true,
+      writable: true,
+    });
+    Object.defineProperty(service, 'collectionFn', {
+      value: mockCollection,
+      configurable: true,
+      writable: true,
+    });
+    Object.defineProperty(service, 'addDocFn', {
+      value: mockAddDoc,
+      configurable: true,
+      writable: true,
+    });
+    Object.defineProperty(service, 'serverTimestampFn', {
+      value: mockServerTimestamp,
       configurable: true,
       writable: true,
     });
@@ -45,7 +58,7 @@ describe('FeedbackService', () => {
       'user-123'
     );
 
-    expect(addDoc).toHaveBeenCalledWith(
+    expect(mockAddDoc).toHaveBeenCalledWith(
       'feedback-collection-ref',
       expect.objectContaining({
         name: 'Max',
@@ -63,7 +76,7 @@ describe('FeedbackService', () => {
       'user-123'
     );
 
-    expect(addDoc).toHaveBeenCalledWith(
+    expect(mockAddDoc).toHaveBeenCalledWith(
       'feedback-collection-ref',
       expect.objectContaining({
         name: null,
