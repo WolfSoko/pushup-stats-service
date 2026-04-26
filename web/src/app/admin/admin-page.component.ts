@@ -2,8 +2,10 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
+  effect,
   inject,
   signal,
+  viewChild,
 } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { DatePipe } from '@angular/common';
@@ -17,7 +19,8 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatTableModule } from '@angular/material/table';
+import { MatSort, MatSortModule } from '@angular/material/sort';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { DeleteUserDialogComponent } from './delete-user-dialog.component';
@@ -61,6 +64,7 @@ interface AdminFeedback {
     MatIconModule,
     MatInputModule,
     MatProgressSpinnerModule,
+    MatSortModule,
     MatTableModule,
     MatTooltipModule,
     MatSlideToggleModule,
@@ -154,7 +158,11 @@ interface AdminFeedback {
         <p class="error-text">{{ error() }}</p>
       } @else {
         <mat-card>
-          <mat-table [dataSource]="filteredUsers()">
+          <mat-table
+            [dataSource]="usersDataSource"
+            matSort
+            #usersSort="matSort"
+          >
             <!-- UID column -->
             <ng-container matColumnDef="uid">
               <mat-header-cell *matHeaderCellDef i18n="@@admin.col.uid"
@@ -169,7 +177,10 @@ interface AdminFeedback {
 
             <!-- displayName column -->
             <ng-container matColumnDef="displayName">
-              <mat-header-cell *matHeaderCellDef i18n="@@admin.col.name"
+              <mat-header-cell
+                *matHeaderCellDef
+                mat-sort-header
+                i18n="@@admin.col.name"
                 >Name</mat-header-cell
               >
               <mat-cell *matCellDef="let u">{{
@@ -179,7 +190,10 @@ interface AdminFeedback {
 
             <!-- email column -->
             <ng-container matColumnDef="email">
-              <mat-header-cell *matHeaderCellDef i18n="@@admin.col.email"
+              <mat-header-cell
+                *matHeaderCellDef
+                mat-sort-header
+                i18n="@@admin.col.email"
                 >E-Mail</mat-header-cell
               >
               <mat-cell *matCellDef="let u">{{ u.email ?? '–' }}</mat-cell>
@@ -187,7 +201,10 @@ interface AdminFeedback {
 
             <!-- anonymous column -->
             <ng-container matColumnDef="anonymous">
-              <mat-header-cell *matHeaderCellDef i18n="@@admin.col.anon"
+              <mat-header-cell
+                *matHeaderCellDef
+                mat-sort-header
+                i18n="@@admin.col.anon"
                 >Anon</mat-header-cell
               >
               <mat-cell *matCellDef="let u">
@@ -201,7 +218,10 @@ interface AdminFeedback {
 
             <!-- pushupCount column -->
             <ng-container matColumnDef="pushupCount">
-              <mat-header-cell *matHeaderCellDef i18n="@@admin.col.pushups"
+              <mat-header-cell
+                *matHeaderCellDef
+                mat-sort-header
+                i18n="@@admin.col.pushups"
                 >Pushups</mat-header-cell
               >
               <mat-cell *matCellDef="let u">{{ u.pushupCount }}</mat-cell>
@@ -209,7 +229,10 @@ interface AdminFeedback {
 
             <!-- lastEntry column -->
             <ng-container matColumnDef="lastEntry">
-              <mat-header-cell *matHeaderCellDef i18n="@@admin.col.lastEntry"
+              <mat-header-cell
+                *matHeaderCellDef
+                mat-sort-header
+                i18n="@@admin.col.lastEntry"
                 >Letzter Eintrag</mat-header-cell
               >
               <mat-cell *matCellDef="let u">{{
@@ -219,7 +242,10 @@ interface AdminFeedback {
 
             <!-- createdAt column -->
             <ng-container matColumnDef="createdAt">
-              <mat-header-cell *matHeaderCellDef i18n="@@admin.col.createdAt"
+              <mat-header-cell
+                *matHeaderCellDef
+                mat-sort-header
+                i18n="@@admin.col.createdAt"
                 >Erstellt</mat-header-cell
               >
               <mat-cell *matCellDef="let u">{{
@@ -283,10 +309,15 @@ interface AdminFeedback {
           <p class="error-text">{{ feedbackActionError() }}</p>
         }
         <mat-card>
-          <mat-table [dataSource]="feedbackList()">
+          <mat-table
+            [dataSource]="feedbackDataSource"
+            matSort
+            #feedbackSort="matSort"
+          >
             <ng-container matColumnDef="createdAt">
               <mat-header-cell
                 *matHeaderCellDef
+                mat-sort-header
                 i18n="@@admin.feedback.col.date"
                 >Datum</mat-header-cell
               >
@@ -298,6 +329,7 @@ interface AdminFeedback {
             <ng-container matColumnDef="name">
               <mat-header-cell
                 *matHeaderCellDef
+                mat-sort-header
                 i18n="@@admin.feedback.col.name"
                 >Name</mat-header-cell
               >
@@ -307,6 +339,7 @@ interface AdminFeedback {
             <ng-container matColumnDef="email">
               <mat-header-cell
                 *matHeaderCellDef
+                mat-sort-header
                 i18n="@@admin.feedback.col.email"
                 >E-Mail</mat-header-cell
               >
@@ -540,7 +573,60 @@ export class AdminPageComponent {
       : this.users()
   );
 
+  readonly usersDataSource = new MatTableDataSource<AdminUser>([]);
+  readonly feedbackDataSource = new MatTableDataSource<AdminFeedback>([]);
+
+  private readonly usersSort = viewChild<MatSort>('usersSort');
+  private readonly feedbackSort = viewChild<MatSort>('feedbackSort');
+
   constructor() {
+    this.usersDataSource.sortingDataAccessor = (item, property) => {
+      switch (property) {
+        case 'displayName':
+          return (item.displayName ?? '').toLowerCase();
+        case 'email':
+          return (item.email ?? '').toLowerCase();
+        case 'anonymous':
+          return item.anonymous ? 1 : 0;
+        case 'pushupCount':
+          return item.pushupCount;
+        case 'lastEntry':
+          return item.lastEntry ? new Date(item.lastEntry).getTime() : 0;
+        case 'createdAt':
+          return item.createdAt ? new Date(item.createdAt).getTime() : 0;
+        default:
+          return '';
+      }
+    };
+
+    this.feedbackDataSource.sortingDataAccessor = (item, property) => {
+      switch (property) {
+        case 'createdAt':
+          return item.createdAt ? new Date(item.createdAt).getTime() : 0;
+        case 'name':
+          return (item.name ?? '').toLowerCase();
+        case 'email':
+          return (item.email ?? '').toLowerCase();
+        default:
+          return '';
+      }
+    };
+
+    effect(() => {
+      this.usersDataSource.data = this.filteredUsers();
+    });
+    effect(() => {
+      this.feedbackDataSource.data = this.feedbackList();
+    });
+    effect(() => {
+      const s = this.usersSort();
+      if (s) this.usersDataSource.sort = s;
+    });
+    effect(() => {
+      const s = this.feedbackSort();
+      if (s) this.feedbackDataSource.sort = s;
+    });
+
     this.loadUsers();
     this.loadFeedback();
   }
