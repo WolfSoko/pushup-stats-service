@@ -5322,5 +5322,59 @@ Deine Position: # ·  Reps        </source>
         <target>Goal reached ✓</target>
       </segment>
     </unit>
+    <unit id="goalReached.daily.title">
+      <segment state="translated">
+        <source>Tagesziel erreicht!</source>
+        <target>Daily goal reached!</target>
+      </segment>
+    </unit>
+    <unit id="goalReached.daily.note">
+      <segment state="translated">
+        <source>Heute hast du dein Versprechen gehalten.</source>
+        <target>Today you kept your promise.</target>
+      </segment>
+    </unit>
+    <unit id="goalReached.weekly.title">
+      <segment state="translated">
+        <source>Wochenziel erreicht!</source>
+        <target>Weekly goal reached!</target>
+      </segment>
+    </unit>
+    <unit id="goalReached.weekly.note">
+      <segment state="translated">
+        <source>Sieben Tage, ein Sieg. Du bist on fire.</source>
+        <target>Seven days, one victory. You are on fire.</target>
+      </segment>
+    </unit>
+    <unit id="goalReached.monthly.title">
+      <segment state="translated">
+        <source>Monatsziel erreicht!</source>
+        <target>Monthly goal reached!</target>
+      </segment>
+    </unit>
+    <unit id="goalReached.monthly.note">
+      <segment state="translated">
+        <source>Ein ganzer Monat Disziplin. Legendär.</source>
+        <target>A whole month of discipline. Legendary.</target>
+      </segment>
+    </unit>
+    <unit id="goalReached.snap">
+      <segment state="translated">
+        <source>Snap!</source>
+        <target>Snap!</target>
+      </segment>
+    </unit>
+    <unit id="goalReached.snapAria">
+      <segment state="translated">
+        <source>Erfolg vaporisieren</source>
+        <target>Vaporize the success</target>
+      </segment>
+    </unit>
+    <unit id="goalReached.repsSuffix">
+      <segment state="translated">
+        <source>Liegestütze</source>
+        <target>push-ups</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

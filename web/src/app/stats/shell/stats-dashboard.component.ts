@@ -58,6 +58,11 @@ export class StatsDashboardComponent {
   private readonly live = inject(LiveDataStore);
   private readonly quickAdd = inject(QuickAddOrchestrationService);
 
+  private readonly goalReachedDialogShown: Record<
+    'daily' | 'weekly' | 'monthly',
+    boolean
+  > = { daily: false, weekly: false, monthly: false };
+
   readonly store = inject(DashboardStore);
 
   // Delegate store signals for template access
@@ -83,6 +88,8 @@ export class StatsDashboardComponent {
   readonly dailyGoalConfigured = this.store.dailyGoalConfigured;
   readonly remainingToGoal = this.store.remainingToGoal;
   readonly goalReached = this.store.goalReached;
+  readonly weeklyGoalReached = this.store.weeklyGoalReached;
+  readonly monthlyGoalReached = this.store.monthlyGoalReached;
   readonly fillToGoalInFlight = this.quickAdd.fillToGoalInFlight;
   readonly quickAddButtons = this.store.quickAddButtons;
   readonly adSlotDashboardInline = this.store.adSlotDashboardInline;
@@ -123,7 +130,67 @@ export class StatsDashboardComponent {
       this.refreshCounter.update((c) => c + 1);
     });
 
+    this.registerGoalReachedTrigger(
+      'daily',
+      this.goalReached,
+      this.todayTotal,
+      this.store.dailyGoal
+    );
+    this.registerGoalReachedTrigger(
+      'weekly',
+      this.weeklyGoalReached,
+      this.weekReps,
+      this.weeklyGoal
+    );
+    this.registerGoalReachedTrigger(
+      'monthly',
+      this.monthlyGoalReached,
+      this.monthReps,
+      this.monthlyGoal
+    );
+
     this.store.loadQuote();
+  }
+
+  private registerGoalReachedTrigger(
+    kind: 'daily' | 'weekly' | 'monthly',
+    reached: () => boolean,
+    total: () => number,
+    goal: () => number
+  ): void {
+    effect(() => {
+      if (!isPlatformBrowser(this.platformId)) return;
+      const isReached = reached();
+      if (!isReached) {
+        this.goalReachedDialogShown[kind] = false;
+        return;
+      }
+      if (this.goalReachedDialogShown[kind]) return;
+      this.goalReachedDialogShown[kind] = true;
+      untracked(() => {
+        void this.openGoalReachedDialog(kind, {
+          total: total(),
+          goal: goal(),
+        });
+      });
+    });
+  }
+
+  private async openGoalReachedDialog(
+    kind: 'daily' | 'weekly' | 'monthly',
+    snapshot: { total: number; goal: number }
+  ): Promise<void> {
+    const { GoalReachedDialogComponent } =
+      await import('../components/goal-reached-dialog/goal-reached-dialog.component');
+    this.dialog.open(GoalReachedDialogComponent, {
+      panelClass: 'goal-reached-dialog-panel',
+      backdropClass: 'goal-reached-dialog-backdrop',
+      autoFocus: 'dialog',
+      restoreFocus: true,
+      width: 'min(92vw, 460px)',
+      maxWidth: '92vw',
+      data: { kind, total: snapshot.total, goal: snapshot.goal },
+    });
   }
 
   fillToGoal(): void {
