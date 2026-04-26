@@ -4,7 +4,7 @@
       copy().icon
     }}</span>
   </div>
-  <h2 id="goal-reached-dialog-title" class="title">{{ copy().title }}</h2>
+  <h2 [id]="data.titleId" class="title">{{ copy().title }}</h2>
   <p class="progress" data-testid="goal-reached-progress">
     {{ progressLabel() }}
     <span class="progress-suffix" i18n="@@goalReached.repsSuffix"

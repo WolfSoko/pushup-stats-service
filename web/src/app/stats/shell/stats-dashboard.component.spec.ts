@@ -632,7 +632,14 @@ describe('StatsDashboardComponent', () => {
       // Then
       expect(dialogOpenSpy).toHaveBeenCalledTimes(1);
       const [, config] = dialogOpenSpy.mock.calls[0];
-      expect(config?.data).toEqual({ kind: 'daily', total: 12, goal: 10 });
+      expect(config?.data).toMatchObject({
+        kind: 'daily',
+        total: 12,
+        goal: 10,
+      });
+      expect(config?.data?.titleId).toMatch(/^goal-reached-dialog-title-\d+$/);
+      // ariaLabelledBy must reference the same id we put on the title h2
+      expect(config?.ariaLabelledBy).toBe(config?.data?.titleId);
     });
 
     it('Given the weekly goal becomes reached, Then the celebration dialog opens with kind=weekly', async () => {
@@ -649,7 +656,12 @@ describe('StatsDashboardComponent', () => {
       // Then
       expect(dialogOpenSpy).toHaveBeenCalledTimes(1);
       const [, config] = dialogOpenSpy.mock.calls[0];
-      expect(config?.data).toEqual({ kind: 'weekly', total: 20, goal: 15 });
+      expect(config?.data).toMatchObject({
+        kind: 'weekly',
+        total: 20,
+        goal: 15,
+      });
+      expect(config?.ariaLabelledBy).toBe(config?.data?.titleId);
     });
 
     it('Given the monthly goal becomes reached, Then the celebration dialog opens with kind=monthly', async () => {
@@ -666,7 +678,12 @@ describe('StatsDashboardComponent', () => {
       // Then
       expect(dialogOpenSpy).toHaveBeenCalledTimes(1);
       const [, config] = dialogOpenSpy.mock.calls[0];
-      expect(config?.data).toEqual({ kind: 'monthly', total: 20, goal: 15 });
+      expect(config?.data).toMatchObject({
+        kind: 'monthly',
+        total: 20,
+        goal: 15,
+      });
+      expect(config?.ariaLabelledBy).toBe(config?.data?.titleId);
     });
 
     it('Given no goals reached, Then the celebration dialog does not open', async () => {

@@ -20,6 +20,13 @@ export interface GoalReachedDialogData {
   readonly kind: GoalKind;
   readonly total: number;
   readonly goal: number;
+  /**
+   * DOM id assigned to the dialog title element. Provided by the caller so
+   * that `MatDialogConfig.ariaLabelledBy` can point at it. Multiple goal
+   * dialogs (daily/weekly/monthly) can be open simultaneously, so the id
+   * MUST be unique per instance.
+   */
+  readonly titleId: string;
 }
 
 interface GoalCopy {
