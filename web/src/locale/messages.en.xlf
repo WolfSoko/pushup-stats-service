@@ -4095,6 +4095,84 @@ Deine Position: # ·  Reps        </source>
         <target>Delete user</target>
       </segment>
     </unit>
+    <unit id="admin.details.title">
+      <segment state="translated">
+        <source>Benutzerdetails</source>
+        <target>User details</target>
+      </segment>
+    </unit>
+    <unit id="admin.row.detailsAria">
+      <segment state="translated">
+        <source>Details öffnen für <ph id="0" equiv="identifier" disp="identifier"/></source>
+        <target>Open details for <ph id="0" equiv="identifier" disp="identifier"/></target>
+      </segment>
+    </unit>
+    <unit id="admin.details.uid">
+      <segment state="translated">
+        <source>UID</source>
+        <target>UID</target>
+      </segment>
+    </unit>
+    <unit id="admin.details.displayName">
+      <segment state="translated">
+        <source>Name</source>
+        <target>Name</target>
+      </segment>
+    </unit>
+    <unit id="admin.details.email">
+      <segment state="translated">
+        <source>E-Mail</source>
+        <target>Email</target>
+      </segment>
+    </unit>
+    <unit id="admin.details.anonymous">
+      <segment state="translated">
+        <source>Anonym</source>
+        <target>Anonymous</target>
+      </segment>
+    </unit>
+    <unit id="admin.details.anonymous.yes">
+      <segment state="translated">
+        <source>Ja</source>
+        <target>Yes</target>
+      </segment>
+    </unit>
+    <unit id="admin.details.anonymous.no">
+      <segment state="translated">
+        <source>Nein</source>
+        <target>No</target>
+      </segment>
+    </unit>
+    <unit id="admin.details.role">
+      <segment state="translated">
+        <source>Rolle</source>
+        <target>Role</target>
+      </segment>
+    </unit>
+    <unit id="admin.details.pushupCount">
+      <segment state="translated">
+        <source>Pushups</source>
+        <target>Pushups</target>
+      </segment>
+    </unit>
+    <unit id="admin.details.lastEntry">
+      <segment state="translated">
+        <source>Letzter Eintrag</source>
+        <target>Last entry</target>
+      </segment>
+    </unit>
+    <unit id="admin.details.createdAt">
+      <segment state="translated">
+        <source>Erstellt</source>
+        <target>Created</target>
+      </segment>
+    </unit>
+    <unit id="admin.details.close">
+      <segment state="translated">
+        <source> Schließen </source>
+        <target> Close </target>
+      </segment>
+    </unit>
     <unit id="admin.delete.anonymize">
       <segment state="translated">
         <source>Daten anonymisieren (Pushups behalten)</source>

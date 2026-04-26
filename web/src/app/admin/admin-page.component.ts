@@ -22,6 +22,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { DeleteUserDialogComponent } from './delete-user-dialog.component';
 import { DeleteFeedbackDialogComponent } from './delete-feedback-dialog.component';
+import { UserDetailsDialogComponent } from './user-details-dialog.component';
 
 export interface AdminUser {
   uid: string;
@@ -191,7 +192,7 @@ interface AdminFeedback {
               >
               <mat-cell *matCellDef="let u">
                 @if (u.anonymous) {
-                  <mat-icon [matTooltip]="'Anonym'" color="warn"
+                  <mat-icon [matTooltip]="'Anonym'" class="anon-icon-warn"
                     >person_outline</mat-icon
                   >
                 }
@@ -229,7 +230,7 @@ interface AdminFeedback {
             <!-- actions column -->
             <ng-container matColumnDef="actions">
               <mat-header-cell *matHeaderCellDef></mat-header-cell>
-              <mat-cell *matCellDef="let u">
+              <mat-cell *matCellDef="let u" (click)="$event.stopPropagation()">
                 <button
                   mat-icon-button
                   color="warn"
@@ -242,7 +243,16 @@ interface AdminFeedback {
             </ng-container>
 
             <mat-header-row *matHeaderRowDef="displayedColumns" />
-            <mat-row *matRowDef="let row; columns: displayedColumns" />
+            <mat-row
+              *matRowDef="let row; columns: displayedColumns"
+              class="clickable-row"
+              tabindex="0"
+              role="button"
+              [attr.aria-label]="detailsAriaLabel(row)"
+              (click)="openDetailsDialog(row)"
+              (keydown.enter)="openDetailsDialog(row)"
+              (keydown.space)="openDetailsDialog(row); $event.preventDefault()"
+            />
           </mat-table>
         </mat-card>
       }
@@ -438,8 +448,22 @@ interface AdminFeedback {
       padding: 2px 6px;
       border-radius: 4px;
     }
+    .anon-icon-warn {
+      color: var(--mat-sys-error);
+    }
     mat-table {
       width: 100%;
+    }
+    .clickable-row {
+      cursor: pointer;
+    }
+    .clickable-row:hover {
+      background: var(--mat-sys-surface-variant);
+    }
+    .clickable-row:focus-visible {
+      outline: 2px solid var(--mat-sys-primary);
+      outline-offset: -2px;
+      background: var(--mat-sys-surface-variant);
     }
     h2 {
       margin-top: 48px;
@@ -645,6 +669,19 @@ export class AdminPageComponent {
     } finally {
       this.setFeedbackLoading(feedback.id, false);
     }
+  }
+
+  openDetailsDialog(user: AdminUser): void {
+    this.dialog.open(UserDetailsDialogComponent, {
+      data: user,
+      width: 'min(92vw, 480px)',
+      maxWidth: '92vw',
+    });
+  }
+
+  detailsAriaLabel(user: AdminUser): string {
+    const identifier = user.displayName ?? user.email ?? user.uid;
+    return $localize`:@@admin.row.detailsAria:Details öffnen für ${identifier}:identifier:`;
   }
 
   async openDeleteDialog(user: AdminUser): Promise<void> {
