@@ -1,4 +1,13 @@
 <div #card class="goal-card" data-testid="goal-reached-card">
+  <button
+    type="button"
+    class="close-btn"
+    data-testid="goal-reached-close"
+    [attr.aria-label]="closeAriaLabel"
+    (click)="onClose()"
+  >
+    <span aria-hidden="true" class="material-icons close-icon">close</span>
+  </button>
   <div class="hero">
     <span aria-hidden="true" class="material-icons hero-icon">{{
       copy().icon

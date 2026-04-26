@@ -31,10 +31,6 @@ import {
 import { QuickAddConfigDialogComponent } from '../components/quick-add-config-dialog/quick-add-config-dialog.component';
 import { DashboardStore } from '../dashboard.store';
 
-// Monotonic counter used to mint unique DOM ids for the goal-reached dialog
-// title element (see openGoalReachedDialog).
-let nextDialogTitleId = 0;
-
 @Component({
   selector: 'app-stats-dashboard',
   imports: [
@@ -61,11 +57,6 @@ export class StatsDashboardComponent {
   private readonly router = inject(Router);
   private readonly live = inject(LiveDataStore);
   private readonly quickAdd = inject(QuickAddOrchestrationService);
-
-  private readonly goalReachedDialogShown: Record<
-    'daily' | 'weekly' | 'monthly',
-    boolean
-  > = { daily: false, weekly: false, monthly: false };
 
   readonly store = inject(DashboardStore);
 
@@ -134,72 +125,7 @@ export class StatsDashboardComponent {
       this.refreshCounter.update((c) => c + 1);
     });
 
-    this.registerGoalReachedTrigger(
-      'daily',
-      this.goalReached,
-      this.todayTotal,
-      this.store.dailyGoal
-    );
-    this.registerGoalReachedTrigger(
-      'weekly',
-      this.weeklyGoalReached,
-      this.weekReps,
-      this.weeklyGoal
-    );
-    this.registerGoalReachedTrigger(
-      'monthly',
-      this.monthlyGoalReached,
-      this.monthReps,
-      this.monthlyGoal
-    );
-
     this.store.loadQuote();
-  }
-
-  private registerGoalReachedTrigger(
-    kind: 'daily' | 'weekly' | 'monthly',
-    reached: () => boolean,
-    total: () => number,
-    goal: () => number
-  ): void {
-    effect(() => {
-      if (!isPlatformBrowser(this.platformId)) return;
-      const isReached = reached();
-      if (!isReached) {
-        this.goalReachedDialogShown[kind] = false;
-        return;
-      }
-      if (this.goalReachedDialogShown[kind]) return;
-      this.goalReachedDialogShown[kind] = true;
-      untracked(() => {
-        void this.openGoalReachedDialog(kind, {
-          total: total(),
-          goal: goal(),
-        });
-      });
-    });
-  }
-
-  private async openGoalReachedDialog(
-    kind: 'daily' | 'weekly' | 'monthly',
-    snapshot: { total: number; goal: number }
-  ): Promise<void> {
-    const { GoalReachedDialogComponent } =
-      await import('../components/goal-reached-dialog/goal-reached-dialog.component');
-    // Unique title id per dialog instance — daily/weekly/monthly can all
-    // be open at once if a single entry crosses several thresholds, and
-    // duplicate DOM ids would make ariaLabelledBy resolution ambiguous.
-    const titleId = `goal-reached-dialog-title-${nextDialogTitleId++}`;
-    this.dialog.open(GoalReachedDialogComponent, {
-      panelClass: 'goal-reached-dialog-panel',
-      backdropClass: 'goal-reached-dialog-backdrop',
-      autoFocus: 'dialog',
-      restoreFocus: true,
-      ariaLabelledBy: titleId,
-      width: 'min(92vw, 460px)',
-      maxWidth: '92vw',
-      data: { kind, total: snapshot.total, goal: snapshot.goal, titleId },
-    });
   }
 
   fillToGoal(): void {

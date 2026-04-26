@@ -24,6 +24,47 @@
   overflow: hidden;
 }
 
+.close-btn {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.18);
+  color: rgb(255, 248, 234);
+  transition:
+    background-color 120ms ease,
+    transform 120ms ease;
+
+  &:hover:not([disabled]) {
+    background: rgba(255, 255, 255, 0.32);
+  }
+
+  &:active:not([disabled]) {
+    transform: scale(0.95);
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow:
+      0 0 0 2px rgb(255, 248, 234),
+      0 0 0 4px rgba(0, 0, 0, 0.45);
+  }
+}
+
+.close-icon {
+  font-size: 20px;
+  line-height: 1;
+  color: rgb(255, 248, 234);
+}
+
 .hero {
   display: flex;
   align-items: center;

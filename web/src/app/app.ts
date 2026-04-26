@@ -43,6 +43,7 @@ import { ThemeToggleComponent } from './core/theme';
 import { ReminderOrchestrationService } from './core/reminder-orchestration.service';
 import { AppDataFacade } from './core/app-data.facade';
 import { QuickAddOrchestrationService } from './core/quick-add-orchestration.service';
+import { GoalReachedNotificationService } from './core/goal-reached-notification.service';
 import { FeedbackDialogComponent } from './core/feedback/feedback-dialog.component';
 import { FeedbackService } from './core/feedback/feedback.service';
 import {
@@ -163,6 +164,11 @@ export class App {
   private readonly reminderOrchestration = inject(ReminderOrchestrationService);
   private readonly quickAdd = inject(QuickAddOrchestrationService);
   private readonly appData = inject(AppDataFacade);
+  // Eager-inject so the goal-reached celebration fires regardless of which
+  // page is mounted when the user crosses a daily/weekly/monthly threshold.
+  private readonly _goalReachedNotifier = inject(
+    GoalReachedNotificationService
+  );
 
   // Delegate to facade
   readonly quickAddSuggestions = this.appData.quickAddSuggestions;

@@ -35,6 +35,7 @@ import {
   POST_AUTH_HOOKS,
   USER_PROFILE_PORT,
 } from '@pu-auth/auth';
+import { provideWsThanosOptions } from '@wolsok/thanos';
 import {
   provideFireStore,
   UserConfigApiService,
@@ -96,6 +97,9 @@ export const appConfig: ApplicationConfig = {
     { provide: POST_AUTH_HOOKS, useClass: UserProfileSyncHook, multi: true },
     { provide: POST_AUTH_HOOKS, useClass: GuestDataMigrationHook, multi: true },
     { provide: VAPID_PUBLIC_KEY, useValue: firebaseRuntime.vapidPublicKey },
+    // Halve the default particle count (400k → 200k) so the goal-reached
+    // snap finishes faster on lower-end devices.
+    provideWsThanosOptions({ maxParticleCount: 200_000 }),
     // Stock ngsw at scope `/` — handles app shell + asset caching only.
     // Push + notification logic lives in a separate worker registered at
     // `/push/` by PushSwRegistrationService (libs/reminders). Keeping ngsw

@@ -81,9 +81,15 @@ export class GoalReachedDialogComponent {
 
   protected readonly snapAriaLabel = $localize`:@@goalReached.snapAria:Erfolg vaporisieren`;
   protected readonly snapLabel = $localize`:@@goalReached.snap:Snap!`;
+  protected readonly closeAriaLabel = $localize`:@@goalReached.closeAria:Schließen`;
   protected readonly progressLabel = computed(
     () => `${this.data.total} / ${this.data.goal}`
   );
+
+  protected onClose(): void {
+    if (this.snapping()) return;
+    this.dialogRef.close();
+  }
 
   protected async onSnap(): Promise<void> {
     if (this.snapping()) return;

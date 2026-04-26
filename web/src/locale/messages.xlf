@@ -3085,6 +3085,14 @@
         <source>Snap!</source>
       </segment>
     </unit>
+    <unit id="goalReached.closeAria">
+      <notes>
+        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:84</note>
+      </notes>
+      <segment>
+        <source>Schließen</source>
+      </segment>
+    </unit>
     <unit id="heatmap.loading">
       <notes>
         <note category="location">web/src/app/stats/components/heatmap/heatmap.component.ts:36,39</note>

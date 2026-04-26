@@ -193,4 +193,27 @@ describe('GoalReachedDialogComponent', () => {
       expect(closeSpy).toHaveBeenCalledTimes(1);
     });
   });
+
+  describe('Given the user clicks the close button', () => {
+    it('Then it closes the dialog without vaporizing', async () => {
+      // Given
+      await setup({
+        kind: 'daily',
+        total: 50,
+        goal: 50,
+        titleId: 'test-title-close',
+      });
+      const closeBtn = fixture.nativeElement.querySelector(
+        '[data-testid="goal-reached-close"]'
+      ) as HTMLButtonElement;
+
+      // When
+      closeBtn.click();
+      await fixture.whenStable();
+
+      // Then
+      expect(vaporizeSpy).not.toHaveBeenCalled();
+      expect(closeSpy).toHaveBeenCalledTimes(1);
+    });
+  });
 });

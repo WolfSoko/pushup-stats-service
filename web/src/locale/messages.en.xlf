@@ -5448,6 +5448,12 @@ Deine Position: # ·  Reps        </source>
         <target>Vaporize the success</target>
       </segment>
     </unit>
+    <unit id="goalReached.closeAria">
+      <segment state="translated">
+        <source>Schließen</source>
+        <target>Close</target>
+      </segment>
+    </unit>
     <unit id="goalReached.repsSuffix">
       <segment state="translated">
         <source>Liegestütze</source>
