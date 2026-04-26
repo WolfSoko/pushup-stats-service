@@ -1,9 +1,8 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AdminUser } from './admin-page.component';
 
 @Component({
@@ -26,7 +25,7 @@ import { AdminUser } from './admin-page.component';
         <dt i18n="@@admin.details.anonymous">Anonym</dt>
         <dd>
           @if (user.anonymous) {
-            <mat-icon class="anon-icon" color="warn">person_outline</mat-icon>
+            <mat-icon class="anon-icon">person_outline</mat-icon>
             <span i18n="@@admin.details.anonymous.yes">Ja</span>
           } @else {
             <span i18n="@@admin.details.anonymous.no">Nein</span>
@@ -82,6 +81,7 @@ import { AdminUser } from './admin-page.component';
     .anon-icon {
       vertical-align: middle;
       margin-right: 4px;
+      color: var(--mat-sys-error);
     }
   `,
 })

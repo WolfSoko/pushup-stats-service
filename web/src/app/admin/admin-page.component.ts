@@ -192,7 +192,7 @@ interface AdminFeedback {
               >
               <mat-cell *matCellDef="let u">
                 @if (u.anonymous) {
-                  <mat-icon [matTooltip]="'Anonym'" color="warn"
+                  <mat-icon [matTooltip]="'Anonym'" class="anon-icon-warn"
                     >person_outline</mat-icon
                   >
                 }
@@ -246,7 +246,12 @@ interface AdminFeedback {
             <mat-row
               *matRowDef="let row; columns: displayedColumns"
               class="clickable-row"
+              tabindex="0"
+              role="button"
+              [attr.aria-label]="detailsAriaLabel(row)"
               (click)="openDetailsDialog(row)"
+              (keydown.enter)="openDetailsDialog(row)"
+              (keydown.space)="openDetailsDialog(row); $event.preventDefault()"
             />
           </mat-table>
         </mat-card>
@@ -443,6 +448,9 @@ interface AdminFeedback {
       padding: 2px 6px;
       border-radius: 4px;
     }
+    .anon-icon-warn {
+      color: var(--mat-sys-error);
+    }
     mat-table {
       width: 100%;
     }
@@ -450,6 +458,11 @@ interface AdminFeedback {
       cursor: pointer;
     }
     .clickable-row:hover {
+      background: var(--mat-sys-surface-variant);
+    }
+    .clickable-row:focus-visible {
+      outline: 2px solid var(--mat-sys-primary);
+      outline-offset: -2px;
       background: var(--mat-sys-surface-variant);
     }
     h2 {
@@ -664,6 +677,11 @@ export class AdminPageComponent {
       width: 'min(92vw, 480px)',
       maxWidth: '92vw',
     });
+  }
+
+  detailsAriaLabel(user: AdminUser): string {
+    const identifier = user.displayName ?? user.email ?? user.uid;
+    return $localize`:@@admin.row.detailsAria:Details öffnen für ${identifier}:identifier:`;
   }
 
   async openDeleteDialog(user: AdminUser): Promise<void> {

@@ -4101,6 +4101,12 @@ Deine Position: # ·  Reps        </source>
         <target>User details</target>
       </segment>
     </unit>
+    <unit id="admin.row.detailsAria">
+      <segment state="translated">
+        <source>Details öffnen für <ph id="0" equiv="identifier" disp="identifier"/></source>
+        <target>Open details for <ph id="0" equiv="identifier" disp="identifier"/></target>
+      </segment>
+    </unit>
     <unit id="admin.details.uid">
       <segment state="translated">
         <source>UID</source>
@@ -4164,7 +4170,7 @@ Deine Position: # ·  Reps        </source>
     <unit id="admin.details.close">
       <segment state="translated">
         <source> Schließen </source>
-        <target>Close</target>
+        <target> Close </target>
       </segment>
     </unit>
     <unit id="admin.delete.anonymize">

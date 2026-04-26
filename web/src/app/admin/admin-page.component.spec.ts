@@ -8,6 +8,7 @@ import {
 import { of } from 'rxjs';
 import { AdminPageComponent, AdminUser } from './admin-page.component';
 import { DeleteFeedbackDialogComponent } from './delete-feedback-dialog.component';
+import { DeleteUserDialogComponent } from './delete-user-dialog.component';
 import { UserDetailsDialogComponent } from './user-details-dialog.component';
 
 vi.mock('@angular/fire/functions', () => ({
@@ -229,8 +230,8 @@ describe('AdminPageComponent', () => {
       );
     });
 
-    it('does NOT open the details dialog when a row action button is clicked', async () => {
-      // Render a single user so a row exists in the table.
+    it('opens the details dialog when a non-actions cell of a rendered row is clicked', async () => {
+      // Render a row so the template (click) wiring is exercised.
       setupCallables([
         { name: 'adminListUsers', impl: async () => ({ data: [sampleUser] }) },
         { name: 'adminListFeedback', impl: async () => ({ data: [] }) },
@@ -245,22 +246,66 @@ describe('AdminPageComponent', () => {
         fixture.debugElement.injector.get(MatDialog),
         'open'
       );
+      dialogOpenSpy.mockReturnValue(stubDialogRef(undefined));
       fixture.detectChanges();
       await fixture.whenStable();
       fixture.detectChanges();
 
-      const actionsCell = fixture.nativeElement.querySelector(
-        'mat-cell.mat-column-actions'
+      // Pick a non-actions cell so we don't hit the stopPropagation handler.
+      const nameCell = fixture.nativeElement.querySelector(
+        'mat-row.clickable-row mat-cell.mat-column-displayName'
       ) as HTMLElement | null;
-      expect(actionsCell).toBeTruthy();
+      expect(nameCell).toBeTruthy();
 
-      const event = new MouseEvent('click', {
-        bubbles: true,
-        cancelable: true,
-      });
-      actionsCell!.dispatchEvent(event);
+      nameCell!.dispatchEvent(
+        new MouseEvent('click', { bubbles: true, cancelable: true })
+      );
 
-      // The actions cell stops propagation, so the row handler must not fire.
+      expect(dialogOpenSpy).toHaveBeenCalledWith(
+        UserDetailsDialogComponent,
+        expect.objectContaining({ data: sampleUser })
+      );
+    });
+
+    it('opens only the delete dialog (not the details dialog) when the row delete button is clicked', async () => {
+      // Render a single user so a row + delete button exist in the table.
+      setupCallables([
+        { name: 'adminListUsers', impl: async () => ({ data: [sampleUser] }) },
+        { name: 'adminListFeedback', impl: async () => ({ data: [] }) },
+      ]);
+      await TestBed.configureTestingModule({
+        imports: [AdminPageComponent, MatDialogModule],
+        providers: [{ provide: Functions, useValue: {} }],
+      }).compileComponents();
+      fixture = TestBed.createComponent(AdminPageComponent);
+      component = fixture.componentInstance;
+      dialogOpenSpy = vi.spyOn(
+        fixture.debugElement.injector.get(MatDialog),
+        'open'
+      );
+      // Stub the delete-confirmation dialog so the (await) delete flow does
+      // not actually call the (mocked-missing) adminDeleteUser callable.
+      dialogOpenSpy.mockReturnValue(stubDialogRef(undefined));
+      fixture.detectChanges();
+      await fixture.whenStable();
+      fixture.detectChanges();
+
+      const deleteButton = fixture.nativeElement.querySelector(
+        'mat-cell.mat-column-actions button'
+      ) as HTMLButtonElement | null;
+      expect(deleteButton).toBeTruthy();
+
+      deleteButton!.dispatchEvent(
+        new MouseEvent('click', { bubbles: true, cancelable: true })
+      );
+      await fixture.whenStable();
+
+      // The delete dialog should open ...
+      expect(dialogOpenSpy).toHaveBeenCalledWith(
+        DeleteUserDialogComponent,
+        expect.objectContaining({ data: sampleUser })
+      );
+      // ... but the row click handler must NOT fire (stopPropagation works).
       expect(dialogOpenSpy).not.toHaveBeenCalledWith(
         UserDetailsDialogComponent,
         expect.anything()

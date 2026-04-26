@@ -811,7 +811,7 @@
     </unit>
     <unit id="admin.feedback.title">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:256,258</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:261,263</note>
       </notes>
       <segment>
         <source>Feedback</source>
@@ -819,7 +819,7 @@
     </unit>
     <unit id="admin.feedback.empty">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:275,277</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:280,282</note>
       </notes>
       <segment>
         <source>Noch kein Feedback vorhanden.</source>
@@ -827,7 +827,7 @@
     </unit>
     <unit id="admin.feedback.col.date">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:286,288</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:291,293</note>
       </notes>
       <segment>
         <source>Datum</source>
@@ -835,7 +835,7 @@
     </unit>
     <unit id="admin.feedback.col.name">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:297,299</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:302,304</note>
       </notes>
       <segment>
         <source>Name</source>
@@ -843,7 +843,7 @@
     </unit>
     <unit id="admin.feedback.col.email">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:306,308</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:311,313</note>
       </notes>
       <segment>
         <source>E-Mail</source>
@@ -851,7 +851,7 @@
     </unit>
     <unit id="admin.feedback.col.message">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:315,317</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:320,322</note>
       </notes>
       <segment>
         <source>Nachricht</source>
@@ -859,7 +859,7 @@
     </unit>
     <unit id="admin.feedback.col.userId">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:326,328</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:331,333</note>
       </notes>
       <segment>
         <source>User</source>
@@ -867,7 +867,7 @@
     </unit>
     <unit id="admin.refresh">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:492</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:505</note>
       </notes>
       <segment>
         <source>Neu laden</source>
@@ -875,7 +875,7 @@
     </unit>
     <unit id="admin.feedback.anon">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:493</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:506</note>
       </notes>
       <segment>
         <source>Anonym</source>
@@ -883,7 +883,7 @@
     </unit>
     <unit id="admin.feedback.markRead">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:494</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:507</note>
       </notes>
       <segment>
         <source>Als gelesen markieren</source>
@@ -891,7 +891,7 @@
     </unit>
     <unit id="admin.feedback.markUnread">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:495</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:508</note>
       </notes>
       <segment>
         <source>Als ungelesen markieren</source>
@@ -899,7 +899,7 @@
     </unit>
     <unit id="admin.feedback.createIssue">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:496</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:509</note>
       </notes>
       <segment>
         <source>GitHub-Issue erstellen</source>
@@ -907,7 +907,7 @@
     </unit>
     <unit id="admin.feedback.openIssue">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:497</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:510</note>
       </notes>
       <segment>
         <source>GitHub-Issue öffnen</source>
@@ -915,10 +915,18 @@
     </unit>
     <unit id="admin.feedback.delete">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:498</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:511</note>
       </notes>
       <segment>
         <source>Feedback löschen</source>
+      </segment>
+    </unit>
+    <unit id="admin.row.detailsAria">
+      <notes>
+        <note category="location">web/src/app/admin/admin-page.component.ts:684</note>
+      </notes>
+      <segment>
+        <source>Details öffnen für <ph id="0" equiv="identifier" disp="identifier"/></source>
       </segment>
     </unit>
     <unit id="admin.feedback.delete.title">
@@ -995,7 +1003,7 @@
     </unit>
     <unit id="admin.details.title">
       <notes>
-        <note category="location">web/src/app/admin/user-details-dialog.component.ts:14,15</note>
+        <note category="location">web/src/app/admin/user-details-dialog.component.ts:13,14</note>
       </notes>
       <segment>
         <source>Benutzerdetails</source>
@@ -1003,7 +1011,7 @@
     </unit>
     <unit id="admin.details.uid">
       <notes>
-        <note category="location">web/src/app/admin/user-details-dialog.component.ts:18</note>
+        <note category="location">web/src/app/admin/user-details-dialog.component.ts:17</note>
       </notes>
       <segment>
         <source>UID</source>
@@ -1011,7 +1019,7 @@
     </unit>
     <unit id="admin.details.displayName">
       <notes>
-        <note category="location">web/src/app/admin/user-details-dialog.component.ts:20,21</note>
+        <note category="location">web/src/app/admin/user-details-dialog.component.ts:19,20</note>
       </notes>
       <segment>
         <source>Name</source>
@@ -1019,7 +1027,7 @@
     </unit>
     <unit id="admin.details.email">
       <notes>
-        <note category="location">web/src/app/admin/user-details-dialog.component.ts:23,24</note>
+        <note category="location">web/src/app/admin/user-details-dialog.component.ts:22,23</note>
       </notes>
       <segment>
         <source>E-Mail</source>
@@ -1027,7 +1035,7 @@
     </unit>
     <unit id="admin.details.anonymous">
       <notes>
-        <note category="location">web/src/app/admin/user-details-dialog.component.ts:26,28</note>
+        <note category="location">web/src/app/admin/user-details-dialog.component.ts:25,27</note>
       </notes>
       <segment>
         <source>Anonym</source>
@@ -1035,7 +1043,7 @@
     </unit>
     <unit id="admin.details.anonymous.yes">
       <notes>
-        <note category="location">web/src/app/admin/user-details-dialog.component.ts:30,32</note>
+        <note category="location">web/src/app/admin/user-details-dialog.component.ts:29,31</note>
       </notes>
       <segment>
         <source>Ja</source>
@@ -1043,7 +1051,7 @@
     </unit>
     <unit id="admin.details.anonymous.no">
       <notes>
-        <note category="location">web/src/app/admin/user-details-dialog.component.ts:32,36</note>
+        <note category="location">web/src/app/admin/user-details-dialog.component.ts:31,35</note>
       </notes>
       <segment>
         <source>Nein</source>
@@ -1051,7 +1059,7 @@
     </unit>
     <unit id="admin.details.role">
       <notes>
-        <note category="location">web/src/app/admin/user-details-dialog.component.ts:36,37</note>
+        <note category="location">web/src/app/admin/user-details-dialog.component.ts:35,36</note>
       </notes>
       <segment>
         <source>Rolle</source>
@@ -1059,7 +1067,7 @@
     </unit>
     <unit id="admin.details.pushupCount">
       <notes>
-        <note category="location">web/src/app/admin/user-details-dialog.component.ts:39,40</note>
+        <note category="location">web/src/app/admin/user-details-dialog.component.ts:38,39</note>
       </notes>
       <segment>
         <source>Pushups</source>
@@ -1067,7 +1075,7 @@
     </unit>
     <unit id="admin.details.lastEntry">
       <notes>
-        <note category="location">web/src/app/admin/user-details-dialog.component.ts:42,44</note>
+        <note category="location">web/src/app/admin/user-details-dialog.component.ts:41,43</note>
       </notes>
       <segment>
         <source>Letzter Eintrag</source>
@@ -1075,7 +1083,7 @@
     </unit>
     <unit id="admin.details.createdAt">
       <notes>
-        <note category="location">web/src/app/admin/user-details-dialog.component.ts:47,49</note>
+        <note category="location">web/src/app/admin/user-details-dialog.component.ts:46,48</note>
       </notes>
       <segment>
         <source>Erstellt</source>
@@ -1083,7 +1091,7 @@
     </unit>
     <unit id="admin.details.close">
       <notes>
-        <note category="location">web/src/app/admin/user-details-dialog.component.ts:55,57</note>
+        <note category="location">web/src/app/admin/user-details-dialog.component.ts:54,56</note>
       </notes>
       <segment>
         <source> Schließen </source>
