@@ -10,7 +10,11 @@ import {
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { LiveDataStore } from '@pu-stats/data-access';
-import { PushupRecord, toBerlinIsoDate } from '@pu-stats/models';
+import {
+  PushupRecord,
+  SNAP_QUALITY_PARTICLES,
+  toBerlinIsoDate,
+} from '@pu-stats/models';
 import { UserConfigStore } from './user-config.store';
 
 type GoalKind = 'daily' | 'weekly' | 'monthly';
@@ -125,15 +129,17 @@ export class GoalReachedNotificationService {
       }
       this.opened.add(key);
       writeFlag(key);
+      const maxParticleCount =
+        SNAP_QUALITY_PARTICLES[this.userConfig.snapQuality()];
       untracked(() =>
-        this.openDialog(spec.kind, { total, goal, storageKey: key })
+        this.openDialog(spec.kind, { total, goal, maxParticleCount })
       );
     });
   }
 
   private async openDialog(
     kind: GoalKind,
-    snapshot: { total: number; goal: number; storageKey: string }
+    snapshot: { total: number; goal: number; maxParticleCount: number }
   ): Promise<void> {
     const { GoalReachedDialogComponent } =
       await import('../stats/components/goal-reached-dialog/goal-reached-dialog.component');
@@ -146,7 +152,13 @@ export class GoalReachedNotificationService {
       ariaLabelledBy: titleId,
       width: 'min(92vw, 460px)',
       maxWidth: '92vw',
-      data: { kind, total: snapshot.total, goal: snapshot.goal, titleId },
+      data: {
+        kind,
+        total: snapshot.total,
+        goal: snapshot.goal,
+        titleId,
+        maxParticleCount: snapshot.maxParticleCount,
+      },
     });
   }
 }

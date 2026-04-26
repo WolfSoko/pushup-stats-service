@@ -14,11 +14,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDialogModule, MatDialog } from '@angular/material/dialog';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { RouterLink } from '@angular/router';
 import { AuthStore, UserContextService } from '@pu-auth/auth';
 import { Router } from '@angular/router';
 import { Analytics, logEvent } from '@angular/fire/analytics';
 import { PushSubscriptionService } from '@pu-reminders/reminders';
+import { DEFAULT_SNAP_QUALITY, SnapQuality } from '@pu-stats/models';
 import { UserConfigStore } from '../../core/user-config.store';
 
 @Component({
@@ -32,6 +34,7 @@ import { UserConfigStore } from '../../core/user-config.store';
     MatSlideToggleModule,
     MatSnackBarModule,
     MatDialogModule,
+    MatButtonToggleModule,
     RouterLink,
   ],
   template: `
@@ -153,6 +156,40 @@ import { UserConfigStore } from '../../core/user-config.store';
                 >Gesamtziel pro Monat.</mat-hint
               >
             </mat-form-field>
+
+            <div class="snap-quality-field">
+              <span
+                id="snap-quality-label"
+                class="snap-quality-label"
+                i18n="@@settings.snapQualityLabel"
+                >Snap-Animation Qualität</span
+              >
+              <mat-button-toggle-group
+                hideSingleSelectionIndicator
+                [value]="snapQualityDraft()"
+                (change)="snapQualityDraft.set($event.value)"
+                aria-labelledby="snap-quality-label"
+                data-testid="settings-snap-quality"
+              >
+                <mat-button-toggle value="low" i18n="@@settings.snapQuality.low"
+                  >Niedrig</mat-button-toggle
+                >
+                <mat-button-toggle
+                  value="middle"
+                  i18n="@@settings.snapQuality.middle"
+                  >Mittel</mat-button-toggle
+                >
+                <mat-button-toggle
+                  value="high"
+                  i18n="@@settings.snapQuality.high"
+                  >Hoch</mat-button-toggle
+                >
+              </mat-button-toggle-group>
+              <p class="muted" i18n="@@settings.snapQualityHint">
+                Steuert die Partikelanzahl der „Ziel erreicht“-Animation (40k /
+                120k / 200k).
+              </p>
+            </div>
           </section>
 
           @if (errorMessage()) {
@@ -340,6 +377,15 @@ import { UserConfigStore } from '../../core/user-config.store';
       border: 1px solid rgba(100, 160, 255, 0.3);
       flex-wrap: wrap;
     }
+    .snap-quality-field {
+      display: grid;
+      gap: 6px;
+      align-content: start;
+    }
+    .snap-quality-label {
+      font-size: 0.85rem;
+      opacity: 0.85;
+    }
   `,
 })
 export class SettingsPageComponent {
@@ -360,6 +406,7 @@ export class SettingsPageComponent {
   readonly monthlyGoalDraft = signal<number>(200);
   readonly leaderboardOptOutDraft = signal(false);
   readonly adsConsentDraft = signal(false);
+  readonly snapQualityDraft = signal<SnapQuality>(DEFAULT_SNAP_QUALITY);
 
   readonly saving = signal(false);
   readonly saved = signal(false);
@@ -378,6 +425,7 @@ export class SettingsPageComponent {
         monthlyGoal: 200,
         hideFromLeaderboard: false,
         consent: { targetedAds: true },
+        snapQuality: DEFAULT_SNAP_QUALITY,
       };
     return {
       displayName: (val as { displayName?: string }).displayName ?? '',
@@ -399,6 +447,9 @@ export class SettingsPageComponent {
       consent: (val as { consent?: { targetedAds?: boolean } }).consent ?? {
         targetedAds: true,
       },
+      snapQuality:
+        (val as { ui?: { snapQuality?: SnapQuality } }).ui?.snapQuality ??
+        DEFAULT_SNAP_QUALITY,
     };
   });
 
@@ -412,6 +463,7 @@ export class SettingsPageComponent {
       this.monthlyGoalDraft.set(cfg.monthlyGoal);
       this.leaderboardOptOutDraft.set(cfg.hideFromLeaderboard);
       this.adsConsentDraft.set(cfg.consent?.targetedAds ?? true);
+      this.snapQualityDraft.set(cfg.snapQuality);
     });
   }
 
@@ -446,6 +498,7 @@ export class SettingsPageComponent {
         },
         ui: {
           hideFromLeaderboard: this.leaderboardOptOutDraft(),
+          snapQuality: this.snapQualityDraft(),
         },
       });
       this.saved.set(true);

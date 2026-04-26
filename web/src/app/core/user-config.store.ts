@@ -7,7 +7,13 @@ import {
 } from '@ngrx/signals';
 import { UserContextService } from '@pu-auth/auth';
 import { UserConfigApiService } from '@pu-stats/data-access';
-import { QuickAddConfig, UserConfig, UserConfigUpdate } from '@pu-stats/models';
+import {
+  DEFAULT_SNAP_QUALITY,
+  QuickAddConfig,
+  SnapQuality,
+  UserConfig,
+  UserConfigUpdate,
+} from '@pu-stats/models';
 import { firstValueFrom } from 'rxjs';
 
 /**
@@ -40,6 +46,10 @@ export const UserConfigStore = signalStore(
     monthlyGoal: computed(() => store.configResource.value()?.monthlyGoal ?? 0),
     quickAdds: computed<QuickAddConfig[]>(
       () => store.configResource.value()?.ui?.quickAdds ?? []
+    ),
+    snapQuality: computed<SnapQuality>(
+      () =>
+        store.configResource.value()?.ui?.snapQuality ?? DEFAULT_SNAP_QUALITY
     ),
   })),
   withMethods((store) => ({

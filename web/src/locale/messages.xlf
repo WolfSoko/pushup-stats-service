@@ -3839,6 +3839,46 @@
         <source>Gesamtziel pro Monat.</source>
       </segment>
     </unit>
+    <unit id="settings.snapQualityLabel">
+      <notes>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts</note>
+      </notes>
+      <segment>
+        <source>Snap-Animation Qualität</source>
+      </segment>
+    </unit>
+    <unit id="settings.snapQuality.low">
+      <notes>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts</note>
+      </notes>
+      <segment>
+        <source>Niedrig</source>
+      </segment>
+    </unit>
+    <unit id="settings.snapQuality.middle">
+      <notes>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts</note>
+      </notes>
+      <segment>
+        <source>Mittel</source>
+      </segment>
+    </unit>
+    <unit id="settings.snapQuality.high">
+      <notes>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts</note>
+      </notes>
+      <segment>
+        <source>Hoch</source>
+      </segment>
+    </unit>
+    <unit id="settings.snapQualityHint">
+      <notes>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts</note>
+      </notes>
+      <segment>
+        <source>Steuert die Partikelanzahl der „Ziel erreicht“-Animation (40k / 120k / 200k).</source>
+      </segment>
+    </unit>
     <unit id="saveSettings">
       <notes>
         <note category="location">web/src/app/stats/shell/settings-page.component.ts:170,172</note>

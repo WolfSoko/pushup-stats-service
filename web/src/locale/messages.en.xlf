@@ -1223,6 +1223,36 @@ Active:         </target>
         <target>Total goal per month.</target>
       </segment>
     </unit>
+    <unit id="settings.snapQualityLabel">
+      <segment state="translated">
+        <source>Snap-Animation Qualität</source>
+        <target>Snap animation quality</target>
+      </segment>
+    </unit>
+    <unit id="settings.snapQuality.low">
+      <segment state="translated">
+        <source>Niedrig</source>
+        <target>Low</target>
+      </segment>
+    </unit>
+    <unit id="settings.snapQuality.middle">
+      <segment state="translated">
+        <source>Mittel</source>
+        <target>Medium</target>
+      </segment>
+    </unit>
+    <unit id="settings.snapQuality.high">
+      <segment state="translated">
+        <source>Hoch</source>
+        <target>High</target>
+      </segment>
+    </unit>
+    <unit id="settings.snapQualityHint">
+      <segment state="translated">
+        <source>Steuert die Partikelanzahl der „Ziel erreicht“-Animation (40k / 120k / 200k).</source>
+        <target>Controls the particle count of the “goal reached” animation (40k / 120k / 200k).</target>
+      </segment>
+    </unit>
     <unit id="dashboard.dailyGoalLabel">
       <segment state="translated">
         <source>Tag</source>

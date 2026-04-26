@@ -4,7 +4,7 @@
 // resolve to a `.mjs` with no adjacent `.d.ts`. Expose a thin module shim
 // for the public API surface we rely on.
 declare module '@wolsok/thanos' {
-  import type { Provider } from '@angular/core';
+  import type { InjectionToken, Provider } from '@angular/core';
   import type { Observable } from 'rxjs';
 
   export interface AnimationState {
@@ -18,6 +18,12 @@ declare module '@wolsok/thanos' {
     readonly maxParticleCount: number;
     readonly particleAcceleration: number;
   }
+
+  export const WS_THANOS_OPTIONS_TOKEN: InjectionToken<WsThanosOptions>;
+
+  export function createWsThanosOptions(
+    options?: Partial<WsThanosOptions>
+  ): WsThanosOptions;
 
   export function provideWsThanosOptions(
     options?: Partial<WsThanosOptions>

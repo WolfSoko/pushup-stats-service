@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
+  createEnvironmentInjector,
   ElementRef,
   EnvironmentInjector,
   inject,
@@ -12,6 +13,7 @@ import {
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { SNAP_QUALITY_PARTICLES } from '@pu-stats/models';
 import { finalize } from 'rxjs';
 
 export type GoalKind = 'daily' | 'weekly' | 'monthly';
@@ -27,6 +29,12 @@ export interface GoalReachedDialogData {
    * MUST be unique per instance.
    */
   readonly titleId: string;
+  /**
+   * Optional override for the @wolsok/thanos `maxParticleCount`. Falls back
+   * to the high preset when omitted so the dialog stays usable in isolation
+   * (e.g. Storybook, manual smoke tests).
+   */
+  readonly maxParticleCount?: number;
 }
 
 interface GoalCopy {
@@ -100,14 +108,39 @@ export class GoalReachedDialogComponent {
     this.snapping.set(true);
     try {
       const el = this.cardRef().nativeElement;
-      const { WsThanosService } = await import('@wolsok/thanos');
-      runInInjectionContext(this.envInjector, () => {
+      const {
+        WsThanosService,
+        WS_THANOS_OPTIONS_TOKEN,
+        createWsThanosOptions,
+      } = await import('@wolsok/thanos');
+      // Build a child environment injector so the user's snap-quality
+      // preset is honoured per-dialog without touching the root
+      // WsThanosService instance (whose options are frozen at first use).
+      const maxParticleCount =
+        this.data.maxParticleCount ?? SNAP_QUALITY_PARTICLES.high;
+      const childEnv = createEnvironmentInjector(
+        [
+          WsThanosService,
+          {
+            provide: WS_THANOS_OPTIONS_TOKEN,
+            useValue: createWsThanosOptions({ maxParticleCount }),
+          },
+        ],
+        this.envInjector,
+        'goal-reached-thanos'
+      );
+      runInInjectionContext(childEnv, () => {
         inject(WsThanosService)
           .vaporize(el)
           // Close on completion AND on error (html2canvas can throw on
           // unsupported CSS like modern color() functions) — single teardown
           // path via finalize keeps both branches in sync.
-          .pipe(finalize(() => this.dialogRef.close()))
+          .pipe(
+            finalize(() => {
+              childEnv.destroy();
+              this.dialogRef.close();
+            })
+          )
           .subscribe({ error: () => undefined });
       });
     } catch {

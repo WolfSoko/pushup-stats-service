@@ -39,6 +39,7 @@ describe('GoalReachedNotificationService', () => {
     weeklyGoal?: number;
     monthlyGoal?: number;
     entries?: PushupRecord[];
+    snapQuality?: 'low' | 'middle' | 'high';
   }): GoalReachedNotificationService {
     userConfigApiMock.getConfig.mockReturnValue(
       of({
@@ -46,6 +47,9 @@ describe('GoalReachedNotificationService', () => {
         dailyGoal: config.dailyGoal ?? 0,
         weeklyGoal: config.weeklyGoal ?? 0,
         monthlyGoal: config.monthlyGoal ?? 0,
+        ...(config.snapQuality
+          ? { ui: { snapQuality: config.snapQuality } }
+          : {}),
       })
     );
     liveEntries.set(config.entries ?? []);
@@ -241,5 +245,47 @@ describe('GoalReachedNotificationService', () => {
       // Then
       expect(dialogOpenSpy).not.toHaveBeenCalled();
     });
+  });
+
+  describe("Given the user's snapQuality preset", () => {
+    const cases: Array<{
+      quality: 'low' | 'middle' | 'high' | undefined;
+      maxParticleCount: number;
+      label: string;
+    }> = [
+      { quality: 'low', maxParticleCount: 40_000, label: 'low → 40k' },
+      { quality: 'middle', maxParticleCount: 120_000, label: 'middle → 120k' },
+      { quality: 'high', maxParticleCount: 200_000, label: 'high → 200k' },
+      {
+        quality: undefined,
+        maxParticleCount: 200_000,
+        label: 'unset → defaults to high (200k)',
+      },
+    ];
+
+    for (const { quality, maxParticleCount, label } of cases) {
+      it(`Then ${label} is forwarded as data.maxParticleCount`, async () => {
+        // Given
+        setup({
+          dailyGoal: 10,
+          snapQuality: quality,
+          entries: [
+            {
+              _id: '1',
+              timestamp: '2026-04-22T08:00:00',
+              reps: 12,
+            } as PushupRecord,
+          ],
+        });
+
+        // When
+        await flushAll();
+
+        // Then
+        expect(dialogOpenSpy).toHaveBeenCalledTimes(1);
+        const [, config] = dialogOpenSpy.mock.calls[0];
+        expect(config?.data).toMatchObject({ maxParticleCount });
+      });
+    }
   });
 });

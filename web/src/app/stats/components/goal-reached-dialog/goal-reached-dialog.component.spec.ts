@@ -2,19 +2,40 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
 
+// Hoisted shared spy so the module mock and the test code reference the same
+// function instance (vi.mock factories can't close over module-scope vars).
+const mocks = vi.hoisted(() => ({
+  vaporizeSpy: vi.fn<(el: HTMLElement) => unknown>(),
+  capturedOptions: { last: null as Record<string, unknown> | null },
+}));
+
 // Replace the real package (which has unresolved missing-extension imports
-// under Node ESM) with a stub class. Tests provide a useValue mock for the
-// WsThanosService DI token, so this stub never has to actually run.
-vi.mock('@wolsok/thanos', () => {
+// under Node ESM) with stubs that wire into the hoisted spy. The dialog
+// constructs WsThanosService via a child environment injector, so the mock
+// class — not a TestBed `useValue` — is what actually runs `.vaporize`.
+vi.mock('@wolsok/thanos', async () => {
+  const { InjectionToken } = await import('@angular/core');
   class WsThanosService {
-    vaporize(_el: HTMLElement): unknown {
-      return null;
+    vaporize(el: HTMLElement): unknown {
+      return mocks.vaporizeSpy(el);
     }
   }
-  return { WsThanosService };
+  return {
+    WsThanosService,
+    WS_THANOS_OPTIONS_TOKEN: new InjectionToken('WS_THANOS_OPTIONS_TOKEN'),
+    createWsThanosOptions: (opts?: Record<string, unknown>) => {
+      const merged = {
+        animationLength: 5000,
+        maxParticleCount: 200_000,
+        particleAcceleration: 30,
+        ...(opts ?? {}),
+      };
+      mocks.capturedOptions.last = merged;
+      return merged;
+    },
+  };
 });
 
-import { WsThanosService } from '@wolsok/thanos';
 import {
   GoalReachedDialogComponent,
   GoalReachedDialogData,
@@ -24,7 +45,7 @@ describe('GoalReachedDialogComponent', () => {
   let fixture: ComponentFixture<GoalReachedDialogComponent>;
   const closeSpy = vitest.fn();
   let vaporizeSubject: Subject<unknown>;
-  const vaporizeSpy = vitest.fn(() => vaporizeSubject.asObservable());
+  const vaporizeSpy = mocks.vaporizeSpy;
 
   async function setup(data: GoalReachedDialogData): Promise<void> {
     await TestBed.configureTestingModule({
@@ -32,7 +53,6 @@ describe('GoalReachedDialogComponent', () => {
       providers: [
         { provide: MatDialogRef, useValue: { close: closeSpy } },
         { provide: MAT_DIALOG_DATA, useValue: data },
-        { provide: WsThanosService, useValue: { vaporize: vaporizeSpy } },
       ],
     }).compileComponents();
 
@@ -43,6 +63,9 @@ describe('GoalReachedDialogComponent', () => {
   beforeEach(() => {
     vaporizeSubject = new Subject<unknown>();
     vitest.clearAllMocks();
+    mocks.capturedOptions.last = null;
+    mocks.vaporizeSpy.mockReset();
+    mocks.vaporizeSpy.mockImplementation(() => vaporizeSubject.asObservable());
   });
 
   describe('Given the dialog renders for a daily goal', () => {
@@ -191,6 +214,53 @@ describe('GoalReachedDialogComponent', () => {
 
       // Then
       expect(closeSpy).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('Given dialog data carries a maxParticleCount override', () => {
+    it('Then it forwards that count into the WsThanosOptions factory on snap', async () => {
+      // Given
+      await setup({
+        kind: 'daily',
+        total: 50,
+        goal: 50,
+        titleId: 'test-title-particles',
+        maxParticleCount: 40_000,
+      });
+      const snapBtn = fixture.nativeElement.querySelector(
+        '[data-testid="goal-reached-snap"]'
+      ) as HTMLButtonElement;
+
+      // When
+      snapBtn.click();
+      await fixture.whenStable();
+
+      // Then
+      expect(mocks.capturedOptions.last).toEqual(
+        expect.objectContaining({ maxParticleCount: 40_000 })
+      );
+    });
+
+    it('Then it falls back to the high preset when the override is omitted', async () => {
+      // Given
+      await setup({
+        kind: 'daily',
+        total: 50,
+        goal: 50,
+        titleId: 'test-title-particles-default',
+      });
+      const snapBtn = fixture.nativeElement.querySelector(
+        '[data-testid="goal-reached-snap"]'
+      ) as HTMLButtonElement;
+
+      // When
+      snapBtn.click();
+      await fixture.whenStable();
+
+      // Then
+      expect(mocks.capturedOptions.last).toEqual(
+        expect.objectContaining({ maxParticleCount: 200_000 })
+      );
     });
   });
 
