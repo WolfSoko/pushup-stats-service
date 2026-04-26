@@ -1,8 +1,8 @@
 <div #card class="goal-card" data-testid="goal-reached-card">
   <div class="hero">
-    <mat-icon class="hero-icon">{{ copy().icon }}</mat-icon>
+    <span class="material-icons hero-icon">{{ copy().icon }}</span>
   </div>
-  <h2 class="title" mat-dialog-title>{{ copy().title }}</h2>
+  <h2 class="title">{{ copy().title }}</h2>
   <p class="progress" data-testid="goal-reached-progress">
     {{ progressLabel() }}
     <span class="progress-suffix" i18n="@@goalReached.repsSuffix"
@@ -13,14 +13,13 @@
   <div class="actions">
     <button
       type="button"
-      mat-flat-button
       class="snap-btn"
       data-testid="goal-reached-snap"
       [disabled]="snapping()"
       [attr.aria-label]="snapAriaLabel"
       (click)="onSnap()"
     >
-      <mat-icon>auto_awesome</mat-icon>
+      <span class="material-icons snap-icon">auto_awesome</span>
       <span>{{ snapLabel }}</span>
     </button>
   </div>

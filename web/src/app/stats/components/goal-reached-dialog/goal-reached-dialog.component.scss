@@ -1,3 +1,8 @@
+// Note: html2canvas v1.x can't parse modern CSS color() functions, which
+// Angular Material 21 uses extensively. The vaporized .goal-card subtree
+// must therefore use only plain rgb()/rgba()/hex colors and avoid any
+// Material components (mat-button, mat-icon, mat-dialog-title) that pull
+// in Material 3 design tokens.
 :host {
   display: block;
 }
@@ -14,7 +19,7 @@
   background:
     radial-gradient(circle at top, rgba(255, 211, 95, 0.35), transparent 60%),
     linear-gradient(135deg, rgba(255, 184, 28, 0.95), rgba(214, 118, 12, 0.95));
-  color: #fff8ea;
+  color: rgb(255, 248, 234);
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
   overflow: hidden;
 }
@@ -34,9 +39,8 @@
 
 .hero-icon {
   font-size: 56px;
-  width: 56px;
-  height: 56px;
-  color: #fff;
+  line-height: 1;
+  color: rgb(255, 255, 255);
   filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.25));
 }
 
@@ -45,25 +49,26 @@
   font-size: 1.5rem;
   font-weight: 700;
   letter-spacing: 0.01em;
+  color: rgb(255, 248, 234);
 }
 
 .progress {
   margin: 0;
   font-size: 1.1rem;
   font-weight: 600;
-  opacity: 0.95;
+  color: rgba(255, 248, 234, 0.95);
 }
 
 .progress-suffix {
   margin-left: 0.35rem;
   font-weight: 400;
-  opacity: 0.85;
+  color: rgba(255, 248, 234, 0.85);
 }
 
 .note {
   margin: 0;
   font-size: 0.95rem;
-  opacity: 0.9;
+  color: rgba(255, 248, 234, 0.9);
   max-width: 32ch;
 }
 
@@ -72,11 +77,37 @@
 }
 
 .snap-btn {
-  background: rgba(255, 255, 255, 0.95);
-  color: #b35c00;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.4rem;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  font: inherit;
   font-weight: 700;
+  font-size: 1rem;
+  background: rgb(255, 252, 245);
+  color: rgb(179, 92, 0);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  transition: transform 100ms ease;
+
+  &:hover:not([disabled]) {
+    transform: translateY(-1px);
+  }
+
+  &:active:not([disabled]) {
+    transform: translateY(0);
+  }
 
   &[disabled] {
     opacity: 0.7;
+    cursor: not-allowed;
   }
+}
+
+.snap-icon {
+  font-size: 20px;
+  line-height: 1;
+  color: rgb(179, 92, 0);
 }
