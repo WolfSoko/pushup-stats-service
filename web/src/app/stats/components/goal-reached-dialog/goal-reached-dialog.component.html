@@ -1,8 +1,10 @@
 <div #card class="goal-card" data-testid="goal-reached-card">
   <div class="hero">
-    <span class="material-icons hero-icon">{{ copy().icon }}</span>
+    <span aria-hidden="true" class="material-icons hero-icon">{{
+      copy().icon
+    }}</span>
   </div>
-  <h2 class="title">{{ copy().title }}</h2>
+  <h2 [id]="data.titleId" class="title">{{ copy().title }}</h2>
   <p class="progress" data-testid="goal-reached-progress">
     {{ progressLabel() }}
     <span class="progress-suffix" i18n="@@goalReached.repsSuffix"
@@ -19,7 +21,9 @@
       [attr.aria-label]="snapAriaLabel"
       (click)="onSnap()"
     >
-      <span class="material-icons snap-icon">auto_awesome</span>
+      <span aria-hidden="true" class="material-icons snap-icon"
+        >auto_awesome</span
+      >
       <span>{{ snapLabel }}</span>
     </button>
   </div>

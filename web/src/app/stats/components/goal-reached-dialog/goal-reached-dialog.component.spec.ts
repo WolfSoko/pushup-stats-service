@@ -48,7 +48,12 @@ describe('GoalReachedDialogComponent', () => {
   describe('Given the dialog renders for a daily goal', () => {
     it('Then it shows the daily title, progress total/goal, and snap button', async () => {
       // Given
-      await setup({ kind: 'daily', total: 100, goal: 100 });
+      await setup({
+        kind: 'daily',
+        total: 100,
+        goal: 100,
+        titleId: 'test-title-1',
+      });
 
       // When
       const text = fixture.nativeElement.textContent ?? '';
@@ -60,12 +65,31 @@ describe('GoalReachedDialogComponent', () => {
         fixture.nativeElement.querySelector('[data-testid="goal-reached-snap"]')
       ).toBeTruthy();
     });
+
+    it('Then the title h2 carries the caller-supplied id for ariaLabelledBy', async () => {
+      // Given
+      await setup({
+        kind: 'daily',
+        total: 100,
+        goal: 100,
+        titleId: 'unique-id-42',
+      });
+
+      // Then
+      const title = fixture.nativeElement.querySelector('h2.title');
+      expect(title?.getAttribute('id')).toBe('unique-id-42');
+    });
   });
 
   describe('Given the dialog renders for a weekly goal', () => {
     it('Then it shows the weekly title and progress', async () => {
       // Given
-      await setup({ kind: 'weekly', total: 540, goal: 500 });
+      await setup({
+        kind: 'weekly',
+        total: 540,
+        goal: 500,
+        titleId: 'test-title-2',
+      });
 
       // When
       const text = fixture.nativeElement.textContent ?? '';
@@ -79,7 +103,12 @@ describe('GoalReachedDialogComponent', () => {
   describe('Given the dialog renders for a monthly goal', () => {
     it('Then it shows the monthly title and progress', async () => {
       // Given
-      await setup({ kind: 'monthly', total: 2200, goal: 2000 });
+      await setup({
+        kind: 'monthly',
+        total: 2200,
+        goal: 2000,
+        titleId: 'test-title-3',
+      });
 
       // When
       const text = fixture.nativeElement.textContent ?? '';
@@ -93,7 +122,12 @@ describe('GoalReachedDialogComponent', () => {
   describe('Given the user clicks Snap', () => {
     it('Then it lazy-vaporizes the card element and closes the dialog on completion', async () => {
       // Given
-      await setup({ kind: 'daily', total: 50, goal: 50 });
+      await setup({
+        kind: 'daily',
+        total: 50,
+        goal: 50,
+        titleId: 'test-title-4',
+      });
       const card = fixture.nativeElement.querySelector(
         '[data-testid="goal-reached-card"]'
       ) as HTMLElement;
@@ -119,7 +153,12 @@ describe('GoalReachedDialogComponent', () => {
 
     it('Then it ignores rapid double-clicks (only one vaporize)', async () => {
       // Given
-      await setup({ kind: 'daily', total: 50, goal: 50 });
+      await setup({
+        kind: 'daily',
+        total: 50,
+        goal: 50,
+        titleId: 'test-title-4',
+      });
       const snapBtn = fixture.nativeElement.querySelector(
         '[data-testid="goal-reached-snap"]'
       ) as HTMLButtonElement;
@@ -135,7 +174,12 @@ describe('GoalReachedDialogComponent', () => {
 
     it('Then it still closes the dialog if vaporize emits an error', async () => {
       // Given — html2canvas can throw on modern CSS color() functions
-      await setup({ kind: 'daily', total: 50, goal: 50 });
+      await setup({
+        kind: 'daily',
+        total: 50,
+        goal: 50,
+        titleId: 'test-title-4',
+      });
       const snapBtn = fixture.nativeElement.querySelector(
         '[data-testid="goal-reached-snap"]'
       ) as HTMLButtonElement;

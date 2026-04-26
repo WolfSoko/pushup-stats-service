@@ -31,6 +31,10 @@ import {
 import { QuickAddConfigDialogComponent } from '../components/quick-add-config-dialog/quick-add-config-dialog.component';
 import { DashboardStore } from '../dashboard.store';
 
+// Monotonic counter used to mint unique DOM ids for the goal-reached dialog
+// title element (see openGoalReachedDialog).
+let nextDialogTitleId = 0;
+
 @Component({
   selector: 'app-stats-dashboard',
   imports: [
@@ -182,14 +186,19 @@ export class StatsDashboardComponent {
   ): Promise<void> {
     const { GoalReachedDialogComponent } =
       await import('../components/goal-reached-dialog/goal-reached-dialog.component');
+    // Unique title id per dialog instance — daily/weekly/monthly can all
+    // be open at once if a single entry crosses several thresholds, and
+    // duplicate DOM ids would make ariaLabelledBy resolution ambiguous.
+    const titleId = `goal-reached-dialog-title-${nextDialogTitleId++}`;
     this.dialog.open(GoalReachedDialogComponent, {
       panelClass: 'goal-reached-dialog-panel',
       backdropClass: 'goal-reached-dialog-backdrop',
       autoFocus: 'dialog',
       restoreFocus: true,
+      ariaLabelledBy: titleId,
       width: 'min(92vw, 460px)',
       maxWidth: '92vw',
-      data: { kind, total: snapshot.total, goal: snapshot.goal },
+      data: { kind, total: snapshot.total, goal: snapshot.goal, titleId },
     });
   }
 
