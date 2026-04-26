@@ -187,6 +187,7 @@ export class StatsDashboardComponent {
       backdropClass: 'goal-reached-dialog-backdrop',
       autoFocus: 'dialog',
       restoreFocus: true,
+      ariaLabelledBy: 'goal-reached-dialog-title',
       width: 'min(92vw, 460px)',
       maxWidth: '92vw',
       data: { kind, total: snapshot.total, goal: snapshot.goal },

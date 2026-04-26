@@ -90,7 +90,9 @@
   background: rgb(255, 252, 245);
   color: rgb(179, 92, 0);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-  transition: transform 100ms ease;
+  transition:
+    transform 100ms ease,
+    box-shadow 100ms ease;
 
   &:hover:not([disabled]) {
     transform: translateY(-1px);
@@ -98,6 +100,16 @@
 
   &:active:not([disabled]) {
     transform: translateY(0);
+  }
+
+  // Restore a keyboard focus ring (Material's built-in indicator was lost
+  // when we dropped mat-flat-button to dodge html2canvas color() parse
+  // errors). Use a 2-stop ring with hard rgb()/rgba() for html2canvas safety.
+  &:focus-visible {
+    outline: none;
+    box-shadow:
+      0 0 0 3px rgb(255, 248, 234),
+      0 0 0 6px rgba(0, 0, 0, 0.45);
   }
 
   &[disabled] {

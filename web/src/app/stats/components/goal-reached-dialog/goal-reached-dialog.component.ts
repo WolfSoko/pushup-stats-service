@@ -12,6 +12,7 @@ import {
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { finalize } from 'rxjs';
 
 export type GoalKind = 'daily' | 'weekly' | 'monthly';
 
@@ -90,12 +91,11 @@ export class GoalReachedDialogComponent {
       runInInjectionContext(this.envInjector, () => {
         inject(WsThanosService)
           .vaporize(el)
-          .subscribe({
-            complete: () => this.dialogRef.close(),
-            // html2canvas can throw on unsupported CSS (e.g. modern color()
-            // functions). Always close so the user isn't stuck.
-            error: () => this.dialogRef.close(),
-          });
+          // Close on completion AND on error (html2canvas can throw on
+          // unsupported CSS like modern color() functions) — single teardown
+          // path via finalize keeps both branches in sync.
+          .pipe(finalize(() => this.dialogRef.close()))
+          .subscribe({ error: () => undefined });
       });
     } catch {
       this.dialogRef.close();
