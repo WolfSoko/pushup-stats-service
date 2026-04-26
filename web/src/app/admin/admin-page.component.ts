@@ -22,6 +22,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { DeleteUserDialogComponent } from './delete-user-dialog.component';
 import { DeleteFeedbackDialogComponent } from './delete-feedback-dialog.component';
+import { UserDetailsDialogComponent } from './user-details-dialog.component';
 
 export interface AdminUser {
   uid: string;
@@ -229,7 +230,7 @@ interface AdminFeedback {
             <!-- actions column -->
             <ng-container matColumnDef="actions">
               <mat-header-cell *matHeaderCellDef></mat-header-cell>
-              <mat-cell *matCellDef="let u">
+              <mat-cell *matCellDef="let u" (click)="$event.stopPropagation()">
                 <button
                   mat-icon-button
                   color="warn"
@@ -242,7 +243,11 @@ interface AdminFeedback {
             </ng-container>
 
             <mat-header-row *matHeaderRowDef="displayedColumns" />
-            <mat-row *matRowDef="let row; columns: displayedColumns" />
+            <mat-row
+              *matRowDef="let row; columns: displayedColumns"
+              class="clickable-row"
+              (click)="openDetailsDialog(row)"
+            />
           </mat-table>
         </mat-card>
       }
@@ -440,6 +445,12 @@ interface AdminFeedback {
     }
     mat-table {
       width: 100%;
+    }
+    .clickable-row {
+      cursor: pointer;
+    }
+    .clickable-row:hover {
+      background: var(--mat-sys-surface-variant);
     }
     h2 {
       margin-top: 48px;
@@ -645,6 +656,14 @@ export class AdminPageComponent {
     } finally {
       this.setFeedbackLoading(feedback.id, false);
     }
+  }
+
+  openDetailsDialog(user: AdminUser): void {
+    this.dialog.open(UserDetailsDialogComponent, {
+      data: user,
+      width: 'min(92vw, 480px)',
+      maxWidth: '92vw',
+    });
   }
 
   async openDeleteDialog(user: AdminUser): Promise<void> {

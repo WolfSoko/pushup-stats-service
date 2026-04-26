@@ -6,8 +6,9 @@ import {
   MatDialogRef,
 } from '@angular/material/dialog';
 import { of } from 'rxjs';
-import { AdminPageComponent } from './admin-page.component';
+import { AdminPageComponent, AdminUser } from './admin-page.component';
 import { DeleteFeedbackDialogComponent } from './delete-feedback-dialog.component';
+import { UserDetailsDialogComponent } from './user-details-dialog.component';
 
 vi.mock('@angular/fire/functions', () => ({
   Functions: class {},
@@ -201,6 +202,69 @@ describe('AdminPageComponent', () => {
         read: true,
       });
       expect(component.feedbackList()[0].read).toBe(true);
+    });
+  });
+
+  describe('openDetailsDialog', () => {
+    const sampleUser: AdminUser = {
+      uid: 'user-1',
+      displayName: 'Alice',
+      email: 'alice@example.com',
+      anonymous: false,
+      pushupCount: 12,
+      lastEntry: '2026-04-09T10:00:00.000Z',
+      createdAt: '2026-01-01T00:00:00.000Z',
+      role: null,
+    };
+
+    it('opens UserDetailsDialogComponent with the clicked user as data', async () => {
+      await createComponent();
+      dialogOpenSpy.mockReturnValue(stubDialogRef(undefined));
+
+      component.openDetailsDialog(sampleUser);
+
+      expect(dialogOpenSpy).toHaveBeenCalledWith(
+        UserDetailsDialogComponent,
+        expect.objectContaining({ data: sampleUser })
+      );
+    });
+
+    it('does NOT open the details dialog when a row action button is clicked', async () => {
+      // Render a single user so a row exists in the table.
+      setupCallables([
+        { name: 'adminListUsers', impl: async () => ({ data: [sampleUser] }) },
+        { name: 'adminListFeedback', impl: async () => ({ data: [] }) },
+      ]);
+      await TestBed.configureTestingModule({
+        imports: [AdminPageComponent, MatDialogModule],
+        providers: [{ provide: Functions, useValue: {} }],
+      }).compileComponents();
+      fixture = TestBed.createComponent(AdminPageComponent);
+      component = fixture.componentInstance;
+      dialogOpenSpy = vi.spyOn(
+        fixture.debugElement.injector.get(MatDialog),
+        'open'
+      );
+      fixture.detectChanges();
+      await fixture.whenStable();
+      fixture.detectChanges();
+
+      const actionsCell = fixture.nativeElement.querySelector(
+        'mat-cell.mat-column-actions'
+      ) as HTMLElement | null;
+      expect(actionsCell).toBeTruthy();
+
+      const event = new MouseEvent('click', {
+        bubbles: true,
+        cancelable: true,
+      });
+      actionsCell!.dispatchEvent(event);
+
+      // The actions cell stops propagation, so the row handler must not fire.
+      expect(dialogOpenSpy).not.toHaveBeenCalledWith(
+        UserDetailsDialogComponent,
+        expect.anything()
+      );
     });
   });
 });

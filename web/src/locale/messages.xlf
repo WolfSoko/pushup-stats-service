@@ -691,7 +691,7 @@
     </unit>
     <unit id="admin.title">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:69,71</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:70,72</note>
       </notes>
       <segment>
         <source>Admin-Bereich</source>
@@ -699,7 +699,7 @@
     </unit>
     <unit id="admin.bulk.title">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:75,77</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:76,78</note>
       </notes>
       <segment>
         <source>Anonyme Benutzer aufräumen</source>
@@ -707,7 +707,7 @@
     </unit>
     <unit id="admin.bulk.daysLabel">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:81,83</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:82,84</note>
       </notes>
       <segment>
         <source>Inaktiv seit (Tage)</source>
@@ -715,7 +715,7 @@
     </unit>
     <unit id="admin.bulk.hint">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:92,95</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:93,96</note>
       </notes>
       <segment>
         <source> Löscht anonyme Benutzer ohne Pushups in den letzten <ph id="0" equiv="INTERPOLATION" disp="{{ inactiveDays() }}"/> Tagen. </source>
@@ -723,7 +723,7 @@
     </unit>
     <unit id="admin.bulk.button">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:108,109</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:109,110</note>
       </notes>
       <segment>
         <source>Inaktive löschen</source>
@@ -731,7 +731,7 @@
     </unit>
     <unit id="admin.bulk.deleted">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:116,117</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:117,118</note>
       </notes>
       <segment>
         <source>Gelöscht:</source>
@@ -739,7 +739,7 @@
     </unit>
     <unit id="admin.bulk.skipped">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:118,119</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:119,120</note>
       </notes>
       <segment>
         <source>Übersprungen:</source>
@@ -747,7 +747,7 @@
     </unit>
     <unit id="admin.filter.anonymous">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:137,138</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:138,139</note>
       </notes>
       <segment>
         <source> Nur anonyme Benutzer </source>
@@ -755,7 +755,7 @@
     </unit>
     <unit id="admin.col.uid">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:160,161</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:161,162</note>
       </notes>
       <segment>
         <source>UID</source>
@@ -763,7 +763,7 @@
     </unit>
     <unit id="admin.col.name">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:172,173</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:173,174</note>
       </notes>
       <segment>
         <source>Name</source>
@@ -771,7 +771,7 @@
     </unit>
     <unit id="admin.col.email">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:182,183</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:183,184</note>
       </notes>
       <segment>
         <source>E-Mail</source>
@@ -779,7 +779,7 @@
     </unit>
     <unit id="admin.col.anon">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:190,191</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:191,192</note>
       </notes>
       <segment>
         <source>Anon</source>
@@ -787,7 +787,7 @@
     </unit>
     <unit id="admin.col.pushups">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:204,205</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:205,206</note>
       </notes>
       <segment>
         <source>Pushups</source>
@@ -795,7 +795,7 @@
     </unit>
     <unit id="admin.col.lastEntry">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:212,214</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:213,215</note>
       </notes>
       <segment>
         <source>Letzter Eintrag</source>
@@ -803,7 +803,7 @@
     </unit>
     <unit id="admin.col.createdAt">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:222,224</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:223,225</note>
       </notes>
       <segment>
         <source>Erstellt</source>
@@ -811,7 +811,7 @@
     </unit>
     <unit id="admin.feedback.title">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:251,253</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:256,258</note>
       </notes>
       <segment>
         <source>Feedback</source>
@@ -819,7 +819,7 @@
     </unit>
     <unit id="admin.feedback.empty">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:270,272</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:275,277</note>
       </notes>
       <segment>
         <source>Noch kein Feedback vorhanden.</source>
@@ -827,7 +827,7 @@
     </unit>
     <unit id="admin.feedback.col.date">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:281,283</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:286,288</note>
       </notes>
       <segment>
         <source>Datum</source>
@@ -835,7 +835,7 @@
     </unit>
     <unit id="admin.feedback.col.name">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:292,294</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:297,299</note>
       </notes>
       <segment>
         <source>Name</source>
@@ -843,7 +843,7 @@
     </unit>
     <unit id="admin.feedback.col.email">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:301,303</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:306,308</note>
       </notes>
       <segment>
         <source>E-Mail</source>
@@ -851,7 +851,7 @@
     </unit>
     <unit id="admin.feedback.col.message">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:310,312</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:315,317</note>
       </notes>
       <segment>
         <source>Nachricht</source>
@@ -859,7 +859,7 @@
     </unit>
     <unit id="admin.feedback.col.userId">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:321,323</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:326,328</note>
       </notes>
       <segment>
         <source>User</source>
@@ -867,7 +867,7 @@
     </unit>
     <unit id="admin.refresh">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:481</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:492</note>
       </notes>
       <segment>
         <source>Neu laden</source>
@@ -875,7 +875,7 @@
     </unit>
     <unit id="admin.feedback.anon">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:482</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:493</note>
       </notes>
       <segment>
         <source>Anonym</source>
@@ -883,7 +883,7 @@
     </unit>
     <unit id="admin.feedback.markRead">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:483</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:494</note>
       </notes>
       <segment>
         <source>Als gelesen markieren</source>
@@ -891,7 +891,7 @@
     </unit>
     <unit id="admin.feedback.markUnread">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:484</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:495</note>
       </notes>
       <segment>
         <source>Als ungelesen markieren</source>
@@ -899,7 +899,7 @@
     </unit>
     <unit id="admin.feedback.createIssue">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:485</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:496</note>
       </notes>
       <segment>
         <source>GitHub-Issue erstellen</source>
@@ -907,7 +907,7 @@
     </unit>
     <unit id="admin.feedback.openIssue">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:486</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:497</note>
       </notes>
       <segment>
         <source>GitHub-Issue öffnen</source>
@@ -915,7 +915,7 @@
     </unit>
     <unit id="admin.feedback.delete">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:487</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:498</note>
       </notes>
       <segment>
         <source>Feedback löschen</source>
@@ -991,6 +991,102 @@
       </notes>
       <segment>
         <source> Löschen </source>
+      </segment>
+    </unit>
+    <unit id="admin.details.title">
+      <notes>
+        <note category="location">web/src/app/admin/user-details-dialog.component.ts:14,15</note>
+      </notes>
+      <segment>
+        <source>Benutzerdetails</source>
+      </segment>
+    </unit>
+    <unit id="admin.details.uid">
+      <notes>
+        <note category="location">web/src/app/admin/user-details-dialog.component.ts:18</note>
+      </notes>
+      <segment>
+        <source>UID</source>
+      </segment>
+    </unit>
+    <unit id="admin.details.displayName">
+      <notes>
+        <note category="location">web/src/app/admin/user-details-dialog.component.ts:20,21</note>
+      </notes>
+      <segment>
+        <source>Name</source>
+      </segment>
+    </unit>
+    <unit id="admin.details.email">
+      <notes>
+        <note category="location">web/src/app/admin/user-details-dialog.component.ts:23,24</note>
+      </notes>
+      <segment>
+        <source>E-Mail</source>
+      </segment>
+    </unit>
+    <unit id="admin.details.anonymous">
+      <notes>
+        <note category="location">web/src/app/admin/user-details-dialog.component.ts:26,28</note>
+      </notes>
+      <segment>
+        <source>Anonym</source>
+      </segment>
+    </unit>
+    <unit id="admin.details.anonymous.yes">
+      <notes>
+        <note category="location">web/src/app/admin/user-details-dialog.component.ts:30,32</note>
+      </notes>
+      <segment>
+        <source>Ja</source>
+      </segment>
+    </unit>
+    <unit id="admin.details.anonymous.no">
+      <notes>
+        <note category="location">web/src/app/admin/user-details-dialog.component.ts:32,36</note>
+      </notes>
+      <segment>
+        <source>Nein</source>
+      </segment>
+    </unit>
+    <unit id="admin.details.role">
+      <notes>
+        <note category="location">web/src/app/admin/user-details-dialog.component.ts:36,37</note>
+      </notes>
+      <segment>
+        <source>Rolle</source>
+      </segment>
+    </unit>
+    <unit id="admin.details.pushupCount">
+      <notes>
+        <note category="location">web/src/app/admin/user-details-dialog.component.ts:39,40</note>
+      </notes>
+      <segment>
+        <source>Pushups</source>
+      </segment>
+    </unit>
+    <unit id="admin.details.lastEntry">
+      <notes>
+        <note category="location">web/src/app/admin/user-details-dialog.component.ts:42,44</note>
+      </notes>
+      <segment>
+        <source>Letzter Eintrag</source>
+      </segment>
+    </unit>
+    <unit id="admin.details.createdAt">
+      <notes>
+        <note category="location">web/src/app/admin/user-details-dialog.component.ts:47,49</note>
+      </notes>
+      <segment>
+        <source>Erstellt</source>
+      </segment>
+    </unit>
+    <unit id="admin.details.close">
+      <notes>
+        <note category="location">web/src/app/admin/user-details-dialog.component.ts:55,57</note>
+      </notes>
+      <segment>
+        <source> Schließen </source>
       </segment>
     </unit>
     <unit id="app.title">
@@ -2911,7 +3007,7 @@
     </unit>
     <unit id="goalReached.repsSuffix">
       <notes>
-        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.html:9,12</note>
+        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.html:11,14</note>
       </notes>
       <segment>
         <source>Liegestütze</source>
@@ -2919,7 +3015,7 @@
     </unit>
     <unit id="goalReached.weekly.title">
       <notes>
-        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:60</note>
+        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:64</note>
       </notes>
       <segment>
         <source>Wochenziel erreicht!</source>
@@ -2927,7 +3023,7 @@
     </unit>
     <unit id="goalReached.weekly.note">
       <notes>
-        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:61</note>
+        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:65</note>
       </notes>
       <segment>
         <source>Sieben Tage, ein Sieg. Du bist on fire.</source>
@@ -2935,7 +3031,7 @@
     </unit>
     <unit id="goalReached.monthly.title">
       <notes>
-        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:66</note>
+        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:70</note>
       </notes>
       <segment>
         <source>Monatsziel erreicht!</source>
@@ -2943,7 +3039,7 @@
     </unit>
     <unit id="goalReached.monthly.note">
       <notes>
-        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:67</note>
+        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:71</note>
       </notes>
       <segment>
         <source>Ein ganzer Monat Disziplin. Legendär.</source>
@@ -2951,7 +3047,7 @@
     </unit>
     <unit id="goalReached.daily.title">
       <notes>
-        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:72</note>
+        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:76</note>
       </notes>
       <segment>
         <source>Tagesziel erreicht!</source>
@@ -2959,7 +3055,7 @@
     </unit>
     <unit id="goalReached.daily.note">
       <notes>
-        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:73</note>
+        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:77</note>
       </notes>
       <segment>
         <source>Heute hast du dein Versprechen gehalten.</source>
@@ -2967,7 +3063,7 @@
     </unit>
     <unit id="goalReached.snapAria">
       <notes>
-        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:78</note>
+        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:82</note>
       </notes>
       <segment>
         <source>Erfolg vaporisieren</source>
@@ -2975,7 +3071,7 @@
     </unit>
     <unit id="goalReached.snap">
       <notes>
-        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:79</note>
+        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:83</note>
       </notes>
       <segment>
         <source>Snap!</source>
@@ -3087,7 +3183,7 @@
     </unit>
     <unit id="chart.subtitle">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:43,44</note>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:43,45</note>
       </notes>
       <segment>
         <source>Balken zeigen deine Wiederholungen pro Zeitabschnitt. Die orange Linie summiert den Tag, die grüne zeigt deinen Trend.</source>
@@ -3095,7 +3191,7 @@
     </unit>
     <unit id="chart.modeToggleAria">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:51,52</note>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:52,53</note>
       </notes>
       <segment>
         <source>Zeitraum der Stundenansicht</source>
@@ -3103,7 +3199,7 @@
     </unit>
     <unit id="chart.mode14h">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:55,56</note>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:56,57</note>
       </notes>
       <segment>
         <source>14h</source>
@@ -3111,7 +3207,7 @@
     </unit>
     <unit id="chart.mode24h">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:58,59</note>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:59,60</note>
       </notes>
       <segment>
         <source>24h</source>
@@ -3119,7 +3215,7 @@
     </unit>
     <unit id="chart.legendAria">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:72</note>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:73</note>
       </notes>
       <segment>
         <source>Legende</source>
@@ -3127,8 +3223,8 @@
     </unit>
     <unit id="chart.interval">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:77,78</note>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:125</note>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:78,79</note>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:126</note>
       </notes>
       <segment>
         <source>Intervallwert</source>
@@ -3136,8 +3232,8 @@
     </unit>
     <unit id="chart.dayIntegral">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:83,84</note>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:126</note>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:84,85</note>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:127</note>
       </notes>
       <segment>
         <source>Tages-Integral</source>
@@ -3145,8 +3241,8 @@
     </unit>
     <unit id="chart.movingAvg">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:89,90</note>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:127</note>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:90,91</note>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:128</note>
       </notes>
       <segment>
         <source>Gleitender Durchschnitt</source>
@@ -3154,8 +3250,8 @@
     </unit>
     <unit id="chart.withSets">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:96,97</note>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:153</note>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:97,98</note>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:154</note>
       </notes>
       <segment>
         <source>Mit Sets</source>
@@ -3163,7 +3259,7 @@
     </unit>
     <unit id="chart.titleHourly">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:123</note>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:124</note>
       </notes>
       <segment>
         <source>Verlauf (Stundenwerte)</source>
@@ -3171,7 +3267,7 @@
     </unit>
     <unit id="chart.titleDaily">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:124</note>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:125</note>
       </notes>
       <segment>
         <source>Verlauf (Tageswerte)</source>
@@ -3179,7 +3275,7 @@
     </unit>
     <unit id="chart.setsTooltip">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:152</note>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:153</note>
       </notes>
       <segment>
         <source>Sets</source>
