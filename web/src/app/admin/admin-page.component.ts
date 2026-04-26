@@ -213,7 +213,7 @@ interface AdminFeedback {
                 >Letzter Eintrag</mat-header-cell
               >
               <mat-cell *matCellDef="let u">{{
-                u.lastEntry | date: 'shortDate'
+                u.lastEntry | date: 'short'
               }}</mat-cell>
             </ng-container>
 
@@ -223,7 +223,7 @@ interface AdminFeedback {
                 >Erstellt</mat-header-cell
               >
               <mat-cell *matCellDef="let u">{{
-                u.createdAt | date: 'shortDate'
+                u.createdAt | date: 'short'
               }}</mat-cell>
             </ng-container>
 
