@@ -161,6 +161,10 @@ export const DashboardStore = signalStore(
     );
 
     const configuredDailyGoal = computed(() => store._userConfig.dailyGoal());
+    const configuredWeeklyGoal = computed(() => store._userConfig.weeklyGoal());
+    const configuredMonthlyGoal = computed(() =>
+      store._userConfig.monthlyGoal()
+    );
     const dailyGoalConfigured = computed(() => configuredDailyGoal() > 0);
     const remainingToGoal = computed(() =>
       Math.max(0, configuredDailyGoal() - todayTotal())
@@ -266,6 +270,15 @@ export const DashboardStore = signalStore(
         : 0
     );
 
+    const weeklyGoalReached = computed(
+      () => configuredWeeklyGoal() > 0 && weekReps() >= configuredWeeklyGoal()
+    );
+
+    const monthlyGoalReached = computed(
+      () =>
+        configuredMonthlyGoal() > 0 && monthReps() >= configuredMonthlyGoal()
+    );
+
     const loading = computed(() => {
       const status = store.entriesResource.status();
       return status === 'loading' || status === 'reloading';
@@ -299,6 +312,8 @@ export const DashboardStore = signalStore(
       quickAddButtons,
       weeklyGoalProgressPercent,
       monthlyGoalProgressPercent,
+      weeklyGoalReached,
+      monthlyGoalReached,
       todayTotal,
       goalProgressPercent,
       dailyGoalConfigured,

@@ -1,0 +1,82 @@
+:host {
+  display: block;
+}
+
+.goal-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 2rem 1.5rem 1.5rem;
+  text-align: center;
+  border-radius: 16px;
+  background:
+    radial-gradient(circle at top, rgba(255, 211, 95, 0.35), transparent 60%),
+    linear-gradient(135deg, rgba(255, 184, 28, 0.95), rgba(214, 118, 12, 0.95));
+  color: #fff8ea;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+}
+
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.18);
+  box-shadow:
+    inset 0 0 0 2px rgba(255, 255, 255, 0.35),
+    0 0 24px rgba(255, 220, 120, 0.4);
+}
+
+.hero-icon {
+  font-size: 56px;
+  width: 56px;
+  height: 56px;
+  color: #fff;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.25));
+}
+
+.title {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.progress {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  opacity: 0.95;
+}
+
+.progress-suffix {
+  margin-left: 0.35rem;
+  font-weight: 400;
+  opacity: 0.85;
+}
+
+.note {
+  margin: 0;
+  font-size: 0.95rem;
+  opacity: 0.9;
+  max-width: 32ch;
+}
+
+.actions {
+  margin-top: 0.5rem;
+}
+
+.snap-btn {
+  background: rgba(255, 255, 255, 0.95);
+  color: #b35c00;
+  font-weight: 700;
+
+  &[disabled] {
+    opacity: 0.7;
+  }
+}

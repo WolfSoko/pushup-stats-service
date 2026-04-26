@@ -1,0 +1,99 @@
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  ElementRef,
+  EnvironmentInjector,
+  inject,
+  PLATFORM_ID,
+  runInInjectionContext,
+  signal,
+  viewChild,
+} from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogModule,
+  MatDialogRef,
+} from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
+
+export type GoalKind = 'daily' | 'weekly' | 'monthly';
+
+export interface GoalReachedDialogData {
+  readonly kind: GoalKind;
+  readonly total: number;
+  readonly goal: number;
+}
+
+interface GoalCopy {
+  readonly icon: string;
+  readonly title: string;
+  readonly note: string;
+}
+
+@Component({
+  selector: 'app-goal-reached-dialog',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [MatDialogModule, MatButtonModule, MatIconModule],
+  templateUrl: './goal-reached-dialog.component.html',
+  styleUrl: './goal-reached-dialog.component.scss',
+})
+export class GoalReachedDialogComponent {
+  private readonly dialogRef = inject(MatDialogRef<GoalReachedDialogComponent>);
+  private readonly platformId = inject(PLATFORM_ID);
+  private readonly envInjector = inject(EnvironmentInjector);
+  protected readonly data = inject<GoalReachedDialogData>(MAT_DIALOG_DATA);
+
+  protected readonly cardRef =
+    viewChild.required<ElementRef<HTMLElement>>('card');
+  protected readonly snapping = signal(false);
+
+  protected readonly copy = computed<GoalCopy>(() => {
+    switch (this.data.kind) {
+      case 'weekly':
+        return {
+          icon: 'military_tech',
+          title: $localize`:@@goalReached.weekly.title:Wochenziel erreicht!`,
+          note: $localize`:@@goalReached.weekly.note:Sieben Tage, ein Sieg. Du bist on fire.`,
+        };
+      case 'monthly':
+        return {
+          icon: 'workspace_premium',
+          title: $localize`:@@goalReached.monthly.title:Monatsziel erreicht!`,
+          note: $localize`:@@goalReached.monthly.note:Ein ganzer Monat Disziplin. Legendär.`,
+        };
+      default:
+        return {
+          icon: 'emoji_events',
+          title: $localize`:@@goalReached.daily.title:Tagesziel erreicht!`,
+          note: $localize`:@@goalReached.daily.note:Heute hast du dein Versprechen gehalten.`,
+        };
+    }
+  });
+
+  protected readonly snapAriaLabel = $localize`:@@goalReached.snapAria:Erfolg vaporisieren`;
+  protected readonly snapLabel = $localize`:@@goalReached.snap:Snap!`;
+  protected readonly progressLabel = computed(
+    () => `${this.data.total} / ${this.data.goal}`
+  );
+
+  protected async onSnap(): Promise<void> {
+    if (this.snapping()) return;
+    if (!isPlatformBrowser(this.platformId)) {
+      this.dialogRef.close();
+      return;
+    }
+    this.snapping.set(true);
+    const el = this.cardRef().nativeElement;
+    const { WsThanosService } = await import('@wolsok/thanos');
+    runInInjectionContext(this.envInjector, () => {
+      inject(WsThanosService)
+        .vaporize(el)
+        .subscribe({
+          complete: () => this.dialogRef.close(),
+        });
+    });
+  }
+}

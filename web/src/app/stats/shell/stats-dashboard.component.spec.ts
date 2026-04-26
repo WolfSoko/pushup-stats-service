@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { of } from 'rxjs';
 import { StatsDashboardComponent } from './stats-dashboard.component';
 import {
@@ -89,6 +89,12 @@ describe('StatsDashboardComponent', () => {
     targetedAdsConsent: () => true,
   };
 
+  const dialogOpenSpy = vitest.fn().mockReturnValue({
+    afterClosed: () => of(null),
+    close: vi.fn(),
+  } as unknown as MatDialogRef<unknown>);
+  const dialogMock = { open: dialogOpenSpy } as unknown as MatDialog;
+
   beforeEach(async () => {
     vi.useFakeTimers({ shouldAdvanceTime: true });
     vi.setSystemTime(frozenDate);
@@ -97,7 +103,9 @@ describe('StatsDashboardComponent', () => {
     liveConnected.set(false);
     window.history.replaceState({}, '', '/');
 
-    await TestBed.configureTestingModule({
+    dialogOpenSpy.mockClear();
+
+    TestBed.configureTestingModule({
       imports: [StatsDashboardComponent],
       providers: [
         { provide: StatsApiService, useValue: serviceMock },
@@ -143,7 +151,13 @@ describe('StatsDashboardComponent', () => {
           },
         },
       ],
-    }).compileComponents();
+    });
+
+    // Override MatDialog at the deep-injector level so that even
+    // standalone-component scoped injectors resolve to our mock.
+    TestBed.overrideProvider(MatDialog, { useValue: dialogMock });
+
+    await TestBed.compileComponents();
 
     fixture = TestBed.createComponent(StatsDashboardComponent);
     await fixture.whenStable();
@@ -316,17 +330,14 @@ describe('StatsDashboardComponent', () => {
 
     describe('When openCreateDialog is called', () => {
       it('Then MatDialog.open is invoked with CreateEntryDialogComponent', () => {
-        // Given — access the same MatDialog instance used by the component
-        const dialog = fixture.debugElement.injector.get(MatDialog);
-        const openSpy = vitest.spyOn(dialog, 'open').mockReturnValue({
-          afterClosed: () => of(undefined),
-        } as unknown as ReturnType<typeof dialog.open>);
+        // Given
+        dialogOpenSpy.mockClear();
 
         // When
         fixture.componentInstance.openCreateDialog();
 
         // Then
-        expect(openSpy).toHaveBeenCalledWith(
+        expect(dialogOpenSpy).toHaveBeenCalledWith(
           expect.any(Function), // CreateEntryDialogComponent
           expect.objectContaining({ width: 'min(92vw, 420px)' })
         );
@@ -582,6 +593,98 @@ describe('StatsDashboardComponent', () => {
       const button = findQuickActionsGoalButton(fixture.nativeElement);
       button!.click();
       expect(svc.fillToGoal).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('Goal-reached celebration dialog', () => {
+    async function flushDynamicImport(): Promise<void> {
+      // Wait for the lazy `import('./goal-reached-dialog.component')` chain
+      // to resolve, then drain the microtasks for the awaited continuation
+      // that calls MatDialog.open.
+      await vi.dynamicImportSettled();
+      await Promise.resolve();
+      await Promise.resolve();
+    }
+
+    function configWithGoals(goals: {
+      dailyGoal: number;
+      weeklyGoal: number;
+      monthlyGoal: number;
+    }): void {
+      const configApi = TestBed.inject(UserConfigApiService);
+      (configApi.getConfig as ReturnType<typeof vitest.fn>).mockReturnValue(
+        of({ userId: 'u1', ...goals })
+      );
+      TestBed.inject(UserConfigStore).reload();
+    }
+
+    it('Given the daily goal becomes reached, Then the celebration dialog opens with kind=daily', async () => {
+      // Given — daily goal set so todayTotal (12) >= dailyGoal (10)
+      fixture.destroy();
+      configWithGoals({ dailyGoal: 10, weeklyGoal: 1000, monthlyGoal: 5000 });
+      dialogOpenSpy.mockClear();
+
+      // When
+      const freshFixture = TestBed.createComponent(StatsDashboardComponent);
+      await freshFixture.whenStable();
+      await flushDynamicImport();
+
+      // Then
+      expect(dialogOpenSpy).toHaveBeenCalledTimes(1);
+      const [, config] = dialogOpenSpy.mock.calls[0];
+      expect(config?.data).toEqual({ kind: 'daily', total: 12, goal: 10 });
+    });
+
+    it('Given the weekly goal becomes reached, Then the celebration dialog opens with kind=weekly', async () => {
+      // Given — weekReps (8 + 12 = 20) >= weeklyGoal (15)
+      fixture.destroy();
+      configWithGoals({ dailyGoal: 1000, weeklyGoal: 15, monthlyGoal: 5000 });
+      dialogOpenSpy.mockClear();
+
+      // When
+      const freshFixture = TestBed.createComponent(StatsDashboardComponent);
+      await freshFixture.whenStable();
+      await flushDynamicImport();
+
+      // Then
+      expect(dialogOpenSpy).toHaveBeenCalledTimes(1);
+      const [, config] = dialogOpenSpy.mock.calls[0];
+      expect(config?.data).toEqual({ kind: 'weekly', total: 20, goal: 15 });
+    });
+
+    it('Given the monthly goal becomes reached, Then the celebration dialog opens with kind=monthly', async () => {
+      // Given — monthReps (20) >= monthlyGoal (15)
+      fixture.destroy();
+      configWithGoals({ dailyGoal: 1000, weeklyGoal: 1000, monthlyGoal: 15 });
+      dialogOpenSpy.mockClear();
+
+      // When
+      const freshFixture = TestBed.createComponent(StatsDashboardComponent);
+      await freshFixture.whenStable();
+      await flushDynamicImport();
+
+      // Then
+      expect(dialogOpenSpy).toHaveBeenCalledTimes(1);
+      const [, config] = dialogOpenSpy.mock.calls[0];
+      expect(config?.data).toEqual({ kind: 'monthly', total: 20, goal: 15 });
+    });
+
+    it('Given no goals reached, Then the celebration dialog does not open', async () => {
+      // Given — defaults (dailyGoal=100) keep all goals unreached
+      fixture.destroy();
+      dialogOpenSpy.mockClear();
+
+      // When
+      const freshFixture = TestBed.createComponent(StatsDashboardComponent);
+      await freshFixture.whenStable();
+      await flushDynamicImport();
+
+      // Then — no goal-reached dialog
+      const goalDialogCalls = dialogOpenSpy.mock.calls.filter((call) => {
+        const config = call[1] as { data?: { kind?: string } } | undefined;
+        return config?.data?.kind !== undefined;
+      });
+      expect(goalDialogCalls).toHaveLength(0);
     });
   });
 

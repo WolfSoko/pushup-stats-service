@@ -2909,6 +2909,78 @@
         <source>Bis</source>
       </segment>
     </unit>
+    <unit id="goalReached.repsSuffix">
+      <notes>
+        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.html:9,12</note>
+      </notes>
+      <segment>
+        <source>Liegestütze</source>
+      </segment>
+    </unit>
+    <unit id="goalReached.weekly.title">
+      <notes>
+        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:60</note>
+      </notes>
+      <segment>
+        <source>Wochenziel erreicht!</source>
+      </segment>
+    </unit>
+    <unit id="goalReached.weekly.note">
+      <notes>
+        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:61</note>
+      </notes>
+      <segment>
+        <source>Sieben Tage, ein Sieg. Du bist on fire.</source>
+      </segment>
+    </unit>
+    <unit id="goalReached.monthly.title">
+      <notes>
+        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:66</note>
+      </notes>
+      <segment>
+        <source>Monatsziel erreicht!</source>
+      </segment>
+    </unit>
+    <unit id="goalReached.monthly.note">
+      <notes>
+        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:67</note>
+      </notes>
+      <segment>
+        <source>Ein ganzer Monat Disziplin. Legendär.</source>
+      </segment>
+    </unit>
+    <unit id="goalReached.daily.title">
+      <notes>
+        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:72</note>
+      </notes>
+      <segment>
+        <source>Tagesziel erreicht!</source>
+      </segment>
+    </unit>
+    <unit id="goalReached.daily.note">
+      <notes>
+        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:73</note>
+      </notes>
+      <segment>
+        <source>Heute hast du dein Versprechen gehalten.</source>
+      </segment>
+    </unit>
+    <unit id="goalReached.snapAria">
+      <notes>
+        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:78</note>
+      </notes>
+      <segment>
+        <source>Erfolg vaporisieren</source>
+      </segment>
+    </unit>
+    <unit id="goalReached.snap">
+      <notes>
+        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:79</note>
+      </notes>
+      <segment>
+        <source>Snap!</source>
+      </segment>
+    </unit>
     <unit id="heatmap.loading">
       <notes>
         <note category="location">web/src/app/stats/components/heatmap/heatmap.component.ts:36,39</note>
