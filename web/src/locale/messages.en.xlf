@@ -986,8 +986,8 @@ Active:         </target>
         
             </notes>
       <segment state="translated">
-        <source>Intervallwerte als Balken, Tages-Integral + gleitender Durchschnitt als Trendlinien</source>
-        <target>Interval values as bars, daily integral + moving average as trend lines</target>
+        <source>Balken zeigen deine Wiederholungen pro Zeitabschnitt. Die orange Linie summiert den Tag, die grüne zeigt deinen Trend.</source>
+        <target>Bars show your reps per time slot. The orange line totals each day, the green one tracks your trend.</target>
 
         
         

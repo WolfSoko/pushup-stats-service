@@ -3018,7 +3018,7 @@
         <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:43,44</note>
       </notes>
       <segment>
-        <source>Intervallwerte als Balken, Tages-Integral + gleitender Durchschnitt als Trendlinien</source>
+        <source>Balken zeigen deine Wiederholungen pro Zeitabschnitt. Die orange Linie summiert den Tag, die grüne zeigt deinen Trend.</source>
       </segment>
     </unit>
     <unit id="chart.modeToggleAria">

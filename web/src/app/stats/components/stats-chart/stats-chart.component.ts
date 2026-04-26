@@ -40,8 +40,9 @@ Chart.register(...registerables);
           granularity() === 'hourly' ? hourlyTitle : dailyTitle
         }}</mat-card-title>
         <mat-card-subtitle i18n="@@chart.subtitle"
-          >Intervallwerte als Balken, Tages-Integral + gleitender Durchschnitt
-          als Trendlinien</mat-card-subtitle
+          >Balken zeigen deine Wiederholungen pro Zeitabschnitt. Die orange
+          Linie summiert den Tag, die grüne zeigt deinen
+          Trend.</mat-card-subtitle
         >
         @if (granularity() === 'hourly') {
           <mat-button-toggle-group
