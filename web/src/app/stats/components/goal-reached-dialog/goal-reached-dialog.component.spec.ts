@@ -132,5 +132,21 @@ describe('GoalReachedDialogComponent', () => {
       // Then
       expect(vaporizeSpy).toHaveBeenCalledTimes(1);
     });
+
+    it('Then it still closes the dialog if vaporize emits an error', async () => {
+      // Given — html2canvas can throw on modern CSS color() functions
+      await setup({ kind: 'daily', total: 50, goal: 50 });
+      const snapBtn = fixture.nativeElement.querySelector(
+        '[data-testid="goal-reached-snap"]'
+      ) as HTMLButtonElement;
+
+      // When
+      snapBtn.click();
+      await fixture.whenStable();
+      vaporizeSubject.error(new Error('Unsupported color function "color"'));
+
+      // Then
+      expect(closeSpy).toHaveBeenCalledTimes(1);
+    });
   });
 });

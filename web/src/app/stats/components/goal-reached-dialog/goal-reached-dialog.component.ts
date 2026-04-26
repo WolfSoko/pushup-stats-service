@@ -11,13 +11,7 @@ import {
   viewChild,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { MatButtonModule } from '@angular/material/button';
-import {
-  MAT_DIALOG_DATA,
-  MatDialogModule,
-  MatDialogRef,
-} from '@angular/material/dialog';
-import { MatIconModule } from '@angular/material/icon';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 export type GoalKind = 'daily' | 'weekly' | 'monthly';
 
@@ -36,7 +30,11 @@ interface GoalCopy {
 @Component({
   selector: 'app-goal-reached-dialog',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [MatDialogModule, MatButtonModule, MatIconModule],
+  // Note: deliberately NO Material component imports. The vaporized subtree
+  // must avoid Material 3 design tokens because html2canvas v1.x can't parse
+  // modern CSS color() functions. We render with plain HTML + the globally
+  // loaded Material Icons font (declared in index.html).
+  imports: [],
   templateUrl: './goal-reached-dialog.component.html',
   styleUrl: './goal-reached-dialog.component.scss',
 })
@@ -86,14 +84,21 @@ export class GoalReachedDialogComponent {
       return;
     }
     this.snapping.set(true);
-    const el = this.cardRef().nativeElement;
-    const { WsThanosService } = await import('@wolsok/thanos');
-    runInInjectionContext(this.envInjector, () => {
-      inject(WsThanosService)
-        .vaporize(el)
-        .subscribe({
-          complete: () => this.dialogRef.close(),
-        });
-    });
+    try {
+      const el = this.cardRef().nativeElement;
+      const { WsThanosService } = await import('@wolsok/thanos');
+      runInInjectionContext(this.envInjector, () => {
+        inject(WsThanosService)
+          .vaporize(el)
+          .subscribe({
+            complete: () => this.dialogRef.close(),
+            // html2canvas can throw on unsupported CSS (e.g. modern color()
+            // functions). Always close so the user isn't stuck.
+            error: () => this.dialogRef.close(),
+          });
+      });
+    } catch {
+      this.dialogRef.close();
+    }
   }
 }
