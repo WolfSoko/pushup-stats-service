@@ -5,6 +5,7 @@ import { EntriesPageComponent } from './entries-page.component';
 import { LiveDataStore, StatsApiService } from '@pu-stats/data-access';
 import { AuthStore } from '@pu-auth/auth';
 import { makeAuthStoreMock } from '@pu-stats/testing';
+import { AppDataFacade } from '../../core/app-data.facade';
 import { EntriesStore } from '../entries.store';
 
 describe('EntriesPageComponent', () => {
@@ -47,6 +48,10 @@ describe('EntriesPageComponent', () => {
     entries: signal(rows),
   };
 
+  const appDataMock = {
+    reloadAfterMutation: vitest.fn(),
+  };
+
   beforeEach(async () => {
     vitest.clearAllMocks();
 
@@ -56,6 +61,7 @@ describe('EntriesPageComponent', () => {
         { provide: StatsApiService, useValue: apiMock },
         { provide: LiveDataStore, useValue: liveMock },
         { provide: AuthStore, useValue: makeAuthStoreMock() },
+        { provide: AppDataFacade, useValue: appDataMock },
       ],
     }).compileComponents();
 

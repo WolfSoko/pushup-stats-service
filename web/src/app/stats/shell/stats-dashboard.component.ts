@@ -20,6 +20,7 @@ import { appendLocalOffset } from '@pu-stats/models';
 import { firstValueFrom } from 'rxjs';
 import { QuickAddBridgeService } from '@pu-stats/quick-add';
 import { QuickAddOrchestrationService } from '../../core/quick-add-orchestration.service';
+import { AppDataFacade } from '../../core/app-data.facade';
 import { AdSlotComponent } from '@pu-stats/ads';
 import { AnalysisTeaserCardComponent } from '../components/analysis-teaser-card/analysis-teaser-card.component';
 import { PreviewBannerComponent } from '../components/preview-banner/preview-banner.component';
@@ -57,6 +58,7 @@ export class StatsDashboardComponent {
   private readonly router = inject(Router);
   private readonly live = inject(LiveDataStore);
   private readonly quickAdd = inject(QuickAddOrchestrationService);
+  private readonly appData = inject(AppDataFacade);
 
   readonly store = inject(DashboardStore);
 
@@ -175,6 +177,7 @@ export class StatsDashboardComponent {
   }) {
     await firstValueFrom(this.api.createPushup(entry));
     this.store.refreshAll();
+    this.appData.reloadAfterMutation();
     this.refreshCounter.update((c) => c + 1);
   }
 
@@ -196,6 +199,7 @@ export class StatsDashboardComponent {
       })
     );
     this.store.refreshAll();
+    this.appData.reloadAfterMutation();
     this.refreshCounter.update((c) => c + 1);
   }
 }

@@ -266,7 +266,7 @@ export class App {
   }
 
   handleFabOpened(): void {
-    this.appData.reloadAfterQuickAdd();
+    this.appData.reloadAfterMutation();
   }
 
   openFeedbackDialog(prefill = true): void {

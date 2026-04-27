@@ -35,7 +35,7 @@ export class QuickAddOrchestrationService {
               verticalPosition: 'bottom',
             }
           );
-          this.appData.reloadAfterQuickAdd();
+          this.appData.reloadAfterMutation();
         },
         error: () =>
           this.snackBar.open(
@@ -73,7 +73,7 @@ export class QuickAddOrchestrationService {
               verticalPosition: 'bottom',
             }
           );
-          this.appData.reloadAfterQuickAdd();
+          this.appData.reloadAfterMutation();
           this._fillToGoalInFlight.set(false);
         },
         error: () => {
