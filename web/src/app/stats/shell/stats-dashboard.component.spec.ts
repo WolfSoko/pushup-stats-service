@@ -14,6 +14,7 @@ import { signal } from '@angular/core';
 import { makeAuthStoreMock } from '@pu-stats/testing';
 import { ActivatedRoute, Router } from '@angular/router';
 import { QuickAddOrchestrationService } from '../../core/quick-add-orchestration.service';
+import { AppDataFacade } from '../../core/app-data.facade';
 import { UserConfigStore } from '../../core/user-config.store';
 
 describe('StatsDashboardComponent', () => {
@@ -89,6 +90,9 @@ describe('StatsDashboardComponent', () => {
     targetedAdsConsent: () => true,
   };
 
+  const reloadAfterQuickAddSpy = vitest.fn();
+  const appDataMock = { reloadAfterQuickAdd: reloadAfterQuickAddSpy };
+
   const dialogOpenSpy = vitest.fn().mockReturnValue({
     afterClosed: () => of(null),
     close: vi.fn(),
@@ -150,6 +154,7 @@ describe('StatsDashboardComponent', () => {
             fillToGoalInFlight: signal(false).asReadonly(),
           },
         },
+        { provide: AppDataFacade, useValue: appDataMock },
       ],
     });
 
@@ -325,6 +330,37 @@ describe('StatsDashboardComponent', () => {
 
         // Then
         expect(serviceMock.listPushups).toHaveBeenCalled();
+      });
+
+      it('Then it should reload AppDataFacade so the toolbar count refreshes', async () => {
+        // Given
+        const component = fixture.componentInstance;
+        vi.clearAllMocks();
+
+        // When
+        await component.createEntry({
+          timestamp: todayTs,
+          reps: 15,
+          source: 'web',
+          type: 'Diamond',
+        });
+
+        // Then
+        expect(reloadAfterQuickAddSpy).toHaveBeenCalledTimes(1);
+      });
+    });
+
+    describe('When addQuickEntry is called', () => {
+      it('Then it should reload AppDataFacade so the toolbar count refreshes', async () => {
+        // Given
+        const component = fixture.componentInstance;
+        vi.clearAllMocks();
+
+        // When
+        await component.addQuickEntry(10);
+
+        // Then
+        expect(reloadAfterQuickAddSpy).toHaveBeenCalledTimes(1);
       });
     });
 

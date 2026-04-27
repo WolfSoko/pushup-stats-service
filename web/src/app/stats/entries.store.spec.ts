@@ -69,6 +69,20 @@ describe('EntriesStore', () => {
     });
   });
 
+  describe('createEntry', () => {
+    it('Given a successful create, When createEntry resolves, Then app-level resources are reloaded so the toolbar count refreshes', async () => {
+      const store = setup();
+
+      await store.createEntry({
+        timestamp: '2026-04-27T08:00:00',
+        reps: 12,
+      });
+
+      expect(apiMock.createPushup).toHaveBeenCalled();
+      expect(appDataMock.reloadAfterQuickAdd).toHaveBeenCalledTimes(1);
+    });
+  });
+
   describe('updateEntry', () => {
     it('Given a successful update, When updateEntry resolves, Then app-level resources are reloaded so the toolbar count refreshes', async () => {
       const store = setup();
