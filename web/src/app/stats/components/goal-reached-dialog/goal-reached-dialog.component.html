@@ -1,4 +1,9 @@
-<div #card class="goal-card" data-testid="goal-reached-card">
+<div
+  #card
+  class="goal-card"
+  [class.is-snapping]="snapping()"
+  data-testid="goal-reached-card"
+>
   <button
     type="button"
     class="close-btn"

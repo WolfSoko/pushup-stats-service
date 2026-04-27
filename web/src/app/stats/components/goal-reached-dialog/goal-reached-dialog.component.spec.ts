@@ -166,6 +166,9 @@ describe('GoalReachedDialogComponent', () => {
       expect(vaporizeSpy).toHaveBeenCalledTimes(1);
       expect(vaporizeSpy).toHaveBeenCalledWith(card);
       expect(closeSpy).not.toHaveBeenCalled();
+      // And the card carries the `is-snapping` marker class so the SCSS
+      // transition (background fade + frame expand) kicks in.
+      expect(card.classList.contains('is-snapping')).toBe(true);
 
       // When the animation completes
       vaporizeSubject.complete();

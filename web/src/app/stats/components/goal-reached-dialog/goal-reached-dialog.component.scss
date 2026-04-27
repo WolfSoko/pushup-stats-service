@@ -9,6 +9,9 @@
 
 .goal-card {
   position: relative;
+  // New stacking context so the ::before frame stays under the content
+  // even though it sits at z-index: -1.
+  isolation: isolate;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -16,12 +19,42 @@
   padding: 2rem 1.5rem 1.5rem;
   text-align: center;
   border-radius: 16px;
-  background:
-    radial-gradient(circle at top, rgba(255, 211, 95, 0.35), transparent 60%),
-    linear-gradient(135deg, rgba(255, 184, 28, 0.95), rgba(214, 118, 12, 0.95));
   color: rgb(255, 248, 234);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
-  overflow: hidden;
+
+  // The card frame (gradient + drop shadow) lives on a pseudo-element so
+  // the snap-start CSS transition can fade and expand it without shifting
+  // any of the actual content (icon/title/progress/note/buttons stay
+  // exactly where they were when html2canvas snapshotted them).
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    background:
+      radial-gradient(circle at top, rgba(255, 211, 95, 0.35), transparent 60%),
+      linear-gradient(
+        135deg,
+        rgba(255, 184, 28, 0.95),
+        rgba(214, 118, 12, 0.95)
+      );
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+    transform-origin: bottom left;
+    transition:
+      transform 300ms ease-out,
+      opacity 300ms ease-out;
+  }
+
+  &.is-snapping {
+    // Allow the expanding frame to bleed past the original card box.
+    overflow: visible;
+
+    &::before {
+      // Grow up and to the right (origin: bottom left); fade to transparent.
+      transform: scale(1.3);
+      opacity: 0;
+    }
+  }
 }
 
 .close-btn {
