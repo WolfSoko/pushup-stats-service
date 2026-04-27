@@ -109,10 +109,44 @@ export class GoalReachedNotificationService {
   ];
 
   private readonly opened = new Set<string>();
+  /**
+   * Last-seen goal value per kind. Used to detect upward changes so that an
+   * earlier "shown" flag for the current period is cleared — otherwise the
+   * user would never see a celebration after raising the bar mid-period.
+   * Initialised to 0 so the very first effect run (resource load) is treated
+   * as a no-op rather than an upward change.
+   */
+  private readonly previousGoals: Record<GoalKind, number> = {
+    daily: 0,
+    weekly: 0,
+    monthly: 0,
+  };
 
   constructor() {
     if (!isPlatformBrowser(this.platformId)) return;
-    for (const spec of this.specs) this.watch(spec);
+    for (const spec of this.specs) {
+      // Order matters: the increase watcher is registered before the
+      // goal-reached watcher so that, when both fire on a single goal raise,
+      // the flag is cleared first and the goal-reached effect sees fresh state.
+      this.watchGoalIncrease(spec);
+      this.watch(spec);
+    }
+  }
+
+  private watchGoalIncrease(spec: GoalSpec): void {
+    effect(() => {
+      const newGoal = spec.goal();
+      const prev = this.previousGoals[spec.kind];
+      this.previousGoals[spec.kind] = newGoal;
+      // Skip the initial 0 → N transition (config first-load, not a raise).
+      if (prev <= 0) return;
+      if (newGoal <= prev) return;
+      const key = `${STORAGE_PREFIX}${spec.kind}_${untracked(() =>
+        spec.periodKey()
+      )}`;
+      this.opened.delete(key);
+      clearFlag(key);
+    });
   }
 
   private watch(spec: GoalSpec): void {
@@ -177,6 +211,14 @@ function writeFlag(key: string): void {
   } catch {
     // localStorage unavailable — best-effort; in-memory `opened` set still
     // suppresses repeat triggers for the lifetime of the session.
+  }
+}
+
+function clearFlag(key: string): void {
+  try {
+    globalThis.localStorage?.removeItem(key);
+  } catch {
+    // localStorage unavailable — nothing to clear.
   }
 }
 

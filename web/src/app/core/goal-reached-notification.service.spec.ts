@@ -6,6 +6,7 @@ import { UserContextService } from '@pu-auth/auth';
 import { of } from 'rxjs';
 import { PushupRecord } from '@pu-stats/models';
 import { GoalReachedNotificationService } from './goal-reached-notification.service';
+import { UserConfigStore } from './user-config.store';
 
 describe('GoalReachedNotificationService', () => {
   // Frozen Berlin date: Wed Apr 22 2026 (ISO week 17)
@@ -287,5 +288,95 @@ describe('GoalReachedNotificationService', () => {
         expect(config?.data).toMatchObject({ maxParticleCount });
       });
     }
+  });
+
+  describe('Given the daily goal is raised mid-period after the dialog already fired', () => {
+    it('Then it clears the persisted flag so the celebration re-fires on crossing the new bar', async () => {
+      // Given — first session: goal=10, total=12 → dialog opens, flag persisted.
+      setup({
+        dailyGoal: 10,
+        entries: [
+          {
+            _id: '1',
+            timestamp: '2026-04-22T08:00:00',
+            reps: 12,
+          } as PushupRecord,
+        ],
+      });
+      await flushAll();
+      expect(dialogOpenSpy).toHaveBeenCalledTimes(1);
+      expect(localStorage.getItem('pus_goal_reached_daily_2026-04-22')).toBe(
+        '1'
+      );
+      dialogOpenSpy.mockClear();
+
+      // When — the user raises the goal AND adds enough reps to cross the new bar.
+      liveEntries.set([
+        {
+          _id: '1',
+          timestamp: '2026-04-22T08:00:00',
+          reps: 12,
+        } as PushupRecord,
+        {
+          _id: '2',
+          timestamp: '2026-04-22T18:00:00',
+          reps: 15,
+        } as PushupRecord,
+      ]);
+      userConfigApiMock.getConfig.mockReturnValue(
+        of({
+          userId: 'u1',
+          dailyGoal: 25,
+          weeklyGoal: 0,
+          monthlyGoal: 0,
+        })
+      );
+      TestBed.inject(UserConfigStore).reload();
+      await flushAll();
+
+      // Then — flag was cleared and the dialog re-fires for the new threshold.
+      expect(dialogOpenSpy).toHaveBeenCalledTimes(1);
+      const [, config] = dialogOpenSpy.mock.calls[0];
+      expect(config?.data).toMatchObject({
+        kind: 'daily',
+        total: 27,
+        goal: 25,
+      });
+    });
+
+    it('Then a downward change leaves the persisted flag intact', async () => {
+      // Given
+      setup({
+        dailyGoal: 10,
+        entries: [
+          {
+            _id: '1',
+            timestamp: '2026-04-22T08:00:00',
+            reps: 12,
+          } as PushupRecord,
+        ],
+      });
+      await flushAll();
+      expect(dialogOpenSpy).toHaveBeenCalledTimes(1);
+      dialogOpenSpy.mockClear();
+
+      // When — goal is lowered (still already reached).
+      userConfigApiMock.getConfig.mockReturnValue(
+        of({
+          userId: 'u1',
+          dailyGoal: 5,
+          weeklyGoal: 0,
+          monthlyGoal: 0,
+        })
+      );
+      TestBed.inject(UserConfigStore).reload();
+      await flushAll();
+
+      // Then — no second dialog, flag still set.
+      expect(dialogOpenSpy).not.toHaveBeenCalled();
+      expect(localStorage.getItem('pus_goal_reached_daily_2026-04-22')).toBe(
+        '1'
+      );
+    });
   });
 });
