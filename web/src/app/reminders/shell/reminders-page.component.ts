@@ -162,8 +162,10 @@ import { ReminderFormStore } from './reminder-form.store';
                   </p>
                   <p class="muted" i18n="@@reminder.quickLog.desc">
                     Zeigt einen "Eintragen"-Button auf der
-                    Push-Benachrichtigung. Tippen speichert die konfigurierte
-                    Anzahl Liegestütze, ohne dass du die App öffnen musst.
+                    Push-Benachrichtigung. Wenn die App schon geöffnet ist,
+                    wird der Eintrag im Hintergrund gespeichert; ansonsten
+                    öffnet sich kurz ein Tab, der den Eintrag automatisch
+                    anlegt.
                   </p>
                   <div class="reminder-row">
                     <mat-slide-toggle

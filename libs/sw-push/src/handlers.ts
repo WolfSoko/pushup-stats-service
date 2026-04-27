@@ -14,6 +14,15 @@ declare const __SW_PUSH_VERSION__: string;
 export const SW_PUSH_VERSION: string =
   typeof __SW_PUSH_VERSION__ === 'string' ? __SW_PUSH_VERSION__ : 'unversioned';
 
+/**
+ * Defense-in-depth cap mirrored from `@pu-stats/models#QUICK_LOG_REPS_MAX` and
+ * the dispatch CF (`data-store/functions/src/push/reminders.ts`). Inlined to
+ * keep the sw-push bundle self-contained — if either value changes, update
+ * here too. The CF already sanitizes before sending; this guard catches stale
+ * payloads from older deployments and any payload tampering.
+ */
+const SW_QUICK_LOG_MAX = 500;
+
 export interface PushSubscriptionChangeEventLike {
   oldSubscription: PushSubscription | null;
   newSubscription: PushSubscription | null;
@@ -207,9 +216,15 @@ export function handleNotificationClick(
 
   if (action === 'quick-log') {
     const repsRaw = event.notification.data?.quickLogReps;
-    const reps =
+    const repsFloored =
       typeof repsRaw === 'number' && Number.isFinite(repsRaw)
         ? Math.floor(repsRaw)
+        : NaN;
+    // Clamp into [1, SW_QUICK_LOG_MAX] so a stale or tampered payload can't
+    // smuggle a 9999-rep entry past the dispatch sanitizer.
+    const reps =
+      Number.isFinite(repsFloored) && repsFloored > 0
+        ? Math.min(repsFloored, SW_QUICK_LOG_MAX)
         : NaN;
     event.waitUntil(
       (async () => {

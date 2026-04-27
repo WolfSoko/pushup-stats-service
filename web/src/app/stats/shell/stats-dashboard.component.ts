@@ -16,7 +16,11 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { LiveDataStore, StatsApiService } from '@pu-stats/data-access';
-import { appendLocalOffset } from '@pu-stats/models';
+import {
+  appendLocalOffset,
+  QUICK_LOG_REPS_MAX,
+  QUICK_LOG_REPS_MIN,
+} from '@pu-stats/models';
 import { firstValueFrom } from 'rxjs';
 import { QuickAddBridgeService } from '@pu-stats/quick-add';
 import { QuickAddOrchestrationService } from '../../core/quick-add-orchestration.service';
@@ -158,19 +162,26 @@ export class StatsDashboardComponent {
    *   - `?log=1`     → open create-entry dialog (existing behavior)
    *   - `?quickLog=N` → silently log N pushups (notification button click
    *                     when no app tab was open — see sw-push handlers).
+   *
+   * `quickLog` arrives via URL and is therefore untrusted: clamp into the
+   * configured `[QUICK_LOG_REPS_MIN, QUICK_LOG_REPS_MAX]` range so a tampered
+   * link can't persist absurd entries (CodeRabbit/Copilot/Codex P1, PR #249).
    */
   private readonly _handleLogParam = afterNextRender(() => {
     const params = this.route.snapshot.queryParamMap;
     const quickLog = params.get('quickLog');
     const quickReps = quickLog != null ? Number(quickLog) : NaN;
-    if (Number.isFinite(quickReps) && quickReps > 0) {
+    if (Number.isFinite(quickReps) && quickReps >= QUICK_LOG_REPS_MIN) {
+      const clamped = Math.min(Math.floor(quickReps), QUICK_LOG_REPS_MAX);
       void this.router.navigate([], {
         relativeTo: this.route,
         queryParams: { quickLog: null },
         queryParamsHandling: 'merge',
         replaceUrl: true,
       });
-      void this.addQuickEntry(Math.floor(quickReps));
+      // Attribute deep-link entries to the reminder so source-based analytics
+      // match the in-tab `QUICK_LOG_PUSHUPS` path (CodeRabbit/Copilot P2).
+      void this.addQuickEntry(clamped, 'reminder');
       return;
     }
     const log = params.get('log');
@@ -199,7 +210,7 @@ export class StatsDashboardComponent {
     this.refreshCounter.update((c) => c + 1);
   }
 
-  async addQuickEntry(reps: number) {
+  async addQuickEntry(reps: number, source: 'web' | 'reminder' = 'web') {
     const now = new Date();
     const y = now.getFullYear();
     const m = String(now.getMonth() + 1).padStart(2, '0');
@@ -212,7 +223,7 @@ export class StatsDashboardComponent {
         timestamp: appendLocalOffset(`${y}-${m}-${d}T${hh}:${mm}`),
         reps,
         sets: [reps],
-        source: 'web',
+        source,
         type: 'Standard',
       })
     );

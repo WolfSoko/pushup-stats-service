@@ -381,6 +381,44 @@ describe('handleNotificationClick', () => {
     expect(openWindow).toHaveBeenCalledWith('/de/app?log=1');
   });
 
+  it('quick-log: clamps an out-of-range payload to the SW max (defense-in-depth)', async () => {
+    const client: ClientLike = {
+      url: 'https://pushup-stats.de/de/app',
+      focus: jest.fn().mockResolvedValue(undefined),
+      postMessage: jest.fn(),
+    };
+    const { ctx } = makeCtx({ matchAllResult: [client] });
+    let waited: Promise<unknown> | undefined;
+    const { event } = makeEvent('quick-log', {
+      locale: 'de',
+      quickLogReps: 99999,
+    });
+    event.waitUntil = (p) => {
+      waited = p;
+    };
+    handleNotificationClick(event, ctx);
+    await waited;
+    expect(client.postMessage).toHaveBeenCalledWith({
+      type: 'QUICK_LOG_PUSHUPS',
+      reps: 500,
+    });
+  });
+
+  it('quick-log: clamps the deep-link reps when no client is open', async () => {
+    const { ctx, openWindow } = makeCtx({ matchAllResult: [] });
+    let waited: Promise<unknown> | undefined;
+    const { event } = makeEvent('quick-log', {
+      locale: 'en',
+      quickLogReps: 99999,
+    });
+    event.waitUntil = (p) => {
+      waited = p;
+    };
+    handleNotificationClick(event, ctx);
+    await waited;
+    expect(openWindow).toHaveBeenCalledWith('/en/app?quickLog=500');
+  });
+
   it('quick-log: floors fractional reps to an integer', async () => {
     const client: ClientLike = {
       url: 'https://pushup-stats.de/de/app',

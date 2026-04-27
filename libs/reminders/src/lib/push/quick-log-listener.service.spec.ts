@@ -115,6 +115,15 @@ describe('QuickLogListenerService', () => {
     expect(createPushup.mock.calls[0][0].reps).toBe(12);
   });
 
+  it('clamps oversized reps to QUICK_LOG_REPS_MAX (defense-in-depth)', async () => {
+    const service = TestBed.inject(QuickLogListenerService);
+    service.init();
+    emitMessage({ type: 'QUICK_LOG_PUSHUPS', reps: 9999 });
+    await new Promise((resolve) => setTimeout(resolve, 0));
+    expect(createPushup).toHaveBeenCalledTimes(1);
+    expect(createPushup.mock.calls[0][0].reps).toBe(500);
+  });
+
   it('shows a success snackbar after a successful entry', async () => {
     const service = TestBed.inject(QuickLogListenerService);
     await service.logEntry(20);

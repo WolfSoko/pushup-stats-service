@@ -54,11 +54,16 @@ export const ReminderFormStore = signalStore(
   })),
   withMethods((store) => ({
     syncFromConfig(config: ReminderConfig | null): void {
+      // Clamp to both bounds on hydrate so a Firestore value written by an
+      // older client (or via an admin tool) can't leak an out-of-range count
+      // into the form (CodeRabbit/Copilot, PR #249).
       const savedReps = config?.quickLogReps;
+      const normalizedReps =
+        typeof savedReps === 'number' && Number.isFinite(savedReps)
+          ? Math.floor(savedReps)
+          : undefined;
       const repsValid =
-        typeof savedReps === 'number' &&
-        Number.isFinite(savedReps) &&
-        savedReps >= QUICK_LOG_REPS_MIN;
+        normalizedReps !== undefined && normalizedReps >= QUICK_LOG_REPS_MIN;
       patchState(store, {
         enabled: config?.enabled ?? false,
         intervalMinutes: config?.intervalMinutes ?? 60,
@@ -66,7 +71,7 @@ export const ReminderFormStore = signalStore(
         quietHours: config?.quietHours ? [...config.quietHours] : [],
         quickLogEnabled: repsValid,
         quickLogReps: repsValid
-          ? Math.floor(savedReps as number)
+          ? Math.min(normalizedReps as number, QUICK_LOG_REPS_MAX)
           : DEFAULT_QUICK_LOG_REPS,
         dirty: false,
         saved: false,

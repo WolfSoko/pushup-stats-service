@@ -204,10 +204,16 @@ export interface NotificationAction {
 }
 
 /**
- * Builds the notification `actions` array. When `quickLogReps` is configured,
- * the second slot becomes a one-tap "Log N" button (action `quick-log`)
- * carrying the count via `data.quickLogReps`. Otherwise the existing generic
- * "log" action that opens the create-entry dialog is used.
+ * Builds the notification `actions` array. When `quickLogReps` is configured
+ * (and passes `sanitizeQuickLogReps`), the second slot becomes a one-tap
+ * "Log N" button (action `quick-log`). Otherwise the generic "log" action
+ * that opens the create-entry dialog is used.
+ *
+ * Note: this only returns the `actions` array — the enclosing notification
+ * payload must populate `data.quickLogReps` with the same sanitized count
+ * when the `quick-log` action is present, otherwise the SW handler
+ * (`libs/sw-push/src/handlers.ts`) cannot route the click. Pass the result
+ * of `sanitizeQuickLogReps` to both call sites.
  */
 export function buildReminderActions(
   language: string | undefined,

@@ -2,7 +2,11 @@ import { isPlatformBrowser } from '@angular/common';
 import { inject, Injectable, NgZone, PLATFORM_ID } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { StatsApiService } from '@pu-stats/data-access';
-import { appendLocalOffset } from '@pu-stats/models';
+import {
+  appendLocalOffset,
+  QUICK_LOG_REPS_MAX,
+  QUICK_LOG_REPS_MIN,
+} from '@pu-stats/models';
 import { firstValueFrom } from 'rxjs';
 
 /**
@@ -40,12 +44,12 @@ export class QuickLogListenerService {
         reps?: number;
       } | null;
       if (data?.type !== 'QUICK_LOG_PUSHUPS') return;
-      const reps = Number(data.reps);
-      if (!Number.isFinite(reps) || reps <= 0) return;
+      const clamped = clampReps(data.reps);
+      if (clamped == null) return;
       // SW message events fire outside Angular's zone — re-enter so any
       // signals/snackbar triggered downstream propagate change detection.
       this.zone.run(() => {
-        void this.logEntry(Math.floor(reps));
+        void this.logEntry(clamped);
       });
     });
   }
@@ -75,6 +79,18 @@ export class QuickLogListenerService {
       );
     }
   }
+}
+
+/**
+ * Mirrors the dispatch CF sanitizer: returns an integer in
+ * `[QUICK_LOG_REPS_MIN, QUICK_LOG_REPS_MAX]`, or `null` for missing/invalid
+ * input. Defense-in-depth — the CF and SW already clamp, but stale payloads
+ * from older deployments can still reach this handler.
+ */
+function clampReps(raw: unknown): number | null {
+  const n = Number(raw);
+  if (!Number.isFinite(n) || n < QUICK_LOG_REPS_MIN) return null;
+  return Math.min(Math.floor(n), QUICK_LOG_REPS_MAX);
 }
 
 function currentLocalTimestamp(): string {

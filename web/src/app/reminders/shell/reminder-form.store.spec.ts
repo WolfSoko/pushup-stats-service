@@ -108,6 +108,12 @@ describe('ReminderFormStore', () => {
       expect(store.quickLogEnabled()).toBe(false);
       expect(store.quickLogReps()).toBe(10);
     });
+
+    it('clamps a persisted out-of-range value on hydrate', () => {
+      store.syncFromConfig({ ...defaultConfig, quickLogReps: 9999 });
+      expect(store.quickLogEnabled()).toBe(true);
+      expect(store.quickLogReps()).toBe(500);
+    });
   });
 
   describe('syncIfClean (race condition guard)', () => {
