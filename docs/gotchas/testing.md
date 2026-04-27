@@ -22,6 +22,21 @@
 
 - **Version-based migrations:** When updating server-side calculation logic (e.g. UserStats), increment `USERSTATS_VERSION` constant. This triggers automatic rebuilds for affected users on their next entry. Tests must validate version is set correctly in rebuilt stats. See [`cloud-functions.md`](cloud-functions.md) for the versioning system.
 
+## Vitest module mocks
+
+- **`vi.mock` factories cannot close over module-scope variables.** Vitest hoists the factory above all imports, so any reference to outer `let`/`const` will be undefined at factory-eval time. To share a spy between the mocked module and the test, use `vi.hoisted`:
+  ```ts
+  const mocks = vi.hoisted(() => ({
+    fooSpy: vi.fn<(arg: string) => unknown>(),
+  }));
+  vi.mock('some-pkg', () => ({
+    foo: (arg: string) => mocks.fooSpy(arg),
+  }));
+  // Tests use mocks.fooSpy directly.
+  ```
+  Type the `vi.fn<Sig>()` explicitly — bare `vi.fn()` resolves to `Mock<Procedure | Constructable>`, which TS treats as not callable inside the mock factory.
+- **`TestBed` providers do NOT reach a `createEnvironmentInjector` child.** When the SUT builds its own child env injector and resolves a service from it (e.g. to override a `providedIn: 'root'` service's options token at call-site), TestBed-level `{ provide: SomeService, useValue: ... }` is invisible. Mock the underlying module via `vi.mock` so the class instantiated inside the child injector is already the stub. Pattern in `goal-reached-dialog.component.spec.ts`.
+
 ## Nx test runner quirks
 
 - **`web` test filter flags are not forwarded:** The `web:test` target uses the `@angular/build:unit-test` executor, which does NOT accept vitest CLI flags (`--testNamePattern`, `--testPathPattern`, `-t`). Running `pnpm exec vitest` directly inside `web/` also fails — it loses the Nx path aliases (`@pu-auth/auth`, `@pu-stats/models`, etc.) and every spec errors with `Cannot find package`. Either run the full `pnpm nx test web` suite, or move the spec into a library project whose test runner does accept filters. Use `--skip-nx-cache` to force a re-run when you just changed non-web code that a web spec depends on.
