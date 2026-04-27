@@ -11,6 +11,8 @@ export interface ReminderConfig {
   quietHours?: Array<{ from: string; to: string }>;
   intervalMinutes?: number;
   language?: string;
+  /** One-tap pushup count surfaced as a notification action. */
+  quickLogReps?: number;
 }
 
 export interface FirestoreTimestamp {
@@ -187,6 +189,61 @@ export function isExpiredSubscriptionError(
   // the next 5-min tick retries.
   if (hostIsInvalidTld) return true;
   return false;
+}
+
+/**
+ * Maximum sane quick-log count surfaced from a notification button.
+ * Mirrors `QUICK_LOG_REPS_MAX` in the shared model — guards against absurd
+ * values written client-side bypassing the form.
+ */
+export const QUICK_LOG_REPS_MAX = 500;
+
+export interface NotificationAction {
+  action: string;
+  title: string;
+}
+
+/**
+ * Builds the notification `actions` array. When `quickLogReps` is configured,
+ * the second slot becomes a one-tap "Log N" button (action `quick-log`)
+ * carrying the count via `data.quickLogReps`. Otherwise the existing generic
+ * "log" action that opens the create-entry dialog is used.
+ */
+export function buildReminderActions(
+  language: string | undefined,
+  quickLogReps: number | undefined
+): NotificationAction[] {
+  const lang = language === 'en' ? 'en' : 'de';
+  const snooze: NotificationAction =
+    lang === 'en'
+      ? { action: 'snooze', title: '⏰ Snooze 30 min' }
+      : { action: 'snooze', title: '⏰ 30 Min snoozen' };
+
+  const reps = sanitizeQuickLogReps(quickLogReps);
+  if (reps) {
+    const title =
+      lang === 'en' ? `✅ Log ${reps}` : `✅ ${reps} eintragen`;
+    return [snooze, { action: 'quick-log', title }];
+  }
+
+  const log: NotificationAction =
+    lang === 'en'
+      ? { action: 'log', title: '✅ Log push-ups' }
+      : { action: 'log', title: '✅ Eintragen' };
+  return [snooze, log];
+}
+
+/**
+ * Returns a clean integer in [1, QUICK_LOG_REPS_MAX] or `undefined` when the
+ * input is missing/invalid. Used to gate inclusion of the quick-log action.
+ */
+export function sanitizeQuickLogReps(
+  raw: number | undefined
+): number | undefined {
+  if (typeof raw !== 'number' || !Number.isFinite(raw)) return undefined;
+  const intVal = Math.floor(raw);
+  if (intVal < 1) return undefined;
+  return Math.min(intVal, QUICK_LOG_REPS_MAX);
 }
 
 /**

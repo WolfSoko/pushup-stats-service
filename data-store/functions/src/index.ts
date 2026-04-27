@@ -30,6 +30,7 @@ import { UserProfile } from './profile';
 import type { ReminderConfig } from './push';
 import {
   buildNotificationPayload,
+  buildReminderActions,
   isExpiredSubscriptionError,
   isLeaseStale,
   pushSubscriptionId,
@@ -981,16 +982,13 @@ export const dispatchPushReminders = onSchedule(
 
           const body = buildNotificationPayload(reminder?.language);
           const lang = reminder?.language === 'en' ? 'en' : 'de';
-          const actions =
-            lang === 'en'
-              ? [
-                  { action: 'snooze', title: '⏰ Snooze 30 min' },
-                  { action: 'log', title: '✅ Log push-ups' },
-                ]
-              : [
-                  { action: 'snooze', title: '⏰ 30 Min snoozen' },
-                  { action: 'log', title: '✅ Eintragen' },
-                ];
+          const actions = buildReminderActions(lang, reminder?.quickLogReps);
+          const quickLogAction = actions.find(
+            (a) => a.action === 'quick-log'
+          );
+          const quickLogReps = quickLogAction
+            ? Math.floor(reminder?.quickLogReps ?? 0)
+            : undefined;
           const payload = JSON.stringify({
             title: 'PushUp Stats',
             body,
@@ -998,7 +996,11 @@ export const dispatchPushReminders = onSchedule(
             badge: '/icons/badge-72x72.png',
             tag: 'reminder',
             renotify: true,
-            data: { url: `/${lang}/app`, locale: lang },
+            data: {
+              url: `/${lang}/app`,
+              locale: lang,
+              ...(quickLogReps ? { quickLogReps } : {}),
+            },
             actions,
           });
 

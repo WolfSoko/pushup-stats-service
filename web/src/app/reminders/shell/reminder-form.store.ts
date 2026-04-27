@@ -6,23 +6,38 @@ import {
   withState,
 } from '@ngrx/signals';
 import { computed } from '@angular/core';
-import type { ReminderConfig } from '@pu-stats/models';
+import {
+  type ReminderConfig,
+  QUICK_LOG_REPS_MAX,
+  QUICK_LOG_REPS_MIN,
+} from '@pu-stats/models';
 
 type ReminderFormState = {
   enabled: boolean;
   intervalMinutes: number;
   language: 'de' | 'en';
   quietHours: { from: string; to: string }[];
+  /**
+   * Whether the one-tap quick-log notification action is enabled. Tracked as
+   * a separate flag so the count can be edited while the toggle is off
+   * without losing the value.
+   */
+  quickLogEnabled: boolean;
+  quickLogReps: number;
   dirty: boolean;
   saving: boolean;
   saved: boolean;
 };
+
+const DEFAULT_QUICK_LOG_REPS = 10;
 
 const initialState: ReminderFormState = {
   enabled: false,
   intervalMinutes: 60,
   language: 'de',
   quietHours: [],
+  quickLogEnabled: false,
+  quickLogReps: DEFAULT_QUICK_LOG_REPS,
   dirty: false,
   saving: false,
   saved: false,
@@ -39,11 +54,20 @@ export const ReminderFormStore = signalStore(
   })),
   withMethods((store) => ({
     syncFromConfig(config: ReminderConfig | null): void {
+      const savedReps = config?.quickLogReps;
+      const repsValid =
+        typeof savedReps === 'number' &&
+        Number.isFinite(savedReps) &&
+        savedReps >= QUICK_LOG_REPS_MIN;
       patchState(store, {
         enabled: config?.enabled ?? false,
         intervalMinutes: config?.intervalMinutes ?? 60,
         language: config?.language ?? 'de',
         quietHours: config?.quietHours ? [...config.quietHours] : [],
+        quickLogEnabled: repsValid,
+        quickLogReps: repsValid
+          ? Math.floor(savedReps as number)
+          : DEFAULT_QUICK_LOG_REPS,
         dirty: false,
         saved: false,
       });
@@ -94,6 +118,22 @@ export const ReminderFormStore = signalStore(
       patchState(store, { intervalMinutes: clamped });
     },
 
+    setQuickLogEnabled(value: boolean): void {
+      patchState(store, { quickLogEnabled: value, dirty: true });
+    },
+
+    setQuickLogReps(value: number): void {
+      patchState(store, { quickLogReps: value, dirty: true });
+    },
+
+    clampQuickLogReps(): void {
+      const val = store.quickLogReps();
+      const clamped = Number.isFinite(val)
+        ? Math.min(QUICK_LOG_REPS_MAX, Math.max(QUICK_LOG_REPS_MIN, val))
+        : DEFAULT_QUICK_LOG_REPS;
+      patchState(store, { quickLogReps: Math.floor(clamped) });
+    },
+
     setSaving(value: boolean): void {
       patchState(store, { saving: value });
     },
@@ -107,13 +147,20 @@ export const ReminderFormStore = signalStore(
     },
 
     toConfig(timezone: string): ReminderConfig {
-      return {
+      const config: ReminderConfig = {
         enabled: store.enabled(),
         intervalMinutes: store.intervalMinutes(),
         quietHours: store.quietHours(),
         timezone,
         language: store.language(),
       };
+      if (store.quickLogEnabled()) {
+        const reps = Math.floor(store.quickLogReps());
+        if (Number.isFinite(reps) && reps >= QUICK_LOG_REPS_MIN) {
+          config.quickLogReps = Math.min(reps, QUICK_LOG_REPS_MAX);
+        }
+      }
+      return config;
     },
   }))
 );

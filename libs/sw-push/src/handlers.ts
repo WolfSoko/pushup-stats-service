@@ -31,7 +31,12 @@ export interface PushEventLike {
 export interface NotificationClickEventLike {
   action: string;
   notification: {
-    data?: { locale?: string; url?: string } | null;
+    data?: {
+      locale?: string;
+      url?: string;
+      /** Set when the dispatch CF includes a `quick-log` action button. */
+      quickLogReps?: number;
+    } | null;
     close(): void;
   };
   waitUntil(promise: Promise<unknown>): void;
@@ -197,6 +202,48 @@ export function handleNotificationClick(
 
   if (action === 'log') {
     event.waitUntil(ctx.clients.openWindow(`/${locale}/app?log=1`));
+    return;
+  }
+
+  if (action === 'quick-log') {
+    const repsRaw = event.notification.data?.quickLogReps;
+    const reps =
+      typeof repsRaw === 'number' && Number.isFinite(repsRaw)
+        ? Math.floor(repsRaw)
+        : NaN;
+    event.waitUntil(
+      (async () => {
+        // No valid count → fall back to the standard log flow so the user
+        // doesn't get an unresponsive button.
+        if (!Number.isFinite(reps) || reps <= 0) {
+          await ctx.clients.openWindow(`/${locale}/app?log=1`);
+          return;
+        }
+        const clientList = await ctx.clients.matchAll({
+          type: 'window',
+          includeUncontrolled: true,
+        });
+        if (clientList.length > 0) {
+          // App is open somewhere — log silently in the existing tab so the
+          // user gets feedback without a navigation flicker.
+          clientList[0].postMessage({
+            type: 'QUICK_LOG_PUSHUPS',
+            reps,
+          });
+          if ('focus' in clientList[0]) {
+            await (
+              clientList[0] as { focus: () => Promise<unknown> }
+            )
+              .focus()
+              .catch(() => undefined);
+          }
+          return;
+        }
+        // No open client — open a new tab with `?quickLog=N`; the dashboard
+        // creates the entry on first render.
+        await ctx.clients.openWindow(`/${locale}/app?quickLog=${reps}`);
+      })()
+    );
     return;
   }
 

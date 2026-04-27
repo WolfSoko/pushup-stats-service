@@ -153,9 +153,27 @@ export class StatsDashboardComponent {
     });
   }
 
-  /** Called after render — opens create dialog if ?log=1 is in the URL */
+  /**
+   * Called after render — handles two notification deep-links:
+   *   - `?log=1`     → open create-entry dialog (existing behavior)
+   *   - `?quickLog=N` → silently log N pushups (notification button click
+   *                     when no app tab was open — see sw-push handlers).
+   */
   private readonly _handleLogParam = afterNextRender(() => {
-    const log = this.route.snapshot.queryParamMap.get('log');
+    const params = this.route.snapshot.queryParamMap;
+    const quickLog = params.get('quickLog');
+    const quickReps = quickLog != null ? Number(quickLog) : NaN;
+    if (Number.isFinite(quickReps) && quickReps > 0) {
+      void this.router.navigate([], {
+        relativeTo: this.route,
+        queryParams: { quickLog: null },
+        queryParamsHandling: 'merge',
+        replaceUrl: true,
+      });
+      void this.addQuickEntry(Math.floor(quickReps));
+      return;
+    }
+    const log = params.get('log');
     if (log === '1') {
       // Clean up URL without re-navigating
       void this.router.navigate([], {

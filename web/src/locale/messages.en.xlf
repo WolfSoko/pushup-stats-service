@@ -4599,6 +4599,48 @@ Deine Position: # ·  Reps        </source>
         <target>EN</target>
       </segment>
     </unit>
+    <unit id="reminder.quickLog.label">
+      <segment state="translated">
+        <source> Direkt-Eintrag aus der Benachrichtigung </source>
+        <target> Quick log from the notification </target>
+      </segment>
+    </unit>
+    <unit id="reminder.quickLog.desc">
+      <segment state="translated">
+        <source> Zeigt einen "Eintragen"-Button auf der Push-Benachrichtigung. Tippen speichert die konfigurierte Anzahl Liegestütze, ohne dass du die App öffnen musst. </source>
+        <target> Adds a "Log" button to the push notification. Tapping it saves the configured number of push-ups without opening the app. </target>
+      </segment>
+    </unit>
+    <unit id="reminder.quickLog.toggle">
+      <segment state="translated">
+        <source> Schnell-Eintrag aktivieren </source>
+        <target> Enable quick log </target>
+      </segment>
+    </unit>
+    <unit id="reminder.quickLog.reps.label">
+      <segment state="translated">
+        <source>Anzahl Liegestütze</source>
+        <target>Push-up count</target>
+      </segment>
+    </unit>
+    <unit id="reminder.quickLog.reps.hint">
+      <segment state="translated">
+        <source>1–500 Wiederholungen</source>
+        <target>1–500 reps</target>
+      </segment>
+    </unit>
+    <unit id="reminder.quickLog.success">
+      <segment state="translated">
+        <source><ph id="0" equiv="reps" disp="reps"/> Push-ups eingetragen ✓</source>
+        <target><ph id="0" equiv="reps" disp="reps"/> push-ups logged ✓</target>
+      </segment>
+    </unit>
+    <unit id="reminder.quickLog.error">
+      <segment state="translated">
+        <source>Eintrag konnte nicht gespeichert werden.</source>
+        <target>Could not save the entry.</target>
+      </segment>
+    </unit>
     <unit id="reminder.quietHours.label">
       <segment state="translated">
         <source> Ruhezeiten </source>

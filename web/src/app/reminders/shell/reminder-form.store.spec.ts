@@ -63,6 +63,53 @@ describe('ReminderFormStore', () => {
     expect(store.dirty()).toBe(false);
   });
 
+  describe('quickLog (one-tap notification action)', () => {
+    it('initializes with quickLog disabled and the default count', () => {
+      expect(store.quickLogEnabled()).toBe(false);
+      expect(store.quickLogReps()).toBe(10);
+    });
+
+    it('marks the form dirty when quickLog is toggled', () => {
+      store.setQuickLogEnabled(true);
+      expect(store.quickLogEnabled()).toBe(true);
+      expect(store.dirty()).toBe(true);
+    });
+
+    it('omits quickLogReps from the saved config when toggle is off', () => {
+      store.setQuickLogEnabled(false);
+      const config = store.toConfig('Europe/Berlin');
+      expect(config.quickLogReps).toBeUndefined();
+    });
+
+    it('writes the configured count when toggle is on', () => {
+      store.setQuickLogEnabled(true);
+      store.setQuickLogReps(25);
+      const config = store.toConfig('Europe/Berlin');
+      expect(config.quickLogReps).toBe(25);
+    });
+
+    it('clamps to the [1, 500] range on blur', () => {
+      store.setQuickLogReps(9999);
+      store.clampQuickLogReps();
+      expect(store.quickLogReps()).toBe(500);
+      store.setQuickLogReps(0);
+      store.clampQuickLogReps();
+      expect(store.quickLogReps()).toBe(1);
+    });
+
+    it('hydrates from a config with quickLogReps set', () => {
+      store.syncFromConfig({ ...defaultConfig, quickLogReps: 30 });
+      expect(store.quickLogEnabled()).toBe(true);
+      expect(store.quickLogReps()).toBe(30);
+    });
+
+    it('hydrates as disabled when quickLogReps is missing or invalid', () => {
+      store.syncFromConfig({ ...defaultConfig, quickLogReps: 0 });
+      expect(store.quickLogEnabled()).toBe(false);
+      expect(store.quickLogReps()).toBe(10);
+    });
+  });
+
   describe('syncIfClean (race condition guard)', () => {
     it('syncs when form is clean', () => {
       const config: ReminderConfig = { ...defaultConfig, enabled: true };

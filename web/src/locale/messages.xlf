@@ -237,7 +237,7 @@
         <note category="location">web/src/app/core/feedback/feedback-dialog.component.ts:96,97</note>
         <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:199,200</note>
         <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts:75,76</note>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:252,253</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:289,290</note>
       </notes>
       <segment>
         <source> Abbrechen </source>
@@ -689,9 +689,41 @@
         <source><ph id="0" equiv="GAP" disp="gap"/> Liegestütze bis zum Tagesziel hinzufügen</source>
       </segment>
     </unit>
+    <unit id="reminder.quickLog.success">
+      <notes>
+        <note category="location">libs/reminders/src/lib/push/quick-log-listener.service.ts:66</note>
+      </notes>
+      <segment>
+        <source><ph id="0" equiv="reps" disp="reps"/> Push-ups eingetragen ✓</source>
+      </segment>
+    </unit>
+    <unit id="snackbar.close">
+      <notes>
+        <note category="location">libs/reminders/src/lib/push/quick-log-listener.service.ts:67</note>
+        <note category="location">libs/reminders/src/lib/push/quick-log-listener.service.ts:73</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:507</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:535</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:551</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:566</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:585</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:604</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:626</note>
+      </notes>
+      <segment>
+        <source>Schließen</source>
+      </segment>
+    </unit>
+    <unit id="reminder.quickLog.error">
+      <notes>
+        <note category="location">libs/reminders/src/lib/push/quick-log-listener.service.ts:72</note>
+      </notes>
+      <segment>
+        <source>Eintrag konnte nicht gespeichert werden.</source>
+      </segment>
+    </unit>
     <unit id="admin.title">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:70,72</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:74,76</note>
       </notes>
       <segment>
         <source>Admin-Bereich</source>
@@ -699,7 +731,7 @@
     </unit>
     <unit id="admin.bulk.title">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:76,78</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:80,82</note>
       </notes>
       <segment>
         <source>Anonyme Benutzer aufräumen</source>
@@ -707,7 +739,7 @@
     </unit>
     <unit id="admin.bulk.daysLabel">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:82,84</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:86,88</note>
       </notes>
       <segment>
         <source>Inaktiv seit (Tage)</source>
@@ -715,7 +747,7 @@
     </unit>
     <unit id="admin.bulk.hint">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:93,96</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:97,100</note>
       </notes>
       <segment>
         <source> Löscht anonyme Benutzer ohne Pushups in den letzten <ph id="0" equiv="INTERPOLATION" disp="{{ inactiveDays() }}"/> Tagen. </source>
@@ -723,7 +755,7 @@
     </unit>
     <unit id="admin.bulk.button">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:109,110</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:113,114</note>
       </notes>
       <segment>
         <source>Inaktive löschen</source>
@@ -731,7 +763,7 @@
     </unit>
     <unit id="admin.bulk.deleted">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:117,118</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:121,122</note>
       </notes>
       <segment>
         <source>Gelöscht:</source>
@@ -739,7 +771,7 @@
     </unit>
     <unit id="admin.bulk.skipped">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:119,120</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:123,124</note>
       </notes>
       <segment>
         <source>Übersprungen:</source>
@@ -747,7 +779,7 @@
     </unit>
     <unit id="admin.filter.anonymous">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:138,139</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:142,143</note>
       </notes>
       <segment>
         <source> Nur anonyme Benutzer </source>
@@ -755,7 +787,7 @@
     </unit>
     <unit id="admin.col.uid">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:161,162</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:169,170</note>
       </notes>
       <segment>
         <source>UID</source>
@@ -763,7 +795,7 @@
     </unit>
     <unit id="admin.col.name">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:173,174</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:184,185</note>
       </notes>
       <segment>
         <source>Name</source>
@@ -771,7 +803,7 @@
     </unit>
     <unit id="admin.col.email">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:183,184</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:197,198</note>
       </notes>
       <segment>
         <source>E-Mail</source>
@@ -779,7 +811,7 @@
     </unit>
     <unit id="admin.col.anon">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:191,192</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:208,209</note>
       </notes>
       <segment>
         <source>Anon</source>
@@ -787,7 +819,7 @@
     </unit>
     <unit id="admin.col.pushups">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:205,206</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:225,226</note>
       </notes>
       <segment>
         <source>Pushups</source>
@@ -795,7 +827,7 @@
     </unit>
     <unit id="admin.col.lastEntry">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:213,215</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:236,238</note>
       </notes>
       <segment>
         <source>Letzter Eintrag</source>
@@ -803,7 +835,7 @@
     </unit>
     <unit id="admin.col.createdAt">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:223,225</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:249,251</note>
       </notes>
       <segment>
         <source>Erstellt</source>
@@ -811,7 +843,7 @@
     </unit>
     <unit id="admin.feedback.title">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:261,263</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:287,289</note>
       </notes>
       <segment>
         <source>Feedback</source>
@@ -819,7 +851,7 @@
     </unit>
     <unit id="admin.feedback.empty">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:280,282</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:306,308</note>
       </notes>
       <segment>
         <source>Noch kein Feedback vorhanden.</source>
@@ -827,7 +859,7 @@
     </unit>
     <unit id="admin.feedback.col.date">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:291,293</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:322,324</note>
       </notes>
       <segment>
         <source>Datum</source>
@@ -835,7 +867,7 @@
     </unit>
     <unit id="admin.feedback.col.name">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:302,304</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:334,336</note>
       </notes>
       <segment>
         <source>Name</source>
@@ -843,7 +875,7 @@
     </unit>
     <unit id="admin.feedback.col.email">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:311,313</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:344,346</note>
       </notes>
       <segment>
         <source>E-Mail</source>
@@ -851,7 +883,7 @@
     </unit>
     <unit id="admin.feedback.col.message">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:320,322</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:353,355</note>
       </notes>
       <segment>
         <source>Nachricht</source>
@@ -859,7 +891,7 @@
     </unit>
     <unit id="admin.feedback.col.userId">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:331,333</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:364,366</note>
       </notes>
       <segment>
         <source>User</source>
@@ -867,7 +899,7 @@
     </unit>
     <unit id="admin.refresh">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:505</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:538</note>
       </notes>
       <segment>
         <source>Neu laden</source>
@@ -875,7 +907,7 @@
     </unit>
     <unit id="admin.feedback.anon">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:506</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:539</note>
       </notes>
       <segment>
         <source>Anonym</source>
@@ -883,7 +915,7 @@
     </unit>
     <unit id="admin.feedback.markRead">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:507</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:540</note>
       </notes>
       <segment>
         <source>Als gelesen markieren</source>
@@ -891,7 +923,7 @@
     </unit>
     <unit id="admin.feedback.markUnread">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:508</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:541</note>
       </notes>
       <segment>
         <source>Als ungelesen markieren</source>
@@ -899,7 +931,7 @@
     </unit>
     <unit id="admin.feedback.createIssue">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:509</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:542</note>
       </notes>
       <segment>
         <source>GitHub-Issue erstellen</source>
@@ -907,7 +939,7 @@
     </unit>
     <unit id="admin.feedback.openIssue">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:510</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:543</note>
       </notes>
       <segment>
         <source>GitHub-Issue öffnen</source>
@@ -915,7 +947,7 @@
     </unit>
     <unit id="admin.feedback.delete">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:511</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:544</note>
       </notes>
       <segment>
         <source>Feedback löschen</source>
@@ -923,7 +955,7 @@
     </unit>
     <unit id="admin.row.detailsAria">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:684</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:770</note>
       </notes>
       <segment>
         <source>Details öffnen für <ph id="0" equiv="identifier" disp="identifier"/></source>
@@ -1468,7 +1500,7 @@
     </unit>
     <unit id="earlyAccess.text">
       <notes>
-        <note category="location">web/src/app/app.ts:117</note>
+        <note category="location">web/src/app/app.ts:121</note>
       </notes>
       <segment>
         <source>Early Access – pushup-stats.de befindet sich noch im Aufbau. Funktionen und Design können sich jederzeit ändern.</source>
@@ -1476,7 +1508,7 @@
     </unit>
     <unit id="earlyAccess.feedback">
       <notes>
-        <note category="location">web/src/app/app.ts:118</note>
+        <note category="location">web/src/app/app.ts:122</note>
       </notes>
       <segment>
         <source>Feedback</source>
@@ -1484,7 +1516,7 @@
     </unit>
     <unit id="seo.default.title">
       <notes>
-        <note category="location">web/src/app/app.ts:212</note>
+        <note category="location">web/src/app/app.ts:221</note>
       </notes>
       <segment>
         <source>Pushup Tracker</source>
@@ -1492,7 +1524,7 @@
     </unit>
     <unit id="seo.default.description">
       <notes>
-        <note category="location">web/src/app/app.ts:215</note>
+        <note category="location">web/src/app/app.ts:224</note>
       </notes>
       <segment>
         <source>Tracke Reps, Trends und Streaks mit Pushup Tracker.</source>
@@ -1500,7 +1532,7 @@
     </unit>
     <unit id="sw.update.available">
       <notes>
-        <note category="location">web/src/app/app.ts:234</note>
+        <note category="location">web/src/app/app.ts:243</note>
       </notes>
       <segment>
         <source>Neue Version verfügbar</source>
@@ -1508,7 +1540,7 @@
     </unit>
     <unit id="sw.update.reload">
       <notes>
-        <note category="location">web/src/app/app.ts:235</note>
+        <note category="location">web/src/app/app.ts:244</note>
       </notes>
       <segment>
         <source>Neu laden</source>
@@ -1516,7 +1548,7 @@
     </unit>
     <unit id="feedback.success">
       <notes>
-        <note category="location">web/src/app/app.ts:293</note>
+        <note category="location">web/src/app/app.ts:302</note>
       </notes>
       <segment>
         <source>Danke für dein Feedback!</source>
@@ -1524,7 +1556,7 @@
     </unit>
     <unit id="feedback.error">
       <notes>
-        <note category="location">web/src/app/app.ts:300</note>
+        <note category="location">web/src/app/app.ts:309</note>
       </notes>
       <segment>
         <source>Feedback konnte nicht gesendet werden.</source>
@@ -1532,7 +1564,7 @@
     </unit>
     <unit id="sw.update.downloading">
       <notes>
-        <note category="location">web/src/app/app.ts:338</note>
+        <note category="location">web/src/app/app.ts:347</note>
       </notes>
       <segment>
         <source>Update wird im Hintergrund geladen …</source>
@@ -2509,9 +2541,49 @@
         <source>EN</source>
       </segment>
     </unit>
-    <unit id="reminder.quietHours.label">
+    <unit id="reminder.quickLog.label">
       <notes>
         <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:161,162</note>
+      </notes>
+      <segment>
+        <source> Direkt-Eintrag aus der Benachrichtigung </source>
+      </segment>
+    </unit>
+    <unit id="reminder.quickLog.desc">
+      <notes>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:164,166</note>
+      </notes>
+      <segment>
+        <source> Zeigt einen &quot;Eintragen&quot;-Button auf der Push-Benachrichtigung. Tippen speichert die konfigurierte Anzahl Liegestütze, ohne dass du die App öffnen musst. </source>
+      </segment>
+    </unit>
+    <unit id="reminder.quickLog.toggle">
+      <notes>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:175,176</note>
+      </notes>
+      <segment>
+        <source> Schnell-Eintrag aktivieren </source>
+      </segment>
+    </unit>
+    <unit id="reminder.quickLog.reps.label">
+      <notes>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:183,185</note>
+      </notes>
+      <segment>
+        <source>Anzahl Liegestütze</source>
+      </segment>
+    </unit>
+    <unit id="reminder.quickLog.reps.hint">
+      <notes>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:196,198</note>
+      </notes>
+      <segment>
+        <source>1–500 Wiederholungen</source>
+      </segment>
+    </unit>
+    <unit id="reminder.quietHours.label">
+      <notes>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:205,206</note>
       </notes>
       <segment>
         <source> Ruhezeiten </source>
@@ -2519,7 +2591,7 @@
     </unit>
     <unit id="reminder.quietHours.from">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:167,169</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:211,213</note>
       </notes>
       <segment>
         <source>Von</source>
@@ -2527,7 +2599,7 @@
     </unit>
     <unit id="reminder.quietHours.to">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:185,186</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:229,230</note>
       </notes>
       <segment>
         <source>Bis</source>
@@ -2535,7 +2607,7 @@
     </unit>
     <unit id="reminder.quietHours.remove.aria">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:202,203</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:246,247</note>
       </notes>
       <segment>
         <source>Ruhezeit entfernen</source>
@@ -2543,7 +2615,7 @@
     </unit>
     <unit id="reminder.quietHours.add">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:216,218</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:260,262</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">add</pc> Ruhezeit hinzufügen </source>
@@ -2551,7 +2623,7 @@
     </unit>
     <unit id="reminder.save">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:231,233</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:275,277</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">save</pc> Erinnerungen speichern </source>
@@ -2559,7 +2631,7 @@
     </unit>
     <unit id="reminder.saved">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:235,237</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:279,281</note>
       </notes>
       <segment>
         <source>Gespeichert.</source>
@@ -2567,7 +2639,7 @@
     </unit>
     <unit id="push.section.title">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:242,243</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:286,287</note>
       </notes>
       <segment>
         <source>🔔 Erinnerungen</source>
@@ -2575,7 +2647,7 @@
     </unit>
     <unit id="push.section.desc">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:244,247</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:288,291</note>
       </notes>
       <segment>
         <source> Wir tippen dir auf die Schulter, wenn es Zeit für Liegestütze ist. </source>
@@ -2583,7 +2655,7 @@
     </unit>
     <unit id="push.status.unsupported">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:249,251</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:293,295</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">info</pc> Dein Browser unterstützt keine Push-Benachrichtigungen. </source>
@@ -2591,7 +2663,7 @@
     </unit>
     <unit id="push.status.denied">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:254,256</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:298,300</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">warning</pc> Push-Benachrichtigungen sind blockiert. Bitte in den Browser-Einstellungen erlauben. </source>
@@ -2599,7 +2671,7 @@
     </unit>
     <unit id="push.status.browserInvalidated">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:263,268</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:307,312</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">warning</pc> Dein Browser hat das Push-Abo für dieses Gerät als dauerhaft ungültig markiert. Bitte setze die Benachrichtigungs-Einstellungen für diese Seite in den Browser-Einstellungen zurück (Chrome → Einstellungen → Website-Einstellungen → Benachrichtigungen) und aktiviere Push danach erneut. </source>
@@ -2607,7 +2679,7 @@
     </unit>
     <unit id="push.status.subscribed">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:276,278</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:320,322</note>
       </notes>
       <segment>
         <source>Erinnerungen aktiv ✓</source>
@@ -2615,7 +2687,7 @@
     </unit>
     <unit id="push.unsubscribe">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:286,288</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:330,332</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">notifications_off</pc> Deaktivieren </source>
@@ -2623,7 +2695,7 @@
     </unit>
     <unit id="push.device.count">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:294,295</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:338,339</note>
       </notes>
       <segment>
         <source> Aktiv auf <ph id="0" equiv="INTERPOLATION" disp="{{ pushService.deviceCount() }}"/> Geräten </source>
@@ -2631,7 +2703,7 @@
     </unit>
     <unit id="push.cta.desc">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:300,301</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:344,345</note>
       </notes>
       <segment>
         <source> Nie wieder eine Einheit verpassen. </source>
@@ -2639,7 +2711,7 @@
     </unit>
     <unit id="push.subscribe">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:310,312</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:354,356</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">notifications</pc> Push aktivieren </source>
@@ -2647,7 +2719,7 @@
     </unit>
     <unit id="unsubAll.section.title">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:318,319</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:362,363</note>
       </notes>
       <segment>
         <source>📵 Push auf allen Geräten</source>
@@ -2655,7 +2727,7 @@
     </unit>
     <unit id="unsubAll.section.desc">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:320,322</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:364,366</note>
       </notes>
       <segment>
         <source> Entfernt alle Push-Benachrichtigungs-Abos auf diesem und allen anderen Geräten. Du bleibst angemeldet und kannst Push jederzeit wieder aktivieren. </source>
@@ -2663,7 +2735,7 @@
     </unit>
     <unit id="unsubAll.button">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:333,335</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:377,379</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">notifications_off</pc> Push auf allen Geräten deaktivieren </source>
@@ -2671,30 +2743,16 @@
     </unit>
     <unit id="push.subscribe.error">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:459</note>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:575</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:506</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:625</note>
       </notes>
       <segment>
         <source>Push konnte nicht aktiviert werden.</source>
       </segment>
     </unit>
-    <unit id="snackbar.close">
-      <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:460</note>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:488</note>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:504</note>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:519</note>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:535</note>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:554</note>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:576</note>
-      </notes>
-      <segment>
-        <source>Schließen</source>
-      </segment>
-    </unit>
     <unit id="unsubAll.error">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:487</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:534</note>
       </notes>
       <segment>
         <source>Entfernen der Push-Abos fehlgeschlagen.</source>
@@ -2702,7 +2760,7 @@
     </unit>
     <unit id="unsubAll.success">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:503</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:550</note>
       </notes>
       <segment>
         <source>Push-Abos aller Geräte entfernt.</source>
@@ -2710,7 +2768,7 @@
     </unit>
     <unit id="reminder.permission.snackbar">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:518</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:565</note>
       </notes>
       <segment>
         <source>Benachrichtigungen sind blockiert. Bitte in den Browser-Einstellungen erlauben.</source>
@@ -2718,8 +2776,8 @@
     </unit>
     <unit id="reminder.save.error">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:534</note>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:553</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:584</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:603</note>
       </notes>
       <segment>
         <source>Einstellungen konnten nicht gespeichert werden.</source>
@@ -3015,7 +3073,7 @@
     </unit>
     <unit id="goalReached.repsSuffix">
       <notes>
-        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.html:11,14</note>
+        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.html:25,28</note>
       </notes>
       <segment>
         <source>Liegestütze</source>
@@ -3023,7 +3081,7 @@
     </unit>
     <unit id="goalReached.weekly.title">
       <notes>
-        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:64</note>
+        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:73</note>
       </notes>
       <segment>
         <source>Wochenziel erreicht!</source>
@@ -3031,7 +3089,7 @@
     </unit>
     <unit id="goalReached.weekly.note">
       <notes>
-        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:65</note>
+        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:74</note>
       </notes>
       <segment>
         <source>Sieben Tage, ein Sieg. Du bist on fire.</source>
@@ -3039,7 +3097,7 @@
     </unit>
     <unit id="goalReached.monthly.title">
       <notes>
-        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:70</note>
+        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:79</note>
       </notes>
       <segment>
         <source>Monatsziel erreicht!</source>
@@ -3047,7 +3105,7 @@
     </unit>
     <unit id="goalReached.monthly.note">
       <notes>
-        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:71</note>
+        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:80</note>
       </notes>
       <segment>
         <source>Ein ganzer Monat Disziplin. Legendär.</source>
@@ -3055,7 +3113,7 @@
     </unit>
     <unit id="goalReached.daily.title">
       <notes>
-        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:76</note>
+        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:85</note>
       </notes>
       <segment>
         <source>Tagesziel erreicht!</source>
@@ -3063,7 +3121,7 @@
     </unit>
     <unit id="goalReached.daily.note">
       <notes>
-        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:77</note>
+        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:86</note>
       </notes>
       <segment>
         <source>Heute hast du dein Versprechen gehalten.</source>
@@ -3071,7 +3129,7 @@
     </unit>
     <unit id="goalReached.snapAria">
       <notes>
-        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:82</note>
+        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:91</note>
       </notes>
       <segment>
         <source>Erfolg vaporisieren</source>
@@ -3079,7 +3137,7 @@
     </unit>
     <unit id="goalReached.snap">
       <notes>
-        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:83</note>
+        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:92</note>
       </notes>
       <segment>
         <source>Snap!</source>
@@ -3087,7 +3145,7 @@
     </unit>
     <unit id="goalReached.closeAria">
       <notes>
-        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:84</note>
+        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:93</note>
       </notes>
       <segment>
         <source>Schließen</source>
@@ -3681,7 +3739,7 @@
     </unit>
     <unit id="settingsTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:41,42</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:44,45</note>
       </notes>
       <segment>
         <source>Einstellungen</source>
@@ -3689,7 +3747,7 @@
     </unit>
     <unit id="settingsSubtitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:43,44</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:46,47</note>
       </notes>
       <segment>
         <source>User-Profil &amp; Tagesziel</source>
@@ -3697,7 +3755,7 @@
     </unit>
     <unit id="guest.banner.text">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:52,54</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:55,57</note>
       </notes>
       <segment>
         <source>Du nutzt die App als Gast. Erstelle ein Konto um alle Funktionen zu nutzen.</source>
@@ -3705,7 +3763,7 @@
     </unit>
     <unit id="guest.banner.cta">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:59,61</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:62,64</note>
       </notes>
       <segment>
         <source>Konto erstellen</source>
@@ -3713,7 +3771,7 @@
     </unit>
     <unit id="displayNameLabel">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:65,66</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:68,69</note>
       </notes>
       <segment>
         <source>Anzeigename</source>
@@ -3721,7 +3779,7 @@
     </unit>
     <unit id="displayNamePlaceholder">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:71</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:74</note>
       </notes>
       <segment>
         <source>Wolf</source>
@@ -3729,7 +3787,7 @@
     </unit>
     <unit id="settings.displayNameHint">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:74,76</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:77,79</note>
       </notes>
       <segment>
         <source>Kann in der Bestenliste angezeigt werden.</source>
@@ -3737,7 +3795,7 @@
     </unit>
     <unit id="settings.leaderboardOptIn">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:83,84</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:86,87</note>
       </notes>
       <segment>
         <source> In Bestenliste anzeigen </source>
@@ -3745,7 +3803,7 @@
     </unit>
     <unit id="settings.leaderboardOptOutHint">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:87,90</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:90,93</note>
       </notes>
       <segment>
         <source> Wenn deaktiviert, wird dein Profil in der Bestenliste nicht angezeigt. </source>
@@ -3753,7 +3811,7 @@
     </unit>
     <unit id="settings.adsConsentOptIn">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:96,97</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:99,100</note>
       </notes>
       <segment>
         <source> Personalisierte Werbung aktivieren </source>
@@ -3761,7 +3819,7 @@
     </unit>
     <unit id="settings.adsConsentHint">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:100,103</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:103,106</note>
       </notes>
       <segment>
         <source> Steuert, ob Werbe-Slots im Dashboard geladen werden dürfen. </source>
@@ -3769,7 +3827,7 @@
     </unit>
     <unit id="dailyGoalLabel">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:104,105</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:107,108</note>
       </notes>
       <segment>
         <source>Tagesziel (Reps)</source>
@@ -3777,7 +3835,7 @@
     </unit>
     <unit id="dailyGoalPlaceholder">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:114</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:117</note>
       </notes>
       <segment>
         <source>10</source>
@@ -3785,7 +3843,7 @@
     </unit>
     <unit id="settings.goalHint">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:117,119</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:120,122</note>
       </notes>
       <segment>
         <source>Wird prominent in der Toolbar angezeigt.</source>
@@ -3793,7 +3851,7 @@
     </unit>
     <unit id="weeklyGoalLabel">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:122,123</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:125,126</note>
       </notes>
       <segment>
         <source>Wochenziel (Reps)</source>
@@ -3801,7 +3859,7 @@
     </unit>
     <unit id="weeklyGoalPlaceholder">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:132</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:135</note>
       </notes>
       <segment>
         <source>50</source>
@@ -3809,7 +3867,7 @@
     </unit>
     <unit id="settings.weeklyGoalHint">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:135,137</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:138,140</note>
       </notes>
       <segment>
         <source>Gesamtziel pro Woche (Mo–So).</source>
@@ -3817,7 +3875,7 @@
     </unit>
     <unit id="monthlyGoalLabel">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:140,141</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:143,144</note>
       </notes>
       <segment>
         <source>Monatsziel (Reps)</source>
@@ -3825,7 +3883,7 @@
     </unit>
     <unit id="monthlyGoalPlaceholder">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:150</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:153</note>
       </notes>
       <segment>
         <source>200</source>
@@ -3833,7 +3891,7 @@
     </unit>
     <unit id="settings.monthlyGoalHint">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:153,155</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:156,158</note>
       </notes>
       <segment>
         <source>Gesamtziel pro Monat.</source>
@@ -3841,7 +3899,7 @@
     </unit>
     <unit id="settings.snapQualityLabel">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:165,167</note>
       </notes>
       <segment>
         <source>Snap-Animation Qualität</source>
@@ -3849,7 +3907,7 @@
     </unit>
     <unit id="settings.snapQuality.low">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:175,177</note>
       </notes>
       <segment>
         <source>Niedrig</source>
@@ -3857,7 +3915,7 @@
     </unit>
     <unit id="settings.snapQuality.middle">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:180,182</note>
       </notes>
       <segment>
         <source>Mittel</source>
@@ -3865,7 +3923,7 @@
     </unit>
     <unit id="settings.snapQuality.high">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:185,187</note>
       </notes>
       <segment>
         <source>Hoch</source>
@@ -3873,15 +3931,15 @@
     </unit>
     <unit id="settings.snapQualityHint">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:189,191</note>
       </notes>
       <segment>
-        <source>Steuert die Partikelanzahl der „Ziel erreicht“-Animation (40k / 120k / 200k).</source>
+        <source> Steuert die Partikelanzahl der „Ziel erreicht“-Animation (40k / 120k / 200k). </source>
       </segment>
     </unit>
     <unit id="saveSettings">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:170,172</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:207,209</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">save</pc> Speichern </source>
@@ -3889,7 +3947,7 @@
     </unit>
     <unit id="saving">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:174,175</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:211,212</note>
       </notes>
       <segment>
         <source>Speichert…</source>
@@ -3897,7 +3955,7 @@
     </unit>
     <unit id="saved">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:177,178</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:214,215</note>
       </notes>
       <segment>
         <source>Gespeichert.</source>
@@ -3905,7 +3963,7 @@
     </unit>
     <unit id="settings.remindersLinkTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:182,183</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:219,220</note>
       </notes>
       <segment>
         <source>🔔 Erinnerungen</source>
@@ -3913,7 +3971,7 @@
     </unit>
     <unit id="settings.remindersLinkDesc">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:184,186</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:221,223</note>
       </notes>
       <segment>
         <source> Liegestütz-Erinnerungen und Push-Benachrichtigungen konfigurieren. </source>
@@ -3921,7 +3979,7 @@
     </unit>
     <unit id="settings.remindersLinkCta">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:191,193</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:228,230</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">notifications</pc> Erinnerungen verwalten </source>
@@ -3929,7 +3987,7 @@
     </unit>
     <unit id="settings.dangerZoneTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:197,198</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:234,235</note>
       </notes>
       <segment>
         <source>Danger Zone</source>
@@ -3937,7 +3995,7 @@
     </unit>
     <unit id="settings.dangerZoneBody">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:199,201</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:236,238</note>
       </notes>
       <segment>
         <source> Konto löschen entfernt dein Konto. Trainingsdaten bleiben für statistische Auswertung anonymisiert erhalten. </source>
@@ -3945,7 +4003,7 @@
     </unit>
     <unit id="settings.deleteAccount">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:210,212</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:247,249</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">warning</pc> Konto löschen </source>
@@ -3953,7 +4011,7 @@
     </unit>
     <unit id="settings.deletingAccount">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:215,218</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:252,255</note>
       </notes>
       <segment>
         <source>Konto wird gelöscht…</source>
@@ -3961,7 +4019,7 @@
     </unit>
     <unit id="settings.deleteDialogTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:222,224</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:259,261</note>
       </notes>
       <segment>
         <source> Account wirklich löschen? </source>
@@ -3969,7 +4027,7 @@
     </unit>
     <unit id="settings.deleteDialogWarning">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:226,228</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:263,265</note>
       </notes>
       <segment>
         <source> Achtung: Diese Aktion ist nicht rückgängig. </source>
@@ -3977,7 +4035,7 @@
     </unit>
     <unit id="settings.deleteDialogInfo">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:229,231</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:266,268</note>
       </notes>
       <segment>
         <source> Dein Konto wird gelöscht. Trainingsdaten bleiben für statistische Auswertung anonymisiert erhalten. </source>
@@ -3985,7 +4043,7 @@
     </unit>
     <unit id="settings.deleteDialogPhraseLabel">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:234,236</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:271,273</note>
       </notes>
       <segment>
         <source>Bestätigungswort eingeben</source>
@@ -3993,7 +4051,7 @@
     </unit>
     <unit id="settings.deleteDialogPhraseHint">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:243,245</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:280,282</note>
       </notes>
       <segment>
         <source>Bitte exakt „löscchen“ eingeben.</source>
@@ -4001,7 +4059,7 @@
     </unit>
     <unit id="settings.deleteConfirmFinal">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:260,262</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:297,299</note>
       </notes>
       <segment>
         <source> Final löschen </source>
