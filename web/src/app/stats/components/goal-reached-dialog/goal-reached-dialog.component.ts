@@ -13,7 +13,7 @@ import {
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { SNAP_QUALITY_PARTICLES } from '@pu-stats/models';
+import { DEFAULT_SNAP_QUALITY, SNAP_QUALITY_PARTICLES } from '@pu-stats/models';
 import { finalize } from 'rxjs';
 
 export type GoalKind = 'daily' | 'weekly' | 'monthly';
@@ -31,8 +31,9 @@ export interface GoalReachedDialogData {
   readonly titleId: string;
   /**
    * Optional override for the @wolsok/thanos `maxParticleCount`. Falls back
-   * to the high preset when omitted so the dialog stays usable in isolation
-   * (e.g. Storybook, manual smoke tests).
+   * to the project-wide default (`SNAP_QUALITY_PARTICLES[DEFAULT_SNAP_QUALITY]`)
+   * when omitted so the dialog stays usable in isolation (e.g. Storybook,
+   * manual smoke tests).
    */
   readonly maxParticleCount?: number;
 }
@@ -117,7 +118,8 @@ export class GoalReachedDialogComponent {
       // preset is honoured per-dialog without touching the root
       // WsThanosService instance (whose options are frozen at first use).
       const maxParticleCount =
-        this.data.maxParticleCount ?? SNAP_QUALITY_PARTICLES.high;
+        this.data.maxParticleCount ??
+        SNAP_QUALITY_PARTICLES[DEFAULT_SNAP_QUALITY];
       const childEnv = createEnvironmentInjector(
         [
           WsThanosService,

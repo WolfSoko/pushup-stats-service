@@ -244,7 +244,7 @@ describe('GoalReachedDialogComponent', () => {
       );
     });
 
-    it('Then it falls back to the high preset when the override is omitted', async () => {
+    it('Then it falls back to the project-default preset when the override is omitted', async () => {
       // Given
       await setup({
         kind: 'daily',
@@ -260,9 +260,9 @@ describe('GoalReachedDialogComponent', () => {
       snapBtn.click();
       await fixture.whenStable();
 
-      // Then
+      // Then — DEFAULT_SNAP_QUALITY is 'low' → 40k particles.
       expect(mocks.capturedOptions.last).toEqual(
-        expect.objectContaining({ maxParticleCount: 200_000 })
+        expect.objectContaining({ maxParticleCount: 40_000 })
       );
     });
   });

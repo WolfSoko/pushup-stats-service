@@ -10,7 +10,7 @@ export const SNAP_QUALITY_PARTICLES: Readonly<Record<SnapQuality, number>> = {
   high: 200_000,
 };
 
-export const DEFAULT_SNAP_QUALITY: SnapQuality = 'high';
+export const DEFAULT_SNAP_QUALITY: SnapQuality = 'low';
 
 /** User-configurable quick-add button (up to 3 slots). */
 export interface QuickAddConfig {

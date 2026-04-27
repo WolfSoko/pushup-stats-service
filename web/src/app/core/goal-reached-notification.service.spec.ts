@@ -259,8 +259,8 @@ describe('GoalReachedNotificationService', () => {
       { quality: 'high', maxParticleCount: 200_000, label: 'high → 200k' },
       {
         quality: undefined,
-        maxParticleCount: 200_000,
-        label: 'unset → defaults to high (200k)',
+        maxParticleCount: 40_000,
+        label: 'unset → defaults to low (40k) per DEFAULT_SNAP_QUALITY',
       },
     ];
 
