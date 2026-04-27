@@ -10,6 +10,7 @@ import {
 } from '@ngrx/signals';
 import { firstValueFrom } from 'rxjs';
 import { LiveDataStore, StatsApiService } from '@pu-stats/data-access';
+import { AppDataFacade } from '../core/app-data.facade';
 
 type EntriesState = {
   from: string;
@@ -40,6 +41,7 @@ export const EntriesStore = signalStore(
   withProps(() => ({
     _api: inject(StatsApiService),
     _live: inject(LiveDataStore),
+    _appData: inject(AppDataFacade),
     _isBrowser: isPlatformBrowser(inject(PLATFORM_ID)),
   })),
   withProps((store) => ({
@@ -100,7 +102,7 @@ export const EntriesStore = signalStore(
       });
     }),
   })),
-  withMethods(({ _api, _isBrowser, _entriesResource, ...store }) => ({
+  withMethods(({ _api, _appData, _isBrowser, _entriesResource, ...store }) => ({
     setFrom(value: string): void {
       patchState(store, { from: value });
     },
@@ -130,6 +132,7 @@ export const EntriesStore = signalStore(
       try {
         await firstValueFrom(_api.createPushup(payload));
         if (!_isBrowser) _entriesResource.reload();
+        _appData.reloadAfterQuickAdd();
       } catch (err) {
         patchState(store, {
           error: err instanceof Error ? err.message : String(err),
@@ -162,6 +165,7 @@ export const EntriesStore = signalStore(
           })
         );
         if (!_isBrowser) _entriesResource.reload();
+        _appData.reloadAfterQuickAdd();
       } catch (err) {
         patchState(store, {
           error: err instanceof Error ? err.message : String(err),
@@ -175,6 +179,7 @@ export const EntriesStore = signalStore(
       try {
         await firstValueFrom(_api.deletePushup(id));
         if (!_isBrowser) _entriesResource.reload();
+        _appData.reloadAfterQuickAdd();
       } catch (err) {
         patchState(store, {
           error: err instanceof Error ? err.message : String(err),
