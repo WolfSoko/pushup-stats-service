@@ -30,10 +30,12 @@ import { UserProfile } from './profile';
 import type { ReminderConfig } from './push';
 import {
   buildNotificationPayload,
+  buildReminderActions,
   isExpiredSubscriptionError,
   isLeaseStale,
   pushSubscriptionId,
   PUSH_SEND_OPTIONS,
+  sanitizeQuickLogReps,
   shouldSendReminder,
   STALE_LEASE_MS,
   validateSubscriptionPayload,
@@ -981,16 +983,13 @@ export const dispatchPushReminders = onSchedule(
 
           const body = buildNotificationPayload(reminder?.language);
           const lang = reminder?.language === 'en' ? 'en' : 'de';
-          const actions =
-            lang === 'en'
-              ? [
-                  { action: 'snooze', title: '⏰ Snooze 30 min' },
-                  { action: 'log', title: '✅ Log push-ups' },
-                ]
-              : [
-                  { action: 'snooze', title: '⏰ 30 Min snoozen' },
-                  { action: 'log', title: '✅ Eintragen' },
-                ];
+          // Single source of truth: sanitize once, then use the same value for
+          // both the action title and the data payload. Computing them
+          // independently caused the title to clamp to 500 while the payload
+          // shipped the raw (potentially absurd) Firestore value, so the SW
+          // logged a different count than the user saw on the button.
+          const quickLogReps = sanitizeQuickLogReps(reminder?.quickLogReps);
+          const actions = buildReminderActions(lang, quickLogReps);
           const payload = JSON.stringify({
             title: 'PushUp Stats',
             body,
@@ -998,7 +997,11 @@ export const dispatchPushReminders = onSchedule(
             badge: '/icons/badge-72x72.png',
             tag: 'reminder',
             renotify: true,
-            data: { url: `/${lang}/app`, locale: lang },
+            data: {
+              url: `/${lang}/app`,
+              locale: lang,
+              ...(quickLogReps ? { quickLogReps } : {}),
+            },
             actions,
           });
 

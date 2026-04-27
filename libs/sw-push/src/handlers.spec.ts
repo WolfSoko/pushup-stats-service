@@ -262,7 +262,9 @@ describe('handlePushSubscriptionChange', () => {
 describe('handleNotificationClick', () => {
   function makeEvent(
     action: string,
-    data?: { locale?: string; url?: string } | null
+    data?:
+      | { locale?: string; url?: string; quickLogReps?: number }
+      | null
   ): { event: NotificationClickEventLike; close: jest.Mock } {
     const close = jest.fn();
     return {
@@ -325,6 +327,119 @@ describe('handleNotificationClick', () => {
     handleNotificationClick(event, ctx);
     await waited;
     expect(openWindow).toHaveBeenCalledWith('/de/app?log=1');
+  });
+
+  it('quick-log: posts QUICK_LOG_PUSHUPS to an open client and skips openWindow', async () => {
+    const client: ClientLike = {
+      url: 'https://pushup-stats.de/de/app',
+      focus: jest.fn().mockResolvedValue(undefined),
+      postMessage: jest.fn(),
+    };
+    const { ctx, openWindow } = makeCtx({ matchAllResult: [client] });
+    let waited: Promise<unknown> | undefined;
+    const { event } = makeEvent('quick-log', {
+      locale: 'de',
+      quickLogReps: 25,
+    });
+    event.waitUntil = (p) => {
+      waited = p;
+    };
+    handleNotificationClick(event, ctx);
+    await waited;
+    expect(client.postMessage).toHaveBeenCalledWith({
+      type: 'QUICK_LOG_PUSHUPS',
+      reps: 25,
+    });
+    expect(client.focus).toHaveBeenCalled();
+    expect(openWindow).not.toHaveBeenCalled();
+  });
+
+  it('quick-log: opens the app with ?quickLog=N when no client is open', async () => {
+    const { ctx, openWindow } = makeCtx({ matchAllResult: [] });
+    let waited: Promise<unknown> | undefined;
+    const { event } = makeEvent('quick-log', {
+      locale: 'en',
+      quickLogReps: 7,
+    });
+    event.waitUntil = (p) => {
+      waited = p;
+    };
+    handleNotificationClick(event, ctx);
+    await waited;
+    expect(openWindow).toHaveBeenCalledWith('/en/app?quickLog=7');
+  });
+
+  it('quick-log: falls back to ?log=1 when payload reps are missing/invalid', async () => {
+    const { ctx, openWindow } = makeCtx({ matchAllResult: [] });
+    let waited: Promise<unknown> | undefined;
+    const { event } = makeEvent('quick-log', { locale: 'de' });
+    event.waitUntil = (p) => {
+      waited = p;
+    };
+    handleNotificationClick(event, ctx);
+    await waited;
+    expect(openWindow).toHaveBeenCalledWith('/de/app?log=1');
+  });
+
+  it('quick-log: clamps an out-of-range payload to the SW max (defense-in-depth)', async () => {
+    const client: ClientLike = {
+      url: 'https://pushup-stats.de/de/app',
+      focus: jest.fn().mockResolvedValue(undefined),
+      postMessage: jest.fn(),
+    };
+    const { ctx } = makeCtx({ matchAllResult: [client] });
+    let waited: Promise<unknown> | undefined;
+    const { event } = makeEvent('quick-log', {
+      locale: 'de',
+      quickLogReps: 99999,
+    });
+    event.waitUntil = (p) => {
+      waited = p;
+    };
+    handleNotificationClick(event, ctx);
+    await waited;
+    expect(client.postMessage).toHaveBeenCalledWith({
+      type: 'QUICK_LOG_PUSHUPS',
+      reps: 500,
+    });
+  });
+
+  it('quick-log: clamps the deep-link reps when no client is open', async () => {
+    const { ctx, openWindow } = makeCtx({ matchAllResult: [] });
+    let waited: Promise<unknown> | undefined;
+    const { event } = makeEvent('quick-log', {
+      locale: 'en',
+      quickLogReps: 99999,
+    });
+    event.waitUntil = (p) => {
+      waited = p;
+    };
+    handleNotificationClick(event, ctx);
+    await waited;
+    expect(openWindow).toHaveBeenCalledWith('/en/app?quickLog=500');
+  });
+
+  it('quick-log: floors fractional reps to an integer', async () => {
+    const client: ClientLike = {
+      url: 'https://pushup-stats.de/de/app',
+      focus: jest.fn().mockResolvedValue(undefined),
+      postMessage: jest.fn(),
+    };
+    const { ctx } = makeCtx({ matchAllResult: [client] });
+    let waited: Promise<unknown> | undefined;
+    const { event } = makeEvent('quick-log', {
+      locale: 'de',
+      quickLogReps: 12.9,
+    });
+    event.waitUntil = (p) => {
+      waited = p;
+    };
+    handleNotificationClick(event, ctx);
+    await waited;
+    expect(client.postMessage).toHaveBeenCalledWith({
+      type: 'QUICK_LOG_PUSHUPS',
+      reps: 12,
+    });
   });
 
   it('focuses an existing window if it already points to the target URL', async () => {

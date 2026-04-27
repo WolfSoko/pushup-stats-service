@@ -14,6 +14,15 @@ declare const __SW_PUSH_VERSION__: string;
 export const SW_PUSH_VERSION: string =
   typeof __SW_PUSH_VERSION__ === 'string' ? __SW_PUSH_VERSION__ : 'unversioned';
 
+/**
+ * Defense-in-depth cap mirrored from `@pu-stats/models#QUICK_LOG_REPS_MAX` and
+ * the dispatch CF (`data-store/functions/src/push/reminders.ts`). Inlined to
+ * keep the sw-push bundle self-contained — if either value changes, update
+ * here too. The CF already sanitizes before sending; this guard catches stale
+ * payloads from older deployments and any payload tampering.
+ */
+const SW_QUICK_LOG_MAX = 500;
+
 export interface PushSubscriptionChangeEventLike {
   oldSubscription: PushSubscription | null;
   newSubscription: PushSubscription | null;
@@ -31,7 +40,12 @@ export interface PushEventLike {
 export interface NotificationClickEventLike {
   action: string;
   notification: {
-    data?: { locale?: string; url?: string } | null;
+    data?: {
+      locale?: string;
+      url?: string;
+      /** Set when the dispatch CF includes a `quick-log` action button. */
+      quickLogReps?: number;
+    } | null;
     close(): void;
   };
   waitUntil(promise: Promise<unknown>): void;
@@ -197,6 +211,54 @@ export function handleNotificationClick(
 
   if (action === 'log') {
     event.waitUntil(ctx.clients.openWindow(`/${locale}/app?log=1`));
+    return;
+  }
+
+  if (action === 'quick-log') {
+    const repsRaw = event.notification.data?.quickLogReps;
+    const repsFloored =
+      typeof repsRaw === 'number' && Number.isFinite(repsRaw)
+        ? Math.floor(repsRaw)
+        : NaN;
+    // Clamp into [1, SW_QUICK_LOG_MAX] so a stale or tampered payload can't
+    // smuggle a 9999-rep entry past the dispatch sanitizer.
+    const reps =
+      Number.isFinite(repsFloored) && repsFloored > 0
+        ? Math.min(repsFloored, SW_QUICK_LOG_MAX)
+        : NaN;
+    event.waitUntil(
+      (async () => {
+        // No valid count → fall back to the standard log flow so the user
+        // doesn't get an unresponsive button.
+        if (!Number.isFinite(reps) || reps <= 0) {
+          await ctx.clients.openWindow(`/${locale}/app?log=1`);
+          return;
+        }
+        const clientList = await ctx.clients.matchAll({
+          type: 'window',
+          includeUncontrolled: true,
+        });
+        if (clientList.length > 0) {
+          // App is open somewhere — log silently in the existing tab so the
+          // user gets feedback without a navigation flicker.
+          clientList[0].postMessage({
+            type: 'QUICK_LOG_PUSHUPS',
+            reps,
+          });
+          if ('focus' in clientList[0]) {
+            await (
+              clientList[0] as { focus: () => Promise<unknown> }
+            )
+              .focus()
+              .catch(() => undefined);
+          }
+          return;
+        }
+        // No open client — open a new tab with `?quickLog=N`; the dashboard
+        // creates the entry on first render.
+        await ctx.clients.openWindow(`/${locale}/app?quickLog=${reps}`);
+      })()
+    );
     return;
   }
 

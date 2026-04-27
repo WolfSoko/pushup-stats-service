@@ -156,6 +156,52 @@ import { ReminderFormStore } from './reminder-form.store';
                   </mat-button-toggle-group>
                 </div>
 
+                <div>
+                  <p class="field-label" i18n="@@reminder.quickLog.label">
+                    Direkt-Eintrag aus der Benachrichtigung
+                  </p>
+                  <p class="muted" i18n="@@reminder.quickLog.desc">
+                    Zeigt einen "Eintragen"-Button auf der
+                    Push-Benachrichtigung. Wenn die App schon geöffnet ist,
+                    wird der Eintrag im Hintergrund gespeichert; ansonsten
+                    öffnet sich kurz ein Tab, der den Eintrag automatisch
+                    anlegt.
+                  </p>
+                  <div class="reminder-row">
+                    <mat-slide-toggle
+                      [checked]="form.quickLogEnabled()"
+                      [disabled]="form.saving()"
+                      (change)="form.setQuickLogEnabled($event.checked)"
+                      i18n="@@reminder.quickLog.toggle"
+                    >
+                      Schnell-Eintrag aktivieren
+                    </mat-slide-toggle>
+                    @if (form.quickLogEnabled()) {
+                      <mat-form-field
+                        appearance="outline"
+                        class="quick-log-field"
+                      >
+                        <mat-label i18n="@@reminder.quickLog.reps.label"
+                          >Anzahl Liegestütze</mat-label
+                        >
+                        <input
+                          matInput
+                          type="number"
+                          min="1"
+                          max="500"
+                          [disabled]="form.saving()"
+                          [value]="form.quickLogReps()"
+                          (input)="form.setQuickLogReps(asNumber($event))"
+                          (blur)="form.clampQuickLogReps()"
+                        />
+                        <mat-hint i18n="@@reminder.quickLog.reps.hint"
+                          >1–500 Wiederholungen</mat-hint
+                        >
+                      </mat-form-field>
+                    }
+                  </div>
+                </div>
+
                 <div class="quiet-hours-section">
                   <p class="field-label" i18n="@@reminder.quietHours.label">
                     Ruhezeiten
@@ -389,6 +435,9 @@ import { ReminderFormStore } from './reminder-form.store';
       margin-top: 8px;
       max-width: 180px;
     }
+    .quick-log-field {
+      max-width: 180px;
+    }
     .quiet-hours-section {
       display: grid;
       gap: 8px;
@@ -529,6 +578,9 @@ export class RemindersPageComponent {
   async saveReminderSettings(): Promise<void> {
     const userId = this.activeUserId();
     this.form.clampInterval();
+    if (this.form.quickLogEnabled()) {
+      this.form.clampQuickLogReps();
+    }
     if (!userId) {
       this.snackBar.open(
         $localize`:@@reminder.save.error:Einstellungen konnten nicht gespeichert werden.`,

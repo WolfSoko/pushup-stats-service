@@ -2,10 +2,13 @@ import { describe, it, expect } from '@jest/globals';
 import {
   shouldSendReminder,
   buildNotificationPayload,
+  buildReminderActions,
+  sanitizeQuickLogReps,
   isExpiredSubscriptionError,
   isLeaseStale,
   STALE_LEASE_MS,
   PUSH_SEND_OPTIONS,
+  QUICK_LOG_REPS_MAX,
   ReminderConfig,
   FirestoreTimestamp,
 } from './reminders';
@@ -448,6 +451,65 @@ describe('push/reminders', () => {
 
     it('uses a topic so FCM collapses queued reminders', () => {
       expect(PUSH_SEND_OPTIONS.topic).toBe('reminder');
+    });
+  });
+
+  describe('sanitizeQuickLogReps', () => {
+    it('returns undefined for missing / non-finite / non-positive input', () => {
+      expect(sanitizeQuickLogReps(undefined)).toBeUndefined();
+      expect(sanitizeQuickLogReps(NaN)).toBeUndefined();
+      expect(sanitizeQuickLogReps(Number.POSITIVE_INFINITY)).toBeUndefined();
+      expect(sanitizeQuickLogReps(0)).toBeUndefined();
+      expect(sanitizeQuickLogReps(-5)).toBeUndefined();
+    });
+
+    it('floors fractional values', () => {
+      expect(sanitizeQuickLogReps(12.7)).toBe(12);
+    });
+
+    it('clamps values larger than the maximum', () => {
+      expect(sanitizeQuickLogReps(QUICK_LOG_REPS_MAX + 1000)).toBe(
+        QUICK_LOG_REPS_MAX
+      );
+    });
+  });
+
+  describe('buildReminderActions', () => {
+    it('returns the generic German log action when no quickLogReps configured', () => {
+      const actions = buildReminderActions('de', undefined);
+      expect(actions).toEqual([
+        { action: 'snooze', title: '⏰ 30 Min snoozen' },
+        { action: 'log', title: '✅ Eintragen' },
+      ]);
+    });
+
+    it('returns the generic English log action when no quickLogReps configured', () => {
+      const actions = buildReminderActions('en', undefined);
+      expect(actions).toEqual([
+        { action: 'snooze', title: '⏰ Snooze 30 min' },
+        { action: 'log', title: '✅ Log push-ups' },
+      ]);
+    });
+
+    it('emits a quick-log action with the configured count (German)', () => {
+      const actions = buildReminderActions('de', 25);
+      expect(actions[1]).toEqual({
+        action: 'quick-log',
+        title: '✅ 25 eintragen',
+      });
+    });
+
+    it('emits a quick-log action with the configured count (English)', () => {
+      const actions = buildReminderActions('en', 25);
+      expect(actions[1]).toEqual({
+        action: 'quick-log',
+        title: '✅ Log 25',
+      });
+    });
+
+    it('falls back to generic log when quickLogReps is invalid', () => {
+      const actions = buildReminderActions('de', NaN);
+      expect(actions[1].action).toBe('log');
     });
   });
 });
