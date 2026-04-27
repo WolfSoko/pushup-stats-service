@@ -1,4 +1,5 @@
-import { computed, inject, resource } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { computed, inject, PLATFORM_ID, resource } from '@angular/core';
 import {
   signalStore,
   withComputed,
@@ -85,8 +86,13 @@ export const DashboardStore = signalStore(
     _live: inject(LiveDataStore),
     _ads: inject(AdsStore),
     _motivation: inject(MotivationStore),
+    _isBrowser: isPlatformBrowser(inject(PLATFORM_ID)),
   })),
   withProps((store) => ({
+    // SSR fallback only. In the browser we read entries from `_live.entries()`
+    // directly so Firestore real-time updates propagate without an extra REST
+    // round-trip. The resource is still reloaded by `refreshAll()` to keep the
+    // SSR cache warm.
     entriesResource: resource({
       loader: async () => firstValueFrom(store._api.listPushups({})),
     }),
@@ -106,9 +112,16 @@ export const DashboardStore = signalStore(
       () => store.allTimeResource.value() ?? EMPTY_STATS
     );
 
-    const entryRows = computed<PushupRecord[]>(
-      () => store.entriesResource.value() ?? []
-    );
+    // Source of truth for entries: Firestore-backed `LiveDataStore` once it
+    // has connected (reactive, real-time). Until then we fall back to the
+    // REST resource so SSR and the cold-start hydration window still render
+    // data instead of an empty state.
+    const entryRows = computed<PushupRecord[]>(() => {
+      if (store._isBrowser && store._live.connected()) {
+        return store._live.entries();
+      }
+      return store.entriesResource.value() ?? [];
+    });
 
     /** Precomputed server-side stats (null if not yet available). */
     const userStats = computed<UserStats | null>(
@@ -129,15 +142,18 @@ export const DashboardStore = signalStore(
     );
 
     const todayTotal = computed(() => {
-      const us = userStats();
       const berlinToday = toBerlinIsoDate(new Date());
-      if (us && us.dailyKey === berlinToday) {
-        return us.dailyReps;
-      }
-      // Fallback: compute from entries
-      return entryRows()
+      const liveTotal = entryRows()
         .filter((entry) => entry.timestamp.slice(0, 10) === berlinToday)
         .reduce((sum, entry) => sum + entry.reps, 0);
+      // In the browser, live entries are always fresher than server-precomputed
+      // userStats: the Cloud Function that aggregates UserStats runs after the
+      // pushup write, so a fresh fetch of UserStats can still return stale
+      // numbers right after a SpeedDial / Quick-Add insertion.
+      if (store._isBrowser && store._live.connected()) return liveTotal;
+      const us = userStats();
+      if (us && us.dailyKey === berlinToday) return us.dailyReps;
+      return liveTotal;
     });
 
     const dailyGoal = computed(() => store._userConfig.dailyGoal() || 10);
@@ -222,11 +238,9 @@ export const DashboardStore = signalStore(
       return streak;
     });
 
-    const weekReps = computed(() => {
-      const us = userStats();
-      if (us && us.weeklyKey === currentIsoWeekKey()) return us.weeklyReps;
-
-      // Fallback: client-side computation using Berlin date
+    // Live computation from entries — used as the primary source in the
+    // browser (always fresh) and as the fallback elsewhere.
+    const weekRepsFromEntries = computed(() => {
       const berlinToday = toBerlinIsoDate(new Date());
       const [by, bm, bd] = berlinToday.split('-').map(Number);
       const todayDate = new Date(by, bm - 1, bd);
@@ -246,16 +260,27 @@ export const DashboardStore = signalStore(
         .reduce((sum, entry) => sum + entry.reps, 0);
     });
 
-    const monthReps = computed(() => {
+    const weekReps = computed(() => {
+      if (store._isBrowser && store._live.connected())
+        return weekRepsFromEntries();
       const us = userStats();
-      if (us && us.monthlyKey === currentMonthKey()) return us.monthlyReps;
+      if (us && us.weeklyKey === currentIsoWeekKey()) return us.weeklyReps;
+      return weekRepsFromEntries();
+    });
 
-      // Fallback: client-side computation using Berlin date
+    const monthRepsFromEntries = computed(() => {
       const prefix = toBerlinIsoDate(new Date()).slice(0, 7);
-
       return entryRows()
         .filter((entry) => entry.timestamp.startsWith(prefix))
         .reduce((sum, entry) => sum + entry.reps, 0);
+    });
+
+    const monthReps = computed(() => {
+      if (store._isBrowser && store._live.connected())
+        return monthRepsFromEntries();
+      const us = userStats();
+      if (us && us.monthlyKey === currentMonthKey()) return us.monthlyReps;
+      return monthRepsFromEntries();
     });
 
     const weeklyGoalProgressPercent = computed(() =>
@@ -280,6 +305,12 @@ export const DashboardStore = signalStore(
     );
 
     const loading = computed(() => {
+      if (store._isBrowser) {
+        // Treat the dashboard as "loading" only until the Firestore listener
+        // has emitted at least once; subsequent updates happen reactively
+        // through `_live.entries()` without a loading flicker.
+        return !store._live.connected() && entryRows().length === 0;
+      }
       const status = store.entriesResource.status();
       return status === 'loading' || status === 'reloading';
     });
