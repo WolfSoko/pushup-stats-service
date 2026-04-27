@@ -177,7 +177,7 @@ export class StatsDashboardComponent {
   }) {
     await firstValueFrom(this.api.createPushup(entry));
     this.store.refreshAll();
-    this.appData.reloadAfterQuickAdd();
+    this.appData.reloadAfterMutation();
     this.refreshCounter.update((c) => c + 1);
   }
 
@@ -199,7 +199,7 @@ export class StatsDashboardComponent {
       })
     );
     this.store.refreshAll();
-    this.appData.reloadAfterQuickAdd();
+    this.appData.reloadAfterMutation();
     this.refreshCounter.update((c) => c + 1);
   }
 }

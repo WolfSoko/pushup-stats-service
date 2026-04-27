@@ -90,8 +90,8 @@ describe('StatsDashboardComponent', () => {
     targetedAdsConsent: () => true,
   };
 
-  const reloadAfterQuickAddSpy = vitest.fn();
-  const appDataMock = { reloadAfterQuickAdd: reloadAfterQuickAddSpy };
+  const reloadAfterMutationSpy = vitest.fn();
+  const appDataMock = { reloadAfterMutation: reloadAfterMutationSpy };
 
   const dialogOpenSpy = vitest.fn().mockReturnValue({
     afterClosed: () => of(null),
@@ -346,7 +346,7 @@ describe('StatsDashboardComponent', () => {
         });
 
         // Then
-        expect(reloadAfterQuickAddSpy).toHaveBeenCalledTimes(1);
+        expect(reloadAfterMutationSpy).toHaveBeenCalledTimes(1);
       });
     });
 
@@ -360,7 +360,7 @@ describe('StatsDashboardComponent', () => {
         await component.addQuickEntry(10);
 
         // Then
-        expect(reloadAfterQuickAddSpy).toHaveBeenCalledTimes(1);
+        expect(reloadAfterMutationSpy).toHaveBeenCalledTimes(1);
       });
     });
 

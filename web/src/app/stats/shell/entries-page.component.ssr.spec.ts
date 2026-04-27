@@ -47,7 +47,7 @@ describe('EntriesPageComponent (SSR/REST)', () => {
         { provide: AuthStore, useValue: makeAuthStoreMock() },
         {
           provide: AppDataFacade,
-          useValue: { reloadAfterQuickAdd: vitest.fn() },
+          useValue: { reloadAfterMutation: vitest.fn() },
         },
       ],
     }).compileComponents();

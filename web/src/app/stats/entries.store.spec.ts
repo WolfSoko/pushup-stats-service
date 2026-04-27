@@ -29,7 +29,7 @@ describe('EntriesStore', () => {
   };
 
   const appDataMock = {
-    reloadAfterQuickAdd: vitest.fn(),
+    reloadAfterMutation: vitest.fn(),
   };
 
   function setup(): InstanceType<typeof EntriesStore> {
@@ -53,7 +53,7 @@ describe('EntriesStore', () => {
       await store.deleteEntry('1');
 
       expect(apiMock.deletePushup).toHaveBeenCalledWith('1');
-      expect(appDataMock.reloadAfterQuickAdd).toHaveBeenCalledTimes(1);
+      expect(appDataMock.reloadAfterMutation).toHaveBeenCalledTimes(1);
     });
 
     it('Given a failing delete, When the api throws, Then app-level resources are not reloaded', async () => {
@@ -64,7 +64,7 @@ describe('EntriesStore', () => {
 
       await store.deleteEntry('1');
 
-      expect(appDataMock.reloadAfterQuickAdd).not.toHaveBeenCalled();
+      expect(appDataMock.reloadAfterMutation).not.toHaveBeenCalled();
       expect(store.error()).toBe('boom');
     });
   });
@@ -79,7 +79,7 @@ describe('EntriesStore', () => {
       });
 
       expect(apiMock.createPushup).toHaveBeenCalled();
-      expect(appDataMock.reloadAfterQuickAdd).toHaveBeenCalledTimes(1);
+      expect(appDataMock.reloadAfterMutation).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -94,7 +94,23 @@ describe('EntriesStore', () => {
       });
 
       expect(apiMock.updatePushup).toHaveBeenCalled();
-      expect(appDataMock.reloadAfterQuickAdd).toHaveBeenCalledTimes(1);
+      expect(appDataMock.reloadAfterMutation).toHaveBeenCalledTimes(1);
+    });
+
+    it('Given a failing update, When the api throws, Then app-level resources are not reloaded', async () => {
+      const store = setup();
+      apiMock.updatePushup.mockReturnValueOnce(
+        throwError(() => new Error('boom'))
+      );
+
+      await store.updateEntry({
+        id: '1',
+        timestamp: '2026-04-27T08:00:00',
+        reps: 25,
+      });
+
+      expect(appDataMock.reloadAfterMutation).not.toHaveBeenCalled();
+      expect(store.error()).toBe('boom');
     });
   });
 });

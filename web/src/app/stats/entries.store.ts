@@ -132,7 +132,7 @@ export const EntriesStore = signalStore(
       try {
         await firstValueFrom(_api.createPushup(payload));
         if (!_isBrowser) _entriesResource.reload();
-        _appData.reloadAfterQuickAdd();
+        _appData.reloadAfterMutation();
       } catch (err) {
         patchState(store, {
           error: err instanceof Error ? err.message : String(err),
@@ -165,7 +165,7 @@ export const EntriesStore = signalStore(
           })
         );
         if (!_isBrowser) _entriesResource.reload();
-        _appData.reloadAfterQuickAdd();
+        _appData.reloadAfterMutation();
       } catch (err) {
         patchState(store, {
           error: err instanceof Error ? err.message : String(err),
@@ -179,7 +179,7 @@ export const EntriesStore = signalStore(
       try {
         await firstValueFrom(_api.deletePushup(id));
         if (!_isBrowser) _entriesResource.reload();
-        _appData.reloadAfterQuickAdd();
+        _appData.reloadAfterMutation();
       } catch (err) {
         patchState(store, {
           error: err instanceof Error ? err.message : String(err),

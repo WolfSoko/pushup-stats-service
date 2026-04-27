@@ -60,7 +60,7 @@ Wird nur verwendet um `user().displayName` für Motivation-Quotes zu bekommen (Z
 - Timestamp-Formatierung
 - API-Call via `statsApi.createPushup()`
 - SnackBar-Feedback
-- Resource-Reload via `appData.reloadAfterQuickAdd()`
+- Resource-Reload via `appData.reloadAfterMutation()`
 
 Das ist Business-Logik die nicht in die Root-Komponente gehört.
 

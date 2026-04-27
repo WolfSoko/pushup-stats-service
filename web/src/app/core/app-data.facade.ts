@@ -67,7 +67,7 @@ export class AppDataFacade {
     return goal > 0 && this.todayProgress() >= goal;
   });
 
-  reloadAfterQuickAdd(): void {
+  reloadAfterMutation(): void {
     this.recentEntriesResource.reload();
     this.dailyProgressResource.reload();
   }

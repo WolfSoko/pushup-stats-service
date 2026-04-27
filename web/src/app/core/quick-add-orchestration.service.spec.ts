@@ -10,7 +10,7 @@ import { AppDataFacade } from './app-data.facade';
 
 describe('QuickAddOrchestrationService.fillToGoal', () => {
   const remainingToGoal = signal(42);
-  const reloadAfterQuickAdd = vitest.fn();
+  const reloadAfterMutation = vitest.fn();
 
   const statsApiMock = {
     createPushup: vitest.fn(),
@@ -21,7 +21,7 @@ describe('QuickAddOrchestrationService.fillToGoal', () => {
 
   const appDataMock: Partial<AppDataFacade> = {
     remainingToGoal: remainingToGoal.asReadonly(),
-    reloadAfterQuickAdd,
+    reloadAfterMutation,
   };
 
   function setup(): QuickAddOrchestrationService {
@@ -74,7 +74,7 @@ describe('QuickAddOrchestrationService.fillToGoal', () => {
     expect(snackBarMock.open).toHaveBeenCalledTimes(1);
     const message = snackBarMock.open.mock.calls[0][0] as string;
     expect(message).toContain('Tagesziel erreicht');
-    expect(reloadAfterQuickAdd).toHaveBeenCalledTimes(1);
+    expect(reloadAfterMutation).toHaveBeenCalledTimes(1);
   });
 
   it('Given createPushup errors, When fillToGoal() is called, Then error snackbar opens and reload is not called', () => {
@@ -86,7 +86,7 @@ describe('QuickAddOrchestrationService.fillToGoal', () => {
     expect(snackBarMock.open).toHaveBeenCalledTimes(1);
     const message = snackBarMock.open.mock.calls[0][0] as string;
     expect(message).toContain('konnte nicht');
-    expect(reloadAfterQuickAdd).not.toHaveBeenCalled();
+    expect(reloadAfterMutation).not.toHaveBeenCalled();
   });
 
   it('Given a previous fillToGoal() is still in flight, When called again, Then createPushup is called only once', () => {

@@ -49,7 +49,7 @@ describe('EntriesPageComponent', () => {
   };
 
   const appDataMock = {
-    reloadAfterQuickAdd: vitest.fn(),
+    reloadAfterMutation: vitest.fn(),
   };
 
   beforeEach(async () => {
