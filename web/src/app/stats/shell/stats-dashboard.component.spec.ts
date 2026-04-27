@@ -75,9 +75,19 @@ describe('StatsDashboardComponent', () => {
 
   const liveTick = signal(0);
   const liveConnected = signal(false);
+  const liveEntries = signal<
+    Array<{
+      _id: string;
+      timestamp: string;
+      reps: number;
+      source?: string;
+      type?: string;
+    }>
+  >([]);
   const liveMock = {
     updateTick: liveTick.asReadonly(),
     connected: liveConnected.asReadonly(),
+    entries: liveEntries.asReadonly(),
   };
 
   const adsConfigMock = {
@@ -105,6 +115,7 @@ describe('StatsDashboardComponent', () => {
     vi.clearAllMocks();
     liveTick.set(0);
     liveConnected.set(false);
+    liveEntries.set([]);
     window.history.replaceState({}, '', '/');
 
     dialogOpenSpy.mockClear();
@@ -629,6 +640,48 @@ describe('StatsDashboardComponent', () => {
       const button = findQuickActionsGoalButton(fixture.nativeElement);
       button!.click();
       expect(svc.fillToGoal).toHaveBeenCalledTimes(1);
+    });
+
+    it('Regression: Given live is connected, When Firestore pushes a new entry (SpeedDial flow), Then the "+X bis zum Ziel" label updates without an explicit reload', async () => {
+      // Given a connected live store with one entry today (12 reps), goal 100
+      liveConnected.set(true);
+      liveEntries.set([
+        {
+          _id: '2',
+          timestamp: todayTs,
+          reps: 12,
+          source: 'web',
+          type: 'Diamond',
+        },
+      ]);
+      await fixture.whenStable();
+      fixture.detectChanges();
+
+      let button = findQuickActionsGoalButton(fixture.nativeElement);
+      expect(button).not.toBeNull();
+      expect(button!.textContent ?? '').toContain('88');
+
+      // When Firestore pushes a new 30-rep entry (the SpeedDial path) —
+      // simulated by a LiveDataStore.entries update. Crucially we do NOT call
+      // refreshAll(): the bug was that derived signals only updated when REST
+      // resources reloaded, ignoring the live signal.
+      liveEntries.update((rows) => [
+        ...rows,
+        {
+          _id: 'new',
+          timestamp: '2025-01-15T13:00:00',
+          reps: 30,
+          source: 'quick-add',
+          type: 'Standard',
+        },
+      ]);
+      await fixture.whenStable();
+      fixture.detectChanges();
+
+      // Then the label reflects the new total reactively (12 + 30 = 42, gap = 58)
+      button = findQuickActionsGoalButton(fixture.nativeElement);
+      expect(button).not.toBeNull();
+      expect(button!.textContent ?? '').toContain('58');
     });
   });
 

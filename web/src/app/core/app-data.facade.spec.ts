@@ -2,9 +2,14 @@ import { TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 import { signal } from '@angular/core';
 import { AppDataFacade } from './app-data.facade';
-import { StatsApiService, UserConfigApiService } from '@pu-stats/data-access';
+import {
+  LiveDataStore,
+  StatsApiService,
+  UserConfigApiService,
+} from '@pu-stats/data-access';
 import { UserContextService } from '@pu-auth/auth';
 import { AdaptiveQuickAddService } from '@pu-stats/quick-add';
+import type { PushupRecord } from '@pu-stats/models';
 
 describe('AppDataFacade', () => {
   const userId = signal<string>('u1');
@@ -32,10 +37,16 @@ describe('AppDataFacade', () => {
       .mockReturnValue(of({ userId: 'u1', dailyGoal: 100 })),
   };
 
+  // Default LiveDataStore mock: disconnected (browser uses SSR fallback path).
+  // Tests that exercise the live-reactive path opt in by providing connected.
+  let liveConnected = signal(false);
+  let liveEntries = signal<PushupRecord[]>([]);
+
   function setup(
     options: {
       dailyGoal?: number;
       todayTotal?: number;
+      live?: { connected: boolean; entries: PushupRecord[] };
     } = {}
   ): AppDataFacade {
     vitest.clearAllMocks();
@@ -60,6 +71,9 @@ describe('AppDataFacade', () => {
       );
     }
 
+    liveConnected = signal(options.live?.connected ?? false);
+    liveEntries = signal<PushupRecord[]>(options.live?.entries ?? []);
+
     TestBed.resetTestingModule();
     TestBed.configureTestingModule({
       providers: [
@@ -72,6 +86,14 @@ describe('AppDataFacade', () => {
         {
           provide: AdaptiveQuickAddService,
           useValue: { compute: vitest.fn().mockReturnValue([1, 5, 10]) },
+        },
+        {
+          provide: LiveDataStore,
+          useValue: {
+            connected: liveConnected.asReadonly(),
+            entries: liveEntries.asReadonly(),
+            updateTick: signal(0).asReadonly(),
+          },
         },
       ],
     });
@@ -171,6 +193,127 @@ describe('AppDataFacade', () => {
       await flushResources();
 
       expect(facade.quickAddSuggestions()).toEqual([]);
+    });
+  });
+
+  describe('Firestore live reactivity (regression: SpeedDial → fill-to-goal button stale)', () => {
+    function todayBerlinIsoDate(): string {
+      // Match the AppDataFacade implementation (toBerlinIsoDate(new Date())).
+      const date = new Date();
+      const parts = new Intl.DateTimeFormat('en-CA', {
+        timeZone: 'Europe/Berlin',
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      }).formatToParts(date);
+      const y = parts.find((p) => p.type === 'year')?.value ?? '1970';
+      const m = parts.find((p) => p.type === 'month')?.value ?? '01';
+      const d = parts.find((p) => p.type === 'day')?.value ?? '01';
+      return `${y}-${m}-${d}`;
+    }
+
+    it('Given live is connected, When a new pushup arrives via Firestore, Then todayProgress, remainingToGoal and goalReached update reactively without an explicit reload', async () => {
+      // Given a connected LiveDataStore with no entries today and a 100-rep goal
+      const facade = setup({
+        dailyGoal: 100,
+        live: { connected: true, entries: [] },
+      });
+      await flushResources();
+
+      expect(facade.todayProgress()).toBe(0);
+      expect(facade.remainingToGoal()).toBe(100);
+      expect(facade.goalReached()).toBe(false);
+
+      // When Firestore pushes a new entry (simulates the SpeedDial flow:
+      // user taps quick-add → CF writes to Firestore → onSnapshot fires →
+      // LiveDataStore.entries updates → derived signals must follow)
+      liveEntries.set([
+        {
+          _id: 'live-1',
+          userId: 'u1',
+          timestamp: `${todayBerlinIsoDate()}T08:30:00`,
+          reps: 30,
+          source: 'quick-add',
+        } as PushupRecord,
+      ]);
+
+      // Then the goal-related signals reflect the new entry without anyone
+      // calling reloadAfterMutation()
+      expect(facade.todayProgress()).toBe(30);
+      expect(facade.remainingToGoal()).toBe(70);
+      expect(facade.goalReached()).toBe(false);
+
+      // And after another live update that fills the goal:
+      liveEntries.update((rows) => [
+        ...rows,
+        {
+          _id: 'live-2',
+          userId: 'u1',
+          timestamp: `${todayBerlinIsoDate()}T09:00:00`,
+          reps: 70,
+          source: 'quick-add',
+        } as PushupRecord,
+      ]);
+
+      expect(facade.todayProgress()).toBe(100);
+      expect(facade.remainingToGoal()).toBe(0);
+      expect(facade.goalReached()).toBe(true);
+    });
+
+    it('Given live is connected, When entries change, Then quickAddSuggestions recompute from the updated live entries', async () => {
+      // Given the adaptive service echoes the entry count for assertion
+      const adaptive = {
+        compute: vitest.fn((rows: PushupRecord[]) => {
+          const len = rows.length;
+          return [len, len * 2, len * 3] as [number, number, number];
+        }),
+      };
+
+      vitest.clearAllMocks();
+      userConfigApiMock.getConfig.mockReturnValue(
+        of({ userId: 'u1', dailyGoal: 100 })
+      );
+      liveConnected = signal(true);
+      liveEntries = signal<PushupRecord[]>([]);
+
+      TestBed.resetTestingModule();
+      TestBed.configureTestingModule({
+        providers: [
+          { provide: StatsApiService, useValue: statsApiMock },
+          { provide: UserConfigApiService, useValue: userConfigApiMock },
+          {
+            provide: UserContextService,
+            useValue: { userIdSafe: () => userId() },
+          },
+          { provide: AdaptiveQuickAddService, useValue: adaptive },
+          {
+            provide: LiveDataStore,
+            useValue: {
+              connected: liveConnected.asReadonly(),
+              entries: liveEntries.asReadonly(),
+              updateTick: signal(0).asReadonly(),
+            },
+          },
+        ],
+      });
+      const facade = TestBed.inject(AppDataFacade);
+      await flushResources();
+
+      expect(facade.quickAddSuggestions()).toEqual([0, 0, 0]);
+
+      // When live data arrives
+      liveEntries.set([
+        {
+          _id: '1',
+          userId: 'u1',
+          timestamp: `${todayBerlinIsoDate()}T08:00:00`,
+          reps: 10,
+          source: 'web',
+        } as PushupRecord,
+      ]);
+
+      // Then suggestions recompute
+      expect(facade.quickAddSuggestions()).toEqual([1, 2, 3]);
     });
   });
 
