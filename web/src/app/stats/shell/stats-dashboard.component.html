@@ -26,6 +26,29 @@
   </header>
 
   <section
+    class="mini-badges"
+    aria-label="All-Time Kurzübersicht"
+    i18n-aria-label="@@allTimeSummaryAria"
+  >
+    <span class="badge"
+      ><small i18n="@@allTimeTotal">All-Time Gesamt</small
+      ><b>{{ allTimeTotal() }}</b></span
+    >
+    <span class="badge"
+      ><small i18n="@@allTimeDays">All-Time Tage</small
+      ><b>{{ allTimeDays() }}</b></span
+    >
+    <span class="badge"
+      ><small i18n="@@allTimeEntries">All-Time Einträge</small
+      ><b>{{ allTimeEntries() }}</b></span
+    >
+    <span class="badge"
+      ><small i18n="@@allTimeAvg">All-Time Ø/Tag</small
+      ><b>{{ allTimeAvg() }}</b></span
+    >
+  </section>
+
+  <section
     class="today-focus"
     aria-label="Tagesfokus"
     i18n-aria-label="@@todayFocusAria"
@@ -99,29 +122,6 @@
         }
       </mat-card-content>
     </mat-card>
-  </section>
-
-  <section
-    class="mini-badges"
-    aria-label="All-Time Kurzübersicht"
-    i18n-aria-label="@@allTimeSummaryAria"
-  >
-    <span class="badge"
-      ><small i18n="@@allTimeTotal">All-Time Gesamt</small
-      ><b>{{ allTimeTotal() }}</b></span
-    >
-    <span class="badge"
-      ><small i18n="@@allTimeDays">All-Time Tage</small
-      ><b>{{ allTimeDays() }}</b></span
-    >
-    <span class="badge"
-      ><small i18n="@@allTimeEntries">All-Time Einträge</small
-      ><b>{{ allTimeEntries() }}</b></span
-    >
-    <span class="badge"
-      ><small i18n="@@allTimeAvg">All-Time Ø/Tag</small
-      ><b>{{ allTimeAvg() }}</b></span
-    >
   </section>
 
   <mat-card class="quick-actions">

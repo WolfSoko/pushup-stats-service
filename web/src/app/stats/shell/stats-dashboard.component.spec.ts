@@ -214,6 +214,17 @@ describe('StatsDashboardComponent', () => {
           )
         ).toBeTruthy();
       });
+
+      it('Then the all-time mini-badges sit directly under the hero header', () => {
+        const root = fixture.nativeElement as HTMLElement;
+        const header = root.querySelector('.page-header');
+        const miniBadges = root.querySelector('.mini-badges');
+
+        expect(header).toBeTruthy();
+        expect(miniBadges).toBeTruthy();
+        // Mini-badges must come right after the hero header, not after today-focus.
+        expect(header!.nextElementSibling).toBe(miniBadges);
+      });
     });
 
     describe('When the user has configured custom quick-add buttons', () => {
