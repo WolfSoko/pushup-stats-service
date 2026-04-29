@@ -219,7 +219,7 @@
       i18n-aria-label="@@dashboard.latestEntriesLinkAriaLabel"
     >
       <h2 i18n="@@dashboard.latestEntries">Letzte Einträge</h2>
-      <mat-icon>arrow_forward</mat-icon>
+      <mat-icon aria-hidden="true">arrow_forward</mat-icon>
     </a>
     <app-stats-table [entries]="latestEntries()" [readOnly]="true" />
   </section>

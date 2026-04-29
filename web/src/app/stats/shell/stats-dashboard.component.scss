@@ -355,6 +355,17 @@ h1 {
   }
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .latest-entries__heading {
+    transition: color 0.15s ease;
+
+    &:hover,
+    &:focus-visible {
+      transform: none;
+    }
+  }
+}
+
 @media (max-width: 680px) {
   .page-header {
     flex-direction: column;
