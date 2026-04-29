@@ -12,7 +12,7 @@ import { AuthStore, UserContextService } from '@pu-auth/auth';
 import { AdsStore } from '@pu-stats/ads';
 import { signal } from '@angular/core';
 import { makeAuthStoreMock } from '@pu-stats/testing';
-import { provideRouter } from '@angular/router';
+import { provideRouter, Router } from '@angular/router';
 import { QuickAddOrchestrationService } from '../../core/quick-add-orchestration.service';
 import { AppDataFacade } from '../../core/app-data.facade';
 import { UserConfigStore } from '../../core/user-config.store';
@@ -217,24 +217,29 @@ describe('StatsDashboardComponent', () => {
         expect(header!.nextElementSibling).toBe(miniBadges);
       });
 
-      it('Then the latest entries heading links to the history page', () => {
+      it('Then the latest entries section navigates to the history page when clicked', async () => {
+        const router = TestBed.inject(Router);
+        const navigateSpy = vi.spyOn(router, 'navigate');
         const root = fixture.nativeElement as HTMLElement;
-        const heading = root.querySelector<HTMLAnchorElement>(
-          '.latest-entries .latest-entries__heading'
-        );
+        const section = root.querySelector<HTMLElement>('.latest-entries');
 
-        expect(heading).toBeTruthy();
-        expect(heading!.tagName).toBe('A');
-        expect(heading!.getAttribute('href')).toBe('/history');
-        expect(heading!.getAttribute('aria-label')).toBe(
+        expect(section).toBeTruthy();
+        expect(section!.getAttribute('role')).toBe('link');
+        expect(section!.getAttribute('tabindex')).toBe('0');
+        expect(section!.getAttribute('aria-label')).toBe(
           'Zur Historie navigieren'
         );
-        expect(heading!.querySelector('h2')?.textContent).toContain(
+        expect(section!.querySelector('h2')?.textContent).toContain(
           'Letzte Einträge'
         );
-        expect(heading!.querySelector('mat-icon')?.textContent).toContain(
-          'arrow_forward'
+        expect(section!.querySelector('.teaser-cta')?.textContent).toContain(
+          'Zur Historie'
         );
+
+        section!.click();
+        await fixture.whenStable();
+
+        expect(navigateSpy).toHaveBeenCalledWith(['/history']);
       });
     });
 

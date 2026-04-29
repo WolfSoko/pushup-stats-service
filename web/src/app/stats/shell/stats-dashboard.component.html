@@ -211,17 +211,30 @@
     </section>
   }
 
-  <section class="latest-entries">
-    <a
-      class="latest-entries__heading"
-      routerLink="/history"
-      aria-label="Zur Historie navigieren"
-      i18n-aria-label="@@dashboard.latestEntriesLinkAriaLabel"
-    >
-      <h2 i18n="@@dashboard.latestEntries">Letzte Einträge</h2>
-      <mat-icon aria-hidden="true">arrow_forward</mat-icon>
-    </a>
-    <app-stats-table [entries]="latestEntries()" [readOnly]="true" />
+  <section
+    class="latest-entries teaser-card"
+    role="link"
+    tabindex="0"
+    (click)="navigateToHistory()"
+    (keydown.enter)="navigateToHistory()"
+    (keyup.space)="navigateToHistory(); $event.preventDefault()"
+    aria-label="Zur Historie navigieren"
+    i18n-aria-label="@@dashboard.latestEntriesLinkAriaLabel"
+  >
+    <h2 i18n="@@dashboard.latestEntries">Letzte Einträge</h2>
+    <div class="entries-preview">
+      <app-stats-table [entries]="latestEntries()" [readOnly]="true" />
+    </div>
+    <div class="teaser-cta-row">
+      <span
+        class="teaser-cta"
+        aria-label="Zur Historie navigieren"
+        i18n-aria-label="@@dashboard.latestEntriesCtaAriaLabel"
+      >
+        <mat-icon aria-hidden="true">history</mat-icon>
+        <span i18n="@@dashboard.latestEntriesCta">Zur Historie</span>
+      </span>
+    </div>
   </section>
 
   @if (dashboardInlineAdsEnabled()) {

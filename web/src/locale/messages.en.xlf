@@ -4908,16 +4908,28 @@ Deine Position: # ·  Reps        </source>
         <target>Today Total</target>
       </segment>
     </unit>
+    <unit id="dashboard.latestEntriesLinkAriaLabel">
+      <segment state="translated">
+        <source>Zur Historie navigieren</source>
+        <target>Navigate to history</target>
+      </segment>
+    </unit>
     <unit id="dashboard.latestEntries">
       <segment state="translated">
         <source>Letzte Einträge</source>
         <target>Recent Entries</target>
       </segment>
     </unit>
-    <unit id="dashboard.latestEntriesLinkAriaLabel">
+    <unit id="dashboard.latestEntriesCtaAriaLabel">
       <segment state="translated">
         <source>Zur Historie navigieren</source>
         <target>Navigate to history</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.latestEntriesCta">
+      <segment state="translated">
+        <source>Zur Historie</source>
+        <target>To history</target>
       </segment>
     </unit>
     <unit id="dashboard.noEntryYet">

@@ -4275,7 +4275,7 @@
     </unit>
     <unit id="dashboard.latestEntriesLinkAriaLabel">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:215,220</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:214,224</note>
       </notes>
       <segment>
         <source>Zur Historie navigieren</source>
@@ -4283,10 +4283,26 @@
     </unit>
     <unit id="dashboard.latestEntries">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:221,222</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:225,226</note>
       </notes>
       <segment>
         <source>Letzte Einträge</source>
+      </segment>
+    </unit>
+    <unit id="dashboard.latestEntriesCtaAriaLabel">
+      <notes>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:230,231</note>
+      </notes>
+      <segment>
+        <source>Zur Historie navigieren</source>
+      </segment>
+    </unit>
+    <unit id="dashboard.latestEntriesCta">
+      <notes>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:234,236</note>
+      </notes>
+      <segment>
+        <source>Zur Historie</source>
       </segment>
     </unit>
     <unit id="ads.dashboard.aria">

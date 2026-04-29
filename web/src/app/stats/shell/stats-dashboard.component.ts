@@ -9,7 +9,7 @@ import {
   signal,
   untracked,
 } from '@angular/core';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialog } from '@angular/material/dialog';
@@ -44,7 +44,6 @@ import { DashboardStore } from '../dashboard.store';
     MatIconModule,
     MatProgressBarModule,
     DatePipe,
-    RouterLink,
     AnalysisTeaserCardComponent,
     PreviewBannerComponent,
     StatsTableComponent,
@@ -156,6 +155,10 @@ export class StatsDashboardComponent {
       width: 'min(92vw, 480px)',
       maxWidth: '92vw',
     });
+  }
+
+  navigateToHistory(): void {
+    void this.router.navigate(['/history']);
   }
 
   /**
