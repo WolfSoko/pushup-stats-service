@@ -12,7 +12,7 @@ import { AuthStore, UserContextService } from '@pu-auth/auth';
 import { AdsStore } from '@pu-stats/ads';
 import { signal } from '@angular/core';
 import { makeAuthStoreMock } from '@pu-stats/testing';
-import { ActivatedRoute, Router } from '@angular/router';
+import { provideRouter, Router } from '@angular/router';
 import { QuickAddOrchestrationService } from '../../core/quick-add-orchestration.service';
 import { AppDataFacade } from '../../core/app-data.facade';
 import { UserConfigStore } from '../../core/user-config.store';
@@ -123,6 +123,7 @@ describe('StatsDashboardComponent', () => {
     TestBed.configureTestingModule({
       imports: [StatsDashboardComponent],
       providers: [
+        provideRouter([]),
         { provide: StatsApiService, useValue: serviceMock },
         {
           provide: UserStatsApiService,
@@ -134,16 +135,6 @@ describe('StatsDashboardComponent', () => {
         { provide: UserContextService, useValue: { userIdSafe: () => 'u1' } },
         { provide: AdsStore, useValue: adsConfigMock },
         { provide: AuthStore, useValue: makeAuthStoreMock() },
-        {
-          provide: ActivatedRoute,
-          useValue: {
-            snapshot: { queryParamMap: { get: () => null } },
-          },
-        },
-        {
-          provide: Router,
-          useValue: { navigate: () => Promise.resolve(true) },
-        },
         {
           provide: UserConfigApiService,
           useValue: {
@@ -224,6 +215,31 @@ describe('StatsDashboardComponent', () => {
         expect(miniBadges).toBeTruthy();
         // Mini-badges must come right after the hero header, not after today-focus.
         expect(header!.nextElementSibling).toBe(miniBadges);
+      });
+
+      it('Then the latest entries section navigates to the history page when clicked', async () => {
+        const router = TestBed.inject(Router);
+        const navigateSpy = vi.spyOn(router, 'navigate');
+        const root = fixture.nativeElement as HTMLElement;
+        const section = root.querySelector<HTMLElement>('.latest-entries');
+
+        expect(section).toBeTruthy();
+        expect(section!.getAttribute('role')).toBe('link');
+        expect(section!.getAttribute('tabindex')).toBe('0');
+        expect(section!.getAttribute('aria-label')).toBe(
+          'Zur Historie navigieren'
+        );
+        expect(section!.querySelector('h2')?.textContent).toContain(
+          'Letzte Einträge'
+        );
+        expect(section!.querySelector('.teaser-cta')?.textContent).toContain(
+          'Zur Historie'
+        );
+
+        section!.click();
+        await fixture.whenStable();
+
+        expect(navigateSpy).toHaveBeenCalledWith(['/history']);
       });
     });
 

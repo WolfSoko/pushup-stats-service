@@ -157,6 +157,10 @@ export class StatsDashboardComponent {
     });
   }
 
+  navigateToHistory(): void {
+    void this.router.navigate(['/history']);
+  }
+
   /**
    * Called after render — handles two notification deep-links:
    *   - `?log=1`     → open create-entry dialog (existing behavior)
