@@ -212,7 +212,15 @@
   }
 
   <section class="latest-entries">
-    <h2 i18n="@@dashboard.latestEntries">Letzte Einträge</h2>
+    <a
+      class="latest-entries__heading"
+      routerLink="/history"
+      aria-label="Zur Historie navigieren"
+      i18n-aria-label="@@dashboard.latestEntriesLinkAriaLabel"
+    >
+      <h2 i18n="@@dashboard.latestEntries">Letzte Einträge</h2>
+      <mat-icon>arrow_forward</mat-icon>
+    </a>
     <app-stats-table [entries]="latestEntries()" [readOnly]="true" />
   </section>
 

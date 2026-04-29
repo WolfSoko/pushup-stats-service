@@ -4914,6 +4914,12 @@ Deine Position: # ·  Reps        </source>
         <target>Recent Entries</target>
       </segment>
     </unit>
+    <unit id="dashboard.latestEntriesLinkAriaLabel">
+      <segment state="translated">
+        <source>Zur Historie navigieren</source>
+        <target>Navigate to history</target>
+      </segment>
+    </unit>
     <unit id="dashboard.noEntryYet">
       <segment state="translated">
         <source>Noch kein Eintrag.</source>

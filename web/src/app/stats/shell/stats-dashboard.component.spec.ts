@@ -12,7 +12,7 @@ import { AuthStore, UserContextService } from '@pu-auth/auth';
 import { AdsStore } from '@pu-stats/ads';
 import { signal } from '@angular/core';
 import { makeAuthStoreMock } from '@pu-stats/testing';
-import { ActivatedRoute, Router } from '@angular/router';
+import { provideRouter } from '@angular/router';
 import { QuickAddOrchestrationService } from '../../core/quick-add-orchestration.service';
 import { AppDataFacade } from '../../core/app-data.facade';
 import { UserConfigStore } from '../../core/user-config.store';
@@ -123,6 +123,7 @@ describe('StatsDashboardComponent', () => {
     TestBed.configureTestingModule({
       imports: [StatsDashboardComponent],
       providers: [
+        provideRouter([]),
         { provide: StatsApiService, useValue: serviceMock },
         {
           provide: UserStatsApiService,
@@ -134,16 +135,6 @@ describe('StatsDashboardComponent', () => {
         { provide: UserContextService, useValue: { userIdSafe: () => 'u1' } },
         { provide: AdsStore, useValue: adsConfigMock },
         { provide: AuthStore, useValue: makeAuthStoreMock() },
-        {
-          provide: ActivatedRoute,
-          useValue: {
-            snapshot: { queryParamMap: { get: () => null } },
-          },
-        },
-        {
-          provide: Router,
-          useValue: { navigate: () => Promise.resolve(true) },
-        },
         {
           provide: UserConfigApiService,
           useValue: {
@@ -224,6 +215,26 @@ describe('StatsDashboardComponent', () => {
         expect(miniBadges).toBeTruthy();
         // Mini-badges must come right after the hero header, not after today-focus.
         expect(header!.nextElementSibling).toBe(miniBadges);
+      });
+
+      it('Then the latest entries heading links to the history page', () => {
+        const root = fixture.nativeElement as HTMLElement;
+        const heading = root.querySelector<HTMLAnchorElement>(
+          '.latest-entries .latest-entries__heading'
+        );
+
+        expect(heading).toBeTruthy();
+        expect(heading!.tagName).toBe('A');
+        expect(heading!.getAttribute('href')).toBe('/history');
+        expect(heading!.getAttribute('aria-label')).toBe(
+          'Zur Historie navigieren'
+        );
+        expect(heading!.querySelector('h2')?.textContent).toContain(
+          'Letzte Einträge'
+        );
+        expect(heading!.querySelector('mat-icon')?.textContent).toContain(
+          'arrow_forward'
+        );
       });
     });
 
