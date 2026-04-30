@@ -28,7 +28,6 @@ import { firstValueFrom } from 'rxjs';
 import { QuickAddBridgeService } from '@pu-stats/quick-add';
 import { QuickAddOrchestrationService } from '../../core/quick-add-orchestration.service';
 import { AppDataFacade } from '../../core/app-data.facade';
-import { ShareService } from '../../core/share.service';
 import { AdSlotComponent } from '@pu-stats/ads';
 import { AnalysisTeaserCardComponent } from '../components/analysis-teaser-card/analysis-teaser-card.component';
 import { PreviewBannerComponent } from '../components/preview-banner/preview-banner.component';
@@ -68,7 +67,6 @@ export class StatsDashboardComponent {
   private readonly live = inject(LiveDataStore);
   private readonly quickAdd = inject(QuickAddOrchestrationService);
   private readonly appData = inject(AppDataFacade);
-  private readonly shareService = inject(ShareService);
 
   readonly shareDayAriaLabel = $localize`:@@dashboard.share.aria:Tagesleistung teilen`;
   readonly shareDayLabel = $localize`:@@dashboard.share:Teilen`;
@@ -188,17 +186,7 @@ export class StatsDashboardComponent {
   }
 
   shareDay(): void {
-    const total = this.todayTotal();
-    const streak = this.currentStreak();
-    const text =
-      streak > 1
-        ? $localize`:@@dashboard.share.text.streak:Heute schon ${total}:total: Liegestütze geschafft – Streak: ${streak}:streak: Tage 🔥 Tracke deine Stats kostenlos:`
-        : $localize`:@@dashboard.share.text.simple:Heute schon ${total}:total: Liegestütze geschafft! 💪 Tracke deine Stats kostenlos:`;
-    void this.shareService.share({
-      title: $localize`:@@dashboard.share.title:Pushup Tracker`,
-      text,
-      url: 'https://pushup-stats.de',
-    });
+    void this.store.shareDay();
   }
 
   /**
