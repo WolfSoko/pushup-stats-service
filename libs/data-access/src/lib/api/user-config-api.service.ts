@@ -23,7 +23,11 @@ export class UserConfigApiService {
   getConfig(userId: string): Observable<UserConfig> {
     const effectiveUserId = this.resolveUserId(userId);
     if (!effectiveUserId || !this.firestore) {
-      return of({ userId } as UserConfig);
+      // Use the resolved id (or the passed-in fallback when no auth user is
+      // available) so the stub config matches the doc path the live read
+      // would have hit. Returning the unresolved `userId` here would emit a
+      // different identity than `updateConfig` writes to.
+      return of({ userId: effectiveUserId || userId } as UserConfig);
     }
 
     const ref = this.docRef(effectiveUserId);
