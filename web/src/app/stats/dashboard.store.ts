@@ -24,7 +24,7 @@ import { UserContextService } from '@pu-auth/auth';
 import { MotivationStore } from '@pu-stats/motivation';
 import { firstValueFrom, of } from 'rxjs';
 import { UserConfigStore } from '../core/user-config.store';
-import { ShareService } from '../core/share.service';
+import { ShareResult, ShareService } from '../core/share.service';
 import { TrainingPlanStore } from '../training-plans/training-plan.store';
 
 const EMPTY_STATS: StatsResponse = {
@@ -405,7 +405,7 @@ export const DashboardStore = signalStore(
     async loadQuote(): Promise<void> {
       await store._motivation.loadQuotes(store._user.userIdSafe());
     },
-    shareDay(): Promise<unknown> {
+    shareDay(): Promise<ShareResult> {
       const total = store.todayTotal();
       const streak = store.currentStreak();
       const text =

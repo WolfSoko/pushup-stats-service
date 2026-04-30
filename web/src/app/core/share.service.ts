@@ -52,7 +52,7 @@ export class ShareService {
           await nav.share(data);
           return 'native';
         } catch (err) {
-          if (err instanceof Error && err.name === 'AbortError') {
+          if ((err as { name?: string } | null)?.name === 'AbortError') {
             return 'cancelled';
           }
         }
