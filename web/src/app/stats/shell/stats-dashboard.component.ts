@@ -9,7 +9,7 @@ import {
   signal,
   untracked,
 } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialog } from '@angular/material/dialog';
@@ -48,6 +48,7 @@ import { DashboardStore } from '../dashboard.store';
     PreviewBannerComponent,
     StatsTableComponent,
     AdSlotComponent,
+    RouterLink,
   ],
   providers: [DashboardStore],
   templateUrl: './stats-dashboard.component.html',
@@ -95,6 +96,12 @@ export class StatsDashboardComponent {
   readonly quickAddButtons = this.store.quickAddButtons;
   readonly adSlotDashboardInline = this.store.adSlotDashboardInline;
   readonly dashboardInlineAdsEnabled = this.store.dashboardInlineAdsEnabled;
+  readonly planActive = this.store.planActive;
+  readonly planTodayTarget = this.store.planTodayTarget;
+  readonly planTodayKind = this.store.planTodayKind;
+  readonly planTitle = this.store.planTitle;
+  readonly planDayIndex = this.store.planDayIndex;
+  readonly planTotalDays = this.store.planTotalDays;
   /** Counter that increments on every data refresh to trigger child component reloads. */
   readonly refreshCounter = signal(0);
 

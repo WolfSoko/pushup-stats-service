@@ -24,6 +24,8 @@ describe('appRoutes', () => {
       'history',
       'analysis',
       'settings',
+      'training-plans',
+      'training-plans/:slug',
       'reminders',
       'leaderboard',
       'blog',

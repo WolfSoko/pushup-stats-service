@@ -5550,5 +5550,197 @@ Deine Position: # ·  Reps        </source>
         <target>push-ups</target>
       </segment>
     </unit>
+    <unit id="nav.trainingPlans">
+      <segment state="translated">
+        <source>Trainingspläne</source>
+        <target>Training plans</target>
+      </segment>
+    </unit>
+    <unit id="seo.trainingPlans.title">
+      <segment state="translated">
+        <source>Trainingspläne – Pushup Tracker</source>
+        <target>Training plans – Pushup Tracker</target>
+      </segment>
+    </unit>
+    <unit id="seo.trainingPlans.description">
+      <segment state="translated">
+        <source>Strukturierte Liegestütz-Trainingspläne mit Tagesziel, Sätzen und automatischer Fortschrittsverfolgung.</source>
+        <target>Structured push-up training plans with daily goals, sets, and automatic progress tracking.</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.title">
+      <segment state="translated">
+        <source>Trainingspläne</source>
+        <target>Training plans</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.intro">
+      <segment state="translated">
+        <source>Strukturierte Pläne mit Tagesziel, Sätzen und automatischer Fortschrittsverfolgung. Starte einen Plan, und dein Tagesziel im Dashboard wird automatisch gesetzt.</source>
+        <target>Structured plans with daily goals, sets, and automatic progress tracking. Start a plan and your daily goal on the dashboard will be set automatically.</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.active.title">
+      <segment state="translated">
+        <source>Aktiver Plan</source>
+        <target>Active plan</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.day">
+      <segment state="translated">
+        <source>Tag</source>
+        <target>Day</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.week">
+      <segment state="translated">
+        <source>Woche</source>
+        <target>Week</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.todayTarget">
+      <segment state="translated">
+        <source>Heute geplant:</source>
+        <target>Today's target:</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.reps">
+      <segment state="translated">
+        <source>Wdh.</source>
+        <target>reps</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.daysSuffix">
+      <segment state="translated">
+        <source>Tage</source>
+        <target>days</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.kind.rest">
+      <segment state="translated">
+        <source>Ruhetag</source>
+        <target>Rest day</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.kind.light">
+      <segment state="translated">
+        <source>Leichter Tag</source>
+        <target>Light day</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.kind.test">
+      <segment state="translated">
+        <source>Maximaltest</source>
+        <target>Max test</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.kind.main">
+      <segment state="translated">
+        <source>Trainingstag</source>
+        <target>Training day</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.level.beginner">
+      <segment state="translated">
+        <source>Einsteiger</source>
+        <target>Beginner</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.level.intermediate">
+      <segment state="translated">
+        <source>Mittelstufe</source>
+        <target>Intermediate</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.level.advanced">
+      <segment state="translated">
+        <source>Fortgeschritten</source>
+        <target>Advanced</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.openDetail">
+      <segment state="translated">
+        <source>Details öffnen</source>
+        <target>Open details</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.viewPlan">
+      <segment state="translated">
+        <source>Plan ansehen</source>
+        <target>View plan</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.start">
+      <segment state="translated">
+        <source>Plan starten</source>
+        <target>Start plan</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.startCta">
+      <segment state="translated">
+        <source>Starte den Plan und das Tagesziel im Dashboard wird automatisch nach diesem Plan gesetzt.</source>
+        <target>Start the plan and the dashboard's daily goal will follow this plan automatically.</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.replaceWarn">
+      <segment state="translated">
+        <source>Achtung: Dies ersetzt den aktuell aktiven Plan.</source>
+        <target>Heads up: this replaces the currently active plan.</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.abandon">
+      <segment state="translated">
+        <source>Plan beenden</source>
+        <target>End plan</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.started">
+      <segment state="translated">
+        <source>Plan gestartet — viel Erfolg!</source>
+        <target>Plan started — good luck!</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.abandoned">
+      <segment state="translated">
+        <source>Plan beendet.</source>
+        <target>Plan ended.</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.progress">
+      <segment state="translated">
+        <source>Fortschritt</source>
+        <target>Progress</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.currentDay">
+      <segment state="translated">
+        <source>Aktueller Tag:</source>
+        <target>Current day:</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.markAria">
+      <segment state="translated">
+        <source>Als erledigt markieren</source>
+        <target>Mark as done</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.unmarkAria">
+      <segment state="translated">
+        <source>Als nicht erledigt markieren</source>
+        <target>Mark as not done</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.back">
+      <segment state="translated">
+        <source>Zurück</source>
+        <target>Back</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.notFound">
+      <segment state="translated">
+        <source>Plan nicht gefunden.</source>
+        <target>Plan not found.</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

@@ -24,6 +24,7 @@ import { UserContextService } from '@pu-auth/auth';
 import { MotivationStore } from '@pu-stats/motivation';
 import { firstValueFrom, of } from 'rxjs';
 import { UserConfigStore } from '../core/user-config.store';
+import { TrainingPlanStore } from '../training-plans/training-plan.store';
 
 const EMPTY_STATS: StatsResponse = {
   meta: {
@@ -87,6 +88,7 @@ export const DashboardStore = signalStore(
     _live: inject(LiveDataStore),
     _ads: inject(AdsStore),
     _motivation: inject(MotivationStore),
+    _trainingPlan: inject(TrainingPlanStore),
     _isBrowser: isPlatformBrowser(inject(PLATFORM_ID)),
   })),
   withProps((store) => ({
@@ -160,7 +162,30 @@ export const DashboardStore = signalStore(
       return liveTotal;
     });
 
-    const dailyGoal = computed(() => store._userConfig.dailyGoal() || 10);
+    /** Today's plan target — if a plan is active and today is not a
+     *  rest day, this overrides the user-configured `dailyGoal`. */
+    const planTodayTarget = computed(() => {
+      if (!store._trainingPlan.hasActivePlan()) return 0;
+      const day = store._trainingPlan.todayDay();
+      if (!day || day.kind === 'rest') return 0;
+      return day.targetReps;
+    });
+
+    const planActive = computed(() => store._trainingPlan.hasActivePlan());
+    const planTodayKind = computed(
+      () => store._trainingPlan.todayDay()?.kind ?? null
+    );
+    const planTitle = computed(
+      () => store._trainingPlan.activeCatalog()?.title ?? ''
+    );
+    const planDayIndex = computed(() => store._trainingPlan.currentDayIndex());
+    const planTotalDays = computed(
+      () => store._trainingPlan.activeCatalog()?.totalDays ?? 0
+    );
+
+    const dailyGoal = computed(
+      () => planTodayTarget() || store._userConfig.dailyGoal() || 10
+    );
     const weeklyGoal = computed(() => store._userConfig.weeklyGoal() || 50);
     const monthlyGoal = computed(() => store._userConfig.monthlyGoal() || 200);
 
@@ -180,7 +205,10 @@ export const DashboardStore = signalStore(
         : 0
     );
 
-    const configuredDailyGoal = computed(() => store._userConfig.dailyGoal());
+    /** Effective daily goal = plan target if active, else configured. */
+    const configuredDailyGoal = computed(
+      () => planTodayTarget() || store._userConfig.dailyGoal()
+    );
     const configuredWeeklyGoal = computed(() => store._userConfig.weeklyGoal());
     const configuredMonthlyGoal = computed(() =>
       store._userConfig.monthlyGoal()
@@ -362,6 +390,12 @@ export const DashboardStore = signalStore(
       adSlotDashboardInline,
       dashboardInlineAdsEnabled,
       todayQuote,
+      planActive,
+      planTodayTarget,
+      planTodayKind,
+      planTitle,
+      planDayIndex,
+      planTotalDays,
     };
   }),
   withMethods((store) => ({
