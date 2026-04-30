@@ -1,0 +1,167 @@
+:host {
+  display: block;
+}
+
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: clamp(18px, 3vw, 36px);
+  display: grid;
+  gap: 20px;
+  color: #e6edf9;
+}
+
+.status-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  padding: 24px;
+}
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: clamp(16px, 2vw, 24px);
+  border: 1px solid rgba(123, 159, 255, 0.25);
+  border-radius: 20px;
+  background: linear-gradient(
+    150deg,
+    rgba(26, 35, 58, 0.9),
+    rgba(13, 18, 32, 0.9)
+  );
+}
+
+.avatar {
+  flex-shrink: 0;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(
+    135deg,
+    rgba(63, 128, 255, 0.92),
+    rgba(58, 92, 213, 0.92)
+  );
+  color: #f4f8ff;
+
+  mat-icon {
+    font-size: 36px;
+    width: 36px;
+    height: 36px;
+  }
+}
+
+.header-text {
+  flex: 1 1 auto;
+  min-width: 0;
+
+  h1 {
+    margin: 0;
+    font-size: clamp(1.4rem, 3vw, 2rem);
+  }
+
+  .subtitle {
+    margin: 4px 0 0;
+    color: #9fb3de;
+    font-size: 0.85rem;
+  }
+}
+
+.share-btn {
+  flex-shrink: 0;
+  align-self: center;
+
+  mat-icon {
+    margin-right: 4px;
+  }
+}
+
+.stats-grid {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+}
+
+.stat-card {
+  border: 1px solid rgba(123, 159, 255, 0.24);
+  background: linear-gradient(
+    170deg,
+    rgba(22, 30, 49, 0.86),
+    rgba(14, 19, 33, 0.9)
+  );
+
+  mat-card-content {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  small {
+    color: #9fb3de;
+    font-size: 0.74rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  b {
+    font-size: 1.6rem;
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+.cta {
+  display: flex;
+  justify-content: center;
+
+  a mat-icon {
+    margin-right: 8px;
+  }
+}
+
+@media (max-width: 600px) {
+  .profile-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .share-btn {
+    align-self: stretch;
+  }
+}
+
+:host-context(html.light-theme) {
+  .container {
+    color: #1e293b;
+  }
+
+  .profile-header {
+    border-color: rgba(59, 130, 246, 0.25);
+    background: linear-gradient(
+      150deg,
+      rgba(248, 250, 252, 0.95),
+      rgba(241, 245, 249, 0.95)
+    );
+  }
+
+  .header-text .subtitle {
+    color: #64748b;
+  }
+
+  .stat-card {
+    border-color: rgba(59, 130, 246, 0.25);
+    background: linear-gradient(
+      170deg,
+      rgba(255, 255, 255, 0.95),
+      rgba(248, 250, 252, 0.98)
+    );
+
+    small {
+      color: #64748b;
+    }
+  }
+}

@@ -47,6 +47,12 @@ export const serverRoutes: ServerRoute[] = [
     path: 'leaderboard',
     renderMode: RenderMode.Server,
   },
+  // Public profile pages: dynamic per UID, server-rendered so social-card
+  // crawlers see populated meta tags without running client JS.
+  {
+    path: 'u/:uid',
+    renderMode: RenderMode.Server,
+  },
   {
     path: 'app',
     renderMode: RenderMode.Server,

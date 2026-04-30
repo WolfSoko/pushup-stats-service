@@ -22,6 +22,7 @@ import { Analytics, logEvent } from '@angular/fire/analytics';
 import { PushSubscriptionService } from '@pu-reminders/reminders';
 import { DEFAULT_SNAP_QUALITY, SnapQuality } from '@pu-stats/models';
 import { UserConfigStore } from '../../core/user-config.store';
+import { ShareService } from '../../core/share.service';
 
 @Component({
   selector: 'app-settings-page',
@@ -90,6 +91,39 @@ import { UserConfigStore } from '../../core/user-config.store';
               Wenn deaktiviert, wird dein Profil in der Bestenliste nicht
               angezeigt.
             </p>
+
+            <mat-slide-toggle
+              [checked]="publicProfileDraft()"
+              (change)="publicProfileDraft.set($event.checked)"
+              data-testid="settings-public-profile-toggle"
+              i18n="@@settings.publicProfile.toggle"
+            >
+              Öffentliches Profil aktivieren
+            </mat-slide-toggle>
+
+            <p class="muted" i18n="@@settings.publicProfile.hint">
+              Erlaubt jedem mit dem Link den Zugriff auf deine Reps, Streak und
+              Bestleistungen. Dein Anzeigename ist sichtbar; E-Mail, Ziele und
+              Erinnerungen bleiben privat.
+            </p>
+
+            @if (publicProfileDraft() && profileUrl()) {
+              <div
+                class="profile-link-row"
+                data-testid="settings-public-profile-link"
+              >
+                <code class="profile-link">{{ profileUrl() }}</code>
+                <button
+                  type="button"
+                  mat-stroked-button
+                  (click)="shareMyProfile()"
+                  i18n="@@settings.publicProfile.shareCta"
+                >
+                  <mat-icon>share</mat-icon>
+                  Profil teilen
+                </button>
+              </div>
+            }
 
             <mat-slide-toggle
               [checked]="adsConsentDraft()"
@@ -327,6 +361,23 @@ import { UserConfigStore } from '../../core/user-config.store';
       font-size: 0.9rem;
       margin: 0;
     }
+    .profile-link-row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+      padding: 10px 12px;
+      border-radius: 10px;
+      background: rgba(123, 159, 255, 0.12);
+      border: 1px solid rgba(123, 159, 255, 0.28);
+    }
+    .profile-link {
+      flex: 1 1 auto;
+      min-width: 0;
+      font-family: ui-monospace, monospace;
+      font-size: 0.85rem;
+      overflow-wrap: anywhere;
+    }
     .reminders-link-section {
       margin-top: 16px;
       padding-top: 12px;
@@ -397,16 +448,24 @@ export class SettingsPageComponent {
   private readonly snackBar = inject(MatSnackBar);
   private readonly pushService = inject(PushSubscriptionService);
   private readonly userConfigStore = inject(UserConfigStore);
+  private readonly shareService = inject(ShareService);
 
   readonly isGuest = this.user.isGuest;
+  readonly userId = this.user.userIdSafe;
 
   readonly displayNameDraft = signal('');
   readonly dailyGoalDraft = signal<number>(10);
   readonly weeklyGoalDraft = signal<number>(50);
   readonly monthlyGoalDraft = signal<number>(200);
   readonly leaderboardOptOutDraft = signal(false);
+  readonly publicProfileDraft = signal(false);
   readonly adsConsentDraft = signal(false);
   readonly snapQualityDraft = signal<SnapQuality>(DEFAULT_SNAP_QUALITY);
+
+  readonly profileUrl = computed(() => {
+    const uid = this.userId();
+    return uid ? `https://pushup-stats.de/u/${uid}` : '';
+  });
 
   readonly saving = signal(false);
   readonly saved = signal(false);
@@ -424,6 +483,7 @@ export class SettingsPageComponent {
         weeklyGoal: 50,
         monthlyGoal: 200,
         hideFromLeaderboard: false,
+        publicProfile: false,
         consent: { targetedAds: true },
         snapQuality: DEFAULT_SNAP_QUALITY,
       };
@@ -444,6 +504,9 @@ export class SettingsPageComponent {
       hideFromLeaderboard:
         (val as { ui?: { hideFromLeaderboard?: boolean } }).ui
           ?.hideFromLeaderboard ?? false,
+      publicProfile:
+        (val as { ui?: { publicProfile?: boolean } }).ui?.publicProfile ??
+        false,
       consent: (val as { consent?: { targetedAds?: boolean } }).consent ?? {
         targetedAds: true,
       },
@@ -462,8 +525,19 @@ export class SettingsPageComponent {
       this.weeklyGoalDraft.set(cfg.weeklyGoal);
       this.monthlyGoalDraft.set(cfg.monthlyGoal);
       this.leaderboardOptOutDraft.set(cfg.hideFromLeaderboard);
+      this.publicProfileDraft.set(cfg.publicProfile);
       this.adsConsentDraft.set(cfg.consent?.targetedAds ?? true);
       this.snapQualityDraft.set(cfg.snapQuality);
+    });
+  }
+
+  shareMyProfile(): void {
+    const url = this.profileUrl();
+    if (!url) return;
+    void this.shareService.share({
+      title: $localize`:@@settings.publicProfile.share.title:Mein Pushup Tracker Profil`,
+      text: $localize`:@@settings.publicProfile.share.text:Schau dir mein Pushup-Profil an:`,
+      url,
     });
   }
 
@@ -498,12 +572,14 @@ export class SettingsPageComponent {
         },
         ui: {
           hideFromLeaderboard: this.leaderboardOptOutDraft(),
+          publicProfile: this.publicProfileDraft(),
           snapQuality: this.snapQualityDraft(),
         },
       });
       this.saved.set(true);
       this.trackAnalytics('settings_saved', {
         hideFromLeaderboard: this.leaderboardOptOutDraft(),
+        publicProfile: this.publicProfileDraft(),
         dailyGoal,
         weeklyGoal,
         monthlyGoal,

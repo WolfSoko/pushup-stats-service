@@ -5832,5 +5832,179 @@ Deine Position: # ·  Reps        </source>
         <target>Sharing is not available on this device.</target>
       </segment>
     </unit>
+    <unit id="seo.publicProfile.title">
+      <segment state="translated">
+        <source>Profil – Pushup Tracker</source>
+        <target>Profile – Pushup Tracker</target>
+      </segment>
+    </unit>
+    <unit id="seo.publicProfile.description">
+      <segment state="translated">
+        <source>Öffentliches Pushup-Profil mit Reps, Streak und Bestleistungen.</source>
+        <target>Public push-up profile with reps, streak and personal bests.</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.notFound.title">
+      <segment state="translated">
+        <source>Profil nicht gefunden</source>
+        <target>Profile not found</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.notFound.body">
+      <segment state="translated">
+        <source>Dieses Profil existiert nicht oder wurde nicht öffentlich freigegeben.</source>
+        <target>This profile does not exist or has not been made public.</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.error.title">
+      <segment state="translated">
+        <source>Profil konnte nicht geladen werden</source>
+        <target>Could not load profile</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.error.body">
+      <segment state="translated">
+        <source>Bitte versuche es später erneut.</source>
+        <target>Please try again later.</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.retry">
+      <segment state="translated">
+        <source>Erneut versuchen</source>
+        <target>Try again</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.toHome">
+      <segment state="translated">
+        <source>Zur Startseite</source>
+        <target>Go to homepage</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.stats">
+      <segment state="translated">
+        <source>Statistik</source>
+        <target>Stats</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.total">
+      <segment state="translated">
+        <source>Gesamte Reps</source>
+        <target>Total reps</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.streak">
+      <segment state="translated">
+        <source>Aktuelle Streak</source>
+        <target>Current streak</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.days">
+      <segment state="translated">
+        <source>Aktive Tage</source>
+        <target>Active days</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.entries">
+      <segment state="translated">
+        <source>Einträge</source>
+        <target>Entries</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.bestSet">
+      <segment state="translated">
+        <source>Bester Einzel-Eintrag</source>
+        <target>Best single entry</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.bestDay">
+      <segment state="translated">
+        <source>Bester Tag</source>
+        <target>Best day</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.share.aria">
+      <segment state="translated">
+        <source>Profil teilen</source>
+        <target>Share profile</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.share">
+      <segment state="translated">
+        <source>Teilen</source>
+        <target>Share</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.cta">
+      <segment state="translated">
+        <source>Selbst tracken – pushup-stats.de</source>
+        <target>Track your own – pushup-stats.de</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.share.text">
+      <segment state="translated">
+        <source><ph id="0" equiv="name" disp="name"/> hat <ph id="1" equiv="total" disp="total"/> Liegestütze auf Pushup Tracker geschafft 💪 Schau's dir an:</source>
+        <target><ph id="0" equiv="name" disp="name"/> hit <ph id="1" equiv="total" disp="total"/> push-ups on Pushup Tracker 💪 Check it out:</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.share.title">
+      <segment state="translated">
+        <source>Pushup Tracker Profil</source>
+        <target>Pushup Tracker profile</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.seo.notFound.title">
+      <segment state="translated">
+        <source>Profil nicht verfügbar – Pushup Tracker</source>
+        <target>Profile not available – Pushup Tracker</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.seo.notFound.description">
+      <segment state="translated">
+        <source>Dieses Profil existiert nicht oder ist nicht öffentlich.</source>
+        <target>This profile does not exist or is not public.</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.seo.title">
+      <segment state="translated">
+        <source><ph id="0" equiv="name" disp="name"/> – Pushup Tracker Profil</source>
+        <target><ph id="0" equiv="name" disp="name"/> – Pushup Tracker profile</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.seo.description">
+      <segment state="translated">
+        <source><ph id="0" equiv="name" disp="name"/> hat <ph id="1" equiv="total" disp="total"/> Liegestütze und eine <ph id="2" equiv="streak" disp="streak"/>-Tage-Streak auf Pushup Tracker.</source>
+        <target><ph id="0" equiv="name" disp="name"/> has <ph id="1" equiv="total" disp="total"/> push-ups and a <ph id="2" equiv="streak" disp="streak"/>-day streak on Pushup Tracker.</target>
+      </segment>
+    </unit>
+    <unit id="settings.publicProfile.toggle">
+      <segment state="translated">
+        <source>Öffentliches Profil aktivieren</source>
+        <target>Enable public profile</target>
+      </segment>
+    </unit>
+    <unit id="settings.publicProfile.hint">
+      <segment state="translated">
+        <source>Erlaubt jedem mit dem Link den Zugriff auf deine Reps, Streak und Bestleistungen. Dein Anzeigename ist sichtbar; E-Mail, Ziele und Erinnerungen bleiben privat.</source>
+        <target>Anyone with the link can see your reps, streak and personal bests. Your display name is visible; email, goals and reminders stay private.</target>
+      </segment>
+    </unit>
+    <unit id="settings.publicProfile.shareCta">
+      <segment state="translated">
+        <source>Profil teilen</source>
+        <target>Share profile</target>
+      </segment>
+    </unit>
+    <unit id="settings.publicProfile.share.title">
+      <segment state="translated">
+        <source>Mein Pushup Tracker Profil</source>
+        <target>My Pushup Tracker profile</target>
+      </segment>
+    </unit>
+    <unit id="settings.publicProfile.share.text">
+      <segment state="translated">
+        <source>Schau dir mein Pushup-Profil an:</source>
+        <target>Check out my push-up profile:</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

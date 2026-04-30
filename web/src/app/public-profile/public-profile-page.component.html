@@ -1,0 +1,111 @@
+<main class="container" data-testid="public-profile-page">
+  @switch (state().kind) {
+    @case ('loading') {
+      <div class="status-card" role="status" aria-live="polite">
+        <mat-spinner diameter="36"></mat-spinner>
+      </div>
+    }
+    @case ('not-found') {
+      <mat-card class="status-card" data-testid="public-profile-not-found">
+        <mat-card-header>
+          <mat-card-title>{{ notFoundTitle }}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p>{{ notFoundBody }}</p>
+        </mat-card-content>
+        <mat-card-actions>
+          <a mat-stroked-button routerLink="/">{{ homeLabel }}</a>
+        </mat-card-actions>
+      </mat-card>
+    }
+    @case ('error') {
+      <mat-card class="status-card" data-testid="public-profile-error">
+        <mat-card-header>
+          <mat-card-title>{{ errorTitle }}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p>{{ errorBody }}</p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-stroked-button type="button" (click)="reload()">
+            {{ retryLabel }}
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    }
+    @case ('ready') {
+      @if (profile(); as p) {
+        <header class="profile-header">
+          <div class="avatar" aria-hidden="true">
+            <mat-icon>fitness_center</mat-icon>
+          </div>
+          <div class="header-text">
+            <h1 data-testid="public-profile-name">{{ p.displayName }}</h1>
+            <p class="subtitle">Pushup Tracker</p>
+          </div>
+          <button
+            mat-stroked-button
+            type="button"
+            class="share-btn"
+            data-testid="public-profile-share"
+            [attr.aria-label]="shareAriaLabel"
+            (click)="shareProfile()"
+          >
+            <mat-icon>share</mat-icon>
+            <span>{{ shareLabel }}</span>
+          </button>
+        </header>
+
+        <section class="stats-grid" [attr.aria-label]="statsLabel">
+          <mat-card class="stat-card">
+            <mat-card-content>
+              <small>{{ totalLabel }}</small>
+              <b data-testid="public-profile-total">{{ p.total }}</b>
+            </mat-card-content>
+          </mat-card>
+          <mat-card class="stat-card">
+            <mat-card-content>
+              <small>{{ streakLabel }}</small>
+              <b data-testid="public-profile-streak">{{ p.currentStreak }}</b>
+            </mat-card-content>
+          </mat-card>
+          <mat-card class="stat-card">
+            <mat-card-content>
+              <small>{{ daysLabel }}</small>
+              <b>{{ p.totalDays }}</b>
+            </mat-card-content>
+          </mat-card>
+          <mat-card class="stat-card">
+            <mat-card-content>
+              <small>{{ entriesLabel }}</small>
+              <b>{{ p.totalEntries }}</b>
+            </mat-card-content>
+          </mat-card>
+          @if (p.bestSingleEntry !== null) {
+            <mat-card class="stat-card">
+              <mat-card-content>
+                <small>{{ bestSetLabel }}</small>
+                <b>{{ p.bestSingleEntry }}</b>
+              </mat-card-content>
+            </mat-card>
+          }
+          @if (p.bestDayTotal !== null) {
+            <mat-card class="stat-card">
+              <mat-card-content>
+                <small>{{ bestDayLabel }}</small>
+                <b>{{ p.bestDayTotal }}</b>
+              </mat-card-content>
+            </mat-card>
+          }
+        </section>
+
+        <section class="cta">
+          <a mat-flat-button color="primary" routerLink="/">
+            <mat-icon>fitness_center</mat-icon>
+            <span>{{ ctaLabel }}</span>
+          </a>
+        </section>
+      }
+    }
+  }
+</main>

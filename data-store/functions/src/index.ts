@@ -26,7 +26,13 @@ import {
   FALLBACK_QUOTES_EN,
   QUOTE_CACHE_HOURS,
 } from './motivation';
-import { UserProfile } from './profile';
+import {
+  buildPublicProfile,
+  isValidUid,
+  type UserConfigForPublicProfile,
+  type UserStatsForPublicProfile,
+  UserProfile,
+} from './profile';
 import type { ReminderConfig } from './push';
 import {
   buildNotificationPayload,
@@ -620,6 +626,46 @@ export const refreshLeaderboardsOnPushupWrite = onDocumentWritten(
   },
   async () => {
     await rebuildLeaderboardsCore();
+  }
+);
+
+// ─── getPublicProfile (anonymous-callable, opt-in only) ──────────────────────
+// Returns a sanitized projection of `userConfigs/{uid}` + `userStats/{uid}`
+// for users who explicitly set `ui.publicProfile = true`. Anyone else returns
+// `not-found` so existence of a private user can't be probed by walking UIDs.
+//
+// This callable runs UNAUTHENTICATED on purpose — it backs the `/u/:uid`
+// public route and the dynamic OG image endpoint. Do NOT add side effects
+// here; only sanctioned read-only projection.
+
+export const getPublicProfile = onCall(
+  { region: 'europe-west3', invoker: 'public' },
+  async (request) => {
+    const uid = String(request.data?.uid ?? '').trim();
+    if (!isValidUid(uid)) {
+      throw new HttpsError('invalid-argument', 'Invalid uid');
+    }
+
+    const db = admin.firestore();
+    const [cfgSnap, statsSnap] = await Promise.all([
+      db.collection('userConfigs').doc(uid).get(),
+      db.collection('userStats').doc(uid).get(),
+    ]);
+
+    const config = cfgSnap.exists
+      ? (cfgSnap.data() as UserConfigForPublicProfile)
+      : null;
+    const stats = statsSnap.exists
+      ? (statsSnap.data() as UserStatsForPublicProfile)
+      : null;
+
+    const projection = buildPublicProfile(uid, config, stats);
+    if (!projection) {
+      // Same response shape for "user does not exist" and "user is private"
+      // so an attacker can't enumerate accounts.
+      throw new HttpsError('not-found', 'Profile not available');
+    }
+    return projection;
   }
 );
 
