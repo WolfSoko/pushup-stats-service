@@ -15,6 +15,7 @@ import { makeAuthStoreMock } from '@pu-stats/testing';
 import { provideRouter, Router } from '@angular/router';
 import { QuickAddOrchestrationService } from '../../core/quick-add-orchestration.service';
 import { AppDataFacade } from '../../core/app-data.facade';
+import { ShareService } from '../../core/share.service';
 import { UserConfigStore } from '../../core/user-config.store';
 
 describe('StatsDashboardComponent', () => {
@@ -103,6 +104,9 @@ describe('StatsDashboardComponent', () => {
   const reloadAfterMutationSpy = vitest.fn();
   const appDataMock = { reloadAfterMutation: reloadAfterMutationSpy };
 
+  const shareSpy = vitest.fn().mockResolvedValue('native' as const);
+  const shareServiceMock = { share: shareSpy };
+
   const dialogOpenSpy = vitest.fn().mockReturnValue({
     afterClosed: () => of(null),
     close: vi.fn(),
@@ -157,6 +161,7 @@ describe('StatsDashboardComponent', () => {
           },
         },
         { provide: AppDataFacade, useValue: appDataMock },
+        { provide: ShareService, useValue: shareServiceMock },
       ],
     });
 
@@ -709,6 +714,73 @@ describe('StatsDashboardComponent', () => {
       button = findQuickActionsGoalButton(fixture.nativeElement);
       expect(button).not.toBeNull();
       expect(button!.textContent ?? '').toContain('58');
+    });
+  });
+
+  describe('Given the share button in the dashboard header', () => {
+    it('Then it forwards a payload with today total + url to ShareService when clicked', async () => {
+      // Given
+      await fixture.whenStable();
+      shareSpy.mockClear();
+      const button = fixture.nativeElement.querySelector(
+        '[data-testid="dashboard-share"]'
+      ) as HTMLButtonElement;
+
+      // When
+      expect(button).not.toBeNull();
+      button.click();
+      await fixture.whenStable();
+
+      // Then
+      expect(shareSpy).toHaveBeenCalledTimes(1);
+      const payload = shareSpy.mock.calls[0][0];
+      expect(payload.url).toBe('https://pushup-stats.de');
+      expect(payload.text).toContain('12');
+      expect(payload.title).toBe('Pushup Tracker');
+    });
+
+    it('Then a multi-day streak adds the streak count to the share text', async () => {
+      // Given — 3 consecutive days ending today (frozen Jan 15, 2025)
+      serviceMock.listPushups.mockReturnValueOnce(
+        of([
+          {
+            _id: 'a',
+            timestamp: '2025-01-13T12:00:00',
+            reps: 10,
+            source: 'web',
+            type: 'Standard',
+          },
+          {
+            _id: 'b',
+            timestamp: '2025-01-14T12:00:00',
+            reps: 10,
+            source: 'web',
+            type: 'Standard',
+          },
+          {
+            _id: 'c',
+            timestamp: '2025-01-15T12:00:00',
+            reps: 10,
+            source: 'web',
+            type: 'Standard',
+          },
+        ])
+      );
+      const freshFixture = TestBed.createComponent(StatsDashboardComponent);
+      await freshFixture.whenStable();
+      shareSpy.mockClear();
+      const button = freshFixture.nativeElement.querySelector(
+        '[data-testid="dashboard-share"]'
+      ) as HTMLButtonElement;
+
+      // When
+      button.click();
+      await freshFixture.whenStable();
+
+      // Then
+      const payload = shareSpy.mock.calls[0][0];
+      expect(payload.text).toContain('Streak');
+      expect(payload.text).toContain('3');
     });
   });
 

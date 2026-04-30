@@ -148,6 +148,55 @@
 
 .actions {
   margin-top: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  justify-content: center;
+}
+
+.share-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.2rem;
+  border: 2px solid rgb(255, 252, 245);
+  border-radius: 999px;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+  font-size: 1rem;
+  background: rgba(255, 255, 255, 0.12);
+  color: rgb(255, 252, 245);
+  transition:
+    transform 100ms ease,
+    background-color 120ms ease;
+
+  &:hover:not([disabled]) {
+    transform: translateY(-1px);
+    background: rgba(255, 255, 255, 0.22);
+  }
+
+  &:active:not([disabled]) {
+    transform: translateY(0);
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow:
+      0 0 0 3px rgb(255, 248, 234),
+      0 0 0 6px rgba(0, 0, 0, 0.45);
+  }
+
+  &[disabled] {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+}
+
+.share-icon {
+  font-size: 20px;
+  line-height: 1;
+  color: rgb(255, 252, 245);
 }
 
 .snap-btn {

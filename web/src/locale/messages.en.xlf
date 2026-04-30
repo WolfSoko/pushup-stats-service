@@ -5550,5 +5550,95 @@ Deine Position: # ·  Reps        </source>
         <target>push-ups</target>
       </segment>
     </unit>
+    <unit id="goalReached.share">
+      <segment state="translated">
+        <source>Teilen</source>
+        <target>Share</target>
+      </segment>
+    </unit>
+    <unit id="goalReached.shareAria">
+      <segment state="translated">
+        <source>Erfolg teilen</source>
+        <target>Share the success</target>
+      </segment>
+    </unit>
+    <unit id="goalReached.share.daily.title">
+      <segment state="translated">
+        <source>Tagesziel geknackt!</source>
+        <target>Daily goal smashed!</target>
+      </segment>
+    </unit>
+    <unit id="goalReached.share.daily.text">
+      <segment state="translated">
+        <source>Heute mein Tagesziel von <ph id="0" equiv="goal" disp="goal"/> Liegestützen geschafft! 💪 Tracke deine Stats kostenlos:</source>
+        <target>Hit my daily goal of <ph id="0" equiv="goal" disp="goal"/> push-ups today! 💪 Track your stats for free:</target>
+      </segment>
+    </unit>
+    <unit id="goalReached.share.weekly.title">
+      <segment state="translated">
+        <source>Wochenziel geknackt!</source>
+        <target>Weekly goal smashed!</target>
+      </segment>
+    </unit>
+    <unit id="goalReached.share.weekly.text">
+      <segment state="translated">
+        <source>Wochenziel von <ph id="0" equiv="goal" disp="goal"/> Liegestützen geschafft – <ph id="1" equiv="total" disp="total"/> insgesamt! 💪 Tracke deine Stats kostenlos:</source>
+        <target>Hit my weekly goal of <ph id="0" equiv="goal" disp="goal"/> push-ups – <ph id="1" equiv="total" disp="total"/> total! 💪 Track your stats for free:</target>
+      </segment>
+    </unit>
+    <unit id="goalReached.share.monthly.title">
+      <segment state="translated">
+        <source>Monatsziel geknackt!</source>
+        <target>Monthly goal smashed!</target>
+      </segment>
+    </unit>
+    <unit id="goalReached.share.monthly.text">
+      <segment state="translated">
+        <source>Monatsziel von <ph id="0" equiv="goal" disp="goal"/> Liegestützen geschafft – <ph id="1" equiv="total" disp="total"/> insgesamt! 💪 Tracke deine Stats kostenlos:</source>
+        <target>Hit my monthly goal of <ph id="0" equiv="goal" disp="goal"/> push-ups – <ph id="1" equiv="total" disp="total"/> total! 💪 Track your stats for free:</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.share">
+      <segment state="translated">
+        <source>Teilen</source>
+        <target>Share</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.share.aria">
+      <segment state="translated">
+        <source>Tagesleistung teilen</source>
+        <target>Share today's progress</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.share.title">
+      <segment state="translated">
+        <source>Pushup Tracker</source>
+        <target>Pushup Tracker</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.share.text.simple">
+      <segment state="translated">
+        <source>Heute schon <ph id="0" equiv="total" disp="total"/> Liegestütze geschafft! 💪 Tracke deine Stats kostenlos:</source>
+        <target>Already <ph id="0" equiv="total" disp="total"/> push-ups today! 💪 Track your stats for free:</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.share.text.streak">
+      <segment state="translated">
+        <source>Heute schon <ph id="0" equiv="total" disp="total"/> Liegestütze geschafft – Streak: <ph id="1" equiv="streak" disp="streak"/> Tage 🔥 Tracke deine Stats kostenlos:</source>
+        <target>Already <ph id="0" equiv="total" disp="total"/> push-ups today – streak: <ph id="1" equiv="streak" disp="streak"/> days 🔥 Track your stats for free:</target>
+      </segment>
+    </unit>
+    <unit id="share.success.clipboard">
+      <segment state="translated">
+        <source>In die Zwischenablage kopiert. Jetzt einfügen und teilen!</source>
+        <target>Copied to clipboard. Paste it anywhere to share!</target>
+      </segment>
+    </unit>
+    <unit id="share.error.unavailable">
+      <segment state="translated">
+        <source>Teilen ist auf diesem Gerät nicht möglich.</source>
+        <target>Sharing is not available on this device.</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

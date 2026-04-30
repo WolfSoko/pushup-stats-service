@@ -29,6 +29,17 @@
   <div class="actions">
     <button
       type="button"
+      class="share-btn"
+      data-testid="goal-reached-share"
+      [disabled]="snapping()"
+      [attr.aria-label]="shareAriaLabel"
+      (click)="onShare()"
+    >
+      <span aria-hidden="true" class="material-icons share-icon">share</span>
+      <span>{{ shareLabel }}</span>
+    </button>
+    <button
+      type="button"
       class="snap-btn"
       data-testid="goal-reached-snap"
       [disabled]="snapping()"
