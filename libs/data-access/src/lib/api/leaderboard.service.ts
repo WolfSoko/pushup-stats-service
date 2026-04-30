@@ -44,10 +44,13 @@ export class LeaderboardService {
 
   /**
    * Real-time stream of the precomputed `leaderboards/current` document.
-   * Emits `null` while the doc does not exist or Firestore is unavailable.
+   *
    * Used by `LeaderboardStore` to reload aggregates whenever the Cloud
    * Function rewrites the snapshot, giving the leaderboard live updates
-   * without a manual refresh.
+   * without a manual refresh. The store only cares about *change*
+   * notifications, not payload shape — so we forward whatever `docData`
+   * emits (the doc data, or `undefined` when the doc does not exist), and
+   * fall back to `EMPTY` (no emissions) when Firestore is unavailable.
    */
   observeSnapshot(): Observable<unknown> {
     if (!this.firestore) return EMPTY;

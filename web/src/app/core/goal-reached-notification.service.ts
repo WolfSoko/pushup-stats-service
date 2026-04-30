@@ -214,24 +214,41 @@ export class GoalReachedNotificationService {
 }
 
 /**
- * Convert a Firestore-stored ISO timestamp (`YYYY-MM-DDTHH:mm:ss.sssZ`) to
- * its Berlin-localised date key. Without the timezone hop, entries created
- * between 00:00–02:00 Berlin local during summer time get classified under
- * the previous UTC day, which would silently mis-count daily/weekly totals.
+ * Convert a Firestore-stored ISO timestamp to its Berlin-localised date key.
+ *
+ * Two timestamp shapes appear in production:
+ *   - Naive (`YYYY-MM-DDTHH:mm[:ss]`) — written by older quick-add entries
+ *     that the backend treats as Berlin local time. We must NOT round-trip
+ *     these through `new Date()`, because that parses them in the device's
+ *     local timezone and shifts the day on devices not in `Europe/Berlin`.
+ *     The Cloud Function's bucketing logic also uses the literal date prefix.
+ *   - TZ-aware (`...Z` or `...±HH:mm`) — written by `createPushup` via
+ *     `new Date().toISOString()`. We convert these via the Berlin formatter
+ *     so that an entry made at 00:30 Berlin (== 22:30 UTC the prior day)
+ *     counts toward today and not yesterday.
  */
 function entryBerlinDate(timestamp: string): string {
-  return toBerlinIsoDate(new Date(timestamp));
+  if (HAS_TIMEZONE.test(timestamp)) {
+    return toBerlinIsoDate(new Date(timestamp));
+  }
+  return timestamp.slice(0, 10);
 }
 
+const HAS_TIMEZONE = /(Z|[+-]\d{2}:?\d{2})$/;
+
 function pruneStalePeriodFlags(todayBerlin: string): void {
-  const ls = globalThis.localStorage;
-  if (!ls) return;
-  const validKeys = new Set([
-    `${STORAGE_PREFIX}daily_${todayBerlin}`,
-    `${STORAGE_PREFIX}weekly_${isoWeekKey(todayBerlin)}`,
-    `${STORAGE_PREFIX}monthly_${todayBerlin.slice(0, 7)}`,
-  ]);
+  // Touching `globalThis.localStorage` itself can throw `SecurityError` in
+  // sandboxed/opaque origins or with storage disabled (Safari private mode,
+  // some embedded webviews). Wrap the whole access — not just the read loop —
+  // so cleanup stays best-effort and never breaks app startup.
   try {
+    const ls = globalThis.localStorage;
+    if (!ls) return;
+    const validKeys = new Set([
+      `${STORAGE_PREFIX}daily_${todayBerlin}`,
+      `${STORAGE_PREFIX}weekly_${isoWeekKey(todayBerlin)}`,
+      `${STORAGE_PREFIX}monthly_${todayBerlin.slice(0, 7)}`,
+    ]);
     const stale: string[] = [];
     for (let i = 0; i < ls.length; i++) {
       const key = ls.key(i);

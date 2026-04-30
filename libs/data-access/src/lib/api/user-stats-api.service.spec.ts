@@ -1,7 +1,10 @@
 jest.mock('@angular/fire/firestore', () => ({
   Firestore: jest.fn(),
   doc: jest.fn(() => ({})),
-  docData: jest.fn(() => of(undefined)),
+  // Implementation is set per-test below; do NOT reference `of` here — the
+  // factory runs during `require()` resolution and rxjs may not yet be
+  // initialised under Jest's CJS transform.
+  docData: jest.fn(),
 }));
 
 import { TestBed } from '@angular/core/testing';
@@ -33,6 +36,7 @@ describe('UserStatsApiService', () => {
   let service: UserStatsApiService;
 
   beforeEach(() => {
+    jest.mocked(docData).mockReturnValue(of(undefined) as never);
     TestBed.configureTestingModule({
       providers: [{ provide: Firestore, useValue: {} }],
     });

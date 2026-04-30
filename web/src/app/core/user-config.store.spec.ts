@@ -1,10 +1,10 @@
 import { TestBed } from '@angular/core/testing';
 import { signal } from '@angular/core';
-import { of } from 'rxjs';
+import { BehaviorSubject, of } from 'rxjs';
 import { UserConfigStore } from './user-config.store';
 import { UserConfigApiService } from '@pu-stats/data-access';
 import { UserContextService } from '@pu-auth/auth';
-import { UserConfigUpdate } from '@pu-stats/models';
+import { UserConfig, UserConfigUpdate } from '@pu-stats/models';
 
 describe('UserConfigStore', () => {
   const userId = signal<string>('u1');
@@ -78,5 +78,42 @@ describe('UserConfigStore', () => {
     expect(store.dailyGoal()).toBe(0);
 
     userId.set('u1'); // restore for other tests
+  });
+
+  it('Given the API observable emits a new config, When no manual reload is called, Then the store reflects the update (live Firestore listener)', async () => {
+    // Given — the API exposes a long-lived stream (as `docData()` does in
+    // production). The store consumes it via `rxResource` and must propagate
+    // every emission to the dailyGoal signal without an explicit `.reload()`.
+    const stream = new BehaviorSubject<UserConfig>({
+      userId: 'u1',
+      dailyGoal: 100,
+    });
+    TestBed.resetTestingModule();
+    TestBed.configureTestingModule({
+      providers: [
+        {
+          provide: UserConfigApiService,
+          useValue: {
+            getConfig: vitest.fn(() => stream.asObservable()),
+            updateConfig: vitest.fn(),
+          },
+        },
+        {
+          provide: UserContextService,
+          useValue: { userIdSafe: () => 'u1' },
+        },
+      ],
+    });
+    const store = TestBed.inject(UserConfigStore);
+    await flush();
+    expect(store.dailyGoal()).toBe(100);
+
+    // When — a fresh emission arrives on the same stream (e.g. another tab
+    // wrote to userConfigs/u1, or the Cloud Function rewrote it).
+    stream.next({ userId: 'u1', dailyGoal: 222 });
+    await flush();
+
+    // Then — the signal updates without `store.reload()` ever being called.
+    expect(store.dailyGoal()).toBe(222);
   });
 });
