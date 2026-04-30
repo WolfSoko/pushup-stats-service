@@ -297,7 +297,9 @@ export class TrainingPlanDetailComponent {
     const p = this.plan();
     if (!p) return [];
     const currentDay = this.isThisPlanActive() ? this.store.currentDayIndex() : null;
-    const completed = new Set(this.store.activePlan()?.completedDays ?? []);
+    const completed = this.isThisPlanActive()
+      ? new Set(this.store.activePlan()?.completedDays ?? [])
+      : new Set<number>();
 
     const grouped = new Map<number, DayRow[]>();
     for (const day of p.days) {
