@@ -281,26 +281,24 @@ describe('TrainingPlanStore', () => {
 
   describe('logPlanDay', () => {
     it('creates a pushup entry with the plan sets and marks the day done', async () => {
-      const today = toBerlinIsoDate(new Date());
+      // Day 2 is a main day with sets [20, 20, 20] and target 60.
+      // We seed startDate one day in the past so day 2 == today
+      // (logPlanDay rejects future days).
+      const yesterdayIso = toBerlinIsoDate(
+        new Date(Date.now() - 86_400_000)
+      );
       const { store, mocks } = setup({
         userId: 'u1',
         planId: PLAN.id,
-        startDate: today,
+        startDate: yesterdayIso,
         status: 'active',
         completedDays: [],
       });
       await flush();
 
-      // Day 2 is a main day with sets [20, 20, 20] and target 60.
       const day2 = PLAN.days[1];
       expect(day2.kind).toBe('main');
       expect(day2.targetReps).toBeGreaterThan(0);
-
-      // Day 2 = startDate + 1
-      const yesterday = toBerlinIsoDate(new Date());
-      void yesterday;
-      // (we just need the create call; date computation is verified
-      // implicitly by the timestamp passed to createPushup)
 
       await store.logPlanDay(2);
       await flush();

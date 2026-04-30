@@ -37,6 +37,18 @@ import {
 import { firstValueFrom, of } from 'rxjs';
 
 /**
+ * Result of `logPlanDay` / `logTodayPlanDay`. Lets callers tailor
+ * UI feedback (snackbar message) to what actually happened: a
+ * fresh write, an idempotent skip, or a rejected request.
+ */
+export type LogPlanDayResult =
+  | 'logged' // pushup entry created + day marked done
+  | 'already-logged' // day was already covered by existing reps; only marked
+  | 'noop' // pre-conditions failed (no plan, rest day, future day, …)
+  | 'in-flight' // a concurrent call for the same day is still running
+  | 'not-ready'; // LiveDataStore hasn't finished its first sync yet
+
+/**
  * Active-plan store. Keeps the live `UserTrainingPlan` doc in sync
  * via a Firestore real-time listener and exposes derived state for
  * the dashboard goal pill, the plan detail page and the training
@@ -63,6 +75,14 @@ export const TrainingPlanStore = signalStore(
      * within 60 s).
      */
     _dayTick: signal(0),
+    /**
+     * Day indexes with an in-flight write. Both `logPlanDay` and
+     * the auto-mark effect read pre-write state from
+     * `LiveDataStore.entries()`/`activePlan()`, so back-to-back
+     * invocations could otherwise race and produce duplicate
+     * pushup entries or `updatePlan` writes for the same day.
+     */
+    _writingDays: signal<ReadonlySet<number>>(new Set()),
   })),
   withProps((store) => ({
     activeResource: rxResource({
@@ -195,6 +215,24 @@ export const TrainingPlanStore = signalStore(
         .filter((e) => e.timestamp.slice(0, 10) === dateIso)
         .reduce((sum, e) => sum + e.reps, 0);
     },
+
+    /** Acquire an in-flight lock for a day. Returns false if already held. */
+    _acquireWriteLock(dayIndex: number): boolean {
+      const set = store._writingDays();
+      if (set.has(dayIndex)) return false;
+      const next = new Set(set);
+      next.add(dayIndex);
+      store._writingDays.set(next);
+      return true;
+    },
+
+    _releaseWriteLock(dayIndex: number): void {
+      const set = store._writingDays();
+      if (!set.has(dayIndex)) return;
+      const next = new Set(set);
+      next.delete(dayIndex);
+      store._writingDays.set(next);
+    },
   })),
   withMethods((store) => ({
     /** All curated plans (re-exposed for component templates). */
@@ -245,10 +283,10 @@ export const TrainingPlanStore = signalStore(
      * Log today's plan-prescribed reps and mark today as done. Thin
      * wrapper around `logPlanDay(currentDayIndex)`.
      */
-    async logTodayPlanDay(): Promise<void> {
+    async logTodayPlanDay(): Promise<LogPlanDayResult> {
       const idx = store.currentDayIndex();
-      if (idx === null) return;
-      await this.logPlanDay(idx);
+      if (idx === null) return 'noop';
+      return this.logPlanDay(idx);
     },
 
     /**
@@ -276,53 +314,80 @@ export const TrainingPlanStore = signalStore(
 
     /**
      * Log the plan-prescribed reps for a day AND mark the day as
-     * done. Skips the pushup write if the user has already logged
-     * enough reps for that calendar day (so the auto-mark effect
-     * and a manual button click both stay idempotent).
+     * done. Idempotent: skips the pushup write if the calendar day
+     * is already covered by existing entries.
      *
      * The pushup entry is timestamped at noon (12:00) on the plan
      * day's calendar date so a backfill for an earlier day still
      * lands in the correct daily bucket.
+     *
+     * Guards (in order):
+     * - Plan must be active (status === 'active') and resolvable.
+     * - Day must be a non-rest, non-zero-target day in the plan.
+     * - Day must not be in the future relative to today.
+     * - `LiveDataStore` must have synced at least once, otherwise
+     *   `_repsLoggedOn` returns 0 and we'd duplicate-write existing
+     *   entries on day-2 reload.
+     * - No concurrent call for the same day index (in-flight lock).
      */
-    async logPlanDay(dayIndex: number): Promise<void> {
+    async logPlanDay(dayIndex: number): Promise<LogPlanDayResult> {
       const a = store.activePlan();
       const c = store.activeCatalog();
-      if (!a || !c) return;
+      if (!a || !c || a.status !== 'active') return 'noop';
       const day = planDayByIndex(c, dayIndex);
-      if (!day || day.kind === 'rest' || day.targetReps <= 0) return;
+      if (!day || day.kind === 'rest' || day.targetReps <= 0) return 'noop';
 
-      const dateIso = store._planDayDate(dayIndex);
-      const alreadyLogged = store._repsLoggedOn(dateIso);
+      const currentIdx = store.currentDayIndex();
+      if (currentIdx === null || dayIndex > currentIdx) return 'noop';
 
-      if (alreadyLogged < day.targetReps) {
-        const remaining = day.targetReps - alreadyLogged;
-        // If the user has logged nothing yet, persist the full
-        // prescribed sets so the breakdown is preserved. If they
-        // logged some reps already, just top up the remainder as a
-        // single set — we don't try to second-guess their split.
-        const sets = alreadyLogged === 0
-          ? day.sets ?? [day.targetReps]
-          : [remaining];
-        const reps = alreadyLogged === 0 ? day.targetReps : remaining;
-        await firstValueFrom(
-          store._statsApi.createPushup({
-            timestamp: appendLocalOffset(`${dateIso}T12:00`),
-            reps,
-            sets,
-            source: 'plan',
-            type: 'Standard',
-          })
-        );
+      // `_live.entries()` is empty until the Firestore listener has
+      // emitted at least once. Don't make a write decision off
+      // pre-sync data — it would top-up a day that's already
+      // covered as soon as the listener catches up.
+      if (store._isBrowser && !store._live.connected()) return 'not-ready';
+
+      if (!store._acquireWriteLock(dayIndex)) return 'in-flight';
+
+      try {
+        const dateIso = store._planDayDate(dayIndex);
+        const alreadyLogged = store._repsLoggedOn(dateIso);
+        let result: LogPlanDayResult;
+
+        if (alreadyLogged < day.targetReps) {
+          const remaining = day.targetReps - alreadyLogged;
+          // If the user has logged nothing yet, persist the full
+          // prescribed sets so the breakdown is preserved. If they
+          // logged some reps already, just top up the remainder as
+          // a single set — we don't try to second-guess their split.
+          const sets =
+            alreadyLogged === 0 ? day.sets ?? [day.targetReps] : [remaining];
+          const reps = alreadyLogged === 0 ? day.targetReps : remaining;
+          await firstValueFrom(
+            store._statsApi.createPushup({
+              timestamp: appendLocalOffset(`${dateIso}T12:00`),
+              reps,
+              sets,
+              source: 'plan',
+              type: 'Standard',
+            })
+          );
+          result = 'logged';
+        } else {
+          result = 'already-logged';
+        }
+
+        if (!a.completedDays.includes(dayIndex)) {
+          const next = [...a.completedDays, dayIndex].sort((x, y) => x - y);
+          const userId = store._user.userIdSafe();
+          await firstValueFrom(
+            store._api.updatePlan(userId, { completedDays: next })
+          );
+        }
+        store.activeResource.reload();
+        return result;
+      } finally {
+        store._releaseWriteLock(dayIndex);
       }
-
-      if (!a.completedDays.includes(dayIndex)) {
-        const next = [...a.completedDays, dayIndex].sort((x, y) => x - y);
-        const userId = store._user.userIdSafe();
-        await firstValueFrom(
-          store._api.updatePlan(userId, { completedDays: next })
-        );
-      }
-      store.activeResource.reload();
     },
 
     /** Undo a day completion. */
@@ -375,8 +440,15 @@ export const TrainingPlanStore = signalStore(
         const idx = store.currentDayIndex();
         const day = store.todayDay();
         if (!a || !day || idx === null) return;
+        // Skip on abandoned/completed plans — the doc still exists,
+        // but writes against it are noise (plus they'd drift the
+        // status-based banner state in the UI).
+        if (a.status !== 'active') return;
         if (day.kind === 'rest' || day.targetReps <= 0) return;
         if (a.completedDays.includes(idx)) return;
+        // The same in-flight lock guards manual logPlanDay calls,
+        // so a fast Quick-Add + auto-mark can't double-write.
+        if (store._writingDays().has(idx)) return;
         // `_live.entries()` is the same source the dashboard uses;
         // it streams from Firestore in real time so manual logs
         // propagate here without polling.
@@ -385,14 +457,14 @@ export const TrainingPlanStore = signalStore(
         store._dayTick();
         const todayReps = store._repsLoggedOn(todayIso);
         if (todayReps >= day.targetReps) {
-          // Fire-and-forget: the resulting `activePlan` reload will
-          // re-trigger this effect, which then short-circuits via
-          // the `completedDays.includes(idx)` guard above.
+          if (!store._acquireWriteLock(idx)) return;
           const next = [...a.completedDays, idx].sort((x, y) => x - y);
           const userId = store._user.userIdSafe();
           firstValueFrom(
             store._api.updatePlan(userId, { completedDays: next })
-          ).then(() => store.activeResource.reload());
+          )
+            .then(() => store.activeResource.reload())
+            .finally(() => store._releaseWriteLock(idx));
         }
       });
     },

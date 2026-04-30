@@ -18,7 +18,7 @@ import {
   localizePlan,
   TrainingPlanDay,
 } from '@pu-stats/models';
-import { TrainingPlanStore } from './training-plan.store';
+import { LogPlanDayResult, TrainingPlanStore } from './training-plan.store';
 
 interface DayRow {
   day: TrainingPlanDay;
@@ -200,15 +200,17 @@ interface DayRow {
                           <mat-icon>check_circle</mat-icon>
                         </button>
                       } @else {
-                        <button
-                          mat-icon-button
-                          color="primary"
-                          (click)="logPlanDay(row.day.dayIndex)"
-                          aria-label="Plan-Sätze eintragen und als erledigt markieren"
-                          i18n-aria-label="@@trainingPlans.logAria"
-                        >
-                          <mat-icon>play_circle</mat-icon>
-                        </button>
+                        @if (row.day.targetReps > 0) {
+                          <button
+                            mat-icon-button
+                            color="primary"
+                            (click)="logPlanDay(row.day.dayIndex)"
+                            aria-label="Plan-Sätze eintragen und als erledigt markieren"
+                            i18n-aria-label="@@trainingPlans.logAria"
+                          >
+                            <mat-icon>play_circle</mat-icon>
+                          </button>
+                        }
                         <button
                           mat-icon-button
                           (click)="mark(row.day.dayIndex)"
@@ -421,11 +423,24 @@ export class TrainingPlanDetailComponent {
   }
 
   async logPlanDay(dayIndex: number): Promise<void> {
-    await this.store.logPlanDay(dayIndex);
-    this.snackbar.open(
-      $localize`:@@trainingPlans.logged:Plan-Sätze wurden eingetragen.`,
-      undefined,
-      { duration: 3000 }
-    );
+    const result = await this.store.logPlanDay(dayIndex);
+    const message = this.messageForLogResult(result);
+    if (message) {
+      this.snackbar.open(message, undefined, { duration: 3000 });
+    }
+  }
+
+  private messageForLogResult(result: LogPlanDayResult): string | null {
+    switch (result) {
+      case 'logged':
+        return $localize`:@@trainingPlans.logged:Plan-Sätze wurden eingetragen.`;
+      case 'already-logged':
+        return $localize`:@@trainingPlans.alreadyLogged:Tag war schon eingetragen — als erledigt markiert.`;
+      case 'not-ready':
+        return $localize`:@@trainingPlans.notReady:Daten werden noch geladen, bitte gleich noch einmal versuchen.`;
+      case 'in-flight':
+      case 'noop':
+        return null;
+    }
   }
 }
