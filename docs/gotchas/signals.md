@@ -27,6 +27,54 @@ Any `toSignal()` wrapping an observable that emits objects which may be mutated 
 - `{ equal: () => false }` plus downstream dedup, OR
 - A `.pipe(map(x => ({ ...x })))` to break reference equality
 
+## Clock-derived computeds need a reactive dependency
+
+`computed(() => toBerlinIsoDate(new Date()))` looks fine but is a **stale-data trap**: the computed has no signal dependency, so Angular memoises the first result for the entire lifetime of the injector. In a long-running PWA session that crosses midnight, `today()` keeps returning yesterday's date — even though `new Date()` would give the right answer if it were called fresh — and any flag/bucket/key derived from it stays anchored to day 1.
+
+`GoalReachedNotificationService` hit this exact bug: the daily celebration suppressed itself on day 2 because both the dialog gating key and the entry filter pulled from a `todayBerlin` that never recomputed.
+
+Fix: tie clock-derived computeds to a signal that _does_ change when the user could possibly observe a different "now" — typically the live data signal that triggers whatever consumes the date:
+
+```ts
+private readonly todayBerlin = computed(() => {
+  this.entries(); // tracking dependency: re-evaluate `new Date()` on any data change
+  return toBerlinIsoDate(new Date());
+});
+```
+
+Alternatives, depending on the use case:
+
+- A wall-clock `setInterval` that bumps a `tick` signal at midnight.
+- Convert the function from `computed` to a plain method so each call re-reads `Date.now()`.
+
+Don't rely on the natural recomputation of consumers — if `todayBerlin` is read from another `computed`, that consumer only re-runs when _its_ dependencies change. The clock-derived signal itself must declare a reactive dep.
+
+## `localStorage` getter can throw — wrap the access, not just the calls
+
+`globalThis.localStorage` itself is a getter. In Safari private mode, sandboxed iframes, embedded webviews, or any context where storage is disabled, _touching_ it throws `SecurityError` synchronously — before any `getItem` / `setItem` call. A guard like:
+
+```ts
+const ls = globalThis.localStorage; // ← can throw
+if (!ls) return;
+try {
+  ls.removeItem(key);
+} catch {}
+```
+
+still aborts module / service construction. Wrap the **entire** access, including the getter read and any derived data, inside the try block:
+
+```ts
+try {
+  const ls = globalThis.localStorage;
+  if (!ls) return;
+  // ...derive keys, iterate, mutate...
+} catch {
+  // Storage unavailable / SecurityError — best-effort.
+}
+```
+
+The `readFlag`/`writeFlag` helpers in `goal-reached-notification.service.ts` follow this pattern. Apply it anywhere a `providedIn: 'root'` service touches `localStorage`/`sessionStorage` during construction — a single uncaught `SecurityError` there breaks the whole app, not just the feature.
+
 ## Display-defaulted signals vs "is this configured?"
 
 Several signals in the app return defaulted values for display convenience:
