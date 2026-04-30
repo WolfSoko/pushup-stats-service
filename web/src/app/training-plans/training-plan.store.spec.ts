@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { PLATFORM_ID, signal } from '@angular/core';
-import { BehaviorSubject, of } from 'rxjs';
+import { BehaviorSubject, from, map, of } from 'rxjs';
 import { UserContextService } from '@pu-auth/auth';
 import {
   LiveDataStore,
@@ -25,6 +25,8 @@ interface Mocks {
     getActivePlan: ReturnType<typeof vitest.fn>;
     setPlan: ReturnType<typeof vitest.fn>;
     updatePlan: ReturnType<typeof vitest.fn>;
+    addCompletedDay: ReturnType<typeof vitest.fn>;
+    removeCompletedDay: ReturnType<typeof vitest.fn>;
   };
   statsApiMock: {
     createPushup: ReturnType<typeof vitest.fn>;
@@ -70,6 +72,30 @@ describe('TrainingPlanStore', () => {
             return new BehaviorSubject(mocks.current).asObservable();
           }
         ),
+        addCompletedDay: vitest.fn((_uid: string, dayIndex: number) => {
+          const cur = mocks.current as UserTrainingPlan;
+          if (!cur.completedDays.includes(dayIndex)) {
+            mocks.current = {
+              ...cur,
+              completedDays: [...cur.completedDays, dayIndex].sort(
+                (x, y) => x - y
+              ),
+            };
+            stream.next(mocks.current);
+          }
+          return of(void 0);
+        }),
+        removeCompletedDay: vitest.fn((_uid: string, dayIndex: number) => {
+          const cur = mocks.current as UserTrainingPlan;
+          if (cur.completedDays.includes(dayIndex)) {
+            mocks.current = {
+              ...cur,
+              completedDays: cur.completedDays.filter((d) => d !== dayIndex),
+            };
+            stream.next(mocks.current);
+          }
+          return of(void 0);
+        }),
       },
       statsApiMock: {
         createPushup: vitest.fn((payload: PushupCreate) =>
@@ -155,10 +181,7 @@ describe('TrainingPlanStore', () => {
     await store.markTodayDone();
     await flush();
 
-    expect(mocks.apiMock.updatePlan).toHaveBeenCalledWith(
-      'u1',
-      expect.objectContaining({ completedDays: [1] })
-    );
+    expect(mocks.apiMock.addCompletedDay).toHaveBeenCalledWith('u1', 1);
     expect(store.todayDone()).toBe(true);
   });
 
@@ -273,7 +296,7 @@ describe('TrainingPlanStore', () => {
     await store.markTodayDone();
     await flush();
 
-    expect(mocks.apiMock.updatePlan).not.toHaveBeenCalled();
+    expect(mocks.apiMock.addCompletedDay).not.toHaveBeenCalled();
     expect(store.activePlan()?.completedDays).toEqual([]);
     // Reference unused param to keep tsc happy.
     void todayIso;
@@ -309,10 +332,7 @@ describe('TrainingPlanStore', () => {
       expect(call.sets).toEqual(day2.sets);
       expect(call.source).toBe('plan');
 
-      expect(mocks.apiMock.updatePlan).toHaveBeenCalledWith(
-        'u1',
-        expect.objectContaining({ completedDays: [2] })
-      );
+      expect(mocks.apiMock.addCompletedDay).toHaveBeenCalledWith('u1', 2);
     });
 
     it('skips the pushup write when the day is already covered by existing entries', async () => {
@@ -348,10 +368,7 @@ describe('TrainingPlanStore', () => {
       // Pushup write skipped — user already had enough reps.
       expect(mocks.statsApiMock.createPushup).not.toHaveBeenCalled();
       // Plan day still gets marked done.
-      expect(mocks.apiMock.updatePlan).toHaveBeenCalledWith(
-        'u1',
-        expect.objectContaining({ completedDays: [2] })
-      );
+      expect(mocks.apiMock.addCompletedDay).toHaveBeenCalledWith('u1', 2);
     });
 
     it('tops up only the remainder when partially logged', async () => {
@@ -406,7 +423,136 @@ describe('TrainingPlanStore', () => {
       await flush();
 
       expect(mocks.statsApiMock.createPushup).not.toHaveBeenCalled();
-      expect(mocks.apiMock.updatePlan).not.toHaveBeenCalled();
+      expect(mocks.apiMock.addCompletedDay).not.toHaveBeenCalled();
+    });
+
+    it("returns 'not-ready' when LiveDataStore hasn't connected yet (no writes)", async () => {
+      // Browser PLATFORM_ID is required for the connected check. We
+      // build the store without the SSR shortcut and then assert no
+      // writes happen even though target would otherwise be reached.
+      const today = toBerlinIsoDate(new Date());
+      const target = PLAN.days[1].targetReps;
+      const startDate = toBerlinIsoDate(new Date(Date.now() - 86_400_000));
+      const stream = new BehaviorSubject<UserTrainingPlan | null>({
+        userId: 'u1',
+        planId: PLAN.id,
+        startDate,
+        status: 'active',
+        completedDays: [],
+      });
+      const apiMock = {
+        getActivePlan: vitest.fn(() => stream.asObservable()),
+        setPlan: vitest.fn(),
+        updatePlan: vitest.fn(),
+        addCompletedDay: vitest.fn(() => of(void 0)),
+        removeCompletedDay: vitest.fn(() => of(void 0)),
+      };
+      const statsApiMock = { createPushup: vitest.fn() };
+      // Pre-existing entry that DOES cover the target — but
+      // `connected: false` means we shouldn't trust it.
+      const liveEntries = signal<PushupRecord[]>([
+        {
+          _id: 'existing',
+          timestamp: `${today}T08:00:00.000+02:00`,
+          reps: target,
+          source: 'web',
+        },
+      ]);
+      TestBed.resetTestingModule();
+      TestBed.configureTestingModule({
+        providers: [
+          { provide: PLATFORM_ID, useValue: 'browser' },
+          { provide: UserTrainingPlanApiService, useValue: apiMock },
+          { provide: StatsApiService, useValue: statsApiMock },
+          {
+            provide: LiveDataStore,
+            useValue: {
+              entries: liveEntries,
+              connected: signal(false),
+              updateTick: signal(0),
+            },
+          },
+          { provide: UserContextService, useValue: { userIdSafe: () => 'u1' } },
+        ],
+      });
+      const store = TestBed.inject(TrainingPlanStore);
+      await flush();
+
+      const result = await store.logPlanDay(2);
+      await flush();
+
+      expect(result).toBe('not-ready');
+      expect(statsApiMock.createPushup).not.toHaveBeenCalled();
+      expect(apiMock.addCompletedDay).not.toHaveBeenCalled();
+      TestBed.resetTestingModule();
+    });
+
+    it("returns 'in-flight' on a concurrent call for the same day (no duplicate writes)", async () => {
+      // Resolver we control to keep the first call hanging until
+      // the second one has had a chance to short-circuit.
+      let releaseFirst: (value: void) => void = () => undefined;
+      const firstWrite = new Promise<void>((res) => (releaseFirst = res));
+      const today = toBerlinIsoDate(new Date());
+      const startDate = toBerlinIsoDate(new Date(Date.now() - 86_400_000));
+      const stream = new BehaviorSubject<UserTrainingPlan | null>({
+        userId: 'u1',
+        planId: PLAN.id,
+        startDate,
+        status: 'active',
+        completedDays: [],
+      });
+      const apiMock = {
+        getActivePlan: vitest.fn(() => stream.asObservable()),
+        setPlan: vitest.fn(),
+        updatePlan: vitest.fn(),
+        addCompletedDay: vitest.fn(() => of(void 0)),
+        removeCompletedDay: vitest.fn(() => of(void 0)),
+      };
+      const statsApiMock = {
+        createPushup: vitest.fn(() => from(firstWrite).pipe(map(() => ({})))),
+      };
+      const liveEntries = signal<PushupRecord[]>([]);
+      TestBed.resetTestingModule();
+      TestBed.configureTestingModule({
+        providers: [
+          // SSR PLATFORM_ID so we don't need to also handle the
+          // setInterval. The 'not-ready' branch relies on
+          // _isBrowser, so we explicitly pass through that gate by
+          // setting `connected: true`.
+          { provide: PLATFORM_ID, useValue: 'server' },
+          { provide: UserTrainingPlanApiService, useValue: apiMock },
+          { provide: StatsApiService, useValue: statsApiMock },
+          {
+            provide: LiveDataStore,
+            useValue: {
+              entries: liveEntries,
+              connected: signal(true),
+              updateTick: signal(0),
+            },
+          },
+          { provide: UserContextService, useValue: { userIdSafe: () => 'u1' } },
+        ],
+      });
+      const store = TestBed.inject(TrainingPlanStore);
+      await flush();
+      void today;
+
+      // Kick off two parallel calls. The first is parked inside
+      // createPushup; the second hits the in-flight lock.
+      const firstPromise = store.logPlanDay(2);
+      // Yield so the lock has been acquired.
+      await Promise.resolve();
+      const secondPromise = store.logPlanDay(2);
+
+      const secondResult = await secondPromise;
+      expect(secondResult).toBe('in-flight');
+      expect(statsApiMock.createPushup).toHaveBeenCalledTimes(1);
+
+      releaseFirst();
+      const firstResult = await firstPromise;
+      await flush();
+      expect(firstResult).toBe('logged');
+      expect(apiMock.addCompletedDay).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -437,6 +583,17 @@ describe('TrainingPlanStore', () => {
             return new BehaviorSubject(next).asObservable();
           }
         ),
+        addCompletedDay: vitest.fn((_uid: string, dayIndex: number) => {
+          const cur = stream.value!;
+          stream.next({
+            ...cur,
+            completedDays: [...cur.completedDays, dayIndex].sort(
+              (x, y) => x - y
+            ),
+          });
+          return of(void 0);
+        }),
+        removeCompletedDay: vitest.fn(() => of(void 0)),
       };
       const statsApiMock = {
         createPushup: vitest.fn(),
@@ -466,7 +623,7 @@ describe('TrainingPlanStore', () => {
       await flush();
 
       // Initially no entries — the effect should not have fired.
-      expect(apiMock.updatePlan).not.toHaveBeenCalled();
+      expect(apiMock.addCompletedDay).not.toHaveBeenCalled();
 
       // Simulate the dashboard logging today's reps.
       liveEntries.set([
@@ -479,10 +636,7 @@ describe('TrainingPlanStore', () => {
       ]);
       await flush();
 
-      expect(apiMock.updatePlan).toHaveBeenCalledWith(
-        'u1',
-        expect.objectContaining({ completedDays: [2] })
-      );
+      expect(apiMock.addCompletedDay).toHaveBeenCalledWith('u1', 2);
       // No pushup created — the auto-mark NEVER writes a new entry.
       expect(statsApiMock.createPushup).not.toHaveBeenCalled();
 
@@ -505,9 +659,6 @@ describe('TrainingPlanStore', () => {
     await store.unmarkDayDone(2);
     await flush();
 
-    expect(mocks.apiMock.updatePlan).toHaveBeenCalledWith(
-      'u1',
-      expect.objectContaining({ completedDays: [1, 3] })
-    );
+    expect(mocks.apiMock.removeCompletedDay).toHaveBeenCalledWith('u1', 2);
   });
 });

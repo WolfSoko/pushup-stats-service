@@ -200,8 +200,21 @@ export const TrainingPlanStore = signalStore(
       if (!a) return toBerlinIsoDate(new Date());
       const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(a.startDate);
       if (!m) return toBerlinIsoDate(new Date());
-      const [, y, mo, d] = m;
-      const start = new Date(Number(y), Number(mo) - 1, Number(d));
+      const year = Number(m[1]);
+      const month = Number(m[2]);
+      const day = Number(m[3]);
+      const start = new Date(year, month - 1, day);
+      // Round-trip: `new Date(2026, 1, 30)` silently overflows to
+      // March 2 instead of failing on Feb-30. Reject impossible
+      // dates so a corrupt `startDate` can't shift logging into
+      // the wrong calendar day.
+      if (
+        start.getFullYear() !== year ||
+        start.getMonth() !== month - 1 ||
+        start.getDate() !== day
+      ) {
+        return toBerlinIsoDate(new Date());
+      }
       start.setHours(0, 0, 0, 0);
       const target = new Date(start);
       target.setDate(start.getDate() + (dayIndex - 1));
@@ -271,11 +284,11 @@ export const TrainingPlanStore = signalStore(
       // so a generic "mark today done" callback can't skew progress.
       if (day.kind === 'rest') return;
       if (a.completedDays.includes(idx)) return;
-      const next = [...a.completedDays, idx].sort((x, y) => x - y);
       const userId = store._user.userIdSafe();
-      await firstValueFrom(
-        store._api.updatePlan(userId, { completedDays: next })
-      );
+      // `arrayUnion` so concurrent writes to *different* day indexes
+      // (e.g. auto-mark today + manual mark for yesterday in another
+      // tab) merge correctly server-side instead of clobbering.
+      await firstValueFrom(store._api.addCompletedDay(userId, idx));
       store.activeResource.reload();
     },
 
@@ -304,11 +317,8 @@ export const TrainingPlanStore = signalStore(
       const day = planDayByIndex(c, dayIndex);
       if (!day || day.kind === 'rest') return;
       if (a.completedDays.includes(dayIndex)) return;
-      const next = [...a.completedDays, dayIndex].sort((x, y) => x - y);
       const userId = store._user.userIdSafe();
-      await firstValueFrom(
-        store._api.updatePlan(userId, { completedDays: next })
-      );
+      await firstValueFrom(store._api.addCompletedDay(userId, dayIndex));
       store.activeResource.reload();
     },
 
@@ -377,11 +387,8 @@ export const TrainingPlanStore = signalStore(
         }
 
         if (!a.completedDays.includes(dayIndex)) {
-          const next = [...a.completedDays, dayIndex].sort((x, y) => x - y);
           const userId = store._user.userIdSafe();
-          await firstValueFrom(
-            store._api.updatePlan(userId, { completedDays: next })
-          );
+          await firstValueFrom(store._api.addCompletedDay(userId, dayIndex));
         }
         store.activeResource.reload();
         return result;
@@ -395,11 +402,8 @@ export const TrainingPlanStore = signalStore(
       const a = store.activePlan();
       if (!a) return;
       if (!a.completedDays.includes(dayIndex)) return;
-      const next = a.completedDays.filter((d) => d !== dayIndex);
       const userId = store._user.userIdSafe();
-      await firstValueFrom(
-        store._api.updatePlan(userId, { completedDays: next })
-      );
+      await firstValueFrom(store._api.removeCompletedDay(userId, dayIndex));
       store.activeResource.reload();
     },
 
@@ -446,6 +450,10 @@ export const TrainingPlanStore = signalStore(
         if (a.status !== 'active') return;
         if (day.kind === 'rest' || day.targetReps <= 0) return;
         if (a.completedDays.includes(idx)) return;
+        // Same readiness guard as `logPlanDay` — without this, a
+        // pre-sync `_live.entries()` could appear to satisfy the
+        // target on stale state and trigger a false auto-mark.
+        if (!store._live.connected()) return;
         // The same in-flight lock guards manual logPlanDay calls,
         // so a fast Quick-Add + auto-mark can't double-write.
         if (store._writingDays().has(idx)) return;
@@ -458,12 +466,21 @@ export const TrainingPlanStore = signalStore(
         const todayReps = store._repsLoggedOn(todayIso);
         if (todayReps >= day.targetReps) {
           if (!store._acquireWriteLock(idx)) return;
-          const next = [...a.completedDays, idx].sort((x, y) => x - y);
           const userId = store._user.userIdSafe();
-          firstValueFrom(
-            store._api.updatePlan(userId, { completedDays: next })
-          )
+          // Use the atomic `arrayUnion` write so a concurrent
+          // manual mark for a different day index (e.g. from
+          // another tab) doesn't get clobbered. `effect()` is
+          // synchronous, so handle errors explicitly — an
+          // unhandled rejection here would surface in the
+          // browser console without context.
+          firstValueFrom(store._api.addCompletedDay(userId, idx))
             .then(() => store.activeResource.reload())
+            .catch((error) => {
+              console.error(
+                'Failed to auto-mark training plan day as completed.',
+                { error, planId: a.planId, dayIndex: idx }
+              );
+            })
             .finally(() => store._releaseWriteLock(idx));
         }
       });

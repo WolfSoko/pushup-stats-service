@@ -4675,6 +4675,24 @@
         <source>Plan-Sätze wurden eingetragen.</source>
       </segment>
     </unit>
+    <unit id="trainingPlans.alreadyLogged">
+      <notes>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts</note>
+        <note category="location">web/src/app/training-plans/training-plans-page.component.ts</note>
+      </notes>
+      <segment>
+        <source>Tag war schon eingetragen — als erledigt markiert.</source>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.notReady">
+      <notes>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts</note>
+        <note category="location">web/src/app/training-plans/training-plans-page.component.ts</note>
+      </notes>
+      <segment>
+        <source>Daten werden noch geladen, bitte gleich noch einmal versuchen.</source>
+      </segment>
+    </unit>
     <unit id="trainingPlans.title">
       <notes>
         <note category="location">web/src/app/training-plans/training-plans-page.component.ts:31,32</note>
