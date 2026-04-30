@@ -112,6 +112,10 @@ export class StatsDashboardComponent {
     if (!cat) return '';
     return localizePlan(cat, this.locale).title;
   });
+  /** Active plan slug — used to deep-link the banner CTA. */
+  readonly planSlug = computed(
+    () => this.trainingPlans.activeCatalog()?.slug ?? ''
+  );
   /** Counter that increments on every data refresh to trigger child component reloads. */
   readonly refreshCounter = signal(0);
 

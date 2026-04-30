@@ -133,8 +133,18 @@ export const TrainingPlanStore = signalStore(
       return isPlanCompleted(c, a.completedDays);
     });
 
+    /**
+     * Active iff the user doc says so AND we can still resolve the
+     * catalog entry. A stale `planId` (e.g. a plan was retired or
+     * the doc was hand-edited) should fall back to the user's normal
+     * goal rather than rendering an "active plan" with empty
+     * title/totalDays in the dashboard banner.
+     */
     const hasActivePlan = computed(
-      () => activePlan() !== null && activePlan()?.status === 'active'
+      () =>
+        activePlan() !== null &&
+        activePlan()?.status === 'active' &&
+        activeCatalog() !== null
     );
 
     return {

@@ -73,7 +73,7 @@
           </div>
           <a
             mat-stroked-button
-            routerLink="/training-plans"
+            [routerLink]="['/training-plans', planSlug()]"
             i18n="@@trainingPlans.openDetail"
           >
             Details öffnen

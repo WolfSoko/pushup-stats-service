@@ -135,11 +135,20 @@ interface DayRow {
                   </div>
                   <div class="day-body">
                     <div class="day-title">
-                      @if (row.day.targetReps > 0) {
+                      @if (row.day.kind === 'rest') {
+                        <span i18n="@@trainingPlans.kind.rest">Ruhetag</span>
+                      } @else if (row.day.kind === 'test') {
+                        <span i18n="@@trainingPlans.kind.test">Maximaltest</span>
+                      } @else if (row.day.kind === 'light') {
+                        <span i18n="@@trainingPlans.kind.light">Leichter Tag</span>
+                        @if (row.day.targetReps > 0) {
+                          <span class="muted">·</span>
+                          <strong>{{ row.day.targetReps }}</strong>
+                          <span i18n="@@trainingPlans.reps">Wdh.</span>
+                        }
+                      } @else if (row.day.targetReps > 0) {
                         <strong>{{ row.day.targetReps }}</strong>
                         <span i18n="@@trainingPlans.reps">Wdh.</span>
-                      } @else {
-                        <span i18n="@@trainingPlans.kind.rest">Ruhetag</span>
                       }
                       @if (row.day.sets && row.day.sets.length > 1) {
                         <span class="sets muted">{{ formatSets(row.day.sets) }}</span>
