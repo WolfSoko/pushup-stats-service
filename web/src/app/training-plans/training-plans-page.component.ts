@@ -11,8 +11,9 @@ import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { RouterLink } from '@angular/router';
-import { TrainingPlanStore } from './training-plan.store';
+import { LogPlanDayResult, TrainingPlanStore } from './training-plan.store';
 
 @Component({
   selector: 'app-training-plans-page',
@@ -22,6 +23,7 @@ import { TrainingPlanStore } from './training-plan.store';
     MatIconModule,
     MatChipsModule,
     MatProgressBarModule,
+    MatSnackBarModule,
     RouterLink,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -99,9 +101,30 @@ import { TrainingPlanStore } from './training-plan.store';
               <mat-icon>cancel</mat-icon>
               Plan beenden
             </button>
+            @if (
+              todayLocalized();
+              as today
+            ) {
+              @if (
+                today.kind !== 'rest' &&
+                today.targetReps > 0 &&
+                !store.todayDone()
+              ) {
+                <button
+                  mat-flat-button
+                  type="button"
+                  color="primary"
+                  (click)="logToday()"
+                >
+                  <mat-icon>play_circle</mat-icon>
+                  <span i18n="@@trainingPlans.logToday"
+                    >Heute eintragen</span
+                  >
+                </button>
+              }
+            }
             <a
               mat-flat-button
-              color="primary"
               [routerLink]="['/training-plans', store.activeCatalog()?.slug]"
             >
               <mat-icon>open_in_full</mat-icon>
@@ -221,6 +244,7 @@ import { TrainingPlanStore } from './training-plan.store';
 })
 export class TrainingPlansPageComponent {
   readonly store = inject(TrainingPlanStore);
+  private readonly snackbar = inject(MatSnackBar);
   private readonly locale = inject(LOCALE_ID) as string;
 
   /** Catalog with `title`/`summary` fields swapped to the active locale. */
@@ -263,5 +287,27 @@ export class TrainingPlansPageComponent {
 
   abandon(): void {
     void this.store.abandon();
+  }
+
+  async logToday(): Promise<void> {
+    const result = await this.store.logTodayPlanDay();
+    const message = this.messageForLogResult(result);
+    if (message) {
+      this.snackbar.open(message, undefined, { duration: 3000 });
+    }
+  }
+
+  private messageForLogResult(result: LogPlanDayResult): string | null {
+    switch (result) {
+      case 'logged':
+        return $localize`:@@trainingPlans.logged:Plan-Sätze wurden eingetragen.`;
+      case 'already-logged':
+        return $localize`:@@trainingPlans.alreadyLogged:Tag war schon eingetragen — als erledigt markiert.`;
+      case 'not-ready':
+        return $localize`:@@trainingPlans.notReady:Daten werden noch geladen, bitte gleich noch einmal versuchen.`;
+      case 'in-flight':
+      case 'noop':
+        return null;
+    }
   }
 }

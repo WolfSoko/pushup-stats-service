@@ -16,6 +16,15 @@ jest.mock('@angular/fire/firestore', () => ({
   doc: jest.fn(),
   docData: jest.fn(),
   setDoc: jest.fn(() => Promise.resolve()),
+  updateDoc: jest.fn(() => Promise.resolve()),
+  arrayUnion: jest.fn((...values: unknown[]) => ({
+    __type: 'arrayUnion',
+    values,
+  })),
+  arrayRemove: jest.fn((...values: unknown[]) => ({
+    __type: 'arrayRemove',
+    values,
+  })),
 }));
 
 describe('UserTrainingPlanApiService', () => {
@@ -161,6 +170,60 @@ describe('UserTrainingPlanApiService', () => {
         userId: 'u',
       }),
       { merge: true }
+    );
+  });
+
+  it('uses arrayUnion for addCompletedDay so concurrent writes merge atomically', async () => {
+    (firestoreFns.doc as jest.Mock).mockReturnValue({ id: 'u' });
+
+    const { fixture } = await render('', {
+      providers: [
+        UserTrainingPlanApiService,
+        { provide: PLATFORM_ID, useValue: 'browser' },
+        { provide: Firestore, useValue: {} },
+        { provide: Auth, useValue: { currentUser: { uid: 'u' } } },
+      ],
+    });
+
+    const service = fixture.debugElement.injector.get(
+      UserTrainingPlanApiService
+    );
+    service.addCompletedDay('u', 5).subscribe();
+
+    await Promise.resolve();
+    expect(firestoreFns.arrayUnion).toHaveBeenCalledWith(5);
+    expect(firestoreFns.updateDoc).toHaveBeenCalledWith(
+      expect.anything(),
+      expect.objectContaining({
+        completedDays: expect.objectContaining({ __type: 'arrayUnion' }),
+      })
+    );
+  });
+
+  it('uses arrayRemove for removeCompletedDay', async () => {
+    (firestoreFns.doc as jest.Mock).mockReturnValue({ id: 'u' });
+
+    const { fixture } = await render('', {
+      providers: [
+        UserTrainingPlanApiService,
+        { provide: PLATFORM_ID, useValue: 'browser' },
+        { provide: Firestore, useValue: {} },
+        { provide: Auth, useValue: { currentUser: { uid: 'u' } } },
+      ],
+    });
+
+    const service = fixture.debugElement.injector.get(
+      UserTrainingPlanApiService
+    );
+    service.removeCompletedDay('u', 2).subscribe();
+
+    await Promise.resolve();
+    expect(firestoreFns.arrayRemove).toHaveBeenCalledWith(2);
+    expect(firestoreFns.updateDoc).toHaveBeenCalledWith(
+      expect.anything(),
+      expect.objectContaining({
+        completedDays: expect.objectContaining({ __type: 'arrayRemove' }),
+      })
     );
   });
 });
