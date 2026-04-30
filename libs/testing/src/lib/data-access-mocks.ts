@@ -13,7 +13,7 @@
  *   const mock = makePushupFirestoreMock({ createPushup: vitest.fn().mockReturnValue(of(record)) });
  */
 
-import { of } from 'rxjs';
+import { EMPTY, of } from 'rxjs';
 import {
   LeaderboardBucket,
   LeaderboardData,
@@ -140,6 +140,7 @@ export function makeLeaderboardMock(
 ): Partial<LeaderboardService> {
   return {
     load: () => Promise.resolve(emptyLeaderboard),
+    observeSnapshot: () => EMPTY,
     ...overrides,
   };
 }

@@ -51,12 +51,22 @@ export class GoalReachedNotificationService {
     this.live.entries()
   );
 
-  private readonly todayBerlin = computed(() => toBerlinIsoDate(new Date()));
+  /**
+   * Berlin-localised "today" key. Reading `entries()` here ties the key to
+   * the live data signal, so that — in a long-running PWA session that
+   * crosses midnight — the key recomputes the next time a Firestore entry
+   * update arrives. Without this dependency `todayBerlin` would cache day 1
+   * forever and the dialog would never re-fire on day 2.
+   */
+  private readonly todayBerlin = computed(() => {
+    this.entries();
+    return toBerlinIsoDate(new Date());
+  });
 
   private readonly todayTotal = computed(() => {
     const today = this.todayBerlin();
     return this.entries()
-      .filter((entry) => entry.timestamp.slice(0, 10) === today)
+      .filter((entry) => entryBerlinDate(entry.timestamp) === today)
       .reduce((sum, entry) => sum + entry.reps, 0);
   });
 
@@ -70,7 +80,7 @@ export class GoalReachedNotificationService {
     const { from, to } = this.weekRange();
     return this.entries()
       .filter((entry) => {
-        const day = entry.timestamp.slice(0, 10);
+        const day = entryBerlinDate(entry.timestamp);
         return day >= from && day <= to;
       })
       .reduce((sum, entry) => sum + entry.reps, 0);
@@ -83,7 +93,7 @@ export class GoalReachedNotificationService {
   private readonly monthTotal = computed(() => {
     const prefix = this.currentMonthKey();
     return this.entries()
-      .filter((entry) => entry.timestamp.startsWith(prefix))
+      .filter((entry) => entryBerlinDate(entry.timestamp).startsWith(prefix))
       .reduce((sum, entry) => sum + entry.reps, 0);
   });
 
@@ -124,6 +134,12 @@ export class GoalReachedNotificationService {
 
   constructor() {
     if (!isPlatformBrowser(this.platformId)) return;
+    // Drop stale period flags from previous days/weeks/months on every app
+    // start. Without this, localStorage accumulates `pus_goal_reached_*` keys
+    // forever, and a clock skew or formatting drift could falsely match an
+    // old key on a new day — exactly the "dialog never re-fires on day 2"
+    // class of bug.
+    pruneStalePeriodFlags(toBerlinIsoDate(new Date()));
     for (const spec of this.specs) {
       // Order matters: the increase watcher is registered before the
       // goal-reached watcher so that, when both fire on a single goal raise,
@@ -194,6 +210,38 @@ export class GoalReachedNotificationService {
         maxParticleCount: snapshot.maxParticleCount,
       },
     });
+  }
+}
+
+/**
+ * Convert a Firestore-stored ISO timestamp (`YYYY-MM-DDTHH:mm:ss.sssZ`) to
+ * its Berlin-localised date key. Without the timezone hop, entries created
+ * between 00:00–02:00 Berlin local during summer time get classified under
+ * the previous UTC day, which would silently mis-count daily/weekly totals.
+ */
+function entryBerlinDate(timestamp: string): string {
+  return toBerlinIsoDate(new Date(timestamp));
+}
+
+function pruneStalePeriodFlags(todayBerlin: string): void {
+  const ls = globalThis.localStorage;
+  if (!ls) return;
+  const validKeys = new Set([
+    `${STORAGE_PREFIX}daily_${todayBerlin}`,
+    `${STORAGE_PREFIX}weekly_${isoWeekKey(todayBerlin)}`,
+    `${STORAGE_PREFIX}monthly_${todayBerlin.slice(0, 7)}`,
+  ]);
+  try {
+    const stale: string[] = [];
+    for (let i = 0; i < ls.length; i++) {
+      const key = ls.key(i);
+      if (key && key.startsWith(STORAGE_PREFIX) && !validKeys.has(key)) {
+        stale.push(key);
+      }
+    }
+    for (const key of stale) ls.removeItem(key);
+  } catch {
+    // localStorage unavailable / SecurityError — best-effort cleanup only.
   }
 }
 

@@ -1,5 +1,6 @@
 import { isPlatformBrowser } from '@angular/common';
 import { computed, inject, PLATFORM_ID, resource } from '@angular/core';
+import { rxResource } from '@angular/core/rxjs-interop';
 import {
   signalStore,
   withComputed,
@@ -21,7 +22,7 @@ import {
 import { AdsStore } from '@pu-stats/ads';
 import { UserContextService } from '@pu-auth/auth';
 import { MotivationStore } from '@pu-stats/motivation';
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom, of } from 'rxjs';
 import { UserConfigStore } from '../core/user-config.store';
 
 const EMPTY_STATS: StatsResponse = {
@@ -99,12 +100,15 @@ export const DashboardStore = signalStore(
     allTimeResource: resource({
       loader: async () => firstValueFrom(store._api.load({})),
     }),
-    userStatsResource: resource({
+    // Real-time listener on `userStats/{userId}`. The Cloud Function
+    // aggregator rewrites this doc after each pushup write — `rxResource`
+    // ensures the dashboard re-renders without polling or manual reload.
+    userStatsResource: rxResource({
       params: () => ({ userId: store._user.userIdSafe() }),
-      loader: async ({ params }) =>
+      stream: ({ params }) =>
         params.userId
-          ? firstValueFrom(store._userStatsApi.getUserStats(params.userId))
-          : null,
+          ? store._userStatsApi.getUserStats(params.userId)
+          : of(null),
     }),
   })),
   withComputed((store) => {

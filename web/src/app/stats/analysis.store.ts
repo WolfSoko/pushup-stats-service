@@ -1,4 +1,5 @@
 import { computed, inject, LOCALE_ID, resource } from '@angular/core';
+import { rxResource } from '@angular/core/rxjs-interop';
 import {
   patchState,
   signalStore,
@@ -7,7 +8,7 @@ import {
   withProps,
   withState,
 } from '@ngrx/signals';
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom, of } from 'rxjs';
 import { StatsApiService, UserStatsApiService } from '@pu-stats/data-access';
 import { UserContextService } from '@pu-auth/auth';
 import {
@@ -173,12 +174,15 @@ export const AnalysisStore = signalStore(
         firstValueFrom(store._api.listPushups(params)),
     });
 
-    const userStatsResource = resource({
+    // Real-time listener on `userStats/{userId}` so server-side aggregation
+    // updates (heatmap, best entries) flow into the analysis page without
+    // requiring a manual reload.
+    const userStatsResource = rxResource({
       params: () => ({ userId: store._user.userIdSafe() }),
-      loader: async ({ params }) =>
+      stream: ({ params }) =>
         params.userId
-          ? firstValueFrom(store._userStatsApi.getUserStats(params.userId))
-          : null,
+          ? store._userStatsApi.getUserStats(params.userId)
+          : of(null),
     });
 
     const weekEntriesResource = resource({

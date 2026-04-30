@@ -3,6 +3,7 @@ import { Auth } from '@angular/fire/auth';
 import { Firestore } from '@angular/fire/firestore';
 import { UserConfig, UserConfigUpdate } from '@pu-stats/models';
 import { render } from '@testing-library/angular';
+import { of } from 'rxjs';
 import { UserConfigApiService } from './user-config-api.service';
 
 jest.mock('@angular/fire/auth', () => ({
@@ -12,7 +13,7 @@ jest.mock('@angular/fire/auth', () => ({
 jest.mock('@angular/fire/firestore', () => ({
   Firestore: jest.fn(),
   doc: jest.fn(),
-  getDoc: jest.fn(),
+  docData: jest.fn(),
   setDoc: jest.fn(() => Promise.resolve()),
 }));
 
@@ -21,12 +22,12 @@ describe('UserConfigApiService', () => {
     jest.clearAllMocks();
   });
 
-  it('reads config from Firestore when authenticated', async () => {
+  it('streams config from Firestore in real time when authenticated', async () => {
     const firestoreFns = await import('@angular/fire/firestore');
     (firestoreFns.doc as jest.Mock).mockReturnValue({ id: 'u' });
-    (firestoreFns.getDoc as jest.Mock).mockResolvedValue({
-      data: () => ({ userId: 'u', dailyGoal: 99 }),
-    });
+    (firestoreFns.docData as jest.Mock).mockReturnValue(
+      of({ userId: 'u', dailyGoal: 99 })
+    );
 
     const { fixture } = await render('', {
       providers: [
@@ -45,12 +46,32 @@ describe('UserConfigApiService', () => {
     expect(result).toEqual({ userId: 'u', dailyGoal: 99 });
   });
 
+  it('falls back to a stub config when the Firestore doc is missing', async () => {
+    const firestoreFns = await import('@angular/fire/firestore');
+    (firestoreFns.doc as jest.Mock).mockReturnValue({ id: 'u' });
+    (firestoreFns.docData as jest.Mock).mockReturnValue(of(undefined));
+
+    const { fixture } = await render('', {
+      providers: [
+        UserConfigApiService,
+        { provide: PLATFORM_ID, useValue: 'browser' },
+        { provide: Firestore, useValue: {} },
+        { provide: Auth, useValue: { currentUser: { uid: 'u' } } },
+      ],
+    });
+
+    const service = fixture.debugElement.injector.get(UserConfigApiService);
+    let result: UserConfig | undefined;
+    service.getConfig('u').subscribe((r) => (result = r));
+
+    await Promise.resolve();
+    expect(result).toEqual({ userId: 'u' });
+  });
+
   it('uses currentUser.uid (not passed-in userId) for Firestore getConfig doc path', async () => {
     const firestoreFns = await import('@angular/fire/firestore');
     (firestoreFns.doc as jest.Mock).mockReturnValue({ id: 'actual-uid' });
-    (firestoreFns.getDoc as jest.Mock).mockResolvedValue({
-      data: () => undefined,
-    });
+    (firestoreFns.docData as jest.Mock).mockReturnValue(of(undefined));
 
     const { fixture } = await render('', {
       providers: [

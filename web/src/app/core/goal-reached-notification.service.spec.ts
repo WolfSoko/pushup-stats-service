@@ -344,6 +344,64 @@ describe('GoalReachedNotificationService', () => {
       });
     });
 
+    it('Then re-fires on the next day even if the previous day was already celebrated', async () => {
+      // Given — day 1: goal reached, dialog opens, flag persisted.
+      setup({
+        dailyGoal: 10,
+        entries: [
+          {
+            _id: '1',
+            timestamp: '2026-04-22T08:00:00',
+            reps: 12,
+          } as PushupRecord,
+        ],
+      });
+      await flushAll();
+      expect(dialogOpenSpy).toHaveBeenCalledTimes(1);
+      expect(localStorage.getItem('pus_goal_reached_daily_2026-04-22')).toBe(
+        '1'
+      );
+      dialogOpenSpy.mockClear();
+
+      // When — clock advances to day 2, fresh service start, the user reaches
+      // the goal again on the new day. Yesterday's flag must NOT silently
+      // suppress the new day's celebration.
+      vi.setSystemTime(new Date(2026, 3, 23, 12, 0));
+      setup({
+        dailyGoal: 10,
+        entries: [
+          {
+            _id: '1',
+            timestamp: '2026-04-22T08:00:00',
+            reps: 12,
+          } as PushupRecord,
+          {
+            _id: '2',
+            timestamp: '2026-04-23T09:00:00',
+            reps: 12,
+          } as PushupRecord,
+        ],
+      });
+      await flushAll();
+
+      // Then — dialog fires for day 2 with its own flag, and yesterday's stale
+      // flag has been pruned from localStorage so it can no longer accidentally
+      // match a future period.
+      expect(dialogOpenSpy).toHaveBeenCalledTimes(1);
+      const [, config] = dialogOpenSpy.mock.calls[0];
+      expect(config?.data).toMatchObject({
+        kind: 'daily',
+        total: 12,
+        goal: 10,
+      });
+      expect(localStorage.getItem('pus_goal_reached_daily_2026-04-23')).toBe(
+        '1'
+      );
+      expect(
+        localStorage.getItem('pus_goal_reached_daily_2026-04-22')
+      ).toBeNull();
+    });
+
     it('Then a downward change leaves the persisted flag intact', async () => {
       // Given
       setup({

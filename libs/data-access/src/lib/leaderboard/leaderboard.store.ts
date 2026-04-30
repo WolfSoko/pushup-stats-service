@@ -1,8 +1,17 @@
-import { computed, inject } from '@angular/core';
+import {
+  computed,
+  effect,
+  inject,
+  Injector,
+  PLATFORM_ID,
+  runInInjectionContext,
+} from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import {
   patchState,
   signalStore,
   withComputed,
+  withHooks,
   withMethods,
   withProps,
   withState,
@@ -33,6 +42,8 @@ export const LeaderboardStore = signalStore(
   withState(initialState),
   withProps(() => ({
     _api: inject(LeaderboardService, { optional: true }),
+    _isBrowser: isPlatformBrowser(inject(PLATFORM_ID)),
+    _injector: inject(Injector),
   })),
   withComputed((store) => ({
     loaded: computed(() => store.data() !== null),
@@ -83,5 +94,28 @@ export const LeaderboardStore = signalStore(
         return data[period()].current;
       });
     },
-  }))
+  })),
+  withHooks({
+    onInit(store) {
+      // Live-refresh whenever the precomputed `leaderboards/current` doc
+      // changes. The snapshot only mutates after a Cloud Function rewrite
+      // (typically minutes), so re-running `load({ force: true })` is cheap
+      // and avoids a stale leaderboard between manual refreshes.
+      if (!store._isBrowser || !store._api) return;
+      const api = store._api;
+      runInInjectionContext(store._injector, () => {
+        effect((onCleanup) => {
+          const sub = api.observeSnapshot().subscribe({
+            next: () => {
+              void store.load({ force: true });
+            },
+            error: () => {
+              /* swallow — leaderboard is non-critical, fall back to one-shot load */
+            },
+          });
+          onCleanup(() => sub.unsubscribe());
+        });
+      });
+    },
+  })
 );

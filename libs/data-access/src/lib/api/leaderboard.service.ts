@@ -3,6 +3,7 @@ import { Auth } from '@angular/fire/auth';
 import {
   collection,
   doc,
+  docData,
   Firestore,
   getDoc,
   getDocs,
@@ -10,6 +11,7 @@ import {
   query,
   where,
 } from '@angular/fire/firestore';
+import { EMPTY, Observable } from 'rxjs';
 
 export type LeaderboardPeriod = 'daily' | 'weekly' | 'monthly';
 
@@ -39,6 +41,18 @@ type PushupRow = {
 export class LeaderboardService {
   private readonly firestore = inject(Firestore, { optional: true });
   private readonly auth = inject(Auth, { optional: true });
+
+  /**
+   * Real-time stream of the precomputed `leaderboards/current` document.
+   * Emits `null` while the doc does not exist or Firestore is unavailable.
+   * Used by `LeaderboardStore` to reload aggregates whenever the Cloud
+   * Function rewrites the snapshot, giving the leaderboard live updates
+   * without a manual refresh.
+   */
+  observeSnapshot(): Observable<unknown> {
+    if (!this.firestore) return EMPTY;
+    return docData(doc(this.firestore, 'leaderboards', 'current'));
+  }
 
   async load(): Promise<LeaderboardData> {
     const currentUserId = this.auth?.currentUser?.uid ?? null;

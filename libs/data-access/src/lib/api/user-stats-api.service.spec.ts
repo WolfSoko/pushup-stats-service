@@ -1,16 +1,14 @@
 jest.mock('@angular/fire/firestore', () => ({
   Firestore: jest.fn(),
   doc: jest.fn(() => ({})),
-  getDoc: jest.fn(() =>
-    Promise.resolve({ exists: () => false, data: () => null })
-  ),
+  docData: jest.fn(() => of(undefined)),
 }));
 
 import { TestBed } from '@angular/core/testing';
-import { Firestore, getDoc } from '@angular/fire/firestore';
+import { Firestore, docData } from '@angular/fire/firestore';
 import { UserStatsApiService } from './user-stats-api.service';
 import { UserStats } from '@pu-stats/models';
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom, of } from 'rxjs';
 
 const fullMockStats: UserStats = {
   userId: 'test-uid',
@@ -51,12 +49,20 @@ describe('UserStatsApiService', () => {
   });
 
   it('returns UserStats when document exists', async () => {
-    jest.mocked(getDoc).mockResolvedValueOnce({
-      exists: () => true,
-      data: () => fullMockStats,
-    } as never);
+    jest.mocked(docData).mockReturnValueOnce(of(fullMockStats) as never);
 
     const result = await firstValueFrom(service.getUserStats('test-uid'));
     expect(result).toEqual(fullMockStats);
+  });
+
+  it('emits successive updates as the userStats doc is rewritten', async () => {
+    const initial: UserStats = { ...fullMockStats, dailyReps: 30 };
+    const updated: UserStats = { ...fullMockStats, dailyReps: 45 };
+    jest.mocked(docData).mockReturnValueOnce(of(initial, updated) as never);
+
+    const emissions: (UserStats | null)[] = [];
+    service.getUserStats('test-uid').subscribe((v) => emissions.push(v));
+    await Promise.resolve();
+    expect(emissions).toEqual([initial, updated]);
   });
 });

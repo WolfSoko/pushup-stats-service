@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
-import { doc, Firestore, getDoc } from '@angular/fire/firestore';
+import { doc, docData, Firestore } from '@angular/fire/firestore';
 import { UserStats } from '@pu-stats/models';
-import { from, map, Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 
 const USER_STATS_COLLECTION = 'userStats';
 
@@ -10,13 +10,15 @@ export class UserStatsApiService {
   private readonly firestore = inject(Firestore);
 
   /**
-   * Fetch precomputed user statistics from `userStats/{userId}`.
-   * Returns null if the document does not exist yet (no backfill run).
+   * Subscribe to precomputed user statistics at `userStats/{userId}`.
+   * Emits null while the document is missing (no backfill run yet) and
+   * re-emits whenever the Cloud Function aggregator rewrites the doc, so the
+   * dashboard updates without a manual reload.
    */
   getUserStats(userId: string): Observable<UserStats | null> {
     const docRef = doc(this.firestore, USER_STATS_COLLECTION, userId);
-    return from(getDoc(docRef)).pipe(
-      map((snap) => (snap.exists() ? (snap.data() as UserStats) : null))
+    return docData(docRef).pipe(
+      map((data) => (data ? (data as UserStats) : null))
     );
   }
 }
