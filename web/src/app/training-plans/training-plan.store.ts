@@ -1,8 +1,16 @@
-import { computed, inject } from '@angular/core';
+import {
+  computed,
+  DestroyRef,
+  inject,
+  PLATFORM_ID,
+  signal,
+} from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { rxResource } from '@angular/core/rxjs-interop';
 import {
   signalStore,
   withComputed,
+  withHooks,
   withMethods,
   withProps,
 } from '@ngrx/signals';
@@ -36,6 +44,16 @@ export const TrainingPlanStore = signalStore(
   withProps(() => ({
     _api: inject(UserTrainingPlanApiService),
     _user: inject(UserContextService),
+    _isBrowser: isPlatformBrowser(inject(PLATFORM_ID)),
+    /**
+     * Coarse daily tick. The Berlin date used by `currentDayIndex`
+     * has no signal dependencies of its own, so without this signal
+     * a long-running tab stays on the previous calendar day after
+     * midnight until something else triggers recomputation. We
+     * update once a minute (cheap; covers the midnight crossover
+     * within 60 s).
+     */
+    _dayTick: signal(0),
   })),
   withProps((store) => ({
     activeResource: rxResource({
@@ -56,7 +74,12 @@ export const TrainingPlanStore = signalStore(
       return a ? findPlanById(a.planId) : null;
     });
 
-    const today = computed(() => toBerlinIsoDate(new Date()));
+    const today = computed(() => {
+      // Establish a dependency on the day tick so `currentDayIndex`
+      // re-evaluates after midnight.
+      store._dayTick();
+      return toBerlinIsoDate(new Date());
+    });
 
     /** Current 1-based day for today, or null if not started/no plan. */
     const currentDayIndex = computed<number | null>(() => {
@@ -87,9 +110,20 @@ export const TrainingPlanStore = signalStore(
       const a = activePlan();
       const c = activeCatalog();
       if (!a || !c) return 0;
-      const total = c.days.filter((d) => d.kind !== 'rest').length;
-      if (total === 0) return 0;
-      return Math.round((a.completedDays.length / total) * 100);
+      const nonRestDayIndexes = new Set(
+        c.days.filter((d) => d.kind !== 'rest').map((d) => d.dayIndex)
+      );
+      if (nonRestDayIndexes.size === 0) return 0;
+      // Filter `completedDays` to only count non-rest days. Rest-day
+      // entries can otherwise leak progress > 100% (e.g. via direct
+      // API writes or future UI changes that mark rest days done).
+      const completedNonRest = a.completedDays.filter((idx) =>
+        nonRestDayIndexes.has(idx)
+      ).length;
+      return Math.min(
+        100,
+        Math.round((completedNonRest / nonRestDayIndexes.size) * 100)
+      );
     });
 
     const isCompleted = computed(() => {
@@ -142,11 +176,15 @@ export const TrainingPlanStore = signalStore(
       store.activeResource.reload();
     },
 
-    /** Mark today's plan day as done. Idempotent. */
+    /** Mark today's plan day as done. Idempotent. No-op on rest days. */
     async markTodayDone(): Promise<void> {
       const a = store.activePlan();
       const idx = store.currentDayIndex();
-      if (!a || idx === null) return;
+      const day = store.todayDay();
+      if (!a || idx === null || !day) return;
+      // Rest days are not part of the completion set — silently skip
+      // so a generic "mark today done" callback can't skew progress.
+      if (day.kind === 'rest') return;
       if (a.completedDays.includes(idx)) return;
       const next = [...a.completedDays, idx].sort((x, y) => x - y);
       const userId = store._user.userIdSafe();
@@ -159,7 +197,12 @@ export const TrainingPlanStore = signalStore(
     /** Mark a specific day as done (used from the plan detail page). */
     async markDayDone(dayIndex: number): Promise<void> {
       const a = store.activePlan();
-      if (!a) return;
+      const c = store.activeCatalog();
+      if (!a || !c) return;
+      // Reject out-of-range or rest-day indexes — those should never
+      // count toward completion progress.
+      const day = planDayByIndex(c, dayIndex);
+      if (!day || day.kind === 'rest') return;
       if (a.completedDays.includes(dayIndex)) return;
       const next = [...a.completedDays, dayIndex].sort((x, y) => x - y);
       const userId = store._user.userIdSafe();
@@ -196,5 +239,19 @@ export const TrainingPlanStore = signalStore(
     reload(): void {
       store.activeResource.reload();
     },
-  }))
+  })),
+  withHooks({
+    onInit(store) {
+      // Browser-only: tick the day signal once a minute so the
+      // Berlin-date-based `currentDayIndex` updates within ~60 s of
+      // midnight even if no Firestore activity refreshes the
+      // `activePlan` resource.
+      if (!store._isBrowser) return;
+      const handle = setInterval(
+        () => store._dayTick.update((n) => n + 1),
+        60_000
+      );
+      inject(DestroyRef).onDestroy(() => clearInterval(handle));
+    },
+  })
 );

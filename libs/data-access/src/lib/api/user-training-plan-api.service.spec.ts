@@ -1,5 +1,6 @@
 import { PLATFORM_ID } from '@angular/core';
 import { Auth } from '@angular/fire/auth';
+import * as firestoreFns from '@angular/fire/firestore';
 import { Firestore } from '@angular/fire/firestore';
 import { UserTrainingPlan } from '@pu-stats/models';
 import { render } from '@testing-library/angular';
@@ -23,7 +24,7 @@ describe('UserTrainingPlanApiService', () => {
   });
 
   it('streams the active plan from Firestore', async () => {
-    const firestoreFns = await import('@angular/fire/firestore');
+
     (firestoreFns.doc as jest.Mock).mockReturnValue({ id: 'u' });
     (firestoreFns.docData as jest.Mock).mockReturnValue(
       of({
@@ -55,7 +56,7 @@ describe('UserTrainingPlanApiService', () => {
   });
 
   it('returns null when the doc does not exist', async () => {
-    const firestoreFns = await import('@angular/fire/firestore');
+
     (firestoreFns.doc as jest.Mock).mockReturnValue({ id: 'u' });
     (firestoreFns.docData as jest.Mock).mockReturnValue(of(undefined));
 
@@ -79,7 +80,7 @@ describe('UserTrainingPlanApiService', () => {
   });
 
   it('uses the auth uid (not the passed-in userId) for the doc path', async () => {
-    const firestoreFns = await import('@angular/fire/firestore');
+
     (firestoreFns.doc as jest.Mock).mockReturnValue({ id: 'real' });
     (firestoreFns.docData as jest.Mock).mockReturnValue(of(undefined));
 
@@ -106,7 +107,7 @@ describe('UserTrainingPlanApiService', () => {
   });
 
   it('writes a new active plan via setPlan (overwrites stale state)', async () => {
-    const firestoreFns = await import('@angular/fire/firestore');
+
     (firestoreFns.doc as jest.Mock).mockReturnValue({ id: 'u' });
 
     const { fixture } = await render('', {
@@ -139,7 +140,7 @@ describe('UserTrainingPlanApiService', () => {
   });
 
   it('merges patches via updatePlan', async () => {
-    const firestoreFns = await import('@angular/fire/firestore');
+
     (firestoreFns.doc as jest.Mock).mockReturnValue({ id: 'u' });
 
     const { fixture } = await render('', {

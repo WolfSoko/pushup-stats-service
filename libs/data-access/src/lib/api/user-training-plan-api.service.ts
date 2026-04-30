@@ -15,9 +15,15 @@ const COLLECTION = 'userTrainingPlans';
 /**
  * Single-document-per-user store for the active training plan.
  * Mirrors the pattern of `UserConfigApiService` (collection
- * `userTrainingPlans/{userId}` keyed on the auth uid). Always uses
- * `currentUser.uid` for the doc path so a forged `userId` parameter
- * cannot redirect reads/writes.
+ * `userTrainingPlans/{userId}` keyed on the auth uid).
+ *
+ * The doc path prefers `auth.currentUser.uid` over the `userId`
+ * argument, so a forged argument cannot redirect reads/writes for an
+ * authenticated session. When `auth.currentUser` is unavailable
+ * (e.g. SSR before auth resolves, or the optional `Auth` provider is
+ * missing in tests) we fall back to the passed-in `userId` so the
+ * stub path matches what callers expect — Firestore rules still
+ * reject any cross-user write.
  */
 @Injectable({ providedIn: 'root' })
 export class UserTrainingPlanApiService {

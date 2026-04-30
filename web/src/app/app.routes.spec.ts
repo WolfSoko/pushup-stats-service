@@ -11,6 +11,8 @@ import { EntriesPageComponent } from './stats/shell/entries-page.component';
 import { SettingsPageComponent } from './stats/shell/settings-page.component';
 import { StatsDashboardComponent } from './stats/shell/stats-dashboard.component';
 import { LeaderboardPageComponent } from './leaderboard/shell/leaderboard-page.component';
+import { TrainingPlanDetailComponent } from './training-plans/training-plan-detail.component';
+import { TrainingPlansPageComponent } from './training-plans/training-plans-page.component';
 
 describe('appRoutes', () => {
   it('defines landing, app and feature routes', () => {
@@ -72,6 +74,18 @@ describe('appRoutes', () => {
     expect(component).toBe(LeaderboardPageComponent);
   });
 
+  it('lazy-loads training plans list and detail components', async () => {
+    const listRoute = appRoutes.find((r) => r.path === 'training-plans');
+    const listComponent = await listRoute?.loadComponent?.();
+    expect(listComponent).toBe(TrainingPlansPageComponent);
+
+    const detailRoute = appRoutes.find(
+      (r) => r.path === 'training-plans/:slug'
+    );
+    const detailComponent = await detailRoute?.loadComponent?.();
+    expect(detailComponent).toBe(TrainingPlanDetailComponent);
+  });
+
   it('statically loads login component', () => {
     const route = appRoutes.find((r) => r.path === 'login');
     expect(route?.component).toBe(LoginComponent);
@@ -94,7 +108,14 @@ describe('appRoutes', () => {
   });
 
   it('protects app routes and keeps landing/login/register public-only', () => {
-    const protectedPaths = ['app', 'history', 'analysis', 'settings'];
+    const protectedPaths = [
+      'app',
+      'history',
+      'analysis',
+      'settings',
+      'training-plans',
+      'training-plans/:slug',
+    ];
     for (const path of protectedPaths) {
       const route = appRoutes.find((r) => r.path === path);
       expect(route?.canActivate).toEqual([authGuard]);

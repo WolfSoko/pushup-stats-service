@@ -175,9 +175,6 @@ export const DashboardStore = signalStore(
     const planTodayKind = computed(
       () => store._trainingPlan.todayDay()?.kind ?? null
     );
-    const planTitle = computed(
-      () => store._trainingPlan.activeCatalog()?.title ?? ''
-    );
     const planDayIndex = computed(() => store._trainingPlan.currentDayIndex());
     const planTotalDays = computed(
       () => store._trainingPlan.activeCatalog()?.totalDays ?? 0
@@ -393,7 +390,6 @@ export const DashboardStore = signalStore(
       planActive,
       planTodayTarget,
       planTodayKind,
-      planTitle,
       planDayIndex,
       planTotalDays,
     };

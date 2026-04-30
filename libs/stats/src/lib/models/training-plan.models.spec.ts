@@ -1,6 +1,7 @@
 import {
   currentPlanDayIndex,
   isPlanCompleted,
+  localizePlan,
   planDayByIndex,
   TrainingPlan,
 } from './training-plan.models';
@@ -29,6 +30,12 @@ describe('training-plan models', () => {
     it('returns null on malformed dates', () => {
       expect(currentPlanDayIndex(plan, 'nope', '2026-04-01')).toBeNull();
       expect(currentPlanDayIndex(plan, '2026-04-01', '2026/04/01')).toBeNull();
+    });
+
+    it('returns null on impossible calendar dates', () => {
+      // 2026-02-30 doesn't exist; Date() would otherwise overflow.
+      expect(currentPlanDayIndex(plan, '2026-02-30', '2026-04-01')).toBeNull();
+      expect(currentPlanDayIndex(plan, '2026-04-01', '2026-13-01')).toBeNull();
     });
 
     it('crosses month and year boundaries via calendar diff', () => {
@@ -94,6 +101,62 @@ describe('training-plan models', () => {
     it('is false while any non-rest day is missing', () => {
       expect(isPlanCompleted(plan, [1, 4])).toBe(false);
       expect(isPlanCompleted(plan, [])).toBe(false);
+    });
+  });
+
+  describe('localizePlan', () => {
+    const plan: TrainingPlan = {
+      id: 'x',
+      slug: 'x',
+      title: 'Deutscher Titel',
+      titleEn: 'English title',
+      summary: 'Deutsche Beschreibung',
+      summaryEn: 'English summary',
+      level: 'beginner',
+      totalDays: 1,
+      days: [
+        {
+          dayIndex: 1,
+          kind: 'main',
+          targetReps: 10,
+          description: 'Deutsch',
+          descriptionEn: 'English',
+        },
+      ],
+    };
+
+    it('returns English fields when locale starts with "en"', () => {
+      const out = localizePlan(plan, 'en');
+      expect(out.title).toBe('English title');
+      expect(out.summary).toBe('English summary');
+      expect(out.days[0].description).toBe('English');
+    });
+
+    it('returns German fields for the source locale "de"', () => {
+      const out = localizePlan(plan, 'de');
+      expect(out.title).toBe('Deutscher Titel');
+      expect(out.days[0].description).toBe('Deutsch');
+    });
+
+    it('handles "en-US" the same as "en"', () => {
+      expect(localizePlan(plan, 'en-US').title).toBe('English title');
+    });
+
+    it('falls back to German description when descriptionEn is missing', () => {
+      const noEnDay: TrainingPlan = {
+        ...plan,
+        days: [
+          {
+            dayIndex: 1,
+            kind: 'main',
+            targetReps: 10,
+            description: 'Nur Deutsch',
+          },
+        ],
+      };
+      expect(localizePlan(noEnDay, 'en').days[0].description).toBe(
+        'Nur Deutsch'
+      );
     });
   });
 

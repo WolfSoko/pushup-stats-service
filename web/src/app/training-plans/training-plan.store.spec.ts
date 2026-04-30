@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { signal } from '@angular/core';
+import { PLATFORM_ID, signal } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { UserContextService } from '@pu-auth/auth';
 import { UserTrainingPlanApiService } from '@pu-stats/data-access';
@@ -55,6 +55,9 @@ describe('TrainingPlanStore', () => {
     TestBed.resetTestingModule();
     TestBed.configureTestingModule({
       providers: [
+        // Treat tests as SSR so the midnight-tick setInterval doesn't
+        // start (otherwise it would leak across `resetTestingModule`).
+        { provide: PLATFORM_ID, useValue: 'server' },
         { provide: UserTrainingPlanApiService, useValue: mocks.apiMock },
         {
           provide: UserContextService,
@@ -178,6 +181,64 @@ describe('TrainingPlanStore', () => {
 
     const total = PLAN.days.filter((d) => d.kind !== 'rest').length;
     expect(store.completionPercent()).toBe(Math.round((3 / total) * 100));
+  });
+
+  it('completionPercent ignores stray rest-day entries and clamps at 100', async () => {
+    const today = toBerlinIsoDate(new Date());
+    // Find a rest-day index inside the catalog so we can plant it
+    // into completedDays as if a stale write leaked one in.
+    const restDay = PLAN.days.find((d) => d.kind === 'rest');
+    if (!restDay) throw new Error('catalog invariant: plan has a rest day');
+    const restDayIdx = restDay.dayIndex;
+    const allNonRest = PLAN.days
+      .filter((d) => d.kind !== 'rest')
+      .map((d) => d.dayIndex);
+
+    const { store } = setup({
+      userId: 'u1',
+      planId: PLAN.id,
+      startDate: today,
+      status: 'active',
+      // every non-rest day completed + a phantom rest day
+      completedDays: [...allNonRest, restDayIdx],
+    });
+    await flush();
+
+    expect(store.completionPercent()).toBe(100);
+  });
+
+  it('markTodayDone does nothing on a rest day', async () => {
+    // Recruit-6w day 2 is a rest day. Start it 1 day ago so today is
+    // the rest day in the plan.
+    const recruit = TRAINING_PLANS.find(
+      (p) => p.id === 'recruit-6w-v1'
+    ) as (typeof TRAINING_PLANS)[number];
+    expect(recruit.days[1].kind).toBe('rest');
+    const todayIso = toBerlinIsoDate(new Date());
+    const yesterday = toBerlinIsoDate(
+      new Date(Date.now() - 86_400_000)
+    );
+
+    const { store, mocks } = setup({
+      userId: 'u1',
+      planId: recruit.id,
+      startDate: yesterday,
+      status: 'active',
+      completedDays: [],
+    });
+    await flush();
+
+    // sanity: the resolver believes today is plan-day 2 (a rest day)
+    expect(store.currentDayIndex()).toBe(2);
+    expect(store.todayDay()?.kind).toBe('rest');
+
+    await store.markTodayDone();
+    await flush();
+
+    expect(mocks.apiMock.updatePlan).not.toHaveBeenCalled();
+    expect(store.activePlan()?.completedDays).toEqual([]);
+    // Reference unused param to keep tsc happy.
+    void todayIso;
   });
 
   it('unmarkDayDone removes a day from completedDays', async () => {

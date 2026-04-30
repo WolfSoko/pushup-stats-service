@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+  LOCALE_ID,
+} from '@angular/core';
+import { localizePlan, TrainingPlanDay } from '@pu-stats/models';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
@@ -29,7 +36,7 @@ import { TrainingPlanStore } from './training-plan.store';
         </p>
       </header>
 
-      @if (store.hasActivePlan() && store.activeCatalog(); as active) {
+      @if (activeView(); as active) {
         <mat-card class="active-plan">
           <mat-card-header>
             <mat-card-title i18n="@@trainingPlans.active.title">
@@ -51,7 +58,7 @@ import { TrainingPlanStore } from './training-plan.store';
               />
             }
 
-            @if (store.todayDay(); as today) {
+            @if (todayLocalized(); as today) {
               <div class="today-card">
                 <div class="today-kind">
                   @if (today.kind === 'rest') {
@@ -95,7 +102,7 @@ import { TrainingPlanStore } from './training-plan.store';
             <a
               mat-flat-button
               color="primary"
-              [routerLink]="['/training-plans', active.slug]"
+              [routerLink]="['/training-plans', store.activeCatalog()?.slug]"
             >
               <mat-icon>open_in_full</mat-icon>
               <span i18n="@@trainingPlans.openDetail">Details öffnen</span>
@@ -105,7 +112,7 @@ import { TrainingPlanStore } from './training-plan.store';
       }
 
       <section class="plan-grid">
-        @for (plan of store.allPlans(); track plan.id) {
+        @for (plan of localizedPlans(); track plan.id) {
           <mat-card class="plan-card">
             <mat-card-header>
               <mat-card-title>{{ plan.title }}</mat-card-title>
@@ -214,6 +221,45 @@ import { TrainingPlanStore } from './training-plan.store';
 })
 export class TrainingPlansPageComponent {
   readonly store = inject(TrainingPlanStore);
+  private readonly locale = inject(LOCALE_ID) as string;
+
+  /** Catalog with `title`/`summary` fields swapped to the active locale. */
+  readonly localizedPlans = computed(() =>
+    this.store.allPlans().map((p) => {
+      const localized = localizePlan(p, this.locale);
+      return {
+        id: p.id,
+        slug: p.slug,
+        level: p.level,
+        totalDays: p.totalDays,
+        title: localized.title,
+        summary: localized.summary,
+      };
+    })
+  );
+
+  /** Active plan card view-model — null when no plan is active. */
+  readonly activeView = computed(() => {
+    const cat = this.store.activeCatalog();
+    if (!cat || !this.store.hasActivePlan()) return null;
+    const localized = localizePlan(cat, this.locale);
+    return {
+      title: localized.title,
+      summary: localized.summary,
+      totalDays: cat.totalDays,
+    };
+  });
+
+  /** Today's day with localized description. */
+  readonly todayLocalized = computed<TrainingPlanDay | null>(() => {
+    const day = this.store.todayDay();
+    const cat = this.store.activeCatalog();
+    if (!day || !cat) return null;
+    const localized = localizePlan(cat, this.locale).days.find(
+      (d) => d.dayIndex === day.dayIndex
+    );
+    return localized ?? day;
+  });
 
   abandon(): void {
     void this.store.abandon();

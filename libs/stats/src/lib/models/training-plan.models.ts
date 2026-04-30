@@ -132,13 +132,51 @@ export function isPlanCompleted(
   return required.every((idx) => completedDays.includes(idx));
 }
 
+/**
+ * Returns plan fields adapted to the active Angular locale. We pick
+ * the English fields when `LOCALE_ID === 'en'` and otherwise fall
+ * back to the German source. The catalog stores both languages
+ * because plans are static curated data, not user-generated content.
+ */
+export function localizePlan(
+  plan: TrainingPlan,
+  locale: string
+): {
+  title: string;
+  summary: string;
+  days: ReadonlyArray<TrainingPlanDay & { description: string }>;
+} {
+  const isEnglish = locale.toLowerCase().startsWith('en');
+  return {
+    title: isEnglish ? plan.titleEn : plan.title,
+    summary: isEnglish ? plan.summaryEn : plan.summary,
+    days: plan.days.map((day) => ({
+      ...day,
+      description:
+        isEnglish && day.descriptionEn ? day.descriptionEn : day.description,
+    })),
+  };
+}
+
 function parseIsoDate(value: string): Date | null {
   // Accept `YYYY-MM-DD` (Berlin date string). Normalize to local
   // midnight so the day diff is calendar-based, not millisecond-based.
   const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
   if (!match) return null;
   const [, y, m, d] = match;
-  const date = new Date(Number(y), Number(m) - 1, Number(d));
+  const year = Number(y);
+  const month = Number(m);
+  const day = Number(d);
+  const date = new Date(year, month - 1, day);
+  // Reject impossible dates like 2026-02-30 — `Date()` would silently
+  // overflow into the next month. Round-trip the components.
+  if (
+    date.getFullYear() !== year ||
+    date.getMonth() !== month - 1 ||
+    date.getDate() !== day
+  ) {
+    return null;
+  }
   date.setHours(0, 0, 0, 0);
   return date;
 }
