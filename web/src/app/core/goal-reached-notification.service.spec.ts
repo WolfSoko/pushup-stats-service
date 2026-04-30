@@ -344,6 +344,120 @@ describe('GoalReachedNotificationService', () => {
       });
     });
 
+    it('Then re-fires on the next day even if the previous day was already celebrated', async () => {
+      // Given — day 1: goal reached, dialog opens, flag persisted.
+      setup({
+        dailyGoal: 10,
+        entries: [
+          {
+            _id: '1',
+            timestamp: '2026-04-22T08:00:00',
+            reps: 12,
+          } as PushupRecord,
+        ],
+      });
+      await flushAll();
+      expect(dialogOpenSpy).toHaveBeenCalledTimes(1);
+      expect(localStorage.getItem('pus_goal_reached_daily_2026-04-22')).toBe(
+        '1'
+      );
+      dialogOpenSpy.mockClear();
+
+      // When — clock advances to day 2, fresh service start, the user reaches
+      // the goal again on the new day. Yesterday's flag must NOT silently
+      // suppress the new day's celebration.
+      vi.setSystemTime(new Date(2026, 3, 23, 12, 0));
+      setup({
+        dailyGoal: 10,
+        entries: [
+          {
+            _id: '1',
+            timestamp: '2026-04-22T08:00:00',
+            reps: 12,
+          } as PushupRecord,
+          {
+            _id: '2',
+            timestamp: '2026-04-23T09:00:00',
+            reps: 12,
+          } as PushupRecord,
+        ],
+      });
+      await flushAll();
+
+      // Then — dialog fires for day 2 with its own flag, and yesterday's stale
+      // flag has been pruned from localStorage so it can no longer accidentally
+      // match a future period.
+      expect(dialogOpenSpy).toHaveBeenCalledTimes(1);
+      const [, config] = dialogOpenSpy.mock.calls[0];
+      expect(config?.data).toMatchObject({
+        kind: 'daily',
+        total: 12,
+        goal: 10,
+      });
+      expect(localStorage.getItem('pus_goal_reached_daily_2026-04-23')).toBe(
+        '1'
+      );
+      expect(
+        localStorage.getItem('pus_goal_reached_daily_2026-04-22')
+      ).toBeNull();
+    });
+
+    it('Then re-fires after midnight in the same service instance when live entries arrive on day 2', async () => {
+      // Given — long-running session. Service is created on day 1 and the
+      // user reaches the goal; flag persisted. The instance stays alive
+      // (PWA / background tab) and the clock crosses midnight without the
+      // service being recreated. This is the regression path the
+      // `live.entries()`-tied `todayBerlin` recompute targets.
+      setup({
+        dailyGoal: 10,
+        entries: [
+          {
+            _id: '1',
+            timestamp: '2026-04-22T08:00:00',
+            reps: 12,
+          } as PushupRecord,
+        ],
+      });
+      await flushAll();
+      expect(dialogOpenSpy).toHaveBeenCalledTimes(1);
+      expect(localStorage.getItem('pus_goal_reached_daily_2026-04-22')).toBe(
+        '1'
+      );
+      dialogOpenSpy.mockClear();
+
+      // When — clock advances to day 2 (no fresh service, no setup() call),
+      // and a new entry on the new day arrives via the same liveEntries
+      // signal the service is already subscribed to.
+      vi.setSystemTime(new Date(2026, 3, 23, 12, 0));
+      liveEntries.set([
+        {
+          _id: '1',
+          timestamp: '2026-04-22T08:00:00',
+          reps: 12,
+        } as PushupRecord,
+        {
+          _id: '2',
+          timestamp: '2026-04-23T09:00:00',
+          reps: 12,
+        } as PushupRecord,
+      ]);
+      await flushAll();
+
+      // Then — the SAME service instance must now recompute "today" to day 2
+      // (because `todayBerlin` depends on `entries()`), pick up the day-2
+      // total, and fire the celebration with the new period key.
+      expect(dialogOpenSpy).toHaveBeenCalledTimes(1);
+      const [, config] = dialogOpenSpy.mock.calls[0];
+      expect(config?.data).toMatchObject({
+        kind: 'daily',
+        total: 12,
+        goal: 10,
+      });
+      expect(localStorage.getItem('pus_goal_reached_daily_2026-04-23')).toBe(
+        '1'
+      );
+    });
+
     it('Then a downward change leaves the persisted flag intact', async () => {
       // Given
       setup({

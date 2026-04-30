@@ -2,9 +2,9 @@ import { inject, Injectable } from '@angular/core';
 import { Auth } from '@angular/fire/auth';
 import {
   doc,
+  docData,
   DocumentReference,
   Firestore,
-  getDoc,
   setDoc,
 } from '@angular/fire/firestore';
 import { UserConfig, UserConfigUpdate } from '@pu-stats/models';
@@ -15,18 +15,28 @@ export class UserConfigApiService {
   private readonly firestore = inject(Firestore, { optional: true });
   private readonly auth = inject(Auth, { optional: true });
 
+  /**
+   * Subscribe to the user's config document. Emits initially and on every
+   * Firestore document change so consumers update reactively (e.g. when the
+   * user edits goals on another device, or after a write completes).
+   */
   getConfig(userId: string): Observable<UserConfig> {
     const effectiveUserId = this.resolveUserId(userId);
     if (!effectiveUserId || !this.firestore) {
-      return of({ userId } as UserConfig);
+      // Use the resolved id (or the passed-in fallback when no auth user is
+      // available) so the stub config matches the doc path the live read
+      // would have hit. Returning the unresolved `userId` here would emit a
+      // different identity than `updateConfig` writes to.
+      return of({ userId: effectiveUserId || userId } as UserConfig);
     }
 
     const ref = this.docRef(effectiveUserId);
-    return from(getDoc(ref)).pipe(
-      map((snapshot) => {
-        const data = snapshot.data() as UserConfig | undefined;
-        return data ?? ({ userId: effectiveUserId } as UserConfig);
-      })
+    return docData(ref).pipe(
+      map(
+        (data) =>
+          (data as UserConfig | undefined) ??
+          ({ userId: effectiveUserId } as UserConfig)
+      )
     );
   }
 

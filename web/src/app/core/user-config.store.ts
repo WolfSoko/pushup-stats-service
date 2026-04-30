@@ -1,4 +1,5 @@
-import { computed, inject, resource } from '@angular/core';
+import { computed, inject } from '@angular/core';
+import { rxResource } from '@angular/core/rxjs-interop';
 import {
   signalStore,
   withComputed,
@@ -14,13 +15,17 @@ import {
   UserConfig,
   UserConfigUpdate,
 } from '@pu-stats/models';
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom, of } from 'rxjs';
 
 /**
  * Root-level store for user config (daily/weekly/monthly goals, display name,
  * consent, ui flags). Single source of truth — consumed by the app toolbar,
  * dashboard and settings page so that edits made in one place propagate
  * reactively to the others without requiring a full reload.
+ *
+ * Backed by a Firestore real-time listener (`docData()`), so config changes
+ * made anywhere — settings page, another device, server-side — propagate to
+ * every consumer without a manual reload.
  */
 export const UserConfigStore = signalStore(
   { providedIn: 'root' },
@@ -29,11 +34,11 @@ export const UserConfigStore = signalStore(
     _user: inject(UserContextService),
   })),
   withProps((store) => ({
-    configResource: resource({
+    configResource: rxResource({
       params: () => ({ userId: store._user.userIdSafe() }),
-      loader: async ({ params }) => {
-        if (!params.userId) return null;
-        return firstValueFrom(store._api.getConfig(params.userId));
+      stream: ({ params }) => {
+        if (!params.userId) return of(null);
+        return store._api.getConfig(params.userId);
       },
     }),
   })),

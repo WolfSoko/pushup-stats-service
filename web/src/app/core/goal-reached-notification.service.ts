@@ -51,12 +51,22 @@ export class GoalReachedNotificationService {
     this.live.entries()
   );
 
-  private readonly todayBerlin = computed(() => toBerlinIsoDate(new Date()));
+  /**
+   * Berlin-localised "today" key. Reading `entries()` here ties the key to
+   * the live data signal, so that — in a long-running PWA session that
+   * crosses midnight — the key recomputes the next time a Firestore entry
+   * update arrives. Without this dependency `todayBerlin` would cache day 1
+   * forever and the dialog would never re-fire on day 2.
+   */
+  private readonly todayBerlin = computed(() => {
+    this.entries();
+    return toBerlinIsoDate(new Date());
+  });
 
   private readonly todayTotal = computed(() => {
     const today = this.todayBerlin();
     return this.entries()
-      .filter((entry) => entry.timestamp.slice(0, 10) === today)
+      .filter((entry) => entryBerlinDate(entry.timestamp) === today)
       .reduce((sum, entry) => sum + entry.reps, 0);
   });
 
@@ -70,7 +80,7 @@ export class GoalReachedNotificationService {
     const { from, to } = this.weekRange();
     return this.entries()
       .filter((entry) => {
-        const day = entry.timestamp.slice(0, 10);
+        const day = entryBerlinDate(entry.timestamp);
         return day >= from && day <= to;
       })
       .reduce((sum, entry) => sum + entry.reps, 0);
@@ -83,7 +93,7 @@ export class GoalReachedNotificationService {
   private readonly monthTotal = computed(() => {
     const prefix = this.currentMonthKey();
     return this.entries()
-      .filter((entry) => entry.timestamp.startsWith(prefix))
+      .filter((entry) => entryBerlinDate(entry.timestamp).startsWith(prefix))
       .reduce((sum, entry) => sum + entry.reps, 0);
   });
 
@@ -124,6 +134,12 @@ export class GoalReachedNotificationService {
 
   constructor() {
     if (!isPlatformBrowser(this.platformId)) return;
+    // Drop stale period flags from previous days/weeks/months on every app
+    // start. Without this, localStorage accumulates `pus_goal_reached_*` keys
+    // forever, and a clock skew or formatting drift could falsely match an
+    // old key on a new day — exactly the "dialog never re-fires on day 2"
+    // class of bug.
+    pruneStalePeriodFlags(toBerlinIsoDate(new Date()));
     for (const spec of this.specs) {
       // Order matters: the increase watcher is registered before the
       // goal-reached watcher so that, when both fire on a single goal raise,
@@ -194,6 +210,55 @@ export class GoalReachedNotificationService {
         maxParticleCount: snapshot.maxParticleCount,
       },
     });
+  }
+}
+
+/**
+ * Convert a Firestore-stored ISO timestamp to its Berlin-localised date key.
+ *
+ * Two timestamp shapes appear in production:
+ *   - Naive (`YYYY-MM-DDTHH:mm[:ss]`) — written by older quick-add entries
+ *     that the backend treats as Berlin local time. We must NOT round-trip
+ *     these through `new Date()`, because that parses them in the device's
+ *     local timezone and shifts the day on devices not in `Europe/Berlin`.
+ *     The Cloud Function's bucketing logic also uses the literal date prefix.
+ *   - TZ-aware (`...Z` or `...±HH:mm`) — written by `createPushup` via
+ *     `new Date().toISOString()`. We convert these via the Berlin formatter
+ *     so that an entry made at 00:30 Berlin (== 22:30 UTC the prior day)
+ *     counts toward today and not yesterday.
+ */
+function entryBerlinDate(timestamp: string): string {
+  if (HAS_TIMEZONE.test(timestamp)) {
+    return toBerlinIsoDate(new Date(timestamp));
+  }
+  return timestamp.slice(0, 10);
+}
+
+const HAS_TIMEZONE = /(Z|[+-]\d{2}:?\d{2})$/;
+
+function pruneStalePeriodFlags(todayBerlin: string): void {
+  // Touching `globalThis.localStorage` itself can throw `SecurityError` in
+  // sandboxed/opaque origins or with storage disabled (Safari private mode,
+  // some embedded webviews). Wrap the whole access — not just the read loop —
+  // so cleanup stays best-effort and never breaks app startup.
+  try {
+    const ls = globalThis.localStorage;
+    if (!ls) return;
+    const validKeys = new Set([
+      `${STORAGE_PREFIX}daily_${todayBerlin}`,
+      `${STORAGE_PREFIX}weekly_${isoWeekKey(todayBerlin)}`,
+      `${STORAGE_PREFIX}monthly_${todayBerlin.slice(0, 7)}`,
+    ]);
+    const stale: string[] = [];
+    for (let i = 0; i < ls.length; i++) {
+      const key = ls.key(i);
+      if (key && key.startsWith(STORAGE_PREFIX) && !validKeys.has(key)) {
+        stale.push(key);
+      }
+    }
+    for (const key of stale) ls.removeItem(key);
+  } catch {
+    // localStorage unavailable / SecurityError — best-effort cleanup only.
   }
 }
 

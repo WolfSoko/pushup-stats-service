@@ -16,6 +16,16 @@
 ## Jest ↔ Firebase
 
 - **`@angular/fire/firestore` import in Jest:** Importing the module at all triggers `fetch is not defined`. Always `jest.mock('@angular/fire/firestore', () => ({...}))` at the top of the file — see `pushup-firestore.service.spec.ts` for the pattern. Use `jest.mocked(getDoc)` instead of `jest.requireMock()` for type safety.
+- **Don't reference module-level imports inside `jest.mock` factories.** `jest.mock(path, factory)` is hoisted above all imports, but the _factory body_ runs the first time the mocked module is `require()`'d. Anything that captures a same-file binding (e.g. `docData: jest.fn(() => of(undefined))` where `of` is imported from `rxjs` below) can evaluate before that import has been initialised under the CJS transform and crash the file. Either keep the factory bare and set the implementation in `beforeEach`:
+  ```ts
+  jest.mock('@angular/fire/firestore', () => ({
+    Firestore: jest.fn(),
+    docData: jest.fn(),
+  }));
+  // ...
+  beforeEach(() => jest.mocked(docData).mockReturnValue(of(undefined) as never));
+  ```
+  …or `require()` the dependency inside the factory. Mirrors the Vitest `vi.hoisted` pattern below.
 - **Cloud Function pure logic testing:** Extract business logic to separate modules (not in Cloud Function triggers) for testability. See `user-stats-delta.ts` pattern: pure functions tested separately via Jest without Firebase mocks; triggers are thin wrappers that call the logic. This enables testing calculation correctness without mocking Firestore.
 
 ## Versioned migrations
