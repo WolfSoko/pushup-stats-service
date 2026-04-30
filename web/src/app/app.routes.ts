@@ -92,6 +92,26 @@ export const appRoutes: Routes = [
       ),
   },
   {
+    path: 'training-plans',
+    canActivate: [authGuard],
+    data: {
+      seoTitle: $localize`:@@seo.trainingPlans.title:Trainingspläne – Pushup Tracker`,
+      seoDescription: $localize`:@@seo.trainingPlans.description:Strukturierte Liegestütz-Trainingspläne mit Tagesziel, Sätzen und automatischer Fortschrittsverfolgung.`,
+    },
+    loadComponent: () =>
+      import('./training-plans/training-plans-page.component').then(
+        (m) => m.TrainingPlansPageComponent
+      ),
+  },
+  {
+    path: 'training-plans/:slug',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('./training-plans/training-plan-detail.component').then(
+        (m) => m.TrainingPlanDetailComponent
+      ),
+  },
+  {
     path: 'reminders',
     canActivate: [authGuard],
     data: {

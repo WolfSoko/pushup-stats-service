@@ -3,6 +3,33 @@
   overflow-x: hidden;
 }
 
+.plan-banner {
+  border-left: 4px solid #7b9fff;
+}
+
+.plan-banner-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.plan-banner-row mat-icon {
+  color: #7b9fff;
+}
+
+.plan-banner-text {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.plan-banner-text .plan-meta {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
 .container {
   max-width: 1200px;
   margin: 0 auto;

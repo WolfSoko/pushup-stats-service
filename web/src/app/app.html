@@ -66,6 +66,16 @@
       @if (isLoggedIn()) {
       <a
         mat-list-item
+        routerLink="/training-plans"
+        routerLinkActive="active"
+        (click)="navOpen.set(false)"
+      >
+        <mat-icon matListItemIcon>fitness_center</mat-icon>
+        <span matListItemTitle i18n="@@nav.trainingPlans">Trainingspläne</span>
+      </a>
+
+      <a
+        mat-list-item
         routerLink="/reminders"
         routerLinkActive="active"
         (click)="navOpen.set(false)"

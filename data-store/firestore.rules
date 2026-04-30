@@ -86,6 +86,19 @@ service cloud.firestore {
       allow read, update, delete: if false;
     }
 
+    // Active training plan — owner-only. Single doc per user.
+    // The doc id IS the user id, and writes must keep `userId` aligned.
+    match /userTrainingPlans/{userId} {
+      allow read: if request.auth != null && request.auth.uid == userId;
+      allow create: if request.auth != null
+                    && request.auth.uid == userId
+                    && request.resource.data.userId == userId;
+      allow update: if request.auth != null
+                    && request.auth.uid == userId
+                    && request.resource.data.userId == userId;
+      allow delete: if request.auth != null && request.auth.uid == userId;
+    }
+
     // Deny everything else by default.
     match /{document=**} {
       allow read, write: if false;

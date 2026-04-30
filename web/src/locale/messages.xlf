@@ -1132,7 +1132,7 @@
     <unit id="app.title">
       <notes>
         <note category="location">web/src/app/app.html:11,12</note>
-        <note category="location">web/src/app/app.html:133,134</note>
+        <note category="location">web/src/app/app.html:143,144</note>
       </notes>
       <segment>
         <source>Pushups</source>
@@ -1141,8 +1141,8 @@
     <unit id="nav.dashboard">
       <notes>
         <note category="location">web/src/app/app.html:23,26</note>
-        <note category="location">web/src/app/app.html:164,166</note>
-        <note category="location">web/src/app/app.html:213,215</note>
+        <note category="location">web/src/app/app.html:174,176</note>
+        <note category="location">web/src/app/app.html:223,225</note>
       </notes>
       <segment>
         <source>Dashboard</source>
@@ -1151,8 +1151,8 @@
     <unit id="nav.analysis">
       <notes>
         <note category="location">web/src/app/app.html:33,36</note>
-        <note category="location">web/src/app/app.html:168,170</note>
-        <note category="location">web/src/app/app.html:217,219</note>
+        <note category="location">web/src/app/app.html:178,180</note>
+        <note category="location">web/src/app/app.html:227,229</note>
       </notes>
       <segment>
         <source>Analyse</source>
@@ -1161,8 +1161,8 @@
     <unit id="nav.leaderboard">
       <notes>
         <note category="location">web/src/app/app.html:43,47</note>
-        <note category="location">web/src/app/app.html:172,174</note>
-        <note category="location">web/src/app/app.html:221,223</note>
+        <note category="location">web/src/app/app.html:182,184</note>
+        <note category="location">web/src/app/app.html:231,233</note>
       </notes>
       <segment>
         <source>Bestenliste</source>
@@ -1171,8 +1171,8 @@
     <unit id="nav.blog">
       <notes>
         <note category="location">web/src/app/app.html:53,56</note>
-        <note category="location">web/src/app/app.html:176,178</note>
-        <note category="location">web/src/app/app.html:225,227</note>
+        <note category="location">web/src/app/app.html:186,188</note>
+        <note category="location">web/src/app/app.html:235,237</note>
       </notes>
       <segment>
         <source>Blog</source>
@@ -1186,9 +1186,17 @@
         <source>Historie</source>
       </segment>
     </unit>
-    <unit id="nav.reminders">
+    <unit id="nav.trainingPlans">
       <notes>
         <note category="location">web/src/app/app.html:74,78</note>
+      </notes>
+      <segment>
+        <source>Trainingspläne</source>
+      </segment>
+    </unit>
+    <unit id="nav.reminders">
+      <notes>
+        <note category="location">web/src/app/app.html:84,88</note>
       </notes>
       <segment>
         <source>Erinnerungen</source>
@@ -1196,7 +1204,7 @@
     </unit>
     <unit id="nav.language">
       <notes>
-        <note category="location">web/src/app/app.html:85,88</note>
+        <note category="location">web/src/app/app.html:95,98</note>
       </notes>
       <segment>
         <source> Sprache </source>
@@ -1204,7 +1212,7 @@
     </unit>
     <unit id="nav.lang.de">
       <notes>
-        <note category="location">web/src/app/app.html:94,97</note>
+        <note category="location">web/src/app/app.html:104,107</note>
       </notes>
       <segment>
         <source>Deutsch</source>
@@ -1212,7 +1220,7 @@
     </unit>
     <unit id="nav.lang.en">
       <notes>
-        <note category="location">web/src/app/app.html:103,105</note>
+        <note category="location">web/src/app/app.html:113,115</note>
       </notes>
       <segment>
         <source>English</source>
@@ -1220,7 +1228,7 @@
     </unit>
     <unit id="nav.aria">
       <notes>
-        <note category="location">web/src/app/app.html:112,113</note>
+        <note category="location">web/src/app/app.html:122,123</note>
       </notes>
       <segment>
         <source>Pushup Navigation</source>
@@ -1228,7 +1236,7 @@
     </unit>
     <unit id="nav.openMenu">
       <notes>
-        <note category="location">web/src/app/app.html:118,119</note>
+        <note category="location">web/src/app/app.html:128,129</note>
       </notes>
       <segment>
         <source>Menü öffnen</source>
@@ -1236,7 +1244,7 @@
     </unit>
     <unit id="nav.toLanding">
       <notes>
-        <note category="location">web/src/app/app.html:128,129</note>
+        <note category="location">web/src/app/app.html:138,139</note>
       </notes>
       <segment>
         <source>Zur Landingpage</source>
@@ -1244,7 +1252,7 @@
     </unit>
     <unit id="toolbarDailyGoal">
       <notes>
-        <note category="location">web/src/app/app.html:136,137</note>
+        <note category="location">web/src/app/app.html:146,147</note>
       </notes>
       <segment>
         <source>Tagesziel</source>
@@ -1252,7 +1260,7 @@
     </unit>
     <unit id="nav.admin">
       <notes>
-        <note category="location">web/src/app/app.html:144,145</note>
+        <note category="location">web/src/app/app.html:154,155</note>
       </notes>
       <segment>
         <source>Admin-Bereich</source>
@@ -1260,7 +1268,7 @@
     </unit>
     <unit id="nav.desktop.aria">
       <notes>
-        <note category="location">web/src/app/app.html:155,156</note>
+        <note category="location">web/src/app/app.html:165,166</note>
       </notes>
       <segment>
         <source>Hauptnavigation</source>
@@ -1268,7 +1276,7 @@
     </unit>
     <unit id="footer.aria">
       <notes>
-        <note category="location">web/src/app/app.html:185</note>
+        <note category="location">web/src/app/app.html:195</note>
       </notes>
       <segment>
         <source>Rechtliches</source>
@@ -1276,7 +1284,7 @@
     </unit>
     <unit id="footer.impressum">
       <notes>
-        <note category="location">web/src/app/app.html:187,189</note>
+        <note category="location">web/src/app/app.html:197,199</note>
       </notes>
       <segment>
         <source>Impressum</source>
@@ -1284,7 +1292,7 @@
     </unit>
     <unit id="footer.datenschutz">
       <notes>
-        <note category="location">web/src/app/app.html:190,193</note>
+        <note category="location">web/src/app/app.html:200,203</note>
       </notes>
       <segment>
         <source>Datenschutz</source>
@@ -1292,7 +1300,7 @@
     </unit>
     <unit id="footer.cookies">
       <notes>
-        <note category="location">web/src/app/app.html:197,199</note>
+        <note category="location">web/src/app/app.html:207,209</note>
       </notes>
       <segment>
         <source> Cookie-Einstellungen </source>
@@ -1300,7 +1308,7 @@
     </unit>
     <unit id="nav.bottom.aria">
       <notes>
-        <note category="location">web/src/app/app.html:204,205</note>
+        <note category="location">web/src/app/app.html:214,215</note>
       </notes>
       <segment>
         <source>Mobile-Navigation</source>
@@ -1418,9 +1426,25 @@
         <source>Verwalte Profil, Leaderboard-Sichtbarkeit und Tagesziel-Einstellungen.</source>
       </segment>
     </unit>
-    <unit id="seo.reminders.title">
+    <unit id="seo.trainingPlans.title">
       <notes>
         <note category="location">web/src/app/app.routes.ts:98</note>
+      </notes>
+      <segment>
+        <source>Trainingspläne – Pushup Tracker</source>
+      </segment>
+    </unit>
+    <unit id="seo.trainingPlans.description">
+      <notes>
+        <note category="location">web/src/app/app.routes.ts:99</note>
+      </notes>
+      <segment>
+        <source>Strukturierte Liegestütz-Trainingspläne mit Tagesziel, Sätzen und automatischer Fortschrittsverfolgung.</source>
+      </segment>
+    </unit>
+    <unit id="seo.reminders.title">
+      <notes>
+        <note category="location">web/src/app/app.routes.ts:118</note>
       </notes>
       <segment>
         <source>Erinnerungen – Pushup Tracker</source>
@@ -1428,7 +1452,7 @@
     </unit>
     <unit id="seo.reminders.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:99</note>
+        <note category="location">web/src/app/app.routes.ts:119</note>
       </notes>
       <segment>
         <source>Konfiguriere Liegestütz-Erinnerungen und Push-Benachrichtigungen.</source>
@@ -1436,7 +1460,7 @@
     </unit>
     <unit id="seo.leaderboard.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:109</note>
+        <note category="location">web/src/app/app.routes.ts:129</note>
       </notes>
       <segment>
         <source>Bestenliste – Pushup Tracker</source>
@@ -1444,7 +1468,7 @@
     </unit>
     <unit id="seo.leaderboard.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:110</note>
+        <note category="location">web/src/app/app.routes.ts:130</note>
       </notes>
       <segment>
         <source>Öffentliche Bestenliste für tägliche, wöchentliche und monatliche Pushup-Reps.</source>
@@ -1452,7 +1476,7 @@
     </unit>
     <unit id="seo.blog.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:124</note>
+        <note category="location">web/src/app/app.routes.ts:144</note>
       </notes>
       <segment>
         <source>Blog – Liegestütze Tipps &amp; Guides | Pushup Tracker</source>
@@ -1460,7 +1484,7 @@
     </unit>
     <unit id="seo.blog.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:125</note>
+        <note category="location">web/src/app/app.routes.ts:145</note>
       </notes>
       <segment>
         <source>Tipps, Trainingspläne und Motivation rund um Liegestütze – von Einsteiger bis Fortgeschritten.</source>
@@ -1468,7 +1492,7 @@
     </unit>
     <unit id="seo.impressum.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:142</note>
+        <note category="location">web/src/app/app.routes.ts:162</note>
       </notes>
       <segment>
         <source>Impressum – Pushup Tracker</source>
@@ -1476,7 +1500,7 @@
     </unit>
     <unit id="seo.impressum.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:143</note>
+        <note category="location">web/src/app/app.routes.ts:163</note>
       </notes>
       <segment>
         <source>Impressum und Anbieterkennzeichnung von Pushup Tracker.</source>
@@ -1484,7 +1508,7 @@
     </unit>
     <unit id="seo.datenschutz.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:153</note>
+        <note category="location">web/src/app/app.routes.ts:173</note>
       </notes>
       <segment>
         <source>Datenschutzerklärung – Pushup Tracker</source>
@@ -1492,7 +1516,7 @@
     </unit>
     <unit id="seo.datenschutz.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:154</note>
+        <note category="location">web/src/app/app.routes.ts:174</note>
       </notes>
       <segment>
         <source>Datenschutzerklärung von Pushup Tracker – Informationen zu Datenverarbeitung, Cookies und Ihren Rechten.</source>
@@ -1717,8 +1741,8 @@
     </unit>
     <unit id="share.error.unavailable">
       <notes>
-        <note category="location">web/src/app/core/share.service.ts:76</note>
-        <note category="location">web/src/app/core/share.service.ts:91</note>
+        <note category="location">web/src/app/core/share.service.ts:72</note>
+        <note category="location">web/src/app/core/share.service.ts:87</note>
       </notes>
       <segment>
         <source>Teilen ist auf diesem Gerät nicht möglich.</source>
@@ -1726,7 +1750,7 @@
     </unit>
     <unit id="share.success.clipboard">
       <notes>
-        <note category="location">web/src/app/core/share.service.ts:85</note>
+        <note category="location">web/src/app/core/share.service.ts:81</note>
       </notes>
       <segment>
         <source>In die Zwischenablage kopiert. Jetzt einfügen und teilen!</source>
@@ -4218,9 +4242,68 @@
         <source>All-Time Ø/Tag</source>
       </segment>
     </unit>
+    <unit id="trainingPlans.day">
+      <notes>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:70,71</note>
+        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:52,53</note>
+      </notes>
+      <segment>
+        <source>Tag</source>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.kind.rest">
+      <notes>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:73,74</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:139,140</note>
+        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:66,67</note>
+      </notes>
+      <segment>
+        <source>Ruhetag</source>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.kind.light">
+      <notes>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:76,77</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:143,144</note>
+        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:69,70</note>
+      </notes>
+      <segment>
+        <source>Leichter Tag</source>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.kind.test">
+      <notes>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:78,80</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:141,142</note>
+        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:72,74</note>
+      </notes>
+      <segment>
+        <source>Maximaltest</source>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.reps">
+      <notes>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:81,83</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:147,148</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:151,153</note>
+        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:84,86</note>
+      </notes>
+      <segment>
+        <source>Wdh.</source>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.openDetail">
+      <notes>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:90,92</note>
+        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:108,110</note>
+      </notes>
+      <segment>
+        <source> Details öffnen </source>
+      </segment>
+    </unit>
     <unit id="todayFocusAria">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:64,65</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:99,100</note>
       </notes>
       <segment>
         <source>Tagesfokus</source>
@@ -4228,7 +4311,7 @@
     </unit>
     <unit id="dashboard.todayTotal">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:70,72</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:105,107</note>
       </notes>
       <segment>
         <source>Heute Gesamt</source>
@@ -4236,7 +4319,7 @@
     </unit>
     <unit id="goalProgressTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:81,83</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:116,118</note>
       </notes>
       <segment>
         <source>Zielfortschritt</source>
@@ -4244,7 +4327,7 @@
     </unit>
     <unit id="dashboard.dailyGoalLabel">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:86,87</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:121,122</note>
       </notes>
       <segment>
         <source>Tag</source>
@@ -4252,7 +4335,7 @@
     </unit>
     <unit id="dashboard.weeklyGoalLabel">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:95,96</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:130,131</note>
       </notes>
       <segment>
         <source>Woche</source>
@@ -4260,7 +4343,7 @@
     </unit>
     <unit id="dashboard.monthlyGoalLabel">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:104,105</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:139,140</note>
       </notes>
       <segment>
         <source>Monat</source>
@@ -4268,7 +4351,7 @@
     </unit>
     <unit id="lastEntryTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:123,124</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:158,159</note>
       </notes>
       <segment>
         <source>Letzter Eintrag</source>
@@ -4276,7 +4359,7 @@
     </unit>
     <unit id="latEntryReps">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:128,130</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:163,165</note>
       </notes>
       <segment>
         <source> <ph id="0" equiv="INTERPOLATION" disp="{{ latest.reps }}"/> Reps · <ph id="1" equiv="INTERPOLATION_1" disp="{{ latest.type || &apos;Standard&apos; }}"/> </source>
@@ -4284,7 +4367,7 @@
     </unit>
     <unit id="dashboard.noEntryYet">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:132,134</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:167,169</note>
       </notes>
       <segment>
         <source>Noch kein Eintrag.</source>
@@ -4292,7 +4375,7 @@
     </unit>
     <unit id="quickActionsTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:141,143</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:176,178</note>
       </notes>
       <segment>
         <source>Schnellaktionen</source>
@@ -4300,7 +4383,7 @@
     </unit>
     <unit id="quickActionsSubtitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:144,146</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:179,181</note>
       </notes>
       <segment>
         <source>Schnell eintragen ohne Dialog</source>
@@ -4308,7 +4391,7 @@
     </unit>
     <unit id="quickActions.edit.aria">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:151,152</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:186,187</note>
       </notes>
       <segment>
         <source>Schnellaktionen bearbeiten</source>
@@ -4316,7 +4399,7 @@
     </unit>
     <unit id="dashboard.quickAdd.button">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:173,174</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:208,209</note>
       </notes>
       <segment>
         <source>+<ph id="0" equiv="INTERPOLATION" disp="{{ reps }}"/> Reps</source>
@@ -4324,7 +4407,7 @@
     </unit>
     <unit id="dashboard.goalFill.reached">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:187,189</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:222,224</note>
       </notes>
       <segment>
         <source>Ziel erreicht ✓</source>
@@ -4332,7 +4415,7 @@
     </unit>
     <unit id="dashboard.goalFill.fill">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:190,191</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:225,226</note>
       </notes>
       <segment>
         <source>+<ph id="0" equiv="INTERPOLATION" disp="{{ remainingToGoal() }}"/> bis zum Ziel</source>
@@ -4340,7 +4423,7 @@
     </unit>
     <unit id="quickAddNew">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:202,204</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:237,239</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">edit_note</pc> Neu </source>
@@ -4348,7 +4431,7 @@
     </unit>
     <unit id="loadingStats">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:221,225</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:256,260</note>
       </notes>
       <segment>
         <source> Lade Statistikdaten… </source>
@@ -4356,7 +4439,7 @@
     </unit>
     <unit id="dashboard.latestEntriesLinkAriaLabel">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:232,233</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:267,268</note>
       </notes>
       <segment>
         <source>Zur Historie navigieren</source>
@@ -4364,7 +4447,7 @@
     </unit>
     <unit id="dashboard.latestEntries">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:235,236</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:270,271</note>
       </notes>
       <segment>
         <source>Letzte Einträge</source>
@@ -4372,7 +4455,7 @@
     </unit>
     <unit id="dashboard.latestEntriesCtaAriaLabel">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:242,243</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:277,278</note>
       </notes>
       <segment>
         <source>Zur Historie navigieren</source>
@@ -4380,7 +4463,7 @@
     </unit>
     <unit id="dashboard.latestEntriesCta">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:246,249</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:281,284</note>
       </notes>
       <segment>
         <source>Zur Historie</source>
@@ -4388,7 +4471,7 @@
     </unit>
     <unit id="ads.dashboard.aria">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:252</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:287</note>
       </notes>
       <segment>
         <source>Werbung</source>
@@ -4396,7 +4479,7 @@
     </unit>
     <unit id="dashboard.share.aria">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:69</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:73</note>
       </notes>
       <segment>
         <source>Tagesleistung teilen</source>
@@ -4404,7 +4487,7 @@
     </unit>
     <unit id="dashboard.share">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:70</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:74</note>
       </notes>
       <segment>
         <source>Teilen</source>
@@ -4412,7 +4495,7 @@
     </unit>
     <unit id="dashboard.share.text.streak">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:174</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:195</note>
       </notes>
       <segment>
         <source>Heute schon <ph id="0" equiv="total" disp="total"/> Liegestütze geschafft – Streak: <ph id="1" equiv="streak" disp="streak"/> Tage 🔥 Tracke deine Stats kostenlos:</source>
@@ -4420,7 +4503,7 @@
     </unit>
     <unit id="dashboard.share.text.simple">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:175</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:196</note>
       </notes>
       <segment>
         <source>Heute schon <ph id="0" equiv="total" disp="total"/> Liegestütze geschafft! 💪 Tracke deine Stats kostenlos:</source>
@@ -4428,10 +4511,200 @@
     </unit>
     <unit id="dashboard.share.title">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:177</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:198</note>
       </notes>
       <segment>
         <source>Pushup Tracker</source>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.back">
+      <notes>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:43</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:193,195</note>
+      </notes>
+      <segment>
+        <source>Zurück</source>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.daysSuffix">
+      <notes>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:53,54</note>
+        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:123,125</note>
+      </notes>
+      <segment>
+        <source>Tage</source>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.level.beginner">
+      <notes>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:56,57</note>
+        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:128,130</note>
+      </notes>
+      <segment>
+        <source>Einsteiger</source>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.level.intermediate">
+      <notes>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:58,60</note>
+        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:132,134</note>
+      </notes>
+      <segment>
+        <source>Mittelstufe</source>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.level.advanced">
+      <notes>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:60,62</note>
+        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:136,138</note>
+      </notes>
+      <segment>
+        <source>Fortgeschritten</source>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.progress">
+      <notes>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:69,70</note>
+      </notes>
+      <segment>
+        <source>Fortschritt</source>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.currentDay">
+      <notes>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:75,76</note>
+      </notes>
+      <segment>
+        <source>Aktueller Tag:</source>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.abandon">
+      <notes>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:82,84</note>
+        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:99,101</note>
+      </notes>
+      <segment>
+        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">cancel</pc> Plan beenden </source>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.startCta">
+      <notes>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:91,93</note>
+      </notes>
+      <segment>
+        <source> Starte den Plan und das Tagesziel im Dashboard wird automatisch nach diesem Plan gesetzt. </source>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.replaceWarn">
+      <notes>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:97,99</note>
+      </notes>
+      <segment>
+        <source> Achtung: Dies ersetzt den aktuell aktiven Plan. </source>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.start">
+      <notes>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:102,104</note>
+      </notes>
+      <segment>
+        <source>Plan starten</source>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.week">
+      <notes>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:111,112</note>
+      </notes>
+      <segment>
+        <source>Woche</source>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.unmarkAria">
+      <notes>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:165,166</note>
+      </notes>
+      <segment>
+        <source>Als nicht erledigt markieren</source>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.markAria">
+      <notes>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:174,175</note>
+      </notes>
+      <segment>
+        <source>Als erledigt markieren</source>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.notFound">
+      <notes>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:190,191</note>
+      </notes>
+      <segment>
+        <source>Plan nicht gefunden.</source>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.started">
+      <notes>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:356</note>
+      </notes>
+      <segment>
+        <source>Plan gestartet — viel Erfolg!</source>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.abandoned">
+      <notes>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:365</note>
+      </notes>
+      <segment>
+        <source>Plan beendet.</source>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.title">
+      <notes>
+        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:31,32</note>
+      </notes>
+      <segment>
+        <source>Trainingspläne</source>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.intro">
+      <notes>
+        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:33,36</note>
+      </notes>
+      <segment>
+        <source> Strukturierte Pläne mit Tagesziel, Sätzen und automatischer Fortschrittsverfolgung. Starte einen Plan, und dein Tagesziel im Dashboard wird automatisch gesetzt. </source>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.active.title">
+      <notes>
+        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:43,44</note>
+      </notes>
+      <segment>
+        <source> Aktiver Plan </source>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.kind.main">
+      <notes>
+        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:75,77</note>
+      </notes>
+      <segment>
+        <source>Trainingstag</source>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.todayTarget">
+      <notes>
+        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:81,83</note>
+      </notes>
+      <segment>
+        <source>Heute geplant:</source>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.viewPlan">
+      <notes>
+        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:152,154</note>
+      </notes>
+      <segment>
+        <source>Plan ansehen</source>
       </segment>
     </unit>
   </file>
