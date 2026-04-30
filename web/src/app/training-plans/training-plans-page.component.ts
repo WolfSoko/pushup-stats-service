@@ -99,9 +99,26 @@ import { TrainingPlanStore } from './training-plan.store';
               <mat-icon>cancel</mat-icon>
               Plan beenden
             </button>
+            @if (
+              todayLocalized();
+              as today
+            ) {
+              @if (today.kind !== 'rest' && !store.todayDone()) {
+                <button
+                  mat-flat-button
+                  type="button"
+                  color="primary"
+                  (click)="logToday()"
+                >
+                  <mat-icon>play_circle</mat-icon>
+                  <span i18n="@@trainingPlans.logToday"
+                    >Heute eintragen</span
+                  >
+                </button>
+              }
+            }
             <a
               mat-flat-button
-              color="primary"
               [routerLink]="['/training-plans', store.activeCatalog()?.slug]"
             >
               <mat-icon>open_in_full</mat-icon>
@@ -263,5 +280,9 @@ export class TrainingPlansPageComponent {
 
   abandon(): void {
     void this.store.abandon();
+  }
+
+  logToday(): void {
+    void this.store.logTodayPlanDay();
   }
 }

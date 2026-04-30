@@ -5832,5 +5832,23 @@ Deine Position: # ·  Reps        </source>
         <target>Sharing is not available on this device.</target>
       </segment>
     </unit>
+    <unit id="trainingPlans.logToday">
+      <segment state="translated">
+        <source>Heute eintragen</source>
+        <target>Log today</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.logAria">
+      <segment state="translated">
+        <source>Plan-Sätze eintragen und als erledigt markieren</source>
+        <target>Log plan sets and mark as done</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.logged">
+      <segment state="translated">
+        <source>Plan-Sätze wurden eingetragen.</source>
+        <target>Plan sets were logged.</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

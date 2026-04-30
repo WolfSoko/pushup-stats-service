@@ -202,8 +202,17 @@ interface DayRow {
                       } @else {
                         <button
                           mat-icon-button
+                          color="primary"
+                          (click)="logPlanDay(row.day.dayIndex)"
+                          aria-label="Plan-Sätze eintragen und als erledigt markieren"
+                          i18n-aria-label="@@trainingPlans.logAria"
+                        >
+                          <mat-icon>play_circle</mat-icon>
+                        </button>
+                        <button
+                          mat-icon-button
                           (click)="mark(row.day.dayIndex)"
-                          aria-label="Als erledigt markieren"
+                          aria-label="Nur als erledigt markieren (ohne Eintrag)"
                           i18n-aria-label="@@trainingPlans.markAria"
                         >
                           <mat-icon>radio_button_unchecked</mat-icon>
@@ -409,5 +418,14 @@ export class TrainingPlanDetailComponent {
 
   async unmark(dayIndex: number): Promise<void> {
     await this.store.unmarkDayDone(dayIndex);
+  }
+
+  async logPlanDay(dayIndex: number): Promise<void> {
+    await this.store.logPlanDay(dayIndex);
+    this.snackbar.open(
+      $localize`:@@trainingPlans.logged:Plan-Sätze wurden eingetragen.`,
+      undefined,
+      { duration: 3000 }
+    );
   }
 }

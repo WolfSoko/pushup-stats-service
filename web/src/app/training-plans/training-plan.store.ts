@@ -1,6 +1,7 @@
 import {
   computed,
   DestroyRef,
+  effect,
   inject,
   PLATFORM_ID,
   signal,
@@ -15,13 +16,19 @@ import {
   withProps,
 } from '@ngrx/signals';
 import { UserContextService } from '@pu-auth/auth';
-import { UserTrainingPlanApiService } from '@pu-stats/data-access';
 import {
+  LiveDataStore,
+  StatsApiService,
+  UserTrainingPlanApiService,
+} from '@pu-stats/data-access';
+import {
+  appendLocalOffset,
   currentPlanDayIndex,
   findPlanById,
   isPlanCompleted,
   planDayByIndex,
   toBerlinIsoDate,
+  toLocalIsoDate,
   TrainingPlan,
   TrainingPlanDay,
   TRAINING_PLANS,
@@ -43,6 +50,8 @@ export const TrainingPlanStore = signalStore(
   { providedIn: 'root' },
   withProps(() => ({
     _api: inject(UserTrainingPlanApiService),
+    _statsApi: inject(StatsApiService),
+    _live: inject(LiveDataStore),
     _user: inject(UserContextService),
     _isBrowser: isPlatformBrowser(inject(PLATFORM_ID)),
     /**
@@ -160,6 +169,34 @@ export const TrainingPlanStore = signalStore(
     };
   }),
   withMethods((store) => ({
+    /**
+     * Calendar date (`YYYY-MM-DD`) for a 1-based plan day. Falls
+     * back to today's Berlin date if the plan is missing or the
+     * start date can't be parsed (defensive — caller already
+     * checks).
+     */
+    _planDayDate(dayIndex: number): string {
+      const a = store.activePlan();
+      if (!a) return toBerlinIsoDate(new Date());
+      const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(a.startDate);
+      if (!m) return toBerlinIsoDate(new Date());
+      const [, y, mo, d] = m;
+      const start = new Date(Number(y), Number(mo) - 1, Number(d));
+      start.setHours(0, 0, 0, 0);
+      const target = new Date(start);
+      target.setDate(start.getDate() + (dayIndex - 1));
+      return toLocalIsoDate(target);
+    },
+
+    /** Sum of reps already logged on a given local date. */
+    _repsLoggedOn(dateIso: string): number {
+      return store
+        ._live.entries()
+        .filter((e) => e.timestamp.slice(0, 10) === dateIso)
+        .reduce((sum, e) => sum + e.reps, 0);
+    },
+  })),
+  withMethods((store) => ({
     /** All curated plans (re-exposed for component templates). */
     allPlans(): ReadonlyArray<TrainingPlan> {
       return TRAINING_PLANS;
@@ -204,7 +241,22 @@ export const TrainingPlanStore = signalStore(
       store.activeResource.reload();
     },
 
-    /** Mark a specific day as done (used from the plan detail page). */
+    /**
+     * Log today's plan-prescribed reps and mark today as done. Thin
+     * wrapper around `logPlanDay(currentDayIndex)`.
+     */
+    async logTodayPlanDay(): Promise<void> {
+      const idx = store.currentDayIndex();
+      if (idx === null) return;
+      await this.logPlanDay(idx);
+    },
+
+    /**
+     * Mark a specific day as done WITHOUT creating a pushup entry.
+     * Use this for "I already logged elsewhere" flows. For the
+     * common case (mark done + log the plan-prescribed reps) call
+     * `logPlanDay()` instead.
+     */
     async markDayDone(dayIndex: number): Promise<void> {
       const a = store.activePlan();
       const c = store.activeCatalog();
@@ -219,6 +271,57 @@ export const TrainingPlanStore = signalStore(
       await firstValueFrom(
         store._api.updatePlan(userId, { completedDays: next })
       );
+      store.activeResource.reload();
+    },
+
+    /**
+     * Log the plan-prescribed reps for a day AND mark the day as
+     * done. Skips the pushup write if the user has already logged
+     * enough reps for that calendar day (so the auto-mark effect
+     * and a manual button click both stay idempotent).
+     *
+     * The pushup entry is timestamped at noon (12:00) on the plan
+     * day's calendar date so a backfill for an earlier day still
+     * lands in the correct daily bucket.
+     */
+    async logPlanDay(dayIndex: number): Promise<void> {
+      const a = store.activePlan();
+      const c = store.activeCatalog();
+      if (!a || !c) return;
+      const day = planDayByIndex(c, dayIndex);
+      if (!day || day.kind === 'rest' || day.targetReps <= 0) return;
+
+      const dateIso = store._planDayDate(dayIndex);
+      const alreadyLogged = store._repsLoggedOn(dateIso);
+
+      if (alreadyLogged < day.targetReps) {
+        const remaining = day.targetReps - alreadyLogged;
+        // If the user has logged nothing yet, persist the full
+        // prescribed sets so the breakdown is preserved. If they
+        // logged some reps already, just top up the remainder as a
+        // single set — we don't try to second-guess their split.
+        const sets = alreadyLogged === 0
+          ? day.sets ?? [day.targetReps]
+          : [remaining];
+        const reps = alreadyLogged === 0 ? day.targetReps : remaining;
+        await firstValueFrom(
+          store._statsApi.createPushup({
+            timestamp: appendLocalOffset(`${dateIso}T12:00`),
+            reps,
+            sets,
+            source: 'plan',
+            type: 'Standard',
+          })
+        );
+      }
+
+      if (!a.completedDays.includes(dayIndex)) {
+        const next = [...a.completedDays, dayIndex].sort((x, y) => x - y);
+        const userId = store._user.userIdSafe();
+        await firstValueFrom(
+          store._api.updatePlan(userId, { completedDays: next })
+        );
+      }
       store.activeResource.reload();
     },
 
@@ -262,6 +365,36 @@ export const TrainingPlanStore = signalStore(
         60_000
       );
       inject(DestroyRef).onDestroy(() => clearInterval(handle));
+
+      // Auto-mark today as done when reps logged via Quick-Add /
+      // dialog reach the plan target. Read-only — never creates a
+      // pushup entry, just flips the `completedDays` flag so users
+      // who track in their own way still see plan progress.
+      effect(() => {
+        const a = store.activePlan();
+        const idx = store.currentDayIndex();
+        const day = store.todayDay();
+        if (!a || !day || idx === null) return;
+        if (day.kind === 'rest' || day.targetReps <= 0) return;
+        if (a.completedDays.includes(idx)) return;
+        // `_live.entries()` is the same source the dashboard uses;
+        // it streams from Firestore in real time so manual logs
+        // propagate here without polling.
+        const todayIso = toBerlinIsoDate(new Date());
+        // Establish a tick dependency so this re-runs at midnight.
+        store._dayTick();
+        const todayReps = store._repsLoggedOn(todayIso);
+        if (todayReps >= day.targetReps) {
+          // Fire-and-forget: the resulting `activePlan` reload will
+          // re-trigger this effect, which then short-circuits via
+          // the `completedDays.includes(idx)` guard above.
+          const next = [...a.completedDays, idx].sort((x, y) => x - y);
+          const userId = store._user.userIdSafe();
+          firstValueFrom(
+            store._api.updatePlan(userId, { completedDays: next })
+          ).then(() => store.activeResource.reload());
+        }
+      });
     },
   })
 );
