@@ -9,7 +9,10 @@ import {
   signal,
   untracked,
 } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { LOCALE_ID, computed } from '@angular/core';
+import { localizePlan } from '@pu-stats/models';
+import { TrainingPlanStore } from '../../training-plans/training-plan.store';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialog } from '@angular/material/dialog';
@@ -48,6 +51,7 @@ import { DashboardStore } from '../dashboard.store';
     PreviewBannerComponent,
     StatsTableComponent,
     AdSlotComponent,
+    RouterLink,
   ],
   providers: [DashboardStore],
   templateUrl: './stats-dashboard.component.html',
@@ -95,6 +99,23 @@ export class StatsDashboardComponent {
   readonly quickAddButtons = this.store.quickAddButtons;
   readonly adSlotDashboardInline = this.store.adSlotDashboardInline;
   readonly dashboardInlineAdsEnabled = this.store.dashboardInlineAdsEnabled;
+  readonly planActive = this.store.planActive;
+  readonly planTodayTarget = this.store.planTodayTarget;
+  readonly planTodayKind = this.store.planTodayKind;
+  readonly planDayIndex = this.store.planDayIndex;
+  readonly planTotalDays = this.store.planTotalDays;
+  private readonly trainingPlans = inject(TrainingPlanStore);
+  private readonly locale = inject(LOCALE_ID) as string;
+  /** Plan title in the active locale. Falls back to '' when no plan. */
+  readonly planTitle = computed(() => {
+    const cat = this.trainingPlans.activeCatalog();
+    if (!cat) return '';
+    return localizePlan(cat, this.locale).title;
+  });
+  /** Active plan slug — used to deep-link the banner CTA. */
+  readonly planSlug = computed(
+    () => this.trainingPlans.activeCatalog()?.slug ?? ''
+  );
   /** Counter that increments on every data refresh to trigger child component reloads. */
   readonly refreshCounter = signal(0);
 

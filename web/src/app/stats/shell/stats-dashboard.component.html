@@ -48,6 +48,41 @@
     >
   </section>
 
+  @if (planActive()) {
+    <mat-card class="plan-banner">
+      <mat-card-content>
+        <div class="plan-banner-row">
+          <mat-icon>fitness_center</mat-icon>
+          <div class="plan-banner-text">
+            <strong>{{ planTitle() }}</strong>
+            <span class="plan-meta">
+              <span i18n="@@trainingPlans.day">Tag</span>
+              {{ planDayIndex() }} / {{ planTotalDays() }}
+              @if (planTodayKind() === 'rest') {
+                · <span i18n="@@trainingPlans.kind.rest">Ruhetag</span>
+              } @else if (planTodayKind() === 'light') {
+                ·
+                <span i18n="@@trainingPlans.kind.light">Leichter Tag</span>
+              } @else if (planTodayKind() === 'test') {
+                · <span i18n="@@trainingPlans.kind.test">Maximaltest</span>
+              } @else {
+                · {{ planTodayTarget() }}
+                <span i18n="@@trainingPlans.reps">Wdh.</span>
+              }
+            </span>
+          </div>
+          <a
+            mat-stroked-button
+            [routerLink]="['/training-plans', planSlug()]"
+            i18n="@@trainingPlans.openDetail"
+          >
+            Details öffnen
+          </a>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  }
+
   <section
     class="today-focus"
     aria-label="Tagesfokus"

@@ -1,4 +1,6 @@
 export * from './lib/models/stats.models';
+export * from './lib/models/training-plan.models';
+export * from './lib/models/training-plan.catalog';
 export * from './lib/date/parse-iso-date';
 export * from './lib/date/to-local-iso-date';
 export * from './lib/date/to-berlin-iso-date';
