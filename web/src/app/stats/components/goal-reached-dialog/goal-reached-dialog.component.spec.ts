@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
+import { ShareService } from '../../../core/share.service';
 
 // Hoisted shared spy so the module mock and the test code reference the same
 // function instance (vi.mock factories can't close over module-scope vars).
@@ -44,6 +45,7 @@ import {
 describe('GoalReachedDialogComponent', () => {
   let fixture: ComponentFixture<GoalReachedDialogComponent>;
   const closeSpy = vitest.fn();
+  const shareSpy = vitest.fn().mockResolvedValue('native' as const);
   let vaporizeSubject: Subject<unknown>;
   const vaporizeSpy = mocks.vaporizeSpy;
 
@@ -53,6 +55,7 @@ describe('GoalReachedDialogComponent', () => {
       providers: [
         { provide: MatDialogRef, useValue: { close: closeSpy } },
         { provide: MAT_DIALOG_DATA, useValue: data },
+        { provide: ShareService, useValue: { share: shareSpy } },
       ],
     }).compileComponents();
 
@@ -264,6 +267,82 @@ describe('GoalReachedDialogComponent', () => {
       expect(mocks.capturedOptions.last).toEqual(
         expect.objectContaining({ maxParticleCount: 40_000 })
       );
+    });
+  });
+
+  describe('Given the user clicks Share', () => {
+    it('Then it forwards a localized payload to ShareService and keeps the dialog open', async () => {
+      // Given
+      await setup({
+        kind: 'daily',
+        total: 100,
+        goal: 100,
+        titleId: 'test-title-share',
+      });
+      const shareBtn = fixture.nativeElement.querySelector(
+        '[data-testid="goal-reached-share"]'
+      ) as HTMLButtonElement;
+
+      // When
+      shareBtn.click();
+      await fixture.whenStable();
+
+      // Then
+      expect(shareSpy).toHaveBeenCalledTimes(1);
+      const payload = shareSpy.mock.calls[0][0];
+      expect(payload.url).toBe('https://pushup-stats.de');
+      expect(payload.text).toContain('Tagesziel');
+      expect(payload.text).toContain('100');
+      expect(closeSpy).not.toHaveBeenCalled();
+    });
+
+    it('Then weekly variant uses the weekly share copy with goal + total', async () => {
+      // Given
+      await setup({
+        kind: 'weekly',
+        total: 540,
+        goal: 500,
+        titleId: 'test-title-share-w',
+      });
+      const shareBtn = fixture.nativeElement.querySelector(
+        '[data-testid="goal-reached-share"]'
+      ) as HTMLButtonElement;
+
+      // When
+      shareBtn.click();
+      await fixture.whenStable();
+
+      // Then
+      const payload = shareSpy.mock.calls.at(-1)?.[0];
+      expect(payload.text).toContain('Wochenziel');
+      expect(payload.text).toContain('500');
+      expect(payload.text).toContain('540');
+    });
+
+    it('Then it ignores Share clicks while a Snap is in flight', async () => {
+      // Given
+      await setup({
+        kind: 'daily',
+        total: 50,
+        goal: 50,
+        titleId: 'test-title-share-locked',
+      });
+      const snapBtn = fixture.nativeElement.querySelector(
+        '[data-testid="goal-reached-snap"]'
+      ) as HTMLButtonElement;
+      const shareBtn = fixture.nativeElement.querySelector(
+        '[data-testid="goal-reached-share"]'
+      ) as HTMLButtonElement;
+
+      // When — snap starts (vaporizeSubject stays open so snapping() is true)
+      snapBtn.click();
+      await fixture.whenStable();
+      shareSpy.mockClear();
+      shareBtn.click();
+      await fixture.whenStable();
+
+      // Then
+      expect(shareSpy).not.toHaveBeenCalled();
     });
   });
 

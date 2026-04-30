@@ -15,6 +15,9 @@ import { isPlatformBrowser } from '@angular/common';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { DEFAULT_SNAP_QUALITY, SNAP_QUALITY_PARTICLES } from '@pu-stats/models';
 import { finalize } from 'rxjs';
+import { ShareService } from '../../../core/share.service';
+
+const SHARE_URL = 'https://pushup-stats.de';
 
 export type GoalKind = 'daily' | 'weekly' | 'monthly';
 
@@ -42,6 +45,8 @@ interface GoalCopy {
   readonly icon: string;
   readonly title: string;
   readonly note: string;
+  readonly shareTitle: string;
+  readonly shareText: string;
 }
 
 @Component({
@@ -59,6 +64,7 @@ export class GoalReachedDialogComponent {
   private readonly dialogRef = inject(MatDialogRef<GoalReachedDialogComponent>);
   private readonly platformId = inject(PLATFORM_ID);
   private readonly envInjector = inject(EnvironmentInjector);
+  private readonly shareService = inject(ShareService);
   protected readonly data = inject<GoalReachedDialogData>(MAT_DIALOG_DATA);
 
   protected readonly cardRef =
@@ -66,24 +72,32 @@ export class GoalReachedDialogComponent {
   protected readonly snapping = signal(false);
 
   protected readonly copy = computed<GoalCopy>(() => {
+    const total = this.data.total;
+    const goal = this.data.goal;
     switch (this.data.kind) {
       case 'weekly':
         return {
           icon: 'military_tech',
           title: $localize`:@@goalReached.weekly.title:Wochenziel erreicht!`,
           note: $localize`:@@goalReached.weekly.note:Sieben Tage, ein Sieg. Du bist on fire.`,
+          shareTitle: $localize`:@@goalReached.share.weekly.title:Wochenziel geknackt!`,
+          shareText: $localize`:@@goalReached.share.weekly.text:Wochenziel von ${goal}:goal: Liegestützen geschafft – ${total}:total: insgesamt! 💪 Tracke deine Stats kostenlos:`,
         };
       case 'monthly':
         return {
           icon: 'workspace_premium',
           title: $localize`:@@goalReached.monthly.title:Monatsziel erreicht!`,
           note: $localize`:@@goalReached.monthly.note:Ein ganzer Monat Disziplin. Legendär.`,
+          shareTitle: $localize`:@@goalReached.share.monthly.title:Monatsziel geknackt!`,
+          shareText: $localize`:@@goalReached.share.monthly.text:Monatsziel von ${goal}:goal: Liegestützen geschafft – ${total}:total: insgesamt! 💪 Tracke deine Stats kostenlos:`,
         };
       default:
         return {
           icon: 'emoji_events',
           title: $localize`:@@goalReached.daily.title:Tagesziel erreicht!`,
           note: $localize`:@@goalReached.daily.note:Heute hast du dein Versprechen gehalten.`,
+          shareTitle: $localize`:@@goalReached.share.daily.title:Tagesziel geknackt!`,
+          shareText: $localize`:@@goalReached.share.daily.text:Heute mein Tagesziel von ${goal}:goal: Liegestützen geschafft! 💪 Tracke deine Stats kostenlos:`,
         };
     }
   });
@@ -91,6 +105,8 @@ export class GoalReachedDialogComponent {
   protected readonly snapAriaLabel = $localize`:@@goalReached.snapAria:Erfolg vaporisieren`;
   protected readonly snapLabel = $localize`:@@goalReached.snap:Snap!`;
   protected readonly closeAriaLabel = $localize`:@@goalReached.closeAria:Schließen`;
+  protected readonly shareAriaLabel = $localize`:@@goalReached.shareAria:Erfolg teilen`;
+  protected readonly shareLabel = $localize`:@@goalReached.share:Teilen`;
   protected readonly progressLabel = computed(
     () => `${this.data.total} / ${this.data.goal}`
   );
@@ -98,6 +114,16 @@ export class GoalReachedDialogComponent {
   protected onClose(): void {
     if (this.snapping()) return;
     this.dialogRef.close();
+  }
+
+  protected async onShare(): Promise<void> {
+    if (this.snapping()) return;
+    const { shareTitle, shareText } = this.copy();
+    await this.shareService.share({
+      title: shareTitle,
+      text: shareText,
+      url: SHARE_URL,
+    });
   }
 
   protected async onSnap(): Promise<void> {

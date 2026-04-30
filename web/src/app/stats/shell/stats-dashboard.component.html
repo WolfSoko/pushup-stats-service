@@ -8,7 +8,7 @@
       alt="Pushup Tracker Logo"
       i18n-alt="@@brandLogoAlt"
     />
-    <div>
+    <div class="header-text">
       <p class="eyebrow" i18n="@@eyebrowTitle">Pushup Stats</p>
       <h1 i18n="@@dashboardTitle">Liegestütze Statistik</h1>
       <p class="subtitle" i18n="@@dashboardSubtitle">
@@ -23,6 +23,17 @@
         Live: {{ liveConnected() ? 'verbunden' : 'getrennt' }}
       </p>
     </div>
+    <button
+      mat-stroked-button
+      type="button"
+      class="header-share"
+      data-testid="dashboard-share"
+      [attr.aria-label]="shareDayAriaLabel"
+      (click)="shareDay()"
+    >
+      <mat-icon>share</mat-icon>
+      <span>{{ shareDayLabel }}</span>
+    </button>
   </header>
 
   <section

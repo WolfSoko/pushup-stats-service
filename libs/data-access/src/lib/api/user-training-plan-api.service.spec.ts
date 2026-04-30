@@ -24,7 +24,6 @@ describe('UserTrainingPlanApiService', () => {
   });
 
   it('streams the active plan from Firestore', async () => {
-
     (firestoreFns.doc as jest.Mock).mockReturnValue({ id: 'u' });
     (firestoreFns.docData as jest.Mock).mockReturnValue(
       of({
@@ -56,7 +55,6 @@ describe('UserTrainingPlanApiService', () => {
   });
 
   it('returns null when the doc does not exist', async () => {
-
     (firestoreFns.doc as jest.Mock).mockReturnValue({ id: 'u' });
     (firestoreFns.docData as jest.Mock).mockReturnValue(of(undefined));
 
@@ -80,7 +78,6 @@ describe('UserTrainingPlanApiService', () => {
   });
 
   it('uses the auth uid (not the passed-in userId) for the doc path', async () => {
-
     (firestoreFns.doc as jest.Mock).mockReturnValue({ id: 'real' });
     (firestoreFns.docData as jest.Mock).mockReturnValue(of(undefined));
 
@@ -107,7 +104,6 @@ describe('UserTrainingPlanApiService', () => {
   });
 
   it('writes a new active plan via setPlan (overwrites stale state)', async () => {
-
     (firestoreFns.doc as jest.Mock).mockReturnValue({ id: 'u' });
 
     const { fixture } = await render('', {
@@ -140,7 +136,6 @@ describe('UserTrainingPlanApiService', () => {
   });
 
   it('merges patches via updatePlan', async () => {
-
     (firestoreFns.doc as jest.Mock).mockReturnValue({ id: 'u' });
 
     const { fixture } = await render('', {

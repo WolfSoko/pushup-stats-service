@@ -15,12 +15,40 @@ import {
 const RECRUIT_DAYS: ReadonlyArray<TrainingPlanDay> = [
   // Week 1 (Mon–Sun) — 3× full reps with 90s rest. Targets are
   // suitable for someone whose max is roughly 10–15 reps.
-  d(1, 'main', 30, [10, 10, 10], '3×10 saubere Liegestütze, 90 s Pause', '3×10 clean push-ups, 90 s rest'),
-  d(2, 'rest', 0, undefined, 'Ruhetag — Stretching, Mobility', 'Rest day — stretching, mobility'),
-  d(3, 'main', 33, [12, 11, 10], '3×AMRAP, 90 s Pause (Ziel ≈12-11-10)', '3×AMRAP, 90 s rest (target ≈12-11-10)'),
+  d(
+    1,
+    'main',
+    30,
+    [10, 10, 10],
+    '3×10 saubere Liegestütze, 90 s Pause',
+    '3×10 clean push-ups, 90 s rest'
+  ),
+  d(
+    2,
+    'rest',
+    0,
+    undefined,
+    'Ruhetag — Stretching, Mobility',
+    'Rest day — stretching, mobility'
+  ),
+  d(
+    3,
+    'main',
+    33,
+    [12, 11, 10],
+    '3×AMRAP, 90 s Pause (Ziel ≈12-11-10)',
+    '3×AMRAP, 90 s rest (target ≈12-11-10)'
+  ),
   d(4, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
   d(5, 'main', 36, [13, 12, 11], '3×AMRAP, 90 s Pause', '3×AMRAP, 90 s rest'),
-  d(6, 'light', 20, [10, 10], 'Leichter Tag — 50 % vom Maximum', 'Light day — 50% of max'),
+  d(
+    6,
+    'light',
+    20,
+    [10, 10],
+    'Leichter Tag — 50 % vom Maximum',
+    'Light day — 50% of max'
+  ),
   d(7, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
   // Week 2 — same scheme, +10% volume.
   d(8, 'main', 36, [13, 12, 11], '3×AMRAP', '3×AMRAP'),
@@ -31,11 +59,32 @@ const RECRUIT_DAYS: ReadonlyArray<TrainingPlanDay> = [
   d(13, 'light', 22, [11, 11], 'Leichter Tag', 'Light day'),
   d(14, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
   // Week 3 — 4 sets, shorter rest (60s).
-  d(15, 'main', 48, [14, 12, 12, 10], '4×AMRAP, 60 s Pause', '4×AMRAP, 60 s rest'),
+  d(
+    15,
+    'main',
+    48,
+    [14, 12, 12, 10],
+    '4×AMRAP, 60 s Pause',
+    '4×AMRAP, 60 s rest'
+  ),
   d(16, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
-  d(17, 'main', 52, [15, 13, 12, 12], '4×AMRAP, 60 s Pause', '4×AMRAP, 60 s rest'),
+  d(
+    17,
+    'main',
+    52,
+    [15, 13, 12, 12],
+    '4×AMRAP, 60 s Pause',
+    '4×AMRAP, 60 s rest'
+  ),
   d(18, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
-  d(19, 'main', 56, [16, 14, 13, 13], '4×AMRAP, 60 s Pause', '4×AMRAP, 60 s rest'),
+  d(
+    19,
+    'main',
+    56,
+    [16, 14, 13, 13],
+    '4×AMRAP, 60 s Pause',
+    '4×AMRAP, 60 s rest'
+  ),
   d(20, 'light', 24, [12, 12], 'Leichter Tag', 'Light day'),
   d(21, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
   // Week 4 — 4 sets, slightly higher reps.
@@ -47,68 +96,264 @@ const RECRUIT_DAYS: ReadonlyArray<TrainingPlanDay> = [
   d(27, 'light', 26, [13, 13], 'Leichter Tag', 'Light day'),
   d(28, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
   // Week 5 — 5 sets, target reps (descending).
-  d(29, 'main', 64, [15, 14, 13, 12, 10], '5 Sätze Zielwiederholungen', '5 sets target reps'),
+  d(
+    29,
+    'main',
+    64,
+    [15, 14, 13, 12, 10],
+    '5 Sätze Zielwiederholungen',
+    '5 sets target reps'
+  ),
   d(30, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
-  d(31, 'main', 68, [16, 15, 14, 13, 10], '5 Sätze Zielwiederholungen', '5 sets target reps'),
+  d(
+    31,
+    'main',
+    68,
+    [16, 15, 14, 13, 10],
+    '5 Sätze Zielwiederholungen',
+    '5 sets target reps'
+  ),
   d(32, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
-  d(33, 'main', 72, [17, 16, 15, 14, 10], '5 Sätze Zielwiederholungen', '5 sets target reps'),
+  d(
+    33,
+    'main',
+    72,
+    [17, 16, 15, 14, 10],
+    '5 Sätze Zielwiederholungen',
+    '5 sets target reps'
+  ),
   d(34, 'light', 28, [14, 14], 'Leichter Tag', 'Light day'),
   d(35, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
   // Week 6 — peak + final test.
-  d(36, 'main', 76, [18, 17, 16, 14, 11], '5 Sätze, volle Bewegungsamplitude', '5 sets, full range of motion'),
+  d(
+    36,
+    'main',
+    76,
+    [18, 17, 16, 14, 11],
+    '5 Sätze, volle Bewegungsamplitude',
+    '5 sets, full range of motion'
+  ),
   d(37, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
-  d(38, 'main', 80, [19, 18, 16, 14, 13], '5 Sätze, kontrolliertes Tempo', '5 sets, controlled tempo'),
-  d(39, 'rest', 0, undefined, 'Ruhetag — Vorbereitung Endtest', 'Rest day — prepare for final test'),
+  d(
+    38,
+    'main',
+    80,
+    [19, 18, 16, 14, 13],
+    '5 Sätze, kontrolliertes Tempo',
+    '5 sets, controlled tempo'
+  ),
+  d(
+    39,
+    'rest',
+    0,
+    undefined,
+    'Ruhetag — Vorbereitung Endtest',
+    'Rest day — prepare for final test'
+  ),
   d(40, 'main', 84, [20, 18, 17, 15, 14], '5 Sätze leicht', '5 sets light'),
   d(41, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
-  d(42, 'test', 100, undefined, 'Endtest: Maximale Liegestütze ohne Pause', 'Final test: max push-ups without stopping'),
+  d(
+    42,
+    'test',
+    100,
+    undefined,
+    'Endtest: Maximale Liegestütze ohne Pause',
+    'Final test: max push-ups without stopping'
+  ),
 ];
 
 const CHALLENGE_30_DAYS: ReadonlyArray<TrainingPlanDay> = [
   // Week 1 — Foundation. 3× AMRAP @ 90s on main days; light = 50% max.
-  d(1, 'test', 0, undefined, 'Maximaltest — als Ausgangswert eintragen', 'Max test — log as your baseline'),
+  d(
+    1,
+    'test',
+    0,
+    undefined,
+    'Maximaltest — als Ausgangswert eintragen',
+    'Max test — log as your baseline'
+  ),
   d(2, 'main', 60, [20, 20, 20], '3×AMRAP, 90 s Pause', '3×AMRAP, 90 s rest'),
-  d(3, 'light', 20, [10, 10], 'Leichter Tag — 2×50 % vom Maximum', 'Light day — 2×50% of max'),
+  d(
+    3,
+    'light',
+    20,
+    [10, 10],
+    'Leichter Tag — 2×50 % vom Maximum',
+    'Light day — 2×50% of max'
+  ),
   d(4, 'main', 63, [22, 21, 20], '3×AMRAP, 90 s Pause', '3×AMRAP, 90 s rest'),
   d(5, 'light', 22, [11, 11], 'Leichter Tag', 'Light day'),
   d(6, 'main', 66, [23, 22, 21], '3×AMRAP, 90 s Pause', '3×AMRAP, 90 s rest'),
   d(7, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
   // Week 2 — Volume. 4× AMRAP @ 60s; light = 60% max.
-  d(8, 'main', 80, [22, 20, 19, 19], '4×AMRAP, 60 s Pause', '4×AMRAP, 60 s rest'),
-  d(9, 'light', 30, [10, 10, 10], 'Leichter Tag — 3×60 % vom Maximum', 'Light day — 3×60% of max'),
-  d(10, 'main', 84, [23, 21, 20, 20], '4×AMRAP, 60 s Pause', '4×AMRAP, 60 s rest'),
+  d(
+    8,
+    'main',
+    80,
+    [22, 20, 19, 19],
+    '4×AMRAP, 60 s Pause',
+    '4×AMRAP, 60 s rest'
+  ),
+  d(
+    9,
+    'light',
+    30,
+    [10, 10, 10],
+    'Leichter Tag — 3×60 % vom Maximum',
+    'Light day — 3×60% of max'
+  ),
+  d(
+    10,
+    'main',
+    84,
+    [23, 21, 20, 20],
+    '4×AMRAP, 60 s Pause',
+    '4×AMRAP, 60 s rest'
+  ),
   d(11, 'light', 33, [11, 11, 11], 'Leichter Tag', 'Light day'),
-  d(12, 'main', 88, [24, 22, 21, 21], '4×AMRAP, 60 s Pause', '4×AMRAP, 60 s rest'),
+  d(
+    12,
+    'main',
+    88,
+    [24, 22, 21, 21],
+    '4×AMRAP, 60 s Pause',
+    '4×AMRAP, 60 s rest'
+  ),
   d(13, 'light', 36, [12, 12, 12], 'Leichter Tag', 'Light day'),
   d(14, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
   // Week 3 — Intensity. 5× target reps (~80% max). No light days.
-  d(15, 'main', 100, [22, 20, 20, 20, 18], '5 Sätze à ~80 % vom Maximum', '5 sets at ~80% of max'),
-  d(16, 'rest', 0, undefined, 'Mobility & Brust-Stretching', 'Mobility & chest stretching'),
-  d(17, 'main', 105, [23, 22, 20, 20, 20], '5 Sätze Zielwiederholungen', '5 sets target reps'),
-  d(18, 'rest', 0, undefined, 'Mobility & Brust-Stretching', 'Mobility & chest stretching'),
-  d(19, 'main', 110, [24, 22, 22, 22, 20], '5 Sätze Zielwiederholungen', '5 sets target reps'),
-  d(20, 'rest', 0, undefined, 'Mobility & Brust-Stretching', 'Mobility & chest stretching'),
-  d(21, 'main', 115, [25, 23, 23, 22, 22], '5 Sätze Zielwiederholungen', '5 sets target reps'),
+  d(
+    15,
+    'main',
+    100,
+    [22, 20, 20, 20, 18],
+    '5 Sätze à ~80 % vom Maximum',
+    '5 sets at ~80% of max'
+  ),
+  d(
+    16,
+    'rest',
+    0,
+    undefined,
+    'Mobility & Brust-Stretching',
+    'Mobility & chest stretching'
+  ),
+  d(
+    17,
+    'main',
+    105,
+    [23, 22, 20, 20, 20],
+    '5 Sätze Zielwiederholungen',
+    '5 sets target reps'
+  ),
+  d(
+    18,
+    'rest',
+    0,
+    undefined,
+    'Mobility & Brust-Stretching',
+    'Mobility & chest stretching'
+  ),
+  d(
+    19,
+    'main',
+    110,
+    [24, 22, 22, 22, 20],
+    '5 Sätze Zielwiederholungen',
+    '5 sets target reps'
+  ),
+  d(
+    20,
+    'rest',
+    0,
+    undefined,
+    'Mobility & Brust-Stretching',
+    'Mobility & chest stretching'
+  ),
+  d(
+    21,
+    'main',
+    115,
+    [25, 23, 23, 22, 22],
+    '5 Sätze Zielwiederholungen',
+    '5 sets target reps'
+  ),
   // Week 4 — Tapering & Peak. 3× 70% max, last 2 days active recovery.
-  d(22, 'main', 70, [25, 23, 22], '3 Sätze à 70 % — Qualität vor Quantität', '3 sets at 70% — quality over quantity'),
+  d(
+    22,
+    'main',
+    70,
+    [25, 23, 22],
+    '3 Sätze à 70 % — Qualität vor Quantität',
+    '3 sets at 70% — quality over quantity'
+  ),
   d(23, 'light', 30, [15, 15], 'Leichter Tag — 2×50 %', 'Light day — 2×50%'),
   d(24, 'main', 75, [26, 25, 24], '3 Sätze à 70 %', '3 sets at 70%'),
   d(25, 'light', 30, [15, 15], 'Leichter Tag — 2×50 %', 'Light day — 2×50%'),
   d(26, 'main', 75, [26, 25, 24], '3 Sätze à 70 %', '3 sets at 70%'),
-  d(27, 'rest', 0, undefined, 'Aktive Erholung — Spaziergang, Mobility', 'Active recovery — walk, mobility'),
+  d(
+    27,
+    'rest',
+    0,
+    undefined,
+    'Aktive Erholung — Spaziergang, Mobility',
+    'Active recovery — walk, mobility'
+  ),
   d(28, 'rest', 0, undefined, 'Aktive Erholung', 'Active recovery'),
-  d(29, 'rest', 0, undefined, 'Ruhe vor dem Endtest', 'Rest before the final test'),
-  d(30, 'test', 100, undefined, 'Endtest: Maximale Liegestütze ohne Pause', 'Final test: max push-ups without stopping'),
+  d(
+    29,
+    'rest',
+    0,
+    undefined,
+    'Ruhe vor dem Endtest',
+    'Rest before the final test'
+  ),
+  d(
+    30,
+    'test',
+    100,
+    undefined,
+    'Endtest: Maximale Liegestütze ohne Pause',
+    'Final test: max push-ups without stopping'
+  ),
 ];
 
 const OVER_40_DAYS: ReadonlyArray<TrainingPlanDay> = [
   // Week 1 — Technique focus, low volume.
-  d(1, 'test', 0, undefined, 'Maximaltest mit sauberer Technik', 'Max test with clean form'),
-  d(2, 'main', 24, [8, 8, 8], '3×8 Knie- oder erhöhte Liegestütze', '3×8 knee or elevated push-ups'),
+  d(
+    1,
+    'test',
+    0,
+    undefined,
+    'Maximaltest mit sauberer Technik',
+    'Max test with clean form'
+  ),
+  d(
+    2,
+    'main',
+    24,
+    [8, 8, 8],
+    '3×8 Knie- oder erhöhte Liegestütze',
+    '3×8 knee or elevated push-ups'
+  ),
   d(3, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
   d(4, 'main', 27, [9, 9, 9], '3×9 saubere Liegestütze', '3×9 clean push-ups'),
-  d(5, 'rest', 0, undefined, 'Ruhetag — Schulter-Mobility', 'Rest day — shoulder mobility'),
-  d(6, 'main', 30, [10, 10, 10], '3×10 saubere Liegestütze', '3×10 clean push-ups'),
+  d(
+    5,
+    'rest',
+    0,
+    undefined,
+    'Ruhetag — Schulter-Mobility',
+    'Rest day — shoulder mobility'
+  ),
+  d(
+    6,
+    'main',
+    30,
+    [10, 10, 10],
+    '3×10 saubere Liegestütze',
+    '3×10 clean push-ups'
+  ),
   d(7, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
   // Week 2 — slight volume increase.
   d(8, 'main', 33, [11, 11, 11], '3×11', '3×11'),
@@ -119,21 +364,70 @@ const OVER_40_DAYS: ReadonlyArray<TrainingPlanDay> = [
   d(13, 'light', 16, [8, 8], 'Leichter Tag', 'Light day'),
   d(14, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
   // Week 3 — 4 sets, more volume but still 90s rest.
-  d(15, 'main', 48, [13, 12, 12, 11], '4 Sätze, 90 s Pause', '4 sets, 90 s rest'),
+  d(
+    15,
+    'main',
+    48,
+    [13, 12, 12, 11],
+    '4 Sätze, 90 s Pause',
+    '4 sets, 90 s rest'
+  ),
   d(16, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
-  d(17, 'main', 52, [14, 13, 13, 12], '4 Sätze, 90 s Pause', '4 sets, 90 s rest'),
+  d(
+    17,
+    'main',
+    52,
+    [14, 13, 13, 12],
+    '4 Sätze, 90 s Pause',
+    '4 sets, 90 s rest'
+  ),
   d(18, 'rest', 0, undefined, 'Ruhetag — Mobility', 'Rest day — mobility'),
-  d(19, 'main', 56, [15, 14, 14, 13], '4 Sätze, 90 s Pause', '4 sets, 90 s rest'),
+  d(
+    19,
+    'main',
+    56,
+    [15, 14, 14, 13],
+    '4 Sätze, 90 s Pause',
+    '4 sets, 90 s rest'
+  ),
   d(20, 'light', 18, [9, 9], 'Leichter Tag', 'Light day'),
   d(21, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
   // Week 4 — peak + final test (still gentle volume).
-  d(22, 'main', 60, [16, 15, 15, 14], '4 Sätze, kontrolliertes Tempo', '4 sets, controlled tempo'),
+  d(
+    22,
+    'main',
+    60,
+    [16, 15, 15, 14],
+    '4 Sätze, kontrolliertes Tempo',
+    '4 sets, controlled tempo'
+  ),
   d(23, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
-  d(24, 'main', 64, [17, 16, 16, 15], '4 Sätze, langsame Exzentrik', '4 sets, slow eccentric'),
+  d(
+    24,
+    'main',
+    64,
+    [17, 16, 16, 15],
+    '4 Sätze, langsame Exzentrik',
+    '4 sets, slow eccentric'
+  ),
   d(25, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
   d(26, 'light', 20, [10, 10], 'Leichter Tag', 'Light day'),
-  d(27, 'rest', 0, undefined, 'Ruhetag — Vorbereitung Endtest', 'Rest day — prepare final test'),
-  d(28, 'test', 50, undefined, 'Endtest: Maximale Liegestütze', 'Final test: max push-ups'),
+  d(
+    27,
+    'rest',
+    0,
+    undefined,
+    'Ruhetag — Vorbereitung Endtest',
+    'Rest day — prepare final test'
+  ),
+  d(
+    28,
+    'test',
+    50,
+    undefined,
+    'Endtest: Maximale Liegestütze',
+    'Final test: max push-ups'
+  ),
 ];
 
 export const TRAINING_PLANS: ReadonlyArray<TrainingPlan> = [

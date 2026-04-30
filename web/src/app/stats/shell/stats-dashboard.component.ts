@@ -68,6 +68,9 @@ export class StatsDashboardComponent {
   private readonly quickAdd = inject(QuickAddOrchestrationService);
   private readonly appData = inject(AppDataFacade);
 
+  readonly shareDayAriaLabel = $localize`:@@dashboard.share.aria:Tagesleistung teilen`;
+  readonly shareDayLabel = $localize`:@@dashboard.share:Teilen`;
+
   readonly store = inject(DashboardStore);
 
   // Delegate store signals for template access
@@ -180,6 +183,10 @@ export class StatsDashboardComponent {
 
   navigateToHistory(): void {
     void this.router.navigate(['/history']);
+  }
+
+  shareDay(): void {
+    void this.store.shareDay();
   }
 
   /**

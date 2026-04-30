@@ -58,6 +58,20 @@
   gap: 14px;
 }
 
+.header-text {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.header-share {
+  flex-shrink: 0;
+  align-self: flex-start;
+
+  mat-icon {
+    margin-right: 4px;
+  }
+}
+
 .brand-logo {
   width: clamp(54px, 8vw, 74px);
   height: clamp(54px, 8vw, 74px);
@@ -404,6 +418,11 @@ h1 {
   .page-header {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .header-share {
+    align-self: stretch;
+    justify-content: center;
   }
 }
 

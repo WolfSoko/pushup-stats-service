@@ -24,6 +24,7 @@ import { UserContextService } from '@pu-auth/auth';
 import { MotivationStore } from '@pu-stats/motivation';
 import { firstValueFrom, of } from 'rxjs';
 import { UserConfigStore } from '../core/user-config.store';
+import { ShareResult, ShareService } from '../core/share.service';
 import { TrainingPlanStore } from '../training-plans/training-plan.store';
 
 const EMPTY_STATS: StatsResponse = {
@@ -89,6 +90,7 @@ export const DashboardStore = signalStore(
     _ads: inject(AdsStore),
     _motivation: inject(MotivationStore),
     _trainingPlan: inject(TrainingPlanStore),
+    _share: inject(ShareService),
     _isBrowser: isPlatformBrowser(inject(PLATFORM_ID)),
   })),
   withProps((store) => ({
@@ -402,6 +404,19 @@ export const DashboardStore = signalStore(
     },
     async loadQuote(): Promise<void> {
       await store._motivation.loadQuotes(store._user.userIdSafe());
+    },
+    shareDay(): Promise<ShareResult> {
+      const total = store.todayTotal();
+      const streak = store.currentStreak();
+      const text =
+        streak > 1
+          ? $localize`:@@dashboard.share.text.streak:Heute schon ${total}:total: Liegestütze geschafft – Streak: ${streak}:streak: Tage 🔥 Tracke deine Stats kostenlos:`
+          : $localize`:@@dashboard.share.text.simple:Heute schon ${total}:total: Liegestütze geschafft! 💪 Tracke deine Stats kostenlos:`;
+      return store._share.share({
+        title: $localize`:@@dashboard.share.title:Pushup Tracker`,
+        text,
+        url: 'https://pushup-stats.de',
+      });
     },
   }))
 );

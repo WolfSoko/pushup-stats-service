@@ -44,7 +44,10 @@ describe('TrainingPlanStore', () => {
         }),
         updatePlan: vitest.fn(
           (_uid: string, patch: Partial<UserTrainingPlan>) => {
-            mocks.current = { ...(mocks.current as UserTrainingPlan), ...patch };
+            mocks.current = {
+              ...(mocks.current as UserTrainingPlan),
+              ...patch,
+            };
             stream.next(mocks.current);
             return new BehaviorSubject(mocks.current).asObservable();
           }
@@ -83,7 +86,7 @@ describe('TrainingPlanStore', () => {
     expect(store.todayTarget()).toBe(0);
   });
 
-  it('exposes today\'s target reps once a plan is active', async () => {
+  it("exposes today's target reps once a plan is active", async () => {
     const today = toBerlinIsoDate(new Date());
     const { store } = setup({
       userId: 'u1',
@@ -215,9 +218,7 @@ describe('TrainingPlanStore', () => {
     ) as (typeof TRAINING_PLANS)[number];
     expect(recruit.days[1].kind).toBe('rest');
     const todayIso = toBerlinIsoDate(new Date());
-    const yesterday = toBerlinIsoDate(
-      new Date(Date.now() - 86_400_000)
-    );
+    const yesterday = toBerlinIsoDate(new Date(Date.now() - 86_400_000));
 
     const { store, mocks } = setup({
       userId: 'u1',

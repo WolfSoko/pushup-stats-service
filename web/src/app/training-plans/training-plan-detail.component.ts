@@ -13,7 +13,11 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { findPlanBySlug, localizePlan, TrainingPlanDay } from '@pu-stats/models';
+import {
+  findPlanBySlug,
+  localizePlan,
+  TrainingPlanDay,
+} from '@pu-stats/models';
 import { TrainingPlanStore } from './training-plan.store';
 
 interface DayRow {
@@ -40,7 +44,12 @@ interface DayRow {
     @if (plan(); as p) {
       <main class="page-wrap">
         <header class="page-header">
-          <a mat-icon-button routerLink="/training-plans" aria-label="Zurück" i18n-aria-label="@@trainingPlans.back">
+          <a
+            mat-icon-button
+            routerLink="/training-plans"
+            aria-label="Zurück"
+            i18n-aria-label="@@trainingPlans.back"
+          >
             <mat-icon>arrow_back</mat-icon>
           </a>
           <div>
@@ -50,7 +59,10 @@ interface DayRow {
         </header>
 
         <mat-chip-set class="meta-chips">
-          <mat-chip>{{ p.totalDays }} <span i18n="@@trainingPlans.daysSuffix">Tage</span></mat-chip>
+          <mat-chip
+            >{{ p.totalDays }}
+            <span i18n="@@trainingPlans.daysSuffix">Tage</span></mat-chip
+          >
           <mat-chip>
             @if (p.level === 'beginner') {
               <span i18n="@@trainingPlans.level.beginner">Einsteiger</span>
@@ -69,7 +81,10 @@ interface DayRow {
                 <span i18n="@@trainingPlans.progress">Fortschritt</span>
                 <strong>{{ store.completionPercent() }}%</strong>
               </div>
-              <mat-progress-bar mode="determinate" [value]="store.completionPercent()" />
+              <mat-progress-bar
+                mode="determinate"
+                [value]="store.completionPercent()"
+              />
               @if (store.currentDayIndex(); as idx) {
                 <p class="muted current-day">
                   <span i18n="@@trainingPlans.currentDay">Aktueller Tag:</span>
@@ -78,7 +93,12 @@ interface DayRow {
               }
             </mat-card-content>
             <mat-card-actions align="end">
-              <button mat-stroked-button color="warn" (click)="abandon()" i18n="@@trainingPlans.abandon">
+              <button
+                mat-stroked-button
+                color="warn"
+                (click)="abandon()"
+                i18n="@@trainingPlans.abandon"
+              >
                 <mat-icon>cancel</mat-icon>
                 Plan beenden
               </button>
@@ -88,12 +108,16 @@ interface DayRow {
           <mat-card class="status-card">
             <mat-card-content>
               <p i18n="@@trainingPlans.startCta">
-                Starte den Plan und das Tagesziel im Dashboard wird automatisch nach diesem Plan gesetzt.
+                Starte den Plan und das Tagesziel im Dashboard wird automatisch
+                nach diesem Plan gesetzt.
               </p>
             </mat-card-content>
             <mat-card-actions align="end">
               @if (store.hasActivePlan()) {
-                <p class="muted warn-replace" i18n="@@trainingPlans.replaceWarn">
+                <p
+                  class="muted warn-replace"
+                  i18n="@@trainingPlans.replaceWarn"
+                >
                   Achtung: Dies ersetzt den aktuell aktiven Plan.
                 </p>
               }
@@ -128,7 +152,9 @@ interface DayRow {
                     } @else if (row.day.kind === 'light') {
                       <mat-icon aria-hidden="true">directions_walk</mat-icon>
                     } @else if (row.day.kind === 'test') {
-                      <mat-icon aria-hidden="true">local_fire_department</mat-icon>
+                      <mat-icon aria-hidden="true"
+                        >local_fire_department</mat-icon
+                      >
                     } @else {
                       <mat-icon aria-hidden="true">fitness_center</mat-icon>
                     }
@@ -138,9 +164,13 @@ interface DayRow {
                       @if (row.day.kind === 'rest') {
                         <span i18n="@@trainingPlans.kind.rest">Ruhetag</span>
                       } @else if (row.day.kind === 'test') {
-                        <span i18n="@@trainingPlans.kind.test">Maximaltest</span>
+                        <span i18n="@@trainingPlans.kind.test"
+                          >Maximaltest</span
+                        >
                       } @else if (row.day.kind === 'light') {
-                        <span i18n="@@trainingPlans.kind.light">Leichter Tag</span>
+                        <span i18n="@@trainingPlans.kind.light"
+                          >Leichter Tag</span
+                        >
                         @if (row.day.targetReps > 0) {
                           <span class="muted">·</span>
                           <strong>{{ row.day.targetReps }}</strong>
@@ -151,7 +181,9 @@ interface DayRow {
                         <span i18n="@@trainingPlans.reps">Wdh.</span>
                       }
                       @if (row.day.sets && row.day.sets.length > 1) {
-                        <span class="sets muted">{{ formatSets(row.day.sets) }}</span>
+                        <span class="sets muted">{{
+                          formatSets(row.day.sets)
+                        }}</span>
                       }
                     </div>
                     <div class="day-desc muted">{{ row.day.description }}</div>
@@ -318,7 +350,9 @@ export class TrainingPlanDetailComponent {
   readonly weeks = computed(() => {
     const localized = this.localized();
     if (!localized) return [];
-    const currentDay = this.isThisPlanActive() ? this.store.currentDayIndex() : null;
+    const currentDay = this.isThisPlanActive()
+      ? this.store.currentDayIndex()
+      : null;
     const completed = this.isThisPlanActive()
       ? new Set(this.store.activePlan()?.completedDays ?? [])
       : new Set<number>();
