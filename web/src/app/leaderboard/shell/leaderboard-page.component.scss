@@ -80,4 +80,21 @@ li {
     border-color: #2563eb;
     background: rgba(59, 130, 246, 0.15);
   }
+
+  // Dark-theme link colours (`#cfe0ff` etc.) are unreadable against the
+  // white mat-card surface in light theme. Override with a darker blue
+  // that hits WCAG AA on the same background.
+  .alias-link {
+    text-decoration-color: rgba(37, 99, 235, 0.55);
+
+    &:hover,
+    &:focus-visible {
+      color: #1d4ed8;
+      text-decoration-color: #1d4ed8;
+    }
+
+    &:focus-visible {
+      outline-color: #2563eb;
+    }
+  }
 }

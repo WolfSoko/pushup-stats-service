@@ -129,8 +129,18 @@ export class LeaderboardService {
         alias: entry.alias,
         reps: entry.reps,
         rank: i + 1,
-        isCurrent:
-          !!currentUserId && entry.alias === this.toAlias(currentUserId),
+        // Prefer matching the snapshot row by `uid` (exact identity) when
+        // it's present — snapshot aliases are real display names, so the
+        // obfuscated `toAlias(currentUserId)` form would never match a
+        // public-profile-opted-in user and `mergeBucket()` would fall
+        // back to the client-side `current` unnecessarily. Older
+        // snapshots without `uid` keep the alias-based fallback so the
+        // rollout doesn't lose the highlight in flight.
+        isCurrent: currentUserId
+          ? entry.uid
+            ? entry.uid === currentUserId
+            : entry.alias === this.toAlias(currentUserId)
+          : false,
         ...(entry.uid ? { uid: entry.uid } : {}),
       }));
 

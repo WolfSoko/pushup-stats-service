@@ -45,13 +45,18 @@ export function isLeaderboardNameAllowed(profile?: UserProfile): boolean {
  * Whether a leaderboard entry should carry the user's UID so the frontend
  * can link to `/u/<uid>`.
  *
- * Two independent opt-ins: the leaderboard name has to be allowed (so the
- * displayed `alias` is the real name, not `anonym`) AND the user must
- * have explicitly enabled the public profile. Either flag missing → no
- * UID, no link, the row stays a plain text entry.
+ * Three independent gates:
+ * 1. Leaderboard name is allowed (`hideFromLeaderboard === false`) so the
+ *    displayed alias is the real name.
+ * 2. Public profile is enabled (`publicProfile === true`).
+ * 3. `displayName` is non-empty after trimming. Without this, a user with
+ *    both opt-ins but a blank name would render as `anonym` (via
+ *    `toPublicDisplayName`'s fallback) AND get a clickable `/u/<uid>` —
+ *    a stable, profile-correlatable handle hiding behind an apparently
+ *    anonymous alias. The third gate forecloses that leak.
  */
 export function isPublicProfileLinkAllowed(profile?: UserProfile): boolean {
-  return (
-    isLeaderboardNameAllowed(profile) && profile?.ui?.publicProfile === true
-  );
+  if (!isLeaderboardNameAllowed(profile)) return false;
+  if (profile?.ui?.publicProfile !== true) return false;
+  return String(profile?.displayName || '').trim().length > 0;
 }

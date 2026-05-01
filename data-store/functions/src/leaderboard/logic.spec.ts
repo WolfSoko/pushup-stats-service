@@ -145,6 +145,42 @@ describe('leaderboard/logic', () => {
         // Defaults to private — no opt-in, no uid.
         expect(result[0].uid).toBeUndefined();
       });
+
+      it('omits uid when displayName is empty/whitespace even with both opt-ins', () => {
+        // Privacy regression: a user with an empty `displayName` would
+        // render as `anonym` via `toPublicDisplayName`'s fallback. If the
+        // row also carried a `uid`, the visible "anonym" label would
+        // become correlatable to a stable `/u/<uid>` permalink — leaking
+        // identity through what looks like an anonymous row. Block the
+        // UID until the user actually has a display name.
+        const rows: PushupRow[] = [
+          { userId: 'user1', timestamp: '2024-03-15T10:00:00Z', reps: 10 },
+          { userId: 'user2', timestamp: '2024-03-15T10:00:00Z', reps: 20 },
+        ];
+        const profiles = new Map<string, UserProfile>([
+          [
+            'user1',
+            {
+              displayName: '',
+              ui: { hideFromLeaderboard: false, publicProfile: true },
+            },
+          ],
+          [
+            'user2',
+            {
+              displayName: '   ',
+              ui: { hideFromLeaderboard: false, publicProfile: true },
+            },
+          ],
+        ]);
+
+        const result = rankEntries(rows, 'daily', '2024-03-15', profiles);
+
+        for (const entry of result) {
+          expect(entry.alias).toBe('anonym');
+          expect(entry.uid).toBeUndefined();
+        }
+      });
     });
 
     it('uses anonymous label for users without profiles', () => {
