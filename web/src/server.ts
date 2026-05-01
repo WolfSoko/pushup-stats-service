@@ -52,6 +52,39 @@ app.use((req, res, next) => {
   next();
 });
 
+// Redirect non-locale-prefixed app routes to /<lang>/... so paths like
+// `/u/<uid>` (which only exist inside the locale-specific Angular bundles)
+// don't 404 with `Cannot GET /u/<uid>` when shared as a bare URL.
+//
+// Angular's own SSR locale middleware only handles the root `/` redirect;
+// every other unprefixed path is forwarded to Angular which has no matching
+// route. We bridge that gap here, picking the locale from `Accept-Language`
+// and falling back to the source locale `de`.
+//
+// Skipped:
+//  - already-prefixed paths (`/de`, `/en` and any subpath thereof)
+//  - well-known files rewritten to `/de/...` by the middleware above
+//  - paths with a file extension (static assets like `/favicon.ico`)
+//  - non-GET/HEAD methods (POSTs to API routes shouldn't be redirected)
+const LOCALE_PREFIXES = new Set(['de', 'en']);
+app.use((req, res, next) => {
+  if (req.method !== 'GET' && req.method !== 'HEAD') return next();
+  const path = req.path;
+  if (path === '/') return next();
+  const firstSegment = path.split('/')[1] ?? '';
+  if (LOCALE_PREFIXES.has(firstSegment)) return next();
+  if (rootFiles.has(firstSegment)) return next();
+  // Skip static assets (any path whose last segment carries a file extension).
+  const lastSegment = path.split('/').pop() ?? '';
+  if (lastSegment.includes('.')) return next();
+
+  const accept = String(req.headers['accept-language'] ?? '').toLowerCase();
+  const lang = /\ben(-|;|,|$)/.test(accept) ? 'en' : 'de';
+  const originalSuffix = req.url.slice(path.length);
+  res.setHeader('Vary', 'Accept-Language');
+  res.redirect(302, `/${lang}${path}${originalSuffix}`);
+});
+
 /**
  * Serve static files from /browser
  */

@@ -97,11 +97,25 @@ interface OgCopy {
   numberLocale: string;
   /** Suffix label between the streak count and active-day count (e.g. "Tage" / "days"). */
   daysLabel: string;
+  /** Headline above the displayName (call-to-action context, e.g. "💪 X reps tracked"). */
+  headline: string;
+  /** Footer call-to-action (e.g. "Track yours – pushup-stats.de"). */
+  cta: string;
 }
 
 const OG_COPY: Readonly<Record<OgLocale, OgCopy>> = {
-  de: { numberLocale: 'de-DE', daysLabel: 'Tage' },
-  en: { numberLocale: 'en-US', daysLabel: 'days' },
+  de: {
+    numberLocale: 'de-DE',
+    daysLabel: 'Tage',
+    headline: 'Pushup-Profil',
+    cta: 'Selbst tracken — kostenlos auf pushup-stats.de',
+  },
+  en: {
+    numberLocale: 'en-US',
+    daysLabel: 'days',
+    headline: 'Push-up profile',
+    cta: 'Track yours — free at pushup-stats.de',
+  },
 };
 
 function copyFor(locale: OgLocale | string | undefined): OgCopy {
@@ -137,10 +151,10 @@ export function buildOgTree(
           textTransform: 'uppercase',
           color: '#9fb3de',
         },
-        children: 'Pushup Tracker',
+        children: `Pushup Tracker · ${copy.headline}`,
       }),
       el('div', {
-        style: { display: 'flex', flexDirection: 'column', gap: '12px' },
+        style: { display: 'flex', flexDirection: 'column', gap: '14px' },
         children: [
           el('div', {
             style: {
@@ -165,10 +179,11 @@ export function buildOgTree(
         style: {
           display: 'flex',
           alignItems: 'center',
-          fontSize: '28px',
-          color: '#8ca8e8',
+          fontSize: '32px',
+          fontWeight: 600,
+          color: '#f4f8ff',
         },
-        children: 'pushup-stats.de',
+        children: copy.cta,
       }),
     ],
   });

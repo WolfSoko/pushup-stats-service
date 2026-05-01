@@ -128,10 +128,17 @@ export class PublicProfilePageComponent {
     const profile = this.profile();
     if (!profile) return;
     const text = $localize`:@@publicProfile.share.text:${profile.displayName}:name: hat ${profile.total}:total: Liegestütze auf Pushup Tracker geschafft 💪 Schau's dir an:`;
+    // Include the locale prefix so the shared link lands on the right
+    // Angular bundle directly. Without it, the bare `/u/<uid>` path used to
+    // 404 (it only exists inside `/de/...` and `/en/...` builds); the SSR
+    // server now also redirects bare → locale-prefixed, but the shared URL
+    // should be the canonical one.
+    const lang = this.localeShortCode();
+    const encodedUid = encodeURIComponent(profile.uid);
     void this.shareService.share({
       title: $localize`:@@publicProfile.share.title:Pushup Tracker Profil`,
       text,
-      url: `${SHARE_URL_BASE}/u/${encodeURIComponent(profile.uid)}`,
+      url: `${SHARE_URL_BASE}/${lang}/u/${encodedUid}`,
     });
   }
 
@@ -181,9 +188,14 @@ export class PublicProfilePageComponent {
     const projectId =
       (this.firebaseApp.options as { projectId?: string }).projectId ??
       'pushup-stats';
+    // Title and description are tuned for the OpenGraph "optimal" ranges
+    // (title ~50-60 chars, description ~110-160 chars) so social cards
+    // don't get truncated and search snippets show meaningful copy. Both
+    // include the user's actual stats so the preview is informative even
+    // before the visitor clicks through.
     this.seo.update(
-      $localize`:@@publicProfile.seo.title:${profile.displayName}:name: – Pushup Tracker Profil`,
-      $localize`:@@publicProfile.seo.description:${profile.displayName}:name: hat ${profile.total}:total: Liegestütze und eine ${profile.currentStreak}:streak:-Tage-Streak auf Pushup Tracker.`,
+      $localize`:@@publicProfile.seo.title:${profile.displayName}:name: – ${profile.total}:total: Liegestütze · Streak ${profile.currentStreak}:streak: · Pushup Tracker`,
+      $localize`:@@publicProfile.seo.description:${profile.displayName}:name: hat ${profile.total}:total: Liegestütze in ${profile.totalDays}:days: aktiven Tagen geschafft – aktuelle Streak: ${profile.currentStreak}:streak: Tage. Tracke selbst kostenlos auf pushup-stats.de.`,
       `/u/${encodedUid}`,
       {
         // Per-user dynamic OG card (1200×630 PNG rendered by satori + resvg

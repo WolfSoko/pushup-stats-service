@@ -121,7 +121,13 @@ describe('PublicProfilePageComponent', () => {
 
       expect(shareMock.share).toHaveBeenCalledTimes(1);
       const payload = shareMock.share.mock.calls[0][0];
-      expect(payload.url).toBe('https://pushup-stats.de/u/abcdef1234567890');
+      // Share URL must include the locale prefix so the recipient lands on
+      // the right Angular bundle directly — bare `/u/<uid>` requires the
+      // SSR redirect and wouldn't survive a client cache or copy-paste
+      // through tools that strip 30x hops.
+      expect(payload.url).toMatch(
+        /^https:\/\/pushup-stats\.de\/(de|en)\/u\/abcdef1234567890$/
+      );
       expect(payload.text).toContain('Wolfi');
       expect(payload.text).toContain('5000');
     });

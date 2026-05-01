@@ -1,5 +1,6 @@
 import {
   Component,
+  LOCALE_ID,
   TemplateRef,
   computed,
   effect,
@@ -454,6 +455,7 @@ export class SettingsPageComponent {
   private readonly pushService = inject(PushSubscriptionService);
   private readonly userConfigStore = inject(UserConfigStore);
   private readonly shareService = inject(ShareService);
+  private readonly localeId = inject(LOCALE_ID) as string;
 
   readonly isGuest = this.user.isGuest;
   readonly userId = this.user.userIdSafe;
@@ -469,7 +471,12 @@ export class SettingsPageComponent {
 
   readonly profileUrl = computed(() => {
     const uid = this.userId();
-    return uid ? `https://pushup-stats.de/u/${uid}` : '';
+    if (!uid) return '';
+    // Include the locale prefix so the link lands on the right Angular
+    // bundle directly — bare `/u/<uid>` only works via the SSR redirect
+    // and we want the canonical share URL to be the prefixed one.
+    const lang = this.localeId?.startsWith('en') ? 'en' : 'de';
+    return `https://pushup-stats.de/${lang}/u/${encodeURIComponent(uid)}`;
   });
 
   readonly saving = signal(false);
