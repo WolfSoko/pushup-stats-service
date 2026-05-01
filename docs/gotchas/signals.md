@@ -75,6 +75,29 @@ try {
 
 The `readFlag`/`writeFlag` helpers in `goal-reached-notification.service.ts` follow this pattern. Apply it anywhere a `providedIn: 'root'` service touches `localStorage`/`sessionStorage` during construction — a single uncaught `SecurityError` there breaks the whole app, not just the feature.
 
+## Stale async loads on route-param changes
+
+Subscribing to `ActivatedRoute.paramMap` and dispatching an `async load(uid)` per emission lets a slower earlier request finish last and overwrite state/SEO for the newer route. Symptom: navigating quickly between two `/u/:uid` pages flashes the wrong profile.
+
+Two fixes (pick one):
+
+- **Monotonic request token** — increment `loadVersion` on entry, snapshot it locally, compare after each `await` and bail if stale. Used in `PublicProfilePageComponent` because the load happens once per emission and the guard reads cleanly.
+- **`switchMap`** — derive the load from a piped observable so RxJS cancels the previous inner subscription when a new uid arrives. Cleaner when the load itself returns an Observable.
+
+```ts
+private loadVersion = 0;
+
+private async load(uid: string): Promise<void> {
+  const version = ++this.loadVersion;
+  this.state.set({ kind: 'loading' });
+  const profile = await this.api.getProfile(uid);
+  if (version !== this.loadVersion) return; // stale
+  this.state.set({ kind: 'ready', profile });
+}
+```
+
+Apply anywhere a route-param-driven async fetch can race itself: `/u/:uid`, `/blog/:slug`, `/training-plans/:slug`, etc. Bumping the token on the "no-uid → not-found" branch matters too — without it, an in-flight load can still resolve and revive a stale profile.
+
 ## Display-defaulted signals vs "is this configured?"
 
 Several signals in the app return defaulted values for display convenience:

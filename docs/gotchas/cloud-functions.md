@@ -54,3 +54,25 @@ Increment `USERSTATS_VERSION` in `@pu-stats/models`. Affected users automaticall
 ## Pure business logic modules
 
 Keep Cloud Function business logic in separate pure modules (e.g. `user-stats-delta.ts`) for unit testing without Firestore mocks. The trigger functions in `index.ts` are thin wrappers. See [`testing.md`](testing.md) for the testing pattern.
+
+## Public-projection pattern (private docs → anonymous-readable surface)
+
+When you need to expose a sanitized subset of an owner-only Firestore doc to anonymous callers (e.g. `/u/:uid` public profiles), do NOT widen Firestore rules. Use a callable that reads via Admin SDK and returns a **whitelisted** projection, with a regression spec asserting the output keys are a subset of an explicit allowlist (`Set` of allowed keys). See `data-store/functions/src/profile/public-profile.ts` + spec for the canonical implementation.
+
+**Privacy gates:**
+
+- Opt-in flag must be `=== true`, never truthy. Defaults to private.
+- Map both "user does not exist" and "user is private" to the same `not-found` response so account existence cannot be probed by walking UIDs.
+- Map invalid/malformed UIDs to the same `not-found` (not `invalid-argument`) so the public route stays on one consistent UX/privacy path.
+
+## `onCall` vs `onRequest` for anonymous endpoints
+
+- `onCall` requires a CORS preflight + Firebase SDK envelope and is awkward for raw `<img>` / crawler use cases. Use it for callable RPCs from authenticated clients.
+- `onRequest` is plain HTTP — needed when crawlers, social-card scrapers, or `<img src>` consume the response directly (e.g. dynamic OG images). Set `invoker: 'public'` to skip auth.
+- Firebase UID range: `1` to `128` characters, charset is implementation-defined but URL-safe in practice. Custom UIDs (test fixtures, custom-token flows) can be much shorter than the 28-char anonymous default — don't impose a minimum length floor in validators or you'll lock out valid users.
+
+## Shipping deps with WASM/native bytes
+
+`@nx/esbuild` with `thirdParty: false` keeps `node_modules` external; with `generatePackageJson: true` new deps just get registered in the emitted `package.json` and Cloud Functions npm-installs them at deploy.
+
+For deps that load WASM at runtime (e.g. `@resvg/resvg-wasm`), use `createRequire(__filename).resolve('@resvg/.../index_bg.wasm')` to locate the file inside the deployed `node_modules` tree — relative paths from `import.meta` don't work in CJS bundles. Cache the `initWasm()` result in module scope; cold start runs it once, warm starts skip.
