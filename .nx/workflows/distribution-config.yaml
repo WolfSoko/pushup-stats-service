@@ -6,22 +6,15 @@
 #
 # Referenced from .github/workflows/ci.yml via
 #   pnpm nx-cloud start-ci-run --distribute-on=.nx/workflows/distribution-config.yaml
-
-# Custom launch template wrapping `linux-medium-js` with a 4 GB Node heap.
-# Default `linux-medium-js` agents have 8 GB total RAM but only the V8
-# default ~2 GB old-space heap, which is too tight for the Angular SSR build
-# + heavy Vitest suites with Firebase/Material — symptoms range from slow
-# GC thrashing to outright OOM. Match the orchestrator's `NODE_OPTIONS` in
-# `.github/workflows/ci.yml` so a task hits the same heap ceiling whether it
-# runs on the GH runner or an Nx Cloud agent.
-launch-templates:
-  linux-medium-js-4gb:
-    resource-class: linux-medium-js
-    env:
-      NODE_OPTIONS: '--max-old-space-size=4096'
-
+#
+# Per-agent Node heap is bumped to 4 GB via `NODE_OPTIONS` forwarded from
+# the orchestrator (`.github/workflows/ci.yml`) — `nx-cloud start-ci-run`
+# propagates `NODE_OPTIONS` to agent task execution by default. If we ever
+# need to override env on a per-agent basis (different heap per
+# resource-class), switch to `launch-templates` per the Nx Cloud workflow
+# schema docs.
 distribute-on:
-  small-changeset: 4 linux-medium-js-4gb
-  medium-changeset: 6 linux-medium-js-4gb
-  large-changeset: 8 linux-medium-js-4gb
-  extra-large-changeset: 10 linux-medium-js-4gb
+  small-changeset: 4 linux-medium-js
+  medium-changeset: 6 linux-medium-js
+  large-changeset: 8 linux-medium-js
+  extra-large-changeset: 10 linux-medium-js
