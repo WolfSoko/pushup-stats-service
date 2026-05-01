@@ -71,12 +71,21 @@ export class PublicProfilePageComponent {
   protected readonly shareLabel = $localize`:@@publicProfile.share:Teilen`;
   protected readonly ctaLabel = $localize`:@@publicProfile.cta:Selbst tracken – pushup-stats.de`;
 
+  /**
+   * Monotonic request token. Increments on every route emission AND every
+   * `load()` start; only the most recent token is allowed to commit state /
+   * SEO. Without this, navigating quickly between two `/u/:uid` pages can
+   * let the slower request finish last and overwrite the newer profile.
+   */
+  private loadVersion = 0;
+
   constructor() {
     this.route.paramMap
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((params) => {
         const uid = (params.get('uid') ?? '').trim();
         if (!uid) {
+          this.loadVersion++;
           this.state.set({ kind: 'not-found' });
           this.applySeo(null);
           return;
@@ -102,9 +111,11 @@ export class PublicProfilePageComponent {
   }
 
   private async load(uid: string): Promise<void> {
+    const version = ++this.loadVersion;
     this.state.set({ kind: 'loading' });
     try {
       const profile = await this.api.getProfile(uid);
+      if (version !== this.loadVersion) return;
       if (!profile) {
         this.state.set({ kind: 'not-found' });
         this.applySeo(null);
@@ -113,17 +124,25 @@ export class PublicProfilePageComponent {
       this.state.set({ kind: 'ready', profile });
       this.applySeo(profile);
     } catch {
+      if (version !== this.loadVersion) return;
       this.state.set({ kind: 'error' });
       this.applySeo(null);
     }
   }
 
+  private currentPath(): string {
+    const uid = this.route.snapshot.paramMap.get('uid')?.trim();
+    return uid ? `/u/${uid}` : '/u/';
+  }
+
   private applySeo(profile: PublicProfile | null): void {
     if (!profile) {
+      // Use the actual requested path so canonical / og:url stay in sync
+      // with the URL the visitor sees, even on the not-found state.
       this.seo.update(
         $localize`:@@publicProfile.seo.notFound.title:Profil nicht verfügbar – Pushup Tracker`,
         $localize`:@@publicProfile.seo.notFound.description:Dieses Profil existiert nicht oder ist nicht öffentlich.`,
-        '/u/'
+        this.currentPath()
       );
       return;
     }

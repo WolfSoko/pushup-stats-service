@@ -642,8 +642,12 @@ export const getPublicProfile = onCall(
   { region: 'europe-west3', invoker: 'public' },
   async (request) => {
     const uid = String(request.data?.uid ?? '').trim();
+    // Collapse malformed UIDs into the same `not-found` response we use for
+    // missing / opted-out users, so /u/<bad-slug> hits the same UX/privacy
+    // path as /u/<missing-but-valid> instead of bouncing into a generic
+    // error state on the client.
     if (!isValidUid(uid)) {
-      throw new HttpsError('invalid-argument', 'Invalid uid');
+      throw new HttpsError('not-found', 'Profile not available');
     }
 
     const db = admin.firestore();

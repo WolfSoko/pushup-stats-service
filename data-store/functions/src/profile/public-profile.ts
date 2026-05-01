@@ -49,14 +49,18 @@ export function isPublicProfileAllowed(
 }
 
 /**
- * Validates a Firebase UID input. Real Firebase UIDs are URL-safe characters
- * up to 128 chars long (anonymous: 28 chars). Reject anything outside a
- * conservative range so a malformed slug never reaches Firestore.
+ * Validates a Firebase UID input. The Auth API allows UIDs of 1-128
+ * characters; the Admin SDK accepts arbitrary strings, but in practice every
+ * shipped UID we see is URL-safe (A-Z, a-z, 0-9, `_`, `-`).
+ *
+ * We restrict the charset rather than the length so projects with custom
+ * short UIDs (e.g. test fixtures) still work, while a malformed slug like a
+ * path traversal (`..`) or a slash never reaches Firestore.
  */
 export function isValidUid(value: unknown): value is string {
   return (
     typeof value === 'string' &&
-    value.length >= 8 &&
+    value.length >= 1 &&
     value.length <= 128 &&
     /^[A-Za-z0-9_-]+$/.test(value)
   );
@@ -82,11 +86,15 @@ export function buildPublicProfile(
     totalDays: numberOrZero(stats?.totalDays),
     currentStreak: numberOrZero(stats?.currentStreak),
     bestSingleEntry:
-      typeof stats?.bestSingleEntry?.reps === 'number'
+      typeof stats?.bestSingleEntry?.reps === 'number' &&
+      Number.isFinite(stats.bestSingleEntry.reps)
         ? stats.bestSingleEntry.reps
         : null,
     bestDayTotal:
-      typeof stats?.bestDay?.total === 'number' ? stats.bestDay.total : null,
+      typeof stats?.bestDay?.total === 'number' &&
+      Number.isFinite(stats.bestDay.total)
+        ? stats.bestDay.total
+        : null,
     updatedAt: typeof stats?.updatedAt === 'string' ? stats.updatedAt : '',
   };
 }

@@ -107,7 +107,12 @@ import { ShareService } from '../../core/share.service';
               Erinnerungen bleiben privat.
             </p>
 
-            @if (publicProfileDraft() && profileUrl()) {
+            <!-- Gate the share CTA on the persisted setting (not the draft).
+                 If we showed the link as soon as the toggle flipped, a user
+                 could tap "Profil teilen" before save() has written
+                 ui.publicProfile to Firestore and end up sharing a link that
+                 the backend will 404. -->
+            @if (config().publicProfile && profileUrl()) {
               <div
                 class="profile-link-row"
                 data-testid="settings-public-profile-link"

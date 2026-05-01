@@ -41,7 +41,9 @@
           </div>
           <div class="header-text">
             <h1 data-testid="public-profile-name">{{ p.displayName }}</h1>
-            <p class="subtitle">Pushup Tracker</p>
+            <p class="subtitle" i18n="@@publicProfile.subtitle">
+              Pushup Tracker
+            </p>
           </div>
           <button
             mat-stroked-button
@@ -60,32 +62,36 @@
           <mat-card class="stat-card">
             <mat-card-content>
               <small>{{ totalLabel }}</small>
-              <b data-testid="public-profile-total">{{ p.total }}</b>
+              <b data-testid="public-profile-total">{{
+                p.total | number: '1.0-0'
+              }}</b>
             </mat-card-content>
           </mat-card>
           <mat-card class="stat-card">
             <mat-card-content>
               <small>{{ streakLabel }}</small>
-              <b data-testid="public-profile-streak">{{ p.currentStreak }}</b>
+              <b data-testid="public-profile-streak">{{
+                p.currentStreak | number: '1.0-0'
+              }}</b>
             </mat-card-content>
           </mat-card>
           <mat-card class="stat-card">
             <mat-card-content>
               <small>{{ daysLabel }}</small>
-              <b>{{ p.totalDays }}</b>
+              <b>{{ p.totalDays | number: '1.0-0' }}</b>
             </mat-card-content>
           </mat-card>
           <mat-card class="stat-card">
             <mat-card-content>
               <small>{{ entriesLabel }}</small>
-              <b>{{ p.totalEntries }}</b>
+              <b>{{ p.totalEntries | number: '1.0-0' }}</b>
             </mat-card-content>
           </mat-card>
           @if (p.bestSingleEntry !== null) {
             <mat-card class="stat-card">
               <mat-card-content>
                 <small>{{ bestSetLabel }}</small>
-                <b>{{ p.bestSingleEntry }}</b>
+                <b>{{ p.bestSingleEntry | number: '1.0-0' }}</b>
               </mat-card-content>
             </mat-card>
           }
@@ -93,7 +99,7 @@
             <mat-card class="stat-card">
               <mat-card-content>
                 <small>{{ bestDayLabel }}</small>
-                <b>{{ p.bestDayTotal }}</b>
+                <b>{{ p.bestDayTotal | number: '1.0-0' }}</b>
               </mat-card-content>
             </mat-card>
           }

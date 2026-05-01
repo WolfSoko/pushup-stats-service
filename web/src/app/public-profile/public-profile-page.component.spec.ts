@@ -82,8 +82,13 @@ describe('PublicProfilePageComponent', () => {
       expect(
         root.querySelector('[data-testid="public-profile-name"]')?.textContent
       ).toContain('Wolfi');
+      // The number pipe formats with the active LOCALE_ID (en-US in tests),
+      // so 5000 renders as "5,000". Match the digits regardless of grouping
+      // separator so changing LOCALE_ID for tests doesn't break the assertion.
       expect(
-        root.querySelector('[data-testid="public-profile-total"]')?.textContent
+        root
+          .querySelector('[data-testid="public-profile-total"]')
+          ?.textContent?.replace(/[,.\s]/g, '')
       ).toContain('5000');
       expect(
         root.querySelector('[data-testid="public-profile-streak"]')?.textContent

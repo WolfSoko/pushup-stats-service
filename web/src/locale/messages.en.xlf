@@ -5844,6 +5844,12 @@ Deine Position: # ·  Reps        </source>
         <target>Public push-up profile with reps, streak and personal bests.</target>
       </segment>
     </unit>
+    <unit id="publicProfile.subtitle">
+      <segment state="translated">
+        <source>Pushup Tracker</source>
+        <target>Pushup Tracker</target>
+      </segment>
+    </unit>
     <unit id="publicProfile.notFound.title">
       <segment state="translated">
         <source>Profil nicht gefunden</source>

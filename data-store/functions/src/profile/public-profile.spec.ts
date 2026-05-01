@@ -7,14 +7,16 @@ import {
 describe('isValidUid', () => {
   it.each([
     ['', false],
-    ['short', false],
+    // Firebase allows UIDs from 1 to 128 chars; custom-token / fixture UIDs
+    // can be shorter than the 28-char anonymous default, so the validator
+    // must accept the full range.
+    ['x', true],
+    ['short', true],
     ['valid-uid-1234567890', true],
     ['ALongIshUidWithMixedCase_-09', true],
     ['has spaces', false],
     ['has/slash', false],
     ['has..dot', false],
-    ['x'.repeat(8), true],
-    ['x'.repeat(7), false],
     ['x'.repeat(128), true],
     ['x'.repeat(129), false],
   ])('isValidUid(%j) => %s', (input, expected) => {
