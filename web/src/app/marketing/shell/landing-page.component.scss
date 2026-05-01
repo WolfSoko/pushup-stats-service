@@ -304,6 +304,11 @@ h1 {
     stroke: var(--lp-stroke);
     stroke-width: 1;
   }
+  .lp-reps {
+    fill: var(--lp-fg);
+    font-size: 13px;
+    font-weight: 700;
+  }
   .lp-total-value {
     fill: var(--lp-fg);
     font-size: 28px;
