@@ -56,32 +56,58 @@ echo "[sentry] cli:     ${SENTRY_CLI[*]}"
 # Inject runtime release ID into every HTML so main.ts can set Sentry.init({ release }).
 # Both index.html and index.csr.html are touched: prerendered routes use index.html;
 # SSR-only routes use index.csr.html as the SPA-shell template.
+# Idempotent: strip any prior SENTRY_RELEASE script tag before inserting the new one,
+# so re-running the script doesn't accumulate duplicate tags in the same HTML.
 find dist/web/browser \( -name "index.html" -o -name "index.csr.html" \) \
-  -exec sed -i "s|</head>|<script>globalThis.SENTRY_RELEASE=\"${RELEASE}\";</script></head>|" {} \;
+  -exec sed -i \
+    -e 's|<script>globalThis\.SENTRY_RELEASE="[^"]*";</script>||g' \
+    -e "s|</head>|<script>globalThis.SENTRY_RELEASE=\"${RELEASE}\";</script></head>|" \
+    {} \;
 
-# Inject debug IDs into JS bundles + .map files (matches errors to maps regardless of URL).
-"${SENTRY_CLI[@]}" sourcemaps inject dist/web
+# Skip inject/upload if no .map files remain in dist/web (e.g. a second run in the
+# same workspace where cleanup already deleted them). With --strict the upload
+# would otherwise abort the build for a no-op situation.
+WEB_MAP_COUNT=$(find dist/web -name "*.map" -type f 2>/dev/null | wc -l)
+if [ "$WEB_MAP_COUNT" -eq 0 ]; then
+  echo "[sentry] dist/web has no .map files — already uploaded? skipping web upload."
+else
+  # Inject debug IDs into JS bundles + .map files (matches errors to maps regardless of URL).
+  "${SENTRY_CLI[@]}" sourcemaps inject dist/web
 
-# --strict: fail loudly if zero files are matched (silent skips were the historical bug).
-"${SENTRY_CLI[@]}" sourcemaps upload \
-  --release="$RELEASE" \
-  --strict \
-  dist/web
-
-# --- Cloud Functions (optional, only if previously built) ---
-if [ -d "data-store/functions-dist" ]; then
-  "${SENTRY_CLI[@]}" sourcemaps inject data-store/functions-dist
+  # --strict: fail loudly if zero files are matched (silent skips were the historical bug).
   "${SENTRY_CLI[@]}" sourcemaps upload \
     --release="$RELEASE" \
     --strict \
-    data-store/functions-dist
+    dist/web
+fi
 
-  # Strip .map files from the deploy bundle (functions don't need them at runtime).
-  find data-store/functions-dist -name "*.map" -delete 2>/dev/null || true
+# --- Cloud Functions (optional, only if previously built) ---
+if [ -d "data-store/functions-dist" ]; then
+  CF_MAP_COUNT=$(find data-store/functions-dist -name "*.map" -type f 2>/dev/null | wc -l)
+  if [ "$CF_MAP_COUNT" -eq 0 ]; then
+    echo "[sentry] data-store/functions-dist has no .map files — skipping CF upload."
+  else
+    "${SENTRY_CLI[@]}" sourcemaps inject data-store/functions-dist
+    "${SENTRY_CLI[@]}" sourcemaps upload \
+      --release="$RELEASE" \
+      --strict \
+      data-store/functions-dist
+
+    # Strip .map files from the deploy bundle (functions don't need them at runtime).
+    find data-store/functions-dist -name "*.map" -delete 2>/dev/null || true
+    echo "[sentry] cloud functions: source maps uploaded, .map files stripped"
+  fi
 
   # Surface the release to runtime so Sentry.init() in functions can tag events.
-  echo "SENTRY_RELEASE=$RELEASE" >> data-store/functions-dist/.env
-  echo "[sentry] cloud functions: source maps uploaded, .map files stripped"
+  # Replace any existing SENTRY_RELEASE line instead of appending — avoids
+  # duplicate keys in .env if the script runs more than once on the same dist.
+  ENV_FILE="data-store/functions-dist/.env"
+  touch "$ENV_FILE"
+  if grep -q '^SENTRY_RELEASE=' "$ENV_FILE"; then
+    sed -i "s|^SENTRY_RELEASE=.*|SENTRY_RELEASE=$RELEASE|" "$ENV_FILE"
+  else
+    echo "SENTRY_RELEASE=$RELEASE" >> "$ENV_FILE"
+  fi
 fi
 
 # --- Cleanup ---

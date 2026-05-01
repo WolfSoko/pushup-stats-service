@@ -13,9 +13,6 @@ env:
   NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN_WRITE }}
   # More heap for Angular SSR build + Playwright webServer in CI.
   NODE_OPTIONS: --max-old-space-size=6144
-  # Token for Sentry source map upload. The script (scripts/upload-sentry-sourcemaps.sh)
-  # is a no-op when this is empty, so deploys don't fail when the secret is unset.
-  SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
@@ -55,6 +52,10 @@ jobs:
       - name: Build Cloud Functions
         run: pnpm nx run cloud-functions:build
       - name: Upload source maps to Sentry
+        # Scope the secret to this step only — script no-ops if the env is empty,
+        # so we don't need an explicit `if:` guard.
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
         run: pnpm sentry:sourcemaps
       - name: Prepare Hosting artifact
         run: |
