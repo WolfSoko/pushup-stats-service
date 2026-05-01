@@ -30,6 +30,7 @@ describe('appRoutes', () => {
       'training-plans/:slug',
       'reminders',
       'leaderboard',
+      'u/:uid',
       'blog',
       'impressum',
       'datenschutz',
@@ -137,5 +138,33 @@ describe('appRoutes', () => {
 
     const wildcard = appRoutes.find((r) => r.path === '**');
     expect(wildcard?.redirectTo).toBe('');
+  });
+
+  it('lazy-loads the PublicProfilePageComponent on /u/:uid', async () => {
+    const route = appRoutes.find((r) => r.path === 'u/:uid');
+    expect(route?.loadComponent).toBeDefined();
+    const component = await route?.loadComponent?.();
+    // Verify it resolves to the correct component class.
+    const { PublicProfilePageComponent } = await import(
+      './public-profile/public-profile-page.component'
+    );
+    expect(component).toBe(PublicProfilePageComponent);
+  });
+
+  it('provides seoTitle and seoDescription for the u/:uid route', () => {
+    const route = appRoutes.find((r) => r.path === 'u/:uid');
+    expect(route?.data?.['seoTitle']).toBeTruthy();
+    expect(route?.data?.['seoDescription']).toBeTruthy();
+    // Sanity-check: the generic SEO fallback includes the brand name so
+    // crawlers encountering a cold-load /u/<uid> see a recognisable title
+    // before the component hydrates the dynamic per-profile SEO.
+    expect(route?.data?.['seoTitle']).toContain('Pushup Tracker');
+  });
+
+  it('does not require auth on the u/:uid route (public access)', () => {
+    // Public profiles must be reachable without an account so anonymous
+    // visitors and social-card crawlers can open /u/<uid> directly.
+    const route = appRoutes.find((r) => r.path === 'u/:uid');
+    expect(route?.canActivate).toBeUndefined();
   });
 });
