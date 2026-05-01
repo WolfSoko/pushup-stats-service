@@ -1,3 +1,4 @@
+import { LOCALE_ID } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { ActivatedRoute, convertToParamMap, ParamMap } from '@angular/router';
@@ -71,6 +72,10 @@ describe('PublicProfilePageComponent', () => {
         { provide: ShareService, useValue: shareMock },
         { provide: SeoService, useValue: seoMock },
         { provide: FirebaseApp, useValue: firebaseAppMock },
+        // Pin the locale so the share-URL assertion below is deterministic
+        // (the unit-test default differs per Angular setup; pinning here
+        // documents which prefix the share builder should pick).
+        { provide: LOCALE_ID, useValue: 'en-US' },
       ],
     }).compileComponents();
 
@@ -121,7 +126,14 @@ describe('PublicProfilePageComponent', () => {
 
       expect(shareMock.share).toHaveBeenCalledTimes(1);
       const payload = shareMock.share.mock.calls[0][0];
-      expect(payload.url).toBe('https://pushup-stats.de/u/abcdef1234567890');
+      // Share URL must include the locale prefix so the recipient lands on
+      // the right Angular bundle directly — bare `/u/<uid>` requires the
+      // SSR redirect and wouldn't survive a client cache or copy-paste
+      // through tools that strip 30x hops. Tests run with the default
+      // LOCALE_ID `en-US`, so we assert the exact `/en/...` URL — going
+      // permissive (matching `(de|en)`) would let a regression silently
+      // map every locale to the source fallback.
+      expect(payload.url).toBe('https://pushup-stats.de/en/u/abcdef1234567890');
       expect(payload.text).toContain('Wolfi');
       expect(payload.text).toContain('5000');
     });

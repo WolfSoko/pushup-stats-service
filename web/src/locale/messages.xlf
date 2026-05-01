@@ -237,7 +237,7 @@
         <note category="location">web/src/app/core/feedback/feedback-dialog.component.ts:96,97</note>
         <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:199,200</note>
         <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts:75,76</note>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:328,329</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:329,330</note>
       </notes>
       <segment>
         <source> Abbrechen </source>
@@ -1846,7 +1846,7 @@
     </unit>
     <unit id="landing.leaderboard.last30">
       <notes>
-        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:42,46</note>
+        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:42,45</note>
       </notes>
       <segment>
         <source> Letzte 30 Tage </source>
@@ -2570,7 +2570,7 @@
     </unit>
     <unit id="publicProfile.notFound.title">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:69</note>
+        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:82</note>
       </notes>
       <segment>
         <source>Profil nicht gefunden</source>
@@ -2578,7 +2578,7 @@
     </unit>
     <unit id="publicProfile.notFound.body">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:70</note>
+        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:83</note>
       </notes>
       <segment>
         <source>Dieses Profil existiert nicht oder wurde nicht öffentlich freigegeben.</source>
@@ -2586,7 +2586,7 @@
     </unit>
     <unit id="publicProfile.error.title">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:71</note>
+        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:84</note>
       </notes>
       <segment>
         <source>Profil konnte nicht geladen werden</source>
@@ -2594,7 +2594,7 @@
     </unit>
     <unit id="publicProfile.error.body">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:72</note>
+        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:85</note>
       </notes>
       <segment>
         <source>Bitte versuche es später erneut.</source>
@@ -2602,7 +2602,7 @@
     </unit>
     <unit id="publicProfile.retry">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:73</note>
+        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:86</note>
       </notes>
       <segment>
         <source>Erneut versuchen</source>
@@ -2610,7 +2610,7 @@
     </unit>
     <unit id="publicProfile.toHome">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:74</note>
+        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:87</note>
       </notes>
       <segment>
         <source>Zur Startseite</source>
@@ -2618,7 +2618,7 @@
     </unit>
     <unit id="publicProfile.stats">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:75</note>
+        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:88</note>
       </notes>
       <segment>
         <source>Statistik</source>
@@ -2626,7 +2626,7 @@
     </unit>
     <unit id="publicProfile.total">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:76</note>
+        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:89</note>
       </notes>
       <segment>
         <source>Gesamte Reps</source>
@@ -2634,7 +2634,7 @@
     </unit>
     <unit id="publicProfile.streak">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:77</note>
+        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:90</note>
       </notes>
       <segment>
         <source>Aktuelle Streak</source>
@@ -2642,7 +2642,7 @@
     </unit>
     <unit id="publicProfile.days">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:78</note>
+        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:91</note>
       </notes>
       <segment>
         <source>Aktive Tage</source>
@@ -2650,7 +2650,7 @@
     </unit>
     <unit id="publicProfile.entries">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:79</note>
+        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:92</note>
       </notes>
       <segment>
         <source>Einträge</source>
@@ -2658,7 +2658,7 @@
     </unit>
     <unit id="publicProfile.bestSet">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:80</note>
+        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:93</note>
       </notes>
       <segment>
         <source>Bester Einzel-Eintrag</source>
@@ -2666,7 +2666,7 @@
     </unit>
     <unit id="publicProfile.bestDay">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:81</note>
+        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:94</note>
       </notes>
       <segment>
         <source>Bester Tag</source>
@@ -2674,7 +2674,7 @@
     </unit>
     <unit id="publicProfile.share.aria">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:82</note>
+        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:95</note>
       </notes>
       <segment>
         <source>Profil teilen</source>
@@ -2682,7 +2682,7 @@
     </unit>
     <unit id="publicProfile.share">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:83</note>
+        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:96</note>
       </notes>
       <segment>
         <source>Teilen</source>
@@ -2690,7 +2690,7 @@
     </unit>
     <unit id="publicProfile.cta">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:84</note>
+        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:97</note>
       </notes>
       <segment>
         <source>Selbst tracken – pushup-stats.de</source>
@@ -2698,7 +2698,7 @@
     </unit>
     <unit id="publicProfile.share.text">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:117</note>
+        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:130</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="name" disp="profile.displayName"/> hat <ph id="1" equiv="total" disp="profile.total"/> Liegestütze auf Pushup Tracker geschafft 💪 Schau&apos;s dir an:</source>
@@ -2706,7 +2706,7 @@
     </unit>
     <unit id="publicProfile.share.title">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:119</note>
+        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:139</note>
       </notes>
       <segment>
         <source>Pushup Tracker Profil</source>
@@ -2714,7 +2714,7 @@
     </unit>
     <unit id="publicProfile.seo.notFound.title">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:155</note>
+        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:181</note>
       </notes>
       <segment>
         <source>Profil nicht verfügbar – Pushup Tracker</source>
@@ -2722,7 +2722,7 @@
     </unit>
     <unit id="publicProfile.seo.notFound.description">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:156</note>
+        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:182</note>
       </notes>
       <segment>
         <source>Dieses Profil existiert nicht oder ist nicht öffentlich.</source>
@@ -2730,23 +2730,23 @@
     </unit>
     <unit id="publicProfile.seo.title">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:162</note>
+        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:197</note>
       </notes>
       <segment>
-        <source><ph id="0" equiv="name" disp="profile.displayName"/> – Pushup Tracker Profil</source>
+        <source><ph id="0" equiv="name" disp="profile.displayName"/> – <ph id="1" equiv="total" disp="profile.total"/> Liegestütze · Streak <ph id="2" equiv="streak" disp="profile.currentStreak"/> · Pushup Tracker</source>
       </segment>
     </unit>
     <unit id="publicProfile.seo.description">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:163</note>
+        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:198</note>
       </notes>
       <segment>
-        <source><ph id="0" equiv="name" disp="profile.displayName"/> hat <ph id="1" equiv="total" disp="profile.total"/> Liegestütze und eine <ph id="2" equiv="streak" disp="profile.currentStreak"/>-Tage-Streak auf Pushup Tracker.</source>
+        <source><ph id="0" equiv="name" disp="profile.displayName"/> hat <ph id="1" equiv="total" disp="profile.total"/> Liegestütze in <ph id="2" equiv="days" disp="profile.totalDays"/> aktiven Tagen geschafft – aktuelle Streak: <ph id="3" equiv="streak" disp="profile.currentStreak"/> Tage. Tracke selbst kostenlos auf pushup-stats.de.</source>
       </segment>
     </unit>
     <unit id="publicProfile.seo.imageAlt">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:170</note>
+        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:211</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="name" disp="profile.displayName"/> auf Pushup Tracker</source>
@@ -4190,7 +4190,7 @@
     </unit>
     <unit id="settingsTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:45,46</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:46,47</note>
       </notes>
       <segment>
         <source>Einstellungen</source>
@@ -4198,7 +4198,7 @@
     </unit>
     <unit id="settingsSubtitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:47,48</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:48,49</note>
       </notes>
       <segment>
         <source>User-Profil &amp; Tagesziel</source>
@@ -4206,7 +4206,7 @@
     </unit>
     <unit id="guest.banner.text">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:56,58</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:57,59</note>
       </notes>
       <segment>
         <source>Du nutzt die App als Gast. Erstelle ein Konto um alle Funktionen zu nutzen.</source>
@@ -4214,7 +4214,7 @@
     </unit>
     <unit id="guest.banner.cta">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:63,65</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:64,66</note>
       </notes>
       <segment>
         <source>Konto erstellen</source>
@@ -4222,7 +4222,7 @@
     </unit>
     <unit id="displayNameLabel">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:69,70</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:70,71</note>
       </notes>
       <segment>
         <source>Anzeigename</source>
@@ -4230,7 +4230,7 @@
     </unit>
     <unit id="displayNamePlaceholder">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:75</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:76</note>
       </notes>
       <segment>
         <source>Wolf</source>
@@ -4238,7 +4238,7 @@
     </unit>
     <unit id="settings.displayNameHint">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:78,80</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:79,81</note>
       </notes>
       <segment>
         <source>Kann in der Bestenliste angezeigt werden.</source>
@@ -4246,7 +4246,7 @@
     </unit>
     <unit id="settings.leaderboardOptIn">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:87,88</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:88,89</note>
       </notes>
       <segment>
         <source> In Bestenliste anzeigen </source>
@@ -4254,7 +4254,7 @@
     </unit>
     <unit id="settings.leaderboardOptOutHint">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:91,94</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:92,95</note>
       </notes>
       <segment>
         <source> Wenn deaktiviert, wird dein Profil in der Bestenliste nicht angezeigt. </source>
@@ -4262,7 +4262,7 @@
     </unit>
     <unit id="settings.publicProfile.toggle">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:101,102</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:102,103</note>
       </notes>
       <segment>
         <source> Öffentliches Profil aktivieren </source>
@@ -4270,7 +4270,7 @@
     </unit>
     <unit id="settings.publicProfile.hint">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:105,108</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:106,109</note>
       </notes>
       <segment>
         <source> Erlaubt jedem mit dem Link den Zugriff auf deine Reps, Streak und Bestleistungen. Dein Anzeigename ist sichtbar; E-Mail, Ziele und Erinnerungen bleiben privat. </source>
@@ -4278,7 +4278,7 @@
     </unit>
     <unit id="settings.publicProfile.shareCta">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:127,129</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:128,130</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">share</pc> Profil teilen </source>
@@ -4286,7 +4286,7 @@
     </unit>
     <unit id="settings.adsConsentOptIn">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:138,139</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:139,140</note>
       </notes>
       <segment>
         <source> Personalisierte Werbung aktivieren </source>
@@ -4294,7 +4294,7 @@
     </unit>
     <unit id="settings.adsConsentHint">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:142,145</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:143,146</note>
       </notes>
       <segment>
         <source> Steuert, ob Werbe-Slots im Dashboard geladen werden dürfen. </source>
@@ -4302,7 +4302,7 @@
     </unit>
     <unit id="dailyGoalLabel">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:146,147</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:147,148</note>
       </notes>
       <segment>
         <source>Tagesziel (Reps)</source>
@@ -4310,7 +4310,7 @@
     </unit>
     <unit id="dailyGoalPlaceholder">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:156</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:157</note>
       </notes>
       <segment>
         <source>10</source>
@@ -4318,7 +4318,7 @@
     </unit>
     <unit id="settings.goalHint">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:159,161</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:160,162</note>
       </notes>
       <segment>
         <source>Wird prominent in der Toolbar angezeigt.</source>
@@ -4326,7 +4326,7 @@
     </unit>
     <unit id="weeklyGoalLabel">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:164,165</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:165,166</note>
       </notes>
       <segment>
         <source>Wochenziel (Reps)</source>
@@ -4334,7 +4334,7 @@
     </unit>
     <unit id="weeklyGoalPlaceholder">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:174</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:175</note>
       </notes>
       <segment>
         <source>50</source>
@@ -4342,7 +4342,7 @@
     </unit>
     <unit id="settings.weeklyGoalHint">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:177,179</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:178,180</note>
       </notes>
       <segment>
         <source>Gesamtziel pro Woche (Mo–So).</source>
@@ -4350,7 +4350,7 @@
     </unit>
     <unit id="monthlyGoalLabel">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:182,183</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:183,184</note>
       </notes>
       <segment>
         <source>Monatsziel (Reps)</source>
@@ -4358,7 +4358,7 @@
     </unit>
     <unit id="monthlyGoalPlaceholder">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:192</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:193</note>
       </notes>
       <segment>
         <source>200</source>
@@ -4366,7 +4366,7 @@
     </unit>
     <unit id="settings.monthlyGoalHint">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:195,197</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:196,198</note>
       </notes>
       <segment>
         <source>Gesamtziel pro Monat.</source>
@@ -4374,7 +4374,7 @@
     </unit>
     <unit id="settings.snapQualityLabel">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:204,206</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:205,207</note>
       </notes>
       <segment>
         <source>Snap-Animation Qualität</source>
@@ -4382,7 +4382,7 @@
     </unit>
     <unit id="settings.snapQuality.low">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:214,216</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:215,217</note>
       </notes>
       <segment>
         <source>Niedrig</source>
@@ -4390,7 +4390,7 @@
     </unit>
     <unit id="settings.snapQuality.middle">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:219,221</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:220,222</note>
       </notes>
       <segment>
         <source>Mittel</source>
@@ -4398,7 +4398,7 @@
     </unit>
     <unit id="settings.snapQuality.high">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:224,226</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:225,227</note>
       </notes>
       <segment>
         <source>Hoch</source>
@@ -4406,7 +4406,7 @@
     </unit>
     <unit id="settings.snapQualityHint">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:228,230</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:229,231</note>
       </notes>
       <segment>
         <source> Steuert die Partikelanzahl der „Ziel erreicht“-Animation (40k / 120k / 200k). </source>
@@ -4414,7 +4414,7 @@
     </unit>
     <unit id="saveSettings">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:246,248</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:247,249</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">save</pc> Speichern </source>
@@ -4422,7 +4422,7 @@
     </unit>
     <unit id="saving">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:250,251</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:251,252</note>
       </notes>
       <segment>
         <source>Speichert…</source>
@@ -4430,7 +4430,7 @@
     </unit>
     <unit id="saved">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:253,254</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:254,255</note>
       </notes>
       <segment>
         <source>Gespeichert.</source>
@@ -4438,7 +4438,7 @@
     </unit>
     <unit id="settings.remindersLinkTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:258,259</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:259,260</note>
       </notes>
       <segment>
         <source>🔔 Erinnerungen</source>
@@ -4446,7 +4446,7 @@
     </unit>
     <unit id="settings.remindersLinkDesc">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:260,262</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:261,263</note>
       </notes>
       <segment>
         <source> Liegestütz-Erinnerungen und Push-Benachrichtigungen konfigurieren. </source>
@@ -4454,7 +4454,7 @@
     </unit>
     <unit id="settings.remindersLinkCta">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:267,269</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:268,270</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">notifications</pc> Erinnerungen verwalten </source>
@@ -4462,7 +4462,7 @@
     </unit>
     <unit id="settings.dangerZoneTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:273,274</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:274,275</note>
       </notes>
       <segment>
         <source>Danger Zone</source>
@@ -4470,7 +4470,7 @@
     </unit>
     <unit id="settings.dangerZoneBody">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:275,277</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:276,278</note>
       </notes>
       <segment>
         <source> Konto löschen entfernt dein Konto. Trainingsdaten bleiben für statistische Auswertung anonymisiert erhalten. </source>
@@ -4478,7 +4478,7 @@
     </unit>
     <unit id="settings.deleteAccount">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:286,288</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:287,289</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">warning</pc> Konto löschen </source>
@@ -4486,7 +4486,7 @@
     </unit>
     <unit id="settings.deletingAccount">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:291,294</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:292,295</note>
       </notes>
       <segment>
         <source>Konto wird gelöscht…</source>
@@ -4494,7 +4494,7 @@
     </unit>
     <unit id="settings.deleteDialogTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:298,300</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:299,301</note>
       </notes>
       <segment>
         <source> Account wirklich löschen? </source>
@@ -4502,7 +4502,7 @@
     </unit>
     <unit id="settings.deleteDialogWarning">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:302,304</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:303,305</note>
       </notes>
       <segment>
         <source> Achtung: Diese Aktion ist nicht rückgängig. </source>
@@ -4510,7 +4510,7 @@
     </unit>
     <unit id="settings.deleteDialogInfo">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:305,307</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:306,308</note>
       </notes>
       <segment>
         <source> Dein Konto wird gelöscht. Trainingsdaten bleiben für statistische Auswertung anonymisiert erhalten. </source>
@@ -4518,7 +4518,7 @@
     </unit>
     <unit id="settings.deleteDialogPhraseLabel">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:310,312</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:311,313</note>
       </notes>
       <segment>
         <source>Bestätigungswort eingeben</source>
@@ -4526,7 +4526,7 @@
     </unit>
     <unit id="settings.deleteDialogPhraseHint">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:319,321</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:320,322</note>
       </notes>
       <segment>
         <source>Bitte exakt „löscchen“ eingeben.</source>
@@ -4534,7 +4534,7 @@
     </unit>
     <unit id="settings.deleteConfirmFinal">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:336,338</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:337,339</note>
       </notes>
       <segment>
         <source> Final löschen </source>
@@ -4542,7 +4542,7 @@
     </unit>
     <unit id="settings.publicProfile.share.title">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:543</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:550</note>
       </notes>
       <segment>
         <source>Mein Pushup Tracker Profil</source>
@@ -4550,7 +4550,7 @@
     </unit>
     <unit id="settings.publicProfile.share.text">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:544</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:551</note>
       </notes>
       <segment>
         <source>Schau dir mein Pushup-Profil an:</source>
@@ -5063,7 +5063,7 @@
     </unit>
     <unit id="trainingPlans.autoStartFailed">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:473</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:492</note>
       </notes>
       <segment>
         <source>Plan-Start fehlgeschlagen — bitte erneut versuchen.</source>
@@ -5071,7 +5071,7 @@
     </unit>
     <unit id="trainingPlans.started">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:540</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:559</note>
       </notes>
       <segment>
         <source>Plan gestartet — viel Erfolg!</source>
@@ -5079,7 +5079,7 @@
     </unit>
     <unit id="trainingPlans.abandoned">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:557</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:576</note>
       </notes>
       <segment>
         <source>Plan beendet.</source>
@@ -5087,7 +5087,7 @@
     </unit>
     <unit id="trainingPlans.logged">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:583</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:602</note>
         <note category="location">web/src/app/training-plans/training-plans-page.component.ts:359</note>
       </notes>
       <segment>
@@ -5096,7 +5096,7 @@
     </unit>
     <unit id="trainingPlans.alreadyLogged">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:585</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:604</note>
         <note category="location">web/src/app/training-plans/training-plans-page.component.ts:361</note>
       </notes>
       <segment>
@@ -5105,7 +5105,7 @@
     </unit>
     <unit id="trainingPlans.notReady">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:587</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:606</note>
         <note category="location">web/src/app/training-plans/training-plans-page.component.ts:363</note>
       </notes>
       <segment>

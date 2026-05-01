@@ -1,5 +1,6 @@
 import {
   Component,
+  LOCALE_ID,
   TemplateRef,
   computed,
   effect,
@@ -23,6 +24,7 @@ import { PushSubscriptionService } from '@pu-reminders/reminders';
 import { DEFAULT_SNAP_QUALITY, SnapQuality } from '@pu-stats/models';
 import { UserConfigStore } from '../../core/user-config.store';
 import { ShareService } from '../../core/share.service';
+import { buildProfileShareUrl } from '../../core/profile-share-url';
 
 @Component({
   selector: 'app-settings-page',
@@ -454,6 +456,7 @@ export class SettingsPageComponent {
   private readonly pushService = inject(PushSubscriptionService);
   private readonly userConfigStore = inject(UserConfigStore);
   private readonly shareService = inject(ShareService);
+  private readonly localeId = inject(LOCALE_ID) as string;
 
   readonly isGuest = this.user.isGuest;
   readonly userId = this.user.userIdSafe;
@@ -467,10 +470,9 @@ export class SettingsPageComponent {
   readonly adsConsentDraft = signal(false);
   readonly snapQualityDraft = signal<SnapQuality>(DEFAULT_SNAP_QUALITY);
 
-  readonly profileUrl = computed(() => {
-    const uid = this.userId();
-    return uid ? `https://pushup-stats.de/u/${uid}` : '';
-  });
+  readonly profileUrl = computed(() =>
+    buildProfileShareUrl(this.userId(), this.localeId)
+  );
 
   readonly saving = signal(false);
   readonly saved = signal(false);

@@ -19,14 +19,13 @@ import { PublicProfileApiService } from '@pu-stats/data-access';
 import { type PublicProfile } from '@pu-stats/models';
 import { ShareService } from '../core/share.service';
 import { SeoService } from '../core/seo.service';
+import { buildProfileShareUrl } from '../core/profile-share-url';
 
 type LoadState =
   | { kind: 'loading' }
   | { kind: 'ready'; profile: PublicProfile }
   | { kind: 'not-found' }
   | { kind: 'error' };
-
-const SHARE_URL_BASE = 'https://pushup-stats.de';
 
 const OG_FUNCTION_REGION = 'europe-west3';
 
@@ -131,7 +130,10 @@ export class PublicProfilePageComponent {
     void this.shareService.share({
       title: $localize`:@@publicProfile.share.title:Pushup Tracker Profil`,
       text,
-      url: `${SHARE_URL_BASE}/u/${encodeURIComponent(profile.uid)}`,
+      // Locale-prefixed canonical share URL — see `buildProfileShareUrl`
+      // for the rationale (locale-prefixed link survives 30x-stripping
+      // tools and lands on the right Angular bundle directly).
+      url: buildProfileShareUrl(profile.uid, this.localeId),
     });
   }
 
@@ -181,9 +183,14 @@ export class PublicProfilePageComponent {
     const projectId =
       (this.firebaseApp.options as { projectId?: string }).projectId ??
       'pushup-stats';
+    // Title and description are tuned for the OpenGraph "optimal" ranges
+    // (title ~50-60 chars, description ~110-160 chars) so social cards
+    // don't get truncated and search snippets show meaningful copy. Both
+    // include the user's actual stats so the preview is informative even
+    // before the visitor clicks through.
     this.seo.update(
-      $localize`:@@publicProfile.seo.title:${profile.displayName}:name: – Pushup Tracker Profil`,
-      $localize`:@@publicProfile.seo.description:${profile.displayName}:name: hat ${profile.total}:total: Liegestütze und eine ${profile.currentStreak}:streak:-Tage-Streak auf Pushup Tracker.`,
+      $localize`:@@publicProfile.seo.title:${profile.displayName}:name: – ${profile.total}:total: Liegestütze · Streak ${profile.currentStreak}:streak: · Pushup Tracker`,
+      $localize`:@@publicProfile.seo.description:${profile.displayName}:name: hat ${profile.total}:total: Liegestütze in ${profile.totalDays}:days: aktiven Tagen geschafft – aktuelle Streak: ${profile.currentStreak}:streak: Tage. Tracke selbst kostenlos auf pushup-stats.de.`,
       `/u/${encodedUid}`,
       {
         // Per-user dynamic OG card (1200×630 PNG rendered by satori + resvg
