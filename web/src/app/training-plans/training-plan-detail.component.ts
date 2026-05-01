@@ -410,8 +410,13 @@ export class TrainingPlanDetailComponent {
 
   readonly loginQueryParams = computed(() => {
     const p = this.plan();
+    // Intentionally NO `autoStart=1` here: a returning user logging back
+    // in might already have a different active plan, and silently
+    // replacing it would bypass the in-UI replacement warning shown for
+    // manual starts. Send them back to the detail page so they can
+    // explicitly confirm via "Plan starten".
     return p
-      ? { returnUrl: `/training-plans/${p.slug}?autoStart=1` }
+      ? { returnUrl: `/training-plans/${p.slug}` }
       : { returnUrl: '/training-plans' };
   });
 
@@ -421,11 +426,18 @@ export class TrainingPlanDetailComponent {
     effect(() => {
       const p = this.plan();
       const wantsAutoStart = this.queryParamsSignal().get('autoStart') === '1';
+      // Defense-in-depth: even with `autoStart=1` (only set by the
+      // signup flow), refuse to silently replace a *different* active
+      // plan. Force the user through the manual flow that surfaces the
+      // replacement warning.
+      const wouldReplaceDifferentPlan =
+        this.store.hasActivePlan() && !this.isThisPlanActive();
       if (
         p &&
         wantsAutoStart &&
         this.isAuthenticated() &&
         !this.isThisPlanActive() &&
+        !wouldReplaceDifferentPlan &&
         !this.autoStartTriggered
       ) {
         this.autoStartTriggered = true;

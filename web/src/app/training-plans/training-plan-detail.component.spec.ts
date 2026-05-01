@@ -73,6 +73,32 @@ describe('TrainingPlanDetailComponent', () => {
       );
     });
 
+    it('login CTA returnUrl does NOT carry autoStart (would silently replace an existing plan after login)', async () => {
+      await render(TrainingPlanDetailComponent, {
+        providers: [
+          provideRouter([]),
+          { provide: ActivatedRoute, useValue: makeRouteMock('recruit-6w') },
+          { provide: TrainingPlanStore, useValue: makeStoreMock() },
+          {
+            provide: AuthStore,
+            useValue: makeAuthStoreMock({
+              isAuthenticated: false,
+              authResolved: true,
+            }),
+          },
+        ],
+      });
+
+      const loginLink = screen.getByRole('link', {
+        name: 'Schon Konto? Einloggen',
+      });
+      const href = decodeURIComponent(loginLink.getAttribute('href') ?? '');
+
+      expect(href).toContain('/login');
+      expect(href).toContain('returnUrl=/training-plans/recruit-6w');
+      expect(href).not.toContain('autoStart');
+    });
+
     it('does not render the "Plan starten" button when unauthenticated', async () => {
       await render(TrainingPlanDetailComponent, {
         providers: [
@@ -147,6 +173,37 @@ describe('TrainingPlanDetailComponent', () => {
         providers: [
           provideRouter([]),
           { provide: ActivatedRoute, useValue: makeRouteMock('recruit-6w') },
+          { provide: TrainingPlanStore, useValue: store },
+          {
+            provide: AuthStore,
+            useValue: makeAuthStoreMock({
+              isAuthenticated: true,
+              authResolved: true,
+            }),
+          },
+        ],
+      });
+
+      await new Promise((resolve) => setTimeout(resolve, 0));
+      expect(store.start).not.toHaveBeenCalled();
+    });
+
+    it('does NOT auto-start (even with ?autoStart=1) when a different plan is already active', async () => {
+      const store = makeStoreMock({
+        hasActivePlan: signal(true),
+        // Different plan than the one whose detail page is being viewed.
+        activePlan: signal({
+          planId: 'challenge-30d-v1',
+          status: 'active',
+        } as never),
+      });
+      await render(TrainingPlanDetailComponent, {
+        providers: [
+          provideRouter([]),
+          {
+            provide: ActivatedRoute,
+            useValue: makeRouteMock('recruit-6w', { autoStart: '1' }),
+          },
           { provide: TrainingPlanStore, useValue: store },
           {
             provide: AuthStore,
