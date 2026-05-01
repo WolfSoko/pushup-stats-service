@@ -172,13 +172,17 @@ interface DayRow {
                           >Leichter Tag</span
                         >
                         @if (row.day.targetReps > 0) {
-                          <span class="muted">·</span>
-                          <strong>{{ row.day.targetReps }}</strong>
-                          <span i18n="@@trainingPlans.reps">Wdh.</span>
+                          <span class="reps">
+                            <span class="muted">·</span>
+                            <strong>{{ row.day.targetReps }}</strong>
+                            <span i18n="@@trainingPlans.reps">Wdh.</span>
+                          </span>
                         }
                       } @else if (row.day.targetReps > 0) {
-                        <strong>{{ row.day.targetReps }}</strong>
-                        <span i18n="@@trainingPlans.reps">Wdh.</span>
+                        <span class="reps">
+                          <strong>{{ row.day.targetReps }}</strong>
+                          <span i18n="@@trainingPlans.reps">Wdh.</span>
+                        </span>
                       }
                       @if (row.day.sets && row.day.sets.length > 1) {
                         <span class="sets muted">{{
@@ -289,12 +293,15 @@ interface DayRow {
       }
       .day-row {
         display: grid;
-        grid-template-columns: 40px 36px 1fr 48px;
-        gap: 12px;
+        grid-template-columns: 32px 28px 1fr auto;
+        gap: 10px;
         align-items: center;
         padding: 10px 12px;
         border-radius: 8px;
         background: rgba(0, 0, 0, 0.04);
+      }
+      .day-body {
+        min-width: 0;
       }
       :host-context(.dark-theme) .day-row {
         background: rgba(255, 255, 255, 0.04);
@@ -317,12 +324,20 @@ interface DayRow {
       }
       .day-title {
         display: flex;
-        gap: 6px;
+        flex-wrap: wrap;
+        column-gap: 6px;
+        row-gap: 2px;
         align-items: baseline;
       }
+      .reps {
+        display: inline-flex;
+        gap: 4px;
+        align-items: baseline;
+        white-space: nowrap;
+      }
       .sets {
-        margin-left: 4px;
         font-size: 0.85rem;
+        white-space: nowrap;
       }
       .day-desc {
         font-size: 0.9rem;
