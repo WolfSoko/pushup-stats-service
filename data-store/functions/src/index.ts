@@ -30,11 +30,14 @@ import {
 import {
   buildPublicProfile,
   isValidUid,
-  renderProfileOg,
   type UserConfigForPublicProfile,
   type UserStatsForPublicProfile,
   UserProfile,
 } from './profile';
+// `renderProfileOg` lives behind a dynamic `import()` call inside the
+// `ogProfile` handler below — pulling satori + @resvg/resvg-wasm (~15 MB
+// + WASM init) eagerly here would slow cold-start for every unrelated
+// function in this bundle (leaderboards, motivation, push, …).
 import type { ReminderConfig } from './push';
 import {
   buildNotificationPayload,
@@ -693,8 +696,12 @@ export const ogProfile = onRequest(
   },
   async (req, res) => {
     const uidRaw = String(req.query['uid'] ?? '').trim();
+    // Privacy parity with `getPublicProfile`: malformed UIDs surface as the
+    // same 404 + short-TTL cache as missing/opted-out profiles, so the OG
+    // endpoint can't be used to enumerate which UID strings are well-formed.
     if (!isValidUid(uidRaw)) {
-      res.status(400).send('invalid uid');
+      res.setHeader('Cache-Control', 'public, max-age=60, s-maxage=300');
+      res.status(404).send('Profile not available');
       return;
     }
 
@@ -719,6 +726,11 @@ export const ogProfile = onRequest(
         return;
       }
 
+      // Lazy-load the renderer so satori + @resvg/resvg-wasm only initialise
+      // on the first OG request (and stay cached in module scope across warm
+      // invocations) — keeps cold-start of unrelated functions in this
+      // bundle unaffected by the heavy renderer deps.
+      const { renderProfileOg } = await import('./profile/og-render');
       const png = await renderProfileOg(projection);
       res.setHeader('Content-Type', 'image/png');
       res.setHeader('Content-Length', String(png.byteLength));
