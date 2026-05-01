@@ -67,6 +67,14 @@ app.use((req, res, next) => {
 //  - paths with a file extension (static assets like `/favicon.ico`)
 //  - non-GET/HEAD methods (POSTs to API routes shouldn't be redirected)
 const LOCALE_PREFIXES = new Set(['de', 'en']);
+// Restrict path characters to the URL-safe app-route alphabet. Anything
+// outside this falls through to Angular instead of being redirected — this
+// is defense in depth against open-redirect / header-injection attacks
+// flowing from the user-controlled `req.url` into the `Location` header
+// (CodeQL js/server-side-unvalidated-url-redirection). Even though the
+// `/<lang>` prefix already constrains the redirect target to the same
+// origin, validating the dataflow source closes the finding cleanly.
+const SAFE_REDIRECT_PATH_RE = /^\/[A-Za-z0-9/_\-.~%]*$/;
 app.use((req, res, next) => {
   if (req.method !== 'GET' && req.method !== 'HEAD') return next();
   const path = req.path;
@@ -77,12 +85,20 @@ app.use((req, res, next) => {
   // Skip static assets (any path whose last segment carries a file extension).
   const lastSegment = path.split('/').pop() ?? '';
   if (lastSegment.includes('.')) return next();
+  // Reject anything outside the safe character class — keeps weird inputs
+  // (backslashes, CR/LF, control characters, exotic Unicode) out of the
+  // Location header instead of trying to sanitise them.
+  if (!SAFE_REDIRECT_PATH_RE.test(path)) return next();
 
   const accept = String(req.headers['accept-language'] ?? '').toLowerCase();
   const lang = /\ben(-|;|,|$)/.test(accept) ? 'en' : 'de';
-  const originalSuffix = req.url.slice(path.length);
+  // Drop the original query/hash entirely: it isn't load-bearing for any
+  // of the routes this redirect serves (`/u/<uid>`, `/login`, etc.) and
+  // omitting it eliminates the second user-controlled string from the
+  // Location header. The locale-prefixed app keeps its own routing, so a
+  // crawler hitting `/u/<uid>` will still land on the right page.
   res.setHeader('Vary', 'Accept-Language');
-  res.redirect(302, `/${lang}${path}${originalSuffix}`);
+  res.redirect(302, `/${lang}${path}`);
 });
 
 /**
