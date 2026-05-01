@@ -12,7 +12,13 @@ env:
   # Configure environment variables.
   # See https://firebase.google.com/docs/app-hosting/configure#user-defined-environment
   - variable: NG_ALLOWED_HOSTS
-    value: 'pushup-stats-service--pushup-stats.europe-west4.hosted.app,pushup-stats.de'
+    # Angular SSR (`@angular/ssr`) rejects requests whose `Host` header isn't
+    # in this list as an SSRF guard. Firebase App Hosting routes through Cloud
+    # Run, so during rolling deploys traffic-tag URLs like
+    # `t-<id>---pushup-stats-service-<hash>-<region>.a.run.app` need to pass
+    # too — the leading dot in `.run.app` matches any subdomain of `run.app`,
+    # which covers every Cloud Run revision URL App Hosting may use.
+    value: 'pushup-stats-service--pushup-stats.europe-west4.hosted.app,pushup-stats.de,.run.app'
     availability:
       - RUNTIME
 

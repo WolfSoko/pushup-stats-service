@@ -28,3 +28,11 @@ pnpm nx-cloud start-ci-run --distribute-on=".nx/workflows/distribution-config.ya
 ```
 
 To scale further (bigger agents for e2e specifically, or higher ceilings), edit the YAML — the CI workflow doesn't need to change.
+
+## Angular SSR `NG_ALLOWED_HOSTS` must include `.run.app`
+
+Angular SSR (`@angular/ssr` v19+) rejects requests whose `Host` header isn't in `NG_ALLOWED_HOSTS` as an SSRF guard. Firebase App Hosting forwards traffic through Cloud Run, so during rolling deploys traffic-tag URLs like `t-<id>---<service>-<hash>-<region>.a.run.app` reach the SSR with that internal hostname — Angular returns `400: Header "host" with value "..." is not allowed`, and the affected page (most visibly `/u/:uid`, which is `RenderMode.Server`) refuses to render.
+
+Fix: include `.run.app` (leading-dot subdomain wildcard) in the comma-separated `NG_ALLOWED_HOSTS` value in **both** `apphosting.yaml` and `apphosting.staging.yaml`. The leading dot matches any subdomain of `run.app`, covering every Cloud Run revision URL App Hosting may forward through.
+
+`.run.app` is broad but acceptable: the SSR doesn't make outgoing requests based on the `Host` header — canonical / `og:url` come from a hardcoded `BASE_URL` in `SeoService` — so the SSRF risk reduces to "an attacker-controlled `*.run.app` host renders our public HTML on their domain", which doesn't expose any private state.
