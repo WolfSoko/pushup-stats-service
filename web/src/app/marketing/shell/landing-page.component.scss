@@ -192,6 +192,83 @@ h1 {
   }
 }
 
+.training-plans-feature {
+  display: grid;
+  gap: 16px;
+  border: 1px solid rgba(123, 159, 255, 0.25);
+  border-radius: 20px;
+  padding: clamp(18px, 3vw, 28px);
+  background: linear-gradient(
+    155deg,
+    rgba(30, 43, 74, 0.55),
+    rgba(14, 19, 33, 0.7)
+  );
+
+  .training-plans-intro {
+    display: grid;
+    gap: 6px;
+  }
+
+  .section-eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #93adea;
+    font-size: 0.74rem;
+  }
+
+  h2 {
+    margin: 0;
+    font-size: clamp(1.4rem, 2.8vw, 1.9rem);
+    line-height: 1.15;
+  }
+
+  p {
+    margin: 0;
+    max-width: 70ch;
+    color: #c4d2f2;
+  }
+
+  .plans-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 12px;
+  }
+
+  .plan-card-mini .key-features-header {
+    align-items: end;
+    gap: 0.5rem;
+  }
+
+  .plans-cta {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+}
+
+:host-context(html.light-theme) {
+  .training-plans-feature {
+    border-color: rgba(59, 130, 246, 0.25);
+    background: linear-gradient(
+      155deg,
+      rgba(239, 246, 255, 0.85),
+      rgba(255, 255, 255, 0.95)
+    );
+
+    .section-eyebrow {
+      color: #3b82f6;
+    }
+
+    h2 {
+      color: #1e293b;
+    }
+
+    p {
+      color: #475569;
+    }
+  }
+}
+
 mat-card-header mat-icon {
   margin-right: 1rem;
   color: #94b1ff;

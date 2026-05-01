@@ -8,6 +8,7 @@ import {
   withProps,
   withState,
 } from '@ngrx/signals';
+import { findPlanById, TrainingPlan } from '@pu-stats/models';
 import { AuthStore } from '../../core/state/auth.store';
 import { RegisterOnboardingStore } from '../../core/state/register-onboarding.store';
 import { hasStrongPasswordPolicy } from '../password-policy';
@@ -20,6 +21,13 @@ type RegisterUiState = {
   isGoogleRegistration: boolean;
   registeringCredentials: boolean;
   registerSuccess: boolean;
+  /**
+   * Plan id pre-selected via `?planId=...` on the register URL — set when the
+   * user lands here from a training plan detail page. Drives the post-signup
+   * redirect to `/training-plans/:slug?autoStart=1` so the plan is started
+   * automatically once the account is ready.
+   */
+  selectedPlanId: string | null;
 };
 
 const initialState: RegisterUiState = {
@@ -30,6 +38,7 @@ const initialState: RegisterUiState = {
   isGoogleRegistration: false,
   registeringCredentials: false,
   registerSuccess: false,
+  selectedPlanId: null,
 };
 
 export const RegisterUiStore = signalStore(
@@ -47,6 +56,10 @@ export const RegisterUiStore = signalStore(
         store.registeringCredentials()
     ),
     onboardingError: computed(() => onboardingStore.error()),
+    selectedPlan: computed<TrainingPlan | null>(() => {
+      const id = store.selectedPlanId();
+      return id ? findPlanById(id) : null;
+    }),
   })),
   withMethods(({ authStore, onboardingStore, auth, ...store }) => ({
     toggleHidePassword: () =>
@@ -56,6 +69,19 @@ export const RegisterUiStore = signalStore(
     setDailyGoal: (value: number) => patchState(store, { dailyGoal: value }),
     setConsentAccepted: (value: boolean) =>
       patchState(store, { consentAccepted: value }),
+    setSelectedPlanId: (planId: string | null) => {
+      // Only accept ids that resolve to a real plan; ignore stale or
+      // malformed query-param values silently — better than redirecting
+      // the user into a dead-end after registration.
+      const resolved = planId && findPlanById(planId) ? planId : null;
+      patchState(store, { selectedPlanId: resolved });
+    },
+    selectedPlanReturnUrl: (): string | null => {
+      const id = store.selectedPlanId();
+      if (!id) return null;
+      const plan = findPlanById(id);
+      return plan ? `/training-plans/${plan.slug}?autoStart=1` : null;
+    },
     prepareGoogleRegistration: () => {
       // Prefer auth.currentUser (synchronous, immediately available after the
       // Google popup closes) over the signal-based authStore.user() which is

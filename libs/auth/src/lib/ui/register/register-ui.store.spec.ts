@@ -129,4 +129,35 @@ describe('RegisterUiStore', () => {
     expect(persisted).toBe(false);
     expect(store.registerSuccess()).toBe(false);
   });
+
+  describe('training plan preselection', () => {
+    it('Given a known plan id When setSelectedPlanId Then exposes the plan and a return URL with autoStart', async () => {
+      const store = await setup();
+
+      store.setSelectedPlanId('recruit-6w-v1');
+
+      expect(store.selectedPlanId()).toBe('recruit-6w-v1');
+      expect(store.selectedPlan()?.slug).toBe('recruit-6w');
+      expect(store.selectedPlanReturnUrl()).toBe(
+        '/training-plans/recruit-6w?autoStart=1'
+      );
+    });
+
+    it('Given an unknown plan id When setSelectedPlanId Then ignores it (no dead-end redirect)', async () => {
+      const store = await setup();
+
+      store.setSelectedPlanId('does-not-exist');
+
+      expect(store.selectedPlanId()).toBeNull();
+      expect(store.selectedPlan()).toBeNull();
+      expect(store.selectedPlanReturnUrl()).toBeNull();
+    });
+
+    it('Given no plan id Then selectedPlanReturnUrl is null', async () => {
+      const store = await setup();
+
+      expect(store.selectedPlanId()).toBeNull();
+      expect(store.selectedPlanReturnUrl()).toBeNull();
+    });
+  });
 });

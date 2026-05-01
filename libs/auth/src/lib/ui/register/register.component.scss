@@ -68,6 +68,33 @@ mat-checkbox {
   margin-bottom: 16px;
 }
 
+.plan-banner {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  border-left: 4px solid var(--mat-sys-primary, #7c4dff);
+  background: rgba(124, 77, 255, 0.08);
+  border-radius: 8px;
+}
+
+.plan-banner mat-icon {
+  flex-shrink: 0;
+  color: var(--mat-sys-primary, #7c4dff);
+}
+
+.plan-banner-title {
+  margin-left: 6px;
+  font-weight: 500;
+}
+
+.plan-banner-hint {
+  margin: 4px 0 0;
+  font-size: 0.85rem;
+  color: var(--text-muted, #666);
+}
+
 .divider {
   display: flex;
   align-items: center;

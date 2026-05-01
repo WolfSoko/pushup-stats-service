@@ -49,6 +49,14 @@ export class LandingPageComponent {
     this.track('landing_discover_click', { target });
   }
 
+  onPlanCardClick(planSlug: string): void {
+    this.track('landing_plan_card_click', { plan: planSlug });
+  }
+
+  onPlansCtaClick(target: 'overview' | 'signup'): void {
+    this.track('landing_plans_cta_click', { target });
+  }
+
   private track(
     eventName: string,
     params: Record<string, string | number | boolean>

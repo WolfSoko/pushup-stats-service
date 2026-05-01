@@ -30,12 +30,18 @@ const breakpointObserverMock = {
   observe: jest.fn().mockReturnValue(of({ matches: true } as BreakpointState)),
 };
 
-async function renderRegister() {
+async function renderRegister(queryParams: Record<string, string> = {}) {
   return render(RegisterComponent, {
     providers: [
       {
         provide: ActivatedRoute,
-        useValue: { snapshot: { queryParamMap: { get: () => null } } },
+        useValue: {
+          snapshot: {
+            queryParamMap: {
+              get: (key: string): string | null => queryParams[key] ?? null,
+            },
+          },
+        },
       },
       { provide: AuthStore, useValue: authStoreMock },
       { provide: RegisterOnboardingStore, useValue: onboardingStoreMock },
@@ -83,6 +89,40 @@ describe('RegisterComponent', () => {
     const matErrors = document.querySelectorAll('mat-error');
     matErrors.forEach((el) => {
       expect(el.textContent).not.toBe('[object Object]');
+    });
+  });
+
+  describe('with preselected training plan', () => {
+    it('Given ?planId=recruit-6w-v1 When rendered Then shows the plan banner with the localized title', async () => {
+      const view = await renderRegister({ planId: 'recruit-6w-v1' });
+
+      const banner = view.fixture.nativeElement.querySelector(
+        '[data-testid="register-plan-banner"]'
+      ) as HTMLElement | null;
+      expect(banner).not.toBeNull();
+      expect(banner?.textContent).toContain('Trainingsplan vorausgewählt');
+      // The detail-page title is locale-aware (de: "Von 0 auf 100 …", en:
+      // "From 0 to 100 …"). Both share the "0" and "100" tokens, so
+      // assert both to keep this stable across LOCALE_ID defaults.
+      expect(banner?.textContent).toMatch(/0.*100/);
+    });
+
+    it('Given an unknown planId Then no plan banner is shown', async () => {
+      const view = await renderRegister({ planId: 'unknown-plan' });
+
+      const banner = view.fixture.nativeElement.querySelector(
+        '[data-testid="register-plan-banner"]'
+      );
+      expect(banner).toBeNull();
+    });
+
+    it('Given no planId Then no plan banner is shown', async () => {
+      const view = await renderRegister();
+
+      const banner = view.fixture.nativeElement.querySelector(
+        '[data-testid="register-plan-banner"]'
+      );
+      expect(banner).toBeNull();
     });
   });
 });

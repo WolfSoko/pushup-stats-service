@@ -210,6 +210,83 @@ describe('LandingPageComponent', () => {
     expect(blogLink.getAttribute('href')).toBe('/blog');
   });
 
+  describe('training plans section', () => {
+    it('renders three plan cards linking to the public detail pages', async () => {
+      await render(LandingPageComponent, {
+        providers: [
+          provideRouter([]),
+          { provide: AdsStore, useValue: adsConfigMock },
+          { provide: AuthService, useValue: makeAuthServiceMock() },
+          { provide: AuthStore, useValue: makeAuthStoreMock() },
+        ],
+      });
+
+      const planLinks = screen.getAllByRole('link', { name: 'Plan ansehen' });
+      const hrefs = planLinks.map((a) => a.getAttribute('href'));
+
+      expect(hrefs).toEqual(
+        expect.arrayContaining([
+          '/training-plans/recruit-6w',
+          '/training-plans/challenge-30d',
+          '/training-plans/over-40-4w',
+        ])
+      );
+    });
+
+    it('always shows "Alle Pläne ansehen" linking to /training-plans', async () => {
+      await render(LandingPageComponent, {
+        providers: [
+          provideRouter([]),
+          { provide: AdsStore, useValue: adsConfigMock },
+          { provide: AuthService, useValue: makeAuthServiceMock() },
+          { provide: AuthStore, useValue: makeAuthStoreMock() },
+        ],
+      });
+
+      const overviewLink = screen.getByRole('link', {
+        name: 'Alle Pläne ansehen',
+      });
+      expect(overviewLink.getAttribute('href')).toBe('/training-plans');
+    });
+
+    it('shows signup CTA pointing to /register?returnUrl=/training-plans for unauthenticated visitors', async () => {
+      await render(LandingPageComponent, {
+        providers: [
+          provideRouter([]),
+          { provide: AdsStore, useValue: adsConfigMock },
+          { provide: AuthService, useValue: makeAuthServiceMock() },
+          { provide: AuthStore, useValue: makeAuthStoreMock() },
+        ],
+      });
+
+      const signupLink = screen.getByRole('link', {
+        name: 'Konto erstellen & Plan starten',
+      });
+      const href = signupLink.getAttribute('href') ?? '';
+
+      expect(href).toContain('/register');
+      expect(decodeURIComponent(href)).toContain('returnUrl=/training-plans');
+    });
+
+    it('hides plan signup CTA for authenticated users', async () => {
+      await render(LandingPageComponent, {
+        providers: [
+          provideRouter([]),
+          { provide: AdsStore, useValue: adsConfigMock },
+          { provide: AuthService, useValue: makeAuthServiceMock() },
+          {
+            provide: AuthStore,
+            useValue: makeAuthStoreMock({ isAuthenticated: true }),
+          },
+        ],
+      });
+
+      expect(
+        screen.queryByRole('link', { name: 'Konto erstellen & Plan starten' })
+      ).toBeNull();
+    });
+  });
+
   it('clicking "Als Gast ausprobieren" calls signInGuestIfNeeded and navigates to /app', async () => {
     const signInGuestIfNeeded = vitest.fn().mockResolvedValue(undefined);
     const view = await render(LandingPageComponent, {
