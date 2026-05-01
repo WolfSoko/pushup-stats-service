@@ -1856,7 +1856,7 @@
     </unit>
     <unit id="landing.leaderboard.reps">
       <notes>
-        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:53,55</note>
+        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:66,68</note>
       </notes>
       <segment>
         <source>Reps</source>
@@ -1864,7 +1864,7 @@
     </unit>
     <unit id="landing.leaderboard.ownPosition">
       <notes>
-        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:61,63</note>
+        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:74,76</note>
       </notes>
       <segment>
         <source> Deine Position: #<ph id="0" equiv="INTERPOLATION" disp="{{ me.rank }}"/> · <ph id="1" equiv="INTERPOLATION_1" disp="{{ me.reps }}"/> Reps </source>
@@ -3954,9 +3954,25 @@
         <source>Keine Daten</source>
       </segment>
     </unit>
+    <unit id="dashboard.share.text.profile.streak">
+      <notes>
+        <note category="location">web/src/app/stats/dashboard.store.ts:436</note>
+      </notes>
+      <segment>
+        <source>Heute schon <ph id="0" equiv="total" disp="total"/> Liegestütze geschafft – Streak: <ph id="1" equiv="streak" disp="streak"/> Tage 🔥 Schau dir mein Profil an:</source>
+      </segment>
+    </unit>
+    <unit id="dashboard.share.text.profile.simple">
+      <notes>
+        <note category="location">web/src/app/stats/dashboard.store.ts:437</note>
+      </notes>
+      <segment>
+        <source>Heute schon <ph id="0" equiv="total" disp="total"/> Liegestütze geschafft! 💪 Schau dir mein Profil an:</source>
+      </segment>
+    </unit>
     <unit id="dashboard.share.text.streak">
       <notes>
-        <note category="location">web/src/app/stats/dashboard.store.ts:413</note>
+        <note category="location">web/src/app/stats/dashboard.store.ts:441</note>
       </notes>
       <segment>
         <source>Heute schon <ph id="0" equiv="total" disp="total"/> Liegestütze geschafft – Streak: <ph id="1" equiv="streak" disp="streak"/> Tage 🔥 Tracke deine Stats kostenlos:</source>
@@ -3964,7 +3980,7 @@
     </unit>
     <unit id="dashboard.share.text.simple">
       <notes>
-        <note category="location">web/src/app/stats/dashboard.store.ts:414</note>
+        <note category="location">web/src/app/stats/dashboard.store.ts:442</note>
       </notes>
       <segment>
         <source>Heute schon <ph id="0" equiv="total" disp="total"/> Liegestütze geschafft! 💪 Tracke deine Stats kostenlos:</source>
@@ -3972,7 +3988,7 @@
     </unit>
     <unit id="dashboard.share.title">
       <notes>
-        <note category="location">web/src/app/stats/dashboard.store.ts:416</note>
+        <note category="location">web/src/app/stats/dashboard.store.ts:446</note>
       </notes>
       <segment>
         <source>Pushup Tracker</source>

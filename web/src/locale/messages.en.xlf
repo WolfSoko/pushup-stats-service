@@ -5997,6 +5997,18 @@ Deine Position: # ·  Reps        </source>
         <target>Already <ph id="0" equiv="total" disp="total"/> push-ups today – streak: <ph id="1" equiv="streak" disp="streak"/> days 🔥 Track your stats for free:</target>
       </segment>
     </unit>
+    <unit id="dashboard.share.text.profile.simple">
+      <segment state="translated">
+        <source>Heute schon <ph id="0" equiv="total" disp="total"/> Liegestütze geschafft! 💪 Schau dir mein Profil an:</source>
+        <target>Already <ph id="0" equiv="total" disp="total"/> push-ups today! 💪 Check out my profile:</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.share.text.profile.streak">
+      <segment state="translated">
+        <source>Heute schon <ph id="0" equiv="total" disp="total"/> Liegestütze geschafft – Streak: <ph id="1" equiv="streak" disp="streak"/> Tage 🔥 Schau dir mein Profil an:</source>
+        <target>Already <ph id="0" equiv="total" disp="total"/> push-ups today – streak: <ph id="1" equiv="streak" disp="streak"/> days 🔥 Check out my profile:</target>
+      </segment>
+    </unit>
     <unit id="share.success.clipboard">
       <segment state="translated">
         <source>In die Zwischenablage kopiert. Jetzt einfügen und teilen!</source>

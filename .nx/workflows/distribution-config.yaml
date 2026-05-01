@@ -6,6 +6,14 @@
 #
 # Referenced from .github/workflows/ci.yml via
 #   pnpm nx-cloud start-ci-run --distribute-on=.nx/workflows/distribution-config.yaml
+#
+# Per-agent Node heap is set to 4 GB via `NODE_OPTIONS` forwarded from the
+# orchestrator. The orchestrator (`.github/workflows/ci.yml`) sets the env
+# var on the GH job AND passes `--with-env-vars="NODE_OPTIONS"` to
+# `nx-cloud start-ci-run` — without that flag agents inherit the V8
+# default (~2 GB old-space heap) regardless of what the orchestrator job
+# env says. See the start-ci-run step in the workflow file for the full
+# rationale; this file only declares the agent pool sizes.
 distribute-on:
   small-changeset: 4 linux-medium-js
   medium-changeset: 6 linux-medium-js

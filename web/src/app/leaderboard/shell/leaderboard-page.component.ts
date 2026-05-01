@@ -1,16 +1,12 @@
-import {
-  Component,
-  computed,
-  inject,
-  linkedSignal,
-} from '@angular/core';
+import { Component, computed, inject, linkedSignal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { RouterLink } from '@angular/router';
 import { LeaderboardPeriod, LeaderboardStore } from '@pu-stats/data-access';
 
 @Component({
   selector: 'app-leaderboard-page',
-  imports: [MatCardModule, MatButtonModule],
+  imports: [MatCardModule, MatButtonModule, RouterLink],
   templateUrl: './leaderboard-page.component.html',
   styleUrl: './leaderboard-page.component.scss',
 })
