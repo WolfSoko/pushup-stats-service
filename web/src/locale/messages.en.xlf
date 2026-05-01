@@ -2227,6 +2227,15 @@ Deine Position: # ·  Reps        </source>
         <target>Create account &amp; start plan</target>
       </segment>
     </unit>
+    <unit id="landing.preview.alt">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+      </notes>
+      <segment state="translated">
+        <source>Vorschau der Statistikansicht</source>
+        <target>Preview of the stats view</target>
+      </segment>
+    </unit>
     <unit id="landing.preview.title">
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:170,173</note>
