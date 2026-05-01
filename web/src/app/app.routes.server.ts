@@ -1,4 +1,5 @@
 import { RenderMode, ServerRoute } from '@angular/ssr';
+import { TRAINING_PLANS } from '@pu-stats/models';
 import { BLOG_POSTS } from './blog/blog-posts.data';
 
 export const serverRoutes: ServerRoute[] = [
@@ -20,6 +21,17 @@ export const serverRoutes: ServerRoute[] = [
     renderMode: RenderMode.Prerender,
     async getPrerenderParams() {
       return BLOG_POSTS.map((post) => ({ slug: post.slug }));
+    },
+  },
+  {
+    path: 'training-plans',
+    renderMode: RenderMode.Prerender,
+  },
+  {
+    path: 'training-plans/:slug',
+    renderMode: RenderMode.Prerender,
+    async getPrerenderParams() {
+      return TRAINING_PLANS.map((plan) => ({ slug: plan.slug }));
     },
   },
   {

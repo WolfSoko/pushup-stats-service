@@ -129,6 +129,7 @@ describe('App (testing-library)', () => {
     expect(screen.getAllByText('Historie').length).toBeGreaterThan(0);
     expect(screen.getAllByText('Analyse').length).toBeGreaterThan(0);
     expect(screen.getAllByText('Bestenliste').length).toBeGreaterThan(0);
+    expect(screen.getAllByText('Trainingspläne').length).toBeGreaterThan(0);
     expect(screen.getByText('Sprache')).toBeTruthy();
     expect(screen.getByText('Deutsch')).toBeTruthy();
     expect(screen.getByText('English')).toBeTruthy();
@@ -371,7 +372,7 @@ describe('App (testing-library)', () => {
     expect(logo?.getAttribute('src')).toBe('assets/pushup-logo.png');
   });
 
-  it('given app is rendered, when reading bottom navigation, then it exposes four primary links', async () => {
+  it('given app is rendered, when reading bottom navigation, then it exposes five primary links', async () => {
     // Given
     await render(App, {
       providers: [
@@ -405,11 +406,12 @@ describe('App (testing-library)', () => {
       throw new Error('Expected .bottom-nav to be rendered');
     }
     const links = bottomNav.querySelectorAll('a');
-    expect(links.length).toBe(4);
+    expect(links.length).toBe(5);
     expect(links[0].getAttribute('href')).toBe('/app');
     expect(links[1].getAttribute('href')).toBe('/analysis');
     expect(links[2].getAttribute('href')).toBe('/leaderboard');
-    expect(links[3].getAttribute('href')).toBe('/blog');
+    expect(links[3].getAttribute('href')).toBe('/training-plans');
+    expect(links[4].getAttribute('href')).toBe('/blog');
   });
 
   it('keeps base document title when no seo route data is active', async () => {

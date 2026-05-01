@@ -1,4 +1,5 @@
 import { RenderMode } from '@angular/ssr';
+import { TRAINING_PLANS } from '@pu-stats/models';
 import { serverRoutes } from './app.routes.server';
 
 describe('serverRoutes', () => {
@@ -12,11 +13,12 @@ describe('serverRoutes', () => {
     expect(route?.renderMode).toBe(RenderMode.Server);
   });
 
-  it('prerenders login, register, blog, impressum, datenschutz and root', () => {
+  it('prerenders login, register, blog, training-plans, impressum, datenschutz and root', () => {
     const prerendered = [
       'login',
       'register',
       'blog',
+      'training-plans',
       'impressum',
       'datenschutz',
       '',
@@ -25,6 +27,21 @@ describe('serverRoutes', () => {
       const route = serverRoutes.find((r) => r.path === path);
       expect(route?.renderMode).toBe(RenderMode.Prerender);
     }
+  });
+
+  it('prerenders training-plans/:slug for every catalog plan', async () => {
+    const route = serverRoutes.find((r) => r.path === 'training-plans/:slug');
+    expect(route).toBeDefined();
+    expect(route?.renderMode).toBe(RenderMode.Prerender);
+    const fn = (route as { getPrerenderParams?: () => Promise<unknown[]> })
+      .getPrerenderParams;
+    expect(typeof fn).toBe('function');
+    const params = (await fn?.()) ?? [];
+    const expectedSlugs = TRAINING_PLANS.map((p) => p.slug).sort();
+    const actualSlugs = (params as { slug: string }[])
+      .map((p) => p.slug)
+      .sort();
+    expect(actualSlugs).toEqual(expectedSlugs);
   });
 
   it('renders leaderboard and the app shell features in Server mode', () => {
