@@ -175,6 +175,33 @@ describe('generate-sitemap', () => {
         '<xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.de/en/blog/pushup-progression"/>'
       );
     });
+
+    it('emits hreflang="x-default" pointing at the DE variant', () => {
+      const xml = buildUrl({
+        path: '/blog',
+        changefreq: 'weekly',
+        priority: '0.9',
+      });
+      expect(xml).toContain(
+        '<xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.de/de/blog"/>'
+      );
+    });
+
+    it('honors custom alternates when emitting x-default for blog pairings', () => {
+      const xml = buildUrl({
+        path: '/blog/liegestuetze-steigern',
+        changefreq: 'monthly',
+        priority: '0.8',
+        locale: 'de',
+        alternates: [
+          { lang: 'de', path: '/blog/liegestuetze-steigern' },
+          { lang: 'en', path: '/blog/pushup-progression' },
+        ],
+      });
+      expect(xml).toContain(
+        '<xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.de/de/blog/liegestuetze-steigern"/>'
+      );
+    });
   });
 
   describe('buildBlogRoutes', () => {

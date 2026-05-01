@@ -51,12 +51,19 @@ function buildUrl({ path, changefreq, priority, locale, lastmod, alternates }) {
 
   const alts = alternates ?? LOCALES.map((lang) => ({ lang, path: suffix }));
 
-  const hreflangLinks = alts
-    .map(
+  // x-default points at the German variant: pushup-stats.de is a German
+  // domain and the SSR locale-redirect picks `de` whenever Accept-Language
+  // doesn't explicitly request English. Search engines use x-default for
+  // unmatched/unknown locales, so it must mirror the runtime fallback.
+  const defaultAlt = alts.find((a) => a.lang === 'de') ?? alts[0];
+
+  const hreflangLinks = [
+    ...alts.map(
       ({ lang, path: altPath }) =>
         `    <xhtml:link rel="alternate" hreflang="${lang}" href="${BASE_URL}/${lang}${altPath}"/>`
-    )
-    .join('\n');
+    ),
+    `    <xhtml:link rel="alternate" hreflang="x-default" href="${BASE_URL}/${defaultAlt.lang}${defaultAlt.path}"/>`,
+  ].join('\n');
 
   const lastmodTag = lastmod ? `\n    <lastmod>${lastmod}</lastmod>` : '';
 
