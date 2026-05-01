@@ -76,3 +76,28 @@ When you need to expose a sanitized subset of an owner-only Firestore doc to ano
 `@nx/esbuild` with `thirdParty: false` keeps `node_modules` external; with `generatePackageJson: true` new deps just get registered in the emitted `package.json` and Cloud Functions npm-installs them at deploy.
 
 For deps that load WASM at runtime (e.g. `@resvg/resvg-wasm`), use `createRequire(__filename).resolve('@resvg/.../index_bg.wasm')` to locate the file inside the deployed `node_modules` tree — relative paths from `import.meta` don't work in CJS bundles. Cache the `initWasm()` result in module scope; cold start runs it once, warm starts skip.
+
+## Lazy-load heavy renderers (satori, puppeteer, sharp, …)
+
+All Cloud Functions in this repo share a single `index.ts` bundle, so any module imported at the top of `index.ts` (or re-exported from a shared barrel like `./profile/index.ts`) initialises in **every** function's cold start — even ones that never touch it. For deps over a few megabytes (satori + `@resvg/resvg-wasm` is ~15 MB combined), that's an unacceptable tax on unrelated triggers.
+
+Pattern:
+
+```ts
+export const ogProfile = onRequest(
+  {
+    /* … */
+  },
+  async (req, res) => {
+    // …Firestore reads, validation, 404 path…
+
+    const { renderProfileOg } = await import('./profile/og-render');
+    const png = await renderProfileOg(projection);
+    // …
+  }
+);
+```
+
+And keep the heavy module **out** of the shared `./profile/index.ts` barrel — direct path imports (`./profile/og-render`) inside the dynamic `import()` only.
+
+The renderer caches its own state (font bytes, `initWasm()` result) in module scope, so the dynamic import runs once per warm container and is free thereafter. First OG request after a cold start still pays the full cost — bump function memory (`512MiB` minimum for satori) and `timeoutSeconds` accordingly.
