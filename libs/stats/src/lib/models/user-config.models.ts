@@ -36,6 +36,12 @@ export interface UserConfig {
   ui?: {
     showSourceColumn?: boolean;
     hideFromLeaderboard?: boolean;
+    /**
+     * Public-profile opt-in. When `true`, the `getPublicProfile(uid)` Cloud
+     * Function returns a sanitized projection of this user's stats; otherwise
+     * it returns `not-found`. Defaults to `false` (private).
+     */
+    publicProfile?: boolean;
     dayChartMode?: '24h' | '14h';
     quickAdds?: QuickAddConfig[];
     snapQuality?: SnapQuality;

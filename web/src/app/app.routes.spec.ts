@@ -30,6 +30,7 @@ describe('appRoutes', () => {
       'training-plans/:slug',
       'reminders',
       'leaderboard',
+      'u/:uid',
       'blog',
       'impressum',
       'datenschutz',

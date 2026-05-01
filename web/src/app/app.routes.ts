@@ -133,6 +133,17 @@ export const appRoutes: Routes = [
       ),
   },
   {
+    path: 'u/:uid',
+    data: {
+      seoTitle: $localize`:@@seo.publicProfile.title:Profil – Pushup Tracker`,
+      seoDescription: $localize`:@@seo.publicProfile.description:Öffentliches Pushup-Profil mit Reps, Streak und Bestleistungen.`,
+    },
+    loadComponent: () =>
+      import('./public-profile/public-profile-page.component').then(
+        (m) => m.PublicProfilePageComponent
+      ),
+  },
+  {
     path: 'blog',
     children: [
       {
