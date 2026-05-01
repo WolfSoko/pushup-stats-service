@@ -16,6 +16,13 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.de/en/blog"/>
   </url>
   <url>
+    <loc>https://pushup-stats.de/de/training-plans</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.de/de/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.de/en/training-plans"/>
+  </url>
+  <url>
     <loc>https://pushup-stats.de/de/leaderboard</loc>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
@@ -35,6 +42,27 @@
     <priority>0.3</priority>
     <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.de/de/datenschutz"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.de/en/datenschutz"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.de/de/training-plans/recruit-6w</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.de/de/training-plans/recruit-6w"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.de/en/training-plans/recruit-6w"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.de/de/training-plans/challenge-30d</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.de/de/training-plans/challenge-30d"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.de/en/training-plans/challenge-30d"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.de/de/training-plans/over-40-4w</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.de/de/training-plans/over-40-4w"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.de/en/training-plans/over-40-4w"/>
   </url>
   <url>
     <loc>https://pushup-stats.de/de/blog/liegestuetze-steigern</loc>
