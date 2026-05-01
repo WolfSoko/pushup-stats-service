@@ -12,6 +12,8 @@ import { join } from 'node:path';
 import { pino } from 'pino';
 import { pinoHttp } from 'pino-http';
 
+import { computeLocaleRedirect } from './server-locale-redirect';
+
 const isProduction = process.env['NODE_ENV'] === 'production';
 
 if (isProduction) {
@@ -56,54 +58,36 @@ app.use((req, res, next) => {
 // `/u/<uid>` (which only exist inside the locale-specific Angular bundles)
 // don't 404 with `Cannot GET /u/<uid>` when shared as a bare URL.
 //
-// Angular's own SSR locale middleware only handles the root `/` redirect;
-// every other unprefixed path is forwarded to Angular which has no matching
-// route. We bridge that gap here, picking the locale from `Accept-Language`
-// and falling back to the source locale `de`.
+// Pure decision logic + path/query validation lives in
+// `./server-locale-redirect` so the routing semantics are unit-tested
+// without spinning up Supertest. This wrapper only adapts request fields
+// in and applies the result out.
 //
-// Skipped:
-//  - already-prefixed paths (`/de`, `/en` and any subpath thereof)
-//  - well-known files rewritten to `/de/...` by the middleware above
-//  - paths with a file extension (static assets like `/favicon.ico`)
-//  - non-GET/HEAD methods (POSTs to API routes shouldn't be redirected)
-const LOCALE_PREFIXES = new Set(['de', 'en']);
-// Restrict path characters to the URL-safe app-route alphabet. Anything
-// outside this falls through to Angular instead of being redirected — this
-// is defense in depth against open-redirect / header-injection attacks
-// flowing from the user-controlled `req.url` into the `Location` header
-// (CodeQL js/server-side-unvalidated-url-redirection). Even though the
-// `/<lang>` prefix already constrains the redirect target to the same
-// origin, validating the dataflow source closes the finding cleanly.
-const SAFE_REDIRECT_PATH_RE = /^\/[A-Za-z0-9/_\-.~%]*$/;
-app.use((req, res, next) => {
-  if (req.method !== 'GET' && req.method !== 'HEAD') return next();
-  const path = req.path;
-  if (path === '/') return next();
-  const firstSegment = path.split('/')[1] ?? '';
-  if (LOCALE_PREFIXES.has(firstSegment)) return next();
-  if (rootFiles.has(firstSegment)) return next();
-  // Skip static assets (any path whose last segment carries a file extension).
-  const lastSegment = path.split('/').pop() ?? '';
-  if (lastSegment.includes('.')) return next();
-  // Reject anything outside the safe character class — keeps weird inputs
-  // (backslashes, CR/LF, control characters, exotic Unicode) out of the
-  // Location header instead of trying to sanitise them.
-  if (!SAFE_REDIRECT_PATH_RE.test(path)) return next();
-
-  const accept = String(req.headers['accept-language'] ?? '').toLowerCase();
-  const lang = /\ben(-|;|,|$)/.test(accept) ? 'en' : 'de';
-  // Drop the original query/hash entirely: it isn't load-bearing for any
-  // of the routes this redirect serves (`/u/<uid>`, `/login`, etc.) and
-  // omitting it eliminates the second user-controlled string from the
-  // Location header. The locale-prefixed app keeps its own routing, so a
-  // crawler hitting `/u/<uid>` will still land on the right page.
-  //
-  // `res.vary` (instead of `setHeader('Vary', ...)`) APPENDS to whatever
-  // upstream middleware (compression, CORS, …) may have already set —
-  // overwriting can quietly break caching semantics elsewhere.
-  res.vary('Accept-Language');
-  res.redirect(302, `/${lang}${path}`);
-});
+// Production-only: the Angular dev server (`nx serve`) shares this same
+// `reqHandler` but disables localization, so `/de/login` etc. don't
+// exist in dev builds. Redirecting unprefixed paths there breaks
+// `nx serve` and any e2e suite that hits `/login` directly. The locale
+// prefixes only really exist in the localized SSR build.
+//
+// `res.vary` (instead of `setHeader('Vary', ...)`) APPENDS to whatever
+// upstream middleware (compression, CORS, …) may have already set —
+// overwriting can quietly break caching semantics elsewhere.
+if (isProduction) {
+  app.use((req, res, next) => {
+    const result = computeLocaleRedirect({
+      method: req.method,
+      path: req.path,
+      url: req.originalUrl ?? req.url,
+      acceptLanguage:
+        typeof req.headers['accept-language'] === 'string'
+          ? req.headers['accept-language']
+          : undefined,
+    });
+    if (result.kind === 'pass') return next();
+    res.vary('Accept-Language');
+    res.redirect(302, result.location);
+  });
+}
 
 /**
  * Serve static files from /browser
