@@ -10,6 +10,22 @@
     </mat-card-header>
 
     <mat-card-content>
+      @if (selectedPlanTitle(); as planTitle) {
+        <div class="plan-banner" data-testid="register-plan-banner">
+          <mat-icon>fitness_center</mat-icon>
+          <div>
+            <strong i18n="@@auth.register.plan.preselected"
+              >Trainingsplan vorausgewählt:</strong
+            >
+            <span class="plan-banner-title">{{ planTitle }}</span>
+            <p class="plan-banner-hint" i18n="@@auth.register.plan.hint">
+              Nach der Registrierung starten wir den Plan automatisch und setzen
+              dein Tagesziel passend.
+            </p>
+          </div>
+        </div>
+      }
+
       @if (authState.error()) {
         <div class="error-message">
           <mat-icon color="warn">error</mat-icon

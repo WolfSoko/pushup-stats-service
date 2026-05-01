@@ -93,7 +93,6 @@ export const appRoutes: Routes = [
   },
   {
     path: 'training-plans',
-    canActivate: [authGuard],
     data: {
       seoTitle: $localize`:@@seo.trainingPlans.title:Trainingspläne – Pushup Tracker`,
       seoDescription: $localize`:@@seo.trainingPlans.description:Strukturierte Liegestütz-Trainingspläne mit Tagesziel, Sätzen und automatischer Fortschrittsverfolgung.`,
@@ -105,7 +104,6 @@ export const appRoutes: Routes = [
   },
   {
     path: 'training-plans/:slug',
-    canActivate: [authGuard],
     loadComponent: () =>
       import('./training-plans/training-plan-detail.component').then(
         (m) => m.TrainingPlanDetailComponent

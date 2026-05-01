@@ -7,73 +7,181 @@
       i18n-alt="@@brandLogoAlt"
     />
     <div class="hero-text">
-    <p class="eyebrow" i18n="@@landing.eyebrow">Pushup Tracker</p>
-    <span class="early-access-badge" i18n="@@landing.earlyAccess.badge"
-      >Early Access</span
-    >
-    <span class="free-badge" i18n="@@landing.free.badge"
-      >Kostenlos & ohne Kreditkarte</span
-    >
-    <h1 i18n="@@landing.title">Dein Training. Klar visualisiert.</h1>
-    <p class="subtitle" i18n="@@landing.subtitle">
-      Kostenlos tracken: Reps, Trends und Streaks in Sekunden – mobil, schnell
-      und mit Live-Updates.
-    </p>
+      <p class="eyebrow" i18n="@@landing.eyebrow">Pushup Tracker</p>
+      <span class="early-access-badge" i18n="@@landing.earlyAccess.badge"
+        >Early Access</span
+      >
+      <span class="free-badge" i18n="@@landing.free.badge"
+        >Kostenlos & ohne Kreditkarte</span
+      >
+      <h1 i18n="@@landing.title">Dein Training. Klar visualisiert.</h1>
+      <p class="subtitle" i18n="@@landing.subtitle">
+        Kostenlos tracken: Reps, Trends und Streaks in Sekunden – mobil, schnell
+        und mit Live-Updates.
+      </p>
 
-    <div class="cta-row">
-      @if (isAuthenticated()) {
-        <!-- Already logged in: go to dashboard -->
-        <a
-          mat-flat-button
-          color="primary"
-          routerLink="/app"
-          (click)="onCtaClick('dashboard')"
-          i18n="@@landing.cta.dashboard"
-          >Zum Dashboard</a
-        >
-        @if (isGuest()) {
-          <!-- Guest: offer to create a real account -->
+      <div class="cta-row">
+        @if (isAuthenticated()) {
+          <!-- Already logged in: go to dashboard -->
           <a
-            mat-stroked-button
+            mat-flat-button
+            color="primary"
+            routerLink="/app"
+            (click)="onCtaClick('dashboard')"
+            i18n="@@landing.cta.dashboard"
+            >Zum Dashboard</a
+          >
+          @if (isGuest()) {
+            <!-- Guest: offer to create a real account -->
+            <a
+              mat-stroked-button
+              routerLink="/register"
+              [queryParams]="{ returnUrl: '/app' }"
+              (click)="onCtaClick('signup')"
+              i18n="@@landing.cta.signup"
+              >Konto erstellen</a
+            >
+          }
+        } @else if (authResolved()) {
+          <!-- Not logged in (auth state confirmed): show all options -->
+          <a
+            mat-flat-button
+            color="primary"
             routerLink="/register"
             [queryParams]="{ returnUrl: '/app' }"
             (click)="onCtaClick('signup')"
             i18n="@@landing.cta.signup"
-            >Konto erstellen</a
+            >Jetzt registrieren</a
           >
+          <a
+            mat-stroked-button
+            routerLink="/login"
+            [queryParams]="{ returnUrl: '/app' }"
+            (click)="onCtaClick('login')"
+            i18n="@@landing.cta.login"
+            >Einloggen</a
+          >
+          <button
+            mat-button
+            type="button"
+            (click)="onTryAsGuest()"
+            i18n="@@landing.cta.guest"
+          >
+            Als Gast ausprobieren
+          </button>
         }
-      } @else if (authResolved()) {
-        <!-- Not logged in (auth state confirmed): show all options -->
-        <a
-          mat-flat-button
-          color="primary"
-          routerLink="/register"
-          [queryParams]="{ returnUrl: '/app' }"
-          (click)="onCtaClick('signup')"
-          i18n="@@landing.cta.signup"
-          >Jetzt registrieren</a
-        >
+      </div>
+      <p class="cta-hint" i18n="@@landing.cta.hint">
+        Kostenlos · Kein Abo · Jederzeit kündbar
+      </p>
+    </div>
+  </section>
+
+  <section
+    class="training-plans-feature"
+    aria-labelledby="training-plans-title"
+  >
+    <div class="training-plans-intro">
+      <span class="section-eyebrow" i18n="@@landing.plans.eyebrow"
+        >Strukturiert trainieren</span
+      >
+      <h2 id="training-plans-title" i18n="@@landing.plans.title">
+        Liegestütz-Trainingspläne, die wirklich funktionieren
+      </h2>
+      <p i18n="@@landing.plans.subtitle">
+        Vom Einsteiger zum 100er-Set: Geführte Pläne mit Tagesziel, Sätzen und
+        automatischer Fortschrittsverfolgung. Stöbere kostenlos — starten und
+        tracken kannst du mit einem kostenlosen Konto.
+      </p>
+    </div>
+
+    <div class="plans-cards">
+      <mat-card class="plan-card-mini">
+        <mat-card-header class="key-features-header">
+          <mat-icon aria-hidden="true">trending_up</mat-icon>
+          <mat-card-title i18n="@@landing.plans.recruit.title"
+            >Von 0 auf 100 — 6 Wochen</mat-card-title
+          >
+        </mat-card-header>
+        <mat-card-content i18n="@@landing.plans.recruit.body">
+          Einsteigerfreundlich: 3 Trainingstage pro Woche, progressiver Aufbau
+          und ein Maximaltest in Woche 6.
+        </mat-card-content>
+        <mat-card-actions>
+          <a
+            mat-stroked-button
+            routerLink="/training-plans/recruit-6w"
+            (click)="onPlanCardClick('recruit-6w')"
+            i18n="@@landing.plans.viewPlan"
+            >Plan ansehen</a
+          >
+        </mat-card-actions>
+      </mat-card>
+
+      <mat-card class="plan-card-mini">
+        <mat-card-header class="key-features-header">
+          <mat-icon aria-hidden="true">local_fire_department</mat-icon>
+          <mat-card-title i18n="@@landing.plans.challenge.title"
+            >30-Tage-Challenge</mat-card-title
+          >
+        </mat-card-header>
+        <mat-card-content i18n="@@landing.plans.challenge.body">
+          30 Tage Pushups mit gezielten Ruhetagen. Tag 1 ist der Maximaltest,
+          Tag 30 der Endtest.
+        </mat-card-content>
+        <mat-card-actions>
+          <a
+            mat-stroked-button
+            routerLink="/training-plans/challenge-30d"
+            (click)="onPlanCardClick('challenge-30d')"
+            i18n="@@landing.plans.viewPlan"
+            >Plan ansehen</a
+          >
+        </mat-card-actions>
+      </mat-card>
+
+      <mat-card class="plan-card-mini">
+        <mat-card-header class="key-features-header">
+          <mat-icon aria-hidden="true">favorite</mat-icon>
+          <mat-card-title i18n="@@landing.plans.over40.title"
+            >Liegestütze ab 40 — 4 Wochen</mat-card-title
+          >
+        </mat-card-header>
+        <mat-card-content i18n="@@landing.plans.over40.body">
+          Schonender Plan mit Fokus auf saubere Technik, ausreichend Pause und
+          langsames Tempo.
+        </mat-card-content>
+        <mat-card-actions>
+          <a
+            mat-stroked-button
+            routerLink="/training-plans/over-40-4w"
+            (click)="onPlanCardClick('over-40-4w')"
+            i18n="@@landing.plans.viewPlan"
+            >Plan ansehen</a
+          >
+        </mat-card-actions>
+      </mat-card>
+    </div>
+
+    <div class="plans-cta">
+      <a
+        mat-flat-button
+        color="primary"
+        routerLink="/training-plans"
+        (click)="onPlansCtaClick('overview')"
+        i18n="@@landing.plans.cta.overview"
+        >Alle Pläne ansehen</a
+      >
+      @if (!isAuthenticated() && authResolved()) {
         <a
           mat-stroked-button
-          routerLink="/login"
-          [queryParams]="{ returnUrl: '/app' }"
-          (click)="onCtaClick('login')"
-          i18n="@@landing.cta.login"
-          >Einloggen</a
+          routerLink="/register"
+          [queryParams]="{ returnUrl: '/training-plans' }"
+          (click)="onPlansCtaClick('signup')"
+          i18n="@@landing.plans.cta.signup"
+          >Konto erstellen & Plan starten</a
         >
-        <button
-          mat-button
-          type="button"
-          (click)="onTryAsGuest()"
-          i18n="@@landing.cta.guest"
-        >
-          Als Gast ausprobieren
-        </button>
       }
-    </div>
-    <p class="cta-hint" i18n="@@landing.cta.hint">
-      Kostenlos · Kein Abo · Jederzeit kündbar
-    </p>
     </div>
   </section>
 
@@ -211,8 +319,9 @@
           >
         </mat-card-header>
         <mat-card-content i18n="@@landing.discover.blog.body">
-          Tipps, Trainingspläne und Motivation rund um Liegestütze – von
-          Einsteiger bis Fortgeschritten.
+          Tipps, Hintergrundwissen und Motivation rund um Liegestütze – von
+          Einsteiger bis Fortgeschritten. Viele Artikel verlinken direkt auf den
+          passenden Trainingsplan.
         </mat-card-content>
         <mat-card-actions>
           <a

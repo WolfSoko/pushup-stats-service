@@ -852,6 +852,24 @@ Active:         </target>
         <target>Create your account</target>
       </segment>
     </unit>
+    <unit id="auth.register.plan.preselected">
+      <notes>
+        <note category="location">libs/auth/src/lib/ui/register/register.component.html</note>
+      </notes>
+      <segment state="translated">
+        <source>Trainingsplan vorausgewählt:</source>
+        <target>Training plan pre-selected:</target>
+      </segment>
+    </unit>
+    <unit id="auth.register.plan.hint">
+      <notes>
+        <note category="location">libs/auth/src/lib/ui/register/register.component.html</note>
+      </notes>
+      <segment state="translated">
+        <source> Nach der Registrierung starten wir den Plan automatisch und setzen dein Tagesziel passend. </source>
+        <target> After signing up we'll start the plan automatically and set your daily goal accordingly. </target>
+      </segment>
+    </unit>
     <unit id="auth.register.success.dashboard">
       <segment state="translated">
         <source/>
@@ -1966,8 +1984,8 @@ Active:         </target>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
       </notes>
       <segment state="translated">
-        <source> Tipps, Trainingspläne und Motivation rund um Liegestütze – von Einsteiger bis Fortgeschritten. </source>
-        <target> Tips, training plans, and motivation around push-ups – from beginner to advanced. </target>
+        <source> Tipps, Hintergrundwissen und Motivation rund um Liegestütze – von Einsteiger bis Fortgeschritten. Viele Artikel verlinken direkt auf den passenden Trainingsplan. </source>
+        <target> Tips, background knowledge, and motivation around push-ups – from beginner to advanced. Many articles link directly to the matching training plan. </target>
       </segment>
     </unit>
     <unit id="landing.discover.blog.cta">
@@ -2084,6 +2102,114 @@ Deine Position: # ·  Reps        </source>
       
       
         </unit>
+    <unit id="landing.plans.eyebrow">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+      </notes>
+      <segment state="translated">
+        <source>Strukturiert trainieren</source>
+        <target>Structured training</target>
+      </segment>
+    </unit>
+    <unit id="landing.plans.title">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+      </notes>
+      <segment state="translated">
+        <source> Liegestütz-Trainingspläne, die wirklich funktionieren </source>
+        <target> Push-up training plans that actually work </target>
+      </segment>
+    </unit>
+    <unit id="landing.plans.subtitle">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+      </notes>
+      <segment state="translated">
+        <source> Vom Einsteiger zum 100er-Set: Geführte Pläne mit Tagesziel, Sätzen und automatischer Fortschrittsverfolgung. Stöbere kostenlos — starten und tracken kannst du mit einem kostenlosen Konto. </source>
+        <target> From beginner to 100 reps: guided plans with daily targets, sets, and automatic progress tracking. Browse for free — to start and track a plan, just create a free account. </target>
+      </segment>
+    </unit>
+    <unit id="landing.plans.recruit.title">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+      </notes>
+      <segment state="translated">
+        <source>Von 0 auf 100 — 6 Wochen</source>
+        <target>From 0 to 100 — 6 weeks</target>
+      </segment>
+    </unit>
+    <unit id="landing.plans.recruit.body">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+      </notes>
+      <segment state="translated">
+        <source> Einsteigerfreundlich: 3 Trainingstage pro Woche, progressiver Aufbau und ein Maximaltest in Woche 6. </source>
+        <target> Beginner-friendly: 3 training days per week, progressive overload, and a max test in week 6. </target>
+      </segment>
+    </unit>
+    <unit id="landing.plans.viewPlan">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+      </notes>
+      <segment state="translated">
+        <source>Plan ansehen</source>
+        <target>View plan</target>
+      </segment>
+    </unit>
+    <unit id="landing.plans.challenge.title">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+      </notes>
+      <segment state="translated">
+        <source>30-Tage-Challenge</source>
+        <target>30-day challenge</target>
+      </segment>
+    </unit>
+    <unit id="landing.plans.challenge.body">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+      </notes>
+      <segment state="translated">
+        <source> 30 Tage Pushups mit gezielten Ruhetagen. Tag 1 ist der Maximaltest, Tag 30 der Endtest. </source>
+        <target> 30 days of push-ups with strategic rest days. Day 1 is the baseline test, Day 30 the final. </target>
+      </segment>
+    </unit>
+    <unit id="landing.plans.over40.title">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+      </notes>
+      <segment state="translated">
+        <source>Liegestütze ab 40 — 4 Wochen</source>
+        <target>Push-ups after 40 — 4 weeks</target>
+      </segment>
+    </unit>
+    <unit id="landing.plans.over40.body">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+      </notes>
+      <segment state="translated">
+        <source> Schonender Plan mit Fokus auf saubere Technik, ausreichend Pause und langsames Tempo. </source>
+        <target> Gentle plan focused on clean technique, full recovery, and a controlled tempo. </target>
+      </segment>
+    </unit>
+    <unit id="landing.plans.cta.overview">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+      </notes>
+      <segment state="translated">
+        <source>Alle Pläne ansehen</source>
+        <target>See all plans</target>
+      </segment>
+    </unit>
+    <unit id="landing.plans.cta.signup">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+      </notes>
+      <segment state="translated">
+        <source>Konto erstellen &amp; Plan starten</source>
+        <target>Create account &amp; start plan</target>
+      </segment>
+    </unit>
     <unit id="landing.preview.title">
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:170,173</note>
@@ -5578,6 +5704,66 @@ Deine Position: # ·  Reps        </source>
       <segment state="translated">
         <source>Strukturierte Pläne mit Tagesziel, Sätzen und automatischer Fortschrittsverfolgung. Starte einen Plan, und dein Tagesziel im Dashboard wird automatisch gesetzt.</source>
         <target>Structured plans with daily goals, sets, and automatic progress tracking. Start a plan and your daily goal on the dashboard will be set automatically.</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.banner.title">
+      <segment state="translated">
+        <source> Plan auswählen, Konto erstellen, durchstarten </source>
+        <target> Pick a plan, create your account, get going </target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.banner.body">
+      <segment state="translated">
+        <source> Suche dir unten einen Plan aus. Mit einem kostenlosen Konto tracken wir deinen Fortschritt automatisch und passen dein Tagesziel an den gewählten Plan an. </source>
+        <target> Pick a plan below. With a free account we'll track your progress automatically and adapt your daily goal to the chosen plan. </target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.banner.login">
+      <segment state="translated">
+        <source>Einloggen</source>
+        <target>Log in</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.banner.signup">
+      <segment state="translated">
+        <source>Kostenlos registrieren</source>
+        <target>Sign up free</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.signupCta">
+      <segment state="translated">
+        <source> Erstelle ein kostenloses Konto, um diesen Plan zu starten. Wir tracken deinen Fortschritt automatisch und setzen dein Tagesziel passend zum Plan. </source>
+        <target> Create a free account to start this plan. We'll track your progress automatically and set your daily goal to match the plan. </target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.signupBenefit.tracking">
+      <segment state="translated">
+        <source> Automatische Fortschrittsverfolgung </source>
+        <target> Automatic progress tracking </target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.signupBenefit.goal">
+      <segment state="translated">
+        <source> Tagesziel passt sich täglich an deinen Plan an </source>
+        <target> Daily goal adapts to your plan every day </target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.signupBenefit.streak">
+      <segment state="translated">
+        <source> Streaks, Statistiken und Bestenliste </source>
+        <target> Streaks, stats, and leaderboard </target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.signupAndStart">
+      <segment state="translated">
+        <source>Konto erstellen &amp; Plan starten</source>
+        <target>Create account &amp; start plan</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.loginAndStart">
+      <segment state="translated">
+        <source>Schon Konto? Einloggen</source>
+        <target>Already have an account? Log in</target>
       </segment>
     </unit>
     <unit id="trainingPlans.active.title">

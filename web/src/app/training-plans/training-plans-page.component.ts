@@ -13,6 +13,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { RouterLink } from '@angular/router';
+import { AuthStore } from '@pu-auth/auth';
 import { LogPlanDayResult, TrainingPlanStore } from './training-plan.store';
 
 @Component({
@@ -37,6 +38,43 @@ import { LogPlanDayResult, TrainingPlanStore } from './training-plan.store';
           Dashboard wird automatisch gesetzt.
         </p>
       </header>
+
+      @if (!isAuthenticated() && authResolved()) {
+        <mat-card class="signup-banner">
+          <mat-card-content>
+            <div class="signup-banner-content">
+              <mat-icon class="signup-icon">person_add</mat-icon>
+              <div>
+                <h2 i18n="@@trainingPlans.banner.title">
+                  Plan auswählen, Konto erstellen, durchstarten
+                </h2>
+                <p i18n="@@trainingPlans.banner.body">
+                  Suche dir unten einen Plan aus. Mit einem kostenlosen Konto
+                  tracken wir deinen Fortschritt automatisch und passen dein
+                  Tagesziel an den gewählten Plan an.
+                </p>
+              </div>
+            </div>
+          </mat-card-content>
+          <mat-card-actions align="end">
+            <a
+              mat-stroked-button
+              routerLink="/login"
+              [queryParams]="{ returnUrl: '/training-plans' }"
+              i18n="@@trainingPlans.banner.login"
+              >Einloggen</a
+            >
+            <a
+              mat-flat-button
+              color="primary"
+              routerLink="/register"
+              [queryParams]="{ returnUrl: '/training-plans' }"
+              i18n="@@trainingPlans.banner.signup"
+              >Kostenlos registrieren</a
+            >
+          </mat-card-actions>
+        </mat-card>
+      }
 
       @if (activeView(); as active) {
         <mat-card class="active-plan">
@@ -101,10 +139,7 @@ import { LogPlanDayResult, TrainingPlanStore } from './training-plan.store';
               <mat-icon>cancel</mat-icon>
               Plan beenden
             </button>
-            @if (
-              todayLocalized();
-              as today
-            ) {
+            @if (todayLocalized(); as today) {
               @if (
                 today.kind !== 'rest' &&
                 today.targetReps > 0 &&
@@ -117,9 +152,7 @@ import { LogPlanDayResult, TrainingPlanStore } from './training-plan.store';
                   (click)="logToday()"
                 >
                   <mat-icon>play_circle</mat-icon>
-                  <span i18n="@@trainingPlans.logToday"
-                    >Heute eintragen</span
-                  >
+                  <span i18n="@@trainingPlans.logToday">Heute eintragen</span>
                 </button>
               }
             }
@@ -239,6 +272,25 @@ import { LogPlanDayResult, TrainingPlanStore } from './training-plan.store';
       .plan-card mat-card-content {
         min-height: 64px;
       }
+      .signup-banner {
+        margin-bottom: 24px;
+        border-left: 4px solid var(--mat-sys-primary, #3f51b5);
+      }
+      .signup-banner-content {
+        display: flex;
+        gap: 16px;
+        align-items: flex-start;
+      }
+      .signup-icon {
+        font-size: 32px;
+        height: 32px;
+        width: 32px;
+        flex-shrink: 0;
+      }
+      .signup-banner h2 {
+        margin: 0 0 4px;
+        font-size: 1.1rem;
+      }
     `,
   ],
 })
@@ -246,6 +298,10 @@ export class TrainingPlansPageComponent {
   readonly store = inject(TrainingPlanStore);
   private readonly snackbar = inject(MatSnackBar);
   private readonly locale = inject(LOCALE_ID) as string;
+  private readonly authStore = inject(AuthStore);
+
+  readonly isAuthenticated = this.authStore.isAuthenticated;
+  readonly authResolved = this.authStore.authResolved;
 
   /** Catalog with `title`/`summary` fields swapped to the active locale. */
   readonly localizedPlans = computed(() =>
