@@ -5886,6 +5886,12 @@ Deine Position: # ·  Reps        </source>
         <target>Plan started — good luck!</target>
       </segment>
     </unit>
+    <unit id="trainingPlans.autoStartFailed">
+      <segment state="translated">
+        <source>Plan-Start fehlgeschlagen — bitte erneut versuchen.</source>
+        <target>Failed to start plan — please try again.</target>
+      </segment>
+    </unit>
     <unit id="trainingPlans.abandoned">
       <segment state="translated">
         <source>Plan beendet.</source>

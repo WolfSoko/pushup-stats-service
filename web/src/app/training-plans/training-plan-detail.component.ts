@@ -106,7 +106,7 @@ interface DayRow {
               </button>
             </mat-card-actions>
           </mat-card>
-        } @else {
+        } @else if (authResolved()) {
           <mat-card class="status-card">
             <mat-card-content>
               @if (isAuthenticated()) {
@@ -388,6 +388,7 @@ export class TrainingPlanDetailComponent {
   private readonly authStore = inject(AuthStore);
 
   protected readonly isAuthenticated = this.authStore.isAuthenticated;
+  protected readonly authResolved = this.authStore.authResolved;
 
   private readonly slugSignal = toSignal(this.route.paramMap, {
     initialValue: this.route.snapshot.paramMap,
@@ -429,19 +430,36 @@ export class TrainingPlanDetailComponent {
       // Defense-in-depth: even with `autoStart=1` (only set by the
       // signup flow), refuse to silently replace a *different* active
       // plan. Force the user through the manual flow that surfaces the
-      // replacement warning.
+      // replacement warning. Also wait until the active-plan resource
+      // has emitted at least once — otherwise during the initial-fetch
+      // window `!isThisPlanActive()` is true even for a plan that's
+      // already active, and we'd race the listener and overwrite it.
       const wouldReplaceDifferentPlan =
         this.store.hasActivePlan() && !this.isThisPlanActive();
       if (
         p &&
         wantsAutoStart &&
+        this.authResolved() &&
         this.isAuthenticated() &&
+        this.store.activePlanLoaded() &&
         !this.isThisPlanActive() &&
         !wouldReplaceDifferentPlan &&
         !this.autoStartTriggered
       ) {
         this.autoStartTriggered = true;
-        void this.start();
+        // Surface failures with a snackbar so the user knows to retry
+        // manually. The flag stays set to prevent a tight retry loop
+        // inside this component instance — a manual reload will
+        // re-attempt because `?autoStart=1` is still in the URL until
+        // a successful start clears it.
+        this.start().catch((error) => {
+          console.error('Auto-start failed', error);
+          this.snackbar.open(
+            $localize`:@@trainingPlans.autoStartFailed:Plan-Start fehlgeschlagen — bitte erneut versuchen.`,
+            undefined,
+            { duration: 4000 }
+          );
+        });
       }
     });
   }

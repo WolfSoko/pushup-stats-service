@@ -2240,7 +2240,7 @@
     </unit>
     <unit id="landing.cta.login">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:62,65</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:62,64</note>
       </notes>
       <segment>
         <source>Einloggen</source>
@@ -2264,7 +2264,7 @@
     </unit>
     <unit id="landing.plans.eyebrow">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:83,85</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:86,88</note>
       </notes>
       <segment>
         <source>Strukturiert trainieren</source>
@@ -2272,7 +2272,7 @@
     </unit>
     <unit id="landing.plans.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:86,88</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:89,91</note>
       </notes>
       <segment>
         <source> Liegestütz-Trainingspläne, die wirklich funktionieren </source>
@@ -2280,7 +2280,7 @@
     </unit>
     <unit id="landing.plans.subtitle">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:89,93</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:92,96</note>
       </notes>
       <segment>
         <source> Vom Einsteiger zum 100er-Set: Geführte Pläne mit Tagesziel, Sätzen und automatischer Fortschrittsverfolgung. Stöbere kostenlos — starten und tracken kannst du mit einem kostenlosen Konto. </source>
@@ -2288,7 +2288,7 @@
     </unit>
     <unit id="landing.plans.recruit.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:100,102</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:103,105</note>
       </notes>
       <segment>
         <source>Von 0 auf 100 — 6 Wochen</source>
@@ -2296,7 +2296,7 @@
     </unit>
     <unit id="landing.plans.recruit.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:104,106</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:107,109</note>
       </notes>
       <segment>
         <source> Einsteigerfreundlich: 3 Trainingstage pro Woche, progressiver Aufbau und ein Maximaltest in Woche 6. </source>
@@ -2304,9 +2304,9 @@
     </unit>
     <unit id="landing.plans.viewPlan">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:113,115</note>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:135,137</note>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:157,159</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:116,118</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:138,140</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:160,162</note>
       </notes>
       <segment>
         <source>Plan ansehen</source>
@@ -2314,7 +2314,7 @@
     </unit>
     <unit id="landing.plans.challenge.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:122,124</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:125,127</note>
       </notes>
       <segment>
         <source>30-Tage-Challenge</source>
@@ -2322,7 +2322,7 @@
     </unit>
     <unit id="landing.plans.challenge.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:126,128</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:129,131</note>
       </notes>
       <segment>
         <source> 30 Tage Pushups mit gezielten Ruhetagen. Tag 1 ist der Maximaltest, Tag 30 der Endtest. </source>
@@ -2330,7 +2330,7 @@
     </unit>
     <unit id="landing.plans.over40.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:144,146</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:147,149</note>
       </notes>
       <segment>
         <source>Liegestütze ab 40 — 4 Wochen</source>
@@ -2338,7 +2338,7 @@
     </unit>
     <unit id="landing.plans.over40.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:148,150</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:151,153</note>
       </notes>
       <segment>
         <source> Schonender Plan mit Fokus auf saubere Technik, ausreichend Pause und langsames Tempo. </source>
@@ -2346,7 +2346,7 @@
     </unit>
     <unit id="landing.plans.cta.overview">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:170,172</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:173,175</note>
       </notes>
       <segment>
         <source>Alle Pläne ansehen</source>
@@ -2354,7 +2354,7 @@
     </unit>
     <unit id="landing.plans.cta.signup">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:179,183</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:182,186</note>
       </notes>
       <segment>
         <source>Konto erstellen &amp; Plan starten</source>
@@ -2362,7 +2362,7 @@
     </unit>
     <unit id="landing.trust.bar">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:188,191</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:191,194</note>
       </notes>
       <segment>
         <source> ✓ Kostenlos · ✓ Kein Abo · ✓ Keine Kreditkarte · ✓ Datenschutz first </source>
@@ -2370,7 +2370,7 @@
     </unit>
     <unit id="landing.feature.analytics.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:196,198</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:199,201</note>
       </notes>
       <segment>
         <source>Smarter Überblick</source>
@@ -2378,7 +2378,7 @@
     </unit>
     <unit id="landing.feature.analytics.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:200,203</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:203,206</note>
       </notes>
       <segment>
         <source>KPIs, Charts und Custom-Zeiträume. Sieh auf einen Blick wie sich dein Training entwickelt.</source>
@@ -2386,7 +2386,7 @@
     </unit>
     <unit id="landing.feature.quick.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:209,211</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:212,214</note>
       </notes>
       <segment>
         <source>Quick Logging</source>
@@ -2394,7 +2394,7 @@
     </unit>
     <unit id="landing.feature.quick.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:213,216</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:216,219</note>
       </notes>
       <segment>
         <source>Eintrag in 2 Sekunden. Schnellaktionen für 10, 20, 30 Reps oder freie Eingabe.</source>
@@ -2402,7 +2402,7 @@
     </unit>
     <unit id="landing.feature.live.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:222,224</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:225,227</note>
       </notes>
       <segment>
         <source>Live &amp; überall</source>
@@ -2410,7 +2410,7 @@
     </unit>
     <unit id="landing.feature.live.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:226,229</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:229,232</note>
       </notes>
       <segment>
         <source>Alle Geräte. Echtzeit-Sync hält deine Daten überall aktuell – kein Refresh nötig.</source>
@@ -2418,7 +2418,7 @@
     </unit>
     <unit id="landing.feature.streak.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:235,237</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:238,240</note>
       </notes>
       <segment>
         <source>Streaks &amp; Bestenliste</source>
@@ -2426,7 +2426,7 @@
     </unit>
     <unit id="landing.feature.streak.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:239,242</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:242,245</note>
       </notes>
       <segment>
         <source>Täglich dabei bleiben. Verfolge deine Streak und miss dich mit der Community.</source>
@@ -2434,7 +2434,7 @@
     </unit>
     <unit id="landing.feature.free.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:248,250</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:251,253</note>
       </notes>
       <segment>
         <source>100% Kostenlos</source>
@@ -2442,7 +2442,7 @@
     </unit>
     <unit id="landing.feature.free.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:252,255</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:255,258</note>
       </notes>
       <segment>
         <source>Keine Kreditkarte. Kein Abo. Einfach registrieren und loslegen – für immer kostenlos.</source>
@@ -2450,7 +2450,7 @@
     </unit>
     <unit id="landing.feature.adaptive.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:261,263</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:264,266</note>
       </notes>
       <segment>
         <source>Smarte Schnellaktionen</source>
@@ -2458,7 +2458,7 @@
     </unit>
     <unit id="landing.feature.adaptive.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:265,268</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:268,271</note>
       </notes>
       <segment>
         <source>Basierend auf deiner Trainingshistorie schlägt die App automatisch passende Wiederholungszahlen vor. Ein Tap genügt.</source>
@@ -2466,7 +2466,7 @@
     </unit>
     <unit id="ads.landing.aria">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:270</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:273</note>
       </notes>
       <segment>
         <source>Werbung</source>
@@ -2474,7 +2474,7 @@
     </unit>
     <unit id="landing.preview.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:275,278</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:278,281</note>
       </notes>
       <segment>
         <source> Deine Statistik auf einen Blick </source>
@@ -2482,7 +2482,7 @@
     </unit>
     <unit id="landing.preview.alt">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:279,280</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:282,283</note>
       </notes>
       <segment>
         <source>Vorschau der Statistikansicht</source>
@@ -2490,7 +2490,7 @@
     </unit>
     <unit id="landing.discover.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:286,287</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:289,290</note>
       </notes>
       <segment>
         <source>Mehr entdecken</source>
@@ -2498,7 +2498,7 @@
     </unit>
     <unit id="landing.discover.leaderboard.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:292,294</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:295,297</note>
       </notes>
       <segment>
         <source>Bestenliste</source>
@@ -2506,7 +2506,7 @@
     </unit>
     <unit id="landing.discover.leaderboard.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:296,299</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:299,302</note>
       </notes>
       <segment>
         <source> Vergleiche dich mit der Community: tägliche, wöchentliche und monatliche Top-Reps. Privacy first – dein Name erscheint nur, wenn du es willst. </source>
@@ -2514,7 +2514,7 @@
     </unit>
     <unit id="landing.discover.leaderboard.cta">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:306,309</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:309,312</note>
       </notes>
       <segment>
         <source>Zur Bestenliste</source>
@@ -2522,7 +2522,7 @@
     </unit>
     <unit id="landing.discover.blog.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:315,317</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:318,320</note>
       </notes>
       <segment>
         <source>Blog</source>
@@ -2530,7 +2530,7 @@
     </unit>
     <unit id="landing.discover.blog.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:319,322</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:322,325</note>
       </notes>
       <segment>
         <source> Tipps, Hintergrundwissen und Motivation rund um Liegestütze – von Einsteiger bis Fortgeschritten. Viele Artikel verlinken direkt auf den passenden Trainingsplan. </source>
@@ -2538,7 +2538,7 @@
     </unit>
     <unit id="landing.discover.blog.cta">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:329,331</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:332,334</note>
       </notes>
       <segment>
         <source>Zum Blog</source>
@@ -4433,7 +4433,7 @@
     <unit id="trainingPlans.openDetail">
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:90,92</note>
-        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:169,171</note>
+        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:164,166</note>
       </notes>
       <segment>
         <source> Details öffnen </source>
@@ -4643,7 +4643,7 @@
     <unit id="trainingPlans.daysSuffix">
       <notes>
         <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:66,68</note>
-        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:184,186</note>
+        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:179,181</note>
       </notes>
       <segment>
         <source>Tage</source>
@@ -4652,7 +4652,7 @@
     <unit id="trainingPlans.level.beginner">
       <notes>
         <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:70,71</note>
-        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:189,191</note>
+        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:184,186</note>
       </notes>
       <segment>
         <source>Einsteiger</source>
@@ -4661,7 +4661,7 @@
     <unit id="trainingPlans.level.intermediate">
       <notes>
         <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:72,74</note>
-        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:193,195</note>
+        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:188,190</note>
       </notes>
       <segment>
         <source>Mittelstufe</source>
@@ -4670,7 +4670,7 @@
     <unit id="trainingPlans.level.advanced">
       <notes>
         <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:74,76</note>
-        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:197,199</note>
+        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:192,194</note>
       </notes>
       <segment>
         <source>Fortgeschritten</source>
@@ -4813,9 +4813,17 @@
         <source>Plan nicht gefunden.</source>
       </segment>
     </unit>
+    <unit id="trainingPlans.autoStartFailed">
+      <notes>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:458</note>
+      </notes>
+      <segment>
+        <source>Plan-Start fehlgeschlagen — bitte erneut versuchen.</source>
+      </segment>
+    </unit>
     <unit id="trainingPlans.started">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:496</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:525</note>
       </notes>
       <segment>
         <source>Plan gestartet — viel Erfolg!</source>
@@ -4823,7 +4831,7 @@
     </unit>
     <unit id="trainingPlans.abandoned">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:513</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:542</note>
       </notes>
       <segment>
         <source>Plan beendet.</source>
@@ -4831,8 +4839,8 @@
     </unit>
     <unit id="trainingPlans.logged">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:539</note>
-        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:364</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:568</note>
+        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:359</note>
       </notes>
       <segment>
         <source>Plan-Sätze wurden eingetragen.</source>
@@ -4840,8 +4848,8 @@
     </unit>
     <unit id="trainingPlans.alreadyLogged">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:541</note>
-        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:366</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:570</note>
+        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:361</note>
       </notes>
       <segment>
         <source>Tag war schon eingetragen — als erledigt markiert.</source>
@@ -4849,8 +4857,8 @@
     </unit>
     <unit id="trainingPlans.notReady">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:543</note>
-        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:368</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:572</note>
+        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:363</note>
       </notes>
       <segment>
         <source>Daten werden noch geladen, bitte gleich noch einmal versuchen.</source>
@@ -4930,7 +4938,7 @@
     </unit>
     <unit id="trainingPlans.logToday">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:159,161</note>
+        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:155,157</note>
       </notes>
       <segment>
         <source>Heute eintragen</source>
@@ -4938,7 +4946,7 @@
     </unit>
     <unit id="trainingPlans.viewPlan">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:213,215</note>
+        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:208,210</note>
       </notes>
       <segment>
         <source>Plan ansehen</source>

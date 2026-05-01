@@ -176,6 +176,20 @@ export const TrainingPlanStore = signalStore(
         activeCatalog() !== null
     );
 
+    /**
+     * True once the Firestore listener for the active plan has emitted
+     * at least one value (or resolved synchronously to `null` for
+     * unauthenticated users). Distinguishes "we haven't heard yet" from
+     * "we know there's no active plan" — critical for one-shot
+     * decisions like the auto-start effect on the detail page, which
+     * would otherwise race the resource and overwrite an existing
+     * active plan during the initial-emission window.
+     */
+    const activePlanLoaded = computed(() => {
+      const status = store.activeResource.status();
+      return status === 'resolved' || status === 'local';
+    });
+
     return {
       activePlan,
       activeCatalog,
@@ -186,6 +200,7 @@ export const TrainingPlanStore = signalStore(
       completionPercent,
       isCompleted,
       hasActivePlan,
+      activePlanLoaded,
     };
   }),
   withMethods((store) => ({
@@ -223,8 +238,8 @@ export const TrainingPlanStore = signalStore(
 
     /** Sum of reps already logged on a given local date. */
     _repsLoggedOn(dateIso: string): number {
-      return store
-        ._live.entries()
+      return store._live
+        .entries()
         .filter((e) => e.timestamp.slice(0, 10) === dateIso)
         .reduce((sum, e) => sum + e.reps, 0);
     },
@@ -370,7 +385,7 @@ export const TrainingPlanStore = signalStore(
           // logged some reps already, just top up the remainder as
           // a single set — we don't try to second-guess their split.
           const sets =
-            alreadyLogged === 0 ? day.sets ?? [day.targetReps] : [remaining];
+            alreadyLogged === 0 ? (day.sets ?? [day.targetReps]) : [remaining];
           const reps = alreadyLogged === 0 ? day.targetReps : remaining;
           await firstValueFrom(
             store._statsApi.createPushup({

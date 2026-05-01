@@ -13,6 +13,7 @@ function makeStoreMock() {
     activeCatalog: signal(null),
     activePlan: signal(null),
     hasActivePlan: signal(false),
+    activePlanLoaded: signal(true),
     currentDayIndex: signal(null),
     completionPercent: signal(0),
     todayDay: signal(null),
