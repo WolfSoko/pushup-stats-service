@@ -13,7 +13,7 @@ import {
 } from '@angular/fire/firestore';
 import { EMPTY, Observable } from 'rxjs';
 
-export type LeaderboardPeriod = 'daily' | 'weekly' | 'monthly';
+export type LeaderboardPeriod = 'daily' | 'last7' | 'last30';
 
 export type LeaderboardEntry = {
   alias: string;
@@ -59,13 +59,13 @@ export class LeaderboardService {
 
   async load(): Promise<LeaderboardData> {
     const currentUserId = this.auth?.currentUser?.uid ?? null;
-    const start = this.startOfMonthIso();
+    const start = this.last30StartIso();
     const rows = await this.fetchRows(start);
 
     const fallback = {
       daily: this.aggregate(rows, 'daily', currentUserId),
-      weekly: this.aggregate(rows, 'weekly', currentUserId),
-      monthly: this.aggregate(rows, 'monthly', currentUserId),
+      last7: this.aggregate(rows, 'last7', currentUserId),
+      last30: this.aggregate(rows, 'last30', currentUserId),
     };
 
     const cached = await this.loadSnapshot(currentUserId);
@@ -78,17 +78,17 @@ export class LeaderboardService {
           cached.daily.top.find((entry) => entry.isCurrent) ??
           fallback.daily.current,
       },
-      weekly: {
-        top: cached.weekly.top,
+      last7: {
+        top: cached.last7.top,
         current:
-          cached.weekly.top.find((entry) => entry.isCurrent) ??
-          fallback.weekly.current,
+          cached.last7.top.find((entry) => entry.isCurrent) ??
+          fallback.last7.current,
       },
-      monthly: {
-        top: cached.monthly.top,
+      last30: {
+        top: cached.last30.top,
         current:
-          cached.monthly.top.find((entry) => entry.isCurrent) ??
-          fallback.monthly.current,
+          cached.last30.top.find((entry) => entry.isCurrent) ??
+          fallback.last30.current,
       },
     };
   }
@@ -121,8 +121,8 @@ export class LeaderboardService {
 
     return {
       daily: { top: mapTop(periods.daily), current: null },
-      weekly: { top: mapTop(periods.weekly), current: null },
-      monthly: { top: mapTop(periods.monthly), current: null },
+      last7: { top: mapTop(periods.last7), current: null },
+      last30: { top: mapTop(periods.last30), current: null },
     };
   }
 
@@ -159,12 +159,19 @@ export class LeaderboardService {
     period: LeaderboardPeriod,
     currentUserId: string | null
   ): LeaderboardBucket {
-    const bucket = this.bucketOf(new Date(), period);
+    const today = this.utcDateKey(new Date());
+    const windowStart =
+      period === 'daily'
+        ? today
+        : this.utcDateKey(
+            this.shiftDays(new Date(), period === 'last7' ? -6 : -29)
+          );
+
     const totals = new Map<string, number>();
 
     for (const row of rows) {
-      const key = this.bucketOf(new Date(row.timestamp), period);
-      if (key !== bucket) continue;
+      const key = this.utcDateKey(new Date(row.timestamp));
+      if (key < windowStart || key > today) continue;
       totals.set(row.userId, (totals.get(row.userId) ?? 0) + row.reps);
     }
 
@@ -196,32 +203,39 @@ export class LeaderboardService {
     return `${first}...${last}`;
   }
 
-  private startOfMonthIso(): string {
+  private last30StartIso(): string {
+    // Trailing 30-day window: today + 29 prior days. Reach back one extra day
+    // to guarantee coverage across timezone boundaries.
     const now = new Date();
-    const from = new Date(
-      Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), 1, 0, 0, 0)
-    );
-    return from.toISOString();
+    const from = this.shiftDays(now, -30);
+    return new Date(
+      Date.UTC(
+        from.getUTCFullYear(),
+        from.getUTCMonth(),
+        from.getUTCDate(),
+        0,
+        0,
+        0
+      )
+    ).toISOString();
   }
 
-  private bucketOf(date: Date, period: LeaderboardPeriod): string {
+  private utcDateKey(date: Date): string {
     const yyyy = date.getUTCFullYear();
     const mm = String(date.getUTCMonth() + 1).padStart(2, '0');
     const dd = String(date.getUTCDate()).padStart(2, '0');
-
-    if (period === 'daily') return `${yyyy}-${mm}-${dd}`;
-    if (period === 'monthly') return `${yyyy}-${mm}`;
-
-    const week = this.isoWeek(date);
-    return `${yyyy}-W${String(week).padStart(2, '0')}`;
+    return `${yyyy}-${mm}-${dd}`;
   }
 
-  private isoWeek(date: Date): number {
-    const d = new Date(
-      Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate())
+  private shiftDays(date: Date, deltaDays: number): Date {
+    const anchor = Date.UTC(
+      date.getUTCFullYear(),
+      date.getUTCMonth(),
+      date.getUTCDate(),
+      12,
+      0,
+      0
     );
-    d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7));
-    const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
-    return Math.ceil(((d.getTime() - yearStart.getTime()) / 86400000 + 1) / 7);
+    return new Date(anchor + deltaDays * 86_400_000);
   }
 }

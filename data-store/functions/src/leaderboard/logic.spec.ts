@@ -2,7 +2,8 @@ import { describe, it, expect } from '@jest/globals';
 import {
   rankEntries,
   calculateCurrentPeriodKeys,
-  getMonthStartForQuery,
+  getLeaderboardQueryStartDate,
+  isoDateNDaysBefore,
   filterOutDemoUser,
   PushupRow,
 } from './logic';
@@ -136,77 +137,96 @@ describe('leaderboard/logic', () => {
       expect(result[0].alias).toBe('Bob');
     });
 
-    it('handles weekly period aggregation', () => {
+    it('aggregates the trailing 7-day window inclusive of both endpoints', () => {
       const rows: PushupRow[] = [
-        { userId: 'user1', timestamp: '2024-03-11T10:00:00Z', reps: 10 }, // Monday of week 11
-        { userId: 'user1', timestamp: '2024-03-15T10:00:00Z', reps: 5 }, // Friday of week 11
+        // Today is 2024-03-15. Window is 2024-03-09 .. 2024-03-15 (7 days).
+        { userId: 'user1', timestamp: '2024-03-09T10:00:00Z', reps: 4 }, // included (start)
+        { userId: 'user1', timestamp: '2024-03-15T10:00:00Z', reps: 6 }, // included (today)
+        { userId: 'user1', timestamp: '2024-03-08T10:00:00Z', reps: 99 }, // excluded (8 days back)
+        { userId: 'user1', timestamp: '2024-03-16T10:00:00Z', reps: 99 }, // excluded (future)
       ];
       const profiles = new Map<string, UserProfile>([
         ['user1', { displayName: 'Alice', ui: { hideFromLeaderboard: false } }],
       ]);
 
-      const result = rankEntries(rows, 'weekly', '2024-W11', profiles);
+      const result = rankEntries(rows, 'last7', '2024-03-15', profiles);
 
       expect(result).toHaveLength(1);
-      expect(result[0]).toEqual({ alias: 'Alice', reps: 15 });
+      expect(result[0]).toEqual({ alias: 'Alice', reps: 10 });
     });
 
-    it('handles monthly period aggregation', () => {
+    it('aggregates the trailing 30-day window inclusive of both endpoints', () => {
       const rows: PushupRow[] = [
-        { userId: 'user1', timestamp: '2024-03-01T10:00:00Z', reps: 10 },
-        { userId: 'user1', timestamp: '2024-03-31T10:00:00Z', reps: 5 },
+        // Today is 2024-03-30. Window is 2024-03-01 .. 2024-03-30 (30 days).
+        { userId: 'user1', timestamp: '2024-03-01T10:00:00Z', reps: 5 },
+        { userId: 'user1', timestamp: '2024-03-30T10:00:00Z', reps: 7 },
+        { userId: 'user1', timestamp: '2024-02-29T10:00:00Z', reps: 99 }, // excluded (31 days back)
       ];
       const profiles = new Map<string, UserProfile>([
         ['user1', { displayName: 'Alice', ui: { hideFromLeaderboard: false } }],
       ]);
 
-      const result = rankEntries(rows, 'monthly', '2024-03', profiles);
+      const result = rankEntries(rows, 'last30', '2024-03-30', profiles);
 
       expect(result).toHaveLength(1);
-      expect(result[0]).toEqual({ alias: 'Alice', reps: 15 });
+      expect(result[0]).toEqual({ alias: 'Alice', reps: 12 });
     });
   });
 
   describe('calculateCurrentPeriodKeys', () => {
-    it('returns period keys for current date', () => {
+    it('returns todays ISO date for all three buckets', () => {
       const now = new Date('2024-03-15T10:00:00Z');
       const keys = calculateCurrentPeriodKeys(now);
 
       expect(keys.daily).toMatch(/^\d{4}-\d{2}-\d{2}$/);
-      expect(keys.weekly).toMatch(/^\d{4}-W\d{2}$/);
-      expect(keys.monthly).toMatch(/^\d{4}-\d{2}$/);
+      expect(keys.last7).toBe(keys.daily);
+      expect(keys.last30).toBe(keys.daily);
     });
 
     it('uses current date when not provided', () => {
       const keys = calculateCurrentPeriodKeys();
 
       expect(keys.daily).toMatch(/^\d{4}-\d{2}-\d{2}$/);
-      expect(keys.weekly).toMatch(/^\d{4}-W\d{2}$/);
-      expect(keys.monthly).toMatch(/^\d{4}-\d{2}$/);
+      expect(keys.last7).toBe(keys.daily);
+      expect(keys.last30).toBe(keys.daily);
     });
   });
 
-  describe('getMonthStartForQuery', () => {
-    it('returns first day of month in ISO format', () => {
-      const result = getMonthStartForQuery({
-        year: 2024,
-        month: 3,
-        day: 15,
-        isoDate: '2024-03-15',
-      });
-
-      expect(result).toBe('2024-03-01');
+  describe('isoDateNDaysBefore', () => {
+    it('returns the same date for daysBack = 0', () => {
+      const result = isoDateNDaysBefore(
+        { year: 2024, month: 3, day: 15, isoDate: '2024-03-15' },
+        0
+      );
+      expect(result).toBe('2024-03-15');
     });
 
-    it('pads month with zero', () => {
-      const result = getMonthStartForQuery({
-        year: 2024,
-        month: 1,
-        day: 15,
-        isoDate: '2024-01-15',
-      });
+    it('walks across month boundaries', () => {
+      const result = isoDateNDaysBefore(
+        { year: 2024, month: 3, day: 1, isoDate: '2024-03-01' },
+        1
+      );
+      expect(result).toBe('2024-02-29'); // 2024 is a leap year
+    });
 
-      expect(result).toBe('2024-01-01');
+    it('walks across year boundaries', () => {
+      const result = isoDateNDaysBefore(
+        { year: 2024, month: 1, day: 1, isoDate: '2024-01-01' },
+        1
+      );
+      expect(result).toBe('2023-12-31');
+    });
+  });
+
+  describe('getLeaderboardQueryStartDate', () => {
+    it('returns the date 29 days before today (covers a 30-day window)', () => {
+      const result = getLeaderboardQueryStartDate({
+        year: 2024,
+        month: 3,
+        day: 30,
+        isoDate: '2024-03-30',
+      });
+      expect(result).toBe('2024-03-01');
     });
   });
 

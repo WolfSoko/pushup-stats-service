@@ -1957,8 +1957,8 @@ Active:         </target>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
       </notes>
       <segment state="translated">
-        <source> Vergleiche dich mit der Community: tägliche, wöchentliche und monatliche Top-Reps. Privacy first – dein Name erscheint nur, wenn du es willst. </source>
-        <target> Compare yourself with the community: daily, weekly, and monthly top reps. Privacy first – your name only shows if you want it to. </target>
+        <source> Vergleiche dich mit der Community: Top-Reps für heute, die letzten 7 Tage und die letzten 30 Tage. Privacy first – dein Name erscheint nur, wenn du es willst. </source>
+        <target> Compare yourself with the community: top reps for today, the last 7 days, and the last 30 days. Privacy first – your name only shows if you want it to. </target>
       </segment>
     </unit>
     <unit id="landing.discover.leaderboard.cta">
@@ -2031,23 +2031,15 @@ Active:         </target>
       
       
         </unit>
-    <unit id="landing.leaderboard.monthly">
+    <unit id="landing.leaderboard.last30">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
-
-        
-            </notes>
+        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html</note>
+      </notes>
       <segment state="translated">
-        <source>Monat</source>
-        <target>Month</target>
-
-        
-        
-            </segment>
-
-      
-      
-        </unit>
+        <source>Letzte 30 Tage</source>
+        <target>Last 30 days</target>
+      </segment>
+    </unit>
     <unit id="landing.leaderboard.ownPosition">
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
@@ -2085,23 +2077,15 @@ Deine Position: # ·  Reps        </source>
       
       
         </unit>
-    <unit id="landing.leaderboard.weekly">
+    <unit id="landing.leaderboard.last7">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
-
-        
-            </notes>
+        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html</note>
+      </notes>
       <segment state="translated">
-        <source>Woche</source>
-        <target>Week</target>
-
-        
-        
-            </segment>
-
-      
-      
-        </unit>
+        <source>Letzte 7 Tage</source>
+        <target>Last 7 days</target>
+      </segment>
+    </unit>
     <unit id="landing.plans.eyebrow">
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
@@ -2313,7 +2297,7 @@ Deine Position: # ·  Reps        </source>
     <unit id="leaderboard.page.subtitle">
       <segment state="translated">
         <source/>
-        <target>Daily · Weekly · Monthly</target>
+        <target>Today · Last 7 days · Last 30 days</target>
       </segment>
     </unit>
     <unit id="leaderboard.page.title">
@@ -3302,8 +3286,8 @@ Deine Position: # ·  Reps        </source>
         </unit>
     <unit id="seo.leaderboard.description">
       <segment state="translated">
-        <source>Öffentliche Bestenliste für tägliche, wöchentliche und monatliche Pushup-Reps.</source>
-        <target>Public leaderboard for daily, weekly, and monthly pushup reps.</target>
+        <source>Öffentliche Bestenliste mit Top-Reps für heute, die letzten 7 Tage und die letzten 30 Tage.</source>
+        <target>Public leaderboard with top reps for today, the last 7 days, and the last 30 days.</target>
 
         
         

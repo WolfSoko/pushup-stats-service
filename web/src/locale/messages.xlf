@@ -1487,7 +1487,7 @@
         <note category="location">web/src/app/app.routes.ts:128</note>
       </notes>
       <segment>
-        <source>Öffentliche Bestenliste für tägliche, wöchentliche und monatliche Pushup-Reps.</source>
+        <source>Öffentliche Bestenliste mit Top-Reps für heute, die letzten 7 Tage und die letzten 30 Tage.</source>
       </segment>
     </unit>
     <unit id="seo.publicProfile.title">
@@ -1825,7 +1825,7 @@
         <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:8,10</note>
       </notes>
       <segment>
-        <source>Daily · Weekly · Monthly</source>
+        <source>Heute · Letzte 7 Tage · Letzte 30 Tage</source>
       </segment>
     </unit>
     <unit id="landing.leaderboard.daily">
@@ -1836,20 +1836,20 @@
         <source> Tag </source>
       </segment>
     </unit>
-    <unit id="landing.leaderboard.weekly">
+    <unit id="landing.leaderboard.last7">
       <notes>
         <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:33,35</note>
       </notes>
       <segment>
-        <source> Woche </source>
+        <source> Letzte 7 Tage </source>
       </segment>
     </unit>
-    <unit id="landing.leaderboard.monthly">
+    <unit id="landing.leaderboard.last30">
       <notes>
         <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:42,46</note>
       </notes>
       <segment>
-        <source> Monat </source>
+        <source> Letzte 30 Tage </source>
       </segment>
     </unit>
     <unit id="landing.leaderboard.reps">
@@ -2525,7 +2525,7 @@
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:299,302</note>
       </notes>
       <segment>
-        <source> Vergleiche dich mit der Community: tägliche, wöchentliche und monatliche Top-Reps. Privacy first – dein Name erscheint nur, wenn du es willst. </source>
+        <source> Vergleiche dich mit der Community: Top-Reps für heute, die letzten 7 Tage und die letzten 30 Tage. Privacy first – dein Name erscheint nur, wenn du es willst. </source>
       </segment>
     </unit>
     <unit id="landing.discover.leaderboard.cta">

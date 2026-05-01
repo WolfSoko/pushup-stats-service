@@ -125,8 +125,8 @@ export function makeStatsApiMock(
 const emptyBucket: LeaderboardBucket = { top: [], current: null };
 const emptyLeaderboard: LeaderboardData = {
   daily: emptyBucket,
-  weekly: emptyBucket,
-  monthly: emptyBucket,
+  last7: emptyBucket,
+  last30: emptyBucket,
 };
 
 /**
