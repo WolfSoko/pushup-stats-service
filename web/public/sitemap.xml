@@ -7,6 +7,7 @@
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.de/de"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.de/en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.de/de"/>
   </url>
   <url>
     <loc>https://pushup-stats.de/de/blog</loc>
@@ -14,6 +15,15 @@
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.de/de/blog"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.de/en/blog"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.de/de/blog"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.de/de/training-plans</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.de/de/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.de/en/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.de/de/training-plans"/>
   </url>
   <url>
     <loc>https://pushup-stats.de/de/leaderboard</loc>
@@ -21,6 +31,7 @@
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.de/de/leaderboard"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.de/en/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.de/de/leaderboard"/>
   </url>
   <url>
     <loc>https://pushup-stats.de/de/impressum</loc>
@@ -28,6 +39,7 @@
     <priority>0.3</priority>
     <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.de/de/impressum"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.de/en/impressum"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.de/de/impressum"/>
   </url>
   <url>
     <loc>https://pushup-stats.de/de/datenschutz</loc>
@@ -35,6 +47,31 @@
     <priority>0.3</priority>
     <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.de/de/datenschutz"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.de/en/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.de/de/datenschutz"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.de/de/training-plans/recruit-6w</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.de/de/training-plans/recruit-6w"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.de/en/training-plans/recruit-6w"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.de/de/training-plans/recruit-6w"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.de/de/training-plans/challenge-30d</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.de/de/training-plans/challenge-30d"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.de/en/training-plans/challenge-30d"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.de/de/training-plans/challenge-30d"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.de/de/training-plans/over-40-4w</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.de/de/training-plans/over-40-4w"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.de/en/training-plans/over-40-4w"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.de/de/training-plans/over-40-4w"/>
   </url>
   <url>
     <loc>https://pushup-stats.de/de/blog/liegestuetze-steigern</loc>
@@ -43,6 +80,7 @@
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.de/de/blog/liegestuetze-steigern"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.de/en/blog/pushup-progression"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.de/de/blog/liegestuetze-steigern"/>
   </url>
   <url>
     <loc>https://pushup-stats.de/de/blog/taeglich-liegestuetze</loc>
@@ -51,6 +89,7 @@
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.de/de/blog/taeglich-liegestuetze"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.de/en/blog/daily-pushups"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.de/de/blog/taeglich-liegestuetze"/>
   </url>
   <url>
     <loc>https://pushup-stats.de/de/blog/liegestuetze-tracker</loc>
@@ -59,6 +98,7 @@
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.de/de/blog/liegestuetze-tracker"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.de/en/blog/pushup-tracker-guide"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.de/de/blog/liegestuetze-tracker"/>
   </url>
   <url>
     <loc>https://pushup-stats.de/de/blog/liegestuetze-varianten</loc>
@@ -67,6 +107,7 @@
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.de/de/blog/liegestuetze-varianten"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.de/en/blog/pushup-variations"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.de/de/blog/liegestuetze-varianten"/>
   </url>
   <url>
     <loc>https://pushup-stats.de/de/blog/30-tage-liegestuetze-challenge</loc>
@@ -75,6 +116,7 @@
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.de/de/blog/30-tage-liegestuetze-challenge"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.de/en/blog/30-day-pushup-challenge"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.de/de/blog/30-tage-liegestuetze-challenge"/>
   </url>
   <url>
     <loc>https://pushup-stats.de/de/blog/liegestuetze-ab-40</loc>
@@ -83,6 +125,7 @@
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.de/de/blog/liegestuetze-ab-40"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.de/en/blog/pushups-over-40"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.de/de/blog/liegestuetze-ab-40"/>
   </url>
   <url>
     <loc>https://pushup-stats.de/de/blog/wim-hof-liegestuetze</loc>
@@ -91,6 +134,7 @@
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.de/de/blog/wim-hof-liegestuetze"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.de/en/blog/wim-hof-pushups"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.de/de/blog/wim-hof-liegestuetze"/>
   </url>
   <url>
     <loc>https://pushup-stats.de/de/blog/liegestuetze-herz-studie</loc>
@@ -99,6 +143,7 @@
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.de/de/blog/liegestuetze-herz-studie"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.de/en/blog/pushups-heart-study"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.de/de/blog/liegestuetze-herz-studie"/>
   </url>
   <url>
     <loc>https://pushup-stats.de/en/blog/pushup-progression</loc>
@@ -107,6 +152,7 @@
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.de/de/blog/liegestuetze-steigern"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.de/en/blog/pushup-progression"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.de/de/blog/liegestuetze-steigern"/>
   </url>
   <url>
     <loc>https://pushup-stats.de/en/blog/daily-pushups</loc>
@@ -115,6 +161,7 @@
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.de/de/blog/taeglich-liegestuetze"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.de/en/blog/daily-pushups"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.de/de/blog/taeglich-liegestuetze"/>
   </url>
   <url>
     <loc>https://pushup-stats.de/en/blog/pushup-variations</loc>
@@ -123,6 +170,7 @@
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.de/de/blog/liegestuetze-varianten"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.de/en/blog/pushup-variations"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.de/de/blog/liegestuetze-varianten"/>
   </url>
   <url>
     <loc>https://pushup-stats.de/en/blog/30-day-pushup-challenge</loc>
@@ -131,6 +179,7 @@
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.de/de/blog/30-tage-liegestuetze-challenge"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.de/en/blog/30-day-pushup-challenge"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.de/de/blog/30-tage-liegestuetze-challenge"/>
   </url>
   <url>
     <loc>https://pushup-stats.de/en/blog/pushups-over-40</loc>
@@ -139,6 +188,7 @@
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.de/de/blog/liegestuetze-ab-40"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.de/en/blog/pushups-over-40"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.de/de/blog/liegestuetze-ab-40"/>
   </url>
   <url>
     <loc>https://pushup-stats.de/en/blog/wim-hof-pushups</loc>
@@ -147,6 +197,7 @@
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.de/de/blog/wim-hof-liegestuetze"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.de/en/blog/wim-hof-pushups"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.de/de/blog/wim-hof-liegestuetze"/>
   </url>
   <url>
     <loc>https://pushup-stats.de/en/blog/pushups-heart-study</loc>
@@ -155,6 +206,7 @@
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.de/de/blog/liegestuetze-herz-studie"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.de/en/blog/pushups-heart-study"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.de/de/blog/liegestuetze-herz-studie"/>
   </url>
   <url>
     <loc>https://pushup-stats.de/en/blog/pushup-tracker-guide</loc>
@@ -163,5 +215,6 @@
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.de/de/blog/liegestuetze-tracker"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.de/en/blog/pushup-tracker-guide"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.de/de/blog/liegestuetze-tracker"/>
   </url>
 </urlset>

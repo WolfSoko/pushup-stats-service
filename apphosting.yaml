@@ -12,13 +12,39 @@ env:
   # Configure environment variables.
   # See https://firebase.google.com/docs/app-hosting/configure#user-defined-environment
   - variable: NG_ALLOWED_HOSTS
-    value: 'pushup-stats-service--pushup-stats.europe-west4.hosted.app,pushup-stats.de'
+    # Angular SSR (`@angular/ssr`) rejects requests whose `Host` header isn't
+    # in this list as an SSRF guard. Firebase App Hosting routes through Cloud
+    # Run, so during rolling deploys traffic-tag URLs like
+    # `t-<id>---pushup-stats-service-<hash>-<region>.a.run.app` reach the SSR
+    # with that internal hostname.
+    #
+    # Angular only treats entries starting with `*.` as wildcards
+    # (see `isHostAllowed` in `@angular/ssr`); `*.run.app` matches any
+    # hostname ending in `.run.app`, including the random per-revision tags.
+    value: 'pushup-stats-service--pushup-stats.europe-west4.hosted.app,pushup-stats.de,*.run.app'
     availability:
       - RUNTIME
 
+  # Sentry auth token for source map upload during App Hosting's build.
+  # App Hosting builds independently from GitHub Actions, so the bundles served
+  # at pushup-stats.de need their own debug-ID upload — otherwise Sentry can't
+  # match runtime stack traces to source maps.
+  #
+  # Setup (one-time, requires gcloud + Firebase project owner role):
+  #   gcloud secrets create SENTRY_AUTH_TOKEN --replication-policy=automatic
+  #   echo -n "<token>" | gcloud secrets versions add SENTRY_AUTH_TOKEN --data-file=-
+  #   firebase apphosting:secrets:grantaccess SENTRY_AUTH_TOKEN \
+  #     --backend pushup-stats-service --project pushup-stats
+  - variable: SENTRY_AUTH_TOKEN
+    secret: SENTRY_AUTH_TOKEN
+    availability:
+      - BUILD
+
 # Grant access to secrets in Cloud Secret Manager.
 # See https://firebase.google.com/docs/app-hosting/configure#secret-parameters
-# - variable: MY_SECRET
-#   secret: mySecretRef
 scripts:
+  # Custom build: produce the Angular SSR artifact, then upload debug IDs +
+  # source maps to Sentry. The Sentry script is a no-op if SENTRY_AUTH_TOKEN
+  # is not bound, so the build still succeeds during initial bring-up.
+  buildCommand: pnpm nx run web:build -c production && pnpm sentry:sourcemaps
   runCommand: node dist/web/server/server.mjs

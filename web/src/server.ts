@@ -12,6 +12,8 @@ import { join } from 'node:path';
 import { pino } from 'pino';
 import { pinoHttp } from 'pino-http';
 
+import { computeLocaleRedirect } from './server-locale-redirect';
+
 const isProduction = process.env['NODE_ENV'] === 'production';
 
 if (isProduction) {
@@ -51,6 +53,41 @@ app.use((req, res, next) => {
   }
   next();
 });
+
+// Redirect non-locale-prefixed app routes to /<lang>/... so paths like
+// `/u/<uid>` (which only exist inside the locale-specific Angular bundles)
+// don't 404 with `Cannot GET /u/<uid>` when shared as a bare URL.
+//
+// Pure decision logic + path/query validation lives in
+// `./server-locale-redirect` so the routing semantics are unit-tested
+// without spinning up Supertest. This wrapper only adapts request fields
+// in and applies the result out.
+//
+// Production-only: the Angular dev server (`nx serve`) shares this same
+// `reqHandler` but disables localization, so `/de/login` etc. don't
+// exist in dev builds. Redirecting unprefixed paths there breaks
+// `nx serve` and any e2e suite that hits `/login` directly. The locale
+// prefixes only really exist in the localized SSR build.
+//
+// `res.vary` (instead of `setHeader('Vary', ...)`) APPENDS to whatever
+// upstream middleware (compression, CORS, …) may have already set —
+// overwriting can quietly break caching semantics elsewhere.
+if (isProduction) {
+  app.use((req, res, next) => {
+    const result = computeLocaleRedirect({
+      method: req.method,
+      path: req.path,
+      url: req.originalUrl ?? req.url,
+      acceptLanguage:
+        typeof req.headers['accept-language'] === 'string'
+          ? req.headers['accept-language']
+          : undefined,
+    });
+    if (result.kind === 'pass') return next();
+    res.vary('Accept-Language');
+    res.redirect(302, result.location);
+  });
+}
 
 /**
  * Serve static files from /browser

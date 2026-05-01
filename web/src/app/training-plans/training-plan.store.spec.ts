@@ -307,9 +307,7 @@ describe('TrainingPlanStore', () => {
       // Day 2 is a main day with sets [20, 20, 20] and target 60.
       // We seed startDate one day in the past so day 2 == today
       // (logPlanDay rejects future days).
-      const yesterdayIso = toBerlinIsoDate(
-        new Date(Date.now() - 86_400_000)
-      );
+      const yesterdayIso = toBerlinIsoDate(new Date(Date.now() - 86_400_000));
       const { store, mocks } = setup({
         userId: 'u1',
         planId: PLAN.id,
@@ -374,9 +372,7 @@ describe('TrainingPlanStore', () => {
     it('tops up only the remainder when partially logged', async () => {
       const today = toBerlinIsoDate(new Date());
       const day2Target = PLAN.days[1].targetReps;
-      const startDate = toBerlinIsoDate(
-        new Date(Date.now() - 86_400_000)
-      );
+      const startDate = toBerlinIsoDate(new Date(Date.now() - 86_400_000));
       const { store, mocks } = setup(
         {
           userId: 'u1',

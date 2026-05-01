@@ -1990,8 +1990,8 @@ Active:         </target>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
       </notes>
       <segment state="translated">
-        <source> Vergleiche dich mit der Community: tägliche, wöchentliche und monatliche Top-Reps. Privacy first – dein Name erscheint nur, wenn du es willst. </source>
-        <target> Compare yourself with the community: daily, weekly, and monthly top reps. Privacy first – your name only shows if you want it to. </target>
+        <source> Vergleiche dich mit der Community: Top-Reps für heute, die letzten 7 Tage und die letzten 30 Tage. Privacy first – dein Name erscheint nur, wenn du es willst. </source>
+        <target> Compare yourself with the community: top reps for today, the last 7 days, and the last 30 days. Privacy first – your name only shows if you want it to. </target>
       </segment>
     </unit>
     <unit id="landing.discover.leaderboard.cta">
@@ -2064,23 +2064,15 @@ Active:         </target>
       
       
         </unit>
-    <unit id="landing.leaderboard.monthly">
+    <unit id="landing.leaderboard.last30">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
-
-        
-            </notes>
+        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html</note>
+      </notes>
       <segment state="translated">
-        <source>Monat</source>
-        <target>Month</target>
-
-        
-        
-            </segment>
-
-      
-      
-        </unit>
+        <source>Letzte 30 Tage</source>
+        <target>Last 30 days</target>
+      </segment>
+    </unit>
     <unit id="landing.leaderboard.ownPosition">
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
@@ -2118,23 +2110,15 @@ Deine Position: # ·  Reps        </source>
       
       
         </unit>
-    <unit id="landing.leaderboard.weekly">
+    <unit id="landing.leaderboard.last7">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
-
-        
-            </notes>
+        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html</note>
+      </notes>
       <segment state="translated">
-        <source>Woche</source>
-        <target>Week</target>
-
-        
-        
-            </segment>
-
-      
-      
-        </unit>
+        <source>Letzte 7 Tage</source>
+        <target>Last 7 days</target>
+      </segment>
+    </unit>
     <unit id="landing.plans.eyebrow">
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
@@ -2329,7 +2313,7 @@ Deine Position: # ·  Reps        </source>
     <unit id="leaderboard.page.subtitle">
       <segment state="translated">
         <source/>
-        <target>Daily · Weekly · Monthly</target>
+        <target>Today · Last 7 days · Last 30 days</target>
       </segment>
     </unit>
     <unit id="leaderboard.page.title">
@@ -3318,8 +3302,8 @@ Deine Position: # ·  Reps        </source>
         </unit>
     <unit id="seo.leaderboard.description">
       <segment state="translated">
-        <source>Öffentliche Bestenliste für tägliche, wöchentliche und monatliche Pushup-Reps.</source>
-        <target>Public leaderboard for daily, weekly, and monthly pushup reps.</target>
+        <source>Öffentliche Bestenliste mit Top-Reps für heute, die letzten 7 Tage und die letzten 30 Tage.</source>
+        <target>Public leaderboard with top reps for today, the last 7 days, and the last 30 days.</target>
 
         
         
@@ -6044,6 +6028,192 @@ Deine Position: # ·  Reps        </source>
       <segment state="translated">
         <source>Daten werden noch geladen, bitte gleich noch einmal versuchen.</source>
         <target>Data still loading, please try again in a moment.</target>
+      </segment>
+    </unit>
+    <unit id="seo.publicProfile.title">
+      <segment state="translated">
+        <source>Profil – Pushup Tracker</source>
+        <target>Profile – Pushup Tracker</target>
+      </segment>
+    </unit>
+    <unit id="seo.publicProfile.description">
+      <segment state="translated">
+        <source>Öffentliches Pushup-Profil mit Reps, Streak und Bestleistungen.</source>
+        <target>Public push-up profile with reps, streak and personal bests.</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.subtitle">
+      <segment state="translated">
+        <source>Pushup Tracker</source>
+        <target>Pushup Tracker</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.seo.imageAlt">
+      <segment state="translated">
+        <source><ph id="0" equiv="name" disp="name"/> auf Pushup Tracker</source>
+        <target><ph id="0" equiv="name" disp="name"/> on Pushup Tracker</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.notFound.title">
+      <segment state="translated">
+        <source>Profil nicht gefunden</source>
+        <target>Profile not found</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.notFound.body">
+      <segment state="translated">
+        <source>Dieses Profil existiert nicht oder wurde nicht öffentlich freigegeben.</source>
+        <target>This profile does not exist or has not been made public.</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.error.title">
+      <segment state="translated">
+        <source>Profil konnte nicht geladen werden</source>
+        <target>Could not load profile</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.error.body">
+      <segment state="translated">
+        <source>Bitte versuche es später erneut.</source>
+        <target>Please try again later.</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.retry">
+      <segment state="translated">
+        <source>Erneut versuchen</source>
+        <target>Try again</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.toHome">
+      <segment state="translated">
+        <source>Zur Startseite</source>
+        <target>Go to homepage</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.stats">
+      <segment state="translated">
+        <source>Statistik</source>
+        <target>Stats</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.total">
+      <segment state="translated">
+        <source>Gesamte Reps</source>
+        <target>Total reps</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.streak">
+      <segment state="translated">
+        <source>Aktuelle Streak</source>
+        <target>Current streak</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.days">
+      <segment state="translated">
+        <source>Aktive Tage</source>
+        <target>Active days</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.entries">
+      <segment state="translated">
+        <source>Einträge</source>
+        <target>Entries</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.bestSet">
+      <segment state="translated">
+        <source>Bester Einzel-Eintrag</source>
+        <target>Best single entry</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.bestDay">
+      <segment state="translated">
+        <source>Bester Tag</source>
+        <target>Best day</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.share.aria">
+      <segment state="translated">
+        <source>Profil teilen</source>
+        <target>Share profile</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.share">
+      <segment state="translated">
+        <source>Teilen</source>
+        <target>Share</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.cta">
+      <segment state="translated">
+        <source>Selbst tracken – pushup-stats.de</source>
+        <target>Track your own – pushup-stats.de</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.share.text">
+      <segment state="translated">
+        <source><ph id="0" equiv="name" disp="name"/> hat <ph id="1" equiv="total" disp="total"/> Liegestütze auf Pushup Tracker geschafft 💪 Schau's dir an:</source>
+        <target><ph id="0" equiv="name" disp="name"/> hit <ph id="1" equiv="total" disp="total"/> push-ups on Pushup Tracker 💪 Check it out:</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.share.title">
+      <segment state="translated">
+        <source>Pushup Tracker Profil</source>
+        <target>Pushup Tracker profile</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.seo.notFound.title">
+      <segment state="translated">
+        <source>Profil nicht verfügbar – Pushup Tracker</source>
+        <target>Profile not available – Pushup Tracker</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.seo.notFound.description">
+      <segment state="translated">
+        <source>Dieses Profil existiert nicht oder ist nicht öffentlich.</source>
+        <target>This profile does not exist or is not public.</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.seo.title">
+      <segment state="translated">
+        <source><ph id="0" equiv="name" disp="name"/> – <ph id="1" equiv="total" disp="total"/> Liegestütze · Streak <ph id="2" equiv="streak" disp="streak"/> · Pushup Tracker</source>
+        <target><ph id="0" equiv="name" disp="name"/> – <ph id="1" equiv="total" disp="total"/> push-ups · streak <ph id="2" equiv="streak" disp="streak"/> · Pushup Tracker</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.seo.description">
+      <segment state="translated">
+        <source><ph id="0" equiv="name" disp="name"/> hat <ph id="1" equiv="total" disp="total"/> Liegestütze in <ph id="2" equiv="days" disp="days"/> aktiven Tagen geschafft – aktuelle Streak: <ph id="3" equiv="streak" disp="streak"/> Tage. Tracke selbst kostenlos auf pushup-stats.de.</source>
+        <target><ph id="0" equiv="name" disp="name"/> hit <ph id="1" equiv="total" disp="total"/> push-ups across <ph id="2" equiv="days" disp="days"/> active days – current streak: <ph id="3" equiv="streak" disp="streak"/> days. Start tracking free at pushup-stats.de.</target>
+      </segment>
+    </unit>
+    <unit id="settings.publicProfile.toggle">
+      <segment state="translated">
+        <source>Öffentliches Profil aktivieren</source>
+        <target>Enable public profile</target>
+      </segment>
+    </unit>
+    <unit id="settings.publicProfile.hint">
+      <segment state="translated">
+        <source>Erlaubt jedem mit dem Link den Zugriff auf deine Reps, Streak und Bestleistungen. Dein Anzeigename ist sichtbar; E-Mail, Ziele und Erinnerungen bleiben privat.</source>
+        <target>Anyone with the link can see your reps, streak and personal bests. Your display name is visible; email, goals and reminders stay private.</target>
+      </segment>
+    </unit>
+    <unit id="settings.publicProfile.shareCta">
+      <segment state="translated">
+        <source>Profil teilen</source>
+        <target>Share profile</target>
+      </segment>
+    </unit>
+    <unit id="settings.publicProfile.share.title">
+      <segment state="translated">
+        <source>Mein Pushup Tracker Profil</source>
+        <target>My Pushup Tracker profile</target>
+      </segment>
+    </unit>
+    <unit id="settings.publicProfile.share.text">
+      <segment state="translated">
+        <source>Schau dir mein Pushup-Profil an:</source>
+        <target>Check out my push-up profile:</target>
       </segment>
     </unit>
   </file>

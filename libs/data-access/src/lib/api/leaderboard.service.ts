@@ -13,7 +13,7 @@ import {
 } from '@angular/fire/firestore';
 import { EMPTY, Observable } from 'rxjs';
 
-export type LeaderboardPeriod = 'daily' | 'weekly' | 'monthly';
+export type LeaderboardPeriod = 'daily' | 'last7' | 'last30';
 
 export type LeaderboardEntry = {
   alias: string;
@@ -30,12 +30,15 @@ export type LeaderboardBucket = {
 export type LeaderboardData = Record<LeaderboardPeriod, LeaderboardBucket>;
 
 const TOP_N = 10;
+const TZ = 'Europe/Berlin';
 
 type PushupRow = {
   userId: string;
   reps: number;
   timestamp: string;
 };
+
+type CachedBuckets = Partial<LeaderboardData>;
 
 @Injectable({ providedIn: 'root' })
 export class LeaderboardService {
@@ -59,43 +62,41 @@ export class LeaderboardService {
 
   async load(): Promise<LeaderboardData> {
     const currentUserId = this.auth?.currentUser?.uid ?? null;
-    const start = this.startOfMonthIso();
+    const start = this.last30StartDateKey();
     const rows = await this.fetchRows(start);
 
-    const fallback = {
+    const fallback: LeaderboardData = {
       daily: this.aggregate(rows, 'daily', currentUserId),
-      weekly: this.aggregate(rows, 'weekly', currentUserId),
-      monthly: this.aggregate(rows, 'monthly', currentUserId),
+      last7: this.aggregate(rows, 'last7', currentUserId),
+      last30: this.aggregate(rows, 'last30', currentUserId),
     };
 
-    const cached = await this.loadSnapshot(currentUserId);
-    if (!cached) return fallback;
+    const cached = (await this.loadSnapshot(currentUserId)) ?? {};
 
+    // Per-bucket merge: during the rollout from the old weekly/monthly schema
+    // the snapshot may still lack the new fields. In that case use the
+    // client-computed fallback instead of an empty array.
     return {
-      daily: {
-        top: cached.daily.top,
-        current:
-          cached.daily.top.find((entry) => entry.isCurrent) ??
-          fallback.daily.current,
-      },
-      weekly: {
-        top: cached.weekly.top,
-        current:
-          cached.weekly.top.find((entry) => entry.isCurrent) ??
-          fallback.weekly.current,
-      },
-      monthly: {
-        top: cached.monthly.top,
-        current:
-          cached.monthly.top.find((entry) => entry.isCurrent) ??
-          fallback.monthly.current,
-      },
+      daily: this.mergeBucket(cached.daily, fallback.daily),
+      last7: this.mergeBucket(cached.last7, fallback.last7),
+      last30: this.mergeBucket(cached.last30, fallback.last30),
+    };
+  }
+
+  private mergeBucket(
+    cached: LeaderboardBucket | undefined,
+    fallback: LeaderboardBucket
+  ): LeaderboardBucket {
+    if (!cached) return fallback;
+    return {
+      top: cached.top,
+      current: cached.top.find((entry) => entry.isCurrent) ?? fallback.current,
     };
   }
 
   private async loadSnapshot(
     currentUserId: string | null
-  ): Promise<LeaderboardData | null> {
+  ): Promise<CachedBuckets | null> {
     if (!this.firestore) return null;
 
     const snap = await getDoc(doc(this.firestore, 'leaderboards', 'current'));
@@ -110,8 +111,8 @@ export class LeaderboardService {
     const periods = data?.periods;
     if (!periods) return null;
 
-    const mapTop = (arr: Array<{ alias: string; reps: number }> | undefined) =>
-      (Array.isArray(arr) ? arr : []).slice(0, TOP_N).map((entry, i) => ({
+    const mapTop = (arr: Array<{ alias: string; reps: number }>) =>
+      arr.slice(0, TOP_N).map((entry, i) => ({
         alias: entry.alias,
         reps: entry.reps,
         rank: i + 1,
@@ -119,21 +120,30 @@ export class LeaderboardService {
           !!currentUserId && entry.alias === this.toAlias(currentUserId),
       }));
 
-    return {
-      daily: { top: mapTop(periods.daily), current: null },
-      weekly: { top: mapTop(periods.weekly), current: null },
-      monthly: { top: mapTop(periods.monthly), current: null },
-    };
+    // Only include keys that are actually present on the snapshot. An
+    // explicit empty array is preserved (server says "no entries"); a
+    // missing key drops out so the merger uses the client-side fallback.
+    const result: CachedBuckets = {};
+    if (Array.isArray(periods.daily)) {
+      result.daily = { top: mapTop(periods.daily), current: null };
+    }
+    if (Array.isArray(periods.last7)) {
+      result.last7 = { top: mapTop(periods.last7), current: null };
+    }
+    if (Array.isArray(periods.last30)) {
+      result.last30 = { top: mapTop(periods.last30), current: null };
+    }
+    return result;
   }
 
-  private async fetchRows(startIso: string): Promise<PushupRow[]> {
+  private async fetchRows(startKey: string): Promise<PushupRow[]> {
     if (!this.firestore) return [];
 
     try {
       const ref = collection(this.firestore, 'pushups');
       const q = query(
         ref,
-        where('timestamp', '>=', startIso),
+        where('timestamp', '>=', startKey),
         orderBy('timestamp', 'desc')
       );
       const snap = await getDocs(q);
@@ -159,12 +169,20 @@ export class LeaderboardService {
     period: LeaderboardPeriod,
     currentUserId: string | null
   ): LeaderboardBucket {
-    const bucket = this.bucketOf(new Date(), period);
+    // Window keys are computed in Europe/Berlin to match the server-side
+    // bucketing (`berlinDateParts`). Comparing with UTC days would shift
+    // entries logged near local midnight by ±1 day vs the snapshot.
+    const today = this.berlinDateKey(new Date());
+    const windowStart =
+      period === 'daily'
+        ? today
+        : this.shiftBerlinDate(today, period === 'last7' ? -6 : -29);
+
     const totals = new Map<string, number>();
 
     for (const row of rows) {
-      const key = this.bucketOf(new Date(row.timestamp), period);
-      if (key !== bucket) continue;
+      const key = this.berlinDateKey(new Date(row.timestamp));
+      if (key < windowStart || key > today) continue;
       totals.set(row.userId, (totals.get(row.userId) ?? 0) + row.reps);
     }
 
@@ -196,32 +214,33 @@ export class LeaderboardService {
     return `${first}...${last}`;
   }
 
-  private startOfMonthIso(): string {
-    const now = new Date();
-    const from = new Date(
-      Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), 1, 0, 0, 0)
-    );
-    return from.toISOString();
+  /**
+   * Lower bound for the Firestore `timestamp` query — date-only `YYYY-MM-DD`
+   * to lexicographically match any ISO timestamp format the entries may use
+   * (`...Z`, `...+02:00`, with or without milliseconds). The window reaches
+   * back 30 days from today's Berlin date for a one-day safety buffer.
+   */
+  private last30StartDateKey(): string {
+    return this.shiftBerlinDate(this.berlinDateKey(new Date()), -30);
   }
 
-  private bucketOf(date: Date, period: LeaderboardPeriod): string {
-    const yyyy = date.getUTCFullYear();
-    const mm = String(date.getUTCMonth() + 1).padStart(2, '0');
-    const dd = String(date.getUTCDate()).padStart(2, '0');
-
-    if (period === 'daily') return `${yyyy}-${mm}-${dd}`;
-    if (period === 'monthly') return `${yyyy}-${mm}`;
-
-    const week = this.isoWeek(date);
-    return `${yyyy}-W${String(week).padStart(2, '0')}`;
+  private berlinDateKey(date: Date): string {
+    // `en-CA` formats as `YYYY-MM-DD`, which is the canonical ISO date form
+    // and lexicographically sortable.
+    return new Intl.DateTimeFormat('en-CA', {
+      timeZone: TZ,
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+    }).format(date);
   }
 
-  private isoWeek(date: Date): number {
-    const d = new Date(
-      Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate())
-    );
-    d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7));
-    const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
-    return Math.ceil(((d.getTime() - yearStart.getTime()) / 86400000 + 1) / 7);
+  private shiftBerlinDate(yyyymmdd: string, deltaDays: number): string {
+    const [y, m, d] = yyyymmdd.split('-').map(Number);
+    // Anchor at 10:00 UTC (~11:00 / 12:00 Berlin) to stay far from midnight
+    // so DST transitions can't push the calendar day off-by-one when we
+    // shift by whole-day increments.
+    const anchor = Date.UTC(y, m - 1, d, 10, 0, 0);
+    return this.berlinDateKey(new Date(anchor + deltaDays * 86_400_000));
   }
 }

@@ -10,6 +10,7 @@ const LOCALES = ['de', 'en'];
 const staticRoutes = [
   { path: '/', changefreq: 'weekly', priority: '1.0' },
   { path: '/blog', changefreq: 'weekly', priority: '0.9' },
+  { path: '/training-plans', changefreq: 'weekly', priority: '0.9' },
   { path: '/leaderboard', changefreq: 'daily', priority: '0.7' },
   { path: '/impressum', changefreq: 'yearly', priority: '0.3' },
   { path: '/datenschutz', changefreq: 'yearly', priority: '0.3' },
@@ -50,12 +51,19 @@ function buildUrl({ path, changefreq, priority, locale, lastmod, alternates }) {
 
   const alts = alternates ?? LOCALES.map((lang) => ({ lang, path: suffix }));
 
-  const hreflangLinks = alts
-    .map(
+  // x-default points at the German variant: pushup-stats.de is a German
+  // domain and the SSR locale-redirect picks `de` whenever Accept-Language
+  // doesn't explicitly request English. Search engines use x-default for
+  // unmatched/unknown locales, so it must mirror the runtime fallback.
+  const defaultAlt = alts.find((a) => a.lang === 'de') ?? alts[0];
+
+  const hreflangLinks = [
+    ...alts.map(
       ({ lang, path: altPath }) =>
         `    <xhtml:link rel="alternate" hreflang="${lang}" href="${BASE_URL}/${lang}${altPath}"/>`
-    )
-    .join('\n');
+    ),
+    `    <xhtml:link rel="alternate" hreflang="x-default" href="${BASE_URL}/${defaultAlt.lang}${defaultAlt.path}"/>`,
+  ].join('\n');
 
   const lastmodTag = lastmod ? `\n    <lastmod>${lastmod}</lastmod>` : '';
 
@@ -65,6 +73,48 @@ function buildUrl({ path, changefreq, priority, locale, lastmod, alternates }) {
     <priority>${priority}</priority>
 ${hreflangLinks}
   </url>`;
+}
+
+function extractTrainingPlanSlugs(source) {
+  // Match `id: '<id>'` immediately followed by `slug: '<slug>'` to scope
+  // matches to TRAINING_PLANS catalog entries (other files contain `slug:`
+  // but only catalog entries pair it with `id:`).
+  const slugs = [];
+  const blockRegex = /\bid:\s*'[^']+',\s*\n\s*slug:\s*'([^']+)'/g;
+  let match;
+  while ((match = blockRegex.exec(source)) !== null) {
+    slugs.push(match[1]);
+  }
+  return slugs;
+}
+
+function readTrainingPlanSlugs() {
+  const catalogPath = resolve(
+    ROOT,
+    'libs/stats/src/lib/models/training-plan.catalog.ts'
+  );
+  let source;
+  try {
+    source = readFileSync(catalogPath, 'utf-8');
+  } catch (err) {
+    console.error(`Failed to read training-plan.catalog.ts: ${err.message}`);
+    return [];
+  }
+  const slugs = extractTrainingPlanSlugs(source);
+  if (slugs.length === 0) {
+    console.warn(
+      'No training plans found - verify training-plan.catalog.ts format'
+    );
+  }
+  return slugs;
+}
+
+function buildTrainingPlanRoutes(slugs) {
+  return slugs.map((slug) => ({
+    path: `/training-plans/${slug}`,
+    changefreq: 'monthly',
+    priority: '0.8',
+  }));
 }
 
 function buildBlogRoutes(posts) {
@@ -97,9 +147,10 @@ function buildBlogRoutes(posts) {
   });
 }
 
-function generateSitemap(posts) {
+function generateSitemap(posts, planSlugs = []) {
   const blogRoutes = buildBlogRoutes(posts);
-  const allRoutes = [...staticRoutes, ...blogRoutes];
+  const planRoutes = buildTrainingPlanRoutes(planSlugs);
+  const allRoutes = [...staticRoutes, ...planRoutes, ...blogRoutes];
   return `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
@@ -110,10 +161,11 @@ ${allRoutes.map(buildUrl).join('\n')}
 
 function main() {
   const posts = readBlogPosts();
-  const xml = generateSitemap(posts);
+  const planSlugs = readTrainingPlanSlugs();
+  const xml = generateSitemap(posts, planSlugs);
   const outPath = resolve(ROOT, 'web/public/sitemap.xml');
   writeFileSync(outPath, xml, 'utf-8');
-  const total = staticRoutes.length + posts.length;
+  const total = staticRoutes.length + planSlugs.length + posts.length;
   console.log(`sitemap.xml written (${total} URLs)`);
 }
 
@@ -124,7 +176,9 @@ if (require.main === module) {
 module.exports = {
   staticRoutes,
   extractBlogPosts,
+  extractTrainingPlanSlugs,
   buildUrl,
   buildBlogRoutes,
+  buildTrainingPlanRoutes,
   generateSitemap,
 };

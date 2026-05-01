@@ -12,6 +12,7 @@ jobs:
   automerge:
     if: github.actor == 'dependabot[bot]' && github.event.pull_request.draft == false
     runs-on: ubuntu-latest
+    timeout-minutes: 20
 
     steps:
       - name: Dependabot-Metadaten laden

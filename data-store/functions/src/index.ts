@@ -8,6 +8,7 @@ import { logger } from 'firebase-functions';
 import { defineSecret } from 'firebase-functions/params';
 import { onDocumentWritten } from 'firebase-functions/v2/firestore';
 import { HttpsError, onCall } from 'firebase-functions/v2/https';
+import { onRequest } from 'firebase-functions/v2/https';
 import { onSchedule } from 'firebase-functions/v2/scheduler';
 import webpush from 'web-push';
 import {
@@ -19,14 +20,24 @@ import {
 import { parseRecaptchaResponse } from './authentication';
 
 // Module imports
-import { berlinDateParts, isoWeekFromYmd } from './datetime';
-import { getMonthStartForQuery, rankEntries } from './leaderboard';
+import { berlinDateParts } from './datetime';
+import { getLeaderboardQueryStartDate, rankEntries } from './leaderboard';
 import {
   FALLBACK_QUOTES_DE,
   FALLBACK_QUOTES_EN,
   QUOTE_CACHE_HOURS,
 } from './motivation';
-import { UserProfile } from './profile';
+import {
+  buildPublicProfile,
+  isValidUid,
+  type UserConfigForPublicProfile,
+  type UserStatsForPublicProfile,
+  UserProfile,
+} from './profile';
+// `renderProfileOg` lives behind a dynamic `import()` call inside the
+// `ogProfile` handler below — pulling satori + @resvg/resvg-wasm (~15 MB
+// + WASM init) eagerly here would slow cold-start for every unrelated
+// function in this bundle (leaderboards, motivation, push, …).
 import type { ReminderConfig } from './push';
 import {
   buildNotificationPayload,
@@ -91,12 +102,11 @@ async function createRecaptchaAssessment({
 async function rebuildLeaderboardsCore() {
   const now = new Date();
   const today = berlinDateParts(now);
-  const week = isoWeekFromYmd(today.year, today.month, today.day);
-  const monthStart = getMonthStartForQuery(today);
+  const queryStart = getLeaderboardQueryStartDate(today);
 
   const snap = await db
     .collection('pushups')
-    .where('timestamp', '>=', monthStart)
+    .where('timestamp', '>=', queryStart)
     .orderBy('timestamp', 'desc')
     .get();
 
@@ -120,31 +130,30 @@ async function rebuildLeaderboardsCore() {
     }
   }
 
-  const dailyKey = today.isoDate;
-  const weeklyKey = `${week.year}-W${String(week.week).padStart(2, '0')}`;
-  const monthlyKey = `${today.year}-${String(today.month).padStart(2, '0')}`;
+  // Rolling windows always end on today's Berlin date, so the same isoDate
+  // serves as the cache key for daily, last7, and last30.
+  const todayKey = today.isoDate;
 
-  const daily = rankEntries(rows, 'daily', dailyKey, userProfiles);
-  const weekly = rankEntries(rows, 'weekly', weeklyKey, userProfiles);
-  const monthly = rankEntries(rows, 'monthly', monthlyKey, userProfiles);
+  const daily = rankEntries(rows, 'daily', todayKey, userProfiles);
+  const last7 = rankEntries(rows, 'last7', todayKey, userProfiles);
+  const last30 = rankEntries(rows, 'last30', todayKey, userProfiles);
 
+  // Overwrite (no merge) so stale weekly/monthly fields from the previous
+  // schema get evicted instead of lingering in the document.
   await db
     .collection('leaderboards')
     .doc('current')
-    .set(
-      {
-        updatedAt: admin.firestore.FieldValue.serverTimestamp(),
-        timezone: TZ,
-        keys: { daily: dailyKey, weekly: weeklyKey, monthly: monthlyKey },
-        periods: { daily, weekly, monthly },
-      },
-      { merge: true }
-    );
+    .set({
+      updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+      timezone: TZ,
+      keys: { daily: todayKey, last7: todayKey, last30: todayKey },
+      periods: { daily, last7, last30 },
+    });
 
   logger.info('Leaderboards rebuilt', {
     daily: daily.length,
-    weekly: weekly.length,
-    monthly: monthly.length,
+    last7: last7.length,
+    last30: last30.length,
   });
 }
 
@@ -620,6 +629,109 @@ export const refreshLeaderboardsOnPushupWrite = onDocumentWritten(
   },
   async () => {
     await rebuildLeaderboardsCore();
+  }
+);
+
+// ─── Shared lookup ────────────────────────────────────────────────────────────
+// Both `getPublicProfile` (callable) and `ogProfile` (HTTP) need the same
+// validation → Firestore reads → projection chain with identical privacy
+// semantics. Centralising the lookup here keeps the 404-parity contract
+// from drifting between the two wrappers and matches the project's "trigger
+// functions in `index.ts` are thin wrappers" rule.
+async function fetchPublicProfileProjection(uid: string) {
+  if (!isValidUid(uid)) return null;
+  const db = admin.firestore();
+  const [cfgSnap, statsSnap] = await Promise.all([
+    db.collection('userConfigs').doc(uid).get(),
+    db.collection('userStats').doc(uid).get(),
+  ]);
+  const config = cfgSnap.exists
+    ? (cfgSnap.data() as UserConfigForPublicProfile)
+    : null;
+  const stats = statsSnap.exists
+    ? (statsSnap.data() as UserStatsForPublicProfile)
+    : null;
+  return buildPublicProfile(uid, config, stats);
+}
+
+// ─── getPublicProfile (anonymous-callable, opt-in only) ──────────────────────
+// Returns a sanitized projection of `userConfigs/{uid}` + `userStats/{uid}`
+// for users who explicitly set `ui.publicProfile = true`. Anyone else returns
+// `not-found` so existence of a private user can't be probed by walking UIDs.
+//
+// This callable runs UNAUTHENTICATED on purpose — it backs the `/u/:uid`
+// public route and the dynamic OG image endpoint. Do NOT add side effects
+// here; only sanctioned read-only projection.
+
+export const getPublicProfile = onCall(
+  { region: 'europe-west3', invoker: 'public' },
+  async (request) => {
+    const uid = String(request.data?.uid ?? '').trim();
+    const projection = await fetchPublicProfileProjection(uid);
+    if (!projection) {
+      // Same response for "malformed UID", "user does not exist", and
+      // "user is private" so an attacker can't enumerate accounts.
+      throw new HttpsError('not-found', 'Profile not available');
+    }
+    return projection;
+  }
+);
+
+// ─── ogProfile (HTTP, dynamic OpenGraph card) ────────────────────────────────
+// `GET /ogProfile?uid=<uid>&lang=<de|en>` — renders a 1200×630 PNG via
+// satori + resvg for the profile's current stats. Returns a 404 with the
+// plain-text body `Profile not available` for users who haven't opted in
+// (or for malformed UIDs), matching `getPublicProfile`'s privacy guarantee.
+//
+// Cache headers let Firebase Hosting / the function's own CDN do most of
+// the work — full re-render is amortised across hours per user.
+
+export const ogProfile = onRequest(
+  {
+    region: 'europe-west3',
+    invoker: 'public',
+    cors: true,
+    memory: '512MiB',
+    timeoutSeconds: 30,
+  },
+  async (req, res) => {
+    const uidRaw = String(req.query['uid'] ?? '').trim();
+    const lang = String(req.query['lang'] ?? 'de').toLowerCase();
+    const locale = lang === 'en' ? 'en' : 'de';
+
+    try {
+      const projection = await fetchPublicProfileProjection(uidRaw);
+      if (!projection) {
+        // Same fingerprint as a non-existent UID. Cache the 404 briefly so
+        // a hot-linked card from a private user doesn't hammer Firestore.
+        res.setHeader('Cache-Control', 'public, max-age=60, s-maxage=300');
+        res.status(404).send('Profile not available');
+        return;
+      }
+
+      // Lazy-load the renderer so satori + @resvg/resvg-wasm only initialise
+      // on the first OG request (and stay cached in module scope across warm
+      // invocations) — keeps cold-start of unrelated functions in this
+      // bundle unaffected by the heavy renderer deps.
+      const { renderProfileOg } = await import('./profile/og-render');
+      const png = await renderProfileOg(projection, locale);
+      res.setHeader('Content-Type', 'image/png');
+      res.setHeader('Content-Length', String(png.byteLength));
+      // 5 min browser, 1 h CDN, 1 day stale-while-revalidate so a slow
+      // delta-aggregation pipeline behind userStats doesn't stall a request.
+      res.setHeader(
+        'Cache-Control',
+        'public, max-age=300, s-maxage=3600, stale-while-revalidate=86400'
+      );
+      res.status(200).send(png);
+    } catch (err) {
+      Sentry.captureException(err);
+      logger.error('ogProfile render failed', {
+        uid: uidRaw,
+        err: err instanceof Error ? err.message : String(err),
+      });
+      res.status(500).send('OG render failed');
+    }
   }
 );
 

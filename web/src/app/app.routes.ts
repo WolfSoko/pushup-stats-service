@@ -125,11 +125,22 @@ export const appRoutes: Routes = [
     path: 'leaderboard',
     data: {
       seoTitle: $localize`:@@seo.leaderboard.title:Bestenliste – Pushup Tracker`,
-      seoDescription: $localize`:@@seo.leaderboard.description:Öffentliche Bestenliste für tägliche, wöchentliche und monatliche Pushup-Reps.`,
+      seoDescription: $localize`:@@seo.leaderboard.description:Öffentliche Bestenliste mit Top-Reps für heute, die letzten 7 Tage und die letzten 30 Tage.`,
     },
     loadComponent: () =>
       import('./leaderboard/shell/leaderboard-page.component').then(
         (m) => m.LeaderboardPageComponent
+      ),
+  },
+  {
+    path: 'u/:uid',
+    data: {
+      seoTitle: $localize`:@@seo.publicProfile.title:Profil – Pushup Tracker`,
+      seoDescription: $localize`:@@seo.publicProfile.description:Öffentliches Pushup-Profil mit Reps, Streak und Bestleistungen.`,
+    },
+    loadComponent: () =>
+      import('./public-profile/public-profile-page.component').then(
+        (m) => m.PublicProfilePageComponent
       ),
   },
   {

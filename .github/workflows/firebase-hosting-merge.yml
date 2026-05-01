@@ -16,6 +16,7 @@ env:
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v6
 
@@ -52,7 +53,8 @@ jobs:
       - name: Build Cloud Functions
         run: pnpm nx run cloud-functions:build
       - name: Upload source maps to Sentry
-        if: env.SENTRY_AUTH_TOKEN != ''
+        # Scope the secret to this step only — script no-ops if the env is empty,
+        # so we don't need an explicit `if:` guard.
         env:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
         run: pnpm sentry:sourcemaps

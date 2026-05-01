@@ -1,8 +1,10 @@
 const {
   staticRoutes,
   extractBlogPosts,
+  extractTrainingPlanSlugs,
   buildUrl,
   buildBlogRoutes,
+  buildTrainingPlanRoutes,
   generateSitemap,
 } = require('./generate-sitemap');
 
@@ -19,9 +21,62 @@ describe('generate-sitemap', () => {
       expect(paths).toEqual([
         '/',
         '/blog',
+        '/training-plans',
         '/leaderboard',
         '/impressum',
         '/datenschutz',
+      ]);
+    });
+  });
+
+  describe('extractTrainingPlanSlugs', () => {
+    it('parses slug from TRAINING_PLANS catalog entries', () => {
+      const source = `
+        export const TRAINING_PLANS = [
+          {
+            id: 'recruit-6w-v1',
+            slug: 'recruit-6w',
+            title: 'x',
+          },
+          {
+            id: 'challenge-30d-v1',
+            slug: 'challenge-30d',
+            title: 'y',
+          },
+        ];
+      `;
+      expect(extractTrainingPlanSlugs(source)).toEqual([
+        'recruit-6w',
+        'challenge-30d',
+      ]);
+    });
+
+    it('ignores `slug:` occurrences not paired with an `id:` line', () => {
+      const source = `
+        const day = { slug: 'not-a-plan' };
+        const plan = {
+          id: 'foo-v1',
+          slug: 'foo',
+        };
+      `;
+      expect(extractTrainingPlanSlugs(source)).toEqual(['foo']);
+    });
+  });
+
+  describe('buildTrainingPlanRoutes', () => {
+    it('emits one /training-plans/<slug> route per plan with bilingual alternates', () => {
+      const routes = buildTrainingPlanRoutes(['recruit-6w', 'challenge-30d']);
+      expect(routes).toEqual([
+        {
+          path: '/training-plans/recruit-6w',
+          changefreq: 'monthly',
+          priority: '0.8',
+        },
+        {
+          path: '/training-plans/challenge-30d',
+          changefreq: 'monthly',
+          priority: '0.8',
+        },
       ]);
     });
   });
@@ -120,6 +175,33 @@ describe('generate-sitemap', () => {
         '<xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.de/en/blog/pushup-progression"/>'
       );
     });
+
+    it('emits hreflang="x-default" pointing at the DE variant', () => {
+      const xml = buildUrl({
+        path: '/blog',
+        changefreq: 'weekly',
+        priority: '0.9',
+      });
+      expect(xml).toContain(
+        '<xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.de/de/blog"/>'
+      );
+    });
+
+    it('honors custom alternates when emitting x-default for blog pairings', () => {
+      const xml = buildUrl({
+        path: '/blog/liegestuetze-steigern',
+        changefreq: 'monthly',
+        priority: '0.8',
+        locale: 'de',
+        alternates: [
+          { lang: 'de', path: '/blog/liegestuetze-steigern' },
+          { lang: 'en', path: '/blog/pushup-progression' },
+        ],
+      });
+      expect(xml).toContain(
+        '<xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.de/de/blog/liegestuetze-steigern"/>'
+      );
+    });
   });
 
   describe('buildBlogRoutes', () => {
@@ -205,6 +287,22 @@ describe('generate-sitemap', () => {
       expect(xml).not.toContain('/de/register');
       expect(xml).not.toContain('/en/login');
       expect(xml).not.toContain('/en/register');
+    });
+
+    it('emits /training-plans list and per-plan detail entries with bilingual alternates', () => {
+      const xml = generateSitemap([], ['recruit-6w', 'challenge-30d']);
+      expect(xml).toContain(
+        '<loc>https://pushup-stats.de/de/training-plans</loc>'
+      );
+      expect(xml).toContain(
+        '<loc>https://pushup-stats.de/de/training-plans/recruit-6w</loc>'
+      );
+      expect(xml).toContain(
+        '<loc>https://pushup-stats.de/de/training-plans/challenge-30d</loc>'
+      );
+      expect(xml).toContain(
+        '<xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.de/en/training-plans/recruit-6w"/>'
+      );
     });
   });
 });

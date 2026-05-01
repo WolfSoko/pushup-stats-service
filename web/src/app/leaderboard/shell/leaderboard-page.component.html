@@ -5,7 +5,7 @@
         >Bestenliste</mat-card-title
       >
       <mat-card-subtitle i18n="@@leaderboard.page.subtitle"
-        >Daily · Weekly · Monthly</mat-card-subtitle
+        >Heute · Letzte 7 Tage · Letzte 30 Tage</mat-card-subtitle
       >
     </mat-card-header>
     <mat-card-content>
@@ -26,20 +26,20 @@
         <button
           mat-stroked-button
           type="button"
-          (click)="period.set('weekly')"
-          [class.active]="period() === 'weekly'"
-          i18n="@@landing.leaderboard.weekly"
+          (click)="period.set('last7')"
+          [class.active]="period() === 'last7'"
+          i18n="@@landing.leaderboard.last7"
         >
-          Woche
+          Letzte 7 Tage
         </button>
         <button
           mat-stroked-button
           type="button"
-          (click)="period.set('monthly')"
-          [class.active]="period() === 'monthly'"
-          i18n="@@landing.leaderboard.monthly"
+          (click)="period.set('last30')"
+          [class.active]="period() === 'last30'"
+          i18n="@@landing.leaderboard.last30"
         >
-          Monat
+          Letzte 30 Tage
         </button>
       </div>
 
