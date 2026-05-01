@@ -193,13 +193,96 @@
 
   <section class="feature-grid">
     <mat-card class="feature-card feature-card--visual">
-      <img
-        class="feature-visual"
-        src="assets/landing-multiset-preview.svg"
-        alt="Vorschau Multi-Set Tracking mit drei Sätzen 12, 10, 8"
-        i18n-alt="@@landing.feature.multiset.alt"
-        loading="lazy"
-      />
+      <div class="feature-visual feature-visual--multiset" aria-hidden="true">
+        <svg viewBox="0 0 320 160" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="lp-set-bar" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" class="lp-bar-from" />
+              <stop offset="100%" class="lp-bar-to" />
+            </linearGradient>
+          </defs>
+          <rect width="320" height="160" rx="14" class="lp-bg" />
+          <rect
+            x="14"
+            y="14"
+            width="190"
+            height="132"
+            rx="10"
+            class="lp-card"
+          />
+          <text x="28" y="36" class="lp-label">Set 1</text>
+          <rect
+            x="28"
+            y="44"
+            width="138"
+            height="10"
+            rx="5"
+            class="lp-bar-bg"
+          />
+          <rect
+            x="28"
+            y="44"
+            width="120"
+            height="10"
+            rx="5"
+            fill="url(#lp-set-bar)"
+          />
+          <text x="172" y="53" class="lp-reps">12</text>
+          <text x="28" y="74" class="lp-label">Set 2</text>
+          <rect
+            x="28"
+            y="82"
+            width="138"
+            height="10"
+            rx="5"
+            class="lp-bar-bg"
+          />
+          <rect
+            x="28"
+            y="82"
+            width="100"
+            height="10"
+            rx="5"
+            fill="url(#lp-set-bar)"
+          />
+          <text x="172" y="91" class="lp-reps">10</text>
+          <text x="28" y="112" class="lp-label">Set 3</text>
+          <rect
+            x="28"
+            y="120"
+            width="138"
+            height="10"
+            rx="5"
+            class="lp-bar-bg"
+          />
+          <rect
+            x="28"
+            y="120"
+            width="80"
+            height="10"
+            rx="5"
+            fill="url(#lp-set-bar)"
+          />
+          <text x="172" y="129" class="lp-reps">8</text>
+          <rect
+            x="216"
+            y="14"
+            width="90"
+            height="132"
+            rx="10"
+            class="lp-card"
+          />
+          <text x="261" y="56" text-anchor="middle" class="lp-total-label">
+            Total
+          </text>
+          <text x="261" y="92" text-anchor="middle" class="lp-total-value">
+            30
+          </text>
+          <text x="261" y="116" text-anchor="middle" class="lp-label">
+            Reps
+          </text>
+        </svg>
+      </div>
       <mat-card-header class="key-features-header">
         <mat-icon aria-hidden="true">layers</mat-icon>
         <mat-card-title i18n="@@landing.feature.multiset.title"
@@ -214,13 +297,61 @@
     </mat-card>
 
     <mat-card class="feature-card feature-card--visual">
-      <img
-        class="feature-visual"
-        src="assets/landing-charts-preview.svg"
-        alt="Vorschau Trend-Charts und Verteilung nach Pushup-Typ"
-        i18n-alt="@@landing.feature.analytics.alt"
-        loading="lazy"
-      />
+      <div class="feature-visual feature-visual--charts" aria-hidden="true">
+        <svg viewBox="0 0 320 160" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="lp-chart-fill" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" class="lp-area-from" />
+              <stop offset="100%" class="lp-area-to" />
+            </linearGradient>
+          </defs>
+          <rect width="320" height="160" rx="14" class="lp-bg" />
+          <g transform="translate(16, 16)">
+            <line x1="0" y1="20" x2="200" y2="20" class="lp-grid" />
+            <line x1="0" y1="55" x2="200" y2="55" class="lp-grid" />
+            <line x1="0" y1="90" x2="200" y2="90" class="lp-grid" />
+            <path
+              class="lp-area"
+              d="M0,95 L25,80 L50,82 L75,55 L100,62 L125,40 L150,48 L175,25 L200,30 L200,120 L0,120 Z"
+              fill="url(#lp-chart-fill)"
+            />
+            <polyline
+              class="lp-line"
+              points="0,95 25,80 50,82 75,55 100,62 125,40 150,48 175,25 200,30"
+            />
+            <circle cx="200" cy="30" r="4" class="lp-dot" />
+            <line x1="0" y1="120" x2="200" y2="120" class="lp-axis" />
+            <line x1="0" y1="120" x2="0" y2="124" class="lp-axis" />
+            <line x1="33" y1="120" x2="33" y2="124" class="lp-axis" />
+            <line x1="66" y1="120" x2="66" y2="124" class="lp-axis" />
+            <line x1="100" y1="120" x2="100" y2="124" class="lp-axis" />
+            <line x1="133" y1="120" x2="133" y2="124" class="lp-axis" />
+            <line x1="166" y1="120" x2="166" y2="124" class="lp-axis" />
+            <line x1="200" y1="120" x2="200" y2="124" class="lp-axis" />
+          </g>
+          <g transform="translate(258, 70)">
+            <circle r="28" class="lp-pie-track" />
+            <circle
+              r="28"
+              class="lp-pie-1"
+              stroke-dasharray="105 176"
+              transform="rotate(-90)"
+            />
+            <circle
+              r="28"
+              class="lp-pie-2"
+              stroke-dasharray="44 176"
+              transform="rotate(125)"
+            />
+            <circle
+              r="28"
+              class="lp-pie-3"
+              stroke-dasharray="26 176"
+              transform="rotate(215)"
+            />
+          </g>
+        </svg>
+      </div>
       <mat-card-header class="key-features-header">
         <mat-icon aria-hidden="true">insights</mat-icon>
         <mat-card-title i18n="@@landing.feature.analytics.title"
@@ -234,13 +365,97 @@
     </mat-card>
 
     <mat-card class="feature-card feature-card--visual">
-      <img
-        class="feature-visual"
-        src="assets/landing-goals-preview.svg"
-        alt="Vorschau Tages-, Wochen- und Monatsziel mit Streak-Anzeige"
-        i18n-alt="@@landing.feature.goals.alt"
-        loading="lazy"
-      />
+      <div class="feature-visual feature-visual--goals" aria-hidden="true">
+        <svg viewBox="0 0 320 160" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="lp-goal-day" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#5DDC96" />
+              <stop offset="100%" stop-color="#34C778" />
+            </linearGradient>
+            <linearGradient id="lp-goal-week" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#3460C2" />
+              <stop offset="100%" stop-color="#7EA5FF" />
+            </linearGradient>
+            <linearGradient id="lp-goal-month" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#FBBF24" />
+              <stop offset="100%" stop-color="#FCD34D" />
+            </linearGradient>
+          </defs>
+          <rect width="320" height="160" rx="14" class="lp-bg" />
+          <g transform="translate(16, 18)">
+            <text x="200" y="10" text-anchor="end" class="lp-row-value">
+              42 / 50
+            </text>
+            <rect
+              x="0"
+              y="14"
+              width="200"
+              height="9"
+              rx="4"
+              class="lp-row-bg"
+            />
+            <rect
+              x="0"
+              y="14"
+              width="168"
+              height="9"
+              rx="4"
+              fill="url(#lp-goal-day)"
+            />
+            <text x="200" y="44" text-anchor="end" class="lp-row-value">
+              280 / 350
+            </text>
+            <rect
+              x="0"
+              y="48"
+              width="200"
+              height="9"
+              rx="4"
+              class="lp-row-bg"
+            />
+            <rect
+              x="0"
+              y="48"
+              width="160"
+              height="9"
+              rx="4"
+              fill="url(#lp-goal-week)"
+            />
+            <text x="200" y="78" text-anchor="end" class="lp-row-value">
+              920 / 1500
+            </text>
+            <rect
+              x="0"
+              y="82"
+              width="200"
+              height="9"
+              rx="4"
+              class="lp-row-bg"
+            />
+            <rect
+              x="0"
+              y="82"
+              width="123"
+              height="9"
+              rx="4"
+              fill="url(#lp-goal-month)"
+            />
+          </g>
+          <g transform="translate(228, 18)">
+            <rect x="0" y="0" width="76" height="92" rx="10" class="lp-card" />
+            <path
+              class="lp-flame"
+              d="M38 14c-3 6-12 10-12 22 0 9 6 14 12 14s12-5 12-14c0-7-3-11-7-15-2 3-3 5-5 5-1-3 1-7 0-12z"
+            />
+            <text x="38" y="72" text-anchor="middle" class="lp-streak-num">
+              17
+            </text>
+            <text x="38" y="86" text-anchor="middle" class="lp-streak-label">
+              Streak
+            </text>
+          </g>
+        </svg>
+      </div>
       <mat-card-header class="key-features-header">
         <mat-icon aria-hidden="true">flag</mat-icon>
         <mat-card-title i18n="@@landing.feature.goals.title"
@@ -255,13 +470,40 @@
     </mat-card>
 
     <mat-card class="feature-card feature-card--visual">
-      <img
-        class="feature-visual"
-        src="assets/landing-heatmap-preview.svg"
-        alt="Vorschau Heatmap-Kalender mit Trainingsintensität pro Tag"
-        i18n-alt="@@landing.feature.heatmap.alt"
-        loading="lazy"
-      />
+      <div class="feature-visual feature-visual--heatmap" aria-hidden="true">
+        <svg viewBox="0 0 320 160" xmlns="http://www.w3.org/2000/svg">
+          <rect width="320" height="160" rx="14" class="lp-bg" />
+          <g transform="translate(35, 14)">
+            @for (week of heatmapWeeks; track week.x) {
+              @for (day of week.days; track day.y) {
+                <rect
+                  [attr.x]="week.x"
+                  [attr.y]="day.y"
+                  width="12"
+                  height="12"
+                  rx="2"
+                  [attr.class]="'lp-day-' + day.level"
+                />
+              }
+            }
+          </g>
+          <g transform="translate(122, 130)">
+            <rect
+              x="0"
+              y="0"
+              width="11"
+              height="11"
+              rx="2"
+              class="lp-day-empty"
+            />
+            <rect x="13" y="0" width="11" height="11" rx="2" class="lp-day-1" />
+            <rect x="26" y="0" width="11" height="11" rx="2" class="lp-day-2" />
+            <rect x="39" y="0" width="11" height="11" rx="2" class="lp-day-3" />
+            <rect x="52" y="0" width="11" height="11" rx="2" class="lp-day-4" />
+            <rect x="65" y="0" width="11" height="11" rx="2" class="lp-day-5" />
+          </g>
+        </svg>
+      </div>
       <mat-card-header class="key-features-header">
         <mat-icon aria-hidden="true">grid_on</mat-icon>
         <mat-card-title i18n="@@landing.feature.heatmap.title"

@@ -1850,15 +1850,6 @@ Active:         </target>
         <target>Charts, trends &amp; pushup types</target>
             </segment>
         </unit>
-    <unit id="landing.feature.analytics.alt">
-      <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
-            </notes>
-      <segment state="translated">
-        <source>Vorschau Trend-Charts und Verteilung nach Pushup-Typ</source>
-        <target>Preview of trend charts and pushup type breakdown</target>
-            </segment>
-        </unit>
     <unit id="landing.feature.multiset.title">
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
@@ -1875,15 +1866,6 @@ Active:         </target>
       <segment state="translated">
         <source>Erfasse jeden Satz einzeln – z.&#x202F;B. 12&#xA0;+&#xA0;10&#xA0;+&#xA0;8. Die App summiert automatisch und zeigt deine durchschnittliche Set-Größe.</source>
         <target>Log every set individually – e.g. 12&#xA0;+&#xA0;10&#xA0;+&#xA0;8. The app sums them up automatically and shows your average set size.</target>
-            </segment>
-        </unit>
-    <unit id="landing.feature.multiset.alt">
-      <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
-            </notes>
-      <segment state="translated">
-        <source>Vorschau Multi-Set Tracking mit drei Sätzen 12, 10, 8</source>
-        <target>Preview of multi-set tracking with three sets 12, 10, 8</target>
             </segment>
         </unit>
     <unit id="landing.feature.goals.title">
@@ -1904,15 +1886,6 @@ Active:         </target>
         <target>Triple progress bar keeps you on track. The streak counter rewards consistency and confetti celebrates each daily goal you hit.</target>
             </segment>
         </unit>
-    <unit id="landing.feature.goals.alt">
-      <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
-            </notes>
-      <segment state="translated">
-        <source>Vorschau Tages-, Wochen- und Monatsziel mit Streak-Anzeige</source>
-        <target>Preview of daily, weekly and monthly goals with streak counter</target>
-            </segment>
-        </unit>
     <unit id="landing.feature.heatmap.title">
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
@@ -1929,15 +1902,6 @@ Active:         </target>
       <segment state="translated">
         <source>Sieh auf einen Blick, an welchen Tagen du wie hart trainiert hast. Lücken werden sichtbar – Konsistenz wird zur Gewohnheit.</source>
         <target>See at a glance how hard you trained on which days. Gaps become visible – consistency turns into habit.</target>
-            </segment>
-        </unit>
-    <unit id="landing.feature.heatmap.alt">
-      <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
-            </notes>
-      <segment state="translated">
-        <source>Vorschau Heatmap-Kalender mit Trainingsintensität pro Tag</source>
-        <target>Preview of the heatmap calendar showing training intensity per day</target>
             </segment>
         </unit>
     <unit id="landing.feature.quick.body">

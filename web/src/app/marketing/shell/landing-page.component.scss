@@ -204,15 +204,192 @@ h1 {
   .feature-visual {
     display: block;
     width: 100%;
-    height: auto;
     aspect-ratio: 2 / 1;
-    object-fit: cover;
-    background: #0f1a33;
+
+    svg {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
   }
 }
 
-:host-context(html.light-theme) .feature-grid .feature-visual {
-  background: #f4f8ff;
+// Inline-SVG preview tokens. Driven by html.light-theme so they follow
+// the user's manual theme choice rather than prefers-color-scheme alone.
+.feature-visual {
+  --lp-bg: #0f1a33;
+  --lp-card: #1a2848;
+  --lp-stroke: #2f4678;
+  --lp-text: #c4d2f2;
+  --lp-fg: #fff;
+  --lp-muted: #93adea;
+  --lp-bar-1: #3460c2;
+  --lp-bar-2: #7ea5ff;
+  --lp-bar-bg: #1f2d52;
+  --lp-line: #7ea5ff;
+  --lp-fade: #7ea5ff;
+  --lp-fade-op: 0.55;
+  --lp-dot: #c2d4ff;
+  --lp-pie-1: #7ea5ff;
+  --lp-pie-2: #5ddc96;
+  --lp-pie-3: #fbbf24;
+  --lp-accent: #fbbf24;
+  --lp-d0: #1a2848;
+  --lp-d1: #1f3a6e;
+  --lp-d2: #3460c2;
+  --lp-d3: #5a8aff;
+  --lp-d4: #8ab0ff;
+  --lp-d5: #c2d4ff;
+
+  svg text {
+    font-family: system-ui, sans-serif;
+  }
+
+  .lp-bg {
+    fill: var(--lp-bg);
+  }
+  .lp-card {
+    fill: var(--lp-card);
+    stroke: var(--lp-stroke);
+    stroke-width: 1;
+  }
+  .lp-label {
+    fill: var(--lp-text);
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .lp-reps {
+    fill: var(--lp-fg);
+    font-size: 13px;
+    font-weight: 700;
+  }
+  .lp-total-label,
+  .lp-streak-label {
+    fill: var(--lp-muted);
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .lp-total-value {
+    fill: var(--lp-fg);
+    font-size: 28px;
+    font-weight: 800;
+  }
+  .lp-bar-from {
+    stop-color: var(--lp-bar-1);
+  }
+  .lp-bar-to {
+    stop-color: var(--lp-bar-2);
+  }
+  .lp-bar-bg,
+  .lp-row-bg {
+    fill: var(--lp-bar-bg);
+  }
+  .lp-axis {
+    stroke: var(--lp-stroke);
+    stroke-width: 1;
+  }
+  .lp-grid {
+    stroke: var(--lp-bar-bg);
+    stroke-width: 1;
+    stroke-dasharray: 3 3;
+  }
+  .lp-line {
+    stroke: var(--lp-line);
+    stroke-width: 2.5;
+    fill: none;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+  }
+  .lp-area-from {
+    stop-color: var(--lp-fade);
+    stop-opacity: var(--lp-fade-op);
+  }
+  .lp-area-to {
+    stop-color: var(--lp-fade);
+    stop-opacity: 0;
+  }
+  .lp-dot {
+    fill: var(--lp-dot);
+  }
+  .lp-pie-track {
+    fill: none;
+    stroke: var(--lp-bar-bg);
+    stroke-width: 8;
+  }
+  .lp-pie-1,
+  .lp-pie-2,
+  .lp-pie-3 {
+    fill: none;
+    stroke-width: 8;
+    stroke-linecap: round;
+  }
+  .lp-pie-1 {
+    stroke: var(--lp-pie-1);
+  }
+  .lp-pie-2 {
+    stroke: var(--lp-pie-2);
+  }
+  .lp-pie-3 {
+    stroke: var(--lp-pie-3);
+  }
+  .lp-row-value {
+    fill: var(--lp-fg);
+    font-size: 11px;
+    font-weight: 700;
+  }
+  .lp-streak-num {
+    fill: var(--lp-accent);
+    font-size: 26px;
+    font-weight: 800;
+  }
+  .lp-flame {
+    fill: var(--lp-accent);
+  }
+  .lp-day-empty {
+    fill: var(--lp-d0);
+  }
+  .lp-day-1 {
+    fill: var(--lp-d1);
+  }
+  .lp-day-2 {
+    fill: var(--lp-d2);
+  }
+  .lp-day-3 {
+    fill: var(--lp-d3);
+  }
+  .lp-day-4 {
+    fill: var(--lp-d4);
+  }
+  .lp-day-5 {
+    fill: var(--lp-d5);
+  }
+}
+
+:host-context(html.light-theme) .feature-visual {
+  --lp-bg: #f4f8ff;
+  --lp-card: #fff;
+  --lp-stroke: #c0d0f0;
+  --lp-text: #334e80;
+  --lp-fg: #1e293b;
+  --lp-muted: #3b82f6;
+  --lp-bar-1: #3868d8;
+  --lp-bar-2: #90b4ff;
+  --lp-bar-bg: #dbe5f8;
+  --lp-line: #2550c0;
+  --lp-fade: #3868d8;
+  --lp-fade-op: 0.45;
+  --lp-dot: #2550c0;
+  --lp-pie-1: #3868d8;
+  --lp-pie-2: #16a34a;
+  --lp-pie-3: #b45309;
+  --lp-accent: #b45309;
+  --lp-d0: #dbe5f8;
+  --lp-d1: #bbd0f5;
+  --lp-d2: #6f9bec;
+  --lp-d3: #3868d8;
+  --lp-d4: #2750b5;
+  --lp-d5: #1a3a85;
 }
 
 .training-plans-feature {
