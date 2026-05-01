@@ -58,8 +58,8 @@ export const LeaderboardStore = signalStore(
           patchState(store, {
             data: {
               daily: { top: [], current: null },
-              weekly: { top: [], current: null },
-              monthly: { top: [], current: null },
+              last7: { top: [], current: null },
+              last30: { top: [], current: null },
             },
             loading: false,
           });

@@ -3,11 +3,7 @@
  * Pure logic and database-agnostic components
  */
 
-import {
-  berlinDateParts,
-  isoWeekFromYmd,
-  BerlinDateParts,
-} from '../datetime';
+import { berlinDateParts, BerlinDateParts } from '../datetime';
 import {
   toPublicDisplayName,
   isLeaderboardNameAllowed,
@@ -28,14 +24,14 @@ export interface LeaderboardEntry {
 
 export interface LeaderboardPeriods {
   daily: LeaderboardEntry[];
-  weekly: LeaderboardEntry[];
-  monthly: LeaderboardEntry[];
+  last7: LeaderboardEntry[];
+  last30: LeaderboardEntry[];
 }
 
 export interface LeaderboardKeys {
   daily: string;
-  weekly: string;
-  monthly: string;
+  last7: string;
+  last30: string;
 }
 
 export interface LeaderboardDocument {
@@ -45,26 +41,60 @@ export interface LeaderboardDocument {
   periods: LeaderboardPeriods;
 }
 
+export type LeaderboardPeriodKind = 'daily' | 'last7' | 'last30';
+
 const TOP_N = 10;
 
 /**
- * Ranks pushup entries for a specific period and target key
- * Returns top N entries sorted by reps descending, with anonymized names
- * @param rows Array of pushup records
- * @param periodKey Period type: 'daily', 'weekly', or 'monthly'
- * @param targetKey The specific period to filter by (e.g., '2024-03-15' for daily)
- * @param userProfiles Map of userId -> UserProfile for display names
- * @returns Sorted leaderboard entries (max TOP_N)
+ * Returns the ISO date `daysBack` days before the given Berlin date.
+ * Uses UTC math anchored to noon to dodge DST boundary glitches — the only
+ * thing we read out is `YYYY-MM-DD`, so the time of day is irrelevant.
+ */
+export function isoDateNDaysBefore(
+  reference: BerlinDateParts,
+  daysBack: number
+): string {
+  const anchor = Date.UTC(
+    reference.year,
+    reference.month - 1,
+    reference.day,
+    12,
+    0,
+    0
+  );
+  const shifted = new Date(anchor - daysBack * 86_400_000);
+  const yyyy = shifted.getUTCFullYear();
+  const mm = String(shifted.getUTCMonth() + 1).padStart(2, '0');
+  const dd = String(shifted.getUTCDate()).padStart(2, '0');
+  return `${yyyy}-${mm}-${dd}`;
+}
+
+/**
+ * Ranks pushup entries for a specific period and target key.
+ * - `daily`: aggregates entries on `targetKey` (an ISO date).
+ * - `last7` / `last30`: aggregates entries with Berlin-date in the trailing
+ *   7- or 30-day window ending on `targetKey` (inclusive).
+ *
+ * Returns top N entries sorted by reps descending, with privacy-aware names.
  */
 export function rankEntries(
   rows: PushupRow[],
-  periodKey: string,
+  periodKey: LeaderboardPeriodKind,
   targetKey: string,
   userProfiles: Map<string, UserProfile>
 ): LeaderboardEntry[] {
   const totals = new Map<string, number>();
 
-  // Aggregate reps by user for the target period
+  let windowStart: string | null = null;
+  if (periodKey === 'last7' || periodKey === 'last30') {
+    const [y, m, d] = targetKey.split('-').map(Number);
+    const days = periodKey === 'last7' ? 6 : 29;
+    windowStart = isoDateNDaysBefore(
+      { year: y, month: m, day: d, isoDate: targetKey },
+      days
+    );
+  }
+
   for (const row of rows) {
     if (!row.timestamp || !row.userId) continue;
 
@@ -72,25 +102,19 @@ export function rankEntries(
     if (Number.isNaN(d.getTime())) continue;
     const p = berlinDateParts(d);
 
-    // Calculate which period this entry belongs to
-    let key: string;
     if (periodKey === 'daily') {
-      key = p.isoDate;
-    } else if (periodKey === 'monthly') {
-      key = `${p.year}-${String(p.month).padStart(2, '0')}`;
+      if (p.isoDate !== targetKey) continue;
     } else {
-      // weekly
-      const wk = isoWeekFromYmd(p.year, p.month, p.day);
-      key = `${wk.year}-W${String(wk.week).padStart(2, '0')}`;
+      if (!windowStart) continue;
+      if (p.isoDate < windowStart || p.isoDate > targetKey) continue;
     }
 
-    // Only count entries that match the target period
-    if (key !== targetKey) continue;
-
-    totals.set(row.userId, (totals.get(row.userId) || 0) + Number(row.reps || 0));
+    totals.set(
+      row.userId,
+      (totals.get(row.userId) || 0) + Number(row.reps || 0)
+    );
   }
 
-  // Convert to leaderboard entries with privacy-aware display names
   return [...totals.entries()]
     .map(([userId, reps]) => {
       const profile = userProfiles.get(userId);
@@ -104,36 +128,37 @@ export function rankEntries(
 }
 
 /**
- * Calculates the current period keys (daily, weekly, monthly) for today
- * @param now Current date/time (defaults to now)
- * @returns Object with formatted period keys
+ * Calculates the current period keys for today.
+ * All three buckets are anchored on today's ISO date — `last7` / `last30`
+ * are rolling windows that always end on the current Berlin day.
  */
 export function calculateCurrentPeriodKeys(now = new Date()): LeaderboardKeys {
   const today = berlinDateParts(now);
-  const week = isoWeekFromYmd(today.year, today.month, today.day);
-
   return {
     daily: today.isoDate,
-    weekly: `${week.year}-W${String(week.week).padStart(2, '0')}`,
-    monthly: `${today.year}-${String(today.month).padStart(2, '0')}`,
+    last7: today.isoDate,
+    last30: today.isoDate,
   };
 }
 
 /**
- * Calculates the month start date for querying Firestore
- * @param today Current date parts (Berlin timezone)
- * @returns ISO date string for first day of month (YYYY-MM-01)
+ * Returns the ISO date that bounds the Firestore query for the leaderboard
+ * rebuild. Reaches back 30 days from today's Berlin date — one extra day
+ * beyond the last30 window — so the query also captures rows whose UTC
+ * timestamp falls on the previous calendar day (e.g. Berlin 00:30 on
+ * day-29 stored as UTC 23:30 on day-30). `rankEntries()` then trims to the
+ * exact 30-day Berlin window.
  */
-export function getMonthStartForQuery(today: BerlinDateParts): string {
-  return `${today.year}-${String(today.month).padStart(2, '0')}-01`;
+export function getLeaderboardQueryStartDate(today: BerlinDateParts): string {
+  return isoDateNDaysBefore(today, 30);
 }
 
 /**
  * Filters out a demo user from rows
- * @param rows Array of pushup records
- * @param demoUserId ID to filter out
- * @returns Filtered rows
  */
-export function filterOutDemoUser(rows: PushupRow[], demoUserId: string): PushupRow[] {
+export function filterOutDemoUser(
+  rows: PushupRow[],
+  demoUserId: string
+): PushupRow[] {
   return rows.filter((r) => r.userId !== demoUserId);
 }

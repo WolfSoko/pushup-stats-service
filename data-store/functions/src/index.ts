@@ -20,8 +20,8 @@ import {
 import { parseRecaptchaResponse } from './authentication';
 
 // Module imports
-import { berlinDateParts, isoWeekFromYmd } from './datetime';
-import { getMonthStartForQuery, rankEntries } from './leaderboard';
+import { berlinDateParts } from './datetime';
+import { getLeaderboardQueryStartDate, rankEntries } from './leaderboard';
 import {
   FALLBACK_QUOTES_DE,
   FALLBACK_QUOTES_EN,
@@ -102,12 +102,11 @@ async function createRecaptchaAssessment({
 async function rebuildLeaderboardsCore() {
   const now = new Date();
   const today = berlinDateParts(now);
-  const week = isoWeekFromYmd(today.year, today.month, today.day);
-  const monthStart = getMonthStartForQuery(today);
+  const queryStart = getLeaderboardQueryStartDate(today);
 
   const snap = await db
     .collection('pushups')
-    .where('timestamp', '>=', monthStart)
+    .where('timestamp', '>=', queryStart)
     .orderBy('timestamp', 'desc')
     .get();
 
@@ -131,31 +130,30 @@ async function rebuildLeaderboardsCore() {
     }
   }
 
-  const dailyKey = today.isoDate;
-  const weeklyKey = `${week.year}-W${String(week.week).padStart(2, '0')}`;
-  const monthlyKey = `${today.year}-${String(today.month).padStart(2, '0')}`;
+  // Rolling windows always end on today's Berlin date, so the same isoDate
+  // serves as the cache key for daily, last7, and last30.
+  const todayKey = today.isoDate;
 
-  const daily = rankEntries(rows, 'daily', dailyKey, userProfiles);
-  const weekly = rankEntries(rows, 'weekly', weeklyKey, userProfiles);
-  const monthly = rankEntries(rows, 'monthly', monthlyKey, userProfiles);
+  const daily = rankEntries(rows, 'daily', todayKey, userProfiles);
+  const last7 = rankEntries(rows, 'last7', todayKey, userProfiles);
+  const last30 = rankEntries(rows, 'last30', todayKey, userProfiles);
 
+  // Overwrite (no merge) so stale weekly/monthly fields from the previous
+  // schema get evicted instead of lingering in the document.
   await db
     .collection('leaderboards')
     .doc('current')
-    .set(
-      {
-        updatedAt: admin.firestore.FieldValue.serverTimestamp(),
-        timezone: TZ,
-        keys: { daily: dailyKey, weekly: weeklyKey, monthly: monthlyKey },
-        periods: { daily, weekly, monthly },
-      },
-      { merge: true }
-    );
+    .set({
+      updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+      timezone: TZ,
+      keys: { daily: todayKey, last7: todayKey, last30: todayKey },
+      periods: { daily, last7, last30 },
+    });
 
   logger.info('Leaderboards rebuilt', {
     daily: daily.length,
-    weekly: weekly.length,
-    monthly: monthly.length,
+    last7: last7.length,
+    last30: last30.length,
   });
 }
 

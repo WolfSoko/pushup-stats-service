@@ -125,7 +125,7 @@ export const appRoutes: Routes = [
     path: 'leaderboard',
     data: {
       seoTitle: $localize`:@@seo.leaderboard.title:Bestenliste – Pushup Tracker`,
-      seoDescription: $localize`:@@seo.leaderboard.description:Öffentliche Bestenliste für tägliche, wöchentliche und monatliche Pushup-Reps.`,
+      seoDescription: $localize`:@@seo.leaderboard.description:Öffentliche Bestenliste mit Top-Reps für heute, die letzten 7 Tage und die letzten 30 Tage.`,
     },
     loadComponent: () =>
       import('./leaderboard/shell/leaderboard-page.component').then(
