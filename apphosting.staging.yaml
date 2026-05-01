@@ -8,7 +8,13 @@ runConfig:
 
 env:
   - variable: NG_ALLOWED_HOSTS
-    value: '.hosted.app'
+    # `*.hosted.app` covers Firebase App Hosting URLs; `*.run.app` covers the
+    # Cloud Run revision/traffic-tag URLs that App Hosting routes through
+    # internally during rolling deploys (Angular SSR's SSRF guard otherwise
+    # rejects them with a 400). Angular's `isHostAllowed` only treats `*.`
+    # prefixes as wildcards — a bare leading dot is matched literally and
+    # would NOT cover the revision URLs.
+    value: '*.hosted.app,*.run.app'
     availability:
       - RUNTIME
 
