@@ -97,7 +97,11 @@ app.use((req, res, next) => {
   // omitting it eliminates the second user-controlled string from the
   // Location header. The locale-prefixed app keeps its own routing, so a
   // crawler hitting `/u/<uid>` will still land on the right page.
-  res.setHeader('Vary', 'Accept-Language');
+  //
+  // `res.vary` (instead of `setHeader('Vary', ...)`) APPENDS to whatever
+  // upstream middleware (compression, CORS, …) may have already set —
+  // overwriting can quietly break caching semantics elsewhere.
+  res.vary('Accept-Language');
   res.redirect(302, `/${lang}${path}`);
 });
 

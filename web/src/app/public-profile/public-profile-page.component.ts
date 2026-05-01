@@ -19,14 +19,13 @@ import { PublicProfileApiService } from '@pu-stats/data-access';
 import { type PublicProfile } from '@pu-stats/models';
 import { ShareService } from '../core/share.service';
 import { SeoService } from '../core/seo.service';
+import { buildProfileShareUrl } from '../core/profile-share-url';
 
 type LoadState =
   | { kind: 'loading' }
   | { kind: 'ready'; profile: PublicProfile }
   | { kind: 'not-found' }
   | { kind: 'error' };
-
-const SHARE_URL_BASE = 'https://pushup-stats.de';
 
 const OG_FUNCTION_REGION = 'europe-west3';
 
@@ -128,17 +127,13 @@ export class PublicProfilePageComponent {
     const profile = this.profile();
     if (!profile) return;
     const text = $localize`:@@publicProfile.share.text:${profile.displayName}:name: hat ${profile.total}:total: Liegestütze auf Pushup Tracker geschafft 💪 Schau's dir an:`;
-    // Include the locale prefix so the shared link lands on the right
-    // Angular bundle directly. Without it, the bare `/u/<uid>` path used to
-    // 404 (it only exists inside `/de/...` and `/en/...` builds); the SSR
-    // server now also redirects bare → locale-prefixed, but the shared URL
-    // should be the canonical one.
-    const lang = this.localeShortCode();
-    const encodedUid = encodeURIComponent(profile.uid);
     void this.shareService.share({
       title: $localize`:@@publicProfile.share.title:Pushup Tracker Profil`,
       text,
-      url: `${SHARE_URL_BASE}/${lang}/u/${encodedUid}`,
+      // Locale-prefixed canonical share URL — see `buildProfileShareUrl`
+      // for the rationale (locale-prefixed link survives 30x-stripping
+      // tools and lands on the right Angular bundle directly).
+      url: buildProfileShareUrl(profile.uid, this.localeId),
     });
   }
 

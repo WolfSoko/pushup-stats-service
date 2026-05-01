@@ -24,6 +24,7 @@ import { PushSubscriptionService } from '@pu-reminders/reminders';
 import { DEFAULT_SNAP_QUALITY, SnapQuality } from '@pu-stats/models';
 import { UserConfigStore } from '../../core/user-config.store';
 import { ShareService } from '../../core/share.service';
+import { buildProfileShareUrl } from '../../core/profile-share-url';
 
 @Component({
   selector: 'app-settings-page',
@@ -469,15 +470,9 @@ export class SettingsPageComponent {
   readonly adsConsentDraft = signal(false);
   readonly snapQualityDraft = signal<SnapQuality>(DEFAULT_SNAP_QUALITY);
 
-  readonly profileUrl = computed(() => {
-    const uid = this.userId();
-    if (!uid) return '';
-    // Include the locale prefix so the link lands on the right Angular
-    // bundle directly — bare `/u/<uid>` only works via the SSR redirect
-    // and we want the canonical share URL to be the prefixed one.
-    const lang = this.localeId?.startsWith('en') ? 'en' : 'de';
-    return `https://pushup-stats.de/${lang}/u/${encodeURIComponent(uid)}`;
-  });
+  readonly profileUrl = computed(() =>
+    buildProfileShareUrl(this.userId(), this.localeId)
+  );
 
   readonly saving = signal(false);
   readonly saved = signal(false);
