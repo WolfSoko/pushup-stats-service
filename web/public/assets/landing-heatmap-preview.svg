@@ -1,0 +1,196 @@
+<svg width="320" height="160" viewBox="0 0 320 160" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+  <defs>
+    <style>
+      .bg { fill: #0F1A33; }
+      .label { fill: #6E84B5; font-family: system-ui, -apple-system, sans-serif; font-size: 9px; }
+      .day-empty { fill: #1A2848; }
+      .day-1 { fill: #1F3A6E; }
+      .day-2 { fill: #3460C2; }
+      .day-3 { fill: #5A8AFF; }
+      .day-4 { fill: #8AB0FF; }
+      .day-5 { fill: #C2D4FF; }
+      .legend-text { fill: #93ADEA; font-family: system-ui, sans-serif; font-size: 8px; }
+
+      @media (prefers-color-scheme: light) {
+        .bg { fill: #F4F8FF; }
+        .label { fill: #6A7FA8; }
+        .day-empty { fill: #DBE5F8; }
+        .day-1 { fill: #BBD0F5; }
+        .day-2 { fill: #6F9BEC; }
+        .day-3 { fill: #3868D8; }
+        .day-4 { fill: #2750B5; }
+        .day-5 { fill: #1A3A85; }
+        .legend-text { fill: #3B82F6; }
+      }
+    </style>
+  </defs>
+
+  <rect width="320" height="160" rx="14" class="bg"/>
+
+  <text x="16" y="22" class="legend-text">Mo</text>
+  <text x="16" y="50" class="legend-text">Mi</text>
+  <text x="16" y="78" class="legend-text">Fr</text>
+  <text x="16" y="106" class="legend-text">So</text>
+
+  <!-- 18 weeks x 7 days grid, cell 14x14 with 2px gap -->
+  <g transform="translate(40, 14)">
+    <!-- generated heatmap pattern -->
+    <g>
+      <!-- week 0 -->
+      <rect x="0"  y="0"  width="12" height="12" rx="2" class="day-1"/>
+      <rect x="0"  y="14" width="12" height="12" rx="2" class="day-empty"/>
+      <rect x="0"  y="28" width="12" height="12" rx="2" class="day-2"/>
+      <rect x="0"  y="42" width="12" height="12" rx="2" class="day-1"/>
+      <rect x="0"  y="56" width="12" height="12" rx="2" class="day-3"/>
+      <rect x="0"  y="70" width="12" height="12" rx="2" class="day-empty"/>
+      <rect x="0"  y="84" width="12" height="12" rx="2" class="day-2"/>
+      <!-- week 1 -->
+      <rect x="14" y="0"  width="12" height="12" rx="2" class="day-2"/>
+      <rect x="14" y="14" width="12" height="12" rx="2" class="day-1"/>
+      <rect x="14" y="28" width="12" height="12" rx="2" class="day-3"/>
+      <rect x="14" y="42" width="12" height="12" rx="2" class="day-2"/>
+      <rect x="14" y="56" width="12" height="12" rx="2" class="day-empty"/>
+      <rect x="14" y="70" width="12" height="12" rx="2" class="day-1"/>
+      <rect x="14" y="84" width="12" height="12" rx="2" class="day-3"/>
+      <!-- week 2 -->
+      <rect x="28" y="0"  width="12" height="12" rx="2" class="day-empty"/>
+      <rect x="28" y="14" width="12" height="12" rx="2" class="day-2"/>
+      <rect x="28" y="28" width="12" height="12" rx="2" class="day-3"/>
+      <rect x="28" y="42" width="12" height="12" rx="2" class="day-4"/>
+      <rect x="28" y="56" width="12" height="12" rx="2" class="day-2"/>
+      <rect x="28" y="70" width="12" height="12" rx="2" class="day-3"/>
+      <rect x="28" y="84" width="12" height="12" rx="2" class="day-1"/>
+      <!-- week 3 -->
+      <rect x="42" y="0"  width="12" height="12" rx="2" class="day-3"/>
+      <rect x="42" y="14" width="12" height="12" rx="2" class="day-4"/>
+      <rect x="42" y="28" width="12" height="12" rx="2" class="day-2"/>
+      <rect x="42" y="42" width="12" height="12" rx="2" class="day-3"/>
+      <rect x="42" y="56" width="12" height="12" rx="2" class="day-4"/>
+      <rect x="42" y="70" width="12" height="12" rx="2" class="day-empty"/>
+      <rect x="42" y="84" width="12" height="12" rx="2" class="day-2"/>
+      <!-- week 4 -->
+      <rect x="56" y="0"  width="12" height="12" rx="2" class="day-2"/>
+      <rect x="56" y="14" width="12" height="12" rx="2" class="day-3"/>
+      <rect x="56" y="28" width="12" height="12" rx="2" class="day-5"/>
+      <rect x="56" y="42" width="12" height="12" rx="2" class="day-4"/>
+      <rect x="56" y="56" width="12" height="12" rx="2" class="day-3"/>
+      <rect x="56" y="70" width="12" height="12" rx="2" class="day-4"/>
+      <rect x="56" y="84" width="12" height="12" rx="2" class="day-3"/>
+      <!-- week 5 -->
+      <rect x="70" y="0"  width="12" height="12" rx="2" class="day-4"/>
+      <rect x="70" y="14" width="12" height="12" rx="2" class="day-2"/>
+      <rect x="70" y="28" width="12" height="12" rx="2" class="day-3"/>
+      <rect x="70" y="42" width="12" height="12" rx="2" class="day-empty"/>
+      <rect x="70" y="56" width="12" height="12" rx="2" class="day-3"/>
+      <rect x="70" y="70" width="12" height="12" rx="2" class="day-5"/>
+      <rect x="70" y="84" width="12" height="12" rx="2" class="day-4"/>
+      <!-- week 6 -->
+      <rect x="84" y="0"  width="12" height="12" rx="2" class="day-3"/>
+      <rect x="84" y="14" width="12" height="12" rx="2" class="day-4"/>
+      <rect x="84" y="28" width="12" height="12" rx="2" class="day-3"/>
+      <rect x="84" y="42" width="12" height="12" rx="2" class="day-5"/>
+      <rect x="84" y="56" width="12" height="12" rx="2" class="day-4"/>
+      <rect x="84" y="70" width="12" height="12" rx="2" class="day-3"/>
+      <rect x="84" y="84" width="12" height="12" rx="2" class="day-2"/>
+      <!-- week 7 -->
+      <rect x="98" y="0"  width="12" height="12" rx="2" class="day-empty"/>
+      <rect x="98" y="14" width="12" height="12" rx="2" class="day-3"/>
+      <rect x="98" y="28" width="12" height="12" rx="2" class="day-4"/>
+      <rect x="98" y="42" width="12" height="12" rx="2" class="day-2"/>
+      <rect x="98" y="56" width="12" height="12" rx="2" class="day-5"/>
+      <rect x="98" y="70" width="12" height="12" rx="2" class="day-4"/>
+      <rect x="98" y="84" width="12" height="12" rx="2" class="day-3"/>
+      <!-- week 8 -->
+      <rect x="112" y="0"  width="12" height="12" rx="2" class="day-3"/>
+      <rect x="112" y="14" width="12" height="12" rx="2" class="day-5"/>
+      <rect x="112" y="28" width="12" height="12" rx="2" class="day-2"/>
+      <rect x="112" y="42" width="12" height="12" rx="2" class="day-3"/>
+      <rect x="112" y="56" width="12" height="12" rx="2" class="day-4"/>
+      <rect x="112" y="70" width="12" height="12" rx="2" class="day-3"/>
+      <rect x="112" y="84" width="12" height="12" rx="2" class="day-5"/>
+      <!-- week 9 -->
+      <rect x="126" y="0"  width="12" height="12" rx="2" class="day-4"/>
+      <rect x="126" y="14" width="12" height="12" rx="2" class="day-3"/>
+      <rect x="126" y="28" width="12" height="12" rx="2" class="day-5"/>
+      <rect x="126" y="42" width="12" height="12" rx="2" class="day-4"/>
+      <rect x="126" y="56" width="12" height="12" rx="2" class="day-3"/>
+      <rect x="126" y="70" width="12" height="12" rx="2" class="day-empty"/>
+      <rect x="126" y="84" width="12" height="12" rx="2" class="day-2"/>
+      <!-- week 10 -->
+      <rect x="140" y="0"  width="12" height="12" rx="2" class="day-2"/>
+      <rect x="140" y="14" width="12" height="12" rx="2" class="day-4"/>
+      <rect x="140" y="28" width="12" height="12" rx="2" class="day-3"/>
+      <rect x="140" y="42" width="12" height="12" rx="2" class="day-5"/>
+      <rect x="140" y="56" width="12" height="12" rx="2" class="day-4"/>
+      <rect x="140" y="70" width="12" height="12" rx="2" class="day-3"/>
+      <rect x="140" y="84" width="12" height="12" rx="2" class="day-3"/>
+      <!-- week 11 -->
+      <rect x="154" y="0"  width="12" height="12" rx="2" class="day-5"/>
+      <rect x="154" y="14" width="12" height="12" rx="2" class="day-3"/>
+      <rect x="154" y="28" width="12" height="12" rx="2" class="day-4"/>
+      <rect x="154" y="42" width="12" height="12" rx="2" class="day-3"/>
+      <rect x="154" y="56" width="12" height="12" rx="2" class="day-5"/>
+      <rect x="154" y="70" width="12" height="12" rx="2" class="day-2"/>
+      <rect x="154" y="84" width="12" height="12" rx="2" class="day-4"/>
+      <!-- week 12 -->
+      <rect x="168" y="0"  width="12" height="12" rx="2" class="day-3"/>
+      <rect x="168" y="14" width="12" height="12" rx="2" class="day-empty"/>
+      <rect x="168" y="28" width="12" height="12" rx="2" class="day-3"/>
+      <rect x="168" y="42" width="12" height="12" rx="2" class="day-5"/>
+      <rect x="168" y="56" width="12" height="12" rx="2" class="day-3"/>
+      <rect x="168" y="70" width="12" height="12" rx="2" class="day-4"/>
+      <rect x="168" y="84" width="12" height="12" rx="2" class="day-5"/>
+      <!-- week 13 -->
+      <rect x="182" y="0"  width="12" height="12" rx="2" class="day-4"/>
+      <rect x="182" y="14" width="12" height="12" rx="2" class="day-5"/>
+      <rect x="182" y="28" width="12" height="12" rx="2" class="day-3"/>
+      <rect x="182" y="42" width="12" height="12" rx="2" class="day-4"/>
+      <rect x="182" y="56" width="12" height="12" rx="2" class="day-5"/>
+      <rect x="182" y="70" width="12" height="12" rx="2" class="day-3"/>
+      <rect x="182" y="84" width="12" height="12" rx="2" class="day-empty"/>
+      <!-- week 14 -->
+      <rect x="196" y="0"  width="12" height="12" rx="2" class="day-2"/>
+      <rect x="196" y="14" width="12" height="12" rx="2" class="day-4"/>
+      <rect x="196" y="28" width="12" height="12" rx="2" class="day-5"/>
+      <rect x="196" y="42" width="12" height="12" rx="2" class="day-3"/>
+      <rect x="196" y="56" width="12" height="12" rx="2" class="day-4"/>
+      <rect x="196" y="70" width="12" height="12" rx="2" class="day-5"/>
+      <rect x="196" y="84" width="12" height="12" rx="2" class="day-4"/>
+      <!-- week 15 -->
+      <rect x="210" y="0"  width="12" height="12" rx="2" class="day-3"/>
+      <rect x="210" y="14" width="12" height="12" rx="2" class="day-5"/>
+      <rect x="210" y="28" width="12" height="12" rx="2" class="day-4"/>
+      <rect x="210" y="42" width="12" height="12" rx="2" class="day-5"/>
+      <rect x="210" y="56" width="12" height="12" rx="2" class="day-4"/>
+      <rect x="210" y="70" width="12" height="12" rx="2" class="day-3"/>
+      <rect x="210" y="84" width="12" height="12" rx="2" class="day-5"/>
+      <!-- week 16 -->
+      <rect x="224" y="0"  width="12" height="12" rx="2" class="day-5"/>
+      <rect x="224" y="14" width="12" height="12" rx="2" class="day-4"/>
+      <rect x="224" y="28" width="12" height="12" rx="2" class="day-5"/>
+      <rect x="224" y="42" width="12" height="12" rx="2" class="day-4"/>
+      <rect x="224" y="56" width="12" height="12" rx="2" class="day-5"/>
+      <rect x="224" y="70" width="12" height="12" rx="2" class="day-5"/>
+      <rect x="224" y="84" width="12" height="12" rx="2" class="day-4"/>
+      <!-- week 17 -->
+      <rect x="238" y="0"  width="12" height="12" rx="2" class="day-4"/>
+      <rect x="238" y="14" width="12" height="12" rx="2" class="day-5"/>
+      <rect x="238" y="28" width="12" height="12" rx="2" class="day-5"/>
+      <rect x="238" y="42" width="12" height="12" rx="2" class="day-4"/>
+      <rect x="238" y="56" width="12" height="12" rx="2" class="day-5"/>
+      <rect x="238" y="70" width="12" height="12" rx="2" class="day-empty"/>
+      <rect x="238" y="84" width="12" height="12" rx="2" class="day-3"/>
+    </g>
+  </g>
+
+  <g transform="translate(40, 130)">
+    <text x="0" y="9" class="legend-text">Wenig</text>
+    <rect x="36" y="0"  width="11" height="11" rx="2" class="day-empty"/>
+    <rect x="49" y="0"  width="11" height="11" rx="2" class="day-1"/>
+    <rect x="62" y="0"  width="11" height="11" rx="2" class="day-2"/>
+    <rect x="75" y="0"  width="11" height="11" rx="2" class="day-3"/>
+    <rect x="88" y="0"  width="11" height="11" rx="2" class="day-4"/>
+    <rect x="101" y="0" width="11" height="11" rx="2" class="day-5"/>
+    <text x="118" y="9" class="legend-text">Viel</text>
+  </g>
+</svg>

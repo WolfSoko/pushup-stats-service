@@ -1,0 +1,71 @@
+<svg width="320" height="160" viewBox="0 0 320 160" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+  <defs>
+    <linearGradient id="chart-fill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#7EA5FF" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#7EA5FF" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="chart-fill-light" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#3868D8" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#3868D8" stop-opacity="0"/>
+    </linearGradient>
+    <style>
+      .bg { fill: #0F1A33; }
+      .axis { stroke: #2F4678; stroke-width: 1; }
+      .grid { stroke: #1F2D52; stroke-width: 1; stroke-dasharray: 3 3; }
+      .line { stroke: #7EA5FF; stroke-width: 2.5; fill: none; stroke-linejoin: round; stroke-linecap: round; }
+      .area { fill: url(#chart-fill); }
+      .dot { fill: #C2D4FF; }
+      .pie-track { fill: none; stroke: #1F2D52; stroke-width: 8; }
+      .pie-1 { fill: none; stroke: #7EA5FF; stroke-width: 8; stroke-linecap: round; }
+      .pie-2 { fill: none; stroke: #5DDC96; stroke-width: 8; stroke-linecap: round; }
+      .pie-3 { fill: none; stroke: #FBBF24; stroke-width: 8; stroke-linecap: round; }
+      .axis-label { fill: #6E84B5; font-family: system-ui, sans-serif; font-size: 8px; }
+      .pie-label { fill: #93ADEA; font-family: system-ui, sans-serif; font-size: 9px; }
+
+      @media (prefers-color-scheme: light) {
+        .bg { fill: #F4F8FF; }
+        .axis { stroke: #C0D0F0; }
+        .grid { stroke: #DBE5F8; }
+        .line { stroke: #2550C0; }
+        .area { fill: url(#chart-fill-light); }
+        .dot { fill: #2550C0; }
+        .pie-track { stroke: #DBE5F8; }
+        .pie-1 { stroke: #3868D8; }
+        .pie-2 { stroke: #16A34A; }
+        .pie-3 { stroke: #B45309; }
+        .axis-label { fill: #6A7FA8; }
+        .pie-label { fill: #3B82F6; }
+      }
+    </style>
+  </defs>
+
+  <rect width="320" height="160" rx="14" class="bg"/>
+
+  <!-- Chart -->
+  <g transform="translate(16, 16)">
+    <line x1="0" y1="20" x2="200" y2="20" class="grid"/>
+    <line x1="0" y1="55" x2="200" y2="55" class="grid"/>
+    <line x1="0" y1="90" x2="200" y2="90" class="grid"/>
+    <path class="area" d="M0,95 L25,80 L50,82 L75,55 L100,62 L125,40 L150,48 L175,25 L200,30 L200,120 L0,120 Z"/>
+    <polyline class="line" points="0,95 25,80 50,82 75,55 100,62 125,40 150,48 175,25 200,30"/>
+    <circle cx="200" cy="30" r="4" class="dot"/>
+    <line x1="0" y1="120" x2="200" y2="120" class="axis"/>
+    <text x="0" y="134" class="axis-label">Mo</text>
+    <text x="35" y="134" class="axis-label">Di</text>
+    <text x="70" y="134" class="axis-label">Mi</text>
+    <text x="105" y="134" class="axis-label">Do</text>
+    <text x="140" y="134" class="axis-label">Fr</text>
+    <text x="170" y="134" class="axis-label">Sa</text>
+    <text x="195" y="134" class="axis-label">So</text>
+  </g>
+
+  <!-- Pie / type breakdown -->
+  <g transform="translate(258, 60)">
+    <circle r="28" class="pie-track"/>
+    <!-- Approx pie: Standard 60%, Wide 25%, Diamond 15% -->
+    <circle r="28" class="pie-1" stroke-dasharray="105 176" transform="rotate(-90)"/>
+    <circle r="28" class="pie-2" stroke-dasharray="44 176" transform="rotate(125)"/>
+    <circle r="28" class="pie-3" stroke-dasharray="26 176" transform="rotate(215)"/>
+  </g>
+  <text x="258" y="118" text-anchor="middle" class="pie-label">Typen</text>
+</svg>

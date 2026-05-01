@@ -1835,104 +1835,164 @@ Active:         </target>
     <unit id="landing.feature.analytics.body">
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
-
-        
             </notes>
       <segment state="translated">
-        <source>Woche, Monat und Custom-Ranges mit klaren KPIs und Charts.</source>
-        <target>Week, month, and custom ranges with clear KPIs and charts.</target>
-
-        
-        
+        <source>Verlaufsdiagramme, KPI-Karten, Verteilung nach Standard, Wide oder Diamond – mit frei wählbarem Zeitraum.</source>
+        <target>Trend charts, KPI cards, breakdown by Standard, Wide or Diamond – with a freely selectable time range.</target>
             </segment>
-
-      
-      
         </unit>
     <unit id="landing.feature.analytics.title">
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
-
-        
             </notes>
       <segment state="translated">
-        <source>Smarter Überblick</source>
-        <target>Smarter overview</target>
-
-        
-        
+        <source>Charts, Trends &amp; Pushup-Typen</source>
+        <target>Charts, trends &amp; pushup types</target>
             </segment>
-
-      
-      
         </unit>
-    <unit id="landing.feature.live.body">
+    <unit id="landing.feature.analytics.alt">
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
-
-        
             </notes>
       <segment state="translated">
-        <source>Firestore Live-Sync hält deine Daten auf allen Geräten aktuell.</source>
-        <target>Firestore live sync keeps your data current across devices.</target>
-
-        
-        
+        <source>Vorschau Trend-Charts und Verteilung nach Pushup-Typ</source>
+        <target>Preview of trend charts and pushup type breakdown</target>
             </segment>
-
-      
-      
         </unit>
-    <unit id="landing.feature.live.title">
+    <unit id="landing.feature.multiset.title">
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
-
-        
             </notes>
       <segment state="translated">
-        <source>Live &amp; überall</source>
-        <target>Live &amp; everywhere</target>
-
-        
-        
+        <source>Multi-Set Tracking</source>
+        <target>Multi-set tracking</target>
             </segment>
-
-      
-      
+        </unit>
+    <unit id="landing.feature.multiset.body">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+            </notes>
+      <segment state="translated">
+        <source>Erfasse jeden Satz einzeln – z.&#x202F;B. 12&#xA0;+&#xA0;10&#xA0;+&#xA0;8. Die App summiert automatisch und zeigt deine durchschnittliche Set-Größe.</source>
+        <target>Log every set individually – e.g. 12&#xA0;+&#xA0;10&#xA0;+&#xA0;8. The app sums them up automatically and shows your average set size.</target>
+            </segment>
+        </unit>
+    <unit id="landing.feature.multiset.alt">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+            </notes>
+      <segment state="translated">
+        <source>Vorschau Multi-Set Tracking mit drei Sätzen 12, 10, 8</source>
+        <target>Preview of multi-set tracking with three sets 12, 10, 8</target>
+            </segment>
+        </unit>
+    <unit id="landing.feature.goals.title">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+            </notes>
+      <segment state="translated">
+        <source>Tages-, Wochen- &amp; Monatsziele</source>
+        <target>Daily, weekly &amp; monthly goals</target>
+            </segment>
+        </unit>
+    <unit id="landing.feature.goals.body">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+            </notes>
+      <segment state="translated">
+        <source>Dreifacher Fortschrittsbalken hält dich auf Kurs. Streak-Anzeige belohnt dranbleiben, Konfetti feiert dein erreichtes Tagesziel.</source>
+        <target>Triple progress bar keeps you on track. The streak counter rewards consistency and confetti celebrates each daily goal you hit.</target>
+            </segment>
+        </unit>
+    <unit id="landing.feature.goals.alt">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+            </notes>
+      <segment state="translated">
+        <source>Vorschau Tages-, Wochen- und Monatsziel mit Streak-Anzeige</source>
+        <target>Preview of daily, weekly and monthly goals with streak counter</target>
+            </segment>
+        </unit>
+    <unit id="landing.feature.heatmap.title">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+            </notes>
+      <segment state="translated">
+        <source>Heatmap-Kalender</source>
+        <target>Heatmap calendar</target>
+            </segment>
+        </unit>
+    <unit id="landing.feature.heatmap.body">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+            </notes>
+      <segment state="translated">
+        <source>Sieh auf einen Blick, an welchen Tagen du wie hart trainiert hast. Lücken werden sichtbar – Konsistenz wird zur Gewohnheit.</source>
+        <target>See at a glance how hard you trained on which days. Gaps become visible – consistency turns into habit.</target>
+            </segment>
+        </unit>
+    <unit id="landing.feature.heatmap.alt">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+            </notes>
+      <segment state="translated">
+        <source>Vorschau Heatmap-Kalender mit Trainingsintensität pro Tag</source>
+        <target>Preview of the heatmap calendar showing training intensity per day</target>
+            </segment>
         </unit>
     <unit id="landing.feature.quick.body">
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
-
-        
             </notes>
       <segment state="translated">
-        <source>Neue Einträge in Sekunden per Schnellaktionen oder Tabelle.</source>
-        <target>Add new entries in seconds via quick actions or table.</target>
-
-        
-        
+        <source>Eintrag in 2 Sekunden über den Floating Action Button oder Schnellaktionen direkt im Dashboard – ganz ohne Dialog.</source>
+        <target>Log an entry in 2 seconds via the floating action button or quick actions directly on the dashboard – no dialog needed.</target>
             </segment>
-
-      
-      
         </unit>
     <unit id="landing.feature.quick.title">
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
-
-        
             </notes>
       <segment state="translated">
-        <source>Quick Logging</source>
-        <target>Quick logging</target>
-
-        
-        
+        <source>Quick Logging mit FAB</source>
+        <target>Quick logging with FAB</target>
             </segment>
-
-      
-      
+        </unit>
+    <unit id="landing.feature.pwa.title">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+            </notes>
+      <segment state="translated">
+        <source>PWA, Live-Sync &amp; Web Share</source>
+        <target>PWA, live sync &amp; web share</target>
+            </segment>
+        </unit>
+    <unit id="landing.feature.pwa.body">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+            </notes>
+      <segment state="translated">
+        <source>Installierbar wie eine native App, Echtzeit-Sync zwischen allen Geräten und Tagesergebnis per Web Share teilen – inklusive Dark- und Light-Theme.</source>
+        <target>Installable like a native app, real-time sync across all your devices and share your daily result via Web Share – with dark and light theme included.</target>
+            </segment>
+        </unit>
+    <unit id="landing.feature.privacy.title">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+            </notes>
+      <segment state="translated">
+        <source>Privacy first &amp; 100&#xA0;% kostenlos</source>
+        <target>Privacy first &amp; 100&#xA0;% free</target>
+            </segment>
+        </unit>
+    <unit id="landing.feature.privacy.body">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+            </notes>
+      <segment state="translated">
+        <source>DSGVO-konform mit anpassbarer Cookie-Zustimmung. Dein Name auf der Bestenliste? Nur wenn du es willst. Kein Abo, keine Kreditkarte.</source>
+        <target>GDPR-friendly with customisable cookie consent. Your name on the leaderboard? Only if you want it there. No subscription, no credit card.</target>
+            </segment>
         </unit>
     <unit id="landing.discover.title">
       <notes>
@@ -4401,30 +4461,6 @@ Deine Position: # ·  Reps        </source>
         <target> ✓ Free · ✓ No subscription · ✓ No credit card · ✓ Privacy first </target>
       </segment>
     </unit>
-    <unit id="landing.feature.streak.title">
-      <segment state="translated">
-        <source>Streaks &amp; Bestenliste</source>
-        <target>Streaks &amp; Leaderboard</target>
-      </segment>
-    </unit>
-    <unit id="landing.feature.streak.body">
-      <segment state="translated">
-        <source>Täglich dabei bleiben. Verfolge deine Streak und miss dich mit der Community.</source>
-        <target>Stay consistent. Track your streak and compete with the community.</target>
-      </segment>
-    </unit>
-    <unit id="landing.feature.free.title">
-      <segment state="translated">
-        <source>100% Kostenlos</source>
-        <target>100% Free</target>
-      </segment>
-    </unit>
-    <unit id="landing.feature.free.body">
-      <segment state="translated">
-        <source>Keine Kreditkarte. Kein Abo. Einfach registrieren und loslegen – für immer kostenlos.</source>
-        <target>No credit card. No subscription. Just sign up and start – free forever.</target>
-      </segment>
-    </unit>
     <unit id="auth.login.success">
       <segment state="translated">
         <source>Erfolgreich angemeldet! 👋</source>
@@ -4955,14 +4991,14 @@ Deine Position: # ·  Reps        </source>
     </unit>
     <unit id="landing.feature.adaptive.title">
       <segment state="translated">
-        <source>Smarte Schnellaktionen</source>
-        <target>Smart Quick Actions</target>
+        <source>Adaptive Vorschläge</source>
+        <target>Adaptive suggestions</target>
       </segment>
     </unit>
     <unit id="landing.feature.adaptive.body">
       <segment state="translated">
-        <source>Basierend auf deiner Trainingshistorie schlägt die App automatisch passende Wiederholungszahlen vor. Ein Tap genügt.</source>
-        <target>Based on your training history, the app automatically suggests fitting rep counts. One tap is all it takes.</target>
+        <source>Die Schnellaktionen lernen aus deiner Historie und schlagen passende Wiederholungen vor – oder du konfigurierst eigene Buttons.</source>
+        <target>The quick actions learn from your history and suggest fitting rep counts – or you configure your own buttons.</target>
       </segment>
     </unit>
     <unit id="dashboard.analysisTeaserAriaLabel">

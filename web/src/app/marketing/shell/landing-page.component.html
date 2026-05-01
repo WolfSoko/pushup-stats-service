@@ -192,81 +192,142 @@
   </p>
 
   <section class="feature-grid">
-    <mat-card>
+    <mat-card class="feature-card feature-card--visual">
+      <img
+        class="feature-visual"
+        src="assets/landing-multiset-preview.svg"
+        alt="Vorschau Multi-Set Tracking mit drei Sätzen 12, 10, 8"
+        i18n-alt="@@landing.feature.multiset.alt"
+        loading="lazy"
+      />
+      <mat-card-header class="key-features-header">
+        <mat-icon aria-hidden="true">layers</mat-icon>
+        <mat-card-title i18n="@@landing.feature.multiset.title"
+          >Multi-Set Tracking</mat-card-title
+        >
+      </mat-card-header>
+      <mat-card-content i18n="@@landing.feature.multiset.body"
+        >Erfasse jeden Satz einzeln – z.&#x202F;B.
+        12&nbsp;+&nbsp;10&nbsp;+&nbsp;8. Die App summiert automatisch und zeigt
+        deine durchschnittliche Set-Größe.</mat-card-content
+      >
+    </mat-card>
+
+    <mat-card class="feature-card feature-card--visual">
+      <img
+        class="feature-visual"
+        src="assets/landing-charts-preview.svg"
+        alt="Vorschau Trend-Charts und Verteilung nach Pushup-Typ"
+        i18n-alt="@@landing.feature.analytics.alt"
+        loading="lazy"
+      />
       <mat-card-header class="key-features-header">
         <mat-icon aria-hidden="true">insights</mat-icon>
         <mat-card-title i18n="@@landing.feature.analytics.title"
-          >Smarter Überblick</mat-card-title
+          >Charts, Trends & Pushup-Typen</mat-card-title
         >
       </mat-card-header>
       <mat-card-content i18n="@@landing.feature.analytics.body"
-        >KPIs, Charts und Custom-Zeiträume. Sieh auf einen Blick wie sich dein
-        Training entwickelt.</mat-card-content
+        >Verlaufsdiagramme, KPI-Karten, Verteilung nach Standard, Wide oder
+        Diamond – mit frei wählbarem Zeitraum.</mat-card-content
       >
     </mat-card>
 
-    <mat-card>
+    <mat-card class="feature-card feature-card--visual">
+      <img
+        class="feature-visual"
+        src="assets/landing-goals-preview.svg"
+        alt="Vorschau Tages-, Wochen- und Monatsziel mit Streak-Anzeige"
+        i18n-alt="@@landing.feature.goals.alt"
+        loading="lazy"
+      />
+      <mat-card-header class="key-features-header">
+        <mat-icon aria-hidden="true">flag</mat-icon>
+        <mat-card-title i18n="@@landing.feature.goals.title"
+          >Tages-, Wochen- & Monatsziele</mat-card-title
+        >
+      </mat-card-header>
+      <mat-card-content i18n="@@landing.feature.goals.body"
+        >Dreifacher Fortschrittsbalken hält dich auf Kurs. Streak-Anzeige
+        belohnt dranbleiben, Konfetti feiert dein erreichtes
+        Tagesziel.</mat-card-content
+      >
+    </mat-card>
+
+    <mat-card class="feature-card feature-card--visual">
+      <img
+        class="feature-visual"
+        src="assets/landing-heatmap-preview.svg"
+        alt="Vorschau Heatmap-Kalender mit Trainingsintensität pro Tag"
+        i18n-alt="@@landing.feature.heatmap.alt"
+        loading="lazy"
+      />
+      <mat-card-header class="key-features-header">
+        <mat-icon aria-hidden="true">grid_on</mat-icon>
+        <mat-card-title i18n="@@landing.feature.heatmap.title"
+          >Heatmap-Kalender</mat-card-title
+        >
+      </mat-card-header>
+      <mat-card-content i18n="@@landing.feature.heatmap.body"
+        >Sieh auf einen Blick, an welchen Tagen du wie hart trainiert hast.
+        Lücken werden sichtbar – Konsistenz wird zur
+        Gewohnheit.</mat-card-content
+      >
+    </mat-card>
+
+    <mat-card class="feature-card">
       <mat-card-header class="key-features-header">
         <mat-icon aria-hidden="true">bolt</mat-icon>
         <mat-card-title i18n="@@landing.feature.quick.title"
-          >Quick Logging</mat-card-title
+          >Quick Logging mit FAB</mat-card-title
         >
       </mat-card-header>
       <mat-card-content i18n="@@landing.feature.quick.body"
-        >Eintrag in 2 Sekunden. Schnellaktionen für 10, 20, 30 Reps oder freie
-        Eingabe.</mat-card-content
+        >Eintrag in 2 Sekunden über den Floating Action Button oder
+        Schnellaktionen direkt im Dashboard – ganz ohne
+        Dialog.</mat-card-content
       >
     </mat-card>
 
-    <mat-card>
-      <mat-card-header class="key-features-header">
-        <mat-icon aria-hidden="true">sync</mat-icon>
-        <mat-card-title i18n="@@landing.feature.live.title"
-          >Live & überall</mat-card-title
-        >
-      </mat-card-header>
-      <mat-card-content i18n="@@landing.feature.live.body"
-        >Alle Geräte. Echtzeit-Sync hält deine Daten überall aktuell – kein
-        Refresh nötig.</mat-card-content
-      >
-    </mat-card>
-
-    <mat-card>
-      <mat-card-header class="key-features-header">
-        <mat-icon aria-hidden="true">emoji_events</mat-icon>
-        <mat-card-title i18n="@@landing.feature.streak.title"
-          >Streaks & Bestenliste</mat-card-title
-        >
-      </mat-card-header>
-      <mat-card-content i18n="@@landing.feature.streak.body"
-        >Täglich dabei bleiben. Verfolge deine Streak und miss dich mit der
-        Community.</mat-card-content
-      >
-    </mat-card>
-
-    <mat-card>
-      <mat-card-header class="key-features-header">
-        <mat-icon aria-hidden="true">lock_open</mat-icon>
-        <mat-card-title i18n="@@landing.feature.free.title"
-          >100% Kostenlos</mat-card-title
-        >
-      </mat-card-header>
-      <mat-card-content i18n="@@landing.feature.free.body"
-        >Keine Kreditkarte. Kein Abo. Einfach registrieren und loslegen – für
-        immer kostenlos.</mat-card-content
-      >
-    </mat-card>
-
-    <mat-card>
+    <mat-card class="feature-card">
       <mat-card-header class="key-features-header">
         <mat-icon aria-hidden="true">auto_awesome</mat-icon>
         <mat-card-title i18n="@@landing.feature.adaptive.title"
-          >Smarte Schnellaktionen</mat-card-title
+          >Adaptive Vorschläge</mat-card-title
         >
       </mat-card-header>
       <mat-card-content i18n="@@landing.feature.adaptive.body"
-        >Basierend auf deiner Trainingshistorie schlägt die App automatisch
-        passende Wiederholungszahlen vor. Ein Tap genügt.</mat-card-content
+        >Die Schnellaktionen lernen aus deiner Historie und schlagen passende
+        Wiederholungen vor – oder du konfigurierst eigene
+        Buttons.</mat-card-content
+      >
+    </mat-card>
+
+    <mat-card class="feature-card">
+      <mat-card-header class="key-features-header">
+        <mat-icon aria-hidden="true">install_mobile</mat-icon>
+        <mat-card-title i18n="@@landing.feature.pwa.title"
+          >PWA, Live-Sync & Web Share</mat-card-title
+        >
+      </mat-card-header>
+      <mat-card-content i18n="@@landing.feature.pwa.body"
+        >Installierbar wie eine native App, Echtzeit-Sync zwischen allen Geräten
+        und Tagesergebnis per Web Share teilen – inklusive Dark- und
+        Light-Theme.</mat-card-content
+      >
+    </mat-card>
+
+    <mat-card class="feature-card">
+      <mat-card-header class="key-features-header">
+        <mat-icon aria-hidden="true">shield</mat-icon>
+        <mat-card-title i18n="@@landing.feature.privacy.title"
+          >Privacy first & 100&nbsp;% kostenlos</mat-card-title
+        >
+      </mat-card-header>
+      <mat-card-content i18n="@@landing.feature.privacy.body"
+        >DSGVO-konform mit anpassbarer Cookie-Zustimmung. Dein Name auf der
+        Bestenliste? Nur wenn du es willst. Kein Abo, keine
+        Kreditkarte.</mat-card-content
       >
     </mat-card>
   </section>
