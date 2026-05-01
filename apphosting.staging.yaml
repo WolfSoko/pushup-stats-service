@@ -18,5 +18,14 @@ env:
     availability:
       - RUNTIME
 
+  # Optional: tag staging events with the same commit-based release as prod so
+  # both share source maps. Falls through harmlessly if the staging project
+  # doesn't have the secret bound (script no-ops without the token).
+  - variable: SENTRY_AUTH_TOKEN
+    secret: SENTRY_AUTH_TOKEN
+    availability:
+      - BUILD
+
 scripts:
+  buildCommand: pnpm nx run web:build -c staging && pnpm sentry:sourcemaps
   runCommand: node dist/web/server/server.mjs

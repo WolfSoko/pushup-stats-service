@@ -308,9 +308,12 @@ Stores consuming server-side precomputed data (e.g. `UserStats`) must validate p
   - **Browser:** Injected into HTML as `globalThis.SENTRY_RELEASE` by the upload script. Read by `Sentry.init()` in `main.ts`.
   - **Server:** Read from `process.env['GIT_SHA']` in `server.ts`.
   - **Cloud Functions:** Read from `process.env['SENTRY_RELEASE']` — written to `data-store/functions-dist/.env` by the upload script during CI deploy.
-- **Release lifecycle:** The deploy script (`scripts/upload-sentry-sourcemaps.sh`) creates a release, links commits (`set-commits --auto` for suspect commits), uploads source maps (web + Cloud Functions), and finalizes the release. Map files are deleted from build outputs after upload so they are not shipped to production.
+- **Release lifecycle:** The deploy script (`scripts/upload-sentry-sourcemaps.sh`) creates a release, links commits (`set-commits --auto --ignore-missing` for suspect commits), injects debug IDs, uploads source maps (web + Cloud Functions) with `--strict`, and finalizes the release. Map files are deleted from build outputs after upload so they are not shipped to production. The script is idempotent and a no-op if `SENTRY_AUTH_TOKEN` is unset, so local builds and uninitialized environments don't break.
 - **Config:** Org and project are set in `.sentryclirc`. DSN is hardcoded in `main.ts`, `server.ts`, and CF `index.ts`.
-- **GitHub Secret required:** `SENTRY_AUTH_TOKEN` — Sentry auth token with scopes `org:ci`, `project:releases`, `project:write`. The deploy step is skipped gracefully when the secret is absent.
+- **`SENTRY_AUTH_TOKEN` is needed in TWO places** (because two separate build pipelines deploy production code):
+  - **GitHub Actions** (Hosting + Functions deploy): repo Secret consumed by `firebase-hosting-merge.yml` job env.
+  - **Firebase App Hosting** (Cloud Run SSR build that serves `pushup-stats.de`): Cloud Secret Manager secret named `SENTRY_AUTH_TOKEN`, referenced as a `BUILD`-availability secret in `apphosting.yaml`. Without this, the bundles deployed to Cloud Run have debug IDs that don't match anything in Sentry → minified stack traces in production. One-time setup: `gcloud secrets create SENTRY_AUTH_TOKEN` + `firebase apphosting:secrets:grantaccess SENTRY_AUTH_TOKEN --backend pushup-stats-service`.
+- Token scopes: `org:ci`, `project:releases`, `project:write`. The deploy step is skipped gracefully when the secret is absent.
 
 ## Gotchas & Pitfalls
 
