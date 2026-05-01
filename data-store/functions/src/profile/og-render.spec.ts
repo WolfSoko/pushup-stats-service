@@ -7,7 +7,7 @@ jest.mock('@resvg/resvg-wasm', () => ({
   initWasm: jest.fn(),
 }));
 
-import { buildOgTree } from './og-render';
+import { buildOgTree, _resetOgCachesForTesting } from './og-render';
 import type { PublicProfileProjection } from './public-profile';
 
 describe('buildOgTree', () => {
@@ -81,5 +81,29 @@ describe('buildOgTree', () => {
     expect(tree.props.style.width).toBe('100%');
     expect(tree.props.style.height).toBe('100%');
     expect(String(tree.props.style.background)).toContain('linear-gradient');
+  });
+
+  it('Returns an element of type div at the root', () => {
+    const tree = buildOgTree(profile) as unknown as { type: string };
+    expect(tree.type).toBe('div');
+  });
+
+  it('Renders the stats string with the separator dot between streak and days', () => {
+    // Regression: the combined stats line reads "N Reps · Streak M · D Tage".
+    // The separator must always be present so the three stat groups
+    // stay visually distinct regardless of locale or number value.
+    const text = flatten(buildOgTree(profile));
+    expect(text).toMatch(/Reps\s*·\s*Streak/);
+    expect(text).toMatch(/Streak\s*\d+\s*·\s*\d+\s*Tage/);
+  });
+});
+
+describe('_resetOgCachesForTesting', () => {
+  it('is callable and idempotent so specs can clear module-level caches between runs', () => {
+    expect(typeof _resetOgCachesForTesting).toBe('function');
+    expect(() => {
+      _resetOgCachesForTesting();
+      _resetOgCachesForTesting();
+    }).not.toThrow();
   });
 });

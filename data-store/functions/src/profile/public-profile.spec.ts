@@ -164,6 +164,53 @@ describe('buildPublicProfile', () => {
     });
   });
 
+  it('Returns null for bestSingleEntry when reps is Infinity', () => {
+    const result = buildPublicProfile(
+      uid,
+      { displayName: 'Wolfi', ui: { publicProfile: true } },
+      {
+        bestSingleEntry: { reps: Infinity, timestamp: '2026-04-01T12:00:00Z' },
+        updatedAt: '2026-04-29T00:00:00Z',
+      }
+    );
+    expect(result?.bestSingleEntry).toBeNull();
+  });
+
+  it('Returns null for bestDayTotal when total is NaN', () => {
+    const result = buildPublicProfile(
+      uid,
+      { displayName: 'Wolfi', ui: { publicProfile: true } },
+      {
+        bestDay: { date: '2026-04-15', total: NaN },
+        updatedAt: '2026-04-29T00:00:00Z',
+      }
+    );
+    expect(result?.bestDayTotal).toBeNull();
+  });
+
+  it('Falls back to empty string for updatedAt when value is not a string', () => {
+    const result = buildPublicProfile(
+      uid,
+      { displayName: 'Wolfi', ui: { publicProfile: true } },
+      {
+        total: 100,
+        // @ts-expect-error – intentionally testing bad runtime data
+        updatedAt: 1714383600000,
+      }
+    );
+    expect(result?.updatedAt).toBe('');
+  });
+
+  it('Returns bestSingleEntry and bestDayTotal as null when both are absent', () => {
+    const result = buildPublicProfile(
+      uid,
+      { displayName: 'Wolfi', ui: { publicProfile: true } },
+      { total: 100 }
+    );
+    expect(result?.bestSingleEntry).toBeNull();
+    expect(result?.bestDayTotal).toBeNull();
+  });
+
   // Privacy regression — explicit list of fields a future careless edit
   // could leak. If anyone adds a property to this projection, this spec
   // forces them to acknowledge it.

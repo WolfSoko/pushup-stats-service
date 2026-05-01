@@ -92,5 +92,36 @@ describe('PublicProfileApiService', () => {
 
       expect(result).toBeNull();
     });
+
+    it('Invokes the callable with the function name getPublicProfile', () => {
+      const { service: svc } = setup(async () => ({ data: sampleProfile }));
+      // Regression: the service must wire to the correct Cloud Function name
+      // so requests aren't silently swallowed by an undefined endpoint.
+      void svc.getProfile('abcdef1234567890');
+
+      expect(httpsCallable).toHaveBeenCalledWith(
+        expect.anything(),
+        'getPublicProfile'
+      );
+    });
+
+    it('Given the callable rejects with a code-less Error, Then re-throws', async () => {
+      const err = new Error('unexpected');
+      const { service } = setup(async () => {
+        throw err;
+      });
+
+      await expect(service.getProfile('abcdef1234567890')).rejects.toBe(err);
+    });
+
+    it('Given the callable rejects with a non-Error primitive, Then re-throws it', async () => {
+      // Defensive edge: some SDK transports surface async rejections as
+      // primitives. The service must NOT swallow these as `null` profiles.
+      const { service } = setup(() => Promise.reject('boom-string'));
+
+      await expect(service.getProfile('abcdef1234567890')).rejects.toBe(
+        'boom-string'
+      );
+    });
   });
 });

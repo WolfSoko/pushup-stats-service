@@ -162,4 +162,66 @@ describe('PublicProfilePageComponent', () => {
       ).toBeTruthy();
     });
   });
+
+  describe('SEO and OG image wiring', () => {
+    it('Sets a dynamic OG image URL pointing at the ogProfile function with URL-encoded UID', async () => {
+      await setup({ resolve: sampleProfile });
+
+      const args: unknown[] = seoMock.update.mock.calls.at(-1)!;
+      const ogExtras = args[3] as
+        | { imageUrl?: string; imageAlt?: string }
+        | undefined;
+      expect(ogExtras?.imageUrl).toContain('ogProfile');
+      expect(ogExtras?.imageUrl).toContain(
+        encodeURIComponent(sampleProfile.uid)
+      );
+    });
+
+    it('Sets an imageAlt that mentions the displayName', async () => {
+      await setup({ resolve: sampleProfile });
+
+      const args: unknown[] = seoMock.update.mock.calls.at(-1)!;
+      const ogExtras = args[3] as
+        | { imageUrl?: string; imageAlt?: string }
+        | undefined;
+      expect(ogExtras?.imageAlt).toContain('Wolfi');
+    });
+
+    it('Does not pass an imageUrl in the not-found state (no per-profile card to render)', async () => {
+      await setup({ resolve: null });
+
+      const args: unknown[] = seoMock.update.mock.calls.at(-1)!;
+      const ogExtras = args[3] as { imageUrl?: string } | undefined;
+      expect(ogExtras?.imageUrl).toBeUndefined();
+    });
+
+    it('Includes the canonical path /u/:uid in the SEO call for a ready profile', async () => {
+      await setup({ resolve: sampleProfile });
+
+      const args: unknown[] = seoMock.update.mock.calls.at(-1)!;
+      expect(args[2]).toBe('/u/abcdef1234567890');
+    });
+  });
+
+  describe('Share button visibility', () => {
+    it('Renders the share button when a profile is loaded', async () => {
+      await setup({ resolve: sampleProfile });
+
+      expect(
+        fixture.nativeElement.querySelector(
+          '[data-testid="public-profile-share"]'
+        )
+      ).not.toBeNull();
+    });
+
+    it('Hides the share button on the not-found state', async () => {
+      await setup({ resolve: null });
+
+      expect(
+        fixture.nativeElement.querySelector(
+          '[data-testid="public-profile-share"]'
+        )
+      ).toBeNull();
+    });
+  });
 });
