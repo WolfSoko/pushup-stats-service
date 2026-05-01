@@ -580,12 +580,143 @@
     <h2 id="preview-title" i18n="@@landing.preview.title">
       Deine Statistik auf einen Blick
     </h2>
-    <img
-      src="assets/landing-stats-screenshot.svg"
-      alt="Vorschau der Statistikansicht"
-      i18n-alt="@@landing.preview.alt"
-      loading="lazy"
-    />
+    <div class="preview-visual" aria-hidden="true">
+      <svg viewBox="0 0 1200 720" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient
+            id="lp-screen-bg"
+            x1="0"
+            y1="0"
+            x2="1200"
+            y2="720"
+            gradientUnits="userSpaceOnUse"
+          >
+            <stop class="lp-screen-bg-from" />
+            <stop offset="1" class="lp-screen-bg-to" />
+          </linearGradient>
+        </defs>
+        <rect width="1200" height="720" rx="28" fill="url(#lp-screen-bg)" />
+        <rect
+          x="28"
+          y="28"
+          width="1144"
+          height="664"
+          rx="22"
+          class="lp-screen-frame"
+          stroke-width="1"
+        />
+        <rect
+          x="60"
+          y="72"
+          width="280"
+          height="42"
+          rx="10"
+          class="lp-screen-bar-1"
+        />
+        <rect
+          x="60"
+          y="130"
+          width="220"
+          height="18"
+          rx="9"
+          class="lp-screen-bar-2"
+        />
+        <rect
+          x="60"
+          y="184"
+          width="260"
+          height="120"
+          rx="16"
+          class="lp-screen-tile"
+          stroke-width="1"
+        />
+        <rect
+          x="340"
+          y="184"
+          width="260"
+          height="120"
+          rx="16"
+          class="lp-screen-tile"
+          stroke-width="1"
+        />
+        <rect
+          x="620"
+          y="184"
+          width="260"
+          height="120"
+          rx="16"
+          class="lp-screen-tile"
+          stroke-width="1"
+        />
+        <rect
+          x="60"
+          y="336"
+          width="820"
+          height="290"
+          rx="18"
+          class="lp-screen-chart-bg"
+          stroke-width="1"
+        />
+        <polyline
+          points="110,560 210,520 300,545 390,465 490,500 580,430 690,470 790,405"
+          class="lp-screen-line"
+          stroke-width="8"
+          fill="none"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+        <circle cx="790" cy="405" r="10" class="lp-screen-dot" />
+        <rect
+          x="910"
+          y="336"
+          width="230"
+          height="290"
+          rx="18"
+          class="lp-screen-chart-bg"
+          stroke-width="1"
+        />
+        <rect
+          x="940"
+          y="372"
+          width="170"
+          height="18"
+          rx="9"
+          class="lp-screen-bar-3"
+        />
+        <rect
+          x="940"
+          y="408"
+          width="120"
+          height="14"
+          rx="7"
+          class="lp-screen-bar-4"
+        />
+        <rect
+          x="940"
+          y="438"
+          width="170"
+          height="14"
+          rx="7"
+          class="lp-screen-bar-4"
+        />
+        <rect
+          x="940"
+          y="468"
+          width="140"
+          height="14"
+          rx="7"
+          class="lp-screen-bar-4"
+        />
+        <rect
+          x="940"
+          y="508"
+          width="170"
+          height="68"
+          rx="12"
+          class="lp-screen-bar-1"
+        />
+      </svg>
+    </div>
   </section>
 
   <section class="discover" aria-labelledby="discover-title">

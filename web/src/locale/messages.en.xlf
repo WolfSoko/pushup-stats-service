@@ -2243,23 +2243,6 @@ Deine Position: # ·  Reps        </source>
         <target>Your stats at a glance</target>
       </segment>
     </unit>
-    <unit id="landing.preview.alt">
-      <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
-
-
-            </notes>
-      <segment state="translated">
-        <source>Vorschau der Statistikansicht</source>
-        <target>Preview of the stats view</target>
-
-        
-        
-            </segment>
-
-      
-      
-        </unit>
     <unit id="landing.subtitle">
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
