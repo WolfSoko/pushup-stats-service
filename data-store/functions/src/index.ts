@@ -8,6 +8,7 @@ import { logger } from 'firebase-functions';
 import { defineSecret } from 'firebase-functions/params';
 import { onDocumentWritten } from 'firebase-functions/v2/firestore';
 import { HttpsError, onCall } from 'firebase-functions/v2/https';
+import { onRequest } from 'firebase-functions/v2/https';
 import { onSchedule } from 'firebase-functions/v2/scheduler';
 import webpush from 'web-push';
 import {
@@ -29,6 +30,7 @@ import {
 import {
   buildPublicProfile,
   isValidUid,
+  renderProfileOg,
   type UserConfigForPublicProfile,
   type UserStatsForPublicProfile,
   UserProfile,
@@ -670,6 +672,71 @@ export const getPublicProfile = onCall(
       throw new HttpsError('not-found', 'Profile not available');
     }
     return projection;
+  }
+);
+
+// ─── ogProfile (HTTP, dynamic OpenGraph card) ────────────────────────────────
+// `GET /og/profile?uid=<uid>` — renders a 1200×630 PNG via satori + resvg
+// for the profile's current stats. Returns 404 PNG-of-nothing for users who
+// haven't opted in (same shape as `getPublicProfile`'s privacy guarantee).
+//
+// Cache headers let Firebase Hosting / the function's own CDN do most of
+// the work — full re-render is amortised across hours per user.
+
+export const ogProfile = onRequest(
+  {
+    region: 'europe-west3',
+    invoker: 'public',
+    cors: true,
+    memory: '512MiB',
+    timeoutSeconds: 30,
+  },
+  async (req, res) => {
+    const uidRaw = String(req.query['uid'] ?? '').trim();
+    if (!isValidUid(uidRaw)) {
+      res.status(400).send('invalid uid');
+      return;
+    }
+
+    try {
+      const db = admin.firestore();
+      const [cfgSnap, statsSnap] = await Promise.all([
+        db.collection('userConfigs').doc(uidRaw).get(),
+        db.collection('userStats').doc(uidRaw).get(),
+      ]);
+      const config = cfgSnap.exists
+        ? (cfgSnap.data() as UserConfigForPublicProfile)
+        : null;
+      const stats = statsSnap.exists
+        ? (statsSnap.data() as UserStatsForPublicProfile)
+        : null;
+      const projection = buildPublicProfile(uidRaw, config, stats);
+      if (!projection) {
+        // Same fingerprint as a non-existent UID. Cache the 404 briefly so
+        // a hot-linked card from a private user doesn't hammer Firestore.
+        res.setHeader('Cache-Control', 'public, max-age=60, s-maxage=300');
+        res.status(404).send('Profile not available');
+        return;
+      }
+
+      const png = await renderProfileOg(projection);
+      res.setHeader('Content-Type', 'image/png');
+      res.setHeader('Content-Length', String(png.byteLength));
+      // 5 min browser, 1 h CDN, 1 day stale-while-revalidate so a slow
+      // delta-aggregation pipeline behind userStats doesn't stall a request.
+      res.setHeader(
+        'Cache-Control',
+        'public, max-age=300, s-maxage=3600, stale-while-revalidate=86400'
+      );
+      res.status(200).send(png);
+    } catch (err) {
+      Sentry.captureException(err);
+      logger.error('ogProfile render failed', {
+        uid: uidRaw,
+        err: err instanceof Error ? err.message : String(err),
+      });
+      res.status(500).send('OG render failed');
+    }
   }
 );
 

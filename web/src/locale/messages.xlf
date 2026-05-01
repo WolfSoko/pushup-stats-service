@@ -2570,7 +2570,7 @@
     </unit>
     <unit id="publicProfile.notFound.title">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:57</note>
+        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:69</note>
       </notes>
       <segment>
         <source>Profil nicht gefunden</source>
@@ -2578,7 +2578,7 @@
     </unit>
     <unit id="publicProfile.notFound.body">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:58</note>
+        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:70</note>
       </notes>
       <segment>
         <source>Dieses Profil existiert nicht oder wurde nicht öffentlich freigegeben.</source>
@@ -2586,7 +2586,7 @@
     </unit>
     <unit id="publicProfile.error.title">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:59</note>
+        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:71</note>
       </notes>
       <segment>
         <source>Profil konnte nicht geladen werden</source>
@@ -2594,7 +2594,7 @@
     </unit>
     <unit id="publicProfile.error.body">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:60</note>
+        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:72</note>
       </notes>
       <segment>
         <source>Bitte versuche es später erneut.</source>
@@ -2602,7 +2602,7 @@
     </unit>
     <unit id="publicProfile.retry">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:61</note>
+        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:73</note>
       </notes>
       <segment>
         <source>Erneut versuchen</source>
@@ -2610,7 +2610,7 @@
     </unit>
     <unit id="publicProfile.toHome">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:62</note>
+        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:74</note>
       </notes>
       <segment>
         <source>Zur Startseite</source>
@@ -2618,7 +2618,7 @@
     </unit>
     <unit id="publicProfile.stats">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:63</note>
+        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:75</note>
       </notes>
       <segment>
         <source>Statistik</source>
@@ -2626,7 +2626,7 @@
     </unit>
     <unit id="publicProfile.total">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:64</note>
+        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:76</note>
       </notes>
       <segment>
         <source>Gesamte Reps</source>
@@ -2634,7 +2634,7 @@
     </unit>
     <unit id="publicProfile.streak">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:65</note>
+        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:77</note>
       </notes>
       <segment>
         <source>Aktuelle Streak</source>
@@ -2642,7 +2642,7 @@
     </unit>
     <unit id="publicProfile.days">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:66</note>
+        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:78</note>
       </notes>
       <segment>
         <source>Aktive Tage</source>
@@ -2650,7 +2650,7 @@
     </unit>
     <unit id="publicProfile.entries">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:67</note>
+        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:79</note>
       </notes>
       <segment>
         <source>Einträge</source>
@@ -2658,7 +2658,7 @@
     </unit>
     <unit id="publicProfile.bestSet">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:68</note>
+        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:80</note>
       </notes>
       <segment>
         <source>Bester Einzel-Eintrag</source>
@@ -2666,7 +2666,7 @@
     </unit>
     <unit id="publicProfile.bestDay">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:69</note>
+        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:81</note>
       </notes>
       <segment>
         <source>Bester Tag</source>
@@ -2674,7 +2674,7 @@
     </unit>
     <unit id="publicProfile.share.aria">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:70</note>
+        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:82</note>
       </notes>
       <segment>
         <source>Profil teilen</source>
@@ -2682,7 +2682,7 @@
     </unit>
     <unit id="publicProfile.share">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:71</note>
+        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:83</note>
       </notes>
       <segment>
         <source>Teilen</source>
@@ -2690,7 +2690,7 @@
     </unit>
     <unit id="publicProfile.cta">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:72</note>
+        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:84</note>
       </notes>
       <segment>
         <source>Selbst tracken – pushup-stats.de</source>
@@ -2698,7 +2698,7 @@
     </unit>
     <unit id="publicProfile.share.text">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:105</note>
+        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:117</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="name" disp="profile.displayName"/> hat <ph id="1" equiv="total" disp="profile.total"/> Liegestütze auf Pushup Tracker geschafft 💪 Schau&apos;s dir an:</source>
@@ -2706,7 +2706,7 @@
     </unit>
     <unit id="publicProfile.share.title">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:107</note>
+        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:119</note>
       </notes>
       <segment>
         <source>Pushup Tracker Profil</source>
@@ -2714,7 +2714,7 @@
     </unit>
     <unit id="publicProfile.seo.notFound.title">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:143</note>
+        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:155</note>
       </notes>
       <segment>
         <source>Profil nicht verfügbar – Pushup Tracker</source>
@@ -2722,7 +2722,7 @@
     </unit>
     <unit id="publicProfile.seo.notFound.description">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:144</note>
+        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:156</note>
       </notes>
       <segment>
         <source>Dieses Profil existiert nicht oder ist nicht öffentlich.</source>
@@ -2730,7 +2730,7 @@
     </unit>
     <unit id="publicProfile.seo.title">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:150</note>
+        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:162</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="name" disp="profile.displayName"/> – Pushup Tracker Profil</source>
@@ -2738,10 +2738,18 @@
     </unit>
     <unit id="publicProfile.seo.description">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:151</note>
+        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:163</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="name" disp="profile.displayName"/> hat <ph id="1" equiv="total" disp="profile.total"/> Liegestütze und eine <ph id="2" equiv="streak" disp="profile.currentStreak"/>-Tage-Streak auf Pushup Tracker.</source>
+      </segment>
+    </unit>
+    <unit id="publicProfile.seo.imageAlt">
+      <notes>
+        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:170</note>
+      </notes>
+      <segment>
+        <source><ph id="0" equiv="name" disp="profile.displayName"/> auf Pushup Tracker</source>
       </segment>
     </unit>
     <unit id="reminders.page.title">

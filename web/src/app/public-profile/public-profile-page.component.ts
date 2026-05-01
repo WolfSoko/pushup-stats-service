@@ -26,6 +26,18 @@ type LoadState =
 
 const SHARE_URL_BASE = 'https://pushup-stats.de';
 
+/**
+ * Public URL of the dynamic OG image function. We do NOT branch by env
+ * here on purpose — staging/dev have a small audience and social cards are
+ * a production-shipping concern; falling back to the default static
+ * og:image (set by `index.html`) on staging is acceptable.
+ *
+ * The function lives behind the legacy `cloudfunctions.net` alias rather
+ * than the `*.run.app` URL so the URL stays stable across redeploys.
+ */
+const OG_IMAGE_BASE =
+  'https://europe-west3-pushup-stats.cloudfunctions.net/ogProfile';
+
 @Component({
   selector: 'app-public-profile-page',
   standalone: true,
@@ -149,7 +161,14 @@ export class PublicProfilePageComponent {
     this.seo.update(
       $localize`:@@publicProfile.seo.title:${profile.displayName}:name: – Pushup Tracker Profil`,
       $localize`:@@publicProfile.seo.description:${profile.displayName}:name: hat ${profile.total}:total: Liegestütze und eine ${profile.currentStreak}:streak:-Tage-Streak auf Pushup Tracker.`,
-      `/u/${profile.uid}`
+      `/u/${profile.uid}`,
+      {
+        // Per-user dynamic OG card (1200×630 PNG rendered by satori + resvg
+        // in the `ogProfile` Cloud Function). Crawlers fetch this directly,
+        // so the full absolute URL is required.
+        imageUrl: `${OG_IMAGE_BASE}?uid=${encodeURIComponent(profile.uid)}`,
+        imageAlt: $localize`:@@publicProfile.seo.imageAlt:${profile.displayName}:name: auf Pushup Tracker`,
+      }
     );
   }
 }
