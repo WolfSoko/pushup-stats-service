@@ -27,13 +27,8 @@
 
   <rect width="320" height="160" rx="14" class="bg"/>
 
-  <text x="16" y="22" class="legend-text">Mo</text>
-  <text x="16" y="50" class="legend-text">Mi</text>
-  <text x="16" y="78" class="legend-text">Fr</text>
-  <text x="16" y="106" class="legend-text">So</text>
-
   <!-- 18 weeks x 7 days grid, cell 14x14 with 2px gap -->
-  <g transform="translate(40, 14)">
+  <g transform="translate(35, 14)">
     <!-- generated heatmap pattern -->
     <g>
       <!-- week 0 -->
@@ -183,14 +178,12 @@
     </g>
   </g>
 
-  <g transform="translate(40, 130)">
-    <text x="0" y="9" class="legend-text">Wenig</text>
-    <rect x="36" y="0"  width="11" height="11" rx="2" class="day-empty"/>
-    <rect x="49" y="0"  width="11" height="11" rx="2" class="day-1"/>
-    <rect x="62" y="0"  width="11" height="11" rx="2" class="day-2"/>
-    <rect x="75" y="0"  width="11" height="11" rx="2" class="day-3"/>
-    <rect x="88" y="0"  width="11" height="11" rx="2" class="day-4"/>
-    <rect x="101" y="0" width="11" height="11" rx="2" class="day-5"/>
-    <text x="118" y="9" class="legend-text">Viel</text>
+  <g transform="translate(122, 130)">
+    <rect x="0"  y="0" width="11" height="11" rx="2" class="day-empty"/>
+    <rect x="13" y="0" width="11" height="11" rx="2" class="day-1"/>
+    <rect x="26" y="0" width="11" height="11" rx="2" class="day-2"/>
+    <rect x="39" y="0" width="11" height="11" rx="2" class="day-3"/>
+    <rect x="52" y="0" width="11" height="11" rx="2" class="day-4"/>
+    <rect x="65" y="0" width="11" height="11" rx="2" class="day-5"/>
   </g>
 </svg>

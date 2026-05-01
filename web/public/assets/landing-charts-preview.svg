@@ -50,22 +50,22 @@
     <polyline class="line" points="0,95 25,80 50,82 75,55 100,62 125,40 150,48 175,25 200,30"/>
     <circle cx="200" cy="30" r="4" class="dot"/>
     <line x1="0" y1="120" x2="200" y2="120" class="axis"/>
-    <text x="0" y="134" class="axis-label">Mo</text>
-    <text x="35" y="134" class="axis-label">Di</text>
-    <text x="70" y="134" class="axis-label">Mi</text>
-    <text x="105" y="134" class="axis-label">Do</text>
-    <text x="140" y="134" class="axis-label">Fr</text>
-    <text x="170" y="134" class="axis-label">Sa</text>
-    <text x="195" y="134" class="axis-label">So</text>
+    <!-- Tick marks instead of locale-specific weekday labels -->
+    <line x1="0"   y1="120" x2="0"   y2="124" class="axis"/>
+    <line x1="33"  y1="120" x2="33"  y2="124" class="axis"/>
+    <line x1="66"  y1="120" x2="66"  y2="124" class="axis"/>
+    <line x1="100" y1="120" x2="100" y2="124" class="axis"/>
+    <line x1="133" y1="120" x2="133" y2="124" class="axis"/>
+    <line x1="166" y1="120" x2="166" y2="124" class="axis"/>
+    <line x1="200" y1="120" x2="200" y2="124" class="axis"/>
   </g>
 
-  <!-- Pie / type breakdown -->
-  <g transform="translate(258, 60)">
+  <!-- Pie / type breakdown (segments speak for themselves) -->
+  <g transform="translate(258, 70)">
     <circle r="28" class="pie-track"/>
     <!-- Approx pie: Standard 60%, Wide 25%, Diamond 15% -->
     <circle r="28" class="pie-1" stroke-dasharray="105 176" transform="rotate(-90)"/>
     <circle r="28" class="pie-2" stroke-dasharray="44 176" transform="rotate(125)"/>
     <circle r="28" class="pie-3" stroke-dasharray="26 176" transform="rotate(215)"/>
   </g>
-  <text x="258" y="118" text-anchor="middle" class="pie-label">Typen</text>
 </svg>
