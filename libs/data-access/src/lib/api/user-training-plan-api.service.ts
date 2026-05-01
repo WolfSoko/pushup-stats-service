@@ -1,11 +1,14 @@
 import { inject, Injectable } from '@angular/core';
 import { Auth } from '@angular/fire/auth';
 import {
+  arrayRemove,
+  arrayUnion,
   doc,
   docData,
   DocumentReference,
   Firestore,
   setDoc,
+  updateDoc,
 } from '@angular/fire/firestore';
 import { UserTrainingPlan, UserTrainingPlanUpdate } from '@pu-stats/models';
 import { from, map, Observable, of } from 'rxjs';
@@ -76,6 +79,39 @@ export class UserTrainingPlanApiService {
           }) as UserTrainingPlan
       )
     );
+  }
+
+  /**
+   * Atomic add/remove for `completedDays`. The default `updatePlan`
+   * path overwrites the whole array via `setDoc({merge:true})`, so
+   * two concurrent in-flight writes (e.g. auto-mark for today racing
+   * with a manual `logPlanDay(yesterday)`) can drop a completion.
+   * `arrayUnion`/`arrayRemove` work at the field-element level, so
+   * concurrent writes to *different* day indexes are merged
+   * correctly server-side.
+   */
+  addCompletedDay(userId: string, dayIndex: number): Observable<void> {
+    const effectiveUserId = this.resolveUserId(userId);
+    if (!effectiveUserId || !this.firestore) return of(void 0);
+    const ref = this.docRef(effectiveUserId);
+    return from(
+      updateDoc(ref, {
+        completedDays: arrayUnion(dayIndex),
+        updatedAt: new Date().toISOString(),
+      })
+    ).pipe(map(() => void 0));
+  }
+
+  removeCompletedDay(userId: string, dayIndex: number): Observable<void> {
+    const effectiveUserId = this.resolveUserId(userId);
+    if (!effectiveUserId || !this.firestore) return of(void 0);
+    const ref = this.docRef(effectiveUserId);
+    return from(
+      updateDoc(ref, {
+        completedDays: arrayRemove(dayIndex),
+        updatedAt: new Date().toISOString(),
+      })
+    ).pipe(map(() => void 0));
   }
 
   /**

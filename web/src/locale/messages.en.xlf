@@ -5720,8 +5720,8 @@ Deine Position: # ·  Reps        </source>
     </unit>
     <unit id="trainingPlans.markAria">
       <segment state="translated">
-        <source>Als erledigt markieren</source>
-        <target>Mark as done</target>
+        <source>Nur als erledigt markieren (ohne Eintrag)</source>
+        <target>Mark as done only (no entry created)</target>
       </segment>
     </unit>
     <unit id="trainingPlans.unmarkAria">
@@ -5830,6 +5830,36 @@ Deine Position: # ·  Reps        </source>
       <segment state="translated">
         <source>Teilen ist auf diesem Gerät nicht möglich.</source>
         <target>Sharing is not available on this device.</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.logToday">
+      <segment state="translated">
+        <source>Heute eintragen</source>
+        <target>Log today</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.logAria">
+      <segment state="translated">
+        <source>Plan-Sätze eintragen und als erledigt markieren</source>
+        <target>Log plan sets and mark as done</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.logged">
+      <segment state="translated">
+        <source>Plan-Sätze wurden eingetragen.</source>
+        <target>Plan sets were logged.</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.alreadyLogged">
+      <segment state="translated">
+        <source>Tag war schon eingetragen — als erledigt markiert.</source>
+        <target>Day was already logged — marked as done.</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.notReady">
+      <segment state="translated">
+        <source>Daten werden noch geladen, bitte gleich noch einmal versuchen.</source>
+        <target>Data still loading, please try again in a moment.</target>
       </segment>
     </unit>
   </file>

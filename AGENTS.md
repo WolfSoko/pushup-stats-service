@@ -35,7 +35,8 @@ When making changes, always write or update relevant tests as part of the same c
 - **Never** instantiate Angular services, guards, or components with `new` when they depend on DI. Use `TestBed` or `@testing-library/angular`'s `render`.
 - **Guards** must be tested in a real Angular router/TestBed context, not as plain functions.
 - **Mock providers via Angular DI** (`{ provide: ..., useValue: ... }`), not by patching `inject()` directly.
-- **External functions** (e.g. `deleteUser` from Firebase) are mocked on the imported module — never with dynamic `import()` or `require()`.
+- **External functions** (e.g. `deleteUser` from Firebase) are mocked on the imported module — never with dynamic `import()` or `require()`. Use a static `import * as ns from '@angular/fire/firestore'` and reference `ns.doc`/`ns.docData` after `jest.mock(...)`; avoid repeating `await import(...)` per test.
+- **`PLATFORM_ID: 'server'` in tests for stores that start a `setInterval` / browser-only timer** in `withHooks`. Otherwise the timer leaks across `TestBed.resetTestingModule()` and tests pile up wall-clock work.
 - **Given-When-Then** style tests are preferred.
 
 ## Tech Stack
@@ -81,9 +82,10 @@ When making changes, always write or update relevant tests as part of the same c
   - `MotivationStore` - quote cache with user-keyed localStorage (motivation module)
   - `LiveDataStore` - Firestore real-time entries + tick (data-access, browser-only)
   - `LeaderboardStore` - shared leaderboard data with `load({ force })` (data-access)
+  - `TrainingPlanStore` - active training plan, derived "today" state, plan-day mutation methods (app-level)
   - `AuthStore`, `ReminderStore`, `PushSubscriptionStore`, `ThemeService` (existing)
 - **Feature/form state:** signalStore with component-level DI
-  - `DashboardStore` - stats, goals, ads, motivation for dashboard page
+  - `DashboardStore` - stats, goals, ads, motivation, plan-day target override for dashboard page
   - `AnalysisStore` - date filters, trends, breakdowns for analysis page
   - `EntriesStore` - CRUD, filters, browser/SSR hybrid for entries page
   - `ReminderFormStore`, `LoginUiStore`, `RegisterUiStore` (existing)
@@ -120,6 +122,15 @@ UI Component  →  Signal Store  →  API Service
 - Both modes return `CreateEntryResult` on submit. The stats table's `openEditDialog()` maps the result back to an update emission.
 - **Sets UX:** Starts with a single "Reps" field. A "+" button adds sets (pre-filled from previous value). Multi-set mode shows "Set 1", "Set 2", etc. with remove buttons and a total display.
 
+**Training Plans (curated catalog + active-plan state):**
+
+- **Catalog** (`libs/stats/src/lib/models/training-plan.catalog.ts`): static, versioned plan definitions with per-day `kind` (`main`/`light`/`rest`/`test`), `targetReps`, optional `sets[]`, and bilingual descriptions (`description` / `descriptionEn`). Plan IDs carry a `-vN` suffix so old `UserTrainingPlan` docs keep resolving when targets change.
+- **Per-user state** (`userTrainingPlans/{userId}` in Firestore): `planId`, `startDate`, `status`, `completedDays[]`. Single active plan per user; starting another overwrites the doc.
+- **Locale-aware rendering:** `localizePlan(plan, LOCALE_ID)` swaps title/summary/description fields. The catalog stores both languages because plans are structured curated data — putting them in XLIFF would lose the per-day pairing.
+- **Single source of truth = `pushups` collection:** the `completedDays` flag is a UI shortcut. `logPlanDay(idx)` writes a real `pushups` entry (with `source: 'plan'`, plan-prescribed sets, noon timestamp on the plan day's calendar date) AND flips the flag. Without the entry, stats/streaks/leaderboard wouldn't reflect the workout.
+- **Auto-mark via `effect()` in `withHooks`:** when `LiveDataStore.entries()` push today's reps past the plan target, today's flag flips automatically — read-only, never creates a new entry. Lets the existing Quick-Add/dialog flows propagate plan progress without an explicit button click.
+- **Day-tick signal:** Berlin-date-based `currentDayIndex()` has no inherent signal dependency, so a long-running browser tab caches the previous calendar day past midnight. The store ticks an internal `_dayTick` signal once a minute (browser-only) so derived day state recomputes within ~60 s of midnight.
+
 ### Module Boundary Rules
 
 Enforced via `@nx/enforce-module-boundaries` in `eslint.config.mjs`:
@@ -141,6 +152,8 @@ Split into focused files under `libs/stats/src/lib/models/`:
 - `user-config.models.ts` - UserConfig, UserConfigUpdate
 - `reminder-config.models.ts` - ReminderConfig
 - `user-stats.models.ts` - UserStats (server-side precomputed), emptyUserStats, USERSTATS_VERSION
+- `training-plan.models.ts` - TrainingPlan, TrainingPlanDay, UserTrainingPlan, `localizePlan()`, `currentPlanDayIndex()`, `planDayByIndex()`, `isPlanCompleted()`. `parseIsoDate` round-trips Y/M/D after `new Date()` to reject impossible dates like `2026-02-30`.
+- `training-plan.catalog.ts` - curated `TRAINING_PLANS` array + `findPlanById()` / `findPlanBySlug()` lookups. Test invariant: every plan's day indexes form a contiguous `1..totalDays` sequence and rest days have `targetReps === 0`.
   - UserStats includes a `version` field for migration support. See [`docs/gotchas/cloud-functions.md`](docs/gotchas/cloud-functions.md) for the versioning strategy.
 
 ## Commands
@@ -201,6 +214,22 @@ A separate Firebase project (`pushup-stats-staging-867b7`) provides full isolati
 - **Firestore region:** `europe-west3` (Frankfurt). Must match when creating the database in Firebase Console.
 - **Firestore rules & indexes** are shared source files (`data-store/firestore.rules`, `data-store/firestore.indexes.json`) deployed to both projects.
 - **Infra scripts:** `infra/setup-staging.sh` automates full project setup (APIs, SA, IAM, secrets); `infra/teardown-staging.sh` removes deploy resources. Both support `--dry-run`.
+
+### Firestore Rules — adding a new collection
+
+`data-store/firestore.rules` ends with a deny-all fallback (`match /{document=**} { allow read, write: if false; }`). **Every new collection a client reads or writes needs a matching `match` block** — without it, authenticated users hit `permission-denied` in production. Both PR preview and merge deploy run `firebase deploy --only functions,firestore`, so the rules ship together with the code, but propagation can lag the hosting deploy by 10–30 s; staging-preview testers may briefly see permission errors on the first request after a redeploy.
+
+Default pattern for owner-only single-doc-per-user collections (e.g. `userTrainingPlans`):
+
+```
+match /userTrainingPlans/{userId} {
+  allow read: if request.auth != null && request.auth.uid == userId;
+  allow create, update: if request.auth != null
+                        && request.auth.uid == userId
+                        && request.resource.data.userId == userId;
+  allow delete: if request.auth != null && request.auth.uid == userId;
+}
+```
 
 ## Pre-Push Checklist
 
