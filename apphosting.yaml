@@ -16,9 +16,26 @@ env:
     availability:
       - RUNTIME
 
+  # Sentry auth token for source map upload during App Hosting's build.
+  # App Hosting builds independently from GitHub Actions, so the bundles served
+  # at pushup-stats.de need their own debug-ID upload — otherwise Sentry can't
+  # match runtime stack traces to source maps.
+  #
+  # Setup (one-time, requires gcloud + Firebase project owner role):
+  #   gcloud secrets create SENTRY_AUTH_TOKEN --replication-policy=automatic
+  #   echo -n "<token>" | gcloud secrets versions add SENTRY_AUTH_TOKEN --data-file=-
+  #   firebase apphosting:secrets:grantaccess SENTRY_AUTH_TOKEN \
+  #     --backend pushup-stats-service --project pushup-stats
+  - variable: SENTRY_AUTH_TOKEN
+    secret: SENTRY_AUTH_TOKEN
+    availability:
+      - BUILD
+
 # Grant access to secrets in Cloud Secret Manager.
 # See https://firebase.google.com/docs/app-hosting/configure#secret-parameters
-# - variable: MY_SECRET
-#   secret: mySecretRef
 scripts:
+  # Custom build: produce the Angular SSR artifact, then upload debug IDs +
+  # source maps to Sentry. The Sentry script is a no-op if SENTRY_AUTH_TOKEN
+  # is not bound, so the build still succeeds during initial bring-up.
+  buildCommand: pnpm nx run web:build -c production && pnpm sentry:sourcemaps
   runCommand: node dist/web/server/server.mjs
