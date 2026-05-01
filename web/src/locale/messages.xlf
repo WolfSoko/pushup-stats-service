@@ -2362,15 +2362,23 @@
     </unit>
     <unit id="landing.trust.bar">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:191,194</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:191,195</note>
       </notes>
       <segment>
         <source> ✓ Kostenlos · ✓ Kein Abo · ✓ Keine Kreditkarte · ✓ Datenschutz first </source>
       </segment>
     </unit>
+    <unit id="landing.features.aria">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:196,197</note>
+      </notes>
+      <segment>
+        <source>Funktionen</source>
+      </segment>
+    </unit>
     <unit id="landing.feature.multiset.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:289,291</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:284,286</note>
       </notes>
       <segment>
         <source>Multi-Set Tracking</source>
@@ -2378,7 +2386,7 @@
     </unit>
     <unit id="landing.feature.multiset.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:293,295</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:288,290</note>
       </notes>
       <segment>
         <source>Erfasse jeden Satz einzeln – z. B. 12 + 10 + 8. Die App summiert automatisch und zeigt deine durchschnittliche Set-Größe.</source>
@@ -2386,7 +2394,7 @@
     </unit>
     <unit id="landing.feature.analytics.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:358,360</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:353,355</note>
       </notes>
       <segment>
         <source>Charts, Trends &amp; Pushup-Typen</source>
@@ -2394,7 +2402,7 @@
     </unit>
     <unit id="landing.feature.analytics.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:362,365</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:357,360</note>
       </notes>
       <segment>
         <source>Verlaufsdiagramme, KPI-Karten, Verteilung nach Standard, Wide oder Diamond – mit frei wählbarem Zeitraum.</source>
@@ -2402,7 +2410,7 @@
     </unit>
     <unit id="landing.feature.goals.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:462,464</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:454,456</note>
       </notes>
       <segment>
         <source>Tages-, Wochen- &amp; Monatsziele</source>
@@ -2410,7 +2418,7 @@
     </unit>
     <unit id="landing.feature.goals.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:466,469</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:458,461</note>
       </notes>
       <segment>
         <source>Dreifacher Fortschrittsbalken hält dich auf Kurs. Streak-Anzeige belohnt dranbleiben, Konfetti feiert dein erreichtes Tagesziel.</source>
@@ -2418,7 +2426,7 @@
     </unit>
     <unit id="landing.feature.heatmap.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:510,512</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:502,504</note>
       </notes>
       <segment>
         <source>Heatmap-Kalender</source>
@@ -2426,7 +2434,7 @@
     </unit>
     <unit id="landing.feature.heatmap.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:514,518</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:506,510</note>
       </notes>
       <segment>
         <source>Sieh auf einen Blick, an welchen Tagen du wie hart trainiert hast. Lücken werden sichtbar – Konsistenz wird zur Gewohnheit.</source>
@@ -2434,7 +2442,7 @@
     </unit>
     <unit id="landing.feature.quick.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:524,526</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:516,518</note>
       </notes>
       <segment>
         <source>Quick Logging mit FAB</source>
@@ -2442,7 +2450,7 @@
     </unit>
     <unit id="landing.feature.quick.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:528,531</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:520,523</note>
       </notes>
       <segment>
         <source>Eintrag in 2 Sekunden über den Floating Action Button oder Schnellaktionen direkt im Dashboard – ganz ohne Dialog.</source>
@@ -2450,7 +2458,7 @@
     </unit>
     <unit id="landing.feature.adaptive.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:538,540</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:530,532</note>
       </notes>
       <segment>
         <source>Adaptive Vorschläge</source>
@@ -2458,7 +2466,7 @@
     </unit>
     <unit id="landing.feature.adaptive.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:542,546</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:534,538</note>
       </notes>
       <segment>
         <source>Die Schnellaktionen lernen aus deiner Historie und schlagen passende Wiederholungen vor – oder du konfigurierst eigene Buttons.</source>
@@ -2466,7 +2474,7 @@
     </unit>
     <unit id="landing.feature.pwa.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:552,554</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:544,546</note>
       </notes>
       <segment>
         <source>PWA, Live-Sync &amp; Web Share</source>
@@ -2474,7 +2482,7 @@
     </unit>
     <unit id="landing.feature.pwa.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:556,559</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:548,551</note>
       </notes>
       <segment>
         <source>Installierbar wie eine native App, Echtzeit-Sync zwischen allen Geräten und Tagesergebnis per Web Share teilen – inklusive Dark- und Light-Theme.</source>
@@ -2482,7 +2490,7 @@
     </unit>
     <unit id="landing.feature.privacy.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:566,568</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:558,560</note>
       </notes>
       <segment>
         <source>Privacy first &amp; 100 % kostenlos</source>
@@ -2490,7 +2498,7 @@
     </unit>
     <unit id="landing.feature.privacy.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:570,574</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:562,566</note>
       </notes>
       <segment>
         <source>DSGVO-konform mit anpassbarer Cookie-Zustimmung. Dein Name auf der Bestenliste? Nur wenn du es willst. Kein Abo, keine Kreditkarte.</source>
@@ -2498,7 +2506,7 @@
     </unit>
     <unit id="ads.landing.aria">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:576</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:568</note>
       </notes>
       <segment>
         <source>Werbung</source>
@@ -2506,7 +2514,7 @@
     </unit>
     <unit id="landing.preview.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:581,583</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:573,575</note>
       </notes>
       <segment>
         <source> Deine Statistik auf einen Blick </source>
@@ -2514,7 +2522,7 @@
     </unit>
     <unit id="landing.discover.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:674,675</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:715,716</note>
       </notes>
       <segment>
         <source>Mehr entdecken</source>
@@ -2522,7 +2530,7 @@
     </unit>
     <unit id="landing.discover.leaderboard.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:680,682</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:721,723</note>
       </notes>
       <segment>
         <source>Bestenliste</source>
@@ -2530,7 +2538,7 @@
     </unit>
     <unit id="landing.discover.leaderboard.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:684,687</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:725,728</note>
       </notes>
       <segment>
         <source> Vergleiche dich mit der Community: tägliche, wöchentliche und monatliche Top-Reps. Privacy first – dein Name erscheint nur, wenn du es willst. </source>
@@ -2538,7 +2546,7 @@
     </unit>
     <unit id="landing.discover.leaderboard.cta">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:694,697</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:735,738</note>
       </notes>
       <segment>
         <source>Zur Bestenliste</source>
@@ -2546,7 +2554,7 @@
     </unit>
     <unit id="landing.discover.blog.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:703,705</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:744,746</note>
       </notes>
       <segment>
         <source>Blog</source>
@@ -2554,7 +2562,7 @@
     </unit>
     <unit id="landing.discover.blog.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:707,710</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:748,751</note>
       </notes>
       <segment>
         <source> Tipps, Hintergrundwissen und Motivation rund um Liegestütze – von Einsteiger bis Fortgeschritten. Viele Artikel verlinken direkt auf den passenden Trainingsplan. </source>
@@ -2562,7 +2570,7 @@
     </unit>
     <unit id="landing.discover.blog.cta">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:717,719</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:758,760</note>
       </notes>
       <segment>
         <source>Zum Blog</source>

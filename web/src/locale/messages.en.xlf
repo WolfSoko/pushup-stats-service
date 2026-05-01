@@ -1946,7 +1946,7 @@ Active:         </target>
             </notes>
       <segment state="translated">
         <source>Privacy first &amp; 100&#xA0;% kostenlos</source>
-        <target>Privacy first &amp; 100&#xA0;% free</target>
+        <target>Privacy first &amp; 100% free</target>
             </segment>
         </unit>
     <unit id="landing.feature.privacy.body">
@@ -1958,6 +1958,15 @@ Active:         </target>
         <target>GDPR-friendly with customisable cookie consent. Your name on the leaderboard? Only if you want it there. No subscription, no credit card.</target>
             </segment>
         </unit>
+    <unit id="landing.features.aria">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+      </notes>
+      <segment state="translated">
+        <source>Funktionen</source>
+        <target>Features</target>
+      </segment>
+    </unit>
     <unit id="landing.discover.title">
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>

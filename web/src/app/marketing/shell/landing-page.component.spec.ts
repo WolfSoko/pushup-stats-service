@@ -359,5 +359,23 @@ describe('LandingPageComponent', () => {
       const week0Levels = component.heatmapWeeks[0].days.map((d) => d.level);
       expect(week0Levels).toEqual(['1', 'empty', '2', '1', '3', 'empty', '2']);
     });
+
+    it('renders one rect per day in the heatmap preview SVG', async () => {
+      const view = await render(LandingPageComponent, {
+        providers: [
+          provideRouter([]),
+          { provide: AdsStore, useValue: adsConfigMock },
+          { provide: AuthService, useValue: makeAuthServiceMock() },
+          { provide: AuthStore, useValue: makeAuthStoreMock() },
+        ],
+      });
+      const host = view.fixture.nativeElement as HTMLElement;
+
+      // The 18 × 7 grid + the 6-step legend below it = 132 rects
+      const dayCells = host.querySelectorAll(
+        '.feature-visual--heatmap rect[class^="lp-day-"]'
+      );
+      expect(dayCells).toHaveLength(18 * 7 + 6);
+    });
   });
 });
