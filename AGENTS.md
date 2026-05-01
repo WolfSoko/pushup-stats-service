@@ -314,17 +314,17 @@ Stores consuming server-side precomputed data (e.g. `UserStats`) must validate p
 
 ## Observability (Sentry)
 
-- **SDKs:** `@sentry/angular` (browser, `web/src/main.ts`) + `@sentry/node` (SSR server, `web/src/server.ts` + Cloud Functions, `data-store/functions/src/index.ts`). Browser and SSR only active in production; Cloud Functions always active.
-- **Release identifier:** Short git SHA (e.g. `abc1234`). No semantic versioning.
-  - **Browser:** Injected into HTML as `globalThis.SENTRY_RELEASE` by the upload script. Read by `Sentry.init()` in `main.ts`.
-  - **Server:** Read from `process.env['GIT_SHA']` in `server.ts`.
-  - **Cloud Functions:** Read from `process.env['SENTRY_RELEASE']` — written to `data-store/functions-dist/.env` by the upload script during CI deploy.
-- **Release lifecycle:** The deploy script (`scripts/upload-sentry-sourcemaps.sh`) creates a release, links commits (`set-commits --auto --ignore-missing` for suspect commits), injects debug IDs, uploads source maps (web + Cloud Functions) with `--strict`, and finalizes the release. Map files are deleted from build outputs after upload so they are not shipped to production. The script is idempotent and a no-op if `SENTRY_AUTH_TOKEN` is unset, so local builds and uninitialized environments don't break.
-- **Config:** Org and project are set in `.sentryclirc`. DSN is hardcoded in `main.ts`, `server.ts`, and CF `index.ts`.
-- **`SENTRY_AUTH_TOKEN` is needed in TWO places** (because two separate build pipelines deploy production code):
-  - **GitHub Actions** (Hosting + Functions deploy): repo Secret consumed by `firebase-hosting-merge.yml` job env.
-  - **Firebase App Hosting** (Cloud Run SSR build that serves `pushup-stats.de`): Cloud Secret Manager secret named `SENTRY_AUTH_TOKEN`, referenced as a `BUILD`-availability secret in `apphosting.yaml`. Without this, the bundles deployed to Cloud Run have debug IDs that don't match anything in Sentry → minified stack traces in production. One-time setup: `gcloud secrets create SENTRY_AUTH_TOKEN` + `firebase apphosting:secrets:grantaccess SENTRY_AUTH_TOKEN --backend pushup-stats-service`.
-- Token scopes: `org:ci`, `project:releases`, `project:write`. The deploy step is skipped gracefully when the secret is absent.
+`@sentry/angular` (browser) + `@sentry/node` (SSR + Cloud Functions). Stack traces in production must resolve to TypeScript source — if you see minified `chunk-XYZ.js:1:144929` in a Sentry issue, the source map upload is broken. **Read [`docs/observability/sentry.md`](docs/observability/sentry.md) before touching `scripts/upload-sentry-sourcemaps.sh`, `apphosting.yaml`, or any `Sentry.init(...)` call.** Key gotcha: `SENTRY_AUTH_TOKEN` lives in TWO places (GitHub repo Secret + Cloud Secret Manager for App Hosting) — the doc explains why and how to set both up.
+
+## Documentation
+
+Detailed reference material lives in [`docs/`](docs/). **Before touching any area listed below, read the relevant doc first** — even if you think you remember the setup. The cost of reading a 5-minute doc is much lower than the cost of breaking a subtle invariant. Default rule: **if there's even a small chance a docs file is relevant to the change you're making, read it before making the change.** Linking to a doc from this file is an explicit signal that the doc contains constraints not obvious from the code.
+
+| Area | File |
+| --- | --- |
+| Sentry source maps, releases, `SENTRY_AUTH_TOKEN` setup | [`docs/observability/sentry.md`](docs/observability/sentry.md) |
+| Pitfalls per-topic (signals, tests, Cloud Functions, push, i18n, …) | [`docs/gotchas/`](docs/gotchas/) — see table below |
+| Firebase environments + deployment | [`docs/Firebase_DEPLOYMENT.md`](docs/Firebase_DEPLOYMENT.md), [`docs/firebase-environments.md`](docs/firebase-environments.md) |
 
 ## Gotchas & Pitfalls
 
