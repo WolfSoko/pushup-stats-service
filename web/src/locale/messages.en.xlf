@@ -6072,6 +6072,12 @@ Deine Position: # ·  Reps        </source>
         <target>Pushup Tracker</target>
       </segment>
     </unit>
+    <unit id="publicProfile.seo.imageAlt">
+      <segment state="translated">
+        <source><ph id="0" equiv="name" disp="name"/> auf Pushup Tracker</source>
+        <target><ph id="0" equiv="name" disp="name"/> on Pushup Tracker</target>
+      </segment>
+    </unit>
     <unit id="publicProfile.notFound.title">
       <segment state="translated">
         <source>Profil nicht gefunden</source>
