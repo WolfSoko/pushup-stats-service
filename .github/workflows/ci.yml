@@ -11,6 +11,7 @@ concurrency:
 jobs:
   lint-test-build:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     env:
       # Für PRs nur Read-Token, für main Pushes Write-Token.
       # Bei Fork-PRs sind Secrets automatisch nicht verfügbar.
@@ -85,6 +86,7 @@ jobs:
     # (which gates on the overall CI workflow conclusion).
     continue-on-error: true
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     permissions:
       contents: write
     steps:
