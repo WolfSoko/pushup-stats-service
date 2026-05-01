@@ -345,6 +345,14 @@ import { AnalysisStore } from '../analysis.store';
       .best-grid {
         grid-template-columns: 1fr;
       }
+      .heatmap-full mat-card-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+      }
+      .heatmap-toggle {
+        margin-left: 0;
+      }
     }
   `,
 })

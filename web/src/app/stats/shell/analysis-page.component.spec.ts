@@ -275,6 +275,20 @@ describe('AnalysisPageComponent', () => {
     expect(wide?.avgSetSize).toBe(0);
   });
 
+  it('places the heatmap reps/sets toggle inside the heatmap card header so the mobile stacked layout applies', () => {
+    fixture.detectChanges();
+    const host: HTMLElement = fixture.nativeElement;
+
+    const heatmapCard = host.querySelector('.heatmap-full');
+    expect(heatmapCard).toBeTruthy();
+
+    const headerToggle = heatmapCard?.querySelector(
+      'mat-card-header .heatmap-toggle'
+    );
+    expect(headerToggle).toBeTruthy();
+    expect(headerToggle?.tagName.toLowerCase()).toBe('mat-button-toggle-group');
+  });
+
   it('includes avgSetsPerEntry in week and month trend', () => {
     const { store } = fixture.componentInstance;
     const week = store.weekTrend();
