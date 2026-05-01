@@ -22,8 +22,13 @@ jobs:
             && secrets.NX_CLOUD_ACCESS_TOKEN_WRITE
           || secrets.NX_CLOUD_ACCESS_TOKEN_READ
         }}
-      # More heap for Angular SSR build + Playwright webServer in CI.
-      NODE_OPTIONS: --max-old-space-size=6144
+      # 4 GB Node heap for the orchestrator job (`lint-test-build`). High
+      # enough for the Angular SSR build + Playwright webServer in CI, and
+      # matches the per-agent heap configured in
+      # `.nx/workflows/distribution-config.yaml` so a task can run on
+      # either side without a different OOM threshold. Bump in lockstep
+      # with the agent setting if the heavy targets ever need more.
+      NODE_OPTIONS: --max-old-space-size=4096
     steps:
       - name: Checkout
         uses: actions/checkout@v6
