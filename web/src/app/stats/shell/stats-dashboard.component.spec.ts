@@ -128,6 +128,15 @@ describe('StatsDashboardComponent', () => {
       imports: [StatsDashboardComponent],
       providers: [
         provideRouter([]),
+        // NOTE: this spec stays on the default browser PLATFORM_ID even
+        // though stores constructed by the component start `setInterval`
+        // timers in `withHooks`. Pinning to `server` was suggested but
+        // breaks two regression tests that explicitly verify the
+        // browser-only `effect()` reacting to `LiveDataStore.updateTick`.
+        // The new tests added in this PR each call `createComponent()`
+        // exactly once — same shape as the cases that were already in
+        // the spec — so they don't materially worsen any pre-existing
+        // timer-leak budget.
         { provide: StatsApiService, useValue: serviceMock },
         {
           provide: UserStatsApiService,
