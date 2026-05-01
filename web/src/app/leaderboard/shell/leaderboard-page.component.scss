@@ -39,6 +39,28 @@ li {
   min-width: 2.5rem;
 }
 
+.alias-link {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: rgba(143, 180, 255, 0.55);
+  text-underline-offset: 3px;
+  transition:
+    color 120ms ease,
+    text-decoration-color 120ms ease;
+
+  &:hover,
+  &:focus-visible {
+    color: #cfe0ff;
+    text-decoration-color: #cfe0ff;
+  }
+
+  &:focus-visible {
+    outline: 2px solid #8fb4ff;
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+}
+
 .own-rank {
   margin-top: 10px;
   color: #9bd8c3;

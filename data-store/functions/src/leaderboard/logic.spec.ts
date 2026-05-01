@@ -79,6 +79,74 @@ describe('leaderboard/logic', () => {
       expect(result[1]).toEqual({ alias: 'Alice', reps: 10 });
     });
 
+    describe('uid attachment for public-profile linking', () => {
+      it('attaches uid only when both leaderboard + publicProfile opt-ins are on', () => {
+        const rows: PushupRow[] = [
+          { userId: 'optedIn', timestamp: '2024-03-15T10:00:00Z', reps: 30 },
+          { userId: 'leaderOnly', timestamp: '2024-03-15T10:00:00Z', reps: 20 },
+          {
+            userId: 'profileOnly',
+            timestamp: '2024-03-15T10:00:00Z',
+            reps: 10,
+          },
+        ];
+        const profiles = new Map<string, UserProfile>([
+          [
+            'optedIn',
+            {
+              displayName: 'Alice',
+              ui: { hideFromLeaderboard: false, publicProfile: true },
+            },
+          ],
+          [
+            'leaderOnly',
+            {
+              displayName: 'Bob',
+              ui: { hideFromLeaderboard: false, publicProfile: false },
+            },
+          ],
+          [
+            'profileOnly',
+            {
+              displayName: 'Carol',
+              ui: { hideFromLeaderboard: true, publicProfile: true },
+            },
+          ],
+        ]);
+
+        const result = rankEntries(rows, 'daily', '2024-03-15', profiles);
+
+        expect(result[0]).toEqual({
+          alias: 'Alice',
+          reps: 30,
+          uid: 'optedIn',
+        });
+        // Leaderboard-only user: name shown but no link.
+        expect(result[1]).toEqual({ alias: 'Bob', reps: 20 });
+        expect(result[1].uid).toBeUndefined();
+        // Public-profile user who hid from the leaderboard stays anonymous
+        // and never gets a link — leaderboard alias is `anonym`, so a UID
+        // would let attackers correlate that anonymous row to a real
+        // profile.
+        expect(result[2]).toEqual({ alias: 'anonym', reps: 10 });
+        expect(result[2].uid).toBeUndefined();
+      });
+
+      it('omits uid for profiles missing the ui block entirely', () => {
+        const rows: PushupRow[] = [
+          { userId: 'user1', timestamp: '2024-03-15T10:00:00Z', reps: 10 },
+        ];
+        const profiles = new Map<string, UserProfile>([
+          ['user1', { displayName: 'Alice' }],
+        ]);
+
+        const result = rankEntries(rows, 'daily', '2024-03-15', profiles);
+
+        // Defaults to private — no opt-in, no uid.
+        expect(result[0].uid).toBeUndefined();
+      });
+    });
+
     it('uses anonymous label for users without profiles', () => {
       const rows: PushupRow[] = [
         { userId: 'user1', timestamp: '2024-03-15T10:00:00Z', reps: 10 },

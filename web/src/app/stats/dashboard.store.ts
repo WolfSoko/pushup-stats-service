@@ -1,5 +1,11 @@
 import { isPlatformBrowser } from '@angular/common';
-import { computed, inject, PLATFORM_ID, resource } from '@angular/core';
+import {
+  computed,
+  inject,
+  LOCALE_ID,
+  PLATFORM_ID,
+  resource,
+} from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import {
   signalStore,
@@ -25,6 +31,7 @@ import { MotivationStore } from '@pu-stats/motivation';
 import { firstValueFrom, of } from 'rxjs';
 import { UserConfigStore } from '../core/user-config.store';
 import { ShareResult, ShareService } from '../core/share.service';
+import { buildProfileShareUrl } from '../core/profile-share-url';
 import { TrainingPlanStore } from '../training-plans/training-plan.store';
 
 const EMPTY_STATS: StatsResponse = {
@@ -91,6 +98,7 @@ export const DashboardStore = signalStore(
     _motivation: inject(MotivationStore),
     _trainingPlan: inject(TrainingPlanStore),
     _share: inject(ShareService),
+    _localeId: inject(LOCALE_ID) as string,
     _isBrowser: isPlatformBrowser(inject(PLATFORM_ID)),
   })),
   withProps((store) => ({
@@ -408,14 +416,34 @@ export const DashboardStore = signalStore(
     shareDay(): Promise<ShareResult> {
       const total = store.todayTotal();
       const streak = store.currentStreak();
-      const text =
-        streak > 1
-          ? $localize`:@@dashboard.share.text.streak:Heute schon ${total}:total: Liegestütze geschafft – Streak: ${streak}:streak: Tage 🔥 Tracke deine Stats kostenlos:`
-          : $localize`:@@dashboard.share.text.simple:Heute schon ${total}:total: Liegestütze geschafft! 💪 Tracke deine Stats kostenlos:`;
+      // Prefer the user's public-profile URL when they opted in — it carries
+      // the dynamic OG card (per-user stats + CTA) so the shared link
+      // produces a much richer social-card preview than the generic
+      // homepage. When the user hasn't opted in, fall back to the homepage
+      // and a plain CTA text — same as before.
+      const uid = store._user.userIdSafe();
+      const publicProfile =
+        store._userConfig.config()?.ui?.publicProfile === true;
+      const profileUrl =
+        publicProfile && uid ? buildProfileShareUrl(uid, store._localeId) : '';
+
+      let text: string;
+      if (profileUrl) {
+        text =
+          streak > 1
+            ? $localize`:@@dashboard.share.text.profile.streak:Heute schon ${total}:total: Liegestütze geschafft – Streak: ${streak}:streak: Tage 🔥 Schau dir mein Profil an:`
+            : $localize`:@@dashboard.share.text.profile.simple:Heute schon ${total}:total: Liegestütze geschafft! 💪 Schau dir mein Profil an:`;
+      } else {
+        text =
+          streak > 1
+            ? $localize`:@@dashboard.share.text.streak:Heute schon ${total}:total: Liegestütze geschafft – Streak: ${streak}:streak: Tage 🔥 Tracke deine Stats kostenlos:`
+            : $localize`:@@dashboard.share.text.simple:Heute schon ${total}:total: Liegestütze geschafft! 💪 Tracke deine Stats kostenlos:`;
+      }
+
       return store._share.share({
         title: $localize`:@@dashboard.share.title:Pushup Tracker`,
         text,
-        url: 'https://pushup-stats.de',
+        url: profileUrl || 'https://pushup-stats.de',
       });
     },
   }))

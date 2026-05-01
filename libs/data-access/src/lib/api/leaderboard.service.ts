@@ -20,6 +20,14 @@ export type LeaderboardEntry = {
   reps: number;
   rank: number;
   isCurrent?: boolean;
+  /**
+   * UID is present iff the user opted into BOTH the leaderboard
+   * (`ui.hideFromLeaderboard === false`) AND a public profile
+   * (`ui.publicProfile === true`). When set, the frontend renders the
+   * row as a link to `/u/<uid>`; when missing, the row stays plain text.
+   * Anonymous-aliased rows never carry a UID.
+   */
+  uid?: string;
 };
 
 export type LeaderboardBucket = {
@@ -104,20 +112,26 @@ export class LeaderboardService {
 
     const data = snap.data() as {
       periods?: Partial<
-        Record<LeaderboardPeriod, Array<{ alias: string; reps: number }>>
+        Record<
+          LeaderboardPeriod,
+          Array<{ alias: string; reps: number; uid?: string }>
+        >
       >;
     };
 
     const periods = data?.periods;
     if (!periods) return null;
 
-    const mapTop = (arr: Array<{ alias: string; reps: number }>) =>
+    const mapTop = (
+      arr: Array<{ alias: string; reps: number; uid?: string }>
+    ) =>
       arr.slice(0, TOP_N).map((entry, i) => ({
         alias: entry.alias,
         reps: entry.reps,
         rank: i + 1,
         isCurrent:
           !!currentUserId && entry.alias === this.toAlias(currentUserId),
+        ...(entry.uid ? { uid: entry.uid } : {}),
       }));
 
     // Only include keys that are actually present on the snapshot. An
