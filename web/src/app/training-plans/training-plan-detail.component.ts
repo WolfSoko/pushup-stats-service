@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
+  effect,
   inject,
   LOCALE_ID,
 } from '@angular/core';
@@ -13,6 +14,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { AuthStore } from '@pu-auth/auth';
 import {
   findPlanBySlug,
   localizePlan,
@@ -104,27 +106,67 @@ interface DayRow {
               </button>
             </mat-card-actions>
           </mat-card>
-        } @else {
+        } @else if (authResolved()) {
           <mat-card class="status-card">
             <mat-card-content>
-              <p i18n="@@trainingPlans.startCta">
-                Starte den Plan und das Tagesziel im Dashboard wird automatisch
-                nach diesem Plan gesetzt.
-              </p>
+              @if (isAuthenticated()) {
+                <p i18n="@@trainingPlans.startCta">
+                  Starte den Plan und das Tagesziel im Dashboard wird
+                  automatisch nach diesem Plan gesetzt.
+                </p>
+              } @else {
+                <p i18n="@@trainingPlans.signupCta">
+                  Erstelle ein kostenloses Konto, um diesen Plan zu starten. Wir
+                  tracken deinen Fortschritt automatisch und setzen dein
+                  Tagesziel passend zum Plan.
+                </p>
+                <ul class="signup-benefits">
+                  <li i18n="@@trainingPlans.signupBenefit.tracking">
+                    Automatische Fortschrittsverfolgung
+                  </li>
+                  <li i18n="@@trainingPlans.signupBenefit.goal">
+                    Tagesziel passt sich täglich an deinen Plan an
+                  </li>
+                  <li i18n="@@trainingPlans.signupBenefit.streak">
+                    Streaks, Statistiken und Bestenliste
+                  </li>
+                </ul>
+              }
             </mat-card-content>
             <mat-card-actions align="end">
-              @if (store.hasActivePlan()) {
-                <p
-                  class="muted warn-replace"
-                  i18n="@@trainingPlans.replaceWarn"
+              @if (isAuthenticated()) {
+                @if (store.hasActivePlan()) {
+                  <p
+                    class="muted warn-replace"
+                    i18n="@@trainingPlans.replaceWarn"
+                  >
+                    Achtung: Dies ersetzt den aktuell aktiven Plan.
+                  </p>
+                }
+                <button mat-flat-button color="primary" (click)="start()">
+                  <mat-icon>play_arrow</mat-icon>
+                  <span i18n="@@trainingPlans.start">Plan starten</span>
+                </button>
+              } @else {
+                <a
+                  mat-flat-button
+                  color="primary"
+                  [routerLink]="['/register']"
+                  [queryParams]="signupQueryParams()"
                 >
-                  Achtung: Dies ersetzt den aktuell aktiven Plan.
-                </p>
+                  <mat-icon>person_add</mat-icon>
+                  <span i18n="@@trainingPlans.signupAndStart"
+                    >Konto erstellen & Plan starten</span
+                  >
+                </a>
+                <a
+                  mat-stroked-button
+                  [routerLink]="['/login']"
+                  [queryParams]="loginQueryParams()"
+                  i18n="@@trainingPlans.loginAndStart"
+                  >Schon Konto? Einloggen</a
+                >
               }
-              <button mat-flat-button color="primary" (click)="start()">
-                <mat-icon>play_arrow</mat-icon>
-                <span i18n="@@trainingPlans.start">Plan starten</span>
-              </button>
             </mat-card-actions>
           </mat-card>
         }
@@ -342,6 +384,13 @@ interface DayRow {
       .day-desc {
         font-size: 0.9rem;
       }
+      .signup-benefits {
+        margin: 12px 0 0;
+        padding-left: 20px;
+      }
+      .signup-benefits li {
+        margin-bottom: 4px;
+      }
     `,
   ],
 })
@@ -351,15 +400,84 @@ export class TrainingPlanDetailComponent {
   private readonly router = inject(Router);
   private readonly snackbar = inject(MatSnackBar);
   private readonly locale = inject(LOCALE_ID) as string;
+  private readonly authStore = inject(AuthStore);
+
+  protected readonly isAuthenticated = this.authStore.isAuthenticated;
+  protected readonly authResolved = this.authStore.authResolved;
 
   private readonly slugSignal = toSignal(this.route.paramMap, {
     initialValue: this.route.snapshot.paramMap,
+  });
+  private readonly queryParamsSignal = toSignal(this.route.queryParamMap, {
+    initialValue: this.route.snapshot.queryParamMap,
   });
 
   readonly plan = computed(() => {
     const slug = this.slugSignal().get('slug');
     return slug ? findPlanBySlug(slug) : null;
   });
+
+  readonly signupQueryParams = computed(() => {
+    const p = this.plan();
+    return p
+      ? { planId: p.id, returnUrl: `/training-plans/${p.slug}?autoStart=1` }
+      : { returnUrl: '/training-plans' };
+  });
+
+  readonly loginQueryParams = computed(() => {
+    const p = this.plan();
+    // Intentionally NO `autoStart=1` here: a returning user logging back
+    // in might already have a different active plan, and silently
+    // replacing it would bypass the in-UI replacement warning shown for
+    // manual starts. Send them back to the detail page so they can
+    // explicitly confirm via "Plan starten".
+    return p
+      ? { returnUrl: `/training-plans/${p.slug}` }
+      : { returnUrl: '/training-plans' };
+  });
+
+  private autoStartTriggered = false;
+
+  constructor() {
+    effect(() => {
+      const p = this.plan();
+      const wantsAutoStart = this.queryParamsSignal().get('autoStart') === '1';
+      // Defense-in-depth: even with `autoStart=1` (only set by the
+      // signup flow), refuse to silently replace a *different* active
+      // plan. Force the user through the manual flow that surfaces the
+      // replacement warning. Also wait until the active-plan resource
+      // has emitted at least once — otherwise during the initial-fetch
+      // window `!isThisPlanActive()` is true even for a plan that's
+      // already active, and we'd race the listener and overwrite it.
+      const wouldReplaceDifferentPlan =
+        this.store.hasActivePlan() && !this.isThisPlanActive();
+      if (
+        p &&
+        wantsAutoStart &&
+        this.authResolved() &&
+        this.isAuthenticated() &&
+        this.store.activePlanLoaded() &&
+        !this.isThisPlanActive() &&
+        !wouldReplaceDifferentPlan &&
+        !this.autoStartTriggered
+      ) {
+        this.autoStartTriggered = true;
+        // Surface failures with a snackbar so the user knows to retry
+        // manually. The flag stays set to prevent a tight retry loop
+        // inside this component instance — a manual reload will
+        // re-attempt because `?autoStart=1` is still in the URL until
+        // a successful start clears it.
+        this.start().catch((error) => {
+          console.error('Auto-start failed', error);
+          this.snackbar.open(
+            $localize`:@@trainingPlans.autoStartFailed:Plan-Start fehlgeschlagen — bitte erneut versuchen.`,
+            undefined,
+            { duration: 4000 }
+          );
+        });
+      }
+    });
+  }
 
   /** Plan with title/summary/day descriptions in the active locale. */
   readonly localized = computed(() => {
@@ -411,12 +529,26 @@ export class TrainingPlanDetailComponent {
   async start(): Promise<void> {
     const p = this.plan();
     if (!p) return;
+    if (!this.isAuthenticated()) {
+      void this.router.navigate(['/register'], {
+        queryParams: this.signupQueryParams(),
+      });
+      return;
+    }
     await this.store.start(p.id);
     this.snackbar.open(
       $localize`:@@trainingPlans.started:Plan gestartet — viel Erfolg!`,
       undefined,
       { duration: 3000 }
     );
+    if (this.queryParamsSignal().get('autoStart') === '1') {
+      void this.router.navigate([], {
+        relativeTo: this.route,
+        queryParams: { autoStart: null },
+        queryParamsHandling: 'merge',
+        replaceUrl: true,
+      });
+    }
   }
 
   async abandon(): Promise<void> {

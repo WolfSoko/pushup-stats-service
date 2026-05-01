@@ -217,6 +217,29 @@ const LOGO_URL = `${BASE_URL}/assets/pushup-logo.png`;
           a:hover {
             text-decoration-thickness: 2px;
           }
+
+          aside.plan-cta {
+            margin: 24px 0;
+            padding: 16px 20px;
+            border-left: 4px solid var(--mat-sys-primary, #7c4dff);
+            border-radius: 8px;
+            background: rgba(124, 77, 255, 0.06);
+          }
+
+          aside.plan-cta h3 {
+            margin: 0 0 8px;
+            font-size: 1.05rem;
+            color: var(--text-heading-secondary);
+          }
+
+          aside.plan-cta p {
+            margin: 0 0 8px;
+          }
+
+          aside.plan-cta p:last-child {
+            margin-bottom: 0;
+            font-weight: 500;
+          }
         }
       }
 

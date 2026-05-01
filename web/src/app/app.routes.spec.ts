@@ -108,14 +108,7 @@ describe('appRoutes', () => {
   });
 
   it('protects app routes and keeps landing/login/register public-only', () => {
-    const protectedPaths = [
-      'app',
-      'history',
-      'analysis',
-      'settings',
-      'training-plans',
-      'training-plans/:slug',
-    ];
+    const protectedPaths = ['app', 'history', 'analysis', 'settings'];
     for (const path of protectedPaths) {
       const route = appRoutes.find((r) => r.path === path);
       expect(route?.canActivate).toEqual([authGuard]);
@@ -129,6 +122,13 @@ describe('appRoutes', () => {
 
     const registerRoute = appRoutes.find((r) => r.path === 'register');
     expect(registerRoute?.canActivate).toEqual([publicOnlyGuard]);
+  });
+
+  it('keeps training-plans routes publicly accessible (no auth guard)', () => {
+    const list = appRoutes.find((r) => r.path === 'training-plans');
+    const detail = appRoutes.find((r) => r.path === 'training-plans/:slug');
+    expect(list?.canActivate).toBeUndefined();
+    expect(detail?.canActivate).toBeUndefined();
   });
 
   it('redirects legacy /landing and wildcard to /', () => {

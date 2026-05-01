@@ -114,6 +114,18 @@ export const BLOG_POSTS: BlogPost[] = [
   Mit einem digitalen Tracker wie Pushup Tracker hast du alle Daten auf einen Blick – inklusive
   Streak, Wochenvolumen und Bestleistungen.
 </p>
+
+<aside class="plan-cta">
+  <h3>Direkt loslegen: 6-Wochen-Plan im Tracker</h3>
+  <p>
+    Diesen 6-Wochen-Aufbau gibt es als geführten Trainingsplan in Pushup Tracker.
+    Du bekommst dein Tagesziel, die genauen Sätze pro Tag und automatische
+    Fortschrittsverfolgung. Vorbei mit Excel-Listen.
+  </p>
+  <p>
+    <a href="/training-plans/recruit-6w">Plan ansehen &rarr;</a>
+  </p>
+</aside>
     `.trim(),
   },
   {
@@ -457,6 +469,18 @@ export const BLOG_POSTS: BlogPost[] = [
   um jeden Trainingstag einzutragen – inklusive Variante, Sätze und Gesamtwiederholungen. Die
   Challenge-Grafik zeigt dir täglich, ob du auf Kurs bist.
 </p>
+
+<aside class="plan-cta">
+  <h3>Challenge im Tracker starten</h3>
+  <p>
+    Die 30-Tage-Challenge gibt es als geführten Trainingsplan: Tag 1 ist der
+    Maximaltest, jeder Tag hat ein Tagesziel und passende Sätze. Pushup Tracker
+    markiert deinen Fortschritt automatisch – du musst nur trainieren.
+  </p>
+  <p>
+    <a href="/training-plans/challenge-30d">30-Tage-Plan starten &rarr;</a>
+  </p>
+</aside>
     `.trim(),
   },
   {
@@ -550,6 +574,18 @@ export const BLOG_POSTS: BlogPost[] = [
   oft trügt. Mit Pushup Tracker siehst du auf einen Blick, ob du diese Woche mehr geschafft hast
   als letzte Woche. Das ist der Anker, der dich auch an schwierigen Tagen motiviert.
 </p>
+
+<aside class="plan-cta">
+  <h3>4-Wochen-Plan ab 40 — schonend & strukturiert</h3>
+  <p>
+    Speziell für den Einstieg ab 40: vier Wochen mit Fokus auf saubere Technik,
+    ausreichend Pause und langsames Tempo. Dein Tagesziel passt sich automatisch
+    an den Plan an, sobald du startest.
+  </p>
+  <p>
+    <a href="/training-plans/over-40-4w">Plan ab 40 ansehen &rarr;</a>
+  </p>
+</aside>
     `.trim(),
   },
 
@@ -887,6 +923,18 @@ export const BLOG_POSTS: BlogPost[] = [
   like Pushup Tracker, you have all your data at a glance – including streaks, weekly volume,
   and personal bests.
 </p>
+
+<aside class="plan-cta">
+  <h3>Start the 6-week plan in the tracker</h3>
+  <p>
+    This 6-week build-up is available as a guided training plan in Pushup Tracker.
+    You get a daily target, the exact sets per day, and automatic progress tracking.
+    No more spreadsheets.
+  </p>
+  <p>
+    <a href="/training-plans/recruit-6w">View the plan &rarr;</a>
+  </p>
+</aside>
     `.trim(),
   },
   {
@@ -1152,6 +1200,18 @@ export const BLOG_POSTS: BlogPost[] = [
   – including variation, sets, and total reps. The challenge graph shows you daily whether you're
   on track.
 </p>
+
+<aside class="plan-cta">
+  <h3>Start the challenge in the tracker</h3>
+  <p>
+    The 30-day challenge is available as a guided training plan: Day 1 is the
+    baseline test, every day has a daily target and matching sets. Pushup Tracker
+    marks your progress automatically — you just have to train.
+  </p>
+  <p>
+    <a href="/training-plans/challenge-30d">Start the 30-day plan &rarr;</a>
+  </p>
+</aside>
     `.trim(),
   },
   {
@@ -1242,6 +1302,18 @@ export const BLOG_POSTS: BlogPost[] = [
   feeling often misleads. With Pushup Tracker you can see at a glance whether you've done more
   this week than last week. That's the anchor that keeps you motivated even on tough days.
 </p>
+
+<aside class="plan-cta">
+  <h3>4-week plan after 40 — gentle &amp; structured</h3>
+  <p>
+    Designed for getting back into push-ups after 40: four weeks focused on
+    clean technique, full recovery, and controlled tempo. Your daily target
+    automatically adapts to the plan once you start it.
+  </p>
+  <p>
+    <a href="/training-plans/over-40-4w">View the over-40 plan &rarr;</a>
+  </p>
+</aside>
     `.trim(),
   },
   {
