@@ -311,6 +311,11 @@ interface DayRow {
       .status-card {
         margin: 16px 0;
       }
+      .status-card mat-card-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
       .progress-row {
         display: flex;
         justify-content: space-between;
@@ -322,6 +327,20 @@ interface DayRow {
       .warn-replace {
         margin: 0 8px 0 0;
         color: var(--mat-sys-error, #d32f2f);
+      }
+      @media (max-width: 600px) {
+        .status-card mat-card-actions {
+          flex-direction: column;
+          align-items: stretch;
+        }
+        .status-card mat-card-actions > a,
+        .status-card mat-card-actions > button {
+          width: 100%;
+          margin: 0;
+        }
+        .warn-replace {
+          margin: 0;
+        }
       }
       .week h2 {
         margin: 24px 0 8px;
