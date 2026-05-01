@@ -122,15 +122,16 @@ export function makeStatsApiMock(
 // LeaderboardService mock
 // ---------------------------------------------------------------------------
 
-const emptyBucket: LeaderboardBucket = { top: [], current: null };
-const emptyLeaderboard: LeaderboardData = {
-  daily: emptyBucket,
-  last7: emptyBucket,
-  last30: emptyBucket,
-};
+const makeEmptyBucket = (): LeaderboardBucket => ({ top: [], current: null });
+const makeEmptyLeaderboard = (): LeaderboardData => ({
+  daily: makeEmptyBucket(),
+  last7: makeEmptyBucket(),
+  last30: makeEmptyBucket(),
+});
 
 /**
  * Creates a LeaderboardService mock that resolves with empty data by default.
+ * Fresh objects per call so a mutation in one test doesn't leak into another.
  *
  * @example
  * { provide: LeaderboardService, useValue: makeLeaderboardMock() }
@@ -139,7 +140,7 @@ export function makeLeaderboardMock(
   overrides: Partial<LeaderboardService> = {}
 ): Partial<LeaderboardService> {
   return {
-    load: () => Promise.resolve(emptyLeaderboard),
+    load: () => Promise.resolve(makeEmptyLeaderboard()),
     observeSnapshot: () => EMPTY,
     ...overrides,
   };

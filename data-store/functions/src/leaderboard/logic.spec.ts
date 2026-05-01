@@ -138,8 +138,9 @@ describe('leaderboard/logic', () => {
     });
 
     it('aggregates the trailing 7-day window inclusive of both endpoints', () => {
+      // Given — today is 2024-03-15. The trailing 7-day window covers
+      // 2024-03-09 (start) through 2024-03-15 (today), inclusive.
       const rows: PushupRow[] = [
-        // Today is 2024-03-15. Window is 2024-03-09 .. 2024-03-15 (7 days).
         { userId: 'user1', timestamp: '2024-03-09T10:00:00Z', reps: 4 }, // included (start)
         { userId: 'user1', timestamp: '2024-03-15T10:00:00Z', reps: 6 }, // included (today)
         { userId: 'user1', timestamp: '2024-03-08T10:00:00Z', reps: 99 }, // excluded (8 days back)
@@ -149,15 +150,17 @@ describe('leaderboard/logic', () => {
         ['user1', { displayName: 'Alice', ui: { hideFromLeaderboard: false } }],
       ]);
 
+      // When
       const result = rankEntries(rows, 'last7', '2024-03-15', profiles);
 
+      // Then — only the two in-window rows are summed.
       expect(result).toHaveLength(1);
       expect(result[0]).toEqual({ alias: 'Alice', reps: 10 });
     });
 
     it('aggregates the trailing 30-day window inclusive of both endpoints', () => {
+      // Given — today is 2024-03-30. Window is 2024-03-01 .. 2024-03-30 (30 days).
       const rows: PushupRow[] = [
-        // Today is 2024-03-30. Window is 2024-03-01 .. 2024-03-30 (30 days).
         { userId: 'user1', timestamp: '2024-03-01T10:00:00Z', reps: 5 },
         { userId: 'user1', timestamp: '2024-03-30T10:00:00Z', reps: 7 },
         { userId: 'user1', timestamp: '2024-02-29T10:00:00Z', reps: 99 }, // excluded (31 days back)
@@ -166,8 +169,10 @@ describe('leaderboard/logic', () => {
         ['user1', { displayName: 'Alice', ui: { hideFromLeaderboard: false } }],
       ]);
 
+      // When
       const result = rankEntries(rows, 'last30', '2024-03-30', profiles);
 
+      // Then
       expect(result).toHaveLength(1);
       expect(result[0]).toEqual({ alias: 'Alice', reps: 12 });
     });
@@ -219,14 +224,22 @@ describe('leaderboard/logic', () => {
   });
 
   describe('getLeaderboardQueryStartDate', () => {
-    it('returns the date 29 days before today (covers a 30-day window)', () => {
-      const result = getLeaderboardQueryStartDate({
+    it('returns the date 30 days before today, one day buffer beyond the last30 window for TZ slack', () => {
+      // Given — today is the 30th of March in Berlin.
+      const today: BerlinDateParts = {
         year: 2024,
         month: 3,
         day: 30,
         isoDate: '2024-03-30',
-      });
-      expect(result).toBe('2024-03-01');
+      };
+
+      // When
+      const result = getLeaderboardQueryStartDate(today);
+
+      // Then — bound is the 29th of February (one day earlier than the 30-day
+      // window's first day) so the Firestore query also catches rows whose
+      // UTC timestamp falls on the previous calendar day relative to Berlin.
+      expect(result).toBe('2024-02-29');
     });
   });
 

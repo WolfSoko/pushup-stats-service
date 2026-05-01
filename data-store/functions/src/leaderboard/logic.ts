@@ -143,11 +143,14 @@ export function calculateCurrentPeriodKeys(now = new Date()): LeaderboardKeys {
 
 /**
  * Returns the ISO date that bounds the Firestore query for the leaderboard
- * rebuild — 29 days before today, so the trailing 30-day window is fully
- * covered (today + 29 prior days = 30 days inclusive).
+ * rebuild. Reaches back 30 days from today's Berlin date — one extra day
+ * beyond the last30 window — so the query also captures rows whose UTC
+ * timestamp falls on the previous calendar day (e.g. Berlin 00:30 on
+ * day-29 stored as UTC 23:30 on day-30). `rankEntries()` then trims to the
+ * exact 30-day Berlin window.
  */
 export function getLeaderboardQueryStartDate(today: BerlinDateParts): string {
-  return isoDateNDaysBefore(today, 29);
+  return isoDateNDaysBefore(today, 30);
 }
 
 /**
