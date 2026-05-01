@@ -96,6 +96,25 @@ describe('buildOgTree', () => {
     expect(text).toMatch(/Reps\s*·\s*Streak/);
     expect(text).toMatch(/Streak\s*\d+\s*·\s*\d+\s*Tage/);
   });
+
+  it('Renders English copy and en-US grouping when locale=en', () => {
+    const text = flatten(buildOgTree(profile, 'en'));
+    // en-US uses ',' grouping for 5000.
+    expect(text).toContain('5,000');
+    expect(text).toContain('90 days');
+    expect(text).not.toContain('Tage');
+  });
+
+  it('Defaults to German copy when no locale is supplied', () => {
+    const text = flatten(buildOgTree(profile));
+    expect(text).toContain('5.000');
+    expect(text).toContain('Tage');
+  });
+
+  it('Falls back to German copy for unknown locale strings', () => {
+    const text = flatten(buildOgTree(profile, 'fr'));
+    expect(text).toContain('Tage');
+  });
 });
 
 describe('_resetOgCachesForTesting', () => {

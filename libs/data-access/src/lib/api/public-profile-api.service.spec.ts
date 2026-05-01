@@ -27,7 +27,11 @@ describe('PublicProfileApiService', () => {
     spy: jest.Mock;
   } {
     const spy = jest.fn(callableImpl);
-    (httpsCallable as unknown as jest.Mock).mockReturnValue(spy);
+    // Reset the shared `httpsCallable` mock between tests so per-test call
+    // assertions don't see leftover invocations from earlier specs.
+    const callableFactory = httpsCallable as unknown as jest.Mock;
+    callableFactory.mockReset();
+    callableFactory.mockReturnValue(spy);
 
     TestBed.resetTestingModule();
     TestBed.configureTestingModule({

@@ -1,12 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { ActivatedRoute, convertToParamMap, ParamMap } from '@angular/router';
+import { FirebaseApp } from '@angular/fire/app';
 import { BehaviorSubject } from 'rxjs';
 import { PublicProfileApiService } from '@pu-stats/data-access';
 import { type PublicProfile } from '@pu-stats/models';
 import { PublicProfilePageComponent } from './public-profile-page.component';
 import { ShareService } from '../core/share.service';
 import { SeoService } from '../core/seo.service';
+
+const firebaseAppMock = {
+  options: { projectId: 'pushup-stats' },
+} as unknown as FirebaseApp;
 
 const sampleProfile: PublicProfile = {
   uid: 'abcdef1234567890',
@@ -65,6 +70,7 @@ describe('PublicProfilePageComponent', () => {
         { provide: PublicProfileApiService, useValue: apiMock },
         { provide: ShareService, useValue: shareMock },
         { provide: SeoService, useValue: seoMock },
+        { provide: FirebaseApp, useValue: firebaseAppMock },
       ],
     }).compileComponents();
 
@@ -164,17 +170,21 @@ describe('PublicProfilePageComponent', () => {
   });
 
   describe('SEO and OG image wiring', () => {
-    it('Sets a dynamic OG image URL pointing at the ogProfile function with URL-encoded UID', async () => {
+    it('Sets a dynamic OG image URL pointing at the ogProfile function with URL-encoded UID + locale', async () => {
       await setup({ resolve: sampleProfile });
 
       const args: unknown[] = seoMock.update.mock.calls.at(-1)!;
       const ogExtras = args[3] as
         | { imageUrl?: string; imageAlt?: string }
         | undefined;
+      // URL must be derived from the active FirebaseApp.options.projectId
+      // so PR previews / staging / prod each hit their own function host.
+      expect(ogExtras?.imageUrl).toContain('-pushup-stats.cloudfunctions.net');
       expect(ogExtras?.imageUrl).toContain('ogProfile');
       expect(ogExtras?.imageUrl).toContain(
         encodeURIComponent(sampleProfile.uid)
       );
+      expect(ogExtras?.imageUrl).toMatch(/[?&]lang=(de|en)/);
     });
 
     it('Sets an imageAlt that mentions the displayName', async () => {

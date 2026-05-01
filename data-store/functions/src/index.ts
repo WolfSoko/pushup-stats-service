@@ -634,6 +634,28 @@ export const refreshLeaderboardsOnPushupWrite = onDocumentWritten(
   }
 );
 
+// ─── Shared lookup ────────────────────────────────────────────────────────────
+// Both `getPublicProfile` (callable) and `ogProfile` (HTTP) need the same
+// validation → Firestore reads → projection chain with identical privacy
+// semantics. Centralising the lookup here keeps the 404-parity contract
+// from drifting between the two wrappers and matches the project's "trigger
+// functions in `index.ts` are thin wrappers" rule.
+async function fetchPublicProfileProjection(uid: string) {
+  if (!isValidUid(uid)) return null;
+  const db = admin.firestore();
+  const [cfgSnap, statsSnap] = await Promise.all([
+    db.collection('userConfigs').doc(uid).get(),
+    db.collection('userStats').doc(uid).get(),
+  ]);
+  const config = cfgSnap.exists
+    ? (cfgSnap.data() as UserConfigForPublicProfile)
+    : null;
+  const stats = statsSnap.exists
+    ? (statsSnap.data() as UserStatsForPublicProfile)
+    : null;
+  return buildPublicProfile(uid, config, stats);
+}
+
 // ─── getPublicProfile (anonymous-callable, opt-in only) ──────────────────────
 // Returns a sanitized projection of `userConfigs/{uid}` + `userStats/{uid}`
 // for users who explicitly set `ui.publicProfile = true`. Anyone else returns
@@ -647,31 +669,10 @@ export const getPublicProfile = onCall(
   { region: 'europe-west3', invoker: 'public' },
   async (request) => {
     const uid = String(request.data?.uid ?? '').trim();
-    // Collapse malformed UIDs into the same `not-found` response we use for
-    // missing / opted-out users, so /u/<bad-slug> hits the same UX/privacy
-    // path as /u/<missing-but-valid> instead of bouncing into a generic
-    // error state on the client.
-    if (!isValidUid(uid)) {
-      throw new HttpsError('not-found', 'Profile not available');
-    }
-
-    const db = admin.firestore();
-    const [cfgSnap, statsSnap] = await Promise.all([
-      db.collection('userConfigs').doc(uid).get(),
-      db.collection('userStats').doc(uid).get(),
-    ]);
-
-    const config = cfgSnap.exists
-      ? (cfgSnap.data() as UserConfigForPublicProfile)
-      : null;
-    const stats = statsSnap.exists
-      ? (statsSnap.data() as UserStatsForPublicProfile)
-      : null;
-
-    const projection = buildPublicProfile(uid, config, stats);
+    const projection = await fetchPublicProfileProjection(uid);
     if (!projection) {
-      // Same response shape for "user does not exist" and "user is private"
-      // so an attacker can't enumerate accounts.
+      // Same response for "malformed UID", "user does not exist", and
+      // "user is private" so an attacker can't enumerate accounts.
       throw new HttpsError('not-found', 'Profile not available');
     }
     return projection;
@@ -679,9 +680,10 @@ export const getPublicProfile = onCall(
 );
 
 // ─── ogProfile (HTTP, dynamic OpenGraph card) ────────────────────────────────
-// `GET /og/profile?uid=<uid>` — renders a 1200×630 PNG via satori + resvg
-// for the profile's current stats. Returns 404 PNG-of-nothing for users who
-// haven't opted in (same shape as `getPublicProfile`'s privacy guarantee).
+// `GET /ogProfile?uid=<uid>&lang=<de|en>` — renders a 1200×630 PNG via
+// satori + resvg for the profile's current stats. Returns a 404 with the
+// plain-text body `Profile not available` for users who haven't opted in
+// (or for malformed UIDs), matching `getPublicProfile`'s privacy guarantee.
 //
 // Cache headers let Firebase Hosting / the function's own CDN do most of
 // the work — full re-render is amortised across hours per user.
@@ -696,28 +698,11 @@ export const ogProfile = onRequest(
   },
   async (req, res) => {
     const uidRaw = String(req.query['uid'] ?? '').trim();
-    // Privacy parity with `getPublicProfile`: malformed UIDs surface as the
-    // same 404 + short-TTL cache as missing/opted-out profiles, so the OG
-    // endpoint can't be used to enumerate which UID strings are well-formed.
-    if (!isValidUid(uidRaw)) {
-      res.setHeader('Cache-Control', 'public, max-age=60, s-maxage=300');
-      res.status(404).send('Profile not available');
-      return;
-    }
+    const lang = String(req.query['lang'] ?? 'de').toLowerCase();
+    const locale = lang === 'en' ? 'en' : 'de';
 
     try {
-      const db = admin.firestore();
-      const [cfgSnap, statsSnap] = await Promise.all([
-        db.collection('userConfigs').doc(uidRaw).get(),
-        db.collection('userStats').doc(uidRaw).get(),
-      ]);
-      const config = cfgSnap.exists
-        ? (cfgSnap.data() as UserConfigForPublicProfile)
-        : null;
-      const stats = statsSnap.exists
-        ? (statsSnap.data() as UserStatsForPublicProfile)
-        : null;
-      const projection = buildPublicProfile(uidRaw, config, stats);
+      const projection = await fetchPublicProfileProjection(uidRaw);
       if (!projection) {
         // Same fingerprint as a non-existent UID. Cache the 404 briefly so
         // a hot-linked card from a private user doesn't hammer Firestore.
@@ -731,7 +716,7 @@ export const ogProfile = onRequest(
       // invocations) — keeps cold-start of unrelated functions in this
       // bundle unaffected by the heavy renderer deps.
       const { renderProfileOg } = await import('./profile/og-render');
-      const png = await renderProfileOg(projection);
+      const png = await renderProfileOg(projection, locale);
       res.setHeader('Content-Type', 'image/png');
       res.setHeader('Content-Length', String(png.byteLength));
       // 5 min browser, 1 h CDN, 1 day stale-while-revalidate so a slow

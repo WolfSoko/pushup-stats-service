@@ -19,31 +19,60 @@ import { readFile } from 'node:fs/promises';
 import { createRequire } from 'node:module';
 import type { PublicProfileProjection } from './public-profile';
 
+// Direct CDN URL (no GitHub redirect), pinned to a release tag for stability.
 const FONT_URL =
-  'https://github.com/rsms/inter/raw/v4.0/docs/font-files/Inter-Bold.woff';
+  'https://raw.githubusercontent.com/rsms/inter/v4.0/docs/font-files/Inter-Bold.woff';
+const FONT_FETCH_TIMEOUT_MS = 5_000;
 
-let fontCache: ArrayBuffer | null = null;
-let wasmInitialised = false;
+// Cloud Functions Gen2 instances handle concurrent requests, so a plain
+// boolean / `null` check around the awaited work would let two cold-start
+// requests both run `initWasm()` (corrupting the global WASM state) or both
+// fetch the font twice. Cache the in-flight Promise instead so every caller
+// awaits the same work; on rejection clear the slot so the next attempt
+// retries from scratch.
+let fontPromise: Promise<ArrayBuffer> | null = null;
+let wasmPromise: Promise<void> | null = null;
 
 async function loadFont(): Promise<ArrayBuffer> {
-  if (fontCache) return fontCache;
-  const res = await fetch(FONT_URL);
-  if (!res.ok) {
-    throw new Error(`OG font fetch failed: ${res.status} ${res.statusText}`);
+  if (!fontPromise) {
+    fontPromise = (async () => {
+      const ctrl = new AbortController();
+      const timer = setTimeout(() => ctrl.abort(), FONT_FETCH_TIMEOUT_MS);
+      try {
+        const res = await fetch(FONT_URL, { signal: ctrl.signal });
+        if (!res.ok) {
+          throw new Error(
+            `OG font fetch failed: ${res.status} ${res.statusText}`
+          );
+        }
+        return await res.arrayBuffer();
+      } finally {
+        clearTimeout(timer);
+      }
+    })().catch((err) => {
+      // Don't poison future attempts with a rejected cached promise.
+      fontPromise = null;
+      throw err;
+    });
   }
-  fontCache = await res.arrayBuffer();
-  return fontCache;
+  return fontPromise;
 }
 
 async function ensureResvgInitialised(): Promise<void> {
-  if (wasmInitialised) return;
-  // Locate the WASM binary inside the deployed bundle's node_modules.
-  // createRequire so it works from a CJS bundle without import.meta.
-  const require = createRequire(__filename);
-  const wasmPath = require.resolve('@resvg/resvg-wasm/index_bg.wasm');
-  const wasmBytes = await readFile(wasmPath);
-  await initWasm(wasmBytes);
-  wasmInitialised = true;
+  if (!wasmPromise) {
+    wasmPromise = (async () => {
+      // Locate the WASM binary inside the deployed bundle's node_modules.
+      // createRequire so it works from a CJS bundle without import.meta.
+      const require = createRequire(__filename);
+      const wasmPath = require.resolve('@resvg/resvg-wasm/index_bg.wasm');
+      const wasmBytes = await readFile(wasmPath);
+      await initWasm(wasmBytes);
+    })().catch((err) => {
+      wasmPromise = null;
+      throw err;
+    });
+  }
+  return wasmPromise;
 }
 
 const WIDTH = 1200;
@@ -61,8 +90,30 @@ function el(type: string, props: SatoriElement['props']): SatoriElement {
   return { type, props };
 }
 
+export type OgLocale = 'de' | 'en';
+
+interface OgCopy {
+  /** Intl locale tag for `toLocaleString` number formatting. */
+  numberLocale: string;
+  /** Suffix label between the streak count and active-day count (e.g. "Tage" / "days"). */
+  daysLabel: string;
+}
+
+const OG_COPY: Readonly<Record<OgLocale, OgCopy>> = {
+  de: { numberLocale: 'de-DE', daysLabel: 'Tage' },
+  en: { numberLocale: 'en-US', daysLabel: 'days' },
+};
+
+function copyFor(locale: OgLocale | string | undefined): OgCopy {
+  return OG_COPY[locale === 'en' ? 'en' : 'de'];
+}
+
 /** Build the satori-friendly element tree for the profile OG card. */
-export function buildOgTree(profile: PublicProfileProjection): SatoriElement {
+export function buildOgTree(
+  profile: PublicProfileProjection,
+  locale: OgLocale | string | undefined = 'de'
+): SatoriElement {
+  const copy = copyFor(locale);
   return el('div', {
     style: {
       width: '100%',
@@ -106,7 +157,7 @@ export function buildOgTree(profile: PublicProfileProjection): SatoriElement {
               fontSize: '36px',
               color: '#dbe7ff',
             },
-            children: `${profile.total.toLocaleString('de-DE')} Reps · Streak ${profile.currentStreak} · ${profile.totalDays} Tage`,
+            children: `${profile.total.toLocaleString(copy.numberLocale)} Reps · Streak ${profile.currentStreak} · ${profile.totalDays} ${copy.daysLabel}`,
           }),
         ],
       }),
@@ -126,13 +177,18 @@ export function buildOgTree(profile: PublicProfileProjection): SatoriElement {
 /**
  * Render a public-profile projection to a PNG buffer (1200×630).
  * Throws on font/resvg failures so callers can return a 500 explicitly.
+ *
+ * `locale` controls number formatting and copy ("Tage" vs "days") so the
+ * card renders in the language matching the share-link source page.
+ * Defaults to `'de'` (the source locale).
  */
 export async function renderProfileOg(
-  profile: PublicProfileProjection
+  profile: PublicProfileProjection,
+  locale: OgLocale | string | undefined = 'de'
 ): Promise<Buffer> {
   const [font] = await Promise.all([loadFont(), ensureResvgInitialised()]);
 
-  const svg = await satori(buildOgTree(profile) as never, {
+  const svg = await satori(buildOgTree(profile, locale) as never, {
     width: WIDTH,
     height: HEIGHT,
     fonts: [
@@ -154,6 +210,6 @@ export async function renderProfileOg(
 
 /** Test-only helper to flush the in-memory caches between specs. */
 export function _resetOgCachesForTesting(): void {
-  fontCache = null;
-  wasmInitialised = false;
+  fontPromise = null;
+  wasmPromise = null;
 }
