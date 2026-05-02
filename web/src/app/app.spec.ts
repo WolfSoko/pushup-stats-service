@@ -3,6 +3,7 @@ import { render, screen } from '@testing-library/angular';
 import { signal, WritableSignal, PLATFORM_ID } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { Title } from '@angular/platform-browser';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { of } from 'rxjs';
 import { StatsApiService, UserConfigApiService } from '@pu-stats/data-access';
 import { Auth } from '@angular/fire/auth';
@@ -496,6 +497,52 @@ describe('App (testing-library)', () => {
     expect(links[2].getAttribute('href')).toBe('/leaderboard');
     expect(links[3].getAttribute('href')).toBe('/training-plans');
     expect(links[4].getAttribute('href')).toBe('/blog');
+  });
+
+  // Regression: the early-access notice used to sit at the bottom-left,
+  // where it overlapped the cookie consent banner (also bottom-anchored).
+  // It must now open at the top so the consent banner stays visible.
+  it('opens the early-access snackbar at the top so it does not overlap the consent banner', async () => {
+    try {
+      localStorage.removeItem('pus_early_access_dismissed');
+    } catch {
+      /* localStorage unavailable in this environment */
+    }
+    const openSpy = vitest
+      .spyOn(MatSnackBar.prototype, 'open')
+      .mockReturnValue({
+        onAction: () => of(undefined),
+        afterDismissed: () => of({ dismissedByAction: false }),
+      } as unknown as ReturnType<MatSnackBar['open']>);
+
+    await render(App, {
+      providers: [
+        provideRouter([]),
+        { provide: PLATFORM_ID, useValue: 'browser' },
+        {
+          provide: UserContextService,
+          useValue: {
+            userNameSafe: userNameSignal.asReadonly(),
+            userIdSafe: () => 'u1',
+            isAdmin: () => false,
+            isGuest: () => false,
+          },
+        },
+        { provide: AuthStore, useValue: authMock },
+        { provide: AuthService, useValue: authServiceMock },
+        { provide: Auth, useValue: firebaseAuthMock },
+        { provide: UserConfigApiService, useValue: userConfigApiMock },
+        { provide: StatsApiService, useValue: statsApiMock },
+        { provide: AdsStore, useValue: adsStoreMock },
+        { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
+      ],
+    });
+
+    const earlyAccessCall = openSpy.mock.calls.find(
+      ([, , config]) => config?.panelClass === 'early-access-snackbar'
+    );
+    expect(earlyAccessCall).toBeTruthy();
+    expect(earlyAccessCall?.[2]?.verticalPosition).toBe('top');
   });
 
   it('keeps base document title when no seo route data is active', async () => {
