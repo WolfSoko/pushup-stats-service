@@ -19,7 +19,6 @@ export const POST: BlogPost = {
     "fitness over 40",
     "push-ups for older adults"
   ],
-  "translationSlug": "liegestuetze-ab-40",
   "heroImage": "https://images.unsplash.com/photo-1638820858482-800bd51f63f1?auto=format&fit=crop&w=1600&q=80",
   "heroImageAlt": "Athlete doing a clean push-up outdoors — training after 40.",
   "heroImageCredit": "Photo: <a href=\"https://unsplash.com\" target=\"_blank\" rel=\"noopener noreferrer\">Unsplash</a>"

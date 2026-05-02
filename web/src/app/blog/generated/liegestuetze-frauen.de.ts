@@ -19,7 +19,6 @@ export const POST: BlogPost = {
     "Frau Liegestütze Trainingsplan",
     "Liegestütze Anfänger Frau"
   ],
-  "translationSlug": "pushups-for-women",
   "heroImage": "https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=1600&q=80",
   "heroImageAlt": "Sportlerin in einer kontrollierten Liegestütze auf einer Outdoor-Trainingsmatte.",
   "heroImageCredit": "Foto: <a href=\"https://unsplash.com\" target=\"_blank\" rel=\"noopener noreferrer\">Unsplash</a>"

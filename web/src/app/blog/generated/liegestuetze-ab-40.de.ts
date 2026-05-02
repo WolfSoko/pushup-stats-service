@@ -19,7 +19,6 @@ export const POST: BlogPost = {
     "Fitness über 40",
     "Liegestütze Gelenke schonen"
   ],
-  "translationSlug": "pushups-over-40",
   "heroImage": "https://images.unsplash.com/photo-1638820858482-800bd51f63f1?auto=format&fit=crop&w=1600&q=80",
   "heroImageAlt": "Sportlerin bei einer sauberen Liegestütze im Grünen – Training ab 40.",
   "heroImageCredit": "Foto: <a href=\"https://unsplash.com\" target=\"_blank\" rel=\"noopener noreferrer\">Unsplash</a>"

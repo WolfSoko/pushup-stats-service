@@ -111,7 +111,7 @@ describe('generate-sitemap', () => {
       expect(scanMarkdownBlogPosts(join(tmpRoot, 'missing'))).toEqual([]);
     });
 
-    it('extracts slug, lang, translationSlug and publishedAt from paired files', () => {
+    it('extracts slug, lang, alternateSlugs, and publishedAt from paired files', () => {
       writePost(
         'liegestuetze-fehler',
         'de',
@@ -128,15 +128,48 @@ describe('generate-sitemap', () => {
       expect(de).toEqual({
         slug: 'liegestuetze-fehler',
         lang: 'de',
-        translationSlug: 'pushup-mistakes',
         publishedAt: '2026-04-30',
+        alternateSlugs: {
+          de: 'liegestuetze-fehler',
+          en: 'pushup-mistakes',
+        },
       });
       expect(en).toEqual({
         slug: 'pushup-mistakes',
         lang: 'en',
-        translationSlug: 'liegestuetze-fehler',
         publishedAt: '2026-04-30',
+        alternateSlugs: {
+          de: 'liegestuetze-fehler',
+          en: 'pushup-mistakes',
+        },
       });
+    });
+
+    it('emits one entry per discovered locale and lists every sibling in alternateSlugs', () => {
+      writePost(
+        'pushups-101',
+        'de',
+        "slug: liegestuetze-101\npublishedAt: '2026-05-01'\ntitle: t\ndescription: d"
+      );
+      writePost(
+        'pushups-101',
+        'en',
+        "slug: pushups-101\npublishedAt: '2026-05-01'\ntitle: t\ndescription: d"
+      );
+      writePost(
+        'pushups-101',
+        'fr',
+        "slug: pompes-101\npublishedAt: '2026-05-01'\ntitle: t\ndescription: d"
+      );
+      const posts = scanMarkdownBlogPosts(tmpRoot);
+      expect(posts).toHaveLength(3);
+      for (const post of posts) {
+        expect(post.alternateSlugs).toEqual({
+          de: 'liegestuetze-101',
+          en: 'pushups-101',
+          fr: 'pompes-101',
+        });
+      }
     });
 
     it('falls back to folder name when frontmatter omits `slug`', () => {
@@ -147,7 +180,7 @@ describe('generate-sitemap', () => {
       );
       const [post] = scanMarkdownBlogPosts(tmpRoot);
       expect(post.slug).toBe('untranslated');
-      expect(post.translationSlug).toBeUndefined();
+      expect(post.alternateSlugs).toEqual({ de: 'untranslated' });
     });
   });
 
@@ -275,27 +308,32 @@ describe('generate-sitemap', () => {
   });
 
   describe('buildBlogRoutes', () => {
+    const pairAlternateSlugs = {
+      de: 'liegestuetze-steigern',
+      en: 'pushup-progression',
+    };
     const posts = [
       {
         slug: 'liegestuetze-steigern',
         lang: 'de',
-        translationSlug: 'pushup-progression',
         publishedAt: '2025-01-15',
+        alternateSlugs: pairAlternateSlugs,
       },
       {
         slug: 'pushup-progression',
         lang: 'en',
-        translationSlug: 'liegestuetze-steigern',
         publishedAt: '2025-01-15',
+        alternateSlugs: pairAlternateSlugs,
       },
       {
         slug: 'orphan-de',
         lang: 'de',
         publishedAt: '2025-02-01',
+        alternateSlugs: { de: 'orphan-de' },
       },
     ];
 
-    it('pairs DE and EN posts with matching translationSlug', () => {
+    it('emits one alternate per locale present in alternateSlugs', () => {
       const routes = buildBlogRoutes(posts);
       const de = routes.find((r) => r.path === '/blog/liegestuetze-steigern');
       const en = routes.find((r) => r.path === '/blog/pushup-progression');
@@ -317,6 +355,27 @@ describe('generate-sitemap', () => {
       ]);
     });
 
+    it('emits N alternates when more than two locales exist', () => {
+      const allLocales = {
+        de: 'liegestuetze-101',
+        en: 'pushups-101',
+        fr: 'pompes-101',
+      };
+      const routes = buildBlogRoutes([
+        {
+          slug: 'liegestuetze-101',
+          lang: 'de',
+          publishedAt: '2025-04-01',
+          alternateSlugs: allLocales,
+        },
+      ]);
+      expect(routes[0].alternates).toEqual([
+        { lang: 'de', path: '/blog/liegestuetze-101' },
+        { lang: 'en', path: '/blog/pushups-101' },
+        { lang: 'fr', path: '/blog/pompes-101' },
+      ]);
+    });
+
     it('propagates publishedAt as lastmod', () => {
       const routes = buildBlogRoutes(posts);
       expect(routes[0].lastmod).toBe('2025-01-15');
@@ -325,18 +384,22 @@ describe('generate-sitemap', () => {
 
   describe('generateSitemap', () => {
     it('produces valid XML with urlset, lastmod, and hreflang tags', () => {
+      const alternateSlugs = {
+        de: 'liegestuetze-steigern',
+        en: 'pushup-progression',
+      };
       const xml = generateSitemap([
         {
           slug: 'liegestuetze-steigern',
           lang: 'de',
-          translationSlug: 'pushup-progression',
           publishedAt: '2025-01-15',
+          alternateSlugs,
         },
         {
           slug: 'pushup-progression',
           lang: 'en',
-          translationSlug: 'liegestuetze-steigern',
           publishedAt: '2025-01-15',
+          alternateSlugs,
         },
       ]);
       expect(xml).toContain('<?xml version="1.0" encoding="UTF-8"?>');

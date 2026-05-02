@@ -178,10 +178,10 @@ export function loadPushupTypeContent(contentRoot) {
   const files = listDirEntries(dir).filter((f) => f.endsWith('.md'));
   const out = {};
   for (const file of files) {
-    const match = /^(.+)\.(de|en)\.md$/.exec(file);
+    const match = /^(.+)\.([a-z][a-z-]*)\.md$/.exec(file);
     if (!match) {
       throw new Error(
-        `${join(dir, file)}: filename must be <id>.<lang>.md (lang=de|en)`
+        `${join(dir, file)}: filename must be <id>.<lang>.md (lowercase locale code)`
       );
     }
     const [, id, lang] = match;

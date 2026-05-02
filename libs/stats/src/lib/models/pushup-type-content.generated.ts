@@ -46,6 +46,20 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
       "tips": [
         "Tempo 3-1-1 (3 s down, 1 s hold, 1 s up) builds noticeably more strength."
       ]
+    },
+    "it": {
+      "name": "Piegamento arciere",
+      "summary": "Piegamento asimmetrico: un braccio si piega mentre l'altro rimane esteso — un passaggio intermedio verso il piegamento a un braccio.",
+      "instructions": [
+        "Mani posizionate notevolmente più larghe delle spalle, dita leggermente ruotate verso l'esterno.",
+        "Durante la discesa, sposta il peso su un lato: un braccio si piega, l'altro rimane quasi disteso.",
+        "Il braccio disteso funge da supporto; la maggior parte del carico è sul braccio che si piega.",
+        "Risali in modo controllato, torna al centro, poi sposta il peso sull'altro lato.",
+        "Conta le ripetizioni per lato — il piano di solito indica il numero per braccio."
+      ],
+      "tips": [
+        "Un tempo 3-1-1 (3 s discesa, 1 s pausa, 1 s salita) sviluppa la forza in modo notevolmente più efficace."
+      ]
     }
   },
   "decline": {
@@ -73,6 +87,19 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
       ],
       "tips": [
         "Do not let the lower back arch — actively brace abs and glutes, especially with high feet."
+      ]
+    },
+    "it": {
+      "name": "Piegamento declinato (piedi in elevazione)",
+      "summary": "Piedi su un rialzo, mani a terra — carico extra sul petto superiore e sulle spalle.",
+      "instructions": [
+        "Piedi su una superficie stabile (panca, sedia, scalino).",
+        "Mani alla larghezza delle spalle a terra, mantieni una linea retta dalla testa ai talloni.",
+        "Abbassa il petto in modo controllato, tenendo gli addominali in tensione.",
+        "Spingi su con forza — più i piedi sono alti, maggiore è il coinvolgimento delle spalle."
+      ],
+      "tips": [
+        "Non lasciare che la zona lombare si inarcherebbe — tieni addominali e glutei attivi, soprattutto con i piedi molto alti."
       ]
     }
   },
@@ -102,6 +129,19 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
       "tips": [
         "Beginners: get comfortable with knee-diamonds before attempting the full version."
       ]
+    },
+    "it": {
+      "name": "Piegamento a diamante",
+      "summary": "Le mani formano un triangolo sotto il petto — massimo coinvolgimento dei tricipiti.",
+      "instructions": [
+        "Pollici e indici si toccano, formando un triangolo a \"diamante\".",
+        "Mani direttamente sotto il petto inferiore, non troppo in basso verso l'addome.",
+        "Tieni i gomiti vicini al busto, puntati verso dietro.",
+        "Abbassa il petto fino al diamante, poi spingi direttamente verso l'alto."
+      ],
+      "tips": [
+        "Principianti: familiarizzate con il diamante sulle ginocchia prima di tentare la versione completa."
+      ]
     }
   },
   "incline": {
@@ -129,6 +169,19 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
       ],
       "tips": [
         "Step the elevation down once 3×10 reps feel clean."
+      ]
+    },
+    "it": {
+      "name": "Piegamento inclinato (mani in elevazione)",
+      "summary": "Mani su una panca, tavolo o parete — riduce il carico sulle braccia.",
+      "instructions": [
+        "Posiziona le mani su una superficie stabile (panca, tavolo, scalino).",
+        "Piedi a terra, corpo in linea retta.",
+        "Abbassa il petto in modo controllato fino alla superficie, poi spingi su.",
+        "Più bassa è la superficie, più difficile è l'esercizio."
+      ],
+      "tips": [
+        "Abbassa l'altezza della superficie una volta che 3×10 ripetizioni risultano pulite e controllate."
       ]
     }
   },
@@ -158,6 +211,19 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
       "tips": [
         "Stay on knee push-ups until you can do 3×8 clean reps, then progress to the standard version."
       ]
+    },
+    "it": {
+      "name": "Piegamento sulle ginocchia",
+      "summary": "Regressione facilitata con le ginocchia a terra — ideale per i principianti.",
+      "instructions": [
+        "Posiziona le ginocchia a terra, piedi sollevati o incrociati.",
+        "Mani alla larghezza delle spalle, mantieni una linea retta dalle ginocchia alle spalle.",
+        "Stabilizza i fianchi — senza cedimenti o sollevamenti.",
+        "Abbassa il petto in modo controllato, poi risali."
+      ],
+      "tips": [
+        "Rimani sui piegamenti sulle ginocchia finché riesci a fare 3×8 ripetizioni pulite, poi passa alla versione standard."
+      ]
     }
   },
   "knuckle": {
@@ -186,6 +252,19 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
       "tips": [
         "Useful for sensitive wrists — load shifts from the joint into the knuckles."
       ]
+    },
+    "it": {
+      "name": "Piegamento sulle nocche",
+      "summary": "Eseguito sulle nocche invece che con le mani piatte — più delicato per i polsi e rafforza gli avambracci.",
+      "instructions": [
+        "Fai i pugni, appoggiati sulle prime due nocche (indice e medio).",
+        "Mantieni il dorso della mano dritto — non piegare il polso.",
+        "Inizia su una superficie morbida (tappetino, asciugamano), poi progredisci verso il pavimento duro.",
+        "Per il resto, esegui come un piegamento standard."
+      ],
+      "tips": [
+        "Utile per polsi sensibili — il carico si sposta dall'articolazione alle nocche."
+      ]
     }
   },
   "negative-one-arm": {
@@ -213,6 +292,19 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
       ],
       "tips": [
         "Build the eccentric time slowly: 3 s → 5 s → 8 s across multiple weeks."
+      ]
+    },
+    "it": {
+      "name": "Piegamento negativo a un braccio",
+      "summary": "Solo la fase di discesa eseguita con un braccio — un eccentrico controllato costruisce la forza per il movimento completo.",
+      "instructions": [
+        "Posiziona una mano su una panca/rialzo; piedi larghi per la stabilità.",
+        "L'altra mano sulla zona lombare o sul fianco; mantieni il corpo come una plank.",
+        "Abbassa verso la panca in 3-5 secondi — senza \"caduta\" improvvisa.",
+        "Risali con entrambe le mani o dalla posizione elevata — la fase concentrica non è a un braccio."
+      ],
+      "tips": [
+        "Aumenta gradualmente il tempo eccentrico: 3 s → 5 s → 8 s nell'arco di più settimane."
       ]
     }
   },
@@ -244,6 +336,20 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
       "tips": [
         "Reps are counted per side — start with the dominant side and match it on the weaker side."
       ]
+    },
+    "it": {
+      "name": "Piegamento a un braccio",
+      "summary": "Piegamento completo con una sola mano — il re della spinta a corpo libero.",
+      "instructions": [
+        "Piedi notevolmente più larghi della larghezza dei fianchi per la massima stabilità (molto larghi all'inizio).",
+        "Una mano sotto il centro del petto; l'altra sulla zona lombare o sul fianco.",
+        "Mantieni il corpo intenzionalmente come una plank — fianchi e spalle non devono ruotare.",
+        "Abbassa il petto fino alla mano in modo controllato, poi spingi direttamente verso l'alto.",
+        "Man mano che la forza cresce, riduci gradualmente la larghezza dei piedi."
+      ],
+      "tips": [
+        "Le ripetizioni si contano per lato — inizia con il lato dominante e pareggiale sul lato più debole."
+      ]
     }
   },
   "partial-one-arm": {
@@ -266,6 +372,17 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
         "Other hand on the lower back; hold the body as a plank — do not rotate the hips.",
         "Intentionally only descend to the bench height (reduced ROM).",
         "Press up one-armed; lower the bench height progressively."
+      ],
+      "tips": []
+    },
+    "it": {
+      "name": "Piegamento parziale a un braccio",
+      "summary": "Piegamenti a un braccio su range di movimento ridotto (es. da una panca bassa).",
+      "instructions": [
+        "Posiziona una mano su una panca/scalino basso; piedi molto larghi (almeno larghezza fianchi).",
+        "L'altra mano sulla zona lombare; mantieni il corpo come una plank — non ruotare i fianchi.",
+        "Scendi intenzionalmente solo fino all'altezza della panca (ROM ridotto).",
+        "Spingi su con un braccio; abbassa progressivamente l'altezza della panca."
       ],
       "tips": []
     }
@@ -295,6 +412,19 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
       ],
       "tips": [
         "Make it harder: put the feet on an elevation for a near-vertical position."
+      ]
+    },
+    "it": {
+      "name": "Piegamento a picco",
+      "summary": "Piegamenti dalla posizione a V rovesciata — spinta quasi verticale, un passaggio verso i piegamenti in verticale.",
+      "instructions": [
+        "Da una posizione quadrupede, spingi i fianchi verso l'alto — il corpo forma una V rovesciata.",
+        "Mani alla larghezza delle spalle, gambe tese o leggermente piegate, fianchi alti.",
+        "Abbassa la testa tra le braccia verso il pavimento — i gomiti puntano all'indietro.",
+        "Risali senza cedere nella posizione di piegamento normale."
+      ],
+      "tips": [
+        "Per renderlo più difficile: metti i piedi su un rialzo per una posizione quasi verticale."
       ]
     }
   },
@@ -328,6 +458,21 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
         "Look slightly forward at the floor — do not crane the neck.",
         "Breathing: inhale on the way down, exhale on the press up."
       ]
+    },
+    "it": {
+      "name": "Piegamento standard",
+      "summary": "Piegamento classico con mani alla larghezza delle spalle e corpo in linea retta.",
+      "instructions": [
+        "Mani alla larghezza delle spalle, direttamente sotto le spalle, dita rivolte in avanti.",
+        "Il corpo forma una linea retta dalla testa ai talloni — tieni addominali e glutei in tensione.",
+        "Gomiti a circa 45° rispetto al busto, non aperti verso l'esterno.",
+        "Abbassa il petto in modo controllato finché sfiora quasi il pavimento.",
+        "Risali con forza, senza bloccare i gomiti in cima."
+      ],
+      "tips": [
+        "Guarda leggermente avanti verso il pavimento — non inarcare il collo.",
+        "Respirazione: inspira nella discesa, espira nella spinta verso l'alto."
+      ]
     }
   },
   "wall-one-arm": {
@@ -350,6 +495,17 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
         "Place one hand on the wall at shoulder height; the other hand rests on the lower back or hip.",
         "Tilt the body as a solid plank toward the wall, bending the elbow under control.",
         "Lower with a slow eccentric (3 s) toward the wall, then press away powerfully."
+      ],
+      "tips": []
+    },
+    "it": {
+      "name": "Piegamento a un braccio contro il muro",
+      "summary": "Piegamenti a un braccio contro una parete — un esercizio di ingresso sicuro per la progressione a un braccio.",
+      "instructions": [
+        "Posizionati a circa un braccio di distanza dalla parete.",
+        "Appoggia una mano sulla parete all'altezza della spalla; l'altra mano poggia sulla zona lombare o sul fianco.",
+        "Inclina il corpo come una plank solida verso la parete, piegando il gomito in modo controllato.",
+        "Scendi con un eccentrico lento (3 s) verso la parete, poi spingi via con forza."
       ],
       "tips": []
     }
@@ -376,6 +532,19 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
         "Elbows track to the sides, opening further as you descend.",
         "Lower the chest under control with a clear stretch sensation across the chest.",
         "Press up consciously from the chest — do not \"cheat\" with the triceps."
+      ],
+      "tips": [
+        "[object Object]"
+      ]
+    },
+    "it": {
+      "name": "Piegamento largo",
+      "summary": "Posizione delle mani più larga che enfatizza il petto e alleggerisce il lavoro dei tricipiti.",
+      "instructions": [
+        "Mani posizionate notevolmente più larghe delle spalle, dita leggermente ruotate verso l'esterno.",
+        "I gomiti si aprono verso i lati, aprendosi ulteriormente durante la discesa.",
+        "Abbassa il petto in modo controllato con una chiara sensazione di allungamento sul petto.",
+        "Spingi su consapevolmente dal petto — senza \"barare\" con i tricipiti."
       ],
       "tips": [
         "[object Object]"

@@ -5,28 +5,56 @@
 
 import type { BlogPost } from '../blog-posts.types';
 
-import { POST as p0 } from './liegestuetze-fehler.de';
-import { POST as p1 } from './pushup-mistakes.en';
-import { POST as p2 } from './liegestuetze-frauen.de';
-import { POST as p3 } from './pushups-for-women.en';
-import { POST as p4 } from './liegestuetze-atmung.de';
-import { POST as p5 } from './pushup-breathing.en';
-import { POST as p6 } from './liegestuetze-herz-studie.de';
-import { POST as p7 } from './pushups-heart-study.en';
-import { POST as p8 } from './wim-hof-liegestuetze.de';
-import { POST as p9 } from './wim-hof-pushups.en';
-import { POST as p10 } from './liegestuetze-ab-40.de';
-import { POST as p11 } from './pushups-over-40.en';
-import { POST as p12 } from './30-day-pushup-challenge.en';
-import { POST as p13 } from './30-tage-liegestuetze-challenge.de';
-import { POST as p14 } from './liegestuetze-varianten.de';
-import { POST as p15 } from './pushup-variations.en';
-import { POST as p16 } from './liegestuetze-tracker.de';
-import { POST as p17 } from './pushup-tracker-guide.en';
-import { POST as p18 } from './daily-pushups.en';
-import { POST as p19 } from './taeglich-liegestuetze.de';
-import { POST as p20 } from './liegestuetze-steigern.de';
-import { POST as p21 } from './pushup-progression.en';
+import { POST as p0 } from './erreurs-pompes.fr';
+import { POST as p1 } from './errores-flexiones.es';
+import { POST as p2 } from './errores-in-pressionibus.la';
+import { POST as p3 } from './errori-piegamenti.it';
+import { POST as p4 } from './liegestuetze-fehler.de';
+import { POST as p5 } from './opdrukken-fouten.nl';
+import { POST as p6 } from './pushup-mistakes.en';
+import { POST as p7 } from './flexiones-mujeres.es';
+import { POST as p8 } from './liegestuetze-frauen.de';
+import { POST as p9 } from './opdrukken-voor-vrouwen.nl';
+import { POST as p10 } from './pompes-pour-femmes.fr';
+import { POST as p11 } from './pushups-for-women.en';
+import { POST as p12 } from './liegestuetze-atmung.de';
+import { POST as p13 } from './opdrukken-ademhaling.nl';
+import { POST as p14 } from './pushup-breathing.en';
+import { POST as p15 } from './respiracion-flexiones.es';
+import { POST as p16 } from './respiration-pompes.fr';
+import { POST as p17 } from './respirazione-piegamenti.it';
+import { POST as p18 } from './spiratio-in-pressionibus.la';
+import { POST as p19 } from './flexiones-salud-corazon.es';
+import { POST as p20 } from './liegestuetze-herz-studie.de';
+import { POST as p21 } from './pompes-sante-cardiaque.fr';
+import { POST as p22 } from './pushups-heart-study.en';
+import { POST as p23 } from './wim-hof-liegestuetze.de';
+import { POST as p24 } from './wim-hof-pushups.en';
+import { POST as p25 } from './flexiones-mayores-40.es';
+import { POST as p26 } from './liegestuetze-ab-40.de';
+import { POST as p27 } from './opdrukken-na-40.nl';
+import { POST as p28 } from './piegamenti-dopo-i-40.it';
+import { POST as p29 } from './pieseis-ges-meta-tessarakonta.grc';
+import { POST as p30 } from './pompes-apres-40-ans.fr';
+import { POST as p31 } from './pressiones-post-xl-annos.la';
+import { POST as p32 } from './pushups-over-40.en';
+import { POST as p33 } from './30-dagen-opdruk-challenge.nl';
+import { POST as p34 } from './30-day-pushup-challenge.en';
+import { POST as p35 } from './30-tage-liegestuetze-challenge.de';
+import { POST as p36 } from './defi-pompes-30-jours.fr';
+import { POST as p37 } from './desafio-flexiones-30-dias.es';
+import { POST as p38 } from './provocatio-triginta-dierum.la';
+import { POST as p39 } from './sfida-30-giorni-piegamenti.it';
+import { POST as p40 } from './triakonta-emerai-pieseos.grc';
+import { POST as p41 } from './liegestuetze-varianten.de';
+import { POST as p42 } from './pushup-variations.en';
+import { POST as p43 } from './liegestuetze-tracker.de';
+import { POST as p44 } from './pushup-tracker-guide.en';
+import { POST as p45 } from './daily-pushups.en';
+import { POST as p46 } from './taeglich-liegestuetze.de';
+import { POST as p47 } from './liegestuetze-steigern.de';
+import { POST as p48 } from './progression-pompes.fr';
+import { POST as p49 } from './pushup-progression.en';
 
 export const GENERATED_BLOG_POSTS: ReadonlyArray<BlogPost> = [
   p0,
@@ -51,4 +79,32 @@ export const GENERATED_BLOG_POSTS: ReadonlyArray<BlogPost> = [
   p19,
   p20,
   p21,
+  p22,
+  p23,
+  p24,
+  p25,
+  p26,
+  p27,
+  p28,
+  p29,
+  p30,
+  p31,
+  p32,
+  p33,
+  p34,
+  p35,
+  p36,
+  p37,
+  p38,
+  p39,
+  p40,
+  p41,
+  p42,
+  p43,
+  p44,
+  p45,
+  p46,
+  p47,
+  p48,
+  p49,
 ];

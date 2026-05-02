@@ -19,7 +19,6 @@ export const POST: BlogPost = {
     "women push-up beginner",
     "push-up progression women"
   ],
-  "translationSlug": "liegestuetze-frauen",
   "heroImage": "https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=1600&q=80",
   "heroImageAlt": "Female athlete performing a controlled push-up on an outdoor training mat.",
   "heroImageCredit": "Photo: <a href=\"https://unsplash.com\" target=\"_blank\" rel=\"noopener noreferrer\">Unsplash</a>"

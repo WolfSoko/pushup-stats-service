@@ -82,10 +82,15 @@ function extractBlogPosts(source) {
 }
 
 /**
- * Scans `content/blog/<folder>/{de,en}.md` for markdown-sourced posts.
+ * Scans `content/blog/<folder>/<lang>.md` for markdown-sourced posts.
  * Folder name is the cross-locale identifier; per-locale `slug` in
- * frontmatter overrides the URL slug for that locale, and the other
- * locale's slug becomes the `translationSlug` in the sitemap.
+ * frontmatter overrides the URL slug for that locale. Each returned
+ * post carries `alternateSlugs` — the map of every sibling locale's
+ * slug (including this post's own) — so callers can emit complete
+ * hreflang alternate sets without re-reading the directory.
+ *
+ * Discovers ANY `<lang>.md` file in each folder (not a fixed list)
+ * so adding a new locale is just dropping in the file.
  */
 function scanMarkdownBlogPosts(blogContentRoot) {
   if (!existsSync(blogContentRoot)) return [];
@@ -99,25 +104,27 @@ function scanMarkdownBlogPosts(blogContentRoot) {
   const posts = [];
   for (const folder of folders) {
     const perLocale = {};
-    for (const lang of ['de', 'en']) {
-      const path = join(blogContentRoot, folder, `${lang}.md`);
-      if (!existsSync(path)) continue;
+    const localeFiles = readdirSync(join(blogContentRoot, folder)).filter((f) =>
+      f.endsWith('.md')
+    );
+    for (const file of localeFiles) {
+      const lang = file.slice(0, -3);
+      const path = join(blogContentRoot, folder, file);
       const data = readFrontmatter(path);
       perLocale[lang] = {
         slug: data.slug ?? folder,
         publishedAt: data.publishedAt,
       };
     }
-    for (const lang of ['de', 'en']) {
-      const entry = perLocale[lang];
-      if (!entry) continue;
-      const otherLang = lang === 'de' ? 'en' : 'de';
-      const other = perLocale[otherLang];
+    const alternateSlugs = Object.fromEntries(
+      Object.entries(perLocale).map(([lang, entry]) => [lang, entry.slug])
+    );
+    for (const [lang, entry] of Object.entries(perLocale)) {
       posts.push({
         slug: entry.slug,
         lang,
-        translationSlug: other ? other.slug : undefined,
         publishedAt: String(entry.publishedAt ?? ''),
+        alternateSlugs,
       });
     }
   }
@@ -222,23 +229,17 @@ function buildTrainingPlanRoutes(slugs) {
 }
 
 function buildBlogRoutes(posts) {
-  const bySlug = new Map(posts.map((p) => [`${p.lang}:${p.slug}`, p]));
   return posts.map((post) => {
-    const pairKey = post.translationSlug
-      ? `${post.lang === 'de' ? 'en' : 'de'}:${post.translationSlug}`
-      : null;
-    const pair = pairKey ? bySlug.get(pairKey) : undefined;
-    const alternates = pair
-      ? [
-          {
-            lang: 'de',
-            path: `/blog/${post.lang === 'de' ? post.slug : pair.slug}`,
-          },
-          {
-            lang: 'en',
-            path: `/blog/${post.lang === 'en' ? post.slug : pair.slug}`,
-          },
-        ]
+    // `alternateSlugs` is populated by `scanMarkdownBlogPosts` with
+    // every sibling locale's slug (including the post's own). Emit one
+    // <xhtml:link> per available translation so search engines pair
+    // them correctly; missing locales for a folder are silently
+    // omitted rather than 404'd against.
+    const alternates = post.alternateSlugs
+      ? Object.entries(post.alternateSlugs).map(([lang, slug]) => ({
+          lang,
+          path: `/blog/${slug}`,
+        }))
       : [{ lang: post.lang, path: `/blog/${post.slug}` }];
     return {
       path: `/blog/${post.slug}`,
