@@ -21,13 +21,13 @@ env:
     # Angular only treats entries starting with `*.` as wildcards
     # (see `isHostAllowed` in `@angular/ssr`); `*.run.app` matches any
     # hostname ending in `.run.app`, including the random per-revision tags.
-    value: 'pushup-stats-service--pushup-stats.europe-west4.hosted.app,pushup-stats.de,*.run.app'
+    value: 'pushup-stats-service--pushup-stats.europe-west4.hosted.app,pushup-stats.com,pushup-stats.de,*.run.app'
     availability:
       - RUNTIME
 
   # Sentry auth token for source map upload during App Hosting's build.
   # App Hosting builds independently from GitHub Actions, so the bundles served
-  # at pushup-stats.de need their own debug-ID upload — otherwise Sentry can't
+  # at pushup-stats.com need their own debug-ID upload — otherwise Sentry can't
   # match runtime stack traces to source maps.
   #
   # Setup (one-time, requires gcloud + Firebase project owner role):

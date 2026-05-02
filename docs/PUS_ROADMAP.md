@@ -1,6 +1,6 @@
 # PUS Roadmap
 
-**Live:** https://pushup-stats.de
+**Live:** https://pushup-stats.com
 **Project Board:** https://github.com/users/WolfSoko/projects/6/views/3
 
 ---

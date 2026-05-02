@@ -17,7 +17,7 @@ import { DEFAULT_SNAP_QUALITY, SNAP_QUALITY_PARTICLES } from '@pu-stats/models';
 import { finalize } from 'rxjs';
 import { ShareService } from '../../../core/share.service';
 
-const SHARE_URL = 'https://pushup-stats.de';
+const SHARE_URL = 'https://pushup-stats.com';
 
 export type GoalKind = 'daily' | 'weekly' | 'monthly';
 

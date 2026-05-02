@@ -5449,8 +5449,8 @@ Deine Position: # ·  Reps        </source>
     </unit>
     <unit id="earlyAccess.text">
       <segment state="translated">
-        <source>Early Access – pushup-stats.de befindet sich noch im Aufbau. Funktionen und Design können sich jederzeit ändern.</source>
-        <target>Early Access – pushup-stats.de is still under development. Features and design may change at any time.</target>
+        <source>Early Access – pushup-stats.com befindet sich noch im Aufbau. Funktionen und Design können sich jederzeit ändern.</source>
+        <target>Early Access – pushup-stats.com is still under development. Features and design may change at any time.</target>
       </segment>
     </unit>
     <unit id="landing.earlyAccess.badge">
@@ -6247,8 +6247,8 @@ Deine Position: # ·  Reps        </source>
     </unit>
     <unit id="publicProfile.cta">
       <segment state="translated">
-        <source>Selbst tracken – pushup-stats.de</source>
-        <target>Track your own – pushup-stats.de</target>
+        <source>Selbst tracken – pushup-stats.com</source>
+        <target>Track your own – pushup-stats.com</target>
       </segment>
     </unit>
     <unit id="publicProfile.share.text">
@@ -6283,8 +6283,8 @@ Deine Position: # ·  Reps        </source>
     </unit>
     <unit id="publicProfile.seo.description">
       <segment state="translated">
-        <source><ph id="0" equiv="name" disp="name"/> hat <ph id="1" equiv="total" disp="total"/> Liegestütze in <ph id="2" equiv="days" disp="days"/> aktiven Tagen geschafft – aktuelle Streak: <ph id="3" equiv="streak" disp="streak"/> Tage. Tracke selbst kostenlos auf pushup-stats.de.</source>
-        <target><ph id="0" equiv="name" disp="name"/> hit <ph id="1" equiv="total" disp="total"/> push-ups across <ph id="2" equiv="days" disp="days"/> active days – current streak: <ph id="3" equiv="streak" disp="streak"/> days. Start tracking free at pushup-stats.de.</target>
+        <source><ph id="0" equiv="name" disp="name"/> hat <ph id="1" equiv="total" disp="total"/> Liegestütze in <ph id="2" equiv="days" disp="days"/> aktiven Tagen geschafft – aktuelle Streak: <ph id="3" equiv="streak" disp="streak"/> Tage. Tracke selbst kostenlos auf pushup-stats.com.</source>
+        <target><ph id="0" equiv="name" disp="name"/> hit <ph id="1" equiv="total" disp="total"/> push-ups across <ph id="2" equiv="days" disp="days"/> active days – current streak: <ph id="3" equiv="streak" disp="streak"/> days. Start tracking free at pushup-stats.com.</target>
       </segment>
     </unit>
     <unit id="settings.publicProfile.toggle">

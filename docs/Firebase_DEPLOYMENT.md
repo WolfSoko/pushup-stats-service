@@ -1,7 +1,7 @@
 # Firebase Deployment
 
 **Projekt:** `pushup-stats`
-**Live-URL:** https://pushup-stats.de
+**Live-URL:** https://pushup-stats.com
 
 ## Voraussetzungen
 
@@ -34,7 +34,7 @@ Manuell triggern über die Firebase Console → App Hosting.
 
 | Umgebung   | Firebase Projekt       | URL                            |
 | ---------- | ---------------------- | ------------------------------ |
-| Production | `pushup-stats`         | https://pushup-stats.de        |
+| Production | `pushup-stats`         | https://pushup-stats.com       |
 | Staging    | `pushup-stats-staging` | (via `fire.config.staging.ts`) |
 | Lokal      | Firebase Emulator      | http://localhost:4200          |
 

@@ -54,7 +54,7 @@ describe('buildOgTree', () => {
   it('Always renders the brand mark and canonical URL', () => {
     const text = flatten(buildOgTree(profile));
     expect(text).toContain('Pushup Tracker');
-    expect(text).toContain('pushup-stats.de');
+    expect(text).toContain('pushup-stats.com');
   });
 
   it('Survives anonymous profiles with zero stats', () => {

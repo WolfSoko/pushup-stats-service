@@ -2,7 +2,7 @@ import { LOCALE_ID } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { SeoService } from './seo.service';
 
-const BASE_URL = 'https://pushup-stats.de';
+const BASE_URL = 'https://pushup-stats.com';
 
 describe('SeoService', () => {
   function setup(locale: 'de' | 'en'): SeoService {

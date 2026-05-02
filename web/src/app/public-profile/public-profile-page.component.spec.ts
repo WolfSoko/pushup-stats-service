@@ -133,7 +133,9 @@ describe('PublicProfilePageComponent', () => {
       // LOCALE_ID `en-US`, so we assert the exact `/en/...` URL — going
       // permissive (matching `(de|en)`) would let a regression silently
       // map every locale to the source fallback.
-      expect(payload.url).toBe('https://pushup-stats.de/en/u/abcdef1234567890');
+      expect(payload.url).toBe(
+        'https://pushup-stats.com/en/u/abcdef1234567890'
+      );
       expect(payload.text).toContain('Wolfi');
       expect(payload.text).toContain('5000');
     });

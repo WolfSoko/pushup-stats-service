@@ -21,7 +21,7 @@ import { Component } from '@angular/core';
         <h2 i18n="@@impressum.contact.title">Kontakt</h2>
         <p>
           <span i18n="@@impressum.contact.email">E-Mail:</span>
-          contact&#64;pushup-stats.de
+          contact&#64;pushup-stats.com
         </p>
       </section>
 
