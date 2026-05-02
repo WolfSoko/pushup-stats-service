@@ -240,12 +240,14 @@
     </mat-card-content>
   </mat-card>
 
-  <app-analysis-teaser-card
-    [streak]="currentStreak()"
-    [weekReps]="weekReps()"
-    [weeklyGoal]="weeklyGoal()"
-    [refreshTrigger]="refreshCounter()"
-  />
+  @defer (hydrate on viewport) {
+    <app-analysis-teaser-card
+      [streak]="currentStreak()"
+      [weekReps]="weekReps()"
+      [weeklyGoal]="weeklyGoal()"
+      [refreshTrigger]="refreshCounter()"
+    />
+  }
 
   @if (loading()) {
     <section
