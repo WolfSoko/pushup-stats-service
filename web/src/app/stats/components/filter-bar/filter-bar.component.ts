@@ -15,7 +15,12 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { parseIsoDate, RangeModes, toLocalIsoDate } from '@pu-stats/models';
+import {
+  inferRangeMode,
+  parseIsoDate,
+  RangeModes,
+  toLocalIsoDate,
+} from '@pu-stats/models';
 
 @Component({
   selector: 'app-filter-bar',
@@ -53,12 +58,16 @@ import { parseIsoDate, RangeModes, toLocalIsoDate } from '@pu-stats/models';
           <mat-button-toggle value="month" i18n="@@rangeModeMonth"
             >Monat</mat-button-toggle
           >
+          <mat-button-toggle value="year" i18n="@@rangeModeYear"
+            >Jahr</mat-button-toggle
+          >
         </mat-button-toggle-group>
 
         <div class="step-actions">
           <button
             type="button"
             mat-stroked-button
+            [disabled]="mode() === 'custom'"
             (click)="shiftRange(-1)"
             i18n="@@rangeBack"
           >
@@ -68,6 +77,7 @@ import { parseIsoDate, RangeModes, toLocalIsoDate } from '@pu-stats/models';
           <button
             type="button"
             mat-stroked-button
+            [disabled]="mode() === 'custom'"
             (click)="jumpToToday()"
             i18n="@@rangeToday"
           >
@@ -76,6 +86,7 @@ import { parseIsoDate, RangeModes, toLocalIsoDate } from '@pu-stats/models';
           <button
             type="button"
             mat-stroked-button
+            [disabled]="mode() === 'custom'"
             (click)="shiftRange(1)"
             i18n="@@rangeForward"
           >
@@ -147,6 +158,20 @@ export class FilterBarComponent implements OnChanges {
       .subscribe((value) => {
         this.toChange.emit(this.toIsoDate(value));
       });
+
+    // Re-infer mode whenever the range changes so the toggle highlight stays
+    // in sync with the actual selection. If the user edits the picker to a
+    // range that doesn't fit the current mode, no toggle is highlighted
+    // (inferred mode is 'custom', for which there is no toggle button).
+    this.range.valueChanges.pipe(takeUntilDestroyed()).subscribe(() => {
+      const inferred = this.inferMode(
+        this.range.controls.start.value,
+        this.range.controls.end.value
+      );
+      if (inferred === this.mode()) return;
+      this.hasUserModeOverride.set(false);
+      this.inferredModeSource.set(inferred);
+    });
   }
 
   ngOnChanges(): void {
@@ -171,13 +196,13 @@ export class FilterBarComponent implements OnChanges {
   setMode(value: RangeModes): void {
     if (!value) return;
 
-    const previousStart = this.range.controls.start.value;
-    const previousEnd = this.range.controls.end.value;
-    const today = this.startOfDay(new Date());
-
     this.hasUserModeOverride.set(true);
     this.mode.set(value);
     this.modeChange.emit(value);
+
+    const previousStart = this.range.controls.start.value;
+    const previousEnd = this.range.controls.end.value;
+    const today = this.startOfDay(new Date());
 
     let anchor: Date | undefined;
     if (
@@ -197,32 +222,20 @@ export class FilterBarComponent implements OnChanges {
   }
 
   jumpToToday(): void {
+    if (this.mode() === 'custom') return;
     this.applyModeRange(new Date());
   }
 
   private inferMode(start: Date | null, end: Date | null): RangeModes {
-    if (!start || !end) return 'week';
-    const s = this.startOfDay(start);
-    const e = this.startOfDay(end);
-    if (s.getTime() === e.getTime()) return 'day';
-
-    const diffDays = Math.round((e.getTime() - s.getTime()) / 86_400_000) + 1;
-    if (diffDays === 7 && s.getDay() === 1) return 'week'; // Monday
-
-    const isMonthStart = s.getDate() === 1;
-    const lastDay = new Date(s.getFullYear(), s.getMonth() + 1, 0).getDate();
-    const isMonthEnd =
-      e.getFullYear() === s.getFullYear() &&
-      e.getMonth() === s.getMonth() &&
-      e.getDate() === lastDay;
-    if (isMonthStart && isMonthEnd) return 'month';
-
-    return 'week';
+    // Delegate to the shared utility used by AnalysisStore so the UI and
+    // store always agree on what counts as a day/week/month/year selection.
+    return inferRangeMode(this.toIsoDate(start), this.toIsoDate(end));
   }
 
   shiftRange(direction: -1 | 1): void {
     const start = this.range.controls.start.value;
     const end = this.range.controls.end.value;
+    if (this.mode() === 'custom') return;
     if (!start || !end) {
       this.applyModeRange();
       return;
@@ -237,7 +250,11 @@ export class FilterBarComponent implements OnChanges {
     } else if (this.mode() === 'week') {
       nextStart.setDate(nextStart.getDate() + direction * 7);
       nextEnd.setDate(nextEnd.getDate() + direction * 7);
-    } else {
+    } else if (this.mode() === 'year') {
+      const year = start.getFullYear() + direction;
+      nextStart.setFullYear(year, 0, 1);
+      nextEnd.setFullYear(year, 11, 31);
+    } else if (this.mode() === 'month') {
       // Always keep full month boundaries and avoid JS date overflow
       // (e.g. Jan 31 + 1 month becoming March).
       const anchor = new Date(
@@ -247,12 +264,18 @@ export class FilterBarComponent implements OnChanges {
       );
       nextStart.setFullYear(anchor.getFullYear(), anchor.getMonth(), 1);
       nextEnd.setFullYear(anchor.getFullYear(), anchor.getMonth() + 1, 0);
+    } else {
+      // Unhandled mode — bail out without changing the range so we don't
+      // silently fall back to month-shifting if a new mode is added.
+      return;
     }
 
     this.range.patchValue({ start: nextStart, end: nextEnd });
   }
 
   private applyModeRange(anchorDate?: Date): void {
+    if (this.mode() === 'custom') return;
+
     const anchor =
       anchorDate ??
       this.range.controls.end.value ??
@@ -269,6 +292,13 @@ export class FilterBarComponent implements OnChanges {
       const start = this.startOfWeek(anchor);
       const end = new Date(start);
       end.setDate(start.getDate() + 6);
+      this.range.patchValue({ start, end });
+      return;
+    }
+
+    if (this.mode() === 'year') {
+      const start = new Date(anchor.getFullYear(), 0, 1);
+      const end = new Date(anchor.getFullYear(), 11, 31);
       this.range.patchValue({ start, end });
       return;
     }
