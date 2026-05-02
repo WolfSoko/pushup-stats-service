@@ -3436,14 +3436,6 @@
         <source>Jahr</source>
       </segment>
     </unit>
-    <unit id="rangeModeCustom">
-      <notes>
-        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:60,61</note>
-      </notes>
-      <segment>
-        <source>Benutzerdefiniert</source>
-      </segment>
-    </unit>
     <unit id="rangeBack">
       <notes>
         <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:65,67</note>

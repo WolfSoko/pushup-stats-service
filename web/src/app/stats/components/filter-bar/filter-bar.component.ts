@@ -56,9 +56,6 @@ import { parseIsoDate, RangeModes, toLocalIsoDate } from '@pu-stats/models';
           <mat-button-toggle value="year" i18n="@@rangeModeYear"
             >Jahr</mat-button-toggle
           >
-          <mat-button-toggle value="custom" i18n="@@rangeModeCustom"
-            >Benutzerdefiniert</mat-button-toggle
-          >
         </mat-button-toggle-group>
 
         <div class="step-actions">
@@ -156,6 +153,20 @@ export class FilterBarComponent implements OnChanges {
       .subscribe((value) => {
         this.toChange.emit(this.toIsoDate(value));
       });
+
+    // Re-infer mode whenever the range changes so the toggle highlight stays
+    // in sync with the actual selection. If the user edits the picker to a
+    // range that doesn't fit the current mode, no toggle is highlighted
+    // (inferred mode is 'custom', for which there is no toggle button).
+    this.range.valueChanges.pipe(takeUntilDestroyed()).subscribe(() => {
+      const inferred = this.inferMode(
+        this.range.controls.start.value,
+        this.range.controls.end.value
+      );
+      if (inferred === this.mode()) return;
+      this.hasUserModeOverride.set(false);
+      this.inferredModeSource.set(inferred);
+    });
   }
 
   ngOnChanges(): void {
@@ -183,10 +194,6 @@ export class FilterBarComponent implements OnChanges {
     this.hasUserModeOverride.set(true);
     this.mode.set(value);
     this.modeChange.emit(value);
-
-    // Custom mode: keep whatever range is currently selected and let the user
-    // edit it freely via the date-range picker. No auto-snap.
-    if (value === 'custom') return;
 
     const previousStart = this.range.controls.start.value;
     const previousEnd = this.range.controls.end.value;

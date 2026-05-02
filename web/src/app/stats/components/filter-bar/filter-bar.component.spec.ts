@@ -47,7 +47,6 @@ describe('FilterBarComponent', () => {
     expect(text).toContain('Woche');
     expect(text).toContain('Monat');
     expect(text).toContain('Jahr');
-    expect(text).toContain('Benutzerdefiniert');
     expect(text).toContain('Zurück');
     expect(text).toContain('Heute');
     expect(text).toContain('Vor');
@@ -223,38 +222,34 @@ describe('FilterBarComponent', () => {
     expect(component.range.controls.end.value).toEqual(new Date(2026, 11, 31));
   });
 
-  it('keeps current selection when switching to custom mode', () => {
+  it('deselects the mode toggle when the range is changed to a non-aligned selection', () => {
+    component.setMode('month');
+    expect(component.mode()).toBe('month');
+
+    // User picks an arbitrary range that fits no preset.
     component.range.patchValue({
       start: new Date(2026, 1, 5),
       end: new Date(2026, 2, 12),
     });
-
-    component.setMode('custom');
 
     expect(component.mode()).toBe('custom');
     expect(component.range.controls.start.value).toEqual(new Date(2026, 1, 5));
     expect(component.range.controls.end.value).toEqual(new Date(2026, 2, 12));
   });
 
-  it('does not shift the range while in custom mode', () => {
-    const start = new Date(2026, 1, 5);
-    const end = new Date(2026, 2, 12);
-    component.range.patchValue({ start, end });
-    component.setMode('custom');
+  it('does not shift or jump when the inferred mode is custom', () => {
+    component.setMode('month');
+    component.range.patchValue({
+      start: new Date(2026, 1, 5),
+      end: new Date(2026, 2, 12),
+    });
+    expect(component.mode()).toBe('custom');
+
+    const start = component.range.controls.start.value;
+    const end = component.range.controls.end.value;
 
     component.shiftRange(1);
     component.shiftRange(-1);
-
-    expect(component.range.controls.start.value).toEqual(start);
-    expect(component.range.controls.end.value).toEqual(end);
-  });
-
-  it('does not snap range when jumping to today in custom mode', () => {
-    const start = new Date(2026, 1, 5);
-    const end = new Date(2026, 2, 12);
-    component.range.patchValue({ start, end });
-    component.setMode('custom');
-
     component.jumpToToday();
 
     expect(component.range.controls.start.value).toEqual(start);

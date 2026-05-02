@@ -3017,15 +3017,6 @@ Deine Position: # ·  Reps        </source>
         <target>Year</target>
       </segment>
     </unit>
-    <unit id="rangeModeCustom">
-      <notes>
-        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:60,61</note>
-      </notes>
-      <segment state="translated">
-        <source>Benutzerdefiniert</source>
-        <target>Custom</target>
-      </segment>
-    </unit>
     <unit id="rangeTo">
       <notes>
         <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:96</note>
