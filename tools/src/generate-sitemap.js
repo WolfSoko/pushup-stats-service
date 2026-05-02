@@ -66,6 +66,10 @@ const staticRoutes = [
 ];
 
 function extractBlogPosts(source) {
+  // Legacy inline-TS blog posts have been fully migrated to
+  // `content/blog/**/*.md`. This helper is kept so existing callers
+  // and tests continue to compile, but the regex now matches nothing
+  // in the current `blog-posts.data.ts`.
   const posts = [];
   const blockRegex =
     /\{\s*slug:\s*'([^']+)',\s*\n\s*lang:\s*'(de|en)',(?:\s*\n\s*translationSlug:\s*'([^']+)',)?[\s\S]*?publishedAt:\s*'([^']+)',/g;
@@ -135,33 +139,13 @@ function readFrontmatter(path) {
 }
 
 function readBlogPosts() {
-  const blogDataPath = resolve(ROOT, 'web/src/app/blog/blog-posts.data.ts');
-  let legacyPosts = [];
-  try {
-    const source = readFileSync(blogDataPath, 'utf-8');
-    legacyPosts = extractBlogPosts(source);
-  } catch (err) {
-    console.error(`Failed to read blog-posts.data.ts: ${err.message}`);
-  }
-
-  const markdownPosts = scanMarkdownBlogPosts(resolve(ROOT, 'content/blog'));
-
-  // Markdown wins on slug collision so an in-progress migration can't
-  // surface a stale legacy entry alongside its markdown replacement.
-  const seen = new Set();
-  const merged = [];
-  for (const post of [...markdownPosts, ...legacyPosts]) {
-    const key = `${post.lang}:${post.slug}`;
-    if (seen.has(key)) continue;
-    seen.add(key);
-    merged.push(post);
-  }
-  if (merged.length === 0) {
+  const posts = scanMarkdownBlogPosts(resolve(ROOT, 'content/blog'));
+  if (posts.length === 0) {
     console.warn(
-      'No blog posts found - verify content/blog/**/*.md and blog-posts.data.ts'
+      'No blog posts found - verify content/blog/<folder>/{de,en}.md'
     );
   }
-  return merged;
+  return posts;
 }
 
 function buildUrl({ path, changefreq, priority, locale, lastmod, alternates }) {

@@ -30,7 +30,6 @@
       "executor": "nx:run-commands",
       "inputs": [
         "{workspaceRoot}/web/src/app/blog/blog-posts.data.ts",
-        "{workspaceRoot}/web/src/app/blog/blog-posts.generated.ts",
         "{workspaceRoot}/content/blog/**/*.md",
         "{workspaceRoot}/tools/src/generate-sitemap.js"
       ],
@@ -49,7 +48,7 @@
         "{workspaceRoot}/tools/src/generate-content.mjs"
       ],
       "outputs": [
-        "{workspaceRoot}/web/src/app/blog/blog-posts.generated.ts",
+        "{workspaceRoot}/web/src/app/blog/generated",
         "{workspaceRoot}/libs/stats/src/lib/models/pushup-type-content.generated.ts"
       ],
       "options": {

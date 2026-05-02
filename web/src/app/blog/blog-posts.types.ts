@@ -4,7 +4,7 @@
 
 export interface BlogPost {
   slug: string;
-  lang: 'de' | 'en';
+  lang: string;
   title: string;
   description: string;
   publishedAt: string;

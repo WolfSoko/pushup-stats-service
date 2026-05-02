@@ -12,6 +12,6 @@ pnpm-lock.yaml
 # Auto-generated content modules (see tools/src/generate-content.mjs).
 # Prettier-reformatting these would diverge from the generator's output
 # and trigger spurious diffs on every build.
-web/src/app/blog/blog-posts.generated.ts
+web/src/app/blog/generated/
 libs/stats/src/lib/models/pushup-type-content.generated.ts
 
