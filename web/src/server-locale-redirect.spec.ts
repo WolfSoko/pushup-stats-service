@@ -166,6 +166,39 @@ describe('computeLocaleRedirect', () => {
       });
     });
 
+    it.each([
+      ['/grc', '/el'],
+      ['/grc/', '/el/'],
+      ['/grc/blog', '/el/blog'],
+      ['/grc/training-plans/recruit-6w', '/el/training-plans/recruit-6w'],
+    ])(
+      'Migrates legacy /grc URL %s to %s 1:1 (without re-detecting Accept-Language)',
+      (path, expected) => {
+        // Regression: before this redirect existed, removing `grc` from
+        // SUPPORTED_LOCALES caused indexed/bookmarked `/grc/...` URLs to
+        // fall through to `pickLocale` and 404 at `/<lang>/grc/...`.
+        expect(
+          computeLocaleRedirect(
+            input({ path, url: path, acceptLanguage: 'de-DE' })
+          )
+        ).toEqual({ kind: 'redirect', location: expected });
+      }
+    );
+
+    it('Preserves the query string when migrating /grc/* to /el/*', () => {
+      expect(
+        computeLocaleRedirect(
+          input({
+            path: '/grc/login',
+            url: '/grc/login?returnUrl=/training-plans',
+          })
+        )
+      ).toEqual({
+        kind: 'redirect',
+        location: '/el/login?returnUrl=/training-plans',
+      });
+    });
+
     it('Drops the suffix when URL parsing fails', () => {
       // Defensive: an unparseable url string should still redirect, just
       // without echoing the bogus suffix into the Location header.
