@@ -538,27 +538,31 @@ export function localizePushupType(
 
 /**
  * Detects the push-up types referenced by a training-plan day's
- * description. Scans the German keywords against `description` and the
- * English keywords against `descriptionEn` (when provided), returning a
- * de-duplicated list in catalog order.
+ * description. Scans both the German and English keyword sets against
+ * the (already-localized) description, returning a de-duplicated list
+ * in catalog order.
  *
  * Why keyword detection: the static training-plan catalog references
  * types only inline in human-readable descriptions. Doing the matching
  * here keeps the catalog editorial (no per-day type tagging) while
  * still enabling tooltips and wiki deep-links.
+ *
+ * Why both keyword sets in one pass: the catalog descriptions are
+ * emitted via `$localize` and the runtime sees only the active-locale
+ * string. By matching against both `keywordsDe` and `keywordsEn`, the
+ * same detection works on the German source and on every translated
+ * locale without per-locale keyword tables.
  */
 export function detectPushupTypes(
-  description: string,
-  descriptionEn?: string
+  description: string
 ): ReadonlyArray<PushupTypeInfo> {
-  const de = description.toLowerCase();
-  const en = descriptionEn?.toLowerCase() ?? '';
+  const text = description.toLowerCase();
   const matched: PushupTypeInfo[] = [];
   for (const type of PUSHUP_TYPES) {
-    const hitDe = type.keywordsDe.some((kw) => de.includes(kw));
-    const hitEn =
-      en.length > 0 && type.keywordsEn.some((kw) => en.includes(kw));
-    if (hitDe || hitEn) {
+    const hit =
+      type.keywordsDe.some((kw) => text.includes(kw)) ||
+      type.keywordsEn.some((kw) => text.includes(kw));
+    if (hit) {
       matched.push(type);
     }
   }

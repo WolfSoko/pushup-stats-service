@@ -291,11 +291,23 @@ export class BlogArticleComponent implements OnInit {
     this.post = found;
     const wordCount = countWords(found.content);
     this.readingTimeMinutes = readingMinutes(found.content);
+    // Blog posts have locale-specific slugs (`translationSlug`), so
+    // we tell SeoService exactly which locales this article exists in
+    // and what their slugs are. Locales without a translation get no
+    // hreflang alternate — better than advertising URLs that 404.
+    const otherLang = found.lang === 'de' ? 'en' : 'de';
+    const alternates: { de?: string; en?: string } = {
+      [found.lang]: `/blog/${found.slug}`,
+    };
+    if (found.translationSlug) {
+      alternates[otherLang] = `/blog/${found.translationSlug}`;
+    }
     this.seo.update(found.title, found.description, `/blog/${found.slug}`, {
       imageUrl: found.heroImage,
       imageAlt: found.heroImageAlt,
       publishedTime: found.publishedAt,
       modifiedTime: found.updatedAt,
+      alternates,
     });
     this.meta.updateTag({ property: 'og:type', content: 'article' });
     this.meta.updateTag({
@@ -311,7 +323,13 @@ export class BlogArticleComponent implements OnInit {
 
     this.removeJsonLd();
 
-    const canonical = `${BASE_URL}/${this.locale.startsWith('en') ? 'en' : 'de'}/blog/${post.slug}`;
+    // Mirror SeoService's canonical resolution: a German post viewed
+    // under a fallback locale build (fr/es/it/nl/grc/la → German
+    // content) canonicalises to /de/, an English post canonicalises
+    // to /en/. Without this both canonical URLs (the `<link>` tag and
+    // the JSON-LD payload) drifted apart whenever the active build
+    // locale wasn't the post's real language.
+    const canonical = `${BASE_URL}/${post.lang}/blog/${post.slug}`;
     const jsonLd: Record<string, unknown> = {
       '@context': 'https://schema.org',
       '@type': 'Article',

@@ -2995,19 +2995,28 @@ Deine Position: # ·  Reps        </source>
       <notes>
         <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:46,47</note>
 
-        
+
             </notes>
       <segment state="translated">
         <source>Woche</source>
         <target>Week</target>
 
-        
-        
+
+
             </segment>
 
-      
-      
+
+
         </unit>
+    <unit id="rangeModeYear">
+      <notes>
+        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:57,58</note>
+      </notes>
+      <segment state="translated">
+        <source>Jahr</source>
+        <target>Year</target>
+      </segment>
+    </unit>
     <unit id="rangeTo">
       <notes>
         <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:96</note>
@@ -3118,23 +3127,6 @@ Deine Position: # ·  Reps        </source>
       
       
         </unit>
-    <unit id="saved">
-      <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:112,113</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Gespeichert.</source>
-        <target>Saved.</target>
-
-        
-        
-            </segment>
-
-      
-      
-        </unit>
     <unit id="saveEntry">
       <notes>
         <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:107</note>
@@ -3144,44 +3136,6 @@ Deine Position: # ·  Reps        </source>
         <target>Save</target>
       </segment>
     </unit>
-    <unit id="saveSettings">
-      <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:105,107</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>
-          <pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">save</pc>
- Speichern         </source>
-        <target>
-          <pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">save</pc>
- Save         </target>
-
-        
-        
-            </segment>
-
-      
-      
-        </unit>
-    <unit id="saving">
-      <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:109,110</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Speichert…</source>
-        <target>Saving…</target>
-
-        
-        
-            </segment>
-
-      
-      
-        </unit>
     <unit id="selectRangeTitle">
       <notes>
         <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:30,33</note>
@@ -3409,6 +3363,102 @@ Deine Position: # ·  Reps        </source>
         <target> Enable personalized ads </target>
       </segment>
     </unit>
+    <unit id="settings.status.saving">
+      <segment state="translated">
+        <source>Speichert…</source>
+        <target>Saving…</target>
+      </segment>
+    </unit>
+    <unit id="settings.status.saved">
+      <segment state="translated">
+        <source>Gespeichert</source>
+        <target>Saved</target>
+      </segment>
+    </unit>
+    <unit id="settings.status.error">
+      <segment state="translated">
+        <source>Fehler beim Speichern</source>
+        <target>Could not save</target>
+      </segment>
+    </unit>
+    <unit id="settings.status.retry">
+      <segment state="translated">
+        <source>Erneut versuchen</source>
+        <target>Try again</target>
+      </segment>
+    </unit>
+    <unit id="settings.status.pending">
+      <segment state="translated">
+        <source>Ungespeicherte Änderungen…</source>
+        <target>Unsaved changes…</target>
+      </segment>
+    </unit>
+    <unit id="settings.status.synced">
+      <segment state="translated">
+        <source>Alle Änderungen gespeichert</source>
+        <target>All changes saved</target>
+      </segment>
+    </unit>
+    <unit id="settings.section.profile.title">
+      <segment state="translated">
+        <source>Profil</source>
+        <target>Profile</target>
+      </segment>
+    </unit>
+    <unit id="settings.section.profile.subtitle">
+      <segment state="translated">
+        <source>Wie du in der App und der Bestenliste erscheinst.</source>
+        <target>How you appear in the app and on the leaderboard.</target>
+      </segment>
+    </unit>
+    <unit id="settings.section.privacy.title">
+      <segment state="translated">
+        <source>Sichtbarkeit</source>
+        <target>Visibility</target>
+      </segment>
+    </unit>
+    <unit id="settings.section.privacy.subtitle">
+      <segment state="translated">
+        <source>Steuere, wer dein Profil sehen kann.</source>
+        <target>Control who can see your profile.</target>
+      </segment>
+    </unit>
+    <unit id="settings.section.goals.title">
+      <segment state="translated">
+        <source>Ziele</source>
+        <target>Goals</target>
+      </segment>
+    </unit>
+    <unit id="settings.section.goals.subtitle">
+      <segment state="translated">
+        <source>Tägliche, wöchentliche und monatliche Ziele.</source>
+        <target>Daily, weekly and monthly targets.</target>
+      </segment>
+    </unit>
+    <unit id="settings.section.display.title">
+      <segment state="translated">
+        <source>Anzeige</source>
+        <target>Display</target>
+      </segment>
+    </unit>
+    <unit id="settings.section.display.subtitle">
+      <segment state="translated">
+        <source>Animationen und Darstellung.</source>
+        <target>Animations and rendering.</target>
+      </segment>
+    </unit>
+    <unit id="settings.section.ads.title">
+      <segment state="translated">
+        <source>Werbung</source>
+        <target>Ads</target>
+      </segment>
+    </unit>
+    <unit id="settings.section.ads.subtitle">
+      <segment state="translated">
+        <source>Personalisierung der Werbe-Slots.</source>
+        <target>Personalization of ad slots.</target>
+      </segment>
+    </unit>
     <unit id="settings.dangerZoneBody">
       <segment state="translated">
         <source/>
@@ -3417,8 +3467,8 @@ Deine Position: # ·  Reps        </source>
     </unit>
     <unit id="settings.remindersLinkTitle">
       <segment state="translated">
-        <source>🔔 Erinnerungen</source>
-        <target>🔔 Reminders</target>
+        <source>Erinnerungen</source>
+        <target>Reminders</target>
       </segment>
     </unit>
     <unit id="settings.remindersLinkDesc">
@@ -6333,6 +6383,720 @@ Deine Position: # ·  Reps        </source>
       <segment state="translated">
         <source>Fortgeschritten</source>
         <target>Advanced</target>
+      </segment>
+    </unit>
+    <unit id="plan.day.rest">
+      <segment state="translated">
+        <source>Ruhetag</source>
+        <target>Rest day</target>
+      </segment>
+    </unit>
+    <unit id="plan.day.rest.mobility">
+      <segment state="translated">
+        <source>Ruhetag — Mobility</source>
+        <target>Rest day — mobility</target>
+      </segment>
+    </unit>
+    <unit id="plan.day.rest.prepFinal">
+      <segment state="translated">
+        <source>Ruhetag — Vorbereitung Endtest</source>
+        <target>Rest day — prepare for final test</target>
+      </segment>
+    </unit>
+    <unit id="plan.day.light">
+      <segment state="translated">
+        <source>Leichter Tag</source>
+        <target>Light day</target>
+      </segment>
+    </unit>
+    <unit id="plan.day.activeRecovery">
+      <segment state="translated">
+        <source>Aktive Erholung</source>
+        <target>Active recovery</target>
+      </segment>
+    </unit>
+    <unit id="plan.day.mobility.chestStretch">
+      <segment state="translated">
+        <source>Mobility &amp; Brust-Stretching</source>
+        <target>Mobility &amp; chest stretching</target>
+      </segment>
+    </unit>
+    <unit id="plan.day.finalTest.maxNoPause">
+      <segment state="translated">
+        <source>Endtest: Maximale Liegestütze ohne Pause</source>
+        <target>Final test: max push-ups without stopping</target>
+      </segment>
+    </unit>
+    <unit id="plan.day.amrap.3x">
+      <segment state="translated">
+        <source>3×AMRAP</source>
+        <target>3×AMRAP</target>
+      </segment>
+    </unit>
+    <unit id="plan.day.amrap.3x90s">
+      <segment state="translated">
+        <source>3×AMRAP, 90 s Pause</source>
+        <target>3×AMRAP, 90 s rest</target>
+      </segment>
+    </unit>
+    <unit id="plan.day.amrap.4x">
+      <segment state="translated">
+        <source>4×AMRAP</source>
+        <target>4×AMRAP</target>
+      </segment>
+    </unit>
+    <unit id="plan.day.amrap.4x60s">
+      <segment state="translated">
+        <source>4×AMRAP, 60 s Pause</source>
+        <target>4×AMRAP, 60 s rest</target>
+      </segment>
+    </unit>
+    <unit id="plan.day.targetReps.5">
+      <segment state="translated">
+        <source>5 Sätze Zielwiederholungen</source>
+        <target>5 sets target reps</target>
+      </segment>
+    </unit>
+    <unit id="plan.day.sets.4x90s">
+      <segment state="translated">
+        <source>4 Sätze, 90 s Pause</source>
+        <target>4 sets, 90 s rest</target>
+      </segment>
+    </unit>
+    <unit id="plan.day.sets.3x70pct">
+      <segment state="translated">
+        <source>3 Sätze à 70 %</source>
+        <target>3 sets at 70%</target>
+      </segment>
+    </unit>
+    <unit id="plan.day.light.2x50pct">
+      <segment state="translated">
+        <source>Leichter Tag — 2×50 %</source>
+        <target>Light day — 2×50%</target>
+      </segment>
+    </unit>
+    <unit id="plan.recruit-6w.title">
+      <segment state="translated">
+        <source>Von 0 auf 100 — 6-Wochen-Aufbau</source>
+        <target>From 0 to 100 — 6-week buildup</target>
+      </segment>
+    </unit>
+    <unit id="plan.recruit-6w.summary">
+      <segment state="translated">
+        <source>Strukturierter Plan für Einsteiger: drei Trainingstage pro Woche, progressive Belastungssteigerung und ein Endtest in Woche 6.</source>
+        <target>Beginner-friendly plan: three training days per week, progressive overload, and a final max test in week 6.</target>
+      </segment>
+    </unit>
+    <unit id="plan.recruit-6w.blogSlug">
+      <segment state="translated">
+        <source>liegestuetze-steigern</source>
+        <target>pushup-progression</target>
+      </segment>
+    </unit>
+    <unit id="plan.recruit-6w.day.1.desc">
+      <segment state="translated">
+        <source>3×10 saubere Liegestütze, 90 s Pause</source>
+        <target>3×10 clean push-ups, 90 s rest</target>
+      </segment>
+    </unit>
+    <unit id="plan.recruit-6w.day.2.desc">
+      <segment state="translated">
+        <source>Ruhetag — Stretching, Mobility</source>
+        <target>Rest day — stretching, mobility</target>
+      </segment>
+    </unit>
+    <unit id="plan.recruit-6w.day.3.desc">
+      <segment state="translated">
+        <source>3×AMRAP, 90 s Pause (Ziel ≈12-11-10)</source>
+        <target>3×AMRAP, 90 s rest (target ≈12-11-10)</target>
+      </segment>
+    </unit>
+    <unit id="plan.recruit-6w.day.6.desc">
+      <segment state="translated">
+        <source>Leichter Tag — 50 % vom Maximum</source>
+        <target>Light day — 50% of max</target>
+      </segment>
+    </unit>
+    <unit id="plan.recruit-6w.day.36.desc">
+      <segment state="translated">
+        <source>5 Sätze, volle Bewegungsamplitude</source>
+        <target>5 sets, full range of motion</target>
+      </segment>
+    </unit>
+    <unit id="plan.recruit-6w.day.38.desc">
+      <segment state="translated">
+        <source>5 Sätze, kontrolliertes Tempo</source>
+        <target>5 sets, controlled tempo</target>
+      </segment>
+    </unit>
+    <unit id="plan.recruit-6w.day.40.desc">
+      <segment state="translated">
+        <source>5 Sätze leicht</source>
+        <target>5 sets light</target>
+      </segment>
+    </unit>
+    <unit id="plan.challenge-30d.title">
+      <segment state="translated">
+        <source>30-Tage-Challenge</source>
+        <target>30-day challenge</target>
+      </segment>
+    </unit>
+    <unit id="plan.challenge-30d.summary">
+      <segment state="translated">
+        <source>Dreißig Tage tägliches Training mit gezielten Ruhetagen. Tag 1 ist der Maximaltest, Tag 30 der Endtest.</source>
+        <target>Thirty days of daily training with strategic rest days. Day 1 is the baseline test, Day 30 the final.</target>
+      </segment>
+    </unit>
+    <unit id="plan.challenge-30d.blogSlug">
+      <segment state="translated">
+        <source>30-tage-liegestuetze-challenge</source>
+        <target>30-day-pushup-challenge</target>
+      </segment>
+    </unit>
+    <unit id="plan.challenge-30d.day.1.desc">
+      <segment state="translated">
+        <source>Maximaltest — als Ausgangswert eintragen</source>
+        <target>Max test — log as your baseline</target>
+      </segment>
+    </unit>
+    <unit id="plan.challenge-30d.day.3.desc">
+      <segment state="translated">
+        <source>Leichter Tag — 2×50 % vom Maximum</source>
+        <target>Light day — 2×50% of max</target>
+      </segment>
+    </unit>
+    <unit id="plan.challenge-30d.day.9.desc">
+      <segment state="translated">
+        <source>Leichter Tag — 3×60 % vom Maximum</source>
+        <target>Light day — 3×60% of max</target>
+      </segment>
+    </unit>
+    <unit id="plan.challenge-30d.day.15.desc">
+      <segment state="translated">
+        <source>5 Sätze à ~80 % vom Maximum</source>
+        <target>5 sets at ~80% of max</target>
+      </segment>
+    </unit>
+    <unit id="plan.challenge-30d.day.22.desc">
+      <segment state="translated">
+        <source>3 Sätze à 70 % — Qualität vor Quantität</source>
+        <target>3 sets at 70% — quality over quantity</target>
+      </segment>
+    </unit>
+    <unit id="plan.challenge-30d.day.27.desc">
+      <segment state="translated">
+        <source>Aktive Erholung — Spaziergang, Mobility</source>
+        <target>Active recovery — walk, mobility</target>
+      </segment>
+    </unit>
+    <unit id="plan.challenge-30d.day.29.desc">
+      <segment state="translated">
+        <source>Ruhe vor dem Endtest</source>
+        <target>Rest before the final test</target>
+      </segment>
+    </unit>
+    <unit id="plan.over-40-4w.title">
+      <segment state="translated">
+        <source>Liegestütze ab 40 — 4-Wochen-Plan</source>
+        <target>Push-ups after 40 — 4-week plan</target>
+      </segment>
+    </unit>
+    <unit id="plan.over-40-4w.summary">
+      <segment state="translated">
+        <source>Schonender 4-Wochen-Plan für Einsteiger ab 40: Fokus auf saubere Technik, ausreichend Pause und langsames Tempo.</source>
+        <target>Gentle 4-week plan for beginners 40+: focus on clean technique, full recovery, and controlled tempo.</target>
+      </segment>
+    </unit>
+    <unit id="plan.over-40-4w.blogSlug">
+      <segment state="translated">
+        <source>liegestuetze-ab-40</source>
+        <target>pushups-over-40</target>
+      </segment>
+    </unit>
+    <unit id="plan.over-40-4w.day.1.desc">
+      <segment state="translated">
+        <source>Maximaltest mit sauberer Technik</source>
+        <target>Max test with clean form</target>
+      </segment>
+    </unit>
+    <unit id="plan.over-40-4w.day.2.desc">
+      <segment state="translated">
+        <source>3×8 Knie- oder erhöhte Liegestütze</source>
+        <target>3×8 knee or elevated push-ups</target>
+      </segment>
+    </unit>
+    <unit id="plan.over-40-4w.day.4.desc">
+      <segment state="translated">
+        <source>3×9 saubere Liegestütze</source>
+        <target>3×9 clean push-ups</target>
+      </segment>
+    </unit>
+    <unit id="plan.over-40-4w.day.5.desc">
+      <segment state="translated">
+        <source>Ruhetag — Schulter-Mobility</source>
+        <target>Rest day — shoulder mobility</target>
+      </segment>
+    </unit>
+    <unit id="plan.over-40-4w.day.6.desc">
+      <segment state="translated">
+        <source>3×10 saubere Liegestütze</source>
+        <target>3×10 clean push-ups</target>
+      </segment>
+    </unit>
+    <unit id="plan.over-40-4w.day.8.desc">
+      <segment state="translated">
+        <source>3×11</source>
+        <target>3×11</target>
+      </segment>
+    </unit>
+    <unit id="plan.over-40-4w.day.10.desc">
+      <segment state="translated">
+        <source>3×12</source>
+        <target>3×12</target>
+      </segment>
+    </unit>
+    <unit id="plan.over-40-4w.day.12.desc">
+      <segment state="translated">
+        <source>3×13</source>
+        <target>3×13</target>
+      </segment>
+    </unit>
+    <unit id="plan.over-40-4w.day.22.desc">
+      <segment state="translated">
+        <source>4 Sätze, kontrolliertes Tempo</source>
+        <target>4 sets, controlled tempo</target>
+      </segment>
+    </unit>
+    <unit id="plan.over-40-4w.day.24.desc">
+      <segment state="translated">
+        <source>4 Sätze, langsame Exzentrik</source>
+        <target>4 sets, slow eccentric</target>
+      </segment>
+    </unit>
+    <unit id="plan.over-40-4w.day.28.desc">
+      <segment state="translated">
+        <source>Endtest: Maximale Liegestütze</source>
+        <target>Final test: max push-ups</target>
+      </segment>
+    </unit>
+    <unit id="plan.daily-100-30d.title">
+      <segment state="translated">
+        <source>Daily 100 — 30 Tage zur 100er-Marke</source>
+        <target>Daily 100 — 30 days to the 100-rep mark</target>
+      </segment>
+    </unit>
+    <unit id="plan.daily-100-30d.summary">
+      <segment state="translated">
+        <source>30-Tage-Volumenplan: ramp-up von 50 auf 100 saubere Wiederholungen pro Einheit, danach zwei Wochen Konsolidierung. 5 Trainingstage + 1 leichter + 1 Ruhetag pro Woche.</source>
+        <target>30-day volume plan: ramp from 50 to 100 clean reps per session, then two weeks of consolidation. 5 training days + 1 light + 1 rest per week.</target>
+      </segment>
+    </unit>
+    <unit id="plan.daily-100-30d.day.1.desc">
+      <segment state="translated">
+        <source>Baseline-Test: maximale Wiederholungen in einem Satz</source>
+        <target>Baseline test: max reps in a single set</target>
+      </segment>
+    </unit>
+    <unit id="plan.daily-100-30d.day.2.desc">
+      <segment state="translated">
+        <source>5×10 saubere Wiederholungen, 60 s Pause</source>
+        <target>5×10 clean reps, 60 s rest</target>
+      </segment>
+    </unit>
+    <unit id="plan.daily-100-30d.day.3.desc">
+      <segment state="translated">
+        <source>5×12, 60 s Pause</source>
+        <target>5×12, 60 s rest</target>
+      </segment>
+    </unit>
+    <unit id="plan.daily-100-30d.day.4.desc">
+      <segment state="translated">
+        <source>5×12, 60 s Pause</source>
+        <target>5×12, 60 s rest</target>
+      </segment>
+    </unit>
+    <unit id="plan.daily-100-30d.day.5.desc">
+      <segment state="translated">
+        <source>5×14, 60 s Pause</source>
+        <target>5×14, 60 s rest</target>
+      </segment>
+    </unit>
+    <unit id="plan.daily-100-30d.day.6.desc">
+      <segment state="translated">
+        <source>Leichter Tag — 2×15 in lockerem Tempo</source>
+        <target>Light day — 2×15 at easy pace</target>
+      </segment>
+    </unit>
+    <unit id="plan.daily-100-30d.day.8.desc">
+      <segment state="translated">
+        <source>5×16</source>
+        <target>5×16</target>
+      </segment>
+    </unit>
+    <unit id="plan.daily-100-30d.day.9.desc">
+      <segment state="translated">
+        <source>5×16</source>
+        <target>5×16</target>
+      </segment>
+    </unit>
+    <unit id="plan.daily-100-30d.day.10.desc">
+      <segment state="translated">
+        <source>5×18</source>
+        <target>5×18</target>
+      </segment>
+    </unit>
+    <unit id="plan.daily-100-30d.day.11.desc">
+      <segment state="translated">
+        <source>5×18</source>
+        <target>5×18</target>
+      </segment>
+    </unit>
+    <unit id="plan.daily-100-30d.day.12.desc">
+      <segment state="translated">
+        <source>Erstes Hundert: 5×20</source>
+        <target>First hundred: 5×20</target>
+      </segment>
+    </unit>
+    <unit id="plan.daily-100-30d.day.15.desc">
+      <segment state="translated">
+        <source>4×25 (weniger Sätze, mehr Wiederholungen)</source>
+        <target>4×25 (fewer sets, more reps)</target>
+      </segment>
+    </unit>
+    <unit id="plan.daily-100-30d.day.16.desc">
+      <segment state="translated">
+        <source>5×20</source>
+        <target>5×20</target>
+      </segment>
+    </unit>
+    <unit id="plan.daily-100-30d.day.17.desc">
+      <segment state="translated">
+        <source>4×25</source>
+        <target>4×25</target>
+      </segment>
+    </unit>
+    <unit id="plan.daily-100-30d.day.18.desc">
+      <segment state="translated">
+        <source>5×20</source>
+        <target>5×20</target>
+      </segment>
+    </unit>
+    <unit id="plan.daily-100-30d.day.19.desc">
+      <segment state="translated">
+        <source>4×25 — Tempo bewusst verlangsamen</source>
+        <target>4×25 — slow tempo intentionally</target>
+      </segment>
+    </unit>
+    <unit id="plan.daily-100-30d.day.22.desc">
+      <segment state="translated">
+        <source>5×20</source>
+        <target>5×20</target>
+      </segment>
+    </unit>
+    <unit id="plan.daily-100-30d.day.23.desc">
+      <segment state="translated">
+        <source>4×25</source>
+        <target>4×25</target>
+      </segment>
+    </unit>
+    <unit id="plan.daily-100-30d.day.24.desc">
+      <segment state="translated">
+        <source>5×20</source>
+        <target>5×20</target>
+      </segment>
+    </unit>
+    <unit id="plan.daily-100-30d.day.25.desc">
+      <segment state="translated">
+        <source>4×25</source>
+        <target>4×25</target>
+      </segment>
+    </unit>
+    <unit id="plan.daily-100-30d.day.26.desc">
+      <segment state="translated">
+        <source>Letzter 100er-Tag vor dem Test</source>
+        <target>Last 100-rep day before the test</target>
+      </segment>
+    </unit>
+    <unit id="plan.daily-100-30d.day.27.desc">
+      <segment state="translated">
+        <source>Leichter Tag — Form-Check</source>
+        <target>Light day — form check</target>
+      </segment>
+    </unit>
+    <unit id="plan.daily-100-30d.day.29.desc">
+      <segment state="translated">
+        <source>Ruhetag — Vorbereitung auf den Endtest</source>
+        <target>Rest day — prepare for final test</target>
+      </segment>
+    </unit>
+    <unit id="plan.daily-100-30d.day.30.desc">
+      <segment state="translated">
+        <source>Endtest: Maximale saubere Wiederholungen in einem Satz</source>
+        <target>Final test: max clean reps in a single set</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.title">
+      <segment state="translated">
+        <source>Einarmige Liegestütze — 12-Wochen-Aufbau</source>
+        <target>One-arm push-up — 12-week buildup</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.summary">
+      <segment state="translated">
+        <source>Vier-Phasen-Plan in Richtung saubere einarmige Liegestütze: Archer und Wand-Negativen, Bank-Negativen, partielle Einarmige, schließlich volle Einarmige im weiten Stand. 4 aktive Tage + 3 Ruhetage pro Woche.</source>
+        <target>Four-phase progression toward a clean one-arm push-up: archer + wall negatives, bench negatives, partial-ROM one-arm, then full-ROM at wide stance. 4 active days + 3 rest days per week.</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.day.1.desc">
+      <segment state="translated">
+        <source>Archer-Liegestütze 3×6</source>
+        <target>Archer push-ups 3×6</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.day.3.desc">
+      <segment state="translated">
+        <source>Wand-Einarmige 3×10 (langsame Exzentrik)</source>
+        <target>Wall one-arm 3×10 (slow eccentric)</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.day.5.desc">
+      <segment state="translated">
+        <source>Standard-Liegestütze 3×20 (Volumen)</source>
+        <target>Standard push-ups 3×20 (volume)</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.day.6.desc">
+      <segment state="translated">
+        <source>Leichter Tag 2×10</source>
+        <target>Light day 2×10</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.day.8.desc">
+      <segment state="translated">
+        <source>Archer 3×8</source>
+        <target>Archer 3×8</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.day.10.desc">
+      <segment state="translated">
+        <source>Wand-Einarmige 3×12</source>
+        <target>Wall one-arm 3×12</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.day.12.desc">
+      <segment state="translated">
+        <source>Standard 3×22</source>
+        <target>Standard 3×22</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.day.13.desc">
+      <segment state="translated">
+        <source>Leichter Tag 2×12</source>
+        <target>Light day 2×12</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.day.15.desc">
+      <segment state="translated">
+        <source>Archer 3×10 — Phase 1 abschließen</source>
+        <target>Archer 3×10 — close out phase 1</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.day.17.desc">
+      <segment state="translated">
+        <source>Wand-Einarmige 3×15</source>
+        <target>Wall one-arm 3×15</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.day.19.desc">
+      <segment state="translated">
+        <source>Standard 3×25</source>
+        <target>Standard 3×25</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.day.20.desc">
+      <segment state="translated">
+        <source>Leichter Tag 2×14</source>
+        <target>Light day 2×14</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.day.22.desc">
+      <segment state="translated">
+        <source>Negative Einarmige von Bank 3×5 (3 s runter)</source>
+        <target>Negative one-arm from bench 3×5 (3 s down)</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.day.24.desc">
+      <segment state="translated">
+        <source>Langsame Archer 3×6 (Tempo 3-1-1)</source>
+        <target>Slow archer 3×6 (tempo 3-1-1)</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.day.26.desc">
+      <segment state="translated">
+        <source>Weite Liegestütze 3×20 (Brust-Volumen)</source>
+        <target>Wide push-ups 3×20 (chest volume)</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.day.29.desc">
+      <segment state="translated">
+        <source>Negative Einarmige 3×5</source>
+        <target>Negative one-arm 3×5</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.day.31.desc">
+      <segment state="translated">
+        <source>Langsame Archer 3×7</source>
+        <target>Slow archer 3×7</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.day.33.desc">
+      <segment state="translated">
+        <source>Weite Liegestütze 3×20</source>
+        <target>Wide push-ups 3×20</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.day.34.desc">
+      <segment state="translated">
+        <source>Leichter Tag 2×11</source>
+        <target>Light day 2×11</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.day.36.desc">
+      <segment state="translated">
+        <source>Negative Einarmige 3×6</source>
+        <target>Negative one-arm 3×6</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.day.38.desc">
+      <segment state="translated">
+        <source>Langsame Archer 3×8 — Phase 2 abschließen</source>
+        <target>Slow archer 3×8 — close out phase 2</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.day.40.desc">
+      <segment state="translated">
+        <source>Weite Liegestütze 3×~22</source>
+        <target>Wide push-ups 3×~22</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.day.43.desc">
+      <segment state="translated">
+        <source>Partielle Einarmige (niedrige Bank) 3×4</source>
+        <target>Partial one-arm (low bench) 3×4</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.day.45.desc">
+      <segment state="translated">
+        <source>Archer mit langem Tempo 3×6</source>
+        <target>Archer with long tempo 3×6</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.day.47.desc">
+      <segment state="translated">
+        <source>Diamant-Liegestütze 3×12 (Trizeps-Volumen)</source>
+        <target>Diamond push-ups 3×12 (triceps volume)</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.day.50.desc">
+      <segment state="translated">
+        <source>Partielle Einarmige 3×4</source>
+        <target>Partial one-arm 3×4</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.day.52.desc">
+      <segment state="translated">
+        <source>Archer mit Tempo 3×6</source>
+        <target>Tempo archer 3×6</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.day.54.desc">
+      <segment state="translated">
+        <source>Diamant 3×13</source>
+        <target>Diamond 3×13</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.day.57.desc">
+      <segment state="translated">
+        <source>Partielle Einarmige 3×5 — Phase 3 abschließen</source>
+        <target>Partial one-arm 3×5 — close out phase 3</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.day.59.desc">
+      <segment state="translated">
+        <source>Tempo-Archer 3×7</source>
+        <target>Tempo archer 3×7</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.day.61.desc">
+      <segment state="translated">
+        <source>Diamant 3×13</source>
+        <target>Diamond 3×13</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.day.64.desc">
+      <segment state="translated">
+        <source>Volle Einarmige (weiter Stand) 3×3</source>
+        <target>Full one-arm (wide stance) 3×3</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.day.66.desc">
+      <segment state="translated">
+        <source>Einarmige (etwas engerer Stand) 3×4</source>
+        <target>One-arm (slightly narrower stance) 3×4</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.day.68.desc">
+      <segment state="translated">
+        <source>Standard 3×25</source>
+        <target>Standard 3×25</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.day.71.desc">
+      <segment state="translated">
+        <source>Volle Einarmige 3×3</source>
+        <target>Full one-arm 3×3</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.day.73.desc">
+      <segment state="translated">
+        <source>Einarmige enger Stand 3×5</source>
+        <target>One-arm narrower stance 3×5</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.day.75.desc">
+      <segment state="translated">
+        <source>Standard 3×25</source>
+        <target>Standard 3×25</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.day.78.desc">
+      <segment state="translated">
+        <source>Letzte schwere Einheit 3×3</source>
+        <target>Final heavy session 3×3</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.day.80.desc">
+      <segment state="translated">
+        <source>Technik-Taper 2×4 saubere Wiederholungen</source>
+        <target>Technique taper 2×4 clean reps</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.day.82.desc">
+      <segment state="translated">
+        <source>Mobility + 2×3 leichte Wiederholungen</source>
+        <target>Mobility + 2×3 light reps</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.day.83.desc">
+      <segment state="translated">
+        <source>Ruhetag — bereit für Endtest</source>
+        <target>Rest day — ready for final</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.day.84.desc">
+      <segment state="translated">
+        <source>Endtest: maximale saubere einarmige Liegestütze pro Seite</source>
+        <target>Final test: max clean one-arm push-ups per side</target>
       </segment>
     </unit>
   </file>

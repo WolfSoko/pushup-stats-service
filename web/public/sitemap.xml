@@ -7,6 +7,12 @@
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.de/de"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.de/en"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pushup-stats.de/fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pushup-stats.de/es"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://pushup-stats.de/it"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://pushup-stats.de/nl"/>
+    <xhtml:link rel="alternate" hreflang="grc" href="https://pushup-stats.de/grc"/>
+    <xhtml:link rel="alternate" hreflang="la" href="https://pushup-stats.de/la"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.de/de"/>
   </url>
   <url>
@@ -15,6 +21,12 @@
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.de/de/blog"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.de/en/blog"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pushup-stats.de/fr/blog"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pushup-stats.de/es/blog"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://pushup-stats.de/it/blog"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://pushup-stats.de/nl/blog"/>
+    <xhtml:link rel="alternate" hreflang="grc" href="https://pushup-stats.de/grc/blog"/>
+    <xhtml:link rel="alternate" hreflang="la" href="https://pushup-stats.de/la/blog"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.de/de/blog"/>
   </url>
   <url>
@@ -23,6 +35,12 @@
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.de/de/training-plans"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.de/en/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pushup-stats.de/fr/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pushup-stats.de/es/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://pushup-stats.de/it/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://pushup-stats.de/nl/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="grc" href="https://pushup-stats.de/grc/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="la" href="https://pushup-stats.de/la/training-plans"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.de/de/training-plans"/>
   </url>
   <url>
@@ -31,6 +49,12 @@
     <priority>0.6</priority>
     <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.de/de/wiki/liegestuetz-typen"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.de/en/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pushup-stats.de/fr/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pushup-stats.de/es/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://pushup-stats.de/it/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://pushup-stats.de/nl/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="grc" href="https://pushup-stats.de/grc/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="la" href="https://pushup-stats.de/la/wiki/liegestuetz-typen"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.de/de/wiki/liegestuetz-typen"/>
   </url>
   <url>
@@ -39,6 +63,12 @@
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.de/de/leaderboard"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.de/en/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pushup-stats.de/fr/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pushup-stats.de/es/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://pushup-stats.de/it/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://pushup-stats.de/nl/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="grc" href="https://pushup-stats.de/grc/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="la" href="https://pushup-stats.de/la/leaderboard"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.de/de/leaderboard"/>
   </url>
   <url>
@@ -47,6 +77,12 @@
     <priority>0.3</priority>
     <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.de/de/impressum"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.de/en/impressum"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pushup-stats.de/fr/impressum"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pushup-stats.de/es/impressum"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://pushup-stats.de/it/impressum"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://pushup-stats.de/nl/impressum"/>
+    <xhtml:link rel="alternate" hreflang="grc" href="https://pushup-stats.de/grc/impressum"/>
+    <xhtml:link rel="alternate" hreflang="la" href="https://pushup-stats.de/la/impressum"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.de/de/impressum"/>
   </url>
   <url>
@@ -55,6 +91,12 @@
     <priority>0.3</priority>
     <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.de/de/datenschutz"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.de/en/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pushup-stats.de/fr/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pushup-stats.de/es/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://pushup-stats.de/it/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://pushup-stats.de/nl/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="grc" href="https://pushup-stats.de/grc/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="la" href="https://pushup-stats.de/la/datenschutz"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.de/de/datenschutz"/>
   </url>
   <url>
@@ -63,6 +105,12 @@
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.de/de/training-plans/recruit-6w"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.de/en/training-plans/recruit-6w"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pushup-stats.de/fr/training-plans/recruit-6w"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pushup-stats.de/es/training-plans/recruit-6w"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://pushup-stats.de/it/training-plans/recruit-6w"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://pushup-stats.de/nl/training-plans/recruit-6w"/>
+    <xhtml:link rel="alternate" hreflang="grc" href="https://pushup-stats.de/grc/training-plans/recruit-6w"/>
+    <xhtml:link rel="alternate" hreflang="la" href="https://pushup-stats.de/la/training-plans/recruit-6w"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.de/de/training-plans/recruit-6w"/>
   </url>
   <url>
@@ -71,6 +119,12 @@
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.de/de/training-plans/challenge-30d"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.de/en/training-plans/challenge-30d"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pushup-stats.de/fr/training-plans/challenge-30d"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pushup-stats.de/es/training-plans/challenge-30d"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://pushup-stats.de/it/training-plans/challenge-30d"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://pushup-stats.de/nl/training-plans/challenge-30d"/>
+    <xhtml:link rel="alternate" hreflang="grc" href="https://pushup-stats.de/grc/training-plans/challenge-30d"/>
+    <xhtml:link rel="alternate" hreflang="la" href="https://pushup-stats.de/la/training-plans/challenge-30d"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.de/de/training-plans/challenge-30d"/>
   </url>
   <url>
@@ -79,6 +133,12 @@
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.de/de/training-plans/over-40-4w"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.de/en/training-plans/over-40-4w"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pushup-stats.de/fr/training-plans/over-40-4w"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pushup-stats.de/es/training-plans/over-40-4w"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://pushup-stats.de/it/training-plans/over-40-4w"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://pushup-stats.de/nl/training-plans/over-40-4w"/>
+    <xhtml:link rel="alternate" hreflang="grc" href="https://pushup-stats.de/grc/training-plans/over-40-4w"/>
+    <xhtml:link rel="alternate" hreflang="la" href="https://pushup-stats.de/la/training-plans/over-40-4w"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.de/de/training-plans/over-40-4w"/>
   </url>
   <url>
@@ -87,6 +147,12 @@
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.de/de/training-plans/daily-100-30d"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.de/en/training-plans/daily-100-30d"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pushup-stats.de/fr/training-plans/daily-100-30d"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pushup-stats.de/es/training-plans/daily-100-30d"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://pushup-stats.de/it/training-plans/daily-100-30d"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://pushup-stats.de/nl/training-plans/daily-100-30d"/>
+    <xhtml:link rel="alternate" hreflang="grc" href="https://pushup-stats.de/grc/training-plans/daily-100-30d"/>
+    <xhtml:link rel="alternate" hreflang="la" href="https://pushup-stats.de/la/training-plans/daily-100-30d"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.de/de/training-plans/daily-100-30d"/>
   </url>
   <url>
@@ -95,6 +161,12 @@
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.de/de/training-plans/one-arm-12w"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.de/en/training-plans/one-arm-12w"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pushup-stats.de/fr/training-plans/one-arm-12w"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pushup-stats.de/es/training-plans/one-arm-12w"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://pushup-stats.de/it/training-plans/one-arm-12w"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://pushup-stats.de/nl/training-plans/one-arm-12w"/>
+    <xhtml:link rel="alternate" hreflang="grc" href="https://pushup-stats.de/grc/training-plans/one-arm-12w"/>
+    <xhtml:link rel="alternate" hreflang="la" href="https://pushup-stats.de/la/training-plans/one-arm-12w"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.de/de/training-plans/one-arm-12w"/>
   </url>
   <url>

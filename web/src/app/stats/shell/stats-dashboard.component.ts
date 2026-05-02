@@ -10,8 +10,7 @@ import {
   untracked,
 } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { LOCALE_ID, computed } from '@angular/core';
-import { localizePlan } from '@pu-stats/models';
+import { computed } from '@angular/core';
 import { TrainingPlanStore } from '../../training-plans/training-plan.store';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -108,13 +107,10 @@ export class StatsDashboardComponent {
   readonly planDayIndex = this.store.planDayIndex;
   readonly planTotalDays = this.store.planTotalDays;
   private readonly trainingPlans = inject(TrainingPlanStore);
-  private readonly locale = inject(LOCALE_ID) as string;
   /** Plan title in the active locale. Falls back to '' when no plan. */
-  readonly planTitle = computed(() => {
-    const cat = this.trainingPlans.activeCatalog();
-    if (!cat) return '';
-    return localizePlan(cat, this.locale).title;
-  });
+  readonly planTitle = computed(
+    () => this.trainingPlans.activeCatalog()?.title ?? ''
+  );
   /** Active plan slug — used to deep-link the banner CTA. */
   readonly planSlug = computed(
     () => this.trainingPlans.activeCatalog()?.slug ?? ''

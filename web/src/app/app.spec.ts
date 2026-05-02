@@ -132,9 +132,10 @@ describe('App (testing-library)', () => {
     expect(screen.getAllByText('Trainingspläne').length).toBeGreaterThan(0);
     // Wiki link is in both the sidenav and the footer.
     expect(screen.getAllByText('Liegestütztypen').length).toBeGreaterThan(0);
+    // The language switcher renders as a mat-select with a 'Sprache'
+    // label; only the currently-selected option is visible until the
+    // panel is opened.
     expect(screen.getByText('Sprache')).toBeTruthy();
-    expect(screen.getByText('Deutsch')).toBeTruthy();
-    expect(screen.getByText('English')).toBeTruthy();
   });
 
   it('shows daily progress and goal in toolbar', async () => {
@@ -341,6 +342,87 @@ describe('App (testing-library)', () => {
         '/en/settings?tab=profile#privacy'
       );
     });
+
+    // Regression: the prefix-stripping regex is now driven by
+    // SUPPORTED_LOCALES, so a typo in any of the new codes would
+    // silently break language switching. Smoke-test every one.
+    it.each(['fr', 'es', 'it', 'nl', 'grc', 'la'] as const)(
+      'switches from /de/<path> to /%s/<path> for the new locales',
+      async (target) => {
+        const { fixture } = await render(App, {
+          providers: [
+            provideRouter([]),
+            { provide: PLATFORM_ID, useValue: 'browser' },
+            {
+              provide: UserContextService,
+              useValue: {
+                userNameSafe: userNameSignal.asReadonly(),
+                userIdSafe: () => 'u1',
+                isAdmin: () => false,
+                isGuest: () => false,
+              },
+            },
+            { provide: AuthStore, useValue: authMock },
+            { provide: AuthService, useValue: authServiceMock },
+            { provide: Auth, useValue: firebaseAuthMock },
+            { provide: UserConfigApiService, useValue: userConfigApiMock },
+            { provide: StatsApiService, useValue: statsApiMock },
+            { provide: AdsStore, useValue: adsStoreMock },
+            { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
+          ],
+        });
+
+        const replaceSpy = vitest.fn();
+        vitest.spyOn(window, 'location', 'get').mockReturnValue({
+          pathname: '/de/training-plans',
+          search: '',
+          hash: '',
+          replace: replaceSpy,
+        } as unknown as Location);
+
+        fixture.componentInstance.setLanguage(target);
+        expect(replaceSpy).toHaveBeenCalledWith(`/${target}/training-plans`);
+      }
+    );
+
+    it.each(['fr', 'es', 'it', 'nl', 'grc', 'la'] as const)(
+      'strips a /%s/ prefix when switching back to /de/',
+      async (source) => {
+        const { fixture } = await render(App, {
+          providers: [
+            provideRouter([]),
+            { provide: PLATFORM_ID, useValue: 'browser' },
+            {
+              provide: UserContextService,
+              useValue: {
+                userNameSafe: userNameSignal.asReadonly(),
+                userIdSafe: () => 'u1',
+                isAdmin: () => false,
+                isGuest: () => false,
+              },
+            },
+            { provide: AuthStore, useValue: authMock },
+            { provide: AuthService, useValue: authServiceMock },
+            { provide: Auth, useValue: firebaseAuthMock },
+            { provide: UserConfigApiService, useValue: userConfigApiMock },
+            { provide: StatsApiService, useValue: statsApiMock },
+            { provide: AdsStore, useValue: adsStoreMock },
+            { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
+          ],
+        });
+
+        const replaceSpy = vitest.fn();
+        vitest.spyOn(window, 'location', 'get').mockReturnValue({
+          pathname: `/${source}/training-plans`,
+          search: '',
+          hash: '',
+          replace: replaceSpy,
+        } as unknown as Location);
+
+        fixture.componentInstance.setLanguage('de');
+        expect(replaceSpy).toHaveBeenCalledWith('/de/training-plans');
+      }
+    );
   });
 
   it('renders the brand logo inside the top toolbar', async () => {

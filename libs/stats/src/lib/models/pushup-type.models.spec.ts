@@ -112,83 +112,75 @@ describe('pushup-type catalog', () => {
 
   describe('detectPushupTypes', () => {
     it('detects standard from a German description', () => {
-      const types = detectPushupTypes('Standard 3×25', 'Standard 3×25');
+      const types = detectPushupTypes('Standard 3×25');
       expect(types.map((t) => t.id)).toContain('standard');
     });
 
-    it('detects archer in both languages', () => {
-      const types = detectPushupTypes(
-        'Archer-Liegestütze 3×6',
-        'Archer push-ups 3×6'
-      );
+    it('detects archer from a German description', () => {
+      const types = detectPushupTypes('Archer-Liegestütze 3×6');
+      expect(types.map((t) => t.id)).toEqual(['archer']);
+    });
+
+    it('detects archer from an English description', () => {
+      const types = detectPushupTypes('Archer push-ups 3×6');
       expect(types.map((t) => t.id)).toEqual(['archer']);
     });
 
     it('detects diamond push-ups', () => {
       const types = detectPushupTypes(
-        'Diamant-Liegestütze 3×12 (Trizeps-Volumen)',
-        'Diamond push-ups 3×12 (triceps volume)'
+        'Diamant-Liegestütze 3×12 (Trizeps-Volumen)'
       );
       expect(types.map((t) => t.id)).toEqual(['diamond']);
     });
 
     it('detects wide push-ups', () => {
-      const types = detectPushupTypes(
-        'Weite Liegestütze 3×20 (Brust-Volumen)',
-        'Wide push-ups 3×20 (chest volume)'
-      );
+      const types = detectPushupTypes('Weite Liegestütze 3×20 (Brust-Volumen)');
       expect(types.map((t) => t.id)).toEqual(['wide']);
     });
 
     it('detects wall-one-arm without bleeding into the generic one-arm entry', () => {
       const types = detectPushupTypes(
-        'Wand-Einarmige 3×10 (langsame Exzentrik)',
-        'Wall one-arm 3×10 (slow eccentric)'
+        'Wand-Einarmige 3×10 (langsame Exzentrik)'
       );
       expect(types.map((t) => t.id)).toEqual(['wall-one-arm']);
     });
 
     it('detects negative-one-arm without bleeding into the generic one-arm entry', () => {
       const types = detectPushupTypes(
-        'Negative Einarmige von Bank 3×5 (3 s runter)',
-        'Negative one-arm from bench 3×5 (3 s down)'
+        'Negative Einarmige von Bank 3×5 (3 s runter)'
       );
       expect(types.map((t) => t.id)).toEqual(['negative-one-arm']);
     });
 
     it('detects partial-one-arm without bleeding into the generic one-arm entry', () => {
       const types = detectPushupTypes(
-        'Partielle Einarmige (niedrige Bank) 3×4',
-        'Partial one-arm (low bench) 3×4'
+        'Partielle Einarmige (niedrige Bank) 3×4'
       );
       expect(types.map((t) => t.id)).toEqual(['partial-one-arm']);
     });
 
     it('detects the generic full one-arm push-up only when no more specific variant matches', () => {
-      const types = detectPushupTypes(
-        'Volle Einarmige (weiter Stand) 3×3',
-        'Full one-arm (wide stance) 3×3'
-      );
+      const types = detectPushupTypes('Volle Einarmige (weiter Stand) 3×3');
       expect(types.map((t) => t.id)).toEqual(['one-arm']);
     });
 
-    it('detects knee or incline push-ups', () => {
-      const types = detectPushupTypes(
-        '3×8 Knie- oder erhöhte Liegestütze',
-        '3×8 knee or incline push-ups'
-      );
+    it('detects knee or incline push-ups in German', () => {
+      const types = detectPushupTypes('3×8 Knie- oder erhöhte Liegestütze');
+      const ids = types.map((t) => t.id);
+      expect(ids).toContain('knee');
+      expect(ids).toContain('incline');
+    });
+
+    it('detects knee or incline push-ups in English', () => {
+      const types = detectPushupTypes('3×8 knee or incline push-ups');
       const ids = types.map((t) => t.id);
       expect(ids).toContain('knee');
       expect(ids).toContain('incline');
     });
 
     it('returns an empty list for rest days', () => {
-      expect(detectPushupTypes('Ruhetag', 'Rest day')).toEqual([]);
-    });
-
-    it('falls back to the German keywords when descriptionEn is omitted', () => {
-      const types = detectPushupTypes('Diamant-Liegestütze 3×12');
-      expect(types.map((t) => t.id)).toEqual(['diamond']);
+      expect(detectPushupTypes('Ruhetag')).toEqual([]);
+      expect(detectPushupTypes('Rest day')).toEqual([]);
     });
   });
 });
