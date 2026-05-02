@@ -1,7 +1,11 @@
+const { mkdtempSync, mkdirSync, writeFileSync, rmSync } = require('node:fs');
+const { join } = require('node:path');
+const { tmpdir } = require('node:os');
 const {
   staticRoutes,
   extractBlogPosts,
   extractTrainingPlanSlugs,
+  scanMarkdownBlogPosts,
   buildUrl,
   buildBlogRoutes,
   buildTrainingPlanRoutes,
@@ -79,6 +83,71 @@ describe('generate-sitemap', () => {
           priority: '0.8',
         },
       ]);
+    });
+  });
+
+  describe('scanMarkdownBlogPosts', () => {
+    let tmpRoot;
+
+    beforeEach(() => {
+      tmpRoot = mkdtempSync(join(tmpdir(), 'sitemap-md-'));
+    });
+
+    afterEach(() => {
+      rmSync(tmpRoot, { recursive: true, force: true });
+    });
+
+    function writePost(folder, lang, frontmatter) {
+      const dir = join(tmpRoot, folder);
+      mkdirSync(dir, { recursive: true });
+      writeFileSync(
+        join(dir, `${lang}.md`),
+        `---\n${frontmatter}\n---\n\nbody\n`,
+        'utf-8'
+      );
+    }
+
+    it('returns an empty list when the content directory does not exist', () => {
+      expect(scanMarkdownBlogPosts(join(tmpRoot, 'missing'))).toEqual([]);
+    });
+
+    it('extracts slug, lang, translationSlug and publishedAt from paired files', () => {
+      writePost(
+        'liegestuetze-fehler',
+        'de',
+        "slug: liegestuetze-fehler\npublishedAt: '2026-04-30'\ntitle: t\ndescription: d"
+      );
+      writePost(
+        'liegestuetze-fehler',
+        'en',
+        "slug: pushup-mistakes\npublishedAt: '2026-04-30'\ntitle: t\ndescription: d"
+      );
+      const posts = scanMarkdownBlogPosts(tmpRoot);
+      const de = posts.find((p) => p.lang === 'de');
+      const en = posts.find((p) => p.lang === 'en');
+      expect(de).toEqual({
+        slug: 'liegestuetze-fehler',
+        lang: 'de',
+        translationSlug: 'pushup-mistakes',
+        publishedAt: '2026-04-30',
+      });
+      expect(en).toEqual({
+        slug: 'pushup-mistakes',
+        lang: 'en',
+        translationSlug: 'liegestuetze-fehler',
+        publishedAt: '2026-04-30',
+      });
+    });
+
+    it('falls back to folder name when frontmatter omits `slug`', () => {
+      writePost(
+        'untranslated',
+        'de',
+        "publishedAt: '2026-01-01'\ntitle: t\ndescription: d"
+      );
+      const [post] = scanMarkdownBlogPosts(tmpRoot);
+      expect(post.slug).toBe('untranslated');
+      expect(post.translationSlug).toBeUndefined();
     });
   });
 

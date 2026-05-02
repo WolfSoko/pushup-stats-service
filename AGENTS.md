@@ -231,6 +231,28 @@ match /userTrainingPlans/{userId} {
 }
 ```
 
+## Translatable content workflow (blog & wiki)
+
+Long-form content lives in markdown files with YAML frontmatter under `content/`, one file per locale. A build-time generator (`tools/src/generate-content.mjs`, Nx target `tools:generate-content`) renders the markdown bodies to HTML and emits `web/src/app/blog/blog-posts.generated.ts` and `libs/stats/src/lib/models/pushup-type-content.generated.ts`. Both generated modules are checked in so reviewers see the diff and the build is hermetic; the generator runs automatically as a `dependsOn` of `web:build` and `tools:generate-sitemap`.
+
+**Blog posts** (`content/blog/<folder>/{de,en}.md`):
+
+- Folder name pairs locales — translation pairing is implicit, no `translationSlug` to keep in sync.
+- Per-locale `slug` in frontmatter overrides the URL slug for that locale (e.g. de=`liegestuetze-fehler`, en=`pushup-mistakes`).
+- Required frontmatter: `title`, `description`, `publishedAt`, `slug` (when locale-specific). Optional: `keywords[]`, `updatedAt`, `heroImage`, `heroImageAlt`, `heroImageCredit` (HTML allowed).
+- Body is GitHub-flavored markdown; raw HTML (e.g. `<aside class="plan-cta">`) passes through.
+- Adding a third locale = drop in `<folder>/fr.md`. The generator picks it up automatically.
+
+**Wiki push-up types** (`content/wiki/pushup-types/<id>.{de,en}.md`):
+
+- File stem is the `PushupTypeId` (matches `PUSHUP_TYPES[].id`); the `.de.md` / `.en.md` suffix carries the locale.
+- Frontmatter holds the translatable fields only: `name`, `summary`, `instructions[]`, optional `tips[]`. Structural metadata (`slug`, `entryLabel`, `difficulty`, `keywordsDe[]`, `keywordsEn[]`) stays in `pushup-type.models.ts` because it's referenced by code, not authored prose.
+- `localizePushupType()` prefers the markdown override and falls back to the legacy parallel `*En` fields; once every type is ported the legacy fields can be removed.
+
+**Migration in progress.** Most blog posts are still inline TypeScript in `web/src/app/blog/blog-posts.data.ts`; most push-up types still live as parallel `name`/`nameEn` fields in `pushup-type.models.ts`. To port one, move the content into the appropriate markdown file(s), delete the legacy entry, and run `pnpm nx run tools:generate-content`. Markdown wins on slug collision so an in-progress migration never serves stale TS content.
+
+The sitemap generator scans both sources (markdown directly + the legacy regex extraction from `blog-posts.data.ts`) so cross-locale hreflang pairing keeps working throughout the migration.
+
 ## Pre-Push Checklist
 
 **Before every push to `main`**, run these checks locally and ensure they pass:
@@ -320,11 +342,11 @@ Stores consuming server-side precomputed data (e.g. `UserStats`) must validate p
 
 Detailed reference material lives in [`docs/`](docs/). **Before touching any area listed below, read the relevant doc first** — even if you think you remember the setup. The cost of reading a 5-minute doc is much lower than the cost of breaking a subtle invariant. Default rule: **if there's even a small chance a docs file is relevant to the change you're making, read it before making the change.** Linking to a doc from this file is an explicit signal that the doc contains constraints not obvious from the code.
 
-| Area | File |
-| --- | --- |
-| Sentry source maps, releases, `SENTRY_AUTH_TOKEN` setup | [`docs/observability/sentry.md`](docs/observability/sentry.md) |
-| Pitfalls per-topic (signals, tests, Cloud Functions, push, i18n, …) | [`docs/gotchas/`](docs/gotchas/) — see table below |
-| Firebase environments + deployment | [`docs/Firebase_DEPLOYMENT.md`](docs/Firebase_DEPLOYMENT.md), [`docs/firebase-environments.md`](docs/firebase-environments.md) |
+| Area                                                                | File                                                                                                                           |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| Sentry source maps, releases, `SENTRY_AUTH_TOKEN` setup             | [`docs/observability/sentry.md`](docs/observability/sentry.md)                                                                 |
+| Pitfalls per-topic (signals, tests, Cloud Functions, push, i18n, …) | [`docs/gotchas/`](docs/gotchas/) — see table below                                                                             |
+| Firebase environments + deployment                                  | [`docs/Firebase_DEPLOYMENT.md`](docs/Firebase_DEPLOYMENT.md), [`docs/firebase-environments.md`](docs/firebase-environments.md) |
 
 ## Gotchas & Pitfalls
 

@@ -1,22 +1,9 @@
-export interface BlogPost {
-  slug: string;
-  lang: 'de' | 'en';
-  title: string;
-  description: string;
-  publishedAt: string;
-  /** Optional ISO date; when present the article shows "Updated on …" and sets article:modified_time. */
-  updatedAt?: string;
-  content: string;
-  keywords: string[];
-  /** Slug of the same article in the other locale — enables hreflang pairing in the sitemap. */
-  translationSlug?: string;
-  /** Absolute URL of the hero image rendered above the article body and used for og:image. */
-  heroImage?: string;
-  /** Accessible alt text for the hero image. */
-  heroImageAlt?: string;
-  /** Small credit line rendered under the hero — typically "Photo: Photographer on Unsplash". HTML allowed. */
-  heroImageCredit?: string;
-}
+import { GENERATED_BLOG_POSTS } from './blog-posts.generated';
+import type { BlogPost } from './blog-posts.types';
+
+// Re-exported for backwards compatibility. New consumers should import
+// the type directly from `./blog-posts.types`.
+export type { BlogPost };
 
 export function getBlogPostsByLocale(locale: string): BlogPost[] {
   const lang = locale.startsWith('en') ? 'en' : 'de';
@@ -33,256 +20,15 @@ export function findBlogPost(
   return BLOG_POSTS.find((p) => p.slug === slug && p.lang === lang);
 }
 
-export const BLOG_POSTS: BlogPost[] = [
-  {
-    slug: 'liegestuetze-fehler',
-    lang: 'de',
-    translationSlug: 'pushup-mistakes',
-    title: 'Die 7 häufigsten Fehler bei Liegestützen — und wie du sie behebst',
-    description:
-      'Schlechte Form kostet dich Wiederholungen, Fortschritt und manchmal die Schulter. Die häufigsten Fehler bei Liegestützen, mit konkreten Korrekturen.',
-    publishedAt: '2026-04-30',
-    keywords: [
-      'Liegestütze Fehler',
-      'Liegestütze richtig machen',
-      'Liegestütze Technik',
-      'Liegestütze Form',
-      'Schulter schmerzen Liegestütze',
-    ],
-    heroImage:
-      'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=1600&q=80',
-    heroImageAlt:
-      'Athletin in Plank-Position auf einer Trainingsmatte, neutrale Kopfhaltung.',
-    heroImageCredit:
-      'Foto: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>',
-    content: `
-<h2>Warum saubere Form mehr zählt als 100 schlechte Wiederholungen</h2>
-<p>
-  Liegestütze sind eine der unterschätzten Übungen: scheinbar simpel, in Wahrheit eine
-  Ganzkörperbewegung mit Dutzenden Stellschrauben. Wer 50 schlampige Liegestütze macht, trainiert
-  Sehnenverkürzungen und kompensatorische Muster — wer 20 saubere macht, baut Kraft auf, die
-  übertragbar bleibt. Die folgenden sieben Fehler tauchen in fast jedem Anfängervideo auf, und drei
-  davon kosten dich langfristig die Schulter.
-</p>
-
-<h2>Fehler 1: Hängender Po — die instabile Mitte</h2>
-<p>
-  Der häufigste Fehler überhaupt. Wenn die Hüfte unter der Linie zwischen Schultern und Fersen
-  hängt, wird die Lendenwirbelsäule zur federnden Brücke. Das schmerzt nicht sofort, aber summiert
-  sich. Ursache ist meist eine schwache Bauchmuskulatur, die unter Belastung loslässt.
-</p>
-<p>
-  <strong>Fix:</strong> Bevor du in die Liegestütze gehst, spanne aktiv den Bauch an, als würdest
-  du einen Schlag erwarten. Diese Spannung muss bis zum Ende des Satzes halten. Wenn du sie
-  verlierst, ist der Satz vorbei — egal wie viele Wiederholungen geplant waren.
-</p>
-
-<h2>Fehler 2: Ellenbogen nach außen — Schulter-Killer Nummer eins</h2>
-<p>
-  Die klassische „T-Position": Ellenbogen 90° vom Körper abgespreizt. Sieht imposant aus, knallt
-  aber den Oberarmkopf direkt gegen das Schulterdach. Wiederhole das oft genug, und das Subakromial-
-  Impingement ist programmiert.
-</p>
-<p>
-  <strong>Fix:</strong> Ellenbogen sollten beim Absenken einen Winkel von etwa 45° zum Rumpf
-  bilden. Stell dir vor, du würdest mit den Ellenbogen die Hüfte „berühren" wollen. Die Hände
-  bleiben unter den Schultern oder leicht weiter — nicht weit außen.
-</p>
-
-<h2>Fehler 3: Halbe Bewegung — die selbstgewählte Lüge</h2>
-<p>
-  Ego-Wiederholungen, bei denen die Brust 20 cm über dem Boden umkehrt. Aus Sicht der Statistik
-  klingt eine 50er-Serie super; aus Sicht der Muskulatur fehlt die untere Hälfte des Kraftspektrums.
-  Genau dort entsteht aber der Reiz, der Wachstum auslöst.
-</p>
-<p>
-  <strong>Fix:</strong> Brust berührt den Boden (oder kommt 1–2 cm darüber). Wenn das nicht
-  geht, regression auf erhöhte Hände — Fensterbank, Stuhl, Treppenstufe — bis du voll absenken
-  kannst. Lieber 8 saubere Wiederholungen als 20 halbe.
-</p>
-
-<h2>Fehler 4: Kopf nach oben — Nacken statt Bauch</h2>
-<p>
-  Beim Anstrengen geht der Kopf reflexartig in den Nacken. Die Halswirbelsäule überstreckt, der
-  obere Trapezius springt ein, und nach 50 Wiederholungen tut der Nacken mehr weh als die Brust.
-</p>
-<p>
-  <strong>Fix:</strong> Blick etwa einen halben Meter vor die Hände auf den Boden. Kopf bleibt in
-  Verlängerung der Wirbelsäule — als ob du eine Tasse auf dem Hinterkopf balancierst.
-</p>
-
-<h2>Fehler 5: Tempo-Roulette — explosiv runter, träge hoch</h2>
-<p>
-  Den Boden „abfangen" und mit Schwung wieder hochpressen. Die exzentrische Phase (das Absenken)
-  ist aber der Hauptreiz für Hypertrophie. Wer sie verschenkt, lässt 40 % der Wirkung liegen.
-</p>
-<p>
-  <strong>Fix:</strong> 2 Sekunden runter, kurze Pause unten, kontrolliert hoch. Erst wenn du
-  Tempo:1-1-1-0 sauber beherrschst, darfst du auf explosive Liegestütze umsteigen.
-</p>
-
-<h2>Fehler 6: Atem anhalten — der unsichtbare Bremser</h2>
-<p>
-  Pressatmung beim Hochdrücken erhöht den intrathorakalen Druck und kann zu Schwindel führen. Über
-  längere Sätze hinweg leidet außerdem die Kraftentfaltung.
-</p>
-<p>
-  <strong>Fix:</strong> Beim Absenken einatmen, beim Hochdrücken kontrolliert ausatmen. Bei
-  Maximalsätzen ist eine kurze Bracing-Phase okay, aber nicht über mehrere Wiederholungen halten.
-  Mehr dazu in unserem <a href="/de/blog/liegestuetze-atmung">Atemtechnik-Artikel</a>.
-</p>
-
-<h2>Fehler 7: Zu viel zu früh — Volumen statt Qualität</h2>
-<p>
-  „100 Liegestütze täglich" klingt nach Disziplin, ist aber für 95 % der Einsteiger der schnellste
-  Weg in die Schulterinflammation. Bindegewebe und Sehnen brauchen länger zur Adaption als Muskeln.
-</p>
-<p>
-  <strong>Fix:</strong> Steigere das Wochenvolumen um maximal 10 %. Wenn du letzte Woche 100
-  Wiederholungen geschafft hast, sind 110 das Ziel — nicht 200. Geduld schlägt Heroismus.
-</p>
-
-<h2>Die 5-Minuten-Selbstdiagnose</h2>
-<p>
-  Stell dein Smartphone zur Seite und filme einen Satz von 10 Wiederholungen. Schau dir das Video
-  zweimal an: einmal von der Seite (Hüftlinie, Tiefe), einmal von hinten (Ellenbogen-Winkel,
-  Schulterposition). Du siehst innerhalb von 30 Sekunden, welcher der sieben Fehler bei dir
-  dominiert. Repariere einen pro Trainingswoche — nicht alle gleichzeitig.
-</p>
-
-<aside class="plan-cta">
-  <h3>Form sauber? Dann wird's Zeit für Volumen</h3>
-  <p>
-    Wenn deine Technik stimmt, bist du bereit für strukturiertes Volumen. Der
-    <a href="/de/training-plans/recruit-6w">6-Wochen-Aufbauplan</a> bringt dich von 0 auf 100
-    saubere Wiederholungen — mit progressiver Belastung statt Crash-Programm.
-  </p>
-</aside>
-    `.trim(),
-  },
-  {
-    slug: 'pushup-mistakes',
-    lang: 'en',
-    translationSlug: 'liegestuetze-fehler',
-    title: 'The 7 most common push-up mistakes — and how to fix each one',
-    description:
-      'Bad form costs you reps, progress, and sometimes your shoulder. The most common push-up mistakes, with concrete fixes for each.',
-    publishedAt: '2026-04-30',
-    keywords: [
-      'push-up mistakes',
-      'push-up form',
-      'push-up technique',
-      'shoulder pain push-ups',
-      'how to do push-ups properly',
-    ],
-    heroImage:
-      'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=1600&q=80',
-    heroImageAlt:
-      'Athlete in plank position on a training mat, neutral head position.',
-    heroImageCredit:
-      'Photo: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>',
-    content: `
-<h2>Why clean form beats 100 sloppy reps</h2>
-<p>
-  Push-ups are an underrated full-body exercise — deceptively simple, with dozens of moving parts.
-  Fifty sloppy reps train compensatory patterns and tendon overload. Twenty clean reps build
-  strength that transfers. The seven mistakes below show up in nearly every beginner video, and
-  three of them eventually cost you a shoulder.
-</p>
-
-<h2>Mistake 1: Sagging hips — the unstable middle</h2>
-<p>
-  By far the most common error. When the hips drop below the line from shoulders to heels, the
-  lumbar spine becomes a flexing bridge. It doesn't hurt right away, but it adds up. The cause
-  is usually a weak core that lets go under load.
-</p>
-<p>
-  <strong>Fix:</strong> Before lowering, brace the abs as if expecting a punch. The brace must
-  hold until the end of the set. If you lose it, the set is over — regardless of the planned reps.
-</p>
-
-<h2>Mistake 2: Flared elbows — shoulder-killer number one</h2>
-<p>
-  The classic "T-position": elbows splayed 90° from the torso. Looks dramatic, but it drives the
-  humeral head straight into the acromion. Repeat that often enough and subacromial impingement
-  is on the way.
-</p>
-<p>
-  <strong>Fix:</strong> Elbows should track at roughly 45° to the torso during the descent.
-  Imagine you're trying to graze your hips with the elbows. Hands stay under the shoulders or
-  slightly wider — never far out.
-</p>
-
-<h2>Mistake 3: Half reps — the quiet self-deception</h2>
-<p>
-  Ego reps where the chest reverses 8 inches above the floor. Sounds great as a 50-rep stat;
-  leaves out the lower half of the strength curve, which is exactly where the growth stimulus
-  lives.
-</p>
-<p>
-  <strong>Fix:</strong> Chest touches the floor (or comes within an inch). If that's not
-  possible, regress to elevated hands — windowsill, chair, stair — until you can lower fully.
-  Eight clean reps beat twenty half ones every time.
-</p>
-
-<h2>Mistake 4: Head up — neck instead of core</h2>
-<p>
-  Under exertion the head reflexively tilts back. The cervical spine extends, the upper traps
-  jump in, and after 50 reps your neck hurts more than your chest.
-</p>
-<p>
-  <strong>Fix:</strong> Eyes about half a meter (1.5 ft) in front of your hands on the floor.
-  Head stays in line with the spine — as if balancing a cup on the back of your skull.
-</p>
-
-<h2>Mistake 5: Tempo roulette — fast down, slow up</h2>
-<p>
-  Catching the floor and bouncing up. But the eccentric phase (the descent) is the primary
-  hypertrophy driver. Skip it and you leave 40% of the effect on the table.
-</p>
-<p>
-  <strong>Fix:</strong> 2 seconds down, brief pause at the bottom, controlled press up. Only
-  after you've mastered tempo 1-1-1-0 should you graduate to explosive push-ups.
-</p>
-
-<h2>Mistake 6: Holding your breath — the invisible brake</h2>
-<p>
-  Valsalva pressing during the push raises intrathoracic pressure and can trigger lightheadedness.
-  Across longer sets, force production also suffers.
-</p>
-<p>
-  <strong>Fix:</strong> Inhale on the descent, exhale on the press. A short brace is okay during
-  max attempts, but don't sustain it across multiple reps. More on this in our
-  <a href="/en/blog/pushup-breathing">breathing technique article</a>.
-</p>
-
-<h2>Mistake 7: Too much too soon — volume over quality</h2>
-<p>
-  "100 push-ups a day" sounds disciplined but is, for 95% of beginners, the fastest path to
-  shoulder inflammation. Connective tissue and tendons adapt slower than muscle.
-</p>
-<p>
-  <strong>Fix:</strong> Increase weekly volume by no more than 10%. If you hit 100 reps last
-  week, target 110 — not 200. Patience beats heroism.
-</p>
-
-<h2>The 5-minute self-diagnosis</h2>
-<p>
-  Set your phone aside and film a set of 10 reps. Watch the clip twice: once from the side (hip
-  line, depth), once from behind (elbow angle, shoulder position). Within 30 seconds you'll see
-  which of the seven mistakes dominates. Repair one per training week — not all at once.
-</p>
-
-<aside class="plan-cta">
-  <h3>Form clean? Now's the time for volume</h3>
-  <p>
-    With your technique solid, you're ready for structured volume. The
-    <a href="/en/training-plans/recruit-6w">6-week buildup plan</a> takes you from 0 to 100 clean
-    reps using progressive overload, not crash programming.
-  </p>
-</aside>
-    `.trim(),
-  },
+/**
+ * Posts authored as inline TypeScript. New posts should be added as
+ * markdown files under `content/blog/<folder>/{de,en}.md` instead —
+ * see AGENTS.md ("Translatable content workflow"). The two sources are
+ * merged into `BLOG_POSTS` below; markdown-sourced posts win on slug
+ * collision so an in-progress migration cannot accidentally serve
+ * stale TS content.
+ */
+const LEGACY_BLOG_POSTS: BlogPost[] = [
   {
     slug: 'liegestuetze-frauen',
     lang: 'de',
@@ -2314,3 +2060,20 @@ export const BLOG_POSTS: BlogPost[] = [
     `.trim(),
   },
 ];
+
+/**
+ * Merged catalog: markdown-sourced posts plus the still-inline TS
+ * entries. Keyed by `lang:slug` so a markdown port wins over a stale
+ * legacy entry during incremental migration.
+ */
+export const BLOG_POSTS: BlogPost[] = (() => {
+  const seen = new Set<string>();
+  const all: BlogPost[] = [];
+  for (const post of [...GENERATED_BLOG_POSTS, ...LEGACY_BLOG_POSTS]) {
+    const key = `${post.lang}:${post.slug}`;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    all.push(post);
+  }
+  return all;
+})();

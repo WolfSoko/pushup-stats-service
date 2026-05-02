@@ -108,6 +108,22 @@ describe('pushup-type catalog', () => {
       if (!wallOneArm) throw new Error('wall-one-arm entry must exist');
       expect(localizePushupType(wallOneArm, 'de').tips).toEqual([]);
     });
+
+    it('uses markdown-sourced override when one exists for the type', () => {
+      // The `standard` push-up has been migrated to
+      // content/wiki/pushup-types/standard.{de,en}.md. The override
+      // path should win — proven here by verifying we still get the
+      // expected localized fields without depending on the legacy
+      // `*En` fields (which can be removed once every type is ported).
+      const standard = findPushupType('standard');
+      if (!standard) throw new Error('standard entry must exist');
+      const en = localizePushupType(standard, 'en');
+      expect(en.name).toBe('Standard push-up');
+      expect(en.instructions.length).toBeGreaterThan(0);
+      const de = localizePushupType(standard, 'de');
+      expect(de.name).toBe('Standard-Liegestütze');
+      expect(de.tips.length).toBeGreaterThan(0);
+    });
   });
 
   describe('detectPushupTypes', () => {

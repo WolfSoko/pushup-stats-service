@@ -1,7 +1,14 @@
 #!/usr/bin/env node
 // Generates sitemap.xml from route + blog-post definitions.
-const { readFileSync, writeFileSync } = require('node:fs');
-const { resolve } = require('node:path');
+const {
+  existsSync,
+  readdirSync,
+  readFileSync,
+  statSync,
+  writeFileSync,
+} = require('node:fs');
+const { join, resolve } = require('node:path');
+const { parse: parseYaml } = require('yaml');
 
 const ROOT = resolve(__dirname, '../..');
 const BASE_URL = 'https://pushup-stats.de';
@@ -70,20 +77,91 @@ function extractBlogPosts(source) {
   return posts;
 }
 
-function readBlogPosts() {
-  const blogDataPath = resolve(ROOT, 'web/src/app/blog/blog-posts.data.ts');
-  let source;
-  try {
-    source = readFileSync(blogDataPath, 'utf-8');
-  } catch (err) {
-    console.error(`Failed to read blog-posts.data.ts: ${err.message}`);
-    return [];
-  }
-  const posts = extractBlogPosts(source);
-  if (posts.length === 0) {
-    console.warn('No blog posts found - verify blog-posts.data.ts format');
+/**
+ * Scans `content/blog/<folder>/{de,en}.md` for markdown-sourced posts.
+ * Folder name is the cross-locale identifier; per-locale `slug` in
+ * frontmatter overrides the URL slug for that locale, and the other
+ * locale's slug becomes the `translationSlug` in the sitemap.
+ */
+function scanMarkdownBlogPosts(blogContentRoot) {
+  if (!existsSync(blogContentRoot)) return [];
+  const folders = readdirSync(blogContentRoot).filter((entry) => {
+    try {
+      return statSync(join(blogContentRoot, entry)).isDirectory();
+    } catch {
+      return false;
+    }
+  });
+  const posts = [];
+  for (const folder of folders) {
+    const perLocale = {};
+    for (const lang of ['de', 'en']) {
+      const path = join(blogContentRoot, folder, `${lang}.md`);
+      if (!existsSync(path)) continue;
+      const data = readFrontmatter(path);
+      perLocale[lang] = {
+        slug: data.slug ?? folder,
+        publishedAt: data.publishedAt,
+      };
+    }
+    for (const lang of ['de', 'en']) {
+      const entry = perLocale[lang];
+      if (!entry) continue;
+      const otherLang = lang === 'de' ? 'en' : 'de';
+      const other = perLocale[otherLang];
+      posts.push({
+        slug: entry.slug,
+        lang,
+        translationSlug: other ? other.slug : undefined,
+        publishedAt: String(entry.publishedAt ?? ''),
+      });
+    }
   }
   return posts;
+}
+
+function readFrontmatter(path) {
+  const source = readFileSync(path, 'utf-8');
+  if (!source.startsWith('---\n') && !source.startsWith('---\r\n')) {
+    throw new Error(`${path}: missing YAML frontmatter`);
+  }
+  const afterOpen = source.indexOf('\n', 3) + 1;
+  const closeIdx = source.indexOf('\n---', afterOpen);
+  if (closeIdx === -1) {
+    throw new Error(`${path}: unterminated YAML frontmatter`);
+  }
+  const yamlBlock = source.slice(afterOpen, closeIdx);
+  return parseYaml(yamlBlock) ?? {};
+}
+
+function readBlogPosts() {
+  const blogDataPath = resolve(ROOT, 'web/src/app/blog/blog-posts.data.ts');
+  let legacyPosts = [];
+  try {
+    const source = readFileSync(blogDataPath, 'utf-8');
+    legacyPosts = extractBlogPosts(source);
+  } catch (err) {
+    console.error(`Failed to read blog-posts.data.ts: ${err.message}`);
+  }
+
+  const markdownPosts = scanMarkdownBlogPosts(resolve(ROOT, 'content/blog'));
+
+  // Markdown wins on slug collision so an in-progress migration can't
+  // surface a stale legacy entry alongside its markdown replacement.
+  const seen = new Set();
+  const merged = [];
+  for (const post of [...markdownPosts, ...legacyPosts]) {
+    const key = `${post.lang}:${post.slug}`;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    merged.push(post);
+  }
+  if (merged.length === 0) {
+    console.warn(
+      'No blog posts found - verify content/blog/**/*.md and blog-posts.data.ts'
+    );
+  }
+  return merged;
 }
 
 function buildUrl({ path, changefreq, priority, locale, lastmod, alternates }) {
@@ -219,6 +297,7 @@ module.exports = {
   staticRoutes,
   extractBlogPosts,
   extractTrainingPlanSlugs,
+  scanMarkdownBlogPosts,
   buildUrl,
   buildBlogRoutes,
   buildTrainingPlanRoutes,

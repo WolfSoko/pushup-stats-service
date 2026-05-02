@@ -10,7 +10,15 @@
  * are curated editorial entries with technique cues that must stay
  * in lockstep across languages — putting them in XLIFF would lose
  * the per-step pairing.
+ *
+ * **Migration in progress:** translatable copy is moving to per-locale
+ * markdown frontmatter under `content/wiki/pushup-types/<id>.{de,en}.md`
+ * (see AGENTS.md). Until every type is ported, `localizePushupType()`
+ * checks the generated override first and falls back to the legacy
+ * `*En` parallel fields below.
  */
+
+import { PUSHUP_TYPE_CONTENT } from './pushup-type-content.generated';
 
 export type PushupTypeId =
   | 'standard'
@@ -516,7 +524,9 @@ export function findPushupTypeByEntryLabel(
 
 /**
  * Returns the localized name + summary for the active Angular locale.
- * English when `locale` starts with `en`, German otherwise.
+ * English when `locale` starts with `en`, German otherwise. Prefers
+ * markdown-sourced content from `PUSHUP_TYPE_CONTENT` when available,
+ * falling back to the legacy parallel `*En` fields on PUSHUP_TYPES.
  */
 export function localizePushupType(
   type: PushupTypeInfo,
@@ -527,7 +537,17 @@ export function localizePushupType(
   instructions: ReadonlyArray<string>;
   tips: ReadonlyArray<string>;
 } {
-  const isEnglish = locale.toLowerCase().startsWith('en');
+  const lang = locale.toLowerCase().startsWith('en') ? 'en' : 'de';
+  const override = PUSHUP_TYPE_CONTENT[type.id]?.[lang];
+  if (override) {
+    return {
+      name: override.name,
+      summary: override.summary,
+      instructions: override.instructions,
+      tips: override.tips,
+    };
+  }
+  const isEnglish = lang === 'en';
   return {
     name: isEnglish ? type.nameEn : type.name,
     summary: isEnglish ? type.summaryEn : type.summary,
