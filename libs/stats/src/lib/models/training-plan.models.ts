@@ -4,6 +4,12 @@
  * curated catalog entry. A `UserTrainingPlan` is the live state of a
  * user who has activated a plan: it tracks the start date and which
  * days have been completed.
+ *
+ * All human-readable fields (`title`, `summary`, `description`,
+ * `blogSlug`) are populated via Angular `$localize` in
+ * `training-plan.catalog.ts`, so each locale-specific build receives
+ * the translated strings up front. There are no parallel `*En` fields
+ * — translation lives in the standard XLIFF flow.
  */
 
 /** Difficulty bucket for filtering and badge color in the UI. */
@@ -31,10 +37,8 @@ export interface TrainingPlanDay {
    * the UI shows just the total target.
    */
   sets?: number[];
-  /** Short German description shown in the day card. */
+  /** Localized short description shown in the day card. */
   description: string;
-  /** Short English description shown in the day card (en locale). */
-  descriptionEn?: string;
 }
 
 /**
@@ -45,19 +49,18 @@ export interface TrainingPlanDay {
 export interface TrainingPlan {
   id: string;
   slug: string;
-  /** German-language title. */
+  /** Localized plan title. */
   title: string;
-  /** English-language title (used when `LOCALE_ID === 'en'`). */
-  titleEn: string;
-  /** German-language summary. */
+  /** Localized one-paragraph summary. */
   summary: string;
-  /** English-language summary. */
-  summaryEn: string;
   level: TrainingPlanLevel;
   totalDays: number;
-  /** Optional blog slug pair (de/en) for "Read the article". */
-  blogSlugDe?: string;
-  blogSlugEn?: string;
+  /**
+   * Optional locale-aware blog slug for the "Read the article" CTA.
+   * The German source value is the DE blog slug; translators replace
+   * it with the EN slug per locale.
+   */
+  blogSlug?: string;
   days: ReadonlyArray<TrainingPlanDay>;
 }
 
@@ -130,32 +133,6 @@ export function isPlanCompleted(
     .map((d) => d.dayIndex);
   if (required.length === 0) return false;
   return required.every((idx) => completedDays.includes(idx));
-}
-
-/**
- * Returns plan fields adapted to the active Angular locale. We pick
- * the English fields when `LOCALE_ID === 'en'` and otherwise fall
- * back to the German source. The catalog stores both languages
- * because plans are static curated data, not user-generated content.
- */
-export function localizePlan(
-  plan: TrainingPlan,
-  locale: string
-): {
-  title: string;
-  summary: string;
-  days: ReadonlyArray<TrainingPlanDay & { description: string }>;
-} {
-  const isEnglish = locale.toLowerCase().startsWith('en');
-  return {
-    title: isEnglish ? plan.titleEn : plan.title,
-    summary: isEnglish ? plan.summaryEn : plan.summary,
-    days: plan.days.map((day) => ({
-      ...day,
-      description:
-        isEnglish && day.descriptionEn ? day.descriptionEn : day.description,
-    })),
-  };
 }
 
 function parseIsoDate(value: string): Date | null {

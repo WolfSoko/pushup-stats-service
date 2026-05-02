@@ -130,9 +130,10 @@ describe('App (testing-library)', () => {
     expect(screen.getAllByText('Analyse').length).toBeGreaterThan(0);
     expect(screen.getAllByText('Bestenliste').length).toBeGreaterThan(0);
     expect(screen.getAllByText('Trainingspläne').length).toBeGreaterThan(0);
+    // The language switcher renders as a mat-select with a 'Sprache'
+    // label; only the currently-selected option is visible until the
+    // panel is opened.
     expect(screen.getByText('Sprache')).toBeTruthy();
-    expect(screen.getByText('Deutsch')).toBeTruthy();
-    expect(screen.getByText('English')).toBeTruthy();
   });
 
   it('shows daily progress and goal in toolbar', async () => {

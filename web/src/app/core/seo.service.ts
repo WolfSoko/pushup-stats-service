@@ -3,7 +3,19 @@ import { inject, Injectable, LOCALE_ID } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
 
 const BASE_URL = 'https://pushup-stats.de';
-const LOCALE_PREFIXES = ['de', 'en'] as const;
+// Keep in sync with `web/src/server-locale-redirect.ts` and the
+// `i18n.locales` map in `web/project.json`. Each known locale gets a
+// `<link rel="alternate" hreflang="…">` entry on every page.
+const LOCALE_PREFIXES = [
+  'de',
+  'en',
+  'fr',
+  'es',
+  'it',
+  'nl',
+  'grc',
+  'la',
+] as const;
 type LocalePrefix = (typeof LOCALE_PREFIXES)[number];
 const DEFAULT_LOCALE: LocalePrefix = 'de';
 
@@ -45,20 +57,20 @@ export class SeoService {
     this.setTag('name', 'twitter:description', seoDescription);
 
     const locale = this.detectLocale(path);
-    const ogLocale = locale === 'en' ? 'en_US' : 'de_DE';
-    this.setTag('property', 'og:locale', ogLocale);
+    this.setTag('property', 'og:locale', this.ogLocaleFor(locale));
 
     const strippedPath = this.stripLocalePrefix(path);
-    const deUrl = `${BASE_URL}/de${strippedPath}`;
-    const enUrl = `${BASE_URL}/en${strippedPath}`;
-    const canonical = locale === 'en' ? enUrl : deUrl;
+    const localeUrl = (lang: LocalePrefix): string =>
+      `${BASE_URL}/${lang}${strippedPath}`;
+    const canonical = localeUrl(locale);
 
     this.setTag('property', 'og:url', canonical);
     this.setCanonical(canonical);
 
-    this.setHreflang('alternate', 'de', deUrl);
-    this.setHreflang('alternate', 'en', enUrl);
-    this.setHreflang('alternate', 'x-default', deUrl);
+    for (const lang of LOCALE_PREFIXES) {
+      this.setHreflang('alternate', lang, localeUrl(lang));
+    }
+    this.setHreflang('alternate', 'x-default', localeUrl(DEFAULT_LOCALE));
 
     this.applyImage(options.imageUrl, options.imageAlt ?? seoTitle);
     this.applyArticleTimes(options.publishedTime, options.modifiedTime);
@@ -94,6 +106,25 @@ export class SeoService {
     } else {
       this.removeTag('property', 'article:modified_time');
     }
+  }
+
+  /**
+   * Map a locale code to its OpenGraph BCP 47 form. OG only formally
+   * supports `xx_YY` IETF tags, so we approximate for classical
+   * languages by returning the bare two-letter code (no region).
+   */
+  private ogLocaleFor(locale: LocalePrefix): string {
+    const map: Record<LocalePrefix, string> = {
+      de: 'de_DE',
+      en: 'en_US',
+      fr: 'fr_FR',
+      es: 'es_ES',
+      it: 'it_IT',
+      nl: 'nl_NL',
+      grc: 'grc',
+      la: 'la',
+    };
+    return map[locale];
   }
 
   private detectLocale(path: string): LocalePrefix {

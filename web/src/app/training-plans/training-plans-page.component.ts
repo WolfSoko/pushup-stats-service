@@ -3,9 +3,8 @@ import {
   Component,
   computed,
   inject,
-  LOCALE_ID,
 } from '@angular/core';
-import { localizePlan, TrainingPlanDay } from '@pu-stats/models';
+import { TrainingPlanDay } from '@pu-stats/models';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
@@ -297,49 +296,38 @@ import { LogPlanDayResult, TrainingPlanStore } from './training-plan.store';
 export class TrainingPlansPageComponent {
   readonly store = inject(TrainingPlanStore);
   private readonly snackbar = inject(MatSnackBar);
-  private readonly locale = inject(LOCALE_ID) as string;
   private readonly authStore = inject(AuthStore);
 
   readonly isAuthenticated = this.authStore.isAuthenticated;
   readonly authResolved = this.authStore.authResolved;
 
-  /** Catalog with `title`/`summary` fields swapped to the active locale. */
+  /** Catalog with `title`/`summary` already localised via $localize. */
   readonly localizedPlans = computed(() =>
-    this.store.allPlans().map((p) => {
-      const localized = localizePlan(p, this.locale);
-      return {
-        id: p.id,
-        slug: p.slug,
-        level: p.level,
-        totalDays: p.totalDays,
-        title: localized.title,
-        summary: localized.summary,
-      };
-    })
+    this.store.allPlans().map((p) => ({
+      id: p.id,
+      slug: p.slug,
+      level: p.level,
+      totalDays: p.totalDays,
+      title: p.title,
+      summary: p.summary,
+    }))
   );
 
   /** Active plan card view-model — null when no plan is active. */
   readonly activeView = computed(() => {
     const cat = this.store.activeCatalog();
     if (!cat || !this.store.hasActivePlan()) return null;
-    const localized = localizePlan(cat, this.locale);
     return {
-      title: localized.title,
-      summary: localized.summary,
+      title: cat.title,
+      summary: cat.summary,
       totalDays: cat.totalDays,
     };
   });
 
-  /** Today's day with localized description. */
-  readonly todayLocalized = computed<TrainingPlanDay | null>(() => {
-    const day = this.store.todayDay();
-    const cat = this.store.activeCatalog();
-    if (!day || !cat) return null;
-    const localized = localizePlan(cat, this.locale).days.find(
-      (d) => d.dayIndex === day.dayIndex
-    );
-    return localized ?? day;
-  });
+  /** Today's day; `description` is already localised via $localize. */
+  readonly todayLocalized = computed<TrainingPlanDay | null>(
+    () => this.store.todayDay() ?? null
+  );
 
   abandon(): void {
     void this.store.abandon();

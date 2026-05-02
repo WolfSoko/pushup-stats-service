@@ -28,8 +28,25 @@ export type LocaleRedirectResult =
   | { readonly kind: 'pass' }
   | { readonly kind: 'redirect'; readonly location: string };
 
+/**
+ * Locale codes registered by the Angular i18n build. Order matters
+ * only for `pickLocale` fallback semantics; the source locale (`de`)
+ * is always first.
+ */
+export const SUPPORTED_LOCALES = [
+  'de',
+  'en',
+  'fr',
+  'es',
+  'it',
+  'nl',
+  'grc',
+  'la',
+] as const;
+export type SupportedLocale = (typeof SUPPORTED_LOCALES)[number];
+
 /** Locale prefixes registered by the Angular i18n build. */
-export const LOCALE_PREFIXES: ReadonlySet<string> = new Set(['de', 'en']);
+export const LOCALE_PREFIXES: ReadonlySet<string> = new Set(SUPPORTED_LOCALES);
 
 /**
  * Files served from the domain root (rewritten to `/de/<file>` by an
@@ -52,14 +69,37 @@ export const ROOT_FILES: ReadonlySet<string> = new Set([
 export const SAFE_REDIRECT_PATH_RE = /^\/[A-Za-z0-9/_\-.~%]*$/;
 
 /**
- * Pick the source locale (`de`) by default, switch to `en` only when
- * `Accept-Language` actually starts with English (after optional `,` /
- * `;` separators between weighted entries). Avoids matching `de` in
- * `de;q=0.5,en;q=0.3` — a `\ben` boundary is enough.
+ * Pick a locale based on `Accept-Language`. Defaults to the source
+ * locale (`de`) and only switches if the header explicitly starts
+ * with one of the supported codes (after optional `,` / `;` weight
+ * separators). Word boundary `\b<code>(-|;|,|$)` keeps `de` from
+ * matching in `de;q=0.5,en;q=0.3`. Classical locales (`grc`, `la`)
+ * are detected too, even though browsers rarely advertise them —
+ * users can configure them manually in OS-level language settings.
  */
-export function pickLocale(acceptLanguage: string | undefined): 'de' | 'en' {
+export function pickLocale(
+  acceptLanguage: string | undefined
+): SupportedLocale {
   const accept = String(acceptLanguage ?? '').toLowerCase();
-  return /\ben(-|;|,|$)/.test(accept) ? 'en' : 'de';
+  // Match in a deterministic priority order: explicit user-preferred
+  // codes win over the source-locale default. Order doesn't matter
+  // strictly because the regex is anchored to a word boundary, but
+  // listing the most likely browser codes first keeps the regex test
+  // cheap.
+  const priority: ReadonlyArray<SupportedLocale> = [
+    'en',
+    'fr',
+    'es',
+    'it',
+    'nl',
+    'grc',
+    'la',
+  ];
+  for (const code of priority) {
+    const re = new RegExp(`\\b${code}(-|;|,|$)`);
+    if (re.test(accept)) return code;
+  }
+  return 'de';
 }
 
 /**

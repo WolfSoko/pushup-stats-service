@@ -10,7 +10,33 @@ import {
  * absolute baselines suitable for the stated audience — users whose
  * current max differs significantly should treat them as anchors and
  * adjust by `±20%`.
+ *
+ * All human-readable strings are wrapped in `$localize` so they flow
+ * through the standard Angular i18n / XLIFF extraction. There are no
+ * parallel `*En` fields — every locale-specific build receives the
+ * pre-localised values up front.
+ *
+ * Recurring day descriptions are extracted as module-level constants
+ * (`REST_DAY`, `LIGHT_DAY`, `AMRAP_3X_90S`, …) so the same XLIFF unit
+ * covers every occurrence across plans.
  */
+
+// ─── Shared day-description constants ──────────────────────────────
+const REST_DAY = $localize`:@@plan.day.rest:Ruhetag`;
+const REST_DAY_MOBILITY = $localize`:@@plan.day.rest.mobility:Ruhetag — Mobility`;
+const REST_DAY_PREP_FINAL = $localize`:@@plan.day.rest.prepFinal:Ruhetag — Vorbereitung Endtest`;
+const LIGHT_DAY = $localize`:@@plan.day.light:Leichter Tag`;
+const ACTIVE_RECOVERY = $localize`:@@plan.day.activeRecovery:Aktive Erholung`;
+const MOBILITY_CHEST_STRETCH = $localize`:@@plan.day.mobility.chestStretch:Mobility & Brust-Stretching`;
+const FINAL_TEST_MAX_NO_PAUSE = $localize`:@@plan.day.finalTest.maxNoPause:Endtest: Maximale Liegestütze ohne Pause`;
+const AMRAP_3X = $localize`:@@plan.day.amrap.3x:3×AMRAP`;
+const AMRAP_3X_90S = $localize`:@@plan.day.amrap.3x90s:3×AMRAP, 90 s Pause`;
+const AMRAP_4X = $localize`:@@plan.day.amrap.4x:4×AMRAP`;
+const AMRAP_4X_60S = $localize`:@@plan.day.amrap.4x60s:4×AMRAP, 60 s Pause`;
+const TARGET_REPS_5 = $localize`:@@plan.day.targetReps.5:5 Sätze Zielwiederholungen`;
+const SETS_4X_90S = $localize`:@@plan.day.sets.4x90s:4 Sätze, 90 s Pause`;
+const SETS_3X_70PCT = $localize`:@@plan.day.sets.3x70pct:3 Sätze à 70 %`;
+const LIGHT_DAY_2X50PCT = $localize`:@@plan.day.light.2x50pct:Leichter Tag — 2×50 %`;
 
 const RECRUIT_DAYS: ReadonlyArray<TrainingPlanDay> = [
   // Week 1 (Mon–Sun) — 3× full reps with 90s rest. Targets are
@@ -20,146 +46,90 @@ const RECRUIT_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     30,
     [10, 10, 10],
-    '3×10 saubere Liegestütze, 90 s Pause',
-    '3×10 clean push-ups, 90 s rest'
+    $localize`:@@plan.recruit-6w.day.1.desc:3×10 saubere Liegestütze, 90 s Pause`
   ),
   d(
     2,
     'rest',
     0,
     undefined,
-    'Ruhetag — Stretching, Mobility',
-    'Rest day — stretching, mobility'
+    $localize`:@@plan.recruit-6w.day.2.desc:Ruhetag — Stretching, Mobility`
   ),
   d(
     3,
     'main',
     33,
     [12, 11, 10],
-    '3×AMRAP, 90 s Pause (Ziel ≈12-11-10)',
-    '3×AMRAP, 90 s rest (target ≈12-11-10)'
+    $localize`:@@plan.recruit-6w.day.3.desc:3×AMRAP, 90 s Pause (Ziel ≈12-11-10)`
   ),
-  d(4, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
-  d(5, 'main', 36, [13, 12, 11], '3×AMRAP, 90 s Pause', '3×AMRAP, 90 s rest'),
+  d(4, 'rest', 0, undefined, REST_DAY),
+  d(5, 'main', 36, [13, 12, 11], AMRAP_3X_90S),
   d(
     6,
     'light',
     20,
     [10, 10],
-    'Leichter Tag — 50 % vom Maximum',
-    'Light day — 50% of max'
+    $localize`:@@plan.recruit-6w.day.6.desc:Leichter Tag — 50 % vom Maximum`
   ),
-  d(7, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
+  d(7, 'rest', 0, undefined, REST_DAY),
   // Week 2 — same scheme, +10% volume.
-  d(8, 'main', 36, [13, 12, 11], '3×AMRAP', '3×AMRAP'),
-  d(9, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
-  d(10, 'main', 39, [14, 13, 12], '3×AMRAP', '3×AMRAP'),
-  d(11, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
-  d(12, 'main', 42, [15, 14, 13], '3×AMRAP', '3×AMRAP'),
-  d(13, 'light', 22, [11, 11], 'Leichter Tag', 'Light day'),
-  d(14, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
+  d(8, 'main', 36, [13, 12, 11], AMRAP_3X),
+  d(9, 'rest', 0, undefined, REST_DAY),
+  d(10, 'main', 39, [14, 13, 12], AMRAP_3X),
+  d(11, 'rest', 0, undefined, REST_DAY),
+  d(12, 'main', 42, [15, 14, 13], AMRAP_3X),
+  d(13, 'light', 22, [11, 11], LIGHT_DAY),
+  d(14, 'rest', 0, undefined, REST_DAY),
   // Week 3 — 4 sets, shorter rest (60s).
-  d(
-    15,
-    'main',
-    48,
-    [14, 12, 12, 10],
-    '4×AMRAP, 60 s Pause',
-    '4×AMRAP, 60 s rest'
-  ),
-  d(16, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
-  d(
-    17,
-    'main',
-    52,
-    [15, 13, 12, 12],
-    '4×AMRAP, 60 s Pause',
-    '4×AMRAP, 60 s rest'
-  ),
-  d(18, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
-  d(
-    19,
-    'main',
-    56,
-    [16, 14, 13, 13],
-    '4×AMRAP, 60 s Pause',
-    '4×AMRAP, 60 s rest'
-  ),
-  d(20, 'light', 24, [12, 12], 'Leichter Tag', 'Light day'),
-  d(21, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
+  d(15, 'main', 48, [14, 12, 12, 10], AMRAP_4X_60S),
+  d(16, 'rest', 0, undefined, REST_DAY),
+  d(17, 'main', 52, [15, 13, 12, 12], AMRAP_4X_60S),
+  d(18, 'rest', 0, undefined, REST_DAY),
+  d(19, 'main', 56, [16, 14, 13, 13], AMRAP_4X_60S),
+  d(20, 'light', 24, [12, 12], LIGHT_DAY),
+  d(21, 'rest', 0, undefined, REST_DAY),
   // Week 4 — 4 sets, slightly higher reps.
-  d(22, 'main', 60, [17, 15, 14, 14], '4×AMRAP', '4×AMRAP'),
-  d(23, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
-  d(24, 'main', 64, [18, 16, 15, 15], '4×AMRAP', '4×AMRAP'),
-  d(25, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
-  d(26, 'main', 68, [19, 17, 16, 16], '4×AMRAP', '4×AMRAP'),
-  d(27, 'light', 26, [13, 13], 'Leichter Tag', 'Light day'),
-  d(28, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
+  d(22, 'main', 60, [17, 15, 14, 14], AMRAP_4X),
+  d(23, 'rest', 0, undefined, REST_DAY),
+  d(24, 'main', 64, [18, 16, 15, 15], AMRAP_4X),
+  d(25, 'rest', 0, undefined, REST_DAY),
+  d(26, 'main', 68, [19, 17, 16, 16], AMRAP_4X),
+  d(27, 'light', 26, [13, 13], LIGHT_DAY),
+  d(28, 'rest', 0, undefined, REST_DAY),
   // Week 5 — 5 sets, target reps (descending).
-  d(
-    29,
-    'main',
-    64,
-    [15, 14, 13, 12, 10],
-    '5 Sätze Zielwiederholungen',
-    '5 sets target reps'
-  ),
-  d(30, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
-  d(
-    31,
-    'main',
-    68,
-    [16, 15, 14, 13, 10],
-    '5 Sätze Zielwiederholungen',
-    '5 sets target reps'
-  ),
-  d(32, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
-  d(
-    33,
-    'main',
-    72,
-    [17, 16, 15, 14, 10],
-    '5 Sätze Zielwiederholungen',
-    '5 sets target reps'
-  ),
-  d(34, 'light', 28, [14, 14], 'Leichter Tag', 'Light day'),
-  d(35, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
+  d(29, 'main', 64, [15, 14, 13, 12, 10], TARGET_REPS_5),
+  d(30, 'rest', 0, undefined, REST_DAY),
+  d(31, 'main', 68, [16, 15, 14, 13, 10], TARGET_REPS_5),
+  d(32, 'rest', 0, undefined, REST_DAY),
+  d(33, 'main', 72, [17, 16, 15, 14, 10], TARGET_REPS_5),
+  d(34, 'light', 28, [14, 14], LIGHT_DAY),
+  d(35, 'rest', 0, undefined, REST_DAY),
   // Week 6 — peak + final test.
   d(
     36,
     'main',
     76,
     [18, 17, 16, 14, 11],
-    '5 Sätze, volle Bewegungsamplitude',
-    '5 sets, full range of motion'
+    $localize`:@@plan.recruit-6w.day.36.desc:5 Sätze, volle Bewegungsamplitude`
   ),
-  d(37, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
+  d(37, 'rest', 0, undefined, REST_DAY),
   d(
     38,
     'main',
     80,
     [19, 18, 16, 14, 13],
-    '5 Sätze, kontrolliertes Tempo',
-    '5 sets, controlled tempo'
+    $localize`:@@plan.recruit-6w.day.38.desc:5 Sätze, kontrolliertes Tempo`
   ),
+  d(39, 'rest', 0, undefined, REST_DAY_PREP_FINAL),
   d(
-    39,
-    'rest',
-    0,
-    undefined,
-    'Ruhetag — Vorbereitung Endtest',
-    'Rest day — prepare for final test'
+    40,
+    'main',
+    84,
+    [20, 18, 17, 15, 14],
+    $localize`:@@plan.recruit-6w.day.40.desc:5 Sätze leicht`
   ),
-  d(40, 'main', 84, [20, 18, 17, 15, 14], '5 Sätze leicht', '5 sets light'),
-  d(41, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
-  d(
-    42,
-    'test',
-    100,
-    undefined,
-    'Endtest: Maximale Liegestütze ohne Pause',
-    'Final test: max push-ups without stopping'
-  ),
+  d(41, 'rest', 0, undefined, REST_DAY),
+  d(42, 'test', 100, undefined, FINAL_TEST_MAX_NO_PAUSE),
 ];
 
 const CHALLENGE_30_DAYS: ReadonlyArray<TrainingPlanDay> = [
@@ -169,153 +139,76 @@ const CHALLENGE_30_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'test',
     0,
     undefined,
-    'Maximaltest — als Ausgangswert eintragen',
-    'Max test — log as your baseline'
+    $localize`:@@plan.challenge-30d.day.1.desc:Maximaltest — als Ausgangswert eintragen`
   ),
-  d(2, 'main', 60, [20, 20, 20], '3×AMRAP, 90 s Pause', '3×AMRAP, 90 s rest'),
+  d(2, 'main', 60, [20, 20, 20], AMRAP_3X_90S),
   d(
     3,
     'light',
     20,
     [10, 10],
-    'Leichter Tag — 2×50 % vom Maximum',
-    'Light day — 2×50% of max'
+    $localize`:@@plan.challenge-30d.day.3.desc:Leichter Tag — 2×50 % vom Maximum`
   ),
-  d(4, 'main', 63, [22, 21, 20], '3×AMRAP, 90 s Pause', '3×AMRAP, 90 s rest'),
-  d(5, 'light', 22, [11, 11], 'Leichter Tag', 'Light day'),
-  d(6, 'main', 66, [23, 22, 21], '3×AMRAP, 90 s Pause', '3×AMRAP, 90 s rest'),
-  d(7, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
+  d(4, 'main', 63, [22, 21, 20], AMRAP_3X_90S),
+  d(5, 'light', 22, [11, 11], LIGHT_DAY),
+  d(6, 'main', 66, [23, 22, 21], AMRAP_3X_90S),
+  d(7, 'rest', 0, undefined, REST_DAY),
   // Week 2 — Volume. 4× AMRAP @ 60s; light = 60% max.
-  d(
-    8,
-    'main',
-    80,
-    [22, 20, 19, 19],
-    '4×AMRAP, 60 s Pause',
-    '4×AMRAP, 60 s rest'
-  ),
+  d(8, 'main', 80, [22, 20, 19, 19], AMRAP_4X_60S),
   d(
     9,
     'light',
     30,
     [10, 10, 10],
-    'Leichter Tag — 3×60 % vom Maximum',
-    'Light day — 3×60% of max'
+    $localize`:@@plan.challenge-30d.day.9.desc:Leichter Tag — 3×60 % vom Maximum`
   ),
-  d(
-    10,
-    'main',
-    84,
-    [23, 21, 20, 20],
-    '4×AMRAP, 60 s Pause',
-    '4×AMRAP, 60 s rest'
-  ),
-  d(11, 'light', 33, [11, 11, 11], 'Leichter Tag', 'Light day'),
-  d(
-    12,
-    'main',
-    88,
-    [24, 22, 21, 21],
-    '4×AMRAP, 60 s Pause',
-    '4×AMRAP, 60 s rest'
-  ),
-  d(13, 'light', 36, [12, 12, 12], 'Leichter Tag', 'Light day'),
-  d(14, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
+  d(10, 'main', 84, [23, 21, 20, 20], AMRAP_4X_60S),
+  d(11, 'light', 33, [11, 11, 11], LIGHT_DAY),
+  d(12, 'main', 88, [24, 22, 21, 21], AMRAP_4X_60S),
+  d(13, 'light', 36, [12, 12, 12], LIGHT_DAY),
+  d(14, 'rest', 0, undefined, REST_DAY),
   // Week 3 — Intensity. 5× target reps (~80% max). No light days.
   d(
     15,
     'main',
     100,
     [22, 20, 20, 20, 18],
-    '5 Sätze à ~80 % vom Maximum',
-    '5 sets at ~80% of max'
+    $localize`:@@plan.challenge-30d.day.15.desc:5 Sätze à ~80 % vom Maximum`
   ),
-  d(
-    16,
-    'rest',
-    0,
-    undefined,
-    'Mobility & Brust-Stretching',
-    'Mobility & chest stretching'
-  ),
-  d(
-    17,
-    'main',
-    105,
-    [23, 22, 20, 20, 20],
-    '5 Sätze Zielwiederholungen',
-    '5 sets target reps'
-  ),
-  d(
-    18,
-    'rest',
-    0,
-    undefined,
-    'Mobility & Brust-Stretching',
-    'Mobility & chest stretching'
-  ),
-  d(
-    19,
-    'main',
-    110,
-    [24, 22, 22, 22, 20],
-    '5 Sätze Zielwiederholungen',
-    '5 sets target reps'
-  ),
-  d(
-    20,
-    'rest',
-    0,
-    undefined,
-    'Mobility & Brust-Stretching',
-    'Mobility & chest stretching'
-  ),
-  d(
-    21,
-    'main',
-    115,
-    [25, 23, 23, 22, 22],
-    '5 Sätze Zielwiederholungen',
-    '5 sets target reps'
-  ),
+  d(16, 'rest', 0, undefined, MOBILITY_CHEST_STRETCH),
+  d(17, 'main', 105, [23, 22, 20, 20, 20], TARGET_REPS_5),
+  d(18, 'rest', 0, undefined, MOBILITY_CHEST_STRETCH),
+  d(19, 'main', 110, [24, 22, 22, 22, 20], TARGET_REPS_5),
+  d(20, 'rest', 0, undefined, MOBILITY_CHEST_STRETCH),
+  d(21, 'main', 115, [25, 23, 23, 22, 22], TARGET_REPS_5),
   // Week 4 — Tapering & Peak. 3× 70% max, last 2 days active recovery.
   d(
     22,
     'main',
     70,
     [25, 23, 22],
-    '3 Sätze à 70 % — Qualität vor Quantität',
-    '3 sets at 70% — quality over quantity'
+    $localize`:@@plan.challenge-30d.day.22.desc:3 Sätze à 70 % — Qualität vor Quantität`
   ),
-  d(23, 'light', 30, [15, 15], 'Leichter Tag — 2×50 %', 'Light day — 2×50%'),
-  d(24, 'main', 75, [26, 25, 24], '3 Sätze à 70 %', '3 sets at 70%'),
-  d(25, 'light', 30, [15, 15], 'Leichter Tag — 2×50 %', 'Light day — 2×50%'),
-  d(26, 'main', 75, [26, 25, 24], '3 Sätze à 70 %', '3 sets at 70%'),
+  d(23, 'light', 30, [15, 15], LIGHT_DAY_2X50PCT),
+  d(24, 'main', 75, [26, 25, 24], SETS_3X_70PCT),
+  d(25, 'light', 30, [15, 15], LIGHT_DAY_2X50PCT),
+  d(26, 'main', 75, [26, 25, 24], SETS_3X_70PCT),
   d(
     27,
     'rest',
     0,
     undefined,
-    'Aktive Erholung — Spaziergang, Mobility',
-    'Active recovery — walk, mobility'
+    $localize`:@@plan.challenge-30d.day.27.desc:Aktive Erholung — Spaziergang, Mobility`
   ),
-  d(28, 'rest', 0, undefined, 'Aktive Erholung', 'Active recovery'),
+  d(28, 'rest', 0, undefined, ACTIVE_RECOVERY),
   d(
     29,
     'rest',
     0,
     undefined,
-    'Ruhe vor dem Endtest',
-    'Rest before the final test'
+    $localize`:@@plan.challenge-30d.day.29.desc:Ruhe vor dem Endtest`
   ),
-  d(
-    30,
-    'test',
-    100,
-    undefined,
-    'Endtest: Maximale Liegestütze ohne Pause',
-    'Final test: max push-ups without stopping'
-  ),
+  d(30, 'test', 100, undefined, FINAL_TEST_MAX_NO_PAUSE),
 ];
 
 const OVER_40_DAYS: ReadonlyArray<TrainingPlanDay> = [
@@ -325,108 +218,91 @@ const OVER_40_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'test',
     0,
     undefined,
-    'Maximaltest mit sauberer Technik',
-    'Max test with clean form'
+    $localize`:@@plan.over-40-4w.day.1.desc:Maximaltest mit sauberer Technik`
   ),
   d(
     2,
     'main',
     24,
     [8, 8, 8],
-    '3×8 Knie- oder erhöhte Liegestütze',
-    '3×8 knee or elevated push-ups'
+    $localize`:@@plan.over-40-4w.day.2.desc:3×8 Knie- oder erhöhte Liegestütze`
   ),
-  d(3, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
-  d(4, 'main', 27, [9, 9, 9], '3×9 saubere Liegestütze', '3×9 clean push-ups'),
+  d(3, 'rest', 0, undefined, REST_DAY),
+  d(
+    4,
+    'main',
+    27,
+    [9, 9, 9],
+    $localize`:@@plan.over-40-4w.day.4.desc:3×9 saubere Liegestütze`
+  ),
   d(
     5,
     'rest',
     0,
     undefined,
-    'Ruhetag — Schulter-Mobility',
-    'Rest day — shoulder mobility'
+    $localize`:@@plan.over-40-4w.day.5.desc:Ruhetag — Schulter-Mobility`
   ),
   d(
     6,
     'main',
     30,
     [10, 10, 10],
-    '3×10 saubere Liegestütze',
-    '3×10 clean push-ups'
+    $localize`:@@plan.over-40-4w.day.6.desc:3×10 saubere Liegestütze`
   ),
-  d(7, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
+  d(7, 'rest', 0, undefined, REST_DAY),
   // Week 2 — slight volume increase.
-  d(8, 'main', 33, [11, 11, 11], '3×11', '3×11'),
-  d(9, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
-  d(10, 'main', 36, [12, 12, 12], '3×12', '3×12'),
-  d(11, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
-  d(12, 'main', 39, [13, 13, 13], '3×13', '3×13'),
-  d(13, 'light', 16, [8, 8], 'Leichter Tag', 'Light day'),
-  d(14, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
+  d(8, 'main', 33, [11, 11, 11], $localize`:@@plan.over-40-4w.day.8.desc:3×11`),
+  d(9, 'rest', 0, undefined, REST_DAY),
+  d(
+    10,
+    'main',
+    36,
+    [12, 12, 12],
+    $localize`:@@plan.over-40-4w.day.10.desc:3×12`
+  ),
+  d(11, 'rest', 0, undefined, REST_DAY),
+  d(
+    12,
+    'main',
+    39,
+    [13, 13, 13],
+    $localize`:@@plan.over-40-4w.day.12.desc:3×13`
+  ),
+  d(13, 'light', 16, [8, 8], LIGHT_DAY),
+  d(14, 'rest', 0, undefined, REST_DAY),
   // Week 3 — 4 sets, more volume but still 90s rest.
-  d(
-    15,
-    'main',
-    48,
-    [13, 12, 12, 11],
-    '4 Sätze, 90 s Pause',
-    '4 sets, 90 s rest'
-  ),
-  d(16, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
-  d(
-    17,
-    'main',
-    52,
-    [14, 13, 13, 12],
-    '4 Sätze, 90 s Pause',
-    '4 sets, 90 s rest'
-  ),
-  d(18, 'rest', 0, undefined, 'Ruhetag — Mobility', 'Rest day — mobility'),
-  d(
-    19,
-    'main',
-    56,
-    [15, 14, 14, 13],
-    '4 Sätze, 90 s Pause',
-    '4 sets, 90 s rest'
-  ),
-  d(20, 'light', 18, [9, 9], 'Leichter Tag', 'Light day'),
-  d(21, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
+  d(15, 'main', 48, [13, 12, 12, 11], SETS_4X_90S),
+  d(16, 'rest', 0, undefined, REST_DAY),
+  d(17, 'main', 52, [14, 13, 13, 12], SETS_4X_90S),
+  d(18, 'rest', 0, undefined, REST_DAY_MOBILITY),
+  d(19, 'main', 56, [15, 14, 14, 13], SETS_4X_90S),
+  d(20, 'light', 18, [9, 9], LIGHT_DAY),
+  d(21, 'rest', 0, undefined, REST_DAY),
   // Week 4 — peak + final test (still gentle volume).
   d(
     22,
     'main',
     60,
     [16, 15, 15, 14],
-    '4 Sätze, kontrolliertes Tempo',
-    '4 sets, controlled tempo'
+    $localize`:@@plan.over-40-4w.day.22.desc:4 Sätze, kontrolliertes Tempo`
   ),
-  d(23, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
+  d(23, 'rest', 0, undefined, REST_DAY),
   d(
     24,
     'main',
     64,
     [17, 16, 16, 15],
-    '4 Sätze, langsame Exzentrik',
-    '4 sets, slow eccentric'
+    $localize`:@@plan.over-40-4w.day.24.desc:4 Sätze, langsame Exzentrik`
   ),
-  d(25, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
-  d(26, 'light', 20, [10, 10], 'Leichter Tag', 'Light day'),
-  d(
-    27,
-    'rest',
-    0,
-    undefined,
-    'Ruhetag — Vorbereitung Endtest',
-    'Rest day — prepare final test'
-  ),
+  d(25, 'rest', 0, undefined, REST_DAY),
+  d(26, 'light', 20, [10, 10], LIGHT_DAY),
+  d(27, 'rest', 0, undefined, REST_DAY_PREP_FINAL),
   d(
     28,
     'test',
     50,
     undefined,
-    'Endtest: Maximale Liegestütze',
-    'Final test: max push-ups'
+    $localize`:@@plan.over-40-4w.day.28.desc:Endtest: Maximale Liegestütze`
   ),
 ];
 
@@ -440,103 +316,177 @@ const DAILY_100_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'test',
     50,
     undefined,
-    'Baseline-Test: maximale Wiederholungen in einem Satz',
-    'Baseline test: max reps in a single set'
+    $localize`:@@plan.daily-100-30d.day.1.desc:Baseline-Test: maximale Wiederholungen in einem Satz`
   ),
   d(
     2,
     'main',
     50,
     [10, 10, 10, 10, 10],
-    '5×10 saubere Wiederholungen, 60 s Pause',
-    '5×10 clean reps, 60 s rest'
+    $localize`:@@plan.daily-100-30d.day.2.desc:5×10 saubere Wiederholungen, 60 s Pause`
   ),
-  d(3, 'main', 60, [12, 12, 12, 12, 12], '5×12, 60 s Pause', '5×12, 60 s rest'),
-  d(4, 'main', 60, [12, 12, 12, 12, 12], '5×12, 60 s Pause', '5×12, 60 s rest'),
-  d(5, 'main', 70, [14, 14, 14, 14, 14], '5×14, 60 s Pause', '5×14, 60 s rest'),
+  d(
+    3,
+    'main',
+    60,
+    [12, 12, 12, 12, 12],
+    $localize`:@@plan.daily-100-30d.day.3.desc:5×12, 60 s Pause`
+  ),
+  d(
+    4,
+    'main',
+    60,
+    [12, 12, 12, 12, 12],
+    $localize`:@@plan.daily-100-30d.day.4.desc:5×12, 60 s Pause`
+  ),
+  d(
+    5,
+    'main',
+    70,
+    [14, 14, 14, 14, 14],
+    $localize`:@@plan.daily-100-30d.day.5.desc:5×14, 60 s Pause`
+  ),
   d(
     6,
     'light',
     30,
     [15, 15],
-    'Leichter Tag — 2×15 in lockerem Tempo',
-    'Light day — 2×15 at easy pace'
+    $localize`:@@plan.daily-100-30d.day.6.desc:Leichter Tag — 2×15 in lockerem Tempo`
   ),
-  d(7, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
+  d(7, 'rest', 0, undefined, REST_DAY),
   // Week 2 — push to 100 reps daily.
-  d(8, 'main', 80, [16, 16, 16, 16, 16], '5×16', '5×16'),
-  d(9, 'main', 80, [16, 16, 16, 16, 16], '5×16', '5×16'),
-  d(10, 'main', 90, [18, 18, 18, 18, 18], '5×18', '5×18'),
-  d(11, 'main', 90, [18, 18, 18, 18, 18], '5×18', '5×18'),
+  d(
+    8,
+    'main',
+    80,
+    [16, 16, 16, 16, 16],
+    $localize`:@@plan.daily-100-30d.day.8.desc:5×16`
+  ),
+  d(
+    9,
+    'main',
+    80,
+    [16, 16, 16, 16, 16],
+    $localize`:@@plan.daily-100-30d.day.9.desc:5×16`
+  ),
+  d(
+    10,
+    'main',
+    90,
+    [18, 18, 18, 18, 18],
+    $localize`:@@plan.daily-100-30d.day.10.desc:5×18`
+  ),
+  d(
+    11,
+    'main',
+    90,
+    [18, 18, 18, 18, 18],
+    $localize`:@@plan.daily-100-30d.day.11.desc:5×18`
+  ),
   d(
     12,
     'main',
     100,
     [20, 20, 20, 20, 20],
-    'Erstes Hundert: 5×20',
-    'First hundred: 5×20'
+    $localize`:@@plan.daily-100-30d.day.12.desc:Erstes Hundert: 5×20`
   ),
-  d(13, 'light', 40, [20, 20], 'Leichter Tag', 'Light day'),
-  d(14, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
+  d(13, 'light', 40, [20, 20], LIGHT_DAY),
+  d(14, 'rest', 0, undefined, REST_DAY),
   // Week 3 — consolidate at 100, vary set count.
   d(
     15,
     'main',
     100,
     [25, 25, 25, 25],
-    '4×25 (weniger Sätze, mehr Wiederholungen)',
-    '4×25 (fewer sets, more reps)'
+    $localize`:@@plan.daily-100-30d.day.15.desc:4×25 (weniger Sätze, mehr Wiederholungen)`
   ),
-  d(16, 'main', 100, [20, 20, 20, 20, 20], '5×20', '5×20'),
-  d(17, 'main', 100, [25, 25, 25, 25], '4×25', '4×25'),
-  d(18, 'main', 100, [20, 20, 20, 20, 20], '5×20', '5×20'),
+  d(
+    16,
+    'main',
+    100,
+    [20, 20, 20, 20, 20],
+    $localize`:@@plan.daily-100-30d.day.16.desc:5×20`
+  ),
+  d(
+    17,
+    'main',
+    100,
+    [25, 25, 25, 25],
+    $localize`:@@plan.daily-100-30d.day.17.desc:4×25`
+  ),
+  d(
+    18,
+    'main',
+    100,
+    [20, 20, 20, 20, 20],
+    $localize`:@@plan.daily-100-30d.day.18.desc:5×20`
+  ),
   d(
     19,
     'main',
     100,
     [25, 25, 25, 25],
-    '4×25 — Tempo bewusst verlangsamen',
-    '4×25 — slow tempo intentionally'
+    $localize`:@@plan.daily-100-30d.day.19.desc:4×25 — Tempo bewusst verlangsamen`
   ),
-  d(20, 'light', 40, [20, 20], 'Leichter Tag', 'Light day'),
-  d(21, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
+  d(20, 'light', 40, [20, 20], LIGHT_DAY),
+  d(21, 'rest', 0, undefined, REST_DAY),
   // Week 4 — maintenance + taper to final test.
-  d(22, 'main', 100, [20, 20, 20, 20, 20], '5×20', '5×20'),
-  d(23, 'main', 100, [25, 25, 25, 25], '4×25', '4×25'),
-  d(24, 'main', 100, [20, 20, 20, 20, 20], '5×20', '5×20'),
-  d(25, 'main', 100, [25, 25, 25, 25], '4×25', '4×25'),
+  d(
+    22,
+    'main',
+    100,
+    [20, 20, 20, 20, 20],
+    $localize`:@@plan.daily-100-30d.day.22.desc:5×20`
+  ),
+  d(
+    23,
+    'main',
+    100,
+    [25, 25, 25, 25],
+    $localize`:@@plan.daily-100-30d.day.23.desc:4×25`
+  ),
+  d(
+    24,
+    'main',
+    100,
+    [20, 20, 20, 20, 20],
+    $localize`:@@plan.daily-100-30d.day.24.desc:5×20`
+  ),
+  d(
+    25,
+    'main',
+    100,
+    [25, 25, 25, 25],
+    $localize`:@@plan.daily-100-30d.day.25.desc:4×25`
+  ),
   d(
     26,
     'main',
     100,
     [20, 20, 20, 20, 20],
-    'Letzter 100er-Tag vor dem Test',
-    'Last 100-rep day before the test'
+    $localize`:@@plan.daily-100-30d.day.26.desc:Letzter 100er-Tag vor dem Test`
   ),
   d(
     27,
     'light',
     40,
     [20, 20],
-    'Leichter Tag — Form-Check',
-    'Light day — form check'
+    $localize`:@@plan.daily-100-30d.day.27.desc:Leichter Tag — Form-Check`
   ),
-  d(28, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
+  d(28, 'rest', 0, undefined, REST_DAY),
   d(
     29,
     'rest',
     0,
     undefined,
-    'Ruhetag — Vorbereitung auf den Endtest',
-    'Rest day — prepare for final test'
+    $localize`:@@plan.daily-100-30d.day.29.desc:Ruhetag — Vorbereitung auf den Endtest`
   ),
   d(
     30,
     'test',
     100,
     undefined,
-    'Endtest: Maximale saubere Wiederholungen in einem Satz',
-    'Final test: max clean reps in a single set'
+    $localize`:@@plan.daily-100-30d.day.30.desc:Endtest: Maximale saubere Wiederholungen in einem Satz`
   ),
 ];
 
@@ -553,50 +503,101 @@ const DAILY_100_DAYS: ReadonlyArray<TrainingPlanDay> = [
 const ONE_ARM_DAYS: ReadonlyArray<TrainingPlanDay> = [
   // ─── Phase 1 ────────────────────────────────────────────────
   // Week 1
-  d(1, 'main', 18, [6, 6, 6], 'Archer-Liegestütze 3×6', 'Archer push-ups 3×6'),
-  d(2, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
+  d(
+    1,
+    'main',
+    18,
+    [6, 6, 6],
+    $localize`:@@plan.one-arm-12w.day.1.desc:Archer-Liegestütze 3×6`
+  ),
+  d(2, 'rest', 0, undefined, REST_DAY),
   d(
     3,
     'main',
     30,
     [10, 10, 10],
-    'Wand-Einarmige 3×10 (langsame Exzentrik)',
-    'Wall one-arm 3×10 (slow eccentric)'
+    $localize`:@@plan.one-arm-12w.day.3.desc:Wand-Einarmige 3×10 (langsame Exzentrik)`
   ),
-  d(4, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
+  d(4, 'rest', 0, undefined, REST_DAY),
   d(
     5,
     'main',
     60,
     [20, 20, 20],
-    'Standard-Liegestütze 3×20 (Volumen)',
-    'Standard push-ups 3×20 (volume)'
+    $localize`:@@plan.one-arm-12w.day.5.desc:Standard-Liegestütze 3×20 (Volumen)`
   ),
-  d(6, 'light', 20, [10, 10], 'Leichter Tag 2×10', 'Light day 2×10'),
-  d(7, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
+  d(
+    6,
+    'light',
+    20,
+    [10, 10],
+    $localize`:@@plan.one-arm-12w.day.6.desc:Leichter Tag 2×10`
+  ),
+  d(7, 'rest', 0, undefined, REST_DAY),
   // Week 2
-  d(8, 'main', 24, [8, 8, 8], 'Archer 3×8', 'Archer 3×8'),
-  d(9, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
-  d(10, 'main', 36, [12, 12, 12], 'Wand-Einarmige 3×12', 'Wall one-arm 3×12'),
-  d(11, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
-  d(12, 'main', 66, [22, 22, 22], 'Standard 3×22', 'Standard 3×22'),
-  d(13, 'light', 24, [12, 12], 'Leichter Tag 2×12', 'Light day 2×12'),
-  d(14, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
+  d(
+    8,
+    'main',
+    24,
+    [8, 8, 8],
+    $localize`:@@plan.one-arm-12w.day.8.desc:Archer 3×8`
+  ),
+  d(9, 'rest', 0, undefined, REST_DAY),
+  d(
+    10,
+    'main',
+    36,
+    [12, 12, 12],
+    $localize`:@@plan.one-arm-12w.day.10.desc:Wand-Einarmige 3×12`
+  ),
+  d(11, 'rest', 0, undefined, REST_DAY),
+  d(
+    12,
+    'main',
+    66,
+    [22, 22, 22],
+    $localize`:@@plan.one-arm-12w.day.12.desc:Standard 3×22`
+  ),
+  d(
+    13,
+    'light',
+    24,
+    [12, 12],
+    $localize`:@@plan.one-arm-12w.day.13.desc:Leichter Tag 2×12`
+  ),
+  d(14, 'rest', 0, undefined, REST_DAY),
   // Week 3
   d(
     15,
     'main',
     30,
     [10, 10, 10],
-    'Archer 3×10 — Phase 1 abschließen',
-    'Archer 3×10 — close out phase 1'
+    $localize`:@@plan.one-arm-12w.day.15.desc:Archer 3×10 — Phase 1 abschließen`
   ),
-  d(16, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
-  d(17, 'main', 45, [15, 15, 15], 'Wand-Einarmige 3×15', 'Wall one-arm 3×15'),
-  d(18, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
-  d(19, 'main', 75, [25, 25, 25], 'Standard 3×25', 'Standard 3×25'),
-  d(20, 'light', 28, [14, 14], 'Leichter Tag 2×14', 'Light day 2×14'),
-  d(21, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
+  d(16, 'rest', 0, undefined, REST_DAY),
+  d(
+    17,
+    'main',
+    45,
+    [15, 15, 15],
+    $localize`:@@plan.one-arm-12w.day.17.desc:Wand-Einarmige 3×15`
+  ),
+  d(18, 'rest', 0, undefined, REST_DAY),
+  d(
+    19,
+    'main',
+    75,
+    [25, 25, 25],
+    $localize`:@@plan.one-arm-12w.day.19.desc:Standard 3×25`
+  ),
+  d(
+    20,
+    'light',
+    28,
+    [14, 14],
+    $localize`:@@plan.one-arm-12w.day.20.desc:Leichter Tag 2×14`
+  ),
+  d(21, 'rest', 0, undefined, REST_DAY),
   // ─── Phase 2 ────────────────────────────────────────────────
   // Week 4
   d(
@@ -604,80 +605,84 @@ const ONE_ARM_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     15,
     [5, 5, 5],
-    'Negative Einarmige von Bank 3×5 (3 s runter)',
-    'Negative one-arm from bench 3×5 (3 s down)'
+    $localize`:@@plan.one-arm-12w.day.22.desc:Negative Einarmige von Bank 3×5 (3 s runter)`
   ),
-  d(23, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
+  d(23, 'rest', 0, undefined, REST_DAY),
   d(
     24,
     'main',
     18,
     [6, 6, 6],
-    'Langsame Archer 3×6 (Tempo 3-1-1)',
-    'Slow archer 3×6 (tempo 3-1-1)'
+    $localize`:@@plan.one-arm-12w.day.24.desc:Langsame Archer 3×6 (Tempo 3-1-1)`
   ),
-  d(25, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
+  d(25, 'rest', 0, undefined, REST_DAY),
   d(
     26,
     'main',
     60,
     [20, 20, 20],
-    'Weite Liegestütze 3×20 (Brust-Volumen)',
-    'Wide push-ups 3×20 (chest volume)'
+    $localize`:@@plan.one-arm-12w.day.26.desc:Weite Liegestütze 3×20 (Brust-Volumen)`
   ),
-  d(27, 'light', 20, [10, 10], 'Leichter Tag', 'Light day'),
-  d(28, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
+  d(27, 'light', 20, [10, 10], LIGHT_DAY),
+  d(28, 'rest', 0, undefined, REST_DAY),
   // Week 5
   d(
     29,
     'main',
     15,
     [5, 5, 5],
-    'Negative Einarmige 3×5',
-    'Negative one-arm 3×5'
+    $localize`:@@plan.one-arm-12w.day.29.desc:Negative Einarmige 3×5`
   ),
-  d(30, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
-  d(31, 'main', 21, [7, 7, 7], 'Langsame Archer 3×7', 'Slow archer 3×7'),
-  d(32, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
+  d(30, 'rest', 0, undefined, REST_DAY),
+  d(
+    31,
+    'main',
+    21,
+    [7, 7, 7],
+    $localize`:@@plan.one-arm-12w.day.31.desc:Langsame Archer 3×7`
+  ),
+  d(32, 'rest', 0, undefined, REST_DAY),
   d(
     33,
     'main',
     60,
     [20, 20, 20],
-    'Weite Liegestütze 3×20',
-    'Wide push-ups 3×20'
+    $localize`:@@plan.one-arm-12w.day.33.desc:Weite Liegestütze 3×20`
   ),
-  d(34, 'light', 22, [11, 11], 'Leichter Tag 2×11', 'Light day 2×11'),
-  d(35, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
+  d(
+    34,
+    'light',
+    22,
+    [11, 11],
+    $localize`:@@plan.one-arm-12w.day.34.desc:Leichter Tag 2×11`
+  ),
+  d(35, 'rest', 0, undefined, REST_DAY),
   // Week 6
   d(
     36,
     'main',
     18,
     [6, 6, 6],
-    'Negative Einarmige 3×6',
-    'Negative one-arm 3×6'
+    $localize`:@@plan.one-arm-12w.day.36.desc:Negative Einarmige 3×6`
   ),
-  d(37, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
+  d(37, 'rest', 0, undefined, REST_DAY),
   d(
     38,
     'main',
     24,
     [8, 8, 8],
-    'Langsame Archer 3×8 — Phase 2 abschließen',
-    'Slow archer 3×8 — close out phase 2'
+    $localize`:@@plan.one-arm-12w.day.38.desc:Langsame Archer 3×8 — Phase 2 abschließen`
   ),
-  d(39, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
+  d(39, 'rest', 0, undefined, REST_DAY),
   d(
     40,
     'main',
     65,
     [22, 22, 21],
-    'Weite Liegestütze 3×~22',
-    'Wide push-ups 3×~22'
+    $localize`:@@plan.one-arm-12w.day.40.desc:Weite Liegestütze 3×~22`
   ),
-  d(41, 'light', 24, [12, 12], 'Leichter Tag', 'Light day'),
-  d(42, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
+  d(41, 'light', 24, [12, 12], LIGHT_DAY),
+  d(42, 'rest', 0, undefined, REST_DAY),
   // ─── Phase 3 ────────────────────────────────────────────────
   // Week 7
   d(
@@ -685,59 +690,78 @@ const ONE_ARM_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     12,
     [4, 4, 4],
-    'Partielle Einarmige (niedrige Bank) 3×4',
-    'Partial one-arm (low bench) 3×4'
+    $localize`:@@plan.one-arm-12w.day.43.desc:Partielle Einarmige (niedrige Bank) 3×4`
   ),
-  d(44, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
+  d(44, 'rest', 0, undefined, REST_DAY),
   d(
     45,
     'main',
     18,
     [6, 6, 6],
-    'Archer mit langem Tempo 3×6',
-    'Archer with long tempo 3×6'
+    $localize`:@@plan.one-arm-12w.day.45.desc:Archer mit langem Tempo 3×6`
   ),
-  d(46, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
+  d(46, 'rest', 0, undefined, REST_DAY),
   d(
     47,
     'main',
     36,
     [12, 12, 12],
-    'Diamant-Liegestütze 3×12 (Trizeps-Volumen)',
-    'Diamond push-ups 3×12 (triceps volume)'
+    $localize`:@@plan.one-arm-12w.day.47.desc:Diamant-Liegestütze 3×12 (Trizeps-Volumen)`
   ),
-  d(48, 'light', 20, [10, 10], 'Leichter Tag', 'Light day'),
-  d(49, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
+  d(48, 'light', 20, [10, 10], LIGHT_DAY),
+  d(49, 'rest', 0, undefined, REST_DAY),
   // Week 8
   d(
     50,
     'main',
     12,
     [4, 4, 4],
-    'Partielle Einarmige 3×4',
-    'Partial one-arm 3×4'
+    $localize`:@@plan.one-arm-12w.day.50.desc:Partielle Einarmige 3×4`
   ),
-  d(51, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
-  d(52, 'main', 18, [6, 6, 6], 'Archer mit Tempo 3×6', 'Tempo archer 3×6'),
-  d(53, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
-  d(54, 'main', 39, [13, 13, 13], 'Diamant 3×13', 'Diamond 3×13'),
-  d(55, 'light', 22, [11, 11], 'Leichter Tag', 'Light day'),
-  d(56, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
+  d(51, 'rest', 0, undefined, REST_DAY),
+  d(
+    52,
+    'main',
+    18,
+    [6, 6, 6],
+    $localize`:@@plan.one-arm-12w.day.52.desc:Archer mit Tempo 3×6`
+  ),
+  d(53, 'rest', 0, undefined, REST_DAY),
+  d(
+    54,
+    'main',
+    39,
+    [13, 13, 13],
+    $localize`:@@plan.one-arm-12w.day.54.desc:Diamant 3×13`
+  ),
+  d(55, 'light', 22, [11, 11], LIGHT_DAY),
+  d(56, 'rest', 0, undefined, REST_DAY),
   // Week 9
   d(
     57,
     'main',
     15,
     [5, 5, 5],
-    'Partielle Einarmige 3×5 — Phase 3 abschließen',
-    'Partial one-arm 3×5 — close out phase 3'
+    $localize`:@@plan.one-arm-12w.day.57.desc:Partielle Einarmige 3×5 — Phase 3 abschließen`
   ),
-  d(58, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
-  d(59, 'main', 21, [7, 7, 7], 'Tempo-Archer 3×7', 'Tempo archer 3×7'),
-  d(60, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
-  d(61, 'main', 39, [13, 13, 13], 'Diamant 3×13', 'Diamond 3×13'),
-  d(62, 'light', 24, [12, 12], 'Leichter Tag', 'Light day'),
-  d(63, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
+  d(58, 'rest', 0, undefined, REST_DAY),
+  d(
+    59,
+    'main',
+    21,
+    [7, 7, 7],
+    $localize`:@@plan.one-arm-12w.day.59.desc:Tempo-Archer 3×7`
+  ),
+  d(60, 'rest', 0, undefined, REST_DAY),
+  d(
+    61,
+    'main',
+    39,
+    [13, 13, 13],
+    $localize`:@@plan.one-arm-12w.day.61.desc:Diamant 3×13`
+  ),
+  d(62, 'light', 24, [12, 12], LIGHT_DAY),
+  d(63, 'rest', 0, undefined, REST_DAY),
   // ─── Phase 4 ────────────────────────────────────────────────
   // Week 10
   d(
@@ -745,79 +769,89 @@ const ONE_ARM_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     9,
     [3, 3, 3],
-    'Volle Einarmige (weiter Stand) 3×3',
-    'Full one-arm (wide stance) 3×3'
+    $localize`:@@plan.one-arm-12w.day.64.desc:Volle Einarmige (weiter Stand) 3×3`
   ),
-  d(65, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
+  d(65, 'rest', 0, undefined, REST_DAY),
   d(
     66,
     'main',
     12,
     [4, 4, 4],
-    'Einarmige (etwas engerer Stand) 3×4',
-    'One-arm (slightly narrower stance) 3×4'
+    $localize`:@@plan.one-arm-12w.day.66.desc:Einarmige (etwas engerer Stand) 3×4`
   ),
-  d(67, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
-  d(68, 'main', 75, [25, 25, 25], 'Standard 3×25', 'Standard 3×25'),
-  d(69, 'light', 20, [10, 10], 'Leichter Tag', 'Light day'),
-  d(70, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
+  d(67, 'rest', 0, undefined, REST_DAY),
+  d(
+    68,
+    'main',
+    75,
+    [25, 25, 25],
+    $localize`:@@plan.one-arm-12w.day.68.desc:Standard 3×25`
+  ),
+  d(69, 'light', 20, [10, 10], LIGHT_DAY),
+  d(70, 'rest', 0, undefined, REST_DAY),
   // Week 11
-  d(71, 'main', 9, [3, 3, 3], 'Volle Einarmige 3×3', 'Full one-arm 3×3'),
-  d(72, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
+  d(
+    71,
+    'main',
+    9,
+    [3, 3, 3],
+    $localize`:@@plan.one-arm-12w.day.71.desc:Volle Einarmige 3×3`
+  ),
+  d(72, 'rest', 0, undefined, REST_DAY),
   d(
     73,
     'main',
     15,
     [5, 5, 5],
-    'Einarmige enger Stand 3×5',
-    'One-arm narrower stance 3×5'
+    $localize`:@@plan.one-arm-12w.day.73.desc:Einarmige enger Stand 3×5`
   ),
-  d(74, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
-  d(75, 'main', 75, [25, 25, 25], 'Standard 3×25', 'Standard 3×25'),
-  d(76, 'light', 22, [11, 11], 'Leichter Tag', 'Light day'),
-  d(77, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
+  d(74, 'rest', 0, undefined, REST_DAY),
+  d(
+    75,
+    'main',
+    75,
+    [25, 25, 25],
+    $localize`:@@plan.one-arm-12w.day.75.desc:Standard 3×25`
+  ),
+  d(76, 'light', 22, [11, 11], LIGHT_DAY),
+  d(77, 'rest', 0, undefined, REST_DAY),
   // Week 12 — taper toward final test.
   d(
     78,
     'main',
     9,
     [3, 3, 3],
-    'Letzte schwere Einheit 3×3',
-    'Final heavy session 3×3'
+    $localize`:@@plan.one-arm-12w.day.78.desc:Letzte schwere Einheit 3×3`
   ),
-  d(79, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
+  d(79, 'rest', 0, undefined, REST_DAY),
   d(
     80,
     'light',
     8,
     [4, 4],
-    'Technik-Taper 2×4 saubere Wiederholungen',
-    'Technique taper 2×4 clean reps'
+    $localize`:@@plan.one-arm-12w.day.80.desc:Technik-Taper 2×4 saubere Wiederholungen`
   ),
-  d(81, 'rest', 0, undefined, 'Ruhetag', 'Rest day'),
+  d(81, 'rest', 0, undefined, REST_DAY),
   d(
     82,
     'light',
     6,
     [3, 3],
-    'Mobility + 2×3 leichte Wiederholungen',
-    'Mobility + 2×3 light reps'
+    $localize`:@@plan.one-arm-12w.day.82.desc:Mobility + 2×3 leichte Wiederholungen`
   ),
   d(
     83,
     'rest',
     0,
     undefined,
-    'Ruhetag — bereit für Endtest',
-    'Rest day — ready for final'
+    $localize`:@@plan.one-arm-12w.day.83.desc:Ruhetag — bereit für Endtest`
   ),
   d(
     84,
     'test',
     5,
     undefined,
-    'Endtest: maximale saubere einarmige Liegestütze pro Seite',
-    'Final test: max clean one-arm push-ups per side'
+    $localize`:@@plan.one-arm-12w.day.84.desc:Endtest: maximale saubere einarmige Liegestütze pro Seite`
   ),
 ];
 
@@ -825,57 +859,38 @@ export const TRAINING_PLANS: ReadonlyArray<TrainingPlan> = [
   {
     id: 'recruit-6w-v1',
     slug: 'recruit-6w',
-    title: 'Von 0 auf 100 — 6-Wochen-Aufbau',
-    titleEn: 'From 0 to 100 — 6-week buildup',
-    summary:
-      'Strukturierter Plan für Einsteiger: drei Trainingstage pro Woche, progressive Belastungssteigerung und ein Endtest in Woche 6.',
-    summaryEn:
-      'Beginner-friendly plan: three training days per week, progressive overload, and a final max test in week 6.',
+    title: $localize`:@@plan.recruit-6w.title:Von 0 auf 100 — 6-Wochen-Aufbau`,
+    summary: $localize`:@@plan.recruit-6w.summary:Strukturierter Plan für Einsteiger: drei Trainingstage pro Woche, progressive Belastungssteigerung und ein Endtest in Woche 6.`,
     level: 'beginner',
     totalDays: 42,
-    blogSlugDe: 'liegestuetze-steigern',
-    blogSlugEn: 'pushup-progression',
+    blogSlug: $localize`:@@plan.recruit-6w.blogSlug:liegestuetze-steigern`,
     days: RECRUIT_DAYS,
   },
   {
     id: 'challenge-30d-v1',
     slug: 'challenge-30d',
-    title: '30-Tage-Challenge',
-    titleEn: '30-day challenge',
-    summary:
-      'Dreißig Tage tägliches Training mit gezielten Ruhetagen. Tag 1 ist der Maximaltest, Tag 30 der Endtest.',
-    summaryEn:
-      'Thirty days of daily training with strategic rest days. Day 1 is the baseline test, Day 30 the final.',
+    title: $localize`:@@plan.challenge-30d.title:30-Tage-Challenge`,
+    summary: $localize`:@@plan.challenge-30d.summary:Dreißig Tage tägliches Training mit gezielten Ruhetagen. Tag 1 ist der Maximaltest, Tag 30 der Endtest.`,
     level: 'intermediate',
     totalDays: 30,
-    blogSlugDe: '30-tage-liegestuetze-challenge',
-    blogSlugEn: '30-day-pushup-challenge',
+    blogSlug: $localize`:@@plan.challenge-30d.blogSlug:30-tage-liegestuetze-challenge`,
     days: CHALLENGE_30_DAYS,
   },
   {
     id: 'over-40-4w-v1',
     slug: 'over-40-4w',
-    title: 'Liegestütze ab 40 — 4-Wochen-Plan',
-    titleEn: 'Push-ups after 40 — 4-week plan',
-    summary:
-      'Schonender 4-Wochen-Plan für Einsteiger ab 40: Fokus auf saubere Technik, ausreichend Pause und langsames Tempo.',
-    summaryEn:
-      'Gentle 4-week plan for beginners 40+: focus on clean technique, full recovery, and controlled tempo.',
+    title: $localize`:@@plan.over-40-4w.title:Liegestütze ab 40 — 4-Wochen-Plan`,
+    summary: $localize`:@@plan.over-40-4w.summary:Schonender 4-Wochen-Plan für Einsteiger ab 40: Fokus auf saubere Technik, ausreichend Pause und langsames Tempo.`,
     level: 'beginner',
     totalDays: 28,
-    blogSlugDe: 'liegestuetze-ab-40',
-    blogSlugEn: 'pushups-over-40',
+    blogSlug: $localize`:@@plan.over-40-4w.blogSlug:liegestuetze-ab-40`,
     days: OVER_40_DAYS,
   },
   {
     id: 'daily-100-30d-v1',
     slug: 'daily-100-30d',
-    title: 'Daily 100 — 30 Tage zur 100er-Marke',
-    titleEn: 'Daily 100 — 30 days to the 100-rep mark',
-    summary:
-      '30-Tage-Volumenplan: ramp-up von 50 auf 100 saubere Wiederholungen pro Einheit, danach zwei Wochen Konsolidierung. 5 Trainingstage + 1 leichter + 1 Ruhetag pro Woche.',
-    summaryEn:
-      '30-day volume plan: ramp from 50 to 100 clean reps per session, then two weeks of consolidation. 5 training days + 1 light + 1 rest per week.',
+    title: $localize`:@@plan.daily-100-30d.title:Daily 100 — 30 Tage zur 100er-Marke`,
+    summary: $localize`:@@plan.daily-100-30d.summary:30-Tage-Volumenplan: ramp-up von 50 auf 100 saubere Wiederholungen pro Einheit, danach zwei Wochen Konsolidierung. 5 Trainingstage + 1 leichter + 1 Ruhetag pro Woche.`,
     level: 'intermediate',
     totalDays: 30,
     days: DAILY_100_DAYS,
@@ -883,12 +898,8 @@ export const TRAINING_PLANS: ReadonlyArray<TrainingPlan> = [
   {
     id: 'one-arm-12w-v1',
     slug: 'one-arm-12w',
-    title: 'Einarmige Liegestütze — 12-Wochen-Aufbau',
-    titleEn: 'One-arm push-up — 12-week buildup',
-    summary:
-      'Vier-Phasen-Plan in Richtung saubere einarmige Liegestütze: Archer und Wand-Negativen, Bank-Negativen, partielle Einarmige, schließlich volle Einarmige im weiten Stand. 4 aktive Tage + 3 Ruhetage pro Woche.',
-    summaryEn:
-      'Four-phase progression toward a clean one-arm push-up: archer + wall negatives, bench negatives, partial-ROM one-arm, then full-ROM at wide stance. 4 active days + 3 rest days per week.',
+    title: $localize`:@@plan.one-arm-12w.title:Einarmige Liegestütze — 12-Wochen-Aufbau`,
+    summary: $localize`:@@plan.one-arm-12w.summary:Vier-Phasen-Plan in Richtung saubere einarmige Liegestütze: Archer und Wand-Negativen, Bank-Negativen, partielle Einarmige, schließlich volle Einarmige im weiten Stand. 4 aktive Tage + 3 Ruhetage pro Woche.`,
     level: 'advanced',
     totalDays: 84,
     days: ONE_ARM_DAYS,
@@ -920,10 +931,9 @@ function d(
   kind: TrainingPlanDay['kind'],
   targetReps: number,
   sets: number[] | undefined,
-  description: string,
-  descriptionEn: string
+  description: string
 ): TrainingPlanDay {
   return sets
-    ? { dayIndex, kind, targetReps, sets, description, descriptionEn }
-    : { dayIndex, kind, targetReps, description, descriptionEn };
+    ? { dayIndex, kind, targetReps, sets, description }
+    : { dayIndex, kind, targetReps, description };
 }

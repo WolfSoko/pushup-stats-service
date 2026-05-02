@@ -1,7 +1,6 @@
 import {
   currentPlanDayIndex,
   isPlanCompleted,
-  localizePlan,
   planDayByIndex,
   TrainingPlan,
 } from './training-plan.models';
@@ -49,9 +48,7 @@ describe('training-plan models', () => {
       id: 'test',
       slug: 'test',
       title: '',
-      titleEn: '',
       summary: '',
-      summaryEn: '',
       level: 'beginner',
       totalDays: 3,
       days: [
@@ -77,9 +74,7 @@ describe('training-plan models', () => {
       id: 'test',
       slug: 'test',
       title: '',
-      titleEn: '',
       summary: '',
-      summaryEn: '',
       level: 'beginner',
       totalDays: 4,
       days: [
@@ -104,65 +99,18 @@ describe('training-plan models', () => {
     });
   });
 
-  describe('localizePlan', () => {
-    const plan: TrainingPlan = {
-      id: 'x',
-      slug: 'x',
-      title: 'Deutscher Titel',
-      titleEn: 'English title',
-      summary: 'Deutsche Beschreibung',
-      summaryEn: 'English summary',
-      level: 'beginner',
-      totalDays: 1,
-      days: [
-        {
-          dayIndex: 1,
-          kind: 'main',
-          targetReps: 10,
-          description: 'Deutsch',
-          descriptionEn: 'English',
-        },
-      ],
-    };
-
-    it('returns English fields when locale starts with "en"', () => {
-      const out = localizePlan(plan, 'en');
-      expect(out.title).toBe('English title');
-      expect(out.summary).toBe('English summary');
-      expect(out.days[0].description).toBe('English');
-    });
-
-    it('returns German fields for the source locale "de"', () => {
-      const out = localizePlan(plan, 'de');
-      expect(out.title).toBe('Deutscher Titel');
-      expect(out.days[0].description).toBe('Deutsch');
-    });
-
-    it('handles "en-US" the same as "en"', () => {
-      expect(localizePlan(plan, 'en-US').title).toBe('English title');
-    });
-
-    it('falls back to German description when descriptionEn is missing', () => {
-      const noEnDay: TrainingPlan = {
-        ...plan,
-        days: [
-          {
-            dayIndex: 1,
-            kind: 'main',
-            targetReps: 10,
-            description: 'Nur Deutsch',
-          },
-        ],
-      };
-      expect(localizePlan(noEnDay, 'en').days[0].description).toBe(
-        'Nur Deutsch'
-      );
-    });
-  });
-
   describe('catalog', () => {
     it('exposes at least three plans', () => {
       expect(TRAINING_PLANS.length).toBeGreaterThanOrEqual(3);
+    });
+
+    it('every plan has localised title and summary', () => {
+      // `$localize` falls back to the source string in the unit-test
+      // environment (no translations loaded), so assert non-empty.
+      for (const plan of TRAINING_PLANS) {
+        expect(plan.title).toBeTruthy();
+        expect(plan.summary).toBeTruthy();
+      }
     });
 
     it('every plan has contiguous day indexes 1..totalDays', () => {

@@ -32,7 +32,13 @@ describe('pickLocale', () => {
     // for what's essentially a marketing-redirect heuristic.
     ['de;q=0.5,en;q=0.3', 'en'],
     ['en-GB,de;q=0.5', 'en'],
-    ['fr-FR', 'de'], // unsupported → source locale fallback
+    ['fr-FR', 'fr'],
+    ['es', 'es'],
+    ['it-IT,en;q=0.5', 'en'], // priority: en wins over later codes
+    ['nl-BE', 'nl'],
+    ['grc', 'grc'],
+    ['la', 'la'],
+    ['zh-CN,ja;q=0.8', 'de'], // unsupported → source locale fallback
     ['xen-fake', 'de'], // word boundary prevents matching `en` inside `xen`
   ])('Given Accept-Language=%j, Then picks %s', (header, expected) => {
     expect(pickLocale(header)).toBe(expected);
@@ -57,7 +63,18 @@ describe('computeLocaleRedirect', () => {
     });
 
     it('Skips already-prefixed paths', () => {
-      for (const path of ['/de', '/de/u/abc', '/en', '/en/login']) {
+      for (const path of [
+        '/de',
+        '/de/u/abc',
+        '/en',
+        '/en/login',
+        '/fr',
+        '/es/u/abc',
+        '/it/login',
+        '/nl',
+        '/grc',
+        '/la/blog',
+      ]) {
         expect(computeLocaleRedirect(input({ path, url: path }))).toEqual({
           kind: 'pass',
         });

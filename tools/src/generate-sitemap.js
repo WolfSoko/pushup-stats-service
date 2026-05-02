@@ -5,7 +5,10 @@ const { resolve } = require('node:path');
 
 const ROOT = resolve(__dirname, '../..');
 const BASE_URL = 'https://pushup-stats.de';
-const LOCALES = ['de', 'en'];
+// Keep in sync with `web/src/server-locale-redirect.ts` and the
+// `i18n.locales` map in `web/project.json`. Each locale here gets a
+// hreflang alternate on every public URL.
+const LOCALES = ['de', 'en', 'fr', 'es', 'it', 'nl', 'grc', 'la'];
 
 const staticRoutes = [
   { path: '/', changefreq: 'weekly', priority: '1.0' },
