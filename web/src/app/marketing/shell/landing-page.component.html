@@ -185,9 +185,11 @@
     </div>
   </section>
 
-  <app-reminder-feature-section
-    class="scroll-reveal scroll-reveal--from-right"
-  ></app-reminder-feature-section>
+  @defer (hydrate on viewport) {
+    <app-reminder-feature-section
+      class="scroll-reveal scroll-reveal--from-right"
+    ></app-reminder-feature-section>
+  }
 
   <p class="trust-bar scroll-reveal" i18n="@@landing.trust.bar">
     ✓ Kostenlos · ✓ Kein Abo · ✓ Keine Kreditkarte · ✓ Datenschutz first
