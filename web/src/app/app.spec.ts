@@ -130,6 +130,8 @@ describe('App (testing-library)', () => {
     expect(screen.getAllByText('Analyse').length).toBeGreaterThan(0);
     expect(screen.getAllByText('Bestenliste').length).toBeGreaterThan(0);
     expect(screen.getAllByText('Trainingspläne').length).toBeGreaterThan(0);
+    // Wiki link is in both the sidenav and the footer.
+    expect(screen.getAllByText('Liegestütztypen').length).toBeGreaterThan(0);
     // The language switcher renders as a mat-select with a 'Sprache'
     // label; only the currently-selected option is visible until the
     // panel is opened.

@@ -22,6 +22,7 @@ describe('generate-sitemap', () => {
         '/',
         '/blog',
         '/training-plans',
+        '/wiki/liegestuetz-typen',
         '/leaderboard',
         '/impressum',
         '/datenschutz',

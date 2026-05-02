@@ -52,6 +52,7 @@ const staticRoutes = [
   { path: '/', changefreq: 'weekly', priority: '1.0' },
   { path: '/blog', changefreq: 'weekly', priority: '0.9' },
   { path: '/training-plans', changefreq: 'weekly', priority: '0.9' },
+  { path: '/wiki/liegestuetz-typen', changefreq: 'monthly', priority: '0.6' },
   { path: '/leaderboard', changefreq: 'daily', priority: '0.7' },
   { path: '/impressum', changefreq: 'yearly', priority: '0.3' },
   { path: '/datenschutz', changefreq: 'yearly', priority: '0.3' },

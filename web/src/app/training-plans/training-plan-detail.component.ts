@@ -4,6 +4,7 @@ import {
   computed,
   effect,
   inject,
+  LOCALE_ID,
 } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -13,9 +14,22 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { AuthStore } from '@pu-auth/auth';
-import { findPlanBySlug, TrainingPlanDay } from '@pu-stats/models';
+import {
+  detectPushupTypes,
+  findPlanBySlug,
+  localizePushupType,
+  PushupTypeInfo,
+  TrainingPlanDay,
+} from '@pu-stats/models';
 import { LogPlanDayResult, TrainingPlanStore } from './training-plan.store';
+
+interface PushupTypeChip {
+  slug: string;
+  name: string;
+  summary: string;
+}
 
 interface DayRow {
   day: TrainingPlanDay;
@@ -23,6 +37,7 @@ interface DayRow {
   isToday: boolean;
   isCompleted: boolean;
   isFuture: boolean;
+  pushupTypes: ReadonlyArray<PushupTypeChip>;
 }
 
 @Component({
@@ -34,6 +49,7 @@ interface DayRow {
     MatIconModule,
     MatProgressBarModule,
     MatSnackBarModule,
+    MatTooltipModule,
     RouterLink,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -228,6 +244,27 @@ interface DayRow {
                       }
                     </div>
                     <div class="day-desc muted">{{ row.day.description }}</div>
+                    @if (row.pushupTypes.length > 0) {
+                      <div class="pushup-types">
+                        @for (type of row.pushupTypes; track type.slug) {
+                          <a
+                            class="pushup-type-chip"
+                            [routerLink]="['/wiki/liegestuetz-typen']"
+                            [queryParams]="{ type: type.slug }"
+                            [fragment]="type.slug"
+                            [matTooltip]="type.summary"
+                            matTooltipPosition="above"
+                          >
+                            <mat-icon
+                              class="pushup-type-icon"
+                              aria-hidden="true"
+                              >help_outline</mat-icon
+                            >
+                            <span>{{ type.name }}</span>
+                          </a>
+                        }
+                      </div>
+                    }
                   </div>
                   <div class="day-actions">
                     @if (isThisPlanActive() && row.day.kind !== 'rest') {
@@ -398,6 +435,43 @@ interface DayRow {
       .day-desc {
         font-size: 0.9rem;
       }
+      .pushup-types {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin-top: 6px;
+      }
+      .pushup-type-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        padding: 2px 10px 2px 6px;
+        border-radius: 999px;
+        background: rgba(63, 81, 181, 0.12);
+        color: var(--mat-sys-primary, #3f51b5);
+        font-size: 0.78rem;
+        line-height: 1.4;
+        text-decoration: none;
+        white-space: nowrap;
+      }
+      .pushup-type-chip:hover,
+      .pushup-type-chip:focus-visible {
+        background: rgba(63, 81, 181, 0.2);
+        text-decoration: underline;
+      }
+      .pushup-type-icon {
+        font-size: 16px;
+        width: 16px;
+        height: 16px;
+      }
+      :host-context(.dark-theme) .pushup-type-chip {
+        background: rgba(159, 168, 218, 0.18);
+        color: var(--mat-sys-primary, #9fa8da);
+      }
+      :host-context(.dark-theme) .pushup-type-chip:hover,
+      :host-context(.dark-theme) .pushup-type-chip:focus-visible {
+        background: rgba(159, 168, 218, 0.28);
+      }
       .signup-benefits {
         margin: 12px 0 0;
         padding-left: 20px;
@@ -413,6 +487,7 @@ export class TrainingPlanDetailComponent {
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly snackbar = inject(MatSnackBar);
+  private readonly locale = inject(LOCALE_ID) as string;
   private readonly authStore = inject(AuthStore);
 
   protected readonly isAuthenticated = this.authStore.isAuthenticated;
@@ -518,6 +593,7 @@ export class TrainingPlanDetailComponent {
         isToday,
         isCompleted: completed.has(day.dayIndex),
         isFuture: currentDay !== null && day.dayIndex > currentDay,
+        pushupTypes: this.pushupTypeChipsForDay(day),
       };
       const list = grouped.get(weekIndex) ?? [];
       list.push(row);
@@ -528,6 +604,23 @@ export class TrainingPlanDetailComponent {
       .sort(([a], [b]) => a - b)
       .map(([weekIndex, rows]) => ({ weekIndex, rows }));
   });
+
+  private pushupTypeChipsForDay(
+    day: TrainingPlanDay
+  ): ReadonlyArray<PushupTypeChip> {
+    if (day.kind === 'rest') return [];
+    const matched: ReadonlyArray<PushupTypeInfo> = detectPushupTypes(
+      day.description
+    );
+    return matched.map((type) => {
+      const localized = localizePushupType(type, this.locale);
+      return {
+        slug: type.slug,
+        name: localized.name,
+        summary: localized.summary,
+      };
+    });
+  }
 
   formatSets(sets: number[]): string {
     return `(${sets.join(' · ')})`;

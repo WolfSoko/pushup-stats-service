@@ -5906,5 +5906,103 @@
         <target>Ver plano</target>
       </segment>
     </unit>
+
+    <!-- Pushup-types wiki page -->
+    <unit id="seo.wiki.pushupTypes.title">
+      <segment state="translated">
+        <source>Liegestütztypen erklärt – Pushup Tracker</source>
+        <target>Variantes de flexiones explicadas – Pushup Tracker</target>
+      </segment>
+    </unit>
+    <unit id="seo.wiki.pushupTypes.description">
+      <segment state="translated">
+        <source>Saubere Ausführung der wichtigsten Liegestütz-Varianten – Standard, Knie, Diamant, Archer, einarmig und mehr.</source>
+        <target>Ejecución limpia de las principales variantes de flexiones: estándar, de rodillas, diamante, archer, a un brazo y más.</target>
+      </segment>
+    </unit>
+    <unit id="wiki.pushupTypes.back">
+      <segment state="translated">
+        <source>Zurück zu den Trainingsplänen</source>
+        <target>Volver a los planes de entrenamiento</target>
+      </segment>
+    </unit>
+    <unit id="wiki.pushupTypes.title">
+      <segment state="translated">
+        <source>Liegestütztypen — saubere Ausführung</source>
+        <target>Variantes de flexiones — ejecución limpia</target>
+      </segment>
+    </unit>
+    <unit id="wiki.pushupTypes.intro">
+      <segment state="translated">
+        <source>Kurzanleitungen für jede Liegestütz-Variante, die in den Trainingsplänen vorkommt. Die Tooltipps in den Plänen verlinken direkt auf den passenden Abschnitt.</source>
+        <target>Guías breves para cada variante de flexión presente en los planes de entrenamiento. Las descripciones emergentes de los planes enlazan directamente con la sección correspondiente.</target>
+      </segment>
+    </unit>
+    <unit id="wiki.pushupTypes.tocTitle">
+      <segment state="translated">
+        <source>Übersicht</source>
+        <target>Resumen</target>
+      </segment>
+    </unit>
+    <unit id="wiki.pushupTypes.instructionsTitle">
+      <segment state="translated">
+        <source>Ausführung</source>
+        <target>Ejecución</target>
+      </segment>
+    </unit>
+    <unit id="wiki.pushupTypes.tipsTitle">
+      <segment state="translated">
+        <source>Tipps</source>
+        <target>Consejos</target>
+      </segment>
+    </unit>
+    <unit id="wiki.pushupTypes.level.beginner">
+      <segment state="translated">
+        <source>Einsteiger</source>
+        <target>Principiante</target>
+      </segment>
+    </unit>
+    <unit id="wiki.pushupTypes.level.intermediate">
+      <segment state="translated">
+        <source>Mittelstufe</source>
+        <target>Intermedio</target>
+      </segment>
+    </unit>
+    <unit id="wiki.pushupTypes.level.advanced">
+      <segment state="translated">
+        <source>Fortgeschritten</source>
+        <target>Avanzado</target>
+      </segment>
+    </unit>
+    <unit id="nav.pushupTypes">
+      <segment state="translated">
+        <source>Liegestütztypen</source>
+        <target>Variantes de flexiones</target>
+      </segment>
+    </unit>
+    <unit id="footer.pushupTypes">
+      <segment state="translated">
+        <source>Liegestütztypen</source>
+        <target>Variantes de flexiones</target>
+      </segment>
+    </unit>
+    <unit id="typeWikiLinkAria">
+      <segment state="translated">
+        <source>Anleitung zum Liegestütztyp öffnen</source>
+        <target>Abrir guía de la variante de flexión</target>
+      </segment>
+    </unit>
+    <unit id="typeWikiLinkTooltip.generic">
+      <segment state="translated">
+        <source>Anleitung zu Liegestütztypen öffnen</source>
+        <target>Abrir guía de variantes de flexiones</target>
+      </segment>
+    </unit>
+    <unit id="typeWikiLinkTooltip.specific">
+      <segment state="translated">
+        <source>Anleitung öffnen</source>
+        <target>Abrir guía</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

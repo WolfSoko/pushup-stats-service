@@ -35,6 +35,10 @@ export const serverRoutes: ServerRoute[] = [
     },
   },
   {
+    path: 'wiki/liegestuetz-typen',
+    renderMode: RenderMode.Prerender,
+  },
+  {
     path: 'impressum',
     renderMode: RenderMode.Prerender,
   },

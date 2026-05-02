@@ -5906,5 +5906,103 @@
         <target>Bekijk plattegrond</target>
       </segment>
     </unit>
+
+    <!-- Pushup-types wiki page -->
+    <unit id="seo.wiki.pushupTypes.title">
+      <segment state="translated">
+        <source>Liegestütztypen erklärt – Pushup Tracker</source>
+        <target>Push-up varianten uitgelegd – Pushup Tracker</target>
+      </segment>
+    </unit>
+    <unit id="seo.wiki.pushupTypes.description">
+      <segment state="translated">
+        <source>Saubere Ausführung der wichtigsten Liegestütz-Varianten – Standard, Knie, Diamant, Archer, einarmig und mehr.</source>
+        <target>Schone uitvoering van de belangrijkste push-up varianten — standaard, knie, diamant, archer, eenarmig en meer.</target>
+      </segment>
+    </unit>
+    <unit id="wiki.pushupTypes.back">
+      <segment state="translated">
+        <source>Zurück zu den Trainingsplänen</source>
+        <target>Terug naar de trainingsplannen</target>
+      </segment>
+    </unit>
+    <unit id="wiki.pushupTypes.title">
+      <segment state="translated">
+        <source>Liegestütztypen — saubere Ausführung</source>
+        <target>Push-up varianten — schone uitvoering</target>
+      </segment>
+    </unit>
+    <unit id="wiki.pushupTypes.intro">
+      <segment state="translated">
+        <source>Kurzanleitungen für jede Liegestütz-Variante, die in den Trainingsplänen vorkommt. Die Tooltipps in den Plänen verlinken direkt auf den passenden Abschnitt.</source>
+        <target>Korte handleidingen voor elke push-up variant die in de trainingsplannen voorkomt. De tooltips in de plannen verwijzen rechtstreeks naar de bijbehorende sectie.</target>
+      </segment>
+    </unit>
+    <unit id="wiki.pushupTypes.tocTitle">
+      <segment state="translated">
+        <source>Übersicht</source>
+        <target>Overzicht</target>
+      </segment>
+    </unit>
+    <unit id="wiki.pushupTypes.instructionsTitle">
+      <segment state="translated">
+        <source>Ausführung</source>
+        <target>Uitvoering</target>
+      </segment>
+    </unit>
+    <unit id="wiki.pushupTypes.tipsTitle">
+      <segment state="translated">
+        <source>Tipps</source>
+        <target>Tips</target>
+      </segment>
+    </unit>
+    <unit id="wiki.pushupTypes.level.beginner">
+      <segment state="translated">
+        <source>Einsteiger</source>
+        <target>Beginner</target>
+      </segment>
+    </unit>
+    <unit id="wiki.pushupTypes.level.intermediate">
+      <segment state="translated">
+        <source>Mittelstufe</source>
+        <target>Gevorderd</target>
+      </segment>
+    </unit>
+    <unit id="wiki.pushupTypes.level.advanced">
+      <segment state="translated">
+        <source>Fortgeschritten</source>
+        <target>Vergevorderd</target>
+      </segment>
+    </unit>
+    <unit id="nav.pushupTypes">
+      <segment state="translated">
+        <source>Liegestütztypen</source>
+        <target>Push-up varianten</target>
+      </segment>
+    </unit>
+    <unit id="footer.pushupTypes">
+      <segment state="translated">
+        <source>Liegestütztypen</source>
+        <target>Push-up varianten</target>
+      </segment>
+    </unit>
+    <unit id="typeWikiLinkAria">
+      <segment state="translated">
+        <source>Anleitung zum Liegestütztyp öffnen</source>
+        <target>Open de handleiding voor deze push-up variant</target>
+      </segment>
+    </unit>
+    <unit id="typeWikiLinkTooltip.generic">
+      <segment state="translated">
+        <source>Anleitung zu Liegestütztypen öffnen</source>
+        <target>Open de handleiding voor push-up varianten</target>
+      </segment>
+    </unit>
+    <unit id="typeWikiLinkTooltip.specific">
+      <segment state="translated">
+        <source>Anleitung öffnen</source>
+        <target>Open handleiding</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

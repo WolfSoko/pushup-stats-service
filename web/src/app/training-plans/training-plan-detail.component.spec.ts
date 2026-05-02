@@ -296,6 +296,69 @@ describe('TrainingPlanDetailComponent', () => {
       // assert it directly without provoking jsdom matSnackBar quirks.
     });
 
+    it('renders pushup-type chips that link to the wiki for explicit variants', async () => {
+      // recruit-6w mentions "saubere Liegestütze" (standard) on day 1
+      // and the one-arm plan mentions Archer/Diamond/Wide etc. We use
+      // the one-arm plan because it has the most type-rich descriptions
+      // and we can assert multiple chips in one render.
+      await render(TrainingPlanDetailComponent, {
+        providers: [
+          provideRouter([]),
+          { provide: ActivatedRoute, useValue: makeRouteMock('one-arm-12w') },
+          { provide: TrainingPlanStore, useValue: makeStoreMock() },
+          {
+            provide: AuthStore,
+            useValue: makeAuthStoreMock({
+              isAuthenticated: false,
+              authResolved: true,
+            }),
+          },
+        ],
+      });
+
+      // Archer chip is present (used on multiple days of the plan).
+      const archerLinks = screen.getAllByRole('link', {
+        name: /Archer-Liegestütze/i,
+      });
+      expect(archerLinks.length).toBeGreaterThan(0);
+
+      // Each chip points to the wiki with the type slug as a fragment
+      // *and* a `?type=` query param (SSR-safe deep-link).
+      const href = archerLinks[0].getAttribute('href') ?? '';
+      expect(href).toContain('/wiki/liegestuetz-typen');
+      expect(href).toContain('type=archer');
+      expect(href).toContain('#archer');
+    });
+
+    it('does NOT render pushup-type chips for rest days', async () => {
+      const { container } = await render(TrainingPlanDetailComponent, {
+        providers: [
+          provideRouter([]),
+          { provide: ActivatedRoute, useValue: makeRouteMock('recruit-6w') },
+          { provide: TrainingPlanStore, useValue: makeStoreMock() },
+          {
+            provide: AuthStore,
+            useValue: makeAuthStoreMock({
+              isAuthenticated: false,
+              authResolved: true,
+            }),
+          },
+        ],
+      });
+
+      // Rest days say "Ruhetag" / "Rest day" — no type chip container
+      // should appear on any rest row. Walk every rest day-row and
+      // assert it has no `.pushup-types` descendant.
+      const restRows = Array.from(
+        container.querySelectorAll<HTMLElement>('.day-row')
+      ).filter((row) => row.textContent?.includes('Ruhetag'));
+      expect(restRows.length).toBeGreaterThan(0);
+      for (const row of restRows) {
+        expect(row.querySelector('.pushup-types')).toBeNull();
+        expect(row.querySelector('.pushup-type-chip')).toBeNull();
+      }
+    });
+
     it('does NOT auto-start (even with ?autoStart=1) when a different plan is already active', async () => {
       const store = makeStoreMock({
         hasActivePlan: signal(true),
