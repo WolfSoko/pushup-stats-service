@@ -443,7 +443,7 @@ export const DashboardStore = signalStore(
       return store._share.share({
         title: $localize`:@@dashboard.share.title:Pushup Tracker`,
         text,
-        url: profileUrl || 'https://pushup-stats.de',
+        url: profileUrl || 'https://pushup-stats.com',
       });
     },
   }))

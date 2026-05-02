@@ -32,7 +32,7 @@ import { Component } from '@angular/core';
           Korte Asper 8<br />
           21465 Wentorf<br />
           <span i18n="@@datenschutz.responsible.email">E-Mail:</span>
-          contact&#64;pushup-stats.de
+          contact&#64;pushup-stats.com
         </p>
       </section>
 

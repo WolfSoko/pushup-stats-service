@@ -290,7 +290,7 @@ describe('GoalReachedDialogComponent', () => {
       // Then
       expect(shareSpy).toHaveBeenCalledTimes(1);
       const payload = shareSpy.mock.calls[0][0];
-      expect(payload.url).toBe('https://pushup-stats.de');
+      expect(payload.url).toBe('https://pushup-stats.com');
       expect(payload.text).toContain('Tagesziel');
       expect(payload.text).toContain('100');
       expect(closeSpy).not.toHaveBeenCalled();

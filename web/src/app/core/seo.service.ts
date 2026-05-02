@@ -6,7 +6,7 @@ import {
   type SupportedLocale,
 } from '../../server-locale-redirect';
 
-const BASE_URL = 'https://pushup-stats.de';
+const BASE_URL = 'https://pushup-stats.com';
 // Single source of truth lives in `server-locale-redirect.ts`; a
 // type alias keeps this file's existing references compact.
 const LOCALE_PREFIXES = SUPPORTED_LOCALES;

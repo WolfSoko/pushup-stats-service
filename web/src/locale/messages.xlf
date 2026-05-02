@@ -1561,7 +1561,7 @@
         <note category="location">web/src/app/app.ts:121</note>
       </notes>
       <segment>
-        <source>Early Access – pushup-stats.de befindet sich noch im Aufbau. Funktionen und Design können sich jederzeit ändern.</source>
+        <source>Early Access – pushup-stats.com befindet sich noch im Aufbau. Funktionen und Design können sich jederzeit ändern.</source>
       </segment>
     </unit>
     <unit id="earlyAccess.feedback">
@@ -2735,7 +2735,7 @@
         <note category="location">web/src/app/public-profile/public-profile-page.component.ts:96</note>
       </notes>
       <segment>
-        <source>Selbst tracken – pushup-stats.de</source>
+        <source>Selbst tracken – pushup-stats.com</source>
       </segment>
     </unit>
     <unit id="publicProfile.share.text">
@@ -2783,7 +2783,7 @@
         <note category="location">web/src/app/public-profile/public-profile-page.component.ts:193</note>
       </notes>
       <segment>
-        <source><ph id="0" equiv="name" disp="profile.displayName"/> hat <ph id="1" equiv="total" disp="profile.total"/> Liegestütze in <ph id="2" equiv="days" disp="profile.totalDays"/> aktiven Tagen geschafft – aktuelle Streak: <ph id="3" equiv="streak" disp="profile.currentStreak"/> Tage. Tracke selbst kostenlos auf pushup-stats.de.</source>
+        <source><ph id="0" equiv="name" disp="profile.displayName"/> hat <ph id="1" equiv="total" disp="profile.total"/> Liegestütze in <ph id="2" equiv="days" disp="profile.totalDays"/> aktiven Tagen geschafft – aktuelle Streak: <ph id="3" equiv="streak" disp="profile.currentStreak"/> Tage. Tracke selbst kostenlos auf pushup-stats.com.</source>
       </segment>
     </unit>
     <unit id="publicProfile.seo.imageAlt">

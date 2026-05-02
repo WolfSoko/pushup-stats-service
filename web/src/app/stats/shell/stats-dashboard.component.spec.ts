@@ -743,7 +743,7 @@ describe('StatsDashboardComponent', () => {
       // Then
       expect(shareSpy).toHaveBeenCalledTimes(1);
       const payload = shareSpy.mock.calls[0][0];
-      expect(payload.url).toBe('https://pushup-stats.de');
+      expect(payload.url).toBe('https://pushup-stats.com');
       expect(payload.text).toContain('12');
       expect(payload.title).toBe('Pushup Tracker');
     });
@@ -824,7 +824,7 @@ describe('StatsDashboardComponent', () => {
       // an") rather than the generic "tracke deine stats" CTA.
       const payload = shareSpy.mock.calls[0][0];
       expect(payload.url).toMatch(
-        /^https:\/\/pushup-stats\.de\/(de|en)\/u\/u1$/
+        /^https:\/\/pushup-stats\.com\/(de|en)\/u\/u1$/
       );
       expect(payload.text).toContain('Profil');
     });
@@ -844,7 +844,7 @@ describe('StatsDashboardComponent', () => {
       await fixture.whenStable();
 
       const payload = shareSpy.mock.calls[0][0];
-      expect(payload.url).toBe('https://pushup-stats.de');
+      expect(payload.url).toBe('https://pushup-stats.com');
     });
   });
 

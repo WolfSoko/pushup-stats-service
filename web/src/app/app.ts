@@ -164,7 +164,7 @@ export class App {
     }
 
     const ref = this.snackBar.open(
-      $localize`:@@earlyAccess.text:Early Access – pushup-stats.de befindet sich noch im Aufbau. Funktionen und Design können sich jederzeit ändern.`,
+      $localize`:@@earlyAccess.text:Early Access – pushup-stats.com befindet sich noch im Aufbau. Funktionen und Design können sich jederzeit ändern.`,
       $localize`:@@earlyAccess.feedback:Feedback`,
       {
         duration: 12_000,

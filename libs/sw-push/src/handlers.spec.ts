@@ -44,7 +44,7 @@ function makeCtx(overrides?: {
       matchAll,
       openWindow,
     },
-    origin: 'https://pushup-stats.de',
+    origin: 'https://pushup-stats.com',
   };
   return { ctx, showNotification, subscribe, matchAll, openWindow };
 }
@@ -149,7 +149,7 @@ describe('handlePush', () => {
 describe('handlePushSubscriptionChange', () => {
   it('uses event.newSubscription when provided and posts to clients', async () => {
     const client: ClientLike = {
-      url: 'https://pushup-stats.de/de/app',
+      url: 'https://pushup-stats.com/de/app',
       focus: jest.fn(),
       postMessage: jest.fn(),
     };
@@ -192,7 +192,7 @@ describe('handlePushSubscriptionChange', () => {
     } as unknown as PushSubscription;
     const subscribe = jest.fn().mockResolvedValue(freshSub);
     const client: ClientLike = {
-      url: 'https://pushup-stats.de/de/app',
+      url: 'https://pushup-stats.com/de/app',
       focus: jest.fn(),
       postMessage: jest.fn(),
     };
@@ -262,9 +262,7 @@ describe('handlePushSubscriptionChange', () => {
 describe('handleNotificationClick', () => {
   function makeEvent(
     action: string,
-    data?:
-      | { locale?: string; url?: string; quickLogReps?: number }
-      | null
+    data?: { locale?: string; url?: string; quickLogReps?: number } | null
   ): { event: NotificationClickEventLike; close: jest.Mock } {
     const close = jest.fn();
     return {
@@ -286,7 +284,7 @@ describe('handleNotificationClick', () => {
 
   it('posts SNOOZE_REMINDER when a client is open for the snooze action', async () => {
     const client: ClientLike = {
-      url: 'https://pushup-stats.de/de/app',
+      url: 'https://pushup-stats.com/de/app',
       focus: jest.fn(),
       postMessage: jest.fn(),
     };
@@ -331,7 +329,7 @@ describe('handleNotificationClick', () => {
 
   it('quick-log: posts QUICK_LOG_PUSHUPS to an open client and skips openWindow', async () => {
     const client: ClientLike = {
-      url: 'https://pushup-stats.de/de/app',
+      url: 'https://pushup-stats.com/de/app',
       focus: jest.fn().mockResolvedValue(undefined),
       postMessage: jest.fn(),
     };
@@ -383,7 +381,7 @@ describe('handleNotificationClick', () => {
 
   it('quick-log: clamps an out-of-range payload to the SW max (defense-in-depth)', async () => {
     const client: ClientLike = {
-      url: 'https://pushup-stats.de/de/app',
+      url: 'https://pushup-stats.com/de/app',
       focus: jest.fn().mockResolvedValue(undefined),
       postMessage: jest.fn(),
     };
@@ -421,7 +419,7 @@ describe('handleNotificationClick', () => {
 
   it('quick-log: floors fractional reps to an integer', async () => {
     const client: ClientLike = {
-      url: 'https://pushup-stats.de/de/app',
+      url: 'https://pushup-stats.com/de/app',
       focus: jest.fn().mockResolvedValue(undefined),
       postMessage: jest.fn(),
     };
@@ -444,7 +442,7 @@ describe('handleNotificationClick', () => {
 
   it('focuses an existing window if it already points to the target URL', async () => {
     const client: ClientLike = {
-      url: 'https://pushup-stats.de/de/app',
+      url: 'https://pushup-stats.com/de/app',
       focus: jest.fn().mockResolvedValue(undefined),
       postMessage: jest.fn(),
     };
@@ -470,7 +468,7 @@ describe('handleNotificationClick', () => {
     handleNotificationClick(event, ctx);
     await waited;
     expect(openWindow).toHaveBeenCalledWith(
-      'https://pushup-stats.de/en/app?x=1'
+      'https://pushup-stats.com/en/app?x=1'
     );
   });
 });

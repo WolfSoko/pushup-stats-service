@@ -1,6 +1,6 @@
 # Push-up Stats Service
 
-**Live:** https://pushup-stats.de
+**Live:** https://pushup-stats.com
 
 Angular SSR Monorepo (Nx) mit Firebase Backend.
 

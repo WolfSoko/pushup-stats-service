@@ -8,7 +8,7 @@
  * hops would land on the static `Cannot GET /u/<uid>` instead of the
  * Angular bundle for their locale.
  */
-const SHARE_URL_BASE = 'https://pushup-stats.de';
+const SHARE_URL_BASE = 'https://pushup-stats.com';
 
 export function buildProfileShareUrl(
   uid: string | null | undefined,

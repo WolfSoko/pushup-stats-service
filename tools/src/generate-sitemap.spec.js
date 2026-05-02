@@ -152,10 +152,10 @@ describe('generate-sitemap', () => {
         priority: '0.9',
       });
       expect(xml).toContain(
-        '<xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.de/de/blog"/>'
+        '<xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/blog"/>'
       );
       expect(xml).toContain(
-        '<xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.de/en/blog"/>'
+        '<xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en/blog"/>'
       );
     });
 
@@ -171,10 +171,10 @@ describe('generate-sitemap', () => {
         ],
       });
       expect(xml).toContain(
-        '<xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.de/de/blog/liegestuetze-steigern"/>'
+        '<xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/blog/liegestuetze-steigern"/>'
       );
       expect(xml).toContain(
-        '<xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.de/en/blog/pushup-progression"/>'
+        '<xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en/blog/pushup-progression"/>'
       );
     });
 
@@ -185,7 +185,7 @@ describe('generate-sitemap', () => {
         priority: '0.9',
       });
       expect(xml).toContain(
-        '<xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.de/de/blog"/>'
+        '<xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/blog"/>'
       );
     });
 
@@ -201,7 +201,7 @@ describe('generate-sitemap', () => {
         ],
       });
       expect(xml).toContain(
-        '<xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.de/de/blog/liegestuetze-steigern"/>'
+        '<xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/blog/liegestuetze-steigern"/>'
       );
     });
   });
@@ -291,10 +291,10 @@ describe('generate-sitemap', () => {
       expect(xml).toContain('<urlset');
       expect(xml).toContain('xmlns:xhtml="http://www.w3.org/1999/xhtml"');
       expect(xml).toContain(
-        '<loc>https://pushup-stats.de/de/blog/liegestuetze-steigern</loc>'
+        '<loc>https://pushup-stats.com/de/blog/liegestuetze-steigern</loc>'
       );
       expect(xml).toContain(
-        '<loc>https://pushup-stats.de/en/blog/pushup-progression</loc>'
+        '<loc>https://pushup-stats.com/en/blog/pushup-progression</loc>'
       );
       expect(xml).toContain('<lastmod>2025-01-15</lastmod>');
     });
@@ -310,16 +310,16 @@ describe('generate-sitemap', () => {
     it('emits /training-plans list and per-plan detail entries with bilingual alternates', () => {
       const xml = generateSitemap([], ['recruit-6w', 'challenge-30d']);
       expect(xml).toContain(
-        '<loc>https://pushup-stats.de/de/training-plans</loc>'
+        '<loc>https://pushup-stats.com/de/training-plans</loc>'
       );
       expect(xml).toContain(
-        '<loc>https://pushup-stats.de/de/training-plans/recruit-6w</loc>'
+        '<loc>https://pushup-stats.com/de/training-plans/recruit-6w</loc>'
       );
       expect(xml).toContain(
-        '<loc>https://pushup-stats.de/de/training-plans/challenge-30d</loc>'
+        '<loc>https://pushup-stats.com/de/training-plans/challenge-30d</loc>'
       );
       expect(xml).toContain(
-        '<xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.de/en/training-plans/recruit-6w"/>'
+        '<xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en/training-plans/recruit-6w"/>'
       );
     });
   });

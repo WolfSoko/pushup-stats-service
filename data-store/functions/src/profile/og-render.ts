@@ -99,7 +99,7 @@ interface OgCopy {
   daysLabel: string;
   /** Headline above the displayName (call-to-action context, e.g. "💪 X reps tracked"). */
   headline: string;
-  /** Footer call-to-action (e.g. "Track yours – pushup-stats.de"). */
+  /** Footer call-to-action (e.g. "Track yours – pushup-stats.com"). */
   cta: string;
 }
 
@@ -108,13 +108,13 @@ const OG_COPY: Readonly<Record<OgLocale, OgCopy>> = {
     numberLocale: 'de-DE',
     daysLabel: 'Tage',
     headline: 'Pushup-Profil',
-    cta: 'Selbst tracken — kostenlos auf pushup-stats.de',
+    cta: 'Selbst tracken — kostenlos auf pushup-stats.com',
   },
   en: {
     numberLocale: 'en-US',
     daysLabel: 'days',
     headline: 'Push-up profile',
-    cta: 'Track yours — free at pushup-stats.de',
+    cta: 'Track yours — free at pushup-stats.com',
   },
 };
 

@@ -1749,8 +1749,8 @@
         <note category="location">web/src/app/app.ts:121</note>
       </notes>
       <segment state="translated">
-        <source>Early Access – pushup-stats.de befindet sich noch im Aufbau. Funktionen und Design können sich jederzeit ändern.</source>
-        <target>Acceso anticipado: pushup-stats.de aún está en construcción. Las funciones y el diseño pueden cambiar en cualquier momento.</target>
+        <source>Early Access – pushup-stats.com befindet sich noch im Aufbau. Funktionen und Design können sich jederzeit ändern.</source>
+        <target>Acceso anticipado: pushup-stats.com aún está en construcción. Las funciones y el diseño pueden cambiar en cualquier momento.</target>
       </segment>
     </unit>
     <unit id="earlyAccess.feedback">
@@ -3069,8 +3069,8 @@
         <note category="location">web/src/app/public-profile/public-profile-page.component.ts:96</note>
       </notes>
       <segment state="translated">
-        <source>Selbst tracken – pushup-stats.de</source>
-        <target>Haz un seguimiento – pushup-stats.de</target>
+        <source>Selbst tracken – pushup-stats.com</source>
+        <target>Haz un seguimiento – pushup-stats.com</target>
       </segment>
     </unit>
     <unit id="publicProfile.share.text">
@@ -3123,8 +3123,8 @@
         <note category="location">web/src/app/public-profile/public-profile-page.component.ts:193</note>
       </notes>
       <segment state="translated">
-        <source><ph id="0" equiv="name" disp="profile.displayName"/> hat <ph id="1" equiv="total" disp="profile.total"/> Liegestütze in <ph id="2" equiv="days" disp="profile.totalDays"/> aktiven Tagen geschafft – aktuelle Streak: <ph id="3" equiv="streak" disp="profile.currentStreak"/> Tage. Tracke selbst kostenlos auf pushup-stats.de.</source>
-        <target><ph id="0" equiv="name" disp="profile.displayName"/> ha completado flexiones <ph id="1" equiv="total" disp="profile.total"/> en días activos <ph id="2" equiv="days" disp="profile.totalDays"/> - racha actual: días <ph id="3" equiv="streak" disp="profile.currentStreak"/>. Realice un seguimiento gratuito en pushup-stats.de.</target>
+        <source><ph id="0" equiv="name" disp="profile.displayName"/> hat <ph id="1" equiv="total" disp="profile.total"/> Liegestütze in <ph id="2" equiv="days" disp="profile.totalDays"/> aktiven Tagen geschafft – aktuelle Streak: <ph id="3" equiv="streak" disp="profile.currentStreak"/> Tage. Tracke selbst kostenlos auf pushup-stats.com.</source>
+        <target><ph id="0" equiv="name" disp="profile.displayName"/> ha completado flexiones <ph id="1" equiv="total" disp="profile.total"/> en días activos <ph id="2" equiv="days" disp="profile.totalDays"/> - racha actual: días <ph id="3" equiv="streak" disp="profile.currentStreak"/>. Realice un seguimiento gratuito en pushup-stats.com.</target>
       </segment>
     </unit>
     <unit id="publicProfile.seo.imageAlt">

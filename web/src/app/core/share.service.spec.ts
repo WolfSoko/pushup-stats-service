@@ -36,7 +36,7 @@ describe('ShareService', () => {
   const payload: SharePayload = {
     title: 'Pushup Tracker',
     text: 'Heute schon 100 Liegestütze!',
-    url: 'https://pushup-stats.de',
+    url: 'https://pushup-stats.com',
   };
 
   beforeAll(() => {

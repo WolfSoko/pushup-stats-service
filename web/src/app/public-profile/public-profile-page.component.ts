@@ -93,7 +93,7 @@ export class PublicProfilePageComponent {
   protected readonly bestDayLabel = $localize`:@@publicProfile.bestDay:Bester Tag`;
   protected readonly shareAriaLabel = $localize`:@@publicProfile.share.aria:Profil teilen`;
   protected readonly shareLabel = $localize`:@@publicProfile.share:Teilen`;
-  protected readonly ctaLabel = $localize`:@@publicProfile.cta:Selbst tracken – pushup-stats.de`;
+  protected readonly ctaLabel = $localize`:@@publicProfile.cta:Selbst tracken – pushup-stats.com`;
 
   /**
    * Monotonic request token. Increments on every route emission AND every
@@ -190,7 +190,7 @@ export class PublicProfilePageComponent {
     // before the visitor clicks through.
     this.seo.update(
       $localize`:@@publicProfile.seo.title:${profile.displayName}:name: – ${profile.total}:total: Liegestütze · Streak ${profile.currentStreak}:streak: · Pushup Tracker`,
-      $localize`:@@publicProfile.seo.description:${profile.displayName}:name: hat ${profile.total}:total: Liegestütze in ${profile.totalDays}:days: aktiven Tagen geschafft – aktuelle Streak: ${profile.currentStreak}:streak: Tage. Tracke selbst kostenlos auf pushup-stats.de.`,
+      $localize`:@@publicProfile.seo.description:${profile.displayName}:name: hat ${profile.total}:total: Liegestütze in ${profile.totalDays}:days: aktiven Tagen geschafft – aktuelle Streak: ${profile.currentStreak}:streak: Tage. Tracke selbst kostenlos auf pushup-stats.com.`,
       `/u/${encodedUid}`,
       {
         // Per-user dynamic OG card (1200×630 PNG rendered by satori + resvg

@@ -14,7 +14,7 @@ import { SeoService } from '../core/seo.service';
 import { BlogPost, findBlogPost } from './blog-posts.data';
 import { countWords, readingMinutes } from './reading-time';
 
-const BASE_URL = 'https://pushup-stats.de';
+const BASE_URL = 'https://pushup-stats.com';
 const LOGO_URL = `${BASE_URL}/assets/pushup-logo.png`;
 
 @Component({

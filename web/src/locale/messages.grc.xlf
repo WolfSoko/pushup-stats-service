@@ -1749,8 +1749,8 @@
         <note category="location">web/src/app/app.ts:121</note>
       </notes>
       <segment state="translated">
-        <source>Early Access – pushup-stats.de befindet sich noch im Aufbau. Funktionen und Design können sich jederzeit ändern.</source>
-        <target>Πρώιμη πρόσβαση – το pushup-stats.de είναι ακόμα υπό κατασκευή. Οι λειτουργίες και ο σχεδιασμός ενδέχεται να αλλάξουν ανά πάσα στιγμή.</target>
+        <source>Early Access – pushup-stats.com befindet sich noch im Aufbau. Funktionen und Design können sich jederzeit ändern.</source>
+        <target>Πρώιμη πρόσβαση – το pushup-stats.com είναι ακόμα υπό κατασκευή. Οι λειτουργίες και ο σχεδιασμός ενδέχεται να αλλάξουν ανά πάσα στιγμή.</target>
       </segment>
     </unit>
     <unit id="earlyAccess.feedback">
@@ -3069,8 +3069,8 @@
         <note category="location">web/src/app/public-profile/public-profile-page.component.ts:96</note>
       </notes>
       <segment state="translated">
-        <source>Selbst tracken – pushup-stats.de</source>
-        <target>Παρακολουθήστε τον εαυτό σας – pushup-stats.de</target>
+        <source>Selbst tracken – pushup-stats.com</source>
+        <target>Παρακολουθήστε τον εαυτό σας – pushup-stats.com</target>
       </segment>
     </unit>
     <unit id="publicProfile.share.text">
@@ -3123,8 +3123,8 @@
         <note category="location">web/src/app/public-profile/public-profile-page.component.ts:193</note>
       </notes>
       <segment state="translated">
-        <source><ph id="0" equiv="name" disp="profile.displayName"/> hat <ph id="1" equiv="total" disp="profile.total"/> Liegestütze in <ph id="2" equiv="days" disp="profile.totalDays"/> aktiven Tagen geschafft – aktuelle Streak: <ph id="3" equiv="streak" disp="profile.currentStreak"/> Tage. Tracke selbst kostenlos auf pushup-stats.de.</source>
-        <target>Ο <ph id="0" equiv="name" disp="profile.displayName"/> ολοκλήρωσε τα push-ups <ph id="1" equiv="total" disp="profile.total"/> στις ενεργές ημέρες <ph id="2" equiv="days" disp="profile.totalDays"/> - τρέχον σερί: <ph id="3" equiv="streak" disp="profile.currentStreak"/> ημέρες. Παρακολουθήστε τον εαυτό σας δωρεάν στο pushup-stats.de.</target>
+        <source><ph id="0" equiv="name" disp="profile.displayName"/> hat <ph id="1" equiv="total" disp="profile.total"/> Liegestütze in <ph id="2" equiv="days" disp="profile.totalDays"/> aktiven Tagen geschafft – aktuelle Streak: <ph id="3" equiv="streak" disp="profile.currentStreak"/> Tage. Tracke selbst kostenlos auf pushup-stats.com.</source>
+        <target>Ο <ph id="0" equiv="name" disp="profile.displayName"/> ολοκλήρωσε τα push-ups <ph id="1" equiv="total" disp="profile.total"/> στις ενεργές ημέρες <ph id="2" equiv="days" disp="profile.totalDays"/> - τρέχον σερί: <ph id="3" equiv="streak" disp="profile.currentStreak"/> ημέρες. Παρακολουθήστε τον εαυτό σας δωρεάν στο pushup-stats.com.</target>
       </segment>
     </unit>
     <unit id="publicProfile.seo.imageAlt">

@@ -29,4 +29,4 @@ Disallow: /nl/reminders
 Disallow: /grc/reminders
 Disallow: /la/reminders
 
-Sitemap: https://pushup-stats.de/sitemap.xml
+Sitemap: https://pushup-stats.com/sitemap.xml
