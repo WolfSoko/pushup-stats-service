@@ -725,6 +725,17 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
         "Spingi su con un braccio; abbassa progressivamente l'altezza della panca."
       ],
       "tips": []
+    },
+    "nl": {
+      "name": "Eénarmige opdruk met beperkt bewegingsbereik",
+      "summary": "Eénarmige opdrukken over een beperkt bewegingsbereik (bijv. vanaf een lage bank).",
+      "instructions": [
+        "Plaats één hand op een lage bank/opstap; voeten zeer breed (minimaal heupbreedte).",
+        "Andere hand op de lage rug; houd het lichaam als een plank — roteer de heupen niet.",
+        "Zak bewust alleen tot de bankhoogte (beperkt bewegingsbereik).",
+        "Druk éénarmig omhoog; verlaag de bankhoogte progressief."
+      ],
+      "tips": []
     }
   },
   "pike": {
@@ -791,6 +802,19 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
       ],
       "tips": [
         "Per renderlo più difficile: metti i piedi su un rialzo per una posizione quasi verticale."
+      ]
+    },
+    "nl": {
+      "name": "Pike-opdruk",
+      "summary": "Opdrukken vanuit een V-vorm — bijna verticaal drukken, een opstap naar handstand-opdrukken.",
+      "instructions": [
+        "Duw vanuit een viervoeter de heupen omhoog — het lichaam vormt een omgekeerde V.",
+        "Handen schouderbreedte, benen recht of licht gebogen, heupen hoog.",
+        "Laat het hoofd tussen de armen zakken richting de vloer — ellebogen bewegen naar achteren.",
+        "Druk terug omhoog zonder terug in een gewone opdrukpositie te zakken."
+      ],
+      "tips": [
+        "Maak het moeilijker: zet de voeten op een verhoging voor een bijna verticale positie."
       ]
     }
   },
@@ -869,6 +893,21 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
         "Guarda leggermente avanti verso il pavimento — non inarcare il collo.",
         "Respirazione: inspira nella discesa, espira nella spinta verso l'alto."
       ]
+    },
+    "nl": {
+      "name": "Standaard opdruk",
+      "summary": "Klassieke opdruk met schouderbreedte handpositie en een rechte lichaamslijn.",
+      "instructions": [
+        "Handen schouderbreedte, direct onder de schouders, vingers naar voren gericht.",
+        "Lichaam vormt een rechte lijn van hoofd tot hielen — span buik en bilspieren aan.",
+        "Ellebogen op ruwweg 45° ten opzichte van de romp, niet uitwaaierend.",
+        "Laat de borst gecontroleerd zakken totdat die de vloer bijna raakt.",
+        "Druk krachtig terug omhoog, vergrendel de ellebogen niet bovenaan."
+      ],
+      "tips": [
+        "Kijk licht vooruit naar de vloer — rek de nek niet.",
+        "Ademhaling: inademen bij het zakken, uitademen bij het omhoogdrukken."
+      ]
     }
   },
   "wall-one-arm": {
@@ -924,6 +963,17 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
         "Appoggia una mano sulla parete all'altezza della spalla; l'altra mano poggia sulla zona lombare o sul fianco.",
         "Inclina il corpo come una plank solida verso la parete, piegando il gomito in modo controllato.",
         "Scendi con un eccentrico lento (3 s) verso la parete, poi spingi via con forza."
+      ],
+      "tips": []
+    },
+    "nl": {
+      "name": "Eénarmige muropdruk",
+      "summary": "Eénarmige opdrukken tegen een muur — een veilige beginoefening voor de eénarmige progressie.",
+      "instructions": [
+        "Sta ongeveer een armslengte van de muur af.",
+        "Plaats één hand op de muur op schouderhoogte; de andere hand rust op de lage rug of heup.",
+        "Kantel het lichaam als een solide plank richting de muur, buig de elleboog gecontroleerd.",
+        "Zak langzaam excentrisch (3 s) naar de muur, druk dan krachtig weg."
       ],
       "tips": []
     }
@@ -989,6 +1039,19 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
         "I gomiti si aprono verso i lati, aprendosi ulteriormente durante la discesa.",
         "Abbassa il petto in modo controllato con una chiara sensazione di allungamento sul petto.",
         "Spingi su consapevolmente dal petto — senza \"barare\" con i tricipiti."
+      ],
+      "tips": [
+        "[object Object]"
+      ]
+    },
+    "nl": {
+      "name": "Brede opdruk",
+      "summary": "Bredere handplaatsing die de borst benadrukt en de triceps ontlast.",
+      "instructions": [
+        "Handen duidelijk breder dan schouderbreedte, vingers licht naar buiten gericht.",
+        "Ellebogen bewegen naar de zijkanten, openen verder bij het zakken.",
+        "Laat de borst gecontroleerd zakken met een duidelijk rek over de borst.",
+        "Druk bewust vanuit de borst omhoog — niet \"vals spelen\" met de triceps."
       ],
       "tips": [
         "[object Object]"
