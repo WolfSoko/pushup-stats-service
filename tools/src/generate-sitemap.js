@@ -34,7 +34,16 @@ function readSupportedLocales() {
     );
     return ['de', 'en'];
   }
-  return [...match[1].matchAll(/'([^']+)'/g)].map((m) => m[1]);
+  // Accept either single or double quotes so a stylistic refactor
+  // of the source tuple doesn't silently empty the locale list.
+  const locales = [...match[1].matchAll(/['"]([^'"]+)['"]/g)].map((m) => m[1]);
+  if (locales.length === 0) {
+    console.warn(
+      `SUPPORTED_LOCALES tuple in ${path} parsed but empty; falling back to ['de','en']`
+    );
+    return ['de', 'en'];
+  }
+  return locales;
 }
 
 const LOCALES = readSupportedLocales();

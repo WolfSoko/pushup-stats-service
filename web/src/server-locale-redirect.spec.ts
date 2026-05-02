@@ -35,6 +35,8 @@ describe('pickLocale', () => {
     ['fr-FR', 'fr'],
     ['es', 'es'],
     ['it-IT,en;q=0.5', 'it'], // header order at q=1.0 (default) tie-breaks
+    ['fr;q=0.8,en;q=0.8', 'fr'], // equal q → first listed wins (stable sort)
+    ['en;q=0.8,fr;q=0.8', 'en'], // ditto, with reversed order
     ['de,de-DE;q=0.9,fr;q=0.8', 'de'],
     ['nl-BE', 'nl'],
     ['grc', 'grc'],

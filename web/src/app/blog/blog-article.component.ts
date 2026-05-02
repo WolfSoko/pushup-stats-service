@@ -323,7 +323,13 @@ export class BlogArticleComponent implements OnInit {
 
     this.removeJsonLd();
 
-    const canonical = `${BASE_URL}/${this.locale.startsWith('en') ? 'en' : 'de'}/blog/${post.slug}`;
+    // Mirror SeoService's canonical resolution: a German post viewed
+    // under a fallback locale build (fr/es/it/nl/grc/la → German
+    // content) canonicalises to /de/, an English post canonicalises
+    // to /en/. Without this both canonical URLs (the `<link>` tag and
+    // the JSON-LD payload) drifted apart whenever the active build
+    // locale wasn't the post's real language.
+    const canonical = `${BASE_URL}/${post.lang}/blog/${post.slug}`;
     const jsonLd: Record<string, unknown> = {
       '@context': 'https://schema.org',
       '@type': 'Article',
