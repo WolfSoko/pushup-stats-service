@@ -10,7 +10,15 @@
  * are curated editorial entries with technique cues that must stay
  * in lockstep across languages — putting them in XLIFF would lose
  * the per-step pairing.
+ *
+ * **Migration in progress:** translatable copy is moving to per-locale
+ * markdown frontmatter under `content/wiki/pushup-types/<id>.{de,en}.md`
+ * (see AGENTS.md). Until every type is ported, `localizePushupType()`
+ * checks the generated override first and falls back to the legacy
+ * `*En` parallel fields below.
  */
+
+import { PUSHUP_TYPE_CONTENT } from './pushup-type-content.generated';
 
 export type PushupTypeId =
   | 'standard'
@@ -516,7 +524,10 @@ export function findPushupTypeByEntryLabel(
 
 /**
  * Returns the localized name + summary for the active Angular locale.
- * English when `locale` starts with `en`, German otherwise.
+ * Resolves the locale's primary subtag (e.g. `fr-CH` → `fr`) and looks
+ * up the markdown-sourced override in `PUSHUP_TYPE_CONTENT`. Falls back
+ * through `en` → `de` → legacy parallel `*En`/`*` fields on
+ * PUSHUP_TYPES so unsupported locales still render something.
  */
 export function localizePushupType(
   type: PushupTypeInfo,
@@ -527,7 +538,19 @@ export function localizePushupType(
   instructions: ReadonlyArray<string>;
   tips: ReadonlyArray<string>;
 } {
-  const isEnglish = locale.toLowerCase().startsWith('en');
+  const primary = locale.toLowerCase().split(/[-_]/)[0];
+  const overrides = PUSHUP_TYPE_CONTENT[type.id];
+  const override =
+    overrides?.[primary] ?? overrides?.['en'] ?? overrides?.['de'];
+  if (override) {
+    return {
+      name: override.name,
+      summary: override.summary,
+      instructions: override.instructions,
+      tips: override.tips,
+    };
+  }
+  const isEnglish = primary === 'en';
   return {
     name: isEnglish ? type.nameEn : type.name,
     summary: isEnglish ? type.summaryEn : type.summary,

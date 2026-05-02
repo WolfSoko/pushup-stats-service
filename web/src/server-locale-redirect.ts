@@ -143,22 +143,6 @@ export function computeLocaleRedirect(
   if (LOCALE_PREFIXES.has(firstSegment)) return { kind: 'pass' };
   if (ROOT_FILES.has(firstSegment)) return { kind: 'pass' };
 
-  // Legacy locale: the Greek build was published under `/grc/...` (mislabelled
-  // as Ancient Greek) before the rename to `/el/...`. Preserve any indexed or
-  // bookmarked URLs by redirecting them 1:1 to the new prefix, query string
-  // intact. Without this, `/grc/blog/...` would fall through to the generic
-  // locale redirect and end up at `/<detected-locale>/grc/blog/...` — a 404.
-  if (firstSegment === 'grc' && SAFE_REDIRECT_PATH_RE.test(path)) {
-    const rest = path.slice('/grc'.length);
-    let search: string;
-    try {
-      search = new URL(input.url, 'http://internal.invalid').search;
-    } catch {
-      search = '';
-    }
-    return { kind: 'redirect', location: `/el${rest}${search}` };
-  }
-
   const lastSegment = path.split('/').pop() ?? '';
   if (lastSegment.includes('.')) return { kind: 'pass' };
 

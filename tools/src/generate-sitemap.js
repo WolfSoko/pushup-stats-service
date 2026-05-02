@@ -1,7 +1,14 @@
 #!/usr/bin/env node
 // Generates sitemap.xml from route + blog-post definitions.
-const { readFileSync, writeFileSync } = require('node:fs');
-const { resolve } = require('node:path');
+const {
+  existsSync,
+  readdirSync,
+  readFileSync,
+  statSync,
+  writeFileSync,
+} = require('node:fs');
+const { join, resolve } = require('node:path');
+const { parse: parseYaml } = require('yaml');
 
 const ROOT = resolve(__dirname, '../..');
 const BASE_URL = 'https://pushup-stats.com';
@@ -59,6 +66,10 @@ const staticRoutes = [
 ];
 
 function extractBlogPosts(source) {
+  // Legacy inline-TS blog posts have been fully migrated to
+  // `content/blog/**/*.md`. This helper is kept so existing callers
+  // and tests continue to compile, but the regex now matches nothing
+  // in the current `blog-posts.data.ts`.
   const posts = [];
   const blockRegex =
     /\{\s*slug:\s*'([^']+)',\s*\n\s*lang:\s*'(de|en)',(?:\s*\n\s*translationSlug:\s*'([^']+)',)?[\s\S]*?publishedAt:\s*'([^']+)',/g;
@@ -70,18 +81,80 @@ function extractBlogPosts(source) {
   return posts;
 }
 
-function readBlogPosts() {
-  const blogDataPath = resolve(ROOT, 'web/src/app/blog/blog-posts.data.ts');
-  let source;
-  try {
-    source = readFileSync(blogDataPath, 'utf-8');
-  } catch (err) {
-    console.error(`Failed to read blog-posts.data.ts: ${err.message}`);
-    return [];
+/**
+ * Scans `content/blog/<folder>/<lang>.md` for markdown-sourced posts.
+ * Folder name is the cross-locale identifier; per-locale `slug` in
+ * frontmatter overrides the URL slug for that locale. Each returned
+ * post carries `alternateSlugs` — the map of every sibling locale's
+ * slug (including this post's own) — so callers can emit complete
+ * hreflang alternate sets without re-reading the directory.
+ *
+ * Discovers ANY `<lang>.md` file in each folder (not a fixed list)
+ * so adding a new locale is just dropping in the file.
+ */
+function scanMarkdownBlogPosts(blogContentRoot) {
+  if (!existsSync(blogContentRoot)) return [];
+  // Sort to make sitemap output byte-stable across filesystems
+  // (readdirSync order varies by OS).
+  const folders = readdirSync(blogContentRoot)
+    .filter((entry) => {
+      try {
+        return statSync(join(blogContentRoot, entry)).isDirectory();
+      } catch {
+        return false;
+      }
+    })
+    .sort();
+  const posts = [];
+  for (const folder of folders) {
+    const perLocale = {};
+    const localeFiles = readdirSync(join(blogContentRoot, folder))
+      .filter((f) => f.endsWith('.md'))
+      .sort();
+    for (const file of localeFiles) {
+      const lang = file.slice(0, -3);
+      const path = join(blogContentRoot, folder, file);
+      const data = readFrontmatter(path);
+      perLocale[lang] = {
+        slug: data.slug ?? folder,
+        publishedAt: data.publishedAt,
+      };
+    }
+    const alternateSlugs = Object.fromEntries(
+      Object.entries(perLocale).map(([lang, entry]) => [lang, entry.slug])
+    );
+    for (const [lang, entry] of Object.entries(perLocale)) {
+      posts.push({
+        slug: entry.slug,
+        lang,
+        publishedAt: String(entry.publishedAt ?? ''),
+        alternateSlugs,
+      });
+    }
   }
-  const posts = extractBlogPosts(source);
+  return posts;
+}
+
+function readFrontmatter(path) {
+  const source = readFileSync(path, 'utf-8');
+  if (!source.startsWith('---\n') && !source.startsWith('---\r\n')) {
+    throw new Error(`${path}: missing YAML frontmatter`);
+  }
+  const afterOpen = source.indexOf('\n', 3) + 1;
+  const closeIdx = source.indexOf('\n---', afterOpen);
+  if (closeIdx === -1) {
+    throw new Error(`${path}: unterminated YAML frontmatter`);
+  }
+  const yamlBlock = source.slice(afterOpen, closeIdx);
+  return parseYaml(yamlBlock) ?? {};
+}
+
+function readBlogPosts() {
+  const posts = scanMarkdownBlogPosts(resolve(ROOT, 'content/blog'));
   if (posts.length === 0) {
-    console.warn('No blog posts found - verify blog-posts.data.ts format');
+    console.warn(
+      'No blog posts found - verify content/blog/<folder>/{de,en}.md'
+    );
   }
   return posts;
 }
@@ -160,36 +233,21 @@ function buildTrainingPlanRoutes(slugs) {
 }
 
 function buildBlogRoutes(posts) {
-  const bySlug = new Map(posts.map((p) => [`${p.lang}:${p.slug}`, p]));
   return posts.map((post) => {
-    const pairKey = post.translationSlug
-      ? `${post.lang === 'de' ? 'en' : 'de'}:${post.translationSlug}`
-      : null;
-    const pair = pairKey ? bySlug.get(pairKey) : undefined;
-    // findBlogPost() resolves any locale that doesn't start with 'en' to the
-    // DE post — so /fr/blog/<de-slug>, /es/blog/<de-slug>, etc. all serve
-    // real content. Only emit hreflang for locales that actually resolve.
-    const deSlug = pair
-      ? post.lang === 'de'
-        ? post.slug
-        : pair.slug
-      : post.lang === 'de'
-        ? post.slug
-        : null;
-    const enSlug = pair
-      ? post.lang === 'en'
-        ? post.slug
-        : pair.slug
-      : post.lang === 'en'
-        ? post.slug
-        : null;
-    const alternates = LOCALES.flatMap((lang) => {
-      if (lang === 'en') {
-        return enSlug ? [{ lang, path: `/blog/${enSlug}` }] : [];
-      }
-      // 'de' and every other locale fall through to the DE variant.
-      return deSlug ? [{ lang, path: `/blog/${deSlug}` }] : [];
-    });
+    // `alternateSlugs` is populated by `scanMarkdownBlogPosts` with
+    // every sibling locale's slug (including the post's own). Emit one
+    // <xhtml:link> per available translation so search engines pair
+    // them correctly; missing locales for a folder are silently
+    // omitted rather than emitting a hreflang to a URL the runtime
+    // would 404 on. With the current full-coverage content set every
+    // post has an entry per supported locale, so this matches what
+    // `findBlogPost()` resolves at runtime.
+    const alternates = post.alternateSlugs
+      ? Object.entries(post.alternateSlugs).map(([lang, slug]) => ({
+          lang,
+          path: `/blog/${slug}`,
+        }))
+      : [{ lang: post.lang, path: `/blog/${post.slug}` }];
     return {
       path: `/blog/${post.slug}`,
       changefreq: 'monthly',
@@ -232,6 +290,7 @@ module.exports = {
   staticRoutes,
   extractBlogPosts,
   extractTrainingPlanSlugs,
+  scanMarkdownBlogPosts,
   buildUrl,
   buildBlogRoutes,
   buildTrainingPlanRoutes,

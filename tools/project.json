@@ -30,11 +30,29 @@
       "executor": "nx:run-commands",
       "inputs": [
         "{workspaceRoot}/web/src/app/blog/blog-posts.data.ts",
+        "{workspaceRoot}/content/blog/**/*.md",
         "{workspaceRoot}/tools/src/generate-sitemap.js"
       ],
       "outputs": ["{workspaceRoot}/web/public/sitemap.xml"],
+      "dependsOn": ["generate-content"],
       "options": {
         "command": "node tools/src/generate-sitemap.js",
+        "cwd": "{workspaceRoot}"
+      }
+    },
+    "generate-content": {
+      "executor": "nx:run-commands",
+      "inputs": [
+        "{workspaceRoot}/content/blog/**/*.md",
+        "{workspaceRoot}/content/wiki/pushup-types/*.md",
+        "{workspaceRoot}/tools/src/generate-content.mjs"
+      ],
+      "outputs": [
+        "{workspaceRoot}/web/src/app/blog/generated",
+        "{workspaceRoot}/libs/stats/src/lib/models/pushup-type-content.generated.ts"
+      ],
+      "options": {
+        "command": "node tools/src/generate-content.mjs",
         "cwd": "{workspaceRoot}"
       }
     }

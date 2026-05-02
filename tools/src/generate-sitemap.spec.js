@@ -1,8 +1,11 @@
+const { mkdtempSync, mkdirSync, writeFileSync, rmSync } = require('node:fs');
+const { join } = require('node:path');
+const { tmpdir } = require('node:os');
 const {
-  LOCALES,
   staticRoutes,
   extractBlogPosts,
   extractTrainingPlanSlugs,
+  scanMarkdownBlogPosts,
   buildUrl,
   buildBlogRoutes,
   buildTrainingPlanRoutes,
@@ -80,6 +83,104 @@ describe('generate-sitemap', () => {
           priority: '0.8',
         },
       ]);
+    });
+  });
+
+  describe('scanMarkdownBlogPosts', () => {
+    let tmpRoot;
+
+    beforeEach(() => {
+      tmpRoot = mkdtempSync(join(tmpdir(), 'sitemap-md-'));
+    });
+
+    afterEach(() => {
+      rmSync(tmpRoot, { recursive: true, force: true });
+    });
+
+    function writePost(folder, lang, frontmatter) {
+      const dir = join(tmpRoot, folder);
+      mkdirSync(dir, { recursive: true });
+      writeFileSync(
+        join(dir, `${lang}.md`),
+        `---\n${frontmatter}\n---\n\nbody\n`,
+        'utf-8'
+      );
+    }
+
+    it('returns an empty list when the content directory does not exist', () => {
+      expect(scanMarkdownBlogPosts(join(tmpRoot, 'missing'))).toEqual([]);
+    });
+
+    it('extracts slug, lang, alternateSlugs, and publishedAt from paired files', () => {
+      writePost(
+        'liegestuetze-fehler',
+        'de',
+        "slug: liegestuetze-fehler\npublishedAt: '2026-04-30'\ntitle: t\ndescription: d"
+      );
+      writePost(
+        'liegestuetze-fehler',
+        'en',
+        "slug: pushup-mistakes\npublishedAt: '2026-04-30'\ntitle: t\ndescription: d"
+      );
+      const posts = scanMarkdownBlogPosts(tmpRoot);
+      const de = posts.find((p) => p.lang === 'de');
+      const en = posts.find((p) => p.lang === 'en');
+      expect(de).toEqual({
+        slug: 'liegestuetze-fehler',
+        lang: 'de',
+        publishedAt: '2026-04-30',
+        alternateSlugs: {
+          de: 'liegestuetze-fehler',
+          en: 'pushup-mistakes',
+        },
+      });
+      expect(en).toEqual({
+        slug: 'pushup-mistakes',
+        lang: 'en',
+        publishedAt: '2026-04-30',
+        alternateSlugs: {
+          de: 'liegestuetze-fehler',
+          en: 'pushup-mistakes',
+        },
+      });
+    });
+
+    it('emits one entry per discovered locale and lists every sibling in alternateSlugs', () => {
+      writePost(
+        'pushups-101',
+        'de',
+        "slug: liegestuetze-101\npublishedAt: '2026-05-01'\ntitle: t\ndescription: d"
+      );
+      writePost(
+        'pushups-101',
+        'en',
+        "slug: pushups-101\npublishedAt: '2026-05-01'\ntitle: t\ndescription: d"
+      );
+      writePost(
+        'pushups-101',
+        'fr',
+        "slug: pompes-101\npublishedAt: '2026-05-01'\ntitle: t\ndescription: d"
+      );
+      const posts = scanMarkdownBlogPosts(tmpRoot);
+      expect(posts).toHaveLength(3);
+      for (const post of posts) {
+        expect(post.alternateSlugs).toEqual({
+          de: 'liegestuetze-101',
+          en: 'pushups-101',
+          fr: 'pompes-101',
+        });
+      }
+    });
+
+    it('falls back to folder name when frontmatter omits `slug`', () => {
+      writePost(
+        'untranslated',
+        'de',
+        "publishedAt: '2026-01-01'\ntitle: t\ndescription: d"
+      );
+      const [post] = scanMarkdownBlogPosts(tmpRoot);
+      expect(post.slug).toBe('untranslated');
+      expect(post.alternateSlugs).toEqual({ de: 'untranslated' });
     });
   });
 
@@ -207,61 +308,83 @@ describe('generate-sitemap', () => {
   });
 
   describe('buildBlogRoutes', () => {
+    const pairAlternateSlugs = {
+      de: 'liegestuetze-steigern',
+      en: 'pushup-progression',
+    };
     const posts = [
       {
         slug: 'liegestuetze-steigern',
         lang: 'de',
-        translationSlug: 'pushup-progression',
         publishedAt: '2025-01-15',
+        alternateSlugs: pairAlternateSlugs,
       },
       {
         slug: 'pushup-progression',
         lang: 'en',
-        translationSlug: 'liegestuetze-steigern',
         publishedAt: '2025-01-15',
+        alternateSlugs: pairAlternateSlugs,
       },
       {
         slug: 'orphan-de',
         lang: 'de',
         publishedAt: '2025-02-01',
+        alternateSlugs: { de: 'orphan-de' },
       },
     ];
 
-    it('pairs DE and EN posts with matching translationSlug across all locales', () => {
+    it('emits one alternate per locale present in alternateSlugs (DE+EN pair)', () => {
       const routes = buildBlogRoutes(posts);
       const de = routes.find((r) => r.path === '/blog/liegestuetze-steigern');
       const en = routes.find((r) => r.path === '/blog/pushup-progression');
-      const expected = LOCALES.map((lang) => ({
-        lang,
-        path:
-          lang === 'en'
-            ? '/blog/pushup-progression'
-            : '/blog/liegestuetze-steigern',
-      }));
+      const expected = [
+        { lang: 'de', path: '/blog/liegestuetze-steigern' },
+        { lang: 'en', path: '/blog/pushup-progression' },
+      ];
       expect(de.alternates).toEqual(expected);
       expect(en.alternates).toEqual(expected);
     });
 
-    it('emits DE plus all DE-fallback locales (no EN) for an orphan DE post', () => {
+    it('emits self-only alternate for an orphan DE post', () => {
       const routes = buildBlogRoutes(posts);
       const orphan = routes.find((r) => r.path === '/blog/orphan-de');
-      const expected = LOCALES.filter((l) => l !== 'en').map((lang) => ({
-        lang,
-        path: '/blog/orphan-de',
-      }));
-      expect(orphan.alternates).toEqual(expected);
+      expect(orphan.alternates).toEqual([
+        { lang: 'de', path: '/blog/orphan-de' },
+      ]);
     });
 
-    it('emits EN-only alternate for an orphan EN post', () => {
+    it('emits self-only alternate for an orphan EN post', () => {
       const routes = buildBlogRoutes([
         {
           slug: 'orphan-en',
           lang: 'en',
           publishedAt: '2025-03-01',
+          alternateSlugs: { en: 'orphan-en' },
         },
       ]);
       expect(routes[0].alternates).toEqual([
         { lang: 'en', path: '/blog/orphan-en' },
+      ]);
+    });
+
+    it('emits N alternates when more than two locales exist', () => {
+      const allLocales = {
+        de: 'liegestuetze-101',
+        en: 'pushups-101',
+        fr: 'pompes-101',
+      };
+      const routes = buildBlogRoutes([
+        {
+          slug: 'liegestuetze-101',
+          lang: 'de',
+          publishedAt: '2025-04-01',
+          alternateSlugs: allLocales,
+        },
+      ]);
+      expect(routes[0].alternates).toEqual([
+        { lang: 'de', path: '/blog/liegestuetze-101' },
+        { lang: 'en', path: '/blog/pushups-101' },
+        { lang: 'fr', path: '/blog/pompes-101' },
       ]);
     });
 
@@ -273,18 +396,22 @@ describe('generate-sitemap', () => {
 
   describe('generateSitemap', () => {
     it('produces valid XML with urlset, lastmod, and hreflang tags', () => {
+      const alternateSlugs = {
+        de: 'liegestuetze-steigern',
+        en: 'pushup-progression',
+      };
       const xml = generateSitemap([
         {
           slug: 'liegestuetze-steigern',
           lang: 'de',
-          translationSlug: 'pushup-progression',
           publishedAt: '2025-01-15',
+          alternateSlugs,
         },
         {
           slug: 'pushup-progression',
           lang: 'en',
-          translationSlug: 'liegestuetze-steigern',
           publishedAt: '2025-01-15',
+          alternateSlugs,
         },
       ]);
       expect(xml).toContain('<?xml version="1.0" encoding="UTF-8"?>');
