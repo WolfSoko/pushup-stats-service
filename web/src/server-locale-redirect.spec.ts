@@ -40,6 +40,8 @@ describe('pickLocale', () => {
     ['grc', 'grc'],
     ['la', 'la'],
     ['en;q=not-a-number,de', 'de'], // malformed q drops the entry
+    ['en;q=0,fr;q=0', 'de'], // explicit q=0 rejects → source locale fallback
+    ['en;q=0,de', 'de'], // q=0 only excludes that entry; remaining ranked entries still apply
     ['zh-CN,ja;q=0.8', 'de'], // no supported tag → source locale fallback
     ['xen-fake', 'de'], // unrecognised primary subtag → source locale fallback
   ])('Given Accept-Language=%j, Then picks %s', (header, expected) => {

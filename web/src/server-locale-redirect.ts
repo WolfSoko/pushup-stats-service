@@ -98,7 +98,10 @@ export function pickLocale(
       const q = qParam ? Number.parseFloat(qParam.slice(2)) : 1;
       return { tag, q: Number.isFinite(q) ? q : 0, index };
     })
-    .filter((e) => e.tag !== '')
+    // Drop empty tags and explicit `q=0` rejections (RFC 7231 §5.3.1
+    // — a value of 0 means "not acceptable", so we must not redirect
+    // a user to a locale they explicitly opted out of).
+    .filter((e) => e.tag !== '' && e.q > 0)
     .sort((a, b) => b.q - a.q || a.index - b.index);
 
   for (const { tag } of ranked) {

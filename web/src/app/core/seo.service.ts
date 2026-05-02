@@ -1,22 +1,16 @@
 import { DOCUMENT } from '@angular/common';
 import { inject, Injectable, LOCALE_ID } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
+import {
+  SUPPORTED_LOCALES,
+  type SupportedLocale,
+} from '../../server-locale-redirect';
 
 const BASE_URL = 'https://pushup-stats.de';
-// Keep in sync with `web/src/server-locale-redirect.ts` and the
-// `i18n.locales` map in `web/project.json`. Each known locale gets a
-// `<link rel="alternate" hreflang="…">` entry on every page.
-const LOCALE_PREFIXES = [
-  'de',
-  'en',
-  'fr',
-  'es',
-  'it',
-  'nl',
-  'grc',
-  'la',
-] as const;
-type LocalePrefix = (typeof LOCALE_PREFIXES)[number];
+// Single source of truth lives in `server-locale-redirect.ts`; a
+// type alias keeps this file's existing references compact.
+const LOCALE_PREFIXES = SUPPORTED_LOCALES;
+type LocalePrefix = SupportedLocale;
 const DEFAULT_LOCALE: LocalePrefix = 'de';
 
 function isKnownLocale(value: string): value is LocalePrefix {

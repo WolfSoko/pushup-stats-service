@@ -5,10 +5,39 @@ const { resolve } = require('node:path');
 
 const ROOT = resolve(__dirname, '../..');
 const BASE_URL = 'https://pushup-stats.de';
-// Keep in sync with `web/src/server-locale-redirect.ts` and the
-// `i18n.locales` map in `web/project.json`. Each locale here gets a
-// hreflang alternate on every public URL.
-const LOCALES = ['de', 'en', 'fr', 'es', 'it', 'nl', 'grc', 'la'];
+
+/**
+ * Single source of truth: parse the `SUPPORTED_LOCALES` tuple out of
+ * `web/src/server-locale-redirect.ts` so the sitemap, the SSR
+ * redirect, and the SEO service can never silently drift apart.
+ * Falls back to a hard-coded list only if the regex doesn't match —
+ * surfaces a loud warning so the build still emits a valid sitemap
+ * but the inconsistency is visible.
+ */
+function readSupportedLocales() {
+  const path = resolve(ROOT, 'web/src/server-locale-redirect.ts');
+  let source;
+  try {
+    source = readFileSync(path, 'utf-8');
+  } catch (err) {
+    console.warn(
+      `Failed to read SUPPORTED_LOCALES from ${path}: ${err.message}`
+    );
+    return ['de', 'en'];
+  }
+  const match = /export const SUPPORTED_LOCALES\s*=\s*\[([^\]]+)\]/.exec(
+    source
+  );
+  if (!match) {
+    console.warn(
+      `SUPPORTED_LOCALES not found in ${path}; falling back to ['de','en']`
+    );
+    return ['de', 'en'];
+  }
+  return [...match[1].matchAll(/'([^']+)'/g)].map((m) => m[1]);
+}
+
+const LOCALES = readSupportedLocales();
 
 const staticRoutes = [
   { path: '/', changefreq: 'weekly', priority: '1.0' },
