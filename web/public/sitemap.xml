@@ -26,6 +26,14 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.de/de/training-plans"/>
   </url>
   <url>
+    <loc>https://pushup-stats.de/de/wiki/liegestuetz-typen</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.de/de/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.de/en/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.de/de/wiki/liegestuetz-typen"/>
+  </url>
+  <url>
     <loc>https://pushup-stats.de/de/leaderboard</loc>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>

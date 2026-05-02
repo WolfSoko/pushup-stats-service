@@ -1,0 +1,453 @@
+/**
+ * Curated catalog of push-up variations referenced in the training
+ * plans. The wiki page (`/wiki/liegestuetz-typen`) renders every entry,
+ * and the plan detail UI uses `detectPushupTypes()` to surface
+ * tooltips with the short summary plus a deep link to the matching
+ * wiki anchor.
+ *
+ * Why static and bilingual: like `training-plan.catalog.ts`, these are
+ * curated editorial entries with technique cues that must stay in
+ * lockstep across languages — putting them in XLIFF would lose the
+ * per-step pairing.
+ */
+
+export type PushupTypeId =
+  | 'standard'
+  | 'knee'
+  | 'elevated'
+  | 'wide'
+  | 'diamond'
+  | 'archer'
+  | 'wall-one-arm'
+  | 'negative-one-arm'
+  | 'partial-one-arm'
+  | 'one-arm';
+
+export type PushupDifficulty = 'beginner' | 'intermediate' | 'advanced';
+
+export interface PushupTypeInfo {
+  id: PushupTypeId;
+  /** Stable slug used as the wiki page anchor (`#<slug>`). */
+  slug: string;
+  difficulty: PushupDifficulty;
+  /** German display name (e.g. "Standard-Liegestütze"). */
+  name: string;
+  /** English display name. */
+  nameEn: string;
+  /** Short German one-liner used in tooltips. */
+  summary: string;
+  /** Short English one-liner used in tooltips. */
+  summaryEn: string;
+  /** Ordered German technique cues for the wiki page. */
+  instructions: ReadonlyArray<string>;
+  /** Ordered English technique cues for the wiki page. */
+  instructionsEn: ReadonlyArray<string>;
+  /** Optional German coaching tips / common mistakes. */
+  tips?: ReadonlyArray<string>;
+  /** Optional English coaching tips / common mistakes. */
+  tipsEn?: ReadonlyArray<string>;
+  /**
+   * German keywords that, if present in a `TrainingPlanDay.description`,
+   * indicate this type. Lower-case substring match.
+   */
+  keywordsDe: ReadonlyArray<string>;
+  /** English keywords (lower-case substring match). */
+  keywordsEn: ReadonlyArray<string>;
+}
+
+export const PUSHUP_TYPES: ReadonlyArray<PushupTypeInfo> = [
+  {
+    id: 'standard',
+    slug: 'standard',
+    difficulty: 'beginner',
+    name: 'Standard-Liegestütze',
+    nameEn: 'Standard push-up',
+    summary:
+      'Klassische Liegestütze mit schulterbreitem Stand und gerader Körperlinie.',
+    summaryEn:
+      'Classic push-up with shoulder-width hand position and a straight body line.',
+    instructions: [
+      'Hände schulterbreit, direkt unter den Schultern, Finger zeigen nach vorne.',
+      'Körper bildet eine gerade Linie von Kopf bis Ferse — Bauch und Po angespannt.',
+      'Ellenbogen in einem 45°-Winkel zum Oberkörper, nicht weit abspreizen.',
+      'Brust kontrolliert in Richtung Boden senken, bis sie knapp darüber ist.',
+      'Kraftvoll wieder hochdrücken, Ellenbogen oben nicht durchstrecken.',
+    ],
+    instructionsEn: [
+      'Hands shoulder-width apart, directly under the shoulders, fingers pointing forward.',
+      'Body forms a straight line from head to heels — brace abs and glutes.',
+      'Elbows at roughly 45° to the torso, not flared out wide.',
+      'Lower the chest under control until it nearly touches the floor.',
+      'Press back up powerfully, do not lock the elbows at the top.',
+    ],
+    tips: [
+      'Blick leicht nach vorne auf den Boden, nicht den Nacken überstrecken.',
+      'Atmung: beim Absenken einatmen, beim Hochdrücken ausatmen.',
+    ],
+    tipsEn: [
+      'Look slightly forward at the floor — do not crane the neck.',
+      'Breathing: inhale on the way down, exhale on the press up.',
+    ],
+    keywordsDe: ['standard', 'sauber', 'volle bewegung'],
+    keywordsEn: ['standard', 'clean push-up', 'clean reps', 'full range'],
+  },
+  {
+    id: 'knee',
+    slug: 'knie',
+    difficulty: 'beginner',
+    name: 'Knie-Liegestütze',
+    nameEn: 'Knee push-up',
+    summary:
+      'Vereinfachte Variante mit Knien als Auflagepunkt — ideal für Einsteiger.',
+    summaryEn:
+      'Easier regression with the knees on the floor — ideal for beginners.',
+    instructions: [
+      'Knie auf dem Boden, Füße angehoben oder gekreuzt.',
+      'Hände schulterbreit, gerade Linie von Knien bis Schultern.',
+      'Hüfte stabil halten — nicht durchhängen oder hochschieben.',
+      'Brust kontrolliert absenken, dann wieder hochdrücken.',
+    ],
+    instructionsEn: [
+      'Place the knees on the floor, feet lifted or crossed.',
+      'Hands shoulder-width, keep a straight line from knees to shoulders.',
+      'Stabilise the hips — no sagging or piking.',
+      'Lower the chest under control, then press back up.',
+    ],
+    tips: [
+      'Nutze Knie-Liegestütze, bis du 3×8 saubere Wiederholungen schaffst, dann steige auf Standard um.',
+    ],
+    tipsEn: [
+      'Stay on knee push-ups until you can do 3×8 clean reps, then progress to the standard version.',
+    ],
+    keywordsDe: ['knie-liegestütze', 'knie liegestütze', 'knie-'],
+    keywordsEn: ['knee push-up', 'knee pushup', 'knee '],
+  },
+  {
+    id: 'elevated',
+    slug: 'erhoeht',
+    difficulty: 'beginner',
+    name: 'Erhöhte Liegestütze',
+    nameEn: 'Elevated push-up',
+    summary:
+      'Hände auf einer Bank, Tisch oder Wand — reduziert das Körpergewicht auf den Armen.',
+    summaryEn:
+      'Hands on a bench, table or wall — reduces the load on the arms.',
+    instructions: [
+      'Hände auf einer stabilen Erhöhung (Bank, Tisch, Treppenstufe).',
+      'Füße am Boden, Körper bildet eine gerade Linie.',
+      'Brust kontrolliert zur Erhöhung absenken, dann hochdrücken.',
+      'Je niedriger die Erhöhung, desto schwieriger die Übung.',
+    ],
+    instructionsEn: [
+      'Place the hands on a stable elevation (bench, table, stair).',
+      'Feet on the floor, body in a straight line.',
+      'Lower the chest under control to the elevation, then press up.',
+      'The lower the elevation, the harder the exercise.',
+    ],
+    tips: ['Schrittweise tiefer gehen, sobald 3×10 sauber gelingen.'],
+    tipsEn: ['Step the elevation down once 3×10 reps feel clean.'],
+    keywordsDe: ['erhöht', 'erhoeht'],
+    keywordsEn: ['elevated', 'incline push-up'],
+  },
+  {
+    id: 'wide',
+    slug: 'weit',
+    difficulty: 'intermediate',
+    name: 'Weite Liegestütze',
+    nameEn: 'Wide push-up',
+    summary:
+      'Breiter Handstand für mehr Brustaktivierung und weniger Trizeps-Belastung.',
+    summaryEn:
+      'Wider hand placement that emphasises the chest and offloads the triceps.',
+    instructions: [
+      'Hände deutlich breiter als schulterbreit, Finger leicht nach außen.',
+      'Ellenbogen zeigen seitlich, beim Absenken weiter nach außen klappen.',
+      'Brust kontrolliert absenken, dabei spürbares Stretchgefühl in der Brust.',
+      'Bewusst aus der Brust hochdrücken — nicht mit dem Trizeps "schummeln".',
+    ],
+    instructionsEn: [
+      'Hands set noticeably wider than shoulders, fingers angled slightly out.',
+      'Elbows track to the sides, opening further as you descend.',
+      'Lower the chest under control with a clear stretch sensation across the chest.',
+      'Press up consciously from the chest — do not "cheat" with the triceps.',
+    ],
+    tips: [
+      'Schultergesundheit: Schulterblätter aktiv zusammenziehen, nicht in den Gelenken hängen.',
+    ],
+    tipsEn: [
+      'Shoulder health: keep the shoulder blades retracted, do not hang in the joints.',
+    ],
+    keywordsDe: ['weite liegestütze', 'weit '],
+    keywordsEn: ['wide push-up', 'wide pushup'],
+  },
+  {
+    id: 'diamond',
+    slug: 'diamant',
+    difficulty: 'intermediate',
+    name: 'Diamant-Liegestütze',
+    nameEn: 'Diamond push-up',
+    summary:
+      'Hände bilden ein Dreieck unter der Brust — maximale Trizeps-Aktivierung.',
+    summaryEn:
+      'Hands form a triangle under the chest — maximum triceps engagement.',
+    instructions: [
+      'Daumen und Zeigefinger berühren sich, bilden ein "Diamant"-Dreieck.',
+      'Hände direkt unter der unteren Brust, nicht zu weit Richtung Bauch.',
+      'Ellenbogen eng am Körper halten, nach hinten zeigend.',
+      'Brust zum Diamant absenken, dann gerade hochdrücken.',
+    ],
+    instructionsEn: [
+      'Thumbs and index fingers touch, forming a "diamond" triangle.',
+      'Hands directly under the lower chest, not too far down toward the belly.',
+      'Keep the elbows close to the torso, pointing back.',
+      'Lower the chest to the diamond, then press straight up.',
+    ],
+    tips: [
+      'Anfänger: an Knie-Diamant gewöhnen, bevor die volle Variante gemacht wird.',
+    ],
+    tipsEn: [
+      'Beginners: get comfortable with knee-diamonds before attempting the full version.',
+    ],
+    keywordsDe: ['diamant', 'diamant-liegestütze'],
+    keywordsEn: ['diamond push-up', 'diamond pushup'],
+  },
+  {
+    id: 'archer',
+    slug: 'archer',
+    difficulty: 'advanced',
+    name: 'Archer-Liegestütze',
+    nameEn: 'Archer push-up',
+    summary:
+      'Asymmetrische Liegestütze: ein Arm beugt, der andere bleibt gestreckt — Vorstufe zur einarmigen Liegestütze.',
+    summaryEn:
+      'Asymmetric push-up: one arm bends while the other stays extended — a stepping stone to the one-arm push-up.',
+    instructions: [
+      'Hände deutlich breiter als schulterbreit, Finger leicht nach außen.',
+      'Beim Absenken zur einen Seite verlagern: ein Arm beugt, der andere bleibt fast gestreckt.',
+      'Gestreckter Arm dient als Stütze, Hauptlast liegt auf dem beugenden Arm.',
+      'Kontrolliert hochdrücken, dabei wieder zur Mitte verlagern, dann zur anderen Seite.',
+      'Wiederholungen pro Seite zählen — die Liste meint typischerweise pro Arm.',
+    ],
+    instructionsEn: [
+      'Hands set noticeably wider than shoulders, fingers angled slightly out.',
+      'On the descent shift to one side: one arm bends, the other stays nearly straight.',
+      'The straight arm acts as support; most of the load lives on the bending arm.',
+      'Press back up under control, return to centre, then shift to the other side.',
+      'Count reps per side — the plan usually lists the per-arm number.',
+    ],
+    tips: [
+      'Tempo 3-1-1 (3 s runter, 1 s halten, 1 s hoch) baut spürbar mehr Kraft auf.',
+    ],
+    tipsEn: [
+      'Tempo 3-1-1 (3 s down, 1 s hold, 1 s up) builds noticeably more strength.',
+    ],
+    keywordsDe: ['archer'],
+    keywordsEn: ['archer'],
+  },
+  {
+    id: 'wall-one-arm',
+    slug: 'wand-einarmig',
+    difficulty: 'intermediate',
+    name: 'Wand-Einarmige',
+    nameEn: 'Wall one-arm push-up',
+    summary:
+      'Einarmige Liegestütze gegen die Wand — sichere Einstiegsübung für die einarmige Progression.',
+    summaryEn:
+      'One-arm push-ups against a wall — a safe entry exercise for the one-arm progression.',
+    instructions: [
+      'In ungefähr einer Armlänge Abstand zur Wand stehen.',
+      'Eine Hand auf Schulterhöhe an die Wand, andere Hand am Rücken oder seitlich.',
+      'Körper als feste Linie kippen lassen, Ellenbogen kontrolliert beugen.',
+      'Mit langsamer Exzentrik (3 s) Richtung Wand absenken, kraftvoll wegdrücken.',
+    ],
+    instructionsEn: [
+      'Stand about an arm length away from the wall.',
+      'Place one hand on the wall at shoulder height; the other hand rests on the lower back or hip.',
+      'Tilt the body as a solid plank toward the wall, bending the elbow under control.',
+      'Lower with a slow eccentric (3 s) toward the wall, then press away powerfully.',
+    ],
+    keywordsDe: ['wand-einarmig', 'wand einarmig'],
+    keywordsEn: ['wall one-arm', 'wall one arm'],
+  },
+  {
+    id: 'negative-one-arm',
+    slug: 'negative-einarmig',
+    difficulty: 'advanced',
+    name: 'Negative Einarmige',
+    nameEn: 'Negative one-arm push-up',
+    summary:
+      'Nur die Absenkphase einarmig — kontrollierte Exzentrik baut die Kraft für die volle Bewegung auf.',
+    summaryEn:
+      'Only the lowering phase done one-armed — a controlled eccentric builds the strength for the full movement.',
+    instructions: [
+      'Eine Hand auf einer Bank/Erhöhung, Füße breit für Stabilität.',
+      'Andere Hand am Rücken oder seitlich, Körper als Plank halten.',
+      'In 3-5 Sekunden langsam zur Bank absenken — keine "Aufschlag"-Phase.',
+      'Mit beiden Händen oder von der erhöhten Position hochdrücken — die positive Phase wird hier nicht einarmig gemacht.',
+    ],
+    instructionsEn: [
+      'Place one hand on a bench/elevation; feet wide for stability.',
+      'Other hand on the lower back or hip; hold the body as a plank.',
+      'Lower toward the bench over 3-5 seconds — no "crash" phase.',
+      'Press up with both hands or from the elevated position — the concentric is not done one-armed here.',
+    ],
+    tips: [
+      'Bauen Sie die negative Zeit langsam aus: 3 s → 5 s → 8 s über mehrere Wochen.',
+    ],
+    tipsEn: [
+      'Build the eccentric time slowly: 3 s → 5 s → 8 s across multiple weeks.',
+    ],
+    keywordsDe: ['negative einarmige', 'negative einarmig'],
+    keywordsEn: ['negative one-arm', 'negative one arm'],
+  },
+  {
+    id: 'partial-one-arm',
+    slug: 'partielle-einarmig',
+    difficulty: 'advanced',
+    name: 'Partielle Einarmige',
+    nameEn: 'Partial-ROM one-arm push-up',
+    summary:
+      'Einarmige Liegestütze über reduzierten Bewegungsumfang (z. B. von einer niedrigen Bank).',
+    summaryEn:
+      'One-arm push-ups over a reduced range of motion (e.g. from a low bench).',
+    instructions: [
+      'Eine Hand auf einer niedrigen Bank/Stufe, Füße sehr breit (mindestens hüftbreit).',
+      'Andere Hand am Rücken, Körper als Plank — Hüfte nicht rotieren lassen.',
+      'Bewusst nur bis zur Bankhöhe absenken (reduzierter ROM).',
+      'Mit der einen Hand hochdrücken; Höhe der Bank schrittweise reduzieren.',
+    ],
+    instructionsEn: [
+      'Place one hand on a low bench/step; feet very wide (at least hip-width).',
+      'Other hand on the lower back; hold the body as a plank — do not rotate the hips.',
+      'Intentionally only descend to the bench height (reduced ROM).',
+      'Press up one-armed; lower the bench height progressively.',
+    ],
+    keywordsDe: ['partielle einarmige', 'partielle einarmig'],
+    keywordsEn: ['partial one-arm', 'partial-rom one-arm', 'partial one arm'],
+  },
+  {
+    id: 'one-arm',
+    slug: 'einarmig',
+    difficulty: 'advanced',
+    name: 'Einarmige Liegestütze',
+    nameEn: 'One-arm push-up',
+    summary:
+      'Volle Liegestütze mit einer Hand — Königsklasse der Brust-/Trizepsübungen.',
+    summaryEn:
+      'Full push-up with a single hand — the king of bodyweight pressing.',
+    instructions: [
+      'Füße deutlich breiter als hüftbreit für maximale Stabilität (anfangs sehr breit).',
+      'Eine Hand unter der Brustmitte, andere am Rücken oder seitlich.',
+      'Körper bewusst als Plank halten — Hüfte und Schultern dürfen nicht rotieren.',
+      'Brust kontrolliert zur Hand absenken, dann gerade hochdrücken.',
+      'Mit fortschreitender Kraft die Standbreite Schritt für Schritt verringern.',
+    ],
+    instructionsEn: [
+      'Feet noticeably wider than hip-width for maximum stability (very wide at the start).',
+      'One hand under the centre of the chest; the other on the lower back or hip.',
+      'Hold the body intentionally as a plank — hips and shoulders must not rotate.',
+      'Lower the chest to the hand under control, then press straight up.',
+      'As strength grows, narrow the foot stance step by step.',
+    ],
+    tips: [
+      'Wiederholungen werden pro Seite gezählt — dominante Seite zuerst, schwächere danach.',
+    ],
+    tipsEn: [
+      'Reps are counted per side — start with the dominant side and match it on the weaker side.',
+    ],
+    keywordsDe: ['volle einarmige', 'einarmige liegestütze', 'einarmige'],
+    keywordsEn: [
+      'full one-arm',
+      'one-arm push-up',
+      'one arm push-up',
+      'one-arm',
+    ],
+  },
+];
+
+const TYPES_BY_ID: ReadonlyMap<PushupTypeId, PushupTypeInfo> = new Map(
+  PUSHUP_TYPES.map((t) => [t.id, t])
+);
+
+const TYPES_BY_SLUG: ReadonlyMap<string, PushupTypeInfo> = new Map(
+  PUSHUP_TYPES.map((t) => [t.slug, t])
+);
+
+export function findPushupType(id: PushupTypeId): PushupTypeInfo | null {
+  return TYPES_BY_ID.get(id) ?? null;
+}
+
+export function findPushupTypeBySlug(slug: string): PushupTypeInfo | null {
+  return TYPES_BY_SLUG.get(slug) ?? null;
+}
+
+/**
+ * Returns the localized name + summary for the active Angular locale.
+ * English when `locale` starts with `en`, German otherwise.
+ */
+export function localizePushupType(
+  type: PushupTypeInfo,
+  locale: string
+): {
+  name: string;
+  summary: string;
+  instructions: ReadonlyArray<string>;
+  tips: ReadonlyArray<string>;
+} {
+  const isEnglish = locale.toLowerCase().startsWith('en');
+  return {
+    name: isEnglish ? type.nameEn : type.name,
+    summary: isEnglish ? type.summaryEn : type.summary,
+    instructions: isEnglish ? type.instructionsEn : type.instructions,
+    tips: (isEnglish ? type.tipsEn : type.tips) ?? [],
+  };
+}
+
+/**
+ * Detects the push-up types referenced by a training-plan day's
+ * description. Scans the German keywords against `description` and the
+ * English keywords against `descriptionEn` (when provided), returning a
+ * de-duplicated list in catalog order.
+ *
+ * Why keyword detection: the static training-plan catalog references
+ * types only inline in human-readable descriptions. Doing the matching
+ * here keeps the catalog editorial (no per-day type tagging) while
+ * still enabling tooltips and wiki deep-links.
+ */
+export function detectPushupTypes(
+  description: string,
+  descriptionEn?: string
+): ReadonlyArray<PushupTypeInfo> {
+  const de = description.toLowerCase();
+  const en = descriptionEn?.toLowerCase() ?? '';
+  const matched: PushupTypeInfo[] = [];
+  for (const type of PUSHUP_TYPES) {
+    const hitDe = type.keywordsDe.some((kw) => de.includes(kw));
+    const hitEn =
+      en.length > 0 && type.keywordsEn.some((kw) => en.includes(kw));
+    if (hitDe || hitEn) {
+      matched.push(type);
+    }
+  }
+  // Specificity rule 1: when "einarmige" matches but a more specific
+  // variant (wall-one-arm, negative-one-arm, partial-one-arm) also
+  // matches, drop the generic "one-arm" entry.
+  const hasSpecificOneArm = matched.some(
+    (t) =>
+      t.id === 'wall-one-arm' ||
+      t.id === 'negative-one-arm' ||
+      t.id === 'partial-one-arm'
+  );
+  let result = hasSpecificOneArm
+    ? matched.filter((t) => t.id !== 'one-arm')
+    : matched;
+
+  // Specificity rule 2: "standard" is the implicit fallback; if any
+  // explicit variant is mentioned (e.g. "saubere einarmige" → both
+  // standard and one-arm), keep only the variant.
+  const hasNonStandard = result.some((t) => t.id !== 'standard');
+  if (hasNonStandard) {
+    result = result.filter((t) => t.id !== 'standard');
+  }
+  return result;
+}

@@ -110,6 +110,17 @@ export const appRoutes: Routes = [
       ),
   },
   {
+    path: 'wiki/liegestuetz-typen',
+    data: {
+      seoTitle: $localize`:@@seo.wiki.pushupTypes.title:Liegestütztypen erklärt – Pushup Tracker`,
+      seoDescription: $localize`:@@seo.wiki.pushupTypes.description:Saubere Ausführung der wichtigsten Liegestütz-Varianten – Standard, Knie, Diamant, Archer, einarmig und mehr.`,
+    },
+    loadComponent: () =>
+      import('./wiki/pushup-types-page.component').then(
+        (m) => m.PushupTypesPageComponent
+      ),
+  },
+  {
     path: 'reminders',
     canActivate: [authGuard],
     data: {
