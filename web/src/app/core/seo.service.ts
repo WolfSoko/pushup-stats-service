@@ -1,10 +1,16 @@
 import { DOCUMENT } from '@angular/common';
 import { inject, Injectable, LOCALE_ID } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
+import {
+  SUPPORTED_LOCALES,
+  type SupportedLocale,
+} from '../../server-locale-redirect';
 
 const BASE_URL = 'https://pushup-stats.de';
-const LOCALE_PREFIXES = ['de', 'en'] as const;
-type LocalePrefix = (typeof LOCALE_PREFIXES)[number];
+// Single source of truth lives in `server-locale-redirect.ts`; a
+// type alias keeps this file's existing references compact.
+const LOCALE_PREFIXES = SUPPORTED_LOCALES;
+type LocalePrefix = SupportedLocale;
 const DEFAULT_LOCALE: LocalePrefix = 'de';
 
 function isKnownLocale(value: string): value is LocalePrefix {
@@ -32,6 +38,16 @@ export class SeoService {
       imageAlt?: string;
       publishedTime?: string;
       modifiedTime?: string;
+      /**
+       * Per-locale path overrides for hreflang alternates. Required
+       * for routes whose slug differs by locale (e.g. blog posts with
+       * `translationSlug`). When omitted, the route is assumed to be
+       * locale-agnostic and the same path is advertised for every
+       * supported locale. Locales not present in the map are skipped
+       * so we never claim alternates for content that doesn't resolve
+       * (e.g. a German blog slug under `/fr/blog/…`).
+       */
+      alternates?: Partial<Record<LocalePrefix, string>>;
     } = {}
   ): void {
     this.title.setTitle(seoTitle);
@@ -45,20 +61,51 @@ export class SeoService {
     this.setTag('name', 'twitter:description', seoDescription);
 
     const locale = this.detectLocale(path);
-    const ogLocale = locale === 'en' ? 'en_US' : 'de_DE';
-    this.setTag('property', 'og:locale', ogLocale);
+    this.setTag('property', 'og:locale', this.ogLocaleFor(locale));
 
     const strippedPath = this.stripLocalePrefix(path);
-    const deUrl = `${BASE_URL}/de${strippedPath}`;
-    const enUrl = `${BASE_URL}/en${strippedPath}`;
-    const canonical = locale === 'en' ? enUrl : deUrl;
+    const url = (lang: LocalePrefix, p: string): string =>
+      `${BASE_URL}/${lang}${p.startsWith('/') ? p : `/${p}`}`;
+
+    // Resolve the per-locale path map. Without overrides we treat the
+    // current path as locale-agnostic and advertise it for every
+    // supported locale. With overrides, only the locales the caller
+    // actually has translations for show up — see Copilot review on
+    // blog posts where `/de/blog/<de-slug>` ≠ `/en/blog/<en-slug>`.
+    const localePaths: Partial<Record<LocalePrefix, string>> =
+      options.alternates ??
+      Object.fromEntries(LOCALE_PREFIXES.map((lang) => [lang, strippedPath]));
+
+    // Canonical resolution: when the active locale is one we have an
+    // alternate path for, the canonical points there. Otherwise we
+    // fall back to the source locale so phantom URLs (e.g.
+    // `/fr/blog/<de-slug>` when fr/es/it/nl/grc/la builds reuse the
+    // German blog data) deduplicate to the post's real language URL
+    // and match the JSON-LD canonical emitted by callers.
+    const canonicalLocale =
+      localePaths[locale] !== undefined ? locale : DEFAULT_LOCALE;
+    const canonical = url(
+      canonicalLocale,
+      localePaths[canonicalLocale] ?? strippedPath
+    );
 
     this.setTag('property', 'og:url', canonical);
     this.setCanonical(canonical);
 
-    this.setHreflang('alternate', 'de', deUrl);
-    this.setHreflang('alternate', 'en', enUrl);
-    this.setHreflang('alternate', 'x-default', deUrl);
+    this.clearStaleHreflang();
+    for (const lang of LOCALE_PREFIXES) {
+      const altPath = localePaths[lang];
+      if (altPath != null)
+        this.setHreflang('alternate', lang, url(lang, altPath));
+    }
+    const xDefaultPath = localePaths[DEFAULT_LOCALE] ?? localePaths[locale];
+    if (xDefaultPath != null) {
+      this.setHreflang(
+        'alternate',
+        'x-default',
+        url(DEFAULT_LOCALE, xDefaultPath)
+      );
+    }
 
     this.applyImage(options.imageUrl, options.imageAlt ?? seoTitle);
     this.applyArticleTimes(options.publishedTime, options.modifiedTime);
@@ -94,6 +141,25 @@ export class SeoService {
     } else {
       this.removeTag('property', 'article:modified_time');
     }
+  }
+
+  /**
+   * Map a locale code to its OpenGraph BCP 47 form. OG only formally
+   * supports `xx_YY` IETF tags, so we approximate for classical
+   * languages by returning the bare two-letter code (no region).
+   */
+  private ogLocaleFor(locale: LocalePrefix): string {
+    const map: Record<LocalePrefix, string> = {
+      de: 'de_DE',
+      en: 'en_US',
+      fr: 'fr_FR',
+      es: 'es_ES',
+      it: 'it_IT',
+      nl: 'nl_NL',
+      grc: 'grc',
+      la: 'la',
+    };
+    return map[locale];
   }
 
   private detectLocale(path: string): LocalePrefix {
@@ -138,6 +204,21 @@ export class SeoService {
       head.appendChild(link);
     }
     link.href = url;
+  }
+
+  /**
+   * Remove any pre-existing `<link rel="alternate" hreflang="…">`
+   * tags. Re-emitted on every `update()` so that navigating between
+   * routes with different alternate sets (e.g. a fully-localised
+   * route to a blog post that only exists in two languages) doesn't
+   * leave stale alternates behind from the previous page.
+   */
+  private clearStaleHreflang(): void {
+    const head = this.document.head;
+    if (!head) return;
+    head
+      .querySelectorAll('link[rel="alternate"][hreflang]')
+      .forEach((node) => node.remove());
   }
 
   private setHreflang(rel: string, hreflang: string, href: string): void {

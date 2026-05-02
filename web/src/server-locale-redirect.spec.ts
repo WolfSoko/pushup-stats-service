@@ -25,15 +25,27 @@ describe('pickLocale', () => {
     ['en', 'en'],
     ['en-US', 'en'],
     ['EN', 'en'],
-    // ANY presence of English in the header switches us to the en bundle.
-    // We deliberately don't parse q-values: so `de;q=0.9,en;q=0.1` still
-    // picks `en`. That's fine for our use case (most tools send a single
-    // primary language), and parsing q-values would be a maintenance trap
-    // for what's essentially a marketing-redirect heuristic.
-    ['de;q=0.5,en;q=0.3', 'en'],
+    // We parse `;q=` weights per RFC 7231 §5.3.5 and stable-sort
+    // entries by descending q (header order tie-breaks at equal q).
+    // `de;q=0.5,en;q=0.3` → `de` (higher q), and the canonical
+    // `en;q=0.1,fr;q=1.0` → `fr` even though `en` appears first.
+    ['de;q=0.5,en;q=0.3', 'de'],
     ['en-GB,de;q=0.5', 'en'],
-    ['fr-FR', 'de'], // unsupported → source locale fallback
-    ['xen-fake', 'de'], // word boundary prevents matching `en` inside `xen`
+    ['en;q=0.1,fr;q=1.0', 'fr'], // explicit q overrides header order
+    ['fr-FR', 'fr'],
+    ['es', 'es'],
+    ['it-IT,en;q=0.5', 'it'], // header order at q=1.0 (default) tie-breaks
+    ['fr;q=0.8,en;q=0.8', 'fr'], // equal q → first listed wins (stable sort)
+    ['en;q=0.8,fr;q=0.8', 'en'], // ditto, with reversed order
+    ['de,de-DE;q=0.9,fr;q=0.8', 'de'],
+    ['nl-BE', 'nl'],
+    ['grc', 'grc'],
+    ['la', 'la'],
+    ['en;q=not-a-number,de', 'de'], // malformed q drops the entry
+    ['en;q=0,fr;q=0', 'de'], // explicit q=0 rejects → source locale fallback
+    ['en;q=0,de', 'de'], // q=0 only excludes that entry; remaining ranked entries still apply
+    ['zh-CN,ja;q=0.8', 'de'], // no supported tag → source locale fallback
+    ['xen-fake', 'de'], // unrecognised primary subtag → source locale fallback
   ])('Given Accept-Language=%j, Then picks %s', (header, expected) => {
     expect(pickLocale(header)).toBe(expected);
   });
@@ -57,7 +69,18 @@ describe('computeLocaleRedirect', () => {
     });
 
     it('Skips already-prefixed paths', () => {
-      for (const path of ['/de', '/de/u/abc', '/en', '/en/login']) {
+      for (const path of [
+        '/de',
+        '/de/u/abc',
+        '/en',
+        '/en/login',
+        '/fr',
+        '/es/u/abc',
+        '/it/login',
+        '/nl',
+        '/grc',
+        '/la/blog',
+      ]) {
         expect(computeLocaleRedirect(input({ path, url: path }))).toEqual({
           kind: 'pass',
         });

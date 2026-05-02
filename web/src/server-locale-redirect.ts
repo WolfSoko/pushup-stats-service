@@ -28,8 +28,25 @@ export type LocaleRedirectResult =
   | { readonly kind: 'pass' }
   | { readonly kind: 'redirect'; readonly location: string };
 
+/**
+ * Locale codes registered by the Angular i18n build. Order matters
+ * only for `pickLocale` fallback semantics; the source locale (`de`)
+ * is always first.
+ */
+export const SUPPORTED_LOCALES = [
+  'de',
+  'en',
+  'fr',
+  'es',
+  'it',
+  'nl',
+  'grc',
+  'la',
+] as const;
+export type SupportedLocale = (typeof SUPPORTED_LOCALES)[number];
+
 /** Locale prefixes registered by the Angular i18n build. */
-export const LOCALE_PREFIXES: ReadonlySet<string> = new Set(['de', 'en']);
+export const LOCALE_PREFIXES: ReadonlySet<string> = new Set(SUPPORTED_LOCALES);
 
 /**
  * Files served from the domain root (rewritten to `/de/<file>` by an
@@ -52,14 +69,48 @@ export const ROOT_FILES: ReadonlySet<string> = new Set([
 export const SAFE_REDIRECT_PATH_RE = /^\/[A-Za-z0-9/_\-.~%]*$/;
 
 /**
- * Pick the source locale (`de`) by default, switch to `en` only when
- * `Accept-Language` actually starts with English (after optional `,` /
- * `;` separators between weighted entries). Avoids matching `de` in
- * `de;q=0.5,en;q=0.3` — a `\ben` boundary is enough.
+ * Pick a locale based on `Accept-Language`. Honours both the user's
+ * stated order and explicit `;q=` weights so headers like
+ * `en;q=0.1,fr;q=1.0` resolve to `fr` (highest weight wins) and
+ * `it-IT,en;q=0.5` resolves to `it` (header order tie-breaks at
+ * weight 1.0). Missing weights default to 1.0 per RFC 7231 §5.3.5;
+ * malformed weights drop to 0 so the entry is deprioritised rather
+ * than crashing the redirect.
+ *
+ * Falls back to the source locale (`de`) when the header is absent,
+ * empty, or contains no supported language. Classical locales (`grc`,
+ * `la`) are matched too, even though browsers rarely advertise them —
+ * users can configure them manually in OS-level language settings.
  */
-export function pickLocale(acceptLanguage: string | undefined): 'de' | 'en' {
+export function pickLocale(
+  acceptLanguage: string | undefined
+): SupportedLocale {
   const accept = String(acceptLanguage ?? '').toLowerCase();
-  return /\ben(-|;|,|$)/.test(accept) ? 'en' : 'de';
+  if (!accept) return 'de';
+  const ranked = accept
+    .split(',')
+    .map((entry, index) => {
+      const [rawTag, ...params] = entry.split(';');
+      const tag = rawTag.trim();
+      const qParam = params
+        .map((p) => p.trim())
+        .find((p) => p.startsWith('q='));
+      const q = qParam ? Number.parseFloat(qParam.slice(2)) : 1;
+      return { tag, q: Number.isFinite(q) ? q : 0, index };
+    })
+    // Drop empty tags and explicit `q=0` rejections (RFC 7231 §5.3.1
+    // — a value of 0 means "not acceptable", so we must not redirect
+    // a user to a locale they explicitly opted out of).
+    .filter((e) => e.tag !== '' && e.q > 0)
+    .sort((a, b) => b.q - a.q || a.index - b.index);
+
+  for (const { tag } of ranked) {
+    const primary = tag.split('-')[0];
+    if ((SUPPORTED_LOCALES as ReadonlyArray<string>).includes(primary)) {
+      return primary as SupportedLocale;
+    }
+  }
+  return 'de';
 }
 
 /**

@@ -11,6 +11,30 @@
       "en": {
         "translation": "web/src/locale/messages.en.xlf",
         "subPath": "en"
+      },
+      "fr": {
+        "translation": "web/src/locale/messages.fr.xlf",
+        "subPath": "fr"
+      },
+      "es": {
+        "translation": "web/src/locale/messages.es.xlf",
+        "subPath": "es"
+      },
+      "it": {
+        "translation": "web/src/locale/messages.it.xlf",
+        "subPath": "it"
+      },
+      "nl": {
+        "translation": "web/src/locale/messages.nl.xlf",
+        "subPath": "nl"
+      },
+      "grc": {
+        "translation": "web/src/locale/messages.grc.xlf",
+        "subPath": "grc"
+      },
+      "la": {
+        "translation": "web/src/locale/messages.la.xlf",
+        "subPath": "la"
       }
     },
     "defaultLocale": "de"
@@ -45,12 +69,12 @@
       },
       "configurations": {
         "production": {
-          "localize": ["de", "en"],
+          "localize": ["de", "en", "fr", "es", "it", "nl", "grc", "la"],
           "budgets": [
             {
               "type": "initial",
-              "maximumWarning": "1755kb",
-              "maximumError": "2048kb"
+              "maximumWarning": "2200kb",
+              "maximumError": "2500kb"
             },
             {
               "type": "anyComponentStyle",
@@ -63,7 +87,7 @@
           "serviceWorker": "web/ngsw-config.json"
         },
         "production-preview": {
-          "localize": ["de", "en"],
+          "localize": ["de", "en", "fr", "es", "it", "nl", "grc", "la"],
           "budgets": [
             {
               "type": "initial",
@@ -97,7 +121,7 @@
           ]
         },
         "staging": {
-          "localize": ["de", "en"],
+          "localize": ["de", "en", "fr", "es", "it", "nl", "grc", "la"],
           "outputHashing": "all",
           "serviceWorker": "web/ngsw-config.json",
           "fileReplacements": [

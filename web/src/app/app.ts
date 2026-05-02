@@ -5,6 +5,7 @@ import {
   DestroyRef,
   effect,
   inject,
+  LOCALE_ID,
   signal,
   viewChild,
 } from '@angular/core';
@@ -17,6 +18,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -51,6 +54,47 @@ import {
   FeedbackDialogData,
   FeedbackResult,
 } from './core/feedback/feedback.models';
+import {
+  SUPPORTED_LOCALES,
+  type SupportedLocale,
+} from '../server-locale-redirect';
+
+interface LanguageOption {
+  readonly code: SupportedLocale;
+  readonly label: string;
+}
+
+/**
+ * Language switcher options. Labels are the language's self-name so a
+ * speaker of any language can recognise their entry, regardless of the
+ * UI's current locale. Hardcoded — these strings are language proper
+ * names, not UI copy that needs translation.
+ */
+const LANGUAGE_OPTIONS: ReadonlyArray<LanguageOption> = [
+  { code: 'de', label: 'Deutsch' },
+  { code: 'en', label: 'English' },
+  { code: 'fr', label: 'Français' },
+  { code: 'es', label: 'Español' },
+  { code: 'it', label: 'Italiano' },
+  { code: 'nl', label: 'Nederlands' },
+  { code: 'grc', label: 'Ἀρχαία Ἑλληνική' },
+  { code: 'la', label: 'Latina' },
+];
+
+/**
+ * Coerce an Angular `LOCALE_ID` (which can arrive as `en-US`, `de-DE`,
+ * etc. in dev / test builds) to one of the codes we know how to render.
+ * Falls back to the source locale (`de`) when the runtime tag doesn't
+ * match any supported language.
+ */
+function resolveCurrentLocale(localeId: string): SupportedLocale {
+  const lower = localeId.toLowerCase();
+  return (
+    SUPPORTED_LOCALES.find(
+      (code) => lower === code || lower.startsWith(`${code}-`)
+    ) ?? 'de'
+  );
+}
 
 @Component({
   selector: 'app-root',
@@ -70,6 +114,8 @@ import {
     ThemeToggleComponent,
     CookieConsentBannerComponent,
     MatDialogModule,
+    MatFormFieldModule,
+    MatSelectModule,
   ],
   templateUrl: './app.html',
   styleUrl: './app.scss',
@@ -188,14 +234,31 @@ export class App {
     this.consentBanner()?.reopen();
   }
 
-  setLanguage(lang: 'de' | 'en', ev?: Event): void {
+  /** Locale options shown in the sidenav language picker. */
+  readonly languageOptions = LANGUAGE_OPTIONS;
+  /**
+   * The currently active locale. `LOCALE_ID` in dev/test builds may
+   * arrive as `'en-US'` or another extended tag, so we coerce to the
+   * matching short code or fall back to the source locale.
+   */
+  readonly currentLocale: SupportedLocale = resolveCurrentLocale(
+    inject(LOCALE_ID)
+  );
+
+  setLanguage(lang: SupportedLocale, ev?: Event): void {
     ev?.preventDefault();
+    this.navOpen.set(false);
     const maxAge = 180 * 24 * 60 * 60; // 180 days
     document.cookie = `lang=${encodeURIComponent(lang)}; Path=/; Max-Age=${maxAge}; SameSite=Lax`;
-    // Preserve current page path when switching language
-    const subPath = window.location.pathname.replace(/^\/(de|en)(\/|$)/, '/');
+    // Preserve current page path when switching language. Strip any
+    // existing locale prefix (one of SUPPORTED_LOCALES) and prepend
+    // the new one. The alternation regex is rebuilt from the locale
+    // list so adding a locale only requires updating one constant.
+    const localesAlt = SUPPORTED_LOCALES.join('|');
+    const stripPrefix = new RegExp(`^/(?:${localesAlt})(/|$)`);
+    const subPath = window.location.pathname.replace(stripPrefix, '/');
     const suffix = subPath === '/' ? '/' : subPath;
-    const prefix = lang === 'en' ? '/en' : '/de';
+    const prefix = `/${lang}`;
     const target = `${prefix}${suffix}${window.location.search}${window.location.hash}`;
     window.location.replace(target);
   }

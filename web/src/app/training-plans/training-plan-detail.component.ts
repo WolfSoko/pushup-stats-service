@@ -4,7 +4,6 @@ import {
   computed,
   effect,
   inject,
-  LOCALE_ID,
 } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -15,11 +14,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { AuthStore } from '@pu-auth/auth';
-import {
-  findPlanBySlug,
-  localizePlan,
-  TrainingPlanDay,
-} from '@pu-stats/models';
+import { findPlanBySlug, TrainingPlanDay } from '@pu-stats/models';
 import { LogPlanDayResult, TrainingPlanStore } from './training-plan.store';
 
 interface DayRow {
@@ -55,8 +50,8 @@ interface DayRow {
             <mat-icon>arrow_back</mat-icon>
           </a>
           <div>
-            <h1>{{ localized()?.title }}</h1>
-            <p class="muted">{{ localized()?.summary }}</p>
+            <h1>{{ p.title }}</h1>
+            <p class="muted">{{ p.summary }}</p>
           </div>
         </header>
 
@@ -418,7 +413,6 @@ export class TrainingPlanDetailComponent {
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly snackbar = inject(MatSnackBar);
-  private readonly locale = inject(LOCALE_ID) as string;
   private readonly authStore = inject(AuthStore);
 
   protected readonly isAuthenticated = this.authStore.isAuthenticated;
@@ -498,12 +492,6 @@ export class TrainingPlanDetailComponent {
     });
   }
 
-  /** Plan with title/summary/day descriptions in the active locale. */
-  readonly localized = computed(() => {
-    const p = this.plan();
-    return p ? localizePlan(p, this.locale) : null;
-  });
-
   readonly isThisPlanActive = computed(() => {
     const p = this.plan();
     const a = this.store.activePlan();
@@ -511,8 +499,8 @@ export class TrainingPlanDetailComponent {
   });
 
   readonly weeks = computed(() => {
-    const localized = this.localized();
-    if (!localized) return [];
+    const plan = this.plan();
+    if (!plan) return [];
     const currentDay = this.isThisPlanActive()
       ? this.store.currentDayIndex()
       : null;
@@ -521,7 +509,7 @@ export class TrainingPlanDetailComponent {
       : new Set<number>();
 
     const grouped = new Map<number, DayRow[]>();
-    for (const day of localized.days) {
+    for (const day of plan.days) {
       const weekIndex = Math.floor((day.dayIndex - 1) / 7) + 1;
       const isToday = currentDay !== null && day.dayIndex === currentDay;
       const row: DayRow = {

@@ -5,7 +5,6 @@ import {
   Component,
   computed,
   inject,
-  LOCALE_ID,
   OnInit,
   signal,
 } from '@angular/core';
@@ -31,7 +30,6 @@ import {
   StepperOrientation,
 } from '@angular/material/stepper';
 import { ActivatedRoute, Router } from '@angular/router';
-import { localizePlan } from '@pu-stats/models';
 import { map, Observable } from 'rxjs';
 import { AuthStore } from '../../core/state/auth.store';
 import { RegisterSuccessComponent } from './components/register-success';
@@ -61,14 +59,12 @@ export class RegisterComponent implements OnInit {
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
   private readonly breakpointObserver = inject(BreakpointObserver);
-  private readonly locale = inject(LOCALE_ID) as string;
   readonly authState = inject(AuthStore);
   readonly registerUiStore = inject(RegisterUiStore);
 
-  readonly selectedPlanTitle = computed(() => {
-    const plan = this.registerUiStore.selectedPlan();
-    return plan ? localizePlan(plan, this.locale).title : null;
-  });
+  readonly selectedPlanTitle = computed(
+    () => this.registerUiStore.selectedPlan()?.title ?? null
+  );
 
   ngOnInit(): void {
     const planId = this.route.snapshot.queryParamMap.get('planId');
