@@ -169,7 +169,7 @@ export class App {
       {
         duration: 12_000,
         horizontalPosition: 'left',
-        verticalPosition: 'bottom',
+        verticalPosition: 'top',
         panelClass: 'early-access-snackbar',
       }
     );
