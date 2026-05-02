@@ -205,7 +205,9 @@ import { AnalysisStore } from '../analysis.store';
             >
           </mat-card-header>
           <mat-card-content>
-            <app-type-pie [data]="store.typeBreakdown()" />
+            @defer (hydrate on viewport) {
+              <app-type-pie [data]="store.typeBreakdown()" />
+            }
           </mat-card-content>
         </mat-card>
 
@@ -231,7 +233,9 @@ import { AnalysisStore } from '../analysis.store';
               >
             </mat-card-header>
             <mat-card-content>
-              <app-sets-distribution [data]="store.setsDistribution()" />
+              @defer (hydrate on viewport) {
+                <app-sets-distribution [data]="store.setsDistribution()" />
+              }
             </mat-card-content>
           </mat-card>
         }
@@ -258,7 +262,9 @@ import { AnalysisStore } from '../analysis.store';
           </mat-button-toggle-group>
         </mat-card-header>
         <mat-card-content class="heatmap-wrap">
-          <app-heatmap [entries]="store.rows()" [mode]="heatmapMode()" />
+          @defer (hydrate on viewport) {
+            <app-heatmap [entries]="store.rows()" [mode]="heatmapMode()" />
+          }
         </mat-card-content>
       </mat-card>
     </main>
