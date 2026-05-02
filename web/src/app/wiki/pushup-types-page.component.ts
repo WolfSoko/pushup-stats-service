@@ -1,4 +1,5 @@
 import {
+  afterRenderEffect,
   ChangeDetectionStrategy,
   Component,
   computed,
@@ -217,7 +218,11 @@ export class PushupTypesPageComponent {
   });
 
   constructor() {
-    queueMicrotask(() => {
+    // afterRenderEffect runs in the browser after each render, so the
+    // target `<section id>` is guaranteed to be in the DOM before we
+    // call `scrollToAnchor`. It also re-fires when `?type=` changes,
+    // covering in-place navigations that don't recreate the component.
+    afterRenderEffect(() => {
       const slug = this.queryParams().get('type');
       if (slug) {
         this.viewport.scrollToAnchor(slug);

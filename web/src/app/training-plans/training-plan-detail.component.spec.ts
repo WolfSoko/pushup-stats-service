@@ -331,7 +331,7 @@ describe('TrainingPlanDetailComponent', () => {
     });
 
     it('does NOT render pushup-type chips for rest days', async () => {
-      await render(TrainingPlanDetailComponent, {
+      const { container } = await render(TrainingPlanDetailComponent, {
         providers: [
           provideRouter([]),
           { provide: ActivatedRoute, useValue: makeRouteMock('recruit-6w') },
@@ -346,16 +346,17 @@ describe('TrainingPlanDetailComponent', () => {
         ],
       });
 
-      // Rest days say "Ruhetag" / "Rest day" — no type chip should
-      // appear on any rest row. Sanity-check that the page renders
-      // and rest rows do NOT carry a chip.
-      const restLabels = screen.getAllByText('Ruhetag');
-      expect(restLabels.length).toBeGreaterThan(0);
-      // Per-row chip lookup is unreliable in jsdom; instead assert no
-      // generic "standard" chip leaks onto rest days by checking that
-      // the count of standard chips is bounded by main/light/test days
-      // mentioning "saubere".
-      // (Detailed coverage lives in pushup-type.models.spec.ts.)
+      // Rest days say "Ruhetag" / "Rest day" — no type chip container
+      // should appear on any rest row. Walk every rest day-row and
+      // assert it has no `.pushup-types` descendant.
+      const restRows = Array.from(
+        container.querySelectorAll<HTMLElement>('.day-row')
+      ).filter((row) => row.textContent?.includes('Ruhetag'));
+      expect(restRows.length).toBeGreaterThan(0);
+      for (const row of restRows) {
+        expect(row.querySelector('.pushup-types')).toBeNull();
+        expect(row.querySelector('.pushup-type-chip')).toBeNull();
+      }
     });
 
     it('does NOT auto-start (even with ?autoStart=1) when a different plan is already active', async () => {
