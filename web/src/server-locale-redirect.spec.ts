@@ -39,7 +39,7 @@ describe('pickLocale', () => {
     ['en;q=0.8,fr;q=0.8', 'en'], // ditto, with reversed order
     ['de,de-DE;q=0.9,fr;q=0.8', 'de'],
     ['nl-BE', 'nl'],
-    ['grc', 'grc'],
+    ['el', 'el'],
     ['la', 'la'],
     ['en;q=not-a-number,de', 'de'], // malformed q drops the entry
     ['en;q=0,fr;q=0', 'de'], // explicit q=0 rejects → source locale fallback
@@ -78,7 +78,7 @@ describe('computeLocaleRedirect', () => {
         '/es/u/abc',
         '/it/login',
         '/nl',
-        '/grc',
+        '/el',
         '/la/blog',
       ]) {
         expect(computeLocaleRedirect(input({ path, url: path }))).toEqual({

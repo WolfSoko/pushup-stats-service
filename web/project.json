@@ -28,9 +28,9 @@
         "translation": "web/src/locale/messages.nl.xlf",
         "subPath": "nl"
       },
-      "grc": {
-        "translation": "web/src/locale/messages.grc.xlf",
-        "subPath": "grc"
+      "el": {
+        "translation": "web/src/locale/messages.el.xlf",
+        "subPath": "el"
       },
       "la": {
         "translation": "web/src/locale/messages.la.xlf",
@@ -69,7 +69,7 @@
       },
       "configurations": {
         "production": {
-          "localize": ["de", "en", "fr", "es", "it", "nl", "grc", "la"],
+          "localize": ["de", "en", "fr", "es", "it", "nl", "el", "la"],
           "budgets": [
             {
               "type": "initial",
@@ -87,7 +87,7 @@
           "serviceWorker": "web/ngsw-config.json"
         },
         "production-preview": {
-          "localize": ["de", "en", "fr", "es", "it", "nl", "grc", "la"],
+          "localize": ["de", "en", "fr", "es", "it", "nl", "el", "la"],
           "budgets": [
             {
               "type": "initial",
@@ -121,7 +121,7 @@
           ]
         },
         "staging": {
-          "localize": ["de", "en", "fr", "es", "it", "nl", "grc", "la"],
+          "localize": ["de", "en", "fr", "es", "it", "nl", "el", "la"],
           "outputHashing": "all",
           "serviceWorker": "web/ngsw-config.json",
           "fileReplacements": [
