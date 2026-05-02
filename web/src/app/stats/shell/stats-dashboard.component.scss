@@ -403,6 +403,30 @@ h1 {
   }
 }
 
+@keyframes dashboard-fly-in-from-right {
+  from {
+    opacity: 0;
+    transform: translateX(60%) scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@supports (animation-timeline: view()) {
+  .plan-banner,
+  .today-focus > mat-card,
+  .quick-actions,
+  app-analysis-teaser-card,
+  .latest-entries {
+    animation: dashboard-fly-in-from-right linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 35%;
+    will-change: transform, opacity;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .latest-entries {
     transition: box-shadow 0.2s ease;
@@ -410,6 +434,16 @@ h1 {
     &:hover,
     &:focus-visible {
       transform: none;
+    }
+  }
+
+  @supports (animation-timeline: view()) {
+    .plan-banner,
+    .today-focus > mat-card,
+    .quick-actions,
+    app-analysis-teaser-card,
+    .latest-entries {
+      animation: none;
     }
   }
 }
