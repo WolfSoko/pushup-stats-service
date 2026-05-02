@@ -15,7 +15,12 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { parseIsoDate, RangeModes, toLocalIsoDate } from '@pu-stats/models';
+import {
+  inferRangeMode,
+  parseIsoDate,
+  RangeModes,
+  toLocalIsoDate,
+} from '@pu-stats/models';
 
 @Component({
   selector: 'app-filter-bar',
@@ -222,30 +227,9 @@ export class FilterBarComponent implements OnChanges {
   }
 
   private inferMode(start: Date | null, end: Date | null): RangeModes {
-    if (!start || !end) return 'week';
-    const s = this.startOfDay(start);
-    const e = this.startOfDay(end);
-    if (s.getTime() === e.getTime()) return 'day';
-
-    const diffDays = Math.round((e.getTime() - s.getTime()) / 86_400_000) + 1;
-    if (diffDays === 7 && s.getDay() === 1) return 'week'; // Monday
-
-    const isMonthStart = s.getDate() === 1;
-    const lastDay = new Date(s.getFullYear(), s.getMonth() + 1, 0).getDate();
-    const isMonthEnd =
-      e.getFullYear() === s.getFullYear() &&
-      e.getMonth() === s.getMonth() &&
-      e.getDate() === lastDay;
-    if (isMonthStart && isMonthEnd) return 'month';
-
-    const isYearStart = s.getMonth() === 0 && s.getDate() === 1;
-    const isYearEnd =
-      e.getFullYear() === s.getFullYear() &&
-      e.getMonth() === 11 &&
-      e.getDate() === 31;
-    if (isYearStart && isYearEnd) return 'year';
-
-    return 'custom';
+    // Delegate to the shared utility used by AnalysisStore so the UI and
+    // store always agree on what counts as a day/week/month/year selection.
+    return inferRangeMode(this.toIsoDate(start), this.toIsoDate(end));
   }
 
   shiftRange(direction: -1 | 1): void {
@@ -270,7 +254,7 @@ export class FilterBarComponent implements OnChanges {
       const year = start.getFullYear() + direction;
       nextStart.setFullYear(year, 0, 1);
       nextEnd.setFullYear(year, 11, 31);
-    } else {
+    } else if (this.mode() === 'month') {
       // Always keep full month boundaries and avoid JS date overflow
       // (e.g. Jan 31 + 1 month becoming March).
       const anchor = new Date(
@@ -280,6 +264,10 @@ export class FilterBarComponent implements OnChanges {
       );
       nextStart.setFullYear(anchor.getFullYear(), anchor.getMonth(), 1);
       nextEnd.setFullYear(anchor.getFullYear(), anchor.getMonth() + 1, 0);
+    } else {
+      // Unhandled mode — bail out without changing the range so we don't
+      // silently fall back to month-shifting if a new mode is added.
+      return;
     }
 
     this.range.patchValue({ start: nextStart, end: nextEnd });
