@@ -62,32 +62,35 @@ import { POST as p53 } from './sfida-30-giorni-piegamenti.it';
 import { POST as p54 } from './triakonta-emerai-pieseos.grc';
 import { POST as p55 } from './liegestuetze-varianten.de';
 import { POST as p56 } from './opdrukken-variaties.nl';
-import { POST as p57 } from './pushup-variations.en';
-import { POST as p58 } from './variaciones-flexiones.es';
-import { POST as p59 } from './variantes-pompes.fr';
-import { POST as p60 } from './varianti-piegamenti.it';
-import { POST as p61 } from './variationes-pressionum.la';
-import { POST as p62 } from './guia-registro-flexiones.es';
-import { POST as p63 } from './guida-tracker-piegamenti.it';
-import { POST as p64 } from './guide-suivi-pompes.fr';
-import { POST as p65 } from './index-pressionum.la';
-import { POST as p66 } from './liegestuetze-tracker.de';
-import { POST as p67 } from './opdruk-tracker-gids.nl';
-import { POST as p68 } from './pushup-tracker-guide.en';
-import { POST as p69 } from './dagelijks-opdrukken.nl';
-import { POST as p70 } from './daily-pushups.en';
-import { POST as p71 } from './flexiones-diarias.es';
-import { POST as p72 } from './piegamenti-quotidiani.it';
-import { POST as p73 } from './pompes-quotidiennes.fr';
-import { POST as p74 } from './pressiones-cotidianae.la';
-import { POST as p75 } from './taeglich-liegestuetze.de';
-import { POST as p76 } from './liegestuetze-steigern.de';
-import { POST as p77 } from './opdrukken-progressie.nl';
-import { POST as p78 } from './progresion-flexiones.es';
-import { POST as p79 } from './progressio-pressionum.la';
-import { POST as p80 } from './progression-pompes.fr';
-import { POST as p81 } from './progressione-piegamenti.it';
-import { POST as p82 } from './pushup-progression.en';
+import { POST as p57 } from './pieseis-ges-poikiliai.grc';
+import { POST as p58 } from './pushup-variations.en';
+import { POST as p59 } from './variaciones-flexiones.es';
+import { POST as p60 } from './variantes-pompes.fr';
+import { POST as p61 } from './varianti-piegamenti.it';
+import { POST as p62 } from './variationes-pressionum.la';
+import { POST as p63 } from './guia-registro-flexiones.es';
+import { POST as p64 } from './guida-tracker-piegamenti.it';
+import { POST as p65 } from './guide-suivi-pompes.fr';
+import { POST as p66 } from './ichneutes-pieseos-ges.grc';
+import { POST as p67 } from './index-pressionum.la';
+import { POST as p68 } from './liegestuetze-tracker.de';
+import { POST as p69 } from './opdruk-tracker-gids.nl';
+import { POST as p70 } from './pushup-tracker-guide.en';
+import { POST as p71 } from './dagelijks-opdrukken.nl';
+import { POST as p72 } from './daily-pushups.en';
+import { POST as p73 } from './flexiones-diarias.es';
+import { POST as p74 } from './piegamenti-quotidiani.it';
+import { POST as p75 } from './pompes-quotidiennes.fr';
+import { POST as p76 } from './pressiones-cotidianae.la';
+import { POST as p77 } from './taeglich-liegestuetze.de';
+import { POST as p78 } from './liegestuetze-steigern.de';
+import { POST as p79 } from './opdrukken-progressie.nl';
+import { POST as p80 } from './pieseis-ges-anabasis.grc';
+import { POST as p81 } from './progresion-flexiones.es';
+import { POST as p82 } from './progressio-pressionum.la';
+import { POST as p83 } from './progression-pompes.fr';
+import { POST as p84 } from './progressione-piegamenti.it';
+import { POST as p85 } from './pushup-progression.en';
 
 export const GENERATED_BLOG_POSTS: ReadonlyArray<BlogPost> = [
   p0,
@@ -173,4 +176,7 @@ export const GENERATED_BLOG_POSTS: ReadonlyArray<BlogPost> = [
   p80,
   p81,
   p82,
+  p83,
+  p84,
+  p85,
 ];
