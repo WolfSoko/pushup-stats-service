@@ -2995,19 +2995,37 @@ Deine Position: # ·  Reps        </source>
       <notes>
         <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:46,47</note>
 
-        
+
             </notes>
       <segment state="translated">
         <source>Woche</source>
         <target>Week</target>
 
-        
-        
+
+
             </segment>
 
-      
-      
+
+
         </unit>
+    <unit id="rangeModeYear">
+      <notes>
+        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:57,58</note>
+      </notes>
+      <segment state="translated">
+        <source>Jahr</source>
+        <target>Year</target>
+      </segment>
+    </unit>
+    <unit id="rangeModeCustom">
+      <notes>
+        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:60,61</note>
+      </notes>
+      <segment state="translated">
+        <source>Benutzerdefiniert</source>
+        <target>Custom</target>
+      </segment>
+    </unit>
     <unit id="rangeTo">
       <notes>
         <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:96</note>

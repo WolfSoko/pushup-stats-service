@@ -12,23 +12,19 @@ describe('FilterBarComponent', () => {
 
     fixture = TestBed.createComponent(FilterBarComponent);
     component = fixture.componentInstance;
-    fixture.componentRef.setInput('from', '2026-02-01');
-    fixture.componentRef.setInput('to', '2026-02-07');
+    // Mon 2026-01-26 .. Sun 2026-02-01 — a valid week so the inferred mode is 'week'
+    fixture.componentRef.setInput('from', '2026-01-26');
+    fixture.componentRef.setInput('to', '2026-02-01');
     await fixture.whenStable();
   });
 
-  it('normalizes initial range to week mode using first selected day as anchor', () => {
+  it('infers week mode and keeps the input range when the dates are a valid Mon-Sun week', () => {
     const start = component.range.controls.start.value;
     const end = component.range.controls.end.value;
 
-    // from=2026-02-01 (Sunday) -> week anchor on first selected day => Mon 2026-01-26 .. Sun 2026-02-01
-    expect(start?.getFullYear()).toBe(2026);
-    expect(start?.getMonth()).toBe(0);
-    expect(start?.getDate()).toBe(26);
-
-    expect(end?.getFullYear()).toBe(2026);
-    expect(end?.getMonth()).toBe(1);
-    expect(end?.getDate()).toBe(1);
+    expect(component.mode()).toBe('week');
+    expect(start).toEqual(new Date(2026, 0, 26));
+    expect(end).toEqual(new Date(2026, 1, 1));
   });
 
   it('emits ISO dates when reactive range controls change', () => {
@@ -50,6 +46,8 @@ describe('FilterBarComponent', () => {
     expect(text).toContain('Tag');
     expect(text).toContain('Woche');
     expect(text).toContain('Monat');
+    expect(text).toContain('Jahr');
+    expect(text).toContain('Benutzerdefiniert');
     expect(text).toContain('Zurück');
     expect(text).toContain('Heute');
     expect(text).toContain('Vor');
@@ -193,6 +191,74 @@ describe('FilterBarComponent', () => {
     } finally {
       vitest.useRealTimers();
     }
+  });
+
+  it('sets year range (Jan 1 - Dec 31) from anchor date', () => {
+    component.range.patchValue({
+      start: new Date(2026, 4, 17),
+      end: new Date(2026, 4, 17),
+    });
+
+    component.setMode('year');
+
+    expect(component.range.controls.start.value).toEqual(new Date(2026, 0, 1));
+    expect(component.range.controls.end.value).toEqual(new Date(2026, 11, 31));
+  });
+
+  it('shifts year range forward and backward without overflow', () => {
+    component.setMode('year');
+    component.range.patchValue({
+      start: new Date(2026, 0, 1),
+      end: new Date(2026, 11, 31),
+    });
+
+    component.shiftRange(1);
+
+    expect(component.range.controls.start.value).toEqual(new Date(2027, 0, 1));
+    expect(component.range.controls.end.value).toEqual(new Date(2027, 11, 31));
+
+    component.shiftRange(-1);
+
+    expect(component.range.controls.start.value).toEqual(new Date(2026, 0, 1));
+    expect(component.range.controls.end.value).toEqual(new Date(2026, 11, 31));
+  });
+
+  it('keeps current selection when switching to custom mode', () => {
+    component.range.patchValue({
+      start: new Date(2026, 1, 5),
+      end: new Date(2026, 2, 12),
+    });
+
+    component.setMode('custom');
+
+    expect(component.mode()).toBe('custom');
+    expect(component.range.controls.start.value).toEqual(new Date(2026, 1, 5));
+    expect(component.range.controls.end.value).toEqual(new Date(2026, 2, 12));
+  });
+
+  it('does not shift the range while in custom mode', () => {
+    const start = new Date(2026, 1, 5);
+    const end = new Date(2026, 2, 12);
+    component.range.patchValue({ start, end });
+    component.setMode('custom');
+
+    component.shiftRange(1);
+    component.shiftRange(-1);
+
+    expect(component.range.controls.start.value).toEqual(start);
+    expect(component.range.controls.end.value).toEqual(end);
+  });
+
+  it('does not snap range when jumping to today in custom mode', () => {
+    const start = new Date(2026, 1, 5);
+    const end = new Date(2026, 2, 12);
+    component.range.patchValue({ start, end });
+    component.setMode('custom');
+
+    component.jumpToToday();
+
+    expect(component.range.controls.start.value).toEqual(start);
+    expect(component.range.controls.end.value).toEqual(end);
   });
 
   it('switches to week mode using first day when today is outside current range', () => {

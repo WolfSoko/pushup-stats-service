@@ -53,12 +53,19 @@ import { parseIsoDate, RangeModes, toLocalIsoDate } from '@pu-stats/models';
           <mat-button-toggle value="month" i18n="@@rangeModeMonth"
             >Monat</mat-button-toggle
           >
+          <mat-button-toggle value="year" i18n="@@rangeModeYear"
+            >Jahr</mat-button-toggle
+          >
+          <mat-button-toggle value="custom" i18n="@@rangeModeCustom"
+            >Benutzerdefiniert</mat-button-toggle
+          >
         </mat-button-toggle-group>
 
         <div class="step-actions">
           <button
             type="button"
             mat-stroked-button
+            [disabled]="mode() === 'custom'"
             (click)="shiftRange(-1)"
             i18n="@@rangeBack"
           >
@@ -76,6 +83,7 @@ import { parseIsoDate, RangeModes, toLocalIsoDate } from '@pu-stats/models';
           <button
             type="button"
             mat-stroked-button
+            [disabled]="mode() === 'custom'"
             (click)="shiftRange(1)"
             i18n="@@rangeForward"
           >
@@ -179,6 +187,10 @@ export class FilterBarComponent implements OnChanges {
     this.mode.set(value);
     this.modeChange.emit(value);
 
+    // Custom mode: keep whatever range is currently selected and let the user
+    // edit it freely via the date-range picker. No auto-snap.
+    if (value === 'custom') return;
+
     let anchor: Date | undefined;
     if (
       previousStart &&
@@ -197,6 +209,7 @@ export class FilterBarComponent implements OnChanges {
   }
 
   jumpToToday(): void {
+    if (this.mode() === 'custom') return;
     this.applyModeRange(new Date());
   }
 
@@ -217,12 +230,20 @@ export class FilterBarComponent implements OnChanges {
       e.getDate() === lastDay;
     if (isMonthStart && isMonthEnd) return 'month';
 
-    return 'week';
+    const isYearStart = s.getMonth() === 0 && s.getDate() === 1;
+    const isYearEnd =
+      e.getFullYear() === s.getFullYear() &&
+      e.getMonth() === 11 &&
+      e.getDate() === 31;
+    if (isYearStart && isYearEnd) return 'year';
+
+    return 'custom';
   }
 
   shiftRange(direction: -1 | 1): void {
     const start = this.range.controls.start.value;
     const end = this.range.controls.end.value;
+    if (this.mode() === 'custom') return;
     if (!start || !end) {
       this.applyModeRange();
       return;
@@ -237,6 +258,10 @@ export class FilterBarComponent implements OnChanges {
     } else if (this.mode() === 'week') {
       nextStart.setDate(nextStart.getDate() + direction * 7);
       nextEnd.setDate(nextEnd.getDate() + direction * 7);
+    } else if (this.mode() === 'year') {
+      const year = start.getFullYear() + direction;
+      nextStart.setFullYear(year, 0, 1);
+      nextEnd.setFullYear(year, 11, 31);
     } else {
       // Always keep full month boundaries and avoid JS date overflow
       // (e.g. Jan 31 + 1 month becoming March).
@@ -253,6 +278,8 @@ export class FilterBarComponent implements OnChanges {
   }
 
   private applyModeRange(anchorDate?: Date): void {
+    if (this.mode() === 'custom') return;
+
     const anchor =
       anchorDate ??
       this.range.controls.end.value ??
@@ -269,6 +296,13 @@ export class FilterBarComponent implements OnChanges {
       const start = this.startOfWeek(anchor);
       const end = new Date(start);
       end.setDate(start.getDate() + 6);
+      this.range.patchValue({ start, end });
+      return;
+    }
+
+    if (this.mode() === 'year') {
+      const start = new Date(anchor.getFullYear(), 0, 1);
+      const end = new Date(anchor.getFullYear(), 11, 31);
       this.range.patchValue({ start, end });
       return;
     }

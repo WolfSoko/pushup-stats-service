@@ -19,13 +19,18 @@ export function inferRangeMode(from: string, to: string): RangeModes {
     s.getMonth() + 1,
     0
   ).getDate();
-  const isMonthEnd = e.getDate() === lastDayOfMonth;
+  const isMonthEnd =
+    e.getFullYear() === s.getFullYear() &&
+    e.getMonth() === s.getMonth() &&
+    e.getDate() === lastDayOfMonth;
 
   if (isMonthStart && isMonthEnd) return 'month';
 
-  const lastDayOfYear = new Date(s.getFullYear(), 11, 0);
   const isYearStart = s.getMonth() === 0 && isMonthStart;
-  const isYearEnd = e.getTime() == lastDayOfYear.getTime();
+  const isYearEnd =
+    e.getFullYear() === s.getFullYear() &&
+    e.getMonth() === 11 &&
+    e.getDate() === 31;
 
   if (isYearStart && isYearEnd) return 'year';
   return 'custom';

@@ -14,6 +14,19 @@ describe('inferRangeMode', () => {
     expect(inferRangeMode('2024-03-01', '2024-03-31')).toBe('month');
   });
 
+  it('returns "year" for a full calendar year', () => {
+    expect(inferRangeMode('2024-01-01', '2024-12-31')).toBe('year');
+  });
+
+  it('returns "year" for a leap-year full range', () => {
+    // 2024 is a leap year — Feb has 29 days, but year start/end are unaffected
+    expect(inferRangeMode('2024-01-01', '2024-12-31')).toBe('year');
+  });
+
+  it('does not classify cross-year ranges as "year"', () => {
+    expect(inferRangeMode('2024-01-01', '2025-12-31')).toBe('custom');
+  });
+
   it('returns "custom" for an arbitrary range', () => {
     expect(inferRangeMode('2024-03-05', '2024-03-20')).toBe('custom');
   });
