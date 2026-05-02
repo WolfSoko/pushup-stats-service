@@ -8,7 +8,10 @@ import {
   provideBrowserGlobalErrorListeners,
   provideZonelessChangeDetection,
 } from '@angular/core';
-import * as Sentry from '@sentry/angular';
+import {
+  createErrorHandler as sentryCreateErrorHandler,
+  TraceService as SentryTraceService,
+} from '@sentry/angular';
 import { getAnalytics, provideAnalytics } from '@angular/fire/analytics';
 import {
   connectFunctionsEmulator,
@@ -42,9 +45,6 @@ import {
 } from '@pu-stats/data-access';
 import { UserProfileSyncHook } from './core/auth/user-profile-sync.hook';
 import { GuestDataMigrationHook } from './core/auth/guest-data-migration.hook';
-import { MatrixController, MatrixElement } from 'chartjs-chart-matrix';
-import ChartDataLabels from 'chartjs-plugin-datalabels';
-import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 import { adsConfig } from '../env/ads.config';
 import { firebaseRuntime } from '../env/firebase-runtime';
 import { demoUserId } from '../env/demo.config';
@@ -62,16 +62,16 @@ export const appConfig: ApplicationConfig = {
       ? [
           {
             provide: ErrorHandler,
-            useValue: Sentry.createErrorHandler(),
+            useValue: sentryCreateErrorHandler(),
           },
           {
-            provide: Sentry.TraceService,
+            provide: SentryTraceService,
             deps: [Router],
           },
           {
             provide: APP_INITIALIZER,
             useFactory: () => () => undefined,
-            deps: [Sentry.TraceService],
+            deps: [SentryTraceService],
             multi: true,
           },
         ]
@@ -83,11 +83,9 @@ export const appConfig: ApplicationConfig = {
     ),
     provideZonelessChangeDetection(),
     provideNativeDateAdapter(),
-    provideCharts(withDefaultRegisterables(), {
-      // Register matrix controller/element + datalabels plugin.
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      registerables: [MatrixController, MatrixElement, ChartDataLabels as any],
-    }),
+    // Chart.js providers (provideCharts) are scoped to chart components in
+    // libs/stats so chart.js + ng2-charts + chartjs-chart-matrix +
+    // chartjs-plugin-datalabels stay out of the eager main bundle.
     // LOCALE_ID is automatically set by Angular i18n based on the build locale
     // MAT_DATE_LOCALE follows LOCALE_ID by default when not explicitly set
     { provide: DEMO_USER_ID, useValue: demoUserId },

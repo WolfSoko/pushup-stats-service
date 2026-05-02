@@ -1,7 +1,7 @@
 import { isPlatformBrowser } from '@angular/common';
 import { Component, PLATFORM_ID, computed, inject, input } from '@angular/core';
 import type { ChartConfiguration } from 'chart.js';
-import { BaseChartDirective } from 'ng2-charts';
+import { BaseChartDirective, provideCharts } from 'ng2-charts';
 import { PushupRecord } from '@pu-stats/models';
 import { ensureHeatmapChartRegistered } from './chart-setup';
 import {
@@ -23,6 +23,7 @@ export interface HeatmapCell {
   selector: 'app-heatmap',
   standalone: true,
   imports: [BaseChartDirective],
+  providers: [provideCharts()],
   template: `
     @if (isBrowser) {
       <canvas
