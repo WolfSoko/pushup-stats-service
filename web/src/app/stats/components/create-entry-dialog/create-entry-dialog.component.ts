@@ -4,6 +4,7 @@ import {
   Component,
   computed,
   inject,
+  LOCALE_ID,
   signal,
 } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
@@ -24,6 +25,7 @@ import { RouterLink } from '@angular/router';
 import {
   appendLocalOffset,
   findPushupTypeByEntryLabel,
+  localizePushupType,
   PUSHUP_TYPES,
 } from '@pu-stats/models';
 
@@ -252,6 +254,7 @@ export class CreateEntryDialogComponent {
   private readonly data = inject<EntryDialogData | null>(MAT_DIALOG_DATA, {
     optional: true,
   });
+  private readonly locale = inject(LOCALE_ID) as string;
 
   readonly isEditMode = !!this.data;
   private readonly originalTimestamp = this.data?.timestamp ?? null;
@@ -323,7 +326,8 @@ export class CreateEntryDialogComponent {
   });
 
   tooltipFor(label: string): string {
-    return findPushupTypeByEntryLabel(label)?.summary ?? '';
+    const type = findPushupTypeByEntryLabel(label);
+    return type ? localizePushupType(type, this.locale).summary : '';
   }
 
   addSet(): void {

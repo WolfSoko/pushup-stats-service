@@ -57,9 +57,10 @@ describe('CreateEntryDialogComponent', () => {
       expect(component.wikiQueryParams()).toEqual({});
     });
 
-    it('Then `tooltipFor` returns the German summary for known types', () => {
-      // Sanity check on a stable catalog entry — the exact wording lives in
-      // pushup-type.models.ts and is covered by its own spec.
+    it('Then `tooltipFor` returns a non-empty summary for known types', () => {
+      // Default locale in the test bed is `en-US`, so we get the English
+      // summary. Localization is exhaustively tested in
+      // pushup-type.models.spec.ts; here we only assert the wiring.
       expect(component.tooltipFor('Standard').length).toBeGreaterThan(0);
       expect(component.tooltipFor('Unknown')).toBe('');
     });

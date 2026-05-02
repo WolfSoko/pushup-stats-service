@@ -317,12 +317,18 @@ export class PushupTypesPageComponent {
    * essential here because the app shell wraps content in a
    * `<mat-sidenav-content>` that owns its own scroll container —
    * `ViewportScroller` only scrolls `window` and would silently no-op.
+   *
+   * Use `getElementById` (not `querySelector`) so an unexpected
+   * `?type=` value containing CSS special characters can't throw a
+   * `DOMException` and break the page. Containment check guards
+   * against IDs from outside this component (defensive, since the
+   * catalog slugs are static).
    */
   private scrollToSection(slug: string): void {
     if (!this.isBrowser) return;
-    const target: HTMLElement | null = this.host.nativeElement.querySelector(
-      `section[id="${slug}"]`
-    );
-    target?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    const target = document.getElementById(slug);
+    if (target && this.host.nativeElement.contains(target)) {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
   }
 }
