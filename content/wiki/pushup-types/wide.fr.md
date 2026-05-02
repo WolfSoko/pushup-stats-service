@@ -7,5 +7,5 @@ instructions:
   - Descendez la poitrine de façon contrôlée avec une nette sensation d'étirement à travers les pectoraux.
   - Poussez vers le haut consciemment depuis les pectoraux — ne « trichez » pas avec les triceps.
 tips:
-  - Santé des épaules: gardez les omoplates rétractées, ne vous suspendez pas dans les articulations.
+  - 'Santé des épaules: gardez les omoplates rétractées, ne vous suspendez pas dans les articulations.'
 ---

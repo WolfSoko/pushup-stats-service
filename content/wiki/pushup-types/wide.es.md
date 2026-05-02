@@ -7,5 +7,5 @@ instructions:
   - Baja el pecho de forma controlada con una clara sensación de estiramiento en el pecho.
   - Empuja conscientemente desde el pecho — no "hagas trampa" con el tríceps.
 tips:
-  - Salud del hombro: mantén las escápulas retraídas, no te cuelgues de las articulaciones.
+  - 'Salud del hombro: mantén las escápulas retraídas, no te cuelgues de las articulaciones.'
 ---

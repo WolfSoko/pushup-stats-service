@@ -1,7 +1,8 @@
 #!/usr/bin/env node
-// Build-time generator: scans `content/blog/**/{de,en}.md` and
-// `content/wiki/pushup-types/<id>.{de,en}.md`, parses YAML frontmatter
-// and renders the markdown body to HTML, then writes:
+// Build-time generator: scans `content/blog/<folder>/<lang>.md` and
+// `content/wiki/pushup-types/<id>.<lang>.md` for any lowercase locale
+// code (de, en, fr, es, it, nl, grc, la, …), parses YAML frontmatter
+// and renders markdown bodies to HTML, then writes:
 //
 //   web/src/app/blog/generated/<slug>.<lang>.ts  (one file per post per locale)
 //   web/src/app/blog/generated/index.ts           (barrel re-exporting all posts)
@@ -76,6 +77,30 @@ function readFileIfExists(path) {
   }
 }
 
+// Slugs become both URL paths AND filename components (`<slug>.<lang>.ts`).
+// Reject anything that could escape the generated dir (path separators,
+// `..`, leading dot, whitespace, capitals) so a malicious or sloppy
+// frontmatter slug can't write outside web/src/app/blog/generated/.
+const SAFE_SLUG_RE = /^[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/;
+
+function assertSafeSlug(slug, sourcePath) {
+  if (typeof slug !== 'string' || !SAFE_SLUG_RE.test(slug)) {
+    throw new Error(
+      `${sourcePath}: invalid slug ${JSON.stringify(slug)} — must match ${SAFE_SLUG_RE} (lowercase ASCII kebab-case, no leading/trailing dash)`
+    );
+  }
+}
+
+const SAFE_LANG_RE = /^[a-z](?:[a-z-]*[a-z])?$/;
+
+function assertSafeLang(lang, sourcePath) {
+  if (typeof lang !== 'string' || !SAFE_LANG_RE.test(lang)) {
+    throw new Error(
+      `${sourcePath}: invalid locale code ${JSON.stringify(lang)} — must be lowercase ASCII (e.g. de, en, grc, zh-tw)`
+    );
+  }
+}
+
 // ---------- Blog ----------
 
 /**
@@ -88,25 +113,31 @@ function readFileIfExists(path) {
  */
 export function loadBlogPosts(contentRoot) {
   const blogRoot = join(contentRoot, 'blog');
-  const folders = listDirEntries(blogRoot).filter((entry) => {
-    const path = join(blogRoot, entry);
-    try {
-      return statSync(path).isDirectory();
-    } catch {
-      return false;
-    }
-  });
+  // Sort folder + file listings so the generated output is deterministic
+  // across filesystems (macOS HFS, Linux ext4, Windows NTFS each return
+  // readdir in different orders).
+  const folders = listDirEntries(blogRoot)
+    .filter((entry) => {
+      const path = join(blogRoot, entry);
+      try {
+        return statSync(path).isDirectory();
+      } catch {
+        return false;
+      }
+    })
+    .sort();
 
   const posts = [];
   for (const folder of folders) {
     const perLocale = {};
     // Discover all locale files in this folder (any `<lang>.md`).
-    const files = listDirEntries(join(blogRoot, folder)).filter((f) =>
-      f.endsWith('.md')
-    );
+    const files = listDirEntries(join(blogRoot, folder))
+      .filter((f) => f.endsWith('.md'))
+      .sort();
     for (const file of files) {
       const lang = file.slice(0, -3); // strip `.md`
       const path = join(blogRoot, folder, file);
+      assertSafeLang(lang, path);
       const source = readFileIfExists(path);
       if (source == null) continue;
       let parsed;
@@ -123,6 +154,7 @@ export function loadBlogPosts(contentRoot) {
       const entry = perLocale[lang];
       const data = entry.data;
       const slug = data.slug ?? folder;
+      assertSafeSlug(slug, entry.path);
       const post = {
         slug,
         lang,
@@ -168,14 +200,18 @@ function requireStr(data, key, path) {
 // ---------- Wiki / push-up types ----------
 
 /**
- * Walks `content/wiki/pushup-types/<id>.{de,en}.md` and returns a
- * `Record<id, Record<lang, PushupTypeContent>>` map. Only the
- * translatable text fields live in markdown; the structural metadata
- * (slug, entryLabel, difficulty, keywords) stays in `pushup-type.models.ts`.
+ * Walks `content/wiki/pushup-types/<id>.<lang>.md` (any lowercase locale
+ * code) and returns a `Record<id, Record<lang, PushupTypeContent>>` map.
+ * Only the translatable text fields live in markdown; structural
+ * metadata (slug, entryLabel, difficulty, keywords) stays in
+ * `pushup-type.models.ts`. File listings are sorted so the generated
+ * output is byte-stable across filesystems.
  */
 export function loadPushupTypeContent(contentRoot) {
   const dir = join(contentRoot, 'wiki', 'pushup-types');
-  const files = listDirEntries(dir).filter((f) => f.endsWith('.md'));
+  const files = listDirEntries(dir)
+    .filter((f) => f.endsWith('.md'))
+    .sort();
   const out = {};
   for (const file of files) {
     const match = /^(.+)\.([a-z][a-z-]*)\.md$/.exec(file);
@@ -186,6 +222,8 @@ export function loadPushupTypeContent(contentRoot) {
     }
     const [, id, lang] = match;
     const path = join(dir, file);
+    assertSafeSlug(id, path);
+    assertSafeLang(lang, path);
     const source = readFileSync(path, 'utf-8');
     let parsed;
     try {
@@ -199,10 +237,23 @@ export function loadPushupTypeContent(contentRoot) {
       name: requireStr(data, 'name', path),
       summary: requireStr(data, 'summary', path),
       instructions: requireStrArray(data, 'instructions', path),
-      tips: Array.isArray(data.tips) ? data.tips.map(String) : [],
+      tips: data.tips == null ? [] : requireStrArray(data, 'tips', path),
     };
   }
-  return out;
+  // Sort top-level keys (push-up type ids) and per-id locale keys so
+  // the emitted JSON object key order is stable across runs.
+  return Object.fromEntries(
+    Object.keys(out)
+      .sort()
+      .map((id) => [
+        id,
+        Object.fromEntries(
+          Object.keys(out[id])
+            .sort()
+            .map((lang) => [lang, out[id][lang]])
+        ),
+      ])
+  );
 }
 
 function requireStrArray(data, key, path) {
@@ -212,13 +263,21 @@ function requireStrArray(data, key, path) {
       `${path}: frontmatter field \`${key}\` must be a non-empty list`
     );
   }
-  return value.map(String);
+  return value.map((item, idx) => {
+    if (typeof item !== 'string' || item.length === 0) {
+      throw new Error(
+        `${path}: frontmatter field \`${key}\` item at index ${idx} must be a non-empty string (got ${typeof item}). This usually means an unquoted scalar like "Word: rest" was parsed as a YAML map; wrap the item in single or double quotes.`
+      );
+    }
+    return item;
+  });
 }
 
 // ---------- Code emission ----------
 
 const HEADER = `// AUTO-GENERATED by tools/src/generate-content.mjs — do not edit directly.
-// Source files: content/blog/**/*.md and content/wiki/pushup-types/<id>.{de,en}.md
+// Source files: content/blog/<folder>/<lang>.md and content/wiki/pushup-types/<id>.<lang>.md
+// (any lowercase locale code is accepted, not just de/en).
 // Run \`pnpm nx run tools:generate-content\` to regenerate (also runs automatically
 // before \`pnpm nx run web:build\`).
 `;
@@ -278,12 +337,21 @@ function main() {
   const posts = loadBlogPosts(contentRoot);
   const pushupContent = loadPushupTypeContent(contentRoot);
 
-  // Per-post generated files + barrel.
+  // Per-post generated files + barrel. Track written filenames so two
+  // posts colliding on `<slug>.<lang>` (e.g. accidental duplicate slug
+  // across folders) fail loudly instead of silently overwriting.
   const generatedDir = resolve(ROOT, 'web/src/app/blog/generated');
   mkdirSync(generatedDir, { recursive: true });
-
+  const writtenKeys = new Set();
   for (const post of posts) {
-    const filePath = resolve(generatedDir, `${post.slug}.${post.lang}.ts`);
+    const key = `${post.slug}.${post.lang}`;
+    if (writtenKeys.has(key)) {
+      throw new Error(
+        `Duplicate generated filename ${key}.ts — two blog posts resolved to the same (slug, lang). Check frontmatter \`slug:\` fields under content/blog/.`
+      );
+    }
+    writtenKeys.add(key);
+    const filePath = resolve(generatedDir, `${key}.ts`);
     writeFileSync(filePath, emitPerPostModule(post), 'utf-8');
   }
   const barrelPath = resolve(generatedDir, 'index.ts');

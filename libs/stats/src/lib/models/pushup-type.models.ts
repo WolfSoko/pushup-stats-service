@@ -524,9 +524,10 @@ export function findPushupTypeByEntryLabel(
 
 /**
  * Returns the localized name + summary for the active Angular locale.
- * English when `locale` starts with `en`, German otherwise. Prefers
- * markdown-sourced content from `PUSHUP_TYPE_CONTENT` when available,
- * falling back to the legacy parallel `*En` fields on PUSHUP_TYPES.
+ * Resolves the locale's primary subtag (e.g. `fr-CH` → `fr`) and looks
+ * up the markdown-sourced override in `PUSHUP_TYPE_CONTENT`. Falls back
+ * through `en` → `de` → legacy parallel `*En`/`*` fields on
+ * PUSHUP_TYPES so unsupported locales still render something.
  */
 export function localizePushupType(
   type: PushupTypeInfo,
@@ -537,8 +538,10 @@ export function localizePushupType(
   instructions: ReadonlyArray<string>;
   tips: ReadonlyArray<string>;
 } {
-  const lang = locale.toLowerCase().startsWith('en') ? 'en' : 'de';
-  const override = PUSHUP_TYPE_CONTENT[type.id]?.[lang];
+  const primary = locale.toLowerCase().split(/[-_]/)[0];
+  const overrides = PUSHUP_TYPE_CONTENT[type.id];
+  const override =
+    overrides?.[primary] ?? overrides?.['en'] ?? overrides?.['de'];
   if (override) {
     return {
       name: override.name,
@@ -547,7 +550,7 @@ export function localizePushupType(
       tips: override.tips,
     };
   }
-  const isEnglish = lang === 'en';
+  const isEnglish = primary === 'en';
   return {
     name: isEnglish ? type.nameEn : type.name,
     summary: isEnglish ? type.summaryEn : type.summary,

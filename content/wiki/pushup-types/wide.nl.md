@@ -7,5 +7,5 @@ instructions:
   - Laat de borst gecontroleerd zakken met een duidelijk rek over de borst.
   - Druk bewust vanuit de borst omhoog — niet "vals spelen" met de triceps.
 tips:
-  - Schoudergezondheid: houd de schouderbladen ingetrokken, hang niet in de gewrichten.
+  - 'Schoudergezondheid: houd de schouderbladen ingetrokken, hang niet in de gewrichten.'
 ---

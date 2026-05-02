@@ -7,5 +7,5 @@ instructions:
   - Abbassa il petto in modo controllato con una chiara sensazione di allungamento sul petto.
   - Spingi su consapevolmente dal petto — senza "barare" con i tricipiti.
 tips:
-  - Salute delle spalle: mantieni le scapole retratte, non cedere nelle articolazioni.
+  - 'Salute delle spalle: mantieni le scapole retratte, non cedere nelle articolazioni.'
 ---

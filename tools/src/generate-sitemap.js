@@ -94,19 +94,23 @@ function extractBlogPosts(source) {
  */
 function scanMarkdownBlogPosts(blogContentRoot) {
   if (!existsSync(blogContentRoot)) return [];
-  const folders = readdirSync(blogContentRoot).filter((entry) => {
-    try {
-      return statSync(join(blogContentRoot, entry)).isDirectory();
-    } catch {
-      return false;
-    }
-  });
+  // Sort to make sitemap output byte-stable across filesystems
+  // (readdirSync order varies by OS).
+  const folders = readdirSync(blogContentRoot)
+    .filter((entry) => {
+      try {
+        return statSync(join(blogContentRoot, entry)).isDirectory();
+      } catch {
+        return false;
+      }
+    })
+    .sort();
   const posts = [];
   for (const folder of folders) {
     const perLocale = {};
-    const localeFiles = readdirSync(join(blogContentRoot, folder)).filter((f) =>
-      f.endsWith('.md')
-    );
+    const localeFiles = readdirSync(join(blogContentRoot, folder))
+      .filter((f) => f.endsWith('.md'))
+      .sort();
     for (const file of localeFiles) {
       const lang = file.slice(0, -3);
       const path = join(blogContentRoot, folder, file);

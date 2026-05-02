@@ -7,5 +7,5 @@ instructions:
   - Brust kontrolliert absenken, dabei spürbares Stretchgefühl in der Brust.
   - Bewusst aus der Brust hochdrücken — nicht mit dem Trizeps "schummeln".
 tips:
-  - Schultergesundheit: Schulterblätter aktiv zusammenziehen, nicht in den Gelenken hängen.
+  - 'Schultergesundheit: Schulterblätter aktiv zusammenziehen, nicht in den Gelenken hängen.'
 ---

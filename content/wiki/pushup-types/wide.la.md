@@ -7,5 +7,5 @@ instructions:
   - Pectus moderate demitte cum clara sensatione extensionis per pectus.
   - Surge pectore intentionaliter — tricipitis "fraudem" ne adhibeas.
 tips:
-  - Valetudo humerorum: scapulas retractas tene, in articulis ne pendeas.
+  - 'Valetudo humerorum: scapulas retractas tene, in articulis ne pendeas.'
 ---

@@ -7,5 +7,5 @@ instructions:
   - Lower the chest under control with a clear stretch sensation across the chest.
   - Press up consciously from the chest — do not "cheat" with the triceps.
 tips:
-  - Shoulder health: keep the shoulder blades retracted, do not hang in the joints.
+  - 'Shoulder health: keep the shoulder blades retracted, do not hang in the joints.'
 ---
