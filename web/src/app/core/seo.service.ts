@@ -144,9 +144,10 @@ export class SeoService {
   }
 
   /**
-   * Map a locale code to its OpenGraph BCP 47 form. OG only formally
-   * supports `xx_YY` IETF tags, so we approximate for languages
-   * without a clear region by returning the bare two-letter code.
+   * Map a locale code to its OpenGraph locale value. OpenGraph uses the
+   * underscore-separated `ll_CC` form (language + region, e.g. `en_US`)
+   * rather than BCP 47's hyphenated tags. For languages without a clear
+   * region we fall back to the bare two-letter language code.
    */
   private ogLocaleFor(locale: LocalePrefix): string {
     const map: Record<LocalePrefix, string> = {
