@@ -5,7 +5,7 @@
 
 export interface UserProfile {
   displayName?: string;
-  ui?: { hideFromLeaderboard?: boolean };
+  ui?: { hideFromLeaderboard?: boolean; publicProfile?: boolean };
   role?: string;
 }
 
@@ -39,4 +39,24 @@ export function toPublicDisplayName(profile?: UserProfile): string {
  */
 export function isLeaderboardNameAllowed(profile?: UserProfile): boolean {
   return profile?.ui?.hideFromLeaderboard === false;
+}
+
+/**
+ * Whether a leaderboard entry should carry the user's UID so the frontend
+ * can link to `/u/<uid>`.
+ *
+ * Three independent gates:
+ * 1. Leaderboard name is allowed (`hideFromLeaderboard === false`) so the
+ *    displayed alias is the real name.
+ * 2. Public profile is enabled (`publicProfile === true`).
+ * 3. `displayName` is non-empty after trimming. Without this, a user with
+ *    both opt-ins but a blank name would render as `anonym` (via
+ *    `toPublicDisplayName`'s fallback) AND get a clickable `/u/<uid>` —
+ *    a stable, profile-correlatable handle hiding behind an apparently
+ *    anonymous alias. The third gate forecloses that leak.
+ */
+export function isPublicProfileLinkAllowed(profile?: UserProfile): boolean {
+  if (!isLeaderboardNameAllowed(profile)) return false;
+  if (profile?.ui?.publicProfile !== true) return false;
+  return String(profile?.displayName || '').trim().length > 0;
 }

@@ -315,4 +315,67 @@ describe('LandingPageComponent', () => {
     expect(signInGuestIfNeeded).toHaveBeenCalled();
     expect(navigateSpy).toHaveBeenCalledWith(['/app']);
   });
+
+  describe('heatmap preview data', () => {
+    it('expands HEATMAP_PATTERN into 18 weeks × 7 days with correct level mapping', async () => {
+      const view = await render(LandingPageComponent, {
+        providers: [
+          provideRouter([]),
+          { provide: AdsStore, useValue: adsConfigMock },
+          { provide: AuthService, useValue: makeAuthServiceMock() },
+          { provide: AuthStore, useValue: makeAuthStoreMock() },
+        ],
+      });
+
+      const component = view.fixture.componentInstance;
+      const weeks = component.heatmapWeeks;
+
+      // Given the pattern: 18 weeks, 7 days each, x stride 14, y stride 14
+      expect(weeks).toHaveLength(18);
+      weeks.forEach((week, i) => {
+        expect(week.x).toBe(i * 14);
+        expect(week.days).toHaveLength(7);
+        week.days.forEach((day, j) => {
+          expect(day.y).toBe(j * 14);
+          // Level is 'empty' or one of '1'..'5' — never the raw 'e' encoding.
+          expect(['empty', '1', '2', '3', '4', '5']).toContain(day.level);
+        });
+      });
+    });
+
+    it("maps the pattern character 'e' to 'empty' and digits to themselves", async () => {
+      // Given
+      const view = await render(LandingPageComponent, {
+        providers: [
+          provideRouter([]),
+          { provide: AdsStore, useValue: adsConfigMock },
+          { provide: AuthService, useValue: makeAuthServiceMock() },
+          { provide: AuthStore, useValue: makeAuthStoreMock() },
+        ],
+      });
+      const component = view.fixture.componentInstance;
+
+      // Then — week 0 should match the documented pattern '1e213e2'
+      const week0Levels = component.heatmapWeeks[0].days.map((d) => d.level);
+      expect(week0Levels).toEqual(['1', 'empty', '2', '1', '3', 'empty', '2']);
+    });
+
+    it('renders one rect per day in the heatmap preview SVG', async () => {
+      const view = await render(LandingPageComponent, {
+        providers: [
+          provideRouter([]),
+          { provide: AdsStore, useValue: adsConfigMock },
+          { provide: AuthService, useValue: makeAuthServiceMock() },
+          { provide: AuthStore, useValue: makeAuthStoreMock() },
+        ],
+      });
+      const host = view.fixture.nativeElement as HTMLElement;
+
+      // The 18 × 7 grid + the 6-step legend below it = 132 rects
+      const dayCells = host.querySelectorAll(
+        '.feature-visual--heatmap rect[class^="lp-day-"]'
+      );
+      expect(dayCells).toHaveLength(18 * 7 + 6);
+    });
+  });
 });

@@ -23,8 +23,13 @@ jobs:
             && secrets.NX_CLOUD_ACCESS_TOKEN_WRITE
           || secrets.NX_CLOUD_ACCESS_TOKEN_READ
         }}
-      # More heap for Angular SSR build + Playwright webServer in CI.
-      NODE_OPTIONS: --max-old-space-size=6144
+      # 4 GB Node heap for the orchestrator job (`lint-test-build`). High
+      # enough for the Angular SSR build + Playwright webServer in CI, and
+      # matches the per-agent heap configured in
+      # `.nx/workflows/distribution-config.yaml` so a task can run on
+      # either side without a different OOM threshold. Bump in lockstep
+      # with the agent setting if the heavy targets ever need more.
+      NODE_OPTIONS: --max-old-space-size=4096
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -67,7 +72,15 @@ jobs:
         # Dynamic agent allocation: small PRs use 4 agents, large changesets
         # scale up to 10 so the 5-shard e2e-ci target finishes in one round
         # instead of two. Config: .nx/workflows/distribution-config.yaml
-        run: pnpm nx-cloud start-ci-run --distribute-on=".nx/workflows/distribution-config.yaml" --stop-agents-after="e2e-ci"
+        #
+        # `--with-env-vars="NODE_OPTIONS"` forwards the orchestrator's
+        # `NODE_OPTIONS=--max-old-space-size=4096` env to every agent's task
+        # process. Without this flag, agents would run with V8's default
+        # ~2 GB old-space heap regardless of what we set on the GH job, and
+        # heavy targets (Angular SSR build, Vitest with Firebase/Material)
+        # would GC-thrash or OOM only on the agent side.
+        # Docs: https://nx.dev/docs/reference/nx-cloud/launch-templates
+        run: pnpm nx-cloud start-ci-run --distribute-on=".nx/workflows/distribution-config.yaml" --stop-agents-after="e2e-ci" --with-env-vars="NODE_OPTIONS"
 
       - name: Nx affected (lint + test + build)
         run: pnpm nx affected -t=lint,test,build,e2e-ci -c=production

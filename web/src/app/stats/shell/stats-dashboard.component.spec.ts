@@ -128,6 +128,15 @@ describe('StatsDashboardComponent', () => {
       imports: [StatsDashboardComponent],
       providers: [
         provideRouter([]),
+        // NOTE: this spec stays on the default browser PLATFORM_ID even
+        // though stores constructed by the component start `setInterval`
+        // timers in `withHooks`. Pinning to `server` was suggested but
+        // breaks two regression tests that explicitly verify the
+        // browser-only `effect()` reacting to `LiveDataStore.updateTick`.
+        // The new tests added in this PR each call `createComponent()`
+        // exactly once — same shape as the cases that were already in
+        // the spec — so they don't materially worsen any pre-existing
+        // timer-leak budget.
         { provide: StatsApiService, useValue: serviceMock },
         {
           provide: UserStatsApiService,
@@ -781,6 +790,61 @@ describe('StatsDashboardComponent', () => {
       const payload = shareSpy.mock.calls[0][0];
       expect(payload.text).toContain('Streak');
       expect(payload.text).toContain('3');
+    });
+
+    it('Given the user has opted into a public profile, Then the share URL is the profile permalink', async () => {
+      // Given — user config with `ui.publicProfile = true`. The store
+      // reads UserConfigStore.config(), so the API mock must return that
+      // shape; UserContextService.userIdSafe() returns 'u1' (see top of
+      // describe block), so the resulting URL is /<lang>/u/u1.
+      const configApi = TestBed.inject(UserConfigApiService);
+      (configApi.getConfig as ReturnType<typeof vitest.fn>).mockReturnValue(
+        of({
+          userId: 'u1',
+          dailyGoal: 100,
+          weeklyGoal: 500,
+          monthlyGoal: 2000,
+          ui: { publicProfile: true },
+        })
+      );
+      TestBed.inject(UserConfigStore).reload();
+      const freshFixture = TestBed.createComponent(StatsDashboardComponent);
+      await freshFixture.whenStable();
+      shareSpy.mockClear();
+      const button = freshFixture.nativeElement.querySelector(
+        '[data-testid="dashboard-share"]'
+      ) as HTMLButtonElement;
+
+      // When
+      button.click();
+      await freshFixture.whenStable();
+
+      // Then — URL is the locale-prefixed profile permalink, and the
+      // share text reads as a personal share ("schau dir mein Profil
+      // an") rather than the generic "tracke deine stats" CTA.
+      const payload = shareSpy.mock.calls[0][0];
+      expect(payload.url).toMatch(
+        /^https:\/\/pushup-stats\.de\/(de|en)\/u\/u1$/
+      );
+      expect(payload.text).toContain('Profil');
+    });
+
+    it('Given the user has NOT opted into a public profile, Then the share URL stays the homepage', async () => {
+      // The default mock config in this spec doesn't set publicProfile,
+      // so this is the existing baseline — assert it explicitly so a
+      // regression flipping the default to "always link to profile"
+      // (which would 404 on opted-out users) is caught.
+      await fixture.whenStable();
+      shareSpy.mockClear();
+      const button = fixture.nativeElement.querySelector(
+        '[data-testid="dashboard-share"]'
+      ) as HTMLButtonElement;
+
+      button.click();
+      await fixture.whenStable();
+
+      const payload = shareSpy.mock.calls[0][0];
+      expect(payload.url).toBe('https://pushup-stats.de');
     });
   });
 

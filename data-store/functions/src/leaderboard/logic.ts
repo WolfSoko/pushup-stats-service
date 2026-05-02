@@ -7,6 +7,7 @@ import { berlinDateParts, BerlinDateParts } from '../datetime';
 import {
   toPublicDisplayName,
   isLeaderboardNameAllowed,
+  isPublicProfileLinkAllowed,
   toAnonymousLabel,
   UserProfile,
 } from '../profile';
@@ -20,6 +21,14 @@ export interface PushupRow {
 export interface LeaderboardEntry {
   alias: string;
   reps: number;
+  /**
+   * UID is only populated when the user opted into BOTH the leaderboard
+   * (`ui.hideFromLeaderboard === false`) AND a public profile
+   * (`ui.publicProfile === true`). Frontend renders entries with `uid`
+   * as links to `/u/<uid>`; entries without `uid` stay plain text.
+   * Anonymous-aliased rows (leaderboard opt-out) never carry a UID.
+   */
+  uid?: string;
 }
 
 export interface LeaderboardPeriods {
@@ -121,7 +130,14 @@ export function rankEntries(
       const alias = isLeaderboardNameAllowed(profile)
         ? toPublicDisplayName(profile)
         : toAnonymousLabel();
-      return { alias, reps };
+      // Only attach a UID when both leaderboard-visibility and
+      // public-profile opt-ins are on — otherwise the row stays plain
+      // text on the frontend and the user's stats can't be deeplinked.
+      const entry: LeaderboardEntry = { alias, reps };
+      if (isPublicProfileLinkAllowed(profile)) {
+        entry.uid = userId;
+      }
+      return entry;
     })
     .sort((a, b) => b.reps - a.reps)
     .slice(0, TOP_N);

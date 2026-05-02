@@ -191,82 +191,377 @@
     ✓ Kostenlos · ✓ Kein Abo · ✓ Keine Kreditkarte · ✓ Datenschutz first
   </p>
 
-  <section class="feature-grid">
-    <mat-card>
+  <section
+    class="feature-grid"
+    aria-label="Funktionen"
+    i18n-aria-label="@@landing.features.aria"
+  >
+    <mat-card class="feature-card feature-card--visual">
+      <div class="feature-visual feature-visual--multiset" aria-hidden="true">
+        <svg viewBox="0 0 320 160" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="lp-set-bar" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" class="lp-bar-from" />
+              <stop offset="100%" class="lp-bar-to" />
+            </linearGradient>
+          </defs>
+          <rect width="320" height="160" rx="14" class="lp-bg" />
+          <rect
+            x="14"
+            y="14"
+            width="190"
+            height="132"
+            rx="10"
+            class="lp-card"
+          />
+          <rect
+            x="28"
+            y="44"
+            width="138"
+            height="10"
+            rx="5"
+            class="lp-bar-bg"
+          />
+          <rect
+            x="28"
+            y="44"
+            width="120"
+            height="10"
+            rx="5"
+            fill="url(#lp-set-bar)"
+          />
+          <text x="172" y="53" class="lp-reps">12</text>
+          <rect
+            x="28"
+            y="82"
+            width="138"
+            height="10"
+            rx="5"
+            class="lp-bar-bg"
+          />
+          <rect
+            x="28"
+            y="82"
+            width="100"
+            height="10"
+            rx="5"
+            fill="url(#lp-set-bar)"
+          />
+          <text x="172" y="91" class="lp-reps">10</text>
+          <rect
+            x="28"
+            y="120"
+            width="138"
+            height="10"
+            rx="5"
+            class="lp-bar-bg"
+          />
+          <rect
+            x="28"
+            y="120"
+            width="80"
+            height="10"
+            rx="5"
+            fill="url(#lp-set-bar)"
+          />
+          <text x="172" y="129" class="lp-reps">8</text>
+          <rect
+            x="216"
+            y="14"
+            width="90"
+            height="132"
+            rx="10"
+            class="lp-card"
+          />
+          <text x="261" y="86" text-anchor="middle" class="lp-total-value">
+            30
+          </text>
+        </svg>
+      </div>
+      <mat-card-header class="key-features-header">
+        <mat-icon aria-hidden="true">layers</mat-icon>
+        <mat-card-title i18n="@@landing.feature.multiset.title"
+          >Multi-Set Tracking</mat-card-title
+        >
+      </mat-card-header>
+      <mat-card-content i18n="@@landing.feature.multiset.body"
+        >Erfasse jeden Satz einzeln – z.&#x202F;B.
+        12&nbsp;+&nbsp;10&nbsp;+&nbsp;8. Die App summiert automatisch und zeigt
+        deine durchschnittliche Set-Größe.</mat-card-content
+      >
+    </mat-card>
+
+    <mat-card class="feature-card feature-card--visual">
+      <div class="feature-visual feature-visual--charts" aria-hidden="true">
+        <svg viewBox="0 0 320 160" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="lp-chart-fill" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" class="lp-area-from" />
+              <stop offset="100%" class="lp-area-to" />
+            </linearGradient>
+          </defs>
+          <rect width="320" height="160" rx="14" class="lp-bg" />
+          <g transform="translate(16, 16)">
+            <line x1="0" y1="20" x2="200" y2="20" class="lp-grid" />
+            <line x1="0" y1="55" x2="200" y2="55" class="lp-grid" />
+            <line x1="0" y1="90" x2="200" y2="90" class="lp-grid" />
+            <path
+              class="lp-area"
+              d="M0,95 L25,80 L50,82 L75,55 L100,62 L125,40 L150,48 L175,25 L200,30 L200,120 L0,120 Z"
+              fill="url(#lp-chart-fill)"
+            />
+            <polyline
+              class="lp-line"
+              points="0,95 25,80 50,82 75,55 100,62 125,40 150,48 175,25 200,30"
+            />
+            <circle cx="200" cy="30" r="4" class="lp-dot" />
+            <line x1="0" y1="120" x2="200" y2="120" class="lp-axis" />
+            <line x1="0" y1="120" x2="0" y2="124" class="lp-axis" />
+            <line x1="33" y1="120" x2="33" y2="124" class="lp-axis" />
+            <line x1="66" y1="120" x2="66" y2="124" class="lp-axis" />
+            <line x1="100" y1="120" x2="100" y2="124" class="lp-axis" />
+            <line x1="133" y1="120" x2="133" y2="124" class="lp-axis" />
+            <line x1="166" y1="120" x2="166" y2="124" class="lp-axis" />
+            <line x1="200" y1="120" x2="200" y2="124" class="lp-axis" />
+          </g>
+          <g transform="translate(258, 70)">
+            <circle r="28" class="lp-pie-track" />
+            <circle
+              r="28"
+              class="lp-pie-1"
+              stroke-dasharray="105 176"
+              transform="rotate(-90)"
+            />
+            <circle
+              r="28"
+              class="lp-pie-2"
+              stroke-dasharray="44 176"
+              transform="rotate(125)"
+            />
+            <circle
+              r="28"
+              class="lp-pie-3"
+              stroke-dasharray="26 176"
+              transform="rotate(215)"
+            />
+          </g>
+        </svg>
+      </div>
       <mat-card-header class="key-features-header">
         <mat-icon aria-hidden="true">insights</mat-icon>
         <mat-card-title i18n="@@landing.feature.analytics.title"
-          >Smarter Überblick</mat-card-title
+          >Charts, Trends & Pushup-Typen</mat-card-title
         >
       </mat-card-header>
       <mat-card-content i18n="@@landing.feature.analytics.body"
-        >KPIs, Charts und Custom-Zeiträume. Sieh auf einen Blick wie sich dein
-        Training entwickelt.</mat-card-content
+        >Verlaufsdiagramme, KPI-Karten, Verteilung nach Standard, Wide oder
+        Diamond – mit frei wählbarem Zeitraum.</mat-card-content
       >
     </mat-card>
 
-    <mat-card>
+    <mat-card class="feature-card feature-card--visual">
+      <div class="feature-visual feature-visual--goals" aria-hidden="true">
+        <svg viewBox="0 0 320 160" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="lp-goal-day" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#5DDC96" />
+              <stop offset="100%" stop-color="#34C778" />
+            </linearGradient>
+            <linearGradient id="lp-goal-week" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#3460C2" />
+              <stop offset="100%" stop-color="#7EA5FF" />
+            </linearGradient>
+            <linearGradient id="lp-goal-month" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#FBBF24" />
+              <stop offset="100%" stop-color="#FCD34D" />
+            </linearGradient>
+          </defs>
+          <rect width="320" height="160" rx="14" class="lp-bg" />
+          <g transform="translate(16, 18)">
+            <text x="200" y="10" text-anchor="end" class="lp-row-value">
+              42 / 50
+            </text>
+            <rect
+              x="0"
+              y="14"
+              width="200"
+              height="9"
+              rx="4"
+              class="lp-row-bg"
+            />
+            <rect
+              x="0"
+              y="14"
+              width="168"
+              height="9"
+              rx="4"
+              fill="url(#lp-goal-day)"
+            />
+            <text x="200" y="44" text-anchor="end" class="lp-row-value">
+              280 / 350
+            </text>
+            <rect
+              x="0"
+              y="48"
+              width="200"
+              height="9"
+              rx="4"
+              class="lp-row-bg"
+            />
+            <rect
+              x="0"
+              y="48"
+              width="160"
+              height="9"
+              rx="4"
+              fill="url(#lp-goal-week)"
+            />
+            <text x="200" y="78" text-anchor="end" class="lp-row-value">
+              920 / 1500
+            </text>
+            <rect
+              x="0"
+              y="82"
+              width="200"
+              height="9"
+              rx="4"
+              class="lp-row-bg"
+            />
+            <rect
+              x="0"
+              y="82"
+              width="123"
+              height="9"
+              rx="4"
+              fill="url(#lp-goal-month)"
+            />
+          </g>
+          <g transform="translate(228, 18)">
+            <rect x="0" y="0" width="76" height="92" rx="10" class="lp-card" />
+            <path
+              class="lp-flame"
+              d="M38 14c-3 6-12 10-12 22 0 9 6 14 12 14s12-5 12-14c0-7-3-11-7-15-2 3-3 5-5 5-1-3 1-7 0-12z"
+            />
+            <text x="38" y="80" text-anchor="middle" class="lp-streak-num">
+              17
+            </text>
+          </g>
+        </svg>
+      </div>
+      <mat-card-header class="key-features-header">
+        <mat-icon aria-hidden="true">flag</mat-icon>
+        <mat-card-title i18n="@@landing.feature.goals.title"
+          >Tages-, Wochen- & Monatsziele</mat-card-title
+        >
+      </mat-card-header>
+      <mat-card-content i18n="@@landing.feature.goals.body"
+        >Dreifacher Fortschrittsbalken hält dich auf Kurs. Streak-Anzeige
+        belohnt dranbleiben, Konfetti feiert dein erreichtes
+        Tagesziel.</mat-card-content
+      >
+    </mat-card>
+
+    <mat-card class="feature-card feature-card--visual">
+      <div class="feature-visual feature-visual--heatmap" aria-hidden="true">
+        <svg viewBox="0 0 320 160" xmlns="http://www.w3.org/2000/svg">
+          <rect width="320" height="160" rx="14" class="lp-bg" />
+          <g transform="translate(35, 14)">
+            @for (week of heatmapWeeks; track week.x) {
+              @for (day of week.days; track day.y) {
+                <rect
+                  [attr.x]="week.x"
+                  [attr.y]="day.y"
+                  width="12"
+                  height="12"
+                  rx="2"
+                  [attr.class]="'lp-day-' + day.level"
+                />
+              }
+            }
+          </g>
+          <g transform="translate(122, 130)">
+            <rect
+              x="0"
+              y="0"
+              width="11"
+              height="11"
+              rx="2"
+              class="lp-day-empty"
+            />
+            <rect x="13" y="0" width="11" height="11" rx="2" class="lp-day-1" />
+            <rect x="26" y="0" width="11" height="11" rx="2" class="lp-day-2" />
+            <rect x="39" y="0" width="11" height="11" rx="2" class="lp-day-3" />
+            <rect x="52" y="0" width="11" height="11" rx="2" class="lp-day-4" />
+            <rect x="65" y="0" width="11" height="11" rx="2" class="lp-day-5" />
+          </g>
+        </svg>
+      </div>
+      <mat-card-header class="key-features-header">
+        <mat-icon aria-hidden="true">grid_on</mat-icon>
+        <mat-card-title i18n="@@landing.feature.heatmap.title"
+          >Heatmap-Kalender</mat-card-title
+        >
+      </mat-card-header>
+      <mat-card-content i18n="@@landing.feature.heatmap.body"
+        >Sieh auf einen Blick, an welchen Tagen du wie hart trainiert hast.
+        Lücken werden sichtbar – Konsistenz wird zur
+        Gewohnheit.</mat-card-content
+      >
+    </mat-card>
+
+    <mat-card class="feature-card">
       <mat-card-header class="key-features-header">
         <mat-icon aria-hidden="true">bolt</mat-icon>
         <mat-card-title i18n="@@landing.feature.quick.title"
-          >Quick Logging</mat-card-title
+          >Quick Logging mit FAB</mat-card-title
         >
       </mat-card-header>
       <mat-card-content i18n="@@landing.feature.quick.body"
-        >Eintrag in 2 Sekunden. Schnellaktionen für 10, 20, 30 Reps oder freie
-        Eingabe.</mat-card-content
+        >Eintrag in 2 Sekunden über den Floating Action Button oder
+        Schnellaktionen direkt im Dashboard – ganz ohne
+        Dialog.</mat-card-content
       >
     </mat-card>
 
-    <mat-card>
-      <mat-card-header class="key-features-header">
-        <mat-icon aria-hidden="true">sync</mat-icon>
-        <mat-card-title i18n="@@landing.feature.live.title"
-          >Live & überall</mat-card-title
-        >
-      </mat-card-header>
-      <mat-card-content i18n="@@landing.feature.live.body"
-        >Alle Geräte. Echtzeit-Sync hält deine Daten überall aktuell – kein
-        Refresh nötig.</mat-card-content
-      >
-    </mat-card>
-
-    <mat-card>
-      <mat-card-header class="key-features-header">
-        <mat-icon aria-hidden="true">emoji_events</mat-icon>
-        <mat-card-title i18n="@@landing.feature.streak.title"
-          >Streaks & Bestenliste</mat-card-title
-        >
-      </mat-card-header>
-      <mat-card-content i18n="@@landing.feature.streak.body"
-        >Täglich dabei bleiben. Verfolge deine Streak und miss dich mit der
-        Community.</mat-card-content
-      >
-    </mat-card>
-
-    <mat-card>
-      <mat-card-header class="key-features-header">
-        <mat-icon aria-hidden="true">lock_open</mat-icon>
-        <mat-card-title i18n="@@landing.feature.free.title"
-          >100% Kostenlos</mat-card-title
-        >
-      </mat-card-header>
-      <mat-card-content i18n="@@landing.feature.free.body"
-        >Keine Kreditkarte. Kein Abo. Einfach registrieren und loslegen – für
-        immer kostenlos.</mat-card-content
-      >
-    </mat-card>
-
-    <mat-card>
+    <mat-card class="feature-card">
       <mat-card-header class="key-features-header">
         <mat-icon aria-hidden="true">auto_awesome</mat-icon>
         <mat-card-title i18n="@@landing.feature.adaptive.title"
-          >Smarte Schnellaktionen</mat-card-title
+          >Adaptive Vorschläge</mat-card-title
         >
       </mat-card-header>
       <mat-card-content i18n="@@landing.feature.adaptive.body"
-        >Basierend auf deiner Trainingshistorie schlägt die App automatisch
-        passende Wiederholungszahlen vor. Ein Tap genügt.</mat-card-content
+        >Die Schnellaktionen lernen aus deiner Historie und schlagen passende
+        Wiederholungen vor – oder du konfigurierst eigene
+        Buttons.</mat-card-content
+      >
+    </mat-card>
+
+    <mat-card class="feature-card">
+      <mat-card-header class="key-features-header">
+        <mat-icon aria-hidden="true">install_mobile</mat-icon>
+        <mat-card-title i18n="@@landing.feature.pwa.title"
+          >PWA, Live-Sync & Web Share</mat-card-title
+        >
+      </mat-card-header>
+      <mat-card-content i18n="@@landing.feature.pwa.body"
+        >Installierbar wie eine native App, Echtzeit-Sync zwischen allen Geräten
+        und Tagesergebnis per Web Share teilen – inklusive Dark- und
+        Light-Theme.</mat-card-content
+      >
+    </mat-card>
+
+    <mat-card class="feature-card">
+      <mat-card-header class="key-features-header">
+        <mat-icon aria-hidden="true">shield</mat-icon>
+        <mat-card-title i18n="@@landing.feature.privacy.title"
+          >Privacy first & 100&nbsp;% kostenlos</mat-card-title
+        >
+      </mat-card-header>
+      <mat-card-content i18n="@@landing.feature.privacy.body"
+        >DSGVO-konform mit anpassbarer Cookie-Zustimmung. Dein Name auf der
+        Bestenliste? Nur wenn du es willst. Kein Abo, keine
+        Kreditkarte.</mat-card-content
       >
     </mat-card>
   </section>
@@ -277,12 +572,149 @@
     <h2 id="preview-title" i18n="@@landing.preview.title">
       Deine Statistik auf einen Blick
     </h2>
-    <img
-      src="assets/landing-stats-screenshot.svg"
-      alt="Vorschau der Statistikansicht"
-      i18n-alt="@@landing.preview.alt"
-      loading="lazy"
-    />
+    <div class="preview-visual">
+      <svg
+        viewBox="0 0 1200 720"
+        xmlns="http://www.w3.org/2000/svg"
+        role="img"
+        aria-label="Vorschau der Statistikansicht"
+        i18n-aria-label="@@landing.preview.alt"
+      >
+        <defs>
+          <linearGradient
+            id="lp-screen-bg"
+            x1="0"
+            y1="0"
+            x2="1200"
+            y2="720"
+            gradientUnits="userSpaceOnUse"
+          >
+            <stop class="lp-screen-bg-from" />
+            <stop offset="1" class="lp-screen-bg-to" />
+          </linearGradient>
+        </defs>
+        <rect width="1200" height="720" rx="28" fill="url(#lp-screen-bg)" />
+        <rect
+          x="28"
+          y="28"
+          width="1144"
+          height="664"
+          rx="22"
+          class="lp-screen-frame"
+          stroke-width="1"
+        />
+        <rect
+          x="60"
+          y="72"
+          width="280"
+          height="42"
+          rx="10"
+          class="lp-screen-bar-1"
+        />
+        <rect
+          x="60"
+          y="130"
+          width="220"
+          height="18"
+          rx="9"
+          class="lp-screen-bar-2"
+        />
+        <rect
+          x="60"
+          y="184"
+          width="260"
+          height="120"
+          rx="16"
+          class="lp-screen-tile"
+          stroke-width="1"
+        />
+        <rect
+          x="340"
+          y="184"
+          width="260"
+          height="120"
+          rx="16"
+          class="lp-screen-tile"
+          stroke-width="1"
+        />
+        <rect
+          x="620"
+          y="184"
+          width="260"
+          height="120"
+          rx="16"
+          class="lp-screen-tile"
+          stroke-width="1"
+        />
+        <rect
+          x="60"
+          y="336"
+          width="820"
+          height="290"
+          rx="18"
+          class="lp-screen-chart-bg"
+          stroke-width="1"
+        />
+        <polyline
+          points="110,560 210,520 300,545 390,465 490,500 580,430 690,470 790,405"
+          class="lp-screen-line"
+          stroke-width="8"
+          fill="none"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+        <circle cx="790" cy="405" r="10" class="lp-screen-dot" />
+        <rect
+          x="910"
+          y="336"
+          width="230"
+          height="290"
+          rx="18"
+          class="lp-screen-chart-bg"
+          stroke-width="1"
+        />
+        <rect
+          x="940"
+          y="372"
+          width="170"
+          height="18"
+          rx="9"
+          class="lp-screen-bar-3"
+        />
+        <rect
+          x="940"
+          y="408"
+          width="120"
+          height="14"
+          rx="7"
+          class="lp-screen-bar-4"
+        />
+        <rect
+          x="940"
+          y="438"
+          width="170"
+          height="14"
+          rx="7"
+          class="lp-screen-bar-4"
+        />
+        <rect
+          x="940"
+          y="468"
+          width="140"
+          height="14"
+          rx="7"
+          class="lp-screen-bar-4"
+        />
+        <rect
+          x="940"
+          y="508"
+          width="170"
+          height="68"
+          rx="12"
+          class="lp-screen-bar-1"
+        />
+      </svg>
+    </div>
   </section>
 
   <section class="discover" aria-labelledby="discover-title">

@@ -47,7 +47,21 @@
         @for (entry of leaderboardSlots(); track entry.rank) {
           <li>
             <span class="rank">#{{ entry.rank }}</span>
-            <span class="alias">{{ entry.alias }}</span>
+            <!-- Link the alias to /u/<uid> only when the user opted into a
+                 public profile AND the leaderboard. Without uid, the row is
+                 either anonymous or the user opted out of profile linking,
+                 so we keep it as plain text. -->
+            @if (entry.uid) {
+              <a
+                class="alias alias-link"
+                [routerLink]="['/u', entry.uid]"
+                [attr.data-testid]="'leaderboard-link-' + entry.rank"
+              >
+                {{ entry.alias }}
+              </a>
+            } @else {
+              <span class="alias">{{ entry.alias }}</span>
+            }
             <strong
               >{{ entry.reps }}
               <span i18n="@@landing.leaderboard.reps">Reps</span></strong
