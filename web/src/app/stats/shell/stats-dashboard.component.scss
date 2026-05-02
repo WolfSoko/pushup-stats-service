@@ -1,6 +1,7 @@
 :host {
   display: block;
   overflow-x: hidden;
+  overflow-x: clip;
 }
 
 .plan-banner {
@@ -403,6 +404,32 @@ h1 {
   }
 }
 
+@keyframes dashboard-fly-in-from-right {
+  from {
+    opacity: 0;
+    translate: 60% 0;
+    scale: 0.94;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+    scale: 1;
+  }
+}
+
+@supports (animation-timeline: view()) {
+  .plan-banner,
+  .today-focus > mat-card,
+  .quick-actions,
+  app-analysis-teaser-card,
+  .latest-entries {
+    animation: dashboard-fly-in-from-right 1s linear both;
+    animation-duration: auto;
+    animation-timeline: view();
+    animation-range: entry 0% cover 35%;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .latest-entries {
     transition: box-shadow 0.2s ease;
@@ -410,6 +437,16 @@ h1 {
     &:hover,
     &:focus-visible {
       transform: none;
+    }
+  }
+
+  @supports (animation-timeline: view()) {
+    .plan-banner,
+    .today-focus > mat-card,
+    .quick-actions,
+    app-analysis-teaser-card,
+    .latest-entries {
+      animation: none;
     }
   }
 }
