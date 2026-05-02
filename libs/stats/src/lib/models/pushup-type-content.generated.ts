@@ -18,38 +18,36 @@ export interface PushupTypeContent {
 export const PUSHUP_TYPE_CONTENT: Readonly<
   Record<string, Readonly<Record<string, PushupTypeContent>>>
 > = {
-  standard: {
-    de: {
-      name: 'Standard-Liegestütze',
-      summary:
-        'Klassische Liegestütze mit schulterbreitem Stand und gerader Körperlinie.',
-      instructions: [
-        'Hände schulterbreit, direkt unter den Schultern, Finger zeigen nach vorne.',
-        'Körper bildet eine gerade Linie von Kopf bis Ferse — Bauch und Po angespannt.',
-        'Ellenbogen in einem 45°-Winkel zum Oberkörper, nicht weit abspreizen.',
-        'Brust kontrolliert in Richtung Boden senken, bis sie knapp darüber ist.',
-        'Kraftvoll wieder hochdrücken, Ellenbogen oben nicht durchstrecken.',
+  "standard": {
+    "de": {
+      "name": "Standard-Liegestütze",
+      "summary": "Klassische Liegestütze mit schulterbreitem Stand und gerader Körperlinie.",
+      "instructions": [
+        "Hände schulterbreit, direkt unter den Schultern, Finger zeigen nach vorne.",
+        "Körper bildet eine gerade Linie von Kopf bis Ferse — Bauch und Po angespannt.",
+        "Ellenbogen in einem 45°-Winkel zum Oberkörper, nicht weit abspreizen.",
+        "Brust kontrolliert in Richtung Boden senken, bis sie knapp darüber ist.",
+        "Kraftvoll wieder hochdrücken, Ellenbogen oben nicht durchstrecken."
       ],
-      tips: [
-        'Blick leicht nach vorne auf den Boden, nicht den Nacken überstrecken.',
-        'Atmung: beim Absenken einatmen, beim Hochdrücken ausatmen.',
-      ],
+      "tips": [
+        "Blick leicht nach vorne auf den Boden, nicht den Nacken überstrecken.",
+        "Atmung: beim Absenken einatmen, beim Hochdrücken ausatmen."
+      ]
     },
-    en: {
-      name: 'Standard push-up',
-      summary:
-        'Classic push-up with shoulder-width hand position and a straight body line.',
-      instructions: [
-        'Hands shoulder-width apart, directly under the shoulders, fingers pointing forward.',
-        'Body forms a straight line from head to heels — brace abs and glutes.',
-        'Elbows at roughly 45° to the torso, not flared out wide.',
-        'Lower the chest under control until it nearly touches the floor.',
-        'Press back up powerfully, do not lock the elbows at the top.',
+    "en": {
+      "name": "Standard push-up",
+      "summary": "Classic push-up with shoulder-width hand position and a straight body line.",
+      "instructions": [
+        "Hands shoulder-width apart, directly under the shoulders, fingers pointing forward.",
+        "Body forms a straight line from head to heels — brace abs and glutes.",
+        "Elbows at roughly 45° to the torso, not flared out wide.",
+        "Lower the chest under control until it nearly touches the floor.",
+        "Press back up powerfully, do not lock the elbows at the top."
       ],
-      tips: [
-        'Look slightly forward at the floor — do not crane the neck.',
-        'Breathing: inhale on the way down, exhale on the press up.',
-      ],
-    },
-  },
+      "tips": [
+        "Look slightly forward at the floor — do not crane the neck.",
+        "Breathing: inhale on the way down, exhale on the press up."
+      ]
+    }
+  }
 };
