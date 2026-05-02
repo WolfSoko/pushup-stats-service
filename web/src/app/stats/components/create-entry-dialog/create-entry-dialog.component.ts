@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { map, startWith } from 'rxjs';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
 import {
@@ -19,7 +20,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { appendLocalOffset } from '@pu-stats/models';
+import { RouterLink } from '@angular/router';
+import {
+  appendLocalOffset,
+  findPushupTypeByEntryLabel,
+  PUSHUP_TYPES,
+} from '@pu-stats/models';
 
 export interface EntryDialogData {
   timestamp: string;
@@ -50,6 +56,7 @@ export interface CreateEntryResult {
     MatInputModule,
     MatTooltipModule,
     MatAutocompleteModule,
+    RouterLink,
   ],
   styles: [
     `
@@ -86,6 +93,17 @@ export interface CreateEntryResult {
         font-size: 13px;
         color: var(--mat-sys-on-surface-variant);
         text-align: end;
+      }
+      .type-row {
+        display: flex;
+        align-items: flex-start;
+        gap: 4px;
+      }
+      .type-row mat-form-field {
+        flex: 1;
+      }
+      .type-help {
+        margin-top: 12px;
       }
     `,
   ],
@@ -159,22 +177,42 @@ export interface CreateEntryResult {
         </div>
       }
 
-      <mat-form-field appearance="outline">
-        <mat-label i18n="@@typeLabel">Typ</mat-label>
-        <input
-          type="text"
-          matInput
-          [formControl]="typeControl"
-          [matAutocomplete]="typeAuto"
-          placeholder="Pick one / Custom"
-          i18n-placeholder="@@typePlaceholder"
-        />
-        <mat-autocomplete #typeAuto="matAutocomplete">
-          @for (option of filteredTypeOptions$ | async; track option) {
-            <mat-option [value]="option">{{ option }}</mat-option>
-          }
-        </mat-autocomplete>
-      </mat-form-field>
+      <div class="type-row">
+        <mat-form-field appearance="outline">
+          <mat-label i18n="@@typeLabel">Typ</mat-label>
+          <input
+            type="text"
+            matInput
+            [formControl]="typeControl"
+            [matAutocomplete]="typeAuto"
+            placeholder="Auswählen oder eintippen"
+            i18n-placeholder="@@typePlaceholder"
+          />
+          <mat-autocomplete #typeAuto="matAutocomplete">
+            @for (option of filteredTypeOptions$ | async; track option) {
+              <mat-option
+                [value]="option"
+                [matTooltip]="tooltipFor(option)"
+                matTooltipPosition="right"
+                >{{ option }}</mat-option
+              >
+            }
+          </mat-autocomplete>
+        </mat-form-field>
+        <a
+          mat-icon-button
+          class="type-help"
+          [routerLink]="['/wiki/liegestuetz-typen']"
+          [queryParams]="wikiQueryParams()"
+          [matTooltip]="wikiTooltip()"
+          matTooltipPosition="left"
+          mat-dialog-close
+          i18n-aria-label="@@typeWikiLinkAria"
+          aria-label="Anleitung zum Liegestütztyp öffnen"
+        >
+          <mat-icon>help_outline</mat-icon>
+        </a>
+      </div>
 
       <mat-form-field appearance="outline">
         <mat-label i18n="@@sourceLabel">Quelle</mat-label>
@@ -183,7 +221,7 @@ export interface CreateEntryResult {
           matInput
           [formControl]="sourceControl"
           [matAutocomplete]="sourceAuto"
-          placeholder="web / whatsapp / Custom"
+          placeholder="web / whatsapp / eigene Quelle"
           i18n-placeholder="@@sourcePlaceholder"
         />
         <mat-autocomplete #sourceAuto="matAutocomplete">
@@ -240,16 +278,12 @@ export class CreateEntryDialogComponent {
     { nonNullable: true }
   );
 
-  private readonly typeOptions = [
-    'Standard',
-    'Diamond',
-    'Wide',
-    'Archer',
-    'Decline',
-    'Incline',
-    'Pike',
-    'Knuckle',
-  ];
+  // Single source of truth: derive the dropdown options from the
+  // wiki catalog so adding a new variation in
+  // `pushup-type.models.ts` automatically surfaces it here.
+  private readonly typeOptions: ReadonlyArray<string> = PUSHUP_TYPES.map(
+    (t) => t.entryLabel
+  );
   private readonly sourceOptions = ['web', 'whatsapp'];
 
   readonly filteredTypeOptions$ = this.typeControl.valueChanges.pipe(
@@ -261,6 +295,36 @@ export class CreateEntryDialogComponent {
     startWith(this.sourceControl.value),
     map((value) => this.filterOptions(value, this.sourceOptions))
   );
+
+  // Track the live type-control value so the wiki deep-link updates as
+  // the user types, without needing manual change detection.
+  private readonly typeValue = toSignal(
+    this.typeControl.valueChanges.pipe(startWith(this.typeControl.value)),
+    { initialValue: this.typeControl.value }
+  );
+
+  readonly wikiQueryParams = computed(() => {
+    const match = findPushupTypeByEntryLabel(this.typeValue());
+    return match ? { type: match.slug } : {};
+  });
+
+  readonly wikiTooltip = computed(() => {
+    const match = findPushupTypeByEntryLabel(this.typeValue());
+    if (!match) {
+      return $localize`:@@typeWikiLinkTooltip.generic:Anleitung zu Liegestütztypen öffnen`;
+    }
+    // Build the specific tooltip from a static template + the entryLabel.
+    // We avoid a named placeholder inside the i18n message because the
+    // labels (Standard, Diamond, Wide, …) are already English/canonical
+    // tokens that don't translate, and inlining them keeps the XLIFF
+    // entry stable across catalog changes.
+    const template = $localize`:@@typeWikiLinkTooltip.specific:Anleitung öffnen`;
+    return `${template}: ${match.entryLabel}`;
+  });
+
+  tooltipFor(label: string): string {
+    return findPushupTypeByEntryLabel(label)?.summary ?? '';
+  }
 
   addSet(): void {
     const currentSets = this.sets();
@@ -327,11 +391,12 @@ export class CreateEntryDialogComponent {
 
   private filterOptions(
     value: string | null | undefined,
-    options: string[]
+    options: ReadonlyArray<string>
   ): string[] {
     const needle = (value ?? '').toLowerCase().trim();
-    if (!needle) return options;
-    if (options.some((opt) => opt.toLowerCase() === needle)) return options;
+    if (!needle) return [...options];
+    if (options.some((opt) => opt.toLowerCase() === needle))
+      return [...options];
     return options.filter((opt) => opt.toLowerCase().includes(needle));
   }
 }

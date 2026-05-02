@@ -38,9 +38,12 @@ describe('PushupTypesPageComponent', () => {
     const expectedSlugs = [
       'standard',
       'knie',
-      'erhoeht',
+      'incline',
+      'decline',
       'weit',
       'diamant',
+      'pike',
+      'faust',
       'archer',
       'wand-einarmig',
       'negative-einarmig',
@@ -69,8 +72,8 @@ describe('PushupTypesPageComponent', () => {
     });
 
     const tocLinks = container.querySelectorAll('nav.toc ul li a');
-    // 10 push-up types in the catalog.
-    expect(tocLinks.length).toBe(10);
+    // 13 push-up types in the catalog.
+    expect(tocLinks.length).toBe(13);
     // Each TOC link points at the matching section anchor.
     for (const link of Array.from(tocLinks)) {
       const href = link.getAttribute('href') ?? '';

@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatDialogRef } from '@angular/material/dialog';
+import { provideRouter } from '@angular/router';
 import {
   CreateEntryDialogComponent,
   CreateEntryResult,
@@ -18,6 +19,7 @@ describe('CreateEntryDialogComponent', () => {
     await TestBed.configureTestingModule({
       imports: [CreateEntryDialogComponent],
       providers: [
+        provideRouter([]),
         {
           provide: MatDialogRef,
           useValue: { close: closeSpy },
@@ -43,6 +45,23 @@ describe('CreateEntryDialogComponent', () => {
 
     it('Then source defaults to web', () => {
       expect(component.sourceControl.value).toBe('web');
+    });
+
+    it('Then the wiki deep-link points to the matching push-up type slug', () => {
+      // Default value is "Standard", which is in the catalog → slug "standard".
+      expect(component.wikiQueryParams()).toEqual({ type: 'standard' });
+    });
+
+    it('Then the wiki deep-link drops the slug for unknown custom types', () => {
+      component.typeControl.setValue('My-Custom-Move');
+      expect(component.wikiQueryParams()).toEqual({});
+    });
+
+    it('Then `tooltipFor` returns the German summary for known types', () => {
+      // Sanity check on a stable catalog entry — the exact wording lives in
+      // pushup-type.models.ts and is covered by its own spec.
+      expect(component.tooltipFor('Standard').length).toBeGreaterThan(0);
+      expect(component.tooltipFor('Unknown')).toBe('');
     });
   });
 

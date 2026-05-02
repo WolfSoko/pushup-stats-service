@@ -3598,19 +3598,19 @@ Deine Position: # ·  Reps        </source>
         <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:197,198</note>
         <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:284,285</note>
 
-        
-        
+
+
             </notes>
       <segment state="translated">
-        <source>web / whatsapp / Custom</source>
-        <target>web / whatsapp / Custom</target>
+        <source>web / whatsapp / eigene Quelle</source>
+        <target>web / whatsapp / custom source</target>
 
-        
-        
+
+
             </segment>
 
-      
-      
+
+
         </unit>
     <unit id="sw.update.downloading">
       <notes>
@@ -3733,20 +3733,38 @@ Deine Position: # ·  Reps        </source>
         <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:180,181</note>
         <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:267,268</note>
 
-        
-        
+
+
             </notes>
       <segment state="translated">
-        <source>Pick one / Custom</source>
-        <target>Pick one / Custom</target>
+        <source>Auswählen oder eintippen</source>
+        <target>Pick one or enter custom</target>
 
-        
-        
+
+
             </segment>
 
-      
-      
+
+
         </unit>
+    <unit id="typeWikiLinkAria">
+      <segment state="translated">
+        <source>Anleitung zum Liegestütztyp öffnen</source>
+        <target>Open push-up technique reference</target>
+      </segment>
+    </unit>
+    <unit id="typeWikiLinkTooltip.generic">
+      <segment state="translated">
+        <source>Anleitung zu Liegestütztypen öffnen</source>
+        <target>Open push-up variation reference</target>
+      </segment>
+    </unit>
+    <unit id="typeWikiLinkTooltip.specific">
+      <segment state="translated">
+        <source>Anleitung öffnen</source>
+        <target>Open reference</target>
+      </segment>
+    </unit>
     <unit id="userIdHint">
       <notes>
         <note category="location">web/src/app/stats/shell/settings-page.component.ts:49,50</note>

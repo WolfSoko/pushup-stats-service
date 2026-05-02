@@ -1,22 +1,26 @@
 /**
  * Curated catalog of push-up variations referenced in the training
- * plans. The wiki page (`/wiki/liegestuetz-typen`) renders every entry,
- * and the plan detail UI uses `detectPushupTypes()` to surface
- * tooltips with the short summary plus a deep link to the matching
- * wiki anchor.
+ * plans and offered in the entry-creation dialog. The wiki page
+ * (`/wiki/liegestuetz-typen`) renders every entry, the plan detail
+ * UI uses `detectPushupTypes()` to surface tooltips with the short
+ * summary plus a deep link to the matching wiki anchor, and the
+ * entry dialog derives its autocomplete options from `entryLabel`.
  *
- * Why static and bilingual: like `training-plan.catalog.ts`, these are
- * curated editorial entries with technique cues that must stay in
- * lockstep across languages — putting them in XLIFF would lose the
- * per-step pairing.
+ * Why static and bilingual: like `training-plan.catalog.ts`, these
+ * are curated editorial entries with technique cues that must stay
+ * in lockstep across languages — putting them in XLIFF would lose
+ * the per-step pairing.
  */
 
 export type PushupTypeId =
   | 'standard'
   | 'knee'
-  | 'elevated'
+  | 'incline'
+  | 'decline'
   | 'wide'
   | 'diamond'
+  | 'pike'
+  | 'knuckle'
   | 'archer'
   | 'wall-one-arm'
   | 'negative-one-arm'
@@ -29,6 +33,13 @@ export interface PushupTypeInfo {
   id: PushupTypeId;
   /** Stable slug used as the wiki page anchor (`#<slug>`). */
   slug: string;
+  /**
+   * Stable English label persisted to Firestore as
+   * `PushupRecord.type` and shown in the entry-dialog autocomplete.
+   * Keep in sync with existing user data — do NOT rename without a
+   * migration.
+   */
+  entryLabel: string;
   difficulty: PushupDifficulty;
   /** German display name (e.g. "Standard-Liegestütze"). */
   name: string;
@@ -59,6 +70,7 @@ export const PUSHUP_TYPES: ReadonlyArray<PushupTypeInfo> = [
   {
     id: 'standard',
     slug: 'standard',
+    entryLabel: 'Standard',
     difficulty: 'beginner',
     name: 'Standard-Liegestütze',
     nameEn: 'Standard push-up',
@@ -94,6 +106,7 @@ export const PUSHUP_TYPES: ReadonlyArray<PushupTypeInfo> = [
   {
     id: 'knee',
     slug: 'knie',
+    entryLabel: 'Knee',
     difficulty: 'beginner',
     name: 'Knie-Liegestütze',
     nameEn: 'Knee push-up',
@@ -123,11 +136,12 @@ export const PUSHUP_TYPES: ReadonlyArray<PushupTypeInfo> = [
     keywordsEn: ['knee push-up', 'knee pushup', 'knee '],
   },
   {
-    id: 'elevated',
-    slug: 'erhoeht',
+    id: 'incline',
+    slug: 'incline',
+    entryLabel: 'Incline',
     difficulty: 'beginner',
-    name: 'Erhöhte Liegestütze',
-    nameEn: 'Elevated push-up',
+    name: 'Incline-Liegestütze (Hände erhöht)',
+    nameEn: 'Incline push-up (hands elevated)',
     summary:
       'Hände auf einer Bank, Tisch oder Wand — reduziert das Körpergewicht auf den Armen.',
     summaryEn:
@@ -146,12 +160,45 @@ export const PUSHUP_TYPES: ReadonlyArray<PushupTypeInfo> = [
     ],
     tips: ['Schrittweise tiefer gehen, sobald 3×10 sauber gelingen.'],
     tipsEn: ['Step the elevation down once 3×10 reps feel clean.'],
-    keywordsDe: ['erhöht', 'erhoeht'],
-    keywordsEn: ['elevated', 'incline push-up'],
+    keywordsDe: ['erhöht', 'erhoeht', 'incline'],
+    keywordsEn: ['incline', 'hands elevated'],
+  },
+  {
+    id: 'decline',
+    slug: 'decline',
+    entryLabel: 'Decline',
+    difficulty: 'intermediate',
+    name: 'Decline-Liegestütze (Füße erhöht)',
+    nameEn: 'Decline push-up (feet elevated)',
+    summary:
+      'Füße auf einer Erhöhung, Hände am Boden — zusätzliche Belastung für die obere Brust und Schultern.',
+    summaryEn:
+      'Feet on an elevation, hands on the floor — extra load on the upper chest and shoulders.',
+    instructions: [
+      'Füße auf einer stabilen Erhöhung (Bank, Stuhl, Stufe).',
+      'Hände schulterbreit am Boden, gerade Linie von Kopf bis Ferse halten.',
+      'Brust kontrolliert zum Boden senken, dabei Bauchspannung halten.',
+      'Kraftvoll hochdrücken — je höher die Füße, desto mehr Schulteranteil.',
+    ],
+    instructionsEn: [
+      'Feet on a stable elevation (bench, chair, step).',
+      'Hands shoulder-width on the floor, keep a straight line from head to heels.',
+      'Lower the chest under control, keep the abs braced.',
+      'Press up powerfully — the higher the feet, the more shoulder involvement.',
+    ],
+    tips: [
+      'Nicht ins Hohlkreuz fallen — Bauch und Po aktiv anspannen, besonders mit hohen Füßen.',
+    ],
+    tipsEn: [
+      'Do not let the lower back arch — actively brace abs and glutes, especially with high feet.',
+    ],
+    keywordsDe: ['decline', 'füße erhöht'],
+    keywordsEn: ['decline', 'feet elevated'],
   },
   {
     id: 'wide',
     slug: 'weit',
+    entryLabel: 'Wide',
     difficulty: 'intermediate',
     name: 'Weite Liegestütze',
     nameEn: 'Wide push-up',
@@ -183,6 +230,7 @@ export const PUSHUP_TYPES: ReadonlyArray<PushupTypeInfo> = [
   {
     id: 'diamond',
     slug: 'diamant',
+    entryLabel: 'Diamond',
     difficulty: 'intermediate',
     name: 'Diamant-Liegestütze',
     nameEn: 'Diamond push-up',
@@ -212,8 +260,73 @@ export const PUSHUP_TYPES: ReadonlyArray<PushupTypeInfo> = [
     keywordsEn: ['diamond push-up', 'diamond pushup'],
   },
   {
+    id: 'pike',
+    slug: 'pike',
+    entryLabel: 'Pike',
+    difficulty: 'intermediate',
+    name: 'Pike-Liegestütze',
+    nameEn: 'Pike push-up',
+    summary:
+      'Liegestütze in V-Position — fast vertikales Drücken, Vorstufe zu Handstand-Liegestützen.',
+    summaryEn:
+      'Push-ups from a V-shape — near-vertical pressing, a stepping stone to handstand push-ups.',
+    instructions: [
+      'Aus dem Vierfüßlerstand Hüfte nach oben schieben — Körper bildet ein umgekehrtes V.',
+      'Hände schulterbreit, Beine gestreckt oder leicht gebeugt, Po hoch.',
+      'Kopf zwischen den Armen Richtung Boden senken — Ellenbogen nach hinten.',
+      'Wieder hochdrücken, ohne in eine Liegestützposition abzukippen.',
+    ],
+    instructionsEn: [
+      'From a quadruped position push the hips up — the body forms an inverted V.',
+      'Hands shoulder-width, legs straight or slightly bent, hips high.',
+      'Lower the head between the arms toward the floor — elbows track back.',
+      'Press back up without dropping into a regular push-up position.',
+    ],
+    tips: [
+      'Schwieriger machen: Füße auf eine Erhöhung stellen, fast vertikale Position.',
+    ],
+    tipsEn: [
+      'Make it harder: put the feet on an elevation for a near-vertical position.',
+    ],
+    keywordsDe: ['pike', 'pike-liegestütze'],
+    keywordsEn: ['pike push-up', 'pike pushup'],
+  },
+  {
+    id: 'knuckle',
+    slug: 'faust',
+    entryLabel: 'Knuckle',
+    difficulty: 'intermediate',
+    name: 'Faust-Liegestütze',
+    nameEn: 'Knuckle push-up',
+    summary:
+      'Auf den Knöcheln statt mit flachen Händen — schont die Handgelenke und stärkt Unterarme.',
+    summaryEn:
+      'Done on the knuckles instead of flat hands — easier on the wrists and strengthens the forearms.',
+    instructions: [
+      'Hände zu Fäusten ballen, auf den ersten zwei Knöcheln (Zeige- und Mittelfinger) abstützen.',
+      'Handrücken gerade — Handgelenk nicht knicken.',
+      'Auf weichem Untergrund (Matte, Handtuch) starten, später auf hartem Boden.',
+      'Sonst wie Standard-Liegestütze ausführen.',
+    ],
+    instructionsEn: [
+      'Make fists, support on the first two knuckles (index and middle finger).',
+      'Keep the back of the hand straight — do not bend the wrist.',
+      'Start on a soft surface (mat, towel), progress to hard floor later.',
+      'Otherwise execute like a standard push-up.',
+    ],
+    tips: [
+      'Hilfreich bei empfindlichen Handgelenken — Belastung wandert vom Gelenk in die Fingerknöchel.',
+    ],
+    tipsEn: [
+      'Useful for sensitive wrists — load shifts from the joint into the knuckles.',
+    ],
+    keywordsDe: ['faust-liegestütze', 'knöchel', 'knuckle'],
+    keywordsEn: ['knuckle push-up', 'knuckle pushup', 'fist push-up'],
+  },
+  {
     id: 'archer',
     slug: 'archer',
+    entryLabel: 'Archer',
     difficulty: 'advanced',
     name: 'Archer-Liegestütze',
     nameEn: 'Archer push-up',
@@ -247,6 +360,7 @@ export const PUSHUP_TYPES: ReadonlyArray<PushupTypeInfo> = [
   {
     id: 'wall-one-arm',
     slug: 'wand-einarmig',
+    entryLabel: 'Wall One-Arm',
     difficulty: 'intermediate',
     name: 'Wand-Einarmige',
     nameEn: 'Wall one-arm push-up',
@@ -272,6 +386,7 @@ export const PUSHUP_TYPES: ReadonlyArray<PushupTypeInfo> = [
   {
     id: 'negative-one-arm',
     slug: 'negative-einarmig',
+    entryLabel: 'Negative One-Arm',
     difficulty: 'advanced',
     name: 'Negative Einarmige',
     nameEn: 'Negative one-arm push-up',
@@ -303,6 +418,7 @@ export const PUSHUP_TYPES: ReadonlyArray<PushupTypeInfo> = [
   {
     id: 'partial-one-arm',
     slug: 'partielle-einarmig',
+    entryLabel: 'Partial One-Arm',
     difficulty: 'advanced',
     name: 'Partielle Einarmige',
     nameEn: 'Partial-ROM one-arm push-up',
@@ -328,6 +444,7 @@ export const PUSHUP_TYPES: ReadonlyArray<PushupTypeInfo> = [
   {
     id: 'one-arm',
     slug: 'einarmig',
+    entryLabel: 'One-Arm',
     difficulty: 'advanced',
     name: 'Einarmige Liegestütze',
     nameEn: 'One-arm push-up',
@@ -373,12 +490,28 @@ const TYPES_BY_SLUG: ReadonlyMap<string, PushupTypeInfo> = new Map(
   PUSHUP_TYPES.map((t) => [t.slug, t])
 );
 
+const TYPES_BY_ENTRY_LABEL: ReadonlyMap<string, PushupTypeInfo> = new Map(
+  PUSHUP_TYPES.map((t) => [t.entryLabel.toLowerCase(), t])
+);
+
 export function findPushupType(id: PushupTypeId): PushupTypeInfo | null {
   return TYPES_BY_ID.get(id) ?? null;
 }
 
 export function findPushupTypeBySlug(slug: string): PushupTypeInfo | null {
   return TYPES_BY_SLUG.get(slug) ?? null;
+}
+
+/**
+ * Look up a catalog entry by the entry-dialog's stored label
+ * (case-insensitive). Returns null when the label is unknown — e.g.
+ * when the user typed a custom value.
+ */
+export function findPushupTypeByEntryLabel(
+  label: string | null | undefined
+): PushupTypeInfo | null {
+  if (!label) return null;
+  return TYPES_BY_ENTRY_LABEL.get(label.toLowerCase().trim()) ?? null;
 }
 
 /**

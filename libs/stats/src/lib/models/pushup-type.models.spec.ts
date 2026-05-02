@@ -1,17 +1,45 @@
 import {
   detectPushupTypes,
   findPushupType,
+  findPushupTypeByEntryLabel,
   findPushupTypeBySlug,
   localizePushupType,
   PUSHUP_TYPES,
 } from './pushup-type.models';
 
 describe('pushup-type catalog', () => {
-  it('exposes every documented type with unique id and slug', () => {
+  it('exposes every documented type with unique id, slug and entryLabel', () => {
     const ids = PUSHUP_TYPES.map((t) => t.id);
     const slugs = PUSHUP_TYPES.map((t) => t.slug);
+    const labels = PUSHUP_TYPES.map((t) => t.entryLabel.toLowerCase());
     expect(new Set(ids).size).toBe(ids.length);
     expect(new Set(slugs).size).toBe(slugs.length);
+    expect(new Set(labels).size).toBe(labels.length);
+  });
+
+  it('covers every push-up type offered in the entry-creation dialog', () => {
+    // Keep this list in lockstep with `typeOptions` in
+    // create-entry-dialog.component.ts. If you add an option there,
+    // add a wiki entry here too — and vice versa.
+    const dialogOptions = [
+      'Standard',
+      'Knee',
+      'Incline',
+      'Decline',
+      'Wide',
+      'Diamond',
+      'Pike',
+      'Knuckle',
+      'Archer',
+      'Wall One-Arm',
+      'Negative One-Arm',
+      'Partial One-Arm',
+      'One-Arm',
+    ];
+    const labels = PUSHUP_TYPES.map((t) => t.entryLabel);
+    for (const option of dialogOptions) {
+      expect(labels).toContain(option);
+    }
   });
 
   it('provides bilingual name, summary and instructions for every type', () => {
@@ -26,7 +54,7 @@ describe('pushup-type catalog', () => {
     }
   });
 
-  describe('findPushupType / findPushupTypeBySlug', () => {
+  describe('findPushupType / findPushupTypeBySlug / findPushupTypeByEntryLabel', () => {
     it('looks up by id', () => {
       expect(findPushupType('diamond')?.slug).toBe('diamant');
     });
@@ -35,10 +63,23 @@ describe('pushup-type catalog', () => {
       expect(findPushupTypeBySlug('archer')?.id).toBe('archer');
     });
 
+    it('looks up by entry-dialog label, case-insensitively', () => {
+      expect(findPushupTypeByEntryLabel('Diamond')?.id).toBe('diamond');
+      expect(findPushupTypeByEntryLabel('diamond')?.id).toBe('diamond');
+      expect(findPushupTypeByEntryLabel('  Wide  ')?.id).toBe('wide');
+    });
+
     it('returns null when the id or slug is unknown', () => {
       // @ts-expect-error — intentionally invalid id for the runtime check.
       expect(findPushupType('does-not-exist')).toBeNull();
       expect(findPushupTypeBySlug('does-not-exist')).toBeNull();
+    });
+
+    it('returns null for unknown / empty entry labels', () => {
+      expect(findPushupTypeByEntryLabel('')).toBeNull();
+      expect(findPushupTypeByEntryLabel(null)).toBeNull();
+      expect(findPushupTypeByEntryLabel(undefined)).toBeNull();
+      expect(findPushupTypeByEntryLabel('Custom-Move')).toBeNull();
     });
   });
 
@@ -131,14 +172,14 @@ describe('pushup-type catalog', () => {
       expect(types.map((t) => t.id)).toEqual(['one-arm']);
     });
 
-    it('detects knee or elevated push-ups', () => {
+    it('detects knee or incline push-ups', () => {
       const types = detectPushupTypes(
         '3×8 Knie- oder erhöhte Liegestütze',
-        '3×8 knee or elevated push-ups'
+        '3×8 knee or incline push-ups'
       );
       const ids = types.map((t) => t.id);
       expect(ids).toContain('knee');
-      expect(ids).toContain('elevated');
+      expect(ids).toContain('incline');
     });
 
     it('returns an empty list for rest days', () => {
