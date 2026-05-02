@@ -75,6 +75,7 @@ import { parseIsoDate, RangeModes, toLocalIsoDate } from '@pu-stats/models';
           <button
             type="button"
             mat-stroked-button
+            [disabled]="mode() === 'custom'"
             (click)="jumpToToday()"
             i18n="@@rangeToday"
           >
@@ -179,10 +180,6 @@ export class FilterBarComponent implements OnChanges {
   setMode(value: RangeModes): void {
     if (!value) return;
 
-    const previousStart = this.range.controls.start.value;
-    const previousEnd = this.range.controls.end.value;
-    const today = this.startOfDay(new Date());
-
     this.hasUserModeOverride.set(true);
     this.mode.set(value);
     this.modeChange.emit(value);
@@ -190,6 +187,10 @@ export class FilterBarComponent implements OnChanges {
     // Custom mode: keep whatever range is currently selected and let the user
     // edit it freely via the date-range picker. No auto-snap.
     if (value === 'custom') return;
+
+    const previousStart = this.range.controls.start.value;
+    const previousEnd = this.range.controls.end.value;
+    const today = this.startOfDay(new Date());
 
     let anchor: Date | undefined;
     if (
