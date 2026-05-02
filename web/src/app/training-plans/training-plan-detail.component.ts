@@ -50,8 +50,8 @@ interface DayRow {
             <mat-icon>arrow_back</mat-icon>
           </a>
           <div>
-            <h1>{{ plan()?.title }}</h1>
-            <p class="muted">{{ plan()?.summary }}</p>
+            <h1>{{ p.title }}</h1>
+            <p class="muted">{{ p.summary }}</p>
           </div>
         </header>
 

@@ -69,14 +69,13 @@ export const ROOT_FILES: ReadonlySet<string> = new Set([
 export const SAFE_REDIRECT_PATH_RE = /^\/[A-Za-z0-9/_\-.~%]*$/;
 
 /**
- * Pick a locale based on `Accept-Language`. We honour the user's
- * stated order — `it-IT,en;q=0.5` returns `it`, not `en` — by
- * splitting the header on `,`, stripping `;q=…` weights, and taking
- * the first entry whose primary subtag matches one of the supported
- * locales (including the source `de`). Q-values themselves aren't
- * parsed: in practice every modern browser already lists languages
- * in the user's preferred order regardless of explicit weights, and
- * full RFC-compliant q-value sorting would be a maintenance trap.
+ * Pick a locale based on `Accept-Language`. Honours both the user's
+ * stated order and explicit `;q=` weights so headers like
+ * `en;q=0.1,fr;q=1.0` resolve to `fr` (highest weight wins) and
+ * `it-IT,en;q=0.5` resolves to `it` (header order tie-breaks at
+ * weight 1.0). Missing weights default to 1.0 per RFC 7231 §5.3.5;
+ * malformed weights drop to 0 so the entry is deprioritised rather
+ * than crashing the redirect.
  *
  * Falls back to the source locale (`de`) when the header is absent,
  * empty, or contains no supported language. Classical locales (`grc`,
@@ -88,9 +87,21 @@ export function pickLocale(
 ): SupportedLocale {
   const accept = String(acceptLanguage ?? '').toLowerCase();
   if (!accept) return 'de';
-  for (const entry of accept.split(',')) {
-    const tag = entry.split(';')[0].trim();
-    if (!tag) continue;
+  const ranked = accept
+    .split(',')
+    .map((entry, index) => {
+      const [rawTag, ...params] = entry.split(';');
+      const tag = rawTag.trim();
+      const qParam = params
+        .map((p) => p.trim())
+        .find((p) => p.startsWith('q='));
+      const q = qParam ? Number.parseFloat(qParam.slice(2)) : 1;
+      return { tag, q: Number.isFinite(q) ? q : 0, index };
+    })
+    .filter((e) => e.tag !== '')
+    .sort((a, b) => b.q - a.q || a.index - b.index);
+
+  for (const { tag } of ranked) {
     const primary = tag.split('-')[0];
     if ((SUPPORTED_LOCALES as ReadonlyArray<string>).includes(primary)) {
       return primary as SupportedLocale;

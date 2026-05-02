@@ -25,19 +25,21 @@ describe('pickLocale', () => {
     ['en', 'en'],
     ['en-US', 'en'],
     ['EN', 'en'],
-    // We honour the header's stated order: the first supported entry
-    // wins, regardless of `;q=…` weights. Q-value parsing would be a
-    // maintenance trap and modern browsers already list languages in
-    // the user's preferred order.
+    // We parse `;q=` weights per RFC 7231 §5.3.5 and stable-sort
+    // entries by descending q (header order tie-breaks at equal q).
+    // `de;q=0.5,en;q=0.3` → `de` (higher q), and the canonical
+    // `en;q=0.1,fr;q=1.0` → `fr` even though `en` appears first.
     ['de;q=0.5,en;q=0.3', 'de'],
     ['en-GB,de;q=0.5', 'en'],
+    ['en;q=0.1,fr;q=1.0', 'fr'], // explicit q overrides header order
     ['fr-FR', 'fr'],
     ['es', 'es'],
-    ['it-IT,en;q=0.5', 'it'], // first stated tag wins, later supported tags don't preempt it
+    ['it-IT,en;q=0.5', 'it'], // header order at q=1.0 (default) tie-breaks
     ['de,de-DE;q=0.9,fr;q=0.8', 'de'],
     ['nl-BE', 'nl'],
     ['grc', 'grc'],
     ['la', 'la'],
+    ['en;q=not-a-number,de', 'de'], // malformed q drops the entry
     ['zh-CN,ja;q=0.8', 'de'], // no supported tag → source locale fallback
     ['xen-fake', 'de'], // unrecognised primary subtag → source locale fallback
   ])('Given Accept-Language=%j, Then picks %s', (header, expected) => {

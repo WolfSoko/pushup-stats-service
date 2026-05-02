@@ -113,6 +113,14 @@ describe('training-plan models', () => {
       }
     });
 
+    it('every plan day has a non-empty localised description', () => {
+      for (const plan of TRAINING_PLANS) {
+        for (const day of plan.days) {
+          expect(day.description).toBeTruthy();
+        }
+      }
+    });
+
     it('every plan has contiguous day indexes 1..totalDays', () => {
       for (const plan of TRAINING_PLANS) {
         const indexes = plan.days.map((d) => d.dayIndex);
