@@ -8,6 +8,19 @@
   padding: clamp(20px, 4vw, 44px);
   display: grid;
   gap: 20px;
+
+  // Scroll-driven reveals (animation-timeline: view()) need scroll runway below
+  // the last animated section, otherwise the bottom cards stay stuck mid-reveal
+  // (blurred/translated/scaled) because the page can't scroll far enough to push
+  // them through the `cover` range. Tracks the largest cover-end used below
+  // (`cover 84%` in `.feature-grid.scroll-reveal-stagger`).
+  @supports (animation-timeline: view()) {
+    padding-bottom: clamp(160px, 80vh, 720px);
+
+    @media (prefers-reduced-motion: reduce) {
+      padding-bottom: clamp(20px, 4vw, 44px);
+    }
+  }
 }
 
 .hero {
