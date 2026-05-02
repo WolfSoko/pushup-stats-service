@@ -6241,7 +6241,7 @@
     <unit id="plan.over-40-4w.day.2.desc">
       <segment state="translated">
         <source>3×8 Knie- oder erhöhte Liegestütze</source>
-        <target>3×8 πιέσεις στα γόνατα ή ανυψωμένες</target>
+        <target>3×8 πιέσεις στα γόνατα ή ανυψωμένες πιέσεις</target>
       </segment>
     </unit>
     <unit id="plan.over-40-4w.day.4.desc">
@@ -6307,7 +6307,7 @@
     <unit id="plan.daily-100-30d.summary">
       <segment state="translated">
         <source>30-Tage-Volumenplan: ramp-up von 50 auf 100 saubere Wiederholungen pro Einheit, danach zwei Wochen Konsolidierung. 5 Trainingstage + 1 leichter + 1 Ruhetag pro Woche.</source>
-        <target>Πρόγραμμα όγκου 30 ημερών: αύξηση από 50 σε 100 καθαρές επαναλήψεις ανά προπόνηση, μετά δύο εβδομάδες παγίωσης. 5 ημέρες προπόνησης + 1 ελαφριά + 1 ξεκούρασης την εβδομάδα.</target>
+        <target>Πρόγραμμα όγκου 30 ημερών: αύξηση από 50 σε 100 καθαρές επαναλήψεις ανά προπόνηση, μετά δύο εβδομάδες παγίωσης. 5 ημέρες προπόνησης + 1 ελαφριά ημέρα + 1 ημέρα ξεκούρασης την εβδομάδα.</target>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.1.desc">
@@ -6463,7 +6463,7 @@
     <unit id="plan.one-arm-12w.summary">
       <segment state="translated">
         <source>Vier-Phasen-Plan in Richtung saubere einarmige Liegestütze: Archer und Wand-Negativen, Bank-Negativen, partielle Einarmige, schließlich volle Einarmige im weiten Stand. 4 aktive Tage + 3 Ruhetage pro Woche.</source>
-        <target>Πρόγραμμα τεσσάρων φάσεων προς μια καθαρή πίεση με έναν βραχίονα: archer και αρνητικές στον τοίχο, αρνητικές σε πάγκο, μερικές με έναν βραχίονα, τέλος πλήρεις με έναν βραχίονα σε φαρδιά στάση. 4 ενεργές ημέρες + 3 ξεκούρασης την εβδομάδα.</target>
+        <target>Πρόγραμμα τεσσάρων φάσεων προς μια καθαρή πίεση με έναν βραχίονα: archer και αρνητικές στον τοίχο, αρνητικές σε πάγκο, μερικές με έναν βραχίονα, τέλος πλήρεις με έναν βραχίονα σε φαρδιά στάση. 4 ενεργές ημέρες + 3 ημέρες ξεκούρασης την εβδομάδα.</target>
       </segment>
     </unit>
     <unit id="plan.one-arm-12w.day.1.desc">
