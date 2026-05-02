@@ -590,13 +590,13 @@ mat-card-header mat-icon {
 .scroll-reveal {
   --reveal-opacity-from: 0;
   --reveal-opacity-to: 1;
-  --reveal-translate-y: 80px;
+  --reveal-translate-y: 180px;
   --reveal-translate-x: 0px;
   --reveal-scale: 1;
   --reveal-rotate: 0deg;
-  --reveal-blur: 0px;
-  --reveal-range-start: entry 5%;
-  --reveal-range-end: cover 35%;
+  --reveal-blur: 6px;
+  --reveal-range-start: entry 0%;
+  --reveal-range-end: cover 70%;
   --reveal-easing: cubic-bezier(0.2, 0.7, 0.3, 1);
 
   @supports (animation-timeline: view()) {
@@ -623,30 +623,34 @@ mat-card-header mat-icon {
 
 // Modifier: slide in from the left edge.
 .scroll-reveal--from-left {
-  --reveal-translate-x: -140px;
-  --reveal-translate-y: 30px;
-  --reveal-rotate: -1.5deg;
+  --reveal-translate-x: -320px;
+  --reveal-translate-y: 80px;
+  --reveal-rotate: -4deg;
+  --reveal-scale: 0.9;
+  --reveal-blur: 8px;
 }
 
 // Modifier: slide in from the right edge.
 .scroll-reveal--from-right {
-  --reveal-translate-x: 140px;
-  --reveal-translate-y: 30px;
-  --reveal-rotate: 1.5deg;
+  --reveal-translate-x: 320px;
+  --reveal-translate-y: 80px;
+  --reveal-rotate: 4deg;
+  --reveal-scale: 0.9;
+  --reveal-blur: 8px;
 }
 
 // Modifier: cinematic zoom-and-focus reveal — used for the big preview screenshot.
 .scroll-reveal--zoom {
-  --reveal-scale: 0.82;
-  --reveal-translate-y: 60px;
-  --reveal-blur: 12px;
-  --reveal-range-end: cover 45%;
+  --reveal-scale: 0.6;
+  --reveal-translate-y: 140px;
+  --reveal-blur: 24px;
+  --reveal-range-end: cover 75%;
 }
 
 // Modifier: pop-in — small element scales up from a smaller version.
 .scroll-reveal--pop {
-  --reveal-scale: 0.6;
-  --reveal-translate-y: 20px;
+  --reveal-scale: 0.4;
+  --reveal-translate-y: 40px;
   --reveal-easing: cubic-bezier(0.34, 1.56, 0.64, 1); // overshoot
 }
 
@@ -657,9 +661,10 @@ mat-card-header mat-icon {
   @supports (animation-timeline: view()) {
     > * {
       --reveal-opacity-from: 0;
-      --reveal-translate-y: 80px;
+      --reveal-translate-y: 160px;
       --reveal-translate-x: 0px;
-      --reveal-scale: 0.94;
+      --reveal-scale: 0.85;
+      --reveal-blur: 6px;
       --reveal-easing: cubic-bezier(0.2, 0.7, 0.3, 1);
 
       animation: scroll-reveal var(--reveal-easing) forwards;
@@ -667,68 +672,83 @@ mat-card-header mat-icon {
     }
 
     > :nth-child(3n + 1) {
-      animation-range: entry 0% cover 30%;
-      --reveal-translate-x: -50px;
+      animation-range: entry 0% cover 60%;
+      --reveal-translate-x: -160px;
+      --reveal-rotate: -3deg;
     }
     > :nth-child(3n + 2) {
-      animation-range: entry 8% cover 38%;
-      --reveal-translate-y: 100px;
+      animation-range: entry 5% cover 70%;
+      --reveal-translate-y: 220px;
+      --reveal-scale: 0.8;
     }
     > :nth-child(3n + 3) {
-      animation-range: entry 16% cover 46%;
-      --reveal-translate-x: 50px;
+      animation-range: entry 10% cover 80%;
+      --reveal-translate-x: 160px;
+      --reveal-rotate: 3deg;
     }
   }
 }
 
 // Per-section flavour overrides.
 .training-plans-feature.scroll-reveal {
-  --reveal-translate-x: -120px;
-  --reveal-translate-y: 40px;
-  --reveal-rotate: -1deg;
-  --reveal-blur: 4px;
+  --reveal-translate-x: -260px;
+  --reveal-translate-y: 100px;
+  --reveal-rotate: -3deg;
+  --reveal-scale: 0.9;
+  --reveal-blur: 10px;
+  --reveal-range-end: cover 70%;
 }
 
 .feature-grid.scroll-reveal-stagger {
   @supports (animation-timeline: view()) {
     > :nth-child(4n + 1) {
-      animation-range: entry 0% cover 28%;
-      --reveal-translate-x: -60px;
-      --reveal-translate-y: 40px;
-      --reveal-rotate: -2deg;
+      animation-range: entry 0% cover 60%;
+      --reveal-translate-x: -200px;
+      --reveal-translate-y: 100px;
+      --reveal-rotate: -5deg;
+      --reveal-scale: 0.85;
+      --reveal-blur: 8px;
     }
     > :nth-child(4n + 2) {
-      animation-range: entry 6% cover 34%;
-      --reveal-translate-x: 60px;
-      --reveal-translate-y: 40px;
-      --reveal-rotate: 2deg;
+      animation-range: entry 4% cover 68%;
+      --reveal-translate-x: 200px;
+      --reveal-translate-y: 100px;
+      --reveal-rotate: 5deg;
+      --reveal-scale: 0.85;
+      --reveal-blur: 8px;
     }
     > :nth-child(4n + 3) {
-      animation-range: entry 12% cover 40%;
-      --reveal-translate-x: -40px;
-      --reveal-translate-y: 60px;
-      --reveal-scale: 0.9;
+      animation-range: entry 8% cover 76%;
+      --reveal-translate-x: -120px;
+      --reveal-translate-y: 160px;
+      --reveal-rotate: -2deg;
+      --reveal-scale: 0.75;
+      --reveal-blur: 10px;
     }
     > :nth-child(4n + 4) {
-      animation-range: entry 18% cover 46%;
-      --reveal-translate-x: 40px;
-      --reveal-translate-y: 60px;
-      --reveal-scale: 0.9;
+      animation-range: entry 12% cover 84%;
+      --reveal-translate-x: 120px;
+      --reveal-translate-y: 160px;
+      --reveal-rotate: 2deg;
+      --reveal-scale: 0.75;
+      --reveal-blur: 10px;
     }
   }
 }
 
 .preview.scroll-reveal {
-  --reveal-scale: 0.78;
-  --reveal-translate-y: 80px;
-  --reveal-blur: 14px;
-  --reveal-range-end: cover 50%;
+  --reveal-scale: 0.55;
+  --reveal-translate-y: 200px;
+  --reveal-blur: 28px;
+  --reveal-rotate: -1deg;
+  --reveal-range-end: cover 80%;
 }
 
 .trust-bar.scroll-reveal {
-  --reveal-translate-y: 20px;
-  --reveal-scale: 0.95;
-  --reveal-range-end: cover 25%;
+  --reveal-translate-y: 60px;
+  --reveal-scale: 0.85;
+  --reveal-blur: 4px;
+  --reveal-range-end: cover 50%;
 }
 
 // Respect user motion preferences — disable all reveal animations.
