@@ -166,18 +166,30 @@ function buildBlogRoutes(posts) {
       ? `${post.lang === 'de' ? 'en' : 'de'}:${post.translationSlug}`
       : null;
     const pair = pairKey ? bySlug.get(pairKey) : undefined;
-    const alternates = pair
-      ? [
-          {
-            lang: 'de',
-            path: `/blog/${post.lang === 'de' ? post.slug : pair.slug}`,
-          },
-          {
-            lang: 'en',
-            path: `/blog/${post.lang === 'en' ? post.slug : pair.slug}`,
-          },
-        ]
-      : [{ lang: post.lang, path: `/blog/${post.slug}` }];
+    // findBlogPost() resolves any locale that doesn't start with 'en' to the
+    // DE post — so /fr/blog/<de-slug>, /es/blog/<de-slug>, etc. all serve
+    // real content. Only emit hreflang for locales that actually resolve.
+    const deSlug = pair
+      ? post.lang === 'de'
+        ? post.slug
+        : pair.slug
+      : post.lang === 'de'
+        ? post.slug
+        : null;
+    const enSlug = pair
+      ? post.lang === 'en'
+        ? post.slug
+        : pair.slug
+      : post.lang === 'en'
+        ? post.slug
+        : null;
+    const alternates = LOCALES.flatMap((lang) => {
+      if (lang === 'en') {
+        return enSlug ? [{ lang, path: `/blog/${enSlug}` }] : [];
+      }
+      // 'de' and every other locale fall through to the DE variant.
+      return deSlug ? [{ lang, path: `/blog/${deSlug}` }] : [];
+    });
     return {
       path: `/blog/${post.slug}`,
       changefreq: 'monthly',
@@ -216,6 +228,7 @@ if (require.main === module) {
 }
 
 module.exports = {
+  LOCALES,
   staticRoutes,
   extractBlogPosts,
   extractTrainingPlanSlugs,
