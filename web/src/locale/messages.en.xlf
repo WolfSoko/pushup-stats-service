@@ -5089,6 +5089,12 @@ Deine Position: # ·  Reps        </source>
         <target>Legal</target>
       </segment>
     </unit>
+    <unit id="footer.pushupTypes">
+      <segment state="translated">
+        <source>Liegestütztypen</source>
+        <target>Push-up variations</target>
+      </segment>
+    </unit>
     <unit id="footer.impressum">
       <segment state="translated">
         <source>Impressum</source>
@@ -5665,6 +5671,12 @@ Deine Position: # ·  Reps        </source>
       <segment state="translated">
         <source>Trainingspläne</source>
         <target>Training plans</target>
+      </segment>
+    </unit>
+    <unit id="nav.pushupTypes">
+      <segment state="translated">
+        <source>Liegestütztypen</source>
+        <target>Push-up variations</target>
       </segment>
     </unit>
     <unit id="seo.trainingPlans.title">

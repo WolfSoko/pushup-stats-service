@@ -65,6 +65,16 @@
 
       <a
         mat-list-item
+        routerLink="/wiki/liegestuetz-typen"
+        routerLinkActive="active"
+        (click)="navOpen.set(false)"
+      >
+        <mat-icon matListItemIcon>menu_book</mat-icon>
+        <span matListItemTitle i18n="@@nav.pushupTypes">Liegestütztypen</span>
+      </a>
+
+      <a
+        mat-list-item
         routerLink="/history"
         routerLinkActive="active"
         (click)="navOpen.set(false)"
@@ -197,6 +207,12 @@
 
     <footer class="app-footer">
       <nav aria-label="Rechtliches" i18n-aria-label="@@footer.aria">
+        <a
+          mat-button
+          routerLink="/wiki/liegestuetz-typen"
+          i18n="@@footer.pushupTypes"
+          >Liegestütztypen</a
+        >
         <a mat-button routerLink="/impressum" i18n="@@footer.impressum"
           >Impressum</a
         >

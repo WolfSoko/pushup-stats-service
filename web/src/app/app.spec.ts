@@ -130,6 +130,8 @@ describe('App (testing-library)', () => {
     expect(screen.getAllByText('Analyse').length).toBeGreaterThan(0);
     expect(screen.getAllByText('Bestenliste').length).toBeGreaterThan(0);
     expect(screen.getAllByText('Trainingspläne').length).toBeGreaterThan(0);
+    // Wiki link is in both the sidenav and the footer.
+    expect(screen.getAllByText('Liegestütztypen').length).toBeGreaterThan(0);
     expect(screen.getByText('Sprache')).toBeTruthy();
     expect(screen.getByText('Deutsch')).toBeTruthy();
     expect(screen.getByText('English')).toBeTruthy();
