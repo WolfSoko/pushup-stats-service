@@ -44,6 +44,16 @@ export class SeoService {
       imageAlt?: string;
       publishedTime?: string;
       modifiedTime?: string;
+      /**
+       * Per-locale path overrides for hreflang alternates. Required
+       * for routes whose slug differs by locale (e.g. blog posts with
+       * `translationSlug`). When omitted, the route is assumed to be
+       * locale-agnostic and the same path is advertised for every
+       * supported locale. Locales not present in the map are skipped
+       * so we never claim alternates for content that doesn't resolve
+       * (e.g. a German blog slug under `/fr/blog/…`).
+       */
+      alternates?: Partial<Record<LocalePrefix, string>>;
     } = {}
   ): void {
     this.title.setTitle(seoTitle);
@@ -60,17 +70,37 @@ export class SeoService {
     this.setTag('property', 'og:locale', this.ogLocaleFor(locale));
 
     const strippedPath = this.stripLocalePrefix(path);
-    const localeUrl = (lang: LocalePrefix): string =>
-      `${BASE_URL}/${lang}${strippedPath}`;
-    const canonical = localeUrl(locale);
+    const url = (lang: LocalePrefix, p: string): string =>
+      `${BASE_URL}/${lang}${p.startsWith('/') ? p : `/${p}`}`;
+
+    // Resolve the per-locale path map. Without overrides we treat the
+    // current path as locale-agnostic and advertise it for every
+    // supported locale. With overrides, only the locales the caller
+    // actually has translations for show up — see Copilot review on
+    // blog posts where `/de/blog/<de-slug>` ≠ `/en/blog/<en-slug>`.
+    const localePaths: Partial<Record<LocalePrefix, string>> =
+      options.alternates ??
+      Object.fromEntries(LOCALE_PREFIXES.map((lang) => [lang, strippedPath]));
+
+    const canonical = url(locale, localePaths[locale] ?? strippedPath);
 
     this.setTag('property', 'og:url', canonical);
     this.setCanonical(canonical);
 
+    this.clearStaleHreflang();
     for (const lang of LOCALE_PREFIXES) {
-      this.setHreflang('alternate', lang, localeUrl(lang));
+      const altPath = localePaths[lang];
+      if (altPath != null)
+        this.setHreflang('alternate', lang, url(lang, altPath));
     }
-    this.setHreflang('alternate', 'x-default', localeUrl(DEFAULT_LOCALE));
+    const xDefaultPath = localePaths[DEFAULT_LOCALE] ?? localePaths[locale];
+    if (xDefaultPath != null) {
+      this.setHreflang(
+        'alternate',
+        'x-default',
+        url(DEFAULT_LOCALE, xDefaultPath)
+      );
+    }
 
     this.applyImage(options.imageUrl, options.imageAlt ?? seoTitle);
     this.applyArticleTimes(options.publishedTime, options.modifiedTime);
@@ -169,6 +199,21 @@ export class SeoService {
       head.appendChild(link);
     }
     link.href = url;
+  }
+
+  /**
+   * Remove any pre-existing `<link rel="alternate" hreflang="…">`
+   * tags. Re-emitted on every `update()` so that navigating between
+   * routes with different alternate sets (e.g. a fully-localised
+   * route to a blog post that only exists in two languages) doesn't
+   * leave stale alternates behind from the previous page.
+   */
+  private clearStaleHreflang(): void {
+    const head = this.document.head;
+    if (!head) return;
+    head
+      .querySelectorAll('link[rel="alternate"][hreflang]')
+      .forEach((node) => node.remove());
   }
 
   private setHreflang(rel: string, hreflang: string, href: string): void {

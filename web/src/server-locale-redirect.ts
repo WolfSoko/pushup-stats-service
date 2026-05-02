@@ -69,35 +69,32 @@ export const ROOT_FILES: ReadonlySet<string> = new Set([
 export const SAFE_REDIRECT_PATH_RE = /^\/[A-Za-z0-9/_\-.~%]*$/;
 
 /**
- * Pick a locale based on `Accept-Language`. Defaults to the source
- * locale (`de`) and only switches if the header explicitly starts
- * with one of the supported codes (after optional `,` / `;` weight
- * separators). Word boundary `\b<code>(-|;|,|$)` keeps `de` from
- * matching in `de;q=0.5,en;q=0.3`. Classical locales (`grc`, `la`)
- * are detected too, even though browsers rarely advertise them —
+ * Pick a locale based on `Accept-Language`. We honour the user's
+ * stated order — `it-IT,en;q=0.5` returns `it`, not `en` — by
+ * splitting the header on `,`, stripping `;q=…` weights, and taking
+ * the first entry whose primary subtag matches one of the supported
+ * locales (including the source `de`). Q-values themselves aren't
+ * parsed: in practice every modern browser already lists languages
+ * in the user's preferred order regardless of explicit weights, and
+ * full RFC-compliant q-value sorting would be a maintenance trap.
+ *
+ * Falls back to the source locale (`de`) when the header is absent,
+ * empty, or contains no supported language. Classical locales (`grc`,
+ * `la`) are matched too, even though browsers rarely advertise them —
  * users can configure them manually in OS-level language settings.
  */
 export function pickLocale(
   acceptLanguage: string | undefined
 ): SupportedLocale {
   const accept = String(acceptLanguage ?? '').toLowerCase();
-  // Match in a deterministic priority order: explicit user-preferred
-  // codes win over the source-locale default. Order doesn't matter
-  // strictly because the regex is anchored to a word boundary, but
-  // listing the most likely browser codes first keeps the regex test
-  // cheap.
-  const priority: ReadonlyArray<SupportedLocale> = [
-    'en',
-    'fr',
-    'es',
-    'it',
-    'nl',
-    'grc',
-    'la',
-  ];
-  for (const code of priority) {
-    const re = new RegExp(`\\b${code}(-|;|,|$)`);
-    if (re.test(accept)) return code;
+  if (!accept) return 'de';
+  for (const entry of accept.split(',')) {
+    const tag = entry.split(';')[0].trim();
+    if (!tag) continue;
+    const primary = tag.split('-')[0];
+    if ((SUPPORTED_LOCALES as ReadonlyArray<string>).includes(primary)) {
+      return primary as SupportedLocale;
+    }
   }
   return 'de';
 }

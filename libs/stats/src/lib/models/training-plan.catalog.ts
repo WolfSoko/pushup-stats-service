@@ -4,6 +4,42 @@ import {
   TrainingPlanLevel,
 } from './training-plan.models';
 
+// Polyfill the global `$localize` tagged template so this module is
+// safe to load from non-Angular runtimes (cloud-functions, plain Node
+// scripts, Jest test contexts that haven't initialised
+// `@angular/localize`). For the Angular i18n build, `$localize` calls
+// in this file are statically replaced per locale at build time, so
+// the polyfill is dead code in production web bundles. For everyone
+// else, it returns the source string (the German metadata-stripped
+// payload), matching what `@angular/localize/init` would emit when no
+// translations are loaded.
+//
+// We avoid importing `@angular/localize/init` directly because it
+// ships ESM-only (`.mjs`) and forces every Jest project that
+// transitively imports `@pu-stats/models` to add `transformIgnore`
+// patterns and other ESM gymnastics.
+{
+  const g = globalThis as unknown as Record<string, unknown>;
+  if (typeof g['$localize'] === 'undefined') {
+    g['$localize'] = (...args: unknown[]): string => {
+      const parts = args[0] as ArrayLike<string>;
+      const expressions = args.slice(1);
+      let first = parts[0] ?? '';
+      // Strip the optional `:metadata:` prefix that `$localize` uses
+      // to carry the i18n id (e.g. `:@@plan.day.rest:Ruhetag`).
+      if (first.startsWith(':')) {
+        const end = first.indexOf(':', 1);
+        if (end > 0) first = first.slice(end + 1);
+      }
+      let out = first;
+      for (let i = 0; i < expressions.length; i++) {
+        out += String(expressions[i]) + (parts[i + 1] ?? '');
+      }
+      return out;
+    };
+  }
+}
+
 /**
  * Curated training plans, derived from existing blog articles in
  * `web/src/app/blog/blog-posts.data.ts`. The numeric targets are

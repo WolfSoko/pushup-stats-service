@@ -25,21 +25,21 @@ describe('pickLocale', () => {
     ['en', 'en'],
     ['en-US', 'en'],
     ['EN', 'en'],
-    // ANY presence of English in the header switches us to the en bundle.
-    // We deliberately don't parse q-values: so `de;q=0.9,en;q=0.1` still
-    // picks `en`. That's fine for our use case (most tools send a single
-    // primary language), and parsing q-values would be a maintenance trap
-    // for what's essentially a marketing-redirect heuristic.
-    ['de;q=0.5,en;q=0.3', 'en'],
+    // We honour the header's stated order: the first supported entry
+    // wins, regardless of `;q=…` weights. Q-value parsing would be a
+    // maintenance trap and modern browsers already list languages in
+    // the user's preferred order.
+    ['de;q=0.5,en;q=0.3', 'de'],
     ['en-GB,de;q=0.5', 'en'],
     ['fr-FR', 'fr'],
     ['es', 'es'],
-    ['it-IT,en;q=0.5', 'en'], // priority: en wins over later codes
+    ['it-IT,en;q=0.5', 'it'], // first stated tag wins, later supported tags don't preempt it
+    ['de,de-DE;q=0.9,fr;q=0.8', 'de'],
     ['nl-BE', 'nl'],
     ['grc', 'grc'],
     ['la', 'la'],
-    ['zh-CN,ja;q=0.8', 'de'], // unsupported → source locale fallback
-    ['xen-fake', 'de'], // word boundary prevents matching `en` inside `xen`
+    ['zh-CN,ja;q=0.8', 'de'], // no supported tag → source locale fallback
+    ['xen-fake', 'de'], // unrecognised primary subtag → source locale fallback
   ])('Given Accept-Language=%j, Then picks %s', (header, expected) => {
     expect(pickLocale(header)).toBe(expected);
   });
