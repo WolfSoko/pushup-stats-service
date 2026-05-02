@@ -79,7 +79,7 @@ export class SeoService {
     // Canonical resolution: when the active locale is one we have an
     // alternate path for, the canonical points there. Otherwise we
     // fall back to the source locale so phantom URLs (e.g.
-    // `/fr/blog/<de-slug>` when fr/es/it/nl/grc/la builds reuse the
+    // `/fr/blog/<de-slug>` when fr/es/it/nl/el/la builds reuse the
     // German blog data) deduplicate to the post's real language URL
     // and match the JSON-LD canonical emitted by callers.
     const canonicalLocale =
@@ -144,9 +144,10 @@ export class SeoService {
   }
 
   /**
-   * Map a locale code to its OpenGraph BCP 47 form. OG only formally
-   * supports `xx_YY` IETF tags, so we approximate for classical
-   * languages by returning the bare two-letter code (no region).
+   * Map a locale code to its OpenGraph locale value. OpenGraph uses the
+   * underscore-separated `ll_CC` form (language + region, e.g. `en_US`)
+   * rather than BCP 47's hyphenated tags. For languages without a clear
+   * region we fall back to the bare two-letter language code.
    */
   private ogLocaleFor(locale: LocalePrefix): string {
     const map: Record<LocalePrefix, string> = {
@@ -156,7 +157,7 @@ export class SeoService {
       es: 'es_ES',
       it: 'it_IT',
       nl: 'nl_NL',
-      grc: 'grc',
+      el: 'el_GR',
       la: 'la',
     };
     return map[locale];

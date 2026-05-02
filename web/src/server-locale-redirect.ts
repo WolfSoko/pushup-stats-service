@@ -40,7 +40,7 @@ export const SUPPORTED_LOCALES = [
   'es',
   'it',
   'nl',
-  'grc',
+  'el',
   'la',
 ] as const;
 export type SupportedLocale = (typeof SUPPORTED_LOCALES)[number];
@@ -78,7 +78,7 @@ export const SAFE_REDIRECT_PATH_RE = /^\/[A-Za-z0-9/_\-.~%]*$/;
  * than crashing the redirect.
  *
  * Falls back to the source locale (`de`) when the header is absent,
- * empty, or contains no supported language. Classical locales (`grc`,
+ * empty, or contains no supported language. Less common locales (`el`,
  * `la`) are matched too, even though browsers rarely advertise them —
  * users can configure them manually in OS-level language settings.
  */

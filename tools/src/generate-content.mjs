@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // Build-time generator: scans `content/blog/<folder>/<lang>.md` and
 // `content/wiki/pushup-types/<id>.<lang>.md` for any lowercase locale
-// code (de, en, fr, es, it, nl, grc, la, …), parses YAML frontmatter
+// code (de, en, fr, es, it, nl, el, la, …), parses YAML frontmatter
 // and renders markdown bodies to HTML, then writes:
 //
 //   web/src/app/blog/generated/<slug>.<lang>.ts  (one file per post per locale)
@@ -96,7 +96,7 @@ const SAFE_LANG_RE = /^[a-z](?:[a-z-]*[a-z])?$/;
 function assertSafeLang(lang, sourcePath) {
   if (typeof lang !== 'string' || !SAFE_LANG_RE.test(lang)) {
     throw new Error(
-      `${sourcePath}: invalid locale code ${JSON.stringify(lang)} — must be lowercase ASCII (e.g. de, en, grc, zh-tw)`
+      `${sourcePath}: invalid locale code ${JSON.stringify(lang)} — must be lowercase ASCII (e.g. de, en, el, zh-tw)`
     );
   }
 }

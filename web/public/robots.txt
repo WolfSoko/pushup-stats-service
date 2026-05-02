@@ -8,7 +8,7 @@ Disallow: /fr/admin
 Disallow: /es/admin
 Disallow: /it/admin
 Disallow: /nl/admin
-Disallow: /grc/admin
+Disallow: /el/admin
 Disallow: /la/admin
 Disallow: /settings
 Disallow: /de/settings
@@ -17,7 +17,7 @@ Disallow: /fr/settings
 Disallow: /es/settings
 Disallow: /it/settings
 Disallow: /nl/settings
-Disallow: /grc/settings
+Disallow: /el/settings
 Disallow: /la/settings
 Disallow: /reminders
 Disallow: /de/reminders
@@ -26,7 +26,7 @@ Disallow: /fr/reminders
 Disallow: /es/reminders
 Disallow: /it/reminders
 Disallow: /nl/reminders
-Disallow: /grc/reminders
+Disallow: /el/reminders
 Disallow: /la/reminders
 
 Sitemap: https://pushup-stats.com/sitemap.xml

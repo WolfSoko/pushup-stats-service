@@ -23,7 +23,7 @@ import { parse as parseYaml } from 'yaml';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '../..');
 
-const NON_SOURCE_LANGS = ['fr', 'es', 'it', 'nl', 'grc', 'la'];
+const NON_SOURCE_LANGS = ['fr', 'es', 'it', 'nl', 'el', 'la'];
 
 function listMd(dir) {
   if (!existsSync(dir)) return [];
