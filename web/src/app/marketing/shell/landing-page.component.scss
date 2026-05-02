@@ -583,3 +583,160 @@ mat-card-header mat-icon {
     color: #3b82f6;
   }
 }
+
+// Scroll-driven reveal animations.
+// Pure CSS via `animation-timeline: view()` — no JS, no IntersectionObserver.
+// Override the per-element CSS variables to vary the entrance for each section.
+.scroll-reveal {
+  --reveal-opacity-from: 0;
+  --reveal-opacity-to: 1;
+  --reveal-translate-y: 80px;
+  --reveal-translate-x: 0px;
+  --reveal-scale: 1;
+  --reveal-rotate: 0deg;
+  --reveal-blur: 0px;
+  --reveal-range-start: entry 5%;
+  --reveal-range-end: cover 35%;
+  --reveal-easing: cubic-bezier(0.2, 0.7, 0.3, 1);
+
+  @supports (animation-timeline: view()) {
+    animation: scroll-reveal var(--reveal-easing) forwards;
+    animation-timeline: view();
+    animation-range: var(--reveal-range-start) var(--reveal-range-end);
+  }
+}
+
+@keyframes scroll-reveal {
+  from {
+    opacity: var(--reveal-opacity-from);
+    transform: translateY(var(--reveal-translate-y))
+      translateX(var(--reveal-translate-x)) scale(var(--reveal-scale))
+      rotate(var(--reveal-rotate));
+    filter: blur(var(--reveal-blur));
+  }
+  to {
+    opacity: var(--reveal-opacity-to);
+    transform: translateY(0) translateX(0) scale(1) rotate(0deg);
+    filter: blur(0);
+  }
+}
+
+// Modifier: slide in from the left edge.
+.scroll-reveal--from-left {
+  --reveal-translate-x: -140px;
+  --reveal-translate-y: 30px;
+  --reveal-rotate: -1.5deg;
+}
+
+// Modifier: slide in from the right edge.
+.scroll-reveal--from-right {
+  --reveal-translate-x: 140px;
+  --reveal-translate-y: 30px;
+  --reveal-rotate: 1.5deg;
+}
+
+// Modifier: cinematic zoom-and-focus reveal — used for the big preview screenshot.
+.scroll-reveal--zoom {
+  --reveal-scale: 0.82;
+  --reveal-translate-y: 60px;
+  --reveal-blur: 12px;
+  --reveal-range-end: cover 45%;
+}
+
+// Modifier: pop-in — small element scales up from a smaller version.
+.scroll-reveal--pop {
+  --reveal-scale: 0.6;
+  --reveal-translate-y: 20px;
+  --reveal-easing: cubic-bezier(0.34, 1.56, 0.64, 1); // overshoot
+}
+
+// Stagger: children of a grid each animate at slightly different scroll positions,
+// producing a wave effect as the grid scrolls into view. Direction also alternates
+// so cards arrive from opposite sides for visual rhythm.
+.scroll-reveal-stagger {
+  @supports (animation-timeline: view()) {
+    > * {
+      --reveal-opacity-from: 0;
+      --reveal-translate-y: 80px;
+      --reveal-translate-x: 0px;
+      --reveal-scale: 0.94;
+      --reveal-easing: cubic-bezier(0.2, 0.7, 0.3, 1);
+
+      animation: scroll-reveal var(--reveal-easing) forwards;
+      animation-timeline: view();
+    }
+
+    > :nth-child(3n + 1) {
+      animation-range: entry 0% cover 30%;
+      --reveal-translate-x: -50px;
+    }
+    > :nth-child(3n + 2) {
+      animation-range: entry 8% cover 38%;
+      --reveal-translate-y: 100px;
+    }
+    > :nth-child(3n + 3) {
+      animation-range: entry 16% cover 46%;
+      --reveal-translate-x: 50px;
+    }
+  }
+}
+
+// Per-section flavour overrides.
+.training-plans-feature.scroll-reveal {
+  --reveal-translate-x: -120px;
+  --reveal-translate-y: 40px;
+  --reveal-rotate: -1deg;
+  --reveal-blur: 4px;
+}
+
+.feature-grid.scroll-reveal-stagger {
+  @supports (animation-timeline: view()) {
+    > :nth-child(4n + 1) {
+      animation-range: entry 0% cover 28%;
+      --reveal-translate-x: -60px;
+      --reveal-translate-y: 40px;
+      --reveal-rotate: -2deg;
+    }
+    > :nth-child(4n + 2) {
+      animation-range: entry 6% cover 34%;
+      --reveal-translate-x: 60px;
+      --reveal-translate-y: 40px;
+      --reveal-rotate: 2deg;
+    }
+    > :nth-child(4n + 3) {
+      animation-range: entry 12% cover 40%;
+      --reveal-translate-x: -40px;
+      --reveal-translate-y: 60px;
+      --reveal-scale: 0.9;
+    }
+    > :nth-child(4n + 4) {
+      animation-range: entry 18% cover 46%;
+      --reveal-translate-x: 40px;
+      --reveal-translate-y: 60px;
+      --reveal-scale: 0.9;
+    }
+  }
+}
+
+.preview.scroll-reveal {
+  --reveal-scale: 0.78;
+  --reveal-translate-y: 80px;
+  --reveal-blur: 14px;
+  --reveal-range-end: cover 50%;
+}
+
+.trust-bar.scroll-reveal {
+  --reveal-translate-y: 20px;
+  --reveal-scale: 0.95;
+  --reveal-range-end: cover 25%;
+}
+
+// Respect user motion preferences — disable all reveal animations.
+@media (prefers-reduced-motion: reduce) {
+  @supports (animation-timeline: view()) {
+    .scroll-reveal,
+    .scroll-reveal-stagger > * {
+      animation: none;
+    }
+  }
+}

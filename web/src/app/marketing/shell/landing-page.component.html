@@ -78,7 +78,7 @@
   </section>
 
   <section
-    class="training-plans-feature"
+    class="training-plans-feature scroll-reveal scroll-reveal--from-left"
     aria-labelledby="training-plans-title"
   >
     <div class="training-plans-intro">
@@ -95,7 +95,7 @@
       </p>
     </div>
 
-    <div class="plans-cards">
+    <div class="plans-cards scroll-reveal-stagger">
       <mat-card class="plan-card-mini">
         <mat-card-header class="key-features-header">
           <mat-icon aria-hidden="true">trending_up</mat-icon>
@@ -185,14 +185,16 @@
     </div>
   </section>
 
-  <app-reminder-feature-section></app-reminder-feature-section>
+  <app-reminder-feature-section
+    class="scroll-reveal scroll-reveal--from-right"
+  ></app-reminder-feature-section>
 
-  <p class="trust-bar" i18n="@@landing.trust.bar">
+  <p class="trust-bar scroll-reveal" i18n="@@landing.trust.bar">
     ✓ Kostenlos · ✓ Kein Abo · ✓ Keine Kreditkarte · ✓ Datenschutz first
   </p>
 
   <section
-    class="feature-grid"
+    class="feature-grid scroll-reveal-stagger"
     aria-label="Funktionen"
     i18n-aria-label="@@landing.features.aria"
   >
@@ -568,7 +570,7 @@
   <section aria-label="Werbung" i18n-aria-label="@@ads.landing.aria">
     <lib-ad-slot [slot]="landingAdSlot()" />
   </section>
-  <section class="preview" aria-labelledby="preview-title">
+  <section class="preview scroll-reveal" aria-labelledby="preview-title">
     <h2 id="preview-title" i18n="@@landing.preview.title">
       Deine Statistik auf einen Blick
     </h2>
@@ -717,9 +719,9 @@
     </div>
   </section>
 
-  <section class="discover" aria-labelledby="discover-title">
+  <section class="discover scroll-reveal" aria-labelledby="discover-title">
     <h2 id="discover-title" i18n="@@landing.discover.title">Mehr entdecken</h2>
-    <div class="discover-grid">
+    <div class="discover-grid scroll-reveal-stagger">
       <mat-card class="discover-card">
         <mat-card-header class="key-features-header">
           <mat-icon aria-hidden="true">leaderboard</mat-icon>
