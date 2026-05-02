@@ -1,4 +1,5 @@
 const {
+  LOCALES,
   staticRoutes,
   extractBlogPosts,
   extractTrainingPlanSlugs,
@@ -226,25 +227,41 @@ describe('generate-sitemap', () => {
       },
     ];
 
-    it('pairs DE and EN posts with matching translationSlug', () => {
+    it('pairs DE and EN posts with matching translationSlug across all locales', () => {
       const routes = buildBlogRoutes(posts);
       const de = routes.find((r) => r.path === '/blog/liegestuetze-steigern');
       const en = routes.find((r) => r.path === '/blog/pushup-progression');
-      expect(de.alternates).toEqual([
-        { lang: 'de', path: '/blog/liegestuetze-steigern' },
-        { lang: 'en', path: '/blog/pushup-progression' },
-      ]);
-      expect(en.alternates).toEqual([
-        { lang: 'de', path: '/blog/liegestuetze-steigern' },
-        { lang: 'en', path: '/blog/pushup-progression' },
-      ]);
+      const expected = LOCALES.map((lang) => ({
+        lang,
+        path:
+          lang === 'en'
+            ? '/blog/pushup-progression'
+            : '/blog/liegestuetze-steigern',
+      }));
+      expect(de.alternates).toEqual(expected);
+      expect(en.alternates).toEqual(expected);
     });
 
-    it('emits self-only alternate for posts without a translation pair', () => {
+    it('emits DE plus all DE-fallback locales (no EN) for an orphan DE post', () => {
       const routes = buildBlogRoutes(posts);
       const orphan = routes.find((r) => r.path === '/blog/orphan-de');
-      expect(orphan.alternates).toEqual([
-        { lang: 'de', path: '/blog/orphan-de' },
+      const expected = LOCALES.filter((l) => l !== 'en').map((lang) => ({
+        lang,
+        path: '/blog/orphan-de',
+      }));
+      expect(orphan.alternates).toEqual(expected);
+    });
+
+    it('emits EN-only alternate for an orphan EN post', () => {
+      const routes = buildBlogRoutes([
+        {
+          slug: 'orphan-en',
+          lang: 'en',
+          publishedAt: '2025-03-01',
+        },
+      ]);
+      expect(routes[0].alternates).toEqual([
+        { lang: 'en', path: '/blog/orphan-en' },
       ]);
     });
 
