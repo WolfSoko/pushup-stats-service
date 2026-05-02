@@ -3118,23 +3118,6 @@ Deine Position: # ·  Reps        </source>
       
       
         </unit>
-    <unit id="saved">
-      <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:112,113</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Gespeichert.</source>
-        <target>Saved.</target>
-
-        
-        
-            </segment>
-
-      
-      
-        </unit>
     <unit id="saveEntry">
       <notes>
         <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:107</note>
@@ -3144,44 +3127,6 @@ Deine Position: # ·  Reps        </source>
         <target>Save</target>
       </segment>
     </unit>
-    <unit id="saveSettings">
-      <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:105,107</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>
-          <pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">save</pc>
- Speichern         </source>
-        <target>
-          <pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">save</pc>
- Save         </target>
-
-        
-        
-            </segment>
-
-      
-      
-        </unit>
-    <unit id="saving">
-      <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:109,110</note>
-
-        
-            </notes>
-      <segment state="translated">
-        <source>Speichert…</source>
-        <target>Saving…</target>
-
-        
-        
-            </segment>
-
-      
-      
-        </unit>
     <unit id="selectRangeTitle">
       <notes>
         <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:30,33</note>
@@ -3409,6 +3354,102 @@ Deine Position: # ·  Reps        </source>
         <target> Enable personalized ads </target>
       </segment>
     </unit>
+    <unit id="settings.status.saving">
+      <segment state="translated">
+        <source>Speichert…</source>
+        <target>Saving…</target>
+      </segment>
+    </unit>
+    <unit id="settings.status.saved">
+      <segment state="translated">
+        <source>Gespeichert</source>
+        <target>Saved</target>
+      </segment>
+    </unit>
+    <unit id="settings.status.error">
+      <segment state="translated">
+        <source>Fehler beim Speichern</source>
+        <target>Could not save</target>
+      </segment>
+    </unit>
+    <unit id="settings.status.retry">
+      <segment state="translated">
+        <source>Erneut versuchen</source>
+        <target>Try again</target>
+      </segment>
+    </unit>
+    <unit id="settings.status.pending">
+      <segment state="translated">
+        <source>Ungespeicherte Änderungen…</source>
+        <target>Unsaved changes…</target>
+      </segment>
+    </unit>
+    <unit id="settings.status.synced">
+      <segment state="translated">
+        <source>Alle Änderungen gespeichert</source>
+        <target>All changes saved</target>
+      </segment>
+    </unit>
+    <unit id="settings.section.profile.title">
+      <segment state="translated">
+        <source>Profil</source>
+        <target>Profile</target>
+      </segment>
+    </unit>
+    <unit id="settings.section.profile.subtitle">
+      <segment state="translated">
+        <source>Wie du in der App und der Bestenliste erscheinst.</source>
+        <target>How you appear in the app and on the leaderboard.</target>
+      </segment>
+    </unit>
+    <unit id="settings.section.privacy.title">
+      <segment state="translated">
+        <source>Sichtbarkeit</source>
+        <target>Visibility</target>
+      </segment>
+    </unit>
+    <unit id="settings.section.privacy.subtitle">
+      <segment state="translated">
+        <source>Steuere, wer dein Profil sehen kann.</source>
+        <target>Control who can see your profile.</target>
+      </segment>
+    </unit>
+    <unit id="settings.section.goals.title">
+      <segment state="translated">
+        <source>Ziele</source>
+        <target>Goals</target>
+      </segment>
+    </unit>
+    <unit id="settings.section.goals.subtitle">
+      <segment state="translated">
+        <source>Tägliche, wöchentliche und monatliche Ziele.</source>
+        <target>Daily, weekly and monthly targets.</target>
+      </segment>
+    </unit>
+    <unit id="settings.section.display.title">
+      <segment state="translated">
+        <source>Anzeige</source>
+        <target>Display</target>
+      </segment>
+    </unit>
+    <unit id="settings.section.display.subtitle">
+      <segment state="translated">
+        <source>Animationen und Darstellung.</source>
+        <target>Animations and rendering.</target>
+      </segment>
+    </unit>
+    <unit id="settings.section.ads.title">
+      <segment state="translated">
+        <source>Werbung</source>
+        <target>Ads</target>
+      </segment>
+    </unit>
+    <unit id="settings.section.ads.subtitle">
+      <segment state="translated">
+        <source>Personalisierung der Werbe-Slots.</source>
+        <target>Personalization of ad slots.</target>
+      </segment>
+    </unit>
     <unit id="settings.dangerZoneBody">
       <segment state="translated">
         <source/>
@@ -3417,8 +3458,8 @@ Deine Position: # ·  Reps        </source>
     </unit>
     <unit id="settings.remindersLinkTitle">
       <segment state="translated">
-        <source>🔔 Erinnerungen</source>
-        <target>🔔 Reminders</target>
+        <source>Erinnerungen</source>
+        <target>Reminders</target>
       </segment>
     </unit>
     <unit id="settings.remindersLinkDesc">
