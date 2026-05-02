@@ -19,7 +19,6 @@ export const POST: BlogPost = {
     "Liegestütze Muskeln",
     "Liegestütze fortgeschritten"
   ],
-  "translationSlug": "pushup-variations",
   "heroImage": "https://images.unsplash.com/photo-1731341400836-baaa5535b8d5?auto=format&fit=crop&w=1600&q=80",
   "heroImageAlt": "Sportler bei einer Liegestütz-Variante im Trainingsraum.",
   "heroImageCredit": "Foto: <a href=\"https://unsplash.com\" target=\"_blank\" rel=\"noopener noreferrer\">Unsplash</a>"

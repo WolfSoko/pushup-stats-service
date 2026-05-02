@@ -19,7 +19,6 @@ export const POST: BlogPost = {
     "push-up muscles",
     "advanced push-ups"
   ],
-  "translationSlug": "liegestuetze-varianten",
   "heroImage": "https://images.unsplash.com/photo-1731341400836-baaa5535b8d5?auto=format&fit=crop&w=1600&q=80",
   "heroImageAlt": "Athlete performing a push-up variation in a training space.",
   "heroImageCredit": "Photo: <a href=\"https://unsplash.com\" target=\"_blank\" rel=\"noopener noreferrer\">Unsplash</a>"

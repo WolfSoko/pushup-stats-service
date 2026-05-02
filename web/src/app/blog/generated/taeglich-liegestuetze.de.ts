@@ -19,7 +19,6 @@ export const POST: BlogPost = {
     "Liegestütze Gewohnheit",
     "Liegestütze Gesundheit"
   ],
-  "translationSlug": "daily-pushups",
   "heroImage": "https://images.unsplash.com/photo-1598971639058-fab3c3109a00?auto=format&fit=crop&w=1600&q=80",
   "heroImageAlt": "Sportlerin bei einer Liegestütze – tägliches Training im Freien.",
   "heroImageCredit": "Foto: <a href=\"https://unsplash.com\" target=\"_blank\" rel=\"noopener noreferrer\">Unsplash</a>"

@@ -19,7 +19,6 @@ export const POST: BlogPost = {
     "Pushup Tracker",
     "push-up progress tracking"
   ],
-  "translationSlug": "liegestuetze-tracker",
   "heroImage": "https://images.unsplash.com/photo-1717821681365-36b0da044a75?auto=format&fit=crop&w=1600&q=80",
   "heroImageAlt": "Athlete doing a clean push-up on a wooden floor — progress in focus.",
   "heroImageCredit": "Photo: <a href=\"https://unsplash.com\" target=\"_blank\" rel=\"noopener noreferrer\">Unsplash</a>"

@@ -19,7 +19,6 @@ export const POST: BlogPost = {
     "push-up habit",
     "push-up health"
   ],
-  "translationSlug": "taeglich-liegestuetze",
   "heroImage": "https://images.unsplash.com/photo-1598971639058-fab3c3109a00?auto=format&fit=crop&w=1600&q=80",
   "heroImageAlt": "Female athlete doing a push-up — a daily training routine outdoors.",
   "heroImageCredit": "Photo: <a href=\"https://unsplash.com\" target=\"_blank\" rel=\"noopener noreferrer\">Unsplash</a>"

@@ -19,7 +19,6 @@ export const POST: BlogPost = {
     "Kälteanwendung Regeneration",
     "Wim Hof Atmung Liegestütze"
   ],
-  "translationSlug": "wim-hof-pushups",
   "heroImage": "https://images.unsplash.com/photo-1548690312-e3b507d8c110?auto=format&fit=crop&w=1600&q=80",
   "heroImageAlt": "Sportler in verschneiter Landschaft – Sinnbild für die Wim Hof Methode.",
   "heroImageCredit": "Foto: <a href=\"https://unsplash.com\" target=\"_blank\" rel=\"noopener noreferrer\">Unsplash</a>"

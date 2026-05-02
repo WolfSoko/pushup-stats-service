@@ -47,6 +47,34 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
         "Tempo 3-1-1 (3 s down, 1 s hold, 1 s up) builds noticeably more strength."
       ]
     },
+    "es": {
+      "name": "Flexión de arquero",
+      "summary": "Flexión asimétrica: un brazo se dobla mientras el otro permanece extendido — un escalón previo a la flexión de un solo brazo.",
+      "instructions": [
+        "Manos notablemente más separadas que los hombros, dedos ligeramente hacia fuera.",
+        "En el descenso, desplázate hacia un lado: un brazo se dobla, el otro permanece casi recto.",
+        "El brazo recto actúa como apoyo; la mayor parte de la carga recae en el brazo que se dobla.",
+        "Empuja hacia arriba de forma controlada, vuelve al centro y luego desplázate al otro lado.",
+        "Cuenta las repeticiones por lado — el plan normalmente indica el número por brazo."
+      ],
+      "tips": [
+        "El tempo 3-1-1 (3 s abajo, 1 s pausa, 1 s arriba) genera notablemente más fuerza."
+      ]
+    },
+    "fr": {
+      "name": "Pompe archer",
+      "summary": "Pompe asymétrique : un bras fléchit pendant que l'autre reste tendu — un tremplin vers la pompe à un bras.",
+      "instructions": [
+        "Placez les mains nettement plus larges que les épaules, doigts légèrement orientés vers l'extérieur.",
+        "À la descente, déplacez le poids d'un côté : un bras fléchit, l'autre reste presque droit.",
+        "Le bras tendu fait office d'appui ; la majorité de la charge repose sur le bras qui fléchit.",
+        "Repoussez de façon contrôlée, revenez au centre, puis déplacez-vous de l'autre côté.",
+        "Comptez les répétitions par côté — le plan indique généralement le nombre par bras."
+      ],
+      "tips": [
+        "Un tempo 3-1-1 (3 s en bas, 1 s de maintien, 1 s en haut) développe nettement plus de force."
+      ]
+    },
     "it": {
       "name": "Piegamento arciere",
       "summary": "Piegamento asimmetrico: un braccio si piega mentre l'altro rimane esteso — un passaggio intermedio verso il piegamento a un braccio.",
@@ -59,6 +87,20 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
       ],
       "tips": [
         "Un tempo 3-1-1 (3 s discesa, 1 s pausa, 1 s salita) sviluppa la forza in modo notevolmente più efficace."
+      ]
+    },
+    "nl": {
+      "name": "Archer-opdruk",
+      "summary": "Asymmetrische opdruk: één arm buigt terwijl de andere gestrekt blijft — een opstap naar de eénarmige opdruk.",
+      "instructions": [
+        "Handen duidelijk breder dan schouderbreedte, vingers licht naar buiten gericht.",
+        "Verschuif bij het zakken naar één kant: één arm buigt, de andere blijft bijna recht.",
+        "De gestrekte arm fungeert als steun; de meeste belasting ligt op de buigende arm.",
+        "Druk gecontroleerd terug omhoog, keer terug naar het midden, verschuif dan naar de andere kant.",
+        "Tel herhalingen per kant — het plan vermeldt doorgaans het per-arm aantal."
+      ],
+      "tips": [
+        "Tempo 3-1-1 (3 s naar beneden, 1 s vasthouden, 1 s omhoog) bouwt merkbaar meer kracht op."
       ]
     }
   },
@@ -89,6 +131,32 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
         "Do not let the lower back arch — actively brace abs and glutes, especially with high feet."
       ]
     },
+    "es": {
+      "name": "Flexión declinada (pies elevados)",
+      "summary": "Pies sobre una elevación, manos en el suelo — mayor carga sobre el pecho superior y los hombros.",
+      "instructions": [
+        "Pies sobre una elevación estable (banco, silla, escalón).",
+        "Manos a la anchura de los hombros en el suelo, mantén una línea recta de la cabeza a los talones.",
+        "Baja el pecho de forma controlada, mantén los abdominales activos.",
+        "Empuja hacia arriba con potencia — cuanto más altos los pies, mayor implicación de los hombros."
+      ],
+      "tips": [
+        "No dejes que la zona lumbar se curve — activa activamente los abdominales y los glúteos, especialmente con los pies muy elevados."
+      ]
+    },
+    "fr": {
+      "name": "Pompe déclinée (pieds surélevés)",
+      "summary": "Pieds sur une élévation, mains au sol — charge supplémentaire sur les pectoraux supérieurs et les épaules.",
+      "instructions": [
+        "Placez les pieds sur une élévation stable (banc, chaise, marche).",
+        "Mains à largeur d'épaules au sol, gardez une ligne droite de la tête aux talons.",
+        "Descendez la poitrine de façon contrôlée, abdominaux gainés.",
+        "Poussez puissamment vers le haut — plus les pieds sont hauts, plus les épaules travaillent."
+      ],
+      "tips": [
+        "Ne laissez pas le bas du dos se creuser — gainez activement abdominaux et fessiers, surtout avec les pieds hauts."
+      ]
+    },
     "it": {
       "name": "Piegamento declinato (piedi in elevazione)",
       "summary": "Piedi su un rialzo, mani a terra — carico extra sul petto superiore e sulle spalle.",
@@ -100,6 +168,19 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
       ],
       "tips": [
         "Non lasciare che la zona lombare si inarcherebbe — tieni addominali e glutei attivi, soprattutto con i piedi molto alti."
+      ]
+    },
+    "nl": {
+      "name": "Decline-opdruk (voeten verhoogd)",
+      "summary": "Voeten op een verhoging, handen op de vloer — extra belasting op de bovenborst en schouders.",
+      "instructions": [
+        "Voeten op een stabiele verhoging (bank, stoel, opstap).",
+        "Handen schouderbreedte op de vloer, houd een rechte lijn van hoofd tot hielen.",
+        "Laat de borst gecontroleerd zakken, houd buikspieren aangespannen.",
+        "Druk krachtig omhoog — hoe hoger de voeten, hoe meer schouderbetrokkenheid."
+      ],
+      "tips": [
+        "Laat de lage rug niet hollen — span buik en bilspieren actief aan, zeker bij hoge voeten."
       ]
     }
   },
@@ -130,6 +211,32 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
         "Beginners: get comfortable with knee-diamonds before attempting the full version."
       ]
     },
+    "es": {
+      "name": "Flexión de diamante",
+      "summary": "Las manos forman un triángulo bajo el pecho — máxima activación del tríceps.",
+      "instructions": [
+        "Los pulgares y los índices se tocan formando un triángulo en \"diamante\".",
+        "Manos directamente bajo el pecho inferior, no demasiado abajo hacia el abdomen.",
+        "Mantén los codos cerca del torso, apuntando hacia atrás.",
+        "Baja el pecho hasta el diamante y luego empuja recto hacia arriba."
+      ],
+      "tips": [
+        "Principiantes: practica primero los diamantes de rodillas antes de intentar la versión completa."
+      ]
+    },
+    "fr": {
+      "name": "Pompe diamant",
+      "summary": "Les mains forment un triangle sous la poitrine — engagement maximal des triceps.",
+      "instructions": [
+        "Les pouces et les index se touchent en formant un triangle en « diamant ».",
+        "Mains directement sous la partie inférieure de la poitrine, pas trop bas vers le ventre.",
+        "Gardez les coudes proches du torse, orientés vers l'arrière.",
+        "Descendez la poitrine jusqu'au diamant, puis poussez droit vers le haut."
+      ],
+      "tips": [
+        "Débutants : maîtrisez d'abord les pompes diamant sur les genoux avant de tenter la version complète."
+      ]
+    },
     "it": {
       "name": "Piegamento a diamante",
       "summary": "Le mani formano un triangolo sotto il petto — massimo coinvolgimento dei tricipiti.",
@@ -141,6 +248,19 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
       ],
       "tips": [
         "Principianti: familiarizzate con il diamante sulle ginocchia prima di tentare la versione completa."
+      ]
+    },
+    "nl": {
+      "name": "Diamantopdruk",
+      "summary": "Handen vormen een driehoek onder de borst — maximale tricepsbetrokkenheid.",
+      "instructions": [
+        "Duimen en wijsvingers raken elkaar en vormen een \"diamant\"-driehoek.",
+        "Handen direct onder de onderborst, niet te ver naar de buik.",
+        "Houd de ellebogen dicht bij de romp, naar achteren gericht.",
+        "Laat de borst zakken naar de diamant, druk dan recht omhoog."
+      ],
+      "tips": [
+        "Beginners: wen eerst aan knie-diamantopdrukken voordat je de volledige versie probeert."
       ]
     }
   },
@@ -171,6 +291,32 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
         "Step the elevation down once 3×10 reps feel clean."
       ]
     },
+    "es": {
+      "name": "Flexión inclinada (manos elevadas)",
+      "summary": "Manos sobre un banco, mesa o pared — reduce la carga sobre los brazos.",
+      "instructions": [
+        "Coloca las manos sobre una elevación estable (banco, mesa, escalón).",
+        "Pies en el suelo, cuerpo en línea recta.",
+        "Baja el pecho de forma controlada hasta la elevación y luego empuja hacia arriba.",
+        "Cuanto más baja la elevación, más difícil el ejercicio."
+      ],
+      "tips": [
+        "Baja la elevación una vez que 3×10 repeticiones se sientan limpias."
+      ]
+    },
+    "fr": {
+      "name": "Pompe inclinée (mains surélevées)",
+      "summary": "Mains sur un banc, une table ou un mur — réduit la charge sur les bras.",
+      "instructions": [
+        "Placez les mains sur une élévation stable (banc, table, marche).",
+        "Pieds au sol, corps en ligne droite.",
+        "Descendez la poitrine de façon contrôlée jusqu'à l'élévation, puis poussez vers le haut.",
+        "Plus l'élévation est basse, plus l'exercice est difficile."
+      ],
+      "tips": [
+        "Abaissez l'élévation dès que 3×10 répétitions semblent propres."
+      ]
+    },
     "it": {
       "name": "Piegamento inclinato (mani in elevazione)",
       "summary": "Mani su una panca, tavolo o parete — riduce il carico sulle braccia.",
@@ -182,6 +328,19 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
       ],
       "tips": [
         "Abbassa l'altezza della superficie una volta che 3×10 ripetizioni risultano pulite e controllate."
+      ]
+    },
+    "nl": {
+      "name": "Incline-opdruk (handen verhoogd)",
+      "summary": "Handen op een bank, tafel of muur — vermindert de belasting op de armen.",
+      "instructions": [
+        "Plaats de handen op een stabiele verhoging (bank, tafel, trap).",
+        "Voeten op de vloer, lichaam in een rechte lijn.",
+        "Laat de borst gecontroleerd zakken naar de verhoging, druk dan omhoog.",
+        "Hoe lager de verhoging, hoe zwaarder de oefening."
+      ],
+      "tips": [
+        "Ga een stap lager met de verhoging zodra 3×10 herhalingen vlot aanvoelen."
       ]
     }
   },
@@ -212,6 +371,32 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
         "Stay on knee push-ups until you can do 3×8 clean reps, then progress to the standard version."
       ]
     },
+    "es": {
+      "name": "Flexión de rodillas",
+      "summary": "Regresión más fácil con las rodillas en el suelo — ideal para principiantes.",
+      "instructions": [
+        "Coloca las rodillas en el suelo, pies levantados o cruzados.",
+        "Manos a la anchura de los hombros, mantén una línea recta de rodillas a hombros.",
+        "Estabiliza las caderas — sin hundirlas ni elevarlas.",
+        "Baja el pecho de forma controlada y luego empuja hacia arriba."
+      ],
+      "tips": [
+        "Quédate con las flexiones de rodillas hasta poder hacer 3×8 repeticiones limpias, luego progresa a la versión estándar."
+      ]
+    },
+    "fr": {
+      "name": "Pompe sur les genoux",
+      "summary": "Régression facilitée avec les genoux au sol — idéale pour les débutants.",
+      "instructions": [
+        "Placez les genoux au sol, pieds levés ou croisés.",
+        "Mains à largeur d'épaules, gardez une ligne droite des genoux aux épaules.",
+        "Stabilisez les hanches — pas d'affaissement ni de levée des fesses.",
+        "Descendez la poitrine de façon contrôlée, puis repoussez vers le haut."
+      ],
+      "tips": [
+        "Restez sur les pompes sur les genoux jusqu'à pouvoir faire 3×8 répétitions propres, puis passez à la version standard."
+      ]
+    },
     "it": {
       "name": "Piegamento sulle ginocchia",
       "summary": "Regressione facilitata con le ginocchia a terra — ideale per i principianti.",
@@ -223,6 +408,19 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
       ],
       "tips": [
         "Rimani sui piegamenti sulle ginocchia finché riesci a fare 3×8 ripetizioni pulite, poi passa alla versione standard."
+      ]
+    },
+    "nl": {
+      "name": "Knieopdruk",
+      "summary": "Makkelijkere regressie met knieën op de vloer — ideaal voor beginners.",
+      "instructions": [
+        "Plaats de knieën op de vloer, voeten omhoog of gekruist.",
+        "Handen schouderbreedte, houd een rechte lijn van knieën tot schouders.",
+        "Stabiliseer de heupen — niet doorzakken of ophogen.",
+        "Laat de borst gecontroleerd zakken, druk dan terug omhoog."
+      ],
+      "tips": [
+        "Blijf op knieopdrukken totdat je 3×8 schone herhalingen kunt doen, ga dan door naar de standaardversie."
       ]
     }
   },
@@ -253,6 +451,32 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
         "Useful for sensitive wrists — load shifts from the joint into the knuckles."
       ]
     },
+    "es": {
+      "name": "Flexión en nudillos",
+      "summary": "Se realiza sobre los nudillos en lugar de las palmas planas — alivia las muñecas y fortalece los antebrazos.",
+      "instructions": [
+        "Cierra los puños, apóyate sobre los dos primeros nudillos (índice y corazón).",
+        "Mantén el dorso de la mano recto — no dobles la muñeca.",
+        "Empieza sobre una superficie blanda (esterilla, toalla) y progresa después al suelo duro.",
+        "Por lo demás, ejecútala como una flexión estándar."
+      ],
+      "tips": [
+        "Útil para muñecas sensibles — la carga se desplaza de la articulación a los nudillos."
+      ]
+    },
+    "fr": {
+      "name": "Pompe sur les poings",
+      "summary": "Réalisée sur les poings plutôt que les paumes — plus douce pour les poignets et renforce les avant-bras.",
+      "instructions": [
+        "Fermez les poings, appuyez-vous sur les deux premières jointures (index et majeur).",
+        "Gardez le dos de la main droit — ne fléchissez pas le poignet.",
+        "Commencez sur une surface souple (tapis, serviette), puis progressez vers un sol dur.",
+        "Exécutez sinon comme une pompe standard."
+      ],
+      "tips": [
+        "Utile pour les poignets sensibles — la charge se déplace de l'articulation vers les jointures."
+      ]
+    },
     "it": {
       "name": "Piegamento sulle nocche",
       "summary": "Eseguito sulle nocche invece che con le mani piatte — più delicato per i polsi e rafforza gli avambracci.",
@@ -264,6 +488,19 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
       ],
       "tips": [
         "Utile per polsi sensibili — il carico si sposta dall'articolazione alle nocche."
+      ]
+    },
+    "nl": {
+      "name": "Vuistopdruk",
+      "summary": "Uitgevoerd op de knokkels in plaats van platte handen — vriendelijker voor de polsen en versterkt de onderarmen.",
+      "instructions": [
+        "Maak vuisten, steun op de eerste twee knokkels (wijsvinger en middelvinger).",
+        "Houd de rugzijde van de hand recht — buig de pols niet.",
+        "Begin op een zacht oppervlak (mat, handdoek), ga later over naar een harde vloer.",
+        "Voer verder uit als een standaard opdruk."
+      ],
+      "tips": [
+        "Nuttig bij gevoelige polsen — de belasting verschuift van het gewricht naar de knokkels."
       ]
     }
   },
@@ -294,6 +531,32 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
         "Build the eccentric time slowly: 3 s → 5 s → 8 s across multiple weeks."
       ]
     },
+    "es": {
+      "name": "Flexión negativa de un solo brazo",
+      "summary": "Solo la fase de descenso se realiza con un solo brazo — una excéntrica controlada desarrolla la fuerza para el movimiento completo.",
+      "instructions": [
+        "Coloca una mano sobre un banco o elevación; pies bien separados para mayor estabilidad.",
+        "La otra mano en la zona lumbar o la cadera; mantén el cuerpo como una plancha.",
+        "Desciende hacia el banco durante 3–5 segundos — sin fase de \"caída\".",
+        "Empuja hacia arriba con ambas manos o desde la posición elevada — la fase concéntrica no se realiza con un solo brazo aquí."
+      ],
+      "tips": [
+        "Aumenta el tiempo excéntrico gradualmente: 3 s → 5 s → 8 s a lo largo de varias semanas."
+      ]
+    },
+    "fr": {
+      "name": "Pompe négative à un bras",
+      "summary": "Seulement la phase de descente effectuée à un bras — un excentrique contrôlé développe la force pour le mouvement complet.",
+      "instructions": [
+        "Placez une main sur un banc ou une élévation ; pieds bien écartés pour la stabilité.",
+        "L'autre main sur le bas du dos ou la hanche ; maintenez le corps en planche.",
+        "Descendez vers le banc sur 3 à 5 secondes — sans phase de « chute ».",
+        "Repoussez avec les deux mains ou depuis la position surélevée — la phase concentrique ne se fait pas à un bras ici."
+      ],
+      "tips": [
+        "Augmentez progressivement le temps excentrique : 3 s → 5 s → 8 s sur plusieurs semaines."
+      ]
+    },
     "it": {
       "name": "Piegamento negativo a un braccio",
       "summary": "Solo la fase di discesa eseguita con un braccio — un eccentrico controllato costruisce la forza per il movimento completo.",
@@ -305,6 +568,19 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
       ],
       "tips": [
         "Aumenta gradualmente il tempo eccentrico: 3 s → 5 s → 8 s nell'arco di più settimane."
+      ]
+    },
+    "nl": {
+      "name": "Negatieve eénarmige opdruk",
+      "summary": "Alleen de neerwaartse fase éénarmig uitgevoerd — een gecontroleerde excentrische beweging bouwt de kracht op voor de volledige beweging.",
+      "instructions": [
+        "Plaats één hand op een bank/verhoging; voeten breed voor stabiliteit.",
+        "Andere hand op de lage rug of heup; houd het lichaam als een plank.",
+        "Zak in 3–5 seconden naar de bank — geen \"val\"-fase.",
+        "Druk omhoog met beide handen of vanuit de verhoogde positie — de concentrische fase is hier niet éénarmig."
+      ],
+      "tips": [
+        "Bouw de excentrische tijd langzaam op: 3 s → 5 s → 8 s over meerdere weken."
       ]
     }
   },
@@ -337,6 +613,34 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
         "Reps are counted per side — start with the dominant side and match it on the weaker side."
       ]
     },
+    "es": {
+      "name": "Flexión de un solo brazo",
+      "summary": "Flexión completa con una sola mano — el rey del press con peso corporal.",
+      "instructions": [
+        "Pies notablemente más separados que la anchura de las caderas para la máxima estabilidad (muy abiertos al principio).",
+        "Una mano bajo el centro del pecho; la otra en la zona lumbar o la cadera.",
+        "Mantén el cuerpo intencionadamente como una plancha — las caderas y los hombros no deben rotar.",
+        "Baja el pecho hacia la mano de forma controlada y luego empuja recto hacia arriba.",
+        "A medida que aumenta la fuerza, reduce progresivamente la separación de los pies."
+      ],
+      "tips": [
+        "Las repeticiones se cuentan por lado — empieza con el lado dominante e iguálalo en el lado más débil."
+      ]
+    },
+    "fr": {
+      "name": "Pompe à un bras",
+      "summary": "Pompe complète avec une seule main — la reine des exercices de poussée au poids du corps.",
+      "instructions": [
+        "Pieds nettement plus larges que la largeur des hanches pour une stabilité maximale (très large au départ).",
+        "Une main sous le centre de la poitrine ; l'autre sur le bas du dos ou la hanche.",
+        "Maintenez intentionnellement le corps en planche — les hanches et les épaules ne doivent pas pivoter.",
+        "Descendez la poitrine jusqu'à la main de façon contrôlée, puis poussez droit vers le haut.",
+        "À mesure que la force augmente, réduisez progressivement l'écartement des pieds."
+      ],
+      "tips": [
+        "Les répétitions se comptent par côté — commencez par le côté dominant et égalisez sur le côté faible."
+      ]
+    },
     "it": {
       "name": "Piegamento a un braccio",
       "summary": "Piegamento completo con una sola mano — il re della spinta a corpo libero.",
@@ -349,6 +653,20 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
       ],
       "tips": [
         "Le ripetizioni si contano per lato — inizia con il lato dominante e pareggiale sul lato più debole."
+      ]
+    },
+    "nl": {
+      "name": "Eénarmige opdruk",
+      "summary": "Volledige opdruk met één hand — de koning van lichaamsgewicht-drukken.",
+      "instructions": [
+        "Voeten duidelijk breder dan heupbreedte voor maximale stabiliteit (zeer breed aan het begin).",
+        "Één hand onder het midden van de borst; de andere op de lage rug of heup.",
+        "Houd het lichaam bewust als een plank — heupen en schouders mogen niet roteren.",
+        "Laat de borst gecontroleerd zakken naar de hand, druk dan recht omhoog.",
+        "Verklein de voetbreedte geleidelijk naarmate de kracht toeneemt."
+      ],
+      "tips": [
+        "Herhalingen worden per kant geteld — begin met de dominante kant en evenaar dat op de zwakkere kant."
       ]
     }
   },
@@ -372,6 +690,28 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
         "Other hand on the lower back; hold the body as a plank — do not rotate the hips.",
         "Intentionally only descend to the bench height (reduced ROM).",
         "Press up one-armed; lower the bench height progressively."
+      ],
+      "tips": []
+    },
+    "es": {
+      "name": "Flexión de un solo brazo con rango parcial",
+      "summary": "Flexiones de un solo brazo con rango de movimiento reducido (p. ej. desde un banco bajo).",
+      "instructions": [
+        "Coloca una mano sobre un banco o escalón bajo; pies muy separados (al menos a la anchura de las caderas).",
+        "La otra mano en la zona lumbar; mantén el cuerpo como una plancha — no rotes las caderas.",
+        "Desciende intencionadamente solo hasta la altura del banco (ROM reducido).",
+        "Empuja hacia arriba con un solo brazo; reduce progresivamente la altura del banco."
+      ],
+      "tips": []
+    },
+    "fr": {
+      "name": "Pompe à un bras en amplitude partielle",
+      "summary": "Pompes à un bras sur une amplitude de mouvement réduite (ex. depuis un banc bas).",
+      "instructions": [
+        "Placez une main sur un banc bas ou une marche ; pieds très écartés (au moins largeur des hanches).",
+        "L'autre main sur le bas du dos ; maintenez le corps en planche — ne faites pas pivoter les hanches.",
+        "Descendez intentionnellement seulement jusqu'à la hauteur du banc (amplitude réduite).",
+        "Poussez vers le haut à un bras ; abaissez progressivement la hauteur du banc."
       ],
       "tips": []
     },
@@ -412,6 +752,32 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
       ],
       "tips": [
         "Make it harder: put the feet on an elevation for a near-vertical position."
+      ]
+    },
+    "es": {
+      "name": "Flexión de pica",
+      "summary": "Flexiones desde una forma en V — press casi vertical, un escalón previo a las flexiones en pino.",
+      "instructions": [
+        "Desde una posición a cuatro patas, eleva las caderas — el cuerpo forma una V invertida.",
+        "Manos a la anchura de los hombros, piernas rectas o ligeramente dobladas, caderas altas.",
+        "Baja la cabeza entre los brazos hacia el suelo — los codos van hacia atrás.",
+        "Empuja de nuevo hacia arriba sin caer a la posición de flexión normal."
+      ],
+      "tips": [
+        "Para hacerlo más difícil: pon los pies sobre una elevación para una posición casi vertical."
+      ]
+    },
+    "fr": {
+      "name": "Pompe pike",
+      "summary": "Pompes depuis une position en V inversé — poussée quasi verticale, un tremplin vers les pompes sur les mains.",
+      "instructions": [
+        "Depuis une position à quatre pattes, poussez les hanches vers le haut — le corps forme un V inversé.",
+        "Mains à largeur d'épaules, jambes tendues ou légèrement fléchies, hanches hautes.",
+        "Descendez la tête entre les bras vers le sol — les coudes s'orientent vers l'arrière.",
+        "Repoussez vers le haut sans retomber en position de pompe classique."
+      ],
+      "tips": [
+        "Pour rendre plus difficile : placez les pieds sur une élévation pour une position quasi verticale."
       ]
     },
     "it": {
@@ -459,6 +825,36 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
         "Breathing: inhale on the way down, exhale on the press up."
       ]
     },
+    "es": {
+      "name": "Flexión estándar",
+      "summary": "Flexión clásica con las manos a la anchura de los hombros y una línea corporal recta.",
+      "instructions": [
+        "Manos a la anchura de los hombros, directamente bajo los hombros, dedos apuntando hacia adelante.",
+        "El cuerpo forma una línea recta de la cabeza a los talones — activa abdominales y glúteos.",
+        "Codos a aproximadamente 45° respecto al torso, sin abrirlos hacia los lados.",
+        "Baja el pecho de forma controlada hasta que casi toque el suelo.",
+        "Empuja hacia arriba con potencia, no bloquees los codos arriba."
+      ],
+      "tips": [
+        "Mira ligeramente hacia delante en el suelo — no fuerces el cuello.",
+        "Respiración: inhala en el descenso, exhala en el empuje hacia arriba."
+      ]
+    },
+    "fr": {
+      "name": "Pompe standard",
+      "summary": "Pompe classique avec position des mains à largeur d'épaules et corps en ligne droite.",
+      "instructions": [
+        "Mains à largeur d'épaules, directement sous les épaules, doigts pointant vers l'avant.",
+        "Corps en ligne droite de la tête aux talons — gainez abdominaux et fessiers.",
+        "Coudes à environ 45° du torse, sans s'écarter sur les côtés.",
+        "Descendez la poitrine de façon contrôlée jusqu'à ce qu'elle effleure presque le sol.",
+        "Repoussez puissamment vers le haut, ne verrouillez pas les coudes en haut."
+      ],
+      "tips": [
+        "Regardez légèrement devant vous vers le sol — ne tendez pas le cou.",
+        "Respiration : inspirez à la descente, expirez à la poussée."
+      ]
+    },
     "it": {
       "name": "Piegamento standard",
       "summary": "Piegamento classico con mani alla larghezza delle spalle e corpo in linea retta.",
@@ -498,6 +894,28 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
       ],
       "tips": []
     },
+    "es": {
+      "name": "Flexión de un solo brazo en pared",
+      "summary": "Flexiones de un solo brazo contra la pared — un ejercicio de entrada seguro para la progresión de un solo brazo.",
+      "instructions": [
+        "Ponte a aproximadamente la longitud de un brazo de la pared.",
+        "Coloca una mano en la pared a la altura del hombro; la otra mano descansa en la zona lumbar o la cadera.",
+        "Inclina el cuerpo como una plancha sólida hacia la pared, doblando el codo de forma controlada.",
+        "Desciende con un excéntrico lento (3 s) hacia la pared y luego empuja con potencia."
+      ],
+      "tips": []
+    },
+    "fr": {
+      "name": "Pompe à un bras contre le mur",
+      "summary": "Pompes à un bras contre un mur — un exercice d'entrée sécurisé pour la progression à un bras.",
+      "instructions": [
+        "Tenez-vous à environ une longueur de bras du mur.",
+        "Placez une main sur le mur à hauteur d'épaule ; l'autre main repose sur le bas du dos ou la hanche.",
+        "Inclinez le corps comme une planche solide vers le mur, en fléchissant le coude de façon contrôlée.",
+        "Descendez avec un excentrique lent (3 s) vers le mur, puis repoussez puissamment."
+      ],
+      "tips": []
+    },
     "it": {
       "name": "Piegamento a un braccio contro il muro",
       "summary": "Piegamenti a un braccio contro una parete — un esercizio di ingresso sicuro per la progressione a un braccio.",
@@ -532,6 +950,32 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
         "Elbows track to the sides, opening further as you descend.",
         "Lower the chest under control with a clear stretch sensation across the chest.",
         "Press up consciously from the chest — do not \"cheat\" with the triceps."
+      ],
+      "tips": [
+        "[object Object]"
+      ]
+    },
+    "es": {
+      "name": "Flexión abierta",
+      "summary": "Posición de manos más abierta que enfatiza el pecho y descarga el tríceps.",
+      "instructions": [
+        "Manos notablemente más separadas que los hombros, dedos ligeramente hacia fuera.",
+        "Los codos se abren hacia los lados, ampliándose más al descender.",
+        "Baja el pecho de forma controlada con una clara sensación de estiramiento en el pecho.",
+        "Empuja conscientemente desde el pecho — no \"hagas trampa\" con el tríceps."
+      ],
+      "tips": [
+        "[object Object]"
+      ]
+    },
+    "fr": {
+      "name": "Pompe large",
+      "summary": "Placement des mains plus large qui accentue les pectoraux et décharge les triceps.",
+      "instructions": [
+        "Placez les mains nettement plus larges que les épaules, doigts légèrement orientés vers l'extérieur.",
+        "Les coudes s'écartent sur les côtés, s'ouvrant davantage lors de la descente.",
+        "Descendez la poitrine de façon contrôlée avec une nette sensation d'étirement à travers les pectoraux.",
+        "Poussez vers le haut consciemment depuis les pectoraux — ne « trichez » pas avec les triceps."
       ],
       "tips": [
         "[object Object]"

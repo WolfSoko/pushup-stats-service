@@ -19,7 +19,6 @@ export const POST: BlogPost = {
     "cold exposure recovery",
     "Wim Hof breathing push-ups"
   ],
-  "translationSlug": "wim-hof-liegestuetze",
   "heroImage": "https://images.unsplash.com/photo-1548690312-e3b507d8c110?auto=format&fit=crop&w=1600&q=80",
   "heroImageAlt": "Athlete standing in a frozen landscape — Wim Hof Method imagery of breath and cold.",
   "heroImageCredit": "Photo: <a href=\"https://unsplash.com\" target=\"_blank\" rel=\"noopener noreferrer\">Unsplash</a>"
