@@ -309,6 +309,40 @@ describe('pushup-type catalog', () => {
       expect(de.name).toBe('Standard-Liegestütze');
       expect(de.tips.length).toBeGreaterThan(0);
     });
+
+    it('returns a non-English translated name for every type in every supported locale', () => {
+      // Regression: the entry-dialog dropdown must show locale-specific
+      // names for all 9 supported locales, not English fallbacks. If
+      // any (type, locale) pair returns the English name, a markdown
+      // file is missing or `localizePushupType` is bypassing it.
+      const supported = [
+        'de',
+        'en',
+        'fr',
+        'es',
+        'it',
+        'nl',
+        'el',
+        'la',
+        'no',
+        'zh',
+      ] as const;
+      for (const type of PUSHUP_TYPES) {
+        const en = localizePushupType(type, 'en').name;
+        for (const lang of supported) {
+          const out = localizePushupType(type, lang);
+          expect(out.name.length).toBeGreaterThan(0);
+          if (lang !== 'en') {
+            // Non-English locales must produce a name distinct from the
+            // English one — if they match, content is missing or the
+            // fallback chain leaked English through.
+            expect(`${type.id}/${lang}: ${out.name}`).not.toBe(
+              `${type.id}/${lang}: ${en}`
+            );
+          }
+        }
+      }
+    });
   });
 
   describe('detectPushupTypes', () => {
