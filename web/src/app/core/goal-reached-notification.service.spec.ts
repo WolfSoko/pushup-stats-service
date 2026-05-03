@@ -656,4 +656,79 @@ describe('GoalReachedNotificationService', () => {
       expect(planCall).toBeUndefined();
     });
   });
+
+  describe("Given today is a 'test' day in the active plan", () => {
+    it("Then it fires the plan dialog the same way 'main' / 'light' days do", async () => {
+      // Given — daily=10, plan target on a test day=40, user logs 40.
+      // Test days carry a real targetReps (the recommended baseline);
+      // they should celebrate just like main/light days.
+      setup({
+        dailyGoal: 10,
+        planTodayDay: {
+          dayIndex: 5,
+          kind: 'test',
+          targetReps: 40,
+          description: '',
+        },
+        entries: [
+          {
+            _id: '1',
+            timestamp: '2026-04-22T08:00:00',
+            reps: 40,
+          } as PushupRecord,
+        ],
+      });
+
+      // When
+      await flushAll();
+
+      // Then
+      const planCall = dialogOpenSpy.mock.calls.find((call) => {
+        const c = call[1] as { data?: { kind?: string } } | undefined;
+        return c?.data?.kind === 'plan';
+      });
+      expect(planCall).toBeDefined();
+      const [, planConfig] = planCall!;
+      expect(planConfig?.data).toMatchObject({
+        kind: 'plan',
+        total: 40,
+        goal: 40,
+      });
+    });
+  });
+
+  describe('Given an active plan but no configured daily goal', () => {
+    it('Then the plan dialog stays silent (the daily-loading-state guard)', async () => {
+      // Given — no `dailyGoal` set in the user config (resource resolves to 0).
+      // The notification service can't distinguish "still loading" from
+      // "user never configured one", so plan-goal celebrations are gated
+      // on a non-zero configured daily goal. Locks the documented behaviour
+      // referenced in the planGoal comment block.
+      setup({
+        planTodayDay: {
+          dayIndex: 1,
+          kind: 'main',
+          targetReps: 30,
+          description: '',
+        },
+        entries: [
+          {
+            _id: '1',
+            timestamp: '2026-04-22T08:00:00',
+            reps: 30,
+          } as PushupRecord,
+        ],
+      });
+
+      // When
+      await flushAll();
+
+      // Then
+      const planCall = dialogOpenSpy.mock.calls.find((call) => {
+        const c = call[1] as { data?: { kind?: string } } | undefined;
+        return c?.data?.kind === 'plan';
+      });
+      expect(planCall).toBeUndefined();
+    });
+  });
 });

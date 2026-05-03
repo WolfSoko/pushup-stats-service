@@ -15,10 +15,9 @@ import {
   SNAP_QUALITY_PARTICLES,
   toBerlinIsoDate,
 } from '@pu-stats/models';
+import type { GoalKind } from '../stats/components/goal-reached-dialog/goal-reached-dialog.component';
 import { TrainingPlanStore } from '../training-plans/training-plan.store';
 import { UserConfigStore } from './user-config.store';
-
-type GoalKind = 'daily' | 'weekly' | 'monthly' | 'plan';
 
 interface GoalSpec {
   readonly kind: GoalKind;
