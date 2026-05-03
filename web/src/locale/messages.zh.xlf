@@ -7,7 +7,7 @@
       </notes>
       <segment state="translated">
         <source>Cookie-Einstellungen</source>
-      <target>Cookie-Einstellungen</target></segment>
+      <target>Cookie 设置</target></segment>
     </unit>
     <unit id="consent.banner.text">
       <notes>
@@ -23,7 +23,7 @@
       </notes>
       <segment state="translated">
         <source> Alle akzeptieren </source>
-      <target> Alle akzeptieren </target></segment>
+      <target> 全部接受 </target></segment>
     </unit>
     <unit id="consent.banner.necessaryOnly">
       <notes>
@@ -31,7 +31,7 @@
       </notes>
       <segment state="translated">
         <source> Nur notwendige </source>
-      <target> Nur notwendige </target></segment>
+      <target> 仅必需 </target></segment>
     </unit>
     <unit id="consent.banner.privacyLink">
       <notes>
@@ -39,7 +39,7 @@
       </notes>
       <segment state="translated">
         <source>Mehr in unserer Datenschutzerklärung</source>
-      <target>Mehr in unserer Datenschutzerklärung</target></segment>
+      <target>了解更多信息，请查阅我们的隐私政策</target></segment>
     </unit>
     <unit id="auth.error.generic">
       <notes>
@@ -47,7 +47,7 @@
       </notes>
       <segment state="translated">
         <source>Anmeldung fehlgeschlagen. Bitte versuche es erneut.</source>
-      <target>Anmeldung fehlgeschlagen. Bitte versuche es erneut.</target></segment>
+      <target>登录失败。请重试。</target></segment>
     </unit>
     <unit id="auth.error.popupClosed">
       <notes>
@@ -55,7 +55,7 @@
       </notes>
       <segment state="translated">
         <source>Google-Anmeldung abgebrochen. Das Anmelde-Fenster wurde geschlossen.</source>
-      <target>Google-Anmeldung abgebrochen. Das Anmelde-Fenster wurde geschlossen.</target></segment>
+      <target>Google 登录已取消。登录窗口已关闭。</target></segment>
     </unit>
     <unit id="auth.error.popupBlocked">
       <notes>
@@ -63,7 +63,7 @@
       </notes>
       <segment state="translated">
         <source>Pop-up wurde blockiert. Bitte Pop-ups erlauben und erneut versuchen.</source>
-      <target>Pop-up wurde blockiert. Bitte Pop-ups erlauben und erneut versuchen.</target></segment>
+      <target>弹出窗口被拦截。请允许弹出窗口后重试。</target></segment>
     </unit>
     <unit id="auth.error.network">
       <notes>
@@ -71,7 +71,7 @@
       </notes>
       <segment state="translated">
         <source>Netzwerkfehler. Bitte Internetverbindung prüfen und erneut versuchen.</source>
-      <target>Netzwerkfehler. Bitte Internetverbindung prüfen und erneut versuchen.</target></segment>
+      <target>网络错误。请检查互联网连接后重试。</target></segment>
     </unit>
     <unit id="auth.error.invalidCredential">
       <notes>
@@ -79,7 +79,7 @@
       </notes>
       <segment state="translated">
         <source>E-Mail oder Passwort ist nicht korrekt.</source>
-      <target>E-Mail oder Passwort ist nicht korrekt.</target></segment>
+      <target>邮箱或密码不正确。</target></segment>
     </unit>
     <unit id="auth.error.invalidEmail">
       <notes>
@@ -87,7 +87,7 @@
       </notes>
       <segment state="translated">
         <source>Bitte eine gültige E-Mail-Adresse eingeben.</source>
-      <target>Bitte eine gültige E-Mail-Adresse eingeben.</target></segment>
+      <target>请输入有效的邮箱地址。</target></segment>
     </unit>
     <unit id="auth.error.userDisabled">
       <notes>
@@ -95,7 +95,7 @@
       </notes>
       <segment state="translated">
         <source>Dieses Konto ist deaktiviert.</source>
-      <target>Dieses Konto ist deaktiviert.</target></segment>
+      <target>此账户已被停用。</target></segment>
     </unit>
     <unit id="auth.error.userNotFound">
       <notes>
@@ -103,7 +103,7 @@
       </notes>
       <segment state="translated">
         <source>Kein Konto mit dieser E-Mail gefunden.</source>
-      <target>Kein Konto mit dieser E-Mail gefunden.</target></segment>
+      <target>未找到使用此邮箱的账户。</target></segment>
     </unit>
     <unit id="auth.error.wrongPassword">
       <notes>
@@ -111,7 +111,7 @@
       </notes>
       <segment state="translated">
         <source>E-Mail oder Passwort ist nicht korrekt.</source>
-      <target>E-Mail oder Passwort ist nicht korrekt.</target></segment>
+      <target>邮箱或密码不正确。</target></segment>
     </unit>
     <unit id="auth.error.emailInUse">
       <notes>
@@ -119,7 +119,7 @@
       </notes>
       <segment state="translated">
         <source>Für diese E-Mail existiert bereits ein Konto.</source>
-      <target>Für diese E-Mail existiert bereits ein Konto.</target></segment>
+      <target>此邮箱已经注册过账户。</target></segment>
     </unit>
     <unit id="auth.error.weakPassword">
       <notes>
@@ -127,7 +127,7 @@
       </notes>
       <segment state="translated">
         <source>Das Passwort ist zu schwach (mindestens 6 Zeichen).</source>
-      <target>Das Passwort ist zu schwach (mindestens 6 Zeichen).</target></segment>
+      <target>密码过于简单（至少需要 6 个字符）。</target></segment>
     </unit>
     <unit id="auth.error.tooManyRequests">
       <notes>
@@ -135,7 +135,7 @@
       </notes>
       <segment state="translated">
         <source>Zu viele Versuche. Bitte kurz warten und erneut versuchen.</source>
-      <target>Zu viele Versuche. Bitte kurz warten und erneut versuchen.</target></segment>
+      <target>尝试过于频繁。请稍候后重试。</target></segment>
     </unit>
     <unit id="auth.error.internalError">
       <notes>
@@ -143,7 +143,7 @@
       </notes>
       <segment state="translated">
         <source>Ein technischer Fehler ist aufgetreten. Bitte gleich erneut versuchen.</source>
-      <target>Ein technischer Fehler ist aufgetreten. Bitte gleich erneut versuchen.</target></segment>
+      <target>出现技术错误。请立即重试。</target></segment>
     </unit>
     <unit id="auth.onboarding.google.error.saveFailed">
       <notes>
@@ -151,7 +151,7 @@
       </notes>
       <segment state="translated">
         <source>Onboarding konnte nicht gespeichert werden. Bitte erneut versuchen.</source>
-      <target>Onboarding konnte nicht gespeichert werden. Bitte erneut versuchen.</target></segment>
+      <target>无法保存入门信息。请重试。</target></segment>
     </unit>
     <unit id="auth.register.error.profileSaveFailed">
       <notes>
@@ -159,7 +159,7 @@
       </notes>
       <segment state="translated">
         <source>Profil konnte nicht gespeichert werden. Bitte erneut versuchen.</source>
-      <target>Profil konnte nicht gespeichert werden. Bitte erneut versuchen.</target></segment>
+      <target>无法保存个人资料。请重试。</target></segment>
     </unit>
     <unit id="user.guestName">
       <notes>
@@ -208,7 +208,7 @@
       </notes>
       <segment state="translated">
         <source>Einwilligung erteilen</source>
-      <target>Einwilligung erteilen</target></segment>
+      <target>我同意</target></segment>
     </unit>
     <unit id="6031063121455734122">
       <notes>
@@ -258,7 +258,7 @@
       </notes>
       <segment state="translated">
         <source>Kein eingeloggter Nutzer gefunden.</source>
-      <target>Kein eingeloggter Nutzer gefunden.</target></segment>
+      <target>未找到已登录的用户。</target></segment>
     </unit>
     <unit id="auth.onboarding.google.error.consentRequired">
       <notes>
@@ -266,7 +266,7 @@
       </notes>
       <segment state="translated">
         <source>Bitte stimme der Datenverarbeitung zu.</source>
-      <target>Bitte stimme der Datenverarbeitung zu.</target></segment>
+      <target>请同意数据处理条款。</target></segment>
     </unit>
     <unit id="auth.login.title">
       <notes>
@@ -274,7 +274,7 @@
       </notes>
       <segment state="translated">
         <source>Willkommen bei PushUp Stats</source>
-      <target>Willkommen bei PushUp Stats</target></segment>
+      <target>欢迎来到 PushUp Stats</target></segment>
     </unit>
     <unit id="auth.login.subtitle">
       <notes>
@@ -443,7 +443,7 @@
       </notes>
       <segment state="translated">
         <source>Trainingsplan vorausgewählt:</source>
-      <target>Trainingsplan vorausgewählt:</target></segment>
+      <target>预选训练计划：</target></segment>
     </unit>
     <unit id="auth.register.plan.hint">
       <notes>
@@ -648,7 +648,7 @@
       </notes>
       <segment state="translated">
         <source>+<ph id="0" equiv="INTERPOLATION" disp="{{ item.value }}" /> bis zum Ziel</source>
-      <target>+</target></segment>
+      <target>+&lt;ph id="0" equiv="INTERPOLATION" disp="{{ item.value }}" /&gt; 至目标</target></segment>
     </unit>
     <unit id="quickAdd.fab.quickAddReps">
       <notes>
@@ -656,7 +656,7 @@
       </notes>
       <segment state="translated">
         <source>+<ph id="0" equiv="INTERPOLATION" disp="{{ item.value }}" /> Reps</source>
-      <target>+</target></segment>
+      <target>+&lt;ph id="0" equiv="INTERPOLATION" disp="{{ item.value }}" /&gt; 次</target></segment>
     </unit>
     <unit id="quickAdd.fab.open">
       <notes>
@@ -1726,7 +1726,7 @@
       </notes>
       <segment state="translated">
         <source> Löscht anonyme Benutzer ohne Pushups in den letzten <ph id="0" equiv="INTERPOLATION" disp="{{ inactiveDays() }}" /> Tagen. </source>
-      <target> Löscht anonyme Benutzer ohne Pushups in den letzten </target></segment>
+      <target> 删除在过去 &lt;ph id="0" equiv="INTERPOLATION" disp="{{ inactiveDays() }}" /&gt; 天内没有俯卧撑记录的匿名用户。 </target></segment>
     </unit>
     <unit id="admin.bulk.button">
       <notes>
@@ -1934,7 +1934,7 @@
       </notes>
       <segment state="translated">
         <source>Details öffnen für <ph id="0" equiv="identifier" disp="identifier" /></source>
-      <target>Details öffnen für </target></segment>
+      <target>打开 &lt;ph id="0" equiv="identifier" disp="identifier" /&gt; 的详情</target></segment>
     </unit>
     <unit id="admin.feedback.delete.title">
       <notes>
@@ -2161,7 +2161,7 @@
       </notes>
       <segment state="translated">
         <source>Trainingspläne</source>
-      <target>Trainingspläne</target></segment>
+      <target>训练计划</target></segment>
     </unit>
     <unit id="nav.pushupTypes">
       <notes>
@@ -2561,7 +2561,7 @@
       </notes>
       <segment state="translated">
         <source>Tracke Reps, Trends und Streaks mit Pushup Tracker.</source>
-      <target>Tracke Reps, Trends und Streaks mit Pushup Tracker.</target></segment>
+      <target>追踪次数、趋势和连续天数，使用俯卧撑追踪器。</target></segment>
     </unit>
     <unit id="sw.update.available">
       <notes>
@@ -2839,7 +2839,7 @@
       </notes>
       <segment state="translated">
         <source> Deine Position: #<ph id="0" equiv="INTERPOLATION" disp="{{ me.rank }}" /> · <ph id="1" equiv="INTERPOLATION_1" disp="{{ me.reps }}" /> Reps </source>
-      <target> Deine Position: #</target></segment>
+      <target> 您的排名：#&lt;ph id="0" equiv="INTERPOLATION" disp="{{ me.rank }}" /&gt; · &lt;ph id="1" equiv="INTERPOLATION_1" disp="{{ me.reps }}" /&gt; 次 </target></segment>
     </unit>
     <unit id="reminder.feature.eyebrow">
       <notes>
@@ -3039,7 +3039,7 @@
       </notes>
       <segment state="translated">
         <source>7. Cookies</source>
-      <target>7. Cookie</target></segment>
+      <target>7. Cookies</target></segment>
     </unit>
     <unit id="datenschutz.cookies.body">
       <notes>
@@ -3299,7 +3299,7 @@
       </notes>
       <segment state="translated">
         <source>Plan ansehen</source>
-      <target>Plan ansehen</target></segment>
+      <target>查看计划</target></segment>
     </unit>
     <unit id="landing.plans.challenge.title">
       <notes>
@@ -3435,7 +3435,7 @@
       </notes>
       <segment state="translated">
         <source>Quick Logging mit FAB</source>
-      <target>Quick Logging mit FAB</target></segment>
+      <target>快速记录（FAB）</target></segment>
     </unit>
     <unit id="landing.feature.quick.body">
       <notes>
@@ -3467,7 +3467,7 @@
       </notes>
       <segment state="translated">
         <source>PWA, Live-Sync &amp; Web Share</source>
-      <target>PWA, Live-Sync &amp; Web Share</target></segment>
+      <target>PWA、实时同步和网页分享</target></segment>
     </unit>
     <unit id="landing.feature.pwa.body">
       <notes>
@@ -3699,7 +3699,7 @@
       </notes>
       <segment state="translated">
         <source>Teilen</source>
-      <target>Teilen</target></segment>
+      <target>分享</target></segment>
     </unit>
     <unit id="publicProfile.cta">
       <notes>
@@ -4099,7 +4099,7 @@
       </notes>
       <segment state="translated">
         <source> Aktiv auf <ph id="0" equiv="INTERPOLATION" disp="{{ pushService.deviceCount() }}" /> Geräten </source>
-      <target> Aktiv auf </target></segment>
+      <target> 在 &lt;ph id="0" equiv="INTERPOLATION" disp="{{ pushService.deviceCount() }}" /&gt; 台设备上激活 </target></segment>
     </unit>
     <unit id="push.cta.desc">
       <notes>
@@ -4241,7 +4241,7 @@
       </notes>
       <segment state="translated">
         <source>Streak: <ph id="0" equiv="INTERPOLATION" disp="{{ streak() }}" /> Tage</source>
-      <target>Streak: </target></segment>
+      <target>连续天数：&lt;ph id="0" equiv="INTERPOLATION" disp="{{ streak() }}" /&gt; 天</target></segment>
     </unit>
     <unit id="dashboard.analysisTeaserWeekReps">
       <notes>
@@ -4249,7 +4249,7 @@
       </notes>
       <segment state="translated">
         <source>Diese Woche: <ph id="0" equiv="INTERPOLATION" disp="{{ weekReps() }}" /> / <ph id="1" equiv="INTERPOLATION_1" disp="{{ weeklyGoal() }}" /> Reps</source>
-      <target>Diese Woche: </target></segment>
+      <target>本周：&lt;ph id="0" equiv="INTERPOLATION" disp="{{ weekReps() }}" /&gt; / &lt;ph id="1" equiv="INTERPOLATION_1" disp="{{ weeklyGoal() }}" /&gt; 次</target></segment>
     </unit>
     <unit id="dashboard.analysisTeaserError">
       <notes>
@@ -4305,7 +4305,7 @@
       </notes>
       <segment state="translated">
         <source>Set <ph id="0" equiv="INTERPOLATION" disp="{{ $index + 1 }}" /></source>
-      <target>Set </target></segment>
+      <target>第 &lt;ph id="0" equiv="INTERPOLATION" disp="{{ $index + 1 }}" /&gt; 组</target></segment>
     </unit>
     <unit id="repsLabel">
       <notes>
@@ -4321,7 +4321,7 @@
       </notes>
       <segment state="translated">
         <source>Set entfernen</source>
-      <target>Set entfernen</target></segment>
+      <target>删除组</target></segment>
     </unit>
     <unit id="addSetAria">
       <notes>
@@ -4329,7 +4329,7 @@
       </notes>
       <segment state="translated">
         <source>Set hinzufügen</source>
-      <target>Set hinzufügen</target></segment>
+      <target>添加组</target></segment>
     </unit>
     <unit id="addSetTooltip">
       <notes>
@@ -4345,7 +4345,7 @@
       </notes>
       <segment state="translated">
         <source> Gesamt: <ph id="0" equiv="INTERPOLATION" disp="{{ totalReps() }}" /> Reps </source>
-      <target> Gesamt: </target></segment>
+      <target> 总计：&lt;ph id="0" equiv="INTERPOLATION" disp="{{ totalReps() }}" /&gt; 次 </target></segment>
     </unit>
     <unit id="typeLabel">
       <notes>
@@ -4483,7 +4483,7 @@
       </notes>
       <segment state="translated">
         <source> Vor <pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">chevron_right</pc></source>
-      <target> Vor </target></segment>
+      <target> 下一步 &lt;pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&amp;lt;mat-icon&amp;gt;" dispEnd="&amp;lt;/mat-icon&amp;gt;"&gt;chevron_right&lt;/pc&gt;</target></segment>
     </unit>
     <unit id="rangeLabel">
       <notes>
@@ -4547,7 +4547,7 @@
       </notes>
       <segment state="translated">
         <source>Wochenziel von <ph id="0" equiv="goal" disp="goal" /> Liegestützen geschafft – <ph id="1" equiv="total" disp="total" /> insgesamt! 💪 Tracke deine Stats kostenlos:</source>
-      <target>Wochenziel von </target></segment>
+      <target>完成每周目标 &lt;ph id="0" equiv="goal" disp="goal" /&gt; 个俯卧撑 – 总计 &lt;ph id="1" equiv="total" disp="total" /&gt; 个！💪 免费追踪您的数据：</target></segment>
     </unit>
     <unit id="goalReached.monthly.title">
       <notes>
@@ -4579,7 +4579,7 @@
       </notes>
       <segment state="translated">
         <source>Monatsziel von <ph id="0" equiv="goal" disp="goal" /> Liegestützen geschafft – <ph id="1" equiv="total" disp="total" /> insgesamt! 💪 Tracke deine Stats kostenlos:</source>
-      <target>Monatsziel von </target></segment>
+      <target>完成每月目标 &lt;ph id="0" equiv="goal" disp="goal" /&gt; 个俯卧撑 – 总计 &lt;ph id="1" equiv="total" disp="total" /&gt; 个！💪 免费追踪您的数据：</target></segment>
     </unit>
     <unit id="goalReached.daily.title">
       <notes>
@@ -4611,7 +4611,7 @@
       </notes>
       <segment state="translated">
         <source>Heute mein Tagesziel von <ph id="0" equiv="goal" disp="goal" /> Liegestützen geschafft! 💪 Tracke deine Stats kostenlos:</source>
-      <target>Heute mein Tagesziel von </target></segment>
+      <target>今天完成每日目标 &lt;ph id="0" equiv="goal" disp="goal" /&gt; 个俯卧撑！💪 免费追踪您的数据：</target></segment>
     </unit>
     <unit id="goalReached.snapAria">
       <notes>
@@ -4651,7 +4651,7 @@
       </notes>
       <segment state="translated">
         <source>Teilen</source>
-      <target>Teilen</target></segment>
+      <target>分享</target></segment>
     </unit>
     <unit id="heatmap.loading">
       <notes>
@@ -4707,7 +4707,7 @@
       </notes>
       <segment state="translated">
         <source> Lege bis zu <ph id="0" equiv="INTERPOLATION" disp="{{ maxRows }}" /> eigene Reps-Buttons fest. Leere Felder werden ignoriert. </source>
-      <target> Lege bis zu </target></segment>
+      <target> 设置最多 &lt;ph id="0" equiv="INTERPOLATION" disp="{{ maxRows }}" /&gt; 个自定义次数按钮。留空将被忽略。 </target></segment>
     </unit>
     <unit id="quickAddConfig.repsLabel">
       <notes>
@@ -4739,7 +4739,7 @@
       </notes>
       <segment state="translated">
         <source>Reps löschen</source>
-      <target>Reps löschen</target></segment>
+      <target>清除次数</target></segment>
     </unit>
     <unit id="quickAddConfig.saveError">
       <notes>
@@ -4997,7 +4997,7 @@
       </notes>
       <segment state="translated">
         <source>Heute schon <ph id="0" equiv="total" disp="total" /> Liegestütze geschafft – Streak: <ph id="1" equiv="streak" disp="streak" /> Tage 🔥 Schau dir mein Profil an:</source>
-      <target>Heute schon </target></segment>
+      <target>今天已完成 &lt;ph id="0" equiv="total" disp="total" /&gt; 个俯卧撑 – 连续天数：&lt;ph id="1" equiv="streak" disp="streak" /&gt; 天 🔥 查看我的个人资料：</target></segment>
     </unit>
     <unit id="dashboard.share.text.profile.simple">
       <notes>
@@ -5005,7 +5005,7 @@
       </notes>
       <segment state="translated">
         <source>Heute schon <ph id="0" equiv="total" disp="total" /> Liegestütze geschafft! 💪 Schau dir mein Profil an:</source>
-      <target>Heute schon </target></segment>
+      <target>今天已完成 &lt;ph id="0" equiv="total" disp="total" /&gt; 个俯卧撑！💪 查看我的个人资料：</target></segment>
     </unit>
     <unit id="dashboard.share.text.streak">
       <notes>
@@ -5013,7 +5013,7 @@
       </notes>
       <segment state="translated">
         <source>Heute schon <ph id="0" equiv="total" disp="total" /> Liegestütze geschafft – Streak: <ph id="1" equiv="streak" disp="streak" /> Tage 🔥 Tracke deine Stats kostenlos:</source>
-      <target>Heute schon </target></segment>
+      <target>今天已完成 &lt;ph id="0" equiv="total" disp="total" /&gt; 个俯卧撑 – 连续天数：&lt;ph id="1" equiv="streak" disp="streak" /&gt; 天 🔥 免费追踪您的数据：</target></segment>
     </unit>
     <unit id="dashboard.share.text.simple">
       <notes>
@@ -5021,7 +5021,7 @@
       </notes>
       <segment state="translated">
         <source>Heute schon <ph id="0" equiv="total" disp="total" /> Liegestütze geschafft! 💪 Tracke deine Stats kostenlos:</source>
-      <target>Heute schon </target></segment>
+      <target>今天已完成 &lt;ph id="0" equiv="total" disp="total" /&gt; 个俯卧撑！💪 免费追踪您的数据：</target></segment>
     </unit>
     <unit id="dashboard.share.title">
       <notes>
@@ -5029,7 +5029,7 @@
       </notes>
       <segment state="translated">
         <source>Pushup Tracker</source>
-      <target>Pushup Tracker</target></segment>
+      <target>俯卧撑追踪器</target></segment>
     </unit>
     <unit id="analysis.weekTrendTitle">
       <notes>
@@ -5395,7 +5395,7 @@
       </notes>
       <segment state="translated">
         <source>Wolf</source>
-      <target>Wolf</target></segment>
+      <target>狼</target></segment>
     </unit>
     <unit id="settings.displayNameHint">
       <notes>
@@ -5671,7 +5671,7 @@
       </notes>
       <segment state="translated">
         <source>Danger Zone</source>
-      <target>Danger Zone</target></segment>
+      <target>危险区域</target></segment>
     </unit>
     <unit id="settings.dangerZoneBody">
       <notes>
@@ -5769,7 +5769,7 @@
       </notes>
       <segment state="translated">
         <source>Pushup Stats</source>
-      <target>Pushup Stats</target></segment>
+      <target>俯卧撑统计</target></segment>
     </unit>
     <unit id="dashboardTitle">
       <notes>
@@ -5793,7 +5793,7 @@
       </notes>
       <segment state="translated">
         <source> Live: <ph id="0" equiv="INTERPOLATION" disp="{{ liveConnected() ? 'verbunden' : 'getrennt' }}" /> </source>
-      <target> Live: </target></segment>
+      <target> 实时：&lt;ph id="0" equiv="INTERPOLATION" disp="{{ liveConnected() ? '连接中' : '已断开' }}" /&gt; </target></segment>
     </unit>
     <unit id="allTimeSummaryAria">
       <notes>
@@ -5956,7 +5956,7 @@
       </notes>
       <segment state="translated">
         <source> <ph id="0" equiv="INTERPOLATION" disp="{{ latest.reps }}" /> Reps · <ph id="1" equiv="INTERPOLATION_1" disp="{{ latest.type || 'Standard' }}" /> </source>
-      <target> </target></segment>
+      <target> &lt;ph id="0" equiv="INTERPOLATION" disp="{{ latest.reps }}" /&gt; 次 · &lt;ph id="1" equiv="INTERPOLATION_1" disp="{{ latest.type || '标准' }}" /&gt; </target></segment>
     </unit>
     <unit id="dashboard.noEntryYet">
       <notes>
@@ -5996,7 +5996,7 @@
       </notes>
       <segment state="translated">
         <source>+<ph id="0" equiv="INTERPOLATION" disp="{{ reps }}" /> Reps</source>
-      <target>+</target></segment>
+      <target>+&lt;ph id="0" equiv="INTERPOLATION" disp="{{ reps }}" /&gt; 次</target></segment>
     </unit>
     <unit id="dashboard.goalFill.reached">
       <notes>
@@ -6012,7 +6012,7 @@
       </notes>
       <segment state="translated">
         <source>+<ph id="0" equiv="INTERPOLATION" disp="{{ remainingToGoal() }}" /> bis zum Ziel</source>
-      <target>+</target></segment>
+      <target>+&lt;ph id="0" equiv="INTERPOLATION" disp="{{ remainingToGoal() }}" /&gt; 至目标</target></segment>
     </unit>
     <unit id="quickAddNew">
       <notes>
@@ -6086,7 +6086,7 @@
       </notes>
       <segment state="translated">
         <source>Teilen</source>
-      <target>Teilen</target></segment>
+      <target>分享</target></segment>
     </unit>
     <unit id="trainingPlans.back">
       <notes>
@@ -6230,7 +6230,7 @@
       </notes>
       <segment state="translated">
         <source>Schon Konto? Einloggen</source>
-      <target>Schon Konto? Einloggen</target></segment>
+      <target>已有账户？登录</target></segment>
     </unit>
     <unit id="trainingPlans.week">
       <notes>
@@ -6329,7 +6329,7 @@
       </notes>
       <segment state="translated">
         <source>Trainingspläne</source>
-      <target>Trainingspläne</target></segment>
+      <target>训练计划</target></segment>
     </unit>
     <unit id="trainingPlans.intro">
       <notes>
@@ -6409,7 +6409,7 @@
       </notes>
       <segment state="translated">
         <source>Plan ansehen</source>
-      <target>Plan ansehen</target></segment>
+      <target>查看计划</target></segment>
     </unit>
     <unit id="wiki.pushupTypes.back">
       <notes>
