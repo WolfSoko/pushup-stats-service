@@ -20,8 +20,8 @@
     "path": "/home/wolf/repo/pushup-stats-service/mobile/android-twa/android.keystore",
     "alias": "android"
   },
-  "appVersionName": "1",
-  "appVersionCode": 1,
+  "appVersionName": "2",
+  "appVersionCode": 2,
   "shortcuts": [],
   "generatorApp": "bubblewrap-cli",
   "webManifestUrl": "https://pushup-stats.com/de/manifest.webmanifest",
@@ -43,7 +43,7 @@
   "fingerprints": [
     {
       "name": "Upload Key",
-      "value": "AB:CD:EF:01:23:45:67:89:AB:CD:EF:01:23:45:67:89:AB:CD:EF:01:23:45:67:89:AB:CD:EF:01:23:45:67:89"
+      "value": "CC:80:6A:9C:03:DD:78:F6:35:F3:A0:2D:36:05:75:73:91:D9:D3:2F:B3:D0:9E:37:33:71:F4:F5:12:E0:13:B4"
     }
   ],
   "additionalTrustedOrigins": [],
@@ -52,5 +52,5 @@
   "fileHandlers": [],
   "launchHandlerClientMode": "",
   "displayOverride": [],
-  "appVersion": "1"
+  "appVersion": "2"
 }
