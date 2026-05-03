@@ -62,7 +62,7 @@ heroImageCredit: '图片：<a href="https://unsplash.com" target="_blank" rel="n
 <aside class="plan-cta">
   <h3>在追踪器中开始6周计划</h3>
   <p>
-    这个6周建立在俯卧撒追踪器中可作为指导性训练计划。你得到每日目标、每天的具体组数以及自动进度追踪。不再需要电子表格。
+    这个6周建立在俯卧撑追踪器中可作为指导性训练计划。你得到每日目标、每天的具体组数以及自动进度追踪。不再需要电子表格。
   </p>
   <p>
     <a href="/training-plans/recruit-6w">查看计划 &rarr;</a>
