@@ -12,10 +12,7 @@ import { join } from 'node:path';
 import { pino } from 'pino';
 import { pinoHttp } from 'pino-http';
 
-import {
-  computeLocaleRedirect,
-  rewriteWellKnownPath,
-} from './server-locale-redirect';
+import { computeLocaleRedirect } from './server-locale-redirect';
 
 const isProduction = process.env['NODE_ENV'] === 'production';
 
@@ -57,21 +54,24 @@ app.use((req, res, next) => {
   next();
 });
 
-// Serve files under `/.well-known/` from the /de build output. Used by
-// Google's Digital Asset Links verifier (TWA / Android App Links) and
-// by other domain-verification flows that REQUIRE the file to live at
-// the unprefixed root path. The whitelist of allowed filenames lives
-// in `./server-locale-redirect` so it stays unit-testable.
-app.use((req, res, next) => {
-  const rewritten = rewriteWellKnownPath(req.path);
-  if (rewritten) {
-    const originalSuffix = req.url.slice(req.path.length);
-    req.url = `${rewritten}${originalSuffix}`;
-    // Short cache so Bubblewrap fingerprint rotations propagate quickly
-    res.setHeader('Cache-Control', 'public, max-age=3600');
-  }
-  next();
-});
+// Serve `/.well-known/<file>` directly from the localised /de/ build
+// output. Mounted as a dedicated `express.static` so the general static
+// handler below can keep `serve-static`'s default `dotfiles: 'ignore'`
+// behaviour — only files intentionally placed in `web/public/.well-known/`
+// (and emitted by the Angular build into each locale bundle) become
+// reachable. The mount path absorbs the `.well-known` segment, so the
+// underlying lookup never sees a dot-prefixed URL component and no
+// `dotfiles` opt-in is needed. `fallthrough: false` makes unknown files
+// here 404 cleanly instead of leaking through to the Angular SSR engine
+// (which would respond with the SPA shell — confusing for verifiers).
+app.use(
+  '/.well-known',
+  express.static(join(browserDistFolder, 'de', '.well-known'), {
+    maxAge: '1h',
+    index: false,
+    fallthrough: false,
+  })
+);
 
 // Redirect non-locale-prefixed app routes to /<lang>/... so paths like
 // `/u/<uid>` (which only exist inside the locale-specific Angular bundles)
@@ -109,21 +109,16 @@ if (isProduction) {
 }
 
 /**
- * Serve static files from /browser.
- *
- * `dotfiles: 'allow'` is REQUIRED — `serve-static`'s default is `'ignore'`,
- * which silently drops any path containing a dot-prefixed segment. The
- * `.well-known` rewrite middleware above maps requests to
- * `/de/.well-known/<file>`; without `'allow'` those requests fall through
- * to the Angular SSR engine (which has no matching route) and Google's
- * Digital Asset Links / TWA verifier sees a 404 instead of the JSON.
+ * Serve static files from /browser. Default `dotfiles: 'ignore'` is
+ * intentional — anything that needs to live under a dot-prefixed path
+ * (e.g. `/.well-known/...`) is opted in via a dedicated `express.static`
+ * mount above, so accidental dotfiles in the build output stay hidden.
  */
 app.use(
   express.static(browserDistFolder, {
     maxAge: '1y',
     index: false,
     redirect: false,
-    dotfiles: 'allow',
   })
 );
 

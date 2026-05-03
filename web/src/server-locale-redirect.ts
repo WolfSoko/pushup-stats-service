@@ -66,36 +66,10 @@ export const ROOT_FILES: ReadonlySet<string> = new Set([
  * verifiers fetch them at the exact URL (Google Digital Asset Links,
  * `acme-challenge`, `security.txt`, etc.). Redirecting `/.well-known/x`
  * to `/de/.well-known/x` would silently break TWA / Android App Links
- * verification.
+ * verification. The actual file serving happens in a dedicated
+ * `express.static` mount in `server.ts`.
  */
 const RESERVED_FIRST_SEGMENTS: ReadonlySet<string> = new Set(['.well-known']);
-
-/**
- * Files served from `/.well-known/<file>` that need to be proxied to
- * the localised build output (which is the only place the Angular
- * asset pipeline emits them). The whitelist prevents the rewrite from
- * being abused as a path-traversal vector for arbitrary `.well-known`
- * URLs.
- */
-export const WELL_KNOWN_FILES: ReadonlySet<string> = new Set([
-  // Google Digital Asset Links — verifies TWA / Android App Links.
-  'assetlinks.json',
-]);
-
-/**
- * Pure decision logic for the `.well-known` rewrite middleware.
- * Returns the new request path that should be used to look up the
- * file in the localised build output, or `null` to leave the request
- * untouched. Only matches direct children of `/.well-known/` against
- * `WELL_KNOWN_FILES` — nested paths and arbitrary filenames fall
- * through to the regular static / Angular pipeline.
- */
-export function rewriteWellKnownPath(path: string): string | null {
-  const match = /^\/\.well-known\/([^/]+)$/.exec(path);
-  if (!match) return null;
-  if (!WELL_KNOWN_FILES.has(match[1])) return null;
-  return `/de${path}`;
-}
 
 /**
  * Restricted to URL-safe app-route characters. Anything outside
@@ -177,7 +151,12 @@ export function pickLocale(
  * - non-GET/HEAD methods
  * - root path `/` (Angular SSR's own locale middleware handles it)
  * - already-prefixed paths (`/de`, `/en`, and any subpath thereof)
- * - well-known root files (rewritten by an earlier middleware)
+ * - root files in `ROOT_FILES` (rewritten by an earlier middleware so
+ *   crawlers reach them at the unprefixed URL)
+ * - paths whose first segment is in `RESERVED_FIRST_SEGMENTS` (e.g.
+ *   `/.well-known/...` — served by a dedicated `express.static` mount;
+ *   redirecting them would break Google Digital Asset Links / TWA
+ *   verification, which fetches the file at the exact URL)
  * - paths with a file extension (static assets)
  * - paths with characters outside `SAFE_REDIRECT_PATH_RE`
  *

@@ -41,6 +41,10 @@
     ],
     "rewrites": [
       {
+        "source": "/.well-known/assetlinks.json",
+        "destination": "/de/.well-known/assetlinks.json"
+      },
+      {
         "source": "/de{,/**}",
         "destination": "/de/index.html"
       },
