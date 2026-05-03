@@ -27,7 +27,7 @@ heroImageCredit: 'Bilde: <a href="https://unsplash.com" target="_blank" rel="noo
 <ul>
   <li><strong>Objektiv måling:</strong> Du kan se i svart og hvitt om du virkelig gjør framgang eller har stagnert i uker.</li>
   <li><strong>Høyere ansvarsfølelse:</strong> Å vite at du må registrere en økt øker demonstrerbart treningsfrekvensen.</li>
-  <li><strong>Optimalisering:</strong> Du lærer etter hvor mange hvdager du presterer bedre, eller hvilke ukedager energinivået ditt er høyest.</li>
+  <li><strong>Optimalisering:</strong> Du lærer etter hvor mange hviledager du presterer bedre, eller hvilke ukedager energinivået ditt er høyest.</li>
   <li><strong>Langsiktig motivasjon:</strong> Tall forteller en historie. Å se at du har vokst fra 20 til 80 armhevninger holder deg motivert.</li>
 </ul>
 

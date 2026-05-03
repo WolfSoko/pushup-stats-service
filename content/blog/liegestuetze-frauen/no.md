@@ -16,7 +16,7 @@ heroImageCredit: 'Foto: <a href="https://unsplash.com" target="_blank" rel="noop
 
 <h2>"Kvinner kan ikke gjøre armhevninger" — den mest seige myta i gymen</h2>
 <p>
-  Dette påstanden har holdt seg i tiår og det er feil. Kvinner kan gjøre armhevninger. Det som varierer: startposisjonen, ikke sluttposisjonen. Veien til en full repetisjon trenger ofte bare en annen progresjon — og denne progresjonen blir sjelden forklart etter standardprotokollen.
+  Denne påstanden har holdt seg i tiår, og den er feil. Kvinner kan gjøre armhevninger. Det som varierer: startposisjonen, ikke sluttposisjonen. Veien til en full repetisjon krever ofte bare en annen progresjon — og denne progresjonen blir sjelden forklart i standardprotokollen.
 </p>
 
 <h2>Hva anatomi faktisk sier</h2>
@@ -24,7 +24,7 @@ heroImageCredit: 'Foto: <a href="https://unsplash.com" target="_blank" rel="noop
   I gjennomsnitt har kvinner et annet øvre-til-nedre-kropp-styrkeforhold enn menn: omtrent 55:45 mot 60:40 for menn. Det gjør en benkpress-sammenligning urettferdig, men det sier ingenting om potensialet til å lære bevegelsen. Studier (f.eks. Hsu et al., 2018) viser at kvinner oppnår rene standardarmhevninger på 8–12 uker med målrettet trening — samme tidslinje som mannlige kollegaer — når progresjonen er riktig.
 </p>
 <p>
-  Det som betyr noe: kroppsvekten i full planke er ikke komfortabel for noen. Trikset er å utvide vektbelastningen gradvis i stedet for å hoppe rett fra "knearmbevninger" til "full".
+  Det som betyr noe: kroppsvekten i full planke er ikke komfortabel for noen. Trikset er å utvide vektbelastningen gradvis i stedet for å hoppe rett fra "knearmhevninger" til "full".
 </p>
 
 <h2>Femtrinns progresjonen</h2>
@@ -36,7 +36,7 @@ heroImageCredit: 'Foto: <a href="https://unsplash.com" target="_blank" rel="noop
     <strong>Hevede armhevninger:</strong> Hender på et kjøkkenbord, stolrygg eller sofa. Jo lavere flate, jo tøffere. Mål: 3×12 med korrekt form.
   </li>
   <li>
-    <strong>Knearmbevninger:</strong> Knær som pivot, kroppen danner en rett linje fra knær til hode. Mål: 3×10 med fullt område.
+    <strong>Knearmhevninger:</strong> Knær som pivot, kroppen danner en rett linje fra knær til hode. Mål: 3×10 med fullt bevegelsesutslag.
   </li>
   <li>
     <strong>Negative armhevninger:</strong> Full vektbelastning, men bare den eksentriske delen. 3 sekunder ned, så la knærne touch. Mål: 3×5 rene negativ.
@@ -62,13 +62,13 @@ heroImageCredit: 'Foto: <a href="https://unsplash.com" target="_blank" rel="noop
 <h2>Hormonell syklus og treningsvinduer</h2>
 <p>
   Forskningen er mindre klar enn ofte hevdet. Det som viser konsistent: i luteale fasen (andre halvdel av syklusen), trenger mange kvinner lengre hvile mellom sett. 90 sekunder i stedet for 60. 3 sett i stedet for 4. Det er ikke svakhet — det er optimalisert trening. Dine
-  <a href="/no/blog/armhevning-tracker-guide">sporingsdata</a> vil avslørere dine høyproduktive vinduer etter 1–2 sykluser.
+  <a href="/no/blog/armhevning-tracker-guide">sporingsdataene dine</a> vil avsløre høyproduktive vinduer etter 1–2 sykluser.
 </p>
 
 <h2>Vanlige snublesteinene</h2>
 <ul>
   <li><strong>Sitter fast på ett trinn for lenge:</strong> Når 3×15 er rene, gå videre — ikke jag etter "perfekt".</li>
-  <li><strong>Hopper over knearmbevninger:</strong> Ser ut som "jenteversjonen", men det er den viktigste broen mellom hevet og full. Ikke hopp over.</li>
+  <li><strong>Hopper over knearmhevninger:</strong> Ser ut som "jenteversjonen", men det er den viktigste broen mellom hevet og full. Ikke hopp over.</li>
   <li><strong>Daglig trening:</strong> Tre dager er nok. Bindevev trenger 48 timer.</li>
 </ul>
 
@@ -76,7 +76,7 @@ heroImageCredit: 'Foto: <a href="https://unsplash.com" target="_blank" rel="noop
   <h3>Spor planen i appen</h3>
   <p>
     Kjør 4-ukers planen eller hopp rett inn i
-    <a href="/no/training-plans/recruit-6w">6-ukers oppbygningen</a> når dine første 3 fullarmbevninger er registrert.
+    <a href="/no/training-plans/recruit-6w">6-ukers oppbygningen</a> når dine første 3 fullverdige armhevninger er registrert.
     Pushup Tracker viser ditt ukentlige volum og signaliserer når du er klar for neste trinn.
   </p>
 </aside>

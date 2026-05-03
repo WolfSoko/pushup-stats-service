@@ -7,5 +7,5 @@ instructions:
   - Hold albueleddet tett inntil kroppen, rettet bakover.
   - Senk brystet ned til diamanten, og press deretter rett oppover.
 tips:
-  - 'Nybegynnere: bliv komfortable med kneer-diamond før du prøver fullversjonen.'
+  - 'Nybegynnere: bli komfortabel med kne-diamant før du prøver fullversjonen.'
 ---

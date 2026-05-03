@@ -7,5 +7,5 @@ instructions:
   - Senk brystet med kontroll, hold magen strammet.
   - Press oppover kraftig – jo høyere føttene, desto mer involvering av skulderne.
 tips:
-  - Ikke la nedre del av ryggen bukte – stram aktivt magen og innglutealmusklene, spesielt ved høye føtter.
+  - Ikke la nedre del av ryggen bukte – stram aktivt magen og setemusklene, spesielt ved høye føtter.
 ---

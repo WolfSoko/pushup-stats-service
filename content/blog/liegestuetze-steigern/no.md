@@ -31,7 +31,7 @@ heroImageCredit: 'Photo: <a href="https://unsplash.com" target="_blank" rel="noo
   <li>Mage og rumpe aktivert gjennom hele bevegelsen</li>
 </ul>
 <p>
-  Hvis du ikke kan gjøre en ordentlig armhevning ennå, start med knearmbevinger eller armhevninger på en forhøyd overflate som en vindueskarm. Reduser motstanden til formen din er solid.
+  Hvis du ikke kan gjøre en ordentlig armhevning ennå, start med armhevninger på knærne eller armhevninger på en forhøyd overflate som en vinduskarm. Reduser motstanden til teknikken din er solid.
 </p>
 
 <h2>6-ukers oppbygging-plan</h2>
@@ -46,7 +46,7 @@ heroImageCredit: 'Photo: <a href="https://unsplash.com" target="_blank" rel="noo
 
 <h2>Restitusjon er ikke luksus</h2>
 <p>
-  Musklene vokser under hvile, ikke under trening. Hard trening hver dag uten pauser risikerer overbelastningsskader og hemmer framgang. Planlegg minst én restdag mellom intense økter. Søvn, tilstrekkelig proteininntak (1,5–2 g per kilogram kroppsvekt) og strekking av bryst- og skuldermuskulaturen etter trening fremskynder restitusjonnen betydelig.
+  Musklene vokser under hvile, ikke under trening. Hard trening hver dag uten pauser risikerer overbelastningsskader og hemmer framgang. Planlegg minst én hviledag mellom intense økter. Søvn, tilstrekkelig proteininntak (1,5–2 g per kilogram kroppsvekt) og uttøying av bryst- og skuldermuskulaturen etter trening fremskynder restitusjonen betydelig.
 </p>
 
 <h2>Bryte gjennom platåer</h2>
@@ -60,9 +60,9 @@ heroImageCredit: 'Photo: <a href="https://unsplash.com" target="_blank" rel="noo
 </p>
 
 <aside class="plan-cta">
-  <h3>Start 6-ukersplanen i sporen</h3>
+  <h3>Start 6-ukersplanen i appen</h3>
   <p>
-    Denne 6-ukers oppbyggingen er tilgjengelig som en veivist treningsplan i Pushup Tracker. Du får et daglig mål, eksakte sett per dag og automatisk framgangssporing. Ingen flere regneark.
+    Denne 6-ukers oppbyggingen er tilgjengelig som en veiledet treningsplan i Pushup Tracker. Du får et daglig mål, eksakte sett per dag og automatisk framgangssporing. Ingen flere regneark.
   </p>
   <p>
     <a href="/no/training-plans/recruit-6w">Se planen &rarr;</a>

@@ -71,8 +71,8 @@ heroImageCredit: 'Photo: <a href="https://unsplash.com" target="_blank" rel="noo
 
 <h2>Ta smerter alvorlig</h2>
 <p>
-  Muskelkurrskap er normalt. Leddsmerter er det ikke. Smerter i skulder, albue eller håndledd er et klart
-  stoppzeichen. Kontakt en fysioterapeut før du fortsetter i så fall. Treningspausen fra
+  Muskelstølhet er normalt. Leddsmerter er det ikke. Smerter i skulder, albue eller håndledd er et klart
+  stopptegn. Kontakt en fysioterapeut før du fortsetter i så fall. Treningspausen fra
   skader koster mer tid enn forebyggende hvileperioder.
 </p>
 

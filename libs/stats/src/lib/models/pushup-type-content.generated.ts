@@ -136,7 +136,7 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
       "name": "Archer armhevning",
       "summary": "Asymmetrisk armhevning der en arm bøyes mens den andre forblir strukket – en springbrett til enarmede armhevninger.",
       "instructions": [
-        "Hendene plasseres merkbart bredere enn skuldrene, fingerne vinklet litt utover.",
+        "Hendene plasseres merkbart bredere enn skuldrene, fingrene vinklet litt utover.",
         "Skift til den ene siden under nedstigningen: en arm bøyes, den andre forblir nesten rett.",
         "Den rette armen fungerer som støtte; det meste av belastningen ligger på den bøyde armen.",
         "Press oppover med kontroll, gå tilbake til midtposisjonen, og skift til den andre siden.",
@@ -262,7 +262,7 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
         "Press oppover kraftig – jo høyere føttene, desto mer involvering av skulderne."
       ],
       "tips": [
-        "Ikke la nedre del av ryggen bukte – stram aktivt magen og innglutealmusklene, spesielt ved høye føtter."
+        "Ikke la nedre del av ryggen bukte – stram aktivt magen og setemusklene, spesielt ved høye føtter."
       ]
     }
   },
@@ -381,7 +381,7 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
         "Senk brystet ned til diamanten, og press deretter rett oppover."
       ],
       "tips": [
-        "Nybegynnere: bliv komfortable med kneer-diamond før du prøver fullversjonen."
+        "Nybegynnere: bli komfortabel med kne-diamant før du prøver fullversjonen."
       ]
     }
   },
@@ -610,7 +610,7 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
       ]
     },
     "no": {
-      "name": "Knee armhevning",
+      "name": "Armhevning på knærne",
       "summary": "Enklere variant med knærne på gulvet – ideell for nybegynnere.",
       "instructions": [
         "Plasser knærne på gulvet, føttene løftet eller krysset.",
@@ -619,7 +619,7 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
         "Senk brystet med kontroll, og press deretter oppover igjen."
       ],
       "tips": [
-        "Hold deg på knee armhevninger til du kan gjøre 3×8 rene repetisjoner, og gå deretter videre til standardversjonen."
+        "Hold deg til armhevninger på knærne til du kan gjøre 3×8 rene repetisjoner, og gå deretter videre til standardversjonen."
       ]
     }
   },
@@ -729,16 +729,16 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
       ]
     },
     "no": {
-      "name": "Knuckle armhevning",
-      "summary": "Gjort på knokler i stedet for flate hender – lettere på håndleddene og styrker underarmene.",
+      "name": "Armhevning på knokene",
+      "summary": "Gjøres på knokene i stedet for flate hender – lettere på håndleddene og styrker underarmene.",
       "instructions": [
-        "Lag neve, støtt på de to første knokler (peke- og långfinger).",
+        "Lag knyttneve, støtt på de to første knokene (peke- og langefingerens knoker).",
         "Hold baksiden av hånden rett – ikke bøy håndleddet.",
-        "Start på en myk overflate (matte, håndkle), progrediér til hardt gulv senere.",
+        "Start på en myk overflate (matte, håndkle), gå videre til hardt gulv senere.",
         "Utfør ellers som en standard armhevning."
       ],
       "tips": [
-        "Nyttig for sensitive håndledd – belastningen skifter fra leddet til knokle."
+        "Nyttig for sensitive håndledd – belastningen flyttes fra leddet til knokene."
       ]
     }
   },
@@ -848,8 +848,8 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
       ]
     },
     "no": {
-      "name": "Negative enarmede armhevning",
-      "summary": "Kun nedstigningsfasen gjøres enarmede – en kontrollert exzentrisk bevegelse bygger styrken til fullbevegelsen.",
+      "name": "Negativ enarms armhevning",
+      "summary": "Kun nedstigningsfasen gjøres med én arm – en kontrollert eksentrisk bevegelse bygger styrken som trengs til fullbevegelsen.",
       "instructions": [
         "Plasser en arm på en benk/forhøyning; føttene bredt for stabilitet.",
         "Den andre armen på nedre del av ryggen eller hoften; hold kroppen som en planke.",
@@ -857,7 +857,7 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
         "Press oppover med begge armene eller fra forhøyningen – den konsentriske fasen gjøres ikke enarmede her."
       ],
       "tips": [
-        "Bygg den excentriske tiden gradvis: 3 s → 5 s → 8 s over flere uker."
+        "Bygg den eksentriske tiden gradvis: 3 s → 5 s → 8 s over flere uker."
       ]
     }
   },
@@ -975,8 +975,8 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
       ]
     },
     "no": {
-      "name": "Enarmede armhevning",
-      "summary": "Full armhevning med en enkelt hand – kongen blant kroppsvektsøvelser.",
+      "name": "Enarms armhevning",
+      "summary": "Full armhevning med én hånd – kongen blant kroppsvektøvelser.",
       "instructions": [
         "Plasser føttene merkbart bredere enn hofteavstanden for maksimal stabilitet (veldig bredt til å begynne med).",
         "En arm under midten av brystet; den andre på nedre del av ryggen eller hoften.",
@@ -1079,13 +1079,13 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
       "tips": []
     },
     "no": {
-      "name": "Partial-ROM enarmede armhevning",
-      "summary": "Enarmede armhevninger over redusert bevegelses- eller/og amplitude (f.eks. fra en lav benk).",
+      "name": "Enarms armhevning med redusert ROM",
+      "summary": "Enarms armhevninger over redusert bevegelsesutslag (f.eks. fra en lav benk).",
       "instructions": [
-        "Plasser en arm på en lav benk/trinn; føttene veldig bredt (minst hofteavstand).",
+        "Plasser én arm på en lav benk/trinn; føttene veldig bredt (minst hofteavstand).",
         "Den andre armen på nedre del av ryggen; hold kroppen som en planke – ikke roter hoften.",
-        "Senk intensjont kun ned til benkhøyden (redusert ROM).",
-        "Press oppover enarmede; senk benkhøyden gradvis."
+        "Senk kontrollert kun ned til benkhøyden (redusert ROM).",
+        "Press oppover med én arm; senk benkhøyden gradvis."
       ],
       "tips": []
     }
@@ -1436,13 +1436,13 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
       "tips": []
     },
     "no": {
-      "name": "Wall enarmede armhevning",
-      "summary": "Enarmede armhevninger mot en vegg – en sikker inngangsøvelse for enarmede progresjon.",
+      "name": "Enarms armhevning mot vegg",
+      "summary": "Enarms armhevninger mot en vegg – en sikker inngangsøvelse for enarms-progresjon.",
       "instructions": [
         "Stå omtrent en armslengde fra veggen.",
-        "Plasser en arm på veggen ved skulderhøyde; den andre armen hviler på nedre del av ryggen eller hoften.",
-        "Vipp kroppen som en solid planke mot veggen, bøy albueleddet med kontroll.",
-        "Senk med en langsom exzentrisk bevegelse (3 s) mot veggen, og press deretter kraftig bort."
+        "Plasser én arm på veggen i skulderhøyde; den andre armen hviler på nedre del av ryggen eller hoften.",
+        "Vipp kroppen som en solid planke mot veggen, og bøy albueleddet med kontroll.",
+        "Senk med en langsom eksentrisk bevegelse (3 s) mot veggen, og press deretter kraftig bort."
       ],
       "tips": []
     }

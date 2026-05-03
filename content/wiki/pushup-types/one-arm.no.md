@@ -1,6 +1,6 @@
 ---
-name: Enarmede armhevning
-summary: Full armhevning med en enkelt hand – kongen blant kroppsvektsøvelser.
+name: Enarms armhevning
+summary: Full armhevning med én hånd – kongen blant kroppsvektøvelser.
 instructions:
   - Plasser føttene merkbart bredere enn hofteavstanden for maksimal stabilitet (veldig bredt til å begynne med).
   - En arm under midten av brystet; den andre på nedre del av ryggen eller hoften.

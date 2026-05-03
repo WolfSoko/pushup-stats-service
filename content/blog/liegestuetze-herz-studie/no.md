@@ -36,13 +36,13 @@ heroImageCredit: 'Foto: <a href="https://unsplash.com" target="_blank" rel="noop
   Det er verdt å lese videre etter overskriften. Viktige designpunkter:
 </p>
 <ul>
-  <li><strong>Utvalg:</strong> 1.104 voksne menn, medianaldel 39,6 år, alle yrkesaktive (brannmenn).
+  <li><strong>Utvalg:</strong> 1.104 voksne menn, medianalder 39,6 år, alle yrkesaktive (brannmenn).
     Kun menn, ett yrke.</li>
   <li><strong>Test:</strong> En metronombasert armhevningskapasitetstest ved baseline (2000), med kardiovaskulære
     hendelser registrert gjennom 2010.</li>
   <li><strong>Utfall:</strong> 37 kardiovaskulære hendelser på ti år — hjerteinfarkt, CAD-relaterte dødsfall,
     koronareingrep.</li>
-  <li><strong>Sammenligning:</strong> Løpebåndassurmål på aerobisk kapasitet var <em>også</em> forbundet med
+  <li><strong>Sammenligning:</strong> Tredemølletest på aerob kapasitet var <em>også</em> forbundet med
     lavere kardiovaskulær risiko — men armhevningssignalet var sterkere enn det aerobiske signalet i denne gruppen.</li>
 </ul>
 <p>

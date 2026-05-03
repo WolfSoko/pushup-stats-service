@@ -62,7 +62,7 @@ heroImageCredit: 'Photo: <a href="https://unsplash.com" target="_blank" rel="noo
     Trener eksplosiv og reaktiv styrke.
   </li>
   <li>
-    <strong>Pikkarmhevning:</strong> Hofter hevet høyt, kropp danner en invertert V. Primærfokus på skuldrene – et springbrett mot handsårstøtte.
+    <strong>Pikkarmhevning:</strong> Hofter hevet høyt, kropp danner en invertert V. Primærfokus på skuldrene – et springbrett mot håndstående armhevning.
   </li>
 </ul>
 

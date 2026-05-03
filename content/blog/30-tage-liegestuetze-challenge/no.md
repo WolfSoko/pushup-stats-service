@@ -25,7 +25,7 @@ heroImageCredit: 'Photo: <a href="https://unsplash.com" target="_blank" rel="noo
   Logger tallet i sporingsappen – det er din baseline for å sammenligne med dag 30.
 </p>
 <ul>
-  <li><strong>Nybegynner (&lt; 10 repetisjoner):</strong> Start med knearmbevninger eller en løftet variant.</li>
+  <li><strong>Nybegynner (&lt; 10 repetisjoner):</strong> Start med knearmhevninger eller en løftet variant.</li>
   <li><strong>Intermediær (10–30 repetisjoner):</strong> Hele armhevninger, eventuelt med varianter.</li>
   <li><strong>Avansert (&gt; 30 repetisjoner):</strong> Hardere varianter (archer, nedover, langsom tempo).</li>
 </ul>
@@ -68,7 +68,7 @@ heroImageCredit: 'Photo: <a href="https://unsplash.com" target="_blank" rel="noo
 <p>
   Den psykologiske effekten av en serie er enorm: når dag 17 vises i grønt på skjermen din,
   synker sannsynligheten for at du hopper over dag 18 dramatisk. Bruk Pushup Tracker til å logge hver treningsdag
-  – inkludert variant, sett og totalt antall repetisjoner. Utfordringsgrafikkert viser deg daglig om du
+  – inkludert variant, sett og totalt antall repetisjoner. Utfordringsgrafikken viser deg daglig om du
   er på rett spor.
 </p>
 

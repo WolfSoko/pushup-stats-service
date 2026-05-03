@@ -21,7 +21,7 @@ heroImageCredit: 'Photo: <a href="https://unsplash.com" target="_blank" rel="noo
 
 <h2>Stabiliseringspuste: grunnlaget</h2>
 <p>
-  Stabilisering betyr å stabile torso som et trykkkar. I stedet for å puste løst strammes hele kjernen — magemuskulatur, skrå magemuskulatur, bekkenbunnmuskulatur, nedre rygg — som om noen skal til å treffe magjen din. Pustingen skjer da inne i et «mindre» volum, ikke gjennom et kollapset ribbein.
+  Stabilisering betyr å stive opp overkroppen som et trykkbeholder. I stedet for å puste løst strammes hele kjernen — magemuskulatur, skrå magemuskulatur, bekkenbunnmuskulatur, nedre rygg — som om noen er i ferd med å slå deg i magen. Pustingen skjer da inne i et «mindre» volum, ikke gjennom et kollapset brystkasse.
 </p>
 <p>
   Uten stabilisering mister hver repetisjons energi til en myk midte. Med stabilisering blir torso stiv, og bryst og skuldre kan arbeide effektivt uten at hoften synker.
@@ -52,7 +52,7 @@ heroImageCredit: 'Photo: <a href="https://unsplash.com" target="_blank" rel="noo
 <h2>Øvelse: lær stabilisering på 3 minutter</h2>
 <ol>
   <li>Gå inn i plankeposisjon. Stabiliser magemuskulaturen som om noen skal til å trå på magen din.</li>
-  <li>Pust dypt inn i magen — ikke i brystet. Spenningen må forblire.</li>
+  <li>Pust dypt inn i magen — ikke i brystet. Spenningen må forbli.</li>
   <li>Pust sakte ut uten å miste spenningen. Gjenta 5×.</li>
 </ol>
 <p>
@@ -61,11 +61,11 @@ heroImageCredit: 'Photo: <a href="https://unsplash.com" target="_blank" rel="noo
 
 <h2>Hvor stor er faktisk forskjellen?</h2>
 <p>
-  I en typisk 3×AMRAP-trening oppnår utøvere med ren pusteteknikk gjennomsnittlig 12–18 % flere repetisjoner totalt enn de med ustrukturert pust. Det er større effekt enn de fleste supplememter leverer — gratis.
+  I en typisk 3×AMRAP-trening oppnår utøvere med ren pusteteknikk gjennomsnittlig 12–18 % flere repetisjoner totalt enn de med ustrukturert pust. Det er større effekt enn de fleste kosttilskudd leverer — gratis.
 </p>
 
 <aside class="plan-cta">
-  <h3>Teknikk sjekk, puste stilt — deretter registrer det</h3>
+  <h3>Teknikk på plass, pust stille — deretter registrer det</h3>
   <p>
     Når pusteteknikk og form er på plass, hjelper konsistent registrering deg å øke ukentlig volum. En oversikt over typiske formfeil finnes i vår
     <a href="/no/blog/armhevning-feil">artikkel om feil</a>.

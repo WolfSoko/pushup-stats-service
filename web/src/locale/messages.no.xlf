@@ -3660,23 +3660,6 @@ Deine Position: # ·  Reps        </source>
 
 
         </unit>
-    <unit id="sw.update.downloading">
-      <notes>
-        <note category="location">web/src/app/app.ts</note>
-
-
-            </notes>
-      <segment state="translated">
-        <source>Update wird im Hintergrund geladen …</source>
-        <target>Oppdatering laster i bakgrunnen …</target>
-
-
-
-            </segment>
-
-
-
-        </unit>
     <unit id="switchUser">
       <notes>
         <note category="location">web/src/app/stats/shell/settings-page.component.ts:60,62</note>
@@ -5725,6 +5708,18 @@ Deine Position: # ·  Reps        </source>
         <target>En hel måned med disiplin. Legendarisk.</target>
       </segment>
     </unit>
+    <unit id="goalReached.plan.title">
+      <segment state="translated">
+        <source>Trainingsplan-Ziel erreicht!</source>
+        <target>Treningsplan-mål nådd!</target>
+      </segment>
+    </unit>
+    <unit id="goalReached.plan.note">
+      <segment state="translated">
+        <source>Heutiges Plan-Pensum geschafft. Stark!</source>
+        <target>Dagens planpensum fullført. Bra gjort!</target>
+      </segment>
+    </unit>
     <unit id="goalReached.snap">
       <segment state="translated">
         <source>Snap!</source>
@@ -6059,6 +6054,18 @@ Deine Position: # ·  Reps        </source>
       <segment state="translated">
         <source>Monatsziel von <ph id="0" equiv="goal" disp="goal"/> Liegestützen geschafft – <ph id="1" equiv="total" disp="total"/> insgesamt! 💪 Tracke deine Stats kostenlos:</source>
         <target>Nådde månedsmålet på <ph id="0" equiv="goal" disp="goal"/> armhevninger – <ph id="1" equiv="total" disp="total"/> totalt! 💪 Spor statistikken din gratis:</target>
+      </segment>
+    </unit>
+    <unit id="goalReached.share.plan.title">
+      <segment state="translated">
+        <source>Plan-Ziel geknackt!</source>
+        <target>Planmål knust!</target>
+      </segment>
+    </unit>
+    <unit id="goalReached.share.plan.text">
+      <segment state="translated">
+        <source>Heute mein Trainingsplan-Ziel von <ph id="0" equiv="goal" disp="goal"/> Liegestützen erreicht – <ph id="1" equiv="total" disp="total"/> insgesamt! 💪 Tracke deine Stats kostenlos:</source>
+        <target>Nådde dagens treningsplanmål på <ph id="0" equiv="goal" disp="goal"/> armhevninger – <ph id="1" equiv="total" disp="total"/> totalt! 💪 Spor statistikken din gratis:</target>
       </segment>
     </unit>
     <unit id="dashboard.share">
