@@ -16,7 +16,7 @@ heroImageCredit: 'Photo: <a href="https://unsplash.com" target="_blank" rel="noo
 
 <h2>Hvorfor systematisk trening gjør hele forskjellen</h2>
 <p>
-  Mange starter med de beste intensjoner: så mange armhevninger som mulig hver dag til armene gir seg. Resultatet? Etter noen dager: smerter, stagnasjon og ofte skader. Hemmeligheten til suksess er ikke blind utholdelse – det er progressiv overbelastning, et prinsipp som eliteathleter har brukt i tiår.
+  Mange starter med de beste intensjoner: så mange armhevninger som mulig hver dag til armene gir seg. Resultatet? Etter noen dager: smerter, stagnasjon og ofte skader. Hemmeligheten til suksess er ikke blind utholdenhet – det er progressiv overbelastning, et prinsipp som eliteatleter har brukt i tiår.
 </p>
 
 <h2>Fundamentet: Riktig teknikk først</h2>
@@ -40,7 +40,7 @@ heroImageCredit: 'Photo: <a href="https://unsplash.com" target="_blank" rel="noo
 </p>
 <ol>
   <li><strong>Uke 1–2:</strong> 3 sett × så mange rene repetisjoner som mulig (AMRAP), 90 sekunder pause mellom settet. Mål: bygge grunnlag, solidifiser teknikk.</li>
-  <li><strong>Uke 3–4:</strong> 4 sett × AMRAP med 60 sekunders pause. Plus ett maksimum-rep-sett per uke uten pause.</li>
+  <li><strong>Uke 3–4:</strong> 4 sett × AMRAP med 60 sekunders pause. Pluss ett maksimum-rep-sett per uke uten pause.</li>
   <li><strong>Uke 5–6:</strong> 5 sett med målantall (f.eks. 15-15-12-12-10), pause etter behov. Fokus på jevn tempo og full bevegelsesomfang.</li>
 </ol>
 

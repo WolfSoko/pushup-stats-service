@@ -16,7 +16,7 @@ heroImageCredit: 'Photo: <a href="https://unsplash.com" target="_blank" rel="noo
 
 <h2>Hva 30-dagersutfordringen oppnår</h2>
 <p>
-  Trettien dager med konsekvent trening endrer målbart din styrke, utholdenhet og kroppsbevisstnhet. Kliniske studier viser at selv fire ukers progressiv styrketrening kan øke tverrsnittet av muskulatur betydelig. Dette programmet kombinerer daglig trening med strategiske hvildedager og en ukentlig fremgangstest.
+  Trettien dager med konsekvent trening endrer målbart din styrke, utholdenhet og kroppsbevissthet. Kliniske studier viser at selv fire ukers progressiv styrketrening kan øke tverrsnittet av muskulatur betydelig. Dette programmet kombinerer daglig trening med strategiske hviledager og en ukentlig fremgangstest.
 </p>
 
 <h2>Forutsetninger og starttest</h2>

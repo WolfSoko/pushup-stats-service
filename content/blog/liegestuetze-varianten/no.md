@@ -17,7 +17,7 @@ heroImageCredit: 'Photo: <a href="https://unsplash.com" target="_blank" rel="noo
 <h2>Hvorfor varianter er essensielle</h2>
 <p>
   Å gjøre den samme standard armhevningen gang etter gang betyr at kroppen din tilpasser seg raskt og slutter å vokse.
-  Varianter endrer lastingivinkelen, legger vekt på ulike muskelgrupper og holder treningsstimulus frisk. Her er 10 varianter som egner seg for alle fitnessnivåer.
+  Varianter endrer belastningsvinkelen, legger vekt på ulike muskelgrupper og holder treningsstimulus frisk. Her er 10 varianter som egner seg for alle fitnessnivåer.
 </p>
 
 <h2>For nybegynnere</h2>
@@ -75,5 +75,5 @@ heroImageCredit: 'Photo: <a href="https://unsplash.com" target="_blank" rel="noo
 <p>
   Standard armhevninger trener hovedsakelig pectoralis major, anterior deltoid og triseps.
   Varianter endrer lastfordelingen: diamantvarianter maksimerer triseps, senket armhevninger rammer øvre bryst, og pikkarmhevninger fokuserer på skuldermusklene.
-  Et balansert treningsprogram med ulike varianter fører til velrundet muskelutvikeling – uten ett eneste treningsutstyr.
+  Et balansert treningsprogram med ulike varianter fører til allsidig muskelutvikling – uten ett eneste treningsutstyr.
 </p>

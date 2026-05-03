@@ -116,6 +116,6 @@ heroImageCredit: 'Photo: <a href="https://unsplash.com" target="_blank" rel="noo
 <h2>Konklusjon</h2>
 <p>
   Wim Hof-metoden har virkelige, målbare effekter på inflammasjon og autonomt tonus.
-  Det er ikke en erstatning for progressiv overbelastning, søvn eller protein — men som et restitutusjons-lag rundt
+  Det er ikke en erstatning for progressiv overbelastning, søvn eller protein — men som et restitusjons-lag rundt
   armhevningstrening, er bevisene gode nok til å prøve, forutsatt at du respekterer luftholding-reglene.
 </p>

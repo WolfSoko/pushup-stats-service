@@ -1,8 +1,8 @@
 ---
 slug: armhevning-tracker-guide
 publishedAt: '2025-03-10'
-title: Hvordan en tracker hjelper deg nå armhevning-personlige rekorder
-description: Hvorfor en digital armhevning-tracker gjør forskjellen – og hvordan Pushup Tracker hjelper deg oppnå personlige rekorder og holde deg konsistent.
+title: Hvordan en tracker hjelper deg å nå personlige armhevningsrekorder
+description: Hvorfor en digital armhevningstracker gjør forskjellen – og hvordan Pushup Tracker hjelper deg å oppnå personlige rekorder og holde deg konsistent.
 keywords:
   - armhevning tracker app
   - armhevning app
@@ -37,7 +37,7 @@ heroImageCredit: 'Bilde: <a href="https://unsplash.com" target="_blank" rel="noo
   I stedet for oppblåste funksjoner fokuserer den på det essensielle:
 </p>
 <ul>
-  <li><strong>Rask registrering:</strong> Lag en oppføring på under 2 sekunder – med hurtighandlinger for vanlige repettall.</li>
+  <li><strong>Rask registrering:</strong> Lag en oppføring på under 2 sekunder – med hurtighandlinger for vanlige repetisjonstall.</li>
   <li><strong>Streak tracking:</strong> Se på et øyeblikk hvor mange påfølgende dager du har trent. Streaket blir den sterkeste motivatoren.</li>
   <li><strong>Diagrammer og KPI-er:</strong> Daglig volum, ukentlige trender og personlige rekorder som rene diagrammer – ingen datarotete.</li>
   <li><strong>Leaderboard:</strong> Konkurrér valgfritt og anonymt med andre brukere – daglig, ukentlig eller månedlig.</li>
