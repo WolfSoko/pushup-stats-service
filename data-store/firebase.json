@@ -45,6 +45,22 @@
         "destination": "/de/.well-known/assetlinks.json"
       },
       {
+        "source": "/manifest.webmanifest",
+        "destination": "/de/manifest.webmanifest"
+      },
+      {
+        "source": "/favicon.ico",
+        "destination": "/de/favicon.ico"
+      },
+      {
+        "source": "/favicon.png",
+        "destination": "/de/favicon.png"
+      },
+      {
+        "source": "/pushup-stats-og.png",
+        "destination": "/de/pushup-stats-og.png"
+      },
+      {
         "source": "/de{,/**}",
         "destination": "/de/index.html"
       },
@@ -59,6 +75,13 @@
         "headers": [
           { "key": "Cache-Control", "value": "public, max-age=3600" },
           { "key": "Content-Type", "value": "application/json" }
+        ]
+      },
+      {
+        "source": "/manifest.webmanifest",
+        "headers": [
+          { "key": "Cache-Control", "value": "public, max-age=3600" },
+          { "key": "Content-Type", "value": "application/manifest+json" }
         ]
       }
     ]

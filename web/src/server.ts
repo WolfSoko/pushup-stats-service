@@ -41,9 +41,24 @@ app.use(pinoHttp({ logger }));
 
 const angularApp = new AngularNodeAppEngine();
 
-// Serve root-level well-known files from the /de build output
-// so they are available at the domain root for crawlers.
-const rootFiles = new Set(['ads.txt', 'robots.txt', 'sitemap.xml']);
+// Serve root-level files from the /de build output so they're
+// available at the domain root for crawlers, validators, and
+// installable-PWA / TWA tooling that fetches well-known absolute
+// paths (Bubblewrap reading the manifest, Lighthouse, Open Graph
+// preview bots).
+const rootFiles = new Set([
+  'ads.txt',
+  'robots.txt',
+  'sitemap.xml',
+  // PWA install manifest — Bubblewrap and most PWA validators expect
+  // it at the unprefixed root URL.
+  'manifest.webmanifest',
+  // Browser-default icon fetches and Open Graph previews target the
+  // domain root rather than the locale-prefixed path.
+  'favicon.ico',
+  'favicon.png',
+  'pushup-stats-og.png',
+]);
 app.use((req, res, next) => {
   const file = req.path.slice(1);
   if (rootFiles.has(file)) {
