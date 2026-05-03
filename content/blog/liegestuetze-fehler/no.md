@@ -18,13 +18,13 @@ heroImageCredit: 'Foto: <a href="https://unsplash.com" target="_blank" rel="noop
 
 Armhevninger er en undervurdert helkroppsøvelse — tilsynelatende enkel, men med dusinvis av bevegelsesdeler. Femti sloppy repetisjoner trener kompensasjonsmønstre og seneoverbelastning. Tjue rene repetisjoner bygger styrke som overføres. De syv feilene nedenfor dukker opp i nesten hvert nybegynnervideo, og tre av dem vil til slutt koste deg en skulder.
 
-## Feil 1: Hengene hofter — det ustabile midten
+## Feil 1: Hengende hofter — den ustabile midten
 
 Langt den vanligste feilen. Når hoftene synker under linjen fra skuldrer til hæler, blir lenderyggvirvelen en fleksjonsbru. Det gjør ikke vondt med en gang, men det summerer seg. Årsaken er vanligvis en svak mage som gir opp under belastning.
 
 **Fiksen:** Før du senker deg, stram magen som om du venter et slag. Spenningen må holde helt til slutten av settet. Hvis du mister den, er settet over — uavhengig av planlagte repetisjoner.
 
-## Feil 2: Alvebuer utspredt — skulderødelageren nummer en
+## Feil 2: Albuer spredt ut — skulderødeleggeren nummer én
 
 Den klassiske "T-posisjonen": albuer spredt 90° fra kroppen. Ser dramatisk ut, men det presser humeruskraniet rett inn i acromionet. Gjenta det ofte nok og subacromialt inneklemming er på vei.
 
@@ -62,7 +62,7 @@ Valsalva-pressing under armhevningen øker intratorakalt trykk og kan utløse sv
 
 ## 5-minutters selvdiagnosen
 
-Still telefonen din til side og film et sett med 10 repetisjoner. Se videoen to ganger: en gang fra siden (hoftelinje, dybde), en gang fra bak (alvebuevinkel, skulderstilling). På 30 sekunder vil du se hvilken av de syv feilene som dominerer. Reparer en per treningsuke — ikke alle på en gang.
+Still telefonen din til side og film et sett med 10 repetisjoner. Se videoen to ganger: en gang fra siden (hoftelinje, dybde), en gang fra bak (albuevinkel, skulderstilling). På 30 sekunder vil du se hvilken av de syv feilene som dominerer. Reparer en per treningsuke — ikke alle på en gang.
 
 <aside class="plan-cta">
   <h3>Teknikken ren? Nå er det tid for volum</h3>
