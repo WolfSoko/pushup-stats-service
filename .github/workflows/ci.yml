@@ -23,12 +23,11 @@ jobs:
             && secrets.NX_CLOUD_ACCESS_TOKEN_WRITE
           || secrets.NX_CLOUD_ACCESS_TOKEN_READ
         }}
-      # 4 GB Node heap for the orchestrator job (`lint-test-build`). High
-      # enough for the Angular SSR build + Playwright webServer in CI, and
-      # matches the per-agent heap configured in
-      # `.nx/workflows/distribution-config.yaml` so a task can run on
-      # either side without a different OOM threshold. Bump in lockstep
-      # with the agent setting if the heavy targets ever need more.
+      # 4 GB Node heap for the orchestrator job. High enough for the Angular
+      # SSR build in CI, and matches the per-agent heap configured in
+      # `.nx/workflows/distribution-config.yaml` so a task can run on either
+      # side without a different OOM threshold. Bump in lockstep with the
+      # agent setting if the heavy targets ever need more.
       NODE_OPTIONS: --max-old-space-size=4096
     steps:
       - name: Checkout
@@ -70,8 +69,7 @@ jobs:
       - uses: nrwl/nx-set-shas@v5
       - name: Nx Cloud distributed run starten
         # Dynamic agent allocation: small PRs use 4 agents, large changesets
-        # scale up to 10 so the 5-shard e2e-ci target finishes in one round
-        # instead of two. Config: .nx/workflows/distribution-config.yaml
+        # scale up. Config: .nx/workflows/distribution-config.yaml
         #
         # `--with-env-vars="NODE_OPTIONS"` forwards the orchestrator's
         # `NODE_OPTIONS=--max-old-space-size=4096` env to every agent's task
@@ -80,10 +78,74 @@ jobs:
         # heavy targets (Angular SSR build, Vitest with Firebase/Material)
         # would GC-thrash or OOM only on the agent side.
         # Docs: https://nx.dev/docs/reference/nx-cloud/launch-templates
-        run: pnpm nx-cloud start-ci-run --distribute-on=".nx/workflows/distribution-config.yaml" --stop-agents-after="e2e-ci" --with-env-vars="NODE_OPTIONS"
+        run: pnpm nx-cloud start-ci-run --distribute-on=".nx/workflows/distribution-config.yaml" --stop-agents-after="build" --with-env-vars="NODE_OPTIONS"
 
       - name: Nx affected (lint + test + build)
-        run: pnpm nx affected -t=lint,test,build,e2e-ci -c=production
+        run: pnpm nx affected -t=lint,test,build -c=production
+
+      - name: Nx fix-ci (always)
+        if: always()
+        run: pnpm nx fix-ci
+
+  # Runs in parallel to lint-test-build. Shares the Angular SSR build via
+  # Nx Cloud's remote cache: the e2e job triggers `build` as a `dependsOn`
+  # of `e2e-ci`, but if the sibling job has already pushed the build
+  # artifact to Nx Cloud it is restored from cache instead of rebuilt.
+  e2e:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      NX_CLOUD_ACCESS_TOKEN: >-
+        ${{
+          github.event_name != 'pull_request'
+            && secrets.NX_CLOUD_ACCESS_TOKEN_WRITE
+          || github.event.pull_request.head.repo.full_name == github.repository
+            && secrets.NX_CLOUD_ACCESS_TOKEN_WRITE
+          || secrets.NX_CLOUD_ACCESS_TOKEN_READ
+        }}
+      # Same 4 GB heap rationale as the lint-test-build job — the Playwright
+      # webServer boots the Angular SSR build, which is the heaviest task
+      # the orchestrator runs locally before handing off to agents.
+      NODE_OPTIONS: --max-old-space-size=4096
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          filter: tree:0
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+
+      - name: Enable corepack
+        env:
+          COREPACK_ENABLE_DOWNLOAD_PROMPT: '0'
+        run: |
+          corepack enable
+          pnpm --version
+
+      - name: Get pnpm store path
+        id: pnpm-store
+        run: echo "path=$(pnpm store path --silent)" >> "$GITHUB_OUTPUT"
+
+      - name: Cache pnpm store
+        uses: actions/cache@v5
+        with:
+          path: ${{ steps.pnpm-store.outputs.path }}
+          key: pnpm-store-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: pnpm-store-${{ runner.os }}-
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - uses: nrwl/nx-set-shas@v5
+      - name: Nx Cloud distributed run starten
+        run: pnpm nx-cloud start-ci-run --distribute-on=".nx/workflows/distribution-config.yaml" --stop-agents-after="e2e-ci" --with-env-vars="NODE_OPTIONS"
+
+      - name: Nx affected (e2e)
+        run: pnpm nx affected -t=e2e-ci -c=production
 
       - name: Nx fix-ci (always)
         if: always()
@@ -93,7 +155,7 @@ jobs:
   # Firebase App Hosting watches this branch instead of main,
   # so it only deploys code that passed lint + test + build + e2e.
   promote-to-deploy:
-    needs: lint-test-build
+    needs: [lint-test-build, e2e]
     if: github.ref == 'refs/heads/main'
     # A push failure here must not block the Firebase Hosting deploy
     # (which gates on the overall CI workflow conclusion).
