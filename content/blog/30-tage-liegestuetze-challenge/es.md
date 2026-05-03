@@ -4,11 +4,12 @@ publishedAt: '2025-11-04'
 title: 'Reto de flexiones de 30 días: tu plan para el máximo progreso'
 description: Este reto estructurado de 30 días te ayuda a aumentar tu número de flexiones paso a paso, desde la primera semana hasta la prueba final del día 30.
 keywords:
-  - reto flexiones 30 días
+  - reto 30 días flexiones
   - plan reto flexiones
   - flexiones en 30 días
-  - desafío flexiones
+  - reto flexiones principiantes
   - aumentar flexiones diarias
+  - Pushup Tracker app
 heroImage: 'https://images.unsplash.com/photo-1596079306903-9164c205f400?auto=format&fit=crop&w=1600&q=80'
 heroImageAlt: Atleta haciendo flexiones al aire libre — el reto diario en la hierba.
 heroImageCredit: 'Foto: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'

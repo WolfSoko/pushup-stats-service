@@ -7,7 +7,7 @@ keywords:
   - Liegestütze Herzrisiko Studie
   - Harvard Liegestütze Studie
   - JAMA Liegestütze
-  - Fitness Herzerkrankung
+  - Liegestütze Herz-Kreislauf-Risiko
 heroImage: 'https://images.unsplash.com/photo-1514512364185-4c2b0985be01?auto=format&fit=crop&w=1600&q=80'
 heroImageAlt: Sportlerin in Plank-Position auf Asphalt – Sinnbild für den Push-Up-Kapazitätstest.
 heroImageCredit: 'Foto: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'

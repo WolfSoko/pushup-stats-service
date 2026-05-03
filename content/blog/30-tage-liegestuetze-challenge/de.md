@@ -6,8 +6,9 @@ keywords:
   - 30 Tage Liegestütze Challenge
   - Liegestütze Challenge Plan
   - Liegestütze in 30 Tagen
-  - Push-Up Challenge
+  - Pushup Challenge Anfänger
   - Liegestütze täglich steigern
+  - Pushup Tracker App
 heroImage: 'https://images.unsplash.com/photo-1596079306903-9164c205f400?auto=format&fit=crop&w=1600&q=80'
 heroImageAlt: Sportler bei einer Outdoor-Liegestütze – tägliche Challenge im Grünen.
 heroImageCredit: 'Foto: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'

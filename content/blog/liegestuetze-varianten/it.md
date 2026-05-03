@@ -4,11 +4,11 @@ publishedAt: '2025-09-22'
 title: 10 Varianti di Piegamenti per Ogni Livello di Fitness
 description: 'Dai piegamenti sulle ginocchia ai piegamenti arciere: queste 10 varianti mirano a petto, tricipiti e spalle — e superano qualsiasi plateau.'
 keywords:
-  - varianti piegamenti
-  - esercizi piegamenti
-  - piegamenti più difficili
-  - muscoli piegamenti
-  - piegamenti avanzati
+  - varianti push-up
+  - esercizi petto senza attrezzi casa
+  - push-up avanzati
+  - quali muscoli allenano i push-up
+  - progressione push-up casa
 heroImage: 'https://images.unsplash.com/photo-1731341400836-baaa5535b8d5?auto=format&fit=crop&w=1600&q=80'
 heroImageAlt: Atleta che esegue una variante di piegamenti in uno spazio di allenamento.
 heroImageCredit: 'Foto: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'

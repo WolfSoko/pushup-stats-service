@@ -5,10 +5,10 @@ title: '让俯卧撑成名的哈佛研究：40+次重复和心脏健康'
 description: '2019年的JAMA研究把俯卧撑能力放在了心血管风险的地图上。以下是数据实际上说了什么、没有说什么，以及如何用它来指导你自己的训练。'
 keywords:
   - 俯卧撑心脏健康
-  - 俯卧撑能力心血管
+  - 俯卧撑心血管能力
   - 哈佛俯卧撑研究
   - JAMA俯卧撑
-  - 健身心脏病
+  - 俯卧撑心血管益处
 heroImage: 'https://images.unsplash.com/photo-1514512364185-4c2b0985be01?auto=format&fit=crop&w=1600&q=80'
 heroImageAlt: 运动员在沥青地面上保持平板支撑位置 — 俯卧撑能力测试。
 heroImageCredit: '图片：<a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'

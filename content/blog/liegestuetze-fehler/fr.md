@@ -6,9 +6,10 @@ description: Une mauvaise technique vous coûte des répétitions, des progrès 
 keywords:
   - erreurs pompes
   - technique pompes
-  - form pompes
+  - douleur poignet pompes
   - douleur épaule pompes
   - comment faire des pompes correctement
+  - Pushup Tracker app
 heroImage: https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=1600&q=80
 heroImageAlt: Athlète en position de planche sur un tapis d'entraînement, tête en position neutre.
 heroImageCredit: 'Photo : <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'

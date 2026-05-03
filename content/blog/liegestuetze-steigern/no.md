@@ -4,11 +4,12 @@ publishedAt: '2025-01-15'
 title: 'Fra 0 til 100: Slik øker du armhevningene dine systematisk'
 description: 'En praktisk guide for progressiv økning av armhevninger – med treningsplan, teknikktips og riktig restitusjon.'
 keywords:
-  - øke armhevninger
-  - flere armhevninger
-  - armhevning-treningsplan
-  - armhevning-framgang
-  - lær armhevninger
+  - øke push-ups
+  - flere push-ups
+  - push-up treningsplan
+  - push-up progresjon nybegynner
+  - lære push-ups
+  - Pushup Tracker app
 heroImage: 'https://images.unsplash.com/photo-1598971457999-ca4ef48a9a71?auto=format&fit=crop&w=1600&q=80'
 heroImageAlt: 'Atlet i rød topp som utfører en ren armhevning.'
 heroImageCredit: 'Photo: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'

@@ -4,11 +4,11 @@ publishedAt: '2025-09-22'
 title: 10 opdruk-variaties voor elk fitnessniveau
 description: 'Van knieopdrukken tot archer-opdrukken: deze 10 variaties trainen borst, triceps en schouders – en doorbreken elk plateau.'
 keywords:
-  - opdrukken variaties
-  - opdrukken oefeningen
-  - moeilijkere opdrukken
-  - opdrukken spieren
-  - gevorderde opdrukken
+  - push-up varianten
+  - lichaamsgewicht borst oefeningen thuis
+  - gevorderde push-ups
+  - welke spieren trainen push-ups
+  - push-up progressie thuis
 heroImage: 'https://images.unsplash.com/photo-1731341400836-baaa5535b8d5?auto=format&fit=crop&w=1600&q=80'
 heroImageAlt: Atleet die een opdruk-variatie uitvoert in een trainingsruimte.
 heroImageCredit: 'Foto: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'

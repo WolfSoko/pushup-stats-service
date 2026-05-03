@@ -5,9 +5,10 @@ title: 'La méthode Wim Hof pour les pompes : respiration, exposition au froid e
 description: "La méthode Wim Hof peut-elle vraiment améliorer les performances aux pompes et la récupération ? Un regard fondé sur les preuves concernant le protocole respiratoire, l'exposition au froid et ce que la recherche montre réellement."
 keywords:
   - méthode Wim Hof
-  - performance aux pompes
-  - respiration pour la performance
-  - exposition au froid récupération
+  - apprendre respiration Wim Hof
+  - performance pompes
+  - respiration performance
+  - récupération exposition froid
   - respiration Wim Hof pompes
 heroImage: 'https://images.unsplash.com/photo-1548690312-e3b507d8c110?auto=format&fit=crop&w=1600&q=80'
 heroImageAlt: Athlète debout dans un paysage gelé — l'imagerie de la méthode Wim Hof entre souffle et froid.

@@ -4,11 +4,12 @@ publishedAt: '2025-03-10'
 title: Quomodo Indicator te ad Recordis Personalibus Pressionum Perducat
 description: Cur indicator pressionum digitalis differat — et quomodo Indicator Pressionum te ad recordis personalibus attingendos et constantem manendum adiuvet.
 keywords:
-  - programma indicatoris pressionum
-  - programma pressionum
-  - pressiones inscribere
-  - Indicator Pressionum
-  - progressus pressionum inscribere
+  - application tractatoris pulsuum
+  - numerator pulsuum gratuitus
+  - optima application pulsuum
+  - persequi pulsus
+  - Pushup Tracker
+  - progressus pulsuum prosequendi
 heroImage: 'https://images.unsplash.com/photo-1717821681365-36b0da044a75?auto=format&fit=crop&w=1600&q=80'
 heroImageAlt: Athleta pressionem puram in pavimento ligneo faciens — progressus in centro.
 heroImageCredit: 'Imago: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'

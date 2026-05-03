@@ -16,9 +16,10 @@ export const POST: BlogPost = {
   "keywords": [
     "αύξηση push-ups",
     "περισσότερα push-ups",
-    "πλάνο προπόνησης push-ups",
-    "πρόοδος push-ups",
-    "μάθε push-ups"
+    "πρόγραμμα προπόνησης push-up",
+    "εξέλιξη push-up αρχάριος",
+    "μάθετε push-ups",
+    "Pushup Tracker app"
   ],
   "heroImage": "https://images.unsplash.com/photo-1598971457999-ca4ef48a9a71?auto=format&fit=crop&w=1600&q=80",
   "heroImageAlt": "Αθλητής με κόκκινο μπλουζάκι κάνει καθαρό push-up.",

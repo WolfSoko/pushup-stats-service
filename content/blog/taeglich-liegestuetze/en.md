@@ -5,7 +5,7 @@ title: Why Daily Push-Ups Will Change Your Life
 description: 'Daily push-ups improve strength, posture, and well-being. Discover the scientifically proven benefits and how to build the habit for good.'
 keywords:
   - daily push-ups
-  - push-ups every day
+  - 100 push-ups a day
   - push-up benefits
   - push-up habit
   - push-up health

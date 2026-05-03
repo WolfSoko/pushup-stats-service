@@ -4,6 +4,7 @@ title: 'Wim Hof Methode für Liegestützen: Atmung, Kälte & mehr Leistung'
 description: 'Wie sinnvoll ist die Wim Hof Methode für deine Liegestütze? Ein forschungsbasierter Blick auf Atemprotokoll, Kälteanwendung und was die Studienlage wirklich hergibt.'
 keywords:
   - Wim Hof Methode
+  - Wim Hof Atmung lernen
   - Liegestütze Leistung
   - Atmung Leistungssteigerung
   - Kälteanwendung Regeneration

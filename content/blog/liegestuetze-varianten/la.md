@@ -4,11 +4,11 @@ publishedAt: '2025-09-22'
 title: Decem Variationes Pressionum pro Quoque Gradu Valetudinis
 description: 'A pressionibus a genibus usque ad sagittarias: hae decem variationes pectus, tricipites, et humeros sollicitant — et quamlibet stagnationem vincunt.'
 keywords:
-  - variationes pressionum
-  - exercitationes pressionum
-  - pressiones difficiliores
-  - musculi pressionum
-  - pressiones provectorum
+  - variationes pulsuum
+  - exercitia pectoris corporis pondere domi
+  - pulsus provecti
+  - qui musculi pulsus exercent
+  - progressio pulsuum domi
 heroImage: 'https://images.unsplash.com/photo-1731341400836-baaa5535b8d5?auto=format&fit=crop&w=1600&q=80'
 heroImageAlt: Athleta variationem pressionis in spatio exercitationis faciens.
 heroImageCredit: 'Imago: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'

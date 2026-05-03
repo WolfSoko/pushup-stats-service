@@ -4,11 +4,12 @@ publishedAt: '2026-04-28'
 title: 'Respirazione nei piegamenti: bracing, ritmo e cosa cambia al massimo sforzo'
 description: 'La respirazione è sottovalutata nei piegamenti. Quando inspirare, quando espirare, cosa significa il bracing — e perché le serie al massimo sforzo richiedono una regola diversa.'
 keywords:
-  - respirazione piegamenti
-  - come respirare nei piegamenti
-  - bracing piegamenti
-  - tecnica respiratoria allenamento forza
-  - valsalva piegamenti
+  - respirazione push-up
+  - come respirare push-up
+  - bracing push-up
+  - tecnica respirazione forza
+  - push-up valsalva
+  - respirazione push-up massimo sforzo
 heroImage: 'https://images.unsplash.com/photo-1599058917765-a780eda07a3e?auto=format&fit=crop&w=1600&q=80'
 heroImageAlt: Atleta in posizione di plank con espressione concentrata.
 heroImageCredit: 'Foto: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'

@@ -5,10 +5,11 @@ title: '俯卧撑呼吸：撑紧腹部、节奏和极限力量下的变化'
 description: '呼吸在俯卧撑中被低估了。何时吸气、何时呼气、撑紧腹部的含义——以及为什么极限力量组需要不同的规则。'
 keywords:
   - 俯卧撑呼吸
-  - 如何呼吸做俯卧撑
-  - 俯卧撑核心稳定
-  - 呼吸技术力量
-  - 俯卧撑瓦尔萨尔瓦动作
+  - 俯卧撑如何呼吸
+  - 俯卧撑核心收紧
+  - 力量训练呼吸技巧
+  - 俯卧撑瓦氏动作
+  - 俯卧撑最大努力呼吸
 heroImage: 'https://images.unsplash.com/photo-1599058917765-a780eda07a3e?auto=format&fit=crop&w=1600&q=80'
 heroImageAlt: '运动员处于平板支撑位置，表情专注。'
 heroImageCredit: '图片：<a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'

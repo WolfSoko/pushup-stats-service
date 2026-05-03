@@ -4,10 +4,10 @@ title: 'Liegestütze für Frauen: Mythen, Anatomie und ein 4-Wochen-Einstieg'
 description: 'Frauen können dieselben Liegestütze wie Männer — die Progression sieht oft nur anders aus. Anatomie, Mythen und ein realistischer Einstiegsplan.'
 keywords:
   - Liegestütze Frauen
-  - Liegestütze lernen Frau
   - Pushups für Frauen
-  - Frau Liegestütze Trainingsplan
   - Liegestütze Anfänger Frau
+  - Liegestütze 4-Wochen Plan Frau
+  - Liegestütze ohne Kraft Frau
 heroImage: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=1600&q=80'
 heroImageAlt: Sportlerin in einer kontrollierten Liegestütze auf einer Outdoor-Trainingsmatte.
 heroImageCredit: 'Foto: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'

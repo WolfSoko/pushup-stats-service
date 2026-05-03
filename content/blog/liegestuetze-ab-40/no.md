@@ -4,11 +4,12 @@ publishedAt: '2026-01-20'
 title: 'Armhevninger etter 40: Slik trener du sikkert og effektivt'
 description: Kroppen din endrer seg etter 40 – men armhevninger er fortsatt en av de beste øvelsene. Lær hvordan du bygger styrke trygt med riktige tilpasninger.
 keywords:
-  - armhevninger etter 40
+  - push-ups etter 40
   - styrketrening etter 40
-  - skånsomme armhevninger
-  - trening etter 40
-  - armhevninger for eldre voksne
+  - push-ups skånsom for ledd
+  - fitness etter 40
+  - push-ups for eldre
+  - push-ups seniorer
 heroImage: 'https://images.unsplash.com/photo-1638820858482-800bd51f63f1?auto=format&fit=crop&w=1600&q=80'
 heroImageAlt: Idrettsutøver som utfører en ren armhevning utendørs – trening etter 40.
 heroImageCredit: 'Photo: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'

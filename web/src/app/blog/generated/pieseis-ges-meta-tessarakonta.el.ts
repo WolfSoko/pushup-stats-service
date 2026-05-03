@@ -16,9 +16,10 @@ export const POST: BlogPost = {
   "keywords": [
     "push-ups μετά τα 40",
     "προπόνηση δύναμης μετά τα 40",
-    "push-ups φιλικά στις αρθρώσεις",
+    "push-ups φιλικές στις αρθρώσεις",
     "fitness μετά τα 40",
-    "push-ups για μεγαλύτερη ηλικία"
+    "push-ups για ηλικιωμένους",
+    "push-ups για senior"
   ],
   "heroImage": "https://images.unsplash.com/photo-1638820858482-800bd51f63f1?auto=format&fit=crop&w=1600&q=80",
   "heroImageAlt": "Αθλητής κάνει καθαρό push-up σε εξωτερικό χώρο — προπόνηση μετά τα 40.",

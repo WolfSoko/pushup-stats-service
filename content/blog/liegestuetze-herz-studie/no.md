@@ -4,11 +4,11 @@ publishedAt: '2026-04-23'
 title: 'Harvard-studien som gjorde armhevninger berømt: 40+ repetisjoner og hjertehelse'
 description: 'En JAMA-studie fra 2019 satte armhevningskapasitet på kardiologiens kart. Her er hva dataene faktisk sa, hva de ikke sa, og hvordan du bruker det i din egen trening.'
 keywords:
-  - armhevninger og hjertehelse
-  - armhevningskapasitet kardiovaskulært
-  - Harvard-studien om armhevninger
-  - JAMA armhevninger
-  - fitness hjertesykdom
+  - push-ups hjertehelse
+  - push-up kapasitet kardiovaskulær
+  - Harvard push-up studie
+  - JAMA push-ups
+  - kardiovaskulær fordel push-ups
 heroImage: 'https://images.unsplash.com/photo-1514512364185-4c2b0985be01?auto=format&fit=crop&w=1600&q=80'
 heroImageAlt: Idrettsutøver i plankeposisjon på asfalt — armhevningskapasitetstesten.
 heroImageCredit: 'Foto: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'

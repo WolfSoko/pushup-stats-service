@@ -4,11 +4,12 @@ publishedAt: '2026-04-23'
 title: 'Η Μέθοδος Wim Hof για Push-Ups: Αναπνοή, Ψυχρή Έκθεση και Απόδοση'
 description: 'Μπορεί η Μέθοδος Wim Hof πραγματικά να βελτιώσει την απόδοση στα push-ups και την αποκατάσταση; Θεωρητική επισκόπηση του πρωτοκόλλου αναπνοής, της ψυχρής έκθεσης και τι δείχνουν πραγματικά τα στοιχεία.'
 keywords:
-  - 'Μέθοδος Wim Hof'
-  - 'απόδοση push-ups'
-  - 'αναπνοή για απόδοση'
-  - 'ψυχρή έκθεση αποκατάσταση'
-  - 'Wim Hof αναπνοή push-ups'
+  - μέθοδος Wim Hof
+  - μάθετε αναπνοή Wim Hof
+  - απόδοση push-up
+  - αναπνοή για απόδοση
+  - ανάκαμψη έκθεση κρύου
+  - αναπνοή Wim Hof push-ups
 heroImage: 'https://images.unsplash.com/photo-1548690312-e3b507d8c110?auto=format&fit=crop&w=1600&q=80'
 heroImageAlt: 'Αθλητής στέκεται σε παγωμένο τοπίο — εικόνα της Μεθόδου Wim Hof, αναπνοή και κρύο.'
 heroImageCredit: 'Φωτογραφία: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'

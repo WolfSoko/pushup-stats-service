@@ -5,10 +5,11 @@ title: The 7 most common push-up mistakes — and how to fix each one
 description: Bad form costs you reps, progress, and sometimes your shoulder. The most common push-up mistakes, with concrete fixes for each.
 keywords:
   - push-up mistakes
-  - push-up form
   - push-up technique
+  - push-up wrist pain
   - shoulder pain push-ups
   - how to do push-ups properly
+  - Pushup Tracker app
 heroImage: https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=1600&q=80
 heroImageAlt: Athlete in plank position on a training mat, neutral head position.
 heroImageCredit: 'Photo: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'

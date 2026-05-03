@@ -4,11 +4,12 @@ publishedAt: '2026-01-20'
 title: 'Piegamenti Dopo i 40: Come Allenarsi in Modo Sicuro ed Efficace'
 description: Il corpo cambia dopo i 40 anni — ma i piegamenti rimangono uno degli esercizi migliori. Scopri come costruire forza in sicurezza con gli adattamenti giusti.
 keywords:
-  - piegamenti dopo i 40
-  - allenamento della forza over 40
-  - piegamenti articolazioni
-  - fitness over 40
-  - piegamenti per adulti più anziani
+  - push-up dopo i 40
+  - allenamento forza dopo 40
+  - push-up per articolazioni
+  - fitness dopo i 40
+  - push-up per anziani
+  - push-up età avanzata
 heroImage: 'https://images.unsplash.com/photo-1638820858482-800bd51f63f1?auto=format&fit=crop&w=1600&q=80'
 heroImageAlt: Atleta che esegue un piegamento pulito all'aperto — allenamento dopo i 40.
 heroImageCredit: 'Foto: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'

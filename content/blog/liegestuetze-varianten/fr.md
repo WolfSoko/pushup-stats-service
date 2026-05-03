@@ -4,11 +4,11 @@ publishedAt: '2025-09-22'
 title: 10 variantes de pompes pour tous les niveaux de forme
 description: 'Des pompes sur les genoux aux pompes archer : ces 10 variantes ciblent les pectoraux, les triceps et les épaules — et brisent tous les plateaux.'
 keywords:
-  - variantes de pompes
-  - exercices de pompes
-  - pompes plus difficiles
-  - muscles pompes
+  - variantes pompes
+  - exercices poitrine sans matériel maison
   - pompes avancées
+  - quels muscles travaillent les pompes
+  - progression pompes maison
 heroImage: 'https://images.unsplash.com/photo-1731341400836-baaa5535b8d5?auto=format&fit=crop&w=1600&q=80'
 heroImageAlt: Athlète réalisant une variante de pompe dans un espace d'entraînement.
 heroImageCredit: 'Photo : <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'

@@ -4,11 +4,11 @@ publishedAt: '2026-04-23'
 title: 'De Harvard-studie die opdrukken beroemd maakte: 40+ herhalingen en hartgezondheid'
 description: 'Een JAMA-studie uit 2019 zette opdruk-capaciteit op de cardiovasculaire risicokaart. Hier lees je wat de data werkelijk zeiden, wat ze niet zeiden, en hoe je ze kunt gebruiken voor je eigen training.'
 keywords:
-  - opdrukken hartgezondheid
-  - opdruk-capaciteit cardiovasculair
-  - Harvard opdrukstudie
-  - JAMA opdrukken
-  - fitness hartziekte
+  - push-ups hartgezondheid
+  - push-up capaciteit cardiovasculair
+  - Harvard push-up studie
+  - JAMA push-ups
+  - cardiovasculair voordeel push-ups
 heroImage: 'https://images.unsplash.com/photo-1514512364185-4c2b0985be01?auto=format&fit=crop&w=1600&q=80'
 heroImageAlt: Atleet in plankpositie op asfalt — de opdruk-capaciteitstest.
 heroImageCredit: 'Foto: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'

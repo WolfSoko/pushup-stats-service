@@ -4,11 +4,12 @@ publishedAt: '2025-11-04'
 title: 'Η Πρόκληση των 30 Ημερών στις Push-Ups: Το Σχέδιό σου για Μέγιστη Πρόοδο'
 description: 'Αυτό το δομημένο πρόγραμμα 30 ημερών σε βοηθάει να αυξήσεις τον αριθμό των push-ups σου βήμα-βήμα — από την πρώτη εβδομάδα ως το τελικό τεστ της 30ής ημέρας.'
 keywords:
-  - 'πρόκληση push-ups 30 ημερών'
-  - 'πρόγραμμα push-ups challenge'
-  - 'push-ups σε 30 ημέρες'
-  - 'push-ups challenge'
-  - 'αύξηση push-ups καθημερινά'
+  - πρόκληση push-up 30 ημερών
+  - πλάνο πρόκλησης push-up
+  - push-ups σε 30 ημέρες
+  - πρόκληση push-up αρχάριους
+  - αυξήστε push-ups καθημερινά
+  - Pushup Tracker app
 heroImage: 'https://images.unsplash.com/photo-1596079306903-9164c205f400?auto=format&fit=crop&w=1600&q=80'
 heroImageAlt: 'Αθλητής κάνει push-up σε εξωτερικό χώρο — η καθημερινή προπόνηση πάνω στο γρασίδι.'
 heroImageCredit: 'Φωτογραφία: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'

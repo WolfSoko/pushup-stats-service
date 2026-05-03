@@ -4,11 +4,12 @@ publishedAt: '2026-04-28'
 title: 'Ademhaling bij opdrukken: bracing, ritme en wat er verandert bij maximale inspanning'
 description: 'Ademhaling wordt onderschat bij opdrukken. Wanneer inademen, wanneer uitademen, wat bracing betekent — en waarom maximale sets een andere regel vereisen.'
 keywords:
-  - ademhaling opdrukken
-  - hoe ademen bij opdrukken
-  - bracing opdrukken
-  - ademhalingstechniek kracht
-  - opdrukken valsalva
+  - ademhaling push-ups
+  - hoe ademen push-ups
+  - bracing push-ups
+  - ademtechniek krachttraining
+  - push-up valsalva
+  - push-up maximale inspanning ademhaling
 heroImage: 'https://images.unsplash.com/photo-1599058917765-a780eda07a3e?auto=format&fit=crop&w=1600&q=80'
 heroImageAlt: Atleet in plankpositie met geconcentreerde uitdrukking.
 heroImageCredit: 'Foto: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'

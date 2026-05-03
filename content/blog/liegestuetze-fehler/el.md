@@ -4,11 +4,12 @@ publishedAt: '2026-04-30'
 title: 'Τα 7 Πιο Συχνά Λάθη στα Push-Ups — και Πώς Διορθώνεται το Καθένα'
 description: 'Η κακή φόρμα σού κοστίζει επαναλήψεις, πρόοδο και μερικές φορές τον ίδιο τον ώμο σου. Τα πιο συχνά λάθη στα push-ups με συγκεκριμένες διορθώσεις για το καθένα.'
 keywords:
-  - 'λάθη push-ups'
-  - 'φόρμα push-up'
-  - 'τεχνική push-up'
-  - 'πόνος ώμου push-ups'
-  - 'πώς κάνεις push-ups σωστά'
+  - λάθη push-up
+  - τεχνική push-up
+  - πόνος καρπού push-ups
+  - πόνος ώμου push-ups
+  - πώς να κάνετε push-ups σωστά
+  - Pushup Tracker app
 heroImage: https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=1600&q=80
 heroImageAlt: 'Αθλητής σε θέση plank πάνω σε στρώμα γυμναστικής, κεφάλι σε ουδέτερη θέση.'
 heroImageCredit: 'Φωτογραφία: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'

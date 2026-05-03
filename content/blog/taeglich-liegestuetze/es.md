@@ -5,10 +5,10 @@ title: Por qué las flexiones diarias cambiarán tu vida
 description: 'Las flexiones diarias mejoran la fuerza, la postura y el bienestar. Descubre los beneficios científicamente probados y cómo construir el hábito de forma definitiva.'
 keywords:
   - flexiones diarias
-  - flexiones todos los días
+  - 100 flexiones al día
   - beneficios flexiones
   - hábito flexiones
-  - salud flexiones
+  - flexiones salud
 heroImage: 'https://images.unsplash.com/photo-1598971639058-fab3c3109a00?auto=format&fit=crop&w=1600&q=80'
 heroImageAlt: Atleta femenina haciendo una flexión — una rutina de entrenamiento diario al aire libre.
 heroImageCredit: 'Foto: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'

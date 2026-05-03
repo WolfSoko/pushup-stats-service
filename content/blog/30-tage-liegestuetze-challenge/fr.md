@@ -4,11 +4,12 @@ publishedAt: '2025-11-04'
 title: 'Défi pompes 30 jours : votre plan pour des progrès maximaux'
 description: Ce défi structuré de 30 jours vous aide à augmenter votre nombre de pompes étape par étape – de la semaine 1 au test final du jour 30.
 keywords:
-  - défi pompes 30 jours
+  - défi 30 jours pompes
   - plan défi pompes
   - pompes en 30 jours
-  - challenge pompes
-  - augmenter les pompes chaque jour
+  - défi pompes débutant
+  - augmenter pompes chaque jour
+  - Pushup Tracker app
 heroImage: 'https://images.unsplash.com/photo-1596079306903-9164c205f400?auto=format&fit=crop&w=1600&q=80'
 heroImageAlt: Athlète faisant des pompes en extérieur — le défi quotidien dans l'herbe.
 heroImageCredit: 'Photo : <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'

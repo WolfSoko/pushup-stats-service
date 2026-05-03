@@ -4,9 +4,9 @@ title: 10 Liegestütz-Varianten für jeden Trainingsstand
 description: 'Von der Knie-Liegestütze bis zur Archer Push-Up: Diese 10 Variationen trainieren gezielt Brust, Trizeps und Schultern – und brechen jedes Plateau.'
 keywords:
   - Liegestütze Varianten
-  - Liegestütze Übungen
+  - Liegestütze ohne Geräte zu Hause
   - Liegestütze schwieriger machen
-  - Liegestütze Muskeln
+  - welche Muskeln bei Liegestützen
   - Liegestütze fortgeschritten
 heroImage: 'https://images.unsplash.com/photo-1731341400836-baaa5535b8d5?auto=format&fit=crop&w=1600&q=80'
 heroImageAlt: Sportler bei einer Liegestütz-Variante im Trainingsraum.

@@ -5,8 +5,8 @@ title: '为什么每日俯卧撑会改变你的生活'
 description: '每日俯卧撑改善力量、姿态和幸福感。发现科学证明的好处，以及如何养成这个习惯。'
 keywords:
   - 每日俯卧撑
-  - 每天俯卧撑
-  - 俯卧撑好处
+  - 每天100个俯卧撑
+  - 俯卧撑益处
   - 俯卧撑习惯
   - 俯卧撑健康
 heroImage: 'https://images.unsplash.com/photo-1598971639058-fab3c3109a00?auto=format&fit=crop&w=1600&q=80'

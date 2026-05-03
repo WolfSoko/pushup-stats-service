@@ -5,10 +5,11 @@ title: 'Respiración en las flexiones: bracing, ritmo y qué cambia al máximo e
 description: 'La respiración está infravalorada en las flexiones. Cuándo inhalar, cuándo exhalar, qué significa el bracing — y por qué las series al máximo necesitan una regla distinta.'
 keywords:
   - respiración flexiones
-  - cómo respirar en flexiones
+  - cómo respirar flexiones
   - bracing flexiones
   - técnica respiración fuerza
-  - valsalva flexiones
+  - flexiones valsalva
+  - respiración flexiones esfuerzo máximo
 heroImage: 'https://images.unsplash.com/photo-1599058917765-a780eda07a3e?auto=format&fit=crop&w=1600&q=80'
 heroImageAlt: Atleta en posición de plancha con expresión concentrada.
 heroImageCredit: 'Foto: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'

@@ -5,10 +5,10 @@ title: 10 Push-Up Variations for Every Fitness Level
 description: 'From knee push-ups to archer push-ups: these 10 variations target chest, triceps, and shoulders – and break through any plateau.'
 keywords:
   - push-up variations
-  - push-up exercises
-  - harder push-ups
-  - push-up muscles
+  - bodyweight chest exercises at home
   - advanced push-ups
+  - what muscles do push-ups work
+  - push-up progression at home
 heroImage: 'https://images.unsplash.com/photo-1731341400836-baaa5535b8d5?auto=format&fit=crop&w=1600&q=80'
 heroImageAlt: Athlete performing a push-up variation in a training space.
 heroImageCredit: 'Photo: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'

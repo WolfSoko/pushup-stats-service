@@ -4,11 +4,12 @@ publishedAt: '2025-01-15'
 title: 'Van 0 naar 100: hoe je systematisch meer opdrukken doet'
 description: 'Een praktische gids voor het progressief verhogen van je opdrukken – met een trainingsplan, techniekadvies en goede herstelstrategie.'
 keywords:
-  - meer opdrukken
-  - opdrukken verhogen
-  - opdrukken trainingsplan
-  - opdrukken vooruitgang
-  - opdrukken leren
+  - push-ups verhogen
+  - meer push-ups
+  - push-up trainingsplan
+  - push-up progressie beginner
+  - push-ups leren
+  - Pushup Tracker app
 heroImage: 'https://images.unsplash.com/photo-1598971457999-ca4ef48a9a71?auto=format&fit=crop&w=1600&q=80'
 heroImageAlt: Atleet in een rood mouwloos shirt die een schone opdruk doet.
 heroImageCredit: 'Foto: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'

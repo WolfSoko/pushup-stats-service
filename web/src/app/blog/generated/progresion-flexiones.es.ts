@@ -17,8 +17,9 @@ export const POST: BlogPost = {
     "aumentar flexiones",
     "más flexiones",
     "plan entrenamiento flexiones",
-    "progreso flexiones",
-    "aprender flexiones"
+    "progresión flexiones principiante",
+    "aprender flexiones",
+    "Pushup Tracker app"
   ],
   "heroImage": "https://images.unsplash.com/photo-1598971457999-ca4ef48a9a71?auto=format&fit=crop&w=1600&q=80",
   "heroImageAlt": "Atleta con camiseta roja realizando una flexión limpia.",

@@ -6,8 +6,9 @@ keywords:
   - Liegestütze steigern
   - mehr Liegestütze
   - Trainingsplan Liegestütze
-  - Liegestütze Fortschritt
+  - Liegestütze Anfänger
   - Liegestütze lernen
+  - Pushup Tracker App
 heroImage: 'https://images.unsplash.com/photo-1598971457999-ca4ef48a9a71?auto=format&fit=crop&w=1600&q=80'
 heroImageAlt: Sportler in roter Tanktop bei einer sauberen Liegestütze.
 heroImageCredit: 'Foto: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'

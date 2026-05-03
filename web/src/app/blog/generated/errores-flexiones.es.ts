@@ -16,9 +16,10 @@ export const POST: BlogPost = {
   "keywords": [
     "errores flexiones",
     "técnica flexiones",
-    "forma correcta flexiones",
+    "dolor muñeca flexiones",
     "dolor hombro flexiones",
-    "cómo hacer flexiones correctamente"
+    "cómo hacer flexiones correctamente",
+    "Pushup Tracker app"
   ],
   "heroImage": "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=1600&q=80",
   "heroImageAlt": "Atleta en posición de plancha sobre una esterilla de entrenamiento, cabeza en posición neutra.",

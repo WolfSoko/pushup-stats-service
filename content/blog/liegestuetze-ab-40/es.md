@@ -4,11 +4,12 @@ publishedAt: '2026-01-20'
 title: 'Flexiones después de los 40: cómo entrenar de forma segura y eficaz'
 description: Tu cuerpo cambia después de los 40, pero las flexiones siguen siendo uno de los mejores ejercicios. Aprende a desarrollar fuerza de forma segura con los ajustes adecuados.
 keywords:
-  - flexiones mayores de 40
-  - entrenamiento de fuerza mayores de 40
-  - flexiones sin impacto articular
-  - fitness después de los 40
+  - flexiones después de los 40
+  - entrenamiento fuerza después de 40
+  - flexiones cuidan articulaciones
+  - fitness después de 40
   - flexiones adultos mayores
+  - flexiones para mayores
 heroImage: 'https://images.unsplash.com/photo-1638820858482-800bd51f63f1?auto=format&fit=crop&w=1600&q=80'
 heroImageAlt: Atleta haciendo una flexión limpia al aire libre — entrenamiento después de los 40.
 heroImageCredit: 'Foto: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'

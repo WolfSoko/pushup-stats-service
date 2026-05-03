@@ -4,11 +4,12 @@ publishedAt: '2025-01-15'
 title: 'A Nullo ad Centum: Quomodo Pressiones Tuas Systematice Augeas'
 description: 'Dux practicus ad pressiones progressive augendas — cum consilio exercitationis, consiliis technicis, et recuperatione recta.'
 keywords:
-  - pressiones augere
-  - pressiones plures
-  - consilium exercitationis pressionum
-  - progressus pressionum
-  - pressiones discere
+  - augere pulsus
+  - plus pulsus
+  - programmatum exercitii pulsuum
+  - progressio pulsuum tironis
+  - discere pulsus
+  - Pushup Tracker app
 heroImage: 'https://images.unsplash.com/photo-1598971457999-ca4ef48a9a71?auto=format&fit=crop&w=1600&q=80'
 heroImageAlt: Athleta in tunica rubra pressionem puram faciens.
 heroImageCredit: 'Imago: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'

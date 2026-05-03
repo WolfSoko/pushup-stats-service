@@ -4,11 +4,12 @@ publishedAt: '2026-04-28'
 title: 'Η Αναπνοή στα Push-Ups: Bracing, Ρυθμός και τι Αλλάζει στη Μέγιστη Προσπάθεια'
 description: 'Η αναπνοή συχνά παραμελείται στα push-ups. Πότε εισπνέεις, πότε εκπνέεις, τι σημαίνει το bracing — και γιατί τα σετ μέγιστης προσπάθειας θέλουν διαφορετικό κανόνα.'
 keywords:
-  - 'αναπνοή push-ups'
-  - 'πώς αναπνέεις στα push-ups'
-  - 'bracing κορμού push-ups'
-  - 'τεχνική αναπνοής δύναμης'
-  - 'valsalva push-ups'
+  - αναπνοή push-ups
+  - πώς να αναπνεύσετε push-ups
+  - bracing push-ups
+  - τεχνική αναπνοής δύναμης
+  - push-up valsalva
+  - push-ups μέγιστη προσπάθεια αναπνοή
 heroImage: 'https://images.unsplash.com/photo-1599058917765-a780eda07a3e?auto=format&fit=crop&w=1600&q=80'
 heroImageAlt: 'Αθλητής σε θέση plank με συγκεντρωμένη έκφραση.'
 heroImageCredit: 'Φωτογραφία: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'

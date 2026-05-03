@@ -4,11 +4,12 @@ publishedAt: '2025-01-15'
 title: 'Da 0 a 100: Come Aumentare Sistematicamente i Tuoi Piegamenti'
 description: 'Una guida pratica per aumentare progressivamente i piegamenti — con piano di allenamento, consigli sulla tecnica e recupero adeguato.'
 keywords:
-  - aumentare piegamenti
-  - più piegamenti
-  - piano allenamento piegamenti
-  - progresso piegamenti
-  - imparare i piegamenti
+  - aumentare push-up
+  - più push-up
+  - programma allenamento push-up
+  - progressione push-up principiante
+  - imparare push-up
+  - Pushup Tracker app
 heroImage: 'https://images.unsplash.com/photo-1598971457999-ca4ef48a9a71?auto=format&fit=crop&w=1600&q=80'
 heroImageAlt: Atleta in canottiera rossa che esegue un piegamento pulito.
 heroImageCredit: 'Foto: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'

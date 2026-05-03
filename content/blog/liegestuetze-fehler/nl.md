@@ -4,11 +4,12 @@ publishedAt: '2026-04-30'
 title: De 7 meest gemaakte opdrukfouten — en hoe je ze oplost
 description: Slechte techniek kost je herhalingen, vooruitgang en soms je schouder. De meest gemaakte opdrukfouten, met concrete oplossingen voor elk.
 keywords:
-  - opdrukken fouten
-  - opdrukken techniek
-  - opdrukken uitvoering
-  - schouderpijn opdrukken
-  - hoe doe je opdrukken correct
+  - push-up fouten
+  - push-up techniek
+  - polspijn push-ups
+  - schouderpijn push-ups
+  - hoe push-ups correct doen
+  - Pushup Tracker app
 heroImage: https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=1600&q=80
 heroImageAlt: Atleet in plankpositie op een trainingsmat, neutrale hoofdpositie.
 heroImageCredit: 'Foto: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'

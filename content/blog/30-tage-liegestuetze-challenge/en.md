@@ -7,8 +7,9 @@ keywords:
   - 30 day push-up challenge
   - push-up challenge plan
   - push-ups in 30 days
-  - push-up challenge
+  - push-up challenge for beginners
   - increase push-ups daily
+  - Pushup Tracker app
 heroImage: 'https://images.unsplash.com/photo-1596079306903-9164c205f400?auto=format&fit=crop&w=1600&q=80'
 heroImageAlt: Athlete doing an outdoor push-up — the daily challenge in the grass.
 heroImageCredit: 'Photo: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'

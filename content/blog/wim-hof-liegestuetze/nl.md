@@ -4,11 +4,12 @@ publishedAt: '2026-04-23'
 title: 'De Wim Hof Methode voor opdrukken: ademhaling, koude blootstelling & prestatie'
 description: 'Kan de Wim Hof Methode echt je opdruk-prestaties en herstel verbeteren? Een op onderzoek gebaseerde blik op het ademhalingsprotocol, koude blootstelling en wat het bewijs werkelijk laat zien.'
 keywords:
-  - Wim Hof Methode
-  - opdrukken prestatie
-  - ademhaling voor prestatie
-  - koude blootstelling herstel
-  - Wim Hof ademhaling opdrukken
+  - Wim Hof methode
+  - Wim Hof ademhaling leren
+  - push-up prestatie
+  - ademhaling prestatie
+  - kou blootstelling herstel
+  - Wim Hof ademhaling push-ups
 heroImage: 'https://images.unsplash.com/photo-1548690312-e3b507d8c110?auto=format&fit=crop&w=1600&q=80'
 heroImageAlt: Atleet in een bevroren landschap — Wim Hof Methode beelden van adem en kou.
 heroImageCredit: 'Foto: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'

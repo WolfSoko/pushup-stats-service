@@ -5,10 +5,11 @@ title: "Respiration pour les pompes : gainage, rythme et ce qui change à l'effo
 description: 'La respiration est sous-estimée pour les pompes. Quand inspirer, quand expirer, ce que signifie le gainage — et pourquoi les séries à effort maximal obéissent à une règle différente.'
 keywords:
   - respiration pompes
-  - comment respirer pendant les pompes
+  - comment respirer pompes
   - gainage pompes
-  - technique respiratoire musculation
-  - valsalva pompes
+  - technique respiration musculation
+  - pompes valsalva
+  - pompes effort maximal respiration
 heroImage: 'https://images.unsplash.com/photo-1599058917765-a780eda07a3e?auto=format&fit=crop&w=1600&q=80'
 heroImageAlt: Athlète en position de planche avec une expression concentrée.
 heroImageCredit: 'Photo : <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'

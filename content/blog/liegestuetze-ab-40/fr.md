@@ -8,7 +8,8 @@ keywords:
   - musculation après 40 ans
   - pompes ménageant les articulations
   - fitness après 40 ans
-  - pompes pour les adultes plus âgés
+  - pompes seniors
+  - pompes pour adultes âgés
 heroImage: 'https://images.unsplash.com/photo-1638820858482-800bd51f63f1?auto=format&fit=crop&w=1600&q=80'
 heroImageAlt: Athlète faisant des pompes propres en extérieur — entraînement après 40 ans.
 heroImageCredit: 'Photo : <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'

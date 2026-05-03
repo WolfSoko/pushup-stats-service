@@ -4,11 +4,11 @@ publishedAt: '2026-04-29'
 title: 'Opdrukken voor vrouwen: mythes, anatomie en een 4-weken startplan'
 description: 'Vrouwen kunnen dezelfde opdrukken doen als mannen — de progressie ziet er vaak alleen anders uit. Anatomie, mythes en een realistisch 4-weken startplan.'
 keywords:
-  - opdrukken voor vrouwen
-  - hoe vrouwen opdrukken leren
-  - vrouwen opdruk-plan
-  - vrouwen opdrukken beginner
-  - opdruk-progressie vrouwen
+  - push-ups voor vrouwen
+  - push-up plan vrouwen
+  - push-up beginner vrouw
+  - push-up progressie vrouwen
+  - knie push-ups vrouwen
 heroImage: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=1600&q=80'
 heroImageAlt: Vrouwelijke atleet die een gecontroleerde opdruk doet op een buitentrainingsmat.
 heroImageCredit: 'Foto: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'

@@ -4,11 +4,12 @@ publishedAt: '2026-01-20'
 title: 'Opdrukken na je 40e: veilig en effectief trainen'
 description: Je lichaam verandert na je 40e – maar opdrukken blijven een van de beste oefeningen. Leer hoe je met de juiste aanpassingen veilig kracht opbouwt.
 keywords:
-  - opdrukken na 40
+  - push-ups na 40
   - krachttraining na 40
-  - opdrukken gewrichtsvriendelijk
+  - push-ups gewrichtsvriendelijk
   - fitness na 40
-  - opdrukken voor ouderen
+  - push-ups voor ouderen
+  - push-ups senioren
 heroImage: 'https://images.unsplash.com/photo-1638820858482-800bd51f63f1?auto=format&fit=crop&w=1600&q=80'
 heroImageAlt: Atleet die buiten een schone opdruk doet — trainen na je 40e.
 heroImageCredit: 'Foto: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'

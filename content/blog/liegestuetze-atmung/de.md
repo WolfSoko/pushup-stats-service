@@ -8,6 +8,7 @@ keywords:
   - Bracing Liegestütze
   - Pushup Atemtechnik
   - Atemtechnik Krafttraining
+  - Liegestütze Maximalsatz
 heroImage: 'https://images.unsplash.com/photo-1599058917765-a780eda07a3e?auto=format&fit=crop&w=1600&q=80'
 heroImageAlt: Athlet in Plank-Position mit konzentriertem Gesichtsausdruck.
 heroImageCredit: 'Foto: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'

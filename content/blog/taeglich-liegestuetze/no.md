@@ -4,11 +4,11 @@ publishedAt: '2025-02-03'
 title: Hvorfor daglige armhevninger vil endre livet ditt
 description: 'Daglige armhevninger forbedrer styrke, stilling og velvære. Oppdag de vitenskapelig beviste fordelene og hvordan du bygger vanen for godt.'
 keywords:
-  - daglige armhevninger
-  - armhevninger hver dag
-  - fordeler med armhevninger
-  - armhevingsvane
-  - armhevninger for helse
+  - daglige push-ups
+  - 100 push-ups per dag
+  - push-up fordeler
+  - push-up vane
+  - push-up helse
 heroImage: 'https://images.unsplash.com/photo-1598971639058-fab3c3109a00?auto=format&fit=crop&w=1600&q=80'
 heroImageAlt: Kvinnelig idrettsutøver som gjør en armheving — en daglig treningsrutine ute.
 heroImageCredit: 'Foto: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'

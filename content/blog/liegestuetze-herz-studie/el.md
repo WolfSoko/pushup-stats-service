@@ -4,11 +4,11 @@ publishedAt: '2026-04-23'
 title: 'Η Μελέτη του Χάρβαρντ που Έκανε Διάσημα τα Push-Ups: 40+ Επαναλήψεις και Υγεία της Καρδιάς'
 description: 'Μελέτη του JAMA του 2019 έβαλε την ικανότητα στα push-ups στον χάρτη του καρδιαγγειακού κινδύνου. Δες τι είπαν πραγματικά τα δεδομένα, τι δεν είπαν και πώς να τα χρησιμοποιήσεις στην προπόνησή σου.'
 keywords:
-  - 'push-ups υγεία καρδιάς'
-  - 'ικανότητα push-ups καρδιαγγειακή'
-  - 'μελέτη Χάρβαρντ push-ups'
-  - 'JAMA push-ups'
-  - 'fitness καρδιαγγειακή νόσος'
+  - push-ups υγεία καρδιάς
+  - ικανότητα push-up καρδιαγγειακή
+  - μελέτη Harvard push-up
+  - JAMA push-ups
+  - καρδιαγγειακό όφελος push-ups
 heroImage: 'https://images.unsplash.com/photo-1514512364185-4c2b0985be01?auto=format&fit=crop&w=1600&q=80'
 heroImageAlt: 'Αθλητής σε θέση plank σε άσφαλτο — το τεστ ικανότητας στα push-ups.'
 heroImageCredit: 'Φωτογραφία: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'

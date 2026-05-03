@@ -4,11 +4,11 @@ publishedAt: '2026-04-29'
 title: 'Les pompes pour les femmes : mythes, anatomie et un plan de départ de 4 semaines'
 description: "Les femmes peuvent faire les mêmes pompes que les hommes — la progression a souvent juste l'air différente. Anatomie, mythes et un plan de départ réaliste de 4 semaines."
 keywords:
-  - pompes pour les femmes
-  - comment les femmes apprennent les pompes
-  - plan de pompes féminin
-  - débutante pompes femme
+  - pompes pour femmes
+  - plan pompes femmes
+  - pompes débutante femme
   - progression pompes femmes
+  - pompes genoux femmes
 heroImage: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=1600&q=80'
 heroImageAlt: Athlète féminine effectuant une pompe contrôlée sur un tapis d'entraînement en extérieur.
 heroImageCredit: 'Photo : <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'

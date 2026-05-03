@@ -4,11 +4,12 @@ publishedAt: '2026-04-28'
 title: 'Spiratio in Pressionibus: Firmatio, Rhythmus, et Quid in Conatu Maximo Mutetur'
 description: 'Spiratio in pressionibus minus aestimatur quam debet. Quando inspirandum, quando exspirandum, quid firmatio significet — et cur ordines maximi alio modo regulam requirant.'
 keywords:
-  - spiratio in pressionibus
-  - quomodo in pressionibus spirare
-  - firmatio in pressionibus
-  - technica spirationis in viribus
-  - Valsalva pressio
+  - respiratio pulsuum
+  - quomodo respirare pulsus
+  - bracing pulsuum
+  - ars respirandi fortitudinis
+  - pulsus valsalva
+  - respiratio pulsuum maximi conatus
 heroImage: 'https://images.unsplash.com/photo-1599058917765-a780eda07a3e?auto=format&fit=crop&w=1600&q=80'
 heroImageAlt: Athleta in positione plana cum vultu intento.
 heroImageCredit: 'Imago: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'

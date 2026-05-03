@@ -4,11 +4,11 @@ publishedAt: '2025-09-22'
 title: 10 armhevningsøvelser for alle fitnessnivåer
 description: 'Fra knearmer til pilarmhevninger: disse 10 variantene rammer bryst, triseps og skuldre – og bryter gjennom eventuelle platåer.'
 keywords:
-  - armhevningsøvelser
-  - armhevningsvarianter
-  - vanskelige armhevninger
-  - armhevningsmuskler
-  - avanserte armhevninger
+  - push-up varianter
+  - kroppsvekt brystøvelser hjemme
+  - avanserte push-ups
+  - hvilke muskler trener push-ups
+  - push-up progresjon hjemme
 heroImage: 'https://images.unsplash.com/photo-1731341400836-baaa5535b8d5?auto=format&fit=crop&w=1600&q=80'
 heroImageAlt: Atlet utfører en armhevningsøvelse i et treningsområde.
 heroImageCredit: 'Photo: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'

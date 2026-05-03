@@ -5,7 +5,8 @@ title: How a Tracker Helps You Hit Push-Up Personal Bests
 description: Why a digital push-up tracker makes the difference – and how Pushup Tracker helps you achieve personal bests and stay consistent.
 keywords:
   - push-up tracker app
-  - push-up app
+  - free push-up counter app
+  - best push-up app
   - track push-ups
   - Pushup Tracker
   - push-up progress tracking

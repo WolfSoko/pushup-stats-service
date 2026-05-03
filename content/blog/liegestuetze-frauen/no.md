@@ -4,11 +4,11 @@ publishedAt: '2026-04-29'
 title: 'Armhevninger for kvinner: myter, anatomi og en 4-ukers startplan'
 description: 'Kvinner kan gjøre samme armhevninger som menn — progresjonene ser bare ofte annerledes ut. Anatomi, myter og en realistisk 4-ukers nybegynnerplan.'
 keywords:
-  - armhevninger for kvinner
-  - hvordan kvinnene lærer armhevninger
-  - armhevningsplan for kvinner
-  - armhevninger nybegynner
-  - armhevningsprogresjon for kvinner
+  - push-ups for kvinner
+  - push-up plan kvinner
+  - push-up nybegynner kvinne
+  - push-up progresjon kvinner
+  - kne push-ups kvinner
 heroImage: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=1600&q=80'
 heroImageAlt: Kvinnelig atlet som utfører en kontrollert armhevning på en utendørs treningstopp.
 heroImageCredit: 'Foto: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'

@@ -4,11 +4,12 @@ publishedAt: '2025-11-04'
 title: 'Sfida 30 Giorni di Piegamenti: Il Piano per il Massimo Progresso'
 description: Questa sfida strutturata di 30 giorni ti aiuta ad aumentare il numero di piegamenti passo dopo passo — dalla settimana 1 al test finale al giorno 30.
 keywords:
-  - sfida 30 giorni piegamenti
-  - piano sfida piegamenti
-  - piegamenti in 30 giorni
-  - sfida piegamenti
-  - aumentare piegamenti ogni giorno
+  - sfida 30 giorni push-up
+  - piano sfida push-up
+  - push-up in 30 giorni
+  - sfida push-up principianti
+  - aumentare push-up al giorno
+  - Pushup Tracker app
 heroImage: 'https://images.unsplash.com/photo-1596079306903-9164c205f400?auto=format&fit=crop&w=1600&q=80'
 heroImageAlt: Atleta che esegue un piegamento all'aperto — la sfida quotidiana sull'erba.
 heroImageCredit: 'Foto: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'

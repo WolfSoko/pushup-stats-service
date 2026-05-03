@@ -4,11 +4,12 @@ publishedAt: '2026-01-20'
 title: 'Push-Ups μετά τα 40: Πώς να Προπονείσαι με Ασφάλεια και Αποτελεσματικότητα'
 description: 'Το σώμα αλλάζει μετά τα 40 — αλλά τα push-ups παραμένουν από τις καλύτερες ασκήσεις. Μάθε πώς να χτίσεις δύναμη με ασφάλεια κάνοντας τις σωστές προσαρμογές.'
 keywords:
-  - 'push-ups μετά τα 40'
-  - 'προπόνηση δύναμης μετά τα 40'
-  - 'push-ups φιλικά στις αρθρώσεις'
-  - 'fitness μετά τα 40'
-  - 'push-ups για μεγαλύτερη ηλικία'
+  - push-ups μετά τα 40
+  - προπόνηση δύναμης μετά τα 40
+  - push-ups φιλικές στις αρθρώσεις
+  - fitness μετά τα 40
+  - push-ups για ηλικιωμένους
+  - push-ups για senior
 heroImage: 'https://images.unsplash.com/photo-1638820858482-800bd51f63f1?auto=format&fit=crop&w=1600&q=80'
 heroImageAlt: 'Αθλητής κάνει καθαρό push-up σε εξωτερικό χώρο — προπόνηση μετά τα 40.'
 heroImageCredit: 'Φωτογραφία: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'

@@ -4,11 +4,12 @@ publishedAt: '2025-01-15'
 title: 'De 0 à 100 : comment augmenter systématiquement vos pompes'
 description: "Un guide pratique pour augmenter progressivement vos pompes — avec un plan d'entraînement, des conseils techniques et une récupération adaptée."
 keywords:
-  - augmenter les pompes
-  - faire plus de pompes
-  - plan d'entraînement pompes
-  - progrès pompes
-  - apprendre les pompes
+  - augmenter pompes
+  - plus de pompes
+  - plan entraînement pompes
+  - progression pompes débutant
+  - apprendre pompes
+  - Pushup Tracker app
 heroImage: 'https://images.unsplash.com/photo-1598971457999-ca4ef48a9a71?auto=format&fit=crop&w=1600&q=80'
 heroImageAlt: Athlète en débardeur rouge effectuant une pompe propre.
 heroImageCredit: 'Photo : <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'

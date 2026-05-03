@@ -4,11 +4,11 @@ publishedAt: '2026-04-29'
 title: 'Piegamenti per donne: miti, anatomia e un piano iniziale di 4 settimane'
 description: 'Le donne possono fare gli stessi piegamenti degli uomini — la progressione spesso sembra solo diversa. Anatomia, miti e un piano di avviamento realistico di 4 settimane.'
 keywords:
-  - piegamenti per donne
-  - come le donne imparano i piegamenti
-  - piano piegamenti femminile
-  - piegamenti donne principianti
-  - progressione piegamenti donne
+  - push-up per donne
+  - programma push-up donne
+  - push-up principiante donna
+  - progressione push-up donne
+  - push-up ginocchia donne
 heroImage: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=1600&q=80'
 heroImageAlt: Atleta femminile che esegue un piegamento controllato su un tappetino da allenamento all'aperto.
 heroImageCredit: 'Foto: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'

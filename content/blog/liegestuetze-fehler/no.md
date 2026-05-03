@@ -4,11 +4,12 @@ publishedAt: '2026-04-30'
 title: De 7 vanligste armhevingsfeilene — og hvordan du fikser hver eneste en
 description: Dårlig teknikk koster deg repetisjoner, fremgang og noen ganger skulderen. De vanligste armhevingsfeilene, med konkrete løsninger for hver.
 keywords:
-  - armhevning feil
-  - armhevning teknikk
-  - armhevning form
-  - skuldersmerter armhevninger
-  - hvordan gjøre armhevninger riktig
+  - push-up feil
+  - push-up teknikk
+  - håndleddssmerte push-ups
+  - skuldersmerte push-ups
+  - hvordan gjøre push-ups riktig
+  - Pushup Tracker app
 heroImage: https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=1600&q=80
 heroImageAlt: Idrettsmann i plankeposisjon på en treningskatt, nøytral hodestilling.
 heroImageCredit: 'Foto: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'

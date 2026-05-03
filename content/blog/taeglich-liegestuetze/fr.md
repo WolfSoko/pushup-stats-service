@@ -5,8 +5,8 @@ title: Pourquoi les pompes quotidiennes vont changer votre vie
 description: 'Les pompes quotidiennes améliorent la force, la posture et le bien-être. Découvrez les bienfaits scientifiquement prouvés et comment ancrer cette habitude durablement.'
 keywords:
   - pompes quotidiennes
-  - pompes tous les jours
-  - bienfaits des pompes
+  - 100 pompes par jour
+  - bienfaits pompes
   - habitude pompes
   - pompes santé
 heroImage: 'https://images.unsplash.com/photo-1598971639058-fab3c3109a00?auto=format&fit=crop&w=1600&q=80'

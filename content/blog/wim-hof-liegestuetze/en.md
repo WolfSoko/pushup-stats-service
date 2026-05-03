@@ -5,6 +5,7 @@ title: 'The Wim Hof Method for Push-Ups: Breathing, Cold Exposure & Performance'
 description: 'Can the Wim Hof Method really boost push-up performance and recovery? A research-based look at the breathing protocol, cold exposure, and what the evidence actually shows.'
 keywords:
   - Wim Hof Method
+  - Wim Hof breathing technique tutorial
   - push-ups performance
   - breathing for performance
   - cold exposure recovery

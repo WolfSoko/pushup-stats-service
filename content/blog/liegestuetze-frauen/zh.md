@@ -5,10 +5,10 @@ title: '女性俯卧撑：误区、解剖学和4周入门计划'
 description: '女性可以像男性一样做俯卧撑 — 进阶过程往往看起来不同。解剖学、误区和一个真实的4周入门计划。'
 keywords:
   - 女性俯卧撑
-  - 女性如何学习俯卧撑
   - 女性俯卧撑计划
-  - 女性俯卧撑初学者
-  - 女性俯卧撑进阶
+  - 女性初学者俯卧撑
+  - 女性俯卧撑进步
+  - 女性跪姿俯卧撑
 heroImage: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=1600&q=80'
 heroImageAlt: 女性运动员在室外垫子上进行规范的俯卧撑。
 heroImageCredit: '图片：<a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'

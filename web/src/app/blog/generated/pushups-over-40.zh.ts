@@ -16,9 +16,10 @@ export const POST: BlogPost = {
   "keywords": [
     "40岁后俯卧撑",
     "40岁后力量训练",
-    "关节友好的俯卧撑",
+    "俯卧撑保护关节",
     "40岁后健身",
-    "老年人俯卧撑"
+    "老年人俯卧撑",
+    "老人俯卧撑"
   ],
   "heroImage": "https://images.unsplash.com/photo-1638820858482-800bd51f63f1?auto=format&fit=crop&w=1600&q=80",
   "heroImageAlt": "运动员在户外做标准俯卧撑——40岁后训练。",

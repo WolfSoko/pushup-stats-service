@@ -4,11 +4,12 @@ publishedAt: '2026-04-23'
 title: 'Wim Hof 呼吸法与俯卧撑：呼吸、冷暴露与表现'
 description: 'Wim Hof 呼吸法真的能提升俯卧撑表现和恢复吗？基于研究的呼吸协议、冷暴露和证据实际显示了什么。'
 keywords:
-  - Wim Hof 呼吸法
+  - Wim Hof方法
+  - 学习Wim Hof呼吸
   - 俯卧撑表现
-  - 呼吸表现
+  - 呼吸提升表现
   - 冷暴露恢复
-  - Wim Hof 呼吸俯卧撑
+  - Wim Hof呼吸俯卧撑
 heroImage: 'https://images.unsplash.com/photo-1548690312-e3b507d8c110?auto=format&fit=crop&w=1600&q=80'
 heroImageAlt: '运动员站在冰冻景观中——Wim Hof 呼吸法的呼吸和冷的意象。'
 heroImageCredit: '图片：<a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'

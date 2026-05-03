@@ -4,9 +4,10 @@ publishedAt: '2025-03-10'
 title: Cómo un tracker te ayuda a batir tus récords personales de flexiones
 description: Por qué un rastreador digital de flexiones marca la diferencia — y cómo Pushup Tracker te ayuda a alcanzar récords personales y mantener la constancia.
 keywords:
-  - app rastreador flexiones
-  - app flexiones
-  - registrar flexiones
+  - aplicación seguimiento flexiones
+  - contador flexiones gratis
+  - mejor aplicación flexiones
+  - seguir flexiones
   - Pushup Tracker
   - seguimiento progreso flexiones
 heroImage: 'https://images.unsplash.com/photo-1717821681365-36b0da044a75?auto=format&fit=crop&w=1600&q=80'

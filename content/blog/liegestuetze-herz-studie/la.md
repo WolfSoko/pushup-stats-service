@@ -4,11 +4,11 @@ publishedAt: '2026-04-23'
 title: 'Studium Harvardense Quod Pressiones Celebravit: XL+ Repetitiones et Valetudo Cordis'
 description: 'Studium JAMA anni MMXIX capacitatem pressionum in mappa periculi cardiovascularis posuit. Hic quid data revera dixerint, quid non, et quomodo id pro exercitatione tua adhibeas.'
 keywords:
-  - pressiones et valetudo cordis
-  - capacitas pressionum cardiovascularis
-  - studium Harvardense pressionum
-  - JAMA pressiones
-  - valetudo exercitatio morbus cordis
+  - pulsus salus cordis
+  - facultas pulsuum cardiovascularis
+  - studium Harvard pulsuum
+  - JAMA pulsus
+  - beneficium cardiovasculare pulsuum
 heroImage: 'https://images.unsplash.com/photo-1514512364185-4c2b0985be01?auto=format&fit=crop&w=1600&q=80'
 heroImageAlt: Athleta in positione plana super asphaltum — probatio capacitatis pressionum.
 heroImageCredit: 'Imago: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'

@@ -5,10 +5,10 @@ title: 'Flexiones para mujeres: mitos, anatomía y un plan inicial de 4 semanas'
 description: 'Las mujeres pueden hacer las mismas flexiones que los hombres — la progresión simplemente suele verse diferente. Anatomía, mitos y un plan inicial realista de 4 semanas.'
 keywords:
   - flexiones para mujeres
-  - cómo aprenden flexiones las mujeres
-  - plan flexiones femenino
-  - flexiones mujeres principiantes
+  - plan flexiones mujeres
+  - flexiones principiante mujer
   - progresión flexiones mujeres
+  - flexiones rodillas mujeres
 heroImage: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=1600&q=80'
 heroImageAlt: Atleta femenina realizando una flexión controlada sobre una esterilla de entrenamiento al aire libre.
 heroImageCredit: 'Foto: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'

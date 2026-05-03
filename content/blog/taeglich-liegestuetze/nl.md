@@ -4,11 +4,11 @@ publishedAt: '2025-02-03'
 title: Waarom dagelijkse opdrukken je leven veranderen
 description: 'Dagelijkse opdrukken verbeteren kracht, houding en welzijn. Ontdek de wetenschappelijk bewezen voordelen en hoe je de gewoonte voor altijd opbouwt.'
 keywords:
-  - dagelijkse opdrukken
-  - elke dag opdrukken
-  - opdrukken voordelen
-  - opdrukken gewoonte
-  - opdrukken gezondheid
+  - dagelijkse push-ups
+  - 100 push-ups per dag
+  - push-up voordelen
+  - push-up gewoonte
+  - push-up gezondheid
 heroImage: 'https://images.unsplash.com/photo-1598971639058-fab3c3109a00?auto=format&fit=crop&w=1600&q=80'
 heroImageAlt: Vrouwelijke atleet die een opdruk doet — een dagelijkse trainingsroutine buiten.
 heroImageCredit: 'Foto: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'

@@ -9,6 +9,7 @@ keywords:
   - bracing push-ups
   - breath technique strength
   - push-up valsalva
+  - max effort push-ups breathing
 heroImage: 'https://images.unsplash.com/photo-1599058917765-a780eda07a3e?auto=format&fit=crop&w=1600&q=80'
 heroImageAlt: Athlete in plank position with focused expression.
 heroImageCredit: 'Photo: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'

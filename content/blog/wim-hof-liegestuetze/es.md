@@ -4,10 +4,11 @@ publishedAt: '2026-04-23'
 title: 'El método Wim Hof para las flexiones: respiración, exposición al frío y rendimiento'
 description: '¿Puede el método Wim Hof mejorar realmente el rendimiento y la recuperación en flexiones? Un análisis basado en investigación del protocolo de respiración, la exposición al frío y lo que dice la evidencia.'
 keywords:
-  - Método Wim Hof
+  - método Wim Hof
+  - aprender respiración Wim Hof
   - rendimiento flexiones
-  - respiración para el rendimiento
-  - exposición al frío recuperación
+  - respiración rendimiento
+  - recuperación exposición frío
   - respiración Wim Hof flexiones
 heroImage: 'https://images.unsplash.com/photo-1548690312-e3b507d8c110?auto=format&fit=crop&w=1600&q=80'
 heroImageAlt: Atleta de pie en un paisaje helado — imágenes del método Wim Hof de respiración y frío.

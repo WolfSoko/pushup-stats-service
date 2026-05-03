@@ -4,7 +4,7 @@ title: Warum tägliche Liegestütze dein Leben verändern
 description: 'Tägliche Liegestütze verbessern Kraft, Haltung und Wohlbefinden. Erfahre die wissenschaftlich belegten Vorteile und wie du die Gewohnheit dauerhaft aufbaust.'
 keywords:
   - täglich Liegestütze
-  - Liegestütze jeden Tag
+  - 100 Liegestütze am Tag
   - Liegestütze Vorteile
   - Liegestütze Gewohnheit
   - Liegestütze Gesundheit

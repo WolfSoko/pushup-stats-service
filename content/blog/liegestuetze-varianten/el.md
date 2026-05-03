@@ -4,11 +4,11 @@ publishedAt: '2025-09-22'
 title: '10 Παραλλαγές Push-Ups για Κάθε Επίπεδο Φυσικής Κατάστασης'
 description: 'Από push-ups στα γόνατα μέχρι archer push-ups: αυτές οι 10 παραλλαγές στοχεύουν στήθος, τρικέφαλους και ώμους — και σπάνε κάθε plateau.'
 keywords:
-  - 'παραλλαγές push-ups'
-  - 'ασκήσεις push-ups'
-  - 'πιο δύσκολα push-ups'
-  - 'μύες push-ups'
-  - 'προχωρημένα push-ups'
+  - παραλλαγές push-up
+  - ασκήσεις στήθους σώματος στο σπίτι
+  - προχωρημένα push-ups
+  - ποιους μύες δουλεύουν τα push-ups
+  - εξέλιξη push-up στο σπίτι
 heroImage: 'https://images.unsplash.com/photo-1731341400836-baaa5535b8d5?auto=format&fit=crop&w=1600&q=80'
 heroImageAlt: 'Αθλητής εκτελεί παραλλαγή push-up σε χώρο προπόνησης.'
 heroImageCredit: 'Φωτογραφία: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'

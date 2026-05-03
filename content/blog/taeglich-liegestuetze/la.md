@@ -4,11 +4,11 @@ publishedAt: '2025-02-03'
 title: Cur Pressiones Cotidianae Vitam Tuam Mutent
 description: 'Pressiones cotidianae vires, positionem corporis, et valetudinem mentis meliorant. Intellege beneficia scientifice probata et quomodo consuetudinem semel constituere possis.'
 keywords:
-  - pressiones cotidianae
-  - pressiones cotidie
-  - beneficia pressionum
-  - consuetudo pressionum
-  - salus pressionum
+  - pulsus cotidiani
+  - C pulsus in die
+  - beneficia pulsuum
+  - consuetudo pulsuum
+  - salus pulsuum
 heroImage: 'https://images.unsplash.com/photo-1598971639058-fab3c3109a00?auto=format&fit=crop&w=1600&q=80'
 heroImageAlt: Athleta femina pressionem faciens — consuetudo exercitationis cotidianae sub divo.
 heroImageCredit: 'Imago: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'

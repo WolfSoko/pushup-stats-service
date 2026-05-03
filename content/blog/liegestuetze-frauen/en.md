@@ -5,10 +5,10 @@ title: 'Push-ups for women: myths, anatomy, and a 4-week starting plan'
 description: 'Women can do the same push-ups as men — the progression often just looks different. Anatomy, myths, and a realistic 4-week starter plan.'
 keywords:
   - push-ups for women
-  - how women learn push-ups
   - female push-up plan
   - women push-up beginner
   - push-up progression women
+  - knee push-ups for women
 heroImage: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=1600&q=80'
 heroImageAlt: Female athlete performing a controlled push-up on an outdoor training mat.
 heroImageCredit: 'Photo: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'

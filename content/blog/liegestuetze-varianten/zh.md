@@ -4,11 +4,11 @@ publishedAt: '2025-09-22'
 title: '10 种适合各个健身水平的俯卧撑变式'
 description: '从膝盖俯卧撑到箭形俯卧撑：这 10 种变式针对胸部、三头肌和肩膀——能突破任何平台期。'
 keywords:
-  - 俯卧撑变式
-  - 俯卧撑锻炼
-  - 更难的俯卧撑
-  - 俯卧撑肌肉
+  - 俯卧撑变体
+  - 居家无器械胸部训练
   - 高级俯卧撑
+  - 俯卧撑锻炼哪些肌肉
+  - 居家俯卧撑进步
 heroImage: 'https://images.unsplash.com/photo-1731341400836-baaa5535b8d5?auto=format&fit=crop&w=1600&q=80'
 heroImageAlt: '运动员在训练空间中做俯卧撑变式。'
 heroImageCredit: '图片：<a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'

@@ -4,11 +4,12 @@ publishedAt: '2025-03-10'
 title: Hvordan en tracker hjelper deg å nå personlige armhevningsrekorder
 description: Hvorfor en digital armhevningstracker gjør forskjellen – og hvordan Pushup Tracker hjelper deg å oppnå personlige rekorder og holde deg konsistent.
 keywords:
-  - armhevning tracker app
-  - armhevning app
-  - spor armhevninger
+  - push-up tracker app
+  - gratis push-up teller app
+  - beste push-up app
+  - spore push-ups
   - Pushup Tracker
-  - armhevning progress tracking
+  - push-up fremgang sporing
 heroImage: 'https://images.unsplash.com/photo-1717821681365-36b0da044a75?auto=format&fit=crop&w=1600&q=80'
 heroImageAlt: Atlet gjør en ren armhevning på et tregulv – progresjon i fokus.
 heroImageCredit: 'Bilde: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'

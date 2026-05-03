@@ -4,11 +4,12 @@ publishedAt: '2025-11-04'
 title: '30-dagers armhevning-utfordring: Din plan for maksimal fremgang'
 description: Denne strukturerte 30-dagers utfordringen hjelper deg å øke antallet armhevninger steg for steg – fra uke 1 til den endelige testen på dag 30.
 keywords:
-  - 30 dagers armhevning utfordring
-  - armhevning utfordring plan
-  - armhevninger på 30 dager
-  - armhevning utfordring
-  - øk armhevninger daglig
+  - 30-dagers push-up utfordring
+  - push-up utfordringsplan
+  - push-ups på 30 dager
+  - push-up utfordring nybegynnere
+  - øke push-ups daglig
+  - Pushup Tracker app
 heroImage: 'https://images.unsplash.com/photo-1596079306903-9164c205f400?auto=format&fit=crop&w=1600&q=80'
 heroImageAlt: Idrettsutøver som gjør en armhevning utendørs — den daglige utfordringen i gresset.
 heroImageCredit: 'Photo: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'

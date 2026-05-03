@@ -4,11 +4,12 @@ publishedAt: '2026-04-30'
 title: I 7 errori più comuni nei piegamenti — e come correggerli
 description: Una forma scorretta ti costa ripetizioni, progressi e a volte anche la spalla. I più comuni errori nei piegamenti, con correzioni concrete per ognuno.
 keywords:
-  - errori piegamenti
-  - forma corretta piegamenti
-  - tecnica piegamenti
-  - dolore spalla piegamenti
-  - come fare piegamenti correttamente
+  - errori push-up
+  - tecnica push-up
+  - dolore polso push-up
+  - dolore spalla push-up
+  - come fare push-up correttamente
+  - Pushup Tracker app
 heroImage: https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=1600&q=80
 heroImageAlt: Atleta in posizione di plank su un tappetino da allenamento, posizione neutra della testa.
 heroImageCredit: 'Foto: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'

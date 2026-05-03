@@ -4,11 +4,12 @@ publishedAt: '2026-04-23'
 title: 'Wim Hof-metoden for armhevninger: Pusting, kuldeeksponering og ytelse'
 description: 'Kan Wim Hof-metoden virkelig forbedre armhevningsytelse og restitusjon? Et forskningsbasert blikk på pustningsprotokoller, kuldeeksponering, og hva bevisene egentlig viser.'
 keywords:
-  - Wim Hof-metoden
-  - armhevningsytelse
-  - pusting for ytelse
+  - Wim Hof metode
+  - lære Wim Hof pust
+  - push-up ytelse
+  - pust for ytelse
   - kuldeeksponering restitusjon
-  - Wim Hof-pusting armhevninger
+  - Wim Hof pust push-ups
 heroImage: 'https://images.unsplash.com/photo-1548690312-e3b507d8c110?auto=format&fit=crop&w=1600&q=80'
 heroImageAlt: Atlet som står i et fryst landskap — Wim Hof-metoden bilde av pust og kulde.
 heroImageCredit: 'Photo: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'

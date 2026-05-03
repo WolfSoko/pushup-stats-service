@@ -6,9 +6,9 @@ description: 'Un estudio de JAMA de 2019 puso la capacidad de flexiones en el ma
 keywords:
   - flexiones salud cardíaca
   - capacidad flexiones cardiovascular
-  - estudio flexiones Harvard
+  - estudio Harvard flexiones
   - JAMA flexiones
-  - fitness enfermedades cardíacas
+  - beneficio cardiovascular flexiones
 heroImage: 'https://images.unsplash.com/photo-1514512364185-4c2b0985be01?auto=format&fit=crop&w=1600&q=80'
 heroImageAlt: Atleta en posición de plancha sobre asfalto — la prueba de capacidad de flexiones.
 heroImageCredit: 'Foto: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'

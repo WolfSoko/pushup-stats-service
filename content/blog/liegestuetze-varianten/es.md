@@ -4,11 +4,11 @@ publishedAt: '2025-09-22'
 title: 10 variaciones de flexiones para todos los niveles de condición física
 description: 'Desde flexiones de rodillas hasta flexiones de arquero: estas 10 variaciones trabajan pecho, tríceps y hombros — y rompen cualquier estancamiento.'
 keywords:
-  - variaciones flexiones
-  - ejercicios flexiones
-  - flexiones más difíciles
-  - músculos flexiones
+  - variantes flexiones
+  - ejercicios pecho sin equipo casa
   - flexiones avanzadas
+  - qué músculos trabajan las flexiones
+  - progresión flexiones casa
 heroImage: 'https://images.unsplash.com/photo-1731341400836-baaa5535b8d5?auto=format&fit=crop&w=1600&q=80'
 heroImageAlt: Atleta realizando una variación de flexiones en un espacio de entrenamiento.
 heroImageCredit: 'Foto: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'

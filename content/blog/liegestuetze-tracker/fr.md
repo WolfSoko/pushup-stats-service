@@ -5,8 +5,9 @@ title: Comment un suivi vous aide à battre vos records aux pompes
 description: Pourquoi un suivi numérique des pompes fait la différence — et comment Pushup Tracker vous aide à atteindre vos records et à rester régulier.
 keywords:
   - application suivi pompes
-  - appli pompes
-  - suivre ses pompes
+  - compteur pompes gratuit
+  - meilleure application pompes
+  - suivre pompes
   - Pushup Tracker
   - suivi progression pompes
 heroImage: 'https://images.unsplash.com/photo-1717821681365-36b0da044a75?auto=format&fit=crop&w=1600&q=80'

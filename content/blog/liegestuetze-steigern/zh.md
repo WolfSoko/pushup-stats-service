@@ -7,8 +7,9 @@ keywords:
   - 增加俯卧撑
   - 更多俯卧撑
   - 俯卧撑训练计划
-  - 俯卧撑进展
+  - 初学者俯卧撑进步
   - 学习俯卧撑
+  - Pushup Tracker app
 heroImage: 'https://images.unsplash.com/photo-1598971457999-ca4ef48a9a71?auto=format&fit=crop&w=1600&q=80'
 heroImageAlt: 穿着红色背心的运动员进行规范的俯卧撑。
 heroImageCredit: '图片：<a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'

@@ -4,11 +4,12 @@ publishedAt: '2025-03-10'
 title: 'Πώς ένας Tracker σε Βοηθάει να Πετύχεις Προσωπικά Ρεκόρ στα Push-Ups'
 description: 'Γιατί ένας ψηφιακός tracker push-ups κάνει τη διαφορά — και πώς το Pushup Tracker σε βοηθάει να πετυχαίνεις προσωπικά ρεκόρ και να μένεις συνεπής.'
 keywords:
-  - 'εφαρμογή tracker push-ups'
-  - 'εφαρμογή push-ups'
-  - 'παρακολούθηση push-ups'
-  - 'Pushup Tracker'
-  - 'παρακολούθηση προόδου push-ups'
+  - εφαρμογή tracker push-up
+  - δωρεάν μετρητής push-up
+  - καλύτερη εφαρμογή push-up
+  - παρακολούθηση push-ups
+  - Pushup Tracker
+  - παρακολούθηση προόδου push-up
 heroImage: 'https://images.unsplash.com/photo-1717821681365-36b0da044a75?auto=format&fit=crop&w=1600&q=80'
 heroImageAlt: 'Αθλητής κάνει καθαρό push-up πάνω σε ξύλινο πάτωμα — η πρόοδος στο επίκεντρο.'
 heroImageCredit: 'Φωτογραφία: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'

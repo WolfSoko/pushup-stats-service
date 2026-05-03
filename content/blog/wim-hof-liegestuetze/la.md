@@ -4,11 +4,12 @@ publishedAt: '2026-04-23'
 title: 'Methodus Wim Hof pro Pressionibus: Spiratio, Frigus, et Praestatio'
 description: 'Potestne Methodus Wim Hof praestationem et recuperationem pressionum vere augere? Conspectus investigationum de ritu spirationis, frigori obnoxio, et quid probationes revera ostendant.'
 keywords:
-  - Methodus Wim Hof
-  - praestatio pressionum
-  - spiratio pro praesatatione
-  - frigus pro recuperatione
-  - spiratio Wim Hof in pressionibus
+  - methodus Wim Hof
+  - discere respirationem Wim Hof
+  - perfomatio pulsuum
+  - respiratio pro perfomatione
+  - recreatio expositione frigoris
+  - respiratio Wim Hof pulsuum
 heroImage: 'https://images.unsplash.com/photo-1548690312-e3b507d8c110?auto=format&fit=crop&w=1600&q=80'
 heroImageAlt: Athleta in regione glaciali stans — imago Methodi Wim Hof de spiratione et frigore.
 heroImageCredit: 'Imago: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'

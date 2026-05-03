@@ -4,11 +4,11 @@ publishedAt: '2026-04-29'
 title: 'Push-Ups για Γυναίκες: Μύθοι, Ανατομία και Πλάνο 4 Εβδομάδων για Αρχάριες'
 description: 'Οι γυναίκες μπορούν να κάνουν τα ίδια push-ups με τους άντρες — η πρόοδος απλώς συχνά μοιάζει διαφορετική. Ανατομία, μύθοι και ρεαλιστικό αρχικό πλάνο 4 εβδομάδων.'
 keywords:
-  - 'push-ups για γυναίκες'
-  - 'πώς οι γυναίκες μαθαίνουν push-ups'
-  - 'πλάνο push-ups γυναικών'
-  - 'γυναίκες αρχάριες push-ups'
-  - 'πρόοδος push-ups γυναικών'
+  - push-ups για γυναίκες
+  - πρόγραμμα push-up γυναικών
+  - push-up αρχάρια γυναίκα
+  - εξέλιξη push-ups γυναικών
+  - γόνατα push-ups γυναικών
 heroImage: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=1600&q=80'
 heroImageAlt: 'Αθλήτρια κάνει ελεγχόμενο push-up σε στρώμα γυμναστικής σε εξωτερικό χώρο.'
 heroImageCredit: 'Φωτογραφία: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'

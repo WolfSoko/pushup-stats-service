@@ -4,11 +4,12 @@ publishedAt: '2025-11-04'
 title: 'Provocatio Triginta Dierum: Consilium ad Progressum Maximum'
 description: Haec provocatio per triginta dies ordinata te adiuvat, ut numerum pressionum gradatim augeas — a septimana prima ad probationem finalem die trigesimo.
 keywords:
-  - provocatio triginta dierum pressionum
-  - consilium provocationis pressionum
-  - pressiones per triginta dies
-  - provocatio pressionum
-  - pressiones cotidianas augere
+  - certamen XXX dierum pulsuum
+  - programmatum certaminis pulsuum
+  - pulsus in XXX diebus
+  - certamen pulsuum tironibus
+  - augere pulsus cotidie
+  - Pushup Tracker app
 heroImage: 'https://images.unsplash.com/photo-1596079306903-9164c205f400?auto=format&fit=crop&w=1600&q=80'
 heroImageAlt: Athleta in herba pressionem faciens — provocatio cotidiana sub divo.
 heroImageCredit: 'Imago: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'

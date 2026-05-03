@@ -4,11 +4,12 @@ publishedAt: '2026-04-28'
 title: 'Pusteteknikk for armhevninger: stabilisering, rytme og hva som endres ved maksimal innsats'
 description: 'Pusteteknikk blir undervurdert for armhevninger. Når skal du puste inn, når skal du puste ut, hva betyr stabilisering — og hvorfor trenger maksimalsettet en annen regel.'
 keywords:
-  - armhevning pusteteknikk
-  - hvordan puste armhevninger
-  - stabilisering armhevninger
-  - pusteytelse styrke
-  - armhevning valsalva
+  - pust push-ups
+  - hvordan puste push-ups
+  - bracing push-ups
+  - pusteteknikk styrketrening
+  - push-up valsalva
+  - push-up maksimal innsats pust
 heroImage: 'https://images.unsplash.com/photo-1599058917765-a780eda07a3e?auto=format&fit=crop&w=1600&q=80'
 heroImageAlt: Utøver i plankeposisjon med fokusert uttrykk.
 heroImageCredit: 'Photo: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'

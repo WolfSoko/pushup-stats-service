@@ -5,10 +5,10 @@ title: "L'étude Harvard qui a rendu les pompes célèbres : 40+ répétitions e
 description: "Une étude JAMA de 2019 a placé la capacité aux pompes sur la carte des risques cardiovasculaires. Voici ce que les données ont réellement dit, ce qu'elles n'ont pas dit, et comment les utiliser pour votre propre entraînement."
 keywords:
   - pompes santé cardiaque
-  - capacité aux pompes cardiovasculaire
+  - capacité pompes cardiovasculaire
   - étude Harvard pompes
   - JAMA pompes
-  - fitness maladie cardiaque
+  - bénéfice cardiovasculaire pompes
 heroImage: 'https://images.unsplash.com/photo-1514512364185-4c2b0985be01?auto=format&fit=crop&w=1600&q=80'
 heroImageAlt: Athlète en position de planche sur l'asphalte — le test de capacité aux pompes.
 heroImageCredit: 'Photo : <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'

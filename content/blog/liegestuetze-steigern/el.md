@@ -4,11 +4,12 @@ publishedAt: '2025-01-15'
 title: 'Από το Μηδέν στα Εκατό: Πώς να Αυξήσεις Συστηματικά τα Push-Ups σου'
 description: 'Πρακτικός οδηγός για προοδευτική αύξηση των push-ups σου — με πλάνο προπόνησης, συμβουλές τεχνικής και σωστή αποκατάσταση.'
 keywords:
-  - 'αύξηση push-ups'
-  - 'περισσότερα push-ups'
-  - 'πλάνο προπόνησης push-ups'
-  - 'πρόοδος push-ups'
-  - 'μάθε push-ups'
+  - αύξηση push-ups
+  - περισσότερα push-ups
+  - πρόγραμμα προπόνησης push-up
+  - εξέλιξη push-up αρχάριος
+  - μάθετε push-ups
+  - Pushup Tracker app
 heroImage: 'https://images.unsplash.com/photo-1598971457999-ca4ef48a9a71?auto=format&fit=crop&w=1600&q=80'
 heroImageAlt: 'Αθλητής με κόκκινο μπλουζάκι κάνει καθαρό push-up.'
 heroImageCredit: 'Φωτογραφία: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'

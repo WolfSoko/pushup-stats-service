@@ -4,11 +4,11 @@ publishedAt: '2025-02-03'
 title: 'Γιατί τα Καθημερινά Push-Ups Θα Αλλάξουν τη Ζωή σου'
 description: 'Τα καθημερινά push-ups βελτιώνουν τη δύναμη, τη στάση σώματος και τη φυσική κατάσταση. Ανακάλυψε τα επιστημονικά αποδεδειγμένα οφέλη και πώς να χτίσεις τη συνήθεια οριστικά.'
 keywords:
-  - 'καθημερινά push-ups'
-  - 'push-ups κάθε μέρα'
-  - 'οφέλη push-ups'
-  - 'συνήθεια push-ups'
-  - 'υγεία push-ups'
+  - καθημερινά push-ups
+  - 100 push-ups την ημέρα
+  - οφέλη push-up
+  - συνήθεια push-up
+  - push-up υγεία
 heroImage: 'https://images.unsplash.com/photo-1598971639058-fab3c3109a00?auto=format&fit=crop&w=1600&q=80'
 heroImageAlt: 'Αθλήτρια κάνει push-up — καθημερινή προπόνηση σε εξωτερικό χώρο.'
 heroImageCredit: 'Φωτογραφία: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'

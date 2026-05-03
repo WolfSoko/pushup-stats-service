@@ -4,11 +4,11 @@ publishedAt: '2025-02-03'
 title: Perché i Piegamenti Quotidiani Cambieranno la Tua Vita
 description: "I piegamenti quotidiani migliorano forza, postura e benessere. Scopri i benefici scientificamente provati e come costruire l'abitudine in modo duraturo."
 keywords:
-  - piegamenti quotidiani
-  - piegamenti ogni giorno
-  - benefici piegamenti
-  - abitudine piegamenti
-  - salute piegamenti
+  - push-up quotidiani
+  - 100 push-up al giorno
+  - benefici push-up
+  - abitudine push-up
+  - push-up salute
 heroImage: 'https://images.unsplash.com/photo-1598971639058-fab3c3109a00?auto=format&fit=crop&w=1600&q=80'
 heroImageAlt: Atleta femminile che fa un piegamento — una routine di allenamento quotidiana all'aperto.
 heroImageCredit: 'Foto: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'

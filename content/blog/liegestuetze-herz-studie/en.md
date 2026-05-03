@@ -8,7 +8,7 @@ keywords:
   - push-up capacity cardiovascular
   - Harvard push-up study
   - JAMA push-ups
-  - fitness heart disease
+  - push-ups cardiovascular benefit
 heroImage: 'https://images.unsplash.com/photo-1514512364185-4c2b0985be01?auto=format&fit=crop&w=1600&q=80'
 heroImageAlt: Athlete in a plank position on asphalt — the push-up capacity test.
 heroImageCredit: 'Photo: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'

@@ -4,11 +4,12 @@ publishedAt: '2026-04-30'
 title: Septem Errores Frequentissimi in Pressionibus — et Quomodo Quemque Corrigas
 description: Forma mala repetitiones, progressum, et interdum humerum tuum tibi aufert. Errores frequentissimi in pressionibus, cum remediis certis pro quoque.
 keywords:
-  - errores in pressionibus
-  - forma pressionis
-  - technica pressionis
-  - dolor humeri in pressionibus
-  - quomodo pressiones recte fiant
+  - errores pulsuum
+  - ars pulsuum
+  - dolor carpi pulsuum
+  - dolor humeri pulsuum
+  - quomodo pulsus recte facere
+  - Pushup Tracker app
 heroImage: https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=1600&q=80
 heroImageAlt: Athleta in positione plana super tapete exercitationis, capite in situ neutro.
 heroImageCredit: 'Imago: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'

@@ -4,11 +4,12 @@ publishedAt: '2026-04-23'
 title: 'Il Metodo Wim Hof per i Piegamenti: Respirazione, Esposizione al Freddo e Performance'
 description: "Il Metodo Wim Hof può davvero migliorare le prestazioni nei piegamenti e il recupero? Uno sguardo basato sulla ricerca al protocollo di respirazione, all'esposizione al freddo e a cosa dice davvero l'evidenza."
 keywords:
-  - Metodo Wim Hof
-  - prestazioni piegamenti
-  - respirazione per la performance
-  - recupero esposizione al freddo
-  - respirazione Wim Hof piegamenti
+  - metodo Wim Hof
+  - imparare respirazione Wim Hof
+  - performance push-up
+  - respirazione performance
+  - recupero esposizione freddo
+  - respirazione Wim Hof push-up
 heroImage: 'https://images.unsplash.com/photo-1548690312-e3b507d8c110?auto=format&fit=crop&w=1600&q=80'
 heroImageAlt: Atleta in piedi in un paesaggio ghiacciato — immagini del Metodo Wim Hof di respiro e freddo.
 heroImageCredit: 'Foto: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'

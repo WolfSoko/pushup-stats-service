@@ -18,7 +18,8 @@ export const POST: BlogPost = {
     "richtig atmen Liegestütze",
     "Bracing Liegestütze",
     "Pushup Atemtechnik",
-    "Atemtechnik Krafttraining"
+    "Atemtechnik Krafttraining",
+    "Liegestütze Maximalsatz"
   ],
   "heroImage": "https://images.unsplash.com/photo-1599058917765-a780eda07a3e?auto=format&fit=crop&w=1600&q=80",
   "heroImageAlt": "Athlet in Plank-Position mit konzentriertem Gesichtsausdruck.",

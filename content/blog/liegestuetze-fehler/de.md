@@ -7,8 +7,9 @@ keywords:
   - Liegestütze Fehler
   - Liegestütze richtig machen
   - Liegestütze Technik
-  - Liegestütze Form
+  - Liegestütze Handgelenk Schmerzen
   - Schulter schmerzen Liegestütze
+  - Pushup Tracker App
 heroImage: https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=1600&q=80
 heroImageAlt: Athletin in Plank-Position auf einer Trainingsmatte, neutrale Kopfhaltung.
 heroImageCredit: 'Foto: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'

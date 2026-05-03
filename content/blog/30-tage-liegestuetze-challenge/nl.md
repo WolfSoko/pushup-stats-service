@@ -4,11 +4,12 @@ publishedAt: '2025-11-04'
 title: '30-daagse opdruk-challenge: jouw plan voor maximale vooruitgang'
 description: Deze gestructureerde 30-daagse challenge helpt je stap voor stap meer opdrukken te doen – van week 1 tot de eindtest op dag 30.
 keywords:
-  - 30 dagen opdruk-challenge
-  - opdruk-challenge plan
-  - opdrukken in 30 dagen
-  - opdruk-challenge
-  - dagelijks meer opdrukken
+  - 30-daagse push-up challenge
+  - push-up challenge plan
+  - push-ups in 30 dagen
+  - push-up challenge beginners
+  - push-ups dagelijks verhogen
+  - Pushup Tracker app
 heroImage: 'https://images.unsplash.com/photo-1596079306903-9164c205f400?auto=format&fit=crop&w=1600&q=80'
 heroImageAlt: Atleet die buiten opdrukken doet — de dagelijkse challenge in het gras.
 heroImageCredit: 'Foto: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'

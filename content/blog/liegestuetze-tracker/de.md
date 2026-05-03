@@ -3,8 +3,9 @@ publishedAt: '2025-03-10'
 title: Mit einem Tracker zur Liegestütz-Bestleistung
 description: 'Warum ein digitaler Liegestütze-Tracker den Unterschied macht – und wie Pushup Tracker dir hilft, Bestleistungen zu erzielen und dranzubleiben.'
 keywords:
-  - Liegestütze tracker app
-  - Liegestütze App
+  - Liegestütze Tracker App
+  - Liegestütze zählen App
+  - kostenlose Pushup App
   - Liegestütze tracken
   - Pushup Tracker
   - Liegestütze Fortschritt verfolgen

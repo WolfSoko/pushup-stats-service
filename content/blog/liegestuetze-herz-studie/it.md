@@ -4,11 +4,11 @@ publishedAt: '2026-04-23'
 title: 'Lo Studio di Harvard che ha reso famosi i piegamenti: 40+ ripetizioni e salute del cuore'
 description: 'Uno studio del 2019 pubblicato su JAMA ha messo la capacità di piegamenti sulla mappa del rischio cardiovascolare. Ecco cosa dicevano davvero i dati, cosa non dicevano e come usarli per il tuo allenamento.'
 keywords:
-  - piegamenti salute cuore
-  - capacità piegamenti cardiovascolare
-  - studio Harvard piegamenti
-  - JAMA piegamenti
-  - fitness malattie cardiache
+  - push-up salute cardiaca
+  - capacità push-up cardiovascolare
+  - studio Harvard push-up
+  - JAMA push-up
+  - beneficio cardiovascolare push-up
 heroImage: 'https://images.unsplash.com/photo-1514512364185-4c2b0985be01?auto=format&fit=crop&w=1600&q=80'
 heroImageAlt: Atleta in posizione di plank su asfalto — il test di capacità di piegamenti.
 heroImageCredit: 'Foto: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'

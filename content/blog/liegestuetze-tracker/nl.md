@@ -4,11 +4,12 @@ publishedAt: '2025-03-10'
 title: Hoe een tracker je helpt opdruk-persoonlijke records te breken
 description: Waarom een digitale opdruk-tracker het verschil maakt – en hoe Pushup Tracker je helpt persoonlijke records te behalen en consistent te blijven.
 keywords:
-  - opdruk tracker app
-  - opdrukken app
-  - opdrukken bijhouden
+  - push-up tracker app
+  - gratis push-up teller app
+  - beste push-up app
+  - push-ups bijhouden
   - Pushup Tracker
-  - opdrukken voortgang bijhouden
+  - push-up voortgang volgen
 heroImage: 'https://images.unsplash.com/photo-1717821681365-36b0da044a75?auto=format&fit=crop&w=1600&q=80'
 heroImageAlt: Atleet die een schone opdruk doet op een houten vloer — voortgang in beeld.
 heroImageCredit: 'Foto: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'

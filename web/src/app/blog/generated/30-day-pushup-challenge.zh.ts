@@ -16,9 +16,10 @@ export const POST: BlogPost = {
   "keywords": [
     "30天俯卧撑挑战",
     "俯卧撑挑战计划",
-    "30天内增加俯卧撑",
-    "俯卧撑挑战",
-    "每日增加俯卧撑次数"
+    "30天俯卧撑",
+    "俯卧撑挑战初学者",
+    "每日增加俯卧撑",
+    "Pushup Tracker app"
   ],
   "heroImage": "https://images.unsplash.com/photo-1596079306903-9164c205f400?auto=format&fit=crop&w=1600&q=80",
   "heroImageAlt": "运动员在草坪上做俯卧撑——日常挑战。",

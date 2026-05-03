@@ -4,11 +4,12 @@ publishedAt: '2025-03-10'
 title: Come un Tracker ti Aiuta a Battere i Record Personali di Piegamenti
 description: Perché un tracker digitale di piegamenti fa la differenza — e come Pushup Tracker ti aiuta a raggiungere i record personali e a rimanere costante.
 keywords:
-  - app tracker piegamenti
-  - app piegamenti
-  - monitorare piegamenti
+  - app tracker push-up
+  - contatore push-up gratuito
+  - migliore app push-up
+  - tracciare push-up
   - Pushup Tracker
-  - monitoraggio progressi piegamenti
+  - monitoraggio progresso push-up
 heroImage: 'https://images.unsplash.com/photo-1717821681365-36b0da044a75?auto=format&fit=crop&w=1600&q=80'
 heroImageAlt: Atleta che esegue un piegamento pulito su un pavimento di legno — il progresso in primo piano.
 heroImageCredit: 'Foto: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'
