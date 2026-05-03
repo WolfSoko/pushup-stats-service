@@ -13,6 +13,7 @@ import { pino } from 'pino';
 import { pinoHttp } from 'pino-http';
 
 import { computeLocaleRedirect } from './server-locale-redirect';
+import { staticCacheControl } from './server-static-cache';
 
 const isProduction = process.env['NODE_ENV'] === 'production';
 
@@ -121,12 +122,21 @@ if (isProduction) {
  * intentional — anything that needs to live under a dot-prefixed path
  * (e.g. `/.well-known/...`) is opted in via a dedicated `express.static`
  * mount above, so accidental dotfiles in the build output stay hidden.
+ *
+ * `setHeaders` (instead of the `maxAge` shortcut) gives content-hashed
+ * bundles a 1-year `immutable` policy and stable filenames a short
+ * shared TTL. Firebase App Hosting's CDN (Google's edge) only caches
+ * `Cache-Control: public` responses with an explicit `max-age`, so the
+ * split is what actually unlocks edge delivery. See
+ * `./server-static-cache` for the policy and tests.
  */
 app.use(
   express.static(browserDistFolder, {
-    maxAge: '1y',
     index: false,
     redirect: false,
+    setHeaders: (res, filePath) => {
+      res.setHeader('Cache-Control', staticCacheControl(filePath));
+    },
   })
 );
 
