@@ -74,11 +74,16 @@ export const SAFE_REDIRECT_PATH_RE = /^\/[A-Za-z0-9/_\-.~%]*$/;
  * actually ship. Browsers almost never advertise `no` directly —
  * Norwegian users send `nb-NO` (Bokmål) or `nn-NO` (Nynorsk). Without
  * this map both would fall through to the German default.
+ *
+ * Uses a `Map` (not a plain object) so that crafted Accept-Language
+ * headers like `__proto__` can't resolve via the prototype chain — a
+ * plain object literal would return `Object.prototype` for that key,
+ * violating the `SupportedLocale | undefined` contract.
  */
-const LOCALE_ALIASES: Readonly<Record<string, SupportedLocale>> = {
-  nb: 'no',
-  nn: 'no',
-};
+const LOCALE_ALIASES = new Map<string, SupportedLocale>([
+  ['nb', 'no'],
+  ['nn', 'no'],
+]);
 
 /**
  * Pick a locale based on `Accept-Language`. Honours both the user's
@@ -118,7 +123,7 @@ export function pickLocale(
 
   for (const { tag } of ranked) {
     const primary = tag.split('-')[0];
-    const aliased = LOCALE_ALIASES[primary];
+    const aliased = LOCALE_ALIASES.get(primary);
     if (aliased) return aliased;
     if ((SUPPORTED_LOCALES as ReadonlyArray<string>).includes(primary)) {
       return primary as SupportedLocale;

@@ -34,7 +34,7 @@ heroImageCredit: 'Photo: <a href="https://unsplash.com" target="_blank" rel="noo
 <ol>
   <li>
     <strong>Uke 1 – Grunnlag (dag 1–7):</strong>
-    Man, ons, fre: 3 × AMRAP med 90 s hvile. Tir, tor: Lettkjørdag – 2 × 50% av maksimum.
+    Man, ons, fre: 3 × AMRAP med 90 s hvile. Tir, tor: Lettdag – 2 × 50% av maksimum.
     Lør: Makstest-sett (teller ikke mot totalen, bare trening). Søn: Hvile.
   </li>
   <li>
@@ -59,7 +59,7 @@ heroImageCredit: 'Photo: <a href="https://unsplash.com" target="_blank" rel="noo
 
 <h2>Ernæring og restitusjon under utfordringen</h2>
 <p>
-  Sikter til tilstrekkelig protein (minst 1,5 g per kg kroppsvekt daglig) og 7–9 timers søvn.
+  Sørg for tilstrekkelig protein (minst 1,5 g per kg kroppsvekt daglig) og 7–9 timers søvn.
   Magnesium før sengetid kan redusere muskelkramper. Etter hver hovedøkt: 2 minutter strekking
   for bryst, skuldre og triseps.
 </p>
