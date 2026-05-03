@@ -50,7 +50,7 @@ heroImageCredit: '图片：<a href="https://unsplash.com" target="_blank" rel="n
   </li>
   <li>
     <strong>箭形俯卧撑：</strong> 一只手臂向侧边延伸，同时将所有重量转移到另一只手臂。
-    通往单臂俯卧撑的跳脚石。
+    通往单臂俯卧撑的垫脚石。
   </li>
 </ul>
 
@@ -63,7 +63,7 @@ heroImageCredit: '图片：<a href="https://unsplash.com" target="_blank" rel="n
     <strong>拍掌俯卧撑：</strong> 向上爆发力强劲，双手短暂离开地面。训练爆发力和反应力。
   </li>
   <li>
-    <strong>倒立俯卧撑：</strong> 臀部高抬，身体形成倒 V 形。主要聚焦肩膀——通往倒立撑的跳脚石。
+    <strong>倒立俯卧撑：</strong> 臀部高抬，身体形成倒 V 形。主要聚焦肩膀——通往倒立撑的垫脚石。
   </li>
 </ul>
 

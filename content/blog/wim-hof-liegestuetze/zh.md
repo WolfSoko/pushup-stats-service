@@ -1,16 +1,16 @@
 ---
 slug: wim-hof-pushups
 publishedAt: '2026-04-23'
-title: "荷尔蒙呼吸法与俯卧撑：呼吸、冷暴露与表现"
-description: "荷尔蒙呼吸法真的能提升俯卧撑表现和恢复吗？基于研究的呼吸协议、冷暴露和证据实际显示了什么。"
+title: "Wim Hof 呼吸法与俯卧撑：呼吸、冷暴露与表现"
+description: "Wim Hof 呼吸法真的能提升俯卧撑表现和恢复吗？基于研究的呼吸协议、冷暴露和证据实际显示了什么。"
 keywords:
-  - 荷尔蒙呼吸法
+  - Wim Hof 呼吸法
   - 俯卧撑表现
   - 呼吸表现
   - 冷暴露恢复
-  - 荷尔蒙呼吸俯卧撑
+  - Wim Hof 呼吸俯卧撑
 heroImage: 'https://images.unsplash.com/photo-1548690312-e3b507d8c110?auto=format&fit=crop&w=1600&q=80'
-heroImageAlt: "运动员站在冰冻景观中——荷尔蒙呼吸法的呼吸和冷的意象。"
+heroImageAlt: "运动员站在冰冻景观中——Wim Hof 呼吸法的呼吸和冷的意象。"
 heroImageCredit: '图片：<a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'
 ---
 
@@ -88,7 +88,7 @@ heroImageCredit: '图片：<a href="https://unsplash.com" target="_blank" rel="n
   <li>
     <strong>冷收尾以恢复。</strong>
     训练后，60-120 秒的冷淋浴针对胸部、肩膀和上臂。2016 年的 PLOS ONE 试验表明
-    这足以触发免疫和情绪效应。不是代替睡眠和蛋白质——除了睡眠和蛋白质。
+    这足以触发免疫和情绪效应。它不是睡眠和蛋白质的替代品——而是要与睡眠和蛋白质配合使用。
   </li>
   <li>
     <strong>"屏息俯卧撑"组（高级，可选）。</strong>

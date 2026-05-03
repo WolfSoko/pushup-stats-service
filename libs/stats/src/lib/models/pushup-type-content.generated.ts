@@ -848,7 +848,7 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
       ]
     },
     "zh": {
-      "name": "负重单臂俯卧撑",
+      "name": "离心单臂俯卧撑",
       "summary": "仅在下降阶段用单臂——控制的离心收缩能为完整动作建立力量基础。",
       "instructions": [
         "一只手放在长凳或抬高物体上，脚分开以获得稳定性。",
