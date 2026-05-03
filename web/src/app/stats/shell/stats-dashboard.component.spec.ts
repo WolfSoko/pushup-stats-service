@@ -334,7 +334,7 @@ describe('StatsDashboardComponent', () => {
 
         // Then
         expect(serviceMock.createPushup).toHaveBeenCalledWith(
-          expect.objectContaining({ reps: 10, source: 'web', type: 'Standard' })
+          expect.objectContaining({ reps: 10, source: 'web', type: 'standard' })
         );
       });
     });

@@ -393,7 +393,7 @@ export const TrainingPlanStore = signalStore(
               reps,
               sets,
               source: 'plan',
-              type: 'Standard',
+              type: 'standard',
             })
           );
           result = 'logged';

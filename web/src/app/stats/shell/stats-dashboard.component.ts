@@ -259,7 +259,7 @@ export class StatsDashboardComponent {
         reps,
         sets: [reps],
         source,
-        type: 'Standard',
+        type: 'standard',
       })
     );
     this.store.refreshAll();

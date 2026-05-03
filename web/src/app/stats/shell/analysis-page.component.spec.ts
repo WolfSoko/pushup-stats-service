@@ -103,7 +103,8 @@ describe('AnalysisPageComponent', () => {
           reps: 12,
           sets: [6, 6],
           source: 'web',
-          type: 'Diamond',
+          // New canonical id form (post-refactor write).
+          type: 'diamond',
         }, // Di
         {
           _id: '3',
@@ -111,6 +112,9 @@ describe('AnalysisPageComponent', () => {
           reps: 20,
           sets: [10, 5, 5],
           source: 'wa',
+          // Legacy English entryLabel form (older Firestore docs). Mixing
+          // it with the new "diamond" id above exercises the bucket-collapse
+          // guarantee — both rows must land in the same breakdown entry.
           type: 'Diamond',
         }, // Mi
         {
@@ -220,15 +224,28 @@ describe('AnalysisPageComponent', () => {
     const { store } = fixture.componentInstance;
     const breakdown = store.typeBreakdown();
 
-    // The store now canonicalizes the stored value (legacy entryLabel
-    // OR new id) and renders the localized name. TestBed default locale
-    // is `de` (the app source locale), so labels appear in German.
-    // Totals: Standard 10 + 25 + 18 = 53, Diamond 12 + 20 = 32, Wide 8.
+    // The store canonicalizes the stored value (legacy entryLabel OR new
+    // id) and renders the localized name. TestBed default locale is `de`
+    // (the app source locale), so labels appear in German.
+    // Totals: Standard 10 + 25 + 18 = 53, Diamond ("diamond" + "Diamond"
+    // collapse to one bucket) 12 + 20 = 32, Wide 8.
     expect(breakdown.map(({ label, value }) => ({ label, value }))).toEqual([
       { label: 'Standard-Liegestütze', value: 53 },
       { label: 'Diamant-Liegestütze', value: 32 },
       { label: 'Weite Liegestütze', value: 8 },
     ]);
+  });
+
+  it('collapses legacy entryLabel and new canonical id into one bucket', () => {
+    // Regression: rows with type "diamond" (new) and "Diamond" (legacy)
+    // must yield exactly one Diamond bucket, not two. The mock dataset
+    // above intentionally mixes both forms.
+    const { store } = fixture.componentInstance;
+    const diamondBuckets = store
+      .typeBreakdown()
+      .filter((b) => b.label === 'Diamant-Liegestütze');
+    expect(diamondBuckets).toHaveLength(1);
+    expect(diamondBuckets[0].value).toBe(32);
   });
 
   it('computes best values', () => {

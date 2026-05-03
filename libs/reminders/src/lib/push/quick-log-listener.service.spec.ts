@@ -71,7 +71,7 @@ describe('QuickLogListenerService', () => {
     expect(payload.reps).toBe(15);
     expect(payload.sets).toEqual([15]);
     expect(payload.source).toBe('reminder');
-    expect(payload.type).toBe('Standard');
+    expect(payload.type).toBe('standard');
     expect(typeof payload.timestamp).toBe('string');
   });
 

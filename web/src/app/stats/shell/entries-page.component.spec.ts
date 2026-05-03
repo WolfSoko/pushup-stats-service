@@ -18,6 +18,7 @@ describe('EntriesPageComponent', () => {
       timestamp: '2026-02-10T08:00:00',
       reps: 10,
       source: 'wa',
+      // Legacy English entryLabel form (older Firestore docs).
       type: 'Standard',
     },
     {
@@ -25,6 +26,7 @@ describe('EntriesPageComponent', () => {
       timestamp: '2026-02-11T09:00:00',
       reps: 25,
       source: 'web',
+      // Legacy English entryLabel form.
       type: 'Diamond',
     },
     {
@@ -33,6 +35,15 @@ describe('EntriesPageComponent', () => {
       reps: 15,
       source: 'wa',
       type: 'Wide',
+    },
+    {
+      _id: '4',
+      timestamp: '2026-02-12T07:00:00',
+      reps: 20,
+      source: 'web',
+      // New canonical id form. Combined with row 2 above, this exercises
+      // the typeOptions / filteredRows bucket-collapse guarantee.
+      type: 'diamond',
     },
   ];
 
@@ -121,5 +132,22 @@ describe('EntriesPageComponent', () => {
     await store.deleteEntry('2');
 
     expect(apiMock.deletePushup).toHaveBeenCalledWith('2');
+  });
+
+  it('deduplicates legacy entryLabel and new canonical id in typeOptions', () => {
+    // Rows 2 ("Diamond") and 4 ("diamond") must collapse into a single
+    // filter option keyed by the canonical id.
+    const options = store.typeOptions();
+    const diamondOptions = options.filter((o) => o.value === 'diamond');
+    expect(diamondOptions).toHaveLength(1);
+    // Filter selection on the canonical id must match both legacy AND
+    // new-form rows in filteredRows.
+    store.setType('diamond');
+    expect(
+      store
+        .filteredRows()
+        .map((x: any) => x._id)
+        .sort()
+    ).toEqual(['2', '4']);
   });
 });

@@ -29,11 +29,7 @@ export class QuickLogListenerService {
   private registered = false;
 
   init(): void {
-    if (
-      this.registered ||
-      !this.isBrowser ||
-      !('serviceWorker' in navigator)
-    ) {
+    if (this.registered || !this.isBrowser || !('serviceWorker' in navigator)) {
       return;
     }
     this.registered = true;
@@ -63,7 +59,7 @@ export class QuickLogListenerService {
           reps,
           sets: [reps],
           source: 'reminder',
-          type: 'Standard',
+          type: 'standard',
         })
       );
       this.snackBar.open(
