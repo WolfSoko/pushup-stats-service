@@ -2588,14 +2588,6 @@
         <source>Feedback konnte nicht gesendet werden.</source>
       </segment>
     </unit>
-    <unit id="sw.update.downloading">
-      <notes>
-        <note category="location">web/src/app/app.ts:410</note>
-      </notes>
-      <segment>
-        <source>Update wird im Hintergrund geladen …</source>
-      </segment>
-    </unit>
     <unit id="blog.article.back">
       <notes>
         <note category="location">web/src/app/blog/blog-article.component.ts:33,35</note>

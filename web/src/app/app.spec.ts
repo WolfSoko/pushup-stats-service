@@ -4,7 +4,8 @@ import { signal, WritableSignal, PLATFORM_ID } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { of } from 'rxjs';
+import { SwUpdate } from '@angular/service-worker';
+import { of, Subject } from 'rxjs';
 import { StatsApiService, UserConfigApiService } from '@pu-stats/data-access';
 import { Auth } from '@angular/fire/auth';
 import { AuthService, AuthStore, UserContextService } from '@pu-auth/auth';
@@ -543,6 +544,101 @@ describe('App (testing-library)', () => {
     );
     expect(earlyAccessCall).toBeTruthy();
     expect(earlyAccessCall?.[2]?.verticalPosition).toBe('top');
+  });
+
+  describe('service worker update notifications', () => {
+    function makeSwUpdateMock() {
+      const versionUpdates = new Subject<{ type: string }>();
+      return {
+        versionUpdates: versionUpdates.asObservable(),
+        isEnabled: true,
+        emit: (event: { type: string }) => versionUpdates.next(event),
+      };
+    }
+
+    it('shows the actionable reload snackbar on VERSION_READY', async () => {
+      const swUpdate = makeSwUpdateMock();
+      const onActionSubject = new Subject<void>();
+      const openSpy = vitest
+        .spyOn(MatSnackBar.prototype, 'open')
+        .mockReturnValue({
+          onAction: () => onActionSubject.asObservable(),
+          afterDismissed: () => of({ dismissedByAction: false }),
+        } as unknown as ReturnType<MatSnackBar['open']>);
+
+      await render(App, {
+        providers: [
+          provideRouter([]),
+          { provide: PLATFORM_ID, useValue: 'browser' },
+          {
+            provide: UserContextService,
+            useValue: {
+              userNameSafe: userNameSignal.asReadonly(),
+              userIdSafe: () => 'u1',
+              isAdmin: () => false,
+              isGuest: () => false,
+            },
+          },
+          { provide: AuthStore, useValue: authMock },
+          { provide: AuthService, useValue: authServiceMock },
+          { provide: Auth, useValue: firebaseAuthMock },
+          { provide: UserConfigApiService, useValue: userConfigApiMock },
+          { provide: StatsApiService, useValue: statsApiMock },
+          { provide: AdsStore, useValue: adsStoreMock },
+          { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
+          { provide: SwUpdate, useValue: swUpdate },
+        ],
+      });
+
+      swUpdate.emit({ type: 'VERSION_READY' });
+
+      const reloadCall = openSpy.mock.calls.find(
+        ([, action]) => action === 'Neu laden'
+      );
+      expect(reloadCall).toBeTruthy();
+      expect(reloadCall?.[0]).toBe('Neue Version verfügbar');
+    });
+
+    // Regression: a non-actionable "downloading in background" toast used to
+    // fire on VERSION_DETECTED, visually replacing the actionable reload toast
+    // and leaving users with no way to apply the update.
+    it('does not show a snackbar on VERSION_DETECTED', async () => {
+      const swUpdate = makeSwUpdateMock();
+      const openSpy = vitest
+        .spyOn(MatSnackBar.prototype, 'open')
+        .mockReturnValue({
+          onAction: () => of(undefined),
+          afterDismissed: () => of({ dismissedByAction: false }),
+        } as unknown as ReturnType<MatSnackBar['open']>);
+
+      await render(App, {
+        providers: [
+          provideRouter([]),
+          { provide: PLATFORM_ID, useValue: 'browser' },
+          {
+            provide: UserContextService,
+            useValue: {
+              userNameSafe: userNameSignal.asReadonly(),
+              userIdSafe: () => 'u1',
+              isAdmin: () => false,
+              isGuest: () => false,
+            },
+          },
+          { provide: AuthStore, useValue: authMock },
+          { provide: AuthService, useValue: authServiceMock },
+          { provide: Auth, useValue: firebaseAuthMock },
+          { provide: UserConfigApiService, useValue: userConfigApiMock },
+          { provide: StatsApiService, useValue: statsApiMock },
+          { provide: AdsStore, useValue: adsStoreMock },
+          { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
+          { provide: SwUpdate, useValue: swUpdate },
+        ],
+      });
+
+      const callsBefore = openSpy.mock.calls.length;
+      swUpdate.emit({ type: 'VERSION_DETECTED' });
+      expect(openSpy.mock.calls.length).toBe(callsBefore);
+    });
   });
 
   it('keeps base document title when no seo route data is active', async () => {
