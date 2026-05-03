@@ -20,6 +20,7 @@ import {
   detectPushupTypes,
   findPlanBySlug,
   localizePushupType,
+  localizePushupTypeSlug,
   PushupTypeInfo,
   TrainingPlanDay,
 } from '@pu-stats/models';
@@ -249,9 +250,10 @@ interface DayRow {
                         @for (type of row.pushupTypes; track type.slug) {
                           <a
                             class="pushup-type-chip"
-                            [routerLink]="['/wiki/liegestuetz-typen']"
-                            [queryParams]="{ type: type.slug }"
-                            [fragment]="type.slug"
+                            [routerLink]="[
+                              '/wiki/liegestuetz-typen',
+                              type.slug,
+                            ]"
                             [matTooltip]="type.summary"
                             matTooltipPosition="above"
                           >
@@ -615,7 +617,7 @@ export class TrainingPlanDetailComponent {
     return matched.map((type) => {
       const localized = localizePushupType(type, this.locale);
       return {
-        slug: type.slug,
+        slug: localizePushupTypeSlug(type, this.locale),
         name: localized.name,
         summary: localized.summary,
       };

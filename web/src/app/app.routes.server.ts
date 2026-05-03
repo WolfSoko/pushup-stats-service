@@ -42,7 +42,24 @@ export const serverRoutes: ServerRoute[] = [
     path: 'wiki/liegestuetz-typen/:slug',
     renderMode: RenderMode.Prerender,
     async getPrerenderParams() {
-      return PUSHUP_TYPES.map((type) => ({ slug: type.slug }));
+      // Prerender the union of every locale's slug so each
+      // locale-build emits a static HTML for `/<lang>/wiki/.../<slug>`
+      // when `<slug>` is its own locale-specific override AND when
+      // it's another locale's slug (those non-canonical pages still
+      // render correctly thanks to the locale-aware
+      // findPushupTypeBySlug, with `<link rel="canonical">` pointing
+      // back at the locale's canonical slug — Google dedupes via
+      // canonical so non-canonical variants don't fragment ranking).
+      const slugs = new Set<string>();
+      for (const type of PUSHUP_TYPES) {
+        slugs.add(type.slug);
+        if (type.slugs) {
+          for (const localeSlug of Object.values(type.slugs)) {
+            if (localeSlug) slugs.add(localeSlug);
+          }
+        }
+      }
+      return Array.from(slugs).map((slug) => ({ slug }));
     },
   },
   {

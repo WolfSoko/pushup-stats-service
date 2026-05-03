@@ -322,12 +322,11 @@ describe('TrainingPlanDetailComponent', () => {
       });
       expect(archerLinks.length).toBeGreaterThan(0);
 
-      // Each chip points to the wiki with the type slug as a fragment
-      // *and* a `?type=` query param (SSR-safe deep-link).
+      // Chip links directly to the wiki detail page for the type
+      // (auto-link to the per-type SEO page). Default test locale is
+      // German so we expect the German default slug `archer`.
       const href = archerLinks[0].getAttribute('href') ?? '';
-      expect(href).toContain('/wiki/liegestuetz-typen');
-      expect(href).toContain('type=archer');
-      expect(href).toContain('#archer');
+      expect(href).toBe('/wiki/liegestuetz-typen/archer');
     });
 
     it('does NOT render pushup-type chips for rest days', async () => {

@@ -39,8 +39,27 @@ export type PushupDifficulty = 'beginner' | 'intermediate' | 'advanced';
 
 export interface PushupTypeInfo {
   id: PushupTypeId;
-  /** Stable slug used as the wiki page anchor (`#<slug>`). */
+  /**
+   * Default slug used as the wiki anchor and as the canonical wiki
+   * detail URL for the source locale (German). Per-locale overrides
+   * live in `slugs` below; this field is the fallback when a locale
+   * has no override.
+   */
   slug: string;
+  /**
+   * Per-locale slug overrides for the wiki detail URL. Each
+   * locale-specific slug becomes the canonical
+   * `/<lang>/wiki/liegestuetz-typen/<slug>` URL for that locale, with
+   * hreflang alternates pointing at every other locale's slug. Locales
+   * not listed fall back to `slug` above so old URLs and unsupported
+   * locales keep resolving.
+   *
+   * URL-safety: every slug must be lowercase ASCII (no diacritics),
+   * because URL-encoded paths confuse SEO crawlers and many social-card
+   * scrapers. Transliterate Greek/Latin/Chinese rather than dropping
+   * the locale.
+   */
+  slugs?: Partial<Record<string, string>>;
   /**
    * Stable English label persisted to Firestore as
    * `PushupRecord.type` and shown in the entry-dialog autocomplete.
@@ -78,6 +97,17 @@ export const PUSHUP_TYPES: ReadonlyArray<PushupTypeInfo> = [
   {
     id: 'standard',
     slug: 'standard',
+    slugs: {
+      en: 'standard-pushup',
+      fr: 'pompe-standard',
+      es: 'flexion-estandar',
+      it: 'push-up-standard',
+      nl: 'standaard-pushup',
+      el: 'standard-push-up',
+      la: 'pulsus-classicus',
+      no: 'standard-armheving',
+      zh: 'biaozhun-fuwocheng',
+    },
     entryLabel: 'Standard',
     difficulty: 'beginner',
     name: 'Standard-Liegestütze',
@@ -114,6 +144,17 @@ export const PUSHUP_TYPES: ReadonlyArray<PushupTypeInfo> = [
   {
     id: 'knee',
     slug: 'knie',
+    slugs: {
+      en: 'knee-pushup',
+      fr: 'pompe-genoux',
+      es: 'flexion-rodillas',
+      it: 'push-up-ginocchia',
+      nl: 'knie-pushup',
+      el: 'gonatistos-push-up',
+      la: 'pulsus-genuum',
+      no: 'knearmheving',
+      zh: 'xigai-fuwocheng',
+    },
     entryLabel: 'Knee',
     difficulty: 'beginner',
     name: 'Knie-Liegestütze',
@@ -146,6 +187,17 @@ export const PUSHUP_TYPES: ReadonlyArray<PushupTypeInfo> = [
   {
     id: 'incline',
     slug: 'incline',
+    slugs: {
+      en: 'incline-pushup',
+      fr: 'pompe-inclinee',
+      es: 'flexion-inclinada',
+      it: 'push-up-inclinato',
+      nl: 'incline-pushup',
+      el: 'klisi-push-up',
+      la: 'pulsus-inclinatus',
+      no: 'hellende-armheving',
+      zh: 'qingxie-fuwocheng',
+    },
     entryLabel: 'Incline',
     difficulty: 'beginner',
     name: 'Incline-Liegestütze (Hände erhöht)',
@@ -174,6 +226,17 @@ export const PUSHUP_TYPES: ReadonlyArray<PushupTypeInfo> = [
   {
     id: 'decline',
     slug: 'decline',
+    slugs: {
+      en: 'decline-pushup',
+      fr: 'pompe-declinee',
+      es: 'flexion-declinada',
+      it: 'push-up-declinato',
+      nl: 'decline-pushup',
+      el: 'katapherus-push-up',
+      la: 'pulsus-inversus',
+      no: 'synkende-armheving',
+      zh: 'xiaqing-fuwocheng',
+    },
     entryLabel: 'Decline',
     difficulty: 'intermediate',
     name: 'Decline-Liegestütze (Füße erhöht)',
@@ -206,6 +269,17 @@ export const PUSHUP_TYPES: ReadonlyArray<PushupTypeInfo> = [
   {
     id: 'wide',
     slug: 'weit',
+    slugs: {
+      en: 'wide-pushup',
+      fr: 'pompe-large',
+      es: 'flexion-amplia',
+      it: 'push-up-largo',
+      nl: 'wijde-pushup',
+      el: 'euros-push-up',
+      la: 'pulsus-latus',
+      no: 'bred-armheving',
+      zh: 'kuanju-fuwocheng',
+    },
     entryLabel: 'Wide',
     difficulty: 'intermediate',
     name: 'Weite Liegestütze',
@@ -238,6 +312,17 @@ export const PUSHUP_TYPES: ReadonlyArray<PushupTypeInfo> = [
   {
     id: 'diamond',
     slug: 'diamant',
+    slugs: {
+      en: 'diamond-pushup',
+      fr: 'pompe-diamant',
+      es: 'flexion-diamante',
+      it: 'push-up-diamante',
+      nl: 'diamant-pushup',
+      el: 'diamantenios-push-up',
+      la: 'pulsus-adamantinus',
+      no: 'diamantarmheving',
+      zh: 'zuanshi-fuwocheng',
+    },
     entryLabel: 'Diamond',
     difficulty: 'intermediate',
     name: 'Diamant-Liegestütze',
@@ -270,6 +355,17 @@ export const PUSHUP_TYPES: ReadonlyArray<PushupTypeInfo> = [
   {
     id: 'pike',
     slug: 'pike',
+    slugs: {
+      en: 'pike-pushup',
+      fr: 'pompe-pike',
+      es: 'flexion-pike',
+      it: 'push-up-pike',
+      nl: 'pike-pushup',
+      el: 'pike-push-up',
+      la: 'pulsus-cunei',
+      no: 'pike-armheving',
+      zh: 'qiandao-fuwocheng',
+    },
     entryLabel: 'Pike',
     difficulty: 'intermediate',
     name: 'Pike-Liegestütze',
@@ -302,6 +398,17 @@ export const PUSHUP_TYPES: ReadonlyArray<PushupTypeInfo> = [
   {
     id: 'knuckle',
     slug: 'faust',
+    slugs: {
+      en: 'knuckle-pushup',
+      fr: 'pompe-poings',
+      es: 'flexion-punos',
+      it: 'push-up-pugno',
+      nl: 'vuist-pushup',
+      el: 'grothies-push-up',
+      la: 'pulsus-pugnis',
+      no: 'knokearmheving',
+      zh: 'quantou-fuwocheng',
+    },
     entryLabel: 'Knuckle',
     difficulty: 'intermediate',
     name: 'Faust-Liegestütze',
@@ -334,6 +441,17 @@ export const PUSHUP_TYPES: ReadonlyArray<PushupTypeInfo> = [
   {
     id: 'archer',
     slug: 'archer',
+    slugs: {
+      en: 'archer-pushup',
+      fr: 'pompe-archer',
+      es: 'flexion-arquero',
+      it: 'push-up-archer',
+      nl: 'archer-pushup',
+      el: 'toxotis-push-up',
+      la: 'pulsus-sagittarius',
+      no: 'archer-armheving',
+      zh: 'gongjianshou-fuwocheng',
+    },
     entryLabel: 'Archer',
     difficulty: 'advanced',
     name: 'Archer-Liegestütze',
@@ -368,6 +486,17 @@ export const PUSHUP_TYPES: ReadonlyArray<PushupTypeInfo> = [
   {
     id: 'wall-one-arm',
     slug: 'wand-einarmig',
+    slugs: {
+      en: 'wall-one-arm-pushup',
+      fr: 'pompe-mur-un-bras',
+      es: 'flexion-pared-un-brazo',
+      it: 'push-up-muro-un-braccio',
+      nl: 'muur-een-arm-pushup',
+      el: 'toixou-monos-push-up',
+      la: 'pulsus-parietis-uno-bracchio',
+      no: 'vegg-en-arm-armheving',
+      zh: 'qiangshang-danbi-fuwocheng',
+    },
     entryLabel: 'Wall One-Arm',
     difficulty: 'intermediate',
     name: 'Wand-Einarmige',
@@ -394,6 +523,17 @@ export const PUSHUP_TYPES: ReadonlyArray<PushupTypeInfo> = [
   {
     id: 'negative-one-arm',
     slug: 'negative-einarmig',
+    slugs: {
+      en: 'negative-one-arm-pushup',
+      fr: 'pompe-negative-un-bras',
+      es: 'flexion-negativa-un-brazo',
+      it: 'push-up-negativo-un-braccio',
+      nl: 'negatieve-een-arm-pushup',
+      el: 'arnitiki-monos-push-up',
+      la: 'pulsus-negativus-uno-bracchio',
+      no: 'negativ-en-arm-armheving',
+      zh: 'xiaji-danbi-fuwocheng',
+    },
     entryLabel: 'Negative One-Arm',
     difficulty: 'advanced',
     name: 'Negative Einarmige',
@@ -426,6 +566,17 @@ export const PUSHUP_TYPES: ReadonlyArray<PushupTypeInfo> = [
   {
     id: 'partial-one-arm',
     slug: 'partielle-einarmig',
+    slugs: {
+      en: 'partial-one-arm-pushup',
+      fr: 'pompe-partielle-un-bras',
+      es: 'flexion-parcial-un-brazo',
+      it: 'push-up-parziale-un-braccio',
+      nl: 'gedeeltelijke-een-arm-pushup',
+      el: 'meriki-monos-push-up',
+      la: 'pulsus-partialis-uno-bracchio',
+      no: 'delvis-en-arm-armheving',
+      zh: 'bufen-danbi-fuwocheng',
+    },
     entryLabel: 'Partial One-Arm',
     difficulty: 'advanced',
     name: 'Partielle Einarmige',
@@ -452,6 +603,17 @@ export const PUSHUP_TYPES: ReadonlyArray<PushupTypeInfo> = [
   {
     id: 'one-arm',
     slug: 'einarmig',
+    slugs: {
+      en: 'one-arm-pushup',
+      fr: 'pompe-un-bras',
+      es: 'flexion-un-brazo',
+      it: 'push-up-un-braccio',
+      nl: 'een-arm-pushup',
+      el: 'monos-push-up',
+      la: 'pulsus-uno-bracchio',
+      no: 'en-arm-armheving',
+      zh: 'danbi-fuwocheng',
+    },
     entryLabel: 'One-Arm',
     difficulty: 'advanced',
     name: 'Einarmige Liegestütze',
@@ -494,9 +656,25 @@ const TYPES_BY_ID: ReadonlyMap<PushupTypeId, PushupTypeInfo> = new Map(
   PUSHUP_TYPES.map((t) => [t.id, t])
 );
 
-const TYPES_BY_SLUG: ReadonlyMap<string, PushupTypeInfo> = new Map(
-  PUSHUP_TYPES.map((t) => [t.slug, t])
-);
+/**
+ * Build a slug → type lookup that includes the default slug AND every
+ * per-locale override. A slug that exists in multiple types would be
+ * a catalog bug; the build asserts uniqueness via this map (Map keys
+ * silently overwrite, so a duplicate would surface as a wrong-type
+ * resolution at runtime — caught by tests).
+ */
+const TYPES_BY_SLUG: ReadonlyMap<string, PushupTypeInfo> = (() => {
+  const map = new Map<string, PushupTypeInfo>();
+  for (const t of PUSHUP_TYPES) {
+    map.set(t.slug, t);
+    if (t.slugs) {
+      for (const localeSlug of Object.values(t.slugs)) {
+        if (localeSlug) map.set(localeSlug, t);
+      }
+    }
+  }
+  return map;
+})();
 
 const TYPES_BY_ENTRY_LABEL: ReadonlyMap<string, PushupTypeInfo> = new Map(
   PUSHUP_TYPES.map((t) => [t.entryLabel.toLowerCase(), t])
@@ -506,8 +684,47 @@ export function findPushupType(id: PushupTypeId): PushupTypeInfo | null {
   return TYPES_BY_ID.get(id) ?? null;
 }
 
+/**
+ * Resolve a wiki slug back to a catalog entry. Accepts the default
+ * (German) slug and every per-locale override emitted by
+ * `localizePushupTypeSlug`, so old DE URLs and current locale-specific
+ * URLs both render the same detail page. Returns null only for slugs
+ * outside the catalog (which the detail component redirects to the
+ * overview).
+ */
 export function findPushupTypeBySlug(slug: string): PushupTypeInfo | null {
   return TYPES_BY_SLUG.get(slug) ?? null;
+}
+
+/**
+ * Returns the locale-specific slug for the wiki detail URL, falling
+ * back to the catalog default (`type.slug`) for any locale without an
+ * override. Always returns the canonical slug for the active locale —
+ * call this when emitting `routerLink`, canonical URLs, hreflang
+ * alternates, or sitemap entries to keep the URL set consistent.
+ */
+export function localizePushupTypeSlug(
+  type: PushupTypeInfo,
+  locale: string
+): string {
+  const primary = locale.toLowerCase().split(/[-_]/)[0];
+  return type.slugs?.[primary] ?? type.slug;
+}
+
+/**
+ * Map of `<locale> → <slug>` for one type, including the default
+ * locale (German) under `de`. Useful for emitting hreflang alternate
+ * sets and the sitemap's `alternateSlugs`.
+ */
+export function pushupTypeSlugByLocale(
+  type: PushupTypeInfo,
+  locales: ReadonlyArray<string>
+): Readonly<Record<string, string>> {
+  const out: Record<string, string> = {};
+  for (const lang of locales) {
+    out[lang] = type.slugs?.[lang] ?? type.slug;
+  }
+  return out;
 }
 
 /**

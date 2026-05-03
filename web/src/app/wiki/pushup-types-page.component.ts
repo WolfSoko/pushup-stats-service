@@ -17,13 +17,17 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import {
   localizePushupType,
+  localizePushupTypeSlug,
   PUSHUP_TYPES,
   PushupTypeInfo,
 } from '@pu-stats/models';
 
 interface LocalizedType {
   id: PushupTypeInfo['id'];
+  /** Default (German) slug; used as the on-page anchor `#<slug>`. */
   slug: string;
+  /** Locale-specific slug for the wiki detail URL. */
+  detailSlug: string;
   difficulty: PushupTypeInfo['difficulty'];
   name: string;
   summary: string;
@@ -134,7 +138,7 @@ interface LocalizedType {
                 <a
                   mat-button
                   class="detail-link"
-                  [routerLink]="['/wiki/liegestuetz-typen', type.slug]"
+                  [routerLink]="['/wiki/liegestuetz-typen', type.detailSlug]"
                   i18n="@@wiki.pushupTypes.viewDetail"
                   >Detailseite öffnen</a
                 >
@@ -286,6 +290,7 @@ export class PushupTypesPageComponent {
     PUSHUP_TYPES.map((type) => ({
       id: type.id,
       slug: type.slug,
+      detailSlug: localizePushupTypeSlug(type, this.locale),
       difficulty: type.difficulty,
       ...localizePushupType(type, this.locale),
     }))

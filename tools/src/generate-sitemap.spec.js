@@ -5,6 +5,7 @@ const {
   staticRoutes,
   extractBlogPosts,
   extractTrainingPlanSlugs,
+  extractPushupTypes,
   extractPushupTypeSlugs,
   scanMarkdownBlogPosts,
   buildUrl,
@@ -36,8 +37,8 @@ describe('generate-sitemap', () => {
     });
   });
 
-  describe('extractPushupTypeSlugs', () => {
-    it('parses slug from PUSHUP_TYPES catalog entries', () => {
+  describe('extractPushupTypes', () => {
+    it('parses default slug from PUSHUP_TYPES catalog entries', () => {
       const source = `
         export const PUSHUP_TYPES = [
           {
@@ -49,6 +50,52 @@ describe('generate-sitemap', () => {
             id: 'diamond',
             slug: 'diamant',
             name: 'y',
+          },
+        ];
+      `;
+      expect(extractPushupTypes(source)).toEqual([
+        { id: 'standard', slug: 'standard', slugs: { de: 'standard' } },
+        { id: 'diamond', slug: 'diamant', slugs: { de: 'diamant' } },
+      ]);
+    });
+
+    it('parses per-locale slugs block', () => {
+      const source = `
+        export const PUSHUP_TYPES = [
+          {
+            id: 'diamond',
+            slug: 'diamant',
+            slugs: {
+              en: 'diamond-pushup',
+              fr: 'pompe-diamant',
+            },
+            name: 'y',
+          },
+        ];
+      `;
+      expect(extractPushupTypes(source)).toEqual([
+        {
+          id: 'diamond',
+          slug: 'diamant',
+          slugs: {
+            de: 'diamant',
+            en: 'diamond-pushup',
+            fr: 'pompe-diamant',
+          },
+        },
+      ]);
+    });
+
+    it('extractPushupTypeSlugs returns the default-slug list', () => {
+      const source = `
+        export const PUSHUP_TYPES = [
+          {
+            id: 'standard',
+            slug: 'standard',
+          },
+          {
+            id: 'diamond',
+            slug: 'diamant',
           },
         ];
       `;
@@ -68,20 +115,40 @@ describe('generate-sitemap', () => {
   });
 
   describe('buildPushupTypeRoutes', () => {
-    it('emits one /wiki/liegestuetz-typen/<slug> route per type', () => {
-      const routes = buildPushupTypeRoutes(['standard', 'diamant']);
-      expect(routes).toEqual([
+    it('emits one route per (type × locale) using each locale slug', () => {
+      const routes = buildPushupTypeRoutes([
         {
-          path: '/wiki/liegestuetz-typen/standard',
-          changefreq: 'monthly',
-          priority: '0.6',
-        },
-        {
-          path: '/wiki/liegestuetz-typen/diamant',
-          changefreq: 'monthly',
-          priority: '0.6',
+          id: 'diamond',
+          slug: 'diamant',
+          slugs: { de: 'diamant', en: 'diamond-pushup' },
         },
       ]);
+      const de = routes.find((r) => r.locale === 'de');
+      const en = routes.find((r) => r.locale === 'en');
+      expect(de.path).toBe('/wiki/liegestuetz-typen/diamant');
+      expect(en.path).toBe('/wiki/liegestuetz-typen/diamond-pushup');
+      // Locales without an override fall back to the default slug.
+      const fr = routes.find((r) => r.locale === 'fr');
+      expect(fr.path).toBe('/wiki/liegestuetz-typen/diamant');
+    });
+
+    it('emits a complete alternates set so every locale links to every other', () => {
+      const routes = buildPushupTypeRoutes([
+        {
+          id: 'diamond',
+          slug: 'diamant',
+          slugs: { de: 'diamant', en: 'diamond-pushup' },
+        },
+      ]);
+      const en = routes.find((r) => r.locale === 'en');
+      expect(en.alternates).toContainEqual({
+        lang: 'de',
+        path: '/wiki/liegestuetz-typen/diamant',
+      });
+      expect(en.alternates).toContainEqual({
+        lang: 'en',
+        path: '/wiki/liegestuetz-typen/diamond-pushup',
+      });
     });
   });
 
@@ -501,16 +568,32 @@ describe('generate-sitemap', () => {
       );
     });
 
-    it('emits one /wiki/liegestuetz-typen/<slug> entry per push-up type with hreflang alternates', () => {
-      const xml = generateSitemap([], [], ['standard', 'diamant']);
-      expect(xml).toContain(
-        '<loc>https://pushup-stats.com/de/wiki/liegestuetz-typen/standard</loc>'
+    it('emits per-locale wiki URLs with hreflang alternates pointing at each locale slug', () => {
+      const xml = generateSitemap(
+        [],
+        [],
+        [
+          {
+            id: 'diamond',
+            slug: 'diamant',
+            slugs: { de: 'diamant', en: 'diamond-pushup' },
+          },
+        ]
       );
+      // Default-slug URL emitted for the DE locale.
       expect(xml).toContain(
         '<loc>https://pushup-stats.com/de/wiki/liegestuetz-typen/diamant</loc>'
       );
+      // Locale-specific slug emitted for EN.
       expect(xml).toContain(
-        '<xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en/wiki/liegestuetz-typen/standard"/>'
+        '<loc>https://pushup-stats.com/en/wiki/liegestuetz-typen/diamond-pushup</loc>'
+      );
+      // hreflang alternates point at each locale's correct slug.
+      expect(xml).toContain(
+        '<xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en/wiki/liegestuetz-typen/diamond-pushup"/>'
+      );
+      expect(xml).toContain(
+        '<xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/wiki/liegestuetz-typen/diamant"/>'
       );
     });
   });

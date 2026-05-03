@@ -16,9 +16,12 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import {
   findPushupTypeBySlug,
   localizePushupType,
+  localizePushupTypeSlug,
+  pushupTypeSlugByLocale,
   type PushupTypeInfo,
 } from '@pu-stats/models';
 import { SeoService } from '../core/seo.service';
+import { SUPPORTED_LOCALES } from '../../server-locale-redirect';
 
 const BASE_URL = 'https://pushup-stats.com';
 const LOGO_URL = `${BASE_URL}/assets/pushup-logo.png`;
@@ -233,10 +236,23 @@ export class PushupTypeDetailComponent implements OnInit {
     const titleSuffix = $localize`:@@seo.wiki.pushupType.titleSuffix:Anleitung & Technik | Pushup Tracker`;
     const seoTitle = `${this.name} – ${titleSuffix}`;
 
+    // Per-locale slug map → hreflang alternates that point at every
+    // locale's canonical wiki URL (e.g. `/en/.../diamond-pushup`,
+    // `/fr/.../pompe-diamant`). Required so `<link rel="canonical">`
+    // for the active locale lands on its locale-specific slug instead
+    // of leaking the German default into other locales.
+    const slugByLocale = pushupTypeSlugByLocale(found, SUPPORTED_LOCALES);
+    const alternates: Partial<Record<string, string>> = {};
+    for (const lang of SUPPORTED_LOCALES) {
+      alternates[lang] = `/wiki/liegestuetz-typen/${slugByLocale[lang]}`;
+    }
+    const localeSlug = localizePushupTypeSlug(found, this.locale);
+
     this.seo.update(
       seoTitle,
       this.summary,
-      `/wiki/liegestuetz-typen/${found.slug}`
+      `/wiki/liegestuetz-typen/${localeSlug}`,
+      { alternates }
     );
     // Combine DE + EN keyword sets — the catalog only carries those
     // two, and Google ignores the keywords meta anyway, so this is a
@@ -255,7 +271,8 @@ export class PushupTypeDetailComponent implements OnInit {
     this.removeJsonLd();
 
     const lang = this.locale.toLowerCase().split(/[-_]/)[0];
-    const canonical = `${BASE_URL}/${lang}/wiki/liegestuetz-typen/${type.slug}`;
+    const localeSlug = localizePushupTypeSlug(type, this.locale);
+    const canonical = `${BASE_URL}/${lang}/wiki/liegestuetz-typen/${localeSlug}`;
     const jsonLd: Record<string, unknown> = {
       '@context': 'https://schema.org',
       '@type': 'HowTo',

@@ -4,7 +4,9 @@ import {
   findPushupTypeByEntryLabel,
   findPushupTypeBySlug,
   localizePushupType,
+  localizePushupTypeSlug,
   PUSHUP_TYPES,
+  pushupTypeSlugByLocale,
 } from './pushup-type.models';
 
 describe('pushup-type catalog', () => {
@@ -75,11 +77,77 @@ describe('pushup-type catalog', () => {
       expect(findPushupTypeBySlug('does-not-exist')).toBeNull();
     });
 
+    it('finds a type by any of its per-locale slug overrides', () => {
+      // German default slug still resolves (backwards compat).
+      expect(findPushupTypeBySlug('diamant')?.id).toBe('diamond');
+      // English-specific override resolves to the same type.
+      expect(findPushupTypeBySlug('diamond-pushup')?.id).toBe('diamond');
+      // Non-canonical locale slug also resolves so old crawler-found
+      // URLs from before per-locale slugs existed still render.
+      expect(findPushupTypeBySlug('pompe-diamant')?.id).toBe('diamond');
+    });
+
     it('returns null for unknown / empty entry labels', () => {
       expect(findPushupTypeByEntryLabel('')).toBeNull();
       expect(findPushupTypeByEntryLabel(null)).toBeNull();
       expect(findPushupTypeByEntryLabel(undefined)).toBeNull();
       expect(findPushupTypeByEntryLabel('Custom-Move')).toBeNull();
+    });
+  });
+
+  describe('localizePushupTypeSlug + pushupTypeSlugByLocale', () => {
+    const diamond = findPushupType('diamond');
+    if (!diamond) throw new Error('diamond entry must exist');
+
+    it('returns the German default slug for the source locale', () => {
+      expect(localizePushupTypeSlug(diamond, 'de')).toBe('diamant');
+    });
+
+    it('returns the English override for an "en" locale', () => {
+      expect(localizePushupTypeSlug(diamond, 'en')).toBe('diamond-pushup');
+    });
+
+    it('falls back to the German default slug for a locale without an override', () => {
+      // `ja` (Japanese) has no override in PUSHUP_TYPES so the default
+      // German slug is what we serve. Documenting this behaviour
+      // explicitly so future locale additions don't regress it.
+      expect(localizePushupTypeSlug(diamond, 'ja')).toBe('diamant');
+    });
+
+    it('honours the primary subtag for compound locales like "en-US"', () => {
+      expect(localizePushupTypeSlug(diamond, 'en-US')).toBe('diamond-pushup');
+    });
+
+    it('builds a slug-by-locale map for emitting hreflang alternates', () => {
+      const map = pushupTypeSlugByLocale(diamond, ['de', 'en', 'fr']);
+      expect(map).toEqual({
+        de: 'diamant',
+        en: 'diamond-pushup',
+        fr: 'pompe-diamant',
+      });
+    });
+
+    it('every catalog type defines a slug for every supported locale (or falls back cleanly)', () => {
+      // Defensive: nothing crashes even when `slugs` is undefined.
+      for (const type of PUSHUP_TYPES) {
+        for (const lang of [
+          'de',
+          'en',
+          'fr',
+          'es',
+          'it',
+          'nl',
+          'el',
+          'la',
+          'no',
+          'zh',
+        ]) {
+          const slug = localizePushupTypeSlug(type, lang);
+          expect(slug.length).toBeGreaterThan(0);
+          // ASCII-only — non-ASCII slugs break SEO crawlers.
+          expect(/^[a-z0-9-]+$/i.test(slug)).toBe(true);
+        }
+      }
     });
   });
 
