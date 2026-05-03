@@ -15,7 +15,7 @@
       </notes>
       <segment state="translated">
         <source> Wir verwenden Cookies für die Funktion der Website. Zusätzlich nutzen wir Google Analytics und Google AdSense. Sie können wählen, ob Sie personalisierte Werbung und Analyse zulassen möchten. </source>
-      <target> Wir verwenden Cookies für die Funktion der Website. Zusätzlich nutzen wir Google Analytics und Google AdSense. Sie können wählen, ob Sie personalisierte Werbung und Analyse zulassen möchten. </target></segment>
+      <target> 我们使用 Cookie 来提供网站功能。此外，我们还使用 Google Analytics 和 Google AdSense。您可以选择是否允许个性化广告和分析。 </target></segment>
     </unit>
     <unit id="consent.banner.acceptAll">
       <notes>
@@ -177,7 +177,7 @@
       <segment state="translated">
         <source> Einrichtung abschließen
 </source>
-      <target> Einrichtung abschließen
+      <target> 完成设置
 </target></segment>
     </unit>
     <unit id="auth.onboarding.google.username">
@@ -216,7 +216,7 @@
       </notes>
       <segment state="translated">
         <source> Zurück </source>
-      <target> Zurück </target></segment>
+      <target> 返回 </target></segment>
     </unit>
     <unit id="auth.next">
       <notes>
@@ -229,7 +229,7 @@
       </notes>
       <segment state="translated">
         <source> Weiter </source>
-      <target> Weiter </target></segment>
+      <target> 继续 </target></segment>
     </unit>
     <unit id="cancel">
       <notes>
@@ -242,7 +242,7 @@
       </notes>
       <segment state="translated">
         <source> Abbrechen </source>
-      <target> Abbrechen </target></segment>
+      <target> 取消 </target></segment>
     </unit>
     <unit id="auth.onboarding.google.finish">
       <notes>
@@ -250,7 +250,7 @@
       </notes>
       <segment state="translated">
         <source> Abschließen </source>
-      <target> Abschließen </target></segment>
+      <target> 完成 </target></segment>
     </unit>
     <unit id="auth.onboarding.google.error.noUser">
       <notes>
@@ -282,7 +282,7 @@
       </notes>
       <segment state="translated">
         <source>Bitte melde dich an</source>
-      <target>Bitte melde dich an</target></segment>
+      <target>请登录</target></segment>
     </unit>
     <unit id="auth.login.loading">
       <notes>
@@ -290,7 +290,7 @@
       </notes>
       <segment state="translated">
         <source>Anmelden...</source>
-      <target>Anmelden...</target></segment>
+      <target>登录中...</target></segment>
     </unit>
     <unit id="auth.email">
       <notes>
@@ -327,7 +327,7 @@
       </notes>
       <segment state="translated">
         <source>oder</source>
-      <target>oder</target></segment>
+      <target>或</target></segment>
     </unit>
     <unit id="auth.google.signin">
       <notes>
@@ -335,7 +335,7 @@
       </notes>
       <segment state="translated">
         <source> Mit Google anmelden </source>
-      <target> Mit Google anmelden </target></segment>
+      <target> 使用 Google 登录 </target></segment>
     </unit>
     <unit id="auth.register.noAccount">
       <notes>
@@ -351,7 +351,7 @@
       </notes>
       <segment state="translated">
         <source> Registrieren </source>
-      <target> Registrieren </target></segment>
+      <target> 注册 </target></segment>
     </unit>
     <unit id="validate.email.required">
       <notes>
@@ -360,7 +360,7 @@
       </notes>
       <segment state="translated">
         <source>Bitte E-Mail eingeben!</source>
-      <target>Bitte E-Mail eingeben!</target></segment>
+      <target>请输入电子邮箱！</target></segment>
     </unit>
     <unit id="validate.email.email">
       <notes>
@@ -369,7 +369,7 @@
       </notes>
       <segment state="translated">
         <source>Bitte gültige E-Mail eingeben!</source>
-      <target>Bitte gültige E-Mail eingeben!</target></segment>
+      <target>请输入有效的电子邮箱！</target></segment>
     </unit>
     <unit id="validate.password.required">
       <notes>
@@ -378,7 +378,7 @@
       </notes>
       <segment state="translated">
         <source>Bitte Passwort eingeben!</source>
-      <target>Bitte Passwort eingeben!</target></segment>
+      <target>请输入密码！</target></segment>
     </unit>
     <unit id="validate.password.minLength">
       <notes>
@@ -387,7 +387,7 @@
       </notes>
       <segment state="translated">
         <source>Passwort muss mindestens 8 Zeichen lang sein!</source>
-      <target>Passwort muss mindestens 8 Zeichen lang sein!</target></segment>
+      <target>密码至少需要 8 个字符！</target></segment>
     </unit>
     <unit id="auth.login.success">
       <notes>
@@ -395,7 +395,7 @@
       </notes>
       <segment state="translated">
         <source>Erfolgreich angemeldet! 👋</source>
-      <target>Erfolgreich angemeldet! 👋</target></segment>
+      <target>登录成功！👋</target></segment>
     </unit>
     <unit id="auth.register.success.title">
       <notes>
@@ -403,7 +403,7 @@
       </notes>
       <segment state="translated">
         <source>Geschafft! 🎉</source>
-      <target>Geschafft! 🎉</target></segment>
+      <target>做得好！🎉</target></segment>
     </unit>
     <unit id="auth.register.success.text">
       <notes>
@@ -411,7 +411,7 @@
       </notes>
       <segment state="translated">
         <source> Dein Account ist bereit. Zeit für die ersten Liegestütze 💪 </source>
-      <target> Dein Account ist bereit. Zeit für die ersten Liegestütze 💪 </target></segment>
+      <target> 你的账户已准备好。准备好做你的第一批俯卧撑了吗 💪 </target></segment>
     </unit>
     <unit id="auth.register.success.dashboard">
       <notes>
@@ -419,7 +419,7 @@
       </notes>
       <segment state="translated">
         <source> Zum Dashboard </source>
-      <target> Zum Dashboard </target></segment>
+      <target> 前往仪表板 </target></segment>
     </unit>
     <unit id="auth.register.title">
       <notes>
@@ -427,7 +427,7 @@
       </notes>
       <segment state="translated">
         <source>Registrierung</source>
-      <target>Registrierung</target></segment>
+      <target>注册</target></segment>
     </unit>
     <unit id="auth.register.subtitle">
       <notes>
@@ -435,7 +435,7 @@
       </notes>
       <segment state="translated">
         <source>Erstelle dein Konto</source>
-      <target>Erstelle dein Konto</target></segment>
+      <target>创建你的账户</target></segment>
     </unit>
     <unit id="auth.register.plan.preselected">
       <notes>
@@ -451,7 +451,7 @@
       </notes>
       <segment state="translated">
         <source> Nach der Registrierung starten wir den Plan automatisch und setzen dein Tagesziel passend. </source>
-      <target> Nach der Registrierung starten wir den Plan automatisch und setzen dein Tagesziel passend. </target></segment>
+      <target> 注册后，我们会自动启动计划并设置你的每日目标。 </target></segment>
     </unit>
     <unit id="auth.google.signup">
       <notes>
@@ -459,7 +459,7 @@
       </notes>
       <segment state="translated">
         <source> Mit Google registrieren </source>
-      <target> Mit Google registrieren </target></segment>
+      <target> 使用 Google 注册 </target></segment>
     </unit>
     <unit id="auth.register.google.skipPassword">
       <notes>
@@ -467,7 +467,7 @@
       </notes>
       <segment state="translated">
         <source> Passwort-Schritt übersprungen (Google Registrierung). </source>
-      <target> Passwort-Schritt übersprungen (Google Registrierung). </target></segment>
+      <target> 密码步骤已跳过（Google 注册）。 </target></segment>
     </unit>
     <unit id="auth.register.back">
       <notes>
@@ -479,7 +479,7 @@
       </notes>
       <segment state="translated">
         <source> Zurück</source>
-      <target> Zurück</target></segment>
+      <target> 返回</target></segment>
     </unit>
     <unit id="auth.register.password.hint">
       <notes>
@@ -487,7 +487,7 @@
       </notes>
       <segment state="translated">
         <source> Mindestens 8 Zeichen, Groß- und Kleinbuchstaben, Zahl und Sonderzeichen. </source>
-      <target> Mindestens 8 Zeichen, Groß- und Kleinbuchstaben, Zahl und Sonderzeichen. </target></segment>
+      <target> 至少 8 个字符，包含大小写字母、数字和特殊字符。 </target></segment>
     </unit>
     <unit id="auth.register.password.repeat">
       <notes>
@@ -503,7 +503,7 @@
       </notes>
       <segment state="translated">
         <source> Ich willige in die Datenverarbeitung zum Erheben technisch notwendiger Daten, statistischer Auswertungen und zum Ausspielen gezielter Werbung ein. </source>
-      <target> Ich willige in die Datenverarbeitung zum Erheben technisch notwendiger Daten, statistischer Auswertungen und zum Ausspielen gezielter Werbung ein. </target></segment>
+      <target> 我同意进行数据处理，用于收集技术必要数据、统计分析和投放有针对性的广告。 </target></segment>
     </unit>
     <unit id="auth.register.submit">
       <notes>
@@ -511,7 +511,7 @@
       </notes>
       <segment state="translated">
         <source> Registrieren </source>
-      <target> Registrieren </target></segment>
+      <target> 注册 </target></segment>
     </unit>
     <unit id="validate.password.policy">
       <notes>
@@ -519,7 +519,7 @@
       </notes>
       <segment state="translated">
         <source>Passwort braucht Groß-/Kleinbuchstaben, Zahl und Sonderzeichen.</source>
-      <target>Passwort braucht Groß-/Kleinbuchstaben, Zahl und Sonderzeichen.</target></segment>
+      <target>密码需要包含大小写字母、数字和特殊字符。</target></segment>
     </unit>
     <unit id="user.menu.history">
       <notes>
@@ -527,7 +527,7 @@
       </notes>
       <segment state="translated">
         <source>Historie</source>
-      <target>Historie</target></segment>
+      <target>历史记录</target></segment>
     </unit>
     <unit id="user.menu.reminders">
       <notes>
@@ -535,7 +535,7 @@
       </notes>
       <segment state="translated">
         <source>Erinnerungen</source>
-      <target>Erinnerungen</target></segment>
+      <target>提醒</target></segment>
     </unit>
     <unit id="user.menu.settings">
       <notes>
@@ -543,7 +543,7 @@
       </notes>
       <segment state="translated">
         <source>Einstellungen</source>
-      <target>Einstellungen</target></segment>
+      <target>设置</target></segment>
     </unit>
     <unit id="user.menu.logout">
       <notes>
@@ -559,7 +559,7 @@
       </notes>
       <segment state="translated">
         <source>Du nutzt die App als Gast</source>
-      <target>Du nutzt die App als Gast</target></segment>
+      <target>你正在以访客身份使用该应用</target></segment>
     </unit>
     <unit id="user.menu.convertAccount">
       <notes>
@@ -567,7 +567,7 @@
       </notes>
       <segment state="translated">
         <source>Umwandeln in Nutzerkonto</source>
-      <target>Umwandeln in Nutzerkonto</target></segment>
+      <target>转换为用户账户</target></segment>
     </unit>
     <unit id="user.menu.signIn">
       <notes>
@@ -584,7 +584,7 @@
       </notes>
       <segment state="translated">
         <source>Als Gast ausprobieren</source>
-      <target>Als Gast ausprobieren</target></segment>
+      <target>以访客身份尝试</target></segment>
     </unit>
     <unit id="user.menu.aria">
       <notes>
@@ -592,7 +592,7 @@
       </notes>
       <segment state="translated">
         <source>Nutzerkonto-Menü</source>
-      <target>Nutzerkonto-Menü</target></segment>
+      <target>用户账户菜单</target></segment>
     </unit>
     <unit id="user.menu.guestAria">
       <notes>
@@ -600,7 +600,7 @@
       </notes>
       <segment state="translated">
         <source>Gast-Menü</source>
-      <target>Gast-Menü</target></segment>
+      <target>访客菜单</target></segment>
     </unit>
     <unit id="user.menu.anonAria">
       <notes>
@@ -608,7 +608,7 @@
       </notes>
       <segment state="translated">
         <source>Anmelde-Menü</source>
-      <target>Anmelde-Menü</target></segment>
+      <target>登录菜单</target></segment>
     </unit>
     <unit id="quickAdd.fab.feedbackAria">
       <notes>
@@ -616,7 +616,7 @@
       </notes>
       <segment state="translated">
         <source>Feedback geben</source>
-      <target>Feedback geben</target></segment>
+      <target>提供反馈</target></segment>
     </unit>
     <unit id="quickAdd.fab.feedback">
       <notes>
@@ -624,7 +624,7 @@
       </notes>
       <segment state="translated">
         <source>Feedback</source>
-      <target>Feedback</target></segment>
+      <target>反馈</target></segment>
     </unit>
     <unit id="quickAdd.fab.customValueAria">
       <notes>
@@ -632,7 +632,7 @@
       </notes>
       <segment state="translated">
         <source>Eigenen Wert eingeben</source>
-      <target>Eigenen Wert eingeben</target></segment>
+      <target>输入自定义值</target></segment>
     </unit>
     <unit id="quickAdd.fab.customValue">
       <notes>
@@ -640,7 +640,7 @@
       </notes>
       <segment state="translated">
         <source>Eigener Wert</source>
-      <target>Eigener Wert</target></segment>
+      <target>自定义值</target></segment>
     </unit>
     <unit id="quickAdd.fab.fillToGoal">
       <notes>
@@ -664,7 +664,7 @@
       </notes>
       <segment state="translated">
         <source>Schnellerfassung öffnen</source>
-      <target>Schnellerfassung öffnen</target></segment>
+      <target>打开快速添加</target></segment>
     </unit>
     <unit id="quickAdd.fab.close">
       <notes>
@@ -672,7 +672,7 @@
       </notes>
       <segment state="translated">
         <source>Schnellerfassung schließen</source>
-      <target>Schnellerfassung schließen</target></segment>
+      <target>关闭快速添加</target></segment>
     </unit>
     <unit id="quickAdd.fab.goalReached">
       <notes>
@@ -680,7 +680,7 @@
       </notes>
       <segment state="translated">
         <source>Ziel erreicht ✓</source>
-      <target>Ziel erreicht ✓</target></segment>
+      <target>目标已达成 ✓</target></segment>
     </unit>
     <unit id="quickAdd.fab.goalReachedAria">
       <notes>
@@ -688,7 +688,7 @@
       </notes>
       <segment state="translated">
         <source>Tagesziel bereits erreicht</source>
-      <target>Tagesziel bereits erreicht</target></segment>
+      <target>每日目标已达成</target></segment>
     </unit>
     <unit id="quickAdd.fab.repAria">
       <notes>
@@ -742,7 +742,7 @@
       </notes>
       <segment state="translated">
         <source>Eintrag konnte nicht gespeichert werden.</source>
-      <target>Eintrag konnte nicht gespeichert werden.</target></segment>
+      <target>无法保存条目。</target></segment>
     </unit>
     <unit id="plan.day.rest">
       <notes>
@@ -758,7 +758,7 @@
       </notes>
       <segment state="translated">
         <source>Ruhetag — Mobility</source>
-      <target>Ruhetag — Mobility</target></segment>
+      <target>休息日 — 活动度训练</target></segment>
     </unit>
     <unit id="plan.day.rest.prepFinal">
       <notes>
@@ -766,7 +766,7 @@
       </notes>
       <segment state="translated">
         <source>Ruhetag — Vorbereitung Endtest</source>
-      <target>Ruhetag — Vorbereitung Endtest</target></segment>
+      <target>休息日 — 准备最终测试</target></segment>
     </unit>
     <unit id="plan.day.light">
       <notes>
@@ -774,7 +774,7 @@
       </notes>
       <segment state="translated">
         <source>Leichter Tag</source>
-      <target>Leichter Tag</target></segment>
+      <target>轻量级训练日</target></segment>
     </unit>
     <unit id="plan.day.activeRecovery">
       <notes>
@@ -782,7 +782,7 @@
       </notes>
       <segment state="translated">
         <source>Aktive Erholung</source>
-      <target>Aktive Erholung</target></segment>
+      <target>积极恢复</target></segment>
     </unit>
     <unit id="plan.day.mobility.chestStretch">
       <notes>
@@ -790,7 +790,7 @@
       </notes>
       <segment state="translated">
         <source>Mobility &amp; Brust-Stretching</source>
-      <target>Mobility &amp; Brust-Stretching</target></segment>
+      <target>活动度训练 &amp;amp; 胸部拉伸</target></segment>
     </unit>
     <unit id="plan.day.finalTest.maxNoPause">
       <notes>
@@ -798,7 +798,7 @@
       </notes>
       <segment state="translated">
         <source>Endtest: Maximale Liegestütze ohne Pause</source>
-      <target>Endtest: Maximale Liegestütze ohne Pause</target></segment>
+      <target>最终测试：最大俯卧撑（不停顿）</target></segment>
     </unit>
     <unit id="plan.day.amrap.3x">
       <notes>
@@ -814,7 +814,7 @@
       </notes>
       <segment state="translated">
         <source>3×AMRAP, 90 s Pause</source>
-      <target>3×AMRAP, 90 s Pause</target></segment>
+      <target>3×AMRAP，90 秒休息</target></segment>
     </unit>
     <unit id="plan.day.amrap.4x">
       <notes>
@@ -830,7 +830,7 @@
       </notes>
       <segment state="translated">
         <source>4×AMRAP, 60 s Pause</source>
-      <target>4×AMRAP, 60 s Pause</target></segment>
+      <target>4×AMRAP，60 秒休息</target></segment>
     </unit>
     <unit id="plan.day.targetReps.5">
       <notes>
@@ -838,7 +838,7 @@
       </notes>
       <segment state="translated">
         <source>5 Sätze Zielwiederholungen</source>
-      <target>5 Sätze Zielwiederholungen</target></segment>
+      <target>5 组目标次数</target></segment>
     </unit>
     <unit id="plan.day.sets.4x90s">
       <notes>
@@ -846,7 +846,7 @@
       </notes>
       <segment state="translated">
         <source>4 Sätze, 90 s Pause</source>
-      <target>4 Sätze, 90 s Pause</target></segment>
+      <target>4 组，90 秒休息</target></segment>
     </unit>
     <unit id="plan.day.sets.3x70pct">
       <notes>
@@ -854,7 +854,7 @@
       </notes>
       <segment state="translated">
         <source>3 Sätze à 70 %</source>
-      <target>3 Sätze à 70 %</target></segment>
+      <target>3 组 × 70%</target></segment>
     </unit>
     <unit id="plan.day.light.2x50pct">
       <notes>
@@ -862,7 +862,7 @@
       </notes>
       <segment state="translated">
         <source>Leichter Tag — 2×50 %</source>
-      <target>Leichter Tag — 2×50 %</target></segment>
+      <target>轻量级训练日 — 2×50%</target></segment>
     </unit>
     <unit id="plan.recruit-6w.day.1.desc">
       <notes>
@@ -870,7 +870,7 @@
       </notes>
       <segment state="translated">
         <source>3×10 saubere Liegestütze, 90 s Pause</source>
-      <target>3×10 saubere Liegestütze, 90 s Pause</target></segment>
+      <target>3×10 标准俯卧撑，90 秒休息</target></segment>
     </unit>
     <unit id="plan.recruit-6w.day.2.desc">
       <notes>
@@ -878,7 +878,7 @@
       </notes>
       <segment state="translated">
         <source>Ruhetag — Stretching, Mobility</source>
-      <target>Ruhetag — Stretching, Mobility</target></segment>
+      <target>休息日 — 拉伸、活动度训练</target></segment>
     </unit>
     <unit id="plan.recruit-6w.day.3.desc">
       <notes>
@@ -886,7 +886,7 @@
       </notes>
       <segment state="translated">
         <source>3×AMRAP, 90 s Pause (Ziel ≈12-11-10)</source>
-      <target>3×AMRAP, 90 s Pause (Ziel ≈12-11-10)</target></segment>
+      <target>3×AMRAP，90 秒休息（目标约 12-11-10）</target></segment>
     </unit>
     <unit id="plan.recruit-6w.day.6.desc">
       <notes>
@@ -894,7 +894,7 @@
       </notes>
       <segment state="translated">
         <source>Leichter Tag — 50 % vom Maximum</source>
-      <target>Leichter Tag — 50 % vom Maximum</target></segment>
+      <target>轻量级训练日 — 最大值的 50%</target></segment>
     </unit>
     <unit id="plan.recruit-6w.day.36.desc">
       <notes>
@@ -902,7 +902,7 @@
       </notes>
       <segment state="translated">
         <source>5 Sätze, volle Bewegungsamplitude</source>
-      <target>5 Sätze, volle Bewegungsamplitude</target></segment>
+      <target>5 组，全程活动范围</target></segment>
     </unit>
     <unit id="plan.recruit-6w.day.38.desc">
       <notes>
@@ -910,7 +910,7 @@
       </notes>
       <segment state="translated">
         <source>5 Sätze, kontrolliertes Tempo</source>
-      <target>5 Sätze, kontrolliertes Tempo</target></segment>
+      <target>5 组，控制速度</target></segment>
     </unit>
     <unit id="plan.recruit-6w.day.40.desc">
       <notes>
@@ -918,7 +918,7 @@
       </notes>
       <segment state="translated">
         <source>5 Sätze leicht</source>
-      <target>5 Sätze leicht</target></segment>
+      <target>5 组轻松</target></segment>
     </unit>
     <unit id="plan.challenge-30d.day.1.desc">
       <notes>
@@ -926,7 +926,7 @@
       </notes>
       <segment state="translated">
         <source>Maximaltest — als Ausgangswert eintragen</source>
-      <target>Maximaltest — als Ausgangswert eintragen</target></segment>
+      <target>最大值测试 — 记录为基准</target></segment>
     </unit>
     <unit id="plan.challenge-30d.day.3.desc">
       <notes>
@@ -934,7 +934,7 @@
       </notes>
       <segment state="translated">
         <source>Leichter Tag — 2×50 % vom Maximum</source>
-      <target>Leichter Tag — 2×50 % vom Maximum</target></segment>
+      <target>轻量级训练日 — 最大值的 2×50%</target></segment>
     </unit>
     <unit id="plan.challenge-30d.day.9.desc">
       <notes>
@@ -942,7 +942,7 @@
       </notes>
       <segment state="translated">
         <source>Leichter Tag — 3×60 % vom Maximum</source>
-      <target>Leichter Tag — 3×60 % vom Maximum</target></segment>
+      <target>轻量级训练日 — 最大值的 3×60%</target></segment>
     </unit>
     <unit id="plan.challenge-30d.day.15.desc">
       <notes>
@@ -950,7 +950,7 @@
       </notes>
       <segment state="translated">
         <source>5 Sätze à ~80 % vom Maximum</source>
-      <target>5 Sätze à ~80 % vom Maximum</target></segment>
+      <target>5 组 × 最大值的约 80%</target></segment>
     </unit>
     <unit id="plan.challenge-30d.day.22.desc">
       <notes>
@@ -958,7 +958,7 @@
       </notes>
       <segment state="translated">
         <source>3 Sätze à 70 % — Qualität vor Quantität</source>
-      <target>3 Sätze à 70 % — Qualität vor Quantität</target></segment>
+      <target>3 组 × 70% — 质量优于数量</target></segment>
     </unit>
     <unit id="plan.challenge-30d.day.27.desc">
       <notes>
@@ -966,7 +966,7 @@
       </notes>
       <segment state="translated">
         <source>Aktive Erholung — Spaziergang, Mobility</source>
-      <target>Aktive Erholung — Spaziergang, Mobility</target></segment>
+      <target>积极恢复 — 散步、活动度训练</target></segment>
     </unit>
     <unit id="plan.challenge-30d.day.29.desc">
       <notes>
@@ -974,7 +974,7 @@
       </notes>
       <segment state="translated">
         <source>Ruhe vor dem Endtest</source>
-      <target>Ruhe vor dem Endtest</target></segment>
+      <target>最终测试前休息</target></segment>
     </unit>
     <unit id="plan.over-40-4w.day.1.desc">
       <notes>
@@ -982,7 +982,7 @@
       </notes>
       <segment state="translated">
         <source>Maximaltest mit sauberer Technik</source>
-      <target>Maximaltest mit sauberer Technik</target></segment>
+      <target>最大值测试，保持正确的技术</target></segment>
     </unit>
     <unit id="plan.over-40-4w.day.2.desc">
       <notes>
@@ -990,7 +990,7 @@
       </notes>
       <segment state="translated">
         <source>3×8 Knie- oder erhöhte Liegestütze</source>
-      <target>3×8 Knie- oder erhöhte Liegestütze</target></segment>
+      <target>3×8 膝盖俯卧撑或提高俯卧撑</target></segment>
     </unit>
     <unit id="plan.over-40-4w.day.4.desc">
       <notes>
@@ -998,7 +998,7 @@
       </notes>
       <segment state="translated">
         <source>3×9 saubere Liegestütze</source>
-      <target>3×9 saubere Liegestütze</target></segment>
+      <target>3×9 标准俯卧撑</target></segment>
     </unit>
     <unit id="plan.over-40-4w.day.5.desc">
       <notes>
@@ -1006,7 +1006,7 @@
       </notes>
       <segment state="translated">
         <source>Ruhetag — Schulter-Mobility</source>
-      <target>Ruhetag — Schulter-Mobility</target></segment>
+      <target>休息日 — 肩部活动度训练</target></segment>
     </unit>
     <unit id="plan.over-40-4w.day.6.desc">
       <notes>
@@ -1014,7 +1014,7 @@
       </notes>
       <segment state="translated">
         <source>3×10 saubere Liegestütze</source>
-      <target>3×10 saubere Liegestütze</target></segment>
+      <target>3×10 标准俯卧撑</target></segment>
     </unit>
     <unit id="plan.over-40-4w.day.8.desc">
       <notes>
@@ -1046,7 +1046,7 @@
       </notes>
       <segment state="translated">
         <source>4 Sätze, kontrolliertes Tempo</source>
-      <target>4 Sätze, kontrolliertes Tempo</target></segment>
+      <target>4 组，控制速度</target></segment>
     </unit>
     <unit id="plan.over-40-4w.day.24.desc">
       <notes>
@@ -1054,7 +1054,7 @@
       </notes>
       <segment state="translated">
         <source>4 Sätze, langsame Exzentrik</source>
-      <target>4 Sätze, langsame Exzentrik</target></segment>
+      <target>4 组，缓慢离心</target></segment>
     </unit>
     <unit id="plan.over-40-4w.day.28.desc">
       <notes>
@@ -1062,7 +1062,7 @@
       </notes>
       <segment state="translated">
         <source>Endtest: Maximale Liegestütze</source>
-      <target>Endtest: Maximale Liegestütze</target></segment>
+      <target>最终测试：最大俯卧撑</target></segment>
     </unit>
     <unit id="plan.daily-100-30d.day.1.desc">
       <notes>
@@ -1070,7 +1070,7 @@
       </notes>
       <segment state="translated">
         <source>Baseline-Test: maximale Wiederholungen in einem Satz</source>
-      <target>Baseline-Test: maximale Wiederholungen in einem Satz</target></segment>
+      <target>基准测试：单组最大重复次数</target></segment>
     </unit>
     <unit id="plan.daily-100-30d.day.2.desc">
       <notes>
@@ -1078,7 +1078,7 @@
       </notes>
       <segment state="translated">
         <source>5×10 saubere Wiederholungen, 60 s Pause</source>
-      <target>5×10 saubere Wiederholungen, 60 s Pause</target></segment>
+      <target>5×10 标准重复，60 秒休息</target></segment>
     </unit>
     <unit id="plan.daily-100-30d.day.3.desc">
       <notes>
@@ -1086,7 +1086,7 @@
       </notes>
       <segment state="translated">
         <source>5×12, 60 s Pause</source>
-      <target>5×12, 60 s Pause</target></segment>
+      <target>5×12，60 秒休息</target></segment>
     </unit>
     <unit id="plan.daily-100-30d.day.4.desc">
       <notes>
@@ -1094,7 +1094,7 @@
       </notes>
       <segment state="translated">
         <source>5×12, 60 s Pause</source>
-      <target>5×12, 60 s Pause</target></segment>
+      <target>5×12，60 秒休息</target></segment>
     </unit>
     <unit id="plan.daily-100-30d.day.5.desc">
       <notes>
@@ -1102,7 +1102,7 @@
       </notes>
       <segment state="translated">
         <source>5×14, 60 s Pause</source>
-      <target>5×14, 60 s Pause</target></segment>
+      <target>5×14，60 秒休息</target></segment>
     </unit>
     <unit id="plan.daily-100-30d.day.6.desc">
       <notes>
@@ -1110,7 +1110,7 @@
       </notes>
       <segment state="translated">
         <source>Leichter Tag — 2×15 in lockerem Tempo</source>
-      <target>Leichter Tag — 2×15 in lockerem Tempo</target></segment>
+      <target>轻量级训练日 — 2×15，轻松节奏</target></segment>
     </unit>
     <unit id="plan.daily-100-30d.day.8.desc">
       <notes>
@@ -1150,7 +1150,7 @@
       </notes>
       <segment state="translated">
         <source>Erstes Hundert: 5×20</source>
-      <target>Erstes Hundert: 5×20</target></segment>
+      <target>首个百位数：5×20</target></segment>
     </unit>
     <unit id="plan.daily-100-30d.day.15.desc">
       <notes>
@@ -1158,7 +1158,7 @@
       </notes>
       <segment state="translated">
         <source>4×25 (weniger Sätze, mehr Wiederholungen)</source>
-      <target>4×25 (weniger Sätze, mehr Wiederholungen)</target></segment>
+      <target>4×25（较少的组，更多的重复）</target></segment>
     </unit>
     <unit id="plan.daily-100-30d.day.16.desc">
       <notes>
@@ -1190,7 +1190,7 @@
       </notes>
       <segment state="translated">
         <source>4×25 — Tempo bewusst verlangsamen</source>
-      <target>4×25 — Tempo bewusst verlangsamen</target></segment>
+      <target>4×25 — 刻意放慢速度</target></segment>
     </unit>
     <unit id="plan.daily-100-30d.day.22.desc">
       <notes>
@@ -1230,7 +1230,7 @@
       </notes>
       <segment state="translated">
         <source>Letzter 100er-Tag vor dem Test</source>
-      <target>Letzter 100er-Tag vor dem Test</target></segment>
+      <target>测试前最后一个百位数日</target></segment>
     </unit>
     <unit id="plan.daily-100-30d.day.27.desc">
       <notes>
@@ -1238,7 +1238,7 @@
       </notes>
       <segment state="translated">
         <source>Leichter Tag — Form-Check</source>
-      <target>Leichter Tag — Form-Check</target></segment>
+      <target>轻量级训练日 — 形式检查</target></segment>
     </unit>
     <unit id="plan.daily-100-30d.day.29.desc">
       <notes>
@@ -1246,7 +1246,7 @@
       </notes>
       <segment state="translated">
         <source>Ruhetag — Vorbereitung auf den Endtest</source>
-      <target>Ruhetag — Vorbereitung auf den Endtest</target></segment>
+      <target>休息日 — 为最终测试做准备</target></segment>
     </unit>
     <unit id="plan.daily-100-30d.day.30.desc">
       <notes>
@@ -1254,7 +1254,7 @@
       </notes>
       <segment state="translated">
         <source>Endtest: Maximale saubere Wiederholungen in einem Satz</source>
-      <target>Endtest: Maximale saubere Wiederholungen in einem Satz</target></segment>
+      <target>最终测试：单组最大标准重复次数</target></segment>
     </unit>
     <unit id="plan.one-arm-12w.day.1.desc">
       <notes>
@@ -1262,7 +1262,7 @@
       </notes>
       <segment state="translated">
         <source>Archer-Liegestütze 3×6</source>
-      <target>Archer-Liegestütze 3×6</target></segment>
+      <target>射手俯卧撑 3×6</target></segment>
     </unit>
     <unit id="plan.one-arm-12w.day.3.desc">
       <notes>
@@ -1270,7 +1270,7 @@
       </notes>
       <segment state="translated">
         <source>Wand-Einarmige 3×10 (langsame Exzentrik)</source>
-      <target>Wand-Einarmige 3×10 (langsame Exzentrik)</target></segment>
+      <target>墙单臂 3×10（缓慢离心）</target></segment>
     </unit>
     <unit id="plan.one-arm-12w.day.5.desc">
       <notes>
@@ -1278,7 +1278,7 @@
       </notes>
       <segment state="translated">
         <source>Standard-Liegestütze 3×20 (Volumen)</source>
-      <target>Standard-Liegestütze 3×20 (Volumen)</target></segment>
+      <target>标准俯卧撑 3×20（体积）</target></segment>
     </unit>
     <unit id="plan.one-arm-12w.day.6.desc">
       <notes>
@@ -1286,7 +1286,7 @@
       </notes>
       <segment state="translated">
         <source>Leichter Tag 2×10</source>
-      <target>Leichter Tag 2×10</target></segment>
+      <target>轻量级训练 2×10</target></segment>
     </unit>
     <unit id="plan.one-arm-12w.day.8.desc">
       <notes>
@@ -1294,7 +1294,7 @@
       </notes>
       <segment state="translated">
         <source>Archer 3×8</source>
-      <target>Archer 3×8</target></segment>
+      <target>射手 3×8</target></segment>
     </unit>
     <unit id="plan.one-arm-12w.day.10.desc">
       <notes>
@@ -1302,7 +1302,7 @@
       </notes>
       <segment state="translated">
         <source>Wand-Einarmige 3×12</source>
-      <target>Wand-Einarmige 3×12</target></segment>
+      <target>墙单臂 3×12</target></segment>
     </unit>
     <unit id="plan.one-arm-12w.day.12.desc">
       <notes>
@@ -1310,7 +1310,7 @@
       </notes>
       <segment state="translated">
         <source>Standard 3×22</source>
-      <target>Standard 3×22</target></segment>
+      <target>标准 3×22</target></segment>
     </unit>
     <unit id="plan.one-arm-12w.day.13.desc">
       <notes>
@@ -1318,7 +1318,7 @@
       </notes>
       <segment state="translated">
         <source>Leichter Tag 2×12</source>
-      <target>Leichter Tag 2×12</target></segment>
+      <target>轻量级训练 2×12</target></segment>
     </unit>
     <unit id="plan.one-arm-12w.day.15.desc">
       <notes>
@@ -1326,7 +1326,7 @@
       </notes>
       <segment state="translated">
         <source>Archer 3×10 — Phase 1 abschließen</source>
-      <target>Archer 3×10 — Phase 1 abschließen</target></segment>
+      <target>射手 3×10 — 完成第 1 阶段</target></segment>
     </unit>
     <unit id="plan.one-arm-12w.day.17.desc">
       <notes>
@@ -1334,7 +1334,7 @@
       </notes>
       <segment state="translated">
         <source>Wand-Einarmige 3×15</source>
-      <target>Wand-Einarmige 3×15</target></segment>
+      <target>墙单臂 3×15</target></segment>
     </unit>
     <unit id="plan.one-arm-12w.day.19.desc">
       <notes>
@@ -1342,7 +1342,7 @@
       </notes>
       <segment state="translated">
         <source>Standard 3×25</source>
-      <target>Standard 3×25</target></segment>
+      <target>标准 3×25</target></segment>
     </unit>
     <unit id="plan.one-arm-12w.day.20.desc">
       <notes>
@@ -1350,7 +1350,7 @@
       </notes>
       <segment state="translated">
         <source>Leichter Tag 2×14</source>
-      <target>Leichter Tag 2×14</target></segment>
+      <target>轻量级训练 2×14</target></segment>
     </unit>
     <unit id="plan.one-arm-12w.day.22.desc">
       <notes>
@@ -1358,7 +1358,7 @@
       </notes>
       <segment state="translated">
         <source>Negative Einarmige von Bank 3×5 (3 s runter)</source>
-      <target>Negative Einarmige von Bank 3×5 (3 s runter)</target></segment>
+      <target>凳子单臂负重 3×5（3 秒向下）</target></segment>
     </unit>
     <unit id="plan.one-arm-12w.day.24.desc">
       <notes>
@@ -1366,7 +1366,7 @@
       </notes>
       <segment state="translated">
         <source>Langsame Archer 3×6 (Tempo 3-1-1)</source>
-      <target>Langsame Archer 3×6 (Tempo 3-1-1)</target></segment>
+      <target>缓慢射手 3×6（速度 3-1-1）</target></segment>
     </unit>
     <unit id="plan.one-arm-12w.day.26.desc">
       <notes>
@@ -1374,7 +1374,7 @@
       </notes>
       <segment state="translated">
         <source>Weite Liegestütze 3×20 (Brust-Volumen)</source>
-      <target>Weite Liegestütze 3×20 (Brust-Volumen)</target></segment>
+      <target>宽距俯卧撑 3×20（胸部体积）</target></segment>
     </unit>
     <unit id="plan.one-arm-12w.day.29.desc">
       <notes>
@@ -1382,7 +1382,7 @@
       </notes>
       <segment state="translated">
         <source>Negative Einarmige 3×5</source>
-      <target>Negative Einarmige 3×5</target></segment>
+      <target>负重单臂 3×5</target></segment>
     </unit>
     <unit id="plan.one-arm-12w.day.31.desc">
       <notes>
@@ -1390,7 +1390,7 @@
       </notes>
       <segment state="translated">
         <source>Langsame Archer 3×7</source>
-      <target>Langsame Archer 3×7</target></segment>
+      <target>缓慢射手 3×7</target></segment>
     </unit>
     <unit id="plan.one-arm-12w.day.33.desc">
       <notes>
@@ -1398,7 +1398,7 @@
       </notes>
       <segment state="translated">
         <source>Weite Liegestütze 3×20</source>
-      <target>Weite Liegestütze 3×20</target></segment>
+      <target>宽距俯卧撑 3×20</target></segment>
     </unit>
     <unit id="plan.one-arm-12w.day.34.desc">
       <notes>
@@ -1406,7 +1406,7 @@
       </notes>
       <segment state="translated">
         <source>Leichter Tag 2×11</source>
-      <target>Leichter Tag 2×11</target></segment>
+      <target>轻量级训练 2×11</target></segment>
     </unit>
     <unit id="plan.one-arm-12w.day.36.desc">
       <notes>
@@ -1414,7 +1414,7 @@
       </notes>
       <segment state="translated">
         <source>Negative Einarmige 3×6</source>
-      <target>Negative Einarmige 3×6</target></segment>
+      <target>负重单臂 3×6</target></segment>
     </unit>
     <unit id="plan.one-arm-12w.day.38.desc">
       <notes>
@@ -1422,7 +1422,7 @@
       </notes>
       <segment state="translated">
         <source>Langsame Archer 3×8 — Phase 2 abschließen</source>
-      <target>Langsame Archer 3×8 — Phase 2 abschließen</target></segment>
+      <target>缓慢射手 3×8 — 完成第 2 阶段</target></segment>
     </unit>
     <unit id="plan.one-arm-12w.day.40.desc">
       <notes>
@@ -1430,7 +1430,7 @@
       </notes>
       <segment state="translated">
         <source>Weite Liegestütze 3×~22</source>
-      <target>Weite Liegestütze 3×~22</target></segment>
+      <target>宽距俯卧撑 3×约 22</target></segment>
     </unit>
     <unit id="plan.one-arm-12w.day.43.desc">
       <notes>
@@ -1438,7 +1438,7 @@
       </notes>
       <segment state="translated">
         <source>Partielle Einarmige (niedrige Bank) 3×4</source>
-      <target>Partielle Einarmige (niedrige Bank) 3×4</target></segment>
+      <target>部分单臂（低凳） 3×4</target></segment>
     </unit>
     <unit id="plan.one-arm-12w.day.45.desc">
       <notes>
@@ -1446,7 +1446,7 @@
       </notes>
       <segment state="translated">
         <source>Archer mit langem Tempo 3×6</source>
-      <target>Archer mit langem Tempo 3×6</target></segment>
+      <target>射手长速度 3×6</target></segment>
     </unit>
     <unit id="plan.one-arm-12w.day.47.desc">
       <notes>
@@ -1454,7 +1454,7 @@
       </notes>
       <segment state="translated">
         <source>Diamant-Liegestütze 3×12 (Trizeps-Volumen)</source>
-      <target>Diamant-Liegestütze 3×12 (Trizeps-Volumen)</target></segment>
+      <target>钻石俯卧撑 3×12（三头肌体积）</target></segment>
     </unit>
     <unit id="plan.one-arm-12w.day.50.desc">
       <notes>
@@ -1462,7 +1462,7 @@
       </notes>
       <segment state="translated">
         <source>Partielle Einarmige 3×4</source>
-      <target>Partielle Einarmige 3×4</target></segment>
+      <target>部分单臂 3×4</target></segment>
     </unit>
     <unit id="plan.one-arm-12w.day.52.desc">
       <notes>
@@ -1470,7 +1470,7 @@
       </notes>
       <segment state="translated">
         <source>Archer mit Tempo 3×6</source>
-      <target>Archer mit Tempo 3×6</target></segment>
+      <target>射手速度 3×6</target></segment>
     </unit>
     <unit id="plan.one-arm-12w.day.54.desc">
       <notes>
@@ -1478,7 +1478,7 @@
       </notes>
       <segment state="translated">
         <source>Diamant 3×13</source>
-      <target>Diamant 3×13</target></segment>
+      <target>钻石 3×13</target></segment>
     </unit>
     <unit id="plan.one-arm-12w.day.57.desc">
       <notes>
@@ -1486,7 +1486,7 @@
       </notes>
       <segment state="translated">
         <source>Partielle Einarmige 3×5 — Phase 3 abschließen</source>
-      <target>Partielle Einarmige 3×5 — Phase 3 abschließen</target></segment>
+      <target>部分单臂 3×5 — 完成第 3 阶段</target></segment>
     </unit>
     <unit id="plan.one-arm-12w.day.59.desc">
       <notes>
@@ -1494,7 +1494,7 @@
       </notes>
       <segment state="translated">
         <source>Tempo-Archer 3×7</source>
-      <target>Tempo-Archer 3×7</target></segment>
+      <target>速度射手 3×7</target></segment>
     </unit>
     <unit id="plan.one-arm-12w.day.61.desc">
       <notes>
@@ -1502,7 +1502,7 @@
       </notes>
       <segment state="translated">
         <source>Diamant 3×13</source>
-      <target>Diamant 3×13</target></segment>
+      <target>钻石 3×13</target></segment>
     </unit>
     <unit id="plan.one-arm-12w.day.64.desc">
       <notes>
@@ -1510,7 +1510,7 @@
       </notes>
       <segment state="translated">
         <source>Volle Einarmige (weiter Stand) 3×3</source>
-      <target>Volle Einarmige (weiter Stand) 3×3</target></segment>
+      <target>完全单臂（宽站姿） 3×3</target></segment>
     </unit>
     <unit id="plan.one-arm-12w.day.66.desc">
       <notes>
@@ -1518,7 +1518,7 @@
       </notes>
       <segment state="translated">
         <source>Einarmige (etwas engerer Stand) 3×4</source>
-      <target>Einarmige (etwas engerer Stand) 3×4</target></segment>
+      <target>单臂（略窄站姿） 3×4</target></segment>
     </unit>
     <unit id="plan.one-arm-12w.day.68.desc">
       <notes>
@@ -1526,7 +1526,7 @@
       </notes>
       <segment state="translated">
         <source>Standard 3×25</source>
-      <target>Standard 3×25</target></segment>
+      <target>标准 3×25</target></segment>
     </unit>
     <unit id="plan.one-arm-12w.day.71.desc">
       <notes>
@@ -1534,7 +1534,7 @@
       </notes>
       <segment state="translated">
         <source>Volle Einarmige 3×3</source>
-      <target>Volle Einarmige 3×3</target></segment>
+      <target>完全单臂 3×3</target></segment>
     </unit>
     <unit id="plan.one-arm-12w.day.73.desc">
       <notes>
@@ -1542,7 +1542,7 @@
       </notes>
       <segment state="translated">
         <source>Einarmige enger Stand 3×5</source>
-      <target>Einarmige enger Stand 3×5</target></segment>
+      <target>单臂窄站姿 3×5</target></segment>
     </unit>
     <unit id="plan.one-arm-12w.day.75.desc">
       <notes>
@@ -1550,7 +1550,7 @@
       </notes>
       <segment state="translated">
         <source>Standard 3×25</source>
-      <target>Standard 3×25</target></segment>
+      <target>标准 3×25</target></segment>
     </unit>
     <unit id="plan.one-arm-12w.day.78.desc">
       <notes>
@@ -1558,7 +1558,7 @@
       </notes>
       <segment state="translated">
         <source>Letzte schwere Einheit 3×3</source>
-      <target>Letzte schwere Einheit 3×3</target></segment>
+      <target>最后的大重量训练 3×3</target></segment>
     </unit>
     <unit id="plan.one-arm-12w.day.80.desc">
       <notes>
@@ -1566,7 +1566,7 @@
       </notes>
       <segment state="translated">
         <source>Technik-Taper 2×4 saubere Wiederholungen</source>
-      <target>Technik-Taper 2×4 saubere Wiederholungen</target></segment>
+      <target>技术减量期 2×4 标准重复</target></segment>
     </unit>
     <unit id="plan.one-arm-12w.day.82.desc">
       <notes>
@@ -1574,7 +1574,7 @@
       </notes>
       <segment state="translated">
         <source>Mobility + 2×3 leichte Wiederholungen</source>
-      <target>Mobility + 2×3 leichte Wiederholungen</target></segment>
+      <target>活动度 + 2×3 轻松重复</target></segment>
     </unit>
     <unit id="plan.one-arm-12w.day.83.desc">
       <notes>
@@ -1582,7 +1582,7 @@
       </notes>
       <segment state="translated">
         <source>Ruhetag — bereit für Endtest</source>
-      <target>Ruhetag — bereit für Endtest</target></segment>
+      <target>休息日 — 为最终测试做准备</target></segment>
     </unit>
     <unit id="plan.one-arm-12w.day.84.desc">
       <notes>
@@ -1590,7 +1590,7 @@
       </notes>
       <segment state="translated">
         <source>Endtest: maximale saubere einarmige Liegestütze pro Seite</source>
-      <target>Endtest: maximale saubere einarmige Liegestütze pro Seite</target></segment>
+      <target>最终测试：每边最大标准单臂俯卧撑</target></segment>
     </unit>
     <unit id="plan.recruit-6w.title">
       <notes>
@@ -1598,7 +1598,7 @@
       </notes>
       <segment state="translated">
         <source>Von 0 auf 100 — 6-Wochen-Aufbau</source>
-      <target>Von 0 auf 100 — 6-Wochen-Aufbau</target></segment>
+      <target>从零到一百 — 6 周建立计划</target></segment>
     </unit>
     <unit id="plan.recruit-6w.summary">
       <notes>
@@ -1606,7 +1606,7 @@
       </notes>
       <segment state="translated">
         <source>Strukturierter Plan für Einsteiger: drei Trainingstage pro Woche, progressive Belastungssteigerung und ein Endtest in Woche 6.</source>
-      <target>Strukturierter Plan für Einsteiger: drei Trainingstage pro Woche, progressive Belastungssteigerung und ein Endtest in Woche 6.</target></segment>
+      <target>为初学者量身定制的结构化计划：每周三个训练日，渐进式负荷增加，第 6 周进行最终测试。</target></segment>
     </unit>
     <unit id="plan.recruit-6w.blogSlug">
       <notes>
@@ -1622,7 +1622,7 @@
       </notes>
       <segment state="translated">
         <source>30-Tage-Challenge</source>
-      <target>30-Tage-Challenge</target></segment>
+      <target>30 天挑战赛</target></segment>
     </unit>
     <unit id="plan.challenge-30d.summary">
       <notes>
@@ -1630,7 +1630,7 @@
       </notes>
       <segment state="translated">
         <source>Dreißig Tage tägliches Training mit gezielten Ruhetagen. Tag 1 ist der Maximaltest, Tag 30 der Endtest.</source>
-      <target>Dreißig Tage tägliches Training mit gezielten Ruhetagen. Tag 1 ist der Maximaltest, Tag 30 der Endtest.</target></segment>
+      <target>30 天每日训练，有针对性的休息日。第 1 天是最大值测试，第 30 天是最终测试。</target></segment>
     </unit>
     <unit id="plan.challenge-30d.blogSlug">
       <notes>
@@ -1646,7 +1646,7 @@
       </notes>
       <segment state="translated">
         <source>Liegestütze ab 40 — 4-Wochen-Plan</source>
-      <target>Liegestütze ab 40 — 4-Wochen-Plan</target></segment>
+      <target>40 岁以上的俯卧撑 — 4 周计划</target></segment>
     </unit>
     <unit id="plan.over-40-4w.summary">
       <notes>
@@ -1654,7 +1654,7 @@
       </notes>
       <segment state="translated">
         <source>Schonender 4-Wochen-Plan für Einsteiger ab 40: Fokus auf saubere Technik, ausreichend Pause und langsames Tempo.</source>
-      <target>Schonender 4-Wochen-Plan für Einsteiger ab 40: Fokus auf saubere Technik, ausreichend Pause und langsames Tempo.</target></segment>
+      <target>为 40 岁以上初学者制定的温和 4 周计划：专注于正确的技术、充足的休息和缓慢的节奏。</target></segment>
     </unit>
     <unit id="plan.over-40-4w.blogSlug">
       <notes>
@@ -1670,7 +1670,7 @@
       </notes>
       <segment state="translated">
         <source>Daily 100 — 30 Tage zur 100er-Marke</source>
-      <target>Daily 100 — 30 Tage zur 100er-Marke</target></segment>
+      <target>每日 100 — 30 天达到 100 个标记</target></segment>
     </unit>
     <unit id="plan.daily-100-30d.summary">
       <notes>
@@ -1678,7 +1678,7 @@
       </notes>
       <segment state="translated">
         <source>30-Tage-Volumenplan: ramp-up von 50 auf 100 saubere Wiederholungen pro Einheit, danach zwei Wochen Konsolidierung. 5 Trainingstage + 1 leichter + 1 Ruhetag pro Woche.</source>
-      <target>30-Tage-Volumenplan: ramp-up von 50 auf 100 saubere Wiederholungen pro Einheit, danach zwei Wochen Konsolidierung. 5 Trainingstage + 1 leichter + 1 Ruhetag pro Woche.</target></segment>
+      <target>30 天体积计划：从 50 上升到每次训练 100 个标准重复，然后两周巩固。每周 5 个训练日 + 1 个轻松 + 1 个休息日。</target></segment>
     </unit>
     <unit id="plan.one-arm-12w.title">
       <notes>
@@ -1686,7 +1686,7 @@
       </notes>
       <segment state="translated">
         <source>Einarmige Liegestütze — 12-Wochen-Aufbau</source>
-      <target>Einarmige Liegestütze — 12-Wochen-Aufbau</target></segment>
+      <target>单臂俯卧撑 — 12 周建立计划</target></segment>
     </unit>
     <unit id="plan.one-arm-12w.summary">
       <notes>
@@ -1694,7 +1694,7 @@
       </notes>
       <segment state="translated">
         <source>Vier-Phasen-Plan in Richtung saubere einarmige Liegestütze: Archer und Wand-Negativen, Bank-Negativen, partielle Einarmige, schließlich volle Einarmige im weiten Stand. 4 aktive Tage + 3 Ruhetage pro Woche.</source>
-      <target>Vier-Phasen-Plan in Richtung saubere einarmige Liegestütze: Archer und Wand-Negativen, Bank-Negativen, partielle Einarmige, schließlich volle Einarmige im weiten Stand. 4 aktive Tage + 3 Ruhetage pro Woche.</target></segment>
+      <target>四阶段计划，走向标准单臂俯卧撑：射手和墙负重、凳负重、部分单臂，最后在宽站姿下完全单臂。每周 4 个活跃日 + 3 个休息日。</target></segment>
     </unit>
     <unit id="admin.title">
       <notes>
@@ -1702,7 +1702,7 @@
       </notes>
       <segment state="translated">
         <source>Admin-Bereich</source>
-      <target>Admin-Bereich</target></segment>
+      <target>管理员区域</target></segment>
     </unit>
     <unit id="admin.bulk.title">
       <notes>
@@ -1710,7 +1710,7 @@
       </notes>
       <segment state="translated">
         <source>Anonyme Benutzer aufräumen</source>
-      <target>Anonyme Benutzer aufräumen</target></segment>
+      <target>清理匿名用户</target></segment>
     </unit>
     <unit id="admin.bulk.daysLabel">
       <notes>
@@ -1718,7 +1718,7 @@
       </notes>
       <segment state="translated">
         <source>Inaktiv seit (Tage)</source>
-      <target>Inaktiv seit (Tage)</target></segment>
+      <target>不活跃（天数）</target></segment>
     </unit>
     <unit id="admin.bulk.hint">
       <notes>
@@ -1734,7 +1734,7 @@
       </notes>
       <segment state="translated">
         <source>Inaktive löschen</source>
-      <target>Inaktive löschen</target></segment>
+      <target>删除无活跃用户</target></segment>
     </unit>
     <unit id="admin.bulk.deleted">
       <notes>
@@ -1742,7 +1742,7 @@
       </notes>
       <segment state="translated">
         <source>Gelöscht:</source>
-      <target>Gelöscht:</target></segment>
+      <target>已删除:</target></segment>
     </unit>
     <unit id="admin.bulk.skipped">
       <notes>
@@ -1750,7 +1750,7 @@
       </notes>
       <segment state="translated">
         <source>Übersprungen:</source>
-      <target>Übersprungen:</target></segment>
+      <target>已跳过:</target></segment>
     </unit>
     <unit id="admin.filter.anonymous">
       <notes>
@@ -1758,7 +1758,7 @@
       </notes>
       <segment state="translated">
         <source> Nur anonyme Benutzer </source>
-      <target> Nur anonyme Benutzer </target></segment>
+      <target> 仅匿名用户 </target></segment>
     </unit>
     <unit id="admin.col.uid">
       <notes>
@@ -1790,7 +1790,7 @@
       </notes>
       <segment state="translated">
         <source>Anon</source>
-      <target>Anon</target></segment>
+      <target>匿名</target></segment>
     </unit>
     <unit id="admin.col.pushups">
       <notes>
@@ -1806,7 +1806,7 @@
       </notes>
       <segment state="translated">
         <source>Letzter Eintrag</source>
-      <target>Letzter Eintrag</target></segment>
+      <target>最后一次训练</target></segment>
     </unit>
     <unit id="admin.col.createdAt">
       <notes>
@@ -1814,7 +1814,7 @@
       </notes>
       <segment state="translated">
         <source>Erstellt</source>
-      <target>Erstellt</target></segment>
+      <target>创建于</target></segment>
     </unit>
     <unit id="admin.feedback.title">
       <notes>
@@ -1822,7 +1822,7 @@
       </notes>
       <segment state="translated">
         <source>Feedback</source>
-      <target>Feedback</target></segment>
+      <target>反馈</target></segment>
     </unit>
     <unit id="admin.feedback.empty">
       <notes>
@@ -1830,7 +1830,7 @@
       </notes>
       <segment state="translated">
         <source>Noch kein Feedback vorhanden.</source>
-      <target>Noch kein Feedback vorhanden.</target></segment>
+      <target>暂无反馈。</target></segment>
     </unit>
     <unit id="admin.feedback.col.date">
       <notes>
@@ -1862,7 +1862,7 @@
       </notes>
       <segment state="translated">
         <source>Nachricht</source>
-      <target>Nachricht</target></segment>
+      <target>消息</target></segment>
     </unit>
     <unit id="admin.feedback.col.userId">
       <notes>
@@ -1870,7 +1870,7 @@
       </notes>
       <segment state="translated">
         <source>User</source>
-      <target>User</target></segment>
+      <target>用户</target></segment>
     </unit>
     <unit id="admin.refresh">
       <notes>
@@ -1886,7 +1886,7 @@
       </notes>
       <segment state="translated">
         <source>Anonym</source>
-      <target>Anonym</target></segment>
+      <target>匿名</target></segment>
     </unit>
     <unit id="admin.feedback.markRead">
       <notes>
@@ -1894,7 +1894,7 @@
       </notes>
       <segment state="translated">
         <source>Als gelesen markieren</source>
-      <target>Als gelesen markieren</target></segment>
+      <target>标记为已读</target></segment>
     </unit>
     <unit id="admin.feedback.markUnread">
       <notes>
@@ -1902,7 +1902,7 @@
       </notes>
       <segment state="translated">
         <source>Als ungelesen markieren</source>
-      <target>Als ungelesen markieren</target></segment>
+      <target>标记为未读</target></segment>
     </unit>
     <unit id="admin.feedback.createIssue">
       <notes>
@@ -1910,7 +1910,7 @@
       </notes>
       <segment state="translated">
         <source>GitHub-Issue erstellen</source>
-      <target>GitHub-Issue erstellen</target></segment>
+      <target>创建 GitHub Issue</target></segment>
     </unit>
     <unit id="admin.feedback.openIssue">
       <notes>
@@ -1918,7 +1918,7 @@
       </notes>
       <segment state="translated">
         <source>GitHub-Issue öffnen</source>
-      <target>GitHub-Issue öffnen</target></segment>
+      <target>打开 GitHub Issue</target></segment>
     </unit>
     <unit id="admin.feedback.delete">
       <notes>
@@ -1926,7 +1926,7 @@
       </notes>
       <segment state="translated">
         <source>Feedback löschen</source>
-      <target>Feedback löschen</target></segment>
+      <target>删除反馈</target></segment>
     </unit>
     <unit id="admin.row.detailsAria">
       <notes>
@@ -1942,7 +1942,7 @@
       </notes>
       <segment state="translated">
         <source> Feedback löschen </source>
-      <target> Feedback löschen </target></segment>
+      <target> 删除反馈 </target></segment>
     </unit>
     <unit id="admin.feedback.delete.confirm">
       <notes>
@@ -1950,7 +1950,7 @@
       </notes>
       <segment state="translated">
         <source> Möchtest du dieses Feedback wirklich endgültig löschen? </source>
-      <target> Möchtest du dieses Feedback wirklich endgültig löschen? </target></segment>
+      <target> 确定要永久删除此反馈吗？ </target></segment>
     </unit>
     <unit id="admin.feedback.delete.cancel">
       <notes>
@@ -1958,7 +1958,7 @@
       </notes>
       <segment state="translated">
         <source> Abbrechen </source>
-      <target> Abbrechen </target></segment>
+      <target> 取消 </target></segment>
     </unit>
     <unit id="admin.feedback.delete.button">
       <notes>
@@ -1966,7 +1966,7 @@
       </notes>
       <segment state="translated">
         <source> Löschen </source>
-      <target> Löschen </target></segment>
+      <target> 删除 </target></segment>
     </unit>
     <unit id="admin.feedback.delete.anonym">
       <notes>
@@ -1974,7 +1974,7 @@
       </notes>
       <segment state="translated">
         <source>Anonym</source>
-      <target>Anonym</target></segment>
+      <target>匿名</target></segment>
     </unit>
     <unit id="admin.delete.title">
       <notes>
@@ -1982,7 +1982,7 @@
       </notes>
       <segment state="translated">
         <source>Benutzer löschen</source>
-      <target>Benutzer löschen</target></segment>
+      <target>删除用户</target></segment>
     </unit>
     <unit id="admin.delete.anonymize">
       <notes>
@@ -1990,7 +1990,7 @@
       </notes>
       <segment state="translated">
         <source>Daten anonymisieren (Pushups behalten)</source>
-      <target>Daten anonymisieren (Pushups behalten)</target></segment>
+      <target>数据匿名处理（保留俯卧撑记录）</target></segment>
     </unit>
     <unit id="admin.delete.cancel">
       <notes>
@@ -1998,7 +1998,7 @@
       </notes>
       <segment state="translated">
         <source> Abbrechen </source>
-      <target> Abbrechen </target></segment>
+      <target> 取消 </target></segment>
     </unit>
     <unit id="admin.delete.confirm">
       <notes>
@@ -2006,7 +2006,7 @@
       </notes>
       <segment state="translated">
         <source> Löschen </source>
-      <target> Löschen </target></segment>
+      <target> 删除 </target></segment>
     </unit>
     <unit id="admin.details.title">
       <notes>
@@ -2014,7 +2014,7 @@
       </notes>
       <segment state="translated">
         <source>Benutzerdetails</source>
-      <target>Benutzerdetails</target></segment>
+      <target>用户详情</target></segment>
     </unit>
     <unit id="admin.details.uid">
       <notes>
@@ -2046,7 +2046,7 @@
       </notes>
       <segment state="translated">
         <source>Anonym</source>
-      <target>Anonym</target></segment>
+      <target>匿名</target></segment>
     </unit>
     <unit id="admin.details.anonymous.yes">
       <notes>
@@ -2054,7 +2054,7 @@
       </notes>
       <segment state="translated">
         <source>Ja</source>
-      <target>Ja</target></segment>
+      <target>是</target></segment>
     </unit>
     <unit id="admin.details.anonymous.no">
       <notes>
@@ -2062,7 +2062,7 @@
       </notes>
       <segment state="translated">
         <source>Nein</source>
-      <target>Nein</target></segment>
+      <target>否</target></segment>
     </unit>
     <unit id="admin.details.role">
       <notes>
@@ -2070,7 +2070,7 @@
       </notes>
       <segment state="translated">
         <source>Rolle</source>
-      <target>Rolle</target></segment>
+      <target>角色</target></segment>
     </unit>
     <unit id="admin.details.pushupCount">
       <notes>
@@ -2086,7 +2086,7 @@
       </notes>
       <segment state="translated">
         <source>Letzter Eintrag</source>
-      <target>Letzter Eintrag</target></segment>
+      <target>最后一次训练</target></segment>
     </unit>
     <unit id="admin.details.createdAt">
       <notes>
@@ -2094,7 +2094,7 @@
       </notes>
       <segment state="translated">
         <source>Erstellt</source>
-      <target>Erstellt</target></segment>
+      <target>创建于</target></segment>
     </unit>
     <unit id="admin.details.close">
       <notes>
@@ -2102,7 +2102,7 @@
       </notes>
       <segment state="translated">
         <source> Schließen </source>
-      <target> Schließen </target></segment>
+      <target> 关闭 </target></segment>
     </unit>
     <unit id="app.title">
       <notes>
@@ -2121,7 +2121,7 @@
       </notes>
       <segment state="translated">
         <source>Dashboard</source>
-      <target>Dashboard</target></segment>
+      <target>仪表盘</target></segment>
     </unit>
     <unit id="nav.analysis">
       <notes>
@@ -2131,7 +2131,7 @@
       </notes>
       <segment state="translated">
         <source>Analyse</source>
-      <target>Analyse</target></segment>
+      <target>分析</target></segment>
     </unit>
     <unit id="nav.leaderboard">
       <notes>
@@ -2141,7 +2141,7 @@
       </notes>
       <segment state="translated">
         <source>Bestenliste</source>
-      <target>Bestenliste</target></segment>
+      <target>排行榜</target></segment>
     </unit>
     <unit id="nav.blog">
       <notes>
@@ -2151,7 +2151,7 @@
       </notes>
       <segment state="translated">
         <source>Blog</source>
-      <target>Blog</target></segment>
+      <target>博客</target></segment>
     </unit>
     <unit id="nav.trainingPlans">
       <notes>
@@ -2169,7 +2169,7 @@
       </notes>
       <segment state="translated">
         <source>Liegestütztypen</source>
-      <target>Liegestütztypen</target></segment>
+      <target>俯卧撑类型</target></segment>
     </unit>
     <unit id="nav.history">
       <notes>
@@ -2177,7 +2177,7 @@
       </notes>
       <segment state="translated">
         <source>Historie</source>
-      <target>Historie</target></segment>
+      <target>历史记录</target></segment>
     </unit>
     <unit id="nav.reminders">
       <notes>
@@ -2185,7 +2185,7 @@
       </notes>
       <segment state="translated">
         <source>Erinnerungen</source>
-      <target>Erinnerungen</target></segment>
+      <target>提醒</target></segment>
     </unit>
     <unit id="nav.language">
       <notes>
@@ -2201,7 +2201,7 @@
       </notes>
       <segment state="translated">
         <source>Pushup Navigation</source>
-      <target>Pushup Navigation</target></segment>
+      <target>俯卧撑导航</target></segment>
     </unit>
     <unit id="nav.openMenu">
       <notes>
@@ -2209,7 +2209,7 @@
       </notes>
       <segment state="translated">
         <source>Menü öffnen</source>
-      <target>Menü öffnen</target></segment>
+      <target>打开菜单</target></segment>
     </unit>
     <unit id="nav.toLanding">
       <notes>
@@ -2217,7 +2217,7 @@
       </notes>
       <segment state="translated">
         <source>Zur Landingpage</source>
-      <target>Zur Landingpage</target></segment>
+      <target>返回首页</target></segment>
     </unit>
     <unit id="toolbarDailyGoal">
       <notes>
@@ -2233,7 +2233,7 @@
       </notes>
       <segment state="translated">
         <source>Admin-Bereich</source>
-      <target>Admin-Bereich</target></segment>
+      <target>管理后台</target></segment>
     </unit>
     <unit id="nav.desktop.aria">
       <notes>
@@ -2241,7 +2241,7 @@
       </notes>
       <segment state="translated">
         <source>Hauptnavigation</source>
-      <target>Hauptnavigation</target></segment>
+      <target>主菜单</target></segment>
     </unit>
     <unit id="footer.aria">
       <notes>
@@ -2249,7 +2249,7 @@
       </notes>
       <segment state="translated">
         <source>Rechtliches</source>
-      <target>Rechtliches</target></segment>
+      <target>法律信息</target></segment>
     </unit>
     <unit id="footer.pushupTypes">
       <notes>
@@ -2257,7 +2257,7 @@
       </notes>
       <segment state="translated">
         <source>Liegestütztypen</source>
-      <target>Liegestütztypen</target></segment>
+      <target>俯卧撑类型</target></segment>
     </unit>
     <unit id="footer.impressum">
       <notes>
@@ -2265,7 +2265,7 @@
       </notes>
       <segment state="translated">
         <source>Impressum</source>
-      <target>Impressum</target></segment>
+      <target>法律声明</target></segment>
     </unit>
     <unit id="footer.datenschutz">
       <notes>
@@ -2273,7 +2273,7 @@
       </notes>
       <segment state="translated">
         <source>Datenschutz</source>
-      <target>Datenschutz</target></segment>
+      <target>隐私政策</target></segment>
     </unit>
     <unit id="footer.cookies">
       <notes>
@@ -2281,7 +2281,7 @@
       </notes>
       <segment state="translated">
         <source> Cookie-Einstellungen </source>
-      <target> Cookie-Einstellungen </target></segment>
+      <target> Cookie 设置 </target></segment>
     </unit>
     <unit id="nav.bottom.aria">
       <notes>
@@ -2289,7 +2289,7 @@
       </notes>
       <segment state="translated">
         <source>Mobile-Navigation</source>
-      <target>Mobile-Navigation</target></segment>
+      <target>移动菜单</target></segment>
     </unit>
     <unit id="seo.landing.title">
       <notes>
@@ -2297,7 +2297,7 @@
       </notes>
       <segment state="translated">
         <source>Liegestütze Tracker – Reps, Streaks und Fortschritt im Blick</source>
-      <target>Liegestütze Tracker – Reps, Streaks und Fortschritt im Blick</target></segment>
+      <target>俯卧撑追踪器 – 记录次数、连续纪录和进度</target></segment>
     </unit>
     <unit id="seo.landing.description">
       <notes>
@@ -2305,7 +2305,7 @@
       </notes>
       <segment state="translated">
         <source>Liegestütze tracken mit einer kostenlosen Web-App. Tagesziel, Streaks, Bestleistungen – mobil, schnell und mit Live-Updates.</source>
-      <target>Liegestütze tracken mit einer kostenlosen Web-App. Tagesziel, Streaks, Bestleistungen – mobil, schnell und mit Live-Updates.</target></segment>
+      <target>用免费网络应用追踪俯卧撑。每日目标、连续纪录、个人记录 – 移动端、快速、实时更新。</target></segment>
     </unit>
     <unit id="seo.dashboard.title">
       <notes>
@@ -2313,7 +2313,7 @@
       </notes>
       <segment state="translated">
         <source>Dashboard – Pushup Tracker</source>
-      <target>Dashboard – Pushup Tracker</target></segment>
+      <target>仪表盘 – 俯卧撑追踪器</target></segment>
     </unit>
     <unit id="seo.dashboard.description">
       <notes>
@@ -2321,7 +2321,7 @@
       </notes>
       <segment state="translated">
         <source>Behalte Trainingsvolumen und Verlauf im Blick – klar, schnell und mobil optimiert.</source>
-      <target>Behalte Trainingsvolumen und Verlauf im Blick – klar, schnell und mobil optimiert.</target></segment>
+      <target>掌握训练量和进度 – 清晰、快速、移动端优化。</target></segment>
     </unit>
     <unit id="seo.login.title">
       <notes>
@@ -2329,7 +2329,7 @@
       </notes>
       <segment state="translated">
         <source>Login – Pushup Tracker</source>
-      <target>Login – Pushup Tracker</target></segment>
+      <target>登录 – 俯卧撑追踪器</target></segment>
     </unit>
     <unit id="seo.login.description">
       <notes>
@@ -2337,7 +2337,7 @@
       </notes>
       <segment state="translated">
         <source>Melde dich an und tracke dein Pushup-Training über alle Geräte.</source>
-      <target>Melde dich an und tracke dein Pushup-Training über alle Geräte.</target></segment>
+      <target>登录并在所有设备上追踪俯卧撑训练。</target></segment>
     </unit>
     <unit id="seo.register.title">
       <notes>
@@ -2345,7 +2345,7 @@
       </notes>
       <segment state="translated">
         <source>Registrierung – Pushup Tracker</source>
-      <target>Registrierung – Pushup Tracker</target></segment>
+      <target>注册 – 俯卧撑追踪器</target></segment>
     </unit>
     <unit id="seo.register.description">
       <notes>
@@ -2353,7 +2353,7 @@
       </notes>
       <segment state="translated">
         <source>Erstelle dein Konto und richte Profil, Tagesziel und Einwilligungen ein.</source>
-      <target>Erstelle dein Konto und richte Profil, Tagesziel und Einwilligungen ein.</target></segment>
+      <target>创建账户并设置个人资料、每日目标和同意项。</target></segment>
     </unit>
     <unit id="seo.history.title">
       <notes>
@@ -2361,7 +2361,7 @@
       </notes>
       <segment state="translated">
         <source>Historie – Pushup Tracker</source>
-      <target>Historie – Pushup Tracker</target></segment>
+      <target>历史记录 – 俯卧撑追踪器</target></segment>
     </unit>
     <unit id="seo.history.description">
       <notes>
@@ -2369,7 +2369,7 @@
       </notes>
       <segment state="translated">
         <source>Durchsuche deine Trainingshistorie, filtere nach Zeitraum und behalte den Überblick.</source>
-      <target>Durchsuche deine Trainingshistorie, filtere nach Zeitraum und behalte den Überblick.</target></segment>
+      <target>搜索训练历史，按时间段筛选，掌握全局。</target></segment>
     </unit>
     <unit id="seo.analysis.title">
       <notes>
@@ -2377,7 +2377,7 @@
       </notes>
       <segment state="translated">
         <source>Analyse – Pushup Tracker</source>
-      <target>Analyse – Pushup Tracker</target></segment>
+      <target>分析 – 俯卧撑追踪器</target></segment>
     </unit>
     <unit id="seo.analysis.description">
       <notes>
@@ -2385,7 +2385,7 @@
       </notes>
       <segment state="translated">
         <source>Analysiere Trends, Verteilungen und Streaks deines Trainings.</source>
-      <target>Analysiere Trends, Verteilungen und Streaks deines Trainings.</target></segment>
+      <target>分析训练的趋势、分布和连续纪录。</target></segment>
     </unit>
     <unit id="seo.settings.title">
       <notes>
@@ -2393,7 +2393,7 @@
       </notes>
       <segment state="translated">
         <source>Einstellungen – Pushup Tracker</source>
-      <target>Einstellungen – Pushup Tracker</target></segment>
+      <target>设置 – 俯卧撑追踪器</target></segment>
     </unit>
     <unit id="seo.settings.description">
       <notes>
@@ -2401,7 +2401,7 @@
       </notes>
       <segment state="translated">
         <source>Verwalte Profil, Leaderboard-Sichtbarkeit und Tagesziel-Einstellungen.</source>
-      <target>Verwalte Profil, Leaderboard-Sichtbarkeit und Tagesziel-Einstellungen.</target></segment>
+      <target>管理个人资料、排行榜可见性和每日目标设置。</target></segment>
     </unit>
     <unit id="seo.trainingPlans.title">
       <notes>
@@ -2409,7 +2409,7 @@
       </notes>
       <segment state="translated">
         <source>Trainingspläne – Pushup Tracker</source>
-      <target>Trainingspläne – Pushup Tracker</target></segment>
+      <target>训练计划 – 俯卧撑追踪器</target></segment>
     </unit>
     <unit id="seo.trainingPlans.description">
       <notes>
@@ -2417,7 +2417,7 @@
       </notes>
       <segment state="translated">
         <source>Strukturierte Liegestütz-Trainingspläne mit Tagesziel, Sätzen und automatischer Fortschrittsverfolgung.</source>
-      <target>Strukturierte Liegestütz-Trainingspläne mit Tagesziel, Sätzen und automatischer Fortschrittsverfolgung.</target></segment>
+      <target>结构化的俯卧撑训练计划，包含每日目标、组数和自动进度追踪。</target></segment>
     </unit>
     <unit id="seo.wiki.pushupTypes.title">
       <notes>
@@ -2425,7 +2425,7 @@
       </notes>
       <segment state="translated">
         <source>Liegestütztypen erklärt – Pushup Tracker</source>
-      <target>Liegestütztypen erklärt – Pushup Tracker</target></segment>
+      <target>俯卧撑类型详解 – 俯卧撑追踪器</target></segment>
     </unit>
     <unit id="seo.wiki.pushupTypes.description">
       <notes>
@@ -2433,7 +2433,7 @@
       </notes>
       <segment state="translated">
         <source>Saubere Ausführung der wichtigsten Liegestütz-Varianten – Standard, Knie, Diamant, Archer, einarmig und mehr.</source>
-      <target>Saubere Ausführung der wichtigsten Liegestütz-Varianten – Standard, Knie, Diamant, Archer, einarmig und mehr.</target></segment>
+      <target>主要俯卧撑变体的正确做法 – 标准、跪姿、菱形、箭形、单臂等。</target></segment>
     </unit>
     <unit id="seo.reminders.title">
       <notes>
@@ -2441,7 +2441,7 @@
       </notes>
       <segment state="translated">
         <source>Erinnerungen – Pushup Tracker</source>
-      <target>Erinnerungen – Pushup Tracker</target></segment>
+      <target>提醒 – 俯卧撑追踪器</target></segment>
     </unit>
     <unit id="seo.reminders.description">
       <notes>
@@ -2449,7 +2449,7 @@
       </notes>
       <segment state="translated">
         <source>Konfiguriere Liegestütz-Erinnerungen und Push-Benachrichtigungen.</source>
-      <target>Konfiguriere Liegestütz-Erinnerungen und Push-Benachrichtigungen.</target></segment>
+      <target>配置俯卧撑提醒和推送通知。</target></segment>
     </unit>
     <unit id="seo.leaderboard.title">
       <notes>
@@ -2457,7 +2457,7 @@
       </notes>
       <segment state="translated">
         <source>Bestenliste – Pushup Tracker</source>
-      <target>Bestenliste – Pushup Tracker</target></segment>
+      <target>排行榜 – 俯卧撑追踪器</target></segment>
     </unit>
     <unit id="seo.leaderboard.description">
       <notes>
@@ -2465,7 +2465,7 @@
       </notes>
       <segment state="translated">
         <source>Öffentliche Bestenliste mit Top-Reps für heute, die letzten 7 Tage und die letzten 30 Tage.</source>
-      <target>Öffentliche Bestenliste mit Top-Reps für heute, die letzten 7 Tage und die letzten 30 Tage.</target></segment>
+      <target>公开排行榜，显示今天、过去 7 天和过去 30 天的最高次数。</target></segment>
     </unit>
     <unit id="seo.publicProfile.title">
       <notes>
@@ -2473,7 +2473,7 @@
       </notes>
       <segment state="translated">
         <source>Profil – Pushup Tracker</source>
-      <target>Profil – Pushup Tracker</target></segment>
+      <target>个人资料 – 俯卧撑追踪器</target></segment>
     </unit>
     <unit id="seo.publicProfile.description">
       <notes>
@@ -2481,7 +2481,7 @@
       </notes>
       <segment state="translated">
         <source>Öffentliches Pushup-Profil mit Reps, Streak und Bestleistungen.</source>
-      <target>Öffentliches Pushup-Profil mit Reps, Streak und Bestleistungen.</target></segment>
+      <target>公开俯卧撑个人资料，显示次数、连续纪录和个人记录。</target></segment>
     </unit>
     <unit id="seo.blog.title">
       <notes>
@@ -2489,7 +2489,7 @@
       </notes>
       <segment state="translated">
         <source>Blog – Liegestütze Tipps &amp; Guides | Pushup Tracker</source>
-      <target>Blog – Liegestütze Tipps &amp; Guides | Pushup Tracker</target></segment>
+      <target>博客 – 俯卧撑技巧和指南 | 俯卧撑追踪器</target></segment>
     </unit>
     <unit id="seo.blog.description">
       <notes>
@@ -2497,7 +2497,7 @@
       </notes>
       <segment state="translated">
         <source>Tipps, Trainingspläne und Motivation rund um Liegestütze – von Einsteiger bis Fortgeschritten.</source>
-      <target>Tipps, Trainingspläne und Motivation rund um Liegestütze – von Einsteiger bis Fortgeschritten.</target></segment>
+      <target>关于俯卧撑的技巧、训练计划和动力 – 从初级到进阶。</target></segment>
     </unit>
     <unit id="seo.impressum.title">
       <notes>
@@ -2505,7 +2505,7 @@
       </notes>
       <segment state="translated">
         <source>Impressum – Pushup Tracker</source>
-      <target>Impressum – Pushup Tracker</target></segment>
+      <target>法律声明 – 俯卧撑追踪器</target></segment>
     </unit>
     <unit id="seo.impressum.description">
       <notes>
@@ -2513,7 +2513,7 @@
       </notes>
       <segment state="translated">
         <source>Impressum und Anbieterkennzeichnung von Pushup Tracker.</source>
-      <target>Impressum und Anbieterkennzeichnung von Pushup Tracker.</target></segment>
+      <target>俯卧撑追踪器的法律声明和提供商标识。</target></segment>
     </unit>
     <unit id="seo.datenschutz.title">
       <notes>
@@ -2521,7 +2521,7 @@
       </notes>
       <segment state="translated">
         <source>Datenschutzerklärung – Pushup Tracker</source>
-      <target>Datenschutzerklärung – Pushup Tracker</target></segment>
+      <target>隐私政策 – 俯卧撑追踪器</target></segment>
     </unit>
     <unit id="seo.datenschutz.description">
       <notes>
@@ -2529,7 +2529,7 @@
       </notes>
       <segment state="translated">
         <source>Datenschutzerklärung von Pushup Tracker – Informationen zu Datenverarbeitung, Cookies und Ihren Rechten.</source>
-      <target>Datenschutzerklärung von Pushup Tracker – Informationen zu Datenverarbeitung, Cookies und Ihren Rechten.</target></segment>
+      <target>俯卧撑追踪器隐私政策 – 数据处理、Cookie 和您的权利信息。</target></segment>
     </unit>
     <unit id="earlyAccess.text">
       <notes>
@@ -2537,7 +2537,7 @@
       </notes>
       <segment state="translated">
         <source>Early Access – pushup-stats.com befindet sich noch im Aufbau. Funktionen und Design können sich jederzeit ändern.</source>
-      <target>Early Access – pushup-stats.com befindet sich noch im Aufbau. Funktionen und Design können sich jederzeit ändern.</target></segment>
+      <target>早期访问 – pushup-stats.com 仍在建设中。功能和设计可能随时更改。</target></segment>
     </unit>
     <unit id="earlyAccess.feedback">
       <notes>
@@ -2545,7 +2545,7 @@
       </notes>
       <segment state="translated">
         <source>Feedback</source>
-      <target>Feedback</target></segment>
+      <target>反馈</target></segment>
     </unit>
     <unit id="seo.default.title">
       <notes>
@@ -2553,7 +2553,7 @@
       </notes>
       <segment state="translated">
         <source>Pushup Tracker</source>
-      <target>Pushup Tracker</target></segment>
+      <target>俯卧撑追踪器</target></segment>
     </unit>
     <unit id="seo.default.description">
       <notes>
@@ -2585,7 +2585,7 @@
       </notes>
       <segment state="translated">
         <source>Danke für dein Feedback!</source>
-      <target>Danke für dein Feedback!</target></segment>
+      <target>感谢你的反馈！</target></segment>
     </unit>
     <unit id="feedback.error">
       <notes>
@@ -2593,7 +2593,7 @@
       </notes>
       <segment state="translated">
         <source>Feedback konnte nicht gesendet werden.</source>
-      <target>Feedback konnte nicht gesendet werden.</target></segment>
+      <target>无法发送反馈。</target></segment>
     </unit>
     <unit id="blog.article.back">
       <notes>
@@ -2621,7 +2621,7 @@
       </notes>
       <segment state="translated">
         <source>Aktualisiert am</source>
-      <target>Aktualisiert am</target></segment>
+      <target>更新于</target></segment>
     </unit>
     <unit id="blog.article.cta">
       <notes>
@@ -2629,7 +2629,7 @@
       </notes>
       <segment state="translated">
         <source> Kostenlos tracken – Jetzt registrieren </source>
-      <target> Kostenlos tracken – Jetzt registrieren </target></segment>
+      <target> 免费追踪 – 立即注册 </target></segment>
     </unit>
     <unit id="blog.article.notFound">
       <notes>
@@ -2637,7 +2637,7 @@
       </notes>
       <segment state="translated">
         <source>Artikel nicht gefunden.</source>
-      <target>Artikel nicht gefunden.</target></segment>
+      <target>文章未找到。</target></segment>
     </unit>
     <unit id="blog.article.toList">
       <notes>
@@ -2645,7 +2645,7 @@
       </notes>
       <segment state="translated">
         <source>Zur Übersicht</source>
-      <target>Zur Übersicht</target></segment>
+      <target>返回列表</target></segment>
     </unit>
     <unit id="blog.list.title">
       <notes>
@@ -2653,7 +2653,7 @@
       </notes>
       <segment state="translated">
         <source>Blog</source>
-      <target>Blog</target></segment>
+      <target>博客</target></segment>
     </unit>
     <unit id="blog.list.intro">
       <notes>
@@ -2661,7 +2661,7 @@
       </notes>
       <segment state="translated">
         <source> Tipps, Guides und Motivation rund um Liegestütze und Krafttraining. </source>
-      <target> Tipps, Guides und Motivation rund um Liegestütze und Krafttraining. </target></segment>
+      <target> 关于俯卧撑和力量训练的技巧、指南和动力。 </target></segment>
     </unit>
     <unit id="blog.list.readArticle">
       <notes>
@@ -2669,7 +2669,7 @@
       </notes>
       <segment state="translated">
         <source>Artikel lesen</source>
-      <target>Artikel lesen</target></segment>
+      <target>阅读文章</target></segment>
     </unit>
     <unit id="feedback.dialog.title">
       <notes>
@@ -2677,7 +2677,7 @@
       </notes>
       <segment state="translated">
         <source>Feedback geben</source>
-      <target>Feedback geben</target></segment>
+      <target>发送反馈</target></segment>
     </unit>
     <unit id="feedback.dialog.anonymous">
       <notes>
@@ -2685,7 +2685,7 @@
       </notes>
       <segment state="translated">
         <source>Anonym absenden</source>
-      <target>Anonym absenden</target></segment>
+      <target>匿名提交</target></segment>
     </unit>
     <unit id="feedback.dialog.name">
       <notes>
@@ -2701,7 +2701,7 @@
       </notes>
       <segment state="translated">
         <source>E-Mail (optional)</source>
-      <target>E-Mail (optional)</target></segment>
+      <target>电子邮件（可选）</target></segment>
     </unit>
     <unit id="feedback.dialog.message">
       <notes>
@@ -2709,7 +2709,7 @@
       </notes>
       <segment state="translated">
         <source>Dein Feedback</source>
-      <target>Dein Feedback</target></segment>
+      <target>你的反馈</target></segment>
     </unit>
     <unit id="feedback.dialog.submit">
       <notes>
@@ -2717,7 +2717,7 @@
       </notes>
       <segment state="translated">
         <source> Absenden </source>
-      <target> Absenden </target></segment>
+      <target> 提交 </target></segment>
     </unit>
     <unit id="quickAdd.success.create">
       <notes>
@@ -2725,7 +2725,7 @@
       </notes>
       <segment state="translated">
         <source>Eintrag gespeichert.</source>
-      <target>Eintrag gespeichert.</target></segment>
+      <target>记录已保存。</target></segment>
     </unit>
     <unit id="quickAdd.error.create">
       <notes>
@@ -2734,7 +2734,7 @@
       </notes>
       <segment state="translated">
         <source>Eintrag konnte nicht gespeichert werden.</source>
-      <target>Eintrag konnte nicht gespeichert werden.</target></segment>
+      <target>无法保存记录。</target></segment>
     </unit>
     <unit id="quickAdd.success.goalReached">
       <notes>
@@ -2742,7 +2742,7 @@
       </notes>
       <segment state="translated">
         <source>Tagesziel erreicht 🎉</source>
-      <target>Tagesziel erreicht 🎉</target></segment>
+      <target>达到每日目标 🎉</target></segment>
     </unit>
     <unit id="share.error.unavailable">
       <notes>
@@ -2751,7 +2751,7 @@
       </notes>
       <segment state="translated">
         <source>Teilen ist auf diesem Gerät nicht möglich.</source>
-      <target>Teilen ist auf diesem Gerät nicht möglich.</target></segment>
+      <target>此设备不支持分享。</target></segment>
     </unit>
     <unit id="share.success.clipboard">
       <notes>
@@ -2759,7 +2759,7 @@
       </notes>
       <segment state="translated">
         <source>In die Zwischenablage kopiert. Jetzt einfügen und teilen!</source>
-      <target>In die Zwischenablage kopiert. Jetzt einfügen und teilen!</target></segment>
+      <target>已复制到剪贴板。现在粘贴并分享！</target></segment>
     </unit>
     <unit id="theme.toggle.auto">
       <notes>
@@ -2767,7 +2767,7 @@
       </notes>
       <segment state="translated">
         <source>Automatisches Design aktiv. Klicken zum Wechseln</source>
-      <target>Automatisches Design aktiv. Klicken zum Wechseln</target></segment>
+      <target>自动设计已激活。点击切换</target></segment>
     </unit>
     <unit id="theme.toggle.light">
       <notes>
@@ -2775,7 +2775,7 @@
       </notes>
       <segment state="translated">
         <source>Helles Design aktiv. Klicken zum Wechseln</source>
-      <target>Helles Design aktiv. Klicken zum Wechseln</target></segment>
+      <target>浅色设计已激活。点击切换</target></segment>
     </unit>
     <unit id="theme.toggle.dark">
       <notes>
@@ -2783,7 +2783,7 @@
       </notes>
       <segment state="translated">
         <source>Dunkles Design aktiv. Klicken zum Wechseln</source>
-      <target>Dunkles Design aktiv. Klicken zum Wechseln</target></segment>
+      <target>深色设计已激活。点击切换</target></segment>
     </unit>
     <unit id="leaderboard.page.title">
       <notes>
@@ -2791,7 +2791,7 @@
       </notes>
       <segment state="translated">
         <source>Bestenliste</source>
-      <target>Bestenliste</target></segment>
+      <target>排行榜</target></segment>
     </unit>
     <unit id="leaderboard.page.subtitle">
       <notes>
@@ -2799,7 +2799,7 @@
       </notes>
       <segment state="translated">
         <source>Heute · Letzte 7 Tage · Letzte 30 Tage</source>
-      <target>Heute · Letzte 7 Tage · Letzte 30 Tage</target></segment>
+      <target>今天 · 过去 7 天 · 过去 30 天</target></segment>
     </unit>
     <unit id="landing.leaderboard.daily">
       <notes>
@@ -2807,7 +2807,7 @@
       </notes>
       <segment state="translated">
         <source> Tag </source>
-      <target> Tag </target></segment>
+      <target> 今天 </target></segment>
     </unit>
     <unit id="landing.leaderboard.last7">
       <notes>
@@ -2815,7 +2815,7 @@
       </notes>
       <segment state="translated">
         <source> Letzte 7 Tage </source>
-      <target> Letzte 7 Tage </target></segment>
+      <target> 过去 7 天 </target></segment>
     </unit>
     <unit id="landing.leaderboard.last30">
       <notes>
@@ -2823,7 +2823,7 @@
       </notes>
       <segment state="translated">
         <source> Letzte 30 Tage </source>
-      <target> Letzte 30 Tage </target></segment>
+      <target> 过去 30 天 </target></segment>
     </unit>
     <unit id="landing.leaderboard.reps">
       <notes>
@@ -2847,7 +2847,7 @@
       </notes>
       <segment state="translated">
         <source>KI-Erinnerungen</source>
-      <target>KI-Erinnerungen</target></segment>
+      <target>AI 提醒</target></segment>
     </unit>
     <unit id="reminder.feature.headline">
       <notes>
@@ -2855,7 +2855,7 @@
       </notes>
       <segment state="translated">
         <source> Dein KI-Coach. Stündlich motiviert. </source>
-      <target> Dein KI-Coach. Stündlich motiviert. </target></segment>
+      <target> 你的 AI 教练。每小时激励。 </target></segment>
     </unit>
     <unit id="reminder.feature.desc">
       <notes>
@@ -2863,7 +2863,7 @@
       </notes>
       <segment state="translated">
         <source> Lass dich automatisch ans Training erinnern – mit individuellen Motivationssprüchen direkt als Browser-Benachrichtigung, generiert von einer KI. </source>
-      <target> Lass dich automatisch ans Training erinnern – mit individuellen Motivationssprüchen direkt als Browser-Benachrichtigung, generiert von einer KI. </target></segment>
+      <target> 自动提醒你训练 – 带有个性化的励志语录，由 AI 生成，直接作为浏览器通知推送。 </target></segment>
     </unit>
     <unit id="reminder.feature.cta">
       <notes>
@@ -2871,7 +2871,7 @@
       </notes>
       <segment state="translated">
         <source>Jetzt einrichten</source>
-      <target>Jetzt einrichten</target></segment>
+      <target>立即设置</target></segment>
     </unit>
     <unit id="reminder.feature.mock.title">
       <notes>
@@ -2887,7 +2887,7 @@
       </notes>
       <segment state="translated">
         <source>Jetzt</source>
-      <target>Jetzt</target></segment>
+      <target>现在</target></segment>
     </unit>
     <unit id="reminder.feature.mock.quote">
       <notes>
@@ -2895,7 +2895,7 @@
       </notes>
       <segment state="translated">
         <source> Jede Wiederholung bringt dich näher ans Ziel. Dein nächstes Set wartet auf dich! </source>
-      <target> Jede Wiederholung bringt dich näher ans Ziel. Dein nächstes Set wartet auf dich! </target></segment>
+      <target> 每一次重复都让你离目标更近。你的下一组准备好了！ </target></segment>
     </unit>
     <unit id="datenschutz.title">
       <notes>
@@ -2903,7 +2903,7 @@
       </notes>
       <segment state="translated">
         <source>Datenschutzerklärung</source>
-      <target>Datenschutzerklärung</target></segment>
+      <target>隐私政策</target></segment>
     </unit>
     <unit id="datenschutz.overview.title">
       <notes>
@@ -2911,7 +2911,7 @@
       </notes>
       <segment state="translated">
         <source> 1. Datenschutz auf einen Blick </source>
-      <target> 1. Datenschutz auf einen Blick </target></segment>
+      <target> 1. 隐私政策一览 </target></segment>
     </unit>
     <unit id="datenschutz.overview.general.title">
       <notes>
@@ -2919,7 +2919,7 @@
       </notes>
       <segment state="translated">
         <source>Allgemeine Hinweise</source>
-      <target>Allgemeine Hinweise</target></segment>
+      <target>常见说明</target></segment>
     </unit>
     <unit id="datenschutz.overview.general.body">
       <notes>
@@ -2927,7 +2927,7 @@
       </notes>
       <segment state="translated">
         <source> Die folgenden Hinweise geben einen einfachen Überblick darüber, was mit Ihren personenbezogenen Daten passiert, wenn Sie diese Website besuchen. Personenbezogene Daten sind alle Daten, mit denen Sie persönlich identifiziert werden können. </source>
-      <target> Die folgenden Hinweise geben einen einfachen Überblick darüber, was mit Ihren personenbezogenen Daten passiert, wenn Sie diese Website besuchen. Personenbezogene Daten sind alle Daten, mit denen Sie persönlich identifiziert werden können. </target></segment>
+      <target> 以下说明简要概述了访问本网站时您的个人数据会发生什么。个人数据是指可以用来识别您身份的所有数据。 </target></segment>
     </unit>
     <unit id="datenschutz.responsible.title">
       <notes>
@@ -2935,7 +2935,7 @@
       </notes>
       <segment state="translated">
         <source> 2. Verantwortliche Stelle </source>
-      <target> 2. Verantwortliche Stelle </target></segment>
+      <target> 2. 责任方 </target></segment>
     </unit>
     <unit id="datenschutz.responsible.body">
       <notes>
@@ -2943,7 +2943,7 @@
       </notes>
       <segment state="translated">
         <source> Die verantwortliche Stelle für die Datenverarbeitung auf dieser Website ist: </source>
-      <target> Die verantwortliche Stelle für die Datenverarbeitung auf dieser Website ist: </target></segment>
+      <target> 本网站数据处理的责任方是： </target></segment>
     </unit>
     <unit id="datenschutz.responsible.email">
       <notes>
@@ -2951,7 +2951,7 @@
       </notes>
       <segment state="translated">
         <source>E-Mail:</source>
-      <target>E-Mail:</target></segment>
+      <target>电子邮件：</target></segment>
     </unit>
     <unit id="datenschutz.hosting.title">
       <notes>
@@ -2959,7 +2959,7 @@
       </notes>
       <segment state="translated">
         <source>3. Hosting</source>
-      <target>3. Hosting</target></segment>
+      <target>3. 托管</target></segment>
     </unit>
     <unit id="datenschutz.hosting.body">
       <notes>
@@ -2967,7 +2967,7 @@
       </notes>
       <segment state="translated">
         <source> Diese Website wird bei Google Firebase (Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland) gehostet. Wenn Sie diese Website besuchen, werden Server-Log-Dateien automatisch erhoben und für kurze Zeit gespeichert. Details entnehmen Sie der Datenschutzerklärung von Google: https://policies.google.com/privacy </source>
-      <target> Diese Website wird bei Google Firebase (Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland) gehostet. Wenn Sie diese Website besuchen, werden Server-Log-Dateien automatisch erhoben und für kurze Zeit gespeichert. Details entnehmen Sie der Datenschutzerklärung von Google: https://policies.google.com/privacy </target></segment>
+      <target> 本网站由 Google Firebase（Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, 爱尔兰）托管。访问本网站时，服务器日志文件会自动收集并短期存储。详情请参阅 Google 隐私政策：https://policies.google.com/privacy </target></segment>
     </unit>
     <unit id="datenschutz.account.title">
       <notes>
@@ -2975,7 +2975,7 @@
       </notes>
       <segment state="translated">
         <source> 4. Registrierung und Nutzerkonto </source>
-      <target> 4. Registrierung und Nutzerkonto </target></segment>
+      <target> 4. 注册和用户账户 </target></segment>
     </unit>
     <unit id="datenschutz.account.body">
       <notes>
@@ -2983,7 +2983,7 @@
       </notes>
       <segment state="translated">
         <source> Sie können ein Nutzerkonto anlegen, um Trainingseinträge zu speichern. Dabei werden E-Mail-Adresse, ein Anzeigename sowie Ihre Trainingseinträge in Google Cloud Firestore gespeichert. Die Authentifizierung erfolgt über Firebase Authentication. Sie können Ihr Konto und alle zugehörigen Daten jederzeit in den Einstellungen löschen. </source>
-      <target> Sie können ein Nutzerkonto anlegen, um Trainingseinträge zu speichern. Dabei werden E-Mail-Adresse, ein Anzeigename sowie Ihre Trainingseinträge in Google Cloud Firestore gespeichert. Die Authentifizierung erfolgt über Firebase Authentication. Sie können Ihr Konto und alle zugehörigen Daten jederzeit in den Einstellungen löschen. </target></segment>
+      <target> 你可以创建用户账户来保存训练记录。邮箱地址、显示名称和训练记录将存储在 Google Cloud Firestore 中。认证通过 Firebase Authentication 进行。你可以随时在设置中删除账户及所有相关数据。 </target></segment>
     </unit>
     <unit id="datenschutz.analytics.title">
       <notes>
@@ -2999,7 +2999,7 @@
       </notes>
       <segment state="translated">
         <source> Diese Website nutzt Google Analytics 4 (Mess-ID: G-5D32B9B1S6), einen Webanalysedienst der Google Ireland Limited. Google Analytics verwendet Cookies und ähnliche Technologien, um Ihre Nutzung der Website zu analysieren. Die erzeugten Informationen werden in der Regel an einen Server von Google übertragen und dort gespeichert. Die IP-Anonymisierung ist aktiviert. Google Analytics wird nur aktiviert, wenn Sie dem zugestimmt haben. </source>
-      <target> Diese Website nutzt Google Analytics 4 (Mess-ID: G-5D32B9B1S6), einen Webanalysedienst der Google Ireland Limited. Google Analytics verwendet Cookies und ähnliche Technologien, um Ihre Nutzung der Website zu analysieren. Die erzeugten Informationen werden in der Regel an einen Server von Google übertragen und dort gespeichert. Die IP-Anonymisierung ist aktiviert. Google Analytics wird nur aktiviert, wenn Sie dem zugestimmt haben. </target></segment>
+      <target> 本网站使用 Google Analytics 4（测量 ID：G-5D32B9B1S6），这是 Google Ireland Limited 的网络分析服务。Google Analytics 使用 Cookie 和类似技术来分析你对网站的使用。生成的信息通常会传输到 Google 服务器并存储在那里。IP 匿名化已启用。Google Analytics 仅在你同意的情况下激活。 </target></segment>
     </unit>
     <unit id="datenschutz.ads.title">
       <notes>
@@ -3015,7 +3015,7 @@
       </notes>
       <segment state="translated">
         <source> Diese Website nutzt Google AdSense (Publisher-ID: ca-pub-6346271540341424), einen Dienst der Google Ireland Limited, zur Einbindung von Werbeanzeigen. Google AdSense verwendet Cookies, um relevante Anzeigen zu schalten und die Anzeigenleistung zu messen. </source>
-      <target> Diese Website nutzt Google AdSense (Publisher-ID: ca-pub-6346271540341424), einen Dienst der Google Ireland Limited, zur Einbindung von Werbeanzeigen. Google AdSense verwendet Cookies, um relevante Anzeigen zu schalten und die Anzeigenleistung zu messen. </target></segment>
+      <target> 本网站使用 Google AdSense（发布商 ID：ca-pub-6346271540341424），这是 Google Ireland Limited 的服务，用于集成广告。Google AdSense 使用 Cookie 来展示相关广告并衡量广告性能。 </target></segment>
     </unit>
     <unit id="datenschutz.ads.personalized.title">
       <notes>
@@ -3023,7 +3023,7 @@
       </notes>
       <segment state="translated">
         <source> Personalisierte und nicht-personalisierte Werbung </source>
-      <target> Personalisierte und nicht-personalisierte Werbung </target></segment>
+      <target> 个性化和非个性化广告 </target></segment>
     </unit>
     <unit id="datenschutz.ads.personalized.body">
       <notes>
@@ -3031,7 +3031,7 @@
       </notes>
       <segment state="translated">
         <source> Beim ersten Besuch der Website werden Sie über einen Consent-Banner gefragt, ob Sie personalisierte Werbung zulassen möchten. Wenn Sie nur „Notwendige“ wählen, werden ausschließlich nicht-personalisierte Anzeigen ausgeliefert, die keine Tracking-Cookies für Werbeprofile setzen. Sie können Ihre Einwilligung jederzeit über den Link „Cookie-Einstellungen“ im Footer der Seite ändern. </source>
-      <target> Beim ersten Besuch der Website werden Sie über einen Consent-Banner gefragt, ob Sie personalisierte Werbung zulassen möchten. Wenn Sie nur „Notwendige“ wählen, werden ausschließlich nicht-personalisierte Anzeigen ausgeliefert, die keine Tracking-Cookies für Werbeprofile setzen. Sie können Ihre Einwilligung jederzeit über den Link „Cookie-Einstellungen“ im Footer der Seite ändern. </target></segment>
+      <target> 首次访问网站时，同意横幅会询问你是否允许个性化广告。如果你仅选择'必要'，将只投放非个性化广告，不会为广告配置文件设置跟踪 Cookie。你可以随时通过页面底部'Cookie 设置'链接更改同意。 </target></segment>
     </unit>
     <unit id="datenschutz.cookies.title">
       <notes>
@@ -3039,7 +3039,7 @@
       </notes>
       <segment state="translated">
         <source>7. Cookies</source>
-      <target>7. Cookies</target></segment>
+      <target>7. Cookie</target></segment>
     </unit>
     <unit id="datenschutz.cookies.body">
       <notes>
@@ -3047,7 +3047,7 @@
       </notes>
       <segment state="translated">
         <source> Diese Website verwendet Cookies. Technisch notwendige Cookies (Session, Spracheinstellung) werden ohne Einwilligung gesetzt. Cookies für Analyse (Google Analytics) und personalisierte Werbung (Google AdSense) werden erst nach Ihrer ausdrücklichen Einwilligung aktiviert. Sie können Ihre Einwilligung jederzeit über den Link „Cookie-Einstellungen“ im Footer widerrufen. </source>
-      <target> Diese Website verwendet Cookies. Technisch notwendige Cookies (Session, Spracheinstellung) werden ohne Einwilligung gesetzt. Cookies für Analyse (Google Analytics) und personalisierte Werbung (Google AdSense) werden erst nach Ihrer ausdrücklichen Einwilligung aktiviert. Sie können Ihre Einwilligung jederzeit über den Link „Cookie-Einstellungen“ im Footer widerrufen. </target></segment>
+      <target> 本网站使用 Cookie。技术上必要的 Cookie（会话、语言设置）在未同意的情况下设置。分析 Cookie（Google Analytics）和个性化广告 Cookie（Google AdSense）仅在你明确同意后激活。你可以随时通过页面底部'Cookie 设置'链接撤销同意。 </target></segment>
     </unit>
     <unit id="datenschutz.rights.title">
       <notes>
@@ -3055,7 +3055,7 @@
       </notes>
       <segment state="translated">
         <source>8. Ihre Rechte</source>
-      <target>8. Ihre Rechte</target></segment>
+      <target>8. 你的权利</target></segment>
     </unit>
     <unit id="datenschutz.rights.body">
       <notes>
@@ -3063,7 +3063,7 @@
       </notes>
       <segment state="translated">
         <source> Sie haben jederzeit das Recht auf Auskunft, Berichtigung, Löschung und Einschränkung der Verarbeitung Ihrer personenbezogenen Daten sowie das Recht auf Datenübertragbarkeit. Außerdem haben Sie das Recht, eine erteilte Einwilligung jederzeit zu widerrufen und sich bei einer Aufsichtsbehörde zu beschweren. </source>
-      <target> Sie haben jederzeit das Recht auf Auskunft, Berichtigung, Löschung und Einschränkung der Verarbeitung Ihrer personenbezogenen Daten sowie das Recht auf Datenübertragbarkeit. Außerdem haben Sie das Recht, eine erteilte Einwilligung jederzeit zu widerrufen und sich bei einer Aufsichtsbehörde zu beschweren. </target></segment>
+      <target> 你随时有权获取、更正、删除和限制处理你的个人数据，以及数据可携带权。此外，你有权随时撤销同意，并向监管机构投诉。 </target></segment>
     </unit>
     <unit id="datenschutz.deletion.title">
       <notes>
@@ -3071,7 +3071,7 @@
       </notes>
       <segment state="translated">
         <source>9. Datenlöschung</source>
-      <target>9. Datenlöschung</target></segment>
+      <target>9. 数据删除</target></segment>
     </unit>
     <unit id="datenschutz.deletion.body">
       <notes>
@@ -3079,7 +3079,7 @@
       </notes>
       <segment state="translated">
         <source> Sie können Ihr Nutzerkonto und alle damit verbundenen Daten jederzeit über die Einstellungsseite der Anwendung löschen. Nach der Löschung werden alle personenbezogenen Daten unverzüglich aus unseren Systemen entfernt. </source>
-      <target> Sie können Ihr Nutzerkonto und alle damit verbundenen Daten jederzeit über die Einstellungsseite der Anwendung löschen. Nach der Löschung werden alle personenbezogenen Daten unverzüglich aus unseren Systemen entfernt. </target></segment>
+      <target> 你可以随时通过应用的设置页面删除用户账户和所有关联数据。删除后，所有个人数据会立即从我们的系统中删除。 </target></segment>
     </unit>
     <unit id="impressum.title">
       <notes>
@@ -3087,7 +3087,7 @@
       </notes>
       <segment state="translated">
         <source>Impressum</source>
-      <target>Impressum</target></segment>
+      <target>法律声明</target></segment>
     </unit>
     <unit id="impressum.info.title">
       <notes>
@@ -3095,7 +3095,7 @@
       </notes>
       <segment state="translated">
         <source> Angaben gemäß § 5 TMG </source>
-      <target> Angaben gemäß § 5 TMG </target></segment>
+      <target> 根据第 5 条 TMG 的规定 </target></segment>
     </unit>
     <unit id="impressum.contact.title">
       <notes>
@@ -3103,7 +3103,7 @@
       </notes>
       <segment state="translated">
         <source>Kontakt</source>
-      <target>Kontakt</target></segment>
+      <target>联系方式</target></segment>
     </unit>
     <unit id="impressum.contact.email">
       <notes>
@@ -3111,7 +3111,7 @@
       </notes>
       <segment state="translated">
         <source>E-Mail:</source>
-      <target>E-Mail:</target></segment>
+      <target>电子邮件：</target></segment>
     </unit>
     <unit id="impressum.liability.content.title">
       <notes>
@@ -3119,7 +3119,7 @@
       </notes>
       <segment state="translated">
         <source> Haftung für Inhalte </source>
-      <target> Haftung für Inhalte </target></segment>
+      <target> 内容责任 </target></segment>
     </unit>
     <unit id="impressum.liability.content.body">
       <notes>
@@ -3127,7 +3127,7 @@
       </notes>
       <segment state="translated">
         <source> Als Diensteanbieter sind wir gemäß § 7 Abs. 1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG sind wir als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen. </source>
-      <target> Als Diensteanbieter sind wir gemäß § 7 Abs. 1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG sind wir als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen. </target></segment>
+      <target> 根据第 7 条第 1 款 TMG，我们作为服务提供商对这些页面上的自有内容按照一般法律负责。根据第 8-10 条 TMG，作为服务提供商，我们没有义务监控传输或存储的第三方信息，或调查是否存在指示非法活动的情况。 </target></segment>
     </unit>
     <unit id="impressum.liability.links.title">
       <notes>
@@ -3135,7 +3135,7 @@
       </notes>
       <segment state="translated">
         <source>Haftung für Links</source>
-      <target>Haftung für Links</target></segment>
+      <target>链接责任</target></segment>
     </unit>
     <unit id="impressum.liability.links.body">
       <notes>
@@ -3143,7 +3143,7 @@
       </notes>
       <segment state="translated">
         <source> Unser Angebot enthält Links zu externen Websites Dritter, auf deren Inhalte wir keinen Einfluss haben. Deshalb können wir für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich. </source>
-      <target> Unser Angebot enthält Links zu externen Websites Dritter, auf deren Inhalte wir keinen Einfluss haben. Deshalb können wir für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich. </target></segment>
+      <target> 我们的服务包含指向第三方外部网站的链接，对这些网站的内容我们无法控制。因此，我们对这些第三方内容不承担任何责任。链接页面的内容始终由各自的提供商或运营商负责。 </target></segment>
     </unit>
     <unit id="impressum.copyright.title">
       <notes>
@@ -3151,7 +3151,7 @@
       </notes>
       <segment state="translated">
         <source>Urheberrecht</source>
-      <target>Urheberrecht</target></segment>
+      <target>版权</target></segment>
     </unit>
     <unit id="impressum.copyright.body">
       <notes>
@@ -3159,7 +3159,7 @@
       </notes>
       <segment state="translated">
         <source> Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der Grenzen des Urheberrechtes bedürfen der schriftlichen Zustimmung des jeweiligen Autors bzw. Erstellers. </source>
-      <target> Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der Grenzen des Urheberrechtes bedürfen der schriftlichen Zustimmung des jeweiligen Autors bzw. Erstellers. </target></segment>
+      <target> 网站运营者创建的内容和作品受德国版权法保护。任何超出版权范围的内容和作品的复制、修改、分发和任何使用形式都需要各自作者或创建者的书面同意。 </target></segment>
     </unit>
     <unit id="brandLogoAlt">
       <notes>
@@ -3168,7 +3168,7 @@
       </notes>
       <segment state="translated">
         <source>Pushup Tracker Logo</source>
-      <target>Pushup Tracker Logo</target></segment>
+      <target>俯卧撑追踪器标志</target></segment>
     </unit>
     <unit id="landing.eyebrow">
       <notes>
@@ -3176,7 +3176,7 @@
       </notes>
       <segment state="translated">
         <source>Pushup Tracker</source>
-      <target>Pushup Tracker</target></segment>
+      <target>俯卧撑追踪器</target></segment>
     </unit>
     <unit id="landing.earlyAccess.badge">
       <notes>
@@ -3184,7 +3184,7 @@
       </notes>
       <segment state="translated">
         <source>Early Access</source>
-      <target>Early Access</target></segment>
+      <target>早期访问</target></segment>
     </unit>
     <unit id="landing.free.badge">
       <notes>
@@ -3192,7 +3192,7 @@
       </notes>
       <segment state="translated">
         <source>Kostenlos &amp; ohne Kreditkarte</source>
-      <target>Kostenlos &amp; ohne Kreditkarte</target></segment>
+      <target>免费且无需信用卡</target></segment>
     </unit>
     <unit id="landing.title">
       <notes>
@@ -3200,7 +3200,7 @@
       </notes>
       <segment state="translated">
         <source>Dein Training. Klar visualisiert.</source>
-      <target>Dein Training. Klar visualisiert.</target></segment>
+      <target>你的训练。清晰可视。</target></segment>
     </unit>
     <unit id="landing.subtitle">
       <notes>
@@ -3208,7 +3208,7 @@
       </notes>
       <segment state="translated">
         <source> Kostenlos tracken: Reps, Trends und Streaks in Sekunden – mobil, schnell und mit Live-Updates. </source>
-      <target> Kostenlos tracken: Reps, Trends und Streaks in Sekunden – mobil, schnell und mit Live-Updates. </target></segment>
+      <target> 免费追踪：几秒内掌握次数、趋势和连续纪录 – 移动端、快速、实时更新。 </target></segment>
     </unit>
     <unit id="landing.cta.dashboard">
       <notes>
@@ -3216,7 +3216,7 @@
       </notes>
       <segment state="translated">
         <source>Zum Dashboard</source>
-      <target>Zum Dashboard</target></segment>
+      <target>前往仪表盘</target></segment>
     </unit>
     <unit id="landing.cta.signup">
       <notes>
@@ -3225,7 +3225,7 @@
       </notes>
       <segment state="translated">
         <source>Konto erstellen</source>
-      <target>Konto erstellen</target></segment>
+      <target>创建账户</target></segment>
     </unit>
     <unit id="landing.cta.login">
       <notes>
@@ -3233,7 +3233,7 @@
       </notes>
       <segment state="translated">
         <source>Einloggen</source>
-      <target>Einloggen</target></segment>
+      <target>登录</target></segment>
     </unit>
     <unit id="landing.cta.guest">
       <notes>
@@ -3241,7 +3241,7 @@
       </notes>
       <segment state="translated">
         <source> Als Gast ausprobieren </source>
-      <target> Als Gast ausprobieren </target></segment>
+      <target> 以访客身份体验 </target></segment>
     </unit>
     <unit id="landing.cta.hint">
       <notes>
@@ -3249,7 +3249,7 @@
       </notes>
       <segment state="translated">
         <source> Kostenlos · Kein Abo · Jederzeit kündbar </source>
-      <target> Kostenlos · Kein Abo · Jederzeit kündbar </target></segment>
+      <target> 免费 · 无订阅 · 随时取消 </target></segment>
     </unit>
     <unit id="landing.plans.eyebrow">
       <notes>
@@ -3257,7 +3257,7 @@
       </notes>
       <segment state="translated">
         <source>Strukturiert trainieren</source>
-      <target>Strukturiert trainieren</target></segment>
+      <target>结构化训练</target></segment>
     </unit>
     <unit id="landing.plans.title">
       <notes>
@@ -3265,7 +3265,7 @@
       </notes>
       <segment state="translated">
         <source> Liegestütz-Trainingspläne, die wirklich funktionieren </source>
-      <target> Liegestütz-Trainingspläne, die wirklich funktionieren </target></segment>
+      <target> 真正有效的俯卧撑训练计划 </target></segment>
     </unit>
     <unit id="landing.plans.subtitle">
       <notes>
@@ -3273,7 +3273,7 @@
       </notes>
       <segment state="translated">
         <source> Vom Einsteiger zum 100er-Set: Geführte Pläne mit Tagesziel, Sätzen und automatischer Fortschrittsverfolgung. Stöbere kostenlos — starten und tracken kannst du mit einem kostenlosen Konto. </source>
-      <target> Vom Einsteiger zum 100er-Set: Geführte Pläne mit Tagesziel, Sätzen und automatischer Fortschrittsverfolgung. Stöbere kostenlos — starten und tracken kannst du mit einem kostenlosen Konto. </target></segment>
+      <target> 从初级到 100 个俯卧撑：包含每日目标、组数和自动进度追踪的指导计划。免费浏览 – 用免费账户开始追踪。 </target></segment>
     </unit>
     <unit id="landing.plans.recruit.title">
       <notes>
@@ -3281,7 +3281,7 @@
       </notes>
       <segment state="translated">
         <source>Von 0 auf 100 — 6 Wochen</source>
-      <target>Von 0 auf 100 — 6 Wochen</target></segment>
+      <target>从零到一百 — 6周训练</target></segment>
     </unit>
     <unit id="landing.plans.recruit.body">
       <notes>
@@ -3289,7 +3289,7 @@
       </notes>
       <segment state="translated">
         <source> Einsteigerfreundlich: 3 Trainingstage pro Woche, progressiver Aufbau und ein Maximaltest in Woche 6. </source>
-      <target> Einsteigerfreundlich: 3 Trainingstage pro Woche, progressiver Aufbau und ein Maximaltest in Woche 6. </target></segment>
+      <target> 初学者友好型：每周3个训练日，循序渐进的强度提升，第6周进行最大次数测试。 </target></segment>
     </unit>
     <unit id="landing.plans.viewPlan">
       <notes>
@@ -3307,7 +3307,7 @@
       </notes>
       <segment state="translated">
         <source>30-Tage-Challenge</source>
-      <target>30-Tage-Challenge</target></segment>
+      <target>30天挑战赛</target></segment>
     </unit>
     <unit id="landing.plans.challenge.body">
       <notes>
@@ -3315,7 +3315,7 @@
       </notes>
       <segment state="translated">
         <source> 30 Tage Pushups mit gezielten Ruhetagen. Tag 1 ist der Maximaltest, Tag 30 der Endtest. </source>
-      <target> 30 Tage Pushups mit gezielten Ruhetagen. Tag 1 ist der Maximaltest, Tag 30 der Endtest. </target></segment>
+      <target> 连续30天俯卧撑，并在特定休息日调整。第1天是最大次数测试，第30天是最终测试。 </target></segment>
     </unit>
     <unit id="landing.plans.over40.title">
       <notes>
@@ -3323,7 +3323,7 @@
       </notes>
       <segment state="translated">
         <source>Liegestütze ab 40 — 4 Wochen</source>
-      <target>Liegestütze ab 40 — 4 Wochen</target></segment>
+      <target>40岁后的俯卧撑 — 4周训练</target></segment>
     </unit>
     <unit id="landing.plans.over40.body">
       <notes>
@@ -3331,7 +3331,7 @@
       </notes>
       <segment state="translated">
         <source> Schonender Plan mit Fokus auf saubere Technik, ausreichend Pause und langsames Tempo. </source>
-      <target> Schonender Plan mit Fokus auf saubere Technik, ausreichend Pause und langsames Tempo. </target></segment>
+      <target> 温和的训练计划，注重正确的姿态、充分的恢复时间和缓慢的节奏。 </target></segment>
     </unit>
     <unit id="landing.plans.cta.overview">
       <notes>
@@ -3339,7 +3339,7 @@
       </notes>
       <segment state="translated">
         <source>Alle Pläne ansehen</source>
-      <target>Alle Pläne ansehen</target></segment>
+      <target>查看全部训练计划</target></segment>
     </unit>
     <unit id="landing.plans.cta.signup">
       <notes>
@@ -3347,7 +3347,7 @@
       </notes>
       <segment state="translated">
         <source>Konto erstellen &amp; Plan starten</source>
-      <target>Konto erstellen &amp; Plan starten</target></segment>
+      <target>创建账户并开始训练计划</target></segment>
     </unit>
     <unit id="landing.trust.bar">
       <notes>
@@ -3355,7 +3355,7 @@
       </notes>
       <segment state="translated">
         <source> ✓ Kostenlos · ✓ Kein Abo · ✓ Keine Kreditkarte · ✓ Datenschutz first </source>
-      <target> ✓ Kostenlos · ✓ Kein Abo · ✓ Keine Kreditkarte · ✓ Datenschutz first </target></segment>
+      <target> ✓ 完全免费 · ✓ 无需订阅 · ✓ 无需信用卡 · ✓ 隐私优先 </target></segment>
     </unit>
     <unit id="landing.features.aria">
       <notes>
@@ -3363,7 +3363,7 @@
       </notes>
       <segment state="translated">
         <source>Funktionen</source>
-      <target>Funktionen</target></segment>
+      <target>功能介绍</target></segment>
     </unit>
     <unit id="landing.feature.multiset.title">
       <notes>
@@ -3371,7 +3371,7 @@
       </notes>
       <segment state="translated">
         <source>Multi-Set Tracking</source>
-      <target>Multi-Set Tracking</target></segment>
+      <target>多组次数追踪</target></segment>
     </unit>
     <unit id="landing.feature.multiset.body">
       <notes>
@@ -3379,7 +3379,7 @@
       </notes>
       <segment state="translated">
         <source>Erfasse jeden Satz einzeln – z. B. 12 + 10 + 8. Die App summiert automatisch und zeigt deine durchschnittliche Set-Größe.</source>
-      <target>Erfasse jeden Satz einzeln – z. B. 12 + 10 + 8. Die App summiert automatisch und zeigt deine durchschnittliche Set-Größe.</target></segment>
+      <target>逐组记录每一组 — 例如 12 + 10 + 8 次。应用会自动求和，并计算你的平均每组次数。</target></segment>
     </unit>
     <unit id="landing.feature.analytics.title">
       <notes>
@@ -3387,7 +3387,7 @@
       </notes>
       <segment state="translated">
         <source>Charts, Trends &amp; Pushup-Typen</source>
-      <target>Charts, Trends &amp; Pushup-Typen</target></segment>
+      <target>图表、趋势和俯卧撑类型分析</target></segment>
     </unit>
     <unit id="landing.feature.analytics.body">
       <notes>
@@ -3395,7 +3395,7 @@
       </notes>
       <segment state="translated">
         <source>Verlaufsdiagramme, KPI-Karten, Verteilung nach Standard, Wide oder Diamond – mit frei wählbarem Zeitraum.</source>
-      <target>Verlaufsdiagramme, KPI-Karten, Verteilung nach Standard, Wide oder Diamond – mit frei wählbarem Zeitraum.</target></segment>
+      <target>趋势图表、关键指标卡、按标准、宽距或菱形分类 — 支持自定义时间段。</target></segment>
     </unit>
     <unit id="landing.feature.goals.title">
       <notes>
@@ -3403,7 +3403,7 @@
       </notes>
       <segment state="translated">
         <source>Tages-, Wochen- &amp; Monatsziele</source>
-      <target>Tages-, Wochen- &amp; Monatsziele</target></segment>
+      <target>日、周、月目标</target></segment>
     </unit>
     <unit id="landing.feature.goals.body">
       <notes>
@@ -3411,7 +3411,7 @@
       </notes>
       <segment state="translated">
         <source>Dreifacher Fortschrittsbalken hält dich auf Kurs. Streak-Anzeige belohnt dranbleiben, Konfetti feiert dein erreichtes Tagesziel.</source>
-      <target>Dreifacher Fortschrittsbalken hält dich auf Kurs. Streak-Anzeige belohnt dranbleiben, Konfetti feiert dein erreichtes Tagesziel.</target></segment>
+      <target>三重进度条让你保持正轨。连续记录显示会显示你的坚持情况，达成每日目标时还有彩纸庆祝。</target></segment>
     </unit>
     <unit id="landing.feature.heatmap.title">
       <notes>
@@ -3419,7 +3419,7 @@
       </notes>
       <segment state="translated">
         <source>Heatmap-Kalender</source>
-      <target>Heatmap-Kalender</target></segment>
+      <target>热力图日历</target></segment>
     </unit>
     <unit id="landing.feature.heatmap.body">
       <notes>
@@ -3427,7 +3427,7 @@
       </notes>
       <segment state="translated">
         <source>Sieh auf einen Blick, an welchen Tagen du wie hart trainiert hast. Lücken werden sichtbar – Konsistenz wird zur Gewohnheit.</source>
-      <target>Sieh auf einen Blick, an welchen Tagen du wie hart trainiert hast. Lücken werden sichtbar – Konsistenz wird zur Gewohnheit.</target></segment>
+      <target>一眼看出你每天的训练强度。空白日期会一目了然 — 坚持就会成为习惯。</target></segment>
     </unit>
     <unit id="landing.feature.quick.title">
       <notes>
@@ -3443,7 +3443,7 @@
       </notes>
       <segment state="translated">
         <source>Eintrag in 2 Sekunden über den Floating Action Button oder Schnellaktionen direkt im Dashboard – ganz ohne Dialog.</source>
-      <target>Eintrag in 2 Sekunden über den Floating Action Button oder Schnellaktionen direkt im Dashboard – ganz ohne Dialog.</target></segment>
+      <target>通过悬浮操作按钮或仪表板快速操作，只需2秒就能记录一次训练 — 无需打开对话框。</target></segment>
     </unit>
     <unit id="landing.feature.adaptive.title">
       <notes>
@@ -3451,7 +3451,7 @@
       </notes>
       <segment state="translated">
         <source>Adaptive Vorschläge</source>
-      <target>Adaptive Vorschläge</target></segment>
+      <target>自适应建议</target></segment>
     </unit>
     <unit id="landing.feature.adaptive.body">
       <notes>
@@ -3459,7 +3459,7 @@
       </notes>
       <segment state="translated">
         <source>Die Schnellaktionen lernen aus deiner Historie und schlagen passende Wiederholungen vor – oder du konfigurierst eigene Buttons.</source>
-      <target>Die Schnellaktionen lernen aus deiner Historie und schlagen passende Wiederholungen vor – oder du konfigurierst eigene Buttons.</target></segment>
+      <target>快速操作按钮会学习你的历史数据并推荐合适的次数 — 或者你可以自定义按钮。</target></segment>
     </unit>
     <unit id="landing.feature.pwa.title">
       <notes>
@@ -3475,7 +3475,7 @@
       </notes>
       <segment state="translated">
         <source>Installierbar wie eine native App, Echtzeit-Sync zwischen allen Geräten und Tagesergebnis per Web Share teilen – inklusive Dark- und Light-Theme.</source>
-      <target>Installierbar wie eine native App, Echtzeit-Sync zwischen allen Geräten und Tagesergebnis per Web Share teilen – inklusive Dark- und Light-Theme.</target></segment>
+      <target>像原生应用一样可安装，所有设备间实时同步数据，可通过网页分享每日成绩 — 包括深色和浅色主题支持。</target></segment>
     </unit>
     <unit id="landing.feature.privacy.title">
       <notes>
@@ -3483,7 +3483,7 @@
       </notes>
       <segment state="translated">
         <source>Privacy first &amp; 100 % kostenlos</source>
-      <target>Privacy first &amp; 100 % kostenlos</target></segment>
+      <target>隐私优先且100%免费</target></segment>
     </unit>
     <unit id="landing.feature.privacy.body">
       <notes>
@@ -3491,7 +3491,7 @@
       </notes>
       <segment state="translated">
         <source>DSGVO-konform mit anpassbarer Cookie-Zustimmung. Dein Name auf der Bestenliste? Nur wenn du es willst. Kein Abo, keine Kreditkarte.</source>
-      <target>DSGVO-konform mit anpassbarer Cookie-Zustimmung. Dein Name auf der Bestenliste? Nur wenn du es willst. Kein Abo, keine Kreditkarte.</target></segment>
+      <target>符合GDPR标准，可自定义Cookie同意设置。想要你的名字出现在排行榜上？只有在你同意时才会显示。无需订阅，无需信用卡。</target></segment>
     </unit>
     <unit id="ads.landing.aria">
       <notes>
@@ -3499,7 +3499,7 @@
       </notes>
       <segment state="translated">
         <source>Werbung</source>
-      <target>Werbung</target></segment>
+      <target>广告</target></segment>
     </unit>
     <unit id="landing.preview.title">
       <notes>
@@ -3507,7 +3507,7 @@
       </notes>
       <segment state="translated">
         <source> Deine Statistik auf einen Blick </source>
-      <target> Deine Statistik auf einen Blick </target></segment>
+      <target> 一眼看出你的统计数据 </target></segment>
     </unit>
     <unit id="landing.preview.alt">
       <notes>
@@ -3515,7 +3515,7 @@
       </notes>
       <segment state="translated">
         <source>Vorschau der Statistikansicht</source>
-      <target>Vorschau der Statistikansicht</target></segment>
+      <target>统计数据页面预览</target></segment>
     </unit>
     <unit id="landing.discover.title">
       <notes>
@@ -3523,7 +3523,7 @@
       </notes>
       <segment state="translated">
         <source>Mehr entdecken</source>
-      <target>Mehr entdecken</target></segment>
+      <target>探索更多</target></segment>
     </unit>
     <unit id="landing.discover.leaderboard.title">
       <notes>
@@ -3531,7 +3531,7 @@
       </notes>
       <segment state="translated">
         <source>Bestenliste</source>
-      <target>Bestenliste</target></segment>
+      <target>排行榜</target></segment>
     </unit>
     <unit id="landing.discover.leaderboard.body">
       <notes>
@@ -3539,7 +3539,7 @@
       </notes>
       <segment state="translated">
         <source> Vergleiche dich mit der Community: Top-Reps für heute, die letzten 7 Tage und die letzten 30 Tage. Privacy first – dein Name erscheint nur, wenn du es willst. </source>
-      <target> Vergleiche dich mit der Community: Top-Reps für heute, die letzten 7 Tage und die letzten 30 Tage. Privacy first – dein Name erscheint nur, wenn du es willst. </target></segment>
+      <target> 与社区对比：今日最高次数、过去7天和过去30天的最高成绩。隐私优先 — 你的名字只会在你同意时才会出现。 </target></segment>
     </unit>
     <unit id="landing.discover.leaderboard.cta">
       <notes>
@@ -3547,7 +3547,7 @@
       </notes>
       <segment state="translated">
         <source>Zur Bestenliste</source>
-      <target>Zur Bestenliste</target></segment>
+      <target>查看排行榜</target></segment>
     </unit>
     <unit id="landing.discover.blog.title">
       <notes>
@@ -3555,7 +3555,7 @@
       </notes>
       <segment state="translated">
         <source>Blog</source>
-      <target>Blog</target></segment>
+      <target>博客</target></segment>
     </unit>
     <unit id="landing.discover.blog.body">
       <notes>
@@ -3563,7 +3563,7 @@
       </notes>
       <segment state="translated">
         <source> Tipps, Hintergrundwissen und Motivation rund um Liegestütze – von Einsteiger bis Fortgeschritten. Viele Artikel verlinken direkt auf den passenden Trainingsplan. </source>
-      <target> Tipps, Hintergrundwissen und Motivation rund um Liegestütze – von Einsteiger bis Fortgeschritten. Viele Artikel verlinken direkt auf den passenden Trainingsplan. </target></segment>
+      <target> 关于俯卧撑的技巧、背景知识和激励文章 — 从初学者到进阶。许多文章会直接链接到合适的训练计划。 </target></segment>
     </unit>
     <unit id="landing.discover.blog.cta">
       <notes>
@@ -3571,7 +3571,7 @@
       </notes>
       <segment state="translated">
         <source>Zum Blog</source>
-      <target>Zum Blog</target></segment>
+      <target>查看博客</target></segment>
     </unit>
     <unit id="publicProfile.subtitle">
       <notes>
@@ -3579,7 +3579,7 @@
       </notes>
       <segment state="translated">
         <source> Pushup Tracker </source>
-      <target> Pushup Tracker </target></segment>
+      <target> 俯卧撑追踪器 </target></segment>
     </unit>
     <unit id="publicProfile.notFound.title">
       <notes>
@@ -3587,7 +3587,7 @@
       </notes>
       <segment state="translated">
         <source>Profil nicht gefunden</source>
-      <target>Profil nicht gefunden</target></segment>
+      <target>资料未找到</target></segment>
     </unit>
     <unit id="publicProfile.notFound.body">
       <notes>
@@ -3595,7 +3595,7 @@
       </notes>
       <segment state="translated">
         <source>Dieses Profil existiert nicht oder wurde nicht öffentlich freigegeben.</source>
-      <target>Dieses Profil existiert nicht oder wurde nicht öffentlich freigegeben.</target></segment>
+      <target>该资料不存在或未公开分享。</target></segment>
     </unit>
     <unit id="publicProfile.error.title">
       <notes>
@@ -3603,7 +3603,7 @@
       </notes>
       <segment state="translated">
         <source>Profil konnte nicht geladen werden</source>
-      <target>Profil konnte nicht geladen werden</target></segment>
+      <target>资料加载失败</target></segment>
     </unit>
     <unit id="publicProfile.error.body">
       <notes>
@@ -3611,7 +3611,7 @@
       </notes>
       <segment state="translated">
         <source>Bitte versuche es später erneut.</source>
-      <target>Bitte versuche es später erneut.</target></segment>
+      <target>请稍后重试。</target></segment>
     </unit>
     <unit id="publicProfile.retry">
       <notes>
@@ -3627,7 +3627,7 @@
       </notes>
       <segment state="translated">
         <source>Zur Startseite</source>
-      <target>Zur Startseite</target></segment>
+      <target>返回首页</target></segment>
     </unit>
     <unit id="publicProfile.stats">
       <notes>
@@ -3643,7 +3643,7 @@
       </notes>
       <segment state="translated">
         <source>Gesamte Reps</source>
-      <target>Gesamte Reps</target></segment>
+      <target>总次数</target></segment>
     </unit>
     <unit id="publicProfile.streak">
       <notes>
@@ -3651,7 +3651,7 @@
       </notes>
       <segment state="translated">
         <source>Aktuelle Streak</source>
-      <target>Aktuelle Streak</target></segment>
+      <target>当前连续天数</target></segment>
     </unit>
     <unit id="publicProfile.days">
       <notes>
@@ -3659,7 +3659,7 @@
       </notes>
       <segment state="translated">
         <source>Aktive Tage</source>
-      <target>Aktive Tage</target></segment>
+      <target>活跃天数</target></segment>
     </unit>
     <unit id="publicProfile.entries">
       <notes>
@@ -3667,7 +3667,7 @@
       </notes>
       <segment state="translated">
         <source>Einträge</source>
-      <target>Einträge</target></segment>
+      <target>记录数</target></segment>
     </unit>
     <unit id="publicProfile.bestSet">
       <notes>
@@ -3675,7 +3675,7 @@
       </notes>
       <segment state="translated">
         <source>Bester Einzel-Eintrag</source>
-      <target>Bester Einzel-Eintrag</target></segment>
+      <target>最佳单次记录</target></segment>
     </unit>
     <unit id="publicProfile.bestDay">
       <notes>
@@ -3683,7 +3683,7 @@
       </notes>
       <segment state="translated">
         <source>Bester Tag</source>
-      <target>Bester Tag</target></segment>
+      <target>最佳训练日</target></segment>
     </unit>
     <unit id="publicProfile.share.aria">
       <notes>
@@ -3691,7 +3691,7 @@
       </notes>
       <segment state="translated">
         <source>Profil teilen</source>
-      <target>Profil teilen</target></segment>
+      <target>分享资料</target></segment>
     </unit>
     <unit id="publicProfile.share">
       <notes>
@@ -3707,7 +3707,7 @@
       </notes>
       <segment state="translated">
         <source>Selbst tracken – pushup-stats.com</source>
-      <target>Selbst tracken – pushup-stats.com</target></segment>
+      <target>自己追踪 — pushup-stats.com</target></segment>
     </unit>
     <unit id="publicProfile.share.text">
       <notes>
@@ -3725,7 +3725,7 @@
       </notes>
       <segment state="translated">
         <source>Pushup Tracker Profil</source>
-      <target>Pushup Tracker Profil</target></segment>
+      <target>俯卧撑追踪器资料</target></segment>
     </unit>
     <unit id="publicProfile.seo.notFound.title">
       <notes>
@@ -3733,7 +3733,7 @@
       </notes>
       <segment state="translated">
         <source>Profil nicht verfügbar – Pushup Tracker</source>
-      <target>Profil nicht verfügbar – Pushup Tracker</target></segment>
+      <target>资料不可用 — 俯卧撑追踪器</target></segment>
     </unit>
     <unit id="publicProfile.seo.notFound.description">
       <notes>
@@ -3741,7 +3741,7 @@
       </notes>
       <segment state="translated">
         <source>Dieses Profil existiert nicht oder ist nicht öffentlich.</source>
-      <target>Dieses Profil existiert nicht oder ist nicht öffentlich.</target></segment>
+      <target>该资料不存在或未公开。</target></segment>
     </unit>
     <unit id="publicProfile.seo.title">
       <notes>
@@ -3779,7 +3779,7 @@
       </notes>
       <segment state="translated">
         <source>🔔 Erinnerungen</source>
-      <target>🔔 Erinnerungen</target></segment>
+      <target>🔔 提醒</target></segment>
     </unit>
     <unit id="reminders.page.subtitle">
       <notes>
@@ -3787,7 +3787,7 @@
       </notes>
       <segment state="translated">
         <source>Liegestütz-Erinnerungen &amp; Push-Benachrichtigungen</source>
-      <target>Liegestütz-Erinnerungen &amp; Push-Benachrichtigungen</target></segment>
+      <target>俯卧撑提醒和推送通知</target></segment>
     </unit>
     <unit id="reminder.section.title">
       <notes>
@@ -3795,7 +3795,7 @@
       </notes>
       <segment state="translated">
         <source>🔔 Erinnerungen / Reminders</source>
-      <target>🔔 Erinnerungen / Reminders</target></segment>
+      <target>🔔 提醒 / Reminders</target></segment>
     </unit>
     <unit id="reminder.enabled.label">
       <notes>
@@ -3803,7 +3803,7 @@
       </notes>
       <segment state="translated">
         <source> Liegestütz-Erinnerungen aktivieren </source>
-      <target> Liegestütz-Erinnerungen aktivieren </target></segment>
+      <target> 启用俯卧撑提醒 </target></segment>
     </unit>
     <unit id="reminder.permission.denied.hint">
       <notes>
@@ -3821,7 +3821,7 @@
       </notes>
       <segment state="translated">
         <source>Benachrichtigungen erlaubt</source>
-      <target>Benachrichtigungen erlaubt</target></segment>
+      <target>已允许通知</target></segment>
     </unit>
     <unit id="reminder.permission.unsupported">
       <notes>
@@ -3839,7 +3839,7 @@
       </notes>
       <segment state="translated">
         <source> Erinnerungsintervall </source>
-      <target> Erinnerungsintervall </target></segment>
+      <target> 提醒间隔 </target></segment>
     </unit>
     <unit id="reminder.interval.aria">
       <notes>
@@ -3847,7 +3847,7 @@
       </notes>
       <segment state="translated">
         <source>Intervall-Voreinstellungen</source>
-      <target>Intervall-Voreinstellungen</target></segment>
+      <target>间隔预设</target></segment>
     </unit>
     <unit id="reminder.interval.30min">
       <notes>
@@ -3855,7 +3855,7 @@
       </notes>
       <segment state="translated">
         <source>30 Min</source>
-      <target>30 Min</target></segment>
+      <target>30分钟</target></segment>
     </unit>
     <unit id="reminder.interval.1h">
       <notes>
@@ -3863,7 +3863,7 @@
       </notes>
       <segment state="translated">
         <source>1 Std</source>
-      <target>1 Std</target></segment>
+      <target>1小时</target></segment>
     </unit>
     <unit id="reminder.interval.2h">
       <notes>
@@ -3871,7 +3871,7 @@
       </notes>
       <segment state="translated">
         <source>2 Std</source>
-      <target>2 Std</target></segment>
+      <target>2小时</target></segment>
     </unit>
     <unit id="reminder.interval.4h">
       <notes>
@@ -3879,7 +3879,7 @@
       </notes>
       <segment state="translated">
         <source>4 Std</source>
-      <target>4 Std</target></segment>
+      <target>4小时</target></segment>
     </unit>
     <unit id="reminder.interval.custom.label">
       <notes>
@@ -3887,7 +3887,7 @@
       </notes>
       <segment state="translated">
         <source>Benutzerdefiniert (Min)</source>
-      <target>Benutzerdefiniert (Min)</target></segment>
+      <target>自定义（分钟）</target></segment>
     </unit>
     <unit id="reminder.interval.hint">
       <notes>
@@ -3895,7 +3895,7 @@
       </notes>
       <segment state="translated">
         <source>15–480 Minuten</source>
-      <target>15–480 Minuten</target></segment>
+      <target>15–480分钟</target></segment>
     </unit>
     <unit id="reminder.language.label">
       <notes>
@@ -3903,7 +3903,7 @@
       </notes>
       <segment state="translated">
         <source> Sprache der Zitate </source>
-      <target> Sprache der Zitate </target></segment>
+      <target> 引言语言 </target></segment>
     </unit>
     <unit id="reminder.language.aria">
       <notes>
@@ -3911,7 +3911,7 @@
       </notes>
       <segment state="translated">
         <source>Erinnerungssprache</source>
-      <target>Erinnerungssprache</target></segment>
+      <target>提醒语言</target></segment>
     </unit>
     <unit id="reminder.language.de">
       <notes>
@@ -3919,7 +3919,7 @@
       </notes>
       <segment state="translated">
         <source>DE</source>
-      <target>DE</target></segment>
+      <target>德文</target></segment>
     </unit>
     <unit id="reminder.language.en">
       <notes>
@@ -3927,7 +3927,7 @@
       </notes>
       <segment state="translated">
         <source>EN</source>
-      <target>EN</target></segment>
+      <target>英文</target></segment>
     </unit>
     <unit id="reminder.quickLog.label">
       <notes>
@@ -3935,7 +3935,7 @@
       </notes>
       <segment state="translated">
         <source> Direkt-Eintrag aus der Benachrichtigung </source>
-      <target> Direkt-Eintrag aus der Benachrichtigung </target></segment>
+      <target> 从通知直接记录 </target></segment>
     </unit>
     <unit id="reminder.quickLog.desc">
       <notes>
@@ -3943,7 +3943,7 @@
       </notes>
       <segment state="translated">
         <source> Zeigt einen "Eintragen"-Button auf der Push-Benachrichtigung. Wenn die App schon geöffnet ist, wird der Eintrag im Hintergrund gespeichert; ansonsten öffnet sich kurz ein Tab, der den Eintrag automatisch anlegt. </source>
-      <target> Zeigt einen "Eintragen"-Button auf der Push-Benachrichtigung. Wenn die App schon geöffnet ist, wird der Eintrag im Hintergrund gespeichert; ansonsten öffnet sich kurz ein Tab, der den Eintrag automatisch anlegt. </target></segment>
+      <target> 在推送通知上显示"记录"按钮。如果应用已打开，记录会在后台保存；否则会打开一个标签页自动创建记录。 </target></segment>
     </unit>
     <unit id="reminder.quickLog.toggle">
       <notes>
@@ -3951,7 +3951,7 @@
       </notes>
       <segment state="translated">
         <source> Schnell-Eintrag aktivieren </source>
-      <target> Schnell-Eintrag aktivieren </target></segment>
+      <target> 启用快速记录 </target></segment>
     </unit>
     <unit id="reminder.quickLog.reps.label">
       <notes>
@@ -3959,7 +3959,7 @@
       </notes>
       <segment state="translated">
         <source>Anzahl Liegestütze</source>
-      <target>Anzahl Liegestütze</target></segment>
+      <target>俯卧撑次数</target></segment>
     </unit>
     <unit id="reminder.quickLog.reps.hint">
       <notes>
@@ -3967,7 +3967,7 @@
       </notes>
       <segment state="translated">
         <source>1–500 Wiederholungen</source>
-      <target>1–500 Wiederholungen</target></segment>
+      <target>1–500次</target></segment>
     </unit>
     <unit id="reminder.quietHours.label">
       <notes>
@@ -3975,7 +3975,7 @@
       </notes>
       <segment state="translated">
         <source> Ruhezeiten </source>
-      <target> Ruhezeiten </target></segment>
+      <target> 安静时段 </target></segment>
     </unit>
     <unit id="reminder.quietHours.from">
       <notes>
@@ -3983,7 +3983,7 @@
       </notes>
       <segment state="translated">
         <source>Von</source>
-      <target>Von</target></segment>
+      <target>从</target></segment>
     </unit>
     <unit id="reminder.quietHours.to">
       <notes>
@@ -3991,7 +3991,7 @@
       </notes>
       <segment state="translated">
         <source>Bis</source>
-      <target>Bis</target></segment>
+      <target>至</target></segment>
     </unit>
     <unit id="reminder.quietHours.remove.aria">
       <notes>
@@ -3999,7 +3999,7 @@
       </notes>
       <segment state="translated">
         <source>Ruhezeit entfernen</source>
-      <target>Ruhezeit entfernen</target></segment>
+      <target>移除安静时段</target></segment>
     </unit>
     <unit id="reminder.quietHours.add">
       <notes>
@@ -4027,7 +4027,7 @@
       </notes>
       <segment state="translated">
         <source>Gespeichert.</source>
-      <target>Gespeichert.</target></segment>
+      <target>已保存。</target></segment>
     </unit>
     <unit id="push.section.title">
       <notes>
@@ -4035,7 +4035,7 @@
       </notes>
       <segment state="translated">
         <source>🔔 Erinnerungen</source>
-      <target>🔔 Erinnerungen</target></segment>
+      <target>🔔 提醒</target></segment>
     </unit>
     <unit id="push.section.desc">
       <notes>
@@ -4043,7 +4043,7 @@
       </notes>
       <segment state="translated">
         <source> Wir tippen dir auf die Schulter, wenn es Zeit für Liegestütze ist. </source>
-      <target> Wir tippen dir auf die Schulter, wenn es Zeit für Liegestütze ist. </target></segment>
+      <target> 当该练习的时候，我们会轻轻提醒你。 </target></segment>
     </unit>
     <unit id="push.status.unsupported">
       <notes>
@@ -4081,7 +4081,7 @@
       </notes>
       <segment state="translated">
         <source>Erinnerungen aktiv ✓</source>
-      <target>Erinnerungen aktiv ✓</target></segment>
+      <target>提醒已激活 ✓</target></segment>
     </unit>
     <unit id="push.unsubscribe">
       <notes>
@@ -4107,7 +4107,7 @@
       </notes>
       <segment state="translated">
         <source> Nie wieder eine Einheit verpassen. </source>
-      <target> Nie wieder eine Einheit verpassen. </target></segment>
+      <target> 永远不会错过一次训练。 </target></segment>
     </unit>
     <unit id="push.subscribe">
       <notes>
@@ -4125,7 +4125,7 @@
       </notes>
       <segment state="translated">
         <source>📵 Push auf allen Geräten</source>
-      <target>📵 Push auf allen Geräten</target></segment>
+      <target>📵 所有设备推送</target></segment>
     </unit>
     <unit id="unsubAll.section.desc">
       <notes>
@@ -4133,7 +4133,7 @@
       </notes>
       <segment state="translated">
         <source> Entfernt alle Push-Benachrichtigungs-Abos auf diesem und allen anderen Geräten. Du bleibst angemeldet und kannst Push jederzeit wieder aktivieren. </source>
-      <target> Entfernt alle Push-Benachrichtigungs-Abos auf diesem und allen anderen Geräten. Du bleibst angemeldet und kannst Push jederzeit wieder aktivieren. </target></segment>
+      <target> 移除此设备和所有其他设备上的所有推送通知订阅。你将保持登录状态，随时可以重新启用推送。 </target></segment>
     </unit>
     <unit id="unsubAll.button">
       <notes>
@@ -4152,7 +4152,7 @@
       </notes>
       <segment state="translated">
         <source>Push konnte nicht aktiviert werden.</source>
-      <target>Push konnte nicht aktiviert werden.</target></segment>
+      <target>无法启用推送。</target></segment>
     </unit>
     <unit id="unsubAll.error">
       <notes>
@@ -4160,7 +4160,7 @@
       </notes>
       <segment state="translated">
         <source>Entfernen der Push-Abos fehlgeschlagen.</source>
-      <target>Entfernen der Push-Abos fehlgeschlagen.</target></segment>
+      <target>无法移除推送订阅。</target></segment>
     </unit>
     <unit id="unsubAll.success">
       <notes>
@@ -4168,7 +4168,7 @@
       </notes>
       <segment state="translated">
         <source>Push-Abos aller Geräte entfernt.</source>
-      <target>Push-Abos aller Geräte entfernt.</target></segment>
+      <target>已移除所有设备的推送订阅。</target></segment>
     </unit>
     <unit id="reminder.permission.snackbar">
       <notes>
@@ -4176,7 +4176,7 @@
       </notes>
       <segment state="translated">
         <source>Benachrichtigungen sind blockiert. Bitte in den Browser-Einstellungen erlauben.</source>
-      <target>Benachrichtigungen sind blockiert. Bitte in den Browser-Einstellungen erlauben.</target></segment>
+      <target>通知已被阻止。请在浏览器设置中允许。</target></segment>
     </unit>
     <unit id="reminder.save.error">
       <notes>
@@ -4185,7 +4185,7 @@
       </notes>
       <segment state="translated">
         <source>Einstellungen konnten nicht gespeichert werden.</source>
-      <target>Einstellungen konnten nicht gespeichert werden.</target></segment>
+      <target>无法保存设置。</target></segment>
     </unit>
     <unit id="unsubAll.dialog.title">
       <notes>
@@ -4193,7 +4193,7 @@
       </notes>
       <segment state="translated">
         <source> Push-Abos aller Geräte entfernen? </source>
-      <target> Push-Abos aller Geräte entfernen? </target></segment>
+      <target> 移除所有设备的推送订阅? </target></segment>
     </unit>
     <unit id="unsubAll.dialog.body">
       <notes>
@@ -4201,7 +4201,7 @@
       </notes>
       <segment state="translated">
         <source> Alle Push-Benachrichtigungs-Abos auf diesem und allen anderen Geräten werden entfernt. Du bleibst angemeldet und kannst Push jederzeit wieder aktivieren. </source>
-      <target> Alle Push-Benachrichtigungs-Abos auf diesem und allen anderen Geräten werden entfernt. Du bleibst angemeldet und kannst Push jederzeit wieder aktivieren. </target></segment>
+      <target> 此设备和所有其他设备上的所有推送通知订阅都将被移除。你将保持登录状态，随时可以重新启用推送。 </target></segment>
     </unit>
     <unit id="unsubAll.dialog.cancel">
       <notes>
@@ -4209,7 +4209,7 @@
       </notes>
       <segment state="translated">
         <source> Abbrechen </source>
-      <target> Abbrechen </target></segment>
+      <target> 取消 </target></segment>
     </unit>
     <unit id="unsubAll.dialog.confirm">
       <notes>
@@ -4217,7 +4217,7 @@
       </notes>
       <segment state="translated">
         <source> Abos entfernen </source>
-      <target> Abos entfernen </target></segment>
+      <target> 移除订阅 </target></segment>
     </unit>
     <unit id="dashboard.analysisTeaserAriaLabel">
       <notes>
@@ -4225,7 +4225,7 @@
       </notes>
       <segment state="translated">
         <source>Analyse öffnen</source>
-      <target>Analyse öffnen</target></segment>
+      <target>打开分析</target></segment>
     </unit>
     <unit id="dashboard.analysisTeaserTitle">
       <notes>
@@ -4233,7 +4233,7 @@
       </notes>
       <segment state="translated">
         <source>Analyse</source>
-      <target>Analyse</target></segment>
+      <target>分析</target></segment>
     </unit>
     <unit id="dashboard.analysisTeaserStreak">
       <notes>
@@ -4257,7 +4257,7 @@
       </notes>
       <segment state="translated">
         <source> Daten konnten nicht geladen werden. </source>
-      <target> Daten konnten nicht geladen werden. </target></segment>
+      <target> 无法加载数据。 </target></segment>
     </unit>
     <unit id="dashboard.analysisTeaserCtaAriaLabel">
       <notes>
@@ -4265,7 +4265,7 @@
       </notes>
       <segment state="translated">
         <source>Zur Analyse navigieren</source>
-      <target>Zur Analyse navigieren</target></segment>
+      <target>导航至分析页面</target></segment>
     </unit>
     <unit id="dashboard.analysisTeaserCta">
       <notes>
@@ -4273,7 +4273,7 @@
       </notes>
       <segment state="translated">
         <source>Zur Analyse</source>
-      <target>Zur Analyse</target></segment>
+      <target>查看分析</target></segment>
     </unit>
     <unit id="editDialogTitle">
       <notes>
@@ -4281,7 +4281,7 @@
       </notes>
       <segment state="translated">
         <source>Eintrag bearbeiten</source>
-      <target>Eintrag bearbeiten</target></segment>
+      <target>编辑记录</target></segment>
     </unit>
     <unit id="createDialogTitle">
       <notes>
@@ -4289,7 +4289,7 @@
       </notes>
       <segment state="translated">
         <source>Neuen Eintrag anlegen</source>
-      <target>Neuen Eintrag anlegen</target></segment>
+      <target>添加新记录</target></segment>
     </unit>
     <unit id="timestampLabel">
       <notes>
@@ -4297,7 +4297,7 @@
       </notes>
       <segment state="translated">
         <source>Zeitpunkt</source>
-      <target>Zeitpunkt</target></segment>
+      <target>时间</target></segment>
     </unit>
     <unit id="setLabel">
       <notes>
@@ -4337,7 +4337,7 @@
       </notes>
       <segment state="translated">
         <source>Weiteres Set hinzufügen</source>
-      <target>Weiteres Set hinzufügen</target></segment>
+      <target>添加另一组</target></segment>
     </unit>
     <unit id="totalReps">
       <notes>
@@ -4361,7 +4361,7 @@
       </notes>
       <segment state="translated">
         <source>Auswählen oder eintippen</source>
-      <target>Auswählen oder eintippen</target></segment>
+      <target>选择或输入</target></segment>
     </unit>
     <unit id="typeWikiLinkAria">
       <notes>
@@ -4369,7 +4369,7 @@
       </notes>
       <segment state="translated">
         <source>Anleitung zum Liegestütztyp öffnen</source>
-      <target>Anleitung zum Liegestütztyp öffnen</target></segment>
+      <target>打开俯卧撑类型指南</target></segment>
     </unit>
     <unit id="sourceLabel">
       <notes>
@@ -4377,7 +4377,7 @@
       </notes>
       <segment state="translated">
         <source>Quelle</source>
-      <target>Quelle</target></segment>
+      <target>来源</target></segment>
     </unit>
     <unit id="sourcePlaceholder">
       <notes>
@@ -4385,7 +4385,7 @@
       </notes>
       <segment state="translated">
         <source>web / whatsapp / eigene Quelle</source>
-      <target>web / whatsapp / eigene Quelle</target></segment>
+      <target>网站 / whatsapp / 自定义来源</target></segment>
     </unit>
     <unit id="saveEntry">
       <notes>
@@ -4393,7 +4393,7 @@
       </notes>
       <segment state="translated">
         <source> Speichern </source>
-      <target> Speichern </target></segment>
+      <target> 保存 </target></segment>
     </unit>
     <unit id="typeWikiLinkTooltip.generic">
       <notes>
@@ -4401,7 +4401,7 @@
       </notes>
       <segment state="translated">
         <source>Anleitung zu Liegestütztypen öffnen</source>
-      <target>Anleitung zu Liegestütztypen öffnen</target></segment>
+      <target>打开俯卧撑类型指南</target></segment>
     </unit>
     <unit id="typeWikiLinkTooltip.specific">
       <notes>
@@ -4409,7 +4409,7 @@
       </notes>
       <segment state="translated">
         <source>Anleitung öffnen</source>
-      <target>Anleitung öffnen</target></segment>
+      <target>打开指南</target></segment>
     </unit>
     <unit id="selectRangeTitle">
       <notes>
@@ -4417,7 +4417,7 @@
       </notes>
       <segment state="translated">
         <source>Zeitraum auswählen</source>
-      <target>Zeitraum auswählen</target></segment>
+      <target>选择时间段</target></segment>
     </unit>
     <unit id="quickRangeAria">
       <notes>
@@ -4425,7 +4425,7 @@
       </notes>
       <segment state="translated">
         <source>Schnellwahl Zeitraum</source>
-      <target>Schnellwahl Zeitraum</target></segment>
+      <target>快速选择时间段</target></segment>
     </unit>
     <unit id="rangeModeDay">
       <notes>
@@ -4475,7 +4475,7 @@
       </notes>
       <segment state="translated">
         <source> Heute </source>
-      <target> Heute </target></segment>
+      <target> 今天 </target></segment>
     </unit>
     <unit id="rangeForward">
       <notes>
@@ -4491,7 +4491,7 @@
       </notes>
       <segment state="translated">
         <source>Zeitraum</source>
-      <target>Zeitraum</target></segment>
+      <target>时间段</target></segment>
     </unit>
     <unit id="rangeFrom">
       <notes>
@@ -4499,7 +4499,7 @@
       </notes>
       <segment state="translated">
         <source>Von</source>
-      <target>Von</target></segment>
+      <target>从</target></segment>
     </unit>
     <unit id="rangeTo">
       <notes>
@@ -4507,7 +4507,7 @@
       </notes>
       <segment state="translated">
         <source>Bis</source>
-      <target>Bis</target></segment>
+      <target>至</target></segment>
     </unit>
     <unit id="goalReached.repsSuffix">
       <notes>
@@ -4515,7 +4515,7 @@
       </notes>
       <segment state="translated">
         <source>Liegestütze</source>
-      <target>Liegestütze</target></segment>
+      <target>个俯卧撑</target></segment>
     </unit>
     <unit id="goalReached.weekly.title">
       <notes>
@@ -4523,7 +4523,7 @@
       </notes>
       <segment state="translated">
         <source>Wochenziel erreicht!</source>
-      <target>Wochenziel erreicht!</target></segment>
+      <target>周目标达成!</target></segment>
     </unit>
     <unit id="goalReached.weekly.note">
       <notes>
@@ -4531,7 +4531,7 @@
       </notes>
       <segment state="translated">
         <source>Sieben Tage, ein Sieg. Du bist on fire.</source>
-      <target>Sieben Tage, ein Sieg. Du bist on fire.</target></segment>
+      <target>七天，一个胜利。你火力全开。</target></segment>
     </unit>
     <unit id="goalReached.share.weekly.title">
       <notes>
@@ -4539,7 +4539,7 @@
       </notes>
       <segment state="translated">
         <source>Wochenziel geknackt!</source>
-      <target>Wochenziel geknackt!</target></segment>
+      <target>周目标破纪录!</target></segment>
     </unit>
     <unit id="goalReached.share.weekly.text">
       <notes>
@@ -4555,7 +4555,7 @@
       </notes>
       <segment state="translated">
         <source>Monatsziel erreicht!</source>
-      <target>Monatsziel erreicht!</target></segment>
+      <target>月目标达成!</target></segment>
     </unit>
     <unit id="goalReached.monthly.note">
       <notes>
@@ -4563,7 +4563,7 @@
       </notes>
       <segment state="translated">
         <source>Ein ganzer Monat Disziplin. Legendär.</source>
-      <target>Ein ganzer Monat Disziplin. Legendär.</target></segment>
+      <target>一整个月的坚持。传奇级别。</target></segment>
     </unit>
     <unit id="goalReached.share.monthly.title">
       <notes>
@@ -4571,7 +4571,7 @@
       </notes>
       <segment state="translated">
         <source>Monatsziel geknackt!</source>
-      <target>Monatsziel geknackt!</target></segment>
+      <target>月目标破纪录!</target></segment>
     </unit>
     <unit id="goalReached.share.monthly.text">
       <notes>
@@ -4587,7 +4587,7 @@
       </notes>
       <segment state="translated">
         <source>Tagesziel erreicht!</source>
-      <target>Tagesziel erreicht!</target></segment>
+      <target>日目标达成!</target></segment>
     </unit>
     <unit id="goalReached.daily.note">
       <notes>
@@ -4595,7 +4595,7 @@
       </notes>
       <segment state="translated">
         <source>Heute hast du dein Versprechen gehalten.</source>
-      <target>Heute hast du dein Versprechen gehalten.</target></segment>
+      <target>你兑现了今天的承诺。</target></segment>
     </unit>
     <unit id="goalReached.share.daily.title">
       <notes>
@@ -4603,7 +4603,7 @@
       </notes>
       <segment state="translated">
         <source>Tagesziel geknackt!</source>
-      <target>Tagesziel geknackt!</target></segment>
+      <target>日目标破纪录!</target></segment>
     </unit>
     <unit id="goalReached.share.daily.text">
       <notes>
@@ -4619,7 +4619,7 @@
       </notes>
       <segment state="translated">
         <source>Erfolg vaporisieren</source>
-      <target>Erfolg vaporisieren</target></segment>
+      <target>消除成功</target></segment>
     </unit>
     <unit id="goalReached.snap">
       <notes>
@@ -4627,7 +4627,7 @@
       </notes>
       <segment state="translated">
         <source>Snap!</source>
-      <target>Snap!</target></segment>
+      <target>哎呀!</target></segment>
     </unit>
     <unit id="goalReached.closeAria">
       <notes>
@@ -4643,7 +4643,7 @@
       </notes>
       <segment state="translated">
         <source>Erfolg teilen</source>
-      <target>Erfolg teilen</target></segment>
+      <target>分享成功</target></segment>
     </unit>
     <unit id="goalReached.share">
       <notes>
@@ -4659,7 +4659,7 @@
       </notes>
       <segment state="translated">
         <source> Heatmap wird im Browser geladen… </source>
-      <target> Heatmap wird im Browser geladen… </target></segment>
+      <target> 热力图正在浏览器中加载… </target></segment>
     </unit>
     <unit id="heatmap.unit.sets">
       <notes>
@@ -4683,7 +4683,7 @@
       </notes>
       <segment state="translated">
         <source>Demo-Ansicht – Starte jetzt und zeichne deine eigenen Pushups auf</source>
-      <target>Demo-Ansicht – Starte jetzt und zeichne deine eigenen Pushups auf</target></segment>
+      <target>演示视图 — 现在开始并记录你自己的俯卧撑</target></segment>
     </unit>
     <unit id="previewBanner.cta">
       <notes>
@@ -4691,7 +4691,7 @@
       </notes>
       <segment state="translated">
         <source> Jetzt starten </source>
-      <target> Jetzt starten </target></segment>
+      <target> 立即开始 </target></segment>
     </unit>
     <unit id="quickAddConfig.title">
       <notes>
@@ -4699,7 +4699,7 @@
       </notes>
       <segment state="translated">
         <source> Schnellaktionen konfigurieren </source>
-      <target> Schnellaktionen konfigurieren </target></segment>
+      <target> 配置快速操作 </target></segment>
     </unit>
     <unit id="quickAddConfig.hint">
       <notes>
@@ -4723,7 +4723,7 @@
       </notes>
       <segment state="translated">
         <source>Im SpeedDial</source>
-      <target>Im SpeedDial</target></segment>
+      <target>在快速操作中</target></segment>
     </unit>
     <unit id="save">
       <notes>
@@ -4731,7 +4731,7 @@
       </notes>
       <segment state="translated">
         <source> Speichern </source>
-      <target> Speichern </target></segment>
+      <target> 保存 </target></segment>
     </unit>
     <unit id="quickAddConfig.clearAria">
       <notes>
@@ -4755,7 +4755,7 @@
       </notes>
       <segment state="translated">
         <source> Keine Sets-Daten vorhanden </source>
-      <target> Keine Sets-Daten vorhanden </target></segment>
+      <target> 没有可用的组次数数据 </target></segment>
     </unit>
     <unit id="chart.subtitle">
       <notes>
@@ -4763,7 +4763,7 @@
       </notes>
       <segment state="translated">
         <source>Balken zeigen deine Wiederholungen pro Zeitabschnitt. Die orange Linie summiert den Tag, die grüne zeigt deinen Trend.</source>
-      <target>Balken zeigen deine Wiederholungen pro Zeitabschnitt. Die orange Linie summiert den Tag, die grüne zeigt deinen Trend.</target></segment>
+      <target>柱状图显示你在每个时间段的俯卧撑次数。橙色线条汇总每天的数据，绿色线条显示你的趋势。</target></segment>
     </unit>
     <unit id="chart.modeToggleAria">
       <notes>
@@ -4771,7 +4771,7 @@
       </notes>
       <segment state="translated">
         <source>Zeitraum der Stundenansicht</source>
-      <target>Zeitraum der Stundenansicht</target></segment>
+      <target>小时视图的时间段</target></segment>
     </unit>
     <unit id="chart.mode14h">
       <notes>
@@ -4779,7 +4779,7 @@
       </notes>
       <segment state="translated">
         <source>14h</source>
-      <target>14h</target></segment>
+      <target>14小时</target></segment>
     </unit>
     <unit id="chart.mode24h">
       <notes>
@@ -4787,7 +4787,7 @@
       </notes>
       <segment state="translated">
         <source>24h</source>
-      <target>24h</target></segment>
+      <target>24小时</target></segment>
     </unit>
     <unit id="chart.legendAria">
       <notes>
@@ -4795,7 +4795,7 @@
       </notes>
       <segment state="translated">
         <source>Legende</source>
-      <target>Legende</target></segment>
+      <target>图例</target></segment>
     </unit>
     <unit id="chart.interval">
       <notes>
@@ -4804,7 +4804,7 @@
       </notes>
       <segment state="translated">
         <source>Intervallwert</source>
-      <target>Intervallwert</target></segment>
+      <target>间隔值</target></segment>
     </unit>
     <unit id="chart.dayIntegral">
       <notes>
@@ -4813,7 +4813,7 @@
       </notes>
       <segment state="translated">
         <source>Tages-Integral</source>
-      <target>Tages-Integral</target></segment>
+      <target>日总数</target></segment>
     </unit>
     <unit id="chart.movingAvg">
       <notes>
@@ -4822,7 +4822,7 @@
       </notes>
       <segment state="translated">
         <source>Gleitender Durchschnitt</source>
-      <target>Gleitender Durchschnitt</target></segment>
+      <target>移动平均线</target></segment>
     </unit>
     <unit id="chart.withSets">
       <notes>
@@ -4831,7 +4831,7 @@
       </notes>
       <segment state="translated">
         <source>Mit Sets</source>
-      <target>Mit Sets</target></segment>
+      <target>按组显示</target></segment>
     </unit>
     <unit id="chart.titleHourly">
       <notes>
@@ -4839,7 +4839,7 @@
       </notes>
       <segment state="translated">
         <source>Verlauf (Stundenwerte)</source>
-      <target>Verlauf (Stundenwerte)</target></segment>
+      <target>趋势（按小时）</target></segment>
     </unit>
     <unit id="chart.titleDaily">
       <notes>
@@ -4847,7 +4847,7 @@
       </notes>
       <segment state="translated">
         <source>Verlauf (Tageswerte)</source>
-      <target>Verlauf (Tageswerte)</target></segment>
+      <target>趋势（按日）</target></segment>
     </unit>
     <unit id="chart.setsTooltip">
       <notes>
@@ -4863,7 +4863,7 @@
       </notes>
       <segment state="translated">
         <source>Historie</source>
-      <target>Historie</target></segment>
+      <target>历史记录</target></segment>
     </unit>
     <unit id="entriesCount">
       <notes>
@@ -4901,7 +4901,7 @@
       </notes>
       <segment state="translated">
         <source> Keine Einträge im gewählten Zeitraum. </source>
-      <target> Keine Einträge im gewählten Zeitraum. </target></segment>
+      <target> 所选时间段内没有记录。 </target></segment>
     </unit>
     <unit id="colTime">
       <notes>
@@ -4933,7 +4933,7 @@
       </notes>
       <segment state="translated">
         <source>Quelle</source>
-      <target>Quelle</target></segment>
+      <target>来源</target></segment>
     </unit>
     <unit id="colActions">
       <notes>
@@ -4941,7 +4941,7 @@
       </notes>
       <segment state="translated">
         <source>Aktion</source>
-      <target>Aktion</target></segment>
+      <target>操作</target></segment>
     </unit>
     <unit id="editAria">
       <notes>
@@ -4981,7 +4981,7 @@
       </notes>
       <segment state="translated">
         <source>⌀ Set-Größe</source>
-      <target>⌀ Set-Größe</target></segment>
+      <target>⌀ 组大小</target></segment>
     </unit>
     <unit id="pie.noData">
       <notes>
@@ -4989,7 +4989,7 @@
       </notes>
       <segment state="translated">
         <source>Keine Daten</source>
-      <target>Keine Daten</target></segment>
+      <target>无数据</target></segment>
     </unit>
     <unit id="dashboard.share.text.profile.streak">
       <notes>
@@ -5037,7 +5037,7 @@
       </notes>
       <segment state="translated">
         <source>Wochentrend</source>
-      <target>Wochentrend</target></segment>
+      <target>周趋势</target></segment>
     </unit>
     <unit id="analysis.weekCol">
       <notes>
@@ -5063,7 +5063,7 @@
       </notes>
       <segment state="translated">
         <source>⌀ Sets</source>
-      <target>⌀ Sets</target></segment>
+      <target>⌀ 组数</target></segment>
     </unit>
     <unit id="analysis.monthTrendTitle">
       <notes>
@@ -5071,7 +5071,7 @@
       </notes>
       <segment state="translated">
         <source>Monatstrend</source>
-      <target>Monatstrend</target></segment>
+      <target>月趋势</target></segment>
     </unit>
     <unit id="analysis.monthCol">
       <notes>
@@ -5087,7 +5087,7 @@
       </notes>
       <segment state="translated">
         <source>Bestwerte &amp; Streaks</source>
-      <target>Bestwerte &amp; Streaks</target></segment>
+      <target>个人最佳 &amp; 连续天数</target></segment>
     </unit>
     <unit id="analysis.bestSingleEntry">
       <notes>
@@ -5095,7 +5095,7 @@
       </notes>
       <segment state="translated">
         <source>Bestwert Einzel-Eintrag:</source>
-      <target>Bestwert Einzel-Eintrag:</target></segment>
+      <target>单次最佳记录：</target></segment>
     </unit>
     <unit id="analysis.bestDay">
       <notes>
@@ -5103,7 +5103,7 @@
       </notes>
       <segment state="translated">
         <source>Bester Tag:</source>
-      <target>Bester Tag:</target></segment>
+      <target>最佳训练日：</target></segment>
     </unit>
     <unit id="analysis.bestSingleSet">
       <notes>
@@ -5111,7 +5111,7 @@
       </notes>
       <segment state="translated">
         <source>Bestes Einzel-Set:</source>
-      <target>Bestes Einzel-Set:</target></segment>
+      <target>最佳单组成绩：</target></segment>
     </unit>
     <unit id="analysis.repsUnit">
       <notes>
@@ -5119,7 +5119,7 @@
       </notes>
       <segment state="translated">
         <source>Wdh.</source>
-      <target>Wdh.</target></segment>
+      <target>次</target></segment>
     </unit>
     <unit id="analysis.currentStreak">
       <notes>
@@ -5127,7 +5127,7 @@
       </notes>
       <segment state="translated">
         <source>Aktuelle Streak:</source>
-      <target>Aktuelle Streak:</target></segment>
+      <target>当前连续天数：</target></segment>
     </unit>
     <unit id="analysis.streakDays">
       <notes>
@@ -5146,7 +5146,7 @@
       </notes>
       <segment state="translated">
         <source>Längste Streak:</source>
-      <target>Längste Streak:</target></segment>
+      <target>最长连续天数：</target></segment>
     </unit>
     <unit id="analysis.typesTitle">
       <notes>
@@ -5154,7 +5154,7 @@
       </notes>
       <segment state="translated">
         <source>Typen (Anteile)</source>
-      <target>Typen (Anteile)</target></segment>
+      <target>类型（占比）</target></segment>
     </unit>
     <unit id="analysis.avgSetSizeTitle">
       <notes>
@@ -5162,7 +5162,7 @@
       </notes>
       <segment state="translated">
         <source>⌀ Set-Größe</source>
-      <target>⌀ Set-Größe</target></segment>
+      <target>⌀ 组大小</target></segment>
     </unit>
     <unit id="analysis.repsPerSet">
       <notes>
@@ -5170,7 +5170,7 @@
       </notes>
       <segment state="translated">
         <source>Reps / Set</source>
-      <target>Reps / Set</target></segment>
+      <target>次数 / 组</target></segment>
     </unit>
     <unit id="analysis.setsDistTitle">
       <notes>
@@ -5178,7 +5178,7 @@
       </notes>
       <segment state="translated">
         <source>Sets-Verteilung</source>
-      <target>Sets-Verteilung</target></segment>
+      <target>组数分布</target></segment>
     </unit>
     <unit id="analysis.heatmapTitle">
       <notes>
@@ -5186,7 +5186,7 @@
       </notes>
       <segment state="translated">
         <source>Heatmap (Wochentag/Uhrzeit)</source>
-      <target>Heatmap (Wochentag/Uhrzeit)</target></segment>
+      <target>热力图（星期/时间）</target></segment>
     </unit>
     <unit id="analysis.heatmapToggleAriaLabel">
       <notes>
@@ -5194,7 +5194,7 @@
       </notes>
       <segment state="translated">
         <source>Heatmap-Modus auswählen</source>
-      <target>Heatmap-Modus auswählen</target></segment>
+      <target>选择热力图模式</target></segment>
     </unit>
     <unit id="analysis.heatmapReps">
       <notes>
@@ -5218,7 +5218,7 @@
       </notes>
       <segment state="translated">
         <source>Filter</source>
-      <target>Filter</target></segment>
+      <target>筛选</target></segment>
     </unit>
     <unit id="entries.subtitle">
       <notes>
@@ -5226,7 +5226,7 @@
       </notes>
       <segment state="translated">
         <source>Zeitraum und Kriterien</source>
-      <target>Zeitraum und Kriterien</target></segment>
+      <target>时间段和条件</target></segment>
     </unit>
     <unit id="entries.dateFrom">
       <notes>
@@ -5234,7 +5234,7 @@
       </notes>
       <segment state="translated">
         <source>Datum von</source>
-      <target>Datum von</target></segment>
+      <target>开始日期</target></segment>
     </unit>
     <unit id="entries.dateTo">
       <notes>
@@ -5242,7 +5242,7 @@
       </notes>
       <segment state="translated">
         <source>Datum bis</source>
-      <target>Datum bis</target></segment>
+      <target>结束日期</target></segment>
     </unit>
     <unit id="entries.sourceFilter">
       <notes>
@@ -5250,7 +5250,7 @@
       </notes>
       <segment state="translated">
         <source>Quelle</source>
-      <target>Quelle</target></segment>
+      <target>来源</target></segment>
     </unit>
     <unit id="entries.allOption">
       <notes>
@@ -5259,7 +5259,7 @@
       </notes>
       <segment state="translated">
         <source>Alle</source>
-      <target>Alle</target></segment>
+      <target>全部</target></segment>
     </unit>
     <unit id="entries.typeFilter">
       <notes>
@@ -5275,7 +5275,7 @@
       </notes>
       <segment state="translated">
         <source>Reps min</source>
-      <target>Reps min</target></segment>
+      <target>最少次数</target></segment>
     </unit>
     <unit id="entries.repsMax">
       <notes>
@@ -5283,7 +5283,7 @@
       </notes>
       <segment state="translated">
         <source>Reps max</source>
-      <target>Reps max</target></segment>
+      <target>最多次数</target></segment>
     </unit>
     <unit id="settingsTitle">
       <notes>
@@ -5291,7 +5291,7 @@
       </notes>
       <segment state="translated">
         <source>Einstellungen</source>
-      <target>Einstellungen</target></segment>
+      <target>设置</target></segment>
     </unit>
     <unit id="settingsSubtitle">
       <notes>
@@ -5299,7 +5299,7 @@
       </notes>
       <segment state="translated">
         <source>User-Profil &amp; Tagesziel</source>
-      <target>User-Profil &amp; Tagesziel</target></segment>
+      <target>用户资料 &amp; 每日目标</target></segment>
     </unit>
     <unit id="settings.status.saving">
       <notes>
@@ -5315,7 +5315,7 @@
       </notes>
       <segment state="translated">
         <source>Gespeichert</source>
-      <target>Gespeichert</target></segment>
+      <target>已保存</target></segment>
     </unit>
     <unit id="settings.status.error">
       <notes>
@@ -5323,7 +5323,7 @@
       </notes>
       <segment state="translated">
         <source>Fehler beim Speichern</source>
-      <target>Fehler beim Speichern</target></segment>
+      <target>保存失败</target></segment>
     </unit>
     <unit id="settings.status.retry">
       <notes>
@@ -5331,7 +5331,7 @@
       </notes>
       <segment state="translated">
         <source> Erneut versuchen </source>
-      <target> Erneut versuchen </target></segment>
+      <target> 重试 </target></segment>
     </unit>
     <unit id="settings.status.pending">
       <notes>
@@ -5339,7 +5339,7 @@
       </notes>
       <segment state="translated">
         <source>Ungespeicherte Änderungen…</source>
-      <target>Ungespeicherte Änderungen…</target></segment>
+      <target>有未保存的更改…</target></segment>
     </unit>
     <unit id="settings.status.synced">
       <notes>
@@ -5347,7 +5347,7 @@
       </notes>
       <segment state="translated">
         <source>Alle Änderungen gespeichert</source>
-      <target>Alle Änderungen gespeichert</target></segment>
+      <target>所有更改已保存</target></segment>
     </unit>
     <unit id="guest.banner.text">
       <notes>
@@ -5355,7 +5355,7 @@
       </notes>
       <segment state="translated">
         <source>Du nutzt die App als Gast. Erstelle ein Konto um alle Funktionen zu nutzen.</source>
-      <target>Du nutzt die App als Gast. Erstelle ein Konto um alle Funktionen zu nutzen.</target></segment>
+      <target>你正在以游客身份使用此应用。创建账户以使用所有功能。</target></segment>
     </unit>
     <unit id="guest.banner.cta">
       <notes>
@@ -5363,7 +5363,7 @@
       </notes>
       <segment state="translated">
         <source>Konto erstellen</source>
-      <target>Konto erstellen</target></segment>
+      <target>创建账户</target></segment>
     </unit>
     <unit id="settings.section.profile.title">
       <notes>
@@ -5379,7 +5379,7 @@
       </notes>
       <segment state="translated">
         <source> Wie du in der App und der Bestenliste erscheinst. </source>
-      <target> Wie du in der App und der Bestenliste erscheinst. </target></segment>
+      <target> 你在应用和排行榜中的显示方式。 </target></segment>
     </unit>
     <unit id="displayNameLabel">
       <notes>
@@ -5387,7 +5387,7 @@
       </notes>
       <segment state="translated">
         <source>Anzeigename</source>
-      <target>Anzeigename</target></segment>
+      <target>显示名称</target></segment>
     </unit>
     <unit id="displayNamePlaceholder">
       <notes>
@@ -5403,7 +5403,7 @@
       </notes>
       <segment state="translated">
         <source>Kann in der Bestenliste angezeigt werden.</source>
-      <target>Kann in der Bestenliste angezeigt werden.</target></segment>
+      <target>可以在排行榜中显示。</target></segment>
     </unit>
     <unit id="settings.section.privacy.title">
       <notes>
@@ -5411,7 +5411,7 @@
       </notes>
       <segment state="translated">
         <source>Sichtbarkeit</source>
-      <target>Sichtbarkeit</target></segment>
+      <target>可见性</target></segment>
     </unit>
     <unit id="settings.section.privacy.subtitle">
       <notes>
@@ -5419,7 +5419,7 @@
       </notes>
       <segment state="translated">
         <source> Steuere, wer dein Profil sehen kann. </source>
-      <target> Steuere, wer dein Profil sehen kann. </target></segment>
+      <target> 控制谁可以查看你的资料。 </target></segment>
     </unit>
     <unit id="settings.leaderboardOptIn">
       <notes>
@@ -5427,7 +5427,7 @@
       </notes>
       <segment state="translated">
         <source> In Bestenliste anzeigen </source>
-      <target> In Bestenliste anzeigen </target></segment>
+      <target> 在排行榜中显示 </target></segment>
     </unit>
     <unit id="settings.leaderboardOptOutHint">
       <notes>
@@ -5435,7 +5435,7 @@
       </notes>
       <segment state="translated">
         <source> Wenn deaktiviert, wird dein Profil in der Bestenliste nicht angezeigt. </source>
-      <target> Wenn deaktiviert, wird dein Profil in der Bestenliste nicht angezeigt. </target></segment>
+      <target> 如果禁用，你的资料将不会显示在排行榜中。 </target></segment>
     </unit>
     <unit id="settings.publicProfile.toggle">
       <notes>
@@ -5443,7 +5443,7 @@
       </notes>
       <segment state="translated">
         <source> Öffentliches Profil aktivieren </source>
-      <target> Öffentliches Profil aktivieren </target></segment>
+      <target> 启用公开资料 </target></segment>
     </unit>
     <unit id="settings.publicProfile.hint">
       <notes>
@@ -5451,7 +5451,7 @@
       </notes>
       <segment state="translated">
         <source> Erlaubt jedem mit dem Link den Zugriff auf deine Reps, Streak und Bestleistungen. Dein Anzeigename ist sichtbar; E-Mail, Ziele und Erinnerungen bleiben privat. </source>
-      <target> Erlaubt jedem mit dem Link den Zugriff auf deine Reps, Streak und Bestleistungen. Dein Anzeigename ist sichtbar; E-Mail, Ziele und Erinnerungen bleiben privat. </target></segment>
+      <target> 允许任何拥有链接的人访问你的次数、连续天数和个人最佳成绩。你的显示名称是可见的；邮箱、目标和提醒保持私密。 </target></segment>
     </unit>
     <unit id="settings.publicProfile.shareCta">
       <notes>
@@ -5469,7 +5469,7 @@
       </notes>
       <segment state="translated">
         <source>Ziele</source>
-      <target>Ziele</target></segment>
+      <target>目标</target></segment>
     </unit>
     <unit id="settings.section.goals.subtitle">
       <notes>
@@ -5477,7 +5477,7 @@
       </notes>
       <segment state="translated">
         <source> Tägliche, wöchentliche und monatliche Ziele. </source>
-      <target> Tägliche, wöchentliche und monatliche Ziele. </target></segment>
+      <target> 每日、每周和每月目标。 </target></segment>
     </unit>
     <unit id="dailyGoalLabel">
       <notes>
@@ -5485,7 +5485,7 @@
       </notes>
       <segment state="translated">
         <source>Tagesziel (Reps)</source>
-      <target>Tagesziel (Reps)</target></segment>
+      <target>每日目标（次数）</target></segment>
     </unit>
     <unit id="dailyGoalPlaceholder">
       <notes>
@@ -5501,7 +5501,7 @@
       </notes>
       <segment state="translated">
         <source>Wird prominent in der Toolbar angezeigt.</source>
-      <target>Wird prominent in der Toolbar angezeigt.</target></segment>
+      <target>会在工具栏中重点显示。</target></segment>
     </unit>
     <unit id="weeklyGoalLabel">
       <notes>
@@ -5509,7 +5509,7 @@
       </notes>
       <segment state="translated">
         <source>Wochenziel (Reps)</source>
-      <target>Wochenziel (Reps)</target></segment>
+      <target>每周目标（次数）</target></segment>
     </unit>
     <unit id="weeklyGoalPlaceholder">
       <notes>
@@ -5525,7 +5525,7 @@
       </notes>
       <segment state="translated">
         <source>Gesamtziel pro Woche (Mo–So).</source>
-      <target>Gesamtziel pro Woche (Mo–So).</target></segment>
+      <target>每周总目标（周一–周日）。</target></segment>
     </unit>
     <unit id="monthlyGoalLabel">
       <notes>
@@ -5533,7 +5533,7 @@
       </notes>
       <segment state="translated">
         <source>Monatsziel (Reps)</source>
-      <target>Monatsziel (Reps)</target></segment>
+      <target>每月目标（次数）</target></segment>
     </unit>
     <unit id="monthlyGoalPlaceholder">
       <notes>
@@ -5549,7 +5549,7 @@
       </notes>
       <segment state="translated">
         <source>Gesamtziel pro Monat.</source>
-      <target>Gesamtziel pro Monat.</target></segment>
+      <target>每月总目标。</target></segment>
     </unit>
     <unit id="settings.section.display.title">
       <notes>
@@ -5557,7 +5557,7 @@
       </notes>
       <segment state="translated">
         <source>Anzeige</source>
-      <target>Anzeige</target></segment>
+      <target>显示</target></segment>
     </unit>
     <unit id="settings.section.display.subtitle">
       <notes>
@@ -5565,7 +5565,7 @@
       </notes>
       <segment state="translated">
         <source> Animationen und Darstellung. </source>
-      <target> Animationen und Darstellung. </target></segment>
+      <target> 动画和显示效果。 </target></segment>
     </unit>
     <unit id="settings.snapQualityLabel">
       <notes>
@@ -5573,7 +5573,7 @@
       </notes>
       <segment state="translated">
         <source>Snap-Animation Qualität</source>
-      <target>Snap-Animation Qualität</target></segment>
+      <target>目标达成动画质量</target></segment>
     </unit>
     <unit id="settings.snapQuality.low">
       <notes>
@@ -5581,7 +5581,7 @@
       </notes>
       <segment state="translated">
         <source>Niedrig</source>
-      <target>Niedrig</target></segment>
+      <target>低</target></segment>
     </unit>
     <unit id="settings.snapQuality.middle">
       <notes>
@@ -5589,7 +5589,7 @@
       </notes>
       <segment state="translated">
         <source>Mittel</source>
-      <target>Mittel</target></segment>
+      <target>中</target></segment>
     </unit>
     <unit id="settings.snapQuality.high">
       <notes>
@@ -5597,7 +5597,7 @@
       </notes>
       <segment state="translated">
         <source>Hoch</source>
-      <target>Hoch</target></segment>
+      <target>高</target></segment>
     </unit>
     <unit id="settings.snapQualityHint">
       <notes>
@@ -5605,7 +5605,7 @@
       </notes>
       <segment state="translated">
         <source> Steuert die Partikelanzahl der „Ziel erreicht“-Animation (40k / 120k / 200k). </source>
-      <target> Steuert die Partikelanzahl der „Ziel erreicht“-Animation (40k / 120k / 200k). </target></segment>
+      <target> 控制目标达成动画的粒子数量（4万 / 12万 / 20万）。 </target></segment>
     </unit>
     <unit id="settings.section.ads.title">
       <notes>
@@ -5613,7 +5613,7 @@
       </notes>
       <segment state="translated">
         <source>Werbung</source>
-      <target>Werbung</target></segment>
+      <target>广告</target></segment>
     </unit>
     <unit id="settings.section.ads.subtitle">
       <notes>
@@ -5621,7 +5621,7 @@
       </notes>
       <segment state="translated">
         <source> Personalisierung der Werbe-Slots. </source>
-      <target> Personalisierung der Werbe-Slots. </target></segment>
+      <target> 个性化广告设置。 </target></segment>
     </unit>
     <unit id="settings.adsConsentOptIn">
       <notes>
@@ -5629,7 +5629,7 @@
       </notes>
       <segment state="translated">
         <source> Personalisierte Werbung aktivieren </source>
-      <target> Personalisierte Werbung aktivieren </target></segment>
+      <target> 启用个性化广告 </target></segment>
     </unit>
     <unit id="settings.adsConsentHint">
       <notes>
@@ -5637,7 +5637,7 @@
       </notes>
       <segment state="translated">
         <source> Steuert, ob Werbe-Slots im Dashboard geladen werden dürfen. </source>
-      <target> Steuert, ob Werbe-Slots im Dashboard geladen werden dürfen. </target></segment>
+      <target> 控制仪表板中的广告是否可以加载。 </target></segment>
     </unit>
     <unit id="settings.remindersLinkTitle">
       <notes>
@@ -5645,7 +5645,7 @@
       </notes>
       <segment state="translated">
         <source>Erinnerungen</source>
-      <target>Erinnerungen</target></segment>
+      <target>提醒</target></segment>
     </unit>
     <unit id="settings.remindersLinkDesc">
       <notes>
@@ -5653,7 +5653,7 @@
       </notes>
       <segment state="translated">
         <source> Liegestütz-Erinnerungen und Push-Benachrichtigungen konfigurieren. </source>
-      <target> Liegestütz-Erinnerungen und Push-Benachrichtigungen konfigurieren. </target></segment>
+      <target> 配置俯卧撑提醒和推送通知。 </target></segment>
     </unit>
     <unit id="settings.remindersLinkCta">
       <notes>
@@ -5679,7 +5679,7 @@
       </notes>
       <segment state="translated">
         <source> Konto löschen entfernt dein Konto. Trainingsdaten bleiben für statistische Auswertung anonymisiert erhalten. </source>
-      <target> Konto löschen entfernt dein Konto. Trainingsdaten bleiben für statistische Auswertung anonymisiert erhalten. </target></segment>
+      <target> 删除账户将删除你的账户。训练数据将被匿名保留用于统计分析。 </target></segment>
     </unit>
     <unit id="settings.deleteAccount">
       <notes>
@@ -5697,7 +5697,7 @@
       </notes>
       <segment state="translated">
         <source>Konto wird gelöscht…</source>
-      <target>Konto wird gelöscht…</target></segment>
+      <target>正在删除账户…</target></segment>
     </unit>
     <unit id="settings.deleteDialogTitle">
       <notes>
@@ -5705,7 +5705,7 @@
       </notes>
       <segment state="translated">
         <source> Account wirklich löschen? </source>
-      <target> Account wirklich löschen? </target></segment>
+      <target> 确定要删除账户吗？ </target></segment>
     </unit>
     <unit id="settings.deleteDialogWarning">
       <notes>
@@ -5713,7 +5713,7 @@
       </notes>
       <segment state="translated">
         <source> Achtung: Diese Aktion ist nicht rückgängig. </source>
-      <target> Achtung: Diese Aktion ist nicht rückgängig. </target></segment>
+      <target> 警告：此操作无法撤销。 </target></segment>
     </unit>
     <unit id="settings.deleteDialogInfo">
       <notes>
@@ -5721,7 +5721,7 @@
       </notes>
       <segment state="translated">
         <source> Dein Konto wird gelöscht. Trainingsdaten bleiben für statistische Auswertung anonymisiert erhalten. </source>
-      <target> Dein Konto wird gelöscht. Trainingsdaten bleiben für statistische Auswertung anonymisiert erhalten. </target></segment>
+      <target> 你的账户将被删除。训练数据将被匿名保留用于统计分析。 </target></segment>
     </unit>
     <unit id="settings.deleteDialogPhraseLabel">
       <notes>
@@ -5729,7 +5729,7 @@
       </notes>
       <segment state="translated">
         <source>Bestätigungswort eingeben</source>
-      <target>Bestätigungswort eingeben</target></segment>
+      <target>输入确认词</target></segment>
     </unit>
     <unit id="settings.deleteDialogPhraseHint">
       <notes>
@@ -5737,7 +5737,7 @@
       </notes>
       <segment state="translated">
         <source>Bitte exakt „löscchen“ eingeben.</source>
-      <target>Bitte exakt „löscchen“ eingeben.</target></segment>
+      <target>请准确输入"löscchen"。</target></segment>
     </unit>
     <unit id="settings.deleteConfirmFinal">
       <notes>
@@ -5745,7 +5745,7 @@
       </notes>
       <segment state="translated">
         <source> Final löschen </source>
-      <target> Final löschen </target></segment>
+      <target> 最终删除 </target></segment>
     </unit>
     <unit id="settings.publicProfile.share.title">
       <notes>
@@ -5753,7 +5753,7 @@
       </notes>
       <segment state="translated">
         <source>Mein Pushup Tracker Profil</source>
-      <target>Mein Pushup Tracker Profil</target></segment>
+      <target>我的 Pushup Tracker 资料</target></segment>
     </unit>
     <unit id="settings.publicProfile.share.text">
       <notes>
@@ -5761,7 +5761,7 @@
       </notes>
       <segment state="translated">
         <source>Schau dir mein Pushup-Profil an:</source>
-      <target>Schau dir mein Pushup-Profil an:</target></segment>
+      <target>查看我的俯卧撑资料：</target></segment>
     </unit>
     <unit id="eyebrowTitle">
       <notes>
@@ -5777,7 +5777,7 @@
       </notes>
       <segment state="translated">
         <source>Liegestütze Statistik</source>
-      <target>Liegestütze Statistik</target></segment>
+      <target>俯卧撑统计</target></segment>
     </unit>
     <unit id="dashboardSubtitle">
       <notes>
@@ -5785,7 +5785,7 @@
       </notes>
       <segment state="translated">
         <source> Behalte Trainingsvolumen und Verlauf im Blick – klar, schnell und mobil optimiert. </source>
-      <target> Behalte Trainingsvolumen und Verlauf im Blick – klar, schnell und mobil optimiert. </target></segment>
+      <target> 快速掌握训练量和进度 – 清晰、快速且移动设备优化。 </target></segment>
     </unit>
     <unit id="liveStateLabel">
       <notes>
@@ -5801,7 +5801,7 @@
       </notes>
       <segment state="translated">
         <source>All-Time Kurzübersicht</source>
-      <target>All-Time Kurzübersicht</target></segment>
+      <target>全时间统计概览</target></segment>
     </unit>
     <unit id="allTimeTotal">
       <notes>
@@ -5809,7 +5809,7 @@
       </notes>
       <segment state="translated">
         <source>All-Time Gesamt</source>
-      <target>All-Time Gesamt</target></segment>
+      <target>全时间总计</target></segment>
     </unit>
     <unit id="allTimeDays">
       <notes>
@@ -5817,7 +5817,7 @@
       </notes>
       <segment state="translated">
         <source>All-Time Tage</source>
-      <target>All-Time Tage</target></segment>
+      <target>全时间天数</target></segment>
     </unit>
     <unit id="allTimeEntries">
       <notes>
@@ -5825,7 +5825,7 @@
       </notes>
       <segment state="translated">
         <source>All-Time Einträge</source>
-      <target>All-Time Einträge</target></segment>
+      <target>全时间记录数</target></segment>
     </unit>
     <unit id="allTimeAvg">
       <notes>
@@ -5833,7 +5833,7 @@
       </notes>
       <segment state="translated">
         <source>All-Time Ø/Tag</source>
-      <target>All-Time Ø/Tag</target></segment>
+      <target>全时间 Ø/天</target></segment>
     </unit>
     <unit id="trainingPlans.day">
       <notes>
@@ -5862,7 +5862,7 @@
       </notes>
       <segment state="translated">
         <source>Leichter Tag</source>
-      <target>Leichter Tag</target></segment>
+      <target>轻量日</target></segment>
     </unit>
     <unit id="trainingPlans.kind.test">
       <notes>
@@ -5872,7 +5872,7 @@
       </notes>
       <segment state="translated">
         <source>Maximaltest</source>
-      <target>Maximaltest</target></segment>
+      <target>最大力量测试</target></segment>
     </unit>
     <unit id="trainingPlans.reps">
       <notes>
@@ -5883,7 +5883,7 @@
       </notes>
       <segment state="translated">
         <source>Wdh.</source>
-      <target>Wdh.</target></segment>
+      <target>次</target></segment>
     </unit>
     <unit id="trainingPlans.openDetail">
       <notes>
@@ -5892,7 +5892,7 @@
       </notes>
       <segment state="translated">
         <source> Details öffnen </source>
-      <target> Details öffnen </target></segment>
+      <target> 打开详情 </target></segment>
     </unit>
     <unit id="todayFocusAria">
       <notes>
@@ -5900,7 +5900,7 @@
       </notes>
       <segment state="translated">
         <source>Tagesfokus</source>
-      <target>Tagesfokus</target></segment>
+      <target>今日重点</target></segment>
     </unit>
     <unit id="dashboard.todayTotal">
       <notes>
@@ -5908,7 +5908,7 @@
       </notes>
       <segment state="translated">
         <source>Heute Gesamt</source>
-      <target>Heute Gesamt</target></segment>
+      <target>今日总计</target></segment>
     </unit>
     <unit id="goalProgressTitle">
       <notes>
@@ -5916,7 +5916,7 @@
       </notes>
       <segment state="translated">
         <source>Zielfortschritt</source>
-      <target>Zielfortschritt</target></segment>
+      <target>目标进度</target></segment>
     </unit>
     <unit id="dashboard.dailyGoalLabel">
       <notes>
@@ -5948,7 +5948,7 @@
       </notes>
       <segment state="translated">
         <source>Letzter Eintrag</source>
-      <target>Letzter Eintrag</target></segment>
+      <target>最后一次训练</target></segment>
     </unit>
     <unit id="latEntryReps">
       <notes>
@@ -5972,7 +5972,7 @@
       </notes>
       <segment state="translated">
         <source>Schnellaktionen</source>
-      <target>Schnellaktionen</target></segment>
+      <target>快速操作</target></segment>
     </unit>
     <unit id="quickActionsSubtitle">
       <notes>
@@ -5980,7 +5980,7 @@
       </notes>
       <segment state="translated">
         <source>Schnell eintragen ohne Dialog</source>
-      <target>Schnell eintragen ohne Dialog</target></segment>
+      <target>快速记录，无需打开对话框</target></segment>
     </unit>
     <unit id="quickActions.edit.aria">
       <notes>
@@ -5988,7 +5988,7 @@
       </notes>
       <segment state="translated">
         <source>Schnellaktionen bearbeiten</source>
-      <target>Schnellaktionen bearbeiten</target></segment>
+      <target>编辑快速操作</target></segment>
     </unit>
     <unit id="dashboard.quickAdd.button">
       <notes>
@@ -6004,7 +6004,7 @@
       </notes>
       <segment state="translated">
         <source>Ziel erreicht ✓</source>
-      <target>Ziel erreicht ✓</target></segment>
+      <target>目标达成 ✓</target></segment>
     </unit>
     <unit id="dashboard.goalFill.fill">
       <notes>
@@ -6030,7 +6030,7 @@
       </notes>
       <segment state="translated">
         <source> Lade Statistikdaten… </source>
-      <target> Lade Statistikdaten… </target></segment>
+      <target> 正在加载统计数据… </target></segment>
     </unit>
     <unit id="dashboard.latestEntriesLinkAriaLabel">
       <notes>
@@ -6038,7 +6038,7 @@
       </notes>
       <segment state="translated">
         <source>Zur Historie navigieren</source>
-      <target>Zur Historie navigieren</target></segment>
+      <target>导航到历史记录</target></segment>
     </unit>
     <unit id="dashboard.latestEntries">
       <notes>
@@ -6046,7 +6046,7 @@
       </notes>
       <segment state="translated">
         <source>Letzte Einträge</source>
-      <target>Letzte Einträge</target></segment>
+      <target>最近的记录</target></segment>
     </unit>
     <unit id="dashboard.latestEntriesCtaAriaLabel">
       <notes>
@@ -6054,7 +6054,7 @@
       </notes>
       <segment state="translated">
         <source>Zur Historie navigieren</source>
-      <target>Zur Historie navigieren</target></segment>
+      <target>导航到历史记录</target></segment>
     </unit>
     <unit id="dashboard.latestEntriesCta">
       <notes>
@@ -6062,7 +6062,7 @@
       </notes>
       <segment state="translated">
         <source>Zur Historie</source>
-      <target>Zur Historie</target></segment>
+      <target>查看历史</target></segment>
     </unit>
     <unit id="ads.dashboard.aria">
       <notes>
@@ -6070,7 +6070,7 @@
       </notes>
       <segment state="translated">
         <source>Werbung</source>
-      <target>Werbung</target></segment>
+      <target>广告</target></segment>
     </unit>
     <unit id="dashboard.share.aria">
       <notes>
@@ -6078,7 +6078,7 @@
       </notes>
       <segment state="translated">
         <source>Tagesleistung teilen</source>
-      <target>Tagesleistung teilen</target></segment>
+      <target>分享今日成绩</target></segment>
     </unit>
     <unit id="dashboard.share">
       <notes>
@@ -6113,7 +6113,7 @@
       </notes>
       <segment state="translated">
         <source>Einsteiger</source>
-      <target>Einsteiger</target></segment>
+      <target>初级</target></segment>
     </unit>
     <unit id="trainingPlans.level.intermediate">
       <notes>
@@ -6122,7 +6122,7 @@
       </notes>
       <segment state="translated">
         <source>Mittelstufe</source>
-      <target>Mittelstufe</target></segment>
+      <target>中级</target></segment>
     </unit>
     <unit id="trainingPlans.level.advanced">
       <notes>
@@ -6131,7 +6131,7 @@
       </notes>
       <segment state="translated">
         <source>Fortgeschritten</source>
-      <target>Fortgeschritten</target></segment>
+      <target>高级</target></segment>
     </unit>
     <unit id="trainingPlans.progress">
       <notes>
@@ -6139,7 +6139,7 @@
       </notes>
       <segment state="translated">
         <source>Fortschritt</source>
-      <target>Fortschritt</target></segment>
+      <target>进度</target></segment>
     </unit>
     <unit id="trainingPlans.currentDay">
       <notes>
@@ -6147,7 +6147,7 @@
       </notes>
       <segment state="translated">
         <source>Aktueller Tag:</source>
-      <target>Aktueller Tag:</target></segment>
+      <target>当前天数：</target></segment>
     </unit>
     <unit id="trainingPlans.abandon">
       <notes>
@@ -6166,7 +6166,7 @@
       </notes>
       <segment state="translated">
         <source> Starte den Plan und das Tagesziel im Dashboard wird automatisch nach diesem Plan gesetzt. </source>
-      <target> Starte den Plan und das Tagesziel im Dashboard wird automatisch nach diesem Plan gesetzt. </target></segment>
+      <target> 启动计划，仪表板中的每日目标将自动根据此计划调整。 </target></segment>
     </unit>
     <unit id="trainingPlans.signupCta">
       <notes>
@@ -6174,7 +6174,7 @@
       </notes>
       <segment state="translated">
         <source> Erstelle ein kostenloses Konto, um diesen Plan zu starten. Wir tracken deinen Fortschritt automatisch und setzen dein Tagesziel passend zum Plan. </source>
-      <target> Erstelle ein kostenloses Konto, um diesen Plan zu starten. Wir tracken deinen Fortschritt automatisch und setzen dein Tagesziel passend zum Plan. </target></segment>
+      <target> 创建免费账户以启动此计划。我们会自动跟踪你的进度，并根据计划调整你的每日目标。 </target></segment>
     </unit>
     <unit id="trainingPlans.signupBenefit.tracking">
       <notes>
@@ -6182,7 +6182,7 @@
       </notes>
       <segment state="translated">
         <source> Automatische Fortschrittsverfolgung </source>
-      <target> Automatische Fortschrittsverfolgung </target></segment>
+      <target> 自动进度跟踪 </target></segment>
     </unit>
     <unit id="trainingPlans.signupBenefit.goal">
       <notes>
@@ -6190,7 +6190,7 @@
       </notes>
       <segment state="translated">
         <source> Tagesziel passt sich täglich an deinen Plan an </source>
-      <target> Tagesziel passt sich täglich an deinen Plan an </target></segment>
+      <target> 每日目标每天自动调整以匹配你的计划 </target></segment>
     </unit>
     <unit id="trainingPlans.signupBenefit.streak">
       <notes>
@@ -6198,7 +6198,7 @@
       </notes>
       <segment state="translated">
         <source> Streaks, Statistiken und Bestenliste </source>
-      <target> Streaks, Statistiken und Bestenliste </target></segment>
+      <target> 连续天数、统计和排行榜 </target></segment>
     </unit>
     <unit id="trainingPlans.replaceWarn">
       <notes>
@@ -6206,7 +6206,7 @@
       </notes>
       <segment state="translated">
         <source> Achtung: Dies ersetzt den aktuell aktiven Plan. </source>
-      <target> Achtung: Dies ersetzt den aktuell aktiven Plan. </target></segment>
+      <target> 警告：这将替换当前活跃的计划。 </target></segment>
     </unit>
     <unit id="trainingPlans.start">
       <notes>
@@ -6222,7 +6222,7 @@
       </notes>
       <segment state="translated">
         <source>Konto erstellen &amp; Plan starten</source>
-      <target>Konto erstellen &amp; Plan starten</target></segment>
+      <target>创建账户 &amp; 启动计划</target></segment>
     </unit>
     <unit id="trainingPlans.loginAndStart">
       <notes>
@@ -6246,7 +6246,7 @@
       </notes>
       <segment state="translated">
         <source>Als nicht erledigt markieren</source>
-      <target>Als nicht erledigt markieren</target></segment>
+      <target>标记为未完成</target></segment>
     </unit>
     <unit id="trainingPlans.logAria">
       <notes>
@@ -6254,7 +6254,7 @@
       </notes>
       <segment state="translated">
         <source>Plan-Sätze eintragen und als erledigt markieren</source>
-      <target>Plan-Sätze eintragen und als erledigt markieren</target></segment>
+      <target>记录计划组数并标记为完成</target></segment>
     </unit>
     <unit id="trainingPlans.markAria">
       <notes>
@@ -6262,7 +6262,7 @@
       </notes>
       <segment state="translated">
         <source>Nur als erledigt markieren (ohne Eintrag)</source>
-      <target>Nur als erledigt markieren (ohne Eintrag)</target></segment>
+      <target>仅标记为完成（无记录）</target></segment>
     </unit>
     <unit id="trainingPlans.notFound">
       <notes>
@@ -6270,7 +6270,7 @@
       </notes>
       <segment state="translated">
         <source>Plan nicht gefunden.</source>
-      <target>Plan nicht gefunden.</target></segment>
+      <target>找不到计划。</target></segment>
     </unit>
     <unit id="trainingPlans.autoStartFailed">
       <notes>
@@ -6278,7 +6278,7 @@
       </notes>
       <segment state="translated">
         <source>Plan-Start fehlgeschlagen — bitte erneut versuchen.</source>
-      <target>Plan-Start fehlgeschlagen — bitte erneut versuchen.</target></segment>
+      <target>计划启动失败 — 请重试。</target></segment>
     </unit>
     <unit id="trainingPlans.started">
       <notes>
@@ -6286,7 +6286,7 @@
       </notes>
       <segment state="translated">
         <source>Plan gestartet — viel Erfolg!</source>
-      <target>Plan gestartet — viel Erfolg!</target></segment>
+      <target>计划已启动 — 加油！</target></segment>
     </unit>
     <unit id="trainingPlans.abandoned">
       <notes>
@@ -6294,7 +6294,7 @@
       </notes>
       <segment state="translated">
         <source>Plan beendet.</source>
-      <target>Plan beendet.</target></segment>
+      <target>计划已结束。</target></segment>
     </unit>
     <unit id="trainingPlans.logged">
       <notes>
@@ -6303,7 +6303,7 @@
       </notes>
       <segment state="translated">
         <source>Plan-Sätze wurden eingetragen.</source>
-      <target>Plan-Sätze wurden eingetragen.</target></segment>
+      <target>计划组数已记录。</target></segment>
     </unit>
     <unit id="trainingPlans.alreadyLogged">
       <notes>
@@ -6312,7 +6312,7 @@
       </notes>
       <segment state="translated">
         <source>Tag war schon eingetragen — als erledigt markiert.</source>
-      <target>Tag war schon eingetragen — als erledigt markiert.</target></segment>
+      <target>该天已记录 — 标记为完成。</target></segment>
     </unit>
     <unit id="trainingPlans.notReady">
       <notes>
@@ -6321,7 +6321,7 @@
       </notes>
       <segment state="translated">
         <source>Daten werden noch geladen, bitte gleich noch einmal versuchen.</source>
-      <target>Daten werden noch geladen, bitte gleich noch einmal versuchen.</target></segment>
+      <target>数据正在加载，请稍后重试。</target></segment>
     </unit>
     <unit id="trainingPlans.title">
       <notes>
@@ -6337,7 +6337,7 @@
       </notes>
       <segment state="translated">
         <source> Strukturierte Pläne mit Tagesziel, Sätzen und automatischer Fortschrittsverfolgung. Starte einen Plan, und dein Tagesziel im Dashboard wird automatisch gesetzt. </source>
-      <target> Strukturierte Pläne mit Tagesziel, Sätzen und automatischer Fortschrittsverfolgung. Starte einen Plan, und dein Tagesziel im Dashboard wird automatisch gesetzt. </target></segment>
+      <target> 结构化训练计划，配备每日目标、组数和自动进度跟踪。启动一个计划，仪表板中的每日目标将自动设置。 </target></segment>
     </unit>
     <unit id="trainingPlans.banner.title">
       <notes>
@@ -6345,7 +6345,7 @@
       </notes>
       <segment state="translated">
         <source> Plan auswählen, Konto erstellen, durchstarten </source>
-      <target> Plan auswählen, Konto erstellen, durchstarten </target></segment>
+      <target> 选择计划，创建账户，开始训练 </target></segment>
     </unit>
     <unit id="trainingPlans.banner.body">
       <notes>
@@ -6353,7 +6353,7 @@
       </notes>
       <segment state="translated">
         <source> Suche dir unten einen Plan aus. Mit einem kostenlosen Konto tracken wir deinen Fortschritt automatisch und passen dein Tagesziel an den gewählten Plan an. </source>
-      <target> Suche dir unten einen Plan aus. Mit einem kostenlosen Konto tracken wir deinen Fortschritt automatisch und passen dein Tagesziel an den gewählten Plan an. </target></segment>
+      <target> 从下面选择一个计划。使用免费账户，我们会自动跟踪你的进度，并将你的每日目标调整为所选计划。 </target></segment>
     </unit>
     <unit id="trainingPlans.banner.login">
       <notes>
@@ -6361,7 +6361,7 @@
       </notes>
       <segment state="translated">
         <source>Einloggen</source>
-      <target>Einloggen</target></segment>
+      <target>登录</target></segment>
     </unit>
     <unit id="trainingPlans.banner.signup">
       <notes>
@@ -6369,7 +6369,7 @@
       </notes>
       <segment state="translated">
         <source>Kostenlos registrieren</source>
-      <target>Kostenlos registrieren</target></segment>
+      <target>免费注册</target></segment>
     </unit>
     <unit id="trainingPlans.active.title">
       <notes>
@@ -6377,7 +6377,7 @@
       </notes>
       <segment state="translated">
         <source> Aktiver Plan </source>
-      <target> Aktiver Plan </target></segment>
+      <target> 当前活跃计划 </target></segment>
     </unit>
     <unit id="trainingPlans.kind.main">
       <notes>
@@ -6393,7 +6393,7 @@
       </notes>
       <segment state="translated">
         <source>Heute geplant:</source>
-      <target>Heute geplant:</target></segment>
+      <target>今日计划：</target></segment>
     </unit>
     <unit id="trainingPlans.logToday">
       <notes>
@@ -6401,7 +6401,7 @@
       </notes>
       <segment state="translated">
         <source>Heute eintragen</source>
-      <target>Heute eintragen</target></segment>
+      <target>今日记录</target></segment>
     </unit>
     <unit id="trainingPlans.viewPlan">
       <notes>
@@ -6417,7 +6417,7 @@
       </notes>
       <segment state="translated">
         <source>Zurück zu den Trainingsplänen</source>
-      <target>Zurück zu den Trainingsplänen</target></segment>
+      <target>返回训练计划</target></segment>
     </unit>
     <unit id="wiki.pushupTypes.title">
       <notes>
@@ -6425,7 +6425,7 @@
       </notes>
       <segment state="translated">
         <source> Liegestütztypen — saubere Ausführung </source>
-      <target> Liegestütztypen — saubere Ausführung </target></segment>
+      <target> 俯卧撑类型 — 正确执行 </target></segment>
     </unit>
     <unit id="wiki.pushupTypes.intro">
       <notes>
@@ -6433,7 +6433,7 @@
       </notes>
       <segment state="translated">
         <source> Kurzanleitungen für jede Liegestütz-Variante, die in den Trainingsplänen vorkommt. Die Tooltipps in den Plänen verlinken direkt auf den passenden Abschnitt. </source>
-      <target> Kurzanleitungen für jede Liegestütz-Variante, die in den Trainingsplänen vorkommt. Die Tooltipps in den Plänen verlinken direkt auf den passenden Abschnitt. </target></segment>
+      <target> 针对训练计划中出现的每种俯卧撑变式的快速指南。计划中的提示会直接链接到相应的部分。 </target></segment>
     </unit>
     <unit id="wiki.pushupTypes.tocTitle">
       <notes>
@@ -6441,7 +6441,7 @@
       </notes>
       <segment state="translated">
         <source> Übersicht </source>
-      <target> Übersicht </target></segment>
+      <target> 目录 </target></segment>
     </unit>
     <unit id="wiki.pushupTypes.level.beginner">
       <notes>
@@ -6449,7 +6449,7 @@
       </notes>
       <segment state="translated">
         <source>Einsteiger</source>
-      <target>Einsteiger</target></segment>
+      <target>初级</target></segment>
     </unit>
     <unit id="wiki.pushupTypes.level.intermediate">
       <notes>
@@ -6457,7 +6457,7 @@
       </notes>
       <segment state="translated">
         <source>Mittelstufe</source>
-      <target>Mittelstufe</target></segment>
+      <target>中级</target></segment>
     </unit>
     <unit id="wiki.pushupTypes.level.advanced">
       <notes>
@@ -6465,7 +6465,7 @@
       </notes>
       <segment state="translated">
         <source>Fortgeschritten</source>
-      <target>Fortgeschritten</target></segment>
+      <target>高级</target></segment>
     </unit>
     <unit id="wiki.pushupTypes.instructionsTitle">
       <notes>
@@ -6473,7 +6473,7 @@
       </notes>
       <segment state="translated">
         <source>Ausführung</source>
-      <target>Ausführung</target></segment>
+      <target>执行方法</target></segment>
     </unit>
     <unit id="wiki.pushupTypes.tipsTitle">
       <notes>
@@ -6481,7 +6481,7 @@
       </notes>
       <segment state="translated">
         <source>Tipps</source>
-      <target>Tipps</target></segment>
+      <target>技巧</target></segment>
     </unit>
   </file>
 </xliff>
