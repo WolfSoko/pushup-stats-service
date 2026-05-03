@@ -64,12 +64,20 @@ app.use((req, res, next) => {
 // `dotfiles` opt-in is needed. `fallthrough: false` makes unknown files
 // here 404 cleanly instead of leaking through to the Angular SSR engine
 // (which would respond with the SPA shell — confusing for verifiers).
+//
+// `setHeaders` sets Cache-Control explicitly: the `maxAge` option alone
+// produced `Cache-Control: no-cache` in production behind App Hosting
+// (likely Cloud Run / Firebase edge-layer overriding `serve-static`'s
+// default header). An explicit `res.setHeader` runs *before* the
+// response is flushed, so it's authoritative on the origin side.
 app.use(
   '/.well-known',
   express.static(join(browserDistFolder, 'de', '.well-known'), {
-    maxAge: '1h',
     index: false,
     fallthrough: false,
+    setHeaders: (res) => {
+      res.setHeader('Cache-Control', 'public, max-age=3600');
+    },
   })
 );
 
