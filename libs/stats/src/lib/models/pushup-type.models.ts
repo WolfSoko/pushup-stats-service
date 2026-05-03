@@ -740,6 +740,35 @@ export function findPushupTypeByEntryLabel(
 }
 
 /**
+ * Resolves a user-facing string back to a catalog entry. Matches in this
+ * order: canonical English `entryLabel` → localized name for the active
+ * locale → localized name in English (as a fallback so a user pasting an
+ * English name into a translated UI still resolves). Returns null for
+ * custom values typed by the user.
+ *
+ * Why English fallback: `entryLabel` (e.g. "One-Arm") and the English
+ * display name (e.g. "One-arm push-up") differ, and users frequently
+ * copy English labels from the wiki regardless of UI language.
+ */
+export function findPushupTypeByLocalizedName(
+  name: string | null | undefined,
+  locale: string
+): PushupTypeInfo | null {
+  const byLabel = findPushupTypeByEntryLabel(name);
+  if (byLabel) return byLabel;
+  if (!name) return null;
+  const needle = name.toLowerCase().trim();
+  if (!needle) return null;
+  for (const type of PUSHUP_TYPES) {
+    const localized = localizePushupType(type, locale).name.toLowerCase();
+    if (localized === needle) return type;
+    const english = localizePushupType(type, 'en').name.toLowerCase();
+    if (english === needle) return type;
+  }
+  return null;
+}
+
+/**
  * Returns the localized name + summary for the active Angular locale.
  * Resolves the locale's primary subtag (e.g. `fr-CH` → `fr`) and looks
  * up the markdown-sourced override in `PUSHUP_TYPE_CONTENT`. Falls back

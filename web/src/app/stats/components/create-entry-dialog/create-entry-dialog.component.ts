@@ -25,8 +25,10 @@ import { RouterLink } from '@angular/router';
 import {
   appendLocalOffset,
   findPushupTypeByEntryLabel,
+  findPushupTypeByLocalizedName,
   localizePushupType,
   PUSHUP_TYPES,
+  PushupTypeInfo,
 } from '@pu-stats/models';
 
 export interface EntryDialogData {
@@ -43,6 +45,13 @@ export interface CreateEntryResult {
   sets: number[];
   source: string;
   type: string;
+}
+
+interface TypeOption {
+  /** Canonical English `entryLabel` persisted to Firestore. */
+  value: string;
+  /** Locale-aware display name shown in the autocomplete. */
+  label: string;
 }
 
 @Component({
@@ -190,13 +199,16 @@ export interface CreateEntryResult {
             placeholder="Auswählen oder eintippen"
             i18n-placeholder="@@typePlaceholder"
           />
-          <mat-autocomplete #typeAuto="matAutocomplete">
-            @for (option of filteredTypeOptions$ | async; track option) {
+          <mat-autocomplete
+            #typeAuto="matAutocomplete"
+            [displayWith]="displayType"
+          >
+            @for (option of filteredTypeOptions$ | async; track option.value) {
               <mat-option
-                [value]="option"
-                [matTooltip]="tooltipFor(option)"
+                [value]="option.value"
+                [matTooltip]="tooltipFor(option.value)"
                 matTooltipPosition="right"
-                >{{ option }}</mat-option
+                >{{ option.label }}</mat-option
               >
             }
           </mat-autocomplete>
@@ -283,21 +295,33 @@ export class CreateEntryDialogComponent {
 
   // Single source of truth: derive the dropdown options from the
   // wiki catalog so adding a new variation in
-  // `pushup-type.models.ts` automatically surfaces it here.
-  private readonly typeOptions: ReadonlyArray<string> = PUSHUP_TYPES.map(
-    (t) => t.entryLabel
+  // `pushup-type.models.ts` automatically surfaces it here. The
+  // dropdown shows the localized `label` (e.g. "Diamant-Liegestütze")
+  // while `value` keeps the canonical English `entryLabel` that gets
+  // persisted to Firestore — see `submit()`.
+  private readonly typeOptions: ReadonlyArray<TypeOption> = PUSHUP_TYPES.map(
+    (t) => ({
+      value: t.entryLabel,
+      label: localizePushupType(t, this.locale).name,
+    })
   );
   private readonly sourceOptions = ['web', 'whatsapp'];
 
   readonly filteredTypeOptions$ = this.typeControl.valueChanges.pipe(
     startWith(this.typeControl.value),
-    map((value) => this.filterOptions(value, this.typeOptions))
+    map((value) => this.filterTypeOptions(value))
   );
 
   readonly filteredSourceOptions$ = this.sourceControl.valueChanges.pipe(
     startWith(this.sourceControl.value),
     map((value) => this.filterOptions(value, this.sourceOptions))
   );
+
+  readonly displayType = (value: string | null | undefined): string => {
+    if (!value) return '';
+    const match = findPushupTypeByEntryLabel(value);
+    return match ? localizePushupType(match, this.locale).name : value;
+  };
 
   // Track the live type-control value so the wiki deep-link updates as
   // the user types, without needing manual change detection.
@@ -307,27 +331,30 @@ export class CreateEntryDialogComponent {
   );
 
   readonly wikiQueryParams = computed(() => {
-    const match = findPushupTypeByEntryLabel(this.typeValue());
+    const match = this.resolveType(this.typeValue());
     return match ? { type: match.slug } : {};
   });
 
   readonly wikiTooltip = computed(() => {
-    const match = findPushupTypeByEntryLabel(this.typeValue());
+    const match = this.resolveType(this.typeValue());
     if (!match) {
       return $localize`:@@typeWikiLinkTooltip.generic:Anleitung zu Liegestütztypen öffnen`;
     }
-    // Build the specific tooltip from a static template + the entryLabel.
-    // We avoid a named placeholder inside the i18n message because the
-    // labels (Standard, Diamond, Wide, …) are already English/canonical
-    // tokens that don't translate, and inlining them keeps the XLIFF
-    // entry stable across catalog changes.
+    // Build the specific tooltip from a static template + the localized
+    // type name. The name is locale-dependent so we read it via
+    // `localizePushupType` rather than the canonical `entryLabel`, which
+    // is always English and would feel out of place in a translated UI.
     const template = $localize`:@@typeWikiLinkTooltip.specific:Anleitung öffnen`;
-    return `${template}: ${match.entryLabel}`;
+    return `${template}: ${localizePushupType(match, this.locale).name}`;
   });
 
   tooltipFor(label: string): string {
-    const type = findPushupTypeByEntryLabel(label);
+    const type = this.resolveType(label);
     return type ? localizePushupType(type, this.locale).summary : '';
+  }
+
+  private resolveType(value: string | null | undefined): PushupTypeInfo | null {
+    return findPushupTypeByLocalizedName(value, this.locale);
   }
 
   addSet(): void {
@@ -354,7 +381,12 @@ export class CreateEntryDialogComponent {
     const reps = validSets.reduce((sum, s) => sum + s, 0);
     if (!this.timestamp() || reps <= 0) return;
 
-    const type = (this.typeControl.value || '').trim() || 'Standard';
+    const rawType = (this.typeControl.value || '').trim() || 'Standard';
+    // Keep Firestore on canonical English entryLabels — when the user
+    // selected a localized option (or typed one verbatim) we map it back
+    // to the catalog. Custom typed values pass through unchanged.
+    const matchedType = this.resolveType(rawType);
+    const type = matchedType ? matchedType.entryLabel : rawType;
     const source = this.normalizeSource(
       (this.sourceControl.value || '').trim() || 'web'
     );
@@ -402,5 +434,23 @@ export class CreateEntryDialogComponent {
     if (options.some((opt) => opt.toLowerCase() === needle))
       return [...options];
     return options.filter((opt) => opt.toLowerCase().includes(needle));
+  }
+
+  private filterTypeOptions(value: string | null | undefined): TypeOption[] {
+    const needle = (value ?? '').toLowerCase().trim();
+    if (!needle) return [...this.typeOptions];
+    // The form control holds the canonical entryLabel after a selection;
+    // an exact match on either side means "user already picked one", so
+    // keep the full list visible instead of filtering down to one row.
+    const exact = this.typeOptions.some(
+      (opt) =>
+        opt.value.toLowerCase() === needle || opt.label.toLowerCase() === needle
+    );
+    if (exact) return [...this.typeOptions];
+    return this.typeOptions.filter(
+      (opt) =>
+        opt.label.toLowerCase().includes(needle) ||
+        opt.value.toLowerCase().includes(needle)
+    );
   }
 }

@@ -58,11 +58,31 @@ describe('CreateEntryDialogComponent', () => {
     });
 
     it('Then `tooltipFor` returns a non-empty summary for known types', () => {
-      // Default locale in the test bed is `en-US`, so we get the English
-      // summary. Localization is exhaustively tested in
-      // pushup-type.models.spec.ts; here we only assert the wiring.
+      // TestBed defaults to the source locale (`de`); the localization
+      // logic itself is exhaustively tested in pushup-type.models.spec.ts.
       expect(component.tooltipFor('Standard').length).toBeGreaterThan(0);
       expect(component.tooltipFor('Unknown')).toBe('');
+    });
+
+    it('Then `displayType` maps the canonical entryLabel to the localized name', () => {
+      // TestBed default locale is `de` (the app's source locale).
+      expect(component.displayType('Standard')).toBe('Standard-Liegestütze');
+      expect(component.displayType('Diamond')).toBe('Diamant-Liegestütze');
+    });
+
+    it('Then `displayType` echoes custom typed values unchanged', () => {
+      expect(component.displayType('My-Custom-Move')).toBe('My-Custom-Move');
+      expect(component.displayType('')).toBe('');
+    });
+
+    it('Then the wiki deep-link resolves a localized name typed by the user', () => {
+      component.typeControl.setValue('Diamant-Liegestütze');
+      expect(component.wikiQueryParams()).toEqual({ type: 'diamant' });
+    });
+
+    it('Then the wiki deep-link also resolves an English name pasted into a translated UI', () => {
+      component.typeControl.setValue('Diamond push-up');
+      expect(component.wikiQueryParams()).toEqual({ type: 'diamant' });
     });
   });
 
@@ -128,6 +148,32 @@ describe('CreateEntryDialogComponent', () => {
         source: 'web',
         type: 'Diamond',
       });
+    });
+
+    it('Then a localized type name is persisted as the canonical English entryLabel', () => {
+      // The dialog shows localized labels but Firestore must keep the
+      // canonical English `entryLabel` so aggregations stay locale-agnostic.
+      component.timestamp.set('2025-01-15T10:30');
+      component.sets.set([10]);
+      component.typeControl.setValue('Diamant-Liegestütze');
+
+      component.submit();
+
+      expect(closeSpy).toHaveBeenCalledWith(
+        expect.objectContaining({ type: 'Diamond' })
+      );
+    });
+
+    it('Then a custom typed type is persisted verbatim', () => {
+      component.timestamp.set('2025-01-15T10:30');
+      component.sets.set([10]);
+      component.typeControl.setValue('My-Custom-Move');
+
+      component.submit();
+
+      expect(closeSpy).toHaveBeenCalledWith(
+        expect.objectContaining({ type: 'My-Custom-Move' })
+      );
     });
 
     it('Then legacy source "wa" is normalized to "whatsapp"', () => {

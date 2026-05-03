@@ -2,6 +2,7 @@ import {
   detectPushupTypes,
   findPushupType,
   findPushupTypeByEntryLabel,
+  findPushupTypeByLocalizedName,
   findPushupTypeBySlug,
   localizePushupType,
   localizePushupTypeSlug,
@@ -92,6 +93,54 @@ describe('pushup-type catalog', () => {
       expect(findPushupTypeByEntryLabel(null)).toBeNull();
       expect(findPushupTypeByEntryLabel(undefined)).toBeNull();
       expect(findPushupTypeByEntryLabel('Custom-Move')).toBeNull();
+    });
+  });
+
+  describe('findPushupTypeByLocalizedName', () => {
+    it('matches the canonical English entryLabel regardless of locale', () => {
+      expect(findPushupTypeByLocalizedName('Diamond', 'de')?.id).toBe(
+        'diamond'
+      );
+      expect(findPushupTypeByLocalizedName('  diamond  ', 'fr')?.id).toBe(
+        'diamond'
+      );
+    });
+
+    it('matches the German display name in a "de" locale', () => {
+      expect(
+        findPushupTypeByLocalizedName('Diamant-Liegestütze', 'de')?.id
+      ).toBe('diamond');
+      expect(
+        findPushupTypeByLocalizedName('Archer-Liegestütze', 'de')?.id
+      ).toBe('archer');
+    });
+
+    it('matches the English display name in an "en" locale', () => {
+      expect(findPushupTypeByLocalizedName('Diamond push-up', 'en')?.id).toBe(
+        'diamond'
+      );
+      expect(
+        findPushupTypeByLocalizedName('Standard push-up', 'en-US')?.id
+      ).toBe('standard');
+    });
+
+    it('also accepts an English name pasted into a non-English UI', () => {
+      // Users frequently copy English names from the wiki regardless of
+      // UI language; the resolver falls back to English so those still
+      // map to the canonical entry.
+      expect(findPushupTypeByLocalizedName('Diamond push-up', 'de')?.id).toBe(
+        'diamond'
+      );
+      expect(findPushupTypeByLocalizedName('Archer push-up', 'fr')?.id).toBe(
+        'archer'
+      );
+    });
+
+    it('returns null for unknown or empty values', () => {
+      expect(findPushupTypeByLocalizedName('', 'de')).toBeNull();
+      expect(findPushupTypeByLocalizedName(null, 'de')).toBeNull();
+      expect(findPushupTypeByLocalizedName(undefined, 'de')).toBeNull();
+      expect(findPushupTypeByLocalizedName('My-Custom-Move', 'de')).toBeNull();
     });
   });
 
