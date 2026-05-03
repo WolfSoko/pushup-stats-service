@@ -10,6 +10,7 @@ Disallow: /it/admin
 Disallow: /nl/admin
 Disallow: /el/admin
 Disallow: /la/admin
+Disallow: /zh/admin
 Disallow: /settings
 Disallow: /de/settings
 Disallow: /en/settings
@@ -19,6 +20,7 @@ Disallow: /it/settings
 Disallow: /nl/settings
 Disallow: /el/settings
 Disallow: /la/settings
+Disallow: /zh/settings
 Disallow: /reminders
 Disallow: /de/reminders
 Disallow: /en/reminders
@@ -28,5 +30,6 @@ Disallow: /it/reminders
 Disallow: /nl/reminders
 Disallow: /el/reminders
 Disallow: /la/reminders
+Disallow: /zh/reminders
 
 Sitemap: https://pushup-stats.com/sitemap.xml

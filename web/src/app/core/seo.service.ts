@@ -159,6 +159,7 @@ export class SeoService {
       nl: 'nl_NL',
       el: 'el_GR',
       la: 'la',
+      zh: 'zh_CN',
     };
     return map[locale];
   }
