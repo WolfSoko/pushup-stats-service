@@ -1,6 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatDialogRef } from '@angular/material/dialog';
 import { provideRouter } from '@angular/router';
+import { firstValueFrom } from 'rxjs';
+import { take } from 'rxjs/operators';
+import { PUSHUP_TYPES } from '@pu-stats/models';
 import {
   CreateEntryDialogComponent,
   CreateEntryResult,
@@ -87,6 +90,26 @@ describe('CreateEntryDialogComponent', () => {
     it('Then the wiki deep-link also resolves an English name pasted into a translated UI', () => {
       component.typeControl.setValue('Diamond push-up');
       expect(component.wikiQueryParams()).toEqual({ type: 'diamant' });
+    });
+
+    it('Then every catalog variant is offered in the autocomplete with localized labels', async () => {
+      // Regression: the filter must return the FULL catalog on the
+      // initial form-control value (default "standard") so the user
+      // sees every variant, not just the one matching the default.
+      const initial = await firstValueFrom(
+        component.filteredTypeOptions$.pipe(take(1))
+      );
+      expect(initial.map((o) => o.value).sort()).toEqual(
+        PUSHUP_TYPES.map((t) => t.id).sort()
+      );
+      // TestBed default locale is `de`; labels must be the German
+      // catalog names, not the English entryLabel fallback.
+      const standard = initial.find((o) => o.value === 'standard');
+      expect(standard?.label).toBe('Standard-Liegestütze');
+      const diamond = initial.find((o) => o.value === 'diamond');
+      expect(diamond?.label).toBe('Diamant-Liegestütze');
+      const oneArm = initial.find((o) => o.value === 'one-arm');
+      expect(oneArm?.label).toBe('Einarmige Liegestütze');
     });
   });
 
