@@ -6727,5 +6727,149 @@
         <target>Eindtest: maximale schone eenarmige opdrukken per kant</target>
       </segment>
     </unit>
+    <unit id="settings.status.saving">
+      <notes>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:97,99</note>
+      </notes>
+      <segment state="translated">
+        <source>Speichert…</source>
+        <target>Opslaan…</target>
+      </segment>
+    </unit>
+    <unit id="settings.status.saved">
+      <notes>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:101,103</note>
+      </notes>
+      <segment state="translated">
+        <source>Gespeichert</source>
+        <target>Opgeslagen</target>
+      </segment>
+    </unit>
+    <unit id="settings.status.error">
+      <notes>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:105,107</note>
+      </notes>
+      <segment state="translated">
+        <source>Fehler beim Speichern</source>
+        <target>Fout bij opslaan</target>
+      </segment>
+    </unit>
+    <unit id="settings.status.retry">
+      <notes>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:112,113</note>
+      </notes>
+      <segment state="translated">
+        <source> Erneut versuchen </source>
+        <target> Opnieuw proberen </target>
+      </segment>
+    </unit>
+    <unit id="settings.status.pending">
+      <notes>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:118,121</note>
+      </notes>
+      <segment state="translated">
+        <source>Ungespeicherte Änderungen…</source>
+        <target>Niet-opgeslagen wijzigingen…</target>
+      </segment>
+    </unit>
+    <unit id="settings.status.synced">
+      <notes>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:124,127</note>
+      </notes>
+      <segment state="translated">
+        <source>Alle Änderungen gespeichert</source>
+        <target>Alle wijzigingen opgeslagen</target>
+      </segment>
+    </unit>
+    <unit id="settings.section.profile.title">
+      <notes>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:148,150</note>
+      </notes>
+      <segment state="translated">
+        <source>Profil</source>
+        <target>Profiel</target>
+      </segment>
+    </unit>
+    <unit id="settings.section.profile.subtitle">
+      <notes>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:151,153</note>
+      </notes>
+      <segment state="translated">
+        <source> Wie du in der App und der Bestenliste erscheinst. </source>
+        <target> Hoe je in de app en in het klassement verschijnt. </target>
+      </segment>
+    </unit>
+    <unit id="settings.section.privacy.title">
+      <notes>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:175,177</note>
+      </notes>
+      <segment state="translated">
+        <source>Sichtbarkeit</source>
+        <target>Zichtbaarheid</target>
+      </segment>
+    </unit>
+    <unit id="settings.section.privacy.subtitle">
+      <notes>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:178,180</note>
+      </notes>
+      <segment state="translated">
+        <source> Steuere, wer dein Profil sehen kann. </source>
+        <target> Bepaal wie je profiel kan zien. </target>
+      </segment>
+    </unit>
+    <unit id="settings.section.goals.title">
+      <notes>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:241,243</note>
+      </notes>
+      <segment state="translated">
+        <source>Ziele</source>
+        <target>Doelen</target>
+      </segment>
+    </unit>
+    <unit id="settings.section.goals.subtitle">
+      <notes>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:244,246</note>
+      </notes>
+      <segment state="translated">
+        <source> Tägliche, wöchentliche und monatliche Ziele. </source>
+        <target> Dagelijkse, wekelijkse en maandelijkse doelen. </target>
+      </segment>
+    </unit>
+    <unit id="settings.section.display.title">
+      <notes>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:310,312</note>
+      </notes>
+      <segment state="translated">
+        <source>Anzeige</source>
+        <target>Weergave</target>
+      </segment>
+    </unit>
+    <unit id="settings.section.display.subtitle">
+      <notes>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:313,315</note>
+      </notes>
+      <segment state="translated">
+        <source> Animationen und Darstellung. </source>
+        <target> Animaties en weergave. </target>
+      </segment>
+    </unit>
+    <unit id="settings.section.ads.title">
+      <notes>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:355,357</note>
+      </notes>
+      <segment state="translated">
+        <source>Werbung</source>
+        <target>Advertenties</target>
+      </segment>
+    </unit>
+    <unit id="settings.section.ads.subtitle">
+      <notes>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:358,360</note>
+      </notes>
+      <segment state="translated">
+        <source> Personalisierung der Werbe-Slots. </source>
+        <target> Personalisatie van advertentievakken. </target>
+      </segment>
+    </unit>
   </file>
 </xliff>

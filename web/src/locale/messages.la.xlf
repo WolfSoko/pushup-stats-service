@@ -6727,5 +6727,149 @@
         <target>Proba finalis: pressiones nitidae uno bracchio quam plurimae per latus</target>
       </segment>
     </unit>
+    <unit id="settings.status.saving">
+      <notes>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:97,99</note>
+      </notes>
+      <segment state="translated">
+        <source>Speichert…</source>
+        <target>Servans…</target>
+      </segment>
+    </unit>
+    <unit id="settings.status.saved">
+      <notes>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:101,103</note>
+      </notes>
+      <segment state="translated">
+        <source>Gespeichert</source>
+        <target>Servatum</target>
+      </segment>
+    </unit>
+    <unit id="settings.status.error">
+      <notes>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:105,107</note>
+      </notes>
+      <segment state="translated">
+        <source>Fehler beim Speichern</source>
+        <target>Error in servando</target>
+      </segment>
+    </unit>
+    <unit id="settings.status.retry">
+      <notes>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:112,113</note>
+      </notes>
+      <segment state="translated">
+        <source> Erneut versuchen </source>
+        <target> Iterum conari </target>
+      </segment>
+    </unit>
+    <unit id="settings.status.pending">
+      <notes>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:118,121</note>
+      </notes>
+      <segment state="translated">
+        <source>Ungespeicherte Änderungen…</source>
+        <target>Mutationes non servatae…</target>
+      </segment>
+    </unit>
+    <unit id="settings.status.synced">
+      <notes>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:124,127</note>
+      </notes>
+      <segment state="translated">
+        <source>Alle Änderungen gespeichert</source>
+        <target>Omnes mutationes servatae</target>
+      </segment>
+    </unit>
+    <unit id="settings.section.profile.title">
+      <notes>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:148,150</note>
+      </notes>
+      <segment state="translated">
+        <source>Profil</source>
+        <target>Profilum</target>
+      </segment>
+    </unit>
+    <unit id="settings.section.profile.subtitle">
+      <notes>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:151,153</note>
+      </notes>
+      <segment state="translated">
+        <source> Wie du in der App und der Bestenliste erscheinst. </source>
+        <target> Quomodo in applicatione et in tabula optimorum appares. </target>
+      </segment>
+    </unit>
+    <unit id="settings.section.privacy.title">
+      <notes>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:175,177</note>
+      </notes>
+      <segment state="translated">
+        <source>Sichtbarkeit</source>
+        <target>Visibilitas</target>
+      </segment>
+    </unit>
+    <unit id="settings.section.privacy.subtitle">
+      <notes>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:178,180</note>
+      </notes>
+      <segment state="translated">
+        <source> Steuere, wer dein Profil sehen kann. </source>
+        <target> Modera qui profilum tuum videre possit. </target>
+      </segment>
+    </unit>
+    <unit id="settings.section.goals.title">
+      <notes>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:241,243</note>
+      </notes>
+      <segment state="translated">
+        <source>Ziele</source>
+        <target>Proposita</target>
+      </segment>
+    </unit>
+    <unit id="settings.section.goals.subtitle">
+      <notes>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:244,246</note>
+      </notes>
+      <segment state="translated">
+        <source> Tägliche, wöchentliche und monatliche Ziele. </source>
+        <target> Proposita cotidiana, hebdomadalia et menstrua. </target>
+      </segment>
+    </unit>
+    <unit id="settings.section.display.title">
+      <notes>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:310,312</note>
+      </notes>
+      <segment state="translated">
+        <source>Anzeige</source>
+        <target>Demonstratio</target>
+      </segment>
+    </unit>
+    <unit id="settings.section.display.subtitle">
+      <notes>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:313,315</note>
+      </notes>
+      <segment state="translated">
+        <source> Animationen und Darstellung. </source>
+        <target> Animationes et apparentia. </target>
+      </segment>
+    </unit>
+    <unit id="settings.section.ads.title">
+      <notes>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:355,357</note>
+      </notes>
+      <segment state="translated">
+        <source>Werbung</source>
+        <target>Promulgationes</target>
+      </segment>
+    </unit>
+    <unit id="settings.section.ads.subtitle">
+      <notes>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:358,360</note>
+      </notes>
+      <segment state="translated">
+        <source> Personalisierung der Werbe-Slots. </source>
+        <target> Personalizatio locorum promulgationum. </target>
+      </segment>
+    </unit>
   </file>
 </xliff>

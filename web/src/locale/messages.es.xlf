@@ -6727,5 +6727,149 @@
         <target>Test final: flexiones limpias a un brazo máximas por lado</target>
       </segment>
     </unit>
+    <unit id="settings.status.saving">
+      <notes>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:97,99</note>
+      </notes>
+      <segment state="translated">
+        <source>Speichert…</source>
+        <target>Guardando…</target>
+      </segment>
+    </unit>
+    <unit id="settings.status.saved">
+      <notes>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:101,103</note>
+      </notes>
+      <segment state="translated">
+        <source>Gespeichert</source>
+        <target>Guardado</target>
+      </segment>
+    </unit>
+    <unit id="settings.status.error">
+      <notes>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:105,107</note>
+      </notes>
+      <segment state="translated">
+        <source>Fehler beim Speichern</source>
+        <target>Error al guardar</target>
+      </segment>
+    </unit>
+    <unit id="settings.status.retry">
+      <notes>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:112,113</note>
+      </notes>
+      <segment state="translated">
+        <source> Erneut versuchen </source>
+        <target> Reintentar </target>
+      </segment>
+    </unit>
+    <unit id="settings.status.pending">
+      <notes>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:118,121</note>
+      </notes>
+      <segment state="translated">
+        <source>Ungespeicherte Änderungen…</source>
+        <target>Cambios sin guardar…</target>
+      </segment>
+    </unit>
+    <unit id="settings.status.synced">
+      <notes>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:124,127</note>
+      </notes>
+      <segment state="translated">
+        <source>Alle Änderungen gespeichert</source>
+        <target>Todos los cambios guardados</target>
+      </segment>
+    </unit>
+    <unit id="settings.section.profile.title">
+      <notes>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:148,150</note>
+      </notes>
+      <segment state="translated">
+        <source>Profil</source>
+        <target>Perfil</target>
+      </segment>
+    </unit>
+    <unit id="settings.section.profile.subtitle">
+      <notes>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:151,153</note>
+      </notes>
+      <segment state="translated">
+        <source> Wie du in der App und der Bestenliste erscheinst. </source>
+        <target> Cómo apareces en la aplicación y en la tabla de clasificación. </target>
+      </segment>
+    </unit>
+    <unit id="settings.section.privacy.title">
+      <notes>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:175,177</note>
+      </notes>
+      <segment state="translated">
+        <source>Sichtbarkeit</source>
+        <target>Visibilidad</target>
+      </segment>
+    </unit>
+    <unit id="settings.section.privacy.subtitle">
+      <notes>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:178,180</note>
+      </notes>
+      <segment state="translated">
+        <source> Steuere, wer dein Profil sehen kann. </source>
+        <target> Controla quién puede ver tu perfil. </target>
+      </segment>
+    </unit>
+    <unit id="settings.section.goals.title">
+      <notes>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:241,243</note>
+      </notes>
+      <segment state="translated">
+        <source>Ziele</source>
+        <target>Objetivos</target>
+      </segment>
+    </unit>
+    <unit id="settings.section.goals.subtitle">
+      <notes>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:244,246</note>
+      </notes>
+      <segment state="translated">
+        <source> Tägliche, wöchentliche und monatliche Ziele. </source>
+        <target> Objetivos diarios, semanales y mensuales. </target>
+      </segment>
+    </unit>
+    <unit id="settings.section.display.title">
+      <notes>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:310,312</note>
+      </notes>
+      <segment state="translated">
+        <source>Anzeige</source>
+        <target>Visualización</target>
+      </segment>
+    </unit>
+    <unit id="settings.section.display.subtitle">
+      <notes>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:313,315</note>
+      </notes>
+      <segment state="translated">
+        <source> Animationen und Darstellung. </source>
+        <target> Animaciones y apariencia. </target>
+      </segment>
+    </unit>
+    <unit id="settings.section.ads.title">
+      <notes>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:355,357</note>
+      </notes>
+      <segment state="translated">
+        <source>Werbung</source>
+        <target>Publicidad</target>
+      </segment>
+    </unit>
+    <unit id="settings.section.ads.subtitle">
+      <notes>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:358,360</note>
+      </notes>
+      <segment state="translated">
+        <source> Personalisierung der Werbe-Slots. </source>
+        <target> Personalización de los espacios publicitarios. </target>
+      </segment>
+    </unit>
   </file>
 </xliff>

@@ -74,6 +74,7 @@
       "configurations": {
         "production": {
           "localize": ["de", "en", "fr", "es", "it", "nl", "el", "la"],
+          "i18nMissingTranslation": "error",
           "budgets": [
             {
               "type": "initial",
@@ -92,6 +93,7 @@
         },
         "production-preview": {
           "localize": ["de", "en", "fr", "es", "it", "nl", "el", "la"],
+          "i18nMissingTranslation": "error",
           "budgets": [
             {
               "type": "initial",
@@ -126,6 +128,7 @@
         },
         "staging": {
           "localize": ["de", "en", "fr", "es", "it", "nl", "el", "la"],
+          "i18nMissingTranslation": "error",
           "outputHashing": "all",
           "serviceWorker": "web/ngsw-config.json",
           "fileReplacements": [
