@@ -1816,15 +1816,6 @@
         <target>Impossibile inviare il feedback.</target>
       </segment>
     </unit>
-    <unit id="sw.update.downloading">
-      <notes>
-        <note category="location">web/src/app/app.ts:347</note>
-      </notes>
-      <segment state="translated">
-        <source>Update wird im Hintergrund geladen …</source>
-        <target>L'aggiornamento viene caricato in background...</target>
-      </segment>
-    </unit>
     <unit id="blog.article.back">
       <notes>
         <note category="location">web/src/app/blog/blog-article.component.ts:33,35</note>

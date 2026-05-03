@@ -31,7 +31,7 @@ import {
   RouterLinkActive,
   RouterOutlet,
 } from '@angular/router';
-import { SwUpdate, VersionDetectedEvent } from '@angular/service-worker';
+import { SwUpdate } from '@angular/service-worker';
 import { AuthService, AuthStore, UserMenuComponent } from '@pu-auth/auth';
 import { filter } from 'rxjs';
 import { SeoService } from './core/seo.service';
@@ -295,11 +295,6 @@ export class App {
       this.swUpdate.versionUpdates
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe((event) => {
-          if (event.type === 'VERSION_DETECTED') {
-            this.showBackgroundUpdateToast(event);
-            return;
-          }
-
           if (event.type !== 'VERSION_READY') return;
 
           const ref = this.snackBar.open(
@@ -403,17 +398,5 @@ export class App {
   ): void {
     if (!this.analytics || !this.analyticsConsentGranted()) return;
     logEvent(this.analytics, eventName, params);
-  }
-
-  private showBackgroundUpdateToast(_event: VersionDetectedEvent): void {
-    this.snackBar.open(
-      $localize`:@@sw.update.downloading:Update wird im Hintergrund geladen …`,
-      '',
-      {
-        duration: 5000,
-        horizontalPosition: 'center',
-        verticalPosition: 'bottom',
-      }
-    );
   }
 }
