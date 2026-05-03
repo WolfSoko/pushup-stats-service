@@ -79,6 +79,7 @@ const LANGUAGE_OPTIONS: ReadonlyArray<LanguageOption> = [
   { code: 'nl', label: 'Nederlands' },
   { code: 'el', label: 'Ελληνικά' },
   { code: 'la', label: 'Latina' },
+  { code: 'no', label: 'Norsk' },
 ];
 
 /**

@@ -41,6 +41,8 @@ describe('pickLocale', () => {
     ['nl-BE', 'nl'],
     ['el', 'el'],
     ['la', 'la'],
+    ['no', 'no'],
+    ['no-NO', 'no'],
     ['en;q=not-a-number,de', 'de'], // malformed q drops the entry
     ['en;q=0,fr;q=0', 'de'], // explicit q=0 rejects → source locale fallback
     ['en;q=0,de', 'de'], // q=0 only excludes that entry; remaining ranked entries still apply
@@ -80,6 +82,7 @@ describe('computeLocaleRedirect', () => {
         '/nl',
         '/el',
         '/la/blog',
+        '/no',
       ]) {
         expect(computeLocaleRedirect(input({ path, url: path }))).toEqual({
           kind: 'pass',

@@ -35,6 +35,10 @@
       "la": {
         "translation": "web/src/locale/messages.la.xlf",
         "subPath": "la"
+      },
+      "no": {
+        "translation": "web/src/locale/messages.no.xlf",
+        "subPath": "no"
       }
     },
     "defaultLocale": "de"
@@ -73,7 +77,7 @@
       },
       "configurations": {
         "production": {
-          "localize": ["de", "en", "fr", "es", "it", "nl", "el", "la"],
+          "localize": ["de", "en", "fr", "es", "it", "nl", "el", "la", "no"],
           "i18nMissingTranslation": "error",
           "budgets": [
             {
@@ -92,7 +96,7 @@
           "serviceWorker": "web/ngsw-config.json"
         },
         "production-preview": {
-          "localize": ["de", "en", "fr", "es", "it", "nl", "el", "la"],
+          "localize": ["de", "en", "fr", "es", "it", "nl", "el", "la", "no"],
           "i18nMissingTranslation": "error",
           "budgets": [
             {
@@ -127,7 +131,7 @@
           ]
         },
         "staging": {
-          "localize": ["de", "en", "fr", "es", "it", "nl", "el", "la"],
+          "localize": ["de", "en", "fr", "es", "it", "nl", "el", "la", "no"],
           "i18nMissingTranslation": "error",
           "outputHashing": "all",
           "serviceWorker": "web/ngsw-config.json",

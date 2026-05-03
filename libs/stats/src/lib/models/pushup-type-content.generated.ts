@@ -34,6 +34,20 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
         "Tempo 3-1-1 (3 s runter, 1 s halten, 1 s hoch) baut spürbar mehr Kraft auf."
       ]
     },
+    "el": {
+      "name": "Πιέσεις Archer",
+      "summary": "Ασύμμετρες πιέσεις: ο ένας βραχίονας λυγίζει ενώ ο άλλος μένει τεντωμένος — ενδιάμεσο βήμα προς τις πιέσεις με έναν βραχίονα.",
+      "instructions": [
+        "Χέρια αισθητά πιο φαρδιά από τους ώμους, δάχτυλα ελαφρώς προς τα έξω.",
+        "Στην κατάβαση μετατόπισε το βάρος προς τη μία πλευρά: ο ένας βραχίονας λυγίζει, ο άλλος μένει σχεδόν ίσιος.",
+        "Ο τεντωμένος βραχίονας λειτουργεί σαν στήριγμα· το μεγαλύτερο φορτίο πέφτει στον βραχίονα που λυγίζει.",
+        "Σπρώξε ελεγχόμενα προς τα πάνω, επίστρεψε στο κέντρο και μετατοπίσου στην άλλη πλευρά.",
+        "Μέτρα τις επαναλήψεις ανά πλευρά — το πρόγραμμα συνήθως αναφέρει τον αριθμό ανά βραχίονα."
+      ],
+      "tips": [
+        "Ρυθμός 3-1-1 (3 δευτ. κάτω, 1 δευτ. κράτημα, 1 δευτ. πάνω) χτίζει αισθητά περισσότερη δύναμη."
+      ]
+    },
     "en": {
       "name": "Archer push-up",
       "summary": "Asymmetric push-up: one arm bends while the other stays extended — a stepping stone to the one-arm push-up.",
@@ -74,20 +88,6 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
       ],
       "tips": [
         "Un tempo 3-1-1 (3 s en bas, 1 s de maintien, 1 s en haut) développe nettement plus de force."
-      ]
-    },
-    "el": {
-      "name": "Πιέσεις Archer",
-      "summary": "Ασύμμετρες πιέσεις: ο ένας βραχίονας λυγίζει ενώ ο άλλος μένει τεντωμένος — ενδιάμεσο βήμα προς τις πιέσεις με έναν βραχίονα.",
-      "instructions": [
-        "Χέρια αισθητά πιο φαρδιά από τους ώμους, δάχτυλα ελαφρώς προς τα έξω.",
-        "Στην κατάβαση μετατόπισε το βάρος προς τη μία πλευρά: ο ένας βραχίονας λυγίζει, ο άλλος μένει σχεδόν ίσιος.",
-        "Ο τεντωμένος βραχίονας λειτουργεί σαν στήριγμα· το μεγαλύτερο φορτίο πέφτει στον βραχίονα που λυγίζει.",
-        "Σπρώξε ελεγχόμενα προς τα πάνω, επίστρεψε στο κέντρο και μετατοπίσου στην άλλη πλευρά.",
-        "Μέτρα τις επαναλήψεις ανά πλευρά — το πρόγραμμα συνήθως αναφέρει τον αριθμό ανά βραχίονα."
-      ],
-      "tips": [
-        "Ρυθμός 3-1-1 (3 δευτ. κάτω, 1 δευτ. κράτημα, 1 δευτ. πάνω) χτίζει αισθητά περισσότερη δύναμη."
       ]
     },
     "it": {
@@ -131,6 +131,20 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
       "tips": [
         "Tempo 3-1-1 (3 s naar beneden, 1 s vasthouden, 1 s omhoog) bouwt merkbaar meer kracht op."
       ]
+    },
+    "no": {
+      "name": "Archer armhevning",
+      "summary": "Asymmetrisk armhevning der en arm bøyes mens den andre forblir strukket – en springbrett til enarmede armhevninger.",
+      "instructions": [
+        "Hendene plasseres merkbart bredere enn skuldrene, fingerne vinklet litt utover.",
+        "Skift til den ene siden under nedstigningen: en arm bøyes, den andre forblir nesten rett.",
+        "Den rette armen fungerer som støtte; det meste av belastningen ligger på den bøyde armen.",
+        "Press oppover med kontroll, gå tilbake til midtposisjonen, og skift til den andre siden.",
+        "Tell repetisjoner per side – planen lister vanligvis antallet per arm."
+      ],
+      "tips": [
+        "Tempo 3-1-1 (3 s ned, 1 s hold, 1 s opp) bygger merkbart mer styrke."
+      ]
     }
   },
   "decline": {
@@ -145,6 +159,19 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
       ],
       "tips": [
         "Nicht ins Hohlkreuz fallen — Bauch und Po aktiv anspannen, besonders mit hohen Füßen."
+      ]
+    },
+    "el": {
+      "name": "Πιέσεις με ανυψωμένα πόδια (Decline)",
+      "summary": "Πόδια σε ύψωμα, χέρια στο πάτωμα — επιπλέον φορτίο στο πάνω στήθος και τους ώμους.",
+      "instructions": [
+        "Πόδια πάνω σε σταθερό ύψωμα (πάγκος, καρέκλα, σκαλοπάτι).",
+        "Χέρια στο πλάτος των ώμων στο πάτωμα, κράτα ίσια γραμμή από το κεφάλι ως τις φτέρνες.",
+        "Κατέβασε ελεγχόμενα το στήθος, διατηρώντας ενεργή την κοιλιά.",
+        "Σπρώξε δυνατά προς τα πάνω — όσο πιο ψηλά τα πόδια, τόσο περισσότερη συμμετοχή των ώμων."
+      ],
+      "tips": [
+        "Μην αφήνεις τη μέση να λυγίσει προς τα μέσα — σφίξε ενεργά κοιλιακούς και γλουτούς, ιδίως όταν τα πόδια είναι ψηλά."
       ]
     },
     "en": {
@@ -186,19 +213,6 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
         "Ne laissez pas le bas du dos se creuser — gainez activement abdominaux et fessiers, surtout avec les pieds hauts."
       ]
     },
-    "el": {
-      "name": "Πιέσεις με ανυψωμένα πόδια (Decline)",
-      "summary": "Πόδια σε ύψωμα, χέρια στο πάτωμα — επιπλέον φορτίο στο πάνω στήθος και τους ώμους.",
-      "instructions": [
-        "Πόδια πάνω σε σταθερό ύψωμα (πάγκος, καρέκλα, σκαλοπάτι).",
-        "Χέρια στο πλάτος των ώμων στο πάτωμα, κράτα ίσια γραμμή από το κεφάλι ως τις φτέρνες.",
-        "Κατέβασε ελεγχόμενα το στήθος, διατηρώντας ενεργή την κοιλιά.",
-        "Σπρώξε δυνατά προς τα πάνω — όσο πιο ψηλά τα πόδια, τόσο περισσότερη συμμετοχή των ώμων."
-      ],
-      "tips": [
-        "Μην αφήνεις τη μέση να λυγίσει προς τα μέσα — σφίξε ενεργά κοιλιακούς και γλουτούς, ιδίως όταν τα πόδια είναι ψηλά."
-      ]
-    },
     "it": {
       "name": "Piegamento declinato (piedi in elevazione)",
       "summary": "Piedi su un rialzo, mani a terra — carico extra sul petto superiore e sulle spalle.",
@@ -237,6 +251,19 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
       "tips": [
         "Laat de lage rug niet hollen — span buik en bilspieren actief aan, zeker bij hoge voeten."
       ]
+    },
+    "no": {
+      "name": "Decline armhevning (føttene høyt)",
+      "summary": "Føttene på en forhøyning, hendene på gulvet – ekstra belastning på øvre bryst og skuldre.",
+      "instructions": [
+        "Plasser føttene på en stabil forhøyning (benk, stol, trinn).",
+        "Hendene skulderbredde fra hverandre på gulvet, hold en rett linje fra hode til hæl.",
+        "Senk brystet med kontroll, hold magen strammet.",
+        "Press oppover kraftig – jo høyere føttene, desto mer involvering av skulderne."
+      ],
+      "tips": [
+        "Ikke la nedre del av ryggen bukte – stram aktivt magen og innglutealmusklene, spesielt ved høye føtter."
+      ]
     }
   },
   "diamond": {
@@ -251,6 +278,19 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
       ],
       "tips": [
         "Anfänger: an Knie-Diamant gewöhnen, bevor die volle Variante gemacht wird."
+      ]
+    },
+    "el": {
+      "name": "Πιέσεις διαμάντι",
+      "summary": "Τα χέρια σχηματίζουν τρίγωνο κάτω από το στήθος — μέγιστη ενεργοποίηση τρικέφαλου.",
+      "instructions": [
+        "Οι αντίχειρες και οι δείκτες ενώνονται και σχηματίζουν ένα τρίγωνο «διαμάντι».",
+        "Χέρια ακριβώς κάτω από το κάτω μέρος του στήθους, όχι πολύ χαμηλά προς την κοιλιά.",
+        "Κράτα τους αγκώνες κοντά στο σώμα, να δείχνουν προς τα πίσω.",
+        "Κατέβασε το στήθος μέχρι το διαμάντι και σπρώξε ίσια προς τα πάνω."
+      ],
+      "tips": [
+        "Αρχάριοι: συνηθίστε στις πιέσεις διαμάντι από τα γόνατα προτού επιχειρήσετε την πλήρη εκδοχή."
       ]
     },
     "en": {
@@ -292,19 +332,6 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
         "Débutants : maîtrisez d'abord les pompes diamant sur les genoux avant de tenter la version complète."
       ]
     },
-    "el": {
-      "name": "Πιέσεις διαμάντι",
-      "summary": "Τα χέρια σχηματίζουν τρίγωνο κάτω από το στήθος — μέγιστη ενεργοποίηση τρικέφαλου.",
-      "instructions": [
-        "Οι αντίχειρες και οι δείκτες ενώνονται και σχηματίζουν ένα τρίγωνο «διαμάντι».",
-        "Χέρια ακριβώς κάτω από το κάτω μέρος του στήθους, όχι πολύ χαμηλά προς την κοιλιά.",
-        "Κράτα τους αγκώνες κοντά στο σώμα, να δείχνουν προς τα πίσω.",
-        "Κατέβασε το στήθος μέχρι το διαμάντι και σπρώξε ίσια προς τα πάνω."
-      ],
-      "tips": [
-        "Αρχάριοι: συνηθίστε στις πιέσεις διαμάντι από τα γόνατα προτού επιχειρήσετε την πλήρη εκδοχή."
-      ]
-    },
     "it": {
       "name": "Piegamento a diamante",
       "summary": "Le mani formano un triangolo sotto il petto — massimo coinvolgimento dei tricipiti.",
@@ -343,6 +370,19 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
       "tips": [
         "Beginners: wen eerst aan knie-diamantopdrukken voordat je de volledige versie probeert."
       ]
+    },
+    "no": {
+      "name": "Diamond armhevning",
+      "summary": "Hendene danner en trekant under brystet – maksimal triceps-engasjement.",
+      "instructions": [
+        "Tomler og pekefingre berører hverandre og danner en \"diamant\"-trekant.",
+        "Hendene direkte under det nedre brystet, ikke for langt ned mot magen.",
+        "Hold albueleddet tett inntil kroppen, rettet bakover.",
+        "Senk brystet ned til diamanten, og press deretter rett oppover."
+      ],
+      "tips": [
+        "Nybegynnere: bliv komfortable med kneer-diamond før du prøver fullversjonen."
+      ]
     }
   },
   "incline": {
@@ -357,6 +397,19 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
       ],
       "tips": [
         "Schrittweise tiefer gehen, sobald 3×10 sauber gelingen."
+      ]
+    },
+    "el": {
+      "name": "Πιέσεις με ανυψωμένα χέρια (Incline)",
+      "summary": "Χέρια σε πάγκο, τραπέζι ή τοίχο — μειώνει το βάρος που σηκώνουν τα χέρια.",
+      "instructions": [
+        "Τοποθέτησε τα χέρια σε σταθερό ύψωμα (πάγκος, τραπέζι, σκαλοπάτι).",
+        "Πόδια στο πάτωμα, σώμα σε ίσια γραμμή.",
+        "Κατέβασε ελεγχόμενα το στήθος ως το ύψωμα και μετά σπρώξε προς τα πάνω.",
+        "Όσο πιο χαμηλό το ύψωμα, τόσο πιο δύσκολη η άσκηση."
+      ],
+      "tips": [
+        "Κατέβασε το ύψωμα μόλις καταφέρεις 3×10 καθαρές επαναλήψεις."
       ]
     },
     "en": {
@@ -398,19 +451,6 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
         "Abaissez l'élévation dès que 3×10 répétitions semblent propres."
       ]
     },
-    "el": {
-      "name": "Πιέσεις με ανυψωμένα χέρια (Incline)",
-      "summary": "Χέρια σε πάγκο, τραπέζι ή τοίχο — μειώνει το βάρος που σηκώνουν τα χέρια.",
-      "instructions": [
-        "Τοποθέτησε τα χέρια σε σταθερό ύψωμα (πάγκος, τραπέζι, σκαλοπάτι).",
-        "Πόδια στο πάτωμα, σώμα σε ίσια γραμμή.",
-        "Κατέβασε ελεγχόμενα το στήθος ως το ύψωμα και μετά σπρώξε προς τα πάνω.",
-        "Όσο πιο χαμηλό το ύψωμα, τόσο πιο δύσκολη η άσκηση."
-      ],
-      "tips": [
-        "Κατέβασε το ύψωμα μόλις καταφέρεις 3×10 καθαρές επαναλήψεις."
-      ]
-    },
     "it": {
       "name": "Piegamento inclinato (mani in elevazione)",
       "summary": "Mani su una panca, tavolo o parete — riduce il carico sulle braccia.",
@@ -449,6 +489,19 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
       "tips": [
         "Ga een stap lager met de verhoging zodra 3×10 herhalingen vlot aanvoelen."
       ]
+    },
+    "no": {
+      "name": "Incline armhevning (hendene høyt)",
+      "summary": "Hendene på en benk, bord eller vegg – reduserer belastningen på armene.",
+      "instructions": [
+        "Plasser hendene på en stabil forhøyning (benk, bord, trapp).",
+        "Føttene på gulvet, kroppen i en rett linje.",
+        "Senk brystet med kontroll ned til forhøyningen, og press deretter oppover.",
+        "Jo lavere forhøyningen, desto vanskeligere øvelsen."
+      ],
+      "tips": [
+        "Senk forhøyningen når 3×10 repetisjoner føles rene og kontrollerte."
+      ]
     }
   },
   "knee": {
@@ -463,6 +516,19 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
       ],
       "tips": [
         "Nutze Knie-Liegestütze, bis du 3×8 saubere Wiederholungen schaffst, dann steige auf Standard um."
+      ]
+    },
+    "el": {
+      "name": "Πιέσεις από τα γόνατα",
+      "summary": "Πιο εύκολη παραλλαγή με τα γόνατα στο πάτωμα — ιδανική για αρχάριους.",
+      "instructions": [
+        "Γόνατα στο πάτωμα, πέλματα ανασηκωμένα ή σταυρωμένα.",
+        "Χέρια στο πλάτος των ώμων, κράτα ίσια γραμμή από τα γόνατα ως τους ώμους.",
+        "Σταθερή λεκάνη — μην την αφήνεις να πέσει ούτε να ανέβει.",
+        "Κατέβασε ελεγχόμενα το στήθος και μετά σπρώξε προς τα πάνω."
+      ],
+      "tips": [
+        "Μείνε στις πιέσεις από τα γόνατα μέχρι να καταφέρεις 3×8 καθαρές επαναλήψεις, και μετά πέρασε στην κανονική εκδοχή."
       ]
     },
     "en": {
@@ -504,19 +570,6 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
         "Restez sur les pompes sur les genoux jusqu'à pouvoir faire 3×8 répétitions propres, puis passez à la version standard."
       ]
     },
-    "el": {
-      "name": "Πιέσεις από τα γόνατα",
-      "summary": "Πιο εύκολη παραλλαγή με τα γόνατα στο πάτωμα — ιδανική για αρχάριους.",
-      "instructions": [
-        "Γόνατα στο πάτωμα, πέλματα ανασηκωμένα ή σταυρωμένα.",
-        "Χέρια στο πλάτος των ώμων, κράτα ίσια γραμμή από τα γόνατα ως τους ώμους.",
-        "Σταθερή λεκάνη — μην την αφήνεις να πέσει ούτε να ανέβει.",
-        "Κατέβασε ελεγχόμενα το στήθος και μετά σπρώξε προς τα πάνω."
-      ],
-      "tips": [
-        "Μείνε στις πιέσεις από τα γόνατα μέχρι να καταφέρεις 3×8 καθαρές επαναλήψεις, και μετά πέρασε στην κανονική εκδοχή."
-      ]
-    },
     "it": {
       "name": "Piegamento sulle ginocchia",
       "summary": "Regressione facilitata con le ginocchia a terra — ideale per i principianti.",
@@ -555,6 +608,19 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
       "tips": [
         "Blijf op knieopdrukken totdat je 3×8 schone herhalingen kunt doen, ga dan door naar de standaardversie."
       ]
+    },
+    "no": {
+      "name": "Knee armhevning",
+      "summary": "Enklere variant med knærne på gulvet – ideell for nybegynnere.",
+      "instructions": [
+        "Plasser knærne på gulvet, føttene løftet eller krysset.",
+        "Hendene skulderbredde fra hverandre, hold en rett linje fra knær til skuldre.",
+        "Stabiliser hoften – ingen nedsinking eller piking.",
+        "Senk brystet med kontroll, og press deretter oppover igjen."
+      ],
+      "tips": [
+        "Hold deg på knee armhevninger til du kan gjøre 3×8 rene repetisjoner, og gå deretter videre til standardversjonen."
+      ]
     }
   },
   "knuckle": {
@@ -569,6 +635,19 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
       ],
       "tips": [
         "Hilfreich bei empfindlichen Handgelenken — Belastung wandert vom Gelenk in die Fingerknöchel."
+      ]
+    },
+    "el": {
+      "name": "Πιέσεις στις γροθιές",
+      "summary": "Στις αρθρώσεις των δαχτύλων αντί για ανοιχτές παλάμες — προστατεύει τους καρπούς και δυναμώνει τα αντιβράχια.",
+      "instructions": [
+        "Σφίξε τα χέρια σε γροθιές και στηρίξου στις δύο πρώτες αρθρώσεις (δείκτη και μέσου).",
+        "Κράτα την ράχη της παλάμης ίσια — μη λυγίζεις τον καρπό.",
+        "Ξεκίνα σε μαλακή επιφάνεια (στρώμα, πετσέτα) και αργότερα πέρνα σε σκληρό πάτωμα.",
+        "Κατά τα άλλα η εκτέλεση είναι ίδια με τις κανονικές πιέσεις."
+      ],
+      "tips": [
+        "Χρήσιμες για ευαίσθητους καρπούς — το φορτίο μετατοπίζεται από την άρθρωση στις αρθρώσεις των δαχτύλων."
       ]
     },
     "en": {
@@ -610,19 +689,6 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
         "Utile pour les poignets sensibles — la charge se déplace de l'articulation vers les jointures."
       ]
     },
-    "el": {
-      "name": "Πιέσεις στις γροθιές",
-      "summary": "Στις αρθρώσεις των δαχτύλων αντί για ανοιχτές παλάμες — προστατεύει τους καρπούς και δυναμώνει τα αντιβράχια.",
-      "instructions": [
-        "Σφίξε τα χέρια σε γροθιές και στηρίξου στις δύο πρώτες αρθρώσεις (δείκτη και μέσου).",
-        "Κράτα την ράχη της παλάμης ίσια — μη λυγίζεις τον καρπό.",
-        "Ξεκίνα σε μαλακή επιφάνεια (στρώμα, πετσέτα) και αργότερα πέρνα σε σκληρό πάτωμα.",
-        "Κατά τα άλλα η εκτέλεση είναι ίδια με τις κανονικές πιέσεις."
-      ],
-      "tips": [
-        "Χρήσιμες για ευαίσθητους καρπούς — το φορτίο μετατοπίζεται από την άρθρωση στις αρθρώσεις των δαχτύλων."
-      ]
-    },
     "it": {
       "name": "Piegamento sulle nocche",
       "summary": "Eseguito sulle nocche invece che con le mani piatte — più delicato per i polsi e rafforza gli avambracci.",
@@ -661,6 +727,19 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
       "tips": [
         "Nuttig bij gevoelige polsen — de belasting verschuift van het gewricht naar de knokkels."
       ]
+    },
+    "no": {
+      "name": "Knuckle armhevning",
+      "summary": "Gjort på knokler i stedet for flate hender – lettere på håndleddene og styrker underarmene.",
+      "instructions": [
+        "Lag neve, støtt på de to første knokler (peke- og långfinger).",
+        "Hold baksiden av hånden rett – ikke bøy håndleddet.",
+        "Start på en myk overflate (matte, håndkle), progrediér til hardt gulv senere.",
+        "Utfør ellers som en standard armhevning."
+      ],
+      "tips": [
+        "Nyttig for sensitive håndledd – belastningen skifter fra leddet til knokle."
+      ]
     }
   },
   "negative-one-arm": {
@@ -675,6 +754,19 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
       ],
       "tips": [
         "Bauen Sie die negative Zeit langsam aus: 3 s → 5 s → 8 s über mehrere Wochen."
+      ]
+    },
+    "el": {
+      "name": "Αρνητικές πιέσεις με έναν βραχίονα",
+      "summary": "Μόνο η φάση καταβίβασης γίνεται με έναν βραχίονα — η ελεγχόμενη έκκεντρη φάση χτίζει τη δύναμη για την πλήρη κίνηση.",
+      "instructions": [
+        "Τοποθέτησε το ένα χέρι σε πάγκο ή ύψωμα· πόδια ανοιχτά για σταθερότητα.",
+        "Το άλλο χέρι στη μέση ή στο πλάι, κράτα το σώμα σαν σανίδα.",
+        "Κατέβα προς τον πάγκο σε 3–5 δευτερόλεπτα — χωρίς «πτώση».",
+        "Σπρώξε προς τα πάνω με τα δύο χέρια ή από την ψηλή θέση — η ανοδική φάση εδώ δεν γίνεται με έναν βραχίονα."
+      ],
+      "tips": [
+        "Αύξανε τον έκκεντρο χρόνο σταδιακά: 3΄΄ → 5΄΄ → 8΄΄ μέσα σε αρκετές εβδομάδες."
       ]
     },
     "en": {
@@ -716,19 +808,6 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
         "Augmentez progressivement le temps excentrique : 3 s → 5 s → 8 s sur plusieurs semaines."
       ]
     },
-    "el": {
-      "name": "Αρνητικές πιέσεις με έναν βραχίονα",
-      "summary": "Μόνο η φάση καταβίβασης γίνεται με έναν βραχίονα — η ελεγχόμενη έκκεντρη φάση χτίζει τη δύναμη για την πλήρη κίνηση.",
-      "instructions": [
-        "Τοποθέτησε το ένα χέρι σε πάγκο ή ύψωμα· πόδια ανοιχτά για σταθερότητα.",
-        "Το άλλο χέρι στη μέση ή στο πλάι, κράτα το σώμα σαν σανίδα.",
-        "Κατέβα προς τον πάγκο σε 3–5 δευτερόλεπτα — χωρίς «πτώση».",
-        "Σπρώξε προς τα πάνω με τα δύο χέρια ή από την ψηλή θέση — η ανοδική φάση εδώ δεν γίνεται με έναν βραχίονα."
-      ],
-      "tips": [
-        "Αύξανε τον έκκεντρο χρόνο σταδιακά: 3΄΄ → 5΄΄ → 8΄΄ μέσα σε αρκετές εβδομάδες."
-      ]
-    },
     "it": {
       "name": "Piegamento negativo a un braccio",
       "summary": "Solo la fase di discesa eseguita con un braccio — un eccentrico controllato costruisce la forza per il movimento completo.",
@@ -767,6 +846,19 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
       "tips": [
         "Bouw de excentrische tijd langzaam op: 3 s → 5 s → 8 s over meerdere weken."
       ]
+    },
+    "no": {
+      "name": "Negative enarmede armhevning",
+      "summary": "Kun nedstigningsfasen gjøres enarmede – en kontrollert exzentrisk bevegelse bygger styrken til fullbevegelsen.",
+      "instructions": [
+        "Plasser en arm på en benk/forhøyning; føttene bredt for stabilitet.",
+        "Den andre armen på nedre del av ryggen eller hoften; hold kroppen som en planke.",
+        "Senk nedover mot benken over 3-5 sekunder – ingen \"krasj\"-fase.",
+        "Press oppover med begge armene eller fra forhøyningen – den konsentriske fasen gjøres ikke enarmede her."
+      ],
+      "tips": [
+        "Bygg den excentriske tiden gradvis: 3 s → 5 s → 8 s over flere uker."
+      ]
     }
   },
   "one-arm": {
@@ -782,6 +874,20 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
       ],
       "tips": [
         "Wiederholungen werden pro Seite gezählt — dominante Seite zuerst, schwächere danach."
+      ]
+    },
+    "el": {
+      "name": "Πιέσεις με έναν βραχίονα",
+      "summary": "Πλήρης πίεση με το ένα χέρι — η βασίλισσα των ασκήσεων με το βάρος του σώματος για στήθος και τρικέφαλους.",
+      "instructions": [
+        "Πόδια αισθητά πιο φαρδιά από το πλάτος της λεκάνης για μέγιστη σταθερότητα (στην αρχή πολύ ανοιχτά).",
+        "Το ένα χέρι κάτω από το κέντρο του στήθους· το άλλο στη μέση ή στο πλάι.",
+        "Κράτα συνειδητά το σώμα σαν σανίδα — η λεκάνη και οι ώμοι δεν πρέπει να περιστρέφονται.",
+        "Κατέβασε ελεγχόμενα το στήθος ως το χέρι και σπρώξε ίσια προς τα πάνω.",
+        "Καθώς αυξάνεται η δύναμη, μείωσε σταδιακά το άνοιγμα των ποδιών."
+      ],
+      "tips": [
+        "Οι επαναλήψεις μετριούνται ανά πλευρά — ξεκίνα από το δυνατό χέρι και αντιστοίχισε τον αριθμό στο αδύναμο."
       ]
     },
     "en": {
@@ -826,20 +932,6 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
         "Les répétitions se comptent par côté — commencez par le côté dominant et égalisez sur le côté faible."
       ]
     },
-    "el": {
-      "name": "Πιέσεις με έναν βραχίονα",
-      "summary": "Πλήρης πίεση με το ένα χέρι — η βασίλισσα των ασκήσεων με το βάρος του σώματος για στήθος και τρικέφαλους.",
-      "instructions": [
-        "Πόδια αισθητά πιο φαρδιά από το πλάτος της λεκάνης για μέγιστη σταθερότητα (στην αρχή πολύ ανοιχτά).",
-        "Το ένα χέρι κάτω από το κέντρο του στήθους· το άλλο στη μέση ή στο πλάι.",
-        "Κράτα συνειδητά το σώμα σαν σανίδα — η λεκάνη και οι ώμοι δεν πρέπει να περιστρέφονται.",
-        "Κατέβασε ελεγχόμενα το στήθος ως το χέρι και σπρώξε ίσια προς τα πάνω.",
-        "Καθώς αυξάνεται η δύναμη, μείωσε σταδιακά το άνοιγμα των ποδιών."
-      ],
-      "tips": [
-        "Οι επαναλήψεις μετριούνται ανά πλευρά — ξεκίνα από το δυνατό χέρι και αντιστοίχισε τον αριθμό στο αδύναμο."
-      ]
-    },
     "it": {
       "name": "Piegamento a un braccio",
       "summary": "Piegamento completo con una sola mano — il re della spinta a corpo libero.",
@@ -881,6 +973,20 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
       "tips": [
         "Herhalingen worden per kant geteld — begin met de dominante kant en evenaar dat op de zwakkere kant."
       ]
+    },
+    "no": {
+      "name": "Enarmede armhevning",
+      "summary": "Full armhevning med en enkelt hand – kongen blant kroppsvektsøvelser.",
+      "instructions": [
+        "Plasser føttene merkbart bredere enn hofteavstanden for maksimal stabilitet (veldig bredt til å begynne med).",
+        "En arm under midten av brystet; den andre på nedre del av ryggen eller hoften.",
+        "Hold kroppen bevisst som en planke – hoften og skulderne må ikke rotere.",
+        "Senk brystet ned til hånden med kontroll, og press deretter rett oppover.",
+        "Ettersom styrken øker, smalner du fotposisjonen gradvis."
+      ],
+      "tips": [
+        "Repetisjoner telles per side – start med den dominante siden og matcher den på den svakere siden."
+      ]
     }
   },
   "partial-one-arm": {
@@ -892,6 +998,17 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
         "Andere Hand am Rücken, Körper als Plank — Hüfte nicht rotieren lassen.",
         "Bewusst nur bis zur Bankhöhe absenken (reduzierter ROM).",
         "Mit der einen Hand hochdrücken; Höhe der Bank schrittweise reduzieren."
+      ],
+      "tips": []
+    },
+    "el": {
+      "name": "Πιέσεις με έναν βραχίονα μερικού εύρους",
+      "summary": "Πιέσεις με έναν βραχίονα σε μειωμένο εύρος κίνησης (π.χ. από χαμηλό πάγκο).",
+      "instructions": [
+        "Τοποθέτησε το ένα χέρι σε χαμηλό πάγκο ή σκαλοπάτι· πόδια πολύ ανοιχτά (τουλάχιστον στο πλάτος της λεκάνης).",
+        "Το άλλο χέρι στη μέση, κράτα το σώμα σαν σανίδα — μην αφήνεις τη λεκάνη να περιστρέφεται.",
+        "Κατέβα συνειδητά μόνο μέχρι το ύψος του πάγκου (μειωμένο εύρος κίνησης).",
+        "Σπρώξε προς τα πάνω με το ένα χέρι· μείωσε σταδιακά το ύψος του πάγκου."
       ],
       "tips": []
     },
@@ -928,17 +1045,6 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
       ],
       "tips": []
     },
-    "el": {
-      "name": "Πιέσεις με έναν βραχίονα μερικού εύρους",
-      "summary": "Πιέσεις με έναν βραχίονα σε μειωμένο εύρος κίνησης (π.χ. από χαμηλό πάγκο).",
-      "instructions": [
-        "Τοποθέτησε το ένα χέρι σε χαμηλό πάγκο ή σκαλοπάτι· πόδια πολύ ανοιχτά (τουλάχιστον στο πλάτος της λεκάνης).",
-        "Το άλλο χέρι στη μέση, κράτα το σώμα σαν σανίδα — μην αφήνεις τη λεκάνη να περιστρέφεται.",
-        "Κατέβα συνειδητά μόνο μέχρι το ύψος του πάγκου (μειωμένο εύρος κίνησης).",
-        "Σπρώξε προς τα πάνω με το ένα χέρι· μείωσε σταδιακά το ύψος του πάγκου."
-      ],
-      "tips": []
-    },
     "it": {
       "name": "Piegamento parziale a un braccio",
       "summary": "Piegamenti a un braccio su range di movimento ridotto (es. da una panca bassa).",
@@ -971,6 +1077,17 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
         "Druk éénarmig omhoog; verlaag de bankhoogte progressief."
       ],
       "tips": []
+    },
+    "no": {
+      "name": "Partial-ROM enarmede armhevning",
+      "summary": "Enarmede armhevninger over redusert bevegelses- eller/og amplitude (f.eks. fra en lav benk).",
+      "instructions": [
+        "Plasser en arm på en lav benk/trinn; føttene veldig bredt (minst hofteavstand).",
+        "Den andre armen på nedre del av ryggen; hold kroppen som en planke – ikke roter hoften.",
+        "Senk intensjont kun ned til benkhøyden (redusert ROM).",
+        "Press oppover enarmede; senk benkhøyden gradvis."
+      ],
+      "tips": []
     }
   },
   "pike": {
@@ -985,6 +1102,19 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
       ],
       "tips": [
         "Schwieriger machen: Füße auf eine Erhöhung stellen, fast vertikale Position."
+      ]
+    },
+    "el": {
+      "name": "Πιέσεις pike",
+      "summary": "Πιέσεις σε σχήμα ανεστραμμένου V — σχεδόν κατακόρυφο σπρώξιμο, ενδιάμεσο βήμα προς τις πιέσεις σε στάση χεριών.",
+      "instructions": [
+        "Από τη θέση τετράποδης στήριξης, ανέβασε τη λεκάνη — το σώμα σχηματίζει ανεστραμμένο V.",
+        "Χέρια στο πλάτος των ώμων, πόδια ίσια ή ελαφρώς λυγισμένα, λεκάνη ψηλά.",
+        "Κατέβασε το κεφάλι ανάμεσα στους βραχίονες προς το πάτωμα — οι αγκώνες κοιτούν προς τα πίσω.",
+        "Σπρώξε ξανά προς τα πάνω χωρίς να πέσεις στην κανονική θέση πιέσεων."
+      ],
+      "tips": [
+        "Πιο δύσκολη παραλλαγή: τοποθέτησε τα πόδια σε ύψωμα για σχεδόν κατακόρυφη θέση."
       ]
     },
     "en": {
@@ -1026,19 +1156,6 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
         "Pour rendre plus difficile : placez les pieds sur une élévation pour une position quasi verticale."
       ]
     },
-    "el": {
-      "name": "Πιέσεις pike",
-      "summary": "Πιέσεις σε σχήμα ανεστραμμένου V — σχεδόν κατακόρυφο σπρώξιμο, ενδιάμεσο βήμα προς τις πιέσεις σε στάση χεριών.",
-      "instructions": [
-        "Από τη θέση τετράποδης στήριξης, ανέβασε τη λεκάνη — το σώμα σχηματίζει ανεστραμμένο V.",
-        "Χέρια στο πλάτος των ώμων, πόδια ίσια ή ελαφρώς λυγισμένα, λεκάνη ψηλά.",
-        "Κατέβασε το κεφάλι ανάμεσα στους βραχίονες προς το πάτωμα — οι αγκώνες κοιτούν προς τα πίσω.",
-        "Σπρώξε ξανά προς τα πάνω χωρίς να πέσεις στην κανονική θέση πιέσεων."
-      ],
-      "tips": [
-        "Πιο δύσκολη παραλλαγή: τοποθέτησε τα πόδια σε ύψωμα για σχεδόν κατακόρυφη θέση."
-      ]
-    },
     "it": {
       "name": "Piegamento a picco",
       "summary": "Piegamenti dalla posizione a V rovesciata — spinta quasi verticale, un passaggio verso i piegamenti in verticale.",
@@ -1077,6 +1194,19 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
       "tips": [
         "Maak het moeilijker: zet de voeten op een verhoging voor een bijna verticale positie."
       ]
+    },
+    "no": {
+      "name": "Pike armhevning",
+      "summary": "Armhevninger fra en V-form – nær-vertikal press, et springbrett til håndstand armhevninger.",
+      "instructions": [
+        "Fra en firbent posisjon presser du hoften oppover – kroppen danner en invertert V.",
+        "Hendene skulderbredde fra hverandre, ben rette eller litt bøyd, hoften høyt.",
+        "Senk hodet mellom armene mot gulvet – albueleddet følger bakover.",
+        "Press oppover uten å falle ned i en regulær armhevningsposisjon."
+      ],
+      "tips": [
+        "Gjør det vanskeligere: plasser føttene på en forhøyning for en nær-vertikal posisjon."
+      ]
     }
   },
   "standard": {
@@ -1093,6 +1223,21 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
       "tips": [
         "Blick leicht nach vorne auf den Boden, nicht den Nacken überstrecken.",
         "Atmung: beim Absenken einatmen, beim Hochdrücken ausatmen."
+      ]
+    },
+    "el": {
+      "name": "Κλασικές πιέσεις",
+      "summary": "Κλασικές πιέσεις με χέρια στο πλάτος των ώμων και ίσια γραμμή σώματος.",
+      "instructions": [
+        "Χέρια στο πλάτος των ώμων, ακριβώς κάτω από τους ώμους, δάχτυλα προς τα μπρος.",
+        "Το σώμα σχηματίζει ίσια γραμμή από το κεφάλι ως τις φτέρνες — σφίξε κοιλιά και γλουτούς.",
+        "Αγκώνες σε γωνία περίπου 45° με τον κορμό, μην τους ανοίγεις προς τα πλάγια.",
+        "Κατέβασε ελεγχόμενα το στήθος μέχρι σχεδόν να αγγίξει το πάτωμα.",
+        "Σπρώξε δυνατά προς τα πάνω, χωρίς να κλειδώνεις τους αγκώνες στην ψηλή θέση."
+      ],
+      "tips": [
+        "Βλέμμα ελαφρώς προς τα μπρος στο πάτωμα — μην υπερεκτείνεις τον αυχένα.",
+        "Αναπνοή: εισπνοή στην κατάβαση, εκπνοή στο σπρώξιμο προς τα πάνω."
       ]
     },
     "en": {
@@ -1140,21 +1285,6 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
         "Respiration : inspirez à la descente, expirez à la poussée."
       ]
     },
-    "el": {
-      "name": "Κλασικές πιέσεις",
-      "summary": "Κλασικές πιέσεις με χέρια στο πλάτος των ώμων και ίσια γραμμή σώματος.",
-      "instructions": [
-        "Χέρια στο πλάτος των ώμων, ακριβώς κάτω από τους ώμους, δάχτυλα προς τα μπρος.",
-        "Το σώμα σχηματίζει ίσια γραμμή από το κεφάλι ως τις φτέρνες — σφίξε κοιλιά και γλουτούς.",
-        "Αγκώνες σε γωνία περίπου 45° με τον κορμό, μην τους ανοίγεις προς τα πλάγια.",
-        "Κατέβασε ελεγχόμενα το στήθος μέχρι σχεδόν να αγγίξει το πάτωμα.",
-        "Σπρώξε δυνατά προς τα πάνω, χωρίς να κλειδώνεις τους αγκώνες στην ψηλή θέση."
-      ],
-      "tips": [
-        "Βλέμμα ελαφρώς προς τα μπρος στο πάτωμα — μην υπερεκτείνεις τον αυχένα.",
-        "Αναπνοή: εισπνοή στην κατάβαση, εκπνοή στο σπρώξιμο προς τα πάνω."
-      ]
-    },
     "it": {
       "name": "Piegamento standard",
       "summary": "Piegamento classico con mani alla larghezza delle spalle e corpo in linea retta.",
@@ -1199,6 +1329,21 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
         "Kijk licht vooruit naar de vloer — rek de nek niet.",
         "Ademhaling: inademen bij het zakken, uitademen bij het omhoogdrukken."
       ]
+    },
+    "no": {
+      "name": "Standard armhevning",
+      "summary": "Klassisk armhevning med skulderbredde håndposisjon og en rett kroppslinje.",
+      "instructions": [
+        "Hendene skulderbredde fra hverandre, direkte under skulderne, fingerne peker fremover.",
+        "Kroppen danner en rett linje fra hode til hæl – stram magen og innglutealmusklene.",
+        "Albueleddet ved omtrent 45° til kroppen, ikke spredt bredt ut til siden.",
+        "Senk brystet med kontroll til det nesten berører gulvet.",
+        "Press oppover kraftig, ikke lås albueleddet på toppen."
+      ],
+      "tips": [
+        "Se litt fremover på gulvet – ikke strekk nakken.",
+        "Pusting: pust inn på vei ned, pust ut på press oppover."
+      ]
     }
   },
   "wall-one-arm": {
@@ -1210,6 +1355,17 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
         "Eine Hand auf Schulterhöhe an die Wand, andere Hand am Rücken oder seitlich.",
         "Körper als feste Linie kippen lassen, Ellenbogen kontrolliert beugen.",
         "Mit langsamer Exzentrik (3 s) Richtung Wand absenken, kraftvoll wegdrücken."
+      ],
+      "tips": []
+    },
+    "el": {
+      "name": "Πιέσεις με έναν βραχίονα στον τοίχο",
+      "summary": "Πιέσεις με έναν βραχίονα κόντρα σε τοίχο — ασφαλής εισαγωγική άσκηση για την προπόνηση του ενός βραχίονα.",
+      "instructions": [
+        "Στάσου σε απόσταση περίπου ενός μπράτσου από τον τοίχο.",
+        "Τοποθέτησε το ένα χέρι στον τοίχο στο ύψος του ώμου· το άλλο χέρι στη μέση ή στο πλάι.",
+        "Άφησε το σώμα να γείρει προς τον τοίχο σαν σφιχτή σανίδα, λυγίζοντας ελεγχόμενα τον αγκώνα.",
+        "Κατέβα με αργή έκκεντρη φάση (3 δευτ.) προς τον τοίχο και σπρώξε δυνατά μακριά του."
       ],
       "tips": []
     },
@@ -1246,17 +1402,6 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
       ],
       "tips": []
     },
-    "el": {
-      "name": "Πιέσεις με έναν βραχίονα στον τοίχο",
-      "summary": "Πιέσεις με έναν βραχίονα κόντρα σε τοίχο — ασφαλής εισαγωγική άσκηση για την προπόνηση του ενός βραχίονα.",
-      "instructions": [
-        "Στάσου σε απόσταση περίπου ενός μπράτσου από τον τοίχο.",
-        "Τοποθέτησε το ένα χέρι στον τοίχο στο ύψος του ώμου· το άλλο χέρι στη μέση ή στο πλάι.",
-        "Άφησε το σώμα να γείρει προς τον τοίχο σαν σφιχτή σανίδα, λυγίζοντας ελεγχόμενα τον αγκώνα.",
-        "Κατέβα με αργή έκκεντρη φάση (3 δευτ.) προς τον τοίχο και σπρώξε δυνατά μακριά του."
-      ],
-      "tips": []
-    },
     "it": {
       "name": "Piegamento a un braccio contro il muro",
       "summary": "Piegamenti a un braccio contro una parete — un esercizio di ingresso sicuro per la progressione a un braccio.",
@@ -1289,6 +1434,17 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
         "Zak langzaam excentrisch (3 s) naar de muur, druk dan krachtig weg."
       ],
       "tips": []
+    },
+    "no": {
+      "name": "Wall enarmede armhevning",
+      "summary": "Enarmede armhevninger mot en vegg – en sikker inngangsøvelse for enarmede progresjon.",
+      "instructions": [
+        "Stå omtrent en armslengde fra veggen.",
+        "Plasser en arm på veggen ved skulderhøyde; den andre armen hviler på nedre del av ryggen eller hoften.",
+        "Vipp kroppen som en solid planke mot veggen, bøy albueleddet med kontroll.",
+        "Senk med en langsom exzentrisk bevegelse (3 s) mot veggen, og press deretter kraftig bort."
+      ],
+      "tips": []
     }
   },
   "wide": {
@@ -1303,6 +1459,19 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
       ],
       "tips": [
         "Schultergesundheit: Schulterblätter aktiv zusammenziehen, nicht in den Gelenken hängen."
+      ]
+    },
+    "el": {
+      "name": "Πιέσεις με ανοιχτή λαβή",
+      "summary": "Πιο φαρδιά θέση χεριών που τονίζει το στήθος και ελαφρώνει τους τρικέφαλους.",
+      "instructions": [
+        "Χέρια αισθητά πιο φαρδιά από τους ώμους, δάχτυλα ελαφρώς προς τα έξω.",
+        "Οι αγκώνες δείχνουν προς τα πλάγια και ανοίγουν περισσότερο κατά την κατάβαση.",
+        "Κατέβασε ελεγχόμενα το στήθος με αισθητή διάταση στο στήθος.",
+        "Σπρώξε προς τα πάνω συνειδητά από το στήθος — μην «κλέβεις» με τους τρικέφαλους."
+      ],
+      "tips": [
+        "Υγεία ώμων: κράτα τις ωμοπλάτες ενεργές και μαζεμένες, μην κρέμεσαι από τις αρθρώσεις."
       ]
     },
     "en": {
@@ -1344,19 +1513,6 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
         "Santé des épaules: gardez les omoplates rétractées, ne vous suspendez pas dans les articulations."
       ]
     },
-    "el": {
-      "name": "Πιέσεις με ανοιχτή λαβή",
-      "summary": "Πιο φαρδιά θέση χεριών που τονίζει το στήθος και ελαφρώνει τους τρικέφαλους.",
-      "instructions": [
-        "Χέρια αισθητά πιο φαρδιά από τους ώμους, δάχτυλα ελαφρώς προς τα έξω.",
-        "Οι αγκώνες δείχνουν προς τα πλάγια και ανοίγουν περισσότερο κατά την κατάβαση.",
-        "Κατέβασε ελεγχόμενα το στήθος με αισθητή διάταση στο στήθος.",
-        "Σπρώξε προς τα πάνω συνειδητά από το στήθος — μην «κλέβεις» με τους τρικέφαλους."
-      ],
-      "tips": [
-        "Υγεία ώμων: κράτα τις ωμοπλάτες ενεργές και μαζεμένες, μην κρέμεσαι από τις αρθρώσεις."
-      ]
-    },
     "it": {
       "name": "Piegamento largo",
       "summary": "Posizione delle mani più larga che enfatizza il petto e alleggerisce il lavoro dei tricipiti.",
@@ -1394,6 +1550,19 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
       ],
       "tips": [
         "Schoudergezondheid: houd de schouderbladen ingetrokken, hang niet in de gewrichten."
+      ]
+    },
+    "no": {
+      "name": "Wide armhevning",
+      "summary": "Bredere håndposisjon som vektlegger brystet og avlaster tricepsen.",
+      "instructions": [
+        "Plasser hendene merkbart bredere enn skuldrene, fingerne vinklet litt utover.",
+        "Albueleddet følger til siden, åpner videre når du senker deg.",
+        "Senk brystet med kontroll med en klar strekkfølelse på tvers av brystet.",
+        "Press oppover bevisst fra brystet – ikke \"jukser\" med tricepsen."
+      ],
+      "tips": [
+        "Skulderhelse: hold skulderbladeene trukket sammen, ikke heng i leddene."
       ]
     }
   }
