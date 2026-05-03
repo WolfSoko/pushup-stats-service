@@ -43,6 +43,13 @@ describe('pickLocale', () => {
     ['la', 'la'],
     ['no', 'no'],
     ['no-NO', 'no'],
+    // Norwegian browsers advertise `nb` (Bokmål) or `nn` (Nynorsk),
+    // not `no`. Both must alias to the `no` bundle so unprefixed
+    // routes don't fall back to German for Norwegian users.
+    ['nb', 'no'],
+    ['nb-NO', 'no'],
+    ['nn', 'no'],
+    ['nn-NO', 'no'],
     ['en;q=not-a-number,de', 'de'], // malformed q drops the entry
     ['en;q=0,fr;q=0', 'de'], // explicit q=0 rejects → source locale fallback
     ['en;q=0,de', 'de'], // q=0 only excludes that entry; remaining ranked entries still apply

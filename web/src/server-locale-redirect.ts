@@ -70,6 +70,17 @@ export const ROOT_FILES: ReadonlySet<string> = new Set([
 export const SAFE_REDIRECT_PATH_RE = /^\/[A-Za-z0-9/_\-.~%]*$/;
 
 /**
+ * Aliases from common BCP 47 primary subtags to the locale code we
+ * actually ship. Browsers almost never advertise `no` directly —
+ * Norwegian users send `nb-NO` (Bokmål) or `nn-NO` (Nynorsk). Without
+ * this map both would fall through to the German default.
+ */
+const LOCALE_ALIASES: Readonly<Record<string, SupportedLocale>> = {
+  nb: 'no',
+  nn: 'no',
+};
+
+/**
  * Pick a locale based on `Accept-Language`. Honours both the user's
  * stated order and explicit `;q=` weights so headers like
  * `en;q=0.1,fr;q=1.0` resolve to `fr` (highest weight wins) and
@@ -107,6 +118,8 @@ export function pickLocale(
 
   for (const { tag } of ranked) {
     const primary = tag.split('-')[0];
+    const aliased = LOCALE_ALIASES[primary];
+    if (aliased) return aliased;
     if ((SUPPORTED_LOCALES as ReadonlyArray<string>).includes(primary)) {
       return primary as SupportedLocale;
     }
