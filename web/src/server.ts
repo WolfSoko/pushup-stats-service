@@ -109,13 +109,21 @@ if (isProduction) {
 }
 
 /**
- * Serve static files from /browser
+ * Serve static files from /browser.
+ *
+ * `dotfiles: 'allow'` is REQUIRED — `serve-static`'s default is `'ignore'`,
+ * which silently drops any path containing a dot-prefixed segment. The
+ * `.well-known` rewrite middleware above maps requests to
+ * `/de/.well-known/<file>`; without `'allow'` those requests fall through
+ * to the Angular SSR engine (which has no matching route) and Google's
+ * Digital Asset Links / TWA verifier sees a 404 instead of the JSON.
  */
 app.use(
   express.static(browserDistFolder, {
     maxAge: '1y',
     index: false,
     redirect: false,
+    dotfiles: 'allow',
   })
 );
 
