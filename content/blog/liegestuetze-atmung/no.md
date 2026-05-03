@@ -68,6 +68,6 @@ heroImageCredit: 'Photo: <a href="https://unsplash.com" target="_blank" rel="noo
   <h3>Teknikk sjekk, puste stilt — deretter registrer det</h3>
   <p>
     Når pusteteknikk og form er på plass, hjelper konsistent registrering deg å øke ukentlig volum. En oversikt over typiske formfeil finnes i vår
-    <a href="/en/blog/pushup-mistakes">artikkel om feil</a>.
+    <a href="/no/blog/armhevning-feil">artikkel om feil</a>.
   </p>
 </aside>

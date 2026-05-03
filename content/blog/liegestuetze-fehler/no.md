@@ -52,7 +52,7 @@ Under anstrengelse tipper hodet refleksivt bakover. Nakkevirvelen strekker seg, 
 
 Valsalva-pressing under armhevningen øker intratorakalt trykk og kan utløse svimmelhet. Over lengre sett lider kraftproduksjonen også.
 
-**Fiksen:** Pust inn ved nedgangen, pust ut ved presset. En kort stramming er okay ved maksimale forsøk, men oppretthold den ikke over flere repetisjoner. Mer om dette i vår [pusteknikkartikkel](/en/blog/pushup-breathing).
+**Fiksen:** Pust inn ved nedgangen, pust ut ved presset. En kort stramming er okay ved maksimale forsøk, men oppretthold den ikke over flere repetisjoner. Mer om dette i vår [pusteknikkartikkel](/no/blog/armhevning-pusteteknikk).
 
 ## Feil 7: For mye for fort — volum over kvalitet
 
@@ -68,7 +68,7 @@ Still telefonen din til side og film et sett med 10 repetisjoner. Se videoen to 
   <h3>Teknikken ren? Nå er det tid for volum</h3>
   <p>
     Med teknikken din solid, er du klar for strukturert volum. 
-    <a href="/en/training-plans/recruit-6w">6-ukers oppbygningsplanen</a> tar deg fra 0 til 100 rene
+    <a href="/no/training-plans/recruit-6w">6-ukers oppbygningsplanen</a> tar deg fra 0 til 100 rene
     repetisjoner ved bruk av progressiv overbelastning, ikke krasj-programmering.
   </p>
 </aside>

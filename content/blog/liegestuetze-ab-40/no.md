@@ -91,6 +91,6 @@ heroImageCredit: 'Photo: <a href="https://unsplash.com" target="_blank" rel="noo
     planen når du starter den.
   </p>
   <p>
-    <a href="/training-plans/over-40-4w">Se planen for over 40 &rarr;</a>
+    <a href="/no/training-plans/over-40-4w">Se planen for over 40 &rarr;</a>
   </p>
 </aside>

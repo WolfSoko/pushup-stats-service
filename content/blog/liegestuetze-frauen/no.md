@@ -62,7 +62,7 @@ heroImageCredit: 'Foto: <a href="https://unsplash.com" target="_blank" rel="noop
 <h2>Hormonell syklus og treningsvinduer</h2>
 <p>
   Forskningen er mindre klar enn ofte hevdet. Det som viser konsistent: i luteale fasen (andre halvdel av syklusen), trenger mange kvinner lengre hvile mellom sett. 90 sekunder i stedet for 60. 3 sett i stedet for 4. Det er ikke svakhet — det er optimalisert trening. Dine
-  <a href="/en/blog/pushup-tracker-guide">sporingsdata</a> vil avslørere dine høyproduktive vinduer etter 1–2 sykluser.
+  <a href="/no/blog/armhevning-tracker-guide">sporingsdata</a> vil avslørere dine høyproduktive vinduer etter 1–2 sykluser.
 </p>
 
 <h2>Vanlige snublesteinene</h2>
@@ -76,7 +76,7 @@ heroImageCredit: 'Foto: <a href="https://unsplash.com" target="_blank" rel="noop
   <h3>Spor planen i appen</h3>
   <p>
     Kjør 4-ukers planen eller hopp rett inn i
-    <a href="/en/training-plans/recruit-6w">6-ukers oppbygningen</a> når dine første 3 fullarmbevninger er registrert.
+    <a href="/no/training-plans/recruit-6w">6-ukers oppbygningen</a> når dine første 3 fullarmbevninger er registrert.
     Pushup Tracker viser ditt ukentlige volum og signaliserer når du er klar for neste trinn.
   </p>
 </aside>

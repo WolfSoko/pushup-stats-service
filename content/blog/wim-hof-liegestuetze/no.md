@@ -108,7 +108,7 @@ heroImageCredit: 'Photo: <a href="https://unsplash.com" target="_blank" rel="noo
 <p>
   Praktiserende rapporterer typisk: bedre toleranse for "brenningen" i høyere-rep sett, raskere humørrestitusjon
   etter en hard økt, og merkbart mindre sårhet 24 timer senere. Styrketall øker ikke; konsistens gjør det. Hvis du allerede bruker
-  <a href="/en/blog/pushup-tracker-guide">en armhevnings-tracker</a>,
+  <a href="/no/blog/armhevning-tracker-guide">en armhevnings-tracker</a>,
   logg pustearbeidet og kulde-rundene sammen med repetisjoner — en måned med data vil fortelle deg mer enn noen
   anekdote.
 </p>

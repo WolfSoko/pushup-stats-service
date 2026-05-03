@@ -1,7 +1,7 @@
 ---
 slug: armhevninger-hjertestudie
 publishedAt: '2026-04-23'
-title: 'Harvard-studien som gjorde armhevninger berømt: 40+ repetisjoner og hjertehhelse'
+title: 'Harvard-studien som gjorde armhevninger berømt: 40+ repetisjoner og hjertehelse'
 description: 'En JAMA-studie fra 2019 satte armhevningskapasitet på kardiologiens kart. Her er hva dataene faktisk sa, hva de ikke sa, og hvordan du bruker det i din egen trening.'
 keywords:
   - armhevninger og hjertehelse
@@ -47,7 +47,7 @@ heroImageCredit: 'Foto: <a href="https://unsplash.com" target="_blank" rel="noop
 </ul>
 <p>
   Forfatterne var forsiktige i diskusjonen: armhevningskapasitet er en fullmektig for samlet funksjonell fitness,
-  ikke en uavhengig årsak til bedre hjertehhelse. Det er <em>en enkel, gratis test uten utstyr</em>
+  ikke en uavhengig årsak til bedre hjertehelse. Det er <em>en enkel, gratis test uten utstyr</em>
   som korrelerer tett med det som betyr noe: muskelmasse, aerobisk reserve og bevegelseskvalitet.
 </p>
 
@@ -88,8 +88,8 @@ heroImageCredit: 'Foto: <a href="https://unsplash.com" target="_blank" rel="noop
   </li>
   <li>
     <strong>Arbeid bakover til strukturert trening.</strong> Hvis baselinjen din er under 10, hjelper
-    <a href="/en/blog/pushup-progression">progresjonsveiledningen</a> deg fra der til en respektabel kapasitet
-    over 6 uker. Fra 20 til 40+, er <a href="/en/blog/30-day-pushup-challenge">30-dagers-utfordringen</a>
+    <a href="/no/blog/okende-armhevninger">progresjonsveiledningen</a> deg fra der til en respektabel kapasitet
+    over 6 uker. Fra 20 til 40+, er <a href="/no/blog/30-dagers-armhevning-utfordring">30-dagers-utfordringen</a>
     designet for å dytte deg forbi det platået.
   </li>
 </ol>

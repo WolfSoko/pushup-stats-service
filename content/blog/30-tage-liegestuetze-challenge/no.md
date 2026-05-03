@@ -80,6 +80,6 @@ heroImageCredit: 'Photo: <a href="https://unsplash.com" target="_blank" rel="noo
     markerer fremgangen din automatisk — du trenger bare å trene.
   </p>
   <p>
-    <a href="/en/training-plans/challenge-30d">Start 30-dagersplanen &rarr;</a>
+    <a href="/no/training-plans/challenge-30d">Start 30-dagersplanen &rarr;</a>
   </p>
 </aside>

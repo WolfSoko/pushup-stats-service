@@ -65,6 +65,6 @@ heroImageCredit: 'Photo: <a href="https://unsplash.com" target="_blank" rel="noo
     Denne 6-ukers oppbyggingen er tilgjengelig som en veivist treningsplan i Pushup Tracker. Du får et daglig mål, eksakte sett per dag og automatisk framgangssporing. Ingen flere regneark.
   </p>
   <p>
-    <a href="/training-plans/recruit-6w">Se planen &rarr;</a>
+    <a href="/no/training-plans/recruit-6w">Se planen &rarr;</a>
   </p>
 </aside>
