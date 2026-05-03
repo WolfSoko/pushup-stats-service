@@ -3322,7 +3322,7 @@
       </notes>
       <segment state="translated">
         <source> Zeigt einen &quot;Eintragen&quot;-Button auf der Push-Benachrichtigung. Wenn die App schon geöffnet ist, wird der Eintrag im Hintergrund gespeichert; ansonsten öffnet sich kurz ein Tab, der den Eintrag automatisch anlegt. </source>
-        <target> Toont een knop "Invoeren" op de pushmelding. Als de app al geopend is, wordt de invoer op de achtergrond opgeslagen; anders wordt er kort een tabblad geopend waarop automatisch het item wordt aangemaakt. </target>
+        <target> Toont een knop "Invoeren" op de pushmelding. Als de app al geopend is, wordt de invoer op de achtergrond opgeslagen; anders wordt er kort een tabblad geopend waarop automatisch de invoer wordt aangemaakt. </target>
       </segment>
     </unit>
     <unit id="reminder.quickLog.toggle">
@@ -4309,7 +4309,7 @@
       </notes>
       <segment state="translated">
         <source><ph id="0" equiv="INTERPOLATION" disp="{{ entries().length }}"/> Einträge</source>
-        <target><ph id="0" equiv="INTERPOLATION" disp="{{ entries().length }}"/> items</target>
+        <target><ph id="0" equiv="INTERPOLATION" disp="{{ entries().length }}"/> invoeren</target>
       </segment>
     </unit>
     <unit id="sourceColumnToggle">
