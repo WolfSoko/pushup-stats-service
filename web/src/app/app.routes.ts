@@ -111,14 +111,27 @@ export const appRoutes: Routes = [
   },
   {
     path: 'wiki/liegestuetz-typen',
-    data: {
-      seoTitle: $localize`:@@seo.wiki.pushupTypes.title:Liegestütztypen erklärt – Pushup Tracker`,
-      seoDescription: $localize`:@@seo.wiki.pushupTypes.description:Saubere Ausführung der wichtigsten Liegestütz-Varianten – Standard, Knie, Diamant, Archer, einarmig und mehr.`,
-    },
-    loadComponent: () =>
-      import('./wiki/pushup-types-page.component').then(
-        (m) => m.PushupTypesPageComponent
-      ),
+    children: [
+      {
+        path: '',
+        pathMatch: 'full',
+        data: {
+          seoTitle: $localize`:@@seo.wiki.pushupTypes.title:Liegestütztypen erklärt – Pushup Tracker`,
+          seoDescription: $localize`:@@seo.wiki.pushupTypes.description:Saubere Ausführung der wichtigsten Liegestütz-Varianten – Standard, Knie, Diamant, Archer, einarmig und mehr.`,
+        },
+        loadComponent: () =>
+          import('./wiki/pushup-types-page.component').then(
+            (m) => m.PushupTypesPageComponent
+          ),
+      },
+      {
+        path: ':slug',
+        loadComponent: () =>
+          import('./wiki/pushup-type-detail.component').then(
+            (m) => m.PushupTypeDetailComponent
+          ),
+      },
+    ],
   },
   {
     path: 'reminders',

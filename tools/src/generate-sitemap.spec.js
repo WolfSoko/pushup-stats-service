@@ -5,10 +5,12 @@ const {
   staticRoutes,
   extractBlogPosts,
   extractTrainingPlanSlugs,
+  extractPushupTypeSlugs,
   scanMarkdownBlogPosts,
   buildUrl,
   buildBlogRoutes,
   buildTrainingPlanRoutes,
+  buildPushupTypeRoutes,
   generateSitemap,
 } = require('./generate-sitemap');
 
@@ -30,6 +32,55 @@ describe('generate-sitemap', () => {
         '/leaderboard',
         '/impressum',
         '/datenschutz',
+      ]);
+    });
+  });
+
+  describe('extractPushupTypeSlugs', () => {
+    it('parses slug from PUSHUP_TYPES catalog entries', () => {
+      const source = `
+        export const PUSHUP_TYPES = [
+          {
+            id: 'standard',
+            slug: 'standard',
+            name: 'x',
+          },
+          {
+            id: 'diamond',
+            slug: 'diamant',
+            name: 'y',
+          },
+        ];
+      `;
+      expect(extractPushupTypeSlugs(source)).toEqual(['standard', 'diamant']);
+    });
+
+    it('ignores `slug:` occurrences not paired with an `id:` line', () => {
+      const source = `
+        const day = { slug: 'not-a-type' };
+        const type = {
+          id: 'foo',
+          slug: 'foo',
+        };
+      `;
+      expect(extractPushupTypeSlugs(source)).toEqual(['foo']);
+    });
+  });
+
+  describe('buildPushupTypeRoutes', () => {
+    it('emits one /wiki/liegestuetz-typen/<slug> route per type', () => {
+      const routes = buildPushupTypeRoutes(['standard', 'diamant']);
+      expect(routes).toEqual([
+        {
+          path: '/wiki/liegestuetz-typen/standard',
+          changefreq: 'monthly',
+          priority: '0.6',
+        },
+        {
+          path: '/wiki/liegestuetz-typen/diamant',
+          changefreq: 'monthly',
+          priority: '0.6',
+        },
       ]);
     });
   });
@@ -447,6 +498,19 @@ describe('generate-sitemap', () => {
       );
       expect(xml).toContain(
         '<xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en/training-plans/recruit-6w"/>'
+      );
+    });
+
+    it('emits one /wiki/liegestuetz-typen/<slug> entry per push-up type with hreflang alternates', () => {
+      const xml = generateSitemap([], [], ['standard', 'diamant']);
+      expect(xml).toContain(
+        '<loc>https://pushup-stats.com/de/wiki/liegestuetz-typen/standard</loc>'
+      );
+      expect(xml).toContain(
+        '<loc>https://pushup-stats.com/de/wiki/liegestuetz-typen/diamant</loc>'
+      );
+      expect(xml).toContain(
+        '<xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en/wiki/liegestuetz-typen/standard"/>'
       );
     });
   });

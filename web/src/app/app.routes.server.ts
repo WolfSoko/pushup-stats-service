@@ -1,5 +1,5 @@
 import { RenderMode, ServerRoute } from '@angular/ssr';
-import { TRAINING_PLANS } from '@pu-stats/models';
+import { PUSHUP_TYPES, TRAINING_PLANS } from '@pu-stats/models';
 import { BLOG_POSTS } from './blog/blog-posts.data';
 
 export const serverRoutes: ServerRoute[] = [
@@ -37,6 +37,13 @@ export const serverRoutes: ServerRoute[] = [
   {
     path: 'wiki/liegestuetz-typen',
     renderMode: RenderMode.Prerender,
+  },
+  {
+    path: 'wiki/liegestuetz-typen/:slug',
+    renderMode: RenderMode.Prerender,
+    async getPrerenderParams() {
+      return PUSHUP_TYPES.map((type) => ({ slug: type.slug }));
+    },
   },
   {
     path: 'impressum',

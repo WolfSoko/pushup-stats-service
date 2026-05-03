@@ -6458,5 +6458,45 @@
         <source>Tipps</source>
       </segment>
     </unit>
+    <unit id="wiki.pushupTypes.viewDetail">
+      <notes>
+        <note category="location">web/src/app/wiki/pushup-types-page.component.ts</note>
+      </notes>
+      <segment>
+        <source>Detailseite öffnen</source>
+      </segment>
+    </unit>
+    <unit id="wiki.pushupType.detail.back">
+      <notes>
+        <note category="location">web/src/app/wiki/pushup-type-detail.component.ts</note>
+      </notes>
+      <segment>
+        <source>Liegestütztypen</source>
+      </segment>
+    </unit>
+    <unit id="wiki.pushupType.detail.toList">
+      <notes>
+        <note category="location">web/src/app/wiki/pushup-type-detail.component.ts</note>
+      </notes>
+      <segment>
+        <source>Alle Liegestütztypen</source>
+      </segment>
+    </unit>
+    <unit id="wiki.pushupType.detail.cta">
+      <notes>
+        <note category="location">web/src/app/wiki/pushup-type-detail.component.ts</note>
+      </notes>
+      <segment>
+        <source>Zu den Trainingsplänen</source>
+      </segment>
+    </unit>
+    <unit id="seo.wiki.pushupType.titleSuffix">
+      <notes>
+        <note category="location">web/src/app/wiki/pushup-type-detail.component.ts</note>
+      </notes>
+      <segment>
+        <source>Anleitung &amp; Technik | Pushup Tracker</source>
+      </segment>
+    </unit>
   </file>
 </xliff>

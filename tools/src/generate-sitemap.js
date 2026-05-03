@@ -190,6 +190,52 @@ ${hreflangLinks}
   </url>`;
 }
 
+/**
+ * Parse `slug:` lines out of `PUSHUP_TYPES` entries in the catalog
+ * source. Each entry pairs `id:` with `slug:` on the next non-blank
+ * line, mirroring the training-plan extractor — scoping the regex
+ * to that pair keeps unrelated `slug:` strings (e.g. inside doc
+ * comments) out of the result.
+ */
+function extractPushupTypeSlugs(source) {
+  const slugs = [];
+  const blockRegex = /\bid:\s*'[^']+',\s*\n\s*slug:\s*'([^']+)'/g;
+  let match;
+  while ((match = blockRegex.exec(source)) !== null) {
+    slugs.push(match[1]);
+  }
+  return slugs;
+}
+
+function readPushupTypeSlugs() {
+  const catalogPath = resolve(
+    ROOT,
+    'libs/stats/src/lib/models/pushup-type.models.ts'
+  );
+  let source;
+  try {
+    source = readFileSync(catalogPath, 'utf-8');
+  } catch (err) {
+    console.error(`Failed to read pushup-type.models.ts: ${err.message}`);
+    return [];
+  }
+  const slugs = extractPushupTypeSlugs(source);
+  if (slugs.length === 0) {
+    console.warn(
+      'No push-up types found - verify pushup-type.models.ts format'
+    );
+  }
+  return slugs;
+}
+
+function buildPushupTypeRoutes(slugs) {
+  return slugs.map((slug) => ({
+    path: `/wiki/liegestuetz-typen/${slug}`,
+    changefreq: 'monthly',
+    priority: '0.6',
+  }));
+}
+
 function extractTrainingPlanSlugs(source) {
   // Match `id: '<id>'` immediately followed by `slug: '<slug>'` to scope
   // matches to TRAINING_PLANS catalog entries (other files contain `slug:`
@@ -259,10 +305,16 @@ function buildBlogRoutes(posts) {
   });
 }
 
-function generateSitemap(posts, planSlugs = []) {
+function generateSitemap(posts, planSlugs = [], pushupTypeSlugs = []) {
   const blogRoutes = buildBlogRoutes(posts);
   const planRoutes = buildTrainingPlanRoutes(planSlugs);
-  const allRoutes = [...staticRoutes, ...planRoutes, ...blogRoutes];
+  const pushupTypeRoutes = buildPushupTypeRoutes(pushupTypeSlugs);
+  const allRoutes = [
+    ...staticRoutes,
+    ...planRoutes,
+    ...pushupTypeRoutes,
+    ...blogRoutes,
+  ];
   return `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
@@ -274,10 +326,15 @@ ${allRoutes.map(buildUrl).join('\n')}
 function main() {
   const posts = readBlogPosts();
   const planSlugs = readTrainingPlanSlugs();
-  const xml = generateSitemap(posts, planSlugs);
+  const pushupTypeSlugs = readPushupTypeSlugs();
+  const xml = generateSitemap(posts, planSlugs, pushupTypeSlugs);
   const outPath = resolve(ROOT, 'web/public/sitemap.xml');
   writeFileSync(outPath, xml, 'utf-8');
-  const total = staticRoutes.length + planSlugs.length + posts.length;
+  const total =
+    staticRoutes.length +
+    planSlugs.length +
+    pushupTypeSlugs.length +
+    posts.length;
   console.log(`sitemap.xml written (${total} URLs)`);
 }
 
@@ -290,9 +347,11 @@ module.exports = {
   staticRoutes,
   extractBlogPosts,
   extractTrainingPlanSlugs,
+  extractPushupTypeSlugs,
   scanMarkdownBlogPosts,
   buildUrl,
   buildBlogRoutes,
   buildTrainingPlanRoutes,
+  buildPushupTypeRoutes,
   generateSitemap,
 };

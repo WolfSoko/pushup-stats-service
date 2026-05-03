@@ -6511,5 +6511,35 @@
         <source>Tipps</source>
       <target>技巧</target></segment>
     </unit>
+    <unit id="wiki.pushupTypes.viewDetail">
+      <segment state="translated">
+        <source>Detailseite öffnen</source>
+        <target>打开详情页</target>
+      </segment>
+    </unit>
+    <unit id="wiki.pushupType.detail.back">
+      <segment state="translated">
+        <source>Liegestütztypen</source>
+        <target>俯卧撑类型</target>
+      </segment>
+    </unit>
+    <unit id="wiki.pushupType.detail.toList">
+      <segment state="translated">
+        <source>Alle Liegestütztypen</source>
+        <target>所有俯卧撑类型</target>
+      </segment>
+    </unit>
+    <unit id="wiki.pushupType.detail.cta">
+      <segment state="translated">
+        <source>Zu den Trainingsplänen</source>
+        <target>查看训练计划</target>
+      </segment>
+    </unit>
+    <unit id="seo.wiki.pushupType.titleSuffix">
+      <segment state="translated">
+        <source>Anleitung &amp; Technik | Pushup Tracker</source>
+        <target>教学与技巧 | Pushup Tracker</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

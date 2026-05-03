@@ -7106,5 +7106,35 @@ Deine Position: # ·  Reps        </source>
         <target>Final test: max clean one-arm push-ups per side</target>
       </segment>
     </unit>
+    <unit id="wiki.pushupTypes.viewDetail">
+      <segment state="translated">
+        <source>Detailseite öffnen</source>
+        <target>Open detail page</target>
+      </segment>
+    </unit>
+    <unit id="wiki.pushupType.detail.back">
+      <segment state="translated">
+        <source>Liegestütztypen</source>
+        <target>Push-up types</target>
+      </segment>
+    </unit>
+    <unit id="wiki.pushupType.detail.toList">
+      <segment state="translated">
+        <source>Alle Liegestütztypen</source>
+        <target>All push-up types</target>
+      </segment>
+    </unit>
+    <unit id="wiki.pushupType.detail.cta">
+      <segment state="translated">
+        <source>Zu den Trainingsplänen</source>
+        <target>Browse training plans</target>
+      </segment>
+    </unit>
+    <unit id="seo.wiki.pushupType.titleSuffix">
+      <segment state="translated">
+        <source>Anleitung &amp; Technik | Pushup Tracker</source>
+        <target>Tutorial &amp; Technique | Pushup Tracker</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

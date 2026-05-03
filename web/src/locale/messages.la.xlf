@@ -6898,5 +6898,35 @@
         <target> Personalizatio locorum promulgationum. </target>
       </segment>
     </unit>
+    <unit id="wiki.pushupTypes.viewDetail">
+      <segment state="translated">
+        <source>Detailseite öffnen</source>
+        <target>Aperire paginam singularem</target>
+      </segment>
+    </unit>
+    <unit id="wiki.pushupType.detail.back">
+      <segment state="translated">
+        <source>Liegestütztypen</source>
+        <target>Genera pulsuum</target>
+      </segment>
+    </unit>
+    <unit id="wiki.pushupType.detail.toList">
+      <segment state="translated">
+        <source>Alle Liegestütztypen</source>
+        <target>Omnia genera pulsuum</target>
+      </segment>
+    </unit>
+    <unit id="wiki.pushupType.detail.cta">
+      <segment state="translated">
+        <source>Zu den Trainingsplänen</source>
+        <target>Ad programmata exercitii</target>
+      </segment>
+    </unit>
+    <unit id="seo.wiki.pushupType.titleSuffix">
+      <segment state="translated">
+        <source>Anleitung &amp; Technik | Pushup Tracker</source>
+        <target>Doctrina &amp; ars | Pushup Tracker</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

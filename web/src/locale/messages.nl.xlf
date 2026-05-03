@@ -6898,5 +6898,35 @@
         <target> Personalisatie van advertentievakken. </target>
       </segment>
     </unit>
+    <unit id="wiki.pushupTypes.viewDetail">
+      <segment state="translated">
+        <source>Detailseite öffnen</source>
+        <target>Detailpagina openen</target>
+      </segment>
+    </unit>
+    <unit id="wiki.pushupType.detail.back">
+      <segment state="translated">
+        <source>Liegestütztypen</source>
+        <target>Push-up types</target>
+      </segment>
+    </unit>
+    <unit id="wiki.pushupType.detail.toList">
+      <segment state="translated">
+        <source>Alle Liegestütztypen</source>
+        <target>Alle push-up types</target>
+      </segment>
+    </unit>
+    <unit id="wiki.pushupType.detail.cta">
+      <segment state="translated">
+        <source>Zu den Trainingsplänen</source>
+        <target>Naar de trainingsplannen</target>
+      </segment>
+    </unit>
+    <unit id="seo.wiki.pushupType.titleSuffix">
+      <segment state="translated">
+        <source>Anleitung &amp; Technik | Pushup Tracker</source>
+        <target>Handleiding &amp; techniek | Pushup Tracker</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

@@ -6898,5 +6898,35 @@
         <target> Personalización de los espacios publicitarios. </target>
       </segment>
     </unit>
+    <unit id="wiki.pushupTypes.viewDetail">
+      <segment state="translated">
+        <source>Detailseite öffnen</source>
+        <target>Abrir página de detalle</target>
+      </segment>
+    </unit>
+    <unit id="wiki.pushupType.detail.back">
+      <segment state="translated">
+        <source>Liegestütztypen</source>
+        <target>Tipos de flexiones</target>
+      </segment>
+    </unit>
+    <unit id="wiki.pushupType.detail.toList">
+      <segment state="translated">
+        <source>Alle Liegestütztypen</source>
+        <target>Todos los tipos de flexiones</target>
+      </segment>
+    </unit>
+    <unit id="wiki.pushupType.detail.cta">
+      <segment state="translated">
+        <source>Zu den Trainingsplänen</source>
+        <target>Ver planes de entrenamiento</target>
+      </segment>
+    </unit>
+    <unit id="seo.wiki.pushupType.titleSuffix">
+      <segment state="translated">
+        <source>Anleitung &amp; Technik | Pushup Tracker</source>
+        <target>Guía y técnica | Pushup Tracker</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

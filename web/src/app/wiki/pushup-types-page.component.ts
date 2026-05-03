@@ -131,6 +131,13 @@ interface LocalizedType {
                     }
                   </ul>
                 }
+                <a
+                  mat-button
+                  class="detail-link"
+                  [routerLink]="['/wiki/liegestuetz-typen', type.slug]"
+                  i18n="@@wiki.pushupTypes.viewDetail"
+                  >Detailseite öffnen</a
+                >
               </mat-card-content>
             </mat-card>
           </section>
@@ -260,6 +267,10 @@ interface LocalizedType {
       .instructions li:last-child,
       .tips li:last-child {
         margin-bottom: 0;
+      }
+      .detail-link {
+        margin-top: 16px;
+        margin-left: -8px;
       }
     `,
   ],
