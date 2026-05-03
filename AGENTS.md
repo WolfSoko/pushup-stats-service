@@ -4,12 +4,14 @@ Single source of truth for all AI agents working on this repo (Claude Code, Copi
 
 Angular 21 / Nx monorepo for tracking pushup statistics with Firebase backend.
 
+> **Default rule:** if there is even a small chance a docs file under [`docs/`](docs/) is relevant to the change you are making, read it before making the change. Linking to a doc from this file is an explicit signal that the doc contains constraints not obvious from the code.
+
 ## Git Workflow
 
 - **Trunk-based development:** Push directly to `main`. No feature branches by default.
 - Feature branches or worktrees only when explicitly requested.
 - **Never commit secrets or user-identifiable data** (API keys, service account JSON, database UIDs, user email addresses) to the repository. Pass them as CLI arguments, environment variables, or Firebase Secrets instead.
-- **Pre-commit reformats files:** Husky + lint-staged run `eslint --fix` + `prettier --write` on every commit. Your staged files may differ from what you wrote (whitespace, line wrapping, fixable lint). Re-read the file before further edits after a commit.
+- **Pre-commit reformats files:** Husky + lint-staged run `eslint --fix` + `prettier --write` on every commit. Your staged files may differ from what you wrote. Re-read the file before further edits after a commit.
 
 ## Development Flow (Project Board)
 
@@ -35,9 +37,20 @@ When making changes, always write or update relevant tests as part of the same c
 - **Never** instantiate Angular services, guards, or components with `new` when they depend on DI. Use `TestBed` or `@testing-library/angular`'s `render`.
 - **Guards** must be tested in a real Angular router/TestBed context, not as plain functions.
 - **Mock providers via Angular DI** (`{ provide: ..., useValue: ... }`), not by patching `inject()` directly.
-- **External functions** (e.g. `deleteUser` from Firebase) are mocked on the imported module — never with dynamic `import()` or `require()`. Use a static `import * as ns from '@angular/fire/firestore'` and reference `ns.doc`/`ns.docData` after `jest.mock(...)`; avoid repeating `await import(...)` per test.
-- **`PLATFORM_ID: 'server'` in tests for stores that start a `setInterval` / browser-only timer** in `withHooks`. Otherwise the timer leaks across `TestBed.resetTestingModule()` and tests pile up wall-clock work.
+- **External functions** (e.g. `deleteUser` from Firebase) are mocked on the imported module — never with dynamic `import()` or `require()`. Use `import * as ns from '@angular/fire/firestore'` and reference `ns.doc`/`ns.docData` after `jest.mock(...)`.
+- **`PLATFORM_ID: 'server'`** in tests for stores that start a `setInterval` / browser-only timer in `withHooks`. Otherwise the timer leaks across `TestBed.resetTestingModule()`.
 - **Given-When-Then** style tests are preferred.
+
+More test pitfalls: [`docs/gotchas/testing.md`](docs/gotchas/testing.md).
+
+## Coding Conventions
+
+- **Comment discipline — only comment if absolutely necessary.** Default to no comments. Add a comment **only** when the _why_ is non-obvious: a hidden constraint, a subtle invariant, a workaround for a specific bug, or behavior that would surprise a reader. Do **not** describe _what_ the code does (well-named identifiers do that). Do **not** add task-tracking comments (`// added for X`, `// fix for #123`, `// used by Y flow`) — that belongs in the PR description and rots as the codebase evolves.
+- **Prefer Angular Material components** (`mat-button`, `mat-icon`, `mat-form-field`, `mat-dialog`, etc.) over plain HTML for buttons, inputs, dialogs, and other interactive controls.
+- **No `@angular/animations`** — it is deprecated and not a project dependency. Use CSS animations/transitions instead.
+- **State management:** see [`docs/architecture.md`](docs/architecture.md) for the signal-store / API-service split and where state belongs. Short version: stores own state, components only bind, services are stateless.
+- **No RxJS for state** — RxJS is allowed only inside the data-access layer for Firestore Observables, then bridged via `toSignal()`.
+- **Don't introduce backwards-compatibility shims** for code paths you are certain are unused — delete instead. No `// removed`, no re-exports of removed types, no renamed `_unused` vars.
 
 ## Tech Stack
 
@@ -45,116 +58,9 @@ When making changes, always write or update relevant tests as part of the same c
 - **Build:** Nx 22, pnpm
 - **Backend:** Firebase (Firestore, Cloud Functions, Auth)
 - **State:** @ngrx/signals (signal stores)
-- **UI:** Angular Material 21, Chart.js – **always prefer Material components** (`mat-button`, `mat-icon`, etc.) over plain HTML elements for buttons, inputs, dialogs, and other interactive controls
-- **Cloud Functions:** TypeScript, esbuild bundle, Jest tests (Nx project `cloud-functions`)
+- **UI:** Angular Material 21, Chart.js
+- **Cloud Functions:** TypeScript, esbuild bundle, Jest tests
 - **Testing:** Vitest (web), Jest (libs + cloud-functions), Playwright (e2e)
-- **Deprecated:** `@angular/animations` is deprecated and NOT a project dependency — do not use or import it. Use CSS animations/transitions instead.
-
-## Architecture
-
-### Library Dependency Graph
-
-```
-@pu-stats/models          (pure types, zero dependencies)
-    ^
-    |--- @pu-stats/data-access  (Firestore API layer)
-    |--- @pu-auth/auth          (Firebase Auth, decoupled via ports)
-    |--- @pu-stats/motivation   (quote service, no auth dependency)
-    |--- @pu-stats/quick-add    (FAB + adaptive suggestions)
-    |--- @pu-stats/ads          (isolated, no lib dependencies)
-    |--- @pu-reminders/reminders (depends on data-access + motivation, NOT auth)
-    |--- cloud-functions        (Cloud Functions, depends on models only)
-```
-
-### Key Architectural Patterns
-
-**Ports & Adapters (Auth <-> Data-Access):**
-
-- Auth defines `PostAuthHook` interface and `USER_PROFILE_PORT` token
-- Concrete implementations (`UserProfileSyncHook`, `GuestDataMigrationHook`) live at app level
-- Wired in `app.config.ts` via DI providers
-- Auth has ZERO imports from `@pu-stats/data-access`
-
-**State Management Conventions:**
-
-- **Global state:** `@ngrx/signals` signalStore with `providedIn: 'root'`
-  - `AdsStore` - Remote Config + consent (ads module)
-  - `MotivationStore` - quote cache with user-keyed localStorage (motivation module)
-  - `LiveDataStore` - Firestore real-time entries + tick (data-access, browser-only)
-  - `LeaderboardStore` - shared leaderboard data with `load({ force })` (data-access)
-  - `TrainingPlanStore` - active training plan, derived "today" state, plan-day mutation methods (app-level)
-  - `AuthStore`, `ReminderStore`, `PushSubscriptionStore`, `ThemeService` (existing)
-- **Feature/form state:** signalStore with component-level DI
-  - `DashboardStore` - stats, goals, ads, motivation, plan-day target override for dashboard page
-  - `AnalysisStore` - date filters, trends, breakdowns for analysis page
-  - `EntriesStore` - CRUD, filters, browser/SSR hybrid for entries page
-  - `ReminderFormStore`, `LoginUiStore`, `RegisterUiStore` (existing)
-- **Resources:** Live inside stores via `withProps`, not in components
-- **Derived state:** `computed()` inside `withComputed`
-- **Side effects:** `effect()` in components or `withHooks`
-- **API Services:** Stateless, return Promises/Observables - no signals, no state
-- **No RxJS for state** - only in data-access layer for Firestore Observables + `toSignal()`
-- **Signal timing and equality caveats** — see [`docs/gotchas/signals.md`](docs/gotchas/signals.md).
-
-**Three-Layer Architecture:**
-
-```
-UI Component  →  Signal Store  →  API Service
-(Template)       (State + Logic)   (Database)
-```
-
-- Components only do template binding + user event delegation
-- Stores own all state, resources, computed signals, and domain logic
-- API services are pure data access with no state
-
-**App Root Delegation:**
-
-- `ReminderOrchestrationService` handles reminder lifecycle (auth -> config load -> start/stop)
-- `AppDataFacade` consolidates app-level resources (recent entries, daily goal, progress)
-- `QuickAddOrchestrationService` handles quick-add entry creation and dialog routing
-- App component handles only layout, navigation, and UI events
-
-**Shared Entry Dialog Pattern:**
-
-- `CreateEntryDialogComponent` serves as the single dialog for both creating and editing entries.
-- **Create mode:** Opened without `MAT_DIALOG_DATA` — starts with empty fields, default timestamp.
-- **Edit mode:** Opened with `EntryDialogData` via `MAT_DIALOG_DATA` — pre-fills timestamp, sets, type, source from existing entry. Preserves original timestamp format when unchanged.
-- Both modes return `CreateEntryResult` on submit. The stats table's `openEditDialog()` maps the result back to an update emission.
-- **Sets UX:** Starts with a single "Reps" field. A "+" button adds sets (pre-filled from previous value). Multi-set mode shows "Set 1", "Set 2", etc. with remove buttons and a total display.
-
-**Training Plans (curated catalog + active-plan state):**
-
-- **Catalog** (`libs/stats/src/lib/models/training-plan.catalog.ts`): static, versioned plan definitions with per-day `kind` (`main`/`light`/`rest`/`test`), `targetReps`, optional `sets[]`, and bilingual descriptions (`description` / `descriptionEn`). Plan IDs carry a `-vN` suffix so old `UserTrainingPlan` docs keep resolving when targets change.
-- **Per-user state** (`userTrainingPlans/{userId}` in Firestore): `planId`, `startDate`, `status`, `completedDays[]`. Single active plan per user; starting another overwrites the doc.
-- **Locale-aware rendering:** `localizePlan(plan, LOCALE_ID)` swaps title/summary/description fields. The catalog stores both languages because plans are structured curated data — putting them in XLIFF would lose the per-day pairing.
-- **Single source of truth = `pushups` collection:** the `completedDays` flag is a UI shortcut. `logPlanDay(idx)` writes a real `pushups` entry (with `source: 'plan'`, plan-prescribed sets, noon timestamp on the plan day's calendar date) AND flips the flag. Without the entry, stats/streaks/leaderboard wouldn't reflect the workout.
-- **Auto-mark via `effect()` in `withHooks`:** when `LiveDataStore.entries()` push today's reps past the plan target, today's flag flips automatically — read-only, never creates a new entry. Lets the existing Quick-Add/dialog flows propagate plan progress without an explicit button click.
-- **Day-tick signal:** Berlin-date-based `currentDayIndex()` has no inherent signal dependency, so a long-running browser tab caches the previous calendar day past midnight. The store ticks an internal `_dayTick` signal once a minute (browser-only) so derived day state recomputes within ~60 s of midnight.
-
-### Module Boundary Rules
-
-Enforced via `@nx/enforce-module-boundaries` in `eslint.config.mjs`:
-
-- `scope:auth` -> `scope:models` only (no data-access!)
-- `scope:motivation` -> `scope:models` only (no auth!)
-- `scope:data-access` -> `scope:models` only
-- `scope:cloud-functions` -> `scope:models` only
-- `scope:reminders` -> `scope:models`, `scope:data-access`, `scope:motivation` (no auth!)
-- `scope:app` -> everything
-
-### Domain Models
-
-Split into focused files under `libs/stats/src/lib/models/`:
-
-- `pushup.models.ts` - PushupRecord, PushupCreate, PushupUpdate
-  - **Sets:** `sets?: number[]` stores per-set reps (e.g. `[10, 10, 10]`). `reps` is always the total sum. `sets` is optional for backward compatibility — old entries without sets work unchanged. All aggregation (UserStats, deltas, charts) uses `reps` only.
-- `stats.models.ts` - StatsResponse, StatsMeta, StatsFilter
-- `user-config.models.ts` - UserConfig, UserConfigUpdate
-- `reminder-config.models.ts` - ReminderConfig
-- `user-stats.models.ts` - UserStats (server-side precomputed), emptyUserStats, USERSTATS_VERSION
-- `training-plan.models.ts` - TrainingPlan, TrainingPlanDay, UserTrainingPlan, `localizePlan()`, `currentPlanDayIndex()`, `planDayByIndex()`, `isPlanCompleted()`. `parseIsoDate` round-trips Y/M/D after `new Date()` to reject impossible dates like `2026-02-30`.
-- `training-plan.catalog.ts` - curated `TRAINING_PLANS` array + `findPlanById()` / `findPlanBySlug()` lookups. Test invariant: every plan's day indexes form a contiguous `1..totalDays` sequence and rest days have `targetReps === 0`.
-  - UserStats includes a `version` field for migration support. See [`docs/gotchas/cloud-functions.md`](docs/gotchas/cloud-functions.md) for the versioning strategy.
 
 ## Commands
 
@@ -166,174 +72,7 @@ pnpm nx run-many --target=test   # Run all tests
 pnpm nx run-many --target=lint   # Lint all projects
 ```
 
-## Project Names (Nx)
-
-| Library         | Nx Project Name     |
-| --------------- | ------------------- |
-| auth            | `auth`              |
-| data-access     | `stats-data-access` |
-| models/stats    | `stats-models`      |
-| motivation      | `pus-motivation`    |
-| reminders       | `pus-reminders`     |
-| quick-add       | `stats-quick-add`   |
-| ads             | `stats-ads`         |
-| testing         | `testing`           |
-| tools           | `tools`             |
-| data-store      | `data-store`        |
-| cloud-functions | `cloud-functions`   |
-| web app         | `web`               |
-
-## i18n / Internationalization
-
-- **Source locale:** German (`de`), **Translation:** English (`en`)
-- **Format:** XLIFF 2.0 (`web/src/locale/messages.xlf` / `messages.en.xlf`)
-- **Templates:** `i18n="@@your.id"` attribute; programmatic: `` $localize`:@@your.id:German text` ``
-- **XLIFF maintenance, locale switching, root `/` handling, and dynamic data localisation** — see [`docs/gotchas/i18n.md`](docs/gotchas/i18n.md).
-
-## CI/CD & Deployment
-
-- **CI Pipeline** (`.github/workflows/ci.yml`): Runs lint, test, build, e2e on every push to `main` and on PRs.
-- **Agent pool:** Nx Cloud dynamic distribution — see `.nx/workflows/distribution-config.yaml`. Details in [`docs/gotchas/build-and-tooling.md`](docs/gotchas/build-and-tooling.md).
-- **Deploy gate:** CI fast-forwards the `deploy` branch from `main` only after all checks pass (`promote-to-deploy` job). Both deployment targets watch this branch.
-- **Firebase Hosting** (static, `.github/workflows/firebase-hosting-merge.yml`): Triggers on push to `deploy` branch.
-- **Firebase App Hosting** (SSR/Cloud Run, `apphosting.yaml`): Auto-deploys on push to `deploy` branch (configured in Firebase Console).
-- **PR Previews** (`.github/workflows/firebase-hosting-pull-request.yml`): Full staging deployment on every PR (same-repo only) — see Staging Environment below.
-- **Rule:** No deployment path should bypass CI. Both Hosting and App Hosting are gated on green CI.
-- **Sentry source maps:** The deploy workflow uploads source maps to Sentry after the production build (`pnpm sentry:sourcemaps`). Requires `SENTRY_AUTH_TOKEN` GitHub secret. See Observability section below.
-
-### Staging Environment
-
-A separate Firebase project (`pushup-stats-staging-867b7`) provides full isolation for PR previews:
-
-- **PR workflow deploys:** Hosting preview + Cloud Functions + Firestore rules & indexes to the staging project.
-- **Web app build:** Uses `staging` configuration (`pnpm nx run web:build -c staging`) which swaps `fire.config.ts` → `fire.config.staging.ts` and `firebase-runtime.ts` → `firebase-runtime.staging.ts` (separate VAPID key for staging push notifications).
-- **Staging config:** `web/src/env/fire.config.staging.ts` points to the staging project.
-- **App Hosting config:** `apphosting.staging.yaml` (reduced `maxInstances: 1`).
-- **Firebase alias:** `staging` alias in `data-store/.firebaserc`.
-- **GitHub Secret required:** `FIREBASE_SERVICE_ACCOUNT_PUSHUP_STATS_STAGING` — service account JSON for the staging project (must be added in GitHub repo settings).
-- **Firestore region:** `europe-west3` (Frankfurt). Must match when creating the database in Firebase Console.
-- **Firestore rules & indexes** are shared source files (`data-store/firestore.rules`, `data-store/firestore.indexes.json`) deployed to both projects.
-- **Infra scripts:** `infra/setup-staging.sh` automates full project setup (APIs, SA, IAM, secrets); `infra/teardown-staging.sh` removes deploy resources. Both support `--dry-run`.
-
-### Firestore Rules — adding a new collection
-
-`data-store/firestore.rules` ends with a deny-all fallback (`match /{document=**} { allow read, write: if false; }`). **Every new collection a client reads or writes needs a matching `match` block** — without it, authenticated users hit `permission-denied` in production. Both PR preview and merge deploy run `firebase deploy --only functions,firestore`, so the rules ship together with the code, but propagation can lag the hosting deploy by 10–30 s; staging-preview testers may briefly see permission errors on the first request after a redeploy.
-
-Default pattern for owner-only single-doc-per-user collections (e.g. `userTrainingPlans`):
-
-```
-match /userTrainingPlans/{userId} {
-  allow read: if request.auth != null && request.auth.uid == userId;
-  allow create, update: if request.auth != null
-                        && request.auth.uid == userId
-                        && request.resource.data.userId == userId;
-  allow delete: if request.auth != null && request.auth.uid == userId;
-}
-```
-
-## Translatable content workflow (blog & wiki)
-
-Long-form content lives in markdown files with YAML frontmatter under `content/`, one file per locale. A build-time generator (`tools/src/generate-content.mjs`, Nx target `tools:generate-content`) renders markdown bodies to HTML and emits:
-
-- `web/src/app/blog/generated/<slug>.<lang>.ts` — one TS module per blog post per locale, each exporting a single `POST: BlogPost` constant. Per-post files give reviewers a focused diff when a single post changes.
-- `web/src/app/blog/generated/index.ts` — barrel re-exporting every per-post module as `GENERATED_BLOG_POSTS`.
-- `libs/stats/src/lib/models/pushup-type-content.generated.ts` — single map of all push-up wiki content (small cross-cutting object, preferred over many tiny files).
-
-All generated modules are checked in so reviewers see the diff and the build is hermetic. The generator runs automatically as a `dependsOn` of `web:build` and `tools:generate-sitemap`.
-
-**Supported locales** (also drives sitemap hreflang): `de`, `en`, `fr`, `es`, `it`, `nl`, `el`, `la`, `no`. Source language is German; English is the canonical secondary; the others are translations of the English version. Adding a new locale across all content = drop in one `<lang>.md` per folder/wiki entry — the generator and sitemap pick them up automatically. **Adding a new locale code itself touches 7 places** — see [`docs/gotchas/i18n.md`](docs/gotchas/i18n.md#adding-a-new-locale).
-
-### How to add a new blog post
-
-1. **Pick the folder name.** Use the German URL slug as the folder name (cross-locale identifier). It is purely an identifier — the actual URL slug per locale comes from frontmatter.
-
-   ```
-   content/blog/<german-slug>/de.md   ← required (source locale)
-   content/blog/<german-slug>/en.md   ← strongly recommended (canonical translation)
-   content/blog/<german-slug>/fr.md   ← optional, one per additional locale
-   …
-   ```
-
-2. **Write the frontmatter.** Required fields: `title`, `description`, `publishedAt` (ISO date string, single-quoted), `slug` (URL slug for THIS locale). Optional: `keywords[]`, `updatedAt`, `heroImage`, `heroImageAlt`, `heroImageCredit` (HTML allowed in `heroImageCredit`).
-
-   ```markdown
-   ---
-   slug: pushup-mistakes
-   publishedAt: '2026-04-30'
-   title: The 7 most common push-up mistakes — and how to fix each one
-   description: Bad form costs you reps, progress, and sometimes your shoulder.
-   keywords:
-     - push-up form
-     - push-up technique
-   heroImage: https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=1600&q=80
-   heroImageAlt: Athlete in plank position on a training mat.
-   heroImageCredit: 'Photo: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'
-   ---
-
-   ## Why clean form beats 100 sloppy reps
-
-   Push-ups are an underrated full-body exercise…
-   ```
-
-3. **Write the body** in GitHub-flavored markdown. Raw HTML passes through `marked` unchanged — use it for callouts (`<aside class="plan-cta">…</aside>`), figure layouts, or any styling the typography defaults don't cover.
-
-4. **Use translated slugs in cross-links.** Internal links use the same locale as the post: a French post links to `/fr/blog/<french-slug>` (not `/en/blog/<english-slug>`). The other-locale slug map is implicit from the sibling files in the folder — read them when in doubt.
-
-5. **Write the same post in every additional locale.** Drop in `<folder>/<lang>.md` for each locale you want a translation in. Per-locale `slug:` differs across files; everything else translates. Untranslated locales fall back to the locale picker on the frontend (no auto-translation).
-
-6. **Run the generator.** `pnpm nx run tools:generate-content` rebuilds the per-post TS modules + barrel + wiki content; `pnpm nx run tools:generate-sitemap` (auto-chained) refreshes `sitemap.xml`. Commit the regenerated TS modules and `sitemap.xml` alongside the markdown.
-
-7. **YAML quoting gotchas.** Single-quoted YAML scalars require `''` to escape an apostrophe (`s'entraîner` → `'s''entraîner'`) or use double quotes. The fixer at `tools/src/fix-translated-yaml.mjs` repairs the most common error class but it is safer to write the YAML correctly the first time.
-
-### How to add a new wiki push-up type
-
-The wiki catalog has two parts: **structural metadata** (referenced by code) lives in TypeScript, **translatable copy** (name, summary, instructions, tips) lives in markdown. Keep them in sync.
-
-1. **Add the structural entry** in `libs/stats/src/lib/models/pushup-type.models.ts`:
-   - Append a new entry to `PUSHUP_TYPES` with: `id`, `slug`, `entryLabel`, `difficulty`, `keywordsDe[]`, `keywordsEn[]`. (The `name`/`nameEn`/`summary`/`summaryEn`/`instructions*`/`tips*` fields are now legacy duplicates of the markdown content — leave them populated until a follow-up cleanup removes them from `PushupTypeInfo`.)
-   - Extend the `PushupTypeId` union with the new `id` literal.
-   - **Do NOT rename `id` of an existing entry** — `PushupRecord.type` stores the kebab-case catalog `id` in Firestore (and read paths still tolerate the legacy English `entryLabel` from older docs). Renaming `id` would orphan existing rows. `entryLabel` is now read-path-only legacy and only kept so old docs keep resolving via `findPushupTypeByStoredValue` / `canonicalizePushupType` / `displayPushupType`.
-
-2. **Add one markdown file per locale**:
-
-   ```
-   content/wiki/pushup-types/<id>.de.md   ← required (source locale)
-   content/wiki/pushup-types/<id>.en.md
-   content/wiki/pushup-types/<id>.fr.md   ← optional
-   …
-   ```
-
-   File stem must equal the `id` from `PushupTypeInfo`. Suffix is the locale code.
-
-3. **Frontmatter shape** (no body — wiki entries are frontmatter-only):
-
-   ```markdown
-   ---
-   name: Standard push-up
-   summary: Classic push-up with shoulder-width hand position and a straight body line.
-   instructions:
-     - Hands shoulder-width apart, directly under the shoulders, fingers pointing forward.
-     - Body forms a straight line from head to heels — brace abs and glutes.
-     - Elbows at roughly 45° to the torso, not flared out wide.
-     - Lower the chest under control until it nearly touches the floor.
-     - Press back up powerfully, do not lock the elbows at the top.
-   tips:
-     - Look slightly forward at the floor — do not crane the neck.
-     - Breathing: inhale on the way down, exhale on the press up.
-   ---
-   ```
-
-   `name` and `summary` are required strings. `instructions` is required, must be a non-empty list. `tips` is optional.
-
-4. **Run the generator** (`pnpm nx run tools:generate-content`) and commit the regenerated `pushup-type-content.generated.ts`.
-
-### How edits propagate
-
-- Edit a markdown file → run `pnpm nx run tools:generate-content` → commit both the markdown change AND the regenerated TS modules. The generator is deterministic and idempotent; reviewers should see diffs only in the files you intentionally touched.
-- The web build (`pnpm nx run web:build`) auto-runs the generator first via `dependsOn`, so you cannot ship stale generated TS modules — but committing the regenerated output keeps PR diffs honest.
-- The sitemap auto-discovers any `<lang>.md` file in `content/blog/<folder>/` and emits one hreflang alternate per locale present. No manual sitemap maintenance needed.
-
-**Migration status.** All 22 blog posts and all 13 push-up types are markdown-sourced. `web/src/app/blog/blog-posts.data.ts` is a thin wrapper re-exporting `GENERATED_BLOG_POSTS` as `BLOG_POSTS`. The sitemap generator reads markdown frontmatter directly via the `yaml` package — no dependency on the generated TS modules.
+Nx project name table → [`docs/architecture.md`](docs/architecture.md#nx-project-names).
 
 ## Pre-Push Checklist
 
@@ -353,86 +92,35 @@ pnpm nx run web:build -c production  # Production build (includes prerender)
 
 Do NOT push if any of these fail. Fix first, then push. Common build/tooling flakes and one-shot script recipes: [`docs/gotchas/build-and-tooling.md`](docs/gotchas/build-and-tooling.md).
 
-## Consent & Ads
+## i18n / Internationalization
 
-- **Cookie consent** is stored in `localStorage` key `pus_cookie_consent` (`'all'` | `'necessary'` | absent).
-- **AdsStore** reads this on init: `consentAnswered` gates whether any ads render; `targetedAdsConsent` controls personalized vs. non-personalized (NPA) mode.
-- **Analytics consent** lives in `pus_analytics_consent` (`'granted'` | `'denied'`), set by the consent banner alongside the cookie consent.
-- **Non-personalized ads** don't require GDPR opt-in but still need a consent _notice_. The banner satisfies this.
-- When testing ads components, mock `AdsStore` (not `RemoteConfig`) – see `ad-slot.component.spec.ts` for the pattern.
+- **Source locale:** German (`de`), **Translation:** English (`en`)
+- **Format:** XLIFF 2.0 (`web/src/locale/messages.xlf` / `messages.en.xlf`)
+- **Templates:** `i18n="@@your.id"` attribute; programmatic: `` $localize`:@@your.id:German text` ``
+- **XLIFF maintenance, locale switching, root `/` handling, dynamic data localisation, adding a new locale code** — see [`docs/gotchas/i18n.md`](docs/gotchas/i18n.md).
 
-## Legal Pages
+## Documentation Index
 
-- `/impressum` and `/datenschutz` live under `web/src/app/marketing/legal/`.
-- Both are prerendered (SSG) for crawler visibility.
-- Footer links are in the app shell (`app.html`), visible on every page.
-- See [SEO & Crawler Discoverability](#seo--crawler-discoverability) for sitemap and `robots.txt` rules.
+Detailed reference material lives in [`docs/`](docs/). **Read the relevant doc before touching the area** — even if you think you remember the setup.
 
-## SEO & Crawler Discoverability
+### Architecture & deployment
 
-**Rule: every change that adds, removes, or restricts a public route must update `sitemap.xml` AND `robots.txt` in the same commit.** Drift between the nav, the prerender list, the sitemap, and the robots disallow list is the most common SEO regression vector here — keep all four in sync.
+| Area                                                     | File                                                                                                                           |
+| -------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| Library deps, ports/adapters, state mgmt, training plans | [`docs/architecture.md`](docs/architecture.md)                                                                                 |
+| CI/CD, deploy gate, staging environment, Firestore rules | [`docs/ci-cd.md`](docs/ci-cd.md)                                                                                               |
+| Cloud Functions overview + Admin Authorization           | [`docs/cloud-functions.md`](docs/cloud-functions.md)                                                                           |
+| Translatable content workflow (blog & wiki)              | [`docs/content-workflow.md`](docs/content-workflow.md)                                                                         |
+| Consent banner, ads gating, legal pages, SEO/sitemap     | [`docs/consent-ads-seo.md`](docs/consent-ads-seo.md)                                                                           |
+| Firebase environments + deployment                       | [`docs/Firebase_DEPLOYMENT.md`](docs/Firebase_DEPLOYMENT.md), [`docs/firebase-environments.md`](docs/firebase-environments.md) |
+| Sentry source maps, releases, `SENTRY_AUTH_TOKEN` setup  | [`docs/observability/sentry.md`](docs/observability/sentry.md)                                                                 |
 
-- **`sitemap.xml`** (`web/public/sitemap.xml`) is auto-generated by `tools/src/generate-sitemap.js` (Nx target: `pnpm nx run tools:generate-sitemap`). The generator runs automatically before every `web:build`. Sources:
-  - Static public routes → `staticRoutes` array in the script. **Add new public routes here.**
-  - Blog posts → auto-scanned from `content/blog/<folder>/{de,en}.md` frontmatter (folder name pairs locales for hreflang).
-  - Training plan detail pages → auto-extracted from `libs/stats/src/lib/models/training-plan.catalog.ts` via regex (paired `id:` + `slug:` lines).
-- **`robots.txt`** (`web/public/robots.txt`) is a static file. Add `Disallow: /<path>`, `Disallow: /de/<path>`, and `Disallow: /en/<path>` for any auth-only or admin route you don't want crawled (current entries: `/admin`, `/settings`, `/reminders`).
-- **Prerender alignment:** Public routes added to the sitemap should also be added to `web/src/app/app.routes.server.ts` (Prerender or Server mode) so crawlers receive populated HTML, not the SPA shell.
-- **Verify after changes:** Run `node tools/src/generate-sitemap.js` and inspect the diff. The script logs the URL count — sanity-check it against expected (static + blog + training plans).
-
-## Push Notifications
+### Push notifications
 
 - **Two-tier reminder system:** In-app (`ReminderService` with `setInterval`) + server-side (`dispatchPushReminders` Cloud Function every 5 min via Web Push).
-- **Browser API quirks, VAPID keys, subscription vs reminder toggle, Cloud Function lease handling** — see [`docs/gotchas/push-and-service-workers.md`](docs/gotchas/push-and-service-workers.md).
+- Browser API quirks, VAPID keys, subscription vs reminder toggle, Cloud Function lease handling — see [`docs/gotchas/push-and-service-workers.md`](docs/gotchas/push-and-service-workers.md).
 
-## Cloud Functions (data-store/functions/)
-
-- **Nx project `cloud-functions`:** TypeScript source in `data-store/functions/src/`, esbuild bundles to `data-store/functions-dist/`. Jest tests with `ts-jest`.
-- **Pure logic extraction:** Keep Cloud Function business logic in separate pure modules (e.g. `user-stats-delta.ts`) for unit testing without Firestore mocks. The trigger functions in `index.ts` are thin wrappers.
-- **Pure business logic modules** (decomposed from the monolithic `index.ts`):
-  - **datetime/:** Berlin timezone utilities (`berlinDateParts`, `isoWeekFromYmd`)
-  - **profile/:** Display name sanitization & leaderboard privacy logic
-  - **leaderboard/:** Ranking aggregation, period key calculations
-  - **authentication/:** Recaptcha response parsing & validation
-  - **motivation/:** Quote cache logic, Gemini fallback, name sanitization
-  - **push/subscription:** Subscription ID generation, payload validation
-  - **push/reminders:** Reminder scheduling (quiet hours, snooze, intervals)
-  - **admin/:** User privilege checks (Custom Claims validation), deletion validation, batch helpers
-- All modules include comprehensive Jest tests (no Firebase dependencies for pure logic).
-- **Deploy-path rule, `defineSecret()` IAM requirements, delta-aggregation pitfalls, UserStats versioning system** — see [`docs/gotchas/cloud-functions.md`](docs/gotchas/cloud-functions.md).
-
-### Admin Authorization
-
-Admin access uses **Firebase Custom Claims** (`{ admin: true }`) — NOT Firestore fields. This ensures only server-side Admin SDK can grant admin privileges.
-
-- **Cloud Functions:** `assertAdmin(request)` checks `request.auth.token.admin === true`
-- **Frontend guard:** `adminGuard` reads `getIdTokenResult().claims.admin`
-- **Frontend service:** `UserContextService.isAdmin` checks ID token claims via resource
-- **Firestore rules:** Client writes to `role` field are blocked as defense-in-depth
-- **Granting admin:** `node scripts/set-admin-claim.mjs <email-or-uid>` (requires Admin SDK credentials)
-- **Token refresh:** After setting claims, user must re-login (or wait ~1h) for the token to update
-
-## Precomputed Data
-
-Stores consuming server-side precomputed data (e.g. `UserStats`) must validate period keys and handle timestamp-offset variations. See [`docs/gotchas/precomputed-data.md`](docs/gotchas/precomputed-data.md).
-
-## Observability (Sentry)
-
-`@sentry/angular` (browser) + `@sentry/node` (SSR + Cloud Functions). Stack traces in production must resolve to TypeScript source — if you see minified `chunk-XYZ.js:1:144929` in a Sentry issue, the source map upload is broken. **Read [`docs/observability/sentry.md`](docs/observability/sentry.md) before touching `scripts/upload-sentry-sourcemaps.sh`, `apphosting.yaml`, or any `Sentry.init(...)` call.** Key gotcha: `SENTRY_AUTH_TOKEN` lives in TWO places (GitHub repo Secret + Cloud Secret Manager for App Hosting) — the doc explains why and how to set both up.
-
-## Documentation
-
-Detailed reference material lives in [`docs/`](docs/). **Before touching any area listed below, read the relevant doc first** — even if you think you remember the setup. The cost of reading a 5-minute doc is much lower than the cost of breaking a subtle invariant. Default rule: **if there's even a small chance a docs file is relevant to the change you're making, read it before making the change.** Linking to a doc from this file is an explicit signal that the doc contains constraints not obvious from the code.
-
-| Area                                                                | File                                                                                                                           |
-| ------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
-| Sentry source maps, releases, `SENTRY_AUTH_TOKEN` setup             | [`docs/observability/sentry.md`](docs/observability/sentry.md)                                                                 |
-| Pitfalls per-topic (signals, tests, Cloud Functions, push, i18n, …) | [`docs/gotchas/`](docs/gotchas/) — see table below                                                                             |
-| Firebase environments + deployment                                  | [`docs/Firebase_DEPLOYMENT.md`](docs/Firebase_DEPLOYMENT.md), [`docs/firebase-environments.md`](docs/firebase-environments.md) |
-
-## Gotchas & Pitfalls
-
-Detailed pitfalls and their fixes live under [`docs/gotchas/`](docs/gotchas/). Check the relevant file **before** debugging a class of problem:
+### Gotchas & pitfalls
 
 | Area                                                         | File                                                                                   |
 | ------------------------------------------------------------ | -------------------------------------------------------------------------------------- |
@@ -448,7 +136,7 @@ Detailed pitfalls and their fixes live under [`docs/gotchas/`](docs/gotchas/). C
 ## Workflow
 
 - **Before pushing:** Run the pre-push checklist above.
-- **After completing a feature or bugfix:** Review whether any new broadly applicable knowledge should be added. General conventions and architectural decisions belong in this file; specific pitfalls belong in `docs/gotchas/<topic>.md`. Do NOT add low-level details about individual files unless they are a recurring pitfall.
+- **After completing a feature or bugfix:** Review whether any new broadly applicable knowledge should be added. General conventions and architectural decisions belong in this file or `docs/architecture.md`; specific pitfalls belong in `docs/gotchas/<topic>.md`. Do NOT add low-level details about individual files unless they are a recurring pitfall.
 - **After every session:** Capture reusable learnings (patterns, pitfalls, conventions discovered) via the `/evolving-loop` skill or the experience-extractor agent (when available).
 
 <!-- nx configuration start-->
