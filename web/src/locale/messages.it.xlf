@@ -3849,6 +3849,15 @@
         <target>mese</target>
       </segment>
     </unit>
+    <unit id="rangeModeYear">
+      <notes>
+        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:57,58</note>
+      </notes>
+      <segment state="translated">
+        <source>Jahr</source>
+        <target>anno</target>
+      </segment>
+    </unit>
     <unit id="rangeBack">
       <notes>
         <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:65,67</note>
