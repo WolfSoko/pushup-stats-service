@@ -3241,8 +3241,8 @@ Deine Position: # ·  Reps        </source>
         </unit>
     <unit id="seo.landing.description">
       <segment state="translated">
-        <source>Liegestütze tracken mit einer kostenlosen Web-App. Tagesziel, Streaks, Bestleistungen – mobil, schnell und mit Live-Updates.</source>
-        <target>Spor armhevninger med en gratis web-app. Daglig mål, serier, personlig rekord – mobil, rask og med live-oppdateringer.</target>
+        <source>Liegestütze tracken mit kostenloser Web-App: Trainingspläne, 30-Tage-Challenge, Tagesziel, Streaks und Bestenliste – mobil, offline-fähig, mit Live-Sync.</source>
+        <target>Spor armhevninger med en gratis web-app: treningsplaner, 30-dagers utfordring, daglig mål, streaks og global ledertavle – mobil, offline, live-synk.</target>
 
 
 
@@ -3252,8 +3252,8 @@ Deine Position: # ·  Reps        </source>
         </unit>
     <unit id="seo.landing.title">
       <segment state="translated">
-        <source>Liegestütze Tracker – Reps, Streaks und Fortschritt im Blick</source>
-        <target>Armhevings-sporer – Reps, Serier og Progresjon på Oversikten</target>
+        <source>Liegestütze Tracker: Trainingsplan, Streaks &amp; Bestenliste</source>
+        <target>Push-up-sporer: treningsplaner, streaks &amp; ledertavle</target>
 
 
 

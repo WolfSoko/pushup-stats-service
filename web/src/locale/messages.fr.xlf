@@ -1497,8 +1497,8 @@
         <note category="location">web/src/app/app.routes.ts:15</note>
       </notes>
       <segment state="translated">
-        <source>Liegestütze Tracker – Reps, Streaks und Fortschritt im Blick</source>
-        <target>Suivi des pompes – répétitions, séquences et progrès en un coup d'œil</target>
+        <source>Liegestütze Tracker: Trainingsplan, Streaks &amp; Bestenliste</source>
+        <target>Suivi des pompes : plans d'entraînement, séries &amp; classement</target>
       </segment>
     </unit>
     <unit id="seo.landing.description">
@@ -1506,8 +1506,8 @@
         <note category="location">web/src/app/app.routes.ts:16</note>
       </notes>
       <segment state="translated">
-        <source>Liegestütze tracken mit einer kostenlosen Web-App. Tagesziel, Streaks, Bestleistungen – mobil, schnell und mit Live-Updates.</source>
-        <target>Suivez les pompes avec une application Web gratuite. Objectif quotidien, séquences, meilleures performances – mobile, rapide et avec mises à jour en direct.</target>
+        <source>Liegestütze tracken mit kostenloser Web-App: Trainingspläne, 30-Tage-Challenge, Tagesziel, Streaks und Bestenliste – mobil, offline-fähig, mit Live-Sync.</source>
+        <target>Suivez vos pompes avec une web app gratuite : plans d'entraînement, défi 30 jours, objectif quotidien, séries et classement mondial – mobile, hors-ligne, sync en direct.</target>
       </segment>
     </unit>
     <unit id="seo.dashboard.title">

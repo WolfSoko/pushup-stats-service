@@ -1497,8 +1497,8 @@
         <note category="location">web/src/app/app.routes.ts:15</note>
       </notes>
       <segment state="translated">
-        <source>Liegestütze Tracker – Reps, Streaks und Fortschritt im Blick</source>
-        <target>Rastreador de flexiones: repeticiones, rachas y progreso de un vistazo</target>
+        <source>Liegestütze Tracker: Trainingsplan, Streaks &amp; Bestenliste</source>
+        <target>Rastreador de flexiones: planes, rachas y clasificación</target>
       </segment>
     </unit>
     <unit id="seo.landing.description">
@@ -1506,8 +1506,8 @@
         <note category="location">web/src/app/app.routes.ts:16</note>
       </notes>
       <segment state="translated">
-        <source>Liegestütze tracken mit einer kostenlosen Web-App. Tagesziel, Streaks, Bestleistungen – mobil, schnell und mit Live-Updates.</source>
-        <target>Realice un seguimiento de las flexiones con una aplicación web gratuita. Objetivo diario, rachas, mejores actuaciones: móvil, rápido y con actualizaciones en vivo.</target>
+        <source>Liegestütze tracken mit kostenloser Web-App: Trainingspläne, 30-Tage-Challenge, Tagesziel, Streaks und Bestenliste – mobil, offline-fähig, mit Live-Sync.</source>
+        <target>Registra flexiones con web app gratuita: planes de entrenamiento, reto de 30 días, objetivo diario, rachas y clasificación global – móvil, offline, sync en vivo.</target>
       </segment>
     </unit>
     <unit id="seo.dashboard.title">

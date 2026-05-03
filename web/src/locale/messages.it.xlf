@@ -1497,8 +1497,8 @@
         <note category="location">web/src/app/app.routes.ts:15</note>
       </notes>
       <segment state="translated">
-        <source>Liegestütze Tracker – Reps, Streaks und Fortschritt im Blick</source>
-        <target>Tracker push-up: ripetizioni, serie e progressi a colpo d'occhio</target>
+        <source>Liegestütze Tracker: Trainingsplan, Streaks &amp; Bestenliste</source>
+        <target>Tracker push-up: programmi, serie &amp; classifica</target>
       </segment>
     </unit>
     <unit id="seo.landing.description">
@@ -1506,8 +1506,8 @@
         <note category="location">web/src/app/app.routes.ts:16</note>
       </notes>
       <segment state="translated">
-        <source>Liegestütze tracken mit einer kostenlosen Web-App. Tagesziel, Streaks, Bestleistungen – mobil, schnell und mit Live-Updates.</source>
-        <target>Tieni traccia delle flessioni con un'app Web gratuita. Obiettivo quotidiano, serie consecutive, migliori prestazioni: mobile, veloce e con aggiornamenti in tempo reale.</target>
+        <source>Liegestütze tracken mit kostenloser Web-App: Trainingspläne, 30-Tage-Challenge, Tagesziel, Streaks und Bestenliste – mobil, offline-fähig, mit Live-Sync.</source>
+        <target>Traccia le flessioni con una web app gratuita: programmi di allenamento, sfida 30 giorni, obiettivo quotidiano, serie e classifica globale – mobile, offline, live sync.</target>
       </segment>
     </unit>
     <unit id="seo.dashboard.title">

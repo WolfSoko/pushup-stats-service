@@ -1497,8 +1497,8 @@
         <note category="location">web/src/app/app.routes.ts:15</note>
       </notes>
       <segment state="translated">
-        <source>Liegestütze Tracker – Reps, Streaks und Fortschritt im Blick</source>
-        <target>Push-up tracker – επαναλήψεις, σειρές και πρόοδος με μια ματιά</target>
+        <source>Liegestütze Tracker: Trainingsplan, Streaks &amp; Bestenliste</source>
+        <target>Push-up tracker: προγράμματα, σερί &amp; κατάταξη</target>
       </segment>
     </unit>
     <unit id="seo.landing.description">
@@ -1506,8 +1506,8 @@
         <note category="location">web/src/app/app.routes.ts:16</note>
       </notes>
       <segment state="translated">
-        <source>Liegestütze tracken mit einer kostenlosen Web-App. Tagesziel, Streaks, Bestleistungen – mobil, schnell und mit Live-Updates.</source>
-        <target>Παρακολουθήστε push-ups με μια δωρεάν εφαρμογή web. Καθημερινός στόχος, σερί, καλύτερες επιδόσεις – κινητό, γρήγορο και με ζωντανές ενημερώσεις.</target>
+        <source>Liegestütze tracken mit kostenloser Web-App: Trainingspläne, 30-Tage-Challenge, Tagesziel, Streaks und Bestenliste – mobil, offline-fähig, mit Live-Sync.</source>
+        <target>Παρακολούθησε push-ups με δωρεάν web app: προγράμματα προπόνησης, πρόκληση 30 ημερών, καθημερινός στόχος, σερί και παγκόσμια κατάταξη – κινητό, offline, ζωντανός συγχρονισμός.</target>
       </segment>
     </unit>
     <unit id="seo.dashboard.title">

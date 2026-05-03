@@ -3243,8 +3243,8 @@ Deine Position: # ·  Reps        </source>
         </unit>
     <unit id="seo.landing.description">
       <segment state="translated">
-        <source>Liegestütze tracken mit einer kostenlosen Web-App. Tagesziel, Streaks, Bestleistungen – mobil, schnell und mit Live-Updates.</source>
-        <target>Track push-ups with a free web app. Daily goal, streaks, and personal bests – mobile, fast, and with live updates.</target>
+        <source>Liegestütze tracken mit kostenloser Web-App: Trainingspläne, 30-Tage-Challenge, Tagesziel, Streaks und Bestenliste – mobil, offline-fähig, mit Live-Sync.</source>
+        <target>Track push-ups with a free web app: training plans, 30-day challenge, daily goal, streaks and global leaderboard – mobile, offline-capable, live-synced.</target>
 
         
         
@@ -3254,8 +3254,8 @@ Deine Position: # ·  Reps        </source>
         </unit>
     <unit id="seo.landing.title">
       <segment state="translated">
-        <source>Liegestütze Tracker – Reps, Streaks und Fortschritt im Blick</source>
-        <target>Push-Up Tracker – Reps, Streaks, and Progress at a Glance</target>
+        <source>Liegestütze Tracker: Trainingsplan, Streaks &amp; Bestenliste</source>
+        <target>Push-Up Tracker: Training Plans, Streaks &amp; Leaderboard</target>
 
         
         

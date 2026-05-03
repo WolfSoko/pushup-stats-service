@@ -2296,16 +2296,16 @@
         <note category="location">web/src/app/app.routes.ts:15</note>
       </notes>
       <segment state="translated">
-        <source>Liegestütze Tracker – Reps, Streaks und Fortschritt im Blick</source>
-      <target>俯卧撑追踪器 – 记录次数、连续纪录和进度</target></segment>
+        <source>Liegestütze Tracker: Trainingsplan, Streaks &amp; Bestenliste</source>
+      <target>俯卧撑追踪器：训练计划、连续纪录和排行榜</target></segment>
     </unit>
     <unit id="seo.landing.description">
       <notes>
         <note category="location">web/src/app/app.routes.ts:16</note>
       </notes>
       <segment state="translated">
-        <source>Liegestütze tracken mit einer kostenlosen Web-App. Tagesziel, Streaks, Bestleistungen – mobil, schnell und mit Live-Updates.</source>
-      <target>用免费网络应用追踪俯卧撑。每日目标、连续纪录、个人记录 – 移动端、快速、实时更新。</target></segment>
+        <source>Liegestütze tracken mit kostenloser Web-App: Trainingspläne, 30-Tage-Challenge, Tagesziel, Streaks und Bestenliste – mobil, offline-fähig, mit Live-Sync.</source>
+      <target>用免费网络应用追踪俯卧撑：训练计划、30天挑战、每日目标、连续纪录和全球排行榜 — 移动端、可离线、实时同步。</target></segment>
     </unit>
     <unit id="seo.dashboard.title">
       <notes>
