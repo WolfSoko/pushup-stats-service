@@ -17,6 +17,10 @@
   @supports (animation-timeline: view()) {
     padding-bottom: clamp(160px, 80vh, 720px);
 
+    @media (max-width: 767px) {
+      padding-bottom: clamp(53px, 27vh, 240px);
+    }
+
     @media (prefers-reduced-motion: reduce) {
       padding-bottom: clamp(20px, 4vw, 44px);
     }
