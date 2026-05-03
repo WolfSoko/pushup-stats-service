@@ -50,10 +50,13 @@ describe('pickLocale', () => {
     ['nb-NO', 'no'],
     ['nn', 'no'],
     ['nn-NO', 'no'],
+    ['zh', 'zh'],
+    ['zh-CN', 'zh'], // primary subtag matches `zh` (Mainland Simplified)
+    ['zh-TW,en;q=0.5', 'zh'], // any zh-* still maps to zh (we only ship Simplified)
     ['en;q=not-a-number,de', 'de'], // malformed q drops the entry
     ['en;q=0,fr;q=0', 'de'], // explicit q=0 rejects → source locale fallback
     ['en;q=0,de', 'de'], // q=0 only excludes that entry; remaining ranked entries still apply
-    ['zh-CN,ja;q=0.8', 'de'], // no supported tag → source locale fallback
+    ['ja-JP,ko;q=0.8', 'de'], // no supported tag → source locale fallback
     ['xen-fake', 'de'], // unrecognised primary subtag → source locale fallback
   ])('Given Accept-Language=%j, Then picks %s', (header, expected) => {
     expect(pickLocale(header)).toBe(expected);

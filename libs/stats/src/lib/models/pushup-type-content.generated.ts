@@ -145,6 +145,20 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
       "tips": [
         "Tempo 3-1-1 (3 s ned, 1 s hold, 1 s opp) bygger merkbart mer styrke."
       ]
+    },
+    "zh": {
+      "name": "弓箭手俯卧撑",
+      "summary": "非对称俯卧撑：一臂弯曲，另一臂保持伸展——通往单臂俯卧撑的垫脚石。",
+      "instructions": [
+        "双手位置明显宽于肩膀，手指略微向外倾斜。",
+        "下降时向一侧倾斜：一臂弯曲，另一臂几乎保持笔直。",
+        "笔直的那一臂起支撑作用，大部分负荷落在弯曲的那一臂上。",
+        "控制速度向上按压，回到中间位置，然后向另一侧倾斜。",
+        "每一侧单独计次——计划通常列出每臂的次数。"
+      ],
+      "tips": [
+        "节奏3-1-1（下降3秒，停顿1秒，上升1秒）能明显增加力量。"
+      ]
     }
   },
   "decline": {
@@ -263,6 +277,19 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
       ],
       "tips": [
         "Ikke la nedre del av ryggen bukte – stram aktivt magen og setemusklene, spesielt ved høye føtter."
+      ]
+    },
+    "zh": {
+      "name": "下斜俯卧撑（脚部抬高）",
+      "summary": "脚踩在抬高的物体上，双手在地面上——增加胸部上部和肩膀的负荷。",
+      "instructions": [
+        "脚踩在稳定的抬高物体上（长凳、椅子、台阶）。",
+        "双手与肩同宽放在地面上，从头到脚跟保持一直线。",
+        "控制速度下降胸部，保持腹部收紧。",
+        "有力地向上按压——脚抬得越高，肩膀参与度越大。"
+      ],
+      "tips": [
+        "不要让下背部拱起——特别是脚抬高时，要积极收紧腹部和臀部。"
       ]
     }
   },
@@ -383,6 +410,19 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
       "tips": [
         "Nybegynnere: bli komfortabel med kne-diamant før du prøver fullversjonen."
       ]
+    },
+    "zh": {
+      "name": "钻石俯卧撑",
+      "summary": "双手形成胸部下方的三角形——最大化三头肌参与。",
+      "instructions": [
+        "拇指和食指相接触，形成\"钻石\"三角形。",
+        "双手位于胸部下方正下方，不要太靠下。",
+        "保持肘部贴近躯干，指向身体后方。",
+        "下降胸部至钻石位置，然后直接向上按压。"
+      ],
+      "tips": [
+        "初学者：先做跪姿钻石俯卧撑，熟悉后再尝试完整版本。"
+      ]
     }
   },
   "incline": {
@@ -501,6 +541,19 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
       ],
       "tips": [
         "Senk forhøyningen når 3×10 repetisjoner føles rene og kontrollerte."
+      ]
+    },
+    "zh": {
+      "name": "上斜俯卧撑（双手抬高）",
+      "summary": "双手放在长凳、桌子或墙上——减少对手臂的负荷。",
+      "instructions": [
+        "双手放在稳定的抬高物体上（长凳、桌子、楼梯）。",
+        "脚踩地面，身体保持一直线。",
+        "控制速度下降胸部至抬高物体，然后向上按压。",
+        "抬高物体越低，动作难度越大。"
+      ],
+      "tips": [
+        "当3组10次动作都能干净完成后，降低支撑物的高度。"
       ]
     }
   },
@@ -621,6 +674,19 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
       "tips": [
         "Hold deg til armhevninger på knærne til du kan gjøre 3×8 rene repetisjoner, og gå deretter videre til standardversjonen."
       ]
+    },
+    "zh": {
+      "name": "跪姿俯卧撑",
+      "summary": "膝盖着地的简化版本——特别适合初学者。",
+      "instructions": [
+        "膝盖放在地面上，脚抬起或交叉。",
+        "双手与肩同宽，从膝盖到肩膀保持一直线。",
+        "稳定髋部——不要下沉或向上翘起。",
+        "控制速度下降胸部，然后向上按压。"
+      ],
+      "tips": [
+        "坚持做跪姿俯卧撑，直到能做3组8次干净的动作，然后升级到标准版本。"
+      ]
     }
   },
   "knuckle": {
@@ -740,6 +806,19 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
       "tips": [
         "Nyttig for sensitive håndledd – belastningen flyttes fra leddet til knokene."
       ]
+    },
+    "zh": {
+      "name": "拳式俯卧撑",
+      "summary": "用拳头关节而不是平手做俯卧撑——对腕部压力小，强化前臂。",
+      "instructions": [
+        "握拳，支撑在前两个关节（食指和中指）。",
+        "保持手背笔直——不要弯曲腕部。",
+        "先在柔软的表面开始（瑜伽垫、毛巾），之后再在硬地面上进行。",
+        "其他动作与标准俯卧撑相同。"
+      ],
+      "tips": [
+        "对腕部敏感的人很有用——负荷从关节转移到了拳头。"
+      ]
     }
   },
   "negative-one-arm": {
@@ -858,6 +937,19 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
       ],
       "tips": [
         "Bygg den eksentriske tiden gradvis: 3 s → 5 s → 8 s over flere uker."
+      ]
+    },
+    "zh": {
+      "name": "离心单臂俯卧撑",
+      "summary": "仅在下降阶段用单臂——控制的离心收缩能为完整动作建立力量基础。",
+      "instructions": [
+        "一只手放在长凳或抬高物体上，脚分开以获得稳定性。",
+        "另一只手放在下背部或髋部，保持身体成平板。",
+        "花3-5秒时间控制下降到长凳——不要\"坠落\"。",
+        "用双手按压或从抬高位置向上按压——向心收缩不是单臂完成。"
+      ],
+      "tips": [
+        "逐步增加离心时间：3秒→5秒→8秒，跨越多周进行。"
       ]
     }
   },
@@ -987,6 +1079,20 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
       "tips": [
         "Repetisjoner telles per side – start med den dominante siden og matcher den på den svakere siden."
       ]
+    },
+    "zh": {
+      "name": "单臂俯卧撑",
+      "summary": "用单手完成的完整俯卧撑——徒手按压的巅峰之作。",
+      "instructions": [
+        "脚明显分开超过臀宽以获得最大稳定性（开始时脚距更宽）。",
+        "一只手放在胸部中心下方，另一只手放在下背部或髋部。",
+        "刻意保持身体成平板——髋部和肩膀不能旋转。",
+        "控制速度将胸部下降至手部，然后直接向上按压。",
+        "力量增长时，逐步缩小脚距。"
+      ],
+      "tips": [
+        "每一侧单独计次——从强侧开始，然后在弱侧达成相同次数。"
+      ]
     }
   },
   "partial-one-arm": {
@@ -1086,6 +1192,17 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
         "Den andre armen på nedre del av ryggen; hold kroppen som en planke – ikke roter hoften.",
         "Senk kontrollert kun ned til benkhøyden (redusert ROM).",
         "Press oppover med én arm; senk benkhøyden gradvis."
+      ],
+      "tips": []
+    },
+    "zh": {
+      "name": "部分范围单臂俯卧撑",
+      "summary": "在减小活动范围的情况下进行单臂俯卧撑（例如从低长凳）。",
+      "instructions": [
+        "一只手放在低长凳或台阶上，脚分开很宽（至少臀宽）。",
+        "另一只手放在下背部，保持身体成平板——不要旋转髋部。",
+        "故意只下降到长凳的高度（减小活动范围）。",
+        "单臂向上按压，逐步降低长凳高度。"
       ],
       "tips": []
     }
@@ -1206,6 +1323,19 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
       ],
       "tips": [
         "Gjør det vanskeligere: plasser føttene på en forhøyning for en nær-vertikal posisjon."
+      ]
+    },
+    "zh": {
+      "name": "派克俯卧撑",
+      "summary": "从V形姿态做俯卧撑——接近竖直的按压，通往倒立撑的垫脚石。",
+      "instructions": [
+        "从四足跪地姿态向上推髋部——身体形成倒V形。",
+        "双手与肩同宽，腿笔直或微微弯曲，髋部抬高。",
+        "将头部下降至双臂之间朝向地面——肘部向后追踪。",
+        "向上按压而不是掉入常规俯卧撑位置。"
+      ],
+      "tips": [
+        "增加难度：将脚放在抬高物体上，实现接近竖直的位置。"
       ]
     }
   },
@@ -1344,6 +1474,21 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
         "Se litt fremover på gulvet – ikke strekk nakken.",
         "Pusting: pust inn på vei ned, pust ut på press oppover."
       ]
+    },
+    "zh": {
+      "name": "标准俯卧撑",
+      "summary": "经典俯卧撑，双手与肩同宽，身体成一直线。",
+      "instructions": [
+        "双手与肩膀同宽，位于肩膀正下方，手指向前。",
+        "身体从头到脚跟成一直线——收紧腹部和臀部肌肉。",
+        "肘部与躯干成约45°角，不要向外扩张。",
+        "控制速度下降，胸部接近地面。",
+        "有力地向上按压，在顶部不要锁定肘关节。"
+      ],
+      "tips": [
+        "目光略微向前看地面——不要抬头看。",
+        "呼吸节奏：下降时吸气，上升时呼气。"
+      ]
     }
   },
   "wall-one-arm": {
@@ -1443,6 +1588,17 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
         "Plasser én arm på veggen i skulderhøyde; den andre armen hviler på nedre del av ryggen eller hoften.",
         "Vipp kroppen som en solid planke mot veggen, og bøy albueleddet med kontroll.",
         "Senk med en langsom eksentrisk bevegelse (3 s) mot veggen, og press deretter kraftig bort."
+      ],
+      "tips": []
+    },
+    "zh": {
+      "name": "墙壁单臂俯卧撑",
+      "summary": "靠墙做单臂俯卧撑——单臂俯卧撑进阶中的安全入门动作。",
+      "instructions": [
+        "站在距离墙约一臂距离的位置。",
+        "一只手放在墙面上，与肩膀同高，另一只手放在下背部或髋部。",
+        "身体像平板一样倾向墙面，控制速度弯曲肘部。",
+        "花3秒时间缓慢下降朝向墙面，然后有力地向外推。"
       ],
       "tips": []
     }
@@ -1563,6 +1719,19 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
       ],
       "tips": [
         "Skulderhelse: hold skulderbladene trukket sammen, ikke heng i leddene."
+      ]
+    },
+    "zh": {
+      "name": "宽距俯卧撑",
+      "summary": "更宽的手部位置强调胸部，减轻三头肌的负荷。",
+      "instructions": [
+        "双手位置明显宽于肩膀，手指略微向外倾斜。",
+        "肘部向两侧追踪，下降时进一步打开。",
+        "控制速度下降胸部，整个胸部应感受到明显的拉伸。",
+        "有意识地从胸部向上按压——不要\"作弊\"式使用三头肌。"
+      ],
+      "tips": [
+        "肩关节健康：保持肩胛骨后缩，不要在关节处悬挂。"
       ]
     }
   }

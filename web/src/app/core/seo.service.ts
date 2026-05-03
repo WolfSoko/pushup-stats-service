@@ -163,6 +163,7 @@ export class SeoService {
       // Bokmål's standard form is `nb_NO`; the macro tag `no_NO` is
       // not in Facebook/OpenGraph's accepted set.
       no: 'nb_NO',
+      zh: 'zh_CN',
     };
     return map[locale];
   }
