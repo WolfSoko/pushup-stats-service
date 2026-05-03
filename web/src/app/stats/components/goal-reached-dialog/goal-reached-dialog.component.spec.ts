@@ -145,6 +145,25 @@ describe('GoalReachedDialogComponent', () => {
     });
   });
 
+  describe('Given the dialog renders for a training plan goal', () => {
+    it('Then it shows the plan title and progress', async () => {
+      // Given
+      await setup({
+        kind: 'plan',
+        total: 50,
+        goal: 50,
+        titleId: 'test-title-plan',
+      });
+
+      // When
+      const text = fixture.nativeElement.textContent ?? '';
+
+      // Then
+      expect(text).toContain('Trainingsplan-Ziel erreicht!');
+      expect(text).toContain('50 / 50');
+    });
+  });
+
   describe('Given the user clicks Snap', () => {
     it('Then it lazy-vaporizes the card element and closes the dialog on completion', async () => {
       // Given

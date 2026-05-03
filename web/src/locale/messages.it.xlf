@@ -3984,6 +3984,42 @@
         <target>Obiettivo mensile di <ph id="0" equiv="goal" disp="goal"/> flessioni raggiunto - <ph id="1" equiv="total" disp="total"/> totale! 💪 Tieni traccia delle tue statistiche gratuitamente:</target>
       </segment>
     </unit>
+    <unit id="goalReached.plan.title">
+      <notes>
+        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:97</note>
+      </notes>
+      <segment state="translated">
+        <source>Trainingsplan-Ziel erreicht!</source>
+        <target>Obiettivo del piano di allenamento raggiunto!</target>
+      </segment>
+    </unit>
+    <unit id="goalReached.plan.note">
+      <notes>
+        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:98</note>
+      </notes>
+      <segment state="translated">
+        <source>Heutiges Plan-Pensum geschafft. Stark!</source>
+        <target>Volume di oggi del piano completato. Forte!</target>
+      </segment>
+    </unit>
+    <unit id="goalReached.share.plan.title">
+      <notes>
+        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:99</note>
+      </notes>
+      <segment state="translated">
+        <source>Plan-Ziel geknackt!</source>
+        <target>Obiettivo del piano battuto!</target>
+      </segment>
+    </unit>
+    <unit id="goalReached.share.plan.text">
+      <notes>
+        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:100</note>
+      </notes>
+      <segment state="translated">
+        <source>Heute mein Trainingsplan-Ziel von <ph id="0" equiv="goal" disp="goal"/> Liegestützen erreicht – <ph id="1" equiv="total" disp="total"/> insgesamt! 💪 Tracke deine Stats kostenlos:</source>
+        <target>Oggi ho raggiunto il mio obiettivo del piano di allenamento di <ph id="0" equiv="goal" disp="goal"/> flessioni – <ph id="1" equiv="total" disp="total"/> in totale! 💪 Tieni traccia delle tue statistiche gratis:</target>
+      </segment>
+    </unit>
     <unit id="goalReached.daily.title">
       <notes>
         <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:97</note>

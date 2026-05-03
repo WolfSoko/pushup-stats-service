@@ -15,9 +15,10 @@ import {
   SNAP_QUALITY_PARTICLES,
   toBerlinIsoDate,
 } from '@pu-stats/models';
+import { TrainingPlanStore } from '../training-plans/training-plan.store';
 import { UserConfigStore } from './user-config.store';
 
-type GoalKind = 'daily' | 'weekly' | 'monthly';
+type GoalKind = 'daily' | 'weekly' | 'monthly' | 'plan';
 
 interface GoalSpec {
   readonly kind: GoalKind;
@@ -46,6 +47,7 @@ export class GoalReachedNotificationService {
   private readonly dialog = inject(MatDialog);
   private readonly userConfig = inject(UserConfigStore);
   private readonly live = inject(LiveDataStore);
+  private readonly trainingPlan = inject(TrainingPlanStore);
 
   private readonly entries = computed<PushupRecord[]>(() =>
     this.live.entries()
@@ -97,6 +99,39 @@ export class GoalReachedNotificationService {
       .reduce((sum, entry) => sum + entry.reps, 0);
   });
 
+  /**
+   * Today's training-plan target — only when a plan is active and today
+   * is a non-rest day. Decoupled from the dashboard's `planTodayTarget`
+   * computed so this service stays usable on pages that don't load the
+   * dashboard store.
+   */
+  private readonly planTodayTarget = computed(() => {
+    if (!this.trainingPlan.hasActivePlan()) return 0;
+    const day = this.trainingPlan.todayDay();
+    if (!day || day.kind === 'rest') return 0;
+    return day.targetReps;
+  });
+
+  /**
+   * Plan-goal threshold: only fires when the plan target would actually
+   * be a stretch above the configured daily goal. When plan target ≤
+   * daily goal, the regular daily celebration already covers the
+   * milestone, so suppress the plan dialog to avoid a near-duplicate.
+   *
+   * Requires a configured daily goal (`> 0`) to disambiguate the
+   * `userConfig` resource's initial loading state (which returns `0`)
+   * from a real "daily goal less than plan" comparison. Users without
+   * a configured daily goal don't get this celebration — the regular
+   * daily one only fires once they configure a goal anyway.
+   */
+  private readonly planGoal = computed(() => {
+    const planTarget = this.planTodayTarget();
+    if (planTarget <= 0) return 0;
+    const daily = this.userConfig.dailyGoal();
+    if (daily <= 0) return 0;
+    return planTarget > daily ? planTarget : 0;
+  });
+
   private readonly specs: readonly GoalSpec[] = [
     {
       kind: 'daily',
@@ -116,6 +151,12 @@ export class GoalReachedNotificationService {
       total: this.monthTotal,
       periodKey: this.currentMonthKey,
     },
+    {
+      kind: 'plan',
+      goal: this.planGoal,
+      total: this.todayTotal,
+      periodKey: this.todayBerlin,
+    },
   ];
 
   private readonly opened = new Set<string>();
@@ -130,6 +171,7 @@ export class GoalReachedNotificationService {
     daily: 0,
     weekly: 0,
     monthly: 0,
+    plan: 0,
   };
 
   constructor() {
@@ -248,6 +290,7 @@ function pruneStalePeriodFlags(todayBerlin: string): void {
       `${STORAGE_PREFIX}daily_${todayBerlin}`,
       `${STORAGE_PREFIX}weekly_${isoWeekKey(todayBerlin)}`,
       `${STORAGE_PREFIX}monthly_${todayBerlin.slice(0, 7)}`,
+      `${STORAGE_PREFIX}plan_${todayBerlin}`,
     ]);
     const stale: string[] = [];
     for (let i = 0; i < ls.length; i++) {

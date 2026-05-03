@@ -3984,6 +3984,42 @@
         <target>Objectif mensuel de pompes <ph id="0" equiv="goal" disp="goal"/> atteint - Total <ph id="1" equiv="total" disp="total"/>! 💪 Suivez vos statistiques gratuitement:</target>
       </segment>
     </unit>
+    <unit id="goalReached.plan.title">
+      <notes>
+        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:97</note>
+      </notes>
+      <segment state="translated">
+        <source>Trainingsplan-Ziel erreicht!</source>
+        <target>Objectif du plan d'entraînement atteint !</target>
+      </segment>
+    </unit>
+    <unit id="goalReached.plan.note">
+      <notes>
+        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:98</note>
+      </notes>
+      <segment state="translated">
+        <source>Heutiges Plan-Pensum geschafft. Stark!</source>
+        <target>Volume du plan d'aujourd'hui validé. Solide !</target>
+      </segment>
+    </unit>
+    <unit id="goalReached.share.plan.title">
+      <notes>
+        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:99</note>
+      </notes>
+      <segment state="translated">
+        <source>Plan-Ziel geknackt!</source>
+        <target>Objectif du plan dépassé !</target>
+      </segment>
+    </unit>
+    <unit id="goalReached.share.plan.text">
+      <notes>
+        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:100</note>
+      </notes>
+      <segment state="translated">
+        <source>Heute mein Trainingsplan-Ziel von <ph id="0" equiv="goal" disp="goal"/> Liegestützen erreicht – <ph id="1" equiv="total" disp="total"/> insgesamt! 💪 Tracke deine Stats kostenlos:</source>
+        <target>Atteint aujourd'hui mon objectif du plan d'entraînement de <ph id="0" equiv="goal" disp="goal"/> pompes – <ph id="1" equiv="total" disp="total"/> au total ! 💪 Suivez vos statistiques gratuitement :</target>
+      </segment>
+    </unit>
     <unit id="goalReached.daily.title">
       <notes>
         <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:97</note>
