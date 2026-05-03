@@ -1816,15 +1816,6 @@
         <target>No se pudo enviar el comentario.</target>
       </segment>
     </unit>
-    <unit id="sw.update.downloading">
-      <notes>
-        <note category="location">web/src/app/app.ts:347</note>
-      </notes>
-      <segment state="translated">
-        <source>Update wird im Hintergrund geladen …</source>
-        <target>La actualización se está cargando en segundo plano...</target>
-      </segment>
-    </unit>
     <unit id="blog.article.back">
       <notes>
         <note category="location">web/src/app/blog/blog-article.component.ts:33,35</note>
@@ -3991,6 +3982,42 @@
       <segment state="translated">
         <source>Monatsziel von <ph id="0" equiv="goal" disp="goal"/> Liegestützen geschafft – <ph id="1" equiv="total" disp="total"/> insgesamt! 💪 Tracke deine Stats kostenlos:</source>
         <target>Meta mensual de flexiones <ph id="0" equiv="goal" disp="goal"/> logradas - ¡<ph id="1" equiv="total" disp="total"/> total! 💪 Realice un seguimiento de sus estadísticas de forma gratuita:</target>
+      </segment>
+    </unit>
+    <unit id="goalReached.plan.title">
+      <notes>
+        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:97</note>
+      </notes>
+      <segment state="translated">
+        <source>Trainingsplan-Ziel erreicht!</source>
+        <target>¡Objetivo del plan de entrenamiento logrado!</target>
+      </segment>
+    </unit>
+    <unit id="goalReached.plan.note">
+      <notes>
+        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:98</note>
+      </notes>
+      <segment state="translated">
+        <source>Heutiges Plan-Pensum geschafft. Stark!</source>
+        <target>¡Volumen de hoy del plan completado. Fuerte!</target>
+      </segment>
+    </unit>
+    <unit id="goalReached.share.plan.title">
+      <notes>
+        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:99</note>
+      </notes>
+      <segment state="translated">
+        <source>Plan-Ziel geknackt!</source>
+        <target>¡Objetivo del plan superado!</target>
+      </segment>
+    </unit>
+    <unit id="goalReached.share.plan.text">
+      <notes>
+        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:100</note>
+      </notes>
+      <segment state="translated">
+        <source>Heute mein Trainingsplan-Ziel von <ph id="0" equiv="goal" disp="goal"/> Liegestützen erreicht – <ph id="1" equiv="total" disp="total"/> insgesamt! 💪 Tracke deine Stats kostenlos:</source>
+        <target>¡Hoy alcancé mi objetivo del plan de entrenamiento de <ph id="0" equiv="goal" disp="goal"/> flexiones – <ph id="1" equiv="total" disp="total"/> en total! 💪 Sigue tus estadísticas gratis:</target>
       </segment>
     </unit>
     <unit id="goalReached.daily.title">

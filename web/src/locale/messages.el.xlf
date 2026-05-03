@@ -1816,15 +1816,6 @@
         <target>Δεν ήταν δυνατή η αποστολή σχολίων.</target>
       </segment>
     </unit>
-    <unit id="sw.update.downloading">
-      <notes>
-        <note category="location">web/src/app/app.ts:347</note>
-      </notes>
-      <segment state="translated">
-        <source>Update wird im Hintergrund geladen …</source>
-        <target>Η ενημέρωση φορτώνεται στο παρασκήνιο...</target>
-      </segment>
-    </unit>
     <unit id="blog.article.back">
       <notes>
         <note category="location">web/src/app/blog/blog-article.component.ts:33,35</note>
@@ -3991,6 +3982,42 @@
       <segment state="translated">
         <source>Monatsziel von <ph id="0" equiv="goal" disp="goal"/> Liegestützen geschafft – <ph id="1" equiv="total" disp="total"/> insgesamt! 💪 Tracke deine Stats kostenlos:</source>
         <target>Επιτεύχθηκε ο μηνιαίος στόχος των push-ups <ph id="0" equiv="goal" disp="goal"/> - <ph id="1" equiv="total" disp="total"/> συνολικά! 💪 Παρακολουθήστε τα στατιστικά σας δωρεάν:</target>
+      </segment>
+    </unit>
+    <unit id="goalReached.plan.title">
+      <notes>
+        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:97</note>
+      </notes>
+      <segment state="translated">
+        <source>Trainingsplan-Ziel erreicht!</source>
+        <target>Στόχος προπονητικού πλάνου επιτεύχθηκε!</target>
+      </segment>
+    </unit>
+    <unit id="goalReached.plan.note">
+      <notes>
+        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:98</note>
+      </notes>
+      <segment state="translated">
+        <source>Heutiges Plan-Pensum geschafft. Stark!</source>
+        <target>Ο σημερινός φόρτος του πλάνου ολοκληρώθηκε. Δυνατά!</target>
+      </segment>
+    </unit>
+    <unit id="goalReached.share.plan.title">
+      <notes>
+        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:99</note>
+      </notes>
+      <segment state="translated">
+        <source>Plan-Ziel geknackt!</source>
+        <target>Στόχος πλάνου σπασμένος!</target>
+      </segment>
+    </unit>
+    <unit id="goalReached.share.plan.text">
+      <notes>
+        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:100</note>
+      </notes>
+      <segment state="translated">
+        <source>Heute mein Trainingsplan-Ziel von <ph id="0" equiv="goal" disp="goal"/> Liegestützen erreicht – <ph id="1" equiv="total" disp="total"/> insgesamt! 💪 Tracke deine Stats kostenlos:</source>
+        <target>Σήμερα έπιασα τον στόχο του προπονητικού πλάνου των <ph id="0" equiv="goal" disp="goal"/> push-ups – <ph id="1" equiv="total" disp="total"/> συνολικά! 💪 Παρακολούθησε τα στατιστικά σου δωρεάν:</target>
       </segment>
     </unit>
     <unit id="goalReached.daily.title">
