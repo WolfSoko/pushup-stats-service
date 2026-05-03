@@ -732,7 +732,7 @@
       </notes>
       <segment state="translated">
         <source>+<ph id="0" equiv="INTERPOLATION" disp="{{ item.value }}"/> Reps</source>
-        <target>+ Représentants <ph id="0" equiv="INTERPOLATION" disp="{{ item.value }}"/></target>
+        <target>+<ph id="0" equiv="INTERPOLATION" disp="{{ item.value }}"/> répétitions</target>
       </segment>
     </unit>
     <unit id="quickAdd.fab.open">
@@ -1363,7 +1363,7 @@
       </notes>
       <segment state="translated">
         <source>Erinnerungen</source>
-        <target>Souvenirs</target>
+        <target>Rappels</target>
       </segment>
     </unit>
     <unit id="nav.language">
@@ -3142,7 +3142,7 @@
       </notes>
       <segment state="translated">
         <source>🔔 Erinnerungen</source>
-        <target>🔔 Souvenirs</target>
+        <target>🔔 Rappels</target>
       </segment>
     </unit>
     <unit id="reminders.page.subtitle">
@@ -3421,7 +3421,7 @@
       </notes>
       <segment state="translated">
         <source>🔔 Erinnerungen</source>
-        <target>🔔 Souvenirs</target>
+        <target>🔔 Rappels</target>
       </segment>
     </unit>
     <unit id="push.section.desc">
@@ -3630,7 +3630,7 @@
       </notes>
       <segment state="translated">
         <source>Analyse</source>
-        <target>Analysis</target>
+        <target>Analyse</target>
       </segment>
     </unit>
     <unit id="dashboard.analysisTeaserStreak">
@@ -4026,7 +4026,7 @@
       </notes>
       <segment state="translated">
         <source>Erfolg vaporisieren</source>
-        <target>Succès de vaporiser</target>
+        <target>Masquer l'animation de succès</target>
       </segment>
     </unit>
     <unit id="goalReached.snap">
@@ -5055,7 +5055,7 @@
       </notes>
       <segment state="translated">
         <source>🔔 Erinnerungen</source>
-        <target>🔔 Souvenirs</target>
+        <target>🔔 Rappels</target>
       </segment>
     </unit>
     <unit id="settings.remindersLinkDesc">
@@ -5294,7 +5294,7 @@
       </notes>
       <segment state="translated">
         <source>Leichter Tag</source>
-        <target>Jour clair</target>
+        <target>Jour léger</target>
       </segment>
     </unit>
     <unit id="trainingPlans.kind.test">
@@ -5621,7 +5621,7 @@
       </notes>
       <segment state="translated">
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">cancel</pc> Plan beenden </source>
-        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">cancel</pc> Plan de fin </target>
+        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">cancel</pc> Arrêter le plan </target>
       </segment>
     </unit>
     <unit id="trainingPlans.startCta">
@@ -5684,7 +5684,7 @@
       </notes>
       <segment state="translated">
         <source>Plan starten</source>
-        <target>Plan de démarrage</target>
+        <target>Démarrer le plan</target>
       </segment>
     </unit>
     <unit id="trainingPlans.signupAndStart">
@@ -5894,7 +5894,7 @@
       </notes>
       <segment state="translated">
         <source>Heute eintragen</source>
-        <target>Participez aujourd'hui</target>
+        <target>Enregistrer aujourd'hui</target>
       </segment>
     </unit>
     <unit id="trainingPlans.viewPlan">
