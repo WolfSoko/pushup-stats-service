@@ -159,6 +159,10 @@ export class SeoService {
       nl: 'nl_NL',
       el: 'el_GR',
       la: 'la',
+      // OpenGraph uses ISO 639-1 + ISO 3166-1 region codes. Norwegian
+      // Bokmål's standard form is `nb_NO`; the macro tag `no_NO` is
+      // not in Facebook/OpenGraph's accepted set.
+      no: 'nb_NO',
       zh: 'zh_CN',
     };
     return map[locale];

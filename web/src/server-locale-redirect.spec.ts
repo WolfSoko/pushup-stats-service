@@ -41,6 +41,15 @@ describe('pickLocale', () => {
     ['nl-BE', 'nl'],
     ['el', 'el'],
     ['la', 'la'],
+    ['no', 'no'],
+    ['no-NO', 'no'],
+    // Norwegian browsers advertise `nb` (Bokmål) or `nn` (Nynorsk),
+    // not `no`. Both must alias to the `no` bundle so unprefixed
+    // routes don't fall back to German for Norwegian users.
+    ['nb', 'no'],
+    ['nb-NO', 'no'],
+    ['nn', 'no'],
+    ['nn-NO', 'no'],
     ['zh', 'zh'],
     ['zh-CN', 'zh'], // primary subtag matches `zh` (Mainland Simplified)
     ['zh-TW,en;q=0.5', 'zh'], // any zh-* still maps to zh (we only ship Simplified)
@@ -83,6 +92,7 @@ describe('computeLocaleRedirect', () => {
         '/nl',
         '/el',
         '/la/blog',
+        '/no',
       ]) {
         expect(computeLocaleRedirect(input({ path, url: path }))).toEqual({
           kind: 'pass',

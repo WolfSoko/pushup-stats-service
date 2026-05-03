@@ -241,7 +241,7 @@ Long-form content lives in markdown files with YAML frontmatter under `content/`
 
 All generated modules are checked in so reviewers see the diff and the build is hermetic. The generator runs automatically as a `dependsOn` of `web:build` and `tools:generate-sitemap`.
 
-**Supported locales** (also drives sitemap hreflang): `de`, `en`, `fr`, `es`, `it`, `nl`, `el`, `la`. Source language is German; English is the canonical secondary; the others are translations of the English version. Adding a new locale across all content = drop in one `<lang>.md` per folder/wiki entry — the generator and sitemap pick them up automatically.
+**Supported locales** (also drives sitemap hreflang): `de`, `en`, `fr`, `es`, `it`, `nl`, `el`, `la`, `no`. Source language is German; English is the canonical secondary; the others are translations of the English version. Adding a new locale across all content = drop in one `<lang>.md` per folder/wiki entry — the generator and sitemap pick them up automatically. **Adding a new locale code itself touches 7 places** — see [`docs/gotchas/i18n.md`](docs/gotchas/i18n.md#adding-a-new-locale).
 
 ### How to add a new blog post
 

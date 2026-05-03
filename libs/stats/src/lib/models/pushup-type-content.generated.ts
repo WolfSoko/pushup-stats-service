@@ -132,6 +132,20 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
         "Tempo 3-1-1 (3 s naar beneden, 1 s vasthouden, 1 s omhoog) bouwt merkbaar meer kracht op."
       ]
     },
+    "no": {
+      "name": "Archer armhevning",
+      "summary": "Asymmetrisk armhevning der en arm bøyes mens den andre forblir strukket – en springbrett til enarmede armhevninger.",
+      "instructions": [
+        "Hendene plasseres merkbart bredere enn skuldrene, fingrene vinklet litt utover.",
+        "Skift til den ene siden under nedstigningen: en arm bøyes, den andre forblir nesten rett.",
+        "Den rette armen fungerer som støtte; det meste av belastningen ligger på den bøyde armen.",
+        "Press oppover med kontroll, gå tilbake til midtposisjonen, og skift til den andre siden.",
+        "Tell repetisjoner per side – planen lister vanligvis antallet per arm."
+      ],
+      "tips": [
+        "Tempo 3-1-1 (3 s ned, 1 s hold, 1 s opp) bygger merkbart mer styrke."
+      ]
+    },
     "zh": {
       "name": "弓箭手俯卧撑",
       "summary": "非对称俯卧撑：一臂弯曲，另一臂保持伸展——通往单臂俯卧撑的垫脚石。",
@@ -250,6 +264,19 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
       ],
       "tips": [
         "Laat de lage rug niet hollen — span buik en bilspieren actief aan, zeker bij hoge voeten."
+      ]
+    },
+    "no": {
+      "name": "Decline armhevning (føttene høyt)",
+      "summary": "Føttene på en forhøyning, hendene på gulvet – ekstra belastning på øvre bryst og skuldre.",
+      "instructions": [
+        "Plasser føttene på en stabil forhøyning (benk, stol, trinn).",
+        "Hendene skulderbredde fra hverandre på gulvet, hold en rett linje fra hode til hæl.",
+        "Senk brystet med kontroll, hold magen strammet.",
+        "Press oppover kraftig – jo høyere føttene, desto mer involvering av skulderne."
+      ],
+      "tips": [
+        "Ikke la nedre del av ryggen bukte – stram aktivt magen og setemusklene, spesielt ved høye føtter."
       ]
     },
     "zh": {
@@ -371,6 +398,19 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
         "Beginners: wen eerst aan knie-diamantopdrukken voordat je de volledige versie probeert."
       ]
     },
+    "no": {
+      "name": "Diamond armhevning",
+      "summary": "Hendene danner en trekant under brystet – maksimal triceps-engasjement.",
+      "instructions": [
+        "Tomler og pekefingre berører hverandre og danner en \"diamant\"-trekant.",
+        "Hendene direkte under det nedre brystet, ikke for langt ned mot magen.",
+        "Hold albueleddet tett inntil kroppen, rettet bakover.",
+        "Senk brystet ned til diamanten, og press deretter rett oppover."
+      ],
+      "tips": [
+        "Nybegynnere: bli komfortabel med kne-diamant før du prøver fullversjonen."
+      ]
+    },
     "zh": {
       "name": "钻石俯卧撑",
       "summary": "双手形成胸部下方的三角形——最大化三头肌参与。",
@@ -488,6 +528,19 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
       ],
       "tips": [
         "Ga een stap lager met de verhoging zodra 3×10 herhalingen vlot aanvoelen."
+      ]
+    },
+    "no": {
+      "name": "Incline armhevning (hendene høyt)",
+      "summary": "Hendene på en benk, bord eller vegg – reduserer belastningen på armene.",
+      "instructions": [
+        "Plasser hendene på en stabil forhøyning (benk, bord, trapp).",
+        "Føttene på gulvet, kroppen i en rett linje.",
+        "Senk brystet med kontroll ned til forhøyningen, og press deretter oppover.",
+        "Jo lavere forhøyningen, desto vanskeligere øvelsen."
+      ],
+      "tips": [
+        "Senk forhøyningen når 3×10 repetisjoner føles rene og kontrollerte."
       ]
     },
     "zh": {
@@ -609,6 +662,19 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
         "Blijf op knieopdrukken totdat je 3×8 schone herhalingen kunt doen, ga dan door naar de standaardversie."
       ]
     },
+    "no": {
+      "name": "Armhevning på knærne",
+      "summary": "Enklere variant med knærne på gulvet – ideell for nybegynnere.",
+      "instructions": [
+        "Plasser knærne på gulvet, føttene løftet eller krysset.",
+        "Hendene skulderbredde fra hverandre, hold en rett linje fra knær til skuldre.",
+        "Stabiliser hoften – ingen nedsinking eller piking.",
+        "Senk brystet med kontroll, og press deretter oppover igjen."
+      ],
+      "tips": [
+        "Hold deg til armhevninger på knærne til du kan gjøre 3×8 rene repetisjoner, og gå deretter videre til standardversjonen."
+      ]
+    },
     "zh": {
       "name": "跪姿俯卧撑",
       "summary": "膝盖着地的简化版本——特别适合初学者。",
@@ -728,6 +794,19 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
         "Nuttig bij gevoelige polsen — de belasting verschuift van het gewricht naar de knokkels."
       ]
     },
+    "no": {
+      "name": "Armhevning på knokene",
+      "summary": "Gjøres på knokene i stedet for flate hender – lettere på håndleddene og styrker underarmene.",
+      "instructions": [
+        "Lag knyttneve, støtt på de to første knokene (peke- og langefingerens knoker).",
+        "Hold baksiden av hånden rett – ikke bøy håndleddet.",
+        "Start på en myk overflate (matte, håndkle), gå videre til hardt gulv senere.",
+        "Utfør ellers som en standard armhevning."
+      ],
+      "tips": [
+        "Nyttig for sensitive håndledd – belastningen flyttes fra leddet til knokene."
+      ]
+    },
     "zh": {
       "name": "拳式俯卧撑",
       "summary": "用拳头关节而不是平手做俯卧撑——对腕部压力小，强化前臂。",
@@ -845,6 +924,19 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
       ],
       "tips": [
         "Bouw de excentrische tijd langzaam op: 3 s → 5 s → 8 s over meerdere weken."
+      ]
+    },
+    "no": {
+      "name": "Negativ enarms armhevning",
+      "summary": "Kun nedstigningsfasen gjøres med én arm – en kontrollert eksentrisk bevegelse bygger styrken som trengs til fullbevegelsen.",
+      "instructions": [
+        "Plasser en arm på en benk/forhøyning; føttene bredt for stabilitet.",
+        "Den andre armen på nedre del av ryggen eller hoften; hold kroppen som en planke.",
+        "Senk nedover mot benken over 3-5 sekunder – ingen \"krasj\"-fase.",
+        "Press oppover med begge armene eller fra forhøyningen – den konsentriske fasen gjøres ikke enarmede her."
+      ],
+      "tips": [
+        "Bygg den eksentriske tiden gradvis: 3 s → 5 s → 8 s over flere uker."
       ]
     },
     "zh": {
@@ -974,6 +1066,20 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
         "Herhalingen worden per kant geteld — begin met de dominante kant en evenaar dat op de zwakkere kant."
       ]
     },
+    "no": {
+      "name": "Enarms armhevning",
+      "summary": "Full armhevning med én hånd – kongen blant kroppsvektøvelser.",
+      "instructions": [
+        "Plasser føttene merkbart bredere enn hofteavstanden for maksimal stabilitet (veldig bredt til å begynne med).",
+        "En arm under midten av brystet; den andre på nedre del av ryggen eller hoften.",
+        "Hold kroppen bevisst som en planke – hoften og skulderne må ikke rotere.",
+        "Senk brystet ned til hånden med kontroll, og press deretter rett oppover.",
+        "Ettersom styrken øker, smalner du fotposisjonen gradvis."
+      ],
+      "tips": [
+        "Repetisjoner telles per side – start med den dominante siden og matcher den på den svakere siden."
+      ]
+    },
     "zh": {
       "name": "单臂俯卧撑",
       "summary": "用单手完成的完整俯卧撑——徒手按压的巅峰之作。",
@@ -1075,6 +1181,17 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
         "Andere hand op de lage rug; houd het lichaam als een plank — roteer de heupen niet.",
         "Zak bewust alleen tot de bankhoogte (beperkt bewegingsbereik).",
         "Druk éénarmig omhoog; verlaag de bankhoogte progressief."
+      ],
+      "tips": []
+    },
+    "no": {
+      "name": "Enarms armhevning med redusert ROM",
+      "summary": "Enarms armhevninger over redusert bevegelsesutslag (f.eks. fra en lav benk).",
+      "instructions": [
+        "Plasser én arm på en lav benk/trinn; føttene veldig bredt (minst hofteavstand).",
+        "Den andre armen på nedre del av ryggen; hold kroppen som en planke – ikke roter hoften.",
+        "Senk kontrollert kun ned til benkhøyden (redusert ROM).",
+        "Press oppover med én arm; senk benkhøyden gradvis."
       ],
       "tips": []
     },
@@ -1193,6 +1310,19 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
       ],
       "tips": [
         "Maak het moeilijker: zet de voeten op een verhoging voor een bijna verticale positie."
+      ]
+    },
+    "no": {
+      "name": "Pike armhevning",
+      "summary": "Armhevninger fra en V-form – nær-vertikal press, et springbrett til håndstand armhevninger.",
+      "instructions": [
+        "Fra en firbent posisjon presser du hoften oppover – kroppen danner en invertert V.",
+        "Hendene skulderbredde fra hverandre, ben rette eller litt bøyd, hoften høyt.",
+        "Senk hodet mellom armene mot gulvet – albueleddet følger bakover.",
+        "Press oppover uten å falle ned i en regulær armhevningsposisjon."
+      ],
+      "tips": [
+        "Gjør det vanskeligere: plasser føttene på en forhøyning for en nær-vertikal posisjon."
       ]
     },
     "zh": {
@@ -1330,6 +1460,21 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
         "Ademhaling: inademen bij het zakken, uitademen bij het omhoogdrukken."
       ]
     },
+    "no": {
+      "name": "Standard armhevning",
+      "summary": "Klassisk armhevning med skulderbredde håndposisjon og en rett kroppslinje.",
+      "instructions": [
+        "Hendene skulderbredde fra hverandre, direkte under skulderne, fingrene peker fremover.",
+        "Kroppen danner en rett linje fra hode til hæl – stram magen og setemusklene.",
+        "Albueleddet ved omtrent 45° til kroppen, ikke spredt bredt ut til siden.",
+        "Senk brystet med kontroll til det nesten berører gulvet.",
+        "Press oppover kraftig, ikke lås albueleddet på toppen."
+      ],
+      "tips": [
+        "Se litt fremover på gulvet – ikke strekk nakken.",
+        "Pusting: pust inn på vei ned, pust ut på press oppover."
+      ]
+    },
     "zh": {
       "name": "标准俯卧撑",
       "summary": "经典俯卧撑，双手与肩同宽，身体成一直线。",
@@ -1432,6 +1577,17 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
         "Plaats één hand op de muur op schouderhoogte; de andere hand rust op de lage rug of heup.",
         "Kantel het lichaam als een solide plank richting de muur, buig de elleboog gecontroleerd.",
         "Zak langzaam excentrisch (3 s) naar de muur, druk dan krachtig weg."
+      ],
+      "tips": []
+    },
+    "no": {
+      "name": "Enarms armhevning mot vegg",
+      "summary": "Enarms armhevninger mot en vegg – en sikker inngangsøvelse for enarms-progresjon.",
+      "instructions": [
+        "Stå omtrent en armslengde fra veggen.",
+        "Plasser én arm på veggen i skulderhøyde; den andre armen hviler på nedre del av ryggen eller hoften.",
+        "Vipp kroppen som en solid planke mot veggen, og bøy albueleddet med kontroll.",
+        "Senk med en langsom eksentrisk bevegelse (3 s) mot veggen, og press deretter kraftig bort."
       ],
       "tips": []
     },
@@ -1550,6 +1706,19 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
       ],
       "tips": [
         "Schoudergezondheid: houd de schouderbladen ingetrokken, hang niet in de gewrichten."
+      ]
+    },
+    "no": {
+      "name": "Wide armhevning",
+      "summary": "Bredere håndposisjon som vektlegger brystet og avlaster tricepsen.",
+      "instructions": [
+        "Plasser hendene merkbart bredere enn skuldrene, fingrene vinklet litt utover.",
+        "Albueleddet følger til siden, åpner videre når du senker deg.",
+        "Senk brystet med kontroll med en klar strekkfølelse på tvers av brystet.",
+        "Press oppover bevisst fra brystet – ikke \"jukser\" med tricepsen."
+      ],
+      "tips": [
+        "Skulderhelse: hold skulderbladene trukket sammen, ikke heng i leddene."
       ]
     },
     "zh": {

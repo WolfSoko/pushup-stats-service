@@ -1,8 +1,8 @@
 ---
 slug: pushup-tracker-guide
 publishedAt: '2025-03-10'
-title: "如何用追踪器突破俯卧撑个人纪录"
-description: "为什么数字俯卧撑追踪器能改变一切，Pushup Tracker 如何帮你突破个人最佳成绩并保持坚持。"
+title: '如何用追踪器突破俯卧撑个人纪录'
+description: '为什么数字俯卧撑追踪器能改变一切，Pushup Tracker 如何帮你突破个人最佳成绩并保持坚持。'
 keywords:
   - 俯卧撑追踪应用
   - 俯卧撑应用
@@ -10,7 +10,7 @@ keywords:
   - Pushup Tracker
   - 俯卧撑进度追踪
 heroImage: 'https://images.unsplash.com/photo-1717821681365-36b0da044a75?auto=format&fit=crop&w=1600&q=80'
-heroImageAlt: "运动员在木地板上做规范俯卧撑——进度是重点。"
+heroImageAlt: '运动员在木地板上做规范俯卧撑——进度是重点。'
 heroImageCredit: '图片：<a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'
 ---
 

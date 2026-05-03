@@ -1,8 +1,8 @@
 ---
 slug: 30-day-pushup-challenge
 publishedAt: '2025-11-04'
-title: "30天俯卧撑挑战：最大化进步的完整计划"
-description: "这个结构化的30天挑战帮你逐步增加俯卧撑数量——从第1周到第30天的最终测试。"
+title: '30天俯卧撑挑战：最大化进步的完整计划'
+description: '这个结构化的30天挑战帮你逐步增加俯卧撑数量——从第1周到第30天的最终测试。'
 keywords:
   - 30天俯卧撑挑战
   - 俯卧撑挑战计划
@@ -10,8 +10,8 @@ keywords:
   - 俯卧撑挑战
   - 每日增加俯卧撑次数
 heroImage: 'https://images.unsplash.com/photo-1596079306903-9164c205f400?auto=format&fit=crop&w=1600&q=80'
-heroImageAlt: "运动员在草坪上做俯卧撑——日常挑战。"
-heroImageCredit: "图片：<a href=\"https://unsplash.com\" target=\"_blank\" rel=\"noopener noreferrer\">Unsplash</a>"
+heroImageAlt: '运动员在草坪上做俯卧撑——日常挑战。'
+heroImageCredit: '图片：<a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'
 ---
 
 <h2>30天挑战能带来什么</h2>

@@ -1,8 +1,8 @@
 ---
 slug: pushup-mistakes
 publishedAt: '2026-04-30'
-title: "俯卧撑最常见的7个错误 — 以及如何逐一纠正"
-description: "错误的动作形式会浪费你的训练量、延缓进步，甚至伤害你的肩膀。最常见的俯卧撑错误，每一个都有具体的改正方法。"
+title: '俯卧撑最常见的7个错误 — 以及如何逐一纠正'
+description: '错误的动作形式会浪费你的训练量、延缓进步，甚至伤害你的肩膀。最常见的俯卧撑错误，每一个都有具体的改正方法。'
 keywords:
   - 俯卧撑错误
   - 俯卧撑形式
@@ -10,7 +10,7 @@ keywords:
   - 俯卧撑肩膀疼痛
   - 如何正确做俯卧撑
 heroImage: https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=1600&q=80
-heroImageAlt: "运动员在垫子上保持平板支撑，头部保持中立位置。"
+heroImageAlt: '运动员在垫子上保持平板支撑，头部保持中立位置。'
 heroImageCredit: '图片：<a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'
 ---
 

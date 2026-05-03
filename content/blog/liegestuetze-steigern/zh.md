@@ -1,8 +1,8 @@
 ---
 slug: pushup-progression
 publishedAt: '2025-01-15'
-title: "从0到100：如何系统地增加你的俯卧撑"
-description: "逐步增加俯卧撑的实用指南 — 包括训练计划、技术提示和适当的恢复。"
+title: '从0到100：如何系统地增加你的俯卧撑'
+description: '逐步增加俯卧撑的实用指南 — 包括训练计划、技术提示和适当的恢复。'
 keywords:
   - 增加俯卧撑
   - 更多俯卧撑

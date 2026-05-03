@@ -1,8 +1,8 @@
 ---
 slug: pushups-over-40
 publishedAt: '2026-01-20'
-title: "40岁后的俯卧撑：如何安全有效地训练"
-description: "你的身体在40岁后会发生变化——但俯卧撑仍然是最好的运动之一。学习如何通过正确的调整安全地增强力量。"
+title: '40岁后的俯卧撑：如何安全有效地训练'
+description: '你的身体在40岁后会发生变化——但俯卧撑仍然是最好的运动之一。学习如何通过正确的调整安全地增强力量。'
 keywords:
   - 40岁后俯卧撑
   - 40岁后力量训练
@@ -10,8 +10,8 @@ keywords:
   - 40岁后健身
   - 老年人俯卧撑
 heroImage: 'https://images.unsplash.com/photo-1638820858482-800bd51f63f1?auto=format&fit=crop&w=1600&q=80'
-heroImageAlt: "运动员在户外做标准俯卧撑——40岁后训练。"
-heroImageCredit: "图片：<a href=\"https://unsplash.com\" target=\"_blank\" rel=\"noopener noreferrer\">Unsplash</a>"
+heroImageAlt: '运动员在户外做标准俯卧撑——40岁后训练。'
+heroImageCredit: '图片：<a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>'
 ---
 
 <h2>40岁后身体的变化</h2>
