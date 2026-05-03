@@ -69,3 +69,14 @@ package-lock.json
 .claude/worktrees
 .claude/settings.local.json
 .claude/scheduled_tasks.lock
+
+# Bubblewrap / Android TWA
+# Keystore files must NEVER be committed — they're the app signing identity.
+# Lose the keystore = can't ship updates to the same Play Store listing.
+# Store them in a password manager and document the location offline.
+*.keystore
+*.jks
+mobile/android-twa/build/
+mobile/android-twa/app/build/
+mobile/android-twa/.gradle/
+mobile/android-twa/local.properties
