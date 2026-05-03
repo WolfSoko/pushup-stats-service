@@ -6004,5 +6004,719 @@
         <target>Abrir guía</target>
       </segment>
     </unit>
+    <unit id="plan.day.rest">
+      <segment state="translated">
+        <source>Ruhetag</source>
+        <target>Día de descanso</target>
+      </segment>
+    </unit>
+    <unit id="plan.day.rest.mobility">
+      <segment state="translated">
+        <source>Ruhetag — Mobility</source>
+        <target>Día de descanso — movilidad</target>
+      </segment>
+    </unit>
+    <unit id="plan.day.rest.prepFinal">
+      <segment state="translated">
+        <source>Ruhetag — Vorbereitung Endtest</source>
+        <target>Día de descanso — preparación del test final</target>
+      </segment>
+    </unit>
+    <unit id="plan.day.light">
+      <segment state="translated">
+        <source>Leichter Tag</source>
+        <target>Día ligero</target>
+      </segment>
+    </unit>
+    <unit id="plan.day.activeRecovery">
+      <segment state="translated">
+        <source>Aktive Erholung</source>
+        <target>Recuperación activa</target>
+      </segment>
+    </unit>
+    <unit id="plan.day.mobility.chestStretch">
+      <segment state="translated">
+        <source>Mobility &amp; Brust-Stretching</source>
+        <target>Movilidad &amp; estiramientos de pecho</target>
+      </segment>
+    </unit>
+    <unit id="plan.day.finalTest.maxNoPause">
+      <segment state="translated">
+        <source>Endtest: Maximale Liegestütze ohne Pause</source>
+        <target>Test final: flexiones máximas sin pausa</target>
+      </segment>
+    </unit>
+    <unit id="plan.day.amrap.3x">
+      <segment state="translated">
+        <source>3×AMRAP</source>
+        <target>3×AMRAP</target>
+      </segment>
+    </unit>
+    <unit id="plan.day.amrap.3x90s">
+      <segment state="translated">
+        <source>3×AMRAP, 90 s Pause</source>
+        <target>3×AMRAP, 90 s de pausa</target>
+      </segment>
+    </unit>
+    <unit id="plan.day.amrap.4x">
+      <segment state="translated">
+        <source>4×AMRAP</source>
+        <target>4×AMRAP</target>
+      </segment>
+    </unit>
+    <unit id="plan.day.amrap.4x60s">
+      <segment state="translated">
+        <source>4×AMRAP, 60 s Pause</source>
+        <target>4×AMRAP, 60 s de pausa</target>
+      </segment>
+    </unit>
+    <unit id="plan.day.targetReps.5">
+      <segment state="translated">
+        <source>5 Sätze Zielwiederholungen</source>
+        <target>5 series de repeticiones objetivo</target>
+      </segment>
+    </unit>
+    <unit id="plan.day.sets.4x90s">
+      <segment state="translated">
+        <source>4 Sätze, 90 s Pause</source>
+        <target>4 series, 90 s de pausa</target>
+      </segment>
+    </unit>
+    <unit id="plan.day.sets.3x70pct">
+      <segment state="translated">
+        <source>3 Sätze à 70 %</source>
+        <target>3 series al 70 %</target>
+      </segment>
+    </unit>
+    <unit id="plan.day.light.2x50pct">
+      <segment state="translated">
+        <source>Leichter Tag — 2×50 %</source>
+        <target>Día ligero — 2×50 %</target>
+      </segment>
+    </unit>
+    <unit id="plan.recruit-6w.title">
+      <segment state="translated">
+        <source>Von 0 auf 100 — 6-Wochen-Aufbau</source>
+        <target>De 0 a 100 — plan de 6 semanas</target>
+      </segment>
+    </unit>
+    <unit id="plan.recruit-6w.summary">
+      <segment state="translated">
+        <source>Strukturierter Plan für Einsteiger: drei Trainingstage pro Woche, progressive Belastungssteigerung und ein Endtest in Woche 6.</source>
+        <target>Plan estructurado para principiantes: tres días de entrenamiento por semana, sobrecarga progresiva y test final en la semana 6.</target>
+      </segment>
+    </unit>
+    <unit id="plan.recruit-6w.blogSlug">
+      <segment state="translated">
+        <source>liegestuetze-steigern</source>
+        <target>progresion-flexiones</target>
+      </segment>
+    </unit>
+    <unit id="plan.recruit-6w.day.1.desc">
+      <segment state="translated">
+        <source>3×10 saubere Liegestütze, 90 s Pause</source>
+        <target>3×10 flexiones limpias, 90 s de pausa</target>
+      </segment>
+    </unit>
+    <unit id="plan.recruit-6w.day.2.desc">
+      <segment state="translated">
+        <source>Ruhetag — Stretching, Mobility</source>
+        <target>Día de descanso — estiramientos, movilidad</target>
+      </segment>
+    </unit>
+    <unit id="plan.recruit-6w.day.3.desc">
+      <segment state="translated">
+        <source>3×AMRAP, 90 s Pause (Ziel ≈12-11-10)</source>
+        <target>3×AMRAP, 90 s de pausa (objetivo ≈12-11-10)</target>
+      </segment>
+    </unit>
+    <unit id="plan.recruit-6w.day.6.desc">
+      <segment state="translated">
+        <source>Leichter Tag — 50 % vom Maximum</source>
+        <target>Día ligero — 50 % del máximo</target>
+      </segment>
+    </unit>
+    <unit id="plan.recruit-6w.day.36.desc">
+      <segment state="translated">
+        <source>5 Sätze, volle Bewegungsamplitude</source>
+        <target>5 series, rango completo de movimiento</target>
+      </segment>
+    </unit>
+    <unit id="plan.recruit-6w.day.38.desc">
+      <segment state="translated">
+        <source>5 Sätze, kontrolliertes Tempo</source>
+        <target>5 series, tempo controlado</target>
+      </segment>
+    </unit>
+    <unit id="plan.recruit-6w.day.40.desc">
+      <segment state="translated">
+        <source>5 Sätze leicht</source>
+        <target>5 series ligeras</target>
+      </segment>
+    </unit>
+    <unit id="plan.challenge-30d.title">
+      <segment state="translated">
+        <source>30-Tage-Challenge</source>
+        <target>Desafío de 30 días</target>
+      </segment>
+    </unit>
+    <unit id="plan.challenge-30d.summary">
+      <segment state="translated">
+        <source>Dreißig Tage tägliches Training mit gezielten Ruhetagen. Tag 1 ist der Maximaltest, Tag 30 der Endtest.</source>
+        <target>Treinta días de entrenamiento diario con días de descanso estratégicos. Día 1 es el test máximo, día 30 el test final.</target>
+      </segment>
+    </unit>
+    <unit id="plan.challenge-30d.blogSlug">
+      <segment state="translated">
+        <source>30-tage-liegestuetze-challenge</source>
+        <target>desafio-flexiones-30-dias</target>
+      </segment>
+    </unit>
+    <unit id="plan.challenge-30d.day.1.desc">
+      <segment state="translated">
+        <source>Maximaltest — als Ausgangswert eintragen</source>
+        <target>Test máximo — registra como punto de partida</target>
+      </segment>
+    </unit>
+    <unit id="plan.challenge-30d.day.3.desc">
+      <segment state="translated">
+        <source>Leichter Tag — 2×50 % vom Maximum</source>
+        <target>Día ligero — 2×50 % del máximo</target>
+      </segment>
+    </unit>
+    <unit id="plan.challenge-30d.day.9.desc">
+      <segment state="translated">
+        <source>Leichter Tag — 3×60 % vom Maximum</source>
+        <target>Día ligero — 3×60 % del máximo</target>
+      </segment>
+    </unit>
+    <unit id="plan.challenge-30d.day.15.desc">
+      <segment state="translated">
+        <source>5 Sätze à ~80 % vom Maximum</source>
+        <target>5 series al ~80 % del máximo</target>
+      </segment>
+    </unit>
+    <unit id="plan.challenge-30d.day.22.desc">
+      <segment state="translated">
+        <source>3 Sätze à 70 % — Qualität vor Quantität</source>
+        <target>3 series al 70 % — calidad antes que cantidad</target>
+      </segment>
+    </unit>
+    <unit id="plan.challenge-30d.day.27.desc">
+      <segment state="translated">
+        <source>Aktive Erholung — Spaziergang, Mobility</source>
+        <target>Recuperación activa — paseo, movilidad</target>
+      </segment>
+    </unit>
+    <unit id="plan.challenge-30d.day.29.desc">
+      <segment state="translated">
+        <source>Ruhe vor dem Endtest</source>
+        <target>Descanso antes del test final</target>
+      </segment>
+    </unit>
+    <unit id="plan.over-40-4w.title">
+      <segment state="translated">
+        <source>Liegestütze ab 40 — 4-Wochen-Plan</source>
+        <target>Flexiones a partir de 40 — plan de 4 semanas</target>
+      </segment>
+    </unit>
+    <unit id="plan.over-40-4w.summary">
+      <segment state="translated">
+        <source>Schonender 4-Wochen-Plan für Einsteiger ab 40: Fokus auf saubere Technik, ausreichend Pause und langsames Tempo.</source>
+        <target>Plan suave de 4 semanas para principiantes mayores de 40: técnica limpia, pausas suficientes y tempo lento.</target>
+      </segment>
+    </unit>
+    <unit id="plan.over-40-4w.blogSlug">
+      <segment state="translated">
+        <source>liegestuetze-ab-40</source>
+        <target>flexiones-mayores-40</target>
+      </segment>
+    </unit>
+    <unit id="plan.over-40-4w.day.1.desc">
+      <segment state="translated">
+        <source>Maximaltest mit sauberer Technik</source>
+        <target>Test máximo con técnica limpia</target>
+      </segment>
+    </unit>
+    <unit id="plan.over-40-4w.day.2.desc">
+      <segment state="translated">
+        <source>3×8 Knie- oder erhöhte Liegestütze</source>
+        <target>3×8 flexiones de rodillas o elevadas</target>
+      </segment>
+    </unit>
+    <unit id="plan.over-40-4w.day.4.desc">
+      <segment state="translated">
+        <source>3×9 saubere Liegestütze</source>
+        <target>3×9 flexiones limpias</target>
+      </segment>
+    </unit>
+    <unit id="plan.over-40-4w.day.5.desc">
+      <segment state="translated">
+        <source>Ruhetag — Schulter-Mobility</source>
+        <target>Día de descanso — movilidad de hombros</target>
+      </segment>
+    </unit>
+    <unit id="plan.over-40-4w.day.6.desc">
+      <segment state="translated">
+        <source>3×10 saubere Liegestütze</source>
+        <target>3×10 flexiones limpias</target>
+      </segment>
+    </unit>
+    <unit id="plan.over-40-4w.day.8.desc">
+      <segment state="translated">
+        <source>3×11</source>
+        <target>3×11</target>
+      </segment>
+    </unit>
+    <unit id="plan.over-40-4w.day.10.desc">
+      <segment state="translated">
+        <source>3×12</source>
+        <target>3×12</target>
+      </segment>
+    </unit>
+    <unit id="plan.over-40-4w.day.12.desc">
+      <segment state="translated">
+        <source>3×13</source>
+        <target>3×13</target>
+      </segment>
+    </unit>
+    <unit id="plan.over-40-4w.day.22.desc">
+      <segment state="translated">
+        <source>4 Sätze, kontrolliertes Tempo</source>
+        <target>4 series, tempo controlado</target>
+      </segment>
+    </unit>
+    <unit id="plan.over-40-4w.day.24.desc">
+      <segment state="translated">
+        <source>4 Sätze, langsame Exzentrik</source>
+        <target>4 series, excéntrica lenta</target>
+      </segment>
+    </unit>
+    <unit id="plan.over-40-4w.day.28.desc">
+      <segment state="translated">
+        <source>Endtest: Maximale Liegestütze</source>
+        <target>Test final: flexiones máximas</target>
+      </segment>
+    </unit>
+    <unit id="plan.daily-100-30d.title">
+      <segment state="translated">
+        <source>Daily 100 — 30 Tage zur 100er-Marke</source>
+        <target>Daily 100 — 30 días para llegar a las 100</target>
+      </segment>
+    </unit>
+    <unit id="plan.daily-100-30d.summary">
+      <segment state="translated">
+        <source>30-Tage-Volumenplan: ramp-up von 50 auf 100 saubere Wiederholungen pro Einheit, danach zwei Wochen Konsolidierung. 5 Trainingstage + 1 leichter + 1 Ruhetag pro Woche.</source>
+        <target>Plan de volumen de 30 días: subida de 50 a 100 repeticiones limpias por sesión, después dos semanas de consolidación. 5 días de entrenamiento + 1 ligero + 1 descanso por semana.</target>
+      </segment>
+    </unit>
+    <unit id="plan.daily-100-30d.day.1.desc">
+      <segment state="translated">
+        <source>Baseline-Test: maximale Wiederholungen in einem Satz</source>
+        <target>Test de referencia: repeticiones máximas en una serie</target>
+      </segment>
+    </unit>
+    <unit id="plan.daily-100-30d.day.2.desc">
+      <segment state="translated">
+        <source>5×10 saubere Wiederholungen, 60 s Pause</source>
+        <target>5×10 repeticiones limpias, 60 s de pausa</target>
+      </segment>
+    </unit>
+    <unit id="plan.daily-100-30d.day.3.desc">
+      <segment state="translated">
+        <source>5×12, 60 s Pause</source>
+        <target>5×12, 60 s de pausa</target>
+      </segment>
+    </unit>
+    <unit id="plan.daily-100-30d.day.4.desc">
+      <segment state="translated">
+        <source>5×12, 60 s Pause</source>
+        <target>5×12, 60 s de pausa</target>
+      </segment>
+    </unit>
+    <unit id="plan.daily-100-30d.day.5.desc">
+      <segment state="translated">
+        <source>5×14, 60 s Pause</source>
+        <target>5×14, 60 s de pausa</target>
+      </segment>
+    </unit>
+    <unit id="plan.daily-100-30d.day.6.desc">
+      <segment state="translated">
+        <source>Leichter Tag — 2×15 in lockerem Tempo</source>
+        <target>Día ligero — 2×15 a tempo relajado</target>
+      </segment>
+    </unit>
+    <unit id="plan.daily-100-30d.day.8.desc">
+      <segment state="translated">
+        <source>5×16</source>
+        <target>5×16</target>
+      </segment>
+    </unit>
+    <unit id="plan.daily-100-30d.day.9.desc">
+      <segment state="translated">
+        <source>5×16</source>
+        <target>5×16</target>
+      </segment>
+    </unit>
+    <unit id="plan.daily-100-30d.day.10.desc">
+      <segment state="translated">
+        <source>5×18</source>
+        <target>5×18</target>
+      </segment>
+    </unit>
+    <unit id="plan.daily-100-30d.day.11.desc">
+      <segment state="translated">
+        <source>5×18</source>
+        <target>5×18</target>
+      </segment>
+    </unit>
+    <unit id="plan.daily-100-30d.day.12.desc">
+      <segment state="translated">
+        <source>Erstes Hundert: 5×20</source>
+        <target>Primer centenar: 5×20</target>
+      </segment>
+    </unit>
+    <unit id="plan.daily-100-30d.day.15.desc">
+      <segment state="translated">
+        <source>4×25 (weniger Sätze, mehr Wiederholungen)</source>
+        <target>4×25 (menos series, más repeticiones)</target>
+      </segment>
+    </unit>
+    <unit id="plan.daily-100-30d.day.16.desc">
+      <segment state="translated">
+        <source>5×20</source>
+        <target>5×20</target>
+      </segment>
+    </unit>
+    <unit id="plan.daily-100-30d.day.17.desc">
+      <segment state="translated">
+        <source>4×25</source>
+        <target>4×25</target>
+      </segment>
+    </unit>
+    <unit id="plan.daily-100-30d.day.18.desc">
+      <segment state="translated">
+        <source>5×20</source>
+        <target>5×20</target>
+      </segment>
+    </unit>
+    <unit id="plan.daily-100-30d.day.19.desc">
+      <segment state="translated">
+        <source>4×25 — Tempo bewusst verlangsamen</source>
+        <target>4×25 — ralentiza el tempo conscientemente</target>
+      </segment>
+    </unit>
+    <unit id="plan.daily-100-30d.day.22.desc">
+      <segment state="translated">
+        <source>5×20</source>
+        <target>5×20</target>
+      </segment>
+    </unit>
+    <unit id="plan.daily-100-30d.day.23.desc">
+      <segment state="translated">
+        <source>4×25</source>
+        <target>4×25</target>
+      </segment>
+    </unit>
+    <unit id="plan.daily-100-30d.day.24.desc">
+      <segment state="translated">
+        <source>5×20</source>
+        <target>5×20</target>
+      </segment>
+    </unit>
+    <unit id="plan.daily-100-30d.day.25.desc">
+      <segment state="translated">
+        <source>4×25</source>
+        <target>4×25</target>
+      </segment>
+    </unit>
+    <unit id="plan.daily-100-30d.day.26.desc">
+      <segment state="translated">
+        <source>Letzter 100er-Tag vor dem Test</source>
+        <target>Último día de 100 antes del test</target>
+      </segment>
+    </unit>
+    <unit id="plan.daily-100-30d.day.27.desc">
+      <segment state="translated">
+        <source>Leichter Tag — Form-Check</source>
+        <target>Día ligero — chequeo de técnica</target>
+      </segment>
+    </unit>
+    <unit id="plan.daily-100-30d.day.29.desc">
+      <segment state="translated">
+        <source>Ruhetag — Vorbereitung auf den Endtest</source>
+        <target>Día de descanso — preparación para el test final</target>
+      </segment>
+    </unit>
+    <unit id="plan.daily-100-30d.day.30.desc">
+      <segment state="translated">
+        <source>Endtest: Maximale saubere Wiederholungen in einem Satz</source>
+        <target>Test final: repeticiones limpias máximas en una serie</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.title">
+      <segment state="translated">
+        <source>Einarmige Liegestütze — 12-Wochen-Aufbau</source>
+        <target>Flexiones a un brazo — plan de 12 semanas</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.summary">
+      <segment state="translated">
+        <source>Vier-Phasen-Plan in Richtung saubere einarmige Liegestütze: Archer und Wand-Negativen, Bank-Negativen, partielle Einarmige, schließlich volle Einarmige im weiten Stand. 4 aktive Tage + 3 Ruhetage pro Woche.</source>
+        <target>Plan en cuatro fases hacia una flexión limpia a un brazo: archer y negativas en pared, negativas en banco, parciales a un brazo, finalmente flexiones completas a un brazo en posición amplia. 4 días activos + 3 de descanso por semana.</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.day.1.desc">
+      <segment state="translated">
+        <source>Archer-Liegestütze 3×6</source>
+        <target>Flexiones archer 3×6</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.day.3.desc">
+      <segment state="translated">
+        <source>Wand-Einarmige 3×10 (langsame Exzentrik)</source>
+        <target>Flexiones a un brazo en pared 3×10 (excéntrica lenta)</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.day.5.desc">
+      <segment state="translated">
+        <source>Standard-Liegestütze 3×20 (Volumen)</source>
+        <target>Flexiones estándar 3×20 (volumen)</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.day.6.desc">
+      <segment state="translated">
+        <source>Leichter Tag 2×10</source>
+        <target>Día ligero 2×10</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.day.8.desc">
+      <segment state="translated">
+        <source>Archer 3×8</source>
+        <target>Archer 3×8</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.day.10.desc">
+      <segment state="translated">
+        <source>Wand-Einarmige 3×12</source>
+        <target>Flexiones a un brazo en pared 3×12</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.day.12.desc">
+      <segment state="translated">
+        <source>Standard 3×22</source>
+        <target>Estándar 3×22</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.day.13.desc">
+      <segment state="translated">
+        <source>Leichter Tag 2×12</source>
+        <target>Día ligero 2×12</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.day.15.desc">
+      <segment state="translated">
+        <source>Archer 3×10 — Phase 1 abschließen</source>
+        <target>Archer 3×10 — cerrar la fase 1</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.day.17.desc">
+      <segment state="translated">
+        <source>Wand-Einarmige 3×15</source>
+        <target>Flexiones a un brazo en pared 3×15</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.day.19.desc">
+      <segment state="translated">
+        <source>Standard 3×25</source>
+        <target>Estándar 3×25</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.day.20.desc">
+      <segment state="translated">
+        <source>Leichter Tag 2×14</source>
+        <target>Día ligero 2×14</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.day.22.desc">
+      <segment state="translated">
+        <source>Negative Einarmige von Bank 3×5 (3 s runter)</source>
+        <target>Negativas a un brazo desde banco 3×5 (3 s bajada)</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.day.24.desc">
+      <segment state="translated">
+        <source>Langsame Archer 3×6 (Tempo 3-1-1)</source>
+        <target>Archer lentas 3×6 (tempo 3-1-1)</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.day.26.desc">
+      <segment state="translated">
+        <source>Weite Liegestütze 3×20 (Brust-Volumen)</source>
+        <target>Flexiones amplias 3×20 (volumen pectoral)</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.day.29.desc">
+      <segment state="translated">
+        <source>Negative Einarmige 3×5</source>
+        <target>Negativas a un brazo 3×5</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.day.31.desc">
+      <segment state="translated">
+        <source>Langsame Archer 3×7</source>
+        <target>Archer lentas 3×7</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.day.33.desc">
+      <segment state="translated">
+        <source>Weite Liegestütze 3×20</source>
+        <target>Flexiones amplias 3×20</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.day.34.desc">
+      <segment state="translated">
+        <source>Leichter Tag 2×11</source>
+        <target>Día ligero 2×11</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.day.36.desc">
+      <segment state="translated">
+        <source>Negative Einarmige 3×6</source>
+        <target>Negativas a un brazo 3×6</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.day.38.desc">
+      <segment state="translated">
+        <source>Langsame Archer 3×8 — Phase 2 abschließen</source>
+        <target>Archer lentas 3×8 — cerrar la fase 2</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.day.40.desc">
+      <segment state="translated">
+        <source>Weite Liegestütze 3×~22</source>
+        <target>Flexiones amplias 3×~22</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.day.43.desc">
+      <segment state="translated">
+        <source>Partielle Einarmige (niedrige Bank) 3×4</source>
+        <target>Parciales a un brazo (banco bajo) 3×4</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.day.45.desc">
+      <segment state="translated">
+        <source>Archer mit langem Tempo 3×6</source>
+        <target>Archer con tempo largo 3×6</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.day.47.desc">
+      <segment state="translated">
+        <source>Diamant-Liegestütze 3×12 (Trizeps-Volumen)</source>
+        <target>Flexiones diamante 3×12 (volumen tríceps)</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.day.50.desc">
+      <segment state="translated">
+        <source>Partielle Einarmige 3×4</source>
+        <target>Parciales a un brazo 3×4</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.day.52.desc">
+      <segment state="translated">
+        <source>Archer mit Tempo 3×6</source>
+        <target>Archer con tempo 3×6</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.day.54.desc">
+      <segment state="translated">
+        <source>Diamant 3×13</source>
+        <target>Diamante 3×13</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.day.57.desc">
+      <segment state="translated">
+        <source>Partielle Einarmige 3×5 — Phase 3 abschließen</source>
+        <target>Parciales a un brazo 3×5 — cerrar la fase 3</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.day.59.desc">
+      <segment state="translated">
+        <source>Tempo-Archer 3×7</source>
+        <target>Archer en tempo 3×7</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.day.61.desc">
+      <segment state="translated">
+        <source>Diamant 3×13</source>
+        <target>Diamante 3×13</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.day.64.desc">
+      <segment state="translated">
+        <source>Volle Einarmige (weiter Stand) 3×3</source>
+        <target>Flexiones completas a un brazo (posición amplia) 3×3</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.day.66.desc">
+      <segment state="translated">
+        <source>Einarmige (etwas engerer Stand) 3×4</source>
+        <target>Flexiones a un brazo (posición algo más estrecha) 3×4</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.day.68.desc">
+      <segment state="translated">
+        <source>Standard 3×25</source>
+        <target>Estándar 3×25</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.day.71.desc">
+      <segment state="translated">
+        <source>Volle Einarmige 3×3</source>
+        <target>Flexiones completas a un brazo 3×3</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.day.73.desc">
+      <segment state="translated">
+        <source>Einarmige enger Stand 3×5</source>
+        <target>Flexiones a un brazo posición estrecha 3×5</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.day.75.desc">
+      <segment state="translated">
+        <source>Standard 3×25</source>
+        <target>Estándar 3×25</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.day.78.desc">
+      <segment state="translated">
+        <source>Letzte schwere Einheit 3×3</source>
+        <target>Última sesión pesada 3×3</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.day.80.desc">
+      <segment state="translated">
+        <source>Technik-Taper 2×4 saubere Wiederholungen</source>
+        <target>Taper técnico 2×4 repeticiones limpias</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.day.82.desc">
+      <segment state="translated">
+        <source>Mobility + 2×3 leichte Wiederholungen</source>
+        <target>Movilidad + 2×3 repeticiones ligeras</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.day.83.desc">
+      <segment state="translated">
+        <source>Ruhetag — bereit für Endtest</source>
+        <target>Día de descanso — listo para el test final</target>
+      </segment>
+    </unit>
+    <unit id="plan.one-arm-12w.day.84.desc">
+      <segment state="translated">
+        <source>Endtest: maximale saubere einarmige Liegestütze pro Seite</source>
+        <target>Test final: flexiones limpias a un brazo máximas por lado</target>
+      </segment>
+    </unit>
   </file>
 </xliff>
