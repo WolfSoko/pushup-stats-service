@@ -1,6 +1,7 @@
 import {
   computeLocaleRedirect,
   pickLocale,
+  rewriteWellKnownPath,
   type LocaleRedirectInput,
 } from './server-locale-redirect';
 
@@ -108,6 +109,24 @@ describe('computeLocaleRedirect', () => {
       }
     });
 
+    it('Skips /.well-known/* paths so external verifiers (Google Digital Asset Links etc.) reach the file at the unprefixed URL', () => {
+      // The Bubblewrap-generated assetlinks.json must be served at
+      // `/.well-known/assetlinks.json` exactly — redirecting to
+      // `/de/.well-known/...` would silently break TWA verification.
+      // The trailing-slash and bare-prefix variants are also covered
+      // because `lastSegment.includes('.')` doesn't catch them.
+      for (const path of [
+        '/.well-known/assetlinks.json',
+        '/.well-known/security.txt',
+        '/.well-known/',
+        '/.well-known',
+      ]) {
+        expect(computeLocaleRedirect(input({ path, url: path }))).toEqual({
+          kind: 'pass',
+        });
+      }
+    });
+
     it('Skips paths whose last segment carries a file extension', () => {
       expect(
         computeLocaleRedirect(
@@ -190,5 +209,43 @@ describe('computeLocaleRedirect', () => {
         /^\/de\/u\/abc$/
       );
     });
+  });
+});
+
+describe('rewriteWellKnownPath', () => {
+  it('Given a whitelisted /.well-known/ path, When rewriting, Then proxies to /de/.well-known/<file>', () => {
+    expect(rewriteWellKnownPath('/.well-known/assetlinks.json')).toBe(
+      '/de/.well-known/assetlinks.json'
+    );
+  });
+
+  it('Given a non-whitelisted filename under /.well-known/, When rewriting, Then returns null so the request falls through unchanged', () => {
+    // Whitelist enforcement: prevents the rewrite from acting as a
+    // path-traversal sink for arbitrary `.well-known` URLs that might
+    // collide with future Angular routes.
+    for (const path of [
+      '/.well-known/security.txt',
+      '/.well-known/random.json',
+    ]) {
+      expect(rewriteWellKnownPath(path)).toBeNull();
+    }
+  });
+
+  it('Given a nested /.well-known/ path, When rewriting, Then returns null (only direct children are proxied)', () => {
+    // The regex anchors `[^/]+` so deeper paths fall through. Keeps the
+    // surface area minimal — extend deliberately rather than by accident.
+    expect(rewriteWellKnownPath('/.well-known/foo/bar.json')).toBeNull();
+  });
+
+  it('Given a non-/.well-known/ path, When rewriting, Then returns null', () => {
+    for (const path of [
+      '/',
+      '/de',
+      '/u/abc123',
+      '/assetlinks.json',
+      '/well-known/assetlinks.json',
+    ]) {
+      expect(rewriteWellKnownPath(path)).toBeNull();
+    }
   });
 });

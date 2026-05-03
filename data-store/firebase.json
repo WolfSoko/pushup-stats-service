@@ -26,7 +26,12 @@
   },
   "hosting": {
     "public": "hosting-public",
-    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "ignore": [
+      "firebase.json",
+      "**/node_modules/**",
+      "**/.git/**",
+      "**/.DS_Store"
+    ],
     "redirects": [
       {
         "source": "/",

@@ -62,6 +62,42 @@ export const ROOT_FILES: ReadonlySet<string> = new Set([
 ]);
 
 /**
+ * Path prefixes that must always be served unprefixed because external
+ * verifiers fetch them at the exact URL (Google Digital Asset Links,
+ * `acme-challenge`, `security.txt`, etc.). Redirecting `/.well-known/x`
+ * to `/de/.well-known/x` would silently break TWA / Android App Links
+ * verification.
+ */
+const RESERVED_FIRST_SEGMENTS: ReadonlySet<string> = new Set(['.well-known']);
+
+/**
+ * Files served from `/.well-known/<file>` that need to be proxied to
+ * the localised build output (which is the only place the Angular
+ * asset pipeline emits them). The whitelist prevents the rewrite from
+ * being abused as a path-traversal vector for arbitrary `.well-known`
+ * URLs.
+ */
+export const WELL_KNOWN_FILES: ReadonlySet<string> = new Set([
+  // Google Digital Asset Links — verifies TWA / Android App Links.
+  'assetlinks.json',
+]);
+
+/**
+ * Pure decision logic for the `.well-known` rewrite middleware.
+ * Returns the new request path that should be used to look up the
+ * file in the localised build output, or `null` to leave the request
+ * untouched. Only matches direct children of `/.well-known/` against
+ * `WELL_KNOWN_FILES` — nested paths and arbitrary filenames fall
+ * through to the regular static / Angular pipeline.
+ */
+export function rewriteWellKnownPath(path: string): string | null {
+  const match = /^\/\.well-known\/([^/]+)$/.exec(path);
+  if (!match) return null;
+  if (!WELL_KNOWN_FILES.has(match[1])) return null;
+  return `/de${path}`;
+}
+
+/**
  * Restricted to URL-safe app-route characters. Anything outside
  * (backslashes, control characters, exotic Unicode) falls through to
  * Angular instead of being redirected — defense-in-depth against
@@ -162,6 +198,7 @@ export function computeLocaleRedirect(
   const firstSegment = path.split('/')[1] ?? '';
   if (LOCALE_PREFIXES.has(firstSegment)) return { kind: 'pass' };
   if (ROOT_FILES.has(firstSegment)) return { kind: 'pass' };
+  if (RESERVED_FIRST_SEGMENTS.has(firstSegment)) return { kind: 'pass' };
 
   const lastSegment = path.split('/').pop() ?? '';
   if (lastSegment.includes('.')) return { kind: 'pass' };

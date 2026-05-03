@@ -12,7 +12,10 @@ import { join } from 'node:path';
 import { pino } from 'pino';
 import { pinoHttp } from 'pino-http';
 
-import { computeLocaleRedirect } from './server-locale-redirect';
+import {
+  computeLocaleRedirect,
+  rewriteWellKnownPath,
+} from './server-locale-redirect';
 
 const isProduction = process.env['NODE_ENV'] === 'production';
 
@@ -49,6 +52,22 @@ app.use((req, res, next) => {
     const originalSuffix = req.url.slice(req.path.length);
     req.url = `/de/${file}${originalSuffix}`;
     // Short cache – crawlers need fresh robots/sitemap, not the 1y static default
+    res.setHeader('Cache-Control', 'public, max-age=3600');
+  }
+  next();
+});
+
+// Serve files under `/.well-known/` from the /de build output. Used by
+// Google's Digital Asset Links verifier (TWA / Android App Links) and
+// by other domain-verification flows that REQUIRE the file to live at
+// the unprefixed root path. The whitelist of allowed filenames lives
+// in `./server-locale-redirect` so it stays unit-testable.
+app.use((req, res, next) => {
+  const rewritten = rewriteWellKnownPath(req.path);
+  if (rewritten) {
+    const originalSuffix = req.url.slice(req.path.length);
+    req.url = `${rewritten}${originalSuffix}`;
+    // Short cache so Bubblewrap fingerprint rotations propagate quickly
     res.setHeader('Cache-Control', 'public, max-age=3600');
   }
   next();
