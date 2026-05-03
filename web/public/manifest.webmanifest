@@ -2,7 +2,7 @@
   "id": "/?source=pwa",
   "name": "Pushup Stats",
   "short_name": "Pushups",
-  "description": "Track push-ups, follow training plans, and compete on the leaderboard.",
+  "description": "Push-ups tracken, Trainingsplänen folgen und in der Bestenliste mithalten.",
   "lang": "de",
   "dir": "ltr",
   "categories": ["health", "fitness", "lifestyle"],
