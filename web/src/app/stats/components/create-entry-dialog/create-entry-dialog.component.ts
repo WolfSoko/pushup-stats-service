@@ -116,6 +116,22 @@ interface TypeOption {
       .type-help {
         margin-top: 12px;
       }
+      .type-option {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        width: 100%;
+      }
+      .type-option-info {
+        font-size: 18px;
+        width: 18px;
+        height: 18px;
+        line-height: 18px;
+        color: var(--mat-sys-on-surface-variant);
+        cursor: help;
+        flex: 0 0 auto;
+      }
     `,
   ],
   template: `
@@ -204,13 +220,22 @@ interface TypeOption {
             [displayWith]="displayType"
           >
             @for (option of filteredTypeOptions$ | async; track option.value) {
-              <mat-option
-                [value]="option.value"
-                [matTooltip]="tooltipFor(option.value)"
-                matTooltipPosition="right"
-                matTooltipTouchGestures="off"
-                >{{ option.label }}</mat-option
-              >
+              <mat-option [value]="option.value">
+                <span class="type-option">
+                  <span>{{ option.label }}</span>
+                  @if (tooltipFor(option.value); as info) {
+                    <mat-icon
+                      class="type-option-info"
+                      [matTooltip]="info"
+                      matTooltipPosition="right"
+                      [attr.aria-label]="info"
+                      role="img"
+                      (click)="$event.stopPropagation()"
+                      >info_outline</mat-icon
+                    >
+                  }
+                </span>
+              </mat-option>
             }
           </mat-autocomplete>
         </mat-form-field>
