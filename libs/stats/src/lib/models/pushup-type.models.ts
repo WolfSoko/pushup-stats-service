@@ -731,6 +731,10 @@ export function pushupTypeSlugByLocale(
  * Look up a catalog entry by the entry-dialog's stored label
  * (case-insensitive). Returns null when the label is unknown — e.g.
  * when the user typed a custom value.
+ *
+ * **Legacy.** Older Firestore docs persist this label as
+ * `PushupRecord.type`; new docs use the catalog `id` instead. Read sites
+ * should use {@link findPushupTypeByStoredValue} so both formats resolve.
  */
 export function findPushupTypeByEntryLabel(
   label: string | null | undefined
@@ -740,11 +744,63 @@ export function findPushupTypeByEntryLabel(
 }
 
 /**
+ * Resolves a stored `PushupRecord.type` value back to a catalog entry.
+ * Accepts the canonical kebab-case `id` (e.g. `'diamond'`) emitted by
+ * the entry dialog AND the legacy English `entryLabel` (e.g.
+ * `'Diamond'`) found on older docs. Returns null for custom strings.
+ */
+export function findPushupTypeByStoredValue(
+  stored: string | null | undefined
+): PushupTypeInfo | null {
+  if (!stored) return null;
+  const needle = stored.toLowerCase().trim();
+  if (!needle) return null;
+  const byId = TYPES_BY_ID.get(needle as PushupTypeId);
+  if (byId) return byId;
+  return TYPES_BY_ENTRY_LABEL.get(needle) ?? null;
+}
+
+/**
+ * Normalizes a stored `PushupRecord.type` value to a single key suitable
+ * for filtering/aggregation. Catalog matches collapse to the canonical
+ * `id`, so legacy `'Diamond'` and new `'diamond'` docs share the same
+ * bucket. Custom strings are returned trimmed (case-preserved) so the
+ * filter dropdown still shows whatever the user typed.
+ */
+export function canonicalizePushupType(
+  stored: string | null | undefined
+): string {
+  const match = findPushupTypeByStoredValue(stored);
+  if (match) return match.id;
+  return (stored ?? '').trim();
+}
+
+/**
+ * Locale-aware display string for a stored `PushupRecord.type`. Maps
+ * both the canonical `id` and the legacy English `entryLabel` to the
+ * localized name from the catalog; custom user-typed strings pass
+ * through unchanged. Falls back to the localized "Standard" label when
+ * the value is empty/missing — matching the historical
+ * `entry.type || 'Standard'` rendering.
+ */
+export function displayPushupType(
+  stored: string | null | undefined,
+  locale: string
+): string {
+  const match = findPushupTypeByStoredValue(stored);
+  if (match) return localizePushupType(match, locale).name;
+  const trimmed = (stored ?? '').trim();
+  if (trimmed) return trimmed;
+  const standard = TYPES_BY_ID.get('standard');
+  return standard ? localizePushupType(standard, locale).name : 'Standard';
+}
+
+/**
  * Resolves a user-facing string back to a catalog entry. Matches in this
- * order: canonical English `entryLabel` → localized name for the active
- * locale → localized name in English (as a fallback so a user pasting an
- * English name into a translated UI still resolves). Returns null for
- * custom values typed by the user.
+ * order: canonical id → legacy English `entryLabel` → localized name for
+ * the active locale → localized name in English (as a fallback so a user
+ * pasting an English name into a translated UI still resolves). Returns
+ * null for custom values typed by the user.
  *
  * Why English fallback: `entryLabel` (e.g. "One-Arm") and the English
  * display name (e.g. "One-arm push-up") differ, and users frequently
@@ -754,8 +810,8 @@ export function findPushupTypeByLocalizedName(
   name: string | null | undefined,
   locale: string
 ): PushupTypeInfo | null {
-  const byLabel = findPushupTypeByEntryLabel(name);
-  if (byLabel) return byLabel;
+  const byStored = findPushupTypeByStoredValue(name);
+  if (byStored) return byStored;
   if (!name) return null;
   const needle = name.toLowerCase().trim();
   if (!needle) return null;

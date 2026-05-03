@@ -12,7 +12,9 @@ import { firstValueFrom, of } from 'rxjs';
 import { StatsApiService, UserStatsApiService } from '@pu-stats/data-access';
 import { UserContextService } from '@pu-auth/auth';
 import {
+  canonicalizePushupType,
   createWeekRange,
+  displayPushupType,
   inferRangeMode,
   PushupRecord,
   StatsGranularity,
@@ -282,18 +284,21 @@ export const AnalysisStore = signalStore(
     });
 
     const typeBreakdown = computed<TypeBreakdownDatum[]>(() => {
+      // Canonicalize before bucketing so legacy entryLabel ("Diamond")
+      // and the new canonical id ("diamond") collapse into a single
+      // bucket; render the localized display name as the chart label.
       const byType = new Map<string, { reps: number; allSets: number[] }>();
       for (const row of rows()) {
-        const type = (row.type || 'Standard').trim() || 'Standard';
-        const entry = byType.get(type) ?? { reps: 0, allSets: [] };
+        const key = canonicalizePushupType(row.type) || 'standard';
+        const entry = byType.get(key) ?? { reps: 0, allSets: [] };
         entry.reps += row.reps;
         if (row.sets?.length) entry.allSets.push(...row.sets);
-        byType.set(type, entry);
+        byType.set(key, entry);
       }
       return [...byType.entries()]
         .sort((a, b) => b[1].reps - a[1].reps)
-        .map(([label, { reps, allSets }]) => ({
-          label,
+        .map(([key, { reps, allSets }]) => ({
+          label: displayPushupType(key, store._locale),
           value: reps,
           avgSetSize: allSets.length
             ? Math.round(

@@ -1,5 +1,11 @@
 import { isPlatformBrowser } from '@angular/common';
-import { computed, inject, PLATFORM_ID, resource } from '@angular/core';
+import {
+  computed,
+  inject,
+  LOCALE_ID,
+  PLATFORM_ID,
+  resource,
+} from '@angular/core';
 import {
   patchState,
   signalStore,
@@ -10,7 +16,16 @@ import {
 } from '@ngrx/signals';
 import { firstValueFrom } from 'rxjs';
 import { LiveDataStore, StatsApiService } from '@pu-stats/data-access';
+import { canonicalizePushupType, displayPushupType } from '@pu-stats/models';
 import { AppDataFacade } from '../core/app-data.facade';
+
+export interface PushupTypeFilterOption {
+  /** Canonical filter key (catalog `id` for catalog matches, trimmed
+   * raw string for custom user-typed types). */
+  value: string;
+  /** Locale-aware display string for the dropdown. */
+  label: string;
+}
 
 type EntriesState = {
   from: string;
@@ -43,6 +58,7 @@ export const EntriesStore = signalStore(
     _live: inject(LiveDataStore),
     _appData: inject(AppDataFacade),
     _isBrowser: isPlatformBrowser(inject(PLATFORM_ID)),
+    _locale: inject(LOCALE_ID) as string,
   })),
   withProps((store) => ({
     _entriesResource: resource({
@@ -72,16 +88,24 @@ export const EntriesStore = signalStore(
         ),
       ].sort((a, b) => a.localeCompare(b))
     ),
-    typeOptions: computed(() =>
-      [
-        ...new Set(
-          store
-            .rows()
-            .map((x) => x.type || 'Standard')
-            .filter(Boolean)
-        ),
-      ].sort((a, b) => a.localeCompare(b))
-    ),
+    typeOptions: computed<PushupTypeFilterOption[]>(() => {
+      // Canonicalize first so legacy "Diamond" and new "diamond" docs
+      // collapse into one filter option. The dropdown then renders the
+      // localized label while the selected value remains the canonical
+      // key that drives `filteredRows`.
+      const seen = new Map<string, PushupTypeFilterOption>();
+      for (const row of store.rows()) {
+        const value = canonicalizePushupType(row.type) || 'standard';
+        if (seen.has(value)) continue;
+        seen.set(value, {
+          value,
+          label: displayPushupType(value, store._locale),
+        });
+      }
+      return [...seen.values()].sort((a, b) =>
+        a.label.localeCompare(b.label, store._locale)
+      );
+    }),
     filteredRows: computed(() => {
       const source = store.source();
       const type = store.type();
@@ -95,7 +119,10 @@ export const EntriesStore = signalStore(
         if (from && date < from) return false;
         if (to && date > to) return false;
         if (source && row.source !== source) return false;
-        if (type && (row.type || 'Standard') !== type) return false;
+        if (type) {
+          const rowKey = canonicalizePushupType(row.type) || 'standard';
+          if (rowKey !== type) return false;
+        }
         if (repsMin !== null && row.reps < repsMin) return false;
         if (repsMax !== null && row.reps > repsMax) return false;
         return true;

@@ -39,8 +39,8 @@ describe('CreateEntryDialogComponent', () => {
       expect(component.timestamp()).toBe('2025-01-15T12:00');
     });
 
-    it('Then type defaults to Standard', () => {
-      expect(component.typeControl.value).toBe('Standard');
+    it('Then type defaults to the canonical "standard" id', () => {
+      expect(component.typeControl.value).toBe('standard');
     });
 
     it('Then source defaults to web', () => {
@@ -64,8 +64,12 @@ describe('CreateEntryDialogComponent', () => {
       expect(component.tooltipFor('Unknown')).toBe('');
     });
 
-    it('Then `displayType` maps the canonical entryLabel to the localized name', () => {
+    it('Then `displayType` maps both the canonical id and the legacy entryLabel to the localized name', () => {
       // TestBed default locale is `de` (the app's source locale).
+      // New canonical id form:
+      expect(component.displayType('standard')).toBe('Standard-Liegestütze');
+      expect(component.displayType('diamond')).toBe('Diamant-Liegestütze');
+      // Legacy entryLabel form (still on older Firestore docs):
       expect(component.displayType('Standard')).toBe('Standard-Liegestütze');
       expect(component.displayType('Diamond')).toBe('Diamant-Liegestütze');
     });
@@ -130,29 +134,30 @@ describe('CreateEntryDialogComponent', () => {
   });
 
   describe('Given submit is called with valid data', () => {
-    it('Then dialogRef.close is called with sets and computed reps', () => {
+    it('Then dialogRef.close is called with sets and the canonical id', () => {
       // Given
       component.timestamp.set('2025-01-15T10:30');
       component.sets.set([10, 15]);
-      component.typeControl.setValue('Diamond');
+      component.typeControl.setValue('diamond');
       component.sourceControl.setValue('web');
 
       // When
       component.submit();
 
-      // Then — timestamp now includes local timezone offset (e.g. '+01:00')
+      // Then — Firestore receives the canonical kebab-case id
+      // (language-agnostic), and timestamp picks up the local offset.
       expect(closeSpy).toHaveBeenCalledWith<[CreateEntryResult]>({
         timestamp: expect.stringMatching(/^2025-01-15T10:30[+-]\d{2}:\d{2}$/),
         reps: 25,
         sets: [10, 15],
         source: 'web',
-        type: 'Diamond',
+        type: 'diamond',
       });
     });
 
-    it('Then a localized type name is persisted as the canonical English entryLabel', () => {
-      // The dialog shows localized labels but Firestore must keep the
-      // canonical English `entryLabel` so aggregations stay locale-agnostic.
+    it('Then a localized type name is persisted as the canonical id', () => {
+      // The dialog shows localized labels but persists the kebab-case id
+      // so aggregations stay locale-agnostic.
       component.timestamp.set('2025-01-15T10:30');
       component.sets.set([10]);
       component.typeControl.setValue('Diamant-Liegestütze');
@@ -160,7 +165,22 @@ describe('CreateEntryDialogComponent', () => {
       component.submit();
 
       expect(closeSpy).toHaveBeenCalledWith(
-        expect.objectContaining({ type: 'Diamond' })
+        expect.objectContaining({ type: 'diamond' })
+      );
+    });
+
+    it('Then a legacy English entryLabel is rewritten to the canonical id', () => {
+      // Useful when re-saving an old entry without otherwise touching it:
+      // the dialog still resolves "Diamond" → "diamond" so the doc moves
+      // forward to the new format.
+      component.timestamp.set('2025-01-15T10:30');
+      component.sets.set([10]);
+      component.typeControl.setValue('Diamond');
+
+      component.submit();
+
+      expect(closeSpy).toHaveBeenCalledWith(
+        expect.objectContaining({ type: 'diamond' })
       );
     });
 

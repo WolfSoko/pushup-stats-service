@@ -1,9 +1,12 @@
 import {
+  canonicalizePushupType,
   detectPushupTypes,
+  displayPushupType,
   findPushupType,
   findPushupTypeByEntryLabel,
   findPushupTypeByLocalizedName,
   findPushupTypeBySlug,
+  findPushupTypeByStoredValue,
   localizePushupType,
   localizePushupTypeSlug,
   PUSHUP_TYPES,
@@ -141,6 +144,71 @@ describe('pushup-type catalog', () => {
       expect(findPushupTypeByLocalizedName(null, 'de')).toBeNull();
       expect(findPushupTypeByLocalizedName(undefined, 'de')).toBeNull();
       expect(findPushupTypeByLocalizedName('My-Custom-Move', 'de')).toBeNull();
+    });
+  });
+
+  describe('findPushupTypeByStoredValue', () => {
+    it('resolves the new canonical id', () => {
+      expect(findPushupTypeByStoredValue('diamond')?.id).toBe('diamond');
+      expect(findPushupTypeByStoredValue('  one-arm  ')?.id).toBe('one-arm');
+    });
+
+    it('resolves the legacy English entryLabel', () => {
+      expect(findPushupTypeByStoredValue('Diamond')?.id).toBe('diamond');
+      expect(findPushupTypeByStoredValue('Wall One-Arm')?.id).toBe(
+        'wall-one-arm'
+      );
+    });
+
+    it('returns null for empty or custom strings', () => {
+      expect(findPushupTypeByStoredValue('')).toBeNull();
+      expect(findPushupTypeByStoredValue(null)).toBeNull();
+      expect(findPushupTypeByStoredValue(undefined)).toBeNull();
+      expect(findPushupTypeByStoredValue('My-Custom-Move')).toBeNull();
+    });
+  });
+
+  describe('canonicalizePushupType', () => {
+    it('collapses legacy entryLabel and new id to the same key', () => {
+      expect(canonicalizePushupType('Diamond')).toBe('diamond');
+      expect(canonicalizePushupType('diamond')).toBe('diamond');
+      expect(canonicalizePushupType('Wall One-Arm')).toBe('wall-one-arm');
+    });
+
+    it('returns the trimmed input unchanged for custom strings', () => {
+      expect(canonicalizePushupType('  My-Custom-Move ')).toBe(
+        'My-Custom-Move'
+      );
+    });
+
+    it('returns an empty string for empty / nullish input', () => {
+      expect(canonicalizePushupType('')).toBe('');
+      expect(canonicalizePushupType(null)).toBe('');
+      expect(canonicalizePushupType(undefined)).toBe('');
+    });
+  });
+
+  describe('displayPushupType', () => {
+    it('renders the localized name for the canonical id', () => {
+      expect(displayPushupType('diamond', 'de')).toBe('Diamant-Liegestütze');
+      expect(displayPushupType('diamond', 'en')).toBe('Diamond push-up');
+    });
+
+    it('renders the localized name for the legacy entryLabel', () => {
+      expect(displayPushupType('Diamond', 'de')).toBe('Diamant-Liegestütze');
+      expect(displayPushupType('Wall One-Arm', 'en')).toBe(
+        'Wall one-arm push-up'
+      );
+    });
+
+    it('echoes custom typed values unchanged', () => {
+      expect(displayPushupType('My-Custom-Move', 'de')).toBe('My-Custom-Move');
+    });
+
+    it('falls back to localized "Standard" for empty / nullish input', () => {
+      expect(displayPushupType('', 'de')).toBe('Standard-Liegestütze');
+      expect(displayPushupType(null, 'de')).toBe('Standard-Liegestütze');
+      expect(displayPushupType(undefined, 'en')).toBe('Standard push-up');
     });
   });
 

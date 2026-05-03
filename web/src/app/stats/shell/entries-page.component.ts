@@ -75,8 +75,10 @@ import { EntriesStore } from '../entries.store';
                 <mat-option value="" i18n="@@entries.allOption"
                   >Alle</mat-option
                 >
-                @for (option of store.typeOptions(); track option) {
-                  <mat-option [value]="option">{{ option }}</mat-option>
+                @for (option of store.typeOptions(); track option.value) {
+                  <mat-option [value]="option.value">{{
+                    option.label
+                  }}</mat-option>
                 }
               </mat-select>
             </mat-form-field>

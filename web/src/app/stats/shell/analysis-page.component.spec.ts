@@ -220,11 +220,14 @@ describe('AnalysisPageComponent', () => {
     const { store } = fixture.componentInstance;
     const breakdown = store.typeBreakdown();
 
-    // Standard: 10 + 25 + 18 = 53, Diamond: 12 + 20 = 32, Wide: 8
+    // The store now canonicalizes the stored value (legacy entryLabel
+    // OR new id) and renders the localized name. TestBed default locale
+    // is `de` (the app source locale), so labels appear in German.
+    // Totals: Standard 10 + 25 + 18 = 53, Diamond 12 + 20 = 32, Wide 8.
     expect(breakdown.map(({ label, value }) => ({ label, value }))).toEqual([
-      { label: 'Standard', value: 53 },
-      { label: 'Diamond', value: 32 },
-      { label: 'Wide', value: 8 },
+      { label: 'Standard-Liegestütze', value: 53 },
+      { label: 'Diamant-Liegestütze', value: 32 },
+      { label: 'Weite Liegestütze', value: 8 },
     ]);
   });
 
@@ -268,10 +271,10 @@ describe('AnalysisPageComponent', () => {
     const { store } = fixture.componentInstance;
     const breakdown = store.typeBreakdown();
     // Standard: sets [5,5] + [10,8,7] + [9,9] = [5,5,10,8,7,9,9] → avg = 53/7 ≈ 7.6
-    const standard = breakdown.find((t) => t.label === 'Standard');
+    const standard = breakdown.find((t) => t.label === 'Standard-Liegestütze');
     expect(standard?.avgSetSize).toBeGreaterThan(0);
     // Wide: no sets → avgSetSize = 0
-    const wide = breakdown.find((t) => t.label === 'Wide');
+    const wide = breakdown.find((t) => t.label === 'Weite Liegestütze');
     expect(wide?.avgSetSize).toBe(0);
   });
 

@@ -292,7 +292,7 @@ The wiki catalog has two parts: **structural metadata** (referenced by code) liv
 1. **Add the structural entry** in `libs/stats/src/lib/models/pushup-type.models.ts`:
    - Append a new entry to `PUSHUP_TYPES` with: `id`, `slug`, `entryLabel`, `difficulty`, `keywordsDe[]`, `keywordsEn[]`. (The `name`/`nameEn`/`summary`/`summaryEn`/`instructions*`/`tips*` fields are now legacy duplicates of the markdown content — leave them populated until a follow-up cleanup removes them from `PushupTypeInfo`.)
    - Extend the `PushupTypeId` union with the new `id` literal.
-   - **Do NOT rename `id` or `entryLabel` of an existing entry** — `PushupRecord.type` stores `entryLabel` in Firestore. Renames need a migration.
+   - **Do NOT rename `id` of an existing entry** — `PushupRecord.type` stores the kebab-case catalog `id` in Firestore (and read paths still tolerate the legacy English `entryLabel` from older docs). Renaming `id` would orphan existing rows. `entryLabel` is now read-path-only legacy and only kept so old docs keep resolving via `findPushupTypeByStoredValue` / `canonicalizePushupType` / `displayPushupType`.
 
 2. **Add one markdown file per locale**:
 

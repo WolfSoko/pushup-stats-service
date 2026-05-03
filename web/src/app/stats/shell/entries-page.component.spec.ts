@@ -76,8 +76,11 @@ describe('EntriesPageComponent', () => {
   });
 
   it('applies source, type and reps filter', () => {
+    // The filter dropdown emits canonical kebab-case ids. Legacy
+    // entryLabel rows ("Wide") still match because the store
+    // canonicalizes both sides before comparing.
     store.setSource('wa');
-    store.setType('Wide');
+    store.setType('wide');
     store.setRepsMin(11);
 
     expect(store.filteredRows().map((x: any) => x._id)).toEqual(['3']);

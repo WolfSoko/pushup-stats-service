@@ -24,8 +24,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterLink } from '@angular/router';
 import {
   appendLocalOffset,
-  findPushupTypeByEntryLabel,
   findPushupTypeByLocalizedName,
+  findPushupTypeByStoredValue,
   localizePushupType,
   PUSHUP_TYPES,
   PushupTypeInfo,
@@ -48,7 +48,7 @@ export interface CreateEntryResult {
 }
 
 interface TypeOption {
-  /** Canonical English `entryLabel` persisted to Firestore. */
+  /** Canonical kebab-case `id` persisted to Firestore. */
   value: string;
   /** Locale-aware display name shown in the autocomplete. */
   label: string;
@@ -284,9 +284,15 @@ export class CreateEntryDialogComponent {
   readonly totalReps = computed(() =>
     this.sets().reduce((sum, s) => sum + (s > 0 ? s : 0), 0)
   );
+  // For edit mode keep the stored value verbatim — it may be a legacy
+  // English entryLabel ("Diamond") or the new canonical id ("diamond").
+  // `displayType` resolves both to the localized name; `submit()` then
+  // canonicalizes back to id before persisting.
   readonly typeControl = new FormControl<string>(
-    this.data?.type || 'Standard',
-    { nonNullable: true }
+    this.data?.type || 'standard',
+    {
+      nonNullable: true,
+    }
   );
   readonly sourceControl = new FormControl<string>(
     this.normalizeSource(this.data?.source || 'web'),
@@ -297,11 +303,12 @@ export class CreateEntryDialogComponent {
   // wiki catalog so adding a new variation in
   // `pushup-type.models.ts` automatically surfaces it here. The
   // dropdown shows the localized `label` (e.g. "Diamant-Liegestütze")
-  // while `value` keeps the canonical English `entryLabel` that gets
-  // persisted to Firestore — see `submit()`.
+  // while `value` carries the canonical kebab-case `id` that gets
+  // persisted to Firestore — see `submit()`. `id` is language-agnostic
+  // so the persisted value never depends on UI translations.
   private readonly typeOptions: ReadonlyArray<TypeOption> = PUSHUP_TYPES.map(
     (t) => ({
-      value: t.entryLabel,
+      value: t.id,
       label: localizePushupType(t, this.locale).name,
     })
   );
@@ -319,7 +326,10 @@ export class CreateEntryDialogComponent {
 
   readonly displayType = (value: string | null | undefined): string => {
     if (!value) return '';
-    const match = findPushupTypeByEntryLabel(value);
+    // Resolves both the new canonical id and the legacy entryLabel found
+    // on older Firestore docs, so edit-mode pre-fills render correctly
+    // regardless of when the entry was written.
+    const match = findPushupTypeByStoredValue(value);
     return match ? localizePushupType(match, this.locale).name : value;
   };
 
@@ -381,12 +391,13 @@ export class CreateEntryDialogComponent {
     const reps = validSets.reduce((sum, s) => sum + s, 0);
     if (!this.timestamp() || reps <= 0) return;
 
-    const rawType = (this.typeControl.value || '').trim() || 'Standard';
-    // Keep Firestore on canonical English entryLabels — when the user
-    // selected a localized option (or typed one verbatim) we map it back
-    // to the catalog. Custom typed values pass through unchanged.
+    const rawType = (this.typeControl.value || '').trim() || 'standard';
+    // Persist the language-agnostic catalog `id` whenever the value maps
+    // to a known type — selection, typed localized name, or a legacy
+    // entryLabel ("Diamond" → "diamond"). Custom typed values pass
+    // through unchanged.
     const matchedType = this.resolveType(rawType);
-    const type = matchedType ? matchedType.entryLabel : rawType;
+    const type = matchedType ? matchedType.id : rawType;
     const source = this.normalizeSource(
       (this.sourceControl.value || '').trim() || 'web'
     );

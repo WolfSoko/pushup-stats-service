@@ -89,7 +89,7 @@
         >Typ</mat-header-cell
       >
       <mat-cell *matCellDef="let entry"
-        ><span>{{ entry.type || 'Standard' }}</span></mat-cell
+        ><span>{{ typeLabel(entry) }}</span></mat-cell
       >
     </ng-container>
 

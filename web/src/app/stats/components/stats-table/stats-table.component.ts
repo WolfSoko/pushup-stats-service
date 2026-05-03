@@ -6,6 +6,7 @@ import {
 } from '@angular/common';
 import {
   Component,
+  LOCALE_ID,
   PLATFORM_ID,
   computed,
   effect,
@@ -25,7 +26,7 @@ import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ScrollingModule } from '@angular/cdk/scrolling';
-import { PushupRecord } from '@pu-stats/models';
+import { displayPushupType, PushupRecord } from '@pu-stats/models';
 import { UserContextService } from '@pu-auth/auth';
 import { UserConfigApiService } from '@pu-stats/data-access';
 import { firstValueFrom } from 'rxjs';
@@ -58,7 +59,11 @@ import {
 export class StatsTableComponent {
   readonly dialog = inject(MatDialog);
   private readonly platformId = inject(PLATFORM_ID);
+  private readonly locale = inject(LOCALE_ID) as string;
   readonly isBrowser = isPlatformBrowser(this.platformId);
+
+  readonly typeLabel = (entry: PushupRecord): string =>
+    displayPushupType(entry.type, this.locale);
 
   readonly sort = viewChild(MatSort);
 
@@ -104,7 +109,7 @@ export class StatsTableComponent {
       if (property === 'timestamp') return new Date(item.timestamp).getTime();
       if (property === 'reps') return item.reps;
       if (property === 'source') return item.source;
-      if (property === 'type') return item.type || 'Standard';
+      if (property === 'type') return this.typeLabel(item);
       return '';
     };
 

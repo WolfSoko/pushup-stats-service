@@ -5,6 +5,7 @@ import {
   Component,
   effect,
   inject,
+  LOCALE_ID,
   PLATFORM_ID,
   signal,
   untracked,
@@ -20,6 +21,8 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { LiveDataStore, StatsApiService } from '@pu-stats/data-access';
 import {
   appendLocalOffset,
+  displayPushupType,
+  PushupRecord,
   QUICK_LOG_REPS_MAX,
   QUICK_LOG_REPS_MIN,
 } from '@pu-stats/models';
@@ -66,6 +69,10 @@ export class StatsDashboardComponent {
   private readonly live = inject(LiveDataStore);
   private readonly quickAdd = inject(QuickAddOrchestrationService);
   private readonly appData = inject(AppDataFacade);
+  private readonly locale = inject(LOCALE_ID) as string;
+
+  readonly typeLabel = (entry: PushupRecord): string =>
+    displayPushupType(entry.type, this.locale);
 
   readonly shareDayAriaLabel = $localize`:@@dashboard.share.aria:Tagesleistung teilen`;
   readonly shareDayLabel = $localize`:@@dashboard.share:Teilen`;
