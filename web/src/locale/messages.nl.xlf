@@ -1669,7 +1669,7 @@
       </notes>
       <segment state="translated">
         <source>Öffentliche Bestenliste mit Top-Reps für heute, die letzten 7 Tage und die letzten 30 Tage.</source>
-        <target>Openbaar klassement met topvertegenwoordigers voor vandaag, de afgelopen 7 dagen en de afgelopen 30 dagen.</target>
+        <target>Openbaar klassement met topscores voor vandaag, de afgelopen 7 dagen en de afgelopen 30 dagen.</target>
       </segment>
     </unit>
     <unit id="seo.publicProfile.title">
@@ -2085,7 +2085,7 @@
       </notes>
       <segment state="translated">
         <source> Deine Position: #<ph id="0" equiv="INTERPOLATION" disp="{{ me.rank }}"/> · <ph id="1" equiv="INTERPOLATION_1" disp="{{ me.reps }}"/> Reps </source>
-        <target> Uw positie: #<ph id="0" equiv="INTERPOLATION" disp="{{ me.rank }}"/> · <ph id="1" equiv="INTERPOLATION_1" disp="{{ me.reps }}"/> vertegenwoordigers </target>
+        <target> Uw positie: #<ph id="0" equiv="INTERPOLATION" disp="{{ me.rank }}"/> · <ph id="1" equiv="INTERPOLATION_1" disp="{{ me.reps }}"/> reps </target>
       </segment>
     </unit>
     <unit id="reminder.feature.eyebrow">
@@ -2602,7 +2602,7 @@
       </notes>
       <segment state="translated">
         <source>Plan ansehen</source>
-        <target>Bekijk plattegrond</target>
+        <target>Bekijk plan</target>
       </segment>
     </unit>
     <unit id="landing.plans.challenge.title">
@@ -2647,7 +2647,7 @@
       </notes>
       <segment state="translated">
         <source>Alle Pläne ansehen</source>
-        <target>Bekijk alle abonnementen</target>
+        <target>Bekijk alle plannen</target>
       </segment>
     </unit>
     <unit id="landing.plans.cta.signup">
@@ -2872,7 +2872,7 @@
       </notes>
       <segment state="translated">
         <source> Vergleiche dich mit der Community: Top-Reps für heute, die letzten 7 Tage und die letzten 30 Tage. Privacy first – dein Name erscheint nur, wenn du es willst. </source>
-        <target> Vergelijk jezelf met de community: topvertegenwoordigers voor vandaag, de afgelopen 7 dagen en de afgelopen 30 dagen. Privacy voorop – uw naam verschijnt alleen als u dat wilt. </target>
+        <target> Vergelijk jezelf met de community: topscores voor vandaag, de afgelopen 7 dagen en de afgelopen 30 dagen. Privacy voorop – uw naam verschijnt alleen als u dat wilt. </target>
       </segment>
     </unit>
     <unit id="landing.discover.leaderboard.cta">
@@ -3295,7 +3295,7 @@
       </notes>
       <segment state="translated">
         <source>EN</source>
-        <target>NL</target>
+        <target>EN</target>
       </segment>
     </unit>
     <unit id="reminder.quickLog.label">
@@ -3313,7 +3313,7 @@
       </notes>
       <segment state="translated">
         <source> Zeigt einen &quot;Eintragen&quot;-Button auf der Push-Benachrichtigung. Wenn die App schon geöffnet ist, wird der Eintrag im Hintergrund gespeichert; ansonsten öffnet sich kurz ein Tab, der den Eintrag automatisch anlegt. </source>
-        <target> Toont een knop "Abonneren" op de pushmelding. Als de app al geopend is, wordt de invoer op de achtergrond opgeslagen; anders wordt er kort een tabblad geopend waarop automatisch het item wordt aangemaakt. </target>
+        <target> Toont een knop "Invoeren" op de pushmelding. Als de app al geopend is, wordt de invoer op de achtergrond opgeslagen; anders wordt er kort een tabblad geopend waarop automatisch de invoer wordt aangemaakt. </target>
       </segment>
     </unit>
     <unit id="reminder.quickLog.toggle">
@@ -3639,7 +3639,7 @@
       </notes>
       <segment state="translated">
         <source>Diese Woche: <ph id="0" equiv="INTERPOLATION" disp="{{ weekReps() }}"/> / <ph id="1" equiv="INTERPOLATION_1" disp="{{ weeklyGoal() }}"/> Reps</source>
-        <target>Deze week: <ph id="0" equiv="INTERPOLATION" disp="{{ weekReps() }}"/> /<ph id="1" equiv="INTERPOLATION_1" disp="{{ weeklyGoal() }}"/> -vertegenwoordigers</target>
+        <target>Deze week: <ph id="0" equiv="INTERPOLATION" disp="{{ weekReps() }}"/> / <ph id="1" equiv="INTERPOLATION_1" disp="{{ weeklyGoal() }}"/> reps</target>
       </segment>
     </unit>
     <unit id="dashboard.analysisTeaserError">
@@ -3984,6 +3984,42 @@
         <target>Maandelijks doel van <ph id="0" equiv="goal" disp="goal"/> push-ups behaald - <ph id="1" equiv="total" disp="total"/> totaal! 💪 Volg gratis uw statistieken:</target>
       </segment>
     </unit>
+    <unit id="goalReached.plan.title">
+      <notes>
+        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:97</note>
+      </notes>
+      <segment state="translated">
+        <source>Trainingsplan-Ziel erreicht!</source>
+        <target>Trainingsplan-doel bereikt!</target>
+      </segment>
+    </unit>
+    <unit id="goalReached.plan.note">
+      <notes>
+        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:98</note>
+      </notes>
+      <segment state="translated">
+        <source>Heutiges Plan-Pensum geschafft. Stark!</source>
+        <target>Het planvolume van vandaag gehaald. Sterk!</target>
+      </segment>
+    </unit>
+    <unit id="goalReached.share.plan.title">
+      <notes>
+        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:99</note>
+      </notes>
+      <segment state="translated">
+        <source>Plan-Ziel geknackt!</source>
+        <target>Plandoel gekraakt!</target>
+      </segment>
+    </unit>
+    <unit id="goalReached.share.plan.text">
+      <notes>
+        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:100</note>
+      </notes>
+      <segment state="translated">
+        <source>Heute mein Trainingsplan-Ziel von <ph id="0" equiv="goal" disp="goal"/> Liegestützen erreicht – <ph id="1" equiv="total" disp="total"/> insgesamt! 💪 Tracke deine Stats kostenlos:</source>
+        <target>Vandaag mijn trainingsplan-doel van <ph id="0" equiv="goal" disp="goal"/> push-ups bereikt – <ph id="1" equiv="total" disp="total"/> totaal! 💪 Volg je stats gratis:</target>
+      </segment>
+    </unit>
     <unit id="goalReached.daily.title">
       <notes>
         <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:97</note>
@@ -4309,7 +4345,7 @@
       </notes>
       <segment state="translated">
         <source><ph id="0" equiv="INTERPOLATION" disp="{{ entries().length }}"/> Einträge</source>
-        <target><ph id="0" equiv="INTERPOLATION" disp="{{ entries().length }}"/>-gegevens</target>
+        <target><ph id="0" equiv="INTERPOLATION" disp="{{ entries().length }}"/> invoeren</target>
       </segment>
     </unit>
     <unit id="sourceColumnToggle">
@@ -5399,7 +5435,7 @@
       </notes>
       <segment state="translated">
         <source> <ph id="0" equiv="INTERPOLATION" disp="{{ latest.reps }}"/> Reps · <ph id="1" equiv="INTERPOLATION_1" disp="{{ latest.type || &apos;Standard&apos; }}"/> </source>
-        <target> <ph id="0" equiv="INTERPOLATION" disp="{{ latest.reps }}"/>-vertegenwoordigers · <ph id="1" equiv="INTERPOLATION_1" disp="{{ latest.type || &apos;Standard&apos; }}"/> </target>
+        <target> <ph id="0" equiv="INTERPOLATION" disp="{{ latest.reps }}"/> reps · <ph id="1" equiv="INTERPOLATION_1" disp="{{ latest.type || &apos;Standard&apos; }}"/> </target>
       </segment>
     </unit>
     <unit id="dashboard.noEntryYet">
@@ -5408,7 +5444,7 @@
       </notes>
       <segment state="translated">
         <source>Noch kein Eintrag.</source>
-        <target>Nog geen toegang.</target>
+        <target>Nog geen invoer.</target>
       </segment>
     </unit>
     <unit id="quickActionsTitle">
@@ -5444,7 +5480,7 @@
       </notes>
       <segment state="translated">
         <source>+<ph id="0" equiv="INTERPOLATION" disp="{{ reps }}"/> Reps</source>
-        <target>+<ph id="0" equiv="INTERPOLATION" disp="{{ reps }}"/> Rep</target>
+        <target>+<ph id="0" equiv="INTERPOLATION" disp="{{ reps }}"/> reps</target>
       </segment>
     </unit>
     <unit id="dashboard.goalFill.reached">
@@ -5684,7 +5720,7 @@
       </notes>
       <segment state="translated">
         <source>Plan starten</source>
-        <target>Startplan</target>
+        <target>Plan starten</target>
       </segment>
     </unit>
     <unit id="trainingPlans.signupAndStart">
@@ -5774,7 +5810,7 @@
       </notes>
       <segment state="translated">
         <source>Plan beendet.</source>
-        <target>Plan voltooid.</target>
+        <target>Plan beëindigd.</target>
       </segment>
     </unit>
     <unit id="trainingPlans.logged">
@@ -5831,7 +5867,7 @@
       </notes>
       <segment state="translated">
         <source> Plan auswählen, Konto erstellen, durchstarten </source>
-        <target> Selecteer een abonnement, maak een account aan en ga aan de slag </target>
+        <target> Selecteer een plan, maak een account aan en ga aan de slag </target>
       </segment>
     </unit>
     <unit id="trainingPlans.banner.body">
@@ -5840,7 +5876,7 @@
       </notes>
       <segment state="translated">
         <source> Suche dir unten einen Plan aus. Mit einem kostenlosen Konto tracken wir deinen Fortschritt automatisch und passen dein Tagesziel an den gewählten Plan an. </source>
-        <target> Kies hieronder een abonnement. Met een gratis account houden we automatisch je voortgang bij en passen we je dagelijkse doel aan het gekozen plan aan. </target>
+        <target> Kies hieronder een plan. Met een gratis account houden we automatisch je voortgang bij en passen we je dagelijkse doel aan het gekozen plan aan. </target>
       </segment>
     </unit>
     <unit id="trainingPlans.banner.login">
@@ -5903,7 +5939,7 @@
       </notes>
       <segment state="translated">
         <source>Plan ansehen</source>
-        <target>Bekijk plattegrond</target>
+        <target>Bekijk plan</target>
       </segment>
     </unit>
 

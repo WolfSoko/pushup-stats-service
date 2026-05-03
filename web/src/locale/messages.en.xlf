@@ -5694,6 +5694,18 @@ Deine Position: # ·  Reps        </source>
         <target>A whole month of discipline. Legendary.</target>
       </segment>
     </unit>
+    <unit id="goalReached.plan.title">
+      <segment state="translated">
+        <source>Trainingsplan-Ziel erreicht!</source>
+        <target>Training plan goal reached!</target>
+      </segment>
+    </unit>
+    <unit id="goalReached.plan.note">
+      <segment state="translated">
+        <source>Heutiges Plan-Pensum geschafft. Stark!</source>
+        <target>Today's plan workload nailed. Strong!</target>
+      </segment>
+    </unit>
     <unit id="goalReached.snap">
       <segment state="translated">
         <source>Snap!</source>
@@ -6028,6 +6040,18 @@ Deine Position: # ·  Reps        </source>
       <segment state="translated">
         <source>Monatsziel von <ph id="0" equiv="goal" disp="goal"/> Liegestützen geschafft – <ph id="1" equiv="total" disp="total"/> insgesamt! 💪 Tracke deine Stats kostenlos:</source>
         <target>Hit my monthly goal of <ph id="0" equiv="goal" disp="goal"/> push-ups – <ph id="1" equiv="total" disp="total"/> total! 💪 Track your stats for free:</target>
+      </segment>
+    </unit>
+    <unit id="goalReached.share.plan.title">
+      <segment state="translated">
+        <source>Plan-Ziel geknackt!</source>
+        <target>Plan goal smashed!</target>
+      </segment>
+    </unit>
+    <unit id="goalReached.share.plan.text">
+      <segment state="translated">
+        <source>Heute mein Trainingsplan-Ziel von <ph id="0" equiv="goal" disp="goal"/> Liegestützen erreicht – <ph id="1" equiv="total" disp="total"/> insgesamt! 💪 Tracke deine Stats kostenlos:</source>
+        <target>Hit today's training plan goal of <ph id="0" equiv="goal" disp="goal"/> push-ups – <ph id="1" equiv="total" disp="total"/> total! 💪 Track your stats for free:</target>
       </segment>
     </unit>
     <unit id="dashboard.share">

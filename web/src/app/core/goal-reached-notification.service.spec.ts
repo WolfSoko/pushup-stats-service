@@ -4,7 +4,8 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { LiveDataStore, UserConfigApiService } from '@pu-stats/data-access';
 import { UserContextService } from '@pu-auth/auth';
 import { of } from 'rxjs';
-import { PushupRecord } from '@pu-stats/models';
+import { PushupRecord, TrainingPlanDay } from '@pu-stats/models';
+import { TrainingPlanStore } from '../training-plans/training-plan.store';
 import { GoalReachedNotificationService } from './goal-reached-notification.service';
 import { UserConfigStore } from './user-config.store';
 
@@ -35,12 +36,20 @@ describe('GoalReachedNotificationService', () => {
       ),
   };
 
+  const planHasActive = signal(false);
+  const planTodayDay = signal<TrainingPlanDay | null>(null);
+  const trainingPlanStoreMock = {
+    hasActivePlan: planHasActive.asReadonly(),
+    todayDay: planTodayDay.asReadonly(),
+  };
+
   function setup(config: {
     dailyGoal?: number;
     weeklyGoal?: number;
     monthlyGoal?: number;
     entries?: PushupRecord[];
     snapQuality?: 'low' | 'middle' | 'high';
+    planTodayDay?: TrainingPlanDay | null;
   }): GoalReachedNotificationService {
     userConfigApiMock.getConfig.mockReturnValue(
       of({
@@ -54,6 +63,9 @@ describe('GoalReachedNotificationService', () => {
       })
     );
     liveEntries.set(config.entries ?? []);
+    const planDay = config.planTodayDay ?? null;
+    planTodayDay.set(planDay);
+    planHasActive.set(planDay !== null);
 
     TestBed.resetTestingModule();
     TestBed.configureTestingModule({
@@ -62,6 +74,7 @@ describe('GoalReachedNotificationService', () => {
         { provide: LiveDataStore, useValue: liveStoreMock },
         { provide: UserContextService, useValue: { userIdSafe: () => 'u1' } },
         { provide: UserConfigApiService, useValue: userConfigApiMock },
+        { provide: TrainingPlanStore, useValue: trainingPlanStoreMock },
       ],
     });
     return TestBed.inject(GoalReachedNotificationService);
@@ -84,6 +97,8 @@ describe('GoalReachedNotificationService', () => {
     vi.setSystemTime(frozenDate);
     dialogOpenSpy.mockClear();
     liveEntries.set([]);
+    planHasActive.set(false);
+    planTodayDay.set(null);
     try {
       localStorage.clear();
     } catch {
@@ -491,6 +506,229 @@ describe('GoalReachedNotificationService', () => {
       expect(localStorage.getItem('pus_goal_reached_daily_2026-04-22')).toBe(
         '1'
       );
+    });
+  });
+
+  describe('Given the training plan target exceeds the daily goal', () => {
+    it('Then it opens a separate kind=plan dialog when the plan target is reached', async () => {
+      // Given — daily goal 10, plan target 50, user logs 50 reps.
+      // The daily threshold (10) and the plan threshold (50) are both
+      // crossed by the same total, so we expect TWO celebration dialogs:
+      // the regular daily one + the plan-specific one.
+      setup({
+        dailyGoal: 10,
+        planTodayDay: {
+          dayIndex: 1,
+          kind: 'main',
+          targetReps: 50,
+          description: '',
+        },
+        entries: [
+          {
+            _id: '1',
+            timestamp: '2026-04-22T08:00:00',
+            reps: 50,
+          } as PushupRecord,
+        ],
+      });
+
+      // When
+      await flushAll();
+
+      // Then — daily dialog
+      const dailyCall = dialogOpenSpy.mock.calls.find((call) => {
+        const c = call[1] as { data?: { kind?: string } } | undefined;
+        return c?.data?.kind === 'daily';
+      });
+      expect(dailyCall).toBeDefined();
+
+      // And — plan dialog with the higher threshold
+      const planCall = dialogOpenSpy.mock.calls.find((call) => {
+        const c = call[1] as { data?: { kind?: string } } | undefined;
+        return c?.data?.kind === 'plan';
+      });
+      expect(planCall).toBeDefined();
+      const [, planConfig] = planCall!;
+      expect(planConfig?.data).toMatchObject({
+        kind: 'plan',
+        total: 50,
+        goal: 50,
+      });
+      expect(localStorage.getItem('pus_goal_reached_plan_2026-04-22')).toBe(
+        '1'
+      );
+    });
+
+    it('Then it does NOT fire the plan dialog while only the daily threshold has been crossed', async () => {
+      // Given — daily=10, plan target=50, only 12 reps logged.
+      setup({
+        dailyGoal: 10,
+        planTodayDay: {
+          dayIndex: 1,
+          kind: 'main',
+          targetReps: 50,
+          description: '',
+        },
+        entries: [
+          {
+            _id: '1',
+            timestamp: '2026-04-22T08:00:00',
+            reps: 12,
+          } as PushupRecord,
+        ],
+      });
+
+      // When
+      await flushAll();
+
+      // Then — daily fires, plan does not (yet).
+      const planCall = dialogOpenSpy.mock.calls.find((call) => {
+        const c = call[1] as { data?: { kind?: string } } | undefined;
+        return c?.data?.kind === 'plan';
+      });
+      expect(planCall).toBeUndefined();
+      expect(
+        localStorage.getItem('pus_goal_reached_plan_2026-04-22')
+      ).toBeNull();
+    });
+  });
+
+  describe('Given the training plan target is ≤ the daily goal', () => {
+    it('Then it suppresses the plan dialog (the daily celebration already covers it)', async () => {
+      // Given — daily 30, plan target 20 (e.g. light day). User reaches 30.
+      setup({
+        dailyGoal: 30,
+        planTodayDay: {
+          dayIndex: 1,
+          kind: 'light',
+          targetReps: 20,
+          description: '',
+        },
+        entries: [
+          {
+            _id: '1',
+            timestamp: '2026-04-22T08:00:00',
+            reps: 30,
+          } as PushupRecord,
+        ],
+      });
+
+      // When
+      await flushAll();
+
+      // Then — exactly one dialog (daily), no plan dialog.
+      const planCall = dialogOpenSpy.mock.calls.find((call) => {
+        const c = call[1] as { data?: { kind?: string } } | undefined;
+        return c?.data?.kind === 'plan';
+      });
+      expect(planCall).toBeUndefined();
+    });
+  });
+
+  describe('Given today is a rest day in the active plan', () => {
+    it('Then the plan dialog stays silent regardless of total reps', async () => {
+      // Given
+      setup({
+        dailyGoal: 10,
+        planTodayDay: {
+          dayIndex: 3,
+          kind: 'rest',
+          targetReps: 0,
+          description: '',
+        },
+        entries: [
+          {
+            _id: '1',
+            timestamp: '2026-04-22T08:00:00',
+            reps: 100,
+          } as PushupRecord,
+        ],
+      });
+
+      // When
+      await flushAll();
+
+      // Then
+      const planCall = dialogOpenSpy.mock.calls.find((call) => {
+        const c = call[1] as { data?: { kind?: string } } | undefined;
+        return c?.data?.kind === 'plan';
+      });
+      expect(planCall).toBeUndefined();
+    });
+  });
+
+  describe("Given today is a 'test' day in the active plan", () => {
+    it("Then it fires the plan dialog the same way 'main' / 'light' days do", async () => {
+      // Given — daily=10, plan target on a test day=40, user logs 40.
+      // Test days carry a real targetReps (the recommended baseline);
+      // they should celebrate just like main/light days.
+      setup({
+        dailyGoal: 10,
+        planTodayDay: {
+          dayIndex: 5,
+          kind: 'test',
+          targetReps: 40,
+          description: '',
+        },
+        entries: [
+          {
+            _id: '1',
+            timestamp: '2026-04-22T08:00:00',
+            reps: 40,
+          } as PushupRecord,
+        ],
+      });
+
+      // When
+      await flushAll();
+
+      // Then
+      const planCall = dialogOpenSpy.mock.calls.find((call) => {
+        const c = call[1] as { data?: { kind?: string } } | undefined;
+        return c?.data?.kind === 'plan';
+      });
+      expect(planCall).toBeDefined();
+      const [, planConfig] = planCall!;
+      expect(planConfig?.data).toMatchObject({
+        kind: 'plan',
+        total: 40,
+        goal: 40,
+      });
+    });
+  });
+
+  describe('Given an active plan but no configured daily goal', () => {
+    it('Then the plan dialog stays silent (the daily-loading-state guard)', async () => {
+      // Given — no `dailyGoal` set in the user config (resource resolves to 0).
+      // The notification service can't distinguish "still loading" from
+      // "user never configured one", so plan-goal celebrations are gated
+      // on a non-zero configured daily goal. Locks the documented behaviour
+      // referenced in the planGoal comment block.
+      setup({
+        planTodayDay: {
+          dayIndex: 1,
+          kind: 'main',
+          targetReps: 30,
+          description: '',
+        },
+        entries: [
+          {
+            _id: '1',
+            timestamp: '2026-04-22T08:00:00',
+            reps: 30,
+          } as PushupRecord,
+        ],
+      });
+
+      // When
+      await flushAll();
+
+      // Then
+      const planCall = dialogOpenSpy.mock.calls.find((call) => {
+        const c = call[1] as { data?: { kind?: string } } | undefined;
+        return c?.data?.kind === 'plan';
+      });
+      expect(planCall).toBeUndefined();
     });
   });
 });

@@ -19,7 +19,7 @@ import { ShareService } from '../../../core/share.service';
 
 const SHARE_URL = 'https://pushup-stats.com';
 
-export type GoalKind = 'daily' | 'weekly' | 'monthly';
+export type GoalKind = 'daily' | 'weekly' | 'monthly' | 'plan';
 
 export interface GoalReachedDialogData {
   readonly kind: GoalKind;
@@ -90,6 +90,14 @@ export class GoalReachedDialogComponent {
           note: $localize`:@@goalReached.monthly.note:Ein ganzer Monat Disziplin. Legendär.`,
           shareTitle: $localize`:@@goalReached.share.monthly.title:Monatsziel geknackt!`,
           shareText: $localize`:@@goalReached.share.monthly.text:Monatsziel von ${goal}:goal: Liegestützen geschafft – ${total}:total: insgesamt! 💪 Tracke deine Stats kostenlos:`,
+        };
+      case 'plan':
+        return {
+          icon: 'fitness_center',
+          title: $localize`:@@goalReached.plan.title:Trainingsplan-Ziel erreicht!`,
+          note: $localize`:@@goalReached.plan.note:Heutiges Plan-Pensum geschafft. Stark!`,
+          shareTitle: $localize`:@@goalReached.share.plan.title:Plan-Ziel geknackt!`,
+          shareText: $localize`:@@goalReached.share.plan.text:Heute mein Trainingsplan-Ziel von ${goal}:goal: Liegestützen erreicht – ${total}:total: insgesamt! 💪 Tracke deine Stats kostenlos:`,
         };
       default:
         return {
