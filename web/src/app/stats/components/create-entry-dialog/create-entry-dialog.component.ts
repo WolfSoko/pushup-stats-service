@@ -208,6 +208,7 @@ interface TypeOption {
                 [value]="option.value"
                 [matTooltip]="tooltipFor(option.value)"
                 matTooltipPosition="right"
+                matTooltipTouchGestures="off"
                 >{{ option.label }}</mat-option
               >
             }
