@@ -1,11 +1,17 @@
 {
+  "id": "/",
   "name": "Pushup Stats",
   "short_name": "Pushups",
+  "description": "Push-ups tracken, Trainingsplänen folgen und in der Bestenliste mithalten.",
+  "lang": "de",
+  "dir": "ltr",
+  "categories": ["health", "fitness", "lifestyle"],
   "theme_color": "#1a233a",
   "background_color": "#0d1220",
   "display": "standalone",
-  "scope": "./",
-  "start_url": "./",
+  "orientation": "portrait",
+  "scope": "/",
+  "start_url": "/?source=pwa",
   "icons": [
     {
       "src": "icons/icon-72x72.png",

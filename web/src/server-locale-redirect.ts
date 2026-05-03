@@ -62,6 +62,16 @@ export const ROOT_FILES: ReadonlySet<string> = new Set([
 ]);
 
 /**
+ * Path prefixes that must always be served unprefixed because external
+ * verifiers fetch them at the exact URL (Google Digital Asset Links,
+ * `acme-challenge`, `security.txt`, etc.). Redirecting `/.well-known/x`
+ * to `/de/.well-known/x` would silently break TWA / Android App Links
+ * verification. The actual file serving happens in a dedicated
+ * `express.static` mount in `server.ts`.
+ */
+const RESERVED_FIRST_SEGMENTS: ReadonlySet<string> = new Set(['.well-known']);
+
+/**
  * Restricted to URL-safe app-route characters. Anything outside
  * (backslashes, control characters, exotic Unicode) falls through to
  * Angular instead of being redirected — defense-in-depth against
@@ -141,7 +151,12 @@ export function pickLocale(
  * - non-GET/HEAD methods
  * - root path `/` (Angular SSR's own locale middleware handles it)
  * - already-prefixed paths (`/de`, `/en`, and any subpath thereof)
- * - well-known root files (rewritten by an earlier middleware)
+ * - root files in `ROOT_FILES` (rewritten by an earlier middleware so
+ *   crawlers reach them at the unprefixed URL)
+ * - paths whose first segment is in `RESERVED_FIRST_SEGMENTS` (e.g.
+ *   `/.well-known/...` — served by a dedicated `express.static` mount;
+ *   redirecting them would break Google Digital Asset Links / TWA
+ *   verification, which fetches the file at the exact URL)
  * - paths with a file extension (static assets)
  * - paths with characters outside `SAFE_REDIRECT_PATH_RE`
  *
@@ -162,6 +177,7 @@ export function computeLocaleRedirect(
   const firstSegment = path.split('/')[1] ?? '';
   if (LOCALE_PREFIXES.has(firstSegment)) return { kind: 'pass' };
   if (ROOT_FILES.has(firstSegment)) return { kind: 'pass' };
+  if (RESERVED_FIRST_SEGMENTS.has(firstSegment)) return { kind: 'pass' };
 
   const lastSegment = path.split('/').pop() ?? '';
   if (lastSegment.includes('.')) return { kind: 'pass' };

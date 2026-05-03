@@ -75,6 +75,10 @@
           {
             "glob": "**/*",
             "input": "web/public"
+          },
+          {
+            "glob": ".well-known/**/*",
+            "input": "web/public"
           }
         ],
         "styles": ["web/src/styles.scss"]

@@ -54,6 +54,25 @@ app.use((req, res, next) => {
   next();
 });
 
+// Serve `/.well-known/<file>` directly from the localised /de/ build
+// output. Mounted as a dedicated `express.static` so the general static
+// handler below can keep `serve-static`'s default `dotfiles: 'ignore'`
+// behaviour — only files intentionally placed in `web/public/.well-known/`
+// (and emitted by the Angular build into each locale bundle) become
+// reachable. The mount path absorbs the `.well-known` segment, so the
+// underlying lookup never sees a dot-prefixed URL component and no
+// `dotfiles` opt-in is needed. `fallthrough: false` makes unknown files
+// here 404 cleanly instead of leaking through to the Angular SSR engine
+// (which would respond with the SPA shell — confusing for verifiers).
+app.use(
+  '/.well-known',
+  express.static(join(browserDistFolder, 'de', '.well-known'), {
+    maxAge: '1h',
+    index: false,
+    fallthrough: false,
+  })
+);
+
 // Redirect non-locale-prefixed app routes to /<lang>/... so paths like
 // `/u/<uid>` (which only exist inside the locale-specific Angular bundles)
 // don't 404 with `Cannot GET /u/<uid>` when shared as a bare URL.
@@ -90,7 +109,10 @@ if (isProduction) {
 }
 
 /**
- * Serve static files from /browser
+ * Serve static files from /browser. Default `dotfiles: 'ignore'` is
+ * intentional — anything that needs to live under a dot-prefixed path
+ * (e.g. `/.well-known/...`) is opted in via a dedicated `express.static`
+ * mount above, so accidental dotfiles in the build output stay hidden.
  */
 app.use(
   express.static(browserDistFolder, {

@@ -108,6 +108,24 @@ describe('computeLocaleRedirect', () => {
       }
     });
 
+    it('Skips /.well-known/* paths so external verifiers (Google Digital Asset Links etc.) reach the file at the unprefixed URL', () => {
+      // The Bubblewrap-generated assetlinks.json must be served at
+      // `/.well-known/assetlinks.json` exactly — redirecting to
+      // `/de/.well-known/...` would silently break TWA verification.
+      // The trailing-slash and bare-prefix variants are also covered
+      // because `lastSegment.includes('.')` doesn't catch them.
+      for (const path of [
+        '/.well-known/assetlinks.json',
+        '/.well-known/security.txt',
+        '/.well-known/',
+        '/.well-known',
+      ]) {
+        expect(computeLocaleRedirect(input({ path, url: path }))).toEqual({
+          kind: 'pass',
+        });
+      }
+    });
+
     it('Skips paths whose last segment carries a file extension', () => {
       expect(
         computeLocaleRedirect(
