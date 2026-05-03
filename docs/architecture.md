@@ -1,0 +1,124 @@
+# Architecture
+
+Detailed architecture reference for the Pushup Stats Service. AGENTS.md keeps the high-level rules; this doc holds the patterns, dependency graph, and domain-model layout.
+
+## Library Dependency Graph
+
+```
+@pu-stats/models          (pure types, zero dependencies)
+    ^
+    |--- @pu-stats/data-access  (Firestore API layer)
+    |--- @pu-auth/auth          (Firebase Auth, decoupled via ports)
+    |--- @pu-stats/motivation   (quote service, no auth dependency)
+    |--- @pu-stats/quick-add    (FAB + adaptive suggestions)
+    |--- @pu-stats/ads          (isolated, no lib dependencies)
+    |--- @pu-reminders/reminders (depends on data-access + motivation, NOT auth)
+    |--- cloud-functions        (Cloud Functions, depends on models only)
+```
+
+## Module Boundary Rules
+
+Enforced via `@nx/enforce-module-boundaries` in `eslint.config.mjs`:
+
+- `scope:auth` -> `scope:models` only (no data-access!)
+- `scope:motivation` -> `scope:models` only (no auth!)
+- `scope:data-access` -> `scope:models` only
+- `scope:cloud-functions` -> `scope:models` only
+- `scope:reminders` -> `scope:models`, `scope:data-access`, `scope:motivation` (no auth!)
+- `scope:app` -> everything
+
+## Nx Project Names
+
+| Library         | Nx Project Name     |
+| --------------- | ------------------- |
+| auth            | `auth`              |
+| data-access     | `stats-data-access` |
+| models/stats    | `stats-models`      |
+| motivation      | `pus-motivation`    |
+| reminders       | `pus-reminders`     |
+| quick-add       | `stats-quick-add`   |
+| ads             | `stats-ads`         |
+| testing         | `testing`           |
+| tools           | `tools`             |
+| data-store      | `data-store`        |
+| cloud-functions | `cloud-functions`   |
+| web app         | `web`               |
+
+## Key Architectural Patterns
+
+### Ports & Adapters (Auth <-> Data-Access)
+
+- Auth defines `PostAuthHook` interface and `USER_PROFILE_PORT` token
+- Concrete implementations (`UserProfileSyncHook`, `GuestDataMigrationHook`) live at app level
+- Wired in `app.config.ts` via DI providers
+- Auth has ZERO imports from `@pu-stats/data-access`
+
+### State Management Conventions
+
+- **Global state:** `@ngrx/signals` signalStore with `providedIn: 'root'`
+  - `AdsStore` - Remote Config + consent (ads module)
+  - `MotivationStore` - quote cache with user-keyed localStorage (motivation module)
+  - `LiveDataStore` - Firestore real-time entries + tick (data-access, browser-only)
+  - `LeaderboardStore` - shared leaderboard data with `load({ force })` (data-access)
+  - `TrainingPlanStore` - active training plan, derived "today" state, plan-day mutation methods (app-level)
+  - `AuthStore`, `ReminderStore`, `PushSubscriptionStore`, `ThemeService` (existing)
+- **Feature/form state:** signalStore with component-level DI
+  - `DashboardStore` - stats, goals, ads, motivation, plan-day target override for dashboard page
+  - `AnalysisStore` - date filters, trends, breakdowns for analysis page
+  - `EntriesStore` - CRUD, filters, browser/SSR hybrid for entries page
+  - `ReminderFormStore`, `LoginUiStore`, `RegisterUiStore` (existing)
+- **Resources:** Live inside stores via `withProps`, not in components
+- **Derived state:** `computed()` inside `withComputed`
+- **Side effects:** `effect()` in components or `withHooks`
+- **API Services:** Stateless, return Promises/Observables - no signals, no state
+- **No RxJS for state** - only in data-access layer for Firestore Observables + `toSignal()`
+- **Signal timing and equality caveats** — see [`gotchas/signals.md`](gotchas/signals.md).
+
+### Three-Layer Architecture
+
+```
+UI Component  →  Signal Store  →  API Service
+(Template)       (State + Logic)   (Database)
+```
+
+- Components only do template binding + user event delegation
+- Stores own all state, resources, computed signals, and domain logic
+- API services are pure data access with no state
+
+### App Root Delegation
+
+- `ReminderOrchestrationService` handles reminder lifecycle (auth -> config load -> start/stop)
+- `AppDataFacade` consolidates app-level resources (recent entries, daily goal, progress)
+- `QuickAddOrchestrationService` handles quick-add entry creation and dialog routing
+- App component handles only layout, navigation, and UI events
+
+### Shared Entry Dialog Pattern
+
+- `CreateEntryDialogComponent` serves as the single dialog for both creating and editing entries.
+- **Create mode:** Opened without `MAT_DIALOG_DATA` — starts with empty fields, default timestamp.
+- **Edit mode:** Opened with `EntryDialogData` via `MAT_DIALOG_DATA` — pre-fills timestamp, sets, type, source from existing entry. Preserves original timestamp format when unchanged.
+- Both modes return `CreateEntryResult` on submit. The stats table's `openEditDialog()` maps the result back to an update emission.
+- **Sets UX:** Starts with a single "Reps" field. A "+" button adds sets (pre-filled from previous value). Multi-set mode shows "Set 1", "Set 2", etc. with remove buttons and a total display.
+
+### Training Plans (curated catalog + active-plan state)
+
+- **Catalog** (`libs/stats/src/lib/models/training-plan.catalog.ts`): static, versioned plan definitions with per-day `kind` (`main`/`light`/`rest`/`test`), `targetReps`, optional `sets[]`, and bilingual descriptions (`description` / `descriptionEn`). Plan IDs carry a `-vN` suffix so old `UserTrainingPlan` docs keep resolving when targets change.
+- **Per-user state** (`userTrainingPlans/{userId}` in Firestore): `planId`, `startDate`, `status`, `completedDays[]`. Single active plan per user; starting another overwrites the doc.
+- **Locale-aware rendering:** `localizePlan(plan, LOCALE_ID)` swaps title/summary/description fields. The catalog stores both languages because plans are structured curated data — putting them in XLIFF would lose the per-day pairing.
+- **Single source of truth = `pushups` collection:** the `completedDays` flag is a UI shortcut. `logPlanDay(idx)` writes a real `pushups` entry (with `source: 'plan'`, plan-prescribed sets, noon timestamp on the plan day's calendar date) AND flips the flag. Without the entry, stats/streaks/leaderboard wouldn't reflect the workout.
+- **Auto-mark via `effect()` in `withHooks`:** when `LiveDataStore.entries()` push today's reps past the plan target, today's flag flips automatically — read-only, never creates a new entry. Lets the existing Quick-Add/dialog flows propagate plan progress without an explicit button click.
+- **Day-tick signal:** Berlin-date-based `currentDayIndex()` has no inherent signal dependency, so a long-running browser tab caches the previous calendar day past midnight. The store ticks an internal `_dayTick` signal once a minute (browser-only) so derived day state recomputes within ~60 s of midnight.
+
+## Domain Models
+
+Split into focused files under `libs/stats/src/lib/models/`:
+
+- `pushup.models.ts` - PushupRecord, PushupCreate, PushupUpdate
+  - **Sets:** `sets?: number[]` stores per-set reps (e.g. `[10, 10, 10]`). `reps` is always the total sum. `sets` is optional for backward compatibility — old entries without sets work unchanged. All aggregation (UserStats, deltas, charts) uses `reps` only.
+- `stats.models.ts` - StatsResponse, StatsMeta, StatsFilter
+- `user-config.models.ts` - UserConfig, UserConfigUpdate
+- `reminder-config.models.ts` - ReminderConfig
+- `user-stats.models.ts` - UserStats (server-side precomputed), emptyUserStats, USERSTATS_VERSION
+- `training-plan.models.ts` - TrainingPlan, TrainingPlanDay, UserTrainingPlan, `localizePlan()`, `currentPlanDayIndex()`, `planDayByIndex()`, `isPlanCompleted()`. `parseIsoDate` round-trips Y/M/D after `new Date()` to reject impossible dates like `2026-02-30`.
+- `training-plan.catalog.ts` - curated `TRAINING_PLANS` array + `findPlanById()` / `findPlanBySlug()` lookups. Test invariant: every plan's day indexes form a contiguous `1..totalDays` sequence and rest days have `targetReps === 0`.
+  - UserStats includes a `version` field for migration support. See [`gotchas/cloud-functions.md`](gotchas/cloud-functions.md) for the versioning strategy.
