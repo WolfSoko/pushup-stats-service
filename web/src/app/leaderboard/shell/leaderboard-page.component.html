@@ -48,9 +48,8 @@
           <li>
             <span class="rank">#{{ entry.rank }}</span>
             <!-- Link the alias to /u/<uid> only when the user opted into a
-                 public profile AND the leaderboard. Without uid, the row is
-                 either anonymous or the user opted out of profile linking,
-                 so we keep it as plain text. -->
+                 public profile. Leaderboard-only opt-ins (no public profile)
+                 still appear here but stay plain text. -->
             @if (entry.uid) {
               <a
                 class="alias alias-link"

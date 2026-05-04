@@ -5,10 +5,8 @@
 
 import { berlinDateParts, BerlinDateParts } from '../datetime';
 import {
-  toPublicDisplayName,
   isLeaderboardNameAllowed,
   isPublicProfileLinkAllowed,
-  toAnonymousLabel,
   UserProfile,
 } from '../profile';
 
@@ -22,11 +20,9 @@ export interface LeaderboardEntry {
   alias: string;
   reps: number;
   /**
-   * UID is only populated when the user opted into BOTH the leaderboard
-   * (`ui.hideFromLeaderboard === false`) AND a public profile
+   * UID is only populated when the user also opted into a public profile
    * (`ui.publicProfile === true`). Frontend renders entries with `uid`
    * as links to `/u/<uid>`; entries without `uid` stay plain text.
-   * Anonymous-aliased rows (leaderboard opt-out) never carry a UID.
    */
   uid?: string;
 }
@@ -125,19 +121,20 @@ export function rankEntries(
   }
 
   return [...totals.entries()]
-    .map(([userId, reps]) => {
+    .flatMap(([userId, reps]): LeaderboardEntry[] => {
       const profile = userProfiles.get(userId);
-      const alias = isLeaderboardNameAllowed(profile)
-        ? toPublicDisplayName(profile)
-        : toAnonymousLabel();
-      // Only attach a UID when both leaderboard-visibility and
-      // public-profile opt-ins are on — otherwise the row stays plain
-      // text on the frontend and the user's stats can't be deeplinked.
+      // Public leaderboard now requires an explicit opt-in AND a non-empty
+      // display name. Users without a profile, with `hideFromLeaderboard`
+      // unset/true, or with a blank name are dropped entirely — no more
+      // `anonym` rows.
+      if (!isLeaderboardNameAllowed(profile)) return [];
+      const alias = String(profile?.displayName || '').trim();
+      if (!alias) return [];
       const entry: LeaderboardEntry = { alias, reps };
       if (isPublicProfileLinkAllowed(profile)) {
         entry.uid = userId;
       }
-      return entry;
+      return [entry];
     })
     .sort((a, b) => b.reps - a.reps)
     .slice(0, TOP_N);
