@@ -47,10 +47,11 @@
         @for (entry of leaderboardSlots(); track entry.rank) {
           <li>
             <span class="rank">#{{ entry.rank }}</span>
-            <!-- Link the alias to /u/<uid> only when the user opted into a
-                 public profile AND the leaderboard. Without uid, the row is
-                 either anonymous or the user opted out of profile linking,
-                 so we keep it as plain text. -->
+            <!-- Link the alias to /u/<uid> when the row carries a uid.
+                 The ranker now requires the full publicProfile opt-in,
+                 so every fresh row has a uid. uid-less rows can only
+                 come from older cached snapshots and stay plain text
+                 for forward-compat. -->
             @if (entry.uid) {
               <a
                 class="alias alias-link"

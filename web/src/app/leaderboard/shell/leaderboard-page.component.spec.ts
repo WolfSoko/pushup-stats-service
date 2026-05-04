@@ -9,11 +9,15 @@ import {
 import { LeaderboardPageComponent } from './leaderboard-page.component';
 
 /**
- * Frontend privacy guard: leaderboard rows only become a `<a>` linking to
- * `/u/<uid>` when the cloud function attached a `uid` (which itself
- * requires both leaderboard + publicProfile opt-ins). Anonymous-aliased
- * rows or opted-out users must stay plain text — these tests fail loudly
- * if the template ever degrades that contract.
+ * Frontend privacy guard: leaderboard rows only become a `<a>` linking
+ * to `/u/<uid>` when the cloud function attached a `uid`. The ranker
+ * now requires the full publicProfile opt-in, so every fresh row has a
+ * uid; uid-less rows can only come from older cached snapshots and
+ * must stay plain text. These tests fail loudly if the template ever
+ * degrades that contract.
+ *
+ * Anonymous rows and opted-out users are filtered out at the
+ * cloud-function layer (`rankEntries`) and never reach the frontend.
  */
 describe('LeaderboardPageComponent', () => {
   let fixture: ComponentFixture<LeaderboardPageComponent>;
@@ -70,33 +74,32 @@ describe('LeaderboardPageComponent', () => {
     });
   });
 
-  describe('Given an entry without uid (opted-out / anonymous)', () => {
+  describe('Given a legacy entry without uid (older cached snapshot)', () => {
     it('Then the alias is rendered as a plain span — never clickable', async () => {
-      await setup([{ rank: 2, alias: 'anonym', reps: 50 }]);
+      await setup([{ rank: 2, alias: 'Bob', reps: 50 }]);
 
       const root = fixture.nativeElement as HTMLElement;
-      // Privacy regression: an anonymous-aliased row must NEVER carry an
-      // anchor, otherwise the visible "anonym" label would be linkable
-      // to a stable profile permalink.
+      // Privacy regression: a row without `uid` must NEVER carry an
+      // anchor, otherwise the alias would be linkable to a stable
+      // profile permalink the user did not opt into.
       expect(
         root.querySelector('[data-testid="leaderboard-link-2"]')
       ).toBeNull();
-      // Find the span that holds the alias text — it must not be inside an <a>.
       const spans = Array.from(
         root.querySelectorAll('li span.alias')
       ) as HTMLElement[];
-      const aliasSpan = spans.find((s) => s.textContent?.trim() === 'anonym');
+      const aliasSpan = spans.find((s) => s.textContent?.trim() === 'Bob');
       expect(aliasSpan).toBeDefined();
       expect(aliasSpan!.closest('a')).toBeNull();
     });
   });
 
-  describe('Given a mix of entries', () => {
-    it('Then only opted-in rows are linked, opted-out rows stay plain text', async () => {
+  describe('Given a mix of fresh + legacy entries', () => {
+    it('Then only rows with uid are linked, legacy uid-less rows stay plain text', async () => {
       await setup([
         { rank: 1, alias: 'Alice', reps: 100, uid: 'aaa' },
-        { rank: 2, alias: 'anonym', reps: 80 },
-        { rank: 3, alias: 'Bob', reps: 60 },
+        { rank: 2, alias: 'Bob', reps: 80 },
+        { rank: 3, alias: 'Carol', reps: 60 },
       ]);
 
       const root = fixture.nativeElement as HTMLElement;
@@ -106,7 +109,6 @@ describe('LeaderboardPageComponent', () => {
       expect(
         root.querySelector('[data-testid="leaderboard-link-2"]')
       ).toBeNull();
-      // Bob has no uid → plain span, no link.
       expect(
         root.querySelector('[data-testid="leaderboard-link-3"]')
       ).toBeNull();

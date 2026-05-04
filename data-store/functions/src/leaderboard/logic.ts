@@ -5,10 +5,8 @@
 
 import { berlinDateParts, BerlinDateParts } from '../datetime';
 import {
-  toPublicDisplayName,
-  isLeaderboardNameAllowed,
+  isLeaderboardExcluded,
   isPublicProfileLinkAllowed,
-  toAnonymousLabel,
   UserProfile,
 } from '../profile';
 
@@ -22,11 +20,10 @@ export interface LeaderboardEntry {
   alias: string;
   reps: number;
   /**
-   * UID is only populated when the user opted into BOTH the leaderboard
-   * (`ui.hideFromLeaderboard === false`) AND a public profile
-   * (`ui.publicProfile === true`). Frontend renders entries with `uid`
-   * as links to `/u/<uid>`; entries without `uid` stay plain text.
-   * Anonymous-aliased rows (leaderboard opt-out) never carry a UID.
+   * Public-profile UID. Always populated by `rankEntries()` because the
+   * leaderboard now requires the full publicProfile opt-in. Kept optional
+   * on the type so the frontend stays tolerant of older snapshots that
+   * may still carry uid-less rows.
    */
   uid?: string;
 }
@@ -53,6 +50,15 @@ export interface LeaderboardDocument {
 export type LeaderboardPeriodKind = 'daily' | 'last7' | 'last30';
 
 const TOP_N = 10;
+
+/**
+ * Per-user, per-Berlin-day cap on reps that count toward the leaderboard.
+ * Acts as a defense-in-depth on top of the per-entry cap (`PUSHUP_REPS_MAX`)
+ * — a determined cheater can still log many entries below 500 reps per
+ * day, this caps the visible total at a plausible elite ceiling. Anything
+ * above is silently truncated; the user's own stats keep the raw value.
+ */
+const LEADERBOARD_DAILY_REPS_CAP = 2000;
 
 /**
  * Returns the ISO date `daysBack` days before the given Berlin date.
@@ -92,7 +98,9 @@ export function rankEntries(
   targetKey: string,
   userProfiles: Map<string, UserProfile>
 ): LeaderboardEntry[] {
-  const totals = new Map<string, number>();
+  // Aggregate per (userId, Berlin day) first so the daily cap can be
+  // applied before windowed sums collapse the day boundary.
+  const perDay = new Map<string, Map<string, number>>();
 
   let windowStart: string | null = null;
   if (periodKey === 'last7' || periodKey === 'last30') {
@@ -118,26 +126,39 @@ export function rankEntries(
       if (p.isoDate < windowStart || p.isoDate > targetKey) continue;
     }
 
-    totals.set(
-      row.userId,
-      (totals.get(row.userId) || 0) + Number(row.reps || 0)
+    let userDays = perDay.get(row.userId);
+    if (!userDays) {
+      userDays = new Map();
+      perDay.set(row.userId, userDays);
+    }
+    userDays.set(
+      p.isoDate,
+      (userDays.get(p.isoDate) || 0) + Number(row.reps || 0)
     );
   }
 
+  const totals = new Map<string, number>();
+  for (const [userId, days] of perDay) {
+    let total = 0;
+    for (const [, dayReps] of days) {
+      total += Math.min(dayReps, LEADERBOARD_DAILY_REPS_CAP);
+    }
+    totals.set(userId, total);
+  }
+
   return [...totals.entries()]
-    .map(([userId, reps]) => {
+    .flatMap(([userId, reps]): LeaderboardEntry[] => {
       const profile = userProfiles.get(userId);
-      const alias = isLeaderboardNameAllowed(profile)
-        ? toPublicDisplayName(profile)
-        : toAnonymousLabel();
-      // Only attach a UID when both leaderboard-visibility and
-      // public-profile opt-ins are on — otherwise the row stays plain
-      // text on the frontend and the user's stats can't be deeplinked.
-      const entry: LeaderboardEntry = { alias, reps };
-      if (isPublicProfileLinkAllowed(profile)) {
-        entry.uid = userId;
-      }
-      return entry;
+      // Admin-set exclusion shadow-bans regardless of opt-in toggles.
+      if (isLeaderboardExcluded(profile)) return [];
+      // Public leaderboard requires the full public-profile opt-in:
+      // `ui.publicProfile === true`, `ui.hideFromLeaderboard === false`,
+      // and a non-empty `displayName`. `isPublicProfileLinkAllowed`
+      // checks all three — so every row that survives is also linkable
+      // to /u/<uid>.
+      if (!isPublicProfileLinkAllowed(profile)) return [];
+      const alias = String(profile?.displayName || '').trim();
+      return [{ alias, reps, uid: userId }];
     })
     .sort((a, b) => b.reps - a.reps)
     .slice(0, TOP_N);

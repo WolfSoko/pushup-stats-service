@@ -21,11 +21,11 @@ export type LeaderboardEntry = {
   rank: number;
   isCurrent?: boolean;
   /**
-   * UID is present iff the user opted into BOTH the leaderboard
-   * (`ui.hideFromLeaderboard === false`) AND a public profile
-   * (`ui.publicProfile === true`). When set, the frontend renders the
-   * row as a link to `/u/<uid>`; when missing, the row stays plain text.
-   * Anonymous-aliased rows never carry a UID.
+   * Public-profile UID. Always populated by the cloud-function ranker
+   * because leaderboard rows now require the full publicProfile opt-in.
+   * Optional only for compatibility with older cached snapshots; current
+   * snapshots always include it. When set, the row renders as a link to
+   * `/u/<uid>`; when missing (legacy), the row stays plain text.
    */
   uid?: string;
 };

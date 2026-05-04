@@ -181,6 +181,28 @@ export function buildGithubIssueBody(
 }
 
 /**
+ * Validates the payload for `adminSetLeaderboardExclusion`. Requires a
+ * non-empty `uid` and a boolean `excluded` flag.
+ */
+export function validateLeaderboardExclusionPayload(
+  data: unknown
+):
+  | { valid: true; uid: string; excluded: boolean }
+  | { valid: false; error: string } {
+  if (!data || typeof data !== 'object') {
+    return { valid: false, error: 'payload must be an object' };
+  }
+  const obj = data as Record<string, unknown>;
+  if (typeof obj.uid !== 'string' || obj.uid.trim().length === 0) {
+    return { valid: false, error: 'uid missing or empty' };
+  }
+  if (typeof obj.excluded !== 'boolean') {
+    return { valid: false, error: 'excluded must be boolean' };
+  }
+  return { valid: true, uid: obj.uid.trim(), excluded: obj.excluded };
+}
+
+/**
  * Batches array into chunks for processing
  * @param array Array to batch
  * @param size Batch size

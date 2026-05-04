@@ -18,15 +18,27 @@ describe('leaderboard/logic', () => {
         { userId: 'user2', timestamp: '2024-03-15T15:00:00Z', reps: 20 },
       ];
       const profiles = new Map<string, UserProfile>([
-        ['user1', { displayName: 'Alice', ui: { hideFromLeaderboard: false } }],
-        ['user2', { displayName: 'Bob', ui: { hideFromLeaderboard: false } }],
+        [
+          'user1',
+          {
+            displayName: 'Alice',
+            ui: { hideFromLeaderboard: false, publicProfile: true },
+          },
+        ],
+        [
+          'user2',
+          {
+            displayName: 'Bob',
+            ui: { hideFromLeaderboard: false, publicProfile: true },
+          },
+        ],
       ]);
 
       const result = rankEntries(rows, 'daily', '2024-03-15', profiles);
 
       expect(result).toHaveLength(2);
-      expect(result[0]).toEqual({ alias: 'Bob', reps: 20 });
-      expect(result[1]).toEqual({ alias: 'Alice', reps: 15 });
+      expect(result[0]).toEqual({ alias: 'Bob', reps: 20, uid: 'user2' });
+      expect(result[1]).toEqual({ alias: 'Alice', reps: 15, uid: 'user1' });
     });
 
     it('sorts entries by reps descending', () => {
@@ -36,9 +48,27 @@ describe('leaderboard/logic', () => {
         { userId: 'user2', timestamp: '2024-03-15T10:00:00Z', reps: 15 },
       ];
       const profiles = new Map<string, UserProfile>([
-        ['user1', { displayName: 'Alice' }],
-        ['user2', { displayName: 'Bob' }],
-        ['user3', { displayName: 'Charlie' }],
+        [
+          'user1',
+          {
+            displayName: 'Alice',
+            ui: { hideFromLeaderboard: false, publicProfile: true },
+          },
+        ],
+        [
+          'user2',
+          {
+            displayName: 'Bob',
+            ui: { hideFromLeaderboard: false, publicProfile: true },
+          },
+        ],
+        [
+          'user3',
+          {
+            displayName: 'Charlie',
+            ui: { hideFromLeaderboard: false, publicProfile: true },
+          },
+        ],
       ]);
 
       const result = rankEntries(rows, 'daily', '2024-03-15', profiles);
@@ -54,33 +84,69 @@ describe('leaderboard/logic', () => {
         { userId: 'user1', timestamp: '2024-03-16T10:00:00Z', reps: 20 }, // Different day
       ];
       const profiles = new Map<string, UserProfile>([
-        ['user1', { displayName: 'Alice', ui: { hideFromLeaderboard: false } }],
+        [
+          'user1',
+          {
+            displayName: 'Alice',
+            ui: { hideFromLeaderboard: false, publicProfile: true },
+          },
+        ],
       ]);
 
       const result = rankEntries(rows, 'daily', '2024-03-15', profiles);
 
       expect(result).toHaveLength(1);
-      expect(result[0]).toEqual({ alias: 'Alice', reps: 10 });
+      expect(result[0]).toEqual({ alias: 'Alice', reps: 10, uid: 'user1' });
     });
 
-    it('respects leaderboard privacy setting', () => {
+    it('drops users who opted out of the leaderboard', () => {
+      // Both fixtures have publicProfile=true so this test isolates the
+      // hideFromLeaderboard gate — Bob's exclusion is solely the
+      // hideFromLeaderboard=true flag, not the missing public profile.
       const rows: PushupRow[] = [
         { userId: 'user1', timestamp: '2024-03-15T10:00:00Z', reps: 10 },
         { userId: 'user2', timestamp: '2024-03-15T10:00:00Z', reps: 20 },
       ];
       const profiles = new Map<string, UserProfile>([
-        ['user1', { displayName: 'Alice', ui: { hideFromLeaderboard: false } }],
-        ['user2', { displayName: 'Bob', ui: { hideFromLeaderboard: true } }], // Hidden
+        [
+          'user1',
+          {
+            displayName: 'Alice',
+            ui: { hideFromLeaderboard: false, publicProfile: true },
+          },
+        ],
+        [
+          'user2',
+          {
+            displayName: 'Bob',
+            ui: { hideFromLeaderboard: true, publicProfile: true },
+          },
+        ],
       ]);
 
       const result = rankEntries(rows, 'daily', '2024-03-15', profiles);
 
-      expect(result[0]).toEqual({ alias: 'anonym', reps: 20 });
-      expect(result[1]).toEqual({ alias: 'Alice', reps: 10 });
+      expect(result).toHaveLength(1);
+      expect(result[0]).toEqual({ alias: 'Alice', reps: 10, uid: 'user1' });
     });
 
-    describe('uid attachment for public-profile linking', () => {
-      it('attaches uid only when both leaderboard + publicProfile opt-ins are on', () => {
+    it('drops users without an explicit publicProfile opt-in', () => {
+      // `hideFromLeaderboard` undefined defaults to hidden — no more
+      // `anonym` fallback row.
+      const rows: PushupRow[] = [
+        { userId: 'user1', timestamp: '2024-03-15T10:00:00Z', reps: 10 },
+      ];
+      const profiles = new Map<string, UserProfile>([
+        ['user1', { displayName: 'Alice' }],
+      ]);
+
+      const result = rankEntries(rows, 'daily', '2024-03-15', profiles);
+
+      expect(result).toEqual([]);
+    });
+
+    describe('public-profile gate', () => {
+      it('only includes users with full publicProfile opt-in; every row carries a uid', () => {
         const rows: PushupRow[] = [
           { userId: 'optedIn', timestamp: '2024-03-15T10:00:00Z', reps: 30 },
           { userId: 'leaderOnly', timestamp: '2024-03-15T10:00:00Z', reps: 20 },
@@ -99,6 +165,7 @@ describe('leaderboard/logic', () => {
             },
           ],
           [
+            // Leaderboard toggle on, but no public profile → dropped.
             'leaderOnly',
             {
               displayName: 'Bob',
@@ -106,6 +173,7 @@ describe('leaderboard/logic', () => {
             },
           ],
           [
+            // Public profile but leaderboard hidden → dropped.
             'profileOnly',
             {
               displayName: 'Carol',
@@ -116,43 +184,12 @@ describe('leaderboard/logic', () => {
 
         const result = rankEntries(rows, 'daily', '2024-03-15', profiles);
 
-        expect(result[0]).toEqual({
-          alias: 'Alice',
-          reps: 30,
-          uid: 'optedIn',
-        });
-        // Leaderboard-only user: name shown but no link.
-        expect(result[1]).toEqual({ alias: 'Bob', reps: 20 });
-        expect(result[1].uid).toBeUndefined();
-        // Public-profile user who hid from the leaderboard stays anonymous
-        // and never gets a link — leaderboard alias is `anonym`, so a UID
-        // would let attackers correlate that anonymous row to a real
-        // profile.
-        expect(result[2]).toEqual({ alias: 'anonym', reps: 10 });
-        expect(result[2].uid).toBeUndefined();
+        expect(result).toEqual([{ alias: 'Alice', reps: 30, uid: 'optedIn' }]);
       });
 
-      it('omits uid for profiles missing the ui block entirely', () => {
-        const rows: PushupRow[] = [
-          { userId: 'user1', timestamp: '2024-03-15T10:00:00Z', reps: 10 },
-        ];
-        const profiles = new Map<string, UserProfile>([
-          ['user1', { displayName: 'Alice' }],
-        ]);
-
-        const result = rankEntries(rows, 'daily', '2024-03-15', profiles);
-
-        // Defaults to private — no opt-in, no uid.
-        expect(result[0].uid).toBeUndefined();
-      });
-
-      it('omits uid when displayName is empty/whitespace even with both opt-ins', () => {
-        // Privacy regression: a user with an empty `displayName` would
-        // render as `anonym` via `toPublicDisplayName`'s fallback. If the
-        // row also carried a `uid`, the visible "anonym" label would
-        // become correlatable to a stable `/u/<uid>` permalink — leaking
-        // identity through what looks like an anonymous row. Block the
-        // UID until the user actually has a display name.
+      it('drops users with empty/whitespace displayName even when both opt-ins are on', () => {
+        // No display name → no row. The leaderboard never falls back to
+        // an anonymous alias.
         const rows: PushupRow[] = [
           { userId: 'user1', timestamp: '2024-03-15T10:00:00Z', reps: 10 },
           { userId: 'user2', timestamp: '2024-03-15T10:00:00Z', reps: 20 },
@@ -176,14 +213,140 @@ describe('leaderboard/logic', () => {
 
         const result = rankEntries(rows, 'daily', '2024-03-15', profiles);
 
-        for (const entry of result) {
-          expect(entry.alias).toBe('anonym');
-          expect(entry.uid).toBeUndefined();
-        }
+        expect(result).toEqual([]);
       });
     });
 
-    it('uses anonymous label for users without profiles', () => {
+    describe('daily cap', () => {
+      it('caps a single-day total at 2000 reps for the daily leaderboard', () => {
+        const rows: PushupRow[] = [
+          { userId: 'cheater', timestamp: '2024-03-15T08:00:00Z', reps: 500 },
+          { userId: 'cheater', timestamp: '2024-03-15T10:00:00Z', reps: 500 },
+          { userId: 'cheater', timestamp: '2024-03-15T12:00:00Z', reps: 500 },
+          { userId: 'cheater', timestamp: '2024-03-15T14:00:00Z', reps: 500 },
+          { userId: 'cheater', timestamp: '2024-03-15T16:00:00Z', reps: 500 },
+        ];
+        const profiles = new Map<string, UserProfile>([
+          [
+            'cheater',
+            {
+              displayName: 'Mallory',
+              ui: { hideFromLeaderboard: false, publicProfile: true },
+            },
+          ],
+        ]);
+
+        const result = rankEntries(rows, 'daily', '2024-03-15', profiles);
+
+        expect(result).toHaveLength(1);
+        expect(result[0].reps).toBe(2000);
+      });
+
+      it('caps each Berlin day independently in last7 windows', () => {
+        // 7 days × 3000 reps = 21000 raw, but each day caps at 2000
+        // → 14000 visible.
+        const rows: PushupRow[] = [];
+        for (let day = 9; day <= 15; day++) {
+          const iso = `2024-03-${String(day).padStart(2, '0')}T10:00:00Z`;
+          rows.push({ userId: 'cheater', timestamp: iso, reps: 1500 });
+          rows.push({ userId: 'cheater', timestamp: iso, reps: 1500 });
+        }
+        const profiles = new Map<string, UserProfile>([
+          [
+            'cheater',
+            {
+              displayName: 'Mallory',
+              ui: { hideFromLeaderboard: false, publicProfile: true },
+            },
+          ],
+        ]);
+
+        const result = rankEntries(rows, 'last7', '2024-03-15', profiles);
+
+        expect(result).toHaveLength(1);
+        expect(result[0].reps).toBe(14000);
+      });
+
+      it('does not affect users below the daily cap', () => {
+        const rows: PushupRow[] = [
+          { userId: 'honest', timestamp: '2024-03-15T08:00:00Z', reps: 50 },
+          { userId: 'honest', timestamp: '2024-03-15T18:00:00Z', reps: 50 },
+        ];
+        const profiles = new Map<string, UserProfile>([
+          [
+            'honest',
+            {
+              displayName: 'Alice',
+              ui: { hideFromLeaderboard: false, publicProfile: true },
+            },
+          ],
+        ]);
+
+        const result = rankEntries(rows, 'daily', '2024-03-15', profiles);
+
+        expect(result[0].reps).toBe(100);
+      });
+    });
+
+    describe('admin shadow-ban', () => {
+      it('excludes users flagged with leaderboardExcluded=true even with both opt-ins', () => {
+        const rows: PushupRow[] = [
+          { userId: 'good', timestamp: '2024-03-15T10:00:00Z', reps: 30 },
+          { userId: 'cheater', timestamp: '2024-03-15T10:00:00Z', reps: 999 },
+        ];
+        const profiles = new Map<string, UserProfile>([
+          [
+            'good',
+            {
+              displayName: 'Alice',
+              ui: { hideFromLeaderboard: false, publicProfile: true },
+            },
+          ],
+          [
+            'cheater',
+            {
+              displayName: 'Mallory',
+              ui: { hideFromLeaderboard: false, publicProfile: true },
+              leaderboardExcluded: true,
+            },
+          ],
+        ]);
+
+        const result = rankEntries(rows, 'daily', '2024-03-15', profiles);
+
+        expect(result).toEqual([{ alias: 'Alice', reps: 30, uid: 'good' }]);
+      });
+
+      it('does not affect users where the flag is unset or false', () => {
+        const rows: PushupRow[] = [
+          { userId: 'user1', timestamp: '2024-03-15T10:00:00Z', reps: 10 },
+          { userId: 'user2', timestamp: '2024-03-15T10:00:00Z', reps: 20 },
+        ];
+        const profiles = new Map<string, UserProfile>([
+          [
+            'user1',
+            {
+              displayName: 'Alice',
+              ui: { hideFromLeaderboard: false, publicProfile: true },
+              leaderboardExcluded: false,
+            },
+          ],
+          [
+            'user2',
+            {
+              displayName: 'Bob',
+              ui: { hideFromLeaderboard: false, publicProfile: true },
+            },
+          ],
+        ]);
+
+        const result = rankEntries(rows, 'daily', '2024-03-15', profiles);
+
+        expect(result).toHaveLength(2);
+      });
+    });
+
+    it('drops users without profiles entirely', () => {
       const rows: PushupRow[] = [
         { userId: 'user1', timestamp: '2024-03-15T10:00:00Z', reps: 10 },
       ];
@@ -191,7 +354,7 @@ describe('leaderboard/logic', () => {
 
       const result = rankEntries(rows, 'daily', '2024-03-15', profiles);
 
-      expect(result[0]).toEqual({ alias: 'anonym', reps: 10 });
+      expect(result).toEqual([]);
     });
 
     it('limits results to TOP_N', () => {
@@ -202,7 +365,10 @@ describe('leaderboard/logic', () => {
       }));
       const profiles = new Map<string, UserProfile>();
       rows.forEach((_, i) => {
-        profiles.set(`user${i}`, { displayName: `User${i}` });
+        profiles.set(`user${i}`, {
+          displayName: `User${i}`,
+          ui: { hideFromLeaderboard: false, publicProfile: true },
+        });
       });
 
       const result = rankEntries(rows, 'daily', '2024-03-15', profiles);
@@ -216,7 +382,13 @@ describe('leaderboard/logic', () => {
         { userId: 'user1', timestamp: '2024-03-15T10:00:00Z', reps: 20 },
       ];
       const profiles = new Map<string, UserProfile>([
-        ['user1', { displayName: 'Alice', ui: { hideFromLeaderboard: false } }],
+        [
+          'user1',
+          {
+            displayName: 'Alice',
+            ui: { hideFromLeaderboard: false, publicProfile: true },
+          },
+        ],
       ]);
 
       const result = rankEntries(rows, 'daily', '2024-03-15', profiles);
@@ -231,8 +403,20 @@ describe('leaderboard/logic', () => {
         { userId: 'user2', timestamp: '2024-03-15T10:00:00Z', reps: 20 },
       ];
       const profiles = new Map<string, UserProfile>([
-        ['user1', { displayName: 'Alice', ui: { hideFromLeaderboard: false } }],
-        ['user2', { displayName: 'Bob', ui: { hideFromLeaderboard: false } }],
+        [
+          'user1',
+          {
+            displayName: 'Alice',
+            ui: { hideFromLeaderboard: false, publicProfile: true },
+          },
+        ],
+        [
+          'user2',
+          {
+            displayName: 'Bob',
+            ui: { hideFromLeaderboard: false, publicProfile: true },
+          },
+        ],
       ]);
 
       const result = rankEntries(rows, 'daily', '2024-03-15', profiles);
@@ -251,7 +435,13 @@ describe('leaderboard/logic', () => {
         { userId: 'user1', timestamp: '2024-03-16T10:00:00Z', reps: 99 }, // excluded (future)
       ];
       const profiles = new Map<string, UserProfile>([
-        ['user1', { displayName: 'Alice', ui: { hideFromLeaderboard: false } }],
+        [
+          'user1',
+          {
+            displayName: 'Alice',
+            ui: { hideFromLeaderboard: false, publicProfile: true },
+          },
+        ],
       ]);
 
       // When
@@ -259,7 +449,7 @@ describe('leaderboard/logic', () => {
 
       // Then — only the two in-window rows are summed.
       expect(result).toHaveLength(1);
-      expect(result[0]).toEqual({ alias: 'Alice', reps: 10 });
+      expect(result[0]).toEqual({ alias: 'Alice', reps: 10, uid: 'user1' });
     });
 
     it('aggregates the trailing 30-day window inclusive of both endpoints', () => {
@@ -270,7 +460,13 @@ describe('leaderboard/logic', () => {
         { userId: 'user1', timestamp: '2024-02-29T10:00:00Z', reps: 99 }, // excluded (31 days back)
       ];
       const profiles = new Map<string, UserProfile>([
-        ['user1', { displayName: 'Alice', ui: { hideFromLeaderboard: false } }],
+        [
+          'user1',
+          {
+            displayName: 'Alice',
+            ui: { hideFromLeaderboard: false, publicProfile: true },
+          },
+        ],
       ]);
 
       // When
@@ -278,7 +474,7 @@ describe('leaderboard/logic', () => {
 
       // Then
       expect(result).toHaveLength(1);
-      expect(result[0]).toEqual({ alias: 'Alice', reps: 12 });
+      expect(result[0]).toEqual({ alias: 'Alice', reps: 12, uid: 'user1' });
     });
   });
 

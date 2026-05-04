@@ -16,7 +16,10 @@ import { TestBed } from '@angular/core/testing';
 import { Firestore } from '@angular/fire/firestore';
 import { firstValueFrom } from 'rxjs';
 import * as firestoreFns from '@angular/fire/firestore';
-import { PushupFirestoreService } from './pushup-firestore.service';
+import {
+  PushupFirestoreService,
+  PushupValidationError,
+} from './pushup-firestore.service';
 
 describe('PushupFirestoreService', () => {
   let service: PushupFirestoreService;
@@ -336,6 +339,60 @@ describe('PushupFirestoreService', () => {
       expect(writtenData).not.toHaveProperty('sets');
     });
 
+    describe('When reps violates the plausibility cap', () => {
+      it('Then surfaces the error via the Observable, not synchronously', async () => {
+        const setDocSpy = jest.spyOn(firestoreFns, 'setDoc');
+
+        // Calling the method must NOT throw synchronously — that would
+        // bypass `.subscribe({ error })` handlers and crash callers.
+        const obs$ = service.createPushup('u1', {
+          timestamp: '2024-01-01T10:00:00Z',
+          reps: 501,
+        });
+
+        await expect(firstValueFrom(obs$)).rejects.toBeInstanceOf(
+          PushupValidationError
+        );
+        expect(setDocSpy).not.toHaveBeenCalled();
+      });
+
+      it('Then rejects zero/negative reps via Observable error', async () => {
+        const setDocSpy = jest.spyOn(firestoreFns, 'setDoc');
+
+        await expect(
+          firstValueFrom(
+            service.createPushup('u1', {
+              timestamp: '2024-01-01T10:00:00Z',
+              reps: 0,
+            })
+          )
+        ).rejects.toBeInstanceOf(PushupValidationError);
+        await expect(
+          firstValueFrom(
+            service.createPushup('u1', {
+              timestamp: '2024-01-01T10:00:00Z',
+              reps: -5,
+            })
+          )
+        ).rejects.toBeInstanceOf(PushupValidationError);
+        expect(setDocSpy).not.toHaveBeenCalled();
+      });
+
+      it('Then rejects non-integer reps via Observable error', async () => {
+        const setDocSpy = jest.spyOn(firestoreFns, 'setDoc');
+
+        await expect(
+          firstValueFrom(
+            service.createPushup('u1', {
+              timestamp: '2024-01-01T10:00:00Z',
+              reps: 1.5,
+            })
+          )
+        ).rejects.toBeInstanceOf(PushupValidationError);
+        expect(setDocSpy).not.toHaveBeenCalled();
+      });
+    });
+
     it('defaults source to "web" and type to "Standard" when omitted', async () => {
       const newRef = { id: 'default-id' };
       jest.spyOn(firestoreFns, 'doc').mockReturnValueOnce(newRef as any);
@@ -370,6 +427,31 @@ describe('PushupFirestoreService', () => {
         rowRef,
         expect.objectContaining({ reps: 8, updatedAt: expect.any(String) })
       );
+    });
+
+    describe('When reps violates the plausibility cap', () => {
+      it('Then surfaces the error via the Observable, not synchronously', async () => {
+        const updateDocSpy = jest.spyOn(firestoreFns, 'updateDoc');
+
+        const obs$ = service.updatePushup('id1', { reps: 9001 });
+
+        await expect(firstValueFrom(obs$)).rejects.toBeInstanceOf(
+          PushupValidationError
+        );
+        expect(updateDocSpy).not.toHaveBeenCalled();
+      });
+
+      it('Then allows updates that omit reps entirely', async () => {
+        const rowRef = {};
+        jest.spyOn(firestoreFns, 'doc').mockReturnValueOnce(rowRef as any);
+        const updateDocSpy = jest
+          .spyOn(firestoreFns, 'updateDoc')
+          .mockResolvedValueOnce(undefined as any);
+
+        await firstValueFrom(service.updatePushup('id1', { source: 'web' }));
+
+        expect(updateDocSpy).toHaveBeenCalled();
+      });
     });
 
     it('strips undefined values from payload before calling updateDoc', async () => {
