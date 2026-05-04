@@ -9,25 +9,33 @@ value on its own. Earlier slices unblock later ones but do not require them.
 
 ---
 
-## Open product questions (decide before PR 2 lands)
+## Open product questions (decided during PR #281)
 
-These thresholds drive validation rules and want a one-line decision:
+These thresholds drove validation rules. **Final values shipped in PR #281
+are bolded; original suggestions kept in italics for traceability.**
 
-- **Per-entry cap:** suggest **200 reps** — covers world-class single-set
-  performance with headroom. Higher = more cheat surface, lower = false
-  rejects.
-- **Daily cap:** suggest **2 000 reps** — well above the realistic top-tier
-  daily volume, still blocks "1 000 000 reps" griefing.
-- **Min account age for leaderboard:** suggest **24 h** — kills throw-away
-  accounts without hurting first-day users much.
-- **Email-verified required for leaderboard:** suggest **yes** — Firebase Auth
-  already exposes `emailVerified`; the cost is one banner in settings.
-- **Display-name policy:** length **2–30**, charset
-  `\p{L}\p{N} _.\-` (Unicode letters/digits + space, underscore, dot, hyphen),
-  plus a small starter wordlist for profanity.
+- **Per-entry cap:** **500 reps** _(originally suggested 200 — raised to
+  match the existing `QUICK_LOG_REPS_MAX = 500` so notification quick-log
+  keeps working unchanged)_. Higher = more cheat surface, lower = false
+  rejects. PR 6's daily cap is the real anti-cheat backstop.
+- **Daily cap:** **2 000 reps** _(unchanged from suggestion)_ — well above
+  realistic top-tier daily volume, still blocks "1 000 000 reps" griefing.
+- **Min account age for leaderboard:** **not gated** _(originally suggested
+  24h)_ — dropped together with the verified-email gate. Daily cap +
+  display-name + admin shadow-ban cover the cheat surface; account-age
+  gating can be added later if needed without schema changes.
+- **Email-verified required for leaderboard:** **no** _(originally
+  suggested yes)_ — explicitly dropped per the user's call. The full
+  publicProfile opt-in (PR 4) plus admin shadow-ban (PR 5) was deemed
+  enough; verified-email gating remains a future option.
+- **Display-name policy:** **length 2–30 (after `.trim()`), charset
+  `\p{L}\p{N} _.\-`** _(unchanged from suggestion)_. Profanity wordlist
+  was deferred to follow-up issue #285.
 
-If any of those don't match what you want, change them in PR 2 / PR 3 / PR 4 —
-the plan structure stays the same.
+Anything we'd want to revise: bump these values via a follow-up PR — the
+constants live in `libs/stats/src/lib/models/{pushup,user-config}.models.ts`
+and `data-store/functions/src/leaderboard/logic.ts` (daily cap), with
+the Firestore rule mirroring them.
 
 ---
 
