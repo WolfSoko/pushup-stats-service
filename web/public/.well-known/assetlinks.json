@@ -5,7 +5,8 @@
       "namespace": "android_app",
       "package_name": "com.pushupstats.app",
       "sha256_cert_fingerprints": [
-        "CC:80:6A:9C:03:DD:78:F6:35:F3:A0:2D:36:05:75:73:91:D9:D3:2F:B3:D0:9E:37:33:71:F4:F5:12:E0:13:B4"
+        "CC:80:6A:9C:03:DD:78:F6:35:F3:A0:2D:36:05:75:73:91:D9:D3:2F:B3:D0:9E:37:33:71:F4:F5:12:E0:13:B4",
+        "A9:60:E6:2F:D8:04:49:D9:AF:26:C8:60:EE:C1:8F:5C:2D:0A:A4:6D:EA:1A:B6:D3:9C:E5:17:02:AC:BE:07:AC"
       ]
     }
   }
