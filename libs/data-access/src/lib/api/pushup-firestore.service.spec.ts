@@ -16,7 +16,10 @@ import { TestBed } from '@angular/core/testing';
 import { Firestore } from '@angular/fire/firestore';
 import { firstValueFrom } from 'rxjs';
 import * as firestoreFns from '@angular/fire/firestore';
-import { PushupFirestoreService } from './pushup-firestore.service';
+import {
+  PushupFirestoreService,
+  PushupValidationError,
+} from './pushup-firestore.service';
 
 describe('PushupFirestoreService', () => {
   let service: PushupFirestoreService;
@@ -336,6 +339,50 @@ describe('PushupFirestoreService', () => {
       expect(writtenData).not.toHaveProperty('sets');
     });
 
+    describe('When reps violates the plausibility cap', () => {
+      it('Then rejects values above PUSHUP_REPS_MAX before touching Firestore', () => {
+        const setDocSpy = jest.spyOn(firestoreFns, 'setDoc');
+
+        expect(() =>
+          service.createPushup('u1', {
+            timestamp: '2024-01-01T10:00:00Z',
+            reps: 501,
+          })
+        ).toThrow(PushupValidationError);
+        expect(setDocSpy).not.toHaveBeenCalled();
+      });
+
+      it('Then rejects zero/negative reps', () => {
+        const setDocSpy = jest.spyOn(firestoreFns, 'setDoc');
+
+        expect(() =>
+          service.createPushup('u1', {
+            timestamp: '2024-01-01T10:00:00Z',
+            reps: 0,
+          })
+        ).toThrow(PushupValidationError);
+        expect(() =>
+          service.createPushup('u1', {
+            timestamp: '2024-01-01T10:00:00Z',
+            reps: -5,
+          })
+        ).toThrow(PushupValidationError);
+        expect(setDocSpy).not.toHaveBeenCalled();
+      });
+
+      it('Then rejects non-integer reps', () => {
+        const setDocSpy = jest.spyOn(firestoreFns, 'setDoc');
+
+        expect(() =>
+          service.createPushup('u1', {
+            timestamp: '2024-01-01T10:00:00Z',
+            reps: 1.5,
+          })
+        ).toThrow(PushupValidationError);
+        expect(setDocSpy).not.toHaveBeenCalled();
+      });
+    });
+
     it('defaults source to "web" and type to "Standard" when omitted', async () => {
       const newRef = { id: 'default-id' };
       jest.spyOn(firestoreFns, 'doc').mockReturnValueOnce(newRef as any);
@@ -370,6 +417,29 @@ describe('PushupFirestoreService', () => {
         rowRef,
         expect.objectContaining({ reps: 8, updatedAt: expect.any(String) })
       );
+    });
+
+    describe('When reps violates the plausibility cap', () => {
+      it('Then rejects updates above PUSHUP_REPS_MAX before touching Firestore', () => {
+        const updateDocSpy = jest.spyOn(firestoreFns, 'updateDoc');
+
+        expect(() => service.updatePushup('id1', { reps: 9001 })).toThrow(
+          PushupValidationError
+        );
+        expect(updateDocSpy).not.toHaveBeenCalled();
+      });
+
+      it('Then allows updates that omit reps entirely', async () => {
+        const rowRef = {};
+        jest.spyOn(firestoreFns, 'doc').mockReturnValueOnce(rowRef as any);
+        const updateDocSpy = jest
+          .spyOn(firestoreFns, 'updateDoc')
+          .mockResolvedValueOnce(undefined as any);
+
+        await firstValueFrom(service.updatePushup('id1', { source: 'web' }));
+
+        expect(updateDocSpy).toHaveBeenCalled();
+      });
     });
 
     it('strips undefined values from payload before calling updateDoc', async () => {

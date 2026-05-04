@@ -13,14 +13,35 @@ import {
   where,
 } from '@angular/fire/firestore';
 import {
+  PUSHUP_REPS_MAX,
+  PUSHUP_REPS_MIN,
   PushupCreate,
   PushupRecord,
   PushupUpdate,
   StatsFilter,
+  validatePushupReps,
 } from '@pu-stats/models';
 import { from, map, Observable } from 'rxjs';
 
 const PUSHUPS_COLLECTION = 'pushups';
+
+export class PushupValidationError extends Error {
+  constructor(
+    public readonly field: 'reps',
+    public readonly violation: 'not-integer' | 'out-of-range'
+  ) {
+    super(`Invalid pushup ${field}: ${violation}`);
+    this.name = 'PushupValidationError';
+  }
+}
+
+function assertValidReps(reps: number): void {
+  const violation = validatePushupReps(reps);
+  if (violation) throw new PushupValidationError('reps', violation);
+}
+
+/** Re-exported so callers can read the cap without importing from `@pu-stats/models`. */
+export { PUSHUP_REPS_MAX, PUSHUP_REPS_MIN };
 
 @Injectable({ providedIn: 'root' })
 export class PushupFirestoreService {
@@ -68,6 +89,7 @@ export class PushupFirestoreService {
     userId: string,
     payload: PushupCreate
   ): Observable<PushupRecord> {
+    assertValidReps(payload.reps);
     const pushupsRef = collection(this.firestore, PUSHUPS_COLLECTION);
     const newRef = doc(pushupsRef);
     const nowIso = new Date().toISOString();
@@ -100,6 +122,7 @@ export class PushupFirestoreService {
   }
 
   updatePushup(id: string, payload: PushupUpdate): Observable<void> {
+    if (payload.reps !== undefined) assertValidReps(payload.reps);
     const rowRef = doc(this.firestore, PUSHUPS_COLLECTION, id);
     // Filter out undefined values and empty arrays — Firestore rejects undefined,
     // and empty sets should be omitted to match createPushup behavior.
