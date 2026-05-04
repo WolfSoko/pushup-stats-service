@@ -21,7 +21,7 @@ import {
   StatsFilter,
   validatePushupReps,
 } from '@pu-stats/models';
-import { from, map, Observable } from 'rxjs';
+import { from, map, Observable, throwError } from 'rxjs';
 
 const PUSHUPS_COLLECTION = 'pushups';
 
@@ -35,9 +35,18 @@ export class PushupValidationError extends Error {
   }
 }
 
-function assertValidReps(reps: number): void {
+/**
+ * Returns an Observable that errors with `PushupValidationError` if the
+ * reps fail validation, otherwise null. Wrapping the throw in a cold
+ * Observable lets RxJS subscribers see the error via their `error`
+ * handler instead of getting a synchronous throw at call time — which
+ * would bypass `subscribe({ error })` and crash callers that build
+ * their own pipelines around the returned Observable.
+ */
+function repsViolationObservable<T>(reps: number): Observable<T> | null {
   const violation = validatePushupReps(reps);
-  if (violation) throw new PushupValidationError('reps', violation);
+  if (!violation) return null;
+  return throwError(() => new PushupValidationError('reps', violation));
 }
 
 /** Re-exported so callers can read the cap without importing from `@pu-stats/models`. */
@@ -89,7 +98,8 @@ export class PushupFirestoreService {
     userId: string,
     payload: PushupCreate
   ): Observable<PushupRecord> {
-    assertValidReps(payload.reps);
+    const violation = repsViolationObservable<PushupRecord>(payload.reps);
+    if (violation) return violation;
     const pushupsRef = collection(this.firestore, PUSHUPS_COLLECTION);
     const newRef = doc(pushupsRef);
     const nowIso = new Date().toISOString();
@@ -122,7 +132,10 @@ export class PushupFirestoreService {
   }
 
   updatePushup(id: string, payload: PushupUpdate): Observable<void> {
-    if (payload.reps !== undefined) assertValidReps(payload.reps);
+    if (payload.reps !== undefined) {
+      const violation = repsViolationObservable<void>(payload.reps);
+      if (violation) return violation;
+    }
     const rowRef = doc(this.firestore, PUSHUPS_COLLECTION, id);
     // Filter out undefined values and empty arrays — Firestore rejects undefined,
     // and empty sets should be omitted to match createPushup behavior.

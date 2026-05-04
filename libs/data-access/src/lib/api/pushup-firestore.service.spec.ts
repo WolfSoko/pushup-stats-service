@@ -340,45 +340,55 @@ describe('PushupFirestoreService', () => {
     });
 
     describe('When reps violates the plausibility cap', () => {
-      it('Then rejects values above PUSHUP_REPS_MAX before touching Firestore', () => {
+      it('Then surfaces the error via the Observable, not synchronously', async () => {
         const setDocSpy = jest.spyOn(firestoreFns, 'setDoc');
 
-        expect(() =>
-          service.createPushup('u1', {
-            timestamp: '2024-01-01T10:00:00Z',
-            reps: 501,
-          })
-        ).toThrow(PushupValidationError);
+        // Calling the method must NOT throw synchronously — that would
+        // bypass `.subscribe({ error })` handlers and crash callers.
+        const obs$ = service.createPushup('u1', {
+          timestamp: '2024-01-01T10:00:00Z',
+          reps: 501,
+        });
+
+        await expect(firstValueFrom(obs$)).rejects.toBeInstanceOf(
+          PushupValidationError
+        );
         expect(setDocSpy).not.toHaveBeenCalled();
       });
 
-      it('Then rejects zero/negative reps', () => {
+      it('Then rejects zero/negative reps via Observable error', async () => {
         const setDocSpy = jest.spyOn(firestoreFns, 'setDoc');
 
-        expect(() =>
-          service.createPushup('u1', {
-            timestamp: '2024-01-01T10:00:00Z',
-            reps: 0,
-          })
-        ).toThrow(PushupValidationError);
-        expect(() =>
-          service.createPushup('u1', {
-            timestamp: '2024-01-01T10:00:00Z',
-            reps: -5,
-          })
-        ).toThrow(PushupValidationError);
+        await expect(
+          firstValueFrom(
+            service.createPushup('u1', {
+              timestamp: '2024-01-01T10:00:00Z',
+              reps: 0,
+            })
+          )
+        ).rejects.toBeInstanceOf(PushupValidationError);
+        await expect(
+          firstValueFrom(
+            service.createPushup('u1', {
+              timestamp: '2024-01-01T10:00:00Z',
+              reps: -5,
+            })
+          )
+        ).rejects.toBeInstanceOf(PushupValidationError);
         expect(setDocSpy).not.toHaveBeenCalled();
       });
 
-      it('Then rejects non-integer reps', () => {
+      it('Then rejects non-integer reps via Observable error', async () => {
         const setDocSpy = jest.spyOn(firestoreFns, 'setDoc');
 
-        expect(() =>
-          service.createPushup('u1', {
-            timestamp: '2024-01-01T10:00:00Z',
-            reps: 1.5,
-          })
-        ).toThrow(PushupValidationError);
+        await expect(
+          firstValueFrom(
+            service.createPushup('u1', {
+              timestamp: '2024-01-01T10:00:00Z',
+              reps: 1.5,
+            })
+          )
+        ).rejects.toBeInstanceOf(PushupValidationError);
         expect(setDocSpy).not.toHaveBeenCalled();
       });
     });
@@ -420,10 +430,12 @@ describe('PushupFirestoreService', () => {
     });
 
     describe('When reps violates the plausibility cap', () => {
-      it('Then rejects updates above PUSHUP_REPS_MAX before touching Firestore', () => {
+      it('Then surfaces the error via the Observable, not synchronously', async () => {
         const updateDocSpy = jest.spyOn(firestoreFns, 'updateDoc');
 
-        expect(() => service.updatePushup('id1', { reps: 9001 })).toThrow(
+        const obs$ = service.updatePushup('id1', { reps: 9001 });
+
+        await expect(firstValueFrom(obs$)).rejects.toBeInstanceOf(
           PushupValidationError
         );
         expect(updateDocSpy).not.toHaveBeenCalled();

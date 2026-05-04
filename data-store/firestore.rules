@@ -8,9 +8,16 @@ service cloud.firestore {
     // `adminSetLeaderboardExclusion` callable — clients must not write it.
     //
     // `displayName` constraints mirror `DISPLAY_NAME_*` in
-    // `libs/stats/src/lib/models/user-config.models.ts`. Length 2..30,
-    // Unicode letters/digits + space, underscore, dot, hyphen — keeps emoji
-    // and control chars out of the public leaderboard.
+    // `libs/stats/src/lib/models/user-config.models.ts`. Length 2..30
+    // **after trimming**, Unicode letters/digits + space, underscore,
+    // dot, hyphen — keeps emoji, control chars, and whitespace-only
+    // names out of the public leaderboard.
+    //
+    // Update path gates the check on `displayName` actually changing —
+    // otherwise users with legacy non-conforming names (e.g. older
+    // emoji, single-char) would be locked out of saving unrelated
+    // settings like dailyGoal or privacy toggles, because
+    // `request.resource.data` is the full post-update document.
     match /userConfigs/{userId} {
       allow read: if request.auth != null && request.auth.uid == userId;
       allow create: if request.auth != null
@@ -19,17 +26,17 @@ service cloud.firestore {
                     && !request.resource.data.keys().hasAny(['role', 'leaderboardExcluded'])
                     && (!('displayName' in request.resource.data.keys())
                         || (request.resource.data.displayName is string
-                            && request.resource.data.displayName.size() >= 2
-                            && request.resource.data.displayName.size() <= 30
+                            && request.resource.data.displayName.trim().size() >= 2
+                            && request.resource.data.displayName.trim().size() <= 30
                             && request.resource.data.displayName.matches('^[\\p{L}\\p{N} _.\\-]+$')));
       allow update: if request.auth != null
                     && request.auth.uid == userId
                     && request.resource.data.userId == userId
                     && !request.resource.data.diff(resource.data).affectedKeys().hasAny(['role', 'leaderboardExcluded'])
-                    && (!('displayName' in request.resource.data.keys())
+                    && (!('displayName' in request.resource.data.diff(resource.data).affectedKeys())
                         || (request.resource.data.displayName is string
-                            && request.resource.data.displayName.size() >= 2
-                            && request.resource.data.displayName.size() <= 30
+                            && request.resource.data.displayName.trim().size() >= 2
+                            && request.resource.data.displayName.trim().size() <= 30
                             && request.resource.data.displayName.matches('^[\\p{L}\\p{N} _.\\-]+$')));
     }
 
@@ -40,6 +47,12 @@ service cloud.firestore {
     // `reps` plausibility cap mirrors `PUSHUP_REPS_MIN` / `PUSHUP_REPS_MAX`
     // in `libs/stats/src/lib/models/pushup.models.ts`. Keep the two in sync —
     // honest writes get rejected here if the client cap is wider.
+    //
+    // Update path gates the cap on `reps` actually changing — otherwise
+    // legacy entries above the new cap would be effectively non-updatable
+    // (fixing `timestamp`/`source` would fail unless `reps` was also
+    // changed first), since `request.resource.data` is the full
+    // post-update document.
     match /pushups/{pushupId} {
       allow read: if resource.data.userId == 'aqgzwSbhudRLrluz1zBSW3XQx013'
                   || (request.auth != null && resource.data.userId == request.auth.uid);
@@ -48,7 +61,7 @@ service cloud.firestore {
                     && resource.data.userId == request.auth.uid
                     && request.resource.data.userId == request.auth.uid
                     && request.resource.data.userId == resource.data.userId
-                    && (!('reps' in request.resource.data.keys())
+                    && (!('reps' in request.resource.data.diff(resource.data).affectedKeys())
                         || (request.resource.data.reps is int
                             && request.resource.data.reps >= 1
                             && request.resource.data.reps <= 500));

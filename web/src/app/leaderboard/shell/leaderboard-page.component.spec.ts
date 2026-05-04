@@ -9,14 +9,15 @@ import {
 import { LeaderboardPageComponent } from './leaderboard-page.component';
 
 /**
- * Frontend privacy guard: leaderboard rows only become a `<a>` linking to
- * `/u/<uid>` when the cloud function attached a `uid` (which itself
- * requires the publicProfile opt-in). Leaderboard-only opt-ins (no public
- * profile) appear with their real alias but must stay plain text — these
- * tests fail loudly if the template ever degrades that contract.
+ * Frontend privacy guard: leaderboard rows only become a `<a>` linking
+ * to `/u/<uid>` when the cloud function attached a `uid`. The ranker
+ * now requires the full publicProfile opt-in, so every fresh row has a
+ * uid; uid-less rows can only come from older cached snapshots and
+ * must stay plain text. These tests fail loudly if the template ever
+ * degrades that contract.
  *
- * Anonymous rows are filtered out at the cloud-function layer
- * (`rankEntries`) and never reach the frontend.
+ * Anonymous rows and opted-out users are filtered out at the
+ * cloud-function layer (`rankEntries`) and never reach the frontend.
  */
 describe('LeaderboardPageComponent', () => {
   let fixture: ComponentFixture<LeaderboardPageComponent>;
@@ -73,7 +74,7 @@ describe('LeaderboardPageComponent', () => {
     });
   });
 
-  describe('Given an entry without uid (leaderboard-only opt-in)', () => {
+  describe('Given a legacy entry without uid (older cached snapshot)', () => {
     it('Then the alias is rendered as a plain span — never clickable', async () => {
       await setup([{ rank: 2, alias: 'Bob', reps: 50 }]);
 
@@ -93,8 +94,8 @@ describe('LeaderboardPageComponent', () => {
     });
   });
 
-  describe('Given a mix of entries', () => {
-    it('Then only profile opt-ins are linked, leaderboard-only rows stay plain text', async () => {
+  describe('Given a mix of fresh + legacy entries', () => {
+    it('Then only rows with uid are linked, legacy uid-less rows stay plain text', async () => {
       await setup([
         { rank: 1, alias: 'Alice', reps: 100, uid: 'aaa' },
         { rank: 2, alias: 'Bob', reps: 80 },
