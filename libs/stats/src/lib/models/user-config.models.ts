@@ -64,3 +64,32 @@ export type UserConfigUpdate = Partial<
     | 'reminder'
   >
 >;
+
+/**
+ * Display-name constraints for the public leaderboard. Mirrored in
+ * `data-store/firestore.rules` — keep both in sync. Pattern allows
+ * Unicode letters, digits, plus space, underscore, dot, hyphen.
+ */
+export const DISPLAY_NAME_MIN_LENGTH = 2;
+export const DISPLAY_NAME_MAX_LENGTH = 30;
+export const DISPLAY_NAME_PATTERN = /^[\p{L}\p{N} _.-]+$/u;
+
+export type DisplayNameViolation =
+  | 'too-short'
+  | 'too-long'
+  | 'invalid-characters';
+
+/**
+ * Returns null if the candidate passes display-name validation, otherwise
+ * the kind of violation. Matches the Firestore rule constraints — clients
+ * should call this before persisting to surface a clear error rather than
+ * a generic permission rejection.
+ */
+export function validateDisplayName(raw: unknown): DisplayNameViolation | null {
+  if (typeof raw !== 'string') return 'invalid-characters';
+  const trimmed = raw.trim();
+  if (trimmed.length < DISPLAY_NAME_MIN_LENGTH) return 'too-short';
+  if (trimmed.length > DISPLAY_NAME_MAX_LENGTH) return 'too-long';
+  if (!DISPLAY_NAME_PATTERN.test(trimmed)) return 'invalid-characters';
+  return null;
+}
