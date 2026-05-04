@@ -100,6 +100,9 @@ describe('leaderboard/logic', () => {
     });
 
     it('drops users who opted out of the leaderboard', () => {
+      // Both fixtures have publicProfile=true so this test isolates the
+      // hideFromLeaderboard gate — Bob's exclusion is solely the
+      // hideFromLeaderboard=true flag, not the missing public profile.
       const rows: PushupRow[] = [
         { userId: 'user1', timestamp: '2024-03-15T10:00:00Z', reps: 10 },
         { userId: 'user2', timestamp: '2024-03-15T10:00:00Z', reps: 20 },
@@ -112,7 +115,13 @@ describe('leaderboard/logic', () => {
             ui: { hideFromLeaderboard: false, publicProfile: true },
           },
         ],
-        ['user2', { displayName: 'Bob', ui: { hideFromLeaderboard: true } }],
+        [
+          'user2',
+          {
+            displayName: 'Bob',
+            ui: { hideFromLeaderboard: true, publicProfile: true },
+          },
+        ],
       ]);
 
       const result = rankEntries(rows, 'daily', '2024-03-15', profiles);

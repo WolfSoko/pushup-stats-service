@@ -170,15 +170,15 @@ necessary as soon as PR 1–4 are live and a determined cheater shows up.
 
 **Changes**
 
-- `libs/auth/...` or `libs/stats/...` model: extend `userConfigs.ui` with
-  optional `excludeFromLeaderboard?: boolean` — admin-only.
+- `libs/auth/...` or `libs/stats/...` model: extend `userConfigs` with
+  optional top-level `leaderboardExcluded?: boolean` — admin-only.
 - `data-store/firestore.rules`
-  - Block client writes to `ui.excludeFromLeaderboard` (mirror the existing
+  - Block client writes to `leaderboardExcluded` (mirror the existing
     `role` carve-out on `userConfigs`).
 - `data-store/functions/src/admin/` — new callable
   `adminSetLeaderboardExclusion({ uid, excluded })` (custom-claim gated).
 - `data-store/functions/src/leaderboard/logic.ts`
-  - `rankEntries()` filters users with `ui.excludeFromLeaderboard === true`.
+  - `rankEntries()` filters users with `leaderboardExcluded === true`.
 - `web/src/app/admin/user-details-dialog.component.ts`
   - Toggle "Vom Leaderboard ausschließen" + reason text field; reason logged
     to a `moderationLog` collection (write-only via Admin SDK).
@@ -216,7 +216,7 @@ take the trigger path.
 
 ## Roll-out order recap
 
-```
+```text
 PR 1 (drop anonymous)
   └── PR 2 (per-entry cap)
         └── PR 3 (name hygiene)
