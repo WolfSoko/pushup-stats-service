@@ -4,7 +4,11 @@
  */
 
 import { berlinDateParts, BerlinDateParts } from '../datetime';
-import { isPublicProfileLinkAllowed, UserProfile } from '../profile';
+import {
+  isLeaderboardExcluded,
+  isPublicProfileLinkAllowed,
+  UserProfile,
+} from '../profile';
 
 export interface PushupRow {
   timestamp?: string;
@@ -120,6 +124,8 @@ export function rankEntries(
   return [...totals.entries()]
     .flatMap(([userId, reps]): LeaderboardEntry[] => {
       const profile = userProfiles.get(userId);
+      // Admin-set exclusion shadow-bans regardless of opt-in toggles.
+      if (isLeaderboardExcluded(profile)) return [];
       // Public leaderboard requires the full public-profile opt-in:
       // `ui.publicProfile === true`, `ui.hideFromLeaderboard === false`,
       // and a non-empty `displayName`. `isPublicProfileLinkAllowed`

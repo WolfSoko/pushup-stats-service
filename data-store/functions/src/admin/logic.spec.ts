@@ -2,6 +2,7 @@ import { describe, it, expect } from '@jest/globals';
 import {
   validateAdminAccess,
   validateDeleteUserPayload,
+  validateLeaderboardExclusionPayload,
   isDemoUser,
   batchArray,
   validateFeedbackId,
@@ -349,6 +350,61 @@ describe('admin/logic', () => {
       const array = [{ id: 1 }, { id: 2 }, { id: 3 }];
       const batches = batchArray(array, 2);
       expect(batches).toEqual([[{ id: 1 }, { id: 2 }], [{ id: 3 }]]);
+    });
+  });
+
+  describe('validateLeaderboardExclusionPayload', () => {
+    it('accepts a valid {uid, excluded} payload', () => {
+      const result = validateLeaderboardExclusionPayload({
+        uid: 'abc',
+        excluded: true,
+      });
+      expect(result).toEqual({ valid: true, uid: 'abc', excluded: true });
+    });
+
+    it('accepts excluded=false (un-banning)', () => {
+      const result = validateLeaderboardExclusionPayload({
+        uid: 'abc',
+        excluded: false,
+      });
+      expect(result).toEqual({ valid: true, uid: 'abc', excluded: false });
+    });
+
+    it('trims surrounding whitespace from uid', () => {
+      const result = validateLeaderboardExclusionPayload({
+        uid: '  abc  ',
+        excluded: true,
+      });
+      expect(result).toEqual({ valid: true, uid: 'abc', excluded: true });
+    });
+
+    it('rejects non-object payload', () => {
+      expect(validateLeaderboardExclusionPayload(null)).toEqual({
+        valid: false,
+        error: 'payload must be an object',
+      });
+      expect(validateLeaderboardExclusionPayload('foo')).toEqual({
+        valid: false,
+        error: 'payload must be an object',
+      });
+    });
+
+    it('rejects missing or empty uid', () => {
+      expect(
+        validateLeaderboardExclusionPayload({ excluded: true })
+      ).toMatchObject({ valid: false });
+      expect(
+        validateLeaderboardExclusionPayload({ uid: '   ', excluded: true })
+      ).toMatchObject({ valid: false });
+    });
+
+    it('rejects non-boolean excluded', () => {
+      expect(
+        validateLeaderboardExclusionPayload({ uid: 'abc', excluded: 'true' })
+      ).toMatchObject({ valid: false });
+      expect(validateLeaderboardExclusionPayload({ uid: 'abc' })).toMatchObject(
+        { valid: false }
+      );
     });
   });
 });

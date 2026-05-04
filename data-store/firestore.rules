@@ -4,6 +4,8 @@ service cloud.firestore {
     // Signed-in users may read and update their own config document.
     // Deletes are handled exclusively by Cloud Functions (adminDeleteUser).
     // The 'role' field is managed exclusively via Firebase Custom Claims — clients must not write it.
+    // `leaderboardExcluded` is an admin-only moderation flag managed by the
+    // `adminSetLeaderboardExclusion` callable — clients must not write it.
     //
     // `displayName` constraints mirror `DISPLAY_NAME_*` in
     // `libs/stats/src/lib/models/user-config.models.ts`. Length 2..30,
@@ -14,7 +16,7 @@ service cloud.firestore {
       allow create: if request.auth != null
                     && request.auth.uid == userId
                     && request.resource.data.userId == userId
-                    && !request.resource.data.keys().hasAny(['role'])
+                    && !request.resource.data.keys().hasAny(['role', 'leaderboardExcluded'])
                     && (!('displayName' in request.resource.data.keys())
                         || (request.resource.data.displayName is string
                             && request.resource.data.displayName.size() >= 2
@@ -23,7 +25,7 @@ service cloud.firestore {
       allow update: if request.auth != null
                     && request.auth.uid == userId
                     && request.resource.data.userId == userId
-                    && !request.resource.data.diff(resource.data).affectedKeys().hasAny(['role'])
+                    && !request.resource.data.diff(resource.data).affectedKeys().hasAny(['role', 'leaderboardExcluded'])
                     && (!('displayName' in request.resource.data.keys())
                         || (request.resource.data.displayName is string
                             && request.resource.data.displayName.size() >= 2

@@ -208,6 +208,64 @@ describe('leaderboard/logic', () => {
       });
     });
 
+    describe('admin shadow-ban', () => {
+      it('excludes users flagged with leaderboardExcluded=true even with both opt-ins', () => {
+        const rows: PushupRow[] = [
+          { userId: 'good', timestamp: '2024-03-15T10:00:00Z', reps: 30 },
+          { userId: 'cheater', timestamp: '2024-03-15T10:00:00Z', reps: 999 },
+        ];
+        const profiles = new Map<string, UserProfile>([
+          [
+            'good',
+            {
+              displayName: 'Alice',
+              ui: { hideFromLeaderboard: false, publicProfile: true },
+            },
+          ],
+          [
+            'cheater',
+            {
+              displayName: 'Mallory',
+              ui: { hideFromLeaderboard: false, publicProfile: true },
+              leaderboardExcluded: true,
+            },
+          ],
+        ]);
+
+        const result = rankEntries(rows, 'daily', '2024-03-15', profiles);
+
+        expect(result).toEqual([{ alias: 'Alice', reps: 30, uid: 'good' }]);
+      });
+
+      it('does not affect users where the flag is unset or false', () => {
+        const rows: PushupRow[] = [
+          { userId: 'user1', timestamp: '2024-03-15T10:00:00Z', reps: 10 },
+          { userId: 'user2', timestamp: '2024-03-15T10:00:00Z', reps: 20 },
+        ];
+        const profiles = new Map<string, UserProfile>([
+          [
+            'user1',
+            {
+              displayName: 'Alice',
+              ui: { hideFromLeaderboard: false, publicProfile: true },
+              leaderboardExcluded: false,
+            },
+          ],
+          [
+            'user2',
+            {
+              displayName: 'Bob',
+              ui: { hideFromLeaderboard: false, publicProfile: true },
+            },
+          ],
+        ]);
+
+        const result = rankEntries(rows, 'daily', '2024-03-15', profiles);
+
+        expect(result).toHaveLength(2);
+      });
+    });
+
     it('drops users without profiles entirely', () => {
       const rows: PushupRow[] = [
         { userId: 'user1', timestamp: '2024-03-15T10:00:00Z', reps: 10 },

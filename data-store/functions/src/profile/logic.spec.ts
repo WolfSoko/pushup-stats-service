@@ -3,6 +3,7 @@ import {
   toAnonymousLabel,
   toPublicDisplayName,
   isLeaderboardNameAllowed,
+  isLeaderboardExcluded,
   UserProfile,
 } from './logic';
 
@@ -39,7 +40,9 @@ describe('profile/logic', () => {
     });
 
     it('returns anonymous when profile is null', () => {
-      expect(toPublicDisplayName(null as unknown as UserProfile)).toBe('anonym');
+      expect(toPublicDisplayName(null as unknown as UserProfile)).toBe(
+        'anonym'
+      );
     });
 
     it('trims whitespace from displayName', () => {
@@ -79,13 +82,33 @@ describe('profile/logic', () => {
     });
 
     it('returns false when profile is null', () => {
-      expect(isLeaderboardNameAllowed(null as unknown as UserProfile)).toBe(false);
+      expect(isLeaderboardNameAllowed(null as unknown as UserProfile)).toBe(
+        false
+      );
     });
 
     it('defaults to hidden (privacy-first)', () => {
       // When no explicit opt-in, user is not visible on leaderboard
       const profile: UserProfile = { displayName: 'Hidden User' };
       expect(isLeaderboardNameAllowed(profile)).toBe(false);
+    });
+  });
+
+  describe('isLeaderboardExcluded', () => {
+    it('returns true when leaderboardExcluded is true', () => {
+      expect(isLeaderboardExcluded({ leaderboardExcluded: true })).toBe(true);
+    });
+
+    it('returns false when leaderboardExcluded is false', () => {
+      expect(isLeaderboardExcluded({ leaderboardExcluded: false })).toBe(false);
+    });
+
+    it('returns false when leaderboardExcluded is undefined', () => {
+      expect(isLeaderboardExcluded({})).toBe(false);
+    });
+
+    it('returns false when profile is undefined', () => {
+      expect(isLeaderboardExcluded(undefined)).toBe(false);
     });
   });
 });

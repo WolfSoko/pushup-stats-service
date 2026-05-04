@@ -15,6 +15,7 @@ import {
   buildGithubIssueBody,
   validateAdminAccess,
   validateFeedbackId,
+  validateLeaderboardExclusionPayload,
   validateMarkFeedbackReadPayload,
 } from './admin';
 import { parseRecaptchaResponse } from './authentication';
@@ -358,6 +359,47 @@ export const adminDeleteUser = onCall(
 
     logger.info('adminDeleteUser', { uid, anonymize, by: request.auth?.uid });
     return { ok: true };
+  }
+);
+
+// ─── adminSetLeaderboardExclusion ─────────────────────────────────────────────
+//
+// Admin shadow-ban for the public leaderboard. Sets the top-level
+// `leaderboardExcluded` flag on the user's `userConfigs` doc; the
+// leaderboard rebuild filters them out at the next run. Reversible —
+// passing `excluded: false` removes the ban without touching opt-in
+// toggles or pushup history. Clients are blocked from writing this
+// field at the Firestore-rule layer.
+
+export const adminSetLeaderboardExclusion = onCall(
+  { region: 'europe-west3', timeoutSeconds: 30 },
+  async (request) => {
+    assertAdmin(request);
+
+    const result = validateLeaderboardExclusionPayload(request.data);
+    if (!result.valid) {
+      throw new HttpsError('invalid-argument', result.error);
+    }
+    const { uid, excluded } = result;
+
+    if (uid === DEMO_USER_ID) {
+      throw new HttpsError(
+        'failed-precondition',
+        'Demo-Benutzer kann nicht gesperrt werden.'
+      );
+    }
+
+    await db
+      .collection('userConfigs')
+      .doc(uid)
+      .set({ leaderboardExcluded: excluded }, { merge: true });
+
+    logger.info('adminSetLeaderboardExclusion', {
+      uid,
+      excluded,
+      by: request.auth?.uid,
+    });
+    return { ok: true, uid, excluded };
   }
 );
 

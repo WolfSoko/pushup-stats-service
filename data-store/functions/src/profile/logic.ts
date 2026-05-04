@@ -7,6 +7,15 @@ export interface UserProfile {
   displayName?: string;
   ui?: { hideFromLeaderboard?: boolean; publicProfile?: boolean };
   role?: string;
+  /**
+   * Admin-only moderation flag. When `true`, the user is excluded from
+   * the public leaderboard regardless of opt-in toggles. Their public
+   * profile (`/u/<uid>`) remains accessible — exclusion only suppresses
+   * leaderboard rows. Writable exclusively via the
+   * `adminSetLeaderboardExclusion` callable; clients are blocked at the
+   * Firestore-rule layer.
+   */
+  leaderboardExcluded?: boolean;
 }
 
 const ANONYMOUS_LABEL = 'anonym';
@@ -59,4 +68,12 @@ export function isPublicProfileLinkAllowed(profile?: UserProfile): boolean {
   if (!isLeaderboardNameAllowed(profile)) return false;
   if (profile?.ui?.publicProfile !== true) return false;
   return String(profile?.displayName || '').trim().length > 0;
+}
+
+/**
+ * Whether the user has been admin-banned from the leaderboard. Decoupled
+ * from the user's own opt-in toggles — exclusion wins in `rankEntries()`.
+ */
+export function isLeaderboardExcluded(profile?: UserProfile): boolean {
+  return profile?.leaderboardExcluded === true;
 }
