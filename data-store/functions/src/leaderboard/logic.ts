@@ -4,11 +4,7 @@
  */
 
 import { berlinDateParts, BerlinDateParts } from '../datetime';
-import {
-  isLeaderboardNameAllowed,
-  isPublicProfileLinkAllowed,
-  UserProfile,
-} from '../profile';
+import { isPublicProfileLinkAllowed, UserProfile } from '../profile';
 
 export interface PushupRow {
   timestamp?: string;
@@ -20,9 +16,10 @@ export interface LeaderboardEntry {
   alias: string;
   reps: number;
   /**
-   * UID is only populated when the user also opted into a public profile
-   * (`ui.publicProfile === true`). Frontend renders entries with `uid`
-   * as links to `/u/<uid>`; entries without `uid` stay plain text.
+   * Public-profile UID. Always populated by `rankEntries()` because the
+   * leaderboard now requires the full publicProfile opt-in. Kept optional
+   * on the type so the frontend stays tolerant of older snapshots that
+   * may still carry uid-less rows.
    */
   uid?: string;
 }
@@ -123,18 +120,14 @@ export function rankEntries(
   return [...totals.entries()]
     .flatMap(([userId, reps]): LeaderboardEntry[] => {
       const profile = userProfiles.get(userId);
-      // Public leaderboard now requires an explicit opt-in AND a non-empty
-      // display name. Users without a profile, with `hideFromLeaderboard`
-      // unset/true, or with a blank name are dropped entirely — no more
-      // `anonym` rows.
-      if (!isLeaderboardNameAllowed(profile)) return [];
+      // Public leaderboard requires the full public-profile opt-in:
+      // `ui.publicProfile === true`, `ui.hideFromLeaderboard === false`,
+      // and a non-empty `displayName`. `isPublicProfileLinkAllowed`
+      // checks all three — so every row that survives is also linkable
+      // to /u/<uid>.
+      if (!isPublicProfileLinkAllowed(profile)) return [];
       const alias = String(profile?.displayName || '').trim();
-      if (!alias) return [];
-      const entry: LeaderboardEntry = { alias, reps };
-      if (isPublicProfileLinkAllowed(profile)) {
-        entry.uid = userId;
-      }
-      return [entry];
+      return [{ alias, reps, uid: userId }];
     })
     .sort((a, b) => b.reps - a.reps)
     .slice(0, TOP_N);
