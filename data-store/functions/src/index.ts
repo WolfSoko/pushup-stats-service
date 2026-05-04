@@ -62,7 +62,7 @@ admin.initializeApp();
 
 const db = admin.firestore();
 const TZ = 'Europe/Berlin';
-const DEMO_USER_ID = 'aqgzwSbhudRLrluz1zBSW3XQx013';
+const DEMO_USER_ID = '9CrETSHzoKcPPw0ctHKM1OiyRrp2';
 const GITHUB_TOKEN = defineSecret('GITHUB_TOKEN');
 
 async function rebuildLeaderboardsCore() {
