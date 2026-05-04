@@ -208,6 +208,77 @@ describe('leaderboard/logic', () => {
       });
     });
 
+    describe('daily cap', () => {
+      it('caps a single-day total at 2000 reps for the daily leaderboard', () => {
+        const rows: PushupRow[] = [
+          { userId: 'cheater', timestamp: '2024-03-15T08:00:00Z', reps: 500 },
+          { userId: 'cheater', timestamp: '2024-03-15T10:00:00Z', reps: 500 },
+          { userId: 'cheater', timestamp: '2024-03-15T12:00:00Z', reps: 500 },
+          { userId: 'cheater', timestamp: '2024-03-15T14:00:00Z', reps: 500 },
+          { userId: 'cheater', timestamp: '2024-03-15T16:00:00Z', reps: 500 },
+        ];
+        const profiles = new Map<string, UserProfile>([
+          [
+            'cheater',
+            {
+              displayName: 'Mallory',
+              ui: { hideFromLeaderboard: false, publicProfile: true },
+            },
+          ],
+        ]);
+
+        const result = rankEntries(rows, 'daily', '2024-03-15', profiles);
+
+        expect(result).toHaveLength(1);
+        expect(result[0].reps).toBe(2000);
+      });
+
+      it('caps each Berlin day independently in last7 windows', () => {
+        // 7 days × 3000 reps = 21000 raw, but each day caps at 2000
+        // → 14000 visible.
+        const rows: PushupRow[] = [];
+        for (let day = 9; day <= 15; day++) {
+          const iso = `2024-03-${String(day).padStart(2, '0')}T10:00:00Z`;
+          rows.push({ userId: 'cheater', timestamp: iso, reps: 1500 });
+          rows.push({ userId: 'cheater', timestamp: iso, reps: 1500 });
+        }
+        const profiles = new Map<string, UserProfile>([
+          [
+            'cheater',
+            {
+              displayName: 'Mallory',
+              ui: { hideFromLeaderboard: false, publicProfile: true },
+            },
+          ],
+        ]);
+
+        const result = rankEntries(rows, 'last7', '2024-03-15', profiles);
+
+        expect(result).toHaveLength(1);
+        expect(result[0].reps).toBe(14000);
+      });
+
+      it('does not affect users below the daily cap', () => {
+        const rows: PushupRow[] = [
+          { userId: 'honest', timestamp: '2024-03-15T08:00:00Z', reps: 50 },
+          { userId: 'honest', timestamp: '2024-03-15T18:00:00Z', reps: 50 },
+        ];
+        const profiles = new Map<string, UserProfile>([
+          [
+            'honest',
+            {
+              displayName: 'Alice',
+              ui: { hideFromLeaderboard: false, publicProfile: true },
+            },
+          ],
+        ]);
+
+        const result = rankEntries(rows, 'daily', '2024-03-15', profiles);
+
+        expect(result[0].reps).toBe(100);
+      });
+    });
+
     describe('admin shadow-ban', () => {
       it('excludes users flagged with leaderboardExcluded=true even with both opt-ins', () => {
         const rows: PushupRow[] = [

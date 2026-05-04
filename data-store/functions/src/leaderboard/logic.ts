@@ -52,6 +52,15 @@ export type LeaderboardPeriodKind = 'daily' | 'last7' | 'last30';
 const TOP_N = 10;
 
 /**
+ * Per-user, per-Berlin-day cap on reps that count toward the leaderboard.
+ * Acts as a defense-in-depth on top of the per-entry cap (`PUSHUP_REPS_MAX`)
+ * — a determined cheater can still log many entries below 500 reps per
+ * day, this caps the visible total at a plausible elite ceiling. Anything
+ * above is silently truncated; the user's own stats keep the raw value.
+ */
+const LEADERBOARD_DAILY_REPS_CAP = 2000;
+
+/**
  * Returns the ISO date `daysBack` days before the given Berlin date.
  * Uses UTC math anchored to noon to dodge DST boundary glitches — the only
  * thing we read out is `YYYY-MM-DD`, so the time of day is irrelevant.
@@ -89,7 +98,9 @@ export function rankEntries(
   targetKey: string,
   userProfiles: Map<string, UserProfile>
 ): LeaderboardEntry[] {
-  const totals = new Map<string, number>();
+  // Aggregate per (userId, Berlin day) first so the daily cap can be
+  // applied before windowed sums collapse the day boundary.
+  const perDay = new Map<string, Map<string, number>>();
 
   let windowStart: string | null = null;
   if (periodKey === 'last7' || periodKey === 'last30') {
@@ -115,10 +126,24 @@ export function rankEntries(
       if (p.isoDate < windowStart || p.isoDate > targetKey) continue;
     }
 
-    totals.set(
-      row.userId,
-      (totals.get(row.userId) || 0) + Number(row.reps || 0)
+    let userDays = perDay.get(row.userId);
+    if (!userDays) {
+      userDays = new Map();
+      perDay.set(row.userId, userDays);
+    }
+    userDays.set(
+      p.isoDate,
+      (userDays.get(p.isoDate) || 0) + Number(row.reps || 0)
     );
+  }
+
+  const totals = new Map<string, number>();
+  for (const [userId, days] of perDay) {
+    let total = 0;
+    for (const [, dayReps] of days) {
+      total += Math.min(dayReps, LEADERBOARD_DAILY_REPS_CAP);
+    }
+    totals.set(userId, total);
   }
 
   return [...totals.entries()]
