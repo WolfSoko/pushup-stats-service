@@ -14,7 +14,6 @@ Decomposed from the monolithic `index.ts`:
 - **datetime/:** Berlin timezone utilities (`berlinDateParts`, `isoWeekFromYmd`)
 - **profile/:** Display name sanitization & leaderboard privacy logic
 - **leaderboard/:** Ranking aggregation, period key calculations
-- **authentication/:** Recaptcha response parsing & validation
 - **motivation/:** Quote cache logic, Gemini fallback, name sanitization
 - **push/subscription:** Subscription ID generation, payload validation
 - **push/reminders:** Reminder scheduling (quiet hours, snooze, intervals)

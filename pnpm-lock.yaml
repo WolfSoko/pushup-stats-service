@@ -375,9 +375,6 @@ importers:
       '@google-cloud/functions-framework':
         specifier: ^3.5.0
         version: 3.5.1
-      '@google-cloud/recaptcha-enterprise':
-        specifier: ^6.4.0
-        version: 6.4.0
       '@google/generative-ai':
         specifier: ^0.21.0
         version: 0.21.0
@@ -2153,10 +2150,6 @@ packages:
 
   '@google-cloud/pubsub@5.3.0':
     resolution: {integrity: sha512-hyUoE85Rj3rRUVk3VU+Selp4MorBwEzsQEqAj6+SE+WabR9LIFitYS6A4R+PyiwVaRk/tggGD8p7bNiIY5sk4w==}
-    engines: {node: '>=18'}
-
-  '@google-cloud/recaptcha-enterprise@6.4.0':
-    resolution: {integrity: sha512-Em9ucyzFlZfLAR57lA6uZ7SqxS30tHNn11wE4FYRds+gWPcevNx8tJQtWAolycLuKgzJf3Kpi/p2kQh+vH0j3A==}
     engines: {node: '>=18'}
 
   '@google-cloud/storage@7.19.0':
@@ -13424,12 +13417,6 @@ snapshots:
       is-stream-ended: 0.1.4
       lodash.snakecase: 4.1.1
       p-defer: 3.0.0
-    transitivePeerDependencies:
-      - supports-color
-
-  '@google-cloud/recaptcha-enterprise@6.4.0':
-    dependencies:
-      google-gax: 5.0.6
     transitivePeerDependencies:
       - supports-color
 

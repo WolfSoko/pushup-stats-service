@@ -1,4 +1,3 @@
-import { RecaptchaEnterpriseServiceClient } from '@google-cloud/recaptcha-enterprise';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import type { UserStats } from '@pu-stats/models';
 import { USERSTATS_VERSION } from '@pu-stats/models';
@@ -17,7 +16,6 @@ import {
   validateFeedbackId,
   validateMarkFeedbackReadPayload,
 } from './admin';
-import { parseRecaptchaResponse } from './authentication';
 
 // Module imports
 import { berlinDateParts } from './datetime';
@@ -66,38 +64,6 @@ const db = admin.firestore();
 const TZ = 'Europe/Berlin';
 const DEMO_USER_ID = 'aqgzwSbhudRLrluz1zBSW3XQx013';
 const GITHUB_TOKEN = defineSecret('GITHUB_TOKEN');
-
-const recaptchaClient = new RecaptchaEnterpriseServiceClient();
-const RECAPTCHA_PROJECT_ID = 'pushup-stats';
-const RECAPTCHA_SITE_KEY = '6LdIVoEsAAAAAMk4rJwg2DYHfM7ud_as7V5rUf4g';
-const RECAPTCHA_MIN_SCORE = 0.5;
-
-async function createRecaptchaAssessment({
-  token,
-  recaptchaAction,
-  projectID = RECAPTCHA_PROJECT_ID,
-  recaptchaKey = RECAPTCHA_SITE_KEY,
-}: {
-  token: string;
-  recaptchaAction: string;
-  projectID?: string;
-  recaptchaKey?: string;
-}) {
-  const projectPath = recaptchaClient.projectPath(projectID);
-
-  const request = {
-    assessment: {
-      event: {
-        token,
-        siteKey: recaptchaKey,
-      },
-    },
-    parent: projectPath,
-  };
-
-  const [response] = await recaptchaClient.createAssessment(request);
-  return parseRecaptchaResponse(response, recaptchaAction, RECAPTCHA_MIN_SCORE);
-}
 
 async function rebuildLeaderboardsCore() {
   const now = new Date();
@@ -156,78 +122,6 @@ async function rebuildLeaderboardsCore() {
     last30: last30.length,
   });
 }
-
-export const assessRecaptchaToken = onCall(
-  { region: 'europe-west3' },
-  async (request) => {
-    const token = String(request.data?.token || '').trim();
-    const recaptchaAction = String(request.data?.action || '').trim();
-
-    if (!token || !recaptchaAction) {
-      logger.warn('reCAPTCHA skipped due to missing token/action', {
-        hasToken: Boolean(token),
-        hasAction: Boolean(recaptchaAction),
-        uid: request.auth?.uid || 'anonymous',
-      });
-      return {
-        ok: false,
-        skipped: true,
-        score: 0,
-        reasons: ['missing-token-or-action'],
-        minScore: RECAPTCHA_MIN_SCORE,
-      };
-    }
-
-    try {
-      const assessment = await createRecaptchaAssessment({
-        token,
-        recaptchaAction,
-      });
-
-      const uid = request.auth?.uid || 'anonymous';
-      logger.info('reCAPTCHA assessment completed', {
-        uid,
-        expectedAction: recaptchaAction,
-        actualAction: assessment.action,
-        actionMatched: assessment.actionMatched,
-        ok: assessment.ok,
-        score: assessment.score,
-        minScore: RECAPTCHA_MIN_SCORE,
-        reasons: assessment.reasons || [],
-        invalidReason: assessment.reason || null,
-      });
-
-      if (!assessment.actionMatched) {
-        logger.warn('reCAPTCHA action mismatch', {
-          uid,
-          expectedAction: recaptchaAction,
-          actualAction: assessment.action,
-        });
-      }
-
-      if (!assessment.ok) {
-        logger.warn('reCAPTCHA blocked request', {
-          uid,
-          expectedAction: recaptchaAction,
-          score: assessment.score,
-          minScore: RECAPTCHA_MIN_SCORE,
-          reasons: assessment.reasons || [],
-          invalidReason: assessment.reason || null,
-        });
-      }
-
-      return {
-        ok: assessment.ok,
-        score: assessment.score,
-        reasons: assessment.reasons || [],
-        minScore: RECAPTCHA_MIN_SCORE,
-      };
-    } catch (error) {
-      logger.error('reCAPTCHA assessment failed', { error });
-      throw new HttpsError('internal', 'reCAPTCHA Prüfung fehlgeschlagen.');
-    }
-  }
-);
 
 // ─── Admin helpers ────────────────────────────────────────────────────────────
 
