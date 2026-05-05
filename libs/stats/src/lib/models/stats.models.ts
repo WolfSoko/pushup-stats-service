@@ -36,3 +36,5 @@ export * from './reminder-config.models';
 export * from './reminder-i18n.models';
 export * from './user-stats.models';
 export * from './public-profile.models';
+export * from './exercise.models';
+export * from './exercise.catalog';

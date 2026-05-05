@@ -3822,6 +3822,90 @@
         <target> Salva </target>
       </segment>
     </unit>
+    <unit id="exerciseSection.lastEntry">
+      <segment state="translated">
+        <source>Letzter Eintrag</source>
+        <target>Ultima voce</target>
+      </segment>
+    </unit>
+    <unit id="exerciseSection.last30d">
+      <segment state="translated">
+        <source>Letzte 30 Tage</source>
+        <target>Ultimi 30 giorni</target>
+      </segment>
+    </unit>
+    <unit id="exerciseSection.add">
+      <segment state="translated">
+        <source>Hinzufügen</source>
+        <target>Aggiungi</target>
+      </segment>
+    </unit>
+    <unit id="exercise.category.pushup">
+      <segment state="translated">
+        <source>Liegestütze</source>
+        <target>Flessioni</target>
+      </segment>
+    </unit>
+    <unit id="exercise.category.abs">
+      <segment state="translated">
+        <source>Bauch</source>
+        <target>Addominali</target>
+      </segment>
+    </unit>
+    <unit id="exercise.category.legs">
+      <segment state="translated">
+        <source>Beine</source>
+        <target>Gambe</target>
+      </segment>
+    </unit>
+    <unit id="exercise.abs.situps.name">
+      <segment state="translated">
+        <source>Sit-ups</source>
+        <target>Sit-up</target>
+      </segment>
+    </unit>
+    <unit id="exercise.legs.squats.name">
+      <segment state="translated">
+        <source>Kniebeugen</source>
+        <target>Squat</target>
+      </segment>
+    </unit>
+    <unit id="exerciseSection.addAriaPrefix">
+      <segment state="translated">
+        <source>Eintrag hinzufügen</source>
+        <target>Aggiungi voce</target>
+      </segment>
+    </unit>
+    <unit id="exerciseSection.savedToast">
+      <segment state="translated">
+        <source>Eintrag gespeichert</source>
+        <target>Voce salvata</target>
+      </segment>
+    </unit>
+    <unit id="exerciseSection.dismiss">
+      <segment state="translated">
+        <source>OK</source>
+        <target>OK</target>
+      </segment>
+    </unit>
+    <unit id="exerciseSection.errorPrefix">
+      <segment state="translated">
+        <source>Konnte nicht gespeichert werden</source>
+        <target>Impossibile salvare</target>
+      </segment>
+    </unit>
+    <unit id="exerciseSection.genericError">
+      <segment state="translated">
+        <source>Etwas ist schiefgelaufen</source>
+        <target>Qualcosa è andato storto</target>
+      </segment>
+    </unit>
+    <unit id="exerciseEntryDialog.title">
+      <segment state="translated">
+        <source>Eintrag hinzufügen</source>
+        <target>Aggiungi voce</target>
+      </segment>
+    </unit>
     <unit id="selectRangeTitle">
       <notes>
         <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:35,38</note>
