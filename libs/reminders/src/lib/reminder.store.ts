@@ -1,4 +1,4 @@
-import { inject } from '@angular/core';
+import { inject, LOCALE_ID } from '@angular/core';
 import {
   patchState,
   signalStore,
@@ -10,7 +10,7 @@ import {
 import { computed } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { UserConfigApiService } from '@pu-stats/data-access';
-import { ReminderConfig } from '@pu-stats/models';
+import { normalizeReminderLocale, ReminderConfig } from '@pu-stats/models';
 import { ReminderPermissionService } from './reminder-permission.service';
 
 export type { ReminderConfig };
@@ -32,7 +32,6 @@ const DEFAULT_REMINDER_CONFIG: ReminderConfig = {
   intervalMinutes: 60,
   quietHours: [],
   timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || 'Europe/Berlin',
-  language: 'de',
 };
 
 export const ReminderStore = signalStore(
@@ -41,11 +40,12 @@ export const ReminderStore = signalStore(
   withProps(() => ({
     _api: inject(UserConfigApiService),
     _permissionService: inject(ReminderPermissionService),
+    _locale: normalizeReminderLocale(inject(LOCALE_ID)),
   })),
   withComputed((store) => ({
     permissionStatus: computed(() => store._permissionService.status()),
   })),
-  withMethods(({ _api, _permissionService: _ps, ...store }) => ({
+  withMethods(({ _api, _permissionService: _ps, _locale, ...store }) => ({
     async loadConfig(userId: string): Promise<void> {
       patchState(store, { loading: true, error: null });
       try {
@@ -65,7 +65,12 @@ export const ReminderStore = signalStore(
     async saveConfig(userId: string, config: ReminderConfig): Promise<void> {
       patchState(store, { loading: true, error: null });
       try {
-        await firstValueFrom(_api.updateConfig(userId, { reminder: config }));
+        // Persist the user's current app locale alongside the reminder so the
+        // server-side push dispatcher (which has no LOCALE_ID) can localise
+        // the notification body and actions.
+        await firstValueFrom(
+          _api.updateConfig(userId, { reminder: config, locale: _locale })
+        );
         patchState(store, { config, loading: false });
       } catch (err) {
         patchState(store, {
@@ -79,7 +84,9 @@ export const ReminderStore = signalStore(
       const reset: ReminderConfig = { ...DEFAULT_REMINDER_CONFIG };
       patchState(store, { loading: true, error: null });
       try {
-        await firstValueFrom(_api.updateConfig(userId, { reminder: reset }));
+        await firstValueFrom(
+          _api.updateConfig(userId, { reminder: reset, locale: _locale })
+        );
         patchState(store, { config: reset, loading: false });
       } catch (err) {
         patchState(store, {

@@ -52,7 +52,6 @@ describe('ReminderService', () => {
     intervalMinutes: 60,
     quietHours: [],
     timezone: 'UTC',
-    language: 'de',
   };
 
   function createService(

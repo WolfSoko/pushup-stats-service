@@ -5,7 +5,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
@@ -29,7 +28,6 @@ import { ReminderFormStore } from './reminder-form.store';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatButtonToggleModule,
     MatIconModule,
     MatSlideToggleModule,
     MatSnackBarModule,
@@ -137,35 +135,14 @@ import { ReminderFormStore } from './reminder-form.store';
                 </div>
 
                 <div>
-                  <p class="field-label" i18n="@@reminder.language.label">
-                    Sprache der Zitate
-                  </p>
-                  <mat-button-toggle-group
-                    [value]="form.language()"
-                    [disabled]="form.saving()"
-                    (change)="form.setLanguage($event.value)"
-                    aria-label="Erinnerungssprache"
-                    i18n-aria-label="@@reminder.language.aria"
-                  >
-                    <mat-button-toggle value="de" i18n="@@reminder.language.de"
-                      >DE</mat-button-toggle
-                    >
-                    <mat-button-toggle value="en" i18n="@@reminder.language.en"
-                      >EN</mat-button-toggle
-                    >
-                  </mat-button-toggle-group>
-                </div>
-
-                <div>
                   <p class="field-label" i18n="@@reminder.quickLog.label">
                     Direkt-Eintrag aus der Benachrichtigung
                   </p>
                   <p class="muted" i18n="@@reminder.quickLog.desc">
                     Zeigt einen "Eintragen"-Button auf der
-                    Push-Benachrichtigung. Wenn die App schon geöffnet ist,
-                    wird der Eintrag im Hintergrund gespeichert; ansonsten
-                    öffnet sich kurz ein Tab, der den Eintrag automatisch
-                    anlegt.
+                    Push-Benachrichtigung. Wenn die App schon geöffnet ist, wird
+                    der Eintrag im Hintergrund gespeichert; ansonsten öffnet
+                    sich kurz ein Tab, der den Eintrag automatisch anlegt.
                   </p>
                   <div class="reminder-row">
                     <mat-slide-toggle

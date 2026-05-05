@@ -260,7 +260,28 @@ describe('push/reminders', () => {
       expect(englishMessages).toContain(message);
     });
 
-    it('returns German message for unknown language', () => {
+    it('returns a French message when language is "fr"', () => {
+      const message = buildNotificationPayload('fr');
+      expect(message).toMatch(/pomp/i);
+    });
+
+    it('returns a Spanish message when language is "es"', () => {
+      const message = buildNotificationPayload('es');
+      expect(message).toMatch(/flexi/i);
+    });
+
+    it('returns an Italian message when language is "it"', () => {
+      const message = buildNotificationPayload('it');
+      expect(message).toMatch(/push-up/i);
+    });
+
+    it('returns a Chinese message when language is "zh"', () => {
+      const message = buildNotificationPayload('zh');
+      // 俯卧撑 = "push-up" in zh
+      expect(message).toContain('俯卧撑');
+    });
+
+    it('falls back to default locale message for an unsupported language', () => {
       const germanMessages = [
         'Zeit für Liegestütze! 💪',
         'Kurze Pause? Perfekt für Liegestütze!',
@@ -269,31 +290,30 @@ describe('push/reminders', () => {
         'Dein Körper ruft: Liegestütze, los!',
       ];
 
-      const message = buildNotificationPayload('fr');
+      // 'xx' is not a supported reminder locale → normalises to default (de)
+      const message = buildNotificationPayload('xx');
       expect(germanMessages).toContain(message);
     });
 
-    it('returns one of the available messages', () => {
-      const allMessages = [
-        'Zeit für Liegestütze! 💪',
-        'Kurze Pause? Perfekt für Liegestütze!',
-        'Du schaffst das – ein paar Liegestütze!',
-        'Beweg dich! Liegestütze warten auf dich. 🔥',
-        'Dein Körper ruft: Liegestütze, los!',
+    it('prefers a quote from the supplied pool over the built-in list', () => {
+      const pool = ['Pool quote 1', 'Pool quote 2'];
+      // Repeat to make sure it never picks something off-pool
+      for (let i = 0; i < 20; i++) {
+        const message = buildNotificationPayload('de', pool);
+        expect(pool).toContain(message);
+      }
+    });
+
+    it('falls back to the built-in list when the pool is empty', () => {
+      const englishMessages = [
         'Time for push-ups! 💪',
         'Quick break? Perfect for push-ups!',
         'You got this – a few push-ups!',
         'Move it! Push-ups are waiting for you. 🔥',
         'Your body calls: push-ups, go!',
       ];
-
-      // Test multiple times to check randomness
-      for (let i = 0; i < 20; i++) {
-        const message = buildNotificationPayload(
-          Math.random() > 0.5 ? 'en' : 'de'
-        );
-        expect(allMessages).toContain(message);
-      }
+      const message = buildNotificationPayload('en', []);
+      expect(englishMessages).toContain(message);
     });
   });
 
@@ -510,6 +530,37 @@ describe('push/reminders', () => {
     it('falls back to generic log when quickLogReps is invalid', () => {
       const actions = buildReminderActions('de', NaN);
       expect(actions[1].action).toBe('log');
+    });
+
+    it('returns French snooze + log labels when locale is "fr"', () => {
+      const actions = buildReminderActions('fr', undefined);
+      expect(actions[0]).toEqual({
+        action: 'snooze',
+        title: '⏰ Reporter 30 min',
+      });
+      expect(actions[1]).toEqual({
+        action: 'log',
+        title: '✅ Enregistrer',
+      });
+    });
+
+    it('returns Chinese snooze + log labels when locale is "zh"', () => {
+      const actions = buildReminderActions('zh', undefined);
+      expect(actions[0].title).toContain('30');
+      expect(actions[1].title).toContain('记录');
+    });
+
+    it('normalises a regional tag (en-US) to its primary subtag', () => {
+      const actions = buildReminderActions('en-US', 12);
+      expect(actions[1]).toEqual({ action: 'quick-log', title: '✅ Log 12' });
+    });
+
+    it('falls back to the default locale for unsupported tags', () => {
+      const actions = buildReminderActions('xx', undefined);
+      expect(actions).toEqual([
+        { action: 'snooze', title: '⏰ 30 Min snoozen' },
+        { action: 'log', title: '✅ Eintragen' },
+      ]);
     });
   });
 });

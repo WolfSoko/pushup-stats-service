@@ -24,6 +24,13 @@ export interface UserConfig {
   userId: string;
   email?: string | null;
   displayName?: string;
+  /**
+   * Primary subtag of the user's preferred app locale (e.g. `de`, `en`,
+   * `fr`). Persisted from the client whenever the reminder is saved so the
+   * server-side push dispatcher (`dispatchPushReminders`) can localise the
+   * notification — it has no `LOCALE_ID` of its own.
+   */
+  locale?: string;
   dailyGoal?: number;
   weeklyGoal?: number;
   monthlyGoal?: number;
@@ -56,6 +63,7 @@ export type UserConfigUpdate = Partial<
     UserConfig,
     | 'email'
     | 'displayName'
+    | 'locale'
     | 'dailyGoal'
     | 'weeklyGoal'
     | 'monthlyGoal'

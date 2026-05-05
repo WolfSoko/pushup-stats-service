@@ -11,7 +11,6 @@ const defaultReminder: ReminderConfig = {
   intervalMinutes: 60,
   quietHours: [],
   timezone: 'Europe/Berlin',
-  language: 'de',
 };
 
 function makeApiMock(
@@ -119,9 +118,14 @@ describe('ReminderStore', () => {
 
     await store.saveConfig('u1', updated);
 
-    expect(apiMock.updateConfig).toHaveBeenCalledWith('u1', {
-      reminder: updated,
-    });
+    expect(apiMock.updateConfig).toHaveBeenCalledWith(
+      'u1',
+      expect.objectContaining({ reminder: updated })
+    );
+    // saveConfig now also persists the user's current locale so the
+    // server-side push dispatcher can localise without LOCALE_ID.
+    const call = (apiMock.updateConfig as jest.Mock).mock.calls[0];
+    expect(typeof call[1].locale).toBe('string');
     expect(store.config()).toEqual(updated);
   });
 

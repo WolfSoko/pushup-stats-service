@@ -3,6 +3,14 @@
  * Pure logic for reminder scheduling and notification content
  */
 
+import {
+  normalizeReminderLocale,
+  reminderBodyChoices,
+  reminderLogLabel,
+  reminderQuickLogLabel,
+  reminderSnoozeLabel,
+} from '@pu-stats/models';
+
 const TZ = 'Europe/Berlin';
 
 export interface ReminderConfig {
@@ -10,7 +18,6 @@ export interface ReminderConfig {
   timezone?: string;
   quietHours?: Array<{ from: string; to: string }>;
   intervalMinutes?: number;
-  language?: string;
   /** One-tap pushup count surfaced as a notification action. */
   quickLogReps?: number;
 }
@@ -219,24 +226,21 @@ export function buildReminderActions(
   language: string | undefined,
   quickLogReps: number | undefined
 ): NotificationAction[] {
-  const lang = language === 'en' ? 'en' : 'de';
-  const snooze: NotificationAction =
-    lang === 'en'
-      ? { action: 'snooze', title: '⏰ Snooze 30 min' }
-      : { action: 'snooze', title: '⏰ 30 Min snoozen' };
+  const locale = normalizeReminderLocale(language);
+  const snooze: NotificationAction = {
+    action: 'snooze',
+    title: reminderSnoozeLabel(locale),
+  };
 
   const reps = sanitizeQuickLogReps(quickLogReps);
   if (reps) {
-    const title =
-      lang === 'en' ? `✅ Log ${reps}` : `✅ ${reps} eintragen`;
-    return [snooze, { action: 'quick-log', title }];
+    return [
+      snooze,
+      { action: 'quick-log', title: reminderQuickLogLabel(locale, reps) },
+    ];
   }
 
-  const log: NotificationAction =
-    lang === 'en'
-      ? { action: 'log', title: '✅ Log push-ups' }
-      : { action: 'log', title: '✅ Eintragen' };
-  return [snooze, log];
+  return [snooze, { action: 'log', title: reminderLogLabel(locale) }];
 }
 
 /**
@@ -253,29 +257,23 @@ export function sanitizeQuickLogReps(
 }
 
 /**
- * Builds a random motivational push notification message
- * @param language Language code ('en' or 'de', defaults to 'de')
- * @returns Random notification message for the language
+ * Builds a motivational push notification body. Prefers a quote from the
+ * caller-provided pool (the AI-generated cache shared with the in-app
+ * dashboard) so the user sees fresh quotes on push notifications too;
+ * falls back to a small per-locale built-in list when the pool is empty
+ * (e.g. the user has never opened the app, or the cache expired).
+ *
+ * @param language Locale primary subtag — anything not in
+ *   `SUPPORTED_REMINDER_LOCALES` is normalised to the default.
+ * @param pool Optional list of pre-generated quotes for the user's
+ *   locale (e.g. flattened tiers from `motivationQuotes/{uid}__{lang}`).
  */
-export function buildNotificationPayload(language?: string): string {
-  const messages: Record<string, string[]> = {
-    de: [
-      'Zeit für Liegestütze! 💪',
-      'Kurze Pause? Perfekt für Liegestütze!',
-      'Du schaffst das – ein paar Liegestütze!',
-      'Beweg dich! Liegestütze warten auf dich. 🔥',
-      'Dein Körper ruft: Liegestütze, los!',
-    ],
-    en: [
-      'Time for push-ups! 💪',
-      'Quick break? Perfect for push-ups!',
-      'You got this – a few push-ups!',
-      'Move it! Push-ups are waiting for you. 🔥',
-      'Your body calls: push-ups, go!',
-    ],
-  };
-
-  const lang = language === 'en' ? 'en' : 'de';
-  const list = messages[lang];
-  return list[Math.floor(Math.random() * list.length)];
+export function buildNotificationPayload(
+  language?: string,
+  pool?: ReadonlyArray<string>
+): string {
+  const locale = normalizeReminderLocale(language);
+  const candidates =
+    pool && pool.length > 0 ? pool : reminderBodyChoices(locale);
+  return candidates[Math.floor(Math.random() * candidates.length)];
 }

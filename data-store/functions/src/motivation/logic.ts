@@ -5,6 +5,25 @@
 
 export const QUOTE_CACHE_HOURS = 12;
 
+/**
+ * Achievement tiers used for daily-goal-aware motivational quotes.
+ *
+ * - `belowGoal` — encouragement / "let's go" / "you can do it" framing.
+ *   Used when the user has not yet hit their daily goal.
+ * - `nearGoal` — push-through framing. Used at ≥50 % progress.
+ * - `goalReached` — celebration / next-level framing. Used at ≥100 %.
+ * - `general` — generic motivation, locale-agnostic.
+ */
+export const QUOTE_TIERS = [
+  'general',
+  'belowGoal',
+  'nearGoal',
+  'goalReached',
+] as const;
+export type QuoteTier = (typeof QUOTE_TIERS)[number];
+
+export type TieredQuotes = Record<QuoteTier, string[]>;
+
 export const FALLBACK_QUOTES_DE = [
   'Du schaffst das! Jede Liegestütze bringt dich weiter.',
   'Stark sein heißt, auch wenn es schwer fällt, weiterzumachen.',
@@ -21,13 +40,95 @@ export const FALLBACK_QUOTES_EN = [
   'Today is the best day for a new personal best!',
 ];
 
+const FALLBACK_TIERS_DE: TieredQuotes = {
+  general: FALLBACK_QUOTES_DE,
+  belowGoal: [
+    'Los geht’s – die ersten Liegestütze warten!',
+    'Anfangen ist die halbe Miete. 💪',
+    'Kleiner Schritt jetzt, großer Sprung später.',
+  ],
+  nearGoal: [
+    'Schon über die Hälfte – jetzt nicht nachlassen!',
+    'Das Tagesziel ist zum Greifen nah. 🔥',
+    'Noch ein paar – du packst das!',
+  ],
+  goalReached: [
+    'Tagesziel geschafft! Ein Bonus-Set?',
+    'Stark! Jetzt noch eine Schippe drauf? 💥',
+    'Champion-Mode aktiviert – weitermachen!',
+  ],
+};
+
+const FALLBACK_TIERS_EN: TieredQuotes = {
+  general: FALLBACK_QUOTES_EN,
+  belowGoal: [
+    'Let’s go — the first push-ups are calling!',
+    'Starting is half the battle. 💪',
+    'Small step now, big jump later.',
+  ],
+  nearGoal: [
+    'Past halfway — don’t slow down now!',
+    'Your daily goal is within reach. 🔥',
+    'A few more — you’ve got this!',
+  ],
+  goalReached: [
+    'Daily goal smashed! Bonus set?',
+    'Strong! Add another round? 💥',
+    'Champion mode activated — keep going!',
+  ],
+};
+
 /**
- * Gets fallback quotes for a language
- * @param language Language code ('en' or 'de')
- * @returns Array of fallback quote strings
+ * Gets fallback quotes for a locale primary subtag.
+ * Unknown locales fall back to English (broadest reach).
  */
 export function getFallbackQuotes(language: string): string[] {
-  return language === 'en' ? [...FALLBACK_QUOTES_EN] : [...FALLBACK_QUOTES_DE];
+  if (language === 'de') return [...FALLBACK_QUOTES_DE];
+  return [...FALLBACK_QUOTES_EN];
+}
+
+/**
+ * Gets tiered fallback quotes for a locale primary subtag. Used when the
+ * Gemini call fails — keeps server-side push reminders working with
+ * sensible localised copy in de/en, and English elsewhere.
+ */
+export function getFallbackTieredQuotes(language: string): TieredQuotes {
+  const src = language === 'de' ? FALLBACK_TIERS_DE : FALLBACK_TIERS_EN;
+  return {
+    general: [...src.general],
+    belowGoal: [...src.belowGoal],
+    nearGoal: [...src.nearGoal],
+    goalReached: [...src.goalReached],
+  };
+}
+
+/**
+ * Picks the achievement tier for the current `(totalToday, dailyGoal)`.
+ * Encapsulates the threshold logic so the same tiering is applied
+ * everywhere (push dispatcher, in-app reminder, dashboard).
+ */
+export function pickAchievementTier(
+  totalToday: number,
+  dailyGoal: number
+): QuoteTier {
+  if (!Number.isFinite(totalToday) || !Number.isFinite(dailyGoal)) {
+    return 'general';
+  }
+  if (dailyGoal <= 0) return 'general';
+  const ratio = totalToday / dailyGoal;
+  if (ratio >= 1) return 'goalReached';
+  if (ratio >= 0.5) return 'nearGoal';
+  return 'belowGoal';
+}
+
+/** Flattens tiered quotes into a single array preserving tier order. */
+export function flattenTiers(tiers: TieredQuotes): string[] {
+  return [
+    ...tiers.general,
+    ...tiers.belowGoal,
+    ...tiers.nearGoal,
+    ...tiers.goalReached,
+  ];
 }
 
 /**
