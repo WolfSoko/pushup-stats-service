@@ -6,7 +6,6 @@ export interface ReminderConfig {
     to: string;
   }[];
   timezone: string;
-  language: 'de' | 'en';
   lastQuoteFetchAt?: string;
   /**
    * One-tap pushup count surfaced as a notification action button. When set

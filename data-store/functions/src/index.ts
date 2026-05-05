@@ -1,6 +1,6 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import type { UserStats } from '@pu-stats/models';
-import { USERSTATS_VERSION } from '@pu-stats/models';
+import { normalizeReminderLocale, USERSTATS_VERSION } from '@pu-stats/models';
 import * as Sentry from '@sentry/node';
 import * as admin from 'firebase-admin';
 import { logger } from 'firebase-functions';
@@ -22,9 +22,11 @@ import {
 import { berlinDateParts } from './datetime';
 import { getLeaderboardQueryStartDate, rankEntries } from './leaderboard';
 import {
-  FALLBACK_QUOTES_DE,
-  FALLBACK_QUOTES_EN,
+  flattenTiers,
+  getFallbackTieredQuotes,
   QUOTE_CACHE_HOURS,
+  QUOTE_TIERS,
+  type TieredQuotes,
 } from './motivation';
 import {
   buildPublicProfile,
@@ -673,6 +675,103 @@ export const ogProfile = onRequest(
 
 // ─── generateMotivationQuotes ─────────────────────────────────────────────────
 
+/**
+ * Per-tier prompt instruction (tone) — appended to the language-agnostic
+ * prompt so the model produces tiered output in a single Gemini call.
+ * Keeping it in English (no German wording) lets the same map drive every
+ * supported locale; the model is told the *output* language separately.
+ */
+const TIER_INSTRUCTIONS: Record<(typeof QUOTE_TIERS)[number], string> = {
+  general: 'general motivation, fitness vibe',
+  belowGoal: 'encouraging "let’s start" / "you can do it" tone',
+  nearGoal: 'push-through tone, halfway-there energy',
+  goalReached: 'celebration + "next-level" challenge tone',
+};
+
+const QUOTES_PER_TIER = 6;
+
+/**
+ * BCP-47 display names used in the Gemini prompt so the model produces
+ * quotes in the requested locale even for tags without obvious instruction
+ * (la, no, zh, …). Falls back to the locale code itself.
+ */
+const LANGUAGE_PROMPT_NAMES: Record<string, string> = {
+  de: 'German',
+  en: 'English',
+  fr: 'French',
+  es: 'Spanish',
+  it: 'Italian',
+  nl: 'Dutch',
+  el: 'Greek',
+  la: 'Latin',
+  no: 'Norwegian',
+  zh: 'Simplified Chinese',
+};
+
+function buildTieredPrompt(
+  language: string,
+  totalToday: number,
+  dailyGoal: number,
+  displayName: string
+): string {
+  const langName = LANGUAGE_PROMPT_NAMES[language] ?? language;
+  const tierLines = QUOTE_TIERS.map(
+    (tier) =>
+      `  "${tier}": ${QUOTES_PER_TIER} short sentences — ${TIER_INSTRUCTIONS[tier]}`
+  ).join('\n');
+  return [
+    `Generate motivational push-up quotes in ${langName} for ${displayName}, who has done ${totalToday} of ${dailyGoal} push-ups today.`,
+    'Each quote must be ≤ 120 characters. Vary tone (sporty, funny, serious).',
+    'Return ONLY a JSON object with these keys (no markdown, no commentary):',
+    tierLines,
+    'Example shape: {"general":["..."],"belowGoal":["..."],"nearGoal":["..."],"goalReached":["..."]}',
+  ].join('\n');
+}
+
+function extractTieredQuotes(text: string): TieredQuotes | null {
+  const jsonMatch = text.match(/\{[\s\S]*\}/);
+  if (!jsonMatch) return null;
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(jsonMatch[0]);
+  } catch {
+    return null;
+  }
+  if (!parsed || typeof parsed !== 'object') return null;
+  const obj = parsed as Record<string, unknown>;
+
+  const result: TieredQuotes = {
+    general: [],
+    belowGoal: [],
+    nearGoal: [],
+    goalReached: [],
+  };
+  let hasAny = false;
+  for (const tier of QUOTE_TIERS) {
+    const raw = obj[tier];
+    if (Array.isArray(raw)) {
+      const cleaned = raw
+        .map((q) => (typeof q === 'string' ? q : String(q ?? '')))
+        .map((q) => q.trim())
+        .filter((q) => q.length > 0);
+      if (cleaned.length > 0) hasAny = true;
+      result[tier] = cleaned;
+    }
+  }
+  return hasAny ? result : null;
+}
+
+interface CachedTiered {
+  uid: string;
+  lang: string;
+  generatedAt: string;
+  tiers: TieredQuotes;
+  /** Flat array kept for legacy clients that only read `quotes`. */
+  quotes: string[];
+  totalToday: number;
+  dailyGoal: number;
+}
+
 export const generateMotivationQuotes = onCall(
   { region: 'europe-west3' },
   async (request) => {
@@ -681,7 +780,7 @@ export const generateMotivationQuotes = onCall(
     }
 
     const uid = request.auth.uid;
-    const language = String(request.data?.language || 'de');
+    const language = normalizeReminderLocale(request.data?.language);
     const totalToday = Number(request.data?.totalToday ?? 0);
     const dailyGoal = Number(request.data?.dailyGoal ?? 100);
     const rawName = String(request.data?.displayName || '').trim();
@@ -696,7 +795,11 @@ export const generateMotivationQuotes = onCall(
       .doc(`${uid}__${language}`);
     const cacheSnap = await cacheRef.get();
     if (cacheSnap.exists) {
-      const cached = cacheSnap.data() ?? {};
+      const cached = (cacheSnap.data() ?? {}) as {
+        generatedAt?: string;
+        tiers?: TieredQuotes;
+        quotes?: ReadonlyArray<unknown>;
+      };
       const generatedAt = cached.generatedAt
         ? new Date(cached.generatedAt)
         : null;
@@ -704,16 +807,27 @@ export const generateMotivationQuotes = onCall(
         const ageHours =
           (Date.now() - generatedAt.getTime()) / (1000 * 60 * 60);
         if (ageHours < QUOTE_CACHE_HOURS) {
-          const cachedQuotes = (
-            (cached.quotes || []) as Array<{ text?: string }>
-          ).map((q) => q.text || q);
-          return { quotes: cachedQuotes };
+          // Prefer the tiered shape; fall back to legacy flat `quotes`
+          // so older cache docs keep working until the next refresh.
+          if (cached.tiers) {
+            return {
+              quotes: flattenTiers(cached.tiers),
+              tiers: cached.tiers,
+            };
+          }
+          const flat = (cached.quotes ?? []).map((q) =>
+            typeof q === 'string'
+              ? q
+              : typeof q === 'object' && q !== null && 'text' in q
+                ? String((q as { text?: unknown }).text ?? '')
+                : String(q ?? '')
+          );
+          return { quotes: flat };
         }
       }
     }
 
-    let quotes: string[] =
-      language === 'en' ? [...FALLBACK_QUOTES_EN] : [...FALLBACK_QUOTES_DE];
+    let tiers: TieredQuotes = getFallbackTieredQuotes(language);
 
     try {
       const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY ?? '');
@@ -721,33 +835,16 @@ export const generateMotivationQuotes = onCall(
         model: 'gemini-2.0-flash-lite',
       });
 
-      let prompt: string;
-      if (language === 'en') {
-        prompt =
-          `Generate exactly 10 short motivating sentences (max 120 chars each) in English for {{name}} who already did ${totalToday} of ${dailyGoal} push-ups today. Use '{{name}}' as placeholder where fitting. Vary tone (sporty, funny, serious). Return only a JSON array: ["..."]`.replace(
-            /\{\{name\}\}/g,
-            displayName
-          );
-      } else {
-        prompt =
-          `Generiere genau 10 kurze motivierende Sätze (je max. 120 Zeichen) auf Deutsch für {{name}}, der heute schon ${totalToday} von ${dailyGoal} Liegestützen gemacht hat. Verwende '{{name}}' als Platzhalter wo passend. Variiere Ton (sportlich, humorvoll, ernst). Gib nur ein JSON-Array zurück: ["..."]`.replace(
-            /\{\{name\}\}/g,
-            displayName
-          );
-      }
-
+      const prompt = buildTieredPrompt(
+        language,
+        totalToday,
+        dailyGoal,
+        displayName
+      );
       const result = await model.generateContent(prompt);
       const text = result.response.text().trim();
-
-      const jsonMatch = text.match(/\[[\s\S]*\]/);
-      if (jsonMatch) {
-        const parsed = JSON.parse(jsonMatch[0]);
-        if (Array.isArray(parsed) && parsed.length > 0) {
-          quotes = parsed
-            .map(String)
-            .filter((q: string) => q.trim().length > 0);
-        }
-      }
+      const parsed = extractTieredQuotes(text);
+      if (parsed) tiers = parsed;
     } catch (err) {
       logger.warn(
         'generateMotivationQuotes: Gemini call failed, using fallback',
@@ -755,16 +852,20 @@ export const generateMotivationQuotes = onCall(
       );
     }
 
+    const flat = flattenTiers(tiers);
     const generatedAt = new Date().toISOString();
-    await cacheRef.set({
+    const docPayload: CachedTiered = {
       uid,
-      quotes: quotes.map((text) => ({ text, lang: language })),
+      lang: language,
+      tiers,
+      quotes: flat,
       generatedAt,
       totalToday,
       dailyGoal,
-    });
+    };
+    await cacheRef.set(docPayload);
 
-    return { quotes };
+    return { quotes: flat, tiers };
   }
 );
 
@@ -925,6 +1026,56 @@ export const revokeAllSessions = onCall({ region: 'europe-west3' }, (request) =>
 const VAPID_PRIVATE_KEY = defineSecret('VAPID_PRIVATE_KEY');
 const VAPID_PUBLIC_KEY = defineSecret('VAPID_PUBLIC_KEY');
 
+/**
+ * Reads the cached motivation pool a user has for `lang` and returns a
+ * flat list of quote strings. Tolerant of legacy doc shapes (flat
+ * `quotes: string[]` / `quotes: {text}[]`) and the new tiered shape.
+ * Returns an empty array on any error so the caller falls back to the
+ * built-in localised messages.
+ */
+async function loadMotivationPool(
+  uid: string,
+  lang: string
+): Promise<string[]> {
+  try {
+    const snap = await db
+      .collection('motivationQuotes')
+      .doc(`${uid}__${lang}`)
+      .get();
+    if (!snap.exists) return [];
+    const data = snap.data() as
+      | {
+          tiers?: TieredQuotes;
+          quotes?: ReadonlyArray<unknown>;
+        }
+      | undefined;
+    if (!data) return [];
+    if (data.tiers) return flattenTiers(data.tiers);
+    if (Array.isArray(data.quotes)) {
+      return data.quotes
+        .map((q) =>
+          typeof q === 'string'
+            ? q
+            : typeof q === 'object' && q !== null && 'text' in q
+              ? String((q as { text?: unknown }).text ?? '')
+              : String(q ?? '')
+        )
+        .filter((q) => q.trim().length > 0);
+    }
+    return [];
+  } catch (err) {
+    // Defensive against non-Error throws (string, null, etc.) — we don't
+    // want the logger itself to throw and surface as an unhandled
+    // rejection in the dispatch loop.
+    logger.warn('loadMotivationPool: failed', {
+      uid,
+      lang,
+      err: err instanceof Error ? err.message : String(err),
+    });
+    return [];
+  }
+}
+
 export const dispatchPushReminders = onSchedule(
   {
     schedule: 'every 5 minutes',
@@ -964,9 +1115,20 @@ export const dispatchPushReminders = onSchedule(
           .collection('userConfigs')
           .doc(uid)
           .get();
-        const reminder = userConfigSnap.data()?.reminder as
-          | ReminderConfig
-          | undefined;
+        const userConfigData = userConfigSnap.data() ?? {};
+        const reminder = userConfigData.reminder as ReminderConfig | undefined;
+        // Prefer the explicit top-level `locale` written by recent clients.
+        // Fall back to the legacy `reminder.language` field on docs created
+        // before that field migrated up — without this, a user who set
+        // English reminders and never re-saved settings would silently
+        // start receiving German push body / actions / URLs after deploy.
+        // Final fallback (`undefined`) lands on the default locale via
+        // `normalizeReminderLocale`.
+        const legacyLanguage = (reminder as { language?: unknown } | undefined)
+          ?.language;
+        const userLocale = normalizeReminderLocale(
+          userConfigData.locale ?? legacyLanguage
+        );
 
         const dispatchRef = db.collection('reminderDispatchState').doc(uid);
         let leaseAcquired = false;
@@ -1029,15 +1191,22 @@ export const dispatchPushReminders = onSchedule(
             continue;
           }
 
-          const body = buildNotificationPayload(reminder?.language);
-          const lang = reminder?.language === 'en' ? 'en' : 'de';
+          // Pull the body from the user's pre-generated motivation pool —
+          // that pool is locale-aware (`generateMotivationQuotes` writes
+          // `motivationQuotes/{uid}__{lang}`) and the Gemini cost is
+          // already paid when the user opens the dashboard, so we get
+          // fresh, personalised quotes on push without spending any new
+          // tokens. Fallback to the per-locale built-in list if the cache
+          // is empty (user hasn't opened the app yet today).
+          const pool = await loadMotivationPool(uid, userLocale);
+          const body = buildNotificationPayload(userLocale, pool);
           // Single source of truth: sanitize once, then use the same value for
           // both the action title and the data payload. Computing them
           // independently caused the title to clamp to 500 while the payload
           // shipped the raw (potentially absurd) Firestore value, so the SW
           // logged a different count than the user saw on the button.
           const quickLogReps = sanitizeQuickLogReps(reminder?.quickLogReps);
-          const actions = buildReminderActions(lang, quickLogReps);
+          const actions = buildReminderActions(userLocale, quickLogReps);
           const payload = JSON.stringify({
             title: 'PushUp Stats',
             body,
@@ -1046,8 +1215,8 @@ export const dispatchPushReminders = onSchedule(
             tag: 'reminder',
             renotify: true,
             data: {
-              url: `/${lang}/app`,
-              locale: lang,
+              url: `/${userLocale}/app`,
+              locale: userLocale,
               ...(quickLogReps ? { quickLogReps } : {}),
             },
             actions,

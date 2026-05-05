@@ -9,6 +9,7 @@ import {
   withProps,
   withState,
 } from '@ngrx/signals';
+import { normalizeReminderLocale } from '@pu-stats/models';
 import { MotivationQuoteService } from './motivation-quote.service';
 
 const CACHE_PREFIX = 'motivation-quotes';
@@ -42,7 +43,7 @@ export const MotivationStore = signalStore(
     return {
       _api: inject(MotivationQuoteService),
       _locale: locale,
-      _lang: locale.startsWith('en') ? 'en' : 'de',
+      _lang: normalizeReminderLocale(locale),
       _isBrowser: isPlatformBrowser(platformId),
     };
   }),

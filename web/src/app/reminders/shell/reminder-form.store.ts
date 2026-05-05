@@ -15,7 +15,6 @@ import {
 type ReminderFormState = {
   enabled: boolean;
   intervalMinutes: number;
-  language: 'de' | 'en';
   quietHours: { from: string; to: string }[];
   /**
    * Whether the one-tap quick-log notification action is enabled. Tracked as
@@ -34,7 +33,6 @@ const DEFAULT_QUICK_LOG_REPS = 10;
 const initialState: ReminderFormState = {
   enabled: false,
   intervalMinutes: 60,
-  language: 'de',
   quietHours: [],
   quickLogEnabled: false,
   quickLogReps: DEFAULT_QUICK_LOG_REPS,
@@ -67,7 +65,6 @@ export const ReminderFormStore = signalStore(
       patchState(store, {
         enabled: config?.enabled ?? false,
         intervalMinutes: config?.intervalMinutes ?? 60,
-        language: config?.language ?? 'de',
         quietHours: config?.quietHours ? [...config.quietHours] : [],
         quickLogEnabled: repsValid,
         quickLogReps: repsValid
@@ -91,10 +88,6 @@ export const ReminderFormStore = signalStore(
 
     setInterval(value: number): void {
       patchState(store, { intervalMinutes: value, dirty: true });
-    },
-
-    setLanguage(value: 'de' | 'en'): void {
-      patchState(store, { language: value, dirty: true });
     },
 
     addQuietHour(): void {
@@ -157,7 +150,6 @@ export const ReminderFormStore = signalStore(
         intervalMinutes: store.intervalMinutes(),
         quietHours: store.quietHours(),
         timezone,
-        language: store.language(),
       };
       if (store.quickLogEnabled()) {
         const reps = Math.floor(store.quickLogReps());

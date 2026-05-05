@@ -23,6 +23,29 @@ export const SW_PUSH_VERSION: string =
  */
 const SW_QUICK_LOG_MAX = 500;
 
+/**
+ * Mirrored from `@pu-stats/models#SUPPORTED_REMINDER_LOCALES`. Inlined so
+ * the sw-push bundle stays self-contained (no cross-package import in the
+ * SW). When adding a locale to the web project's `i18n.locales`, add it
+ * here too, otherwise notification clicks for that locale fall back to
+ * the default and route to `/de/app...` instead of the locale-prefixed
+ * URL.
+ */
+const SW_SUPPORTED_LOCALES = [
+  'de',
+  'en',
+  'fr',
+  'es',
+  'it',
+  'nl',
+  'el',
+  'la',
+  'no',
+  'zh',
+] as const;
+type SwLocale = (typeof SW_SUPPORTED_LOCALES)[number];
+const SW_DEFAULT_LOCALE: SwLocale = 'de';
+
 export interface PushSubscriptionChangeEventLike {
   oldSubscription: PushSubscription | null;
   newSubscription: PushSubscription | null;
@@ -78,16 +101,26 @@ interface PushPayload {
   actions?: Array<{ action: string; title: string }>;
 }
 
-function resolveLocale(raw: unknown): 'en' | 'de' {
-  return String(raw ?? '')
-    .toLowerCase()
-    .startsWith('en')
-    ? 'en'
-    : 'de';
+function resolveLocale(raw: unknown): SwLocale {
+  if (typeof raw !== 'string') return SW_DEFAULT_LOCALE;
+  // Trim before splitting so a payload with leading/trailing whitespace
+  // (e.g. " en-US ") still resolves correctly. Aligned with the
+  // server-side `normalizeReminderLocale` in @pu-stats/models.
+  const primary = raw.trim().toLowerCase().split(/[-_]/)[0];
+  return (SW_SUPPORTED_LOCALES as ReadonlyArray<string>).includes(primary)
+    ? (primary as SwLocale)
+    : SW_DEFAULT_LOCALE;
 }
 
+/**
+ * Last-resort action labels used only when the dispatch CF doesn't ship
+ * an `actions` array (legacy or malformed payload). The CF always sets
+ * locale-aware actions, so duplicating the full 10-locale dictionary
+ * here would just bloat the SW bundle for a path that's never hit in
+ * practice — de/en covers every realistic legacy payload.
+ */
 function defaultActions(
-  locale: 'en' | 'de'
+  locale: SwLocale
 ): Array<{ action: string; title: string }> {
   return locale === 'en'
     ? [
@@ -246,9 +279,7 @@ export function handleNotificationClick(
             reps,
           });
           if ('focus' in clientList[0]) {
-            await (
-              clientList[0] as { focus: () => Promise<unknown> }
-            )
+            await (clientList[0] as { focus: () => Promise<unknown> })
               .focus()
               .catch(() => undefined);
           }

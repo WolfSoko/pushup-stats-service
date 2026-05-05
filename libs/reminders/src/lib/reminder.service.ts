@@ -1,5 +1,6 @@
 import { inject, Injectable, LOCALE_ID, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
+import { normalizeReminderLocale, reminderTitle } from '@pu-stats/models';
 import { ReminderStore } from './reminder.store';
 import { ReminderPermissionService } from './reminder-permission.service';
 import { MotivationStore } from '@pu-stats/motivation';
@@ -49,10 +50,7 @@ export class ReminderService {
   private readonly motivationStore = inject(MotivationStore);
   private readonly pushStore = inject(PushSubscriptionStore);
   private readonly pushSwRegistration = inject(PushSwRegistrationService);
-  private readonly locale = (() => {
-    const l = inject(LOCALE_ID).toLowerCase();
-    return l.startsWith('en') ? 'en' : 'de';
-  })();
+  private readonly locale = normalizeReminderLocale(inject(LOCALE_ID));
 
   private intervalId: ReturnType<typeof setInterval> | null = null;
   private initialTickTimeoutId: ReturnType<typeof setTimeout> | null = null;
@@ -118,9 +116,7 @@ export class ReminderService {
     const quote = await this.getNextQuote();
     if (!quote) return;
 
-    const lang = config.language ?? 'de';
-    const title =
-      lang === 'en' ? '💪 Time for push-ups!' : '💪 Zeit für Liegestütze!';
+    const title = reminderTitle(this.locale);
 
     if (Notification.permission === 'granted') {
       // Prefer ServiceWorker notification — `new Notification()` is not

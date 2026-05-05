@@ -1,10 +1,14 @@
 import { describe, it, expect } from '@jest/globals';
 import {
+  flattenTiers,
   getFallbackQuotes,
+  getFallbackTieredQuotes,
+  pickAchievementTier,
   sanitizeDisplayName,
   extractJsonArray,
   filterValidQuotes,
   isCacheValid,
+  QUOTE_TIERS,
   FALLBACK_QUOTES_DE,
   FALLBACK_QUOTES_EN,
 } from './logic';
@@ -21,9 +25,12 @@ describe('motivation/logic', () => {
       expect(quotes).toEqual(FALLBACK_QUOTES_EN);
     });
 
-    it('defaults to German for unknown language', () => {
+    it('defaults to English for unknown locale (broadest reach)', () => {
+      // Was German for unknown locales — switched to English when
+      // multi-locale support landed; English is more universally
+      // recognised than German for users browsing in fr/es/it/etc.
       const quotes = getFallbackQuotes('fr');
-      expect(quotes).toEqual(FALLBACK_QUOTES_DE);
+      expect(quotes).toEqual(FALLBACK_QUOTES_EN);
     });
 
     it('returns new array on each call', () => {
@@ -31,6 +38,74 @@ describe('motivation/logic', () => {
       const quotes2 = getFallbackQuotes('de');
       expect(quotes1).not.toBe(quotes2); // Different array instances
       expect(quotes1).toEqual(quotes2); // Same content
+    });
+  });
+
+  describe('getFallbackTieredQuotes', () => {
+    it('returns a populated quote list for every tier (de)', () => {
+      const tiered = getFallbackTieredQuotes('de');
+      for (const tier of QUOTE_TIERS) {
+        expect(tiered[tier].length).toBeGreaterThan(0);
+      }
+    });
+
+    it('returns a populated quote list for every tier (en)', () => {
+      const tiered = getFallbackTieredQuotes('en');
+      for (const tier of QUOTE_TIERS) {
+        expect(tiered[tier].length).toBeGreaterThan(0);
+      }
+    });
+
+    it('falls back to English for unsupported locales', () => {
+      const tiered = getFallbackTieredQuotes('fr');
+      expect(tiered.general).toEqual(getFallbackTieredQuotes('en').general);
+    });
+
+    it('returns deep-copied arrays so mutation does not bleed', () => {
+      const a = getFallbackTieredQuotes('de');
+      a.general.push('mutated');
+      const b = getFallbackTieredQuotes('de');
+      expect(b.general).not.toContain('mutated');
+    });
+  });
+
+  describe('pickAchievementTier', () => {
+    it('picks belowGoal at < 50 % progress', () => {
+      expect(pickAchievementTier(10, 100)).toBe('belowGoal');
+    });
+
+    it('picks nearGoal at exactly 50 % progress', () => {
+      expect(pickAchievementTier(50, 100)).toBe('nearGoal');
+    });
+
+    it('picks nearGoal at 80 % progress', () => {
+      expect(pickAchievementTier(80, 100)).toBe('nearGoal');
+    });
+
+    it('picks goalReached at exactly 100 % progress', () => {
+      expect(pickAchievementTier(100, 100)).toBe('goalReached');
+    });
+
+    it('picks goalReached when over the goal', () => {
+      expect(pickAchievementTier(250, 100)).toBe('goalReached');
+    });
+
+    it('falls back to general for invalid input', () => {
+      expect(pickAchievementTier(NaN, 100)).toBe('general');
+      expect(pickAchievementTier(10, 0)).toBe('general');
+      expect(pickAchievementTier(10, -1)).toBe('general');
+    });
+  });
+
+  describe('flattenTiers', () => {
+    it('concatenates tiers in canonical order', () => {
+      const result = flattenTiers({
+        general: ['g1'],
+        belowGoal: ['b1'],
+        nearGoal: ['n1'],
+        goalReached: ['r1'],
+      });
+      expect(result).toEqual(['g1', 'b1', 'n1', 'r1']);
     });
   });
 

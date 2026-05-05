@@ -7,7 +7,6 @@ const defaultConfig: ReminderConfig = {
   intervalMinutes: 60,
   quietHours: [],
   timezone: 'Europe/Berlin',
-  language: 'de',
 };
 
 describe('ReminderFormStore', () => {
@@ -31,12 +30,10 @@ describe('ReminderFormStore', () => {
       enabled: true,
       intervalMinutes: 30,
       quietHours: [{ from: '22:00', to: '06:00' }],
-      language: 'en',
     };
     store.syncFromConfig(config);
     expect(store.enabled()).toBe(true);
     expect(store.intervalMinutes()).toBe(30);
-    expect(store.language()).toBe('en');
     expect(store.quietHours()).toEqual([{ from: '22:00', to: '06:00' }]);
     expect(store.dirty()).toBe(false);
   });
@@ -45,7 +42,6 @@ describe('ReminderFormStore', () => {
     store.syncFromConfig(null);
     expect(store.enabled()).toBe(false);
     expect(store.intervalMinutes()).toBe(60);
-    expect(store.language()).toBe('de');
     expect(store.quietHours()).toEqual([]);
     expect(store.dirty()).toBe(false);
   });

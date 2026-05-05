@@ -327,6 +327,44 @@ describe('handleNotificationClick', () => {
     expect(openWindow).toHaveBeenCalledWith('/de/app?log=1');
   });
 
+  it('routes the log action to the locale-prefixed URL for non-de/en locales (fr)', async () => {
+    const { ctx, openWindow } = makeCtx();
+    let waited: Promise<unknown> | undefined;
+    const { event } = makeEvent('log', { locale: 'fr' });
+    event.waitUntil = (p) => {
+      waited = p;
+    };
+    handleNotificationClick(event, ctx);
+    await waited;
+    expect(openWindow).toHaveBeenCalledWith('/fr/app?log=1');
+  });
+
+  it('routes the snooze action to the locale-prefixed URL for non-de/en locales (zh)', async () => {
+    const { ctx, openWindow } = makeCtx({ matchAllResult: [] });
+    let waited: Promise<unknown> | undefined;
+    const { event } = makeEvent('snooze', { locale: 'zh' });
+    event.waitUntil = (p) => {
+      waited = p;
+    };
+    handleNotificationClick(event, ctx);
+    await waited;
+    expect(openWindow).toHaveBeenCalledWith('/zh/app?snooze=30');
+  });
+
+  it('falls back to the default locale URL for an unsupported locale tag', async () => {
+    const { ctx, openWindow } = makeCtx();
+    let waited: Promise<unknown> | undefined;
+    // 'xx' is not in SW_SUPPORTED_LOCALES, so we fall back to the default
+    // (de) and open `/de/app?log=1` rather than `/xx/app?log=1`.
+    const { event } = makeEvent('log', { locale: 'xx' });
+    event.waitUntil = (p) => {
+      waited = p;
+    };
+    handleNotificationClick(event, ctx);
+    await waited;
+    expect(openWindow).toHaveBeenCalledWith('/de/app?log=1');
+  });
+
   it('quick-log: posts QUICK_LOG_PUSHUPS to an open client and skips openWindow', async () => {
     const client: ClientLike = {
       url: 'https://pushup-stats.com/de/app',
