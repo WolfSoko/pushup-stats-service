@@ -23,14 +23,27 @@ export type ReminderLocale = (typeof SUPPORTED_REMINDER_LOCALES)[number];
 export const DEFAULT_REMINDER_LOCALE: ReminderLocale = 'de';
 
 /**
+ * BCP-47 primary-subtag aliases. Norwegian is a macrolanguage: `nb`
+ * (Bokmål) and `nn` (Nynorsk) are distinct primary subtags but both
+ * map to our single `no` reminder locale. Without this map a user with
+ * `LOCALE_ID = 'nb-NO'` would silently fall back to the default locale.
+ */
+const LOCALE_ALIAS: Readonly<Record<string, ReminderLocale>> = {
+  nb: 'no',
+  nn: 'no',
+};
+
+/**
  * Normalises any locale string to a supported primary subtag.
- * `en-US` → `en`, `zh-Hant` → `zh`, unknown → `DEFAULT_REMINDER_LOCALE`.
+ * `en-US` → `en`, `zh-Hant` → `zh`, `nb-NO` → `no`,
+ * unknown → `DEFAULT_REMINDER_LOCALE`.
  */
 export function normalizeReminderLocale(raw: unknown): ReminderLocale {
   if (typeof raw !== 'string') return DEFAULT_REMINDER_LOCALE;
-  const primary = raw.toLowerCase().split(/[-_]/)[0];
-  return (SUPPORTED_REMINDER_LOCALES as ReadonlyArray<string>).includes(primary)
-    ? (primary as ReminderLocale)
+  const primary = raw.trim().toLowerCase().split(/[-_]/)[0];
+  const aliased = LOCALE_ALIAS[primary] ?? primary;
+  return (SUPPORTED_REMINDER_LOCALES as ReadonlyArray<string>).includes(aliased)
+    ? (aliased as ReminderLocale)
     : DEFAULT_REMINDER_LOCALE;
 }
 
@@ -164,7 +177,9 @@ export function reminderTitle(locale: unknown): string {
 }
 
 export function reminderBodyChoices(locale: unknown): ReadonlyArray<string> {
-  return REMINDER_BODIES[normalizeReminderLocale(locale)];
+  // Defensive copy so a caller that .push()es into the result can't
+  // mutate the module-level dictionary and leak across notifications.
+  return [...REMINDER_BODIES[normalizeReminderLocale(locale)]];
 }
 
 export function reminderSnoozeLabel(locale: unknown): string {

@@ -32,12 +32,12 @@ describe('UserConfig reminder field', () => {
   it('accepts a full reminder config', () => {
     const config: UserConfig = {
       userId: 'u1',
+      locale: 'de',
       reminder: {
         enabled: true,
         intervalMinutes: 60,
         quietHours: [{ from: '22:00', to: '07:00' }],
         timezone: 'Europe/Berlin',
-        language: 'de',
         lastQuoteFetchAt: '2026-03-23T10:00:00.000Z',
       },
     };
@@ -45,7 +45,7 @@ describe('UserConfig reminder field', () => {
     expect(config.reminder?.intervalMinutes).toBe(60);
     expect(config.reminder?.quietHours).toHaveLength(1);
     expect(config.reminder?.timezone).toBe('Europe/Berlin');
-    expect(config.reminder?.language).toBe('de');
+    expect(config.locale).toBe('de');
     expect(config.reminder?.lastQuoteFetchAt).toBeDefined();
   });
 
@@ -57,12 +57,12 @@ describe('UserConfig reminder field', () => {
   it('allows lastQuoteFetchAt to be omitted', () => {
     const config: UserConfig = {
       userId: 'u3',
+      locale: 'en',
       reminder: {
         enabled: false,
         intervalMinutes: 30,
         quietHours: [],
         timezone: 'UTC',
-        language: 'en',
       },
     };
     expect(config.reminder?.lastQuoteFetchAt).toBeUndefined();
@@ -71,6 +71,7 @@ describe('UserConfig reminder field', () => {
   it('allows multiple quiet-hour windows', () => {
     const config: UserConfig = {
       userId: 'u4',
+      locale: 'en',
       reminder: {
         enabled: true,
         intervalMinutes: 120,
@@ -79,7 +80,6 @@ describe('UserConfig reminder field', () => {
           { from: '12:00', to: '13:00' },
         ],
         timezone: 'Europe/Berlin',
-        language: 'en',
       },
     };
     expect(config.reminder?.quietHours).toHaveLength(2);
@@ -94,10 +94,11 @@ describe('UserConfigUpdate reminder field', () => {
         intervalMinutes: 30,
         quietHours: [],
         timezone: 'Europe/Berlin',
-        language: 'de',
       },
+      locale: 'de',
     };
     expect(update.reminder?.enabled).toBe(true);
+    expect(update.locale).toBe('de');
   });
 
   it('allows reminder to be omitted in update', () => {

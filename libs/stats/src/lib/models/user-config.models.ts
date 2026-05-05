@@ -1,4 +1,5 @@
 import { ReminderConfig } from './reminder-config.models';
+import type { ReminderLocale } from './reminder-i18n.models';
 
 /** Particle-count quality preset for the goal-reached snap animation. */
 export type SnapQuality = 'low' | 'middle' | 'high';
@@ -29,8 +30,12 @@ export interface UserConfig {
    * `fr`). Persisted from the client whenever the reminder is saved so the
    * server-side push dispatcher (`dispatchPushReminders`) can localise the
    * notification — it has no `LOCALE_ID` of its own.
+   *
+   * Typed as `ReminderLocale` (not `string`) so a future caller cannot
+   * persist an unsupported subtag client-side; the server still applies
+   * `normalizeReminderLocale` defensively when reading legacy docs.
    */
-  locale?: string;
+  locale?: ReminderLocale;
   dailyGoal?: number;
   weeklyGoal?: number;
   monthlyGoal?: number;

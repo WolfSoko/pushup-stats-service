@@ -30,6 +30,23 @@ describe('reminder-i18n.models', () => {
       expect(normalizeReminderLocale('FR')).toBe('fr');
     });
 
+    it('trims surrounding whitespace before normalising', () => {
+      expect(normalizeReminderLocale('  en  ')).toBe('en');
+    });
+
+    it('maps Norwegian Bokmål (nb-NO) to "no"', () => {
+      // BCP-47 treats `nb`/`nn` as distinct primary subtags; the previous
+      // implementation silently fell back to the default for either,
+      // which gave Bokmål users German notifications.
+      expect(normalizeReminderLocale('nb-NO')).toBe('no');
+      expect(normalizeReminderLocale('nb')).toBe('no');
+    });
+
+    it('maps Norwegian Nynorsk (nn-NO) to "no"', () => {
+      expect(normalizeReminderLocale('nn-NO')).toBe('no');
+      expect(normalizeReminderLocale('nn')).toBe('no');
+    });
+
     it('falls back to default for unsupported locales', () => {
       expect(normalizeReminderLocale('xx')).toBe(DEFAULT_REMINDER_LOCALE);
       expect(normalizeReminderLocale('')).toBe(DEFAULT_REMINDER_LOCALE);

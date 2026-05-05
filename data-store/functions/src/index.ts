@@ -681,7 +681,7 @@ export const ogProfile = onRequest(
  * Keeping it in English (no German wording) lets the same map drive every
  * supported locale; the model is told the *output* language separately.
  */
-const TIER_INSTRUCTIONS: Record<string, string> = {
+const TIER_INSTRUCTIONS: Record<(typeof QUOTE_TIERS)[number], string> = {
   general: 'general motivation, fitness vibe',
   belowGoal: 'encouraging "let’s start" / "you can do it" tone',
   nearGoal: 'push-through tone, halfway-there energy',
@@ -1064,10 +1064,13 @@ async function loadMotivationPool(
     }
     return [];
   } catch (err) {
+    // Defensive against non-Error throws (string, null, etc.) — we don't
+    // want the logger itself to throw and surface as an unhandled
+    // rejection in the dispatch loop.
     logger.warn('loadMotivationPool: failed', {
       uid,
       lang,
-      err: (err as Error).message,
+      err: err instanceof Error ? err.message : String(err),
     });
     return [];
   }
@@ -1114,10 +1117,18 @@ export const dispatchPushReminders = onSchedule(
           .get();
         const userConfigData = userConfigSnap.data() ?? {};
         const reminder = userConfigData.reminder as ReminderConfig | undefined;
-        // The user's preferred app locale is persisted alongside the
-        // reminder by the client (`ReminderStore.saveConfig`). Server has
-        // no LOCALE_ID, so without this we would have to guess.
-        const userLocale = normalizeReminderLocale(userConfigData.locale);
+        // Prefer the explicit top-level `locale` written by recent clients.
+        // Fall back to the legacy `reminder.language` field on docs created
+        // before that field migrated up — without this, a user who set
+        // English reminders and never re-saved settings would silently
+        // start receiving German push body / actions / URLs after deploy.
+        // Final fallback (`undefined`) lands on the default locale via
+        // `normalizeReminderLocale`.
+        const legacyLanguage = (reminder as { language?: unknown } | undefined)
+          ?.language;
+        const userLocale = normalizeReminderLocale(
+          userConfigData.locale ?? legacyLanguage
+        );
 
         const dispatchRef = db.collection('reminderDispatchState').doc(uid);
         let leaseAcquired = false;

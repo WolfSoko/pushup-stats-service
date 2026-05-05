@@ -67,6 +67,38 @@
       {
         "source": "/en{,/**}",
         "destination": "/en/index.html"
+      },
+      {
+        "source": "/fr{,/**}",
+        "destination": "/fr/index.html"
+      },
+      {
+        "source": "/es{,/**}",
+        "destination": "/es/index.html"
+      },
+      {
+        "source": "/it{,/**}",
+        "destination": "/it/index.html"
+      },
+      {
+        "source": "/nl{,/**}",
+        "destination": "/nl/index.html"
+      },
+      {
+        "source": "/el{,/**}",
+        "destination": "/el/index.html"
+      },
+      {
+        "source": "/la{,/**}",
+        "destination": "/la/index.html"
+      },
+      {
+        "source": "/no{,/**}",
+        "destination": "/no/index.html"
+      },
+      {
+        "source": "/zh{,/**}",
+        "destination": "/zh/index.html"
       }
     ],
     "headers": [
