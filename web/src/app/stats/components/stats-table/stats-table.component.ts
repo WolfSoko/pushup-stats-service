@@ -1,34 +1,29 @@
-import {
-  AsyncPipe,
-  DatePipe,
-  NgTemplateOutlet,
-  isPlatformBrowser,
-} from '@angular/common';
+import { ScrollingModule } from '@angular/cdk/scrolling';
+import { DatePipe, isPlatformBrowser, NgTemplateOutlet } from '@angular/common';
 import {
   Component,
-  LOCALE_ID,
-  PLATFORM_ID,
   computed,
   effect,
   inject,
   input,
+  LOCALE_ID,
   output,
+  PLATFORM_ID,
   signal,
   viewChild,
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatRippleModule } from '@angular/material/core';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatRippleModule } from '@angular/material/core';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { ScrollingModule } from '@angular/cdk/scrolling';
-import { displayPushupType, PushupRecord } from '@pu-stats/models';
 import { UserContextService } from '@pu-auth/auth';
 import { UserConfigApiService } from '@pu-stats/data-access';
+import { displayPushupType, PushupRecord } from '@pu-stats/models';
 import { firstValueFrom } from 'rxjs';
 import {
   CreateEntryDialogComponent,
@@ -42,7 +37,6 @@ import {
     MatCardModule,
     MatProgressSpinnerModule,
     DatePipe,
-    AsyncPipe,
     NgTemplateOutlet,
     MatDialogModule,
     MatButtonModule,
