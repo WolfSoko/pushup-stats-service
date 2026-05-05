@@ -3177,10 +3177,10 @@
     </unit>
     <unit id="landing.free.badge">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:15,17</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:14</note>
       </notes>
       <segment>
-        <source>Kostenlos &amp; ohne Kreditkarte</source>
+        <source>kostenlos</source>
       </segment>
     </unit>
     <unit id="landing.title">

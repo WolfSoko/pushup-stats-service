@@ -3191,8 +3191,8 @@
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:15,17</note>
       </notes>
       <segment state="translated">
-        <source>Kostenlos &amp; ohne Kreditkarte</source>
-      <target>免费且无需信用卡</target></segment>
+        <source>kostenlos</source>
+      <target>免费</target></segment>
     </unit>
     <unit id="landing.title">
       <notes>

@@ -4451,8 +4451,8 @@ Deine Position: # ·  Reps        </source>
     </unit>
     <unit id="landing.free.badge">
       <segment state="translated">
-        <source>Kostenlos &amp; ohne Kreditkarte</source>
-        <target>Free &amp; no credit card required</target>
+        <source>kostenlos</source>
+        <target>free</target>
       </segment>
     </unit>
     <unit id="landing.cta.hint">
