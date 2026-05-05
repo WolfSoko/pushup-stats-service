@@ -18,6 +18,7 @@ import {
 } from '@pu-reminders/reminders';
 import { UnsubscribeAllDevicesDialogComponent } from './unsubscribe-all-devices-dialog.component';
 import { ReminderFormStore } from './reminder-form.store';
+import { PageHeaderComponent } from '../../core/page-header/page-header.component';
 
 @Component({
   selector: 'app-reminders-page',
@@ -31,20 +32,17 @@ import { ReminderFormStore } from './reminder-form.store';
     MatIconModule,
     MatSlideToggleModule,
     MatSnackBarModule,
+    PageHeaderComponent,
   ],
   template: `
     <main class="page-wrap">
+      <app-page-header icon="notifications_active" variant="reminders">
+        <h1 page-title i18n="@@remindersHeaderTitle">Erinnerungen</h1>
+        <p page-subtitle i18n="@@remindersHeaderSubtitle">
+          Push-Benachrichtigungen, Zeiten und Geräte verwalten.
+        </p>
+      </app-page-header>
       <mat-card>
-        <mat-card-header>
-          <mat-card-title i18n="@@reminders.page.title"
-            >🔔 Erinnerungen</mat-card-title
-          >
-          <mat-card-subtitle i18n="@@reminders.page.subtitle"
-            >Liegestütz-Erinnerungen &
-            Push-Benachrichtigungen</mat-card-subtitle
-          >
-        </mat-card-header>
-
         <mat-card-content>
           <section class="reminder-section">
             <h3 i18n="@@reminder.section.title">🔔 Erinnerungen / Reminders</h3>

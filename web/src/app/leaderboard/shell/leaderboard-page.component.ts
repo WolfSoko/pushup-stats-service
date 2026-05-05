@@ -3,10 +3,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { RouterLink } from '@angular/router';
 import { LeaderboardPeriod, LeaderboardStore } from '@pu-stats/data-access';
+import { PageHeaderComponent } from '../../core/page-header/page-header.component';
 
 @Component({
   selector: 'app-leaderboard-page',
-  imports: [MatCardModule, MatButtonModule, RouterLink],
+  imports: [MatCardModule, MatButtonModule, RouterLink, PageHeaderComponent],
   templateUrl: './leaderboard-page.component.html',
   styleUrl: './leaderboard-page.component.scss',
 })

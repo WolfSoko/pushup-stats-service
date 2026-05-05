@@ -6934,5 +6934,77 @@
         <target>Doctrina &amp; ars | Pushup Tracker</target>
       </segment>
     </unit>
+    <unit id="analysisHeaderTitle">
+      <segment state="translated">
+        <source>Analyse</source>
+        <target>Analysis</target>
+      </segment>
+    </unit>
+    <unit id="analysisHeaderSubtitle">
+      <segment state="translated">
+        <source>Trends, Verteilungen und Streaks deines Trainings auf einen Blick.</source>
+        <target>Lineamenta, distributiones et series exercitationis tuae uno aspectu.</target>
+      </segment>
+    </unit>
+    <unit id="historyHeaderTitle">
+      <segment state="translated">
+        <source>Historie</source>
+        <target>Historia</target>
+      </segment>
+    </unit>
+    <unit id="historyHeaderSubtitle">
+      <segment state="translated">
+        <source>Durchsuche, filtere und bearbeite deine Trainingseinträge.</source>
+        <target>Quaere, percola et corrige inscriptiones exercitationis tuae.</target>
+      </segment>
+    </unit>
+    <unit id="leaderboardHeaderTitle">
+      <segment state="translated">
+        <source>Bestenliste</source>
+        <target>Tabula primorum</target>
+      </segment>
+    </unit>
+    <unit id="leaderboardHeaderSubtitle">
+      <segment state="translated">
+        <source>Heute, letzte 7 Tage und letzte 30 Tage – wer schiebt die meisten Reps?</source>
+        <target>Hodie, ultimis VII et XXX diebus – quis plurima impellit?</target>
+      </segment>
+    </unit>
+    <unit id="settingsHeaderTitle">
+      <segment state="translated">
+        <source>Einstellungen</source>
+        <target>Configuratio</target>
+      </segment>
+    </unit>
+    <unit id="settingsHeaderSubtitle">
+      <segment state="translated">
+        <source>Profil, Ziele und Sichtbarkeit nach deinem Geschmack.</source>
+        <target>Profilum, fines et visibilitas ad sensum tuum.</target>
+      </segment>
+    </unit>
+    <unit id="remindersHeaderTitle">
+      <segment state="translated">
+        <source>Erinnerungen</source>
+        <target>Memoranda</target>
+      </segment>
+    </unit>
+    <unit id="remindersHeaderSubtitle">
+      <segment state="translated">
+        <source>Push-Benachrichtigungen, Zeiten und Geräte verwalten.</source>
+        <target>Pulsus, horas et machinas administra.</target>
+      </segment>
+    </unit>
+    <unit id="adminHeaderTitle">
+      <segment state="translated">
+        <source>Admin-Bereich</source>
+        <target>Sedes administri</target>
+      </segment>
+    </unit>
+    <unit id="adminHeaderSubtitle">
+      <segment state="translated">
+        <source>Nutzerverwaltung, Feedback und Bereinigungen.</source>
+        <target>Administratio utentium, sententiae et purgationes.</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

@@ -7142,5 +7142,77 @@ Deine Position: # ·  Reps        </source>
         <target>Tutorial &amp; Technique | Pushup Tracker</target>
       </segment>
     </unit>
+    <unit id="analysisHeaderTitle">
+      <segment state="translated">
+        <source>Analyse</source>
+        <target>Analysis</target>
+      </segment>
+    </unit>
+    <unit id="analysisHeaderSubtitle">
+      <segment state="translated">
+        <source>Trends, Verteilungen und Streaks deines Trainings auf einen Blick.</source>
+        <target>Trends, distributions and streaks of your training at a glance.</target>
+      </segment>
+    </unit>
+    <unit id="historyHeaderTitle">
+      <segment state="translated">
+        <source>Historie</source>
+        <target>History</target>
+      </segment>
+    </unit>
+    <unit id="historyHeaderSubtitle">
+      <segment state="translated">
+        <source>Durchsuche, filtere und bearbeite deine Trainingseinträge.</source>
+        <target>Search, filter and edit your training entries.</target>
+      </segment>
+    </unit>
+    <unit id="leaderboardHeaderTitle">
+      <segment state="translated">
+        <source>Bestenliste</source>
+        <target>Leaderboard</target>
+      </segment>
+    </unit>
+    <unit id="leaderboardHeaderSubtitle">
+      <segment state="translated">
+        <source>Heute, letzte 7 Tage und letzte 30 Tage – wer schiebt die meisten Reps?</source>
+        <target>Today, last 7 days and last 30 days – who pushes the most reps?</target>
+      </segment>
+    </unit>
+    <unit id="settingsHeaderTitle">
+      <segment state="translated">
+        <source>Einstellungen</source>
+        <target>Settings</target>
+      </segment>
+    </unit>
+    <unit id="settingsHeaderSubtitle">
+      <segment state="translated">
+        <source>Profil, Ziele und Sichtbarkeit nach deinem Geschmack.</source>
+        <target>Profile, goals and visibility – tailored to your taste.</target>
+      </segment>
+    </unit>
+    <unit id="remindersHeaderTitle">
+      <segment state="translated">
+        <source>Erinnerungen</source>
+        <target>Reminders</target>
+      </segment>
+    </unit>
+    <unit id="remindersHeaderSubtitle">
+      <segment state="translated">
+        <source>Push-Benachrichtigungen, Zeiten und Geräte verwalten.</source>
+        <target>Manage push notifications, schedules and devices.</target>
+      </segment>
+    </unit>
+    <unit id="adminHeaderTitle">
+      <segment state="translated">
+        <source>Admin-Bereich</source>
+        <target>Admin Panel</target>
+      </segment>
+    </unit>
+    <unit id="adminHeaderSubtitle">
+      <segment state="translated">
+        <source>Nutzerverwaltung, Feedback und Bereinigungen.</source>
+        <target>User management, feedback and clean-up.</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

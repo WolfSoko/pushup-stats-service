@@ -6,6 +6,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { PreviewBannerComponent } from '../components/preview-banner/preview-banner.component';
 import { StatsTableComponent } from '../components/stats-table/stats-table.component';
 import { EntriesStore } from '../entries.store';
+import { PageHeaderComponent } from '../../core/page-header/page-header.component';
 
 @Component({
   selector: 'app-entries-page',
@@ -15,12 +16,19 @@ import { EntriesStore } from '../entries.store';
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
+    PageHeaderComponent,
     PreviewBannerComponent,
     StatsTableComponent,
   ],
   template: `
     <main class="page-wrap">
       <app-preview-banner />
+      <app-page-header icon="history" variant="history">
+        <h1 page-title i18n="@@historyHeaderTitle">Historie</h1>
+        <p page-subtitle i18n="@@historyHeaderSubtitle">
+          Durchsuche, filtere und bearbeite deine Trainingseinträge.
+        </p>
+      </app-page-header>
       <mat-card>
         <mat-card-header>
           <mat-card-title i18n="@@entries.title">Filter</mat-card-title>

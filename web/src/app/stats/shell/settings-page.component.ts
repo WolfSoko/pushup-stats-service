@@ -30,6 +30,7 @@ import { DEFAULT_SNAP_QUALITY, SnapQuality } from '@pu-stats/models';
 import { UserConfigStore } from '../../core/user-config.store';
 import { ShareService } from '../../core/share.service';
 import { buildProfileShareUrl } from '../../core/profile-share-url';
+import { PageHeaderComponent } from '../../core/page-header/page-header.component';
 
 type SaveStatus = 'idle' | 'pending' | 'saving' | 'saved' | 'error';
 
@@ -71,17 +72,18 @@ interface ResolvedConfig {
     MatProgressSpinnerModule,
     MatDialogModule,
     MatButtonToggleModule,
+    PageHeaderComponent,
     RouterLink,
   ],
   template: `
     <main class="page-wrap">
-      <header class="page-header">
-        <div class="title-block">
-          <h1 i18n="@@settingsTitle">Einstellungen</h1>
-          <p class="muted" i18n="@@settingsSubtitle">User-Profil & Tagesziel</p>
-        </div>
-
+      <app-page-header icon="tune" variant="settings">
+        <h1 page-title i18n="@@settingsHeaderTitle">Einstellungen</h1>
+        <p page-subtitle i18n="@@settingsHeaderSubtitle">
+          Profil, Ziele und Sichtbarkeit nach deinem Geschmack.
+        </p>
         <div
+          page-actions
           class="save-status"
           role="status"
           aria-live="polite"
@@ -126,7 +128,7 @@ interface ResolvedConfig {
             }
           }
         </div>
-      </header>
+      </app-page-header>
 
       @if (isGuest()) {
         <div class="guest-banner">
@@ -490,22 +492,6 @@ interface ResolvedConfig {
       padding: 16px;
       display: grid;
       gap: 16px;
-    }
-    .page-header {
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      gap: 16px;
-      flex-wrap: wrap;
-      padding: 0 4px;
-    }
-    .title-block h1 {
-      margin: 0;
-      font-size: 1.75rem;
-      line-height: 1.1;
-    }
-    .title-block p {
-      margin: 4px 0 0;
     }
     .save-status {
       display: inline-flex;

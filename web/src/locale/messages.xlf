@@ -6506,5 +6506,101 @@
         <source>Anleitung &amp; Technik | Pushup Tracker</source>
       </segment>
     </unit>
+    <unit id="analysisHeaderTitle">
+      <notes>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts</note>
+      </notes>
+      <segment>
+        <source>Analyse</source>
+      </segment>
+    </unit>
+    <unit id="analysisHeaderSubtitle">
+      <notes>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts</note>
+      </notes>
+      <segment>
+        <source>Trends, Verteilungen und Streaks deines Trainings auf einen Blick.</source>
+      </segment>
+    </unit>
+    <unit id="historyHeaderTitle">
+      <notes>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts</note>
+      </notes>
+      <segment>
+        <source>Historie</source>
+      </segment>
+    </unit>
+    <unit id="historyHeaderSubtitle">
+      <notes>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts</note>
+      </notes>
+      <segment>
+        <source>Durchsuche, filtere und bearbeite deine Trainingseinträge.</source>
+      </segment>
+    </unit>
+    <unit id="leaderboardHeaderTitle">
+      <notes>
+        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html</note>
+      </notes>
+      <segment>
+        <source>Bestenliste</source>
+      </segment>
+    </unit>
+    <unit id="leaderboardHeaderSubtitle">
+      <notes>
+        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html</note>
+      </notes>
+      <segment>
+        <source>Heute, letzte 7 Tage und letzte 30 Tage – wer schiebt die meisten Reps?</source>
+      </segment>
+    </unit>
+    <unit id="settingsHeaderTitle">
+      <notes>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts</note>
+      </notes>
+      <segment>
+        <source>Einstellungen</source>
+      </segment>
+    </unit>
+    <unit id="settingsHeaderSubtitle">
+      <notes>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts</note>
+      </notes>
+      <segment>
+        <source>Profil, Ziele und Sichtbarkeit nach deinem Geschmack.</source>
+      </segment>
+    </unit>
+    <unit id="remindersHeaderTitle">
+      <notes>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts</note>
+      </notes>
+      <segment>
+        <source>Erinnerungen</source>
+      </segment>
+    </unit>
+    <unit id="remindersHeaderSubtitle">
+      <notes>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts</note>
+      </notes>
+      <segment>
+        <source>Push-Benachrichtigungen, Zeiten und Geräte verwalten.</source>
+      </segment>
+    </unit>
+    <unit id="adminHeaderTitle">
+      <notes>
+        <note category="location">web/src/app/admin/admin-page.component.ts</note>
+      </notes>
+      <segment>
+        <source>Admin-Bereich</source>
+      </segment>
+    </unit>
+    <unit id="adminHeaderSubtitle">
+      <notes>
+        <note category="location">web/src/app/admin/admin-page.component.ts</note>
+      </notes>
+      <segment>
+        <source>Nutzerverwaltung, Feedback und Bereinigungen.</source>
+      </segment>
+    </unit>
   </file>
 </xliff>

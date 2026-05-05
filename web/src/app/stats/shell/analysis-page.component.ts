@@ -19,6 +19,7 @@ import { SetsDistributionComponent } from '../components/sets-distribution/sets-
 import { StatsChartComponent } from '../components/stats-chart/stats-chart.component';
 import { TypePieComponent } from '../components/type-pie/type-pie.component';
 import { AnalysisStore } from '../analysis.store';
+import { PageHeaderComponent } from '../../core/page-header/page-header.component';
 
 @Component({
   selector: 'app-analysis-page',
@@ -30,6 +31,7 @@ import { AnalysisStore } from '../analysis.store';
     DecimalPipe,
     FilterBarComponent,
     HeatmapComponent,
+    PageHeaderComponent,
     PreviewBannerComponent,
     SetsDistributionComponent,
     StatsChartComponent,
@@ -38,6 +40,13 @@ import { AnalysisStore } from '../analysis.store';
   template: `
     <main class="page-wrap">
       <app-preview-banner />
+
+      <app-page-header icon="insights" variant="analysis">
+        <h1 page-title i18n="@@analysisHeaderTitle">Analyse</h1>
+        <p page-subtitle i18n="@@analysisHeaderSubtitle">
+          Trends, Verteilungen und Streaks deines Trainings auf einen Blick.
+        </p>
+      </app-page-header>
 
       <section class="filter-section">
         <app-filter-bar

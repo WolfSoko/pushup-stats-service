@@ -6547,5 +6547,77 @@
         <target>教学与技巧 | Pushup Tracker</target>
       </segment>
     </unit>
+    <unit id="analysisHeaderTitle">
+      <segment state="translated">
+        <source>Analyse</source>
+        <target>分析</target>
+      </segment>
+    </unit>
+    <unit id="analysisHeaderSubtitle">
+      <segment state="translated">
+        <source>Trends, Verteilungen und Streaks deines Trainings auf einen Blick.</source>
+        <target>一目了然查看训练趋势、分布和连胜。</target>
+      </segment>
+    </unit>
+    <unit id="historyHeaderTitle">
+      <segment state="translated">
+        <source>Historie</source>
+        <target>历史</target>
+      </segment>
+    </unit>
+    <unit id="historyHeaderSubtitle">
+      <segment state="translated">
+        <source>Durchsuche, filtere und bearbeite deine Trainingseinträge.</source>
+        <target>搜索、筛选并编辑你的训练记录。</target>
+      </segment>
+    </unit>
+    <unit id="leaderboardHeaderTitle">
+      <segment state="translated">
+        <source>Bestenliste</source>
+        <target>排行榜</target>
+      </segment>
+    </unit>
+    <unit id="leaderboardHeaderSubtitle">
+      <segment state="translated">
+        <source>Heute, letzte 7 Tage und letzte 30 Tage – wer schiebt die meisten Reps?</source>
+        <target>今天、最近 7 天和最近 30 天 — 谁完成的俯卧撑最多？</target>
+      </segment>
+    </unit>
+    <unit id="settingsHeaderTitle">
+      <segment state="translated">
+        <source>Einstellungen</source>
+        <target>设置</target>
+      </segment>
+    </unit>
+    <unit id="settingsHeaderSubtitle">
+      <segment state="translated">
+        <source>Profil, Ziele und Sichtbarkeit nach deinem Geschmack.</source>
+        <target>按你的喜好管理资料、目标和可见性。</target>
+      </segment>
+    </unit>
+    <unit id="remindersHeaderTitle">
+      <segment state="translated">
+        <source>Erinnerungen</source>
+        <target>提醒</target>
+      </segment>
+    </unit>
+    <unit id="remindersHeaderSubtitle">
+      <segment state="translated">
+        <source>Push-Benachrichtigungen, Zeiten und Geräte verwalten.</source>
+        <target>管理推送通知、时间和设备。</target>
+      </segment>
+    </unit>
+    <unit id="adminHeaderTitle">
+      <segment state="translated">
+        <source>Admin-Bereich</source>
+        <target>管理区</target>
+      </segment>
+    </unit>
+    <unit id="adminHeaderSubtitle">
+      <segment state="translated">
+        <source>Nutzerverwaltung, Feedback und Bereinigungen.</source>
+        <target>用户管理、反馈和清理。</target>
+      </segment>
+    </unit>
   </file>
 </xliff>
