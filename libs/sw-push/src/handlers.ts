@@ -103,7 +103,10 @@ interface PushPayload {
 
 function resolveLocale(raw: unknown): SwLocale {
   if (typeof raw !== 'string') return SW_DEFAULT_LOCALE;
-  const primary = raw.toLowerCase().split(/[-_]/)[0];
+  // Trim before splitting so a payload with leading/trailing whitespace
+  // (e.g. " en-US ") still resolves correctly. Aligned with the
+  // server-side `normalizeReminderLocale` in @pu-stats/models.
+  const primary = raw.trim().toLowerCase().split(/[-_]/)[0];
   return (SW_SUPPORTED_LOCALES as ReadonlyArray<string>).includes(primary)
     ? (primary as SwLocale)
     : SW_DEFAULT_LOCALE;

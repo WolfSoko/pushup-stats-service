@@ -223,10 +223,10 @@ export interface NotificationAction {
  * of `sanitizeQuickLogReps` to both call sites.
  */
 export function buildReminderActions(
-  language: string | undefined,
+  rawLocale: string | undefined,
   quickLogReps: number | undefined
 ): NotificationAction[] {
-  const locale = normalizeReminderLocale(language);
+  const locale = normalizeReminderLocale(rawLocale);
   const snooze: NotificationAction = {
     action: 'snooze',
     title: reminderSnoozeLabel(locale),
@@ -263,16 +263,16 @@ export function sanitizeQuickLogReps(
  * falls back to a small per-locale built-in list when the pool is empty
  * (e.g. the user has never opened the app, or the cache expired).
  *
- * @param language Locale primary subtag — anything not in
+ * @param rawLocale Locale primary subtag — anything not in
  *   `SUPPORTED_REMINDER_LOCALES` is normalised to the default.
  * @param pool Optional list of pre-generated quotes for the user's
  *   locale (e.g. flattened tiers from `motivationQuotes/{uid}__{lang}`).
  */
 export function buildNotificationPayload(
-  language?: string,
+  rawLocale?: string,
   pool?: ReadonlyArray<string>
 ): string {
-  const locale = normalizeReminderLocale(language);
+  const locale = normalizeReminderLocale(rawLocale);
   const candidates =
     pool && pool.length > 0 ? pool : reminderBodyChoices(locale);
   return candidates[Math.floor(Math.random() * candidates.length)];

@@ -165,7 +165,7 @@ const QUICK_LOG_LABELS: Record<ReminderLocale, (n: number) => string> = {
   fr: (n) => `✅ Enregistrer ${n}`,
   es: (n) => `✅ Registrar ${n}`,
   it: (n) => `✅ Registra ${n}`,
-  nl: (n) => `✅ Logg ${n}`,
+  nl: (n) => `✅ Registreer ${n}`,
   el: (n) => `✅ Καταχώριση ${n}`,
   la: (n) => `✅ Inscribere ${n}`,
   no: (n) => `✅ Logg ${n}`,
