@@ -15,7 +15,7 @@
 # env says. See the start-ci-run step in the workflow file for the full
 # rationale; this file only declares the agent pool sizes.
 distribute-on:
-  small-changeset: 4 linux-medium-js
-  medium-changeset: 6 linux-medium-js
-  large-changeset: 8 linux-medium-js
-  extra-large-changeset: 10 linux-medium-js
+  small-changeset: 4 linux-large-js
+  medium-changeset: 6 linux-large-js
+  large-changeset: 8 linux-large-js
+  extra-large-changeset: 10 linux-large-js
