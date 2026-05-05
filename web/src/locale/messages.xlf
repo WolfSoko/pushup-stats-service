@@ -5422,6 +5422,14 @@
         <source> Wenn deaktiviert, wird dein Profil in der Bestenliste nicht angezeigt. </source>
       </segment>
     </unit>
+    <unit id="settings.leaderboardRequiresPublicProfile">
+      <notes>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:200,204</note>
+      </notes>
+      <segment>
+        <source> Nur Profile mit aktiviertem Öffentlichen Profil erscheinen in der Bestenliste. Aktiviere unten „Öffentliches Profil“, um diese Option zu nutzen. </source>
+      </segment>
+    </unit>
     <unit id="settings.publicProfile.toggle">
       <notes>
         <note category="location">web/src/app/stats/shell/settings-page.component.ts:203,204</note>

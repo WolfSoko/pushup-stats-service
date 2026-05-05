@@ -3561,6 +3561,12 @@ Deine Position: # ·  Reps        </source>
         <target> If disabled, your profile will not be shown in the leaderboard. </target>
       </segment>
     </unit>
+    <unit id="settings.leaderboardRequiresPublicProfile">
+      <segment state="translated">
+        <source/>
+        <target> Only profiles with Public profile enabled appear on the leaderboard. Enable “Public profile” below to use this option. </target>
+      </segment>
+    </unit>
     <unit id="settingsSubtitle">
       <notes>
         <note category="location">web/src/app/stats/shell/settings-page.component.ts:33,34</note>

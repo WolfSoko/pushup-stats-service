@@ -4887,6 +4887,12 @@
         <target> Εάν είναι απενεργοποιημένο, το προφίλ σας δεν θα εμφανίζεται στον πίνακα κατάταξης. </target>
       </segment>
     </unit>
+    <unit id="settings.leaderboardRequiresPublicProfile">
+      <segment state="translated">
+        <source/>
+        <target> Μόνο τα προφίλ με ενεργοποιημένο το Δημόσιο προφίλ εμφανίζονται στον πίνακα κατάταξης. Ενεργοποίησε παρακάτω το «Δημόσιο προφίλ» για να χρησιμοποιήσεις αυτήν την επιλογή. </target>
+      </segment>
+    </unit>
     <unit id="settings.publicProfile.toggle">
       <notes>
         <note category="location">web/src/app/stats/shell/settings-page.component.ts:103,104</note>

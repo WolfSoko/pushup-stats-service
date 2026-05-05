@@ -3559,6 +3559,12 @@ Deine Position: # ·  Reps        </source>
         <target> Hvis deaktivert, vil profilen din ikke vises på ranglisten. </target>
       </segment>
     </unit>
+    <unit id="settings.leaderboardRequiresPublicProfile">
+      <segment state="translated">
+        <source/>
+        <target> Bare profiler med Offentlig profil aktivert vises på topplisten. Aktiver «Offentlig profil» nedenfor for å bruke dette alternativet. </target>
+      </segment>
+    </unit>
     <unit id="settingsSubtitle">
       <notes>
         <note category="location">web/src/app/stats/shell/settings-page.component.ts:33,34</note>

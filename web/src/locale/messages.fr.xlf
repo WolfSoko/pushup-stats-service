@@ -4887,6 +4887,12 @@
         <target> S'il est désactivé, votre profil n'apparaîtra pas dans le classement. </target>
       </segment>
     </unit>
+    <unit id="settings.leaderboardRequiresPublicProfile">
+      <segment state="translated">
+        <source/>
+        <target> Seuls les profils avec Profil public activé apparaissent dans le classement. Activez « Profil public » ci-dessous pour utiliser cette option. </target>
+      </segment>
+    </unit>
     <unit id="settings.publicProfile.toggle">
       <notes>
         <note category="location">web/src/app/stats/shell/settings-page.component.ts:103,104</note>

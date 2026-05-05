@@ -182,15 +182,29 @@ interface ResolvedConfig {
           <div class="setting-row">
             <mat-slide-toggle
               [checked]="!leaderboardOptOutDraft()"
+              [disabled]="!publicProfileDraft()"
               (change)="leaderboardOptOutDraft.set(!$event.checked)"
+              data-testid="settings-leaderboard-toggle"
               i18n="@@settings.leaderboardOptIn"
             >
               In Bestenliste anzeigen
             </mat-slide-toggle>
-            <p class="muted" i18n="@@settings.leaderboardOptOutHint">
-              Wenn deaktiviert, wird dein Profil in der Bestenliste nicht
-              angezeigt.
-            </p>
+            @if (publicProfileDraft()) {
+              <p class="muted" i18n="@@settings.leaderboardOptOutHint">
+                Wenn deaktiviert, wird dein Profil in der Bestenliste nicht
+                angezeigt.
+              </p>
+            } @else {
+              <p
+                class="muted"
+                data-testid="settings-leaderboard-requires-public-profile"
+                i18n="@@settings.leaderboardRequiresPublicProfile"
+              >
+                Nur Profile mit aktiviertem Öffentlichen Profil erscheinen in
+                der Bestenliste. Aktiviere unten „Öffentliches Profil“, um diese
+                Option zu nutzen.
+              </p>
+            }
           </div>
 
           <div class="setting-row">

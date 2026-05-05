@@ -4887,6 +4887,12 @@
         <target> Si está deshabilitado, su perfil no aparecerá en la tabla de clasificación. </target>
       </segment>
     </unit>
+    <unit id="settings.leaderboardRequiresPublicProfile">
+      <segment state="translated">
+        <source/>
+        <target> Solo los perfiles con Perfil público activado aparecen en la tabla de clasificación. Activa «Perfil público» abajo para usar esta opción. </target>
+      </segment>
+    </unit>
     <unit id="settings.publicProfile.toggle">
       <notes>
         <note category="location">web/src/app/stats/shell/settings-page.component.ts:103,104</note>

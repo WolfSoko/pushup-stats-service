@@ -5465,6 +5465,12 @@
         <source> Wenn deaktiviert, wird dein Profil in der Bestenliste nicht angezeigt. </source>
       <target> 如果禁用，你的资料将不会显示在排行榜中。 </target></segment>
     </unit>
+    <unit id="settings.leaderboardRequiresPublicProfile">
+      <segment state="translated">
+        <source/>
+        <target> 只有启用了「公开档案」的用户才会出现在排行榜上。请在下方启用「公开档案」以使用此选项。 </target>
+      </segment>
+    </unit>
     <unit id="settings.publicProfile.toggle">
       <notes>
         <note category="location">web/src/app/stats/shell/settings-page.component.ts:203,204</note>
