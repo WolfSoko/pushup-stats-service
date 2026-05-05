@@ -6928,5 +6928,77 @@
         <target>Guida e tecnica | Pushup Tracker</target>
       </segment>
     </unit>
+    <unit id="analysisHeaderTitle">
+      <segment state="translated">
+        <source>Analyse</source>
+        <target>Analisi</target>
+      </segment>
+    </unit>
+    <unit id="analysisHeaderSubtitle">
+      <segment state="translated">
+        <source>Trends, Verteilungen und Streaks deines Trainings auf einen Blick.</source>
+        <target>Tendenze, distribuzioni e serie del tuo allenamento a colpo d'occhio.</target>
+      </segment>
+    </unit>
+    <unit id="historyHeaderTitle">
+      <segment state="translated">
+        <source>Historie</source>
+        <target>Cronologia</target>
+      </segment>
+    </unit>
+    <unit id="historyHeaderSubtitle">
+      <segment state="translated">
+        <source>Durchsuche, filtere und bearbeite deine Trainings­einträge.</source>
+        <target>Cerca, filtra e modifica le tue voci di allenamento.</target>
+      </segment>
+    </unit>
+    <unit id="leaderboardHeaderTitle">
+      <segment state="translated">
+        <source>Bestenliste</source>
+        <target>Classifica</target>
+      </segment>
+    </unit>
+    <unit id="leaderboardHeaderSubtitle">
+      <segment state="translated">
+        <source>Heute, letzte 7 Tage und letzte 30 Tage – wer schiebt die meisten Reps?</source>
+        <target>Oggi, ultimi 7 giorni e ultimi 30 giorni: chi fa più reps?</target>
+      </segment>
+    </unit>
+    <unit id="settingsHeaderTitle">
+      <segment state="translated">
+        <source>Einstellungen</source>
+        <target>Impostazioni</target>
+      </segment>
+    </unit>
+    <unit id="settingsHeaderSubtitle">
+      <segment state="translated">
+        <source>Profil, Ziele und Sichtbarkeit nach deinem Geschmack.</source>
+        <target>Profilo, obiettivi e visibilità a tuo piacere.</target>
+      </segment>
+    </unit>
+    <unit id="remindersHeaderTitle">
+      <segment state="translated">
+        <source>Erinnerungen</source>
+        <target>Promemoria</target>
+      </segment>
+    </unit>
+    <unit id="remindersHeaderSubtitle">
+      <segment state="translated">
+        <source>Push-Benachrichtigungen, Zeiten und Geräte verwalten.</source>
+        <target>Gestisci notifiche push, orari e dispositivi.</target>
+      </segment>
+    </unit>
+    <unit id="adminHeaderTitle">
+      <segment state="translated">
+        <source>Admin-Bereich</source>
+        <target>Area admin</target>
+      </segment>
+    </unit>
+    <unit id="adminHeaderSubtitle">
+      <segment state="translated">
+        <source>Nutzerverwaltung, Feedback und Bereinigungen.</source>
+        <target>Gestione utenti, feedback e pulizia.</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

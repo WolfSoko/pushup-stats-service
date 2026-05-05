@@ -6928,5 +6928,77 @@
         <target>Guide &amp; technique | Pushup Tracker</target>
       </segment>
     </unit>
+    <unit id="analysisHeaderTitle">
+      <segment state="translated">
+        <source>Analyse</source>
+        <target>Analyse</target>
+      </segment>
+    </unit>
+    <unit id="analysisHeaderSubtitle">
+      <segment state="translated">
+        <source>Trends, Verteilungen und Streaks deines Trainings auf einen Blick.</source>
+        <target>Tendances, répartitions et séries de votre entraînement en un coup d'œil.</target>
+      </segment>
+    </unit>
+    <unit id="historyHeaderTitle">
+      <segment state="translated">
+        <source>Historie</source>
+        <target>Historique</target>
+      </segment>
+    </unit>
+    <unit id="historyHeaderSubtitle">
+      <segment state="translated">
+        <source>Durchsuche, filtere und bearbeite deine Trainings­einträge.</source>
+        <target>Recherchez, filtrez et modifiez vos entrées d'entraînement.</target>
+      </segment>
+    </unit>
+    <unit id="leaderboardHeaderTitle">
+      <segment state="translated">
+        <source>Bestenliste</source>
+        <target>Classement</target>
+      </segment>
+    </unit>
+    <unit id="leaderboardHeaderSubtitle">
+      <segment state="translated">
+        <source>Heute, letzte 7 Tage und letzte 30 Tage – wer schiebt die meisten Reps?</source>
+        <target>Aujourd'hui, 7 et 30 derniers jours – qui pousse le plus de reps ?</target>
+      </segment>
+    </unit>
+    <unit id="settingsHeaderTitle">
+      <segment state="translated">
+        <source>Einstellungen</source>
+        <target>Paramètres</target>
+      </segment>
+    </unit>
+    <unit id="settingsHeaderSubtitle">
+      <segment state="translated">
+        <source>Profil, Ziele und Sichtbarkeit nach deinem Geschmack.</source>
+        <target>Profil, objectifs et visibilité selon vos envies.</target>
+      </segment>
+    </unit>
+    <unit id="remindersHeaderTitle">
+      <segment state="translated">
+        <source>Erinnerungen</source>
+        <target>Rappels</target>
+      </segment>
+    </unit>
+    <unit id="remindersHeaderSubtitle">
+      <segment state="translated">
+        <source>Push-Benachrichtigungen, Zeiten und Geräte verwalten.</source>
+        <target>Gérer les notifications push, horaires et appareils.</target>
+      </segment>
+    </unit>
+    <unit id="adminHeaderTitle">
+      <segment state="translated">
+        <source>Admin-Bereich</source>
+        <target>Espace admin</target>
+      </segment>
+    </unit>
+    <unit id="adminHeaderSubtitle">
+      <segment state="translated">
+        <source>Nutzerverwaltung, Feedback und Bereinigungen.</source>
+        <target>Gestion des utilisateurs, retours et nettoyage.</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

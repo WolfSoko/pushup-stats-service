@@ -26,6 +26,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { DeleteUserDialogComponent } from './delete-user-dialog.component';
 import { DeleteFeedbackDialogComponent } from './delete-feedback-dialog.component';
 import { UserDetailsDialogComponent } from './user-details-dialog.component';
+import { PageHeaderComponent } from '../core/page-header/page-header.component';
 
 export interface AdminUser {
   uid: string;
@@ -68,10 +69,16 @@ interface AdminFeedback {
     MatTableModule,
     MatTooltipModule,
     MatSlideToggleModule,
+    PageHeaderComponent,
   ],
   template: `
     <div class="admin-page">
-      <h1 i18n="@@admin.title">Admin-Bereich</h1>
+      <app-page-header icon="admin_panel_settings" variant="admin">
+        <h1 page-title i18n="@@adminHeaderTitle">Admin-Bereich</h1>
+        <p page-subtitle i18n="@@adminHeaderSubtitle">
+          Nutzerverwaltung, Feedback und Bereinigungen.
+        </p>
+      </app-page-header>
 
       <!-- Bulk action card -->
       <mat-card class="bulk-card">
