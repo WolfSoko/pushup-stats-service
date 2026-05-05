@@ -14,6 +14,16 @@ import { PageHeaderComponent } from './page-header.component';
 })
 class HostComponent {}
 
+@Component({
+  imports: [PageHeaderComponent],
+  template: `
+    <app-page-header>
+      <h1 page-title>Standard</h1>
+    </app-page-header>
+  `,
+})
+class BareHostComponent {}
+
 describe('PageHeaderComponent', () => {
   it('given a host providing projected slots, when rendered, then projects title, subtitle and actions', async () => {
     await render(HostComponent);
@@ -34,5 +44,16 @@ describe('PageHeaderComponent', () => {
     await render(HostComponent);
     const icon = document.querySelector('.page-header-icon mat-icon');
     expect(icon?.textContent?.trim()).toBe('insights');
+  });
+
+  it('given no icon input, when rendered, then omits the icon span', async () => {
+    await render(BareHostComponent);
+    expect(document.querySelector('.page-header-icon')).toBeNull();
+  });
+
+  it('given no variant input, when rendered, then exposes the default variant', async () => {
+    await render(BareHostComponent);
+    const header = document.querySelector('.page-header');
+    expect(header?.getAttribute('data-variant')).toBe('default');
   });
 });

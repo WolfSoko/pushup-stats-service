@@ -6948,7 +6948,7 @@
     </unit>
     <unit id="historyHeaderSubtitle">
       <segment state="translated">
-        <source>Durchsuche, filtere und bearbeite deine Trainings­einträge.</source>
+        <source>Durchsuche, filtere und bearbeite deine Trainingseinträge.</source>
         <target>Cerca, filtra e modifica le tue voci di allenamento.</target>
       </segment>
     </unit>
@@ -6961,7 +6961,7 @@
     <unit id="leaderboardHeaderSubtitle">
       <segment state="translated">
         <source>Heute, letzte 7 Tage und letzte 30 Tage – wer schiebt die meisten Reps?</source>
-        <target>Oggi, ultimi 7 giorni e ultimi 30 giorni: chi fa più reps?</target>
+        <target>Oggi, ultimi 7 giorni e ultimi 30 giorni: chi fa più ripetizioni?</target>
       </segment>
     </unit>
     <unit id="settingsHeaderTitle">
@@ -6991,7 +6991,7 @@
     <unit id="adminHeaderTitle">
       <segment state="translated">
         <source>Admin-Bereich</source>
-        <target>Area admin</target>
+        <target>Area amministrazione</target>
       </segment>
     </unit>
     <unit id="adminHeaderSubtitle">

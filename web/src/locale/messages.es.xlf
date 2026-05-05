@@ -6948,14 +6948,14 @@
     </unit>
     <unit id="historyHeaderSubtitle">
       <segment state="translated">
-        <source>Durchsuche, filtere und bearbeite deine Trainings­einträge.</source>
+        <source>Durchsuche, filtere und bearbeite deine Trainingseinträge.</source>
         <target>Busca, filtra y edita tus entradas de entrenamiento.</target>
       </segment>
     </unit>
     <unit id="leaderboardHeaderTitle">
       <segment state="translated">
         <source>Bestenliste</source>
-        <target>Clasificación</target>
+        <target>Tabla de clasificación</target>
       </segment>
     </unit>
     <unit id="leaderboardHeaderSubtitle">
@@ -6967,7 +6967,7 @@
     <unit id="settingsHeaderTitle">
       <segment state="translated">
         <source>Einstellungen</source>
-        <target>Ajustes</target>
+        <target>Configuración</target>
       </segment>
     </unit>
     <unit id="settingsHeaderSubtitle">
@@ -6991,7 +6991,7 @@
     <unit id="adminHeaderTitle">
       <segment state="translated">
         <source>Admin-Bereich</source>
-        <target>Área de admin</target>
+        <target>Área de administración</target>
       </segment>
     </unit>
     <unit id="adminHeaderSubtitle">

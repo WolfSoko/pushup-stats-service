@@ -7139,7 +7139,7 @@ Deine Position: # ·  Reps        </source>
     <unit id="analysisHeaderTitle">
       <segment state="translated">
         <source>Analyse</source>
-        <target>Analytics</target>
+        <target>Analysis</target>
       </segment>
     </unit>
     <unit id="analysisHeaderSubtitle">
@@ -7156,7 +7156,7 @@ Deine Position: # ·  Reps        </source>
     </unit>
     <unit id="historyHeaderSubtitle">
       <segment state="translated">
-        <source>Durchsuche, filtere und bearbeite deine Trainings­einträge.</source>
+        <source>Durchsuche, filtere und bearbeite deine Trainingseinträge.</source>
         <target>Search, filter and edit your training entries.</target>
       </segment>
     </unit>
@@ -7199,7 +7199,7 @@ Deine Position: # ·  Reps        </source>
     <unit id="adminHeaderTitle">
       <segment state="translated">
         <source>Admin-Bereich</source>
-        <target>Admin Area</target>
+        <target>Admin Panel</target>
       </segment>
     </unit>
     <unit id="adminHeaderSubtitle">

@@ -6948,14 +6948,14 @@
     </unit>
     <unit id="historyHeaderSubtitle">
       <segment state="translated">
-        <source>Durchsuche, filtere und bearbeite deine Trainings­einträge.</source>
+        <source>Durchsuche, filtere und bearbeite deine Trainingseinträge.</source>
         <target>Doorzoek, filter en bewerk je trainingsinvoer.</target>
       </segment>
     </unit>
     <unit id="leaderboardHeaderTitle">
       <segment state="translated">
         <source>Bestenliste</source>
-        <target>Ranglijst</target>
+        <target>Leiderbord</target>
       </segment>
     </unit>
     <unit id="leaderboardHeaderSubtitle">
@@ -6991,7 +6991,7 @@
     <unit id="adminHeaderTitle">
       <segment state="translated">
         <source>Admin-Bereich</source>
-        <target>Admin-gebied</target>
+        <target>Beheergedeelte</target>
       </segment>
     </unit>
     <unit id="adminHeaderSubtitle">

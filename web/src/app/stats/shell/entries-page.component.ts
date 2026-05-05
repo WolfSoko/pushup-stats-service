@@ -26,7 +26,7 @@ import { PageHeaderComponent } from '../../core/page-header/page-header.componen
       <app-page-header icon="history" variant="history">
         <h1 page-title i18n="@@historyHeaderTitle">Historie</h1>
         <p page-subtitle i18n="@@historyHeaderSubtitle">
-          Durchsuche, filtere und bearbeite deine Trainings­einträge.
+          Durchsuche, filtere und bearbeite deine Trainingseinträge.
         </p>
       </app-page-header>
       <mat-card>
