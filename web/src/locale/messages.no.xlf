@@ -7228,5 +7228,149 @@ Deine Position: # ·  Reps        </source>
         <target>Brukerstyring, tilbakemeldinger og opprydding.</target>
       </segment>
     </unit>
+    <unit id="leaderboard.visibilityHint">
+      <segment state="translated">
+        <source/>
+        <target> Endre synlighet eller visningsnavn? </target>
+      </segment>
+    </unit>
+    <unit id="leaderboard.visibilityHint.cta">
+      <segment state="translated">
+        <source/>
+        <target>Åpne innstillinger</target>
+      </segment>
+    </unit>
+    <unit id="leaderboard.loginHint">
+      <segment state="translated">
+        <source/>
+        <target> Bli med og vis deg? </target>
+      </segment>
+    </unit>
+    <unit id="leaderboard.loginHint.cta">
+      <segment state="translated">
+        <source/>
+        <target>Logg inn</target>
+      </segment>
+    </unit>
+    <unit id="analysis.empty.title">
+      <segment state="translated">
+        <source/>
+        <target>Ingen data å analysere ennå.</target>
+      </segment>
+    </unit>
+    <unit id="analysis.empty.body">
+      <segment state="translated">
+        <source/>
+        <target> Start en treningsplan eller logg ditt første sett — vi viser trender og rekker her. </target>
+      </segment>
+    </unit>
+    <unit id="analysis.empty.cta">
+      <segment state="translated">
+        <source/>
+        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">fitness_center</pc> Velg treningsplan </target>
+      </segment>
+    </unit>
+    <unit id="entries.empty.title">
+      <segment state="translated">
+        <source/>
+        <target>Ingen oppføringer ennå.</target>
+      </segment>
+    </unit>
+    <unit id="entries.empty.body">
+      <segment state="translated">
+        <source/>
+        <target> Logg ditt første sett pushups — historikken vises her. </target>
+      </segment>
+    </unit>
+    <unit id="entries.empty.cta">
+      <segment state="translated">
+        <source/>
+        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">add</pc> Lag oppføring </target>
+      </segment>
+    </unit>
+    <unit id="settings.displayNameHint.leaderboardLink">
+      <segment state="translated">
+        <source/>
+        <target>Til topplisten</target>
+      </segment>
+    </unit>
+    <unit id="settings.publicProfile.previewCta">
+      <segment state="translated">
+        <source/>
+        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">visibility</pc> Forhåndsvisning</target>
+      </segment>
+    </unit>
+    <unit id="settings.goals.planOverrideHint">
+      <segment state="translated">
+        <source/>
+        <target> En aktiv treningsplan setter dagsmålet ditt automatisk. Manuelle verdier gjelder først etter at planen er ferdig. </target>
+      </segment>
+    </unit>
+    <unit id="settings.goals.openActivePlan">
+      <segment state="translated">
+        <source/>
+        <target>Åpne aktiv plan</target>
+      </segment>
+    </unit>
+    <unit id="settings.adsConsent.privacyLink">
+      <segment state="translated">
+        <source/>
+        <target>Personvernerklæring</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.noPlanTitle">
+      <segment state="translated">
+        <source/>
+        <target>Ingen aktiv treningsplan ennå</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.noPlanSubtitle">
+      <segment state="translated">
+        <source/>
+        <target> Velg en plan for å sette dagsmålet ditt automatisk. </target>
+      </segment>
+    </unit>
+    <unit id="dashboard.noPlanCta">
+      <segment state="translated">
+        <source/>
+        <target> Velg plan </target>
+      </segment>
+    </unit>
+    <unit id="dashboard.goalEditAria">
+      <segment state="translated">
+        <source/>
+        <target>Åpne dagsmål i innstillinger</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.lastEntryLinkAria">
+      <segment state="translated">
+        <source/>
+        <target>Åpne siste oppføring i historikken</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.allTimeBadgesLinkAria">
+      <segment state="translated">
+        <source/>
+        <target>Gå til analyse</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.allTimeBadges.cta">
+      <segment state="translated">
+        <source/>
+        <target>Til analyse</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.goalOverrideHint">
+      <segment state="translated">
+        <source/>
+        <target> Dagsmålet settes av planen. </target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.goalOverrideHint.cta">
+      <segment state="translated">
+        <source/>
+        <target>Juster manuelle mål</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

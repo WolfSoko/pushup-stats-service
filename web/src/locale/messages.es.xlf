@@ -7006,5 +7006,149 @@
         <target>Gestión de usuarios, comentarios y limpieza.</target>
       </segment>
     </unit>
+    <unit id="leaderboard.visibilityHint">
+      <segment state="translated">
+        <source/>
+        <target> ¿Cambiar la visibilidad o el nombre? </target>
+      </segment>
+    </unit>
+    <unit id="leaderboard.visibilityHint.cta">
+      <segment state="translated">
+        <source/>
+        <target>Abrir ajustes</target>
+      </segment>
+    </unit>
+    <unit id="leaderboard.loginHint">
+      <segment state="translated">
+        <source/>
+        <target> ¿Participar y aparecer? </target>
+      </segment>
+    </unit>
+    <unit id="leaderboard.loginHint.cta">
+      <segment state="translated">
+        <source/>
+        <target>Iniciar sesión</target>
+      </segment>
+    </unit>
+    <unit id="analysis.empty.title">
+      <segment state="translated">
+        <source/>
+        <target>Aún no hay datos para analizar.</target>
+      </segment>
+    </unit>
+    <unit id="analysis.empty.body">
+      <segment state="translated">
+        <source/>
+        <target> Inicia un plan de entrenamiento o registra tu primera serie y mostraremos tendencias y rachas aquí. </target>
+      </segment>
+    </unit>
+    <unit id="analysis.empty.cta">
+      <segment state="translated">
+        <source/>
+        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">fitness_center</pc> Elegir plan de entrenamiento </target>
+      </segment>
+    </unit>
+    <unit id="entries.empty.title">
+      <segment state="translated">
+        <source/>
+        <target>Aún no hay entradas.</target>
+      </segment>
+    </unit>
+    <unit id="entries.empty.body">
+      <segment state="translated">
+        <source/>
+        <target> Registra tu primera serie de flexiones y tu historial aparecerá aquí. </target>
+      </segment>
+    </unit>
+    <unit id="entries.empty.cta">
+      <segment state="translated">
+        <source/>
+        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">add</pc> Crear entrada </target>
+      </segment>
+    </unit>
+    <unit id="settings.displayNameHint.leaderboardLink">
+      <segment state="translated">
+        <source/>
+        <target>Ver la clasificación</target>
+      </segment>
+    </unit>
+    <unit id="settings.publicProfile.previewCta">
+      <segment state="translated">
+        <source/>
+        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">visibility</pc> Vista previa</target>
+      </segment>
+    </unit>
+    <unit id="settings.goals.planOverrideHint">
+      <segment state="translated">
+        <source/>
+        <target> Un plan de entrenamiento activo establece tu objetivo diario automáticamente. Los valores manuales solo se aplican al finalizar el plan. </target>
+      </segment>
+    </unit>
+    <unit id="settings.goals.openActivePlan">
+      <segment state="translated">
+        <source/>
+        <target>Abrir plan activo</target>
+      </segment>
+    </unit>
+    <unit id="settings.adsConsent.privacyLink">
+      <segment state="translated">
+        <source/>
+        <target>Política de privacidad</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.noPlanTitle">
+      <segment state="translated">
+        <source/>
+        <target>Aún no hay un plan de entrenamiento activo</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.noPlanSubtitle">
+      <segment state="translated">
+        <source/>
+        <target> Elige un plan para que tu objetivo diario se fije automáticamente. </target>
+      </segment>
+    </unit>
+    <unit id="dashboard.noPlanCta">
+      <segment state="translated">
+        <source/>
+        <target> Elegir plan </target>
+      </segment>
+    </unit>
+    <unit id="dashboard.goalEditAria">
+      <segment state="translated">
+        <source/>
+        <target>Abrir el objetivo diario en ajustes</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.lastEntryLinkAria">
+      <segment state="translated">
+        <source/>
+        <target>Abrir la última entrada en el historial</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.allTimeBadgesLinkAria">
+      <segment state="translated">
+        <source/>
+        <target>Ir al análisis</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.allTimeBadges.cta">
+      <segment state="translated">
+        <source/>
+        <target>Al análisis</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.goalOverrideHint">
+      <segment state="translated">
+        <source/>
+        <target> El objetivo diario lo establece el plan. </target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.goalOverrideHint.cta">
+      <segment state="translated">
+        <source/>
+        <target>Ajustar objetivos manuales</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

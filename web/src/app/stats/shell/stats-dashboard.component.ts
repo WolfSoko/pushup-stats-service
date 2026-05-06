@@ -114,6 +114,15 @@ export class StatsDashboardComponent {
   readonly planDayIndex = this.store.planDayIndex;
   readonly planTotalDays = this.store.planTotalDays;
   private readonly trainingPlans = inject(TrainingPlanStore);
+  /**
+   * Only render the "no active plan" banner once the plan resource has
+   * actually resolved. Otherwise users with an active plan see a
+   * misleading "Pick a plan" CTA flicker on every cold load while the
+   * Firestore listener is still hydrating.
+   */
+  readonly showNoPlanBanner = computed(
+    () => this.trainingPlans.activePlanLoaded() && !this.planActive()
+  );
   /** Plan title in the active locale. Falls back to '' when no plan. */
   readonly planTitle = computed(
     () => this.trainingPlans.activeCatalog()?.title ?? ''

@@ -98,7 +98,7 @@
         </div>
       </mat-card-content>
     </mat-card>
-  } @else {
+  } @else if (showNoPlanBanner()) {
     <mat-card class="plan-banner plan-banner--empty">
       <mat-card-content>
         <div class="plan-banner-row">
@@ -201,7 +201,7 @@
       data-testid="dashboard-last-entry-link"
       (click)="navigateToHistory()"
       (keydown.enter)="navigateToHistory()"
-      (keyup.space)="navigateToHistory(); $event.preventDefault()"
+      (keydown.space)="navigateToHistory(); $event.preventDefault()"
       aria-label="Letzten Eintrag in der Historie öffnen"
       i18n-aria-label="@@dashboard.lastEntryLinkAria"
     >

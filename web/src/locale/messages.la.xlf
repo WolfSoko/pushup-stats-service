@@ -7006,5 +7006,149 @@
         <target>Administratio utentium, sententiae et purgationes.</target>
       </segment>
     </unit>
+    <unit id="leaderboard.visibilityHint">
+      <segment state="translated">
+        <source/>
+        <target> Visibilitatem aut nomen ostensum mutare? </target>
+      </segment>
+    </unit>
+    <unit id="leaderboard.visibilityHint.cta">
+      <segment state="translated">
+        <source/>
+        <target>Optiones aperire</target>
+      </segment>
+    </unit>
+    <unit id="leaderboard.loginHint">
+      <segment state="translated">
+        <source/>
+        <target> Particeps fieri et hic apparere? </target>
+      </segment>
+    </unit>
+    <unit id="leaderboard.loginHint.cta">
+      <segment state="translated">
+        <source/>
+        <target>Inscribere</target>
+      </segment>
+    </unit>
+    <unit id="analysis.empty.title">
+      <segment state="translated">
+        <source/>
+        <target>Nulla data ad analysim adhuc.</target>
+      </segment>
+    </unit>
+    <unit id="analysis.empty.body">
+      <segment state="translated">
+        <source/>
+        <target> Exercitii consilium incipe vel primum gradum tuum inscribe — tendentias et seriem hic ostendemus. </target>
+      </segment>
+    </unit>
+    <unit id="analysis.empty.cta">
+      <segment state="translated">
+        <source/>
+        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">fitness_center</pc> Exercitii consilium eligere </target>
+      </segment>
+    </unit>
+    <unit id="entries.empty.title">
+      <segment state="translated">
+        <source/>
+        <target>Nullae inscriptiones adhuc.</target>
+      </segment>
+    </unit>
+    <unit id="entries.empty.body">
+      <segment state="translated">
+        <source/>
+        <target> Primum gradum flexionum tuum inscribe — historia tua hic apparebit. </target>
+      </segment>
+    </unit>
+    <unit id="entries.empty.cta">
+      <segment state="translated">
+        <source/>
+        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">add</pc> Inscriptionem creare </target>
+      </segment>
+    </unit>
+    <unit id="settings.displayNameHint.leaderboardLink">
+      <segment state="translated">
+        <source/>
+        <target>Ad tabulam victorum</target>
+      </segment>
+    </unit>
+    <unit id="settings.publicProfile.previewCta">
+      <segment state="translated">
+        <source/>
+        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">visibility</pc> Praevisus</target>
+      </segment>
+    </unit>
+    <unit id="settings.goals.planOverrideHint">
+      <segment state="translated">
+        <source/>
+        <target> Activum exercitii consilium propositum diurnum sponte ponit. Valores manuales solum post finem consilii valent. </target>
+      </segment>
+    </unit>
+    <unit id="settings.goals.openActivePlan">
+      <segment state="translated">
+        <source/>
+        <target>Activum consilium aperire</target>
+      </segment>
+    </unit>
+    <unit id="settings.adsConsent.privacyLink">
+      <segment state="translated">
+        <source/>
+        <target>Declaratio confidentiae</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.noPlanTitle">
+      <segment state="translated">
+        <source/>
+        <target>Nullum exercitii consilium activum</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.noPlanSubtitle">
+      <segment state="translated">
+        <source/>
+        <target> Elige consilium ut propositum diurnum tuum sponte ponatur. </target>
+      </segment>
+    </unit>
+    <unit id="dashboard.noPlanCta">
+      <segment state="translated">
+        <source/>
+        <target> Consilium eligere </target>
+      </segment>
+    </unit>
+    <unit id="dashboard.goalEditAria">
+      <segment state="translated">
+        <source/>
+        <target>Propositum diurnum in optionibus aperire</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.lastEntryLinkAria">
+      <segment state="translated">
+        <source/>
+        <target>Ultimam inscriptionem in historia aperire</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.allTimeBadgesLinkAria">
+      <segment state="translated">
+        <source/>
+        <target>Ad analysim navigare</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.allTimeBadges.cta">
+      <segment state="translated">
+        <source/>
+        <target>Ad analysim</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.goalOverrideHint">
+      <segment state="translated">
+        <source/>
+        <target> Propositum diurnum a consilio ponitur. </target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.goalOverrideHint.cta">
+      <segment state="translated">
+        <source/>
+        <target>Proposita manualia aptare</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

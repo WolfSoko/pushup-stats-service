@@ -6619,5 +6619,149 @@
         <target>用户管理、反馈和清理。</target>
       </segment>
     </unit>
+    <unit id="leaderboard.visibilityHint">
+      <segment state="translated">
+        <source/>
+        <target> 想修改可见性或显示名称？ </target>
+      </segment>
+    </unit>
+    <unit id="leaderboard.visibilityHint.cta">
+      <segment state="translated">
+        <source/>
+        <target>打开设置</target>
+      </segment>
+    </unit>
+    <unit id="leaderboard.loginHint">
+      <segment state="translated">
+        <source/>
+        <target> 想参与并出现在这里？ </target>
+      </segment>
+    </unit>
+    <unit id="leaderboard.loginHint.cta">
+      <segment state="translated">
+        <source/>
+        <target>登录</target>
+      </segment>
+    </unit>
+    <unit id="analysis.empty.title">
+      <segment state="translated">
+        <source/>
+        <target>还没有可分析的数据。</target>
+      </segment>
+    </unit>
+    <unit id="analysis.empty.body">
+      <segment state="translated">
+        <source/>
+        <target> 启动训练计划或记录第一组——我们会在这里显示趋势和连续记录。 </target>
+      </segment>
+    </unit>
+    <unit id="analysis.empty.cta">
+      <segment state="translated">
+        <source/>
+        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">fitness_center</pc> 选择训练计划 </target>
+      </segment>
+    </unit>
+    <unit id="entries.empty.title">
+      <segment state="translated">
+        <source/>
+        <target>还没有记录。</target>
+      </segment>
+    </unit>
+    <unit id="entries.empty.body">
+      <segment state="translated">
+        <source/>
+        <target> 记录你的第一组俯卧撑——历史记录就会显示在这里。 </target>
+      </segment>
+    </unit>
+    <unit id="entries.empty.cta">
+      <segment state="translated">
+        <source/>
+        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">add</pc> 创建记录 </target>
+      </segment>
+    </unit>
+    <unit id="settings.displayNameHint.leaderboardLink">
+      <segment state="translated">
+        <source/>
+        <target>查看排行榜</target>
+      </segment>
+    </unit>
+    <unit id="settings.publicProfile.previewCta">
+      <segment state="translated">
+        <source/>
+        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">visibility</pc> 预览</target>
+      </segment>
+    </unit>
+    <unit id="settings.goals.planOverrideHint">
+      <segment state="translated">
+        <source/>
+        <target> 活动的训练计划会自动设定每日目标。手动值仅在计划结束后生效。 </target>
+      </segment>
+    </unit>
+    <unit id="settings.goals.openActivePlan">
+      <segment state="translated">
+        <source/>
+        <target>打开活动计划</target>
+      </segment>
+    </unit>
+    <unit id="settings.adsConsent.privacyLink">
+      <segment state="translated">
+        <source/>
+        <target>隐私声明</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.noPlanTitle">
+      <segment state="translated">
+        <source/>
+        <target>尚无活动训练计划</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.noPlanSubtitle">
+      <segment state="translated">
+        <source/>
+        <target> 选择一个计划，让每日目标自动设定。 </target>
+      </segment>
+    </unit>
+    <unit id="dashboard.noPlanCta">
+      <segment state="translated">
+        <source/>
+        <target> 选择计划 </target>
+      </segment>
+    </unit>
+    <unit id="dashboard.goalEditAria">
+      <segment state="translated">
+        <source/>
+        <target>在设置中打开每日目标</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.lastEntryLinkAria">
+      <segment state="translated">
+        <source/>
+        <target>在历史记录中打开最后一条记录</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.allTimeBadgesLinkAria">
+      <segment state="translated">
+        <source/>
+        <target>前往分析</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.allTimeBadges.cta">
+      <segment state="translated">
+        <source/>
+        <target>查看分析</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.goalOverrideHint">
+      <segment state="translated">
+        <source/>
+        <target> 每日目标由计划设定。 </target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.goalOverrideHint.cta">
+      <segment state="translated">
+        <source/>
+        <target>调整手动目标</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

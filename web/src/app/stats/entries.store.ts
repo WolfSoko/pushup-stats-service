@@ -76,6 +76,18 @@ export const EntriesStore = signalStore(
         ? store._live.entries()
         : (store._entriesResource.value() ?? [])
     ),
+    /**
+     * True once the entries data source has produced its first result.
+     * In the browser this gates on the live Firestore listener (which
+     * starts with an empty array before the first snapshot arrives,
+     * so an unguarded empty-state CTA flickers on every cold load).
+     * On the server it gates on the REST resource resolving.
+     */
+    entriesLoaded: computed(() =>
+      store._isBrowser
+        ? store._live.connected()
+        : store._entriesResource.status() === 'resolved'
+    ),
   })),
   withComputed((store) => ({
     sourceOptions: computed(() =>

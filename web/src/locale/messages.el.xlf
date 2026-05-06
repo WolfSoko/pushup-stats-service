@@ -7006,5 +7006,149 @@
         <target>Διαχείριση χρηστών, σχόλια και καθαρισμοί.</target>
       </segment>
     </unit>
+    <unit id="leaderboard.visibilityHint">
+      <segment state="translated">
+        <source/>
+        <target> Αλλαγή ορατότητας ή ονόματος εμφάνισης; </target>
+      </segment>
+    </unit>
+    <unit id="leaderboard.visibilityHint.cta">
+      <segment state="translated">
+        <source/>
+        <target>Άνοιγμα ρυθμίσεων</target>
+      </segment>
+    </unit>
+    <unit id="leaderboard.loginHint">
+      <segment state="translated">
+        <source/>
+        <target> Συμμετοχή και εμφάνιση εδώ; </target>
+      </segment>
+    </unit>
+    <unit id="leaderboard.loginHint.cta">
+      <segment state="translated">
+        <source/>
+        <target>Σύνδεση</target>
+      </segment>
+    </unit>
+    <unit id="analysis.empty.title">
+      <segment state="translated">
+        <source/>
+        <target>Δεν υπάρχουν ακόμη δεδομένα για ανάλυση.</target>
+      </segment>
+    </unit>
+    <unit id="analysis.empty.body">
+      <segment state="translated">
+        <source/>
+        <target> Ξεκίνα ένα πρόγραμμα προπόνησης ή κατέγραψε την πρώτη σου σειρά — θα εμφανιστούν εδώ τάσεις και σερί. </target>
+      </segment>
+    </unit>
+    <unit id="analysis.empty.cta">
+      <segment state="translated">
+        <source/>
+        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">fitness_center</pc> Επιλογή προγράμματος προπόνησης </target>
+      </segment>
+    </unit>
+    <unit id="entries.empty.title">
+      <segment state="translated">
+        <source/>
+        <target>Δεν υπάρχουν ακόμη καταχωρήσεις.</target>
+      </segment>
+    </unit>
+    <unit id="entries.empty.body">
+      <segment state="translated">
+        <source/>
+        <target> Καταχώρησε την πρώτη σου σειρά push-ups — το ιστορικό σου θα εμφανιστεί εδώ. </target>
+      </segment>
+    </unit>
+    <unit id="entries.empty.cta">
+      <segment state="translated">
+        <source/>
+        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">add</pc> Δημιουργία καταχώρησης </target>
+      </segment>
+    </unit>
+    <unit id="settings.displayNameHint.leaderboardLink">
+      <segment state="translated">
+        <source/>
+        <target>Προς τον πίνακα κατάταξης</target>
+      </segment>
+    </unit>
+    <unit id="settings.publicProfile.previewCta">
+      <segment state="translated">
+        <source/>
+        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">visibility</pc> Προεπισκόπηση</target>
+      </segment>
+    </unit>
+    <unit id="settings.goals.planOverrideHint">
+      <segment state="translated">
+        <source/>
+        <target> Ένα ενεργό πρόγραμμα προπόνησης ορίζει αυτόματα τον ημερήσιο στόχο σου. Οι χειροκίνητες τιμές ισχύουν μόνο μετά τη λήξη του προγράμματος. </target>
+      </segment>
+    </unit>
+    <unit id="settings.goals.openActivePlan">
+      <segment state="translated">
+        <source/>
+        <target>Άνοιγμα ενεργού προγράμματος</target>
+      </segment>
+    </unit>
+    <unit id="settings.adsConsent.privacyLink">
+      <segment state="translated">
+        <source/>
+        <target>Πολιτική απορρήτου</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.noPlanTitle">
+      <segment state="translated">
+        <source/>
+        <target>Δεν υπάρχει ακόμη ενεργό πρόγραμμα προπόνησης</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.noPlanSubtitle">
+      <segment state="translated">
+        <source/>
+        <target> Επίλεξε ένα πρόγραμμα για να οριστεί αυτόματα ο ημερήσιος στόχος σου. </target>
+      </segment>
+    </unit>
+    <unit id="dashboard.noPlanCta">
+      <segment state="translated">
+        <source/>
+        <target> Επιλογή προγράμματος </target>
+      </segment>
+    </unit>
+    <unit id="dashboard.goalEditAria">
+      <segment state="translated">
+        <source/>
+        <target>Άνοιγμα ημερήσιου στόχου στις ρυθμίσεις</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.lastEntryLinkAria">
+      <segment state="translated">
+        <source/>
+        <target>Άνοιγμα τελευταίας καταχώρησης στο ιστορικό</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.allTimeBadgesLinkAria">
+      <segment state="translated">
+        <source/>
+        <target>Μετάβαση στην ανάλυση</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.allTimeBadges.cta">
+      <segment state="translated">
+        <source/>
+        <target>Στην ανάλυση</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.goalOverrideHint">
+      <segment state="translated">
+        <source/>
+        <target> Ο ημερήσιος στόχος ορίζεται από το πρόγραμμα. </target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.goalOverrideHint.cta">
+      <segment state="translated">
+        <source/>
+        <target>Προσαρμογή χειροκίνητων στόχων</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

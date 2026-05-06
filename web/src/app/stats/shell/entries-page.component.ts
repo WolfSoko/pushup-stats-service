@@ -131,7 +131,7 @@ import { PageHeaderComponent } from '../../core/page-header/page-header.componen
         (remove)="store.deleteEntry($event)"
       />
 
-      @if (!store.rows().length) {
+      @if (store.entriesLoaded() && !store.rows().length) {
         <mat-card class="empty-cta" data-testid="entries-empty-cta">
           <mat-card-content>
             <mat-icon>fitness_center</mat-icon>
