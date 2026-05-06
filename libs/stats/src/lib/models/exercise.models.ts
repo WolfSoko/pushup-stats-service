@@ -218,23 +218,33 @@ export function requiredCompanionFields(
  *
  * Validation rules:
  *   - The value field expected by `def.measurement` must be present and a
- *     finite integer in `[def.min, def.max]`.
+ *     finite integer in `[def.min, def.max]` (skipped when `partial` is
+ *     true, e.g. for an `updateEntry()` patch that only changes the variant).
  *   - Companion fields declared in {@link COMPANION_FIELDS} for the
  *     measurement may also be present (e.g. `durationSec` for distance,
  *     `weightKg` for weighted sets). All other measurement value fields
  *     are rejected as `wrong-measurement-field`.
- *   - Companions in {@link REQUIRED_COMPANIONS} must be present.
- *   - Companion values are validated against their own per-field bounds
- *     in {@link COMPANION_BOUNDS}.
+ *   - Companions in {@link REQUIRED_COMPANIONS} must be present (skipped
+ *     when `partial` is true).
+ *   - Companion values, when present, are validated against their own
+ *     per-field bounds in {@link COMPANION_BOUNDS}.
  *   - `variantId`, if set, must reference one of `def.variants[].id`.
+ *
+ * Why a `partial` mode: `ExerciseFirestoreService.updateEntry()` ships
+ * patches that may only change a single field (e.g. `variantId`).
+ * Requiring the primary measurement value on every patch would force the
+ * caller to refetch the document just to satisfy the validator —
+ * breaking the cheap-update contract.
  */
 export function validateExerciseEntry(
   entry: Pick<
     ExerciseEntry,
     'reps' | 'durationSec' | 'distanceM' | 'weightKg' | 'variantId'
   >,
-  def: Pick<ExerciseDefinition, 'measurement' | 'min' | 'max' | 'variants'>
+  def: Pick<ExerciseDefinition, 'measurement' | 'min' | 'max' | 'variants'>,
+  options?: { partial?: boolean }
 ): ExerciseEntryViolation | null {
+  const partial = options?.partial === true;
   const expectedField = measurementValueField(def.measurement);
   const allowedCompanions = COMPANION_FIELDS[def.measurement];
   const allFields: ReadonlyArray<MeasurementValueField> = [
@@ -252,21 +262,24 @@ export function validateExerciseEntry(
   }
   const value = entry[expectedField];
   if (value === undefined || value === null) {
-    return 'measurement-value-missing';
+    if (!partial) return 'measurement-value-missing';
+  } else {
+    if (
+      typeof value !== 'number' ||
+      !Number.isFinite(value) ||
+      !Number.isInteger(value)
+    ) {
+      return 'measurement-value-not-integer';
+    }
+    if (value < def.min || value > def.max) {
+      return 'measurement-value-out-of-range';
+    }
   }
-  if (
-    typeof value !== 'number' ||
-    !Number.isFinite(value) ||
-    !Number.isInteger(value)
-  ) {
-    return 'measurement-value-not-integer';
-  }
-  if (value < def.min || value > def.max) {
-    return 'measurement-value-out-of-range';
-  }
-  for (const f of REQUIRED_COMPANIONS[def.measurement]) {
-    if (entry[f] === undefined || entry[f] === null) {
-      return 'companion-value-missing';
+  if (!partial) {
+    for (const f of REQUIRED_COMPANIONS[def.measurement]) {
+      if (entry[f] === undefined || entry[f] === null) {
+        return 'companion-value-missing';
+      }
     }
   }
   for (const f of allowedCompanions) {

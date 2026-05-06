@@ -218,6 +218,41 @@ describe('ExerciseFirestoreService', () => {
         )
       ).rejects.toThrow(/out-of-range/);
     });
+
+    it('rejects payloads that try to change the exerciseId', async () => {
+      await expect(
+        firstValueFrom(
+          service.updateEntry('s1', 'abs.situps', {
+            exerciseId: 'legs.squats',
+          })
+        )
+      ).rejects.toBeInstanceOf(ExerciseValidationError);
+    });
+
+    it('strips a pass-through exerciseId that matches the stored value', async () => {
+      const updateSpy = jest.spyOn(firestoreFns, 'updateDoc');
+      await firstValueFrom(
+        service.updateEntry('s1', 'abs.situps', {
+          exerciseId: 'abs.situps',
+          source: 'mobile',
+        })
+      );
+      const patch = updateSpy.mock.calls[0]?.[1] as Record<string, unknown>;
+      expect(patch['exerciseId']).toBeUndefined();
+      expect(patch['source']).toBe('mobile');
+    });
+
+    it('uses partial validation so a variantId-only update is allowed', async () => {
+      // The exercise definition for sit-ups currently has no variants,
+      // so an unknown variantId still fails — but an empty string (the
+      // sentinel for "no variant") must pass without requiring a reps
+      // value in the patch.
+      const updateSpy = jest.spyOn(firestoreFns, 'updateDoc');
+      await firstValueFrom(
+        service.updateEntry('s1', 'abs.situps', { variantId: '' })
+      );
+      expect(updateSpy).toHaveBeenCalledTimes(1);
+    });
   });
 
   describe('deleteEntry', () => {

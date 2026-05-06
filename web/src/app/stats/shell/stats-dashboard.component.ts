@@ -22,6 +22,7 @@ import { LiveDataStore, StatsApiService } from '@pu-stats/data-access';
 import {
   appendLocalOffset,
   displayPushupType,
+  EXERCISE_CATEGORIES,
   PushupRecord,
   QUICK_LOG_REPS_MAX,
   QUICK_LOG_REPS_MIN,
@@ -34,10 +35,7 @@ import { AdSlotComponent } from '@pu-stats/ads';
 import { AnalysisTeaserCardComponent } from '../components/analysis-teaser-card/analysis-teaser-card.component';
 import { PreviewBannerComponent } from '../components/preview-banner/preview-banner.component';
 import { StatsTableComponent } from '../components/stats-table/stats-table.component';
-import {
-  EXERCISE_CATEGORIES,
-  ExerciseCategorySectionComponent,
-} from '../components/exercise-category-section/exercise-category-section.component';
+import { ExerciseCategorySectionComponent } from '../components/exercise-category-section/exercise-category-section.component';
 import {
   CreateEntryDialogComponent,
   CreateEntryResult,

@@ -113,7 +113,7 @@ export interface ExerciseEntry {
 **Migration-Strategie**
 
 Cloud-Function-Backfill: Liest alle `pushups/*` Docs, schreibt sie 1:1 nach
-`exerciseEntries/*` mit `exerciseId='pushup'` und `variantType=type`. Die alte
+`exerciseEntries/*` mit `exerciseId='pushup'` und `variantId=type`. Die alte
 Collection bleibt **read-only** als Fallback bestehen, bis alle Klienten auf
 neuem Schema lesen. Nach n Tagen: alte Collection löschen, Rule entfernen.
 
@@ -253,6 +253,34 @@ Measurement:
 Caps liegen aktuell hartcodiert in `COMPANION_BOUNDS` (z. B. `weightKg`
 0.25..500 mit Fließkomma für 2.5-kg-Inkremente, `durationSec` 1..86 400).
 In Phase 4 (Custom-Übungen) wandern sie in `ExerciseDefinition`.
+
+## Aufgeschobene Folgearbeiten (aus PR #289 Review)
+
+Punkte, die im Phase-0-PR identifiziert, aber bewusst nicht direkt
+gefixt wurden, weil ihr Aufwand den Tracer-Bullet sprengen würde:
+
+- **Cloud-Function-Tests für `updateExerciseStatsOnEntryWrite`.** Die
+  bestehenden Branches (first-create rebuild, version upgrade,
+  timestamp-changed move, normaler Delta-Pfad, missing-doc rebuild)
+  sind durch die Tests von `applyDelta` / `rebuildFromEntries` indirekt
+  abgedeckt, aber dieser Trigger braucht eigene Tests, sobald Phase 1+
+  weitere Measurement-Typen ergänzt.
+- **Component-Tests für `ExerciseCategorySectionComponent`.** Der
+  `summaries()`-Compute und der `openDialog()`-Erfolgs-/Fehlerpfad
+  sollten Tests bekommen, sobald die Sektion mehr als reine Read+Add-
+  Logik enthält (Streaks, Filter, Charts).
+- **Per-Index-`aria-label`s im Eintrag-Dialog.** "Set 2 entfernen" /
+  "Set 2 hinzufügen" statt der heute generischen Labels braucht eine
+  ICU-MessageFormat-i18n-Erweiterung über alle 9 Locales — kein
+  funktionaler Fix.
+- **Codegen für Catalog-Caps ↔ Firestore-Rule.** Heute pflegen wir die
+  reps-Caps an zwei Stellen (Catalog + Rule). Sobald Phase 4 (Custom-
+  Übungen) variable Caps einführt, brauchen wir entweder eine
+  generierte Rule oder eine Build-Time-Assertion.
+- **Generische Anzeige-Logik in der Section.** `totalReps30d` und
+  `last.reps` setzen Phase-0-Reps-only voraus. Wenn Phase 1 (Plank /
+  Time) landet, muss die Sektion via `measurementValueField()` die
+  passende Spalte rendern.
 
 ## Risiken & Offene Fragen
 

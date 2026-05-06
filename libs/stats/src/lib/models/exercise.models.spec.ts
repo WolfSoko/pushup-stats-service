@@ -249,6 +249,52 @@ describe('validateExerciseEntry — weight measurement', () => {
   });
 });
 
+describe('validateExerciseEntry — partial / patch mode', () => {
+  describe('Given a partial patch that omits the primary value', () => {
+    it('Then a variantId-only update on a reps exercise passes', () => {
+      const def: Pick<
+        ExerciseDefinition,
+        'measurement' | 'min' | 'max' | 'variants'
+      > = {
+        ...repsDef,
+        variants: [{ id: 'wide', nameKey: '@@v.wide' }],
+      };
+      expect(
+        validateExerciseEntry({ variantId: 'wide' }, def, { partial: true })
+      ).toBeNull();
+    });
+
+    it('Then a partial weight patch without weightKg passes', () => {
+      // Without `partial`, weight measurement requires weightKg.
+      expect(
+        validateExerciseEntry({}, weightDef, { partial: true })
+      ).toBeNull();
+    });
+  });
+
+  describe('Given a partial patch that includes invalid values', () => {
+    it('Then a fractional reps patch is still rejected', () => {
+      expect(
+        validateExerciseEntry({ reps: 1.5 }, repsDef, { partial: true })
+      ).toBe('measurement-value-not-integer');
+    });
+
+    it('Then an out-of-range patch is still rejected', () => {
+      expect(
+        validateExerciseEntry({ reps: 9999 }, repsDef, { partial: true })
+      ).toBe('measurement-value-out-of-range');
+    });
+
+    it('Then an unknown variantId in a partial patch is still rejected', () => {
+      expect(
+        validateExerciseEntry({ variantId: 'unknown' }, repsDef, {
+          partial: true,
+        })
+      ).toBe('invalid-variant');
+    });
+  });
+});
+
 describe('validateExerciseEntry — variants', () => {
   const defWithVariants: Pick<
     ExerciseDefinition,

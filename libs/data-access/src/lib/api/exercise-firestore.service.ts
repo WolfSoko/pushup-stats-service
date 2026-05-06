@@ -51,7 +51,8 @@ function violationObservable<T>(
   payload: Pick<
     ExerciseEntry,
     'reps' | 'durationSec' | 'distanceM' | 'weightKg' | 'variantId'
-  >
+  >,
+  options?: { partial?: boolean }
 ): Observable<T> | null {
   const def = findExerciseDefinition(exerciseId);
   if (!def) {
@@ -59,7 +60,7 @@ function violationObservable<T>(
       () => new ExerciseValidationError(exerciseId, 'unknown-exercise')
     );
   }
-  const violation = validateExerciseEntry(payload, def);
+  const violation = validateExerciseEntry(payload, def, options);
   if (!violation) return null;
   return throwError(
     () => new ExerciseValidationError(exerciseId, violation)
@@ -71,13 +72,19 @@ export class ExerciseFirestoreService {
   private readonly firestore = inject(Firestore);
 
   /**
-   * Lists entries for a user, optionally restricted to a single exercise.
-   * Mirrors `PushupFirestoreService.listPushups` so the dashboard sections
-   * can reuse the same date-window filtering.
+   * Lists entries for a user, optionally restricted to a single exercise
+   * or a small set of catalog exercises (Firestore `in` queries are
+   * capped at 30 — fine for the Phase-0 catalog and any realistic
+   * category size). Mirrors `PushupFirestoreService.listPushups` so the
+   * dashboard sections can reuse the same date-window filtering.
    */
   listEntries(
     userId: string,
-    options?: { exerciseId?: string; filter?: StatsFilter }
+    options?: {
+      exerciseId?: string;
+      exerciseIds?: ReadonlyArray<string>;
+      filter?: StatsFilter;
+    }
   ): Observable<ExerciseEntry[]> {
     const ref = collection(this.firestore, EXERCISE_ENTRIES_COLLECTION);
     const constraints: QueryConstraint[] = [
@@ -86,6 +93,8 @@ export class ExerciseFirestoreService {
     ];
     if (options?.exerciseId) {
       constraints.push(where('exerciseId', '==', options.exerciseId));
+    } else if (options?.exerciseIds && options.exerciseIds.length > 0) {
+      constraints.push(where('exerciseId', 'in', [...options.exerciseIds]));
     }
     if (options?.filter?.from) {
       constraints.push(
@@ -178,21 +187,51 @@ export class ExerciseFirestoreService {
     return from(setDoc(newRef, firestoreData)).pipe(map(() => record));
   }
 
+  /**
+   * Patches an existing entry. `exerciseId` is the **stored** value of the
+   * doc (used to look up the catalog entry for validation) and is treated
+   * as immutable: a different exercise must be modelled as delete + create
+   * so the per-exercise stats trigger can decrement the old aggregate.
+   * Attempting to change `exerciseId` via the patch payload errors with
+   * `unknown-exercise`-shaped {@link ExerciseValidationError} (the
+   * `'immutable-exercise-id'` violation marker keeps it distinguishable
+   * from a typo in the stored id).
+   *
+   * Validation is **partial** — only the fields actually being patched
+   * are checked. So a variant-only update doesn't need to round-trip the
+   * primary measurement value, and a no-op update (only `source` changing)
+   * skips validation entirely.
+   */
   updateEntry(
     id: string,
     exerciseId: string,
     payload: ExerciseEntryUpdate
   ): Observable<void> {
+    if (
+      payload.exerciseId !== undefined &&
+      payload.exerciseId !== exerciseId
+    ) {
+      return throwError(
+        () => new ExerciseValidationError(exerciseId, 'unknown-exercise')
+      );
+    }
     const valueChanges = (
       ['reps', 'durationSec', 'distanceM', 'weightKg', 'variantId'] as const
     ).some((k) => payload[k] !== undefined);
     if (valueChanges) {
-      const violation = violationObservable<void>(exerciseId, payload);
+      const violation = violationObservable<void>(exerciseId, payload, {
+        partial: true,
+      });
       if (violation) return violation;
     }
     const rowRef = doc(this.firestore, EXERCISE_ENTRIES_COLLECTION, id);
+    // Strip exerciseId so an explicit pass-through doesn't sneak past the
+    // immutability check above (e.g. caller forwards the original entry
+    // verbatim). updatedAt is computed server-side, payload values stay.
+    const { exerciseId: _ignored, ...patchable } = payload;
+    void _ignored;
     const cleanPayload = Object.fromEntries(
-      Object.entries(payload).filter(
+      Object.entries(patchable).filter(
         ([, v]) => v !== undefined && !(Array.isArray(v) && v.length === 0)
       )
     );

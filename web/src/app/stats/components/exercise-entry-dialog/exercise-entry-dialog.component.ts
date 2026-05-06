@@ -100,6 +100,7 @@ export interface ExerciseEntryDialogResult {
               matInput
               type="number"
               min="0"
+              step="1"
               [value]="set"
               (input)="updateSet($index, asValue($event))"
               required
@@ -181,7 +182,13 @@ export class ExerciseEntryDialogComponent {
   }
 
   updateSet(index: number, value: string): void {
-    const num = Math.max(0, Number(value) || 0);
+    // Clamp to a non-negative integer up front. The downstream
+    // `validateExerciseEntry` rejects fractional reps as
+    // `measurement-value-not-integer`; flooring here keeps the UI in
+    // sync with that contract instead of letting `canSubmit()` go true
+    // on `5.5` reps and then failing at submit time.
+    const parsed = Number(value);
+    const num = Number.isFinite(parsed) ? Math.max(0, Math.floor(parsed)) : 0;
     this.sets.update((s) => s.map((v, i) => (i === index ? num : v)));
   }
 

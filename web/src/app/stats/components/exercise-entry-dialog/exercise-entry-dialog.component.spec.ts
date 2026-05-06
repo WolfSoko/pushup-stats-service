@@ -99,6 +99,26 @@ describe('ExerciseEntryDialogComponent', () => {
     });
   });
 
+  describe('Given the input clamps to non-negative integers', () => {
+    it('Then a fractional value is floored', () => {
+      const cmp = createComponent();
+      cmp.updateSet(0, '5.7');
+      expect(cmp.sets()[0]).toBe(5);
+    });
+
+    it('Then a negative value is clamped to 0', () => {
+      const cmp = createComponent();
+      cmp.updateSet(0, '-3');
+      expect(cmp.sets()[0]).toBe(0);
+    });
+
+    it('Then a non-numeric value falls back to 0', () => {
+      const cmp = createComponent();
+      cmp.updateSet(0, 'abc');
+      expect(cmp.sets()[0]).toBe(0);
+    });
+  });
+
   describe('When the user removes a set', () => {
     it('keeps a single empty set after removing the last one', () => {
       const cmp = createComponent();

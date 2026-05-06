@@ -18,7 +18,6 @@ import {
   ExerciseValidationError,
 } from '@pu-stats/data-access';
 import {
-  EXERCISE_CATEGORIES,
   ExerciseCategoryId,
   ExerciseDefinition,
   ExerciseEntry,
@@ -177,13 +176,19 @@ export class ExerciseCategorySectionComponent {
   }
 
   private readonly entriesResource = rxResource({
-    params: () => ({
-      userId: this.userContext.userIdSafe(),
-      categoryId: this.categoryId(),
-    }),
+    params: () => {
+      const defs = exercisesByCategory().get(this.categoryId()) ?? [];
+      return {
+        userId: this.userContext.userIdSafe(),
+        exerciseIds: defs.map((d) => d.id),
+      };
+    },
     stream: ({ params }) => {
-      if (!params.userId) return of<ExerciseEntry[]>([]);
+      if (!params.userId || params.exerciseIds.length === 0) {
+        return of<ExerciseEntry[]>([]);
+      }
       return this.exerciseService.listEntries(params.userId, {
+        exerciseIds: params.exerciseIds,
         filter: { from: thirtyDaysAgoIso() },
       });
     },
@@ -235,9 +240,13 @@ export class ExerciseCategorySectionComponent {
         duration: 3000,
       });
     } catch (err) {
+      // The dialog already enforces integer reps and the catalog caps,
+      // so an `ExerciseValidationError` here is a programming error
+      // surface — show the user-friendly generic message and let the
+      // browser console + Sentry capture the underlying violation code.
       const message =
         err instanceof ExerciseValidationError
-          ? `${this.i18n.errorPrefix}: ${err.violation}`
+          ? this.i18n.errorPrefix
           : this.i18n.genericError;
       this.snack.open(message, this.i18n.dismissLabel, { duration: 5000 });
     }
@@ -280,6 +289,3 @@ function buildI18n(): I18nBundle {
     genericError: $localize`:@@exerciseSection.genericError:Etwas ist schiefgelaufen`,
   };
 }
-
-// Re-export categories so the dashboard imports stay short.
-export { EXERCISE_CATEGORIES };

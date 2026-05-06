@@ -137,10 +137,22 @@ service cloud.firestore {
     // shipped in Phase 0. Other measurement types (durationSec,
     // distanceM, weightKg) are rejected at the rule level until their
     // dedicated phases land.
+    //
+    // Schema is also pinned via `keys().hasOnly([...])` so unknown fields
+    // can't sneak past the trigger / aggregation logic.
+    //
+    // `exerciseId` is immutable on update — a different exercise must be
+    // recorded as a delete + create so the per-exercise stats trigger can
+    // decrement the old aggregate. (See `updateExerciseStatsOnEntryWrite`
+    // in `data-store/functions/src/index.ts`.)
     match /exerciseEntries/{entryId} {
       allow read: if request.auth != null && resource.data.userId == request.auth.uid;
       allow delete: if request.auth != null && resource.data.userId == request.auth.uid;
       allow create: if request.auth != null
+                    && request.resource.data.keys().hasOnly([
+                      'userId', 'exerciseId', 'reps', 'sets', 'variantId',
+                      'timestamp', 'source', 'createdAt', 'updatedAt'
+                    ])
                     && request.resource.data.userId == request.auth.uid
                     && request.resource.data.exerciseId is string
                     && (request.resource.data.exerciseId == 'abs.situps'
@@ -148,19 +160,24 @@ service cloud.firestore {
                     && request.resource.data.reps is int
                     && request.resource.data.reps >= 1
                     && request.resource.data.reps <= 500
-                    && !request.resource.data.keys().hasAny(['durationSec', 'distanceM', 'weightKg']);
+                    && request.resource.data.timestamp is string
+                    && request.resource.data.timestamp.size() > 0;
       allow update: if request.auth != null
                     && resource.data.userId == request.auth.uid
+                    && request.resource.data.keys().hasOnly([
+                      'userId', 'exerciseId', 'reps', 'sets', 'variantId',
+                      'timestamp', 'source', 'createdAt', 'updatedAt'
+                    ])
                     && request.resource.data.userId == request.auth.uid
                     && request.resource.data.userId == resource.data.userId
-                    && (!('exerciseId' in request.resource.data.diff(resource.data).affectedKeys())
-                        || (request.resource.data.exerciseId == 'abs.situps'
-                            || request.resource.data.exerciseId == 'legs.squats'))
+                    && !('exerciseId' in request.resource.data.diff(resource.data).affectedKeys())
                     && (!('reps' in request.resource.data.diff(resource.data).affectedKeys())
                         || (request.resource.data.reps is int
                             && request.resource.data.reps >= 1
                             && request.resource.data.reps <= 500))
-                    && !request.resource.data.keys().hasAny(['durationSec', 'distanceM', 'weightKg']);
+                    && (!('timestamp' in request.resource.data.diff(resource.data).affectedKeys())
+                        || (request.resource.data.timestamp is string
+                            && request.resource.data.timestamp.size() > 0));
     }
 
     // Active training plan — owner-only. Single doc per user.

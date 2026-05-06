@@ -3182,7 +3182,7 @@ Deine Position: # ·  Reps        </source>
     <unit id="exercise.category.pushup">
       <segment state="translated">
         <source>Liegestütze</source>
-        <target>Push-ups</target>
+        <target>Armhevninger</target>
       </segment>
     </unit>
     <unit id="exercise.category.abs">

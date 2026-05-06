@@ -89,15 +89,22 @@ export function findExerciseCategory(
 /**
  * Catalog exercises grouped by category, in catalog declaration order
  * within each group. Useful for category-pickers and dashboard sections.
+ *
+ * The catalog is a module-level constant so the result is identical on
+ * every call — cache it once instead of re-allocating in every signal
+ * recomputation (the dashboard sections call this from inside a
+ * `computed`).
  */
+let cachedByCategory:
+  | ReadonlyMap<ExerciseCategoryInfo['id'], ReadonlyArray<ExerciseDefinition>>
+  | null = null;
+
 export function exercisesByCategory(): ReadonlyMap<
   ExerciseCategoryInfo['id'],
   ReadonlyArray<ExerciseDefinition>
 > {
-  const map = new Map<
-    ExerciseCategoryInfo['id'],
-    ExerciseDefinition[]
-  >();
+  if (cachedByCategory) return cachedByCategory;
+  const map = new Map<ExerciseCategoryInfo['id'], ExerciseDefinition[]>();
   for (const cat of EXERCISE_CATEGORIES) {
     map.set(cat.id, []);
   }
@@ -105,5 +112,6 @@ export function exercisesByCategory(): ReadonlyMap<
     const bucket = map.get(def.categoryId);
     if (bucket) bucket.push(def);
   }
-  return map;
+  cachedByCategory = map;
+  return cachedByCategory;
 }
