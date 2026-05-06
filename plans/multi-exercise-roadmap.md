@@ -230,6 +230,30 @@ ist die "obere" Sektion, darunter folgen Bauch und Beine.
 - Alte Service-Wrapper entfernt.
 - Alte Collection nach Sentry-Stichtag löschen.
 
+## Companion-Fields (Strecke pro Zeit, Reps × Gewicht)
+
+Manche Übungen brauchen **zwei** Wertfelder, nicht eins:
+
+- **Laufen / Radfahren** = Strecke + Zeit (Pace). Datenmodell: `distanceM`
+  als primärer Wert, `durationSec` als optionaler Companion.
+- **Squats mit Hantel** = Reps × kg pro Set. Datenmodell: `reps` als
+  primärer Wert, `weightKg` als verpflichtender Companion.
+
+Der Validator (`validateExerciseEntry` in `exercise.models.ts`) erlaubt
+seit dem Companion-Fix Fields jetzt aus einer expliziten Liste pro
+Measurement:
+
+| Measurement | Primär | Companion (optional) | Companion (required) |
+| --- | --- | --- | --- |
+| `reps` | `reps` | — | — |
+| `time` | `durationSec` | — | — |
+| `distance` | `distanceM` | `durationSec` | — |
+| `weight` | `reps` | — | `weightKg` |
+
+Caps liegen aktuell hartcodiert in `COMPANION_BOUNDS` (z. B. `weightKg`
+0.25..500 mit Fließkomma für 2.5-kg-Inkremente, `durationSec` 1..86 400).
+In Phase 4 (Custom-Übungen) wandern sie in `ExerciseDefinition`.
+
 ## Risiken & Offene Fragen
 
 - **Backwards-Compat von `userStats`:** Heute liegt das Aggregat als ein einziges

@@ -111,7 +111,16 @@ export type ExerciseEntryViolation =
   | 'measurement-value-not-integer'
   | 'measurement-value-out-of-range'
   | 'wrong-measurement-field'
-  | 'invalid-variant';
+  | 'invalid-variant'
+  | 'companion-value-missing'
+  | 'companion-value-invalid'
+  | 'companion-value-out-of-range';
+
+type MeasurementValueField =
+  | 'reps'
+  | 'durationSec'
+  | 'distanceM'
+  | 'weightKg';
 
 /**
  * Returns the value field expected for a measurement type. Pure helper —
@@ -133,6 +142,76 @@ export function measurementValueField(
 }
 
 /**
+ * Companion value fields allowed alongside the primary measurement value.
+ *
+ * - `distance`: an optional `durationSec` lets the entry record pace
+ *   (e.g. a 5 km run in 27:30 stores `distanceM` AND `durationSec`).
+ * - `weight`: a required `weightKg` companion turns the rep count into
+ *   a weighted set (squats with 80 kg → `reps:5`, `weightKg:80`).
+ *
+ * Any field not declared here is rejected as `wrong-measurement-field`.
+ */
+const COMPANION_FIELDS: Readonly<
+  Record<MeasurementType, ReadonlyArray<MeasurementValueField>>
+> = {
+  reps: [],
+  time: [],
+  distance: ['durationSec'],
+  weight: ['weightKg'],
+};
+
+const REQUIRED_COMPANIONS: Readonly<
+  Record<MeasurementType, ReadonlyArray<MeasurementValueField>>
+> = {
+  reps: [],
+  time: [],
+  distance: [],
+  weight: ['weightKg'],
+};
+
+/**
+ * Bounds and integer-ness for each value field when used as a companion.
+ *
+ * Why per-field instead of pulling from the {@link ExerciseDefinition}:
+ * companion semantics (e.g. weightKg up to ~500 kg, durationSec up to
+ * one day) are largely catalog-independent and not yet expressive enough
+ * to warrant a per-definition cap. When custom user exercises land in
+ * Phase 4 we can move these into `ExerciseDefinition`.
+ */
+const COMPANION_BOUNDS: Readonly<
+  Record<
+    MeasurementValueField,
+    { readonly min: number; readonly max: number; readonly integer: boolean }
+  >
+> = {
+  reps: { min: 1, max: 500, integer: true },
+  durationSec: { min: 1, max: 86_400, integer: true },
+  distanceM: { min: 1, max: 100_000, integer: true },
+  weightKg: { min: 0.25, max: 500, integer: false },
+};
+
+/**
+ * Returns the companion fields a measurement type allows. Useful for UI
+ * form builders that show/hide pace or weight inputs based on the
+ * selected exercise.
+ */
+export function companionFields(
+  measurement: MeasurementType
+): ReadonlyArray<MeasurementValueField> {
+  return COMPANION_FIELDS[measurement];
+}
+
+/**
+ * Returns the companion fields a measurement type *requires* (vs. just
+ * allows). Currently only `weight` requires `weightKg`.
+ */
+export function requiredCompanionFields(
+  measurement: MeasurementType
+): ReadonlyArray<MeasurementValueField> {
+  return REQUIRED_COMPANIONS[measurement];
+}
+
+/**
  * Validates an entry payload against its exercise definition. Pure — used
  * by the data-access service to fail fast before hitting Firestore, by form
  * validators, and by the Cloud Function delta. Returns null when valid.
@@ -140,8 +219,13 @@ export function measurementValueField(
  * Validation rules:
  *   - The value field expected by `def.measurement` must be present and a
  *     finite integer in `[def.min, def.max]`.
- *   - No other measurement value field may be set (so a 'reps' entry must
- *     not also carry `durationSec`, etc. — keeps the aggregation honest).
+ *   - Companion fields declared in {@link COMPANION_FIELDS} for the
+ *     measurement may also be present (e.g. `durationSec` for distance,
+ *     `weightKg` for weighted sets). All other measurement value fields
+ *     are rejected as `wrong-measurement-field`.
+ *   - Companions in {@link REQUIRED_COMPANIONS} must be present.
+ *   - Companion values are validated against their own per-field bounds
+ *     in {@link COMPANION_BOUNDS}.
  *   - `variantId`, if set, must reference one of `def.variants[].id`.
  */
 export function validateExerciseEntry(
@@ -152,10 +236,16 @@ export function validateExerciseEntry(
   def: Pick<ExerciseDefinition, 'measurement' | 'min' | 'max' | 'variants'>
 ): ExerciseEntryViolation | null {
   const expectedField = measurementValueField(def.measurement);
-  const otherFields = (
-    ['reps', 'durationSec', 'distanceM', 'weightKg'] as const
-  ).filter((f) => f !== expectedField);
-  for (const f of otherFields) {
+  const allowedCompanions = COMPANION_FIELDS[def.measurement];
+  const allFields: ReadonlyArray<MeasurementValueField> = [
+    'reps',
+    'durationSec',
+    'distanceM',
+    'weightKg',
+  ];
+  for (const f of allFields) {
+    if (f === expectedField) continue;
+    if (allowedCompanions.includes(f)) continue;
     if (entry[f] !== undefined) {
       return 'wrong-measurement-field';
     }
@@ -173,6 +263,25 @@ export function validateExerciseEntry(
   }
   if (value < def.min || value > def.max) {
     return 'measurement-value-out-of-range';
+  }
+  for (const f of REQUIRED_COMPANIONS[def.measurement]) {
+    if (entry[f] === undefined || entry[f] === null) {
+      return 'companion-value-missing';
+    }
+  }
+  for (const f of allowedCompanions) {
+    const v = entry[f];
+    if (v === undefined || v === null) continue;
+    const bounds = COMPANION_BOUNDS[f];
+    if (typeof v !== 'number' || !Number.isFinite(v)) {
+      return 'companion-value-invalid';
+    }
+    if (bounds.integer && !Number.isInteger(v)) {
+      return 'companion-value-invalid';
+    }
+    if (v < bounds.min || v > bounds.max) {
+      return 'companion-value-out-of-range';
+    }
   }
   if (entry.variantId !== undefined && entry.variantId !== '') {
     const variants = def.variants ?? [];

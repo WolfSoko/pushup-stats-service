@@ -18,6 +18,7 @@ import {
   ExerciseEntryUpdate,
   ExerciseEntryViolation,
   StatsFilter,
+  companionFields,
   findExerciseDefinition,
   measurementValueField,
   validateExerciseEntry,
@@ -140,6 +141,13 @@ export class ExerciseFirestoreService {
     const newRef = doc(ref);
     const nowIso = new Date().toISOString();
     const valueFromPayload = payload[valueField];
+    const allowedCompanions = companionFields(def.measurement);
+    const companionPatch: Record<string, number> = {};
+    for (const f of allowedCompanions) {
+      const v = payload[f];
+      if (typeof v === 'number') companionPatch[f] = v;
+    }
+
     const record: ExerciseEntry = {
       _id: newRef.id,
       userId,
@@ -147,9 +155,7 @@ export class ExerciseFirestoreService {
       timestamp: payload.timestamp,
       [valueField]: valueFromPayload,
       ...(payload.variantId ? { variantId: payload.variantId } : {}),
-      ...(payload.weightKg !== undefined && def.measurement === 'weight'
-        ? { weightKg: payload.weightKg }
-        : {}),
+      ...companionPatch,
       ...(payload.sets?.length ? { sets: payload.sets } : {}),
       source: payload.source ?? 'web',
       createdAt: nowIso,
@@ -164,11 +170,9 @@ export class ExerciseFirestoreService {
       source: record.source,
       createdAt: nowIso,
       updatedAt: nowIso,
+      ...companionPatch,
     };
     if (payload.variantId) firestoreData['variantId'] = payload.variantId;
-    if (payload.weightKg !== undefined && def.measurement === 'weight') {
-      firestoreData['weightKg'] = payload.weightKg;
-    }
     if (payload.sets?.length) firestoreData['sets'] = payload.sets;
 
     return from(setDoc(newRef, firestoreData)).pipe(map(() => record));

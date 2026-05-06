@@ -1,5 +1,7 @@
 import {
+  companionFields,
   measurementValueField,
+  requiredCompanionFields,
   validateExerciseEntry,
   type ExerciseDefinition,
   type MeasurementType,
@@ -51,6 +53,28 @@ describe('measurementValueField', () => {
     ])('Then %s maps to field %s', (m, expected) => {
       expect(measurementValueField(m)).toBe(expected);
     });
+  });
+});
+
+describe('companionFields', () => {
+  it.each<[MeasurementType, string[]]>([
+    ['reps', []],
+    ['time', []],
+    ['distance', ['durationSec']],
+    ['weight', ['weightKg']],
+  ])('Then %s allows %p as companion fields', (m, expected) => {
+    expect([...companionFields(m)]).toEqual(expected);
+  });
+});
+
+describe('requiredCompanionFields', () => {
+  it.each<[MeasurementType, string[]]>([
+    ['reps', []],
+    ['time', []],
+    ['distance', []],
+    ['weight', ['weightKg']],
+  ])('Then %s requires %p as companion fields', (m, expected) => {
+    expect([...requiredCompanionFields(m)]).toEqual(expected);
   });
 });
 
@@ -125,8 +149,17 @@ describe('validateExerciseEntry — time measurement', () => {
 });
 
 describe('validateExerciseEntry — distance measurement', () => {
-  it('accepts a valid distance in meters', () => {
+  it('accepts a valid distance in meters without a duration companion', () => {
     expect(validateExerciseEntry({ distanceM: 5000 }, distanceDef)).toBeNull();
+  });
+
+  it('accepts a valid distance with an optional durationSec companion (pace)', () => {
+    expect(
+      validateExerciseEntry(
+        { distanceM: 5000, durationSec: 1650 },
+        distanceDef
+      )
+    ).toBeNull();
   });
 
   it('rejects a missing distance value', () => {
@@ -134,17 +167,85 @@ describe('validateExerciseEntry — distance measurement', () => {
       'measurement-value-missing'
     );
   });
+
+  it('rejects a non-integer durationSec companion', () => {
+    expect(
+      validateExerciseEntry(
+        { distanceM: 5000, durationSec: 27.5 },
+        distanceDef
+      )
+    ).toBe('companion-value-invalid');
+  });
+
+  it('rejects a durationSec companion outside its bounds', () => {
+    expect(
+      validateExerciseEntry({ distanceM: 5000, durationSec: 0 }, distanceDef)
+    ).toBe('companion-value-out-of-range');
+    expect(
+      validateExerciseEntry(
+        { distanceM: 5000, durationSec: 100_000 },
+        distanceDef
+      )
+    ).toBe('companion-value-out-of-range');
+  });
+
+  it('rejects companion fields not declared for distance', () => {
+    expect(
+      validateExerciseEntry({ distanceM: 5000, weightKg: 5 }, distanceDef)
+    ).toBe('wrong-measurement-field');
+  });
 });
 
 describe('validateExerciseEntry — weight measurement', () => {
-  it('accepts a valid weight (delivered as reps for now)', () => {
-    expect(validateExerciseEntry({ reps: 80 }, weightDef)).toBeNull();
+  it('accepts a valid weighted set (reps + weightKg companion)', () => {
+    expect(
+      validateExerciseEntry({ reps: 5, weightKg: 80 }, weightDef)
+    ).toBeNull();
+  });
+
+  it('accepts a fractional weightKg companion (e.g. 2.5 kg increments)', () => {
+    expect(
+      validateExerciseEntry({ reps: 8, weightKg: 27.5 }, weightDef)
+    ).toBeNull();
+  });
+
+  it('rejects a weighted set without weightKg', () => {
+    expect(validateExerciseEntry({ reps: 5 }, weightDef)).toBe(
+      'companion-value-missing'
+    );
   });
 
   it('rejects when reps exceeds the cap', () => {
-    expect(validateExerciseEntry({ reps: 999 }, weightDef)).toBe(
+    expect(validateExerciseEntry({ reps: 999, weightKg: 80 }, weightDef)).toBe(
       'measurement-value-out-of-range'
     );
+  });
+
+  it('rejects an out-of-range weightKg', () => {
+    expect(
+      validateExerciseEntry({ reps: 5, weightKg: 0 }, weightDef)
+    ).toBe('companion-value-out-of-range');
+    expect(
+      validateExerciseEntry({ reps: 5, weightKg: 1000 }, weightDef)
+    ).toBe('companion-value-out-of-range');
+  });
+
+  it('rejects a non-finite weightKg', () => {
+    expect(
+      validateExerciseEntry(
+        { reps: 5, weightKg: Number.POSITIVE_INFINITY },
+        weightDef
+      )
+    ).toBe('companion-value-invalid');
+  });
+
+  it('rejects companion fields not declared for weight', () => {
+    expect(
+      validateExerciseEntry(
+        { reps: 5, weightKg: 80, durationSec: 30 },
+        weightDef
+      )
+    ).toBe('wrong-measurement-field');
   });
 });
 
