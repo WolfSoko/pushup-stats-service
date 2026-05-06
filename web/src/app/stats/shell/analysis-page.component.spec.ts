@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 import { of } from 'rxjs';
 import { AnalysisPageComponent } from './analysis-page.component';
 import { StatsApiService, UserStatsApiService } from '@pu-stats/data-access';
@@ -321,5 +322,100 @@ describe('AnalysisPageComponent', () => {
     expect(month.length).toBeGreaterThan(0);
     const monthHasAvg = month.some((m) => (m.avgSetsPerEntry ?? 0) > 0);
     expect(monthHasAvg).toBe(true);
+  });
+});
+
+describe('AnalysisPageComponent empty-state CTA gating', () => {
+  // Regression guard: `showEmptyCta` was introduced specifically to avoid
+  // an ExpressionChangedAfterItHasBeenCheckedError thrown when reading
+  // `store.rows().length` while `entriesResource` was still in its
+  // initial undefined→[] transition. The CTA must stay hidden until the
+  // resource resolves, then surface for empty datasets.
+  let fixture: ComponentFixture<AnalysisPageComponent>;
+
+  const emptyApiMock = {
+    load: vitest.fn().mockReturnValue(
+      of({
+        meta: {
+          from: null,
+          to: null,
+          entries: 0,
+          days: 0,
+          total: 0,
+          granularity: 'daily',
+        },
+        series: [],
+      })
+    ),
+    listPushups: vitest.fn().mockReturnValue(of([])),
+  };
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [AnalysisPageComponent],
+      providers: [
+        provideRouter([]),
+        { provide: StatsApiService, useValue: emptyApiMock },
+        { provide: AuthStore, useValue: makeAuthStoreMock() },
+        { provide: UserContextService, useValue: { userIdSafe: () => 'u1' } },
+        {
+          provide: UserStatsApiService,
+          useValue: {
+            getUserStats: vitest.fn().mockReturnValue(of(null)),
+          },
+        },
+      ],
+    })
+      .overrideComponent(AnalysisPageComponent, {
+        remove: {
+          imports: [
+            FilterBarComponent,
+            HeatmapComponent,
+            TypePieComponent,
+            StatsChartComponent,
+            SetsDistributionComponent,
+          ],
+        },
+        add: {
+          imports: [
+            MockFilterBarComponent,
+            MockHeatmapComponent,
+            MockTypePieComponent,
+            MockStatsChartComponent,
+            MockSetsDistributionComponent,
+          ],
+        },
+      })
+      .compileComponents();
+
+    fixture = TestBed.createComponent(AnalysisPageComponent);
+  });
+
+  it('hides the empty-state CTA while the entries resource has not resolved', () => {
+    // Pre-stabilization: resource status is still 'loading', so even
+    // though `rows()` would coalesce to `[]`, the CTA must stay hidden
+    // to avoid the false-positive flicker that triggered the original
+    // NG0100 error.
+    expect(fixture.componentInstance.showEmptyCta()).toBe(false);
+    fixture.detectChanges();
+    const host: HTMLElement = fixture.nativeElement;
+    expect(host.querySelector('[data-testid="analysis-empty-cta"]')).toBeNull();
+  });
+
+  it('renders the empty-state CTA after the entries resource resolves with no data', async () => {
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    expect(fixture.componentInstance.showEmptyCta()).toBe(true);
+
+    const host: HTMLElement = fixture.nativeElement;
+    const cta = host.querySelector(
+      '[data-testid="analysis-empty-cta-plans"]'
+    ) as HTMLAnchorElement | null;
+    expect(cta).not.toBeNull();
+    // RouterLink resolves `routerLink="/training-plans"` to `/training-plans`
+    // when provideRouter([]) is in scope.
+    expect(cta?.getAttribute('href')).toBe('/training-plans');
   });
 });

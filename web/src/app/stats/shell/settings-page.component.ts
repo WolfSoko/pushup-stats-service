@@ -31,6 +31,7 @@ import { UserConfigStore } from '../../core/user-config.store';
 import { ShareService } from '../../core/share.service';
 import { buildProfileShareUrl } from '../../core/profile-share-url';
 import { PageHeaderComponent } from '../../core/page-header/page-header.component';
+import { TrainingPlanStore } from '../../training-plans/training-plan.store';
 
 type SaveStatus = 'idle' | 'pending' | 'saving' | 'saved' | 'error';
 
@@ -143,7 +144,7 @@ interface ResolvedConfig {
         </div>
       }
 
-      <mat-card class="section-card">
+      <mat-card id="profile" class="section-card">
         <mat-card-header>
           <mat-icon mat-card-avatar>person</mat-icon>
           <mat-card-title i18n="@@settings.section.profile.title"
@@ -167,10 +168,18 @@ interface ResolvedConfig {
               >Kann in der Bestenliste angezeigt werden.</mat-hint
             >
           </mat-form-field>
+          <p class="muted profile-hint-row">
+            <a
+              routerLink="/leaderboard"
+              class="hint-link"
+              i18n="@@settings.displayNameHint.leaderboardLink"
+              >Zur Bestenliste</a
+            >
+          </p>
         </mat-card-content>
       </mat-card>
 
-      <mat-card class="section-card">
+      <mat-card id="visibility" class="section-card">
         <mat-card-header>
           <mat-icon mat-card-avatar>visibility</mat-icon>
           <mat-card-title i18n="@@settings.section.privacy.title"
@@ -235,6 +244,15 @@ interface ResolvedConfig {
                 data-testid="settings-public-profile-link"
               >
                 <code class="profile-link">{{ profileUrl() }}</code>
+                <a
+                  mat-stroked-button
+                  [routerLink]="['/u', userId()]"
+                  data-testid="settings-public-profile-preview"
+                  i18n="@@settings.publicProfile.previewCta"
+                >
+                  <mat-icon>visibility</mat-icon>
+                  Vorschau
+                </a>
                 <button
                   type="button"
                   mat-stroked-button
@@ -250,7 +268,7 @@ interface ResolvedConfig {
         </mat-card-content>
       </mat-card>
 
-      <mat-card class="section-card">
+      <mat-card id="targets" class="section-card">
         <mat-card-header>
           <mat-icon mat-card-avatar>flag</mat-icon>
           <mat-card-title i18n="@@settings.section.goals.title"
@@ -261,6 +279,24 @@ interface ResolvedConfig {
           </mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
+          @if (planActive()) {
+            <div
+              class="plan-override-hint"
+              data-testid="settings-plan-override-hint"
+            >
+              <mat-icon>fitness_center</mat-icon>
+              <span i18n="@@settings.goals.planOverrideHint">
+                Ein aktiver Trainingsplan setzt dein Tagesziel automatisch.
+                Manuelle Werte gelten erst nach Planende.
+              </span>
+              <a
+                mat-stroked-button
+                [routerLink]="['/training-plans', activePlanSlug()]"
+                i18n="@@settings.goals.openActivePlan"
+                >Aktiven Plan öffnen</a
+              >
+            </div>
+          }
           <div class="grid">
             <mat-form-field appearance="outline">
               <mat-label i18n="@@dailyGoalLabel">Tagesziel (Reps)</mat-label>
@@ -319,7 +355,7 @@ interface ResolvedConfig {
         </mat-card-content>
       </mat-card>
 
-      <mat-card class="section-card">
+      <mat-card id="display" class="section-card">
         <mat-card-header>
           <mat-icon mat-card-avatar>tune</mat-icon>
           <mat-card-title i18n="@@settings.section.display.title"
@@ -364,7 +400,7 @@ interface ResolvedConfig {
         </mat-card-content>
       </mat-card>
 
-      <mat-card class="section-card">
+      <mat-card id="ads" class="section-card">
         <mat-card-header>
           <mat-icon mat-card-avatar>campaign</mat-icon>
           <mat-card-title i18n="@@settings.section.ads.title"
@@ -382,13 +418,21 @@ interface ResolvedConfig {
           >
             Personalisierte Werbung aktivieren
           </mat-slide-toggle>
-          <p class="muted" i18n="@@settings.adsConsentHint">
-            Steuert, ob Werbe-Slots im Dashboard geladen werden dürfen.
+          <p class="muted">
+            <span i18n="@@settings.adsConsentHint"
+              >Steuert, ob Werbe-Slots im Dashboard geladen werden dürfen.</span
+            >
+            <a
+              routerLink="/datenschutz"
+              class="inline-link"
+              i18n="@@settings.adsConsent.privacyLink"
+              >Datenschutzerklärung</a
+            >
           </p>
         </mat-card-content>
       </mat-card>
 
-      <mat-card class="section-card">
+      <mat-card id="reminders" class="section-card">
         <mat-card-header>
           <mat-icon mat-card-avatar>notifications</mat-icon>
           <mat-card-title i18n="@@settings.remindersLinkTitle"
@@ -410,7 +454,7 @@ interface ResolvedConfig {
         </mat-card-actions>
       </mat-card>
 
-      <mat-card class="section-card danger-zone">
+      <mat-card id="danger-zone" class="section-card danger-zone">
         <mat-card-header>
           <mat-icon mat-card-avatar class="danger-icon">warning</mat-icon>
           <mat-card-title i18n="@@settings.dangerZoneTitle"
@@ -615,6 +659,37 @@ interface ResolvedConfig {
       font-size: 0.85rem;
       opacity: 0.85;
     }
+    .inline-link {
+      margin-left: 6px;
+    }
+    .profile-hint-row {
+      margin: -8px 0 0;
+    }
+    .hint-link {
+      color: var(--mat-sys-primary, #8fb4ff);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+    .plan-override-hint {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      padding: 10px 12px;
+      margin-bottom: 12px;
+      border-radius: 10px;
+      background: rgba(123, 159, 255, 0.12);
+      border: 1px solid rgba(123, 159, 255, 0.28);
+      font-size: 0.9rem;
+    }
+    .plan-override-hint span {
+      flex: 1 1 220px;
+    }
+    /* Anchor scroll offset so the page header doesn't cover the section title.
+       The fixed app toolbar is ~64px tall. */
+    .section-card[id] {
+      scroll-margin-top: 80px;
+    }
   `,
 })
 export class SettingsPageComponent implements OnDestroy {
@@ -628,9 +703,14 @@ export class SettingsPageComponent implements OnDestroy {
   private readonly shareService = inject(ShareService);
   private readonly localeId = inject(LOCALE_ID) as string;
   private readonly platformId = inject(PLATFORM_ID);
+  private readonly trainingPlans = inject(TrainingPlanStore);
 
   readonly isGuest = this.user.isGuest;
   readonly userId = this.user.userIdSafe;
+  readonly planActive = this.trainingPlans.hasActivePlan;
+  readonly activePlanSlug = computed(
+    () => this.trainingPlans.activeCatalog()?.slug ?? ''
+  );
 
   readonly displayNameDraft = signal('');
   readonly dailyGoalDraft = signal<number>(10);

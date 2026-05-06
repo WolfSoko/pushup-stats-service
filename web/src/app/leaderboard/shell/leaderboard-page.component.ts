@@ -1,18 +1,39 @@
 import { Component, computed, inject, linkedSignal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
+import { AuthStore, UserContextService } from '@pu-auth/auth';
 import { LeaderboardPeriod, LeaderboardStore } from '@pu-stats/data-access';
 import { PageHeaderComponent } from '../../core/page-header/page-header.component';
 
 @Component({
   selector: 'app-leaderboard-page',
-  imports: [MatCardModule, MatButtonModule, RouterLink, PageHeaderComponent],
+  imports: [
+    MatCardModule,
+    MatButtonModule,
+    MatIconModule,
+    RouterLink,
+    PageHeaderComponent,
+  ],
   templateUrl: './leaderboard-page.component.html',
   styleUrl: './leaderboard-page.component.scss',
 })
 export class LeaderboardPageComponent {
   private readonly store = inject(LeaderboardStore);
+  private readonly user = inject(UserContextService);
+  private readonly auth = inject(AuthStore);
+
+  readonly currentUserId = this.user.userIdSafe;
+  /**
+   * Suppress the hint while auth is still bootstrapping. Otherwise an
+   * authenticated user briefly sees the "sign in" CTA on cold load before
+   * `currentUserId` populates.
+   */
+  readonly authResolved = this.auth.authResolved;
+  readonly isLoggedIn = computed(
+    () => this.currentUserId() !== '' && !this.user.isGuest()
+  );
 
   readonly period = linkedSignal<LeaderboardPeriod>(() => 'daily');
 

@@ -69,6 +69,76 @@ li {
   font-weight: 600;
 }
 
+.own-rank--link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  text-decoration: none;
+  border-radius: 4px;
+
+  mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+  }
+
+  &:hover,
+  &:focus-visible {
+    color: #cfe0ff;
+  }
+
+  &:focus-visible {
+    outline: 2px solid #8fb4ff;
+    outline-offset: 2px;
+  }
+}
+
+.visibility-hint {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(123, 159, 255, 0.18);
+  font-size: 0.88rem;
+  opacity: 0.85;
+
+  mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+    opacity: 0.85;
+  }
+
+  a {
+    color: #8fb4ff;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+
+    &:hover,
+    &:focus-visible {
+      color: #cfe0ff;
+    }
+  }
+}
+
+:host-context(html.light-theme) {
+  .own-rank--link:hover,
+  .own-rank--link:focus-visible {
+    color: #1d4ed8;
+  }
+
+  .visibility-hint a {
+    color: #2563eb;
+
+    &:hover,
+    &:focus-visible {
+      color: #1d4ed8;
+    }
+  }
+}
+
 :host-context(html.light-theme) {
   .rank {
     color: #3b5a99;

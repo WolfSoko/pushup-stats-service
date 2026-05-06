@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { signal } from '@angular/core';
+import { AuthStore, UserContextService } from '@pu-auth/auth';
+import { makeAuthStoreMock } from '@pu-stats/testing';
 import {
   type LeaderboardEntry,
   type LeaderboardPeriod,
@@ -48,6 +50,14 @@ describe('LeaderboardPageComponent', () => {
       providers: [
         provideRouter([]),
         { provide: LeaderboardStore, useValue: storeMock },
+        { provide: AuthStore, useValue: makeAuthStoreMock() },
+        {
+          provide: UserContextService,
+          useValue: {
+            userIdSafe: signal('').asReadonly(),
+            isGuest: signal(false).asReadonly(),
+          },
+        },
       ],
     }).compileComponents();
 

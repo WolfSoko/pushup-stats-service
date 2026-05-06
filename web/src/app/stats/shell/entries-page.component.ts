@@ -1,8 +1,11 @@
 import { Component, effect, inject } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { RouterLink } from '@angular/router';
 import { PreviewBannerComponent } from '../components/preview-banner/preview-banner.component';
 import { StatsTableComponent } from '../components/stats-table/stats-table.component';
 import { EntriesStore } from '../entries.store';
@@ -12,10 +15,13 @@ import { PageHeaderComponent } from '../../core/page-header/page-header.componen
   selector: 'app-entries-page',
   providers: [EntriesStore],
   imports: [
+    MatButtonModule,
     MatCardModule,
     MatFormFieldModule,
+    MatIconModule,
     MatInputModule,
     MatSelectModule,
+    RouterLink,
     PageHeaderComponent,
     PreviewBannerComponent,
     StatsTableComponent,
@@ -124,6 +130,34 @@ import { PageHeaderComponent } from '../../core/page-header/page-header.componen
         (update)="store.updateEntry($event)"
         (remove)="store.deleteEntry($event)"
       />
+
+      @if (store.entriesLoaded() && !store.rows().length) {
+        <mat-card class="empty-cta" data-testid="entries-empty-cta">
+          <mat-card-content>
+            <mat-icon aria-hidden="true">fitness_center</mat-icon>
+            <div>
+              <strong i18n="@@entries.empty.title"
+                >Noch keine Einträge.</strong
+              >
+              <p i18n="@@entries.empty.body">
+                Trage deinen ersten Satz Liegestütze ein — dann wird hier deine
+                Historie sichtbar.
+              </p>
+            </div>
+            <a
+              mat-flat-button
+              color="primary"
+              routerLink="/app"
+              [queryParams]="{ log: '1' }"
+              data-testid="entries-empty-cta-log"
+              i18n="@@entries.empty.cta"
+            >
+              <mat-icon aria-hidden="true">add</mat-icon>
+              Eintrag erstellen
+            </a>
+          </mat-card-content>
+        </mat-card>
+      }
     </main>
   `,
   styles: `
@@ -138,6 +172,30 @@ import { PageHeaderComponent } from '../../core/page-header/page-header.componen
       display: grid;
       gap: 12px;
       grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    }
+    .empty-cta mat-card-content {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .empty-cta mat-icon {
+      font-size: 32px;
+      width: 32px;
+      height: 32px;
+      opacity: 0.7;
+    }
+    .empty-cta strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+    .empty-cta p {
+      margin: 0;
+      opacity: 0.85;
+      max-width: 48ch;
+    }
+    .empty-cta a {
+      margin-left: auto;
     }
   `,
 })
