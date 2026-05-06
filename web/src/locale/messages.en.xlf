@@ -7347,12 +7347,6 @@ Deine Position: # ·  Reps        </source>
         <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">fitness_center</pc> Pick a training plan</target>
       </segment>
     </unit>
-    <unit id="dashboard.allTimeBadgesLinkAria">
-      <segment state="translated">
-        <source/>
-        <target>Open analysis</target>
-      </segment>
-    </unit>
     <unit id="dashboard.allTimeBadges.cta">
       <segment state="translated">
         <source/>

@@ -6739,12 +6739,6 @@
         <target>在历史记录中打开最后一条记录</target>
       </segment>
     </unit>
-    <unit id="dashboard.allTimeBadgesLinkAria">
-      <segment state="translated">
-        <source/>
-        <target>前往分析</target>
-      </segment>
-    </unit>
     <unit id="dashboard.allTimeBadges.cta">
       <segment state="translated">
         <source/>

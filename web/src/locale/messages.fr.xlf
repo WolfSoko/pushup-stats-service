@@ -7126,12 +7126,6 @@
         <target>Ouvrir la dernière entrée dans l'historique</target>
       </segment>
     </unit>
-    <unit id="dashboard.allTimeBadgesLinkAria">
-      <segment state="translated">
-        <source/>
-        <target>Naviguer vers l'analyse</target>
-      </segment>
-    </unit>
     <unit id="dashboard.allTimeBadges.cta">
       <segment state="translated">
         <source/>

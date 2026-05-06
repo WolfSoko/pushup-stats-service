@@ -7015,13 +7015,13 @@
     <unit id="leaderboard.visibilityHint.cta">
       <segment state="translated">
         <source/>
-        <target>Abrir ajustes</target>
+        <target>Abrir configuración</target>
       </segment>
     </unit>
     <unit id="leaderboard.loginHint">
       <segment state="translated">
         <source/>
-        <target> ¿Participar y aparecer? </target>
+        <target> ¿Quieres participar y aparecer aquí? </target>
       </segment>
     </unit>
     <unit id="leaderboard.loginHint.cta">
@@ -7057,7 +7057,7 @@
     <unit id="entries.empty.body">
       <segment state="translated">
         <source/>
-        <target> Registra tu primera serie de flexiones y tu historial aparecerá aquí. </target>
+        <target> Registra tu primera entrada de flexiones y tu historial aparecerá aquí. </target>
       </segment>
     </unit>
     <unit id="entries.empty.cta">
@@ -7117,19 +7117,13 @@
     <unit id="dashboard.goalEditAria">
       <segment state="translated">
         <source/>
-        <target>Abrir el objetivo diario en ajustes</target>
+        <target>Abrir el objetivo diario en la configuración</target>
       </segment>
     </unit>
     <unit id="dashboard.lastEntryLinkAria">
       <segment state="translated">
         <source/>
         <target>Abrir la última entrada en el historial</target>
-      </segment>
-    </unit>
-    <unit id="dashboard.allTimeBadgesLinkAria">
-      <segment state="translated">
-        <source/>
-        <target>Ir al análisis</target>
       </segment>
     </unit>
     <unit id="dashboard.allTimeBadges.cta">

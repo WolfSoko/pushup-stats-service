@@ -67,7 +67,7 @@ import { PageHeaderComponent } from '../../core/page-header/page-header.componen
       @if (showEmptyCta()) {
         <mat-card class="empty-cta" data-testid="analysis-empty-cta">
           <mat-card-content>
-            <mat-icon>insights</mat-icon>
+            <mat-icon aria-hidden="true">insights</mat-icon>
             <div>
               <strong i18n="@@analysis.empty.title"
                 >Noch keine Daten zum Analysieren.</strong
@@ -84,7 +84,7 @@ import { PageHeaderComponent } from '../../core/page-header/page-header.componen
               data-testid="analysis-empty-cta-plans"
               i18n="@@analysis.empty.cta"
             >
-              <mat-icon>fitness_center</mat-icon>
+              <mat-icon aria-hidden="true">fitness_center</mat-icon>
               Trainingsplan wählen
             </a>
           </mat-card-content>

@@ -7126,12 +7126,6 @@
         <target>Άνοιγμα τελευταίας καταχώρησης στο ιστορικό</target>
       </segment>
     </unit>
-    <unit id="dashboard.allTimeBadgesLinkAria">
-      <segment state="translated">
-        <source/>
-        <target>Μετάβαση στην ανάλυση</target>
-      </segment>
-    </unit>
     <unit id="dashboard.allTimeBadges.cta">
       <segment state="translated">
         <source/>

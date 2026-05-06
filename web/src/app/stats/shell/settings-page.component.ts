@@ -164,18 +164,18 @@ interface ResolvedConfig {
               placeholder="Wolf"
               i18n-placeholder="@@displayNamePlaceholder"
             />
-            <mat-hint>
-              <span i18n="@@settings.displayNameHint"
-                >Kann in der Bestenliste angezeigt werden.</span
-              >
-              <a
-                routerLink="/leaderboard"
-                class="inline-link"
-                i18n="@@settings.displayNameHint.leaderboardLink"
-                >Zur Bestenliste</a
-              >
-            </mat-hint>
+            <mat-hint i18n="@@settings.displayNameHint"
+              >Kann in der Bestenliste angezeigt werden.</mat-hint
+            >
           </mat-form-field>
+          <p class="muted profile-hint-row">
+            <a
+              routerLink="/leaderboard"
+              class="hint-link"
+              i18n="@@settings.displayNameHint.leaderboardLink"
+              >Zur Bestenliste</a
+            >
+          </p>
         </mat-card-content>
       </mat-card>
 
@@ -661,6 +661,14 @@ interface ResolvedConfig {
     }
     .inline-link {
       margin-left: 6px;
+    }
+    .profile-hint-row {
+      margin: -8px 0 0;
+    }
+    .hint-link {
+      color: var(--mat-sys-primary, #8fb4ff);
+      text-decoration: underline;
+      text-underline-offset: 2px;
     }
     .plan-override-hint {
       display: flex;

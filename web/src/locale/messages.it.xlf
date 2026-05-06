@@ -7126,12 +7126,6 @@
         <target>Apri l'ultimo inserimento nella cronologia</target>
       </segment>
     </unit>
-    <unit id="dashboard.allTimeBadgesLinkAria">
-      <segment state="translated">
-        <source/>
-        <target>Vai all'analisi</target>
-      </segment>
-    </unit>
     <unit id="dashboard.allTimeBadges.cta">
       <segment state="translated">
         <source/>

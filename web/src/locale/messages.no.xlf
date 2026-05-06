@@ -7261,7 +7261,7 @@ Deine Position: # ·  Reps        </source>
     <unit id="analysis.empty.body">
       <segment state="translated">
         <source/>
-        <target> Start en treningsplan eller logg ditt første sett — vi viser trender og rekker her. </target>
+        <target> Start en treningsplan eller logg ditt første sett — vi viser trender og serier her. </target>
       </segment>
     </unit>
     <unit id="analysis.empty.cta">
@@ -7279,7 +7279,7 @@ Deine Position: # ·  Reps        </source>
     <unit id="entries.empty.body">
       <segment state="translated">
         <source/>
-        <target> Logg ditt første sett pushups — historikken vises her. </target>
+        <target> Logg ditt første sett armhevninger — historikken vises her. </target>
       </segment>
     </unit>
     <unit id="entries.empty.cta">
@@ -7315,7 +7315,7 @@ Deine Position: # ·  Reps        </source>
     <unit id="settings.adsConsent.privacyLink">
       <segment state="translated">
         <source/>
-        <target>Personvernerklæring</target>
+        <target>Personvernpolicy</target>
       </segment>
     </unit>
     <unit id="dashboard.noPlanTitle">
@@ -7346,12 +7346,6 @@ Deine Position: # ·  Reps        </source>
       <segment state="translated">
         <source/>
         <target>Åpne siste oppføring i historikken</target>
-      </segment>
-    </unit>
-    <unit id="dashboard.allTimeBadgesLinkAria">
-      <segment state="translated">
-        <source/>
-        <target>Gå til analyse</target>
       </segment>
     </unit>
     <unit id="dashboard.allTimeBadges.cta">

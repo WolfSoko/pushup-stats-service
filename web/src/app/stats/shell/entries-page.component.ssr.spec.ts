@@ -62,5 +62,8 @@ describe('EntriesPageComponent (SSR/REST)', () => {
     const store = fixture.debugElement.injector.get(EntriesStore);
     expect(apiMock.listPushups).toHaveBeenCalled();
     expect(store.rows().map((x) => x._id)).toEqual(['1']);
+    // Server path of `entriesLoaded` flips once the REST resource resolves;
+    // the empty-state CTA is gated on this flag, so verify it's true here.
+    expect(store.entriesLoaded()).toBe(true);
   });
 });

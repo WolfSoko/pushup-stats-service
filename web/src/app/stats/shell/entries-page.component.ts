@@ -134,7 +134,7 @@ import { PageHeaderComponent } from '../../core/page-header/page-header.componen
       @if (store.entriesLoaded() && !store.rows().length) {
         <mat-card class="empty-cta" data-testid="entries-empty-cta">
           <mat-card-content>
-            <mat-icon>fitness_center</mat-icon>
+            <mat-icon aria-hidden="true">fitness_center</mat-icon>
             <div>
               <strong i18n="@@entries.empty.title"
                 >Noch keine Einträge.</strong
@@ -152,7 +152,7 @@ import { PageHeaderComponent } from '../../core/page-header/page-header.componen
               data-testid="entries-empty-cta-log"
               i18n="@@entries.empty.cta"
             >
-              <mat-icon>add</mat-icon>
+              <mat-icon aria-hidden="true">add</mat-icon>
               Eintrag erstellen
             </a>
           </mat-card-content>
