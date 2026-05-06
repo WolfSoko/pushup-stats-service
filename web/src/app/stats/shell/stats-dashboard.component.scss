@@ -205,7 +205,55 @@ h1 {
 .mini-badges {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   gap: 8px;
+}
+
+.mini-badges--link {
+  text-decoration: none;
+  color: inherit;
+  border-radius: 999px;
+  transition:
+    transform 0.15s ease,
+    filter 0.2s ease;
+
+  &:hover,
+  &:focus-visible {
+    transform: translateY(-1px);
+    filter: brightness(1.1);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--mat-sys-primary, #8fb4ff);
+    outline-offset: 4px;
+  }
+}
+
+.badges-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: auto;
+  padding: 6px 10px;
+  font-size: 0.78rem;
+  color: var(--mat-sys-primary, #8fb4ff);
+
+  mat-icon {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mini-badges--link {
+    transition: filter 0.2s ease;
+
+    &:hover,
+    &:focus-visible {
+      transform: none;
+    }
+  }
 }
 
 .badge {

@@ -36,10 +36,12 @@
     </button>
   </header>
 
-  <section
-    class="mini-badges"
-    aria-label="All-Time Kurzübersicht"
-    i18n-aria-label="@@allTimeSummaryAria"
+  <a
+    class="mini-badges mini-badges--link"
+    routerLink="/analysis"
+    aria-label="Zur Analyse navigieren"
+    i18n-aria-label="@@dashboard.allTimeBadgesLinkAria"
+    data-testid="dashboard-all-time-badges-link"
   >
     <span class="badge"
       ><small i18n="@@allTimeTotal">All-Time Gesamt</small
@@ -57,7 +59,11 @@
       ><small i18n="@@allTimeAvg">All-Time Ø/Tag</small
       ><b>{{ allTimeAvg() }}</b></span
     >
-  </section>
+    <span class="badges-cta">
+      <mat-icon aria-hidden="true">insights</mat-icon>
+      <span i18n="@@dashboard.allTimeBadges.cta">Zur Analyse</span>
+    </span>
+  </a>
 
   @if (planActive()) {
     <mat-card class="plan-banner">
