@@ -1,15 +1,19 @@
 import { DecimalPipe, DOCUMENT, isPlatformBrowser } from '@angular/common';
 import {
   Component,
+  computed,
   effect,
   inject,
   PLATFORM_ID,
   REQUEST,
   signal,
 } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
+import { RouterLink } from '@angular/router';
 import { createWeekRange } from '@pu-stats/models';
 import { LiveDataStore } from '@pu-stats/data-access';
 import { FilterBarComponent } from '../components/filter-bar/filter-bar.component';
@@ -25,9 +29,12 @@ import { PageHeaderComponent } from '../../core/page-header/page-header.componen
   selector: 'app-analysis-page',
   providers: [AnalysisStore],
   imports: [
+    MatButtonModule,
     MatButtonToggleModule,
     MatCardModule,
+    MatIconModule,
     MatTableModule,
+    RouterLink,
     DecimalPipe,
     FilterBarComponent,
     HeatmapComponent,
@@ -56,6 +63,33 @@ import { PageHeaderComponent } from '../../core/page-header/page-header.componen
           (toChange)="store.setTo($event)"
         />
       </section>
+
+      @if (showEmptyCta()) {
+        <mat-card class="empty-cta" data-testid="analysis-empty-cta">
+          <mat-card-content>
+            <mat-icon>insights</mat-icon>
+            <div>
+              <strong i18n="@@analysis.empty.title"
+                >Noch keine Daten zum Analysieren.</strong
+              >
+              <p i18n="@@analysis.empty.body">
+                Starte einen Trainingsplan oder trage deinen ersten Satz ein —
+                dann zeigen wir dir hier Trends und Streaks.
+              </p>
+            </div>
+            <a
+              mat-flat-button
+              color="primary"
+              routerLink="/training-plans"
+              data-testid="analysis-empty-cta-plans"
+              i18n="@@analysis.empty.cta"
+            >
+              <mat-icon>fitness_center</mat-icon>
+              Trainingsplan wählen
+            </a>
+          </mat-card-content>
+        </mat-card>
+      }
 
       <app-stats-chart
         [series]="store.chartSeries()"
@@ -356,6 +390,31 @@ import { PageHeaderComponent } from '../../core/page-header/page-header.componen
       margin-left: auto;
     }
 
+    .empty-cta mat-card-content {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .empty-cta > mat-card-content > mat-icon {
+      font-size: 32px;
+      width: 32px;
+      height: 32px;
+      opacity: 0.7;
+    }
+    .empty-cta strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+    .empty-cta p {
+      margin: 0;
+      opacity: 0.85;
+      max-width: 48ch;
+    }
+    .empty-cta a {
+      margin-left: auto;
+    }
+
     @media (max-width: 600px) {
       .best-grid {
         grid-template-columns: 1fr;
@@ -384,6 +443,17 @@ export class AnalysisPageComponent {
   readonly trendColumnsWithSets = ['label', 'total', 'avgSetsPerEntry'];
 
   readonly heatmapMode = signal<'reps' | 'sets'>('reps');
+
+  /**
+   * Only reveal the empty-state CTA after the entries resource has resolved.
+   * Reading `store.rows()` directly during the initial undefined→[] transition
+   * trips Angular's expression-changed-after-checked check in dev mode.
+   */
+  readonly showEmptyCta = computed(
+    () =>
+      this.store.entriesResource.status() === 'resolved' &&
+      this.store.rows().length === 0
+  );
 
   private readonly live = inject(LiveDataStore);
 

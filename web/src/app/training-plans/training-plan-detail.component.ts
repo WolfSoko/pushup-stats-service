@@ -105,6 +105,18 @@ interface DayRow {
                   {{ idx }} / {{ p.totalDays }}
                 </p>
               }
+              <p class="muted goal-hint">
+                <mat-icon aria-hidden="true">flag</mat-icon>
+                <span i18n="@@trainingPlans.goalOverrideHint">
+                  Tagesziel wird vom Plan gesetzt.
+                </span>
+                <a
+                  routerLink="/settings"
+                  fragment="targets"
+                  i18n="@@trainingPlans.goalOverrideHint.cta"
+                  >Manuelle Ziele anpassen</a
+                >
+              </p>
             </mat-card-content>
             <mat-card-actions align="end">
               <button
@@ -357,6 +369,22 @@ interface DayRow {
       }
       .current-day {
         margin-top: 8px;
+      }
+      .goal-hint {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        flex-wrap: wrap;
+        margin-top: 8px;
+        font-size: 0.88rem;
+      }
+      .goal-hint mat-icon {
+        font-size: 18px;
+        width: 18px;
+        height: 18px;
+      }
+      .goal-hint a {
+        color: var(--mat-sys-primary, #3f51b5);
       }
       .warn-replace {
         margin: 0 8px 0 0;

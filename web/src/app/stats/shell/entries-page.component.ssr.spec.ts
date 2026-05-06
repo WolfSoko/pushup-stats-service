@@ -1,6 +1,7 @@
 import { Auth } from '@angular/fire/auth';
 import { PLATFORM_ID } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 import { of } from 'rxjs';
 import { EntriesPageComponent } from './entries-page.component';
 import { LiveDataStore, StatsApiService } from '@pu-stats/data-access';
@@ -40,6 +41,7 @@ describe('EntriesPageComponent (SSR/REST)', () => {
     await TestBed.configureTestingModule({
       imports: [EntriesPageComponent],
       providers: [
+        provideRouter([]),
         { provide: PLATFORM_ID, useValue: 'server' },
         { provide: StatsApiService, useValue: apiMock },
         { provide: LiveDataStore, useValue: liveMock },

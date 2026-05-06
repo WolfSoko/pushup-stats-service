@@ -8,6 +8,53 @@
   border-left: 4px solid #7b9fff;
 }
 
+.plan-banner--empty {
+  border-left-color: rgba(255, 200, 100, 0.65);
+
+  mat-icon {
+    color: rgba(255, 200, 100, 0.85) !important;
+  }
+}
+
+.goal-edit-link {
+  margin-left: auto;
+  opacity: 0.7;
+
+  &:hover,
+  &:focus-visible {
+    opacity: 1;
+  }
+}
+
+.last-entry-card {
+  cursor: pointer;
+  transition:
+    box-shadow 0.2s ease,
+    transform 0.15s ease;
+
+  &:hover,
+  &:focus-visible {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+    transform: translateY(-2px);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--mat-sys-primary, #3f51b5);
+    outline-offset: 2px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .last-entry-card {
+    transition: box-shadow 0.2s ease;
+
+    &:hover,
+    &:focus-visible {
+      transform: none;
+    }
+  }
+}
+
 .plan-banner-row {
   display: flex;
   align-items: center;

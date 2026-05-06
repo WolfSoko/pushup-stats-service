@@ -92,6 +92,30 @@
         </div>
       </mat-card-content>
     </mat-card>
+  } @else {
+    <mat-card class="plan-banner plan-banner--empty">
+      <mat-card-content>
+        <div class="plan-banner-row">
+          <mat-icon>fitness_center</mat-icon>
+          <div class="plan-banner-text">
+            <strong i18n="@@dashboard.noPlanTitle"
+              >Noch kein aktiver Trainingsplan</strong
+            >
+            <span class="plan-meta" i18n="@@dashboard.noPlanSubtitle">
+              Wähle einen Plan, um dein Tagesziel automatisch setzen zu lassen.
+            </span>
+          </div>
+          <a
+            mat-stroked-button
+            routerLink="/training-plans"
+            data-testid="dashboard-pick-plan-cta"
+            i18n="@@dashboard.noPlanCta"
+          >
+            Plan wählen
+          </a>
+        </div>
+      </mat-card-content>
+    </mat-card>
   }
 
   <section
@@ -115,6 +139,17 @@
         <mat-card-title i18n="@@goalProgressTitle"
           >Zielfortschritt</mat-card-title
         >
+        <a
+          mat-icon-button
+          class="goal-edit-link"
+          routerLink="/settings"
+          fragment="targets"
+          data-testid="dashboard-goal-settings-link"
+          aria-label="Tagesziel in Einstellungen öffnen"
+          i18n-aria-label="@@dashboard.goalEditAria"
+        >
+          <mat-icon>tune</mat-icon>
+        </a>
       </mat-card-header>
       <mat-card-content>
         <div class="goal-row">
@@ -153,7 +188,17 @@
       </mat-card-content>
     </mat-card>
 
-    <mat-card>
+    <mat-card
+      class="last-entry-card"
+      role="link"
+      tabindex="0"
+      data-testid="dashboard-last-entry-link"
+      (click)="navigateToHistory()"
+      (keydown.enter)="navigateToHistory()"
+      (keyup.space)="navigateToHistory(); $event.preventDefault()"
+      aria-label="Letzten Eintrag in der Historie öffnen"
+      i18n-aria-label="@@dashboard.lastEntryLinkAria"
+    >
       <mat-card-header>
         <mat-card-title i18n="@@lastEntryTitle">Letzter Eintrag</mat-card-title>
       </mat-card-header>
