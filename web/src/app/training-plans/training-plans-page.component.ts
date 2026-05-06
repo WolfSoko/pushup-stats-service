@@ -13,6 +13,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { RouterLink } from '@angular/router';
 import { AuthStore } from '@pu-auth/auth';
+import { PageHeaderComponent } from '../core/page-header/page-header.component';
 import { LogPlanDayResult, TrainingPlanStore } from './training-plan.store';
 
 @Component({
@@ -24,19 +25,20 @@ import { LogPlanDayResult, TrainingPlanStore } from './training-plan.store';
     MatChipsModule,
     MatProgressBarModule,
     MatSnackBarModule,
+    PageHeaderComponent,
     RouterLink,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <main class="page-wrap">
-      <header class="page-header">
-        <h1 i18n="@@trainingPlans.title">Trainingspläne</h1>
-        <p class="muted" i18n="@@trainingPlans.intro">
+      <app-page-header icon="fitness_center" variant="training">
+        <h1 page-title i18n="@@trainingPlans.title">Trainingspläne</h1>
+        <p page-subtitle i18n="@@trainingPlans.intro">
           Strukturierte Pläne mit Tagesziel, Sätzen und automatischer
           Fortschrittsverfolgung. Starte einen Plan, und dein Tagesziel im
           Dashboard wird automatisch gesetzt.
         </p>
-      </header>
+      </app-page-header>
 
       @if (!isAuthenticated() && authResolved()) {
         <mat-card class="signup-banner">
@@ -218,9 +220,8 @@ import { LogPlanDayResult, TrainingPlanStore } from './training-plan.store';
         max-width: 980px;
         margin: 0 auto;
         padding: 16px;
-      }
-      .page-header h1 {
-        margin: 0 0 4px;
+        display: grid;
+        gap: 16px;
       }
       .muted {
         color: rgba(0, 0, 0, 0.6);

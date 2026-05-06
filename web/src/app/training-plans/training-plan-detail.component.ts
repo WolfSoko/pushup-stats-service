@@ -24,6 +24,7 @@ import {
   PushupTypeInfo,
   TrainingPlanDay,
 } from '@pu-stats/models';
+import { PageHeaderComponent } from '../core/page-header/page-header.component';
 import { LogPlanDayResult, TrainingPlanStore } from './training-plan.store';
 
 interface PushupTypeChip {
@@ -51,14 +52,18 @@ interface DayRow {
     MatProgressBarModule,
     MatSnackBarModule,
     MatTooltipModule,
+    PageHeaderComponent,
     RouterLink,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     @if (plan(); as p) {
       <main class="page-wrap">
-        <header class="page-header">
+        <app-page-header icon="fitness_center" variant="training">
+          <h1 page-title>{{ p.title }}</h1>
+          <p page-subtitle>{{ p.summary }}</p>
           <a
+            page-actions
             mat-icon-button
             routerLink="/training-plans"
             aria-label="Zurück"
@@ -66,11 +71,7 @@ interface DayRow {
           >
             <mat-icon>arrow_back</mat-icon>
           </a>
-          <div>
-            <h1>{{ p.title }}</h1>
-            <p class="muted">{{ p.summary }}</p>
-          </div>
-        </header>
+        </app-page-header>
 
         <mat-chip-set class="meta-chips">
           <mat-chip
@@ -325,13 +326,9 @@ interface DayRow {
         margin: 0 auto;
         padding: 16px;
       }
-      .page-header {
-        display: flex;
-        gap: 8px;
-        align-items: flex-start;
-      }
-      .page-header h1 {
-        margin: 0;
+      app-page-header {
+        display: block;
+        margin-bottom: 16px;
       }
       .muted {
         color: rgba(0, 0, 0, 0.6);

@@ -8,7 +8,9 @@ export type PageHeaderVariant =
   | 'leaderboard'
   | 'settings'
   | 'reminders'
-  | 'admin';
+  | 'admin'
+  | 'training'
+  | 'blog';
 
 @Component({
   selector: 'app-page-header',
@@ -156,6 +158,38 @@ export type PageHeaderVariant =
       );
     }
 
+    .page-header[data-variant='training'] {
+      background: linear-gradient(
+        150deg,
+        rgba(58, 30, 16, 0.92),
+        rgba(24, 13, 10, 0.92)
+      );
+      border-color: rgba(255, 142, 83, 0.36);
+    }
+    .page-header[data-variant='training']::before {
+      background: radial-gradient(
+        circle at top right,
+        rgba(255, 142, 83, 0.28),
+        transparent 60%
+      );
+    }
+
+    .page-header[data-variant='blog'] {
+      background: linear-gradient(
+        150deg,
+        rgba(36, 22, 60, 0.92),
+        rgba(15, 12, 28, 0.92)
+      );
+      border-color: rgba(167, 139, 250, 0.36);
+    }
+    .page-header[data-variant='blog']::before {
+      background: radial-gradient(
+        circle at top right,
+        rgba(167, 139, 250, 0.28),
+        transparent 60%
+      );
+    }
+
     .page-header-icon {
       flex-shrink: 0;
       display: inline-flex;
@@ -292,6 +326,24 @@ export type PageHeaderVariant =
           rgba(252, 218, 218, 0.96)
         );
         border-color: rgba(220, 38, 38, 0.32);
+      }
+
+      .page-header[data-variant='training'] {
+        background: linear-gradient(
+          150deg,
+          rgba(255, 240, 224, 0.96),
+          rgba(255, 224, 196, 0.96)
+        );
+        border-color: rgba(214, 96, 12, 0.36);
+      }
+
+      .page-header[data-variant='blog'] {
+        background: linear-gradient(
+          150deg,
+          rgba(243, 238, 255, 0.96),
+          rgba(228, 219, 252, 0.96)
+        );
+        border-color: rgba(124, 77, 255, 0.32);
       }
 
       .page-header-icon {

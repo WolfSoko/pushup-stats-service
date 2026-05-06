@@ -10,6 +10,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { Meta } from '@angular/platform-browser';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { PageHeaderComponent } from '../core/page-header/page-header.component';
 import { SeoService } from '../core/seo.service';
 import { BlogPost, findBlogPost } from './blog-posts.data';
 import { countWords, readingMinutes } from './reading-time';
@@ -19,7 +20,13 @@ const LOGO_URL = `${BASE_URL}/assets/pushup-logo.png`;
 
 @Component({
   selector: 'app-blog-article',
-  imports: [RouterLink, MatButtonModule, MatIconModule, DatePipe],
+  imports: [
+    RouterLink,
+    MatButtonModule,
+    MatIconModule,
+    DatePipe,
+    PageHeaderComponent,
+  ],
   template: `
     @if (post) {
       <article class="blog-article">
@@ -49,7 +56,10 @@ const LOGO_URL = `${BASE_URL}/assets/pushup-logo.png`;
               }
             </figure>
           }
-          <h1>{{ post.title }}</h1>
+          <app-page-header icon="article" variant="blog">
+            <h1 page-title>{{ post.title }}</h1>
+            <p page-subtitle>{{ post.description }}</p>
+          </app-page-header>
           <p class="article-meta">
             <time [attr.datetime]="post.publishedAt">{{
               post.publishedAt | date: 'longDate'
@@ -153,10 +163,9 @@ const LOGO_URL = `${BASE_URL}/assets/pushup-logo.png`;
         font-size: 0.9rem;
       }
 
-      h1 {
-        margin: 0 0 8px;
-        font-size: clamp(1.6rem, 4vw, 2.4rem);
-        line-height: 1.2;
+      app-page-header {
+        display: block;
+        margin-bottom: 12px;
       }
 
       .article-meta {

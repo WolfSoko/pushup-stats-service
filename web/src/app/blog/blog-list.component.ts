@@ -3,17 +3,26 @@ import { Component, inject, LOCALE_ID } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { RouterLink } from '@angular/router';
+import { PageHeaderComponent } from '../core/page-header/page-header.component';
 import { getBlogPostsByLocale } from './blog-posts.data';
 
 @Component({
   selector: 'app-blog-list',
-  imports: [RouterLink, MatCardModule, MatButtonModule, DatePipe],
+  imports: [
+    RouterLink,
+    MatCardModule,
+    MatButtonModule,
+    DatePipe,
+    PageHeaderComponent,
+  ],
   template: `
     <main class="blog-list">
-      <h1 i18n="@@blog.list.title">Blog</h1>
-      <p class="blog-intro" i18n="@@blog.list.intro">
-        Tipps, Guides und Motivation rund um Liegestütze und Krafttraining.
-      </p>
+      <app-page-header icon="article" variant="blog">
+        <h1 page-title i18n="@@blog.list.title">Blog</h1>
+        <p page-subtitle i18n="@@blog.list.intro">
+          Tipps, Guides und Motivation rund um Liegestütze und Krafttraining.
+        </p>
+      </app-page-header>
 
       <div class="articles">
         @for (post of posts; track post.slug) {
@@ -69,15 +78,9 @@ import { getBlogPostsByLocale } from './blog-posts.data';
         padding: clamp(20px, 4vw, 44px);
       }
 
-      h1 {
-        margin: 0 0 8px;
-        font-size: clamp(1.8rem, 4vw, 2.6rem);
-      }
-
-      .blog-intro {
-        margin: 0 0 32px;
-        color: var(--text-muted);
-        font-size: 1rem;
+      app-page-header {
+        display: block;
+        margin-bottom: 32px;
       }
 
       .articles {
