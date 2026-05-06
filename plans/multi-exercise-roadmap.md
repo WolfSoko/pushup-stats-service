@@ -282,6 +282,170 @@ gefixt wurden, weil ihr Aufwand den Tracer-Bullet sprengen würde:
   Time) landet, muss die Sektion via `measurementValueField()` die
   passende Spalte rendern.
 
+## Cross-cutting Tracks (über mehrere Phasen)
+
+Folgearbeiten, die nicht in eine einzelne Tracer-Bullet-Phase passen, weil sie
+quer durch die App schneiden. Sie laufen parallel zu den Phasen oder werden
+zwischen ihnen eingeschoben.
+
+### Track UI-1 — Historie für alle Übungen
+
+**Status:** offen, sollte direkt nach Phase 0 starten.
+
+Die `/entries` Seite (`entries-page.component.ts` + `EntriesStore`) liest
+heute ausschließlich aus der `pushups`-Collection. Solange Sit-ups und
+Kniebeugen nicht dort auftauchen, ist die Historie für die neuen Übungen
+unsichtbar — User können einen Eintrag anlegen, aber nicht wiederfinden,
+bearbeiten oder löschen.
+
+**Scope**
+
+- `EntriesStore` zusätzlich aus `exerciseEntries` laden und beide
+  Quellen in eine vereinheitlichte Liste mergen (`PushupRecord` →
+  `ExerciseEntry`-Form mit `exerciseId='pushup'`).
+- `StatsTableComponent` bekommt eine "Übung"-Spalte (Kategorie-Icon +
+  lokalisierter Name), die für Pushup wie heute den `variantType`
+  zeigt, für andere Übungen den Exercise-Namen.
+- Filter-Bar: zusätzlicher Multi-Select "Übung" (Pushup, Bauch-…,
+  Beine-…). Default = alle Übungen.
+- Edit-Flow: Pushups öffnen den existierenden Pushup-Dialog,
+  Exercise-Entries den neuen `ExerciseEntryDialogComponent`.
+- Tests: Service-Spec für gemerge'te Quellen, Component-Spec für
+  Filter-Verhalten.
+
+**Out of Scope**
+
+- Bulk-Operationen (Massenlöschen über Übungen hinweg) — kommt mit
+  Phase 2 (Per-Exercise-Streaks), wenn das Mental-Modell pro Übung
+  steht.
+
+**Offene Fragen**
+
+- Sortierung bei mixed Übungen: chronologisch absteigend ist klar,
+  aber was ist mit gleichzeitigen Einträgen? Tiebreaker via
+  Exercise-Name oder Eingabereihenfolge?
+
+### Track UI-2 — Analyse mit Übungs-Filter und Measurement-spezifischen Graphen
+
+**Status:** offen, hat Abhängigkeiten zu Phase 1 (Plank) und Phase 3
+(Cardio). Filter-Teil kann früher als die neuen Graphen.
+
+Die `/analysis` Seite (`analysis-page.component.ts`,
+`AnalysisStore`, `StatsChartComponent`, `TypePieComponent`,
+`SetsDistributionComponent`, `HeatmapComponent`) ist konsequent auf
+reps und Pushup-Varianten gebaut. Der "TypePie" zeigt heute Pushup-
+Varianten — das ergibt für Sit-ups oder Squats keinen Sinn, weil
+Phase-0-Übungen keine Varianten haben. Die Y-Achse vom StatsChart
+ist hartcodiert auf "Reps".
+
+**Scope (Filter-Stufe — sobald Phase 0 in Production ist)**
+
+- Übungs-Filter (Multi-Select wie in der Historie). Wenn nur eine
+  Übung ausgewählt ist, schaltet der TypePie auf die Varianten dieser
+  Übung um (heute: Pushup-Varianten; künftig: Plank-Varianten).
+- Bei Multi-Select über Kategorien hinweg zeigt die Pie-Darstellung
+  stattdessen die Verteilung pro Übungstyp.
+
+**Scope (Graphen-Stufe — kommt mit Phase 1+/3+)**
+
+- **Plank (time):** Y-Achse "Sekunden", Best-Hold-Linie, kumulative
+  Haltezeit pro Tag/Woche statt Reps.
+- **Cardio (distance + duration):** Pace-Diagramm (min/km über Zeit),
+  Wochen-Distanz-Aggregat. Strecke-pro-Zeit braucht eine zweite
+  Achse oder einen separaten "Pace"-Graph — bewusst NICHT auf einer
+  Achse mit reps oder seconds mischen.
+- **Strength (reps × weight):** Volumen pro Tag (= Σ reps·kg),
+  1RM-Schätzung (Epley) pro Übung über Zeit, PR-Linie.
+- **Heatmap:** bleibt grundsätzlich, gewichtet künftig optional auf
+  Volume/Sekunden statt nur reps, abhängig von der ausgewählten Übung.
+
+**Design-Entscheidungen, die wir treffen müssen**
+
+- Ein Chart pro Übung (saubere Achsen) vs. ein "vereinheitlichtes
+  Effort-Score"-Chart (skaliert reps/sek/m/kg auf eine Vergleichsachse —
+  fragwürdige Semantik, aber praktisch für Streak-Visualisierung).
+- Wechsel zwischen Übungen via Tabs (klare Fokussierung) vs.
+  vertikales Stapeln (alles auf einen Blick, längere Seite).
+- Sets-Distribution macht für Cardio keinen Sinn — komponentes
+  per Measurement gewählt.
+
+**Out of Scope**
+
+- Vergleichs-Charts ("Pushups vs. Squats") — eigenes Track, sobald
+  alle Measurement-Typen live sind.
+
+### Track ARCH — Klare Modul-Interfaces
+
+**Status:** offen, sollte vor Phase 4 (Custom Exercises) abgeschlossen
+sein, weil dort die Schnittstellen zwischen Catalog, Stores und UI
+am stärksten belastet werden.
+
+Heute haben mehrere Module implizite Abhängigkeiten:
+
+- `dashboard.store.ts` und `analysis.store.ts` lesen direkt aus
+  `LiveDataStore`/`StatsApiService` und kennen das `PushupRecord`-Shape.
+- `EntriesStore` und `EntriesPageComponent` teilen Filter-Zustand
+  über Inputs, nicht über ein Filter-Interface.
+- Stats-Components akzeptieren `PushupRecord[]` direkt, statt eine
+  domain-neutrale `EntryView` Schnittstelle.
+
+**Scope**
+
+- `libs/stats/src/lib/models/` bekommt eine `EntryView` (Lese-Form,
+  Measurement-aware), die UI-Components statt `PushupRecord`/
+  `ExerciseEntry` konsumieren. Stores mappen am Rand auf `EntryView`.
+- `libs/data-access` definiert ein einheitliches `EntryQueryService`-
+  Interface (User + Date-Range + ExerciseIds → `EntryView[]`), das
+  Pushup- und Exercise-Firestore-Service intern bündelt.
+- Filter-State zentral (z. B. ein `FilterStore` oder Query-Param-
+  Bridge), damit Historie und Analyse synchronisiert werden können.
+- Public-API-Files (`libs/*/src/index.ts`) auditieren — nur
+  Symbole exportieren, die von außen genutzt werden, alles andere
+  privat halten.
+- Diagramm + Erklärung in `docs/architecture.md` ergänzen.
+
+**Out of Scope**
+
+- Ein vollständiger Wechsel auf Hexagonal-/Ports-und-Adapters-
+  Architektur — zu schwer für den aktuellen Reifegrad.
+
+### Track MKT — Landingpage-Text + SEO
+
+**Status:** offen, blockiert nicht andere Phasen, sollte aber kurz nach
+Phase 0 (sit-ups + squats live) erfolgen, damit der Marketing-Text
+das tatsächliche Produkt widerspiegelt.
+
+Aktuell beschreiben die Landingpage und das `<meta>` ausschließlich
+"Liegestütze tracken". Ab Phase 0 ist das eine Untertreibung; Suchanfragen
+nach "Bauchtraining App", "Kniebeugen Tracker", später "Lauftracker" etc.
+finden uns nicht.
+
+**Scope**
+
+- Hero-Text und Feature-Sektion in
+  `web/src/app/marketing/shell/landing-page.component.{html,ts}`
+  überarbeiten — "Multi-Exercise" als Kernversprechen, Pushups als
+  flagship example.
+- `<meta name="description">` und `<title>` pro Locale aktualisieren.
+- `seo.service.ts` `keywords` erweitern: Bauchtraining, Beintraining,
+  Plank, Squats, Calisthenics, später Laufen/Cardio.
+- Strukturierte Daten (`schema.org/SportsActivityLocation` oder
+  passender Type) prüfen.
+- Sitemap: stellt sicher, dass die Wiki-Seiten zukünftiger Übungen
+  korrekt indexierbar sind (heute SEO-Demo nur Pushups —
+  siehe Risiken unten).
+- A/B-Test-fähig vorbereiten: Variante A (Pushup-fokussiert),
+  Variante B (Multi-Exercise-fokussiert), via GrowthBook-Flag falls
+  vorhanden.
+- Open-Graph / Twitter-Cards Bilder: ein generisches Multi-Exercise-
+  Hero statt Pushup-only.
+
+**Offene Fragen**
+
+- Brand-Name "Pushup Stats Service" passt nicht mehr zum Multi-
+  Exercise-Versprechen. Re-Branding ist ein separater Track —
+  hier nur Texte, kein Logo / Domain-Wechsel.
+
 ## Risiken & Offene Fragen
 
 - **Backwards-Compat von `userStats`:** Heute liegt das Aggregat als ein einziges
