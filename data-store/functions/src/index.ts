@@ -68,6 +68,25 @@ const TZ = 'Europe/Berlin';
 const DEMO_USER_ID = '9CrETSHzoKcPPw0ctHKM1OiyRrp2';
 const GITHUB_TOKEN = defineSecret('GITHUB_TOKEN');
 
+/**
+ * Returns the input as a `number[]` of finite, non-negative integers.
+ * Any non-array, non-numeric, or out-of-shape values become an empty
+ * array so downstream `reduce()`s never see NaN. Used by the
+ * exerciseEntries trigger; the legacy pushup trigger keeps its inline
+ * `Array.isArray` guard for now.
+ */
+function sanitizeSetsArray(input: unknown): number[] {
+  if (!Array.isArray(input)) return [];
+  const out: number[] = [];
+  for (const v of input) {
+    if (typeof v !== 'number') continue;
+    if (!Number.isFinite(v) || !Number.isInteger(v)) continue;
+    if (v < 0) continue;
+    out.push(v);
+  }
+  return out;
+}
+
 async function rebuildLeaderboardsCore() {
   const now = new Date();
   const today = berlinDateParts(now);
@@ -1666,12 +1685,15 @@ export const updateExerciseStatsOnEntryWrite = onDocumentWritten(
     const newReps = Number(afterData?.reps ?? 0);
     const oldTimestamp = beforeData?.timestamp as string | undefined;
     const newTimestamp = afterData?.timestamp as string | undefined;
-    const oldSets = Array.isArray(beforeData?.sets)
-      ? (beforeData.sets as number[])
-      : [];
-    const newSets = Array.isArray(afterData?.sets)
-      ? (afterData.sets as number[])
-      : [];
+    // Defensive sanitization: reduce over `sets` runs straight into
+    // applyDelta()/rebuildFromEntries() and any non-numeric value would
+    // poison the aggregate with NaN, which then causes the transaction
+    // set() to reject and the Cloud Function to retry forever.
+    // The Firestore rule enforces `is list` on writes, but documents
+    // predating that rule (or admin SDK writes) can still carry
+    // surprises.
+    const oldSets = sanitizeSetsArray(beforeData?.sets);
+    const newSets = sanitizeSetsArray(afterData?.sets);
 
     const isCreate = !beforeData && !!afterData;
     const isDelete = !!beforeData && !afterData;

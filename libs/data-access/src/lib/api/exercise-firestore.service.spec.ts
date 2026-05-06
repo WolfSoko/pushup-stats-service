@@ -9,6 +9,7 @@ jest.mock('@angular/fire/firestore', () => ({
   setDoc: jest.fn(async () => undefined),
   updateDoc: jest.fn(async () => undefined),
   deleteDoc: jest.fn(async () => undefined),
+  deleteField: jest.fn(() => '__deleted__'),
 }));
 
 import { TestBed } from '@angular/core/testing';
@@ -86,6 +87,96 @@ describe('ExerciseFirestoreService', () => {
       );
       expect(exerciseFilter).toBeDefined();
       expect(exerciseFilter?.[2]).toBe('legs.squats');
+    });
+
+    it('forwards exerciseIds as an `in` query constraint', async () => {
+      const whereSpy = jest.spyOn(firestoreFns, 'where');
+
+      await firstValueFrom(
+        service.listEntries('u1', {
+          exerciseIds: ['abs.situps', 'legs.squats'],
+        })
+      );
+
+      const exerciseFilter = whereSpy.mock.calls.find(
+        ([field]) => field === 'exerciseId'
+      );
+      expect(exerciseFilter?.[1]).toBe('in');
+      expect(exerciseFilter?.[2]).toEqual(['abs.situps', 'legs.squats']);
+    });
+
+    it('rejects exerciseIds longer than the Firestore `in` cap of 30', async () => {
+      const tooMany = Array.from({ length: 31 }, (_, i) => `e.${i}`);
+      await expect(
+        firstValueFrom(service.listEntries('u1', { exerciseIds: tooMany }))
+      ).rejects.toThrow(/at most 30/);
+    });
+
+    it('emits a from-clause when filter.from is set', async () => {
+      const whereSpy = jest.spyOn(firestoreFns, 'where');
+      await firstValueFrom(
+        service.listEntries('u1', { filter: { from: '2026-04-01' } })
+      );
+      const fromFilter = whereSpy.mock.calls.find(
+        ([field, op]) => field === 'timestamp' && op === '>='
+      );
+      expect(fromFilter?.[2]).toBe('2026-04-01T00:00:00.000Z');
+    });
+
+    it('emits a to-clause when filter.to is set', async () => {
+      const whereSpy = jest.spyOn(firestoreFns, 'where');
+      await firstValueFrom(
+        service.listEntries('u1', { filter: { to: '2026-04-30' } })
+      );
+      const toFilter = whereSpy.mock.calls.find(
+        ([field, op]) => field === 'timestamp' && op === '<='
+      );
+      expect(toFilter?.[2]).toBe('2026-04-30T23:59:59.999Z');
+    });
+
+    it('drops mapped entries outside the [from, to] window', async () => {
+      jest.spyOn(firestoreFns, 'getDocs').mockResolvedValueOnce({
+        docs: [
+          {
+            id: 'before',
+            data: () => ({
+              userId: 'u1',
+              exerciseId: 'abs.situps',
+              timestamp: '2026-03-31T22:00:00Z',
+              reps: 10,
+              source: 'web',
+            }),
+          },
+          {
+            id: 'inside',
+            data: () => ({
+              userId: 'u1',
+              exerciseId: 'abs.situps',
+              timestamp: '2026-04-15T10:00:00Z',
+              reps: 25,
+              source: 'web',
+            }),
+          },
+          {
+            id: 'after',
+            data: () => ({
+              userId: 'u1',
+              exerciseId: 'abs.situps',
+              timestamp: '2026-05-01T08:00:00Z',
+              reps: 20,
+              source: 'web',
+            }),
+          },
+        ],
+      } as never);
+
+      const result = await firstValueFrom(
+        service.listEntries('u1', {
+          filter: { from: '2026-04-01', to: '2026-04-30' },
+        })
+      );
+
+      expect(result.map((e) => e._id)).toEqual(['inside']);
     });
   });
 
@@ -240,6 +331,20 @@ describe('ExerciseFirestoreService', () => {
       const patch = updateSpy.mock.calls[0]?.[1] as Record<string, unknown>;
       expect(patch['exerciseId']).toBeUndefined();
       expect(patch['source']).toBe('mobile');
+    });
+
+    it('clears the sets field when the patch sends an empty array', async () => {
+      const updateSpy = jest.spyOn(firestoreFns, 'updateDoc');
+      const deleteFieldSpy = jest.spyOn(firestoreFns, 'deleteField');
+      await firstValueFrom(
+        service.updateEntry('s1', 'abs.situps', { sets: [] })
+      );
+      expect(deleteFieldSpy).toHaveBeenCalled();
+      const patch = updateSpy.mock.calls[0]?.[1] as Record<string, unknown>;
+      // The mocked deleteField returns the sentinel string from the
+      // jest.mock call above; the real Firestore SDK returns a sentinel
+      // object with the same role.
+      expect(patch['sets']).toBe('__deleted__');
     });
 
     it('uses partial validation so a variantId-only update is allowed', async () => {

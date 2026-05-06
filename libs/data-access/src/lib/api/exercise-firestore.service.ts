@@ -2,6 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import {
   collection,
   deleteDoc,
+  deleteField,
   doc,
   Firestore,
   getDocs,
@@ -94,6 +95,18 @@ export class ExerciseFirestoreService {
     if (options?.exerciseId) {
       constraints.push(where('exerciseId', '==', options.exerciseId));
     } else if (options?.exerciseIds && options.exerciseIds.length > 0) {
+      // Firestore's `in` operator caps the value list at 30. Phase-0
+      // categories are far below that, but guarding here keeps the
+      // failure mode predictable for future larger catalogs (and
+      // avoids a cryptic Firestore error to the caller).
+      if (options.exerciseIds.length > 30) {
+        return throwError(
+          () =>
+            new Error(
+              `listEntries: exerciseIds supports at most 30 ids, got ${options.exerciseIds!.length}`
+            )
+        );
+      }
       constraints.push(where('exerciseId', 'in', [...options.exerciseIds]));
     }
     if (options?.filter?.from) {
@@ -193,9 +206,11 @@ export class ExerciseFirestoreService {
    * as immutable: a different exercise must be modelled as delete + create
    * so the per-exercise stats trigger can decrement the old aggregate.
    * Attempting to change `exerciseId` via the patch payload errors with
-   * `unknown-exercise`-shaped {@link ExerciseValidationError} (the
-   * `'immutable-exercise-id'` violation marker keeps it distinguishable
-   * from a typo in the stored id).
+   * an {@link ExerciseValidationError} carrying the `'unknown-exercise'`
+   * violation code — there is no dedicated immutability code yet, so
+   * callers wanting to distinguish "typo in stored id" from "tried to
+   * move exercise" need to compare the patch and the stored value
+   * themselves.
    *
    * Validation is **partial** — only the fields actually being patched
    * are checked. So a variant-only update doesn't need to round-trip the
@@ -227,14 +242,25 @@ export class ExerciseFirestoreService {
     const rowRef = doc(this.firestore, EXERCISE_ENTRIES_COLLECTION, id);
     // Strip exerciseId so an explicit pass-through doesn't sneak past the
     // immutability check above (e.g. caller forwards the original entry
-    // verbatim). updatedAt is computed server-side, payload values stay.
+    // verbatim). updatedAt is overwritten below with a client-side
+    // ISO timestamp — Firestore `serverTimestamp()` would be safer
+    // against clock skew, but the create path also writes client time
+    // and switching one without the other would produce mixed shapes.
     const { exerciseId: _ignored, ...patchable } = payload;
     void _ignored;
-    const cleanPayload = Object.fromEntries(
-      Object.entries(patchable).filter(
-        ([, v]) => v !== undefined && !(Array.isArray(v) && v.length === 0)
-      )
-    );
+    // An explicit `sets: []` is the contract for "drop the per-set
+    // breakdown" (e.g. user goes from 3×10 back to a single 30-rep entry).
+    // Dropping that key entirely would silently keep the stale array on
+    // the doc; mapping it to `deleteField()` clears the field as expected.
+    const cleanPayload: Record<string, unknown> = {};
+    for (const [k, v] of Object.entries(patchable)) {
+      if (v === undefined) continue;
+      if (k === 'sets' && Array.isArray(v) && v.length === 0) {
+        cleanPayload[k] = deleteField();
+        continue;
+      }
+      cleanPayload[k] = v;
+    }
     return from(
       updateDoc(rowRef, {
         ...cleanPayload,

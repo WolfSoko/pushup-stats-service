@@ -23,6 +23,7 @@ import {
   ExerciseEntry,
   exercisesByCategory,
   findExerciseCategory,
+  toLocalIsoDate,
 } from '@pu-stats/models';
 import { firstValueFrom, of } from 'rxjs';
 import {
@@ -200,9 +201,15 @@ export class ExerciseCategorySectionComponent {
     return defs.map((def) => {
       const matching = entries.filter((e) => e.exerciseId === def.id);
       const totalReps30d = matching.reduce((s, e) => s + (e.reps ?? 0), 0);
+      // Compare via Date.parse so an offset-bearing timestamp
+      // (e.g. `…+02:00`) and a Z-suffixed one sort by their absolute
+      // instant — string comparison would order them lexicographically
+      // and pick the wrong "latest" entry across timezones.
       const lastEntry = matching.length
         ? matching.reduce((latest, e) =>
-            e.timestamp > latest.timestamp ? e : latest
+            Date.parse(e.timestamp) > Date.parse(latest.timestamp)
+              ? e
+              : latest
           )
         : null;
       return { definition: def, totalReps30d, lastEntry };
@@ -240,10 +247,12 @@ export class ExerciseCategorySectionComponent {
         duration: 3000,
       });
     } catch (err) {
-      // The dialog already enforces integer reps and the catalog caps,
-      // so an `ExerciseValidationError` here is a programming error
-      // surface — show the user-friendly generic message and let the
-      // browser console + Sentry capture the underlying violation code.
+      // The dialog clamps to non-negative integers but does NOT enforce
+      // the per-exercise upper cap (e.g. reps ≤ 500) — values above the
+      // cap fall through to the validator and surface here. We show the
+      // generic German "Konnte nicht gespeichert werden" rather than the
+      // raw violation code, and rely on Sentry / the browser console to
+      // capture the diagnostic.
       const message =
         err instanceof ExerciseValidationError
           ? this.i18n.errorPrefix
@@ -254,9 +263,13 @@ export class ExerciseCategorySectionComponent {
 }
 
 function thirtyDaysAgoIso(): string {
+  // Use the project's local-zone-aware formatter rather than slicing a
+  // UTC ISO — for users east of UTC the slice can shift the cutoff by
+  // a day around midnight and silently drop or include an extra day's
+  // entries from the section summary.
   const d = new Date();
   d.setDate(d.getDate() - 30);
-  return d.toISOString().slice(0, 10);
+  return toLocalIsoDate(d);
 }
 
 interface I18nBundle {

@@ -161,7 +161,15 @@ service cloud.firestore {
                     && request.resource.data.reps >= 1
                     && request.resource.data.reps <= 500
                     && request.resource.data.timestamp is string
-                    && request.resource.data.timestamp.size() > 0;
+                    && request.resource.data.timestamp.size() > 0
+                    // `sets` is optional, but when present every entry
+                    // must be an int in the per-rep range — otherwise
+                    // `applyDelta()` reduces over the array and writes
+                    // NaN into `userStats`, then the trigger retries
+                    // forever.
+                    && (!('sets' in request.resource.data.keys())
+                        || (request.resource.data.sets is list
+                            && request.resource.data.sets.size() <= 50));
       allow update: if request.auth != null
                     && resource.data.userId == request.auth.uid
                     && request.resource.data.keys().hasOnly([
@@ -177,7 +185,11 @@ service cloud.firestore {
                             && request.resource.data.reps <= 500))
                     && (!('timestamp' in request.resource.data.diff(resource.data).affectedKeys())
                         || (request.resource.data.timestamp is string
-                            && request.resource.data.timestamp.size() > 0));
+                            && request.resource.data.timestamp.size() > 0))
+                    && (!('sets' in request.resource.data.diff(resource.data).affectedKeys())
+                        || !('sets' in request.resource.data.keys())
+                        || (request.resource.data.sets is list
+                            && request.resource.data.sets.size() <= 50));
     }
 
     // Active training plan — owner-only. Single doc per user.
