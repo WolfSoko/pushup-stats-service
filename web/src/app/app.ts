@@ -33,7 +33,7 @@ import {
 } from '@angular/router';
 import { SwUpdate } from '@angular/service-worker';
 import { AuthService, AuthStore, UserMenuComponent } from '@pu-auth/auth';
-import { filter } from 'rxjs';
+import { filter, interval } from 'rxjs';
 import { SeoService } from './core/seo.service';
 import { UserContextService } from '@pu-auth/auth';
 import {
@@ -294,7 +294,8 @@ export class App {
       });
 
     if (this.swUpdate?.isEnabled) {
-      this.swUpdate.versionUpdates
+      const swUpdate = this.swUpdate;
+      swUpdate.versionUpdates
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe((event) => {
           if (event.type !== 'VERSION_READY') return;
@@ -309,9 +310,23 @@ export class App {
             }
           );
 
-          ref.onAction().subscribe(() => {
+          ref.onAction().subscribe(async () => {
+            // `reload()` alone keeps the old waiting worker in place; call
+            // `activateUpdate()` first so the new ngsw takes over before the
+            // browser fetches the next navigation.
+            await swUpdate.activateUpdate();
             window.location.reload();
           });
+        });
+
+      // Long-lived sessions (PWA / TWA users who never close the tab) only
+      // see VERSION_READY when ngsw re-checks the manifest. Default check is
+      // once on app stabilisation, so without a poll a deploy never reaches
+      // them. Ten minutes mirrors the cadence used in the SW reminder system.
+      interval(10 * 60 * 1000)
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe(() => {
+          void swUpdate.checkForUpdate();
         });
     }
   }

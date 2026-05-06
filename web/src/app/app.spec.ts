@@ -552,6 +552,8 @@ describe('App (testing-library)', () => {
       return {
         versionUpdates: versionUpdates.asObservable(),
         isEnabled: true,
+        activateUpdate: vitest.fn().mockResolvedValue(true),
+        checkForUpdate: vitest.fn().mockResolvedValue(true),
         emit: (event: { type: string }) => versionUpdates.next(event),
       };
     }
@@ -638,6 +640,102 @@ describe('App (testing-library)', () => {
       const callsBefore = openSpy.mock.calls.length;
       swUpdate.emit({ type: 'VERSION_DETECTED' });
       expect(openSpy.mock.calls.length).toBe(callsBefore);
+    });
+
+    // Regression: a plain `location.reload()` does not skip the waiting
+    // ngsw, so users would tap "Neu laden" and still get the old build.
+    // The handler must call `activateUpdate()` before the reload.
+    it('activates the waiting worker before reloading on Neu laden click', async () => {
+      const swUpdate = makeSwUpdateMock();
+      const onActionSubject = new Subject<void>();
+      vitest.spyOn(MatSnackBar.prototype, 'open').mockReturnValue({
+        onAction: () => onActionSubject.asObservable(),
+        afterDismissed: () => of({ dismissedByAction: false }),
+      } as unknown as ReturnType<MatSnackBar['open']>);
+
+      const reloadSpy = vitest.fn();
+      vitest.spyOn(window, 'location', 'get').mockReturnValue({
+        reload: reloadSpy,
+      } as unknown as Location);
+
+      await render(App, {
+        providers: [
+          provideRouter([]),
+          { provide: PLATFORM_ID, useValue: 'browser' },
+          {
+            provide: UserContextService,
+            useValue: {
+              userNameSafe: userNameSignal.asReadonly(),
+              userIdSafe: () => 'u1',
+              isAdmin: () => false,
+              isGuest: () => false,
+            },
+          },
+          { provide: AuthStore, useValue: authMock },
+          { provide: AuthService, useValue: authServiceMock },
+          { provide: Auth, useValue: firebaseAuthMock },
+          { provide: UserConfigApiService, useValue: userConfigApiMock },
+          { provide: StatsApiService, useValue: statsApiMock },
+          { provide: AdsStore, useValue: adsStoreMock },
+          { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
+          { provide: SwUpdate, useValue: swUpdate },
+        ],
+      });
+
+      swUpdate.emit({ type: 'VERSION_READY' });
+      onActionSubject.next();
+      await Promise.resolve();
+      await Promise.resolve();
+
+      expect(swUpdate.activateUpdate).toHaveBeenCalledTimes(1);
+      expect(reloadSpy).toHaveBeenCalledTimes(1);
+      expect(swUpdate.activateUpdate.mock.invocationCallOrder[0]).toBeLessThan(
+        reloadSpy.mock.invocationCallOrder[0]
+      );
+    });
+
+    // Regression: long-lived PWA/TWA sessions never received the reload
+    // toast because ngsw only checked the manifest once at app start.
+    // Polling every 10 minutes ensures new deploys eventually surface.
+    it('polls swUpdate.checkForUpdate every 10 minutes', async () => {
+      vitest.useFakeTimers();
+      try {
+        const swUpdate = makeSwUpdateMock();
+
+        await render(App, {
+          providers: [
+            provideRouter([]),
+            { provide: PLATFORM_ID, useValue: 'browser' },
+            {
+              provide: UserContextService,
+              useValue: {
+                userNameSafe: userNameSignal.asReadonly(),
+                userIdSafe: () => 'u1',
+                isAdmin: () => false,
+                isGuest: () => false,
+              },
+            },
+            { provide: AuthStore, useValue: authMock },
+            { provide: AuthService, useValue: authServiceMock },
+            { provide: Auth, useValue: firebaseAuthMock },
+            { provide: UserConfigApiService, useValue: userConfigApiMock },
+            { provide: StatsApiService, useValue: statsApiMock },
+            { provide: AdsStore, useValue: adsStoreMock },
+            { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
+            { provide: SwUpdate, useValue: swUpdate },
+          ],
+        });
+
+        expect(swUpdate.checkForUpdate).not.toHaveBeenCalled();
+
+        vitest.advanceTimersByTime(10 * 60 * 1000);
+        expect(swUpdate.checkForUpdate).toHaveBeenCalledTimes(1);
+
+        vitest.advanceTimersByTime(20 * 60 * 1000);
+        expect(swUpdate.checkForUpdate).toHaveBeenCalledTimes(3);
+      } finally {
+        vitest.useRealTimers();
+      }
     });
   });
 
