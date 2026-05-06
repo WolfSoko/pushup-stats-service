@@ -4,6 +4,31 @@
 
 In-app reminders use `ReminderService` with `setInterval`. Server-side reminders come from the `dispatchPushReminders` Cloud Function (runs every 5 min via Web Push).
 
+## ngsw update prompt: `activateUpdate()` before `reload()`
+
+`SwUpdate.versionUpdates` fires `VERSION_READY` when ngsw has downloaded a new version, but the new worker stays in `installed/waiting` until the **last** client of the old worker is gone. A plain `window.location.reload()` does not qualify — it just opens another navigation against the still-active old worker, so the user taps "Neu laden", the page reloads, and they keep seeing the old build until every tab is closed.
+
+Always call `await swUpdate.activateUpdate()` first, then `reload()` (`web/src/app/app.ts`):
+
+```ts
+ref.onAction().subscribe(async () => {
+  await swUpdate.activateUpdate();
+  window.location.reload();
+});
+```
+
+## ngsw doesn't poll — long-lived PWA/TWA sessions miss updates
+
+`SwUpdate` only checks the manifest once on app stabilisation (`registerWhenStable:2000` in `app.config.ts`). PWA / TWA users who never close the tab consequently **never** receive `VERSION_READY` after a deploy. Poll explicitly:
+
+```ts
+interval(10 * 60 * 1000)
+  .pipe(takeUntilDestroyed(this.destroyRef))
+  .subscribe(() => void swUpdate.checkForUpdate());
+```
+
+Symptom that points here: "the SW update notification stopped working after deploys" while DevTools shows the new ngsw is registered but stuck in `waiting`.
+
 ## Browser API quirks
 
 - **Android Chrome does NOT support `new Notification()`** — always use `ServiceWorkerRegistration.showNotification()` with a `new Notification()` fallback for desktop/dev.
