@@ -88,29 +88,31 @@
         }
       }
 
-      @if (isLoggedIn()) {
-        <p class="visibility-hint" data-testid="leaderboard-visibility-hint">
-          <mat-icon aria-hidden="true">visibility</mat-icon>
-          <span i18n="@@leaderboard.visibilityHint">
-            Sichtbarkeit oder Anzeigename anpassen?
-          </span>
-          <a
-            routerLink="/settings"
-            fragment="visibility"
-            i18n="@@leaderboard.visibilityHint.cta"
-            >Einstellungen öffnen</a
-          >
-        </p>
-      } @else {
-        <p class="visibility-hint" data-testid="leaderboard-login-hint">
-          <mat-icon aria-hidden="true">login</mat-icon>
-          <span i18n="@@leaderboard.loginHint">
-            Mitmachen und auftauchen?
-          </span>
-          <a routerLink="/login" i18n="@@leaderboard.loginHint.cta"
-            >Anmelden</a
-          >
-        </p>
+      @if (authResolved()) {
+        @if (isLoggedIn()) {
+          <p class="visibility-hint" data-testid="leaderboard-visibility-hint">
+            <mat-icon aria-hidden="true">visibility</mat-icon>
+            <span i18n="@@leaderboard.visibilityHint">
+              Sichtbarkeit oder Anzeigename anpassen?
+            </span>
+            <a
+              routerLink="/settings"
+              fragment="visibility"
+              i18n="@@leaderboard.visibilityHint.cta"
+              >Einstellungen öffnen</a
+            >
+          </p>
+        } @else {
+          <p class="visibility-hint" data-testid="leaderboard-login-hint">
+            <mat-icon aria-hidden="true">login</mat-icon>
+            <span i18n="@@leaderboard.loginHint">
+              Mitmachen und auftauchen?
+            </span>
+            <a routerLink="/login" i18n="@@leaderboard.loginHint.cta"
+              >Anmelden</a
+            >
+          </p>
+        }
       }
     </mat-card-content>
   </mat-card>
