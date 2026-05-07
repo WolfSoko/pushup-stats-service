@@ -159,7 +159,7 @@ import { PageHeaderComponent } from '../../core/page-header/page-header.componen
                 >Noch keine Einträge.</strong
               >
               <p i18n="@@entries.empty.body">
-                Trage deinen ersten Satz Liegestütze ein — dann wird hier deine
+                Trage deinen ersten Trainingseintrag ein — dann wird hier deine
                 Historie sichtbar.
               </p>
             </div>

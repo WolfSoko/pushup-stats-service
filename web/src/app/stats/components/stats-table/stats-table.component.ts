@@ -94,10 +94,13 @@ export class StatsTableComponent {
     if (entry.kind === 'pushup') {
       return displayPushupType(entry.variantType, this.locale);
     }
-    // Phase-0 catalog: sit-ups + squats. Fall back to the raw id for
-    // any future exercise that lands before the i18n table here is
-    // updated, so it is still visible (just not localized).
-    return EXERCISE_DISPLAY_NAMES[entry.exerciseId] ?? entry.exerciseId;
+    // The Typ column is a *sub-type* (pushup variant), not the exercise
+    // itself. For exercise rows the parent Übung column already shows
+    // the localized name; surfacing it here too produced a duplicated
+    // "Sit-ups | Sit-ups" pair. Phase-0 exercises have no variants, so
+    // an empty cell is correct. Track UI-3 will introduce per-exercise
+    // variants and this can return `entry.variantId` then.
+    return entry.variantId ?? '';
   };
 
   readonly sort = viewChild(MatSort);
@@ -150,14 +153,17 @@ export class StatsTableComponent {
     return cols;
   });
 
-  /** Memoized normalization to UnifiedEntry[] for both input shapes. */
+  /** Normalize each input element to UnifiedEntry. The two callers
+   * pass homogeneous arrays today (dashboard preview = PushupRecord[],
+   * history page = UnifiedEntry[]), but a per-element check is barely
+   * costlier than a first-element heuristic and keeps mixed arrays
+   * working if a future caller ever feeds one. */
   private readonly unifiedEntries = computed<UnifiedEntry[]>(() => {
     const raw = this.entries() ?? [];
     if (raw.length === 0) return [];
-    // Heuristic: UnifiedEntry has a `kind` discriminator; PushupRecord
-    // does not. Avoids importing a runtime guard from libs/stats.
-    if ('kind' in raw[0]) return raw as UnifiedEntry[];
-    return (raw as PushupRecord[]).map(pushupRecordToUnified);
+    return (raw as Array<PushupRecord | UnifiedEntry>).map((r) =>
+      'kind' in r ? r : pushupRecordToUnified(r)
+    );
   });
 
   readonly dataSource = new MatTableDataSource<UnifiedEntry>([]);

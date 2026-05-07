@@ -6793,7 +6793,7 @@
     <unit id="entries.empty.body">
       <segment state="translated">
         <source/>
-        <target> 记录你的第一组俯卧撑——历史记录就会显示在这里。 </target>
+        <target> 添加你的第一条训练记录——历史记录就会显示在这里。 </target>
       </segment>
     </unit>
     <unit id="entries.empty.cta">

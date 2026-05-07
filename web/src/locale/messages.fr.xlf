@@ -7180,7 +7180,7 @@
     <unit id="entries.empty.body">
       <segment state="translated">
         <source/>
-        <target> Enregistrez votre première série de pompes — votre historique apparaîtra ici. </target>
+        <target> Saisissez votre première entrée d'entraînement — votre historique apparaîtra ici. </target>
       </segment>
     </unit>
     <unit id="entries.empty.cta">

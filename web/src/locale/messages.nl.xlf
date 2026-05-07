@@ -7180,7 +7180,7 @@
     <unit id="entries.empty.body">
       <segment state="translated">
         <source/>
-        <target> Registreer je eerste set push-ups — je geschiedenis verschijnt hier. </target>
+        <target> Voeg je eerste trainingsinvoer toe — je historie verschijnt hier. </target>
       </segment>
     </unit>
     <unit id="entries.empty.cta">

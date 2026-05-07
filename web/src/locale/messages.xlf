@@ -4449,7 +4449,7 @@
     <unit id="exercise.category.pushup">
       <notes>
         <note category="location">web/src/app/stats/components/exercise-category-section/exercise-category-section.component.ts:287</note>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:170</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:176</note>
         <note category="location">web/src/app/stats/shell/entries-page.component.ts:276</note>
       </notes>
       <segment>
@@ -4475,7 +4475,7 @@
     <unit id="exercise.abs.situps.name">
       <notes>
         <note category="location">web/src/app/stats/components/exercise-category-section/exercise-category-section.component.ts:292</note>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:333</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:339</note>
         <note category="location">web/src/app/stats/shell/entries-page.component.ts:285</note>
       </notes>
       <segment>
@@ -4485,7 +4485,7 @@
     <unit id="exercise.legs.squats.name">
       <notes>
         <note category="location">web/src/app/stats/components/exercise-category-section/exercise-category-section.component.ts:293</note>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:334</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:340</note>
         <note category="location">web/src/app/stats/shell/entries-page.component.ts:286</note>
       </notes>
       <segment>
@@ -5132,7 +5132,7 @@
     </unit>
     <unit id="colExercise">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:166</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:172</note>
       </notes>
       <segment>
         <source>Übung</source>
@@ -5523,7 +5523,7 @@
         <note category="location">web/src/app/stats/shell/entries-page.component.ts:162,164</note>
       </notes>
       <segment>
-        <source> Trage deinen ersten Satz Liegestütze ein — dann wird hier deine Historie sichtbar. </source>
+        <source> Trage deinen ersten Trainingseintrag ein — dann wird hier deine Historie sichtbar. </source>
       </segment>
     </unit>
     <unit id="entries.empty.cta">

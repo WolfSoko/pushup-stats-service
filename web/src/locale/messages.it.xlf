@@ -7180,7 +7180,7 @@
     <unit id="entries.empty.body">
       <segment state="translated">
         <source/>
-        <target> Registra la tua prima serie di flessioni — la cronologia apparirà qui. </target>
+        <target> Aggiungi la tua prima voce di allenamento — la cronologia apparirà qui. </target>
       </segment>
     </unit>
     <unit id="entries.empty.cta">

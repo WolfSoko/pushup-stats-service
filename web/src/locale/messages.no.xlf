@@ -7402,7 +7402,7 @@ Deine Position: # ·  Reps        </source>
     <unit id="entries.empty.body">
       <segment state="translated">
         <source/>
-        <target> Logg ditt første sett armhevninger — historikken vises her. </target>
+        <target> Legg til din første treningsoppføring — historikken vises her. </target>
       </segment>
     </unit>
     <unit id="entries.empty.cta">

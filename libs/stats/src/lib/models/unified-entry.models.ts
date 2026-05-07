@@ -49,8 +49,12 @@ export type UnifiedEntry = UnifiedPushupEntry | UnifiedExerciseEntry;
  * Logical filter key for the History/Analysis exercise multi-select.
  * `'pushup'` matches every legacy pushup doc regardless of variant;
  * any other value is an `ExerciseDefinition.id` from the catalog.
+ *
+ * The `string & {}` half is the standard TypeScript trick to keep
+ * `'pushup'` as an autocomplete hint without widening the union all
+ * the way to `string` (which is what `'pushup' | string` collapses to).
  */
-export type UnifiedEntryFilterKey = 'pushup' | string;
+export type UnifiedEntryFilterKey = 'pushup' | (string & {});
 
 export function pushupRecordToUnified(r: PushupRecord): UnifiedPushupEntry {
   return {

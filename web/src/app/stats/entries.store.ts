@@ -39,12 +39,6 @@ export interface PushupTypeFilterOption {
   label: string;
 }
 
-/**
- * Multi-select option in the new "Übung" filter on the history page.
- * `value` is the {@link UnifiedEntryFilterKey} stored in
- * `EntriesState.kinds`; `label` is the locale-aware display string for
- * the dropdown.
- */
 export interface ExerciseKindFilterOption {
   value: UnifiedEntryFilterKey;
   label: string;
@@ -148,11 +142,6 @@ export const EntriesStore = signalStore(
         ),
       ].sort((a, b) => a.localeCompare(b))
     ),
-    /**
-     * Pushup-variant options for the existing "Typ" filter. Only mined
-     * from pushup-kind rows so non-pushup entries don't pollute the
-     * variant dropdown.
-     */
     typeOptions: computed<PushupTypeFilterOption[]>(() => {
       const seen = new Map<string, PushupTypeFilterOption>();
       for (const row of store.rows()) {
@@ -271,12 +260,6 @@ export const EntriesStore = signalStore(
           patchState(store, { busyAction: null, busyId: null });
         }
       },
-      /**
-       * Updates an entry in the right backing collection based on the
-       * caller-supplied `kind`. Phase 0 only mutates pushup variant /
-       * reps / sets / timestamp / source — the exercise dialog covers
-       * the same field set for sit-ups and squats.
-       */
       async updateEntry(payload: {
         kind: 'pushup' | 'exercise';
         id: string;

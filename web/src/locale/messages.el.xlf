@@ -7180,7 +7180,7 @@
     <unit id="entries.empty.body">
       <segment state="translated">
         <source/>
-        <target> Καταχώρησε την πρώτη σου σειρά push-ups — το ιστορικό σου θα εμφανιστεί εδώ. </target>
+        <target> Προσθέστε την πρώτη σας καταχώρηση προπόνησης — το ιστορικό σας θα εμφανιστεί εδώ. </target>
       </segment>
     </unit>
     <unit id="entries.empty.cta">

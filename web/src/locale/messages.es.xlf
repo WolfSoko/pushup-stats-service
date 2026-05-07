@@ -7180,7 +7180,7 @@
     <unit id="entries.empty.body">
       <segment state="translated">
         <source/>
-        <target> Registra tu primera entrada de flexiones y tu historial aparecerá aquí. </target>
+        <target> Añade tu primera entrada de entrenamiento — tu historial aparecerá aquí. </target>
       </segment>
     </unit>
     <unit id="entries.empty.cta">

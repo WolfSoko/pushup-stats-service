@@ -94,8 +94,13 @@ export const LiveDataStore = signalStore(
         const unsubExercises = onSnapshot(
           exerciseQuery,
           (snapshot) => {
+            // `connected` is intentionally NOT set here — the pushup
+            // subscription is the canonical liveness indicator. If we
+            // also flipped it to `true` from this handler, an
+            // exercise-only success would mask a concurrent pushup
+            // subscription failure (the error handler on the pushup
+            // stream sets `connected: false`).
             patchState(store, {
-              connected: true,
               exerciseEntries: snapshot.docs.map(
                 (d) => ({ _id: d.id, ...d.data() }) as ExerciseEntry
               ),
@@ -103,10 +108,8 @@ export const LiveDataStore = signalStore(
             });
           },
           // A failure on the exerciseEntries subscription must not flip
-          // `connected` to false — the pushup subscription drives the
-          // canonical live-state indicator, and most users still have
-          // zero exercise entries today (the collection is empty for
-          // them, not unreachable).
+          // `connected` to false either — same reason: pushups own the
+          // canonical signal.
           () => undefined
         );
         onCleanup(() => {

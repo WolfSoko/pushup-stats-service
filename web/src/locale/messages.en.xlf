@@ -7443,7 +7443,7 @@ Deine Position: # ·  Reps        </source>
     <unit id="entries.empty.body">
       <segment state="translated">
         <source/>
-        <target> Log your first set of pushups — your history will appear here. </target>
+        <target> Add your first training entry — your history will appear here. </target>
       </segment>
     </unit>
     <unit id="entries.empty.cta">
