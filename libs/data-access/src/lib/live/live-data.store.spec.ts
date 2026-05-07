@@ -48,5 +48,31 @@ describe('LiveDataStore', () => {
       expect(store.entries()).toEqual([]);
       expect(store.updateTick()).toBe(0);
     });
+
+    it('starts with an empty exerciseEntries array', () => {
+      TestBed.configureTestingModule({
+        providers: [
+          LiveDataStore,
+          { provide: PLATFORM_ID, useValue: 'browser' },
+        ],
+      });
+      const store = TestBed.inject(LiveDataStore);
+
+      expect(store.exerciseEntries()).toEqual([]);
+    });
+
+    it('exposes exerciseEntries on server platform as well', () => {
+      TestBed.configureTestingModule({
+        providers: [
+          LiveDataStore,
+          { provide: PLATFORM_ID, useValue: 'server' },
+        ],
+      });
+      const store = TestBed.inject(LiveDataStore);
+
+      // On the server the Firestore listener never fires, so the
+      // exerciseEntries signal stays at its initial empty array.
+      expect(store.exerciseEntries()).toEqual([]);
+    });
   });
 });
