@@ -4438,6 +4438,24 @@
         <source>Anleitung öffnen</source>
       <target>打开指南</target></segment>
     </unit>
+    <unit id="entryDialog.variant">
+      <segment state="translated">
+        <source>Variante</source>
+        <target>变体</target>
+      </segment>
+    </unit>
+    <unit id="entryDialog.variantNone">
+      <segment state="translated">
+        <source>—</source>
+        <target>—</target>
+      </segment>
+    </unit>
+    <unit id="entryDialog.overCap">
+      <segment state="translated">
+        <source> Maximum: <ph id="0" equiv="INTERPOLATION" disp="{{ data.definition.max }}"/> pro Eintrag </source>
+        <target> 最大: <ph id="0" equiv="INTERPOLATION" disp="{{ data.definition.max }}"/> 条记录 </target>
+      </segment>
+    </unit>
     <unit id="exerciseSection.lastEntry">
       <segment state="translated">
         <source>Letzter Eintrag</source>

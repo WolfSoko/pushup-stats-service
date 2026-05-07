@@ -3822,6 +3822,24 @@
         <target> Opslaan </target>
       </segment>
     </unit>
+    <unit id="entryDialog.variant">
+      <segment state="translated">
+        <source>Variante</source>
+        <target>Variant</target>
+      </segment>
+    </unit>
+    <unit id="entryDialog.variantNone">
+      <segment state="translated">
+        <source>—</source>
+        <target>—</target>
+      </segment>
+    </unit>
+    <unit id="entryDialog.overCap">
+      <segment state="translated">
+        <source> Maximum: <ph id="0" equiv="INTERPOLATION" disp="{{ data.definition.max }}"/> pro Eintrag </source>
+        <target> Maximum: <ph id="0" equiv="INTERPOLATION" disp="{{ data.definition.max }}"/> per invoer </target>
+      </segment>
+    </unit>
     <unit id="exerciseSection.lastEntry">
       <segment state="translated">
         <source>Letzter Eintrag</source>

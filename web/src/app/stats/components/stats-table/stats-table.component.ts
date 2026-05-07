@@ -35,13 +35,13 @@ import { firstValueFrom } from 'rxjs';
 import {
   CreateEntryDialogComponent,
   CreateEntryResult,
-  EntryDialogData,
+  EntryDialogData as PushupEntryDialogData,
 } from '../create-entry-dialog/create-entry-dialog.component';
 import {
-  ExerciseEntryDialogComponent,
-  ExerciseEntryDialogData,
-  ExerciseEntryDialogResult,
-} from '../exercise-entry-dialog/exercise-entry-dialog.component';
+  EntryDialogComponent,
+  EntryDialogData,
+  EntryDialogResult,
+} from '../entry-dialog/entry-dialog.component';
 import { exerciseDisplayName } from '../../i18n/exercise-display-names';
 
 /**
@@ -219,7 +219,7 @@ export class StatsTableComponent {
 
   openEditDialog(entry: UnifiedEntry): void {
     if (entry.kind === 'pushup') {
-      const dialogData: EntryDialogData = {
+      const dialogData: PushupEntryDialogData = {
         timestamp: entry.timestamp,
         reps: entry.reps,
         sets: entry.sets,
@@ -227,14 +227,15 @@ export class StatsTableComponent {
         type: entry.variantType ?? undefined,
       };
       this.dialog
-        .open<CreateEntryDialogComponent, EntryDialogData, CreateEntryResult>(
+        .open<
           CreateEntryDialogComponent,
-          {
-            width: 'min(92vw, 420px)',
-            maxWidth: '92vw',
-            data: dialogData,
-          }
-        )
+          PushupEntryDialogData,
+          CreateEntryResult
+        >(CreateEntryDialogComponent, {
+          width: 'min(92vw, 420px)',
+          maxWidth: '92vw',
+          data: dialogData,
+        })
         .afterClosed()
         .subscribe((result) => {
           if (result) {
@@ -256,25 +257,35 @@ export class StatsTableComponent {
       return;
     }
 
+    // Synthetic-fallback guards against stale data where the entry's
+    // exerciseId no longer exists in the catalog (renamed or removed).
+    const def = findExerciseDefinition(entry.exerciseId) ?? {
+      id: entry.exerciseId,
+      categoryId: 'abs' as const,
+      measurement: 'reps' as const,
+      min: 1,
+      max: 500,
+      unit: 'reps',
+    };
     const exerciseName = this.exerciseLabel(entry);
     this.dialog
-      .open<
-        ExerciseEntryDialogComponent,
-        ExerciseEntryDialogData,
-        ExerciseEntryDialogResult
-      >(ExerciseEntryDialogComponent, {
-        width: 'min(92vw, 420px)',
-        maxWidth: '92vw',
-        data: {
-          exerciseId: entry.exerciseId,
-          exerciseName,
-          initial: {
-            timestamp: entry.timestamp,
-            reps: entry.reps,
-            ...(entry.sets ? { sets: entry.sets } : {}),
+      .open<EntryDialogComponent, EntryDialogData, EntryDialogResult>(
+        EntryDialogComponent,
+        {
+          width: 'min(92vw, 420px)',
+          maxWidth: '92vw',
+          data: {
+            definition: def,
+            exerciseName,
+            initial: {
+              timestamp: entry.timestamp,
+              reps: entry.reps,
+              sets: entry.sets,
+              variantId: entry.variantId,
+            },
           },
-        },
-      })
+        }
+      )
       .afterClosed()
       .subscribe((result) => {
         if (result) {
@@ -286,6 +297,7 @@ export class StatsTableComponent {
             reps: result.reps,
             sets: result.sets.length > 1 ? result.sets : undefined,
             source: entry.source,
+            ...(result.variantId ? { variantId: result.variantId } : {}),
           });
         }
       });
