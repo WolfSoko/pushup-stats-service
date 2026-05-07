@@ -446,6 +446,67 @@ finden uns nicht.
   Exercise-Versprechen. Re-Branding ist ein separater Track —
   hier nur Texte, kein Logo / Domain-Wechsel.
 
+### Track UI-3 — Ein Dialog für alle Übungen
+
+**Status:** offen, sollte vor Phase 4 (Custom Exercises) abgeschlossen sein —
+Custom-Übungen brauchen zwingend einen parametrisierten Dialog, da man pro
+neue User-Übung keinen neuen Dialog generieren kann. Auch ein guter
+Einstiegspunkt direkt nach Phase 0, um die Dopplung zwischen den beiden
+heute existierenden Dialogen wegzubekommen, bevor weitere Übungen landen.
+
+Heute existieren zwei parallele Dialoge mit überschneidender Logik:
+
+- `CreateEntryDialogComponent` — pushup-only: timestamp, sets/reps,
+  Variant-Autocomplete über `PUSHUP_TYPES`, Wiki-Deep-Link, Source-Feld.
+- `ExerciseEntryDialogComponent` — Phase-0 Light-Variante für Sit-ups
+  und Squats: timestamp, sets/reps. Bewusst minimal gebaut, um den
+  Pushup-Pfad nicht zu touchieren.
+
+Beide werden zusammengeführt in **einen** `EntryDialogComponent`, der
+sich aus der `ExerciseDefinition` selbst konfiguriert.
+
+**Scope**
+
+- **Form-Felder dynamisch nach `measurement`:**
+  - `reps` und `weight` → Reps-Input + Sets-Liste.
+  - `time` → mm:ss-Input + optionaler Stopper-Button (Phase 1 Plank).
+  - `distance` → km/m-Input + optionales Pace-Companion (Phase 3 Cardio).
+  - `weight` → zusätzlich kg-Companion-Input (Phase 5 Strength).
+- **Variant-Picker als eigenes Sub-Komponent.** Default: einfacher
+  `mat-select` mit den `def.variants[]`. Pushup überschreibt das via
+  konfigurierbarem `VariantPickerKind` mit dem heutigen Autocomplete-
+  und Wiki-Link-Verhalten — die UX bleibt identisch, nur der
+  Container-Dialog ist generisch.
+- **Caps clientseitig erzwingen**, abgeleitet aus `def.min`/`def.max`,
+  damit der heutige Bug "Dialog akzeptiert reps > 500, Validator
+  rejectet erst beim Speichern" verschwindet (siehe PR #289 Review-
+  Kommentar).
+- **Edit-Modus:** akzeptiert ein bestehendes `UnifiedEntry` (siehe
+  Track ARCH) und routet auf das passende Form-Feld basierend auf
+  der Definition.
+- `ExerciseEntryDialogComponent` und `CreateEntryDialogComponent`
+  werden zu Adaptern degradiert (oder gelöscht), abhängig davon was
+  Track ARCH liefert.
+- Tests pro Measurement-Typ (Form-Render und Submit-Pfad), plus ein
+  Regression-Test, dass die Pushup-Edit-Pfade bit-genau das alte
+  Verhalten reproduzieren (Wiki-Link, Variant-Autocomplete, Source-
+  Autocomplete).
+
+**Out of Scope**
+
+- Komplett neue Eingabe-Affordances wie Voice-Input oder Foto-Eintrag —
+  separater Track.
+- Pre-Population aus Trainingsplan ("Heute 3×12 Squats") — kommt mit
+  einem eigenen Track sobald Trainings-Pläne pro Übung existieren.
+
+**Offene Fragen**
+
+- Wo lebt die Variant-Picker-Konfiguration? `ExerciseDefinition` mit
+  einem `variantPickerKind: 'autocomplete-with-wiki' | 'simple-select'`
+  Feld, oder ein zentrales Lookup im Dialog basierend auf
+  `def.id === 'pushup'`? Ersteres ist sauberer, aber jeder Custom-User-
+  Übung muss eines wählen → Default `'simple-select'`.
+
 ## Risiken & Offene Fragen
 
 - **Backwards-Compat von `userStats`:** Heute liegt das Aggregat als ein einziges
