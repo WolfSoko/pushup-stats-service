@@ -116,6 +116,11 @@ mat-checkbox {
 }
 
 .google-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: center;
+  height: 48px;
   background-color: #fff;
   color: #444;
   border: 1px solid #ddd;
@@ -123,6 +128,12 @@ mat-checkbox {
 
 .google-button:hover {
   background-color: #f8f8f8;
+}
+
+.google-logo {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
 }
 
 .muted {
