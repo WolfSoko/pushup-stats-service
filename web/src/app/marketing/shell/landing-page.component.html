@@ -543,14 +543,42 @@
       <mat-card-header class="key-features-header">
         <mat-icon aria-hidden="true">install_mobile</mat-icon>
         <mat-card-title i18n="@@landing.feature.pwa.title"
-          >PWA, Live-Sync & Web Share</mat-card-title
+          >App-Installation, Live-Sync & Teilen</mat-card-title
         >
       </mat-card-header>
       <mat-card-content i18n="@@landing.feature.pwa.body"
-        >Installierbar wie eine native App, Echtzeit-Sync zwischen allen Geräten
-        und Tagesergebnis per Web Share teilen – inklusive Dark- und
-        Light-Theme.</mat-card-content
+        >Direkt aus dem Browser als App installieren – mit Echtzeit-Sync
+        zwischen allen Geräten und Tagesergebnis per
+        Teilen-Button.</mat-card-content
       >
+      @if (isStandalone()) {
+        <mat-card-actions class="install-actions">
+          <span class="install-badge" i18n="@@landing.feature.pwa.installed">
+            <mat-icon aria-hidden="true">check_circle</mat-icon>
+            Du nutzt bereits die installierte App
+          </span>
+        </mat-card-actions>
+      } @else if (canInstall()) {
+        <mat-card-actions class="install-actions">
+          <button
+            mat-flat-button
+            color="primary"
+            type="button"
+            (click)="onInstallClick()"
+            i18n="@@landing.feature.pwa.install"
+          >
+            <mat-icon aria-hidden="true">download</mat-icon>
+            Jetzt als App installieren
+          </button>
+        </mat-card-actions>
+      } @else if (showIosInstallHint) {
+        <mat-card-actions class="install-actions">
+          <p class="install-hint" i18n="@@landing.feature.pwa.iosHint">
+            Auf iPhone & iPad: Teilen-Symbol antippen und „Zum Home-Bildschirm“
+            wählen.
+          </p>
+        </mat-card-actions>
+      }
     </mat-card>
 
     <mat-card class="feature-card">

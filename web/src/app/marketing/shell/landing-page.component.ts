@@ -6,6 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { Router, RouterLink } from '@angular/router';
 import { AdSlotComponent, AdsStore } from '@pu-stats/ads';
 import { AuthService, AuthStore } from '@pu-auth/auth';
+import { InstallPromptService } from '../../core/install-prompt.service';
 import { ReminderFeatureSectionComponent } from '../components/reminder-feature-section/reminder-feature-section.component';
 
 // Each string is 7 characters — one per day, top-to-bottom.
@@ -49,11 +50,16 @@ export class LandingPageComponent {
   private readonly adsStore = inject(AdsStore);
   private readonly authService = inject(AuthService);
   private readonly authStore = inject(AuthStore);
+  private readonly installPrompt = inject(InstallPromptService);
   private readonly router = inject(Router);
 
   readonly isAuthenticated = this.authStore.isAuthenticated;
   readonly authResolved = this.authStore.authResolved;
   readonly isGuest = this.authStore.isGuest;
+
+  readonly canInstall = this.installPrompt.canInstall;
+  readonly isStandalone = this.installPrompt.isStandalone;
+  readonly showIosInstallHint = this.installPrompt.isIos;
 
   readonly adClient = this.adsStore.adClient;
   readonly landingAdSlot = this.adsStore.landingInlineSlot;
@@ -88,6 +94,11 @@ export class LandingPageComponent {
 
   onPlansCtaClick(target: 'overview' | 'signup'): void {
     this.track('landing_plans_cta_click', { target });
+  }
+
+  async onInstallClick(): Promise<void> {
+    const outcome = await this.installPrompt.prompt();
+    this.track('landing_install_prompt', { outcome });
   }
 
   private track(
