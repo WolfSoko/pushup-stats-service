@@ -36,7 +36,7 @@ export class InstallPromptService {
   private readonly installed = signal<boolean>(this.detectStandalone());
 
   readonly canInstall = computed(() => this.deferredPrompt() !== null);
-  readonly isStandalone = computed(() => this.installed());
+  readonly isStandalone = this.installed.asReadonly();
   readonly isIos = this.detectIos();
 
   constructor() {
@@ -83,10 +83,13 @@ export class InstallPromptService {
 
   private detectStandalone(): boolean {
     if (!isPlatformBrowser(this.platformId)) return false;
-    const matchMedia = globalThis.matchMedia;
-    if (typeof matchMedia === 'function') {
+    if (typeof globalThis.matchMedia === 'function') {
       try {
-        if (matchMedia('(display-mode: standalone)').matches) return true;
+        // Call via globalThis so the WebIDL `this` binding is preserved
+        // (detached invocation throws "Illegal invocation" in real browsers).
+        if (globalThis.matchMedia('(display-mode: standalone)').matches) {
+          return true;
+        }
       } catch {
         // matchMedia exists but threw — treat as not standalone.
       }
