@@ -1,7 +1,11 @@
 import { signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { of, throwError } from 'rxjs';
-import { LiveDataStore, StatsApiService } from '@pu-stats/data-access';
+import {
+  ExerciseFirestoreService,
+  LiveDataStore,
+  StatsApiService,
+} from '@pu-stats/data-access';
 import { AppDataFacade } from '../core/app-data.facade';
 import { EntriesStore } from './entries.store';
 
@@ -23,9 +27,18 @@ describe('EntriesStore', () => {
     updatePushup: vitest.fn().mockReturnValue(of({ _id: '1' })),
   };
 
+  const exerciseServiceMock = {
+    listEntries: vitest.fn().mockReturnValue(of([])),
+    createEntry: vitest.fn().mockReturnValue(of({ _id: 'x' })),
+    updateEntry: vitest.fn().mockReturnValue(of(undefined)),
+    deleteEntry: vitest.fn().mockReturnValue(of({ ok: true })),
+  };
+
   const liveMock = {
     connected: signal(true),
     entries: signal(rows),
+    exerciseEntries: signal([] as never[]),
+    updateTick: signal(0),
   };
 
   const appDataMock = {
@@ -39,6 +52,7 @@ describe('EntriesStore', () => {
       providers: [
         EntriesStore,
         { provide: StatsApiService, useValue: apiMock },
+        { provide: ExerciseFirestoreService, useValue: exerciseServiceMock },
         { provide: LiveDataStore, useValue: liveMock },
         { provide: AppDataFacade, useValue: appDataMock },
       ],
@@ -47,25 +61,34 @@ describe('EntriesStore', () => {
   }
 
   describe('deleteEntry', () => {
-    it('Given a successful delete, When deleteEntry resolves, Then app-level resources are reloaded so the toolbar count refreshes', async () => {
+    it('Given a successful pushup delete, Then app-level resources are reloaded so the toolbar count refreshes', async () => {
       const store = setup();
 
-      await store.deleteEntry('1');
+      await store.deleteEntry({ kind: 'pushup', id: '1' });
 
       expect(apiMock.deletePushup).toHaveBeenCalledWith('1');
       expect(appDataMock.reloadAfterMutation).toHaveBeenCalledTimes(1);
     });
 
-    it('Given a failing delete, When the api throws, Then app-level resources are not reloaded', async () => {
+    it('Given a failing delete, Then app-level resources are not reloaded', async () => {
       const store = setup();
       apiMock.deletePushup.mockReturnValueOnce(
         throwError(() => new Error('boom'))
       );
 
-      await store.deleteEntry('1');
+      await store.deleteEntry({ kind: 'pushup', id: '1' });
 
       expect(appDataMock.reloadAfterMutation).not.toHaveBeenCalled();
       expect(store.error()).toBe('boom');
+    });
+
+    it('Given an exercise-kind delete, Then ExerciseFirestoreService.deleteEntry is called', async () => {
+      const store = setup();
+
+      await store.deleteEntry({ kind: 'exercise', id: 's42' });
+
+      expect(exerciseServiceMock.deleteEntry).toHaveBeenCalledWith('s42');
+      expect(apiMock.deletePushup).not.toHaveBeenCalled();
     });
   });
 
@@ -84,10 +107,11 @@ describe('EntriesStore', () => {
   });
 
   describe('updateEntry', () => {
-    it('Given a successful update, When updateEntry resolves, Then app-level resources are reloaded so the toolbar count refreshes', async () => {
+    it('Given a successful pushup update, Then app-level resources are reloaded', async () => {
       const store = setup();
 
       await store.updateEntry({
+        kind: 'pushup',
         id: '1',
         timestamp: '2026-04-27T08:00:00',
         reps: 25,
@@ -97,13 +121,14 @@ describe('EntriesStore', () => {
       expect(appDataMock.reloadAfterMutation).toHaveBeenCalledTimes(1);
     });
 
-    it('Given a failing update, When the api throws, Then app-level resources are not reloaded', async () => {
+    it('Given a failing update, Then app-level resources are not reloaded', async () => {
       const store = setup();
       apiMock.updatePushup.mockReturnValueOnce(
         throwError(() => new Error('boom'))
       );
 
       await store.updateEntry({
+        kind: 'pushup',
         id: '1',
         timestamp: '2026-04-27T08:00:00',
         reps: 25,
@@ -111,6 +136,25 @@ describe('EntriesStore', () => {
 
       expect(appDataMock.reloadAfterMutation).not.toHaveBeenCalled();
       expect(store.error()).toBe('boom');
+    });
+
+    it('Given an exercise-kind update with exerciseId, Then ExerciseFirestoreService.updateEntry is called', async () => {
+      const store = setup();
+
+      await store.updateEntry({
+        kind: 'exercise',
+        id: 's42',
+        exerciseId: 'abs.situps',
+        timestamp: '2026-04-27T08:00:00',
+        reps: 25,
+      });
+
+      expect(exerciseServiceMock.updateEntry).toHaveBeenCalledWith(
+        's42',
+        'abs.situps',
+        expect.objectContaining({ reps: 25 })
+      );
+      expect(apiMock.updatePushup).not.toHaveBeenCalled();
     });
   });
 });

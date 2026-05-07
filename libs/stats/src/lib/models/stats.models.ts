@@ -38,3 +38,4 @@ export * from './user-stats.models';
 export * from './public-profile.models';
 export * from './exercise.models';
 export * from './exercise.catalog';
+export * from './unified-entry.models';

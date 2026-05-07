@@ -1065,6 +1065,18 @@ Active:         </target>
       
       
         </unit>
+    <unit id="colExercise">
+      <segment state="translated">
+        <source>Übung</source>
+        <target>Exercise</target>
+      </segment>
+    </unit>
+    <unit id="entries.exerciseFilter">
+      <segment state="translated">
+        <source>Übung</source>
+        <target>Exercise</target>
+      </segment>
+    </unit>
     <unit id="colReps">
       <notes>
         <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:75,76</note>

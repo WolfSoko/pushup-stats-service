@@ -4,6 +4,7 @@ import { of } from 'rxjs';
 import { StatsTableComponent } from './stats-table.component';
 import { UserConfigApiService } from '@pu-stats/data-access';
 import { UserContextService } from '@pu-auth/auth';
+import type { UnifiedEntry } from '@pu-stats/models';
 import { CreateEntryResult } from '../create-entry-dialog/create-entry-dialog.component';
 
 describe('StatsTableComponent', () => {
@@ -36,14 +37,24 @@ describe('StatsTableComponent', () => {
     fixture = TestBed.createComponent(StatsTableComponent);
   });
 
-  it('binds entry data to table dataSource', async () => {
+  it('binds entry data to table dataSource (mapped to UnifiedEntry)', async () => {
     const entries = [
       { _id: '1', timestamp: '2026-02-10T13:45:00', reps: 8, source: 'wa' },
     ];
     fixture.componentRef.setInput('entries', entries);
     await fixture.whenStable();
 
-    expect(fixture.componentInstance.dataSource.data).toEqual(entries);
+    // Legacy PushupRecord input is mapped to UnifiedEntry on the way
+    // into the dataSource so the row template can read `kind`-aware
+    // helpers without each caller having to map first.
+    const data = fixture.componentInstance.dataSource.data;
+    expect(data).toHaveLength(1);
+    expect(data[0]).toMatchObject({
+      kind: 'pushup',
+      _id: '1',
+      reps: 8,
+      source: 'wa',
+    });
   });
 
   it('binds all entries to dataSource for virtual viewport rendering', async () => {
@@ -104,13 +115,14 @@ describe('StatsTableComponent', () => {
       const updateSpy = vitest.fn();
       component.update.subscribe(updateSpy);
 
-      const entry = {
+      const entry: UnifiedEntry = {
+        kind: 'pushup',
         _id: '1',
         timestamp: '2026-02-10T13:45:00',
         reps: 30,
         sets: [10, 10, 10] as number[],
         source: 'wa',
-        type: 'Diamond',
+        variantType: 'Diamond',
       };
 
       const editResult: CreateEntryResult = {
@@ -136,13 +148,15 @@ describe('StatsTableComponent', () => {
             reps: entry.reps,
             sets: entry.sets,
             source: entry.source,
-            type: entry.type,
+            type: entry.variantType,
           },
         })
       );
 
-      // Verify update was emitted with dialog result
+      // Verify update was emitted with dialog result and the kind
+      // discriminator the parent store needs to dispatch.
       expect(updateSpy).toHaveBeenCalledWith({
+        kind: 'pushup',
         id: '1',
         timestamp: editResult.timestamp,
         reps: editResult.reps,
@@ -162,10 +176,12 @@ describe('StatsTableComponent', () => {
       } as never);
 
       component.openEditDialog({
+        kind: 'pushup',
         _id: '1',
         timestamp: '2026-02-10T13:45:00',
         reps: 8,
         source: 'wa',
+        variantType: null,
       });
 
       expect(updateSpy).not.toHaveBeenCalled();
@@ -178,11 +194,12 @@ describe('StatsTableComponent', () => {
       } as never);
 
       component.openEditDialog({
+        kind: 'pushup',
         _id: '1',
         timestamp: '2026-02-10T13:45:00',
         reps: 20,
         source: 'web',
-        type: 'Standard',
+        variantType: 'Standard',
       });
 
       expect(openSpy).toHaveBeenCalledWith(
