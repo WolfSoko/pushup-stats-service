@@ -2790,8 +2790,8 @@
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:544,546</note>
       </notes>
       <segment state="translated">
-        <source>PWA, Live-Sync &amp; Web Share</source>
-        <target>PWA, Live Sync &amp; Web Share</target>
+        <source>App-Installation, Live-Sync &amp; Teilen</source>
+        <target>Εγκατάσταση εφαρμογής, ζωντανός συγχρονισμός & κοινή χρήση</target>
       </segment>
     </unit>
     <unit id="landing.feature.pwa.body">
@@ -2799,35 +2799,35 @@
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:548,551</note>
       </notes>
       <segment state="translated">
-        <source>Installierbar wie eine native App, Echtzeit-Sync zwischen allen Geräten und Tagesergebnis per Web Share teilen – inklusive Dark- und Light-Theme.</source>
-        <target>Μπορεί να εγκατασταθεί σαν εγγενής εφαρμογή, να συγχρονίζεται σε πραγματικό χρόνο μεταξύ όλων των συσκευών και να μοιράζεται καθημερινά αποτελέσματα μέσω κοινής χρήσης ιστού – συμπεριλαμβανομένων σκούρων και ανοιχτόχρωμων θεμάτων.</target>
+        <source>Direkt aus dem Browser als App installieren – mit Echtzeit-Sync zwischen allen Geräten und Tagesergebnis per Teilen-Button.</source>
+        <target>Εγκατάσταση απευθείας από τον περιηγητή σαν εφαρμογή – με συγχρονισμό σε πραγματικό χρόνο σε όλες τις συσκευές και κοινοποίηση του ημερήσιου αποτελέσματος με ένα κουμπί.</target>
       </segment>
     </unit>
     <unit id="landing.feature.pwa.installed">
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon aria-hidden=&quot;true&quot;&gt;" dispEnd="&lt;/mat-icon&gt;">check_circle</pc> Du nutzt bereits die installierte App </source>
-        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon aria-hidden=&quot;true&quot;&gt;" dispEnd="&lt;/mat-icon&gt;">check_circle</pc> Du nutzt bereits die installierte App </target>
+        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon aria-hidden=&quot;true&quot;&gt;" dispEnd="&lt;/mat-icon&gt;">check_circle</pc> Χρησιμοποιείς ήδη την εγκατεστημένη εφαρμογή </target>
       </segment>
     </unit>
     <unit id="landing.feature.pwa.install">
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon aria-hidden=&quot;true&quot;&gt;" dispEnd="&lt;/mat-icon&gt;">download</pc> Jetzt als App installieren </source>
-        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon aria-hidden=&quot;true&quot;&gt;" dispEnd="&lt;/mat-icon&gt;">download</pc> Jetzt als App installieren </target>
+        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon aria-hidden=&quot;true&quot;&gt;" dispEnd="&lt;/mat-icon&gt;">download</pc> Εγκατάσταση ως εφαρμογή </target>
       </segment>
     </unit>
     <unit id="landing.feature.pwa.iosHint">
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source> Auf iPhone &amp; iPad: Teilen-Symbol antippen und „Zum Home-Bildschirm“ wählen. </source>
-        <target> Auf iPhone &amp; iPad: Teilen-Symbol antippen und „Zum Home-Bildschirm“ wählen. </target>
+        <target> Σε iPhone & iPad: άγγιξε το εικονίδιο κοινής χρήσης και επίλεξε «Στην οθόνη Αφετηρίας». </target>
       </segment>
     </unit>
     <unit id="landing.feature.privacy.title">
