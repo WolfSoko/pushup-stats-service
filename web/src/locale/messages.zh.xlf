@@ -4438,6 +4438,30 @@
         <source>Anleitung öffnen</source>
       <target>打开指南</target></segment>
     </unit>
+    <unit id="entryDialog.duration">
+      <segment state="translated">
+        <source>Dauer (mm:ss)</source>
+        <target>时长 (mm:ss)</target>
+      </segment>
+    </unit>
+    <unit id="entryDialog.overCapTime">
+      <segment state="translated">
+        <source>Maximum: <ph id="0" equiv="INTERPOLATION" disp="{{ formattedMax() }}"/></source>
+        <target>最大: <ph id="0" equiv="INTERPOLATION" disp="{{ formattedMax() }}"/></target>
+      </segment>
+    </unit>
+    <unit id="exercise.category.plank">
+      <segment state="translated">
+        <source>Plank</source>
+        <target>平板支撑</target>
+      </segment>
+    </unit>
+    <unit id="exercise.plank.standard.name">
+      <segment state="translated">
+        <source>Plank</source>
+        <target>平板支撑</target>
+      </segment>
+    </unit>
     <unit id="entryDialog.variant">
       <segment state="translated">
         <source>Variante</source>

@@ -7,6 +7,8 @@
 const EXERCISE_DISPLAY_NAMES: Record<string, string> = {
   'abs.situps': $localize`:@@exercise.abs.situps.name:Sit-ups`,
   'legs.squats': $localize`:@@exercise.legs.squats.name:Kniebeugen`,
+  'plank.standard': $localize`:@@exercise.plank.standard.name:Plank`,
+  'cardio.running': $localize`:@@exercise.cardio.running.name:Laufen`,
 };
 
 export function exerciseDisplayName(id: string): string {

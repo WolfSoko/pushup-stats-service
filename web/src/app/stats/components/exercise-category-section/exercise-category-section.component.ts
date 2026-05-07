@@ -121,12 +121,14 @@ interface ExerciseSummary {
                   <div class="exercise-meta">
                     <span i18n="@@exerciseSection.lastEntry">Letzter Eintrag</span>
                     : {{ last.timestamp | date: 'shortDate' }}
-                    — {{ last.reps }}
+                    — {{ formatValue(item.definition, last) }}
                   </div>
                 }
               </div>
               <div class="exercise-stats">
-                <span class="total">{{ item.totalReps30d }}</span>
+                <span class="total">{{
+                  formatTotal(item.definition, item.totalReps30d)
+                }}</span>
                 <span class="label" i18n="@@exerciseSection.last30d"
                   >Letzte 30 Tage</span
                 >
@@ -173,6 +175,29 @@ export class ExerciseCategorySectionComponent {
     return `${this.i18n.addPrefix}: ${this.exerciseName(id)}`;
   }
 
+  /**
+   * Format the per-row "last entry" value. Time-measurement exercises
+   * (plank) carry the value in `durationSec` and render as `m:ss`;
+   * everything else falls back to the raw rep count.
+   */
+  formatValue(def: ExerciseDefinition, entry: ExerciseEntry): string {
+    if (def.measurement === 'time' && entry.durationSec !== undefined) {
+      return formatSeconds(entry.durationSec);
+    }
+    return String(entry.reps ?? 0);
+  }
+
+  /**
+   * Format the section's "30-day total" cell. Same exercise-aware
+   * branch as {@link formatValue}.
+   */
+  formatTotal(def: ExerciseDefinition, total: number): string {
+    if (def.measurement === 'time') {
+      return formatSeconds(total);
+    }
+    return String(total);
+  }
+
   private localizeCategory(id: ExerciseCategoryId): string {
     return this.i18n.categoryNames[id] ?? id;
   }
@@ -201,7 +226,15 @@ export class ExerciseCategorySectionComponent {
     const defs = exercisesByCategory().get(this.categoryId()) ?? [];
     return defs.map((def) => {
       const matching = entries.filter((e) => e.exerciseId === def.id);
-      const totalReps30d = matching.reduce((s, e) => s + (e.reps ?? 0), 0);
+      // Time-measurement exercises (plank) carry the value in
+      // `durationSec`; reps-measurement exercises in `reps`. The
+      // summary total is exercise-scoped so it represents whichever
+      // unit the catalog defines.
+      const totalReps30d = matching.reduce((s, e) => {
+        const v =
+          def.measurement === 'time' ? (e.durationSec ?? 0) : (e.reps ?? 0);
+        return s + v;
+      }, 0);
       // Compare via Date.parse so an offset-bearing timestamp
       // (e.g. `…+02:00`) and a Z-suffixed one sort by their absolute
       // instant — string comparison would order them lexicographically
@@ -239,9 +272,17 @@ export class ExerciseCategorySectionComponent {
         this.exerciseService.createEntry(userId, {
           exerciseId: result.exerciseId,
           timestamp: result.timestamp,
-          reps: result.reps,
+          // Measurement-aware payload shape: time exercises (plank)
+          // ship a `durationSec` and no reps/sets; reps exercises do
+          // the inverse. Mirroring the dialog's measurement
+          // discriminator keeps the validator happy on both paths.
+          ...(result.measurement === 'time'
+            ? { durationSec: result.durationSec ?? 0 }
+            : {
+                reps: result.reps,
+                ...(result.sets.length > 1 ? { sets: result.sets } : {}),
+              }),
           ...(result.variantId ? { variantId: result.variantId } : {}),
-          ...(result.sets.length > 1 ? { sets: result.sets } : {}),
         })
       );
       this.entriesResource.reload();
@@ -261,6 +302,18 @@ export class ExerciseCategorySectionComponent {
       this.snack.open(message, this.i18n.dismissLabel, { duration: 5000 });
     }
   }
+}
+
+/**
+ * Format raw seconds as `m:ss`. Module-level helper (mirrors the one in
+ * StatsTableComponent — Track UI-3 Phase B will move both into a
+ * shared service together with the variant-picker work).
+ */
+function formatSeconds(totalSec: number): string {
+  if (!Number.isFinite(totalSec) || totalSec < 0) return '';
+  const m = Math.floor(totalSec / 60);
+  const s = totalSec % 60;
+  return `${m}:${String(s).padStart(2, '0')}`;
 }
 
 function thirtyDaysAgoIso(): string {
@@ -288,10 +341,12 @@ function buildI18n(): I18nBundle {
     pushup: $localize`:@@exercise.category.pushup:Liegestütze`,
     abs: $localize`:@@exercise.category.abs:Bauch`,
     legs: $localize`:@@exercise.category.legs:Beine`,
+    plank: $localize`:@@exercise.category.plank:Plank`,
   };
   const exerciseNames: Record<string, string> = {
     'abs.situps': $localize`:@@exercise.abs.situps.name:Sit-ups`,
     'legs.squats': $localize`:@@exercise.legs.squats.name:Kniebeugen`,
+    'plank.standard': $localize`:@@exercise.plank.standard.name:Plank`,
   };
   return {
     categoryNames,

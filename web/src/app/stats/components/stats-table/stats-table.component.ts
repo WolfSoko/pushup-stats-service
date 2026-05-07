@@ -49,13 +49,17 @@ import { exerciseDisplayName } from '../../i18n/exercise-display-names';
  * `kind` discriminator so the parent store can dispatch to the right
  * Firestore service. `exerciseId` and `variantId` are only meaningful
  * when `kind === 'exercise'`; `type` only when `kind === 'pushup'`.
+ *
+ * Either `reps` (with optional `sets`) or `durationSec` is set,
+ * depending on the underlying exercise's measurement.
  */
 export interface StatsTableUpdate {
   kind: 'pushup' | 'exercise';
   id: string;
   timestamp: string;
-  reps: number;
+  reps?: number;
   sets?: number[];
+  durationSec?: number;
   source: string;
   type?: string;
   exerciseId?: string;
@@ -298,6 +302,9 @@ export class StatsTableComponent {
               timestamp: entry.timestamp,
               reps: entry.reps,
               sets: entry.sets,
+              ...(entry.durationSec !== undefined
+                ? { durationSec: entry.durationSec }
+                : {}),
               variantId: entry.variantId,
             },
           },
@@ -311,16 +318,24 @@ export class StatsTableComponent {
             id: entry._id,
             exerciseId: entry.exerciseId,
             timestamp: result.timestamp,
-            reps: result.reps,
-            // Same single-set-collapse rule as the pushup branch:
-            // explicit `[]` clears a stale per-set breakdown.
-            sets:
-              result.sets.length > 1
-                ? result.sets
-                : entry.sets !== undefined
-                  ? []
-                  : undefined,
             source: entry.source,
+            // Measurement-aware: time exercises (plank) carry a
+            // durationSec; reps exercises carry reps + optional sets.
+            // The reps branch keeps the explicit-clear sentinel
+            // semantics (sets: [] when collapsing a multi-set entry to
+            // a single set) so a stale per-set breakdown doesn't
+            // survive the update via Firestore field-omit.
+            ...(result.measurement === 'time'
+              ? { durationSec: result.durationSec ?? 0 }
+              : {
+                  reps: result.reps,
+                  sets:
+                    result.sets.length > 1
+                      ? result.sets
+                      : entry.sets !== undefined
+                        ? []
+                        : undefined,
+                }),
             // Forward the dialog's tri-state variantId verbatim:
             // - non-empty string sets the variant
             // - explicit null tells the store to clear it via deleteField()
@@ -362,6 +377,18 @@ export class StatsTableComponent {
     if (!sets?.length) return '';
     const allSame = sets.every((s) => s === sets[0]);
     return allSame ? `${sets.length}×${sets[0]}` : sets.join(' + ');
+  }
+
+  /**
+   * Format raw seconds as `m:ss` for the table cell — keeps the column
+   * compact (a 90 s plank reads "1:30"). Hour-long planks would hit
+   * `90:00` which is fine for the cap of 7200 s.
+   */
+  formatDuration(totalSec: number): string {
+    if (!Number.isFinite(totalSec) || totalSec < 0) return '';
+    const m = Math.floor(totalSec / 60);
+    const s = totalSec % 60;
+    return `${m}:${String(s).padStart(2, '0')}`;
   }
 
   private async loadShowSourceFromDb(): Promise<void> {

@@ -21,6 +21,15 @@ const situpsDef: ExerciseDefinition = {
   unit: 'reps',
 };
 
+const plankDef: ExerciseDefinition = {
+  id: 'plank.standard',
+  categoryId: 'plank',
+  measurement: 'time',
+  min: 1,
+  max: 7200,
+  unit: 's',
+};
+
 const pushupWithVariantsDef: ExerciseDefinition = {
   id: 'pushup',
   categoryId: 'pushup',
@@ -319,6 +328,75 @@ describe('EntryDialogComponent', () => {
       expect(cmp.canSubmit()).toBe(false);
       cmp.submit();
       expect(dialogRef.close).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('Time measurement (plank)', () => {
+    it('marks the form as time-measurement and starts with empty mm:ss', () => {
+      const cmp = createComponent({
+        definition: plankDef,
+        exerciseName: 'Plank',
+      });
+      expect(cmp.isTimeMeasurement()).toBe(true);
+      expect(cmp.durationInput()).toBe('');
+      expect(cmp.canSubmit()).toBe(false);
+    });
+
+    it('parses mm:ss into seconds and submits durationSec', () => {
+      const cmp = createComponent({
+        definition: plankDef,
+        exerciseName: 'Plank',
+      });
+      cmp.timestamp.set('2026-04-15T10:00');
+      cmp.durationInput.set('1:30');
+      expect(cmp.durationSec()).toBe(90);
+      expect(cmp.canSubmit()).toBe(true);
+
+      cmp.submit();
+
+      const result = dialogRef.close.mock
+        .calls[0][0] as EntryDialogResult;
+      expect(result.measurement).toBe('time');
+      expect(result.durationSec).toBe(90);
+      expect(result.exerciseId).toBe('plank.standard');
+      expect(result.reps).toBe(0);
+      expect(result.sets).toEqual([]);
+    });
+
+    it('rejects malformed mm:ss strings', () => {
+      const cmp = createComponent({
+        definition: plankDef,
+        exerciseName: 'Plank',
+      });
+      cmp.timestamp.set('2026-04-15T10:00');
+      cmp.durationInput.set('not-a-time');
+      expect(cmp.durationSec()).toBeNull();
+      expect(cmp.canSubmit()).toBe(false);
+    });
+
+    it('disables submit when the duration exceeds the per-exercise cap', () => {
+      const cmp = createComponent({
+        definition: { ...plankDef, max: 60 },
+        exerciseName: 'Plank',
+      });
+      cmp.timestamp.set('2026-04-15T10:00');
+      cmp.durationInput.set('5:00');
+      expect(cmp.overCap()).toBe(true);
+      expect(cmp.canSubmit()).toBe(false);
+    });
+
+    it('pre-fills mm:ss in edit mode from the entry durationSec', () => {
+      const cmp = createComponent({
+        definition: plankDef,
+        exerciseName: 'Plank',
+        initial: {
+          timestamp: '2026-04-15T10:00:00+02:00',
+          reps: 0,
+          durationSec: 95,
+        },
+      });
+      // 95 s → 1:35
+      expect(cmp.durationInput()).toBe('1:35');
     });
   });
 });

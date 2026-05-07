@@ -261,8 +261,11 @@ export const EntriesStore = signalStore(
         id: string;
         exerciseId?: string;
         timestamp: string;
-        reps: number;
+        // Reps measurement field; `undefined` for time-measurement
+        // updates (where `durationSec` carries the value instead).
+        reps?: number;
         sets?: number[];
+        durationSec?: number;
         source?: string;
         type?: string;
         // `null` is the "clear this variant" sentinel forwarded from the
@@ -296,7 +299,10 @@ export const EntriesStore = signalStore(
             await firstValueFrom(
               _exerciseService.updateEntry(payload.id, payload.exerciseId, {
                 timestamp: payload.timestamp,
-                reps: payload.reps,
+                ...(payload.reps !== undefined ? { reps: payload.reps } : {}),
+                ...(payload.durationSec !== undefined
+                  ? { durationSec: payload.durationSec }
+                  : {}),
                 ...(payload.sets !== undefined ? { sets: payload.sets } : {}),
                 ...(payload.source !== undefined
                   ? { source: payload.source }

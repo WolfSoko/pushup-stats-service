@@ -30,13 +30,19 @@ export const EXERCISE_CATEGORIES: ReadonlyArray<ExerciseCategoryInfo> = [
     icon: 'directions_run',
     order: 30,
   },
+  {
+    id: 'plank',
+    nameKey: '@@exercise.category.plank',
+    icon: 'horizontal_rule',
+    order: 40,
+  },
 ];
 
 /**
- * Standard catalog of exercises available to every user. Phase 0 ships
- * with sit-ups (abs) and squats (legs). The pushup catalog stays in
- * `pushup-type.models.ts` for backwards compatibility with existing
- * Firestore docs in the `pushups` collection — see roadmap.
+ * Standard catalog of exercises available to every user. The pushup
+ * catalog stays in `pushup-type.models.ts` for backwards compatibility
+ * with existing Firestore docs in the `pushups` collection — see
+ * roadmap.
  *
  * Caps mirror the `exerciseEntries` Firestore rule. Any change here MUST
  * be reflected in `data-store/firestore.rules` and vice versa.
@@ -61,6 +67,20 @@ export const EXERCISE_CATALOG: ReadonlyArray<ExerciseDefinition> = [
     unit: 'reps',
     nameKey: '@@exercise.legs.squats.name',
     icon: 'directions_run',
+  },
+  {
+    // Standard plank — the time-measurement entry point. Variants
+    // (forearm / side / hollow hold) ship with their own catalog ids
+    // once the variant picker grows the autocomplete-with-wiki path
+    // (see UI-3 Phase B in the roadmap).
+    id: 'plank.standard',
+    categoryId: 'plank',
+    measurement: 'time',
+    min: 1,
+    max: 7200,
+    unit: 's',
+    nameKey: '@@exercise.plank.standard.name',
+    icon: 'horizontal_rule',
   },
 ];
 

@@ -1681,8 +1681,14 @@ export const updateExerciseStatsOnEntryWrite = onDocumentWritten(
       return;
     }
 
-    const oldReps = Number(beforeData?.reps ?? 0);
-    const newReps = Number(afterData?.reps ?? 0);
+    // The aggregation slot stays named `reps` for backwards
+    // compatibility with the existing UserStats schema, but for
+    // time-measurement exercises (plank) we feed `durationSec` into
+    // the same slot. The per-exercise stats doc is exercise-scoped, so
+    // `total` carries seconds for plank and rep counts for sit-ups —
+    // the display layer formats accordingly.
+    const oldReps = Number(beforeData?.reps ?? beforeData?.durationSec ?? 0);
+    const newReps = Number(afterData?.reps ?? afterData?.durationSec ?? 0);
     const oldTimestamp = beforeData?.timestamp as string | undefined;
     const newTimestamp = afterData?.timestamp as string | undefined;
     // Defensive sanitization: reduce over `sets` runs straight into
@@ -1743,7 +1749,11 @@ export const updateExerciseStatsOnEntryWrite = onDocumentWritten(
         const data = d.data();
         return {
           timestamp: data.timestamp as string,
-          reps: Number(data.reps ?? 0),
+          // Time-measurement entries (plank) carry the value in
+          // `durationSec`; reuse the rebuild path's `reps` slot so the
+          // per-exercise total ends up correct (seconds for plank,
+          // reps for sit-ups/squats).
+          reps: Number(data.reps ?? data.durationSec ?? 0),
           ...(Array.isArray(data.sets) ? { sets: data.sets as number[] } : {}),
         };
       });
@@ -1816,11 +1826,19 @@ export const updateExerciseStatsOnEntryWrite = onDocumentWritten(
             .where('userId', '==', userId)
             .where('exerciseId', '==', exerciseId)
         );
-        const userEntries = userEntriesSnap.docs.map((d) => d.data()) as Array<{
-          timestamp: string;
-          reps: number;
-          sets?: number[];
-        }>;
+        const userEntries = userEntriesSnap.docs.map((d) => {
+          const data = d.data();
+          return {
+            timestamp: data.timestamp as string,
+            // Time-measurement entries write the primary value to
+            // `durationSec`; fold it back into the `reps` slot the
+            // rebuild expects.
+            reps: Number(data.reps ?? data.durationSec ?? 0),
+            ...(Array.isArray(data.sets)
+              ? { sets: data.sets as number[] }
+              : {}),
+          };
+        });
         current = rebuildFromEntries(userId, userEntries, nowIso);
       }
 

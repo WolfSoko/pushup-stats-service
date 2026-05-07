@@ -3822,6 +3822,30 @@
         <target> Servare </target>
       </segment>
     </unit>
+    <unit id="entryDialog.duration">
+      <segment state="translated">
+        <source>Dauer (mm:ss)</source>
+        <target>Duratio (mm:ss)</target>
+      </segment>
+    </unit>
+    <unit id="entryDialog.overCapTime">
+      <segment state="translated">
+        <source>Maximum: <ph id="0" equiv="INTERPOLATION" disp="{{ formattedMax() }}"/></source>
+        <target>Maximum: <ph id="0" equiv="INTERPOLATION" disp="{{ formattedMax() }}"/></target>
+      </segment>
+    </unit>
+    <unit id="exercise.category.plank">
+      <segment state="translated">
+        <source>Plank</source>
+        <target>Plank</target>
+      </segment>
+    </unit>
+    <unit id="exercise.plank.standard.name">
+      <segment state="translated">
+        <source>Plank</source>
+        <target>Plank</target>
+      </segment>
+    </unit>
     <unit id="entryDialog.variant">
       <segment state="translated">
         <source>Variante</source>
