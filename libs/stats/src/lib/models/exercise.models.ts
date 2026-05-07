@@ -95,7 +95,14 @@ export interface ExerciseEntryCreate {
 
 export interface ExerciseEntryUpdate {
   exerciseId?: string;
-  variantId?: string;
+  /**
+   * Variant id patch. `string` sets the variant; `null` is the
+   * sentinel for "explicitly clear" — the data-access layer
+   * translates it into a Firestore `deleteField()` so the doc no
+   * longer carries one. `undefined` means "no change" (omitted from
+   * the patch).
+   */
+  variantId?: string | null;
   timestamp?: string;
   reps?: number;
   durationSec?: number;
@@ -239,8 +246,14 @@ export function requiredCompanionFields(
 export function validateExerciseEntry(
   entry: Pick<
     ExerciseEntry,
-    'reps' | 'durationSec' | 'distanceM' | 'weightKg' | 'variantId'
-  >,
+    'reps' | 'durationSec' | 'distanceM' | 'weightKg'
+  > & {
+    // `null` is the patch sentinel for "clear the variant"; the
+    // persisted `ExerciseEntry.variantId` is `string | undefined`
+    // because the Firestore doc never actually stores null (the
+    // service translates the sentinel to `deleteField()`).
+    variantId?: string | null;
+  },
   def: Pick<ExerciseDefinition, 'measurement' | 'min' | 'max' | 'variants'>,
   options?: { partial?: boolean }
 ): ExerciseEntryViolation | null {
@@ -296,7 +309,14 @@ export function validateExerciseEntry(
       return 'companion-value-out-of-range';
     }
   }
-  if (entry.variantId !== undefined && entry.variantId !== '') {
+  // Empty string and explicit `null` both mean "no variant" — the
+  // dialog uses `null` as the patch sentinel for "clear an existing
+  // variant" and we must not reject that as an unknown variant.
+  if (
+    entry.variantId !== undefined &&
+    entry.variantId !== null &&
+    entry.variantId !== ''
+  ) {
     const variants = def.variants ?? [];
     if (!variants.some((v) => v.id === entry.variantId)) {
       return 'invalid-variant';

@@ -19,7 +19,6 @@ import { MatSelectModule } from '@angular/material/select';
 import {
   appendLocalOffset,
   ExerciseDefinition,
-  measurementValueField,
   UnifiedEntry,
 } from '@pu-stats/models';
 
@@ -31,7 +30,7 @@ export interface EntryDialogData {
    *  Track-ARCH will move them into a shared service. */
   exerciseName: string;
   /** Optional pre-fill for edit mode. The dialog only reads fields
-   *  that match `definition.measurement` (Phase A: reps + sets). */
+   *  matching `definition.measurement` — today reps + sets. */
   initial?: Pick<UnifiedEntry, 'timestamp' | 'reps' | 'sets'> & {
     variantId?: string;
   };
@@ -39,25 +38,36 @@ export interface EntryDialogData {
 
 export interface EntryDialogResult {
   exerciseId: string;
-  variantId?: string;
+  /**
+   * Variant id, if the user picked one. Tri-state semantics so callers
+   * can distinguish "no change" from "explicitly clear":
+   *   - `string` (non-empty): set or keep this variant.
+   *   - `null`: user cleared a previously-set variant — callers should
+   *     translate this to a Firestore `deleteField()` on update.
+   *   - `undefined`: user never engaged with the picker (no change in
+   *     edit mode, no variant in create mode).
+   */
+  variantId?: string | null;
   timestamp: string;
   reps: number;
   sets: number[];
 }
 
 /**
- * Generic entry dialog parameterized by an `ExerciseDefinition`.
+ * Generic entry dialog parameterized by an `ExerciseDefinition`. Drives
+ * its form fields off the catalog definition so any new exercise drops
+ * in without component-level changes.
  *
- * Phase A (this PR) — supports `'reps'` and `'weight'` measurement
- * types via the same reps + sets form. Variants are surfaced as a
- * simple `mat-select` when the definition declares any. Caps come
- * from `def.min` / `def.max` so the form rejects out-of-range values
- * before submit, fixing the "validator rejects after canSubmit() said
- * yes" gap from PR #292 review.
+ * Today only the `'reps'` measurement is wired (sit-ups, squats);
+ * `validateExerciseEntry` rejects a `'weight'` payload without a
+ * `weightKg` companion, so weighted exercises will need their own
+ * field path before they can use this dialog. See the roadmap for the
+ * planned phasing.
  *
- * Phase B will fold the pushup `CreateEntryDialogComponent` into this
- * one once the variant-picker grows an autocomplete-with-wiki mode —
- * see `plans/multi-exercise-roadmap.md`.
+ * Caps come from `def.min` / `def.max` so the input clamps and
+ * `canSubmit()` locks at the ceiling — closes the
+ * "validator rejects after canSubmit() said yes" gap that the
+ * pushup-only `CreateEntryDialogComponent` had.
  */
 @Component({
   selector: 'app-entry-dialog',
@@ -247,12 +257,6 @@ export class EntryDialogComponent {
     () => (this.data.definition.variants?.length ?? 0) > 0
   );
 
-  /**
-   * Quick i18n lookup for variant labels. Built per Phase-0 catalog;
-   * extends naturally as `def.variants[]` grows.  When Track UI-3
-   * Phase B introduces the autocomplete-with-wiki picker, this whole
-   * lookup moves into the variant-picker sub-component.
-   */
   variantLabel(variantId: string): string {
     return VARIANT_LABELS[variantId] ?? variantId;
   }
@@ -301,10 +305,21 @@ export class EntryDialogComponent {
         ? this.originalTimestamp
         : appendLocalOffset(this.timestamp());
 
+    // Variant tri-state: emit a non-empty string to set/keep, `null` to
+    // clear an existing variant in edit mode (so callers know to issue
+    // a Firestore `deleteField()` rather than skip the field), and
+    // `undefined` when the user never engaged with the picker.
     const variantId = this.variantControl.value.trim();
+    const initialVariantId = this.data.initial?.variantId ?? '';
+    const variantPatch: { variantId?: string | null } = variantId
+      ? { variantId }
+      : initialVariantId
+        ? { variantId: null }
+        : {};
+
     const result: EntryDialogResult = {
       exerciseId: this.data.definition.id,
-      ...(variantId ? { variantId } : {}),
+      ...variantPatch,
       timestamp,
       reps,
       sets: validSets,
@@ -321,16 +336,4 @@ export class EntryDialogComponent {
   }
 }
 
-// Ensure the dialog still type-checks the imported helper even when
-// no measurement-specific path needs it today (Phase A only handles
-// reps); Phase 1 will reach for `measurementValueField` to switch on
-// the active value field.
-void measurementValueField;
-
-/**
- * Localized variant labels keyed by variant id. The Phase-0 catalog
- * (sit-ups, squats) ships with empty `variants[]`, so this map is
- * effectively dormant until Phase 1+ catalog entries land.  The
- * placeholder keys keep the picker code path covered in tests.
- */
 const VARIANT_LABELS: Record<string, string> = {};

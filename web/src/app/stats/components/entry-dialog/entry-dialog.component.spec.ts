@@ -95,13 +95,52 @@ describe('EntryDialogComponent', () => {
       expect(result.exerciseId).toBe('pushup');
     });
 
-    it('omits variantId when none is picked', () => {
+    it('omits variantId when none is picked in create mode', () => {
       const cmp = createComponent({
         definition: pushupWithVariantsDef,
         exerciseName: 'Pushup',
       });
       cmp.timestamp.set('2026-04-15T10:00');
       cmp.updateSet(0, '20');
+      cmp.submit();
+
+      const result = dialogRef.close.mock
+        .calls[0][0] as EntryDialogResult;
+      expect('variantId' in result).toBe(false);
+    });
+
+    it('emits variantId: null when the user clears a previously-set variant', () => {
+      const cmp = createComponent({
+        definition: pushupWithVariantsDef,
+        exerciseName: 'Pushup',
+        initial: {
+          timestamp: '2026-04-15T10:00:00+02:00',
+          reps: 20,
+          sets: [20],
+          variantId: 'wide',
+        },
+      });
+      // User opens the picker and selects the empty placeholder.
+      cmp.variantControl.setValue('');
+      cmp.submit();
+
+      const result = dialogRef.close.mock
+        .calls[0][0] as EntryDialogResult;
+      // Tri-state contract: null = clear (deleteField on update),
+      // not omitted (which the store would treat as "no change").
+      expect(result.variantId).toBeNull();
+    });
+
+    it('omits variantId when an entry without a variant stays without one', () => {
+      const cmp = createComponent({
+        definition: pushupWithVariantsDef,
+        exerciseName: 'Pushup',
+        initial: {
+          timestamp: '2026-04-15T10:00:00+02:00',
+          reps: 20,
+          sets: [20],
+        },
+      });
       cmp.submit();
 
       const result = dialogRef.close.mock

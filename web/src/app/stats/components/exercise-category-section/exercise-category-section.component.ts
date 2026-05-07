@@ -249,12 +249,11 @@ export class ExerciseCategorySectionComponent {
         duration: 3000,
       });
     } catch (err) {
-      // The dialog clamps to non-negative integers but does NOT enforce
-      // the per-exercise upper cap (e.g. reps ≤ 500) — values above the
-      // cap fall through to the validator and surface here. We show the
-      // generic German "Konnte nicht gespeichert werden" rather than the
-      // raw violation code, and rely on Sentry / the browser console to
-      // capture the diagnostic.
+      // EntryDialogComponent clamps reps to def.min/def.max and locks
+      // canSubmit() at the cap, so an ExerciseValidationError here is
+      // a programming or schema-mismatch surface — show the generic
+      // toast and let Sentry / the browser console capture the
+      // diagnostic.
       const message =
         err instanceof ExerciseValidationError
           ? this.i18n.errorPrefix

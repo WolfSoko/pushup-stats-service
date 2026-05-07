@@ -59,7 +59,14 @@ export interface StatsTableUpdate {
   source: string;
   type?: string;
   exerciseId?: string;
-  variantId?: string;
+  /**
+   * Tri-state forwarded from `EntryDialogResult.variantId`:
+   *   - `string` (non-empty): set the variant.
+   *   - `null`: clear an existing variant — the store should issue a
+   *     Firestore `deleteField()` so the doc no longer carries one.
+   *   - `undefined`: no change (omitted from the patch).
+   */
+  variantId?: string | null;
 }
 
 export interface StatsTableRemove {
@@ -297,7 +304,13 @@ export class StatsTableComponent {
             reps: result.reps,
             sets: result.sets.length > 1 ? result.sets : undefined,
             source: entry.source,
-            ...(result.variantId ? { variantId: result.variantId } : {}),
+            // Forward the dialog's tri-state variantId verbatim:
+            // - non-empty string sets the variant
+            // - explicit null tells the store to clear it via deleteField()
+            // - undefined means "no change"
+            ...(result.variantId !== undefined
+              ? { variantId: result.variantId }
+              : {}),
           });
         }
       });
