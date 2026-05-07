@@ -266,6 +266,30 @@ h1 {
     flex-direction: column;
   }
 
+  .install-actions {
+    margin-top: auto;
+    padding-top: 0.5rem;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .install-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-weight: 500;
+    color: var(--mat-sys-primary, #1565c0);
+  }
+
+  .install-hint {
+    margin: 0;
+    font-size: 0.875rem;
+    line-height: 1.4;
+    color: var(--mat-sys-on-surface-variant, rgba(0, 0, 0, 0.6));
+  }
+
   .feature-card--visual {
     overflow: hidden;
     padding-top: 0;

@@ -2566,7 +2566,7 @@
     </unit>
     <unit id="sw.update.available">
       <notes>
-        <note category="location">web/src/app/app.ts:303</note>
+        <note category="location">web/src/app/app.ts:304</note>
       </notes>
       <segment>
         <source>Neue Version verfügbar</source>
@@ -2574,7 +2574,7 @@
     </unit>
     <unit id="sw.update.reload">
       <notes>
-        <note category="location">web/src/app/app.ts:304</note>
+        <note category="location">web/src/app/app.ts:305</note>
       </notes>
       <segment>
         <source>Neu laden</source>
@@ -2582,7 +2582,7 @@
     </unit>
     <unit id="feedback.success">
       <notes>
-        <note category="location">web/src/app/app.ts:362</note>
+        <note category="location">web/src/app/app.ts:377</note>
       </notes>
       <segment>
         <source>Danke für dein Feedback!</source>
@@ -2590,7 +2590,7 @@
     </unit>
     <unit id="feedback.error">
       <notes>
-        <note category="location">web/src/app/app.ts:369</note>
+        <note category="location">web/src/app/app.ts:384</note>
       </notes>
       <segment>
         <source>Feedback konnte nicht gesendet werden.</source>
@@ -2598,7 +2598,7 @@
     </unit>
     <unit id="blog.article.back">
       <notes>
-        <note category="location">web/src/app/blog/blog-article.component.ts:33,35</note>
+        <note category="location">web/src/app/blog/blog-article.component.ts:40,42</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">arrow_back</pc> Blog </source>
@@ -2606,7 +2606,7 @@
     </unit>
     <unit id="blog.article.readingTime">
       <notes>
-        <note category="location">web/src/app/blog/blog-article.component.ts:60,61</note>
+        <note category="location">web/src/app/blog/blog-article.component.ts:70,71</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="INTERPOLATION" disp="{{ readingTimeMinutes }}"/> Min. Lesezeit</source>
@@ -2614,7 +2614,7 @@
     </unit>
     <unit id="blog.article.updated">
       <notes>
-        <note category="location">web/src/app/blog/blog-article.component.ts:66,67</note>
+        <note category="location">web/src/app/blog/blog-article.component.ts:76,77</note>
       </notes>
       <segment>
         <source>Aktualisiert am</source>
@@ -2622,7 +2622,7 @@
     </unit>
     <unit id="blog.article.cta">
       <notes>
-        <note category="location">web/src/app/blog/blog-article.component.ts:83,85</note>
+        <note category="location">web/src/app/blog/blog-article.component.ts:93,95</note>
       </notes>
       <segment>
         <source> Kostenlos tracken – Jetzt registrieren </source>
@@ -2630,7 +2630,7 @@
     </unit>
     <unit id="blog.article.notFound">
       <notes>
-        <note category="location">web/src/app/blog/blog-article.component.ts:89,90</note>
+        <note category="location">web/src/app/blog/blog-article.component.ts:99,100</note>
       </notes>
       <segment>
         <source>Artikel nicht gefunden.</source>
@@ -2638,7 +2638,7 @@
     </unit>
     <unit id="blog.article.toList">
       <notes>
-        <note category="location">web/src/app/blog/blog-article.component.ts:91,95</note>
+        <note category="location">web/src/app/blog/blog-article.component.ts:101,105</note>
       </notes>
       <segment>
         <source>Zur Übersicht</source>
@@ -2646,7 +2646,7 @@
     </unit>
     <unit id="blog.list.title">
       <notes>
-        <note category="location">web/src/app/blog/blog-list.component.ts:13,14</note>
+        <note category="location">web/src/app/blog/blog-list.component.ts:21,22</note>
       </notes>
       <segment>
         <source>Blog</source>
@@ -2654,7 +2654,7 @@
     </unit>
     <unit id="blog.list.intro">
       <notes>
-        <note category="location">web/src/app/blog/blog-list.component.ts:15,18</note>
+        <note category="location">web/src/app/blog/blog-list.component.ts:23,25</note>
       </notes>
       <segment>
         <source> Tipps, Guides und Motivation rund um Liegestütze und Krafttraining. </source>
@@ -2662,7 +2662,7 @@
     </unit>
     <unit id="blog.list.readArticle">
       <notes>
-        <note category="location">web/src/app/blog/blog-list.component.ts:52,54</note>
+        <note category="location">web/src/app/blog/blog-list.component.ts:61,63</note>
       </notes>
       <segment>
         <source>Artikel lesen</source>
@@ -2718,7 +2718,7 @@
     </unit>
     <unit id="eyebrowTitle">
       <notes>
-        <note category="location">web/src/app/core/page-header/page-header.component.ts:25,26</note>
+        <note category="location">web/src/app/core/page-header/page-header.component.ts:27,28</note>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:12,13</note>
       </notes>
       <segment>
@@ -3505,7 +3505,7 @@
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:546,548</note>
       </notes>
       <segment>
-        <source>PWA, Live-Sync &amp; Web Share</source>
+        <source>App-Installation, Live-Sync &amp; Teilen</source>
       </segment>
     </unit>
     <unit id="landing.feature.pwa.body">
@@ -3513,12 +3513,36 @@
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:550,553</note>
       </notes>
       <segment>
-        <source>Installierbar wie eine native App, Echtzeit-Sync zwischen allen Geräten und Tagesergebnis per Web Share teilen – inklusive Dark- und Light-Theme.</source>
+        <source>Direkt aus dem Browser als App installieren – mit Echtzeit-Sync zwischen allen Geräten und Tagesergebnis per Teilen-Button.</source>
+      </segment>
+    </unit>
+    <unit id="landing.feature.pwa.installed">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:556,558</note>
+      </notes>
+      <segment>
+        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon aria-hidden=&quot;true&quot;&gt;" dispEnd="&lt;/mat-icon&gt;">check_circle</pc> Du nutzt bereits die installierte App </source>
+      </segment>
+    </unit>
+    <unit id="landing.feature.pwa.install">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:569,571</note>
+      </notes>
+      <segment>
+        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon aria-hidden=&quot;true&quot;&gt;" dispEnd="&lt;/mat-icon&gt;">download</pc> Jetzt als App installieren </source>
+      </segment>
+    </unit>
+    <unit id="landing.feature.pwa.iosHint">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:576,579</note>
+      </notes>
+      <segment>
+        <source> Auf iPhone &amp; iPad: Teilen-Symbol antippen und „Zum Home-Bildschirm“ wählen. </source>
       </segment>
     </unit>
     <unit id="landing.feature.privacy.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:560,562</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:587,589</note>
       </notes>
       <segment>
         <source>Privacy first &amp; 100 % kostenlos</source>
@@ -3526,7 +3550,7 @@
     </unit>
     <unit id="landing.feature.privacy.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:564,568</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:591,595</note>
       </notes>
       <segment>
         <source>DSGVO-konform mit anpassbarer Cookie-Zustimmung. Dein Name auf der Bestenliste? Nur wenn du es willst. Kein Abo, keine Kreditkarte.</source>
@@ -3534,7 +3558,7 @@
     </unit>
     <unit id="ads.landing.aria">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:570</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:597</note>
       </notes>
       <segment>
         <source>Werbung</source>
@@ -3542,7 +3566,7 @@
     </unit>
     <unit id="landing.preview.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:579,581</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:606,608</note>
       </notes>
       <segment>
         <source> Deine Statistik auf einen Blick </source>
@@ -3550,7 +3574,7 @@
     </unit>
     <unit id="landing.preview.alt">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:586,587</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:613,614</note>
       </notes>
       <segment>
         <source>Vorschau der Statistikansicht</source>
@@ -3558,7 +3582,7 @@
     </unit>
     <unit id="landing.discover.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:727,728</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:754,755</note>
       </notes>
       <segment>
         <source>Mehr entdecken</source>
@@ -3566,7 +3590,7 @@
     </unit>
     <unit id="landing.discover.leaderboard.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:733,735</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:760,762</note>
       </notes>
       <segment>
         <source>Bestenliste</source>
@@ -3574,7 +3598,7 @@
     </unit>
     <unit id="landing.discover.leaderboard.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:737,740</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:764,767</note>
       </notes>
       <segment>
         <source> Vergleiche dich mit der Community: Top-Reps für heute, die letzten 7 Tage und die letzten 30 Tage. Privacy first – dein Name erscheint nur, wenn du es willst. </source>
@@ -3582,7 +3606,7 @@
     </unit>
     <unit id="landing.discover.leaderboard.cta">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:747,750</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:774,777</note>
       </notes>
       <segment>
         <source>Zur Bestenliste</source>
@@ -3590,7 +3614,7 @@
     </unit>
     <unit id="landing.discover.blog.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:756,758</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:783,785</note>
       </notes>
       <segment>
         <source>Blog</source>
@@ -3598,7 +3622,7 @@
     </unit>
     <unit id="landing.discover.blog.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:760,763</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:787,790</note>
       </notes>
       <segment>
         <source> Tipps, Hintergrundwissen und Motivation rund um Liegestütze – von Einsteiger bis Fortgeschritten. Viele Artikel verlinken direkt auf den passenden Trainingsplan. </source>
@@ -3606,7 +3630,7 @@
     </unit>
     <unit id="landing.discover.blog.cta">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:770,772</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:797,799</note>
       </notes>
       <segment>
         <source>Zum Blog</source>
@@ -5955,7 +5979,7 @@
     <unit id="trainingPlans.day">
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:74,75</note>
-        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:91,92</note>
+        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:93,94</note>
       </notes>
       <segment>
         <source>Tag</source>
@@ -5964,8 +5988,8 @@
     <unit id="trainingPlans.kind.rest">
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:77,78</note>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:231,232</note>
-        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:105,106</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:232,233</note>
+        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:107,108</note>
       </notes>
       <segment>
         <source>Ruhetag</source>
@@ -5974,8 +5998,8 @@
     <unit id="trainingPlans.kind.light">
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:80,81</note>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:238,240</note>
-        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:108,109</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:239,241</note>
+        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:110,111</note>
       </notes>
       <segment>
         <source>Leichter Tag</source>
@@ -5984,8 +6008,8 @@
     <unit id="trainingPlans.kind.test">
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:82,84</note>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:234,236</note>
-        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:111,113</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:235,237</note>
+        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:113,115</note>
       </notes>
       <segment>
         <source>Maximaltest</source>
@@ -5994,9 +6018,9 @@
     <unit id="trainingPlans.reps">
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:85,87</note>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:244,245</note>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:250,251</note>
-        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:123,125</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:245,246</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:251,252</note>
+        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:125,127</note>
       </notes>
       <segment>
         <source>Wdh.</source>
@@ -6005,7 +6029,7 @@
     <unit id="trainingPlans.openDetail">
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:94,96</note>
-        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:163,165</note>
+        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:165,167</note>
       </notes>
       <segment>
         <source> Details öffnen </source>
@@ -6245,8 +6269,8 @@
     </unit>
     <unit id="trainingPlans.back">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:65</note>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:328,330</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:70</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:329,331</note>
       </notes>
       <segment>
         <source>Zurück</source>
@@ -6254,8 +6278,8 @@
     </unit>
     <unit id="trainingPlans.daysSuffix">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:78,80</note>
-        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:178,180</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:79,81</note>
+        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:180,182</note>
       </notes>
       <segment>
         <source>Tage</source>
@@ -6263,8 +6287,8 @@
     </unit>
     <unit id="trainingPlans.level.beginner">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:82,83</note>
-        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:183,185</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:83,84</note>
+        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:185,187</note>
       </notes>
       <segment>
         <source>Einsteiger</source>
@@ -6272,8 +6296,8 @@
     </unit>
     <unit id="trainingPlans.level.intermediate">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:84,86</note>
-        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:187,189</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:85,87</note>
+        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:189,191</note>
       </notes>
       <segment>
         <source>Mittelstufe</source>
@@ -6281,8 +6305,8 @@
     </unit>
     <unit id="trainingPlans.level.advanced">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:86,88</note>
-        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:191,193</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:87,89</note>
+        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:193,195</note>
       </notes>
       <segment>
         <source>Fortgeschritten</source>
@@ -6290,7 +6314,7 @@
     </unit>
     <unit id="trainingPlans.progress">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:95,96</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:96,97</note>
       </notes>
       <segment>
         <source>Fortschritt</source>
@@ -6298,7 +6322,7 @@
     </unit>
     <unit id="trainingPlans.currentDay">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:104,105</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:105,106</note>
       </notes>
       <segment>
         <source>Aktueller Tag:</source>
@@ -6306,7 +6330,7 @@
     </unit>
     <unit id="trainingPlans.goalOverrideHint">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:111,113</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:112,114</note>
       </notes>
       <segment>
         <source> Tagesziel wird vom Plan gesetzt. </source>
@@ -6314,7 +6338,7 @@
     </unit>
     <unit id="trainingPlans.goalOverrideHint.cta">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:117,120</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:118,121</note>
       </notes>
       <segment>
         <source>Manuelle Ziele anpassen</source>
@@ -6322,8 +6346,8 @@
     </unit>
     <unit id="trainingPlans.abandon">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:128,130</note>
-        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:138,140</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:129,131</note>
+        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:140,142</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">cancel</pc> Plan beenden </source>
@@ -6331,7 +6355,7 @@
     </unit>
     <unit id="trainingPlans.startCta">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:138,140</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:139,141</note>
       </notes>
       <segment>
         <source> Starte den Plan und das Tagesziel im Dashboard wird automatisch nach diesem Plan gesetzt. </source>
@@ -6339,7 +6363,7 @@
     </unit>
     <unit id="trainingPlans.signupCta">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:143,145</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:144,146</note>
       </notes>
       <segment>
         <source> Erstelle ein kostenloses Konto, um diesen Plan zu starten. Wir tracken deinen Fortschritt automatisch und setzen dein Tagesziel passend zum Plan. </source>
@@ -6347,7 +6371,7 @@
     </unit>
     <unit id="trainingPlans.signupBenefit.tracking">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:149,151</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:150,152</note>
       </notes>
       <segment>
         <source> Automatische Fortschrittsverfolgung </source>
@@ -6355,7 +6379,7 @@
     </unit>
     <unit id="trainingPlans.signupBenefit.goal">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:152,154</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:153,155</note>
       </notes>
       <segment>
         <source> Tagesziel passt sich täglich an deinen Plan an </source>
@@ -6363,7 +6387,7 @@
     </unit>
     <unit id="trainingPlans.signupBenefit.streak">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:155,157</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:156,158</note>
       </notes>
       <segment>
         <source> Streaks, Statistiken und Bestenliste </source>
@@ -6371,7 +6395,7 @@
     </unit>
     <unit id="trainingPlans.replaceWarn">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:167,168</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:168,169</note>
       </notes>
       <segment>
         <source> Achtung: Dies ersetzt den aktuell aktiven Plan. </source>
@@ -6379,7 +6403,7 @@
     </unit>
     <unit id="trainingPlans.start">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:172,174</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:173,175</note>
       </notes>
       <segment>
         <source>Plan starten</source>
@@ -6387,7 +6411,7 @@
     </unit>
     <unit id="trainingPlans.signupAndStart">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:183,185</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:184,186</note>
       </notes>
       <segment>
         <source>Konto erstellen &amp; Plan starten</source>
@@ -6395,7 +6419,7 @@
     </unit>
     <unit id="trainingPlans.loginAndStart">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:191,194</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:192,195</note>
       </notes>
       <segment>
         <source>Schon Konto? Einloggen</source>
@@ -6403,7 +6427,7 @@
     </unit>
     <unit id="trainingPlans.week">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:201,202</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:202,203</note>
       </notes>
       <segment>
         <source>Woche</source>
@@ -6411,7 +6435,7 @@
     </unit>
     <unit id="trainingPlans.unmarkAria">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:289,290</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:290,291</note>
       </notes>
       <segment>
         <source>Als nicht erledigt markieren</source>
@@ -6419,7 +6443,7 @@
     </unit>
     <unit id="trainingPlans.logAria">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:300,301</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:301,302</note>
       </notes>
       <segment>
         <source>Plan-Sätze eintragen und als erledigt markieren</source>
@@ -6427,7 +6451,7 @@
     </unit>
     <unit id="trainingPlans.markAria">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:309,310</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:310,311</note>
       </notes>
       <segment>
         <source>Nur als erledigt markieren (ohne Eintrag)</source>
@@ -6435,7 +6459,7 @@
     </unit>
     <unit id="trainingPlans.notFound">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:325,326</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:326,327</note>
       </notes>
       <segment>
         <source>Plan nicht gefunden.</source>
@@ -6443,7 +6467,7 @@
     </unit>
     <unit id="trainingPlans.autoStartFailed">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:591</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:588</note>
       </notes>
       <segment>
         <source>Plan-Start fehlgeschlagen — bitte erneut versuchen.</source>
@@ -6451,7 +6475,7 @@
     </unit>
     <unit id="trainingPlans.started">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:670</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:667</note>
       </notes>
       <segment>
         <source>Plan gestartet — viel Erfolg!</source>
@@ -6459,7 +6483,7 @@
     </unit>
     <unit id="trainingPlans.abandoned">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:687</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:684</note>
       </notes>
       <segment>
         <source>Plan beendet.</source>
@@ -6467,8 +6491,8 @@
     </unit>
     <unit id="trainingPlans.logged">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:713</note>
-        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:347</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:710</note>
+        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:348</note>
       </notes>
       <segment>
         <source>Plan-Sätze wurden eingetragen.</source>
@@ -6476,8 +6500,8 @@
     </unit>
     <unit id="trainingPlans.alreadyLogged">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:715</note>
-        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:349</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:712</note>
+        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:350</note>
       </notes>
       <segment>
         <source>Tag war schon eingetragen — als erledigt markiert.</source>
@@ -6485,8 +6509,8 @@
     </unit>
     <unit id="trainingPlans.notReady">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:717</note>
-        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:351</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:714</note>
+        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:352</note>
       </notes>
       <segment>
         <source>Daten werden noch geladen, bitte gleich noch einmal versuchen.</source>
@@ -6494,7 +6518,7 @@
     </unit>
     <unit id="trainingPlans.title">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:33,34</note>
+        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:35,36</note>
       </notes>
       <segment>
         <source>Trainingspläne</source>
@@ -6502,7 +6526,7 @@
     </unit>
     <unit id="trainingPlans.intro">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:35,38</note>
+        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:37,40</note>
       </notes>
       <segment>
         <source> Strukturierte Pläne mit Tagesziel, Sätzen und automatischer Fortschrittsverfolgung. Starte einen Plan, und dein Tagesziel im Dashboard wird automatisch gesetzt. </source>
@@ -6510,7 +6534,7 @@
     </unit>
     <unit id="trainingPlans.banner.title">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:48,50</note>
+        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:50,52</note>
       </notes>
       <segment>
         <source> Plan auswählen, Konto erstellen, durchstarten </source>
@@ -6518,7 +6542,7 @@
     </unit>
     <unit id="trainingPlans.banner.body">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:51,53</note>
+        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:53,55</note>
       </notes>
       <segment>
         <source> Suche dir unten einen Plan aus. Mit einem kostenlosen Konto tracken wir deinen Fortschritt automatisch und passen dein Tagesziel an den gewählten Plan an. </source>
@@ -6526,7 +6550,7 @@
     </unit>
     <unit id="trainingPlans.banner.login">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:64,67</note>
+        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:66,69</note>
       </notes>
       <segment>
         <source>Einloggen</source>
@@ -6534,7 +6558,7 @@
     </unit>
     <unit id="trainingPlans.banner.signup">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:72,74</note>
+        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:74,76</note>
       </notes>
       <segment>
         <source>Kostenlos registrieren</source>
@@ -6542,7 +6566,7 @@
     </unit>
     <unit id="trainingPlans.active.title">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:82,83</note>
+        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:84,85</note>
       </notes>
       <segment>
         <source> Aktiver Plan </source>
@@ -6550,7 +6574,7 @@
     </unit>
     <unit id="trainingPlans.kind.main">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:114,116</note>
+        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:116,118</note>
       </notes>
       <segment>
         <source>Trainingstag</source>
@@ -6558,7 +6582,7 @@
     </unit>
     <unit id="trainingPlans.todayTarget">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:120,122</note>
+        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:122,124</note>
       </notes>
       <segment>
         <source>Heute geplant:</source>
@@ -6566,7 +6590,7 @@
     </unit>
     <unit id="trainingPlans.logToday">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:154,156</note>
+        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:156,158</note>
       </notes>
       <segment>
         <source>Heute eintragen</source>
@@ -6574,7 +6598,7 @@
     </unit>
     <unit id="trainingPlans.viewPlan">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:207,209</note>
+        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:209,211</note>
       </notes>
       <segment>
         <source>Plan ansehen</source>

@@ -2803,6 +2803,33 @@
         <target>Può essere installato come un'app nativa, sincronizzazione in tempo reale tra tutti i dispositivi e condivisione dei risultati giornalieri tramite condivisione web, inclusi temi scuri e chiari.</target>
       </segment>
     </unit>
+    <unit id="landing.feature.pwa.installed">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+      </notes>
+      <segment state="initial">
+        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon aria-hidden=&quot;true&quot;&gt;" dispEnd="&lt;/mat-icon&gt;">check_circle</pc> Du nutzt bereits die installierte App </source>
+        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon aria-hidden=&quot;true&quot;&gt;" dispEnd="&lt;/mat-icon&gt;">check_circle</pc> Du nutzt bereits die installierte App </target>
+      </segment>
+    </unit>
+    <unit id="landing.feature.pwa.install">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+      </notes>
+      <segment state="initial">
+        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon aria-hidden=&quot;true&quot;&gt;" dispEnd="&lt;/mat-icon&gt;">download</pc> Jetzt als App installieren </source>
+        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon aria-hidden=&quot;true&quot;&gt;" dispEnd="&lt;/mat-icon&gt;">download</pc> Jetzt als App installieren </target>
+      </segment>
+    </unit>
+    <unit id="landing.feature.pwa.iosHint">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+      </notes>
+      <segment state="initial">
+        <source> Auf iPhone &amp; iPad: Teilen-Symbol antippen und „Zum Home-Bildschirm“ wählen. </source>
+        <target> Auf iPhone &amp; iPad: Teilen-Symbol antippen und „Zum Home-Bildschirm“ wählen. </target>
+      </segment>
+    </unit>
     <unit id="landing.feature.privacy.title">
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:558,560</note>

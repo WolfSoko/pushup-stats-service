@@ -1,10 +1,34 @@
+import { signal } from '@angular/core';
 import { provideRouter, Router } from '@angular/router';
 import { render, screen } from '@testing-library/angular';
 import userEvent from '@testing-library/user-event';
 import { AdsStore } from '@pu-stats/ads';
 import { AuthService, AuthStore } from '@pu-auth/auth';
 import { makeAuthServiceMock, makeAuthStoreMock } from '@pu-stats/testing';
+import { InstallPromptService } from '../../core/install-prompt.service';
 import { LandingPageComponent } from './landing-page.component';
+
+interface InstallPromptStub {
+  canInstall: ReturnType<typeof signal<boolean>>;
+  isStandalone: ReturnType<typeof signal<boolean>>;
+  isIos: boolean;
+  prompt: ReturnType<typeof vitest.fn>;
+}
+
+function makeInstallPromptMock(
+  init: Partial<{
+    canInstall: boolean;
+    isStandalone: boolean;
+    isIos: boolean;
+  }> = {}
+): InstallPromptStub {
+  return {
+    canInstall: signal(init.canInstall ?? false),
+    isStandalone: signal(init.isStandalone ?? false),
+    isIos: init.isIos ?? false,
+    prompt: vitest.fn().mockResolvedValue('accepted'),
+  };
+}
 
 const adsConfigMock = {
   enabled: () => false,
@@ -376,6 +400,69 @@ describe('LandingPageComponent', () => {
         '.feature-visual--heatmap rect[class^="lp-day-"]'
       );
       expect(dayCells).toHaveLength(18 * 7 + 6);
+    });
+  });
+
+  describe('Given the install card', () => {
+    async function renderWith(installMock: InstallPromptStub): Promise<void> {
+      await render(LandingPageComponent, {
+        providers: [
+          provideRouter([]),
+          { provide: AdsStore, useValue: adsConfigMock },
+          { provide: AuthService, useValue: makeAuthServiceMock() },
+          { provide: AuthStore, useValue: makeAuthStoreMock() },
+          { provide: InstallPromptService, useValue: installMock },
+        ],
+      });
+    }
+
+    it('does not contain the literal text "PWA" anymore', async () => {
+      await renderWith(makeInstallPromptMock());
+
+      expect(screen.queryByText(/\bPWA\b/)).toBeNull();
+      expect(
+        screen.getByText('App-Installation, Live-Sync & Teilen')
+      ).toBeTruthy();
+    });
+
+    it('shows the install button and triggers the prompt on click', async () => {
+      const installMock = makeInstallPromptMock({ canInstall: true });
+      await renderWith(installMock);
+
+      const button = screen.getByRole('button', {
+        name: /Jetzt als App installieren/,
+      });
+      await userEvent.click(button);
+
+      expect(installMock.prompt).toHaveBeenCalledTimes(1);
+    });
+
+    it('hides the install button while the browser has not offered the prompt', async () => {
+      await renderWith(makeInstallPromptMock({ canInstall: false }));
+
+      expect(
+        screen.queryByRole('button', { name: /Jetzt als App installieren/ })
+      ).toBeNull();
+    });
+
+    it('shows the iOS hint when running on iOS Safari without prompt', async () => {
+      await renderWith(makeInstallPromptMock({ isIos: true }));
+
+      expect(screen.getByText(/Teilen-Symbol antippen/)).toBeTruthy();
+      expect(
+        screen.queryByRole('button', { name: /Jetzt als App installieren/ })
+      ).toBeNull();
+    });
+
+    it('shows the "already installed" badge when running standalone', async () => {
+      await renderWith(makeInstallPromptMock({ isStandalone: true }));
+
+      expect(
+        screen.getByText('Du nutzt bereits die installierte App')
+      ).toBeTruthy();
+      expect(
+        screen.queryByRole('button', { name: /Jetzt als App installieren/ })
+      ).toBeNull();
     });
   });
 });

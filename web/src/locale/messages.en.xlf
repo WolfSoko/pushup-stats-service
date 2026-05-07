@@ -1927,8 +1927,8 @@ Active:         </target>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
             </notes>
       <segment state="translated">
-        <source>PWA, Live-Sync &amp; Web Share</source>
-        <target>PWA, live sync &amp; web share</target>
+        <source>App-Installation, Live-Sync &amp; Teilen</source>
+        <target>App install, live sync &amp; sharing</target>
             </segment>
         </unit>
     <unit id="landing.feature.pwa.body">
@@ -1936,8 +1936,35 @@ Active:         </target>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
             </notes>
       <segment state="translated">
-        <source>Installierbar wie eine native App, Echtzeit-Sync zwischen allen Geräten und Tagesergebnis per Web Share teilen – inklusive Dark- und Light-Theme.</source>
-        <target>Installable like a native app, real-time sync across all your devices and share your daily result via Web Share – with dark and light theme included.</target>
+        <source>Direkt aus dem Browser als App installieren – mit Echtzeit-Sync zwischen allen Geräten und Tagesergebnis per Teilen-Button.</source>
+        <target>Install it as an app straight from the browser – with real-time sync across all your devices and your daily result a share button away.</target>
+            </segment>
+        </unit>
+    <unit id="landing.feature.pwa.installed">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+            </notes>
+      <segment state="translated">
+        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon aria-hidden=&quot;true&quot;&gt;" dispEnd="&lt;/mat-icon&gt;">check_circle</pc> Du nutzt bereits die installierte App </source>
+        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon aria-hidden=&quot;true&quot;&gt;" dispEnd="&lt;/mat-icon&gt;">check_circle</pc> You are already using the installed app </target>
+            </segment>
+        </unit>
+    <unit id="landing.feature.pwa.install">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+            </notes>
+      <segment state="translated">
+        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon aria-hidden=&quot;true&quot;&gt;" dispEnd="&lt;/mat-icon&gt;">download</pc> Jetzt als App installieren </source>
+        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon aria-hidden=&quot;true&quot;&gt;" dispEnd="&lt;/mat-icon&gt;">download</pc> Install as an app </target>
+            </segment>
+        </unit>
+    <unit id="landing.feature.pwa.iosHint">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
+            </notes>
+      <segment state="translated">
+        <source> Auf iPhone &amp; iPad: Teilen-Symbol antippen und „Zum Home-Bildschirm“ wählen. </source>
+        <target> On iPhone &amp; iPad: tap the Share icon and choose &quot;Add to Home Screen&quot;. </target>
             </segment>
         </unit>
     <unit id="landing.feature.privacy.title">
