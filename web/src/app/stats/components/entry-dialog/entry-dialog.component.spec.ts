@@ -492,6 +492,19 @@ describe('EntryDialogComponent', () => {
       expect(cmp.canSubmit()).toBe(true);
     });
 
+    it('flags overCap when the duration exceeds the companion bound', () => {
+      const cmp = createComponent({
+        definition: runningDef,
+        exerciseName: 'Laufen',
+      });
+      cmp.timestamp.set('2026-04-15T10:00');
+      cmp.distanceInput.set('5.00');
+      // 86_400 s is the companion ceiling; 1500:00 = 90_000 s clears it.
+      cmp.durationInput.set('1500:00');
+      expect(cmp.overCap()).toBe(true);
+      expect(cmp.canSubmit()).toBe(false);
+    });
+
     it('submits distanceM (rounded) and durationSec, with empty reps/sets', () => {
       const cmp = createComponent({
         definition: runningDef,

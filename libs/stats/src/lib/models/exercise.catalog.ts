@@ -92,9 +92,9 @@ export const EXERCISE_CATALOG: ReadonlyArray<ExerciseDefinition> = [
     // First composite-measurement entry: a tracked run carries both
     // distance and duration. `min`/`max` constrain `distanceM`
     // (100 m sprint up to 50 km ultra); the required duration
-    // companion is bounded by COMPANION_BOUNDS in `exercise.models.ts`
-    // (1..86400 s) — Phase 3 polish can tighten that to a per-exercise
-    // range once user data shows what's plausible.
+    // companion is bounded globally by COMPANION_BOUNDS in
+    // `exercise.models.ts` (1..86400 s) because no user data exists
+    // yet to establish a tighter per-exercise ceiling.
     id: 'cardio.running',
     categoryId: 'cardio',
     measurement: 'distance-time',

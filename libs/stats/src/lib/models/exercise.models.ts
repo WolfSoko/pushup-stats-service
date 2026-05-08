@@ -225,7 +225,7 @@ const REQUIRED_COMPANIONS: Readonly<
  * to warrant a per-definition cap. When custom user exercises land in
  * Phase 4 we can move these into `ExerciseDefinition`.
  */
-const COMPANION_BOUNDS: Readonly<
+export const COMPANION_BOUNDS: Readonly<
   Record<
     MeasurementValueField,
     { readonly min: number; readonly max: number; readonly integer: boolean }

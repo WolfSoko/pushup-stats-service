@@ -61,6 +61,7 @@ export interface StatsTableUpdate {
   reps?: number;
   sets?: number[];
   durationSec?: number;
+  distanceM?: number;
   source: string;
   type?: string;
   exerciseId?: string;

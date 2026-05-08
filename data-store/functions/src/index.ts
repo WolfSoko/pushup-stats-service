@@ -1691,11 +1691,15 @@ export const updateExerciseStatsOnEntryWrite = onDocumentWritten(
     // accordingly. For composite measurements ('distance-time') the
     // companion duration is left to the live entries query in the
     // dashboard summary; the aggregated slot stays single-valued.
+    //
+    // Fallback ordering matters: `distanceM` MUST come before
+    // `durationSec` because cardio.running entries carry both, and
+    // the primary value (distance) needs to win the `??` chain.
     const oldReps = Number(
-      beforeData?.reps ?? beforeData?.durationSec ?? beforeData?.distanceM ?? 0
+      beforeData?.reps ?? beforeData?.distanceM ?? beforeData?.durationSec ?? 0
     );
     const newReps = Number(
-      afterData?.reps ?? afterData?.durationSec ?? afterData?.distanceM ?? 0
+      afterData?.reps ?? afterData?.distanceM ?? afterData?.durationSec ?? 0
     );
     const oldTimestamp = beforeData?.timestamp as string | undefined;
     const newTimestamp = afterData?.timestamp as string | undefined;
@@ -1760,8 +1764,10 @@ export const updateExerciseStatsOnEntryWrite = onDocumentWritten(
           // Non-rep entries reuse the rebuild path's `reps` slot for
           // their primary measurement value: seconds for plank, meters
           // for cardio.running. The slot is exercise-scoped so it
-          // never mixes units across exercises.
-          reps: Number(data.reps ?? data.durationSec ?? data.distanceM ?? 0),
+          // never mixes units across exercises. `distanceM` precedes
+          // `durationSec` so a cardio.running entry (both fields set)
+          // aggregates the distance, not the companion duration.
+          reps: Number(data.reps ?? data.distanceM ?? data.durationSec ?? 0),
           ...(Array.isArray(data.sets) ? { sets: data.sets as number[] } : {}),
         };
       });
@@ -1840,8 +1846,9 @@ export const updateExerciseStatsOnEntryWrite = onDocumentWritten(
             timestamp: data.timestamp as string,
             // Non-rep entries fold their primary measurement into the
             // `reps` slot the rebuild expects: durationSec for plank,
-            // distanceM for cardio.running.
-            reps: Number(data.reps ?? data.durationSec ?? data.distanceM ?? 0),
+            // distanceM for cardio.running. Same ordering as the live
+            // trigger — distance wins over duration when both exist.
+            reps: Number(data.reps ?? data.distanceM ?? data.durationSec ?? 0),
             ...(Array.isArray(data.sets)
               ? { sets: data.sets as number[] }
               : {}),

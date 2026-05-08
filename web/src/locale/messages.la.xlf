@@ -3855,7 +3855,7 @@
     <unit id="exercise.category.cardio">
       <segment state="translated">
         <source>Ausdauer</source>
-        <target>Cursus</target>
+        <target>Exercitatio</target>
       </segment>
     </unit>
     <unit id="exercise.cardio.running.name">

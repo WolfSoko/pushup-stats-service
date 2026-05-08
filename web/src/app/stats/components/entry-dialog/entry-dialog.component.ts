@@ -18,6 +18,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import {
   appendLocalOffset,
+  COMPANION_BOUNDS,
   ExerciseDefinition,
   formatExerciseValue,
   MeasurementType,
@@ -370,7 +371,16 @@ export class EntryDialogComponent {
   readonly overCap = computed(() => {
     if (this.isDistanceTimeMeasurement()) {
       const m = this.distanceM();
-      return m !== null && m > this.data.definition.max;
+      const sec = this.durationSec();
+      // Distance ceiling comes from the catalog (`def.max` in meters);
+      // duration ceiling from the global companion bound. Either side
+      // tripping the cap should surface the over-cap hint, not just
+      // distance — a 99:59:59 entry on a 50 km cap should not silently
+      // disable submit with no UI feedback.
+      const distanceOver = m !== null && m > this.data.definition.max;
+      const durationOver =
+        sec !== null && sec > COMPANION_BOUNDS.durationSec.max;
+      return distanceOver || durationOver;
     }
     if (this.isTimeMeasurement()) {
       const sec = this.durationSec();
