@@ -7,6 +7,7 @@ import {
   StatsApiService,
   UserConfigApiService,
   UserStatsApiService,
+  UserTrainingPlanApiService,
 } from '@pu-stats/data-access';
 import { AuthStore, UserContextService } from '@pu-auth/auth';
 import { AdsStore } from '@pu-stats/ads';
@@ -17,6 +18,7 @@ import { QuickAddOrchestrationService } from '../../core/quick-add-orchestration
 import { AppDataFacade } from '../../core/app-data.facade';
 import { ShareService } from '../../core/share.service';
 import { UserConfigStore } from '../../core/user-config.store';
+import { TrainingPlanStore } from '../../training-plans/training-plan.store';
 
 describe('StatsDashboardComponent', () => {
   let fixture: ComponentFixture<StatsDashboardComponent>;
@@ -113,6 +115,17 @@ describe('StatsDashboardComponent', () => {
   } as unknown as MatDialogRef<unknown>);
   const dialogMock = { open: dialogOpenSpy } as unknown as MatDialog;
 
+  // Default to "no active plan" — same effective behaviour as the
+  // unmocked service (Firestore is optional → resolves to null). Tests
+  // that exercise the plan-aware UI override `getActivePlan` per case.
+  const trainingPlanApiMock = {
+    getActivePlan: vitest.fn().mockReturnValue(of(null)),
+    setPlan: vitest.fn().mockReturnValue(of(null)),
+    addCompletedDay: vitest.fn().mockReturnValue(of(null)),
+    removeCompletedDay: vitest.fn().mockReturnValue(of(null)),
+    updatePlan: vitest.fn().mockReturnValue(of(null)),
+  };
+
   beforeEach(async () => {
     vi.useFakeTimers({ shouldAdvanceTime: true });
     vi.setSystemTime(frozenDate);
@@ -123,6 +136,7 @@ describe('StatsDashboardComponent', () => {
     window.history.replaceState({}, '', '/');
 
     dialogOpenSpy.mockClear();
+    trainingPlanApiMock.getActivePlan.mockReset().mockReturnValue(of(null));
 
     TestBed.configureTestingModule({
       imports: [StatsDashboardComponent],
@@ -171,6 +185,10 @@ describe('StatsDashboardComponent', () => {
         },
         { provide: AppDataFacade, useValue: appDataMock },
         { provide: ShareService, useValue: shareServiceMock },
+        {
+          provide: UserTrainingPlanApiService,
+          useValue: trainingPlanApiMock,
+        },
       ],
     });
 
@@ -886,6 +904,129 @@ describe('StatsDashboardComponent', () => {
         // Then - at minimum 1 day (today)
         expect(streak).toBeGreaterThanOrEqual(1);
       });
+    });
+  });
+
+  describe('Given an active training plan prescribes a rest day for today', () => {
+    // Frozen date is 2025-01-15 (see top of describe). The
+    // `recruit-6w-v1` catalog defines day 2 as a rest day, so
+    // `startDate: '2025-01-14'` puts today on a rest day.
+    const restDayPlan = {
+      userId: 'u1',
+      planId: 'recruit-6w-v1',
+      startDate: '2025-01-14',
+      status: 'active' as const,
+      completedDays: [] as number[],
+    };
+
+    function querySelector(
+      el: HTMLElement,
+      testid: string
+    ): HTMLElement | null {
+      return el.querySelector<HTMLElement>(`[data-testid="${testid}"]`);
+    }
+
+    it('Then the Zielfortschritt card shows "Ruhetag" instead of an X / Y count', async () => {
+      // Given an active plan with today as rest day
+      trainingPlanApiMock.getActivePlan.mockReturnValue(of(restDayPlan));
+      TestBed.inject(TrainingPlanStore).reload();
+
+      // When the dashboard renders
+      const freshFixture = TestBed.createComponent(StatsDashboardComponent);
+      await freshFixture.whenStable();
+      freshFixture.detectChanges();
+
+      // Then the rest-day badge is shown and the configured-goal hint
+      // sits below it as a small secondary line.
+      const component = freshFixture.componentInstance;
+      expect(component.isPlanRestDay()).toBe(true);
+
+      const badge = querySelector(
+        freshFixture.nativeElement,
+        'dashboard-rest-day-target'
+      );
+      expect(badge).not.toBeNull();
+      expect(badge!.textContent ?? '').toContain('Ruhetag');
+
+      const hint = querySelector(
+        freshFixture.nativeElement,
+        'dashboard-rest-day-config-hint'
+      );
+      expect(hint).not.toBeNull();
+      // Default mock config has dailyGoal: 100 — the configured goal
+      // must remain visible (smaller, below) so the user knows what
+      // their non-plan baseline is.
+      expect(hint!.textContent ?? '').toContain('100');
+    });
+
+    it('And the configured-goal hint is hidden when the user has no daily goal set', async () => {
+      // Given an active rest day AND a user config with dailyGoal=0
+      trainingPlanApiMock.getActivePlan.mockReturnValue(of(restDayPlan));
+      const configApi = TestBed.inject(UserConfigApiService);
+      (configApi.getConfig as ReturnType<typeof vitest.fn>).mockReturnValue(
+        of({ userId: 'u1', dailyGoal: 0, weeklyGoal: 0, monthlyGoal: 0 })
+      );
+      TestBed.inject(UserConfigStore).reload();
+      TestBed.inject(TrainingPlanStore).reload();
+
+      // When the dashboard renders
+      const freshFixture = TestBed.createComponent(StatsDashboardComponent);
+      await freshFixture.whenStable();
+      freshFixture.detectChanges();
+
+      // Then no stale "Konfiguriertes Tagesziel: 0" line bleeds through
+      expect(
+        querySelector(freshFixture.nativeElement, 'dashboard-rest-day-target')
+      ).not.toBeNull();
+      expect(
+        querySelector(
+          freshFixture.nativeElement,
+          'dashboard-rest-day-config-hint'
+        )
+      ).toBeNull();
+    });
+
+    it('And the Schnellaktionen "+N bis zum Ziel" CTA is suppressed so it does not contradict the rest-day banner', async () => {
+      // Given an active rest day with a non-zero configured daily goal
+      // (default mock has dailyGoal: 100, todayTotal: 12 → remainingToGoal
+      // would otherwise be 88, rendering the goal-fill CTA).
+      trainingPlanApiMock.getActivePlan.mockReturnValue(of(restDayPlan));
+      TestBed.inject(TrainingPlanStore).reload();
+
+      // When the dashboard renders
+      const freshFixture = TestBed.createComponent(StatsDashboardComponent);
+      await freshFixture.whenStable();
+      freshFixture.detectChanges();
+
+      // Then the goal-fill button is hidden — telling the user "fill
+      // to goal" while the Zielfortschritt card says "Ruhetag" would
+      // be contradictory guidance on the same screen.
+      expect(
+        freshFixture.nativeElement.querySelector(
+          '[data-testid="dashboard-quick-actions-goal-fill"]'
+        )
+      ).toBeNull();
+    });
+
+    it('And on a non-rest plan day the Zielfortschritt card keeps the regular X / Y display', async () => {
+      // Given today resolves to day 1 (a `main` day in recruit-6w-v1)
+      trainingPlanApiMock.getActivePlan.mockReturnValue(
+        of({ ...restDayPlan, startDate: '2025-01-15' })
+      );
+      TestBed.inject(TrainingPlanStore).reload();
+
+      // When the dashboard renders
+      const freshFixture = TestBed.createComponent(StatsDashboardComponent);
+      await freshFixture.whenStable();
+      freshFixture.detectChanges();
+
+      // Then the rest-day badge is NOT shown — the regular daily
+      // goal row is rendered instead.
+      const component = freshFixture.componentInstance;
+      expect(component.isPlanRestDay()).toBe(false);
+      expect(
+        querySelector(freshFixture.nativeElement, 'dashboard-rest-day-target')
+      ).toBeNull();
     });
   });
 });

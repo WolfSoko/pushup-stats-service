@@ -5435,6 +5435,12 @@
         <target>día</target>
       </segment>
     </unit>
+    <unit id="dashboard.restDay.configuredGoalHint">
+      <segment state="translated">
+        <source>Konfiguriertes Tagesziel:</source>
+        <target>Objetivo diario configurado:</target>
+      </segment>
+    </unit>
     <unit id="dashboard.weeklyGoalLabel">
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:130,131</note>
