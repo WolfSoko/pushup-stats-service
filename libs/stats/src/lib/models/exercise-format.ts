@@ -7,9 +7,9 @@ import { measurementValueField } from './exercise.models';
  *
  *   - `'reps'`  → bare number (`"30"`)
  *   - `'s'`     → `m:ss` so a 90 s plank reads `"1:30"`
- *   - `'kg'`    → `"<n> kg"` (Phase 5 strength)
+ *   - `'kg'`    → `"<n> kg"`
  *   - `'m'`     → `"<n> m"` for short distances; ≥1000 m render as
- *                 `"<n.nn> km"` so a 5 km run reads cleanly (Phase 3)
+ *                 `"<n.nn> km"` so a 5 km run reads cleanly
  *   - any other → bare number, unit-suffixed if non-empty
  *
  * Why unit and not `measurement`: a single measurement type can have
@@ -17,9 +17,14 @@ import { measurementValueField } from './exercise.models';
  * decisions live with the unit. `measurement` keeps driving which
  * data field on an entry actually carries the value (see
  * {@link measurementValueField}).
+ *
+ * Negative values return `''` rather than a unit-suffixed nonsense
+ * string ("-100 m"). The validator already enforces `>= def.min` for
+ * persisted entries, but this helper is also called from form
+ * previews where a half-typed input could briefly be negative.
  */
 export function formatExerciseValue(value: number, unit: string): string {
-  if (!Number.isFinite(value)) return '';
+  if (!Number.isFinite(value) || value < 0) return '';
   switch (unit) {
     case 'reps':
       return String(value);
@@ -94,8 +99,10 @@ export function formatDistanceTime(
   if (!hasDuration) return formatExerciseValue(distanceM, 'm');
   const distance = formatExerciseValue(distanceM, 'm');
   const time = formatExerciseValue(durationSec, 's');
+  // Both inputs are positive and finite at this point, so
+  // `formatPaceMinPerKm` will always return a non-empty string.
   const pace = formatPaceMinPerKm(distanceM, durationSec);
-  return pace ? `${distance} · ${time} (${pace})` : `${distance} · ${time}`;
+  return `${distance} · ${time} (${pace})`;
 }
 
 /**

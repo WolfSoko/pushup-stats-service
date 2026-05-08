@@ -279,6 +279,16 @@ describe('validateExerciseEntry — distance-time measurement', () => {
       )
     ).toBeNull();
   });
+
+  it('accepts a duration-only patch in partial-update mode (no primary)', () => {
+    expect(
+      validateExerciseEntry(
+        { durationSec: 1500 },
+        distanceTimeDef,
+        { partial: true }
+      )
+    ).toBeNull();
+  });
 });
 
 describe('validateExerciseEntry — weight measurement', () => {

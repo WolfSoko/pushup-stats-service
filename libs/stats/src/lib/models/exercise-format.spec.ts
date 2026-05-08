@@ -75,6 +75,13 @@ describe('formatExerciseValue', () => {
       expect(formatExerciseValue(Number.NaN, 'reps')).toBe('');
       expect(formatExerciseValue(Number.POSITIVE_INFINITY, 'kg')).toBe('');
     });
+
+    it('returns an empty string for negative values across all units', () => {
+      expect(formatExerciseValue(-1, 'reps')).toBe('');
+      expect(formatExerciseValue(-100, 'm')).toBe('');
+      expect(formatExerciseValue(-5, 'kg')).toBe('');
+      expect(formatExerciseValue(-30, 's')).toBe('');
+    });
   });
 });
 

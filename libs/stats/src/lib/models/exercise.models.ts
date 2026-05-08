@@ -73,9 +73,17 @@ export interface ExerciseEntry {
   timestamp: string;
   /** Set when measurement = 'reps' or 'weight'. */
   reps?: number;
-  /** Set when measurement = 'time'. */
+  /**
+   * Primary value for `measurement = 'time'` (plank) and required
+   * companion for `measurement = 'distance-time'` (a tracked run
+   * carries both a distance and a duration).
+   */
   durationSec?: number;
-  /** Set when measurement = 'distance'. */
+  /**
+   * Primary value for `measurement = 'distance'` and
+   * `measurement = 'distance-time'`. The catalog `min`/`max`
+   * constrain this field; the duration companion has its own bounds.
+   */
   distanceM?: number;
   /** Set when measurement = 'weight' (kg per rep). */
   weightKg?: number;
