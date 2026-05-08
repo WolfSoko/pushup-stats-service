@@ -19,6 +19,7 @@ import { MatSelectModule } from '@angular/material/select';
 import {
   appendLocalOffset,
   ExerciseDefinition,
+  formatExerciseValue,
   MeasurementType,
 } from '@pu-stats/models';
 
@@ -280,7 +281,7 @@ export class EntryDialogComponent {
    */
   readonly durationInput = signal(
     this.data.initial?.durationSec !== undefined
-      ? formatSecondsAsMmSs(this.data.initial.durationSec)
+      ? formatExerciseValue(this.data.initial.durationSec, 's')
       : ''
   );
 
@@ -299,10 +300,11 @@ export class EntryDialogComponent {
     this.sets().reduce((sum, s) => sum + (s > 0 ? s : 0), 0)
   );
 
-  /** Localized form of `def.max` for the over-cap hint when the
-   *  measurement is `'time'` — surfaces "5:00" instead of "300". */
+  /** Display form of `def.max` for the over-cap hint, using the same
+   *  unit-aware formatter as the section card and stats table — a
+   *  300 s plank cap renders as "5:00". */
   readonly formattedMax = computed(() =>
-    formatSecondsAsMmSs(this.data.definition.max)
+    formatExerciseValue(this.data.definition.max, this.data.definition.unit)
   );
 
   readonly overCap = computed(() =>
@@ -453,17 +455,4 @@ function parseDurationToSeconds(input: string): number | null {
   const seconds = Number(match[2]);
   if (!Number.isFinite(minutes) || !Number.isFinite(seconds)) return null;
   return minutes * 60 + seconds;
-}
-
-/**
- * Inverse of {@link parseDurationToSeconds}: formats seconds back into
- * the `mm:ss` string the input field expects. Pads seconds to two
- * digits; minutes are not padded so a 30-second hold renders as
- * `0:30` and a 12-minute one as `12:00`.
- */
-function formatSecondsAsMmSs(totalSec: number): string {
-  if (!Number.isFinite(totalSec) || totalSec < 0) return '0:00';
-  const m = Math.floor(totalSec / 60);
-  const s = totalSec % 60;
-  return `${m}:${String(s).padStart(2, '0')}`;
 }

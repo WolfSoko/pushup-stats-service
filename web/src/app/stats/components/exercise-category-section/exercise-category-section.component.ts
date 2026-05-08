@@ -23,6 +23,8 @@ import {
   ExerciseEntry,
   exercisesByCategory,
   findExerciseCategory,
+  formatExerciseValue,
+  measurementValueField,
   toLocalIsoDate,
 } from '@pu-stats/models';
 import { firstValueFrom, of } from 'rxjs';
@@ -176,26 +178,18 @@ export class ExerciseCategorySectionComponent {
   }
 
   /**
-   * Format the per-row "last entry" value. Time-measurement exercises
-   * (plank) carry the value in `durationSec` and render as `m:ss`;
-   * everything else falls back to the raw rep count.
+   * Format the per-row "last entry" value. Reads the right entry field
+   * via the catalog's `measurement` (data flow) and formats according
+   * to `def.unit` (display) — keeps the two concerns separated.
    */
   formatValue(def: ExerciseDefinition, entry: ExerciseEntry): string {
-    if (def.measurement === 'time' && entry.durationSec !== undefined) {
-      return formatSeconds(entry.durationSec);
-    }
-    return String(entry.reps ?? 0);
+    const valueField = measurementValueField(def.measurement);
+    const raw = (entry[valueField] as number | undefined) ?? 0;
+    return formatExerciseValue(raw, def.unit);
   }
 
-  /**
-   * Format the section's "30-day total" cell. Same exercise-aware
-   * branch as {@link formatValue}.
-   */
   formatTotal(def: ExerciseDefinition, total: number): string {
-    if (def.measurement === 'time') {
-      return formatSeconds(total);
-    }
-    return String(total);
+    return formatExerciseValue(total, def.unit);
   }
 
   private localizeCategory(id: ExerciseCategoryId): string {
@@ -226,13 +220,13 @@ export class ExerciseCategorySectionComponent {
     const defs = exercisesByCategory().get(this.categoryId()) ?? [];
     return defs.map((def) => {
       const matching = entries.filter((e) => e.exerciseId === def.id);
-      // Time-measurement exercises (plank) carry the value in
-      // `durationSec`; reps-measurement exercises in `reps`. The
-      // summary total is exercise-scoped so it represents whichever
-      // unit the catalog defines.
+      // The summary total is exercise-scoped so it represents whatever
+      // unit the catalog assigns: seconds for plank, reps for sit-ups,
+      // future kg/m for strength/cardio. `measurementValueField`
+      // tells us which entry field carries the primary value.
+      const valueField = measurementValueField(def.measurement);
       const totalValue30d = matching.reduce((s, e) => {
-        const v =
-          def.measurement === 'time' ? (e.durationSec ?? 0) : (e.reps ?? 0);
+        const v = (e[valueField] as number | undefined) ?? 0;
         return s + v;
       }, 0);
       // Compare via Date.parse so an offset-bearing timestamp
@@ -302,18 +296,6 @@ export class ExerciseCategorySectionComponent {
       this.snack.open(message, this.i18n.dismissLabel, { duration: 5000 });
     }
   }
-}
-
-/**
- * Format raw seconds as `m:ss`. Module-level helper (mirrors the one in
- * StatsTableComponent — Track UI-3 Phase B will move both into a
- * shared service together with the variant-picker work).
- */
-function formatSeconds(totalSec: number): string {
-  if (!Number.isFinite(totalSec) || totalSec < 0) return '';
-  const m = Math.floor(totalSec / 60);
-  const s = totalSec % 60;
-  return `${m}:${String(s).padStart(2, '0')}`;
 }
 
 function thirtyDaysAgoIso(): string {

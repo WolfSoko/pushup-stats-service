@@ -26,6 +26,7 @@ import { UserConfigApiService } from '@pu-stats/data-access';
 import {
   displayPushupType,
   findExerciseDefinition,
+  formatExerciseValue,
   PushupRecord,
   pushupRecordToUnified,
   UnifiedEntry,
@@ -387,15 +388,13 @@ export class StatsTableComponent {
   }
 
   /**
-   * Format raw seconds as `m:ss` for the table cell — keeps the column
-   * compact (a 90 s plank reads "1:30"). Hour-long planks would hit
-   * `90:00` which is fine for the cap of 7200 s.
+   * Format a duration cell. Delegates to the unit-aware
+   * `formatExerciseValue` so the same helper drives the section card,
+   * the dialog cap hint, and this column — keeps display logic in one
+   * place when more units (kg, m) land in later phases.
    */
   formatDuration(totalSec: number): string {
-    if (!Number.isFinite(totalSec) || totalSec < 0) return '';
-    const m = Math.floor(totalSec / 60);
-    const s = totalSec % 60;
-    return `${m}:${String(s).padStart(2, '0')}`;
+    return formatExerciseValue(totalSec, 's');
   }
 
   private async loadShowSourceFromDb(): Promise<void> {
