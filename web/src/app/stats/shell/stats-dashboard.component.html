@@ -157,7 +157,7 @@
       </mat-card-header>
       <mat-card-content>
         @if (isPlanRestDay()) {
-          <div class="goal-row goal-row--rest">
+          <div class="goal-row">
             <small i18n="@@dashboard.dailyGoalLabel">Tag</small>
             <strong
               class="rest-day-badge"
@@ -286,7 +286,11 @@
           <span i18n="@@dashboard.quickAdd.button">+{{ reps }} Reps</span>
         </button>
       }
-      @if (dailyGoalConfigured() && (remainingToGoal() > 0 || goalReached())) {
+      @if (
+        !isPlanRestDay() &&
+        dailyGoalConfigured() &&
+        (remainingToGoal() > 0 || goalReached())
+      ) {
         <button
           type="button"
           mat-flat-button

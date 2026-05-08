@@ -986,6 +986,28 @@ describe('StatsDashboardComponent', () => {
       ).toBeNull();
     });
 
+    it('And the Schnellaktionen "+N bis zum Ziel" CTA is suppressed so it does not contradict the rest-day banner', async () => {
+      // Given an active rest day with a non-zero configured daily goal
+      // (default mock has dailyGoal: 100, todayTotal: 12 → remainingToGoal
+      // would otherwise be 88, rendering the goal-fill CTA).
+      trainingPlanApiMock.getActivePlan.mockReturnValue(of(restDayPlan));
+      TestBed.inject(TrainingPlanStore).reload();
+
+      // When the dashboard renders
+      const freshFixture = TestBed.createComponent(StatsDashboardComponent);
+      await freshFixture.whenStable();
+      freshFixture.detectChanges();
+
+      // Then the goal-fill button is hidden — telling the user "fill
+      // to goal" while the Zielfortschritt card says "Ruhetag" would
+      // be contradictory guidance on the same screen.
+      expect(
+        freshFixture.nativeElement.querySelector(
+          '[data-testid="dashboard-quick-actions-goal-fill"]'
+        )
+      ).toBeNull();
+    });
+
     it('And on a non-rest plan day the Zielfortschritt card keeps the regular X / Y display', async () => {
       // Given today resolves to day 1 (a `main` day in recruit-6w-v1)
       trainingPlanApiMock.getActivePlan.mockReturnValue(
