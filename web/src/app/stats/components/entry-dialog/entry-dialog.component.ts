@@ -32,12 +32,14 @@ export interface EntryDialogData {
   exerciseName: string;
   /** Optional pre-fill for edit mode. The dialog only reads fields
    *  matching `definition.measurement` — reps + sets for reps-measured
-   *  exercises, durationSec for time-measured ones. */
+   *  exercises, durationSec for time-measured ones, distanceM +
+   *  durationSec for distance-time-measured ones. */
   initial?: {
     timestamp: string;
     reps: number;
     sets?: number[];
     durationSec?: number;
+    distanceM?: number;
     variantId?: string;
   };
 }
@@ -63,8 +65,12 @@ export interface EntryDialogResult {
   reps: number;
   /** Populated for `'reps'` and `'weight'` measurement; `[]` otherwise. */
   sets: number[];
-  /** Populated for `'time'` measurement; `undefined` otherwise. */
+  /** Populated for `'time'` and `'distance-time'` measurement;
+   *  `undefined` otherwise. */
   durationSec?: number;
+  /** Populated for `'distance-time'` measurement; `undefined`
+   *  otherwise. Always rounded to whole meters. */
+  distanceM?: number;
 }
 
 /**
@@ -72,13 +78,16 @@ export interface EntryDialogResult {
  * its form fields off the catalog definition so any new exercise drops
  * in without component-level changes.
  *
- * Two measurement paths are wired:
+ * Three measurement paths are wired:
  *   - `'reps'` — reps + sets list, sums into the entry total.
  *   - `'time'` — single mm:ss duration input.
+ *   - `'distance-time'` — distance (km) + companion duration (mm:ss).
+ *     Both required; the catalog `min`/`max` constrain `distanceM`,
+ *     the duration uses the same parser as the plank path.
  *
  * `'weight'` and `'distance'` measurements still need their own
- * companion fields (weightKg / distanceM + optional pace) — the form
- * branches off `def.measurement` so adding them is additive.
+ * companion fields (weightKg / distanceM-only) — the form branches
+ * off `def.measurement` so adding them is additive.
  *
  * Caps come from `def.min` / `def.max` so the input clamps and
  * `canSubmit()` locks at the ceiling — closes the "validator rejects
@@ -156,7 +165,36 @@ export interface EntryDialogResult {
         </mat-form-field>
       }
 
-      @if (isTimeMeasurement()) {
+      @if (isDistanceTimeMeasurement()) {
+        <mat-form-field appearance="outline">
+          <mat-label i18n="@@entryDialog.distance">Distanz (km)</mat-label>
+          <input
+            matInput
+            type="number"
+            inputmode="decimal"
+            placeholder="5.00"
+            [min]="minKm()"
+            [max]="maxKm()"
+            step="0.01"
+            [value]="distanceInput()"
+            (input)="distanceInput.set(asValue($event))"
+            required
+          />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label i18n="@@entryDialog.duration">Dauer (mm:ss)</mat-label>
+          <input
+            matInput
+            type="text"
+            inputmode="numeric"
+            placeholder="25:00"
+            pattern="^[0-9]+:[0-5][0-9]$"
+            [value]="durationInput()"
+            (input)="durationInput.set(asValue($event))"
+            required
+          />
+        </mat-form-field>
+      } @else if (isTimeMeasurement()) {
         <mat-form-field appearance="outline">
           <mat-label i18n="@@entryDialog.duration">Dauer (mm:ss)</mat-label>
           <input
@@ -222,7 +260,7 @@ export interface EntryDialogResult {
       }
       @if (overCap()) {
         <div class="total-reps">
-          @if (isTimeMeasurement()) {
+          @if (isTimeMeasurement() || isDistanceTimeMeasurement()) {
             <span i18n="@@entryDialog.overCapTime"
               >Maximum: {{ formattedMax() }}</span
             >
@@ -267,6 +305,10 @@ export class EntryDialogComponent {
     () => this.data.definition.measurement === 'time'
   );
 
+  readonly isDistanceTimeMeasurement = computed(
+    () => this.data.definition.measurement === 'distance-time'
+  );
+
   readonly sets = signal<number[]>(
     this.data.initial?.sets?.length
       ? [...this.data.initial.sets]
@@ -276,7 +318,8 @@ export class EntryDialogComponent {
   );
 
   /**
-   * Free-text mm:ss input for time-measurement exercises (plank).
+   * Free-text mm:ss input for time-measurement exercises (plank) and
+   * the duration companion of distance-time exercises (cardio.running).
    * Pre-filled from `initial.durationSec` in edit mode.
    */
   readonly durationInput = signal(
@@ -288,6 +331,23 @@ export class EntryDialogComponent {
   readonly durationSec = computed(() =>
     parseDurationToSeconds(this.durationInput())
   );
+
+  /**
+   * Distance input in km (decimal) for distance-time exercises. Stored
+   * persistently as integer meters via `distanceM` — the catalog
+   * `min`/`max` are also meters, so we render them as km here only for
+   * the user-facing input.
+   */
+  readonly distanceInput = signal(
+    this.data.initial?.distanceM !== undefined
+      ? formatKmInput(this.data.initial.distanceM)
+      : ''
+  );
+
+  readonly distanceM = computed(() => parseKmToMeters(this.distanceInput()));
+
+  readonly minKm = computed(() => this.data.definition.min / 1000);
+  readonly maxKm = computed(() => this.data.definition.max / 1000);
 
   readonly variantControl = new FormControl<string>(
     this.data.initial?.variantId ?? '',
@@ -307,15 +367,31 @@ export class EntryDialogComponent {
     formatExerciseValue(this.data.definition.max, this.data.definition.unit)
   );
 
-  readonly overCap = computed(() =>
-    this.isTimeMeasurement()
-      ? this.durationSec() !== null &&
-        this.durationSec()! > this.data.definition.max
-      : this.totalReps() > this.data.definition.max
-  );
+  readonly overCap = computed(() => {
+    if (this.isDistanceTimeMeasurement()) {
+      const m = this.distanceM();
+      return m !== null && m > this.data.definition.max;
+    }
+    if (this.isTimeMeasurement()) {
+      const sec = this.durationSec();
+      return sec !== null && sec > this.data.definition.max;
+    }
+    return this.totalReps() > this.data.definition.max;
+  });
 
   readonly canSubmit = computed(() => {
     if (this.timestamp().length === 0) return false;
+    if (this.isDistanceTimeMeasurement()) {
+      const m = this.distanceM();
+      const sec = this.durationSec();
+      return (
+        m !== null &&
+        m >= this.data.definition.min &&
+        sec !== null &&
+        sec > 0 &&
+        !this.overCap()
+      );
+    }
     if (this.isTimeMeasurement()) {
       const sec = this.durationSec();
       return (
@@ -412,6 +488,24 @@ export class EntryDialogComponent {
       return;
     }
 
+    if (measurement === 'distance-time') {
+      const m = this.distanceM();
+      const sec = this.durationSec();
+      if (m === null || m <= 0 || sec === null || sec <= 0) return;
+      const result: EntryDialogResult = {
+        exerciseId: this.data.definition.id,
+        measurement,
+        ...variantPatch,
+        timestamp,
+        reps: 0,
+        sets: [],
+        distanceM: m,
+        durationSec: sec,
+      };
+      this.dialogRef.close(result);
+      return;
+    }
+
     const validSets = this.sets().filter((s) => s > 0);
     const reps = validSets.reduce((sum, s) => sum + s, 0);
     if (reps <= 0) return;
@@ -455,4 +549,30 @@ function parseDurationToSeconds(input: string): number | null {
   const seconds = Number(match[2]);
   if (!Number.isFinite(minutes) || !Number.isFinite(seconds)) return null;
   return minutes * 60 + seconds;
+}
+
+/**
+ * Parse a free-text km input ("5", "5.25", "0.10") into integer
+ * meters. Returns `null` for empty/non-numeric/non-positive input so
+ * the caller can disable submit instead of writing `NaN` or `0` to
+ * Firestore. Locale-specific separators ("5,25") are tolerated by
+ * normalising the comma to a dot — `Number()` itself is en-locale.
+ */
+function parseKmToMeters(input: string): number | null {
+  const trimmed = input.trim().replace(',', '.');
+  if (!trimmed) return null;
+  const km = Number(trimmed);
+  if (!Number.isFinite(km) || km <= 0) return null;
+  return Math.round(km * 1000);
+}
+
+/**
+ * Render a stored `distanceM` as a km string for the form input.
+ * Always uses dot as decimal separator because the `<input
+ * type="number">` element binds to dot-locale regardless of the
+ * surrounding `LOCALE_ID`.
+ */
+function formatKmInput(distanceM: number): string {
+  if (!Number.isFinite(distanceM) || distanceM <= 0) return '';
+  return (distanceM / 1000).toFixed(2);
 }

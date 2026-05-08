@@ -292,16 +292,23 @@ export class ExerciseCategorySectionComponent {
         this.exerciseService.createEntry(userId, {
           exerciseId: result.exerciseId,
           timestamp: result.timestamp,
-          // Measurement-aware payload shape: time exercises (plank)
-          // ship a `durationSec` and no reps/sets; reps exercises do
-          // the inverse. Mirroring the dialog's measurement
-          // discriminator keeps the validator happy on both paths.
+          // Measurement-aware payload shape:
+          //   - 'time' (plank): durationSec only.
+          //   - 'distance-time' (cardio.running): distanceM + durationSec.
+          //   - reps measurements: reps + optional sets.
+          // Mirroring the dialog's measurement discriminator keeps the
+          // validator happy on every path.
           ...(result.measurement === 'time'
             ? { durationSec: result.durationSec ?? 0 }
-            : {
-                reps: result.reps,
-                ...(result.sets.length > 1 ? { sets: result.sets } : {}),
-              }),
+            : result.measurement === 'distance-time'
+              ? {
+                  distanceM: result.distanceM ?? 0,
+                  durationSec: result.durationSec ?? 0,
+                }
+              : {
+                  reps: result.reps,
+                  ...(result.sets.length > 1 ? { sets: result.sets } : {}),
+                }),
           ...(result.variantId ? { variantId: result.variantId } : {}),
         })
       );

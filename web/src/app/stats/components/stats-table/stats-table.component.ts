@@ -313,6 +313,9 @@ export class StatsTableComponent {
               ...(entry.durationSec !== undefined
                 ? { durationSec: entry.durationSec }
                 : {}),
+              ...(entry.distanceM !== undefined
+                ? { distanceM: entry.distanceM }
+                : {}),
               variantId: entry.variantId,
             },
           },
@@ -327,23 +330,30 @@ export class StatsTableComponent {
             exerciseId: entry.exerciseId,
             timestamp: result.timestamp,
             source: entry.source,
-            // Measurement-aware: time exercises (plank) carry a
-            // durationSec; reps exercises carry reps + optional sets.
-            // The reps branch keeps the explicit-clear sentinel
-            // semantics (sets: [] when collapsing a multi-set entry to
-            // a single set) so a stale per-set breakdown doesn't
-            // survive the update via Firestore field-omit.
+            // Measurement-aware:
+            //   - 'time' (plank): durationSec only.
+            //   - 'distance-time' (cardio.running): distanceM + durationSec.
+            //   - reps measurements: reps + optional sets. The sets
+            //     branch keeps the explicit-clear sentinel `[]` when
+            //     collapsing a multi-set entry to a single set so a
+            //     stale per-set breakdown doesn't survive the update
+            //     via Firestore field-omit.
             ...(result.measurement === 'time'
               ? { durationSec: result.durationSec ?? 0 }
-              : {
-                  reps: result.reps,
-                  sets:
-                    result.sets.length > 1
-                      ? result.sets
-                      : entry.sets !== undefined
-                        ? []
-                        : undefined,
-                }),
+              : result.measurement === 'distance-time'
+                ? {
+                    distanceM: result.distanceM ?? 0,
+                    durationSec: result.durationSec ?? 0,
+                  }
+                : {
+                    reps: result.reps,
+                    sets:
+                      result.sets.length > 1
+                        ? result.sets
+                        : entry.sets !== undefined
+                          ? []
+                          : undefined,
+                  }),
             // Forward the dialog's tri-state variantId verbatim:
             // - non-empty string sets the variant
             // - explicit null tells the store to clear it via deleteField()

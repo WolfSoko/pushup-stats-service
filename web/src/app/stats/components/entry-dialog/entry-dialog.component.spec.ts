@@ -30,6 +30,15 @@ const plankDef: ExerciseDefinition = {
   unit: 's',
 };
 
+const runningDef: ExerciseDefinition = {
+  id: 'cardio.running',
+  categoryId: 'cardio',
+  measurement: 'distance-time',
+  min: 100,
+  max: 50_000,
+  unit: 'm',
+};
+
 const pushupWithVariantsDef: ExerciseDefinition = {
   id: 'pushup',
   categoryId: 'pushup',
@@ -397,6 +406,136 @@ describe('EntryDialogComponent', () => {
       });
       // 95 s → 1:35
       expect(cmp.durationInput()).toBe('1:35');
+    });
+  });
+
+  describe('Distance-time measurement (cardio.running)', () => {
+    it('marks the form as distance-time and starts with both fields empty', () => {
+      const cmp = createComponent({
+        definition: runningDef,
+        exerciseName: 'Laufen',
+      });
+      expect(cmp.isDistanceTimeMeasurement()).toBe(true);
+      expect(cmp.distanceInput()).toBe('');
+      expect(cmp.durationInput()).toBe('');
+      expect(cmp.canSubmit()).toBe(false);
+    });
+
+    it('parses km input into integer meters', () => {
+      const cmp = createComponent({
+        definition: runningDef,
+        exerciseName: 'Laufen',
+      });
+      cmp.distanceInput.set('5.25');
+      expect(cmp.distanceM()).toBe(5250);
+    });
+
+    it('tolerates a comma decimal separator', () => {
+      const cmp = createComponent({
+        definition: runningDef,
+        exerciseName: 'Laufen',
+      });
+      cmp.distanceInput.set('5,25');
+      expect(cmp.distanceM()).toBe(5250);
+    });
+
+    it('rejects empty, non-numeric, and non-positive distance', () => {
+      const cmp = createComponent({
+        definition: runningDef,
+        exerciseName: 'Laufen',
+      });
+      cmp.distanceInput.set('');
+      expect(cmp.distanceM()).toBeNull();
+      cmp.distanceInput.set('garbage');
+      expect(cmp.distanceM()).toBeNull();
+      cmp.distanceInput.set('0');
+      expect(cmp.distanceM()).toBeNull();
+      cmp.distanceInput.set('-3');
+      expect(cmp.distanceM()).toBeNull();
+    });
+
+    it('keeps submit disabled until both distance and duration are valid', () => {
+      const cmp = createComponent({
+        definition: runningDef,
+        exerciseName: 'Laufen',
+      });
+      cmp.timestamp.set('2026-04-15T10:00');
+
+      cmp.distanceInput.set('5.00');
+      expect(cmp.canSubmit()).toBe(false);
+
+      cmp.durationInput.set('25:00');
+      expect(cmp.canSubmit()).toBe(true);
+
+      // Clearing the duration locks submit again.
+      cmp.durationInput.set('');
+      expect(cmp.canSubmit()).toBe(false);
+    });
+
+    it('disables submit below def.min and above def.max', () => {
+      const cmp = createComponent({
+        definition: runningDef,
+        exerciseName: 'Laufen',
+      });
+      cmp.timestamp.set('2026-04-15T10:00');
+      cmp.durationInput.set('25:00');
+
+      cmp.distanceInput.set('0.05');
+      expect(cmp.canSubmit()).toBe(false);
+
+      cmp.distanceInput.set('60');
+      expect(cmp.overCap()).toBe(true);
+      expect(cmp.canSubmit()).toBe(false);
+
+      cmp.distanceInput.set('5.00');
+      expect(cmp.overCap()).toBe(false);
+      expect(cmp.canSubmit()).toBe(true);
+    });
+
+    it('submits distanceM (rounded) and durationSec, with empty reps/sets', () => {
+      const cmp = createComponent({
+        definition: runningDef,
+        exerciseName: 'Laufen',
+      });
+      cmp.timestamp.set('2026-04-15T10:00');
+      cmp.distanceInput.set('5.25');
+      cmp.durationInput.set('25:00');
+      expect(cmp.canSubmit()).toBe(true);
+
+      cmp.submit();
+
+      const result = dialogRef.close.mock
+        .calls[0][0] as EntryDialogResult;
+      expect(result.measurement).toBe('distance-time');
+      expect(result.exerciseId).toBe('cardio.running');
+      expect(result.distanceM).toBe(5250);
+      expect(result.durationSec).toBe(25 * 60);
+      expect(result.reps).toBe(0);
+      expect(result.sets).toEqual([]);
+    });
+
+    it('pre-fills distance + duration in edit mode', () => {
+      const cmp = createComponent({
+        definition: runningDef,
+        exerciseName: 'Laufen',
+        initial: {
+          timestamp: '2026-04-15T10:00:00+02:00',
+          reps: 0,
+          distanceM: 5250,
+          durationSec: 25 * 60 + 30,
+        },
+      });
+      expect(cmp.distanceInput()).toBe('5.25');
+      expect(cmp.durationInput()).toBe('25:30');
+    });
+
+    it('exposes minKm/maxKm derived from def.min/def.max', () => {
+      const cmp = createComponent({
+        definition: runningDef,
+        exerciseName: 'Laufen',
+      });
+      expect(cmp.minKm()).toBeCloseTo(0.1);
+      expect(cmp.maxKm()).toBe(50);
     });
   });
 });

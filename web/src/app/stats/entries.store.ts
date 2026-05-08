@@ -261,11 +261,15 @@ export const EntriesStore = signalStore(
         id: string;
         exerciseId?: string;
         timestamp: string;
-        // Reps measurement field; `undefined` for time-measurement
-        // updates (where `durationSec` carries the value instead).
+        // Measurement-specific value fields. Reps/sets for reps
+        // exercises, durationSec for plank, distanceM (+ durationSec
+        // companion) for cardio.running. Each call patches whatever
+        // the dialog produced; the data-access layer enforces that
+        // mutually exclusive fields don't end up on the same doc.
         reps?: number;
         sets?: number[];
         durationSec?: number;
+        distanceM?: number;
         source?: string;
         type?: string;
         // `null` is the "clear this variant" sentinel forwarded from the
@@ -302,6 +306,9 @@ export const EntriesStore = signalStore(
                 ...(payload.reps !== undefined ? { reps: payload.reps } : {}),
                 ...(payload.durationSec !== undefined
                   ? { durationSec: payload.durationSec }
+                  : {}),
+                ...(payload.distanceM !== undefined
+                  ? { distanceM: payload.distanceM }
                   : {}),
                 ...(payload.sets !== undefined ? { sets: payload.sets } : {}),
                 ...(payload.source !== undefined

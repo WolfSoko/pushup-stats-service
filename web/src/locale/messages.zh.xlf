@@ -4438,6 +4438,12 @@
         <source>Anleitung öffnen</source>
       <target>打开指南</target></segment>
     </unit>
+    <unit id="entryDialog.distance">
+      <segment state="translated">
+        <source>Distanz (km)</source>
+        <target>距离 (公里)</target>
+      </segment>
+    </unit>
     <unit id="entryDialog.duration">
       <segment state="translated">
         <source>Dauer (mm:ss)</source>

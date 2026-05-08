@@ -3219,6 +3219,12 @@ Deine Position: # ·  Reps        </source>
         <target>Lagre</target>
       </segment>
     </unit>
+    <unit id="entryDialog.distance">
+      <segment state="translated">
+        <source>Distanz (km)</source>
+        <target>Distanse (km)</target>
+      </segment>
+    </unit>
     <unit id="entryDialog.duration">
       <segment state="translated">
         <source>Dauer (mm:ss)</source>
