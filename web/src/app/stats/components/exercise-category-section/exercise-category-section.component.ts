@@ -350,11 +350,13 @@ function buildI18n(): I18nBundle {
     abs: $localize`:@@exercise.category.abs:Bauch`,
     legs: $localize`:@@exercise.category.legs:Beine`,
     plank: $localize`:@@exercise.category.plank:Plank`,
+    cardio: $localize`:@@exercise.category.cardio:Ausdauer`,
   };
   const exerciseNames: Record<string, string> = {
     'abs.situps': $localize`:@@exercise.abs.situps.name:Sit-ups`,
     'legs.squats': $localize`:@@exercise.legs.squats.name:Kniebeugen`,
     'plank.standard': $localize`:@@exercise.plank.standard.name:Plank`,
+    'cardio.running': $localize`:@@exercise.cardio.running.name:Laufen`,
   };
   return {
     categoryNames,

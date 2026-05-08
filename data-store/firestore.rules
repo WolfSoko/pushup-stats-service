@@ -154,8 +154,9 @@ service cloud.firestore {
       allow delete: if request.auth != null && resource.data.userId == request.auth.uid;
       allow create: if request.auth != null
                     && request.resource.data.keys().hasOnly([
-                      'userId', 'exerciseId', 'reps', 'durationSec', 'sets',
-                      'variantId', 'timestamp', 'source', 'createdAt', 'updatedAt'
+                      'userId', 'exerciseId', 'reps', 'durationSec', 'distanceM',
+                      'sets', 'variantId', 'timestamp', 'source',
+                      'createdAt', 'updatedAt'
                     ])
                     && request.resource.data.userId == request.auth.uid
                     && request.resource.data.exerciseId is string
@@ -168,7 +169,8 @@ service cloud.firestore {
                         && request.resource.data.reps is int
                         && request.resource.data.reps >= 1
                         && request.resource.data.reps <= 500
-                        && !('durationSec' in request.resource.data.keys()))
+                        && !('durationSec' in request.resource.data.keys())
+                        && !('distanceM' in request.resource.data.keys()))
                       ||
                       // Time-measured exercises (plank). `sets` would
                       // poison `applyDelta` because no per-set duration
@@ -178,6 +180,20 @@ service cloud.firestore {
                         && request.resource.data.durationSec is int
                         && request.resource.data.durationSec >= 1
                         && request.resource.data.durationSec <= 7200
+                        && !('reps' in request.resource.data.keys())
+                        && !('sets' in request.resource.data.keys())
+                        && !('distanceM' in request.resource.data.keys()))
+                      ||
+                      // Distance-time-measured exercises (cardio.running).
+                      // Both fields are required; `reps`/`sets` are blocked
+                      // for the same reason as plank.
+                      (request.resource.data.exerciseId == 'cardio.running'
+                        && request.resource.data.distanceM is int
+                        && request.resource.data.distanceM >= 100
+                        && request.resource.data.distanceM <= 50000
+                        && request.resource.data.durationSec is int
+                        && request.resource.data.durationSec >= 1
+                        && request.resource.data.durationSec <= 86400
                         && !('reps' in request.resource.data.keys())
                         && !('sets' in request.resource.data.keys()))
                     )
@@ -192,8 +208,9 @@ service cloud.firestore {
       allow update: if request.auth != null
                     && resource.data.userId == request.auth.uid
                     && request.resource.data.keys().hasOnly([
-                      'userId', 'exerciseId', 'reps', 'durationSec', 'sets',
-                      'variantId', 'timestamp', 'source', 'createdAt', 'updatedAt'
+                      'userId', 'exerciseId', 'reps', 'durationSec', 'distanceM',
+                      'sets', 'variantId', 'timestamp', 'source',
+                      'createdAt', 'updatedAt'
                     ])
                     && request.resource.data.userId == request.auth.uid
                     && request.resource.data.userId == resource.data.userId
@@ -203,25 +220,42 @@ service cloud.firestore {
                     // `exerciseId` is immutable (checked above) so we
                     // pin to `resource.data.exerciseId`.
                     && (
-                      // Reps-measured exercises: reject `durationSec`
-                      // and validate reps when changed.
+                      // Reps-measured exercises: reject `durationSec`/
+                      // `distanceM` and validate reps when changed.
                       ((resource.data.exerciseId == 'abs.situps'
                           || resource.data.exerciseId == 'legs.squats')
                         && !('durationSec' in request.resource.data.keys())
+                        && !('distanceM' in request.resource.data.keys())
                         && (!('reps' in request.resource.data.diff(resource.data).affectedKeys())
                             || (request.resource.data.reps is int
                                 && request.resource.data.reps >= 1
                                 && request.resource.data.reps <= 500)))
                       ||
-                      // Time-measured exercises (plank): reject `reps`
-                      // and `sets`, validate durationSec when changed.
+                      // Time-measured exercises (plank): reject `reps`,
+                      // `sets`, `distanceM`; validate durationSec when changed.
                       (resource.data.exerciseId == 'plank.standard'
                         && !('reps' in request.resource.data.keys())
                         && !('sets' in request.resource.data.keys())
+                        && !('distanceM' in request.resource.data.keys())
                         && (!('durationSec' in request.resource.data.diff(resource.data).affectedKeys())
                             || (request.resource.data.durationSec is int
                                 && request.resource.data.durationSec >= 1
                                 && request.resource.data.durationSec <= 7200)))
+                      ||
+                      // Distance-time-measured exercises (cardio.running):
+                      // reject `reps`/`sets`; validate distanceM and
+                      // durationSec when changed.
+                      (resource.data.exerciseId == 'cardio.running'
+                        && !('reps' in request.resource.data.keys())
+                        && !('sets' in request.resource.data.keys())
+                        && (!('distanceM' in request.resource.data.diff(resource.data).affectedKeys())
+                            || (request.resource.data.distanceM is int
+                                && request.resource.data.distanceM >= 100
+                                && request.resource.data.distanceM <= 50000))
+                        && (!('durationSec' in request.resource.data.diff(resource.data).affectedKeys())
+                            || (request.resource.data.durationSec is int
+                                && request.resource.data.durationSec >= 1
+                                && request.resource.data.durationSec <= 86400)))
                     )
                     && (!('timestamp' in request.resource.data.diff(resource.data).affectedKeys())
                         || (request.resource.data.timestamp is string

@@ -3846,6 +3846,18 @@
         <target>Plank</target>
       </segment>
     </unit>
+    <unit id="exercise.category.cardio">
+      <segment state="translated">
+        <source>Ausdauer</source>
+        <target>Cardio</target>
+      </segment>
+    </unit>
+    <unit id="exercise.cardio.running.name">
+      <segment state="translated">
+        <source>Laufen</source>
+        <target>Corsa</target>
+      </segment>
+    </unit>
     <unit id="entryDialog.variant">
       <segment state="translated">
         <source>Variante</source>

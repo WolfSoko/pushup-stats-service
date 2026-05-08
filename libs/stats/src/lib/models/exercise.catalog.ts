@@ -36,6 +36,12 @@ export const EXERCISE_CATEGORIES: ReadonlyArray<ExerciseCategoryInfo> = [
     icon: 'horizontal_rule',
     order: 40,
   },
+  {
+    id: 'cardio',
+    nameKey: '@@exercise.category.cardio',
+    icon: 'directions_run',
+    order: 50,
+  },
 ];
 
 /**
@@ -81,6 +87,22 @@ export const EXERCISE_CATALOG: ReadonlyArray<ExerciseDefinition> = [
     unit: 's',
     nameKey: '@@exercise.plank.standard.name',
     icon: 'horizontal_rule',
+  },
+  {
+    // First composite-measurement entry: a tracked run carries both
+    // distance and duration. `min`/`max` constrain `distanceM`
+    // (100 m sprint up to 50 km ultra); the required duration
+    // companion is bounded by COMPANION_BOUNDS in `exercise.models.ts`
+    // (1..86400 s) — Phase 3 polish can tighten that to a per-exercise
+    // range once user data shows what's plausible.
+    id: 'cardio.running',
+    categoryId: 'cardio',
+    measurement: 'distance-time',
+    min: 100,
+    max: 50_000,
+    unit: 'm',
+    nameKey: '@@exercise.cardio.running.name',
+    icon: 'directions_run',
   },
 ];
 

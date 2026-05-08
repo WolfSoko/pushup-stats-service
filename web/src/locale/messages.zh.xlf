@@ -4462,6 +4462,18 @@
         <target>平板支撑</target>
       </segment>
     </unit>
+    <unit id="exercise.category.cardio">
+      <segment state="translated">
+        <source>Ausdauer</source>
+        <target>有氧运动</target>
+      </segment>
+    </unit>
+    <unit id="exercise.cardio.running.name">
+      <segment state="translated">
+        <source>Laufen</source>
+        <target>跑步</target>
+      </segment>
+    </unit>
     <unit id="entryDialog.variant">
       <segment state="translated">
         <source>Variante</source>

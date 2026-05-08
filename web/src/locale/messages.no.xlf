@@ -3243,6 +3243,18 @@ Deine Position: # ·  Reps        </source>
         <target>Planke</target>
       </segment>
     </unit>
+    <unit id="exercise.category.cardio">
+      <segment state="translated">
+        <source>Ausdauer</source>
+        <target>Kondisjon</target>
+      </segment>
+    </unit>
+    <unit id="exercise.cardio.running.name">
+      <segment state="translated">
+        <source>Laufen</source>
+        <target>Løping</target>
+      </segment>
+    </unit>
     <unit id="entryDialog.variant">
       <segment state="translated">
         <source>Variante</source>

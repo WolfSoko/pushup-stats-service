@@ -1683,12 +1683,20 @@ export const updateExerciseStatsOnEntryWrite = onDocumentWritten(
 
     // The aggregation slot stays named `reps` for backwards
     // compatibility with the existing UserStats schema, but for
-    // time-measurement exercises (plank) we feed `durationSec` into
-    // the same slot. The per-exercise stats doc is exercise-scoped, so
-    // `total` carries seconds for plank and rep counts for sit-ups —
-    // the display layer formats accordingly.
-    const oldReps = Number(beforeData?.reps ?? beforeData?.durationSec ?? 0);
-    const newReps = Number(afterData?.reps ?? afterData?.durationSec ?? 0);
+    // non-rep exercises we feed the primary measurement field
+    // (`durationSec` for plank, `distanceM` for cardio.running) into
+    // the same slot. The per-exercise stats doc is exercise-scoped,
+    // so `total` carries seconds for plank, meters for a tracked run,
+    // and rep counts for sit-ups — the display layer formats
+    // accordingly. For composite measurements ('distance-time') the
+    // companion duration is left to the live entries query in the
+    // dashboard summary; the aggregated slot stays single-valued.
+    const oldReps = Number(
+      beforeData?.reps ?? beforeData?.durationSec ?? beforeData?.distanceM ?? 0
+    );
+    const newReps = Number(
+      afterData?.reps ?? afterData?.durationSec ?? afterData?.distanceM ?? 0
+    );
     const oldTimestamp = beforeData?.timestamp as string | undefined;
     const newTimestamp = afterData?.timestamp as string | undefined;
     // Defensive sanitization: reduce over `sets` runs straight into
@@ -1749,11 +1757,11 @@ export const updateExerciseStatsOnEntryWrite = onDocumentWritten(
         const data = d.data();
         return {
           timestamp: data.timestamp as string,
-          // Time-measurement entries (plank) carry the value in
-          // `durationSec`; reuse the rebuild path's `reps` slot so the
-          // per-exercise total ends up correct (seconds for plank,
-          // reps for sit-ups/squats).
-          reps: Number(data.reps ?? data.durationSec ?? 0),
+          // Non-rep entries reuse the rebuild path's `reps` slot for
+          // their primary measurement value: seconds for plank, meters
+          // for cardio.running. The slot is exercise-scoped so it
+          // never mixes units across exercises.
+          reps: Number(data.reps ?? data.durationSec ?? data.distanceM ?? 0),
           ...(Array.isArray(data.sets) ? { sets: data.sets as number[] } : {}),
         };
       });
@@ -1830,10 +1838,10 @@ export const updateExerciseStatsOnEntryWrite = onDocumentWritten(
           const data = d.data();
           return {
             timestamp: data.timestamp as string,
-            // Time-measurement entries write the primary value to
-            // `durationSec`; fold it back into the `reps` slot the
-            // rebuild expects.
-            reps: Number(data.reps ?? data.durationSec ?? 0),
+            // Non-rep entries fold their primary measurement into the
+            // `reps` slot the rebuild expects: durationSec for plank,
+            // distanceM for cardio.running.
+            reps: Number(data.reps ?? data.durationSec ?? data.distanceM ?? 0),
             ...(Array.isArray(data.sets)
               ? { sets: data.sets as number[] }
               : {}),
