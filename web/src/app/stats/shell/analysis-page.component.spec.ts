@@ -310,6 +310,23 @@ describe('AnalysisPageComponent', () => {
     expect(headerToggle?.tagName.toLowerCase()).toBe('mat-button-toggle-group');
   });
 
+  it('keeps the date range filter sticky so it stays visible while scrolling', () => {
+    fixture.detectChanges();
+    const host: HTMLElement = fixture.nativeElement;
+    const filterSection = host.querySelector('.filter-section');
+    expect(filterSection).toBeTruthy();
+    const computed = window.getComputedStyle(filterSection as Element);
+    expect(computed.position).toBe('sticky');
+    // The sticky offset must derive from --top-nav-height +
+    // --desktop-nav-height so it stays in sync with the toolbar layout.
+    // jsdom returns the raw calc()/var() expression rather than resolving
+    // it to pixels, which is exactly what we want to verify here — a
+    // hardcoded magic number (e.g. `top: 64px`) would silently overlap or
+    // gap relative to the nav once the variables change.
+    expect(computed.top).toMatch(/var\(--top-nav-height/);
+    expect(computed.top).toMatch(/var\(--desktop-nav-height/);
+  });
+
   it('includes avgSetsPerEntry in week and month trend', () => {
     const { store } = fixture.componentInstance;
     const week = store.weekTrend();

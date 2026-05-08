@@ -2790,8 +2790,8 @@
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:544,546</note>
       </notes>
       <segment state="translated">
-        <source>PWA, Live-Sync &amp; Web Share</source>
-        <target>PWA, sincronización en vivo y uso compartido web</target>
+        <source>App-Installation, Live-Sync &amp; Teilen</source>
+        <target>Instalación de la app, sincronización en directo y compartir</target>
       </segment>
     </unit>
     <unit id="landing.feature.pwa.body">
@@ -2799,35 +2799,35 @@
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:548,551</note>
       </notes>
       <segment state="translated">
-        <source>Installierbar wie eine native App, Echtzeit-Sync zwischen allen Geräten und Tagesergebnis per Web Share teilen – inklusive Dark- und Light-Theme.</source>
-        <target>Se puede instalar como una aplicación nativa, sincronizar en tiempo real entre todos los dispositivos y compartir resultados diarios a través de la web, incluidos temas oscuros y claros.</target>
+        <source>Direkt aus dem Browser als App installieren – mit Echtzeit-Sync zwischen allen Geräten und Tagesergebnis per Teilen-Button.</source>
+        <target>Instálala directamente desde el navegador como una app, con sincronización en tiempo real entre todos tus dispositivos y comparte tu resultado diario con un solo botón.</target>
       </segment>
     </unit>
     <unit id="landing.feature.pwa.installed">
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon aria-hidden=&quot;true&quot;&gt;" dispEnd="&lt;/mat-icon&gt;">check_circle</pc> Du nutzt bereits die installierte App </source>
-        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon aria-hidden=&quot;true&quot;&gt;" dispEnd="&lt;/mat-icon&gt;">check_circle</pc> Du nutzt bereits die installierte App </target>
+        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon aria-hidden=&quot;true&quot;&gt;" dispEnd="&lt;/mat-icon&gt;">check_circle</pc> Ya estás usando la app instalada </target>
       </segment>
     </unit>
     <unit id="landing.feature.pwa.install">
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon aria-hidden=&quot;true&quot;&gt;" dispEnd="&lt;/mat-icon&gt;">download</pc> Jetzt als App installieren </source>
-        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon aria-hidden=&quot;true&quot;&gt;" dispEnd="&lt;/mat-icon&gt;">download</pc> Jetzt als App installieren </target>
+        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon aria-hidden=&quot;true&quot;&gt;" dispEnd="&lt;/mat-icon&gt;">download</pc> Instalar como app </target>
       </segment>
     </unit>
     <unit id="landing.feature.pwa.iosHint">
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source> Auf iPhone &amp; iPad: Teilen-Symbol antippen und „Zum Home-Bildschirm“ wählen. </source>
-        <target> Auf iPhone &amp; iPad: Teilen-Symbol antippen und „Zum Home-Bildschirm“ wählen. </target>
+        <target> En iPhone y iPad: toca el icono de compartir y elige «Añadir a pantalla de inicio». </target>
       </segment>
     </unit>
     <unit id="landing.feature.privacy.title">
@@ -5517,6 +5517,12 @@
       <segment state="translated">
         <source>Tag</source>
         <target>día</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.restDay.configuredGoalHint">
+      <segment state="translated">
+        <source>Konfiguriertes Tagesziel:</source>
+        <target>Objetivo diario configurado:</target>
       </segment>
     </unit>
     <unit id="dashboard.weeklyGoalLabel">

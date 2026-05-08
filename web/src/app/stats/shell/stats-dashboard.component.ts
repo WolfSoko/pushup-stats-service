@@ -126,6 +126,8 @@ export class StatsDashboardComponent {
   readonly planTodayKind = this.store.planTodayKind;
   readonly planDayIndex = this.store.planDayIndex;
   readonly planTotalDays = this.store.planTotalDays;
+  readonly isPlanRestDay = this.store.isPlanRestDay;
+  readonly userConfiguredDailyGoal = this.store.userConfiguredDailyGoal;
   private readonly trainingPlans = inject(TrainingPlanStore);
   /**
    * Only render the "no active plan" banner once the plan resource has

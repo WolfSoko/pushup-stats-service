@@ -182,8 +182,8 @@
     <unit id="auth.onboarding.google.username">
       <notes>
         <note category="location">libs/auth/src/lib/ui/login/google-onboarding-dialog/google-onboarding-dialog.component.html:8,11</note>
-        <note category="location">libs/auth/src/lib/ui/register/register.component.html:211,213</note>
-        <note category="location">libs/auth/src/lib/ui/register/register.component.html:215,217</note>
+        <note category="location">libs/auth/src/lib/ui/register/register.component.html:234,236</note>
+        <note category="location">libs/auth/src/lib/ui/register/register.component.html:238,240</note>
       </notes>
       <segment>
         <source>Benutzername</source>
@@ -192,8 +192,8 @@
     <unit id="auth.onboarding.google.goal">
       <notes>
         <note category="location">libs/auth/src/lib/ui/login/google-onboarding-dialog/google-onboarding-dialog.component.html:19,21</note>
-        <note category="location">libs/auth/src/lib/ui/register/register.component.html:246,248</note>
-        <note category="location">libs/auth/src/lib/ui/register/register.component.html:250,252</note>
+        <note category="location">libs/auth/src/lib/ui/register/register.component.html:269,271</note>
+        <note category="location">libs/auth/src/lib/ui/register/register.component.html:273,275</note>
       </notes>
       <segment>
         <source>Tagesziel</source>
@@ -202,8 +202,8 @@
     <unit id="auth.onboarding.google.consent.checkbox">
       <notes>
         <note category="location">libs/auth/src/lib/ui/login/google-onboarding-dialog/google-onboarding-dialog.component.html:36,39</note>
-        <note category="location">libs/auth/src/lib/ui/register/register.component.html:285,287</note>
-        <note category="location">libs/auth/src/lib/ui/register/register.component.html:296,298</note>
+        <note category="location">libs/auth/src/lib/ui/register/register.component.html:308,310</note>
+        <note category="location">libs/auth/src/lib/ui/register/register.component.html:319,321</note>
       </notes>
       <segment>
         <source>Einwilligung erteilen</source>
@@ -221,10 +221,10 @@
       <notes>
         <note category="location">libs/auth/src/lib/ui/login/google-onboarding-dialog/google-onboarding-dialog.component.html:62,65</note>
         <note category="location">libs/auth/src/lib/ui/register/register.component.html:81,82</note>
-        <note category="location">libs/auth/src/lib/ui/register/register.component.html:130,131</note>
-        <note category="location">libs/auth/src/lib/ui/register/register.component.html:201,202</note>
-        <note category="location">libs/auth/src/lib/ui/register/register.component.html:239,240</note>
-        <note category="location">libs/auth/src/lib/ui/register/register.component.html:276,277</note>
+        <note category="location">libs/auth/src/lib/ui/register/register.component.html:153,154</note>
+        <note category="location">libs/auth/src/lib/ui/register/register.component.html:224,225</note>
+        <note category="location">libs/auth/src/lib/ui/register/register.component.html:262,263</note>
+        <note category="location">libs/auth/src/lib/ui/register/register.component.html:299,300</note>
       </notes>
       <segment>
         <source> Weiter </source>
@@ -233,7 +233,7 @@
     <unit id="cancel">
       <notes>
         <note category="location">libs/auth/src/lib/ui/login/google-onboarding-dialog/google-onboarding-dialog.component.html:67,69</note>
-        <note category="location">libs/auth/src/lib/ui/register/register.component.html:330,331</note>
+        <note category="location">libs/auth/src/lib/ui/register/register.component.html:353,354</note>
         <note category="location">web/src/app/core/feedback/feedback-dialog.component.ts:96,97</note>
         <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:277,278</note>
         <note category="location">web/src/app/stats/components/exercise-entry-dialog/exercise-entry-dialog.component.ts:142,143</note>
@@ -305,8 +305,8 @@
     <unit id="auth.password">
       <notes>
         <note category="location">libs/auth/src/lib/ui/login/login.component.html:41,42</note>
-        <note category="location">libs/auth/src/lib/ui/register/register.component.html:109,111</note>
-        <note category="location">libs/auth/src/lib/ui/register/register.component.html:138,139</note>
+        <note category="location">libs/auth/src/lib/ui/register/register.component.html:132,134</note>
+        <note category="location">libs/auth/src/lib/ui/register/register.component.html:161,162</note>
       </notes>
       <segment>
         <source>Passwort</source>
@@ -331,15 +331,15 @@
     </unit>
     <unit id="auth.google.signin">
       <notes>
-        <note category="location">libs/auth/src/lib/ui/login/login.component.html:88,90</note>
+        <note category="location">libs/auth/src/lib/ui/login/login.component.html:111,113</note>
       </notes>
       <segment>
-        <source> Mit Google anmelden </source>
+        <source>Mit Google anmelden</source>
       </segment>
     </unit>
     <unit id="auth.register.noAccount">
       <notes>
-        <note category="location">libs/auth/src/lib/ui/login/login.component.html:91,92</note>
+        <note category="location">libs/auth/src/lib/ui/login/login.component.html:114,115</note>
       </notes>
       <segment>
         <source>Noch kein Account?</source>
@@ -347,7 +347,7 @@
     </unit>
     <unit id="2721806142807617942">
       <notes>
-        <note category="location">libs/auth/src/lib/ui/login/login.component.html:93,94</note>
+        <note category="location">libs/auth/src/lib/ui/login/login.component.html:116,117</note>
       </notes>
       <segment>
         <source> Registrieren </source>
@@ -455,15 +455,15 @@
     </unit>
     <unit id="auth.google.signup">
       <notes>
-        <note category="location">libs/auth/src/lib/ui/register/register.component.html:93,94</note>
+        <note category="location">libs/auth/src/lib/ui/register/register.component.html:116,118</note>
       </notes>
       <segment>
-        <source> Mit Google registrieren </source>
+        <source>Mit Google registrieren</source>
       </segment>
     </unit>
     <unit id="auth.register.google.skipPassword">
       <notes>
-        <note category="location">libs/auth/src/lib/ui/register/register.component.html:113,115</note>
+        <note category="location">libs/auth/src/lib/ui/register/register.component.html:136,138</note>
       </notes>
       <segment>
         <source> Passwort-Schritt übersprungen (Google Registrierung). </source>
@@ -471,11 +471,11 @@
     </unit>
     <unit id="auth.register.back">
       <notes>
-        <note category="location">libs/auth/src/lib/ui/register/register.component.html:122,123</note>
-        <note category="location">libs/auth/src/lib/ui/register/register.component.html:185,186</note>
-        <note category="location">libs/auth/src/lib/ui/register/register.component.html:230,231</note>
-        <note category="location">libs/auth/src/lib/ui/register/register.component.html:267,268</note>
-        <note category="location">libs/auth/src/lib/ui/register/register.component.html:305,306</note>
+        <note category="location">libs/auth/src/lib/ui/register/register.component.html:145,146</note>
+        <note category="location">libs/auth/src/lib/ui/register/register.component.html:208,209</note>
+        <note category="location">libs/auth/src/lib/ui/register/register.component.html:253,254</note>
+        <note category="location">libs/auth/src/lib/ui/register/register.component.html:290,291</note>
+        <note category="location">libs/auth/src/lib/ui/register/register.component.html:328,329</note>
       </notes>
       <segment>
         <source> Zurück</source>
@@ -483,7 +483,7 @@
     </unit>
     <unit id="auth.register.password.hint">
       <notes>
-        <note category="location">libs/auth/src/lib/ui/register/register.component.html:162,164</note>
+        <note category="location">libs/auth/src/lib/ui/register/register.component.html:185,187</note>
       </notes>
       <segment>
         <source> Mindestens 8 Zeichen, Groß- und Kleinbuchstaben, Zahl und Sonderzeichen. </source>
@@ -491,7 +491,7 @@
     </unit>
     <unit id="auth.register.password.repeat">
       <notes>
-        <note category="location">libs/auth/src/lib/ui/register/register.component.html:170,172</note>
+        <note category="location">libs/auth/src/lib/ui/register/register.component.html:193,195</note>
       </notes>
       <segment>
         <source>Passwort wiederholen</source>
@@ -499,7 +499,7 @@
     </unit>
     <unit id="auth.onboarding.google.consent.text">
       <notes>
-        <note category="location">libs/auth/src/lib/ui/register/register.component.html:288,291</note>
+        <note category="location">libs/auth/src/lib/ui/register/register.component.html:311,314</note>
       </notes>
       <segment>
         <source> Ich willige in die Datenverarbeitung zum Erheben technisch notwendiger Daten, statistischer Auswertungen und zum Ausspielen gezielter Werbung ein. </source>
@@ -507,7 +507,7 @@
     </unit>
     <unit id="auth.register.submit">
       <notes>
-        <note category="location">libs/auth/src/lib/ui/register/register.component.html:322,323</note>
+        <note category="location">libs/auth/src/lib/ui/register/register.component.html:345,346</note>
       </notes>
       <segment>
         <source> Registrieren </source>
@@ -5142,7 +5142,7 @@
     </unit>
     <unit id="dashboard.share.text.profile.streak">
       <notes>
-        <note category="location">web/src/app/stats/dashboard.store.ts:434</note>
+        <note category="location">web/src/app/stats/dashboard.store.ts:452</note>
       </notes>
       <segment>
         <source>Heute schon <ph id="0" equiv="total" disp="total"/> Liegestütze geschafft – Streak: <ph id="1" equiv="streak" disp="streak"/> Tage 🔥 Schau dir mein Profil an:</source>
@@ -5150,7 +5150,7 @@
     </unit>
     <unit id="dashboard.share.text.profile.simple">
       <notes>
-        <note category="location">web/src/app/stats/dashboard.store.ts:435</note>
+        <note category="location">web/src/app/stats/dashboard.store.ts:453</note>
       </notes>
       <segment>
         <source>Heute schon <ph id="0" equiv="total" disp="total"/> Liegestütze geschafft! 💪 Schau dir mein Profil an:</source>
@@ -5158,7 +5158,7 @@
     </unit>
     <unit id="dashboard.share.text.streak">
       <notes>
-        <note category="location">web/src/app/stats/dashboard.store.ts:439</note>
+        <note category="location">web/src/app/stats/dashboard.store.ts:457</note>
       </notes>
       <segment>
         <source>Heute schon <ph id="0" equiv="total" disp="total"/> Liegestütze geschafft – Streak: <ph id="1" equiv="streak" disp="streak"/> Tage 🔥 Tracke deine Stats kostenlos:</source>
@@ -5166,7 +5166,7 @@
     </unit>
     <unit id="dashboard.share.text.simple">
       <notes>
-        <note category="location">web/src/app/stats/dashboard.store.ts:440</note>
+        <note category="location">web/src/app/stats/dashboard.store.ts:458</note>
       </notes>
       <segment>
         <source>Heute schon <ph id="0" equiv="total" disp="total"/> Liegestütze geschafft! 💪 Tracke deine Stats kostenlos:</source>
@@ -5174,7 +5174,7 @@
     </unit>
     <unit id="dashboard.share.title">
       <notes>
-        <note category="location">web/src/app/stats/dashboard.store.ts:444</note>
+        <note category="location">web/src/app/stats/dashboard.store.ts:462</note>
       </notes>
       <segment>
         <source>Pushup Tracker</source>
@@ -6108,6 +6108,7 @@
     <unit id="trainingPlans.kind.rest">
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:77,78</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:169,171</note>
         <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:232,233</note>
         <note category="location">web/src/app/training-plans/training-plans-page.component.ts:107,108</note>
       </notes>
@@ -6138,6 +6139,7 @@
     <unit id="trainingPlans.reps">
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:85,87</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:182,184</note>
         <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:245,246</note>
         <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:251,252</note>
         <note category="location">web/src/app/training-plans/training-plans-page.component.ts:125,127</note>
@@ -6213,15 +6215,24 @@
     </unit>
     <unit id="dashboard.dailyGoalLabel">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:160,161</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:161,163</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:188,189</note>
       </notes>
       <segment>
         <source>Tag</source>
       </segment>
     </unit>
+    <unit id="dashboard.restDay.configuredGoalHint">
+      <notes>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:178,180</note>
+      </notes>
+      <segment>
+        <source>Konfiguriertes Tagesziel:</source>
+      </segment>
+    </unit>
     <unit id="dashboard.weeklyGoalLabel">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:169,170</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:198,199</note>
       </notes>
       <segment>
         <source>Woche</source>
@@ -6229,7 +6240,7 @@
     </unit>
     <unit id="dashboard.monthlyGoalLabel">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:178,179</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:207,208</note>
       </notes>
       <segment>
         <source>Monat</source>
@@ -6237,7 +6248,7 @@
     </unit>
     <unit id="dashboard.lastEntryLinkAria">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:203,204</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:232,233</note>
       </notes>
       <segment>
         <source>Letzten Eintrag in der Historie öffnen</source>
@@ -6245,7 +6256,7 @@
     </unit>
     <unit id="lastEntryTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:207,208</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:236,237</note>
       </notes>
       <segment>
         <source>Letzter Eintrag</source>
@@ -6253,7 +6264,7 @@
     </unit>
     <unit id="latEntryReps">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:212,214</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:241,243</note>
       </notes>
       <segment>
         <source> <ph id="0" equiv="INTERPOLATION" disp="{{ latest.reps }}"/> Reps · <ph id="1" equiv="INTERPOLATION_1" disp="{{ typeLabel(latest) }}"/> </source>
@@ -6261,7 +6272,7 @@
     </unit>
     <unit id="dashboard.noEntryYet">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:216,218</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:245,247</note>
       </notes>
       <segment>
         <source>Noch kein Eintrag.</source>
@@ -6269,7 +6280,7 @@
     </unit>
     <unit id="quickActionsTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:225,227</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:254,256</note>
       </notes>
       <segment>
         <source>Schnellaktionen</source>
@@ -6277,7 +6288,7 @@
     </unit>
     <unit id="quickActionsSubtitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:228,230</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:257,259</note>
       </notes>
       <segment>
         <source>Schnell eintragen ohne Dialog</source>
@@ -6285,7 +6296,7 @@
     </unit>
     <unit id="quickActions.edit.aria">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:235,236</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:264,265</note>
       </notes>
       <segment>
         <source>Schnellaktionen bearbeiten</source>
@@ -6293,7 +6304,7 @@
     </unit>
     <unit id="dashboard.quickAdd.button">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:257,258</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:286,287</note>
       </notes>
       <segment>
         <source>+<ph id="0" equiv="INTERPOLATION" disp="{{ reps }}"/> Reps</source>
@@ -6301,7 +6312,7 @@
     </unit>
     <unit id="dashboard.goalFill.reached">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:271,273</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:300,302</note>
       </notes>
       <segment>
         <source>Ziel erreicht ✓</source>
@@ -6309,7 +6320,7 @@
     </unit>
     <unit id="dashboard.goalFill.fill">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:274,275</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:303,304</note>
       </notes>
       <segment>
         <source>+<ph id="0" equiv="INTERPOLATION" disp="{{ remainingToGoal() }}"/> bis zum Ziel</source>
@@ -6317,7 +6328,7 @@
     </unit>
     <unit id="quickAddNew">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:286,288</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:315,317</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">edit_note</pc> Neu </source>
@@ -6325,7 +6336,7 @@
     </unit>
     <unit id="loadingStats">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:307,311</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:336,340</note>
       </notes>
       <segment>
         <source> Lade Statistikdaten… </source>
@@ -6333,7 +6344,7 @@
     </unit>
     <unit id="dashboard.latestEntriesLinkAriaLabel">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:318,319</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:347,348</note>
       </notes>
       <segment>
         <source>Zur Historie navigieren</source>
@@ -6341,7 +6352,7 @@
     </unit>
     <unit id="dashboard.latestEntries">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:321,322</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:350,351</note>
       </notes>
       <segment>
         <source>Letzte Einträge</source>
@@ -6349,7 +6360,7 @@
     </unit>
     <unit id="dashboard.latestEntriesCtaAriaLabel">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:328,329</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:357,358</note>
       </notes>
       <segment>
         <source>Zur Historie navigieren</source>
@@ -6357,7 +6368,7 @@
     </unit>
     <unit id="dashboard.latestEntriesCta">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:332,335</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:361,364</note>
       </notes>
       <segment>
         <source>Zur Historie</source>
@@ -6365,7 +6376,7 @@
     </unit>
     <unit id="ads.dashboard.aria">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:338</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:367</note>
       </notes>
       <segment>
         <source>Werbung</source>
