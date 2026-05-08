@@ -236,6 +236,7 @@
         <note category="location">libs/auth/src/lib/ui/register/register.component.html:353,354</note>
         <note category="location">web/src/app/core/feedback/feedback-dialog.component.ts:96,97</note>
         <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:277,278</note>
+        <note category="location">web/src/app/stats/components/exercise-entry-dialog/exercise-entry-dialog.component.ts:142,143</note>
         <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts:75,76</note>
         <note category="location">web/src/app/stats/shell/settings-page.component.ts:519,520</note>
       </notes>
@@ -4297,6 +4298,7 @@
     <unit id="timestampLabel">
       <notes>
         <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:148,150</note>
+        <note category="location">web/src/app/stats/components/exercise-entry-dialog/exercise-entry-dialog.component.ts:81,83</note>
       </notes>
       <segment>
         <source>Zeitpunkt</source>
@@ -4305,6 +4307,7 @@
     <unit id="setLabel">
       <notes>
         <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:162,163</note>
+        <note category="location">web/src/app/stats/components/exercise-entry-dialog/exercise-entry-dialog.component.ts:95,96</note>
       </notes>
       <segment>
         <source>Set <ph id="0" equiv="INTERPOLATION" disp="{{ $index + 1 }}"/></source>
@@ -4313,6 +4316,7 @@
     <unit id="repsLabel">
       <notes>
         <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:164,165</note>
+        <note category="location">web/src/app/stats/components/exercise-entry-dialog/exercise-entry-dialog.component.ts:97,98</note>
       </notes>
       <segment>
         <source>Reps</source>
@@ -4321,6 +4325,7 @@
     <unit id="removeSetAria">
       <notes>
         <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:181,183</note>
+        <note category="location">web/src/app/stats/components/exercise-entry-dialog/exercise-entry-dialog.component.ts:115,117</note>
       </notes>
       <segment>
         <source>Set entfernen</source>
@@ -4329,6 +4334,7 @@
     <unit id="addSetAria">
       <notes>
         <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:192,193</note>
+        <note category="location">web/src/app/stats/components/exercise-entry-dialog/exercise-entry-dialog.component.ts:126,128</note>
       </notes>
       <segment>
         <source>Set hinzufügen</source>
@@ -4345,6 +4351,7 @@
     <unit id="totalReps">
       <notes>
         <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:203,205</note>
+        <note category="location">web/src/app/stats/components/exercise-entry-dialog/exercise-entry-dialog.component.ts:135,137</note>
       </notes>
       <segment>
         <source> Gesamt: <ph id="0" equiv="INTERPOLATION" disp="{{ totalReps() }}"/> Reps </source>
@@ -4393,6 +4400,7 @@
     <unit id="saveEntry">
       <notes>
         <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:285,287</note>
+        <note category="location">web/src/app/stats/components/exercise-entry-dialog/exercise-entry-dialog.component.ts:151,153</note>
       </notes>
       <segment>
         <source> Speichern </source>
@@ -4412,6 +4420,118 @@
       </notes>
       <segment>
         <source>Anleitung öffnen</source>
+      </segment>
+    </unit>
+    <unit id="exerciseSection.lastEntry">
+      <notes>
+        <note category="location">web/src/app/stats/components/exercise-category-section/exercise-category-section.component.ts:121,122</note>
+      </notes>
+      <segment>
+        <source>Letzter Eintrag</source>
+      </segment>
+    </unit>
+    <unit id="exerciseSection.last30d">
+      <notes>
+        <note category="location">web/src/app/stats/components/exercise-category-section/exercise-category-section.component.ts:130,132</note>
+      </notes>
+      <segment>
+        <source>Letzte 30 Tage</source>
+      </segment>
+    </unit>
+    <unit id="exerciseSection.add">
+      <notes>
+        <note category="location">web/src/app/stats/components/exercise-category-section/exercise-category-section.component.ts:140,142</note>
+      </notes>
+      <segment>
+        <source>Hinzufügen</source>
+      </segment>
+    </unit>
+    <unit id="exercise.category.pushup">
+      <notes>
+        <note category="location">web/src/app/stats/components/exercise-category-section/exercise-category-section.component.ts:287</note>
+      </notes>
+      <segment>
+        <source>Liegestütze</source>
+      </segment>
+    </unit>
+    <unit id="exercise.category.abs">
+      <notes>
+        <note category="location">web/src/app/stats/components/exercise-category-section/exercise-category-section.component.ts:288</note>
+      </notes>
+      <segment>
+        <source>Bauch</source>
+      </segment>
+    </unit>
+    <unit id="exercise.category.legs">
+      <notes>
+        <note category="location">web/src/app/stats/components/exercise-category-section/exercise-category-section.component.ts:289</note>
+      </notes>
+      <segment>
+        <source>Beine</source>
+      </segment>
+    </unit>
+    <unit id="exercise.abs.situps.name">
+      <notes>
+        <note category="location">web/src/app/stats/components/exercise-category-section/exercise-category-section.component.ts:292</note>
+      </notes>
+      <segment>
+        <source>Sit-ups</source>
+      </segment>
+    </unit>
+    <unit id="exercise.legs.squats.name">
+      <notes>
+        <note category="location">web/src/app/stats/components/exercise-category-section/exercise-category-section.component.ts:293</note>
+      </notes>
+      <segment>
+        <source>Kniebeugen</source>
+      </segment>
+    </unit>
+    <unit id="exerciseSection.addAriaPrefix">
+      <notes>
+        <note category="location">web/src/app/stats/components/exercise-category-section/exercise-category-section.component.ts:298</note>
+      </notes>
+      <segment>
+        <source>Eintrag hinzufügen</source>
+      </segment>
+    </unit>
+    <unit id="exerciseSection.savedToast">
+      <notes>
+        <note category="location">web/src/app/stats/components/exercise-category-section/exercise-category-section.component.ts:299</note>
+      </notes>
+      <segment>
+        <source>Eintrag gespeichert</source>
+      </segment>
+    </unit>
+    <unit id="exerciseSection.dismiss">
+      <notes>
+        <note category="location">web/src/app/stats/components/exercise-category-section/exercise-category-section.component.ts:300</note>
+      </notes>
+      <segment>
+        <source>OK</source>
+      </segment>
+    </unit>
+    <unit id="exerciseSection.errorPrefix">
+      <notes>
+        <note category="location">web/src/app/stats/components/exercise-category-section/exercise-category-section.component.ts:301</note>
+      </notes>
+      <segment>
+        <source>Konnte nicht gespeichert werden</source>
+      </segment>
+    </unit>
+    <unit id="exerciseSection.genericError">
+      <notes>
+        <note category="location">web/src/app/stats/components/exercise-category-section/exercise-category-section.component.ts:302</note>
+      </notes>
+      <segment>
+        <source>Etwas ist schiefgelaufen</source>
+      </segment>
+    </unit>
+    <unit id="exerciseEntryDialog.title">
+      <notes>
+        <note category="location">web/src/app/stats/components/exercise-entry-dialog/exercise-entry-dialog.component.ts:75,77</note>
+      </notes>
+      <segment>
+        <source>Eintrag hinzufügen</source>
       </segment>
     </unit>
     <unit id="selectRangeTitle">
@@ -6264,7 +6384,7 @@
     </unit>
     <unit id="dashboard.share.aria">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:77</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:80</note>
       </notes>
       <segment>
         <source>Tagesleistung teilen</source>
@@ -6272,7 +6392,7 @@
     </unit>
     <unit id="dashboard.share">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:78</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:81</note>
       </notes>
       <segment>
         <source>Teilen</source>

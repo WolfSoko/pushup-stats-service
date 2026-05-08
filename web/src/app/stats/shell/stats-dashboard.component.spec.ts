@@ -3,6 +3,7 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { of } from 'rxjs';
 import { StatsDashboardComponent } from './stats-dashboard.component';
 import {
+  ExerciseFirestoreService,
   LiveDataStore,
   StatsApiService,
   UserConfigApiService,
@@ -185,6 +186,16 @@ describe('StatsDashboardComponent', () => {
         },
         { provide: AppDataFacade, useValue: appDataMock },
         { provide: ShareService, useValue: shareServiceMock },
+        // The Phase-0 multi-exercise dashboard sections inject this
+        // service via `inject(ExerciseFirestoreService)`. The dashboard
+        // test doesn't exercise those sections directly, so we hand it
+        // a thin stub returning an empty entry stream — without it the
+        // section component fails to construct and Angular reports a
+        // misleading "Circular dependency" error.
+        {
+          provide: ExerciseFirestoreService,
+          useValue: { listEntries: () => of([]) },
+        },
         {
           provide: UserTrainingPlanApiService,
           useValue: trainingPlanApiMock,

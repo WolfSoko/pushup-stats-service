@@ -4438,6 +4438,90 @@
         <source>Anleitung öffnen</source>
       <target>打开指南</target></segment>
     </unit>
+    <unit id="exerciseSection.lastEntry">
+      <segment state="translated">
+        <source>Letzter Eintrag</source>
+        <target>最后记录</target>
+      </segment>
+    </unit>
+    <unit id="exerciseSection.last30d">
+      <segment state="translated">
+        <source>Letzte 30 Tage</source>
+        <target>最近30天</target>
+      </segment>
+    </unit>
+    <unit id="exerciseSection.add">
+      <segment state="translated">
+        <source>Hinzufügen</source>
+        <target>添加</target>
+      </segment>
+    </unit>
+    <unit id="exercise.category.pushup">
+      <segment state="translated">
+        <source>Liegestütze</source>
+        <target>俯卧撑</target>
+      </segment>
+    </unit>
+    <unit id="exercise.category.abs">
+      <segment state="translated">
+        <source>Bauch</source>
+        <target>腹部</target>
+      </segment>
+    </unit>
+    <unit id="exercise.category.legs">
+      <segment state="translated">
+        <source>Beine</source>
+        <target>腿部</target>
+      </segment>
+    </unit>
+    <unit id="exercise.abs.situps.name">
+      <segment state="translated">
+        <source>Sit-ups</source>
+        <target>仰卧起坐</target>
+      </segment>
+    </unit>
+    <unit id="exercise.legs.squats.name">
+      <segment state="translated">
+        <source>Kniebeugen</source>
+        <target>深蹲</target>
+      </segment>
+    </unit>
+    <unit id="exerciseSection.addAriaPrefix">
+      <segment state="translated">
+        <source>Eintrag hinzufügen</source>
+        <target>添加记录</target>
+      </segment>
+    </unit>
+    <unit id="exerciseSection.savedToast">
+      <segment state="translated">
+        <source>Eintrag gespeichert</source>
+        <target>记录已保存</target>
+      </segment>
+    </unit>
+    <unit id="exerciseSection.dismiss">
+      <segment state="translated">
+        <source>OK</source>
+        <target>确定</target>
+      </segment>
+    </unit>
+    <unit id="exerciseSection.errorPrefix">
+      <segment state="translated">
+        <source>Konnte nicht gespeichert werden</source>
+        <target>无法保存</target>
+      </segment>
+    </unit>
+    <unit id="exerciseSection.genericError">
+      <segment state="translated">
+        <source>Etwas ist schiefgelaufen</source>
+        <target>出错了</target>
+      </segment>
+    </unit>
+    <unit id="exerciseEntryDialog.title">
+      <segment state="translated">
+        <source>Eintrag hinzufügen</source>
+        <target>添加记录</target>
+      </segment>
+    </unit>
     <unit id="selectRangeTitle">
       <notes>
         <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:40,43</note>

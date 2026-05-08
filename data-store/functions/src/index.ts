@@ -68,6 +68,25 @@ const TZ = 'Europe/Berlin';
 const DEMO_USER_ID = '9CrETSHzoKcPPw0ctHKM1OiyRrp2';
 const GITHUB_TOKEN = defineSecret('GITHUB_TOKEN');
 
+/**
+ * Returns the input as a `number[]` of finite, non-negative integers.
+ * Any non-array, non-numeric, or out-of-shape values become an empty
+ * array so downstream `reduce()`s never see NaN. Used by the
+ * exerciseEntries trigger; the legacy pushup trigger keeps its inline
+ * `Array.isArray` guard for now.
+ */
+function sanitizeSetsArray(input: unknown): number[] {
+  if (!Array.isArray(input)) return [];
+  const out: number[] = [];
+  for (const v of input) {
+    if (typeof v !== 'number') continue;
+    if (!Number.isFinite(v) || !Number.isInteger(v)) continue;
+    if (v < 0) continue;
+    out.push(v);
+  }
+  return out;
+}
+
 async function rebuildLeaderboardsCore() {
   const now = new Date();
   const today = berlinDateParts(now);
@@ -1616,5 +1635,205 @@ export const rebuildUserStats = onCall(
       by: request.auth?.uid,
     });
     return { rebuilt: totalRebuilt };
+  }
+);
+
+// ─── updateExerciseStatsOnEntryWrite ──────────────────────────────────────────
+// Phase-0 of the multi-exercise migration. Mirrors
+// `updateUserStatsOnPushupWrite` but for entries written to the new
+// `exerciseEntries` collection. Aggregates land in
+// `userStats/{userId}/perExercise/{exerciseId}` so the existing
+// `userStats/{userId}` doc — which still serves the Pushup dashboard —
+// stays untouched.
+//
+// We deliberately reuse `applyDelta`/`rebuildFromEntries` from
+// `user-stats-delta.ts` to avoid forking the streak/heatmap logic. The
+// per-exercise doc carries the same UserStats shape; downstream consumers
+// can decide which fields to surface (heatmap and sets are over-spec
+// for a Phase-0 sit-ups counter but cost nothing).
+
+export const updateExerciseStatsOnEntryWrite = onDocumentWritten(
+  {
+    document: 'exerciseEntries/{entryId}',
+    region: 'europe-west3',
+  },
+  async (event) => {
+    const beforeData = event.data?.before?.data();
+    const afterData = event.data?.after?.data();
+
+    const userId = (afterData?.userId ?? beforeData?.userId) as
+      | string
+      | undefined;
+    if (!userId) {
+      logger.warn(
+        'updateExerciseStatsOnEntryWrite: no userId found, skipping'
+      );
+      return;
+    }
+
+    const exerciseId = (afterData?.exerciseId ?? beforeData?.exerciseId) as
+      | string
+      | undefined;
+    if (!exerciseId) {
+      logger.warn(
+        'updateExerciseStatsOnEntryWrite: no exerciseId found, skipping'
+      );
+      return;
+    }
+
+    const oldReps = Number(beforeData?.reps ?? 0);
+    const newReps = Number(afterData?.reps ?? 0);
+    const oldTimestamp = beforeData?.timestamp as string | undefined;
+    const newTimestamp = afterData?.timestamp as string | undefined;
+    // Defensive sanitization: reduce over `sets` runs straight into
+    // applyDelta()/rebuildFromEntries() and any non-numeric value would
+    // poison the aggregate with NaN, which then causes the transaction
+    // set() to reject and the Cloud Function to retry forever.
+    // The Firestore rule enforces `is list` on writes, but documents
+    // predating that rule (or admin SDK writes) can still carry
+    // surprises.
+    const oldSets = sanitizeSetsArray(beforeData?.sets);
+    const newSets = sanitizeSetsArray(afterData?.sets);
+
+    const isCreate = !beforeData && !!afterData;
+    const isDelete = !!beforeData && !afterData;
+    const isUpdate = !!beforeData && !!afterData;
+    const timestampChanged =
+      isUpdate && oldTimestamp && newTimestamp && oldTimestamp !== newTimestamp;
+
+    if (!newTimestamp && !oldTimestamp) {
+      logger.warn(
+        'updateExerciseStatsOnEntryWrite: no timestamp found, skipping'
+      );
+      return;
+    }
+
+    const nowIso = new Date().toISOString();
+    const statsRef = db
+      .collection('userStats')
+      .doc(userId)
+      .collection('perExercise')
+      .doc(exerciseId);
+
+    const statsSnap = await statsRef.get();
+    const existingStats = statsSnap.exists
+      ? (statsSnap.data() as UserStats)
+      : null;
+
+    let firstEntryAllEntries:
+      | Array<{ timestamp: string; reps: number; sets?: number[] }>
+      | null = null;
+    let versionOutdated = false;
+
+    if (
+      existingStats &&
+      (!existingStats.version || existingStats.version < USERSTATS_VERSION)
+    ) {
+      versionOutdated = true;
+    }
+
+    if ((isCreate && !existingStats) || versionOutdated) {
+      const allEntriesSnap = await db
+        .collection('exerciseEntries')
+        .where('userId', '==', userId)
+        .where('exerciseId', '==', exerciseId)
+        .orderBy('timestamp', 'asc')
+        .get();
+      firstEntryAllEntries = allEntriesSnap.docs.map((d) => {
+        const data = d.data();
+        return {
+          timestamp: data.timestamp as string,
+          reps: Number(data.reps ?? 0),
+          ...(Array.isArray(data.sets) ? { sets: data.sets as number[] } : {}),
+        };
+      });
+    }
+
+    await db.runTransaction(async (tx) => {
+      const txSnap = await tx.get(statsRef);
+      let current = txSnap.exists ? (txSnap.data() as UserStats) : null;
+
+      let shouldRebuild = false;
+      if (firstEntryAllEntries !== null && isCreate && !current) {
+        shouldRebuild = true;
+      } else if (
+        firstEntryAllEntries !== null &&
+        current &&
+        (!current.version || current.version < USERSTATS_VERSION)
+      ) {
+        shouldRebuild = true;
+      }
+
+      if (shouldRebuild) {
+        // userId is intentionally re-used as the per-exercise stats key —
+        // applyDelta/emptyUserStats only treat it as an opaque identifier.
+        current = rebuildFromEntries(userId, firstEntryAllEntries!, nowIso);
+      } else if (current) {
+        if (timestampChanged) {
+          current = applyDelta(current, {
+            userId,
+            repsDelta: -oldReps,
+            entriesDelta: -1,
+            timestamp: oldTimestamp!,
+            newReps: 0,
+            nowIso,
+            setsDelta: -(oldSets.length || 0),
+            oldSets: oldSets.length ? oldSets : undefined,
+          });
+          current = applyDelta(current, {
+            userId,
+            repsDelta: newReps,
+            entriesDelta: 1,
+            timestamp: newTimestamp!,
+            newReps,
+            nowIso,
+            setsDelta: newSets.length || 0,
+            newSets: newSets.length ? newSets : undefined,
+          });
+        } else {
+          const repsDelta = newReps - oldReps;
+          const entriesDelta = isCreate ? 1 : isDelete ? -1 : 0;
+          const timestamp = (newTimestamp ?? oldTimestamp)!;
+          const setsDelta = (newSets.length || 0) - (oldSets.length || 0);
+          current = applyDelta(current, {
+            userId,
+            repsDelta,
+            entriesDelta,
+            timestamp,
+            newReps,
+            nowIso,
+            setsDelta,
+            newSets: newSets.length ? newSets : undefined,
+            oldSets: oldSets.length ? oldSets : undefined,
+          });
+        }
+      } else {
+        // Missing per-exercise stats on a non-first-create write.
+        // Rebuild from source-of-truth so updates/deletes don't wipe totals.
+        const userEntriesSnap = await tx.get(
+          db
+            .collection('exerciseEntries')
+            .where('userId', '==', userId)
+            .where('exerciseId', '==', exerciseId)
+        );
+        const userEntries = userEntriesSnap.docs.map((d) => d.data()) as Array<{
+          timestamp: string;
+          reps: number;
+          sets?: number[];
+        }>;
+        current = rebuildFromEntries(userId, userEntries, nowIso);
+      }
+
+      tx.set(statsRef, current);
+    });
+
+    logger.info('updateExerciseStatsOnEntryWrite', {
+      userId,
+      exerciseId,
+      oldReps,
+      newReps,
+      timestampChanged,
+      entryId: event.params?.entryId,
+    });
   }
 );

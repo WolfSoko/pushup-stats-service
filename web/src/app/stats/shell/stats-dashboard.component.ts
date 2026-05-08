@@ -22,6 +22,7 @@ import { LiveDataStore, StatsApiService } from '@pu-stats/data-access';
 import {
   appendLocalOffset,
   displayPushupType,
+  EXERCISE_CATEGORIES,
   PushupRecord,
   QUICK_LOG_REPS_MAX,
   QUICK_LOG_REPS_MIN,
@@ -34,6 +35,7 @@ import { AdSlotComponent } from '@pu-stats/ads';
 import { AnalysisTeaserCardComponent } from '../components/analysis-teaser-card/analysis-teaser-card.component';
 import { PreviewBannerComponent } from '../components/preview-banner/preview-banner.component';
 import { StatsTableComponent } from '../components/stats-table/stats-table.component';
+import { ExerciseCategorySectionComponent } from '../components/exercise-category-section/exercise-category-section.component';
 import {
   CreateEntryDialogComponent,
   CreateEntryResult,
@@ -54,6 +56,7 @@ import { DashboardStore } from '../dashboard.store';
     StatsTableComponent,
     AdSlotComponent,
     RouterLink,
+    ExerciseCategorySectionComponent,
   ],
   providers: [DashboardStore],
   templateUrl: './stats-dashboard.component.html',
@@ -76,6 +79,16 @@ export class StatsDashboardComponent {
 
   readonly shareDayAriaLabel = $localize`:@@dashboard.share.aria:Tagesleistung teilen`;
   readonly shareDayLabel = $localize`:@@dashboard.share:Teilen`;
+
+  /**
+   * Phase-0 Multi-Exercise: categories rendered below the pushup
+   * dashboard cards. Pushup itself is excluded — its data still lives
+   * in the legacy `pushups` collection and renders via the existing
+   * cards above.
+   */
+  readonly newExerciseCategories = EXERCISE_CATEGORIES.filter(
+    (cat) => cat.id !== 'pushup'
+  );
 
   readonly store = inject(DashboardStore);
 

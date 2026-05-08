@@ -3167,6 +3167,90 @@ Deine Position: # ·  Reps        </source>
         <target>Lagre</target>
       </segment>
     </unit>
+    <unit id="exerciseSection.lastEntry">
+      <segment state="translated">
+        <source>Letzter Eintrag</source>
+        <target>Siste oppføring</target>
+      </segment>
+    </unit>
+    <unit id="exerciseSection.last30d">
+      <segment state="translated">
+        <source>Letzte 30 Tage</source>
+        <target>Siste 30 dager</target>
+      </segment>
+    </unit>
+    <unit id="exerciseSection.add">
+      <segment state="translated">
+        <source>Hinzufügen</source>
+        <target>Legg til</target>
+      </segment>
+    </unit>
+    <unit id="exercise.category.pushup">
+      <segment state="translated">
+        <source>Liegestütze</source>
+        <target>Armhevninger</target>
+      </segment>
+    </unit>
+    <unit id="exercise.category.abs">
+      <segment state="translated">
+        <source>Bauch</source>
+        <target>Mage</target>
+      </segment>
+    </unit>
+    <unit id="exercise.category.legs">
+      <segment state="translated">
+        <source>Beine</source>
+        <target>Ben</target>
+      </segment>
+    </unit>
+    <unit id="exercise.abs.situps.name">
+      <segment state="translated">
+        <source>Sit-ups</source>
+        <target>Sit-ups</target>
+      </segment>
+    </unit>
+    <unit id="exercise.legs.squats.name">
+      <segment state="translated">
+        <source>Kniebeugen</source>
+        <target>Knebøy</target>
+      </segment>
+    </unit>
+    <unit id="exerciseSection.addAriaPrefix">
+      <segment state="translated">
+        <source>Eintrag hinzufügen</source>
+        <target>Legg til oppføring</target>
+      </segment>
+    </unit>
+    <unit id="exerciseSection.savedToast">
+      <segment state="translated">
+        <source>Eintrag gespeichert</source>
+        <target>Oppføring lagret</target>
+      </segment>
+    </unit>
+    <unit id="exerciseSection.dismiss">
+      <segment state="translated">
+        <source>OK</source>
+        <target>OK</target>
+      </segment>
+    </unit>
+    <unit id="exerciseSection.errorPrefix">
+      <segment state="translated">
+        <source>Konnte nicht gespeichert werden</source>
+        <target>Kunne ikke lagre</target>
+      </segment>
+    </unit>
+    <unit id="exerciseSection.genericError">
+      <segment state="translated">
+        <source>Etwas ist schiefgelaufen</source>
+        <target>Noe gikk galt</target>
+      </segment>
+    </unit>
+    <unit id="exerciseEntryDialog.title">
+      <segment state="translated">
+        <source>Eintrag hinzufügen</source>
+        <target>Legg til oppføring</target>
+      </segment>
+    </unit>
     <unit id="selectRangeTitle">
       <notes>
         <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:30,33</note>
