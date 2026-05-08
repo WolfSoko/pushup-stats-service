@@ -198,14 +198,31 @@ service cloud.firestore {
                     && request.resource.data.userId == request.auth.uid
                     && request.resource.data.userId == resource.data.userId
                     && !('exerciseId' in request.resource.data.diff(resource.data).affectedKeys())
-                    && (!('reps' in request.resource.data.diff(resource.data).affectedKeys())
-                        || (request.resource.data.reps is int
-                            && request.resource.data.reps >= 1
-                            && request.resource.data.reps <= 500))
-                    && (!('durationSec' in request.resource.data.diff(resource.data).affectedKeys())
-                        || (request.resource.data.durationSec is int
-                            && request.resource.data.durationSec >= 1
-                            && request.resource.data.durationSec <= 7200))
+                    // Mirror the create branching so an update can't
+                    // sneak the wrong measurement field onto an entry.
+                    // `exerciseId` is immutable (checked above) so we
+                    // pin to `resource.data.exerciseId`.
+                    && (
+                      // Reps-measured exercises: reject `durationSec`
+                      // and validate reps when changed.
+                      ((resource.data.exerciseId == 'abs.situps'
+                          || resource.data.exerciseId == 'legs.squats')
+                        && !('durationSec' in request.resource.data.keys())
+                        && (!('reps' in request.resource.data.diff(resource.data).affectedKeys())
+                            || (request.resource.data.reps is int
+                                && request.resource.data.reps >= 1
+                                && request.resource.data.reps <= 500)))
+                      ||
+                      // Time-measured exercises (plank): reject `reps`
+                      // and `sets`, validate durationSec when changed.
+                      (resource.data.exerciseId == 'plank.standard'
+                        && !('reps' in request.resource.data.keys())
+                        && !('sets' in request.resource.data.keys())
+                        && (!('durationSec' in request.resource.data.diff(resource.data).affectedKeys())
+                            || (request.resource.data.durationSec is int
+                                && request.resource.data.durationSec >= 1
+                                && request.resource.data.durationSec <= 7200)))
+                    )
                     && (!('timestamp' in request.resource.data.diff(resource.data).affectedKeys())
                         || (request.resource.data.timestamp is string
                             && request.resource.data.timestamp.size() > 0))

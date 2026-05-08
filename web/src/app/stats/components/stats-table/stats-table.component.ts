@@ -193,7 +193,14 @@ export class StatsTableComponent {
   constructor() {
     this.dataSource.sortingDataAccessor = (item, property) => {
       if (property === 'timestamp') return new Date(item.timestamp).getTime();
-      if (property === 'reps') return item.reps;
+      // The "reps" column also renders durationSec for time-measured
+      // entries (plank). For sit-ups/squats `durationSec` is undefined,
+      // for plank `reps` is normalized to 0 — coalescing in this order
+      // keeps both kinds correctly ordered when the column is sorted.
+      if (property === 'reps')
+        return ('durationSec' in item && item.durationSec !== undefined
+          ? item.durationSec
+          : item.reps);
       if (property === 'source') return item.source;
       if (property === 'type') return this.typeLabel(item);
       if (property === 'exercise') return this.exerciseLabel(item);

@@ -34,7 +34,7 @@ import {
 
 interface ExerciseSummary {
   definition: ExerciseDefinition;
-  totalReps30d: number;
+  totalValue30d: number;
   lastEntry: ExerciseEntry | null;
 }
 
@@ -127,7 +127,7 @@ interface ExerciseSummary {
               </div>
               <div class="exercise-stats">
                 <span class="total">{{
-                  formatTotal(item.definition, item.totalReps30d)
+                  formatTotal(item.definition, item.totalValue30d)
                 }}</span>
                 <span class="label" i18n="@@exerciseSection.last30d"
                   >Letzte 30 Tage</span
@@ -230,7 +230,7 @@ export class ExerciseCategorySectionComponent {
       // `durationSec`; reps-measurement exercises in `reps`. The
       // summary total is exercise-scoped so it represents whichever
       // unit the catalog defines.
-      const totalReps30d = matching.reduce((s, e) => {
+      const totalValue30d = matching.reduce((s, e) => {
         const v =
           def.measurement === 'time' ? (e.durationSec ?? 0) : (e.reps ?? 0);
         return s + v;
@@ -246,7 +246,7 @@ export class ExerciseCategorySectionComponent {
               : latest
           )
         : null;
-      return { definition: def, totalReps30d, lastEntry };
+      return { definition: def, totalValue30d, lastEntry };
     });
   });
 

@@ -437,10 +437,12 @@ export class EntryDialogComponent {
 const VARIANT_LABELS: Record<string, string> = {};
 
 /**
- * Parse mm:ss (or m:ss / hh:mm:ss with the leading "h" parsed as
- * minutes — single colon is the contract for plank's typical hold
- * range) into integer seconds. Returns null for malformed input so the
- * caller can disable submit instead of writing NaN to Firestore.
+ * Parse `m+:ss` (single colon, any number of minute digits, exactly two
+ * second digits in the 0–59 range) into integer seconds. Returns `null`
+ * for malformed input so the caller can disable submit instead of
+ * writing `NaN` to Firestore. Hours are out of scope — the plank cap
+ * tops out at 7200 s ("120:00") and we want the shortest format that
+ * still covers it.
  */
 function parseDurationToSeconds(input: string): number | null {
   const trimmed = input.trim();
