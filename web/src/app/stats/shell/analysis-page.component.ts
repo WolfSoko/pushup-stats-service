@@ -105,94 +105,6 @@ import { PageHeaderComponent } from '../../core/page-header/page-header.componen
       <section class="grid">
         <mat-card>
           <mat-card-header>
-            <mat-card-title i18n="@@analysis.weekTrendTitle"
-              >Wochentrend</mat-card-title
-            >
-            <mat-card-subtitle>{{
-              store.weekTrendSubtitle()
-            }}</mat-card-subtitle>
-          </mat-card-header>
-          <mat-card-content>
-            <mat-table [dataSource]="store.weekTrend()">
-              <ng-container matColumnDef="label">
-                <mat-header-cell *matHeaderCellDef i18n="@@analysis.weekCol"
-                  >Woche</mat-header-cell
-                >
-                <mat-cell *matCellDef="let row">{{ row.label }}</mat-cell>
-              </ng-container>
-              <ng-container matColumnDef="total">
-                <mat-header-cell *matHeaderCellDef i18n="@@analysis.repsCol"
-                  >Reps</mat-header-cell
-                >
-                <mat-cell *matCellDef="let row">{{ row.total }}</mat-cell>
-              </ng-container>
-              <ng-container matColumnDef="avgSetsPerEntry">
-                <mat-header-cell *matHeaderCellDef i18n="@@analysis.avgSetsCol"
-                  >&#x2300; Sets</mat-header-cell
-                >
-                <mat-cell *matCellDef="let row">{{
-                  row.avgSetsPerEntry !== null &&
-                  row.avgSetsPerEntry !== undefined
-                    ? (row.avgSetsPerEntry | number)
-                    : '—'
-                }}</mat-cell>
-              </ng-container>
-              <mat-header-row
-                *matHeaderRowDef="trendColumnsWithSets"
-              ></mat-header-row>
-              <mat-row
-                *matRowDef="let row; columns: trendColumnsWithSets"
-              ></mat-row>
-            </mat-table>
-          </mat-card-content>
-        </mat-card>
-
-        <mat-card>
-          <mat-card-header>
-            <mat-card-title i18n="@@analysis.monthTrendTitle"
-              >Monatstrend</mat-card-title
-            >
-            <mat-card-subtitle>{{
-              store.monthTrendSubtitle()
-            }}</mat-card-subtitle>
-          </mat-card-header>
-          <mat-card-content>
-            <mat-table [dataSource]="store.monthTrend()">
-              <ng-container matColumnDef="label">
-                <mat-header-cell *matHeaderCellDef i18n="@@analysis.monthCol"
-                  >Monat</mat-header-cell
-                >
-                <mat-cell *matCellDef="let row">{{ row.label }}</mat-cell>
-              </ng-container>
-              <ng-container matColumnDef="total">
-                <mat-header-cell *matHeaderCellDef i18n="@@analysis.repsCol"
-                  >Reps</mat-header-cell
-                >
-                <mat-cell *matCellDef="let row">{{ row.total }}</mat-cell>
-              </ng-container>
-              <ng-container matColumnDef="avgSetsPerEntry">
-                <mat-header-cell *matHeaderCellDef i18n="@@analysis.avgSetsCol"
-                  >&#x2300; Sets</mat-header-cell
-                >
-                <mat-cell *matCellDef="let row">{{
-                  row.avgSetsPerEntry !== null &&
-                  row.avgSetsPerEntry !== undefined
-                    ? (row.avgSetsPerEntry | number)
-                    : '—'
-                }}</mat-cell>
-              </ng-container>
-              <mat-header-row
-                *matHeaderRowDef="trendColumnsWithSets"
-              ></mat-header-row>
-              <mat-row
-                *matRowDef="let row; columns: trendColumnsWithSets"
-              ></mat-row>
-            </mat-table>
-          </mat-card-content>
-        </mat-card>
-
-        <mat-card>
-          <mat-card-header>
             <mat-card-title i18n="@@analysis.bestStreaksTitle"
               >Bestwerte & Streaks</mat-card-title
             >
@@ -310,6 +222,108 @@ import { PageHeaderComponent } from '../../core/page-header/page-header.componen
           }
         </mat-card-content>
       </mat-card>
+
+      <section class="trends-section" data-testid="analysis-trends-section">
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title i18n="@@analysis.weekTrendTitle"
+              >Wochentrend</mat-card-title
+            >
+            <mat-card-subtitle i18n="@@analysis.weekTrendSubtitle"
+              >Letzte 8 Wochen</mat-card-subtitle
+            >
+          </mat-card-header>
+          <mat-card-content>
+            @defer (on viewport) {
+              <mat-table [dataSource]="store.weekTrend()">
+                <ng-container matColumnDef="label">
+                  <mat-header-cell *matHeaderCellDef i18n="@@analysis.weekCol"
+                    >Woche</mat-header-cell
+                  >
+                  <mat-cell *matCellDef="let row">{{ row.label }}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="total">
+                  <mat-header-cell *matHeaderCellDef i18n="@@analysis.repsCol"
+                    >Reps</mat-header-cell
+                  >
+                  <mat-cell *matCellDef="let row">{{ row.total }}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="avgSetsPerEntry">
+                  <mat-header-cell
+                    *matHeaderCellDef
+                    i18n="@@analysis.avgSetsCol"
+                    >&#x2300; Sets</mat-header-cell
+                  >
+                  <mat-cell *matCellDef="let row">{{
+                    row.avgSetsPerEntry !== null &&
+                    row.avgSetsPerEntry !== undefined
+                      ? (row.avgSetsPerEntry | number)
+                      : '—'
+                  }}</mat-cell>
+                </ng-container>
+                <mat-header-row
+                  *matHeaderRowDef="trendColumnsWithSets"
+                ></mat-header-row>
+                <mat-row
+                  *matRowDef="let row; columns: trendColumnsWithSets"
+                ></mat-row>
+              </mat-table>
+            } @placeholder {
+              <div class="trend-placeholder" aria-hidden="true"></div>
+            }
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title i18n="@@analysis.monthTrendTitle"
+              >Monatstrend</mat-card-title
+            >
+            <mat-card-subtitle i18n="@@analysis.monthTrendSubtitle"
+              >Letzte 6 Monate</mat-card-subtitle
+            >
+          </mat-card-header>
+          <mat-card-content>
+            @defer (on viewport) {
+              <mat-table [dataSource]="store.monthTrend()">
+                <ng-container matColumnDef="label">
+                  <mat-header-cell *matHeaderCellDef i18n="@@analysis.monthCol"
+                    >Monat</mat-header-cell
+                  >
+                  <mat-cell *matCellDef="let row">{{ row.label }}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="total">
+                  <mat-header-cell *matHeaderCellDef i18n="@@analysis.repsCol"
+                    >Reps</mat-header-cell
+                  >
+                  <mat-cell *matCellDef="let row">{{ row.total }}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="avgSetsPerEntry">
+                  <mat-header-cell
+                    *matHeaderCellDef
+                    i18n="@@analysis.avgSetsCol"
+                    >&#x2300; Sets</mat-header-cell
+                  >
+                  <mat-cell *matCellDef="let row">{{
+                    row.avgSetsPerEntry !== null &&
+                    row.avgSetsPerEntry !== undefined
+                      ? (row.avgSetsPerEntry | number)
+                      : '—'
+                  }}</mat-cell>
+                </ng-container>
+                <mat-header-row
+                  *matHeaderRowDef="trendColumnsWithSets"
+                ></mat-header-row>
+                <mat-row
+                  *matRowDef="let row; columns: trendColumnsWithSets"
+                ></mat-row>
+              </mat-table>
+            } @placeholder {
+              <div class="trend-placeholder" aria-hidden="true"></div>
+            }
+          </mat-card-content>
+        </mat-card>
+      </section>
     </main>
   `,
   styles: `

@@ -1,3 +1,7 @@
+:host {
+  display: block;
+}
+
 .controls {
   display: grid;
   gap: 14px;
@@ -18,8 +22,69 @@
 .step-actions {
   display: flex;
   gap: 8px;
+  align-items: center;
+}
+
+.step-icon-mobile {
+  display: none;
+}
+
+.picker-toggle {
+  display: none;
 }
 
 mat-form-field {
   width: min(560px, 100%);
+}
+
+@media (max-width: 600px) {
+  .heading {
+    display: none;
+  }
+
+  .controls {
+    gap: 8px;
+  }
+
+  .quick-range {
+    gap: 6px;
+    justify-content: space-between;
+  }
+
+  .step-actions {
+    gap: 2px;
+  }
+
+  .step-btn {
+    min-width: 0;
+    padding: 0 8px;
+  }
+
+  .step-btn--today .step-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .step-btn--today .step-icon-mobile {
+    display: inline-block;
+  }
+
+  .picker-toggle {
+    display: inline-flex;
+  }
+
+  .date-picker-field {
+    display: none;
+  }
+
+  :host(.picker-expanded) .date-picker-field {
+    display: block;
+  }
 }

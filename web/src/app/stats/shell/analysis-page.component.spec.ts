@@ -213,12 +213,31 @@ describe('AnalysisPageComponent', () => {
     expect(nextDay.getDate()).toBe(1);
   });
 
-  it('provides subtitle strings for trend cards', () => {
-    const { store } = fixture.componentInstance;
-    expect(store.weekTrendSubtitle()).toBeTruthy();
-    expect(store.monthTrendSubtitle()).toBeTruthy();
-    // Subtitles should contain a date separator
-    expect(store.weekTrendSubtitle()).toContain('–');
+  it('renders fixed-window labels for trend cards', () => {
+    fixture.detectChanges();
+    const host: HTMLElement = fixture.nativeElement;
+    const trends = host.querySelector(
+      '[data-testid="analysis-trends-section"]'
+    );
+    expect(trends?.textContent).toContain('Wochentrend');
+    expect(trends?.textContent).toContain('Letzte 8 Wochen');
+    expect(trends?.textContent).toContain('Monatstrend');
+    expect(trends?.textContent).toContain('Letzte 6 Monate');
+  });
+
+  it('positions trend cards below the heatmap so they only render on viewport', () => {
+    fixture.detectChanges();
+    const host: HTMLElement = fixture.nativeElement;
+    const heatmap = host.querySelector('.heatmap-full');
+    const trends = host.querySelector(
+      '[data-testid="analysis-trends-section"]'
+    );
+    expect(heatmap).toBeTruthy();
+    expect(trends).toBeTruthy();
+    if (!heatmap || !trends) return;
+    expect(
+      heatmap.compareDocumentPosition(trends) & Node.DOCUMENT_POSITION_FOLLOWING
+    ).toBeTruthy();
   });
 
   it('computes type breakdown, treating missing type as Standard', () => {

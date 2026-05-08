@@ -362,6 +362,15 @@ Aktiv:         </target>
 
 
         </unit>
+    <unit id="analysis.monthTrendSubtitle">
+      <notes>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:283,285</note>
+      </notes>
+      <segment state="translated">
+        <source>Letzte 6 Monate</source>
+        <target>Siste 6 måneder</target>
+      </segment>
+    </unit>
     <unit id="analysis.repsCol">
       <notes>
         <note category="location">web/src/app/stats/shell/analysis-page.component.ts:37,38</note>
@@ -453,6 +462,15 @@ Aktiv:         </target>
 
 
         </unit>
+    <unit id="analysis.weekTrendSubtitle">
+      <notes>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:233,235</note>
+      </notes>
+      <segment state="translated">
+        <source>Letzte 8 Wochen</source>
+        <target>Siste 8 uker</target>
+      </segment>
+    </unit>
     <unit id="analysis.avgSetsCol">
       <segment state="translated">
         <source>&#x2300; Sets</source>
@@ -2780,6 +2798,42 @@ Deine Position: # ·  Reps        </source>
 
 
         </unit>
+    <unit id="pie.modeAria">
+      <notes>
+        <note category="location">web/src/app/stats/components/type-pie/type-pie.component.ts:49</note>
+      </notes>
+      <segment state="translated">
+        <source>Auswahl</source>
+        <target>Utvalg</target>
+      </segment>
+    </unit>
+    <unit id="pie.top5">
+      <notes>
+        <note category="location">web/src/app/stats/components/type-pie/type-pie.component.ts:52,53</note>
+      </notes>
+      <segment state="translated">
+        <source>Top 5</source>
+        <target>Topp 5</target>
+      </segment>
+    </unit>
+    <unit id="pie.all">
+      <notes>
+        <note category="location">web/src/app/stats/components/type-pie/type-pie.component.ts:55,56</note>
+      </notes>
+      <segment state="translated">
+        <source>Alle</source>
+        <target>Alle</target>
+      </segment>
+    </unit>
+    <unit id="pie.custom">
+      <notes>
+        <note category="location">web/src/app/stats/components/type-pie/type-pie.component.ts:58,59</note>
+      </notes>
+      <segment state="translated">
+        <source>Auswahl</source>
+        <target>Utvalg</target>
+      </segment>
+    </unit>
     <unit id="quickActionsSubtitle">
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:103,105</note>
@@ -2912,48 +2966,42 @@ Deine Position: # ·  Reps        </source>
 
 
         </unit>
+    <unit id="rangeBackAria">
+      <notes>
+        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:77</note>
+      </notes>
+      <segment state="translated">
+        <source>Zurück</source>
+        <target>Tilbake</target>
+      </segment>
+    </unit>
     <unit id="rangeBack">
       <notes>
-        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:60,62</note>
-
-
-            </notes>
+        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:80,81</note>
+      </notes>
       <segment state="translated">
-        <source>
-          <pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">chevron_left</pc>
- Zurück         </source>
-        <target>
-          <pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">chevron_left</pc>
- Tilbake         </target>
-
-
-
-            </segment>
-
-
-
-        </unit>
+        <source>Zurück</source>
+        <target>Tilbake</target>
+      </segment>
+    </unit>
+    <unit id="rangeForwardAria">
+      <notes>
+        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:101</note>
+      </notes>
+      <segment state="translated">
+        <source>Vor</source>
+        <target>Frem</target>
+      </segment>
+    </unit>
     <unit id="rangeForward">
       <notes>
-        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:77,80</note>
-
-
-            </notes>
+        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:103,104</note>
+      </notes>
       <segment state="translated">
-        <source>
-          <pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">chevron_right</pc>
- Vor         </source>
-        <target>
-          <pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">chevron_right</pc>
- Framover         </target>
-
-
-
-            </segment>
-
-
-
-        </unit>
+        <source>Vor</source>
+        <target>Frem</target>
+      </segment>
+    </unit>
     <unit id="rangeFrom">
       <notes>
         <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:90</note>
@@ -3065,23 +3113,33 @@ Deine Position: # ·  Reps        </source>
 
 
         </unit>
+    <unit id="rangeTodayAria">
+      <notes>
+        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:89</note>
+      </notes>
+      <segment state="translated">
+        <source>Heute</source>
+        <target>I dag</target>
+      </segment>
+    </unit>
     <unit id="rangeToday">
       <notes>
-        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:69,70</note>
-
-
-            </notes>
+        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:92,93</note>
+      </notes>
       <segment state="translated">
-        <source> Heute </source>
-        <target> I dag </target>
-
-
-
-            </segment>
-
-
-
-        </unit>
+        <source>Heute</source>
+        <target>I dag</target>
+      </segment>
+    </unit>
+    <unit id="rangePickerToggleAria">
+      <notes>
+        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:112,113</note>
+      </notes>
+      <segment state="translated">
+        <source>Eigenen Zeitraum auswählen</source>
+        <target>Velg egendefinert periode</target>
+      </segment>
+    </unit>
     <unit id="repsLabel">
       <notes>
         <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:162,163</note>

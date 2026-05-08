@@ -85,40 +85,6 @@ function sortedUniqueDates(rows: PushupRecord[]): string[] {
   );
 }
 
-function expandToWeekRange(
-  from: string,
-  to: string
-): { from: string; to: string } {
-  const fromDate = new Date(`${from}T00:00:00`);
-  const day = fromDate.getDay() || 7;
-  fromDate.setDate(fromDate.getDate() - (day - 1));
-
-  const toDate = new Date(`${to}T00:00:00`);
-  const toDay = toDate.getDay() || 7;
-  toDate.setDate(toDate.getDate() + (7 - toDay));
-
-  return {
-    from: toLocalIsoDate(fromDate),
-    to: toLocalIsoDate(toDate),
-  };
-}
-
-function expandToMonthRange(
-  from: string,
-  to: string
-): { from: string; to: string } {
-  const fromDate = new Date(`${from}T00:00:00`);
-  fromDate.setDate(1);
-
-  const toDate = new Date(`${to}T00:00:00`);
-  toDate.setMonth(toDate.getMonth() + 1, 0);
-
-  return {
-    from: toLocalIsoDate(fromDate),
-    to: toLocalIsoDate(toDate),
-  };
-}
-
 export const AnalysisStore = signalStore(
   withState<AnalysisState>(() => {
     const defaultRange = createWeekRange();
@@ -149,17 +115,32 @@ export const AnalysisStore = signalStore(
 
     const rangeMode = computed(() => inferRangeMode(store.from(), store.to()));
 
+    // Trends always span a fixed window ending today, independent of the
+    // page filter: 8 ISO weeks for weekTrend, 6 calendar months for
+    // monthTrend. This is intentional — users want to read recent
+    // momentum, not a slice of an arbitrary filter range.
     const weekFilter = computed(() => {
-      const from = store.from();
-      const to = store.to();
-      if (!from || !to) return { from, to };
-      return expandToWeekRange(from, to);
+      const today = new Date();
+      const day = today.getDay() || 7;
+      const monday = new Date(today);
+      monday.setDate(today.getDate() - (day - 1));
+      const sunday = new Date(monday);
+      sunday.setDate(monday.getDate() + 6);
+      const from = new Date(monday);
+      from.setDate(monday.getDate() - 7 * 7);
+      return {
+        from: toLocalIsoDate(from),
+        to: toLocalIsoDate(sunday),
+      };
     });
     const monthFilter = computed(() => {
-      const from = store.from();
-      const to = store.to();
-      if (!from || !to) return { from, to };
-      return expandToMonthRange(from, to);
+      const today = new Date();
+      const from = new Date(today.getFullYear(), today.getMonth() - 5, 1);
+      const to = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+      return {
+        from: toLocalIsoDate(from),
+        to: toLocalIsoDate(to),
+      };
     });
 
     return { filter, rangeMode, weekFilter, monthFilter };
@@ -273,7 +254,7 @@ export const AnalysisStore = signalStore(
       }
       return [...byMonth.entries()]
         .sort(([a], [b]) => a.localeCompare(b))
-        .slice(-12)
+        .slice(-6)
         .map(([label, { total, entryCount, setsCount }]) => ({
           label,
           total,
@@ -396,51 +377,6 @@ export const AnalysisStore = signalStore(
       return Math.max(...allSets);
     });
 
-    const weekTrendSubtitle = computed(() => {
-      const { from, to } = store.weekFilter();
-      if (!from || !to) return '';
-      const fromDate = new Date(`${from}T00:00:00`);
-      const toDate = new Date(`${to}T00:00:00`);
-      const sameYear = fromDate.getFullYear() === toDate.getFullYear();
-      const fmtFrom = new Intl.DateTimeFormat(store._locale, {
-        day: 'numeric',
-        month: 'short',
-        ...(sameYear ? {} : { year: 'numeric' }),
-      });
-      const fmtTo = new Intl.DateTimeFormat(store._locale, {
-        day: 'numeric',
-        month: 'short',
-        year: 'numeric',
-      });
-      return `${fmtFrom.format(fromDate)} – ${fmtTo.format(toDate)}`;
-    });
-
-    const monthTrendSubtitle = computed(() => {
-      const { from, to } = store.monthFilter();
-      if (!from || !to) return '';
-      const fromDate = new Date(`${from}T00:00:00`);
-      const toDate = new Date(`${to}T00:00:00`);
-      const sameMonth =
-        fromDate.getMonth() === toDate.getMonth() &&
-        fromDate.getFullYear() === toDate.getFullYear();
-      if (sameMonth) {
-        return new Intl.DateTimeFormat(store._locale, {
-          month: 'long',
-          year: 'numeric',
-        }).format(fromDate);
-      }
-      const sameYear = fromDate.getFullYear() === toDate.getFullYear();
-      const fmtFrom = new Intl.DateTimeFormat(store._locale, {
-        month: 'long',
-        ...(sameYear ? {} : { year: 'numeric' }),
-      });
-      const fmtTo = new Intl.DateTimeFormat(store._locale, {
-        month: 'long',
-        year: 'numeric',
-      });
-      return `${fmtFrom.format(fromDate)} – ${fmtTo.format(toDate)}`;
-    });
-
     return {
       stats,
       chartSeries,
@@ -448,8 +384,6 @@ export const AnalysisStore = signalStore(
       rows,
       weekTrend,
       monthTrend,
-      weekTrendSubtitle,
-      monthTrendSubtitle,
       typeBreakdown,
       bestSingleEntry,
       bestDay,

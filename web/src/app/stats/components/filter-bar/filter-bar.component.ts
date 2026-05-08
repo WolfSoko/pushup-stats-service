@@ -34,6 +34,9 @@ import {
     MatIconModule,
     ReactiveFormsModule,
   ],
+  host: {
+    '[class.picker-expanded]': 'datePickerExpanded()',
+  },
   template: `
     <section class="controls">
       <div class="heading">
@@ -67,36 +70,54 @@ import {
           <button
             type="button"
             mat-stroked-button
+            class="step-btn"
             [disabled]="mode() === 'custom'"
             (click)="shiftRange(-1)"
-            i18n="@@rangeBack"
+            aria-label="Zurück"
+            i18n-aria-label="@@rangeBackAria"
           >
             <mat-icon>chevron_left</mat-icon>
-            Zurück
+            <span class="step-label" i18n="@@rangeBack">Zurück</span>
           </button>
           <button
             type="button"
             mat-stroked-button
+            class="step-btn step-btn--today"
             [disabled]="mode() === 'custom'"
             (click)="jumpToToday()"
-            i18n="@@rangeToday"
+            aria-label="Heute"
+            i18n-aria-label="@@rangeTodayAria"
           >
-            Heute
+            <mat-icon class="step-icon-mobile">today</mat-icon>
+            <span class="step-label" i18n="@@rangeToday">Heute</span>
           </button>
           <button
             type="button"
             mat-stroked-button
+            class="step-btn"
             [disabled]="mode() === 'custom'"
             (click)="shiftRange(1)"
-            i18n="@@rangeForward"
+            aria-label="Vor"
+            i18n-aria-label="@@rangeForwardAria"
           >
-            Vor
+            <span class="step-label" i18n="@@rangeForward">Vor</span>
             <mat-icon>chevron_right</mat-icon>
+          </button>
+          <button
+            type="button"
+            mat-icon-button
+            class="picker-toggle"
+            (click)="toggleDatePicker()"
+            [attr.aria-expanded]="datePickerExpanded()"
+            aria-label="Eigenen Zeitraum auswählen"
+            i18n-aria-label="@@rangePickerToggleAria"
+          >
+            <mat-icon>date_range</mat-icon>
           </button>
         </div>
       </section>
 
-      <mat-form-field appearance="outline">
+      <mat-form-field class="date-picker-field" appearance="outline">
         <mat-label i18n="@@rangeLabel">Zeitraum</mat-label>
         <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
           <input
@@ -128,6 +149,8 @@ export class FilterBarComponent implements OnChanges {
 
   private readonly hasUserModeOverride = signal(false);
   private readonly inferredModeSource = signal<RangeModes>('week');
+
+  readonly datePickerExpanded = signal(false);
 
   readonly fromChange = output<string>();
   readonly toChange = output<string>();
@@ -224,6 +247,10 @@ export class FilterBarComponent implements OnChanges {
   jumpToToday(): void {
     if (this.mode() === 'custom') return;
     this.applyModeRange(new Date());
+  }
+
+  toggleDatePicker(): void {
+    this.datePickerExpanded.update((value) => !value);
   }
 
   private inferMode(start: Date | null, end: Date | null): RangeModes {
