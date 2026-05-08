@@ -52,10 +52,14 @@ type AnalysisState = {
   from: string;
   to: string;
   dayChartMode: '24h' | '14h' | undefined;
-  // Reactive dependency for the fixed-window trend filters: bumping
-  // this signal re-evaluates `weekFilter`/`monthFilter` so a session
-  // kept open across midnight doesn't render a stale window.
+  // Reactive dependency for the fixed-window trend filters: bumped only
+  // when the local calendar day actually changes, so a polling interval
+  // can call `tickClock()` aggressively without forcing
+  // `weekFilter`/`monthFilter` to emit new params each minute (which would
+  // otherwise re-trigger the trend resource loaders and flicker the empty
+  // CTA back to false during the reload).
   clockTick: number;
+  lastDayKey: string;
 };
 
 function isoWeek(date: Date): number {
@@ -97,6 +101,7 @@ export const AnalysisStore = signalStore(
       to: defaultRange.to,
       dayChartMode: undefined as '24h' | '14h' | undefined,
       clockTick: 0,
+      lastDayKey: '',
     };
   }),
   withProps(() => {
@@ -247,7 +252,7 @@ export const AnalysisStore = signalStore(
           total,
           avgSetsPerEntry: entryCount
             ? Math.round((setsCount / entryCount) * 10) / 10
-            : 0,
+            : undefined,
         })
       );
     });
@@ -280,7 +285,7 @@ export const AnalysisStore = signalStore(
           total,
           avgSetsPerEntry: entryCount
             ? Math.round((setsCount / entryCount) * 10) / 10
-            : 0,
+            : undefined,
         })
       );
     });
@@ -439,7 +444,12 @@ export const AnalysisStore = signalStore(
       store.monthEntriesResource.reload();
     },
     tickClock(): void {
-      patchState(store, { clockTick: store.clockTick() + 1 });
+      const todayKey = toLocalIsoDate(new Date());
+      if (todayKey === store.lastDayKey()) return;
+      patchState(store, {
+        clockTick: store.clockTick() + 1,
+        lastDayKey: todayKey,
+      });
     },
   }))
 );

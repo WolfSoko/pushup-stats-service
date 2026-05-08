@@ -475,6 +475,11 @@ describe('AnalysisPageComponent empty-state vs populated trends', () => {
   // "noch keine Daten" message.
   let fixture: ComponentFixture<AnalysisPageComponent>;
 
+  // Locked clock so the future-dated page filter stays after `today` and
+  // the trend window stays before it, regardless of the real wall clock.
+  const FROZEN_NOW = new Date(2026, 4, 8, 12); // Fri May 8 2026
+  const PAGE_FILTER_FROM = '2026-12-01';
+
   const splitApiMock = {
     load: vitest.fn().mockReturnValue(
       of({
@@ -490,12 +495,16 @@ describe('AnalysisPageComponent empty-state vs populated trends', () => {
       })
     ),
     listPushups: vitest.fn().mockImplementation((params: { from: string }) => {
-      // Filter resource (rows) is empty; week/month resources resolve to
-      // historical entries — exercises the populated-trend gate.
-      const isFiltered = params.from && params.from > '2026-04-01';
-      if (isFiltered) return of([]);
-      const today = new Date();
-      const recent = new Date(today.getFullYear(), today.getMonth(), 1);
+      // The page filter (rows resource) gets the explicit far-future
+      // range; the fixed trend windows always start before the page
+      // filter, so distinguish the two by exact prefix instead of a
+      // wall-clock comparison.
+      if (params.from === PAGE_FILTER_FROM) return of([]);
+      const recent = new Date(
+        FROZEN_NOW.getFullYear(),
+        FROZEN_NOW.getMonth(),
+        1
+      );
       return of([
         {
           _id: 'h1',
@@ -510,6 +519,9 @@ describe('AnalysisPageComponent empty-state vs populated trends', () => {
   };
 
   beforeEach(async () => {
+    vitest.useFakeTimers({ toFake: ['Date'] });
+    vitest.setSystemTime(FROZEN_NOW);
+
     await TestBed.configureTestingModule({
       imports: [AnalysisPageComponent],
       providers: [
@@ -550,10 +562,14 @@ describe('AnalysisPageComponent empty-state vs populated trends', () => {
     fixture = TestBed.createComponent(AnalysisPageComponent);
     // Force the page filter to a far-future empty range so only the
     // fixed-window trends produce data.
-    fixture.componentInstance.store.setRange('2026-12-01', '2026-12-07');
+    fixture.componentInstance.store.setRange(PAGE_FILTER_FROM, '2026-12-07');
     fixture.detectChanges();
     await fixture.whenStable();
     fixture.detectChanges();
+  });
+
+  afterEach(() => {
+    vitest.useRealTimers();
   });
 
   it('hides the empty CTA when fixed-window trends have data', () => {
