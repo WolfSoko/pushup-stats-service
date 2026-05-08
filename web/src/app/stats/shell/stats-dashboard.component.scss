@@ -357,6 +357,37 @@ h1 {
   }
 }
 
+.rest-day-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #b6e8d3;
+  background: rgba(72, 165, 124, 0.18);
+  border: 1px solid rgba(124, 207, 168, 0.4);
+}
+.rest-day-badge-icon {
+  font-size: 1.1rem;
+  width: 1.1rem;
+  height: 1.1rem;
+}
+.rest-day-config-hint {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 4px 0 0;
+  font-size: 0.78rem;
+  color: #9fb3de;
+  font-variant-numeric: tabular-nums;
+}
+.rest-day-config-hint-value {
+  color: #cddcf8;
+  font-weight: 600;
+}
+
 .mid-grid {
   display: grid;
   gap: 18px;
@@ -624,5 +655,17 @@ h1 {
 
   .motivational-quote {
     color: var(--mat-sys-on-surface-variant, rgba(0, 0, 0, 0.6));
+  }
+
+  .rest-day-badge {
+    color: #166534;
+    background: rgba(34, 197, 94, 0.12);
+    border-color: rgba(34, 197, 94, 0.35);
+  }
+  .rest-day-config-hint {
+    color: #475569;
+  }
+  .rest-day-config-hint-value {
+    color: #1e293b;
   }
 }

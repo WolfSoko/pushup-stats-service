@@ -156,14 +156,43 @@
         </a>
       </mat-card-header>
       <mat-card-content>
-        <div class="goal-row">
-          <small i18n="@@dashboard.dailyGoalLabel">Tag</small>
-          <span>{{ todayTotal() }} / {{ dailyGoal() }}</span>
-        </div>
-        <mat-progress-bar
-          mode="determinate"
-          [value]="goalProgressPercent()"
-        ></mat-progress-bar>
+        @if (isPlanRestDay()) {
+          <div class="goal-row goal-row--rest">
+            <small i18n="@@dashboard.dailyGoalLabel">Tag</small>
+            <strong
+              class="rest-day-badge"
+              data-testid="dashboard-rest-day-target"
+            >
+              <mat-icon class="rest-day-badge-icon" aria-hidden="true"
+                >self_improvement</mat-icon
+              >
+              <span i18n="@@trainingPlans.kind.rest">Ruhetag</span>
+            </strong>
+          </div>
+          @if (userConfiguredDailyGoal() > 0) {
+            <p
+              class="rest-day-config-hint"
+              data-testid="dashboard-rest-day-config-hint"
+            >
+              <span i18n="@@dashboard.restDay.configuredGoalHint"
+                >Konfiguriertes Tagesziel:</span
+              >
+              <span class="rest-day-config-hint-value"
+                >{{ userConfiguredDailyGoal() }}
+                <span i18n="@@trainingPlans.reps">Wdh.</span></span
+              >
+            </p>
+          }
+        } @else {
+          <div class="goal-row">
+            <small i18n="@@dashboard.dailyGoalLabel">Tag</small>
+            <span>{{ todayTotal() }} / {{ dailyGoal() }}</span>
+          </div>
+          <mat-progress-bar
+            mode="determinate"
+            [value]="goalProgressPercent()"
+          ></mat-progress-bar>
+        }
 
         <div class="goal-row">
           <small i18n="@@dashboard.weeklyGoalLabel">Woche</small>

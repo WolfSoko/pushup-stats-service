@@ -190,6 +190,22 @@ export const DashboardStore = signalStore(
       () => store._trainingPlan.activeCatalog()?.totalDays ?? 0
     );
 
+    /** True when an active plan prescribes a rest day for today. The
+     *  Zielfortschritt card uses this to swap the X/Y count for a
+     *  highlighted "Ruhetag" badge — the plan goal trumps the user's
+     *  configured daily target on rest days. */
+    const isPlanRestDay = computed(
+      () => planActive() && planTodayKind() === 'rest'
+    );
+
+    /** The user's manually configured daily goal, independent of any
+     *  active plan override. Surfaced separately so the rest-day UI
+     *  can show it as a smaller secondary hint under the prominent
+     *  "Ruhetag" label. */
+    const userConfiguredDailyGoal = computed(() =>
+      store._userConfig.dailyGoal()
+    );
+
     const dailyGoal = computed(
       () => planTodayTarget() || store._userConfig.dailyGoal() || 10
     );
@@ -402,6 +418,8 @@ export const DashboardStore = signalStore(
       planTodayKind,
       planDayIndex,
       planTotalDays,
+      isPlanRestDay,
+      userConfiguredDailyGoal,
     };
   }),
   withMethods((store) => ({
