@@ -1275,6 +1275,12 @@ Aktiv:         </target>
         <target>Dag</target>
       </segment>
     </unit>
+    <unit id="dashboard.restDay.configuredGoalHint">
+      <segment state="translated">
+        <source>Konfiguriertes Tagesziel:</source>
+        <target>Konfigurert dagsmål:</target>
+      </segment>
+    </unit>
     <unit id="dashboard.weeklyGoalLabel">
       <segment state="translated">
         <source>Woche</source>
