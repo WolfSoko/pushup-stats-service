@@ -117,7 +117,11 @@ import {
         </div>
       </section>
 
-      <mat-form-field class="date-picker-field" appearance="outline">
+      <mat-form-field
+        class="date-picker-field"
+        appearance="outline"
+        subscriptSizing="dynamic"
+      >
         <mat-label i18n="@@rangeLabel">Zeitraum</mat-label>
         <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
           <input
