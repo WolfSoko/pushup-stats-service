@@ -345,12 +345,22 @@ import { PageHeaderComponent } from '../../core/page-header/page-header.componen
       z-index: 8;
       margin-inline: -16px;
       padding: 12px 16px;
-      background: var(--mat-sys-surface, #1e1e1e);
+      background: color-mix(
+        in srgb,
+        var(--mat-sys-surface, #1e1e1e) 85%,
+        transparent
+      );
       border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      -webkit-backdrop-filter: blur(6px);
       backdrop-filter: blur(6px);
     }
 
     :host-context(html.light-theme) .filter-section {
+      background: color-mix(
+        in srgb,
+        var(--mat-sys-surface, #ffffff) 85%,
+        transparent
+      );
       border-bottom-color: rgba(148, 163, 184, 0.3);
     }
 

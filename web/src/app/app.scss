@@ -161,6 +161,12 @@ mat-sidenav-content {
   display: none;
   @media (min-width: 768px) {
     display: flex;
+    align-items: center;
+    // Couple the actual rendered height to --desktop-nav-height so the
+    // variable is the single source of truth for sticky offset stacking
+    // (e.g. analysis page filter bar) and won't drift if typography or
+    // padding inside the nav links changes.
+    min-height: var(--desktop-nav-height);
     gap: 8px;
     padding-inline: max(16px, calc((100vw - 1200px) / 2));
     background: var(--mat-toolbar-container-background-color, #1e1e1e);
