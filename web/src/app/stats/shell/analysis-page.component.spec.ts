@@ -310,6 +310,20 @@ describe('AnalysisPageComponent', () => {
     expect(headerToggle?.tagName.toLowerCase()).toBe('mat-button-toggle-group');
   });
 
+  it('keeps the date range filter sticky so it stays visible while scrolling', () => {
+    fixture.detectChanges();
+    const host: HTMLElement = fixture.nativeElement;
+    const filterSection = host.querySelector('.filter-section');
+    expect(filterSection).toBeTruthy();
+    const computed = window.getComputedStyle(filterSection as Element);
+    expect(computed.position).toBe('sticky');
+    // The offset should reference the toolbar variables so the filter
+    // sits below the top nav (and desktop nav on >=768px viewports).
+    const stickyTop = computed.top;
+    expect(stickyTop).not.toBe('');
+    expect(stickyTop).not.toBe('auto');
+  });
+
   it('includes avgSetsPerEntry in week and month trend', () => {
     const { store } = fixture.componentInstance;
     const week = store.weekTrend();

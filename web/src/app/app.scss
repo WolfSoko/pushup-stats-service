@@ -25,8 +25,15 @@ mat-card-content + mat-card-footer {
 }
 
 mat-sidenav-content {
-  // Toolbar height — drives the sticky offset for .desktop-nav so both stay in sync.
+  // Toolbar heights — drive sticky offsets for .desktop-nav and any
+  // page-level sticky element (e.g. the analysis filter bar) so they
+  // stay in sync if the nav layout changes.
   --top-nav-height: 64px;
+  --desktop-nav-height: 0px;
+
+  @media (min-width: 768px) {
+    --desktop-nav-height: 40px;
+  }
 
   height: 100svh;
   overflow: auto;

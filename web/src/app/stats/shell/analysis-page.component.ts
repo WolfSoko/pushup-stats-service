@@ -340,7 +340,25 @@ import { PageHeaderComponent } from '../../core/page-header/page-header.componen
     }
 
     .filter-section {
-      margin-bottom: 16px;
+      position: sticky;
+      top: calc(var(--top-nav-height, 64px) + var(--desktop-nav-height, 0px));
+      z-index: 8;
+      margin-inline: -16px;
+      padding: 12px 16px;
+      background: var(--mat-sys-surface, #1e1e1e);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(6px);
+    }
+
+    :host-context(html.light-theme) .filter-section {
+      border-bottom-color: rgba(148, 163, 184, 0.3);
+    }
+
+    @media (max-width: 900px) {
+      .filter-section {
+        margin-inline: -12px;
+        padding: 10px 12px;
+      }
     }
 
     .chart-card {
