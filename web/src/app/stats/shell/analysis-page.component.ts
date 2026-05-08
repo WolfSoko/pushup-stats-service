@@ -2,6 +2,7 @@ import { DecimalPipe, DOCUMENT, isPlatformBrowser } from '@angular/common';
 import {
   Component,
   computed,
+  DestroyRef,
   effect,
   inject,
   PLATFORM_ID,
@@ -490,14 +491,22 @@ export class AnalysisPageComponent {
    * Only reveal the empty-state CTA after the entries resource has resolved.
    * Reading `store.rows()` directly during the initial undefined→[] transition
    * trips Angular's expression-changed-after-checked check in dev mode.
+   * Trends use a fixed window independent of the page filter, so the CTA
+   * must also stay hidden whenever a trend bucket has activity — otherwise
+   * narrowing the filter to an empty range contradicts populated trend cards.
    */
-  readonly showEmptyCta = computed(
-    () =>
-      this.store.entriesResource.status() === 'resolved' &&
-      this.store.rows().length === 0
-  );
+  readonly showEmptyCta = computed(() => {
+    if (this.store.entriesResource.status() !== 'resolved') return false;
+    if (this.store.weekEntriesResource.status() !== 'resolved') return false;
+    if (this.store.monthEntriesResource.status() !== 'resolved') return false;
+    if (this.store.rows().length > 0) return false;
+    if (this.store.weekTrend().some((t) => t.total > 0)) return false;
+    if (this.store.monthTrend().some((t) => t.total > 0)) return false;
+    return true;
+  });
 
   private readonly live = inject(LiveDataStore);
+  private readonly destroyRef = inject(DestroyRef);
 
   constructor() {
     // Resolve initial range from URL query params (SSR-aware)
@@ -511,6 +520,15 @@ export class AnalysisPageComponent {
       if (!tick) return;
       this.store.refreshAll();
     });
+
+    // Bump the store clock every 5 minutes so the fixed-window trend
+    // filters re-evaluate when the calendar day rolls over during a
+    // long-running session. Cleared on component destroy to keep tests
+    // and SSR free of leaking timers.
+    if (isPlatformBrowser(this.platformId)) {
+      const interval = setInterval(() => this.store.tickClock(), 5 * 60 * 1000);
+      this.destroyRef.onDestroy(() => clearInterval(interval));
+    }
 
     // URL history tracking effect (UI side effect, stays in component)
     effect(() => {

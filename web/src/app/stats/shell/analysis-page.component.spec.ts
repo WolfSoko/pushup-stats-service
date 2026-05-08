@@ -145,6 +145,14 @@ describe('AnalysisPageComponent', () => {
   };
 
   beforeEach(async () => {
+    // Lock the clock to Sun Feb 15 2026 so the fixed-window trend filters
+    // include the mock entries (Feb 9–15 2026). Real "now" would push the
+    // window months ahead and make every bucket empty.
+    vitest.useFakeTimers({
+      toFake: ['Date'],
+    });
+    vitest.setSystemTime(new Date(2026, 1, 15, 12));
+
     await TestBed.configureTestingModule({
       imports: [AnalysisPageComponent],
       providers: [
@@ -183,6 +191,10 @@ describe('AnalysisPageComponent', () => {
 
     fixture = TestBed.createComponent(AnalysisPageComponent);
     await fixture.whenStable();
+  });
+
+  afterEach(() => {
+    vitest.useRealTimers();
   });
 
   it('builds week and month trend series from expanded ranges', () => {
@@ -453,5 +465,246 @@ describe('AnalysisPageComponent empty-state CTA gating', () => {
     // RouterLink resolves `routerLink="/training-plans"` to `/training-plans`
     // when provideRouter([]) is in scope.
     expect(cta?.getAttribute('href')).toBe('/training-plans');
+  });
+});
+
+describe('AnalysisPageComponent empty-state vs populated trends', () => {
+  // Regression guard: when the page filter has no entries but the fixed
+  // 8-week / 6-month trend windows do, the CTA must stay hidden so the
+  // "Letzte 8 Wochen" cards don't render alongside a contradictory
+  // "noch keine Daten" message.
+  let fixture: ComponentFixture<AnalysisPageComponent>;
+
+  const splitApiMock = {
+    load: vitest.fn().mockReturnValue(
+      of({
+        meta: {
+          from: null,
+          to: null,
+          entries: 0,
+          days: 0,
+          total: 0,
+          granularity: 'daily',
+        },
+        series: [],
+      })
+    ),
+    listPushups: vitest.fn().mockImplementation((params: { from: string }) => {
+      // Filter resource (rows) is empty; week/month resources resolve to
+      // historical entries — exercises the populated-trend gate.
+      const isFiltered = params.from && params.from > '2026-04-01';
+      if (isFiltered) return of([]);
+      const today = new Date();
+      const recent = new Date(today.getFullYear(), today.getMonth(), 1);
+      return of([
+        {
+          _id: 'h1',
+          timestamp: recent.toISOString(),
+          reps: 30,
+          sets: [10, 10, 10],
+          source: 'web',
+          type: 'Standard',
+        },
+      ]);
+    }),
+  };
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [AnalysisPageComponent],
+      providers: [
+        provideRouter([]),
+        { provide: StatsApiService, useValue: splitApiMock },
+        { provide: AuthStore, useValue: makeAuthStoreMock() },
+        { provide: UserContextService, useValue: { userIdSafe: () => 'u1' } },
+        {
+          provide: UserStatsApiService,
+          useValue: {
+            getUserStats: vitest.fn().mockReturnValue(of(null)),
+          },
+        },
+      ],
+    })
+      .overrideComponent(AnalysisPageComponent, {
+        remove: {
+          imports: [
+            FilterBarComponent,
+            HeatmapComponent,
+            TypePieComponent,
+            StatsChartComponent,
+            SetsDistributionComponent,
+          ],
+        },
+        add: {
+          imports: [
+            MockFilterBarComponent,
+            MockHeatmapComponent,
+            MockTypePieComponent,
+            MockStatsChartComponent,
+            MockSetsDistributionComponent,
+          ],
+        },
+      })
+      .compileComponents();
+
+    fixture = TestBed.createComponent(AnalysisPageComponent);
+    // Force the page filter to a far-future empty range so only the
+    // fixed-window trends produce data.
+    fixture.componentInstance.store.setRange('2026-12-01', '2026-12-07');
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+  });
+
+  it('hides the empty CTA when fixed-window trends have data', () => {
+    expect(fixture.componentInstance.store.rows().length).toBe(0);
+    const week = fixture.componentInstance.store.weekTrend();
+    expect(week.some((w) => w.total > 0)).toBe(true);
+    expect(fixture.componentInstance.showEmptyCta()).toBe(false);
+  });
+});
+
+describe('AnalysisStore fixed-window trend filters', () => {
+  // Direct boundary tests for the fixed-window filter computeds. These
+  // are sensitive to ISO week + month rollovers and to JS Date's
+  // Sunday-as-0 convention; lock the system clock to specific edge dates
+  // and assert the exact ISO output.
+  let fixture: ComponentFixture<AnalysisPageComponent>;
+
+  const apiMock = {
+    load: vitest.fn().mockReturnValue(
+      of({
+        meta: {
+          from: null,
+          to: null,
+          entries: 0,
+          days: 0,
+          total: 0,
+          granularity: 'daily',
+        },
+        series: [],
+      })
+    ),
+    listPushups: vitest.fn().mockReturnValue(of([])),
+  };
+
+  async function createAt(date: Date): Promise<void> {
+    vitest.setSystemTime(date);
+    await TestBed.configureTestingModule({
+      imports: [AnalysisPageComponent],
+      providers: [
+        provideRouter([]),
+        { provide: StatsApiService, useValue: apiMock },
+        { provide: AuthStore, useValue: makeAuthStoreMock() },
+        { provide: UserContextService, useValue: { userIdSafe: () => 'u1' } },
+        {
+          provide: UserStatsApiService,
+          useValue: {
+            getUserStats: vitest.fn().mockReturnValue(of(null)),
+          },
+        },
+      ],
+    })
+      .overrideComponent(AnalysisPageComponent, {
+        remove: {
+          imports: [
+            FilterBarComponent,
+            HeatmapComponent,
+            TypePieComponent,
+            StatsChartComponent,
+            SetsDistributionComponent,
+          ],
+        },
+        add: {
+          imports: [
+            MockFilterBarComponent,
+            MockHeatmapComponent,
+            MockTypePieComponent,
+            MockStatsChartComponent,
+            MockSetsDistributionComponent,
+          ],
+        },
+      })
+      .compileComponents();
+
+    fixture = TestBed.createComponent(AnalysisPageComponent);
+  }
+
+  beforeEach(() => {
+    // Only fake Date — leaving setTimeout/setInterval real keeps Angular's
+    // resource() and TestBed.compileComponents() pipelines unblocked.
+    vitest.useFakeTimers({ toFake: ['Date'] });
+  });
+
+  afterEach(() => {
+    vitest.useRealTimers();
+    TestBed.resetTestingModule();
+  });
+
+  it('weekFilter spans 8 ISO weeks Mon–Sun for a mid-week anchor', async () => {
+    await createAt(new Date(2026, 0, 14, 12)); // Wed Jan 14 2026
+    const wf = fixture.componentInstance.store.weekFilter();
+    expect(wf.from).toBe('2025-11-24'); // Monday 7 weeks before this Monday
+    expect(wf.to).toBe('2026-01-18'); // Sunday of current ISO week
+  });
+
+  it('weekFilter handles Sunday correctly (getDay() === 0)', async () => {
+    await createAt(new Date(2026, 0, 18, 23, 30)); // Sun Jan 18 2026 night
+    const wf = fixture.componentInstance.store.weekFilter();
+    // Sunday belongs to the week starting Mon Jan 12, so the window
+    // ends on its Sunday and starts 7 weeks earlier.
+    expect(wf.from).toBe('2025-11-24');
+    expect(wf.to).toBe('2026-01-18');
+  });
+
+  it('weekFilter rolls across the year boundary', async () => {
+    await createAt(new Date(2026, 0, 1, 9)); // Thu Jan 1 2026
+    const wf = fixture.componentInstance.store.weekFilter();
+    // Week of Jan 1 2026 starts Mon Dec 29 2025; 7 weeks earlier is
+    // Mon Nov 10 2025.
+    expect(wf.from).toBe('2025-11-10');
+    expect(wf.to).toBe('2026-01-04');
+  });
+
+  it('monthFilter spans 6 calendar months ending current month', async () => {
+    await createAt(new Date(2026, 0, 14, 12)); // Jan 14 2026
+    const mf = fixture.componentInstance.store.monthFilter();
+    expect(mf.from).toBe('2025-08-01');
+    expect(mf.to).toBe('2026-01-31');
+  });
+
+  it('monthFilter handles February correctly in leap and non-leap years', async () => {
+    await createAt(new Date(2028, 1, 15, 12)); // Feb 15 2028 (leap year)
+    const mf = fixture.componentInstance.store.monthFilter();
+    expect(mf.from).toBe('2027-09-01');
+    expect(mf.to).toBe('2028-02-29');
+  });
+
+  it('weekTrend always emits 8 buckets even with zero entries', async () => {
+    await createAt(new Date(2026, 0, 14, 12));
+    const week = fixture.componentInstance.store.weekTrend();
+    expect(week).toHaveLength(8);
+    expect(week.every((w) => w.total === 0)).toBe(true);
+  });
+
+  it('monthTrend always emits 6 buckets even with zero entries', async () => {
+    await createAt(new Date(2026, 0, 14, 12));
+    const month = fixture.componentInstance.store.monthTrend();
+    expect(month).toHaveLength(6);
+    expect(month.every((m) => m.total === 0)).toBe(true);
+  });
+
+  it('weekFilter re-evaluates after tickClock when the day changes', async () => {
+    await createAt(new Date(2026, 0, 18, 23, 59)); // Sun Jan 18
+    const before = fixture.componentInstance.store.weekFilter();
+    expect(before.to).toBe('2026-01-18');
+
+    // Move clock past midnight into the next ISO week.
+    vitest.setSystemTime(new Date(2026, 0, 19, 0, 5)); // Mon Jan 19
+    fixture.componentInstance.store.tickClock();
+
+    const after = fixture.componentInstance.store.weekFilter();
+    expect(after.from).toBe('2025-12-01');
+    expect(after.to).toBe('2026-01-25');
   });
 });

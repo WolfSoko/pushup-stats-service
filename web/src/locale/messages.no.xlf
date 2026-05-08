@@ -2798,13 +2798,22 @@ Deine Position: # ·  Reps        </source>
 
 
         </unit>
-    <unit id="pie.modeAria">
+    <unit id="pie.distributionAria">
       <notes>
-        <note category="location">web/src/app/stats/components/type-pie/type-pie.component.ts:49</note>
+        <note category="location">web/src/app/stats/components/type-pie/type-pie.component.ts:27,28</note>
       </notes>
       <segment state="translated">
-        <source>Auswahl</source>
-        <target>Utvalg</target>
+        <source>Verteilung der Liegestütz-Typen</source>
+        <target>Fordeling av push-up-typer</target>
+      </segment>
+    </unit>
+    <unit id="pie.modeAria">
+      <notes>
+        <note category="location">web/src/app/stats/components/type-pie/type-pie.component.ts</note>
+      </notes>
+      <segment state="translated">
+        <source>Anzeigemodus der Typverteilung</source>
+        <target>Visningsmodus for typefordeling</target>
       </segment>
     </unit>
     <unit id="pie.top5">
@@ -2968,11 +2977,11 @@ Deine Position: # ·  Reps        </source>
         </unit>
     <unit id="rangeBackAria">
       <notes>
-        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:77</note>
+        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts</note>
       </notes>
       <segment state="translated">
-        <source>Zurück</source>
-        <target>Tilbake</target>
+        <source>Vorheriger Zeitraum</source>
+        <target>Forrige periode</target>
       </segment>
     </unit>
     <unit id="rangeBack">
@@ -2986,11 +2995,11 @@ Deine Position: # ·  Reps        </source>
     </unit>
     <unit id="rangeForwardAria">
       <notes>
-        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:101</note>
+        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts</note>
       </notes>
       <segment state="translated">
-        <source>Vor</source>
-        <target>Frem</target>
+        <source>Nächster Zeitraum</source>
+        <target>Neste periode</target>
       </segment>
     </unit>
     <unit id="rangeForward">
@@ -3115,11 +3124,11 @@ Deine Position: # ·  Reps        </source>
         </unit>
     <unit id="rangeTodayAria">
       <notes>
-        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:89</note>
+        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts</note>
       </notes>
       <segment state="translated">
-        <source>Heute</source>
-        <target>I dag</target>
+        <source>Zum heutigen Zeitraum springen</source>
+        <target>Gå til dagens periode</target>
       </segment>
     </unit>
     <unit id="rangeToday">

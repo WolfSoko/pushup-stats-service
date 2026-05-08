@@ -3878,11 +3878,11 @@
     </unit>
     <unit id="rangeBackAria">
       <notes>
-        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:77</note>
+        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts</note>
       </notes>
       <segment state="translated">
-        <source>Zurück</source>
-        <target>Terug</target>
+        <source>Vorheriger Zeitraum</source>
+        <target>Vorige periode</target>
       </segment>
     </unit>
     <unit id="rangeBack">
@@ -3896,11 +3896,11 @@
     </unit>
     <unit id="rangeTodayAria">
       <notes>
-        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:89</note>
+        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts</note>
       </notes>
       <segment state="translated">
-        <source>Heute</source>
-        <target>Vandaag</target>
+        <source>Zum heutigen Zeitraum springen</source>
+        <target>Naar de periode van vandaag</target>
       </segment>
     </unit>
     <unit id="rangeToday">
@@ -3923,11 +3923,11 @@
     </unit>
     <unit id="rangeForwardAria">
       <notes>
-        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:101</note>
+        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts</note>
       </notes>
       <segment state="translated">
-        <source>Vor</source>
-        <target>Vooruit</target>
+        <source>Nächster Zeitraum</source>
+        <target>Volgende periode</target>
       </segment>
     </unit>
     <unit id="rangeForward">
@@ -4541,13 +4541,22 @@
         <target>Geen gegevens</target>
       </segment>
     </unit>
-    <unit id="pie.modeAria">
+    <unit id="pie.distributionAria">
       <notes>
-        <note category="location">web/src/app/stats/components/type-pie/type-pie.component.ts:49</note>
+        <note category="location">web/src/app/stats/components/type-pie/type-pie.component.ts:27,28</note>
       </notes>
       <segment state="translated">
-        <source>Auswahl</source>
-        <target>Selectie</target>
+        <source>Verteilung der Liegestütz-Typen</source>
+        <target>Verdeling van push-uptypen</target>
+      </segment>
+    </unit>
+    <unit id="pie.modeAria">
+      <notes>
+        <note category="location">web/src/app/stats/components/type-pie/type-pie.component.ts</note>
+      </notes>
+      <segment state="translated">
+        <source>Anzeigemodus der Typverteilung</source>
+        <target>Weergavemodus van de typeverdeling</target>
       </segment>
     </unit>
     <unit id="pie.top5">

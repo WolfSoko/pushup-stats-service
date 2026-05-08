@@ -4488,11 +4488,11 @@
     </unit>
     <unit id="rangeBackAria">
       <notes>
-        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:77</note>
+        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts</note>
       </notes>
       <segment state="translated">
-        <source>Zurück</source>
-        <target>上一页</target>
+        <source>Vorheriger Zeitraum</source>
+        <target>上一周期</target>
       </segment>
     </unit>
     <unit id="rangeBack">
@@ -4501,16 +4501,16 @@
       </notes>
       <segment state="translated">
         <source>Zurück</source>
-        <target>上一页</target>
+        <target>上一周期</target>
       </segment>
     </unit>
     <unit id="rangeTodayAria">
       <notes>
-        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:89</note>
+        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts</note>
       </notes>
       <segment state="translated">
-        <source>Heute</source>
-        <target>今天</target>
+        <source>Zum heutigen Zeitraum springen</source>
+        <target>跳到今天的周期</target>
       </segment>
     </unit>
     <unit id="rangeToday">
@@ -4533,11 +4533,11 @@
     </unit>
     <unit id="rangeForwardAria">
       <notes>
-        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:101</note>
+        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts</note>
       </notes>
       <segment state="translated">
-        <source>Vor</source>
-        <target>下一页</target>
+        <source>Nächster Zeitraum</source>
+        <target>下一周期</target>
       </segment>
     </unit>
     <unit id="rangeForward">
@@ -4546,7 +4546,7 @@
       </notes>
       <segment state="translated">
         <source>Vor</source>
-        <target>下一页</target>
+        <target>下一周期</target>
       </segment>
     </unit>
     <unit id="rangeLabel">
@@ -5083,13 +5083,22 @@
         <source>Keine Daten</source>
       <target>无数据</target></segment>
     </unit>
-    <unit id="pie.modeAria">
+    <unit id="pie.distributionAria">
       <notes>
-        <note category="location">web/src/app/stats/components/type-pie/type-pie.component.ts:49</note>
+        <note category="location">web/src/app/stats/components/type-pie/type-pie.component.ts:27,28</note>
       </notes>
       <segment state="translated">
-        <source>Auswahl</source>
-        <target>选择</target>
+        <source>Verteilung der Liegestütz-Typen</source>
+        <target>俯卧撑类型分布</target>
+      </segment>
+    </unit>
+    <unit id="pie.modeAria">
+      <notes>
+        <note category="location">web/src/app/stats/components/type-pie/type-pie.component.ts</note>
+      </notes>
+      <segment state="translated">
+        <source>Anzeigemodus der Typverteilung</source>
+        <target>选择饼图显示模式</target>
       </segment>
     </unit>
     <unit id="pie.top5">

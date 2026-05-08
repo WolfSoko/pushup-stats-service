@@ -57,6 +57,46 @@ describe('TypePieComponent', () => {
     expect(component.isSelected('Diamond')).toBe(true);
   });
 
+  it('clicking a mat-checkbox in the legend wires through to toggle()', () => {
+    fixture.detectChanges();
+    const host: HTMLElement = fixture.nativeElement;
+    // mat-checkbox renders an inner native input — clicking it fires (change).
+    const diamondInput = host.querySelector<HTMLInputElement>(
+      '[data-testid="type-pie-toggle-Diamond"] input[type="checkbox"]'
+    );
+    expect(diamondInput).toBeTruthy();
+    diamondInput?.click();
+    fixture.detectChanges();
+
+    expect(component.mode()).toBe('custom');
+    expect(component.isSelected('Diamond')).toBe(false);
+    expect(component.isSelected('Standard')).toBe(true);
+  });
+
+  it('seeds custom selection from the current visible set when entering Auswahl via the toggle', () => {
+    // Switching directly from Top 5 to custom should preserve the top-5
+    // selection so the pie doesn't render empty until the user toggles
+    // anything manually.
+    component.setMode('custom');
+
+    expect(component.mode()).toBe('custom');
+    expect([...component.selectedLabels()]).toEqual([
+      'Standard',
+      'Diamond',
+      'Wide',
+      'Decline',
+      'Knee',
+    ]);
+    expect(component.visibleSegments()).toHaveLength(5);
+  });
+
+  it('switching from Alle to Auswahl seeds custom selection with every label', () => {
+    component.setMode('all');
+    component.setMode('custom');
+
+    expect(component.selectedLabels().size).toBe(7);
+  });
+
   it('renders one legend row with checkbox per type, regardless of mode', () => {
     fixture.detectChanges();
     const host: HTMLElement = fixture.nativeElement;

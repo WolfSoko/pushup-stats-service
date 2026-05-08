@@ -3878,11 +3878,11 @@
     </unit>
     <unit id="rangeBackAria">
       <notes>
-        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:77</note>
+        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts</note>
       </notes>
       <segment state="translated">
-        <source>Zurück</source>
-        <target>Πίσω</target>
+        <source>Vorheriger Zeitraum</source>
+        <target>Προηγούμενη περίοδος</target>
       </segment>
     </unit>
     <unit id="rangeBack">
@@ -3896,11 +3896,11 @@
     </unit>
     <unit id="rangeTodayAria">
       <notes>
-        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:89</note>
+        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts</note>
       </notes>
       <segment state="translated">
-        <source>Heute</source>
-        <target>Σήμερα</target>
+        <source>Zum heutigen Zeitraum springen</source>
+        <target>Μετάβαση στην τρέχουσα περίοδο</target>
       </segment>
     </unit>
     <unit id="rangeToday">
@@ -3923,11 +3923,11 @@
     </unit>
     <unit id="rangeForwardAria">
       <notes>
-        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:101</note>
+        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts</note>
       </notes>
       <segment state="translated">
-        <source>Vor</source>
-        <target>Μπροστά</target>
+        <source>Nächster Zeitraum</source>
+        <target>Επόμενη περίοδος</target>
       </segment>
     </unit>
     <unit id="rangeForward">
@@ -4541,13 +4541,22 @@
         <target>Δεν υπάρχουν δεδομένα</target>
       </segment>
     </unit>
-    <unit id="pie.modeAria">
+    <unit id="pie.distributionAria">
       <notes>
-        <note category="location">web/src/app/stats/components/type-pie/type-pie.component.ts:49</note>
+        <note category="location">web/src/app/stats/components/type-pie/type-pie.component.ts:27,28</note>
       </notes>
       <segment state="translated">
-        <source>Auswahl</source>
-        <target>Επιλογή</target>
+        <source>Verteilung der Liegestütz-Typen</source>
+        <target>Κατανομή τύπων push-up</target>
+      </segment>
+    </unit>
+    <unit id="pie.modeAria">
+      <notes>
+        <note category="location">web/src/app/stats/components/type-pie/type-pie.component.ts</note>
+      </notes>
+      <segment state="translated">
+        <source>Anzeigemodus der Typverteilung</source>
+        <target>Λειτουργία προβολής κατανομής τύπων</target>
       </segment>
     </unit>
     <unit id="pie.top5">

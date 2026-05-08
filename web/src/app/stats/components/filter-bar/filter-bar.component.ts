@@ -73,7 +73,7 @@ import {
             class="step-btn"
             [disabled]="mode() === 'custom'"
             (click)="shiftRange(-1)"
-            aria-label="Zurück"
+            aria-label="Vorheriger Zeitraum"
             i18n-aria-label="@@rangeBackAria"
           >
             <mat-icon>chevron_left</mat-icon>
@@ -85,7 +85,7 @@ import {
             class="step-btn step-btn--today"
             [disabled]="mode() === 'custom'"
             (click)="jumpToToday()"
-            aria-label="Heute"
+            aria-label="Zum heutigen Zeitraum springen"
             i18n-aria-label="@@rangeTodayAria"
           >
             <mat-icon class="step-icon-mobile">today</mat-icon>
@@ -97,7 +97,7 @@ import {
             class="step-btn"
             [disabled]="mode() === 'custom'"
             (click)="shiftRange(1)"
-            aria-label="Vor"
+            aria-label="Nächster Zeitraum"
             i18n-aria-label="@@rangeForwardAria"
           >
             <span class="step-label" i18n="@@rangeForward">Vor</span>

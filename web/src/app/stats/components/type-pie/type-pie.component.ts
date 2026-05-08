@@ -24,7 +24,8 @@ const TOP_N = 5;
             class="pie"
             viewBox="0 0 42 42"
             role="img"
-            aria-label="Type distribution"
+            aria-label="Verteilung der Liegestütz-Typen"
+            i18n-aria-label="@@pie.distributionAria"
           >
             <circle class="bg" cx="21" cy="21" r="15.915" />
 
@@ -45,7 +46,7 @@ const TOP_N = 5;
             class="mode-toggle"
             [value]="mode()"
             (change)="setMode($event.value)"
-            aria-label="Auswahl"
+            aria-label="Anzeigemodus der Typverteilung"
             i18n-aria-label="@@pie.modeAria"
           >
             <mat-button-toggle value="top5" i18n="@@pie.top5"
@@ -286,6 +287,9 @@ export class TypePieComponent {
 
   setMode(value: PieSelectionMode): void {
     if (!value) return;
+    if (value === 'custom') {
+      this.customSelection.set(new Set(this.selectedLabels()));
+    }
     this.mode.set(value);
   }
 }
