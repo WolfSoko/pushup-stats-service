@@ -23,7 +23,9 @@ import {
   ExerciseEntry,
   exercisesByCategory,
   findExerciseCategory,
-  formatExerciseValue,
+  formatEntryDisplay,
+  formatEntryTotal,
+  measurementCompanionValueField,
   measurementValueField,
   toLocalIsoDate,
 } from '@pu-stats/models';
@@ -36,7 +38,15 @@ import {
 
 interface ExerciseSummary {
   definition: ExerciseDefinition;
+  /** Sum of the primary measurement value over the last 30 days. */
   totalValue30d: number;
+  /**
+   * Sum of the secondary (companion) display value over the same
+   * window — only set for composite measurements like
+   * `'distance-time'`, where the duration matters as much as the
+   * distance. `undefined` for single-value exercises.
+   */
+  totalCompanionValue30d?: number;
   lastEntry: ExerciseEntry | null;
 }
 
@@ -128,9 +138,7 @@ interface ExerciseSummary {
                 }
               </div>
               <div class="exercise-stats">
-                <span class="total">{{
-                  formatTotal(item.definition, item.totalValue30d)
-                }}</span>
+                <span class="total">{{ formatTotal(item) }}</span>
                 <span class="label" i18n="@@exerciseSection.last30d"
                   >Letzte 30 Tage</span
                 >
@@ -178,18 +186,23 @@ export class ExerciseCategorySectionComponent {
   }
 
   /**
-   * Format the per-row "last entry" value. Reads the right entry field
-   * via the catalog's `measurement` (data flow) and formats according
-   * to `def.unit` (display) — keeps the two concerns separated.
+   * Format the per-row "last entry" value. Delegates to
+   * `formatEntryDisplay` which handles single-value AND composite
+   * measurements (e.g. distance-time renders as
+   * `"5.00 km · 25:00 (5:00 /km)"`).
    */
   formatValue(def: ExerciseDefinition, entry: ExerciseEntry): string {
-    const valueField = measurementValueField(def.measurement);
-    const raw = (entry[valueField] as number | undefined) ?? 0;
-    return formatExerciseValue(raw, def.unit);
+    return formatEntryDisplay(entry, def);
   }
 
-  formatTotal(def: ExerciseDefinition, total: number): string {
-    return formatExerciseValue(total, def.unit);
+  formatTotal(summary: ExerciseSummary): string {
+    return formatEntryTotal(
+      {
+        primary: summary.totalValue30d,
+        companion: summary.totalCompanionValue30d,
+      },
+      summary.definition
+    );
   }
 
   private localizeCategory(id: ExerciseCategoryId): string {
@@ -220,15 +233,23 @@ export class ExerciseCategorySectionComponent {
     const defs = exercisesByCategory().get(this.categoryId()) ?? [];
     return defs.map((def) => {
       const matching = entries.filter((e) => e.exerciseId === def.id);
-      // The summary total is exercise-scoped so it represents whatever
-      // unit the catalog assigns: seconds for plank, reps for sit-ups,
-      // future kg/m for strength/cardio. `measurementValueField`
-      // tells us which entry field carries the primary value.
+      // The summary total is exercise-scoped: seconds for plank, reps
+      // for sit-ups, distance + duration for a tracked run.
+      // `measurementValueField` picks the primary field; for composite
+      // measurements (`distance-time`) we also sum the companion field
+      // so the card can show "42.00 km · 3:30:00 (5:00 /km)".
       const valueField = measurementValueField(def.measurement);
+      const companionField = measurementCompanionValueField(def.measurement);
       const totalValue30d = matching.reduce((s, e) => {
         const v = (e[valueField] as number | undefined) ?? 0;
         return s + v;
       }, 0);
+      const totalCompanionValue30d = companionField
+        ? matching.reduce((s, e) => {
+            const v = (e[companionField] as number | undefined) ?? 0;
+            return s + v;
+          }, 0)
+        : undefined;
       // Compare via Date.parse so an offset-bearing timestamp
       // (e.g. `…+02:00`) and a Z-suffixed one sort by their absolute
       // instant — string comparison would order them lexicographically
@@ -240,7 +261,12 @@ export class ExerciseCategorySectionComponent {
               : latest
           )
         : null;
-      return { definition: def, totalValue30d, lastEntry };
+      return {
+        definition: def,
+        totalValue30d,
+        totalCompanionValue30d,
+        lastEntry,
+      };
     });
   });
 

@@ -9,7 +9,12 @@
  * Migration plan and roadmap: see `plans/multi-exercise-roadmap.md`.
  */
 
-export type MeasurementType = 'reps' | 'time' | 'distance' | 'weight';
+export type MeasurementType =
+  | 'reps'
+  | 'time'
+  | 'distance'
+  | 'weight'
+  | 'distance-time';
 
 export type ExerciseCategoryId =
   | 'pushup'
@@ -146,8 +151,31 @@ export function measurementValueField(
     case 'time':
       return 'durationSec';
     case 'distance':
+    case 'distance-time':
+      // For distance-time the primary value is the distance — that's what
+      // the catalog `min`/`max` constrain, what Aggregations sum, and what
+      // headline displays read. The duration is a required companion
+      // (see {@link COMPANION_FIELDS}/{@link REQUIRED_COMPANIONS}).
       return 'distanceM';
   }
+}
+
+/**
+ * Returns the secondary (companion) value field that carries equal
+ * display weight to the primary value, or `undefined` when there isn't
+ * one. Currently only `'distance-time'` qualifies — the duration is
+ * just as important to display as the distance, and {@link
+ * formatEntryDisplay} renders both.
+ *
+ * Distinct from {@link companionFields}, which lists *allowed* companions
+ * for validation. A field can be a validation companion without being
+ * a display companion (e.g. `'distance'` may carry an optional
+ * duration but renders as distance-only).
+ */
+export function measurementCompanionValueField(
+  measurement: MeasurementType
+): MeasurementValueField | undefined {
+  return measurement === 'distance-time' ? 'durationSec' : undefined;
 }
 
 /**
@@ -166,6 +194,7 @@ const COMPANION_FIELDS: Readonly<
   reps: [],
   time: [],
   distance: ['durationSec'],
+  'distance-time': ['durationSec'],
   weight: ['weightKg'],
 };
 
@@ -175,6 +204,7 @@ const REQUIRED_COMPANIONS: Readonly<
   reps: [],
   time: [],
   distance: [],
+  'distance-time': ['durationSec'],
   weight: ['weightKg'],
 };
 

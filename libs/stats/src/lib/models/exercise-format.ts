@@ -1,3 +1,6 @@
+import type { ExerciseDefinition, ExerciseEntry } from './exercise.models';
+import { measurementValueField } from './exercise.models';
+
 /**
  * Render an exercise's primary value as a localized-ish display string,
  * driven by `ExerciseDefinition.unit`. The shape is:
@@ -44,3 +47,97 @@ function roundForDisplay(value: number): string {
   if (Number.isInteger(value)) return String(value);
   return value.toFixed(2);
 }
+
+/**
+ * Pace as `m:ss /km` for the given distance/duration pair, or empty
+ * string when either input is non-positive (pace is meaningless for a
+ * 0 m or 0 s entry — and dividing by zero would produce `Infinity`).
+ *
+ * The result is rounded to whole seconds; sub-second precision would
+ * be noise on a hand-stopped run timer.
+ */
+export function formatPaceMinPerKm(
+  distanceM: number,
+  durationSec: number
+): string {
+  if (
+    !Number.isFinite(distanceM) ||
+    !Number.isFinite(durationSec) ||
+    distanceM <= 0 ||
+    durationSec <= 0
+  ) {
+    return '';
+  }
+  const secPerKm = Math.round((durationSec * 1000) / distanceM);
+  const m = Math.floor(secPerKm / 60);
+  const s = secPerKm % 60;
+  return `${m}:${String(s).padStart(2, '0')} /km`;
+}
+
+/**
+ * Render a distance + duration pair as `"<distance> · <time> (<pace>)"`,
+ * dropping the pace suffix when either value is missing. Used for
+ * `'distance-time'` exercises like a tracked run, where both values
+ * carry equal display weight.
+ */
+export function formatDistanceTime(
+  distanceM: number,
+  durationSec: number
+): string {
+  // Check the raw values, not the formatted strings: a 0 m / 0 s
+  // entry formats to "0 m" / "0:00" (which are valid display strings
+  // for non-cardio contexts), but in a composite they're noise.
+  const hasDistance = Number.isFinite(distanceM) && distanceM > 0;
+  const hasDuration = Number.isFinite(durationSec) && durationSec > 0;
+  if (!hasDistance && !hasDuration) return '';
+  if (!hasDistance) return formatExerciseValue(durationSec, 's');
+  if (!hasDuration) return formatExerciseValue(distanceM, 'm');
+  const distance = formatExerciseValue(distanceM, 'm');
+  const time = formatExerciseValue(durationSec, 's');
+  const pace = formatPaceMinPerKm(distanceM, durationSec);
+  return pace ? `${distance} · ${time} (${pace})` : `${distance} · ${time}`;
+}
+
+/**
+ * High-level "what does this entry read as on a card or row" helper.
+ * Routes through the right formatter based on `def.measurement`:
+ *
+ *   - `'distance-time'`: composite (`5.00 km · 25:00 (5:00 /km)`)
+ *   - everything else: single value via {@link formatExerciseValue} +
+ *     `def.unit`, reading the field that {@link measurementValueField}
+ *     designates.
+ *
+ * Components should call this instead of branching on measurement
+ * themselves — keeps the composite/single switch in one place.
+ */
+export function formatEntryDisplay(
+  entry: Pick<
+    ExerciseEntry,
+    'reps' | 'durationSec' | 'distanceM' | 'weightKg'
+  >,
+  def: Pick<ExerciseDefinition, 'measurement' | 'unit'>
+): string {
+  if (def.measurement === 'distance-time') {
+    return formatDistanceTime(entry.distanceM ?? 0, entry.durationSec ?? 0);
+  }
+  const valueField = measurementValueField(def.measurement);
+  const raw = (entry[valueField] as number | undefined) ?? 0;
+  return formatExerciseValue(raw, def.unit);
+}
+
+/**
+ * Same shape as {@link formatEntryDisplay} but for an aggregated total
+ * (e.g. 30-day sum). For composite measurements the caller passes both
+ * the distance total and the duration total; for single measurements
+ * only the primary total is read.
+ */
+export function formatEntryTotal(
+  totals: { primary: number; companion?: number },
+  def: Pick<ExerciseDefinition, 'measurement' | 'unit'>
+): string {
+  if (def.measurement === 'distance-time') {
+    return formatDistanceTime(totals.primary, totals.companion ?? 0);
+  }
+  return formatExerciseValue(totals.primary, def.unit);
+}
+
