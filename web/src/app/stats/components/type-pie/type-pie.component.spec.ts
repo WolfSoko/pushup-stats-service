@@ -30,26 +30,31 @@ describe('TypePieComponent', () => {
     fixture.detectChanges();
   });
 
-  it('defaults to Top 5 mode and selects the five highest-value labels', () => {
+  it('defaults to Top 5 mode and selects the five highest-value ids', () => {
     // Then
     expect(component.mode()).toBe('top5');
-    expect([...component.selectedLabels()]).toEqual([
+    expect([...component.selectedIds()]).toEqual([
       'Standard',
       'Diamond',
       'Wide',
       'Decline',
       'Knee',
     ]);
-    expect(component.visibleSegments()).toHaveLength(5);
+    // 5 selected + an explicit "Other" arc covering the unselected
+    // remainder so the rendered pie always reads as a complete circle.
+    expect(component.visibleSegments()).toHaveLength(6);
+    expect(component.visibleSegments().at(-1)?.id).toBe('__other__');
+    expect(component.otherPercent()).toBeGreaterThan(0);
   });
 
-  it('switches to Alle mode when toggled, selecting every label', () => {
+  it('switches to Alle mode when toggled, selecting every id and dropping the Other arc', () => {
     // When
     component.setMode('all');
 
     // Then
-    expect(component.selectedLabels().size).toBe(7);
+    expect(component.selectedIds().size).toBe(7);
     expect(component.visibleSegments()).toHaveLength(7);
+    expect(component.otherPercent()).toBe(0);
   });
 
   it('toggling a checkbox switches mode to custom and updates the subset', () => {
@@ -90,16 +95,37 @@ describe('TypePieComponent', () => {
     // When: switching directly from Top 5 to custom
     component.setMode('custom');
 
-    // Then: the top-5 selection is preserved instead of starting empty
+    // Then: the top-5 selection is preserved instead of starting empty,
+    // and the Other arc still completes the circle.
     expect(component.mode()).toBe('custom');
-    expect([...component.selectedLabels()]).toEqual([
+    expect([...component.selectedIds()]).toEqual([
       'Standard',
       'Diamond',
       'Wide',
       'Decline',
       'Knee',
     ]);
-    expect(component.visibleSegments()).toHaveLength(5);
+    expect(component.visibleSegments()).toHaveLength(6);
+    expect(component.visibleSegments().at(-1)?.id).toBe('__other__');
+  });
+
+  it('uses the stable id (not the localized label) for selection and test selectors', () => {
+    // Given: data whose label simulates a localized display name
+    fixture.componentRef.setInput('data', [
+      { id: 'standard', label: 'Standard-Liegestütze', value: 50 },
+      { id: 'diamond', label: 'Diamant-Liegestütze', value: 30 },
+    ]);
+    fixture.detectChanges();
+
+    // Then: selection is keyed by id; data-testids carry the canonical id
+    expect([...component.selectedIds()]).toEqual(['standard', 'diamond']);
+    const host: HTMLElement = fixture.nativeElement;
+    expect(
+      host.querySelector('[data-testid="type-pie-toggle-standard"]')
+    ).toBeTruthy();
+    expect(
+      host.querySelector('[data-testid="type-pie-toggle-diamond"]')
+    ).toBeTruthy();
   });
 
   it('switching from Alle to Auswahl seeds custom selection with every label', () => {
@@ -108,7 +134,7 @@ describe('TypePieComponent', () => {
     component.setMode('custom');
 
     // Then
-    expect(component.selectedLabels().size).toBe(7);
+    expect(component.selectedIds().size).toBe(7);
   });
 
   it('renders one legend row with checkbox per type, regardless of mode', () => {

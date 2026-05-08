@@ -3,6 +3,14 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 
 export interface PieDatum {
+  /**
+   * Stable, locale-independent identifier used for selection state and
+   * test selectors. Defaults to `label` when omitted, but production
+   * callers should pass a canonical key (e.g. the canonical pushup
+   * type id) so checkbox state and `data-testid` survive locale
+   * switches and labels with spaces/diacritics.
+   */
+  id?: string;
   label: string;
   value: number;
   avgSetSize?: number;
@@ -11,6 +19,7 @@ export interface PieDatum {
 export type PieSelectionMode = 'top5' | 'all' | 'custom';
 
 const TOP_N = 5;
+const OTHER_COLOR = 'rgba(120, 120, 120, 0.55)';
 
 @Component({
   selector: 'app-type-pie',
@@ -29,7 +38,7 @@ const TOP_N = 5;
           >
             <circle class="bg" cx="21" cy="21" r="15.915" />
 
-            @for (seg of visibleSegments(); track seg.label) {
+            @for (seg of visibleSegments(); track seg.id) {
               <circle
                 class="seg"
                 cx="21"
@@ -62,13 +71,13 @@ const TOP_N = 5;
         </div>
 
         <div class="legend" data-testid="type-pie-legend">
-          @for (seg of allSegments(); track seg.label) {
+          @for (seg of allSegments(); track seg.id) {
             <div class="row">
               <mat-checkbox
                 color="primary"
-                [checked]="isSelected(seg.label)"
-                (change)="toggle(seg.label)"
-                [attr.data-testid]="'type-pie-toggle-' + seg.label"
+                [checked]="isSelected(seg.id)"
+                (change)="toggle(seg.id)"
+                [attr.data-testid]="'type-pie-toggle-' + seg.id"
               >
                 <span class="row-name">
                   <span class="dot" [style.background]="seg.color"></span>
@@ -85,6 +94,15 @@ const TOP_N = 5;
                 <span class="set-value">{{ seg.avgSetSize }}</span>
               </div>
             }
+          }
+          @if (otherPercent() > 0) {
+            <div class="row other-row" data-testid="type-pie-other-row">
+              <span class="row-name">
+                <span class="dot" [style.background]="otherColor"></span>
+                <span class="name" i18n="@@pie.other">Sonstige</span>
+              </span>
+              <span class="pct">{{ otherPercent() }}%</span>
+            </div>
           }
         </div>
       </div>
@@ -162,6 +180,10 @@ const TOP_N = 5;
       grid-template-columns: 1fr auto;
       padding-left: 36px;
     }
+    .other-row {
+      opacity: 0.75;
+      padding-left: 36px;
+    }
     .set-label {
       overflow: hidden;
       text-overflow: ellipsis;
@@ -190,6 +212,8 @@ export class TypePieComponent {
   readonly mode = signal<PieSelectionMode>('top5');
   private readonly customSelection = signal<ReadonlySet<string>>(new Set());
 
+  readonly otherColor = OTHER_COLOR;
+
   readonly total = computed(() =>
     this.data().reduce((sum, x) => sum + (x.value || 0), 0)
   );
@@ -209,6 +233,7 @@ export class TypePieComponent {
     const total = this.total();
     if (!total)
       return [] as Array<{
+        id: string;
         label: string;
         value: number;
         percent: number;
@@ -221,6 +246,7 @@ export class TypePieComponent {
       .sort((a, b) => (b.value || 0) - (a.value || 0));
 
     return rows.map((row, idx) => ({
+      id: row.id ?? row.label,
       label: row.label,
       value: row.value || 0,
       percent: Math.round(((row.value || 0) / total) * 100),
@@ -229,14 +255,14 @@ export class TypePieComponent {
     }));
   });
 
-  readonly selectedLabels = computed<ReadonlySet<string>>(() => {
+  readonly selectedIds = computed<ReadonlySet<string>>(() => {
     const all = this.allSegments();
     const mode = this.mode();
     if (mode === 'top5') {
-      return new Set(all.slice(0, TOP_N).map((s) => s.label));
+      return new Set(all.slice(0, TOP_N).map((s) => s.id));
     }
     if (mode === 'all') {
-      return new Set(all.map((s) => s.label));
+      return new Set(all.map((s) => s.id));
     }
     return this.customSelection();
   });
@@ -245,6 +271,7 @@ export class TypePieComponent {
     const total = this.total();
     if (!total)
       return [] as Array<{
+        id: string;
         label: string;
         percent: number;
         color: string;
@@ -252,13 +279,14 @@ export class TypePieComponent {
         offset: number;
       }>;
 
-    const selected = this.selectedLabels();
+    const selected = this.selectedIds();
     let acc = 0;
-    return this.allSegments()
-      .filter((s) => selected.has(s.label))
+    const segments = this.allSegments()
+      .filter((s) => selected.has(s.id))
       .map((seg) => {
         const dash = (seg.value / total) * 100;
         const result = {
+          id: seg.id,
           label: seg.label,
           percent: seg.percent,
           color: seg.color,
@@ -268,18 +296,45 @@ export class TypePieComponent {
         acc += dash;
         return result;
       });
+
+    // Cap the cumulative dash so floating-point drift can't push the
+    // remainder negative.
+    const remainder = Math.max(0, 100 - acc);
+    if (remainder > 0.5) {
+      segments.push({
+        id: '__other__',
+        label: 'other',
+        percent: Math.round(remainder),
+        color: OTHER_COLOR,
+        dasharray: `${remainder} ${100 - remainder}`,
+        offset: 25 - acc,
+      });
+    }
+    return segments;
   });
 
-  isSelected(label: string): boolean {
-    return this.selectedLabels().has(label);
+  /** Cumulative percent of types not currently visible — for the legend. */
+  readonly otherPercent = computed(() => {
+    const total = this.total();
+    if (!total) return 0;
+    const selected = this.selectedIds();
+    const hiddenValue = this.allSegments()
+      .filter((s) => !selected.has(s.id))
+      .reduce((sum, s) => sum + s.value, 0);
+    if (hiddenValue <= 0) return 0;
+    return Math.round((hiddenValue / total) * 100);
+  });
+
+  isSelected(id: string): boolean {
+    return this.selectedIds().has(id);
   }
 
-  toggle(label: string): void {
-    const next = new Set(this.selectedLabels());
-    if (next.has(label)) {
-      next.delete(label);
+  toggle(id: string): void {
+    const next = new Set(this.selectedIds());
+    if (next.has(id)) {
+      next.delete(id);
     } else {
-      next.add(label);
+      next.add(id);
     }
     this.customSelection.set(next);
     this.mode.set('custom');
@@ -288,7 +343,7 @@ export class TypePieComponent {
   setMode(value: PieSelectionMode): void {
     if (!value) return;
     if (value === 'custom') {
-      this.customSelection.set(new Set(this.selectedLabels()));
+      this.customSelection.set(new Set(this.selectedIds()));
     }
     this.mode.set(value);
   }

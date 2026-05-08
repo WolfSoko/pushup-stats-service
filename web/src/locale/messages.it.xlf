@@ -4559,6 +4559,15 @@
         <target>Modalità di visualizzazione della distribuzione</target>
       </segment>
     </unit>
+    <unit id="pie.other">
+      <notes>
+        <note category="location">web/src/app/stats/components/type-pie/type-pie.component.ts:96,98</note>
+      </notes>
+      <segment state="translated">
+        <source>Sonstige</source>
+        <target>Altri</target>
+      </segment>
+    </unit>
     <unit id="pie.top5">
       <notes>
         <note category="location">web/src/app/stats/components/type-pie/type-pie.component.ts:52,53</note>

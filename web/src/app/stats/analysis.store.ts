@@ -43,6 +43,8 @@ interface TrendPoint {
 }
 
 export interface TypeBreakdownDatum {
+  /** Canonical pushup type id — stable across locales. */
+  id: string;
   label: string;
   value: number;
   avgSetSize: number;
@@ -338,6 +340,7 @@ export const AnalysisStore = signalStore(
       return [...byType.entries()]
         .sort((a, b) => b[1].reps - a[1].reps)
         .map(([key, { reps, allSets }]) => ({
+          id: key,
           label: displayPushupType(key, store._locale),
           value: reps,
           avgSetSize: allSets.length

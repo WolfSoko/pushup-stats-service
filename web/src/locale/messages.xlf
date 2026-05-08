@@ -4520,7 +4520,7 @@
     </unit>
     <unit id="rangeLabel">
       <notes>
-        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:121,122</note>
+        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:125,126</note>
       </notes>
       <segment>
         <source>Zeitraum</source>
@@ -4528,7 +4528,7 @@
     </unit>
     <unit id="rangeFrom">
       <notes>
-        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:127</note>
+        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:131</note>
       </notes>
       <segment>
         <source>Von</source>
@@ -4536,7 +4536,7 @@
     </unit>
     <unit id="rangeTo">
       <notes>
-        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:133</note>
+        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:137</note>
       </notes>
       <segment>
         <source>Bis</source>
@@ -5038,7 +5038,7 @@
     </unit>
     <unit id="pie.distributionAria">
       <notes>
-        <note category="location">web/src/app/stats/components/type-pie/type-pie.component.ts:27,28</note>
+        <note category="location">web/src/app/stats/components/type-pie/type-pie.component.ts:36,37</note>
       </notes>
       <segment>
         <source>Verteilung der Liegestütz-Typen</source>
@@ -5046,7 +5046,7 @@
     </unit>
     <unit id="pie.modeAria">
       <notes>
-        <note category="location">web/src/app/stats/components/type-pie/type-pie.component.ts:49,50</note>
+        <note category="location">web/src/app/stats/components/type-pie/type-pie.component.ts:58,59</note>
       </notes>
       <segment>
         <source>Anzeigemodus der Typverteilung</source>
@@ -5054,7 +5054,7 @@
     </unit>
     <unit id="pie.top5">
       <notes>
-        <note category="location">web/src/app/stats/components/type-pie/type-pie.component.ts:53,54</note>
+        <note category="location">web/src/app/stats/components/type-pie/type-pie.component.ts:62,63</note>
       </notes>
       <segment>
         <source>Top 5</source>
@@ -5062,7 +5062,7 @@
     </unit>
     <unit id="pie.all">
       <notes>
-        <note category="location">web/src/app/stats/components/type-pie/type-pie.component.ts:56,57</note>
+        <note category="location">web/src/app/stats/components/type-pie/type-pie.component.ts:65,66</note>
       </notes>
       <segment>
         <source>Alle</source>
@@ -5070,7 +5070,7 @@
     </unit>
     <unit id="pie.custom">
       <notes>
-        <note category="location">web/src/app/stats/components/type-pie/type-pie.component.ts:59,60</note>
+        <note category="location">web/src/app/stats/components/type-pie/type-pie.component.ts:68,69</note>
       </notes>
       <segment>
         <source>Auswahl</source>
@@ -5078,15 +5078,23 @@
     </unit>
     <unit id="pie.avgSetSize">
       <notes>
-        <note category="location">web/src/app/stats/components/type-pie/type-pie.component.ts:83,84</note>
+        <note category="location">web/src/app/stats/components/type-pie/type-pie.component.ts:92,93</note>
       </notes>
       <segment>
         <source>⌀ Set-Größe</source>
       </segment>
     </unit>
+    <unit id="pie.other">
+      <notes>
+        <note category="location">web/src/app/stats/components/type-pie/type-pie.component.ts:102,103</note>
+      </notes>
+      <segment>
+        <source>Sonstige</source>
+      </segment>
+    </unit>
     <unit id="pie.noData">
       <notes>
-        <note category="location">web/src/app/stats/components/type-pie/type-pie.component.ts:92,95</note>
+        <note category="location">web/src/app/stats/components/type-pie/type-pie.component.ts:110,113</note>
       </notes>
       <segment>
         <source>Keine Daten</source>

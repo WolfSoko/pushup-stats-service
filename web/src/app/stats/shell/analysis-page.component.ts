@@ -398,6 +398,11 @@ import { PageHeaderComponent } from '../../core/page-header/page-header.componen
       width: 100%;
       min-height: 400px;
     }
+    /* Reserve roughly the rendered table height so revealing the
+       deferred trend block doesn't shift the rest of the page down. */
+    .trend-placeholder {
+      min-height: 320px;
+    }
 
     @media (max-width: 900px) {
       .page-wrap {
