@@ -1,4 +1,6 @@
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatCheckboxHarness } from '@angular/material/checkbox/testing';
 import { TypePieComponent, PieDatum } from './type-pie.component';
 
 describe('TypePieComponent', () => {
@@ -16,6 +18,7 @@ describe('TypePieComponent', () => {
   ];
 
   beforeEach(async () => {
+    // Given: a TypePieComponent rendered with 7 types ordered by descending value.
     await TestBed.configureTestingModule({
       imports: [TypePieComponent],
     }).compileComponents();
@@ -28,9 +31,9 @@ describe('TypePieComponent', () => {
   });
 
   it('defaults to Top 5 mode and selects the five highest-value labels', () => {
+    // Then
     expect(component.mode()).toBe('top5');
-    const selected = [...component.selectedLabels()];
-    expect(selected).toEqual([
+    expect([...component.selectedLabels()]).toEqual([
       'Standard',
       'Diamond',
       'Wide',
@@ -41,44 +44,53 @@ describe('TypePieComponent', () => {
   });
 
   it('switches to Alle mode when toggled, selecting every label', () => {
+    // When
     component.setMode('all');
+
+    // Then
     expect(component.selectedLabels().size).toBe(7);
     expect(component.visibleSegments()).toHaveLength(7);
   });
 
   it('toggling a checkbox switches mode to custom and updates the subset', () => {
+    // When: Diamond is toggled
     component.toggle('Diamond');
 
+    // Then: mode flips to custom and Diamond drops out
     expect(component.mode()).toBe('custom');
     expect(component.isSelected('Diamond')).toBe(false);
     expect(component.isSelected('Standard')).toBe(true);
-    // Re-toggling re-selects.
+
+    // When: Diamond is re-toggled
     component.toggle('Diamond');
+
+    // Then: it re-enters the selection
     expect(component.isSelected('Diamond')).toBe(true);
   });
 
-  it('clicking a mat-checkbox in the legend wires through to toggle()', () => {
-    fixture.detectChanges();
-    const host: HTMLElement = fixture.nativeElement;
-    // mat-checkbox renders an inner native input — clicking it fires (change).
-    const diamondInput = host.querySelector<HTMLInputElement>(
-      '[data-testid="type-pie-toggle-Diamond"] input[type="checkbox"]'
+  it('clicking a mat-checkbox in the legend wires through to toggle()', async () => {
+    // Given: a harness loader for the rendered checkboxes
+    const loader = TestbedHarnessEnvironment.loader(fixture);
+    const diamondCheckbox = await loader.getHarness(
+      MatCheckboxHarness.with({
+        selector: '[data-testid="type-pie-toggle-Diamond"]',
+      })
     );
-    expect(diamondInput).toBeTruthy();
-    diamondInput?.click();
-    fixture.detectChanges();
 
+    // When: the user toggles the Diamond checkbox via Material's public API
+    await diamondCheckbox.toggle();
+
+    // Then: the component's (change) binding flips mode and selection
     expect(component.mode()).toBe('custom');
     expect(component.isSelected('Diamond')).toBe(false);
     expect(component.isSelected('Standard')).toBe(true);
   });
 
   it('seeds custom selection from the current visible set when entering Auswahl via the toggle', () => {
-    // Switching directly from Top 5 to custom should preserve the top-5
-    // selection so the pie doesn't render empty until the user toggles
-    // anything manually.
+    // When: switching directly from Top 5 to custom
     component.setMode('custom');
 
+    // Then: the top-5 selection is preserved instead of starting empty
     expect(component.mode()).toBe('custom');
     expect([...component.selectedLabels()]).toEqual([
       'Standard',
@@ -91,14 +103,16 @@ describe('TypePieComponent', () => {
   });
 
   it('switching from Alle to Auswahl seeds custom selection with every label', () => {
+    // When
     component.setMode('all');
     component.setMode('custom');
 
+    // Then
     expect(component.selectedLabels().size).toBe(7);
   });
 
   it('renders one legend row with checkbox per type, regardless of mode', () => {
-    fixture.detectChanges();
+    // Then
     const host: HTMLElement = fixture.nativeElement;
     const rows = host.querySelectorAll(
       '[data-testid="type-pie-legend"] mat-checkbox'
@@ -107,25 +121,29 @@ describe('TypePieComponent', () => {
   });
 
   it('exposes toggle hooks per label so the legend can drive subset selection', () => {
-    fixture.detectChanges();
+    // Then
     const host: HTMLElement = fixture.nativeElement;
-    const standard = host.querySelector(
-      '[data-testid="type-pie-toggle-Standard"]'
-    );
-    expect(standard).toBeTruthy();
+    expect(
+      host.querySelector('[data-testid="type-pie-toggle-Standard"]')
+    ).toBeTruthy();
   });
 
   it('shows the empty placeholder when total is zero', () => {
+    // When: every datum has value 0
     fixture.componentRef.setInput('data', [
       { label: 'A', value: 0 },
       { label: 'B', value: 0 },
     ]);
     fixture.detectChanges();
-    const host: HTMLElement = fixture.nativeElement;
-    expect(host.textContent).toContain('Keine Daten');
+
+    // Then
+    expect((fixture.nativeElement as HTMLElement).textContent).toContain(
+      'Keine Daten'
+    );
   });
 
   it('keeps stable colors per index sorted by descending value', () => {
+    // Then
     const segments = component.allSegments();
     expect(segments[0].label).toBe('Standard');
     expect(segments[0].color).toBe('#1976d2');

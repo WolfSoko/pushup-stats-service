@@ -237,7 +237,13 @@ describe('AnalysisPageComponent', () => {
     expect(trends?.textContent).toContain('Letzte 6 Monate');
   });
 
-  it('positions trend cards below the heatmap so they only render on viewport', () => {
+  // The trend cards are wrapped in `@defer (on viewport)`, but verifying
+  // hydration in jsdom is fragile (it requires mocking IntersectionObserver
+  // and using Angular's still-evolving defer-test helpers). This test
+  // narrowly guards the intentional DOM ordering — heatmap above the
+  // trends — which is the stable structural invariant the lazy load
+  // depends on; the @defer behaviour itself is covered by the framework.
+  it('places the trend section after the heatmap card in the DOM', () => {
     fixture.detectChanges();
     const host: HTMLElement = fixture.nativeElement;
     const heatmap = host.querySelector('.heatmap-full');

@@ -93,6 +93,24 @@ function sortedUniqueDates(rows: PushupRecord[]): string[] {
   );
 }
 
+const TREND_WEEKS = 8;
+const TREND_MONTHS = 6;
+
+/** Monday of the ISO week containing the given date (local time, midnight). */
+function startOfIsoWeek(date: Date): Date {
+  const day = date.getDay() || 7;
+  return new Date(
+    date.getFullYear(),
+    date.getMonth(),
+    date.getDate() - (day - 1)
+  );
+}
+
+/** First day of the calendar month containing the given date. */
+function startOfMonth(date: Date): Date {
+  return new Date(date.getFullYear(), date.getMonth(), 1);
+}
+
 export const AnalysisStore = signalStore(
   withState<AnalysisState>(() => {
     const defaultRange = createWeekRange();
@@ -101,7 +119,11 @@ export const AnalysisStore = signalStore(
       to: defaultRange.to,
       dayChartMode: undefined as '24h' | '14h' | undefined,
       clockTick: 0,
-      lastDayKey: '',
+      // Seed with today so the first `tickClock()` after construction is a
+      // no-op; otherwise the 5-minute polling interval would force a
+      // spurious reload of weekEntriesResource/monthEntriesResource on
+      // its first iteration even when the calendar day hasn't changed.
+      lastDayKey: toLocalIsoDate(new Date()),
     };
   }),
   withProps(() => {
@@ -131,33 +153,48 @@ export const AnalysisStore = signalStore(
     // momentum, not a slice of an arbitrary filter range. The
     // `clockTick` signal is read so a session kept open across midnight
     // re-evaluates the window when `tickClock()` fires.
-    const weekFilter = computed(() => {
+    const currentMonday = computed(() => {
       store.clockTick();
-      const today = new Date();
-      const day = today.getDay() || 7;
-      const monday = new Date(today);
-      monday.setDate(today.getDate() - (day - 1));
+      return startOfIsoWeek(new Date());
+    });
+    const currentMonthStart = computed(() => {
+      store.clockTick();
+      return startOfMonth(new Date());
+    });
+
+    const weekFilter = computed(() => {
+      const monday = currentMonday();
       const sunday = new Date(monday);
       sunday.setDate(monday.getDate() + 6);
       const from = new Date(monday);
-      from.setDate(monday.getDate() - 7 * 7);
+      from.setDate(monday.getDate() - 7 * (TREND_WEEKS - 1));
       return {
         from: toLocalIsoDate(from),
         to: toLocalIsoDate(sunday),
       };
     });
     const monthFilter = computed(() => {
-      store.clockTick();
-      const today = new Date();
-      const from = new Date(today.getFullYear(), today.getMonth() - 5, 1);
-      const to = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+      const start = currentMonthStart();
+      const from = new Date(
+        start.getFullYear(),
+        start.getMonth() - (TREND_MONTHS - 1),
+        1
+      );
+      const to = new Date(start.getFullYear(), start.getMonth() + 1, 0);
       return {
         from: toLocalIsoDate(from),
         to: toLocalIsoDate(to),
       };
     });
 
-    return { filter, rangeMode, weekFilter, monthFilter };
+    return {
+      filter,
+      rangeMode,
+      weekFilter,
+      monthFilter,
+      currentMonday,
+      currentMonthStart,
+    };
   }),
   withProps((store) => {
     const statsResource = resource({
@@ -216,22 +253,15 @@ export const AnalysisStore = signalStore(
 
     const weekRows = computed(() => store.weekEntriesResource.value() ?? []);
     const weekTrend = computed<TrendPoint[]>(() => {
-      // Pre-seed the last 8 ISO weeks (oldest → newest) so a sparse
+      // Pre-seed TREND_WEEKS ISO weeks (oldest → newest) so a sparse
       // history still produces a fixed-length trend with explicit zero
       // rows; otherwise users would silently see fewer than 8 buckets.
-      store.clockTick();
-      const today = new Date();
-      const day = today.getDay() || 7;
-      const monday = new Date(
-        today.getFullYear(),
-        today.getMonth(),
-        today.getDate() - (day - 1)
-      );
+      const monday = store.currentMonday();
       const byWeek = new Map<
         string,
         { total: number; entryCount: number; setsCount: number }
       >();
-      for (let i = 7; i >= 0; i--) {
+      for (let i = TREND_WEEKS - 1; i >= 0; i--) {
         const d = new Date(monday);
         d.setDate(monday.getDate() - i * 7);
         const key = `${isoWeekYear(d)}-W${String(isoWeek(d)).padStart(2, '0')}`;
@@ -259,14 +289,17 @@ export const AnalysisStore = signalStore(
 
     const monthRows = computed(() => store.monthEntriesResource.value() ?? []);
     const monthTrend = computed<TrendPoint[]>(() => {
-      store.clockTick();
-      const today = new Date();
+      const monthStart = store.currentMonthStart();
       const byMonth = new Map<
         string,
         { total: number; entryCount: number; setsCount: number }
       >();
-      for (let i = 5; i >= 0; i--) {
-        const d = new Date(today.getFullYear(), today.getMonth() - i, 1);
+      for (let i = TREND_MONTHS - 1; i >= 0; i--) {
+        const d = new Date(
+          monthStart.getFullYear(),
+          monthStart.getMonth() - i,
+          1
+        );
         const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
         byMonth.set(key, { total: 0, entryCount: 0, setsCount: 0 });
       }
