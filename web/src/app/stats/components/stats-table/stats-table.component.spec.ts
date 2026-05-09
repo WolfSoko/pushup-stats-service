@@ -6,7 +6,7 @@ import { UserConfigApiService } from '@pu-stats/data-access';
 import { UserContextService } from '@pu-auth/auth';
 import type { UnifiedEntry } from '@pu-stats/models';
 import { CreateEntryResult } from '../create-entry-dialog/create-entry-dialog.component';
-import { ExerciseEntryDialogResult } from '../exercise-entry-dialog/exercise-entry-dialog.component';
+import { EntryDialogResult } from '../entry-dialog/entry-dialog.component';
 
 describe('StatsTableComponent', () => {
   let fixture: ComponentFixture<StatsTableComponent>;
@@ -258,7 +258,7 @@ describe('StatsTableComponent', () => {
         source: 'web',
       };
 
-      const editResult: ExerciseEntryDialogResult = {
+      const editResult: EntryDialogResult = {
         exerciseId: 'abs.situps',
         timestamp: '2026-02-10T14:00+01:00',
         reps: 35,
@@ -286,7 +286,7 @@ describe('StatsTableComponent', () => {
       const updateSpy = vitest.fn();
       component.update.subscribe(updateSpy);
 
-      const editResult: ExerciseEntryDialogResult = {
+      const editResult: EntryDialogResult = {
         exerciseId: 'legs.squats',
         timestamp: '2026-02-10T14:00+01:00',
         reps: 20,
