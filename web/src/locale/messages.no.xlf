@@ -3231,6 +3231,12 @@ Deine Position: # ·  Reps        </source>
         <target>Varighet (mm:ss)</target>
       </segment>
     </unit>
+    <unit id="entryDialog.overCapDuration">
+      <segment state="translated">
+        <source>Maximum-Dauer: <ph id="0" equiv="INTERPOLATION" disp="{{ formattedDurationMax() }}"/></source>
+        <target>Maks varighet: <ph id="0" equiv="INTERPOLATION" disp="{{ formattedDurationMax() }}"/></target>
+      </segment>
+    </unit>
     <unit id="entryDialog.overCapTime">
       <segment state="translated">
         <source>Maximum: <ph id="0" equiv="INTERPOLATION" disp="{{ formattedMax() }}"/></source>

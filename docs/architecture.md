@@ -127,7 +127,7 @@ Split into focused files under `libs/stats/src/lib/models/`:
 
 `ExerciseDefinition` separates three concerns deliberately:
 
-- **`measurement`** - which entry field carries the primary value. Drives validation (range checks against `def.min`/`def.max`), aggregation (which field summer roll up), and storage. `MeasurementType` is `'reps' | 'time' | 'distance' | 'weight' | 'distance-time'`.
+- **`measurement`** - which entry field carries the primary value. Drives validation (range checks against `def.min`/`def.max`), aggregation (which field sums roll up), and storage. `MeasurementType` is `'reps' | 'time' | 'distance' | 'weight' | 'distance-time'`.
 - **`unit`** - the rendering hint. `formatExerciseValue(value, unit)` switches on this string so a single measurement type can carry alternate display units later (kg vs. lb, km vs. mi). The catalog currently uses `'reps' | 's' | 'm' | 'kg'`.
 - **Companion fields** - secondary values an entry may (or must) carry alongside the primary. Declared in `COMPANION_FIELDS` / `REQUIRED_COMPANIONS` per measurement. `'distance'` allows an optional `durationSec`; `'distance-time'` requires it; `'weight'` requires `weightKg`.
 
@@ -136,4 +136,4 @@ Split into focused files under `libs/stats/src/lib/models/`:
 - For `'distance-time'`: renders the composite `"5.00 km · 25:00 (5:00 /km)"` via `formatDistanceTime`.
 - For everything else: reads the field that `measurementValueField(measurement)` returns and pipes it through `formatExerciseValue(value, def.unit)`.
 
-`measurementCompanionValueField(measurement)` returns the secondary display field for composite measurements (currently only `'durationSec'` for `'distance-time'`). Aggregation paths use it to sum a second total alongside the primary, so a 30-day card for a tracked run can show `"42.00 km · 3:30:00 (5:00 /km)"`. Phase 3 (cardio catalog entries) plugs into this without any further infrastructure work — only a `cardio.running` definition + tighter companion bounds need to be added.
+`measurementCompanionValueField(measurement)` returns the secondary display field for composite measurements (currently only `'durationSec'` for `'distance-time'`). Aggregation paths use it to sum a second total alongside the primary, so a 30-day card for a tracked run can show `"42.00 km · 3:30:00 (5:00 /km)"`. The first composite catalog entry is `cardio.running`; later cardio types (cycling, swimming, …) and tighter per-exercise companion bounds plug into the same path without further infrastructure work.

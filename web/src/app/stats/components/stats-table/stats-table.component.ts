@@ -26,7 +26,9 @@ import { UserConfigApiService } from '@pu-stats/data-access';
 import {
   displayPushupType,
   findExerciseDefinition,
+  formatEntryDisplay,
   formatExerciseValue,
+  measurementValueField,
   PushupRecord,
   pushupRecordToUnified,
   UnifiedEntry,
@@ -195,14 +197,13 @@ export class StatsTableComponent {
   constructor() {
     this.dataSource.sortingDataAccessor = (item, property) => {
       if (property === 'timestamp') return new Date(item.timestamp).getTime();
-      // The "reps" column also renders durationSec for time-measured
-      // entries (plank). For sit-ups/squats `durationSec` is undefined,
-      // for plank `reps` is normalized to 0 — coalescing in this order
-      // keeps both kinds correctly ordered when the column is sorted.
-      if (property === 'reps')
-        return ('durationSec' in item && item.durationSec !== undefined
-          ? item.durationSec
-          : item.reps);
+      // The "reps" column renders measurement-aware values (reps for
+      // sit-ups/squats, durationSec for plank, distanceM for the
+      // composite distance-time cardio.running). Sort by the primary
+      // measurement field so the displayed value drives ordering —
+      // otherwise distance-time rows would tie on duration and plank
+      // rows would tie on the normalized 0 reps.
+      if (property === 'reps') return this.sortValue(item);
       if (property === 'source') return item.source;
       if (property === 'type') return this.typeLabel(item);
       if (property === 'exercise') return this.exerciseLabel(item);
@@ -396,6 +397,35 @@ export class StatsTableComponent {
     if (!sets?.length) return '';
     const allSame = sets.every((s) => s === sets[0]);
     return allSame ? `${sets.length}×${sets[0]}` : sets.join(' + ');
+  }
+
+  /**
+   * Renders the "Reps" column for any measurement type. Pushup rows
+   * fall through to the legacy reps + sets path; for catalog
+   * exercises we route through {@link formatEntryDisplay} which
+   * handles the composite distance-time format and the per-unit
+   * formatting in one place.
+   */
+  formatEntry(entry: UnifiedEntry): string {
+    if (entry.kind === 'pushup') return String(entry.reps);
+    const def = findExerciseDefinition(entry.exerciseId);
+    if (!def) return String(entry.reps);
+    return formatEntryDisplay(entry, def);
+  }
+
+  /**
+   * Sort key for the "Reps" column. Picks the primary measurement
+   * field per definition: distance for cardio.running, duration for
+   * plank, reps for everything else. Falls back to `entry.reps` when
+   * the catalog id is missing — same fallback the table uses for
+   * stale entries.
+   */
+  private sortValue(entry: UnifiedEntry): number {
+    if (entry.kind === 'pushup') return entry.reps;
+    const def = findExerciseDefinition(entry.exerciseId);
+    if (!def) return entry.reps;
+    const field = measurementValueField(def.measurement);
+    return (entry[field] as number | undefined) ?? entry.reps;
   }
 
   /**

@@ -261,7 +261,13 @@ export interface EntryDialogResult {
       }
       @if (overCap()) {
         <div class="total-reps">
-          @if (isTimeMeasurement() || isDistanceTimeMeasurement()) {
+          @if (overCapKind() === 'duration') {
+            <span i18n="@@entryDialog.overCapDuration"
+              >Maximum-Dauer: {{ formattedDurationMax() }}</span
+            >
+          } @else if (
+            overCapKind() === 'distance' || isTimeMeasurement()
+          ) {
             <span i18n="@@entryDialog.overCapTime"
               >Maximum: {{ formattedMax() }}</span
             >
@@ -368,26 +374,36 @@ export class EntryDialogComponent {
     formatExerciseValue(this.data.definition.max, this.data.definition.unit)
   );
 
-  readonly overCap = computed(() => {
-    if (this.isDistanceTimeMeasurement()) {
-      const m = this.distanceM();
-      const sec = this.durationSec();
-      // Distance ceiling comes from the catalog (`def.max` in meters);
-      // duration ceiling from the global companion bound. Either side
-      // tripping the cap should surface the over-cap hint, not just
-      // distance — a 99:59:59 entry on a 50 km cap should not silently
-      // disable submit with no UI feedback.
-      const distanceOver = m !== null && m > this.data.definition.max;
-      const durationOver =
-        sec !== null && sec > COMPANION_BOUNDS.durationSec.max;
-      return distanceOver || durationOver;
+  /** Companion-duration ceiling display for the distance-time hint. */
+  readonly formattedDurationMax = computed(() =>
+    formatExerciseValue(COMPANION_BOUNDS.durationSec.max, 's')
+  );
+
+  /**
+   * Which cap (if any) is currently exceeded. Lets the template show a
+   * distance-specific or duration-specific message for distance-time
+   * entries instead of always rendering `def.max` (which is the
+   * distance ceiling and would mislead when only the duration is over).
+   */
+  readonly overCapKind = computed<'distance' | 'duration' | 'value' | null>(
+    () => {
+      if (this.isDistanceTimeMeasurement()) {
+        const m = this.distanceM();
+        const sec = this.durationSec();
+        if (m !== null && m > this.data.definition.max) return 'distance';
+        if (sec !== null && sec > COMPANION_BOUNDS.durationSec.max)
+          return 'duration';
+        return null;
+      }
+      if (this.isTimeMeasurement()) {
+        const sec = this.durationSec();
+        return sec !== null && sec > this.data.definition.max ? 'value' : null;
+      }
+      return this.totalReps() > this.data.definition.max ? 'value' : null;
     }
-    if (this.isTimeMeasurement()) {
-      const sec = this.durationSec();
-      return sec !== null && sec > this.data.definition.max;
-    }
-    return this.totalReps() > this.data.definition.max;
-  });
+  );
+
+  readonly overCap = computed(() => this.overCapKind() !== null);
 
   readonly canSubmit = computed(() => {
     if (this.timestamp().length === 0) return false;

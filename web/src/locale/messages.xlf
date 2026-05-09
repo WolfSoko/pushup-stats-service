@@ -236,7 +236,7 @@
         <note category="location">libs/auth/src/lib/ui/register/register.component.html:353,354</note>
         <note category="location">web/src/app/core/feedback/feedback-dialog.component.ts:96,97</note>
         <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:277,278</note>
-        <note category="location">web/src/app/stats/components/entry-dialog/entry-dialog.component.ts:278,279</note>
+        <note category="location">web/src/app/stats/components/entry-dialog/entry-dialog.component.ts:285,286</note>
         <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts:75,76</note>
         <note category="location">web/src/app/stats/shell/settings-page.component.ts:519,520</note>
       </notes>
@@ -4282,7 +4282,7 @@
     <unit id="editDialogTitle">
       <notes>
         <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:140,142</note>
-        <note category="location">web/src/app/stats/components/entry-dialog/entry-dialog.component.ts:133,135</note>
+        <note category="location">web/src/app/stats/components/entry-dialog/entry-dialog.component.ts:134,136</note>
       </notes>
       <segment>
         <source>Eintrag bearbeiten</source>
@@ -4299,7 +4299,7 @@
     <unit id="timestampLabel">
       <notes>
         <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:148,150</note>
-        <note category="location">web/src/app/stats/components/entry-dialog/entry-dialog.component.ts:142,144</note>
+        <note category="location">web/src/app/stats/components/entry-dialog/entry-dialog.component.ts:143,145</note>
       </notes>
       <segment>
         <source>Zeitpunkt</source>
@@ -4308,7 +4308,7 @@
     <unit id="setLabel">
       <notes>
         <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:162,163</note>
-        <note category="location">web/src/app/stats/components/entry-dialog/entry-dialog.component.ts:216,217</note>
+        <note category="location">web/src/app/stats/components/entry-dialog/entry-dialog.component.ts:217,218</note>
       </notes>
       <segment>
         <source>Set <ph id="0" equiv="INTERPOLATION" disp="{{ $index + 1 }}"/></source>
@@ -4317,7 +4317,7 @@
     <unit id="repsLabel">
       <notes>
         <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:164,165</note>
-        <note category="location">web/src/app/stats/components/entry-dialog/entry-dialog.component.ts:218,219</note>
+        <note category="location">web/src/app/stats/components/entry-dialog/entry-dialog.component.ts:219,220</note>
       </notes>
       <segment>
         <source>Reps</source>
@@ -4326,7 +4326,7 @@
     <unit id="removeSetAria">
       <notes>
         <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:181,183</note>
-        <note category="location">web/src/app/stats/components/entry-dialog/entry-dialog.component.ts:237,239</note>
+        <note category="location">web/src/app/stats/components/entry-dialog/entry-dialog.component.ts:238,240</note>
       </notes>
       <segment>
         <source>Set entfernen</source>
@@ -4335,7 +4335,7 @@
     <unit id="addSetAria">
       <notes>
         <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:192,193</note>
-        <note category="location">web/src/app/stats/components/entry-dialog/entry-dialog.component.ts:248,250</note>
+        <note category="location">web/src/app/stats/components/entry-dialog/entry-dialog.component.ts:249,251</note>
       </notes>
       <segment>
         <source>Set hinzufügen</source>
@@ -4352,7 +4352,7 @@
     <unit id="totalReps">
       <notes>
         <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:203,205</note>
-        <note category="location">web/src/app/stats/components/entry-dialog/entry-dialog.component.ts:257,259</note>
+        <note category="location">web/src/app/stats/components/entry-dialog/entry-dialog.component.ts:258,260</note>
       </notes>
       <segment>
         <source> Gesamt: <ph id="0" equiv="INTERPOLATION" disp="{{ totalReps() }}"/> Reps </source>
@@ -4401,7 +4401,7 @@
     <unit id="saveEntry">
       <notes>
         <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:285,287</note>
-        <note category="location">web/src/app/stats/components/entry-dialog/entry-dialog.component.ts:287,289</note>
+        <note category="location">web/src/app/stats/components/entry-dialog/entry-dialog.component.ts:294,296</note>
       </notes>
       <segment>
         <source> Speichern </source>
@@ -4425,7 +4425,7 @@
     </unit>
     <unit id="exerciseEntryDialog.title">
       <notes>
-        <note category="location">web/src/app/stats/components/entry-dialog/entry-dialog.component.ts:135,137</note>
+        <note category="location">web/src/app/stats/components/entry-dialog/entry-dialog.component.ts:136,138</note>
       </notes>
       <segment>
         <source>Eintrag hinzufügen</source>
@@ -4433,7 +4433,7 @@
     </unit>
     <unit id="entryDialog.variant">
       <notes>
-        <note category="location">web/src/app/stats/components/entry-dialog/entry-dialog.component.ts:154,155</note>
+        <note category="location">web/src/app/stats/components/entry-dialog/entry-dialog.component.ts:155,156</note>
       </notes>
       <segment>
         <source>Variante</source>
@@ -4441,7 +4441,7 @@
     </unit>
     <unit id="entryDialog.variantNone">
       <notes>
-        <note category="location">web/src/app/stats/components/entry-dialog/entry-dialog.component.ts:157,159</note>
+        <note category="location">web/src/app/stats/components/entry-dialog/entry-dialog.component.ts:158,160</note>
       </notes>
       <segment>
         <source>—</source>
@@ -4449,7 +4449,7 @@
     </unit>
     <unit id="entryDialog.distance">
       <notes>
-        <note category="location">web/src/app/stats/components/entry-dialog/entry-dialog.component.ts:170,172</note>
+        <note category="location">web/src/app/stats/components/entry-dialog/entry-dialog.component.ts:171,173</note>
       </notes>
       <segment>
         <source>Distanz (km)</source>
@@ -4457,16 +4457,24 @@
     </unit>
     <unit id="entryDialog.duration">
       <notes>
-        <note category="location">web/src/app/stats/components/entry-dialog/entry-dialog.component.ts:185,187</note>
-        <note category="location">web/src/app/stats/components/entry-dialog/entry-dialog.component.ts:199,201</note>
+        <note category="location">web/src/app/stats/components/entry-dialog/entry-dialog.component.ts:186,188</note>
+        <note category="location">web/src/app/stats/components/entry-dialog/entry-dialog.component.ts:200,202</note>
       </notes>
       <segment>
         <source>Dauer (mm:ss)</source>
       </segment>
     </unit>
+    <unit id="entryDialog.overCapDuration">
+      <notes>
+        <note category="location">web/src/app/stats/components/entry-dialog/entry-dialog.component.ts:266,267</note>
+      </notes>
+      <segment>
+        <source>Maximum-Dauer: <ph id="0" equiv="INTERPOLATION" disp="{{ formattedDurationMax() }}"/></source>
+      </segment>
+    </unit>
     <unit id="entryDialog.overCapTime">
       <notes>
-        <note category="location">web/src/app/stats/components/entry-dialog/entry-dialog.component.ts:265,266</note>
+        <note category="location">web/src/app/stats/components/entry-dialog/entry-dialog.component.ts:272,273</note>
       </notes>
       <segment>
         <source>Maximum: <ph id="0" equiv="INTERPOLATION" disp="{{ formattedMax() }}"/></source>
@@ -4474,7 +4482,7 @@
     </unit>
     <unit id="entryDialog.overCap">
       <notes>
-        <note category="location">web/src/app/stats/components/entry-dialog/entry-dialog.component.ts:269,270</note>
+        <note category="location">web/src/app/stats/components/entry-dialog/entry-dialog.component.ts:276,277</note>
       </notes>
       <segment>
         <source>Maximum: <ph id="0" equiv="INTERPOLATION" disp="{{ data.definition.max }}"/> pro Eintrag</source>
@@ -4507,8 +4515,8 @@
     <unit id="exercise.category.pushup">
       <notes>
         <note category="location">web/src/app/stats/components/exercise-category-section/exercise-category-section.component.ts:356</note>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:188</note>
-        <note category="location">web/src/app/stats/shell/entries-page.component.ts:276</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:190</note>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts:277</note>
       </notes>
       <segment>
         <source>Liegestütze</source>
@@ -4549,8 +4557,7 @@
     <unit id="exercise.abs.situps.name">
       <notes>
         <note category="location">web/src/app/stats/components/exercise-category-section/exercise-category-section.component.ts:363</note>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:413</note>
-        <note category="location">web/src/app/stats/shell/entries-page.component.ts:285</note>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:8</note>
       </notes>
       <segment>
         <source>Sit-ups</source>
@@ -4559,8 +4566,7 @@
     <unit id="exercise.legs.squats.name">
       <notes>
         <note category="location">web/src/app/stats/components/exercise-category-section/exercise-category-section.component.ts:364</note>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:415</note>
-        <note category="location">web/src/app/stats/shell/entries-page.component.ts:286</note>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:9</note>
       </notes>
       <segment>
         <source>Kniebeugen</source>
@@ -4569,8 +4575,7 @@
     <unit id="exercise.plank.standard.name">
       <notes>
         <note category="location">web/src/app/stats/components/exercise-category-section/exercise-category-section.component.ts:365</note>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:414</note>
-        <note category="location">web/src/app/stats/shell/entries-page.component.ts:287</note>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:10</note>
       </notes>
       <segment>
         <source>Plank</source>
@@ -4579,8 +4584,7 @@
     <unit id="exercise.cardio.running.name">
       <notes>
         <note category="location">web/src/app/stats/components/exercise-category-section/exercise-category-section.component.ts:366</note>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:416</note>
-        <note category="location">web/src/app/stats/shell/entries-page.component.ts:288</note>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:11</note>
       </notes>
       <segment>
         <source>Laufen</source>
@@ -5194,7 +5198,7 @@
     </unit>
     <unit id="colType">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:105,106</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:101,102</note>
       </notes>
       <segment>
         <source>Typ</source>
@@ -5202,7 +5206,7 @@
     </unit>
     <unit id="colSource">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:114,115</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:110,111</note>
       </notes>
       <segment>
         <source>Quelle</source>
@@ -5210,7 +5214,7 @@
     </unit>
     <unit id="colActions">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:123,124</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:119,120</note>
       </notes>
       <segment>
         <source>Aktion</source>
@@ -5218,7 +5222,7 @@
     </unit>
     <unit id="editAria">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:130,131</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:126,127</note>
       </notes>
       <segment>
         <source>Bearbeiten</source>
@@ -5226,7 +5230,7 @@
     </unit>
     <unit id="editTitle">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:132,133</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:128,129</note>
       </notes>
       <segment>
         <source>Bearbeiten</source>
@@ -5234,7 +5238,7 @@
     </unit>
     <unit id="deleteAria">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:143</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:139</note>
       </notes>
       <segment>
         <source>Löschen</source>
@@ -5242,7 +5246,7 @@
     </unit>
     <unit id="deleteTitle">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:145</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:141</note>
       </notes>
       <segment>
         <source>Löschen</source>
@@ -5250,7 +5254,7 @@
     </unit>
     <unit id="colExercise">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:184</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:186</note>
       </notes>
       <segment>
         <source>Übung</source>
@@ -5258,7 +5262,7 @@
     </unit>
     <unit id="pie.distributionAria">
       <notes>
-        <note category="location">web/src/app/stats/components/type-pie/type-pie.component.ts:36,37</note>
+        <note category="location">web/src/app/stats/components/type-pie/type-pie.component.ts:34,35</note>
       </notes>
       <segment>
         <source>Verteilung der Liegestütz-Typen</source>
@@ -5266,7 +5270,7 @@
     </unit>
     <unit id="pie.avgSetSize">
       <notes>
-        <note category="location">web/src/app/stats/components/type-pie/type-pie.component.ts:92,93</note>
+        <note category="location">web/src/app/stats/components/type-pie/type-pie.component.ts:72,73</note>
       </notes>
       <segment>
         <source>⌀ Set-Größe</source>
@@ -5274,7 +5278,7 @@
     </unit>
     <unit id="pie.other">
       <notes>
-        <note category="location">web/src/app/stats/components/type-pie/type-pie.component.ts:102,103</note>
+        <note category="location">web/src/app/stats/components/type-pie/type-pie.component.ts:84,85</note>
       </notes>
       <segment>
         <source>Sonstige</source>
@@ -5282,7 +5286,7 @@
     </unit>
     <unit id="pie.noData">
       <notes>
-        <note category="location">web/src/app/stats/components/type-pie/type-pie.component.ts:110,113</note>
+        <note category="location">web/src/app/stats/components/type-pie/type-pie.component.ts:92,95</note>
       </notes>
       <segment>
         <source>Keine Daten</source>
@@ -5565,7 +5569,7 @@
     </unit>
     <unit id="historyHeaderTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/entries-page.component.ts:37,38</note>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts:38,39</note>
       </notes>
       <segment>
         <source>Historie</source>
@@ -5573,7 +5577,7 @@
     </unit>
     <unit id="historyHeaderSubtitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/entries-page.component.ts:39,41</note>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts:40,42</note>
       </notes>
       <segment>
         <source> Durchsuche, filtere und bearbeite deine Trainingseinträge. </source>
@@ -5581,7 +5585,7 @@
     </unit>
     <unit id="entries.title">
       <notes>
-        <note category="location">web/src/app/stats/shell/entries-page.component.ts:44,45</note>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts:45,46</note>
       </notes>
       <segment>
         <source>Filter</source>
@@ -5589,7 +5593,7 @@
     </unit>
     <unit id="entries.subtitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/entries-page.component.ts:46,47</note>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts:47,48</note>
       </notes>
       <segment>
         <source>Zeitraum und Kriterien</source>
@@ -5597,7 +5601,7 @@
     </unit>
     <unit id="entries.dateFrom">
       <notes>
-        <note category="location">web/src/app/stats/shell/entries-page.component.ts:53,54</note>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts:54,55</note>
       </notes>
       <segment>
         <source>Datum von</source>
@@ -5605,7 +5609,7 @@
     </unit>
     <unit id="entries.dateTo">
       <notes>
-        <note category="location">web/src/app/stats/shell/entries-page.component.ts:63,64</note>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts:64,65</note>
       </notes>
       <segment>
         <source>Datum bis</source>
@@ -5613,7 +5617,7 @@
     </unit>
     <unit id="entries.exerciseFilter">
       <notes>
-        <note category="location">web/src/app/stats/shell/entries-page.component.ts:73,74</note>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts:74,75</note>
       </notes>
       <segment>
         <source>Übung</source>
@@ -5621,7 +5625,7 @@
     </unit>
     <unit id="entries.sourceFilter">
       <notes>
-        <note category="location">web/src/app/stats/shell/entries-page.component.ts:88,89</note>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts:89,90</note>
       </notes>
       <segment>
         <source>Quelle</source>
@@ -5629,8 +5633,8 @@
     </unit>
     <unit id="entries.allOption">
       <notes>
-        <note category="location">web/src/app/stats/shell/entries-page.component.ts:94,96</note>
-        <note category="location">web/src/app/stats/shell/entries-page.component.ts:109,111</note>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts:95,97</note>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts:110,112</note>
       </notes>
       <segment>
         <source>Alle</source>
@@ -5638,7 +5642,7 @@
     </unit>
     <unit id="entries.typeFilter">
       <notes>
-        <note category="location">web/src/app/stats/shell/entries-page.component.ts:103,104</note>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts:104,105</note>
       </notes>
       <segment>
         <source>Typ</source>
@@ -5646,7 +5650,7 @@
     </unit>
     <unit id="entries.repsMin">
       <notes>
-        <note category="location">web/src/app/stats/shell/entries-page.component.ts:120,121</note>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts:121,122</note>
       </notes>
       <segment>
         <source>Reps min</source>
@@ -5654,7 +5658,7 @@
     </unit>
     <unit id="entries.repsMax">
       <notes>
-        <note category="location">web/src/app/stats/shell/entries-page.component.ts:131,132</note>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts:132,133</note>
       </notes>
       <segment>
         <source>Reps max</source>
@@ -5662,7 +5666,7 @@
     </unit>
     <unit id="entries.empty.title">
       <notes>
-        <note category="location">web/src/app/stats/shell/entries-page.component.ts:159,161</note>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts:160,162</note>
       </notes>
       <segment>
         <source>Noch keine Einträge.</source>
@@ -5670,7 +5674,7 @@
     </unit>
     <unit id="entries.empty.body">
       <notes>
-        <note category="location">web/src/app/stats/shell/entries-page.component.ts:162,164</note>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts:163,165</note>
       </notes>
       <segment>
         <source> Trage deinen ersten Trainingseintrag ein — dann wird hier deine Historie sichtbar. </source>
@@ -5678,7 +5682,7 @@
     </unit>
     <unit id="entries.empty.cta">
       <notes>
-        <note category="location">web/src/app/stats/shell/entries-page.component.ts:174,176</note>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts:175,177</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon aria-hidden=&quot;true&quot;&gt;" dispEnd="&lt;/mat-icon&gt;">add</pc> Eintrag erstellen </source>

@@ -407,6 +407,86 @@ describe('StatsTableComponent', () => {
         expect.objectContaining({ sets: [] })
       );
     });
+
+    it('emits a plank update with durationSec and no reps/sets', () => {
+      const component = fixture.componentInstance;
+      const updateSpy = vitest.fn();
+      component.update.subscribe(updateSpy);
+
+      const editResult: EntryDialogResult = {
+        measurement: 'time' as const,
+        exerciseId: 'plank.standard',
+        timestamp: '2026-02-10T14:00+01:00',
+        reps: 0,
+        sets: [],
+        durationSec: 90,
+      };
+      vitest.spyOn(component.dialog, 'open').mockReturnValue({
+        afterClosed: () => of(editResult),
+      } as never);
+
+      component.openEditDialog({
+        kind: 'exercise',
+        _id: 'pl-1',
+        exerciseId: 'plank.standard',
+        timestamp: '2026-02-10T13:45:00',
+        reps: 0,
+        durationSec: 60,
+        source: 'web',
+      });
+
+      const call = updateSpy.mock.calls[0][0];
+      expect(call).toMatchObject({
+        kind: 'exercise',
+        id: 'pl-1',
+        exerciseId: 'plank.standard',
+        durationSec: 90,
+      });
+      // Measurement-aware shape: time entries do not carry reps/sets.
+      expect('reps' in call).toBe(false);
+      expect('sets' in call).toBe(false);
+    });
+
+    it('emits a cardio.running update with distanceM + durationSec and no reps/sets', () => {
+      const component = fixture.componentInstance;
+      const updateSpy = vitest.fn();
+      component.update.subscribe(updateSpy);
+
+      const editResult: EntryDialogResult = {
+        measurement: 'distance-time' as const,
+        exerciseId: 'cardio.running',
+        timestamp: '2026-02-10T14:00+01:00',
+        reps: 0,
+        sets: [],
+        distanceM: 5250,
+        durationSec: 1500,
+      };
+      vitest.spyOn(component.dialog, 'open').mockReturnValue({
+        afterClosed: () => of(editResult),
+      } as never);
+
+      component.openEditDialog({
+        kind: 'exercise',
+        _id: 'r-1',
+        exerciseId: 'cardio.running',
+        timestamp: '2026-02-10T13:45:00',
+        reps: 0,
+        distanceM: 5000,
+        durationSec: 1450,
+        source: 'web',
+      });
+
+      const call = updateSpy.mock.calls[0][0];
+      expect(call).toMatchObject({
+        kind: 'exercise',
+        id: 'r-1',
+        exerciseId: 'cardio.running',
+        distanceM: 5250,
+        durationSec: 1500,
+      });
+      expect('reps' in call).toBe(false);
+      expect('sets' in call).toBe(false);
+    });
   });
 
   describe('showExerciseColumn distinct-key heuristic', () => {
