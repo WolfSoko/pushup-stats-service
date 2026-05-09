@@ -1,54 +1,111 @@
-import { Component, computed, input } from '@angular/core';
+import { DecimalPipe } from '@angular/common';
+import { Component, computed, input, signal } from '@angular/core';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 export interface PieDatum {
+  /**
+   * Stable, locale-independent identifier used for selection state and
+   * test selectors. Defaults to `label` when omitted, but production
+   * callers should pass a canonical key (e.g. the canonical pushup
+   * type id) so checkbox state and `data-testid` survive locale
+   * switches and labels with spaces/diacritics.
+   */
+  id?: string;
   label: string;
   value: number;
   avgSetSize?: number;
 }
 
+export type PieSelectionMode = 'top5' | 'all' | 'custom';
+
+const TOP_N = 5;
+const OTHER_COLOR = 'rgba(120, 120, 120, 0.55)';
+
 @Component({
   selector: 'app-type-pie',
   standalone: true,
+  imports: [DecimalPipe, MatButtonToggleModule, MatCheckboxModule],
   template: `
     @if (total() > 0) {
       <div class="wrap">
-        <svg
-          class="pie"
-          viewBox="0 0 42 42"
-          role="img"
-          aria-label="Type distribution"
-        >
-          <circle class="bg" cx="21" cy="21" r="15.915" />
+        <div class="pie-area">
+          <svg
+            class="pie"
+            viewBox="0 0 42 42"
+            role="img"
+            aria-label="Verteilung der Liegestütz-Typen"
+            i18n-aria-label="@@pie.distributionAria"
+          >
+            <circle class="bg" cx="21" cy="21" r="15.915" />
 
-          @for (seg of segments(); track seg.label) {
-            <circle
-              class="seg"
-              cx="21"
-              cy="21"
-              r="15.915"
-              [attr.stroke]="seg.color"
-              [attr.stroke-dasharray]="seg.dasharray"
-              [attr.stroke-dashoffset]="seg.offset"
-            />
-          }
-        </svg>
+            @for (seg of visibleSegments(); track seg.id) {
+              <circle
+                class="seg"
+                cx="21"
+                cy="21"
+                r="15.915"
+                [attr.stroke]="seg.color"
+                [attr.stroke-dasharray]="seg.dasharray"
+                [attr.stroke-dashoffset]="seg.offset"
+              />
+            }
+          </svg>
 
-        <div class="legend">
-          @for (seg of segments(); track seg.label) {
+          <mat-button-toggle-group
+            class="mode-toggle"
+            [value]="mode()"
+            (change)="setMode($event.value)"
+            aria-label="Anzeigemodus der Typverteilung"
+            i18n-aria-label="@@pie.modeAria"
+          >
+            <mat-button-toggle value="top5" i18n="@@pie.top5"
+              >Top 5</mat-button-toggle
+            >
+            <mat-button-toggle value="all" i18n="@@pie.all"
+              >Alle</mat-button-toggle
+            >
+            <mat-button-toggle value="custom" i18n="@@pie.custom"
+              >Auswahl</mat-button-toggle
+            >
+          </mat-button-toggle-group>
+        </div>
+
+        <div class="legend" data-testid="type-pie-legend">
+          @for (seg of allSegments(); track seg.id) {
             <div class="row">
-              <span class="dot" [style.background]="seg.color"></span>
-              <span class="name">{{ seg.label }}</span>
+              <mat-checkbox
+                color="primary"
+                [checked]="isSelected(seg.id)"
+                (change)="toggle(seg.id)"
+                [attr.data-testid]="'type-pie-toggle-' + seg.id"
+              >
+                <span class="row-name">
+                  <span class="dot" [style.background]="seg.color"></span>
+                  <span class="name">{{ seg.label }}</span>
+                </span>
+              </mat-checkbox>
               <span class="pct">{{ seg.percent }}%</span>
             </div>
             @if (seg.avgSetSize) {
               <div class="row set-detail">
-                <span></span>
                 <span class="set-label" i18n="@@pie.avgSetSize"
                   >&#x2300; Set-Gr&#x00F6;&#x00DF;e</span
                 >
-                <span class="set-value">{{ seg.avgSetSize }}</span>
+                <span class="set-value">{{
+                  seg.avgSetSize | number: '1.0-1'
+                }}</span>
               </div>
             }
+          }
+          @if (otherPercent() > 0) {
+            <div class="row other-row" data-testid="type-pie-other-row">
+              <span class="row-name">
+                <span class="dot" [style.background]="otherColor"></span>
+                <span class="name" i18n="@@pie.other">Sonstige</span>
+              </span>
+              <span class="pct">{{ otherPercent() }}%</span>
+            </div>
           }
         </div>
       </div>
@@ -59,14 +116,22 @@ export interface PieDatum {
   styles: `
     .wrap {
       display: grid;
-      grid-template-columns: 160px 1fr;
-      align-items: center;
+      grid-template-columns: 200px 1fr;
+      align-items: start;
       gap: 16px;
+    }
+    .pie-area {
+      display: grid;
+      gap: 10px;
+      justify-items: center;
     }
     .pie {
       width: 160px;
       height: 160px;
       transform: rotate(-90deg);
+    }
+    .mode-toggle {
+      font-size: 0.78rem;
     }
     .bg {
       fill: none;
@@ -81,20 +146,27 @@ export interface PieDatum {
 
     .legend {
       display: grid;
-      gap: 8px;
+      gap: 4px;
       min-width: 0;
     }
     .row {
       display: grid;
-      grid-template-columns: 14px 1fr auto;
+      grid-template-columns: 1fr auto;
       gap: 10px;
       align-items: center;
+    }
+    .row-name {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
     }
     .dot {
       width: 10px;
       height: 10px;
       border-radius: 50%;
       display: inline-block;
+      flex: 0 0 auto;
     }
     .name {
       overflow: hidden;
@@ -108,6 +180,12 @@ export interface PieDatum {
     .set-detail {
       opacity: 0.6;
       font-size: 0.8rem;
+      grid-template-columns: 1fr auto;
+      padding-left: 36px;
+    }
+    .other-row {
+      opacity: 0.75;
+      padding-left: 36px;
     }
     .set-label {
       overflow: hidden;
@@ -134,6 +212,11 @@ export interface PieDatum {
 export class TypePieComponent {
   readonly data = input<PieDatum[]>([]);
 
+  readonly mode = signal<PieSelectionMode>('top5');
+  private readonly customSelection = signal<ReadonlySet<string>>(new Set());
+
+  readonly otherColor = OTHER_COLOR;
+
   readonly total = computed(() =>
     this.data().reduce((sum, x) => sum + (x.value || 0), 0)
   );
@@ -149,38 +232,122 @@ export class TypePieComponent {
     '#455a64', // blue grey
   ];
 
-  readonly segments = computed(() => {
+  readonly allSegments = computed(() => {
     const total = this.total();
     if (!total)
       return [] as Array<{
+        id: string;
+        label: string;
+        value: number;
+        percent: number;
+        color: string;
+        avgSetSize: number;
+      }>;
+
+    const rows = [...this.data()]
+      .filter((x) => (x.value || 0) > 0)
+      .sort((a, b) => (b.value || 0) - (a.value || 0));
+
+    return rows.map((row, idx) => ({
+      id: row.id ?? row.label,
+      label: row.label,
+      value: row.value || 0,
+      percent: Math.round(((row.value || 0) / total) * 100),
+      color: this.palette[idx % this.palette.length],
+      avgSetSize: row.avgSetSize ?? 0,
+    }));
+  });
+
+  readonly selectedIds = computed<ReadonlySet<string>>(() => {
+    const all = this.allSegments();
+    const mode = this.mode();
+    if (mode === 'top5') {
+      return new Set(all.slice(0, TOP_N).map((s) => s.id));
+    }
+    if (mode === 'all') {
+      return new Set(all.map((s) => s.id));
+    }
+    return this.customSelection();
+  });
+
+  readonly visibleSegments = computed(() => {
+    const total = this.total();
+    if (!total)
+      return [] as Array<{
+        id: string;
         label: string;
         percent: number;
         color: string;
         dasharray: string;
         offset: number;
-        avgSetSize: number;
       }>;
 
-    // Sort descending for stable, readable legend.
-    const rows = [...this.data()]
-      .filter((x) => (x.value || 0) > 0)
-      .sort((a, b) => (b.value || 0) - (a.value || 0));
-
-    // We use a 100-unit circumference convention.
+    const selected = this.selectedIds();
     let acc = 0;
-    return rows.map((row, idx) => {
-      const percent = Math.round(((row.value || 0) / total) * 100);
-      const dash = (row.value / total) * 100;
-      const seg = {
-        label: row.label,
-        percent,
-        color: this.palette[idx % this.palette.length],
-        dasharray: `${dash} ${100 - dash}`,
+    const segments = this.allSegments()
+      .filter((s) => selected.has(s.id))
+      .map((seg) => {
+        const dash = (seg.value / total) * 100;
+        const result = {
+          id: seg.id,
+          label: seg.label,
+          percent: seg.percent,
+          color: seg.color,
+          dasharray: `${dash} ${100 - dash}`,
+          offset: 25 - acc,
+        };
+        acc += dash;
+        return result;
+      });
+
+    // Cap the cumulative dash so floating-point drift can't push the
+    // remainder negative.
+    const remainder = Math.max(0, 100 - acc);
+    if (remainder > 0.5) {
+      segments.push({
+        id: '__other__',
+        label: 'other',
+        percent: Math.round(remainder),
+        color: OTHER_COLOR,
+        dasharray: `${remainder} ${100 - remainder}`,
         offset: 25 - acc,
-        avgSetSize: row.avgSetSize ?? 0,
-      };
-      acc += dash;
-      return seg;
-    });
+      });
+    }
+    return segments;
   });
+
+  /** Cumulative percent of types not currently visible — for the legend. */
+  readonly otherPercent = computed(() => {
+    const total = this.total();
+    if (!total) return 0;
+    const selected = this.selectedIds();
+    const hiddenValue = this.allSegments()
+      .filter((s) => !selected.has(s.id))
+      .reduce((sum, s) => sum + s.value, 0);
+    if (hiddenValue <= 0) return 0;
+    return Math.round((hiddenValue / total) * 100);
+  });
+
+  isSelected(id: string): boolean {
+    return this.selectedIds().has(id);
+  }
+
+  toggle(id: string): void {
+    const next = new Set(this.selectedIds());
+    if (next.has(id)) {
+      next.delete(id);
+    } else {
+      next.add(id);
+    }
+    this.customSelection.set(next);
+    this.mode.set('custom');
+  }
+
+  setMode(value: PieSelectionMode): void {
+    if (!value) return;
+    if (value === 'custom') {
+      this.customSelection.set(new Set(this.selectedIds()));
+    }
+    this.mode.set(value);
+  }
 }
