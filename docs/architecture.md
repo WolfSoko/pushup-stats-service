@@ -122,3 +122,18 @@ Split into focused files under `libs/stats/src/lib/models/`:
 - `training-plan.models.ts` - TrainingPlan, TrainingPlanDay, UserTrainingPlan, `localizePlan()`, `currentPlanDayIndex()`, `planDayByIndex()`, `isPlanCompleted()`. `parseIsoDate` round-trips Y/M/D after `new Date()` to reject impossible dates like `2026-02-30`.
 - `training-plan.catalog.ts` - curated `TRAINING_PLANS` array + `findPlanById()` / `findPlanBySlug()` lookups. Test invariant: every plan's day indexes form a contiguous `1..totalDays` sequence and rest days have `targetReps === 0`.
   - UserStats includes a `version` field for migration support. See [`gotchas/cloud-functions.md`](gotchas/cloud-functions.md) for the versioning strategy.
+
+### Generic exercise model — measurement vs. unit vs. companion
+
+`ExerciseDefinition` separates three concerns deliberately:
+
+- **`measurement`** - which entry field carries the primary value. Drives validation (range checks against `def.min`/`def.max`), aggregation (which field sums roll up), and storage. `MeasurementType` is `'reps' | 'time' | 'distance' | 'weight' | 'distance-time'`.
+- **`unit`** - the rendering hint. `formatExerciseValue(value, unit)` switches on this string so a single measurement type can carry alternate display units later (kg vs. lb, km vs. mi). The catalog currently uses `'reps' | 's' | 'm' | 'kg'`.
+- **Companion fields** - secondary values an entry may (or must) carry alongside the primary. Declared in `COMPANION_FIELDS` / `REQUIRED_COMPANIONS` per measurement. `'distance'` allows an optional `durationSec`; `'distance-time'` requires it; `'weight'` requires `weightKg`.
+
+**Display routing.** Components don't branch on `measurement` themselves — they call `formatEntryDisplay(entry, def)` / `formatEntryTotal({ primary, companion }, def)`, which:
+
+- For `'distance-time'`: renders the composite `"5.00 km · 25:00 (5:00 /km)"` via `formatDistanceTime`.
+- For everything else: reads the field that `measurementValueField(measurement)` returns and pipes it through `formatExerciseValue(value, def.unit)`.
+
+`measurementCompanionValueField(measurement)` returns the secondary display field for composite measurements (currently only `'durationSec'` for `'distance-time'`). Aggregation paths use it to sum a second total alongside the primary, so a 30-day card for a tracked run can show `"42.00 km · 3:30:00 (5:00 /km)"`. The first composite catalog entry is `cardio.running`; later cardio types (cycling, swimming, …) and tighter per-exercise companion bounds plug into the same path without further infrastructure work.

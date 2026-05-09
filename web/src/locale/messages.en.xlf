@@ -3212,6 +3212,54 @@ Deine Position: # ·  Reps        </source>
         <target>Save</target>
       </segment>
     </unit>
+    <unit id="entryDialog.distance">
+      <segment state="translated">
+        <source>Distanz (km)</source>
+        <target>Distance (km)</target>
+      </segment>
+    </unit>
+    <unit id="entryDialog.duration">
+      <segment state="translated">
+        <source>Dauer (mm:ss)</source>
+        <target>Duration (mm:ss)</target>
+      </segment>
+    </unit>
+    <unit id="entryDialog.overCapDuration">
+      <segment state="translated">
+        <source>Maximum-Dauer: <ph id="0" equiv="INTERPOLATION" disp="{{ formattedDurationMax() }}"/></source>
+        <target>Maximum duration: <ph id="0" equiv="INTERPOLATION" disp="{{ formattedDurationMax() }}"/></target>
+      </segment>
+    </unit>
+    <unit id="entryDialog.overCapTime">
+      <segment state="translated">
+        <source>Maximum: <ph id="0" equiv="INTERPOLATION" disp="{{ formattedMax() }}"/></source>
+        <target>Maximum: <ph id="0" equiv="INTERPOLATION" disp="{{ formattedMax() }}"/></target>
+      </segment>
+    </unit>
+    <unit id="exercise.category.plank">
+      <segment state="translated">
+        <source>Plank</source>
+        <target>Plank</target>
+      </segment>
+    </unit>
+    <unit id="exercise.plank.standard.name">
+      <segment state="translated">
+        <source>Plank</source>
+        <target>Plank</target>
+      </segment>
+    </unit>
+    <unit id="exercise.category.cardio">
+      <segment state="translated">
+        <source>Ausdauer</source>
+        <target>Cardio</target>
+      </segment>
+    </unit>
+    <unit id="exercise.cardio.running.name">
+      <segment state="translated">
+        <source>Laufen</source>
+        <target>Running</target>
+      </segment>
+    </unit>
     <unit id="entryDialog.variant">
       <segment state="translated">
         <source>Variante</source>

@@ -1681,8 +1681,26 @@ export const updateExerciseStatsOnEntryWrite = onDocumentWritten(
       return;
     }
 
-    const oldReps = Number(beforeData?.reps ?? 0);
-    const newReps = Number(afterData?.reps ?? 0);
+    // The aggregation slot stays named `reps` for backwards
+    // compatibility with the existing UserStats schema, but for
+    // non-rep exercises we feed the primary measurement field
+    // (`durationSec` for plank, `distanceM` for cardio.running) into
+    // the same slot. The per-exercise stats doc is exercise-scoped,
+    // so `total` carries seconds for plank, meters for a tracked run,
+    // and rep counts for sit-ups — the display layer formats
+    // accordingly. For composite measurements ('distance-time') the
+    // companion duration is left to the live entries query in the
+    // dashboard summary; the aggregated slot stays single-valued.
+    //
+    // Fallback ordering matters: `distanceM` MUST come before
+    // `durationSec` because cardio.running entries carry both, and
+    // the primary value (distance) needs to win the `??` chain.
+    const oldReps = Number(
+      beforeData?.reps ?? beforeData?.distanceM ?? beforeData?.durationSec ?? 0
+    );
+    const newReps = Number(
+      afterData?.reps ?? afterData?.distanceM ?? afterData?.durationSec ?? 0
+    );
     const oldTimestamp = beforeData?.timestamp as string | undefined;
     const newTimestamp = afterData?.timestamp as string | undefined;
     // Defensive sanitization: reduce over `sets` runs straight into
@@ -1743,7 +1761,13 @@ export const updateExerciseStatsOnEntryWrite = onDocumentWritten(
         const data = d.data();
         return {
           timestamp: data.timestamp as string,
-          reps: Number(data.reps ?? 0),
+          // Non-rep entries reuse the rebuild path's `reps` slot for
+          // their primary measurement value: seconds for plank, meters
+          // for cardio.running. The slot is exercise-scoped so it
+          // never mixes units across exercises. `distanceM` precedes
+          // `durationSec` so a cardio.running entry (both fields set)
+          // aggregates the distance, not the companion duration.
+          reps: Number(data.reps ?? data.distanceM ?? data.durationSec ?? 0),
           ...(Array.isArray(data.sets) ? { sets: data.sets as number[] } : {}),
         };
       });
@@ -1816,11 +1840,20 @@ export const updateExerciseStatsOnEntryWrite = onDocumentWritten(
             .where('userId', '==', userId)
             .where('exerciseId', '==', exerciseId)
         );
-        const userEntries = userEntriesSnap.docs.map((d) => d.data()) as Array<{
-          timestamp: string;
-          reps: number;
-          sets?: number[];
-        }>;
+        const userEntries = userEntriesSnap.docs.map((d) => {
+          const data = d.data();
+          return {
+            timestamp: data.timestamp as string,
+            // Non-rep entries fold their primary measurement into the
+            // `reps` slot the rebuild expects: durationSec for plank,
+            // distanceM for cardio.running. Same ordering as the live
+            // trigger — distance wins over duration when both exist.
+            reps: Number(data.reps ?? data.distanceM ?? data.durationSec ?? 0),
+            ...(Array.isArray(data.sets)
+              ? { sets: data.sets as number[] }
+              : {}),
+          };
+        });
         current = rebuildFromEntries(userId, userEntries, nowIso);
       }
 

@@ -9,7 +9,12 @@
  * Migration plan and roadmap: see `plans/multi-exercise-roadmap.md`.
  */
 
-export type MeasurementType = 'reps' | 'time' | 'distance' | 'weight';
+export type MeasurementType =
+  | 'reps'
+  | 'time'
+  | 'distance'
+  | 'weight'
+  | 'distance-time';
 
 export type ExerciseCategoryId =
   | 'pushup'
@@ -68,9 +73,17 @@ export interface ExerciseEntry {
   timestamp: string;
   /** Set when measurement = 'reps' or 'weight'. */
   reps?: number;
-  /** Set when measurement = 'time'. */
+  /**
+   * Primary value for `measurement = 'time'` (plank) and required
+   * companion for `measurement = 'distance-time'` (a tracked run
+   * carries both a distance and a duration).
+   */
   durationSec?: number;
-  /** Set when measurement = 'distance'. */
+  /**
+   * Primary value for `measurement = 'distance'` and
+   * `measurement = 'distance-time'`. The catalog `min`/`max`
+   * constrain this field; the duration companion has its own bounds.
+   */
   distanceM?: number;
   /** Set when measurement = 'weight' (kg per rep). */
   weightKg?: number;
@@ -146,8 +159,31 @@ export function measurementValueField(
     case 'time':
       return 'durationSec';
     case 'distance':
+    case 'distance-time':
+      // For distance-time the primary value is the distance — that's what
+      // the catalog `min`/`max` constrain, what Aggregations sum, and what
+      // headline displays read. The duration is a required companion
+      // (see {@link COMPANION_FIELDS}/{@link REQUIRED_COMPANIONS}).
       return 'distanceM';
   }
+}
+
+/**
+ * Returns the secondary (companion) value field that carries equal
+ * display weight to the primary value, or `undefined` when there isn't
+ * one. Currently only `'distance-time'` qualifies — the duration is
+ * just as important to display as the distance, and {@link
+ * formatEntryDisplay} renders both.
+ *
+ * Distinct from {@link companionFields}, which lists *allowed* companions
+ * for validation. A field can be a validation companion without being
+ * a display companion (e.g. `'distance'` may carry an optional
+ * duration but renders as distance-only).
+ */
+export function measurementCompanionValueField(
+  measurement: MeasurementType
+): MeasurementValueField | undefined {
+  return measurement === 'distance-time' ? 'durationSec' : undefined;
 }
 
 /**
@@ -166,6 +202,7 @@ const COMPANION_FIELDS: Readonly<
   reps: [],
   time: [],
   distance: ['durationSec'],
+  'distance-time': ['durationSec'],
   weight: ['weightKg'],
 };
 
@@ -175,6 +212,7 @@ const REQUIRED_COMPANIONS: Readonly<
   reps: [],
   time: [],
   distance: [],
+  'distance-time': ['durationSec'],
   weight: ['weightKg'],
 };
 
@@ -187,7 +225,7 @@ const REQUIRED_COMPANIONS: Readonly<
  * to warrant a per-definition cap. When custom user exercises land in
  * Phase 4 we can move these into `ExerciseDefinition`.
  */
-const COMPANION_BOUNDS: Readonly<
+export const COMPANION_BOUNDS: Readonly<
   Record<
     MeasurementValueField,
     { readonly min: number; readonly max: number; readonly integer: boolean }

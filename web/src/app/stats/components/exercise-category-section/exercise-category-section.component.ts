@@ -23,6 +23,10 @@ import {
   ExerciseEntry,
   exercisesByCategory,
   findExerciseCategory,
+  formatEntryDisplay,
+  formatEntryTotal,
+  measurementCompanionValueField,
+  measurementValueField,
   toLocalIsoDate,
 } from '@pu-stats/models';
 import { firstValueFrom, of } from 'rxjs';
@@ -34,7 +38,15 @@ import {
 
 interface ExerciseSummary {
   definition: ExerciseDefinition;
-  totalReps30d: number;
+  /** Sum of the primary measurement value over the last 30 days. */
+  totalValue30d: number;
+  /**
+   * Sum of the secondary (companion) display value over the same
+   * window — only set for composite measurements like
+   * `'distance-time'`, where the duration matters as much as the
+   * distance. `undefined` for single-value exercises.
+   */
+  totalCompanionValue30d?: number;
   lastEntry: ExerciseEntry | null;
 }
 
@@ -121,12 +133,12 @@ interface ExerciseSummary {
                   <div class="exercise-meta">
                     <span i18n="@@exerciseSection.lastEntry">Letzter Eintrag</span>
                     : {{ last.timestamp | date: 'shortDate' }}
-                    — {{ last.reps }}
+                    — {{ formatValue(item.definition, last) }}
                   </div>
                 }
               </div>
               <div class="exercise-stats">
-                <span class="total">{{ item.totalReps30d }}</span>
+                <span class="total">{{ formatTotal(item) }}</span>
                 <span class="label" i18n="@@exerciseSection.last30d"
                   >Letzte 30 Tage</span
                 >
@@ -173,6 +185,26 @@ export class ExerciseCategorySectionComponent {
     return `${this.i18n.addPrefix}: ${this.exerciseName(id)}`;
   }
 
+  /**
+   * Format the per-row "last entry" value. Delegates to
+   * `formatEntryDisplay` which handles single-value AND composite
+   * measurements (e.g. distance-time renders as
+   * `"5.00 km · 25:00 (5:00 /km)"`).
+   */
+  formatValue(def: ExerciseDefinition, entry: ExerciseEntry): string {
+    return formatEntryDisplay(entry, def);
+  }
+
+  formatTotal(summary: ExerciseSummary): string {
+    return formatEntryTotal(
+      {
+        primary: summary.totalValue30d,
+        companion: summary.totalCompanionValue30d,
+      },
+      summary.definition
+    );
+  }
+
   private localizeCategory(id: ExerciseCategoryId): string {
     return this.i18n.categoryNames[id] ?? id;
   }
@@ -201,7 +233,23 @@ export class ExerciseCategorySectionComponent {
     const defs = exercisesByCategory().get(this.categoryId()) ?? [];
     return defs.map((def) => {
       const matching = entries.filter((e) => e.exerciseId === def.id);
-      const totalReps30d = matching.reduce((s, e) => s + (e.reps ?? 0), 0);
+      // The summary total is exercise-scoped: seconds for plank, reps
+      // for sit-ups, distance + duration for a tracked run.
+      // `measurementValueField` picks the primary field; for composite
+      // measurements (`distance-time`) we also sum the companion field
+      // so the card can show "42.00 km · 3:30:00 (5:00 /km)".
+      const valueField = measurementValueField(def.measurement);
+      const companionField = measurementCompanionValueField(def.measurement);
+      const totalValue30d = matching.reduce((s, e) => {
+        const v = (e[valueField] as number | undefined) ?? 0;
+        return s + v;
+      }, 0);
+      const totalCompanionValue30d = companionField
+        ? matching.reduce((s, e) => {
+            const v = (e[companionField] as number | undefined) ?? 0;
+            return s + v;
+          }, 0)
+        : undefined;
       // Compare via Date.parse so an offset-bearing timestamp
       // (e.g. `…+02:00`) and a Z-suffixed one sort by their absolute
       // instant — string comparison would order them lexicographically
@@ -213,7 +261,12 @@ export class ExerciseCategorySectionComponent {
               : latest
           )
         : null;
-      return { definition: def, totalReps30d, lastEntry };
+      return {
+        definition: def,
+        totalValue30d,
+        totalCompanionValue30d,
+        lastEntry,
+      };
     });
   });
 
@@ -239,9 +292,24 @@ export class ExerciseCategorySectionComponent {
         this.exerciseService.createEntry(userId, {
           exerciseId: result.exerciseId,
           timestamp: result.timestamp,
-          reps: result.reps,
+          // Measurement-aware payload shape:
+          //   - 'time' (plank): durationSec only.
+          //   - 'distance-time' (cardio.running): distanceM + durationSec.
+          //   - reps measurements: reps + optional sets.
+          // Mirroring the dialog's measurement discriminator keeps the
+          // validator happy on every path.
+          ...(result.measurement === 'time'
+            ? { durationSec: result.durationSec ?? 0 }
+            : result.measurement === 'distance-time'
+              ? {
+                  distanceM: result.distanceM ?? 0,
+                  durationSec: result.durationSec ?? 0,
+                }
+              : {
+                  reps: result.reps,
+                  ...(result.sets.length > 1 ? { sets: result.sets } : {}),
+                }),
           ...(result.variantId ? { variantId: result.variantId } : {}),
-          ...(result.sets.length > 1 ? { sets: result.sets } : {}),
         })
       );
       this.entriesResource.reload();
@@ -288,10 +356,14 @@ function buildI18n(): I18nBundle {
     pushup: $localize`:@@exercise.category.pushup:Liegestütze`,
     abs: $localize`:@@exercise.category.abs:Bauch`,
     legs: $localize`:@@exercise.category.legs:Beine`,
+    plank: $localize`:@@exercise.category.plank:Plank`,
+    cardio: $localize`:@@exercise.category.cardio:Ausdauer`,
   };
   const exerciseNames: Record<string, string> = {
     'abs.situps': $localize`:@@exercise.abs.situps.name:Sit-ups`,
     'legs.squats': $localize`:@@exercise.legs.squats.name:Kniebeugen`,
+    'plank.standard': $localize`:@@exercise.plank.standard.name:Plank`,
+    'cardio.running': $localize`:@@exercise.cardio.running.name:Laufen`,
   };
   return {
     categoryNames,

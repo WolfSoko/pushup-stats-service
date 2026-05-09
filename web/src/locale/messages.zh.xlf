@@ -4438,6 +4438,54 @@
         <source>Anleitung öffnen</source>
       <target>打开指南</target></segment>
     </unit>
+    <unit id="entryDialog.distance">
+      <segment state="translated">
+        <source>Distanz (km)</source>
+        <target>距离 (公里)</target>
+      </segment>
+    </unit>
+    <unit id="entryDialog.duration">
+      <segment state="translated">
+        <source>Dauer (mm:ss)</source>
+        <target>时长 (mm:ss)</target>
+      </segment>
+    </unit>
+    <unit id="entryDialog.overCapDuration">
+      <segment state="translated">
+        <source>Maximum-Dauer: <ph id="0" equiv="INTERPOLATION" disp="{{ formattedDurationMax() }}"/></source>
+        <target>最长时长：<ph id="0" equiv="INTERPOLATION" disp="{{ formattedDurationMax() }}"/></target>
+      </segment>
+    </unit>
+    <unit id="entryDialog.overCapTime">
+      <segment state="translated">
+        <source>Maximum: <ph id="0" equiv="INTERPOLATION" disp="{{ formattedMax() }}"/></source>
+        <target>最大: <ph id="0" equiv="INTERPOLATION" disp="{{ formattedMax() }}"/></target>
+      </segment>
+    </unit>
+    <unit id="exercise.category.plank">
+      <segment state="translated">
+        <source>Plank</source>
+        <target>平板支撑</target>
+      </segment>
+    </unit>
+    <unit id="exercise.plank.standard.name">
+      <segment state="translated">
+        <source>Plank</source>
+        <target>平板支撑</target>
+      </segment>
+    </unit>
+    <unit id="exercise.category.cardio">
+      <segment state="translated">
+        <source>Ausdauer</source>
+        <target>有氧运动</target>
+      </segment>
+    </unit>
+    <unit id="exercise.cardio.running.name">
+      <segment state="translated">
+        <source>Laufen</source>
+        <target>跑步</target>
+      </segment>
+    </unit>
     <unit id="entryDialog.variant">
       <segment state="translated">
         <source>Variante</source>

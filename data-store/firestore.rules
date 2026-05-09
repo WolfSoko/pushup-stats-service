@@ -128,42 +128,77 @@ service cloud.firestore {
       allow read, update, delete: if false;
     }
 
-    // Generic exercise entries (sit-ups, squats, …). New collection that
-    // co-exists with `pushups` while we migrate. Caps mirror the Phase-0
-    // catalog in `libs/stats/src/lib/models/exercise.catalog.ts`
-    // (reps 1..500). Custom user-defined exercises are NOT yet allowed —
-    // the `exerciseId` must be one of the known catalog ids and
-    // measurement value caps are hardcoded for the rep-based exercises
-    // shipped in Phase 0. Other measurement types (durationSec,
-    // distanceM, weightKg) are rejected at the rule level until their
-    // dedicated phases land.
+    // Generic exercise entries (sit-ups, squats, plank, …). New
+    // collection that co-exists with `pushups` while we migrate. Caps
+    // mirror the catalog in
+    // `libs/stats/src/lib/models/exercise.catalog.ts`. Custom
+    // user-defined exercises are NOT yet allowed — the `exerciseId`
+    // must be one of the known catalog ids.
     //
-    // Schema is also pinned via `keys().hasOnly([...])` so unknown fields
-    // can't sneak past the trigger / aggregation logic.
+    // Per-exercise measurement validation:
+    //   - `abs.situps`, `legs.squats` (reps): require `reps` int 1..500;
+    //     forbid `durationSec`.
+    //   - `plank.standard` (time): require `durationSec` int 1..7200;
+    //     forbid `reps` and `sets`.
     //
-    // `exerciseId` is immutable on update — a different exercise must be
-    // recorded as a delete + create so the per-exercise stats trigger can
-    // decrement the old aggregate. (See `updateExerciseStatsOnEntryWrite`
-    // in `data-store/functions/src/index.ts`.)
+    // Schema is also pinned via `keys().hasOnly([...])` so unknown
+    // fields can't sneak past the trigger / aggregation logic.
+    //
+    // `exerciseId` is immutable on update — a different exercise must
+    // be recorded as a delete + create so the per-exercise stats
+    // trigger can decrement the old aggregate. (See
+    // `updateExerciseStatsOnEntryWrite` in
+    // `data-store/functions/src/index.ts`.)
     match /exerciseEntries/{entryId} {
       allow read: if request.auth != null && resource.data.userId == request.auth.uid;
       allow delete: if request.auth != null && resource.data.userId == request.auth.uid;
       allow create: if request.auth != null
                     && request.resource.data.keys().hasOnly([
-                      'userId', 'exerciseId', 'reps', 'sets', 'variantId',
-                      'timestamp', 'source', 'createdAt', 'updatedAt'
+                      'userId', 'exerciseId', 'reps', 'durationSec', 'distanceM',
+                      'sets', 'variantId', 'timestamp', 'source',
+                      'createdAt', 'updatedAt'
                     ])
                     && request.resource.data.userId == request.auth.uid
                     && request.resource.data.exerciseId is string
-                    && (request.resource.data.exerciseId == 'abs.situps'
-                        || request.resource.data.exerciseId == 'legs.squats')
-                    && request.resource.data.reps is int
-                    && request.resource.data.reps >= 1
-                    && request.resource.data.reps <= 500
                     && request.resource.data.timestamp is string
                     && request.resource.data.timestamp.size() > 0
+                    && (
+                      // Reps-measured exercises.
+                      ((request.resource.data.exerciseId == 'abs.situps'
+                          || request.resource.data.exerciseId == 'legs.squats')
+                        && request.resource.data.reps is int
+                        && request.resource.data.reps >= 1
+                        && request.resource.data.reps <= 500
+                        && !('durationSec' in request.resource.data.keys())
+                        && !('distanceM' in request.resource.data.keys()))
+                      ||
+                      // Time-measured exercises (plank). `sets` would
+                      // poison `applyDelta` because no per-set duration
+                      // breakdown is defined yet — block it at the rule
+                      // until a future phase introduces one.
+                      (request.resource.data.exerciseId == 'plank.standard'
+                        && request.resource.data.durationSec is int
+                        && request.resource.data.durationSec >= 1
+                        && request.resource.data.durationSec <= 7200
+                        && !('reps' in request.resource.data.keys())
+                        && !('sets' in request.resource.data.keys())
+                        && !('distanceM' in request.resource.data.keys()))
+                      ||
+                      // Distance-time-measured exercises (cardio.running).
+                      // Both fields are required; `reps`/`sets` are blocked
+                      // for the same reason as plank.
+                      (request.resource.data.exerciseId == 'cardio.running'
+                        && request.resource.data.distanceM is int
+                        && request.resource.data.distanceM >= 100
+                        && request.resource.data.distanceM <= 50000
+                        && request.resource.data.durationSec is int
+                        && request.resource.data.durationSec >= 1
+                        && request.resource.data.durationSec <= 86400
+                        && !('reps' in request.resource.data.keys())
+                        && !('sets' in request.resource.data.keys()))
+                    )
                     // `sets` is optional, but when present every entry
-                    // must be an int in the per-rep range — otherwise
+                    // must be a bounded int list — otherwise
                     // `applyDelta()` reduces over the array and writes
                     // NaN into `userStats`, then the trigger retries
                     // forever.
@@ -173,16 +208,55 @@ service cloud.firestore {
       allow update: if request.auth != null
                     && resource.data.userId == request.auth.uid
                     && request.resource.data.keys().hasOnly([
-                      'userId', 'exerciseId', 'reps', 'sets', 'variantId',
-                      'timestamp', 'source', 'createdAt', 'updatedAt'
+                      'userId', 'exerciseId', 'reps', 'durationSec', 'distanceM',
+                      'sets', 'variantId', 'timestamp', 'source',
+                      'createdAt', 'updatedAt'
                     ])
                     && request.resource.data.userId == request.auth.uid
                     && request.resource.data.userId == resource.data.userId
                     && !('exerciseId' in request.resource.data.diff(resource.data).affectedKeys())
-                    && (!('reps' in request.resource.data.diff(resource.data).affectedKeys())
-                        || (request.resource.data.reps is int
-                            && request.resource.data.reps >= 1
-                            && request.resource.data.reps <= 500))
+                    // Mirror the create branching so an update can't
+                    // sneak the wrong measurement field onto an entry.
+                    // `exerciseId` is immutable (checked above) so we
+                    // pin to `resource.data.exerciseId`.
+                    && (
+                      // Reps-measured exercises: reject `durationSec`/
+                      // `distanceM` and validate reps when changed.
+                      ((resource.data.exerciseId == 'abs.situps'
+                          || resource.data.exerciseId == 'legs.squats')
+                        && !('durationSec' in request.resource.data.keys())
+                        && !('distanceM' in request.resource.data.keys())
+                        && (!('reps' in request.resource.data.diff(resource.data).affectedKeys())
+                            || (request.resource.data.reps is int
+                                && request.resource.data.reps >= 1
+                                && request.resource.data.reps <= 500)))
+                      ||
+                      // Time-measured exercises (plank): reject `reps`,
+                      // `sets`, `distanceM`; validate durationSec when changed.
+                      (resource.data.exerciseId == 'plank.standard'
+                        && !('reps' in request.resource.data.keys())
+                        && !('sets' in request.resource.data.keys())
+                        && !('distanceM' in request.resource.data.keys())
+                        && (!('durationSec' in request.resource.data.diff(resource.data).affectedKeys())
+                            || (request.resource.data.durationSec is int
+                                && request.resource.data.durationSec >= 1
+                                && request.resource.data.durationSec <= 7200)))
+                      ||
+                      // Distance-time-measured exercises (cardio.running):
+                      // reject `reps`/`sets`; validate distanceM and
+                      // durationSec when changed.
+                      (resource.data.exerciseId == 'cardio.running'
+                        && !('reps' in request.resource.data.keys())
+                        && !('sets' in request.resource.data.keys())
+                        && (!('distanceM' in request.resource.data.diff(resource.data).affectedKeys())
+                            || (request.resource.data.distanceM is int
+                                && request.resource.data.distanceM >= 100
+                                && request.resource.data.distanceM <= 50000))
+                        && (!('durationSec' in request.resource.data.diff(resource.data).affectedKeys())
+                            || (request.resource.data.durationSec is int
+                                && request.resource.data.durationSec >= 1
+                                && request.resource.data.durationSec <= 86400)))
+                    )
                     && (!('timestamp' in request.resource.data.diff(resource.data).affectedKeys())
                         || (request.resource.data.timestamp is string
                             && request.resource.data.timestamp.size() > 0))

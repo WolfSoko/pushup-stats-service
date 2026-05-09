@@ -1,5 +1,6 @@
 import {
   companionFields,
+  measurementCompanionValueField,
   measurementValueField,
   requiredCompanionFields,
   validateExerciseEntry,
@@ -43,6 +44,15 @@ const weightDef: Pick<
   max: 200,
 };
 
+const distanceTimeDef: Pick<
+  ExerciseDefinition,
+  'measurement' | 'min' | 'max' | 'variants'
+> = {
+  measurement: 'distance-time',
+  min: 100,
+  max: 100_000,
+};
+
 describe('measurementValueField', () => {
   describe('Given each MeasurementType', () => {
     it.each<[MeasurementType, string]>([
@@ -50,9 +60,22 @@ describe('measurementValueField', () => {
       ['weight', 'reps'],
       ['time', 'durationSec'],
       ['distance', 'distanceM'],
+      ['distance-time', 'distanceM'],
     ])('Then %s maps to field %s', (m, expected) => {
       expect(measurementValueField(m)).toBe(expected);
     });
+  });
+});
+
+describe('measurementCompanionValueField', () => {
+  it.each<[MeasurementType, string | undefined]>([
+    ['reps', undefined],
+    ['time', undefined],
+    ['distance', undefined],
+    ['weight', undefined],
+    ['distance-time', 'durationSec'],
+  ])('Then %s maps to companion display field %s', (m, expected) => {
+    expect(measurementCompanionValueField(m)).toBe(expected);
   });
 });
 
@@ -61,6 +84,7 @@ describe('companionFields', () => {
     ['reps', []],
     ['time', []],
     ['distance', ['durationSec']],
+    ['distance-time', ['durationSec']],
     ['weight', ['weightKg']],
   ])('Then %s allows %p as companion fields', (m, expected) => {
     expect([...companionFields(m)]).toEqual(expected);
@@ -72,6 +96,7 @@ describe('requiredCompanionFields', () => {
     ['reps', []],
     ['time', []],
     ['distance', []],
+    ['distance-time', ['durationSec']],
     ['weight', ['weightKg']],
   ])('Then %s requires %p as companion fields', (m, expected) => {
     expect([...requiredCompanionFields(m)]).toEqual(expected);
@@ -193,6 +218,76 @@ describe('validateExerciseEntry — distance measurement', () => {
     expect(
       validateExerciseEntry({ distanceM: 5000, weightKg: 5 }, distanceDef)
     ).toBe('wrong-measurement-field');
+  });
+});
+
+describe('validateExerciseEntry — distance-time measurement', () => {
+  it('accepts a tracked run with both distance and duration', () => {
+    expect(
+      validateExerciseEntry(
+        { distanceM: 5000, durationSec: 1500 },
+        distanceTimeDef
+      )
+    ).toBeNull();
+  });
+
+  it('rejects when the duration companion is missing', () => {
+    expect(validateExerciseEntry({ distanceM: 5000 }, distanceTimeDef)).toBe(
+      'companion-value-missing'
+    );
+  });
+
+  it('rejects when the primary distance is missing', () => {
+    expect(validateExerciseEntry({ durationSec: 1500 }, distanceTimeDef)).toBe(
+      'measurement-value-missing'
+    );
+  });
+
+  it('rejects out-of-range distances against the catalog cap', () => {
+    expect(
+      validateExerciseEntry(
+        { distanceM: 200_000, durationSec: 36_000 },
+        distanceTimeDef
+      )
+    ).toBe('measurement-value-out-of-range');
+  });
+
+  it('rejects out-of-range durations against companion bounds', () => {
+    expect(
+      validateExerciseEntry(
+        { distanceM: 5000, durationSec: 200_000 },
+        distanceTimeDef
+      )
+    ).toBe('companion-value-out-of-range');
+  });
+
+  it('rejects entries that also carry an unrelated value field', () => {
+    expect(
+      validateExerciseEntry(
+        { distanceM: 5000, durationSec: 1500, reps: 10 },
+        distanceTimeDef
+      )
+    ).toBe('wrong-measurement-field');
+  });
+
+  it('skips the duration-required check in partial-update mode', () => {
+    expect(
+      validateExerciseEntry(
+        { distanceM: 5000 },
+        distanceTimeDef,
+        { partial: true }
+      )
+    ).toBeNull();
+  });
+
+  it('accepts a duration-only patch in partial-update mode (no primary)', () => {
+    expect(
+      validateExerciseEntry(
+        { durationSec: 1500 },
+        distanceTimeDef,
+        { partial: true }
+      )
+    ).toBeNull();
   });
 });
 

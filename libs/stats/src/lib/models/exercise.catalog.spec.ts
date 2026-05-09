@@ -49,6 +49,21 @@ describe('EXERCISE_CATALOG', () => {
     expect(ids.has('abs.situps')).toBe(true);
     expect(ids.has('legs.squats')).toBe(true);
   });
+
+  it('exposes plank.standard as the time-measurement entry point', () => {
+    const plank = EXERCISE_CATALOG.find((d) => d.id === 'plank.standard');
+    expect(plank?.measurement).toBe('time');
+    expect(plank?.unit).toBe('s');
+  });
+
+  it('exposes cardio.running as the first distance-time exercise', () => {
+    const running = EXERCISE_CATALOG.find((d) => d.id === 'cardio.running');
+    expect(running?.measurement).toBe('distance-time');
+    expect(running?.unit).toBe('m');
+    expect(running?.categoryId).toBe('cardio');
+    expect(running?.min).toBeGreaterThan(0);
+    expect(running?.max).toBeGreaterThanOrEqual(50_000);
+  });
 });
 
 describe('findExerciseDefinition', () => {

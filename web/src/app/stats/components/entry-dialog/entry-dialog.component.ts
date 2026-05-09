@@ -18,8 +18,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import {
   appendLocalOffset,
+  COMPANION_BOUNDS,
   ExerciseDefinition,
-  UnifiedEntry,
+  formatExerciseValue,
+  MeasurementType,
 } from '@pu-stats/models';
 
 export interface EntryDialogData {
@@ -30,14 +32,25 @@ export interface EntryDialogData {
    *  Track-ARCH will move them into a shared service. */
   exerciseName: string;
   /** Optional pre-fill for edit mode. The dialog only reads fields
-   *  matching `definition.measurement` — today reps + sets. */
-  initial?: Pick<UnifiedEntry, 'timestamp' | 'reps' | 'sets'> & {
+   *  matching `definition.measurement` — reps + sets for reps-measured
+   *  exercises, durationSec for time-measured ones, distanceM +
+   *  durationSec for distance-time-measured ones. */
+  initial?: {
+    timestamp: string;
+    reps: number;
+    sets?: number[];
+    durationSec?: number;
+    distanceM?: number;
     variantId?: string;
   };
 }
 
 export interface EntryDialogResult {
   exerciseId: string;
+  /** Discriminator the caller switches on when shaping the create /
+   *  update payload — saves a second `findExerciseDefinition` lookup
+   *  on the consumer side. */
+  measurement: MeasurementType;
   /**
    * Variant id, if the user picked one. Tri-state semantics so callers
    * can distinguish "no change" from "explicitly clear":
@@ -49,8 +62,16 @@ export interface EntryDialogResult {
    */
   variantId?: string | null;
   timestamp: string;
+  /** Populated for `'reps'` and `'weight'` measurement; `0` otherwise. */
   reps: number;
+  /** Populated for `'reps'` and `'weight'` measurement; `[]` otherwise. */
   sets: number[];
+  /** Populated for `'time'` and `'distance-time'` measurement;
+   *  `undefined` otherwise. */
+  durationSec?: number;
+  /** Populated for `'distance-time'` measurement; `undefined`
+   *  otherwise. Always rounded to whole meters. */
+  distanceM?: number;
 }
 
 /**
@@ -58,15 +79,21 @@ export interface EntryDialogResult {
  * its form fields off the catalog definition so any new exercise drops
  * in without component-level changes.
  *
- * Only the `'reps'` measurement is wired here; `validateExerciseEntry`
- * rejects a `'weight'` payload without a `weightKg` companion, so a
- * weight-measurement definition cannot be opened in this dialog without
- * a separate field path.
+ * Three measurement paths are wired:
+ *   - `'reps'` — reps + sets list, sums into the entry total.
+ *   - `'time'` — single mm:ss duration input.
+ *   - `'distance-time'` — distance (km) + companion duration (mm:ss).
+ *     Both required; the catalog `min`/`max` constrain `distanceM`,
+ *     the duration uses the same parser as the plank path.
+ *
+ * `'weight'` and `'distance'` measurements still need their own
+ * companion fields (weightKg / distanceM-only) — the form branches
+ * off `def.measurement` so adding them is additive.
  *
  * Caps come from `def.min` / `def.max` so the input clamps and
- * `canSubmit()` locks at the ceiling — closes the
- * "validator rejects after canSubmit() said yes" gap that the
- * pushup-only `CreateEntryDialogComponent` had.
+ * `canSubmit()` locks at the ceiling — closes the "validator rejects
+ * after canSubmit() said yes" gap that the pushup-only
+ * `CreateEntryDialogComponent` had.
  */
 @Component({
   selector: 'app-entry-dialog',
@@ -139,57 +166,116 @@ export interface EntryDialogResult {
         </mat-form-field>
       }
 
-      @for (set of sets(); track $index) {
-        <div class="set-row">
-          <mat-form-field appearance="outline">
+      @if (isDistanceTimeMeasurement()) {
+        <mat-form-field appearance="outline">
+          <mat-label i18n="@@entryDialog.distance">Distanz (km)</mat-label>
+          <input
+            matInput
+            type="number"
+            inputmode="decimal"
+            placeholder="5.00"
+            [min]="minKm()"
+            [max]="maxKm()"
+            step="0.01"
+            [value]="distanceInput()"
+            (input)="distanceInput.set(asValue($event))"
+            required
+          />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label i18n="@@entryDialog.duration">Dauer (mm:ss)</mat-label>
+          <input
+            matInput
+            type="text"
+            inputmode="numeric"
+            placeholder="25:00"
+            pattern="^[0-9]+:[0-5][0-9]$"
+            [value]="durationInput()"
+            (input)="durationInput.set(asValue($event))"
+            required
+          />
+        </mat-form-field>
+      } @else if (isTimeMeasurement()) {
+        <mat-form-field appearance="outline">
+          <mat-label i18n="@@entryDialog.duration">Dauer (mm:ss)</mat-label>
+          <input
+            matInput
+            type="text"
+            inputmode="numeric"
+            placeholder="01:30"
+            pattern="^[0-9]+:[0-5][0-9]$"
+            [value]="durationInput()"
+            (input)="durationInput.set(asValue($event))"
+            required
+          />
+        </mat-form-field>
+      } @else {
+        @for (set of sets(); track $index) {
+          <div class="set-row">
+            <mat-form-field appearance="outline">
+              @if (hasMultipleSets()) {
+                <mat-label i18n="@@setLabel">Set {{ $index + 1 }}</mat-label>
+              } @else {
+                <mat-label i18n="@@repsLabel">Reps</mat-label>
+              }
+              <input
+                matInput
+                type="number"
+                [min]="0"
+                [max]="data.definition.max"
+                step="1"
+                [value]="set"
+                (input)="updateSet($index, asValue($event))"
+                required
+              />
+            </mat-form-field>
             @if (hasMultipleSets()) {
-              <mat-label i18n="@@setLabel">Set {{ $index + 1 }}</mat-label>
-            } @else {
-              <mat-label i18n="@@repsLabel">Reps</mat-label>
+              <button
+                type="button"
+                mat-icon-button
+                (click)="removeSet($index)"
+                i18n-aria-label="@@removeSetAria"
+                aria-label="Set entfernen"
+              >
+                <mat-icon>remove_circle_outline</mat-icon>
+              </button>
             }
-            <input
-              matInput
-              type="number"
-              [min]="0"
-              [max]="data.definition.max"
-              step="1"
-              [value]="set"
-              (input)="updateSet($index, asValue($event))"
-              required
-            />
-          </mat-form-field>
-          @if (hasMultipleSets()) {
-            <button
-              type="button"
-              mat-icon-button
-              (click)="removeSet($index)"
-              i18n-aria-label="@@removeSetAria"
-              aria-label="Set entfernen"
-            >
-              <mat-icon>remove_circle_outline</mat-icon>
-            </button>
-          }
-          @if ($last) {
-            <button
-              type="button"
-              mat-icon-button
-              (click)="addSet()"
-              i18n-aria-label="@@addSetAria"
-              aria-label="Set hinzufügen"
-            >
-              <mat-icon>add_circle_outline</mat-icon>
-            </button>
-          }
-        </div>
-      }
-      @if (hasMultipleSets()) {
-        <div class="total-reps" i18n="@@totalReps">
-          Gesamt: {{ totalReps() }} Reps
-        </div>
+            @if ($last) {
+              <button
+                type="button"
+                mat-icon-button
+                (click)="addSet()"
+                i18n-aria-label="@@addSetAria"
+                aria-label="Set hinzufügen"
+              >
+                <mat-icon>add_circle_outline</mat-icon>
+              </button>
+            }
+          </div>
+        }
+        @if (hasMultipleSets()) {
+          <div class="total-reps" i18n="@@totalReps">
+            Gesamt: {{ totalReps() }} Reps
+          </div>
+        }
       }
       @if (overCap()) {
-        <div class="total-reps" i18n="@@entryDialog.overCap">
-          Maximum: {{ data.definition.max }} pro Eintrag
+        <div class="total-reps">
+          @if (overCapKind() === 'duration') {
+            <span i18n="@@entryDialog.overCapDuration"
+              >Maximum-Dauer: {{ formattedDurationMax() }}</span
+            >
+          } @else if (
+            overCapKind() === 'distance' || isTimeMeasurement()
+          ) {
+            <span i18n="@@entryDialog.overCapTime"
+              >Maximum: {{ formattedMax() }}</span
+            >
+          } @else {
+            <span i18n="@@entryDialog.overCap"
+              >Maximum: {{ data.definition.max }} pro Eintrag</span
+            >
+          }
         </div>
       }
     </mat-dialog-content>
@@ -222,13 +308,53 @@ export class EntryDialogComponent {
       : this.defaultDateTimeLocal()
   );
 
+  readonly isTimeMeasurement = computed(
+    () => this.data.definition.measurement === 'time'
+  );
+
+  readonly isDistanceTimeMeasurement = computed(
+    () => this.data.definition.measurement === 'distance-time'
+  );
+
   readonly sets = signal<number[]>(
     this.data.initial?.sets?.length
       ? [...this.data.initial.sets]
-      : this.data.initial
+      : this.data.initial && this.data.initial.reps > 0
         ? [this.data.initial.reps]
         : [0]
   );
+
+  /**
+   * Free-text mm:ss input for time-measurement exercises (plank) and
+   * the duration companion of distance-time exercises (cardio.running).
+   * Pre-filled from `initial.durationSec` in edit mode.
+   */
+  readonly durationInput = signal(
+    this.data.initial?.durationSec !== undefined
+      ? formatExerciseValue(this.data.initial.durationSec, 's')
+      : ''
+  );
+
+  readonly durationSec = computed(() =>
+    parseDurationToSeconds(this.durationInput())
+  );
+
+  /**
+   * Distance input in km (decimal) for distance-time exercises. Stored
+   * persistently as integer meters via `distanceM` — the catalog
+   * `min`/`max` are also meters, so we render them as km here only for
+   * the user-facing input.
+   */
+  readonly distanceInput = signal(
+    this.data.initial?.distanceM !== undefined
+      ? formatKmInput(this.data.initial.distanceM)
+      : ''
+  );
+
+  readonly distanceM = computed(() => parseKmToMeters(this.distanceInput()));
+
+  readonly minKm = computed(() => this.data.definition.min / 1000);
+  readonly maxKm = computed(() => this.data.definition.max / 1000);
 
   readonly variantControl = new FormControl<string>(
     this.data.initial?.variantId ?? '',
@@ -241,16 +367,67 @@ export class EntryDialogComponent {
     this.sets().reduce((sum, s) => sum + (s > 0 ? s : 0), 0)
   );
 
-  readonly overCap = computed(
-    () => this.totalReps() > this.data.definition.max
+  /** Display form of `def.max` for the over-cap hint, using the same
+   *  unit-aware formatter as the section card and stats table — a
+   *  300 s plank cap renders as "5:00". */
+  readonly formattedMax = computed(() =>
+    formatExerciseValue(this.data.definition.max, this.data.definition.unit)
   );
 
-  readonly canSubmit = computed(
-    () =>
-      this.timestamp().length > 0 &&
-      this.totalReps() >= this.data.definition.min &&
-      !this.overCap()
+  /** Companion-duration ceiling display for the distance-time hint. */
+  readonly formattedDurationMax = computed(() =>
+    formatExerciseValue(COMPANION_BOUNDS.durationSec.max, 's')
   );
+
+  /**
+   * Which cap (if any) is currently exceeded. Lets the template show a
+   * distance-specific or duration-specific message for distance-time
+   * entries instead of always rendering `def.max` (which is the
+   * distance ceiling and would mislead when only the duration is over).
+   */
+  readonly overCapKind = computed<'distance' | 'duration' | 'value' | null>(
+    () => {
+      if (this.isDistanceTimeMeasurement()) {
+        const m = this.distanceM();
+        const sec = this.durationSec();
+        if (m !== null && m > this.data.definition.max) return 'distance';
+        if (sec !== null && sec > COMPANION_BOUNDS.durationSec.max)
+          return 'duration';
+        return null;
+      }
+      if (this.isTimeMeasurement()) {
+        const sec = this.durationSec();
+        return sec !== null && sec > this.data.definition.max ? 'value' : null;
+      }
+      return this.totalReps() > this.data.definition.max ? 'value' : null;
+    }
+  );
+
+  readonly overCap = computed(() => this.overCapKind() !== null);
+
+  readonly canSubmit = computed(() => {
+    if (this.timestamp().length === 0) return false;
+    if (this.isDistanceTimeMeasurement()) {
+      const m = this.distanceM();
+      const sec = this.durationSec();
+      return (
+        m !== null &&
+        m >= this.data.definition.min &&
+        sec !== null &&
+        sec > 0 &&
+        !this.overCap()
+      );
+    }
+    if (this.isTimeMeasurement()) {
+      const sec = this.durationSec();
+      return (
+        sec !== null && sec >= this.data.definition.min && !this.overCap()
+      );
+    }
+    return (
+      this.totalReps() >= this.data.definition.min && !this.overCap()
+    );
+  });
 
   readonly showVariantPicker = computed(
     () => (this.data.definition.variants?.length ?? 0) > 0
@@ -290,9 +467,6 @@ export class EntryDialogComponent {
 
   submit(): void {
     if (!this.canSubmit()) return;
-    const validSets = this.sets().filter((s) => s > 0);
-    const reps = validSets.reduce((sum, s) => sum + s, 0);
-    if (reps <= 0) return;
 
     // Preserve the original ISO timestamp when the user didn't touch
     // the field in edit mode, mirroring CreateEntryDialogComponent's
@@ -322,8 +496,49 @@ export class EntryDialogComponent {
             ? { variantId: null }
             : {};
 
+    const measurement = this.data.definition.measurement;
+
+    if (measurement === 'time') {
+      const sec = this.durationSec();
+      if (sec === null || sec <= 0) return;
+      const result: EntryDialogResult = {
+        exerciseId: this.data.definition.id,
+        measurement,
+        ...variantPatch,
+        timestamp,
+        reps: 0,
+        sets: [],
+        durationSec: sec,
+      };
+      this.dialogRef.close(result);
+      return;
+    }
+
+    if (measurement === 'distance-time') {
+      const m = this.distanceM();
+      const sec = this.durationSec();
+      if (m === null || m <= 0 || sec === null || sec <= 0) return;
+      const result: EntryDialogResult = {
+        exerciseId: this.data.definition.id,
+        measurement,
+        ...variantPatch,
+        timestamp,
+        reps: 0,
+        sets: [],
+        distanceM: m,
+        durationSec: sec,
+      };
+      this.dialogRef.close(result);
+      return;
+    }
+
+    const validSets = this.sets().filter((s) => s > 0);
+    const reps = validSets.reduce((sum, s) => sum + s, 0);
+    if (reps <= 0) return;
+
     const result: EntryDialogResult = {
       exerciseId: this.data.definition.id,
+      measurement,
       ...variantPatch,
       timestamp,
       reps,
@@ -342,3 +557,48 @@ export class EntryDialogComponent {
 }
 
 const VARIANT_LABELS: Record<string, string> = {};
+
+/**
+ * Parse `m+:ss` (single colon, any number of minute digits, exactly two
+ * second digits in the 0–59 range) into integer seconds. Returns `null`
+ * for malformed input so the caller can disable submit instead of
+ * writing `NaN` to Firestore. Hours are out of scope — the plank cap
+ * tops out at 7200 s ("120:00") and we want the shortest format that
+ * still covers it.
+ */
+function parseDurationToSeconds(input: string): number | null {
+  const trimmed = input.trim();
+  if (!trimmed) return null;
+  const match = /^(\d+):([0-5]\d)$/.exec(trimmed);
+  if (!match) return null;
+  const minutes = Number(match[1]);
+  const seconds = Number(match[2]);
+  if (!Number.isFinite(minutes) || !Number.isFinite(seconds)) return null;
+  return minutes * 60 + seconds;
+}
+
+/**
+ * Parse a free-text km input ("5", "5.25", "0.10") into integer
+ * meters. Returns `null` for empty/non-numeric/non-positive input so
+ * the caller can disable submit instead of writing `NaN` or `0` to
+ * Firestore. Locale-specific separators ("5,25") are tolerated by
+ * normalising the comma to a dot — `Number()` itself is en-locale.
+ */
+function parseKmToMeters(input: string): number | null {
+  const trimmed = input.trim().replace(',', '.');
+  if (!trimmed) return null;
+  const km = Number(trimmed);
+  if (!Number.isFinite(km) || km <= 0) return null;
+  return Math.round(km * 1000);
+}
+
+/**
+ * Render a stored `distanceM` as a km string for the form input.
+ * Always uses dot as decimal separator because the `<input
+ * type="number">` element binds to dot-locale regardless of the
+ * surrounding `LOCALE_ID`.
+ */
+function formatKmInput(distanceM: number): string {
+  if (!Number.isFinite(distanceM) || distanceM <= 0) return '';
+  return (distanceM / 1000).toFixed(2);
+}

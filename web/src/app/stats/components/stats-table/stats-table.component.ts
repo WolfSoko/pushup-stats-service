@@ -26,6 +26,9 @@ import { UserConfigApiService } from '@pu-stats/data-access';
 import {
   displayPushupType,
   findExerciseDefinition,
+  formatEntryDisplay,
+  formatExerciseValue,
+  measurementValueField,
   PushupRecord,
   pushupRecordToUnified,
   UnifiedEntry,
@@ -49,13 +52,18 @@ import { exerciseDisplayName } from '../../i18n/exercise-display-names';
  * `kind` discriminator so the parent store can dispatch to the right
  * Firestore service. `exerciseId` and `variantId` are only meaningful
  * when `kind === 'exercise'`; `type` only when `kind === 'pushup'`.
+ *
+ * Either `reps` (with optional `sets`) or `durationSec` is set,
+ * depending on the underlying exercise's measurement.
  */
 export interface StatsTableUpdate {
   kind: 'pushup' | 'exercise';
   id: string;
   timestamp: string;
-  reps: number;
+  reps?: number;
   sets?: number[];
+  durationSec?: number;
+  distanceM?: number;
   source: string;
   type?: string;
   exerciseId?: string;
@@ -189,7 +197,13 @@ export class StatsTableComponent {
   constructor() {
     this.dataSource.sortingDataAccessor = (item, property) => {
       if (property === 'timestamp') return new Date(item.timestamp).getTime();
-      if (property === 'reps') return item.reps;
+      // The "reps" column renders measurement-aware values (reps for
+      // sit-ups/squats, durationSec for plank, distanceM for the
+      // composite distance-time cardio.running). Sort by the primary
+      // measurement field so the displayed value drives ordering —
+      // otherwise distance-time rows would tie on duration and plank
+      // rows would tie on the normalized 0 reps.
+      if (property === 'reps') return this.sortValue(item);
       if (property === 'source') return item.source;
       if (property === 'type') return this.typeLabel(item);
       if (property === 'exercise') return this.exerciseLabel(item);
@@ -298,6 +312,12 @@ export class StatsTableComponent {
               timestamp: entry.timestamp,
               reps: entry.reps,
               sets: entry.sets,
+              ...(entry.durationSec !== undefined
+                ? { durationSec: entry.durationSec }
+                : {}),
+              ...(entry.distanceM !== undefined
+                ? { distanceM: entry.distanceM }
+                : {}),
               variantId: entry.variantId,
             },
           },
@@ -311,16 +331,31 @@ export class StatsTableComponent {
             id: entry._id,
             exerciseId: entry.exerciseId,
             timestamp: result.timestamp,
-            reps: result.reps,
-            // Same single-set-collapse rule as the pushup branch:
-            // explicit `[]` clears a stale per-set breakdown.
-            sets:
-              result.sets.length > 1
-                ? result.sets
-                : entry.sets !== undefined
-                  ? []
-                  : undefined,
             source: entry.source,
+            // Measurement-aware:
+            //   - 'time' (plank): durationSec only.
+            //   - 'distance-time' (cardio.running): distanceM + durationSec.
+            //   - reps measurements: reps + optional sets. The sets
+            //     branch keeps the explicit-clear sentinel `[]` when
+            //     collapsing a multi-set entry to a single set so a
+            //     stale per-set breakdown doesn't survive the update
+            //     via Firestore field-omit.
+            ...(result.measurement === 'time'
+              ? { durationSec: result.durationSec ?? 0 }
+              : result.measurement === 'distance-time'
+                ? {
+                    distanceM: result.distanceM ?? 0,
+                    durationSec: result.durationSec ?? 0,
+                  }
+                : {
+                    reps: result.reps,
+                    sets:
+                      result.sets.length > 1
+                        ? result.sets
+                        : entry.sets !== undefined
+                          ? []
+                          : undefined,
+                  }),
             // Forward the dialog's tri-state variantId verbatim:
             // - non-empty string sets the variant
             // - explicit null tells the store to clear it via deleteField()
@@ -362,6 +397,45 @@ export class StatsTableComponent {
     if (!sets?.length) return '';
     const allSame = sets.every((s) => s === sets[0]);
     return allSame ? `${sets.length}×${sets[0]}` : sets.join(' + ');
+  }
+
+  /**
+   * Renders the "Reps" column for any measurement type. Pushup rows
+   * fall through to the legacy reps + sets path; for catalog
+   * exercises we route through {@link formatEntryDisplay} which
+   * handles the composite distance-time format and the per-unit
+   * formatting in one place.
+   */
+  formatEntry(entry: UnifiedEntry): string {
+    if (entry.kind === 'pushup') return String(entry.reps);
+    const def = findExerciseDefinition(entry.exerciseId);
+    if (!def) return String(entry.reps);
+    return formatEntryDisplay(entry, def);
+  }
+
+  /**
+   * Sort key for the "Reps" column. Picks the primary measurement
+   * field per definition: distance for cardio.running, duration for
+   * plank, reps for everything else. Falls back to `entry.reps` when
+   * the catalog id is missing — same fallback the table uses for
+   * stale entries.
+   */
+  private sortValue(entry: UnifiedEntry): number {
+    if (entry.kind === 'pushup') return entry.reps;
+    const def = findExerciseDefinition(entry.exerciseId);
+    if (!def) return entry.reps;
+    const field = measurementValueField(def.measurement);
+    return (entry[field] as number | undefined) ?? entry.reps;
+  }
+
+  /**
+   * Format a duration cell. Delegates to the unit-aware
+   * `formatExerciseValue` so the same helper drives the section card,
+   * the dialog cap hint, and this column — keeps display logic in one
+   * place when more units (kg, m) land in later phases.
+   */
+  formatDuration(totalSec: number): string {
+    return formatExerciseValue(totalSec, 's');
   }
 
   private async loadShowSourceFromDb(): Promise<void> {
