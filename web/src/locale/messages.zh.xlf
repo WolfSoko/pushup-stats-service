@@ -4444,10 +4444,16 @@
         <target>距离 (公里)</target>
       </segment>
     </unit>
-    <unit id="entryDialog.duration">
+    <unit id="entryDialog.durationMinutes">
       <segment state="translated">
-        <source>Dauer (mm:ss)</source>
-        <target>时长 (mm:ss)</target>
+        <source>Minuten</source>
+        <target>分钟</target>
+      </segment>
+    </unit>
+    <unit id="entryDialog.durationSeconds">
+      <segment state="translated">
+        <source>Sekunden</source>
+        <target>秒</target>
       </segment>
     </unit>
     <unit id="entryDialog.overCapDuration">

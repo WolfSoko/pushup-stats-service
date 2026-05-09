@@ -3828,10 +3828,16 @@
         <target>Distancia (km)</target>
       </segment>
     </unit>
-    <unit id="entryDialog.duration">
+    <unit id="entryDialog.durationMinutes">
       <segment state="translated">
-        <source>Dauer (mm:ss)</source>
-        <target>Duración (mm:ss)</target>
+        <source>Minuten</source>
+        <target>Minutos</target>
+      </segment>
+    </unit>
+    <unit id="entryDialog.durationSeconds">
+      <segment state="translated">
+        <source>Sekunden</source>
+        <target>Segundos</target>
       </segment>
     </unit>
     <unit id="entryDialog.overCapDuration">

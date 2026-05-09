@@ -3234,10 +3234,16 @@ Deine Position: # ·  Reps        </source>
         <target>Distanse (km)</target>
       </segment>
     </unit>
-    <unit id="entryDialog.duration">
+    <unit id="entryDialog.durationMinutes">
       <segment state="translated">
-        <source>Dauer (mm:ss)</source>
-        <target>Varighet (mm:ss)</target>
+        <source>Minuten</source>
+        <target>Minutter</target>
+      </segment>
+    </unit>
+    <unit id="entryDialog.durationSeconds">
+      <segment state="translated">
+        <source>Sekunden</source>
+        <target>Sekunder</target>
       </segment>
     </unit>
     <unit id="entryDialog.overCapDuration">

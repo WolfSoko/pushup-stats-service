@@ -107,8 +107,7 @@ describe('EntryDialogComponent', () => {
       cmp.variantControl.setValue('wide');
       cmp.submit();
 
-      const result = dialogRef.close.mock
-        .calls[0][0] as EntryDialogResult;
+      const result = dialogRef.close.mock.calls[0][0] as EntryDialogResult;
       expect(result.variantId).toBe('wide');
       expect(result.exerciseId).toBe('pushup');
     });
@@ -122,8 +121,7 @@ describe('EntryDialogComponent', () => {
       cmp.updateSet(0, '20');
       cmp.submit();
 
-      const result = dialogRef.close.mock
-        .calls[0][0] as EntryDialogResult;
+      const result = dialogRef.close.mock.calls[0][0] as EntryDialogResult;
       expect('variantId' in result).toBe(false);
     });
 
@@ -142,8 +140,7 @@ describe('EntryDialogComponent', () => {
       cmp.variantControl.setValue('');
       cmp.submit();
 
-      const result = dialogRef.close.mock
-        .calls[0][0] as EntryDialogResult;
+      const result = dialogRef.close.mock.calls[0][0] as EntryDialogResult;
       // Tri-state contract: null = clear (deleteField on update),
       // not omitted (which the store would treat as "no change").
       expect(result.variantId).toBeNull();
@@ -161,8 +158,7 @@ describe('EntryDialogComponent', () => {
       });
       cmp.submit();
 
-      const result = dialogRef.close.mock
-        .calls[0][0] as EntryDialogResult;
+      const result = dialogRef.close.mock.calls[0][0] as EntryDialogResult;
       expect('variantId' in result).toBe(false);
     });
 
@@ -182,8 +178,7 @@ describe('EntryDialogComponent', () => {
       // a concurrent variant change by re-asserting the same string.
       cmp.submit();
 
-      const result = dialogRef.close.mock
-        .calls[0][0] as EntryDialogResult;
+      const result = dialogRef.close.mock.calls[0][0] as EntryDialogResult;
       expect('variantId' in result).toBe(false);
     });
   });
@@ -201,8 +196,7 @@ describe('EntryDialogComponent', () => {
       cmp.submit();
 
       expect(dialogRef.close).toHaveBeenCalledTimes(1);
-      const result = dialogRef.close.mock
-        .calls[0][0] as EntryDialogResult;
+      const result = dialogRef.close.mock.calls[0][0] as EntryDialogResult;
       expect(result.exerciseId).toBe('legs.squats');
       expect(result.reps).toBe(25);
       expect(result.sets).toEqual([25]);
@@ -266,8 +260,7 @@ describe('EntryDialogComponent', () => {
       cmp.timestamp.set('2026-04-15T10:00');
       cmp.submit();
 
-      const result = dialogRef.close.mock
-        .calls[0][0] as EntryDialogResult;
+      const result = dialogRef.close.mock.calls[0][0] as EntryDialogResult;
       expect(result.reps).toBe(45);
       expect(result.sets).toEqual([10, 15, 20]);
     });
@@ -282,8 +275,7 @@ describe('EntryDialogComponent', () => {
       cmp.timestamp.set('2026-04-15T10:00');
       cmp.submit();
 
-      const result = dialogRef.close.mock
-        .calls[0][0] as EntryDialogResult;
+      const result = dialogRef.close.mock.calls[0][0] as EntryDialogResult;
       expect(result.sets).toEqual([10, 20]);
       expect(result.reps).toBe(30);
     });
@@ -324,8 +316,7 @@ describe('EntryDialogComponent', () => {
       });
       cmp.submit();
 
-      const result = dialogRef.close.mock
-        .calls[0][0] as EntryDialogResult;
+      const result = dialogRef.close.mock.calls[0][0] as EntryDialogResult;
       expect(result.timestamp).toBe(original);
     });
   });
@@ -341,30 +332,32 @@ describe('EntryDialogComponent', () => {
   });
 
   describe('Time measurement (plank)', () => {
-    it('marks the form as time-measurement and starts with empty mm:ss', () => {
+    it('marks the form as time-measurement and starts with empty min/sec inputs', () => {
       const cmp = createComponent({
         definition: plankDef,
         exerciseName: 'Plank',
       });
       expect(cmp.isTimeMeasurement()).toBe(true);
-      expect(cmp.durationInput()).toBe('');
+      expect(cmp.durationMinutesInput()).toBe('');
+      expect(cmp.durationSecondsInput()).toBe('');
+      expect(cmp.durationSec()).toBeNull();
       expect(cmp.canSubmit()).toBe(false);
     });
 
-    it('parses mm:ss into seconds and submits durationSec', () => {
+    it('combines the min/sec inputs into seconds and submits durationSec', () => {
       const cmp = createComponent({
         definition: plankDef,
         exerciseName: 'Plank',
       });
       cmp.timestamp.set('2026-04-15T10:00');
-      cmp.durationInput.set('1:30');
+      cmp.durationMinutesInput.set('1');
+      cmp.durationSecondsInput.set('30');
       expect(cmp.durationSec()).toBe(90);
       expect(cmp.canSubmit()).toBe(true);
 
       cmp.submit();
 
-      const result = dialogRef.close.mock
-        .calls[0][0] as EntryDialogResult;
+      const result = dialogRef.close.mock.calls[0][0] as EntryDialogResult;
       expect(result.measurement).toBe('time');
       expect(result.durationSec).toBe(90);
       expect(result.exerciseId).toBe('plank.standard');
@@ -372,14 +365,107 @@ describe('EntryDialogComponent', () => {
       expect(result.sets).toEqual([]);
     });
 
-    it('rejects malformed mm:ss strings', () => {
+    it('treats an empty minutes field as 0 when seconds are filled in', () => {
       const cmp = createComponent({
         definition: plankDef,
         exerciseName: 'Plank',
       });
       cmp.timestamp.set('2026-04-15T10:00');
-      cmp.durationInput.set('not-a-time');
+      cmp.durationSecondsInput.set('45');
+      expect(cmp.durationSec()).toBe(45);
+      expect(cmp.canSubmit()).toBe(true);
+    });
+
+    it('treats an empty seconds field as 0 when minutes are filled in', () => {
+      const cmp = createComponent({
+        definition: plankDef,
+        exerciseName: 'Plank',
+      });
+      cmp.timestamp.set('2026-04-15T10:00');
+      cmp.durationMinutesInput.set('2');
+      expect(cmp.durationSec()).toBe(120);
+      expect(cmp.canSubmit()).toBe(true);
+    });
+
+    it('rejects seconds outside the 0-59 range', () => {
+      const cmp = createComponent({
+        definition: plankDef,
+        exerciseName: 'Plank',
+      });
+      cmp.timestamp.set('2026-04-15T10:00');
+      cmp.durationMinutesInput.set('1');
+      cmp.durationSecondsInput.set('60');
       expect(cmp.durationSec()).toBeNull();
+      expect(cmp.canSubmit()).toBe(false);
+    });
+
+    it('rejects negative numbers in either field', () => {
+      const cmp = createComponent({
+        definition: plankDef,
+        exerciseName: 'Plank',
+      });
+      cmp.timestamp.set('2026-04-15T10:00');
+      cmp.durationMinutesInput.set('-1');
+      cmp.durationSecondsInput.set('30');
+      expect(cmp.durationSec()).toBeNull();
+      expect(cmp.canSubmit()).toBe(false);
+    });
+
+    it('rejects negative seconds when minutes are valid', () => {
+      const cmp = createComponent({
+        definition: plankDef,
+        exerciseName: 'Plank',
+      });
+      cmp.timestamp.set('2026-04-15T10:00');
+      cmp.durationMinutesInput.set('1');
+      cmp.durationSecondsInput.set('-5');
+      expect(cmp.durationSec()).toBeNull();
+      expect(cmp.canSubmit()).toBe(false);
+    });
+
+    it('accepts 59 as the upper boundary for seconds', () => {
+      const cmp = createComponent({
+        definition: plankDef,
+        exerciseName: 'Plank',
+      });
+      cmp.timestamp.set('2026-04-15T10:00');
+      cmp.durationMinutesInput.set('1');
+      cmp.durationSecondsInput.set('59');
+      expect(cmp.durationSec()).toBe(119);
+      expect(cmp.canSubmit()).toBe(true);
+    });
+
+    it('rejects fractional values in either field', () => {
+      const cmp = createComponent({
+        definition: plankDef,
+        exerciseName: 'Plank',
+      });
+      cmp.timestamp.set('2026-04-15T10:00');
+      cmp.durationMinutesInput.set('1.9');
+      cmp.durationSecondsInput.set('30');
+      // Without the integer check, "1.9" would silently floor to 1 and
+      // save 90 s instead of 114 s — regression guard for that.
+      expect(cmp.durationSec()).toBeNull();
+      expect(cmp.canSubmit()).toBe(false);
+
+      cmp.durationMinutesInput.set('1');
+      cmp.durationSecondsInput.set('30.5');
+      expect(cmp.durationSec()).toBeNull();
+      expect(cmp.canSubmit()).toBe(false);
+    });
+
+    it('disables submit on a zero-duration entry even if def.min permits it', () => {
+      const cmp = createComponent({
+        definition: { ...plankDef, min: 0 },
+        exerciseName: 'Plank',
+      });
+      cmp.timestamp.set('2026-04-15T10:00');
+      cmp.durationMinutesInput.set('0');
+      cmp.durationSecondsInput.set('0');
+      // canSubmit() must agree with submit()'s `sec <= 0` early-return so
+      // the Save button can't enable on an entry the dialog would
+      // silently drop.
+      expect(cmp.durationSec()).toBe(0);
       expect(cmp.canSubmit()).toBe(false);
     });
 
@@ -389,12 +475,13 @@ describe('EntryDialogComponent', () => {
         exerciseName: 'Plank',
       });
       cmp.timestamp.set('2026-04-15T10:00');
-      cmp.durationInput.set('5:00');
+      cmp.durationMinutesInput.set('5');
+      cmp.durationSecondsInput.set('0');
       expect(cmp.overCap()).toBe(true);
       expect(cmp.canSubmit()).toBe(false);
     });
 
-    it('pre-fills mm:ss in edit mode from the entry durationSec', () => {
+    it('pre-fills min/sec in edit mode from the entry durationSec', () => {
       const cmp = createComponent({
         definition: plankDef,
         exerciseName: 'Plank',
@@ -404,8 +491,9 @@ describe('EntryDialogComponent', () => {
           durationSec: 95,
         },
       });
-      // 95 s → 1:35
-      expect(cmp.durationInput()).toBe('1:35');
+      // 95 s → 1 min 35 s
+      expect(cmp.durationMinutesInput()).toBe('1');
+      expect(cmp.durationSecondsInput()).toBe('35');
     });
   });
 
@@ -417,7 +505,8 @@ describe('EntryDialogComponent', () => {
       });
       expect(cmp.isDistanceTimeMeasurement()).toBe(true);
       expect(cmp.distanceInput()).toBe('');
-      expect(cmp.durationInput()).toBe('');
+      expect(cmp.durationMinutesInput()).toBe('');
+      expect(cmp.durationSecondsInput()).toBe('');
       expect(cmp.canSubmit()).toBe(false);
     });
 
@@ -464,11 +553,13 @@ describe('EntryDialogComponent', () => {
       cmp.distanceInput.set('5.00');
       expect(cmp.canSubmit()).toBe(false);
 
-      cmp.durationInput.set('25:00');
+      cmp.durationMinutesInput.set('25');
+      cmp.durationSecondsInput.set('0');
       expect(cmp.canSubmit()).toBe(true);
 
-      // Clearing the duration locks submit again.
-      cmp.durationInput.set('');
+      // Clearing both duration fields locks submit again.
+      cmp.durationMinutesInput.set('');
+      cmp.durationSecondsInput.set('');
       expect(cmp.canSubmit()).toBe(false);
     });
 
@@ -478,7 +569,8 @@ describe('EntryDialogComponent', () => {
         exerciseName: 'Laufen',
       });
       cmp.timestamp.set('2026-04-15T10:00');
-      cmp.durationInput.set('25:00');
+      cmp.durationMinutesInput.set('25');
+      cmp.durationSecondsInput.set('0');
 
       cmp.distanceInput.set('0.05');
       expect(cmp.canSubmit()).toBe(false);
@@ -499,8 +591,9 @@ describe('EntryDialogComponent', () => {
       });
       cmp.timestamp.set('2026-04-15T10:00');
       cmp.distanceInput.set('5.00');
-      // 86_400 s is the companion ceiling; 1500:00 = 90_000 s clears it.
-      cmp.durationInput.set('1500:00');
+      // 86_400 s is the companion ceiling; 1500 min = 90_000 s clears it.
+      cmp.durationMinutesInput.set('1500');
+      cmp.durationSecondsInput.set('0');
       expect(cmp.overCap()).toBe(true);
       expect(cmp.canSubmit()).toBe(false);
     });
@@ -512,13 +605,13 @@ describe('EntryDialogComponent', () => {
       });
       cmp.timestamp.set('2026-04-15T10:00');
       cmp.distanceInput.set('5.25');
-      cmp.durationInput.set('25:00');
+      cmp.durationMinutesInput.set('25');
+      cmp.durationSecondsInput.set('0');
       expect(cmp.canSubmit()).toBe(true);
 
       cmp.submit();
 
-      const result = dialogRef.close.mock
-        .calls[0][0] as EntryDialogResult;
+      const result = dialogRef.close.mock.calls[0][0] as EntryDialogResult;
       expect(result.measurement).toBe('distance-time');
       expect(result.exerciseId).toBe('cardio.running');
       expect(result.distanceM).toBe(5250);
@@ -539,7 +632,8 @@ describe('EntryDialogComponent', () => {
         },
       });
       expect(cmp.distanceInput()).toBe('5.25');
-      expect(cmp.durationInput()).toBe('25:30');
+      expect(cmp.durationMinutesInput()).toBe('25');
+      expect(cmp.durationSecondsInput()).toBe('30');
     });
 
     it('exposes minKm/maxKm derived from def.min/def.max', () => {

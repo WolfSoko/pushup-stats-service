@@ -24,6 +24,8 @@ import {
   MeasurementType,
 } from '@pu-stats/models';
 
+const SECONDS_MAX = 59;
+
 export interface EntryDialogData {
   /** Catalog definition the dialog parameters its form against. */
   definition: ExerciseDefinition;
@@ -121,6 +123,13 @@ export interface EntryDialogResult {
       .set-row mat-form-field {
         flex: 1;
       }
+      .duration-row {
+        display: flex;
+        gap: 8px;
+      }
+      .duration-row mat-form-field {
+        flex: 1;
+      }
       .total-reps {
         font-size: 13px;
         color: var(--mat-sys-on-surface-variant);
@@ -182,33 +191,65 @@ export interface EntryDialogResult {
             required
           />
         </mat-form-field>
-        <mat-form-field appearance="outline">
-          <mat-label i18n="@@entryDialog.duration">Dauer (mm:ss)</mat-label>
-          <input
-            matInput
-            type="text"
-            inputmode="numeric"
-            placeholder="25:00"
-            pattern="^[0-9]+:[0-5][0-9]$"
-            [value]="durationInput()"
-            (input)="durationInput.set(asValue($event))"
-            required
-          />
-        </mat-form-field>
+        <div class="duration-row">
+          <mat-form-field appearance="outline">
+            <mat-label i18n="@@entryDialog.durationMinutes">Minuten</mat-label>
+            <input
+              matInput
+              type="number"
+              inputmode="numeric"
+              placeholder="25"
+              min="0"
+              step="1"
+              [value]="durationMinutesInput()"
+              (input)="durationMinutesInput.set(asValue($event))"
+            />
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label i18n="@@entryDialog.durationSeconds">Sekunden</mat-label>
+            <input
+              matInput
+              type="number"
+              inputmode="numeric"
+              placeholder="0"
+              min="0"
+              [max]="secondsMax"
+              step="1"
+              [value]="durationSecondsInput()"
+              (input)="durationSecondsInput.set(asValue($event))"
+            />
+          </mat-form-field>
+        </div>
       } @else if (isTimeMeasurement()) {
-        <mat-form-field appearance="outline">
-          <mat-label i18n="@@entryDialog.duration">Dauer (mm:ss)</mat-label>
-          <input
-            matInput
-            type="text"
-            inputmode="numeric"
-            placeholder="01:30"
-            pattern="^[0-9]+:[0-5][0-9]$"
-            [value]="durationInput()"
-            (input)="durationInput.set(asValue($event))"
-            required
-          />
-        </mat-form-field>
+        <div class="duration-row">
+          <mat-form-field appearance="outline">
+            <mat-label i18n="@@entryDialog.durationMinutes">Minuten</mat-label>
+            <input
+              matInput
+              type="number"
+              inputmode="numeric"
+              placeholder="1"
+              min="0"
+              step="1"
+              [value]="durationMinutesInput()"
+              (input)="durationMinutesInput.set(asValue($event))"
+            />
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label i18n="@@entryDialog.durationSeconds">Sekunden</mat-label>
+            <input
+              matInput
+              type="number"
+              inputmode="numeric"
+              placeholder="30"
+              min="0"
+              [max]="secondsMax"
+              step="1"
+              [value]="durationSecondsInput()"
+              (input)="durationSecondsInput.set(asValue($event))"
+            />
+          </mat-form-field>
+        </div>
       } @else {
         @for (set of sets(); track $index) {
           <div class="set-row">
@@ -265,9 +306,7 @@ export interface EntryDialogResult {
             <span i18n="@@entryDialog.overCapDuration"
               >Maximum-Dauer: {{ formattedDurationMax() }}</span
             >
-          } @else if (
-            overCapKind() === 'distance' || isTimeMeasurement()
-          ) {
+          } @else if (overCapKind() === 'distance' || isTimeMeasurement()) {
             <span i18n="@@entryDialog.overCapTime"
               >Maximum: {{ formattedMax() }}</span
             >
@@ -325,19 +364,27 @@ export class EntryDialogComponent {
   );
 
   /**
-   * Free-text mm:ss input for time-measurement exercises (plank) and
-   * the duration companion of distance-time exercises (cardio.running).
+   * Split duration input — minutes + seconds — for time-measurement
+   * exercises (plank) and the duration companion of distance-time
+   * exercises (cardio.running). Stored as strings so an empty field is
+   * representable; combined into integer seconds via `durationSec`.
    * Pre-filled from `initial.durationSec` in edit mode.
    */
-  readonly durationInput = signal(
-    this.data.initial?.durationSec !== undefined
-      ? formatExerciseValue(this.data.initial.durationSec, 's')
-      : ''
+  private readonly initialDurationParts = splitDurationParts(
+    this.data.initial?.durationSec
   );
 
+  readonly durationMinutesInput = signal(this.initialDurationParts.minutes);
+  readonly durationSecondsInput = signal(this.initialDurationParts.seconds);
+
   readonly durationSec = computed(() =>
-    parseDurationToSeconds(this.durationInput())
+    parseDurationFromParts(
+      this.durationMinutesInput(),
+      this.durationSecondsInput()
+    )
   );
+
+  readonly secondsMax = SECONDS_MAX;
 
   /**
    * Distance input in km (decimal) for distance-time exercises. Stored
@@ -421,12 +468,13 @@ export class EntryDialogComponent {
     if (this.isTimeMeasurement()) {
       const sec = this.durationSec();
       return (
-        sec !== null && sec >= this.data.definition.min && !this.overCap()
+        sec !== null &&
+        sec > 0 &&
+        sec >= this.data.definition.min &&
+        !this.overCap()
       );
     }
-    return (
-      this.totalReps() >= this.data.definition.min && !this.overCap()
-    );
+    return this.totalReps() >= this.data.definition.min && !this.overCap();
   });
 
   readonly showVariantPicker = computed(
@@ -559,22 +607,48 @@ export class EntryDialogComponent {
 const VARIANT_LABELS: Record<string, string> = {};
 
 /**
- * Parse `m+:ss` (single colon, any number of minute digits, exactly two
- * second digits in the 0–59 range) into integer seconds. Returns `null`
- * for malformed input so the caller can disable submit instead of
- * writing `NaN` to Firestore. Hours are out of scope — the plank cap
- * tops out at 7200 s ("120:00") and we want the shortest format that
- * still covers it.
+ * Combine the two number-input parts into total integer seconds.
+ * Returns `null` when both parts are empty or any field is invalid, so
+ * the caller can disable submit instead of writing `NaN`/`0` to
+ * Firestore. Either part empty is treated as 0 — typing only minutes or
+ * only seconds is a valid shortcut.
  */
-function parseDurationToSeconds(input: string): number | null {
-  const trimmed = input.trim();
-  if (!trimmed) return null;
-  const match = /^(\d+):([0-5]\d)$/.exec(trimmed);
-  if (!match) return null;
-  const minutes = Number(match[1]);
-  const seconds = Number(match[2]);
-  if (!Number.isFinite(minutes) || !Number.isFinite(seconds)) return null;
+function parseDurationFromParts(
+  minutesInput: string,
+  secondsInput: string
+): number | null {
+  const minTrim = minutesInput.trim();
+  const secTrim = secondsInput.trim();
+  if (minTrim === '' && secTrim === '') return null;
+
+  const minutes = minTrim === '' ? 0 : Number(minTrim);
+  const seconds = secTrim === '' ? 0 : Number(secTrim);
+  // Reject fractional input (e.g. "1.9") so a paste-into-the-number-field
+  // doesn't silently truncate to a shorter saved duration. The native
+  // step="1" attribute only flags constraint validity; it does not stop
+  // the value from reaching this parser.
+  if (!Number.isInteger(minutes) || !Number.isInteger(seconds)) return null;
+  if (minutes < 0 || seconds < 0) return null;
+  if (seconds > SECONDS_MAX) return null;
+
   return minutes * 60 + seconds;
+}
+
+/**
+ * Split a stored total-seconds value into the two strings shown in the
+ * minutes / seconds inputs. Empty strings when no initial value, so the
+ * fields render blank in create mode.
+ */
+function splitDurationParts(totalSec: number | undefined): {
+  minutes: string;
+  seconds: string;
+} {
+  if (totalSec === undefined || !Number.isFinite(totalSec) || totalSec <= 0) {
+    return { minutes: '', seconds: '' };
+  }
+  const m = Math.floor(totalSec / 60);
+  const s = Math.floor(totalSec % 60);
+  return { minutes: String(m), seconds: String(s) };
 }
 
 /**
