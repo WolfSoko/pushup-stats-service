@@ -39,6 +39,7 @@ import {
   PUSHUP_TYPES,
   PushupTypeInfo,
 } from '@pu-stats/models';
+import { exerciseDisplayName } from '../../i18n/exercise-display-names';
 
 /**
  * Synthetic id for the implicit "Liegestütze (Standard)" exercise inside
@@ -257,7 +258,7 @@ interface PushupTypeOption {
           <mat-label i18n="@@trainingEntryDialog.exercise">Übung</mat-label>
           <mat-select
             [value]="exerciseId()"
-            (valueChange)="exerciseId.set($event)"
+            (valueChange)="onExerciseChange($event)"
             [disabled]="isEditMode"
             data-testid="training-entry-exercise"
           >
@@ -596,7 +597,17 @@ export class TrainingEntryDialogComponent {
 
   readonly currentDefinition = computed<ExerciseDefinition | null>(() => {
     if (this.mode() !== 'exercise') return null;
-    return findExerciseDefinition(this.exerciseId());
+    const def = findExerciseDefinition(this.exerciseId());
+    if (def) return def;
+    // Stale-data fallback: in edit mode, the catalog id may have been
+    // renamed or removed since the entry was written. Synthesize a
+    // permissive `ExerciseDefinition` so the form still renders against
+    // the original measurement and the user can fix the entry instead
+    // of staring at a frozen, never-submittable dialog.
+    if (this.isEditMode && this.data?.kind === 'exercise') {
+      return syntheticDefinitionFor(this.data, this.category());
+    }
+    return null;
   });
 
   // ----- timestamp & set state --------------------------------------------
@@ -817,12 +828,28 @@ export class TrainingEntryDialogComponent {
     this.variantControl.setValue('');
   }
 
+  /**
+   * Exercise picker change. Resets the variant control and the
+   * measurement-specific inputs so a stale variant id from the previous
+   * exercise can't survive the switch and be rejected as
+   * `invalid-variant` by the data-access validator on submit.
+   */
+  onExerciseChange(next: string): void {
+    if (this.isEditMode) return;
+    this.exerciseId.set(next);
+    this.variantControl.setValue('');
+    this.sets.set([0]);
+    this.durationMinutesInput.set('');
+    this.durationSecondsInput.set('');
+    this.distanceInput.set('');
+  }
+
   exerciseVariantLabel(variantId: string): string {
     return variantId;
   }
 
   exerciseLabel(id: string): string {
-    return EXERCISE_NAMES[id] ?? id;
+    return exerciseDisplayName(id);
   }
 
   addSet(): void {
@@ -960,7 +987,14 @@ export class TrainingEntryDialogComponent {
     if (!this.data) return 'pushup';
     if (this.data.kind === 'pushup') return 'pushup';
     const def = findExerciseDefinition(this.data.exerciseId);
-    return def?.categoryId ?? 'pushup';
+    if (def) return def.categoryId;
+    // Stale exerciseId (renamed/removed in the catalog): stay in
+    // exercise mode so the dialog doesn't silently flip to pushup,
+    // which would also corrupt the emitted payload shape on submit.
+    // Pick the category the id is prefixed with when it follows the
+    // dotted catalog convention (e.g. `'abs.weighted-situps'` → `abs`),
+    // otherwise default to the first non-pushup catalog category.
+    return inferExerciseCategory(this.data.exerciseId);
   }
 
   private initialExerciseId(): string {
@@ -1039,13 +1073,6 @@ const CATEGORY_NAMES: Record<ExerciseCategoryId, () => string> = {
   mobility: () => 'Mobility',
 };
 
-const EXERCISE_NAMES: Record<string, string> = {
-  'abs.situps': $localize`:@@exercise.abs.situps.name:Sit-ups`,
-  'legs.squats': $localize`:@@exercise.legs.squats.name:Kniebeugen`,
-  'plank.standard': $localize`:@@exercise.plank.standard.name:Plank`,
-  'cardio.running': $localize`:@@exercise.cardio.running.name:Laufen`,
-};
-
 function buildCategoryOptions(): ReadonlyArray<CategoryOption> {
   // Filter to categories that actually have something to log in this
   // dialog: pushup (always — handled separately) plus any catalog
@@ -1113,4 +1140,62 @@ function parseKmToMeters(input: string): number | null {
 function formatKmInput(distanceM: number): string {
   if (!Number.isFinite(distanceM) || distanceM <= 0) return '';
   return (distanceM / 1000).toFixed(2);
+}
+
+/**
+ * Infer the catalog category for a stale `exerciseId` whose catalog
+ * entry has been renamed or removed. Catalog ids follow the dotted
+ * convention `'<category>.<exercise>'`, so the prefix is enough to
+ * recover the right dashboard mode without a registry lookup. Falls
+ * back to the first non-pushup category that has at least one catalog
+ * exercise so the dialog never opens in pushup mode for an
+ * exercise-kind entry.
+ */
+function inferExerciseCategory(
+  exerciseId: string | undefined
+): ExerciseCategoryId {
+  const prefix = exerciseId?.split('.')[0];
+  const known = EXERCISE_CATEGORIES.find((c) => c.id === prefix);
+  if (known && known.id !== 'pushup') return known.id;
+  const byCategory = exercisesByCategory();
+  const fallback = EXERCISE_CATEGORIES.find(
+    (c) => c.id !== 'pushup' && (byCategory.get(c.id)?.length ?? 0) > 0
+  );
+  return fallback?.id ?? 'abs';
+}
+
+/**
+ * Build a permissive `ExerciseDefinition` for a stale catalog id so
+ * the edit dialog can still render an entry whose original definition
+ * has been renamed or removed. Picks the measurement off the existing
+ * payload (durationSec → time, distanceM+durationSec → distance-time,
+ * else reps) and uses {@link COMPANION_BOUNDS} for the cap so the
+ * over-cap hint and submit gate keep working.
+ */
+function syntheticDefinitionFor(
+  data: TrainingEntryDialogData,
+  categoryId: ExerciseCategoryId
+): ExerciseDefinition {
+  const measurement: MeasurementType =
+    data.distanceM !== undefined && data.durationSec !== undefined
+      ? 'distance-time'
+      : data.durationSec !== undefined
+        ? 'time'
+        : 'reps';
+  const bounds =
+    measurement === 'reps'
+      ? COMPANION_BOUNDS.reps
+      : measurement === 'time'
+        ? COMPANION_BOUNDS.durationSec
+        : COMPANION_BOUNDS.distanceM;
+  const unit =
+    measurement === 'reps' ? 'reps' : measurement === 'time' ? 's' : 'm';
+  return {
+    id: data.exerciseId ?? '',
+    categoryId,
+    measurement,
+    min: bounds.min,
+    max: bounds.max,
+    unit,
+  };
 }

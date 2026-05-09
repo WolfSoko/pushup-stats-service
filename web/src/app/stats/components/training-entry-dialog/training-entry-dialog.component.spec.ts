@@ -120,6 +120,23 @@ describe('TrainingEntryDialogComponent', () => {
       });
     });
 
+    it('clears the variant control and value fields when the exercise picker changes', () => {
+      const { component } = createDialog(null);
+
+      component.onCategoryChange('abs');
+      component.variantControl.setValue('weighted');
+      component.updateSet(0, '12');
+
+      // Simulate the picker switching to a different exercise within
+      // the same category. The variant id from the previous exercise
+      // would otherwise survive and be rejected as `invalid-variant`
+      // by the data-access validator on submit.
+      component.onExerciseChange('legs.squats');
+
+      expect(component.variantControl.value).toBe('');
+      expect(component.sets()).toEqual([0]);
+    });
+
     it('caps reps at the catalog max for the chosen exercise', () => {
       const { component } = createDialog(null);
 
@@ -206,6 +223,32 @@ describe('TrainingEntryDialogComponent', () => {
       // store to issue a Firestore deleteField() instead of leaving
       // the stale variant on the doc.
       expect(result.variantId).toBeNull();
+    });
+
+    it('keeps an exercise-kind entry in exercise mode when the catalog id is stale', () => {
+      // Regression: a renamed/removed catalog id used to flip the
+      // dialog into pushup mode and corrupt the emitted payload shape
+      // on submit.
+      const { component, closeSpy } = createDialog({
+        kind: 'exercise',
+        exerciseId: 'abs.removed-variant',
+        timestamp: '2026-02-10T13:45:00+01:00',
+        reps: 25,
+        sets: [25],
+      });
+
+      expect(component.mode()).toBe('exercise');
+      // Category prefix `'abs.…'` recovers the right dashboard
+      // category even though the specific exercise no longer exists.
+      expect(component.category()).toBe('abs');
+      // The synthetic fallback definition lets the user fix and resubmit
+      // the entry without staring at a frozen dialog.
+      expect(component.canSubmit()).toBe(true);
+
+      component.submit();
+      const result = closeSpy.mock.calls[0][0] as TrainingEntryDialogResult;
+      expect(result.kind).toBe('exercise');
+      expect(result.exerciseId).toBe('abs.removed-variant');
     });
   });
 });
