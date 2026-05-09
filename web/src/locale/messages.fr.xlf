@@ -824,15 +824,6 @@
         <target>L'entrée n'a pas pu être enregistrée.</target>
       </segment>
     </unit>
-    <unit id="admin.title">
-      <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:74,76</note>
-      </notes>
-      <segment state="translated">
-        <source>Admin-Bereich</source>
-        <target>Zone d'administration</target>
-      </segment>
-    </unit>
     <unit id="admin.bulk.title">
       <notes>
         <note category="location">web/src/app/admin/admin-page.component.ts:80,82</note>
@@ -1373,24 +1364,6 @@
       <segment state="translated">
         <source> Sprache </source>
         <target> langue </target>
-      </segment>
-    </unit>
-    <unit id="nav.lang.de">
-      <notes>
-        <note category="location">web/src/app/app.html:104,107</note>
-      </notes>
-      <segment state="translated">
-        <source>Deutsch</source>
-        <target>Allemand</target>
-      </segment>
-    </unit>
-    <unit id="nav.lang.en">
-      <notes>
-        <note category="location">web/src/app/app.html:113,115</note>
-      </notes>
-      <segment state="translated">
-        <source>English</source>
-        <target>Anglais</target>
       </segment>
     </unit>
     <unit id="nav.aria">
@@ -2023,24 +1996,6 @@
       <segment state="translated">
         <source>Dunkles Design aktiv. Klicken zum Wechseln</source>
         <target>Thème sombre actif. Cliquez pour changer</target>
-      </segment>
-    </unit>
-    <unit id="leaderboard.page.title">
-      <notes>
-        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:5,7</note>
-      </notes>
-      <segment state="translated">
-        <source>Bestenliste</source>
-        <target>Classement</target>
-      </segment>
-    </unit>
-    <unit id="leaderboard.page.subtitle">
-      <notes>
-        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:8,10</note>
-      </notes>
-      <segment state="translated">
-        <source>Heute · Letzte 7 Tage · Letzte 30 Tage</source>
-        <target>Aujourd'hui · 7 derniers jours · 30 derniers jours</target>
       </segment>
     </unit>
     <unit id="landing.leaderboard.daily">
@@ -3154,24 +3109,6 @@
         <target><ph id="0" equiv="name" disp="profile.displayName"/> sur Pushup Tracker</target>
       </segment>
     </unit>
-    <unit id="reminders.page.title">
-      <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:42,44</note>
-      </notes>
-      <segment state="translated">
-        <source>🔔 Erinnerungen</source>
-        <target>🔔 Rappels</target>
-      </segment>
-    </unit>
-    <unit id="reminders.page.subtitle">
-      <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:45,47</note>
-      </notes>
-      <segment state="translated">
-        <source>Liegestütz-Erinnerungen &amp; Push-Benachrichtigungen</source>
-        <target>Rappels push-up et notifications push</target>
-      </segment>
-    </unit>
     <unit id="reminder.section.title">
       <notes>
         <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:52,54</note>
@@ -3287,42 +3224,6 @@
       <segment state="translated">
         <source>15–480 Minuten</source>
         <target>15-480 minutes</target>
-      </segment>
-    </unit>
-    <unit id="reminder.language.label">
-      <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:141,142</note>
-      </notes>
-      <segment state="translated">
-        <source> Sprache der Zitate </source>
-        <target> Langue des cotations </target>
-      </segment>
-    </unit>
-    <unit id="reminder.language.aria">
-      <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:147,148</note>
-      </notes>
-      <segment state="translated">
-        <source>Erinnerungssprache</source>
-        <target>Langage mémoire</target>
-      </segment>
-    </unit>
-    <unit id="reminder.language.de">
-      <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:151,152</note>
-      </notes>
-      <segment state="translated">
-        <source>DE</source>
-        <target>DE</target>
-      </segment>
-    </unit>
-    <unit id="reminder.language.en">
-      <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:154,155</note>
-      </notes>
-      <segment state="translated">
-        <source>EN</source>
-        <target>FR</target>
       </segment>
     </unit>
     <unit id="reminder.quickLog.label">
@@ -4941,24 +4842,6 @@
         <target>Répétitions max.</target>
       </segment>
     </unit>
-    <unit id="settingsTitle">
-      <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:47,48</note>
-      </notes>
-      <segment state="translated">
-        <source>Einstellungen</source>
-        <target>Paramètres</target>
-      </segment>
-    </unit>
-    <unit id="settingsSubtitle">
-      <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:49,50</note>
-      </notes>
-      <segment state="translated">
-        <source>User-Profil &amp; Tagesziel</source>
-        <target>Profil utilisateur et objectif quotidien</target>
-      </segment>
-    </unit>
     <unit id="guest.banner.text">
       <notes>
         <note category="location">web/src/app/stats/shell/settings-page.component.ts:58,60</note>
@@ -5199,33 +5082,6 @@
         <target> Contrôle le nombre de particules de l'animation « Cible atteinte » (40k / 120k / 200k). </target>
       </segment>
     </unit>
-    <unit id="saveSettings">
-      <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:248,250</note>
-      </notes>
-      <segment state="translated">
-        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">save</pc> Speichern </source>
-        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">save</pc> Enregistrer </target>
-      </segment>
-    </unit>
-    <unit id="saving">
-      <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:252,253</note>
-      </notes>
-      <segment state="translated">
-        <source>Speichert…</source>
-        <target>Enregistre…</target>
-      </segment>
-    </unit>
-    <unit id="saved">
-      <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:255,256</note>
-      </notes>
-      <segment state="translated">
-        <source>Gespeichert.</source>
-        <target>Enregistré.</target>
-      </segment>
-    </unit>
     <unit id="settings.remindersLinkTitle">
       <notes>
         <note category="location">web/src/app/stats/shell/settings-page.component.ts:260,261</note>
@@ -5395,15 +5251,6 @@
       <segment state="translated">
         <source> Live: <ph id="0" equiv="INTERPOLATION" disp="{{ liveConnected() ? &apos;verbunden&apos; : &apos;getrennt&apos; }}"/> </source>
         <target> En direct: <ph id="0" equiv="INTERPOLATION" disp="{{ liveConnected()? &apos;verbunden&apos;: &apos;getrennt&apos; }}"/> </target>
-      </segment>
-    </unit>
-    <unit id="allTimeSummaryAria">
-      <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:41,42</note>
-      </notes>
-      <segment state="translated">
-        <source>All-Time Kurzübersicht</source>
-        <target>Aperçu rapide de tous les temps</target>
       </segment>
     </unit>
     <unit id="allTimeTotal">

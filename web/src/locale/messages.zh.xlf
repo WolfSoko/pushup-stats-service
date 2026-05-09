@@ -1696,14 +1696,6 @@
         <source>Vier-Phasen-Plan in Richtung saubere einarmige Liegestütze: Archer und Wand-Negativen, Bank-Negativen, partielle Einarmige, schließlich volle Einarmige im weiten Stand. 4 aktive Tage + 3 Ruhetage pro Woche.</source>
       <target>四阶段计划，走向标准单臂俯卧撑：射手和墙负重、凳负重、部分单臂，最后在宽站姿下完全单臂。每周 4 个活跃日 + 3 个休息日。</target></segment>
     </unit>
-    <unit id="admin.title">
-      <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:74,76</note>
-      </notes>
-      <segment state="translated">
-        <source>Admin-Bereich</source>
-      <target>管理员区域</target></segment>
-    </unit>
     <unit id="admin.bulk.title">
       <notes>
         <note category="location">web/src/app/admin/admin-page.component.ts:80,82</note>
@@ -2785,22 +2777,6 @@
         <source>Dunkles Design aktiv. Klicken zum Wechseln</source>
       <target>深色设计已激活。点击切换</target></segment>
     </unit>
-    <unit id="leaderboard.page.title">
-      <notes>
-        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:5,7</note>
-      </notes>
-      <segment state="translated">
-        <source>Bestenliste</source>
-      <target>排行榜</target></segment>
-    </unit>
-    <unit id="leaderboard.page.subtitle">
-      <notes>
-        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:8,10</note>
-      </notes>
-      <segment state="translated">
-        <source>Heute · Letzte 7 Tage · Letzte 30 Tage</source>
-      <target>今天 · 过去 7 天 · 过去 30 天</target></segment>
-    </unit>
     <unit id="landing.leaderboard.daily">
       <notes>
         <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:24,26</note>
@@ -3800,22 +3776,6 @@
         <target><ph id="0" equiv="name" disp="profile.displayName" /> 的 Pushup Tracker 个人资料</target>
       </segment>
     </unit>
-    <unit id="reminders.page.title">
-      <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:42,44</note>
-      </notes>
-      <segment state="translated">
-        <source>🔔 Erinnerungen</source>
-      <target>🔔 提醒</target></segment>
-    </unit>
-    <unit id="reminders.page.subtitle">
-      <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:45,47</note>
-      </notes>
-      <segment state="translated">
-        <source>Liegestütz-Erinnerungen &amp; Push-Benachrichtigungen</source>
-      <target>俯卧撑提醒和推送通知</target></segment>
-    </unit>
     <unit id="reminder.section.title">
       <notes>
         <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:52,54</note>
@@ -3923,38 +3883,6 @@
       <segment state="translated">
         <source>15–480 Minuten</source>
       <target>15–480分钟</target></segment>
-    </unit>
-    <unit id="reminder.language.label">
-      <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:141,142</note>
-      </notes>
-      <segment state="translated">
-        <source> Sprache der Zitate </source>
-      <target> 引言语言 </target></segment>
-    </unit>
-    <unit id="reminder.language.aria">
-      <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:147,148</note>
-      </notes>
-      <segment state="translated">
-        <source>Erinnerungssprache</source>
-      <target>提醒语言</target></segment>
-    </unit>
-    <unit id="reminder.language.de">
-      <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:151,152</note>
-      </notes>
-      <segment state="translated">
-        <source>DE</source>
-      <target>德文</target></segment>
-    </unit>
-    <unit id="reminder.language.en">
-      <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:154,155</note>
-      </notes>
-      <segment state="translated">
-        <source>EN</source>
-      <target>英文</target></segment>
     </unit>
     <unit id="reminder.quickLog.label">
       <notes>
@@ -5449,22 +5377,6 @@
         <source>Reps max</source>
       <target>最多次数</target></segment>
     </unit>
-    <unit id="settingsTitle">
-      <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:80,81</note>
-      </notes>
-      <segment state="translated">
-        <source>Einstellungen</source>
-      <target>设置</target></segment>
-    </unit>
-    <unit id="settingsSubtitle">
-      <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:81,84</note>
-      </notes>
-      <segment state="translated">
-        <source>User-Profil &amp; Tagesziel</source>
-      <target>用户资料 &amp; 每日目标</target></segment>
-    </unit>
     <unit id="settings.status.saving">
       <notes>
         <note category="location">web/src/app/stats/shell/settings-page.component.ts:97,99</note>
@@ -5964,14 +5876,6 @@
       <segment state="translated">
         <source> Live: <ph id="0" equiv="INTERPOLATION" disp="{{ liveConnected() ? 'verbunden' : 'getrennt' }}" /> </source>
       <target> 实时：<ph id="0" equiv="INTERPOLATION" disp="{{ liveConnected() ? '连接中' : '已断开' }}" /> </target></segment>
-    </unit>
-    <unit id="allTimeSummaryAria">
-      <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:41,42</note>
-      </notes>
-      <segment state="translated">
-        <source>All-Time Kurzübersicht</source>
-      <target>全时间统计概览</target></segment>
     </unit>
     <unit id="allTimeTotal">
       <notes>

@@ -1,0 +1,36 @@
+name: Sync Translations
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'web/src/locale/messages.xlf'
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    # Prevent infinite loop: skip commits that this workflow itself created.
+    if: github.actor != 'github-actions[bot]'
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Sync translation files
+        # Exit 1 = changes were made, exit 0 = already in sync. Both are success.
+        run: python3 tools/src/sync-translations.py || true
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add web/src/locale/messages.*.xlf
+          if git diff --staged --quiet; then
+            echo "Translation files already in sync."
+          else
+            git commit -m "chore(i18n): sync translation files with messages.xlf [skip ci]"
+            git push
+          fi

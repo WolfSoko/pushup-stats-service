@@ -1,124 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <xliff version="2.0" xmlns="urn:oasis:names:tc:xliff:document:2.0" srcLang="de" trgLang="no">
   <file id="ngi18n" original="ng.template">
-    <unit id="1713004850888488155">
-      <notes>
-        <note category="location">web/src/app/app.ts:81</note>
-
-
-            </notes>
-      <segment state="translated">
-        <source>Neue Version verfügbar</source>
-        <target>Ny versjon tilgjengelig</target>
-
-
-
-            </segment>
-
-
-
-        </unit>
-    <unit id="1933013871016789910">
-      <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:34</note>
-
-
-            </notes>
-      <segment state="translated">
-        <source>Gesamt</source>
-        <target>Totalt</target>
-
-
-
-            </segment>
-
-
-
-        </unit>
-    <unit id="2361265238320887165">
-      <notes>
-        <note category="location">libs/auth/src/lib/ui/login/login.component.html:26,27</note>
-
-
-            </notes>
-      <segment state="translated">
-        <source>Abmelden</source>
-        <target>Logg ut</target>
-
-
-
-            </segment>
-
-
-
-        </unit>
     <unit id="2721806142807617942">
       <segment state="translated">
         <source/>
         <target> Registrer </target>
       </segment>
     </unit>
-    <unit id="5889607835368180076">
-      <notes>
-        <note category="location">web/src/app/app.ts:82</note>
-
-
-            </notes>
-      <segment state="translated">
-        <source>Neu laden</source>
-        <target>Oppdater</target>
-
-
-
-            </segment>
-
-
-
-        </unit>
     <unit id="6031063121455734122">
       <segment state="translated">
         <source/>
         <target> Tilbake </target>
       </segment>
     </unit>
-    <unit id="7638356697128454089">
-      <notes>
-        <note category="location">libs/auth/src/lib/ui/login/login.component.html:25,26</note>
-
-
-            </notes>
-      <segment state="translated">
-        <source>Anmeldung erfolgreich!</source>
-        <target>Innlogging vellykket!</target>
-
-
-
-            </segment>
-
-
-
-        </unit>
-    <unit id="activeUser">
-      <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:64,65</note>
-
-
-            </notes>
-      <segment state="translated">
-        <source>
-          <ph id="0" equiv="INTERPOLATION" disp="{{ activeUserId() }}"/>
-Aktiv:         </source>
-        <target>
-          <ph id="0" equiv="INTERPOLATION" disp="{{ activeUserId() }}"/>
-Aktiv:         </target>
-
-
-
-            </segment>
-
-
-
-        </unit>
     <unit id="ads.dashboard.aria">
       <segment state="translated">
         <source>Werbung</source>
@@ -184,23 +78,6 @@ Aktiv:         </target>
       <segment state="translated">
         <source>All-Time Einträge</source>
         <target>Oppføringer (hele tiden)</target>
-
-
-
-            </segment>
-
-
-
-        </unit>
-    <unit id="allTimeSummaryAria">
-      <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:76,77</note>
-
-
-            </notes>
-      <segment state="translated">
-        <source>All-Time Kurzübersicht</source>
-        <target>Sammendrag hele tiden</target>
 
 
 
@@ -579,12 +456,6 @@ Aktiv:         </target>
         <target>Med serier</target>
       </segment>
     </unit>
-    <unit id="chart.avgSetSize">
-      <segment state="translated">
-        <source>&#x2300; Set-Gr&#x00F6;&#x00DF;e</source>
-        <target>&#x2300; Seriestørrelse</target>
-      </segment>
-    </unit>
     <unit id="app.title">
       <notes>
         <note category="location">web/src/app/app.html:11,12</note>
@@ -784,12 +655,6 @@ Aktiv:         </target>
         <target>Brukernavn</target>
       </segment>
     </unit>
-    <unit id="auth.onboarding.google.username.hint">
-      <segment state="translated">
-        <source/>
-        <target>Minst 2 tegn.</target>
-      </segment>
-    </unit>
     <unit id="auth.or">
       <segment state="translated">
         <source/>
@@ -806,12 +671,6 @@ Aktiv:         </target>
       <segment state="translated">
         <source/>
         <target> Tilbake </target>
-      </segment>
-    </unit>
-    <unit id="auth.register.finalizing">
-      <segment state="translated">
-        <source/>
-        <target>Oppretter konto og lagrer profil...</target>
       </segment>
     </unit>
     <unit id="auth.register.google.skipPassword">
@@ -832,28 +691,10 @@ Aktiv:         </target>
         <target>Min. 8 tegn, 1 tall og 1 spesialtegn.</target>
       </segment>
     </unit>
-    <unit id="auth.register.password.invalid">
-      <segment state="translated">
-        <source/>
-        <target>Passordet oppfyller ikke kravene.</target>
-      </segment>
-    </unit>
     <unit id="auth.register.password.repeat">
       <segment state="translated">
         <source/>
         <target>Gjenta passord</target>
-      </segment>
-    </unit>
-    <unit id="auth.register.password.repeat.invalid">
-      <segment state="translated">
-        <source/>
-        <target>Passordene samsvarer ikke.</target>
-      </segment>
-    </unit>
-    <unit id="auth.register.processing">
-      <segment state="translated">
-        <source/>
-        <target>Forbereder registrering...</target>
       </segment>
     </unit>
     <unit id="auth.register.submit">
@@ -1311,40 +1152,6 @@ Aktiv:         </target>
         <target>Måned</target>
       </segment>
     </unit>
-    <unit id="dashboard.leaderboard.subtitle">
-      <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html</note>
-
-
-            </notes>
-      <segment state="translated">
-        <source>Daily · Weekly · Monthly</source>
-        <target>Daglig · Ukentlig · Månedlig</target>
-
-
-
-            </segment>
-
-
-
-        </unit>
-    <unit id="dashboard.leaderboard.title">
-      <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html</note>
-
-
-            </notes>
-      <segment state="translated">
-        <source>Bestenliste</source>
-        <target>Rangert liste</target>
-
-
-
-            </segment>
-
-
-
-        </unit>
     <unit id="dashboardSubtitle">
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:13,16</note>
@@ -1379,24 +1186,6 @@ Aktiv:         </target>
 
 
         </unit>
-    <unit id="dayChartMode14h">
-      <segment state="translated">
-        <source/>
-        <target>14h dagmodus</target>
-      </segment>
-    </unit>
-    <unit id="dayChartMode24h">
-      <segment state="translated">
-        <source/>
-        <target>24h</target>
-      </segment>
-    </unit>
-    <unit id="dayChartModeLabel">
-      <segment state="translated">
-        <source/>
-        <target>Dagvisning</target>
-      </segment>
-    </unit>
     <unit id="deleteAria">
       <notes>
         <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:121</note>
@@ -1684,23 +1473,6 @@ Aktiv:         </target>
         <target>
           <ph id="0" equiv="INTERPOLATION" disp="{{ entries().length }}"/>
  oppføringer        </target>
-
-
-
-            </segment>
-
-
-
-        </unit>
-    <unit id="entriesInSelectedRange">
-      <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:175,177</note>
-
-
-            </notes>
-      <segment state="translated">
-        <source>Einträge im gewählten Zeitraum</source>
-        <target>Oppføringer i valgt periode</target>
 
 
 
@@ -2096,23 +1868,6 @@ Aktiv:         </target>
 
 
         </unit>
-    <unit id="landing.leaderboard.empty">
-      <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
-
-
-            </notes>
-      <segment state="translated">
-        <source>Noch keine Daten</source>
-        <target>Ingen data ennå</target>
-
-
-
-            </segment>
-
-
-
-        </unit>
     <unit id="landing.leaderboard.last30">
       <notes>
         <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html</note>
@@ -2368,18 +2123,6 @@ Deine Position: # ·  Reps        </source>
 
 
         </unit>
-    <unit id="leaderboard.page.subtitle">
-      <segment state="translated">
-        <source/>
-        <target>I dag · Siste 7 dager · Siste 30 dager</target>
-      </segment>
-    </unit>
-    <unit id="leaderboard.page.title">
-      <segment state="translated">
-        <source/>
-        <target>Leaderboard</target>
-      </segment>
-    </unit>
     <unit id="liveStateLabel">
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:21,23</note>
@@ -2410,23 +2153,6 @@ Deine Position: # ·  Reps        </source>
       <segment state="translated">
         <source> Lade Statistikdaten… </source>
         <target> Laster statistikkdata… </target>
-
-
-
-            </segment>
-
-
-
-        </unit>
-    <unit id="nav.account">
-      <notes>
-        <note category="location">web/src/app/app.html:91,93</note>
-
-
-            </notes>
-      <segment state="translated">
-        <source> Account </source>
-        <target> Konto </target>
 
 
 
@@ -2503,40 +2229,6 @@ Deine Position: # ·  Reps        </source>
 
 
         </unit>
-    <unit id="nav.lang.de">
-      <notes>
-        <note category="location">web/src/app/app.html:74,77</note>
-
-
-            </notes>
-      <segment state="translated">
-        <source>Deutsch</source>
-        <target>Tysk</target>
-
-
-
-            </segment>
-
-
-
-        </unit>
-    <unit id="nav.lang.en">
-      <notes>
-        <note category="location">web/src/app/app.html:83,85</note>
-
-
-            </notes>
-      <segment state="translated">
-        <source>English</source>
-        <target>Engelsk</target>
-
-
-
-            </segment>
-
-
-
-        </unit>
     <unit id="nav.language">
       <notes>
         <note category="location">web/src/app/app.html:65,68</note>
@@ -2560,40 +2252,6 @@ Deine Position: # ·  Reps        </source>
         <target>Leaderboard</target>
       </segment>
     </unit>
-    <unit id="nav.login">
-      <notes>
-        <note category="location">web/src/app/app.html:109,111</note>
-
-
-            </notes>
-      <segment state="translated">
-        <source>Login</source>
-        <target>Innlogging</target>
-
-
-
-            </segment>
-
-
-
-        </unit>
-    <unit id="nav.logout">
-      <notes>
-        <note category="location">web/src/app/app.html:104,106</note>
-
-
-            </notes>
-      <segment state="translated">
-        <source>Logout</source>
-        <target>Logg ut</target>
-
-
-
-            </segment>
-
-
-
-        </unit>
     <unit id="nav.openMenu">
       <notes>
         <note category="location">web/src/app/app.html:107,108</note>
@@ -2603,23 +2261,6 @@ Deine Position: # ·  Reps        </source>
       <segment state="translated">
         <source>Menü öffnen</source>
         <target>Åpne meny</target>
-
-
-
-            </segment>
-
-
-
-        </unit>
-    <unit id="nav.settings">
-      <notes>
-        <note category="location">web/src/app/app.html:55,58</note>
-
-
-            </notes>
-      <segment state="translated">
-        <source>Einstellungen</source>
-        <target>Innstillinger</target>
 
 
 
@@ -2654,125 +2295,6 @@ Deine Position: # ·  Reps        </source>
       <segment state="translated">
         <source> Keine Einträge im gewählten Zeitraum. </source>
         <target> Ingen oppføringer i valgt periode. </target>
-
-
-
-            </segment>
-
-
-
-        </unit>
-    <unit id="noEntryInPeriod">
-      <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:68,70</note>
-
-
-            </notes>
-      <segment state="translated">
-        <source>Noch kein Eintrag für diesen Zeitraum.</source>
-        <target>Ingen oppføring for denne perioden ennå.</target>
-
-
-
-            </segment>
-
-
-
-        </unit>
-    <unit id="period.day">
-      <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:52</note>
-
-
-            </notes>
-      <segment state="translated">
-        <source>Tag</source>
-        <target>Dag</target>
-
-
-
-            </segment>
-
-
-
-        </unit>
-    <unit id="period.month">
-      <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:54</note>
-
-
-            </notes>
-      <segment state="translated">
-        <source>Monat</source>
-        <target>Måned</target>
-
-
-
-            </segment>
-
-
-
-        </unit>
-    <unit id="period.range">
-      <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:56</note>
-
-
-            </notes>
-      <segment state="translated">
-        <source>Zeitraum</source>
-        <target>Periode</target>
-
-
-
-            </segment>
-
-
-
-        </unit>
-    <unit id="period.today">
-      <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:51</note>
-
-
-            </notes>
-      <segment state="translated">
-        <source>Heute</source>
-        <target>I dag</target>
-
-
-
-            </segment>
-
-
-
-        </unit>
-    <unit id="period.week">
-      <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:53</note>
-
-
-            </notes>
-      <segment state="translated">
-        <source>Woche</source>
-        <target>Uke</target>
-
-
-
-            </segment>
-
-
-
-        </unit>
-    <unit id="period.year">
-      <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:55</note>
-
-
-            </notes>
-      <segment state="translated">
-        <source>Jahr</source>
-        <target>År</target>
 
 
 
@@ -3207,33 +2729,6 @@ Deine Position: # ·  Reps        </source>
         <target> Total: <ph id="0" equiv="INTERPOLATION" disp="{{ totalReps() }}"/> reps </target>
       </segment>
     </unit>
-    <unit id="saveChanges">
-      <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:306,312</note>
-
-
-            </notes>
-      <segment state="translated">
-        <source>
-          <pc id="0" equivStart="START_BLOCK_IF" equivEnd="CLOSE_BLOCK_IF" type="other" dispStart="@if (editingId() &amp;&amp; isBusy(&apos;update&apos;, editBusyId())) {" dispEnd="}">
-            <pc id="1" equivStart="START_TAG_MAT_SPINNER" equivEnd="CLOSE_TAG_MAT_SPINNER" type="other" dispStart="&lt;mat-spinner diameter=&quot;14&quot;&gt;" dispEnd="&lt;/mat-spinner&gt;"/>
-          </pc>
-          <pc id="2" equivStart="START_BLOCK_ELSE" equivEnd="CLOSE_BLOCK_ELSE" type="other" dispStart="@else {" dispEnd="}"> Speichern </pc>
-        </source>
-        <target>
-          <pc id="0" equivStart="START_BLOCK_IF" equivEnd="CLOSE_BLOCK_IF" type="other" dispStart="@if (editingId() &amp;&amp; isBusy(&apos;update&apos;, editBusyId())) {" dispEnd="}">
-            <pc id="1" equivStart="START_TAG_MAT_SPINNER" equivEnd="CLOSE_TAG_MAT_SPINNER" type="other" dispStart="&lt;mat-spinner diameter=&quot;14&quot;&gt;" dispEnd="&lt;/mat-spinner&gt;"/>
-          </pc>
-          <pc id="2" equivStart="START_BLOCK_ELSE" equivEnd="CLOSE_BLOCK_ELSE" type="other" dispStart="@else {" dispEnd="}"> Lagre </pc>
-        </target>
-
-
-
-            </segment>
-
-
-
-        </unit>
     <unit id="saveEntry">
       <notes>
         <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:107</note>
@@ -3674,40 +3169,6 @@ Deine Position: # ·  Reps        </source>
         <target> Bare profiler med Offentlig profil aktivert vises på topplisten. Aktiver «Offentlig profil» nedenfor for å bruke dette alternativet. </target>
       </segment>
     </unit>
-    <unit id="settingsSubtitle">
-      <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:33,34</note>
-
-
-            </notes>
-      <segment state="translated">
-        <source>User-Profil &amp; Tagesziel</source>
-        <target>Brukerprofil &amp; daglig mål</target>
-
-
-
-            </segment>
-
-
-
-        </unit>
-    <unit id="settingsTitle">
-      <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:31,32</note>
-
-
-            </notes>
-      <segment state="translated">
-        <source>Einstellungen</source>
-        <target>Innstillinger</target>
-
-
-
-            </segment>
-
-
-
-        </unit>
     <unit id="sourceColumnToggle">
       <notes>
         <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:15,20</note>
@@ -3775,27 +3236,6 @@ Deine Position: # ·  Reps        </source>
 
 
         </unit>
-    <unit id="switchUser">
-      <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:60,62</note>
-
-
-            </notes>
-      <segment state="translated">
-        <source>
-          <pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">switch_account</pc>
- User wechseln         </source>
-        <target>
-          <pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">switch_account</pc>
- Bytt bruker         </target>
-
-
-
-            </segment>
-
-
-
-        </unit>
     <unit id="timestampLabel">
       <notes>
         <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:151,153</note>
@@ -3807,23 +3247,6 @@ Deine Position: # ·  Reps        </source>
       <segment state="translated">
         <source>Zeitpunkt</source>
         <target>Tidsstempel</target>
-
-
-
-            </segment>
-
-
-
-        </unit>
-    <unit id="title.fallback">
-      <notes>
-        <note category="location">web/src/app/app.ts:65</note>
-
-
-            </notes>
-      <segment state="translated">
-        <source>Dein Name 💪</source>
-        <target>Ditt navn 💪</target>
 
 
 
@@ -3911,57 +3334,6 @@ Deine Position: # ·  Reps        </source>
         <target>Åpne referanse</target>
       </segment>
     </unit>
-    <unit id="userIdHint">
-      <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:49,50</note>
-
-
-            </notes>
-      <segment state="translated">
-        <source> Wird für Multi-User-Zuordnung genutzt (Auth kommt später). </source>
-        <target> Brukes til tildeling av flere brukere (autentisering kommer senere). </target>
-
-
-
-            </segment>
-
-
-
-        </unit>
-    <unit id="userIdLabel">
-      <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:40,41</note>
-
-
-            </notes>
-      <segment state="translated">
-        <source>User ID</source>
-        <target>Bruker-ID</target>
-
-
-
-            </segment>
-
-
-
-        </unit>
-    <unit id="userIdPlaceholder">
-      <notes>
-        <note category="location">web/src/app/stats/shell/settings-page.component.ts:45,46</note>
-
-
-            </notes>
-      <segment state="translated">
-        <source>z.B. wolf</source>
-        <target>f.eks. wolf</target>
-
-
-
-            </segment>
-
-
-
-        </unit>
     <unit id="validate.email.email">
       <notes>
         <note category="location">libs/auth/src/lib/ui/login/login.component.ts:69</note>
@@ -4338,12 +3710,6 @@ Deine Position: # ·  Reps        </source>
         <target>Profil kunne ikke lagres. Vennligst prøv igjen.</target>
       </segment>
     </unit>
-    <unit id="admin.title">
-      <segment state="translated">
-        <source>Admin-Bereich</source>
-        <target>Administrasjonspanel</target>
-      </segment>
-    </unit>
     <unit id="admin.bulk.title">
       <segment state="translated">
         <source>Anonyme Benutzer aufräumen</source>
@@ -4566,12 +3932,6 @@ Deine Position: # ·  Reps        </source>
         <target> Kom i gang </target>
       </segment>
     </unit>
-    <unit id="period.total">
-      <segment state="translated">
-        <source>Gesamt</source>
-        <target>Totalt</target>
-      </segment>
-    </unit>
     <unit id="landing.free.badge">
       <segment state="translated">
         <source>kostenlos</source>
@@ -4776,18 +4136,6 @@ Deine Position: # ·  Reps        </source>
         <target>Push-abonnementene på alle enheter er fjernet.</target>
       </segment>
     </unit>
-    <unit id="reminders.page.title">
-      <segment state="translated">
-        <source>🔔 Erinnerungen</source>
-        <target>🔔 Påminnelser</target>
-      </segment>
-    </unit>
-    <unit id="reminders.page.subtitle">
-      <segment state="translated">
-        <source>Liegestütz-Erinnerungen &amp; Push-Benachrichtigungen</source>
-        <target>Armhevings-påminnelser &amp; push-varsler</target>
-      </segment>
-    </unit>
     <unit id="reminder.section.title">
       <segment state="translated">
         <source>🔔 Erinnerungen / Reminders</source>
@@ -4864,30 +4212,6 @@ Deine Position: # ·  Reps        </source>
       <segment state="translated">
         <source>15–480 Minuten</source>
         <target>15–480 minutter</target>
-      </segment>
-    </unit>
-    <unit id="reminder.language.label">
-      <segment state="translated">
-        <source> Sprache der Zitate </source>
-        <target> Språk for sitater </target>
-      </segment>
-    </unit>
-    <unit id="reminder.language.aria">
-      <segment state="translated">
-        <source>Erinnerungssprache</source>
-        <target>Påminnelsesspråk</target>
-      </segment>
-    </unit>
-    <unit id="reminder.language.de">
-      <segment state="translated">
-        <source>DE</source>
-        <target>DE</target>
-      </segment>
-    </unit>
-    <unit id="reminder.language.en">
-      <segment state="translated">
-        <source>EN</source>
-        <target>EN</target>
       </segment>
     </unit>
     <unit id="reminder.quickLog.label">
@@ -5229,12 +4553,6 @@ Deine Position: # ·  Reps        </source>
         <target>Ingen oppføringer ennå.</target>
       </segment>
     </unit>
-    <unit id="analysis.chartTitle">
-      <segment state="translated">
-        <source>Verlauf</source>
-        <target>Fremgang</target>
-      </segment>
-    </unit>
     <unit id="theme.toggle.auto">
       <notes>
         <note category="location">web/src/app/core/theme/theme-toggle.component.ts:41</note>
@@ -5375,12 +4693,6 @@ Deine Position: # ·  Reps        </source>
       <segment state="translated">
         <source>E-Mail:</source>
         <target>E-post:</target>
-      </segment>
-    </unit>
-    <unit id="impressum.contact.phone">
-      <segment state="translated">
-        <source>Telefon:</source>
-        <target>Telefon:</target>
       </segment>
     </unit>
     <unit id="impressum.liability.content.title">
