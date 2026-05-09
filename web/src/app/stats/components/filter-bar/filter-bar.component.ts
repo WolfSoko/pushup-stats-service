@@ -82,13 +82,12 @@ import {
           <button
             type="button"
             mat-stroked-button
-            class="step-btn step-btn--today"
+            class="step-btn"
             [disabled]="mode() === 'custom'"
             (click)="jumpToToday()"
             aria-label="Zum heutigen Zeitraum springen"
             i18n-aria-label="@@rangeTodayAria"
           >
-            <mat-icon class="step-icon-mobile">today</mat-icon>
             <span class="step-label" i18n="@@rangeToday">Heute</span>
           </button>
           <button
