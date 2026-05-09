@@ -1,3 +1,4 @@
+import { DecimalPipe } from '@angular/common';
 import { Component, computed, input, signal } from '@angular/core';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -24,7 +25,7 @@ const OTHER_COLOR = 'rgba(120, 120, 120, 0.55)';
 @Component({
   selector: 'app-type-pie',
   standalone: true,
-  imports: [MatButtonToggleModule, MatCheckboxModule],
+  imports: [DecimalPipe, MatButtonToggleModule, MatCheckboxModule],
   template: `
     @if (total() > 0) {
       <div class="wrap">
@@ -91,7 +92,9 @@ const OTHER_COLOR = 'rgba(120, 120, 120, 0.55)';
                 <span class="set-label" i18n="@@pie.avgSetSize"
                   >&#x2300; Set-Gr&#x00F6;&#x00DF;e</span
                 >
-                <span class="set-value">{{ seg.avgSetSize }}</span>
+                <span class="set-value">{{
+                  seg.avgSetSize | number: '1.0-1'
+                }}</span>
               </div>
             }
           }
