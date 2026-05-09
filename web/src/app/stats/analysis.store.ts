@@ -43,6 +43,8 @@ interface TrendPoint {
 }
 
 export interface TypeBreakdownDatum {
+  /** Canonical pushup type id — stable across locales. */
+  id: string;
   label: string;
   value: number;
   avgSetSize: number;
@@ -52,6 +54,14 @@ type AnalysisState = {
   from: string;
   to: string;
   dayChartMode: '24h' | '14h' | undefined;
+  // Reactive dependency for the fixed-window trend filters: bumped only
+  // when the local calendar day actually changes, so a polling interval
+  // can call `tickClock()` aggressively without forcing
+  // `weekFilter`/`monthFilter` to emit new params each minute (which would
+  // otherwise re-trigger the trend resource loaders and flicker the empty
+  // CTA back to false during the reload).
+  clockTick: number;
+  lastDayKey: string;
 };
 
 function isoWeek(date: Date): number {
@@ -85,38 +95,22 @@ function sortedUniqueDates(rows: PushupRecord[]): string[] {
   );
 }
 
-function expandToWeekRange(
-  from: string,
-  to: string
-): { from: string; to: string } {
-  const fromDate = new Date(`${from}T00:00:00`);
-  const day = fromDate.getDay() || 7;
-  fromDate.setDate(fromDate.getDate() - (day - 1));
+const TREND_WEEKS = 8;
+const TREND_MONTHS = 6;
 
-  const toDate = new Date(`${to}T00:00:00`);
-  const toDay = toDate.getDay() || 7;
-  toDate.setDate(toDate.getDate() + (7 - toDay));
-
-  return {
-    from: toLocalIsoDate(fromDate),
-    to: toLocalIsoDate(toDate),
-  };
+/** Monday of the ISO week containing the given date (local time, midnight). */
+function startOfIsoWeek(date: Date): Date {
+  const day = date.getDay() || 7;
+  return new Date(
+    date.getFullYear(),
+    date.getMonth(),
+    date.getDate() - (day - 1)
+  );
 }
 
-function expandToMonthRange(
-  from: string,
-  to: string
-): { from: string; to: string } {
-  const fromDate = new Date(`${from}T00:00:00`);
-  fromDate.setDate(1);
-
-  const toDate = new Date(`${to}T00:00:00`);
-  toDate.setMonth(toDate.getMonth() + 1, 0);
-
-  return {
-    from: toLocalIsoDate(fromDate),
-    to: toLocalIsoDate(toDate),
-  };
+/** First day of the calendar month containing the given date. */
+function startOfMonth(date: Date): Date {
+  return new Date(date.getFullYear(), date.getMonth(), 1);
 }
 
 export const AnalysisStore = signalStore(
@@ -126,6 +120,12 @@ export const AnalysisStore = signalStore(
       from: defaultRange.from,
       to: defaultRange.to,
       dayChartMode: undefined as '24h' | '14h' | undefined,
+      clockTick: 0,
+      // Seed with today so the first `tickClock()` after construction is a
+      // no-op; otherwise the 5-minute polling interval would force a
+      // spurious reload of weekEntriesResource/monthEntriesResource on
+      // its first iteration even when the calendar day hasn't changed.
+      lastDayKey: toLocalIsoDate(new Date()),
     };
   }),
   withProps(() => {
@@ -149,20 +149,54 @@ export const AnalysisStore = signalStore(
 
     const rangeMode = computed(() => inferRangeMode(store.from(), store.to()));
 
-    const weekFilter = computed(() => {
-      const from = store.from();
-      const to = store.to();
-      if (!from || !to) return { from, to };
-      return expandToWeekRange(from, to);
+    // Trends always span a fixed window ending today, independent of the
+    // page filter: 8 ISO weeks for weekTrend, 6 calendar months for
+    // monthTrend. This is intentional — users want to read recent
+    // momentum, not a slice of an arbitrary filter range. The
+    // `clockTick` signal is read so a session kept open across midnight
+    // re-evaluates the window when `tickClock()` fires.
+    const currentMonday = computed(() => {
+      store.clockTick();
+      return startOfIsoWeek(new Date());
     });
-    const monthFilter = computed(() => {
-      const from = store.from();
-      const to = store.to();
-      if (!from || !to) return { from, to };
-      return expandToMonthRange(from, to);
+    const currentMonthStart = computed(() => {
+      store.clockTick();
+      return startOfMonth(new Date());
     });
 
-    return { filter, rangeMode, weekFilter, monthFilter };
+    const weekFilter = computed(() => {
+      const monday = currentMonday();
+      const sunday = new Date(monday);
+      sunday.setDate(monday.getDate() + 6);
+      const from = new Date(monday);
+      from.setDate(monday.getDate() - 7 * (TREND_WEEKS - 1));
+      return {
+        from: toLocalIsoDate(from),
+        to: toLocalIsoDate(sunday),
+      };
+    });
+    const monthFilter = computed(() => {
+      const start = currentMonthStart();
+      const from = new Date(
+        start.getFullYear(),
+        start.getMonth() - (TREND_MONTHS - 1),
+        1
+      );
+      const to = new Date(start.getFullYear(), start.getMonth() + 1, 0);
+      return {
+        from: toLocalIsoDate(from),
+        to: toLocalIsoDate(to),
+      };
+    });
+
+    return {
+      filter,
+      rangeMode,
+      weekFilter,
+      monthFilter,
+      currentMonday,
+      currentMonthStart,
+    };
   }),
   withProps((store) => {
     const statsResource = resource({
@@ -221,66 +255,74 @@ export const AnalysisStore = signalStore(
 
     const weekRows = computed(() => store.weekEntriesResource.value() ?? []);
     const weekTrend = computed<TrendPoint[]>(() => {
+      // Pre-seed TREND_WEEKS ISO weeks (oldest → newest) so a sparse
+      // history still produces a fixed-length trend with explicit zero
+      // rows; otherwise users would silently see fewer than 8 buckets.
+      const monday = store.currentMonday();
       const byWeek = new Map<
         string,
         { total: number; entryCount: number; setsCount: number }
       >();
+      for (let i = TREND_WEEKS - 1; i >= 0; i--) {
+        const d = new Date(monday);
+        d.setDate(monday.getDate() - i * 7);
+        const key = `${isoWeekYear(d)}-W${String(isoWeek(d)).padStart(2, '0')}`;
+        byWeek.set(key, { total: 0, entryCount: 0, setsCount: 0 });
+      }
       for (const row of weekRows()) {
         const date = new Date(row.timestamp);
-        const year = isoWeekYear(date);
-        const week = String(isoWeek(date)).padStart(2, '0');
-        const key = `${year}-W${week}`;
-        const entry = byWeek.get(key) ?? {
-          total: 0,
-          entryCount: 0,
-          setsCount: 0,
-        };
+        const key = `${isoWeekYear(date)}-W${String(isoWeek(date)).padStart(2, '0')}`;
+        const entry = byWeek.get(key);
+        if (!entry) continue;
         entry.total += row.reps;
         entry.entryCount += 1;
         entry.setsCount += row.sets?.length ?? 0;
-        byWeek.set(key, entry);
       }
-      return [...byWeek.entries()]
-        .sort(([a], [b]) => a.localeCompare(b))
-        .slice(-8)
-        .map(([label, { total, entryCount, setsCount }]) => ({
+      return [...byWeek.entries()].map(
+        ([label, { total, entryCount, setsCount }]) => ({
           label,
           total,
           avgSetsPerEntry: entryCount
             ? Math.round((setsCount / entryCount) * 10) / 10
-            : 0,
-        }));
+            : undefined,
+        })
+      );
     });
 
     const monthRows = computed(() => store.monthEntriesResource.value() ?? []);
     const monthTrend = computed<TrendPoint[]>(() => {
+      const monthStart = store.currentMonthStart();
       const byMonth = new Map<
         string,
         { total: number; entryCount: number; setsCount: number }
       >();
+      for (let i = TREND_MONTHS - 1; i >= 0; i--) {
+        const d = new Date(
+          monthStart.getFullYear(),
+          monthStart.getMonth() - i,
+          1
+        );
+        const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+        byMonth.set(key, { total: 0, entryCount: 0, setsCount: 0 });
+      }
       for (const row of monthRows()) {
         const date = new Date(row.timestamp);
-        const label = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
-        const entry = byMonth.get(label) ?? {
-          total: 0,
-          entryCount: 0,
-          setsCount: 0,
-        };
+        const key = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
+        const entry = byMonth.get(key);
+        if (!entry) continue;
         entry.total += row.reps;
         entry.entryCount += 1;
         entry.setsCount += row.sets?.length ?? 0;
-        byMonth.set(label, entry);
       }
-      return [...byMonth.entries()]
-        .sort(([a], [b]) => a.localeCompare(b))
-        .slice(-12)
-        .map(([label, { total, entryCount, setsCount }]) => ({
+      return [...byMonth.entries()].map(
+        ([label, { total, entryCount, setsCount }]) => ({
           label,
           total,
           avgSetsPerEntry: entryCount
             ? Math.round((setsCount / entryCount) * 10) / 10
-            : 0,
-        }));
+            : undefined,
+        })
+      );
     });
 
     const typeBreakdown = computed<TypeBreakdownDatum[]>(() => {
@@ -298,6 +340,7 @@ export const AnalysisStore = signalStore(
       return [...byType.entries()]
         .sort((a, b) => b[1].reps - a[1].reps)
         .map(([key, { reps, allSets }]) => ({
+          id: key,
           label: displayPushupType(key, store._locale),
           value: reps,
           avgSetSize: allSets.length
@@ -396,51 +439,6 @@ export const AnalysisStore = signalStore(
       return Math.max(...allSets);
     });
 
-    const weekTrendSubtitle = computed(() => {
-      const { from, to } = store.weekFilter();
-      if (!from || !to) return '';
-      const fromDate = new Date(`${from}T00:00:00`);
-      const toDate = new Date(`${to}T00:00:00`);
-      const sameYear = fromDate.getFullYear() === toDate.getFullYear();
-      const fmtFrom = new Intl.DateTimeFormat(store._locale, {
-        day: 'numeric',
-        month: 'short',
-        ...(sameYear ? {} : { year: 'numeric' }),
-      });
-      const fmtTo = new Intl.DateTimeFormat(store._locale, {
-        day: 'numeric',
-        month: 'short',
-        year: 'numeric',
-      });
-      return `${fmtFrom.format(fromDate)} – ${fmtTo.format(toDate)}`;
-    });
-
-    const monthTrendSubtitle = computed(() => {
-      const { from, to } = store.monthFilter();
-      if (!from || !to) return '';
-      const fromDate = new Date(`${from}T00:00:00`);
-      const toDate = new Date(`${to}T00:00:00`);
-      const sameMonth =
-        fromDate.getMonth() === toDate.getMonth() &&
-        fromDate.getFullYear() === toDate.getFullYear();
-      if (sameMonth) {
-        return new Intl.DateTimeFormat(store._locale, {
-          month: 'long',
-          year: 'numeric',
-        }).format(fromDate);
-      }
-      const sameYear = fromDate.getFullYear() === toDate.getFullYear();
-      const fmtFrom = new Intl.DateTimeFormat(store._locale, {
-        month: 'long',
-        ...(sameYear ? {} : { year: 'numeric' }),
-      });
-      const fmtTo = new Intl.DateTimeFormat(store._locale, {
-        month: 'long',
-        year: 'numeric',
-      });
-      return `${fmtFrom.format(fromDate)} – ${fmtTo.format(toDate)}`;
-    });
-
     return {
       stats,
       chartSeries,
@@ -448,8 +446,6 @@ export const AnalysisStore = signalStore(
       rows,
       weekTrend,
       monthTrend,
-      weekTrendSubtitle,
-      monthTrendSubtitle,
       typeBreakdown,
       bestSingleEntry,
       bestDay,
@@ -482,6 +478,14 @@ export const AnalysisStore = signalStore(
       store.userStatsResource.reload();
       store.weekEntriesResource.reload();
       store.monthEntriesResource.reload();
+    },
+    tickClock(): void {
+      const todayKey = toLocalIsoDate(new Date());
+      if (todayKey === store.lastDayKey()) return;
+      patchState(store, {
+        clockTick: store.clockTick() + 1,
+        lastDayKey: todayKey,
+      });
     },
   }))
 );

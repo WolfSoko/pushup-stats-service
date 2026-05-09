@@ -2,6 +2,7 @@ import { DecimalPipe, DOCUMENT, isPlatformBrowser } from '@angular/common';
 import {
   Component,
   computed,
+  DestroyRef,
   effect,
   inject,
   PLATFORM_ID,
@@ -103,94 +104,6 @@ import { PageHeaderComponent } from '../../core/page-header/page-header.componen
       />
 
       <section class="grid">
-        <mat-card>
-          <mat-card-header>
-            <mat-card-title i18n="@@analysis.weekTrendTitle"
-              >Wochentrend</mat-card-title
-            >
-            <mat-card-subtitle>{{
-              store.weekTrendSubtitle()
-            }}</mat-card-subtitle>
-          </mat-card-header>
-          <mat-card-content>
-            <mat-table [dataSource]="store.weekTrend()">
-              <ng-container matColumnDef="label">
-                <mat-header-cell *matHeaderCellDef i18n="@@analysis.weekCol"
-                  >Woche</mat-header-cell
-                >
-                <mat-cell *matCellDef="let row">{{ row.label }}</mat-cell>
-              </ng-container>
-              <ng-container matColumnDef="total">
-                <mat-header-cell *matHeaderCellDef i18n="@@analysis.repsCol"
-                  >Reps</mat-header-cell
-                >
-                <mat-cell *matCellDef="let row">{{ row.total }}</mat-cell>
-              </ng-container>
-              <ng-container matColumnDef="avgSetsPerEntry">
-                <mat-header-cell *matHeaderCellDef i18n="@@analysis.avgSetsCol"
-                  >&#x2300; Sets</mat-header-cell
-                >
-                <mat-cell *matCellDef="let row">{{
-                  row.avgSetsPerEntry !== null &&
-                  row.avgSetsPerEntry !== undefined
-                    ? (row.avgSetsPerEntry | number)
-                    : '—'
-                }}</mat-cell>
-              </ng-container>
-              <mat-header-row
-                *matHeaderRowDef="trendColumnsWithSets"
-              ></mat-header-row>
-              <mat-row
-                *matRowDef="let row; columns: trendColumnsWithSets"
-              ></mat-row>
-            </mat-table>
-          </mat-card-content>
-        </mat-card>
-
-        <mat-card>
-          <mat-card-header>
-            <mat-card-title i18n="@@analysis.monthTrendTitle"
-              >Monatstrend</mat-card-title
-            >
-            <mat-card-subtitle>{{
-              store.monthTrendSubtitle()
-            }}</mat-card-subtitle>
-          </mat-card-header>
-          <mat-card-content>
-            <mat-table [dataSource]="store.monthTrend()">
-              <ng-container matColumnDef="label">
-                <mat-header-cell *matHeaderCellDef i18n="@@analysis.monthCol"
-                  >Monat</mat-header-cell
-                >
-                <mat-cell *matCellDef="let row">{{ row.label }}</mat-cell>
-              </ng-container>
-              <ng-container matColumnDef="total">
-                <mat-header-cell *matHeaderCellDef i18n="@@analysis.repsCol"
-                  >Reps</mat-header-cell
-                >
-                <mat-cell *matCellDef="let row">{{ row.total }}</mat-cell>
-              </ng-container>
-              <ng-container matColumnDef="avgSetsPerEntry">
-                <mat-header-cell *matHeaderCellDef i18n="@@analysis.avgSetsCol"
-                  >&#x2300; Sets</mat-header-cell
-                >
-                <mat-cell *matCellDef="let row">{{
-                  row.avgSetsPerEntry !== null &&
-                  row.avgSetsPerEntry !== undefined
-                    ? (row.avgSetsPerEntry | number)
-                    : '—'
-                }}</mat-cell>
-              </ng-container>
-              <mat-header-row
-                *matHeaderRowDef="trendColumnsWithSets"
-              ></mat-header-row>
-              <mat-row
-                *matRowDef="let row; columns: trendColumnsWithSets"
-              ></mat-row>
-            </mat-table>
-          </mat-card-content>
-        </mat-card>
-
         <mat-card>
           <mat-card-header>
             <mat-card-title i18n="@@analysis.bestStreaksTitle"
@@ -310,6 +223,108 @@ import { PageHeaderComponent } from '../../core/page-header/page-header.componen
           }
         </mat-card-content>
       </mat-card>
+
+      <section class="trends-section" data-testid="analysis-trends-section">
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title i18n="@@analysis.weekTrendTitle"
+              >Wochentrend</mat-card-title
+            >
+            <mat-card-subtitle i18n="@@analysis.weekTrendSubtitle"
+              >Letzte 8 Wochen</mat-card-subtitle
+            >
+          </mat-card-header>
+          <mat-card-content>
+            @defer (on viewport) {
+              <mat-table [dataSource]="store.weekTrend()">
+                <ng-container matColumnDef="label">
+                  <mat-header-cell *matHeaderCellDef i18n="@@analysis.weekCol"
+                    >Woche</mat-header-cell
+                  >
+                  <mat-cell *matCellDef="let row">{{ row.label }}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="total">
+                  <mat-header-cell *matHeaderCellDef i18n="@@analysis.repsCol"
+                    >Reps</mat-header-cell
+                  >
+                  <mat-cell *matCellDef="let row">{{ row.total }}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="avgSetsPerEntry">
+                  <mat-header-cell
+                    *matHeaderCellDef
+                    i18n="@@analysis.avgSetsCol"
+                    >&#x2300; Sets</mat-header-cell
+                  >
+                  <mat-cell *matCellDef="let row">{{
+                    row.avgSetsPerEntry !== null &&
+                    row.avgSetsPerEntry !== undefined
+                      ? (row.avgSetsPerEntry | number)
+                      : '—'
+                  }}</mat-cell>
+                </ng-container>
+                <mat-header-row
+                  *matHeaderRowDef="trendColumnsWithSets"
+                ></mat-header-row>
+                <mat-row
+                  *matRowDef="let row; columns: trendColumnsWithSets"
+                ></mat-row>
+              </mat-table>
+            } @placeholder {
+              <div class="trend-placeholder" aria-hidden="true"></div>
+            }
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title i18n="@@analysis.monthTrendTitle"
+              >Monatstrend</mat-card-title
+            >
+            <mat-card-subtitle i18n="@@analysis.monthTrendSubtitle"
+              >Letzte 6 Monate</mat-card-subtitle
+            >
+          </mat-card-header>
+          <mat-card-content>
+            @defer (on viewport) {
+              <mat-table [dataSource]="store.monthTrend()">
+                <ng-container matColumnDef="label">
+                  <mat-header-cell *matHeaderCellDef i18n="@@analysis.monthCol"
+                    >Monat</mat-header-cell
+                  >
+                  <mat-cell *matCellDef="let row">{{ row.label }}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="total">
+                  <mat-header-cell *matHeaderCellDef i18n="@@analysis.repsCol"
+                    >Reps</mat-header-cell
+                  >
+                  <mat-cell *matCellDef="let row">{{ row.total }}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="avgSetsPerEntry">
+                  <mat-header-cell
+                    *matHeaderCellDef
+                    i18n="@@analysis.avgSetsCol"
+                    >&#x2300; Sets</mat-header-cell
+                  >
+                  <mat-cell *matCellDef="let row">{{
+                    row.avgSetsPerEntry !== null &&
+                    row.avgSetsPerEntry !== undefined
+                      ? (row.avgSetsPerEntry | number)
+                      : '—'
+                  }}</mat-cell>
+                </ng-container>
+                <mat-header-row
+                  *matHeaderRowDef="trendColumnsWithSets"
+                ></mat-header-row>
+                <mat-row
+                  *matRowDef="let row; columns: trendColumnsWithSets"
+                ></mat-row>
+              </mat-table>
+            } @placeholder {
+              <div class="trend-placeholder" aria-hidden="true"></div>
+            }
+          </mat-card-content>
+        </mat-card>
+      </section>
     </main>
   `,
   styles: `
@@ -382,6 +397,11 @@ import { PageHeaderComponent } from '../../core/page-header/page-header.componen
       overflow: auto;
       width: 100%;
       min-height: 400px;
+    }
+    /* Reserve roughly the rendered table height so revealing the
+       deferred trend block doesn't shift the rest of the page down. */
+    .trend-placeholder {
+      min-height: 320px;
     }
 
     @media (max-width: 900px) {
@@ -476,14 +496,22 @@ export class AnalysisPageComponent {
    * Only reveal the empty-state CTA after the entries resource has resolved.
    * Reading `store.rows()` directly during the initial undefined→[] transition
    * trips Angular's expression-changed-after-checked check in dev mode.
+   * Trends use a fixed window independent of the page filter, so the CTA
+   * must also stay hidden whenever a trend bucket has activity — otherwise
+   * narrowing the filter to an empty range contradicts populated trend cards.
    */
-  readonly showEmptyCta = computed(
-    () =>
-      this.store.entriesResource.status() === 'resolved' &&
-      this.store.rows().length === 0
-  );
+  readonly showEmptyCta = computed(() => {
+    if (this.store.entriesResource.status() !== 'resolved') return false;
+    if (this.store.weekEntriesResource.status() !== 'resolved') return false;
+    if (this.store.monthEntriesResource.status() !== 'resolved') return false;
+    if (this.store.rows().length > 0) return false;
+    if (this.store.weekTrend().some((t) => t.total > 0)) return false;
+    if (this.store.monthTrend().some((t) => t.total > 0)) return false;
+    return true;
+  });
 
   private readonly live = inject(LiveDataStore);
+  private readonly destroyRef = inject(DestroyRef);
 
   constructor() {
     // Resolve initial range from URL query params (SSR-aware)
@@ -497,6 +525,15 @@ export class AnalysisPageComponent {
       if (!tick) return;
       this.store.refreshAll();
     });
+
+    // Bump the store clock every 5 minutes so the fixed-window trend
+    // filters re-evaluate when the calendar day rolls over during a
+    // long-running session. Cleared on component destroy to keep tests
+    // and SSR free of leaking timers.
+    if (isPlatformBrowser(this.platformId)) {
+      const interval = setInterval(() => this.store.tickClock(), 5 * 60 * 1000);
+      this.destroyRef.onDestroy(() => clearInterval(interval));
+    }
 
     // URL history tracking effect (UI side effect, stays in component)
     effect(() => {
