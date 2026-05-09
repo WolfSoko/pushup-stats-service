@@ -5176,15 +5176,6 @@
         <target>俯卧撑类型分布</target>
       </segment>
     </unit>
-    <unit id="pie.modeAria">
-      <notes>
-        <note category="location">web/src/app/stats/components/type-pie/type-pie.component.ts</note>
-      </notes>
-      <segment state="translated">
-        <source>Anzeigemodus der Typverteilung</source>
-        <target>选择饼图显示模式</target>
-      </segment>
-    </unit>
     <unit id="pie.other">
       <notes>
         <note category="location">web/src/app/stats/components/type-pie/type-pie.component.ts:96,98</note>
@@ -5192,33 +5183,6 @@
       <segment state="translated">
         <source>Sonstige</source>
         <target>其他</target>
-      </segment>
-    </unit>
-    <unit id="pie.top5">
-      <notes>
-        <note category="location">web/src/app/stats/components/type-pie/type-pie.component.ts:52,53</note>
-      </notes>
-      <segment state="translated">
-        <source>Top 5</source>
-        <target>前 5</target>
-      </segment>
-    </unit>
-    <unit id="pie.all">
-      <notes>
-        <note category="location">web/src/app/stats/components/type-pie/type-pie.component.ts:55,56</note>
-      </notes>
-      <segment state="translated">
-        <source>Alle</source>
-        <target>全部</target>
-      </segment>
-    </unit>
-    <unit id="pie.custom">
-      <notes>
-        <note category="location">web/src/app/stats/components/type-pie/type-pie.component.ts:58,59</note>
-      </notes>
-      <segment state="translated">
-        <source>Auswahl</source>
-        <target>选择</target>
       </segment>
     </unit>
     <unit id="dashboard.share.text.profile.streak">
