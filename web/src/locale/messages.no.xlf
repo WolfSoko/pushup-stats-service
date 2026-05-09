@@ -7616,5 +7616,29 @@ Deine Position: # ·  Reps        </source>
         <target>Juster manuelle mål</target>
       </segment>
     </unit>
+    <unit id="trainingEntryDialog.title">
+      <segment state="translated">
+        <source>Trainingseintrag anlegen</source>
+        <target>Legg til treningsoppføring</target>
+      </segment>
+    </unit>
+    <unit id="trainingEntryDialog.category">
+      <segment state="translated">
+        <source>Kategorie</source>
+        <target>Kategori</target>
+      </segment>
+    </unit>
+    <unit id="trainingEntryDialog.exercise">
+      <segment state="translated">
+        <source>Übung</source>
+        <target>Øvelse</target>
+      </segment>
+    </unit>
+    <unit id="trainingEntryDialog.pushup.exercise">
+      <segment state="translated">
+        <source>Liegestütze</source>
+        <target>Armhevinger</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

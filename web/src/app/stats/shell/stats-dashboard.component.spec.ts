@@ -112,6 +112,16 @@ describe('StatsDashboardComponent', () => {
   const reloadAfterMutationSpy = vitest.fn();
   const appDataMock = { reloadAfterMutation: reloadAfterMutationSpy };
 
+  const exerciseCreateSpy = vitest.fn().mockReturnValue(of({ _id: 'ex-1' }));
+  const exerciseFirestoreMock = {
+    listEntries: () => of([]),
+    createEntry: exerciseCreateSpy,
+  };
+
+  const userContextSpy = {
+    userIdSafe: vitest.fn().mockReturnValue('u1'),
+  };
+
   const shareSpy = vitest.fn().mockResolvedValue('native' as const);
   const shareServiceMock = { share: shareSpy };
 
@@ -143,6 +153,8 @@ describe('StatsDashboardComponent', () => {
 
     dialogOpenSpy.mockClear();
     trainingPlanApiMock.getActivePlan.mockReset().mockReturnValue(of(null));
+    exerciseCreateSpy.mockReset().mockReturnValue(of({ _id: 'ex-1' }));
+    userContextSpy.userIdSafe.mockReset().mockReturnValue('u1');
 
     TestBed.configureTestingModule({
       imports: [StatsDashboardComponent],
@@ -165,7 +177,7 @@ describe('StatsDashboardComponent', () => {
           },
         },
         { provide: LiveDataStore, useValue: liveMock },
-        { provide: UserContextService, useValue: { userIdSafe: () => 'u1' } },
+        { provide: UserContextService, useValue: userContextSpy },
         { provide: AdsStore, useValue: adsConfigMock },
         { provide: AuthStore, useValue: makeAuthStoreMock() },
         {
@@ -191,15 +203,12 @@ describe('StatsDashboardComponent', () => {
         },
         { provide: AppDataFacade, useValue: appDataMock },
         { provide: ShareService, useValue: shareServiceMock },
-        // The Phase-0 multi-exercise dashboard sections inject this
-        // service via `inject(ExerciseFirestoreService)`. The dashboard
-        // test doesn't exercise those sections directly, so we hand it
-        // a thin stub returning an empty entry stream — without it the
-        // section component fails to construct and Angular reports a
-        // misleading "Circular dependency" error.
+        // The unified create dialog injects ExerciseFirestoreService for
+        // exercise-kind entries; the spy at the top of the suite lets
+        // the exercise-branch tests below assert what was sent.
         {
           provide: ExerciseFirestoreService,
-          useValue: { listEntries: () => of([]) },
+          useValue: exerciseFirestoreMock,
         },
         {
           provide: UserTrainingPlanApiService,
@@ -375,7 +384,7 @@ describe('StatsDashboardComponent', () => {
   });
 
   describe('Given the manual entry dialog is submitted (regression: create event was silently dropped)', () => {
-    describe('When createEntry is called with a valid entry', () => {
+    describe('When createEntry is called with a pushup result', () => {
       it('Then it should call createPushup', async () => {
         // Given — createEntry() is the handler called after the dialog closes
         const component = fixture.componentInstance;
@@ -383,10 +392,12 @@ describe('StatsDashboardComponent', () => {
 
         // When
         await component.createEntry({
+          kind: 'pushup',
           timestamp: todayTs,
           reps: 15,
+          sets: [15],
           source: 'web',
-          type: 'Diamond',
+          type: 'diamond',
         });
         await fixture.whenStable();
 
@@ -394,8 +405,9 @@ describe('StatsDashboardComponent', () => {
         expect(serviceMock.createPushup).toHaveBeenCalledWith({
           timestamp: todayTs,
           reps: 15,
+          sets: [15],
           source: 'web',
-          type: 'Diamond',
+          type: 'diamond',
         });
       });
 
@@ -406,10 +418,12 @@ describe('StatsDashboardComponent', () => {
 
         // When
         await component.createEntry({
+          kind: 'pushup',
           timestamp: todayTs,
           reps: 15,
+          sets: [15],
           source: 'web',
-          type: 'Diamond',
+          type: 'diamond',
         });
         // refreshAll() triggers async resource reload — wait for it
         await fixture.whenStable();
@@ -425,14 +439,68 @@ describe('StatsDashboardComponent', () => {
 
         // When
         await component.createEntry({
+          kind: 'pushup',
           timestamp: todayTs,
           reps: 15,
+          sets: [15],
           source: 'web',
-          type: 'Diamond',
+          type: 'diamond',
         });
 
         // Then
         expect(reloadAfterMutationSpy).toHaveBeenCalledTimes(1);
+      });
+    });
+
+    describe('When createEntry is called with an exercise result', () => {
+      it('Then ExerciseFirestoreService.createEntry is invoked with the user id and the catalog payload', async () => {
+        const component = fixture.componentInstance;
+        vi.clearAllMocks();
+
+        await component.createEntry({
+          kind: 'exercise',
+          exerciseId: 'plank.standard',
+          measurement: 'time',
+          timestamp: '2026-02-10T13:45+01:00',
+          reps: 0,
+          sets: [],
+          durationSec: 90,
+        });
+        await fixture.whenStable();
+
+        expect(exerciseCreateSpy).toHaveBeenCalledWith(
+          'u1',
+          expect.objectContaining({
+            exerciseId: 'plank.standard',
+            durationSec: 90,
+          })
+        );
+        // Pushup API stays untouched on the exercise branch — would
+        // otherwise leak the entry into the wrong Firestore collection.
+        expect(serviceMock.createPushup).not.toHaveBeenCalled();
+        expect(reloadAfterMutationSpy).toHaveBeenCalledTimes(1);
+      });
+
+      it('Then it returns early without writing when userIdSafe() is empty', async () => {
+        const component = fixture.componentInstance;
+        vi.clearAllMocks();
+        userContextSpy.userIdSafe.mockReturnValueOnce('');
+
+        await component.createEntry({
+          kind: 'exercise',
+          exerciseId: 'plank.standard',
+          measurement: 'time',
+          timestamp: '2026-02-10T13:45+01:00',
+          reps: 0,
+          sets: [],
+          durationSec: 90,
+        });
+
+        // Anonymous / signed-out users must not silently land in the
+        // exerciseEntries collection — the early-return guards that.
+        expect(exerciseCreateSpy).not.toHaveBeenCalled();
+        expect(serviceMock.createPushup).not.toHaveBeenCalled();
+        expect(reloadAfterMutationSpy).not.toHaveBeenCalled();
       });
     });
 
@@ -451,7 +519,7 @@ describe('StatsDashboardComponent', () => {
     });
 
     describe('When openCreateDialog is called', () => {
-      it('Then MatDialog.open is invoked with CreateEntryDialogComponent', () => {
+      it('Then MatDialog.open is invoked with the unified TrainingEntryDialogComponent', () => {
         // Given
         dialogOpenSpy.mockClear();
 
@@ -460,7 +528,7 @@ describe('StatsDashboardComponent', () => {
 
         // Then
         expect(dialogOpenSpy).toHaveBeenCalledWith(
-          expect.any(Function), // CreateEntryDialogComponent
+          expect.any(Function), // TrainingEntryDialogComponent
           expect.objectContaining({ width: 'min(92vw, 420px)' })
         );
       });
@@ -522,7 +590,10 @@ describe('StatsDashboardComponent', () => {
           { provide: ShareService, useValue: shareServiceMock },
           {
             provide: ExerciseFirestoreService,
-            useValue: { listEntries: () => of([]) },
+            useValue: {
+              listEntries: () => of([]),
+              createEntry: () => of({}),
+            },
           },
           {
             provide: UserTrainingPlanApiService,

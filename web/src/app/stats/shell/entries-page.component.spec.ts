@@ -116,6 +116,7 @@ describe('EntriesPageComponent', () => {
 
   it('creates an entry via api', async () => {
     await store.createEntry({
+      kind: 'pushup',
       timestamp: '2026-02-11T20:00',
       reps: 12,
       source: 'web',

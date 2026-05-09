@@ -18,11 +18,15 @@ import { MatCardModule } from '@angular/material/card';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { LiveDataStore, StatsApiService } from '@pu-stats/data-access';
+import {
+  ExerciseFirestoreService,
+  LiveDataStore,
+  StatsApiService,
+} from '@pu-stats/data-access';
+import { UserContextService } from '@pu-auth/auth';
 import {
   appendLocalOffset,
   displayPushupType,
-  EXERCISE_CATEGORIES,
   PushupRecord,
   QUICK_LOG_REPS_MAX,
   QUICK_LOG_REPS_MIN,
@@ -35,11 +39,11 @@ import { AdSlotComponent } from '@pu-stats/ads';
 import { AnalysisTeaserCardComponent } from '../components/analysis-teaser-card/analysis-teaser-card.component';
 import { PreviewBannerComponent } from '../components/preview-banner/preview-banner.component';
 import { StatsTableComponent } from '../components/stats-table/stats-table.component';
-import { ExerciseCategorySectionComponent } from '../components/exercise-category-section/exercise-category-section.component';
 import {
-  CreateEntryDialogComponent,
-  CreateEntryResult,
-} from '../components/create-entry-dialog/create-entry-dialog.component';
+  TrainingEntryDialogComponent,
+  TrainingEntryDialogData,
+  TrainingEntryDialogResult,
+} from '../components/training-entry-dialog/training-entry-dialog.component';
 import { QuickAddConfigDialogComponent } from '../components/quick-add-config-dialog/quick-add-config-dialog.component';
 import { DashboardStore } from '../dashboard.store';
 
@@ -56,7 +60,6 @@ import { DashboardStore } from '../dashboard.store';
     StatsTableComponent,
     AdSlotComponent,
     RouterLink,
-    ExerciseCategorySectionComponent,
   ],
   providers: [DashboardStore],
   templateUrl: './stats-dashboard.component.html',
@@ -65,6 +68,8 @@ import { DashboardStore } from '../dashboard.store';
 })
 export class StatsDashboardComponent {
   private readonly api = inject(StatsApiService);
+  private readonly exerciseService = inject(ExerciseFirestoreService);
+  private readonly userContext = inject(UserContextService);
   private readonly dialog = inject(MatDialog);
   private readonly platformId = inject(PLATFORM_ID);
   private readonly route = inject(ActivatedRoute);
@@ -79,16 +84,6 @@ export class StatsDashboardComponent {
 
   readonly shareDayAriaLabel = $localize`:@@dashboard.share.aria:Tagesleistung teilen`;
   readonly shareDayLabel = $localize`:@@dashboard.share:Teilen`;
-
-  /**
-   * Phase-0 Multi-Exercise: categories rendered below the pushup
-   * dashboard cards. Pushup itself is excluded — its data still lives
-   * in the legacy `pushups` collection and renders via the existing
-   * cards above.
-   */
-  readonly newExerciseCategories = EXERCISE_CATEGORIES.filter(
-    (cat) => cat.id !== 'pushup'
-  );
 
   readonly store = inject(DashboardStore);
 
@@ -191,10 +186,14 @@ export class StatsDashboardComponent {
 
   openCreateDialog(): void {
     this.dialog
-      .open<CreateEntryDialogComponent, void, CreateEntryResult>(
-        CreateEntryDialogComponent,
-        { width: 'min(92vw, 420px)', maxWidth: '92vw' }
-      )
+      .open<
+        TrainingEntryDialogComponent,
+        TrainingEntryDialogData | null,
+        TrainingEntryDialogResult
+      >(TrainingEntryDialogComponent, {
+        width: 'min(92vw, 420px)',
+        maxWidth: '92vw',
+      })
       .afterClosed()
       .subscribe((result) => {
         if (result) void this.createEntry(result);
@@ -262,14 +261,39 @@ export class StatsDashboardComponent {
     }
   });
 
-  async createEntry(entry: {
-    timestamp: string;
-    reps: number;
-    sets?: number[];
-    source?: string;
-    type?: string;
-  }) {
-    await firstValueFrom(this.api.createPushup(entry));
+  async createEntry(result: TrainingEntryDialogResult) {
+    if (result.kind === 'pushup') {
+      await firstValueFrom(
+        this.api.createPushup({
+          timestamp: result.timestamp,
+          reps: result.reps,
+          sets: result.sets,
+          source: result.source,
+          type: result.type,
+        })
+      );
+    } else {
+      const userId = this.userContext.userIdSafe();
+      if (!userId) return;
+      await firstValueFrom(
+        this.exerciseService.createEntry(userId, {
+          exerciseId: result.exerciseId,
+          timestamp: result.timestamp,
+          ...(result.measurement === 'time'
+            ? { durationSec: result.durationSec ?? 0 }
+            : result.measurement === 'distance-time'
+              ? {
+                  distanceM: result.distanceM ?? 0,
+                  durationSec: result.durationSec ?? 0,
+                }
+              : {
+                  reps: result.reps,
+                  ...(result.sets.length > 1 ? { sets: result.sets } : {}),
+                }),
+          ...(result.variantId ? { variantId: result.variantId } : {}),
+        })
+      );
+    }
     this.store.refreshAll();
     this.appData.reloadAfterMutation();
     this.refreshCounter.update((c) => c + 1);

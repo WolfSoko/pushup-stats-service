@@ -7045,5 +7045,37 @@
         <source>Detailseite öffnen</source>
       </segment>
     </unit>
+    <unit id="trainingEntryDialog.title">
+      <notes>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts</note>
+      </notes>
+      <segment>
+        <source>Trainingseintrag anlegen</source>
+      </segment>
+    </unit>
+    <unit id="trainingEntryDialog.category">
+      <notes>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts</note>
+      </notes>
+      <segment>
+        <source>Kategorie</source>
+      </segment>
+    </unit>
+    <unit id="trainingEntryDialog.exercise">
+      <notes>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts</note>
+      </notes>
+      <segment>
+        <source>Übung</source>
+      </segment>
+    </unit>
+    <unit id="trainingEntryDialog.pushup.exercise">
+      <notes>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts</note>
+      </notes>
+      <segment>
+        <source>Liegestütze</source>
+      </segment>
+    </unit>
   </file>
 </xliff>
