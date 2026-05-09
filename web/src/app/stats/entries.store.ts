@@ -240,7 +240,7 @@ export const EntriesStore = signalStore(
         patchState(store, { repsMax: value });
       },
       async createEntry(payload: {
-        kind?: 'pushup' | 'exercise';
+        kind: 'pushup' | 'exercise';
         timestamp: string;
         reps?: number;
         sets?: number[];
@@ -253,13 +253,7 @@ export const EntriesStore = signalStore(
       }): Promise<void> {
         patchState(store, { busyAction: 'create', busyId: null, error: null });
         try {
-          // The unified create-entry dialog tags every result with a
-          // `kind` discriminator; older callers without it are pushup
-          // by historic default. Route accordingly so we hit the right
-          // Firestore collection without leaking measurement-specific
-          // fields into createPushup.
-          const kind = payload.kind ?? 'pushup';
-          if (kind === 'pushup') {
+          if (payload.kind === 'pushup') {
             await firstValueFrom(
               _api.createPushup({
                 timestamp: payload.timestamp,

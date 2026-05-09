@@ -7606,7 +7606,7 @@ Deine Position: # ·  Reps        </source>
     <unit id="trainingEntryDialog.pushup.exercise">
       <segment state="translated">
         <source>Liegestütze</source>
-        <target>Pushups</target>
+        <target>Push-ups</target>
       </segment>
     </unit>
   </file>

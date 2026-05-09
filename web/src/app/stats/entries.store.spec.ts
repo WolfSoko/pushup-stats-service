@@ -112,17 +112,6 @@ describe('EntriesStore', () => {
       expect(appDataMock.reloadAfterMutation).toHaveBeenCalledTimes(1);
     });
 
-    it('Given a payload without kind, Then it falls back to the legacy pushup path', async () => {
-      const store = setup();
-
-      await store.createEntry({
-        timestamp: '2026-04-27T08:00:00',
-        reps: 12,
-      });
-
-      expect(apiMock.createPushup).toHaveBeenCalled();
-    });
-
     it('Given an exercise-kind create, Then ExerciseFirestoreService.createEntry is called with the user id', async () => {
       const store = setup();
 
@@ -141,6 +130,53 @@ describe('EntriesStore', () => {
         })
       );
       expect(apiMock.createPushup).not.toHaveBeenCalled();
+    });
+
+    it('Given an exercise-kind create without exerciseId, Then no service is called and store.error is set', async () => {
+      const store = setup();
+
+      await store.createEntry({
+        kind: 'exercise',
+        timestamp: '2026-04-27T08:00:00',
+        durationSec: 90,
+      });
+
+      // Guard branch: omitting exerciseId on an exercise-kind payload
+      // is a programmer error. The store reports it via `error` rather
+      // than silently dispatching to the wrong Firestore collection.
+      expect(exerciseServiceMock.createEntry).not.toHaveBeenCalled();
+      expect(apiMock.createPushup).not.toHaveBeenCalled();
+      expect(store.error()).toMatch(/exerciseId is required/i);
+    });
+
+    it('Given an exercise-kind create with an empty user id, Then no service is called and store.error is set', async () => {
+      vitest.clearAllMocks();
+      TestBed.resetTestingModule();
+      TestBed.configureTestingModule({
+        providers: [
+          EntriesStore,
+          { provide: StatsApiService, useValue: apiMock },
+          { provide: ExerciseFirestoreService, useValue: exerciseServiceMock },
+          { provide: LiveDataStore, useValue: liveMock },
+          { provide: AppDataFacade, useValue: appDataMock },
+          {
+            provide: UserContextService,
+            useValue: { userIdSafe: () => '' },
+          },
+        ],
+      });
+      const store = TestBed.inject(EntriesStore);
+
+      await store.createEntry({
+        kind: 'exercise',
+        exerciseId: 'plank.standard',
+        timestamp: '2026-04-27T08:00:00',
+        durationSec: 90,
+      });
+
+      expect(exerciseServiceMock.createEntry).not.toHaveBeenCalled();
+      expect(apiMock.createPushup).not.toHaveBeenCalled();
+      expect(store.error()).toMatch(/missing user id/i);
     });
   });
 

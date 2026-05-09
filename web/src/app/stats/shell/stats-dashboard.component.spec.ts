@@ -112,6 +112,16 @@ describe('StatsDashboardComponent', () => {
   const reloadAfterMutationSpy = vitest.fn();
   const appDataMock = { reloadAfterMutation: reloadAfterMutationSpy };
 
+  const exerciseCreateSpy = vitest.fn().mockReturnValue(of({ _id: 'ex-1' }));
+  const exerciseFirestoreMock = {
+    listEntries: () => of([]),
+    createEntry: exerciseCreateSpy,
+  };
+
+  const userContextSpy = {
+    userIdSafe: vitest.fn().mockReturnValue('u1'),
+  };
+
   const shareSpy = vitest.fn().mockResolvedValue('native' as const);
   const shareServiceMock = { share: shareSpy };
 
@@ -143,6 +153,8 @@ describe('StatsDashboardComponent', () => {
 
     dialogOpenSpy.mockClear();
     trainingPlanApiMock.getActivePlan.mockReset().mockReturnValue(of(null));
+    exerciseCreateSpy.mockReset().mockReturnValue(of({ _id: 'ex-1' }));
+    userContextSpy.userIdSafe.mockReset().mockReturnValue('u1');
 
     TestBed.configureTestingModule({
       imports: [StatsDashboardComponent],
@@ -165,7 +177,7 @@ describe('StatsDashboardComponent', () => {
           },
         },
         { provide: LiveDataStore, useValue: liveMock },
-        { provide: UserContextService, useValue: { userIdSafe: () => 'u1' } },
+        { provide: UserContextService, useValue: userContextSpy },
         { provide: AdsStore, useValue: adsConfigMock },
         { provide: AuthStore, useValue: makeAuthStoreMock() },
         {
@@ -192,14 +204,11 @@ describe('StatsDashboardComponent', () => {
         { provide: AppDataFacade, useValue: appDataMock },
         { provide: ShareService, useValue: shareServiceMock },
         // The unified create dialog injects ExerciseFirestoreService for
-        // exercise-kind entries. Pushup tests below never hit the
-        // exercise branch, so a thin stub keeps DI happy.
+        // exercise-kind entries; the spy at the top of the suite lets
+        // the exercise-branch tests below assert what was sent.
         {
           provide: ExerciseFirestoreService,
-          useValue: {
-            listEntries: () => of([]),
-            createEntry: () => of({}),
-          },
+          useValue: exerciseFirestoreMock,
         },
         {
           provide: UserTrainingPlanApiService,
@@ -440,6 +449,58 @@ describe('StatsDashboardComponent', () => {
 
         // Then
         expect(reloadAfterMutationSpy).toHaveBeenCalledTimes(1);
+      });
+    });
+
+    describe('When createEntry is called with an exercise result', () => {
+      it('Then ExerciseFirestoreService.createEntry is invoked with the user id and the catalog payload', async () => {
+        const component = fixture.componentInstance;
+        vi.clearAllMocks();
+
+        await component.createEntry({
+          kind: 'exercise',
+          exerciseId: 'plank.standard',
+          measurement: 'time',
+          timestamp: '2026-02-10T13:45+01:00',
+          reps: 0,
+          sets: [],
+          durationSec: 90,
+        });
+        await fixture.whenStable();
+
+        expect(exerciseCreateSpy).toHaveBeenCalledWith(
+          'u1',
+          expect.objectContaining({
+            exerciseId: 'plank.standard',
+            durationSec: 90,
+          })
+        );
+        // Pushup API stays untouched on the exercise branch — would
+        // otherwise leak the entry into the wrong Firestore collection.
+        expect(serviceMock.createPushup).not.toHaveBeenCalled();
+        expect(reloadAfterMutationSpy).toHaveBeenCalledTimes(1);
+      });
+
+      it('Then it returns early without writing when userIdSafe() is empty', async () => {
+        const component = fixture.componentInstance;
+        vi.clearAllMocks();
+        userContextSpy.userIdSafe.mockReturnValueOnce('');
+
+        await component.createEntry({
+          kind: 'exercise',
+          exerciseId: 'plank.standard',
+          measurement: 'time',
+          timestamp: '2026-02-10T13:45+01:00',
+          reps: 0,
+          sets: [],
+          durationSec: 90,
+        });
+
+        // Anonymous / signed-out users must not silently land in the
+        // exerciseEntries collection — the early-return guards that.
+        expect(exerciseCreateSpy).not.toHaveBeenCalled();
+        expect(serviceMock.createPushup).not.toHaveBeenCalled();
+        expect(reloadAfterMutationSpy).not.toHaveBeenCalled();
       });
     });
 

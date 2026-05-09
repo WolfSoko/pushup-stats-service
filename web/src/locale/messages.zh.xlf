@@ -7055,7 +7055,7 @@
     <unit id="trainingEntryDialog.exercise">
       <segment state="translated">
         <source>Übung</source>
-        <target>练习</target>
+        <target>训练</target>
       </segment>
     </unit>
     <unit id="trainingEntryDialog.pushup.exercise">
