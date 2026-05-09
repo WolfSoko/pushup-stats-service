@@ -14,7 +14,12 @@ import { AuthStore, UserContextService } from '@pu-auth/auth';
 import { AdsStore } from '@pu-stats/ads';
 import { signal } from '@angular/core';
 import { makeAuthStoreMock } from '@pu-stats/testing';
-import { provideRouter, Router } from '@angular/router';
+import {
+  ActivatedRoute,
+  convertToParamMap,
+  provideRouter,
+  Router,
+} from '@angular/router';
 import { QuickAddOrchestrationService } from '../../core/quick-add-orchestration.service';
 import { AppDataFacade } from '../../core/app-data.facade';
 import { ShareService } from '../../core/share.service';
@@ -458,6 +463,128 @@ describe('StatsDashboardComponent', () => {
           expect.any(Function), // CreateEntryDialogComponent
           expect.objectContaining({ width: 'min(92vw, 420px)' })
         );
+      });
+    });
+  });
+
+  // Regression: snooze deep-link must never silently log push-ups.
+  // The push SW opens `/${locale}/app?snooze=30` when the user clicks the
+  // "30 Min snoozen" notification action and no app tab is open. App.ts
+  // consumes that param and calls the snoozeReminder Cloud Function;
+  // the dashboard's `_handleLogParam` deep-link handler must NOT mistake
+  // that URL for a quick-log / log deep-link and create an entry.
+  describe('Given the dashboard mounts on a snooze deep-link URL', () => {
+    /**
+     * Boots a fresh dashboard fixture with the given query params on the
+     * `ActivatedRoute` snapshot — the only path the dashboard's
+     * `_handleLogParam` reads. Resets the testing module so the override
+     * is allowed (overrideProvider can't run after `createComponent`).
+     */
+    async function createDashboardWithQueryParams(
+      params: Record<string, string>
+    ): Promise<ComponentFixture<StatsDashboardComponent>> {
+      TestBed.resetTestingModule();
+      vi.useFakeTimers({ shouldAdvanceTime: true });
+      vi.setSystemTime(frozenDate);
+      window.history.replaceState({}, '', '/');
+      TestBed.configureTestingModule({
+        imports: [StatsDashboardComponent],
+        providers: [
+          provideRouter([]),
+          { provide: StatsApiService, useValue: serviceMock },
+          {
+            provide: UserStatsApiService,
+            useValue: { getUserStats: vitest.fn().mockReturnValue(of(null)) },
+          },
+          { provide: LiveDataStore, useValue: liveMock },
+          { provide: UserContextService, useValue: { userIdSafe: () => 'u1' } },
+          { provide: AdsStore, useValue: adsConfigMock },
+          { provide: AuthStore, useValue: makeAuthStoreMock() },
+          {
+            provide: UserConfigApiService,
+            useValue: {
+              getConfig: vitest.fn().mockReturnValue(
+                of({
+                  userId: 'u1',
+                  dailyGoal: 100,
+                  weeklyGoal: 500,
+                  monthlyGoal: 2000,
+                  ui: { showSourceColumn: false },
+                })
+              ),
+            },
+          },
+          {
+            provide: QuickAddOrchestrationService,
+            useValue: {
+              fillToGoal: vitest.fn(),
+              fillToGoalInFlight: signal(false).asReadonly(),
+            },
+          },
+          { provide: AppDataFacade, useValue: appDataMock },
+          { provide: ShareService, useValue: shareServiceMock },
+          {
+            provide: ExerciseFirestoreService,
+            useValue: { listEntries: () => of([]) },
+          },
+          {
+            provide: UserTrainingPlanApiService,
+            useValue: trainingPlanApiMock,
+          },
+          {
+            provide: ActivatedRoute,
+            useValue: {
+              snapshot: { queryParamMap: convertToParamMap(params) },
+            },
+          },
+        ],
+      });
+      TestBed.overrideProvider(MatDialog, { useValue: dialogMock });
+      await TestBed.compileComponents();
+      const f = TestBed.createComponent(StatsDashboardComponent);
+      await f.whenStable();
+      return f;
+    }
+
+    describe('When the URL carries only ?snooze=30', () => {
+      it('Then it must NOT call createPushup', async () => {
+        // Given — fresh dashboard mounted with the snooze deep-link URL
+        serviceMock.createPushup.mockClear();
+        await createDashboardWithQueryParams({ snooze: '30' });
+
+        // Then — snooze deep-links don't trigger any entry creation. The
+        // SW's snooze action posts SNOOZE_REMINDER to an open client OR
+        // opens this URL when no client exists; either way, the dashboard
+        // must keep its hands off entry creation.
+        expect(serviceMock.createPushup).not.toHaveBeenCalled();
+      });
+
+      it('Then it must NOT open the create-entry dialog', async () => {
+        // Given
+        dialogOpenSpy.mockClear();
+        await createDashboardWithQueryParams({ snooze: '30' });
+
+        // Then — `?log=1` opens the dialog; `?snooze=30` must not.
+        expect(dialogOpenSpy).not.toHaveBeenCalled();
+      });
+    });
+
+    describe('When the URL carries ?snooze=30&quickLog=20 (defense-in-depth)', () => {
+      // The current SW never produces this combination, but if a future
+      // change ever did, the snooze flow should win — clicking snooze
+      // should never silently log push-ups even with a stale `quickLog`
+      // alongside it. This test pins down the dashboard's contract:
+      // a `snooze` param suppresses the quick-log deep-link.
+      it('Then it must NOT call createPushup', async () => {
+        // Given
+        serviceMock.createPushup.mockClear();
+        await createDashboardWithQueryParams({
+          snooze: '30',
+          quickLog: '20',
+        });
+
+        // Then
+        expect(serviceMock.createPushup).not.toHaveBeenCalled();
       });
     });
   });
