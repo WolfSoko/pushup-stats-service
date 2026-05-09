@@ -4,7 +4,11 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { of } from 'rxjs';
 import { EntriesPageComponent } from './entries-page.component';
-import { LiveDataStore, StatsApiService } from '@pu-stats/data-access';
+import {
+  ExerciseFirestoreService,
+  LiveDataStore,
+  StatsApiService,
+} from '@pu-stats/data-access';
 import { AuthStore } from '@pu-auth/auth';
 import { makeAuthStoreMock } from '@pu-stats/testing';
 import { AppDataFacade } from '../../core/app-data.facade';
@@ -33,6 +37,15 @@ describe('EntriesPageComponent (SSR/REST)', () => {
   const liveMock = {
     connected: () => false,
     entries: () => [],
+    exerciseEntries: () => [],
+    updateTick: () => 0,
+  };
+
+  const exerciseServiceMock = {
+    listEntries: vitest.fn().mockReturnValue(of([])),
+    createEntry: vitest.fn().mockReturnValue(of({ _id: 'x' })),
+    updateEntry: vitest.fn().mockReturnValue(of(undefined)),
+    deleteEntry: vitest.fn().mockReturnValue(of({ ok: true })),
   };
 
   beforeEach(async () => {
@@ -44,6 +57,7 @@ describe('EntriesPageComponent (SSR/REST)', () => {
         provideRouter([]),
         { provide: PLATFORM_ID, useValue: 'server' },
         { provide: StatsApiService, useValue: apiMock },
+        { provide: ExerciseFirestoreService, useValue: exerciseServiceMock },
         { provide: LiveDataStore, useValue: liveMock },
         { provide: Auth, useValue: {} },
         { provide: AuthStore, useValue: makeAuthStoreMock() },

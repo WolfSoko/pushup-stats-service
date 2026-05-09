@@ -2,7 +2,11 @@ import { signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 import { EntriesPageComponent } from './entries-page.component';
-import { LiveDataStore, StatsApiService } from '@pu-stats/data-access';
+import {
+  ExerciseFirestoreService,
+  LiveDataStore,
+  StatsApiService,
+} from '@pu-stats/data-access';
 import { AuthStore } from '@pu-auth/auth';
 import { makeAuthStoreMock } from '@pu-stats/testing';
 import { AppDataFacade } from '../../core/app-data.facade';
@@ -57,6 +61,18 @@ describe('EntriesPageComponent', () => {
   const liveMock = {
     connected: signal(true),
     entries: signal(rows),
+    // EntriesStore now reads from both pushups and exerciseEntries via
+    // LiveDataStore. The Phase-0 history flow only exercises pushups
+    // here, so an empty exerciseEntries signal is enough.
+    exerciseEntries: signal([] as never[]),
+    updateTick: signal(0),
+  };
+
+  const exerciseServiceMock = {
+    listEntries: vitest.fn().mockReturnValue(of([])),
+    createEntry: vitest.fn().mockReturnValue(of({ _id: 'x' })),
+    updateEntry: vitest.fn().mockReturnValue(of(undefined)),
+    deleteEntry: vitest.fn().mockReturnValue(of({ ok: true })),
   };
 
   const appDataMock = {
@@ -70,6 +86,7 @@ describe('EntriesPageComponent', () => {
       imports: [EntriesPageComponent],
       providers: [
         { provide: StatsApiService, useValue: apiMock },
+        { provide: ExerciseFirestoreService, useValue: exerciseServiceMock },
         { provide: LiveDataStore, useValue: liveMock },
         { provide: AuthStore, useValue: makeAuthStoreMock() },
         { provide: AppDataFacade, useValue: appDataMock },
@@ -113,6 +130,7 @@ describe('EntriesPageComponent', () => {
 
   it('updates an entry via api', async () => {
     await store.updateEntry({
+      kind: 'pushup',
       id: '1',
       timestamp: '2026-02-11T20:00',
       reps: 14,
@@ -129,7 +147,7 @@ describe('EntriesPageComponent', () => {
   });
 
   it('deletes a single row via api', async () => {
-    await store.deleteEntry('2');
+    await store.deleteEntry({ kind: 'pushup', id: '2' });
 
     expect(apiMock.deletePushup).toHaveBeenCalledWith('2');
   });
@@ -149,5 +167,26 @@ describe('EntriesPageComponent', () => {
         .map((x: any) => x._id)
         .sort()
     ).toEqual(['2', '4']);
+  });
+
+  describe('kindFilterOptions + kindLabel', () => {
+    it('maps kindOptionsRaw values into { value, label } pairs', () => {
+      const component = fixture.componentInstance;
+      const opts = component.kindFilterOptions();
+      // The mock rows are all pushup-kind, so the only filter key is
+      // 'pushup' (variants collapse via unifiedEntryFilterKey).
+      expect(opts).toHaveLength(1);
+      expect(opts[0].value).toBe('pushup');
+      // The label is the localized "Liegestütze" string ($localize
+      // returns the source German in tests because no locale runtime
+      // is loaded).
+      expect(opts[0].label).toBe('Liegestütze');
+    });
+    // Note: the exercise-id branch of `kindLabel` is exercised
+    // indirectly through `exerciseDisplayName` (covered in
+    // stats-table.component.spec.ts via the exerciseLabel path)
+    // rather than re-mocking the store here — the store is wired
+    // through DI as a component provider, so a stub instance can't
+    // be injected without rebuilding the whole TestBed.
   });
 });

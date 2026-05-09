@@ -1,4 +1,4 @@
-import { Component, effect, inject } from '@angular/core';
+import { Component, computed, effect, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -6,9 +6,14 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { RouterLink } from '@angular/router';
+import { findExerciseDefinition } from '@pu-stats/models';
+import { exerciseDisplayName } from '../i18n/exercise-display-names';
 import { PreviewBannerComponent } from '../components/preview-banner/preview-banner.component';
 import { StatsTableComponent } from '../components/stats-table/stats-table.component';
-import { EntriesStore } from '../entries.store';
+import {
+  EntriesStore,
+  type ExerciseKindFilterOption,
+} from '../entries.store';
 import { PageHeaderComponent } from '../../core/page-header/page-header.component';
 
 @Component({
@@ -63,6 +68,21 @@ import { PageHeaderComponent } from '../../core/page-header/page-header.componen
                 [value]="store.to()"
                 (input)="store.setTo(asValue($event))"
               />
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label i18n="@@entries.exerciseFilter">Übung</mat-label>
+              <mat-select
+                multiple
+                [value]="store.kinds()"
+                (valueChange)="store.setKinds($event)"
+              >
+                @for (option of kindFilterOptions(); track option.value) {
+                  <mat-option [value]="option.value">{{
+                    option.label
+                  }}</mat-option>
+                }
+              </mat-select>
             </mat-form-field>
 
             <mat-form-field appearance="outline">
@@ -140,7 +160,7 @@ import { PageHeaderComponent } from '../../core/page-header/page-header.componen
                 >Noch keine Einträge.</strong
               >
               <p i18n="@@entries.empty.body">
-                Trage deinen ersten Satz Liegestütze ein — dann wird hier deine
+                Trage deinen ersten Trainingseintrag ein — dann wird hier deine
                 Historie sichtbar.
               </p>
             </div>
@@ -202,6 +222,18 @@ import { PageHeaderComponent } from '../../core/page-header/page-header.componen
 export class EntriesPageComponent {
   protected readonly store = inject(EntriesStore);
 
+  /**
+   * Locale-aware labels for the new "Übung" multi-select. Built in the
+   * component because `$localize` is template/component territory; the
+   * signal store stays UI-framework-agnostic.
+   */
+  readonly kindFilterOptions = computed<ExerciseKindFilterOption[]>(() =>
+    this.store.kindOptionsRaw().map((value) => ({
+      value,
+      label: this.kindLabel(value),
+    }))
+  );
+
   constructor() {
     effect(() => {
       const rows = this.store.rows();
@@ -238,5 +270,14 @@ export class EntriesPageComponent {
     const m = String(now.getMonth() + 1).padStart(2, '0');
     const d = String(now.getDate()).padStart(2, '0');
     return `${y}-${m}-${d}`;
+  }
+
+  private kindLabel(value: string): string {
+    if (value === 'pushup') {
+      return $localize`:@@exercise.category.pushup:Liegestütze`;
+    }
+    const def = findExerciseDefinition(value);
+    if (!def) return value;
+    return exerciseDisplayName(def.id);
   }
 }

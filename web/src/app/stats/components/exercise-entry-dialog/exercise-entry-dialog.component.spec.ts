@@ -140,4 +140,121 @@ describe('ExerciseEntryDialogComponent', () => {
       expect(dialogRef.close).not.toHaveBeenCalled();
     });
   });
+
+  describe('Edit-mode prefill via initial', () => {
+    it('binds timestamp and a multi-set breakdown from initial', () => {
+      const cmp = createComponent({
+        exerciseId: 'abs.situps',
+        exerciseName: 'Sit-ups',
+        initial: {
+          timestamp: '2026-04-15T10:30:00+02:00',
+          reps: 30,
+          sets: [10, 10, 10],
+        },
+      });
+      // datetime-local strips seconds + offset (16-char prefix).
+      expect(cmp.timestamp()).toBe('2026-04-15T10:30');
+      expect(cmp.sets()).toEqual([10, 10, 10]);
+      expect(cmp.totalReps()).toBe(30);
+      expect(cmp.canSubmit()).toBe(true);
+    });
+
+    it('falls back to a single set carrying initial.reps when sets is omitted', () => {
+      const cmp = createComponent({
+        exerciseId: 'legs.squats',
+        exerciseName: 'Kniebeugen',
+        initial: {
+          timestamp: '2026-04-15T08:00:00+02:00',
+          reps: 25,
+        },
+      });
+      expect(cmp.sets()).toEqual([25]);
+      expect(cmp.canSubmit()).toBe(true);
+    });
+
+    it('preserves the original ISO timestamp when the user did not edit it', () => {
+      const cmp = createComponent({
+        exerciseId: 'abs.situps',
+        exerciseName: 'Sit-ups',
+        initial: {
+          timestamp: '2026-04-15T10:30:00+02:00',
+          reps: 30,
+          sets: [10, 10, 10],
+        },
+      });
+      cmp.submit();
+      const result = dialogRef.close.mock
+        .calls[0][0] as ExerciseEntryDialogResult;
+      expect(result.timestamp).toBe('2026-04-15T10:30:00+02:00');
+      expect(result.reps).toBe(30);
+      expect(result.sets).toEqual([10, 10, 10]);
+    });
+
+    it('appends the local offset when the user adjusts the timestamp', () => {
+      const cmp = createComponent({
+        exerciseId: 'abs.situps',
+        exerciseName: 'Sit-ups',
+        initial: {
+          timestamp: '2026-04-15T10:30:00+02:00',
+          reps: 30,
+          sets: [10, 10, 10],
+        },
+      });
+      cmp.timestamp.set('2026-04-15T11:00');
+      cmp.submit();
+      const result = dialogRef.close.mock
+        .calls[0][0] as ExerciseEntryDialogResult;
+      expect(result.timestamp.startsWith('2026-04-15T11:00')).toBe(true);
+      expect(result.timestamp).not.toBe('2026-04-15T10:30:00+02:00');
+    });
+
+    it('falls back to [0] when initial.reps is 0 and sets is omitted', () => {
+      const cmp = createComponent({
+        exerciseId: 'abs.situps',
+        exerciseName: 'Sit-ups',
+        initial: {
+          timestamp: '2026-04-15T10:30:00+02:00',
+          reps: 0,
+        },
+      });
+      expect(cmp.sets()).toEqual([0]);
+      expect(cmp.canSubmit()).toBe(false);
+    });
+
+    it('falls back to [0] when initial.sets is an empty array', () => {
+      const cmp = createComponent({
+        exerciseId: 'abs.situps',
+        exerciseName: 'Sit-ups',
+        initial: {
+          timestamp: '2026-04-15T10:30:00+02:00',
+          reps: 0,
+          sets: [],
+        },
+      });
+      expect(cmp.sets()).toEqual([0]);
+    });
+
+    it('preserves zero-valued sets in the breakdown but ignores them on submit', () => {
+      const cmp = createComponent({
+        exerciseId: 'abs.situps',
+        exerciseName: 'Sit-ups',
+        initial: {
+          timestamp: '2026-04-15T10:30:00+02:00',
+          reps: 30,
+          sets: [10, 0, 20],
+        },
+      });
+      // The breakdown round-trips verbatim — mid-edit zeros are kept
+      // so the user can re-fill them without losing the slot.
+      expect(cmp.sets()).toEqual([10, 0, 20]);
+      // totalReps and submit collapse to non-zero entries only.
+      expect(cmp.totalReps()).toBe(30);
+
+      cmp.submit();
+      const result = dialogRef.close.mock
+        .calls[0][0] as ExerciseEntryDialogResult;
+      expect(result.sets).toEqual([10, 20]);
+      expect(result.reps).toBe(30);
+    });
+  });
 });

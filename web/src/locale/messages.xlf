@@ -4449,6 +4449,8 @@
     <unit id="exercise.category.pushup">
       <notes>
         <note category="location">web/src/app/stats/components/exercise-category-section/exercise-category-section.component.ts:287</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:176</note>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts:276</note>
       </notes>
       <segment>
         <source>Liegestütze</source>
@@ -4473,6 +4475,8 @@
     <unit id="exercise.abs.situps.name">
       <notes>
         <note category="location">web/src/app/stats/components/exercise-category-section/exercise-category-section.component.ts:292</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:339</note>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts:285</note>
       </notes>
       <segment>
         <source>Sit-ups</source>
@@ -4481,6 +4485,8 @@
     <unit id="exercise.legs.squats.name">
       <notes>
         <note category="location">web/src/app/stats/components/exercise-category-section/exercise-category-section.component.ts:293</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:340</note>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts:286</note>
       </notes>
       <segment>
         <source>Kniebeugen</source>
@@ -5102,7 +5108,7 @@
     </unit>
     <unit id="colType">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:89,90</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:101,102</note>
       </notes>
       <segment>
         <source>Typ</source>
@@ -5110,7 +5116,7 @@
     </unit>
     <unit id="colSource">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:98,99</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:110,111</note>
       </notes>
       <segment>
         <source>Quelle</source>
@@ -5118,7 +5124,7 @@
     </unit>
     <unit id="colActions">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:107,108</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:119,120</note>
       </notes>
       <segment>
         <source>Aktion</source>
@@ -5126,7 +5132,7 @@
     </unit>
     <unit id="editAria">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:114,115</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:126,127</note>
       </notes>
       <segment>
         <source>Bearbeiten</source>
@@ -5134,7 +5140,7 @@
     </unit>
     <unit id="editTitle">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:116,117</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:128,129</note>
       </notes>
       <segment>
         <source>Bearbeiten</source>
@@ -5142,7 +5148,7 @@
     </unit>
     <unit id="deleteAria">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:127</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:139</note>
       </notes>
       <segment>
         <source>Löschen</source>
@@ -5150,10 +5156,18 @@
     </unit>
     <unit id="deleteTitle">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:129</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:141</note>
       </notes>
       <segment>
         <source>Löschen</source>
+      </segment>
+    </unit>
+    <unit id="colExercise">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:172</note>
+      </notes>
+      <segment>
+        <source>Übung</source>
       </segment>
     </unit>
     <unit id="pie.distributionAria">
@@ -5497,7 +5511,7 @@
     </unit>
     <unit id="historyHeaderTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/entries-page.component.ts:33,34</note>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts:37,38</note>
       </notes>
       <segment>
         <source>Historie</source>
@@ -5505,7 +5519,7 @@
     </unit>
     <unit id="historyHeaderSubtitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/entries-page.component.ts:35,37</note>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts:39,41</note>
       </notes>
       <segment>
         <source> Durchsuche, filtere und bearbeite deine Trainingseinträge. </source>
@@ -5513,7 +5527,7 @@
     </unit>
     <unit id="entries.title">
       <notes>
-        <note category="location">web/src/app/stats/shell/entries-page.component.ts:40,41</note>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts:44,45</note>
       </notes>
       <segment>
         <source>Filter</source>
@@ -5521,7 +5535,7 @@
     </unit>
     <unit id="entries.subtitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/entries-page.component.ts:42,43</note>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts:46,47</note>
       </notes>
       <segment>
         <source>Zeitraum und Kriterien</source>
@@ -5529,7 +5543,7 @@
     </unit>
     <unit id="entries.dateFrom">
       <notes>
-        <note category="location">web/src/app/stats/shell/entries-page.component.ts:49,50</note>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts:53,54</note>
       </notes>
       <segment>
         <source>Datum von</source>
@@ -5537,15 +5551,23 @@
     </unit>
     <unit id="entries.dateTo">
       <notes>
-        <note category="location">web/src/app/stats/shell/entries-page.component.ts:59,60</note>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts:63,64</note>
       </notes>
       <segment>
         <source>Datum bis</source>
       </segment>
     </unit>
+    <unit id="entries.exerciseFilter">
+      <notes>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts:73,74</note>
+      </notes>
+      <segment>
+        <source>Übung</source>
+      </segment>
+    </unit>
     <unit id="entries.sourceFilter">
       <notes>
-        <note category="location">web/src/app/stats/shell/entries-page.component.ts:69,70</note>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts:88,89</note>
       </notes>
       <segment>
         <source>Quelle</source>
@@ -5553,8 +5575,8 @@
     </unit>
     <unit id="entries.allOption">
       <notes>
-        <note category="location">web/src/app/stats/shell/entries-page.component.ts:75,77</note>
-        <note category="location">web/src/app/stats/shell/entries-page.component.ts:90,92</note>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts:94,96</note>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts:109,111</note>
       </notes>
       <segment>
         <source>Alle</source>
@@ -5562,7 +5584,7 @@
     </unit>
     <unit id="entries.typeFilter">
       <notes>
-        <note category="location">web/src/app/stats/shell/entries-page.component.ts:84,85</note>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts:103,104</note>
       </notes>
       <segment>
         <source>Typ</source>
@@ -5570,7 +5592,7 @@
     </unit>
     <unit id="entries.repsMin">
       <notes>
-        <note category="location">web/src/app/stats/shell/entries-page.component.ts:101,102</note>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts:120,121</note>
       </notes>
       <segment>
         <source>Reps min</source>
@@ -5578,7 +5600,7 @@
     </unit>
     <unit id="entries.repsMax">
       <notes>
-        <note category="location">web/src/app/stats/shell/entries-page.component.ts:112,113</note>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts:131,132</note>
       </notes>
       <segment>
         <source>Reps max</source>
@@ -5586,7 +5608,7 @@
     </unit>
     <unit id="entries.empty.title">
       <notes>
-        <note category="location">web/src/app/stats/shell/entries-page.component.ts:140,142</note>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts:159,161</note>
       </notes>
       <segment>
         <source>Noch keine Einträge.</source>
@@ -5594,15 +5616,15 @@
     </unit>
     <unit id="entries.empty.body">
       <notes>
-        <note category="location">web/src/app/stats/shell/entries-page.component.ts:143,145</note>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts:162,164</note>
       </notes>
       <segment>
-        <source> Trage deinen ersten Satz Liegestütze ein — dann wird hier deine Historie sichtbar. </source>
+        <source> Trage deinen ersten Trainingseintrag ein — dann wird hier deine Historie sichtbar. </source>
       </segment>
     </unit>
     <unit id="entries.empty.cta">
       <notes>
-        <note category="location">web/src/app/stats/shell/entries-page.component.ts:155,157</note>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts:174,176</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon aria-hidden=&quot;true&quot;&gt;" dispEnd="&lt;/mat-icon&gt;">add</pc> Eintrag erstellen </source>

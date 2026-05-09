@@ -10,7 +10,7 @@ import {
   query,
   where,
 } from '@angular/fire/firestore';
-import { PushupRecord } from '@pu-stats/models';
+import { ExerciseEntry, PushupRecord } from '@pu-stats/models';
 import {
   patchState,
   signalStore,
@@ -21,6 +21,12 @@ import {
 
 type LiveDataState = {
   entries: PushupRecord[];
+  /**
+   * Live mirror of `exerciseEntries` (sit-ups, squats, …) for the
+   * current user. Pushups stay on `entries` for backwards compat with
+   * every existing consumer; new code reads `exerciseEntries`.
+   */
+  exerciseEntries: ExerciseEntry[];
   connected: boolean;
   updateTick: number;
 };
@@ -29,6 +35,7 @@ export const LiveDataStore = signalStore(
   { providedIn: 'root' },
   withState<LiveDataState>({
     entries: [],
+    exerciseEntries: [],
     connected: false,
     updateTick: 0,
   }),
@@ -53,16 +60,26 @@ export const LiveDataStore = signalStore(
       effect((onCleanup) => {
         const u = user();
         if (!u) {
-          patchState(store, { connected: false, entries: [], updateTick: 0 });
+          patchState(store, {
+            connected: false,
+            entries: [],
+            exerciseEntries: [],
+            updateTick: 0,
+          });
           return;
         }
-        const q = query(
+        const pushupQuery = query(
           collection(fs, 'pushups'),
           where('userId', '==', u.uid),
           orderBy('timestamp', 'asc')
         );
-        const unsub = onSnapshot(
-          q,
+        const exerciseQuery = query(
+          collection(fs, 'exerciseEntries'),
+          where('userId', '==', u.uid),
+          orderBy('timestamp', 'asc')
+        );
+        const unsubPushups = onSnapshot(
+          pushupQuery,
           (snapshot) => {
             patchState(store, {
               connected: true,
@@ -74,7 +91,31 @@ export const LiveDataStore = signalStore(
           },
           () => patchState(store, { connected: false })
         );
-        onCleanup(unsub);
+        const unsubExercises = onSnapshot(
+          exerciseQuery,
+          (snapshot) => {
+            // `connected` is intentionally NOT set here — the pushup
+            // subscription is the canonical liveness indicator. If we
+            // also flipped it to `true` from this handler, an
+            // exercise-only success would mask a concurrent pushup
+            // subscription failure (the error handler on the pushup
+            // stream sets `connected: false`).
+            patchState(store, {
+              exerciseEntries: snapshot.docs.map(
+                (d) => ({ _id: d.id, ...d.data() }) as ExerciseEntry
+              ),
+              updateTick: store.updateTick() + 1,
+            });
+          },
+          // A failure on the exerciseEntries subscription must not flip
+          // `connected` to false either — same reason: pushups own the
+          // canonical signal.
+          () => undefined
+        );
+        onCleanup(() => {
+          unsubPushups();
+          unsubExercises();
+        });
       });
     },
   })

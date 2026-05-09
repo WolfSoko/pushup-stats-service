@@ -4,7 +4,9 @@ import { of } from 'rxjs';
 import { StatsTableComponent } from './stats-table.component';
 import { UserConfigApiService } from '@pu-stats/data-access';
 import { UserContextService } from '@pu-auth/auth';
+import type { UnifiedEntry } from '@pu-stats/models';
 import { CreateEntryResult } from '../create-entry-dialog/create-entry-dialog.component';
+import { ExerciseEntryDialogResult } from '../exercise-entry-dialog/exercise-entry-dialog.component';
 
 describe('StatsTableComponent', () => {
   let fixture: ComponentFixture<StatsTableComponent>;
@@ -36,14 +38,24 @@ describe('StatsTableComponent', () => {
     fixture = TestBed.createComponent(StatsTableComponent);
   });
 
-  it('binds entry data to table dataSource', async () => {
+  it('binds entry data to table dataSource (mapped to UnifiedEntry)', async () => {
     const entries = [
       { _id: '1', timestamp: '2026-02-10T13:45:00', reps: 8, source: 'wa' },
     ];
     fixture.componentRef.setInput('entries', entries);
     await fixture.whenStable();
 
-    expect(fixture.componentInstance.dataSource.data).toEqual(entries);
+    // Legacy PushupRecord input is mapped to UnifiedEntry on the way
+    // into the dataSource so the row template can read `kind`-aware
+    // helpers without each caller having to map first.
+    const data = fixture.componentInstance.dataSource.data;
+    expect(data).toHaveLength(1);
+    expect(data[0]).toMatchObject({
+      kind: 'pushup',
+      _id: '1',
+      reps: 8,
+      source: 'wa',
+    });
   });
 
   it('binds all entries to dataSource for virtual viewport rendering', async () => {
@@ -104,13 +116,14 @@ describe('StatsTableComponent', () => {
       const updateSpy = vitest.fn();
       component.update.subscribe(updateSpy);
 
-      const entry = {
+      const entry: UnifiedEntry = {
+        kind: 'pushup',
         _id: '1',
         timestamp: '2026-02-10T13:45:00',
         reps: 30,
         sets: [10, 10, 10] as number[],
         source: 'wa',
-        type: 'Diamond',
+        variantType: 'Diamond',
       };
 
       const editResult: CreateEntryResult = {
@@ -136,13 +149,15 @@ describe('StatsTableComponent', () => {
             reps: entry.reps,
             sets: entry.sets,
             source: entry.source,
-            type: entry.type,
+            type: entry.variantType,
           },
         })
       );
 
-      // Verify update was emitted with dialog result
+      // Verify update was emitted with dialog result and the kind
+      // discriminator the parent store needs to dispatch.
       expect(updateSpy).toHaveBeenCalledWith({
+        kind: 'pushup',
         id: '1',
         timestamp: editResult.timestamp,
         reps: editResult.reps,
@@ -162,10 +177,12 @@ describe('StatsTableComponent', () => {
       } as never);
 
       component.openEditDialog({
+        kind: 'pushup',
         _id: '1',
         timestamp: '2026-02-10T13:45:00',
         reps: 8,
         source: 'wa',
+        variantType: null,
       });
 
       expect(updateSpy).not.toHaveBeenCalled();
@@ -178,11 +195,12 @@ describe('StatsTableComponent', () => {
       } as never);
 
       component.openEditDialog({
+        kind: 'pushup',
         _id: '1',
         timestamp: '2026-02-10T13:45:00',
         reps: 20,
         source: 'web',
-        type: 'Standard',
+        variantType: 'Standard',
       });
 
       expect(openSpy).toHaveBeenCalledWith(
@@ -194,6 +212,200 @@ describe('StatsTableComponent', () => {
           }),
         })
       );
+    });
+
+    it('strips a single-set array when emitting the pushup update', () => {
+      const component = fixture.componentInstance;
+      const updateSpy = vitest.fn();
+      component.update.subscribe(updateSpy);
+
+      const editResult: CreateEntryResult = {
+        timestamp: '2026-02-10T14:00+01:00',
+        reps: 25,
+        sets: [25],
+        source: 'web',
+        type: 'Standard',
+      };
+      vitest.spyOn(component.dialog, 'open').mockReturnValue({
+        afterClosed: () => of(editResult),
+      } as never);
+
+      component.openEditDialog({
+        kind: 'pushup',
+        _id: '1',
+        timestamp: '2026-02-10T13:45:00',
+        reps: 20,
+        source: 'web',
+        variantType: 'Standard',
+      });
+
+      expect(updateSpy).toHaveBeenCalledWith(
+        expect.objectContaining({ sets: undefined })
+      );
+    });
+
+    it('emits an exercise update with immutable exerciseId and reconciled sets', () => {
+      const component = fixture.componentInstance;
+      const updateSpy = vitest.fn();
+      component.update.subscribe(updateSpy);
+
+      const exerciseEntry: UnifiedEntry = {
+        kind: 'exercise',
+        _id: 'ex-7',
+        exerciseId: 'abs.situps',
+        timestamp: '2026-02-10T13:45:00',
+        reps: 30,
+        source: 'web',
+      };
+
+      const editResult: ExerciseEntryDialogResult = {
+        exerciseId: 'abs.situps',
+        timestamp: '2026-02-10T14:00+01:00',
+        reps: 35,
+        sets: [12, 12, 11],
+      };
+      vitest.spyOn(component.dialog, 'open').mockReturnValue({
+        afterClosed: () => of(editResult),
+      } as never);
+
+      component.openEditDialog(exerciseEntry);
+
+      expect(updateSpy).toHaveBeenCalledWith({
+        kind: 'exercise',
+        id: 'ex-7',
+        exerciseId: 'abs.situps',
+        timestamp: editResult.timestamp,
+        reps: 35,
+        sets: [12, 12, 11],
+        source: 'web',
+      });
+    });
+
+    it('strips a single-set array on exercise updates', () => {
+      const component = fixture.componentInstance;
+      const updateSpy = vitest.fn();
+      component.update.subscribe(updateSpy);
+
+      const editResult: ExerciseEntryDialogResult = {
+        exerciseId: 'legs.squats',
+        timestamp: '2026-02-10T14:00+01:00',
+        reps: 20,
+        sets: [20],
+      };
+      vitest.spyOn(component.dialog, 'open').mockReturnValue({
+        afterClosed: () => of(editResult),
+      } as never);
+
+      component.openEditDialog({
+        kind: 'exercise',
+        _id: 'ex-9',
+        exerciseId: 'legs.squats',
+        timestamp: '2026-02-10T13:45:00',
+        reps: 18,
+        source: 'web',
+      });
+
+      expect(updateSpy).toHaveBeenCalledWith(
+        expect.objectContaining({ sets: undefined })
+      );
+    });
+  });
+
+  describe('showExerciseColumn distinct-key heuristic', () => {
+    it('hides the column when every row is the same exercise', () => {
+      const component = fixture.componentInstance;
+      fixture.componentRef.setInput('entries', [
+        {
+          kind: 'exercise',
+          _id: '1',
+          exerciseId: 'abs.situps',
+          timestamp: '2026-02-10T13:45:00',
+          reps: 20,
+          source: 'web',
+        },
+        {
+          kind: 'exercise',
+          _id: '2',
+          exerciseId: 'abs.situps',
+          timestamp: '2026-02-09T13:45:00',
+          reps: 25,
+          source: 'web',
+        },
+      ] satisfies UnifiedEntry[]);
+
+      expect(component.showExerciseColumn()).toBe(false);
+    });
+
+    it('shows the column when rows mix two distinct exercises', () => {
+      const component = fixture.componentInstance;
+      fixture.componentRef.setInput('entries', [
+        {
+          kind: 'exercise',
+          _id: '1',
+          exerciseId: 'abs.situps',
+          timestamp: '2026-02-10T13:45:00',
+          reps: 20,
+          source: 'web',
+        },
+        {
+          kind: 'exercise',
+          _id: '2',
+          exerciseId: 'legs.squats',
+          timestamp: '2026-02-09T13:45:00',
+          reps: 30,
+          source: 'web',
+        },
+      ] satisfies UnifiedEntry[]);
+
+      expect(component.showExerciseColumn()).toBe(true);
+    });
+
+    it('treats every pushup variant as one filter key (column hidden)', () => {
+      const component = fixture.componentInstance;
+      fixture.componentRef.setInput('entries', [
+        {
+          kind: 'pushup',
+          _id: '1',
+          timestamp: '2026-02-10T13:45:00',
+          reps: 20,
+          source: 'web',
+          variantType: 'Standard',
+        },
+        {
+          kind: 'pushup',
+          _id: '2',
+          timestamp: '2026-02-09T13:45:00',
+          reps: 15,
+          source: 'web',
+          variantType: 'Diamond',
+        },
+      ] satisfies UnifiedEntry[]);
+
+      expect(component.showExerciseColumn()).toBe(false);
+    });
+
+    it('shows the column for a pushup + exercise mix', () => {
+      const component = fixture.componentInstance;
+      fixture.componentRef.setInput('entries', [
+        {
+          kind: 'pushup',
+          _id: '1',
+          timestamp: '2026-02-10T13:45:00',
+          reps: 20,
+          source: 'web',
+          variantType: 'Standard',
+        },
+        {
+          kind: 'exercise',
+          _id: '2',
+          exerciseId: 'abs.situps',
+          timestamp: '2026-02-09T13:45:00',
+          reps: 30,
+          source: 'web',
+        },
+      ] satisfies UnifiedEntry[]);
+
+      expect(component.showExerciseColumn()).toBe(true);
     });
   });
 
@@ -230,6 +442,46 @@ describe('StatsTableComponent', () => {
       const component = fixture.componentInstance;
       const result = component.formatSets([20]);
       expect(result).toBe('1×20');
+    });
+  });
+
+  describe('emitRemove kind dispatch', () => {
+    it('emits a pushup remove payload for pushup rows', () => {
+      const component = fixture.componentInstance;
+      const removeSpy = vitest.fn();
+      component.remove.subscribe(removeSpy);
+
+      component.emitRemove({
+        kind: 'pushup',
+        _id: 'p-1',
+        timestamp: '2026-02-10T13:45:00',
+        reps: 20,
+        source: 'web',
+        variantType: 'Standard',
+      });
+
+      expect(removeSpy).toHaveBeenCalledWith({ kind: 'pushup', id: 'p-1' });
+    });
+
+    it('emits an exercise remove payload for exercise rows', () => {
+      const component = fixture.componentInstance;
+      const removeSpy = vitest.fn();
+      component.remove.subscribe(removeSpy);
+
+      component.emitRemove({
+        kind: 'exercise',
+        _id: 'ex-9',
+        exerciseId: 'legs.squats',
+        timestamp: '2026-02-10T13:45:00',
+        reps: 25,
+        source: 'web',
+      });
+
+      // The kind discriminator is what the parent store uses to
+      // dispatch to the right Firestore service; exerciseId is not
+      // needed in the remove payload because the doc-id alone keys
+      // the right collection.
+      expect(removeSpy).toHaveBeenCalledWith({ kind: 'exercise', id: 'ex-9' });
     });
   });
 
