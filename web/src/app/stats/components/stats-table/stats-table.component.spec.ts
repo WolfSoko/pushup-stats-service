@@ -309,6 +309,99 @@ describe('StatsTableComponent', () => {
         expect.objectContaining({ sets: undefined })
       );
     });
+
+    it('forwards a non-empty variantId on exercise edit (set variant)', () => {
+      const component = fixture.componentInstance;
+      const updateSpy = vitest.fn();
+      component.update.subscribe(updateSpy);
+
+      const editResult: EntryDialogResult = {
+        exerciseId: 'abs.situps',
+        timestamp: '2026-02-10T14:00+01:00',
+        reps: 30,
+        sets: [30],
+        variantId: 'weighted',
+      };
+      vitest.spyOn(component.dialog, 'open').mockReturnValue({
+        afterClosed: () => of(editResult),
+      } as never);
+
+      component.openEditDialog({
+        kind: 'exercise',
+        _id: 'ex-7',
+        exerciseId: 'abs.situps',
+        timestamp: '2026-02-10T13:45:00',
+        reps: 25,
+        source: 'web',
+      });
+
+      expect(updateSpy).toHaveBeenCalledWith(
+        expect.objectContaining({ variantId: 'weighted' })
+      );
+    });
+
+    it('forwards null variantId on exercise edit (clear variant)', () => {
+      const component = fixture.componentInstance;
+      const updateSpy = vitest.fn();
+      component.update.subscribe(updateSpy);
+
+      const editResult: EntryDialogResult = {
+        exerciseId: 'abs.situps',
+        timestamp: '2026-02-10T14:00+01:00',
+        reps: 30,
+        sets: [30],
+        variantId: null,
+      };
+      vitest.spyOn(component.dialog, 'open').mockReturnValue({
+        afterClosed: () => of(editResult),
+      } as never);
+
+      component.openEditDialog({
+        kind: 'exercise',
+        _id: 'ex-7',
+        exerciseId: 'abs.situps',
+        timestamp: '2026-02-10T13:45:00',
+        reps: 25,
+        source: 'web',
+        variantId: 'weighted',
+      });
+
+      const call = updateSpy.mock.calls[0][0];
+      expect(call.variantId).toBeNull();
+      expect('variantId' in call).toBe(true);
+    });
+
+    it('emits sets: [] as the explicit clear sentinel when collapsing a multi-set entry to one set', () => {
+      const component = fixture.componentInstance;
+      const updateSpy = vitest.fn();
+      component.update.subscribe(updateSpy);
+
+      const editResult: EntryDialogResult = {
+        exerciseId: 'abs.situps',
+        timestamp: '2026-02-10T14:00+01:00',
+        reps: 30,
+        sets: [30],
+      };
+      vitest.spyOn(component.dialog, 'open').mockReturnValue({
+        afterClosed: () => of(editResult),
+      } as never);
+
+      component.openEditDialog({
+        kind: 'exercise',
+        _id: 'ex-7',
+        exerciseId: 'abs.situps',
+        timestamp: '2026-02-10T13:45:00',
+        reps: 30,
+        sets: [10, 10, 10],
+        source: 'web',
+      });
+
+      // Without the explicit `[]` the update would omit `sets` and the
+      // stale [10,10,10] breakdown would survive in Firestore.
+      expect(updateSpy).toHaveBeenCalledWith(
+        expect.objectContaining({ sets: [] })
+      );
+    });
   });
 
   describe('showExerciseColumn distinct-key heuristic', () => {

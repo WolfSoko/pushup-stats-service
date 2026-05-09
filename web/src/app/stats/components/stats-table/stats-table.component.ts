@@ -255,7 +255,17 @@ export class StatsTableComponent {
               id: entry._id,
               timestamp: result.timestamp,
               reps: result.reps,
-              sets: result.sets.length > 1 ? result.sets : undefined,
+              // Single-set collapse: if the original doc carried a
+              // multi-set breakdown, emit `[]` as the explicit clear
+              // sentinel so ExerciseFirestoreService.updateEntry() can
+              // translate it into deleteField(); `undefined` would just
+              // omit the field and leave stale sets behind.
+              sets:
+                result.sets.length > 1
+                  ? result.sets
+                  : entry.sets !== undefined
+                    ? []
+                    : undefined,
               source: result.source,
               type: result.type,
             });
@@ -302,7 +312,14 @@ export class StatsTableComponent {
             exerciseId: entry.exerciseId,
             timestamp: result.timestamp,
             reps: result.reps,
-            sets: result.sets.length > 1 ? result.sets : undefined,
+            // Same single-set-collapse rule as the pushup branch:
+            // explicit `[]` clears a stale per-set breakdown.
+            sets:
+              result.sets.length > 1
+                ? result.sets
+                : entry.sets !== undefined
+                  ? []
+                  : undefined,
             source: entry.source,
             // Forward the dialog's tri-state variantId verbatim:
             // - non-empty string sets the variant

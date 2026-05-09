@@ -4453,7 +4453,7 @@
     <unit id="entryDialog.overCap">
       <segment state="translated">
         <source> Maximum: <ph id="0" equiv="INTERPOLATION" disp="{{ data.definition.max }}"/> pro Eintrag </source>
-        <target> 最大: <ph id="0" equiv="INTERPOLATION" disp="{{ data.definition.max }}"/> 条记录 </target>
+        <target> 每条记录最多 <ph id="0" equiv="INTERPOLATION" disp="{{ data.definition.max }}"/> </target>
       </segment>
     </unit>
     <unit id="exerciseSection.lastEntry">

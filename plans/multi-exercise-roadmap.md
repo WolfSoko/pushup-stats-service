@@ -448,7 +448,7 @@ finden uns nicht.
 
 ### Track UI-3 — Ein Dialog für alle Übungen
 
-**Status:** Phase A in Arbeit (PR folgt). Phase B kommt vor Phase 4 (Custom
+**Status:** Phase A in diesem PR (`#293`). Phase B kommt vor Phase 4 (Custom
 Exercises) — Custom-Übungen brauchen zwingend einen parametrisierten Dialog,
 da man pro neue User-Übung keinen neuen Dialog generieren kann.
 
@@ -471,8 +471,11 @@ ohne neuen Komponenten-Code.
 **Scope**
 
 - **Form-Felder dynamisch nach `def.measurement`:**
-  - Phase-0: `'reps'` und `'weight'` → Reps-Input + Sets-Liste
-    (clientseitig auf `def.min`/`def.max` geclampt, `step="1"`).
+  - Phase-0: `'reps'` → Reps-Input + Sets-Liste (clientseitig auf
+    `def.min`/`def.max` geclampt, `step="1"`). `'weight'` wartet auf
+    einen dedizierten `weightKg`-Companion-Input — der Validator
+    rejected `weight`-Definitionen ohne `weightKg`, deshalb darf der
+    unified Dialog sie noch nicht öffnen.
   - Phase 1+: `'time'` / `'distance'` Felder werden mitgeplant aber
     nicht implementiert — ein klar abgegrenzter `switch (def.measurement)`
     macht die Erweiterung in Phase 1 (Plank) und Phase 3 (Cardio)

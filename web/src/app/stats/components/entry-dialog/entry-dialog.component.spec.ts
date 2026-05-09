@@ -147,6 +147,27 @@ describe('EntryDialogComponent', () => {
         .calls[0][0] as EntryDialogResult;
       expect('variantId' in result).toBe(false);
     });
+
+    it('omits variantId when an existing variant is left unchanged in edit mode', () => {
+      const cmp = createComponent({
+        definition: pushupWithVariantsDef,
+        exerciseName: 'Pushup',
+        initial: {
+          timestamp: '2026-04-15T10:00:00+02:00',
+          reps: 20,
+          sets: [20],
+          variantId: 'wide',
+        },
+      });
+      // No setValue call — the user opened, looked, and saved without
+      // touching the variant picker. The patch must not race against
+      // a concurrent variant change by re-asserting the same string.
+      cmp.submit();
+
+      const result = dialogRef.close.mock
+        .calls[0][0] as EntryDialogResult;
+      expect('variantId' in result).toBe(false);
+    });
   });
 
   describe('When the user enters reps and submits', () => {

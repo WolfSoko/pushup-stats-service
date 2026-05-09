@@ -310,11 +310,17 @@ export class EntryDialogComponent {
     // `undefined` when the user never engaged with the picker.
     const variantId = this.variantControl.value.trim();
     const initialVariantId = this.data.initial?.variantId ?? '';
-    const variantPatch: { variantId?: string | null } = variantId
-      ? { variantId }
-      : initialVariantId
-        ? { variantId: null }
-        : {};
+    // Tri-state with no-change preservation: emit variantId only if it
+    // actually changed, otherwise omit so the update doesn't race
+    // against concurrent variant edits with stale data.
+    const variantPatch: { variantId?: string | null } =
+      variantId === initialVariantId
+        ? {}
+        : variantId
+          ? { variantId }
+          : initialVariantId
+            ? { variantId: null }
+            : {};
 
     const result: EntryDialogResult = {
       exerciseId: this.data.definition.id,

@@ -96,11 +96,13 @@ export interface ExerciseEntryCreate {
 export interface ExerciseEntryUpdate {
   exerciseId?: string;
   /**
-   * Variant id patch. `string` sets the variant; `null` is the
-   * sentinel for "explicitly clear" — the data-access layer
+   * Variant id patch. A non-empty `string` sets the variant; `null` is
+   * the sentinel for "explicitly clear" — the data-access layer
    * translates it into a Firestore `deleteField()` so the doc no
    * longer carries one. `undefined` means "no change" (omitted from
-   * the patch).
+   * the patch). The empty string `''` is also accepted as a defensive
+   * fallback and treated like `undefined` ("no variant"), matching the
+   * raw value an unfilled mat-select control delivers.
    */
   variantId?: string | null;
   timestamp?: string;
