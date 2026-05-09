@@ -411,6 +411,64 @@ describe('EntryDialogComponent', () => {
       expect(cmp.canSubmit()).toBe(false);
     });
 
+    it('rejects negative seconds when minutes are valid', () => {
+      const cmp = createComponent({
+        definition: plankDef,
+        exerciseName: 'Plank',
+      });
+      cmp.timestamp.set('2026-04-15T10:00');
+      cmp.durationMinutesInput.set('1');
+      cmp.durationSecondsInput.set('-5');
+      expect(cmp.durationSec()).toBeNull();
+      expect(cmp.canSubmit()).toBe(false);
+    });
+
+    it('accepts 59 as the upper boundary for seconds', () => {
+      const cmp = createComponent({
+        definition: plankDef,
+        exerciseName: 'Plank',
+      });
+      cmp.timestamp.set('2026-04-15T10:00');
+      cmp.durationMinutesInput.set('1');
+      cmp.durationSecondsInput.set('59');
+      expect(cmp.durationSec()).toBe(119);
+      expect(cmp.canSubmit()).toBe(true);
+    });
+
+    it('rejects fractional values in either field', () => {
+      const cmp = createComponent({
+        definition: plankDef,
+        exerciseName: 'Plank',
+      });
+      cmp.timestamp.set('2026-04-15T10:00');
+      cmp.durationMinutesInput.set('1.9');
+      cmp.durationSecondsInput.set('30');
+      // Without the integer check, "1.9" would silently floor to 1 and
+      // save 90 s instead of 114 s — regression guard for that.
+      expect(cmp.durationSec()).toBeNull();
+      expect(cmp.canSubmit()).toBe(false);
+
+      cmp.durationMinutesInput.set('1');
+      cmp.durationSecondsInput.set('30.5');
+      expect(cmp.durationSec()).toBeNull();
+      expect(cmp.canSubmit()).toBe(false);
+    });
+
+    it('disables submit on a zero-duration entry even if def.min permits it', () => {
+      const cmp = createComponent({
+        definition: { ...plankDef, min: 0 },
+        exerciseName: 'Plank',
+      });
+      cmp.timestamp.set('2026-04-15T10:00');
+      cmp.durationMinutesInput.set('0');
+      cmp.durationSecondsInput.set('0');
+      // canSubmit() must agree with submit()'s `sec <= 0` early-return so
+      // the Save button can't enable on an entry the dialog would
+      // silently drop.
+      expect(cmp.durationSec()).toBe(0);
+      expect(cmp.canSubmit()).toBe(false);
+    });
+
     it('disables submit when the duration exceeds the per-exercise cap', () => {
       const cmp = createComponent({
         definition: { ...plankDef, max: 60 },

@@ -467,7 +467,12 @@ export class EntryDialogComponent {
     }
     if (this.isTimeMeasurement()) {
       const sec = this.durationSec();
-      return sec !== null && sec >= this.data.definition.min && !this.overCap();
+      return (
+        sec !== null &&
+        sec > 0 &&
+        sec >= this.data.definition.min &&
+        !this.overCap()
+      );
     }
     return this.totalReps() >= this.data.definition.min && !this.overCap();
   });
@@ -618,11 +623,15 @@ function parseDurationFromParts(
 
   const minutes = minTrim === '' ? 0 : Number(minTrim);
   const seconds = secTrim === '' ? 0 : Number(secTrim);
-  if (!Number.isFinite(minutes) || !Number.isFinite(seconds)) return null;
+  // Reject fractional input (e.g. "1.9") so a paste-into-the-number-field
+  // doesn't silently truncate to a shorter saved duration. The native
+  // step="1" attribute only flags constraint validity; it does not stop
+  // the value from reaching this parser.
+  if (!Number.isInteger(minutes) || !Number.isInteger(seconds)) return null;
   if (minutes < 0 || seconds < 0) return null;
   if (seconds > SECONDS_MAX) return null;
 
-  return Math.floor(minutes) * 60 + Math.floor(seconds);
+  return minutes * 60 + seconds;
 }
 
 /**
