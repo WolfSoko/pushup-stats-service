@@ -29,6 +29,7 @@ import {
   PushupRecord,
   pushupRecordToUnified,
   UnifiedEntry,
+  unifiedEntryFilterKey,
 } from '@pu-stats/models';
 import { firstValueFrom } from 'rxjs';
 import {
@@ -41,6 +42,7 @@ import {
   ExerciseEntryDialogData,
   ExerciseEntryDialogResult,
 } from '../exercise-entry-dialog/exercise-entry-dialog.component';
+import { exerciseDisplayName } from '../../i18n/exercise-display-names';
 
 /**
  * Update payload emitted from the row's edit button. Always carries the
@@ -94,12 +96,8 @@ export class StatsTableComponent {
     if (entry.kind === 'pushup') {
       return displayPushupType(entry.variantType, this.locale);
     }
-    // The Typ column is a *sub-type* (pushup variant), not the exercise
-    // itself. For exercise rows the parent Übung column already shows
-    // the localized name; surfacing it here too produced a duplicated
-    // "Sit-ups | Sit-ups" pair. Phase-0 exercises have no variants, so
-    // an empty cell is correct. Track UI-3 will introduce per-exercise
-    // variants and this can return `entry.variantId` then.
+    // Typ is a sub-type (pushup variant), not the exercise itself —
+    // surfacing the exercise name here would duplicate the Übung column.
     return entry.variantId ?? '';
   };
 
@@ -132,16 +130,17 @@ export class StatsTableComponent {
   readonly showSourceColumn = signal(false);
 
   /**
-   * Whether the current row set spans more than one exercise type. Adds
-   * the "Übung" column when true so the dashboard preview (pushup-only)
-   * does not show a redundant column with "Liegestütze" on every row.
+   * Whether the current row set spans more than one distinct exercise.
+   * Adds the "Übung" column only when true so a uniform set (pushup-only
+   * preview, or a user who's logged just squats) does not show a column
+   * where every cell repeats the same label. Discrimination is by
+   * `unifiedEntryFilterKey` so all pushup variants count as one entry.
    */
   readonly showExerciseColumn = computed(() => {
     const rows = this.unifiedEntries();
     if (rows.length === 0) return false;
-    const firstKind = rows[0].kind;
-    if (firstKind === 'exercise') return true;
-    return rows.some((r) => r.kind !== firstKind);
+    const distinctKeys = new Set(rows.map((r) => unifiedEntryFilterKey(r)));
+    return distinctKeys.size > 1;
   });
 
   readonly displayedColumns = computed(() => {
@@ -177,7 +176,7 @@ export class StatsTableComponent {
     }
     const def = findExerciseDefinition(entry.exerciseId);
     if (!def) return entry.exerciseId;
-    return EXERCISE_DISPLAY_NAMES[def.id] ?? def.id;
+    return exerciseDisplayName(def.id);
   }
 
   constructor() {
@@ -207,9 +206,6 @@ export class StatsTableComponent {
   }
 
   openCreateDialog(): void {
-    // History page only creates pushup entries via the legacy dialog.
-    // Exercise entries are added from the dashboard category sections
-    // in Phase 0 — Track UI-3 will collapse both flows.
     this.dialog
       .open<CreateEntryDialogComponent, void, CreateEntryResult>(
         CreateEntryDialogComponent,
@@ -242,12 +238,16 @@ export class StatsTableComponent {
         .afterClosed()
         .subscribe((result) => {
           if (result) {
+            // Strip a single-element sets array — it carries no info
+            // beyond the reps total and would otherwise round-trip an
+            // empty per-set breakdown into Firestore. Same heuristic
+            // as the exercise branch below.
             this.update.emit({
               kind: 'pushup',
               id: entry._id,
               timestamp: result.timestamp,
               reps: result.reps,
-              sets: result.sets,
+              sets: result.sets.length > 1 ? result.sets : undefined,
               source: result.source,
               type: result.type,
             });
@@ -256,9 +256,6 @@ export class StatsTableComponent {
       return;
     }
 
-    // exercise kind: open the lightweight ExerciseEntryDialog. The
-    // dialog ignores its data payload's timestamp/reps fields today —
-    // a follow-up (Track UI-3) will give it real edit support.
     const exerciseName = this.exerciseLabel(entry);
     this.dialog
       .open<
@@ -328,14 +325,3 @@ export class StatsTableComponent {
     }
   }
 }
-
-/**
- * Locale-aware display strings for the Phase-0 catalog. Lives next to
- * the component so `$localize` is picked up by the build extractor.
- * When Track UI-3 lands a unified dialog, this table moves into a
- * shared service.
- */
-const EXERCISE_DISPLAY_NAMES: Record<string, string> = {
-  'abs.situps': $localize`:@@exercise.abs.situps.name:Sit-ups`,
-  'legs.squats': $localize`:@@exercise.legs.squats.name:Kniebeugen`,
-};

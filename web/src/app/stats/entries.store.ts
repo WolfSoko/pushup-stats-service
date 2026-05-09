@@ -243,10 +243,6 @@ export const EntriesStore = signalStore(
         source?: string;
         type?: string;
       }): Promise<void> {
-        // The History page only creates pushup entries via the
-        // existing dialog; exercise entries are added from the
-        // dashboard sections in Phase 0. UI-3 will collapse those
-        // paths into one dialog.
         patchState(store, { busyAction: 'create', busyId: null, error: null });
         try {
           await firstValueFrom(_api.createPushup(payload));

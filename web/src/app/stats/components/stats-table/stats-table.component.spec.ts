@@ -6,6 +6,7 @@ import { UserConfigApiService } from '@pu-stats/data-access';
 import { UserContextService } from '@pu-auth/auth';
 import type { UnifiedEntry } from '@pu-stats/models';
 import { CreateEntryResult } from '../create-entry-dialog/create-entry-dialog.component';
+import { ExerciseEntryDialogResult } from '../exercise-entry-dialog/exercise-entry-dialog.component';
 
 describe('StatsTableComponent', () => {
   let fixture: ComponentFixture<StatsTableComponent>;
@@ -211,6 +212,200 @@ describe('StatsTableComponent', () => {
           }),
         })
       );
+    });
+
+    it('strips a single-set array when emitting the pushup update', () => {
+      const component = fixture.componentInstance;
+      const updateSpy = vitest.fn();
+      component.update.subscribe(updateSpy);
+
+      const editResult: CreateEntryResult = {
+        timestamp: '2026-02-10T14:00+01:00',
+        reps: 25,
+        sets: [25],
+        source: 'web',
+        type: 'Standard',
+      };
+      vitest.spyOn(component.dialog, 'open').mockReturnValue({
+        afterClosed: () => of(editResult),
+      } as never);
+
+      component.openEditDialog({
+        kind: 'pushup',
+        _id: '1',
+        timestamp: '2026-02-10T13:45:00',
+        reps: 20,
+        source: 'web',
+        variantType: 'Standard',
+      });
+
+      expect(updateSpy).toHaveBeenCalledWith(
+        expect.objectContaining({ sets: undefined })
+      );
+    });
+
+    it('emits an exercise update with immutable exerciseId and reconciled sets', () => {
+      const component = fixture.componentInstance;
+      const updateSpy = vitest.fn();
+      component.update.subscribe(updateSpy);
+
+      const exerciseEntry: UnifiedEntry = {
+        kind: 'exercise',
+        _id: 'ex-7',
+        exerciseId: 'abs.situps',
+        timestamp: '2026-02-10T13:45:00',
+        reps: 30,
+        source: 'web',
+      };
+
+      const editResult: ExerciseEntryDialogResult = {
+        exerciseId: 'abs.situps',
+        timestamp: '2026-02-10T14:00+01:00',
+        reps: 35,
+        sets: [12, 12, 11],
+      };
+      vitest.spyOn(component.dialog, 'open').mockReturnValue({
+        afterClosed: () => of(editResult),
+      } as never);
+
+      component.openEditDialog(exerciseEntry);
+
+      expect(updateSpy).toHaveBeenCalledWith({
+        kind: 'exercise',
+        id: 'ex-7',
+        exerciseId: 'abs.situps',
+        timestamp: editResult.timestamp,
+        reps: 35,
+        sets: [12, 12, 11],
+        source: 'web',
+      });
+    });
+
+    it('strips a single-set array on exercise updates', () => {
+      const component = fixture.componentInstance;
+      const updateSpy = vitest.fn();
+      component.update.subscribe(updateSpy);
+
+      const editResult: ExerciseEntryDialogResult = {
+        exerciseId: 'legs.squats',
+        timestamp: '2026-02-10T14:00+01:00',
+        reps: 20,
+        sets: [20],
+      };
+      vitest.spyOn(component.dialog, 'open').mockReturnValue({
+        afterClosed: () => of(editResult),
+      } as never);
+
+      component.openEditDialog({
+        kind: 'exercise',
+        _id: 'ex-9',
+        exerciseId: 'legs.squats',
+        timestamp: '2026-02-10T13:45:00',
+        reps: 18,
+        source: 'web',
+      });
+
+      expect(updateSpy).toHaveBeenCalledWith(
+        expect.objectContaining({ sets: undefined })
+      );
+    });
+  });
+
+  describe('showExerciseColumn distinct-key heuristic', () => {
+    it('hides the column when every row is the same exercise', () => {
+      const component = fixture.componentInstance;
+      fixture.componentRef.setInput('entries', [
+        {
+          kind: 'exercise',
+          _id: '1',
+          exerciseId: 'abs.situps',
+          timestamp: '2026-02-10T13:45:00',
+          reps: 20,
+          source: 'web',
+        },
+        {
+          kind: 'exercise',
+          _id: '2',
+          exerciseId: 'abs.situps',
+          timestamp: '2026-02-09T13:45:00',
+          reps: 25,
+          source: 'web',
+        },
+      ] satisfies UnifiedEntry[]);
+
+      expect(component.showExerciseColumn()).toBe(false);
+    });
+
+    it('shows the column when rows mix two distinct exercises', () => {
+      const component = fixture.componentInstance;
+      fixture.componentRef.setInput('entries', [
+        {
+          kind: 'exercise',
+          _id: '1',
+          exerciseId: 'abs.situps',
+          timestamp: '2026-02-10T13:45:00',
+          reps: 20,
+          source: 'web',
+        },
+        {
+          kind: 'exercise',
+          _id: '2',
+          exerciseId: 'legs.squats',
+          timestamp: '2026-02-09T13:45:00',
+          reps: 30,
+          source: 'web',
+        },
+      ] satisfies UnifiedEntry[]);
+
+      expect(component.showExerciseColumn()).toBe(true);
+    });
+
+    it('treats every pushup variant as one filter key (column hidden)', () => {
+      const component = fixture.componentInstance;
+      fixture.componentRef.setInput('entries', [
+        {
+          kind: 'pushup',
+          _id: '1',
+          timestamp: '2026-02-10T13:45:00',
+          reps: 20,
+          source: 'web',
+          variantType: 'Standard',
+        },
+        {
+          kind: 'pushup',
+          _id: '2',
+          timestamp: '2026-02-09T13:45:00',
+          reps: 15,
+          source: 'web',
+          variantType: 'Diamond',
+        },
+      ] satisfies UnifiedEntry[]);
+
+      expect(component.showExerciseColumn()).toBe(false);
+    });
+
+    it('shows the column for a pushup + exercise mix', () => {
+      const component = fixture.componentInstance;
+      fixture.componentRef.setInput('entries', [
+        {
+          kind: 'pushup',
+          _id: '1',
+          timestamp: '2026-02-10T13:45:00',
+          reps: 20,
+          source: 'web',
+          variantType: 'Standard',
+        },
+        {
+          kind: 'exercise',
+          _id: '2',
+          exerciseId: 'abs.situps',
+          timestamp: '2026-02-09T13:45:00',
+          reps: 30,
+          source: 'web',
+        },
+      ] satisfies UnifiedEntry[]);
+
+      expect(component.showExerciseColumn()).toBe(true);
     });
   });
 

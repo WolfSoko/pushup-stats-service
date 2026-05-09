@@ -7,6 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { RouterLink } from '@angular/router';
 import { findExerciseDefinition } from '@pu-stats/models';
+import { exerciseDisplayName } from '../i18n/exercise-display-names';
 import { PreviewBannerComponent } from '../components/preview-banner/preview-banner.component';
 import { StatsTableComponent } from '../components/stats-table/stats-table.component';
 import {
@@ -277,11 +278,6 @@ export class EntriesPageComponent {
     }
     const def = findExerciseDefinition(value);
     if (!def) return value;
-    return KIND_LABELS[def.id] ?? def.id;
+    return exerciseDisplayName(def.id);
   }
 }
-
-const KIND_LABELS: Record<string, string> = {
-  'abs.situps': $localize`:@@exercise.abs.situps.name:Sit-ups`,
-  'legs.squats': $localize`:@@exercise.legs.squats.name:Kniebeugen`,
-};

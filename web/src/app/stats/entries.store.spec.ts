@@ -156,5 +156,21 @@ describe('EntriesStore', () => {
       );
       expect(apiMock.updatePushup).not.toHaveBeenCalled();
     });
+
+    it('Given an exercise-kind update WITHOUT exerciseId, Then the guard sets store.error and skips the service call', async () => {
+      const store = setup();
+
+      await store.updateEntry({
+        kind: 'exercise',
+        id: 's42',
+        timestamp: '2026-04-27T08:00:00',
+        reps: 25,
+      });
+
+      expect(exerciseServiceMock.updateEntry).not.toHaveBeenCalled();
+      expect(apiMock.updatePushup).not.toHaveBeenCalled();
+      expect(store.error()).toMatch(/exerciseId is required/i);
+      expect(store.busyAction()).toBeNull();
+    });
   });
 });
