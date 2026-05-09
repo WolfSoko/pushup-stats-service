@@ -559,7 +559,6 @@ export class TrainingPlanDetailComponent {
   });
 
   private autoStartTriggered = false;
-  private lastScrolledDay: string | null = null;
 
   constructor() {
     // Honour an incoming `?day=<index>` query param so deep-links from
@@ -568,14 +567,17 @@ export class TrainingPlanDetailComponent {
     // because the app shell wraps content in `<mat-sidenav-content>`,
     // which owns its own scroll container — `ViewportScroller` only
     // scrolls `window` and would silently no-op.
+    //
+    // We intentionally do NOT strip `?day=` after scrolling: keeping it
+    // in the URL makes the deep-link bookmarkable and re-fires the
+    // scroll on Back/Forward navigation, matching the `?type=` pattern
+    // in the wiki pushup-types page.
     afterRenderEffect(() => {
+      if (!this.isBrowser) return;
       const raw = this.queryParamsSignal().get('day');
-      if (!raw || !this.isBrowser) return;
-      if (raw === this.lastScrolledDay) return;
-      const id = `day-${raw}`;
-      const target = document.getElementById(id);
+      if (!raw) return;
+      const target = document.getElementById(`day-${raw}`);
       if (target && this.host.nativeElement.contains(target)) {
-        this.lastScrolledDay = raw;
         target.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
     });
