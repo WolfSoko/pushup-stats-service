@@ -181,13 +181,7 @@ export class ExerciseEntryDialogComponent {
       ? this.data.initial.timestamp.slice(0, 16)
       : this.defaultDateTimeLocal()
   );
-  readonly sets = signal<number[]>(
-    this.data.initial?.sets?.length
-      ? [...this.data.initial.sets]
-      : this.data.initial && this.data.initial.reps > 0
-        ? [this.data.initial.reps]
-        : [0]
-  );
+  readonly sets = signal<number[]>(this.computeInitialSets());
   readonly hasMultipleSets = computed(() => this.sets().length > 1);
   readonly totalReps = computed(() =>
     this.sets().reduce((sum, s) => sum + (s > 0 ? s : 0), 0)
@@ -242,6 +236,13 @@ export class ExerciseEntryDialogComponent {
       sets: validSets,
     };
     this.dialogRef.close(result);
+  }
+
+  private computeInitialSets(): number[] {
+    const initial = this.data.initial;
+    if (initial?.sets?.length) return [...initial.sets];
+    if (initial && initial.reps > 0) return [initial.reps];
+    return [0];
   }
 
   private defaultDateTimeLocal(): string {
