@@ -259,6 +259,7 @@ describe('StatsTableComponent', () => {
       };
 
       const editResult: EntryDialogResult = {
+        measurement: 'reps' as const,
         exerciseId: 'abs.situps',
         timestamp: '2026-02-10T14:00+01:00',
         reps: 35,
@@ -287,6 +288,7 @@ describe('StatsTableComponent', () => {
       component.update.subscribe(updateSpy);
 
       const editResult: EntryDialogResult = {
+        measurement: 'reps' as const,
         exerciseId: 'legs.squats',
         timestamp: '2026-02-10T14:00+01:00',
         reps: 20,
@@ -316,6 +318,7 @@ describe('StatsTableComponent', () => {
       component.update.subscribe(updateSpy);
 
       const editResult: EntryDialogResult = {
+        measurement: 'reps' as const,
         exerciseId: 'abs.situps',
         timestamp: '2026-02-10T14:00+01:00',
         reps: 30,
@@ -346,6 +349,7 @@ describe('StatsTableComponent', () => {
       component.update.subscribe(updateSpy);
 
       const editResult: EntryDialogResult = {
+        measurement: 'reps' as const,
         exerciseId: 'abs.situps',
         timestamp: '2026-02-10T14:00+01:00',
         reps: 30,
@@ -377,6 +381,7 @@ describe('StatsTableComponent', () => {
       component.update.subscribe(updateSpy);
 
       const editResult: EntryDialogResult = {
+        measurement: 'reps' as const,
         exerciseId: 'abs.situps',
         timestamp: '2026-02-10T14:00+01:00',
         reps: 30,
