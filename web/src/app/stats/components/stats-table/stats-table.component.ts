@@ -35,13 +35,13 @@ import { firstValueFrom } from 'rxjs';
 import {
   CreateEntryDialogComponent,
   CreateEntryResult,
-  EntryDialogData,
+  EntryDialogData as PushupEntryDialogData,
 } from '../create-entry-dialog/create-entry-dialog.component';
 import {
-  ExerciseEntryDialogComponent,
-  ExerciseEntryDialogData,
-  ExerciseEntryDialogResult,
-} from '../exercise-entry-dialog/exercise-entry-dialog.component';
+  EntryDialogComponent,
+  EntryDialogData,
+  EntryDialogResult,
+} from '../entry-dialog/entry-dialog.component';
 import { exerciseDisplayName } from '../../i18n/exercise-display-names';
 
 /**
@@ -59,7 +59,14 @@ export interface StatsTableUpdate {
   source: string;
   type?: string;
   exerciseId?: string;
-  variantId?: string;
+  /**
+   * Tri-state forwarded from `EntryDialogResult.variantId`:
+   *   - `string` (non-empty): set the variant.
+   *   - `null`: clear an existing variant — the store should issue a
+   *     Firestore `deleteField()` so the doc no longer carries one.
+   *   - `undefined`: no change (omitted from the patch).
+   */
+  variantId?: string | null;
 }
 
 export interface StatsTableRemove {
@@ -219,7 +226,7 @@ export class StatsTableComponent {
 
   openEditDialog(entry: UnifiedEntry): void {
     if (entry.kind === 'pushup') {
-      const dialogData: EntryDialogData = {
+      const dialogData: PushupEntryDialogData = {
         timestamp: entry.timestamp,
         reps: entry.reps,
         sets: entry.sets,
@@ -227,14 +234,15 @@ export class StatsTableComponent {
         type: entry.variantType ?? undefined,
       };
       this.dialog
-        .open<CreateEntryDialogComponent, EntryDialogData, CreateEntryResult>(
+        .open<
           CreateEntryDialogComponent,
-          {
-            width: 'min(92vw, 420px)',
-            maxWidth: '92vw',
-            data: dialogData,
-          }
-        )
+          PushupEntryDialogData,
+          CreateEntryResult
+        >(CreateEntryDialogComponent, {
+          width: 'min(92vw, 420px)',
+          maxWidth: '92vw',
+          data: dialogData,
+        })
         .afterClosed()
         .subscribe((result) => {
           if (result) {
@@ -247,7 +255,17 @@ export class StatsTableComponent {
               id: entry._id,
               timestamp: result.timestamp,
               reps: result.reps,
-              sets: result.sets.length > 1 ? result.sets : undefined,
+              // Single-set collapse: if the original doc carried a
+              // multi-set breakdown, emit `[]` as the explicit clear
+              // sentinel so ExerciseFirestoreService.updateEntry() can
+              // translate it into deleteField(); `undefined` would just
+              // omit the field and leave stale sets behind.
+              sets:
+                result.sets.length > 1
+                  ? result.sets
+                  : entry.sets !== undefined
+                    ? []
+                    : undefined,
               source: result.source,
               type: result.type,
             });
@@ -256,25 +274,35 @@ export class StatsTableComponent {
       return;
     }
 
+    // Synthetic-fallback guards against stale data where the entry's
+    // exerciseId no longer exists in the catalog (renamed or removed).
+    const def = findExerciseDefinition(entry.exerciseId) ?? {
+      id: entry.exerciseId,
+      categoryId: 'abs' as const,
+      measurement: 'reps' as const,
+      min: 1,
+      max: 500,
+      unit: 'reps',
+    };
     const exerciseName = this.exerciseLabel(entry);
     this.dialog
-      .open<
-        ExerciseEntryDialogComponent,
-        ExerciseEntryDialogData,
-        ExerciseEntryDialogResult
-      >(ExerciseEntryDialogComponent, {
-        width: 'min(92vw, 420px)',
-        maxWidth: '92vw',
-        data: {
-          exerciseId: entry.exerciseId,
-          exerciseName,
-          initial: {
-            timestamp: entry.timestamp,
-            reps: entry.reps,
-            ...(entry.sets ? { sets: entry.sets } : {}),
+      .open<EntryDialogComponent, EntryDialogData, EntryDialogResult>(
+        EntryDialogComponent,
+        {
+          width: 'min(92vw, 420px)',
+          maxWidth: '92vw',
+          data: {
+            definition: def,
+            exerciseName,
+            initial: {
+              timestamp: entry.timestamp,
+              reps: entry.reps,
+              sets: entry.sets,
+              variantId: entry.variantId,
+            },
           },
-        },
-      })
+        }
+      )
       .afterClosed()
       .subscribe((result) => {
         if (result) {
@@ -284,8 +312,22 @@ export class StatsTableComponent {
             exerciseId: entry.exerciseId,
             timestamp: result.timestamp,
             reps: result.reps,
-            sets: result.sets.length > 1 ? result.sets : undefined,
+            // Same single-set-collapse rule as the pushup branch:
+            // explicit `[]` clears a stale per-set breakdown.
+            sets:
+              result.sets.length > 1
+                ? result.sets
+                : entry.sets !== undefined
+                  ? []
+                  : undefined,
             source: entry.source,
+            // Forward the dialog's tri-state variantId verbatim:
+            // - non-empty string sets the variant
+            // - explicit null tells the store to clear it via deleteField()
+            // - undefined means "no change"
+            ...(result.variantId !== undefined
+              ? { variantId: result.variantId }
+              : {}),
           });
         }
       });

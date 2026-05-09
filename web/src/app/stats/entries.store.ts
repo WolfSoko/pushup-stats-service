@@ -265,7 +265,11 @@ export const EntriesStore = signalStore(
         sets?: number[];
         source?: string;
         type?: string;
-        variantId?: string;
+        // `null` is the "clear this variant" sentinel forwarded from the
+        // dialog tri-state; the data-access layer translates it into a
+        // Firestore `deleteField()` so the doc actually loses the variant
+        // rather than keeping the old one.
+        variantId?: string | null;
       }): Promise<void> {
         patchState(store, {
           busyAction: 'update',

@@ -358,6 +358,20 @@ describe('ExerciseFirestoreService', () => {
       );
       expect(updateSpy).toHaveBeenCalledTimes(1);
     });
+
+    it('clears the variantId field when the patch sends null', async () => {
+      const updateSpy = jest.spyOn(firestoreFns, 'updateDoc');
+      const deleteFieldSpy = jest.spyOn(firestoreFns, 'deleteField');
+      await firstValueFrom(
+        service.updateEntry('s1', 'abs.situps', { variantId: null })
+      );
+      expect(deleteFieldSpy).toHaveBeenCalled();
+      const patch = updateSpy.mock.calls[0]?.[1] as Record<string, unknown>;
+      // Same pattern as the sets-clear branch: null routes through
+      // deleteField so the doc loses the variantId entirely instead of
+      // having the field overwritten with an empty string.
+      expect(patch['variantId']).toBe('__deleted__');
+    });
   });
 
   describe('deleteEntry', () => {

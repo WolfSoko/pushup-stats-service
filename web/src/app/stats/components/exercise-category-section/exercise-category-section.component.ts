@@ -27,9 +27,10 @@ import {
 } from '@pu-stats/models';
 import { firstValueFrom, of } from 'rxjs';
 import {
-  ExerciseEntryDialogComponent,
-  ExerciseEntryDialogResult,
-} from '../exercise-entry-dialog/exercise-entry-dialog.component';
+  EntryDialogComponent,
+  EntryDialogData,
+  EntryDialogResult,
+} from '../entry-dialog/entry-dialog.component';
 
 interface ExerciseSummary {
   definition: ExerciseDefinition;
@@ -41,7 +42,7 @@ interface ExerciseSummary {
  * Phase-0 dashboard section per exercise category. Shows the user's
  * total reps over the last 30 days for each catalog exercise in this
  * category and a single button per exercise that opens the lightweight
- * {@link ExerciseEntryDialogComponent}. Pushup data lives in the
+ * {@link EntryDialogComponent}. Pushup data lives in the
  * legacy collection and is intentionally NOT rendered here — that
  * stays on the existing dashboard cards above.
  */
@@ -220,12 +221,12 @@ export class ExerciseCategorySectionComponent {
     const userId = this.userContext.userIdSafe();
     if (!userId) return;
     const ref = this.dialog.open<
-      ExerciseEntryDialogComponent,
-      { exerciseId: string; exerciseName: string },
-      ExerciseEntryDialogResult | undefined
-    >(ExerciseEntryDialogComponent, {
+      EntryDialogComponent,
+      EntryDialogData,
+      EntryDialogResult | undefined
+    >(EntryDialogComponent, {
       data: {
-        exerciseId: def.id,
+        definition: def,
         exerciseName: this.exerciseName(def.id),
       },
       width: '420px',
@@ -239,6 +240,7 @@ export class ExerciseCategorySectionComponent {
           exerciseId: result.exerciseId,
           timestamp: result.timestamp,
           reps: result.reps,
+          ...(result.variantId ? { variantId: result.variantId } : {}),
           ...(result.sets.length > 1 ? { sets: result.sets } : {}),
         })
       );
@@ -247,12 +249,11 @@ export class ExerciseCategorySectionComponent {
         duration: 3000,
       });
     } catch (err) {
-      // The dialog clamps to non-negative integers but does NOT enforce
-      // the per-exercise upper cap (e.g. reps ≤ 500) — values above the
-      // cap fall through to the validator and surface here. We show the
-      // generic German "Konnte nicht gespeichert werden" rather than the
-      // raw violation code, and rely on Sentry / the browser console to
-      // capture the diagnostic.
+      // EntryDialogComponent clamps reps to def.min/def.max and locks
+      // canSubmit() at the cap, so an ExerciseValidationError here is
+      // a programming or schema-mismatch surface — show the generic
+      // toast and let Sentry / the browser console capture the
+      // diagnostic.
       const message =
         err instanceof ExerciseValidationError
           ? this.i18n.errorPrefix

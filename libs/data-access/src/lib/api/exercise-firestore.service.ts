@@ -51,8 +51,8 @@ function violationObservable<T>(
   exerciseId: string,
   payload: Pick<
     ExerciseEntry,
-    'reps' | 'durationSec' | 'distanceM' | 'weightKg' | 'variantId'
-  >,
+    'reps' | 'durationSec' | 'distanceM' | 'weightKg'
+  > & { variantId?: string | null },
   options?: { partial?: boolean }
 ): Observable<T> | null {
   const def = findExerciseDefinition(exerciseId);
@@ -248,14 +248,21 @@ export class ExerciseFirestoreService {
     // and switching one without the other would produce mixed shapes.
     const { exerciseId: _ignored, ...patchable } = payload;
     void _ignored;
-    // An explicit `sets: []` is the contract for "drop the per-set
-    // breakdown" (e.g. user goes from 3×10 back to a single 30-rep entry).
-    // Dropping that key entirely would silently keep the stale array on
-    // the doc; mapping it to `deleteField()` clears the field as expected.
+    // Tri-state sentinels for explicit field clearing. Dropping the key
+    // entirely would silently keep the stale value on the doc; mapping
+    // it to `deleteField()` makes the patch actually clear the field.
+    //   - `sets: []` clears the per-set breakdown.
+    //   - `variantId: null` clears a previously-set variant (the dialog
+    //     forwards `null` when the user picked the "no variant" option
+    //     in edit mode).
     const cleanPayload: Record<string, unknown> = {};
     for (const [k, v] of Object.entries(patchable)) {
       if (v === undefined) continue;
       if (k === 'sets' && Array.isArray(v) && v.length === 0) {
+        cleanPayload[k] = deleteField();
+        continue;
+      }
+      if (k === 'variantId' && v === null) {
         cleanPayload[k] = deleteField();
         continue;
       }
