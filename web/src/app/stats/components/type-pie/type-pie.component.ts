@@ -51,6 +51,18 @@ const OTHER_COLOR = 'rgba(120, 120, 120, 0.55)';
         </div>
 
         <div class="legend" data-testid="type-pie-legend">
+          <div class="row preset-row">
+            <mat-checkbox
+              color="primary"
+              [checked]="isTopFiveActive()"
+              (change)="onTopFiveChange($event.checked)"
+              data-testid="type-pie-top5"
+            >
+              <span class="row-name">
+                <span class="name preset-name" i18n="@@pie.top5">Top 5</span>
+              </span>
+            </mat-checkbox>
+          </div>
           @for (seg of allSegments(); track seg.id) {
             <div class="row">
               <mat-checkbox
@@ -166,6 +178,17 @@ const OTHER_COLOR = 'rgba(120, 120, 120, 0.55)';
       opacity: 0.75;
       padding-left: 36px;
     }
+    .preset-row {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      padding-bottom: 4px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+      background: var(--mat-sys-surface, #fff);
+    }
+    .preset-name {
+      font-weight: 600;
+    }
     .set-label {
       overflow: hidden;
       text-overflow: ellipsis;
@@ -237,14 +260,29 @@ export class TypePieComponent {
     }));
   });
 
+  readonly topFiveIds = computed<ReadonlySet<string>>(
+    () =>
+      new Set(
+        this.allSegments()
+          .slice(0, TOP_N)
+          .map((s) => s.id)
+      )
+  );
+
   readonly selectedIds = computed<ReadonlySet<string>>(() => {
     const explicit = this.userSelection();
     if (explicit !== null) return explicit;
-    return new Set(
-      this.allSegments()
-        .slice(0, TOP_N)
-        .map((s) => s.id)
-    );
+    return this.topFiveIds();
+  });
+
+  readonly isTopFiveActive = computed(() => {
+    const selected = this.selectedIds();
+    const top = this.topFiveIds();
+    if (selected.size !== top.size) return false;
+    for (const id of top) {
+      if (!selected.has(id)) return false;
+    }
+    return true;
   });
 
   readonly visibleSegments = computed(() => {
@@ -317,5 +355,13 @@ export class TypePieComponent {
       next.add(id);
     }
     this.userSelection.set(next);
+  }
+
+  onTopFiveChange(checked: boolean): void {
+    if (checked) {
+      this.userSelection.set(new Set(this.topFiveIds()));
+    } else {
+      this.userSelection.set(new Set(this.allSegments().map((s) => s.id)));
+    }
   }
 }

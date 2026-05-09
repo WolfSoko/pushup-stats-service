@@ -111,13 +111,13 @@ describe('TypePieComponent', () => {
     ).toBeTruthy();
   });
 
-  it('renders one legend row with checkbox per type', () => {
-    // Then
+  it('renders one legend row with checkbox per type plus the Top 5 preset', () => {
+    // Then: 7 type rows + 1 preset row
     const host: HTMLElement = fixture.nativeElement;
     const rows = host.querySelectorAll(
       '[data-testid="type-pie-legend"] mat-checkbox'
     );
-    expect(rows).toHaveLength(7);
+    expect(rows).toHaveLength(8);
   });
 
   it('legend container caps its height so the list scrolls when many types are present', () => {
@@ -155,6 +155,69 @@ describe('TypePieComponent', () => {
     expect(segments[0].color).toBe('#1976d2');
     expect(segments[1].label).toBe('Diamond');
     expect(segments[1].color).toBe('#9c27b0');
+  });
+
+  it('renders a Top 5 preset checkbox at the top of the legend, checked by default', () => {
+    // Then: the preset row exists and reflects the default top-5 selection
+    const host: HTMLElement = fixture.nativeElement;
+    const preset = host.querySelector(
+      '[data-testid="type-pie-top5"]'
+    ) as HTMLElement | null;
+    expect(preset).toBeTruthy();
+    expect(component.isTopFiveActive()).toBe(true);
+  });
+
+  it('clicking the Top 5 preset on a custom subset restores exactly the top-5 ids', () => {
+    // Given: user has narrowed selection to a non-top-5 subset
+    fixture.componentRef.setInput('data', sevenTypes);
+    fixture.detectChanges();
+    component.toggle('Spider');
+    component.toggle('Standard');
+    expect(component.isTopFiveActive()).toBe(false);
+
+    // When: the user activates the Top 5 preset
+    component.onTopFiveChange(true);
+
+    // Then: selection collapses back to exactly the 5 highest-value ids
+    expect(component.isTopFiveActive()).toBe(true);
+    expect([...component.selectedIds()].sort()).toEqual(
+      ['Decline', 'Diamond', 'Knee', 'Standard', 'Wide'].sort()
+    );
+  });
+
+  it('unchecking the Top 5 preset expands the selection to all types', () => {
+    // Given: default state (top 5 active)
+    expect(component.isTopFiveActive()).toBe(true);
+
+    // When: user unchecks the preset
+    component.onTopFiveChange(false);
+
+    // Then: every type is selected, no Other arc
+    expect(component.selectedIds().size).toBe(7);
+    expect(component.otherPercent()).toBe(0);
+    expect(component.isTopFiveActive()).toBe(false);
+  });
+
+  it('Top 5 preset checkbox harness toggles selection', async () => {
+    // Given: user narrowed to one type
+    component.toggle('Diamond');
+    component.toggle('Wide');
+    component.toggle('Decline');
+    component.toggle('Knee');
+    expect(component.selectedIds().size).toBe(1);
+
+    // When: the preset checkbox is toggled via Material's harness
+    const loader = TestbedHarnessEnvironment.loader(fixture);
+    const top5 = await loader.getHarness(
+      MatCheckboxHarness.with({
+        selector: '[data-testid="type-pie-top5"]',
+      })
+    );
+    await top5.toggle();
+    fixture.detectChanges();
+
+    // Then: selection snaps back to the top 5
+    expect(component.isTopFiveActive()).toBe(true);
   });
 
   it('removing the last selected type empties the pie and treats all data as Other', () => {

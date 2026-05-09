@@ -5181,6 +5181,15 @@
         <source>Löschen</source>
       <target>删除</target></segment>
     </unit>
+    <unit id="pie.top5">
+      <notes>
+        <note category="location">web/src/app/stats/components/type-pie/type-pie.component.ts:62,64</note>
+      </notes>
+      <segment state="translated">
+        <source>Top 5</source>
+        <target>Top 5</target>
+      </segment>
+    </unit>
     <unit id="pie.avgSetSize">
       <notes>
         <note category="location">web/src/app/stats/components/type-pie/type-pie.component.ts:47,48</note>
