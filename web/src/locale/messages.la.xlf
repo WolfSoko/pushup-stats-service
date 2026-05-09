@@ -2790,8 +2790,8 @@
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:544,546</note>
       </notes>
       <segment state="translated">
-        <source>PWA, Live-Sync &amp; Web Share</source>
-        <target>PWA, Vive Sync &amp; Web Share</target>
+        <source>App-Installation, Live-Sync &amp; Teilen</source>
+        <target>Applicationis installatio, synchronia viva et communicatio</target>
       </segment>
     </unit>
     <unit id="landing.feature.pwa.body">
@@ -2799,35 +2799,35 @@
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:548,551</note>
       </notes>
       <segment state="translated">
-        <source>Installierbar wie eine native App, Echtzeit-Sync zwischen allen Geräten und Tagesergebnis per Web Share teilen – inklusive Dark- und Light-Theme.</source>
-        <target>Institui potest sicut app indigena, sync realis-tempus inter omnes machinos et cottidianos proventus per interretialem partem - inter themata obscura et levia.</target>
+        <source>Direkt aus dem Browser als App installieren – mit Echtzeit-Sync zwischen allen Geräten und Tagesergebnis per Teilen-Button.</source>
+        <target>Eam directe e navigatro tamquam applicationem installa – cum synchronia tempore reali inter omnia instrumenta et eventu cotidiano per buttonem communicatum.</target>
       </segment>
     </unit>
     <unit id="landing.feature.pwa.installed">
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon aria-hidden=&quot;true&quot;&gt;" dispEnd="&lt;/mat-icon&gt;">check_circle</pc> Du nutzt bereits die installierte App </source>
-        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon aria-hidden=&quot;true&quot;&gt;" dispEnd="&lt;/mat-icon&gt;">check_circle</pc> Du nutzt bereits die installierte App </target>
+        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon aria-hidden=&quot;true&quot;&gt;" dispEnd="&lt;/mat-icon&gt;">check_circle</pc> Iam applicatione installata uteris </target>
       </segment>
     </unit>
     <unit id="landing.feature.pwa.install">
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon aria-hidden=&quot;true&quot;&gt;" dispEnd="&lt;/mat-icon&gt;">download</pc> Jetzt als App installieren </source>
-        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon aria-hidden=&quot;true&quot;&gt;" dispEnd="&lt;/mat-icon&gt;">download</pc> Jetzt als App installieren </target>
+        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon aria-hidden=&quot;true&quot;&gt;" dispEnd="&lt;/mat-icon&gt;">download</pc> Tamquam applicationem installa </target>
       </segment>
     </unit>
     <unit id="landing.feature.pwa.iosHint">
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source> Auf iPhone &amp; iPad: Teilen-Symbol antippen und „Zum Home-Bildschirm“ wählen. </source>
-        <target> Auf iPhone &amp; iPad: Teilen-Symbol antippen und „Zum Home-Bildschirm“ wählen. </target>
+        <target> In iPhone et iPad: signum communicandi tange et “Ad Tabulam Domesticam” elige. </target>
       </segment>
     </unit>
     <unit id="landing.feature.privacy.title">
@@ -3843,7 +3843,7 @@
     <unit id="exercise.category.pushup">
       <segment state="translated">
         <source>Liegestütze</source>
-        <target>Pulsus</target>
+        <target>Pushups</target>
       </segment>
     </unit>
     <unit id="exercise.category.abs">
@@ -5529,6 +5529,12 @@
       <segment state="translated">
         <source>Tag</source>
         <target>die</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.restDay.configuredGoalHint">
+      <segment state="translated">
+        <source>Konfiguriertes Tagesziel:</source>
+        <target>Propositum diei configuratum:</target>
       </segment>
     </unit>
     <unit id="dashboard.weeklyGoalLabel">
