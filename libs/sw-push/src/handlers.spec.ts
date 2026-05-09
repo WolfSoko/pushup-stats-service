@@ -315,6 +315,68 @@ describe('handleNotificationClick', () => {
     expect(openWindow).toHaveBeenCalledWith('/en/app?snooze=30');
   });
 
+  // Regression: a snooze click on a notification that ALSO carries
+  // `quickLogReps` (the configured "Log N" button data) must never produce
+  // a quick-log message — only SNOOZE_REMINDER. Locks in the contract that
+  // the snooze handler ignores `data.quickLogReps` and the message types
+  // stay strictly partitioned, so a snooze click can never silently log
+  // push-ups even on a notification built with the quick-log action.
+  it('snooze action ignores notification.data.quickLogReps and never posts QUICK_LOG_PUSHUPS', async () => {
+    const client: ClientLike = {
+      url: 'https://pushup-stats.com/de/app',
+      focus: jest.fn(),
+      postMessage: jest.fn(),
+    };
+    const { ctx, openWindow } = makeCtx({ matchAllResult: [client] });
+    let waited: Promise<unknown> | undefined;
+    const { event } = makeEvent('snooze', {
+      locale: 'de',
+      quickLogReps: 25,
+    });
+    event.waitUntil = (p) => {
+      waited = p;
+    };
+    handleNotificationClick(event, ctx);
+    await waited;
+
+    // Exactly one message, of type SNOOZE_REMINDER. No QUICK_LOG_PUSHUPS
+    // leaks out, and the snooze count is 30 — not the quickLogReps value.
+    expect(client.postMessage).toHaveBeenCalledTimes(1);
+    expect(client.postMessage).toHaveBeenCalledWith({
+      type: 'SNOOZE_REMINDER',
+      snoozeMinutes: 30,
+    });
+    const allMessageTypes = client.postMessage.mock.calls.map(
+      (call) => (call[0] as { type?: string }).type
+    );
+    expect(allMessageTypes).not.toContain('QUICK_LOG_PUSHUPS');
+    expect(openWindow).not.toHaveBeenCalled();
+  });
+
+  // Regression: when no client is open, the snooze deep-link URL must not
+  // include `quickLog` even if `data.quickLogReps` was set on the
+  // notification. App.ts handles `?snooze=30` by calling the snoozeReminder
+  // Cloud Function — the dashboard must not see a `quickLog` param that
+  // would silently create an entry alongside.
+  it('snooze action without an open client opens ?snooze=30 only — never with quickLog', async () => {
+    const { ctx, openWindow } = makeCtx({ matchAllResult: [] });
+    let waited: Promise<unknown> | undefined;
+    const { event } = makeEvent('snooze', {
+      locale: 'de',
+      quickLogReps: 25,
+    });
+    event.waitUntil = (p) => {
+      waited = p;
+    };
+    handleNotificationClick(event, ctx);
+    await waited;
+    expect(openWindow).toHaveBeenCalledTimes(1);
+    expect(openWindow).toHaveBeenCalledWith('/de/app?snooze=30');
+    const openedUrl = openWindow.mock.calls[0][0] as string;
+    expect(openedUrl).not.toContain('quickLog');
+    expect(openedUrl).not.toContain('log=1');
+  });
+
   it('opens the app with ?log=1 for the log action', async () => {
     const { ctx, openWindow } = makeCtx();
     let waited: Promise<unknown> | undefined;

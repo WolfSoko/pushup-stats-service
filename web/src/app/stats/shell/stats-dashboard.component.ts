@@ -225,9 +225,15 @@ export class StatsDashboardComponent {
    * `quickLog` arrives via URL and is therefore untrusted: clamp into the
    * configured `[QUICK_LOG_REPS_MIN, QUICK_LOG_REPS_MAX]` range so a tampered
    * link can't persist absurd entries (CodeRabbit/Copilot/Codex P1, PR #249).
+   *
+   * Snooze always wins: if `?snooze=N` is also present, the user explicitly
+   * snoozed and did NOT want to log push-ups in this navigation. Skip both
+   * deep-links so a combined or stale URL can never silently create an entry
+   * alongside the snooze — App.ts consumes the snooze param separately.
    */
   private readonly _handleLogParam = afterNextRender(() => {
     const params = this.route.snapshot.queryParamMap;
+    if (params.has('snooze')) return;
     const quickLog = params.get('quickLog');
     const quickReps = quickLog != null ? Number(quickLog) : NaN;
     if (Number.isFinite(quickReps) && quickReps >= QUICK_LOG_REPS_MIN) {

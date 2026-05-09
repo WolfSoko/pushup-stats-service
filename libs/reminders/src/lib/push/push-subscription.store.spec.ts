@@ -509,4 +509,118 @@ describe('PushSubscriptionStore', () => {
       expect(store.status()).toBe('subscribed');
     });
   });
+
+  // Regression: clicking "Snooze" on a push notification must only call the
+  // snoozeReminder Cloud Function — never any entry-creation path. This locks
+  // in that the SW message bridge keeps SNOOZE_REMINDER and QUICK_LOG_PUSHUPS
+  // strictly partitioned, so a snooze click can never silently log push-ups.
+  describe('regression: snooze message never triggers entry creation', () => {
+    function setupMessageBridge(): {
+      messageListeners: Array<(ev: MessageEvent) => void>;
+    } {
+      const messageListeners: Array<(ev: MessageEvent) => void> = [];
+      Object.defineProperty(navigator, 'serviceWorker', {
+        value: {
+          addEventListener: jest.fn(
+            (type: string, listener: (ev: MessageEvent) => void) => {
+              if (type === 'message') messageListeners.push(listener);
+            }
+          ),
+        },
+        configurable: true,
+        writable: true,
+      });
+      return { messageListeners };
+    }
+
+    it('SNOOZE_REMINDER from the SW invokes the snoozeReminder callable with the supplied minutes', async () => {
+      const { messageListeners } = setupMessageBridge();
+      const callable = jest
+        .fn()
+        .mockResolvedValue({ data: { ok: true, snoozeUntil: 'x' } });
+      const httpsCallableMock = httpsCallable as jest.Mock;
+      httpsCallableMock.mockReset();
+      httpsCallableMock.mockReturnValue(callable);
+
+      const store = setupStore();
+      store.registerSwListener();
+
+      for (const listener of messageListeners) {
+        listener({
+          data: { type: 'SNOOZE_REMINDER', snoozeMinutes: 45 },
+        } as MessageEvent);
+      }
+      await new Promise((resolve) => setTimeout(resolve, 0));
+
+      // Exactly one callable was created — the snoozeReminder one. No second
+      // call (e.g. createPushup, savePushSubscription) leaked through.
+      expect(httpsCallableMock).toHaveBeenCalledTimes(1);
+      expect(httpsCallableMock).toHaveBeenCalledWith(
+        expect.anything(),
+        'snoozeReminder'
+      );
+      expect(callable).toHaveBeenCalledWith({ snoozeMinutes: 45 });
+    });
+
+    it('SNOOZE_REMINDER without explicit minutes defaults to 30', async () => {
+      const { messageListeners } = setupMessageBridge();
+      const callable = jest
+        .fn()
+        .mockResolvedValue({ data: { ok: true, snoozeUntil: 'x' } });
+      const httpsCallableMock = httpsCallable as jest.Mock;
+      httpsCallableMock.mockReset();
+      httpsCallableMock.mockReturnValue(callable);
+
+      const store = setupStore();
+      store.registerSwListener();
+
+      for (const listener of messageListeners) {
+        listener({ data: { type: 'SNOOZE_REMINDER' } } as MessageEvent);
+      }
+      await new Promise((resolve) => setTimeout(resolve, 0));
+
+      expect(callable).toHaveBeenCalledWith({ snoozeMinutes: 30 });
+    });
+
+    it('an unrelated SW message (e.g. QUICK_LOG_PUSHUPS) never reaches the snoozeReminder callable', async () => {
+      const { messageListeners } = setupMessageBridge();
+      const callable = jest.fn();
+      const httpsCallableMock = httpsCallable as jest.Mock;
+      httpsCallableMock.mockReset();
+      httpsCallableMock.mockReturnValue(callable);
+
+      const store = setupStore();
+      store.registerSwListener();
+
+      for (const listener of messageListeners) {
+        listener({
+          data: { type: 'QUICK_LOG_PUSHUPS', reps: 20 },
+        } as MessageEvent);
+      }
+      await new Promise((resolve) => setTimeout(resolve, 0));
+
+      expect(httpsCallableMock).not.toHaveBeenCalled();
+      expect(callable).not.toHaveBeenCalled();
+    });
+
+    it('snooze() public method calls the snoozeReminder callable and nothing else', async () => {
+      setupMessageBridge();
+      const callable = jest
+        .fn()
+        .mockResolvedValue({ data: { ok: true, snoozeUntil: 'x' } });
+      const httpsCallableMock = httpsCallable as jest.Mock;
+      httpsCallableMock.mockReset();
+      httpsCallableMock.mockReturnValue(callable);
+
+      const store = setupStore();
+      await store.snooze(15);
+
+      expect(httpsCallableMock).toHaveBeenCalledTimes(1);
+      expect(httpsCallableMock).toHaveBeenCalledWith(
+        expect.anything(),
+        'snoozeReminder'
+      );
+      expect(callable).toHaveBeenCalledWith({ snoozeMinutes: 15 });
+    });
+  });
 });
