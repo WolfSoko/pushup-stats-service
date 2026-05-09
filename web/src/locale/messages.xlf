@@ -5203,6 +5203,14 @@
         <source>Verteilung der Liegestütz-Typen</source>
       </segment>
     </unit>
+    <unit id="pie.top5">
+      <notes>
+        <note category="location">web/src/app/stats/components/type-pie/type-pie.component.ts:62,64</note>
+      </notes>
+      <segment>
+        <source>Top 5</source>
+      </segment>
+    </unit>
     <unit id="pie.avgSetSize">
       <notes>
         <note category="location">web/src/app/stats/components/type-pie/type-pie.component.ts:92,93</note>

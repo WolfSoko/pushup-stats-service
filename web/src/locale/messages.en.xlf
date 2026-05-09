@@ -529,6 +529,15 @@ Active:         </target>
         <target>No sets data available</target>
       </segment>
     </unit>
+    <unit id="pie.top5">
+      <notes>
+        <note category="location">web/src/app/stats/components/type-pie/type-pie.component.ts:62,64</note>
+      </notes>
+      <segment state="translated">
+        <source>Top 5</source>
+        <target>Top 5</target>
+      </segment>
+    </unit>
     <unit id="pie.avgSetSize">
       <segment state="translated">
         <source>&#x2300; Set-Gr&#x00F6;&#x00DF;e</source>
