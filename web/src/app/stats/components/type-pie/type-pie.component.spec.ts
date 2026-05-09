@@ -30,9 +30,8 @@ describe('TypePieComponent', () => {
     fixture.detectChanges();
   });
 
-  it('defaults to Top 5 mode and selects the five highest-value ids', () => {
+  it('preselects the top 5 highest-value ids by default', () => {
     // Then
-    expect(component.mode()).toBe('top5');
     expect([...component.selectedIds()]).toEqual([
       'Standard',
       'Diamond',
@@ -47,22 +46,11 @@ describe('TypePieComponent', () => {
     expect(component.otherPercent()).toBeGreaterThan(0);
   });
 
-  it('switches to Alle mode when toggled, selecting every id and dropping the Other arc', () => {
-    // When
-    component.setMode('all');
-
-    // Then
-    expect(component.selectedIds().size).toBe(7);
-    expect(component.visibleSegments()).toHaveLength(7);
-    expect(component.otherPercent()).toBe(0);
-  });
-
-  it('toggling a checkbox switches mode to custom and updates the subset', () => {
-    // When: Diamond is toggled
+  it('toggling a checkbox removes the type and drops its slice from the pie', () => {
+    // When: Diamond is toggled off
     component.toggle('Diamond');
 
-    // Then: mode flips to custom and Diamond drops out
-    expect(component.mode()).toBe('custom');
+    // Then: Diamond drops out, Standard remains
     expect(component.isSelected('Diamond')).toBe(false);
     expect(component.isSelected('Standard')).toBe(true);
 
@@ -71,6 +59,20 @@ describe('TypePieComponent', () => {
 
     // Then: it re-enters the selection
     expect(component.isSelected('Diamond')).toBe(true);
+  });
+
+  it('toggling a previously-hidden type adds it to the visible set', () => {
+    // Given: Spider is initially hidden (rank 6, not in default top 5)
+    expect(component.isSelected('Spider')).toBe(false);
+
+    // When: the user opts Spider in
+    component.toggle('Spider');
+
+    // Then: Spider is visible and contributes a real slice (not "Other")
+    expect(component.isSelected('Spider')).toBe(true);
+    expect(component.visibleSegments().some((s) => s.id === 'Spider')).toBe(
+      true
+    );
   });
 
   it('clicking a mat-checkbox in the legend wires through to toggle()', async () => {
@@ -85,28 +87,9 @@ describe('TypePieComponent', () => {
     // When: the user toggles the Diamond checkbox via Material's public API
     await diamondCheckbox.toggle();
 
-    // Then: the component's (change) binding flips mode and selection
-    expect(component.mode()).toBe('custom');
+    // Then: the component's (change) binding flips selection
     expect(component.isSelected('Diamond')).toBe(false);
     expect(component.isSelected('Standard')).toBe(true);
-  });
-
-  it('seeds custom selection from the current visible set when entering Auswahl via the toggle', () => {
-    // When: switching directly from Top 5 to custom
-    component.setMode('custom');
-
-    // Then: the top-5 selection is preserved instead of starting empty,
-    // and the Other arc still completes the circle.
-    expect(component.mode()).toBe('custom');
-    expect([...component.selectedIds()]).toEqual([
-      'Standard',
-      'Diamond',
-      'Wide',
-      'Decline',
-      'Knee',
-    ]);
-    expect(component.visibleSegments()).toHaveLength(6);
-    expect(component.visibleSegments().at(-1)?.id).toBe('__other__');
   });
 
   it('uses the stable id (not the localized label) for selection and test selectors', () => {
@@ -128,16 +111,7 @@ describe('TypePieComponent', () => {
     ).toBeTruthy();
   });
 
-  it('switching from Alle to Auswahl seeds custom selection with every label', () => {
-    // When
-    component.setMode('all');
-    component.setMode('custom');
-
-    // Then
-    expect(component.selectedIds().size).toBe(7);
-  });
-
-  it('renders one legend row with checkbox per type, regardless of mode', () => {
+  it('renders one legend row with checkbox per type', () => {
     // Then
     const host: HTMLElement = fixture.nativeElement;
     const rows = host.querySelectorAll(
@@ -146,12 +120,18 @@ describe('TypePieComponent', () => {
     expect(rows).toHaveLength(7);
   });
 
-  it('exposes toggle hooks per label so the legend can drive subset selection', () => {
-    // Then
+  it('legend container caps its height so the list scrolls when many types are present', () => {
+    // Given: the legend element rendered for the 7 types in beforeEach
     const host: HTMLElement = fixture.nativeElement;
-    expect(
-      host.querySelector('[data-testid="type-pie-toggle-Standard"]')
-    ).toBeTruthy();
+    const legend = host.querySelector(
+      '[data-testid="type-pie-legend"]'
+    ) as HTMLElement | null;
+
+    // Then: it has a bounded height with vertical overflow auto so users can scroll
+    expect(legend).toBeTruthy();
+    const styles = getComputedStyle(legend!);
+    expect(styles.overflowY).toBe('auto');
+    expect(styles.maxHeight).not.toBe('none');
   });
 
   it('shows the empty placeholder when total is zero', () => {
@@ -175,5 +155,18 @@ describe('TypePieComponent', () => {
     expect(segments[0].color).toBe('#1976d2');
     expect(segments[1].label).toBe('Diamond');
     expect(segments[1].color).toBe('#9c27b0');
+  });
+
+  it('removing the last selected type empties the pie and treats all data as Other', () => {
+    // When: the user unchecks every default-selected type
+    for (const id of [...component.selectedIds()]) {
+      component.toggle(id);
+    }
+
+    // Then: the visible set is just the synthetic Other arc covering 100%
+    expect(component.selectedIds().size).toBe(0);
+    expect(component.visibleSegments()).toHaveLength(1);
+    expect(component.visibleSegments()[0].id).toBe('__other__');
+    expect(component.otherPercent()).toBe(100);
   });
 });

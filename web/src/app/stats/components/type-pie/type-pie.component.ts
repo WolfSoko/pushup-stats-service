@@ -1,6 +1,5 @@
 import { DecimalPipe } from '@angular/common';
 import { Component, computed, input, signal } from '@angular/core';
-import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 
 export interface PieDatum {
@@ -17,15 +16,13 @@ export interface PieDatum {
   avgSetSize?: number;
 }
 
-export type PieSelectionMode = 'top5' | 'all' | 'custom';
-
 const TOP_N = 5;
 const OTHER_COLOR = 'rgba(120, 120, 120, 0.55)';
 
 @Component({
   selector: 'app-type-pie',
   standalone: true,
-  imports: [DecimalPipe, MatButtonToggleModule, MatCheckboxModule],
+  imports: [DecimalPipe, MatCheckboxModule],
   template: `
     @if (total() > 0) {
       <div class="wrap">
@@ -51,24 +48,6 @@ const OTHER_COLOR = 'rgba(120, 120, 120, 0.55)';
               />
             }
           </svg>
-
-          <mat-button-toggle-group
-            class="mode-toggle"
-            [value]="mode()"
-            (change)="setMode($event.value)"
-            aria-label="Anzeigemodus der Typverteilung"
-            i18n-aria-label="@@pie.modeAria"
-          >
-            <mat-button-toggle value="top5" i18n="@@pie.top5"
-              >Top 5</mat-button-toggle
-            >
-            <mat-button-toggle value="all" i18n="@@pie.all"
-              >Alle</mat-button-toggle
-            >
-            <mat-button-toggle value="custom" i18n="@@pie.custom"
-              >Auswahl</mat-button-toggle
-            >
-          </mat-button-toggle-group>
         </div>
 
         <div class="legend" data-testid="type-pie-legend">
@@ -130,9 +109,6 @@ const OTHER_COLOR = 'rgba(120, 120, 120, 0.55)';
       height: 160px;
       transform: rotate(-90deg);
     }
-    .mode-toggle {
-      font-size: 0.78rem;
-    }
     .bg {
       fill: none;
       stroke: rgba(0, 0, 0, 0.08);
@@ -148,6 +124,9 @@ const OTHER_COLOR = 'rgba(120, 120, 120, 0.55)';
       display: grid;
       gap: 4px;
       min-width: 0;
+      max-height: 220px;
+      overflow-y: auto;
+      padding-right: 4px;
     }
     .row {
       display: grid;
@@ -212,8 +191,8 @@ const OTHER_COLOR = 'rgba(120, 120, 120, 0.55)';
 export class TypePieComponent {
   readonly data = input<PieDatum[]>([]);
 
-  readonly mode = signal<PieSelectionMode>('top5');
-  private readonly customSelection = signal<ReadonlySet<string>>(new Set());
+  // null = use top-5 default; concrete Set = explicit user choice (may be empty).
+  private readonly userSelection = signal<ReadonlySet<string> | null>(null);
 
   readonly otherColor = OTHER_COLOR;
 
@@ -259,15 +238,13 @@ export class TypePieComponent {
   });
 
   readonly selectedIds = computed<ReadonlySet<string>>(() => {
-    const all = this.allSegments();
-    const mode = this.mode();
-    if (mode === 'top5') {
-      return new Set(all.slice(0, TOP_N).map((s) => s.id));
-    }
-    if (mode === 'all') {
-      return new Set(all.map((s) => s.id));
-    }
-    return this.customSelection();
+    const explicit = this.userSelection();
+    if (explicit !== null) return explicit;
+    return new Set(
+      this.allSegments()
+        .slice(0, TOP_N)
+        .map((s) => s.id)
+    );
   });
 
   readonly visibleSegments = computed(() => {
@@ -339,15 +316,6 @@ export class TypePieComponent {
     } else {
       next.add(id);
     }
-    this.customSelection.set(next);
-    this.mode.set('custom');
-  }
-
-  setMode(value: PieSelectionMode): void {
-    if (!value) return;
-    if (value === 'custom') {
-      this.customSelection.set(new Set(this.selectedIds()));
-    }
-    this.mode.set(value);
+    this.userSelection.set(next);
   }
 }
