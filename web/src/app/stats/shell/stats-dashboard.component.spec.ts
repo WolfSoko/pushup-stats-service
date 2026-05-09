@@ -1163,5 +1163,29 @@ describe('StatsDashboardComponent', () => {
         querySelector(freshFixture.nativeElement, 'dashboard-rest-day-target')
       ).toBeNull();
     });
+
+    it('And the plan banner "Details öffnen" CTA links to the active day so the detail page scrolls there', async () => {
+      // Given today resolves to day 1 (a `main` day in recruit-6w-v1).
+      trainingPlanApiMock.getActivePlan.mockReturnValue(
+        of({ ...restDayPlan, startDate: '2025-01-15' })
+      );
+      TestBed.inject(TrainingPlanStore).reload();
+
+      const freshFixture = TestBed.createComponent(StatsDashboardComponent);
+      await freshFixture.whenStable();
+      freshFixture.detectChanges();
+
+      // When the dashboard banner CTA is rendered, its href carries
+      // `?day=<currentDayIndex>` so the detail page can scroll the
+      // matching `#day-<N>` row into view on arrival.
+      const link: HTMLAnchorElement | null =
+        freshFixture.nativeElement.querySelector(
+          '.plan-banner a[mat-stroked-button]'
+        );
+      expect(link).not.toBeNull();
+      const href = link!.getAttribute('href') ?? '';
+      expect(href).toContain('/training-plans/recruit-6w');
+      expect(href).toContain('day=1');
+    });
   });
 });
