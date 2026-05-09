@@ -358,6 +358,82 @@ describe('TrainingPlanDetailComponent', () => {
       }
     });
 
+    it('scrolls the matching day-row into view when ?day=N is set in the URL', async () => {
+      // jsdom does not implement `Element.scrollIntoView` — install a
+      // mock on the prototype so the spy can record calls and we can
+      // assert which element it was invoked on.
+      const original = HTMLElement.prototype.scrollIntoView;
+      const scrollIntoView = vitest.fn();
+      HTMLElement.prototype.scrollIntoView = scrollIntoView;
+
+      // Given the user lands on the plan detail with `?day=12` (e.g.
+      // navigated via the dashboard banner CTA, which carries the
+      // active day index in its queryParams).
+      const { fixture } = await render(TrainingPlanDetailComponent, {
+        providers: [
+          provideRouter([]),
+          {
+            provide: ActivatedRoute,
+            useValue: makeRouteMock('recruit-6w', { day: '12' }),
+          },
+          { provide: TrainingPlanStore, useValue: makeStoreMock() },
+          {
+            provide: AuthStore,
+            useValue: makeAuthStoreMock({
+              isAuthenticated: true,
+              authResolved: true,
+            }),
+          },
+        ],
+      });
+
+      // afterRenderEffect runs after the next render — flush.
+      await fixture.whenStable();
+      fixture.detectChanges();
+
+      // Then each day-row has a stable `day-<index>` id so the dashboard
+      // banner can deep-link any day, and `scrollIntoView` was called
+      // on the day-12 element specifically (not just any element).
+      const root = fixture.nativeElement as HTMLElement;
+      const day12 = root.querySelector('#day-12') as HTMLElement | null;
+      expect(day12).not.toBeNull();
+      expect(day12!.classList.contains('day-row')).toBe(true);
+      expect(scrollIntoView).toHaveBeenCalled();
+      const wasCalledOnDay12 = scrollIntoView.mock.contexts.some(
+        (ctx) => ctx === day12
+      );
+      expect(wasCalledOnDay12).toBe(true);
+
+      HTMLElement.prototype.scrollIntoView = original;
+    });
+
+    it('does not scroll when ?day is missing', async () => {
+      const original = HTMLElement.prototype.scrollIntoView;
+      const scrollIntoView = vitest.fn();
+      HTMLElement.prototype.scrollIntoView = scrollIntoView;
+
+      const { fixture } = await render(TrainingPlanDetailComponent, {
+        providers: [
+          provideRouter([]),
+          { provide: ActivatedRoute, useValue: makeRouteMock('recruit-6w') },
+          { provide: TrainingPlanStore, useValue: makeStoreMock() },
+          {
+            provide: AuthStore,
+            useValue: makeAuthStoreMock({
+              isAuthenticated: true,
+              authResolved: true,
+            }),
+          },
+        ],
+      });
+
+      await fixture.whenStable();
+      fixture.detectChanges();
+
+      expect(scrollIntoView).not.toHaveBeenCalled();
+      HTMLElement.prototype.scrollIntoView = original;
+    });
+
     it('does NOT auto-start (even with ?autoStart=1) when a different plan is already active', async () => {
       const store = makeStoreMock({
         hasActivePlan: signal(true),

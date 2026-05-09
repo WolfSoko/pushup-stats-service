@@ -1,10 +1,14 @@
+import { isPlatformBrowser } from '@angular/common';
 import {
+  afterRenderEffect,
   ChangeDetectionStrategy,
   Component,
   computed,
   effect,
+  ElementRef,
   inject,
   LOCALE_ID,
+  PLATFORM_ID,
 } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -206,6 +210,7 @@ interface DayRow {
               @for (row of week.rows; track row.day.dayIndex) {
                 <li
                   class="day-row"
+                  [attr.id]="'day-' + row.day.dayIndex"
                   [class.today]="row.isToday"
                   [class.done]="row.isCompleted"
                   [class.future]="row.isFuture"
@@ -516,6 +521,8 @@ export class TrainingPlanDetailComponent {
   private readonly snackbar = inject(MatSnackBar);
   private readonly locale = inject(LOCALE_ID) as string;
   private readonly authStore = inject(AuthStore);
+  private readonly host: ElementRef<HTMLElement> = inject(ElementRef);
+  private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
 
   protected readonly isAuthenticated = this.authStore.isAuthenticated;
   protected readonly authResolved = this.authStore.authResolved;
@@ -552,8 +559,27 @@ export class TrainingPlanDetailComponent {
   });
 
   private autoStartTriggered = false;
+  private lastScrolledDay: string | null = null;
 
   constructor() {
+    // Honour an incoming `?day=<index>` query param so deep-links from
+    // the dashboard's plan banner scroll to the active day after route
+    // hydration. Use `Element.scrollIntoView` (not `ViewportScroller`)
+    // because the app shell wraps content in `<mat-sidenav-content>`,
+    // which owns its own scroll container — `ViewportScroller` only
+    // scrolls `window` and would silently no-op.
+    afterRenderEffect(() => {
+      const raw = this.queryParamsSignal().get('day');
+      if (!raw || !this.isBrowser) return;
+      if (raw === this.lastScrolledDay) return;
+      const id = `day-${raw}`;
+      const target = document.getElementById(id);
+      if (target && this.host.nativeElement.contains(target)) {
+        this.lastScrolledDay = raw;
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+
     effect(() => {
       const p = this.plan();
       const wantsAutoStart = this.queryParamsSignal().get('autoStart') === '1';
