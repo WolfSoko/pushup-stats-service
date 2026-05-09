@@ -58,11 +58,10 @@ export interface EntryDialogResult {
  * its form fields off the catalog definition so any new exercise drops
  * in without component-level changes.
  *
- * Today only the `'reps'` measurement is wired (sit-ups, squats);
- * `validateExerciseEntry` rejects a `'weight'` payload without a
- * `weightKg` companion, so weighted exercises will need their own
- * field path before they can use this dialog. See the roadmap for the
- * planned phasing.
+ * Only the `'reps'` measurement is wired here; `validateExerciseEntry`
+ * rejects a `'weight'` payload without a `weightKg` companion, so a
+ * weight-measurement definition cannot be opened in this dialog without
+ * a separate field path.
  *
  * Caps come from `def.min` / `def.max` so the input clamps and
  * `canSubmit()` locks at the ceiling — closes the
