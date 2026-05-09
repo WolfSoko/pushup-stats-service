@@ -274,7 +274,7 @@ export class StatsDashboardComponent {
       );
     } else {
       const userId = this.userContext.userIdSafe();
-      if (!userId || !result.exerciseId) return;
+      if (!userId) return;
       await firstValueFrom(
         this.exerciseService.createEntry(userId, {
           exerciseId: result.exerciseId,

@@ -2,6 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { provideRouter } from '@angular/router';
 import {
+  ExerciseEntryDialogResult,
   TrainingEntryDialogComponent,
   TrainingEntryDialogData,
   TrainingEntryDialogResult,
@@ -218,7 +219,7 @@ describe('TrainingEntryDialogComponent', () => {
       component.variantControl.setValue('');
       component.submit();
 
-      const result = closeSpy.mock.calls[0][0] as TrainingEntryDialogResult;
+      const result = closeSpy.mock.calls[0][0] as ExerciseEntryDialogResult;
       // Tri-state: explicit null is the patch sentinel that tells the
       // store to issue a Firestore deleteField() instead of leaving
       // the stale variant on the doc.
@@ -246,7 +247,7 @@ describe('TrainingEntryDialogComponent', () => {
       expect(component.canSubmit()).toBe(true);
 
       component.submit();
-      const result = closeSpy.mock.calls[0][0] as TrainingEntryDialogResult;
+      const result = closeSpy.mock.calls[0][0] as ExerciseEntryDialogResult;
       expect(result.kind).toBe('exercise');
       expect(result.exerciseId).toBe('abs.removed-variant');
     });

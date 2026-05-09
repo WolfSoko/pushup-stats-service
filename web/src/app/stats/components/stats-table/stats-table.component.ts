@@ -36,6 +36,8 @@ import {
 } from '@pu-stats/models';
 import { firstValueFrom } from 'rxjs';
 import {
+  ExerciseEntryDialogResult,
+  PushupEntryDialogResult,
   TrainingEntryDialogComponent,
   TrainingEntryDialogData,
   TrainingEntryDialogResult,
@@ -296,15 +298,27 @@ export class StatsTableComponent {
 
   private toCreatePayload(result: TrainingEntryDialogResult): StatsTableCreate {
     if (result.kind === 'pushup') {
-      return {
-        kind: 'pushup',
-        timestamp: result.timestamp,
-        reps: result.reps,
-        ...(result.sets.length > 1 ? { sets: result.sets } : {}),
-        source: result.source,
-        type: result.type,
-      };
+      return this.pushupCreatePayload(result);
     }
+    return this.exerciseCreatePayload(result);
+  }
+
+  private pushupCreatePayload(
+    result: PushupEntryDialogResult
+  ): StatsTableCreate {
+    return {
+      kind: 'pushup',
+      timestamp: result.timestamp,
+      reps: result.reps,
+      ...(result.sets.length > 1 ? { sets: result.sets } : {}),
+      source: result.source,
+      type: result.type,
+    };
+  }
+
+  private exerciseCreatePayload(
+    result: ExerciseEntryDialogResult
+  ): StatsTableCreate {
     return {
       kind: 'exercise',
       exerciseId: result.exerciseId,
@@ -328,26 +342,48 @@ export class StatsTableComponent {
     entry: UnifiedEntry,
     result: TrainingEntryDialogResult
   ): StatsTableUpdate {
-    if (entry.kind === 'pushup') {
-      return {
-        kind: 'pushup',
-        id: entry._id,
-        timestamp: result.timestamp,
-        reps: result.reps,
-        // Single-set collapse: if the original doc carried a multi-set
-        // breakdown, emit `[]` as the explicit clear sentinel so the
-        // store maps it to a Firestore `deleteField()`; `undefined`
-        // would just omit the field and leave stale sets behind.
-        sets:
-          result.sets.length > 1
-            ? result.sets
-            : entry.sets !== undefined
-              ? []
-              : undefined,
-        source: result.source ?? entry.source,
-        type: result.type,
-      };
+    // Edit mode locks the kind picker, so dialog result kind always
+    // matches the row's kind. The kind-narrowed branches keep the
+    // payload type-safe even though the runtime guard is on `entry`.
+    if (entry.kind === 'pushup' && result.kind === 'pushup') {
+      return this.pushupUpdatePayload(entry, result);
     }
+    if (entry.kind === 'exercise' && result.kind === 'exercise') {
+      return this.exerciseUpdatePayload(entry, result);
+    }
+    throw new Error(
+      `toUpdatePayload: kind mismatch — entry='${entry.kind}', result='${result.kind}'`
+    );
+  }
+
+  private pushupUpdatePayload(
+    entry: Extract<UnifiedEntry, { kind: 'pushup' }>,
+    result: PushupEntryDialogResult
+  ): StatsTableUpdate {
+    return {
+      kind: 'pushup',
+      id: entry._id,
+      timestamp: result.timestamp,
+      reps: result.reps,
+      // Single-set collapse: if the original doc carried a multi-set
+      // breakdown, emit `[]` as the explicit clear sentinel so the
+      // store maps it to a Firestore `deleteField()`; `undefined`
+      // would just omit the field and leave stale sets behind.
+      sets:
+        result.sets.length > 1
+          ? result.sets
+          : entry.sets !== undefined
+            ? []
+            : undefined,
+      source: result.source,
+      type: result.type,
+    };
+  }
+
+  private exerciseUpdatePayload(
+    entry: Extract<UnifiedEntry, { kind: 'exercise' }>,
+    result: ExerciseEntryDialogResult
+  ): StatsTableUpdate {
     return {
       kind: 'exercise',
       id: entry._id,

@@ -54,35 +54,65 @@ const SECONDS_MAX = 59;
 /**
  * Initial / edit-mode payload for {@link TrainingEntryDialogComponent}.
  *
- * `kind` discriminates which collection the entry lives in. In edit
+ * Discriminated by `kind` — pushup entries live in the legacy
+ * `pushups` collection, exercise entries in `exerciseEntries`. In edit
  * mode the picker rows for category and exercise are disabled — users
  * cannot move an entry between collections after the fact.
  */
-export interface TrainingEntryDialogData {
-  /** Discriminator. `'pushup'` populates pushup fields (variant + source);
-   *  `'exercise'` populates `exerciseId` + measurement-specific fields. */
-  kind: 'pushup' | 'exercise';
+export interface PushupEntryDialogData {
+  kind: 'pushup';
   timestamp: string;
-  /** For `'pushup'`: total reps. For `'exercise'` reps measurement: total reps. */
+  /** Total reps. */
   reps?: number;
   sets?: number[];
-  /** For `'exercise'` time / distance-time measurements. */
-  durationSec?: number;
-  /** For `'exercise'` distance-time measurement (meters). */
-  distanceM?: number;
-  /** For `'pushup'`: source (web / whatsapp / …). */
+  /** Source label (web / whatsapp / …). */
   source?: string;
-  /** For `'pushup'`: variant id (e.g. `'standard'`, `'diamond'`). */
+  /** Variant id (e.g. `'standard'`, `'diamond'`). */
   type?: string;
-  /** For `'exercise'`: catalog id (e.g. `'plank.standard'`). */
-  exerciseId?: string;
-  /** For `'exercise'`: variant id within the catalog definition. */
+}
+
+export interface ExerciseEntryDialogData {
+  kind: 'exercise';
+  timestamp: string;
+  /** Catalog id (e.g. `'plank.standard'`). May reference a stale id
+   *  whose catalog entry was renamed/removed; the dialog falls back to
+   *  a synthetic definition in that case. */
+  exerciseId: string;
+  /** For reps-measurement exercises: total reps. */
+  reps?: number;
+  sets?: number[];
+  /** For `'time'` and `'distance-time'` measurements. */
+  durationSec?: number;
+  /** For `'distance-time'` measurement (meters). */
+  distanceM?: number;
+  /** Variant id within the catalog definition. */
   variantId?: string;
 }
 
-export interface TrainingEntryDialogResult {
-  kind: 'pushup' | 'exercise';
+export type TrainingEntryDialogData =
+  | PushupEntryDialogData
+  | ExerciseEntryDialogData;
+
+export interface PushupEntryDialogResult {
+  kind: 'pushup';
   timestamp: string;
+  /** Total reps. */
+  reps: number;
+  /** Per-set breakdown — `[reps]` for a single set. */
+  sets: number[];
+  /** Source label. Always populated. */
+  source: string;
+  /** Variant id. Always populated (defaults to `'standard'`). */
+  type: string;
+}
+
+export interface ExerciseEntryDialogResult {
+  kind: 'exercise';
+  timestamp: string;
+  /** Catalog id the entry was logged against. */
+  exerciseId: string;
+  /** Catalog measurement — drives the consumer's payload shape. */
+  measurement: MeasurementType;
   /** Total reps for reps-measurements; `0` otherwise. */
   reps: number;
   /** Per-set breakdown for reps-measurements; `[]` otherwise. */
@@ -91,22 +121,18 @@ export interface TrainingEntryDialogResult {
   durationSec?: number;
   /** Set for `'distance-time'`. */
   distanceM?: number;
-  /** Pushup source (always set for `kind === 'pushup'`). */
-  source?: string;
-  /** Pushup variant id (always set for `kind === 'pushup'`). */
-  type?: string;
-  /** Catalog exercise id (always set for `kind === 'exercise'`). */
-  exerciseId?: string;
-  /** Catalog measurement (only set for `kind === 'exercise'`). */
-  measurement?: MeasurementType;
   /**
-   * Variant id tri-state for `kind === 'exercise'`:
+   * Variant id tri-state:
    *   - non-empty `string`: set or keep this variant.
    *   - `null`: clear an existing variant (caller maps to `deleteField()`).
    *   - `undefined`: no change / no variant in create mode.
    */
   variantId?: string | null;
 }
+
+export type TrainingEntryDialogResult =
+  | PushupEntryDialogResult
+  | ExerciseEntryDialogResult;
 
 interface CategoryOption {
   value: ExerciseCategoryId;
@@ -641,7 +667,7 @@ export class TrainingEntryDialogComponent {
    * representable; combined into integer seconds via {@link durationSec}.
    */
   private readonly initialDurationParts = splitDurationParts(
-    this.data?.durationSec
+    this.data?.kind === 'exercise' ? this.data.durationSec : undefined
   );
 
   readonly durationMinutesInput = signal(this.initialDurationParts.minutes);
@@ -657,7 +683,9 @@ export class TrainingEntryDialogComponent {
   readonly secondsMax = SECONDS_MAX;
 
   readonly distanceInput = signal(
-    this.data?.distanceM !== undefined ? formatKmInput(this.data.distanceM) : ''
+    this.data?.kind === 'exercise' && this.data.distanceM !== undefined
+      ? formatKmInput(this.data.distanceM)
+      : ''
   );
 
   readonly distanceM = computed(() => parseKmToMeters(this.distanceInput()));
@@ -898,7 +926,7 @@ export class TrainingEntryDialogComponent {
         (this.sourceControl.value || '').trim() || 'web'
       );
 
-      const result: TrainingEntryDialogResult = {
+      const result: PushupEntryDialogResult = {
         kind: 'pushup',
         timestamp,
         reps,
@@ -932,7 +960,7 @@ export class TrainingEntryDialogComponent {
     if (measurement === 'time') {
       const sec = this.durationSec();
       if (sec === null || sec <= 0) return;
-      const result: TrainingEntryDialogResult = {
+      const result: ExerciseEntryDialogResult = {
         kind: 'exercise',
         exerciseId: def.id,
         measurement,
@@ -950,7 +978,7 @@ export class TrainingEntryDialogComponent {
       const m = this.distanceM();
       const sec = this.durationSec();
       if (m === null || m <= 0 || sec === null || sec <= 0) return;
-      const result: TrainingEntryDialogResult = {
+      const result: ExerciseEntryDialogResult = {
         kind: 'exercise',
         exerciseId: def.id,
         measurement,
@@ -969,7 +997,7 @@ export class TrainingEntryDialogComponent {
     const reps = validSets.reduce((sum, s) => sum + s, 0);
     if (reps <= 0) return;
 
-    const result: TrainingEntryDialogResult = {
+    const result: ExerciseEntryDialogResult = {
       kind: 'exercise',
       exerciseId: def.id,
       measurement,
@@ -1000,7 +1028,7 @@ export class TrainingEntryDialogComponent {
   private initialExerciseId(): string {
     if (!this.data) return PUSHUP_EXERCISE_ID;
     if (this.data.kind === 'pushup') return PUSHUP_EXERCISE_ID;
-    return this.data.exerciseId ?? '';
+    return this.data.exerciseId;
   }
 
   private initialSets(): number[] {
@@ -1173,7 +1201,7 @@ function inferExerciseCategory(
  * over-cap hint and submit gate keep working.
  */
 function syntheticDefinitionFor(
-  data: TrainingEntryDialogData,
+  data: ExerciseEntryDialogData,
   categoryId: ExerciseCategoryId
 ): ExerciseDefinition {
   const measurement: MeasurementType =
@@ -1191,7 +1219,7 @@ function syntheticDefinitionFor(
   const unit =
     measurement === 'reps' ? 'reps' : measurement === 'time' ? 's' : 'm';
   return {
-    id: data.exerciseId ?? '',
+    id: data.exerciseId,
     categoryId,
     measurement,
     min: bounds.min,
