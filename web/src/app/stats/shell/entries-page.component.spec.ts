@@ -168,4 +168,25 @@ describe('EntriesPageComponent', () => {
         .sort()
     ).toEqual(['2', '4']);
   });
+
+  describe('kindFilterOptions + kindLabel', () => {
+    it('maps kindOptionsRaw values into { value, label } pairs', () => {
+      const component = fixture.componentInstance;
+      const opts = component.kindFilterOptions();
+      // The mock rows are all pushup-kind, so the only filter key is
+      // 'pushup' (variants collapse via unifiedEntryFilterKey).
+      expect(opts).toHaveLength(1);
+      expect(opts[0].value).toBe('pushup');
+      // The label is the localized "Liegestütze" string ($localize
+      // returns the source German in tests because no locale runtime
+      // is loaded).
+      expect(opts[0].label).toBe('Liegestütze');
+    });
+    // Note: the exercise-id branch of `kindLabel` is exercised
+    // indirectly through `exerciseDisplayName` (covered in
+    // stats-table.component.spec.ts via the exerciseLabel path)
+    // rather than re-mocking the store here — the store is wired
+    // through DI as a component provider, so a stub instance can't
+    // be injected without rebuilding the whole TestBed.
+  });
 });

@@ -21,6 +21,17 @@ export interface ExerciseEntryDialogData {
   exerciseId: string;
   /** Localized exercise name shown in the dialog title. */
   exerciseName: string;
+  /**
+   * Optional pre-fill for edit mode. When omitted, the dialog opens in
+   * create mode with an empty set + the current local time. When set,
+   * the form binds to the entry's timestamp/reps/sets so a user can
+   * adjust an existing record without re-typing it from scratch.
+   */
+  initial?: {
+    timestamp: string;
+    reps: number;
+    sets?: number[];
+  };
 }
 
 export interface ExerciseEntryDialogResult {
@@ -159,8 +170,24 @@ export class ExerciseEntryDialogComponent {
   );
   readonly data = inject<ExerciseEntryDialogData>(MAT_DIALOG_DATA);
 
-  readonly timestamp = signal(this.defaultDateTimeLocal());
-  readonly sets = signal<number[]>([0]);
+  // Edit-mode pre-fill: the parent passes the original ISO timestamp;
+  // the datetime-local input binds to the first 16 chars (no seconds,
+  // no offset). The original is held in `originalTimestamp` so submit
+  // can preserve it byte-for-byte when the user didn't touch the field.
+  private readonly originalTimestamp = this.data.initial?.timestamp ?? null;
+
+  readonly timestamp = signal(
+    this.data.initial
+      ? this.data.initial.timestamp.slice(0, 16)
+      : this.defaultDateTimeLocal()
+  );
+  readonly sets = signal<number[]>(
+    this.data.initial?.sets?.length
+      ? [...this.data.initial.sets]
+      : this.data.initial && this.data.initial.reps > 0
+        ? [this.data.initial.reps]
+        : [0]
+  );
   readonly hasMultipleSets = computed(() => this.sets().length > 1);
   readonly totalReps = computed(() =>
     this.sets().reduce((sum, s) => sum + (s > 0 ? s : 0), 0)
@@ -200,9 +227,17 @@ export class ExerciseEntryDialogComponent {
     const validSets = this.sets().filter((s) => s > 0);
     const reps = validSets.reduce((sum, s) => sum + s, 0);
     if (!this.timestamp() || reps <= 0) return;
+    // Preserve the original ISO timestamp when the user didn't touch
+    // the field in edit mode. Without this, an unedited save would
+    // silently rewrite the offset and drop seconds.
+    const defaultLocal = this.originalTimestamp?.slice(0, 16) ?? '';
+    const timestamp =
+      this.originalTimestamp && this.timestamp() === defaultLocal
+        ? this.originalTimestamp
+        : appendLocalOffset(this.timestamp());
     const result: ExerciseEntryDialogResult = {
       exerciseId: this.data.exerciseId,
-      timestamp: appendLocalOffset(this.timestamp()),
+      timestamp,
       reps,
       sets: validSets,
     };

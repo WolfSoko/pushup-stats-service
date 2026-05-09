@@ -265,7 +265,15 @@ export class StatsTableComponent {
       >(ExerciseEntryDialogComponent, {
         width: 'min(92vw, 420px)',
         maxWidth: '92vw',
-        data: { exerciseId: entry.exerciseId, exerciseName },
+        data: {
+          exerciseId: entry.exerciseId,
+          exerciseName,
+          initial: {
+            timestamp: entry.timestamp,
+            reps: entry.reps,
+            ...(entry.sets ? { sets: entry.sets } : {}),
+          },
+        },
       })
       .afterClosed()
       .subscribe((result) => {

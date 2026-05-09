@@ -445,6 +445,46 @@ describe('StatsTableComponent', () => {
     });
   });
 
+  describe('emitRemove kind dispatch', () => {
+    it('emits a pushup remove payload for pushup rows', () => {
+      const component = fixture.componentInstance;
+      const removeSpy = vitest.fn();
+      component.remove.subscribe(removeSpy);
+
+      component.emitRemove({
+        kind: 'pushup',
+        _id: 'p-1',
+        timestamp: '2026-02-10T13:45:00',
+        reps: 20,
+        source: 'web',
+        variantType: 'Standard',
+      });
+
+      expect(removeSpy).toHaveBeenCalledWith({ kind: 'pushup', id: 'p-1' });
+    });
+
+    it('emits an exercise remove payload for exercise rows', () => {
+      const component = fixture.componentInstance;
+      const removeSpy = vitest.fn();
+      component.remove.subscribe(removeSpy);
+
+      component.emitRemove({
+        kind: 'exercise',
+        _id: 'ex-9',
+        exerciseId: 'legs.squats',
+        timestamp: '2026-02-10T13:45:00',
+        reps: 25,
+        source: 'web',
+      });
+
+      // The kind discriminator is what the parent store uses to
+      // dispatch to the right Firestore service; exerciseId is not
+      // needed in the remove payload because the doc-id alone keys
+      // the right collection.
+      expect(removeSpy).toHaveBeenCalledWith({ kind: 'exercise', id: 'ex-9' });
+    });
+  });
+
   it('renders non-virtual table fallback on server platform', async () => {
     TestBed.resetTestingModule();
     await TestBed.configureTestingModule({
