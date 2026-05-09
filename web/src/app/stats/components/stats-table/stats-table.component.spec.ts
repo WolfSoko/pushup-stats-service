@@ -5,8 +5,7 @@ import { StatsTableComponent } from './stats-table.component';
 import { UserConfigApiService } from '@pu-stats/data-access';
 import { UserContextService } from '@pu-auth/auth';
 import type { UnifiedEntry } from '@pu-stats/models';
-import { CreateEntryResult } from '../create-entry-dialog/create-entry-dialog.component';
-import { EntryDialogResult } from '../entry-dialog/entry-dialog.component';
+import type { TrainingEntryDialogResult } from '../training-entry-dialog/training-entry-dialog.component';
 
 describe('StatsTableComponent', () => {
   let fixture: ComponentFixture<StatsTableComponent>;
@@ -45,9 +44,6 @@ describe('StatsTableComponent', () => {
     fixture.componentRef.setInput('entries', entries);
     await fixture.whenStable();
 
-    // Legacy PushupRecord input is mapped to UnifiedEntry on the way
-    // into the dataSource so the row template can read `kind`-aware
-    // helpers without each caller having to map first.
     const data = fixture.componentInstance.dataSource.data;
     expect(data).toHaveLength(1);
     expect(data[0]).toMatchObject({
@@ -74,17 +70,18 @@ describe('StatsTableComponent', () => {
   });
 
   describe('openCreateDialog()', () => {
-    it('opens CreateEntryDialogComponent and emits create when dialog closes with result', () => {
+    it('opens the unified dialog and emits a pushup create payload', () => {
       const component = fixture.componentInstance;
       const createSpy = vitest.fn();
       component.create.subscribe(createSpy);
 
-      const result: CreateEntryResult = {
+      const result: TrainingEntryDialogResult = {
+        kind: 'pushup',
         timestamp: '2026-02-11T07:00',
         reps: 12,
         sets: [12],
         source: 'web',
-        type: 'Standard',
+        type: 'standard',
       };
       vitest.spyOn(component.dialog, 'open').mockReturnValue({
         afterClosed: () => of(result),
@@ -92,7 +89,44 @@ describe('StatsTableComponent', () => {
 
       component.openCreateDialog();
 
-      expect(createSpy).toHaveBeenCalledWith(result);
+      // Single-set arrays are stripped before reaching the store —
+      // they carry no information beyond the total reps.
+      expect(createSpy).toHaveBeenCalledWith({
+        kind: 'pushup',
+        timestamp: result.timestamp,
+        reps: 12,
+        source: 'web',
+        type: 'standard',
+      });
+    });
+
+    it('emits an exercise create payload for non-pushup entries', () => {
+      const component = fixture.componentInstance;
+      const createSpy = vitest.fn();
+      component.create.subscribe(createSpy);
+
+      const result: TrainingEntryDialogResult = {
+        kind: 'exercise',
+        exerciseId: 'plank.standard',
+        measurement: 'time',
+        timestamp: '2026-02-11T07:00',
+        reps: 0,
+        sets: [],
+        durationSec: 90,
+      };
+      vitest.spyOn(component.dialog, 'open').mockReturnValue({
+        afterClosed: () => of(result),
+      } as never);
+
+      component.openCreateDialog();
+
+      expect(createSpy).toHaveBeenCalledWith(
+        expect.objectContaining({
+          kind: 'exercise',
+          exerciseId: 'plank.standard',
+          durationSec: 90,
+        })
+      );
     });
 
     it('does not emit create when dialog is cancelled', () => {
@@ -111,7 +145,7 @@ describe('StatsTableComponent', () => {
   });
 
   describe('openEditDialog()', () => {
-    it('opens dialog with entry data and emits update on close', () => {
+    it('opens dialog with pushup entry data and emits update on close', () => {
       const component = fixture.componentInstance;
       const updateSpy = vitest.fn();
       component.update.subscribe(updateSpy);
@@ -126,12 +160,13 @@ describe('StatsTableComponent', () => {
         variantType: 'Diamond',
       };
 
-      const editResult: CreateEntryResult = {
+      const editResult: TrainingEntryDialogResult = {
+        kind: 'pushup',
         timestamp: '2026-02-10T14:00+01:00',
         reps: 35,
         sets: [10, 15, 10],
         source: 'web',
-        type: 'Diamond',
+        type: 'diamond',
       };
 
       const openSpy = vitest.spyOn(component.dialog, 'open').mockReturnValue({
@@ -140,22 +175,22 @@ describe('StatsTableComponent', () => {
 
       component.openEditDialog(entry);
 
-      // Verify dialog was opened with entry data
+      // The dialog gets the edit payload tagged as pushup so the
+      // category/exercise pickers stay locked.
       expect(openSpy).toHaveBeenCalledWith(
         expect.anything(),
         expect.objectContaining({
-          data: {
+          data: expect.objectContaining({
+            kind: 'pushup',
             timestamp: entry.timestamp,
             reps: entry.reps,
             sets: entry.sets,
             source: entry.source,
             type: entry.variantType,
-          },
+          }),
         })
       );
 
-      // Verify update was emitted with dialog result and the kind
-      // discriminator the parent store needs to dispatch.
       expect(updateSpy).toHaveBeenCalledWith({
         kind: 'pushup',
         id: '1',
@@ -188,7 +223,7 @@ describe('StatsTableComponent', () => {
       expect(updateSpy).not.toHaveBeenCalled();
     });
 
-    it('passes entry without sets to edit dialog correctly', () => {
+    it('passes pushup entry without sets to edit dialog correctly', () => {
       const component = fixture.componentInstance;
       const openSpy = vitest.spyOn(component.dialog, 'open').mockReturnValue({
         afterClosed: () => of(undefined),
@@ -207,6 +242,7 @@ describe('StatsTableComponent', () => {
         expect.anything(),
         expect.objectContaining({
           data: expect.objectContaining({
+            kind: 'pushup',
             reps: 20,
             sets: undefined,
           }),
@@ -219,12 +255,13 @@ describe('StatsTableComponent', () => {
       const updateSpy = vitest.fn();
       component.update.subscribe(updateSpy);
 
-      const editResult: CreateEntryResult = {
+      const editResult: TrainingEntryDialogResult = {
+        kind: 'pushup',
         timestamp: '2026-02-10T14:00+01:00',
         reps: 25,
         sets: [25],
         source: 'web',
-        type: 'Standard',
+        type: 'standard',
       };
       vitest.spyOn(component.dialog, 'open').mockReturnValue({
         afterClosed: () => of(editResult),
@@ -258,8 +295,9 @@ describe('StatsTableComponent', () => {
         source: 'web',
       };
 
-      const editResult: EntryDialogResult = {
-        measurement: 'reps' as const,
+      const editResult: TrainingEntryDialogResult = {
+        kind: 'exercise',
+        measurement: 'reps',
         exerciseId: 'abs.situps',
         timestamp: '2026-02-10T14:00+01:00',
         reps: 35,
@@ -287,8 +325,9 @@ describe('StatsTableComponent', () => {
       const updateSpy = vitest.fn();
       component.update.subscribe(updateSpy);
 
-      const editResult: EntryDialogResult = {
-        measurement: 'reps' as const,
+      const editResult: TrainingEntryDialogResult = {
+        kind: 'exercise',
+        measurement: 'reps',
         exerciseId: 'legs.squats',
         timestamp: '2026-02-10T14:00+01:00',
         reps: 20,
@@ -317,8 +356,9 @@ describe('StatsTableComponent', () => {
       const updateSpy = vitest.fn();
       component.update.subscribe(updateSpy);
 
-      const editResult: EntryDialogResult = {
-        measurement: 'reps' as const,
+      const editResult: TrainingEntryDialogResult = {
+        kind: 'exercise',
+        measurement: 'reps',
         exerciseId: 'abs.situps',
         timestamp: '2026-02-10T14:00+01:00',
         reps: 30,
@@ -348,8 +388,9 @@ describe('StatsTableComponent', () => {
       const updateSpy = vitest.fn();
       component.update.subscribe(updateSpy);
 
-      const editResult: EntryDialogResult = {
-        measurement: 'reps' as const,
+      const editResult: TrainingEntryDialogResult = {
+        kind: 'exercise',
+        measurement: 'reps',
         exerciseId: 'abs.situps',
         timestamp: '2026-02-10T14:00+01:00',
         reps: 30,
@@ -380,8 +421,9 @@ describe('StatsTableComponent', () => {
       const updateSpy = vitest.fn();
       component.update.subscribe(updateSpy);
 
-      const editResult: EntryDialogResult = {
-        measurement: 'reps' as const,
+      const editResult: TrainingEntryDialogResult = {
+        kind: 'exercise',
+        measurement: 'reps',
         exerciseId: 'abs.situps',
         timestamp: '2026-02-10T14:00+01:00',
         reps: 30,
@@ -401,8 +443,6 @@ describe('StatsTableComponent', () => {
         source: 'web',
       });
 
-      // Without the explicit `[]` the update would omit `sets` and the
-      // stale [10,10,10] breakdown would survive in Firestore.
       expect(updateSpy).toHaveBeenCalledWith(
         expect.objectContaining({ sets: [] })
       );
@@ -413,8 +453,9 @@ describe('StatsTableComponent', () => {
       const updateSpy = vitest.fn();
       component.update.subscribe(updateSpy);
 
-      const editResult: EntryDialogResult = {
-        measurement: 'time' as const,
+      const editResult: TrainingEntryDialogResult = {
+        kind: 'exercise',
+        measurement: 'time',
         exerciseId: 'plank.standard',
         timestamp: '2026-02-10T14:00+01:00',
         reps: 0,
@@ -442,7 +483,6 @@ describe('StatsTableComponent', () => {
         exerciseId: 'plank.standard',
         durationSec: 90,
       });
-      // Measurement-aware shape: time entries do not carry reps/sets.
       expect('reps' in call).toBe(false);
       expect('sets' in call).toBe(false);
     });
@@ -452,8 +492,9 @@ describe('StatsTableComponent', () => {
       const updateSpy = vitest.fn();
       component.update.subscribe(updateSpy);
 
-      const editResult: EntryDialogResult = {
-        measurement: 'distance-time' as const,
+      const editResult: TrainingEntryDialogResult = {
+        kind: 'exercise',
+        measurement: 'distance-time',
         exerciseId: 'cardio.running',
         timestamp: '2026-02-10T14:00+01:00',
         reps: 0,
@@ -655,10 +696,6 @@ describe('StatsTableComponent', () => {
         source: 'web',
       });
 
-      // The kind discriminator is what the parent store uses to
-      // dispatch to the right Firestore service; exerciseId is not
-      // needed in the remove payload because the doc-id alone keys
-      // the right collection.
       expect(removeSpy).toHaveBeenCalledWith({ kind: 'exercise', id: 'ex-9' });
     });
   });

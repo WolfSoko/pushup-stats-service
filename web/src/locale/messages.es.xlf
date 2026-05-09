@@ -7426,5 +7426,29 @@
         <target>Ajustar objetivos manuales</target>
       </segment>
     </unit>
+    <unit id="trainingEntryDialog.title">
+      <segment state="translated">
+        <source>Trainingseintrag anlegen</source>
+        <target>Crear entrada de entrenamiento</target>
+      </segment>
+    </unit>
+    <unit id="trainingEntryDialog.category">
+      <segment state="translated">
+        <source>Kategorie</source>
+        <target>Categoría</target>
+      </segment>
+    </unit>
+    <unit id="trainingEntryDialog.exercise">
+      <segment state="translated">
+        <source>Übung</source>
+        <target>Ejercicio</target>
+      </segment>
+    </unit>
+    <unit id="trainingEntryDialog.pushup.exercise">
+      <segment state="translated">
+        <source>Liegestütze</source>
+        <target>Flexiones</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

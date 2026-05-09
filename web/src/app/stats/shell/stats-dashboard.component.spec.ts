@@ -191,15 +191,15 @@ describe('StatsDashboardComponent', () => {
         },
         { provide: AppDataFacade, useValue: appDataMock },
         { provide: ShareService, useValue: shareServiceMock },
-        // The Phase-0 multi-exercise dashboard sections inject this
-        // service via `inject(ExerciseFirestoreService)`. The dashboard
-        // test doesn't exercise those sections directly, so we hand it
-        // a thin stub returning an empty entry stream — without it the
-        // section component fails to construct and Angular reports a
-        // misleading "Circular dependency" error.
+        // The unified create dialog injects ExerciseFirestoreService for
+        // exercise-kind entries. Pushup tests below never hit the
+        // exercise branch, so a thin stub keeps DI happy.
         {
           provide: ExerciseFirestoreService,
-          useValue: { listEntries: () => of([]) },
+          useValue: {
+            listEntries: () => of([]),
+            createEntry: () => of({}),
+          },
         },
         {
           provide: UserTrainingPlanApiService,
@@ -375,7 +375,7 @@ describe('StatsDashboardComponent', () => {
   });
 
   describe('Given the manual entry dialog is submitted (regression: create event was silently dropped)', () => {
-    describe('When createEntry is called with a valid entry', () => {
+    describe('When createEntry is called with a pushup result', () => {
       it('Then it should call createPushup', async () => {
         // Given — createEntry() is the handler called after the dialog closes
         const component = fixture.componentInstance;
@@ -383,10 +383,12 @@ describe('StatsDashboardComponent', () => {
 
         // When
         await component.createEntry({
+          kind: 'pushup',
           timestamp: todayTs,
           reps: 15,
+          sets: [15],
           source: 'web',
-          type: 'Diamond',
+          type: 'diamond',
         });
         await fixture.whenStable();
 
@@ -394,8 +396,9 @@ describe('StatsDashboardComponent', () => {
         expect(serviceMock.createPushup).toHaveBeenCalledWith({
           timestamp: todayTs,
           reps: 15,
+          sets: [15],
           source: 'web',
-          type: 'Diamond',
+          type: 'diamond',
         });
       });
 
@@ -406,10 +409,12 @@ describe('StatsDashboardComponent', () => {
 
         // When
         await component.createEntry({
+          kind: 'pushup',
           timestamp: todayTs,
           reps: 15,
+          sets: [15],
           source: 'web',
-          type: 'Diamond',
+          type: 'diamond',
         });
         // refreshAll() triggers async resource reload — wait for it
         await fixture.whenStable();
@@ -425,10 +430,12 @@ describe('StatsDashboardComponent', () => {
 
         // When
         await component.createEntry({
+          kind: 'pushup',
           timestamp: todayTs,
           reps: 15,
+          sets: [15],
           source: 'web',
-          type: 'Diamond',
+          type: 'diamond',
         });
 
         // Then
@@ -451,7 +458,7 @@ describe('StatsDashboardComponent', () => {
     });
 
     describe('When openCreateDialog is called', () => {
-      it('Then MatDialog.open is invoked with CreateEntryDialogComponent', () => {
+      it('Then MatDialog.open is invoked with the unified TrainingEntryDialogComponent', () => {
         // Given
         dialogOpenSpy.mockClear();
 
@@ -460,7 +467,7 @@ describe('StatsDashboardComponent', () => {
 
         // Then
         expect(dialogOpenSpy).toHaveBeenCalledWith(
-          expect.any(Function), // CreateEntryDialogComponent
+          expect.any(Function), // TrainingEntryDialogComponent
           expect.objectContaining({ width: 'min(92vw, 420px)' })
         );
       });
@@ -522,7 +529,10 @@ describe('StatsDashboardComponent', () => {
           { provide: ShareService, useValue: shareServiceMock },
           {
             provide: ExerciseFirestoreService,
-            useValue: { listEntries: () => of([]) },
+            useValue: {
+              listEntries: () => of([]),
+              createEntry: () => of({}),
+            },
           },
           {
             provide: UserTrainingPlanApiService,

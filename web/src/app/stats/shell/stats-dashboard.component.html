@@ -373,8 +373,4 @@
       <lib-ad-slot [slot]="adSlotDashboardInline()" />
     </section>
   }
-
-  @for (cat of newExerciseCategories; track cat.id) {
-    <app-exercise-category-section [categoryId]="cat.id" />
-  }
 </main>

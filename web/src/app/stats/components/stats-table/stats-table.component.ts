@@ -36,15 +36,10 @@ import {
 } from '@pu-stats/models';
 import { firstValueFrom } from 'rxjs';
 import {
-  CreateEntryDialogComponent,
-  CreateEntryResult,
-  EntryDialogData as PushupEntryDialogData,
-} from '../create-entry-dialog/create-entry-dialog.component';
-import {
-  EntryDialogComponent,
-  EntryDialogData,
-  EntryDialogResult,
-} from '../entry-dialog/entry-dialog.component';
+  TrainingEntryDialogComponent,
+  TrainingEntryDialogData,
+  TrainingEntryDialogResult,
+} from '../training-entry-dialog/training-entry-dialog.component';
 import { exerciseDisplayName } from '../../i18n/exercise-display-names';
 
 /**
@@ -80,6 +75,25 @@ export interface StatsTableUpdate {
 export interface StatsTableRemove {
   kind: 'pushup' | 'exercise';
   id: string;
+}
+
+/**
+ * Create payload emitted from the table. Mirrors {@link StatsTableUpdate}
+ * but without `id`, since a new entry has no doc to patch yet. The `kind`
+ * discriminator lets the parent store dispatch to `createPushup` or
+ * `createEntry` without re-introspecting the dialog result.
+ */
+export interface StatsTableCreate {
+  kind: 'pushup' | 'exercise';
+  timestamp: string;
+  reps?: number;
+  sets?: number[];
+  durationSec?: number;
+  distanceM?: number;
+  source?: string;
+  type?: string;
+  exerciseId?: string;
+  variantId?: string;
 }
 
 @Component({
@@ -129,13 +143,7 @@ export class StatsTableComponent {
   readonly busyAction = input<'create' | 'update' | 'delete' | null>(null);
   readonly busyId = input<string | null>(null);
 
-  readonly create = output<{
-    timestamp: string;
-    reps: number;
-    sets?: number[];
-    source?: string;
-    type?: string;
-  }>();
+  readonly create = output<StatsTableCreate>();
   readonly update = output<StatsTableUpdate>();
   readonly remove = output<StatsTableRemove>();
 
@@ -228,144 +236,144 @@ export class StatsTableComponent {
 
   openCreateDialog(): void {
     this.dialog
-      .open<CreateEntryDialogComponent, void, CreateEntryResult>(
-        CreateEntryDialogComponent,
-        { width: 'min(92vw, 420px)', maxWidth: '92vw' }
-      )
+      .open<
+        TrainingEntryDialogComponent,
+        TrainingEntryDialogData | null,
+        TrainingEntryDialogResult
+      >(TrainingEntryDialogComponent, {
+        width: 'min(92vw, 420px)',
+        maxWidth: '92vw',
+      })
       .afterClosed()
       .subscribe((result) => {
-        if (result) this.create.emit(result);
+        if (!result) return;
+        this.create.emit(this.toCreatePayload(result));
       });
   }
 
   openEditDialog(entry: UnifiedEntry): void {
-    if (entry.kind === 'pushup') {
-      const dialogData: PushupEntryDialogData = {
-        timestamp: entry.timestamp,
-        reps: entry.reps,
-        sets: entry.sets,
-        source: entry.source,
-        type: entry.variantType ?? undefined,
+    const dialogData: TrainingEntryDialogData =
+      entry.kind === 'pushup'
+        ? {
+            kind: 'pushup',
+            timestamp: entry.timestamp,
+            reps: entry.reps,
+            sets: entry.sets,
+            source: entry.source,
+            type: entry.variantType ?? undefined,
+          }
+        : {
+            kind: 'exercise',
+            timestamp: entry.timestamp,
+            reps: entry.reps,
+            sets: entry.sets,
+            ...(entry.durationSec !== undefined
+              ? { durationSec: entry.durationSec }
+              : {}),
+            ...(entry.distanceM !== undefined
+              ? { distanceM: entry.distanceM }
+              : {}),
+            exerciseId: entry.exerciseId,
+            variantId: entry.variantId,
+          };
+
+    this.dialog
+      .open<
+        TrainingEntryDialogComponent,
+        TrainingEntryDialogData,
+        TrainingEntryDialogResult
+      >(TrainingEntryDialogComponent, {
+        width: 'min(92vw, 420px)',
+        maxWidth: '92vw',
+        data: dialogData,
+      })
+      .afterClosed()
+      .subscribe((result) => {
+        if (!result) return;
+        this.update.emit(this.toUpdatePayload(entry, result));
+      });
+  }
+
+  private toCreatePayload(result: TrainingEntryDialogResult): StatsTableCreate {
+    if (result.kind === 'pushup') {
+      return {
+        kind: 'pushup',
+        timestamp: result.timestamp,
+        reps: result.reps,
+        ...(result.sets.length > 1 ? { sets: result.sets } : {}),
+        source: result.source,
+        type: result.type,
       };
-      this.dialog
-        .open<
-          CreateEntryDialogComponent,
-          PushupEntryDialogData,
-          CreateEntryResult
-        >(CreateEntryDialogComponent, {
-          width: 'min(92vw, 420px)',
-          maxWidth: '92vw',
-          data: dialogData,
-        })
-        .afterClosed()
-        .subscribe((result) => {
-          if (result) {
-            // Strip a single-element sets array — it carries no info
-            // beyond the reps total and would otherwise round-trip an
-            // empty per-set breakdown into Firestore. Same heuristic
-            // as the exercise branch below.
-            this.update.emit({
-              kind: 'pushup',
-              id: entry._id,
-              timestamp: result.timestamp,
+    }
+    return {
+      kind: 'exercise',
+      exerciseId: result.exerciseId,
+      timestamp: result.timestamp,
+      ...(result.measurement === 'time'
+        ? { durationSec: result.durationSec ?? 0 }
+        : result.measurement === 'distance-time'
+          ? {
+              distanceM: result.distanceM ?? 0,
+              durationSec: result.durationSec ?? 0,
+            }
+          : {
               reps: result.reps,
-              // Single-set collapse: if the original doc carried a
-              // multi-set breakdown, emit `[]` as the explicit clear
-              // sentinel so ExerciseFirestoreService.updateEntry() can
-              // translate it into deleteField(); `undefined` would just
-              // omit the field and leave stale sets behind.
+              ...(result.sets.length > 1 ? { sets: result.sets } : {}),
+            }),
+      ...(result.variantId ? { variantId: result.variantId } : {}),
+    };
+  }
+
+  private toUpdatePayload(
+    entry: UnifiedEntry,
+    result: TrainingEntryDialogResult
+  ): StatsTableUpdate {
+    if (entry.kind === 'pushup') {
+      return {
+        kind: 'pushup',
+        id: entry._id,
+        timestamp: result.timestamp,
+        reps: result.reps,
+        // Single-set collapse: if the original doc carried a multi-set
+        // breakdown, emit `[]` as the explicit clear sentinel so the
+        // store maps it to a Firestore `deleteField()`; `undefined`
+        // would just omit the field and leave stale sets behind.
+        sets:
+          result.sets.length > 1
+            ? result.sets
+            : entry.sets !== undefined
+              ? []
+              : undefined,
+        source: result.source ?? entry.source,
+        type: result.type,
+      };
+    }
+    return {
+      kind: 'exercise',
+      id: entry._id,
+      exerciseId: entry.exerciseId,
+      timestamp: result.timestamp,
+      source: entry.source,
+      ...(result.measurement === 'time'
+        ? { durationSec: result.durationSec ?? 0 }
+        : result.measurement === 'distance-time'
+          ? {
+              distanceM: result.distanceM ?? 0,
+              durationSec: result.durationSec ?? 0,
+            }
+          : {
+              reps: result.reps,
               sets:
                 result.sets.length > 1
                   ? result.sets
                   : entry.sets !== undefined
                     ? []
                     : undefined,
-              source: result.source,
-              type: result.type,
-            });
-          }
-        });
-      return;
-    }
-
-    // Synthetic-fallback guards against stale data where the entry's
-    // exerciseId no longer exists in the catalog (renamed or removed).
-    const def = findExerciseDefinition(entry.exerciseId) ?? {
-      id: entry.exerciseId,
-      categoryId: 'abs' as const,
-      measurement: 'reps' as const,
-      min: 1,
-      max: 500,
-      unit: 'reps',
+            }),
+      ...(result.variantId !== undefined
+        ? { variantId: result.variantId }
+        : {}),
     };
-    const exerciseName = this.exerciseLabel(entry);
-    this.dialog
-      .open<EntryDialogComponent, EntryDialogData, EntryDialogResult>(
-        EntryDialogComponent,
-        {
-          width: 'min(92vw, 420px)',
-          maxWidth: '92vw',
-          data: {
-            definition: def,
-            exerciseName,
-            initial: {
-              timestamp: entry.timestamp,
-              reps: entry.reps,
-              sets: entry.sets,
-              ...(entry.durationSec !== undefined
-                ? { durationSec: entry.durationSec }
-                : {}),
-              ...(entry.distanceM !== undefined
-                ? { distanceM: entry.distanceM }
-                : {}),
-              variantId: entry.variantId,
-            },
-          },
-        }
-      )
-      .afterClosed()
-      .subscribe((result) => {
-        if (result) {
-          this.update.emit({
-            kind: 'exercise',
-            id: entry._id,
-            exerciseId: entry.exerciseId,
-            timestamp: result.timestamp,
-            source: entry.source,
-            // Measurement-aware:
-            //   - 'time' (plank): durationSec only.
-            //   - 'distance-time' (cardio.running): distanceM + durationSec.
-            //   - reps measurements: reps + optional sets. The sets
-            //     branch keeps the explicit-clear sentinel `[]` when
-            //     collapsing a multi-set entry to a single set so a
-            //     stale per-set breakdown doesn't survive the update
-            //     via Firestore field-omit.
-            ...(result.measurement === 'time'
-              ? { durationSec: result.durationSec ?? 0 }
-              : result.measurement === 'distance-time'
-                ? {
-                    distanceM: result.distanceM ?? 0,
-                    durationSec: result.durationSec ?? 0,
-                  }
-                : {
-                    reps: result.reps,
-                    sets:
-                      result.sets.length > 1
-                        ? result.sets
-                        : entry.sets !== undefined
-                          ? []
-                          : undefined,
-                  }),
-            // Forward the dialog's tri-state variantId verbatim:
-            // - non-empty string sets the variant
-            // - explicit null tells the store to clear it via deleteField()
-            // - undefined means "no change"
-            ...(result.variantId !== undefined
-              ? { variantId: result.variantId }
-              : {}),
-          });
-        }
-      });
   }
 
   emitRemove(entry: UnifiedEntry): void {

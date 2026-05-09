@@ -7426,5 +7426,29 @@
         <target>Proposita manualia aptare</target>
       </segment>
     </unit>
+    <unit id="trainingEntryDialog.title">
+      <segment state="translated">
+        <source>Trainingseintrag anlegen</source>
+        <target>Inscriptionem exercitii adde</target>
+      </segment>
+    </unit>
+    <unit id="trainingEntryDialog.category">
+      <segment state="translated">
+        <source>Kategorie</source>
+        <target>Genus</target>
+      </segment>
+    </unit>
+    <unit id="trainingEntryDialog.exercise">
+      <segment state="translated">
+        <source>Übung</source>
+        <target>Exercitium</target>
+      </segment>
+    </unit>
+    <unit id="trainingEntryDialog.pushup.exercise">
+      <segment state="translated">
+        <source>Liegestütze</source>
+        <target>Pulsus</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

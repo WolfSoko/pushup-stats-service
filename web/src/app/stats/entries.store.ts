@@ -15,6 +15,7 @@ import {
   withState,
 } from '@ngrx/signals';
 import { firstValueFrom } from 'rxjs';
+import { UserContextService } from '@pu-auth/auth';
 import {
   ExerciseFirestoreService,
   LiveDataStore,
@@ -83,6 +84,7 @@ export const EntriesStore = signalStore(
     _exerciseService: inject(ExerciseFirestoreService),
     _live: inject(LiveDataStore),
     _appData: inject(AppDataFacade),
+    _userContext: inject(UserContextService),
     _isBrowser: isPlatformBrowser(inject(PLATFORM_ID)),
     _locale: inject(LOCALE_ID) as string,
   })),
@@ -211,6 +213,7 @@ export const EntriesStore = signalStore(
       _api,
       _exerciseService,
       _appData,
+      _userContext,
       _isBrowser,
       _entriesResource,
       ...store
@@ -237,15 +240,64 @@ export const EntriesStore = signalStore(
         patchState(store, { repsMax: value });
       },
       async createEntry(payload: {
+        kind?: 'pushup' | 'exercise';
         timestamp: string;
-        reps: number;
+        reps?: number;
         sets?: number[];
+        durationSec?: number;
+        distanceM?: number;
         source?: string;
         type?: string;
+        exerciseId?: string;
+        variantId?: string;
       }): Promise<void> {
         patchState(store, { busyAction: 'create', busyId: null, error: null });
         try {
-          await firstValueFrom(_api.createPushup(payload));
+          // The unified create-entry dialog tags every result with a
+          // `kind` discriminator; older callers without it are pushup
+          // by historic default. Route accordingly so we hit the right
+          // Firestore collection without leaking measurement-specific
+          // fields into createPushup.
+          const kind = payload.kind ?? 'pushup';
+          if (kind === 'pushup') {
+            await firstValueFrom(
+              _api.createPushup({
+                timestamp: payload.timestamp,
+                reps: payload.reps ?? 0,
+                ...(payload.sets !== undefined ? { sets: payload.sets } : {}),
+                source: payload.source,
+                type: payload.type,
+              })
+            );
+          } else {
+            if (!payload.exerciseId) {
+              throw new Error(
+                'createEntry: exerciseId is required for kind="exercise"'
+              );
+            }
+            const userId = _userContext.userIdSafe();
+            if (!userId) {
+              throw new Error('createEntry: missing user id');
+            }
+            await firstValueFrom(
+              _exerciseService.createEntry(userId, {
+                exerciseId: payload.exerciseId,
+                timestamp: payload.timestamp,
+                ...(payload.reps !== undefined ? { reps: payload.reps } : {}),
+                ...(payload.sets !== undefined ? { sets: payload.sets } : {}),
+                ...(payload.durationSec !== undefined
+                  ? { durationSec: payload.durationSec }
+                  : {}),
+                ...(payload.distanceM !== undefined
+                  ? { distanceM: payload.distanceM }
+                  : {}),
+                ...(payload.source !== undefined
+                  ? { source: payload.source }
+                  : {}),
+                ...(payload.variantId ? { variantId: payload.variantId } : {}),
+              })
+            );
+          }
           if (!_isBrowser) _entriesResource.reload();
           _appData.reloadAfterMutation();
         } catch (err) {

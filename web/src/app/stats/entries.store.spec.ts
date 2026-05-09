@@ -6,6 +6,7 @@ import {
   LiveDataStore,
   StatsApiService,
 } from '@pu-stats/data-access';
+import { UserContextService } from '@pu-auth/auth';
 import { AppDataFacade } from '../core/app-data.facade';
 import { EntriesStore } from './entries.store';
 
@@ -45,6 +46,10 @@ describe('EntriesStore', () => {
     reloadAfterMutation: vitest.fn(),
   };
 
+  const userContextMock = {
+    userIdSafe: () => 'u1',
+  } as unknown as UserContextService;
+
   function setup(): InstanceType<typeof EntriesStore> {
     vitest.clearAllMocks();
     TestBed.resetTestingModule();
@@ -55,6 +60,7 @@ describe('EntriesStore', () => {
         { provide: ExerciseFirestoreService, useValue: exerciseServiceMock },
         { provide: LiveDataStore, useValue: liveMock },
         { provide: AppDataFacade, useValue: appDataMock },
+        { provide: UserContextService, useValue: userContextMock },
       ],
     });
     return TestBed.inject(EntriesStore);
@@ -93,7 +99,20 @@ describe('EntriesStore', () => {
   });
 
   describe('createEntry', () => {
-    it('Given a successful create, When createEntry resolves, Then app-level resources are reloaded so the toolbar count refreshes', async () => {
+    it('Given a pushup-kind create, When createEntry resolves, Then app-level resources are reloaded so the toolbar count refreshes', async () => {
+      const store = setup();
+
+      await store.createEntry({
+        kind: 'pushup',
+        timestamp: '2026-04-27T08:00:00',
+        reps: 12,
+      });
+
+      expect(apiMock.createPushup).toHaveBeenCalled();
+      expect(appDataMock.reloadAfterMutation).toHaveBeenCalledTimes(1);
+    });
+
+    it('Given a payload without kind, Then it falls back to the legacy pushup path', async () => {
       const store = setup();
 
       await store.createEntry({
@@ -102,7 +121,26 @@ describe('EntriesStore', () => {
       });
 
       expect(apiMock.createPushup).toHaveBeenCalled();
-      expect(appDataMock.reloadAfterMutation).toHaveBeenCalledTimes(1);
+    });
+
+    it('Given an exercise-kind create, Then ExerciseFirestoreService.createEntry is called with the user id', async () => {
+      const store = setup();
+
+      await store.createEntry({
+        kind: 'exercise',
+        exerciseId: 'plank.standard',
+        timestamp: '2026-04-27T08:00:00',
+        durationSec: 90,
+      });
+
+      expect(exerciseServiceMock.createEntry).toHaveBeenCalledWith(
+        'u1',
+        expect.objectContaining({
+          exerciseId: 'plank.standard',
+          durationSec: 90,
+        })
+      );
+      expect(apiMock.createPushup).not.toHaveBeenCalled();
     });
   });
 
