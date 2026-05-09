@@ -467,12 +467,11 @@ describe('StatsDashboardComponent', () => {
     });
   });
 
-  // Regression: snooze deep-link must never silently log push-ups.
-  // The push SW opens `/${locale}/app?snooze=30` when the user clicks the
-  // "30 Min snoozen" notification action and no app tab is open. App.ts
-  // consumes that param and calls the snoozeReminder Cloud Function;
-  // the dashboard's `_handleLogParam` deep-link handler must NOT mistake
-  // that URL for a quick-log / log deep-link and create an entry.
+  // Regression: a `?snooze=N` deep-link arrives via the SW snooze action
+  // (or via App.ts before it strips the param). The dashboard's
+  // `_handleLogParam` shares the URL with App.ts's `_handleSnoozeParam`,
+  // so it must defer to it — never mistake a snooze URL for a quick-log
+  // or log deep-link.
   describe('Given the dashboard mounts on a snooze deep-link URL', () => {
     /**
      * Boots a fresh dashboard fixture with the given query params on the
@@ -484,8 +483,6 @@ describe('StatsDashboardComponent', () => {
       params: Record<string, string>
     ): Promise<ComponentFixture<StatsDashboardComponent>> {
       TestBed.resetTestingModule();
-      vi.useFakeTimers({ shouldAdvanceTime: true });
-      vi.setSystemTime(frozenDate);
       window.history.replaceState({}, '', '/');
       TestBed.configureTestingModule({
         imports: [StatsDashboardComponent],
