@@ -64,26 +64,12 @@ type AnalysisState = {
   to: string;
   dayChartMode: '24h' | '14h' | undefined;
   /**
-   * Active exercise-kind filter for the type-pie. Mirrors
-   * `EntriesState.kinds` so the filter chip set stays consistent
-   * between History and Analysis.
-   *
-   * Three modes:
-   *   - **empty array (default)** — pushup-variant breakdown, exactly
-   *     the same legend the page rendered before the multi-exercise
-   *     filter shipped. Exercise entries are intentionally ignored so
-   *     existing users see no change unless they opt in.
-   *   - **`['pushup']`** — equivalent to default; the kind-mode branch
-   *     specifically detects this single-pushup case and falls back to
-   *     the variant breakdown.
-   *   - **any other non-empty subset** — kind-mode pie: pushups
-   *     collapse into one bucket and each `exerciseId` becomes its own
-   *     slice. The sum is reps-only; `time`/`distance-time` exercises
-   *     surface with `value = 0` until per-measurement charts land.
-   *
-   * Only the type-pie respects the filter for now — the streak/best-day
-   * KPIs stay pushup-only until per-exercise streaks land (Phase 2 of the
-   * multi-exercise roadmap).
+   * Active exercise-kind filter for the type-pie. Empty array and
+   * `['pushup']` both render the pushup-variant breakdown (default);
+   * any other non-empty subset switches the pie into kind-mode where
+   * pushups collapse into one bucket and each `exerciseId` becomes a
+   * slice. Streaks/best-day KPIs stay pushup-only — per-exercise
+   * versions land with Phase 2 of the multi-exercise roadmap.
    */
   kinds: ReadonlyArray<UnifiedEntryFilterKey>;
   // Reactive dependency for the fixed-window trend filters: bumped only
@@ -289,11 +275,9 @@ export const AnalysisStore = signalStore(
     const rows = computed(() => store.entriesResource.value() ?? []);
 
     /**
-     * Unified rows (pushups + exercise entries) restricted to the page's
-     * date range. Browser-only — exercise entries arrive via the
-     * Firestore `onSnapshot` stream in `LiveDataStore` and are filtered
-     * here against `from`/`to`. SSR (no live store) keeps the empty
-     * array so the page renders the same as before.
+     * Browser-only: exercise entries come from the live Firestore
+     * snapshot and are filtered to the page's date range. SSR has no
+     * live store and keeps the array empty.
      */
     const unifiedRows = computed<UnifiedEntry[]>(() => {
       const from = store.from();
@@ -314,11 +298,7 @@ export const AnalysisStore = signalStore(
       return [...pushups, ...exercises];
     });
 
-    /**
-     * Distinct exercise-kind keys present in the visible date range —
-     * `'pushup'` plus any catalog id that has at least one entry. Used to
-     * populate the filter multi-select on the Analysis page.
-     */
+    /** Distinct kind keys with at least one entry in the visible range. */
     const kindOptionsRaw = computed<UnifiedEntryFilterKey[]>(() => {
       const seen = new Set<UnifiedEntryFilterKey>();
       for (const row of unifiedRows()) {
@@ -409,9 +389,6 @@ export const AnalysisStore = signalStore(
       const onlyPushup =
         !kindSet || (kindSet.size === 1 && kindSet.has('pushup'));
 
-      // Default mode (or pushup-only filter): break the pie down by
-      // pushup variant — same behaviour as before the multi-exercise
-      // filter landed.
       if (onlyPushup) {
         const byType = new Map<string, { reps: number; allSets: number[] }>();
         for (const row of rows()) {
@@ -435,15 +412,10 @@ export const AnalysisStore = signalStore(
           }));
       }
 
-      // Multi-kind or non-pushup-only filter: collapse pushups into a
-      // single bucket and group exercise entries by `exerciseId`. This
-      // is intentionally a reps-only view — `time` and `distance-time`
-      // exercises are surfaced with `value = 0` until per-measurement
-      // charts land (Track UI-2 graphen-stufe in the roadmap).
-      //
-      // Label resolution is deferred to the page component because the
-      // localised name for `'pushup'` and for catalog-id keys requires
-      // `$localize`, which belongs to the template/component layer.
+      // Reps-only view: `time` and `distance-time` exercises surface
+      // with `value = 0` until per-measurement charts land. Label is
+      // emitted as the bare key — `$localize` for kind names lives in
+      // the page component.
       const byKind = new Map<string, { reps: number; allSets: number[] }>();
       for (const row of unifiedRows()) {
         const key = unifiedEntryFilterKey(row);

@@ -3360,7 +3360,7 @@ Deine Position: # ·  Reps        </source>
     <unit id="exercise.abs.legraises.name">
       <segment state="translated">
         <source>Beinheben</source>
-        <target>Beinheben</target>
+        <target>Benhev</target>
       </segment>
     </unit>
     <unit id="exercise.abs.russiantwist.name">
@@ -3378,19 +3378,19 @@ Deine Position: # ·  Reps        </source>
     <unit id="exercise.legs.lunges.name">
       <segment state="translated">
         <source>Ausfallschritte</source>
-        <target>Ausfallschritte</target>
+        <target>Utfall</target>
       </segment>
     </unit>
     <unit id="exercise.legs.glutebridge.name">
       <segment state="translated">
         <source>Hüftheben</source>
-        <target>Hüftheben</target>
+        <target>Seteløft</target>
       </segment>
     </unit>
     <unit id="exercise.legs.calfraises.name">
       <segment state="translated">
         <source>Wadenheben</source>
-        <target>Wadenheben</target>
+        <target>Tåhev</target>
       </segment>
     </unit>
     <unit id="exercise.legs.jumpsquats.name">
@@ -3402,13 +3402,13 @@ Deine Position: # ·  Reps        </source>
     <unit id="analysis.exerciseFilter">
       <segment state="translated">
         <source>Übung</source>
-        <target>Übung</target>
+        <target>Øvelse</target>
       </segment>
     </unit>
     <unit id="analysis.kindUnknown">
       <segment state="translated">
         <source>Andere Übung</source>
-        <target>Andere Übung</target>
+        <target>Annen øvelse</target>
       </segment>
     </unit>
     <unit id="exerciseSection.addAriaPrefix">

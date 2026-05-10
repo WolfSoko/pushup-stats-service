@@ -3945,61 +3945,61 @@
     <unit id="exercise.abs.crunches.name">
       <segment state="translated">
         <source>Crunches</source>
-        <target>Crunches</target>
+        <target>Κοιλιακοί (crunches)</target>
       </segment>
     </unit>
     <unit id="exercise.abs.legraises.name">
       <segment state="translated">
         <source>Beinheben</source>
-        <target>Beinheben</target>
+        <target>Άρσεις ποδιών</target>
       </segment>
     </unit>
     <unit id="exercise.abs.russiantwist.name">
       <segment state="translated">
         <source>Russian Twist</source>
-        <target>Russian Twist</target>
+        <target>Ρωσικές στροφές</target>
       </segment>
     </unit>
     <unit id="exercise.abs.mountainclimbers.name">
       <segment state="translated">
         <source>Mountain Climbers</source>
-        <target>Mountain Climbers</target>
+        <target>Ορειβάτες</target>
       </segment>
     </unit>
     <unit id="exercise.legs.lunges.name">
       <segment state="translated">
         <source>Ausfallschritte</source>
-        <target>Ausfallschritte</target>
+        <target>Προβολές</target>
       </segment>
     </unit>
     <unit id="exercise.legs.glutebridge.name">
       <segment state="translated">
         <source>Hüftheben</source>
-        <target>Hüftheben</target>
+        <target>Γέφυρα γλουτών</target>
       </segment>
     </unit>
     <unit id="exercise.legs.calfraises.name">
       <segment state="translated">
         <source>Wadenheben</source>
-        <target>Wadenheben</target>
+        <target>Άρσεις γαμπών</target>
       </segment>
     </unit>
     <unit id="exercise.legs.jumpsquats.name">
       <segment state="translated">
         <source>Jump Squats</source>
-        <target>Jump Squats</target>
+        <target>Καθίσματα με άλμα</target>
       </segment>
     </unit>
     <unit id="analysis.exerciseFilter">
       <segment state="translated">
         <source>Übung</source>
-        <target>Übung</target>
+        <target>Άσκηση</target>
       </segment>
     </unit>
     <unit id="analysis.kindUnknown">
       <segment state="translated">
         <source>Andere Übung</source>
-        <target>Andere Übung</target>
+        <target>Άλλη άσκηση</target>
       </segment>
     </unit>
     <unit id="exerciseSection.addAriaPrefix">

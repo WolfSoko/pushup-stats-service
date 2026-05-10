@@ -3951,55 +3951,55 @@
     <unit id="exercise.abs.legraises.name">
       <segment state="translated">
         <source>Beinheben</source>
-        <target>Beinheben</target>
+        <target>Elevaciones de piernas</target>
       </segment>
     </unit>
     <unit id="exercise.abs.russiantwist.name">
       <segment state="translated">
         <source>Russian Twist</source>
-        <target>Russian Twist</target>
+        <target>Giro ruso</target>
       </segment>
     </unit>
     <unit id="exercise.abs.mountainclimbers.name">
       <segment state="translated">
         <source>Mountain Climbers</source>
-        <target>Mountain Climbers</target>
+        <target>Escaladores</target>
       </segment>
     </unit>
     <unit id="exercise.legs.lunges.name">
       <segment state="translated">
         <source>Ausfallschritte</source>
-        <target>Ausfallschritte</target>
+        <target>Zancadas</target>
       </segment>
     </unit>
     <unit id="exercise.legs.glutebridge.name">
       <segment state="translated">
         <source>Hüftheben</source>
-        <target>Hüftheben</target>
+        <target>Puente de glúteos</target>
       </segment>
     </unit>
     <unit id="exercise.legs.calfraises.name">
       <segment state="translated">
         <source>Wadenheben</source>
-        <target>Wadenheben</target>
+        <target>Elevaciones de talones</target>
       </segment>
     </unit>
     <unit id="exercise.legs.jumpsquats.name">
       <segment state="translated">
         <source>Jump Squats</source>
-        <target>Jump Squats</target>
+        <target>Sentadillas con salto</target>
       </segment>
     </unit>
     <unit id="analysis.exerciseFilter">
       <segment state="translated">
         <source>Übung</source>
-        <target>Übung</target>
+        <target>Ejercicio</target>
       </segment>
     </unit>
     <unit id="analysis.kindUnknown">
       <segment state="translated">
         <source>Andere Übung</source>
-        <target>Andere Übung</target>
+        <target>Otro ejercicio</target>
       </segment>
     </unit>
     <unit id="exerciseSection.addAriaPrefix">

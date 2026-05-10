@@ -3951,7 +3951,7 @@
     <unit id="exercise.abs.legraises.name">
       <segment state="translated">
         <source>Beinheben</source>
-        <target>Beinheben</target>
+        <target>Sollevamenti gambe</target>
       </segment>
     </unit>
     <unit id="exercise.abs.russiantwist.name">
@@ -3969,13 +3969,13 @@
     <unit id="exercise.legs.lunges.name">
       <segment state="translated">
         <source>Ausfallschritte</source>
-        <target>Ausfallschritte</target>
+        <target>Affondi</target>
       </segment>
     </unit>
     <unit id="exercise.legs.glutebridge.name">
       <segment state="translated">
         <source>Hüftheben</source>
-        <target>Hüftheben</target>
+        <target>Ponte glutei</target>
       </segment>
     </unit>
     <unit id="exercise.legs.calfraises.name">
@@ -3993,13 +3993,13 @@
     <unit id="analysis.exerciseFilter">
       <segment state="translated">
         <source>Übung</source>
-        <target>Übung</target>
+        <target>Esercizio</target>
       </segment>
     </unit>
     <unit id="analysis.kindUnknown">
       <segment state="translated">
         <source>Andere Übung</source>
-        <target>Andere Übung</target>
+        <target>Altro esercizio</target>
       </segment>
     </unit>
     <unit id="exerciseSection.addAriaPrefix">
