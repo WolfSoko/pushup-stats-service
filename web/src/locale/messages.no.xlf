@@ -1890,7 +1890,7 @@ Aktiv:         </target>
             </notes>
       <segment state="translated">
         <source>Charts, Trends &amp; alle Übungen</source>
-        <target>Diagrammer, trender og hver øvelse</target>
+        <target>Diagrammer, trender og alle øvelser</target>
             </segment>
         </unit>
     <unit id="landing.feature.multiset.title">

@@ -2500,7 +2500,7 @@
       </notes>
       <segment state="translated">
         <source> Liegestütze tracken in Sekunden – mit Trends, Streaks und Live-Sync. Plus Sit-ups, Kniebeugen, Plank und Laufen, wenn du mehr willst. </source>
-        <target> Tracke tes pompes en quelques secondes — avec tendances, séries et synchronisation en direct. Plus des abdos, squats, gainage et course quand tu en veux plus. </target>
+        <target> Suis tes pompes en quelques secondes — avec tendances, séries et synchronisation en direct. Plus des abdos, squats, gainage et course quand tu en veux plus. </target>
       </segment>
     </unit>
     <unit id="landing.cta.dashboard">
@@ -2701,7 +2701,7 @@
       </notes>
       <segment state="translated">
         <source>Charts, Trends &amp; alle Übungen</source>
-        <target>Graphiques, tendances &amp; chaque exercice</target>
+        <target>Graphiques, tendances &amp; tous les exercices</target>
       </segment>
     </unit>
     <unit id="landing.feature.analytics.body">
