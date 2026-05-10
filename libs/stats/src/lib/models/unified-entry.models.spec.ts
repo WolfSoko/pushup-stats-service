@@ -1,9 +1,10 @@
 import {
   exerciseEntryToUnified,
   pushupRecordToUnified,
+  unifiedEntryCategoryId,
   unifiedEntryFilterKey,
 } from './unified-entry.models';
-import type { ExerciseEntry } from './exercise.models';
+import type { ExerciseDefinition, ExerciseEntry } from './exercise.models';
 import type { PushupRecord } from './pushup.models';
 
 describe('pushupRecordToUnified', () => {
@@ -159,5 +160,120 @@ describe('unifiedEntryFilterKey', () => {
         exerciseId: 'legs.squats',
       })
     ).toBe('legs.squats');
+  });
+});
+
+describe('unifiedEntryCategoryId', () => {
+  describe('Given a pushup entry', () => {
+    it('returns "pushup" regardless of variant', () => {
+      expect(
+        unifiedEntryCategoryId({
+          kind: 'pushup',
+          _id: 'p',
+          timestamp: 't',
+          reps: 1,
+          source: 'web',
+          variantType: 'diamond',
+        })
+      ).toBe('pushup');
+      expect(
+        unifiedEntryCategoryId({
+          kind: 'pushup',
+          _id: 'p',
+          timestamp: 't',
+          reps: 1,
+          source: 'web',
+          variantType: null,
+        })
+      ).toBe('pushup');
+    });
+  });
+
+  describe('Given a catalog exercise entry', () => {
+    it('returns the categoryId from the catalog (abs)', () => {
+      expect(
+        unifiedEntryCategoryId({
+          kind: 'exercise',
+          _id: 'e',
+          timestamp: 't',
+          reps: 1,
+          source: 'web',
+          exerciseId: 'abs.situps',
+        })
+      ).toBe('abs');
+    });
+
+    it('returns the categoryId from the catalog (legs)', () => {
+      expect(
+        unifiedEntryCategoryId({
+          kind: 'exercise',
+          _id: 'e',
+          timestamp: 't',
+          reps: 1,
+          source: 'web',
+          exerciseId: 'legs.squats',
+        })
+      ).toBe('legs');
+    });
+
+    it('returns the categoryId for non-reps measurements (cardio)', () => {
+      expect(
+        unifiedEntryCategoryId({
+          kind: 'exercise',
+          _id: 'e',
+          timestamp: 't',
+          reps: 0,
+          source: 'web',
+          exerciseId: 'cardio.running',
+          distanceM: 5000,
+          durationSec: 1650,
+        })
+      ).toBe('cardio');
+    });
+  });
+
+  describe('Given an unknown exercise id', () => {
+    it('returns null when the catalog has no match and no resolver is provided', () => {
+      expect(
+        unifiedEntryCategoryId({
+          kind: 'exercise',
+          _id: 'e',
+          timestamp: 't',
+          reps: 1,
+          source: 'web',
+          exerciseId: 'custom.unknown',
+        })
+      ).toBeNull();
+    });
+  });
+
+  describe('Given a custom resolver', () => {
+    it('uses the resolver to look up custom exercises outside the catalog', () => {
+      const customDef: ExerciseDefinition = {
+        id: 'custom-uuid',
+        categoryId: 'mobility',
+        ownerId: 'u1',
+        measurement: 'reps',
+        min: 1,
+        max: 100,
+        unit: 'reps',
+        customName: 'Hip openers',
+      };
+      const resolver = (id: string) =>
+        id === 'custom-uuid' ? customDef : null;
+      expect(
+        unifiedEntryCategoryId(
+          {
+            kind: 'exercise',
+            _id: 'e',
+            timestamp: 't',
+            reps: 1,
+            source: 'web',
+            exerciseId: 'custom-uuid',
+          },
+          resolver
+        )
+      ).toBe('mobility');
+    });
   });
 });

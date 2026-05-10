@@ -14,7 +14,12 @@
  *     the source doc.
  */
 
-import type { ExerciseEntry } from './exercise.models';
+import { findExerciseDefinition } from './exercise.catalog';
+import type {
+  ExerciseCategoryId,
+  ExerciseDefinition,
+  ExerciseEntry,
+} from './exercise.models';
 import type { PushupRecord } from './pushup.models';
 
 export interface UnifiedEntryBase {
@@ -99,6 +104,28 @@ export function exerciseEntryToUnified(e: ExerciseEntry): UnifiedExerciseEntry {
  * stays a separate dropdown so users can still drill down to "Diamond
  * Pushups only".
  */
-export function unifiedEntryFilterKey(entry: UnifiedEntry): UnifiedEntryFilterKey {
+export function unifiedEntryFilterKey(
+  entry: UnifiedEntry
+): UnifiedEntryFilterKey {
   return entry.kind === 'pushup' ? 'pushup' : entry.exerciseId;
+}
+
+/**
+ * Maps a UnifiedEntry to the exercise category it belongs to. Pushup
+ * entries always map to `'pushup'`. Exercise entries are resolved via
+ * the catalog — `resolveDefinition` defaults to {@link
+ * findExerciseDefinition} but can be overridden when the analysis page
+ * needs to resolve custom user exercises that live outside the
+ * standard catalog. Returns `null` when the exercise id is not
+ * resolvable, so callers can decide whether to bucket the entry into
+ * an "unknown" group or drop it.
+ */
+export function unifiedEntryCategoryId(
+  entry: UnifiedEntry,
+  resolveDefinition: (
+    id: string
+  ) => ExerciseDefinition | null = findExerciseDefinition
+): ExerciseCategoryId | null {
+  if (entry.kind === 'pushup') return 'pushup';
+  return resolveDefinition(entry.exerciseId)?.categoryId ?? null;
 }

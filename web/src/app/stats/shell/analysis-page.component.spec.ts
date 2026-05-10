@@ -471,6 +471,79 @@ describe('AnalysisPageComponent', () => {
     expect(values).toContain('abs.situps');
   });
 
+  describe('per-category view (activeView / viewFilteredRows)', () => {
+    beforeEach(() => {
+      liveExerciseEntries.set([
+        {
+          _id: 'ex-abs',
+          userId: 'u1',
+          exerciseId: 'abs.situps',
+          timestamp: '2026-02-12T08:00:00.000Z',
+          reps: 30,
+          source: 'web',
+        } as ExerciseEntry,
+        {
+          _id: 'ex-legs',
+          userId: 'u1',
+          exerciseId: 'legs.squats',
+          timestamp: '2026-02-13T08:00:00.000Z',
+          reps: 40,
+          source: 'web',
+        } as ExerciseEntry,
+      ]);
+      const component = fixture.componentInstance;
+      component.store.setRange('2026-02-09', '2026-02-15');
+    });
+
+    it('defaults activeView to "overview" so existing behaviour is preserved', () => {
+      const { store } = fixture.componentInstance;
+      expect(store.activeView()).toBe('overview');
+    });
+
+    it('viewFilteredRows returns every unified row in overview mode', () => {
+      const { store } = fixture.componentInstance;
+      // 6 pushups + 2 exercises in the seeded range
+      expect(store.viewFilteredRows()).toHaveLength(8);
+    });
+
+    it('setActiveView("abs") narrows viewFilteredRows to abs-category entries only', () => {
+      const { store } = fixture.componentInstance;
+      store.setActiveView('abs');
+      const rows = store.viewFilteredRows();
+      expect(rows).toHaveLength(1);
+      expect(rows[0].kind).toBe('exercise');
+      expect((rows[0] as { exerciseId?: string }).exerciseId).toBe(
+        'abs.situps'
+      );
+    });
+
+    it('setActiveView("pushup") collapses to pushup entries only', () => {
+      const { store } = fixture.componentInstance;
+      store.setActiveView('pushup');
+      const rows = store.viewFilteredRows();
+      expect(rows).toHaveLength(6);
+      expect(rows.every((r) => r.kind === 'pushup')).toBe(true);
+    });
+
+    it('setActiveView("legs") narrows to legs-category entries only', () => {
+      const { store } = fixture.componentInstance;
+      store.setActiveView('legs');
+      const rows = store.viewFilteredRows();
+      expect(rows).toHaveLength(1);
+      expect((rows[0] as { exerciseId?: string }).exerciseId).toBe(
+        'legs.squats'
+      );
+    });
+
+    it('returns to all rows when activeView is reset to "overview"', () => {
+      const { store } = fixture.componentInstance;
+      store.setActiveView('abs');
+      expect(store.viewFilteredRows()).toHaveLength(1);
+      store.setActiveView('overview');
+      expect(store.viewFilteredRows()).toHaveLength(8);
+    });
+  });
+
   it('resolves bare kind ids to localised labels via typeBreakdownDisplay', () => {
     // Coverage for the component-level mapping that lives outside the
     // store: the store's kind-mode breakdown emits raw ids in `label`
