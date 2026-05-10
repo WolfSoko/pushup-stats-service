@@ -6329,13 +6329,13 @@ Deine Position: # ·  Reps        </source>
     </unit>
     <unit id="trainingPlans.unskipAria">
       <segment state="translated">
-        <source>Übersprungen rückgängig</source>
+        <source>Überspringen rückgängig machen</source>
         <target>Angre hopp</target>
       </segment>
     </unit>
     <unit id="trainingPlans.unskipTooltip">
       <segment state="translated">
-        <source>Übersprungen rückgängig</source>
+        <source>Überspringen rückgängig machen</source>
         <target>Angre hopp</target>
       </segment>
     </unit>

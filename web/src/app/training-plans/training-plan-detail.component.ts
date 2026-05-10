@@ -289,68 +289,70 @@ interface DayRow {
                     }
                   </div>
                   <div class="day-actions">
-                    @if (isThisPlanActive() && row.day.kind !== 'rest') {
-                      @if (row.isCompleted) {
-                        <button
-                          mat-icon-button
-                          (click)="unmark(row.day.dayIndex)"
-                          aria-label="Als nicht erledigt markieren"
-                          i18n-aria-label="@@trainingPlans.unmarkAria"
-                        >
-                          <mat-icon>check_circle</mat-icon>
-                        </button>
-                      } @else if (row.isSkipped) {
-                        <button
-                          mat-icon-button
-                          (click)="unskip(row.day.dayIndex)"
-                          aria-label="Übersprungen rückgängig"
-                          i18n-aria-label="@@trainingPlans.unskipAria"
-                          matTooltip="Übersprungen rückgängig"
-                          i18n-matTooltip="@@trainingPlans.unskipTooltip"
-                        >
-                          <mat-icon>redo</mat-icon>
-                        </button>
-                      } @else {
-                        @if (row.day.targetReps > 0) {
+                    @if (isThisPlanActive()) {
+                      @if (row.day.kind !== 'rest') {
+                        @if (row.isCompleted) {
                           <button
                             mat-icon-button
-                            color="primary"
-                            (click)="logPlanDay(row.day.dayIndex)"
-                            aria-label="Plan-Sätze eintragen und als erledigt markieren"
-                            i18n-aria-label="@@trainingPlans.logAria"
+                            (click)="unmark(row.day.dayIndex)"
+                            aria-label="Als nicht erledigt markieren"
+                            i18n-aria-label="@@trainingPlans.unmarkAria"
                           >
-                            <mat-icon>play_circle</mat-icon>
+                            <mat-icon>check_circle</mat-icon>
                           </button>
-                        }
-                        <button
-                          mat-icon-button
-                          (click)="mark(row.day.dayIndex)"
-                          aria-label="Nur als erledigt markieren (ohne Eintrag)"
-                          i18n-aria-label="@@trainingPlans.markAria"
-                        >
-                          <mat-icon>radio_button_unchecked</mat-icon>
-                        </button>
-                        @if (!row.isToday) {
+                        } @else if (row.isSkipped) {
                           <button
                             mat-icon-button
-                            (click)="jumpToDay(row.day.dayIndex)"
-                            aria-label="Zu diesem Tag springen"
-                            i18n-aria-label="@@trainingPlans.jumpAria"
-                            matTooltip="Zu diesem Tag springen"
-                            i18n-matTooltip="@@trainingPlans.jumpTooltip"
+                            (click)="unskip(row.day.dayIndex)"
+                            aria-label="Überspringen rückgängig machen"
+                            i18n-aria-label="@@trainingPlans.unskipAria"
+                            matTooltip="Überspringen rückgängig machen"
+                            i18n-matTooltip="@@trainingPlans.unskipTooltip"
                           >
-                            <mat-icon>fast_forward</mat-icon>
+                            <mat-icon>redo</mat-icon>
+                          </button>
+                        } @else {
+                          @if (row.day.targetReps > 0) {
+                            <button
+                              mat-icon-button
+                              color="primary"
+                              (click)="logPlanDay(row.day.dayIndex)"
+                              aria-label="Plan-Sätze eintragen und als erledigt markieren"
+                              i18n-aria-label="@@trainingPlans.logAria"
+                            >
+                              <mat-icon>play_circle</mat-icon>
+                            </button>
+                          }
+                          <button
+                            mat-icon-button
+                            (click)="mark(row.day.dayIndex)"
+                            aria-label="Nur als erledigt markieren (ohne Eintrag)"
+                            i18n-aria-label="@@trainingPlans.markAria"
+                          >
+                            <mat-icon>radio_button_unchecked</mat-icon>
+                          </button>
+                          <button
+                            mat-icon-button
+                            (click)="skip(row.day.dayIndex)"
+                            aria-label="Tag überspringen"
+                            i18n-aria-label="@@trainingPlans.skipAria"
+                            matTooltip="Tag überspringen"
+                            i18n-matTooltip="@@trainingPlans.skipTooltip"
+                          >
+                            <mat-icon>skip_next</mat-icon>
                           </button>
                         }
+                      }
+                      @if (!row.isToday) {
                         <button
                           mat-icon-button
-                          (click)="skip(row.day.dayIndex)"
-                          aria-label="Tag überspringen"
-                          i18n-aria-label="@@trainingPlans.skipAria"
-                          matTooltip="Tag überspringen"
-                          i18n-matTooltip="@@trainingPlans.skipTooltip"
+                          (click)="jumpToDay(row.day.dayIndex)"
+                          aria-label="Zu diesem Tag springen"
+                          i18n-aria-label="@@trainingPlans.jumpAria"
+                          matTooltip="Zu diesem Tag springen"
+                          i18n-matTooltip="@@trainingPlans.jumpTooltip"
                         >
-                          <mat-icon>skip_next</mat-icon>
+                          <mat-icon>fast_forward</mat-icon>
                         </button>
                       }
                     }

@@ -6622,7 +6622,7 @@
     <unit id="trainingPlans.back">
       <notes>
         <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:75</note>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:369,371</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:371,373</note>
       </notes>
       <segment>
         <source>Zurück</source>
@@ -6787,7 +6787,7 @@
     </unit>
     <unit id="trainingPlans.unmarkAria">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:297,298</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:298,299</note>
       </notes>
       <segment>
         <source>Als nicht erledigt markieren</source>
@@ -6795,23 +6795,23 @@
     </unit>
     <unit id="trainingPlans.unskipAria">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:306,307</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:307,308</note>
       </notes>
       <segment>
-        <source>Übersprungen rückgängig</source>
+        <source>Überspringen rückgängig machen</source>
       </segment>
     </unit>
     <unit id="trainingPlans.unskipTooltip">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:308,309</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:309,310</note>
       </notes>
       <segment>
-        <source>Übersprungen rückgängig</source>
+        <source>Überspringen rückgängig machen</source>
       </segment>
     </unit>
     <unit id="trainingPlans.logAria">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:319,320</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:320,321</note>
       </notes>
       <segment>
         <source>Plan-Sätze eintragen und als erledigt markieren</source>
@@ -6819,31 +6819,15 @@
     </unit>
     <unit id="trainingPlans.markAria">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:328,329</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:329,330</note>
       </notes>
       <segment>
         <source>Nur als erledigt markieren (ohne Eintrag)</source>
       </segment>
     </unit>
-    <unit id="trainingPlans.jumpAria">
-      <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:337,338</note>
-      </notes>
-      <segment>
-        <source>Zu diesem Tag springen</source>
-      </segment>
-    </unit>
-    <unit id="trainingPlans.jumpTooltip">
-      <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:339,340</note>
-      </notes>
-      <segment>
-        <source>Zu diesem Tag springen</source>
-      </segment>
-    </unit>
     <unit id="trainingPlans.skipAria">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:348,349</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:337,338</note>
       </notes>
       <segment>
         <source>Tag überspringen</source>
@@ -6851,15 +6835,31 @@
     </unit>
     <unit id="trainingPlans.skipTooltip">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:350,351</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:339,340</note>
       </notes>
       <segment>
         <source>Tag überspringen</source>
       </segment>
     </unit>
+    <unit id="trainingPlans.jumpAria">
+      <notes>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:350,351</note>
+      </notes>
+      <segment>
+        <source>Zu diesem Tag springen</source>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.jumpTooltip">
+      <notes>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:352,353</note>
+      </notes>
+      <segment>
+        <source>Zu diesem Tag springen</source>
+      </segment>
+    </unit>
     <unit id="trainingPlans.notFound">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:366,367</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:368,369</note>
       </notes>
       <segment>
         <source>Plan nicht gefunden.</source>
@@ -6867,7 +6867,7 @@
     </unit>
     <unit id="trainingPlans.autoStartFailed">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:659</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:661</note>
       </notes>
       <segment>
         <source>Plan-Start fehlgeschlagen — bitte erneut versuchen.</source>
@@ -6875,7 +6875,7 @@
     </unit>
     <unit id="trainingPlans.started">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:742</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:744</note>
       </notes>
       <segment>
         <source>Plan gestartet — viel Erfolg!</source>
@@ -6883,7 +6883,7 @@
     </unit>
     <unit id="trainingPlans.abandoned">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:759</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:761</note>
       </notes>
       <segment>
         <source>Plan beendet.</source>
@@ -6891,7 +6891,7 @@
     </unit>
     <unit id="trainingPlans.skipped">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:777</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:779</note>
       </notes>
       <segment>
         <source>Tag übersprungen.</source>
@@ -6899,7 +6899,7 @@
     </unit>
     <unit id="trainingPlans.jumped">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:790</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:792</note>
       </notes>
       <segment>
         <source>Auf Tag <ph id="0" equiv="INTERPOLATION" disp="dayIndex"/> gesprungen.</source>
@@ -6907,7 +6907,7 @@
     </unit>
     <unit id="trainingPlans.logged">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:807</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:809</note>
         <note category="location">web/src/app/training-plans/training-plans-page.component.ts:348</note>
       </notes>
       <segment>
@@ -6916,7 +6916,7 @@
     </unit>
     <unit id="trainingPlans.alreadyLogged">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:809</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:811</note>
         <note category="location">web/src/app/training-plans/training-plans-page.component.ts:350</note>
       </notes>
       <segment>
@@ -6925,7 +6925,7 @@
     </unit>
     <unit id="trainingPlans.notReady">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:811</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:813</note>
         <note category="location">web/src/app/training-plans/training-plans-page.component.ts:352</note>
       </notes>
       <segment>

@@ -6642,13 +6642,13 @@
     </unit>
     <unit id="trainingPlans.unskipAria">
       <segment state="translated">
-        <source>Übersprungen rückgängig</source>
+        <source>Überspringen rückgängig machen</source>
         <target>撤销跳过</target>
       </segment>
     </unit>
     <unit id="trainingPlans.unskipTooltip">
       <segment state="translated">
-        <source>Übersprungen rückgängig</source>
+        <source>Überspringen rückgängig machen</source>
         <target>撤销跳过</target>
       </segment>
     </unit>
