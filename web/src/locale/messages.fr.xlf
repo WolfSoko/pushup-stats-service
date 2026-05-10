@@ -4727,13 +4727,16 @@
         <target>Répartition des types de pompes</target>
       </segment>
     </unit>
-    <unit id="pie.other">
-      <notes>
-        <note category="location">web/src/app/stats/components/type-pie/type-pie.component.ts:96,98</note>
-      </notes>
+    <unit id="pie.totalLabel">
       <segment state="translated">
-        <source>Sonstige</source>
-        <target>Autres</target>
+        <source>Gesamt</source>
+        <target>Total</target>
+      </segment>
+    </unit>
+    <unit id="pie.noSelection">
+      <segment state="translated">
+        <source>Keine Auswahl</source>
+        <target>Aucune sélection</target>
       </segment>
     </unit>
     <unit id="dashboard.share.text.profile.streak">

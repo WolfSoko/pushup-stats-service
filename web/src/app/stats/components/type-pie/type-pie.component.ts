@@ -17,7 +17,6 @@ export interface PieDatum {
 }
 
 const TOP_N = 5;
-const OTHER_COLOR = 'rgba(120, 120, 120, 0.55)';
 
 @Component({
   selector: 'app-type-pie',
@@ -27,27 +26,72 @@ const OTHER_COLOR = 'rgba(120, 120, 120, 0.55)';
     @if (total() > 0) {
       <div class="wrap">
         <div class="pie-area">
-          <svg
-            class="pie"
-            viewBox="0 0 42 42"
-            role="img"
-            aria-label="Verteilung der Liegestütz-Typen"
-            i18n-aria-label="@@pie.distributionAria"
-          >
-            <circle class="bg" cx="21" cy="21" r="15.915" />
+          <div class="pie-stack">
+            <svg
+              class="pie"
+              viewBox="0 0 42 42"
+              role="img"
+              aria-label="Verteilung der Liegestütz-Typen"
+              i18n-aria-label="@@pie.distributionAria"
+            >
+              <circle class="bg" cx="21" cy="21" r="15.915" />
 
-            @for (seg of visibleSegments(); track seg.id) {
-              <circle
-                class="seg"
-                cx="21"
-                cy="21"
-                r="15.915"
-                [attr.stroke]="seg.color"
-                [attr.stroke-dasharray]="seg.dasharray"
-                [attr.stroke-dashoffset]="seg.offset"
-              />
-            }
-          </svg>
+              @for (seg of visibleSegments(); track seg.id) {
+                <circle
+                  class="seg"
+                  [class.focused]="focusedId() === seg.id"
+                  [class.dimmed]="
+                    focusedId() !== null && focusedId() !== seg.id
+                  "
+                  cx="21"
+                  cy="21"
+                  r="15.915"
+                  [attr.stroke]="seg.color"
+                  [attr.stroke-dasharray]="seg.dasharray"
+                  [attr.stroke-dashoffset]="seg.offset"
+                  tabindex="0"
+                  role="button"
+                  [attr.aria-label]="
+                    seg.label + ': ' + seg.value + ' (' + seg.percent + '%)'
+                  "
+                  [attr.aria-pressed]="focusedId() === seg.id"
+                  [attr.data-testid]="'type-pie-slice-' + seg.id"
+                  (click)="focusSegment(seg.id)"
+                  (keydown.enter)="focusSegment(seg.id)"
+                  (keydown.space)="
+                    focusSegment(seg.id); $event.preventDefault()
+                  "
+                />
+              }
+            </svg>
+
+            <div class="pie-center" data-testid="type-pie-center">
+              @if (selectedTotal() === 0) {
+                <span class="center-label" i18n="@@pie.noSelection"
+                  >Keine Auswahl</span
+                >
+              } @else if (focusedSegment(); as f) {
+                <span
+                  class="center-label"
+                  data-testid="type-pie-focused-label"
+                  >{{ f.label }}</span
+                >
+                <span
+                  class="center-value"
+                  data-testid="type-pie-focused-value"
+                  >{{ f.value | number }}</span
+                >
+                <span class="center-pct" data-testid="type-pie-focused-percent"
+                  >{{ f.percent }}%</span
+                >
+              } @else {
+                <span class="center-label" i18n="@@pie.totalLabel">Gesamt</span>
+                <span class="center-value" data-testid="type-pie-total">{{
+                  selectedTotal() | number
+                }}</span>
+              }
+            </div>
+          </div>
         </div>
 
         <div class="legend" data-testid="type-pie-legend">
@@ -76,7 +120,11 @@ const OTHER_COLOR = 'rgba(120, 120, 120, 0.55)';
                   <span class="name">{{ seg.label }}</span>
                 </span>
               </mat-checkbox>
-              <span class="pct">{{ seg.percent }}%</span>
+              @if (legendPercent(seg.id); as pct) {
+                <span class="pct">{{ pct }}%</span>
+              } @else {
+                <span class="pct count">{{ seg.value | number }}</span>
+              }
             </div>
             @if (seg.avgSetSize) {
               <div class="row set-detail">
@@ -88,15 +136,6 @@ const OTHER_COLOR = 'rgba(120, 120, 120, 0.55)';
                 }}</span>
               </div>
             }
-          }
-          @if (otherPercent() > 0) {
-            <div class="row other-row" data-testid="type-pie-other-row">
-              <span class="row-name">
-                <span class="dot" [style.background]="otherColor"></span>
-                <span class="name" i18n="@@pie.other">Sonstige</span>
-              </span>
-              <span class="pct">{{ otherPercent() }}%</span>
-            </div>
           }
         </div>
       </div>
@@ -116,6 +155,11 @@ const OTHER_COLOR = 'rgba(120, 120, 120, 0.55)';
       gap: 10px;
       justify-items: center;
     }
+    .pie-stack {
+      position: relative;
+      width: 160px;
+      height: 160px;
+    }
     .pie {
       width: 160px;
       height: 160px;
@@ -130,6 +174,49 @@ const OTHER_COLOR = 'rgba(120, 120, 120, 0.55)';
       fill: none;
       stroke-width: 10;
       stroke-linecap: butt;
+      cursor: pointer;
+      transition:
+        stroke-width 0.15s ease,
+        opacity 0.15s ease;
+    }
+    .seg:hover,
+    .seg:focus-visible,
+    .seg.focused {
+      stroke-width: 12;
+      outline: none;
+    }
+    .seg.dimmed {
+      opacity: 0.45;
+    }
+    .pie-center {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      align-content: center;
+      justify-items: center;
+      text-align: center;
+      pointer-events: none;
+      padding: 18%;
+      gap: 2px;
+    }
+    .center-label {
+      font-size: 0.72rem;
+      opacity: 0.75;
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .center-value {
+      font-size: 1.25rem;
+      font-weight: 600;
+      font-variant-numeric: tabular-nums;
+      line-height: 1.1;
+    }
+    .center-pct {
+      font-size: 0.85rem;
+      opacity: 0.85;
+      font-variant-numeric: tabular-nums;
     }
 
     .legend {
@@ -168,14 +255,13 @@ const OTHER_COLOR = 'rgba(120, 120, 120, 0.55)';
       font-variant-numeric: tabular-nums;
       opacity: 0.8;
     }
+    .pct.count {
+      opacity: 0.5;
+    }
     .set-detail {
       opacity: 0.6;
       font-size: 0.8rem;
       grid-template-columns: 1fr auto;
-      padding-left: 36px;
-    }
-    .other-row {
-      opacity: 0.75;
       padding-left: 36px;
     }
     .preset-row {
@@ -205,7 +291,7 @@ const OTHER_COLOR = 'rgba(120, 120, 120, 0.55)';
       .wrap {
         grid-template-columns: 1fr;
       }
-      .pie {
+      .pie-stack {
         margin: 0 auto;
       }
     }
@@ -216,8 +302,8 @@ export class TypePieComponent {
 
   // null = use top-5 default; concrete Set = explicit user choice (may be empty).
   private readonly userSelection = signal<ReadonlySet<string> | null>(null);
-
-  readonly otherColor = OTHER_COLOR;
+  private readonly _focusedId = signal<string | null>(null);
+  readonly focusedId = this._focusedId.asReadonly();
 
   readonly total = computed(() =>
     this.data().reduce((sum, x) => sum + (x.value || 0), 0)
@@ -285,62 +371,57 @@ export class TypePieComponent {
     return true;
   });
 
+  /**
+   * Sum of values across the currently selected types — defines the 100%
+   * reference used by the pie and legend percentages so the rendered pie
+   * has no Other arc when types are excluded.
+   */
+  readonly selectedTotal = computed(() => {
+    const selected = this.selectedIds();
+    return this.allSegments()
+      .filter((s) => selected.has(s.id))
+      .reduce((sum, s) => sum + s.value, 0);
+  });
+
   readonly visibleSegments = computed(() => {
-    const total = this.total();
-    if (!total)
+    const selectedTotal = this.selectedTotal();
+    if (!selectedTotal)
       return [] as Array<{
         id: string;
         label: string;
+        value: number;
         percent: number;
         color: string;
+        avgSetSize: number;
         dasharray: string;
         offset: number;
       }>;
 
     const selected = this.selectedIds();
     let acc = 0;
-    const segments = this.allSegments()
+    return this.allSegments()
       .filter((s) => selected.has(s.id))
       .map((seg) => {
-        const dash = (seg.value / total) * 100;
+        const dash = (seg.value / selectedTotal) * 100;
         const result = {
           id: seg.id,
           label: seg.label,
-          percent: seg.percent,
+          value: seg.value,
+          percent: Math.round((seg.value / selectedTotal) * 100),
           color: seg.color,
+          avgSetSize: seg.avgSetSize,
           dasharray: `${dash} ${100 - dash}`,
           offset: 25 - acc,
         };
         acc += dash;
         return result;
       });
-
-    // Cap the cumulative dash so floating-point drift can't push the
-    // remainder negative.
-    const remainder = Math.max(0, 100 - acc);
-    if (remainder > 0.5) {
-      segments.push({
-        id: '__other__',
-        label: 'other',
-        percent: Math.round(remainder),
-        color: OTHER_COLOR,
-        dasharray: `${remainder} ${100 - remainder}`,
-        offset: 25 - acc,
-      });
-    }
-    return segments;
   });
 
-  /** Cumulative percent of types not currently visible — for the legend. */
-  readonly otherPercent = computed(() => {
-    const total = this.total();
-    if (!total) return 0;
-    const selected = this.selectedIds();
-    const hiddenValue = this.allSegments()
-      .filter((s) => !selected.has(s.id))
-      .reduce((sum, s) => sum + s.value, 0);
-    if (hiddenValue <= 0) return 0;
-    return Math.round((hiddenValue / total) * 100);
+  readonly focusedSegment = computed(() => {
+    const id = this._focusedId();
+    if (!id) return null;
+    return this.visibleSegments().find((s) => s.id === id) ?? null;
   });
 
   isSelected(id: string): boolean {
@@ -351,6 +432,7 @@ export class TypePieComponent {
     const next = new Set(this.selectedIds());
     if (next.has(id)) {
       next.delete(id);
+      if (this._focusedId() === id) this._focusedId.set(null);
     } else {
       next.add(id);
     }
@@ -363,5 +445,21 @@ export class TypePieComponent {
     } else {
       this.userSelection.set(new Set(this.allSegments().map((s) => s.id)));
     }
+    const fid = this._focusedId();
+    if (fid && !this.selectedIds().has(fid)) this._focusedId.set(null);
+  }
+
+  focusSegment(id: string): void {
+    this._focusedId.set(this._focusedId() === id ? null : id);
+  }
+
+  /** Percent of the selected total — `null` for unselected rows. */
+  legendPercent(id: string): number | null {
+    if (!this.selectedIds().has(id)) return null;
+    const total = this.selectedTotal();
+    if (total <= 0) return null;
+    const seg = this.allSegments().find((s) => s.id === id);
+    if (!seg) return null;
+    return Math.round((seg.value / total) * 100);
   }
 }
