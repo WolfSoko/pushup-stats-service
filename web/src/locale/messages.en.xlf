@@ -1867,7 +1867,7 @@ Active:         </target>
             </notes>
       <segment state="translated">
         <source>Verlaufsdiagramme und KPI-Karten für jede Übung: Liegestütz-Varianten (Standard, Wide, Diamond), Sit-ups, Kniebeugen, Plank und Laufen – mit frei wählbarem Zeitraum.</source>
-        <target>Trend charts and KPI cards for every exercise: push-up variants (Standard, Wide, Diamond), sit-ups, squats, planks and runs – with a freely selectable time range.</target>
+        <target>Trend charts and KPI cards for every exercise: push-up variants (Standard, Wide, Diamond), sit-ups, squats, planks and running – with a freely selectable time range.</target>
             </segment>
         </unit>
     <unit id="landing.feature.analytics.title">
@@ -2309,7 +2309,7 @@ Deine Position: # ·  Reps        </source>
             </notes>
       <segment state="translated">
         <source> Liegestütze tracken in Sekunden – mit Trends, Streaks und Live-Sync. Plus Sit-ups, Kniebeugen, Plank und Laufen, wenn du mehr willst. </source>
-        <target> Track push-ups in seconds — with trends, streaks and live sync. Plus sit-ups, squats, planks and runs when you want more. </target>
+        <target> Track push-ups in seconds — with trends, streaks and live sync. Plus sit-ups, squats, planks and running when you want more. </target>
 
 
 
