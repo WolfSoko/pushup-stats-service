@@ -40,6 +40,18 @@
         "cwd": "{workspaceRoot}"
       }
     },
+    "sync-translations": {
+      "executor": "nx:run-commands",
+      "inputs": [
+        "{workspaceRoot}/web/src/locale/messages.xlf",
+        "{workspaceRoot}/tools/src/sync-xlf-translations.js"
+      ],
+      "outputs": ["{workspaceRoot}/web/src/locale"],
+      "options": {
+        "command": "node tools/src/sync-xlf-translations.js",
+        "cwd": "{workspaceRoot}"
+      }
+    },
     "generate-content": {
       "executor": "nx:run-commands",
       "inputs": [
