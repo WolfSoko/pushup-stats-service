@@ -4787,13 +4787,16 @@
         <target>Distributio generum exercitiorum</target>
       </segment>
     </unit>
-    <unit id="pie.other">
-      <notes>
-        <note category="location">web/src/app/stats/components/type-pie/type-pie.component.ts:96,98</note>
-      </notes>
+    <unit id="pie.totalLabel">
       <segment state="translated">
-        <source>Sonstige</source>
-        <target>Cetera</target>
+        <source>Gesamt</source>
+        <target>Summa</target>
+      </segment>
+    </unit>
+    <unit id="pie.noSelection">
+      <segment state="translated">
+        <source>Keine Auswahl</source>
+        <target>Nulla electio</target>
       </segment>
     </unit>
     <unit id="dashboard.share.text.profile.streak">

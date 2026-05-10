@@ -4787,13 +4787,16 @@
         <target>Verdeling van push-uptypen</target>
       </segment>
     </unit>
-    <unit id="pie.other">
-      <notes>
-        <note category="location">web/src/app/stats/components/type-pie/type-pie.component.ts:96,98</note>
-      </notes>
+    <unit id="pie.totalLabel">
       <segment state="translated">
-        <source>Sonstige</source>
-        <target>Overige</target>
+        <source>Gesamt</source>
+        <target>Totaal</target>
+      </segment>
+    </unit>
+    <unit id="pie.noSelection">
+      <segment state="translated">
+        <source>Keine Auswahl</source>
+        <target>Geen selectie</target>
       </segment>
     </unit>
     <unit id="dashboard.share.text.profile.streak">
