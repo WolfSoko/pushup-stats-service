@@ -1498,7 +1498,7 @@
       </notes>
       <segment state="translated">
         <source>Liegestütze Tracker: Trainingsplan, Streaks &amp; Bestenliste</source>
-        <target>Rastreador de flexiones: planes, rachas y clasificación</target>
+        <target>Tracker de flexiones: planes de entrenamiento, rachas y clasificación</target>
       </segment>
     </unit>
     <unit id="seo.landing.description">
@@ -1506,8 +1506,8 @@
         <note category="location">web/src/app/app.routes.ts:16</note>
       </notes>
       <segment state="translated">
-        <source>Liegestütze tracken mit kostenloser Web-App: Trainingspläne, 30-Tage-Challenge, Tagesziel, Streaks und Bestenliste – mobil, offline-fähig, mit Live-Sync.</source>
-        <target>Registra flexiones con web app gratuita: planes de entrenamiento, reto de 30 días, objetivo diario, rachas y clasificación global – móvil, offline, sync en vivo.</target>
+        <source>Liegestütze tracken mit kostenloser Web-App: Trainingspläne, 30-Tage-Challenge, Tagesziel, Streaks und Bestenliste – jetzt auch mit Sit-ups, Kniebeugen, Plank und Laufen. Mobil, offline-fähig, mit Live-Sync.</source>
+        <target>Registra tus flexiones con una web-app gratuita: planes de entrenamiento, reto de 30 días, objetivo diario, rachas y clasificación — ahora también con abdominales, sentadillas, plancha y carrera. Móvil, sin conexión, sincronización en vivo.</target>
       </segment>
     </unit>
     <unit id="seo.dashboard.title">
@@ -2499,8 +2499,8 @@
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:19,23</note>
       </notes>
       <segment state="translated">
-        <source> Kostenlos tracken: Reps, Trends und Streaks in Sekunden – mobil, schnell und mit Live-Updates. </source>
-        <target> Realice un seguimiento gratuito: repeticiones, tendencias y rachas en segundos: móvil, rápido y con actualizaciones en vivo. </target>
+        <source> Liegestütze tracken in Sekunden – mit Trends, Streaks und Live-Sync. Plus Sit-ups, Kniebeugen, Plank und Laufen, wenn du mehr willst. </source>
+        <target> Registra tus flexiones en segundos — con tendencias, rachas y sincronización en vivo. Además abdominales, sentadillas, plancha y carrera cuando quieras más. </target>
       </segment>
     </unit>
     <unit id="landing.cta.dashboard">
@@ -2700,8 +2700,8 @@
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:353,355</note>
       </notes>
       <segment state="translated">
-        <source>Charts, Trends &amp; Pushup-Typen</source>
-        <target>Gráficos, tendencias y tipos de flexiones</target>
+        <source>Charts, Trends &amp; alle Übungen</source>
+        <target>Gráficos, tendencias y cada ejercicio</target>
       </segment>
     </unit>
     <unit id="landing.feature.analytics.body">
@@ -2709,8 +2709,8 @@
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:357,360</note>
       </notes>
       <segment state="translated">
-        <source>Verlaufsdiagramme, KPI-Karten, Verteilung nach Standard, Wide oder Diamond – mit frei wählbarem Zeitraum.</source>
-        <target>Gráficos de progreso, mapas de KPI, distribución según estándar, ancho o diamante, con un período de libre elección.</target>
+        <source>Verlaufsdiagramme und KPI-Karten für jede Übung: Liegestütz-Varianten (Standard, Wide, Diamond), Sit-ups, Kniebeugen, Plank und Laufen – mit frei wählbarem Zeitraum.</source>
+        <target>Gráficos de tendencia y tarjetas KPI para cada ejercicio: variantes de flexión (Standard, Wide, Diamond), abdominales, sentadillas, plancha y carrera — con un periodo libremente seleccionable.</target>
       </segment>
     </unit>
     <unit id="landing.feature.goals.title">

@@ -2298,7 +2298,7 @@
         <note category="location">web/src/app/app.routes.ts:15</note>
       </notes>
       <segment>
-        <source>Fitness-Tracker für Liegestütze, Sit-ups, Kniebeugen, Plank &amp; Laufen</source>
+        <source>Liegestütze Tracker: Trainingsplan, Streaks &amp; Bestenliste</source>
       </segment>
     </unit>
     <unit id="seo.landing.description">
@@ -2306,7 +2306,7 @@
         <note category="location">web/src/app/app.routes.ts:16</note>
       </notes>
       <segment>
-        <source>Tracke Liegestütze (Standard, Wide, Diamond), Sit-ups, Kniebeugen, Plank-Halten und Laufstrecken – kostenlos. Trainingspläne, Tagesziele, Streaks und Bestenliste – mobil, offline-fähig, mit Live-Sync.</source>
+        <source>Liegestütze tracken mit kostenloser Web-App: Trainingspläne, 30-Tage-Challenge, Tagesziel, Streaks und Bestenliste – jetzt auch mit Sit-ups, Kniebeugen, Plank und Laufen. Mobil, offline-fähig, mit Live-Sync.</source>
       </segment>
     </unit>
     <unit id="seo.dashboard.title">
@@ -3247,7 +3247,7 @@
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:17,21</note>
       </notes>
       <segment>
-        <source> Liegestütze, Sit-ups, Kniebeugen, Plank und Laufen – alles in einer App tracken. Reps, Zeit und Distanz mit Trends, Streaks und Live-Sync. </source>
+        <source> Liegestütze tracken in Sekunden – mit Trends, Streaks und Live-Sync. Plus Sit-ups, Kniebeugen, Plank und Laufen, wenn du mehr willst. </source>
       </segment>
     </unit>
     <unit id="landing.cta.dashboard">

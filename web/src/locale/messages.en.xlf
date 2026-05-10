@@ -2308,8 +2308,8 @@ Deine Position: # ·  Reps        </source>
 
             </notes>
       <segment state="translated">
-        <source> Liegestütze, Sit-ups, Kniebeugen, Plank und Laufen – alles in einer App tracken. Reps, Zeit und Distanz mit Trends, Streaks und Live-Sync. </source>
-        <target> Push-ups, sit-ups, squats, planks and runs — track them all in one app. Reps, time and distance with trends, streaks and live sync. </target>
+        <source> Liegestütze tracken in Sekunden – mit Trends, Streaks und Live-Sync. Plus Sit-ups, Kniebeugen, Plank und Laufen, wenn du mehr willst. </source>
+        <target> Track push-ups in seconds — with trends, streaks and live sync. Plus sit-ups, squats, planks and runs when you want more. </target>
 
 
 
@@ -3475,8 +3475,8 @@ Deine Position: # ·  Reps        </source>
         </unit>
     <unit id="seo.landing.description">
       <segment state="translated">
-        <source>Tracke Liegestütze (Standard, Wide, Diamond), Sit-ups, Kniebeugen, Plank-Halten und Laufstrecken – kostenlos. Trainingspläne, Tagesziele, Streaks und Bestenliste – mobil, offline-fähig, mit Live-Sync.</source>
-        <target>Track push-ups (Standard, Wide, Diamond), sit-ups, squats, plank holds and runs – free. Training plans, daily goals, streaks and a global leaderboard – mobile, offline-capable, live-synced.</target>
+        <source>Liegestütze tracken mit kostenloser Web-App: Trainingspläne, 30-Tage-Challenge, Tagesziel, Streaks und Bestenliste – jetzt auch mit Sit-ups, Kniebeugen, Plank und Laufen. Mobil, offline-fähig, mit Live-Sync.</source>
+        <target>Track push-ups with a free web app: training plans, 30-day challenge, daily goal, streaks and global leaderboard – now also with sit-ups, squats, planks and running. Mobile, offline-capable, live-synced.</target>
 
 
 
@@ -3486,8 +3486,8 @@ Deine Position: # ·  Reps        </source>
         </unit>
     <unit id="seo.landing.title">
       <segment state="translated">
-        <source>Fitness-Tracker für Liegestütze, Sit-ups, Kniebeugen, Plank &amp; Laufen</source>
-        <target>Fitness Tracker for Push-Ups, Sit-Ups, Squats, Planks &amp; Running</target>
+        <source>Liegestütze Tracker: Trainingsplan, Streaks &amp; Bestenliste</source>
+        <target>Push-Up Tracker: Training Plans, Streaks &amp; Leaderboard</target>
 
 
 
