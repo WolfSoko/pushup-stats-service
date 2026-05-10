@@ -39,20 +39,185 @@ describe('TypePieComponent', () => {
       'Decline',
       'Knee',
     ]);
-    // 5 selected + an explicit "Other" arc covering the unselected
-    // remainder so the rendered pie always reads as a complete circle.
-    expect(component.visibleSegments()).toHaveLength(6);
-    expect(component.visibleSegments().at(-1)?.id).toBe('__other__');
-    expect(component.otherPercent()).toBeGreaterThan(0);
+    // Selected types fill the pie 100% — no synthetic Other arc.
+    expect(component.visibleSegments()).toHaveLength(5);
+    expect(component.visibleSegments().some((s) => s.id === '__other__')).toBe(
+      false
+    );
+  });
+
+  it('selectedTotal sums only the selected types', () => {
+    // Default top-5: 100+80+60+40+30 = 310, vs. grand total 340.
+    expect(component.selectedTotal()).toBe(310);
+    expect(component.total()).toBe(340);
+  });
+
+  it('renders the selected total in the donut center', () => {
+    const host: HTMLElement = fixture.nativeElement;
+    const total = host.querySelector('[data-testid="type-pie-total"]');
+    expect(total).toBeTruthy();
+    expect(total!.textContent?.replace(/\s+/g, '')).toContain('310');
+  });
+
+  it('selected types fill the pie 100% (sum of dash fractions ≈ 100)', () => {
+    const sumDash = component.visibleSegments().reduce((sum, seg) => {
+      const visible = parseFloat(seg.dasharray.split(' ')[0]);
+      return sum + visible;
+    }, 0);
+    expect(sumDash).toBeCloseTo(100, 5);
+  });
+
+  it('legend percentages for selected types are relative to the selected total', () => {
+    // selected total = 310; Standard contributes 100/310 ≈ 32%.
+    expect(component.legendPercent('Standard')).toBe(
+      Math.round((100 / 310) * 100)
+    );
+    expect(component.legendPercent('Diamond')).toBe(
+      Math.round((80 / 310) * 100)
+    );
+    // Spider is unselected → no percent (legend falls back to raw count).
+    expect(component.legendPercent('Spider')).toBeNull();
+  });
+
+  it('focusing a slice surfaces its info in the donut center', () => {
+    // When: a slice is focused programmatically
+    component.focusSegment('Standard');
+    fixture.detectChanges();
+
+    // Then: focusedSegment exposes the slice payload
+    const focused = component.focusedSegment();
+    expect(focused?.id).toBe('Standard');
+    expect(focused?.value).toBe(100);
+
+    // And the rendered center swaps the total for the slice info
+    const host: HTMLElement = fixture.nativeElement;
+    const value = host.querySelector('[data-testid="type-pie-focused-value"]');
+    const label = host.querySelector('[data-testid="type-pie-focused-label"]');
+    const pct = host.querySelector('[data-testid="type-pie-focused-percent"]');
+    expect(value?.textContent?.replace(/\s+/g, '')).toContain('100');
+    expect(label?.textContent).toContain('Standard');
+    expect(pct?.textContent).toContain('%');
+    // Total label is hidden while a slice is focused.
+    expect(host.querySelector('[data-testid="type-pie-total"]')).toBeNull();
+  });
+
+  it('clicking the same slice twice clears the focus and restores the total', () => {
+    component.focusSegment('Standard');
+    expect(component.focusedSegment()?.id).toBe('Standard');
+
+    component.focusSegment('Standard');
+    expect(component.focusedSegment()).toBeNull();
+
+    fixture.detectChanges();
+    const host: HTMLElement = fixture.nativeElement;
+    expect(host.querySelector('[data-testid="type-pie-total"]')).toBeTruthy();
+  });
+
+  it('clicking a slice in the SVG focuses it via the (click) handler', () => {
+    const host: HTMLElement = fixture.nativeElement;
+    const slice = host.querySelector(
+      '[data-testid="type-pie-slice-Diamond"]'
+    ) as SVGElement | null;
+    expect(slice).toBeTruthy();
+    slice!.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    fixture.detectChanges();
+
+    expect(component.focusedSegment()?.id).toBe('Diamond');
+  });
+
+  it('focuses a slice via Enter keydown', () => {
+    const host: HTMLElement = fixture.nativeElement;
+    const slice = host.querySelector(
+      '[data-testid="type-pie-slice-Diamond"]'
+    ) as SVGElement | null;
+    expect(slice).toBeTruthy();
+
+    slice!.dispatchEvent(
+      new KeyboardEvent('keydown', { key: 'Enter', bubbles: true })
+    );
+    fixture.detectChanges();
+
+    expect(component.focusedSegment()?.id).toBe('Diamond');
+  });
+
+  it('focuses a slice via Space keydown', () => {
+    const host: HTMLElement = fixture.nativeElement;
+    const slice = host.querySelector(
+      '[data-testid="type-pie-slice-Wide"]'
+    ) as SVGElement | null;
+    expect(slice).toBeTruthy();
+
+    slice!.dispatchEvent(
+      new KeyboardEvent('keydown', { key: ' ', bubbles: true })
+    );
+    fixture.detectChanges();
+
+    expect(component.focusedSegment()?.id).toBe('Wide');
+  });
+
+  it('toggling off the focused type clears the focus', () => {
+    component.focusSegment('Standard');
+    expect(component.focusedSegment()?.id).toBe('Standard');
+
+    // Standard becomes unselected; the focused detail can no longer apply.
+    component.toggle('Standard');
+    expect(component.focusedSegment()).toBeNull();
+  });
+
+  it('does not dim slices when the parent swaps data and evicts the focused id', () => {
+    // Given: Standard is focused
+    component.focusSegment('Standard');
+    fixture.detectChanges();
+    expect(component.focusedSegment()?.id).toBe('Standard');
+
+    // When: data swaps to a set that no longer contains Standard
+    fixture.componentRef.setInput('data', [
+      { label: 'Diamond', value: 80 },
+      { label: 'Wide', value: 60 },
+    ]);
+    fixture.detectChanges();
+
+    // Then: effective focusedId reports null and no rendered slice is dimmed
+    expect(component.focusedSegment()).toBeNull();
+    expect(component.focusedId()).toBeNull();
+    const host: HTMLElement = fixture.nativeElement;
+    expect(host.querySelectorAll('.seg.dimmed')).toHaveLength(0);
+    // Total label is restored too.
+    expect(host.querySelector('[data-testid="type-pie-total"]')).toBeTruthy();
+  });
+
+  it('renders 0% (not raw count) for a selected slice whose share rounds to zero', () => {
+    // Given: a tiny slice that rounds to 0% of the selected total
+    fixture.componentRef.setInput('data', [
+      { label: 'Standard', value: 1000 },
+      { label: 'Spider', value: 2 },
+    ]);
+    fixture.detectChanges();
+
+    // Spider is selected (top-5 default covers both) but rounds to 0%.
+    expect(component.isSelected('Spider')).toBe(true);
+    expect(component.legendPercent('Spider')).toBe(0);
+
+    // The legend pct cell renders "0%" instead of falling into the
+    // unselected/raw-count branch.
+    const host: HTMLElement = fixture.nativeElement;
+    const pct = host
+      .querySelector('[data-testid="type-pie-toggle-Spider"]')
+      ?.closest('.row')
+      ?.querySelector('.pct');
+    expect(pct?.textContent).toContain('0%');
+    expect(pct?.classList.contains('count')).toBe(false);
   });
 
   it('toggling a checkbox removes the type and drops its slice from the pie', () => {
     // When: Diamond is toggled off
     component.toggle('Diamond');
 
-    // Then: Diamond drops out, Standard remains
+    // Then: Diamond drops out and the remaining slices still sum to 100%
     expect(component.isSelected('Diamond')).toBe(false);
-    expect(component.isSelected('Standard')).toBe(true);
+    expect(component.visibleSegments().some((s) => s.id === 'Diamond')).toBe(
+      false
+    );
 
     // When: Diamond is re-toggled
     component.toggle('Diamond');
@@ -68,7 +233,7 @@ describe('TypePieComponent', () => {
     // When: the user opts Spider in
     component.toggle('Spider');
 
-    // Then: Spider is visible and contributes a real slice (not "Other")
+    // Then: Spider is visible and contributes a real slice
     expect(component.isSelected('Spider')).toBe(true);
     expect(component.visibleSegments().some((s) => s.id === 'Spider')).toBe(
       true
@@ -108,6 +273,9 @@ describe('TypePieComponent', () => {
     ).toBeTruthy();
     expect(
       host.querySelector('[data-testid="type-pie-toggle-diamond"]')
+    ).toBeTruthy();
+    expect(
+      host.querySelector('[data-testid="type-pie-slice-standard"]')
     ).toBeTruthy();
   });
 
@@ -185,16 +353,16 @@ describe('TypePieComponent', () => {
     );
   });
 
-  it('unchecking the Top 5 preset expands the selection to all types', () => {
+  it('unchecking the Top 5 preset expands the selection so selectedTotal equals the grand total', () => {
     // Given: default state (top 5 active)
     expect(component.isTopFiveActive()).toBe(true);
 
     // When: user unchecks the preset
     component.onTopFiveChange(false);
 
-    // Then: every type is selected, no Other arc
+    // Then: every type contributes; selected total equals the grand total
     expect(component.selectedIds().size).toBe(7);
-    expect(component.otherPercent()).toBe(0);
+    expect(component.selectedTotal()).toBe(component.total());
     expect(component.isTopFiveActive()).toBe(false);
   });
 
@@ -220,16 +388,20 @@ describe('TypePieComponent', () => {
     expect(component.isTopFiveActive()).toBe(true);
   });
 
-  it('removing the last selected type empties the pie and treats all data as Other', () => {
+  it('removing the last selected type empties the pie and shows the no-selection placeholder', () => {
     // When: the user unchecks every default-selected type
     for (const id of [...component.selectedIds()]) {
       component.toggle(id);
     }
+    fixture.detectChanges();
 
-    // Then: the visible set is just the synthetic Other arc covering 100%
+    // Then: the pie has no slices, the selected total is zero, and the
+    // donut center shows the no-selection placeholder.
     expect(component.selectedIds().size).toBe(0);
-    expect(component.visibleSegments()).toHaveLength(1);
-    expect(component.visibleSegments()[0].id).toBe('__other__');
-    expect(component.otherPercent()).toBe(100);
+    expect(component.visibleSegments()).toHaveLength(0);
+    expect(component.selectedTotal()).toBe(0);
+    expect((fixture.nativeElement as HTMLElement).textContent).toContain(
+      'Keine Auswahl'
+    );
   });
 });
