@@ -1866,8 +1866,8 @@ Active:         </target>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
             </notes>
       <segment state="translated">
-        <source>Verlaufsdiagramme, KPI-Karten, Verteilung nach Standard, Wide oder Diamond – mit frei wählbarem Zeitraum.</source>
-        <target>Trend charts, KPI cards, breakdown by Standard, Wide or Diamond – with a freely selectable time range.</target>
+        <source>Verlaufsdiagramme und KPI-Karten für jede Übung: Liegestütz-Varianten (Standard, Wide, Diamond), Sit-ups, Kniebeugen, Plank und Laufen – mit frei wählbarem Zeitraum.</source>
+        <target>Trend charts and KPI cards for every exercise: push-up variants (Standard, Wide, Diamond), sit-ups, squats, planks and running – with a freely selectable time range.</target>
             </segment>
         </unit>
     <unit id="landing.feature.analytics.title">
@@ -1875,8 +1875,8 @@ Active:         </target>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
             </notes>
       <segment state="translated">
-        <source>Charts, Trends &amp; Pushup-Typen</source>
-        <target>Charts, trends &amp; pushup types</target>
+        <source>Charts, Trends &amp; alle Übungen</source>
+        <target>Charts, trends &amp; all exercises</target>
             </segment>
         </unit>
     <unit id="landing.feature.multiset.title">
@@ -2305,18 +2305,18 @@ Deine Position: # ·  Reps        </source>
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
 
-        
+
             </notes>
       <segment state="translated">
-        <source> Tracke Reps, Trends und Streaks in Sekunden – mobil, schnell und mit Live- Updates. </source>
-        <target> Track reps, trends, and streaks in seconds — mobile, fast, and live-updated. </target>
+        <source> Liegestütze tracken in Sekunden – mit Trends, Streaks und Live-Sync. Plus Sit-ups, Kniebeugen, Plank und Laufen, wenn du mehr willst. </source>
+        <target> Track push-ups in seconds — with trends, streaks and live sync. Plus sit-ups, squats, planks and running when you want more. </target>
 
-        
-        
+
+
             </segment>
 
-      
-      
+
+
         </unit>
     <unit id="landing.title">
       <notes>
@@ -3478,25 +3478,25 @@ Deine Position: # ·  Reps        </source>
         </unit>
     <unit id="seo.landing.description">
       <segment state="translated">
-        <source>Liegestütze tracken mit kostenloser Web-App: Trainingspläne, 30-Tage-Challenge, Tagesziel, Streaks und Bestenliste – mobil, offline-fähig, mit Live-Sync.</source>
-        <target>Track push-ups with a free web app: training plans, 30-day challenge, daily goal, streaks and global leaderboard – mobile, offline-capable, live-synced.</target>
+        <source>Liegestütze tracken mit kostenloser Web-App: Trainingspläne, 30-Tage-Challenge, Tagesziel, Streaks und Bestenliste – jetzt auch mit Sit-ups, Kniebeugen, Plank und Laufen. Mobil, offline-fähig, mit Live-Sync.</source>
+        <target>Track push-ups with a free web app: training plans, 30-day challenge, daily goal, streaks and global leaderboard – now also with sit-ups, squats, planks and running. Mobile, offline-capable, live-synced.</target>
 
-        
-        
+
+
             </segment>
 
-      
+
         </unit>
     <unit id="seo.landing.title">
       <segment state="translated">
         <source>Liegestütze Tracker: Trainingsplan, Streaks &amp; Bestenliste</source>
         <target>Push-Up Tracker: Training Plans, Streaks &amp; Leaderboard</target>
 
-        
-        
+
+
             </segment>
 
-      
+
         </unit>
     <unit id="seo.leaderboard.description">
       <segment state="translated">

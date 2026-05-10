@@ -2305,7 +2305,7 @@
         <note category="location">web/src/app/app.routes.ts:16</note>
       </notes>
       <segment>
-        <source>Liegestütze tracken mit kostenloser Web-App: Trainingspläne, 30-Tage-Challenge, Tagesziel, Streaks und Bestenliste – mobil, offline-fähig, mit Live-Sync.</source>
+        <source>Liegestütze tracken mit kostenloser Web-App: Trainingspläne, 30-Tage-Challenge, Tagesziel, Streaks und Bestenliste – jetzt auch mit Sit-ups, Kniebeugen, Plank und Laufen. Mobil, offline-fähig, mit Live-Sync.</source>
       </segment>
     </unit>
     <unit id="seo.dashboard.title">
@@ -3246,7 +3246,7 @@
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:17,21</note>
       </notes>
       <segment>
-        <source> Kostenlos tracken: Reps, Trends und Streaks in Sekunden – mobil, schnell und mit Live-Updates. </source>
+        <source> Liegestütze tracken in Sekunden – mit Trends, Streaks und Live-Sync. Plus Sit-ups, Kniebeugen, Plank und Laufen, wenn du mehr willst. </source>
       </segment>
     </unit>
     <unit id="landing.cta.dashboard">
@@ -3425,7 +3425,7 @@
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:355,357</note>
       </notes>
       <segment>
-        <source>Charts, Trends &amp; Pushup-Typen</source>
+        <source>Charts, Trends &amp; alle Übungen</source>
       </segment>
     </unit>
     <unit id="landing.feature.analytics.body">
@@ -3433,7 +3433,7 @@
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:359,362</note>
       </notes>
       <segment>
-        <source>Verlaufsdiagramme, KPI-Karten, Verteilung nach Standard, Wide oder Diamond – mit frei wählbarem Zeitraum.</source>
+        <source>Verlaufsdiagramme und KPI-Karten für jede Übung: Liegestütz-Varianten (Standard, Wide, Diamond), Sit-ups, Kniebeugen, Plank und Laufen – mit frei wählbarem Zeitraum.</source>
       </segment>
     </unit>
     <unit id="landing.feature.goals.title">
