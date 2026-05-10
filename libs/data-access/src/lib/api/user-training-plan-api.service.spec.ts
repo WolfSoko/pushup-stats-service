@@ -17,6 +17,7 @@ jest.mock('@angular/fire/firestore', () => ({
   docData: jest.fn(),
   setDoc: jest.fn(() => Promise.resolve()),
   updateDoc: jest.fn(() => Promise.resolve()),
+  runTransaction: jest.fn(),
   arrayUnion: jest.fn((...values: unknown[]) => ({
     __type: 'arrayUnion',
     values,
@@ -196,6 +197,151 @@ describe('UserTrainingPlanApiService', () => {
       expect.anything(),
       expect.objectContaining({
         completedDays: expect.objectContaining({ __type: 'arrayUnion' }),
+      })
+    );
+  });
+
+  it('addCompletedDay also clears the same day from skippedDays atomically', async () => {
+    (firestoreFns.doc as jest.Mock).mockReturnValue({ id: 'u' });
+
+    const { fixture } = await render('', {
+      providers: [
+        UserTrainingPlanApiService,
+        { provide: PLATFORM_ID, useValue: 'browser' },
+        { provide: Firestore, useValue: {} },
+        { provide: Auth, useValue: { currentUser: { uid: 'u' } } },
+      ],
+    });
+
+    const service = fixture.debugElement.injector.get(
+      UserTrainingPlanApiService
+    );
+    service.addCompletedDay('u', 5).subscribe();
+
+    await Promise.resolve();
+    expect(firestoreFns.arrayUnion).toHaveBeenCalledWith(5);
+    expect(firestoreFns.arrayRemove).toHaveBeenCalledWith(5);
+    expect(firestoreFns.updateDoc).toHaveBeenCalledWith(
+      expect.anything(),
+      expect.objectContaining({
+        completedDays: expect.objectContaining({ __type: 'arrayUnion' }),
+        skippedDays: expect.objectContaining({ __type: 'arrayRemove' }),
+      })
+    );
+  });
+
+  it('addSkippedDay adds to skippedDays and removes from completedDays atomically', async () => {
+    (firestoreFns.doc as jest.Mock).mockReturnValue({ id: 'u' });
+
+    const { fixture } = await render('', {
+      providers: [
+        UserTrainingPlanApiService,
+        { provide: PLATFORM_ID, useValue: 'browser' },
+        { provide: Firestore, useValue: {} },
+        { provide: Auth, useValue: { currentUser: { uid: 'u' } } },
+      ],
+    });
+
+    const service = fixture.debugElement.injector.get(
+      UserTrainingPlanApiService
+    );
+    service.addSkippedDay('u', 7).subscribe();
+
+    await Promise.resolve();
+    expect(firestoreFns.arrayUnion).toHaveBeenCalledWith(7);
+    expect(firestoreFns.arrayRemove).toHaveBeenCalledWith(7);
+    expect(firestoreFns.updateDoc).toHaveBeenCalledWith(
+      expect.anything(),
+      expect.objectContaining({
+        skippedDays: expect.objectContaining({ __type: 'arrayUnion' }),
+        completedDays: expect.objectContaining({ __type: 'arrayRemove' }),
+      })
+    );
+  });
+
+  it('jumpToDay reads completedDays/skippedDays inside a transaction and rewrites both fields atomically', async () => {
+    (firestoreFns.doc as jest.Mock).mockReturnValue({ id: 'u' });
+
+    // Capture the transaction body so we can run it against a fake
+    // snapshot and inspect the resulting tx.update payload.
+    let capturedUpdate: Record<string, unknown> | null = null;
+    (firestoreFns.runTransaction as jest.Mock).mockImplementation(
+      async (_fs: unknown, body: (tx: unknown) => Promise<void>) => {
+        const tx = {
+          get: async () => ({
+            // Fresh server state: a concurrent skip(7) landed before the
+            // transaction reads, plus prior completion of day 10.
+            data: () => ({
+              completedDays: [10],
+              skippedDays: [7],
+            }),
+          }),
+          update: (_ref: unknown, payload: Record<string, unknown>) => {
+            capturedUpdate = payload;
+          },
+        };
+        await body(tx);
+      }
+    );
+
+    const { fixture } = await render('', {
+      providers: [
+        UserTrainingPlanApiService,
+        { provide: PLATFORM_ID, useValue: 'browser' },
+        { provide: Firestore, useValue: {} },
+        { provide: Auth, useValue: { currentUser: { uid: 'u' } } },
+      ],
+    });
+
+    const service = fixture.debugElement.injector.get(
+      UserTrainingPlanApiService
+    );
+    // Jump to day 8 in a 30-day plan; non-rest days < 8 are 1..6 (7 is
+    // a rest day, omitted by caller).
+    await new Promise<void>((resolve, reject) =>
+      service
+        .jumpToDay('u', {
+          newStartDate: '2026-04-15',
+          targetDayIndex: 8,
+          nonRestDaysBeforeTarget: [1, 2, 3, 4, 5, 6],
+        })
+        .subscribe({ next: () => resolve(), error: reject })
+    );
+
+    expect(firestoreFns.runTransaction).toHaveBeenCalled();
+    expect(capturedUpdate).not.toBeNull();
+    const payload = capturedUpdate as Record<string, unknown>;
+    expect(payload['startDate']).toBe('2026-04-15');
+    // Day 10 stays completed (preserved server-side); day 7 was the
+    // concurrent skip — it's NOT in nonRestDaysBeforeTarget but IS in
+    // priorSkipped, so it should be preserved as well. Days 1..6 sans
+    // 10 are bulk-skipped.
+    expect(payload['skippedDays']).toEqual([1, 2, 3, 4, 5, 6, 7]);
+  });
+
+  it('removeSkippedDay uses arrayRemove on skippedDays', async () => {
+    (firestoreFns.doc as jest.Mock).mockReturnValue({ id: 'u' });
+
+    const { fixture } = await render('', {
+      providers: [
+        UserTrainingPlanApiService,
+        { provide: PLATFORM_ID, useValue: 'browser' },
+        { provide: Firestore, useValue: {} },
+        { provide: Auth, useValue: { currentUser: { uid: 'u' } } },
+      ],
+    });
+
+    const service = fixture.debugElement.injector.get(
+      UserTrainingPlanApiService
+    );
+    service.removeSkippedDay('u', 3).subscribe();
+
+    await Promise.resolve();
+    expect(firestoreFns.arrayRemove).toHaveBeenCalledWith(3);
+    expect(firestoreFns.updateDoc).toHaveBeenCalledWith(
+      expect.anything(),
+      expect.objectContaining({
+        skippedDays: expect.objectContaining({ __type: 'arrayRemove' }),
       })
     );
   });

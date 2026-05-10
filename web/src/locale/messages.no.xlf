@@ -6315,6 +6315,54 @@ Deine Position: # ·  Reps        </source>
         <target>Marker som ikke gjort</target>
       </segment>
     </unit>
+    <unit id="trainingPlans.skipAria">
+      <segment state="translated">
+        <source>Tag überspringen</source>
+        <target>Hopp over dag</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.skipTooltip">
+      <segment state="translated">
+        <source>Tag überspringen</source>
+        <target>Hopp over dag</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.unskipAria">
+      <segment state="translated">
+        <source>Überspringen rückgängig machen</source>
+        <target>Angre hopp</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.unskipTooltip">
+      <segment state="translated">
+        <source>Überspringen rückgängig machen</source>
+        <target>Angre hopp</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.jumpAria">
+      <segment state="translated">
+        <source>Zu diesem Tag springen</source>
+        <target>Hopp til denne dagen</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.jumpTooltip">
+      <segment state="translated">
+        <source>Zu diesem Tag springen</source>
+        <target>Hopp til denne dagen</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.skipped">
+      <segment state="translated">
+        <source>Tag übersprungen.</source>
+        <target>Dag hoppet over.</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.jumped">
+      <segment state="translated">
+        <source>Auf Tag <ph id="0" equiv="INTERPOLATION" disp="dayIndex"/> gesprungen.</source>
+        <target>Hoppet til dag <ph id="0" equiv="INTERPOLATION" disp="dayIndex"/>.</target>
+      </segment>
+    </unit>
     <unit id="trainingPlans.back">
       <segment state="translated">
         <source>Zurück</source>

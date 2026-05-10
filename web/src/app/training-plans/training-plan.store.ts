@@ -27,6 +27,7 @@ import {
   findPlanById,
   isPlanCompleted,
   planDayByIndex,
+  startDateForTargetDay,
   toBerlinIsoDate,
   toLocalIsoDate,
   TrainingPlan,
@@ -135,23 +136,33 @@ export const TrainingPlanStore = signalStore(
       return a.completedDays.includes(idx);
     });
 
+    const todaySkipped = computed(() => {
+      const idx = currentDayIndex();
+      const a = activePlan();
+      if (!a || idx === null) return false;
+      return (a.skippedDays ?? []).includes(idx);
+    });
+
     const completionPercent = computed(() => {
       const a = activePlan();
       const c = activeCatalog();
       if (!a || !c) return 0;
-      const nonRestDayIndexes = new Set(
-        c.days.filter((d) => d.kind !== 'rest').map((d) => d.dayIndex)
+      const skipped = new Set(a.skippedDays ?? []);
+      const requiredDayIndexes = new Set(
+        c.days
+          .filter((d) => d.kind !== 'rest' && !skipped.has(d.dayIndex))
+          .map((d) => d.dayIndex)
       );
-      if (nonRestDayIndexes.size === 0) return 0;
-      // Filter `completedDays` to only count non-rest days. Rest-day
-      // entries can otherwise leak progress > 100% (e.g. via direct
-      // API writes or future UI changes that mark rest days done).
-      const completedNonRest = a.completedDays.filter((idx) =>
-        nonRestDayIndexes.has(idx)
+      if (requiredDayIndexes.size === 0) return 0;
+      // Only count non-rest, non-skipped days. Rest-day or skipped-day
+      // entries leaking into `completedDays` would otherwise skew
+      // progress > 100%.
+      const completedRequired = a.completedDays.filter((idx) =>
+        requiredDayIndexes.has(idx)
       ).length;
       return Math.min(
         100,
-        Math.round((completedNonRest / nonRestDayIndexes.size) * 100)
+        Math.round((completedRequired / requiredDayIndexes.size) * 100)
       );
     });
 
@@ -159,7 +170,7 @@ export const TrainingPlanStore = signalStore(
       const a = activePlan();
       const c = activeCatalog();
       if (!a || !c) return false;
-      return isPlanCompleted(c, a.completedDays);
+      return isPlanCompleted(c, a.completedDays, a.skippedDays ?? []);
     });
 
     /**
@@ -197,6 +208,7 @@ export const TrainingPlanStore = signalStore(
       todayDay,
       todayTarget,
       todayDone,
+      todaySkipped,
       completionPercent,
       isCompleted,
       hasActivePlan,
@@ -284,6 +296,7 @@ export const TrainingPlanStore = signalStore(
           startDate: toBerlinIsoDate(new Date()),
           status: 'active',
           completedDays: [],
+          skippedDays: [],
         })
       );
       store.activeResource.reload();
@@ -419,6 +432,88 @@ export const TrainingPlanStore = signalStore(
       if (!a.completedDays.includes(dayIndex)) return;
       const userId = store._user.userIdSafe();
       await firstValueFrom(store._api.removeCompletedDay(userId, dayIndex));
+      store.activeResource.reload();
+    },
+
+    /**
+     * Mark a plan day as skipped (user chose not to do it). Skipped
+     * days are excluded from the completion percent denominator and
+     * the `isPlanCompleted` required-set.
+     *
+     * Idempotent on the skip side. Mutually exclusive with
+     * `completedDays`: the API atomically removes the same index from
+     * `completedDays` so a day can never be in both arrays.
+     *
+     * No-op for rest days (already excluded from progress) and for
+     * out-of-range indexes.
+     */
+    async skipDay(dayIndex: number): Promise<void> {
+      const a = store.activePlan();
+      const c = store.activeCatalog();
+      if (!a || !c) return;
+      const day = planDayByIndex(c, dayIndex);
+      if (!day || day.kind === 'rest') return;
+      if ((a.skippedDays ?? []).includes(dayIndex)) return;
+      const userId = store._user.userIdSafe();
+      await firstValueFrom(store._api.addSkippedDay(userId, dayIndex));
+      store.activeResource.reload();
+    },
+
+    /** Undo a skip. */
+    async unskipDay(dayIndex: number): Promise<void> {
+      const a = store.activePlan();
+      if (!a) return;
+      if (!(a.skippedDays ?? []).includes(dayIndex)) return;
+      const userId = store._user.userIdSafe();
+      await firstValueFrom(store._api.removeSkippedDay(userId, dayIndex));
+      store.activeResource.reload();
+    },
+
+    /**
+     * Re-anchor the plan so today maps to `targetDayIndex`. Adjusts
+     * `startDate` accordingly and bulk-marks all earlier non-rest,
+     * non-completed days as skipped so progress reflects "I jumped
+     * over these" rather than counting them as still-pending.
+     *
+     * - `targetDayIndex` must be in `[1, totalDays]` — otherwise
+     *   no-op.
+     * - Days already in `completedDays` stay completed even if they're
+     *   now in the future relative to the new `startDate`.
+     * - Days that were previously skipped but are now `>= targetDay`
+     *   are removed from `skippedDays` so re-doing them is possible.
+     *
+     * Delegates to `_api.jumpToDay`, which runs a Firestore
+     * transaction. Recomputing `skippedDays` from the local snapshot
+     * and writing it via `setDoc({merge:true})` would silently drop
+     * concurrent `arrayUnion`/`arrayRemove` skip writes from another
+     * tab/device, since `merge: true` does not field-merge arrays.
+     */
+    async jumpToDay(targetDayIndex: number): Promise<void> {
+      const a = store.activePlan();
+      const c = store.activeCatalog();
+      if (!a || !c || a.status !== 'active') return;
+      if (targetDayIndex < 1 || targetDayIndex > c.totalDays) return;
+
+      const today = toBerlinIsoDate(new Date());
+      const newStartDate = startDateForTargetDay(
+        c.totalDays,
+        targetDayIndex,
+        today
+      );
+      if (!newStartDate) return;
+
+      const nonRestDaysBeforeTarget = c.days
+        .filter((d) => d.dayIndex < targetDayIndex && d.kind !== 'rest')
+        .map((d) => d.dayIndex);
+
+      const userId = store._user.userIdSafe();
+      await firstValueFrom(
+        store._api.jumpToDay(userId, {
+          newStartDate,
+          targetDayIndex,
+          nonRestDaysBeforeTarget,
+        })
+      );
       store.activeResource.reload();
     },
 

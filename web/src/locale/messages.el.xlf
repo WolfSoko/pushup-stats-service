@@ -6110,6 +6110,54 @@
         <target>Επισήμανση ως μη ολοκληρωμένη</target>
       </segment>
     </unit>
+    <unit id="trainingPlans.skipAria">
+      <segment state="translated">
+        <source>Tag überspringen</source>
+        <target>Παράλειψη ημέρας</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.skipTooltip">
+      <segment state="translated">
+        <source>Tag überspringen</source>
+        <target>Παράλειψη ημέρας</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.unskipAria">
+      <segment state="translated">
+        <source>Überspringen rückgängig machen</source>
+        <target>Αναίρεση παράλειψης</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.unskipTooltip">
+      <segment state="translated">
+        <source>Überspringen rückgängig machen</source>
+        <target>Αναίρεση παράλειψης</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.jumpAria">
+      <segment state="translated">
+        <source>Zu diesem Tag springen</source>
+        <target>Μετάβαση σε αυτή την ημέρα</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.jumpTooltip">
+      <segment state="translated">
+        <source>Zu diesem Tag springen</source>
+        <target>Μετάβαση σε αυτή την ημέρα</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.skipped">
+      <segment state="translated">
+        <source>Tag übersprungen.</source>
+        <target>Η ημέρα παραλείφθηκε.</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.jumped">
+      <segment state="translated">
+        <source>Auf Tag <ph id="0" equiv="INTERPOLATION" disp="dayIndex"/> gesprungen.</source>
+        <target>Μετάβαση στην ημέρα <ph id="0" equiv="INTERPOLATION" disp="dayIndex"/>.</target>
+      </segment>
+    </unit>
     <unit id="trainingPlans.logAria">
       <notes>
         <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:254,255</note>

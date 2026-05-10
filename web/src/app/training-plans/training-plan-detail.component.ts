@@ -42,6 +42,7 @@ interface DayRow {
   weekIndex: number;
   isToday: boolean;
   isCompleted: boolean;
+  isSkipped: boolean;
   isFuture: boolean;
   pushupTypes: ReadonlyArray<PushupTypeChip>;
 }
@@ -213,6 +214,7 @@ interface DayRow {
                   [attr.id]="'day-' + row.day.dayIndex"
                   [class.today]="row.isToday"
                   [class.done]="row.isCompleted"
+                  [class.skipped]="row.isSkipped"
                   [class.future]="row.isFuture"
                 >
                   <div class="day-num">
@@ -287,35 +289,70 @@ interface DayRow {
                     }
                   </div>
                   <div class="day-actions">
-                    @if (isThisPlanActive() && row.day.kind !== 'rest') {
-                      @if (row.isCompleted) {
-                        <button
-                          mat-icon-button
-                          (click)="unmark(row.day.dayIndex)"
-                          aria-label="Als nicht erledigt markieren"
-                          i18n-aria-label="@@trainingPlans.unmarkAria"
-                        >
-                          <mat-icon>check_circle</mat-icon>
-                        </button>
-                      } @else {
-                        @if (row.day.targetReps > 0) {
+                    @if (isThisPlanActive()) {
+                      @if (row.day.kind !== 'rest') {
+                        @if (row.isCompleted) {
                           <button
                             mat-icon-button
-                            color="primary"
-                            (click)="logPlanDay(row.day.dayIndex)"
-                            aria-label="Plan-Sätze eintragen und als erledigt markieren"
-                            i18n-aria-label="@@trainingPlans.logAria"
+                            (click)="unmark(row.day.dayIndex)"
+                            aria-label="Als nicht erledigt markieren"
+                            i18n-aria-label="@@trainingPlans.unmarkAria"
                           >
-                            <mat-icon>play_circle</mat-icon>
+                            <mat-icon>check_circle</mat-icon>
+                          </button>
+                        } @else if (row.isSkipped) {
+                          <button
+                            mat-icon-button
+                            (click)="unskip(row.day.dayIndex)"
+                            aria-label="Überspringen rückgängig machen"
+                            i18n-aria-label="@@trainingPlans.unskipAria"
+                            matTooltip="Überspringen rückgängig machen"
+                            i18n-matTooltip="@@trainingPlans.unskipTooltip"
+                          >
+                            <mat-icon>redo</mat-icon>
+                          </button>
+                        } @else {
+                          @if (row.day.targetReps > 0) {
+                            <button
+                              mat-icon-button
+                              color="primary"
+                              (click)="logPlanDay(row.day.dayIndex)"
+                              aria-label="Plan-Sätze eintragen und als erledigt markieren"
+                              i18n-aria-label="@@trainingPlans.logAria"
+                            >
+                              <mat-icon>play_circle</mat-icon>
+                            </button>
+                          }
+                          <button
+                            mat-icon-button
+                            (click)="mark(row.day.dayIndex)"
+                            aria-label="Nur als erledigt markieren (ohne Eintrag)"
+                            i18n-aria-label="@@trainingPlans.markAria"
+                          >
+                            <mat-icon>radio_button_unchecked</mat-icon>
+                          </button>
+                          <button
+                            mat-icon-button
+                            (click)="skip(row.day.dayIndex)"
+                            aria-label="Tag überspringen"
+                            i18n-aria-label="@@trainingPlans.skipAria"
+                            matTooltip="Tag überspringen"
+                            i18n-matTooltip="@@trainingPlans.skipTooltip"
+                          >
+                            <mat-icon>skip_next</mat-icon>
                           </button>
                         }
+                      }
+                      @if (!row.isToday) {
                         <button
                           mat-icon-button
-                          (click)="mark(row.day.dayIndex)"
-                          aria-label="Nur als erledigt markieren (ohne Eintrag)"
-                          i18n-aria-label="@@trainingPlans.markAria"
+                          (click)="jumpToDay(row.day.dayIndex)"
+                          aria-label="Zu diesem Tag springen"
+                          i18n-aria-label="@@trainingPlans.jumpAria"
+                          matTooltip="Zu diesem Tag springen"
+                          i18n-matTooltip="@@trainingPlans.jumpTooltip"
                         >
-                          <mat-icon>radio_button_unchecked</mat-icon>
+                          <mat-icon>fast_forward</mat-icon>
                         </button>
                       }
                     }
@@ -442,6 +479,14 @@ interface DayRow {
       }
       .day-row.future {
         opacity: 0.85;
+      }
+      .day-row.skipped {
+        opacity: 0.55;
+      }
+      .day-row.skipped .day-num,
+      .day-row.skipped .day-title,
+      .day-row.skipped .day-desc {
+        text-decoration: line-through;
       }
       .day-num {
         text-align: center;
@@ -637,6 +682,9 @@ export class TrainingPlanDetailComponent {
     const completed = this.isThisPlanActive()
       ? new Set(this.store.activePlan()?.completedDays ?? [])
       : new Set<number>();
+    const skipped = this.isThisPlanActive()
+      ? new Set(this.store.activePlan()?.skippedDays ?? [])
+      : new Set<number>();
 
     const grouped = new Map<number, DayRow[]>();
     for (const day of plan.days) {
@@ -647,6 +695,7 @@ export class TrainingPlanDetailComponent {
         weekIndex,
         isToday,
         isCompleted: completed.has(day.dayIndex),
+        isSkipped: skipped.has(day.dayIndex),
         isFuture: currentDay !== null && day.dayIndex > currentDay,
         pushupTypes: this.pushupTypeChipsForDay(day),
       };
@@ -722,6 +771,28 @@ export class TrainingPlanDetailComponent {
 
   async unmark(dayIndex: number): Promise<void> {
     await this.store.unmarkDayDone(dayIndex);
+  }
+
+  async skip(dayIndex: number): Promise<void> {
+    await this.store.skipDay(dayIndex);
+    this.snackbar.open(
+      $localize`:@@trainingPlans.skipped:Tag übersprungen.`,
+      undefined,
+      { duration: 2000 }
+    );
+  }
+
+  async unskip(dayIndex: number): Promise<void> {
+    await this.store.unskipDay(dayIndex);
+  }
+
+  async jumpToDay(dayIndex: number): Promise<void> {
+    await this.store.jumpToDay(dayIndex);
+    this.snackbar.open(
+      $localize`:@@trainingPlans.jumped:Auf Tag ${dayIndex}:INTERPOLATION: gesprungen.`,
+      undefined,
+      { duration: 2500 }
+    );
   }
 
   async logPlanDay(dayIndex: number): Promise<void> {

@@ -85,12 +85,24 @@ export interface UserTrainingPlan {
    * skipped days.
    */
   completedDays: number[];
+  /**
+   * Day indexes the user has chosen to skip (e.g. via `jumpToDay` or
+   * an explicit per-day skip action). Skipped days are excluded from
+   * both the completion percent denominator and the `isPlanCompleted`
+   * required-set, so the user can still finish a plan after missing
+   * days. Mutually exclusive with `completedDays` — a day index is in
+   * at most one of the two arrays.
+   */
+  skippedDays?: number[];
   createdAt?: string;
   updatedAt?: string;
 }
 
 export type UserTrainingPlanUpdate = Partial<
-  Pick<UserTrainingPlan, 'planId' | 'startDate' | 'status' | 'completedDays'>
+  Pick<
+    UserTrainingPlan,
+    'planId' | 'startDate' | 'status' | 'completedDays' | 'skippedDays'
+  >
 >;
 
 /**
@@ -123,16 +135,48 @@ export function planDayByIndex(
   return plan.days.find((d) => d.dayIndex === dayIndex) ?? null;
 }
 
-/** Returns true once every non-rest day is in `completedDays`. */
+/**
+ * Returns true once every non-rest, non-skipped day is in
+ * `completedDays`. A plan with every working day skipped is NOT
+ * considered completed — that would mark "did nothing" as a finished
+ * plan, which is not the contract `isPlanCompleted` is meant to
+ * satisfy (used for the dashboard "Plan abgeschlossen" badge).
+ */
 export function isPlanCompleted(
   plan: Pick<TrainingPlan, 'days'>,
-  completedDays: ReadonlyArray<number>
+  completedDays: ReadonlyArray<number>,
+  skippedDays: ReadonlyArray<number> = []
 ): boolean {
+  const skipped = new Set(skippedDays);
   const required = plan.days
-    .filter((d) => d.kind !== 'rest')
+    .filter((d) => d.kind !== 'rest' && !skipped.has(d.dayIndex))
     .map((d) => d.dayIndex);
   if (required.length === 0) return false;
   return required.every((idx) => completedDays.includes(idx));
+}
+
+/**
+ * 1-based day index that `jumpToDay` should re-anchor `startDate` to
+ * for a given target day and "today". Returns the ISO date the
+ * `UserTrainingPlan.startDate` field should be set to so that
+ * `currentPlanDayIndex(plan, result, today) === targetDayIndex`.
+ *
+ * Returns `null` for an out-of-range target. Does not mutate.
+ */
+export function startDateForTargetDay(
+  totalDays: number,
+  targetDayIndex: number,
+  today: string
+): string | null {
+  if (targetDayIndex < 1 || targetDayIndex > totalDays) return null;
+  const now = parseIsoDate(today);
+  if (!now) return null;
+  const start = new Date(now);
+  start.setDate(now.getDate() - (targetDayIndex - 1));
+  const y = start.getFullYear();
+  const m = String(start.getMonth() + 1).padStart(2, '0');
+  const d = String(start.getDate()).padStart(2, '0');
+  return `${y}-${m}-${d}`;
 }
 
 function parseIsoDate(value: string): Date | null {

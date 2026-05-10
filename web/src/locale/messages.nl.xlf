@@ -6110,6 +6110,54 @@
         <target>Markeer als niet voltooid</target>
       </segment>
     </unit>
+    <unit id="trainingPlans.skipAria">
+      <segment state="translated">
+        <source>Tag überspringen</source>
+        <target>Dag overslaan</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.skipTooltip">
+      <segment state="translated">
+        <source>Tag überspringen</source>
+        <target>Dag overslaan</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.unskipAria">
+      <segment state="translated">
+        <source>Überspringen rückgängig machen</source>
+        <target>Overslaan ongedaan maken</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.unskipTooltip">
+      <segment state="translated">
+        <source>Überspringen rückgängig machen</source>
+        <target>Overslaan ongedaan maken</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.jumpAria">
+      <segment state="translated">
+        <source>Zu diesem Tag springen</source>
+        <target>Naar deze dag springen</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.jumpTooltip">
+      <segment state="translated">
+        <source>Zu diesem Tag springen</source>
+        <target>Naar deze dag springen</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.skipped">
+      <segment state="translated">
+        <source>Tag übersprungen.</source>
+        <target>Dag overgeslagen.</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.jumped">
+      <segment state="translated">
+        <source>Auf Tag <ph id="0" equiv="INTERPOLATION" disp="dayIndex"/> gesprungen.</source>
+        <target>Gesprongen naar dag <ph id="0" equiv="INTERPOLATION" disp="dayIndex"/>.</target>
+      </segment>
+    </unit>
     <unit id="trainingPlans.logAria">
       <notes>
         <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:254,255</note>

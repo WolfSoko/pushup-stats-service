@@ -27,6 +27,9 @@ interface Mocks {
     updatePlan: ReturnType<typeof vitest.fn>;
     addCompletedDay: ReturnType<typeof vitest.fn>;
     removeCompletedDay: ReturnType<typeof vitest.fn>;
+    addSkippedDay: ReturnType<typeof vitest.fn>;
+    removeSkippedDay: ReturnType<typeof vitest.fn>;
+    jumpToDay: ReturnType<typeof vitest.fn>;
   };
   statsApiMock: {
     createPushup: ReturnType<typeof vitest.fn>;
@@ -74,11 +77,16 @@ describe('TrainingPlanStore', () => {
         ),
         addCompletedDay: vitest.fn((_uid: string, dayIndex: number) => {
           const cur = mocks.current as UserTrainingPlan;
-          if (!cur.completedDays.includes(dayIndex)) {
+          const completedHas = cur.completedDays.includes(dayIndex);
+          const skippedHas = (cur.skippedDays ?? []).includes(dayIndex);
+          if (!completedHas || skippedHas) {
             mocks.current = {
               ...cur,
-              completedDays: [...cur.completedDays, dayIndex].sort(
-                (x, y) => x - y
+              completedDays: completedHas
+                ? cur.completedDays
+                : [...cur.completedDays, dayIndex].sort((x, y) => x - y),
+              skippedDays: (cur.skippedDays ?? []).filter(
+                (d) => d !== dayIndex
               ),
             };
             stream.next(mocks.current);
@@ -96,6 +104,68 @@ describe('TrainingPlanStore', () => {
           }
           return of(void 0);
         }),
+        addSkippedDay: vitest.fn((_uid: string, dayIndex: number) => {
+          const cur = mocks.current as UserTrainingPlan;
+          const skippedHas = (cur.skippedDays ?? []).includes(dayIndex);
+          const completedHas = cur.completedDays.includes(dayIndex);
+          if (!skippedHas || completedHas) {
+            mocks.current = {
+              ...cur,
+              completedDays: cur.completedDays.filter((d) => d !== dayIndex),
+              skippedDays: skippedHas
+                ? (cur.skippedDays ?? [])
+                : [...(cur.skippedDays ?? []), dayIndex].sort((x, y) => x - y),
+            };
+            stream.next(mocks.current);
+          }
+          return of(void 0);
+        }),
+        removeSkippedDay: vitest.fn((_uid: string, dayIndex: number) => {
+          const cur = mocks.current as UserTrainingPlan;
+          if ((cur.skippedDays ?? []).includes(dayIndex)) {
+            mocks.current = {
+              ...cur,
+              skippedDays: (cur.skippedDays ?? []).filter(
+                (d) => d !== dayIndex
+              ),
+            };
+            stream.next(mocks.current);
+          }
+          return of(void 0);
+        }),
+        // Mirrors the production transaction: reads the current
+        // completedDays/skippedDays and rewrites both startDate and
+        // skippedDays in one write. Tests rely on this matching the
+        // documented invariants.
+        jumpToDay: vitest.fn(
+          (
+            _uid: string,
+            args: {
+              newStartDate: string;
+              targetDayIndex: number;
+              nonRestDaysBeforeTarget: ReadonlyArray<number>;
+            }
+          ) => {
+            const cur = mocks.current as UserTrainingPlan;
+            const completed = new Set(cur.completedDays);
+            const preservedPriorSkips = (cur.skippedDays ?? []).filter(
+              (idx) => idx < args.targetDayIndex && !completed.has(idx)
+            );
+            const newlySkipped = args.nonRestDaysBeforeTarget.filter(
+              (idx) => !completed.has(idx)
+            );
+            const skippedDays = Array.from(
+              new Set([...preservedPriorSkips, ...newlySkipped])
+            ).sort((x, y) => x - y);
+            mocks.current = {
+              ...cur,
+              startDate: args.newStartDate,
+              skippedDays,
+            };
+            stream.next(mocks.current);
+            return of(void 0);
+          }
+        ),
       },
       statsApiMock: {
         createPushup: vitest.fn((payload: PushupCreate) =>
@@ -638,6 +708,234 @@ describe('TrainingPlanStore', () => {
 
       // Tear down the implicit setInterval started by withHooks.
       TestBed.resetTestingModule();
+    });
+  });
+
+  describe('skipDay / unskipDay', () => {
+    it('skipDay records the index in skippedDays', async () => {
+      const today = toBerlinIsoDate(new Date());
+      const { store, mocks } = setup({
+        userId: 'u1',
+        planId: PLAN.id,
+        startDate: today,
+        status: 'active',
+        completedDays: [],
+      });
+      await flush();
+
+      // Day 2 is a non-rest day in challenge-30d.
+      await store.skipDay(2);
+      await flush();
+
+      expect(mocks.apiMock.addSkippedDay).toHaveBeenCalledWith('u1', 2);
+      expect(store.activePlan()?.skippedDays).toContain(2);
+    });
+
+    it('skipDay removes the index from completedDays so a day is in at most one array', async () => {
+      const today = toBerlinIsoDate(new Date());
+      const { store } = setup({
+        userId: 'u1',
+        planId: PLAN.id,
+        startDate: today,
+        status: 'active',
+        completedDays: [2, 3],
+      });
+      await flush();
+
+      await store.skipDay(2);
+      await flush();
+
+      expect(store.activePlan()?.completedDays).not.toContain(2);
+      expect(store.activePlan()?.skippedDays).toContain(2);
+    });
+
+    it('skipDay is a no-op for rest days', async () => {
+      const today = toBerlinIsoDate(new Date());
+      const { store, mocks } = setup({
+        userId: 'u1',
+        planId: PLAN.id,
+        startDate: today,
+        status: 'active',
+        completedDays: [],
+      });
+      await flush();
+
+      const restDay = PLAN.days.find((d) => d.kind === 'rest');
+      if (!restDay) throw new Error('catalog invariant: rest day exists');
+
+      await store.skipDay(restDay.dayIndex);
+      await flush();
+
+      expect(mocks.apiMock.addSkippedDay).not.toHaveBeenCalled();
+    });
+
+    it('unskipDay removes the index from skippedDays', async () => {
+      const today = toBerlinIsoDate(new Date());
+      const { store, mocks } = setup({
+        userId: 'u1',
+        planId: PLAN.id,
+        startDate: today,
+        status: 'active',
+        completedDays: [],
+        skippedDays: [2, 3],
+      });
+      await flush();
+
+      await store.unskipDay(2);
+      await flush();
+
+      expect(mocks.apiMock.removeSkippedDay).toHaveBeenCalledWith('u1', 2);
+      expect(store.activePlan()?.skippedDays).toEqual([3]);
+    });
+
+    it('marking a previously-skipped day done auto-unskips it', async () => {
+      const today = toBerlinIsoDate(new Date());
+      const { store } = setup({
+        userId: 'u1',
+        planId: PLAN.id,
+        startDate: today,
+        status: 'active',
+        completedDays: [],
+        skippedDays: [2],
+      });
+      await flush();
+
+      await store.markDayDone(2);
+      await flush();
+
+      // The mock for addCompletedDay mirrors the API: it strips the
+      // index from skippedDays so the invariant holds.
+      expect(store.activePlan()?.skippedDays).not.toContain(2);
+      expect(store.activePlan()?.completedDays).toContain(2);
+    });
+  });
+
+  describe('completionPercent with skippedDays', () => {
+    it('excludes skipped days from the denominator', async () => {
+      const today = toBerlinIsoDate(new Date());
+      const allNonRest = PLAN.days
+        .filter((d) => d.kind !== 'rest')
+        .map((d) => d.dayIndex);
+      const skipIdx = allNonRest[0];
+      const completedRest = allNonRest.slice(1);
+
+      const { store } = setup({
+        userId: 'u1',
+        planId: PLAN.id,
+        startDate: today,
+        status: 'active',
+        completedDays: completedRest,
+        skippedDays: [skipIdx],
+      });
+      await flush();
+
+      // All remaining required days completed → 100%.
+      expect(store.completionPercent()).toBe(100);
+    });
+  });
+
+  describe('jumpToDay', () => {
+    it('re-anchors startDate so today maps to the target day', async () => {
+      // Start a 30-day plan today, then jump to day 8.
+      const today = toBerlinIsoDate(new Date());
+      const { store, mocks } = setup({
+        userId: 'u1',
+        planId: PLAN.id,
+        startDate: today,
+        status: 'active',
+        completedDays: [],
+      });
+      await flush();
+      expect(store.currentDayIndex()).toBe(1);
+
+      await store.jumpToDay(8);
+      await flush();
+
+      expect(mocks.apiMock.jumpToDay).toHaveBeenCalled();
+      // The new startDate should make currentDayIndex return 8.
+      expect(store.currentDayIndex()).toBe(8);
+    });
+
+    it('marks intervening non-rest, non-completed days as skipped', async () => {
+      const today = toBerlinIsoDate(new Date());
+      const { store } = setup({
+        userId: 'u1',
+        planId: PLAN.id,
+        startDate: today,
+        status: 'active',
+        // Day 2 already done — should NOT end up skipped.
+        completedDays: [2],
+      });
+      await flush();
+
+      await store.jumpToDay(8);
+      await flush();
+
+      const skipped = new Set(store.activePlan()?.skippedDays ?? []);
+      // Day 2 stays completed.
+      expect(skipped.has(2)).toBe(false);
+      expect(store.activePlan()?.completedDays).toContain(2);
+      // Every other non-rest day in 1..7 should be skipped.
+      for (const day of PLAN.days) {
+        if (day.dayIndex >= 8) break;
+        if (day.kind === 'rest') continue;
+        if (day.dayIndex === 2) continue;
+        expect(skipped.has(day.dayIndex)).toBe(true);
+      }
+      // Rest days never end up in skippedDays.
+      const restIndexesBefore8 = PLAN.days
+        .filter((d) => d.dayIndex < 8 && d.kind === 'rest')
+        .map((d) => d.dayIndex);
+      for (const restIdx of restIndexesBefore8) {
+        expect(skipped.has(restIdx)).toBe(false);
+      }
+    });
+
+    it('drops prior skips that are now in the future after a backward jump and preserves future-completed days', async () => {
+      // Start the plan so today is plan-day 12, with day 5 previously
+      // skipped and day 10 previously completed. Jump back to day 3:
+      // - day 5 is now in the future → should be removed from
+      //   skippedDays so the user can re-do it,
+      // - day 10 stays completed even though it's now in the future
+      //   (jumpToDay never strips completedDays).
+      const startDate = toBerlinIsoDate(new Date(Date.now() - 11 * 86_400_000));
+      const { store } = setup({
+        userId: 'u1',
+        planId: PLAN.id,
+        startDate,
+        status: 'active',
+        completedDays: [10],
+        skippedDays: [5],
+      });
+      await flush();
+      expect(store.currentDayIndex()).toBe(12);
+
+      await store.jumpToDay(3);
+      await flush();
+
+      const skipped = new Set(store.activePlan()?.skippedDays ?? []);
+      expect(skipped.has(5)).toBe(false);
+      // Completed days that are now in the future stay completed.
+      expect(store.activePlan()?.completedDays).toContain(10);
+      expect(store.currentDayIndex()).toBe(3);
+    });
+
+    it('rejects out-of-range targets', async () => {
+      const today = toBerlinIsoDate(new Date());
+      const { store, mocks } = setup({
+        userId: 'u1',
+        planId: PLAN.id,
+        startDate: today,
+        status: 'active',
+        completedDays: [],
+      });
+      await flush();
+
+      await store.jumpToDay(0);
+      await store.jumpToDay(PLAN.totalDays + 1);
+      await flush();
+
+      expect(mocks.apiMock.jumpToDay).not.toHaveBeenCalled();
     });
   });
 
