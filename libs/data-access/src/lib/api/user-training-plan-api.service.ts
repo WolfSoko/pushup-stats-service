@@ -7,6 +7,7 @@ import {
   docData,
   DocumentReference,
   Firestore,
+  runTransaction,
   setDoc,
   updateDoc,
 } from '@angular/fire/firestore';
@@ -134,6 +135,59 @@ export class UserTrainingPlanApiService {
         skippedDays: arrayUnion(dayIndex),
         completedDays: arrayRemove(dayIndex),
         updatedAt: new Date().toISOString(),
+      })
+    ).pipe(map(() => void 0));
+  }
+
+  /**
+   * Atomic re-anchor: write `startDate` and a recomputed `skippedDays`
+   * inside a Firestore transaction so concurrent `arrayUnion` /
+   * `arrayRemove` writes from another tab can't be silently
+   * overwritten by the bulk-array replacement that this operation
+   * needs to perform.
+   *
+   * `nonRestDaysBeforeTarget` is the set of plan-day indexes
+   * `< targetDayIndex` whose `kind !== 'rest'`. The transaction reads
+   * the current `completedDays` from server state and:
+   * - keeps prior skips that still sit before the new cursor and
+   *   aren't completed,
+   * - bulk-skips every non-rest predecessor that isn't completed.
+   *
+   * Days already in `completedDays` are preserved as-is (even if they
+   * end up in the future relative to the new `startDate`).
+   */
+  jumpToDay(
+    userId: string,
+    args: {
+      newStartDate: string;
+      targetDayIndex: number;
+      nonRestDaysBeforeTarget: ReadonlyArray<number>;
+    }
+  ): Observable<void> {
+    const effectiveUserId = this.resolveUserId(userId);
+    if (!effectiveUserId || !this.firestore) return of(void 0);
+    const ref = this.docRef(effectiveUserId);
+    const firestore = this.firestore;
+    return from(
+      runTransaction(firestore, async (tx) => {
+        const snap = await tx.get(ref);
+        const data = (snap.data() as UserTrainingPlan | undefined) ?? null;
+        const completed = new Set<number>(data?.completedDays ?? []);
+        const priorSkipped: ReadonlyArray<number> = data?.skippedDays ?? [];
+        const preservedPriorSkips = priorSkipped.filter(
+          (idx) => idx < args.targetDayIndex && !completed.has(idx)
+        );
+        const newlySkipped = args.nonRestDaysBeforeTarget.filter(
+          (idx) => !completed.has(idx)
+        );
+        const skippedDays = Array.from(
+          new Set([...preservedPriorSkips, ...newlySkipped])
+        ).sort((x, y) => x - y);
+        tx.update(ref, {
+          startDate: args.newStartDate,
+          skippedDays,
+          updatedAt: new Date().toISOString(),
+        });
       })
     ).pipe(map(() => void 0));
   }

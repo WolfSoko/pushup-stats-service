@@ -29,6 +29,7 @@ interface Mocks {
     removeCompletedDay: ReturnType<typeof vitest.fn>;
     addSkippedDay: ReturnType<typeof vitest.fn>;
     removeSkippedDay: ReturnType<typeof vitest.fn>;
+    jumpToDay: ReturnType<typeof vitest.fn>;
   };
   statsApiMock: {
     createPushup: ReturnType<typeof vitest.fn>;
@@ -132,6 +133,39 @@ describe('TrainingPlanStore', () => {
           }
           return of(void 0);
         }),
+        // Mirrors the production transaction: reads the current
+        // completedDays/skippedDays and rewrites both startDate and
+        // skippedDays in one write. Tests rely on this matching the
+        // documented invariants.
+        jumpToDay: vitest.fn(
+          (
+            _uid: string,
+            args: {
+              newStartDate: string;
+              targetDayIndex: number;
+              nonRestDaysBeforeTarget: ReadonlyArray<number>;
+            }
+          ) => {
+            const cur = mocks.current as UserTrainingPlan;
+            const completed = new Set(cur.completedDays);
+            const preservedPriorSkips = (cur.skippedDays ?? []).filter(
+              (idx) => idx < args.targetDayIndex && !completed.has(idx)
+            );
+            const newlySkipped = args.nonRestDaysBeforeTarget.filter(
+              (idx) => !completed.has(idx)
+            );
+            const skippedDays = Array.from(
+              new Set([...preservedPriorSkips, ...newlySkipped])
+            ).sort((x, y) => x - y);
+            mocks.current = {
+              ...cur,
+              startDate: args.newStartDate,
+              skippedDays,
+            };
+            stream.next(mocks.current);
+            return of(void 0);
+          }
+        ),
       },
       statsApiMock: {
         createPushup: vitest.fn((payload: PushupCreate) =>
@@ -817,7 +851,7 @@ describe('TrainingPlanStore', () => {
       await store.jumpToDay(8);
       await flush();
 
-      expect(mocks.apiMock.updatePlan).toHaveBeenCalled();
+      expect(mocks.apiMock.jumpToDay).toHaveBeenCalled();
       // The new startDate should make currentDayIndex return 8.
       expect(store.currentDayIndex()).toBe(8);
     });
@@ -857,17 +891,20 @@ describe('TrainingPlanStore', () => {
       }
     });
 
-    it('drops prior skips that are now in the future after a backward jump', async () => {
+    it('drops prior skips that are now in the future after a backward jump and preserves future-completed days', async () => {
       // Start the plan so today is plan-day 12, with day 5 previously
-      // skipped. Jump back to day 3 → day 5 is now in the future and
-      // should be removed from skippedDays so the user can re-do it.
+      // skipped and day 10 previously completed. Jump back to day 3:
+      // - day 5 is now in the future → should be removed from
+      //   skippedDays so the user can re-do it,
+      // - day 10 stays completed even though it's now in the future
+      //   (jumpToDay never strips completedDays).
       const startDate = toBerlinIsoDate(new Date(Date.now() - 11 * 86_400_000));
       const { store } = setup({
         userId: 'u1',
         planId: PLAN.id,
         startDate,
         status: 'active',
-        completedDays: [],
+        completedDays: [10],
         skippedDays: [5],
       });
       await flush();
@@ -878,6 +915,8 @@ describe('TrainingPlanStore', () => {
 
       const skipped = new Set(store.activePlan()?.skippedDays ?? []);
       expect(skipped.has(5)).toBe(false);
+      // Completed days that are now in the future stay completed.
+      expect(store.activePlan()?.completedDays).toContain(10);
       expect(store.currentDayIndex()).toBe(3);
     });
 
@@ -896,7 +935,7 @@ describe('TrainingPlanStore', () => {
       await store.jumpToDay(PLAN.totalDays + 1);
       await flush();
 
-      expect(mocks.apiMock.updatePlan).not.toHaveBeenCalled();
+      expect(mocks.apiMock.jumpToDay).not.toHaveBeenCalled();
     });
   });
 

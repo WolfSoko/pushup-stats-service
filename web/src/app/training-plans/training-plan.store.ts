@@ -482,9 +482,11 @@ export const TrainingPlanStore = signalStore(
      * - Days that were previously skipped but are now `>= targetDay`
      *   are removed from `skippedDays` so re-doing them is possible.
      *
-     * Writes via `updatePlan` so `startDate` and `skippedDays` change
-     * in a single doc write — partial state (new startDate without
-     * the skip backfill) would mis-render the progress bar.
+     * Delegates to `_api.jumpToDay`, which runs a Firestore
+     * transaction. Recomputing `skippedDays` from the local snapshot
+     * and writing it via `setDoc({merge:true})` would silently drop
+     * concurrent `arrayUnion`/`arrayRemove` skip writes from another
+     * tab/device, since `merge: true` does not field-merge arrays.
      */
     async jumpToDay(targetDayIndex: number): Promise<void> {
       const a = store.activePlan();
@@ -500,31 +502,16 @@ export const TrainingPlanStore = signalStore(
       );
       if (!newStartDate) return;
 
-      const completed = new Set(a.completedDays);
-      // Days strictly before `targetDayIndex` that the user hasn't
-      // completed and aren't rest get marked skipped. Existing skips
-      // that still sit before the cursor stay skipped.
-      const newlySkipped = c.days
-        .filter(
-          (d) =>
-            d.dayIndex < targetDayIndex &&
-            d.kind !== 'rest' &&
-            !completed.has(d.dayIndex)
-        )
+      const nonRestDaysBeforeTarget = c.days
+        .filter((d) => d.dayIndex < targetDayIndex && d.kind !== 'rest')
         .map((d) => d.dayIndex);
-      // Drop any prior skips that are now in the future (>= target).
-      const preservedPriorSkips = (a.skippedDays ?? []).filter(
-        (idx) => idx < targetDayIndex && !completed.has(idx)
-      );
-      const skippedDays = Array.from(
-        new Set([...preservedPriorSkips, ...newlySkipped])
-      ).sort((x, y) => x - y);
 
       const userId = store._user.userIdSafe();
       await firstValueFrom(
-        store._api.updatePlan(userId, {
-          startDate: newStartDate,
-          skippedDays,
+        store._api.jumpToDay(userId, {
+          newStartDate,
+          targetDayIndex,
+          nonRestDaysBeforeTarget,
         })
       );
       store.activeResource.reload();
