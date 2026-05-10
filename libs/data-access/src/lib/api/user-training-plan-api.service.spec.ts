@@ -200,6 +200,91 @@ describe('UserTrainingPlanApiService', () => {
     );
   });
 
+  it('addCompletedDay also clears the same day from skippedDays atomically', async () => {
+    (firestoreFns.doc as jest.Mock).mockReturnValue({ id: 'u' });
+
+    const { fixture } = await render('', {
+      providers: [
+        UserTrainingPlanApiService,
+        { provide: PLATFORM_ID, useValue: 'browser' },
+        { provide: Firestore, useValue: {} },
+        { provide: Auth, useValue: { currentUser: { uid: 'u' } } },
+      ],
+    });
+
+    const service = fixture.debugElement.injector.get(
+      UserTrainingPlanApiService
+    );
+    service.addCompletedDay('u', 5).subscribe();
+
+    await Promise.resolve();
+    expect(firestoreFns.arrayUnion).toHaveBeenCalledWith(5);
+    expect(firestoreFns.arrayRemove).toHaveBeenCalledWith(5);
+    expect(firestoreFns.updateDoc).toHaveBeenCalledWith(
+      expect.anything(),
+      expect.objectContaining({
+        completedDays: expect.objectContaining({ __type: 'arrayUnion' }),
+        skippedDays: expect.objectContaining({ __type: 'arrayRemove' }),
+      })
+    );
+  });
+
+  it('addSkippedDay adds to skippedDays and removes from completedDays atomically', async () => {
+    (firestoreFns.doc as jest.Mock).mockReturnValue({ id: 'u' });
+
+    const { fixture } = await render('', {
+      providers: [
+        UserTrainingPlanApiService,
+        { provide: PLATFORM_ID, useValue: 'browser' },
+        { provide: Firestore, useValue: {} },
+        { provide: Auth, useValue: { currentUser: { uid: 'u' } } },
+      ],
+    });
+
+    const service = fixture.debugElement.injector.get(
+      UserTrainingPlanApiService
+    );
+    service.addSkippedDay('u', 7).subscribe();
+
+    await Promise.resolve();
+    expect(firestoreFns.arrayUnion).toHaveBeenCalledWith(7);
+    expect(firestoreFns.arrayRemove).toHaveBeenCalledWith(7);
+    expect(firestoreFns.updateDoc).toHaveBeenCalledWith(
+      expect.anything(),
+      expect.objectContaining({
+        skippedDays: expect.objectContaining({ __type: 'arrayUnion' }),
+        completedDays: expect.objectContaining({ __type: 'arrayRemove' }),
+      })
+    );
+  });
+
+  it('removeSkippedDay uses arrayRemove on skippedDays', async () => {
+    (firestoreFns.doc as jest.Mock).mockReturnValue({ id: 'u' });
+
+    const { fixture } = await render('', {
+      providers: [
+        UserTrainingPlanApiService,
+        { provide: PLATFORM_ID, useValue: 'browser' },
+        { provide: Firestore, useValue: {} },
+        { provide: Auth, useValue: { currentUser: { uid: 'u' } } },
+      ],
+    });
+
+    const service = fixture.debugElement.injector.get(
+      UserTrainingPlanApiService
+    );
+    service.removeSkippedDay('u', 3).subscribe();
+
+    await Promise.resolve();
+    expect(firestoreFns.arrayRemove).toHaveBeenCalledWith(3);
+    expect(firestoreFns.updateDoc).toHaveBeenCalledWith(
+      expect.anything(),
+      expect.objectContaining({
+        skippedDays: expect.objectContaining({ __type: 'arrayRemove' }),
+      })
+    );
+  });
+
   it('uses arrayRemove for removeCompletedDay', async () => {
     (firestoreFns.doc as jest.Mock).mockReturnValue({ id: 'u' });
 

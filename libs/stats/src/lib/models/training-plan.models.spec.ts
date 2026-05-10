@@ -2,6 +2,7 @@ import {
   currentPlanDayIndex,
   isPlanCompleted,
   planDayByIndex,
+  startDateForTargetDay,
   TrainingPlan,
 } from './training-plan.models';
 import { findPlanById, TRAINING_PLANS } from './training-plan.catalog';
@@ -96,6 +97,45 @@ describe('training-plan models', () => {
     it('is false while any non-rest day is missing', () => {
       expect(isPlanCompleted(plan, [1, 4])).toBe(false);
       expect(isPlanCompleted(plan, [])).toBe(false);
+    });
+
+    it('treats skipped non-rest days as not required', () => {
+      // Day 3 skipped → only 1 and 4 are required.
+      expect(isPlanCompleted(plan, [1, 4], [3])).toBe(true);
+    });
+
+    it('returns false when every working day is skipped (nothing to finish)', () => {
+      expect(isPlanCompleted(plan, [], [1, 3, 4])).toBe(false);
+    });
+  });
+
+  describe('startDateForTargetDay', () => {
+    it('returns today for targetDay === 1', () => {
+      expect(startDateForTargetDay(30, 1, '2026-04-15')).toBe('2026-04-15');
+    });
+
+    it('returns today minus (target-1) days for later targets', () => {
+      expect(startDateForTargetDay(30, 8, '2026-04-15')).toBe('2026-04-08');
+    });
+
+    it('crosses month boundaries', () => {
+      // 2026-05-02 - 5 days = 2026-04-27
+      expect(startDateForTargetDay(30, 6, '2026-05-02')).toBe('2026-04-27');
+    });
+
+    it('crosses year boundaries', () => {
+      // 2026-01-02 - 5 days = 2025-12-28
+      expect(startDateForTargetDay(30, 6, '2026-01-02')).toBe('2025-12-28');
+    });
+
+    it('returns null for out-of-range targets', () => {
+      expect(startDateForTargetDay(30, 0, '2026-04-15')).toBeNull();
+      expect(startDateForTargetDay(30, 31, '2026-04-15')).toBeNull();
+      expect(startDateForTargetDay(30, -1, '2026-04-15')).toBeNull();
+    });
+
+    it('returns null on malformed today', () => {
+      expect(startDateForTargetDay(30, 1, 'nope')).toBeNull();
     });
   });
 

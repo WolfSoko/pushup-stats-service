@@ -94,9 +94,14 @@ export class UserTrainingPlanApiService {
     const effectiveUserId = this.resolveUserId(userId);
     if (!effectiveUserId || !this.firestore) return of(void 0);
     const ref = this.docRef(effectiveUserId);
+    // Marking done implicitly unskips: a day must be in at most one
+    // of `completedDays` / `skippedDays`. The arrayRemove on a value
+    // that isn't in the array is a no-op, so this is safe even when
+    // the day was never skipped.
     return from(
       updateDoc(ref, {
         completedDays: arrayUnion(dayIndex),
+        skippedDays: arrayRemove(dayIndex),
         updatedAt: new Date().toISOString(),
       })
     ).pipe(map(() => void 0));
@@ -109,6 +114,37 @@ export class UserTrainingPlanApiService {
     return from(
       updateDoc(ref, {
         completedDays: arrayRemove(dayIndex),
+        updatedAt: new Date().toISOString(),
+      })
+    ).pipe(map(() => void 0));
+  }
+
+  /**
+   * Atomic skip: add to `skippedDays` and remove from `completedDays`
+   * in one write so a day index can never appear in both arrays.
+   * Mixing `arrayUnion` and `arrayRemove` across two fields in a
+   * single `updateDoc` is supported by Firestore.
+   */
+  addSkippedDay(userId: string, dayIndex: number): Observable<void> {
+    const effectiveUserId = this.resolveUserId(userId);
+    if (!effectiveUserId || !this.firestore) return of(void 0);
+    const ref = this.docRef(effectiveUserId);
+    return from(
+      updateDoc(ref, {
+        skippedDays: arrayUnion(dayIndex),
+        completedDays: arrayRemove(dayIndex),
+        updatedAt: new Date().toISOString(),
+      })
+    ).pipe(map(() => void 0));
+  }
+
+  removeSkippedDay(userId: string, dayIndex: number): Observable<void> {
+    const effectiveUserId = this.resolveUserId(userId);
+    if (!effectiveUserId || !this.firestore) return of(void 0);
+    const ref = this.docRef(effectiveUserId);
+    return from(
+      updateDoc(ref, {
+        skippedDays: arrayRemove(dayIndex),
         updatedAt: new Date().toISOString(),
       })
     ).pipe(map(() => void 0));
