@@ -4651,6 +4651,14 @@
         <source>Übung</source>
       </segment>
     </unit>
+    <unit id="analysis.kindUnknown">
+      <notes>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts</note>
+      </notes>
+      <segment>
+        <source>Andere Übung</source>
+      </segment>
+    </unit>
     <unit id="exercise.plank.standard.name">
       <notes>
         <note category="location">web/src/app/stats/components/exercise-category-section/exercise-category-section.component.ts:365</note>

@@ -1,6 +1,21 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
+    // Centralised list of `measurement: 'reps'` exercises the
+    // `exerciseEntries` rule accepts. Keep in sync with the
+    // `measurement: 'reps'` entries in
+    // `libs/stats/src/lib/models/exercise.catalog.ts`. The same list
+    // backs the create and the update branch — adding a new reps
+    // exercise only requires touching this one helper plus the catalog.
+    function isRepsExerciseId(id) {
+      return [
+        'abs.situps', 'abs.crunches', 'abs.legraises',
+        'abs.russiantwist', 'abs.mountainclimbers',
+        'legs.squats', 'legs.lunges', 'legs.glutebridge',
+        'legs.calfraises', 'legs.jumpsquats'
+      ].hasAny([id]);
+    }
+
     // Signed-in users may read and update their own config document.
     // Deletes are handled exclusively by Cloud Functions (adminDeleteUser).
     // The 'role' field is managed exclusively via Firebase Custom Claims — clients must not write it.
@@ -163,15 +178,10 @@ service cloud.firestore {
                     && request.resource.data.timestamp is string
                     && request.resource.data.timestamp.size() > 0
                     && (
-                      // Reps-measured exercises. Keep this list in sync
-                      // with the `measurement: 'reps'` entries in
-                      // `libs/stats/src/lib/models/exercise.catalog.ts`.
-                      ([
-                          'abs.situps', 'abs.crunches', 'abs.legraises',
-                          'abs.russiantwist', 'abs.mountainclimbers',
-                          'legs.squats', 'legs.lunges', 'legs.glutebridge',
-                          'legs.calfraises', 'legs.jumpsquats'
-                        ].hasAny([request.resource.data.exerciseId])
+                      // Reps-measured exercises. Allowlist lives in
+                      // `isRepsExerciseId()` at the top of this file so
+                      // create + update share a single source of truth.
+                      (isRepsExerciseId(request.resource.data.exerciseId)
                         && request.resource.data.reps is int
                         && request.resource.data.reps >= 1
                         && request.resource.data.reps <= 500
@@ -227,14 +237,10 @@ service cloud.firestore {
                     // pin to `resource.data.exerciseId`.
                     && (
                       // Reps-measured exercises: reject `durationSec`/
-                      // `distanceM` and validate reps when changed. Keep
-                      // the list in sync with the create branch above.
-                      ([
-                          'abs.situps', 'abs.crunches', 'abs.legraises',
-                          'abs.russiantwist', 'abs.mountainclimbers',
-                          'legs.squats', 'legs.lunges', 'legs.glutebridge',
-                          'legs.calfraises', 'legs.jumpsquats'
-                        ].hasAny([resource.data.exerciseId])
+                      // `distanceM` and validate reps when changed. Same
+                      // allowlist as create, sourced from
+                      // `isRepsExerciseId()` at the top of this file.
+                      (isRepsExerciseId(resource.data.exerciseId)
                         && !('durationSec' in request.resource.data.keys())
                         && !('distanceM' in request.resource.data.keys())
                         && (!('reps' in request.resource.data.diff(resource.data).affectedKeys())

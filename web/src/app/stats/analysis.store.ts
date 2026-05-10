@@ -64,10 +64,22 @@ type AnalysisState = {
   to: string;
   dayChartMode: '24h' | '14h' | undefined;
   /**
-   * Active exercise-kind filter for the type-pie. Empty array = show
-   * every kind (pushup variants + exercise totals merged); a non-empty
-   * subset narrows the breakdown. Mirrors `EntriesState.kinds` so the
-   * Filter is consistent across History and Analysis.
+   * Active exercise-kind filter for the type-pie. Mirrors
+   * `EntriesState.kinds` so the filter chip set stays consistent
+   * between History and Analysis.
+   *
+   * Three modes:
+   *   - **empty array (default)** — pushup-variant breakdown, exactly
+   *     the same legend the page rendered before the multi-exercise
+   *     filter shipped. Exercise entries are intentionally ignored so
+   *     existing users see no change unless they opt in.
+   *   - **`['pushup']`** — equivalent to default; the kind-mode branch
+   *     specifically detects this single-pushup case and falls back to
+   *     the variant breakdown.
+   *   - **any other non-empty subset** — kind-mode pie: pushups
+   *     collapse into one bucket and each `exerciseId` becomes its own
+   *     slice. The sum is reps-only; `time`/`distance-time` exercises
+   *     surface with `value = 0` until per-measurement charts land.
    *
    * Only the type-pie respects the filter for now — the streak/best-day
    * KPIs stay pushup-only until per-exercise streaks land (Phase 2 of the

@@ -3402,6 +3402,12 @@ Deine Position: # ·  Reps        </source>
         <target>Übung</target>
       </segment>
     </unit>
+    <unit id="analysis.kindUnknown">
+      <segment state="translated">
+        <source>Andere Übung</source>
+        <target>Andere Übung</target>
+      </segment>
+    </unit>
     <unit id="exerciseSection.addAriaPrefix">
       <segment state="translated">
         <source>Eintrag hinzufügen</source>

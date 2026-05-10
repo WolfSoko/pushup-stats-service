@@ -5,7 +5,6 @@ import {
   DestroyRef,
   effect,
   inject,
-  LOCALE_ID,
   PLATFORM_ID,
   REQUEST,
   signal,
@@ -20,7 +19,6 @@ import { MatTableModule } from '@angular/material/table';
 import { RouterLink } from '@angular/router';
 import {
   createWeekRange,
-  displayPushupType,
   findExerciseDefinition,
   UnifiedEntryFilterKey,
 } from '@pu-stats/models';
@@ -80,7 +78,7 @@ interface ExerciseKindOption {
           (toChange)="store.setTo($event)"
         />
 
-        @if (kindFilterOptions().length > 1) {
+        @if (kindFilterOptions().length > 1 || store.kinds().length > 0) {
           <mat-form-field
             class="kind-filter"
             appearance="outline"
@@ -524,7 +522,6 @@ export class AnalysisPageComponent {
 
   private readonly platformId = inject(PLATFORM_ID);
   private readonly document = inject(DOCUMENT);
-  private readonly locale = inject(LOCALE_ID);
   private readonly request = inject(REQUEST, { optional: true }) as {
     url?: string;
   } | null;
@@ -534,13 +531,31 @@ export class AnalysisPageComponent {
    * Mirrors the pattern in `EntriesPageComponent.kindFilterOptions` —
    * the store exposes the raw filter keys; `$localize` lives here in the
    * component layer so the per-locale bundle baking still works.
+   *
+   * Currently-selected kinds are merged in even when they no longer
+   * appear in the visible date range, so the user can always see and
+   * deselect a stale filter (e.g. after narrowing the range past the
+   * last entry of that kind). Without this, `mat-select` would render a
+   * chip with no matching `mat-option` and the dropdown would dead-end.
    */
-  readonly kindFilterOptions = computed<ExerciseKindOption[]>(() =>
-    this.store.kindOptionsRaw().map((value) => ({
+  readonly kindFilterOptions = computed<ExerciseKindOption[]>(() => {
+    const seen = new Set<UnifiedEntryFilterKey>();
+    const merged: UnifiedEntryFilterKey[] = [];
+    for (const k of this.store.kindOptionsRaw()) {
+      if (seen.has(k)) continue;
+      seen.add(k);
+      merged.push(k);
+    }
+    for (const k of this.store.kinds()) {
+      if (seen.has(k)) continue;
+      seen.add(k);
+      merged.push(k);
+    }
+    return merged.map((value) => ({
       value,
       label: this.kindLabel(value),
-    }))
-  );
+    }));
+  });
 
   /**
    * Resolves the bare-id labels emitted by `store.typeBreakdown()` (in
@@ -649,9 +664,10 @@ export class AnalysisPageComponent {
     }
     const def = findExerciseDefinition(value);
     if (def) return exerciseDisplayName(def.id);
-    // Custom user-typed value or legacy id without a catalog entry —
-    // fall back to the (already locale-aware) pushup display so the
-    // legend never shows raw ids.
-    return displayPushupType(value, this.locale);
+    // Legacy id without a catalog entry (e.g. an exercise removed from
+    // the catalog whose entries still live in Firestore) — surface a
+    // generic localised label rather than the raw `category.name` id so
+    // the legend never reads like a developer string.
+    return $localize`:@@analysis.kindUnknown:Andere Übung`;
   }
 }
