@@ -64,11 +64,11 @@ type AnalysisState = {
   to: string;
   dayChartMode: '24h' | '14h' | undefined;
   /**
-   * Active exercise-kind filter for the type-pie. Empty array and
-   * `['pushup']` render the pushup-variant breakdown; any other
-   * non-empty subset switches to kind-mode (pushups collapsed into
-   * one bucket, each `exerciseId` as its own slice). Streaks/best-day
-   * KPIs stay pushup-only.
+   * Active exercise-kind filter for the type-pie. Both an empty array
+   * (default) and `['pushup']` render the pushup-variant breakdown;
+   * any other non-empty subset switches to kind-mode (pushups
+   * collapsed into one bucket, each `exerciseId` as its own slice).
+   * Streaks/best-day KPIs stay pushup-only.
    */
   kinds: ReadonlyArray<UnifiedEntryFilterKey>;
   // Reactive dependency for the fixed-window trend filters: bumped only
