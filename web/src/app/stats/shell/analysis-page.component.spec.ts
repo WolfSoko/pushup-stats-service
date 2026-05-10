@@ -396,6 +396,29 @@ describe('AnalysisPageComponent', () => {
     expect(store.typeBreakdown()).toEqual([]);
   });
 
+  it('hides the kind filter for pushup-only ranges to keep the default page minimal', () => {
+    // Mock dataset has only pushup entries; the filter would just show
+    // a single "Pushup" option which is redundant with the variant pie.
+    const component = fixture.componentInstance;
+    expect(component.kindFilterOptions().map((o) => o.value)).toEqual([
+      'pushup',
+    ]);
+    expect(component.showKindFilter()).toBe(false);
+  });
+
+  it('shows the kind filter when a non-pushup kind is selected even on a pushup-only range', () => {
+    // Regression for Copilot finding: a user with only sit-up entries
+    // would never see the filter, and the default pushup-variant pie
+    // would render empty. Setting a non-pushup kind via the store —
+    // which the page also does when handling URL params or stale
+    // selections — must immediately surface the filter so the user
+    // can adjust it.
+    const component = fixture.componentInstance;
+    component.store.setKinds(['abs.situps']);
+    fixture.detectChanges();
+    expect(component.showKindFilter()).toBe(true);
+  });
+
   it('keeps stale kind selections in the option list so the user can always clear them', () => {
     // Regression for codex P1: after picking a kind that is not present
     // in the current date range, the filter would disappear entirely
@@ -416,22 +439,23 @@ describe('AnalysisPageComponent', () => {
     // regression in the wrapper would silently render `abs.situps` as
     // the legend text instead of "Sit-ups".
     const component = fixture.componentInstance;
-    // Force kind-mode with both pushup and an exercise id selected so
-    // the mapping branch is exercised even though the mock dataset has
-    // no exercise entries.
     component.store.setKinds(['pushup', 'abs.situps']);
     fixture.detectChanges();
-    const labels = component
+    const breakdown = component
       .typeBreakdownDisplay()
       .map((d) => ({ id: d.id, label: d.label }));
-    // The pushup bucket reduces to the localised category label; the
-    // abs.situps id resolves to its localised display name.
-    const pushup = labels.find((l) => l.id === 'pushup');
+    const pushup = breakdown.find((l) => l.id === 'pushup');
     expect(pushup?.label).toBe('Liegestütze');
-    // The locale-aware exercise display name comes from the i18n
-    // table; in DE source locale "Sit-ups" stays the same.
-    // Even when the bucket has zero reps it still flows through the
-    // mapping because typeBreakdownDisplay maps every entry.
+
+    // The mock dataset has no abs.situps entries so the breakdown
+    // bucket itself is missing; `kindFilterOptions` calls the same
+    // `kindLabel` mapping for both selected and in-range kinds, so it
+    // proves the catalog lookup → localised name path also works for
+    // catalog ids — without needing fixture data we don't have.
+    const situpsOption = component
+      .kindFilterOptions()
+      .find((o) => o.value === 'abs.situps');
+    expect(situpsOption?.label).toBe('Sit-ups');
   });
 });
 
