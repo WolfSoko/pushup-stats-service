@@ -20,6 +20,7 @@ import {
   createWeekRange,
   displayPushupType,
   exerciseEntryToUnified,
+  type ExerciseCategoryId,
   inferRangeMode,
   PushupRecord,
   pushupRecordToUnified,
@@ -28,10 +29,14 @@ import {
   StatsSeriesEntry,
   toLocalIsoDate,
   UnifiedEntry,
+  unifiedEntryCategoryId,
   UnifiedEntryFilterKey,
   unifiedEntryFilterKey,
   UserStats,
 } from '@pu-stats/models';
+
+/** Active analysis view: overview tab or a specific exercise category. */
+export type AnalysisView = 'overview' | ExerciseCategoryId;
 
 const EMPTY_STATS: StatsResponse = {
   meta: {
@@ -71,6 +76,13 @@ type AnalysisState = {
    * Streaks/best-day KPIs stay pushup-only.
    */
   kinds: ReadonlyArray<UnifiedEntryFilterKey>;
+  /**
+   * Active per-category view tab. `'overview'` (default) keeps the
+   * page-wide aggregate behaviour; any other value scopes
+   * {@link AnalysisStore.viewFilteredRows} (and downstream KPIs in
+   * follow-up commits) to entries from that category.
+   */
+  activeView: AnalysisView;
   // Reactive dependency for the fixed-window trend filters: bumped only
   // when the local calendar day actually changes, so a polling interval
   // can call `tickClock()` aggressively without forcing
@@ -138,6 +150,7 @@ export const AnalysisStore = signalStore(
       to: defaultRange.to,
       dayChartMode: undefined as '24h' | '14h' | undefined,
       kinds: [] as ReadonlyArray<UnifiedEntryFilterKey>,
+      activeView: 'overview' as AnalysisView,
       clockTick: 0,
       // Seed with today so the first `tickClock()` after construction is a
       // no-op; otherwise the 5-minute polling interval would force a
@@ -306,6 +319,21 @@ export const AnalysisStore = signalStore(
         if (b === 'pushup') return 1;
         return a.localeCompare(b);
       });
+    });
+
+    /**
+     * Unified rows scoped to the {@link AnalysisStore.activeView active
+     * tab}. `'overview'` returns every row in range; any
+     * `ExerciseCategoryId` filters down to entries that map to that
+     * category via {@link unifiedEntryCategoryId}. Foundation for the
+     * per-category KPIs/charts/trends rolled out in subsequent commits.
+     */
+    const viewFilteredRows = computed<UnifiedEntry[]>(() => {
+      const view = store.activeView();
+      if (view === 'overview') return unifiedRows();
+      return unifiedRows().filter(
+        (row) => unifiedEntryCategoryId(row) === view
+      );
     });
 
     const weekRows = computed(() => store.weekEntriesResource.value() ?? []);
@@ -531,6 +559,7 @@ export const AnalysisStore = signalStore(
       granularity,
       rows,
       unifiedRows,
+      viewFilteredRows,
       kindOptionsRaw,
       weekTrend,
       monthTrend,
@@ -562,6 +591,9 @@ export const AnalysisStore = signalStore(
     },
     setKinds(kinds: ReadonlyArray<UnifiedEntryFilterKey>): void {
       patchState(store, { kinds });
+    },
+    setActiveView(activeView: AnalysisView): void {
+      patchState(store, { activeView });
     },
     refreshAll(): void {
       store.statsResource.reload();
