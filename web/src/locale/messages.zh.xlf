@@ -6628,6 +6628,54 @@
         <source>Als nicht erledigt markieren</source>
       <target>标记为未完成</target></segment>
     </unit>
+    <unit id="trainingPlans.skipAria">
+      <segment state="translated">
+        <source>Tag überspringen</source>
+        <target>跳过此天</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.skipTooltip">
+      <segment state="translated">
+        <source>Tag überspringen</source>
+        <target>跳过此天</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.unskipAria">
+      <segment state="translated">
+        <source>Übersprungen rückgängig</source>
+        <target>撤销跳过</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.unskipTooltip">
+      <segment state="translated">
+        <source>Übersprungen rückgängig</source>
+        <target>撤销跳过</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.jumpAria">
+      <segment state="translated">
+        <source>Zu diesem Tag springen</source>
+        <target>跳转到此天</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.jumpTooltip">
+      <segment state="translated">
+        <source>Zu diesem Tag springen</source>
+        <target>跳转到此天</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.skipped">
+      <segment state="translated">
+        <source>Tag übersprungen.</source>
+        <target>已跳过此天。</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.jumped">
+      <segment state="translated">
+        <source>Auf Tag <ph id="0" equiv="INTERPOLATION" disp="dayIndex"/> gesprungen.</source>
+        <target>已跳转到第 <ph id="0" equiv="INTERPOLATION" disp="dayIndex"/> 天。</target>
+      </segment>
+    </unit>
     <unit id="trainingPlans.logAria">
       <notes>
         <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:286,287</note>
