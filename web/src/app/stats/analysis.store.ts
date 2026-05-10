@@ -9,18 +9,27 @@ import {
   withState,
 } from '@ngrx/signals';
 import { firstValueFrom, of } from 'rxjs';
-import { StatsApiService, UserStatsApiService } from '@pu-stats/data-access';
+import {
+  LiveDataStore,
+  StatsApiService,
+  UserStatsApiService,
+} from '@pu-stats/data-access';
 import { UserContextService } from '@pu-auth/auth';
 import {
   canonicalizePushupType,
   createWeekRange,
   displayPushupType,
+  exerciseEntryToUnified,
   inferRangeMode,
   PushupRecord,
+  pushupRecordToUnified,
   StatsGranularity,
   StatsResponse,
   StatsSeriesEntry,
   toLocalIsoDate,
+  UnifiedEntry,
+  UnifiedEntryFilterKey,
+  unifiedEntryFilterKey,
   UserStats,
 } from '@pu-stats/models';
 
@@ -54,6 +63,29 @@ type AnalysisState = {
   from: string;
   to: string;
   dayChartMode: '24h' | '14h' | undefined;
+  /**
+   * Active exercise-kind filter for the type-pie. Mirrors
+   * `EntriesState.kinds` so the filter chip set stays consistent
+   * between History and Analysis.
+   *
+   * Three modes:
+   *   - **empty array (default)** — pushup-variant breakdown, exactly
+   *     the same legend the page rendered before the multi-exercise
+   *     filter shipped. Exercise entries are intentionally ignored so
+   *     existing users see no change unless they opt in.
+   *   - **`['pushup']`** — equivalent to default; the kind-mode branch
+   *     specifically detects this single-pushup case and falls back to
+   *     the variant breakdown.
+   *   - **any other non-empty subset** — kind-mode pie: pushups
+   *     collapse into one bucket and each `exerciseId` becomes its own
+   *     slice. The sum is reps-only; `time`/`distance-time` exercises
+   *     surface with `value = 0` until per-measurement charts land.
+   *
+   * Only the type-pie respects the filter for now — the streak/best-day
+   * KPIs stay pushup-only until per-exercise streaks land (Phase 2 of the
+   * multi-exercise roadmap).
+   */
+  kinds: ReadonlyArray<UnifiedEntryFilterKey>;
   // Reactive dependency for the fixed-window trend filters: bumped only
   // when the local calendar day actually changes, so a polling interval
   // can call `tickClock()` aggressively without forcing
@@ -120,6 +152,7 @@ export const AnalysisStore = signalStore(
       from: defaultRange.from,
       to: defaultRange.to,
       dayChartMode: undefined as '24h' | '14h' | undefined,
+      kinds: [] as ReadonlyArray<UnifiedEntryFilterKey>,
       clockTick: 0,
       // Seed with today so the first `tickClock()` after construction is a
       // no-op; otherwise the 5-minute polling interval would force a
@@ -132,11 +165,13 @@ export const AnalysisStore = signalStore(
     const api = inject(StatsApiService);
     const userStatsApi = inject(UserStatsApiService);
     const user = inject(UserContextService);
+    const live = inject(LiveDataStore);
     const locale = inject(LOCALE_ID);
     return {
       _api: api,
       _userStatsApi: userStatsApi,
       _user: user,
+      _live: live,
       _locale: locale,
     };
   }),
@@ -253,6 +288,49 @@ export const AnalysisStore = signalStore(
     );
     const rows = computed(() => store.entriesResource.value() ?? []);
 
+    /**
+     * Unified rows (pushups + exercise entries) restricted to the page's
+     * date range. Browser-only — exercise entries arrive via the
+     * Firestore `onSnapshot` stream in `LiveDataStore` and are filtered
+     * here against `from`/`to`. SSR (no live store) keeps the empty
+     * array so the page renders the same as before.
+     */
+    const unifiedRows = computed<UnifiedEntry[]>(() => {
+      const from = store.from();
+      const to = store.to();
+      const inRange = (timestamp: string): boolean => {
+        const date = timestamp.slice(0, 10);
+        if (from && date < from) return false;
+        if (to && date > to) return false;
+        return true;
+      };
+      const pushups = rows()
+        .filter((r) => inRange(r.timestamp))
+        .map(pushupRecordToUnified);
+      const exercises = store._live
+        .exerciseEntries()
+        .filter((e) => inRange(e.timestamp))
+        .map(exerciseEntryToUnified);
+      return [...pushups, ...exercises];
+    });
+
+    /**
+     * Distinct exercise-kind keys present in the visible date range —
+     * `'pushup'` plus any catalog id that has at least one entry. Used to
+     * populate the filter multi-select on the Analysis page.
+     */
+    const kindOptionsRaw = computed<UnifiedEntryFilterKey[]>(() => {
+      const seen = new Set<UnifiedEntryFilterKey>();
+      for (const row of unifiedRows()) {
+        seen.add(unifiedEntryFilterKey(row));
+      }
+      return [...seen].sort((a, b) => {
+        if (a === 'pushup') return -1;
+        if (b === 'pushup') return 1;
+        return a.localeCompare(b);
+      });
+    });
+
     const weekRows = computed(() => store.weekEntriesResource.value() ?? []);
     const weekTrend = computed<TrendPoint[]>(() => {
       // Pre-seed TREND_WEEKS ISO weeks (oldest → newest) so a sparse
@@ -326,22 +404,61 @@ export const AnalysisStore = signalStore(
     });
 
     const typeBreakdown = computed<TypeBreakdownDatum[]>(() => {
-      // Canonicalize before bucketing so legacy entryLabel ("Diamond")
-      // and the new canonical id ("diamond") collapse into a single
-      // bucket; render the localized display name as the chart label.
-      const byType = new Map<string, { reps: number; allSets: number[] }>();
-      for (const row of rows()) {
-        const key = canonicalizePushupType(row.type) || 'standard';
-        const entry = byType.get(key) ?? { reps: 0, allSets: [] };
-        entry.reps += row.reps;
-        if (row.sets?.length) entry.allSets.push(...row.sets);
-        byType.set(key, entry);
+      const kinds = store.kinds();
+      const kindSet = kinds.length > 0 ? new Set<string>(kinds) : null;
+      const onlyPushup =
+        !kindSet || (kindSet.size === 1 && kindSet.has('pushup'));
+
+      // Default mode (or pushup-only filter): break the pie down by
+      // pushup variant — same behaviour as before the multi-exercise
+      // filter landed.
+      if (onlyPushup) {
+        const byType = new Map<string, { reps: number; allSets: number[] }>();
+        for (const row of rows()) {
+          const key = canonicalizePushupType(row.type) || 'standard';
+          const entry = byType.get(key) ?? { reps: 0, allSets: [] };
+          entry.reps += row.reps;
+          if (row.sets?.length) entry.allSets.push(...row.sets);
+          byType.set(key, entry);
+        }
+        return [...byType.entries()]
+          .sort((a, b) => b[1].reps - a[1].reps)
+          .map(([key, { reps, allSets }]) => ({
+            id: key,
+            label: displayPushupType(key, store._locale),
+            value: reps,
+            avgSetSize: allSets.length
+              ? Math.round(
+                  (allSets.reduce((s, v) => s + v, 0) / allSets.length) * 10
+                ) / 10
+              : 0,
+          }));
       }
-      return [...byType.entries()]
+
+      // Multi-kind or non-pushup-only filter: collapse pushups into a
+      // single bucket and group exercise entries by `exerciseId`. This
+      // is intentionally a reps-only view — `time` and `distance-time`
+      // exercises are surfaced with `value = 0` until per-measurement
+      // charts land (Track UI-2 graphen-stufe in the roadmap).
+      //
+      // Label resolution is deferred to the page component because the
+      // localised name for `'pushup'` and for catalog-id keys requires
+      // `$localize`, which belongs to the template/component layer.
+      const byKind = new Map<string, { reps: number; allSets: number[] }>();
+      for (const row of unifiedRows()) {
+        const key = unifiedEntryFilterKey(row);
+        if (kindSet && !kindSet.has(key)) continue;
+        const bucket = byKind.get(key) ?? { reps: 0, allSets: [] };
+        bucket.reps += row.reps;
+        if (row.sets?.length) bucket.allSets.push(...row.sets);
+        byKind.set(key, bucket);
+      }
+      return [...byKind.entries()]
         .sort((a, b) => b[1].reps - a[1].reps)
         .map(([key, { reps, allSets }]) => ({
           id: key,
-          label: displayPushupType(key, store._locale),
+          // Caller maps id → localised label.
+          label: key,
           value: reps,
           avgSetSize: allSets.length
             ? Math.round(
@@ -444,6 +561,8 @@ export const AnalysisStore = signalStore(
       chartSeries,
       granularity,
       rows,
+      unifiedRows,
+      kindOptionsRaw,
       weekTrend,
       monthTrend,
       typeBreakdown,
@@ -471,6 +590,9 @@ export const AnalysisStore = signalStore(
     },
     setDayChartMode(dayChartMode: '24h' | '14h'): void {
       patchState(store, { dayChartMode });
+    },
+    setKinds(kinds: ReadonlyArray<UnifiedEntryFilterKey>): void {
+      patchState(store, { kinds });
     },
     refreshAll(): void {
       store.statsResource.reload();

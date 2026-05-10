@@ -65,6 +65,46 @@ export const EXERCISE_CATALOG: ReadonlyArray<ExerciseDefinition> = [
     icon: 'self_improvement',
   },
   {
+    id: 'abs.crunches',
+    categoryId: 'abs',
+    measurement: 'reps',
+    min: 1,
+    max: 500,
+    unit: 'reps',
+    nameKey: '@@exercise.abs.crunches.name',
+    icon: 'self_improvement',
+  },
+  {
+    id: 'abs.legraises',
+    categoryId: 'abs',
+    measurement: 'reps',
+    min: 1,
+    max: 500,
+    unit: 'reps',
+    nameKey: '@@exercise.abs.legraises.name',
+    icon: 'self_improvement',
+  },
+  {
+    id: 'abs.russiantwist',
+    categoryId: 'abs',
+    measurement: 'reps',
+    min: 1,
+    max: 500,
+    unit: 'reps',
+    nameKey: '@@exercise.abs.russiantwist.name',
+    icon: 'self_improvement',
+  },
+  {
+    id: 'abs.mountainclimbers',
+    categoryId: 'abs',
+    measurement: 'reps',
+    min: 1,
+    max: 500,
+    unit: 'reps',
+    nameKey: '@@exercise.abs.mountainclimbers.name',
+    icon: 'self_improvement',
+  },
+  {
     id: 'legs.squats',
     categoryId: 'legs',
     measurement: 'reps',
@@ -72,6 +112,46 @@ export const EXERCISE_CATALOG: ReadonlyArray<ExerciseDefinition> = [
     max: 500,
     unit: 'reps',
     nameKey: '@@exercise.legs.squats.name',
+    icon: 'directions_run',
+  },
+  {
+    id: 'legs.lunges',
+    categoryId: 'legs',
+    measurement: 'reps',
+    min: 1,
+    max: 500,
+    unit: 'reps',
+    nameKey: '@@exercise.legs.lunges.name',
+    icon: 'directions_run',
+  },
+  {
+    id: 'legs.glutebridge',
+    categoryId: 'legs',
+    measurement: 'reps',
+    min: 1,
+    max: 500,
+    unit: 'reps',
+    nameKey: '@@exercise.legs.glutebridge.name',
+    icon: 'directions_run',
+  },
+  {
+    id: 'legs.calfraises',
+    categoryId: 'legs',
+    measurement: 'reps',
+    min: 1,
+    max: 500,
+    unit: 'reps',
+    nameKey: '@@exercise.legs.calfraises.name',
+    icon: 'directions_run',
+  },
+  {
+    id: 'legs.jumpsquats',
+    categoryId: 'legs',
+    measurement: 'reps',
+    min: 1,
+    max: 500,
+    unit: 'reps',
+    nameKey: '@@exercise.legs.jumpsquats.name',
     icon: 'directions_run',
   },
   {
@@ -137,9 +217,10 @@ export function findExerciseCategory(
  * recomputation (the dashboard sections call this from inside a
  * `computed`).
  */
-let cachedByCategory:
-  | ReadonlyMap<ExerciseCategoryInfo['id'], ReadonlyArray<ExerciseDefinition>>
-  | null = null;
+let cachedByCategory: ReadonlyMap<
+  ExerciseCategoryInfo['id'],
+  ReadonlyArray<ExerciseDefinition>
+> | null = null;
 
 export function exercisesByCategory(): ReadonlyMap<
   ExerciseCategoryInfo['id'],

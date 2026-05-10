@@ -12,10 +12,16 @@ import {
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
+import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { RouterLink } from '@angular/router';
-import { createWeekRange } from '@pu-stats/models';
+import {
+  createWeekRange,
+  findExerciseDefinition,
+  UnifiedEntryFilterKey,
+} from '@pu-stats/models';
 import { LiveDataStore } from '@pu-stats/data-access';
 import { FilterBarComponent } from '../components/filter-bar/filter-bar.component';
 import { HeatmapComponent } from '../components/heatmap/heatmap.component';
@@ -24,7 +30,13 @@ import { SetsDistributionComponent } from '../components/sets-distribution/sets-
 import { StatsChartComponent } from '../components/stats-chart/stats-chart.component';
 import { TypePieComponent } from '../components/type-pie/type-pie.component';
 import { AnalysisStore } from '../analysis.store';
+import { exerciseDisplayName } from '../i18n/exercise-display-names';
 import { PageHeaderComponent } from '../../core/page-header/page-header.component';
+
+interface ExerciseKindOption {
+  value: UnifiedEntryFilterKey;
+  label: string;
+}
 
 @Component({
   selector: 'app-analysis-page',
@@ -33,7 +45,9 @@ import { PageHeaderComponent } from '../../core/page-header/page-header.componen
     MatButtonModule,
     MatButtonToggleModule,
     MatCardModule,
+    MatFormFieldModule,
     MatIconModule,
+    MatSelectModule,
     MatTableModule,
     RouterLink,
     DecimalPipe,
@@ -63,6 +77,28 @@ import { PageHeaderComponent } from '../../core/page-header/page-header.componen
           (fromChange)="store.setFrom($event)"
           (toChange)="store.setTo($event)"
         />
+
+        @if (kindFilterOptions().length > 1 || store.kinds().length > 0) {
+          <mat-form-field
+            class="kind-filter"
+            appearance="outline"
+            subscriptSizing="dynamic"
+          >
+            <mat-label i18n="@@analysis.exerciseFilter">Übung</mat-label>
+            <mat-select
+              multiple
+              [value]="store.kinds()"
+              (valueChange)="store.setKinds($event)"
+              data-testid="analysis-kind-filter"
+            >
+              @for (option of kindFilterOptions(); track option.value) {
+                <mat-option [value]="option.value">{{
+                  option.label
+                }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+        }
       </section>
 
       @if (showEmptyCta()) {
@@ -162,7 +198,7 @@ import { PageHeaderComponent } from '../../core/page-header/page-header.componen
           </mat-card-header>
           <mat-card-content>
             @defer (hydrate on viewport) {
-              <app-type-pie [data]="store.typeBreakdown()" />
+              <app-type-pie [data]="typeBreakdownDisplay()" />
             }
           </mat-card-content>
         </mat-card>
@@ -355,6 +391,9 @@ import { PageHeaderComponent } from '../../core/page-header/page-header.componen
     }
 
     .filter-section {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
       position: sticky;
       top: calc(var(--top-nav-height, 64px) + var(--desktop-nav-height, 0px));
       z-index: 8;
@@ -487,6 +526,55 @@ export class AnalysisPageComponent {
     url?: string;
   } | null;
 
+  /**
+   * Multi-select options for the "Übung" filter on the analysis page.
+   * Mirrors the pattern in `EntriesPageComponent.kindFilterOptions` —
+   * the store exposes the raw filter keys; `$localize` lives here in the
+   * component layer so the per-locale bundle baking still works.
+   *
+   * Currently-selected kinds are merged in even when they no longer
+   * appear in the visible date range, so the user can always see and
+   * deselect a stale filter (e.g. after narrowing the range past the
+   * last entry of that kind). Without this, `mat-select` would render a
+   * chip with no matching `mat-option` and the dropdown would dead-end.
+   */
+  readonly kindFilterOptions = computed<ExerciseKindOption[]>(() => {
+    const seen = new Set<UnifiedEntryFilterKey>();
+    const merged: UnifiedEntryFilterKey[] = [];
+    for (const k of this.store.kindOptionsRaw()) {
+      if (seen.has(k)) continue;
+      seen.add(k);
+      merged.push(k);
+    }
+    for (const k of this.store.kinds()) {
+      if (seen.has(k)) continue;
+      seen.add(k);
+      merged.push(k);
+    }
+    return merged.map((value) => ({
+      value,
+      label: this.kindLabel(value),
+    }));
+  });
+
+  /**
+   * Resolves the bare-id labels emitted by `store.typeBreakdown()` (in
+   * multi-kind mode) into localised display names. Pushup-only mode
+   * returns the breakdown unchanged because the store already produces
+   * locale-aware variant names there.
+   */
+  readonly typeBreakdownDisplay = computed(() => {
+    const kinds = this.store.kinds();
+    const isKindMode =
+      kinds.length > 0 && !(kinds.length === 1 && kinds[0] === 'pushup');
+    const data = this.store.typeBreakdown();
+    if (!isKindMode) return data;
+    return data.map((d) => ({
+      ...d,
+      label: this.kindLabel(d.id as UnifiedEntryFilterKey),
+    }));
+  });
+
   readonly trendColumns = ['label', 'total'];
   readonly trendColumnsWithSets = ['label', 'total', 'avgSetsPerEntry'];
 
@@ -568,5 +656,18 @@ export class AnalysisPageComponent {
     const qIndex = url.indexOf('?');
     if (qIndex === -1) return '';
     return url.slice(qIndex);
+  }
+
+  private kindLabel(value: UnifiedEntryFilterKey): string {
+    if (value === 'pushup') {
+      return $localize`:@@exercise.category.pushup:Liegestütze`;
+    }
+    const def = findExerciseDefinition(value);
+    if (def) return exerciseDisplayName(def.id);
+    // Legacy id without a catalog entry (e.g. an exercise removed from
+    // the catalog whose entries still live in Firestore) — surface a
+    // generic localised label rather than the raw `category.name` id so
+    // the legend never reads like a developer string.
+    return $localize`:@@analysis.kindUnknown:Andere Übung`;
   }
 }

@@ -3335,6 +3335,66 @@ Deine Position: # ·  Reps        </source>
         <target>Squats</target>
       </segment>
     </unit>
+    <unit id="exercise.abs.crunches.name">
+      <segment state="translated">
+        <source>Crunches</source>
+        <target>Crunches</target>
+      </segment>
+    </unit>
+    <unit id="exercise.abs.legraises.name">
+      <segment state="translated">
+        <source>Beinheben</source>
+        <target>Leg raises</target>
+      </segment>
+    </unit>
+    <unit id="exercise.abs.russiantwist.name">
+      <segment state="translated">
+        <source>Russian Twist</source>
+        <target>Russian Twist</target>
+      </segment>
+    </unit>
+    <unit id="exercise.abs.mountainclimbers.name">
+      <segment state="translated">
+        <source>Mountain Climbers</source>
+        <target>Mountain Climbers</target>
+      </segment>
+    </unit>
+    <unit id="exercise.legs.lunges.name">
+      <segment state="translated">
+        <source>Ausfallschritte</source>
+        <target>Lunges</target>
+      </segment>
+    </unit>
+    <unit id="exercise.legs.glutebridge.name">
+      <segment state="translated">
+        <source>Hüftheben</source>
+        <target>Glute Bridge</target>
+      </segment>
+    </unit>
+    <unit id="exercise.legs.calfraises.name">
+      <segment state="translated">
+        <source>Wadenheben</source>
+        <target>Calf raises</target>
+      </segment>
+    </unit>
+    <unit id="exercise.legs.jumpsquats.name">
+      <segment state="translated">
+        <source>Jump Squats</source>
+        <target>Jump Squats</target>
+      </segment>
+    </unit>
+    <unit id="analysis.exerciseFilter">
+      <segment state="translated">
+        <source>Übung</source>
+        <target>Exercise</target>
+      </segment>
+    </unit>
+    <unit id="analysis.kindUnknown">
+      <segment state="translated">
+        <source>Andere Übung</source>
+        <target>Other exercise</target>
+      </segment>
+    </unit>
     <unit id="exerciseSection.addAriaPrefix">
       <segment state="translated">
         <source>Eintrag hinzufügen</source>
