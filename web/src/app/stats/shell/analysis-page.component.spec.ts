@@ -2,7 +2,11 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { of } from 'rxjs';
 import { AnalysisPageComponent } from './analysis-page.component';
-import { StatsApiService, UserStatsApiService } from '@pu-stats/data-access';
+import {
+  LiveDataStore,
+  StatsApiService,
+  UserStatsApiService,
+} from '@pu-stats/data-access';
 import { AuthStore, UserContextService } from '@pu-auth/auth';
 import { makeAuthStoreMock } from '@pu-stats/testing';
 import { FilterBarComponent } from '../components/filter-bar/filter-bar.component';
@@ -12,8 +16,8 @@ import { StatsChartComponent } from '../components/stats-chart/stats-chart.compo
 import { SetsDistributionComponent } from '../components/sets-distribution/sets-distribution.component';
 
 // We don't want to render real components in unit tests.
-import { Component, input, model, output } from '@angular/core';
-import { RangeModes } from '@pu-stats/models';
+import { Component, input, model, output, signal } from '@angular/core';
+import { ExerciseEntry, RangeModes } from '@pu-stats/models';
 
 @Component({
   selector: 'app-filter-bar',
@@ -73,6 +77,15 @@ class MockSetsDistributionComponent {
 
 describe('AnalysisPageComponent', () => {
   let fixture: ComponentFixture<AnalysisPageComponent>;
+  // Mutable mirror of the LiveDataStore so tests can seed exercise
+  // entries that the analysis store reads via `unifiedRows`.
+  const liveExerciseEntries = signal<ExerciseEntry[]>([]);
+  const liveMock = {
+    connected: signal(true),
+    entries: signal([] as never[]),
+    exerciseEntries: liveExerciseEntries,
+    updateTick: signal(0),
+  };
 
   const apiMock = {
     load: vitest.fn().mockReturnValue(
@@ -153,12 +166,14 @@ describe('AnalysisPageComponent', () => {
     });
     vitest.setSystemTime(new Date(2026, 1, 15, 12));
 
+    liveExerciseEntries.set([]);
     await TestBed.configureTestingModule({
       imports: [AnalysisPageComponent],
       providers: [
         { provide: StatsApiService, useValue: apiMock },
         { provide: AuthStore, useValue: makeAuthStoreMock() },
         { provide: UserContextService, useValue: { userIdSafe: () => 'u1' } },
+        { provide: LiveDataStore, useValue: liveMock },
         {
           provide: UserStatsApiService,
           useValue: {
@@ -406,6 +421,30 @@ describe('AnalysisPageComponent', () => {
     expect(component.showKindFilter()).toBe(false);
   });
 
+  it('shows the kind filter when the range contains a non-pushup kind even with no selection', () => {
+    // OR-branch of `showKindFilter`: a user who already has sit-up
+    // entries in the visible range must see the filter without
+    // pre-selecting anything, otherwise they could never enable
+    // kind-mode for their own data.
+    const component = fixture.componentInstance;
+    liveExerciseEntries.set([
+      {
+        _id: 'e1',
+        userId: 'u1',
+        exerciseId: 'abs.situps',
+        timestamp: '2026-02-12T08:00:00.000Z',
+        reps: 30,
+        source: 'web',
+      } as ExerciseEntry,
+    ]);
+    component.store.setKinds([]);
+    component.store.setRange('2026-02-09', '2026-02-15');
+    fixture.detectChanges();
+    const values = component.kindFilterOptions().map((o) => o.value);
+    expect(values).toContain('abs.situps');
+    expect(component.showKindFilter()).toBe(true);
+  });
+
   it('shows the kind filter when a non-pushup kind is selected even on a pushup-only range', () => {
     // Regression for Copilot finding: a user with only sit-up entries
     // would never see the filter, and the default pushup-variant pie
@@ -492,6 +531,15 @@ describe('AnalysisPageComponent empty-state CTA gating', () => {
         { provide: StatsApiService, useValue: emptyApiMock },
         { provide: AuthStore, useValue: makeAuthStoreMock() },
         { provide: UserContextService, useValue: { userIdSafe: () => 'u1' } },
+        {
+          provide: LiveDataStore,
+          useValue: {
+            connected: signal(true),
+            entries: signal([]),
+            exerciseEntries: signal([]),
+            updateTick: signal(0),
+          },
+        },
         {
           provide: UserStatsApiService,
           useValue: {

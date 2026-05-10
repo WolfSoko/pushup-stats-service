@@ -65,11 +65,10 @@ type AnalysisState = {
   dayChartMode: '24h' | '14h' | undefined;
   /**
    * Active exercise-kind filter for the type-pie. Empty array and
-   * `['pushup']` both render the pushup-variant breakdown (default);
-   * any other non-empty subset switches the pie into kind-mode where
-   * pushups collapse into one bucket and each `exerciseId` becomes a
-   * slice. Streaks/best-day KPIs stay pushup-only — per-exercise
-   * versions land with Phase 2 of the multi-exercise roadmap.
+   * `['pushup']` render the pushup-variant breakdown; any other
+   * non-empty subset switches to kind-mode (pushups collapsed into
+   * one bucket, each `exerciseId` as its own slice). Streaks/best-day
+   * KPIs stay pushup-only.
    */
   kinds: ReadonlyArray<UnifiedEntryFilterKey>;
   // Reactive dependency for the fixed-window trend filters: bumped only
@@ -274,11 +273,9 @@ export const AnalysisStore = signalStore(
     );
     const rows = computed(() => store.entriesResource.value() ?? []);
 
-    /**
-     * Browser-only: exercise entries come from the live Firestore
-     * snapshot and are filtered to the page's date range. SSR has no
-     * live store and keeps the array empty.
-     */
+    // Pushup rows come from the REST resource (works on SSR); exercise
+    // entries come from the live Firestore snapshot, so SSR yields
+    // pushups only.
     const unifiedRows = computed<UnifiedEntry[]>(() => {
       const from = store.from();
       const to = store.to();

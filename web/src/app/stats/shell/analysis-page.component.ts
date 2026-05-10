@@ -557,18 +557,13 @@ export class AnalysisPageComponent {
     }));
   });
 
-  /**
-   * The filter is meaningful whenever the user has any choice to make:
-   *   - any non-pushup kind is present in the range (a pushups-only
-   *     range still fully describes itself via the variant pie), OR
-   *   - a kind is already selected (so the user can always clear it,
-   *     even after narrowing the range past its last entry).
-   * Hiding it for a pure-pushup range keeps the page minimal for the
-   * default user.
-   */
+  // Hidden for pure-pushup ranges to keep the default page minimal,
+  // but always visible when a kind is selected so the user can clear it.
+  // Reads the raw keys directly so visibility doesn't trigger label
+  // resolution / `$localize`.
   readonly showKindFilter = computed(() => {
     if (this.store.kinds().length > 0) return true;
-    return this.kindFilterOptions().some((o) => o.value !== 'pushup');
+    return this.store.kindOptionsRaw().some((k) => k !== 'pushup');
   });
 
   /**
