@@ -30,7 +30,7 @@ const TOP_N = 5;
             <svg
               class="pie"
               viewBox="0 0 42 42"
-              role="img"
+              role="group"
               aria-label="Verteilung der Liegestütz-Typen"
               i18n-aria-label="@@pie.distributionAria"
             >
@@ -120,8 +120,8 @@ const TOP_N = 5;
                   <span class="name">{{ seg.label }}</span>
                 </span>
               </mat-checkbox>
-              @if (legendPercent(seg.id); as pct) {
-                <span class="pct">{{ pct }}%</span>
+              @if (isSelected(seg.id)) {
+                <span class="pct">{{ legendPercent(seg.id) ?? 0 }}%</span>
               } @else {
                 <span class="pct count">{{ seg.value | number }}</span>
               }
@@ -303,7 +303,13 @@ export class TypePieComponent {
   // null = use top-5 default; concrete Set = explicit user choice (may be empty).
   private readonly userSelection = signal<ReadonlySet<string> | null>(null);
   private readonly _focusedId = signal<string | null>(null);
-  readonly focusedId = this._focusedId.asReadonly();
+  // Effective focused id — `null` whenever the raw focus no longer maps
+  // to a visible segment (e.g. after the parent swaps `data` and evicts
+  // it). The template reads this so dimming/focused styling can't get
+  // stuck on a stale id.
+  readonly focusedId = computed<string | null>(
+    () => this.focusedSegment()?.id ?? null
+  );
 
   readonly total = computed(() =>
     this.data().reduce((sum, x) => sum + (x.value || 0), 0)

@@ -125,6 +125,36 @@ describe('TypePieComponent', () => {
     expect(component.focusedSegment()?.id).toBe('Diamond');
   });
 
+  it('focuses a slice via Enter keydown', () => {
+    const host: HTMLElement = fixture.nativeElement;
+    const slice = host.querySelector(
+      '[data-testid="type-pie-slice-Diamond"]'
+    ) as SVGElement | null;
+    expect(slice).toBeTruthy();
+
+    slice!.dispatchEvent(
+      new KeyboardEvent('keydown', { key: 'Enter', bubbles: true })
+    );
+    fixture.detectChanges();
+
+    expect(component.focusedSegment()?.id).toBe('Diamond');
+  });
+
+  it('focuses a slice via Space keydown', () => {
+    const host: HTMLElement = fixture.nativeElement;
+    const slice = host.querySelector(
+      '[data-testid="type-pie-slice-Wide"]'
+    ) as SVGElement | null;
+    expect(slice).toBeTruthy();
+
+    slice!.dispatchEvent(
+      new KeyboardEvent('keydown', { key: ' ', bubbles: true })
+    );
+    fixture.detectChanges();
+
+    expect(component.focusedSegment()?.id).toBe('Wide');
+  });
+
   it('toggling off the focused type clears the focus', () => {
     component.focusSegment('Standard');
     expect(component.focusedSegment()?.id).toBe('Standard');
@@ -132,6 +162,51 @@ describe('TypePieComponent', () => {
     // Standard becomes unselected; the focused detail can no longer apply.
     component.toggle('Standard');
     expect(component.focusedSegment()).toBeNull();
+  });
+
+  it('does not dim slices when the parent swaps data and evicts the focused id', () => {
+    // Given: Standard is focused
+    component.focusSegment('Standard');
+    fixture.detectChanges();
+    expect(component.focusedSegment()?.id).toBe('Standard');
+
+    // When: data swaps to a set that no longer contains Standard
+    fixture.componentRef.setInput('data', [
+      { label: 'Diamond', value: 80 },
+      { label: 'Wide', value: 60 },
+    ]);
+    fixture.detectChanges();
+
+    // Then: effective focusedId reports null and no rendered slice is dimmed
+    expect(component.focusedSegment()).toBeNull();
+    expect(component.focusedId()).toBeNull();
+    const host: HTMLElement = fixture.nativeElement;
+    expect(host.querySelectorAll('.seg.dimmed')).toHaveLength(0);
+    // Total label is restored too.
+    expect(host.querySelector('[data-testid="type-pie-total"]')).toBeTruthy();
+  });
+
+  it('renders 0% (not raw count) for a selected slice whose share rounds to zero', () => {
+    // Given: a tiny slice that rounds to 0% of the selected total
+    fixture.componentRef.setInput('data', [
+      { label: 'Standard', value: 1000 },
+      { label: 'Spider', value: 2 },
+    ]);
+    fixture.detectChanges();
+
+    // Spider is selected (top-5 default covers both) but rounds to 0%.
+    expect(component.isSelected('Spider')).toBe(true);
+    expect(component.legendPercent('Spider')).toBe(0);
+
+    // The legend pct cell renders "0%" instead of falling into the
+    // unselected/raw-count branch.
+    const host: HTMLElement = fixture.nativeElement;
+    const pct = host
+      .querySelector('[data-testid="type-pie-toggle-Spider"]')
+      ?.closest('.row')
+      ?.querySelector('.pct');
+    expect(pct?.textContent).toContain('0%');
+    expect(pct?.classList.contains('count')).toBe(false);
   });
 
   it('toggling a checkbox removes the type and drops its slice from the pie', () => {
