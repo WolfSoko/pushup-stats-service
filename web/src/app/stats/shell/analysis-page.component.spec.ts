@@ -377,6 +377,24 @@ describe('AnalysisPageComponent', () => {
     const monthHasAvg = month.some((m) => (m.avgSetsPerEntry ?? 0) > 0);
     expect(monthHasAvg).toBe(true);
   });
+
+  it('keeps typeBreakdown in pushup-variant mode while no kinds filter is active', () => {
+    const { store } = fixture.componentInstance;
+    expect(store.kinds()).toEqual([]);
+    const labels = store.typeBreakdown().map((b) => b.label);
+    // Locale-aware variant names (German source locale).
+    expect(labels).toContain('Standard-Liegestütze');
+    expect(labels).toContain('Diamant-Liegestütze');
+  });
+
+  it('switches typeBreakdown to kind-mode when a non-pushup kind is selected', () => {
+    const { store } = fixture.componentInstance;
+    store.setKinds(['abs.situps']);
+    // Mock dataset has no exercise entries, so the breakdown collapses to
+    // an empty list — no "abs.situps" bucket without source data, no
+    // pushup variants either because the filter excludes pushups.
+    expect(store.typeBreakdown()).toEqual([]);
+  });
 });
 
 describe('AnalysisPageComponent empty-state CTA gating', () => {

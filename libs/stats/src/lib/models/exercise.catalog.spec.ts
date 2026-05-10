@@ -50,6 +50,22 @@ describe('EXERCISE_CATALOG', () => {
     expect(ids.has('legs.squats')).toBe(true);
   });
 
+  it('includes the additional abs and legs exercises', () => {
+    const ids = new Set(EXERCISE_CATALOG.map((d) => d.id));
+    for (const id of [
+      'abs.crunches',
+      'abs.legraises',
+      'abs.russiantwist',
+      'abs.mountainclimbers',
+      'legs.lunges',
+      'legs.glutebridge',
+      'legs.calfraises',
+      'legs.jumpsquats',
+    ]) {
+      expect(ids.has(id)).toBe(true);
+    }
+  });
+
   it('exposes plank.standard as the time-measurement entry point', () => {
     const plank = EXERCISE_CATALOG.find((d) => d.id === 'plank.standard');
     expect(plank?.measurement).toBe('time');

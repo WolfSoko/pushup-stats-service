@@ -5,6 +5,7 @@ import {
   DestroyRef,
   effect,
   inject,
+  LOCALE_ID,
   PLATFORM_ID,
   REQUEST,
   signal,
@@ -12,10 +13,17 @@ import {
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
+import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { RouterLink } from '@angular/router';
-import { createWeekRange } from '@pu-stats/models';
+import {
+  createWeekRange,
+  displayPushupType,
+  findExerciseDefinition,
+  UnifiedEntryFilterKey,
+} from '@pu-stats/models';
 import { LiveDataStore } from '@pu-stats/data-access';
 import { FilterBarComponent } from '../components/filter-bar/filter-bar.component';
 import { HeatmapComponent } from '../components/heatmap/heatmap.component';
@@ -24,7 +32,13 @@ import { SetsDistributionComponent } from '../components/sets-distribution/sets-
 import { StatsChartComponent } from '../components/stats-chart/stats-chart.component';
 import { TypePieComponent } from '../components/type-pie/type-pie.component';
 import { AnalysisStore } from '../analysis.store';
+import { exerciseDisplayName } from '../i18n/exercise-display-names';
 import { PageHeaderComponent } from '../../core/page-header/page-header.component';
+
+interface ExerciseKindOption {
+  value: UnifiedEntryFilterKey;
+  label: string;
+}
 
 @Component({
   selector: 'app-analysis-page',
@@ -33,7 +47,9 @@ import { PageHeaderComponent } from '../../core/page-header/page-header.componen
     MatButtonModule,
     MatButtonToggleModule,
     MatCardModule,
+    MatFormFieldModule,
     MatIconModule,
+    MatSelectModule,
     MatTableModule,
     RouterLink,
     DecimalPipe,
@@ -63,6 +79,28 @@ import { PageHeaderComponent } from '../../core/page-header/page-header.componen
           (fromChange)="store.setFrom($event)"
           (toChange)="store.setTo($event)"
         />
+
+        @if (kindFilterOptions().length > 1) {
+          <mat-form-field
+            class="kind-filter"
+            appearance="outline"
+            subscriptSizing="dynamic"
+          >
+            <mat-label i18n="@@analysis.exerciseFilter">Übung</mat-label>
+            <mat-select
+              multiple
+              [value]="store.kinds()"
+              (valueChange)="store.setKinds($event)"
+              data-testid="analysis-kind-filter"
+            >
+              @for (option of kindFilterOptions(); track option.value) {
+                <mat-option [value]="option.value">{{
+                  option.label
+                }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+        }
       </section>
 
       @if (showEmptyCta()) {
@@ -162,7 +200,7 @@ import { PageHeaderComponent } from '../../core/page-header/page-header.componen
           </mat-card-header>
           <mat-card-content>
             @defer (hydrate on viewport) {
-              <app-type-pie [data]="store.typeBreakdown()" />
+              <app-type-pie [data]="typeBreakdownDisplay()" />
             }
           </mat-card-content>
         </mat-card>
@@ -355,6 +393,9 @@ import { PageHeaderComponent } from '../../core/page-header/page-header.componen
     }
 
     .filter-section {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
       position: sticky;
       top: calc(var(--top-nav-height, 64px) + var(--desktop-nav-height, 0px));
       z-index: 8;
@@ -483,9 +524,41 @@ export class AnalysisPageComponent {
 
   private readonly platformId = inject(PLATFORM_ID);
   private readonly document = inject(DOCUMENT);
+  private readonly locale = inject(LOCALE_ID);
   private readonly request = inject(REQUEST, { optional: true }) as {
     url?: string;
   } | null;
+
+  /**
+   * Multi-select options for the "Übung" filter on the analysis page.
+   * Mirrors the pattern in `EntriesPageComponent.kindFilterOptions` —
+   * the store exposes the raw filter keys; `$localize` lives here in the
+   * component layer so the per-locale bundle baking still works.
+   */
+  readonly kindFilterOptions = computed<ExerciseKindOption[]>(() =>
+    this.store.kindOptionsRaw().map((value) => ({
+      value,
+      label: this.kindLabel(value),
+    }))
+  );
+
+  /**
+   * Resolves the bare-id labels emitted by `store.typeBreakdown()` (in
+   * multi-kind mode) into localised display names. Pushup-only mode
+   * returns the breakdown unchanged because the store already produces
+   * locale-aware variant names there.
+   */
+  readonly typeBreakdownDisplay = computed(() => {
+    const kinds = this.store.kinds();
+    const isKindMode =
+      kinds.length > 0 && !(kinds.length === 1 && kinds[0] === 'pushup');
+    const data = this.store.typeBreakdown();
+    if (!isKindMode) return data;
+    return data.map((d) => ({
+      ...d,
+      label: this.kindLabel(d.id as UnifiedEntryFilterKey),
+    }));
+  });
 
   readonly trendColumns = ['label', 'total'];
   readonly trendColumnsWithSets = ['label', 'total', 'avgSetsPerEntry'];
@@ -568,5 +641,17 @@ export class AnalysisPageComponent {
     const qIndex = url.indexOf('?');
     if (qIndex === -1) return '';
     return url.slice(qIndex);
+  }
+
+  private kindLabel(value: UnifiedEntryFilterKey): string {
+    if (value === 'pushup') {
+      return $localize`:@@exercise.category.pushup:Liegestütze`;
+    }
+    const def = findExerciseDefinition(value);
+    if (def) return exerciseDisplayName(def.id);
+    // Custom user-typed value or legacy id without a catalog entry —
+    // fall back to the (already locale-aware) pushup display so the
+    // legend never shows raw ids.
+    return displayPushupType(value, this.locale);
   }
 }

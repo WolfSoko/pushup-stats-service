@@ -163,9 +163,15 @@ service cloud.firestore {
                     && request.resource.data.timestamp is string
                     && request.resource.data.timestamp.size() > 0
                     && (
-                      // Reps-measured exercises.
-                      ((request.resource.data.exerciseId == 'abs.situps'
-                          || request.resource.data.exerciseId == 'legs.squats')
+                      // Reps-measured exercises. Keep this list in sync
+                      // with the `measurement: 'reps'` entries in
+                      // `libs/stats/src/lib/models/exercise.catalog.ts`.
+                      ([
+                          'abs.situps', 'abs.crunches', 'abs.legraises',
+                          'abs.russiantwist', 'abs.mountainclimbers',
+                          'legs.squats', 'legs.lunges', 'legs.glutebridge',
+                          'legs.calfraises', 'legs.jumpsquats'
+                        ].hasAny([request.resource.data.exerciseId])
                         && request.resource.data.reps is int
                         && request.resource.data.reps >= 1
                         && request.resource.data.reps <= 500
@@ -221,9 +227,14 @@ service cloud.firestore {
                     // pin to `resource.data.exerciseId`.
                     && (
                       // Reps-measured exercises: reject `durationSec`/
-                      // `distanceM` and validate reps when changed.
-                      ((resource.data.exerciseId == 'abs.situps'
-                          || resource.data.exerciseId == 'legs.squats')
+                      // `distanceM` and validate reps when changed. Keep
+                      // the list in sync with the create branch above.
+                      ([
+                          'abs.situps', 'abs.crunches', 'abs.legraises',
+                          'abs.russiantwist', 'abs.mountainclimbers',
+                          'legs.squats', 'legs.lunges', 'legs.glutebridge',
+                          'legs.calfraises', 'legs.jumpsquats'
+                        ].hasAny([resource.data.exerciseId])
                         && !('durationSec' in request.resource.data.keys())
                         && !('distanceM' in request.resource.data.keys())
                         && (!('reps' in request.resource.data.diff(resource.data).affectedKeys())

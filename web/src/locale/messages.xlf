@@ -4565,20 +4565,90 @@
     </unit>
     <unit id="exercise.abs.situps.name">
       <notes>
-        <note category="location">web/src/app/stats/components/exercise-category-section/exercise-category-section.component.ts:363</note>
         <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:8</note>
       </notes>
       <segment>
         <source>Sit-ups</source>
       </segment>
     </unit>
-    <unit id="exercise.legs.squats.name">
+    <unit id="exercise.abs.crunches.name">
       <notes>
-        <note category="location">web/src/app/stats/components/exercise-category-section/exercise-category-section.component.ts:364</note>
         <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:9</note>
       </notes>
       <segment>
+        <source>Crunches</source>
+      </segment>
+    </unit>
+    <unit id="exercise.abs.legraises.name">
+      <notes>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:10</note>
+      </notes>
+      <segment>
+        <source>Beinheben</source>
+      </segment>
+    </unit>
+    <unit id="exercise.abs.russiantwist.name">
+      <notes>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:11</note>
+      </notes>
+      <segment>
+        <source>Russian Twist</source>
+      </segment>
+    </unit>
+    <unit id="exercise.abs.mountainclimbers.name">
+      <notes>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:12</note>
+      </notes>
+      <segment>
+        <source>Mountain Climbers</source>
+      </segment>
+    </unit>
+    <unit id="exercise.legs.squats.name">
+      <notes>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:13</note>
+      </notes>
+      <segment>
         <source>Kniebeugen</source>
+      </segment>
+    </unit>
+    <unit id="exercise.legs.lunges.name">
+      <notes>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:14</note>
+      </notes>
+      <segment>
+        <source>Ausfallschritte</source>
+      </segment>
+    </unit>
+    <unit id="exercise.legs.glutebridge.name">
+      <notes>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:15</note>
+      </notes>
+      <segment>
+        <source>Hüftheben</source>
+      </segment>
+    </unit>
+    <unit id="exercise.legs.calfraises.name">
+      <notes>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:16</note>
+      </notes>
+      <segment>
+        <source>Wadenheben</source>
+      </segment>
+    </unit>
+    <unit id="exercise.legs.jumpsquats.name">
+      <notes>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:17</note>
+      </notes>
+      <segment>
+        <source>Jump Squats</source>
+      </segment>
+    </unit>
+    <unit id="analysis.exerciseFilter">
+      <notes>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts</note>
+      </notes>
+      <segment>
+        <source>Übung</source>
       </segment>
     </unit>
     <unit id="exercise.plank.standard.name">
