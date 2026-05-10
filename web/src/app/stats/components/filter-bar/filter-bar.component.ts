@@ -100,7 +100,7 @@ import {
             i18n-aria-label="@@rangeForwardAria"
           >
             <span class="step-label" i18n="@@rangeForward">Vor</span>
-            <mat-icon>chevron_right</mat-icon>
+            <mat-icon iconPositionEnd>chevron_right</mat-icon>
           </button>
           <button
             type="button"
