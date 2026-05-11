@@ -36,8 +36,8 @@ Chart.register(...registerables);
   template: `
     <mat-card class="chart">
       <mat-card-header>
-        <mat-card-title>{{
-          granularity() === 'hourly' ? hourlyTitle : dailyTitle
+        <mat-card-title data-testid="stats-chart-title">{{
+          chartTitle()
         }}</mat-card-title>
         <mat-card-subtitle i18n="@@chart.subtitle"
           >Balken zeigen deine Wiederholungen pro Zeitabschnitt. Die orange
@@ -120,9 +120,23 @@ export class StatsChartComponent implements AfterViewInit {
   readonly to = input<string | null>(null);
   readonly dayChartMode = model<'24h' | '14h'>('14h');
   readonly entries = input<PushupRecord[]>([]);
+  /**
+   * Localised label naming the exercise (or group of exercises) the
+   * series represents — appended to the title so users can tell at a
+   * glance whether they are looking at pushups, sit-ups, an aggregated
+   * "all exercises" view, etc. Empty string keeps the legacy bare
+   * title.
+   */
+  readonly kindLabel = input<string>('');
 
   readonly hourlyTitle = $localize`:@@chart.titleHourly:Verlauf (Stundenwerte)`;
   readonly dailyTitle = $localize`:@@chart.titleDaily:Verlauf (Tageswerte)`;
+  readonly chartTitle = computed(() => {
+    const base =
+      this.granularity() === 'hourly' ? this.hourlyTitle : this.dailyTitle;
+    const label = this.kindLabel().trim();
+    return label ? `${base} – ${label}` : base;
+  });
   readonly intervalLabel = $localize`:@@chart.interval:Intervallwert`;
   readonly dayIntegralLabel = $localize`:@@chart.dayIntegral:Tages-Integral`;
   readonly movingAvgLabel = $localize`:@@chart.movingAvg:Gleitender Durchschnitt`;

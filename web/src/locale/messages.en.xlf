@@ -1029,19 +1029,28 @@ Active:         </target>
       <notes>
         <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:82</note>
 
-        
+
             </notes>
       <segment state="translated">
         <source>Verlauf (Tageswerte)</source>
         <target>Progress (daily values)</target>
 
-        
-        
+
+
             </segment>
 
-      
-      
+
+
         </unit>
+    <unit id="chart.kindLabel.all">
+      <notes>
+        <note category="location">web/src/app/stats/components/analysis-teaser-card/analysis-teaser-card.component.ts:148</note>
+      </notes>
+      <segment state="translated">
+        <source>Alle Übungen</source>
+        <target>All exercises</target>
+      </segment>
+    </unit>
     <unit id="chart.titleHourly">
       <notes>
         <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:81</note>

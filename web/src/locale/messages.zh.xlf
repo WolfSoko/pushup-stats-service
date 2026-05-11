@@ -5157,6 +5157,15 @@
         <source>Verlauf (Tageswerte)</source>
       <target>趋势（按日）</target></segment>
     </unit>
+    <unit id="chart.kindLabel.all">
+      <notes>
+        <note category="location">web/src/app/stats/components/analysis-teaser-card/analysis-teaser-card.component.ts:148</note>
+      </notes>
+      <segment state="translated">
+        <source>Alle Übungen</source>
+        <target>所有训练</target>
+      </segment>
+    </unit>
     <unit id="chart.setsTooltip">
       <notes>
         <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:153</note>

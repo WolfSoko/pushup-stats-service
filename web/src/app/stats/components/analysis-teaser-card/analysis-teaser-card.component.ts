@@ -9,8 +9,12 @@ import {
 import { Router } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
-import { StatsApiService } from '@pu-stats/data-access';
-import { StatsResponse, toLocalIsoDate } from '@pu-stats/models';
+import { LiveDataStore, StatsApiService } from '@pu-stats/data-access';
+import {
+  StatsResponse,
+  StatsSeriesEntry,
+  toLocalIsoDate,
+} from '@pu-stats/models';
 import { firstValueFrom } from 'rxjs';
 import { StatsChartComponent } from '../stats-chart/stats-chart.component';
 
@@ -68,6 +72,7 @@ const EMPTY_STATS: StatsResponse = {
               [rangeMode]="'week'"
               [from]="from()"
               [to]="to()"
+              [kindLabel]="chartKindLabel"
             />
           </div>
         }
@@ -125,6 +130,7 @@ const EMPTY_STATS: StatsResponse = {
 })
 export class AnalysisTeaserCardComponent {
   private readonly api = inject(StatsApiService);
+  private readonly live = inject(LiveDataStore);
   private readonly router = inject(Router);
 
   readonly streak = input(0);
@@ -132,6 +138,14 @@ export class AnalysisTeaserCardComponent {
   readonly weeklyGoal = input(0);
   /** Increment to trigger a data reload (e.g. after entry creation). */
   readonly refreshTrigger = input(0);
+
+  /**
+   * Localised heading label so the user can tell which exercises feed
+   * this chart. The dashboard teaser aggregates pushups together with
+   * every other tracked exercise, so the label reads "Alle Übungen"
+   * rather than naming a single exercise.
+   */
+  readonly chartKindLabel = $localize`:@@chart.kindLabel.all:Alle Übungen`;
 
   private readonly weekRange = computed(() => {
     const today = new Date();
@@ -152,9 +166,48 @@ export class AnalysisTeaserCardComponent {
       firstValueFrom(this.api.load({ from: params.from, to: params.to })),
   });
 
-  readonly chartSeries = computed(
-    () => (this.statsResource.value() ?? EMPTY_STATS).series
-  );
+  /**
+   * Daily totals for the current week summed across **every** tracked
+   * exercise. The REST resource serves the SSR/cold-start window (and
+   * still feeds the unauthenticated demo render via the API). Once the
+   * Firestore listener has connected we switch to the live unified
+   * stream so pushups *and* exercise entries (sit-ups, squats, …)
+   * both contribute — otherwise users who train other exercises see
+   * an empty "Verlauf" chart even when they were active that week.
+   */
+  readonly chartSeries = computed<StatsSeriesEntry[]>(() => {
+    const { from, to } = this.weekRange();
+    if (!this.live.connected()) {
+      return (this.statsResource.value() ?? EMPTY_STATS).series;
+    }
+
+    const totals = new Map<string, number>();
+    const inRange = (timestamp: string): boolean => {
+      const day = timestamp.slice(0, 10);
+      return day >= from && day <= to;
+    };
+
+    for (const entry of this.live.entries()) {
+      if (!inRange(entry.timestamp)) continue;
+      const day = entry.timestamp.slice(0, 10);
+      totals.set(day, (totals.get(day) ?? 0) + entry.reps);
+    }
+    for (const entry of this.live.exerciseEntries()) {
+      if (!inRange(entry.timestamp)) continue;
+      const reps = entry.reps ?? 0;
+      if (reps <= 0) continue;
+      const day = entry.timestamp.slice(0, 10);
+      totals.set(day, (totals.get(day) ?? 0) + reps);
+    }
+
+    const sortedDays = [...totals.keys()].sort((a, b) => a.localeCompare(b));
+    let cumulative = 0;
+    return sortedDays.map((day) => {
+      const total = totals.get(day) ?? 0;
+      cumulative += total;
+      return { bucket: day, total, dayIntegral: cumulative };
+    });
+  });
 
   navigateToAnalysis(): void {
     this.router.navigate(['/analysis']);
