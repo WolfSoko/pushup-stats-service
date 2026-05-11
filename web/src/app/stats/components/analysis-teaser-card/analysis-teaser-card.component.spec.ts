@@ -248,27 +248,26 @@ describe('AnalysisTeaserCardComponent', () => {
     });
   });
 
-  describe('Given the week range computation', () => {
-    it('Then from should be a Monday date string', () => {
-      // Given / When
-      const dateStr = component.from();
-
-      // Then
-      expect(dateStr).toMatch(/^\d{4}-\d{2}-\d{2}$/);
-      const [y, m, d] = dateStr.split('-').map(Number);
-      // getUTCDay() returns 1 for Monday
-      expect(new Date(Date.UTC(y, m - 1, d)).getUTCDay()).toBe(1);
+  describe('Given the chart range computation', () => {
+    // FROZEN_TODAY = 2026-04-08 (Wed). Trailing 7-day window (inclusive)
+    // → 2026-04-02 .. 2026-04-08.
+    it('Then to is today', () => {
+      expect(component.to()).toBe('2026-04-08');
     });
 
-    it('Then to should be a Sunday date string', () => {
-      // Given / When
-      const dateStr = component.to();
+    it('Then from is six days before today (inclusive 7-day window)', () => {
+      expect(component.from()).toBe('2026-04-02');
+    });
 
-      // Then
-      expect(dateStr).toMatch(/^\d{4}-\d{2}-\d{2}$/);
-      const [y, m, d] = dateStr.split('-').map(Number);
-      // getUTCDay() returns 0 for Sunday
-      expect(new Date(Date.UTC(y, m - 1, d)).getUTCDay()).toBe(0);
+    it('Then the window covers exactly 7 calendar days', () => {
+      const [fy, fm, fd] = component.from().split('-').map(Number);
+      const [ty, tm, td] = component.to().split('-').map(Number);
+      const fromDate = new Date(Date.UTC(fy, fm - 1, fd));
+      const toDate = new Date(Date.UTC(ty, tm - 1, td));
+      const days = Math.round(
+        (toDate.getTime() - fromDate.getTime()) / 86_400_000
+      );
+      expect(days).toBe(6); // 0..6 inclusive ⇒ 7 days
     });
   });
 
