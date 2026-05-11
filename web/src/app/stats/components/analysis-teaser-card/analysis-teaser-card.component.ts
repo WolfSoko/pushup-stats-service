@@ -9,8 +9,12 @@ import {
 import { Router } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
-import { StatsApiService } from '@pu-stats/data-access';
-import { StatsResponse, toLocalIsoDate } from '@pu-stats/models';
+import { LiveDataStore, StatsApiService } from '@pu-stats/data-access';
+import {
+  StatsResponse,
+  StatsSeriesEntry,
+  toLocalIsoDate,
+} from '@pu-stats/models';
 import { firstValueFrom } from 'rxjs';
 import { StatsChartComponent } from '../stats-chart/stats-chart.component';
 
@@ -56,7 +60,7 @@ const EMPTY_STATS: StatsResponse = {
         </mat-card-subtitle>
       </mat-card-header>
       <mat-card-content>
-        @if (statsResource.error()) {
+        @if (statsResource.error() && !liveConnected()) {
           <p class="error-fallback" i18n="@@dashboard.analysisTeaserError">
             Daten konnten nicht geladen werden.
           </p>
@@ -68,6 +72,7 @@ const EMPTY_STATS: StatsResponse = {
               [rangeMode]="'week'"
               [from]="from()"
               [to]="to()"
+              [kindLabel]="chartKindLabel()"
             />
           </div>
         }
@@ -125,6 +130,7 @@ const EMPTY_STATS: StatsResponse = {
 })
 export class AnalysisTeaserCardComponent {
   private readonly api = inject(StatsApiService);
+  private readonly live = inject(LiveDataStore);
   private readonly router = inject(Router);
 
   readonly streak = input(0);
@@ -132,6 +138,16 @@ export class AnalysisTeaserCardComponent {
   readonly weeklyGoal = input(0);
   /** Increment to trigger a data reload (e.g. after entry creation). */
   readonly refreshTrigger = input(0);
+
+  private readonly allExercisesLabel = $localize`:@@chart.kindLabel.all:Alle Übungen`;
+  /**
+   * Pushup label reused from the analysis page i18n catalog so we don't
+   * spawn a parallel XLIFF unit for the same German string.
+   */
+  private readonly pushupLabel = $localize`:@@exercise.category.pushup:Liegestütze`;
+
+  /** Exposed for the template's error-fallback gate. */
+  readonly liveConnected = computed(() => this.live.connected());
 
   private readonly weekRange = computed(() => {
     const today = new Date();
@@ -146,15 +162,87 @@ export class AnalysisTeaserCardComponent {
   readonly from = computed(() => this.weekRange().from);
   readonly to = computed(() => this.weekRange().to);
 
+  /**
+   * Honest heading label that tracks the *actual* data the chart is
+   * showing — not a fixed string. Without this, the cold-start / SSR
+   * fallback labels REST-only pushup data as "Alle Übungen" and a
+   * live-but-pushup-only week still claims to aggregate every exercise.
+   *
+   * Note: the chart axis is reps, so duration-only entries (plank …)
+   * legitimately don't contribute bars. We therefore avoid promising
+   * "Alle Übungen" when no other rep-bearing kind is present.
+   */
+  readonly chartKindLabel = computed(() => {
+    const { from, to } = this.weekRange();
+    const inRange = (timestamp: string): boolean => {
+      const day = timestamp.slice(0, 10);
+      return day >= from && day <= to;
+    };
+
+    if (!this.live.connected()) {
+      return this.pushupLabel;
+    }
+
+    const hasPushupReps = this.live
+      .entries()
+      .some((e) => inRange(e.timestamp) && e.reps > 0);
+    const hasOtherReps = this.live
+      .exerciseEntries()
+      .some((e) => inRange(e.timestamp) && (e.reps ?? 0) > 0);
+
+    if (hasOtherReps) return this.allExercisesLabel;
+    if (hasPushupReps) return this.pushupLabel;
+    return '';
+  });
+
   readonly statsResource = resource({
     params: () => ({ ...this.weekRange(), _refresh: this.refreshTrigger() }),
     loader: async ({ params }) =>
       firstValueFrom(this.api.load({ from: params.from, to: params.to })),
   });
 
-  readonly chartSeries = computed(
-    () => (this.statsResource.value() ?? EMPTY_STATS).series
-  );
+  /**
+   * Daily totals for the current week summed across **every** tracked
+   * exercise. The REST resource serves the SSR/cold-start window (and
+   * still feeds the unauthenticated demo render via the API). Once the
+   * Firestore listener has connected we switch to the live unified
+   * stream so pushups *and* exercise entries (sit-ups, squats, …)
+   * both contribute — otherwise users who train other exercises see
+   * an empty "Verlauf" chart even when they were active that week.
+   */
+  readonly chartSeries = computed<StatsSeriesEntry[]>(() => {
+    const { from, to } = this.weekRange();
+    if (!this.live.connected()) {
+      return (this.statsResource.value() ?? EMPTY_STATS).series;
+    }
+
+    const totals = new Map<string, number>();
+    const inRange = (timestamp: string): boolean => {
+      const day = timestamp.slice(0, 10);
+      return day >= from && day <= to;
+    };
+
+    for (const entry of this.live.entries()) {
+      if (!inRange(entry.timestamp)) continue;
+      const day = entry.timestamp.slice(0, 10);
+      totals.set(day, (totals.get(day) ?? 0) + entry.reps);
+    }
+    for (const entry of this.live.exerciseEntries()) {
+      if (!inRange(entry.timestamp)) continue;
+      const reps = entry.reps ?? 0;
+      if (reps <= 0) continue;
+      const day = entry.timestamp.slice(0, 10);
+      totals.set(day, (totals.get(day) ?? 0) + reps);
+    }
+
+    const sortedDays = [...totals.keys()].sort((a, b) => a.localeCompare(b));
+    let cumulative = 0;
+    return sortedDays.map((day) => {
+      const total = totals.get(day) ?? 0;
+      cumulative += total;
+      return { bucket: day, total, dayIntegral: cumulative };
+    });
+  });
 
   navigateToAnalysis(): void {
     this.router.navigate(['/analysis']);

@@ -450,6 +450,15 @@ Aktiv:         </target>
         <target>24h</target>
       </segment>
     </unit>
+    <unit id="chart.kindLabel.all">
+      <notes>
+        <note category="location">web/src/app/stats/components/analysis-teaser-card/analysis-teaser-card.component.ts:148</note>
+      </notes>
+      <segment state="translated">
+        <source>Alle Übungen</source>
+        <target>Alle øvelser</target>
+      </segment>
+    </unit>
     <unit id="chart.setsTooltip">
       <segment state="translated">
         <source>Sets</source>

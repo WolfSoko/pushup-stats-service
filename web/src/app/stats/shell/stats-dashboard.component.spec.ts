@@ -93,10 +93,20 @@ describe('StatsDashboardComponent', () => {
       type?: string;
     }>
   >([]);
+  const liveExerciseEntries = signal<
+    Array<{
+      _id: string;
+      exerciseId: string;
+      timestamp: string;
+      reps?: number;
+      source?: string;
+    }>
+  >([]);
   const liveMock = {
     updateTick: liveTick.asReadonly(),
     connected: liveConnected.asReadonly(),
     entries: liveEntries.asReadonly(),
+    exerciseEntries: liveExerciseEntries.asReadonly(),
   };
 
   const adsConfigMock = {
@@ -149,6 +159,7 @@ describe('StatsDashboardComponent', () => {
     liveTick.set(0);
     liveConnected.set(false);
     liveEntries.set([]);
+    liveExerciseEntries.set([]);
     window.history.replaceState({}, '', '/');
 
     dialogOpenSpy.mockClear();
