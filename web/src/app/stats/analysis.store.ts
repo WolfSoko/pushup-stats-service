@@ -22,7 +22,6 @@ import {
   exerciseEntryToUnified,
   type ExerciseCategoryId,
   inferRangeMode,
-  PushupRecord,
   pushupRecordToUnified,
   StatsGranularity,
   StatsResponse,
@@ -118,7 +117,9 @@ function daysBetween(a: string, b: string): number {
   return Math.round((bd - ad) / 86_400_000);
 }
 
-function sortedUniqueDates(rows: PushupRecord[]): string[] {
+function sortedUniqueDates(
+  rows: ReadonlyArray<{ timestamp: string }>
+): string[] {
   return [...new Set(rows.map((x) => x.timestamp.slice(0, 10)))].sort((a, b) =>
     a.localeCompare(b)
   );
@@ -465,14 +466,18 @@ export const AnalysisStore = signalStore(
         }));
     });
 
-    const bestSingleEntry = computed<PushupRecord | null>(() => {
-      if (!rows().length) return null;
-      return [...rows()].sort((a, b) => b.reps - a.reps)[0] ?? null;
+    // KPIs operate on {@link viewFilteredRows} so they re-aggregate
+    // automatically when the user switches to a per-category tab
+    // (or stays on overview, which sees every UnifiedEntry).
+    const bestSingleEntry = computed<UnifiedEntry | null>(() => {
+      const view = viewFilteredRows();
+      if (!view.length) return null;
+      return [...view].sort((a, b) => b.reps - a.reps)[0] ?? null;
     });
 
     const bestDay = computed<{ date: string; total: number } | null>(() => {
       const byDay = new Map<string, number>();
-      for (const row of rows()) {
+      for (const row of viewFilteredRows()) {
         const key = row.timestamp.slice(0, 10);
         byDay.set(key, (byDay.get(key) ?? 0) + row.reps);
       }
@@ -482,7 +487,7 @@ export const AnalysisStore = signalStore(
     });
 
     const longestStreak = computed(() => {
-      const dates = sortedUniqueDates(rows());
+      const dates = sortedUniqueDates(viewFilteredRows());
       if (!dates.length) return 0;
       let best = 1;
       let current = 1;
@@ -495,7 +500,7 @@ export const AnalysisStore = signalStore(
     });
 
     const currentStreak = computed(() => {
-      const dates = sortedUniqueDates(rows());
+      const dates = sortedUniqueDates(viewFilteredRows());
       if (!dates.length) return 0;
       let streak = 1;
       for (let i = dates.length - 1; i > 0; i--) {
@@ -515,9 +520,9 @@ export const AnalysisStore = signalStore(
       () => userStats()?.heatmap ?? {}
     );
 
-    /** Average reps per individual set across all entries with sets data. */
+    /** Average reps per individual set across the active view's entries. */
     const avgSetSize = computed(() => {
-      const allSets = rows().flatMap((r) => r.sets ?? []);
+      const allSets = viewFilteredRows().flatMap((r) => r.sets ?? []);
       if (!allSets.length) return 0;
       return (
         Math.round((allSets.reduce((s, v) => s + v, 0) / allSets.length) * 10) /
@@ -529,7 +534,7 @@ export const AnalysisStore = signalStore(
     const setsDistribution = computed<
       Array<{ setCount: number; count: number; percent: number }>
     >(() => {
-      const entriesWithSets = rows().filter((r) => r.sets?.length);
+      const entriesWithSets = viewFilteredRows().filter((r) => r.sets?.length);
       if (!entriesWithSets.length) return [];
       const byCount = new Map<number, number>();
       for (const row of entriesWithSets) {
@@ -546,9 +551,9 @@ export const AnalysisStore = signalStore(
         }));
     });
 
-    /** Maximum reps in a single set across all entries. */
+    /** Maximum reps in a single set across the active view's entries. */
     const bestSingleSet = computed(() => {
-      const allSets = rows().flatMap((r) => r.sets ?? []);
+      const allSets = viewFilteredRows().flatMap((r) => r.sets ?? []);
       if (!allSets.length) return 0;
       return Math.max(...allSets);
     });
