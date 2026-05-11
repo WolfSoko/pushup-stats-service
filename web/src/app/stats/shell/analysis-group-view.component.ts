@@ -13,11 +13,9 @@ import { AnalysisStore } from '../analysis.store';
 import { kindDisplayName } from '../i18n/exercise-display-names';
 
 /**
- * Detail view that renders the chart, KPI grid, heatmap and trend
- * tables for the currently active analysis view (overview or a
- * specific exercise category). The store's `activeView` / view-scoped
- * computeds drive the data, so this component carries no inputs —
- * dropping it inside any tab content gives the right slice.
+ * The store's `activeView` / view-scoped computeds drive the data,
+ * so this component carries no inputs — dropping it inside any tab
+ * content gives the right slice without prop-drilling.
  */
 @Component({
   selector: 'app-analysis-group-view',
@@ -160,7 +158,10 @@ import { kindDisplayName } from '../i18n/exercise-display-names';
       </mat-card-header>
       <mat-card-content class="heatmap-wrap">
         @defer (hydrate on viewport) {
-          <app-heatmap [entries]="store.rows()" [mode]="heatmapMode()" />
+          <app-heatmap
+            [entries]="store.viewFilteredRows()"
+            [mode]="heatmapMode()"
+          />
         }
       </mat-card-content>
     </mat-card>
