@@ -60,7 +60,7 @@ const EMPTY_STATS: StatsResponse = {
         </mat-card-subtitle>
       </mat-card-header>
       <mat-card-content>
-        @if (statsResource.error()) {
+        @if (statsResource.error() && !liveConnected()) {
           <p class="error-fallback" i18n="@@dashboard.analysisTeaserError">
             Daten konnten nicht geladen werden.
           </p>
@@ -72,7 +72,7 @@ const EMPTY_STATS: StatsResponse = {
               [rangeMode]="'week'"
               [from]="from()"
               [to]="to()"
-              [kindLabel]="chartKindLabel"
+              [kindLabel]="chartKindLabel()"
             />
           </div>
         }
@@ -139,13 +139,15 @@ export class AnalysisTeaserCardComponent {
   /** Increment to trigger a data reload (e.g. after entry creation). */
   readonly refreshTrigger = input(0);
 
+  private readonly allExercisesLabel = $localize`:@@chart.kindLabel.all:Alle Übungen`;
   /**
-   * Localised heading label so the user can tell which exercises feed
-   * this chart. The dashboard teaser aggregates pushups together with
-   * every other tracked exercise, so the label reads "Alle Übungen"
-   * rather than naming a single exercise.
+   * Pushup label reused from the analysis page i18n catalog so we don't
+   * spawn a parallel XLIFF unit for the same German string.
    */
-  readonly chartKindLabel = $localize`:@@chart.kindLabel.all:Alle Übungen`;
+  private readonly pushupLabel = $localize`:@@exercise.category.pushup:Liegestütze`;
+
+  /** Exposed for the template's error-fallback gate. */
+  readonly liveConnected = computed(() => this.live.connected());
 
   private readonly weekRange = computed(() => {
     const today = new Date();
@@ -159,6 +161,39 @@ export class AnalysisTeaserCardComponent {
 
   readonly from = computed(() => this.weekRange().from);
   readonly to = computed(() => this.weekRange().to);
+
+  /**
+   * Honest heading label that tracks the *actual* data the chart is
+   * showing — not a fixed string. Without this, the cold-start / SSR
+   * fallback labels REST-only pushup data as "Alle Übungen" and a
+   * live-but-pushup-only week still claims to aggregate every exercise.
+   *
+   * Note: the chart axis is reps, so duration-only entries (plank …)
+   * legitimately don't contribute bars. We therefore avoid promising
+   * "Alle Übungen" when no other rep-bearing kind is present.
+   */
+  readonly chartKindLabel = computed(() => {
+    const { from, to } = this.weekRange();
+    const inRange = (timestamp: string): boolean => {
+      const day = timestamp.slice(0, 10);
+      return day >= from && day <= to;
+    };
+
+    if (!this.live.connected()) {
+      return this.pushupLabel;
+    }
+
+    const hasPushupReps = this.live
+      .entries()
+      .some((e) => inRange(e.timestamp) && e.reps > 0);
+    const hasOtherReps = this.live
+      .exerciseEntries()
+      .some((e) => inRange(e.timestamp) && (e.reps ?? 0) > 0);
+
+    if (hasOtherReps) return this.allExercisesLabel;
+    if (hasPushupReps) return this.pushupLabel;
+    return '';
+  });
 
   readonly statsResource = resource({
     params: () => ({ ...this.weekRange(), _refresh: this.refreshTrigger() }),

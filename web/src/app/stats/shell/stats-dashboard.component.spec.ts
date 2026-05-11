@@ -159,6 +159,7 @@ describe('StatsDashboardComponent', () => {
     liveTick.set(0);
     liveConnected.set(false);
     liveEntries.set([]);
+    liveExerciseEntries.set([]);
     window.history.replaceState({}, '', '/');
 
     dialogOpenSpy.mockClear();

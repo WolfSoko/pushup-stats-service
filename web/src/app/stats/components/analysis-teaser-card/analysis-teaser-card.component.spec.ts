@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Component, input, signal } from '@angular/core';
-import { of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { AnalysisTeaserCardComponent } from './analysis-teaser-card.component';
 import { LiveDataStore, StatsApiService } from '@pu-stats/data-access';
 import { AuthStore } from '@pu-auth/auth';
@@ -88,9 +88,20 @@ describe('AnalysisTeaserCardComponent', () => {
     await fixture.whenStable();
   }
 
+  // Frozen "today" so week-boundary helpers below don't flake around
+  // midnight / timezone rollovers. 2026-04-08 is a Wednesday — the Monday
+  // of its ISO week is 2026-04-06.
+  const FROZEN_TODAY = new Date(2026, 3, 8, 12, 0, 0);
+
   beforeEach(async () => {
     vitest.clearAllMocks();
+    vitest.useFakeTimers({ shouldAdvanceTime: true });
+    vitest.setSystemTime(FROZEN_TODAY);
     await setupWithLiveStore();
+  });
+
+  afterEach(() => {
+    vitest.useRealTimers();
   });
 
   describe('Given the component is rendered', () => {
@@ -262,9 +273,9 @@ describe('AnalysisTeaserCardComponent', () => {
   });
 
   describe('Given the chart heading', () => {
-    it('Then chartKindLabel is set so the chart can name its exercises', () => {
-      expect(component.chartKindLabel).toBeTruthy();
-      expect(typeof component.chartKindLabel).toBe('string');
+    it('Then chartKindLabel returns a non-empty string', () => {
+      expect(component.chartKindLabel()).toBeTruthy();
+      expect(typeof component.chartKindLabel()).toBe('string');
     });
 
     it('Then the kindLabel is forwarded to the stats chart', () => {
@@ -275,7 +286,7 @@ describe('AnalysisTeaserCardComponent', () => {
       const stub = chart?.componentInstance as
         | StubStatsChartComponent
         | undefined;
-      expect(stub?.kindLabel()).toBe(component.chartKindLabel);
+      expect(stub?.kindLabel()).toBe(component.chartKindLabel());
     });
   });
 
@@ -289,27 +300,21 @@ describe('AnalysisTeaserCardComponent', () => {
         { bucket: '2026-03-30', total: 20, dayIntegral: 20 },
       ]);
     });
+
+    it('Then chartKindLabel names the pushup-only REST source', () => {
+      // Disconnected ⇒ REST data only ⇒ label must not claim "all exercises".
+      expect(component.chartKindLabel()).not.toBe('');
+      expect(component.chartKindLabel()).not.toMatch(/Alle Übungen/i);
+    });
   });
 
   describe('Given the live store has connected with unified entries', () => {
-    let liveFixture: ComponentFixture<AnalysisTeaserCardComponent>;
-    let liveComponent: AnalysisTeaserCardComponent;
-
-    function freshMonday(): { weekStart: string; weekMid: string } {
-      const today = new Date();
-      const dayOfWeek = (today.getDay() + 6) % 7;
-      const monday = new Date(today);
-      monday.setDate(today.getDate() - dayOfWeek);
-      const wednesday = new Date(monday);
-      wednesday.setDate(monday.getDate() + 2);
-      const pad = (n: number) => String(n).padStart(2, '0');
-      const fmt = (d: Date) =>
-        `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
-      return { weekStart: fmt(monday), weekMid: fmt(wednesday) };
-    }
+    // Deterministic — derived from FROZEN_TODAY above so the asserted bucket
+    // dates match what the component computes.
+    const weekStart = '2026-04-06'; // Monday
+    const weekMid = '2026-04-08'; // Wednesday (== FROZEN_TODAY)
 
     beforeEach(async () => {
-      const { weekStart, weekMid } = freshMonday();
       TestBed.resetTestingModule();
       await setupWithLiveStore({
         connected: true,
@@ -333,16 +338,12 @@ describe('AnalysisTeaserCardComponent', () => {
           },
         ],
       });
-      liveFixture = fixture;
-      liveComponent = component;
-      liveFixture.detectChanges();
-      await liveFixture.whenStable();
+      fixture.detectChanges();
+      await fixture.whenStable();
     });
 
     it('Then chartSeries combines pushups and exercise reps per day', () => {
-      const series = liveComponent.chartSeries();
-      const { weekStart, weekMid } = freshMonday();
-
+      const series = component.chartSeries();
       // Pushups on Monday: 10 reps
       // Situps on Wednesday: 15 reps (plank has no reps → excluded)
       const monday = series.find((s) => s.bucket === weekStart);
@@ -352,10 +353,14 @@ describe('AnalysisTeaserCardComponent', () => {
     });
 
     it('Then dayIntegral is cumulative across the merged days', () => {
-      const series = liveComponent.chartSeries();
+      const series = component.chartSeries();
       // 10 on Monday, +15 on Wednesday → 25 cumulative on Wednesday
       const cumulativeTotals = series.map((s) => s.dayIntegral);
       expect(cumulativeTotals[cumulativeTotals.length - 1]).toBe(25);
+    });
+
+    it('Then chartKindLabel reports "Alle Übungen" when multiple kinds contribute reps', () => {
+      expect(component.chartKindLabel()).toMatch(/Alle Übungen/i);
     });
 
     it('Then entries outside the week range are excluded', async () => {
@@ -370,6 +375,60 @@ describe('AnalysisTeaserCardComponent', () => {
       fixture.detectChanges();
       await fixture.whenStable();
       expect(component.chartSeries()).toEqual([]);
+      // No reps in the current week ⇒ label collapses to empty.
+      expect(component.chartKindLabel()).toBe('');
+    });
+  });
+
+  describe('Given the live store has connected with only pushup entries this week', () => {
+    const weekStart = '2026-04-06';
+
+    beforeEach(async () => {
+      TestBed.resetTestingModule();
+      await setupWithLiveStore({
+        connected: true,
+        entries: [
+          { _id: 'p1', timestamp: `${weekStart}T08:00:00+01:00`, reps: 10 },
+        ],
+        exerciseEntries: [],
+      });
+      fixture.detectChanges();
+      await fixture.whenStable();
+    });
+
+    it('Then chartKindLabel names pushups and does not claim "Alle Übungen"', () => {
+      const label = component.chartKindLabel();
+      expect(label).not.toBe('');
+      expect(label).not.toMatch(/Alle Übungen/i);
+    });
+  });
+
+  describe('Given the REST resource errored but live data is connected', () => {
+    beforeEach(async () => {
+      TestBed.resetTestingModule();
+      apiMock.load.mockReturnValueOnce(
+        // Mimic a REST failure: emit nothing, then error.
+        new Observable((subscriber) => {
+          subscriber.error(new Error('boom'));
+        })
+      );
+      await setupWithLiveStore({
+        connected: true,
+        entries: [
+          { _id: 'p1', timestamp: '2026-04-06T08:00:00+01:00', reps: 12 },
+        ],
+        exerciseEntries: [],
+      });
+      fixture.detectChanges();
+      await fixture.whenStable();
+    });
+
+    it('Then the chart still renders (error fallback suppressed while live is connected)', () => {
+      const errorFallback =
+        fixture.nativeElement.querySelector('.error-fallback');
+      const chart = fixture.nativeElement.querySelector('app-stats-chart');
+      expect(errorFallback).toBeFalsy();
+      expect(chart).toBeTruthy();
     });
   });
 });
