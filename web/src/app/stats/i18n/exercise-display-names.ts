@@ -36,9 +36,10 @@ export function exerciseDisplayName(id: string): string {
  * type-pie legend so both stay in sync without duplicating the
  * `$localize` calls.
  *
- * Falls back to a generic "Andere Übung" label for legacy ids that
- * no longer have a catalog entry (e.g. an exercise removed from the
- * catalog whose Firestore entries still exist).
+ * For ids that miss the catalog (user-defined custom exercises or
+ * legacy ids whose Firestore entries still exist) the raw `value`
+ * is returned, so each one stays individually distinguishable in
+ * filter chips and the type-pie legend.
  */
 export function kindDisplayName(value: UnifiedEntryFilterKey): string {
   if (value === 'pushup') {
