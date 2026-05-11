@@ -588,6 +588,45 @@ describe('AnalysisPageComponent', () => {
       expect(store.setsDistribution()).toEqual([]);
       expect(store.bestSingleSet()).toBe(0);
     });
+
+    // The trend windows span 8 ISO weeks / 6 months ending on the
+    // locked clock (Sun Feb 15 2026). Every seeded entry lives in
+    // 2026-W07 / 2026-02, so the assertions below pick out that
+    // single non-empty bucket.
+    it('overview week trend aggregates pushups + exercises', () => {
+      const { store } = fixture.componentInstance;
+      const week = store.weekTrend().find((w) => w.label === '2026-W07');
+      // 6 pushups summing 93 reps + 30 abs + 40 legs = 163
+      expect(week?.total).toBe(163);
+    });
+
+    it('per-category week trend scopes to the active view (abs)', () => {
+      const { store } = fixture.componentInstance;
+      store.setActiveView('abs');
+      const week = store.weekTrend().find((w) => w.label === '2026-W07');
+      expect(week?.total).toBe(30);
+    });
+
+    it('per-category month trend scopes to the active view (legs)', () => {
+      const { store } = fixture.componentInstance;
+      store.setActiveView('legs');
+      const month = store.monthTrend().find((m) => m.label === '2026-02');
+      expect(month?.total).toBe(40);
+    });
+
+    it('per-category pushup trend matches the legacy pushup-only totals', () => {
+      const { store } = fixture.componentInstance;
+      store.setActiveView('pushup');
+      const week = store.weekTrend().find((w) => w.label === '2026-W07');
+      expect(week?.total).toBe(93);
+    });
+
+    it('empty-category trends report zero totals across the window', () => {
+      const { store } = fixture.componentInstance;
+      store.setActiveView('plank');
+      expect(store.weekTrend().every((w) => w.total === 0)).toBe(true);
+      expect(store.monthTrend().every((m) => m.total === 0)).toBe(true);
+    });
   });
 
   it('resolves bare kind ids to localised labels via typeBreakdownDisplay', () => {
