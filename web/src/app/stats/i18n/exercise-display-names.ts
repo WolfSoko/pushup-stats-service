@@ -1,4 +1,5 @@
 import {
+  type ExerciseCategoryId,
   findExerciseDefinition,
   type UnifiedEntryFilterKey,
 } from '@pu-stats/models';
@@ -46,4 +47,29 @@ export function kindDisplayName(value: UnifiedEntryFilterKey): string {
   const def = findExerciseDefinition(value);
   if (def) return exerciseDisplayName(def.id);
   return $localize`:@@analysis.kindUnknown:Andere Übung`;
+}
+
+/**
+ * Locale-aware display strings for exercise categories. Shared between
+ * the analysis overview cards and the comparison chart so the store
+ * can emit translated labels instead of raw XLIFF ids — Chart.js has
+ * no runtime hook for `$localize`, and emitting the id would render
+ * the legend like a developer string in production builds.
+ *
+ * The German source strings mirror the catalogue entries in the
+ * training-entry dialog; XLIFF ids stay identical so the existing
+ * translations apply unchanged.
+ */
+const CATEGORY_DISPLAY_NAMES: Record<ExerciseCategoryId, string> = {
+  pushup: $localize`:@@exercise.category.pushup:Liegestütze`,
+  abs: $localize`:@@exercise.category.abs:Bauch`,
+  legs: $localize`:@@exercise.category.legs:Beine`,
+  plank: $localize`:@@exercise.category.plank:Plank`,
+  cardio: $localize`:@@exercise.category.cardio:Ausdauer`,
+  strength: $localize`:@@exercise.category.strength:Kraft`,
+  mobility: $localize`:@@exercise.category.mobility:Mobility`,
+};
+
+export function categoryDisplayName(id: ExerciseCategoryId): string {
+  return CATEGORY_DISPLAY_NAMES[id] ?? id;
 }

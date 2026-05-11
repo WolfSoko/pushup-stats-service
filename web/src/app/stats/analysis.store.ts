@@ -35,6 +35,7 @@ import {
   unifiedEntryFilterKey,
   UserStats,
 } from '@pu-stats/models';
+import { categoryDisplayName } from './i18n/exercise-display-names';
 
 /** Active analysis view: overview tab or a specific exercise category. */
 export type AnalysisView = 'overview' | ExerciseCategoryId;
@@ -351,13 +352,12 @@ export const AnalysisStore = signalStore(
       });
     });
 
-    /**
-     * Unified rows scoped to the {@link AnalysisStore.activeView active
-     * tab}. `'overview'` returns every row in range; any
-     * `ExerciseCategoryId` filters down to entries that map to that
-     * category via {@link unifiedEntryCategoryId}. Foundation for the
-     * per-category KPIs/charts/trends rolled out in subsequent commits.
-     */
+    // Entries whose exerciseId is absent from the standard catalog
+    // (e.g. a removed-and-never-replaced custom user exercise) drop
+    // out of every per-category tab — `unifiedEntryCategoryId` returns
+    // null and no tab matches. That's intentional: the overview tab
+    // still surfaces their volume, and resurrecting them under an
+    // "Andere" bucket would mask the catalog-mismatch in normal use.
     const viewFilteredRows = computed<UnifiedEntry[]>(() => {
       const view = store.activeView();
       if (view === 'overview') return unifiedRows();
@@ -434,11 +434,14 @@ export const AnalysisStore = signalStore(
       return result.sort((a, b) => a.order - b.order);
     });
 
-    /** Bar/pie-friendly projection of {@link categorySummaries}. */
+    // Labels are resolved here rather than left to the chart component
+    // because Chart.js has no `$localize` hook — feeding it the raw
+    // XLIFF id would render the legend like a developer string in
+    // production builds.
     const categoryComparison = computed<CategoryComparison>(() => {
       const summaries = categorySummaries();
       return {
-        labels: summaries.map((s) => s.nameKey),
+        labels: summaries.map((s) => categoryDisplayName(s.categoryId)),
         reps: summaries.map((s) => s.totalReps),
         sets: summaries.map((s) => s.totalSets),
       };
@@ -457,6 +460,12 @@ export const AnalysisStore = signalStore(
       return true;
     };
 
+    // Pushups come from a date-scoped REST resource; exercise entries
+    // are taken from `_live.exerciseEntries()` (the full Firestore
+    // snapshot) and clipped client-side. This asymmetry is acceptable
+    // for typical histories but should grow into a date-windowed
+    // exerciseEntries resource once long histories show up — until
+    // then the inRange filter keeps memory predictable.
     const trendUnifiedRows = (
       pushupRows: ReadonlyArray<PushupRecord>,
       window: { from: string; to: string }
@@ -567,15 +576,25 @@ export const AnalysisStore = signalStore(
     });
 
     const typeBreakdown = computed<TypeBreakdownDatum[]>(() => {
+      const view = store.activeView();
+      const rowsForView = viewFilteredRows();
       const kinds = store.kinds();
       const kindSet = kinds.length > 0 ? new Set<string>(kinds) : null;
-      const onlyPushup =
-        !kindSet || (kindSet.size === 1 && kindSet.has('pushup'));
+      // In a per-category tab the pushup-variant breakdown only makes
+      // sense for the pushup tab; every other category renders the
+      // kind-mode breakdown over its own entries. In overview the
+      // legacy gate stays so a default page still shows pushup
+      // variants when no kind filter is active.
+      const showPushupVariants =
+        view === 'pushup' ||
+        (view === 'overview' &&
+          (!kindSet || (kindSet.size === 1 && kindSet.has('pushup'))));
 
-      if (onlyPushup) {
+      if (showPushupVariants) {
         const byType = new Map<string, { reps: number; allSets: number[] }>();
-        for (const row of rows()) {
-          const key = canonicalizePushupType(row.type) || 'standard';
+        for (const row of rowsForView) {
+          if (row.kind !== 'pushup') continue;
+          const key = canonicalizePushupType(row.variantType) || 'standard';
           const entry = byType.get(key) ?? { reps: 0, allSets: [] };
           entry.reps += row.reps;
           if (row.sets?.length) entry.allSets.push(...row.sets);
@@ -600,7 +619,7 @@ export const AnalysisStore = signalStore(
       // emitted as the bare key — `$localize` for kind names lives in
       // the page component.
       const byKind = new Map<string, { reps: number; allSets: number[] }>();
-      for (const row of unifiedRows()) {
+      for (const row of rowsForView) {
         const key = unifiedEntryFilterKey(row);
         if (kindSet && !kindSet.has(key)) continue;
         const bucket = byKind.get(key) ?? { reps: 0, allSets: [] };
@@ -623,9 +642,6 @@ export const AnalysisStore = signalStore(
         }));
     });
 
-    // KPIs operate on {@link viewFilteredRows} so they re-aggregate
-    // automatically when the user switches to a per-category tab
-    // (or stays on overview, which sees every UnifiedEntry).
     const bestSingleEntry = computed<UnifiedEntry | null>(() => {
       const view = viewFilteredRows();
       if (!view.length) return null;

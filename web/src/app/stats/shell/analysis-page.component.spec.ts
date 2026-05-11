@@ -669,14 +669,13 @@ describe('AnalysisPageComponent', () => {
       });
     });
 
-    it('categoryComparison projects summaries into chart-friendly arrays', () => {
+    it('categoryComparison projects summaries into chart-friendly arrays with translated labels', () => {
+      // Chart.js cannot resolve $localize ids at runtime, so labels
+      // are pre-translated by the store. TestBed defaults to the
+      // source locale (de) — assertions use the German source strings.
       const { store } = fixture.componentInstance;
       const cmp = store.categoryComparison();
-      expect(cmp.labels).toEqual([
-        '@@exercise.category.pushup',
-        '@@exercise.category.abs',
-        '@@exercise.category.legs',
-      ]);
+      expect(cmp.labels).toEqual(['Liegestütze', 'Bauch', 'Beine']);
       expect(cmp.reps).toEqual([93, 30, 40]);
       expect(cmp.sets).toEqual([12, 0, 0]);
     });
@@ -688,6 +687,34 @@ describe('AnalysisPageComponent', () => {
       expect(store.categorySummaries().map((s) => s.categoryId)).toEqual(
         baseline
       );
+    });
+
+    it('typeBreakdown collapses to the active category in kind mode (abs)', () => {
+      const { store } = fixture.componentInstance;
+      store.setActiveView('abs');
+      const breakdown = store.typeBreakdown();
+      expect(breakdown).toHaveLength(1);
+      expect(breakdown[0]).toMatchObject({
+        id: 'abs.situps',
+        value: 30,
+      });
+    });
+
+    it('typeBreakdown stays in pushup-variant mode when the active view is pushup', () => {
+      const { store } = fixture.componentInstance;
+      store.setActiveView('pushup');
+      const labels = store.typeBreakdown().map((b) => b.label);
+      expect(labels).toContain('Standard-Liegestütze');
+      expect(labels).toContain('Diamant-Liegestütze');
+      // Wide pushups are in the seed (id=4, 8 reps); a non-pushup
+      // category would yield none.
+      expect(labels).toContain('Weite Liegestütze');
+    });
+
+    it('typeBreakdown is empty for a category that has no entries', () => {
+      const { store } = fixture.componentInstance;
+      store.setActiveView('plank');
+      expect(store.typeBreakdown()).toEqual([]);
     });
   });
 

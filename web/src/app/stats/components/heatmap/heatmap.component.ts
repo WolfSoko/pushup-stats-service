@@ -2,7 +2,6 @@ import { isPlatformBrowser } from '@angular/common';
 import { Component, PLATFORM_ID, computed, inject, input } from '@angular/core';
 import type { ChartConfiguration } from 'chart.js';
 import { BaseChartDirective, provideCharts } from 'ng2-charts';
-import { PushupRecord } from '@pu-stats/models';
 import { ensureHeatmapChartRegistered } from './chart-setup';
 import {
   buildHeatmapCells,
@@ -10,6 +9,15 @@ import {
   defaultHeatmapHoursTopDown,
   heatmapCellColor,
 } from './heatmap.utils';
+
+/** Minimal shape the heatmap reads — narrower than `PushupRecord` or
+ *  `UnifiedEntry` so both can be passed in without a union type at the
+ *  caller. `buildHeatmapCells` already requires only these fields. */
+export interface HeatmapEntry {
+  timestamp: string;
+  reps: number;
+  sets?: number[];
+}
 
 ensureHeatmapChartRegistered();
 
@@ -52,7 +60,7 @@ export interface HeatmapCell {
   `,
 })
 export class HeatmapComponent {
-  readonly entries = input<PushupRecord[]>([]);
+  readonly entries = input<ReadonlyArray<HeatmapEntry>>([]);
   readonly mode = input<'reps' | 'sets'>('reps');
 
   readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
