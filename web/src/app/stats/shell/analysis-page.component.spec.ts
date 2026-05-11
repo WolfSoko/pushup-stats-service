@@ -542,6 +542,52 @@ describe('AnalysisPageComponent', () => {
       store.setActiveView('overview');
       expect(store.viewFilteredRows()).toHaveLength(8);
     });
+
+    it('overview KPIs include exercise entries alongside pushups', () => {
+      const { store } = fixture.componentInstance;
+      // Overview = 6 pushups (max 25) + 2 exercises (max 40 legs.squats)
+      expect(store.bestSingleEntry()?.reps).toBe(40);
+      // Best day = Feb 13: 25 reps (pushup id 5) + 40 reps (legs ex)
+      expect(store.bestDay()).toEqual({ date: '2026-02-13', total: 65 });
+    });
+
+    it('per-category KPIs scope to the active view (abs)', () => {
+      const { store } = fixture.componentInstance;
+      store.setActiveView('abs');
+      expect(store.bestSingleEntry()?.reps).toBe(30);
+      expect(store.bestDay()).toEqual({ date: '2026-02-12', total: 30 });
+      // 1 abs entry, no consecutive day → streak length 1
+      expect(store.currentStreak()).toBe(1);
+      expect(store.longestStreak()).toBe(1);
+      // The seeded abs entry has no sets array → distribution stays empty
+      expect(store.avgSetSize()).toBe(0);
+      expect(store.setsDistribution()).toEqual([]);
+      expect(store.bestSingleSet()).toBe(0);
+    });
+
+    it('per-category KPIs scope to the active view (pushup)', () => {
+      const { store } = fixture.componentInstance;
+      store.setActiveView('pushup');
+      // Same numbers as the original pushup-only tests because the
+      // seeded mock is the pushup-only dataset.
+      expect(store.bestSingleEntry()?.reps).toBe(25);
+      expect(store.bestDay()?.total).toBe(25);
+      expect(store.longestStreak()).toBe(5);
+      expect(store.avgSetSize()).toBe(7.1);
+      expect(store.bestSingleSet()).toBe(10);
+    });
+
+    it('KPIs collapse to zero/null when the active view has no entries', () => {
+      const { store } = fixture.componentInstance;
+      store.setActiveView('plank');
+      expect(store.bestSingleEntry()).toBeNull();
+      expect(store.bestDay()).toBeNull();
+      expect(store.currentStreak()).toBe(0);
+      expect(store.longestStreak()).toBe(0);
+      expect(store.avgSetSize()).toBe(0);
+      expect(store.setsDistribution()).toEqual([]);
+      expect(store.bestSingleSet()).toBe(0);
+    });
   });
 
   it('resolves bare kind ids to localised labels via typeBreakdownDisplay', () => {
