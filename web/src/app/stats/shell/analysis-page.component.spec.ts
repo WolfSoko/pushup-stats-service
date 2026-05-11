@@ -1,7 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import { provideRouter } from '@angular/router';
 import { of } from 'rxjs';
 import { AnalysisPageComponent } from './analysis-page.component';
+import { AnalysisGroupViewComponent } from './analysis-group-view.component';
 import {
   LiveDataStore,
   StatsApiService,
@@ -183,9 +185,12 @@ describe('AnalysisPageComponent', () => {
       ],
     })
       .overrideComponent(AnalysisPageComponent, {
+        remove: { imports: [FilterBarComponent] },
+        add: { imports: [MockFilterBarComponent] },
+      })
+      .overrideComponent(AnalysisGroupViewComponent, {
         remove: {
           imports: [
-            FilterBarComponent,
             HeatmapComponent,
             TypePieComponent,
             StatsChartComponent,
@@ -194,7 +199,6 @@ describe('AnalysisPageComponent', () => {
         },
         add: {
           imports: [
-            MockFilterBarComponent,
             MockHeatmapComponent,
             MockTypePieComponent,
             MockStatsChartComponent,
@@ -688,26 +692,29 @@ describe('AnalysisPageComponent', () => {
   });
 
   it('resolves bare kind ids to localised labels via typeBreakdownDisplay', () => {
-    // Coverage for the component-level mapping that lives outside the
-    // store: the store's kind-mode breakdown emits raw ids in `label`
-    // and the page wraps it in `typeBreakdownDisplay` to localise. A
-    // regression in the wrapper would silently render `abs.situps` as
-    // the legend text instead of "Sit-ups".
-    const component = fixture.componentInstance;
-    component.store.setKinds(['pushup', 'abs.situps']);
+    // Coverage for the component-level mapping that lives in the
+    // group view: the store's kind-mode breakdown emits raw ids in
+    // `label` and the group view wraps it in `typeBreakdownDisplay`
+    // to localise. A regression in the wrapper would silently render
+    // `abs.situps` as the legend text instead of "Sit-ups".
+    fixture.componentInstance.store.setKinds(['pushup', 'abs.situps']);
     fixture.detectChanges();
-    const breakdown = component
+    const groupView = fixture.debugElement.query(
+      By.directive(AnalysisGroupViewComponent)
+    ).componentInstance as AnalysisGroupViewComponent;
+    const breakdown = groupView
       .typeBreakdownDisplay()
       .map((d) => ({ id: d.id, label: d.label }));
     const pushup = breakdown.find((l) => l.id === 'pushup');
     expect(pushup?.label).toBe('Liegestütze');
 
     // The mock dataset has no abs.situps entries so the breakdown
-    // bucket itself is missing; `kindFilterOptions` calls the same
-    // `kindLabel` mapping for both selected and in-range kinds, so it
-    // proves the catalog lookup → localised name path also works for
-    // catalog ids — without needing fixture data we don't have.
-    const situpsOption = component
+    // bucket itself is missing; `kindFilterOptions` on the shell uses
+    // the same shared `kindDisplayName` mapping for both selected and
+    // in-range kinds, so it proves the catalog lookup → localised
+    // name path also works for catalog ids — without needing fixture
+    // data we don't have.
+    const situpsOption = fixture.componentInstance
       .kindFilterOptions()
       .find((o) => o.value === 'abs.situps');
     expect(situpsOption?.label).toBe('Sit-ups');
@@ -765,9 +772,12 @@ describe('AnalysisPageComponent empty-state CTA gating', () => {
       ],
     })
       .overrideComponent(AnalysisPageComponent, {
+        remove: { imports: [FilterBarComponent] },
+        add: { imports: [MockFilterBarComponent] },
+      })
+      .overrideComponent(AnalysisGroupViewComponent, {
         remove: {
           imports: [
-            FilterBarComponent,
             HeatmapComponent,
             TypePieComponent,
             StatsChartComponent,
@@ -776,7 +786,6 @@ describe('AnalysisPageComponent empty-state CTA gating', () => {
         },
         add: {
           imports: [
-            MockFilterBarComponent,
             MockHeatmapComponent,
             MockTypePieComponent,
             MockStatsChartComponent,

@@ -1,3 +1,8 @@
+import {
+  findExerciseDefinition,
+  type UnifiedEntryFilterKey,
+} from '@pu-stats/models';
+
 /**
  * Locale-aware display strings for the standard exercise catalog.
  * `$localize` calls live in this module so the angular build extractor
@@ -21,4 +26,24 @@ const EXERCISE_DISPLAY_NAMES: Record<string, string> = {
 
 export function exerciseDisplayName(id: string): string {
   return EXERCISE_DISPLAY_NAMES[id] ?? id;
+}
+
+/**
+ * Resolves the filter-key shape used by the analysis page (`'pushup'`
+ * for the collapsed pushup bucket, exerciseId for everything else)
+ * to a localised label. Shared between the page filter chips and the
+ * type-pie legend so both stay in sync without duplicating the
+ * `$localize` calls.
+ *
+ * Falls back to a generic "Andere Übung" label for legacy ids that
+ * no longer have a catalog entry (e.g. an exercise removed from the
+ * catalog whose Firestore entries still exist).
+ */
+export function kindDisplayName(value: UnifiedEntryFilterKey): string {
+  if (value === 'pushup') {
+    return $localize`:@@exercise.category.pushup:Liegestütze`;
+  }
+  const def = findExerciseDefinition(value);
+  if (def) return exerciseDisplayName(def.id);
+  return $localize`:@@analysis.kindUnknown:Andere Übung`;
 }
