@@ -250,7 +250,11 @@ export class AnalysisPageComponent {
     if (this.store.entriesResource.status() !== 'resolved') return false;
     if (this.store.weekEntriesResource.status() !== 'resolved') return false;
     if (this.store.monthEntriesResource.status() !== 'resolved') return false;
-    if (this.store.rows().length > 0) return false;
+    // Pre-merge: `rows()` is the pushup REST resource only. A range
+    // that contains only exercise entries would otherwise still flash
+    // the empty CTA even though the group view renders charts. Reading
+    // `unifiedRows()` mirrors what the rest of the page sees.
+    if (this.store.unifiedRows().length > 0) return false;
     if (this.store.weekTrend().some((t) => t.total > 0)) return false;
     if (this.store.monthTrend().some((t) => t.total > 0)) return false;
     return true;

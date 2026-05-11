@@ -23,10 +23,19 @@ Designentscheidungen (mit Nutzer abgestimmt):
 Neuer Helper in `libs/stats/src/lib/models/`:
 
 ```ts
-unifiedEntryCategoryId(entry: UnifiedEntry): ExerciseCategoryId
-//  'pushup' kind   → 'pushup'
-//  'exercise' kind → catalog.find(exerciseId).categoryId
+unifiedEntryCategoryId(
+  entry: UnifiedEntry,
+  resolveDefinition?: (id: string) => ExerciseDefinition | null
+): ExerciseCategoryId | null
+//  'pushup' kind                      → 'pushup'
+//  'exercise' kind, im Catalog        → ExerciseDefinition.categoryId
+//  'exercise' kind, nicht im Catalog  → null  (Resolver kann Custom-IDs einbringen)
 ```
+
+`null` ist absichtlich Teil des Rückgabetyps: Einträge mit unbekannter
+`exerciseId` (z. B. eine aus dem Catalog entfernte User-Custom-Übung,
+deren Firestore-Docs noch existieren) fallen damit aus jeder
+Kategorie-Sicht heraus, ohne im Overview zu verschwinden.
 
 Wird in `analysis.store.ts` als Basisfilter genutzt.
 
@@ -37,17 +46,13 @@ Wird in `analysis.store.ts` als Basisfilter genutzt.
 Neuer State:
 
 ```ts
-activeView: 'overview' | ExerciseCategoryId   // default 'overview'
+activeView: 'overview' | ExerciseCategoryId; // default 'overview'
 ```
 
 Neuer Selector vor allen bisherigen computeds einziehen:
 
 ```ts
-viewFilteredRows = computed(() =>
-  activeView() === 'overview'
-    ? rows()
-    : rows().filter(e => unifiedEntryCategoryId(e) === activeView())
-)
+viewFilteredRows = computed(() => (activeView() === 'overview' ? rows() : rows().filter((e) => unifiedEntryCategoryId(e) === activeView())));
 ```
 
 Alle bestehenden Aggregate (`chartSeries`, `typeBreakdown`, `bestSingleEntry`, `bestDay`, `currentStreak`, `longestStreak`, `setsDistribution`, `avgSetSize`, `heatmapData`) auf `viewFilteredRows` umstellen.
@@ -81,13 +86,13 @@ Methode: `setActiveView(view)` — synct mit `?view=` Query-Param.
 
 Aktueller Monolith `analysis-page.component.ts` (682 Zeilen) wird zerlegt:
 
-| Datei                                          | Rolle                                                                                                                                |
-| ---------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
-| `analysis-page.component.ts`                   | **Shell**: Filter-Bar oben + `mat-tab-group`, liest/schreibt `?view=`-Query-Param, switcht `activeView` im Store                     |
-| `analysis-overview.component.ts` (neu)         | Übersicht-Tab: `<category-comparison-chart>` + Grid aus `<category-summary-card>`                                                    |
+| Datei                                          | Rolle                                                                                                                                   |
+| ---------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| `analysis-page.component.ts`                   | **Shell**: Filter-Bar oben + `mat-tab-group`, liest/schreibt `?view=`-Query-Param, switcht `activeView` im Store                        |
+| `analysis-overview.component.ts` (neu)         | Übersicht-Tab: `<category-comparison-chart>` + Grid aus `<category-summary-card>`                                                       |
 | `analysis-group-view.component.ts` (neu)       | Wiederverwendbare Detail-Ansicht: Chart + KPIs + Heatmap + Trends — keine Inputs, liest alles aus dem Store (der bereits gefiltert ist) |
-| `category-summary-card.component.ts` (neu)     | `mat-card` mit Icon, Name, Quick-Stats, Button `(click)="select.emit(categoryId)"`                                                   |
-| `category-comparison-chart.component.ts` (neu) | Horizontaler Bar-Chart (Chart.js) — Reps pro Kategorie, mit Sets als sekundäre Achse oder Toggle                                     |
+| `category-summary-card.component.ts` (neu)     | `mat-card` mit Icon, Name, Quick-Stats, Button `(click)="select.emit(categoryId)"`                                                      |
+| `category-comparison-chart.component.ts` (neu) | Horizontaler Bar-Chart (Chart.js) — Reps pro Kategorie, mit Sets als sekundäre Achse oder Toggle                                        |
 
 Filter-Bar (Datumsbereich) bleibt **oberhalb** der Tabs → wirkt auf alle Ansichten.
 
@@ -99,11 +104,9 @@ Die bestehende „Kind"-Mehrfachauswahl entfällt durch die Tab-Auswahl. Empfehl
 
 ```ts
 visibleTabs = computed(() => {
-  const cats = new Set(rows().map(unifiedEntryCategoryId))
-  return EXERCISE_CATEGORIES
-    .filter(c => cats.has(c.id))
-    .sort((a, b) => a.order - b.order)
-})
+  const cats = new Set(rows().map(unifiedEntryCategoryId));
+  return EXERCISE_CATEGORIES.filter((c) => cats.has(c.id)).sort((a, b) => a.order - b.order);
+});
 ```
 
 Übersicht-Tab immer Index 0. Tab-Wechsel → `setActiveView` → Query-Param-Update via `router.navigate([], { queryParams: { view }, queryParamsHandling: 'merge' })`.
@@ -132,14 +135,14 @@ Kategorienamen nutzen bestehende `EXERCISE_CATEGORIES[*].nameKey`.
 
 ## 7. Tests
 
-| Bereich                       | Test                                                                                                                                              |
-| ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `unifiedEntryCategoryId`      | Pure-Function-Unit-Tests pro Kind                                                                                                                 |
-| `analysis.store`              | `activeView` schaltet `viewFilteredRows`, KPIs ändern sich entsprechend; `categorySummaries` filtert leere Kategorien; `weekTrend` / `monthTrend` kategoriegefiltert |
-| `category-summary-card`       | Rendert i18n Name + Stats; Klick emittiert `categoryId`                                                                                           |
-| `category-comparison-chart`   | Mappt `categoryComparison` korrekt auf Chart.js dataset                                                                                           |
-| `analysis-page` Shell         | Tabwechsel updated Query-Param und `activeView`; `?view=abs` initialer Snapshot wird übernommen; nur Tabs mit Daten sind sichtbar                 |
-| Smoke                         | Wechsel zwischen Tabs ändert KPIs ohne Reload                                                                                                     |
+| Bereich                     | Test                                                                                                                                                                 |
+| --------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `unifiedEntryCategoryId`    | Pure-Function-Unit-Tests pro Kind                                                                                                                                    |
+| `analysis.store`            | `activeView` schaltet `viewFilteredRows`, KPIs ändern sich entsprechend; `categorySummaries` filtert leere Kategorien; `weekTrend` / `monthTrend` kategoriegefiltert |
+| `category-summary-card`     | Rendert i18n Name + Stats; Klick emittiert `categoryId`                                                                                                              |
+| `category-comparison-chart` | Mappt `categoryComparison` korrekt auf Chart.js dataset                                                                                                              |
+| `analysis-page` Shell       | Tabwechsel updated Query-Param und `activeView`; `?view=abs` initialer Snapshot wird übernommen; nur Tabs mit Daten sind sichtbar                                    |
+| Smoke                       | Wechsel zwischen Tabs ändert KPIs ohne Reload                                                                                                                        |
 
 Jeweils Given-When-Then; `TestBed` / `render`; `PLATFORM_ID: 'server'` falls Store mit Timer-Hook erweitert wird (aktuell nicht der Fall).
 
