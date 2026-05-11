@@ -6620,50 +6620,6 @@
         <source>Woche</source>
       <target>周</target></segment>
     </unit>
-    <unit id="trainingPlans.unmarkAria">
-      <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:275,276</note>
-      </notes>
-      <segment state="translated">
-        <source>Als nicht erledigt markieren</source>
-      <target>标记为未完成</target></segment>
-    </unit>
-    <unit id="trainingPlans.skipAria">
-      <segment state="translated">
-        <source>Tag überspringen</source>
-        <target>跳过此天</target>
-      </segment>
-    </unit>
-    <unit id="trainingPlans.skipTooltip">
-      <segment state="translated">
-        <source>Tag überspringen</source>
-        <target>跳过此天</target>
-      </segment>
-    </unit>
-    <unit id="trainingPlans.unskipAria">
-      <segment state="translated">
-        <source>Überspringen rückgängig machen</source>
-        <target>撤销跳过</target>
-      </segment>
-    </unit>
-    <unit id="trainingPlans.unskipTooltip">
-      <segment state="translated">
-        <source>Überspringen rückgängig machen</source>
-        <target>撤销跳过</target>
-      </segment>
-    </unit>
-    <unit id="trainingPlans.jumpAria">
-      <segment state="translated">
-        <source>Zu diesem Tag springen</source>
-        <target>跳转到此天</target>
-      </segment>
-    </unit>
-    <unit id="trainingPlans.jumpTooltip">
-      <segment state="translated">
-        <source>Zu diesem Tag springen</source>
-        <target>跳转到此天</target>
-      </segment>
-    </unit>
     <unit id="trainingPlans.skipped">
       <segment state="translated">
         <source>Tag übersprungen.</source>
@@ -6675,22 +6631,6 @@
         <source>Auf Tag <ph id="0" equiv="INTERPOLATION" disp="dayIndex"/> gesprungen.</source>
         <target>已跳转到第 <ph id="0" equiv="INTERPOLATION" disp="dayIndex"/> 天。</target>
       </segment>
-    </unit>
-    <unit id="trainingPlans.logAria">
-      <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:286,287</note>
-      </notes>
-      <segment state="translated">
-        <source>Plan-Sätze eintragen und als erledigt markieren</source>
-      <target>记录计划组数并标记为完成</target></segment>
-    </unit>
-    <unit id="trainingPlans.markAria">
-      <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:295,296</note>
-      </notes>
-      <segment state="translated">
-        <source>Nur als erledigt markieren (ohne Eintrag)</source>
-      <target>仅标记为完成（无记录）</target></segment>
     </unit>
     <unit id="trainingPlans.notFound">
       <notes>
@@ -6758,6 +6698,48 @@
       <segment state="translated">
         <source>Trainingspläne</source>
       <target>训练计划</target></segment>
+    </unit>
+    <unit id="trainingPlans.menu.triggerAria">
+      <segment state="translated">
+        <source>Tagesaktionen öffnen</source>
+        <target>Tagesaktionen öffnen</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.menu.undoDone">
+      <segment state="translated">
+        <source>Erledigt rückgängig machen</source>
+        <target>Erledigt rückgängig machen</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.menu.undoSkip">
+      <segment state="translated">
+        <source>Überspringen rückgängig machen</source>
+        <target>Überspringen rückgängig machen</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.menu.logDone">
+      <segment state="translated">
+        <source>Plan-Sätze eintragen &amp; abhaken</source>
+        <target>Plan-Sätze eintragen &amp; abhaken</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.menu.markDone">
+      <segment state="translated">
+        <source>Nur abhaken (ohne Eintrag)</source>
+        <target>Nur abhaken (ohne Eintrag)</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.menu.skip">
+      <segment state="translated">
+        <source>Tag überspringen</source>
+        <target>Tag überspringen</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.menu.jump">
+      <segment state="translated">
+        <source>Zu diesem Tag springen</source>
+        <target>Zu diesem Tag springen</target>
+      </segment>
     </unit>
     <unit id="trainingPlans.intro">
       <notes>

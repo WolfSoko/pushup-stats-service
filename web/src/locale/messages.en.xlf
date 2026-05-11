@@ -6271,49 +6271,43 @@ Deine Position: # ·  Reps        </source>
         <target>Current day:</target>
       </segment>
     </unit>
-    <unit id="trainingPlans.markAria">
+    <unit id="trainingPlans.menu.triggerAria">
       <segment state="translated">
-        <source>Nur als erledigt markieren (ohne Eintrag)</source>
-        <target>Mark as done only (no entry created)</target>
+        <source>Tagesaktionen öffnen</source>
+        <target>Open day actions</target>
       </segment>
     </unit>
-    <unit id="trainingPlans.unmarkAria">
+    <unit id="trainingPlans.menu.undoDone">
       <segment state="translated">
-        <source>Als nicht erledigt markieren</source>
-        <target>Mark as not done</target>
+        <source>Erledigt rückgängig machen</source>
+        <target>Undo done</target>
       </segment>
     </unit>
-    <unit id="trainingPlans.skipAria">
-      <segment state="translated">
-        <source>Tag überspringen</source>
-        <target>Skip day</target>
-      </segment>
-    </unit>
-    <unit id="trainingPlans.skipTooltip">
-      <segment state="translated">
-        <source>Tag überspringen</source>
-        <target>Skip day</target>
-      </segment>
-    </unit>
-    <unit id="trainingPlans.unskipAria">
+    <unit id="trainingPlans.menu.undoSkip">
       <segment state="translated">
         <source>Überspringen rückgängig machen</source>
         <target>Undo skip</target>
       </segment>
     </unit>
-    <unit id="trainingPlans.unskipTooltip">
+    <unit id="trainingPlans.menu.logDone">
       <segment state="translated">
-        <source>Überspringen rückgängig machen</source>
-        <target>Undo skip</target>
+        <source>Plan-Sätze eintragen &amp; abhaken</source>
+        <target>Log plan sets &amp; mark done</target>
       </segment>
     </unit>
-    <unit id="trainingPlans.jumpAria">
+    <unit id="trainingPlans.menu.markDone">
       <segment state="translated">
-        <source>Zu diesem Tag springen</source>
-        <target>Jump to this day</target>
+        <source>Nur abhaken (ohne Eintrag)</source>
+        <target>Mark done only (no entry)</target>
       </segment>
     </unit>
-    <unit id="trainingPlans.jumpTooltip">
+    <unit id="trainingPlans.menu.skip">
+      <segment state="translated">
+        <source>Tag überspringen</source>
+        <target>Skip day</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.menu.jump">
       <segment state="translated">
         <source>Zu diesem Tag springen</source>
         <target>Jump to this day</target>
@@ -6461,12 +6455,6 @@ Deine Position: # ·  Reps        </source>
       <segment state="translated">
         <source>Heute eintragen</source>
         <target>Log today</target>
-      </segment>
-    </unit>
-    <unit id="trainingPlans.logAria">
-      <segment state="translated">
-        <source>Plan-Sätze eintragen und als erledigt markieren</source>
-        <target>Log plan sets and mark as done</target>
       </segment>
     </unit>
     <unit id="trainingPlans.logged">

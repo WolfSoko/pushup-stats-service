@@ -5,51 +5,36 @@
       <notes>
         <note category="location">web/src/app/app.ts:81</note>
 
-
             </notes>
       <segment state="translated">
         <source>Neue Version verfügbar</source>
         <target>Ny versjon tilgjengelig</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="1933013871016789910">
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:34</note>
 
-
             </notes>
       <segment state="translated">
         <source>Gesamt</source>
         <target>Totalt</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="2361265238320887165">
       <notes>
         <note category="location">libs/auth/src/lib/ui/login/login.component.html:26,27</note>
 
-
             </notes>
       <segment state="translated">
         <source>Abmelden</source>
         <target>Logg ut</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="2721806142807617942">
@@ -62,17 +47,12 @@
       <notes>
         <note category="location">web/src/app/app.ts:82</note>
 
-
             </notes>
       <segment state="translated">
         <source>Neu laden</source>
         <target>Oppdater</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="6031063121455734122">
@@ -85,23 +65,17 @@
       <notes>
         <note category="location">libs/auth/src/lib/ui/login/login.component.html:25,26</note>
 
-
             </notes>
       <segment state="translated">
         <source>Anmeldung erfolgreich!</source>
         <target>Innlogging vellykket!</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="activeUser">
       <notes>
         <note category="location">web/src/app/stats/shell/settings-page.component.ts:64,65</note>
-
 
             </notes>
       <segment state="translated">
@@ -112,11 +86,7 @@ Aktiv:         </source>
           <ph id="0" equiv="INTERPOLATION" disp="{{ activeUserId() }}"/>
 Aktiv:         </target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="ads.dashboard.aria">
@@ -124,10 +94,7 @@ Aktiv:         </target>
         <source>Werbung</source>
         <target>Annonse</target>
 
-
-
             </segment>
-
 
         </unit>
     <unit id="ads.landing.aria">
@@ -135,231 +102,163 @@ Aktiv:         </target>
         <source>Werbung</source>
         <target>Annonse</target>
 
-
-
             </segment>
-
 
         </unit>
     <unit id="allTimeAvg">
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:92,93</note>
 
-
             </notes>
       <segment state="translated">
         <source>All-Time Ø/Tag</source>
         <target>Gjennomsnitt per dag (hele tiden)</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="allTimeDays">
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:84,85</note>
 
-
             </notes>
       <segment state="translated">
         <source>All-Time Tage</source>
         <target>Dager (hele tiden)</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="allTimeEntries">
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:88,89</note>
 
-
             </notes>
       <segment state="translated">
         <source>All-Time Einträge</source>
         <target>Oppføringer (hele tiden)</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="allTimeSummaryAria">
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:76,77</note>
 
-
             </notes>
       <segment state="translated">
         <source>All-Time Kurzübersicht</source>
         <target>Sammendrag hele tiden</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="allTimeTotal">
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:80,81</note>
 
-
             </notes>
       <segment state="translated">
         <source>All-Time Gesamt</source>
         <target>Totalt (hele tiden)</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="analysis.bestDay">
       <notes>
         <note category="location">web/src/app/stats/shell/analysis-page.component.ts:87,89</note>
 
-
             </notes>
       <segment state="translated">
         <source>Bester Tag:</source>
         <target>Beste dag:</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="analysis.bestSingleEntry">
       <notes>
         <note category="location">web/src/app/stats/shell/analysis-page.component.ts:82,84</note>
 
-
             </notes>
       <segment state="translated">
         <source>Bestwert Einzel-Eintrag:</source>
         <target>Beste enkeltoppføring:</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="analysis.bestStreaksTitle">
       <notes>
         <note category="location">web/src/app/stats/shell/analysis-page.component.ts:76,78</note>
 
-
             </notes>
       <segment state="translated">
         <source>Bestwerte &amp; Streaks</source>
         <target>Besteresultater &amp; serier</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="analysis.currentStreak">
       <notes>
         <note category="location">web/src/app/stats/shell/analysis-page.component.ts:93,95</note>
 
-
             </notes>
       <segment state="translated">
         <source>Aktuelle Streak:</source>
         <target>Nåværende serie:</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="analysis.heatmapTitle">
       <notes>
         <note category="location">web/src/app/stats/shell/analysis-page.component.ts:126,128</note>
 
-
             </notes>
       <segment state="translated">
         <source>Heatmap (Wochentag/Uhrzeit)</source>
         <target>Heatmap (ukedag/tidspunkt)</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="analysis.longestStreak">
       <notes>
         <note category="location">web/src/app/stats/shell/analysis-page.component.ts:101,103</note>
 
-
             </notes>
       <segment state="translated">
         <source>Längste Streak:</source>
         <target>Lengste serie:</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="analysis.monthCol">
       <notes>
         <note category="location">web/src/app/stats/shell/analysis-page.component.ts:57,58</note>
 
-
             </notes>
       <segment state="translated">
         <source>Monat</source>
         <target>Måned</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="analysis.monthTrendTitle">
       <notes>
         <note category="location">web/src/app/stats/shell/analysis-page.component.ts:50,52</note>
 
-
             </notes>
       <segment state="translated">
         <source>Monatstrend</source>
         <target>Månedsutvikling</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="analysis.monthTrendSubtitle">
@@ -376,26 +275,18 @@ Aktiv:         </target>
         <note category="location">web/src/app/stats/shell/analysis-page.component.ts:37,38</note>
         <note category="location">web/src/app/stats/shell/analysis-page.component.ts:63,64</note>
 
-
-
             </notes>
       <segment state="translated">
         <source>Reps</source>
         <target>Repetisjoner</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="analysis.streakDays">
       <notes>
         <note category="location">web/src/app/stats/shell/analysis-page.component.ts:96,97</note>
         <note category="location">web/src/app/stats/shell/analysis-page.component.ts:104,105</note>
-
-
 
             </notes>
       <segment state="translated">
@@ -406,60 +297,43 @@ Aktiv:         </target>
           <ph id="0" equiv="INTERPOLATION" disp="{{ currentStreak() }}"/>
  dager        </target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="analysis.typesTitle">
       <notes>
         <note category="location">web/src/app/stats/shell/analysis-page.component.ts:114,116</note>
 
-
             </notes>
       <segment state="translated">
         <source>Typen (Anteile)</source>
         <target>Typer (andeler)</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="analysis.weekCol">
       <notes>
         <note category="location">web/src/app/stats/shell/analysis-page.component.ts:31,32</note>
 
-
             </notes>
       <segment state="translated">
         <source>Woche</source>
         <target>Uke</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="analysis.weekTrendTitle">
       <notes>
         <note category="location">web/src/app/stats/shell/analysis-page.component.ts:24,26</note>
 
-
             </notes>
       <segment state="translated">
         <source>Wochentrend</source>
         <target>Ukesutvikling</target>
 
-
             </segment>
-
 
         </unit>
     <unit id="analysis.weekTrendSubtitle">
@@ -599,18 +473,12 @@ Aktiv:         </target>
         <note category="location">web/src/app/app.html:11,12</note>
         <note category="location">web/src/app/app.html:114,115</note>
 
-
-
             </notes>
       <segment state="translated">
         <source>Pushups</source>
         <target>Pushup Stats</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="auth.email">
@@ -928,11 +796,7 @@ Aktiv:         </target>
         <source>Pushup Tracker Logo</source>
         <target>Pushup Tracker-logo</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="cancel">
@@ -940,154 +804,108 @@ Aktiv:         </target>
         <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:215,217</note>
         <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:297,299</note>
 
-
-
             </notes>
       <segment state="translated">
         <source> Abbrechen </source>
         <target> Avbryt </target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="chart.dayIntegral">
       <notes>
         <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:54,55</note>
 
-
             </notes>
       <segment state="translated">
         <source>Tages-Integral</source>
         <target>Daglig integral</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="chart.interval">
       <notes>
         <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:48,49</note>
 
-
             </notes>
       <segment state="translated">
         <source>Intervallwert</source>
         <target>Intervallverdi</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="chart.legendAria">
       <notes>
         <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:43</note>
 
-
             </notes>
       <segment state="translated">
         <source>Legende</source>
         <target>Forklaring</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="chart.movingAvg">
       <notes>
         <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:60,61</note>
 
-
             </notes>
       <segment state="translated">
         <source>Gleitender Durchschnitt</source>
         <target>Glidende gjennomsnitt</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="chart.subtitle">
       <notes>
         <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:30,31</note>
 
-
             </notes>
       <segment state="translated">
         <source>Balken zeigen deine Wiederholungen pro Zeitabschnitt. Die orange Linie summiert den Tag, die grüne zeigt deinen Trend.</source>
         <target>Søylene viser repetisjonene dine per tidsperiode. Den oransje linjen summerer dagen, den grønne viser trenden din.</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="chart.titleDaily">
       <notes>
         <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:82</note>
 
-
             </notes>
       <segment state="translated">
         <source>Verlauf (Tageswerte)</source>
         <target>Progresjon (daglige verdier)</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="chart.titleHourly">
       <notes>
         <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:81</note>
 
-
             </notes>
       <segment state="translated">
         <source>Verlauf (Stundenwerte)</source>
         <target>Progresjon (timeverdier)</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="colActions">
       <notes>
         <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:102,103</note>
 
-
             </notes>
       <segment state="translated">
         <source>Aktion</source>
         <target>Handling</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="colExercise">
@@ -1106,91 +924,65 @@ Aktiv:         </target>
       <notes>
         <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:75,76</note>
 
-
             </notes>
       <segment state="translated">
         <source>Reps</source>
         <target>Reps</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="colSource">
       <notes>
         <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:93,94</note>
 
-
             </notes>
       <segment state="translated">
         <source>Quelle</source>
         <target>Kilde</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="colTime">
       <notes>
         <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:66,67</note>
 
-
             </notes>
       <segment state="translated">
         <source>Zeit</source>
         <target>Tid</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="colType">
       <notes>
         <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:84,85</note>
 
-
             </notes>
       <segment state="translated">
         <source>Typ</source>
         <target>Type</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="createDialogTitle">
       <notes>
         <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:147,149</note>
 
-
             </notes>
       <segment state="translated">
         <source>Neuen Eintrag anlegen</source>
         <target>Opprett nytt oppføring</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="createNewEntry">
       <notes>
         <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:27,30</note>
-
 
             </notes>
       <segment state="translated">
@@ -1201,45 +993,31 @@ Aktiv:         </target>
           <pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">add</pc>
  Ny         </target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="dailyGoalLabel">
       <notes>
         <note category="location">web/src/app/stats/shell/settings-page.component.ts:80,81</note>
 
-
             </notes>
       <segment state="translated">
         <source>Tagesziel (Reps)</source>
         <target>Daglig mål (reps)</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="dailyGoalPlaceholder">
       <notes>
         <note category="location">web/src/app/stats/shell/settings-page.component.ts:88</note>
 
-
             </notes>
       <segment state="translated">
         <source>10</source>
         <target>10</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="weeklyGoalLabel">
@@ -1336,68 +1114,48 @@ Aktiv:         </target>
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html</note>
 
-
             </notes>
       <segment state="translated">
         <source>Daily · Weekly · Monthly</source>
         <target>Daglig · Ukentlig · Månedlig</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="dashboard.leaderboard.title">
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html</note>
 
-
             </notes>
       <segment state="translated">
         <source>Bestenliste</source>
         <target>Rangert liste</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="dashboardSubtitle">
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:13,16</note>
 
-
             </notes>
       <segment state="translated">
         <source> Behalte Trainingsvolumen und Verlauf im Blick – klar, schnell und mobil optimiert. </source>
         <target> Hold øye med treningsvolumet og progresjon – klar, rask og mobil optimert. </target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="dashboardTitle">
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:11,12</note>
 
-
             </notes>
       <segment state="translated">
         <source>Liegestütze Statistik</source>
         <target>Armhevingsstatistikk</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="dayChartMode14h">
@@ -1422,119 +1180,84 @@ Aktiv:         </target>
       <notes>
         <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:121</note>
 
-
             </notes>
       <segment state="translated">
         <source>Löschen</source>
         <target>Slett</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="deleteTitle">
       <notes>
         <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:123</note>
 
-
             </notes>
       <segment state="translated">
         <source>Löschen</source>
         <target>Slett</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="displayNameLabel">
       <notes>
         <note category="location">web/src/app/stats/shell/settings-page.component.ts:69,70</note>
 
-
             </notes>
       <segment state="translated">
         <source>Anzeigename</source>
         <target>Visningsnavn</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="displayNamePlaceholder">
       <notes>
         <note category="location">web/src/app/stats/shell/settings-page.component.ts:75</note>
 
-
             </notes>
       <segment state="translated">
         <source>Wolf</source>
         <target>Wolf</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="editAria">
       <notes>
         <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:108,109</note>
 
-
             </notes>
       <segment state="translated">
         <source>Bearbeiten</source>
         <target>Rediger</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="editDialogTitle">
       <notes>
         <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:234,236</note>
 
-
             </notes>
       <segment state="translated">
         <source>Eintrag bearbeiten</source>
         <target>Rediger oppføring</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="editTitle">
       <notes>
         <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:110,111</note>
 
-
             </notes>
       <segment state="translated">
         <source>Bearbeiten</source>
         <target>Rediger</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="entries.allOption">
@@ -1542,160 +1265,113 @@ Aktiv:         </target>
         <note category="location">web/src/app/stats/shell/entries-page.component.ts:64,66</note>
         <note category="location">web/src/app/stats/shell/entries-page.component.ts:76,78</note>
 
-
-
             </notes>
       <segment state="translated">
         <source>Alle</source>
         <target>Alle</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="entries.dateFrom">
       <notes>
         <note category="location">web/src/app/stats/shell/entries-page.component.ts:41,42</note>
 
-
             </notes>
       <segment state="translated">
         <source>Datum von</source>
         <target>Dato fra</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="entries.dateTo">
       <notes>
         <note category="location">web/src/app/stats/shell/entries-page.component.ts:51,52</note>
 
-
             </notes>
       <segment state="translated">
         <source>Datum bis</source>
         <target>Dato til</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="entries.repsMax">
       <notes>
         <note category="location">web/src/app/stats/shell/entries-page.component.ts:96,97</note>
 
-
             </notes>
       <segment state="translated">
         <source>Reps max</source>
         <target>Reps max</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="entries.repsMin">
       <notes>
         <note category="location">web/src/app/stats/shell/entries-page.component.ts:85,86</note>
 
-
             </notes>
       <segment state="translated">
         <source>Reps min</source>
         <target>Reps min</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="entries.sourceFilter">
       <notes>
         <note category="location">web/src/app/stats/shell/entries-page.component.ts:61,62</note>
 
-
             </notes>
       <segment state="translated">
         <source>Quelle</source>
         <target>Kilde</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="entries.subtitle">
       <notes>
         <note category="location">web/src/app/stats/shell/entries-page.component.ts:34,35</note>
 
-
             </notes>
       <segment state="translated">
         <source>Zeitraum und Kriterien</source>
         <target>Periode og kriterier</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="entries.title">
       <notes>
         <note category="location">web/src/app/stats/shell/entries-page.component.ts:32,33</note>
 
-
             </notes>
       <segment state="translated">
         <source>Filter</source>
         <target>Filter</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="entries.typeFilter">
       <notes>
         <note category="location">web/src/app/stats/shell/entries-page.component.ts:73,74</note>
 
-
             </notes>
       <segment state="translated">
         <source>Typ</source>
         <target>Type</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="entriesCount">
       <notes>
         <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:5</note>
-
 
             </notes>
       <segment state="translated">
@@ -1706,96 +1382,67 @@ Aktiv:         </target>
           <ph id="0" equiv="INTERPOLATION" disp="{{ entries().length }}"/>
  oppføringer        </target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="entriesInSelectedRange">
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:175,177</note>
 
-
             </notes>
       <segment state="translated">
         <source>Einträge im gewählten Zeitraum</source>
         <target>Oppføringer i valgt periode</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="entriesTitle">
       <notes>
         <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:3,4</note>
 
-
             </notes>
       <segment state="translated">
         <source>Historie</source>
         <target>Historikk</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="eyebrowTitle">
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:10,11</note>
 
-
             </notes>
       <segment state="translated">
         <source>Pushup Stats</source>
         <target>Pushup Stats</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="goalProgressTitle">
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:45,47</note>
 
-
             </notes>
       <segment state="translated">
         <source>Zielfortschritt</source>
         <target>Målprogresjon</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="heatmap.loading">
       <notes>
         <note category="location">web/src/app/stats/components/heatmap/heatmap.component.ts:36,39</note>
 
-
             </notes>
       <segment state="translated">
         <source> Heatmap wird im Browser geladen… </source>
         <target> Laster varmekart i nettleser… </target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="landing.cta.dashboard">
@@ -1811,68 +1458,48 @@ Aktiv:         </target>
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
 
-
             </notes>
       <segment state="translated">
         <source>Als Gast ausprobieren</source>
         <target>Prøv som gjest</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="landing.cta.login">
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
 
-
             </notes>
       <segment state="translated">
         <source>Einloggen</source>
         <target>Logg inn</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="landing.cta.signup">
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
 
-
             </notes>
       <segment state="translated">
         <source>Jetzt registrieren</source>
         <target>Registrer deg nå</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="landing.eyebrow">
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
 
-
             </notes>
       <segment state="translated">
         <source>Pushup Tracker</source>
         <target>Pushup Tracker</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="landing.feature.analytics.body">
@@ -2104,34 +1731,24 @@ Aktiv:         </target>
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
 
-
             </notes>
       <segment state="translated">
         <source>Tag</source>
         <target>Dag</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="landing.leaderboard.empty">
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
 
-
             </notes>
       <segment state="translated">
         <source>Noch keine Daten</source>
         <target>Ingen data ennå</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="landing.leaderboard.last30">
@@ -2147,7 +1764,6 @@ Aktiv:         </target>
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
 
-
             </notes>
       <segment state="translated">
         <source>
@@ -2156,28 +1772,19 @@ Aktiv:         </target>
 Deine Position: # ·  Reps        </source>
         <target> Din posisjon: #{$INTERPOLATION} · {$INTERPOLATION_1} armhevninger </target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="landing.leaderboard.reps">
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
 
-
             </notes>
       <segment state="translated">
         <source>Reps</source>
         <target>Armhevninger</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="landing.leaderboard.last7">
@@ -2319,57 +1926,41 @@ Deine Position: # ·  Reps        </source>
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
 
-
             </notes>
       <segment state="translated">
         <source> Liegestütze tracken in Sekunden – mit Trends, Streaks und Live-Sync. Plus Sit-ups, Kniebeugen, Plank und Laufen, wenn du mehr willst. </source>
         <target> Spor push-ups på sekunder — med trender, streaks og live-sync. Pluss sit-ups, knebøy, plank og løping når du vil ha mer. </target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="landing.title">
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
 
-
             </notes>
       <segment state="translated">
         <source>Dein Training. Klar visualisiert.</source>
         <target>Ditt trening. Klart visualisert.</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="lastEntryTitle">
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:59,60</note>
 
-
             </notes>
       <segment state="translated">
         <source>Letzter Eintrag</source>
         <target>Siste oppføring</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="latEntryReps">
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:64,66</note>
-
 
             </notes>
       <segment state="translated">
@@ -2382,11 +1973,7 @@ Deine Position: # ·  Reps        </source>
           <ph id="1" equiv="INTERPOLATION_1" disp="{{ latest.type || &apos;Standard&apos; }}"/>
   armhevninger ·          </target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="leaderboard.page.subtitle">
@@ -2405,7 +1992,6 @@ Deine Position: # ·  Reps        </source>
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:21,23</note>
 
-
             </notes>
       <segment state="translated">
         <source>
@@ -2415,164 +2001,115 @@ Deine Position: # ·  Reps        </source>
           <ph id="0" equiv="INTERPOLATION" disp="{{ liveConnected() ? &apos;connected&apos; : &apos;disconnected&apos; }}"/>
  Direkte:          </target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="loadingStats">
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:162,166</note>
 
-
             </notes>
       <segment state="translated">
         <source> Lade Statistikdaten… </source>
         <target> Laster statistikkdata… </target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="nav.account">
       <notes>
         <note category="location">web/src/app/app.html:91,93</note>
 
-
             </notes>
       <segment state="translated">
         <source> Account </source>
         <target> Konto </target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="nav.analysis">
       <notes>
         <note category="location">web/src/app/app.html:43,46</note>
 
-
             </notes>
       <segment state="translated">
         <source>Analyse</source>
         <target>Analyse</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="nav.aria">
       <notes>
         <note category="location">web/src/app/app.html:101,102</note>
 
-
             </notes>
       <segment state="translated">
         <source>Pushup Navigation</source>
         <target>Pushup navigasjon</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="nav.dashboard">
       <notes>
         <note category="location">web/src/app/app.html:23,26</note>
 
-
             </notes>
       <segment state="translated">
         <source>Dashboard</source>
         <target>Dashbord</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="nav.history">
       <notes>
         <note category="location">web/src/app/app.html:33,36</note>
 
-
             </notes>
       <segment state="translated">
         <source>Historie</source>
         <target>Historikk</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="nav.lang.de">
       <notes>
         <note category="location">web/src/app/app.html:74,77</note>
 
-
             </notes>
       <segment state="translated">
         <source>Deutsch</source>
         <target>Tysk</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="nav.lang.en">
       <notes>
         <note category="location">web/src/app/app.html:83,85</note>
 
-
             </notes>
       <segment state="translated">
         <source>English</source>
         <target>Engelsk</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="nav.language">
       <notes>
         <note category="location">web/src/app/app.html:65,68</note>
 
-
             </notes>
       <segment state="translated">
         <source> Sprache </source>
         <target> Språk </target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="nav.leaderboard">
@@ -2585,238 +2122,168 @@ Deine Position: # ·  Reps        </source>
       <notes>
         <note category="location">web/src/app/app.html:109,111</note>
 
-
             </notes>
       <segment state="translated">
         <source>Login</source>
         <target>Innlogging</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="nav.logout">
       <notes>
         <note category="location">web/src/app/app.html:104,106</note>
 
-
             </notes>
       <segment state="translated">
         <source>Logout</source>
         <target>Logg ut</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="nav.openMenu">
       <notes>
         <note category="location">web/src/app/app.html:107,108</note>
 
-
             </notes>
       <segment state="translated">
         <source>Menü öffnen</source>
         <target>Åpne meny</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="nav.settings">
       <notes>
         <note category="location">web/src/app/app.html:55,58</note>
 
-
             </notes>
       <segment state="translated">
         <source>Einstellungen</source>
         <target>Innstillinger</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="nav.toLanding">
       <notes>
         <note category="location">web/src/app/app.html</note>
 
-
             </notes>
       <segment state="translated">
         <source>Zur Landingpage</source>
         <target>Gå til landingsside</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="noEntriesInSelectedRange">
       <notes>
         <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:50,53</note>
 
-
             </notes>
       <segment state="translated">
         <source> Keine Einträge im gewählten Zeitraum. </source>
         <target> Ingen oppføringer i valgt periode. </target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="noEntryInPeriod">
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:68,70</note>
 
-
             </notes>
       <segment state="translated">
         <source>Noch kein Eintrag für diesen Zeitraum.</source>
         <target>Ingen oppføring for denne perioden ennå.</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="period.day">
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:52</note>
 
-
             </notes>
       <segment state="translated">
         <source>Tag</source>
         <target>Dag</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="period.month">
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:54</note>
 
-
             </notes>
       <segment state="translated">
         <source>Monat</source>
         <target>Måned</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="period.range">
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:56</note>
 
-
             </notes>
       <segment state="translated">
         <source>Zeitraum</source>
         <target>Periode</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="period.today">
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:51</note>
 
-
             </notes>
       <segment state="translated">
         <source>Heute</source>
         <target>I dag</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="period.week">
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:53</note>
 
-
             </notes>
       <segment state="translated">
         <source>Woche</source>
         <target>Uke</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="period.year">
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:55</note>
 
-
             </notes>
       <segment state="translated">
         <source>Jahr</source>
         <target>År</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="pie.noData">
       <notes>
         <note category="location">web/src/app/stats/components/type-pie/type-pie.component.ts:46,49</note>
 
-
             </notes>
       <segment state="translated">
         <source>Keine Daten</source>
         <target>Ingen data</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="pie.distributionAria">
@@ -2844,34 +2311,24 @@ Deine Position: # ·  Reps        </source>
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:103,105</note>
 
-
             </notes>
       <segment state="translated">
         <source>Schnell eintragen ohne Dialog</source>
         <target>Rask registrering uten dialog</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="quickActionsTitle">
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:100,102</note>
 
-
             </notes>
       <segment state="translated">
         <source>Schnellaktionen</source>
         <target>Hurtighandlinger</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="dashboard.quickAdd.button">
@@ -2959,17 +2416,12 @@ Deine Position: # ·  Reps        </source>
       <notes>
         <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:35,36</note>
 
-
             </notes>
       <segment state="translated">
         <source>Schnellwahl Zeitraum</source>
         <target>Rask periode-valg</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="rangeBackAria">
@@ -3012,85 +2464,60 @@ Deine Position: # ·  Reps        </source>
       <notes>
         <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:90</note>
 
-
             </notes>
       <segment state="translated">
         <source>Von</source>
         <target>Fra</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="rangeLabel">
       <notes>
         <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:84,85</note>
 
-
             </notes>
       <segment state="translated">
         <source>Zeitraum</source>
         <target>Tidsperiode</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="rangeModeDay">
       <notes>
         <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:43,44</note>
 
-
             </notes>
       <segment state="translated">
         <source>Tag</source>
         <target>Dag</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="rangeModeMonth">
       <notes>
         <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:49,50</note>
 
-
             </notes>
       <segment state="translated">
         <source>Monat</source>
         <target>Måned</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="rangeModeWeek">
       <notes>
         <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:46,47</note>
 
-
             </notes>
       <segment state="translated">
         <source>Woche</source>
         <target>Uke</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="rangeModeYear">
@@ -3106,17 +2533,12 @@ Deine Position: # ·  Reps        </source>
       <notes>
         <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:96</note>
 
-
             </notes>
       <segment state="translated">
         <source>Bis</source>
         <target>Til</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="rangeTodayAria">
@@ -3151,18 +2573,12 @@ Deine Position: # ·  Reps        </source>
         <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:162,163</note>
         <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:249,250</note>
 
-
-
             </notes>
       <segment state="translated">
         <source>Reps</source>
         <target>Reps</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="addSetTooltip">
@@ -3199,7 +2615,6 @@ Deine Position: # ·  Reps        </source>
       <notes>
         <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:306,312</note>
 
-
             </notes>
       <segment state="translated">
         <source>
@@ -3215,11 +2630,7 @@ Deine Position: # ·  Reps        </source>
           <pc id="2" equivStart="START_BLOCK_ELSE" equivEnd="CLOSE_BLOCK_ELSE" type="other" dispStart="@else {" dispEnd="}"> Lagre </pc>
         </target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="saveEntry">
@@ -3451,17 +2862,12 @@ Deine Position: # ·  Reps        </source>
       <notes>
         <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:30,33</note>
 
-
             </notes>
       <segment state="translated">
         <source>Zeitraum auswählen</source>
         <target>Velg tidsperiode</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="seo.analysis.description">
@@ -3469,10 +2875,7 @@ Deine Position: # ·  Reps        </source>
         <source>Analysiere Trends, Verteilungen und Streaks deines Trainings.</source>
         <target>Analyser trender, distribusjoner og treningsserier.</target>
 
-
-
             </segment>
-
 
         </unit>
     <unit id="seo.analysis.title">
@@ -3480,10 +2883,7 @@ Deine Position: # ·  Reps        </source>
         <source>Analyse – Pushup Tracker</source>
         <target>Analyse – Pushup Stats</target>
 
-
-
             </segment>
-
 
         </unit>
     <unit id="seo.dashboard.description">
@@ -3491,10 +2891,7 @@ Deine Position: # ·  Reps        </source>
         <source>Behalte Trainingsvolumen und Verlauf im Blick – klar, schnell und mobil optimiert.</source>
         <target>Behold treningsvolum og progresjon – klar, rask og mobil optimalisert.</target>
 
-
-
             </segment>
-
 
         </unit>
     <unit id="seo.dashboard.title">
@@ -3502,10 +2899,7 @@ Deine Position: # ·  Reps        </source>
         <source>Dashboard – Pushup Tracker</source>
         <target>Dashboard – Pushup Stats</target>
 
-
-
             </segment>
-
 
         </unit>
     <unit id="seo.history.description">
@@ -3513,10 +2907,7 @@ Deine Position: # ·  Reps        </source>
         <source>Durchsuche deine Trainingshistorie, filtere nach Zeitraum und behalte den Überblick.</source>
         <target>Søk i treningshistorikken din, filtrer etter tidsperiode og hold oversikten.</target>
 
-
-
             </segment>
-
 
         </unit>
     <unit id="seo.history.title">
@@ -3524,10 +2915,7 @@ Deine Position: # ·  Reps        </source>
         <source>Historie – Pushup Tracker</source>
         <target>Historie – Pushup Stats</target>
 
-
-
             </segment>
-
 
         </unit>
     <unit id="seo.default.description">
@@ -3535,10 +2923,7 @@ Deine Position: # ·  Reps        </source>
         <source>Tracke Reps, Trends und Streaks mit Pushup Tracker.</source>
         <target>Spor reps, trender og treningsserier med Pushup Stats.</target>
 
-
-
             </segment>
-
 
         </unit>
     <unit id="seo.default.title">
@@ -3546,10 +2931,7 @@ Deine Position: # ·  Reps        </source>
         <source>Pushup Tracker</source>
         <target>Pushup Stats</target>
 
-
-
             </segment>
-
 
         </unit>
     <unit id="seo.landing.description">
@@ -3557,10 +2939,7 @@ Deine Position: # ·  Reps        </source>
         <source>Liegestütze tracken mit kostenloser Web-App: Trainingspläne, 30-Tage-Challenge, Tagesziel, Streaks und Bestenliste – jetzt auch mit Sit-ups, Kniebeugen, Plank und Laufen. Mobil, offline-fähig, mit Live-Sync.</source>
         <target>Spor push-ups med en gratis nettapp: treningsplaner, 30-dagers utfordring, daglig mål, streaks og topplister — nå også med sit-ups, knebøy, plank og løping. Mobil, offline, live-sync.</target>
 
-
-
             </segment>
-
 
         </unit>
     <unit id="seo.landing.title">
@@ -3568,10 +2947,7 @@ Deine Position: # ·  Reps        </source>
         <source>Liegestütze Tracker: Trainingsplan, Streaks &amp; Bestenliste</source>
         <target>Push-up-tracker: treningsplaner, streaks &amp; topplister</target>
 
-
-
             </segment>
-
 
         </unit>
     <unit id="seo.leaderboard.description">
@@ -3579,10 +2955,7 @@ Deine Position: # ·  Reps        </source>
         <source>Öffentliche Bestenliste mit Top-Reps für heute, die letzten 7 Tage und die letzten 30 Tage.</source>
         <target>Offentlig rangliste med topp-reps for i dag, de siste 7 dagene og de siste 30 dagene.</target>
 
-
-
             </segment>
-
 
         </unit>
     <unit id="seo.leaderboard.title">
@@ -3590,10 +2963,7 @@ Deine Position: # ·  Reps        </source>
         <source>Bestenliste – Pushup Tracker</source>
         <target>Rangliste – Pushup Stats</target>
 
-
-
             </segment>
-
 
         </unit>
     <unit id="seo.login.description">
@@ -3601,10 +2971,7 @@ Deine Position: # ·  Reps        </source>
         <source>Melde dich an und tracke dein Pushup-Training über alle Geräte.</source>
         <target>Logg inn og spor armhevingstreningen din på tvers av alle enheter.</target>
 
-
-
             </segment>
-
 
         </unit>
     <unit id="seo.login.title">
@@ -3612,10 +2979,7 @@ Deine Position: # ·  Reps        </source>
         <source>Login – Pushup Tracker</source>
         <target>Logg inn – Pushup Stats</target>
 
-
-
             </segment>
-
 
         </unit>
     <unit id="seo.register.description">
@@ -3623,10 +2987,7 @@ Deine Position: # ·  Reps        </source>
         <source>Erstelle dein Konto und richte Profil, Tagesziel und Einwilligungen ein.</source>
         <target>Opprett kontoen din og konfigurer profil, daglig mål og samtykkeasettinger.</target>
 
-
-
             </segment>
-
 
         </unit>
     <unit id="seo.register.title">
@@ -3634,10 +2995,7 @@ Deine Position: # ·  Reps        </source>
         <source>Registrierung – Pushup Tracker</source>
         <target>Registrer deg – Pushup Stats</target>
 
-
-
             </segment>
-
 
         </unit>
     <unit id="seo.settings.description">
@@ -3645,10 +3003,7 @@ Deine Position: # ·  Reps        </source>
         <source>Verwalte Profil, Leaderboard-Sichtbarkeit und Tagesziel-Einstellungen.</source>
         <target>Administrer profil, rangliste-synlighet og daglige målinnstillinger.</target>
 
-
-
             </segment>
-
 
         </unit>
     <unit id="seo.settings.title">
@@ -3656,10 +3011,7 @@ Deine Position: # ·  Reps        </source>
         <source>Einstellungen – Pushup Tracker</source>
         <target>Innstillinger – Pushup Stats</target>
 
-
-
             </segment>
-
 
         </unit>
     <unit id="settings.adsConsentHint">
@@ -3882,40 +3234,29 @@ Deine Position: # ·  Reps        </source>
       <notes>
         <note category="location">web/src/app/stats/shell/settings-page.component.ts:33,34</note>
 
-
             </notes>
       <segment state="translated">
         <source>User-Profil &amp; Tagesziel</source>
         <target>Brukerprofil &amp; daglig mål</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="settingsTitle">
       <notes>
         <note category="location">web/src/app/stats/shell/settings-page.component.ts:31,32</note>
 
-
             </notes>
       <segment state="translated">
         <source>Einstellungen</source>
         <target>Innstillinger</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="sourceColumnToggle">
       <notes>
         <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:15,20</note>
-
 
             </notes>
       <segment state="translated">
@@ -3934,11 +3275,7 @@ Deine Position: # ·  Reps        </source>
           </pc>
  Kilde         </target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="sourceLabel">
@@ -3946,18 +3283,12 @@ Deine Position: # ·  Reps        </source>
         <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:191,193</note>
         <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:278,280</note>
 
-
-
             </notes>
       <segment state="translated">
         <source>Quelle</source>
         <target>Kilde</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="sourcePlaceholder">
@@ -3965,24 +3296,17 @@ Deine Position: # ·  Reps        </source>
         <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:197,198</note>
         <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:284,285</note>
 
-
-
             </notes>
       <segment state="translated">
         <source>web / whatsapp / eigene Quelle</source>
         <target>web / whatsapp / egendefinert kilde</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="switchUser">
       <notes>
         <note category="location">web/src/app/stats/shell/settings-page.component.ts:60,62</note>
-
 
             </notes>
       <segment state="translated">
@@ -3993,11 +3317,7 @@ Deine Position: # ·  Reps        </source>
           <pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">switch_account</pc>
  Bytt bruker         </target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="timestampLabel">
@@ -4005,52 +3325,36 @@ Deine Position: # ·  Reps        </source>
         <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:151,153</note>
         <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:238,240</note>
 
-
-
             </notes>
       <segment state="translated">
         <source>Zeitpunkt</source>
         <target>Tidsstempel</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="title.fallback">
       <notes>
         <note category="location">web/src/app/app.ts:65</note>
 
-
             </notes>
       <segment state="translated">
         <source>Dein Name 💪</source>
         <target>Ditt navn 💪</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="todayFocusAria">
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:28,29</note>
 
-
             </notes>
       <segment state="translated">
         <source>Tagesfokus</source>
         <target>Dagens fokus</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="toolbarDailyGoal">
@@ -4064,18 +3368,12 @@ Deine Position: # ·  Reps        </source>
         <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:174,175</note>
         <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:261,262</note>
 
-
-
             </notes>
       <segment state="translated">
         <source>Typ</source>
         <target>Type</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="typePlaceholder">
@@ -4083,18 +3381,12 @@ Deine Position: # ·  Reps        </source>
         <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:180,181</note>
         <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:267,268</note>
 
-
-
             </notes>
       <segment state="translated">
         <source>Auswählen oder eintippen</source>
         <target>Velg eller skriv inn egendefinert</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="typeWikiLinkAria">
@@ -4119,119 +3411,84 @@ Deine Position: # ·  Reps        </source>
       <notes>
         <note category="location">web/src/app/stats/shell/settings-page.component.ts:49,50</note>
 
-
             </notes>
       <segment state="translated">
         <source> Wird für Multi-User-Zuordnung genutzt (Auth kommt später). </source>
         <target> Brukes til tildeling av flere brukere (autentisering kommer senere). </target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="userIdLabel">
       <notes>
         <note category="location">web/src/app/stats/shell/settings-page.component.ts:40,41</note>
 
-
             </notes>
       <segment state="translated">
         <source>User ID</source>
         <target>Bruker-ID</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="userIdPlaceholder">
       <notes>
         <note category="location">web/src/app/stats/shell/settings-page.component.ts:45,46</note>
 
-
             </notes>
       <segment state="translated">
         <source>z.B. wolf</source>
         <target>f.eks. wolf</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="validate.email.email">
       <notes>
         <note category="location">libs/auth/src/lib/ui/login/login.component.ts:69</note>
 
-
             </notes>
       <segment state="translated">
         <source>Bitte gültige E-Mail eingeben!</source>
         <target>Vennligst oppgi en gyldig e-post!</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="validate.email.required">
       <notes>
         <note category="location">libs/auth/src/lib/ui/login/login.component.ts:66</note>
 
-
             </notes>
       <segment state="translated">
         <source>Bitte E-Mail eingeben!</source>
         <target>Vennligst oppgi e-post!</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="validate.password.minLength">
       <notes>
         <note category="location">libs/auth/src/lib/ui/login/login.component.ts:75</note>
 
-
             </notes>
       <segment state="translated">
         <source>Passwort muss mindestens 6 Zeichen lang sein!</source>
         <target>Passordet må være minst 6 tegn langt!</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="validate.password.required">
       <notes>
         <note category="location">libs/auth/src/lib/ui/login/login.component.ts:72</note>
 
-
             </notes>
       <segment state="translated">
         <source>Bitte Passwort eingeben!</source>
         <target>Vennligst oppgi passord!</target>
 
-
-
             </segment>
-
-
 
         </unit>
     <unit id="validate.password.policy">
@@ -4243,199 +3500,6 @@ Deine Position: # ·  Reps        </source>
         <target>Passordet må inneholde store og små bokstaver, tall og spesialtegn.</target>
             </segment>
         </unit>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         <unit id="user.guestName">
       <notes>
@@ -6093,6 +5157,48 @@ Deine Position: # ·  Reps        </source>
         <target>Treningsplaner</target>
       </segment>
     </unit>
+    <unit id="trainingPlans.menu.triggerAria">
+      <segment state="translated">
+        <source>Tagesaktionen öffnen</source>
+        <target>Tagesaktionen öffnen</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.menu.undoDone">
+      <segment state="translated">
+        <source>Erledigt rückgängig machen</source>
+        <target>Erledigt rückgängig machen</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.menu.undoSkip">
+      <segment state="translated">
+        <source>Überspringen rückgängig machen</source>
+        <target>Überspringen rückgängig machen</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.menu.logDone">
+      <segment state="translated">
+        <source>Plan-Sätze eintragen &amp; abhaken</source>
+        <target>Plan-Sätze eintragen &amp; abhaken</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.menu.markDone">
+      <segment state="translated">
+        <source>Nur abhaken (ohne Eintrag)</source>
+        <target>Nur abhaken (ohne Eintrag)</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.menu.skip">
+      <segment state="translated">
+        <source>Tag überspringen</source>
+        <target>Tag überspringen</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.menu.jump">
+      <segment state="translated">
+        <source>Zu diesem Tag springen</source>
+        <target>Zu diesem Tag springen</target>
+      </segment>
+    </unit>
     <unit id="trainingPlans.intro">
       <segment state="translated">
         <source>Strukturierte Pläne mit Tagesziel, Sätzen und automatischer Fortschrittsverfolgung. Starte einen Plan, und dein Tagesziel im Dashboard wird automatisch gesetzt.</source>
@@ -6303,54 +5409,6 @@ Deine Position: # ·  Reps        </source>
         <target>Gjeldende dag:</target>
       </segment>
     </unit>
-    <unit id="trainingPlans.markAria">
-      <segment state="translated">
-        <source>Nur als erledigt markieren (ohne Eintrag)</source>
-        <target>Marker som gjort (uten å opprette oppføring)</target>
-      </segment>
-    </unit>
-    <unit id="trainingPlans.unmarkAria">
-      <segment state="translated">
-        <source>Als nicht erledigt markieren</source>
-        <target>Marker som ikke gjort</target>
-      </segment>
-    </unit>
-    <unit id="trainingPlans.skipAria">
-      <segment state="translated">
-        <source>Tag überspringen</source>
-        <target>Hopp over dag</target>
-      </segment>
-    </unit>
-    <unit id="trainingPlans.skipTooltip">
-      <segment state="translated">
-        <source>Tag überspringen</source>
-        <target>Hopp over dag</target>
-      </segment>
-    </unit>
-    <unit id="trainingPlans.unskipAria">
-      <segment state="translated">
-        <source>Überspringen rückgängig machen</source>
-        <target>Angre hopp</target>
-      </segment>
-    </unit>
-    <unit id="trainingPlans.unskipTooltip">
-      <segment state="translated">
-        <source>Überspringen rückgängig machen</source>
-        <target>Angre hopp</target>
-      </segment>
-    </unit>
-    <unit id="trainingPlans.jumpAria">
-      <segment state="translated">
-        <source>Zu diesem Tag springen</source>
-        <target>Hopp til denne dagen</target>
-      </segment>
-    </unit>
-    <unit id="trainingPlans.jumpTooltip">
-      <segment state="translated">
-        <source>Zu diesem Tag springen</source>
-        <target>Hopp til denne dagen</target>
-      </segment>
-    </unit>
     <unit id="trainingPlans.skipped">
       <segment state="translated">
         <source>Tag übersprungen.</source>
@@ -6493,12 +5551,6 @@ Deine Position: # ·  Reps        </source>
       <segment state="translated">
         <source>Heute eintragen</source>
         <target>Logg i dag</target>
-      </segment>
-    </unit>
-    <unit id="trainingPlans.logAria">
-      <segment state="translated">
-        <source>Plan-Sätze eintragen und als erledigt markieren</source>
-        <target>Logg plan-sett og marker som gjort</target>
       </segment>
     </unit>
     <unit id="trainingPlans.logged">
