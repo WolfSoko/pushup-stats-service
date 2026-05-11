@@ -5160,43 +5160,43 @@ Deine Position: # ·  Reps        </source>
     <unit id="trainingPlans.menu.triggerAria">
       <segment state="translated">
         <source>Tagesaktionen öffnen</source>
-        <target>Tagesaktionen öffnen</target>
+        <target>Åpne dagsmeny</target>
       </segment>
     </unit>
     <unit id="trainingPlans.menu.undoDone">
       <segment state="translated">
         <source>Erledigt rückgängig machen</source>
-        <target>Erledigt rückgängig machen</target>
+        <target>Marker som ikke gjort</target>
       </segment>
     </unit>
     <unit id="trainingPlans.menu.undoSkip">
       <segment state="translated">
         <source>Überspringen rückgängig machen</source>
-        <target>Überspringen rückgängig machen</target>
+        <target>Angre hopp</target>
       </segment>
     </unit>
     <unit id="trainingPlans.menu.logDone">
       <segment state="translated">
         <source>Plan-Sätze eintragen &amp; abhaken</source>
-        <target>Plan-Sätze eintragen &amp; abhaken</target>
+        <target>Logg plan-sett og marker som gjort</target>
       </segment>
     </unit>
     <unit id="trainingPlans.menu.markDone">
       <segment state="translated">
         <source>Nur abhaken (ohne Eintrag)</source>
-        <target>Nur abhaken (ohne Eintrag)</target>
+        <target>Marker som gjort (uten å opprette oppføring)</target>
       </segment>
     </unit>
     <unit id="trainingPlans.menu.skip">
       <segment state="translated">
         <source>Tag überspringen</source>
-        <target>Tag überspringen</target>
+        <target>Hopp over dag</target>
       </segment>
     </unit>
     <unit id="trainingPlans.menu.jump">
       <segment state="translated">
         <source>Zu diesem Tag springen</source>
-        <target>Zu diesem Tag springen</target>
+        <target>Hopp til denne dagen</target>
       </segment>
     </unit>
     <unit id="trainingPlans.intro">

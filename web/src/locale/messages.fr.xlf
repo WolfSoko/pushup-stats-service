@@ -6191,43 +6191,43 @@
     <unit id="trainingPlans.menu.triggerAria">
       <segment state="translated">
         <source>Tagesaktionen öffnen</source>
-        <target>Tagesaktionen öffnen</target>
+        <target>Ouvrir les actions du jour</target>
       </segment>
     </unit>
     <unit id="trainingPlans.menu.undoDone">
       <segment state="translated">
         <source>Erledigt rückgängig machen</source>
-        <target>Erledigt rückgängig machen</target>
+        <target>Marquer comme non terminé</target>
       </segment>
     </unit>
     <unit id="trainingPlans.menu.undoSkip">
       <segment state="translated">
         <source>Überspringen rückgängig machen</source>
-        <target>Überspringen rückgängig machen</target>
+        <target>Annuler le saut</target>
       </segment>
     </unit>
     <unit id="trainingPlans.menu.logDone">
       <segment state="translated">
         <source>Plan-Sätze eintragen &amp; abhaken</source>
-        <target>Plan-Sätze eintragen &amp; abhaken</target>
+        <target>Saisir les enregistrements du plan et les marquer comme terminés</target>
       </segment>
     </unit>
     <unit id="trainingPlans.menu.markDone">
       <segment state="translated">
         <source>Nur abhaken (ohne Eintrag)</source>
-        <target>Nur abhaken (ohne Eintrag)</target>
+        <target>Marquer comme terminé uniquement (sans saisie)</target>
       </segment>
     </unit>
     <unit id="trainingPlans.menu.skip">
       <segment state="translated">
         <source>Tag überspringen</source>
-        <target>Tag überspringen</target>
+        <target>Passer le jour</target>
       </segment>
     </unit>
     <unit id="trainingPlans.menu.jump">
       <segment state="translated">
         <source>Zu diesem Tag springen</source>
-        <target>Zu diesem Tag springen</target>
+        <target>Aller à ce jour</target>
       </segment>
     </unit>
     <unit id="trainingPlans.intro">

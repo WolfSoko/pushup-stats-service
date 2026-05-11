@@ -6702,43 +6702,43 @@
     <unit id="trainingPlans.menu.triggerAria">
       <segment state="translated">
         <source>Tagesaktionen öffnen</source>
-        <target>Tagesaktionen öffnen</target>
+        <target>打开当日操作</target>
       </segment>
     </unit>
     <unit id="trainingPlans.menu.undoDone">
       <segment state="translated">
         <source>Erledigt rückgängig machen</source>
-        <target>Erledigt rückgängig machen</target>
+        <target>标记为未完成</target>
       </segment>
     </unit>
     <unit id="trainingPlans.menu.undoSkip">
       <segment state="translated">
         <source>Überspringen rückgängig machen</source>
-        <target>Überspringen rückgängig machen</target>
+        <target>撤销跳过</target>
       </segment>
     </unit>
     <unit id="trainingPlans.menu.logDone">
       <segment state="translated">
         <source>Plan-Sätze eintragen &amp; abhaken</source>
-        <target>Plan-Sätze eintragen &amp; abhaken</target>
+        <target>记录计划组数并标记为完成</target>
       </segment>
     </unit>
     <unit id="trainingPlans.menu.markDone">
       <segment state="translated">
         <source>Nur abhaken (ohne Eintrag)</source>
-        <target>Nur abhaken (ohne Eintrag)</target>
+        <target>仅标记为完成（无记录）</target>
       </segment>
     </unit>
     <unit id="trainingPlans.menu.skip">
       <segment state="translated">
         <source>Tag überspringen</source>
-        <target>Tag überspringen</target>
+        <target>跳过此天</target>
       </segment>
     </unit>
     <unit id="trainingPlans.menu.jump">
       <segment state="translated">
         <source>Zu diesem Tag springen</source>
-        <target>Zu diesem Tag springen</target>
+        <target>跳转到此天</target>
       </segment>
     </unit>
     <unit id="trainingPlans.intro">
