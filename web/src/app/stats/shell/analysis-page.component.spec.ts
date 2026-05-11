@@ -716,6 +716,26 @@ describe('AnalysisPageComponent', () => {
       store.setActiveView('plank');
       expect(store.typeBreakdown()).toEqual([]);
     });
+
+    it('typeBreakdownDisplay localises kind-mode ids when activeView scopes to a non-pushup category', () => {
+      // Regression for codex P2: setActiveView('abs') without an
+      // explicit kinds filter puts the store in kind-mode and emits
+      // raw ids like `abs.situps`. The display mapper must mirror the
+      // store's gate and localise — otherwise the pie legend reads
+      // like a developer string.
+      const { store } = fixture.componentInstance;
+      store.setActiveView('abs');
+      fixture.detectChanges();
+      const groupView = fixture.debugElement.query(
+        By.directive(AnalysisGroupViewComponent)
+      ).componentInstance as AnalysisGroupViewComponent;
+      const breakdown = groupView.typeBreakdownDisplay();
+      expect(breakdown).toHaveLength(1);
+      expect(breakdown[0]).toMatchObject({
+        id: 'abs.situps',
+        label: 'Sit-ups',
+      });
+    });
   });
 
   it('resolves bare kind ids to localised labels via typeBreakdownDisplay', () => {

@@ -350,16 +350,22 @@ export class AnalysisGroupViewComponent {
 
   /**
    * Resolves the bare-id labels emitted by `store.typeBreakdown()` (in
-   * multi-kind mode) into localised display names. Pushup-only mode
-   * returns the breakdown unchanged because the store already produces
-   * locale-aware variant names there.
+   * kind mode) into localised display names. Pushup-variant mode
+   * passes through because the store already produces locale-aware
+   * variant names. The gate mirrors `analysis.store` — a per-category
+   * tab other than 'pushup' is always kind mode, so the breakdown
+   * carries exerciseIds like `abs.situps` that need translating even
+   * without an explicit kinds filter.
    */
   readonly typeBreakdownDisplay = computed(() => {
+    const view = this.store.activeView();
     const kinds = this.store.kinds();
-    const isKindMode =
-      kinds.length > 0 && !(kinds.length === 1 && kinds[0] === 'pushup');
+    const showPushupVariants =
+      view === 'pushup' ||
+      (view === 'overview' &&
+        (kinds.length === 0 || (kinds.length === 1 && kinds[0] === 'pushup')));
     const data = this.store.typeBreakdown();
-    if (!isKindMode) return data;
+    if (showPushupVariants) return data;
     return data.map((d) => ({
       ...d,
       label: kindDisplayName(d.id as UnifiedEntryFilterKey),
