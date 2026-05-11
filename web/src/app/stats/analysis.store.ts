@@ -22,6 +22,7 @@ import {
   exerciseEntryToUnified,
   type ExerciseCategoryId,
   inferRangeMode,
+  PushupRecord,
   pushupRecordToUnified,
   StatsGranularity,
   StatsResponse,
@@ -337,7 +338,49 @@ export const AnalysisStore = signalStore(
       );
     });
 
-    const weekRows = computed(() => store.weekEntriesResource.value() ?? []);
+    // Trend rows mirror the activeView filter so the 8-week and
+    // 6-month windows reflect the same category as the rest of the
+    // page. We merge the pushup REST data (which the resource already
+    // fetches for the trend window) with the live exercise entries —
+    // no extra Firestore reads — and then drop entries outside both
+    // the trend window and the active view.
+    const inRangeFn = (from: string, to: string) => (timestamp: string) => {
+      const date = timestamp.slice(0, 10);
+      if (from && date < from) return false;
+      if (to && date > to) return false;
+      return true;
+    };
+
+    const trendUnifiedRows = (
+      pushupRows: ReadonlyArray<PushupRecord>,
+      window: { from: string; to: string }
+    ): UnifiedEntry[] => {
+      const inRange = inRangeFn(window.from, window.to);
+      const pushups = pushupRows
+        .filter((r) => inRange(r.timestamp))
+        .map(pushupRecordToUnified);
+      const exercises = store._live
+        .exerciseEntries()
+        .filter((e) => inRange(e.timestamp))
+        .map(exerciseEntryToUnified);
+      return [...pushups, ...exercises];
+    };
+
+    const applyViewFilter = (rows: UnifiedEntry[]): UnifiedEntry[] => {
+      const view = store.activeView();
+      if (view === 'overview') return rows;
+      return rows.filter((row) => unifiedEntryCategoryId(row) === view);
+    };
+
+    const weekTrendRows = computed<UnifiedEntry[]>(() =>
+      applyViewFilter(
+        trendUnifiedRows(
+          store.weekEntriesResource.value() ?? [],
+          store.weekFilter()
+        )
+      )
+    );
+
     const weekTrend = computed<TrendPoint[]>(() => {
       // Pre-seed TREND_WEEKS ISO weeks (oldest → newest) so a sparse
       // history still produces a fixed-length trend with explicit zero
@@ -353,7 +396,7 @@ export const AnalysisStore = signalStore(
         const key = `${isoWeekYear(d)}-W${String(isoWeek(d)).padStart(2, '0')}`;
         byWeek.set(key, { total: 0, entryCount: 0, setsCount: 0 });
       }
-      for (const row of weekRows()) {
+      for (const row of weekTrendRows()) {
         const date = new Date(row.timestamp);
         const key = `${isoWeekYear(date)}-W${String(isoWeek(date)).padStart(2, '0')}`;
         const entry = byWeek.get(key);
@@ -373,7 +416,15 @@ export const AnalysisStore = signalStore(
       );
     });
 
-    const monthRows = computed(() => store.monthEntriesResource.value() ?? []);
+    const monthTrendRows = computed<UnifiedEntry[]>(() =>
+      applyViewFilter(
+        trendUnifiedRows(
+          store.monthEntriesResource.value() ?? [],
+          store.monthFilter()
+        )
+      )
+    );
+
     const monthTrend = computed<TrendPoint[]>(() => {
       const monthStart = store.currentMonthStart();
       const byMonth = new Map<
@@ -389,7 +440,7 @@ export const AnalysisStore = signalStore(
         const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
         byMonth.set(key, { total: 0, entryCount: 0, setsCount: 0 });
       }
-      for (const row of monthRows()) {
+      for (const row of monthTrendRows()) {
         const date = new Date(row.timestamp);
         const key = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
         const entry = byMonth.get(key);
