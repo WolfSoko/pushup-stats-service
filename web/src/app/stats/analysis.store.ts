@@ -21,6 +21,7 @@ import {
   displayPushupType,
   exerciseEntryToUnified,
   type ExerciseCategoryId,
+  EXERCISE_CATEGORIES,
   inferRangeMode,
   PushupRecord,
   pushupRecordToUnified,
@@ -62,6 +63,33 @@ export interface TypeBreakdownDatum {
   label: string;
   value: number;
   avgSetSize: number;
+}
+
+/**
+ * Per-category roll-up consumed by the analysis overview tab. The
+ * cards render `nameKey`/`icon`, and the comparison chart pulls
+ * `totalReps`/`totalSets` from the same shape so the two views stay
+ * in lockstep. Categories with no entries in the current date range
+ * are filtered out upstream — every entry here represents a present,
+ * non-empty group.
+ */
+export interface CategorySummary {
+  categoryId: ExerciseCategoryId;
+  nameKey: string;
+  icon: string;
+  order: number;
+  totalReps: number;
+  totalSets: number;
+  todayReps: number;
+  currentStreak: number;
+  bestDay: { date: string; total: number } | null;
+}
+
+/** Series shape consumed by the overview comparison chart. */
+export interface CategoryComparison {
+  labels: ReadonlyArray<string>;
+  reps: ReadonlyArray<number>;
+  sets: ReadonlyArray<number>;
 }
 
 type AnalysisState = {
@@ -336,6 +364,84 @@ export const AnalysisStore = signalStore(
       return unifiedRows().filter(
         (row) => unifiedEntryCategoryId(row) === view
       );
+    });
+
+    /**
+     * Per-category roll-up for the overview tab. Always operates on
+     * the full unified row set in the current date range — independent
+     * of {@link AnalysisStore.activeView} — because the cards/chart in
+     * the overview show every group side-by-side.
+     *
+     * `lastDayKey` is read so `todayReps` re-evaluates after a
+     * `tickClock()` crosses midnight without forcing an extra signal.
+     */
+    const categorySummaries = computed<CategorySummary[]>(() => {
+      const todayKey = store.lastDayKey();
+      const rows = unifiedRows();
+      const byCategory = new Map<ExerciseCategoryId, UnifiedEntry[]>();
+      for (const row of rows) {
+        const cat = unifiedEntryCategoryId(row);
+        if (!cat) continue;
+        const bucket = byCategory.get(cat);
+        if (bucket) bucket.push(row);
+        else byCategory.set(cat, [row]);
+      }
+      const result: CategorySummary[] = [];
+      for (const meta of EXERCISE_CATEGORIES) {
+        const catRows = byCategory.get(meta.id);
+        if (!catRows || !catRows.length) continue;
+        const totalReps = catRows.reduce((s, r) => s + r.reps, 0);
+        const totalSets = catRows.reduce(
+          (s, r) => s + (r.sets?.length ?? 0),
+          0
+        );
+        const todayReps = catRows.reduce(
+          (s, r) => (r.timestamp.slice(0, 10) === todayKey ? s + r.reps : s),
+          0
+        );
+        const byDay = new Map<string, number>();
+        for (const r of catRows) {
+          const k = r.timestamp.slice(0, 10);
+          byDay.set(k, (byDay.get(k) ?? 0) + r.reps);
+        }
+        let bestDayPair: [string, number] | null = null;
+        for (const e of byDay.entries()) {
+          if (!bestDayPair || e[1] > bestDayPair[1]) bestDayPair = e;
+        }
+        const dates = sortedUniqueDates(catRows);
+        let streak = 0;
+        if (dates.length) {
+          streak = 1;
+          for (let i = dates.length - 1; i > 0; i--) {
+            if (daysBetween(dates[i - 1], dates[i]) === 1) streak += 1;
+            else break;
+          }
+        }
+        result.push({
+          categoryId: meta.id,
+          nameKey: meta.nameKey,
+          icon: meta.icon,
+          order: meta.order,
+          totalReps,
+          totalSets,
+          todayReps,
+          currentStreak: streak,
+          bestDay: bestDayPair
+            ? { date: bestDayPair[0], total: bestDayPair[1] }
+            : null,
+        });
+      }
+      return result.sort((a, b) => a.order - b.order);
+    });
+
+    /** Bar/pie-friendly projection of {@link categorySummaries}. */
+    const categoryComparison = computed<CategoryComparison>(() => {
+      const summaries = categorySummaries();
+      return {
+        labels: summaries.map((s) => s.nameKey),
+        reps: summaries.map((s) => s.totalReps),
+        sets: summaries.map((s) => s.totalSets),
+      };
     });
 
     // Trend rows mirror the activeView filter so the 8-week and
@@ -616,6 +722,8 @@ export const AnalysisStore = signalStore(
       rows,
       unifiedRows,
       viewFilteredRows,
+      categorySummaries,
+      categoryComparison,
       kindOptionsRaw,
       weekTrend,
       monthTrend,
