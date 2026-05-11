@@ -6101,51 +6101,6 @@
         <target>εβδομάδα</target>
       </segment>
     </unit>
-    <unit id="trainingPlans.unmarkAria">
-      <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:243,244</note>
-      </notes>
-      <segment state="translated">
-        <source>Als nicht erledigt markieren</source>
-        <target>Επισήμανση ως μη ολοκληρωμένη</target>
-      </segment>
-    </unit>
-    <unit id="trainingPlans.skipAria">
-      <segment state="translated">
-        <source>Tag überspringen</source>
-        <target>Παράλειψη ημέρας</target>
-      </segment>
-    </unit>
-    <unit id="trainingPlans.skipTooltip">
-      <segment state="translated">
-        <source>Tag überspringen</source>
-        <target>Παράλειψη ημέρας</target>
-      </segment>
-    </unit>
-    <unit id="trainingPlans.unskipAria">
-      <segment state="translated">
-        <source>Überspringen rückgängig machen</source>
-        <target>Αναίρεση παράλειψης</target>
-      </segment>
-    </unit>
-    <unit id="trainingPlans.unskipTooltip">
-      <segment state="translated">
-        <source>Überspringen rückgängig machen</source>
-        <target>Αναίρεση παράλειψης</target>
-      </segment>
-    </unit>
-    <unit id="trainingPlans.jumpAria">
-      <segment state="translated">
-        <source>Zu diesem Tag springen</source>
-        <target>Μετάβαση σε αυτή την ημέρα</target>
-      </segment>
-    </unit>
-    <unit id="trainingPlans.jumpTooltip">
-      <segment state="translated">
-        <source>Zu diesem Tag springen</source>
-        <target>Μετάβαση σε αυτή την ημέρα</target>
-      </segment>
-    </unit>
     <unit id="trainingPlans.skipped">
       <segment state="translated">
         <source>Tag übersprungen.</source>
@@ -6156,24 +6111,6 @@
       <segment state="translated">
         <source>Auf Tag <ph id="0" equiv="INTERPOLATION" disp="dayIndex"/> gesprungen.</source>
         <target>Μετάβαση στην ημέρα <ph id="0" equiv="INTERPOLATION" disp="dayIndex"/>.</target>
-      </segment>
-    </unit>
-    <unit id="trainingPlans.logAria">
-      <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:254,255</note>
-      </notes>
-      <segment state="translated">
-        <source>Plan-Sätze eintragen und als erledigt markieren</source>
-        <target>Εισαγάγετε εγγραφές σχεδίου και σημειώστε τις ως ολοκληρωμένες</target>
-      </segment>
-    </unit>
-    <unit id="trainingPlans.markAria">
-      <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:263,264</note>
-      </notes>
-      <segment state="translated">
-        <source>Nur als erledigt markieren (ohne Eintrag)</source>
-        <target>Επισήμανση ως ολοκληρωμένου μόνο (χωρίς καταχώριση)</target>
       </segment>
     </unit>
     <unit id="trainingPlans.notFound">
@@ -6249,6 +6186,48 @@
       <segment state="translated">
         <source>Trainingspläne</source>
         <target>Προπονητικά σχέδια</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.menu.triggerAria">
+      <segment state="translated">
+        <source>Tagesaktionen öffnen</source>
+        <target>Tagesaktionen öffnen</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.menu.undoDone">
+      <segment state="translated">
+        <source>Erledigt rückgängig machen</source>
+        <target>Erledigt rückgängig machen</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.menu.undoSkip">
+      <segment state="translated">
+        <source>Überspringen rückgängig machen</source>
+        <target>Überspringen rückgängig machen</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.menu.logDone">
+      <segment state="translated">
+        <source>Plan-Sätze eintragen &amp; abhaken</source>
+        <target>Plan-Sätze eintragen &amp; abhaken</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.menu.markDone">
+      <segment state="translated">
+        <source>Nur abhaken (ohne Eintrag)</source>
+        <target>Nur abhaken (ohne Eintrag)</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.menu.skip">
+      <segment state="translated">
+        <source>Tag überspringen</source>
+        <target>Tag überspringen</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.menu.jump">
+      <segment state="translated">
+        <source>Zu diesem Tag springen</source>
+        <target>Zu diesem Tag springen</target>
       </segment>
     </unit>
     <unit id="trainingPlans.intro">

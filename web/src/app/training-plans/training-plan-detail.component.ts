@@ -16,6 +16,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -54,6 +55,7 @@ interface DayRow {
     MatButtonModule,
     MatChipsModule,
     MatIconModule,
+    MatMenuModule,
     MatProgressBarModule,
     MatSnackBarModule,
     MatTooltipModule,
@@ -289,72 +291,92 @@ interface DayRow {
                     }
                   </div>
                   <div class="day-actions">
-                    @if (isThisPlanActive()) {
-                      @if (row.day.kind !== 'rest') {
+                    @if (
+                      isThisPlanActive() &&
+                      (row.day.kind !== 'rest' || !row.isToday)
+                    ) {
+                      <button
+                        mat-icon-button
+                        [matMenuTriggerFor]="dayMenu"
+                        aria-label="Tagesaktionen öffnen"
+                        i18n-aria-label="@@trainingPlans.menu.triggerAria"
+                      >
                         @if (row.isCompleted) {
-                          <button
-                            mat-icon-button
-                            (click)="unmark(row.day.dayIndex)"
-                            aria-label="Als nicht erledigt markieren"
-                            i18n-aria-label="@@trainingPlans.unmarkAria"
-                          >
-                            <mat-icon>check_circle</mat-icon>
-                          </button>
+                          <mat-icon>check_circle</mat-icon>
                         } @else if (row.isSkipped) {
-                          <button
-                            mat-icon-button
-                            (click)="unskip(row.day.dayIndex)"
-                            aria-label="Überspringen rückgängig machen"
-                            i18n-aria-label="@@trainingPlans.unskipAria"
-                            matTooltip="Überspringen rückgängig machen"
-                            i18n-matTooltip="@@trainingPlans.unskipTooltip"
-                          >
-                            <mat-icon>redo</mat-icon>
-                          </button>
+                          <mat-icon>skip_next</mat-icon>
                         } @else {
-                          @if (row.day.targetReps > 0) {
+                          <mat-icon>more_vert</mat-icon>
+                        }
+                      </button>
+                      <mat-menu #dayMenu="matMenu">
+                        @if (row.day.kind !== 'rest') {
+                          @if (row.isCompleted) {
                             <button
-                              mat-icon-button
-                              color="primary"
-                              (click)="logPlanDay(row.day.dayIndex)"
-                              aria-label="Plan-Sätze eintragen und als erledigt markieren"
-                              i18n-aria-label="@@trainingPlans.logAria"
+                              mat-menu-item
+                              (click)="unmark(row.day.dayIndex)"
                             >
-                              <mat-icon>check_circle_outline</mat-icon>
+                              <mat-icon>undo</mat-icon>
+                              <span i18n="@@trainingPlans.menu.undoDone"
+                                >Erledigt rückgängig machen</span
+                              >
+                            </button>
+                          } @else if (row.isSkipped) {
+                            <button
+                              mat-menu-item
+                              (click)="unskip(row.day.dayIndex)"
+                            >
+                              <mat-icon>undo</mat-icon>
+                              <span i18n="@@trainingPlans.menu.undoSkip"
+                                >Überspringen rückgängig machen</span
+                              >
+                            </button>
+                          } @else {
+                            @if (row.day.targetReps > 0) {
+                              <button
+                                mat-menu-item
+                                (click)="logPlanDay(row.day.dayIndex)"
+                              >
+                                <mat-icon color="primary"
+                                  >check_circle</mat-icon
+                                >
+                                <span i18n="@@trainingPlans.menu.logDone"
+                                  >Plan-Sätze eintragen & abhaken</span
+                                >
+                              </button>
+                            }
+                            <button
+                              mat-menu-item
+                              (click)="mark(row.day.dayIndex)"
+                            >
+                              <mat-icon>check</mat-icon>
+                              <span i18n="@@trainingPlans.menu.markDone"
+                                >Nur abhaken (ohne Eintrag)</span
+                              >
+                            </button>
+                            <button
+                              mat-menu-item
+                              (click)="skip(row.day.dayIndex)"
+                            >
+                              <mat-icon>skip_next</mat-icon>
+                              <span i18n="@@trainingPlans.menu.skip"
+                                >Tag überspringen</span
+                              >
                             </button>
                           }
+                        }
+                        @if (!row.isToday) {
                           <button
-                            mat-icon-button
-                            (click)="mark(row.day.dayIndex)"
-                            aria-label="Nur als erledigt markieren (ohne Eintrag)"
-                            i18n-aria-label="@@trainingPlans.markAria"
+                            mat-menu-item
+                            (click)="jumpToDay(row.day.dayIndex)"
                           >
-                            <mat-icon>radio_button_unchecked</mat-icon>
-                          </button>
-                          <button
-                            mat-icon-button
-                            (click)="skip(row.day.dayIndex)"
-                            aria-label="Tag überspringen"
-                            i18n-aria-label="@@trainingPlans.skipAria"
-                            matTooltip="Tag überspringen"
-                            i18n-matTooltip="@@trainingPlans.skipTooltip"
-                          >
-                            <mat-icon>skip_next</mat-icon>
+                            <mat-icon>fast_forward</mat-icon>
+                            <span i18n="@@trainingPlans.menu.jump"
+                              >Zu diesem Tag springen</span
+                            >
                           </button>
                         }
-                      }
-                      @if (!row.isToday) {
-                        <button
-                          mat-icon-button
-                          (click)="jumpToDay(row.day.dayIndex)"
-                          aria-label="Zu diesem Tag springen"
-                          i18n-aria-label="@@trainingPlans.jumpAria"
-                          matTooltip="Zu diesem Tag springen"
-                          i18n-matTooltip="@@trainingPlans.jumpTooltip"
-                        >
-                          <mat-icon>fast_forward</mat-icon>
-                        </button>
-                      }
+                      </mat-menu>
                     }
                   </div>
                 </li>
