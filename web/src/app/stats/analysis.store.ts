@@ -98,18 +98,20 @@ type AnalysisState = {
   to: string;
   dayChartMode: '24h' | '14h' | undefined;
   /**
-   * Active exercise-kind filter for the type-pie. Both an empty array
-   * (default) and `['pushup']` render the pushup-variant breakdown;
-   * any other non-empty subset switches to kind-mode (pushups
-   * collapsed into one bucket, each `exerciseId` as its own slice).
-   * Streaks/best-day KPIs stay pushup-only.
+   * Active exercise-kind filter for the type-pie. In overview the
+   * empty array (default) and `['pushup']` render the pushup-variant
+   * breakdown; any other non-empty subset switches to kind-mode
+   * (pushups collapsed into one bucket, each `exerciseId` as its own
+   * slice). Streaks and best-day KPIs are no longer pushup-only —
+   * they live on {@link AnalysisStore.viewFilteredRows} and follow
+   * {@link AnalysisState.activeView} instead.
    */
   kinds: ReadonlyArray<UnifiedEntryFilterKey>;
   /**
    * Active per-category view tab. `'overview'` (default) keeps the
    * page-wide aggregate behaviour; any other value scopes
-   * {@link AnalysisStore.viewFilteredRows} (and downstream KPIs in
-   * follow-up commits) to entries from that category.
+   * {@link AnalysisStore.viewFilteredRows} and all downstream KPIs,
+   * trends and the type-pie to entries from that category.
    */
   activeView: AnalysisView;
   // Reactive dependency for the fixed-window trend filters: bumped only

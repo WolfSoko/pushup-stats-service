@@ -46,7 +46,14 @@ export function kindDisplayName(value: UnifiedEntryFilterKey): string {
   }
   const def = findExerciseDefinition(value);
   if (def) return exerciseDisplayName(def.id);
-  return $localize`:@@analysis.kindUnknown:Andere Übung`;
+  // Catalog-miss path: user-defined exercises (custom UUIDs) and
+  // legacy ids without a catalog entry both land here. Returning the
+  // bare id keeps each one distinguishable in the filter chips and
+  // type-pie legend until custom-exercise definitions are threaded
+  // through the analysis page — collapsing every miss into a single
+  // "Andere Übung" label made multi-custom-exercise users unable to
+  // tell their own filters apart.
+  return value;
 }
 
 /**
@@ -56,18 +63,20 @@ export function kindDisplayName(value: UnifiedEntryFilterKey): string {
  * no runtime hook for `$localize`, and emitting the id would render
  * the legend like a developer string in production builds.
  *
- * The German source strings mirror the catalogue entries in the
- * training-entry dialog; XLIFF ids stay identical so the existing
- * translations apply unchanged.
+ * Only entries with a corresponding XLIFF unit and at least one
+ * catalog exercise are mapped here. `strength` and `mobility` exist in
+ * the `ExerciseCategoryId` union but are absent from
+ * `EXERCISE_CATEGORIES`, so adding $localize calls for them would
+ * fail the locale-baked production build with "No translation found"
+ * — they get a per-id fallback through {@link categoryDisplayName}
+ * until they ship with their own exercises and translations.
  */
-const CATEGORY_DISPLAY_NAMES: Record<ExerciseCategoryId, string> = {
+const CATEGORY_DISPLAY_NAMES: Partial<Record<ExerciseCategoryId, string>> = {
   pushup: $localize`:@@exercise.category.pushup:Liegestütze`,
   abs: $localize`:@@exercise.category.abs:Bauch`,
   legs: $localize`:@@exercise.category.legs:Beine`,
   plank: $localize`:@@exercise.category.plank:Plank`,
   cardio: $localize`:@@exercise.category.cardio:Ausdauer`,
-  strength: $localize`:@@exercise.category.strength:Kraft`,
-  mobility: $localize`:@@exercise.category.mobility:Mobility`,
 };
 
 export function categoryDisplayName(id: ExerciseCategoryId): string {

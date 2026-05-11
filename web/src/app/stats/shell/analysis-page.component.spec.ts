@@ -18,7 +18,14 @@ import { StatsChartComponent } from '../components/stats-chart/stats-chart.compo
 import { SetsDistributionComponent } from '../components/sets-distribution/sets-distribution.component';
 
 // We don't want to render real components in unit tests.
-import { Component, input, model, output, signal } from '@angular/core';
+import {
+  Component,
+  input,
+  model,
+  output,
+  PLATFORM_ID,
+  signal,
+} from '@angular/core';
 import { ExerciseEntry, RangeModes } from '@pu-stats/models';
 
 @Component({
@@ -172,6 +179,10 @@ describe('AnalysisPageComponent', () => {
     await TestBed.configureTestingModule({
       imports: [AnalysisPageComponent],
       providers: [
+        // 'server' skips the component's setInterval-based clock tick
+        // and the URL history effect; both depend on browser-only APIs
+        // and otherwise risk leaking timers across TestBed resets.
+        { provide: PLATFORM_ID, useValue: 'server' },
         { provide: StatsApiService, useValue: apiMock },
         { provide: AuthStore, useValue: makeAuthStoreMock() },
         { provide: UserContextService, useValue: { userIdSafe: () => 'u1' } },
@@ -797,6 +808,7 @@ describe('AnalysisPageComponent empty-state CTA gating', () => {
     await TestBed.configureTestingModule({
       imports: [AnalysisPageComponent],
       providers: [
+        { provide: PLATFORM_ID, useValue: 'server' },
         provideRouter([]),
         { provide: StatsApiService, useValue: emptyApiMock },
         { provide: AuthStore, useValue: makeAuthStoreMock() },
