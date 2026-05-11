@@ -627,6 +627,64 @@ describe('AnalysisPageComponent', () => {
       expect(store.weekTrend().every((w) => w.total === 0)).toBe(true);
       expect(store.monthTrend().every((m) => m.total === 0)).toBe(true);
     });
+
+    it('categorySummaries lists only categories with entries, sorted by order', () => {
+      const { store } = fixture.componentInstance;
+      const summaries = store.categorySummaries();
+      expect(summaries.map((s) => s.categoryId)).toEqual([
+        'pushup',
+        'abs',
+        'legs',
+      ]);
+    });
+
+    it('categorySummaries surfaces per-category totals, today reps and best day', () => {
+      const { store } = fixture.componentInstance;
+      const summaries = store.categorySummaries();
+      const pushup = summaries.find((s) => s.categoryId === 'pushup');
+      expect(pushup).toMatchObject({
+        totalReps: 93,
+        // 5+5 + 6+6 + 10+5+5 + 10+8+7 + 9+9 = 12 sets across 5 entries.
+        totalSets: 12,
+        // System time is Sun Feb 15 2026; only entry id=6 (18 reps) lands today.
+        todayReps: 18,
+        bestDay: { date: '2026-02-13', total: 25 },
+      });
+      const abs = summaries.find((s) => s.categoryId === 'abs');
+      expect(abs).toMatchObject({
+        totalReps: 30,
+        totalSets: 0,
+        todayReps: 0,
+        currentStreak: 1,
+        bestDay: { date: '2026-02-12', total: 30 },
+      });
+      const legs = summaries.find((s) => s.categoryId === 'legs');
+      expect(legs).toMatchObject({
+        totalReps: 40,
+        bestDay: { date: '2026-02-13', total: 40 },
+      });
+    });
+
+    it('categoryComparison projects summaries into chart-friendly arrays', () => {
+      const { store } = fixture.componentInstance;
+      const cmp = store.categoryComparison();
+      expect(cmp.labels).toEqual([
+        '@@exercise.category.pushup',
+        '@@exercise.category.abs',
+        '@@exercise.category.legs',
+      ]);
+      expect(cmp.reps).toEqual([93, 30, 40]);
+      expect(cmp.sets).toEqual([12, 0, 0]);
+    });
+
+    it('categorySummaries stays insensitive to the active view (it powers the overview)', () => {
+      const { store } = fixture.componentInstance;
+      const baseline = store.categorySummaries().map((s) => s.categoryId);
+      store.setActiveView('abs');
+      expect(store.categorySummaries().map((s) => s.categoryId)).toEqual(
+        baseline
+      );
+    });
   });
 
   it('resolves bare kind ids to localised labels via typeBreakdownDisplay', () => {
