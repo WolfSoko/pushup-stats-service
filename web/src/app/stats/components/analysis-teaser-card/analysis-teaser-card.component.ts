@@ -149,14 +149,18 @@ export class AnalysisTeaserCardComponent {
   /** Exposed for the template's error-fallback gate. */
   readonly liveConnected = computed(() => this.live.connected());
 
+  /**
+   * Rolling 7-day window ending today (inclusive). The earlier
+   * Monday-to-Sunday ISO-week range collapses to a single visible day
+   * whenever today *is* Monday, which made the teaser chart look broken
+   * — users only saw today's bar with six empty future days. A trailing
+   * window always shows seven days of history regardless of weekday.
+   */
   private readonly weekRange = computed(() => {
     const today = new Date();
-    const dayOfWeek = (today.getDay() + 6) % 7; // Monday = 0
-    const monday = new Date(today);
-    monday.setDate(today.getDate() - dayOfWeek);
-    const sunday = new Date(monday);
-    sunday.setDate(monday.getDate() + 6);
-    return { from: toLocalIsoDate(monday), to: toLocalIsoDate(sunday) };
+    const start = new Date(today);
+    start.setDate(today.getDate() - 6);
+    return { from: toLocalIsoDate(start), to: toLocalIsoDate(today) };
   });
 
   readonly from = computed(() => this.weekRange().from);
