@@ -320,7 +320,7 @@ interface DayRow {
                               aria-label="Plan-Sätze eintragen und als erledigt markieren"
                               i18n-aria-label="@@trainingPlans.logAria"
                             >
-                              <mat-icon>play_circle</mat-icon>
+                              <mat-icon>check_circle_outline</mat-icon>
                             </button>
                           }
                           <button
