@@ -19,10 +19,13 @@ import {
   UserStatsApiService,
 } from '@pu-stats/data-access';
 import {
+  exerciseEntryToUnified,
   PushupRecord,
+  pushupRecordToUnified,
   StatsResponse,
   toBerlinIsoDate,
   toLocalIsoDate,
+  UnifiedEntry,
   UserStats,
 } from '@pu-stats/models';
 import { AdsStore } from '@pu-stats/ads';
@@ -244,8 +247,30 @@ export const DashboardStore = signalStore(
       () => configuredDailyGoal() > 0 && todayTotal() >= configuredDailyGoal()
     );
 
-    const lastEntry = computed<PushupRecord | null>(() => {
-      const rows = entryRows();
+    /**
+     * Unified read shape for the dashboard's history-related cards
+     * ("Letzter Eintrag", "Letzte Einträge"). Combines the legacy
+     * `pushups` collection with the new `exerciseEntries` collection so
+     * sit-ups, squats, plank, etc. appear alongside pushups instead of
+     * being silently hidden. Goal/streak totals stay on the
+     * pushup-specific `entryRows()` because those metrics are currently
+     * pushup-only — only the recent-history surfaces are unified here.
+     *
+     * SSR only sees pushups via the REST resource; the exercise
+     * collection has no SSR endpoint yet and the dashboard's "recent
+     * entries" preview is not a SEO surface.
+     */
+    const unifiedRows = computed<UnifiedEntry[]>(() => {
+      const pushups = entryRows().map(pushupRecordToUnified);
+      if (!store._isBrowser) return pushups;
+      const exercises = store._live
+        .exerciseEntries()
+        .map(exerciseEntryToUnified);
+      return [...pushups, ...exercises];
+    });
+
+    const lastEntry = computed<UnifiedEntry | null>(() => {
+      const rows = unifiedRows();
       if (!rows.length) return null;
       return (
         [...rows].sort(
@@ -255,8 +280,8 @@ export const DashboardStore = signalStore(
       );
     });
 
-    const latestEntries = computed<PushupRecord[]>(() => {
-      return [...entryRows()]
+    const latestEntries = computed<UnifiedEntry[]>(() => {
+      return [...unifiedRows()]
         .sort(
           (a, b) =>
             new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()

@@ -238,9 +238,16 @@
       </mat-card-header>
       <mat-card-content>
         @if (lastEntry(); as latest) {
-          <p i18n="@@latEntryReps">
-            {{ latest.reps }} Reps · {{ typeLabel(latest) }}
-          </p>
+          @if (latest.kind === 'pushup') {
+            <p i18n="@@latEntryReps">
+              {{ latest.reps }} Reps · {{ pushupTypeLabel(latest) }}
+            </p>
+          } @else {
+            <p data-testid="dashboard-last-entry-exercise">
+              {{ exerciseEntryValue(latest) }} ·
+              {{ exerciseEntryLabel(latest) }}
+            </p>
+          }
           <small>{{ latest.timestamp | date: 'short' }}</small>
         } @else {
           <p i18n="@@dashboard.noEntryYet">Noch kein Eintrag.</p>

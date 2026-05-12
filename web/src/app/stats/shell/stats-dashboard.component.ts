@@ -27,10 +27,13 @@ import { UserContextService } from '@pu-auth/auth';
 import {
   appendLocalOffset,
   displayPushupType,
-  PushupRecord,
+  findExerciseDefinition,
+  formatEntryDisplay,
   QUICK_LOG_REPS_MAX,
   QUICK_LOG_REPS_MIN,
+  UnifiedEntry,
 } from '@pu-stats/models';
+import { exerciseDisplayName } from '../i18n/exercise-display-names';
 import { firstValueFrom } from 'rxjs';
 import { QuickAddBridgeService } from '@pu-stats/quick-add';
 import { QuickAddOrchestrationService } from '../../core/quick-add-orchestration.service';
@@ -79,8 +82,34 @@ export class StatsDashboardComponent {
   private readonly appData = inject(AppDataFacade);
   private readonly locale = inject(LOCALE_ID) as string;
 
-  readonly typeLabel = (entry: PushupRecord): string =>
-    displayPushupType(entry.type, this.locale);
+  /**
+   * Pushup-variant label for the "Letzter Eintrag" card. Kept narrow to
+   * `UnifiedPushupEntry` so the template branches on `latest.kind` and
+   * keeps the legacy `{{ reps }} Reps · {{ variant }}` format for the
+   * existing i18n message (@@latEntryReps).
+   */
+  readonly pushupTypeLabel = (
+    entry: Extract<UnifiedEntry, { kind: 'pushup' }>
+  ): string => displayPushupType(entry.variantType, this.locale);
+
+  /**
+   * Measurement-aware value for the "Letzter Eintrag" card on
+   * non-pushup workouts: reps for sit-ups/squats, duration for plank,
+   * distance + time for cardio.running. Mirrors the stats-table's
+   * `formatEntry` so the dashboard preview matches the history page.
+   */
+  readonly exerciseEntryValue = (
+    entry: Extract<UnifiedEntry, { kind: 'exercise' }>
+  ): string => {
+    const def = findExerciseDefinition(entry.exerciseId);
+    if (!def) return String(entry.reps);
+    return formatEntryDisplay(entry, def);
+  };
+
+  /** Localised exercise name (e.g. "Sit-ups", "Plank"). */
+  readonly exerciseEntryLabel = (
+    entry: Extract<UnifiedEntry, { kind: 'exercise' }>
+  ): string => exerciseDisplayName(entry.exerciseId);
 
   readonly shareDayAriaLabel = $localize`:@@dashboard.share.aria:Tagesleistung teilen`;
   readonly shareDayLabel = $localize`:@@dashboard.share:Teilen`;
