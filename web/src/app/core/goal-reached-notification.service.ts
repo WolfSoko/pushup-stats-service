@@ -8,7 +8,7 @@ import {
   Signal,
   untracked,
 } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { LiveDataStore } from '@pu-stats/data-access';
 import {
   PushupRecord,
@@ -160,6 +160,14 @@ export class GoalReachedNotificationService {
 
   private readonly opened = new Set<string>();
   /**
+   * Per-kind dedupe for live dialog instances. Without it, rapid clicks /
+   * held Enter on the toolbar pill (or two near-simultaneous goal crossings
+   * on the same kind) would stack overlays and trap focus inside the
+   * top-most one. We cap at one open dialog per kind; the second trigger
+   * silently no-ops while the first is still on screen.
+   */
+  private readonly activeDialogs = new Map<GoalKind, MatDialogRef<unknown>>();
+  /**
    * Last-seen goal value per kind. Used to detect upward changes so that an
    * earlier "shown" flag for the current period is cleared — otherwise the
    * user would never see a celebration after raising the bar mid-period.
@@ -232,10 +240,15 @@ export class GoalReachedNotificationService {
     kind: GoalKind,
     snapshot: { total: number; goal: number; maxParticleCount: number }
   ): Promise<void> {
+    if (this.activeDialogs.has(kind)) return;
     const { GoalReachedDialogComponent } =
       await import('../stats/components/goal-reached-dialog/goal-reached-dialog.component');
+    // Re-check after the dynamic import resolves: an auto-fire effect and
+    // a manual reopen() can race across the await, and we still only want
+    // one dialog per kind.
+    if (this.activeDialogs.has(kind)) return;
     const titleId = `goal-reached-dialog-title-${nextDialogTitleId++}`;
-    this.dialog.open(GoalReachedDialogComponent, {
+    const ref = this.dialog.open(GoalReachedDialogComponent, {
       panelClass: 'goal-reached-dialog-panel',
       backdropClass: 'goal-reached-dialog-backdrop',
       autoFocus: 'dialog',
@@ -250,6 +263,10 @@ export class GoalReachedNotificationService {
         titleId,
         maxParticleCount: snapshot.maxParticleCount,
       },
+    });
+    this.activeDialogs.set(kind, ref);
+    ref.afterClosed().subscribe(() => {
+      this.activeDialogs.delete(kind);
     });
   }
 

@@ -3,7 +3,7 @@ import { signal } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { LiveDataStore, UserConfigApiService } from '@pu-stats/data-access';
 import { UserContextService } from '@pu-auth/auth';
-import { of } from 'rxjs';
+import { of, Subject } from 'rxjs';
 import { PushupRecord, TrainingPlanDay } from '@pu-stats/models';
 import { TrainingPlanStore } from '../training-plans/training-plan.store';
 import { GoalReachedNotificationService } from './goal-reached-notification.service';
@@ -750,6 +750,48 @@ describe('GoalReachedNotificationService', () => {
 
       // Then
       expect(dialogOpenSpy).not.toHaveBeenCalled();
+    });
+
+    it('Then back-to-back reopen("daily") calls do not stack overlays while a dialog is open', async () => {
+      // Given — auto-fire opens the first dialog and the mock's afterClosed
+      // is a held-open Subject, so the in-memory `activeDialogs` map for
+      // 'daily' stays populated (i.e. the real dialog is still on screen).
+      const afterClosed = new Subject<unknown>();
+      const heldRef = {
+        afterClosed: () => afterClosed.asObservable(),
+        close: vi.fn(),
+      } as unknown as MatDialogRef<unknown>;
+      dialogOpenSpy.mockReturnValueOnce(heldRef);
+
+      const service = setup({
+        dailyGoal: 10,
+        entries: [
+          {
+            _id: '1',
+            timestamp: '2026-04-22T08:00:00',
+            reps: 12,
+          } as PushupRecord,
+        ],
+      });
+      await flushAll();
+      expect(dialogOpenSpy).toHaveBeenCalledTimes(1);
+      dialogOpenSpy.mockClear();
+
+      // When — rapid double-click / held Enter on the toolbar pill.
+      service.reopen('daily');
+      service.reopen('daily');
+      await flushAll();
+
+      // Then — both reopens are dedupe-blocked by the still-open first dialog.
+      expect(dialogOpenSpy).not.toHaveBeenCalled();
+
+      // And once the first dialog closes, a fresh reopen can fire again
+      // (proves the cleanup subscription releases the per-kind slot).
+      afterClosed.next(null);
+      afterClosed.complete();
+      service.reopen('daily');
+      await flushAll();
+      expect(dialogOpenSpy).toHaveBeenCalledTimes(1);
     });
 
     it('Then reopen("daily") no-ops when no daily goal is configured', async () => {
