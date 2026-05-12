@@ -348,6 +348,113 @@ describe('App (testing-library)', () => {
       expect(pill?.getAttribute('tabindex')).toBeNull();
       expect(pill?.getAttribute('aria-label')).toBeNull();
     });
+
+    it('replays the celebration when Enter is pressed on the pill after the goal is reached', async () => {
+      // Given — goal reached + pill focusable.
+      userConfigApiMock.getConfig.mockReturnValue(of({ dailyGoal: 50 }));
+      statsApiMock.load.mockReturnValue(
+        of({
+          meta: {
+            from: null,
+            to: null,
+            entries: 1,
+            days: 1,
+            total: 80,
+            granularity: 'daily',
+          },
+          series: [],
+        })
+      );
+      const notifierMock = makeNotifierMock();
+      await render(App, { providers: commonProviders(notifierMock) });
+      await screen.findByText((content) => content.includes('80 / 50'));
+      const pill = document.querySelector<HTMLElement>(
+        '[data-testid="toolbar-goal-pill"]'
+      );
+
+      // When
+      pill?.dispatchEvent(
+        new KeyboardEvent('keydown', { key: 'Enter', bubbles: true })
+      );
+
+      // Then
+      expect(notifierMock.reopen).toHaveBeenCalledTimes(1);
+      expect(notifierMock.reopen).toHaveBeenCalledWith('daily');
+    });
+
+    it('replays the celebration when Space is pressed and suppresses the default page-scroll', async () => {
+      // Given
+      userConfigApiMock.getConfig.mockReturnValue(of({ dailyGoal: 50 }));
+      statsApiMock.load.mockReturnValue(
+        of({
+          meta: {
+            from: null,
+            to: null,
+            entries: 1,
+            days: 1,
+            total: 80,
+            granularity: 'daily',
+          },
+          series: [],
+        })
+      );
+      const notifierMock = makeNotifierMock();
+      await render(App, { providers: commonProviders(notifierMock) });
+      await screen.findByText((content) => content.includes('80 / 50'));
+      const pill = document.querySelector<HTMLElement>(
+        '[data-testid="toolbar-goal-pill"]'
+      );
+      const spaceEvent = new KeyboardEvent('keydown', {
+        key: ' ',
+        bubbles: true,
+        cancelable: true,
+      });
+
+      // When
+      pill?.dispatchEvent(spaceEvent);
+
+      // Then
+      expect(notifierMock.reopen).toHaveBeenCalledTimes(1);
+      expect(notifierMock.reopen).toHaveBeenCalledWith('daily');
+      expect(spaceEvent.defaultPrevented).toBe(true);
+    });
+
+    it('does NOT replay the celebration on auto-repeat keydown events (held key)', async () => {
+      // Given — held Enter emits repeated keydown events; WAI-ARIA Button
+      // Pattern says only the first press activates.
+      userConfigApiMock.getConfig.mockReturnValue(of({ dailyGoal: 50 }));
+      statsApiMock.load.mockReturnValue(
+        of({
+          meta: {
+            from: null,
+            to: null,
+            entries: 1,
+            days: 1,
+            total: 80,
+            granularity: 'daily',
+          },
+          series: [],
+        })
+      );
+      const notifierMock = makeNotifierMock();
+      await render(App, { providers: commonProviders(notifierMock) });
+      await screen.findByText((content) => content.includes('80 / 50'));
+      const pill = document.querySelector<HTMLElement>(
+        '[data-testid="toolbar-goal-pill"]'
+      );
+
+      // When — repeat: true on the synthetic event flags it as auto-repeat.
+      pill?.dispatchEvent(
+        new KeyboardEvent('keydown', {
+          key: 'Enter',
+          bubbles: true,
+          repeat: true,
+        })
+      );
+
+      // Then
+      expect(notifierMock.reopen).not.toHaveBeenCalled();
+    });
   });
 
   describe('setLanguage', () => {
