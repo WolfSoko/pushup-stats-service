@@ -159,7 +159,10 @@ export class GoalReachedDialogComponent {
           WsThanosService,
           {
             provide: WS_THANOS_OPTIONS_TOKEN,
-            useValue: createWsThanosOptions({ maxParticleCount }),
+            useValue: createWsThanosOptions({
+              animationLength: 5000,
+              maxParticleCount,
+            }),
           },
         ],
         this.envInjector,
