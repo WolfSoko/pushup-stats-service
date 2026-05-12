@@ -80,3 +80,7 @@ mobile/android-twa/build/
 mobile/android-twa/app/build/
 mobile/android-twa/.gradle/
 mobile/android-twa/local.properties
+
+# Python cache
+__pycache__/
+*.pyc
