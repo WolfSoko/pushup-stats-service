@@ -7432,73 +7432,79 @@
     <unit id="analysis.tabs.overview">
       <segment state="translated">
         <source/>
-        <target>Overview</target>
+        <target>Επισκόπηση</target>
       </segment>
     </unit>
     <unit id="analysis.overview.empty">
       <segment state="translated">
         <source/>
-        <target>No entries in the current date range yet.</target>
+        <target>Δεν υπάρχουν ακόμη καταχωρίσεις στο τρέχον εύρος ημερομηνιών.</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.uncategorisedNotice">
+      <segment state="translated">
+        <source/>
+        <target>Αυτές οι καταχωρίσεις δεν ανήκουν σε καμία γνωστή κατηγορία — σύνολο παρακάτω.</target>
       </segment>
     </unit>
     <unit id="analysis.overview.comparison.title">
       <segment state="translated">
         <source/>
-        <target>Comparison by exercise group</target>
+        <target>Σύγκριση ανά ομάδα ασκήσεων</target>
       </segment>
     </unit>
     <unit id="analysis.overview.comparison.metricAria">
       <segment state="translated">
         <source/>
-        <target>Metric</target>
+        <target>Μέγεθος</target>
       </segment>
     </unit>
     <unit id="analysis.overview.comparison.metric.reps">
       <segment state="translated">
         <source/>
-        <target>Reps</target>
+        <target>Επαναλήψεις</target>
       </segment>
     </unit>
     <unit id="analysis.overview.comparison.metric.sets">
       <segment state="translated">
         <source/>
-        <target>Sets</target>
+        <target>Σετ</target>
       </segment>
     </unit>
     <unit id="analysis.overview.comparison.empty">
       <segment state="translated">
         <source/>
-        <target>No data in the current date range.</target>
+        <target>Δεν υπάρχουν δεδομένα στο τρέχον εύρος ημερομηνιών.</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.totalReps">
       <segment state="translated">
         <source/>
-        <target>Total reps</target>
+        <target>Συνολικές επαναλήψεις</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.todayReps">
       <segment state="translated">
         <source/>
-        <target>Today</target>
+        <target>Σήμερα</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.streak">
       <segment state="translated">
         <source/>
-        <target>Streak</target>
+        <target>Σερί</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.bestDay">
       <segment state="translated">
         <source/>
-        <target>Best day</target>
+        <target>Καλύτερη ημέρα</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.viewDetails">
       <segment state="translated">
         <source/>
-        <target>View details</target>
+        <target>Προβολή λεπτομερειών</target>
       </segment>
     </unit>
     <unit id="entries.empty.title">

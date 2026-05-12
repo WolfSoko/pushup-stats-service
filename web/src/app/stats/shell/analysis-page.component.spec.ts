@@ -255,10 +255,10 @@ describe('AnalysisPageComponent', () => {
     expect(nextDay.getDate()).toBe(1);
   });
 
-  // NOTE: DOM-level tests for the group-view (trends section ordering,
-  // heatmap toggle position, kind-id localisation) live in
-  // `analysis-group-view.component.spec.ts` — they need the group-view
-  // rendered without mat-tab's lazy body template, which doesn't
+  // NOTE: DOM-level group-view tests (trend section ordering, heatmap
+  // toggle position, kind-id localisation via `typeBreakdownDisplay`)
+  // live in `analysis-group-view.component.spec.ts`. They render the
+  // group-view directly because mat-tab's lazy body template doesn't
   // hydrate reliably under PLATFORM_ID=server in jsdom.
 
   it('computes type breakdown, treating missing type as Standard', () => {

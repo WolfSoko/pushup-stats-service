@@ -6695,73 +6695,79 @@ Deine Position: # ·  Reps        </source>
     <unit id="analysis.tabs.overview">
       <segment state="translated">
         <source/>
-        <target>Overview</target>
+        <target>Oversikt</target>
       </segment>
     </unit>
     <unit id="analysis.overview.empty">
       <segment state="translated">
         <source/>
-        <target>No entries in the current date range yet.</target>
+        <target>Ingen oppføringer i valgt datointervall ennå.</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.uncategorisedNotice">
+      <segment state="translated">
+        <source/>
+        <target>Disse oppføringene tilhører ingen kjent kategori — aggregat under.</target>
       </segment>
     </unit>
     <unit id="analysis.overview.comparison.title">
       <segment state="translated">
         <source/>
-        <target>Comparison by exercise group</target>
+        <target>Sammenligning etter øvelsesgruppe</target>
       </segment>
     </unit>
     <unit id="analysis.overview.comparison.metricAria">
       <segment state="translated">
         <source/>
-        <target>Metric</target>
+        <target>Måleverdi</target>
       </segment>
     </unit>
     <unit id="analysis.overview.comparison.metric.reps">
       <segment state="translated">
         <source/>
-        <target>Reps</target>
+        <target>Repetisjoner</target>
       </segment>
     </unit>
     <unit id="analysis.overview.comparison.metric.sets">
       <segment state="translated">
         <source/>
-        <target>Sets</target>
+        <target>Sett</target>
       </segment>
     </unit>
     <unit id="analysis.overview.comparison.empty">
       <segment state="translated">
         <source/>
-        <target>No data in the current date range.</target>
+        <target>Ingen data i valgt datointervall.</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.totalReps">
       <segment state="translated">
         <source/>
-        <target>Total reps</target>
+        <target>Totale repetisjoner</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.todayReps">
       <segment state="translated">
         <source/>
-        <target>Today</target>
+        <target>I dag</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.streak">
       <segment state="translated">
         <source/>
-        <target>Streak</target>
+        <target>Serie</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.bestDay">
       <segment state="translated">
         <source/>
-        <target>Best day</target>
+        <target>Beste dag</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.viewDetails">
       <segment state="translated">
         <source/>
-        <target>View details</target>
+        <target>Vis detaljer</target>
       </segment>
     </unit>
     <unit id="entries.empty.title">

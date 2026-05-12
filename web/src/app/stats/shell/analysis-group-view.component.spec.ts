@@ -1,5 +1,6 @@
 import { Component, input, model, PLATFORM_ID, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
 import {
   LiveDataStore,
@@ -199,5 +200,42 @@ describe('AnalysisGroupViewComponent', () => {
     );
     expect(headerToggle).toBeTruthy();
     expect(headerToggle?.tagName.toLowerCase()).toBe('mat-button-toggle-group');
+  });
+
+  it('typeBreakdownDisplay localises bare exerciseIds in kind mode', async () => {
+    // Regression: in kind mode (a non-pushup active view, or a kinds
+    // filter that excludes pushups) the store emits raw catalog ids
+    // like `abs.situps`. The component wraps them in `kindDisplayName`
+    // so the pie legend reads "Sit-ups" instead of the developer id.
+    liveExerciseEntries.set([
+      {
+        _id: 'e1',
+        userId: 'u1',
+        exerciseId: 'abs.situps',
+        timestamp: '2026-02-12T08:00:00.000Z',
+        reps: 30,
+        source: 'web',
+      } as ExerciseEntry,
+    ]);
+    const groupViewEl = fixture.debugElement.query(
+      By.directive(AnalysisGroupViewComponent)
+    );
+    // Pull the store from the group-view's own injector — the HostComponent
+    // provides AnalysisStore on its own tree, so TestBed.inject would
+    // resolve a different (or missing) instance.
+    const store = groupViewEl.injector.get(AnalysisStore);
+    store.setRange('2026-02-09', '2026-02-15');
+    store.setActiveView('abs');
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const groupView =
+      groupViewEl.componentInstance as AnalysisGroupViewComponent;
+    const breakdown = groupView.typeBreakdownDisplay();
+    expect(breakdown).toHaveLength(1);
+    expect(breakdown[0]).toMatchObject({
+      id: 'abs.situps',
+      label: 'Sit-ups',
+    });
   });
 });

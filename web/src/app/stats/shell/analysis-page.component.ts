@@ -111,9 +111,19 @@ interface VisibleTab {
               <mat-icon aria-hidden="true">dashboard</mat-icon>
               <span i18n="@@analysis.tabs.overview">Übersicht</span>
             </ng-template>
-            <div class="tab-body">
-              <app-analysis-overview (viewSelect)="onOverviewSelect($event)" />
-            </div>
+            <!--
+              matTabContent defers per-tab instantiation until that tab is
+              actually selected, so visiting /analysis with N visible
+              categories doesn't construct N copies of analysis-group-view
+              up front (charts, tables, computeds).
+            -->
+            <ng-template matTabContent>
+              <div class="tab-body">
+                <app-analysis-overview
+                  (viewSelect)="onOverviewSelect($event)"
+                />
+              </div>
+            </ng-template>
           </mat-tab>
           @for (tab of visibleTabs(); track tab.id) {
             <mat-tab [attr.data-testid]="'analysis-tab-' + tab.id">
@@ -121,9 +131,11 @@ interface VisibleTab {
                 <mat-icon aria-hidden="true">{{ tab.icon }}</mat-icon>
                 <span>{{ tab.label }}</span>
               </ng-template>
-              <div class="tab-body">
-                <app-analysis-group-view />
-              </div>
+              <ng-template matTabContent>
+                <div class="tab-body">
+                  <app-analysis-group-view />
+                </div>
+              </ng-template>
             </mat-tab>
           }
         </mat-tab-group>

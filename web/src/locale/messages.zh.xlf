@@ -7049,73 +7049,79 @@
     <unit id="analysis.tabs.overview">
       <segment state="translated">
         <source/>
-        <target>Overview</target>
+        <target>概览</target>
       </segment>
     </unit>
     <unit id="analysis.overview.empty">
       <segment state="translated">
         <source/>
-        <target>No entries in the current date range yet.</target>
+        <target>当前日期范围内尚无条目。</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.uncategorisedNotice">
+      <segment state="translated">
+        <source/>
+        <target>这些条目不属于任何已知类别 — 下方为汇总。</target>
       </segment>
     </unit>
     <unit id="analysis.overview.comparison.title">
       <segment state="translated">
         <source/>
-        <target>Comparison by exercise group</target>
+        <target>按训练组对比</target>
       </segment>
     </unit>
     <unit id="analysis.overview.comparison.metricAria">
       <segment state="translated">
         <source/>
-        <target>Metric</target>
+        <target>指标</target>
       </segment>
     </unit>
     <unit id="analysis.overview.comparison.metric.reps">
       <segment state="translated">
         <source/>
-        <target>Reps</target>
+        <target>次数</target>
       </segment>
     </unit>
     <unit id="analysis.overview.comparison.metric.sets">
       <segment state="translated">
         <source/>
-        <target>Sets</target>
+        <target>组数</target>
       </segment>
     </unit>
     <unit id="analysis.overview.comparison.empty">
       <segment state="translated">
         <source/>
-        <target>No data in the current date range.</target>
+        <target>当前日期范围内暂无数据。</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.totalReps">
       <segment state="translated">
         <source/>
-        <target>Total reps</target>
+        <target>总次数</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.todayReps">
       <segment state="translated">
         <source/>
-        <target>Today</target>
+        <target>今天</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.streak">
       <segment state="translated">
         <source/>
-        <target>Streak</target>
+        <target>连击</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.bestDay">
       <segment state="translated">
         <source/>
-        <target>Best day</target>
+        <target>最佳日</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.viewDetails">
       <segment state="translated">
         <source/>
-        <target>View details</target>
+        <target>查看详情</target>
       </segment>
     </unit>
     <unit id="entries.empty.title">

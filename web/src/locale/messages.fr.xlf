@@ -7432,73 +7432,79 @@
     <unit id="analysis.tabs.overview">
       <segment state="translated">
         <source/>
-        <target>Overview</target>
+        <target>Aperçu</target>
       </segment>
     </unit>
     <unit id="analysis.overview.empty">
       <segment state="translated">
         <source/>
-        <target>No entries in the current date range yet.</target>
+        <target>Aucune entrée dans la plage de dates actuelle.</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.uncategorisedNotice">
+      <segment state="translated">
+        <source/>
+        <target>Ces entrées n'appartiennent à aucune catégorie connue — agrégat ci-dessous.</target>
       </segment>
     </unit>
     <unit id="analysis.overview.comparison.title">
       <segment state="translated">
         <source/>
-        <target>Comparison by exercise group</target>
+        <target>Comparaison par groupe d'exercices</target>
       </segment>
     </unit>
     <unit id="analysis.overview.comparison.metricAria">
       <segment state="translated">
         <source/>
-        <target>Metric</target>
+        <target>Métrique</target>
       </segment>
     </unit>
     <unit id="analysis.overview.comparison.metric.reps">
       <segment state="translated">
         <source/>
-        <target>Reps</target>
+        <target>Répétitions</target>
       </segment>
     </unit>
     <unit id="analysis.overview.comparison.metric.sets">
       <segment state="translated">
         <source/>
-        <target>Sets</target>
+        <target>Séries</target>
       </segment>
     </unit>
     <unit id="analysis.overview.comparison.empty">
       <segment state="translated">
         <source/>
-        <target>No data in the current date range.</target>
+        <target>Aucune donnée dans la plage de dates actuelle.</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.totalReps">
       <segment state="translated">
         <source/>
-        <target>Total reps</target>
+        <target>Total des répétitions</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.todayReps">
       <segment state="translated">
         <source/>
-        <target>Today</target>
+        <target>Aujourd'hui</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.streak">
       <segment state="translated">
         <source/>
-        <target>Streak</target>
+        <target>Série</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.bestDay">
       <segment state="translated">
         <source/>
-        <target>Best day</target>
+        <target>Meilleur jour</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.viewDetails">
       <segment state="translated">
         <source/>
-        <target>View details</target>
+        <target>Voir les détails</target>
       </segment>
     </unit>
     <unit id="entries.empty.title">

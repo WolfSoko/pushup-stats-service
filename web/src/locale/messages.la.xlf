@@ -7441,6 +7441,12 @@
         <target>No entries in the current date range yet.</target>
       </segment>
     </unit>
+    <unit id="analysis.overview.uncategorisedNotice">
+      <segment state="translated">
+        <source/>
+        <target>These entries don't belong to a known category — aggregate below.</target>
+      </segment>
+    </unit>
     <unit id="analysis.overview.comparison.title">
       <segment state="translated">
         <source/>
