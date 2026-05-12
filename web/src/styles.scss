@@ -209,3 +209,25 @@ mat-card-header + mat-card-footer {
   color: var(--mat-sys-on-tertiary-container, #31111d) !important;
   font-weight: 600;
 }
+
+// Goal-reached celebration dialog: the .goal-card paints its own gold-gradient
+// frame on a ::before pseudo. Material's own dialog surface must therefore be
+// invisible — otherwise the snap-out animation (frame fade + expand) reveals
+// the dark/light Material surface underneath instead of the page background.
+// We also let the surface overflow so the expanding frame can sweep toward
+// the viewport's top-right corner.
+.goal-reached-dialog-panel {
+  --mdc-dialog-container-color: transparent;
+  --mdc-dialog-container-elevation-shadow: none;
+
+  .mat-mdc-dialog-surface,
+  .mdc-dialog__surface {
+    background: transparent !important;
+    box-shadow: none !important;
+    overflow: visible !important;
+  }
+}
+
+.cdk-overlay-pane.goal-reached-dialog-panel {
+  overflow: visible;
+}
