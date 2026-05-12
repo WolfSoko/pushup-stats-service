@@ -361,10 +361,10 @@ export class App {
   // filter bindings as the base `Event` (no `.repeat`), so the WAI-ARIA
   // Button Pattern's auto-repeat guard can't live inline. The method also
   // accepts `Event` (not `KeyboardEvent`) so the template call passes
-  // strict type-checking (TS2345); we narrow with a runtime cast since
-  // (keydown.*) only ever fires for KeyboardEvents at runtime.
+  // strict type-checking (TS2345); narrow via `instanceof` to read
+  // `.repeat` safely.
   handleGoalPillKeydown(event: Event): void {
-    if ((event as KeyboardEvent).repeat) return;
+    if (event instanceof KeyboardEvent && event.repeat) return;
     this.handleGoalPillClick();
   }
 
