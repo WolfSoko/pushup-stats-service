@@ -347,6 +347,18 @@ export class App {
     this.appData.reloadAfterMutation();
   }
 
+  /**
+   * Toolbar "Tagesziel" pill click — when today's goal has already been
+   * reached, replay the snap-celebration dialog on demand. No-op while the
+   * pill is still counting up to the goal.
+   */
+  handleGoalPillClick(): void {
+    if (!this.goalReached()) return;
+    this._goalReachedNotifier.reopen('daily');
+  }
+
+  protected readonly reopenDailyAriaLabel = $localize`:@@toolbarDailyGoal.replayAria:Tagesziel-Animation erneut abspielen`;
+
   openFeedbackDialog(prefill = true): void {
     const data: FeedbackDialogData = prefill
       ? {

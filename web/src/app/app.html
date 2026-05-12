@@ -145,7 +145,16 @@
       </a>
       <span class="app-title" i18n="@@app.title">Pushups</span>
       <span class="spacer"></span>
-      <span class="goal-pill"
+      <span
+        class="goal-pill"
+        [class.is-clickable]="goalReached()"
+        [attr.role]="goalReached() ? 'button' : null"
+        [attr.tabindex]="goalReached() ? 0 : null"
+        [attr.aria-label]="goalReached() ? reopenDailyAriaLabel : null"
+        data-testid="toolbar-goal-pill"
+        (click)="handleGoalPillClick()"
+        (keydown.enter)="handleGoalPillClick()"
+        (keydown.space)="handleGoalPillClick(); $event.preventDefault()"
         ><small i18n="@@toolbarDailyGoal">Tagesziel</small>
         <strong>{{ todayProgress() }} / {{ dailyGoal() }}</strong></span
       >

@@ -7627,5 +7627,11 @@
         <target>Flessioni</target>
       </segment>
     </unit>
+    <unit id="toolbarDailyGoal.replayAria">
+      <segment state="translated">
+        <source>Tagesziel-Animation erneut abspielen</source>
+        <target>Riproduci animazione obiettivo giornaliero</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

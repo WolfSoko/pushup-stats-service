@@ -697,6 +697,84 @@ describe('GoalReachedNotificationService', () => {
     });
   });
 
+  describe('Given the user explicitly re-triggers the daily celebration', () => {
+    it('Then reopen("daily") re-opens the snap dialog even after the auto-fired one was dismissed', async () => {
+      // Given — auto-fire happens once, then we clear the spy to assert the
+      // manual re-open is a separate, independent call (not just a leftover).
+      const service = setup({
+        dailyGoal: 10,
+        entries: [
+          {
+            _id: '1',
+            timestamp: '2026-04-22T08:00:00',
+            reps: 12,
+          } as PushupRecord,
+        ],
+      });
+      await flushAll();
+      expect(dialogOpenSpy).toHaveBeenCalledTimes(1);
+      dialogOpenSpy.mockClear();
+
+      // When — user clicks the toolbar pill to replay the snap.
+      service.reopen('daily');
+      await flushAll();
+
+      // Then — dialog opens again with the current totals + goal.
+      expect(dialogOpenSpy).toHaveBeenCalledTimes(1);
+      const [, config] = dialogOpenSpy.mock.calls[0];
+      expect(config?.data).toMatchObject({
+        kind: 'daily',
+        total: 12,
+        goal: 10,
+      });
+    });
+
+    it('Then reopen("daily") no-ops while the goal has not yet been reached', async () => {
+      // Given — daily goal set but progress still below it.
+      const service = setup({
+        dailyGoal: 10,
+        entries: [
+          {
+            _id: '1',
+            timestamp: '2026-04-22T08:00:00',
+            reps: 5,
+          } as PushupRecord,
+        ],
+      });
+      await flushAll();
+      dialogOpenSpy.mockClear();
+
+      // When
+      service.reopen('daily');
+      await flushAll();
+
+      // Then
+      expect(dialogOpenSpy).not.toHaveBeenCalled();
+    });
+
+    it('Then reopen("daily") no-ops when no daily goal is configured', async () => {
+      // Given
+      const service = setup({
+        entries: [
+          {
+            _id: '1',
+            timestamp: '2026-04-22T08:00:00',
+            reps: 100,
+          } as PushupRecord,
+        ],
+      });
+      await flushAll();
+      dialogOpenSpy.mockClear();
+
+      // When
+      service.reopen('daily');
+      await flushAll();
+
+      // Then
+      expect(dialogOpenSpy).not.toHaveBeenCalled();
+    });
+  });
+
   describe('Given an active plan but no configured daily goal', () => {
     it('Then the plan dialog stays silent (the daily-loading-state guard)', async () => {
       // Given — no `dailyGoal` set in the user config (resource resolves to 0).

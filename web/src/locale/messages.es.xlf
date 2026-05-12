@@ -7627,5 +7627,11 @@
         <target>Flexiones</target>
       </segment>
     </unit>
+    <unit id="toolbarDailyGoal.replayAria">
+      <segment state="translated">
+        <source>Tagesziel-Animation erneut abspielen</source>
+        <target>Repetir animación de la meta diaria</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

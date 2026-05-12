@@ -252,6 +252,28 @@ export class GoalReachedNotificationService {
       },
     });
   }
+
+  /**
+   * Manually re-open the celebration dialog for a goal that has already
+   * been reached this period. Used by the toolbar "Tagesziel" pill so the
+   * user can replay the snap animation on demand.
+   *
+   * Bypasses the per-period `opened` / localStorage gating — that gate
+   * suppresses the auto-fire during navigation, not intentional re-opens.
+   * Silently no-ops when the goal isn't configured or hasn't been reached.
+   */
+  reopen(kind: GoalKind): void {
+    if (!isPlatformBrowser(this.platformId)) return;
+    const spec = this.specs.find((s) => s.kind === kind);
+    if (!spec) return;
+    const goal = spec.goal();
+    if (goal <= 0) return;
+    const total = spec.total();
+    if (total < goal) return;
+    const maxParticleCount =
+      SNAP_QUALITY_PARTICLES[this.userConfig.snapQuality()];
+    void this.openDialog(kind, { total, goal, maxParticleCount });
+  }
 }
 
 /**

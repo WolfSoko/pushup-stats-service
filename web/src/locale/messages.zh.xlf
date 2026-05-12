@@ -7244,5 +7244,11 @@
         <target>俯卧撑</target>
       </segment>
     </unit>
+    <unit id="toolbarDailyGoal.replayAria">
+      <segment state="translated">
+        <source>Tagesziel-Animation erneut abspielen</source>
+        <target>重播每日目标动画</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

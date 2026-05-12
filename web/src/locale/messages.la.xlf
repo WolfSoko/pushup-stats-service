@@ -7627,5 +7627,11 @@
         <target>Pushups</target>
       </segment>
     </unit>
+    <unit id="toolbarDailyGoal.replayAria">
+      <segment state="translated">
+        <source>Tagesziel-Animation erneut abspielen</source>
+        <target>Animationem metae diurnae iterum ludere</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

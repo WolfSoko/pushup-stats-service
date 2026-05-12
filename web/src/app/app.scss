@@ -144,6 +144,28 @@ mat-sidenav-content {
       font-size: 0.95rem;
       font-variant-numeric: tabular-nums;
     }
+
+    &.is-clickable {
+      cursor: pointer;
+      transition:
+        background-color 120ms ease,
+        transform 120ms ease,
+        border-color 120ms ease;
+
+      &:hover {
+        background: rgba(30, 47, 84, 0.6);
+        border-color: rgba(129, 161, 232, 0.55);
+      }
+
+      &:active {
+        transform: scale(0.97);
+      }
+
+      &:focus-visible {
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(125, 154, 219, 0.85);
+      }
+    }
   }
 }
 
@@ -304,6 +326,17 @@ html.light-theme {
       background: rgba(240, 245, 255, 0.9);
       border-color: rgba(59, 130, 246, 0.35);
       color: #1e293b;
+
+      &.is-clickable {
+        &:hover {
+          background: rgba(219, 234, 254, 0.95);
+          border-color: rgba(59, 130, 246, 0.55);
+        }
+
+        &:focus-visible {
+          box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.6);
+        }
+      }
     }
   }
 
