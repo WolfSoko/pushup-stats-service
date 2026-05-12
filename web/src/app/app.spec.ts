@@ -196,7 +196,12 @@ describe('App (testing-library)', () => {
     }) {
       return [
         provideRouter([]),
-        { provide: PLATFORM_ID, useValue: 'browser' },
+        // PLATFORM_ID 'server' so the TrainingPlanStore's once-a-minute
+        // setInterval in withHooks (browser-only branch) doesn't leak
+        // across TestBed.resetTestingModule(). The pill state we assert on
+        // is driven purely by signals/resource, both of which work on
+        // server.
+        { provide: PLATFORM_ID, useValue: 'server' },
         {
           provide: UserContextService,
           useValue: {

@@ -357,12 +357,14 @@ export class App {
     this._goalReachedNotifier.reopen('daily');
   }
 
-  // Angular templates type `$event` for `(keydown.*)` as the base `Event`,
-  // so the WAI-ARIA Button Pattern's `event.repeat` guard cannot live in
-  // the template binding (it would fail strict template type-checking with
-  // TS2339). Narrow to KeyboardEvent here instead.
-  handleGoalPillKeydown(event: KeyboardEvent): void {
-    if (event.repeat) return;
+  // Angular's strictTemplates mode types `$event` for `(keydown.*)` key-
+  // filter bindings as the base `Event` (no `.repeat`), so the WAI-ARIA
+  // Button Pattern's auto-repeat guard can't live inline. The method also
+  // accepts `Event` (not `KeyboardEvent`) so the template call passes
+  // strict type-checking (TS2345); we narrow with a runtime cast since
+  // (keydown.*) only ever fires for KeyboardEvents at runtime.
+  handleGoalPillKeydown(event: Event): void {
+    if ((event as KeyboardEvent).repeat) return;
     this.handleGoalPillClick();
   }
 
