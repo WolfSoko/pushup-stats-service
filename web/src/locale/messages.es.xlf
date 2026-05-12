@@ -7429,6 +7429,78 @@
         <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">fitness_center</pc> Elegir plan de entrenamiento </target>
       </segment>
     </unit>
+    <unit id="analysis.tabs.overview">
+      <segment state="translated">
+        <source/>
+        <target>Overview</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.empty">
+      <segment state="translated">
+        <source/>
+        <target>No entries in the current date range yet.</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.comparison.title">
+      <segment state="translated">
+        <source/>
+        <target>Comparison by exercise group</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.comparison.metricAria">
+      <segment state="translated">
+        <source/>
+        <target>Metric</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.comparison.metric.reps">
+      <segment state="translated">
+        <source/>
+        <target>Reps</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.comparison.metric.sets">
+      <segment state="translated">
+        <source/>
+        <target>Sets</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.comparison.empty">
+      <segment state="translated">
+        <source/>
+        <target>No data in the current date range.</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.totalReps">
+      <segment state="translated">
+        <source/>
+        <target>Total reps</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.todayReps">
+      <segment state="translated">
+        <source/>
+        <target>Today</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.streak">
+      <segment state="translated">
+        <source/>
+        <target>Streak</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.bestDay">
+      <segment state="translated">
+        <source/>
+        <target>Best day</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.viewDetails">
+      <segment state="translated">
+        <source/>
+        <target>View details</target>
+      </segment>
+    </unit>
     <unit id="entries.empty.title">
       <segment state="translated">
         <source/>

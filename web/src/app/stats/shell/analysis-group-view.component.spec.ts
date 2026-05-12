@@ -1,0 +1,203 @@
+import { Component, input, model, PLATFORM_ID, signal } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { of } from 'rxjs';
+import {
+  LiveDataStore,
+  StatsApiService,
+  UserStatsApiService,
+} from '@pu-stats/data-access';
+import { AuthStore, UserContextService } from '@pu-auth/auth';
+import { makeAuthStoreMock } from '@pu-stats/testing';
+import { ExerciseEntry, RangeModes } from '@pu-stats/models';
+
+import { AnalysisStore } from '../analysis.store';
+import { AnalysisGroupViewComponent } from './analysis-group-view.component';
+import { HeatmapComponent } from '../components/heatmap/heatmap.component';
+import { TypePieComponent } from '../components/type-pie/type-pie.component';
+import { StatsChartComponent } from '../components/stats-chart/stats-chart.component';
+import { SetsDistributionComponent } from '../components/sets-distribution/sets-distribution.component';
+
+@Component({
+  selector: 'app-heatmap',
+  standalone: true,
+  template: '',
+})
+class MockHeatmapComponent {
+  readonly entries = input<unknown[]>([]);
+  readonly mode = input<string>('reps');
+}
+
+@Component({
+  selector: 'app-type-pie',
+  standalone: true,
+  template: '',
+})
+class MockTypePieComponent {
+  readonly data = input<unknown[]>([]);
+}
+
+@Component({
+  selector: 'app-stats-chart',
+  standalone: true,
+  template: '',
+})
+class MockStatsChartComponent {
+  readonly series = input<unknown[]>([]);
+  readonly granularity = input<string>('daily');
+  readonly rangeMode = input<RangeModes>('week' as RangeModes);
+  readonly from = input<string>('');
+  readonly to = input<string>('');
+  readonly entries = input<unknown[]>([]);
+  readonly dayChartMode = model<string>('14h');
+}
+
+@Component({
+  selector: 'app-sets-distribution',
+  standalone: true,
+  template: '',
+})
+class MockSetsDistributionComponent {
+  readonly data = input<unknown[]>([]);
+}
+
+// Wraps the group-view in a provider context so its `inject(AnalysisStore)`
+// resolves without going through the analysis-page shell (and its
+// mat-tab-group, which doesn't hydrate its lazy body template reliably
+// under PLATFORM_ID=server in jsdom). Tests can manipulate the store
+// directly to drive view filters.
+@Component({
+  selector: 'app-host',
+  standalone: true,
+  imports: [AnalysisGroupViewComponent],
+  providers: [AnalysisStore],
+  template: '<app-analysis-group-view />',
+})
+class HostComponent {}
+
+describe('AnalysisGroupViewComponent', () => {
+  let fixture: ComponentFixture<HostComponent>;
+  const liveExerciseEntries = signal<ExerciseEntry[]>([]);
+  const liveMock = {
+    connected: signal(true),
+    entries: signal([] as never[]),
+    exerciseEntries: liveExerciseEntries,
+    updateTick: signal(0),
+  };
+
+  const apiMock = {
+    load: vitest.fn().mockReturnValue(
+      of({
+        meta: {
+          from: null,
+          to: null,
+          entries: 1,
+          days: 1,
+          total: 25,
+          granularity: 'daily',
+        },
+        series: [],
+      })
+    ),
+    listPushups: vitest.fn().mockReturnValue(
+      of([
+        {
+          _id: '1',
+          timestamp: '2026-02-13T08:00:00',
+          reps: 25,
+          sets: [10, 8, 7],
+          source: 'web',
+          type: 'Standard',
+        },
+      ])
+    ),
+  };
+
+  beforeEach(async () => {
+    vitest.useFakeTimers({ toFake: ['Date'] });
+    vitest.setSystemTime(new Date(2026, 1, 15, 12));
+    liveExerciseEntries.set([]);
+
+    await TestBed.configureTestingModule({
+      imports: [HostComponent],
+      providers: [
+        { provide: PLATFORM_ID, useValue: 'server' },
+        { provide: StatsApiService, useValue: apiMock },
+        { provide: AuthStore, useValue: makeAuthStoreMock() },
+        { provide: UserContextService, useValue: { userIdSafe: () => 'u1' } },
+        { provide: LiveDataStore, useValue: liveMock },
+        {
+          provide: UserStatsApiService,
+          useValue: {
+            getUserStats: vitest.fn().mockReturnValue(of(null)),
+          },
+        },
+      ],
+    })
+      .overrideComponent(AnalysisGroupViewComponent, {
+        remove: {
+          imports: [
+            HeatmapComponent,
+            TypePieComponent,
+            StatsChartComponent,
+            SetsDistributionComponent,
+          ],
+        },
+        add: {
+          imports: [
+            MockHeatmapComponent,
+            MockTypePieComponent,
+            MockStatsChartComponent,
+            MockSetsDistributionComponent,
+          ],
+        },
+      })
+      .compileComponents();
+
+    fixture = TestBed.createComponent(HostComponent);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+  });
+
+  afterEach(() => {
+    vitest.useRealTimers();
+  });
+
+  it('renders fixed-window labels for trend cards', () => {
+    const host: HTMLElement = fixture.nativeElement;
+    const trends = host.querySelector(
+      '[data-testid="analysis-trends-section"]'
+    );
+    expect(trends?.textContent).toContain('Wochentrend');
+    expect(trends?.textContent).toContain('Letzte 8 Wochen');
+    expect(trends?.textContent).toContain('Monatstrend');
+    expect(trends?.textContent).toContain('Letzte 6 Monate');
+  });
+
+  it('places the trend section after the heatmap card in the DOM', () => {
+    const host: HTMLElement = fixture.nativeElement;
+    const heatmap = host.querySelector('.heatmap-full');
+    const trends = host.querySelector(
+      '[data-testid="analysis-trends-section"]'
+    );
+    expect(heatmap).toBeTruthy();
+    expect(trends).toBeTruthy();
+    if (!heatmap || !trends) return;
+    expect(
+      heatmap.compareDocumentPosition(trends) & Node.DOCUMENT_POSITION_FOLLOWING
+    ).toBeTruthy();
+  });
+
+  it('places the heatmap reps/sets toggle inside the heatmap card header so the mobile stacked layout applies', () => {
+    const host: HTMLElement = fixture.nativeElement;
+
+    const heatmapCard = host.querySelector('.heatmap-full');
+    expect(heatmapCard).toBeTruthy();
+
+    const headerToggle = heatmapCard?.querySelector(
+      'mat-card-header .heatmap-toggle'
+    );
+    expect(headerToggle).toBeTruthy();
+    expect(headerToggle?.tagName.toLowerCase()).toBe('mat-button-toggle-group');
+  });
+});
