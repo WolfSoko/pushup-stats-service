@@ -3,7 +3,7 @@ import { signal } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { LiveDataStore, UserConfigApiService } from '@pu-stats/data-access';
 import { UserContextService } from '@pu-auth/auth';
-import { of } from 'rxjs';
+import { of, Subject } from 'rxjs';
 import { PushupRecord, TrainingPlanDay } from '@pu-stats/models';
 import { TrainingPlanStore } from '../training-plans/training-plan.store';
 import { GoalReachedNotificationService } from './goal-reached-notification.service';
@@ -694,6 +694,126 @@ describe('GoalReachedNotificationService', () => {
         total: 40,
         goal: 40,
       });
+    });
+  });
+
+  describe('Given the user explicitly re-triggers the daily celebration', () => {
+    it('Then reopen("daily") re-opens the snap dialog even after the auto-fired one was dismissed', async () => {
+      // Given — auto-fire happens once, then we clear the spy to assert the
+      // manual re-open is a separate, independent call (not just a leftover).
+      const service = setup({
+        dailyGoal: 10,
+        entries: [
+          {
+            _id: '1',
+            timestamp: '2026-04-22T08:00:00',
+            reps: 12,
+          } as PushupRecord,
+        ],
+      });
+      await flushAll();
+      expect(dialogOpenSpy).toHaveBeenCalledTimes(1);
+      dialogOpenSpy.mockClear();
+
+      // When — user clicks the toolbar pill to replay the snap.
+      service.reopen('daily');
+      await flushAll();
+
+      // Then — dialog opens again with the current totals + goal.
+      expect(dialogOpenSpy).toHaveBeenCalledTimes(1);
+      const [, config] = dialogOpenSpy.mock.calls[0];
+      expect(config?.data).toMatchObject({
+        kind: 'daily',
+        total: 12,
+        goal: 10,
+      });
+    });
+
+    it('Then reopen("daily") no-ops while the goal has not yet been reached', async () => {
+      // Given — daily goal set but progress still below it.
+      const service = setup({
+        dailyGoal: 10,
+        entries: [
+          {
+            _id: '1',
+            timestamp: '2026-04-22T08:00:00',
+            reps: 5,
+          } as PushupRecord,
+        ],
+      });
+      await flushAll();
+      dialogOpenSpy.mockClear();
+
+      // When
+      service.reopen('daily');
+      await flushAll();
+
+      // Then
+      expect(dialogOpenSpy).not.toHaveBeenCalled();
+    });
+
+    it('Then back-to-back reopen("daily") calls do not stack overlays while a dialog is open', async () => {
+      // Given — auto-fire opens the first dialog and the mock's afterClosed
+      // is a held-open Subject, so the in-memory `activeDialogs` map for
+      // 'daily' stays populated (i.e. the real dialog is still on screen).
+      const afterClosed = new Subject<unknown>();
+      const heldRef = {
+        afterClosed: () => afterClosed.asObservable(),
+        close: vi.fn(),
+      } as unknown as MatDialogRef<unknown>;
+      dialogOpenSpy.mockReturnValueOnce(heldRef);
+
+      const service = setup({
+        dailyGoal: 10,
+        entries: [
+          {
+            _id: '1',
+            timestamp: '2026-04-22T08:00:00',
+            reps: 12,
+          } as PushupRecord,
+        ],
+      });
+      await flushAll();
+      expect(dialogOpenSpy).toHaveBeenCalledTimes(1);
+      dialogOpenSpy.mockClear();
+
+      // When — rapid double-click / held Enter on the toolbar pill.
+      service.reopen('daily');
+      service.reopen('daily');
+      await flushAll();
+
+      // Then — both reopens are dedupe-blocked by the still-open first dialog.
+      expect(dialogOpenSpy).not.toHaveBeenCalled();
+
+      // And once the first dialog closes, a fresh reopen can fire again
+      // (proves the cleanup subscription releases the per-kind slot).
+      afterClosed.next(null);
+      afterClosed.complete();
+      service.reopen('daily');
+      await flushAll();
+      expect(dialogOpenSpy).toHaveBeenCalledTimes(1);
+    });
+
+    it('Then reopen("daily") no-ops when no daily goal is configured', async () => {
+      // Given
+      const service = setup({
+        entries: [
+          {
+            _id: '1',
+            timestamp: '2026-04-22T08:00:00',
+            reps: 100,
+          } as PushupRecord,
+        ],
+      });
+      await flushAll();
+      dialogOpenSpy.mockClear();
+
+      // When
+      service.reopen('daily');
+      await flushAll();
+
+      // Then
+      expect(dialogOpenSpy).not.toHaveBeenCalled();
     });
   });
 

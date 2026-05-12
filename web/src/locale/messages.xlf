@@ -2228,6 +2228,14 @@
         <source>Tagesziel</source>
       </segment>
     </unit>
+    <unit id="toolbarDailyGoal.replayAria">
+      <notes>
+        <note category="location">web/src/app/app.ts</note>
+      </notes>
+      <segment>
+        <source>Tagesziel-Animation erneut abspielen</source>
+      </segment>
+    </unit>
     <unit id="nav.admin">
       <notes>
         <note category="location">web/src/app/app.html:157,158</note>

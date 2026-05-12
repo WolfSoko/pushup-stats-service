@@ -19,6 +19,16 @@ import { ShareService } from '../../../core/share.service';
 
 const SHARE_URL = 'https://pushup-stats.com';
 
+/**
+ * Length of the @wolsok/thanos vaporize animation. The card's frame fade
+ * is no longer time-driven via a parallel CSS transition; instead each
+ * vaporize frame writes its normalized progress (`animationT`, 0..1) to
+ * the `--snap-progress` custom property on the card, and SCSS reads that
+ * to interpolate transform/opacity. So this constant is the sole source
+ * of the celebration duration.
+ */
+export const GOAL_SNAP_DURATION_MS = 5000;
+
 export type GoalKind = 'daily' | 'weekly' | 'monthly' | 'plan';
 
 export interface GoalReachedDialogData {
@@ -159,7 +169,10 @@ export class GoalReachedDialogComponent {
           WsThanosService,
           {
             provide: WS_THANOS_OPTIONS_TOKEN,
-            useValue: createWsThanosOptions({ maxParticleCount }),
+            useValue: createWsThanosOptions({
+              animationLength: GOAL_SNAP_DURATION_MS,
+              maxParticleCount,
+            }),
           },
         ],
         this.envInjector,
@@ -177,7 +190,17 @@ export class GoalReachedDialogComponent {
               this.dialogRef.close();
             })
           )
-          .subscribe({ error: () => undefined });
+          .subscribe({
+            // Drive the frame's transform/opacity off the actual particle
+            // progress instead of a parallel CSS transition. Clamped to
+            // 0..1 because the last frame can emit animationT slightly > 1
+            // before the stream completes.
+            next: (state) => {
+              const t = Math.min(1, Math.max(0, state.animationT));
+              el.style.setProperty('--snap-progress', String(t));
+            },
+            error: () => undefined,
+          });
       });
     } catch {
       this.dialogRef.close();

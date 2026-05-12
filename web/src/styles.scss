@@ -209,3 +209,25 @@ mat-card-header + mat-card-footer {
   color: var(--mat-sys-on-tertiary-container, #31111d) !important;
   font-weight: 600;
 }
+
+// Goal-reached celebration dialog: the .goal-card paints its own gold-gradient
+// frame on a ::before pseudo, and the @wolsok/thanos snap animation rasterises
+// the card into a particle canvas that flows beyond the dialog bounds.
+// Material's own dialog surface must therefore be invisible — otherwise the
+// dark/light Material surface shows underneath the fading frame, and clips
+// the snap canvas at the dialog edges.
+.goal-reached-dialog-panel {
+  --mdc-dialog-container-color: transparent;
+  --mdc-dialog-container-elevation-shadow: none;
+
+  .mat-mdc-dialog-surface,
+  .mdc-dialog__surface {
+    background: transparent !important;
+    box-shadow: none !important;
+    overflow: visible !important;
+  }
+}
+
+.cdk-overlay-pane.goal-reached-dialog-panel {
+  overflow: visible;
+}

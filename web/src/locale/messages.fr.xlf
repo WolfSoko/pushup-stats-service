@@ -7627,5 +7627,11 @@
         <target>Pompes</target>
       </segment>
     </unit>
+    <unit id="toolbarDailyGoal.replayAria">
+      <segment state="translated">
+        <source>Tagesziel-Animation erneut abspielen</source>
+        <target>Rejouer l'animation de l'objectif quotidien</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

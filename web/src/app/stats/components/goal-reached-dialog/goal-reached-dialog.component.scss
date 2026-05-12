@@ -40,20 +40,18 @@
       );
     box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
     transform-origin: bottom left;
-    transition:
-      transform 300ms ease-out,
-      opacity 300ms ease-out;
+    // The frame is animated directly off the @wolsok/thanos particle
+    // progress: each vaporize() frame writes `--snap-progress` (0..1) on
+    // the card, and we interpolate transform/opacity from it. No parallel
+    // CSS transition — keeps the frame fade locked to the actual snap.
+    transform: scale(calc(1 + 0.3 * var(--snap-progress, 0)));
+    opacity: calc(1 - var(--snap-progress, 0));
   }
 
   &.is-snapping {
-    // Allow the expanding frame to bleed past the original card box.
+    // Let the expanding frame bleed past the original card box (the
+    // border-radius clip would otherwise crop the scaled pseudo-element).
     overflow: visible;
-
-    &::before {
-      // Grow up and to the right (origin: bottom left); fade to transparent.
-      transform: scale(1.3);
-      opacity: 0;
-    }
   }
 }
 

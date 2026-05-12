@@ -8,9 +8,12 @@ declare module '@wolsok/thanos' {
   import type { Observable } from 'rxjs';
 
   export interface AnimationState {
-    readonly progress?: number;
-    readonly running?: boolean;
-    readonly [key: string]: unknown;
+    /** Seconds elapsed since the previous frame. */
+    readonly deltaTSec: number;
+    /** Normalized animation progress, 0 at start and 1 at completion. */
+    readonly animationT: number;
+    readonly maxWidth: number;
+    readonly maxHeight: number;
   }
 
   export interface WsThanosOptions {
