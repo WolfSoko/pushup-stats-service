@@ -1,5 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { render, screen } from '@testing-library/angular';
+import userEvent from '@testing-library/user-event';
 import { signal, WritableSignal, PLATFORM_ID } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { Title } from '@angular/platform-browser';
@@ -241,15 +242,15 @@ describe('App (testing-library)', () => {
         })
       );
       const notifierMock = makeNotifierMock();
-      const { fixture } = await render(App, {
+      await render(App, {
         providers: commonProviders(notifierMock),
       });
       // Wait for the dailyProgressResource to resolve so goalReached() flips
-      // to true before we exercise the click handler.
+      // to true and the pill is wired into the DOM.
       await screen.findByText((content) => content.includes('80 / 50'));
 
       // When
-      fixture.componentInstance.handleGoalPillClick();
+      await userEvent.click(screen.getByTestId('toolbar-goal-pill'));
 
       // Then
       expect(notifierMock.reopen).toHaveBeenCalledTimes(1);
@@ -273,13 +274,13 @@ describe('App (testing-library)', () => {
         })
       );
       const notifierMock = makeNotifierMock();
-      const { fixture } = await render(App, {
+      await render(App, {
         providers: commonProviders(notifierMock),
       });
       await screen.findByText((content) => content.includes('10 / 100'));
 
       // When
-      fixture.componentInstance.handleGoalPillClick();
+      await userEvent.click(screen.getByTestId('toolbar-goal-pill'));
 
       // Then
       expect(notifierMock.reopen).not.toHaveBeenCalled();
