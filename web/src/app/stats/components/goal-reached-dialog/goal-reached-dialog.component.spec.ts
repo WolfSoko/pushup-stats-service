@@ -220,6 +220,51 @@ describe('GoalReachedDialogComponent', () => {
       expect(vaporizeSpy).toHaveBeenCalledTimes(1);
     });
 
+    it('Then each vaporize frame writes its animationT to --snap-progress on the card', async () => {
+      // Given — drives the SCSS frame fade off the actual particle progress
+      // instead of a parallel CSS transition, so the card frame stays in
+      // lockstep with the vaporize animation.
+      await setup({
+        kind: 'daily',
+        total: 50,
+        goal: 50,
+        titleId: 'test-title-progress',
+      });
+      const card = fixture.nativeElement.querySelector(
+        '[data-testid="goal-reached-card"]'
+      ) as HTMLElement;
+      const snapBtn = fixture.nativeElement.querySelector(
+        '[data-testid="goal-reached-snap"]'
+      ) as HTMLButtonElement;
+
+      // When — snap starts and three particle frames emit at progress 0/0.5/1.
+      snapBtn.click();
+      await fixture.whenStable();
+      vaporizeSubject.next({
+        deltaTSec: 0,
+        animationT: 0,
+        maxWidth: 100,
+        maxHeight: 100,
+      });
+      expect(card.style.getPropertyValue('--snap-progress')).toBe('0');
+      vaporizeSubject.next({
+        deltaTSec: 0.016,
+        animationT: 0.5,
+        maxWidth: 100,
+        maxHeight: 100,
+      });
+      expect(card.style.getPropertyValue('--snap-progress')).toBe('0.5');
+      // A real run can emit animationT slightly > 1 on the last frame —
+      // confirm the subscriber clamps so the CSS stays in 0..1.
+      vaporizeSubject.next({
+        deltaTSec: 0.016,
+        animationT: 1.05,
+        maxWidth: 100,
+        maxHeight: 100,
+      });
+      expect(card.style.getPropertyValue('--snap-progress')).toBe('1');
+    });
+
     it('Then it still closes the dialog if vaporize emits an error', async () => {
       // Given — html2canvas can throw on modern CSS color() functions
       await setup({

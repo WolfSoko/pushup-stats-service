@@ -20,11 +20,12 @@ import { ShareService } from '../../../core/share.service';
 const SHARE_URL = 'https://pushup-stats.com';
 
 /**
- * Single source of truth for the snap-celebration animation length.
- * The same value is consumed by `@wolsok/thanos` (via `animationLength`)
- * and the `.goal-card::before` frame transition (via the
- * `--goal-snap-duration` CSS custom property bound on the card element).
- * Changing it here propagates to both.
+ * Length of the @wolsok/thanos vaporize animation. The card's frame fade
+ * is no longer time-driven via a parallel CSS transition; instead each
+ * vaporize frame writes its normalized progress (`animationT`, 0..1) to
+ * the `--snap-progress` custom property on the card, and SCSS reads that
+ * to interpolate transform/opacity. So this constant is the sole source
+ * of the celebration duration.
  */
 export const GOAL_SNAP_DURATION_MS = 5000;
 
@@ -119,8 +120,6 @@ export class GoalReachedDialogComponent {
     }
   });
 
-  protected readonly snapDurationCss = `${GOAL_SNAP_DURATION_MS}ms`;
-
   protected readonly snapAriaLabel = $localize`:@@goalReached.snapAria:Erfolg vaporisieren`;
   protected readonly snapLabel = $localize`:@@goalReached.snap:Snap!`;
   protected readonly closeAriaLabel = $localize`:@@goalReached.closeAria:Schließen`;
@@ -191,7 +190,17 @@ export class GoalReachedDialogComponent {
               this.dialogRef.close();
             })
           )
-          .subscribe({ error: () => undefined });
+          .subscribe({
+            // Drive the frame's transform/opacity off the actual particle
+            // progress instead of a parallel CSS transition. Clamped to
+            // 0..1 because the last frame can emit animationT slightly > 1
+            // before the stream completes.
+            next: (state) => {
+              const t = Math.min(1, Math.max(0, state.animationT));
+              el.style.setProperty('--snap-progress', String(t));
+            },
+            error: () => undefined,
+          });
       });
     } catch {
       this.dialogRef.close();
