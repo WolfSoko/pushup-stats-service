@@ -48,9 +48,12 @@ interface FakeStore {
   categorySummaries: ReturnType<typeof signal<CategorySummary[]>>;
   categoryComparison: ReturnType<typeof signal<CategoryComparison>>;
   unifiedRows: ReturnType<typeof signal<unknown[]>>;
+  activeView: ReturnType<typeof signal<string>>;
+  setActiveView: (view: string) => void;
 }
 
 function makeFakeStore(): FakeStore {
+  const activeView = signal<string>('overview');
   return {
     categorySummaries: signal<CategorySummary[]>([]),
     categoryComparison: signal<CategoryComparison>({
@@ -59,6 +62,8 @@ function makeFakeStore(): FakeStore {
       sets: [],
     }),
     unifiedRows: signal<unknown[]>([]),
+    activeView,
+    setActiveView: (view: string) => activeView.set(view),
   };
 }
 
@@ -238,5 +243,43 @@ describe('AnalysisOverviewComponent', () => {
     button.click();
     fixture.detectChanges();
     expect(fixture.componentInstance.lastEmitted()).toBe('pushup');
+  });
+
+  it('snaps activeView to overview in the uncategorised fallback so the embedded group-view is not stale-filtered', () => {
+    // Regression for Copilot finding: a stale `?view=plank` deep link
+    // leaves `activeView` pointing at an empty category. The embedded
+    // `<app-analysis-group-view />` then reads `viewFilteredRows()`
+    // scoped to plank → empty subset, defeating the fallback's whole
+    // point of surfacing the uncategorised rows. The component's
+    // effect must re-sync activeView to 'overview' as soon as it
+    // enters the fallback branch.
+    store.activeView.set('plank');
+    store.unifiedRows.set([{ id: 'orphan' }]);
+    fixture.detectChanges();
+    expect(store.activeView()).toBe('overview');
+  });
+
+  it('leaves activeView alone when the category overview branch is active', () => {
+    // Guard against the snap firing too eagerly: when category data
+    // exists, the user may have legitimately landed via `?view=plank`
+    // and is currently looking at the overview tab only because the
+    // shell rendered it as the default Overview view. Snapping then
+    // would corrupt the deep-link intent.
+    store.activeView.set('plank');
+    store.categorySummaries.set([
+      {
+        categoryId: 'pushup',
+        nameKey: '@@exercise.category.pushup',
+        icon: 'fitness_center',
+        order: 10,
+        totalReps: 100,
+        totalSets: 12,
+        todayReps: 7,
+        currentStreak: 3,
+        bestDay: null,
+      },
+    ]);
+    fixture.detectChanges();
+    expect(store.activeView()).toBe('plank');
   });
 });

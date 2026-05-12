@@ -1,4 +1,4 @@
-import { Component, computed, inject, output } from '@angular/core';
+import { Component, computed, effect, inject, output } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import type { ExerciseCategoryId } from '@pu-stats/models';
 
@@ -105,4 +105,27 @@ export class AnalysisOverviewComponent {
   readonly hasUncategorisedRows = computed(
     () => this.store.unifiedRows().length > 0
   );
+
+  constructor() {
+    // The uncategorised-fallback branch embeds <app-analysis-group-view />,
+    // which reads `viewFilteredRows()` (scoped by `activeView`). If a
+    // stale `?view=<category>` deep link left `activeView` pointing at
+    // an empty category, the group-view would filter out the very rows
+    // we're trying to surface. Snap `activeView` back to `'overview'`
+    // whenever this branch is active.
+    //
+    // Narrow guard: we only run when there are zero category summaries
+    // AND non-zero unified rows — i.e. the exact uncategorised-fallback
+    // condition. That's mutually exclusive with the "data with known
+    // categories exists" case, so this can't race with a `?view=plank`
+    // deep link whose data hasn't loaded yet (the empty-state branch
+    // handles that until rows arrive).
+    effect(() => {
+      if (this.showCategoryOverview()) return;
+      if (!this.hasUncategorisedRows()) return;
+      if (this.store.activeView() !== 'overview') {
+        this.store.setActiveView('overview');
+      }
+    });
+  }
 }
