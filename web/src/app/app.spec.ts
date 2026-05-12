@@ -242,6 +242,7 @@ describe('App (testing-library)', () => {
         })
       );
       const notifierMock = makeNotifierMock();
+      const user = userEvent.setup();
       await render(App, {
         providers: commonProviders(notifierMock),
       });
@@ -250,7 +251,7 @@ describe('App (testing-library)', () => {
       await screen.findByText((content) => content.includes('80 / 50'));
 
       // When
-      await userEvent.click(screen.getByTestId('toolbar-goal-pill'));
+      await user.click(screen.getByTestId('toolbar-goal-pill'));
 
       // Then
       expect(notifierMock.reopen).toHaveBeenCalledTimes(1);
@@ -274,13 +275,14 @@ describe('App (testing-library)', () => {
         })
       );
       const notifierMock = makeNotifierMock();
+      const user = userEvent.setup();
       await render(App, {
         providers: commonProviders(notifierMock),
       });
       await screen.findByText((content) => content.includes('10 / 100'));
 
       // When
-      await userEvent.click(screen.getByTestId('toolbar-goal-pill'));
+      await user.click(screen.getByTestId('toolbar-goal-pill'));
 
       // Then
       expect(notifierMock.reopen).not.toHaveBeenCalled();

@@ -40,9 +40,13 @@
       );
     box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
     transform-origin: bottom left;
+    // Duration is owned by GOAL_SNAP_DURATION_MS in the component and
+    // piped in via the --goal-snap-duration CSS custom property on the
+    // card element. The literal fallback keeps standalone style previews
+    // (Storybook, plain HTML harness) animating at the right speed.
     transition:
-      transform 5000ms ease-out,
-      opacity 5000ms ease-out;
+      transform var(--goal-snap-duration, 5000ms) ease-out,
+      opacity var(--goal-snap-duration, 5000ms) ease-out;
   }
 
   &.is-snapping {

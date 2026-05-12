@@ -19,6 +19,15 @@ import { ShareService } from '../../../core/share.service';
 
 const SHARE_URL = 'https://pushup-stats.com';
 
+/**
+ * Single source of truth for the snap-celebration animation length.
+ * The same value is consumed by `@wolsok/thanos` (via `animationLength`)
+ * and the `.goal-card::before` frame transition (via the
+ * `--goal-snap-duration` CSS custom property bound on the card element).
+ * Changing it here propagates to both.
+ */
+export const GOAL_SNAP_DURATION_MS = 5000;
+
 export type GoalKind = 'daily' | 'weekly' | 'monthly' | 'plan';
 
 export interface GoalReachedDialogData {
@@ -110,6 +119,8 @@ export class GoalReachedDialogComponent {
     }
   });
 
+  protected readonly snapDurationCss = `${GOAL_SNAP_DURATION_MS}ms`;
+
   protected readonly snapAriaLabel = $localize`:@@goalReached.snapAria:Erfolg vaporisieren`;
   protected readonly snapLabel = $localize`:@@goalReached.snap:Snap!`;
   protected readonly closeAriaLabel = $localize`:@@goalReached.closeAria:Schließen`;
@@ -160,7 +171,7 @@ export class GoalReachedDialogComponent {
           {
             provide: WS_THANOS_OPTIONS_TOKEN,
             useValue: createWsThanosOptions({
-              animationLength: 5000,
+              animationLength: GOAL_SNAP_DURATION_MS,
               maxParticleCount,
             }),
           },
