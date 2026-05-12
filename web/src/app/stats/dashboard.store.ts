@@ -247,19 +247,9 @@ export const DashboardStore = signalStore(
       () => configuredDailyGoal() > 0 && todayTotal() >= configuredDailyGoal()
     );
 
-    /**
-     * Unified read shape for the dashboard's history-related cards
-     * ("Letzter Eintrag", "Letzte Einträge"). Combines the legacy
-     * `pushups` collection with the new `exerciseEntries` collection so
-     * sit-ups, squats, plank, etc. appear alongside pushups instead of
-     * being silently hidden. Goal/streak totals stay on the
-     * pushup-specific `entryRows()` because those metrics are currently
-     * pushup-only — only the recent-history surfaces are unified here.
-     *
-     * SSR only sees pushups via the REST resource; the exercise
-     * collection has no SSR endpoint yet and the dashboard's "recent
-     * entries" preview is not a SEO surface.
-     */
+    // SSR only sees pushups (no exerciseEntries REST endpoint). Goal /
+    // streak / total metrics stay on the pushup-only `entryRows()` —
+    // only the history surfaces consume `unifiedRows`.
     const unifiedRows = computed<UnifiedEntry[]>(() => {
       const pushups = entryRows().map(pushupRecordToUnified);
       if (!store._isBrowser) return pushups;

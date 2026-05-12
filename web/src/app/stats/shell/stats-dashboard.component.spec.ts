@@ -99,6 +99,8 @@ describe('StatsDashboardComponent', () => {
       exerciseId: string;
       timestamp: string;
       reps?: number;
+      durationSec?: number;
+      distanceM?: number;
       source?: string;
     }>
   >([]);
@@ -416,7 +418,7 @@ describe('StatsDashboardComponent', () => {
         expect(component.lastEntry()?.kind).toBe('exercise');
       });
 
-      it('Then the "Letzter Eintrag" card renders the exercise label and value', async () => {
+      it('Then the "Letzter Eintrag" card renders the exercise label and the measurement-aware value', async () => {
         // Given the live store has a single plank entry (time-based).
         liveConnected.set(true);
         liveEntries.set([]);
@@ -425,9 +427,6 @@ describe('StatsDashboardComponent', () => {
             _id: 'e1',
             exerciseId: 'plank.standard',
             timestamp: '2025-01-15T11:00:00',
-            // Plank is measured in durationSec; reps is undefined on
-            // the source doc — the mapper normalizes to 0 reps.
-            // @ts-expect-error - durationSec missing from the loose mock type
             durationSec: 90,
             source: 'web',
           },
@@ -435,14 +434,17 @@ describe('StatsDashboardComponent', () => {
         await fixture.whenStable();
         fixture.detectChanges();
 
-        // Then the exercise-branch template renders, NOT the legacy
-        // "X Reps · variant" pushup branch.
+        // Then the exercise-branch template renders the label AND the
+        // measurement-aware value: a 90-second plank reads as "1:30"
+        // (m:ss via formatExerciseValue), not "0 Reps" or "90".
         const root = fixture.nativeElement as HTMLElement;
         const card = root.querySelector<HTMLElement>(
           '[data-testid="dashboard-last-entry-exercise"]'
         );
         expect(card).not.toBeNull();
-        expect(card!.textContent ?? '').toContain('Plank');
+        const text = card!.textContent ?? '';
+        expect(text).toContain('Plank');
+        expect(text).toContain('1:30');
       });
     });
   });
