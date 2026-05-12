@@ -627,6 +627,137 @@ describe('AnalysisPageComponent', () => {
       expect(store.typeBreakdown()).toEqual([]);
     });
 
+    it('viewChartSeries aggregates pushups + exercises in overview mode', () => {
+      // Regression for the analysis-graph-tab bug: the chart used to
+      // bind to `store.chartSeries()` (pushup-only REST series) which
+      // ignored exercise entries and never re-aggregated per active
+      // view. The new view-scoped computed must include both source
+      // collections in overview mode.
+      const { store } = fixture.componentInstance;
+      const series = store.viewChartSeries();
+      const byBucket = new Map(series.map((s) => [s.bucket, s.total]));
+      // Feb 12: pushup id=4 (8) + abs sit-ups (30) = 38
+      expect(byBucket.get('2026-02-12')).toBe(38);
+      // Feb 13: pushup id=5 (25) + legs squats (40) = 65
+      expect(byBucket.get('2026-02-13')).toBe(65);
+      // dayIntegral on the last bucket totals everything in range
+      const last = series[series.length - 1];
+      expect(last.dayIntegral).toBe(163);
+    });
+
+    it('viewChartSeries narrows to the active category (abs)', () => {
+      const { store } = fixture.componentInstance;
+      store.setActiveView('abs');
+      const series = store.viewChartSeries();
+      expect(series).toEqual([
+        { bucket: '2026-02-12', total: 30, dayIntegral: 30 },
+      ]);
+    });
+
+    it('viewChartSeries narrows to the active category (legs)', () => {
+      const { store } = fixture.componentInstance;
+      store.setActiveView('legs');
+      const series = store.viewChartSeries();
+      expect(series).toEqual([
+        { bucket: '2026-02-13', total: 40, dayIntegral: 40 },
+      ]);
+    });
+
+    it('viewChartSeries scoped to pushup matches the legacy pushup-only daily totals', () => {
+      const { store } = fixture.componentInstance;
+      store.setActiveView('pushup');
+      const series = store.viewChartSeries();
+      // Seeded pushups: Feb 9 → 15 with one skipped day, totals
+      // [10,12,20,8,25,18] and cumulative dayIntegral [10,22,42,50,75,93].
+      expect(series.map((s) => s.bucket)).toEqual([
+        '2026-02-09',
+        '2026-02-10',
+        '2026-02-11',
+        '2026-02-12',
+        '2026-02-13',
+        '2026-02-15',
+      ]);
+      expect(series.map((s) => s.total)).toEqual([10, 12, 20, 8, 25, 18]);
+      expect(series.map((s) => s.dayIntegral)).toEqual([
+        10, 22, 42, 50, 75, 93,
+      ]);
+    });
+
+    it('viewChartSeries collapses to an empty array for a category with no entries', () => {
+      const { store } = fixture.componentInstance;
+      store.setActiveView('plank');
+      expect(store.viewChartSeries()).toEqual([]);
+    });
+
+    it('viewGranularity tracks from===to without waiting on the REST resource', () => {
+      // The REST-backed `granularity()` lags the resource during cold
+      // start / filter swaps; `viewGranularity()` must derive the mode
+      // from the page filter directly so the chart's axis stays in
+      // lockstep with `viewChartSeries()` bucketing.
+      const { store } = fixture.componentInstance;
+      expect(store.viewGranularity()).toBe('daily');
+      store.setRange('2026-02-12', '2026-02-12');
+      expect(store.viewGranularity()).toBe('hourly');
+      store.setRange('2026-02-09', '2026-02-15');
+      expect(store.viewGranularity()).toBe('daily');
+    });
+
+    it('viewChartSeries switches to hourly buckets when the page filter is a single day', () => {
+      // Single-day ranges flip the API to hourly granularity. The
+      // view-scoped chart must mirror that bucketing on view-filtered
+      // rows so the per-category tab still renders a populated chart
+      // for that day. Exact hour placement depends on the runner's
+      // timezone (the seeded abs entry is in UTC), so we assert the
+      // shape and the total — both timezone-agnostic.
+      const { store } = fixture.componentInstance;
+      store.setRange('2026-02-12', '2026-02-12');
+      store.setActiveView('abs');
+      store.setDayChartMode('24h');
+      const series = store.viewChartSeries();
+      expect(series).toHaveLength(24);
+      // All 24 buckets sum to the single abs entry's reps.
+      expect(series.reduce((acc, s) => acc + s.total, 0)).toBe(30);
+      // Final cumulative dayIntegral equals the day's total.
+      expect(series[series.length - 1].dayIntegral).toBe(30);
+    });
+
+    it('viewChartSeries collapses 00-07 into a single night bucket in 14h mode', () => {
+      // 14h mode mirrors `StatsApiService.toStatsResponse`: one night
+      // bucket "00-07" followed by hours 8..21 → 15 buckets total.
+      // CI runs in UTC, so the abs entry's hour (08:00 UTC) lands in
+      // the 08 slot, keeping the day's reps inside the 14h window.
+      const { store } = fixture.componentInstance;
+      store.setRange('2026-02-12', '2026-02-12');
+      store.setActiveView('abs');
+      store.setDayChartMode('14h');
+      const series = store.viewChartSeries();
+      expect(series).toHaveLength(15);
+      expect(series[0]).toMatchObject({ bucketLabel: '00-07' });
+      expect(series[series.length - 1].dayIntegral).toBe(30);
+    });
+
+    it('viewChartEntries shapes view-filtered rows for the chart sets-stacking layer', () => {
+      const { store } = fixture.componentInstance;
+      store.setActiveView('abs');
+      const entries = store.viewChartEntries();
+      expect(entries).toEqual([
+        { timestamp: '2026-02-12T08:00:00.000Z', reps: 30 },
+      ]);
+    });
+
+    it('viewChartEntries preserves the sets array on entries that have one', () => {
+      // The chart's stacked-bar layer keys off `entry.sets[]` to colour
+      // the "with sets" portion separately. If the store dropped the
+      // array on the way through, every pushup tab would silently lose
+      // its purple "Mit Sets" segment.
+      const { store } = fixture.componentInstance;
+      store.setActiveView('pushup');
+      const entries = store.viewChartEntries();
+      expect(
+        entries.some((e) => Array.isArray(e.sets) && e.sets.length > 1)
+      ).toBe(true);
+    });
+
     it('typeBreakdownDisplay localises kind-mode ids when activeView scopes to a non-pushup category', () => {
       // Regression for codex P2: setActiveView('abs') without an
       // explicit kinds filter puts the store in kind-mode and emits

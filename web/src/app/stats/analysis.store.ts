@@ -319,6 +319,12 @@ export const AnalysisStore = signalStore(
     );
     const rows = computed(() => store.entriesResource.value() ?? []);
 
+    // The stats-chart's stacked-bar layer reads `timestamp`, `reps` and
+    // optional `sets[]`. UnifiedEntry already declares all three on its
+    // base, so Pick keeps the structural feed in lockstep with the
+    // canonical model — no parallel field list to drift.
+    type ChartFeedEntry = Pick<UnifiedEntry, 'timestamp' | 'reps' | 'sets'>;
+
     // Pushup rows come from the REST resource (works on SSR); exercise
     // entries come from the live Firestore snapshot, so SSR yields
     // pushups only.
@@ -367,6 +373,106 @@ export const AnalysisStore = signalStore(
         (row) => unifiedEntryCategoryId(row) === view
       );
     });
+
+    /**
+     * Granularity of {@link viewChartSeries}. Tracked separately from
+     * the REST-derived {@link granularity} (which lags the resource
+     * during cold-start / filter changes) so the chart's axis mode,
+     * dayChartMode toggle visibility and sets-stacking bucket-keying
+     * stay locked to the bucketing actually produced for the view.
+     */
+    const viewGranularity = computed<StatsGranularity>(() => {
+      const from = store.from();
+      const to = store.to();
+      return !!from && !!to && from === to ? 'hourly' : 'daily';
+    });
+
+    /**
+     * Chart series scoped to {@link AnalysisState.activeView}. The
+     * REST-backed {@link chartSeries} aggregates pushups-only on the
+     * server, so consuming it from a per-category tab would always
+     * render the pushup history regardless of which tab is active.
+     * This computed mirrors the daily/hourly bucketing in
+     * `StatsApiService.toStatsResponse` but feeds on the view-filtered
+     * unified rows so each tab's chart matches its KPIs. Hourly
+     * bucketing is gated on `from === to` (the same condition the
+     * server uses) rather than `granularity()` so the series doesn't
+     * lag behind during a cold-start where the resource hasn't yet
+     * resolved to its `'hourly'` meta.
+     */
+    const viewChartSeries = computed<StatsSeriesEntry[]>(() => {
+      const from = store.from();
+      const isDayRange = viewGranularity() === 'hourly';
+      const rowsForView = viewFilteredRows();
+
+      if (isDayRange) {
+        const hourTotals = Array.from({ length: 24 }, () => 0);
+        for (const row of rowsForView) {
+          const hour = new Date(row.timestamp).getHours();
+          if (hour >= 0 && hour <= 23) hourTotals[hour] += row.reps;
+        }
+        let cumulative = 0;
+        if (resolvedDayChartMode() === '24h') {
+          return hourTotals.map((total, hour) => {
+            cumulative += total;
+            return {
+              bucket: `${from}T${String(hour).padStart(2, '0')}:00:00`,
+              total,
+              dayIntegral: cumulative,
+            };
+          });
+        }
+        const result: StatsSeriesEntry[] = [];
+        const nightTotal = hourTotals
+          .slice(0, 8)
+          .reduce((sum, value) => sum + value, 0);
+        cumulative += nightTotal;
+        result.push({
+          bucket: `${from}T00:00:00`,
+          bucketLabel: '00-07',
+          total: nightTotal,
+          dayIntegral: cumulative,
+        });
+        for (let hour = 8; hour <= 21; hour++) {
+          const total = hourTotals[hour] ?? 0;
+          cumulative += total;
+          result.push({
+            bucket: `${from}T${String(hour).padStart(2, '0')}:00:00`,
+            total,
+            dayIntegral: cumulative,
+          });
+        }
+        return result;
+      }
+
+      const totals = new Map<string, number>();
+      for (const row of rowsForView) {
+        const day = row.timestamp.slice(0, 10);
+        totals.set(day, (totals.get(day) ?? 0) + row.reps);
+      }
+      const sortedDays = [...totals.keys()].sort((a, b) => a.localeCompare(b));
+      let cumulative = 0;
+      return sortedDays.map((day) => {
+        const total = totals.get(day) ?? 0;
+        cumulative += total;
+        return { bucket: day, total, dayIntegral: cumulative };
+      });
+    });
+
+    /**
+     * Raw view-filtered entries shaped for {@link StatsChartComponent}'s
+     * sets-stacking pass: it groups entries by bucket to colour the
+     * "with sets" portion separately. Routing exercise entries through
+     * here means a non-pushup tab gets its own stack rather than
+     * silently borrowing the pushup `[entries]`.
+     */
+    const viewChartEntries = computed<ChartFeedEntry[]>(() =>
+      viewFilteredRows().map((row) => ({
+        timestamp: row.timestamp,
+        reps: row.reps,
+        ...(row.sets ? { sets: row.sets } : {}),
+      }))
+    );
 
     /**
      * Per-category roll-up for the overview tab. Always operates on
@@ -736,6 +842,9 @@ export const AnalysisStore = signalStore(
     return {
       stats,
       chartSeries,
+      viewChartSeries,
+      viewChartEntries,
+      viewGranularity,
       granularity,
       rows,
       unifiedRows,

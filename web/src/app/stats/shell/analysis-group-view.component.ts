@@ -32,12 +32,12 @@ import { kindDisplayName } from '../i18n/exercise-display-names';
   ],
   template: `
     <app-stats-chart
-      [series]="store.chartSeries()"
-      [granularity]="store.granularity()"
+      [series]="store.viewChartSeries()"
+      [granularity]="store.viewGranularity()"
       [rangeMode]="store.rangeMode()"
       [from]="store.from()"
       [to]="store.to()"
-      [entries]="store.rows()"
+      [entries]="store.viewChartEntries()"
       [dayChartMode]="store.resolvedDayChartMode()"
       (dayChartModeChange)="store.setDayChartMode($event)"
     />
