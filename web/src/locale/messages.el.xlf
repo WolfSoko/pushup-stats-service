@@ -7429,6 +7429,84 @@
         <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">fitness_center</pc> Επιλογή προγράμματος προπόνησης </target>
       </segment>
     </unit>
+    <unit id="analysis.tabs.overview">
+      <segment state="translated">
+        <source/>
+        <target>Επισκόπηση</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.empty">
+      <segment state="translated">
+        <source/>
+        <target>Δεν υπάρχουν ακόμη καταχωρίσεις στο τρέχον εύρος ημερομηνιών.</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.uncategorisedNotice">
+      <segment state="translated">
+        <source/>
+        <target>Αυτές οι καταχωρίσεις δεν ανήκουν σε καμία γνωστή κατηγορία — σύνολο παρακάτω.</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.comparison.title">
+      <segment state="translated">
+        <source/>
+        <target>Σύγκριση ανά ομάδα ασκήσεων</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.comparison.metricAria">
+      <segment state="translated">
+        <source/>
+        <target>Μέγεθος</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.comparison.metric.reps">
+      <segment state="translated">
+        <source/>
+        <target>Επαναλήψεις</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.comparison.metric.sets">
+      <segment state="translated">
+        <source/>
+        <target>Σετ</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.comparison.empty">
+      <segment state="translated">
+        <source/>
+        <target>Δεν υπάρχουν δεδομένα στο τρέχον εύρος ημερομηνιών.</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.totalReps">
+      <segment state="translated">
+        <source/>
+        <target>Συνολικές επαναλήψεις</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.todayReps">
+      <segment state="translated">
+        <source/>
+        <target>Σήμερα</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.streak">
+      <segment state="translated">
+        <source/>
+        <target>Σερί</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.bestDay">
+      <segment state="translated">
+        <source/>
+        <target>Καλύτερη ημέρα</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.viewDetails">
+      <segment state="translated">
+        <source/>
+        <target>Προβολή λεπτομερειών</target>
+      </segment>
+    </unit>
     <unit id="entries.empty.title">
       <segment state="translated">
         <source/>

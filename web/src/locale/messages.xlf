@@ -4224,7 +4224,7 @@
     </unit>
     <unit id="dashboard.analysisTeaserAriaLabel">
       <notes>
-        <note category="location">web/src/app/stats/components/analysis-teaser-card/analysis-teaser-card.component.ts:40,41</note>
+        <note category="location">web/src/app/stats/components/analysis-teaser-card/analysis-teaser-card.component.ts:44,45</note>
       </notes>
       <segment>
         <source>Analyse öffnen</source>
@@ -4232,7 +4232,7 @@
     </unit>
     <unit id="dashboard.analysisTeaserTitle">
       <notes>
-        <note category="location">web/src/app/stats/components/analysis-teaser-card/analysis-teaser-card.component.ts:45,47</note>
+        <note category="location">web/src/app/stats/components/analysis-teaser-card/analysis-teaser-card.component.ts:49,51</note>
       </notes>
       <segment>
         <source>Analyse</source>
@@ -4240,7 +4240,7 @@
     </unit>
     <unit id="dashboard.analysisTeaserStreak">
       <notes>
-        <note category="location">web/src/app/stats/components/analysis-teaser-card/analysis-teaser-card.component.ts:49,50</note>
+        <note category="location">web/src/app/stats/components/analysis-teaser-card/analysis-teaser-card.component.ts:53,54</note>
       </notes>
       <segment>
         <source>Streak: <ph id="0" equiv="INTERPOLATION" disp="{{ streak() }}"/> Tage</source>
@@ -4248,7 +4248,7 @@
     </unit>
     <unit id="dashboard.analysisTeaserWeekReps">
       <notes>
-        <note category="location">web/src/app/stats/components/analysis-teaser-card/analysis-teaser-card.component.ts:53,55</note>
+        <note category="location">web/src/app/stats/components/analysis-teaser-card/analysis-teaser-card.component.ts:57,59</note>
       </notes>
       <segment>
         <source>Diese Woche: <ph id="0" equiv="INTERPOLATION" disp="{{ weekReps() }}"/> / <ph id="1" equiv="INTERPOLATION_1" disp="{{ weeklyGoal() }}"/> Reps</source>
@@ -4256,7 +4256,7 @@
     </unit>
     <unit id="dashboard.analysisTeaserError">
       <notes>
-        <note category="location">web/src/app/stats/components/analysis-teaser-card/analysis-teaser-card.component.ts:61,63</note>
+        <note category="location">web/src/app/stats/components/analysis-teaser-card/analysis-teaser-card.component.ts:65,67</note>
       </notes>
       <segment>
         <source> Daten konnten nicht geladen werden. </source>
@@ -4264,7 +4264,7 @@
     </unit>
     <unit id="dashboard.analysisTeaserCtaAriaLabel">
       <notes>
-        <note category="location">web/src/app/stats/components/analysis-teaser-card/analysis-teaser-card.component.ts:78,79</note>
+        <note category="location">web/src/app/stats/components/analysis-teaser-card/analysis-teaser-card.component.ts:83,84</note>
       </notes>
       <segment>
         <source>Zur Analyse navigieren</source>
@@ -4272,10 +4272,121 @@
     </unit>
     <unit id="dashboard.analysisTeaserCta">
       <notes>
-        <note category="location">web/src/app/stats/components/analysis-teaser-card/analysis-teaser-card.component.ts:82,84</note>
+        <note category="location">web/src/app/stats/components/analysis-teaser-card/analysis-teaser-card.component.ts:87,89</note>
       </notes>
       <segment>
         <source>Zur Analyse</source>
+      </segment>
+    </unit>
+    <unit id="chart.kindLabel.all">
+      <notes>
+        <note category="location">web/src/app/stats/components/analysis-teaser-card/analysis-teaser-card.component.ts:142</note>
+      </notes>
+      <segment>
+        <source>Alle Übungen</source>
+      </segment>
+    </unit>
+    <unit id="exercise.category.pushup">
+      <notes>
+        <note category="location">web/src/app/stats/components/analysis-teaser-card/analysis-teaser-card.component.ts:147</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:200</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:1093</note>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:46</note>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:76</note>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts:277</note>
+      </notes>
+      <segment>
+        <source>Liegestütze</source>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.comparison.title">
+      <notes>
+        <note category="location">web/src/app/stats/components/category-comparison-chart/category-comparison-chart.component.ts:26,28</note>
+      </notes>
+      <segment>
+        <source> Vergleich nach Übungsgruppe </source>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.comparison.metricAria">
+      <notes>
+        <note category="location">web/src/app/stats/components/category-comparison-chart/category-comparison-chart.component.ts:31,32</note>
+      </notes>
+      <segment>
+        <source>Kennzahl</source>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.comparison.metric.reps">
+      <notes>
+        <note category="location">web/src/app/stats/components/category-comparison-chart/category-comparison-chart.component.ts:39,41</note>
+      </notes>
+      <segment>
+        <source> Wdh. </source>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.comparison.metric.sets">
+      <notes>
+        <note category="location">web/src/app/stats/components/category-comparison-chart/category-comparison-chart.component.ts:45,47</note>
+      </notes>
+      <segment>
+        <source> Sätze </source>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.comparison.empty">
+      <notes>
+        <note category="location">web/src/app/stats/components/category-comparison-chart/category-comparison-chart.component.ts:56,59</note>
+      </notes>
+      <segment>
+        <source> Keine Daten im aktuellen Zeitraum. </source>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.totalReps">
+      <notes>
+        <note category="location">web/src/app/stats/components/category-summary-card/category-summary-card.component.ts:34,36</note>
+      </notes>
+      <segment>
+        <source>Reps gesamt</source>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.todayReps">
+      <notes>
+        <note category="location">web/src/app/stats/components/category-summary-card/category-summary-card.component.ts:44,45</note>
+      </notes>
+      <segment>
+        <source>Heute</source>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.streak">
+      <notes>
+        <note category="location">web/src/app/stats/components/category-summary-card/category-summary-card.component.ts:48,50</note>
+      </notes>
+      <segment>
+        <source>Streak</source>
+      </segment>
+    </unit>
+    <unit id="analysis.streakDays">
+      <notes>
+        <note category="location">web/src/app/stats/components/category-summary-card/category-summary-card.component.ts:51,52</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:81,82</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:89,90</note>
+      </notes>
+      <segment>
+        <source><ph id="0" equiv="INTERPOLATION" disp="{{ summary().currentStreak }}"/> Tage</source>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.bestDay">
+      <notes>
+        <note category="location">web/src/app/stats/components/category-summary-card/category-summary-card.component.ts:56,57</note>
+      </notes>
+      <segment>
+        <source>Bester Tag</source>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.viewDetails">
+      <notes>
+        <note category="location">web/src/app/stats/components/category-summary-card/category-summary-card.component.ts:75,78</note>
+      </notes>
+      <segment>
+        <source>Details ansehen</source>
       </segment>
     </unit>
     <unit id="selectRangeTitle">
@@ -4729,7 +4840,7 @@
     <unit id="chart.interval">
       <notes>
         <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:78,79</note>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:126</note>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:140</note>
       </notes>
       <segment>
         <source>Intervallwert</source>
@@ -4738,7 +4849,7 @@
     <unit id="chart.dayIntegral">
       <notes>
         <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:84,85</note>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:127</note>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:141</note>
       </notes>
       <segment>
         <source>Tages-Integral</source>
@@ -4747,7 +4858,7 @@
     <unit id="chart.movingAvg">
       <notes>
         <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:90,91</note>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:128</note>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:142</note>
       </notes>
       <segment>
         <source>Gleitender Durchschnitt</source>
@@ -4756,7 +4867,7 @@
     <unit id="chart.withSets">
       <notes>
         <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:97,98</note>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:154</note>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:168</note>
       </notes>
       <segment>
         <source>Mit Sets</source>
@@ -4764,7 +4875,7 @@
     </unit>
     <unit id="chart.titleHourly">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:124</note>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:132</note>
       </notes>
       <segment>
         <source>Verlauf (Stundenwerte)</source>
@@ -4772,23 +4883,15 @@
     </unit>
     <unit id="chart.titleDaily">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:125</note>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:133</note>
       </notes>
       <segment>
         <source>Verlauf (Tageswerte)</source>
       </segment>
     </unit>
-    <unit id="chart.kindLabel.all">
-      <notes>
-        <note category="location">web/src/app/stats/components/analysis-teaser-card/analysis-teaser-card.component.ts:148</note>
-      </notes>
-      <segment>
-        <source>Alle Übungen</source>
-      </segment>
-    </unit>
     <unit id="chart.setsTooltip">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:153</note>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:167</note>
       </notes>
       <segment>
         <source>Sets</source>
@@ -4914,18 +5017,6 @@
       </notes>
       <segment>
         <source>Übung</source>
-      </segment>
-    </unit>
-    <unit id="exercise.category.pushup">
-      <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:200</note>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:1093</note>
-        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:46</note>
-        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:76</note>
-        <note category="location">web/src/app/stats/shell/entries-page.component.ts:277</note>
-      </notes>
-      <segment>
-        <source>Liegestütze</source>
       </segment>
     </unit>
     <unit id="editDialogTitle">
@@ -5422,15 +5513,6 @@
         <source>Aktuelle Streak:</source>
       </segment>
     </unit>
-    <unit id="analysis.streakDays">
-      <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:81,82</note>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:89,90</note>
-      </notes>
-      <segment>
-        <source><ph id="0" equiv="INTERPOLATION" disp="{{ store.currentStreak() }}"/> Tage</source>
-      </segment>
-    </unit>
     <unit id="analysis.longestStreak">
       <notes>
         <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:86,88</note>
@@ -5569,9 +5651,25 @@
         <source>Monat</source>
       </segment>
     </unit>
+    <unit id="analysis.overview.uncategorisedNotice">
+      <notes>
+        <note category="location">web/src/app/stats/shell/analysis-overview.component.ts:58,61</note>
+      </notes>
+      <segment>
+        <source> Diese Einträge gehören zu keiner bekannten Kategorie — Aggregat unten. </source>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.empty">
+      <notes>
+        <note category="location">web/src/app/stats/shell/analysis-overview.component.ts:68,72</note>
+      </notes>
+      <segment>
+        <source> Im aktuellen Zeitraum gibt es noch keine Einträge. </source>
+      </segment>
+    </unit>
     <unit id="analysisHeaderTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:51,52</note>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:61,62</note>
       </notes>
       <segment>
         <source>Analyse</source>
@@ -5579,23 +5677,15 @@
     </unit>
     <unit id="analysisHeaderSubtitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:53,55</note>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:63,65</note>
       </notes>
       <segment>
         <source> Trends, Verteilungen und Streaks deines Trainings auf einen Blick. </source>
       </segment>
     </unit>
-    <unit id="analysis.exerciseFilter">
-      <notes>
-        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:71,73</note>
-      </notes>
-      <segment>
-        <source>Übung</source>
-      </segment>
-    </unit>
     <unit id="analysis.empty.title">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:94,96</note>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:82,84</note>
       </notes>
       <segment>
         <source>Noch keine Daten zum Analysieren.</source>
@@ -5603,7 +5693,7 @@
     </unit>
     <unit id="analysis.empty.body">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:97,99</note>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:85,87</note>
       </notes>
       <segment>
         <source> Starte einen Trainingsplan oder trage deinen ersten Satz ein — dann zeigen wir dir hier Trends und Streaks. </source>
@@ -5611,10 +5701,18 @@
     </unit>
     <unit id="analysis.empty.cta">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:108,110</note>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:96,98</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon aria-hidden=&quot;true&quot;&gt;" dispEnd="&lt;/mat-icon&gt;">fitness_center</pc> Trainingsplan wählen </source>
+      </segment>
+    </unit>
+    <unit id="analysis.tabs.overview">
+      <notes>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:112,114</note>
+      </notes>
+      <segment>
+        <source>Übersicht</source>
       </segment>
     </unit>
     <unit id="historyHeaderTitle">
@@ -6627,7 +6725,7 @@
     <unit id="trainingPlans.back">
       <notes>
         <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:77</note>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:391,393</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:393,395</note>
       </notes>
       <segment>
         <source>Zurück</source>
@@ -6816,7 +6914,7 @@
     </unit>
     <unit id="trainingPlans.menu.logDone">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:342,344</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:344,346</note>
       </notes>
       <segment>
         <source>Plan-Sätze eintragen &amp; abhaken</source>
@@ -6824,7 +6922,7 @@
     </unit>
     <unit id="trainingPlans.menu.markDone">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:352,354</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:354,356</note>
       </notes>
       <segment>
         <source>Nur abhaken (ohne Eintrag)</source>
@@ -6832,7 +6930,7 @@
     </unit>
     <unit id="trainingPlans.menu.skip">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:361,362</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:363,364</note>
       </notes>
       <segment>
         <source>Tag überspringen</source>
@@ -6840,7 +6938,7 @@
     </unit>
     <unit id="trainingPlans.menu.jump">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:373,375</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:375,377</note>
       </notes>
       <segment>
         <source>Zu diesem Tag springen</source>
@@ -6848,7 +6946,7 @@
     </unit>
     <unit id="trainingPlans.notFound">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:388,389</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:390,391</note>
       </notes>
       <segment>
         <source>Plan nicht gefunden.</source>
@@ -6856,7 +6954,7 @@
     </unit>
     <unit id="trainingPlans.autoStartFailed">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:681</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:683</note>
       </notes>
       <segment>
         <source>Plan-Start fehlgeschlagen — bitte erneut versuchen.</source>
@@ -6864,7 +6962,7 @@
     </unit>
     <unit id="trainingPlans.started">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:764</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:766</note>
       </notes>
       <segment>
         <source>Plan gestartet — viel Erfolg!</source>
@@ -6872,7 +6970,7 @@
     </unit>
     <unit id="trainingPlans.abandoned">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:781</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:783</note>
       </notes>
       <segment>
         <source>Plan beendet.</source>
@@ -6880,7 +6978,7 @@
     </unit>
     <unit id="trainingPlans.skipped">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:799</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:801</note>
       </notes>
       <segment>
         <source>Tag übersprungen.</source>
@@ -6888,7 +6986,7 @@
     </unit>
     <unit id="trainingPlans.jumped">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:812</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:814</note>
       </notes>
       <segment>
         <source>Auf Tag <ph id="0" equiv="INTERPOLATION" disp="dayIndex"/> gesprungen.</source>
@@ -6896,7 +6994,7 @@
     </unit>
     <unit id="trainingPlans.logged">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:829</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:831</note>
         <note category="location">web/src/app/training-plans/training-plans-page.component.ts:348</note>
       </notes>
       <segment>
@@ -6905,7 +7003,7 @@
     </unit>
     <unit id="trainingPlans.alreadyLogged">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:831</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:833</note>
         <note category="location">web/src/app/training-plans/training-plans-page.component.ts:350</note>
       </notes>
       <segment>
@@ -6914,7 +7012,7 @@
     </unit>
     <unit id="trainingPlans.notReady">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:833</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:835</note>
         <note category="location">web/src/app/training-plans/training-plans-page.component.ts:352</note>
       </notes>
       <segment>

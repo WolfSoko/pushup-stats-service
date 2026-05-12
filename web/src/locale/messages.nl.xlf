@@ -7429,6 +7429,84 @@
         <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">fitness_center</pc> Trainingsplan kiezen </target>
       </segment>
     </unit>
+    <unit id="analysis.tabs.overview">
+      <segment state="translated">
+        <source/>
+        <target>Overzicht</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.empty">
+      <segment state="translated">
+        <source/>
+        <target>Nog geen invoer in het huidige datumbereik.</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.uncategorisedNotice">
+      <segment state="translated">
+        <source/>
+        <target>Deze invoer hoort niet bij een bekende categorie — totaal hieronder.</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.comparison.title">
+      <segment state="translated">
+        <source/>
+        <target>Vergelijking per oefeningsgroep</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.comparison.metricAria">
+      <segment state="translated">
+        <source/>
+        <target>Eenheid</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.comparison.metric.reps">
+      <segment state="translated">
+        <source/>
+        <target>Herhalingen</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.comparison.metric.sets">
+      <segment state="translated">
+        <source/>
+        <target>Sets</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.comparison.empty">
+      <segment state="translated">
+        <source/>
+        <target>Geen gegevens in het huidige datumbereik.</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.totalReps">
+      <segment state="translated">
+        <source/>
+        <target>Totaal herhalingen</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.todayReps">
+      <segment state="translated">
+        <source/>
+        <target>Vandaag</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.streak">
+      <segment state="translated">
+        <source/>
+        <target>Reeks</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.bestDay">
+      <segment state="translated">
+        <source/>
+        <target>Beste dag</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.viewDetails">
+      <segment state="translated">
+        <source/>
+        <target>Details bekijken</target>
+      </segment>
+    </unit>
     <unit id="entries.empty.title">
       <segment state="translated">
         <source/>

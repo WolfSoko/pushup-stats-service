@@ -255,38 +255,11 @@ describe('AnalysisPageComponent', () => {
     expect(nextDay.getDate()).toBe(1);
   });
 
-  it('renders fixed-window labels for trend cards', () => {
-    fixture.detectChanges();
-    const host: HTMLElement = fixture.nativeElement;
-    const trends = host.querySelector(
-      '[data-testid="analysis-trends-section"]'
-    );
-    expect(trends?.textContent).toContain('Wochentrend');
-    expect(trends?.textContent).toContain('Letzte 8 Wochen');
-    expect(trends?.textContent).toContain('Monatstrend');
-    expect(trends?.textContent).toContain('Letzte 6 Monate');
-  });
-
-  // The trend cards are wrapped in `@defer (on viewport)`, but verifying
-  // hydration in jsdom is fragile (it requires mocking IntersectionObserver
-  // and using Angular's still-evolving defer-test helpers). This test
-  // narrowly guards the intentional DOM ordering — heatmap above the
-  // trends — which is the stable structural invariant the lazy load
-  // depends on; the @defer behaviour itself is covered by the framework.
-  it('places the trend section after the heatmap card in the DOM', () => {
-    fixture.detectChanges();
-    const host: HTMLElement = fixture.nativeElement;
-    const heatmap = host.querySelector('.heatmap-full');
-    const trends = host.querySelector(
-      '[data-testid="analysis-trends-section"]'
-    );
-    expect(heatmap).toBeTruthy();
-    expect(trends).toBeTruthy();
-    if (!heatmap || !trends) return;
-    expect(
-      heatmap.compareDocumentPosition(trends) & Node.DOCUMENT_POSITION_FOLLOWING
-    ).toBeTruthy();
-  });
+  // NOTE: DOM-level group-view tests (trend section ordering, heatmap
+  // toggle position, kind-id localisation via `typeBreakdownDisplay`)
+  // live in `analysis-group-view.component.spec.ts`. They render the
+  // group-view directly because mat-tab's lazy body template doesn't
+  // hydrate reliably under PLATFORM_ID=server in jsdom.
 
   it('computes type breakdown, treating missing type as Standard', () => {
     const { store } = fixture.componentInstance;
@@ -363,20 +336,6 @@ describe('AnalysisPageComponent', () => {
     expect(wide?.avgSetSize).toBe(0);
   });
 
-  it('places the heatmap reps/sets toggle inside the heatmap card header so the mobile stacked layout applies', () => {
-    fixture.detectChanges();
-    const host: HTMLElement = fixture.nativeElement;
-
-    const heatmapCard = host.querySelector('.heatmap-full');
-    expect(heatmapCard).toBeTruthy();
-
-    const headerToggle = heatmapCard?.querySelector(
-      'mat-card-header .heatmap-toggle'
-    );
-    expect(headerToggle).toBeTruthy();
-    expect(headerToggle?.tagName.toLowerCase()).toBe('mat-button-toggle-group');
-  });
-
   it('keeps the date range filter sticky so it stays visible while scrolling', () => {
     fixture.detectChanges();
     const host: HTMLElement = fixture.nativeElement;
@@ -424,66 +383,6 @@ describe('AnalysisPageComponent', () => {
     // an empty list — no "abs.situps" bucket without source data, no
     // pushup variants either because the filter excludes pushups.
     expect(store.typeBreakdown()).toEqual([]);
-  });
-
-  it('hides the kind filter for pushup-only ranges to keep the default page minimal', () => {
-    // Mock dataset has only pushup entries; the filter would just show
-    // a single "Pushup" option which is redundant with the variant pie.
-    const component = fixture.componentInstance;
-    expect(component.kindFilterOptions().map((o) => o.value)).toEqual([
-      'pushup',
-    ]);
-    expect(component.showKindFilter()).toBe(false);
-  });
-
-  it('shows the kind filter when the range contains a non-pushup kind even with no selection', () => {
-    // OR-branch of `showKindFilter`: a user who already has sit-up
-    // entries in the visible range must see the filter without
-    // pre-selecting anything, otherwise they could never enable
-    // kind-mode for their own data.
-    const component = fixture.componentInstance;
-    liveExerciseEntries.set([
-      {
-        _id: 'e1',
-        userId: 'u1',
-        exerciseId: 'abs.situps',
-        timestamp: '2026-02-12T08:00:00.000Z',
-        reps: 30,
-        source: 'web',
-      } as ExerciseEntry,
-    ]);
-    component.store.setKinds([]);
-    component.store.setRange('2026-02-09', '2026-02-15');
-    fixture.detectChanges();
-    const values = component.kindFilterOptions().map((o) => o.value);
-    expect(values).toContain('abs.situps');
-    expect(component.showKindFilter()).toBe(true);
-  });
-
-  it('shows the kind filter when a non-pushup kind is selected even on a pushup-only range', () => {
-    // Regression for Copilot finding: a user with only sit-up entries
-    // would never see the filter, and the default pushup-variant pie
-    // would render empty. Setting a non-pushup kind via the store —
-    // which the page also does when handling URL params or stale
-    // selections — must immediately surface the filter so the user
-    // can adjust it.
-    const component = fixture.componentInstance;
-    component.store.setKinds(['abs.situps']);
-    fixture.detectChanges();
-    expect(component.showKindFilter()).toBe(true);
-  });
-
-  it('keeps stale kind selections in the option list so the user can always clear them', () => {
-    // Regression for codex P1: after picking a kind that is not present
-    // in the current date range, the filter would disappear entirely
-    // because `kindFilterOptions` only listed in-range kinds. The chip
-    // stayed selected with no matching option to deselect, leaving the
-    // pie filtered to nothing.
-    const component = fixture.componentInstance;
-    component.store.setKinds(['abs.situps']);
-    fixture.detectChanges();
-    const values = component.kindFilterOptions().map((o) => o.value);
-    expect(values).toContain('abs.situps');
   });
 
   describe('per-category view (activeView / viewFilteredRows)', () => {
@@ -749,33 +648,91 @@ describe('AnalysisPageComponent', () => {
     });
   });
 
-  it('resolves bare kind ids to localised labels via typeBreakdownDisplay', () => {
-    // Coverage for the component-level mapping that lives in the
-    // group view: the store's kind-mode breakdown emits raw ids in
-    // `label` and the group view wraps it in `typeBreakdownDisplay`
-    // to localise. A regression in the wrapper would silently render
-    // `abs.situps` as the legend text instead of "Sit-ups".
-    fixture.componentInstance.store.setKinds(['pushup', 'abs.situps']);
-    fixture.detectChanges();
-    const groupView = fixture.debugElement.query(
-      By.directive(AnalysisGroupViewComponent)
-    ).componentInstance as AnalysisGroupViewComponent;
-    const breakdown = groupView
-      .typeBreakdownDisplay()
-      .map((d) => ({ id: d.id, label: d.label }));
-    const pushup = breakdown.find((l) => l.id === 'pushup');
-    expect(pushup?.label).toBe('Liegestütze');
+  describe('tabs + URL sync', () => {
+    it('shows only the Overview tab plus one tab per category with entries', () => {
+      const component = fixture.componentInstance;
+      // Seeded dataset has only pushup entries → one visible category tab.
+      expect(component.visibleTabs().map((t) => t.id)).toEqual(['pushup']);
 
-    // The mock dataset has no abs.situps entries so the breakdown
-    // bucket itself is missing; `kindFilterOptions` on the shell uses
-    // the same shared `kindDisplayName` mapping for both selected and
-    // in-range kinds, so it proves the catalog lookup → localised
-    // name path also works for catalog ids — without needing fixture
-    // data we don't have.
-    const situpsOption = fixture.componentInstance
-      .kindFilterOptions()
-      .find((o) => o.value === 'abs.situps');
-    expect(situpsOption?.label).toBe('Sit-ups');
+      liveExerciseEntries.set([
+        {
+          _id: 'e1',
+          userId: 'u1',
+          exerciseId: 'abs.situps',
+          timestamp: '2026-02-12T08:00:00.000Z',
+          reps: 30,
+          source: 'web',
+        } as ExerciseEntry,
+        {
+          _id: 'e2',
+          userId: 'u1',
+          exerciseId: 'legs.squats',
+          timestamp: '2026-02-13T08:00:00.000Z',
+          reps: 40,
+          source: 'web',
+        } as ExerciseEntry,
+      ]);
+      component.store.setRange('2026-02-09', '2026-02-15');
+      fixture.detectChanges();
+
+      // Order follows EXERCISE_CATEGORIES.order (pushup=10, abs=20, legs=30).
+      expect(component.visibleTabs().map((t) => t.id)).toEqual([
+        'pushup',
+        'abs',
+        'legs',
+      ]);
+    });
+
+    it('switches activeView when a tab is selected', () => {
+      const component = fixture.componentInstance;
+      // Overview = 0, pushup tab = 1 (the only category visible by default).
+      component.onTabIndexChange(1);
+      expect(component.store.activeView()).toBe('pushup');
+
+      component.onTabIndexChange(0);
+      expect(component.store.activeView()).toBe('overview');
+    });
+
+    it('maps activeView back to the matching tab index for the mat-tab-group binding', () => {
+      const component = fixture.componentInstance;
+      component.store.setActiveView('pushup');
+      expect(component.selectedTabIndex()).toBe(1);
+      component.store.setActiveView('overview');
+      expect(component.selectedTabIndex()).toBe(0);
+    });
+
+    it('falls back to Overview when activeView points at a tab that is not visible', () => {
+      // The seeded dataset only has pushup entries, so the abs/legs/plank
+      // tabs never render. Pointing activeView at one of them — e.g. via
+      // a stale `?view=plank` deep link — must surface index 0 rather
+      // than leaving the binding referencing an out-of-range slot.
+      const component = fixture.componentInstance;
+      component.store.setActiveView('plank');
+      fixture.detectChanges();
+      expect(component.visibleTabs().some((t) => t.id === 'plank')).toBe(false);
+      expect(component.selectedTabIndex()).toBe(0);
+    });
+
+    it('selecting an overview card emits the category and switches the active view', () => {
+      const component = fixture.componentInstance;
+      component.onOverviewSelect('pushup');
+      expect(component.store.activeView()).toBe('pushup');
+    });
+
+    it('renders a mat-tab-group with the Overview tab plus the visible categories', () => {
+      fixture.detectChanges();
+      const host: HTMLElement = fixture.nativeElement;
+      const tabGroup = host.querySelector('[data-testid="analysis-tabs"]');
+      expect(tabGroup).toBeTruthy();
+      const overviewTab = host.querySelector(
+        '[data-testid="analysis-tab-overview"]'
+      );
+      const pushupTab = host.querySelector(
+        '[data-testid="analysis-tab-pushup"]'
+      );
+      expect(overviewTab).toBeTruthy();
+      expect(pushupTab).toBeTruthy();
+    });
   });
 });
 

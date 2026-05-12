@@ -6692,6 +6692,84 @@ Deine Position: # ·  Reps        </source>
         <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">fitness_center</pc> Velg treningsplan </target>
       </segment>
     </unit>
+    <unit id="analysis.tabs.overview">
+      <segment state="translated">
+        <source/>
+        <target>Oversikt</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.empty">
+      <segment state="translated">
+        <source/>
+        <target>Ingen oppføringer i valgt datointervall ennå.</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.uncategorisedNotice">
+      <segment state="translated">
+        <source/>
+        <target>Disse oppføringene tilhører ingen kjent kategori — aggregert nedenfor.</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.comparison.title">
+      <segment state="translated">
+        <source/>
+        <target>Sammenligning etter øvelsesgruppe</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.comparison.metricAria">
+      <segment state="translated">
+        <source/>
+        <target>Måleverdi</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.comparison.metric.reps">
+      <segment state="translated">
+        <source/>
+        <target>Repetisjoner</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.comparison.metric.sets">
+      <segment state="translated">
+        <source/>
+        <target>Sett</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.comparison.empty">
+      <segment state="translated">
+        <source/>
+        <target>Ingen data i valgt datointervall.</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.totalReps">
+      <segment state="translated">
+        <source/>
+        <target>Totale repetisjoner</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.todayReps">
+      <segment state="translated">
+        <source/>
+        <target>I dag</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.streak">
+      <segment state="translated">
+        <source/>
+        <target>Serie</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.bestDay">
+      <segment state="translated">
+        <source/>
+        <target>Beste dag</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.viewDetails">
+      <segment state="translated">
+        <source/>
+        <target>Vis detaljer</target>
+      </segment>
+    </unit>
     <unit id="entries.empty.title">
       <segment state="translated">
         <source/>

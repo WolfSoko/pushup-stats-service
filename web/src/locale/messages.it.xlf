@@ -7429,6 +7429,84 @@
         <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">fitness_center</pc> Scegli piano di allenamento </target>
       </segment>
     </unit>
+    <unit id="analysis.tabs.overview">
+      <segment state="translated">
+        <source/>
+        <target>Panoramica</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.empty">
+      <segment state="translated">
+        <source/>
+        <target>Nessuna voce nell'intervallo di date selezionato.</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.uncategorisedNotice">
+      <segment state="translated">
+        <source/>
+        <target>Queste voci non appartengono a nessuna categoria nota — aggregato qui sotto.</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.comparison.title">
+      <segment state="translated">
+        <source/>
+        <target>Confronto per gruppo di esercizi</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.comparison.metricAria">
+      <segment state="translated">
+        <source/>
+        <target>Metrica</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.comparison.metric.reps">
+      <segment state="translated">
+        <source/>
+        <target>Ripetizioni</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.comparison.metric.sets">
+      <segment state="translated">
+        <source/>
+        <target>Serie</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.comparison.empty">
+      <segment state="translated">
+        <source/>
+        <target>Nessun dato nell'intervallo di date selezionato.</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.totalReps">
+      <segment state="translated">
+        <source/>
+        <target>Ripetizioni totali</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.todayReps">
+      <segment state="translated">
+        <source/>
+        <target>Oggi</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.streak">
+      <segment state="translated">
+        <source/>
+        <target>Serie consecutiva</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.bestDay">
+      <segment state="translated">
+        <source/>
+        <target>Miglior giorno</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.viewDetails">
+      <segment state="translated">
+        <source/>
+        <target>Visualizza dettagli</target>
+      </segment>
+    </unit>
     <unit id="entries.empty.title">
       <segment state="translated">
         <source/>

@@ -10,22 +10,32 @@ import {
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
-import { MatSelectModule } from '@angular/material/select';
+import { MatTabsModule } from '@angular/material/tabs';
 import { RouterLink } from '@angular/router';
-import { createWeekRange, UnifiedEntryFilterKey } from '@pu-stats/models';
+import {
+  createWeekRange,
+  type ExerciseCategoryId,
+  EXERCISE_CATEGORIES,
+} from '@pu-stats/models';
 import { LiveDataStore } from '@pu-stats/data-access';
 import { FilterBarComponent } from '../components/filter-bar/filter-bar.component';
 import { PreviewBannerComponent } from '../components/preview-banner/preview-banner.component';
-import { AnalysisStore } from '../analysis.store';
-import { kindDisplayName } from '../i18n/exercise-display-names';
+import { AnalysisStore, type AnalysisView } from '../analysis.store';
+import { categoryDisplayName } from '../i18n/exercise-display-names';
 import { PageHeaderComponent } from '../../core/page-header/page-header.component';
 import { AnalysisGroupViewComponent } from './analysis-group-view.component';
+import { AnalysisOverviewComponent } from './analysis-overview.component';
 
-interface ExerciseKindOption {
-  value: UnifiedEntryFilterKey;
+const VALID_VIEWS: ReadonlySet<AnalysisView> = new Set<AnalysisView>([
+  'overview',
+  ...EXERCISE_CATEGORIES.map((c) => c.id),
+]);
+
+interface VisibleTab {
+  id: ExerciseCategoryId;
   label: string;
+  icon: string;
 }
 
 @Component({
@@ -34,11 +44,11 @@ interface ExerciseKindOption {
   imports: [
     MatButtonModule,
     MatCardModule,
-    MatFormFieldModule,
     MatIconModule,
-    MatSelectModule,
+    MatTabsModule,
     RouterLink,
     AnalysisGroupViewComponent,
+    AnalysisOverviewComponent,
     FilterBarComponent,
     PageHeaderComponent,
     PreviewBannerComponent,
@@ -61,28 +71,6 @@ interface ExerciseKindOption {
           (fromChange)="store.setFrom($event)"
           (toChange)="store.setTo($event)"
         />
-
-        @if (showKindFilter()) {
-          <mat-form-field
-            class="kind-filter"
-            appearance="outline"
-            subscriptSizing="dynamic"
-          >
-            <mat-label i18n="@@analysis.exerciseFilter">Übung</mat-label>
-            <mat-select
-              multiple
-              [value]="store.kinds()"
-              (valueChange)="store.setKinds($event)"
-              data-testid="analysis-kind-filter"
-            >
-              @for (option of kindFilterOptions(); track option.value) {
-                <mat-option [value]="option.value">{{
-                  option.label
-                }}</mat-option>
-              }
-            </mat-select>
-          </mat-form-field>
-        }
       </section>
 
       @if (showEmptyCta()) {
@@ -110,9 +98,48 @@ interface ExerciseKindOption {
             </a>
           </mat-card-content>
         </mat-card>
+      } @else {
+        <mat-tab-group
+          class="analysis-tabs"
+          [selectedIndex]="selectedTabIndex()"
+          (selectedIndexChange)="onTabIndexChange($event)"
+          mat-align-tabs="start"
+          data-testid="analysis-tabs"
+        >
+          <mat-tab data-testid="analysis-tab-overview">
+            <ng-template mat-tab-label>
+              <mat-icon aria-hidden="true">dashboard</mat-icon>
+              <span i18n="@@analysis.tabs.overview">Übersicht</span>
+            </ng-template>
+            <!--
+              matTabContent defers per-tab instantiation until that tab is
+              actually selected, so visiting /analysis with N visible
+              categories doesn't construct N copies of analysis-group-view
+              up front (charts, tables, computeds).
+            -->
+            <ng-template matTabContent>
+              <div class="tab-body">
+                <app-analysis-overview
+                  (viewSelect)="onOverviewSelect($event)"
+                />
+              </div>
+            </ng-template>
+          </mat-tab>
+          @for (tab of visibleTabs(); track tab.id) {
+            <mat-tab [attr.data-testid]="'analysis-tab-' + tab.id">
+              <ng-template mat-tab-label>
+                <mat-icon aria-hidden="true">{{ tab.icon }}</mat-icon>
+                <span>{{ tab.label }}</span>
+              </ng-template>
+              <ng-template matTabContent>
+                <div class="tab-body">
+                  <app-analysis-group-view />
+                </div>
+              </ng-template>
+            </mat-tab>
+          }
+        </mat-tab-group>
       }
-
-      <app-analysis-group-view />
     </main>
   `,
   styles: `
@@ -187,6 +214,24 @@ interface ExerciseKindOption {
     .empty-cta a {
       margin-left: auto;
     }
+
+    .analysis-tabs {
+      width: 100%;
+    }
+    .analysis-tabs ::ng-deep .mat-mdc-tab-label-container {
+      border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+    }
+    .tab-body {
+      display: grid;
+      gap: 16px;
+      padding: 16px 0;
+    }
+    @media (max-width: 900px) {
+      .tab-body {
+        gap: 12px;
+        padding: 12px 0;
+      }
+    }
   `,
 })
 export class AnalysisPageComponent {
@@ -199,43 +244,31 @@ export class AnalysisPageComponent {
   } | null;
 
   /**
-   * Multi-select options for the "Übung" filter on the analysis page.
-   * Mirrors the pattern in `EntriesPageComponent.kindFilterOptions` —
-   * the store exposes the raw filter keys; `$localize` lives here in the
-   * component layer so the per-locale bundle baking still works.
-   *
-   * Currently-selected kinds are merged in even when they no longer
-   * appear in the visible date range, so the user can always see and
-   * deselect a stale filter (e.g. after narrowing the range past the
-   * last entry of that kind). Without this, `mat-select` would render a
-   * chip with no matching `mat-option` and the dropdown would dead-end.
+   * Categories that have at least one entry in the active date range.
+   * Mirrors `categorySummaries` because both consume the same per-range
+   * roll-up, so a card in the overview always matches a tab here.
    */
-  readonly kindFilterOptions = computed<ExerciseKindOption[]>(() => {
-    const seen = new Set<UnifiedEntryFilterKey>();
-    const merged: UnifiedEntryFilterKey[] = [];
-    for (const k of this.store.kindOptionsRaw()) {
-      if (seen.has(k)) continue;
-      seen.add(k);
-      merged.push(k);
-    }
-    for (const k of this.store.kinds()) {
-      if (seen.has(k)) continue;
-      seen.add(k);
-      merged.push(k);
-    }
-    return merged.map((value) => ({
-      value,
-      label: kindDisplayName(value),
-    }));
-  });
+  readonly visibleTabs = computed<VisibleTab[]>(() =>
+    this.store.categorySummaries().map((s) => ({
+      id: s.categoryId,
+      label: categoryDisplayName(s.categoryId),
+      icon: s.icon,
+    }))
+  );
 
-  // Hidden for pure-pushup ranges to keep the default page minimal,
-  // but always visible when a kind is selected so the user can clear it.
-  // Reads the raw keys directly so visibility doesn't trigger label
-  // resolution / `$localize`.
-  readonly showKindFilter = computed(() => {
-    if (this.store.kinds().length > 0) return true;
-    return this.store.kindOptionsRaw().some((k) => k !== 'pushup');
+  /**
+   * Overview is index 0; category tabs follow in `visibleTabs` order.
+   * When the active view points at a category that isn't visible (e.g.
+   * the user narrowed the range past its last entry, or arrived via a
+   * stale deep link), we surface the Overview tab rather than leave the
+   * group falsely selected — the category will reappear once the range
+   * widens again, which also brings its data back.
+   */
+  readonly selectedTabIndex = computed<number>(() => {
+    const view = this.store.activeView();
+    if (view === 'overview') return 0;
+    const idx = this.visibleTabs().findIndex((t) => t.id === view);
+    return idx < 0 ? 0 : idx + 1;
   });
 
   /**
@@ -250,10 +283,6 @@ export class AnalysisPageComponent {
     if (this.store.entriesResource.status() !== 'resolved') return false;
     if (this.store.weekEntriesResource.status() !== 'resolved') return false;
     if (this.store.monthEntriesResource.status() !== 'resolved') return false;
-    // Pre-merge: `rows()` is the pushup REST resource only. A range
-    // that contains only exercise entries would otherwise still flash
-    // the empty CTA even though the group view renders charts. Reading
-    // `unifiedRows()` mirrors what the rest of the page sees.
     if (this.store.unifiedRows().length > 0) return false;
     if (this.store.weekTrend().some((t) => t.total > 0)) return false;
     if (this.store.monthTrend().some((t) => t.total > 0)) return false;
@@ -264,11 +293,12 @@ export class AnalysisPageComponent {
   private readonly destroyRef = inject(DestroyRef);
 
   constructor() {
-    // Resolve initial range from URL query params (SSR-aware)
-    const initialRange = this.resolveInitialRange();
-    this.store.setRange(initialRange.from, initialRange.to);
+    const initial = this.resolveInitialParams();
+    this.store.setRange(initial.from, initial.to);
+    if (initial.view !== 'overview') {
+      this.store.setActiveView(initial.view);
+    }
 
-    // Reload stats when live data changes (new entries via websocket)
     effect(() => {
       if (!isPlatformBrowser(this.platformId)) return;
       const tick = this.live.updateTick();
@@ -276,23 +306,20 @@ export class AnalysisPageComponent {
       this.store.refreshAll();
     });
 
-    // Bump the store clock every 5 minutes so the fixed-window trend
-    // filters re-evaluate when the calendar day rolls over during a
-    // long-running session. Cleared on component destroy to keep tests
-    // and SSR free of leaking timers.
     if (isPlatformBrowser(this.platformId)) {
       const interval = setInterval(() => this.store.tickClock(), 5 * 60 * 1000);
       this.destroyRef.onDestroy(() => clearInterval(interval));
     }
 
-    // URL history tracking effect (UI side effect, stays in component)
     effect(() => {
       if (!isPlatformBrowser(this.platformId)) return;
       const params = new URLSearchParams();
       const from = this.store.from();
       const to = this.store.to();
+      const view = this.store.activeView();
       if (from) params.set('from', from);
       if (to) params.set('to', to);
+      if (view !== 'overview') params.set('view', view);
 
       const query = params.toString();
       const nextUrl = `${this.document.location.pathname}${query ? `?${query}` : ''}`;
@@ -300,13 +327,39 @@ export class AnalysisPageComponent {
     });
   }
 
-  private resolveInitialRange(): { from: string; to: string } {
+  onTabIndexChange(index: number): void {
+    if (index <= 0) {
+      this.store.setActiveView('overview');
+      return;
+    }
+    const tab = this.visibleTabs()[index - 1];
+    if (!tab) {
+      this.store.setActiveView('overview');
+      return;
+    }
+    this.store.setActiveView(tab.id);
+  }
+
+  onOverviewSelect(categoryId: ExerciseCategoryId): void {
+    this.store.setActiveView(categoryId);
+  }
+
+  private resolveInitialParams(): {
+    from: string;
+    to: string;
+    view: AnalysisView;
+  } {
     const defaultRange = createWeekRange();
     const search = this.resolveSearchString();
     const params = new URLSearchParams(search);
     const from = params.get('from') ?? defaultRange.from;
     const to = params.get('to') ?? defaultRange.to;
-    return { from, to };
+    const viewParam = params.get('view');
+    const view: AnalysisView =
+      viewParam && VALID_VIEWS.has(viewParam as AnalysisView)
+        ? (viewParam as AnalysisView)
+        : 'overview';
+    return { from, to, view };
   }
 
   private resolveSearchString(): string {
