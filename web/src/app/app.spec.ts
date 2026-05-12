@@ -12,6 +12,7 @@ import { AuthService, AuthStore, UserContextService } from '@pu-auth/auth';
 import { AdsStore } from '@pu-stats/ads';
 import { VAPID_PUBLIC_KEY } from '@pu-reminders/reminders';
 import { App } from './app';
+import { GoalReachedNotificationService } from './core/goal-reached-notification.service';
 
 describe('App (testing-library)', () => {
   let userNameSignal: WritableSignal<string>;
@@ -183,6 +184,165 @@ describe('App (testing-library)', () => {
     expect(
       await screen.findByText((content) => content.includes('42 / 137'))
     ).toBeTruthy();
+  });
+
+  describe('toolbar goal-pill replay', () => {
+    function makeNotifierMock(): { reopen: ReturnType<typeof vitest.fn> } {
+      return { reopen: vitest.fn() };
+    }
+
+    function commonProviders(notifierMock: {
+      reopen: ReturnType<typeof vitest.fn>;
+    }) {
+      return [
+        provideRouter([]),
+        { provide: PLATFORM_ID, useValue: 'browser' },
+        {
+          provide: UserContextService,
+          useValue: {
+            userNameSafe: userNameSignal.asReadonly(),
+            userIdSafe: () => 'u1',
+            isAdmin: () => false,
+            isGuest: () => false,
+          },
+        },
+        { provide: AuthStore, useValue: authMock },
+        { provide: AuthService, useValue: authServiceMock },
+        { provide: Auth, useValue: firebaseAuthMock },
+        { provide: UserConfigApiService, useValue: userConfigApiMock },
+        { provide: StatsApiService, useValue: statsApiMock },
+        { provide: AdsStore, useValue: adsStoreMock },
+        { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
+        // Stub the notifier so its constructor-time effects (which inject
+        // many other root services) don't run in this minimal harness.
+        { provide: GoalReachedNotificationService, useValue: notifierMock },
+      ];
+    }
+
+    it('given the daily goal is reached, when the pill is clicked, then it replays the daily celebration', async () => {
+      // Given — dailyGoal=50, todayProgress=80 → goalReached === true.
+      userConfigApiMock.getConfig.mockReturnValue(of({ dailyGoal: 50 }));
+      statsApiMock.load.mockReturnValue(
+        of({
+          meta: {
+            from: null,
+            to: null,
+            entries: 1,
+            days: 1,
+            total: 80,
+            granularity: 'daily',
+          },
+          series: [],
+        })
+      );
+      const notifierMock = makeNotifierMock();
+      const { fixture } = await render(App, {
+        providers: commonProviders(notifierMock),
+      });
+      // Wait for the dailyProgressResource to resolve so goalReached() flips
+      // to true before we exercise the click handler.
+      await screen.findByText((content) => content.includes('80 / 50'));
+
+      // When
+      fixture.componentInstance.handleGoalPillClick();
+
+      // Then
+      expect(notifierMock.reopen).toHaveBeenCalledTimes(1);
+      expect(notifierMock.reopen).toHaveBeenCalledWith('daily');
+    });
+
+    it('given the daily goal has NOT been reached, when the pill is clicked, then the notifier stays quiet', async () => {
+      // Given — dailyGoal=100, todayProgress=10 → goalReached === false.
+      userConfigApiMock.getConfig.mockReturnValue(of({ dailyGoal: 100 }));
+      statsApiMock.load.mockReturnValue(
+        of({
+          meta: {
+            from: null,
+            to: null,
+            entries: 1,
+            days: 1,
+            total: 10,
+            granularity: 'daily',
+          },
+          series: [],
+        })
+      );
+      const notifierMock = makeNotifierMock();
+      const { fixture } = await render(App, {
+        providers: commonProviders(notifierMock),
+      });
+      await screen.findByText((content) => content.includes('10 / 100'));
+
+      // When
+      fixture.componentInstance.handleGoalPillClick();
+
+      // Then
+      expect(notifierMock.reopen).not.toHaveBeenCalled();
+    });
+
+    it('exposes role="button", tabindex="0" and a localized aria-label on the pill once the daily goal is reached', async () => {
+      // Given
+      userConfigApiMock.getConfig.mockReturnValue(of({ dailyGoal: 50 }));
+      statsApiMock.load.mockReturnValue(
+        of({
+          meta: {
+            from: null,
+            to: null,
+            entries: 1,
+            days: 1,
+            total: 80,
+            granularity: 'daily',
+          },
+          series: [],
+        })
+      );
+      const notifierMock = makeNotifierMock();
+      await render(App, { providers: commonProviders(notifierMock) });
+      await screen.findByText((content) => content.includes('80 / 50'));
+
+      // Then — the source-locale (de) build serves the German aria copy.
+      const pill = document.querySelector<HTMLElement>(
+        '[data-testid="toolbar-goal-pill"]'
+      );
+      expect(pill).toBeTruthy();
+      expect(pill?.classList.contains('is-clickable')).toBe(true);
+      expect(pill?.getAttribute('role')).toBe('button');
+      expect(pill?.getAttribute('tabindex')).toBe('0');
+      expect(pill?.getAttribute('aria-label')).toBe(
+        'Tagesziel-Animation erneut abspielen'
+      );
+    });
+
+    it('omits role/tabindex/aria-label on the pill while the daily goal is not yet reached', async () => {
+      // Given
+      userConfigApiMock.getConfig.mockReturnValue(of({ dailyGoal: 100 }));
+      statsApiMock.load.mockReturnValue(
+        of({
+          meta: {
+            from: null,
+            to: null,
+            entries: 1,
+            days: 1,
+            total: 10,
+            granularity: 'daily',
+          },
+          series: [],
+        })
+      );
+      const notifierMock = makeNotifierMock();
+      await render(App, { providers: commonProviders(notifierMock) });
+      await screen.findByText((content) => content.includes('10 / 100'));
+
+      // Then
+      const pill = document.querySelector<HTMLElement>(
+        '[data-testid="toolbar-goal-pill"]'
+      );
+      expect(pill).toBeTruthy();
+      expect(pill?.classList.contains('is-clickable')).toBe(false);
+      expect(pill?.getAttribute('role')).toBeNull();
+      expect(pill?.getAttribute('tabindex')).toBeNull();
+      expect(pill?.getAttribute('aria-label')).toBeNull();
+    });
   });
 
   describe('setLanguage', () => {
