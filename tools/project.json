@@ -40,6 +40,17 @@
         "cwd": "{workspaceRoot}"
       }
     },
+    "test-xliff-sync": {
+      "executor": "nx:run-commands",
+      "inputs": [
+        "{workspaceRoot}/tools/src/sync-xliff.py",
+        "{workspaceRoot}/tools/src/sync-xliff.spec.py"
+      ],
+      "options": {
+        "command": "python3 tools/src/sync-xliff.spec.py",
+        "cwd": "{workspaceRoot}"
+      }
+    },
     "generate-content": {
       "executor": "nx:run-commands",
       "inputs": [
