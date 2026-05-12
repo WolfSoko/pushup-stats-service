@@ -41,22 +41,17 @@
     box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
     transform-origin: bottom left;
     transition:
-      transform 700ms cubic-bezier(0.16, 1, 0.3, 1),
-      opacity 700ms ease-out;
+      transform 300ms ease-out,
+      opacity 300ms ease-out;
   }
 
   &.is-snapping {
-    // Allow the expanding frame to bleed past the original card box —
-    // and out of the Material dialog surface, which is forced transparent
-    // via the global .goal-reached-dialog-panel rule in styles.scss.
+    // Allow the expanding frame to bleed past the original card box.
     overflow: visible;
 
     &::before {
-      // Sweep the frame from the card's bottom-left corner toward the
-      // viewport's top-right while fading out. The scale is intentionally
-      // huge so the frame reaches past any realistic viewport corner; the
-      // simultaneous opacity fade hides the gradient stretch.
-      transform: scale(10);
+      // Grow up and to the right (origin: bottom left); fade to transparent.
+      transform: scale(1.3);
       opacity: 0;
     }
   }
