@@ -6707,7 +6707,7 @@ Deine Position: # ·  Reps        </source>
     <unit id="analysis.overview.uncategorisedNotice">
       <segment state="translated">
         <source/>
-        <target>Disse oppføringene tilhører ingen kjent kategori — aggregat under.</target>
+        <target>Disse oppføringene tilhører ingen kjent kategori — aggregert nedenfor.</target>
       </segment>
     </unit>
     <unit id="analysis.overview.comparison.title">

@@ -7109,7 +7109,7 @@
     <unit id="analysis.overview.cards.streak">
       <segment state="translated">
         <source/>
-        <target>连击</target>
+        <target>连续天数</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.bestDay">

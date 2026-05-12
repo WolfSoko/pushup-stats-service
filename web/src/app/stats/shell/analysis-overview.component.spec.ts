@@ -175,6 +175,45 @@ describe('AnalysisOverviewComponent', () => {
     ).toBeNull();
   });
 
+  it('prefers the category overview over the uncategorised fallback when both signals are populated', () => {
+    // Precedence regression guard: if a future refactor swaps the order
+    // of the `@if` / `@else if` branches in the template, this test
+    // would catch the regression. The Overview must show the
+    // comparison + cards (not the uncategorised notice) whenever any
+    // category roll-up exists, regardless of whether unifiedRows also
+    // carries rows.
+    store.categorySummaries.set([
+      {
+        categoryId: 'pushup',
+        nameKey: '@@exercise.category.pushup',
+        icon: 'fitness_center',
+        order: 10,
+        totalReps: 100,
+        totalSets: 12,
+        todayReps: 7,
+        currentStreak: 3,
+        bestDay: { date: '2026-02-13', total: 25 },
+      },
+    ]);
+    store.unifiedRows.set([{ id: 'orphan' }]);
+    fixture.detectChanges();
+    const host: HTMLElement = fixture.nativeElement;
+    expect(
+      host.querySelector('[data-testid="analysis-overview-cards"]')
+    ).toBeTruthy();
+    expect(host.querySelectorAll('app-category-summary-card')).toHaveLength(1);
+    expect(host.querySelector('app-category-comparison-chart')).toBeTruthy();
+    expect(host.querySelector('[data-testid="stub-group-view"]')).toBeNull();
+    expect(
+      host.querySelector(
+        '[data-testid="analysis-overview-uncategorised-notice"]'
+      )
+    ).toBeNull();
+    expect(
+      host.querySelector('[data-testid="analysis-overview-empty"]')
+    ).toBeNull();
+  });
+
   it('forwards viewSelect emissions from a summary card up to the parent', () => {
     store.categorySummaries.set([
       {
