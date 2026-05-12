@@ -27,10 +27,13 @@ import { UserContextService } from '@pu-auth/auth';
 import {
   appendLocalOffset,
   displayPushupType,
-  PushupRecord,
+  findExerciseDefinition,
+  formatEntryDisplay,
   QUICK_LOG_REPS_MAX,
   QUICK_LOG_REPS_MIN,
+  UnifiedEntry,
 } from '@pu-stats/models';
+import { exerciseDisplayName } from '../i18n/exercise-display-names';
 import { firstValueFrom } from 'rxjs';
 import { QuickAddBridgeService } from '@pu-stats/quick-add';
 import { QuickAddOrchestrationService } from '../../core/quick-add-orchestration.service';
@@ -79,8 +82,24 @@ export class StatsDashboardComponent {
   private readonly appData = inject(AppDataFacade);
   private readonly locale = inject(LOCALE_ID) as string;
 
-  readonly typeLabel = (entry: PushupRecord): string =>
-    displayPushupType(entry.type, this.locale);
+  readonly pushupTypeLabel = (
+    entry: Extract<UnifiedEntry, { kind: 'pushup' }>
+  ): string => displayPushupType(entry.variantType, this.locale);
+
+  // Mirrors stats-table.formatEntry so the dashboard preview matches
+  // the history page when a catalog definition exists (plank → m:ss,
+  // cardio.running → distance · time (pace), etc.).
+  readonly exerciseEntryValue = (
+    entry: Extract<UnifiedEntry, { kind: 'exercise' }>
+  ): string => {
+    const def = findExerciseDefinition(entry.exerciseId);
+    if (!def) return String(entry.reps);
+    return formatEntryDisplay(entry, def);
+  };
+
+  readonly exerciseEntryLabel = (
+    entry: Extract<UnifiedEntry, { kind: 'exercise' }>
+  ): string => exerciseDisplayName(entry.exerciseId);
 
   readonly shareDayAriaLabel = $localize`:@@dashboard.share.aria:Tagesleistung teilen`;
   readonly shareDayLabel = $localize`:@@dashboard.share:Teilen`;

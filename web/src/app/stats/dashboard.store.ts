@@ -19,10 +19,13 @@ import {
   UserStatsApiService,
 } from '@pu-stats/data-access';
 import {
+  exerciseEntryToUnified,
   PushupRecord,
+  pushupRecordToUnified,
   StatsResponse,
   toBerlinIsoDate,
   toLocalIsoDate,
+  UnifiedEntry,
   UserStats,
 } from '@pu-stats/models';
 import { AdsStore } from '@pu-stats/ads';
@@ -244,8 +247,20 @@ export const DashboardStore = signalStore(
       () => configuredDailyGoal() > 0 && todayTotal() >= configuredDailyGoal()
     );
 
-    const lastEntry = computed<PushupRecord | null>(() => {
-      const rows = entryRows();
+    // SSR only sees pushups (no exerciseEntries REST endpoint). Goal /
+    // streak / total metrics stay on the pushup-only `entryRows()` —
+    // only the history surfaces consume `unifiedRows`.
+    const unifiedRows = computed<UnifiedEntry[]>(() => {
+      const pushups = entryRows().map(pushupRecordToUnified);
+      if (!store._isBrowser) return pushups;
+      const exercises = store._live
+        .exerciseEntries()
+        .map(exerciseEntryToUnified);
+      return [...pushups, ...exercises];
+    });
+
+    const lastEntry = computed<UnifiedEntry | null>(() => {
+      const rows = unifiedRows();
       if (!rows.length) return null;
       return (
         [...rows].sort(
@@ -255,8 +270,8 @@ export const DashboardStore = signalStore(
       );
     });
 
-    const latestEntries = computed<PushupRecord[]>(() => {
-      return [...entryRows()]
+    const latestEntries = computed<UnifiedEntry[]>(() => {
+      return [...unifiedRows()]
         .sort(
           (a, b) =>
             new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()

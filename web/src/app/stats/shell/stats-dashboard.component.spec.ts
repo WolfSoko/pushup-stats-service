@@ -99,6 +99,8 @@ describe('StatsDashboardComponent', () => {
       exerciseId: string;
       timestamp: string;
       reps?: number;
+      durationSec?: number;
+      distanceM?: number;
       source?: string;
     }>
   >([]);
@@ -373,6 +375,76 @@ describe('StatsDashboardComponent', () => {
         // Then
         expect(component.lastEntry()?._id).toBe('2');
         expect(component.latestEntries()).toHaveLength(2);
+      });
+    });
+
+    // Regression: the "Letzte Einträge" preview was previously fed only
+    // by the pushups collection, so sit-ups / squats / plank entries
+    // were silently hidden from the dashboard even though the History
+    // page rendered them. The unified row source merges both Firestore
+    // collections so every kind of workout shows up here.
+    describe('When live exercise entries exist alongside pushups', () => {
+      it('Then latestEntries surfaces both pushups and exercise entries', async () => {
+        // Given the live store has connected with one pushup and one
+        // exercise entry (sit-ups).
+        liveConnected.set(true);
+        liveEntries.set([
+          {
+            _id: 'p1',
+            timestamp: '2025-01-15T10:00:00',
+            reps: 10,
+            source: 'web',
+            type: 'Standard',
+          },
+        ]);
+        liveExerciseEntries.set([
+          {
+            _id: 'e1',
+            exerciseId: 'abs.situps',
+            timestamp: '2025-01-15T11:00:00',
+            reps: 20,
+            source: 'web',
+          },
+        ]);
+        await fixture.whenStable();
+        const component = fixture.componentInstance;
+
+        // Then both entries are part of the dashboard's recent history.
+        const ids = component.latestEntries().map((e) => e._id);
+        expect(ids).toEqual(expect.arrayContaining(['p1', 'e1']));
+        // Latest by timestamp is the exercise entry (11:00 > 10:00) —
+        // proves the unified merge isn't accidentally pushup-biased.
+        expect(component.lastEntry()?._id).toBe('e1');
+        expect(component.lastEntry()?.kind).toBe('exercise');
+      });
+
+      it('Then the "Letzter Eintrag" card renders the exercise label and the measurement-aware value', async () => {
+        // Given the live store has a single plank entry (time-based).
+        liveConnected.set(true);
+        liveEntries.set([]);
+        liveExerciseEntries.set([
+          {
+            _id: 'e1',
+            exerciseId: 'plank.standard',
+            timestamp: '2025-01-15T11:00:00',
+            durationSec: 90,
+            source: 'web',
+          },
+        ]);
+        await fixture.whenStable();
+        fixture.detectChanges();
+
+        // Then the exercise-branch template renders the label AND the
+        // measurement-aware value: a 90-second plank reads as "1:30"
+        // (m:ss via formatExerciseValue), not "0 Reps" or "90".
+        const root = fixture.nativeElement as HTMLElement;
+        const card = root.querySelector<HTMLElement>(
+          '[data-testid="dashboard-last-entry-exercise"]'
+        );
+        expect(card).not.toBeNull();
+        const text = card!.textContent ?? '';
+        expect(text).toContain('Plank');
+        expect(text).toContain('1:30');
       });
     });
   });
