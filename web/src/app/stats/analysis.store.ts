@@ -320,14 +320,10 @@ export const AnalysisStore = signalStore(
     const rows = computed(() => store.entriesResource.value() ?? []);
 
     // The stats-chart's stacked-bar layer reads `timestamp`, `reps` and
-    // optional `sets[]`. Both PushupRecord and UnifiedEntry expose all
-    // three, so a structural shape is enough — no need to round-trip
-    // through pushupRecordToUnified just to satisfy a stricter type.
-    type ChartFeedEntry = {
-      timestamp: string;
-      reps: number;
-      sets?: number[];
-    };
+    // optional `sets[]`. UnifiedEntry already declares all three on its
+    // base, so Pick keeps the structural feed in lockstep with the
+    // canonical model — no parallel field list to drift.
+    type ChartFeedEntry = Pick<UnifiedEntry, 'timestamp' | 'reps' | 'sets'>;
 
     // Pushup rows come from the REST resource (works on SSR); exercise
     // entries come from the live Firestore snapshot, so SSR yields
@@ -379,6 +375,19 @@ export const AnalysisStore = signalStore(
     });
 
     /**
+     * Granularity of {@link viewChartSeries}. Tracked separately from
+     * the REST-derived {@link granularity} (which lags the resource
+     * during cold-start / filter changes) so the chart's axis mode,
+     * dayChartMode toggle visibility and sets-stacking bucket-keying
+     * stay locked to the bucketing actually produced for the view.
+     */
+    const viewGranularity = computed<StatsGranularity>(() => {
+      const from = store.from();
+      const to = store.to();
+      return !!from && !!to && from === to ? 'hourly' : 'daily';
+    });
+
+    /**
      * Chart series scoped to {@link AnalysisState.activeView}. The
      * REST-backed {@link chartSeries} aggregates pushups-only on the
      * server, so consuming it from a per-category tab would always
@@ -393,8 +402,7 @@ export const AnalysisStore = signalStore(
      */
     const viewChartSeries = computed<StatsSeriesEntry[]>(() => {
       const from = store.from();
-      const to = store.to();
-      const isDayRange = !!from && !!to && from === to;
+      const isDayRange = viewGranularity() === 'hourly';
       const rowsForView = viewFilteredRows();
 
       if (isDayRange) {
@@ -836,6 +844,7 @@ export const AnalysisStore = signalStore(
       chartSeries,
       viewChartSeries,
       viewChartEntries,
+      viewGranularity,
       granularity,
       rows,
       unifiedRows,

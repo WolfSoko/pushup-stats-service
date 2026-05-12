@@ -689,6 +689,19 @@ describe('AnalysisPageComponent', () => {
       expect(store.viewChartSeries()).toEqual([]);
     });
 
+    it('viewGranularity tracks from===to without waiting on the REST resource', () => {
+      // The REST-backed `granularity()` lags the resource during cold
+      // start / filter swaps; `viewGranularity()` must derive the mode
+      // from the page filter directly so the chart's axis stays in
+      // lockstep with `viewChartSeries()` bucketing.
+      const { store } = fixture.componentInstance;
+      expect(store.viewGranularity()).toBe('daily');
+      store.setRange('2026-02-12', '2026-02-12');
+      expect(store.viewGranularity()).toBe('hourly');
+      store.setRange('2026-02-09', '2026-02-15');
+      expect(store.viewGranularity()).toBe('daily');
+    });
+
     it('viewChartSeries switches to hourly buckets when the page filter is a single day', () => {
       // Single-day ranges flip the API to hourly granularity. The
       // view-scoped chart must mirror that bucketing on view-filtered
@@ -708,6 +721,21 @@ describe('AnalysisPageComponent', () => {
       expect(series[series.length - 1].dayIntegral).toBe(30);
     });
 
+    it('viewChartSeries collapses 00-07 into a single night bucket in 14h mode', () => {
+      // 14h mode mirrors `StatsApiService.toStatsResponse`: one night
+      // bucket "00-07" followed by hours 8..21 → 15 buckets total.
+      // CI runs in UTC, so the abs entry's hour (08:00 UTC) lands in
+      // the 08 slot, keeping the day's reps inside the 14h window.
+      const { store } = fixture.componentInstance;
+      store.setRange('2026-02-12', '2026-02-12');
+      store.setActiveView('abs');
+      store.setDayChartMode('14h');
+      const series = store.viewChartSeries();
+      expect(series).toHaveLength(15);
+      expect(series[0]).toMatchObject({ bucketLabel: '00-07' });
+      expect(series[series.length - 1].dayIntegral).toBe(30);
+    });
+
     it('viewChartEntries shapes view-filtered rows for the chart sets-stacking layer', () => {
       const { store } = fixture.componentInstance;
       store.setActiveView('abs');
@@ -715,6 +743,19 @@ describe('AnalysisPageComponent', () => {
       expect(entries).toEqual([
         { timestamp: '2026-02-12T08:00:00.000Z', reps: 30 },
       ]);
+    });
+
+    it('viewChartEntries preserves the sets array on entries that have one', () => {
+      // The chart's stacked-bar layer keys off `entry.sets[]` to colour
+      // the "with sets" portion separately. If the store dropped the
+      // array on the way through, every pushup tab would silently lose
+      // its purple "Mit Sets" segment.
+      const { store } = fixture.componentInstance;
+      store.setActiveView('pushup');
+      const entries = store.viewChartEntries();
+      expect(
+        entries.some((e) => Array.isArray(e.sets) && e.sets.length > 1)
+      ).toBe(true);
     });
 
     it('typeBreakdownDisplay localises kind-mode ids when activeView scopes to a non-pushup category', () => {

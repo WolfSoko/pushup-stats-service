@@ -33,7 +33,7 @@ import { kindDisplayName } from '../i18n/exercise-display-names';
   template: `
     <app-stats-chart
       [series]="store.viewChartSeries()"
-      [granularity]="store.granularity()"
+      [granularity]="store.viewGranularity()"
       [rangeMode]="store.rangeMode()"
       [from]="store.from()"
       [to]="store.to()"
