@@ -106,13 +106,12 @@ const EMPTY_STATS: StatsResponse = {
     }
 
     .mini-chart {
-      height: clamp(260px, 34vw, 360px);
-      overflow: hidden;
+      min-height: clamp(260px, 34vw, 360px);
       pointer-events: none;
     }
 
     .error-fallback {
-      height: clamp(260px, 34vw, 360px);
+      min-height: clamp(260px, 34vw, 360px);
       display: flex;
       align-items: center;
       justify-content: center;

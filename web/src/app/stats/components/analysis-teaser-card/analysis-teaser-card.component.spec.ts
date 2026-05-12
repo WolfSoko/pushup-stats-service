@@ -246,6 +246,21 @@ describe('AnalysisTeaserCardComponent', () => {
       // Must NOT contain the old fixed 180px for mini-chart
       expect(joined).not.toMatch(/\.mini-chart[^}]*height:\s*180px/);
     });
+
+    it('Then .mini-chart must not clip the embedded chart bottom/right', () => {
+      // Regression guard: the embedded <app-stats-chart> renders its own
+      // header (title + subtitle) plus a chart-host sized to
+      // clamp(260px, 34vw, 360px) plus a legend. A fixed `height` combined
+      // with `overflow: hidden` on .mini-chart clipped the legend and the
+      // x-axis ticks. Use `min-height` (reserve, allow growth) and do not
+      // clip.
+      const cmpDef = (AnalysisTeaserCardComponent as any).ɵcmp;
+      const allStyles: string[] = cmpDef?.styles ?? [];
+      const joined = allStyles.join(' ');
+
+      expect(joined).not.toMatch(/\.mini-chart[^}]*overflow:\s*hidden/);
+      expect(joined).toMatch(/\.mini-chart[^}]*min-height:\s*clamp\(260px/);
+    });
   });
 
   describe('Given the chart range computation', () => {
