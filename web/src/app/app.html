@@ -153,8 +153,8 @@
         [attr.aria-label]="goalReached() ? reopenDailyAriaLabel : null"
         data-testid="toolbar-goal-pill"
         (click)="handleGoalPillClick()"
-        (keydown.enter)="!$event.repeat && handleGoalPillClick()"
-        (keydown.space)="!$event.repeat && handleGoalPillClick(); $event.preventDefault()"
+        (keydown.enter)="handleGoalPillKeydown($event)"
+        (keydown.space)="handleGoalPillKeydown($event); $event.preventDefault()"
         ><small i18n="@@toolbarDailyGoal">Tagesziel</small>
         <strong>{{ todayProgress() }} / {{ dailyGoal() }}</strong></span
       >

@@ -153,7 +153,7 @@ mat-sidenav-content {
         border-color 120ms ease;
 
       &:hover {
-        background: rgba(30, 47, 84, 0.6);
+        background-color: rgba(30, 47, 84, 0.6);
         border-color: rgba(129, 161, 232, 0.55);
       }
 
@@ -329,7 +329,7 @@ html.light-theme {
 
       &.is-clickable {
         &:hover {
-          background: rgba(219, 234, 254, 0.95);
+          background-color: rgba(219, 234, 254, 0.95);
           border-color: rgba(59, 130, 246, 0.55);
         }
 

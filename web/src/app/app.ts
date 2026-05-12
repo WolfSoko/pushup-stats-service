@@ -357,6 +357,15 @@ export class App {
     this._goalReachedNotifier.reopen('daily');
   }
 
+  // Angular templates type `$event` for `(keydown.*)` as the base `Event`,
+  // so the WAI-ARIA Button Pattern's `event.repeat` guard cannot live in
+  // the template binding (it would fail strict template type-checking with
+  // TS2339). Narrow to KeyboardEvent here instead.
+  handleGoalPillKeydown(event: KeyboardEvent): void {
+    if (event.repeat) return;
+    this.handleGoalPillClick();
+  }
+
   protected readonly reopenDailyAriaLabel = $localize`:@@toolbarDailyGoal.replayAria:Tagesziel-Animation erneut abspielen`;
 
   openFeedbackDialog(prefill = true): void {
