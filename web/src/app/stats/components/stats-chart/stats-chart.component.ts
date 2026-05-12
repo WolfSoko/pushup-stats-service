@@ -15,11 +15,19 @@ import {
 } from '@angular/core';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCardModule } from '@angular/material/card';
-import {
-  PushupRecord,
-  StatsGranularity,
-  StatsSeriesEntry,
-} from '@pu-stats/models';
+import { StatsGranularity, StatsSeriesEntry } from '@pu-stats/models';
+
+/**
+ * Minimum shape the chart reads off each entry for sets-stacking. Both
+ * the legacy {@link PushupRecord} and the analysis store's view-scoped
+ * unified feed satisfy this, so the input can ingest either without an
+ * intermediate adapter.
+ */
+export interface StatsChartEntry {
+  timestamp: string;
+  reps: number;
+  sets?: number[];
+}
 import {
   Chart,
   ChartConfiguration,
@@ -119,7 +127,7 @@ export class StatsChartComponent implements AfterViewInit {
   readonly from = input<string | null>(null);
   readonly to = input<string | null>(null);
   readonly dayChartMode = model<'24h' | '14h'>('14h');
-  readonly entries = input<PushupRecord[]>([]);
+  readonly entries = input<StatsChartEntry[]>([]);
   /**
    * Localised label naming the exercise (or group of exercises) the
    * series represents — appended to the title so users can tell at a
@@ -169,7 +177,7 @@ export class StatsChartComponent implements AfterViewInit {
 
   private renderChart(
     series: StatsSeriesEntry[],
-    entries: PushupRecord[] = []
+    entries: StatsChartEntry[] = []
   ): void {
     const element = this.chartCanvas()?.nativeElement;
     if (!element) return;
