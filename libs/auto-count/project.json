@@ -1,0 +1,21 @@
+{
+  "name": "auto-count",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/auto-count/src",
+  "prefix": "lib",
+  "projectType": "library",
+  "tags": ["scope:auto-count"],
+  "targets": {
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/auto-count/jest.config.cts",
+        "tsConfig": "libs/auto-count/tsconfig.spec.json"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}
