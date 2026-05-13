@@ -483,6 +483,7 @@ interface DayRow {
         padding: 10px 12px;
         border-radius: 8px;
         background: rgba(0, 0, 0, 0.04);
+        scroll-margin-top: 80px;
       }
       .day-body {
         min-width: 0;

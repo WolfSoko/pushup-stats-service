@@ -407,6 +407,37 @@ describe('TrainingPlanDetailComponent', () => {
       HTMLElement.prototype.scrollIntoView = original;
     });
 
+    it('offsets day-row anchors below the sticky toolbar so deep-linked days are not hidden', async () => {
+      // Regression: navigating from the dashboard banner with `?day=N`
+      // scrolls the matching `.day-row` to the top of the scroll
+      // container, but the sticky `mat-toolbar.top-nav` (≈64px tall)
+      // would otherwise overlap the row. `scroll-margin-top` shifts the
+      // scroll resting position down so the row is fully visible.
+      const { fixture } = await render(TrainingPlanDetailComponent, {
+        providers: [
+          provideRouter([]),
+          { provide: ActivatedRoute, useValue: makeRouteMock('recruit-6w') },
+          { provide: TrainingPlanStore, useValue: makeStoreMock() },
+          {
+            provide: AuthStore,
+            useValue: makeAuthStoreMock({
+              isAuthenticated: true,
+              authResolved: true,
+            }),
+          },
+        ],
+      });
+      fixture.detectChanges();
+
+      const dayRow = (fixture.nativeElement as HTMLElement).querySelector(
+        '.day-row'
+      );
+      expect(dayRow).not.toBeNull();
+      const computed = window.getComputedStyle(dayRow as Element);
+      const offset = parseFloat(computed.scrollMarginTop);
+      expect(offset).toBeGreaterThanOrEqual(64);
+    });
+
     it('does not scroll when ?day is missing', async () => {
       const original = HTMLElement.prototype.scrollIntoView;
       const scrollIntoView = vitest.fn();
