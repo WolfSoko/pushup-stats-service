@@ -112,23 +112,26 @@ export class GoalReachedNotificationService {
   });
 
   /**
-   * Plan-goal threshold: only fires when the plan target would actually
-   * be a stretch above the configured daily goal. When plan target ≤
-   * daily goal, the regular daily celebration already covers the
-   * milestone, so suppress the plan dialog to avoid a near-duplicate.
+   * Plan-goal threshold. Fires whenever the plan's daily target is
+   * reached, with one exception: when a configured daily goal already
+   * covers the plan target (daily ≥ plan), the daily celebration is
+   * enough and we suppress the plan dialog to avoid a near-duplicate.
    *
-   * Requires a configured daily goal (`> 0`) to disambiguate the
-   * `userConfig` resource's initial loading state (which returns `0`)
-   * from a real "daily goal less than plan" comparison. Users without
-   * a configured daily goal don't get this celebration — the regular
-   * daily one only fires once they configure a goal anyway.
+   * Users with only a plan (no configured daily goal) get the plan
+   * dialog as their primary celebration — the toolbar pill labels the
+   * plan target as the "Tagesziel", so reaching it deserves a snap.
+   *
+   * Gated on `userConfig.loaded()` so the resource's initial loading
+   * state (where `dailyGoal()` is `0` before the first emission) can't
+   * be mistaken for a user who genuinely has no configured daily goal.
    */
   private readonly planGoal = computed(() => {
     const planTarget = this.planTodayTarget();
     if (planTarget <= 0) return 0;
+    if (!this.userConfig.loaded()) return 0;
     const daily = this.userConfig.dailyGoal();
-    if (daily <= 0) return 0;
-    return planTarget > daily ? planTarget : 0;
+    if (daily > 0 && daily >= planTarget) return 0;
+    return planTarget;
   });
 
   private readonly specs: readonly GoalSpec[] = [
@@ -290,6 +293,26 @@ export class GoalReachedNotificationService {
     const maxParticleCount =
       SNAP_QUALITY_PARTICLES[this.userConfig.snapQuality()];
     void this.openDialog(kind, { total, goal, maxParticleCount });
+  }
+
+  /**
+   * Replay the celebration matching the toolbar "Tagesziel" pill. The
+   * pill displays the plan target when a plan is active (effective
+   * daily-goal semantics in `AppDataFacade`), so prefer 'plan' when
+   * it's the relevant dialog and fall back to 'daily' otherwise. No-op
+   * when neither has been reached.
+   */
+  reopenPrimaryGoal(): void {
+    if (!isPlatformBrowser(this.platformId)) return;
+    for (const kind of ['plan', 'daily'] as const) {
+      const spec = this.specs.find((s) => s.kind === kind);
+      if (!spec) continue;
+      const goal = spec.goal();
+      if (goal <= 0) continue;
+      if (spec.total() < goal) continue;
+      this.reopen(kind);
+      return;
+    }
   }
 }
 

@@ -46,6 +46,13 @@ export const UserConfigStore = signalStore(
     config: computed<UserConfig | null>(
       () => store.configResource.value() ?? null
     ),
+    /**
+     * True once the config resource has emitted at least once (either a
+     * real config doc or `null` for unauthenticated users). Lets callers
+     * distinguish "still loading" from "user never configured a daily
+     * goal" — both expose `dailyGoal() === 0` otherwise.
+     */
+    loaded: computed(() => store.configResource.value() !== undefined),
     dailyGoal: computed(() => store.configResource.value()?.dailyGoal ?? 0),
     weeklyGoal: computed(() => store.configResource.value()?.weeklyGoal ?? 0),
     monthlyGoal: computed(() => store.configResource.value()?.monthlyGoal ?? 0),

@@ -188,12 +188,16 @@ describe('App (testing-library)', () => {
   });
 
   describe('toolbar goal-pill replay', () => {
-    function makeNotifierMock(): { reopen: ReturnType<typeof vitest.fn> } {
-      return { reopen: vitest.fn() };
+    function makeNotifierMock(): {
+      reopen: ReturnType<typeof vitest.fn>;
+      reopenPrimaryGoal: ReturnType<typeof vitest.fn>;
+    } {
+      return { reopen: vitest.fn(), reopenPrimaryGoal: vitest.fn() };
     }
 
     function commonProviders(notifierMock: {
       reopen: ReturnType<typeof vitest.fn>;
+      reopenPrimaryGoal: ReturnType<typeof vitest.fn>;
     }) {
       return [
         provideRouter([]),
@@ -254,8 +258,8 @@ describe('App (testing-library)', () => {
       await user.click(screen.getByTestId('toolbar-goal-pill'));
 
       // Then
-      expect(notifierMock.reopen).toHaveBeenCalledTimes(1);
-      expect(notifierMock.reopen).toHaveBeenCalledWith('daily');
+      expect(notifierMock.reopenPrimaryGoal).toHaveBeenCalledTimes(1);
+      expect(notifierMock.reopen).not.toHaveBeenCalled();
     });
 
     it('given the daily goal has NOT been reached, when the pill is clicked, then the notifier stays quiet', async () => {
@@ -285,6 +289,7 @@ describe('App (testing-library)', () => {
       await user.click(screen.getByTestId('toolbar-goal-pill'));
 
       // Then
+      expect(notifierMock.reopenPrimaryGoal).not.toHaveBeenCalled();
       expect(notifierMock.reopen).not.toHaveBeenCalled();
     });
 
@@ -381,8 +386,8 @@ describe('App (testing-library)', () => {
       );
 
       // Then
-      expect(notifierMock.reopen).toHaveBeenCalledTimes(1);
-      expect(notifierMock.reopen).toHaveBeenCalledWith('daily');
+      expect(notifierMock.reopenPrimaryGoal).toHaveBeenCalledTimes(1);
+      expect(notifierMock.reopen).not.toHaveBeenCalled();
     });
 
     it('replays the celebration when Space is pressed and suppresses the default page-scroll', async () => {
@@ -417,8 +422,8 @@ describe('App (testing-library)', () => {
       pill?.dispatchEvent(spaceEvent);
 
       // Then
-      expect(notifierMock.reopen).toHaveBeenCalledTimes(1);
-      expect(notifierMock.reopen).toHaveBeenCalledWith('daily');
+      expect(notifierMock.reopenPrimaryGoal).toHaveBeenCalledTimes(1);
+      expect(notifierMock.reopen).not.toHaveBeenCalled();
       expect(spaceEvent.defaultPrevented).toBe(true);
     });
 
@@ -456,6 +461,7 @@ describe('App (testing-library)', () => {
       );
 
       // Then
+      expect(notifierMock.reopenPrimaryGoal).not.toHaveBeenCalled();
       expect(notifierMock.reopen).not.toHaveBeenCalled();
     });
   });
