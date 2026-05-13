@@ -61,6 +61,16 @@ describe('StatsChartComponent', () => {
       expect(component.movingAvgLegendText()).toContain('(Reps)');
     });
 
+    it('Given measurement="weight", Then the legend reports kilograms', () => {
+      // Regression: an earlier version copied the reps wording for
+      // weight ("(Reps)"). Weight has its own unit (kg) and subtitle.
+      fixture.componentRef.setInput('measurement', 'weight');
+      fixture.detectChanges();
+      expect(component.intervalLegendText()).toContain('(kg)');
+      expect(component.movingAvgLegendText()).toContain('(kg)');
+      expect(component.subtitleText()).toContain('Trainingsgewicht');
+    });
+
     it('Given measurement="time", Then the legend reports seconds', () => {
       fixture.componentRef.setInput('measurement', 'time');
       fixture.detectChanges();

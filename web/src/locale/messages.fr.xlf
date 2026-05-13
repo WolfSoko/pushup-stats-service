@@ -4529,8 +4529,8 @@
         <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts</note>
       </notes>
       <segment state="translated">
-        <source>Balken zeigen deine Wiederholungen pro Zeitabschnitt. Die orange Linie summiert den Tag, die grüne zeigt deinen Trend.</source>
-        <target>Les barres affichent vos répétitions par période de temps. La ligne orange résume la journée, la verte montre votre tendance.</target>
+        <source>Balken zeigen dein Trainingsgewicht (kg) pro Zeitabschnitt. Die orange Linie summiert den Tag, die grüne zeigt deinen Trend.</source>
+        <target>Les barres affichent votre charge d'entraînement (kg) par période. La ligne orange résume la journée, la verte montre votre tendance.</target>
       </segment>
     </unit>
     <unit id="chart.subtitle.mixed">

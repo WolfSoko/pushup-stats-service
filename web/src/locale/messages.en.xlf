@@ -1040,8 +1040,8 @@ Active:         </target>
         <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts</note>
       </notes>
       <segment state="translated">
-        <source>Balken zeigen deine Wiederholungen pro Zeitabschnitt. Die orange Linie summiert den Tag, die grüne zeigt deinen Trend.</source>
-        <target>Bars show your reps per time slot. The orange line totals each day, the green one tracks your trend.</target>
+        <source>Balken zeigen dein Trainingsgewicht (kg) pro Zeitabschnitt. Die orange Linie summiert den Tag, die grüne zeigt deinen Trend.</source>
+        <target>Bars show your training weight (kg) per time slot. The orange line totals each day, the green one tracks your trend.</target>
       </segment>
     </unit>
     <unit id="chart.subtitle.mixed">

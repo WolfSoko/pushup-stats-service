@@ -4529,8 +4529,8 @@
         <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts</note>
       </notes>
       <segment state="translated">
-        <source>Balken zeigen deine Wiederholungen pro Zeitabschnitt. Die orange Linie summiert den Tag, die grüne zeigt deinen Trend.</source>
-        <target>Crustae repetitiones tuas per spatium temporis ostendunt. Linea aurea diem summat, viridis trendum tuum monstrat.</target>
+        <source>Balken zeigen dein Trainingsgewicht (kg) pro Zeitabschnitt. Die orange Linie summiert den Tag, die grüne zeigt deinen Trend.</source>
+        <target>Crustae pondus exercitationis tuae (kg) per spatium ostendunt. Linea aurea diem summat, viridis trendum monstrat.</target>
       </segment>
     </unit>
     <unit id="chart.subtitle.mixed">
@@ -4548,7 +4548,7 @@
       </notes>
       <segment state="translated">
         <source>km Tempo</source>
-        <target>Velocitas</target>
+        <target>Velocitas km</target>
       </segment>
     </unit>
     <unit id="chart.modeToggleAria">

@@ -175,7 +175,7 @@ export class StatsChartComponent implements AfterViewInit {
   private readonly subtitleReps = $localize`:@@chart.subtitle.reps:Balken zeigen deine Wiederholungen pro Zeitabschnitt. Die orange Linie summiert den Tag, die grüne zeigt deinen Trend.`;
   private readonly subtitleTime = $localize`:@@chart.subtitle.time:Balken zeigen deine Übungsdauer (s) pro Zeitabschnitt. Die orange Linie summiert den Tag, die grüne zeigt deinen Trend.`;
   private readonly subtitleDistance = $localize`:@@chart.subtitle.distance:Balken zeigen deine Strecke (km) pro Zeitabschnitt. Die orange Linie zeigt dein Tempo (min/km), die grüne deinen Strecken-Trend.`;
-  private readonly subtitleWeight = $localize`:@@chart.subtitle.weight:Balken zeigen deine Wiederholungen pro Zeitabschnitt. Die orange Linie summiert den Tag, die grüne zeigt deinen Trend.`;
+  private readonly subtitleWeight = $localize`:@@chart.subtitle.weight:Balken zeigen dein Trainingsgewicht (kg) pro Zeitabschnitt. Die orange Linie summiert den Tag, die grüne zeigt deinen Trend.`;
   private readonly subtitleMixed = $localize`:@@chart.subtitle.mixed:Balken zeigen dein Trainingsvolumen pro Zeitabschnitt. Die orange Linie summiert den Tag, die grüne zeigt deinen Trend.`;
 
   readonly subtitleText = computed(() => {
@@ -213,8 +213,9 @@ export class StatsChartComponent implements AfterViewInit {
       case 'distance':
       case 'distance-time':
         return ' (km)';
-      case 'reps':
       case 'weight':
+        return ' (kg)';
+      case 'reps':
         return ' (Reps)';
       default:
         return '';
@@ -559,9 +560,11 @@ export class StatsChartComponent implements AfterViewInit {
             position: 'right',
             ticks: {
               color: '#ffbe66',
-              // Pace ticks render as decimal min/km (e.g. "5.5"); the
-              // cumulative-integral path keeps integer ticks.
-              precision: paceMode ? 1 : 0,
+              // Pace ticks render as decimal min/km (e.g. "5.5"); when
+              // the line falls back to the cumulative day-integral the
+              // precision must match the left axis so km/s/reps share a
+              // consistent number format on both sides.
+              precision: paceMode ? 1 : this.barAxisPrecision(),
             },
             grid: { drawOnChartArea: false },
           },

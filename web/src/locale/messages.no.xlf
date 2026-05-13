@@ -901,8 +901,8 @@ Aktiv:         </target>
         <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts</note>
       </notes>
       <segment state="translated">
-        <source>Balken zeigen deine Wiederholungen pro Zeitabschnitt. Die orange Linie summiert den Tag, die grüne zeigt deinen Trend.</source>
-        <target>Søylene viser dine repetisjoner per tidsperiode. Den oransje linjen summerer dagen, den grønne viser trenden din.</target>
+        <source>Balken zeigen dein Trainingsgewicht (kg) pro Zeitabschnitt. Die orange Linie summiert den Tag, die grüne zeigt deinen Trend.</source>
+        <target>Søylene viser treningsvekten din (kg) per tidsperiode. Den oransje linjen summerer dagen, den grønne viser trenden din.</target>
       </segment>
     </unit>
     <unit id="chart.subtitle.mixed">
@@ -920,7 +920,7 @@ Aktiv:         </target>
       </notes>
       <segment state="translated">
         <source>km Tempo</source>
-        <target>Tempo</target>
+        <target>km-tempo</target>
       </segment>
     </unit>
     <unit id="chart.titleDaily">

@@ -4529,8 +4529,8 @@
         <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts</note>
       </notes>
       <segment state="translated">
-        <source>Balken zeigen deine Wiederholungen pro Zeitabschnitt. Die orange Linie summiert den Tag, die grüne zeigt deinen Trend.</source>
-        <target>Οι μπάρες δείχνουν τις επαναλήψεις σου ανά διάστημα. Η πορτοκαλί γραμμή αθροίζει την ημέρα, η πράσινη δείχνει την τάση.</target>
+        <source>Balken zeigen dein Trainingsgewicht (kg) pro Zeitabschnitt. Die orange Linie summiert den Tag, die grüne zeigt deinen Trend.</source>
+        <target>Οι μπάρες δείχνουν το βάρος προπόνησής σου (kg) ανά διάστημα. Η πορτοκαλί γραμμή αθροίζει την ημέρα, η πράσινη δείχνει την τάση.</target>
       </segment>
     </unit>
     <unit id="chart.subtitle.mixed">

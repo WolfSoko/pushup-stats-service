@@ -5097,8 +5097,8 @@
         <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts</note>
       </notes>
       <segment state="translated">
-        <source>Balken zeigen deine Wiederholungen pro Zeitabschnitt. Die orange Linie summiert den Tag, die grüne zeigt deinen Trend.</source>
-        <target>柱状图显示每个时间段的重复次数。橙色线汇总当天，绿色线显示趋势。</target>
+        <source>Balken zeigen dein Trainingsgewicht (kg) pro Zeitabschnitt. Die orange Linie summiert den Tag, die grüne zeigt deinen Trend.</source>
+        <target>柱状图显示每个时间段的训练重量（公斤）。橙色线汇总当天，绿色线显示趋势。</target>
       </segment>
     </unit>
     <unit id="chart.subtitle.mixed">
