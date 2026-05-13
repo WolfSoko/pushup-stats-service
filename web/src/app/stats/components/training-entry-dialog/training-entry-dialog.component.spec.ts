@@ -31,7 +31,7 @@ describe('TrainingEntryDialogComponent', () => {
     it('defaults to the pushup category and synthetic exercise id', () => {
       const { component } = createDialog(null);
 
-      expect(component.category()).toBe('pushup');
+      expect(component.category()).toBe('push');
       expect(component.mode()).toBe('pushup');
       expect(component.isEditMode).toBe(false);
     });
@@ -40,11 +40,12 @@ describe('TrainingEntryDialogComponent', () => {
       const { component } = createDialog(null);
 
       component.sets.set([20]);
-      component.onCategoryChange('plank');
+      component.onCategoryChange('core');
 
-      expect(component.category()).toBe('plank');
+      expect(component.category()).toBe('core');
       expect(component.mode()).toBe('exercise');
-      expect(component.exerciseId()).toBe('plank.standard');
+      // First catalog entry in the core category becomes the picker default.
+      expect(component.exerciseId()).toBe('abs.situps');
       // Reps/sets must reset so a stale 20-rep value can't bleed into
       // the new measurement-specific form.
       expect(component.sets()).toEqual([0]);
@@ -75,10 +76,14 @@ describe('TrainingEntryDialogComponent', () => {
       expect(result.timestamp).toMatch(/^2026-02-10T13:45/);
     });
 
-    it('emits an exercise result with durationSec for the plank category', () => {
+    it('emits an exercise result with durationSec when plank is picked under core', () => {
       const { component, closeSpy } = createDialog(null);
 
-      component.onCategoryChange('plank');
+      component.onCategoryChange('core');
+      // Plank lives in the core category now — switch the picker to it
+      // explicitly because the category default is the first reps-based
+      // entry (`abs.situps`), not the time-measurement plank row.
+      component.onExerciseChange('plank.standard');
       component.timestamp.set('2026-02-10T13:45');
       component.durationMinutesInput.set('1');
       component.durationSecondsInput.set('30');
@@ -124,7 +129,7 @@ describe('TrainingEntryDialogComponent', () => {
     it('clears the variant control and value fields when the exercise picker changes', () => {
       const { component } = createDialog(null);
 
-      component.onCategoryChange('abs');
+      component.onCategoryChange('core');
       component.variantControl.setValue('weighted');
       component.updateSet(0, '12');
 
@@ -141,7 +146,7 @@ describe('TrainingEntryDialogComponent', () => {
     it('caps reps at the catalog max for the chosen exercise', () => {
       const { component } = createDialog(null);
 
-      component.onCategoryChange('abs');
+      component.onCategoryChange('core');
       component.updateSet(0, '9999');
 
       // abs.situps caps at 500 — typing a higher value clamps so
@@ -163,14 +168,14 @@ describe('TrainingEntryDialogComponent', () => {
       });
 
       expect(component.isEditMode).toBe(true);
-      expect(component.category()).toBe('pushup');
+      expect(component.category()).toBe('push');
       expect(component.sets()).toEqual([10, 10, 10]);
       expect(component.pushupTypeControl.value).toBe('diamond');
       expect(component.sourceControl.value).toBe('whatsapp');
       // Edit mode must not allow moving an entry between collections,
       // so the category-change handler is a no-op.
-      component.onCategoryChange('plank');
-      expect(component.category()).toBe('pushup');
+      component.onCategoryChange('core');
+      expect(component.category()).toBe('push');
     });
 
     it('preserves the original ISO timestamp when the user does not touch the field', () => {
@@ -198,7 +203,7 @@ describe('TrainingEntryDialogComponent', () => {
         durationSec: 90,
       });
 
-      expect(component.category()).toBe('plank');
+      expect(component.category()).toBe('core');
       expect(component.exerciseId()).toBe('plank.standard');
       expect(component.mode()).toBe('exercise');
       expect(component.isTimeMeasurement()).toBe(true);
@@ -241,7 +246,7 @@ describe('TrainingEntryDialogComponent', () => {
       expect(component.mode()).toBe('exercise');
       // Category prefix `'abs.…'` recovers the right dashboard
       // category even though the specific exercise no longer exists.
-      expect(component.category()).toBe('abs');
+      expect(component.category()).toBe('core');
       // The synthetic fallback definition lets the user fix and resubmit
       // the entry without staring at a frozen dialog.
       expect(component.canSubmit()).toBe(true);

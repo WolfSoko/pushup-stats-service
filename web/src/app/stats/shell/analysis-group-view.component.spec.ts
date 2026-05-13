@@ -225,7 +225,7 @@ describe('AnalysisGroupViewComponent', () => {
     // resolve a different (or missing) instance.
     const store = groupViewEl.injector.get(AnalysisStore);
     store.setRange('2026-02-09', '2026-02-15');
-    store.setActiveView('abs');
+    store.setActiveView('core');
     fixture.detectChanges();
     await fixture.whenStable();
 

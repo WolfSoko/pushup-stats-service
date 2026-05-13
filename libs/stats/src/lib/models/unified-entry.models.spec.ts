@@ -175,7 +175,7 @@ describe('unifiedEntryCategoryId', () => {
           source: 'web',
           variantType: 'diamond',
         })
-      ).toBe('pushup');
+      ).toBe('push');
       expect(
         unifiedEntryCategoryId({
           kind: 'pushup',
@@ -185,12 +185,12 @@ describe('unifiedEntryCategoryId', () => {
           source: 'web',
           variantType: null,
         })
-      ).toBe('pushup');
+      ).toBe('push');
     });
   });
 
   describe('Given a catalog exercise entry', () => {
-    it('returns the categoryId from the catalog (abs)', () => {
+    it('returns the categoryId from the catalog (core for legacy abs.* ids)', () => {
       expect(
         unifiedEntryCategoryId({
           kind: 'exercise',
@@ -200,10 +200,10 @@ describe('unifiedEntryCategoryId', () => {
           source: 'web',
           exerciseId: 'abs.situps',
         })
-      ).toBe('abs');
+      ).toBe('core');
     });
 
-    it('returns the categoryId from the catalog (legs)', () => {
+    it('returns the categoryId from the catalog (squat for legacy legs.squats)', () => {
       expect(
         unifiedEntryCategoryId({
           kind: 'exercise',
@@ -213,7 +213,7 @@ describe('unifiedEntryCategoryId', () => {
           source: 'web',
           exerciseId: 'legs.squats',
         })
-      ).toBe('legs');
+      ).toBe('squat');
     });
 
     it('returns the categoryId for non-reps measurements (cardio)', () => {

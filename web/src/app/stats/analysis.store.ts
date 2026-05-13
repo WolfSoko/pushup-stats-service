@@ -689,12 +689,15 @@ export const AnalysisStore = signalStore(
       const kinds = store.kinds();
       const kindSet = kinds.length > 0 ? new Set<string>(kinds) : null;
       // In a per-category tab the pushup-variant breakdown only makes
-      // sense for the pushup tab; every other category renders the
-      // kind-mode breakdown over its own entries. In overview the
+      // sense for the push tab (which collapses legacy pushups into
+      // the movement-pattern category); every other category renders
+      // the kind-mode breakdown over its own entries. In overview the
       // legacy gate stays so a default page still shows pushup
-      // variants when no kind filter is active.
+      // variants when no kind filter is active. The kind filter key
+      // remains `'pushup'` — it identifies the legacy Firestore
+      // collection, distinct from the `'push'` category id.
       const showPushupVariants =
-        view === 'pushup' ||
+        view === 'push' ||
         (view === 'overview' &&
           (!kindSet || (kindSet.size === 1 && kindSet.has('pushup'))));
 

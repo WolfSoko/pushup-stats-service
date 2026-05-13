@@ -175,13 +175,15 @@ describe('EntriesPageComponent', () => {
       const component = fixture.componentInstance;
       const opts = component.kindFilterOptions();
       // The mock rows are all pushup-kind, so the only filter key is
-      // 'pushup' (variants collapse via unifiedEntryFilterKey).
+      // 'pushup' (variants collapse via unifiedEntryFilterKey — the
+      // filter-key string stays as the legacy Firestore collection
+      // identifier).
       expect(opts).toHaveLength(1);
       expect(opts[0].value).toBe('pushup');
-      // The label is the localized "Liegestütze" string ($localize
-      // returns the source German in tests because no locale runtime
-      // is loaded).
-      expect(opts[0].label).toBe('Liegestütze');
+      // Label switches to the new movement-pattern category label
+      // ("Drücken") which is what the analysis page filter chips
+      // already render.
+      expect(opts[0].label).toBe('Drücken');
     });
     // Note: the exercise-id branch of `kindLabel` is exercised
     // indirectly through `exerciseDisplayName` (covered in

@@ -422,7 +422,7 @@ describe('AnalysisPageComponent', () => {
 
     it('setActiveView("abs") narrows viewFilteredRows to abs-category entries only', () => {
       const { store } = fixture.componentInstance;
-      store.setActiveView('abs');
+      store.setActiveView('core');
       const rows = store.viewFilteredRows();
       expect(rows).toHaveLength(1);
       expect(rows[0].kind).toBe('exercise');
@@ -433,7 +433,7 @@ describe('AnalysisPageComponent', () => {
 
     it('setActiveView("pushup") collapses to pushup entries only', () => {
       const { store } = fixture.componentInstance;
-      store.setActiveView('pushup');
+      store.setActiveView('push');
       const rows = store.viewFilteredRows();
       expect(rows).toHaveLength(6);
       expect(rows.every((r) => r.kind === 'pushup')).toBe(true);
@@ -441,7 +441,7 @@ describe('AnalysisPageComponent', () => {
 
     it('setActiveView("legs") narrows to legs-category entries only', () => {
       const { store } = fixture.componentInstance;
-      store.setActiveView('legs');
+      store.setActiveView('squat');
       const rows = store.viewFilteredRows();
       expect(rows).toHaveLength(1);
       expect((rows[0] as { exerciseId?: string }).exerciseId).toBe(
@@ -451,7 +451,7 @@ describe('AnalysisPageComponent', () => {
 
     it('returns to all rows when activeView is reset to "overview"', () => {
       const { store } = fixture.componentInstance;
-      store.setActiveView('abs');
+      store.setActiveView('core');
       expect(store.viewFilteredRows()).toHaveLength(1);
       store.setActiveView('overview');
       expect(store.viewFilteredRows()).toHaveLength(8);
@@ -467,7 +467,7 @@ describe('AnalysisPageComponent', () => {
 
     it('per-category KPIs scope to the active view (abs)', () => {
       const { store } = fixture.componentInstance;
-      store.setActiveView('abs');
+      store.setActiveView('core');
       expect(store.bestSingleEntry()?.reps).toBe(30);
       expect(store.bestDay()).toEqual({ date: '2026-02-12', total: 30 });
       // 1 abs entry, no consecutive day → streak length 1
@@ -481,7 +481,7 @@ describe('AnalysisPageComponent', () => {
 
     it('per-category KPIs scope to the active view (pushup)', () => {
       const { store } = fixture.componentInstance;
-      store.setActiveView('pushup');
+      store.setActiveView('push');
       // Same numbers as the original pushup-only tests because the
       // seeded mock is the pushup-only dataset.
       expect(store.bestSingleEntry()?.reps).toBe(25);
@@ -493,7 +493,7 @@ describe('AnalysisPageComponent', () => {
 
     it('KPIs collapse to zero/null when the active view has no entries', () => {
       const { store } = fixture.componentInstance;
-      store.setActiveView('plank');
+      store.setActiveView('mobility');
       expect(store.bestSingleEntry()).toBeNull();
       expect(store.bestDay()).toBeNull();
       expect(store.currentStreak()).toBe(0);
@@ -516,28 +516,28 @@ describe('AnalysisPageComponent', () => {
 
     it('per-category week trend scopes to the active view (abs)', () => {
       const { store } = fixture.componentInstance;
-      store.setActiveView('abs');
+      store.setActiveView('core');
       const week = store.weekTrend().find((w) => w.label === '2026-W07');
       expect(week?.total).toBe(30);
     });
 
     it('per-category month trend scopes to the active view (legs)', () => {
       const { store } = fixture.componentInstance;
-      store.setActiveView('legs');
+      store.setActiveView('squat');
       const month = store.monthTrend().find((m) => m.label === '2026-02');
       expect(month?.total).toBe(40);
     });
 
     it('per-category pushup trend matches the legacy pushup-only totals', () => {
       const { store } = fixture.componentInstance;
-      store.setActiveView('pushup');
+      store.setActiveView('push');
       const week = store.weekTrend().find((w) => w.label === '2026-W07');
       expect(week?.total).toBe(93);
     });
 
     it('empty-category trends report zero totals across the window', () => {
       const { store } = fixture.componentInstance;
-      store.setActiveView('plank');
+      store.setActiveView('mobility');
       expect(store.weekTrend().every((w) => w.total === 0)).toBe(true);
       expect(store.monthTrend().every((m) => m.total === 0)).toBe(true);
     });
@@ -546,16 +546,16 @@ describe('AnalysisPageComponent', () => {
       const { store } = fixture.componentInstance;
       const summaries = store.categorySummaries();
       expect(summaries.map((s) => s.categoryId)).toEqual([
-        'pushup',
-        'abs',
-        'legs',
+        'push',
+        'squat',
+        'core',
       ]);
     });
 
     it('categorySummaries surfaces per-category totals, today reps and best day', () => {
       const { store } = fixture.componentInstance;
       const summaries = store.categorySummaries();
-      const pushup = summaries.find((s) => s.categoryId === 'pushup');
+      const pushup = summaries.find((s) => s.categoryId === 'push');
       expect(pushup).toMatchObject({
         totalReps: 93,
         // 5+5 + 6+6 + 10+5+5 + 10+8+7 + 9+9 = 12 sets across 5 entries.
@@ -564,7 +564,7 @@ describe('AnalysisPageComponent', () => {
         todayReps: 18,
         bestDay: { date: '2026-02-13', total: 25 },
       });
-      const abs = summaries.find((s) => s.categoryId === 'abs');
+      const abs = summaries.find((s) => s.categoryId === 'core');
       expect(abs).toMatchObject({
         totalReps: 30,
         totalSets: 0,
@@ -572,7 +572,7 @@ describe('AnalysisPageComponent', () => {
         currentStreak: 1,
         bestDay: { date: '2026-02-12', total: 30 },
       });
-      const legs = summaries.find((s) => s.categoryId === 'legs');
+      const legs = summaries.find((s) => s.categoryId === 'squat');
       expect(legs).toMatchObject({
         totalReps: 40,
         bestDay: { date: '2026-02-13', total: 40 },
@@ -582,18 +582,19 @@ describe('AnalysisPageComponent', () => {
     it('categoryComparison projects summaries into chart-friendly arrays with translated labels', () => {
       // Chart.js cannot resolve $localize ids at runtime, so labels
       // are pre-translated by the store. TestBed defaults to the
-      // source locale (de) — assertions use the German source strings.
+      // source locale (de) — assertions use the German source strings
+      // for the movement-pattern category names.
       const { store } = fixture.componentInstance;
       const cmp = store.categoryComparison();
-      expect(cmp.labels).toEqual(['Liegestütze', 'Bauch', 'Beine']);
-      expect(cmp.reps).toEqual([93, 30, 40]);
+      expect(cmp.labels).toEqual(['Drücken', 'Kniebeuge', 'Rumpf']);
+      expect(cmp.reps).toEqual([93, 40, 30]);
       expect(cmp.sets).toEqual([12, 0, 0]);
     });
 
     it('categorySummaries stays insensitive to the active view (it powers the overview)', () => {
       const { store } = fixture.componentInstance;
       const baseline = store.categorySummaries().map((s) => s.categoryId);
-      store.setActiveView('abs');
+      store.setActiveView('core');
       expect(store.categorySummaries().map((s) => s.categoryId)).toEqual(
         baseline
       );
@@ -601,7 +602,7 @@ describe('AnalysisPageComponent', () => {
 
     it('typeBreakdown collapses to the active category in kind mode (abs)', () => {
       const { store } = fixture.componentInstance;
-      store.setActiveView('abs');
+      store.setActiveView('core');
       const breakdown = store.typeBreakdown();
       expect(breakdown).toHaveLength(1);
       expect(breakdown[0]).toMatchObject({
@@ -612,7 +613,7 @@ describe('AnalysisPageComponent', () => {
 
     it('typeBreakdown stays in pushup-variant mode when the active view is pushup', () => {
       const { store } = fixture.componentInstance;
-      store.setActiveView('pushup');
+      store.setActiveView('push');
       const labels = store.typeBreakdown().map((b) => b.label);
       expect(labels).toContain('Standard-Liegestütze');
       expect(labels).toContain('Diamant-Liegestütze');
@@ -623,7 +624,7 @@ describe('AnalysisPageComponent', () => {
 
     it('typeBreakdown is empty for a category that has no entries', () => {
       const { store } = fixture.componentInstance;
-      store.setActiveView('plank');
+      store.setActiveView('mobility');
       expect(store.typeBreakdown()).toEqual([]);
     });
 
@@ -647,7 +648,7 @@ describe('AnalysisPageComponent', () => {
 
     it('viewChartSeries narrows to the active category (abs)', () => {
       const { store } = fixture.componentInstance;
-      store.setActiveView('abs');
+      store.setActiveView('core');
       const series = store.viewChartSeries();
       expect(series).toEqual([
         { bucket: '2026-02-12', total: 30, dayIntegral: 30 },
@@ -656,7 +657,7 @@ describe('AnalysisPageComponent', () => {
 
     it('viewChartSeries narrows to the active category (legs)', () => {
       const { store } = fixture.componentInstance;
-      store.setActiveView('legs');
+      store.setActiveView('squat');
       const series = store.viewChartSeries();
       expect(series).toEqual([
         { bucket: '2026-02-13', total: 40, dayIntegral: 40 },
@@ -665,7 +666,7 @@ describe('AnalysisPageComponent', () => {
 
     it('viewChartSeries scoped to pushup matches the legacy pushup-only daily totals', () => {
       const { store } = fixture.componentInstance;
-      store.setActiveView('pushup');
+      store.setActiveView('push');
       const series = store.viewChartSeries();
       // Seeded pushups: Feb 9 → 15 with one skipped day, totals
       // [10,12,20,8,25,18] and cumulative dayIntegral [10,22,42,50,75,93].
@@ -685,7 +686,7 @@ describe('AnalysisPageComponent', () => {
 
     it('viewChartSeries collapses to an empty array for a category with no entries', () => {
       const { store } = fixture.componentInstance;
-      store.setActiveView('plank');
+      store.setActiveView('mobility');
       expect(store.viewChartSeries()).toEqual([]);
     });
 
@@ -711,7 +712,7 @@ describe('AnalysisPageComponent', () => {
       // shape and the total — both timezone-agnostic.
       const { store } = fixture.componentInstance;
       store.setRange('2026-02-12', '2026-02-12');
-      store.setActiveView('abs');
+      store.setActiveView('core');
       store.setDayChartMode('24h');
       const series = store.viewChartSeries();
       expect(series).toHaveLength(24);
@@ -728,7 +729,7 @@ describe('AnalysisPageComponent', () => {
       // the 08 slot, keeping the day's reps inside the 14h window.
       const { store } = fixture.componentInstance;
       store.setRange('2026-02-12', '2026-02-12');
-      store.setActiveView('abs');
+      store.setActiveView('core');
       store.setDayChartMode('14h');
       const series = store.viewChartSeries();
       expect(series).toHaveLength(15);
@@ -738,7 +739,7 @@ describe('AnalysisPageComponent', () => {
 
     it('viewChartEntries shapes view-filtered rows for the chart sets-stacking layer', () => {
       const { store } = fixture.componentInstance;
-      store.setActiveView('abs');
+      store.setActiveView('core');
       const entries = store.viewChartEntries();
       expect(entries).toEqual([
         { timestamp: '2026-02-12T08:00:00.000Z', reps: 30 },
@@ -751,7 +752,7 @@ describe('AnalysisPageComponent', () => {
       // array on the way through, every pushup tab would silently lose
       // its purple "Mit Sets" segment.
       const { store } = fixture.componentInstance;
-      store.setActiveView('pushup');
+      store.setActiveView('push');
       const entries = store.viewChartEntries();
       expect(
         entries.some((e) => Array.isArray(e.sets) && e.sets.length > 1)
@@ -759,13 +760,13 @@ describe('AnalysisPageComponent', () => {
     });
 
     it('typeBreakdownDisplay localises kind-mode ids when activeView scopes to a non-pushup category', () => {
-      // Regression for codex P2: setActiveView('abs') without an
+      // Regression for codex P2: setActiveView('core') without an
       // explicit kinds filter puts the store in kind-mode and emits
       // raw ids like `abs.situps`. The display mapper must mirror the
       // store's gate and localise — otherwise the pie legend reads
       // like a developer string.
       const { store } = fixture.componentInstance;
-      store.setActiveView('abs');
+      store.setActiveView('core');
       fixture.detectChanges();
       const groupView = fixture.debugElement.query(
         By.directive(AnalysisGroupViewComponent)
@@ -782,8 +783,9 @@ describe('AnalysisPageComponent', () => {
   describe('tabs + URL sync', () => {
     it('shows only the Overview tab plus one tab per category with entries', () => {
       const component = fixture.componentInstance;
-      // Seeded dataset has only pushup entries → one visible category tab.
-      expect(component.visibleTabs().map((t) => t.id)).toEqual(['pushup']);
+      // Seeded dataset has only pushup entries → one visible category tab,
+      // routed under the `push` movement-pattern category.
+      expect(component.visibleTabs().map((t) => t.id)).toEqual(['push']);
 
       liveExerciseEntries.set([
         {
@@ -806,19 +808,20 @@ describe('AnalysisPageComponent', () => {
       component.store.setRange('2026-02-09', '2026-02-15');
       fixture.detectChanges();
 
-      // Order follows EXERCISE_CATEGORIES.order (pushup=10, abs=20, legs=30).
+      // Order follows EXERCISE_CATEGORIES.order
+      // (push=10, squat=30, core=70 → legs.squats → squat, abs.situps → core).
       expect(component.visibleTabs().map((t) => t.id)).toEqual([
-        'pushup',
-        'abs',
-        'legs',
+        'push',
+        'squat',
+        'core',
       ]);
     });
 
     it('switches activeView when a tab is selected', () => {
       const component = fixture.componentInstance;
-      // Overview = 0, pushup tab = 1 (the only category visible by default).
+      // Overview = 0, push tab = 1 (the only category visible by default).
       component.onTabIndexChange(1);
-      expect(component.store.activeView()).toBe('pushup');
+      expect(component.store.activeView()).toBe('push');
 
       component.onTabIndexChange(0);
       expect(component.store.activeView()).toBe('overview');
@@ -826,28 +829,30 @@ describe('AnalysisPageComponent', () => {
 
     it('maps activeView back to the matching tab index for the mat-tab-group binding', () => {
       const component = fixture.componentInstance;
-      component.store.setActiveView('pushup');
+      component.store.setActiveView('push');
       expect(component.selectedTabIndex()).toBe(1);
       component.store.setActiveView('overview');
       expect(component.selectedTabIndex()).toBe(0);
     });
 
     it('falls back to Overview when activeView points at a tab that is not visible', () => {
-      // The seeded dataset only has pushup entries, so the abs/legs/plank
-      // tabs never render. Pointing activeView at one of them — e.g. via
-      // a stale `?view=plank` deep link — must surface index 0 rather
+      // The seeded dataset only has pushup entries, so the core/squat tabs
+      // never render. Pointing activeView at an empty category — e.g. via
+      // a stale `?view=mobility` deep link — must surface index 0 rather
       // than leaving the binding referencing an out-of-range slot.
       const component = fixture.componentInstance;
-      component.store.setActiveView('plank');
+      component.store.setActiveView('mobility');
       fixture.detectChanges();
-      expect(component.visibleTabs().some((t) => t.id === 'plank')).toBe(false);
+      expect(component.visibleTabs().some((t) => t.id === 'mobility')).toBe(
+        false
+      );
       expect(component.selectedTabIndex()).toBe(0);
     });
 
     it('selecting an overview card emits the category and switches the active view', () => {
       const component = fixture.componentInstance;
-      component.onOverviewSelect('pushup');
-      expect(component.store.activeView()).toBe('pushup');
+      component.onOverviewSelect('push');
+      expect(component.store.activeView()).toBe('push');
     });
 
     it('renders a mat-tab-group with the Overview tab plus the visible categories', () => {
@@ -858,11 +863,9 @@ describe('AnalysisPageComponent', () => {
       const overviewTab = host.querySelector(
         '[data-testid="analysis-tab-overview"]'
       );
-      const pushupTab = host.querySelector(
-        '[data-testid="analysis-tab-pushup"]'
-      );
+      const pushTab = host.querySelector('[data-testid="analysis-tab-push"]');
       expect(overviewTab).toBeTruthy();
-      expect(pushupTab).toBeTruthy();
+      expect(pushTab).toBeTruthy();
     });
   });
 });

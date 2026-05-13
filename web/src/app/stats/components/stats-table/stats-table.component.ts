@@ -197,7 +197,7 @@ export class StatsTableComponent {
 
   exerciseLabel(entry: UnifiedEntry): string {
     if (entry.kind === 'pushup') {
-      return $localize`:@@exercise.category.pushup:Liegestütze`;
+      return $localize`:@@exercise.category.push:Drücken`;
     }
     const def = findExerciseDefinition(entry.exerciseId);
     if (!def) return entry.exerciseId;

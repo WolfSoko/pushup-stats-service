@@ -18,8 +18,8 @@ import { CategorySummaryCardComponent } from './category-summary-card.component'
 })
 class HostComponent {
   readonly summary = signal<CategorySummary>({
-    categoryId: 'pushup',
-    nameKey: '@@exercise.category.pushup',
+    categoryId: 'push',
+    nameKey: '@@exercise.category.push',
     icon: 'fitness_center',
     order: 10,
     totalReps: 123,
@@ -46,9 +46,9 @@ describe('CategorySummaryCardComponent', () => {
     const host: HTMLElement = fixture.nativeElement;
     // TestBed default locale is `de` — categoryDisplayName returns the
     // German source string.
-    expect(host.textContent).toContain('Liegestütze');
+    expect(host.textContent).toContain('Drücken');
     const totalReps = host.querySelector(
-      '[data-testid="category-summary-card-totalReps-pushup"]'
+      '[data-testid="category-summary-card-totalReps-push"]'
     );
     expect(totalReps?.textContent?.trim()).toBe('123');
   });
@@ -66,26 +66,26 @@ describe('CategorySummaryCardComponent', () => {
   it('emits the categoryId when the details button is clicked', () => {
     const host: HTMLElement = fixture.nativeElement;
     const button = host.querySelector(
-      '[data-testid="category-summary-card-drilldown-pushup"]'
+      '[data-testid="category-summary-card-drilldown-push"]'
     ) as HTMLButtonElement;
     expect(button).toBeTruthy();
     button.click();
-    expect(fixture.componentInstance.lastEmitted()).toBe('pushup');
+    expect(fixture.componentInstance.lastEmitted()).toBe('push');
   });
 
   it('carries a category-scoped data-testid so multiple cards stay addressable', () => {
     fixture.componentInstance.summary.set({
       ...fixture.componentInstance.summary(),
-      categoryId: 'abs',
+      categoryId: 'core',
       icon: 'self_improvement',
     });
     fixture.detectChanges();
     const host: HTMLElement = fixture.nativeElement;
     expect(
-      host.querySelector('[data-testid="category-summary-card-abs"]')
+      host.querySelector('[data-testid="category-summary-card-core"]')
     ).toBeTruthy();
     expect(
-      host.querySelector('[data-testid="category-summary-card-drilldown-abs"]')
+      host.querySelector('[data-testid="category-summary-card-drilldown-core"]')
     ).toBeTruthy();
   });
 

@@ -146,7 +146,7 @@ describe('AnalysisOverviewComponent', () => {
   it('renders the chart and one card per summary when categories exist', () => {
     store.categorySummaries.set([
       {
-        categoryId: 'pushup',
+        categoryId: 'push',
         nameKey: '@@exercise.category.pushup',
         icon: 'fitness_center',
         order: 10,
@@ -157,7 +157,7 @@ describe('AnalysisOverviewComponent', () => {
         bestDay: { date: '2026-02-13', total: 25 },
       },
       {
-        categoryId: 'abs',
+        categoryId: 'core',
         nameKey: '@@exercise.category.abs',
         icon: 'self_improvement',
         order: 20,
@@ -189,7 +189,7 @@ describe('AnalysisOverviewComponent', () => {
     // carries rows.
     store.categorySummaries.set([
       {
-        categoryId: 'pushup',
+        categoryId: 'push',
         nameKey: '@@exercise.category.pushup',
         icon: 'fitness_center',
         order: 10,
@@ -222,7 +222,7 @@ describe('AnalysisOverviewComponent', () => {
   it('forwards viewSelect emissions from a summary card up to the parent', () => {
     store.categorySummaries.set([
       {
-        categoryId: 'pushup',
+        categoryId: 'push',
         nameKey: '@@exercise.category.pushup',
         icon: 'fitness_center',
         order: 10,
@@ -242,7 +242,7 @@ describe('AnalysisOverviewComponent', () => {
     expect(button).toBeTruthy();
     button.click();
     fixture.detectChanges();
-    expect(fixture.componentInstance.lastEmitted()).toBe('pushup');
+    expect(fixture.componentInstance.lastEmitted()).toBe('push');
   });
 
   it('snaps activeView to overview in the uncategorised fallback so the embedded group-view is not stale-filtered', () => {
@@ -253,7 +253,7 @@ describe('AnalysisOverviewComponent', () => {
     // point of surfacing the uncategorised rows. The component's
     // effect must re-sync activeView to 'overview' as soon as it
     // enters the fallback branch.
-    store.activeView.set('plank');
+    store.activeView.set('mobility');
     store.unifiedRows.set([{ id: 'orphan' }]);
     fixture.detectChanges();
     expect(store.activeView()).toBe('overview');
@@ -265,10 +265,10 @@ describe('AnalysisOverviewComponent', () => {
     // and is currently looking at the overview tab only because the
     // shell rendered it as the default Overview view. Snapping then
     // would corrupt the deep-link intent.
-    store.activeView.set('plank');
+    store.activeView.set('mobility');
     store.categorySummaries.set([
       {
-        categoryId: 'pushup',
+        categoryId: 'push',
         nameKey: '@@exercise.category.pushup',
         icon: 'fitness_center',
         order: 10,
@@ -280,6 +280,6 @@ describe('AnalysisOverviewComponent', () => {
       },
     ]);
     fixture.detectChanges();
-    expect(store.activeView()).toBe('plank');
+    expect(store.activeView()).toBe('mobility');
   });
 });
