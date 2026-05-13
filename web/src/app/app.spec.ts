@@ -6,7 +6,7 @@ import { provideRouter } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SwUpdate } from '@angular/service-worker';
-import { of, Subject } from 'rxjs';
+import { NEVER, of, Subject } from 'rxjs';
 import { StatsApiService, UserConfigApiService } from '@pu-stats/data-access';
 import { Auth } from '@angular/fire/auth';
 import { AuthService, AuthStore, UserContextService } from '@pu-auth/auth';
@@ -888,10 +888,14 @@ describe('App (testing-library)', () => {
     // always act on it, with a distinct panelClass for styling.
     it('opens the update snackbar sticky at top-center with the sw-update panelClass', async () => {
       const swUpdate = makeSwUpdateMock();
+      // `NEVER` (not `of(undefined)`) so the action observable never emits —
+      // an immediate emission would synchronously fire the VERSION_READY
+      // handler's `activateUpdate()` + `window.location.reload()` side
+      // effects during this config-only assertion (jsdom can't navigate).
       const openSpy = vitest
         .spyOn(MatSnackBar.prototype, 'open')
         .mockReturnValue({
-          onAction: () => of(undefined),
+          onAction: () => NEVER,
           afterDismissed: () => of({ dismissedByAction: false }),
         } as unknown as ReturnType<MatSnackBar['open']>);
 
