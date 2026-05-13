@@ -34,6 +34,12 @@ const EXERCISE_DISPLAY_NAMES: Record<string, string> = {
   'legs.lunges': $localize`:@@exercise.legs.lunges.name:Ausfallschritte`,
   'lunge.stepup': $localize`:@@exercise.lunge.stepup.name:Step-ups`,
 
+  // push (non-pushup pressing movements — pushup variants live on the
+  // legacy `pushups` collection, not in this map)
+  'push.dips': $localize`:@@exercise.push.dips.name:Dips`,
+  'push.benchdips': $localize`:@@exercise.push.benchdips.name:Bankdips`,
+  'push.handstandhold': $localize`:@@exercise.push.handstandhold.name:Handstand-Hold`,
+
   // pull
   'pull.pullups': $localize`:@@exercise.pull.pullups.name:Klimmzüge`,
   'pull.rows': $localize`:@@exercise.pull.rows.name:Ruderzug`,
@@ -159,6 +165,11 @@ const VARIANT_DISPLAY_NAMES: Record<string, string> = {
   '@@exercise.variant.rows.australian': $localize`:@@exercise.variant.rows.australian:Australian Row`,
   '@@exercise.variant.rows.dumbbell': $localize`:@@exercise.variant.rows.dumbbell:Kurzhantel`,
   '@@exercise.variant.rows.barbell': $localize`:@@exercise.variant.rows.barbell:Langhantel`,
+
+  // dips
+  '@@exercise.variant.dips.parallel': $localize`:@@exercise.variant.dips.parallel:Barren`,
+  '@@exercise.variant.dips.straight-bar': $localize`:@@exercise.variant.dips.straight-bar:Stange`,
+  '@@exercise.variant.dips.ring': $localize`:@@exercise.variant.dips.ring:Ringe`,
 };
 
 export function variantDisplayName(variant: ExerciseVariant): string {
@@ -172,10 +183,9 @@ export function variantDisplayName(variant: ExerciseVariant): string {
  * the type-pie legend so both stay in sync without duplicating the
  * `$localize` calls.
  *
- * The legacy filter-key string remains `'pushup'` (it identifies the
- * legacy Firestore collection); only the *display* shifts to the new
- * movement-pattern label "Drücken / Push" via the shared category
- * translation unit.
+ * Legacy pushup entries (Liegestütze) keep their own bucket separate
+ * from the generic `push` movement-pattern category (dips, handstand),
+ * so this branch resolves to the Liegestütze label.
  *
  * For ids that miss the catalog (user-defined custom exercises or
  * legacy ids whose Firestore entries still exist) the raw `value`
@@ -184,7 +194,7 @@ export function variantDisplayName(variant: ExerciseVariant): string {
  */
 export function kindDisplayName(value: UnifiedEntryFilterKey): string {
   if (value === 'pushup') {
-    return $localize`:@@exercise.category.push:Drücken`;
+    return $localize`:@@exercise.category.pushup:Liegestütze`;
   }
   const def = findExerciseDefinition(value);
   if (def) return exerciseDisplayName(def.id);
@@ -208,6 +218,7 @@ export function kindDisplayName(value: UnifiedEntryFilterKey): string {
 // Omitting them here lets `categoryDisplayName` fall back to the raw id
 // rather than maintain dead `$localize` calls for unused labels.
 const CATEGORY_DISPLAY_NAMES: Partial<Record<ExerciseCategoryId, string>> = {
+  pushup: $localize`:@@exercise.category.pushup:Liegestütze`,
   push: $localize`:@@exercise.category.push:Drücken`,
   pull: $localize`:@@exercise.category.pull:Ziehen`,
   squat: $localize`:@@exercise.category.squat:Kniebeuge`,

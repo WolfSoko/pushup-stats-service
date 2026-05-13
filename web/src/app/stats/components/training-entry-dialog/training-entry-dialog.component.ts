@@ -592,21 +592,23 @@ export class TrainingEntryDialogComponent {
   readonly category = signal<ExerciseCategoryId>(this.initialCategory());
 
   /**
-   * Catalog exercise id when category !== 'push'. Defaults to the
-   * first exercise of the chosen category. For the push category the
-   * value is the synthetic {@link PUSHUP_EXERCISE_ID} so the picker can
-   * show a single entry without a real catalog row — the legacy
-   * `pushups` Firestore collection has no `ExerciseDefinition`.
+   * Catalog exercise id when category !== 'pushup'. Defaults to the
+   * first exercise of the chosen category. For the `pushup` category
+   * (Liegestütze) the value is the synthetic {@link PUSHUP_EXERCISE_ID}
+   * so the picker can show a single entry without a real catalog row —
+   * the legacy `pushups` Firestore collection has no
+   * `ExerciseDefinition`. Other push exercises (dips, handstand) live
+   * in the separate `push` category as normal catalog entries.
    */
   readonly exerciseId = signal<string>(this.initialExerciseId());
 
   readonly mode = computed<'pushup' | 'exercise'>(() =>
-    this.category() === 'push' ? 'pushup' : 'exercise'
+    this.category() === 'pushup' ? 'pushup' : 'exercise'
   );
 
   readonly exerciseOptions = computed<ExerciseOption[]>(() => {
     const cat = this.category();
-    if (cat === 'push') {
+    if (cat === 'pushup') {
       return [
         {
           value: PUSHUP_EXERCISE_ID,
@@ -848,7 +850,7 @@ export class TrainingEntryDialogComponent {
     // Reset exercise to the first option of the new category. Reset
     // measurement-specific inputs so a stale value from a previously
     // selected exercise can't leak through to the new one.
-    if (next === 'push') {
+    if (next === 'pushup') {
       this.exerciseId.set(PUSHUP_EXERCISE_ID);
     } else {
       const defs = exercisesByCategory().get(next) ?? [];
@@ -1017,8 +1019,8 @@ export class TrainingEntryDialogComponent {
   // ----- helpers ----------------------------------------------------------
 
   private initialCategory(): ExerciseCategoryId {
-    if (!this.data) return 'push';
-    if (this.data.kind === 'pushup') return 'push';
+    if (!this.data) return 'pushup';
+    if (this.data.kind === 'pushup') return 'pushup';
     const def = findExerciseDefinition(this.data.exerciseId);
     if (def) return def.categoryId;
     // Stale exerciseId (renamed/removed in the catalog): stay in
@@ -1095,6 +1097,7 @@ export class TrainingEntryDialogComponent {
 }
 
 const CATEGORY_NAMES: Record<ExerciseCategoryId, () => string> = {
+  pushup: () => $localize`:@@exercise.category.pushup:Liegestütze`,
   push: () => $localize`:@@exercise.category.push:Drücken`,
   pull: () => $localize`:@@exercise.category.pull:Ziehen`,
   squat: () => $localize`:@@exercise.category.squat:Kniebeuge`,
@@ -1113,7 +1116,7 @@ function buildCategoryOptions(): ReadonlyArray<CategoryOption> {
   // any catalog category with at least one ExerciseDefinition.
   const byCategory = exercisesByCategory();
   return EXERCISE_CATEGORIES.filter(
-    (cat) => cat.id === 'push' || (byCategory.get(cat.id)?.length ?? 0) > 0
+    (cat) => cat.id === 'pushup' || (byCategory.get(cat.id)?.length ?? 0) > 0
   ).map((cat) => ({
     value: cat.id,
     label: (CATEGORY_NAMES[cat.id] ?? (() => cat.id))(),
@@ -1200,10 +1203,10 @@ function inferExerciseCategory(
     return LEGACY_PREFIX_MAP[prefix];
   }
   const known = EXERCISE_CATEGORIES.find((c) => c.id === prefix);
-  if (known && known.id !== 'push') return known.id;
+  if (known && known.id !== 'pushup') return known.id;
   const byCategory = exercisesByCategory();
   const fallback = EXERCISE_CATEGORIES.find(
-    (c) => c.id !== 'push' && (byCategory.get(c.id)?.length ?? 0) > 0
+    (c) => c.id !== 'pushup' && (byCategory.get(c.id)?.length ?? 0) > 0
   );
   return fallback?.id ?? 'core';
 }

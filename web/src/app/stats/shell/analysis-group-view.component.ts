@@ -353,16 +353,15 @@ export class AnalysisGroupViewComponent {
    * kind mode) into localised display names. Pushup-variant mode
    * passes through because the store already produces locale-aware
    * variant names. The gate mirrors `analysis.store` — a per-category
-   * tab other than 'push' is always kind mode, so the breakdown
-   * carries exerciseIds like `abs.situps` that need translating even
-   * without an explicit kinds filter. The legacy kind filter key
-   * stays `'pushup'` (Firestore collection identifier).
+   * tab other than `pushup` (Liegestütze) is always kind mode, so the
+   * breakdown carries exerciseIds like `abs.situps` that need
+   * translating even without an explicit kinds filter.
    */
   readonly typeBreakdownDisplay = computed(() => {
     const view = this.store.activeView();
     const kinds = this.store.kinds();
     const showPushupVariants =
-      view === 'push' ||
+      view === 'pushup' ||
       (view === 'overview' &&
         (kinds.length === 0 || (kinds.length === 1 && kinds[0] === 'pushup')));
     const data = this.store.typeBreakdown();

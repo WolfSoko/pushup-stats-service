@@ -18,8 +18,8 @@ import { CategorySummaryCardComponent } from './category-summary-card.component'
 })
 class HostComponent {
   readonly summary = signal<CategorySummary>({
-    categoryId: 'push',
-    nameKey: '@@exercise.category.push',
+    categoryId: 'pushup',
+    nameKey: '@@exercise.category.pushup',
     icon: 'fitness_center',
     order: 10,
     totalReps: 123,
@@ -46,9 +46,9 @@ describe('CategorySummaryCardComponent', () => {
     const host: HTMLElement = fixture.nativeElement;
     // TestBed default locale is `de` — categoryDisplayName returns the
     // German source string.
-    expect(host.textContent).toContain('Drücken');
+    expect(host.textContent).toContain('Liegestütze');
     const totalReps = host.querySelector(
-      '[data-testid="category-summary-card-totalReps-push"]'
+      '[data-testid="category-summary-card-totalReps-pushup"]'
     );
     expect(totalReps?.textContent?.trim()).toBe('123');
   });
@@ -66,11 +66,11 @@ describe('CategorySummaryCardComponent', () => {
   it('emits the categoryId when the details button is clicked', () => {
     const host: HTMLElement = fixture.nativeElement;
     const button = host.querySelector(
-      '[data-testid="category-summary-card-drilldown-push"]'
+      '[data-testid="category-summary-card-drilldown-pushup"]'
     ) as HTMLButtonElement;
     expect(button).toBeTruthy();
     button.click();
-    expect(fixture.componentInstance.lastEmitted()).toBe('push');
+    expect(fixture.componentInstance.lastEmitted()).toBe('pushup');
   });
 
   it('carries a category-scoped data-testid so multiple cards stay addressable', () => {
