@@ -165,11 +165,15 @@ export function unifiedEntryMeasurement(
  * `typeBreakdown` referred to as "until per-measurement charts land").
  *
  * Unknown exerciseIds (custom user exercises whose catalog entry the
- * caller didn't resolve) fall back to the first populated numeric
- * field so they still contribute a visible bar rather than vanishing.
- * Mixed-unit aggregation in a category that contains both reps and
- * time exercises is intentional for now — drilling into a single
- * measurement is a separate UX concern.
+ * caller didn't resolve) fall back to the first populated
+ * volume-meaningful field in the order `reps` → `durationSec` →
+ * `distanceM` so they still contribute a visible bar rather than
+ * vanishing. `weightKg` is intentionally excluded: it expresses load
+ * per rep rather than a volume, and summing it across entries has no
+ * sensible meaning for a chart bar height. Mixed-unit aggregation in
+ * a category that contains both reps and time exercises is intentional
+ * for now — drilling into a single measurement is a separate UX
+ * concern.
  */
 export function unifiedEntryPrimaryValue(
   entry: UnifiedEntry,
