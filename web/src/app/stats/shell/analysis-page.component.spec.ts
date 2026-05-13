@@ -353,6 +353,30 @@ describe('AnalysisPageComponent', () => {
     expect(computed.top).toMatch(/var\(--desktop-nav-height/);
   });
 
+  it('constrains the page-wrap grid track so the tab row cannot widen the page', () => {
+    // Regression: without an explicit `minmax(0, 1fr)` track, the grid
+    // child mat-tab-group's intrinsic width (all tab labels side-by-side)
+    // overflows max-width: 1200px and Material's tab-header pagination
+    // never engages — making the entire Analyse page horizontally
+    // scrollable. The track constraint lets the tab-group shrink to the
+    // viewport so mat-tab-header switches to its scrollable/paginated
+    // mode instead.
+    //
+    // We assert against Angular's compiled component styles
+    // (`ɵcmp.styles`) rather than walking `document.styleSheets` — the
+    // codebase already uses this pattern (see
+    // analysis-teaser-card.component.spec.ts) and it's resilient to
+    // jsdom CSSOM quirks.
+    const cmpDef = (
+      AnalysisPageComponent as unknown as { ɵcmp: { styles: string[] } }
+    ).ɵcmp;
+    const styles = (cmpDef?.styles ?? []).join(' ');
+    expect(styles).toMatch(
+      /\.page-wrap[^}]*grid-template-columns:\s*minmax\(\s*0(px)?\s*,\s*1fr\s*\)/
+    );
+    expect(styles).toMatch(/\.analysis-tabs[^}]*min-width:\s*0/);
+  });
+
   it('includes avgSetsPerEntry in week and month trend', () => {
     const { store } = fixture.componentInstance;
     const week = store.weekTrend();

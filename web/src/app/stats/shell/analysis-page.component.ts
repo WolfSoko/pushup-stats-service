@@ -148,6 +148,11 @@ interface VisibleTab {
       margin: 0 auto;
       padding: 16px;
       display: grid;
+      /* minmax(0, 1fr) lets grid children shrink below their intrinsic
+         width — without it, mat-tab-header's full row of tab labels
+         widens the page past max-width and Material's auto-pagination
+         never engages. */
+      grid-template-columns: minmax(0, 1fr);
       gap: 16px;
     }
 
@@ -217,6 +222,7 @@ interface VisibleTab {
 
     .analysis-tabs {
       width: 100%;
+      min-width: 0;
     }
     .analysis-tabs ::ng-deep .mat-mdc-tab-label-container {
       border-bottom: 1px solid rgba(148, 163, 184, 0.2);
