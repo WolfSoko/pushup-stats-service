@@ -4497,13 +4497,58 @@
         <target> Δεν υπάρχουν διαθέσιμα δεδομένα συνόλων </target>
       </segment>
     </unit>
-    <unit id="chart.subtitle">
+    <unit id="chart.subtitle.reps">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:43,45</note>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts</note>
       </notes>
       <segment state="translated">
         <source>Balken zeigen deine Wiederholungen pro Zeitabschnitt. Die orange Linie summiert den Tag, die grüne zeigt deinen Trend.</source>
-        <target>Οι ράβδοι δείχνουν τις επαναλήψεις σας ανά χρονική περίοδο. Η πορτοκαλί γραμμή συνοψίζει την ημέρα, το πράσινο δείχνει την τάση σας.</target>
+        <target>Οι μπάρες δείχνουν τις επαναλήψεις σου ανά διάστημα. Η πορτοκαλί γραμμή αθροίζει την ημέρα, η πράσινη δείχνει την τάση.</target>
+      </segment>
+    </unit>
+    <unit id="chart.subtitle.time">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts</note>
+      </notes>
+      <segment state="translated">
+        <source>Balken zeigen deine Übungsdauer (s) pro Zeitabschnitt. Die orange Linie summiert den Tag, die grüne zeigt deinen Trend.</source>
+        <target>Οι μπάρες δείχνουν τη διάρκεια άσκησης (δ) ανά διάστημα. Η πορτοκαλί γραμμή αθροίζει την ημέρα, η πράσινη δείχνει την τάση.</target>
+      </segment>
+    </unit>
+    <unit id="chart.subtitle.distance">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts</note>
+      </notes>
+      <segment state="translated">
+        <source>Balken zeigen deine Strecke (km) pro Zeitabschnitt. Die orange Linie zeigt dein Tempo (min/km), die grüne deinen Strecken-Trend.</source>
+        <target>Οι μπάρες δείχνουν την απόστασή σου (χλμ) ανά διάστημα. Η πορτοκαλί γραμμή δείχνει τον ρυθμό σου (λεπτά/χλμ), η πράσινη την τάση απόστασης.</target>
+      </segment>
+    </unit>
+    <unit id="chart.subtitle.weight">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts</note>
+      </notes>
+      <segment state="translated">
+        <source>Balken zeigen dein Trainingsgewicht (kg) pro Zeitabschnitt. Die orange Linie summiert den Tag, die grüne zeigt deinen Trend.</source>
+        <target>Οι μπάρες δείχνουν το βάρος προπόνησής σου (kg) ανά διάστημα. Η πορτοκαλί γραμμή αθροίζει την ημέρα, η πράσινη δείχνει την τάση.</target>
+      </segment>
+    </unit>
+    <unit id="chart.subtitle.mixed">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts</note>
+      </notes>
+      <segment state="translated">
+        <source>Balken zeigen dein Trainingsvolumen pro Zeitabschnitt. Die orange Linie summiert den Tag, die grüne zeigt deinen Trend.</source>
+        <target>Οι μπάρες δείχνουν τον όγκο προπόνησής σου ανά διάστημα. Η πορτοκαλί γραμμή αθροίζει την ημέρα, η πράσινη δείχνει την τάση.</target>
+      </segment>
+    </unit>
+    <unit id="chart.kmPace">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts</note>
+      </notes>
+      <segment state="translated">
+        <source>km Tempo</source>
+        <target>Ρυθμός</target>
       </segment>
     </unit>
     <unit id="chart.modeToggleAria">

@@ -72,6 +72,8 @@ class MockStatsChartComponent {
   readonly from = input<string>('');
   readonly to = input<string>('');
   readonly entries = input<unknown[]>([]);
+  readonly measurement = input<unknown>(null);
+  readonly paceSeries = input<unknown[]>([]);
   readonly dayChartMode = model<string>('14h');
 }
 

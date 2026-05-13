@@ -15,7 +15,11 @@ import {
 } from '@angular/core';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCardModule } from '@angular/material/card';
-import { StatsGranularity, StatsSeriesEntry } from '@pu-stats/models';
+import {
+  type MeasurementType,
+  StatsGranularity,
+  StatsSeriesEntry,
+} from '@pu-stats/models';
 
 /**
  * Minimum shape the chart reads off each entry for sets-stacking. Both
@@ -28,6 +32,25 @@ export interface StatsChartEntry {
   reps: number;
   sets?: number[];
 }
+
+/**
+ * Per-bucket pace value (min/km) aligned 1:1 with the bar series. Used
+ * for `'distance'` / `'distance-time'` views where the cumulative
+ * "day-integral" line is replaced with a pace line. `null` breaks the
+ * line at gaps (buckets without distance data).
+ */
+export interface PaceSeriesEntry {
+  bucket: string;
+  pace: number | null;
+}
+
+/**
+ * Aggregate measurement label feeding the chart's subtitle, legend, and
+ * y-axis tick formatters. `'mixed'` is for views that span more than
+ * one measurement (e.g. core: reps + time); `null` is the empty-view
+ * fallback. Other values mirror {@link MeasurementType}.
+ */
+export type ChartMeasurement = MeasurementType | 'mixed' | null;
 import {
   Chart,
   ChartConfiguration,
@@ -47,11 +70,9 @@ Chart.register(...registerables);
         <mat-card-title data-testid="stats-chart-title">{{
           chartTitle()
         }}</mat-card-title>
-        <mat-card-subtitle i18n="@@chart.subtitle"
-          >Balken zeigen deine Wiederholungen pro Zeitabschnitt. Die orange
-          Linie summiert den Tag, die grüne zeigt deinen
-          Trend.</mat-card-subtitle
-        >
+        <mat-card-subtitle data-testid="stats-chart-subtitle">{{
+          subtitleText()
+        }}</mat-card-subtitle>
         @if (granularity() === 'hourly') {
           <mat-button-toggle-group
             [value]="dayChartMode()"
@@ -79,25 +100,11 @@ Chart.register(...registerables);
           class="legend"
           aria-label="Legende"
           i18n-aria-label="@@chart.legendAria"
+          data-testid="stats-chart-legend"
         >
-          <span
-            ><i class="dot dot-bar"></i
-            ><ng-container i18n="@@chart.interval"
-              >Intervallwert</ng-container
-            ></span
-          >
-          <span
-            ><i class="dot dot-line"></i
-            ><ng-container i18n="@@chart.dayIntegral"
-              >Tages-Integral</ng-container
-            ></span
-          >
-          <span
-            ><i class="dot dot-avg"></i
-            ><ng-container i18n="@@chart.movingAvg"
-              >Gleitender Durchschnitt</ng-container
-            ></span
-          >
+          <span><i class="dot dot-bar"></i>{{ intervalLegendText() }}</span>
+          <span><i class="dot dot-line"></i>{{ secondaryLegendText() }}</span>
+          <span><i class="dot dot-avg"></i>{{ movingAvgLegendText() }}</span>
           @if (hasSetsData()) {
             <span
               ><i class="dot dot-sets-bar"></i
@@ -136,6 +143,21 @@ export class StatsChartComponent implements AfterViewInit {
    * title.
    */
   readonly kindLabel = input<string>('');
+  /**
+   * Aggregate measurement type of the bar series. Drives subtitle copy,
+   * legend units, y-axis tick formatting, and whether the orange line
+   * shows the cumulative day integral or km-pace. `null` (the default)
+   * preserves the legacy reps-centric copy for callers that haven't
+   * opted into measurement-aware rendering yet.
+   */
+  readonly measurement = input<ChartMeasurement>(null);
+  /**
+   * Per-bucket pace (min/km) aligned with the bar series. When the
+   * view's {@link measurement} is `'distance'` / `'distance-time'` and
+   * this array contains at least one non-null pace, the chart swaps
+   * the cumulative day-integral line for a km-Tempo line.
+   */
+  readonly paceSeries = input<PaceSeriesEntry[]>([]);
 
   readonly hourlyTitle = $localize`:@@chart.titleHourly:Verlauf (Stundenwerte)`;
   readonly dailyTitle = $localize`:@@chart.titleDaily:Verlauf (Tageswerte)`;
@@ -145,9 +167,80 @@ export class StatsChartComponent implements AfterViewInit {
     const label = this.kindLabel().trim();
     return label ? `${base} – ${label}` : base;
   });
+
+  // -- Localised copy -----------------------------------------------------
+  // Subtitle variants are pre-extracted as $localize tagged templates so
+  // the i18n extractor picks every wording up; the active subtitle is
+  // selected at render time based on `measurement()`.
+  private readonly subtitleReps = $localize`:@@chart.subtitle.reps:Balken zeigen deine Wiederholungen pro Zeitabschnitt. Die orange Linie summiert den Tag, die grüne zeigt deinen Trend.`;
+  private readonly subtitleTime = $localize`:@@chart.subtitle.time:Balken zeigen deine Übungsdauer (s) pro Zeitabschnitt. Die orange Linie summiert den Tag, die grüne zeigt deinen Trend.`;
+  private readonly subtitleDistance = $localize`:@@chart.subtitle.distance:Balken zeigen deine Strecke (km) pro Zeitabschnitt. Die orange Linie zeigt dein Tempo (min/km), die grüne deinen Strecken-Trend.`;
+  private readonly subtitleWeight = $localize`:@@chart.subtitle.weight:Balken zeigen dein Trainingsgewicht (kg) pro Zeitabschnitt. Die orange Linie summiert den Tag, die grüne zeigt deinen Trend.`;
+  private readonly subtitleMixed = $localize`:@@chart.subtitle.mixed:Balken zeigen dein Trainingsvolumen pro Zeitabschnitt. Die orange Linie summiert den Tag, die grüne zeigt deinen Trend.`;
+
+  readonly subtitleText = computed(() => {
+    switch (this.measurement()) {
+      case 'time':
+        return this.subtitleTime;
+      case 'distance':
+      case 'distance-time':
+        return this.subtitleDistance;
+      case 'weight':
+        return this.subtitleWeight;
+      case 'mixed':
+        return this.subtitleMixed;
+      case 'reps':
+      case null:
+      default:
+        return this.subtitleReps;
+    }
+  });
+
   readonly intervalLabel = $localize`:@@chart.interval:Intervallwert`;
   readonly dayIntegralLabel = $localize`:@@chart.dayIntegral:Tages-Integral`;
+  readonly paceLabel = $localize`:@@chart.kmPace:km Tempo`;
   readonly movingAvgLabel = $localize`:@@chart.movingAvg:Gleitender Durchschnitt`;
+
+  /**
+   * Unit suffix appended to the bar series label and matching legend
+   * entries. Empty string for the legacy / unknown / mixed case so the
+   * label reads exactly as before.
+   */
+  readonly unitSuffix = computed(() => {
+    switch (this.measurement()) {
+      case 'time':
+        return ' (s)';
+      case 'distance':
+      case 'distance-time':
+        return ' (km)';
+      case 'weight':
+        return ' (kg)';
+      case 'reps':
+        return ' (Reps)';
+      default:
+        return '';
+    }
+  });
+
+  readonly paceMode = computed(() => {
+    const m = this.measurement();
+    if (m !== 'distance' && m !== 'distance-time') return false;
+    return this.paceSeries().some((p) => p.pace !== null);
+  });
+
+  readonly intervalLegendText = computed(
+    () => `${this.intervalLabel}${this.unitSuffix()}`
+  );
+
+  readonly secondaryLegendText = computed(() =>
+    this.paceMode()
+      ? `${this.paceLabel} (min/km)`
+      : `${this.dayIntegralLabel}${this.unitSuffix()}`
+  );
+
+  readonly movingAvgLegendText = computed(
+    () => `${this.movingAvgLabel}${this.unitSuffix()}`
+  );
 
   readonly hasSetsData = computed(() =>
     this.entries().some((e) => (e.sets?.length ?? 0) > 1)
@@ -160,8 +253,10 @@ export class StatsChartComponent implements AfterViewInit {
       if (!isPlatformBrowser(this.platformId) || !this.viewReady()) return;
       const currentSeries = this.series();
       const currentEntries = this.entries();
-      // Track dayChartMode to re-render on toggle
+      // Track dayChartMode + measurement-driven inputs to re-render
       this.dayChartMode();
+      this.measurement();
+      this.paceSeries();
       queueMicrotask(() => this.renderChart(currentSeries, currentEntries));
     });
   }
@@ -280,12 +375,13 @@ export class StatsChartComponent implements AfterViewInit {
 
     const hasSetsData = [...setsByBucket.values()].some((b) => b.setsReps > 0);
 
+    const intervalDatasetLabel = `${this.intervalLabel}${this.unitSuffix()}`;
     // Build stacked bar datasets when sets data exists
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const barDatasets: any[] = hasSetsData
       ? [
           {
-            label: this.intervalLabel,
+            label: intervalDatasetLabel,
             data: series.map((d) => {
               const ts = this.bucketToTs(d.bucket);
               const info = setsByBucket.get(ts);
@@ -311,7 +407,7 @@ export class StatsChartComponent implements AfterViewInit {
         ]
       : [
           {
-            label: this.intervalLabel,
+            label: intervalDatasetLabel,
             data: series.map((d) => ({
               x: this.bucketToTs(d.bucket),
               y: d.total,
@@ -322,15 +418,34 @@ export class StatsChartComponent implements AfterViewInit {
           },
         ];
 
+    const paceMode = this.paceMode();
+    const paceByBucket = new Map<number, number | null>();
+    if (paceMode) {
+      for (const p of this.paceSeries()) {
+        paceByBucket.set(this.bucketToTs(p.bucket), p.pace);
+      }
+    }
+
+    const secondaryLineLabel = paceMode
+      ? `${this.paceLabel} (min/km)`
+      : `${this.dayIntegralLabel}${this.unitSuffix()}`;
+    const secondaryLineData = paceMode
+      ? series.map((d) => {
+          const ts = this.bucketToTs(d.bucket);
+          const pace = paceByBucket.get(ts);
+          return { x: ts, y: pace ?? null };
+        })
+      : series.map((d) => ({
+          x: this.bucketToTs(d.bucket),
+          y: d.dayIntegral,
+        }));
+
     const data: ChartConfiguration<'bar' | 'line'>['data'] = {
       datasets: [
         ...barDatasets,
         {
-          label: this.dayIntegralLabel,
-          data: series.map((d) => ({
-            x: this.bucketToTs(d.bucket),
-            y: d.dayIntegral,
-          })),
+          label: secondaryLineLabel,
+          data: secondaryLineData,
           type: 'line',
           borderColor: '#ffbe66',
           backgroundColor: '#ffbe66',
@@ -338,9 +453,10 @@ export class StatsChartComponent implements AfterViewInit {
           pointHoverRadius: 4,
           tension: 0.24,
           yAxisID: 'yIntegral',
+          spanGaps: false,
         },
         {
-          label: this.movingAvgLabel,
+          label: `${this.movingAvgLabel}${this.unitSuffix()}`,
           data: movingAvg.map((avg, index) => ({
             x: this.bucketToTs(series[index].bucket),
             y: avg,
@@ -433,12 +549,23 @@ export class StatsChartComponent implements AfterViewInit {
           },
           y: {
             stacked: hasSetsData,
-            ticks: { color: chartTick, precision: 0 },
+            ticks: {
+              color: chartTick,
+              // km bars use 1 decimal; reps/seconds stay integer.
+              precision: this.barAxisPrecision(),
+            },
             grid: { color: chartGrid },
           },
           yIntegral: {
             position: 'right',
-            ticks: { color: '#ffbe66', precision: 0 },
+            ticks: {
+              color: '#ffbe66',
+              // Pace ticks render as decimal min/km (e.g. "5.5"); when
+              // the line falls back to the cumulative day-integral the
+              // precision must match the left axis so km/s/reps share a
+              // consistent number format on both sides.
+              precision: paceMode ? 1 : this.barAxisPrecision(),
+            },
             grid: { drawOnChartArea: false },
           },
         },
@@ -508,5 +635,10 @@ export class StatsChartComponent implements AfterViewInit {
   private bucketToTs(bucket: string): number {
     const normalized = bucket.length === 10 ? `${bucket}T00:00:00` : bucket;
     return new Date(normalized).getTime();
+  }
+
+  private barAxisPrecision(): number {
+    const m = this.measurement();
+    return m === 'distance' || m === 'distance-time' ? 1 : 0;
   }
 }

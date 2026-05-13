@@ -23,6 +23,7 @@ import {
   type ExerciseCategoryId,
   EXERCISE_CATEGORIES,
   inferRangeMode,
+  type MeasurementType,
   PushupRecord,
   pushupRecordToUnified,
   StatsGranularity,
@@ -33,6 +34,7 @@ import {
   unifiedEntryCategoryId,
   UnifiedEntryFilterKey,
   unifiedEntryFilterKey,
+  unifiedEntryMeasurement,
   unifiedEntryPrimaryValue,
   UserStats,
 } from '@pu-stats/models';
@@ -174,6 +176,51 @@ function startOfIsoWeek(date: Date): Date {
 /** First day of the calendar month containing the given date. */
 function startOfMonth(date: Date): Date {
   return new Date(date.getFullYear(), date.getMonth(), 1);
+}
+
+/**
+ * `1 km` reads better on the y-axis than `1000`. Distance bars are
+ * scaled at the source so every downstream consumer (chart bar,
+ * stacked-bar layer, tooltip) sees the same display value. Time stays
+ * in seconds and reps stay in reps — the legend communicates the unit.
+ *
+ * Pure / referentially-transparent so it lives outside `withComputed`'s
+ * closure — no per-signal-evaluation allocation.
+ */
+function measurementScale(
+  measurement: MeasurementType | 'mixed' | null
+): number {
+  return measurement === 'distance' || measurement === 'distance-time'
+    ? 1 / 1000
+    : 1;
+}
+
+/**
+ * Maps a timestamp to the bucket-key it should fall into for the
+ * active chart bucketing scheme. Pulled out of `withComputed` so
+ * `viewPaceSeries`'s row→bucket lookup and any future caller share a
+ * single source of truth.
+ *
+ * Mirrors the keys `viewChartSeries` emits:
+ *   - daily            → `YYYY-MM-DD`
+ *   - hourly 24h mode  → `${from}T${HH}:00:00`
+ *   - hourly 14h mode  → `${from}T00:00:00` for hours 0-7 (the merged
+ *     night bucket); otherwise the hour-suffixed key above.
+ */
+function bucketKeyForTimestamp(
+  timestamp: string,
+  opts: {
+    isDayRange: boolean;
+    dayChartMode: '14h' | '24h';
+    from: string | null;
+  }
+): string {
+  if (!opts.isDayRange) return timestamp.slice(0, 10);
+  const hour = new Date(timestamp).getHours();
+  if (opts.dayChartMode === '14h' && hour < 8) {
+    return `${opts.from}T00:00:00`;
+  }
+  return `${opts.from}T${String(hour).padStart(2, '0')}:00:00`;
 }
 
 export const AnalysisStore = signalStore(
@@ -389,6 +436,44 @@ export const AnalysisStore = signalStore(
     });
 
     /**
+     * Dominant measurement type of the entries currently driving the
+     * chart. Drives the chart's subtitle copy, legend units, and the
+     * "Tages-Integral → km Tempo" line swap for distance/cardio.
+     *
+     *   - `null`     — no entries in the view
+     *   - a single measurement — every entry shares it (e.g. all
+     *     pushups → `'reps'`, all planks → `'time'`, all runs →
+     *     `'distance-time'`)
+     *   - `'mixed'`  — the view contains more than one measurement
+     *     (typical for `core`, which mixes sit-ups and planks, or
+     *     `overview`); the chart falls back to generic copy without a
+     *     specific unit.
+     *
+     * Unknown exerciseIds collapse into `'mixed'` so a custom user
+     * exercise that the catalog can't resolve doesn't masquerade as a
+     * specific unit. `'distance'` (e.g. carries) and `'distance-time'`
+     * (e.g. runs) are returned as distinct values — downstream
+     * consumers (chart paceMode, unit scaling) treat them equivalently
+     * via an `('distance' | 'distance-time')` check, which keeps the
+     * type informative for tab-level UI without forcing a normalisation
+     * step here.
+     */
+    const viewMeasurement = computed<MeasurementType | 'mixed' | null>(() => {
+      const rowsForView = viewFilteredRows();
+      let measurement: MeasurementType | null = null;
+      for (const row of rowsForView) {
+        const m = unifiedEntryMeasurement(row);
+        if (m === null) return 'mixed';
+        if (measurement === null) {
+          measurement = m;
+        } else if (measurement !== m) {
+          return 'mixed';
+        }
+      }
+      return measurement;
+    });
+
+    /**
      * Chart series scoped to {@link AnalysisState.activeView}. The
      * REST-backed {@link chartSeries} aggregates pushups-only on the
      * server, so consuming it from a per-category tab would always
@@ -405,13 +490,14 @@ export const AnalysisStore = signalStore(
       const from = store.from();
       const isDayRange = viewGranularity() === 'hourly';
       const rowsForView = viewFilteredRows();
+      const scale = measurementScale(viewMeasurement());
 
       if (isDayRange) {
         const hourTotals = Array.from({ length: 24 }, () => 0);
         for (const row of rowsForView) {
           const hour = new Date(row.timestamp).getHours();
           if (hour >= 0 && hour <= 23)
-            hourTotals[hour] += unifiedEntryPrimaryValue(row);
+            hourTotals[hour] += unifiedEntryPrimaryValue(row) * scale;
         }
         let cumulative = 0;
         if (resolvedDayChartMode() === '24h') {
@@ -450,7 +536,10 @@ export const AnalysisStore = signalStore(
       const totals = new Map<string, number>();
       for (const row of rowsForView) {
         const day = row.timestamp.slice(0, 10);
-        totals.set(day, (totals.get(day) ?? 0) + unifiedEntryPrimaryValue(row));
+        totals.set(
+          day,
+          (totals.get(day) ?? 0) + unifiedEntryPrimaryValue(row) * scale
+        );
       }
       const sortedDays = [...totals.keys()].sort((a, b) => a.localeCompare(b));
       let cumulative = 0;
@@ -458,6 +547,61 @@ export const AnalysisStore = signalStore(
         const total = totals.get(day) ?? 0;
         cumulative += total;
         return { bucket: day, total, dayIntegral: cumulative };
+      });
+    });
+
+    /**
+     * Returns the bucket-key a row falls into for the current chart's
+     * bucketing scheme. Mirrors the keys produced by
+     * {@link viewChartSeries} so {@link viewPaceSeries} can align its
+     * entries 1:1 with the bar series.
+     */
+    const bucketKeyForRow = (row: UnifiedEntry): string =>
+      bucketKeyForTimestamp(row.timestamp, {
+        isDayRange: viewGranularity() === 'hourly',
+        dayChartMode: resolvedDayChartMode(),
+        from: store.from(),
+      });
+
+    /**
+     * Per-bucket pace (min/km) for distance / distance-time views,
+     * aligned 1:1 with {@link viewChartSeries} buckets so the chart's
+     * line layer can render it in place of the day integral. Empty
+     * `[]` for any other measurement — the chart falls back to the
+     * cumulative day-integral line.
+     *
+     * `pace = (totalDurationSec / 60) / (totalDistanceM / 1000)`. A
+     * bucket with zero distance returns `pace = null` so the chart
+     * can break the line at gaps rather than dropping to zero (which
+     * would imply an impossibly fast pace).
+     */
+    const viewPaceSeries = computed<
+      Array<{ bucket: string; pace: number | null }>
+    >(() => {
+      const measurement = viewMeasurement();
+      if (measurement !== 'distance' && measurement !== 'distance-time') {
+        return [];
+      }
+      const stats = new Map<string, { totalSec: number; totalM: number }>();
+      for (const row of viewFilteredRows()) {
+        if (row.kind !== 'exercise') continue;
+        const totalSec = row.durationSec ?? 0;
+        const totalM = row.distanceM ?? 0;
+        if (!totalSec && !totalM) continue;
+        const key = bucketKeyForRow(row);
+        const e = stats.get(key) ?? { totalSec: 0, totalM: 0 };
+        e.totalSec += totalSec;
+        e.totalM += totalM;
+        stats.set(key, e);
+      }
+      return viewChartSeries().map(({ bucket }) => {
+        const e = stats.get(bucket);
+        // Carry exercises are pure `distance` (no paired duration); without
+        // both numbers a pace value is meaningless, so break the line.
+        if (!e || e.totalM === 0 || e.totalSec === 0) {
+          return { bucket, pace: null };
+        }
+        return { bucket, pace: e.totalSec / 60 / (e.totalM / 1000) };
       });
     });
 
@@ -476,13 +620,14 @@ export const AnalysisStore = signalStore(
      * a reps/weight concept, so time-measured rows still fall into the
      * "no sets" portion of the stack.
      */
-    const viewChartEntries = computed<ChartFeedEntry[]>(() =>
-      viewFilteredRows().map((row) => ({
+    const viewChartEntries = computed<ChartFeedEntry[]>(() => {
+      const scale = measurementScale(viewMeasurement());
+      return viewFilteredRows().map((row) => ({
         timestamp: row.timestamp,
-        reps: unifiedEntryPrimaryValue(row),
+        reps: unifiedEntryPrimaryValue(row) * scale,
         ...(row.sets ? { sets: row.sets } : {}),
-      }))
-    );
+      }));
+    });
 
     /**
      * Per-category roll-up for the overview tab. Always operates on
@@ -857,6 +1002,8 @@ export const AnalysisStore = signalStore(
       viewChartSeries,
       viewChartEntries,
       viewGranularity,
+      viewMeasurement,
+      viewPaceSeries,
       granularity,
       rows,
       unifiedRows,
