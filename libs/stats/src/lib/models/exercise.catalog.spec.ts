@@ -17,6 +17,32 @@ describe('EXERCISE_CATEGORIES', () => {
       expect(cat.nameKey).toMatch(/^@@/);
     }
   });
+
+  it('ships the dialog-supported movement-pattern categories', () => {
+    const ids = new Set(EXERCISE_CATEGORIES.map((c) => c.id));
+    // `carry` (distance) and `strength` (weight) stay declared in
+    // ExerciseCategoryId but are intentionally absent from
+    // EXERCISE_CATEGORIES until the training-entry dialog grows
+    // weight + distance form support — see catalog header comment.
+    for (const id of [
+      'push',
+      'pull',
+      'squat',
+      'hinge',
+      'lunge',
+      'core',
+      'cardio',
+      'mobility',
+    ]) {
+      expect(ids.has(id)).toBe(true);
+    }
+  });
+
+  it('omits weight/distance categories until dialog gains support', () => {
+    const ids = new Set(EXERCISE_CATEGORIES.map((c) => c.id));
+    expect(ids.has('carry')).toBe(false);
+    expect(ids.has('strength')).toBe(false);
+  });
 });
 
 describe('EXERCISE_CATALOG', () => {
@@ -44,32 +70,34 @@ describe('EXERCISE_CATALOG', () => {
     }
   });
 
-  it('includes the phase-0 sit-ups and squats exercises', () => {
+  it('keeps legacy core ids stable so existing Firestore docs resolve', () => {
     const ids = new Set(EXERCISE_CATALOG.map((d) => d.id));
+    // `abs.*` and `plank.*` ids predate the movement-pattern restructure
+    // (moved into the `core` category, ids untouched).
     expect(ids.has('abs.situps')).toBe(true);
-    expect(ids.has('legs.squats')).toBe(true);
+    expect(ids.has('abs.crunches')).toBe(true);
+    expect(ids.has('abs.legraises')).toBe(true);
+    expect(ids.has('abs.russiantwist')).toBe(true);
+    expect(ids.has('abs.mountainclimbers')).toBe(true);
+    expect(ids.has('plank.standard')).toBe(true);
   });
 
-  it('includes the additional abs and legs exercises', () => {
+  it('keeps legacy lower-body ids stable', () => {
     const ids = new Set(EXERCISE_CATALOG.map((d) => d.id));
-    for (const id of [
-      'abs.crunches',
-      'abs.legraises',
-      'abs.russiantwist',
-      'abs.mountainclimbers',
-      'legs.lunges',
-      'legs.glutebridge',
-      'legs.calfraises',
-      'legs.jumpsquats',
-    ]) {
-      expect(ids.has(id)).toBe(true);
-    }
+    // `legs.*` ids predate the squat/hinge/lunge split — kept stable,
+    // only categorisation moved.
+    expect(ids.has('legs.squats')).toBe(true);
+    expect(ids.has('legs.lunges')).toBe(true);
+    expect(ids.has('legs.glutebridge')).toBe(true);
+    expect(ids.has('legs.calfraises')).toBe(true);
+    expect(ids.has('legs.jumpsquats')).toBe(true);
   });
 
-  it('exposes plank.standard as the time-measurement entry point', () => {
+  it('exposes plank.standard as a time-measurement core exercise', () => {
     const plank = EXERCISE_CATALOG.find((d) => d.id === 'plank.standard');
     expect(plank?.measurement).toBe('time');
     expect(plank?.unit).toBe('s');
+    expect(plank?.categoryId).toBe('core');
   });
 
   it('exposes cardio.running as the first distance-time exercise', () => {
@@ -80,11 +108,47 @@ describe('EXERCISE_CATALOG', () => {
     expect(running?.min).toBeGreaterThan(0);
     expect(running?.max).toBeGreaterThanOrEqual(50_000);
   });
+
+  it('ships pull/hinge/mobility exercises', () => {
+    const ids = new Set(EXERCISE_CATALOG.map((d) => d.id));
+    expect(ids.has('pull.pullups')).toBe(true);
+    expect(ids.has('pull.rows')).toBe(true);
+    expect(ids.has('hinge.singlelegRdl')).toBe(true);
+    expect(ids.has('mobility.stretching')).toBe(true);
+  });
+
+  it('does not yet ship distance- or weight-measured catalog entries', () => {
+    // The training-entry dialog only renders `reps` / `time` /
+    // `distance-time` form rows. Surfacing `distance` (carry) or
+    // `weight` (strength) catalog entries before the dialog gains
+    // those input shapes would route users into a save-error path.
+    for (const def of EXERCISE_CATALOG) {
+      expect(def.measurement).not.toBe('distance');
+      expect(def.measurement).not.toBe('weight');
+    }
+  });
+
+  it('attaches variants to compound exercises that benefit from them', () => {
+    const pullups = EXERCISE_CATALOG.find((d) => d.id === 'pull.pullups');
+    expect(pullups?.variants?.length).toBeGreaterThan(0);
+    const plank = EXERCISE_CATALOG.find((d) => d.id === 'plank.standard');
+    expect(plank?.variants?.length).toBeGreaterThan(0);
+    const lunges = EXERCISE_CATALOG.find((d) => d.id === 'legs.lunges');
+    expect(lunges?.variants?.length).toBeGreaterThan(0);
+  });
 });
 
 describe('findExerciseDefinition', () => {
-  it('returns a known catalog entry by id', () => {
-    expect(findExerciseDefinition('abs.situps')?.categoryId).toBe('abs');
+  it('resolves a legacy core id to the core category', () => {
+    expect(findExerciseDefinition('abs.situps')?.categoryId).toBe('core');
+  });
+
+  it('resolves a legacy lower-body id to its movement pattern', () => {
+    expect(findExerciseDefinition('legs.squats')?.categoryId).toBe('squat');
+    expect(findExerciseDefinition('legs.lunges')?.categoryId).toBe('lunge');
+    expect(findExerciseDefinition('legs.glutebridge')?.categoryId).toBe(
+      'hinge'
+    );
   });
 
   it('returns null for unknown ids', () => {
@@ -100,8 +164,11 @@ describe('findExerciseDefinition', () => {
 
 describe('findExerciseCategory', () => {
   it('returns a known category by id', () => {
-    expect(findExerciseCategory('abs')?.nameKey).toBe(
-      '@@exercise.category.abs'
+    expect(findExerciseCategory('core')?.nameKey).toBe(
+      '@@exercise.category.core'
+    );
+    expect(findExerciseCategory('squat')?.nameKey).toBe(
+      '@@exercise.category.squat'
     );
   });
 
@@ -113,10 +180,12 @@ describe('findExerciseCategory', () => {
 describe('exercisesByCategory', () => {
   it('groups every catalog entry under its category', () => {
     const map = exercisesByCategory();
-    const abs = map.get('abs') ?? [];
-    const legs = map.get('legs') ?? [];
-    expect(abs.map((d) => d.id)).toContain('abs.situps');
-    expect(legs.map((d) => d.id)).toContain('legs.squats');
+    const core = map.get('core') ?? [];
+    const squat = map.get('squat') ?? [];
+    const lunge = map.get('lunge') ?? [];
+    expect(core.map((d) => d.id)).toContain('abs.situps');
+    expect(squat.map((d) => d.id)).toContain('legs.squats');
+    expect(lunge.map((d) => d.id)).toContain('legs.lunges');
   });
 
   it('declares a bucket for every known category, even when empty', () => {

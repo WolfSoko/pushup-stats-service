@@ -10,10 +10,7 @@ import { findExerciseDefinition } from '@pu-stats/models';
 import { exerciseDisplayName } from '../i18n/exercise-display-names';
 import { PreviewBannerComponent } from '../components/preview-banner/preview-banner.component';
 import { StatsTableComponent } from '../components/stats-table/stats-table.component';
-import {
-  EntriesStore,
-  type ExerciseKindFilterOption,
-} from '../entries.store';
+import { EntriesStore, type ExerciseKindFilterOption } from '../entries.store';
 import { PageHeaderComponent } from '../../core/page-header/page-header.component';
 
 @Component({
@@ -156,9 +153,7 @@ import { PageHeaderComponent } from '../../core/page-header/page-header.componen
           <mat-card-content>
             <mat-icon aria-hidden="true">fitness_center</mat-icon>
             <div>
-              <strong i18n="@@entries.empty.title"
-                >Noch keine Einträge.</strong
-              >
+              <strong i18n="@@entries.empty.title">Noch keine Einträge.</strong>
               <p i18n="@@entries.empty.body">
                 Trage deinen ersten Trainingseintrag ein — dann wird hier deine
                 Historie sichtbar.
@@ -274,7 +269,7 @@ export class EntriesPageComponent {
 
   private kindLabel(value: string): string {
     if (value === 'pushup') {
-      return $localize`:@@exercise.category.pushup:Liegestütze`;
+      return $localize`:@@exercise.category.push:Drücken`;
     }
     const def = findExerciseDefinition(value);
     if (!def) return value;

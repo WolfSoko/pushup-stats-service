@@ -16,14 +16,33 @@ export type MeasurementType =
   | 'weight'
   | 'distance-time';
 
+/**
+ * Categories follow a movement-pattern taxonomy (Dan John / functional
+ * fitness) rather than body-part labels, with one isolation bucket
+ * (`cardio`, `mobility`, `strength`) per cross-pattern concern:
+ *
+ *   push   — horizontal/vertical pressing (pushups, dips, pike pushup)
+ *   pull   — vertical/horizontal pulling (pull-ups, rows)
+ *   squat  — knee-dominant lower body (squat variants, calf raise)
+ *   hinge  — hip-dominant lower body (glute bridge, hip thrust)
+ *   lunge  — single-leg / split-stance (lunge variants, step-up)
+ *   carry  — loaded carries (farmer's walk, suitcase carry)
+ *   core   — anti-extension / -rotation / -lateral-flexion (plank, sit-up, …)
+ *   cardio — sustained conditioning (run, bike, row, jump rope, burpee)
+ *   mobility — flexibility, joint prep (stretching, yoga, foam roll)
+ *   strength — barbell/dumbbell compound lifts measured in load × reps
+ */
 export type ExerciseCategoryId =
-  | 'pushup'
-  | 'abs'
-  | 'legs'
-  | 'plank'
+  | 'push'
+  | 'pull'
+  | 'squat'
+  | 'hinge'
+  | 'lunge'
+  | 'carry'
+  | 'core'
   | 'cardio'
-  | 'strength'
-  | 'mobility';
+  | 'mobility'
+  | 'strength';
 
 export interface ExerciseCategoryInfo {
   id: ExerciseCategoryId;
@@ -138,11 +157,7 @@ export type ExerciseEntryViolation =
   | 'companion-value-invalid'
   | 'companion-value-out-of-range';
 
-type MeasurementValueField =
-  | 'reps'
-  | 'durationSec'
-  | 'distanceM'
-  | 'weightKg';
+type MeasurementValueField = 'reps' | 'durationSec' | 'distanceM' | 'weightKg';
 
 /**
  * Returns the value field expected for a measurement type. Pure helper —
@@ -151,7 +166,10 @@ type MeasurementValueField =
  */
 export function measurementValueField(
   measurement: MeasurementType
-): keyof Pick<ExerciseEntry, 'reps' | 'durationSec' | 'distanceM' | 'weightKg'> {
+): keyof Pick<
+  ExerciseEntry,
+  'reps' | 'durationSec' | 'distanceM' | 'weightKg'
+> {
   switch (measurement) {
     case 'reps':
     case 'weight':

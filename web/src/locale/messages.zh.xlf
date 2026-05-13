@@ -7250,5 +7250,545 @@
         <target>重播每日目标动画</target>
       </segment>
     </unit>
+      <unit id="exercise.category.push">
+      <segment state="initial">
+        <source>Drücken</source>
+        <target>Drücken</target>
+      </segment>
+    </unit>
+    <unit id="exercise.category.pull">
+      <segment state="initial">
+        <source>Ziehen</source>
+        <target>Ziehen</target>
+      </segment>
+    </unit>
+    <unit id="exercise.category.squat">
+      <segment state="initial">
+        <source>Kniebeuge</source>
+        <target>Kniebeuge</target>
+      </segment>
+    </unit>
+    <unit id="exercise.category.hinge">
+      <segment state="initial">
+        <source>Hüftstreckung</source>
+        <target>Hüftstreckung</target>
+      </segment>
+    </unit>
+    <unit id="exercise.category.lunge">
+      <segment state="initial">
+        <source>Ausfallschritt</source>
+        <target>Ausfallschritt</target>
+      </segment>
+    </unit>
+    <unit id="exercise.category.carry">
+      <segment state="initial">
+        <source>Tragen</source>
+        <target>Tragen</target>
+      </segment>
+    </unit>
+    <unit id="exercise.category.core">
+      <segment state="initial">
+        <source>Rumpf</source>
+        <target>Rumpf</target>
+      </segment>
+    </unit>
+    <unit id="exercise.category.mobility">
+      <segment state="initial">
+        <source>Mobilität</source>
+        <target>Mobilität</target>
+      </segment>
+    </unit>
+    <unit id="exercise.category.strength">
+      <segment state="initial">
+        <source>Krafttraining</source>
+        <target>Krafttraining</target>
+      </segment>
+    </unit>
+    <unit id="exercise.core.deadbug.name">
+      <segment state="initial">
+        <source>Dead Bug</source>
+        <target>Dead Bug</target>
+      </segment>
+    </unit>
+    <unit id="exercise.core.hollowhold.name">
+      <segment state="initial">
+        <source>Hollow Hold</source>
+        <target>Hollow Hold</target>
+      </segment>
+    </unit>
+    <unit id="exercise.squat.wallsit.name">
+      <segment state="initial">
+        <source>Wandsitz</source>
+        <target>Wandsitz</target>
+      </segment>
+    </unit>
+    <unit id="exercise.squat.boxjump.name">
+      <segment state="initial">
+        <source>Box Jumps</source>
+        <target>Box Jumps</target>
+      </segment>
+    </unit>
+    <unit id="exercise.hinge.singlelegRdl.name">
+      <segment state="initial">
+        <source>Einbeiniges Kreuzheben</source>
+        <target>Einbeiniges Kreuzheben</target>
+      </segment>
+    </unit>
+    <unit id="exercise.hinge.goodmorning.name">
+      <segment state="initial">
+        <source>Good Morning</source>
+        <target>Good Morning</target>
+      </segment>
+    </unit>
+    <unit id="exercise.lunge.stepup.name">
+      <segment state="initial">
+        <source>Step-ups</source>
+        <target>Step-ups</target>
+      </segment>
+    </unit>
+    <unit id="exercise.pull.pullups.name">
+      <segment state="initial">
+        <source>Klimmzüge</source>
+        <target>Klimmzüge</target>
+      </segment>
+    </unit>
+    <unit id="exercise.pull.rows.name">
+      <segment state="initial">
+        <source>Ruderzug</source>
+        <target>Ruderzug</target>
+      </segment>
+    </unit>
+    <unit id="exercise.pull.deadhang.name">
+      <segment state="initial">
+        <source>Dead Hang</source>
+        <target>Dead Hang</target>
+      </segment>
+    </unit>
+    <unit id="exercise.pull.facepull.name">
+      <segment state="initial">
+        <source>Face Pull</source>
+        <target>Face Pull</target>
+      </segment>
+    </unit>
+    <unit id="exercise.carry.farmer.name">
+      <segment state="initial">
+        <source>Farmer&apos;s Walk</source>
+        <target>Farmer&apos;s Walk</target>
+      </segment>
+    </unit>
+    <unit id="exercise.carry.suitcase.name">
+      <segment state="initial">
+        <source>Suitcase Carry</source>
+        <target>Suitcase Carry</target>
+      </segment>
+    </unit>
+    <unit id="exercise.carry.overhead.name">
+      <segment state="initial">
+        <source>Overhead Carry</source>
+        <target>Overhead Carry</target>
+      </segment>
+    </unit>
+    <unit id="exercise.cardio.walking.name">
+      <segment state="initial">
+        <source>Gehen</source>
+        <target>Gehen</target>
+      </segment>
+    </unit>
+    <unit id="exercise.cardio.cycling.name">
+      <segment state="initial">
+        <source>Radfahren</source>
+        <target>Radfahren</target>
+      </segment>
+    </unit>
+    <unit id="exercise.cardio.rowing.name">
+      <segment state="initial">
+        <source>Rudern</source>
+        <target>Rudern</target>
+      </segment>
+    </unit>
+    <unit id="exercise.cardio.swimming.name">
+      <segment state="initial">
+        <source>Schwimmen</source>
+        <target>Schwimmen</target>
+      </segment>
+    </unit>
+    <unit id="exercise.cardio.jumprope.name">
+      <segment state="initial">
+        <source>Seilspringen</source>
+        <target>Seilspringen</target>
+      </segment>
+    </unit>
+    <unit id="exercise.cardio.burpees.name">
+      <segment state="initial">
+        <source>Burpees</source>
+        <target>Burpees</target>
+      </segment>
+    </unit>
+    <unit id="exercise.cardio.jumpingjacks.name">
+      <segment state="initial">
+        <source>Hampelmänner</source>
+        <target>Hampelmänner</target>
+      </segment>
+    </unit>
+    <unit id="exercise.cardio.highknees.name">
+      <segment state="initial">
+        <source>High Knees</source>
+        <target>High Knees</target>
+      </segment>
+    </unit>
+    <unit id="exercise.mobility.stretching.name">
+      <segment state="initial">
+        <source>Dehnen</source>
+        <target>Dehnen</target>
+      </segment>
+    </unit>
+    <unit id="exercise.mobility.yoga.name">
+      <segment state="initial">
+        <source>Yoga</source>
+        <target>Yoga</target>
+      </segment>
+    </unit>
+    <unit id="exercise.mobility.foamrolling.name">
+      <segment state="initial">
+        <source>Faszienrolle</source>
+        <target>Faszienrolle</target>
+      </segment>
+    </unit>
+    <unit id="exercise.mobility.dynamicwarmup.name">
+      <segment state="initial">
+        <source>Dynamisches Aufwärmen</source>
+        <target>Dynamisches Aufwärmen</target>
+      </segment>
+    </unit>
+    <unit id="exercise.mobility.catcow.name">
+      <segment state="initial">
+        <source>Katze-Kuh</source>
+        <target>Katze-Kuh</target>
+      </segment>
+    </unit>
+    <unit id="exercise.mobility.hipopener.name">
+      <segment state="initial">
+        <source>Hüftöffner</source>
+        <target>Hüftöffner</target>
+      </segment>
+    </unit>
+    <unit id="exercise.strength.benchpress.name">
+      <segment state="initial">
+        <source>Bankdrücken</source>
+        <target>Bankdrücken</target>
+      </segment>
+    </unit>
+    <unit id="exercise.strength.overheadpress.name">
+      <segment state="initial">
+        <source>Schulterdrücken</source>
+        <target>Schulterdrücken</target>
+      </segment>
+    </unit>
+    <unit id="exercise.strength.deadlift.name">
+      <segment state="initial">
+        <source>Kreuzheben</source>
+        <target>Kreuzheben</target>
+      </segment>
+    </unit>
+    <unit id="exercise.strength.barbellsquat.name">
+      <segment state="initial">
+        <source>Langhantel-Kniebeuge</source>
+        <target>Langhantel-Kniebeuge</target>
+      </segment>
+    </unit>
+    <unit id="exercise.strength.barbellrow.name">
+      <segment state="initial">
+        <source>Langhantelrudern</source>
+        <target>Langhantelrudern</target>
+      </segment>
+    </unit>
+    <unit id="exercise.strength.kettlebellswing.name">
+      <segment state="initial">
+        <source>Kettlebell Swing</source>
+        <target>Kettlebell Swing</target>
+      </segment>
+    </unit>
+      <unit id="exercise.variant.situps.standard">
+      <segment state="initial">
+        <source>Standard</source>
+        <target>Standard</target>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.situps.decline">
+      <segment state="initial">
+        <source>Decline</source>
+        <target>Decline</target>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.situps.weighted">
+      <segment state="initial">
+        <source>Mit Zusatzgewicht</source>
+        <target>Mit Zusatzgewicht</target>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.crunches.standard">
+      <segment state="initial">
+        <source>Standard</source>
+        <target>Standard</target>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.crunches.reverse">
+      <segment state="initial">
+        <source>Reverse Crunches</source>
+        <target>Reverse Crunches</target>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.crunches.bicycle">
+      <segment state="initial">
+        <source>Bicycle Crunches</source>
+        <target>Bicycle Crunches</target>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.crunches.oblique">
+      <segment state="initial">
+        <source>Schräge Crunches</source>
+        <target>Schräge Crunches</target>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.legraises.lying">
+      <segment state="initial">
+        <source>Liegend</source>
+        <target>Liegend</target>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.legraises.hanging-knee">
+      <segment state="initial">
+        <source>Hängend (Knie)</source>
+        <target>Hängend (Knie)</target>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.legraises.hanging-straight">
+      <segment state="initial">
+        <source>Hängend (gestreckt)</source>
+        <target>Hängend (gestreckt)</target>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.russiantwist.bodyweight">
+      <segment state="initial">
+        <source>Eigengewicht</source>
+        <target>Eigengewicht</target>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.russiantwist.weighted">
+      <segment state="initial">
+        <source>Mit Zusatzgewicht</source>
+        <target>Mit Zusatzgewicht</target>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.mountainclimbers.standard">
+      <segment state="initial">
+        <source>Standard</source>
+        <target>Standard</target>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.mountainclimbers.cross-body">
+      <segment state="initial">
+        <source>Cross-Body</source>
+        <target>Cross-Body</target>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.plank.standard">
+      <segment state="initial">
+        <source>Standard</source>
+        <target>Standard</target>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.plank.forearm">
+      <segment state="initial">
+        <source>Unterarmstütz</source>
+        <target>Unterarmstütz</target>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.plank.side">
+      <segment state="initial">
+        <source>Seitlich</source>
+        <target>Seitlich</target>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.plank.reverse">
+      <segment state="initial">
+        <source>Umgekehrt</source>
+        <target>Umgekehrt</target>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.squats.bodyweight">
+      <segment state="initial">
+        <source>Eigengewicht</source>
+        <target>Eigengewicht</target>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.squats.sumo">
+      <segment state="initial">
+        <source>Sumo</source>
+        <target>Sumo</target>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.squats.goblet">
+      <segment state="initial">
+        <source>Goblet</source>
+        <target>Goblet</target>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.squats.bulgarian-split">
+      <segment state="initial">
+        <source>Bulgarian Split</source>
+        <target>Bulgarian Split</target>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.squats.pistol">
+      <segment state="initial">
+        <source>Pistol</source>
+        <target>Pistol</target>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.calfraises.standard">
+      <segment state="initial">
+        <source>Standard</source>
+        <target>Standard</target>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.calfraises.single-leg">
+      <segment state="initial">
+        <source>Einbeinig</source>
+        <target>Einbeinig</target>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.calfraises.seated">
+      <segment state="initial">
+        <source>Sitzend</source>
+        <target>Sitzend</target>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.glutebridge.standard">
+      <segment state="initial">
+        <source>Standard</source>
+        <target>Standard</target>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.glutebridge.single-leg">
+      <segment state="initial">
+        <source>Einbeinig</source>
+        <target>Einbeinig</target>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.glutebridge.hip-thrust">
+      <segment state="initial">
+        <source>Hip Thrust</source>
+        <target>Hip Thrust</target>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.glutebridge.march">
+      <segment state="initial">
+        <source>Marching</source>
+        <target>Marching</target>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.lunges.forward">
+      <segment state="initial">
+        <source>Vorwärts</source>
+        <target>Vorwärts</target>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.lunges.reverse">
+      <segment state="initial">
+        <source>Rückwärts</source>
+        <target>Rückwärts</target>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.lunges.walking">
+      <segment state="initial">
+        <source>Walking</source>
+        <target>Walking</target>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.lunges.lateral">
+      <segment state="initial">
+        <source>Seitlich</source>
+        <target>Seitlich</target>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.lunges.curtsy">
+      <segment state="initial">
+        <source>Curtsy</source>
+        <target>Curtsy</target>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.lunges.jumping">
+      <segment state="initial">
+        <source>Jumping</source>
+        <target>Jumping</target>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.pullups.standard">
+      <segment state="initial">
+        <source>Standard</source>
+        <target>Standard</target>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.pullups.chin-up">
+      <segment state="initial">
+        <source>Chin-up</source>
+        <target>Chin-up</target>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.pullups.wide-grip">
+      <segment state="initial">
+        <source>Breiter Griff</source>
+        <target>Breiter Griff</target>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.pullups.neutral-grip">
+      <segment state="initial">
+        <source>Neutraler Griff</source>
+        <target>Neutraler Griff</target>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.pullups.negative">
+      <segment state="initial">
+        <source>Negativ</source>
+        <target>Negativ</target>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.pullups.assisted">
+      <segment state="initial">
+        <source>Assistiert</source>
+        <target>Assistiert</target>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.pullups.archer">
+      <segment state="initial">
+        <source>Archer</source>
+        <target>Archer</target>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.rows.inverted">
+      <segment state="initial">
+        <source>Inverted Row</source>
+        <target>Inverted Row</target>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.rows.australian">
+      <segment state="initial">
+        <source>Australian Row</source>
+        <target>Australian Row</target>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.rows.dumbbell">
+      <segment state="initial">
+        <source>Kurzhantel</source>
+        <target>Kurzhantel</target>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.rows.barbell">
+      <segment state="initial">
+        <source>Langhantel</source>
+        <target>Langhantel</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

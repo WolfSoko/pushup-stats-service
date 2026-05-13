@@ -30,6 +30,7 @@ import {
   exercisesByCategory,
   ExerciseCategoryId,
   ExerciseDefinition,
+  ExerciseVariant,
   findExerciseDefinition,
   findPushupTypeByLocalizedName,
   findPushupTypeByStoredValue,
@@ -39,7 +40,10 @@ import {
   PUSHUP_TYPES,
   PushupTypeInfo,
 } from '@pu-stats/models';
-import { exerciseDisplayName } from '../../i18n/exercise-display-names';
+import {
+  exerciseDisplayName,
+  variantDisplayName,
+} from '../../i18n/exercise-display-names';
 
 /**
  * Synthetic id for the implicit "Liegestütze (Standard)" exercise inside
@@ -368,7 +372,7 @@ interface PushupTypeOption {
             >
             @for (variant of currentDefinition()?.variants; track variant.id) {
               <mat-option [value]="variant.id">{{
-                exerciseVariantLabel(variant.id)
+                exerciseVariantLabel(variant)
               }}</mat-option>
             }
           </mat-select>
@@ -588,20 +592,21 @@ export class TrainingEntryDialogComponent {
   readonly category = signal<ExerciseCategoryId>(this.initialCategory());
 
   /**
-   * Catalog exercise id when category !== 'pushup'. Defaults to the
-   * first exercise of the chosen category. For the pushup category the
+   * Catalog exercise id when category !== 'push'. Defaults to the
+   * first exercise of the chosen category. For the push category the
    * value is the synthetic {@link PUSHUP_EXERCISE_ID} so the picker can
-   * show a single entry without a real catalog row.
+   * show a single entry without a real catalog row — the legacy
+   * `pushups` Firestore collection has no `ExerciseDefinition`.
    */
   readonly exerciseId = signal<string>(this.initialExerciseId());
 
   readonly mode = computed<'pushup' | 'exercise'>(() =>
-    this.category() === 'pushup' ? 'pushup' : 'exercise'
+    this.category() === 'push' ? 'pushup' : 'exercise'
   );
 
   readonly exerciseOptions = computed<ExerciseOption[]>(() => {
     const cat = this.category();
-    if (cat === 'pushup') {
+    if (cat === 'push') {
       return [
         {
           value: PUSHUP_EXERCISE_ID,
@@ -843,7 +848,7 @@ export class TrainingEntryDialogComponent {
     // Reset exercise to the first option of the new category. Reset
     // measurement-specific inputs so a stale value from a previously
     // selected exercise can't leak through to the new one.
-    if (next === 'pushup') {
+    if (next === 'push') {
       this.exerciseId.set(PUSHUP_EXERCISE_ID);
     } else {
       const defs = exercisesByCategory().get(next) ?? [];
@@ -872,8 +877,8 @@ export class TrainingEntryDialogComponent {
     this.distanceInput.set('');
   }
 
-  exerciseVariantLabel(variantId: string): string {
-    return variantId;
+  exerciseVariantLabel(variant: ExerciseVariant): string {
+    return variantDisplayName(variant);
   }
 
   exerciseLabel(id: string): string {
@@ -1012,16 +1017,16 @@ export class TrainingEntryDialogComponent {
   // ----- helpers ----------------------------------------------------------
 
   private initialCategory(): ExerciseCategoryId {
-    if (!this.data) return 'pushup';
-    if (this.data.kind === 'pushup') return 'pushup';
+    if (!this.data) return 'push';
+    if (this.data.kind === 'pushup') return 'push';
     const def = findExerciseDefinition(this.data.exerciseId);
     if (def) return def.categoryId;
     // Stale exerciseId (renamed/removed in the catalog): stay in
     // exercise mode so the dialog doesn't silently flip to pushup,
     // which would also corrupt the emitted payload shape on submit.
     // Pick the category the id is prefixed with when it follows the
-    // dotted catalog convention (e.g. `'abs.weighted-situps'` → `abs`),
-    // otherwise default to the first non-pushup catalog category.
+    // dotted catalog convention (e.g. `'abs.weighted-situps'` → `core`),
+    // otherwise default to the first non-push catalog category.
     return inferExerciseCategory(this.data.exerciseId);
   }
 
@@ -1090,24 +1095,25 @@ export class TrainingEntryDialogComponent {
 }
 
 const CATEGORY_NAMES: Record<ExerciseCategoryId, () => string> = {
-  pushup: () => $localize`:@@exercise.category.pushup:Liegestütze`,
-  abs: () => $localize`:@@exercise.category.abs:Bauch`,
-  legs: () => $localize`:@@exercise.category.legs:Beine`,
-  plank: () => $localize`:@@exercise.category.plank:Plank`,
+  push: () => $localize`:@@exercise.category.push:Drücken`,
+  pull: () => $localize`:@@exercise.category.pull:Ziehen`,
+  squat: () => $localize`:@@exercise.category.squat:Kniebeuge`,
+  hinge: () => $localize`:@@exercise.category.hinge:Hüftstreckung`,
+  lunge: () => $localize`:@@exercise.category.lunge:Ausfallschritt`,
+  carry: () => $localize`:@@exercise.category.carry:Tragen`,
+  core: () => $localize`:@@exercise.category.core:Rumpf`,
   cardio: () => $localize`:@@exercise.category.cardio:Ausdauer`,
-  // strength + mobility are catalog-known but have no exercises yet —
-  // leave them out of the dialog until they ship a definition.
-  strength: () => 'Kraft',
-  mobility: () => 'Mobility',
+  mobility: () => $localize`:@@exercise.category.mobility:Mobilität`,
+  strength: () => $localize`:@@exercise.category.strength:Krafttraining`,
 };
 
 function buildCategoryOptions(): ReadonlyArray<CategoryOption> {
   // Filter to categories that actually have something to log in this
-  // dialog: pushup (always — handled separately) plus any catalog
-  // category with at least one ExerciseDefinition.
+  // dialog: push (always — legacy pushups handled separately) plus
+  // any catalog category with at least one ExerciseDefinition.
   const byCategory = exercisesByCategory();
   return EXERCISE_CATEGORIES.filter(
-    (cat) => cat.id === 'pushup' || (byCategory.get(cat.id)?.length ?? 0) > 0
+    (cat) => cat.id === 'push' || (byCategory.get(cat.id)?.length ?? 0) > 0
   ).map((cat) => ({
     value: cat.id,
     label: (CATEGORY_NAMES[cat.id] ?? (() => cat.id))(),
@@ -1183,13 +1189,23 @@ function inferExerciseCategory(
   exerciseId: string | undefined
 ): ExerciseCategoryId {
   const prefix = exerciseId?.split('.')[0];
+  // Legacy id prefixes from before the movement-pattern restructure
+  // still appear in Firestore docs — map them onto the new categories.
+  const LEGACY_PREFIX_MAP: Record<string, ExerciseCategoryId> = {
+    abs: 'core',
+    plank: 'core',
+    legs: 'squat',
+  };
+  if (prefix && prefix in LEGACY_PREFIX_MAP) {
+    return LEGACY_PREFIX_MAP[prefix];
+  }
   const known = EXERCISE_CATEGORIES.find((c) => c.id === prefix);
-  if (known && known.id !== 'pushup') return known.id;
+  if (known && known.id !== 'push') return known.id;
   const byCategory = exercisesByCategory();
   const fallback = EXERCISE_CATEGORIES.find(
-    (c) => c.id !== 'pushup' && (byCategory.get(c.id)?.length ?? 0) > 0
+    (c) => c.id !== 'push' && (byCategory.get(c.id)?.length ?? 0) > 0
   );
-  return fallback?.id ?? 'abs';
+  return fallback?.id ?? 'core';
 }
 
 /**
