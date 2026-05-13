@@ -1098,7 +1098,7 @@ const CATEGORY_NAMES: Record<ExerciseCategoryId, () => string> = {
   push: () => $localize`:@@exercise.category.push:Drücken`,
   pull: () => $localize`:@@exercise.category.pull:Ziehen`,
   squat: () => $localize`:@@exercise.category.squat:Kniebeuge`,
-  hinge: () => $localize`:@@exercise.category.hinge:Hüftbeuge`,
+  hinge: () => $localize`:@@exercise.category.hinge:Hüftstreckung`,
   lunge: () => $localize`:@@exercise.category.lunge:Ausfallschritt`,
   carry: () => $localize`:@@exercise.category.carry:Tragen`,
   core: () => $localize`:@@exercise.category.core:Rumpf`,

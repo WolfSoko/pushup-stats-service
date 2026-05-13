@@ -90,7 +90,6 @@ export const EXERCISE_CATEGORIES: ReadonlyArray<ExerciseCategoryInfo> = [
  * be reflected in `data-store/firestore.rules` and vice versa.
  */
 export const EXERCISE_CATALOG: ReadonlyArray<ExerciseDefinition> = [
-  // ─── core ────────────────────────────────────────────────────────────
   {
     // Legacy id `abs.situps` predates the movement-pattern restructure.
     // Kept as-is so existing Firestore docs continue to resolve; only
@@ -280,7 +279,6 @@ export const EXERCISE_CATALOG: ReadonlyArray<ExerciseDefinition> = [
     ],
   },
 
-  // ─── squat (knee-dominant lower body) ────────────────────────────────
   {
     id: 'legs.squats',
     categoryId: 'squat',
@@ -376,7 +374,6 @@ export const EXERCISE_CATALOG: ReadonlyArray<ExerciseDefinition> = [
     icon: 'directions_run',
   },
 
-  // ─── hinge (hip-dominant lower body) ─────────────────────────────────
   {
     id: 'legs.glutebridge',
     categoryId: 'hinge',
@@ -430,7 +427,6 @@ export const EXERCISE_CATALOG: ReadonlyArray<ExerciseDefinition> = [
     icon: 'compress',
   },
 
-  // ─── lunge (single-leg / split-stance) ───────────────────────────────
   {
     id: 'legs.lunges',
     categoryId: 'lunge',
@@ -484,7 +480,6 @@ export const EXERCISE_CATALOG: ReadonlyArray<ExerciseDefinition> = [
     icon: 'stairs',
   },
 
-  // ─── pull (vertical/horizontal pulling) ──────────────────────────────
   {
     id: 'pull.pullups',
     categoryId: 'pull',
@@ -585,14 +580,12 @@ export const EXERCISE_CATALOG: ReadonlyArray<ExerciseDefinition> = [
     icon: 'rowing',
   },
 
-  // ─── carry (loaded carries) ──────────────────────────────────────────
   // Carry exercises are `distance`-measured and need a distance-only
   // form path the training dialog doesn't yet implement (today it only
   // renders `time` and `distance-time` form rows). They ship in a
   // follow-up PR alongside the dialog work + a Firestore rule branch
   // that bounds `distanceM` for the carry-specific ids.
 
-  // ─── cardio ──────────────────────────────────────────────────────────
   {
     id: 'cardio.running',
     categoryId: 'cardio',
@@ -684,7 +677,6 @@ export const EXERCISE_CATALOG: ReadonlyArray<ExerciseDefinition> = [
     icon: 'directions_run',
   },
 
-  // ─── mobility ────────────────────────────────────────────────────────
   {
     id: 'mobility.stretching',
     categoryId: 'mobility',
@@ -746,7 +738,6 @@ export const EXERCISE_CATALOG: ReadonlyArray<ExerciseDefinition> = [
     icon: 'accessibility_new',
   },
 
-  // ─── strength (weighted compound lifts) ──────────────────────────────
   // Strength exercises are `weight`-measured and require a `weightKg`
   // companion input the training dialog doesn't yet render. They ship
   // in a follow-up PR alongside the weighted-set form, the `weightKg`

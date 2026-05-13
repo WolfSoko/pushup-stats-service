@@ -281,20 +281,20 @@ service cloud.firestore {
                     // pin to `resource.data.exerciseId`.
                     && (
                       // Reps-measured exercises: reject `durationSec`/
-                      // `distanceM` and validate reps when changed. Same
-                      // allowlist as create, sourced from
-                      // `isRepsExerciseId()` at the top of this file.
+                      // `distanceM` and validate reps when changed.
+                      // Caps mirror the create branch (single source of
+                      // truth via `isRepsExerciseId()` at the top).
                       (isRepsExerciseId(resource.data.exerciseId)
                         && !('durationSec' in request.resource.data.keys())
                         && !('distanceM' in request.resource.data.keys())
                         && (!('reps' in request.resource.data.diff(resource.data).affectedKeys())
                             || (request.resource.data.reps is int
                                 && request.resource.data.reps >= 1
-                                && request.resource.data.reps <= 500)))
+                                && request.resource.data.reps <= 10000)))
                       ||
-                      // Time-measured exercises (plank): reject `reps`,
-                      // `sets`, `distanceM`; validate durationSec when changed.
-                      (resource.data.exerciseId == 'plank.standard'
+                      // Time-measured exercises: reject `reps`, `sets`,
+                      // `distanceM`; validate durationSec when changed.
+                      (isTimeExerciseId(resource.data.exerciseId)
                         && !('reps' in request.resource.data.keys())
                         && !('sets' in request.resource.data.keys())
                         && !('distanceM' in request.resource.data.keys())
@@ -303,16 +303,15 @@ service cloud.firestore {
                                 && request.resource.data.durationSec >= 1
                                 && request.resource.data.durationSec <= 7200)))
                       ||
-                      // Distance-time-measured exercises (cardio.running):
-                      // reject `reps`/`sets`; validate distanceM and
-                      // durationSec when changed.
-                      (resource.data.exerciseId == 'cardio.running'
+                      // Distance-time-measured exercises: reject `reps`/
+                      // `sets`; validate distanceM + durationSec on change.
+                      (isDistanceTimeExerciseId(resource.data.exerciseId)
                         && !('reps' in request.resource.data.keys())
                         && !('sets' in request.resource.data.keys())
                         && (!('distanceM' in request.resource.data.diff(resource.data).affectedKeys())
                             || (request.resource.data.distanceM is int
-                                && request.resource.data.distanceM >= 100
-                                && request.resource.data.distanceM <= 50000))
+                                && request.resource.data.distanceM >= 1
+                                && request.resource.data.distanceM <= 300000))
                         && (!('durationSec' in request.resource.data.diff(resource.data).affectedKeys())
                             || (request.resource.data.durationSec is int
                                 && request.resource.data.durationSec >= 1

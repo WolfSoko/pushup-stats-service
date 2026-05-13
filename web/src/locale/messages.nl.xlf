@@ -7653,8 +7653,8 @@
     </unit>
     <unit id="exercise.category.hinge">
       <segment state="initial">
-        <source>Hüftbeuge</source>
-        <target>Hüftbeuge</target>
+        <source>Hüftstreckung</source>
+        <target>Hüftstreckung</target>
       </segment>
     </unit>
     <unit id="exercise.category.lunge">
