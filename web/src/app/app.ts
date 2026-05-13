@@ -349,12 +349,13 @@ export class App {
 
   /**
    * Toolbar "Tagesziel" pill click — when today's goal has already been
-   * reached, replay the snap-celebration dialog on demand. No-op while the
-   * pill is still counting up to the goal.
+   * reached, replay the snap-celebration dialog on demand. The notifier
+   * picks the right dialog kind (plan vs. daily) to match what the pill
+   * is showing. No-op while the pill is still counting up to the goal.
    */
   handleGoalPillClick(): void {
     if (!this.goalReached()) return;
-    this._goalReachedNotifier.reopen('daily');
+    this._goalReachedNotifier.reopenPrimaryGoal();
   }
 
   // Angular's strictTemplates mode types `$event` for `(keydown.*)` key-

@@ -818,12 +818,11 @@ describe('GoalReachedNotificationService', () => {
   });
 
   describe('Given an active plan but no configured daily goal', () => {
-    it('Then the plan dialog stays silent (the daily-loading-state guard)', async () => {
-      // Given — no `dailyGoal` set in the user config (resource resolves to 0).
-      // The notification service can't distinguish "still loading" from
-      // "user never configured one", so plan-goal celebrations are gated
-      // on a non-zero configured daily goal. Locks the documented behaviour
-      // referenced in the planGoal comment block.
+    it('Then it opens the plan dialog when the plan target is reached', async () => {
+      // Given — only a plan is active (no dailyGoal configured). The toolbar
+      // pill labels the plan target as the "Tagesziel", so reaching it must
+      // celebrate via the plan-specific dialog (regression for #332 + #330:
+      // before this fix the dialog never fired at all in this scenario).
       setup({
         planTodayDay: {
           dayIndex: 1,
@@ -843,12 +842,165 @@ describe('GoalReachedNotificationService', () => {
       // When
       await flushAll();
 
-      // Then
+      // Then — plan dialog fires with the plan target.
       const planCall = dialogOpenSpy.mock.calls.find((call) => {
         const c = call[1] as { data?: { kind?: string } } | undefined;
         return c?.data?.kind === 'plan';
       });
-      expect(planCall).toBeUndefined();
+      expect(planCall).toBeDefined();
+      const [, planConfig] = planCall!;
+      expect(planConfig?.data).toMatchObject({
+        kind: 'plan',
+        total: 30,
+        goal: 30,
+      });
+      // And — no daily dialog (no configured daily goal to celebrate).
+      const dailyCall = dialogOpenSpy.mock.calls.find((call) => {
+        const c = call[1] as { data?: { kind?: string } } | undefined;
+        return c?.data?.kind === 'daily';
+      });
+      expect(dailyCall).toBeUndefined();
+    });
+
+    it('Then it stays silent while the plan target has not yet been reached', async () => {
+      // Given — only a plan is active, total below plan target.
+      setup({
+        planTodayDay: {
+          dayIndex: 1,
+          kind: 'main',
+          targetReps: 30,
+          description: '',
+        },
+        entries: [
+          {
+            _id: '1',
+            timestamp: '2026-04-22T08:00:00',
+            reps: 10,
+          } as PushupRecord,
+        ],
+      });
+
+      // When
+      await flushAll();
+
+      // Then
+      expect(dialogOpenSpy).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('Given the toolbar pill replays the primary goal', () => {
+    it('Then reopenPrimaryGoal() reopens the plan dialog when only a plan is active', async () => {
+      // Given — auto-fire opens the plan dialog once.
+      const service = setup({
+        planTodayDay: {
+          dayIndex: 1,
+          kind: 'main',
+          targetReps: 30,
+          description: '',
+        },
+        entries: [
+          {
+            _id: '1',
+            timestamp: '2026-04-22T08:00:00',
+            reps: 30,
+          } as PushupRecord,
+        ],
+      });
+      await flushAll();
+      expect(dialogOpenSpy).toHaveBeenCalledTimes(1);
+      dialogOpenSpy.mockClear();
+
+      // When
+      service.reopenPrimaryGoal();
+      await flushAll();
+
+      // Then
+      expect(dialogOpenSpy).toHaveBeenCalledTimes(1);
+      const [, config] = dialogOpenSpy.mock.calls[0];
+      expect(config?.data).toMatchObject({
+        kind: 'plan',
+        total: 30,
+        goal: 30,
+      });
+    });
+
+    it('Then reopenPrimaryGoal() reopens the daily dialog when daily is configured', async () => {
+      // Given
+      const service = setup({
+        dailyGoal: 10,
+        entries: [
+          {
+            _id: '1',
+            timestamp: '2026-04-22T08:00:00',
+            reps: 12,
+          } as PushupRecord,
+        ],
+      });
+      await flushAll();
+      dialogOpenSpy.mockClear();
+
+      // When
+      service.reopenPrimaryGoal();
+      await flushAll();
+
+      // Then
+      expect(dialogOpenSpy).toHaveBeenCalledTimes(1);
+      const [, config] = dialogOpenSpy.mock.calls[0];
+      expect(config?.data).toMatchObject({ kind: 'daily' });
+    });
+
+    it("Then reopenPrimaryGoal() prefers the plan dialog when both daily and plan have been crossed (matches the pill's plan-target label)", async () => {
+      // Given — daily=10, plan=50, total=50. Both auto-fire during setup.
+      const service = setup({
+        dailyGoal: 10,
+        planTodayDay: {
+          dayIndex: 1,
+          kind: 'main',
+          targetReps: 50,
+          description: '',
+        },
+        entries: [
+          {
+            _id: '1',
+            timestamp: '2026-04-22T08:00:00',
+            reps: 50,
+          } as PushupRecord,
+        ],
+      });
+      await flushAll();
+      dialogOpenSpy.mockClear();
+
+      // When
+      service.reopenPrimaryGoal();
+      await flushAll();
+
+      // Then — plan dialog wins (the toolbar pill shows the plan target).
+      expect(dialogOpenSpy).toHaveBeenCalledTimes(1);
+      const [, config] = dialogOpenSpy.mock.calls[0];
+      expect(config?.data).toMatchObject({ kind: 'plan' });
+    });
+
+    it('Then reopenPrimaryGoal() no-ops when neither goal has been reached', async () => {
+      // Given
+      const service = setup({
+        dailyGoal: 100,
+        entries: [
+          {
+            _id: '1',
+            timestamp: '2026-04-22T08:00:00',
+            reps: 5,
+          } as PushupRecord,
+        ],
+      });
+      await flushAll();
+      dialogOpenSpy.mockClear();
+
+      // When
+      service.reopenPrimaryGoal();
+      await flushAll();
+
+      // Then
+      expect(dialogOpenSpy).not.toHaveBeenCalled();
     });
   });
 });
