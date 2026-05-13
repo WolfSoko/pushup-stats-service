@@ -178,6 +178,51 @@ function startOfMonth(date: Date): Date {
   return new Date(date.getFullYear(), date.getMonth(), 1);
 }
 
+/**
+ * `1 km` reads better on the y-axis than `1000`. Distance bars are
+ * scaled at the source so every downstream consumer (chart bar,
+ * stacked-bar layer, tooltip) sees the same display value. Time stays
+ * in seconds and reps stay in reps — the legend communicates the unit.
+ *
+ * Pure / referentially-transparent so it lives outside `withComputed`'s
+ * closure — no per-signal-evaluation allocation.
+ */
+function measurementScale(
+  measurement: MeasurementType | 'mixed' | null
+): number {
+  return measurement === 'distance' || measurement === 'distance-time'
+    ? 1 / 1000
+    : 1;
+}
+
+/**
+ * Maps a timestamp to the bucket-key it should fall into for the
+ * active chart bucketing scheme. Pulled out of `withComputed` so
+ * `viewPaceSeries`'s row→bucket lookup and any future caller share a
+ * single source of truth.
+ *
+ * Mirrors the keys `viewChartSeries` emits:
+ *   - daily            → `YYYY-MM-DD`
+ *   - hourly 24h mode  → `${from}T${HH}:00:00`
+ *   - hourly 14h mode  → `${from}T00:00:00` for hours 0-7 (the merged
+ *     night bucket); otherwise the hour-suffixed key above.
+ */
+function bucketKeyForTimestamp(
+  timestamp: string,
+  opts: {
+    isDayRange: boolean;
+    dayChartMode: '14h' | '24h';
+    from: string | null;
+  }
+): string {
+  if (!opts.isDayRange) return timestamp.slice(0, 10);
+  const hour = new Date(timestamp).getHours();
+  if (opts.dayChartMode === '14h' && hour < 8) {
+    return `${opts.from}T00:00:00`;
+  }
+  return `${opts.from}T${String(hour).padStart(2, '0')}:00:00`;
+}
+
 export const AnalysisStore = signalStore(
   withState<AnalysisState>(() => {
     const defaultRange = createWeekRange();
@@ -428,19 +473,6 @@ export const AnalysisStore = signalStore(
       return measurement;
     });
 
-    // `1 km` reads better on the y-axis than `1000`. We scale distance
-    // bars at the source so every downstream consumer (chart bar,
-    // stacked-bar layer, tooltip) sees the same display value. Time
-    // stays in seconds and reps stay in reps — the legend communicates
-    // the unit.
-    const measurementScale = (
-      measurement: MeasurementType | 'mixed' | null
-    ): number => {
-      return measurement === 'distance' || measurement === 'distance-time'
-        ? 1 / 1000
-        : 1;
-    };
-
     /**
      * Chart series scoped to {@link AnalysisState.activeView}. The
      * REST-backed {@link chartSeries} aggregates pushups-only on the
@@ -524,16 +556,12 @@ export const AnalysisStore = signalStore(
      * {@link viewChartSeries} so {@link viewPaceSeries} can align its
      * entries 1:1 with the bar series.
      */
-    const bucketKeyForRow = (row: UnifiedEntry): string => {
-      const isDayRange = viewGranularity() === 'hourly';
-      if (!isDayRange) return row.timestamp.slice(0, 10);
-      const from = store.from();
-      const hour = new Date(row.timestamp).getHours();
-      if (resolvedDayChartMode() === '14h' && hour < 8) {
-        return `${from}T00:00:00`;
-      }
-      return `${from}T${String(hour).padStart(2, '0')}:00:00`;
-    };
+    const bucketKeyForRow = (row: UnifiedEntry): string =>
+      bucketKeyForTimestamp(row.timestamp, {
+        isDayRange: viewGranularity() === 'hourly',
+        dayChartMode: resolvedDayChartMode(),
+        from: store.from(),
+      });
 
     /**
      * Per-bucket pace (min/km) for distance / distance-time views,
