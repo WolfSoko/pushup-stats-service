@@ -565,7 +565,11 @@ export const AnalysisStore = signalStore(
       }
       return viewChartSeries().map(({ bucket }) => {
         const e = stats.get(bucket);
-        if (!e || e.totalM === 0) return { bucket, pace: null };
+        // Carry exercises are pure `distance` (no paired duration); without
+        // both numbers a pace value is meaningless, so break the line.
+        if (!e || e.totalM === 0 || e.totalSec === 0) {
+          return { bucket, pace: null };
+        }
         return { bucket, pace: e.totalSec / 60 / (e.totalM / 1000) };
       });
     });

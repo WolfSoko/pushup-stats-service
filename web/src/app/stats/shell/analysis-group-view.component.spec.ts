@@ -355,6 +355,36 @@ describe('AnalysisGroupViewComponent', () => {
     expect(entry?.pace).toBeCloseTo(5, 5);
   });
 
+  it('viewPaceSeries returns pace=null for distance entries without duration so the chart does not render a bogus zero-pace line', async () => {
+    // Regression for a distance-only carry exercise (or a future
+    // `distance` exercise with no paired duration): totalSec stays 0,
+    // so dividing by it would produce pace=0. The chart's paceMode()
+    // would flip true on the non-null value and we'd show an
+    // impossible "0 min/km" line in place of the day integral.
+    liveExerciseEntries.set([
+      {
+        _id: 'e1',
+        userId: 'u1',
+        exerciseId: 'cardio.running',
+        timestamp: '2026-02-10T08:00:00.000Z',
+        distanceM: 5000,
+        // durationSec deliberately omitted
+        source: 'web',
+      } as ExerciseEntry,
+    ]);
+    const groupViewEl = fixture.debugElement.query(
+      By.directive(AnalysisGroupViewComponent)
+    );
+    const store = groupViewEl.injector.get(AnalysisStore);
+    store.setRange('2026-02-09', '2026-02-15');
+    store.setActiveView('cardio');
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const entry = store.viewPaceSeries().find((p) => p.bucket === '2026-02-10');
+    expect(entry?.pace).toBeNull();
+  });
+
   it('viewPaceSeries is empty for non-distance views (reps/time) — the chart keeps the day-integral line', async () => {
     liveExerciseEntries.set([
       {
