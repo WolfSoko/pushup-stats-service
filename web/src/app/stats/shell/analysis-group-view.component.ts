@@ -38,6 +38,8 @@ import { kindDisplayName } from '../i18n/exercise-display-names';
       [from]="store.from()"
       [to]="store.to()"
       [entries]="store.viewChartEntries()"
+      [measurement]="store.viewMeasurement()"
+      [paceSeries]="store.viewPaceSeries()"
       [dayChartMode]="store.resolvedDayChartMode()"
       (dayChartModeChange)="store.setDayChartMode($event)"
     />

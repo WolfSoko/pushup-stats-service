@@ -49,6 +49,8 @@ class MockStatsChartComponent {
   readonly from = input<string>('');
   readonly to = input<string>('');
   readonly entries = input<unknown[]>([]);
+  readonly measurement = input<unknown>(null);
+  readonly paceSeries = input<unknown[]>([]);
   readonly dayChartMode = model<string>('14h');
 }
 
@@ -239,6 +241,141 @@ describe('AnalysisGroupViewComponent', () => {
     const totals = Object.fromEntries(series.map((s) => [s.bucket, s.total]));
     expect(totals['2026-02-10']).toBe(60);
     expect(totals['2026-02-12']).toBe(90);
+  });
+
+  it('viewMeasurement reports "time" for a plank-only view so the chart knows the unit', async () => {
+    liveExerciseEntries.set([
+      {
+        _id: 'e1',
+        userId: 'u1',
+        exerciseId: 'plank.standard',
+        timestamp: '2026-02-10T08:00:00.000Z',
+        durationSec: 60,
+        source: 'web',
+      } as ExerciseEntry,
+    ]);
+    const groupViewEl = fixture.debugElement.query(
+      By.directive(AnalysisGroupViewComponent)
+    );
+    const store = groupViewEl.injector.get(AnalysisStore);
+    store.setRange('2026-02-09', '2026-02-15');
+    store.setActiveView('core');
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    expect(store.viewMeasurement()).toBe('time');
+  });
+
+  it('viewMeasurement collapses to "mixed" when a category contains different measurements', async () => {
+    liveExerciseEntries.set([
+      {
+        _id: 'e1',
+        userId: 'u1',
+        exerciseId: 'abs.situps',
+        timestamp: '2026-02-10T08:00:00.000Z',
+        reps: 30,
+        source: 'web',
+      } as ExerciseEntry,
+      {
+        _id: 'e2',
+        userId: 'u1',
+        exerciseId: 'plank.standard',
+        timestamp: '2026-02-11T08:00:00.000Z',
+        durationSec: 60,
+        source: 'web',
+      } as ExerciseEntry,
+    ]);
+    const groupViewEl = fixture.debugElement.query(
+      By.directive(AnalysisGroupViewComponent)
+    );
+    const store = groupViewEl.injector.get(AnalysisStore);
+    store.setRange('2026-02-09', '2026-02-15');
+    store.setActiveView('core');
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    expect(store.viewMeasurement()).toBe('mixed');
+  });
+
+  it('viewChartSeries scales distance entries from meters to km so the bar axis reads naturally', async () => {
+    // Regression: distance-measured runs are stored in meters
+    // (`distanceM: 5000`). Showing 5000 on the chart axis is awkward —
+    // the store divides by 1000 so the bar shows 5 (km) and the
+    // legend's "(km)" unit lines up.
+    liveExerciseEntries.set([
+      {
+        _id: 'e1',
+        userId: 'u1',
+        exerciseId: 'cardio.running',
+        timestamp: '2026-02-10T08:00:00.000Z',
+        distanceM: 5000,
+        durationSec: 1500,
+        source: 'web',
+      } as ExerciseEntry,
+    ]);
+    const groupViewEl = fixture.debugElement.query(
+      By.directive(AnalysisGroupViewComponent)
+    );
+    const store = groupViewEl.injector.get(AnalysisStore);
+    store.setRange('2026-02-09', '2026-02-15');
+    store.setActiveView('cardio');
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const series = store.viewChartSeries();
+    const totals = Object.fromEntries(series.map((s) => [s.bucket, s.total]));
+    expect(totals['2026-02-10']).toBe(5);
+  });
+
+  it('viewPaceSeries returns min/km pace for distance-time entries, aligned with the bar buckets', async () => {
+    // 5 km in 25 min → 5 min/km
+    liveExerciseEntries.set([
+      {
+        _id: 'e1',
+        userId: 'u1',
+        exerciseId: 'cardio.running',
+        timestamp: '2026-02-10T08:00:00.000Z',
+        distanceM: 5000,
+        durationSec: 1500,
+        source: 'web',
+      } as ExerciseEntry,
+    ]);
+    const groupViewEl = fixture.debugElement.query(
+      By.directive(AnalysisGroupViewComponent)
+    );
+    const store = groupViewEl.injector.get(AnalysisStore);
+    store.setRange('2026-02-09', '2026-02-15');
+    store.setActiveView('cardio');
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const pace = store.viewPaceSeries();
+    const entry = pace.find((p) => p.bucket === '2026-02-10');
+    expect(entry).toBeDefined();
+    expect(entry?.pace).toBeCloseTo(5, 5);
+  });
+
+  it('viewPaceSeries is empty for non-distance views (reps/time) — the chart keeps the day-integral line', async () => {
+    liveExerciseEntries.set([
+      {
+        _id: 'e1',
+        userId: 'u1',
+        exerciseId: 'plank.standard',
+        timestamp: '2026-02-10T08:00:00.000Z',
+        durationSec: 60,
+        source: 'web',
+      } as ExerciseEntry,
+    ]);
+    const groupViewEl = fixture.debugElement.query(
+      By.directive(AnalysisGroupViewComponent)
+    );
+    const store = groupViewEl.injector.get(AnalysisStore);
+    store.setRange('2026-02-09', '2026-02-15');
+    store.setActiveView('core');
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    expect(store.viewPaceSeries()).toEqual([]);
   });
 
   it('viewChartEntries surfaces durationSec on `reps` for time-measured rows so the stacked-bar layer also sees the volume', async () => {
