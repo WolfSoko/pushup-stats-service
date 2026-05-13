@@ -165,7 +165,7 @@ describe('unifiedEntryFilterKey', () => {
 
 describe('unifiedEntryCategoryId', () => {
   describe('Given a pushup entry', () => {
-    it('returns "pushup" regardless of variant', () => {
+    it('returns "push" regardless of variant', () => {
       expect(
         unifiedEntryCategoryId({
           kind: 'pushup',

@@ -231,30 +231,36 @@ describe('TrainingEntryDialogComponent', () => {
       expect(result.variantId).toBeNull();
     });
 
-    it('keeps an exercise-kind entry in exercise mode when the catalog id is stale', () => {
-      // Regression: a renamed/removed catalog id used to flip the
-      // dialog into pushup mode and corrupt the emitted payload shape
-      // on submit.
-      const { component, closeSpy } = createDialog({
-        kind: 'exercise',
-        exerciseId: 'abs.removed-variant',
-        timestamp: '2026-02-10T13:45:00+01:00',
-        reps: 25,
-        sets: [25],
-      });
+    it.each([
+      // Legacy id prefix → recovered movement-pattern category. The
+      // dialog must stay in exercise mode and surface the right
+      // dashboard category for stale ids whose catalog entry was
+      // renamed or removed.
+      ['abs.removed-variant', 'core' as const],
+      ['plank.removed-variant', 'core' as const],
+      ['legs.removed-variant', 'squat' as const],
+    ])(
+      'keeps an exercise-kind entry in exercise mode for stale id %s',
+      (exerciseId, expectedCategory) => {
+        const { component, closeSpy } = createDialog({
+          kind: 'exercise',
+          exerciseId,
+          timestamp: '2026-02-10T13:45:00+01:00',
+          reps: 25,
+          sets: [25],
+        });
 
-      expect(component.mode()).toBe('exercise');
-      // Category prefix `'abs.…'` recovers the right dashboard
-      // category even though the specific exercise no longer exists.
-      expect(component.category()).toBe('core');
-      // The synthetic fallback definition lets the user fix and resubmit
-      // the entry without staring at a frozen dialog.
-      expect(component.canSubmit()).toBe(true);
+        expect(component.mode()).toBe('exercise');
+        expect(component.category()).toBe(expectedCategory);
+        // The synthetic fallback definition lets the user fix and
+        // resubmit the entry without staring at a frozen dialog.
+        expect(component.canSubmit()).toBe(true);
 
-      component.submit();
-      const result = closeSpy.mock.calls[0][0] as ExerciseEntryDialogResult;
-      expect(result.kind).toBe('exercise');
-      expect(result.exerciseId).toBe('abs.removed-variant');
-    });
+        component.submit();
+        const result = closeSpy.mock.calls[0][0] as ExerciseEntryDialogResult;
+        expect(result.kind).toBe('exercise');
+        expect(result.exerciseId).toBe(exerciseId);
+      }
+    );
   });
 });

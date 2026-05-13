@@ -1,5 +1,6 @@
 import {
   type ExerciseCategoryId,
+  type ExerciseVariant,
   findExerciseDefinition,
   type UnifiedEntryFilterKey,
 } from '@pu-stats/models';
@@ -77,6 +78,94 @@ export function exerciseDisplayName(id: string): string {
 }
 
 /**
+ * Locale-aware display strings for exercise variants. Keyed by the
+ * variant's `nameKey` (the XLIFF unit id) so the dialog can resolve a
+ * label from any `ExerciseVariant` without coupling to its parent
+ * exercise id.
+ *
+ * $localize calls must be literal at extraction time — keep these
+ * spelled out one per variant. Falls back to the raw variant id when
+ * a name key isn't mapped here (e.g. a future variant added to the
+ * catalog before this file is updated).
+ */
+const VARIANT_DISPLAY_NAMES: Record<string, string> = {
+  // sit-ups
+  '@@exercise.variant.situps.standard': $localize`:@@exercise.variant.situps.standard:Standard`,
+  '@@exercise.variant.situps.decline': $localize`:@@exercise.variant.situps.decline:Decline`,
+  '@@exercise.variant.situps.weighted': $localize`:@@exercise.variant.situps.weighted:Mit Zusatzgewicht`,
+
+  // crunches
+  '@@exercise.variant.crunches.standard': $localize`:@@exercise.variant.crunches.standard:Standard`,
+  '@@exercise.variant.crunches.reverse': $localize`:@@exercise.variant.crunches.reverse:Reverse Crunches`,
+  '@@exercise.variant.crunches.bicycle': $localize`:@@exercise.variant.crunches.bicycle:Bicycle Crunches`,
+  '@@exercise.variant.crunches.oblique': $localize`:@@exercise.variant.crunches.oblique:Schräge Crunches`,
+
+  // leg raises
+  '@@exercise.variant.legraises.lying': $localize`:@@exercise.variant.legraises.lying:Liegend`,
+  '@@exercise.variant.legraises.hanging-knee': $localize`:@@exercise.variant.legraises.hanging-knee:Hängend (Knie)`,
+  '@@exercise.variant.legraises.hanging-straight': $localize`:@@exercise.variant.legraises.hanging-straight:Hängend (gestreckt)`,
+
+  // russian twist
+  '@@exercise.variant.russiantwist.bodyweight': $localize`:@@exercise.variant.russiantwist.bodyweight:Eigengewicht`,
+  '@@exercise.variant.russiantwist.weighted': $localize`:@@exercise.variant.russiantwist.weighted:Mit Zusatzgewicht`,
+
+  // mountain climbers
+  '@@exercise.variant.mountainclimbers.standard': $localize`:@@exercise.variant.mountainclimbers.standard:Standard`,
+  '@@exercise.variant.mountainclimbers.cross-body': $localize`:@@exercise.variant.mountainclimbers.cross-body:Cross-Body`,
+
+  // plank
+  '@@exercise.variant.plank.standard': $localize`:@@exercise.variant.plank.standard:Standard`,
+  '@@exercise.variant.plank.forearm': $localize`:@@exercise.variant.plank.forearm:Unterarmstütz`,
+  '@@exercise.variant.plank.side': $localize`:@@exercise.variant.plank.side:Seitlich`,
+  '@@exercise.variant.plank.reverse': $localize`:@@exercise.variant.plank.reverse:Umgekehrt`,
+
+  // squats
+  '@@exercise.variant.squats.bodyweight': $localize`:@@exercise.variant.squats.bodyweight:Eigengewicht`,
+  '@@exercise.variant.squats.sumo': $localize`:@@exercise.variant.squats.sumo:Sumo`,
+  '@@exercise.variant.squats.goblet': $localize`:@@exercise.variant.squats.goblet:Goblet`,
+  '@@exercise.variant.squats.bulgarian-split': $localize`:@@exercise.variant.squats.bulgarian-split:Bulgarian Split`,
+  '@@exercise.variant.squats.pistol': $localize`:@@exercise.variant.squats.pistol:Pistol`,
+
+  // calf raises
+  '@@exercise.variant.calfraises.standard': $localize`:@@exercise.variant.calfraises.standard:Standard`,
+  '@@exercise.variant.calfraises.single-leg': $localize`:@@exercise.variant.calfraises.single-leg:Einbeinig`,
+  '@@exercise.variant.calfraises.seated': $localize`:@@exercise.variant.calfraises.seated:Sitzend`,
+
+  // glute bridge
+  '@@exercise.variant.glutebridge.standard': $localize`:@@exercise.variant.glutebridge.standard:Standard`,
+  '@@exercise.variant.glutebridge.single-leg': $localize`:@@exercise.variant.glutebridge.single-leg:Einbeinig`,
+  '@@exercise.variant.glutebridge.hip-thrust': $localize`:@@exercise.variant.glutebridge.hip-thrust:Hip Thrust`,
+  '@@exercise.variant.glutebridge.march': $localize`:@@exercise.variant.glutebridge.march:Marching`,
+
+  // lunges
+  '@@exercise.variant.lunges.forward': $localize`:@@exercise.variant.lunges.forward:Vorwärts`,
+  '@@exercise.variant.lunges.reverse': $localize`:@@exercise.variant.lunges.reverse:Rückwärts`,
+  '@@exercise.variant.lunges.walking': $localize`:@@exercise.variant.lunges.walking:Walking`,
+  '@@exercise.variant.lunges.lateral': $localize`:@@exercise.variant.lunges.lateral:Seitlich`,
+  '@@exercise.variant.lunges.curtsy': $localize`:@@exercise.variant.lunges.curtsy:Curtsy`,
+  '@@exercise.variant.lunges.jumping': $localize`:@@exercise.variant.lunges.jumping:Jumping`,
+
+  // pullups
+  '@@exercise.variant.pullups.standard': $localize`:@@exercise.variant.pullups.standard:Standard`,
+  '@@exercise.variant.pullups.chin-up': $localize`:@@exercise.variant.pullups.chin-up:Chin-up`,
+  '@@exercise.variant.pullups.wide-grip': $localize`:@@exercise.variant.pullups.wide-grip:Breiter Griff`,
+  '@@exercise.variant.pullups.neutral-grip': $localize`:@@exercise.variant.pullups.neutral-grip:Neutraler Griff`,
+  '@@exercise.variant.pullups.negative': $localize`:@@exercise.variant.pullups.negative:Negativ`,
+  '@@exercise.variant.pullups.assisted': $localize`:@@exercise.variant.pullups.assisted:Assistiert`,
+  '@@exercise.variant.pullups.archer': $localize`:@@exercise.variant.pullups.archer:Archer`,
+
+  // rows
+  '@@exercise.variant.rows.inverted': $localize`:@@exercise.variant.rows.inverted:Inverted Row`,
+  '@@exercise.variant.rows.australian': $localize`:@@exercise.variant.rows.australian:Australian Row`,
+  '@@exercise.variant.rows.dumbbell': $localize`:@@exercise.variant.rows.dumbbell:Kurzhantel`,
+  '@@exercise.variant.rows.barbell': $localize`:@@exercise.variant.rows.barbell:Langhantel`,
+};
+
+export function variantDisplayName(variant: ExerciseVariant): string {
+  return VARIANT_DISPLAY_NAMES[variant.nameKey] ?? variant.id;
+}
+
+/**
  * Resolves the filter-key shape used by the analysis page (`'pushup'`
  * for the collapsed legacy-pushup bucket, exerciseId for everything
  * else) to a localised label. Shared between the page filter chips and
@@ -118,7 +207,7 @@ const CATEGORY_DISPLAY_NAMES: Record<ExerciseCategoryId, string> = {
   push: $localize`:@@exercise.category.push:Drücken`,
   pull: $localize`:@@exercise.category.pull:Ziehen`,
   squat: $localize`:@@exercise.category.squat:Kniebeuge`,
-  hinge: $localize`:@@exercise.category.hinge:Hüftbeuge`,
+  hinge: $localize`:@@exercise.category.hinge:Hüftstreckung`,
   lunge: $localize`:@@exercise.category.lunge:Ausfallschritt`,
   carry: $localize`:@@exercise.category.carry:Tragen`,
   core: $localize`:@@exercise.category.core:Rumpf`,

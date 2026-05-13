@@ -236,7 +236,7 @@
         <note category="location">libs/auth/src/lib/ui/register/register.component.html:353,354</note>
         <note category="location">web/src/app/core/feedback/feedback-dialog.component.ts:96,97</note>
         <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts:75,76</note>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:546,547</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:550,551</note>
         <note category="location">web/src/app/stats/shell/settings-page.component.ts:519,520</note>
       </notes>
       <segment>
@@ -4294,13 +4294,17 @@
         <source>Alle Übungen</source>
       </segment>
     </unit>
-    <unit id="exercise.category.pushup">
+    <unit id="exercise.category.push">
       <notes>
-        <note category="location">web/src/app/stats/components/analysis-teaser-card/analysis-teaser-card.component.ts:146</note>
+        <note category="location">web/src/app/stats/components/analysis-teaser-card/analysis-teaser-card.component.ts:147</note>
         <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:200</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:1098</note>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:187</note>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:207</note>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts:272</note>
       </notes>
       <segment>
-        <source>Liegestütze</source>
+        <source>Drücken</source>
       </segment>
     </unit>
     <unit id="analysis.overview.comparison.title">
@@ -5025,7 +5029,7 @@
     </unit>
     <unit id="editDialogTitle">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:261,263</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:265,267</note>
       </notes>
       <segment>
         <source>Eintrag bearbeiten</source>
@@ -5033,7 +5037,7 @@
     </unit>
     <unit id="trainingEntryDialog.title">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:263,267</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:267,271</note>
       </notes>
       <segment>
         <source>Trainingseintrag anlegen</source>
@@ -5041,7 +5045,7 @@
     </unit>
     <unit id="trainingEntryDialog.category">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:269,271</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:273,275</note>
       </notes>
       <segment>
         <source>Kategorie</source>
@@ -5049,7 +5053,7 @@
     </unit>
     <unit id="trainingEntryDialog.exercise">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:284,286</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:288,290</note>
       </notes>
       <segment>
         <source>Übung</source>
@@ -5057,7 +5061,7 @@
     </unit>
     <unit id="timestampLabel">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:299,301</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:303,305</note>
       </notes>
       <segment>
         <source>Zeitpunkt</source>
@@ -5065,7 +5069,7 @@
     </unit>
     <unit id="typeLabel">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:312,313</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:316,317</note>
       </notes>
       <segment>
         <source>Typ</source>
@@ -5073,7 +5077,7 @@
     </unit>
     <unit id="typePlaceholder">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:318,319</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:322,323</note>
       </notes>
       <segment>
         <source>Auswählen oder eintippen</source>
@@ -5081,7 +5085,7 @@
     </unit>
     <unit id="typeWikiLinkAria">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:357,359</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:361,363</note>
       </notes>
       <segment>
         <source>Anleitung zum Liegestütztyp öffnen</source>
@@ -5089,7 +5093,7 @@
     </unit>
     <unit id="entryDialog.variant">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:364,365</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:368,369</note>
       </notes>
       <segment>
         <source>Variante</source>
@@ -5097,7 +5101,7 @@
     </unit>
     <unit id="entryDialog.variantNone">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:367,369</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:371,373</note>
       </notes>
       <segment>
         <source>—</source>
@@ -5105,7 +5109,7 @@
     </unit>
     <unit id="entryDialog.distance">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:380,382</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:384,386</note>
       </notes>
       <segment>
         <source>Distanz (km)</source>
@@ -5113,8 +5117,8 @@
     </unit>
     <unit id="entryDialog.durationMinutes">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:396,398</note>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:426,428</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:400,402</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:430,432</note>
       </notes>
       <segment>
         <source>Minuten</source>
@@ -5122,8 +5126,8 @@
     </unit>
     <unit id="entryDialog.durationSeconds">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:409,411</note>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:439,441</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:413,415</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:443,445</note>
       </notes>
       <segment>
         <source>Sekunden</source>
@@ -5131,7 +5135,7 @@
     </unit>
     <unit id="setLabel">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:458,459</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:462,463</note>
       </notes>
       <segment>
         <source>Set <ph id="0" equiv="INTERPOLATION" disp="{{ $index + 1 }}"/></source>
@@ -5139,7 +5143,7 @@
     </unit>
     <unit id="repsLabel">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:460,461</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:464,465</note>
       </notes>
       <segment>
         <source>Reps</source>
@@ -5147,7 +5151,7 @@
     </unit>
     <unit id="removeSetAria">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:479,481</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:483,485</note>
       </notes>
       <segment>
         <source>Set entfernen</source>
@@ -5155,7 +5159,7 @@
     </unit>
     <unit id="addSetAria">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:490,491</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:494,495</note>
       </notes>
       <segment>
         <source>Set hinzufügen</source>
@@ -5163,7 +5167,7 @@
     </unit>
     <unit id="addSetTooltip">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:492,494</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:496,498</note>
       </notes>
       <segment>
         <source>Weiteres Set hinzufügen</source>
@@ -5171,7 +5175,7 @@
     </unit>
     <unit id="totalReps">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:501,503</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:505,507</note>
       </notes>
       <segment>
         <source> Gesamt: <ph id="0" equiv="INTERPOLATION" disp="{{ totalReps() }}"/> Reps </source>
@@ -5179,7 +5183,7 @@
     </unit>
     <unit id="entryDialog.overCapDuration">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:510,511</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:514,515</note>
       </notes>
       <segment>
         <source>Maximum-Dauer: <ph id="0" equiv="INTERPOLATION" disp="{{ formattedDurationMax() }}"/></source>
@@ -5187,7 +5191,7 @@
     </unit>
     <unit id="entryDialog.overCapTime">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:514,515</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:518,519</note>
       </notes>
       <segment>
         <source>Maximum: <ph id="0" equiv="INTERPOLATION" disp="{{ formattedMax() }}"/></source>
@@ -5195,7 +5199,7 @@
     </unit>
     <unit id="entryDialog.overCap">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:518,519</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:522,523</note>
       </notes>
       <segment>
         <source>Maximum: <ph id="0" equiv="INTERPOLATION" disp="{{ repsMax() }}"/> pro Eintrag</source>
@@ -5203,7 +5207,7 @@
     </unit>
     <unit id="sourceLabel">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:526,527</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:530,531</note>
       </notes>
       <segment>
         <source>Quelle</source>
@@ -5211,7 +5215,7 @@
     </unit>
     <unit id="sourcePlaceholder">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:532,533</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:536,537</note>
       </notes>
       <segment>
         <source>web / whatsapp / eigene Quelle</source>
@@ -5219,7 +5223,7 @@
     </unit>
     <unit id="saveEntry">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:556,558</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:560,562</note>
       </notes>
       <segment>
         <source> Speichern </source>
@@ -5227,7 +5231,7 @@
     </unit>
     <unit id="trainingEntryDialog.pushup.exercise">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:609</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:613</note>
       </notes>
       <segment>
         <source>Liegestütze</source>
@@ -5235,7 +5239,7 @@
     </unit>
     <unit id="typeWikiLinkTooltip.generic">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:771</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:775</note>
       </notes>
       <segment>
         <source>Anleitung zu Liegestütztypen öffnen</source>
@@ -5243,27 +5247,16 @@
     </unit>
     <unit id="typeWikiLinkTooltip.specific">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:773</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:777</note>
       </notes>
       <segment>
         <source>Anleitung öffnen</source>
       </segment>
     </unit>
-    <unit id="exercise.category.push">
-      <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:1094</note>
-        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:98</note>
-        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:118</note>
-        <note category="location">web/src/app/stats/shell/entries-page.component.ts:277</note>
-      </notes>
-      <segment>
-        <source>Drücken</source>
-      </segment>
-    </unit>
     <unit id="exercise.category.pull">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:1095</note>
-        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:119</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:1099</note>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:208</note>
       </notes>
       <segment>
         <source>Ziehen</source>
@@ -5271,8 +5264,8 @@
     </unit>
     <unit id="exercise.category.squat">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:1096</note>
-        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:120</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:1100</note>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:209</note>
       </notes>
       <segment>
         <source>Kniebeuge</source>
@@ -5280,8 +5273,8 @@
     </unit>
     <unit id="exercise.category.hinge">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:1097</note>
-        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:121</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:1101</note>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:210</note>
       </notes>
       <segment>
         <source>Hüftbeuge</source>
@@ -5289,8 +5282,8 @@
     </unit>
     <unit id="exercise.category.lunge">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:1098</note>
-        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:122</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:1102</note>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:211</note>
       </notes>
       <segment>
         <source>Ausfallschritt</source>
@@ -5298,8 +5291,8 @@
     </unit>
     <unit id="exercise.category.carry">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:1099</note>
-        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:123</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:1103</note>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:212</note>
       </notes>
       <segment>
         <source>Tragen</source>
@@ -5307,8 +5300,8 @@
     </unit>
     <unit id="exercise.category.core">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:1100</note>
-        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:124</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:1104</note>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:213</note>
       </notes>
       <segment>
         <source>Rumpf</source>
@@ -5316,8 +5309,8 @@
     </unit>
     <unit id="exercise.category.cardio">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:1101</note>
-        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:125</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:1105</note>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:214</note>
       </notes>
       <segment>
         <source>Ausdauer</source>
@@ -5325,8 +5318,8 @@
     </unit>
     <unit id="exercise.category.mobility">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:1102</note>
-        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:126</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:1106</note>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:215</note>
       </notes>
       <segment>
         <source>Mobilität</source>
@@ -5334,8 +5327,8 @@
     </unit>
     <unit id="exercise.category.strength">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:1103</note>
-        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:127</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:1107</note>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:216</note>
       </notes>
       <segment>
         <source>Krafttraining</source>
@@ -5431,7 +5424,7 @@
     </unit>
     <unit id="exercise.abs.situps.name">
       <notes>
-        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:15</note>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:16</note>
       </notes>
       <segment>
         <source>Sit-ups</source>
@@ -5439,7 +5432,7 @@
     </unit>
     <unit id="exercise.abs.crunches.name">
       <notes>
-        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:16</note>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:17</note>
       </notes>
       <segment>
         <source>Crunches</source>
@@ -5447,7 +5440,7 @@
     </unit>
     <unit id="exercise.abs.legraises.name">
       <notes>
-        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:17</note>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:18</note>
       </notes>
       <segment>
         <source>Beinheben</source>
@@ -5455,7 +5448,7 @@
     </unit>
     <unit id="exercise.abs.russiantwist.name">
       <notes>
-        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:18</note>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:19</note>
       </notes>
       <segment>
         <source>Russian Twist</source>
@@ -5463,7 +5456,7 @@
     </unit>
     <unit id="exercise.abs.mountainclimbers.name">
       <notes>
-        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:19</note>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:20</note>
       </notes>
       <segment>
         <source>Mountain Climbers</source>
@@ -5471,7 +5464,7 @@
     </unit>
     <unit id="exercise.core.deadbug.name">
       <notes>
-        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:20</note>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:21</note>
       </notes>
       <segment>
         <source>Dead Bug</source>
@@ -5479,7 +5472,7 @@
     </unit>
     <unit id="exercise.core.hollowhold.name">
       <notes>
-        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:21</note>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:22</note>
       </notes>
       <segment>
         <source>Hollow Hold</source>
@@ -5487,7 +5480,7 @@
     </unit>
     <unit id="exercise.plank.standard.name">
       <notes>
-        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:22</note>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:23</note>
       </notes>
       <segment>
         <source>Plank</source>
@@ -5495,7 +5488,7 @@
     </unit>
     <unit id="exercise.legs.squats.name">
       <notes>
-        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:25</note>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:26</note>
       </notes>
       <segment>
         <source>Kniebeugen</source>
@@ -5503,7 +5496,7 @@
     </unit>
     <unit id="exercise.legs.jumpsquats.name">
       <notes>
-        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:26</note>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:27</note>
       </notes>
       <segment>
         <source>Jump Squats</source>
@@ -5511,7 +5504,7 @@
     </unit>
     <unit id="exercise.legs.calfraises.name">
       <notes>
-        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:27</note>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:28</note>
       </notes>
       <segment>
         <source>Wadenheben</source>
@@ -5519,7 +5512,7 @@
     </unit>
     <unit id="exercise.squat.wallsit.name">
       <notes>
-        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:28</note>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:29</note>
       </notes>
       <segment>
         <source>Wandsitz</source>
@@ -5527,7 +5520,7 @@
     </unit>
     <unit id="exercise.squat.boxjump.name">
       <notes>
-        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:29</note>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:30</note>
       </notes>
       <segment>
         <source>Box Jumps</source>
@@ -5535,7 +5528,7 @@
     </unit>
     <unit id="exercise.legs.glutebridge.name">
       <notes>
-        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:30</note>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:31</note>
       </notes>
       <segment>
         <source>Hüftheben</source>
@@ -5543,7 +5536,7 @@
     </unit>
     <unit id="exercise.hinge.singlelegRdl.name">
       <notes>
-        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:31</note>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:32</note>
       </notes>
       <segment>
         <source>Einbeiniges Kreuzheben</source>
@@ -5551,7 +5544,7 @@
     </unit>
     <unit id="exercise.hinge.goodmorning.name">
       <notes>
-        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:32</note>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:33</note>
       </notes>
       <segment>
         <source>Good Morning</source>
@@ -5559,7 +5552,7 @@
     </unit>
     <unit id="exercise.legs.lunges.name">
       <notes>
-        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:33</note>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:34</note>
       </notes>
       <segment>
         <source>Ausfallschritte</source>
@@ -5567,7 +5560,7 @@
     </unit>
     <unit id="exercise.lunge.stepup.name">
       <notes>
-        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:34</note>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:35</note>
       </notes>
       <segment>
         <source>Step-ups</source>
@@ -5575,7 +5568,7 @@
     </unit>
     <unit id="exercise.pull.pullups.name">
       <notes>
-        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:37</note>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:38</note>
       </notes>
       <segment>
         <source>Klimmzüge</source>
@@ -5583,7 +5576,7 @@
     </unit>
     <unit id="exercise.pull.rows.name">
       <notes>
-        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:38</note>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:39</note>
       </notes>
       <segment>
         <source>Ruderzug</source>
@@ -5591,7 +5584,7 @@
     </unit>
     <unit id="exercise.pull.deadhang.name">
       <notes>
-        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:39</note>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:40</note>
       </notes>
       <segment>
         <source>Dead Hang</source>
@@ -5599,7 +5592,7 @@
     </unit>
     <unit id="exercise.pull.facepull.name">
       <notes>
-        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:40</note>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:41</note>
       </notes>
       <segment>
         <source>Face Pull</source>
@@ -5607,7 +5600,7 @@
     </unit>
     <unit id="exercise.carry.farmer.name">
       <notes>
-        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:43</note>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:44</note>
       </notes>
       <segment>
         <source>Farmer&apos;s Walk</source>
@@ -5615,7 +5608,7 @@
     </unit>
     <unit id="exercise.carry.suitcase.name">
       <notes>
-        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:44</note>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:45</note>
       </notes>
       <segment>
         <source>Suitcase Carry</source>
@@ -5623,7 +5616,7 @@
     </unit>
     <unit id="exercise.carry.overhead.name">
       <notes>
-        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:45</note>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:46</note>
       </notes>
       <segment>
         <source>Overhead Carry</source>
@@ -5631,7 +5624,7 @@
     </unit>
     <unit id="exercise.cardio.running.name">
       <notes>
-        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:48</note>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:49</note>
       </notes>
       <segment>
         <source>Laufen</source>
@@ -5639,7 +5632,7 @@
     </unit>
     <unit id="exercise.cardio.walking.name">
       <notes>
-        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:49</note>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:50</note>
       </notes>
       <segment>
         <source>Gehen</source>
@@ -5647,7 +5640,7 @@
     </unit>
     <unit id="exercise.cardio.cycling.name">
       <notes>
-        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:50</note>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:51</note>
       </notes>
       <segment>
         <source>Radfahren</source>
@@ -5655,7 +5648,7 @@
     </unit>
     <unit id="exercise.cardio.rowing.name">
       <notes>
-        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:51</note>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:52</note>
       </notes>
       <segment>
         <source>Rudern</source>
@@ -5663,7 +5656,7 @@
     </unit>
     <unit id="exercise.cardio.swimming.name">
       <notes>
-        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:52</note>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:53</note>
       </notes>
       <segment>
         <source>Schwimmen</source>
@@ -5671,7 +5664,7 @@
     </unit>
     <unit id="exercise.cardio.jumprope.name">
       <notes>
-        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:53</note>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:54</note>
       </notes>
       <segment>
         <source>Seilspringen</source>
@@ -5679,7 +5672,7 @@
     </unit>
     <unit id="exercise.cardio.burpees.name">
       <notes>
-        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:54</note>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:55</note>
       </notes>
       <segment>
         <source>Burpees</source>
@@ -5687,7 +5680,7 @@
     </unit>
     <unit id="exercise.cardio.jumpingjacks.name">
       <notes>
-        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:55</note>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:56</note>
       </notes>
       <segment>
         <source>Hampelmänner</source>
@@ -5695,7 +5688,7 @@
     </unit>
     <unit id="exercise.cardio.highknees.name">
       <notes>
-        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:56</note>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:57</note>
       </notes>
       <segment>
         <source>High Knees</source>
@@ -5703,7 +5696,7 @@
     </unit>
     <unit id="exercise.mobility.stretching.name">
       <notes>
-        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:59</note>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:60</note>
       </notes>
       <segment>
         <source>Dehnen</source>
@@ -5711,7 +5704,7 @@
     </unit>
     <unit id="exercise.mobility.yoga.name">
       <notes>
-        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:60</note>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:61</note>
       </notes>
       <segment>
         <source>Yoga</source>
@@ -5719,7 +5712,7 @@
     </unit>
     <unit id="exercise.mobility.foamrolling.name">
       <notes>
-        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:61</note>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:62</note>
       </notes>
       <segment>
         <source>Faszienrolle</source>
@@ -5727,7 +5720,7 @@
     </unit>
     <unit id="exercise.mobility.dynamicwarmup.name">
       <notes>
-        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:62</note>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:63</note>
       </notes>
       <segment>
         <source>Dynamisches Aufwärmen</source>
@@ -5735,7 +5728,7 @@
     </unit>
     <unit id="exercise.mobility.catcow.name">
       <notes>
-        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:63</note>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:64</note>
       </notes>
       <segment>
         <source>Katze-Kuh</source>
@@ -5743,7 +5736,7 @@
     </unit>
     <unit id="exercise.mobility.hipopener.name">
       <notes>
-        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:64</note>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:65</note>
       </notes>
       <segment>
         <source>Hüftöffner</source>
@@ -5751,7 +5744,7 @@
     </unit>
     <unit id="exercise.strength.benchpress.name">
       <notes>
-        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:67</note>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:68</note>
       </notes>
       <segment>
         <source>Bankdrücken</source>
@@ -5759,7 +5752,7 @@
     </unit>
     <unit id="exercise.strength.overheadpress.name">
       <notes>
-        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:68</note>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:69</note>
       </notes>
       <segment>
         <source>Schulterdrücken</source>
@@ -5767,7 +5760,7 @@
     </unit>
     <unit id="exercise.strength.deadlift.name">
       <notes>
-        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:69</note>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:70</note>
       </notes>
       <segment>
         <source>Kreuzheben</source>
@@ -5775,7 +5768,7 @@
     </unit>
     <unit id="exercise.strength.barbellsquat.name">
       <notes>
-        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:70</note>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:71</note>
       </notes>
       <segment>
         <source>Langhantel-Kniebeuge</source>
@@ -5783,7 +5776,7 @@
     </unit>
     <unit id="exercise.strength.barbellrow.name">
       <notes>
-        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:71</note>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:72</note>
       </notes>
       <segment>
         <source>Langhantelrudern</source>
@@ -5791,10 +5784,386 @@
     </unit>
     <unit id="exercise.strength.kettlebellswing.name">
       <notes>
-        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:72</note>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:73</note>
       </notes>
       <segment>
         <source>Kettlebell Swing</source>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.situps.standard">
+      <notes>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:93</note>
+      </notes>
+      <segment>
+        <source>Standard</source>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.situps.decline">
+      <notes>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:94</note>
+      </notes>
+      <segment>
+        <source>Decline</source>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.situps.weighted">
+      <notes>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:95</note>
+      </notes>
+      <segment>
+        <source>Mit Zusatzgewicht</source>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.crunches.standard">
+      <notes>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:98</note>
+      </notes>
+      <segment>
+        <source>Standard</source>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.crunches.reverse">
+      <notes>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:99</note>
+      </notes>
+      <segment>
+        <source>Reverse Crunches</source>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.crunches.bicycle">
+      <notes>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:100</note>
+      </notes>
+      <segment>
+        <source>Bicycle Crunches</source>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.crunches.oblique">
+      <notes>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:101</note>
+      </notes>
+      <segment>
+        <source>Schräge Crunches</source>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.legraises.lying">
+      <notes>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:104</note>
+      </notes>
+      <segment>
+        <source>Liegend</source>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.legraises.hanging-knee">
+      <notes>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:105</note>
+      </notes>
+      <segment>
+        <source>Hängend (Knie)</source>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.legraises.hanging-straight">
+      <notes>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:106</note>
+      </notes>
+      <segment>
+        <source>Hängend (gestreckt)</source>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.russiantwist.bodyweight">
+      <notes>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:109</note>
+      </notes>
+      <segment>
+        <source>Eigengewicht</source>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.russiantwist.weighted">
+      <notes>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:110</note>
+      </notes>
+      <segment>
+        <source>Mit Zusatzgewicht</source>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.mountainclimbers.standard">
+      <notes>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:113</note>
+      </notes>
+      <segment>
+        <source>Standard</source>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.mountainclimbers.cross-body">
+      <notes>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:114</note>
+      </notes>
+      <segment>
+        <source>Cross-Body</source>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.plank.standard">
+      <notes>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:117</note>
+      </notes>
+      <segment>
+        <source>Standard</source>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.plank.forearm">
+      <notes>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:118</note>
+      </notes>
+      <segment>
+        <source>Unterarmstütz</source>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.plank.side">
+      <notes>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:119</note>
+      </notes>
+      <segment>
+        <source>Seitlich</source>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.plank.reverse">
+      <notes>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:120</note>
+      </notes>
+      <segment>
+        <source>Umgekehrt</source>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.squats.bodyweight">
+      <notes>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:123</note>
+      </notes>
+      <segment>
+        <source>Eigengewicht</source>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.squats.sumo">
+      <notes>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:124</note>
+      </notes>
+      <segment>
+        <source>Sumo</source>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.squats.goblet">
+      <notes>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:125</note>
+      </notes>
+      <segment>
+        <source>Goblet</source>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.squats.bulgarian-split">
+      <notes>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:126</note>
+      </notes>
+      <segment>
+        <source>Bulgarian Split</source>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.squats.pistol">
+      <notes>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:127</note>
+      </notes>
+      <segment>
+        <source>Pistol</source>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.calfraises.standard">
+      <notes>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:130</note>
+      </notes>
+      <segment>
+        <source>Standard</source>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.calfraises.single-leg">
+      <notes>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:131</note>
+      </notes>
+      <segment>
+        <source>Einbeinig</source>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.calfraises.seated">
+      <notes>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:132</note>
+      </notes>
+      <segment>
+        <source>Sitzend</source>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.glutebridge.standard">
+      <notes>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:135</note>
+      </notes>
+      <segment>
+        <source>Standard</source>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.glutebridge.single-leg">
+      <notes>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:136</note>
+      </notes>
+      <segment>
+        <source>Einbeinig</source>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.glutebridge.hip-thrust">
+      <notes>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:137</note>
+      </notes>
+      <segment>
+        <source>Hip Thrust</source>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.glutebridge.march">
+      <notes>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:138</note>
+      </notes>
+      <segment>
+        <source>Marching</source>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.lunges.forward">
+      <notes>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:141</note>
+      </notes>
+      <segment>
+        <source>Vorwärts</source>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.lunges.reverse">
+      <notes>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:142</note>
+      </notes>
+      <segment>
+        <source>Rückwärts</source>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.lunges.walking">
+      <notes>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:143</note>
+      </notes>
+      <segment>
+        <source>Walking</source>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.lunges.lateral">
+      <notes>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:144</note>
+      </notes>
+      <segment>
+        <source>Seitlich</source>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.lunges.curtsy">
+      <notes>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:145</note>
+      </notes>
+      <segment>
+        <source>Curtsy</source>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.lunges.jumping">
+      <notes>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:146</note>
+      </notes>
+      <segment>
+        <source>Jumping</source>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.pullups.standard">
+      <notes>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:149</note>
+      </notes>
+      <segment>
+        <source>Standard</source>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.pullups.chin-up">
+      <notes>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:150</note>
+      </notes>
+      <segment>
+        <source>Chin-up</source>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.pullups.wide-grip">
+      <notes>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:151</note>
+      </notes>
+      <segment>
+        <source>Breiter Griff</source>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.pullups.neutral-grip">
+      <notes>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:152</note>
+      </notes>
+      <segment>
+        <source>Neutraler Griff</source>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.pullups.negative">
+      <notes>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:153</note>
+      </notes>
+      <segment>
+        <source>Negativ</source>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.pullups.assisted">
+      <notes>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:154</note>
+      </notes>
+      <segment>
+        <source>Assistiert</source>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.pullups.archer">
+      <notes>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:155</note>
+      </notes>
+      <segment>
+        <source>Archer</source>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.rows.inverted">
+      <notes>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:158</note>
+      </notes>
+      <segment>
+        <source>Inverted Row</source>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.rows.australian">
+      <notes>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:159</note>
+      </notes>
+      <segment>
+        <source>Australian Row</source>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.rows.dumbbell">
+      <notes>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:160</note>
+      </notes>
+      <segment>
+        <source>Kurzhantel</source>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.rows.barbell">
+      <notes>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:161</note>
+      </notes>
+      <segment>
+        <source>Langhantel</source>
       </segment>
     </unit>
     <unit id="analysis.bestStreaksTitle">
@@ -6049,7 +6418,7 @@
     </unit>
     <unit id="historyHeaderTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/entries-page.component.ts:38,39</note>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts:35,36</note>
       </notes>
       <segment>
         <source>Historie</source>
@@ -6057,7 +6426,7 @@
     </unit>
     <unit id="historyHeaderSubtitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/entries-page.component.ts:40,42</note>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts:37,39</note>
       </notes>
       <segment>
         <source> Durchsuche, filtere und bearbeite deine Trainingseinträge. </source>
@@ -6065,7 +6434,7 @@
     </unit>
     <unit id="entries.title">
       <notes>
-        <note category="location">web/src/app/stats/shell/entries-page.component.ts:45,46</note>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts:42,43</note>
       </notes>
       <segment>
         <source>Filter</source>
@@ -6073,7 +6442,7 @@
     </unit>
     <unit id="entries.subtitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/entries-page.component.ts:47,48</note>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts:44,45</note>
       </notes>
       <segment>
         <source>Zeitraum und Kriterien</source>
@@ -6081,7 +6450,7 @@
     </unit>
     <unit id="entries.dateFrom">
       <notes>
-        <note category="location">web/src/app/stats/shell/entries-page.component.ts:54,55</note>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts:51,52</note>
       </notes>
       <segment>
         <source>Datum von</source>
@@ -6089,7 +6458,7 @@
     </unit>
     <unit id="entries.dateTo">
       <notes>
-        <note category="location">web/src/app/stats/shell/entries-page.component.ts:64,65</note>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts:61,62</note>
       </notes>
       <segment>
         <source>Datum bis</source>
@@ -6097,7 +6466,7 @@
     </unit>
     <unit id="entries.exerciseFilter">
       <notes>
-        <note category="location">web/src/app/stats/shell/entries-page.component.ts:74,75</note>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts:71,72</note>
       </notes>
       <segment>
         <source>Übung</source>
@@ -6105,7 +6474,7 @@
     </unit>
     <unit id="entries.sourceFilter">
       <notes>
-        <note category="location">web/src/app/stats/shell/entries-page.component.ts:89,90</note>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts:86,87</note>
       </notes>
       <segment>
         <source>Quelle</source>
@@ -6113,8 +6482,8 @@
     </unit>
     <unit id="entries.allOption">
       <notes>
-        <note category="location">web/src/app/stats/shell/entries-page.component.ts:95,97</note>
-        <note category="location">web/src/app/stats/shell/entries-page.component.ts:110,112</note>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts:92,94</note>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts:107,109</note>
       </notes>
       <segment>
         <source>Alle</source>
@@ -6122,7 +6491,7 @@
     </unit>
     <unit id="entries.typeFilter">
       <notes>
-        <note category="location">web/src/app/stats/shell/entries-page.component.ts:104,105</note>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts:101,102</note>
       </notes>
       <segment>
         <source>Typ</source>
@@ -6130,7 +6499,7 @@
     </unit>
     <unit id="entries.repsMin">
       <notes>
-        <note category="location">web/src/app/stats/shell/entries-page.component.ts:121,122</note>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts:118,119</note>
       </notes>
       <segment>
         <source>Reps min</source>
@@ -6138,7 +6507,7 @@
     </unit>
     <unit id="entries.repsMax">
       <notes>
-        <note category="location">web/src/app/stats/shell/entries-page.component.ts:132,133</note>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts:129,130</note>
       </notes>
       <segment>
         <source>Reps max</source>
@@ -6146,7 +6515,7 @@
     </unit>
     <unit id="entries.empty.title">
       <notes>
-        <note category="location">web/src/app/stats/shell/entries-page.component.ts:160,162</note>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts:156,157</note>
       </notes>
       <segment>
         <source>Noch keine Einträge.</source>
@@ -6154,7 +6523,7 @@
     </unit>
     <unit id="entries.empty.body">
       <notes>
-        <note category="location">web/src/app/stats/shell/entries-page.component.ts:163,165</note>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts:158,160</note>
       </notes>
       <segment>
         <source> Trage deinen ersten Trainingseintrag ein — dann wird hier deine Historie sichtbar. </source>
@@ -6162,7 +6531,7 @@
     </unit>
     <unit id="entries.empty.cta">
       <notes>
-        <note category="location">web/src/app/stats/shell/entries-page.component.ts:175,177</note>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts:170,172</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon aria-hidden=&quot;true&quot;&gt;" dispEnd="&lt;/mat-icon&gt;">add</pc> Eintrag erstellen </source>

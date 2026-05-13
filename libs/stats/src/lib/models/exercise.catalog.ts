@@ -49,12 +49,6 @@ export const EXERCISE_CATEGORIES: ReadonlyArray<ExerciseCategoryInfo> = [
     order: 50,
   },
   {
-    id: 'carry',
-    nameKey: '@@exercise.category.carry',
-    icon: 'luggage',
-    order: 60,
-  },
-  {
     id: 'core',
     nameKey: '@@exercise.category.core',
     icon: 'self_improvement',
@@ -72,12 +66,13 @@ export const EXERCISE_CATEGORIES: ReadonlyArray<ExerciseCategoryInfo> = [
     icon: 'accessibility_new',
     order: 90,
   },
-  {
-    id: 'strength',
-    nameKey: '@@exercise.category.strength',
-    icon: 'exercise',
-    order: 100,
-  },
+  // `carry` (distance) and `strength` (weight) are declared in
+  // ExerciseCategoryId for forward compatibility but stay out of the
+  // picker until the training-entry dialog grows weight + distance-only
+  // form fields and the Firestore rule learns the matching companion
+  // bounds. Today the dialog falls back to a reps payload for any
+  // measurement it doesn't recognise — surfacing those exercises now
+  // would put users in front of a save-error path.
 ];
 
 /**
@@ -591,36 +586,11 @@ export const EXERCISE_CATALOG: ReadonlyArray<ExerciseDefinition> = [
   },
 
   // ─── carry (loaded carries) ──────────────────────────────────────────
-  {
-    id: 'carry.farmer',
-    categoryId: 'carry',
-    measurement: 'distance',
-    min: 1,
-    max: 5000,
-    unit: 'm',
-    nameKey: '@@exercise.carry.farmer.name',
-    icon: 'luggage',
-  },
-  {
-    id: 'carry.suitcase',
-    categoryId: 'carry',
-    measurement: 'distance',
-    min: 1,
-    max: 5000,
-    unit: 'm',
-    nameKey: '@@exercise.carry.suitcase.name',
-    icon: 'luggage',
-  },
-  {
-    id: 'carry.overhead',
-    categoryId: 'carry',
-    measurement: 'distance',
-    min: 1,
-    max: 2000,
-    unit: 'm',
-    nameKey: '@@exercise.carry.overhead.name',
-    icon: 'luggage',
-  },
+  // Carry exercises are `distance`-measured and need a distance-only
+  // form path the training dialog doesn't yet implement (today it only
+  // renders `time` and `distance-time` form rows). They ship in a
+  // follow-up PR alongside the dialog work + a Firestore rule branch
+  // that bounds `distanceM` for the carry-specific ids.
 
   // ─── cardio ──────────────────────────────────────────────────────────
   {
@@ -777,66 +747,11 @@ export const EXERCISE_CATALOG: ReadonlyArray<ExerciseDefinition> = [
   },
 
   // ─── strength (weighted compound lifts) ──────────────────────────────
-  {
-    id: 'strength.benchpress',
-    categoryId: 'strength',
-    measurement: 'weight',
-    min: 1,
-    max: 50,
-    unit: 'reps',
-    nameKey: '@@exercise.strength.benchpress.name',
-    icon: 'exercise',
-  },
-  {
-    id: 'strength.overheadpress',
-    categoryId: 'strength',
-    measurement: 'weight',
-    min: 1,
-    max: 50,
-    unit: 'reps',
-    nameKey: '@@exercise.strength.overheadpress.name',
-    icon: 'exercise',
-  },
-  {
-    id: 'strength.deadlift',
-    categoryId: 'strength',
-    measurement: 'weight',
-    min: 1,
-    max: 50,
-    unit: 'reps',
-    nameKey: '@@exercise.strength.deadlift.name',
-    icon: 'exercise',
-  },
-  {
-    id: 'strength.barbellsquat',
-    categoryId: 'strength',
-    measurement: 'weight',
-    min: 1,
-    max: 50,
-    unit: 'reps',
-    nameKey: '@@exercise.strength.barbellsquat.name',
-    icon: 'exercise',
-  },
-  {
-    id: 'strength.barbellrow',
-    categoryId: 'strength',
-    measurement: 'weight',
-    min: 1,
-    max: 50,
-    unit: 'reps',
-    nameKey: '@@exercise.strength.barbellrow.name',
-    icon: 'exercise',
-  },
-  {
-    id: 'strength.kettlebellswing',
-    categoryId: 'strength',
-    measurement: 'weight',
-    min: 1,
-    max: 100,
-    unit: 'reps',
-    nameKey: '@@exercise.strength.kettlebellswing.name',
-    icon: 'exercise',
-  },
+  // Strength exercises are `weight`-measured and require a `weightKg`
+  // companion input the training dialog doesn't yet render. They ship
+  // in a follow-up PR alongside the weighted-set form, the `weightKg`
+  // companion in `exerciseEntries` Firestore rule, and the
+  // per-exercise stats trigger work to surface PRs in load × reps.
 ];
 
 const CATALOG_BY_ID: ReadonlyMap<string, ExerciseDefinition> = new Map(

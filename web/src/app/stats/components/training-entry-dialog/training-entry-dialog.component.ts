@@ -30,6 +30,7 @@ import {
   exercisesByCategory,
   ExerciseCategoryId,
   ExerciseDefinition,
+  ExerciseVariant,
   findExerciseDefinition,
   findPushupTypeByLocalizedName,
   findPushupTypeByStoredValue,
@@ -39,7 +40,10 @@ import {
   PUSHUP_TYPES,
   PushupTypeInfo,
 } from '@pu-stats/models';
-import { exerciseDisplayName } from '../../i18n/exercise-display-names';
+import {
+  exerciseDisplayName,
+  variantDisplayName,
+} from '../../i18n/exercise-display-names';
 
 /**
  * Synthetic id for the implicit "Liegestütze (Standard)" exercise inside
@@ -368,7 +372,7 @@ interface PushupTypeOption {
             >
             @for (variant of currentDefinition()?.variants; track variant.id) {
               <mat-option [value]="variant.id">{{
-                exerciseVariantLabel(variant.id)
+                exerciseVariantLabel(variant)
               }}</mat-option>
             }
           </mat-select>
@@ -873,8 +877,8 @@ export class TrainingEntryDialogComponent {
     this.distanceInput.set('');
   }
 
-  exerciseVariantLabel(variantId: string): string {
-    return variantId;
+  exerciseVariantLabel(variant: ExerciseVariant): string {
+    return variantDisplayName(variant);
   }
 
   exerciseLabel(id: string): string {

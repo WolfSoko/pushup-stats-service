@@ -147,7 +147,7 @@ describe('AnalysisOverviewComponent', () => {
     store.categorySummaries.set([
       {
         categoryId: 'push',
-        nameKey: '@@exercise.category.pushup',
+        nameKey: '@@exercise.category.push',
         icon: 'fitness_center',
         order: 10,
         totalReps: 100,
@@ -158,7 +158,7 @@ describe('AnalysisOverviewComponent', () => {
       },
       {
         categoryId: 'core',
-        nameKey: '@@exercise.category.abs',
+        nameKey: '@@exercise.category.core',
         icon: 'self_improvement',
         order: 20,
         totalReps: 30,
@@ -190,7 +190,7 @@ describe('AnalysisOverviewComponent', () => {
     store.categorySummaries.set([
       {
         categoryId: 'push',
-        nameKey: '@@exercise.category.pushup',
+        nameKey: '@@exercise.category.push',
         icon: 'fitness_center',
         order: 10,
         totalReps: 100,
@@ -223,7 +223,7 @@ describe('AnalysisOverviewComponent', () => {
     store.categorySummaries.set([
       {
         categoryId: 'push',
-        nameKey: '@@exercise.category.pushup',
+        nameKey: '@@exercise.category.push',
         icon: 'fitness_center',
         order: 10,
         totalReps: 100,
@@ -269,7 +269,7 @@ describe('AnalysisOverviewComponent', () => {
     store.categorySummaries.set([
       {
         categoryId: 'push',
-        nameKey: '@@exercise.category.pushup',
+        nameKey: '@@exercise.category.push',
         icon: 'fitness_center',
         order: 10,
         totalReps: 100,

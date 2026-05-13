@@ -18,22 +18,30 @@ describe('EXERCISE_CATEGORIES', () => {
     }
   });
 
-  it('ships every movement-pattern category', () => {
+  it('ships the dialog-supported movement-pattern categories', () => {
     const ids = new Set(EXERCISE_CATEGORIES.map((c) => c.id));
+    // `carry` (distance) and `strength` (weight) stay declared in
+    // ExerciseCategoryId but are intentionally absent from
+    // EXERCISE_CATEGORIES until the training-entry dialog grows
+    // weight + distance form support — see catalog header comment.
     for (const id of [
       'push',
       'pull',
       'squat',
       'hinge',
       'lunge',
-      'carry',
       'core',
       'cardio',
       'mobility',
-      'strength',
     ]) {
       expect(ids.has(id)).toBe(true);
     }
+  });
+
+  it('omits weight/distance categories until dialog gains support', () => {
+    const ids = new Set(EXERCISE_CATEGORIES.map((c) => c.id));
+    expect(ids.has('carry')).toBe(false);
+    expect(ids.has('strength')).toBe(false);
   });
 });
 
@@ -101,14 +109,23 @@ describe('EXERCISE_CATALOG', () => {
     expect(running?.max).toBeGreaterThanOrEqual(50_000);
   });
 
-  it('ships pull/hinge/carry/strength exercises', () => {
+  it('ships pull/hinge/mobility exercises', () => {
     const ids = new Set(EXERCISE_CATALOG.map((d) => d.id));
     expect(ids.has('pull.pullups')).toBe(true);
     expect(ids.has('pull.rows')).toBe(true);
     expect(ids.has('hinge.singlelegRdl')).toBe(true);
-    expect(ids.has('carry.farmer')).toBe(true);
-    expect(ids.has('strength.deadlift')).toBe(true);
     expect(ids.has('mobility.stretching')).toBe(true);
+  });
+
+  it('does not yet ship distance- or weight-measured catalog entries', () => {
+    // The training-entry dialog only renders `reps` / `time` /
+    // `distance-time` form rows. Surfacing `distance` (carry) or
+    // `weight` (strength) catalog entries before the dialog gains
+    // those input shapes would route users into a save-error path.
+    for (const def of EXERCISE_CATALOG) {
+      expect(def.measurement).not.toBe('distance');
+      expect(def.measurement).not.toBe('weight');
+    }
   });
 
   it('attaches variants to compound exercises that benefit from them', () => {

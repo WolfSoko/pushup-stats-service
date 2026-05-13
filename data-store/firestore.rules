@@ -1,18 +1,54 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    // Centralised list of `measurement: 'reps'` exercises the
-    // `exerciseEntries` rule accepts. Keep in sync with the
-    // `measurement: 'reps'` entries in
-    // `libs/stats/src/lib/models/exercise.catalog.ts`. The same list
-    // backs the create and the update branch — adding a new reps
-    // exercise only requires touching this one helper plus the catalog.
+    // Centralised allowlists of catalog exercise ids per measurement
+    // type. Keep these in sync with `libs/stats/src/lib/models/exercise.catalog.ts` —
+    // the rule must list every id the catalog ships, otherwise users
+    // get permission-denied on save for a freshly added exercise.
+    //
+    // Per-exercise min/max bounds live in the catalog and are enforced
+    // client-side; the rule uses one broad bound per measurement type
+    // as a tamper-resistance backstop. A widened-but-not-infinite cap
+    // is intentional: catastrophic values (e.g. distanceM = 10^9) still
+    // get rejected here, but every legitimate catalog entry passes.
     function isRepsExerciseId(id) {
       return [
+        // Legacy `abs.*` / `legs.*` ids predate the movement-pattern
+        // restructure and live across `core` / `squat` / `hinge` / `lunge`.
         'abs.situps', 'abs.crunches', 'abs.legraises',
         'abs.russiantwist', 'abs.mountainclimbers',
         'legs.squats', 'legs.lunges', 'legs.glutebridge',
-        'legs.calfraises', 'legs.jumpsquats'
+        'legs.calfraises', 'legs.jumpsquats',
+        // core / squat / hinge / lunge — new reps exercises
+        'core.deadbug',
+        'squat.boxjump',
+        'hinge.singlelegRdl', 'hinge.goodmorning',
+        'lunge.stepup',
+        // pull — bodyweight pulling
+        'pull.pullups', 'pull.rows', 'pull.facepull',
+        // cardio reps-counted conditioning
+        'cardio.jumprope', 'cardio.burpees', 'cardio.jumpingjacks',
+        // mobility (only catcow is reps-counted; the others are time)
+        'mobility.catcow'
+      ].hasAny([id]);
+    }
+
+    function isTimeExerciseId(id) {
+      return [
+        'plank.standard',
+        'core.hollowhold',
+        'squat.wallsit',
+        'pull.deadhang',
+        'cardio.highknees',
+        'mobility.stretching', 'mobility.yoga', 'mobility.foamrolling',
+        'mobility.dynamicwarmup', 'mobility.hipopener'
+      ].hasAny([id]);
+    }
+
+    function isDistanceTimeExerciseId(id) {
+      return [
+        'cardio.running', 'cardio.walking', 'cardio.cycling',
+        'cardio.rowing', 'cardio.swimming'
       ].hasAny([id]);
     }
 
@@ -181,18 +217,23 @@ service cloud.firestore {
                       // Reps-measured exercises. Allowlist lives in
                       // `isRepsExerciseId()` at the top of this file so
                       // create + update share a single source of truth.
+                      // Cap (500) matches the widest catalog max for
+                      // reps exercises; per-exercise caps are enforced
+                      // client-side.
                       (isRepsExerciseId(request.resource.data.exerciseId)
                         && request.resource.data.reps is int
                         && request.resource.data.reps >= 1
-                        && request.resource.data.reps <= 500
+                        && request.resource.data.reps <= 10000
                         && !('durationSec' in request.resource.data.keys())
                         && !('distanceM' in request.resource.data.keys()))
                       ||
-                      // Time-measured exercises (plank). `sets` would
-                      // poison `applyDelta` because no per-set duration
-                      // breakdown is defined yet — block it at the rule
-                      // until a future phase introduces one.
-                      (request.resource.data.exerciseId == 'plank.standard'
+                      // Time-measured exercises (plank, hollow hold,
+                      // wall sit, dead hang, mobility holds, …). `sets`
+                      // would poison `applyDelta` because no per-set
+                      // duration breakdown is defined yet — block it at
+                      // the rule until a future phase introduces one.
+                      // Cap (7200 = 2 h) matches the widest catalog max.
+                      (isTimeExerciseId(request.resource.data.exerciseId)
                         && request.resource.data.durationSec is int
                         && request.resource.data.durationSec >= 1
                         && request.resource.data.durationSec <= 7200
@@ -200,13 +241,16 @@ service cloud.firestore {
                         && !('sets' in request.resource.data.keys())
                         && !('distanceM' in request.resource.data.keys()))
                       ||
-                      // Distance-time-measured exercises (cardio.running).
-                      // Both fields are required; `reps`/`sets` are blocked
-                      // for the same reason as plank.
-                      (request.resource.data.exerciseId == 'cardio.running'
+                      // Distance-time-measured exercises (cardio.running
+                      // and friends). Both fields are required; reps /
+                      // sets are blocked for the same reason as the
+                      // time branch. Distance cap (300 000 m = 300 km)
+                      // covers cycling; the per-exercise min/max
+                      // catalog bounds narrow it further client-side.
+                      (isDistanceTimeExerciseId(request.resource.data.exerciseId)
                         && request.resource.data.distanceM is int
-                        && request.resource.data.distanceM >= 100
-                        && request.resource.data.distanceM <= 50000
+                        && request.resource.data.distanceM >= 1
+                        && request.resource.data.distanceM <= 300000
                         && request.resource.data.durationSec is int
                         && request.resource.data.durationSec >= 1
                         && request.resource.data.durationSec <= 86400
