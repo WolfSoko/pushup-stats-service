@@ -24,3 +24,11 @@ export const PUSHUP_PROFILE: ExerciseAngleProfile = {
   minDwellMs: 200,
   minConfidence: 0.6,
 };
+
+const PROFILES: ReadonlyMap<string, ExerciseAngleProfile> = new Map([
+  [PUSHUP_PROFILE.id, PUSHUP_PROFILE],
+]);
+
+export function profileFor(exerciseId: string): ExerciseAngleProfile | null {
+  return PROFILES.get(exerciseId) ?? null;
+}
