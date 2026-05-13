@@ -203,17 +203,19 @@ export function kindDisplayName(value: UnifiedEntryFilterKey): string {
  * no runtime hook for `$localize`, and emitting the id would render
  * the legend like a developer string in production builds.
  */
-const CATEGORY_DISPLAY_NAMES: Record<ExerciseCategoryId, string> = {
+// `carry` and `strength` are declared in `ExerciseCategoryId` for
+// forward-compat but ship without picker entries (see catalog header).
+// Omitting them here lets `categoryDisplayName` fall back to the raw id
+// rather than maintain dead `$localize` calls for unused labels.
+const CATEGORY_DISPLAY_NAMES: Partial<Record<ExerciseCategoryId, string>> = {
   push: $localize`:@@exercise.category.push:Drücken`,
   pull: $localize`:@@exercise.category.pull:Ziehen`,
   squat: $localize`:@@exercise.category.squat:Kniebeuge`,
   hinge: $localize`:@@exercise.category.hinge:Hüftstreckung`,
   lunge: $localize`:@@exercise.category.lunge:Ausfallschritt`,
-  carry: $localize`:@@exercise.category.carry:Tragen`,
   core: $localize`:@@exercise.category.core:Rumpf`,
   cardio: $localize`:@@exercise.category.cardio:Ausdauer`,
   mobility: $localize`:@@exercise.category.mobility:Mobilität`,
-  strength: $localize`:@@exercise.category.strength:Krafttraining`,
 };
 
 export function categoryDisplayName(id: ExerciseCategoryId): string {

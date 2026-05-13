@@ -72,4 +72,15 @@ describe('categoryDisplayName', () => {
     expect(categoryDisplayName('cardio')).toBe('Ausdauer');
     expect(categoryDisplayName('mobility')).toBe('Mobilität');
   });
+
+  it('falls back to the raw id when the category is unknown', () => {
+    // `carry` and `strength` stay in the type union (forward-compat)
+    // but their display labels are intentionally absent from
+    // CATEGORY_DISPLAY_NAMES until the dialog gains weight + distance
+    // form support. The runtime fallback returns the raw id so the
+    // analysis page doesn't render "undefined" if it ever resolves
+    // entries to one of those categories before the labels ship.
+    expect(categoryDisplayName('carry')).toBe('carry');
+    expect(categoryDisplayName('strength')).toBe('strength');
+  });
 });

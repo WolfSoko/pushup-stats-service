@@ -217,9 +217,10 @@ service cloud.firestore {
                       // Reps-measured exercises. Allowlist lives in
                       // `isRepsExerciseId()` at the top of this file so
                       // create + update share a single source of truth.
-                      // Cap (500) matches the widest catalog max for
-                      // reps exercises; per-exercise caps are enforced
-                      // client-side.
+                      // Cap (10 000) covers high-rep conditioning ids
+                      // like `cardio.jumprope`; per-exercise caps are
+                      // enforced client-side via the catalog
+                      // `min`/`max` plus the `applyDelta` trigger.
                       (isRepsExerciseId(request.resource.data.exerciseId)
                         && request.resource.data.reps is int
                         && request.resource.data.reps >= 1

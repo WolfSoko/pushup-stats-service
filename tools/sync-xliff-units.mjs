@@ -50,15 +50,17 @@ async function syncFile(localePath, sourceMap) {
     .map((id) => buildLocaleUnit(id, extractSource(sourceMap.get(id))))
     .join('\n');
 
-  const insertBefore = xliff.lastIndexOf('</file>');
-  if (insertBefore === -1) {
+  // Find the start of the line containing the closing `</file>` so we
+  // insert *before* its leading whitespace (typically 2 spaces). Inserting
+  // at the `<` character itself leaves that indentation in front of the
+  // first new unit and skews formatting across locale files.
+  const closingTag = xliff.lastIndexOf('</file>');
+  if (closingTag === -1) {
     throw new Error(`No </file> tag in ${localePath}`);
   }
+  const lineStart = xliff.lastIndexOf('\n', closingTag) + 1;
   const next =
-    xliff.slice(0, insertBefore) +
-    additions +
-    '\n  ' +
-    xliff.slice(insertBefore);
+    xliff.slice(0, lineStart) + additions + '\n' + xliff.slice(lineStart);
   await writeFile(localePath, next, 'utf8');
   return { localePath, added: missingIds.length };
 }
