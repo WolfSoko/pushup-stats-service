@@ -183,7 +183,7 @@ describe('EntriesPageComponent', () => {
       // Label switches to the new movement-pattern category label
       // ("Drücken") which is what the analysis page filter chips
       // already render.
-      expect(opts[0].label).toBe('Drücken');
+      expect(opts[0].label).toBe('Liegestütze');
     });
     // Note: the exercise-id branch of `kindLabel` is exercised
     // indirectly through `exerciseDisplayName` (covered in

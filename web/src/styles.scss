@@ -210,6 +210,27 @@ mat-card-header + mat-card-footer {
   font-weight: 600;
 }
 
+// ngsw update available — top-anchored, primary container so it reads as an
+// actionable system prompt distinct from the early-access notice. Clears the
+// 64px sticky toolbar like the early-access toast.
+.sw-update-snackbar {
+  margin-top: 72px;
+}
+
+.sw-update-snackbar .mdc-snackbar__surface {
+  background: var(--mat-sys-primary-container, #d0e4ff) !important;
+  color: var(--mat-sys-on-primary-container, #001c38) !important;
+}
+
+.sw-update-snackbar .mdc-snackbar__label {
+  color: var(--mat-sys-on-primary-container, #001c38) !important;
+}
+
+.sw-update-snackbar .mat-mdc-button {
+  color: var(--mat-sys-on-primary-container, #001c38) !important;
+  font-weight: 600;
+}
+
 // Goal-reached celebration dialog: the .goal-card paints its own gold-gradient
 // frame on a ::before pseudo, and the @wolsok/thanos snap animation rasterises
 // the card into a particle canvas that flows beyond the dialog bounds.

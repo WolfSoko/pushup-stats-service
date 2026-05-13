@@ -3,6 +3,8 @@ import {
   pushupRecordToUnified,
   unifiedEntryCategoryId,
   unifiedEntryFilterKey,
+  unifiedEntryMeasurement,
+  unifiedEntryPrimaryValue,
 } from './unified-entry.models';
 import type { ExerciseDefinition, ExerciseEntry } from './exercise.models';
 import type { PushupRecord } from './pushup.models';
@@ -165,7 +167,7 @@ describe('unifiedEntryFilterKey', () => {
 
 describe('unifiedEntryCategoryId', () => {
   describe('Given a pushup entry', () => {
-    it('returns "push" regardless of variant', () => {
+    it('returns "pushup" regardless of variant', () => {
       expect(
         unifiedEntryCategoryId({
           kind: 'pushup',
@@ -175,7 +177,7 @@ describe('unifiedEntryCategoryId', () => {
           source: 'web',
           variantType: 'diamond',
         })
-      ).toBe('push');
+      ).toBe('pushup');
       expect(
         unifiedEntryCategoryId({
           kind: 'pushup',
@@ -185,7 +187,7 @@ describe('unifiedEntryCategoryId', () => {
           source: 'web',
           variantType: null,
         })
-      ).toBe('push');
+      ).toBe('pushup');
     });
   });
 
@@ -274,6 +276,198 @@ describe('unifiedEntryCategoryId', () => {
           resolver
         )
       ).toBe('mobility');
+    });
+  });
+});
+
+describe('unifiedEntryMeasurement', () => {
+  it('returns "reps" for any pushup entry', () => {
+    expect(
+      unifiedEntryMeasurement({
+        kind: 'pushup',
+        _id: 'p',
+        timestamp: 't',
+        reps: 1,
+        source: 'web',
+        variantType: null,
+      })
+    ).toBe('reps');
+  });
+
+  it('resolves the catalog measurement for known exercise ids', () => {
+    expect(
+      unifiedEntryMeasurement({
+        kind: 'exercise',
+        _id: 'e',
+        timestamp: 't',
+        reps: 0,
+        source: 'web',
+        exerciseId: 'plank.standard',
+        durationSec: 60,
+      })
+    ).toBe('time');
+
+    expect(
+      unifiedEntryMeasurement({
+        kind: 'exercise',
+        _id: 'e',
+        timestamp: 't',
+        reps: 30,
+        source: 'web',
+        exerciseId: 'abs.situps',
+      })
+    ).toBe('reps');
+  });
+
+  it('returns null when the exerciseId is not in the catalog', () => {
+    expect(
+      unifiedEntryMeasurement({
+        kind: 'exercise',
+        _id: 'e',
+        timestamp: 't',
+        reps: 1,
+        source: 'web',
+        exerciseId: 'custom-uuid',
+      })
+    ).toBeNull();
+  });
+});
+
+describe('unifiedEntryPrimaryValue', () => {
+  describe('Given a reps-measured entry (pushup or catalog rep exercise)', () => {
+    it('returns the reps count for pushups', () => {
+      expect(
+        unifiedEntryPrimaryValue({
+          kind: 'pushup',
+          _id: 'p',
+          timestamp: 't',
+          reps: 25,
+          source: 'web',
+          variantType: 'standard',
+        })
+      ).toBe(25);
+    });
+
+    it('returns the reps count for rep-measured catalog exercises', () => {
+      expect(
+        unifiedEntryPrimaryValue({
+          kind: 'exercise',
+          _id: 'e',
+          timestamp: 't',
+          reps: 30,
+          source: 'web',
+          exerciseId: 'abs.situps',
+        })
+      ).toBe(30);
+    });
+  });
+
+  describe('Given a time-measured entry (plank, hollow hold, …)', () => {
+    it('returns durationSec so the chart sees a non-zero contribution', () => {
+      // Regression: time-measured entries used to surface as `reps = 0`
+      // in the analysis chart, hiding planks/hollow holds from the
+      // graph entirely. The primary value must come off `durationSec`.
+      expect(
+        unifiedEntryPrimaryValue({
+          kind: 'exercise',
+          _id: 'e',
+          timestamp: 't',
+          reps: 0,
+          source: 'web',
+          exerciseId: 'plank.standard',
+          durationSec: 90,
+        })
+      ).toBe(90);
+    });
+
+    it('falls back to 0 when durationSec is missing', () => {
+      expect(
+        unifiedEntryPrimaryValue({
+          kind: 'exercise',
+          _id: 'e',
+          timestamp: 't',
+          reps: 0,
+          source: 'web',
+          exerciseId: 'plank.standard',
+        })
+      ).toBe(0);
+    });
+  });
+
+  describe('Given a distance-measured entry', () => {
+    it('returns distanceM for distance-time exercises like a tracked run', () => {
+      expect(
+        unifiedEntryPrimaryValue({
+          kind: 'exercise',
+          _id: 'e',
+          timestamp: 't',
+          reps: 0,
+          source: 'web',
+          exerciseId: 'cardio.running',
+          distanceM: 5000,
+          durationSec: 1650,
+        })
+      ).toBe(5000);
+    });
+  });
+
+  describe('Given an unknown exercise id (custom user exercise not resolved)', () => {
+    it('falls back to the first populated numeric field so the entry still contributes', () => {
+      expect(
+        unifiedEntryPrimaryValue({
+          kind: 'exercise',
+          _id: 'e',
+          timestamp: 't',
+          reps: 0,
+          source: 'web',
+          exerciseId: 'custom-uuid',
+          durationSec: 120,
+        })
+      ).toBe(120);
+    });
+
+    it('returns 0 when no numeric field is populated', () => {
+      expect(
+        unifiedEntryPrimaryValue({
+          kind: 'exercise',
+          _id: 'e',
+          timestamp: 't',
+          reps: 0,
+          source: 'web',
+          exerciseId: 'custom-uuid',
+        })
+      ).toBe(0);
+    });
+  });
+
+  describe('Given a custom resolver', () => {
+    it('uses the resolver to pick the right value field for custom exercises', () => {
+      const customDef: ExerciseDefinition = {
+        id: 'custom-uuid',
+        categoryId: 'core',
+        ownerId: 'u1',
+        measurement: 'time',
+        min: 1,
+        max: 1200,
+        unit: 's',
+        customName: 'Custom plank',
+      };
+      const resolver = (id: string) =>
+        id === 'custom-uuid' ? customDef : null;
+      expect(
+        unifiedEntryPrimaryValue(
+          {
+            kind: 'exercise',
+            _id: 'e',
+            timestamp: 't',
+            reps: 0,
+            source: 'web',
+            exerciseId: 'custom-uuid',
+            durationSec: 75,
+          },
+          resolver
+        )
+      ).toBe(75);
     });
   });
 });

@@ -146,8 +146,8 @@ describe('AnalysisOverviewComponent', () => {
   it('renders the chart and one card per summary when categories exist', () => {
     store.categorySummaries.set([
       {
-        categoryId: 'push',
-        nameKey: '@@exercise.category.push',
+        categoryId: 'pushup',
+        nameKey: '@@exercise.category.pushup',
         icon: 'fitness_center',
         order: 10,
         totalReps: 100,
@@ -189,8 +189,8 @@ describe('AnalysisOverviewComponent', () => {
     // carries rows.
     store.categorySummaries.set([
       {
-        categoryId: 'push',
-        nameKey: '@@exercise.category.push',
+        categoryId: 'pushup',
+        nameKey: '@@exercise.category.pushup',
         icon: 'fitness_center',
         order: 10,
         totalReps: 100,
@@ -222,8 +222,8 @@ describe('AnalysisOverviewComponent', () => {
   it('forwards viewSelect emissions from a summary card up to the parent', () => {
     store.categorySummaries.set([
       {
-        categoryId: 'push',
-        nameKey: '@@exercise.category.push',
+        categoryId: 'pushup',
+        nameKey: '@@exercise.category.pushup',
         icon: 'fitness_center',
         order: 10,
         totalReps: 100,
@@ -242,7 +242,7 @@ describe('AnalysisOverviewComponent', () => {
     expect(button).toBeTruthy();
     button.click();
     fixture.detectChanges();
-    expect(fixture.componentInstance.lastEmitted()).toBe('push');
+    expect(fixture.componentInstance.lastEmitted()).toBe('pushup');
   });
 
   it('snaps activeView to overview in the uncategorised fallback so the embedded group-view is not stale-filtered', () => {
@@ -268,8 +268,8 @@ describe('AnalysisOverviewComponent', () => {
     store.activeView.set('mobility');
     store.categorySummaries.set([
       {
-        categoryId: 'push',
-        nameKey: '@@exercise.category.push',
+        categoryId: 'pushup',
+        nameKey: '@@exercise.category.pushup',
         icon: 'fitness_center',
         order: 10,
         totalReps: 100,

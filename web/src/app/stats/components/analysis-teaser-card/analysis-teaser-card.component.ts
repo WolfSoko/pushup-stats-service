@@ -140,11 +140,11 @@ export class AnalysisTeaserCardComponent {
 
   private readonly allExercisesLabel = $localize`:@@chart.kindLabel.all:Alle Übungen`;
   /**
-   * Push-movement label reused from the analysis page i18n catalog so we
-   * don't spawn a parallel XLIFF unit. Used to label legacy-pushup data
-   * surfaced on the teaser chart.
+   * Pushup label reused from the analysis page i18n catalog so we
+   * don't spawn a parallel XLIFF unit. Used to label legacy-pushup
+   * data surfaced on the teaser chart.
    */
-  private readonly pushupLabel = $localize`:@@exercise.category.push:Drücken`;
+  private readonly pushupLabel = $localize`:@@exercise.category.pushup:Liegestütze`;
 
   /** Exposed for the template's error-fallback gate. */
   readonly liveConnected = computed(() => this.live.connected());

@@ -21,7 +21,8 @@ export type MeasurementType =
  * fitness) rather than body-part labels, with one isolation bucket
  * (`cardio`, `mobility`, `strength`) per cross-pattern concern:
  *
- *   push   — horizontal/vertical pressing (pushups, dips, pike pushup)
+ *   pushup — bodyweight pushup variants (legacy `pushups` collection)
+ *   push   — other horizontal/vertical pressing (dips, handstand hold)
  *   pull   — vertical/horizontal pulling (pull-ups, rows)
  *   squat  — knee-dominant lower body (squat variants, calf raise)
  *   hinge  — hip-dominant lower body (glute bridge, hip thrust)
@@ -31,8 +32,14 @@ export type MeasurementType =
  *   cardio — sustained conditioning (run, bike, row, jump rope, burpee)
  *   mobility — flexibility, joint prep (stretching, yoga, foam roll)
  *   strength — barbell/dumbbell compound lifts measured in load × reps
+ *
+ * `pushup` is kept as a separate category from `push` because the app
+ * is called "PushUps" — pushup variants are the headline workout and
+ * deserve their own bucket on the dashboard. Other pressing movements
+ * (dips, handstand) live in `push`.
  */
 export type ExerciseCategoryId =
+  | 'pushup'
   | 'push'
   | 'pull'
   | 'squat'

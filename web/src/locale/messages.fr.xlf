@@ -8173,5 +8173,41 @@
         <target>Langhantel</target>
       </segment>
     </unit>
+    <unit id="exercise.push.dips.name">
+      <segment state="initial">
+        <source>Dips</source>
+        <target>Dips</target>
+      </segment>
+    </unit>
+    <unit id="exercise.push.benchdips.name">
+      <segment state="initial">
+        <source>Bankdips</source>
+        <target>Bankdips</target>
+      </segment>
+    </unit>
+    <unit id="exercise.push.handstandhold.name">
+      <segment state="initial">
+        <source>Handstand-Hold</source>
+        <target>Handstand-Hold</target>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.dips.parallel">
+      <segment state="initial">
+        <source>Barren</source>
+        <target>Barren</target>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.dips.straight-bar">
+      <segment state="initial">
+        <source>Stange</source>
+        <target>Stange</target>
+      </segment>
+    </unit>
+    <unit id="exercise.variant.dips.ring">
+      <segment state="initial">
+        <source>Ringe</source>
+        <target>Ringe</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

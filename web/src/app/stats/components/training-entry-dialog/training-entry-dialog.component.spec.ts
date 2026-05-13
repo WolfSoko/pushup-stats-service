@@ -31,7 +31,7 @@ describe('TrainingEntryDialogComponent', () => {
     it('defaults to the pushup category and synthetic exercise id', () => {
       const { component } = createDialog(null);
 
-      expect(component.category()).toBe('push');
+      expect(component.category()).toBe('pushup');
       expect(component.mode()).toBe('pushup');
       expect(component.isEditMode).toBe(false);
     });
@@ -168,14 +168,14 @@ describe('TrainingEntryDialogComponent', () => {
       });
 
       expect(component.isEditMode).toBe(true);
-      expect(component.category()).toBe('push');
+      expect(component.category()).toBe('pushup');
       expect(component.sets()).toEqual([10, 10, 10]);
       expect(component.pushupTypeControl.value).toBe('diamond');
       expect(component.sourceControl.value).toBe('whatsapp');
       // Edit mode must not allow moving an entry between collections,
       // so the category-change handler is a no-op.
       component.onCategoryChange('core');
-      expect(component.category()).toBe('push');
+      expect(component.category()).toBe('pushup');
     });
 
     it('preserves the original ISO timestamp when the user does not touch the field', () => {

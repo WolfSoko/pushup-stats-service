@@ -882,6 +882,56 @@ describe('App (testing-library)', () => {
       expect(reloadCall?.[0]).toBe('Neue Version verfügbar');
     });
 
+    // Regression: a 20s auto-dismiss + bottom anchor meant the prompt was
+    // easy to miss (mobile bottom-nav clipped it; tabbing away wiped it).
+    // The update toast must now be sticky and top-anchored so the user can
+    // always act on it, with a distinct panelClass for styling.
+    it('opens the update snackbar sticky at top-center with the sw-update panelClass', async () => {
+      const swUpdate = makeSwUpdateMock();
+      const openSpy = vitest
+        .spyOn(MatSnackBar.prototype, 'open')
+        .mockReturnValue({
+          onAction: () => of(undefined),
+          afterDismissed: () => of({ dismissedByAction: false }),
+        } as unknown as ReturnType<MatSnackBar['open']>);
+
+      await render(App, {
+        providers: [
+          provideRouter([]),
+          { provide: PLATFORM_ID, useValue: 'browser' },
+          {
+            provide: UserContextService,
+            useValue: {
+              userNameSafe: userNameSignal.asReadonly(),
+              userIdSafe: () => 'u1',
+              isAdmin: () => false,
+              isGuest: () => false,
+            },
+          },
+          { provide: AuthStore, useValue: authMock },
+          { provide: AuthService, useValue: authServiceMock },
+          { provide: Auth, useValue: firebaseAuthMock },
+          { provide: UserConfigApiService, useValue: userConfigApiMock },
+          { provide: StatsApiService, useValue: statsApiMock },
+          { provide: AdsStore, useValue: adsStoreMock },
+          { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
+          { provide: SwUpdate, useValue: swUpdate },
+        ],
+      });
+
+      swUpdate.emit({ type: 'VERSION_READY' });
+
+      const reloadCall = openSpy.mock.calls.find(
+        ([, action]) => action === 'Neu laden'
+      );
+      expect(reloadCall).toBeTruthy();
+      const config = reloadCall?.[2];
+      expect(config?.duration).toBeUndefined();
+      expect(config?.horizontalPosition).toBe('center');
+      expect(config?.verticalPosition).toBe('top');
+      expect(config?.panelClass).toBe('sw-update-snackbar');
+    });
+
     // Regression: a non-actionable "downloading in background" toast used to
     // fire on VERSION_DETECTED, visually replacing the actionable reload toast
     // and leaving users with no way to apply the update.

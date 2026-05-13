@@ -300,13 +300,19 @@ export class App {
         .subscribe((event) => {
           if (event.type !== 'VERSION_READY') return;
 
+          // Sticky (no `duration`) + top-center: the prompt sits at eye level
+          // and stays put until the user clicks "Neu laden". An auto-dismiss
+          // timer made the toast easy to miss (especially when the mobile
+          // bottom-nav cropped the bottom-anchored variant). Distinct
+          // panelClass lets `styles.scss` give it its own surface colour so
+          // it doesn't get mistaken for a routine info toast.
           const ref = this.snackBar.open(
             $localize`:@@sw.update.available:Neue Version verfügbar`,
             $localize`:@@sw.update.reload:Neu laden`,
             {
-              duration: 20_000,
               horizontalPosition: 'center',
-              verticalPosition: 'bottom',
+              verticalPosition: 'top',
+              panelClass: 'sw-update-snackbar',
             }
           );
 

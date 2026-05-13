@@ -433,7 +433,7 @@ describe('AnalysisPageComponent', () => {
 
     it('setActiveView("pushup") collapses to pushup entries only', () => {
       const { store } = fixture.componentInstance;
-      store.setActiveView('push');
+      store.setActiveView('pushup');
       const rows = store.viewFilteredRows();
       expect(rows).toHaveLength(6);
       expect(rows.every((r) => r.kind === 'pushup')).toBe(true);
@@ -481,7 +481,7 @@ describe('AnalysisPageComponent', () => {
 
     it('per-category KPIs scope to the active view (pushup)', () => {
       const { store } = fixture.componentInstance;
-      store.setActiveView('push');
+      store.setActiveView('pushup');
       // Same numbers as the original pushup-only tests because the
       // seeded mock is the pushup-only dataset.
       expect(store.bestSingleEntry()?.reps).toBe(25);
@@ -530,7 +530,7 @@ describe('AnalysisPageComponent', () => {
 
     it('per-category pushup trend matches the legacy pushup-only totals', () => {
       const { store } = fixture.componentInstance;
-      store.setActiveView('push');
+      store.setActiveView('pushup');
       const week = store.weekTrend().find((w) => w.label === '2026-W07');
       expect(week?.total).toBe(93);
     });
@@ -546,7 +546,7 @@ describe('AnalysisPageComponent', () => {
       const { store } = fixture.componentInstance;
       const summaries = store.categorySummaries();
       expect(summaries.map((s) => s.categoryId)).toEqual([
-        'push',
+        'pushup',
         'squat',
         'core',
       ]);
@@ -555,7 +555,7 @@ describe('AnalysisPageComponent', () => {
     it('categorySummaries surfaces per-category totals, today reps and best day', () => {
       const { store } = fixture.componentInstance;
       const summaries = store.categorySummaries();
-      const pushup = summaries.find((s) => s.categoryId === 'push');
+      const pushup = summaries.find((s) => s.categoryId === 'pushup');
       expect(pushup).toMatchObject({
         totalReps: 93,
         // 5+5 + 6+6 + 10+5+5 + 10+8+7 + 9+9 = 12 sets across 5 entries.
@@ -586,7 +586,7 @@ describe('AnalysisPageComponent', () => {
       // for the movement-pattern category names.
       const { store } = fixture.componentInstance;
       const cmp = store.categoryComparison();
-      expect(cmp.labels).toEqual(['Drücken', 'Kniebeuge', 'Rumpf']);
+      expect(cmp.labels).toEqual(['Liegestütze', 'Kniebeuge', 'Rumpf']);
       expect(cmp.reps).toEqual([93, 40, 30]);
       expect(cmp.sets).toEqual([12, 0, 0]);
     });
@@ -613,7 +613,7 @@ describe('AnalysisPageComponent', () => {
 
     it('typeBreakdown stays in pushup-variant mode when the active view is pushup', () => {
       const { store } = fixture.componentInstance;
-      store.setActiveView('push');
+      store.setActiveView('pushup');
       const labels = store.typeBreakdown().map((b) => b.label);
       expect(labels).toContain('Standard-Liegestütze');
       expect(labels).toContain('Diamant-Liegestütze');
@@ -666,7 +666,7 @@ describe('AnalysisPageComponent', () => {
 
     it('viewChartSeries scoped to pushup matches the legacy pushup-only daily totals', () => {
       const { store } = fixture.componentInstance;
-      store.setActiveView('push');
+      store.setActiveView('pushup');
       const series = store.viewChartSeries();
       // Seeded pushups: Feb 9 → 15 with one skipped day, totals
       // [10,12,20,8,25,18] and cumulative dayIntegral [10,22,42,50,75,93].
@@ -752,7 +752,7 @@ describe('AnalysisPageComponent', () => {
       // array on the way through, every pushup tab would silently lose
       // its purple "Mit Sets" segment.
       const { store } = fixture.componentInstance;
-      store.setActiveView('push');
+      store.setActiveView('pushup');
       const entries = store.viewChartEntries();
       expect(
         entries.some((e) => Array.isArray(e.sets) && e.sets.length > 1)
@@ -785,7 +785,7 @@ describe('AnalysisPageComponent', () => {
       const component = fixture.componentInstance;
       // Seeded dataset has only pushup entries → one visible category tab,
       // routed under the `push` movement-pattern category.
-      expect(component.visibleTabs().map((t) => t.id)).toEqual(['push']);
+      expect(component.visibleTabs().map((t) => t.id)).toEqual(['pushup']);
 
       liveExerciseEntries.set([
         {
@@ -809,9 +809,9 @@ describe('AnalysisPageComponent', () => {
       fixture.detectChanges();
 
       // Order follows EXERCISE_CATEGORIES.order
-      // (push=10, squat=30, core=70 → legs.squats → squat, abs.situps → core).
+      // (pushup=5, squat=30, core=70 → legs.squats → squat, abs.situps → core).
       expect(component.visibleTabs().map((t) => t.id)).toEqual([
-        'push',
+        'pushup',
         'squat',
         'core',
       ]);
@@ -821,7 +821,7 @@ describe('AnalysisPageComponent', () => {
       const component = fixture.componentInstance;
       // Overview = 0, push tab = 1 (the only category visible by default).
       component.onTabIndexChange(1);
-      expect(component.store.activeView()).toBe('push');
+      expect(component.store.activeView()).toBe('pushup');
 
       component.onTabIndexChange(0);
       expect(component.store.activeView()).toBe('overview');
@@ -829,7 +829,7 @@ describe('AnalysisPageComponent', () => {
 
     it('maps activeView back to the matching tab index for the mat-tab-group binding', () => {
       const component = fixture.componentInstance;
-      component.store.setActiveView('push');
+      component.store.setActiveView('pushup');
       expect(component.selectedTabIndex()).toBe(1);
       component.store.setActiveView('overview');
       expect(component.selectedTabIndex()).toBe(0);
@@ -851,8 +851,8 @@ describe('AnalysisPageComponent', () => {
 
     it('selecting an overview card emits the category and switches the active view', () => {
       const component = fixture.componentInstance;
-      component.onOverviewSelect('push');
-      expect(component.store.activeView()).toBe('push');
+      component.onOverviewSelect('pushup');
+      expect(component.store.activeView()).toBe('pushup');
     });
 
     it('renders a mat-tab-group with the Overview tab plus the visible categories', () => {
@@ -863,9 +863,11 @@ describe('AnalysisPageComponent', () => {
       const overviewTab = host.querySelector(
         '[data-testid="analysis-tab-overview"]'
       );
-      const pushTab = host.querySelector('[data-testid="analysis-tab-push"]');
+      const pushupTab = host.querySelector(
+        '[data-testid="analysis-tab-pushup"]'
+      );
       expect(overviewTab).toBeTruthy();
-      expect(pushTab).toBeTruthy();
+      expect(pushupTab).toBeTruthy();
     });
   });
 });

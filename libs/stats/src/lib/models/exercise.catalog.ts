@@ -14,14 +14,23 @@ import type {
  * Existing user entries reference exercises by id, not by category, so
  * recategorizing an exercise (e.g. moving `legs.squats` into the
  * `squat` category) is a UI-only change — no Firestore migration is
- * needed. Legacy entries in the `pushups` collection map to the `push`
- * category via {@link import('./unified-entry.models').unifiedEntryCategoryId}.
+ * needed. Legacy entries in the `pushups` collection map to the
+ * `pushup` category via
+ * {@link import('./unified-entry.models').unifiedEntryCategoryId}, so
+ * Liegestütze keep their dedicated bucket separate from the generic
+ * `push` movement-pattern category.
  */
 export const EXERCISE_CATEGORIES: ReadonlyArray<ExerciseCategoryInfo> = [
   {
+    id: 'pushup',
+    nameKey: '@@exercise.category.pushup',
+    icon: 'fitness_center',
+    order: 5,
+  },
+  {
     id: 'push',
     nameKey: '@@exercise.category.push',
-    icon: 'fitness_center',
+    icon: 'open_with',
     order: 10,
   },
   {
@@ -478,6 +487,54 @@ export const EXERCISE_CATALOG: ReadonlyArray<ExerciseDefinition> = [
     unit: 'reps',
     nameKey: '@@exercise.lunge.stepup.name',
     icon: 'stairs',
+  },
+
+  {
+    id: 'push.dips',
+    categoryId: 'push',
+    measurement: 'reps',
+    min: 1,
+    max: 200,
+    unit: 'reps',
+    nameKey: '@@exercise.push.dips.name',
+    icon: 'open_with',
+    variants: [
+      {
+        id: 'parallel',
+        nameKey: '@@exercise.variant.dips.parallel',
+        difficulty: 'intermediate',
+      },
+      {
+        id: 'straight-bar',
+        nameKey: '@@exercise.variant.dips.straight-bar',
+        difficulty: 'intermediate',
+      },
+      {
+        id: 'ring',
+        nameKey: '@@exercise.variant.dips.ring',
+        difficulty: 'advanced',
+      },
+    ],
+  },
+  {
+    id: 'push.benchdips',
+    categoryId: 'push',
+    measurement: 'reps',
+    min: 1,
+    max: 300,
+    unit: 'reps',
+    nameKey: '@@exercise.push.benchdips.name',
+    icon: 'open_with',
+  },
+  {
+    id: 'push.handstandhold',
+    categoryId: 'push',
+    measurement: 'time',
+    min: 1,
+    max: 600,
+    unit: 's',
+    nameKey: '@@exercise.push.handstandhold.name',
+    icon: 'open_with',
   },
 
   {
