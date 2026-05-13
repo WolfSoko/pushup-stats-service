@@ -4497,13 +4497,58 @@
         <target> Nessun dato disponibile </target>
       </segment>
     </unit>
-    <unit id="chart.subtitle">
+    <unit id="chart.subtitle.reps">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:43,45</note>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts</note>
       </notes>
       <segment state="translated">
         <source>Balken zeigen deine Wiederholungen pro Zeitabschnitt. Die orange Linie summiert den Tag, die grüne zeigt deinen Trend.</source>
-        <target>Le barre mostrano le ripetizioni per periodo di tempo. La linea arancione riassume la giornata, quella verde mostra la tua tendenza.</target>
+        <target>Le barre mostrano le tue ripetizioni per intervallo. La linea arancione somma la giornata, la verde mostra la tua tendenza.</target>
+      </segment>
+    </unit>
+    <unit id="chart.subtitle.time">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts</note>
+      </notes>
+      <segment state="translated">
+        <source>Balken zeigen deine Übungsdauer (s) pro Zeitabschnitt. Die orange Linie summiert den Tag, die grüne zeigt deinen Trend.</source>
+        <target>Le barre mostrano la durata dell'esercizio (s) per intervallo. La linea arancione somma la giornata, la verde mostra la tua tendenza.</target>
+      </segment>
+    </unit>
+    <unit id="chart.subtitle.distance">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts</note>
+      </notes>
+      <segment state="translated">
+        <source>Balken zeigen deine Strecke (km) pro Zeitabschnitt. Die orange Linie zeigt dein Tempo (min/km), die grüne deinen Strecken-Trend.</source>
+        <target>Le barre mostrano la tua distanza (km) per intervallo. La linea arancione mostra il tuo passo (min/km), la verde la tendenza della distanza.</target>
+      </segment>
+    </unit>
+    <unit id="chart.subtitle.weight">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts</note>
+      </notes>
+      <segment state="translated">
+        <source>Balken zeigen deine Wiederholungen pro Zeitabschnitt. Die orange Linie summiert den Tag, die grüne zeigt deinen Trend.</source>
+        <target>Le barre mostrano le tue ripetizioni per intervallo. La linea arancione somma la giornata, la verde mostra la tua tendenza.</target>
+      </segment>
+    </unit>
+    <unit id="chart.subtitle.mixed">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts</note>
+      </notes>
+      <segment state="translated">
+        <source>Balken zeigen dein Trainingsvolumen pro Zeitabschnitt. Die orange Linie summiert den Tag, die grüne zeigt deinen Trend.</source>
+        <target>Le barre mostrano il tuo volume di allenamento per intervallo. La linea arancione somma la giornata, la verde mostra la tua tendenza.</target>
+      </segment>
+    </unit>
+    <unit id="chart.kmPace">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts</note>
+      </notes>
+      <segment state="translated">
+        <source>km Tempo</source>
+        <target>Passo</target>
       </segment>
     </unit>
     <unit id="chart.modeToggleAria">

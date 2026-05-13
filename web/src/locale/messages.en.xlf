@@ -1008,23 +1008,60 @@ Active:         </target>
       
       
         </unit>
-    <unit id="chart.subtitle">
+    <unit id="chart.subtitle.reps">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:30,31</note>
-
-        
-            </notes>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts</note>
+      </notes>
       <segment state="translated">
         <source>Balken zeigen deine Wiederholungen pro Zeitabschnitt. Die orange Linie summiert den Tag, die grüne zeigt deinen Trend.</source>
         <target>Bars show your reps per time slot. The orange line totals each day, the green one tracks your trend.</target>
-
-        
-        
-            </segment>
-
-      
-      
-        </unit>
+      </segment>
+    </unit>
+    <unit id="chart.subtitle.time">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts</note>
+      </notes>
+      <segment state="translated">
+        <source>Balken zeigen deine Übungsdauer (s) pro Zeitabschnitt. Die orange Linie summiert den Tag, die grüne zeigt deinen Trend.</source>
+        <target>Bars show your exercise duration (s) per time slot. The orange line totals each day, the green one tracks your trend.</target>
+      </segment>
+    </unit>
+    <unit id="chart.subtitle.distance">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts</note>
+      </notes>
+      <segment state="translated">
+        <source>Balken zeigen deine Strecke (km) pro Zeitabschnitt. Die orange Linie zeigt dein Tempo (min/km), die grüne deinen Strecken-Trend.</source>
+        <target>Bars show your distance (km) per time slot. The orange line shows your pace (min/km), the green one tracks your distance trend.</target>
+      </segment>
+    </unit>
+    <unit id="chart.subtitle.weight">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts</note>
+      </notes>
+      <segment state="translated">
+        <source>Balken zeigen deine Wiederholungen pro Zeitabschnitt. Die orange Linie summiert den Tag, die grüne zeigt deinen Trend.</source>
+        <target>Bars show your reps per time slot. The orange line totals each day, the green one tracks your trend.</target>
+      </segment>
+    </unit>
+    <unit id="chart.subtitle.mixed">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts</note>
+      </notes>
+      <segment state="translated">
+        <source>Balken zeigen dein Trainingsvolumen pro Zeitabschnitt. Die orange Linie summiert den Tag, die grüne zeigt deinen Trend.</source>
+        <target>Bars show your training volume per time slot. The orange line totals each day, the green one tracks your trend.</target>
+      </segment>
+    </unit>
+    <unit id="chart.kmPace">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts</note>
+      </notes>
+      <segment state="translated">
+        <source>km Tempo</source>
+        <target>km pace</target>
+      </segment>
+    </unit>
     <unit id="chart.titleDaily">
       <notes>
         <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:82</note>

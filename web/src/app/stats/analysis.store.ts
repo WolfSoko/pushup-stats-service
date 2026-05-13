@@ -406,9 +406,12 @@ export const AnalysisStore = signalStore(
      *
      * Unknown exerciseIds collapse into `'mixed'` so a custom user
      * exercise that the catalog can't resolve doesn't masquerade as a
-     * specific unit. The two `distance` flavours collapse to
-     * `'distance-time'` for pace purposes — `distance-time` is the
-     * superset that always carries both `durationSec` and `distanceM`.
+     * specific unit. `'distance'` (e.g. carries) and `'distance-time'`
+     * (e.g. runs) are returned as distinct values — downstream
+     * consumers (chart paceMode, unit scaling) treat them equivalently
+     * via an `('distance' | 'distance-time')` check, which keeps the
+     * type informative for tab-level UI without forcing a normalisation
+     * step here.
      */
     const viewMeasurement = computed<MeasurementType | 'mixed' | null>(() => {
       const rowsForView = viewFilteredRows();

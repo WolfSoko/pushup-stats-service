@@ -869,18 +869,60 @@ Aktiv:         </target>
             </segment>
 
         </unit>
-    <unit id="chart.subtitle">
+    <unit id="chart.subtitle.reps">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:30,31</note>
-
-            </notes>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts</note>
+      </notes>
       <segment state="translated">
         <source>Balken zeigen deine Wiederholungen pro Zeitabschnitt. Die orange Linie summiert den Tag, die grüne zeigt deinen Trend.</source>
-        <target>Søylene viser repetisjonene dine per tidsperiode. Den oransje linjen summerer dagen, den grønne viser trenden din.</target>
-
-            </segment>
-
-        </unit>
+        <target>Søylene viser dine repetisjoner per tidsperiode. Den oransje linjen summerer dagen, den grønne viser trenden din.</target>
+      </segment>
+    </unit>
+    <unit id="chart.subtitle.time">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts</note>
+      </notes>
+      <segment state="translated">
+        <source>Balken zeigen deine Übungsdauer (s) pro Zeitabschnitt. Die orange Linie summiert den Tag, die grüne zeigt deinen Trend.</source>
+        <target>Søylene viser øvelsesvarigheten din (s) per tidsperiode. Den oransje linjen summerer dagen, den grønne viser trenden.</target>
+      </segment>
+    </unit>
+    <unit id="chart.subtitle.distance">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts</note>
+      </notes>
+      <segment state="translated">
+        <source>Balken zeigen deine Strecke (km) pro Zeitabschnitt. Die orange Linie zeigt dein Tempo (min/km), die grüne deinen Strecken-Trend.</source>
+        <target>Søylene viser distansen din (km) per tidsperiode. Den oransje linjen viser tempoet ditt (min/km), den grønne distansetrenden.</target>
+      </segment>
+    </unit>
+    <unit id="chart.subtitle.weight">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts</note>
+      </notes>
+      <segment state="translated">
+        <source>Balken zeigen deine Wiederholungen pro Zeitabschnitt. Die orange Linie summiert den Tag, die grüne zeigt deinen Trend.</source>
+        <target>Søylene viser dine repetisjoner per tidsperiode. Den oransje linjen summerer dagen, den grønne viser trenden din.</target>
+      </segment>
+    </unit>
+    <unit id="chart.subtitle.mixed">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts</note>
+      </notes>
+      <segment state="translated">
+        <source>Balken zeigen dein Trainingsvolumen pro Zeitabschnitt. Die orange Linie summiert den Tag, die grüne zeigt deinen Trend.</source>
+        <target>Søylene viser treningsvolumet ditt per tidsperiode. Den oransje linjen summerer dagen, den grønne viser trenden.</target>
+      </segment>
+    </unit>
+    <unit id="chart.kmPace">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts</note>
+      </notes>
+      <segment state="translated">
+        <source>km Tempo</source>
+        <target>Tempo</target>
+      </segment>
+    </unit>
     <unit id="chart.titleDaily">
       <notes>
         <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:82</note>

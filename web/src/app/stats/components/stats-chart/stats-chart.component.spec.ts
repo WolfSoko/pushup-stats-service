@@ -68,11 +68,24 @@ describe('StatsChartComponent', () => {
       expect(component.movingAvgLegendText()).toContain('(s)');
     });
 
-    it('Given measurement="distance-time" without pace data, Then the secondary legend still shows the day-integral label', () => {
+    it('Given measurement="distance-time" without pace data, Then the secondary legend falls back to the day-integral label with unit', () => {
+      // Without usable pace buckets the chart keeps the cumulative
+      // day-integral line; the legend should still announce the unit
+      // for consistency with the other legend rows.
       fixture.componentRef.setInput('measurement', 'distance-time');
       fixture.componentRef.setInput('paceSeries', [] as PaceSeriesEntry[]);
       fixture.detectChanges();
-      expect(component.secondaryLegendText()).toBe(component.dayIntegralLabel);
+      expect(component.secondaryLegendText()).toBe(
+        `${component.dayIntegralLabel} (km)`
+      );
+    });
+
+    it('Given measurement="reps" (no pace), Then the secondary legend reads "Tages-Integral (Reps)"', () => {
+      fixture.componentRef.setInput('measurement', 'reps');
+      fixture.detectChanges();
+      expect(component.secondaryLegendText()).toBe(
+        `${component.dayIntegralLabel} (Reps)`
+      );
     });
 
     it('Given measurement="distance-time" with at least one non-null pace bucket, Then the secondary legend reads "km Tempo (min/km)"', () => {

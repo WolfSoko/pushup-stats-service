@@ -232,7 +232,9 @@ export class StatsChartComponent implements AfterViewInit {
   );
 
   readonly secondaryLegendText = computed(() =>
-    this.paceMode() ? `${this.paceLabel} (min/km)` : this.dayIntegralLabel
+    this.paceMode()
+      ? `${this.paceLabel} (min/km)`
+      : `${this.dayIntegralLabel}${this.unitSuffix()}`
   );
 
   readonly movingAvgLegendText = computed(
@@ -425,7 +427,7 @@ export class StatsChartComponent implements AfterViewInit {
 
     const secondaryLineLabel = paceMode
       ? `${this.paceLabel} (min/km)`
-      : this.dayIntegralLabel;
+      : `${this.dayIntegralLabel}${this.unitSuffix()}`;
     const secondaryLineData = paceMode
       ? series.map((d) => {
           const ts = this.bucketToTs(d.bucket);
