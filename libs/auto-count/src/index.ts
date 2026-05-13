@@ -1,5 +1,3 @@
-/// <reference types="@angular/localize" />
-
 export type { ExerciseAngleProfile } from './lib/exercise-angle-profile';
 export { PUSHUP_PROFILE, profileFor } from './lib/exercise-angle-profile';
 export type { PoseSample } from './lib/pose-sample';
