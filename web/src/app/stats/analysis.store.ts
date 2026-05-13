@@ -33,6 +33,7 @@ import {
   unifiedEntryCategoryId,
   UnifiedEntryFilterKey,
   unifiedEntryFilterKey,
+  unifiedEntryPrimaryValue,
   UserStats,
 } from '@pu-stats/models';
 import { categoryDisplayName } from './i18n/exercise-display-names';
@@ -409,7 +410,8 @@ export const AnalysisStore = signalStore(
         const hourTotals = Array.from({ length: 24 }, () => 0);
         for (const row of rowsForView) {
           const hour = new Date(row.timestamp).getHours();
-          if (hour >= 0 && hour <= 23) hourTotals[hour] += row.reps;
+          if (hour >= 0 && hour <= 23)
+            hourTotals[hour] += unifiedEntryPrimaryValue(row);
         }
         let cumulative = 0;
         if (resolvedDayChartMode() === '24h') {
@@ -448,7 +450,7 @@ export const AnalysisStore = signalStore(
       const totals = new Map<string, number>();
       for (const row of rowsForView) {
         const day = row.timestamp.slice(0, 10);
-        totals.set(day, (totals.get(day) ?? 0) + row.reps);
+        totals.set(day, (totals.get(day) ?? 0) + unifiedEntryPrimaryValue(row));
       }
       const sortedDays = [...totals.keys()].sort((a, b) => a.localeCompare(b));
       let cumulative = 0;
@@ -465,11 +467,19 @@ export const AnalysisStore = signalStore(
      * "with sets" portion separately. Routing exercise entries through
      * here means a non-pushup tab gets its own stack rather than
      * silently borrowing the pushup `[entries]`.
+     *
+     * `reps` carries the entry's primary measurement value (so time /
+     * distance entries contribute their `durationSec` / `distanceM`)
+     * rather than the literal rep count — otherwise the chart's
+     * stacked-bar layer would render time-measured rows as zero even
+     * though {@link viewChartSeries} now sums them correctly. Sets are
+     * a reps/weight concept, so time-measured rows still fall into the
+     * "no sets" portion of the stack.
      */
     const viewChartEntries = computed<ChartFeedEntry[]>(() =>
       viewFilteredRows().map((row) => ({
         timestamp: row.timestamp,
-        reps: row.reps,
+        reps: unifiedEntryPrimaryValue(row),
         ...(row.sets ? { sets: row.sets } : {}),
       }))
     );
@@ -624,7 +634,7 @@ export const AnalysisStore = signalStore(
         const key = `${isoWeekYear(date)}-W${String(isoWeek(date)).padStart(2, '0')}`;
         const entry = byWeek.get(key);
         if (!entry) continue;
-        entry.total += row.reps;
+        entry.total += unifiedEntryPrimaryValue(row);
         entry.entryCount += 1;
         entry.setsCount += row.sets?.length ?? 0;
       }
@@ -668,7 +678,7 @@ export const AnalysisStore = signalStore(
         const key = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
         const entry = byMonth.get(key);
         if (!entry) continue;
-        entry.total += row.reps;
+        entry.total += unifiedEntryPrimaryValue(row);
         entry.entryCount += 1;
         entry.setsCount += row.sets?.length ?? 0;
       }

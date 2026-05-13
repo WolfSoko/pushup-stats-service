@@ -202,6 +202,70 @@ describe('AnalysisGroupViewComponent', () => {
     expect(headerToggle?.tagName.toLowerCase()).toBe('mat-button-toggle-group');
   });
 
+  it('viewChartSeries includes durationSec for time-measured exercises (regression: planks rendered as zero-height bars)', async () => {
+    // Regression: time-measured exercises (`plank.standard`,
+    // `core.hollowhold`, …) store their primary value on
+    // `durationSec`, not `reps`. The chart aggregation used to sum
+    // `row.reps` unconditionally, which made these entries surface as
+    // zero on the analysis graph — the user-visible bug.
+    liveExerciseEntries.set([
+      {
+        _id: 'e1',
+        userId: 'u1',
+        exerciseId: 'plank.standard',
+        timestamp: '2026-02-10T08:00:00.000Z',
+        durationSec: 60,
+        source: 'web',
+      } as ExerciseEntry,
+      {
+        _id: 'e2',
+        userId: 'u1',
+        exerciseId: 'plank.standard',
+        timestamp: '2026-02-12T09:00:00.000Z',
+        durationSec: 90,
+        source: 'web',
+      } as ExerciseEntry,
+    ]);
+    const groupViewEl = fixture.debugElement.query(
+      By.directive(AnalysisGroupViewComponent)
+    );
+    const store = groupViewEl.injector.get(AnalysisStore);
+    store.setRange('2026-02-09', '2026-02-15');
+    store.setActiveView('core');
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const series = store.viewChartSeries();
+    const totals = Object.fromEntries(series.map((s) => [s.bucket, s.total]));
+    expect(totals['2026-02-10']).toBe(60);
+    expect(totals['2026-02-12']).toBe(90);
+  });
+
+  it('viewChartEntries surfaces durationSec on `reps` for time-measured rows so the stacked-bar layer also sees the volume', async () => {
+    liveExerciseEntries.set([
+      {
+        _id: 'e1',
+        userId: 'u1',
+        exerciseId: 'plank.standard',
+        timestamp: '2026-02-10T08:00:00.000Z',
+        durationSec: 75,
+        source: 'web',
+      } as ExerciseEntry,
+    ]);
+    const groupViewEl = fixture.debugElement.query(
+      By.directive(AnalysisGroupViewComponent)
+    );
+    const store = groupViewEl.injector.get(AnalysisStore);
+    store.setRange('2026-02-09', '2026-02-15');
+    store.setActiveView('core');
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const entries = store.viewChartEntries();
+    expect(entries).toHaveLength(1);
+    expect(entries[0].reps).toBe(75);
+  });
+
   it('typeBreakdownDisplay localises bare exerciseIds in kind mode', async () => {
     // Regression: in kind mode (a non-pushup active view, or a kinds
     // filter that excludes pushups) the store emits raw catalog ids

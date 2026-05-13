@@ -19,6 +19,7 @@ import type {
   ExerciseCategoryId,
   ExerciseDefinition,
   ExerciseEntry,
+  MeasurementType,
 } from './exercise.models';
 import type { PushupRecord } from './pushup.models';
 
@@ -132,4 +133,69 @@ export function unifiedEntryCategoryId(
 ): ExerciseCategoryId | null {
   if (entry.kind === 'pushup') return 'pushup';
   return resolveDefinition(entry.exerciseId)?.categoryId ?? null;
+}
+
+/**
+ * Returns the measurement type for an entry — the dimension its primary
+ * value lives on. Pushup entries are always `'reps'`. Exercise entries
+ * resolve through the catalog; an unknown `exerciseId` yields `null` so
+ * callers can decide whether to drop the row or fall back to a default.
+ */
+export function unifiedEntryMeasurement(
+  entry: UnifiedEntry,
+  resolveDefinition: (
+    id: string
+  ) => ExerciseDefinition | null = findExerciseDefinition
+): MeasurementType | null {
+  if (entry.kind === 'pushup') return 'reps';
+  return resolveDefinition(entry.exerciseId)?.measurement ?? null;
+}
+
+/**
+ * Volume value for time-bucket aggregations (analysis chart, week/month
+ * trends). The chart bar height per day/hour is `sum(primaryValue)`
+ * across the bucket's entries — so each entry must contribute on the
+ * dimension its measurement type lives on:
+ *
+ *   - `reps` / `weight` → `reps`
+ *   - `time`            → `durationSec`
+ *   - `distance` / `distance-time` → `distanceM`
+ *
+ * The legacy implementation summed `reps` unconditionally, which made
+ * planks, hollow holds and timed cardio surface as zero-height bars
+ * even when the user had logged them — that's the bug this helper
+ * fixes (and what the historical TODO in `analysis.store.ts`
+ * `typeBreakdown` referred to as "until per-measurement charts land").
+ *
+ * Unknown exerciseIds (custom user exercises whose catalog entry the
+ * caller didn't resolve) fall back to the first populated
+ * volume-meaningful field in the order `reps` → `durationSec` →
+ * `distanceM` so they still contribute a visible bar rather than
+ * vanishing. `weightKg` is intentionally excluded: it expresses load
+ * per rep rather than a volume, and summing it across entries has no
+ * sensible meaning for a chart bar height. Mixed-unit aggregation in
+ * a category that contains both reps and time exercises is intentional
+ * for now — drilling into a single measurement is a separate UX
+ * concern.
+ */
+export function unifiedEntryPrimaryValue(
+  entry: UnifiedEntry,
+  resolveDefinition: (
+    id: string
+  ) => ExerciseDefinition | null = findExerciseDefinition
+): number {
+  if (entry.kind === 'pushup') return entry.reps;
+  const measurement = resolveDefinition(entry.exerciseId)?.measurement;
+  switch (measurement) {
+    case 'reps':
+    case 'weight':
+      return entry.reps;
+    case 'time':
+      return entry.durationSec ?? 0;
+    case 'distance':
+    case 'distance-time':
+      return entry.distanceM ?? 0;
+    default:
+      return entry.reps || entry.durationSec || entry.distanceM || 0;
+  }
 }
