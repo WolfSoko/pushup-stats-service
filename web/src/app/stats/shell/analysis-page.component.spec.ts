@@ -353,6 +353,44 @@ describe('AnalysisPageComponent', () => {
     expect(computed.top).toMatch(/var\(--desktop-nav-height/);
   });
 
+  it('constrains the page-wrap grid track so the tab row cannot widen the page', () => {
+    // Regression: without an explicit `minmax(0, 1fr)` track, the grid
+    // child mat-tab-group's intrinsic width (all tab labels side-by-side)
+    // overflows max-width: 1200px and Material's tab-header pagination
+    // never engages — making the entire Analyse page horizontally
+    // scrollable. The track constraint lets the tab-group shrink to the
+    // viewport so mat-tab-header switches to its scrollable/paginated
+    // mode instead.
+    //
+    // jsdom doesn't compute `grid-template-columns` from stylesheets
+    // (returns ''), so we walk the document's adopted/style-sheets and
+    // assert the raw cssText for `.page-wrap` carries the constraint.
+    fixture.detectChanges();
+    const rules: string[] = [];
+    for (const sheet of Array.from(document.styleSheets)) {
+      let cssRules: CSSRuleList;
+      try {
+        cssRules = sheet.cssRules;
+      } catch {
+        continue;
+      }
+      for (const rule of Array.from(cssRules)) {
+        rules.push(rule.cssText);
+      }
+    }
+    const pageWrapRule = rules.find(
+      (r) => r.includes('.page-wrap') && r.includes('grid-template-columns')
+    );
+    expect(pageWrapRule).toBeDefined();
+    expect(pageWrapRule).toMatch(/minmax\(\s*0(px)?\s*,\s*1fr\s*\)/);
+
+    const tabsRule = rules.find(
+      (r) => r.includes('.analysis-tabs') && r.includes('min-width')
+    );
+    expect(tabsRule).toBeDefined();
+    expect(tabsRule).toMatch(/min-width:\s*0/);
+  });
+
   it('includes avgSetsPerEntry in week and month trend', () => {
     const { store } = fixture.componentInstance;
     const week = store.weekTrend();
