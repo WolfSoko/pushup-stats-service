@@ -11,6 +11,7 @@ import { UserContextService } from '@pu-auth/auth';
 import { LiveDataStore, StatsApiService } from '@pu-stats/data-access';
 import { toBerlinIsoDate } from '@pu-stats/models';
 import { AdaptiveQuickAddService } from '@pu-stats/quick-add';
+import { TrainingPlanStore } from '../training-plans/training-plan.store';
 import { UserConfigStore } from './user-config.store';
 
 /**
@@ -28,6 +29,7 @@ export class AppDataFacade {
   private readonly statsApi = inject(StatsApiService);
   private readonly adaptiveQuickAdd = inject(AdaptiveQuickAddService);
   private readonly userConfig = inject(UserConfigStore);
+  private readonly trainingPlan = inject(TrainingPlanStore);
   private readonly live = inject(LiveDataStore);
   private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
 
@@ -66,7 +68,29 @@ export class AppDataFacade {
     return this.adaptiveQuickAdd.compute(this.recentEntries());
   });
 
-  readonly dailyGoal = computed(() => this.userConfig.dailyGoal() || 100);
+  /**
+   * Today's prescribed plan reps when a plan is active and today is a
+   * non-rest day. Mirrors the dashboard's `planTodayTarget` so the
+   * toolbar pill and Quick-Add fill button reflect the plan target the
+   * moment a plan is activated, without waiting for a manual config edit.
+   */
+  private readonly planTodayTarget = computed(() => {
+    if (!this.trainingPlan.hasActivePlan()) return 0;
+    const day = this.trainingPlan.todayDay();
+    if (!day || day.kind === 'rest') return 0;
+    return day.targetReps;
+  });
+
+  /**
+   * Plan target if available, otherwise the user-configured goal. Kept
+   * without the `|| 100` fallback so `remainingToGoal` and `goalReached`
+   * can distinguish "no goal configured" from "goal of 100".
+   */
+  private readonly effectiveDailyGoal = computed(
+    () => this.planTodayTarget() || this.userConfig.dailyGoal()
+  );
+
+  readonly dailyGoal = computed(() => this.effectiveDailyGoal() || 100);
 
   readonly dailyProgressResource = resource({
     params: () => ({ userId: this.user.userIdSafe() }),
@@ -92,11 +116,11 @@ export class AppDataFacade {
   });
 
   readonly remainingToGoal = computed(() =>
-    Math.max(0, this.userConfig.dailyGoal() - this.todayProgress())
+    Math.max(0, this.effectiveDailyGoal() - this.todayProgress())
   );
 
   readonly goalReached = computed(() => {
-    const goal = this.userConfig.dailyGoal();
+    const goal = this.effectiveDailyGoal();
     return goal > 0 && this.todayProgress() >= goal;
   });
 

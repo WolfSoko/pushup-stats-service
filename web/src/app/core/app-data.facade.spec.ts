@@ -9,7 +9,8 @@ import {
 } from '@pu-stats/data-access';
 import { UserContextService } from '@pu-auth/auth';
 import { AdaptiveQuickAddService } from '@pu-stats/quick-add';
-import type { PushupRecord } from '@pu-stats/models';
+import type { PushupRecord, TrainingPlanDay } from '@pu-stats/models';
+import { TrainingPlanStore } from '../training-plans/training-plan.store';
 
 describe('AppDataFacade', () => {
   const userId = signal<string>('u1');
@@ -42,11 +43,21 @@ describe('AppDataFacade', () => {
   let liveConnected = signal(false);
   let liveEntries = signal<PushupRecord[]>([]);
 
+  // Default TrainingPlanStore: no active plan. Tests that exercise the
+  // plan-override path set `planTodayDay` and the mock derives `hasActivePlan`.
+  const planTodayDay = signal<TrainingPlanDay | null>(null);
+  const planHasActive = signal(false);
+  const trainingPlanStoreMock = {
+    hasActivePlan: planHasActive.asReadonly(),
+    todayDay: planTodayDay.asReadonly(),
+  };
+
   function setup(
     options: {
       dailyGoal?: number;
       todayTotal?: number;
       live?: { connected: boolean; entries: PushupRecord[] };
+      planTodayDay?: TrainingPlanDay | null;
     } = {}
   ): AppDataFacade {
     vitest.clearAllMocks();
@@ -73,6 +84,9 @@ describe('AppDataFacade', () => {
 
     liveConnected = signal(options.live?.connected ?? false);
     liveEntries = signal<PushupRecord[]>(options.live?.entries ?? []);
+    const planDay = options.planTodayDay ?? null;
+    planTodayDay.set(planDay);
+    planHasActive.set(planDay !== null);
 
     TestBed.resetTestingModule();
     TestBed.configureTestingModule({
@@ -95,6 +109,7 @@ describe('AppDataFacade', () => {
             updateTick: signal(0).asReadonly(),
           },
         },
+        { provide: TrainingPlanStore, useValue: trainingPlanStoreMock },
       ],
     });
     return TestBed.inject(AppDataFacade);
@@ -276,6 +291,9 @@ describe('AppDataFacade', () => {
       liveConnected = signal(true);
       liveEntries = signal<PushupRecord[]>([]);
 
+      planTodayDay.set(null);
+      planHasActive.set(false);
+
       TestBed.resetTestingModule();
       TestBed.configureTestingModule({
         providers: [
@@ -294,6 +312,7 @@ describe('AppDataFacade', () => {
               updateTick: signal(0).asReadonly(),
             },
           },
+          { provide: TrainingPlanStore, useValue: trainingPlanStoreMock },
         ],
       });
       const facade = TestBed.inject(AppDataFacade);
@@ -352,6 +371,75 @@ describe('AppDataFacade', () => {
       await flushResources();
 
       expect(facade.goalReached()).toBe(false);
+    });
+  });
+
+  describe('plan override (regression: toolbar pill stale after plan activation)', () => {
+    const mainDay: TrainingPlanDay = {
+      dayIndex: 1,
+      kind: 'main',
+      targetReps: 60,
+      description: 'Tag 1',
+    };
+    const restDay: TrainingPlanDay = {
+      dayIndex: 1,
+      kind: 'rest',
+      targetReps: 0,
+      description: 'Ruhetag',
+    };
+
+    it('Given an active plan with a non-rest day, Then dailyGoal returns the plan target (overrides user config)', async () => {
+      const facade = setup({ dailyGoal: 100, planTodayDay: mainDay });
+      await flushResources();
+
+      expect(facade.dailyGoal()).toBe(60);
+    });
+
+    it('Given an active plan with a non-rest day, Then remainingToGoal is computed against the plan target', async () => {
+      const facade = setup({
+        dailyGoal: 100,
+        todayTotal: 20,
+        planTodayDay: mainDay,
+      });
+      await flushResources();
+
+      expect(facade.remainingToGoal()).toBe(40);
+    });
+
+    it('Given an active plan with a non-rest day, Then goalReached fires when progress reaches the plan target, not the user goal', async () => {
+      const facade = setup({
+        dailyGoal: 100,
+        todayTotal: 60,
+        planTodayDay: mainDay,
+      });
+      await flushResources();
+
+      expect(facade.goalReached()).toBe(true);
+    });
+
+    it('Given an active plan on a rest day, Then dailyGoal falls back to the user-configured goal', async () => {
+      const facade = setup({ dailyGoal: 100, planTodayDay: restDay });
+      await flushResources();
+
+      expect(facade.dailyGoal()).toBe(100);
+    });
+
+    it('Given no active plan, Then dailyGoal still reflects the user-configured goal (no regression)', async () => {
+      const facade = setup({ dailyGoal: 100, planTodayDay: null });
+      await flushResources();
+
+      expect(facade.dailyGoal()).toBe(100);
+    });
+
+    it('When a plan is activated mid-session, Then dailyGoal reactively switches to the plan target without a reload', async () => {
+      const facade = setup({ dailyGoal: 100 });
+      await flushResources();
+      expect(facade.dailyGoal()).toBe(100);
+
+      planTodayDay.set(mainDay);
+      planHasActive.set(true);
+
+      expect(facade.dailyGoal()).toBe(60);
     });
   });
 });
