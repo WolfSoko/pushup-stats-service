@@ -165,7 +165,7 @@ describe('unifiedEntryFilterKey', () => {
 
 describe('unifiedEntryCategoryId', () => {
   describe('Given a pushup entry', () => {
-    it('returns "push" regardless of variant', () => {
+    it('returns "pushup" regardless of variant', () => {
       expect(
         unifiedEntryCategoryId({
           kind: 'pushup',
@@ -175,7 +175,7 @@ describe('unifiedEntryCategoryId', () => {
           source: 'web',
           variantType: 'diamond',
         })
-      ).toBe('push');
+      ).toBe('pushup');
       expect(
         unifiedEntryCategoryId({
           kind: 'pushup',
@@ -185,7 +185,7 @@ describe('unifiedEntryCategoryId', () => {
           source: 'web',
           variantType: null,
         })
-      ).toBe('push');
+      ).toBe('pushup');
     });
   });
 

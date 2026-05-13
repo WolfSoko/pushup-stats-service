@@ -20,11 +20,15 @@ describe('EXERCISE_CATEGORIES', () => {
 
   it('ships the dialog-supported movement-pattern categories', () => {
     const ids = new Set(EXERCISE_CATEGORIES.map((c) => c.id));
+    // `pushup` is kept as a dedicated bucket separate from `push`
+    // because the app is called "PushUps" — Liegestütze are the
+    // headline workout and deserve their own dashboard card.
     // `carry` (distance) and `strength` (weight) stay declared in
     // ExerciseCategoryId but are intentionally absent from
     // EXERCISE_CATEGORIES until the training-entry dialog grows
     // weight + distance form support — see catalog header comment.
     for (const id of [
+      'pushup',
       'push',
       'pull',
       'squat',
@@ -109,12 +113,30 @@ describe('EXERCISE_CATALOG', () => {
     expect(running?.max).toBeGreaterThanOrEqual(50_000);
   });
 
-  it('ships pull/hinge/mobility exercises', () => {
+  it('ships push (non-pushup) / pull / hinge / mobility exercises', () => {
     const ids = new Set(EXERCISE_CATALOG.map((d) => d.id));
+    expect(ids.has('push.dips')).toBe(true);
+    expect(ids.has('push.benchdips')).toBe(true);
+    expect(ids.has('push.handstandhold')).toBe(true);
     expect(ids.has('pull.pullups')).toBe(true);
     expect(ids.has('pull.rows')).toBe(true);
     expect(ids.has('hinge.singlelegRdl')).toBe(true);
     expect(ids.has('mobility.stretching')).toBe(true);
+  });
+
+  it('keeps pushup variants out of the new push category', () => {
+    // Liegestütze stay on the legacy `pushups` Firestore collection
+    // via `PushupRecord`; the `push` catalog category is reserved for
+    // non-pushup pressing movements (dips, handstand). The catalog
+    // must not double-list any pushup variant under push.dips* or
+    // similar.
+    const pushIds = EXERCISE_CATALOG.filter((d) => d.categoryId === 'push').map(
+      (d) => d.id
+    );
+    for (const id of pushIds) {
+      expect(id.startsWith('push.')).toBe(true);
+      expect(id).not.toMatch(/pushup/i);
+    }
   });
 
   it('does not yet ship distance- or weight-measured catalog entries', () => {

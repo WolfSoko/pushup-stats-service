@@ -113,13 +113,16 @@ export function unifiedEntryFilterKey(
 /**
  * Maps a UnifiedEntry to the exercise category it belongs to. Legacy
  * pushup entries (kind `'pushup'`, served from the legacy `pushups`
- * collection) always map to the `'push'` movement-pattern category.
- * Exercise entries are resolved via the catalog — `resolveDefinition`
- * defaults to {@link findExerciseDefinition} but can be overridden when
- * the analysis page needs to resolve custom user exercises that live
- * outside the standard catalog. Returns `null` when the exercise id is
- * not resolvable, so callers can decide whether to bucket the entry
- * into an "unknown" group or drop it.
+ * collection) always map to the dedicated `'pushup'` category so
+ * Liegestütze keep their own dashboard bucket — the generic `push`
+ * movement-pattern category is reserved for non-pushup pressing
+ * movements (dips, handstand). Exercise entries are resolved via the
+ * catalog — `resolveDefinition` defaults to
+ * {@link findExerciseDefinition} but can be overridden when the
+ * analysis page needs to resolve custom user exercises that live
+ * outside the standard catalog. Returns `null` when the exercise id
+ * is not resolvable, so callers can decide whether to bucket the
+ * entry into an "unknown" group or drop it.
  */
 export function unifiedEntryCategoryId(
   entry: UnifiedEntry,
@@ -127,6 +130,6 @@ export function unifiedEntryCategoryId(
     id: string
   ) => ExerciseDefinition | null = findExerciseDefinition
 ): ExerciseCategoryId | null {
-  if (entry.kind === 'pushup') return 'push';
+  if (entry.kind === 'pushup') return 'pushup';
   return resolveDefinition(entry.exerciseId)?.categoryId ?? null;
 }

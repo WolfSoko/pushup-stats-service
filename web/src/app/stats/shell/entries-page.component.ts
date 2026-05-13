@@ -269,7 +269,7 @@ export class EntriesPageComponent {
 
   private kindLabel(value: string): string {
     if (value === 'pushup') {
-      return $localize`:@@exercise.category.push:Drücken`;
+      return $localize`:@@exercise.category.pushup:Liegestütze`;
     }
     const def = findExerciseDefinition(value);
     if (!def) return value;

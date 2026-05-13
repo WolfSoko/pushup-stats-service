@@ -24,6 +24,9 @@ service cloud.firestore {
         'squat.boxjump',
         'hinge.singlelegRdl', 'hinge.goodmorning',
         'lunge.stepup',
+        // push — non-pushup pressing (pushup variants stay on the
+        // legacy `pushups` collection with their own rule above)
+        'push.dips', 'push.benchdips',
         // pull — bodyweight pulling
         'pull.pullups', 'pull.rows', 'pull.facepull',
         // cardio reps-counted conditioning
@@ -38,6 +41,7 @@ service cloud.firestore {
         'plank.standard',
         'core.hollowhold',
         'squat.wallsit',
+        'push.handstandhold',
         'pull.deadhang',
         'cardio.highknees',
         'mobility.stretching', 'mobility.yoga', 'mobility.foamrolling',

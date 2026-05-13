@@ -22,11 +22,11 @@ describe('exerciseDisplayName', () => {
 });
 
 describe('kindDisplayName', () => {
-  it('returns the push movement-pattern label for the legacy pushup filter key', () => {
-    // The filter-key string stays `'pushup'` (it identifies the legacy
-    // Firestore collection) but the displayed label now uses the
-    // movement-pattern translation unit.
-    expect(kindDisplayName('pushup')).toBe('Drücken');
+  it('returns the Liegestütze label for the legacy pushup filter key', () => {
+    // Pushup variants keep their own dedicated bucket separate from
+    // the generic `push` movement-pattern category, so the legacy
+    // filter key `'pushup'` resolves to "Liegestütze".
+    expect(kindDisplayName('pushup')).toBe('Liegestütze');
   });
 
   it('resolves a catalog exerciseId to its display name', () => {
@@ -63,6 +63,7 @@ describe('variantDisplayName', () => {
 
 describe('categoryDisplayName', () => {
   it('returns the German source label for the movement-pattern categories', () => {
+    expect(categoryDisplayName('pushup')).toBe('Liegestütze');
     expect(categoryDisplayName('push')).toBe('Drücken');
     expect(categoryDisplayName('pull')).toBe('Ziehen');
     expect(categoryDisplayName('squat')).toBe('Kniebeuge');
