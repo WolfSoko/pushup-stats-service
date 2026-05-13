@@ -15,6 +15,14 @@ export interface ExerciseAngleProfile {
   readonly minDwellMs: number;
   /** Per-sample confidence floor; samples below this are dropped entirely. */
   readonly minConfidence: number;
+  /**
+   * Max ms between two consecutive in-zone samples before the candidate
+   * is considered stale and reset. Keeps `minDwellMs` honest when frames
+   * are sparse (dead-zone gaps, dropped frames, low-confidence stretches)
+   * — without it, two single in-zone observations separated by a long
+   * pause would commit as a stable phase.
+   */
+  readonly maxFrameGapMs: number;
 }
 
 export const PUSHUP_PROFILE: ExerciseAngleProfile = {
@@ -23,6 +31,7 @@ export const PUSHUP_PROFILE: ExerciseAngleProfile = {
   downAngleDeg: 90,
   minDwellMs: 200,
   minConfidence: 0.6,
+  maxFrameGapMs: 500,
 };
 
 const PROFILES: ReadonlyMap<string, ExerciseAngleProfile> = new Map([

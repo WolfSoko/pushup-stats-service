@@ -11,6 +11,7 @@ Detailed architecture reference for the Pushup Stats Service. AGENTS.md keeps th
     |--- @pu-auth/auth          (Firebase Auth, decoupled via ports)
     |--- @pu-stats/motivation   (quote service, no auth dependency)
     |--- @pu-stats/quick-add    (FAB + adaptive suggestions)
+    |--- @pu-stats/auto-count   (pose-based rep counter, ports + state machine)
     |--- @pu-stats/ads          (isolated, no lib dependencies)
     |--- @pu-reminders/reminders (depends on data-access + motivation, NOT auth)
     |--- cloud-functions        (Cloud Functions, depends on models only)
@@ -23,6 +24,7 @@ Enforced via `@nx/enforce-module-boundaries` in `eslint.config.mjs`:
 - `scope:auth` -> `scope:models` only (no data-access!)
 - `scope:motivation` -> `scope:models` only (no auth!)
 - `scope:data-access` -> `scope:models` only
+- `scope:auto-count` -> `scope:models` only
 - `scope:cloud-functions` -> `scope:models` only
 - `scope:reminders` -> `scope:models`, `scope:data-access`, `scope:motivation` (no auth!)
 - `scope:app` -> everything
@@ -37,6 +39,7 @@ Enforced via `@nx/enforce-module-boundaries` in `eslint.config.mjs`:
 | motivation      | `pus-motivation`    |
 | reminders       | `pus-reminders`     |
 | quick-add       | `stats-quick-add`   |
+| auto-count      | `auto-count`        |
 | ads             | `stats-ads`         |
 | testing         | `testing`           |
 | tools           | `tools`             |

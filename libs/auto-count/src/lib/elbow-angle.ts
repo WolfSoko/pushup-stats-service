@@ -5,9 +5,10 @@ export interface Point2D {
 
 /**
  * Angle (degrees) at the elbow joint, given the surrounding triplet
- * (shoulder, elbow, wrist). Returns NaN if any segment is degenerate
- * (zero-length) — the state machine drops such samples via its
- * confidence floor, so we don't need to invent a fallback value.
+ * (shoulder, elbow, wrist). Returns NaN if either segment is degenerate
+ * (zero-length); callers must filter such results — `poseToElbowSample`
+ * drops them via `Number.isNaN(angleDeg)` so they never reach the rep
+ * state machine.
  *
  * Pose-Landmarker coords are normalized in [0, 1]; the angle is
  * scale-invariant so 2D vs 3D doesn't matter for this calculation.

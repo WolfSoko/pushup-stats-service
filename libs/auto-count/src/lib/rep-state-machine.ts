@@ -14,17 +14,26 @@ export interface RepProcessResult {
   readonly repJustHappened: boolean;
 }
 
-type CandidatePhase = { phase: 'up' | 'down'; sinceMs: number } | null;
+type CandidatePhase = {
+  phase: 'up' | 'down';
+  sinceMs: number;
+  lastSeenMs: number;
+} | null;
 
 /**
  * Pure, frame-by-frame rep detector. Counts a rep on each confirmed
  * `down -> up` transition. Confirmation requires the candidate phase to
- * persist for at least `profile.minDwellMs`, so single-frame noise blips
- * across a threshold cannot trigger a count.
+ * persist for at least `profile.minDwellMs` in observed in-zone samples,
+ * so single-frame noise blips across a threshold cannot trigger a count.
  *
- * Dead-zone samples (between `downAngleDeg` and `upAngleDeg`) do not reset
- * the current candidate — they just don't advance it. This keeps the
- * detector tolerant of slow transitions while still rejecting jitter.
+ * Dead-zone samples (between `downAngleDeg` and `upAngleDeg`) do not
+ * reset the current candidate, which keeps the detector tolerant of
+ * slow transitions and brief noise. They also do not advance the dwell
+ * timer: if two consecutive in-zone observations are separated by more
+ * than `profile.maxFrameGapMs` (long dead-zone gap, low-confidence
+ * stretch, or dropped frames) the candidate is treated as stale and
+ * restarted from the new sample. Otherwise sparse sampling could
+ * commit a phase the user never actually held.
  */
 export class RepStateMachine {
   private count = 0;
@@ -50,11 +59,27 @@ export class RepStateMachine {
     }
 
     if (this.candidate === null || this.candidate.phase !== zone) {
-      this.candidate = { phase: zone, sinceMs: sample.timestampMs };
+      this.candidate = {
+        phase: zone,
+        sinceMs: sample.timestampMs,
+        lastSeenMs: sample.timestampMs,
+      };
       return { snapshot: this.snapshot(), repJustHappened: false };
     }
 
-    const dwell = sample.timestampMs - this.candidate.sinceMs;
+    const gap = sample.timestampMs - this.candidate.lastSeenMs;
+    if (gap > this.profile.maxFrameGapMs) {
+      this.candidate = {
+        phase: zone,
+        sinceMs: sample.timestampMs,
+        lastSeenMs: sample.timestampMs,
+      };
+      return { snapshot: this.snapshot(), repJustHappened: false };
+    }
+
+    this.candidate = { ...this.candidate, lastSeenMs: sample.timestampMs };
+
+    const dwell = this.candidate.lastSeenMs - this.candidate.sinceMs;
     if (dwell < this.profile.minDwellMs) {
       return { snapshot: this.snapshot(), repJustHappened: false };
     }

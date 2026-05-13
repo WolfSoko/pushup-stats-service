@@ -83,14 +83,14 @@ const configure = (params: {
   detector: FakeDetector;
   frameSource: FakeFrameSource;
   platformId?: object | string;
+  detectorFactory?: () => Promise<PoseDetector>;
 }): void => {
+  const factory =
+    params.detectorFactory ?? (() => Promise.resolve(params.detector));
   TestBed.configureTestingModule({
     providers: [
       { provide: PLATFORM_ID, useValue: params.platformId ?? 'browser' },
-      {
-        provide: POSE_DETECTOR_FACTORY,
-        useValue: () => Promise.resolve(params.detector),
-      },
+      { provide: POSE_DETECTOR_FACTORY, useValue: factory },
       { provide: POSE_FRAME_SOURCE, useValue: params.frameSource },
       PoseRepCounterService,
     ],
@@ -197,5 +197,67 @@ describe('PoseRepCounterService', () => {
     await svc.start({ exerciseId: 'pushup' });
     await svc.start({ exerciseId: 'pushup' });
     expect(frameSource.subscribed).toBe(1);
+  });
+
+  it('given start is called again while a previous start is awaiting the detector, then second call is a no-op', async () => {
+    TestBed.resetTestingModule();
+    let resolveFactory: ((d: PoseDetector) => void) | null = null;
+    configure({
+      detector,
+      frameSource,
+      detectorFactory: () =>
+        new Promise<PoseDetector>((resolve) => {
+          resolveFactory = resolve;
+        }),
+    });
+    const svc = TestBed.inject(PoseRepCounterService);
+    svc.bindVideoElement(video);
+
+    const first = svc.start({ exerciseId: 'pushup' });
+    const second = svc.start({ exerciseId: 'pushup' });
+
+    expect(resolveFactory).not.toBeNull();
+    (resolveFactory as unknown as (d: PoseDetector) => void)(detector);
+    await Promise.all([first, second]);
+
+    expect(frameSource.subscribed).toBe(1);
+  });
+
+  it('given stop is called while start is awaiting the detector, then the detector is closed and no subscription is created', async () => {
+    TestBed.resetTestingModule();
+    let resolveFactory: ((d: PoseDetector) => void) | null = null;
+    configure({
+      detector,
+      frameSource,
+      detectorFactory: () =>
+        new Promise<PoseDetector>((resolve) => {
+          resolveFactory = resolve;
+        }),
+    });
+    const svc = TestBed.inject(PoseRepCounterService);
+    svc.bindVideoElement(video);
+
+    const starting = svc.start({ exerciseId: 'pushup' });
+    await svc.stop();
+    (resolveFactory as unknown as (d: PoseDetector) => void)(detector);
+    await starting;
+
+    expect(svc.isActive()).toBe(false);
+    expect(detector.closed).toBe(true);
+    expect(frameSource.subscribed).toBe(0);
+  });
+
+  it('given frames that do not change phase or count, when processed, then the snapshot signal returns the same reference', async () => {
+    const svc = TestBed.inject(PoseRepCounterService);
+    svc.bindVideoElement(video);
+    detector.script = [STRAIGHT, STRAIGHT, STRAIGHT];
+    await svc.start({ exerciseId: 'pushup' });
+
+    const before = svc.snapshot();
+    frameSource.emit(0);
+    frameSource.emit(50);
+    frameSource.emit(100);
+
+    expect(svc.snapshot()).toBe(before);
   });
 });

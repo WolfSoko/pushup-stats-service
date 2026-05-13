@@ -17,6 +17,9 @@ const INITIAL_SNAPSHOT: RepCountSnapshot = {
   lastRepAtMs: null,
 };
 
+const snapshotEqual = (a: RepCountSnapshot, b: RepCountSnapshot): boolean =>
+  a.count === b.count && a.phase === b.phase && a.lastRepAtMs === b.lastRepAtMs;
+
 /**
  * Pose-based rep counter. Browser-only — on the server it stays in
  * `isActive=false` and `start()` resolves immediately as a no-op so SSR
@@ -32,7 +35,9 @@ export class PoseRepCounterService implements RepCounter {
   private readonly detectorFactory = inject(POSE_DETECTOR_FACTORY);
   private readonly frameSource = inject<PoseFrameSource>(POSE_FRAME_SOURCE);
 
-  private readonly _snapshot = signal<RepCountSnapshot>(INITIAL_SNAPSHOT);
+  private readonly _snapshot = signal<RepCountSnapshot>(INITIAL_SNAPSHOT, {
+    equal: snapshotEqual,
+  });
   private readonly _isActive = signal(false);
 
   readonly snapshot = this._snapshot.asReadonly();
@@ -42,6 +47,13 @@ export class PoseRepCounterService implements RepCounter {
   private detector: PoseDetector | null = null;
   private unsubscribeFrames: (() => void) | null = null;
   private videoEl: HTMLVideoElement | null = null;
+  private startPending = false;
+  /**
+   * Bumped on every `start()` and `stop()` so an in-flight start that
+   * was cancelled (by a concurrent stop, or a follow-up start) can
+   * detect the abort when it resumes after the detector factory awaits.
+   */
+  private startToken = 0;
 
   /**
    * Component-driven: the dialog wires its own `<video>` and hands the
@@ -54,7 +66,7 @@ export class PoseRepCounterService implements RepCounter {
 
   async start(options: RepCounterStartOptions): Promise<void> {
     if (!isPlatformBrowser(this.platformId)) return;
-    if (this._isActive()) return;
+    if (this._isActive() || this.startPending) return;
 
     const profile = profileFor(options.exerciseId);
     if (!profile) {
@@ -70,11 +82,26 @@ export class PoseRepCounterService implements RepCounter {
       );
     }
 
+    this.startPending = true;
+    const token = ++this.startToken;
+
     this.machine = new RepStateMachine(profile);
     this._snapshot.set(this.machine.snapshot());
 
-    this.detector = await this.detectorFactory();
+    let detector: PoseDetector;
+    try {
+      detector = await this.detectorFactory();
+    } catch (err) {
+      if (token === this.startToken) this.startPending = false;
+      throw err;
+    }
 
+    if (token !== this.startToken) {
+      detector.close();
+      return;
+    }
+
+    this.detector = detector;
     this.unsubscribeFrames = this.frameSource.subscribe(video, (tick) => {
       if (!this.detector || !this.machine) return;
       const result = this.detector.detectForVideo(video, tick.timestampMs);
@@ -85,9 +112,12 @@ export class PoseRepCounterService implements RepCounter {
     });
 
     this._isActive.set(true);
+    this.startPending = false;
   }
 
   async stop(): Promise<void> {
+    this.startToken += 1;
+    this.startPending = false;
     this.unsubscribeFrames?.();
     this.unsubscribeFrames = null;
     this.detector?.close();

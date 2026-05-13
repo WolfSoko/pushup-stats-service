@@ -119,6 +119,24 @@ describe('RepStateMachine (pushup profile)', () => {
     expect(machine.snapshot().count).toBe(1);
   });
 
+  it('given two sparse in-zone samples separated by a long dead-zone gap, when processed, then candidate does not commit prematurely', () => {
+    const machine = new RepStateMachine(PUSHUP_PROFILE);
+    feed(machine, [sample(0, 170), sample(250, 170)]);
+    expect(machine.snapshot().phase).toBe('up');
+
+    feed(machine, [
+      sample(300, 80),
+      sample(400, 120),
+      sample(500, 120),
+      sample(800, 120),
+      sample(1200, 120),
+      sample(1500, 80),
+    ]);
+
+    expect(machine.snapshot().phase).toBe('up');
+    expect(machine.snapshot().count).toBe(0);
+  });
+
   it('given a long low-confidence gap mid-cycle, when followed by confident up, then transition resumes correctly', () => {
     const machine = new RepStateMachine(PUSHUP_PROFILE);
     feed(machine, [
