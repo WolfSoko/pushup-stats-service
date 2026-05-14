@@ -891,6 +891,845 @@ const ONE_ARM_DAYS: ReadonlyArray<TrainingPlanDay> = [
   ),
 ];
 
+// Push-Pull Balance — 6-week intermediate plan. Trains push and pull
+// symmetrically to avoid the all-push imbalance the single-exercise
+// pushup plans encourage. Each main day prescribes a paired pull
+// movement (rows, pull-up negatives, face pulls) alongside the push
+// work. `targetReps` tracks the pushup component only — that's what
+// the auto-mark + Quick-Add flow can credit. Pull work counts toward
+// the day via the description and the user's manual completion.
+const PUSH_PULL_BALANCE_DAYS: ReadonlyArray<TrainingPlanDay> = [
+  // Week 1 — baseline volume.
+  d(
+    1,
+    'main',
+    30,
+    [10, 10, 10],
+    $localize`:@@plan.push-pull-6w.day.1.desc:Push 3×10 saubere Liegestütze · Pull 3×8 invertierte Rudern, 90 s Pause`
+  ),
+  d(
+    2,
+    'main',
+    24,
+    [12, 12],
+    $localize`:@@plan.push-pull-6w.day.2.desc:Pull-Tag: 4×8 Australian Rows · Push 2×12 Knie-Liegestütze als Aktivierung`
+  ),
+  d(3, 'rest', 0, undefined, REST_DAY),
+  d(
+    4,
+    'main',
+    33,
+    [11, 11, 11],
+    $localize`:@@plan.push-pull-6w.day.4.desc:Push 3×11 · Pull 3×6 Klimmzug-Negative (5 s Exzentrik)`
+  ),
+  d(
+    5,
+    'light',
+    20,
+    [10, 10],
+    $localize`:@@plan.push-pull-6w.day.5.desc:Leichter Tag 2×10 · 3×12 Face Pulls`
+  ),
+  d(
+    6,
+    'main',
+    36,
+    [12, 12, 12],
+    $localize`:@@plan.push-pull-6w.day.6.desc:Push 3×12 · Pull 3×8 invertierte Rudern · Plank 3×30 s`
+  ),
+  d(7, 'rest', 0, undefined, REST_DAY),
+  // Week 2 — same scheme, +10 % volume.
+  d(
+    8,
+    'main',
+    36,
+    [13, 12, 11],
+    $localize`:@@plan.push-pull-6w.day.8.desc:Push 3×AMRAP (Ziel 13-12-11) · Pull 3×9 Rudern`
+  ),
+  d(
+    9,
+    'main',
+    27,
+    [9, 9, 9],
+    $localize`:@@plan.push-pull-6w.day.9.desc:Pull-Tag: 4×9 Australian Rows · Push 3×9 saubere LS`
+  ),
+  d(10, 'rest', 0, undefined, REST_DAY),
+  d(
+    11,
+    'main',
+    39,
+    [14, 13, 12],
+    $localize`:@@plan.push-pull-6w.day.11.desc:Push 3×AMRAP (Ziel 14-13-12) · Pull 3×7 Klimmzug-Negative`
+  ),
+  d(
+    12,
+    'light',
+    22,
+    [11, 11],
+    $localize`:@@plan.push-pull-6w.day.12.desc:Leichter Tag 2×11 · 3×12 Face Pulls · Schulter-Mobility`
+  ),
+  d(
+    13,
+    'main',
+    42,
+    [15, 14, 13],
+    $localize`:@@plan.push-pull-6w.day.13.desc:Push 3×AMRAP · Pull 3×10 invertierte Rudern · Plank 3×40 s`
+  ),
+  d(14, 'rest', 0, undefined, REST_DAY),
+  // Week 3 — 4 sets, balanced volume.
+  d(
+    15,
+    'main',
+    45,
+    [12, 11, 11, 11],
+    $localize`:@@plan.push-pull-6w.day.15.desc:Push 4 Sätze · Pull 4×6 Klimmzüge (oder Negative)`
+  ),
+  d(
+    16,
+    'main',
+    30,
+    [10, 10, 10],
+    $localize`:@@plan.push-pull-6w.day.16.desc:Pull-Tag: 5×8 Australian Rows · Push 3×10 saubere LS`
+  ),
+  d(17, 'rest', 0, undefined, REST_DAY),
+  d(
+    18,
+    'main',
+    48,
+    [13, 12, 12, 11],
+    $localize`:@@plan.push-pull-6w.day.18.desc:Push 4×AMRAP · Pull 4×7 Klimmzüge · Plank 3×45 s`
+  ),
+  d(
+    19,
+    'light',
+    24,
+    [12, 12],
+    $localize`:@@plan.push-pull-6w.day.19.desc:Leichter Tag 2×12 · 3×15 Face Pulls`
+  ),
+  d(
+    20,
+    'main',
+    51,
+    [14, 13, 12, 12],
+    $localize`:@@plan.push-pull-6w.day.20.desc:Push 4×AMRAP · Pull 4×8 Klimmzüge · Hollow Hold 3×20 s`
+  ),
+  d(21, 'rest', 0, undefined, REST_DAY),
+  // Week 4 — heavier loads, balanced sets.
+  d(
+    22,
+    'main',
+    54,
+    [15, 13, 13, 13],
+    $localize`:@@plan.push-pull-6w.day.22.desc:Push 4 Sätze, 60 s Pause · Pull 4×8 Klimmzüge`
+  ),
+  d(
+    23,
+    'main',
+    33,
+    [11, 11, 11],
+    $localize`:@@plan.push-pull-6w.day.23.desc:Pull-Tag: 5×9 Australian Rows · Push 3×11 LS`
+  ),
+  d(24, 'rest', 0, undefined, REST_DAY),
+  d(
+    25,
+    'main',
+    57,
+    [16, 14, 14, 13],
+    $localize`:@@plan.push-pull-6w.day.25.desc:Push 4×AMRAP · Pull 4×9 Klimmzüge · Plank 3×50 s`
+  ),
+  d(
+    26,
+    'light',
+    26,
+    [13, 13],
+    $localize`:@@plan.push-pull-6w.day.26.desc:Leichter Tag 2×13 · Brust- und Rücken-Mobility`
+  ),
+  d(
+    27,
+    'main',
+    60,
+    [17, 15, 14, 14],
+    $localize`:@@plan.push-pull-6w.day.27.desc:Push 4×AMRAP · Pull 4×10 Klimmzüge · Hollow Hold 3×30 s`
+  ),
+  d(28, 'rest', 0, undefined, REST_DAY),
+  // Week 5 — 5 sets, descending reps.
+  d(
+    29,
+    'main',
+    65,
+    [14, 13, 13, 13, 12],
+    $localize`:@@plan.push-pull-6w.day.29.desc:Push 5 Sätze · Pull 5×7 Klimmzüge, 90 s Pause`
+  ),
+  d(
+    30,
+    'main',
+    36,
+    [12, 12, 12],
+    $localize`:@@plan.push-pull-6w.day.30.desc:Pull-Tag: 5×10 Australian Rows · Push 3×12 LS`
+  ),
+  d(31, 'rest', 0, undefined, REST_DAY),
+  d(
+    32,
+    'main',
+    70,
+    [15, 14, 14, 14, 13],
+    $localize`:@@plan.push-pull-6w.day.32.desc:Push 5 Sätze · Pull 5×8 Klimmzüge · Plank 3×60 s`
+  ),
+  d(
+    33,
+    'light',
+    28,
+    [14, 14],
+    $localize`:@@plan.push-pull-6w.day.33.desc:Leichter Tag 2×14 · 4×12 Face Pulls`
+  ),
+  d(
+    34,
+    'main',
+    75,
+    [16, 15, 15, 15, 14],
+    $localize`:@@plan.push-pull-6w.day.34.desc:Push 5 Sätze · Pull 5×9 Klimmzüge · Hollow Hold 3×40 s`
+  ),
+  d(35, 'rest', 0, undefined, REST_DAY),
+  // Week 6 — peak + final test.
+  d(
+    36,
+    'main',
+    80,
+    [17, 16, 16, 16, 15],
+    $localize`:@@plan.push-pull-6w.day.36.desc:Push 5 Sätze schwer · Pull 5×10 Klimmzüge`
+  ),
+  d(
+    37,
+    'main',
+    40,
+    [10, 10, 10, 10],
+    $localize`:@@plan.push-pull-6w.day.37.desc:Pull-Schwerpunkt: 5×AMRAP Klimmzüge · Push 4×10 LS`
+  ),
+  d(38, 'rest', 0, undefined, REST_DAY_MOBILITY),
+  d(
+    39,
+    'main',
+    60,
+    [15, 15, 15, 15],
+    $localize`:@@plan.push-pull-6w.day.39.desc:Taper-Tag: 4×15 saubere LS · 3×6 Klimmzüge`
+  ),
+  d(
+    40,
+    'light',
+    20,
+    [10, 10],
+    $localize`:@@plan.push-pull-6w.day.40.desc:Leichter Tag 2×10 · Mobility`
+  ),
+  d(41, 'rest', 0, undefined, REST_DAY_PREP_FINAL),
+  d(
+    42,
+    'test',
+    100,
+    undefined,
+    $localize`:@@plan.push-pull-6w.day.42.desc:Endtest: maximale Liegestütze + maximale Klimmzüge in einem Satz`
+  ),
+];
+
+// Full Body Strong — 6-week intermediate plan combining the four
+// foundational bodyweight patterns: push (Liegestütze), squat
+// (Kniebeugen), hinge (Glute Bridge), and anti-extension (Plank).
+// Each main day is a circuit; `targetReps` tracks pushups, the
+// description prescribes the full circuit.
+const FULL_BODY_DAYS: ReadonlyArray<TrainingPlanDay> = [
+  // Week 1 — circuit foundation, 3 main days.
+  d(
+    1,
+    'test',
+    20,
+    undefined,
+    $localize`:@@plan.full-body-6w.day.1.desc:Baseline-Test: maximale Liegestütze · 1 min Wall-Sit · 1 min Plank`
+  ),
+  d(
+    2,
+    'main',
+    30,
+    [10, 10, 10],
+    $localize`:@@plan.full-body-6w.day.2.desc:Zirkel 3 Runden — 10 LS · 15 Kniebeugen · 10 Ausfallschritte je Bein · 30 s Plank`
+  ),
+  d(3, 'rest', 0, undefined, REST_DAY),
+  d(
+    4,
+    'main',
+    30,
+    [10, 10, 10],
+    $localize`:@@plan.full-body-6w.day.4.desc:Zirkel 3 Runden — 10 LS · 15 Sumo-Kniebeugen · 12 Glute Bridges · 40 s Plank`
+  ),
+  d(
+    5,
+    'light',
+    20,
+    [10, 10],
+    $localize`:@@plan.full-body-6w.day.5.desc:Leichter Tag — 2×10 LS · Mobility 10 min`
+  ),
+  d(
+    6,
+    'main',
+    30,
+    [10, 10, 10],
+    $localize`:@@plan.full-body-6w.day.6.desc:Zirkel 3 Runden — 10 LS · 15 Kniebeugen · 10 Glute Bridges · 30 s Hollow Hold`
+  ),
+  d(7, 'rest', 0, undefined, REST_DAY),
+  // Week 2 — +20 % volume per circuit station.
+  d(
+    8,
+    'main',
+    36,
+    [12, 12, 12],
+    $localize`:@@plan.full-body-6w.day.8.desc:Zirkel 3 Runden — 12 LS · 18 Kniebeugen · 12 Ausfallschritte je Bein · 40 s Plank`
+  ),
+  d(9, 'rest', 0, undefined, REST_DAY),
+  d(
+    10,
+    'main',
+    36,
+    [12, 12, 12],
+    $localize`:@@plan.full-body-6w.day.10.desc:Zirkel 3 Runden — 12 LS · 18 Sumo-Kniebeugen · 15 Glute Bridges · 45 s Plank`
+  ),
+  d(
+    11,
+    'light',
+    22,
+    [11, 11],
+    $localize`:@@plan.full-body-6w.day.11.desc:Leichter Tag — 2×11 LS · Hip Opener 10 min`
+  ),
+  d(
+    12,
+    'main',
+    36,
+    [12, 12, 12],
+    $localize`:@@plan.full-body-6w.day.12.desc:Zirkel 3 Runden — 12 LS · 12 Step-Ups je Bein · 15 Russian Twists · 40 s Plank`
+  ),
+  d(13, 'rest', 0, undefined, REST_DAY),
+  d(14, 'rest', 0, undefined, REST_DAY),
+  // Week 3 — 4-round circuits.
+  d(
+    15,
+    'main',
+    40,
+    [10, 10, 10, 10],
+    $localize`:@@plan.full-body-6w.day.15.desc:Zirkel 4 Runden — 10 LS · 15 Kniebeugen · 12 Glute Bridges · 40 s Plank`
+  ),
+  d(16, 'rest', 0, undefined, REST_DAY),
+  d(
+    17,
+    'main',
+    44,
+    [11, 11, 11, 11],
+    $localize`:@@plan.full-body-6w.day.17.desc:Zirkel 4 Runden — 11 LS · 16 Ausfallschritte je Bein · 15 Glute Bridges · 45 s Plank`
+  ),
+  d(
+    18,
+    'light',
+    24,
+    [12, 12],
+    $localize`:@@plan.full-body-6w.day.18.desc:Leichter Tag — 2×12 LS · Yoga 20 min`
+  ),
+  d(
+    19,
+    'main',
+    48,
+    [12, 12, 12, 12],
+    $localize`:@@plan.full-body-6w.day.19.desc:Zirkel 4 Runden — 12 LS · 15 Jump Squats · 12 Glute Bridges · 45 s Plank`
+  ),
+  d(20, 'rest', 0, undefined, REST_DAY),
+  d(21, 'rest', 0, undefined, REST_DAY),
+  // Week 4 — heavier per station.
+  d(
+    22,
+    'main',
+    52,
+    [13, 13, 13, 13],
+    $localize`:@@plan.full-body-6w.day.22.desc:Zirkel 4 Runden — 13 LS · 18 Kniebeugen · 15 Glute Bridges · 50 s Plank`
+  ),
+  d(23, 'rest', 0, undefined, REST_DAY),
+  d(
+    24,
+    'main',
+    56,
+    [14, 14, 14, 14],
+    $localize`:@@plan.full-body-6w.day.24.desc:Zirkel 4 Runden — 14 LS · 18 Ausfallschritte je Bein · 15 Hip Thrusts · 50 s Plank`
+  ),
+  d(
+    25,
+    'light',
+    26,
+    [13, 13],
+    $localize`:@@plan.full-body-6w.day.25.desc:Leichter Tag — 2×13 LS · Foam Rolling 15 min`
+  ),
+  d(
+    26,
+    'main',
+    60,
+    [15, 15, 15, 15],
+    $localize`:@@plan.full-body-6w.day.26.desc:Zirkel 4 Runden — 15 LS · 18 Jump Squats · 15 Glute Bridges · 60 s Plank`
+  ),
+  d(27, 'rest', 0, undefined, REST_DAY),
+  d(28, 'rest', 0, undefined, REST_DAY),
+  // Week 5 — 5-round circuits.
+  d(
+    29,
+    'main',
+    60,
+    [12, 12, 12, 12, 12],
+    $localize`:@@plan.full-body-6w.day.29.desc:Zirkel 5 Runden — 12 LS · 15 Kniebeugen · 12 Glute Bridges · 45 s Plank`
+  ),
+  d(30, 'rest', 0, undefined, REST_DAY),
+  d(
+    31,
+    'main',
+    65,
+    [13, 13, 13, 13, 13],
+    $localize`:@@plan.full-body-6w.day.31.desc:Zirkel 5 Runden — 13 LS · 16 Ausfallschritte je Bein · 13 Glute Bridges · 50 s Plank`
+  ),
+  d(
+    32,
+    'light',
+    28,
+    [14, 14],
+    $localize`:@@plan.full-body-6w.day.32.desc:Leichter Tag — 2×14 LS · Mobility 15 min`
+  ),
+  d(
+    33,
+    'main',
+    70,
+    [14, 14, 14, 14, 14],
+    $localize`:@@plan.full-body-6w.day.33.desc:Zirkel 5 Runden — 14 LS · 18 Jump Squats · 15 Hip Thrusts · 60 s Plank`
+  ),
+  d(34, 'rest', 0, undefined, REST_DAY),
+  d(35, 'rest', 0, undefined, REST_DAY),
+  // Week 6 — peak + functional test.
+  d(
+    36,
+    'main',
+    75,
+    [15, 15, 15, 15, 15],
+    $localize`:@@plan.full-body-6w.day.36.desc:Peak-Zirkel 5 Runden — 15 LS · 20 Kniebeugen · 15 Glute Bridges · 60 s Plank`
+  ),
+  d(37, 'rest', 0, undefined, REST_DAY),
+  d(
+    38,
+    'main',
+    60,
+    [15, 15, 15, 15],
+    $localize`:@@plan.full-body-6w.day.38.desc:Taper-Zirkel 4 Runden, kontrolliertes Tempo — 15 LS · 15 KB · 12 GB · 45 s Plank`
+  ),
+  d(
+    39,
+    'light',
+    24,
+    [12, 12],
+    $localize`:@@plan.full-body-6w.day.39.desc:Leichter Tag — 2×12 LS · Mobility`
+  ),
+  d(40, 'rest', 0, undefined, REST_DAY_MOBILITY),
+  d(41, 'rest', 0, undefined, REST_DAY_PREP_FINAL),
+  d(
+    42,
+    'test',
+    50,
+    undefined,
+    $localize`:@@plan.full-body-6w.day.42.desc:Funktionstest: maximale LS · 50 Kniebeugen auf Zeit · 1 min Plank-Halt`
+  ),
+];
+
+// Core Foundations — 4-week beginner plan centered on core stability.
+// Pushups appear as a moderate "activation" component (so the plan
+// keeps integrating with the existing auto-mark + pushup tracking),
+// but each main day is built around plank, hollow hold, dead bug,
+// leg raises, and rotational work prescribed in the description.
+const CORE_FOUNDATIONS_DAYS: ReadonlyArray<TrainingPlanDay> = [
+  // Week 1 — establish baseline holds.
+  d(
+    1,
+    'test',
+    10,
+    undefined,
+    $localize`:@@plan.core-4w.day.1.desc:Baseline: maximale Plank-Zeit · 10 saubere LS · maximale Hollow-Hold-Zeit`
+  ),
+  d(
+    2,
+    'main',
+    20,
+    [10, 10],
+    $localize`:@@plan.core-4w.day.2.desc:Plank 3×30 s · Hollow Hold 3×20 s · Dead Bug 3×10 je Seite · LS 2×10`
+  ),
+  d(
+    3,
+    'main',
+    24,
+    [12, 12],
+    $localize`:@@plan.core-4w.day.3.desc:Beinheben 3×10 · Russian Twist 3×15 · Plank 3×30 s · LS 2×12`
+  ),
+  d(4, 'rest', 0, undefined, REST_DAY),
+  d(
+    5,
+    'main',
+    20,
+    [10, 10],
+    $localize`:@@plan.core-4w.day.5.desc:Mountain Climbers 3×30 s · Dead Bug 3×12 · Plank 3×35 s · LS 2×10`
+  ),
+  d(
+    6,
+    'light',
+    14,
+    [7, 7],
+    $localize`:@@plan.core-4w.day.6.desc:Leichter Tag — Cat-Cow 3×10 · Hip Opener 2 min · 2×7 saubere LS`
+  ),
+  d(7, 'rest', 0, undefined, REST_DAY),
+  // Week 2 — extend holds, add side plank.
+  d(
+    8,
+    'main',
+    22,
+    [11, 11],
+    $localize`:@@plan.core-4w.day.8.desc:Plank 3×40 s · Hollow Hold 3×25 s · Dead Bug 3×12 · LS 2×11`
+  ),
+  d(
+    9,
+    'main',
+    24,
+    [12, 12],
+    $localize`:@@plan.core-4w.day.9.desc:Beinheben 3×12 · Russian Twist 3×18 · Plank 3×40 s · LS 2×12`
+  ),
+  d(10, 'rest', 0, undefined, REST_DAY),
+  d(
+    11,
+    'main',
+    24,
+    [12, 12],
+    $localize`:@@plan.core-4w.day.11.desc:Mountain Climbers 4×30 s · Side Plank 2×25 s je Seite · LS 2×12`
+  ),
+  d(
+    12,
+    'light',
+    16,
+    [8, 8],
+    $localize`:@@plan.core-4w.day.12.desc:Leichter Tag — Mobility 10 min · 2×8 LS`
+  ),
+  d(
+    13,
+    'main',
+    26,
+    [13, 13],
+    $localize`:@@plan.core-4w.day.13.desc:Core-Zirkel 3 Runden — 40 s Plank · 20 s Hollow Hold · 12 Dead Bugs · 10 LS`
+  ),
+  d(14, 'rest', 0, undefined, REST_DAY),
+  // Week 3 — heavier holds, hanging work.
+  d(
+    15,
+    'main',
+    30,
+    [15, 15],
+    $localize`:@@plan.core-4w.day.15.desc:Plank 3×50 s · Side Plank 3×30 s je Seite · Hollow Hold 3×30 s · LS 2×15`
+  ),
+  d(
+    16,
+    'main',
+    30,
+    [15, 15],
+    $localize`:@@plan.core-4w.day.16.desc:Hängendes Knieheben 3×8 · Russian Twist 3×20 · Plank 3×50 s · LS 2×15`
+  ),
+  d(17, 'rest', 0, undefined, REST_DAY),
+  d(
+    18,
+    'main',
+    30,
+    [15, 15],
+    $localize`:@@plan.core-4w.day.18.desc:Core-Power: Plank 3×60 s · Dead Bug 3×15 · Mountain Climbers 3×45 s · LS 2×15`
+  ),
+  d(
+    19,
+    'light',
+    18,
+    [9, 9],
+    $localize`:@@plan.core-4w.day.19.desc:Leichter Tag — 2×9 LS · Stretching 10 min`
+  ),
+  d(
+    20,
+    'main',
+    30,
+    [15, 15],
+    $localize`:@@plan.core-4w.day.20.desc:Core-Zirkel 3 Runden — 50 s Plank · 12 Beinheben · 20 Russian Twists · 10 LS`
+  ),
+  d(21, 'rest', 0, undefined, REST_DAY),
+  // Week 4 — peak + test.
+  d(
+    22,
+    'main',
+    32,
+    [16, 16],
+    $localize`:@@plan.core-4w.day.22.desc:Plank 3×60 s · Hollow Hold 3×40 s · Hängendes Knieheben 3×10 · LS 2×16`
+  ),
+  d(
+    23,
+    'main',
+    32,
+    [16, 16],
+    $localize`:@@plan.core-4w.day.23.desc:Core-Zirkel 3 Runden — 1 min Plank · 30 Russian Twists · 12 Beinheben · 12 LS`
+  ),
+  d(24, 'rest', 0, undefined, REST_DAY),
+  d(
+    25,
+    'main',
+    32,
+    [16, 16],
+    $localize`:@@plan.core-4w.day.25.desc:Side Plank 3×40 s je Seite · Dead Bug 3×16 · Hollow Hold 3×40 s · LS 2×16`
+  ),
+  d(
+    26,
+    'light',
+    18,
+    [9, 9],
+    $localize`:@@plan.core-4w.day.26.desc:Leichter Tag — 2×9 LS · Mobility`
+  ),
+  d(27, 'rest', 0, undefined, REST_DAY_PREP_FINAL),
+  d(
+    28,
+    'test',
+    30,
+    undefined,
+    $localize`:@@plan.core-4w.day.28.desc:Endtest: 1 min Plank-Halt · maximale LS · 1 min Hollow Hold`
+  ),
+];
+
+// HIIT Burner — 4-week intermediate plan. High-intensity intervals
+// combining pushups with burpees, mountain climbers, jumping jacks,
+// and squats. `targetReps` tracks the pushup portion of each
+// interval. Best paired with the 30-day Challenge or the 6-week
+// recruit plan as a conditioning block.
+const HIIT_BURNER_DAYS: ReadonlyArray<TrainingPlanDay> = [
+  // Week 1 — short Tabata-style intervals.
+  d(
+    1,
+    'main',
+    30,
+    [10, 10, 10],
+    $localize`:@@plan.hiit-4w.day.1.desc:HIIT 4 Runden 30/15 s — LS · Burpees · Mountain Climbers · Jumping Jacks`
+  ),
+  d(2, 'rest', 0, undefined, REST_DAY),
+  d(
+    3,
+    'main',
+    30,
+    [10, 10, 10],
+    $localize`:@@plan.hiit-4w.day.3.desc:HIIT 5 Runden 30/30 s — LS · Burpees · Hampelmänner · Plank`
+  ),
+  d(
+    4,
+    'light',
+    20,
+    [10, 10],
+    $localize`:@@plan.hiit-4w.day.4.desc:Aktive Erholung — 15 min Gehen · 2×10 LS · Mobility`
+  ),
+  d(
+    5,
+    'main',
+    32,
+    [12, 10, 10],
+    $localize`:@@plan.hiit-4w.day.5.desc:Tabata 8 Runden 20/10 s — LS · Burpees · Mountain Climbers · Jump Squats`
+  ),
+  d(6, 'rest', 0, undefined, REST_DAY),
+  d(7, 'rest', 0, undefined, REST_DAY),
+  // Week 2 — longer work intervals.
+  d(
+    8,
+    'main',
+    36,
+    [12, 12, 12],
+    $localize`:@@plan.hiit-4w.day.8.desc:HIIT 5 Runden 40/20 s — LS · Burpees · Mountain Climbers · Squats · Plank`
+  ),
+  d(9, 'rest', 0, undefined, REST_DAY),
+  d(
+    10,
+    'main',
+    36,
+    [12, 12, 12],
+    $localize`:@@plan.hiit-4w.day.10.desc:HIIT-Ladder 10-9-8-…-1 — LS · Burpees (jede Runde 1 Wiederholung weniger)`
+  ),
+  d(
+    11,
+    'light',
+    22,
+    [11, 11],
+    $localize`:@@plan.hiit-4w.day.11.desc:Aktive Erholung — 20 min lockeres Cardio · 2×11 LS`
+  ),
+  d(
+    12,
+    'main',
+    40,
+    [14, 13, 13],
+    $localize`:@@plan.hiit-4w.day.12.desc:HIIT 6 Runden 30/15 s — LS · Burpees · Mountain Climbers · Jumping Jacks`
+  ),
+  d(13, 'rest', 0, undefined, REST_DAY),
+  d(14, 'rest', 0, undefined, REST_DAY),
+  // Week 3 — pyramid + EMOM.
+  d(
+    15,
+    'main',
+    44,
+    [11, 11, 11, 11],
+    $localize`:@@plan.hiit-4w.day.15.desc:HIIT-Pyramide 1-2-3-4-5-4-3-2-1 — Burpees · LS · Kniebeugen je Stufe`
+  ),
+  d(16, 'rest', 0, undefined, REST_DAY),
+  d(
+    17,
+    'main',
+    48,
+    [12, 12, 12, 12],
+    $localize`:@@plan.hiit-4w.day.17.desc:HIIT 6 Runden 40/20 s — LS · Burpees · MC · Hampelmänner · Squats · Plank`
+  ),
+  d(
+    18,
+    'light',
+    24,
+    [12, 12],
+    $localize`:@@plan.hiit-4w.day.18.desc:Aktive Erholung — Yoga 20 min · 2×12 LS`
+  ),
+  d(
+    19,
+    'main',
+    52,
+    [13, 13, 13, 13],
+    $localize`:@@plan.hiit-4w.day.19.desc:Tabata 8 Runden 20/10 s — abwechselnd LS · Burpees · Squats · MC`
+  ),
+  d(20, 'rest', 0, undefined, REST_DAY),
+  d(21, 'rest', 0, undefined, REST_DAY),
+  // Week 4 — peak + conditioning test.
+  d(
+    22,
+    'main',
+    56,
+    [14, 14, 14, 14],
+    $localize`:@@plan.hiit-4w.day.22.desc:HIIT-Finale 10 Runden 30/15 s — LS · Burpees · MC · Hampelmänner`
+  ),
+  d(23, 'rest', 0, undefined, REST_DAY),
+  d(
+    24,
+    'main',
+    60,
+    [15, 15, 15, 15],
+    $localize`:@@plan.hiit-4w.day.24.desc:EMOM 20 min — pro Minute 5 LS · 5 Burpees · 10 Hampelmänner`
+  ),
+  d(
+    25,
+    'light',
+    26,
+    [13, 13],
+    $localize`:@@plan.hiit-4w.day.25.desc:Aktive Erholung — Mobility · 2×13 LS`
+  ),
+  d(26, 'rest', 0, undefined, REST_DAY),
+  d(27, 'rest', 0, undefined, REST_DAY_PREP_FINAL),
+  d(
+    28,
+    'test',
+    50,
+    undefined,
+    $localize`:@@plan.hiit-4w.day.28.desc:Konditionstest: 100 LS + 50 Burpees auf Zeit (Bestzeit notieren)`
+  ),
+];
+
+// Mobility & Recovery — 2-week beginner deload. Daily light pushup
+// volume + mobility / yoga / foam rolling work. Designed as a
+// recovery block between two hard plans, or as an on-ramp for
+// returning after a break.
+const MOBILITY_RECOVERY_DAYS: ReadonlyArray<TrainingPlanDay> = [
+  d(
+    1,
+    'light',
+    10,
+    [10],
+    $localize`:@@plan.mobility-2w.day.1.desc:Dynamisches Aufwärmen 10 min · 1×10 saubere LS · 10 min Stretching`
+  ),
+  d(
+    2,
+    'light',
+    10,
+    [10],
+    $localize`:@@plan.mobility-2w.day.2.desc:Yoga-Flow 20 min · 1×10 LS · Brust-Stretching`
+  ),
+  d(
+    3,
+    'light',
+    12,
+    [6, 6],
+    $localize`:@@plan.mobility-2w.day.3.desc:Cat-Cow 3×10 · Hip Opener 2 min · 2×6 LS · 5 min Foam Rolling`
+  ),
+  d(
+    4,
+    'rest',
+    0,
+    undefined,
+    $localize`:@@plan.mobility-2w.day.4.desc:Ruhetag — Foam Rolling 15 min`
+  ),
+  d(
+    5,
+    'light',
+    12,
+    [6, 6],
+    $localize`:@@plan.mobility-2w.day.5.desc:Brust-Stretching 5 min · 2×6 LS · 10 min Spaziergang`
+  ),
+  d(
+    6,
+    'light',
+    14,
+    [7, 7],
+    $localize`:@@plan.mobility-2w.day.6.desc:Dynamisches Aufwärmen 10 min · 2×7 LS · Schulter-Mobility 5 min`
+  ),
+  d(7, 'rest', 0, undefined, ACTIVE_RECOVERY),
+  d(
+    8,
+    'light',
+    14,
+    [7, 7],
+    $localize`:@@plan.mobility-2w.day.8.desc:Schulter-Mobility 10 min · 2×7 LS · 10 min Stretching`
+  ),
+  d(
+    9,
+    'light',
+    16,
+    [8, 8],
+    $localize`:@@plan.mobility-2w.day.9.desc:Yoga 20 min · 2×8 LS`
+  ),
+  d(
+    10,
+    'light',
+    16,
+    [8, 8],
+    $localize`:@@plan.mobility-2w.day.10.desc:Foam Rolling 10 min · 2×8 LS · Hip Opener 5 min`
+  ),
+  d(
+    11,
+    'rest',
+    0,
+    undefined,
+    $localize`:@@plan.mobility-2w.day.11.desc:Ruhetag — Stretching nach Bedarf`
+  ),
+  d(
+    12,
+    'light',
+    18,
+    [9, 9],
+    $localize`:@@plan.mobility-2w.day.12.desc:Dynamisches Aufwärmen · 2×9 LS · 10 min Mobility`
+  ),
+  d(
+    13,
+    'light',
+    20,
+    [10, 10],
+    $localize`:@@plan.mobility-2w.day.13.desc:2×10 LS · 15 min Yoga`
+  ),
+  d(
+    14,
+    'light',
+    20,
+    [10, 10],
+    $localize`:@@plan.mobility-2w.day.14.desc:Form-Check: 2×10 saubere LS · vollständige Mobility-Session 20 min`
+  ),
+];
+
 export const TRAINING_PLANS: ReadonlyArray<TrainingPlan> = [
   {
     id: 'recruit-6w-v1',
@@ -939,6 +1778,51 @@ export const TRAINING_PLANS: ReadonlyArray<TrainingPlan> = [
     level: 'advanced',
     totalDays: 84,
     days: ONE_ARM_DAYS,
+  },
+  {
+    id: 'push-pull-6w-v1',
+    slug: 'push-pull-6w',
+    title: $localize`:@@plan.push-pull-6w.title:Push & Pull Balance — 6-Wochen-Plan`,
+    summary: $localize`:@@plan.push-pull-6w.summary:Symmetrischer 6-Wochen-Plan für Liegestütze und Rückenübungen (Rudern, Klimmzug-Negative, Face Pulls). Vermeidet das klassische "nur Push"-Ungleichgewicht und stärkt die hintere Kette gleichwertig. Pull-Tag pro Woche zusätzlich zur Push-Progression.`,
+    level: 'intermediate',
+    totalDays: 42,
+    days: PUSH_PULL_BALANCE_DAYS,
+  },
+  {
+    id: 'full-body-6w-v1',
+    slug: 'full-body-6w',
+    title: $localize`:@@plan.full-body-6w.title:Full Body Strong — 6-Wochen-Ganzkörperplan`,
+    summary: $localize`:@@plan.full-body-6w.summary:Sechs Wochen Ganzkörper-Zirkel: Liegestütze, Kniebeugen, Ausfallschritte, Glute Bridges und Plank in 3-, 4- und 5-Runden-Zirkeln. Drei Trainingstage pro Woche, klar steigende Volumen, funktioneller Endtest in Woche 6.`,
+    level: 'intermediate',
+    totalDays: 42,
+    days: FULL_BODY_DAYS,
+  },
+  {
+    id: 'core-4w-v1',
+    slug: 'core-4w',
+    title: $localize`:@@plan.core-4w.title:Core Foundations — 4-Wochen-Rumpfplan`,
+    summary: $localize`:@@plan.core-4w.summary:Vier Wochen Rumpfstabilität: Plank, Hollow Hold, Dead Bug, Beinheben und Rotation. Pro Trainingstag eine moderate Liegestütze-Aktivierung. Vier Trainingstage und ein leichter Tag pro Woche, Endtest mit Plank-Halt und Hollow Hold.`,
+    level: 'beginner',
+    totalDays: 28,
+    days: CORE_FOUNDATIONS_DAYS,
+  },
+  {
+    id: 'hiit-4w-v1',
+    slug: 'hiit-4w',
+    title: $localize`:@@plan.hiit-4w.title:HIIT Burner — 4-Wochen-Konditionsplan`,
+    summary: $localize`:@@plan.hiit-4w.summary:Vier Wochen hochintensives Intervalltraining mit Liegestützen, Burpees, Mountain Climbers, Hampelmännern und Kniebeugen. Tabata, Pyramide und EMOM-Strukturen. Eignet sich als Konditions-Booster zwischen klassischen Liegestütze-Plänen.`,
+    level: 'intermediate',
+    totalDays: 28,
+    days: HIIT_BURNER_DAYS,
+  },
+  {
+    id: 'mobility-2w-v1',
+    slug: 'mobility-2w',
+    title: $localize`:@@plan.mobility-2w.title:Mobility & Recovery — 2-Wochen-Deload`,
+    summary: $localize`:@@plan.mobility-2w.summary:Zwei Wochen aktive Erholung: tägliche Mobility-, Yoga- und Stretching-Einheiten mit leichtem Liegestütze-Volumen. Ideal als Deload zwischen zwei harten Plänen oder zum Wiedereinstieg nach einer Trainingspause.`,
+    level: 'beginner',
+    totalDays: 14,
+    days: MOBILITY_RECOVERY_DAYS,
   },
 ];
 
