@@ -529,6 +529,12 @@ Active:         </target>
         <target>No sets data available</target>
       </segment>
     </unit>
+    <unit id="intervalsDistribution.noData">
+      <segment state="translated">
+        <source>Keine Intervall-Daten vorhanden</source>
+        <target>No intervals data available</target>
+      </segment>
+    </unit>
     <unit id="pie.top5">
       <notes>
         <note category="location">web/src/app/stats/components/type-pie/type-pie.component.ts:62,64</note>
