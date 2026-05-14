@@ -4647,6 +4647,48 @@
         <target> No hay datos de lances disponibles </target>
       </segment>
     </unit>
+    <unit id="intervalsDistribution.noData">
+      <segment state="initial">
+        <source>Keine Intervall-Daten vorhanden</source>
+        <target>Keine Intervall-Daten vorhanden</target>
+      </segment>
+    </unit>
+    <unit id="intervalsDistribution.listLabel">
+      <segment state="initial">
+        <source>Intervall-Verteilung</source>
+        <target>Intervall-Verteilung</target>
+      </segment>
+    </unit>
+    <unit id="entry.interval.label">
+      <segment state="initial">
+        <source>Intervall <ph id="0" equiv="INTERPOLATION" disp="{{ $index + 1 }}"/></source>
+        <target>Intervall <ph id="0" equiv="INTERPOLATION" disp="{{ $index + 1 }}"/></target>
+      </segment>
+    </unit>
+    <unit id="entry.intervals.label">
+      <segment state="initial">
+        <source>Intervalle</source>
+        <target>Intervalle</target>
+      </segment>
+    </unit>
+    <unit id="entry.intervals.remove">
+      <segment state="initial">
+        <source>Intervall entfernen</source>
+        <target>Intervall entfernen</target>
+      </segment>
+    </unit>
+    <unit id="entry.intervals.add">
+      <segment state="initial">
+        <source>Intervall hinzufügen</source>
+        <target>Intervall hinzufügen</target>
+      </segment>
+    </unit>
+    <unit id="entry.intervals.addTooltip">
+      <segment state="initial">
+        <source>Weiteres Intervall hinzufügen</source>
+        <target>Weiteres Intervall hinzufügen</target>
+      </segment>
+    </unit>
     <unit id="chart.subtitle.reps">
       <notes>
         <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts</note>

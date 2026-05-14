@@ -294,21 +294,31 @@ export class StatsDashboardComponent {
     } else {
       const userId = this.userContext.userIdSafe();
       if (!userId) return;
+      const intervals = result.intervals ?? [];
       await firstValueFrom(
         this.exerciseService.createEntry(userId, {
           exerciseId: result.exerciseId,
           timestamp: result.timestamp,
           ...(result.measurement === 'time'
-            ? { durationSec: result.durationSec ?? 0 }
+            ? {
+                durationSec: result.durationSec ?? 0,
+                ...(intervals.length > 0 ? { intervals } : {}),
+              }
             : result.measurement === 'distance-time'
               ? {
                   distanceM: result.distanceM ?? 0,
                   durationSec: result.durationSec ?? 0,
+                  ...(intervals.length > 0 ? { intervals } : {}),
                 }
-              : {
-                  reps: result.reps,
-                  ...(result.sets.length > 1 ? { sets: result.sets } : {}),
-                }),
+              : result.measurement === 'distance'
+                ? {
+                    distanceM: result.distanceM ?? 0,
+                    ...(intervals.length > 0 ? { intervals } : {}),
+                  }
+                : {
+                    reps: result.reps,
+                    ...(result.sets.length > 1 ? { sets: result.sets } : {}),
+                  }),
           ...(result.variantId ? { variantId: result.variantId } : {}),
         })
       );
