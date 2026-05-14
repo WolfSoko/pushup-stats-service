@@ -12,6 +12,15 @@ import { Firestore } from '@angular/fire/firestore';
 import * as firestoreFns from '@angular/fire/firestore';
 import { MotivationQuoteService } from './motivation-quote.service';
 
+type DocSnapshotMock = Awaited<ReturnType<typeof firestoreFns.getDoc>>;
+const docSnapshot = (
+  payload: { exists: true; quotes: string[] } | { exists: false }
+): DocSnapshotMock =>
+  ({
+    exists: () => payload.exists,
+    data: () => (payload.exists ? { quotes: payload.quotes } : undefined),
+  }) as unknown as DocSnapshotMock;
+
 describe('MotivationQuoteService', () => {
   describe('SSR (server platform)', () => {
     let service: MotivationQuoteService;
@@ -49,10 +58,12 @@ describe('MotivationQuoteService', () => {
     });
 
     it('should load quotes from Firestore cache if available', async () => {
-      jest.spyOn(firestoreFns, 'getDoc').mockResolvedValueOnce({
-        exists: () => true,
-        data: () => ({ quotes: ['Firestore Quote 1', 'Firestore Quote 2'] }),
-      } as any);
+      jest.spyOn(firestoreFns, 'getDoc').mockResolvedValueOnce(
+        docSnapshot({
+          exists: true,
+          quotes: ['Firestore Quote 1', 'Firestore Quote 2'],
+        })
+      );
 
       const result = await service.fetchQuotes('de', 'test-user-123');
 
@@ -62,10 +73,11 @@ describe('MotivationQuoteService', () => {
     });
 
     it('should return first quote from Firestore cache', async () => {
-      jest.spyOn(firestoreFns, 'getDoc').mockResolvedValueOnce({
-        exists: () => true,
-        data: () => ({ quotes: ['First Quote', 'Second'] }),
-      } as any);
+      jest
+        .spyOn(firestoreFns, 'getDoc')
+        .mockResolvedValueOnce(
+          docSnapshot({ exists: true, quotes: ['First Quote', 'Second'] })
+        );
 
       const result = await service.fetchQuotes('de', 'test-user-123');
 
@@ -73,12 +85,12 @@ describe('MotivationQuoteService', () => {
     });
 
     it('should save quotes to Firestore after fetch', async () => {
-      jest.spyOn(firestoreFns, 'getDoc').mockResolvedValueOnce({
-        exists: () => false,
-      } as any);
+      jest
+        .spyOn(firestoreFns, 'getDoc')
+        .mockResolvedValueOnce(docSnapshot({ exists: false }));
       const setDocSpy = jest
         .spyOn(firestoreFns, 'setDoc')
-        .mockResolvedValueOnce(undefined as any);
+        .mockResolvedValueOnce(undefined);
 
       // Without Functions provider, service returns [] on cache miss
       await service.fetchQuotes('de', 'test-user-123');
@@ -90,10 +102,11 @@ describe('MotivationQuoteService', () => {
     it('should use correct Firestore doc ID format', async () => {
       const today = new Date().toISOString().slice(0, 10);
       const docSpy = jest.spyOn(firestoreFns, 'doc');
-      jest.spyOn(firestoreFns, 'getDoc').mockResolvedValueOnce({
-        exists: () => true,
-        data: () => ({ quotes: ['Quote'] }),
-      } as any);
+      jest
+        .spyOn(firestoreFns, 'getDoc')
+        .mockResolvedValueOnce(
+          docSnapshot({ exists: true, quotes: ['Quote'] })
+        );
 
       await service.fetchQuotes('de', 'test-user-123');
 
@@ -118,10 +131,11 @@ describe('MotivationQuoteService', () => {
 
       const today = new Date().toISOString().slice(0, 10);
       const docSpy = jest.spyOn(firestoreFns, 'doc');
-      jest.spyOn(firestoreFns, 'getDoc').mockResolvedValueOnce({
-        exists: () => true,
-        data: () => ({ quotes: ['English Quote'] }),
-      } as any);
+      jest
+        .spyOn(firestoreFns, 'getDoc')
+        .mockResolvedValueOnce(
+          docSnapshot({ exists: true, quotes: ['English Quote'] })
+        );
 
       const result = await enService.fetchQuotes('en', 'en-user');
 
