@@ -2060,6 +2060,18 @@ Active:         </target>
         <target>GDPR-friendly with customisable cookie consent. Your name on the leaderboard? Only if you want it there. No subscription, no credit card.</target>
             </segment>
         </unit>
+    <unit id="landing.feature.autoCount.title">
+      <segment state="translated">
+        <source>Reps automatisch zählen</source>
+        <target>Auto-count your reps</target>
+      </segment>
+    </unit>
+    <unit id="landing.feature.autoCount.body">
+      <segment state="translated">
+        <source>Stell das Handy hin, öffne die Auto-Zählung und mach deine Liegestütze, Kniebeugen, Klimmzüge oder Sit-ups – die Kamera erkennt die Bewegung und zählt mit. Der Live-Form-Check zeigt Winkel und Sicherheit, damit du jederzeit weißt, dass die Zählung sauber läuft.</source>
+        <target>Prop up your phone, open the auto-counter and start your push-ups, squats, pull-ups or sit-ups – the camera spots the motion and counts along. The live Form Check shows angle and confidence so you always know the count is clean.</target>
+      </segment>
+    </unit>
     <unit id="landing.features.aria">
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>

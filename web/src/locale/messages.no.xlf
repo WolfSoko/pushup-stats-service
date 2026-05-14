@@ -1706,6 +1706,18 @@ Aktiv:         </target>
         <target>GDPR-kompatibel med tilpassbar informasjonskapsel-samtykke. Ditt navn på leaderboard? Bare hvis du ønsker det. Ingen abonnement, intet kredittkort.</target>
             </segment>
         </unit>
+    <unit id="landing.feature.autoCount.title">
+      <segment state="translated">
+        <source>Reps automatisch zählen</source>
+        <target>Tell repsene automatisk</target>
+      </segment>
+    </unit>
+    <unit id="landing.feature.autoCount.body">
+      <segment state="translated">
+        <source>Stell das Handy hin, öffne die Auto-Zählung und mach deine Liegestütze, Kniebeugen, Klimmzüge oder Sit-ups – die Kamera erkennt die Bewegung und zählt mit. Der Live-Form-Check zeigt Winkel und Sicherheit, damit du jederzeit weißt, dass die Zählung sauber läuft.</source>
+        <target>Sett mobilen ned, åpne auto-tellingen og gjør armhevinger, knebøy, kroppshevinger eller sit-ups – kameraet ser bevegelsen og teller med. Live Form Check viser vinkel og sikkerhet slik at du vet at tellingen er ren.</target>
+      </segment>
+    </unit>
     <unit id="landing.features.aria">
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>

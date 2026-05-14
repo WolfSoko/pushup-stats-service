@@ -3495,6 +3495,18 @@
         <source> ✓ Kostenlos · ✓ Kein Abo · ✓ Keine Kreditkarte · ✓ Datenschutz first </source>
       <target> ✓ 完全免费 · ✓ 无需订阅 · ✓ 无需信用卡 · ✓ 隐私优先 </target></segment>
     </unit>
+    <unit id="landing.feature.autoCount.title">
+      <segment state="translated">
+        <source>Reps automatisch zählen</source>
+        <target>自动计数你的训练</target>
+      </segment>
+    </unit>
+    <unit id="landing.feature.autoCount.body">
+      <segment state="translated">
+        <source>Stell das Handy hin, öffne die Auto-Zählung und mach deine Liegestütze, Kniebeugen, Klimmzüge oder Sit-ups – die Kamera erkennt die Bewegung und zählt mit. Der Live-Form-Check zeigt Winkel und Sicherheit, damit du jederzeit weißt, dass die Zählung sauber läuft.</source>
+        <target>把手机放好,打开自动计数,然后开始做俯卧撑、深蹲、引体向上或仰卧起坐——相机识别动作并自动计数。实时动作检查显示角度和置信度,让你随时知道计数是否准确。</target>
+      </segment>
+    </unit>
     <unit id="landing.features.aria">
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:200,201</note>

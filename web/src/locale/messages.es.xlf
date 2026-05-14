@@ -2806,6 +2806,18 @@
         <target> ✓ Gratis · ✓ Sin suscripción · ✓ Sin tarjeta de crédito · ✓ La protección de datos es lo primero </target>
       </segment>
     </unit>
+    <unit id="landing.feature.autoCount.title">
+      <segment state="translated">
+        <source>Reps automatisch zählen</source>
+        <target>Cuenta tus repeticiones automáticamente</target>
+      </segment>
+    </unit>
+    <unit id="landing.feature.autoCount.body">
+      <segment state="translated">
+        <source>Stell das Handy hin, öffne die Auto-Zählung und mach deine Liegestütze, Kniebeugen, Klimmzüge oder Sit-ups – die Kamera erkennt die Bewegung und zählt mit. Der Live-Form-Check zeigt Winkel und Sicherheit, damit du jederzeit weißt, dass die Zählung sauber läuft.</source>
+        <target>Coloca el teléfono, abre el conteo automático y empieza tus flexiones, sentadillas, dominadas o abdominales: la cámara detecta el movimiento y cuenta por ti. El Form Check en vivo muestra ángulo y confianza para que sepas que el conteo es limpio.</target>
+      </segment>
+    </unit>
     <unit id="landing.features.aria">
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:196,197</note>
