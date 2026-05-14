@@ -81,9 +81,14 @@ import { categoryDisplayName } from '../../i18n/exercise-display-names';
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 12px;
-      margin-top: 12px;
+      margin: 12px 0 0;
       padding-top: 12px;
       border-top: 1px solid rgba(0, 0, 0, 0.08);
+    }
+    .meta-row > div {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
     }
     :host-context(html:not(.light-theme)) .meta-row {
       border-top-color: rgba(255, 255, 255, 0.08);

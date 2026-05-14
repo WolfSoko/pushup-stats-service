@@ -671,6 +671,12 @@ describe('AnalysisPageComponent', () => {
       if (core?.volume.kind !== 'mixed') return;
       // Stable facet order: reps before time.
       expect(core.volume.facets.map((f) => f.kind)).toEqual(['reps', 'time']);
+      // Facet kinds must stay unique — the card template tracks
+      // `@for … track facet.kind`, so duplicates would trigger
+      // Angular NG0955 (e.g. if a future `weight`-measurement entry
+      // were ever placed alongside reps without collapsing first).
+      const kinds = core.volume.facets.map((f) => f.kind);
+      expect(new Set(kinds).size).toBe(kinds.length);
       expect(core.volume.facets[0]).toEqual({
         kind: 'reps',
         totalReps: 30,

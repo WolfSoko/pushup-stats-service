@@ -7877,7 +7877,7 @@ Deine Position: # ·  Reps        </source>
     <unit id="analysis.overview.comparison.metricLabel">
       <segment state="translated">
         <source/>
-        <target>Trainings</target>
+        <target>Training sessions</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.facet.repsTitle">
@@ -7931,13 +7931,13 @@ Deine Position: # ·  Reps        </source>
     <unit id="analysis.overview.cards.facet.distanceTimeTitle">
       <segment state="translated">
         <source/>
-        <target>Distance & Time</target>
+        <target>Distance &amp; Time</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.entries">
       <segment state="translated">
         <source/>
-        <target>Trainings</target>
+        <target>Training sessions</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.viewDetails">

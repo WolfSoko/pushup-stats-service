@@ -397,42 +397,77 @@ function pickBestDay(byDay: Map<string, number>): [string, number] | null {
 }
 
 /**
+ * Maps a measurement type to the facet kind {@link buildFacet} emits
+ * for it. `weight` shares the reps-shaped facet (both expose volume on
+ * `entry.reps`), so the catalog's reserved `weight` measurement must
+ * not produce a second `kind: 'reps'` facet alongside a real reps
+ * bucket — that would push two entries with identical
+ * `facet.kind` into the card's `@for … track facet.kind` loop and
+ * trigger Angular NG0955 (duplicate keys, incorrect row reuse).
+ */
+export function facetKindFor(
+  measurement: MeasurementType
+): CategorySingleFacet['kind'] {
+  switch (measurement) {
+    case 'time':
+      return 'time';
+    case 'distance':
+      return 'distance';
+    case 'distance-time':
+      return 'distance-time';
+    case 'reps':
+    case 'weight':
+    default:
+      return 'reps';
+  }
+}
+
+/**
  * Resolves a category's rows into a single measurement facet or a
  * mixed bucket. Unknown exerciseIds (custom catalog entries deleted
  * from the device's local catalog) fold into the reps facet so they
  * still surface a number — the rationale matches
  * {@link unifiedEntryPrimaryValue}'s fallback.
+ *
+ * Bucketing is keyed by *facet kind* rather than the raw
+ * {@link MeasurementType}: `reps` and `weight` collapse into one
+ * `'reps'` bucket so a category mixing custom weight entries with
+ * bodyweight reps doesn't emit two `kind: 'reps'` facets (which would
+ * collide under `@for … track facet.kind`).
  */
 function computeCategoryVolume(
   rows: ReadonlyArray<UnifiedEntry>,
   todayKey: string
 ): CategoryVolume {
-  const byMeasurement = new Map<MeasurementType, UnifiedEntry[]>();
+  const byKind = new Map<
+    CategorySingleFacet['kind'],
+    { measurement: MeasurementType; rows: UnifiedEntry[] }
+  >();
   for (const row of rows) {
-    const m = unifiedEntryMeasurement(row) ?? 'reps';
-    const bucket = byMeasurement.get(m);
-    if (bucket) bucket.push(row);
-    else byMeasurement.set(m, [row]);
+    const measurement = unifiedEntryMeasurement(row) ?? 'reps';
+    const kind = facetKindFor(measurement);
+    const bucket = byKind.get(kind);
+    if (bucket) bucket.rows.push(row);
+    else byKind.set(kind, { measurement, rows: [row] });
   }
-  if (byMeasurement.size === 1) {
-    const [[measurement, group]] = [...byMeasurement.entries()];
+  if (byKind.size === 1) {
+    const [{ measurement, rows: group }] = [...byKind.values()];
     return buildFacet(measurement, group, todayKey);
   }
-  // Stable facet order: reps → time → distance → distance-time → weight
-  // — matches the dominant-to-rare frequency in the catalog so the
+  // Stable facet order: reps → time → distance → distance-time.
+  // Matches the dominant-to-rare frequency in the catalog so the
   // primary-movement facet leads the card.
-  const order: MeasurementType[] = [
+  const order: ReadonlyArray<CategorySingleFacet['kind']> = [
     'reps',
     'time',
     'distance',
     'distance-time',
-    'weight',
   ];
   const facets: CategorySingleFacet[] = [];
-  for (const m of order) {
-    const group = byMeasurement.get(m);
-    if (!group?.length) continue;
-    facets.push(buildFacet(m, group, todayKey));
+  for (const kind of order) {
+    const bucket = byKind.get(kind);
+    if (!bucket?.rows.length) continue;
+    facets.push(buildFacet(bucket.measurement, bucket.rows, todayKey));
   }
   return { kind: 'mixed', facets };
 }

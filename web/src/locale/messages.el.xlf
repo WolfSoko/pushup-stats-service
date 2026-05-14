@@ -7681,7 +7681,7 @@
     <unit id="analysis.overview.cards.facet.distanceTimeTitle">
       <segment state="translated">
         <source/>
-        <target>Απόσταση & χρόνος</target>
+        <target>Απόσταση &amp; χρόνος</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.entries">
