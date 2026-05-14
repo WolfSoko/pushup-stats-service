@@ -211,7 +211,8 @@ interface PushupTypeOption {
         gap: 8px;
       }
       .duration-row mat-form-field {
-        flex: 1;
+        flex: 1 1 0;
+        min-width: 0;
       }
       @keyframes clone-set {
         from {
@@ -384,14 +385,12 @@ interface PushupTypeOption {
           <mat-label i18n="@@entryDialog.distance">Distanz (km)</mat-label>
           <input
             matInput
-            type="number"
+            type="text"
             inputmode="decimal"
-            placeholder="5.00"
-            [min]="minKm()"
-            [max]="maxKm()"
-            step="0.01"
+            [placeholder]="distancePlaceholder"
             [value]="distanceInput()"
             (input)="distanceInput.set(asValue($event))"
+            data-testid="training-entry-distance"
             required
           />
         </mat-form-field>
@@ -697,8 +696,16 @@ export class TrainingEntryDialogComponent {
 
   readonly distanceM = computed(() => parseKmToMeters(this.distanceInput()));
 
-  readonly minKm = computed(() => (this.currentDefinition()?.min ?? 0) / 1000);
-  readonly maxKm = computed(() => (this.currentDefinition()?.max ?? 0) / 1000);
+  /**
+   * Locale-aware placeholder for the km input. The input is `type="text"` +
+   * `inputmode="decimal"` (not `type="number"`) so users can type either the
+   * dot- or comma-separated form their locale uses — `<input type="number">`
+   * silently rejects "," in most browsers regardless of `LOCALE_ID`.
+   */
+  readonly distancePlaceholder = new Intl.NumberFormat(this.locale, {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }).format(5);
 
   readonly isTimeMeasurement = computed(
     () => this.currentDefinition()?.measurement === 'time'
