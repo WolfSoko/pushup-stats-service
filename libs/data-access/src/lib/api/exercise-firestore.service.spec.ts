@@ -279,6 +279,34 @@ describe('ExerciseFirestoreService', () => {
       expect(data['sets']).toEqual([10, 10, 10]);
     });
 
+    it('omits empty intervals array from the Firestore payload', async () => {
+      const setDocSpy = jest.spyOn(firestoreFns, 'setDoc');
+      await firstValueFrom(
+        service.createEntry('u1', {
+          exerciseId: 'plank.standard',
+          timestamp: '2026-04-15T08:00:00Z',
+          durationSec: 90,
+          intervals: [],
+        })
+      );
+      const data = setDocSpy.mock.calls[0]?.[1] as Record<string, unknown>;
+      expect(data['intervals']).toBeUndefined();
+    });
+
+    it('preserves a non-empty intervals array on the Firestore payload', async () => {
+      const setDocSpy = jest.spyOn(firestoreFns, 'setDoc');
+      await firstValueFrom(
+        service.createEntry('u1', {
+          exerciseId: 'plank.standard',
+          timestamp: '2026-04-15T08:00:00Z',
+          durationSec: 90,
+          intervals: [30, 30, 30],
+        })
+      );
+      const data = setDocSpy.mock.calls[0]?.[1] as Record<string, unknown>;
+      expect(data['intervals']).toEqual([30, 30, 30]);
+    });
+
     it('defaults source to "web" when not provided', async () => {
       const setDocSpy = jest.spyOn(firestoreFns, 'setDoc');
       await firstValueFrom(
@@ -304,9 +332,7 @@ describe('ExerciseFirestoreService', () => {
 
     it('errors when the new reps value is out of range', async () => {
       await expect(
-        firstValueFrom(
-          service.updateEntry('s1', 'abs.situps', { reps: 9999 })
-        )
+        firstValueFrom(service.updateEntry('s1', 'abs.situps', { reps: 9999 }))
       ).rejects.toThrow(/out-of-range/);
     });
 
@@ -345,6 +371,26 @@ describe('ExerciseFirestoreService', () => {
       // jest.mock call above; the real Firestore SDK returns a sentinel
       // object with the same role.
       expect(patch['sets']).toBe('__deleted__');
+    });
+
+    it('clears the intervals field when the patch sends an empty array', async () => {
+      const updateSpy = jest.spyOn(firestoreFns, 'updateDoc');
+      const deleteFieldSpy = jest.spyOn(firestoreFns, 'deleteField');
+      await firstValueFrom(
+        service.updateEntry('s1', 'abs.situps', { intervals: [] })
+      );
+      expect(deleteFieldSpy).toHaveBeenCalled();
+      const patch = updateSpy.mock.calls[0]?.[1] as Record<string, unknown>;
+      expect(patch['intervals']).toBe('__deleted__');
+    });
+
+    it('preserves a non-empty intervals array on the update patch', async () => {
+      const updateSpy = jest.spyOn(firestoreFns, 'updateDoc');
+      await firstValueFrom(
+        service.updateEntry('s1', 'abs.situps', { intervals: [30, 30, 30] })
+      );
+      const patch = updateSpy.mock.calls[0]?.[1] as Record<string, unknown>;
+      expect(patch['intervals']).toEqual([30, 30, 30]);
     });
 
     it('uses partial validation so a variantId-only update is allowed', async () => {

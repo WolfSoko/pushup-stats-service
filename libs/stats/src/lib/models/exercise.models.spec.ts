@@ -1,5 +1,6 @@
 import {
   companionFields,
+  entryBreakdownField,
   measurementCompanionValueField,
   measurementValueField,
   requiredCompanionFields,
@@ -79,6 +80,18 @@ describe('measurementCompanionValueField', () => {
   });
 });
 
+describe('entryBreakdownField', () => {
+  it.each<[MeasurementType, 'sets' | 'intervals']>([
+    ['reps', 'sets'],
+    ['weight', 'sets'],
+    ['time', 'intervals'],
+    ['distance', 'intervals'],
+    ['distance-time', 'intervals'],
+  ])('Then %s exposes its breakdown as %s', (m, expected) => {
+    expect(entryBreakdownField(m)).toBe(expected);
+  });
+});
+
 describe('companionFields', () => {
   it.each<[MeasurementType, string[]]>([
     ['reps', []],
@@ -144,9 +157,9 @@ describe('validateExerciseEntry — reps measurement', () => {
     it.each(['durationSec', 'distanceM', 'weightKg'] as const)(
       'Then setting %s alongside reps is rejected as wrong-measurement-field',
       (field) => {
-        expect(
-          validateExerciseEntry({ reps: 10, [field]: 5 }, repsDef)
-        ).toBe('wrong-measurement-field');
+        expect(validateExerciseEntry({ reps: 10, [field]: 5 }, repsDef)).toBe(
+          'wrong-measurement-field'
+        );
       }
     );
   });
@@ -180,10 +193,7 @@ describe('validateExerciseEntry — distance measurement', () => {
 
   it('accepts a valid distance with an optional durationSec companion (pace)', () => {
     expect(
-      validateExerciseEntry(
-        { distanceM: 5000, durationSec: 1650 },
-        distanceDef
-      )
+      validateExerciseEntry({ distanceM: 5000, durationSec: 1650 }, distanceDef)
     ).toBeNull();
   });
 
@@ -195,10 +205,7 @@ describe('validateExerciseEntry — distance measurement', () => {
 
   it('rejects a non-integer durationSec companion', () => {
     expect(
-      validateExerciseEntry(
-        { distanceM: 5000, durationSec: 27.5 },
-        distanceDef
-      )
+      validateExerciseEntry({ distanceM: 5000, durationSec: 27.5 }, distanceDef)
     ).toBe('companion-value-invalid');
   });
 
@@ -272,21 +279,17 @@ describe('validateExerciseEntry — distance-time measurement', () => {
 
   it('skips the duration-required check in partial-update mode', () => {
     expect(
-      validateExerciseEntry(
-        { distanceM: 5000 },
-        distanceTimeDef,
-        { partial: true }
-      )
+      validateExerciseEntry({ distanceM: 5000 }, distanceTimeDef, {
+        partial: true,
+      })
     ).toBeNull();
   });
 
   it('accepts a duration-only patch in partial-update mode (no primary)', () => {
     expect(
-      validateExerciseEntry(
-        { durationSec: 1500 },
-        distanceTimeDef,
-        { partial: true }
-      )
+      validateExerciseEntry({ durationSec: 1500 }, distanceTimeDef, {
+        partial: true,
+      })
     ).toBeNull();
   });
 });
@@ -317,12 +320,12 @@ describe('validateExerciseEntry — weight measurement', () => {
   });
 
   it('rejects an out-of-range weightKg', () => {
-    expect(
-      validateExerciseEntry({ reps: 5, weightKg: 0 }, weightDef)
-    ).toBe('companion-value-out-of-range');
-    expect(
-      validateExerciseEntry({ reps: 5, weightKg: 1000 }, weightDef)
-    ).toBe('companion-value-out-of-range');
+    expect(validateExerciseEntry({ reps: 5, weightKg: 0 }, weightDef)).toBe(
+      'companion-value-out-of-range'
+    );
+    expect(validateExerciseEntry({ reps: 5, weightKg: 1000 }, weightDef)).toBe(
+      'companion-value-out-of-range'
+    );
   });
 
   it('rejects a non-finite weightKg', () => {
@@ -414,10 +417,7 @@ describe('validateExerciseEntry — variants', () => {
 
   it('rejects an entry with an unknown variantId', () => {
     expect(
-      validateExerciseEntry(
-        { reps: 10, variantId: 'diamond' },
-        defWithVariants
-      )
+      validateExerciseEntry({ reps: 10, variantId: 'diamond' }, defWithVariants)
     ).toBe('invalid-variant');
   });
 

@@ -63,9 +63,7 @@ function violationObservable<T>(
   }
   const violation = validateExerciseEntry(payload, def, options);
   if (!violation) return null;
-  return throwError(
-    () => new ExerciseValidationError(exerciseId, violation)
-  );
+  return throwError(() => new ExerciseValidationError(exerciseId, violation));
 }
 
 @Injectable({ providedIn: 'root' })
@@ -179,6 +177,7 @@ export class ExerciseFirestoreService {
       ...(payload.variantId ? { variantId: payload.variantId } : {}),
       ...companionPatch,
       ...(payload.sets?.length ? { sets: payload.sets } : {}),
+      ...(payload.intervals?.length ? { intervals: payload.intervals } : {}),
       source: payload.source ?? 'web',
       createdAt: nowIso,
       updatedAt: nowIso,
@@ -196,6 +195,9 @@ export class ExerciseFirestoreService {
     };
     if (payload.variantId) firestoreData['variantId'] = payload.variantId;
     if (payload.sets?.length) firestoreData['sets'] = payload.sets;
+    if (payload.intervals?.length) {
+      firestoreData['intervals'] = payload.intervals;
+    }
 
     return from(setDoc(newRef, firestoreData)).pipe(map(() => record));
   }
@@ -222,10 +224,7 @@ export class ExerciseFirestoreService {
     exerciseId: string,
     payload: ExerciseEntryUpdate
   ): Observable<void> {
-    if (
-      payload.exerciseId !== undefined &&
-      payload.exerciseId !== exerciseId
-    ) {
+    if (payload.exerciseId !== undefined && payload.exerciseId !== exerciseId) {
       return throwError(
         () => new ExerciseValidationError(exerciseId, 'unknown-exercise')
       );
@@ -252,13 +251,18 @@ export class ExerciseFirestoreService {
     // entirely would silently keep the stale value on the doc; mapping
     // it to `deleteField()` makes the patch actually clear the field.
     //   - `sets: []` clears the per-set breakdown.
+    //   - `intervals: []` clears the per-interval breakdown.
     //   - `variantId: null` clears a previously-set variant (the dialog
     //     forwards `null` when the user picked the "no variant" option
     //     in edit mode).
     const cleanPayload: Record<string, unknown> = {};
     for (const [k, v] of Object.entries(patchable)) {
       if (v === undefined) continue;
-      if (k === 'sets' && Array.isArray(v) && v.length === 0) {
+      if (
+        (k === 'sets' || k === 'intervals') &&
+        Array.isArray(v) &&
+        v.length === 0
+      ) {
         cleanPayload[k] = deleteField();
         continue;
       }
