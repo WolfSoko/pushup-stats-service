@@ -37,7 +37,7 @@ export interface IntervalsDistributionDatum {
               formatValue(d.value)
             }}</span>
             <div class="bar-track" aria-hidden="true">
-              <div class="bar-fill" [style.width.%]="barWidth(d.percent)"></div>
+              <div class="bar-fill" [style.width.%]="barWidth(d.count)"></div>
             </div>
             <span class="value" aria-hidden="true">{{ d.percent }}%</span>
           </div>
@@ -121,18 +121,18 @@ export class IntervalsDistributionComponent {
       }));
   });
 
-  // Interval workouts (especially distance / distance-time) often have
-  // every value distinct, so raw `percent` would leave the widest bar
-  // very short. Normalising to the largest bin keeps the chart legible
-  // when the distribution is flat.
-  private readonly maxPercent = computed(() =>
-    this.data().reduce((max, d) => Math.max(max, d.percent), 0)
+  // Normalise bar widths against the largest bin's raw count, not its
+  // rounded display percent. With >100 unique interval values (sprint
+  // sessions with many distinct distances), every bin's percent rounds
+  // to 0 and a percent-based normaliser collapses every bar to width 0.
+  private readonly maxCount = computed(() =>
+    this.data().reduce((max, d) => Math.max(max, d.count), 0)
   );
 
-  barWidth(percent: number): number {
-    const max = this.maxPercent();
+  barWidth(count: number): number {
+    const max = this.maxCount();
     if (max <= 0) return 0;
-    return (percent / max) * 100;
+    return (count / max) * 100;
   }
 
   formatValue(value: number): string {

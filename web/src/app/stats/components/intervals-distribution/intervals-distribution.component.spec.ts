@@ -173,7 +173,7 @@ describe('IntervalsDistributionComponent', () => {
       fixture.componentRef.setInput('measurement', 'time');
       fixture.componentRef.setInput('entries', []);
       fixture.detectChanges();
-      expect(component.barWidth(50)).toBe(0);
+      expect(component.barWidth(1)).toBe(0);
     });
 
     it('renders the biggest bin at 100% and scales others proportionally', () => {
@@ -187,10 +187,28 @@ describe('IntervalsDistributionComponent', () => {
       ]);
       fixture.detectChanges();
       const [a, b] = component.data();
-      expect(component.barWidth(a.percent)).toBe(100);
-      // Allow 1px rounding noise: 25/75*100 ≈ 33.33.
-      expect(component.barWidth(b.percent)).toBeGreaterThan(33);
-      expect(component.barWidth(b.percent)).toBeLessThan(34);
+      expect(component.barWidth(a.count)).toBe(100);
+      // Allow 1px rounding noise: 1/3*100 ≈ 33.33.
+      expect(component.barWidth(b.count)).toBeGreaterThan(33);
+      expect(component.barWidth(b.count)).toBeLessThan(34);
+    });
+
+    it('still renders bars when every bin rounds to 0% (many unique values)', () => {
+      // 250 unique interval distances → each count=1, percent=round(0.4)=0
+      // for every bin. Percent-based normalisation would collapse every
+      // bar to width 0; count-based normalisation keeps them at 100%.
+      const intervals = Array.from({ length: 250 }, (_, i) => 100 + i);
+      fixture.componentRef.setInput('measurement', 'distance-time');
+      fixture.componentRef.setInput('entries', [
+        exerciseEntry({ exerciseId: 'cardio.running', intervals }),
+      ]);
+      fixture.detectChanges();
+      const datums = component.data();
+      expect(datums.length).toBe(250);
+      expect(datums.every((d) => d.percent === 0)).toBe(true);
+      expect(datums.every((d) => component.barWidth(d.count) === 100)).toBe(
+        true
+      );
     });
   });
 
