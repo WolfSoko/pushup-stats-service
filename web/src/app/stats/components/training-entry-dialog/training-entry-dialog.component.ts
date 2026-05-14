@@ -211,7 +211,8 @@ interface PushupTypeOption {
         gap: 8px;
       }
       .duration-row mat-form-field {
-        flex: 1;
+        flex: 1 1 0;
+        min-width: 0;
       }
       @keyframes clone-set {
         from {
@@ -384,14 +385,12 @@ interface PushupTypeOption {
           <mat-label i18n="@@entryDialog.distance">Distanz (km)</mat-label>
           <input
             matInput
-            type="number"
+            type="text"
             inputmode="decimal"
-            placeholder="5.00"
-            [min]="minKm()"
-            [max]="maxKm()"
-            step="0.01"
+            [placeholder]="distancePlaceholder"
             [value]="distanceInput()"
             (input)="distanceInput.set(asValue($event))"
+            data-testid="training-entry-distance"
             required
           />
         </mat-form-field>
@@ -691,14 +690,19 @@ export class TrainingEntryDialogComponent {
 
   readonly distanceInput = signal(
     this.data?.kind === 'exercise' && this.data.distanceM !== undefined
-      ? formatKmInput(this.data.distanceM)
+      ? formatKmInput(this.data.distanceM, this.locale)
       : ''
   );
 
   readonly distanceM = computed(() => parseKmToMeters(this.distanceInput()));
 
-  readonly minKm = computed(() => (this.currentDefinition()?.min ?? 0) / 1000);
-  readonly maxKm = computed(() => (this.currentDefinition()?.max ?? 0) / 1000);
+  /**
+   * Locale-aware placeholder for the km input. The input is `type="text"` +
+   * `inputmode="decimal"` (not `type="number"`) so users can type either the
+   * dot- or comma-separated form their locale uses — `<input type="number">`
+   * silently rejects "," in most browsers regardless of `LOCALE_ID`.
+   */
+  readonly distancePlaceholder = formatKm(5, this.locale);
 
   readonly isTimeMeasurement = computed(
     () => this.currentDefinition()?.measurement === 'time'
@@ -1174,9 +1178,23 @@ function parseKmToMeters(input: string): number | null {
   return Math.round(km * 1000);
 }
 
-function formatKmInput(distanceM: number): string {
+/**
+ * `useGrouping: false` keeps the formatted km value separator-free
+ * (e.g. de-DE `12345` km → `12345,00`, not `12.345,00`). The thousand
+ * separator would otherwise clash with the decimal comma and break the
+ * dot/comma swap in {@link parseKmToMeters}.
+ */
+function formatKm(km: number, locale: string): string {
+  return new Intl.NumberFormat(locale, {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+    useGrouping: false,
+  }).format(km);
+}
+
+function formatKmInput(distanceM: number, locale: string): string {
   if (!Number.isFinite(distanceM) || distanceM <= 0) return '';
-  return (distanceM / 1000).toFixed(2);
+  return formatKm(distanceM / 1000, locale);
 }
 
 /**

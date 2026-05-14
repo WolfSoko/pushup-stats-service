@@ -1,4 +1,5 @@
-import { TestBed } from '@angular/core/testing';
+import { LOCALE_ID, Provider } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { provideRouter } from '@angular/router';
 import {
@@ -9,8 +10,12 @@ import {
 } from './training-entry-dialog.component';
 
 describe('TrainingEntryDialogComponent', () => {
-  function createDialog(data: TrainingEntryDialogData | null): {
+  function createDialog(
+    data: TrainingEntryDialogData | null,
+    extraProviders: Provider[] = []
+  ): {
     component: TrainingEntryDialogComponent;
+    fixture: ComponentFixture<TrainingEntryDialogComponent>;
     closeSpy: ReturnType<typeof vitest.fn>;
   } {
     TestBed.resetTestingModule();
@@ -21,10 +26,11 @@ describe('TrainingEntryDialogComponent', () => {
         provideRouter([]),
         { provide: MAT_DIALOG_DATA, useValue: data },
         { provide: MatDialogRef, useValue: { close: closeSpy } },
+        ...extraProviders,
       ],
     });
     const fixture = TestBed.createComponent(TrainingEntryDialogComponent);
-    return { component: fixture.componentInstance, closeSpy };
+    return { component: fixture.componentInstance, fixture, closeSpy };
   }
 
   describe('create mode (no edit data)', () => {
@@ -126,6 +132,66 @@ describe('TrainingEntryDialogComponent', () => {
       });
     });
 
+    it('accepts a German decimal comma in the km input (5,25 → 5250 m)', () => {
+      const { component, fixture, closeSpy } = createDialog(null, [
+        { provide: LOCALE_ID, useValue: 'de-DE' },
+      ]);
+
+      component.onCategoryChange('cardio');
+      fixture.detectChanges();
+
+      // The km input must use type="text" + inputmode="decimal" — a
+      // native type="number" input rejects "," in most browsers
+      // regardless of locale, so a German user who types the local
+      // decimal separator would see their input silently dropped.
+      const distanceEl: HTMLInputElement = fixture.nativeElement.querySelector(
+        'input[data-testid="training-entry-distance"]'
+      );
+      expect(distanceEl).toBeTruthy();
+      expect(distanceEl.type).toBe('text');
+      expect(distanceEl.inputMode).toBe('decimal');
+
+      distanceEl.value = '5,25';
+      distanceEl.dispatchEvent(new Event('input'));
+      fixture.detectChanges();
+
+      component.timestamp.set('2026-02-10T13:45');
+      component.durationMinutesInput.set('25');
+      component.durationSecondsInput.set('0');
+
+      expect(component.distanceM()).toBe(5250);
+      expect(component.canSubmit()).toBe(true);
+      component.submit();
+
+      const result = closeSpy.mock.calls[0][0] as TrainingEntryDialogResult;
+      expect(result).toMatchObject({
+        distanceM: 5250,
+        durationSec: 1500,
+      });
+    });
+
+    it('renders a locale-aware placeholder for the km input', () => {
+      const { fixture: deFixture } = createDialog(null, [
+        { provide: LOCALE_ID, useValue: 'de-DE' },
+      ]);
+      deFixture.componentInstance.onCategoryChange('cardio');
+      deFixture.detectChanges();
+      const deInput: HTMLInputElement = deFixture.nativeElement.querySelector(
+        'input[data-testid="training-entry-distance"]'
+      );
+      expect(deInput.placeholder).toBe('5,00');
+
+      const { fixture: enFixture } = createDialog(null, [
+        { provide: LOCALE_ID, useValue: 'en-US' },
+      ]);
+      enFixture.componentInstance.onCategoryChange('cardio');
+      enFixture.detectChanges();
+      const enInput: HTMLInputElement = enFixture.nativeElement.querySelector(
+        'input[data-testid="training-entry-distance"]'
+      );
+      expect(enInput.placeholder).toBe('5.00');
+    });
+
     it('clears the variant control and value fields when the exercise picker changes', () => {
       const { component } = createDialog(null);
 
@@ -210,6 +276,35 @@ describe('TrainingEntryDialogComponent', () => {
       expect(component.durationMinutesInput()).toBe('1');
       expect(component.durationSecondsInput()).toBe('30');
     });
+
+    it.each([
+      // Edit-mode km initial value must match the active locale so the
+      // create + edit paths show the same separator. Without this, a
+      // de-DE user opening an existing run would see a dot-formatted
+      // value while typing fresh entries gets a comma placeholder.
+      ['de-DE', '5,25'],
+      ['en-US', '5.25'],
+    ])(
+      'formats the edit-mode km initial value with the active locale (%s)',
+      (locale, expected) => {
+        const { component } = createDialog(
+          {
+            kind: 'exercise',
+            exerciseId: 'cardio.running',
+            timestamp: '2026-02-10T13:45:00+01:00',
+            distanceM: 5250,
+            durationSec: 1500,
+          },
+          [{ provide: LOCALE_ID, useValue: locale }]
+        );
+
+        expect(component.distanceInput()).toBe(expected);
+        // Round-trip: the locale-formatted string must still parse back
+        // to the original metres so the edit dialog opens at green.
+        expect(component.distanceM()).toBe(5250);
+        expect(component.canSubmit()).toBe(true);
+      }
+    );
 
     it('emits a null variantId when the user clears a previously-set variant', () => {
       const { component, closeSpy } = createDialog({
