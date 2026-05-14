@@ -26,6 +26,7 @@ import { RouterLink } from '@angular/router';
 import {
   appendLocalOffset,
   COMPANION_BOUNDS,
+  entryBreakdownField,
   EXERCISE_CATEGORIES,
   exercisesByCategory,
   ExerciseCategoryId,
@@ -84,7 +85,16 @@ export interface ExerciseEntryDialogData {
   exerciseId: string;
   /** For reps-measurement exercises: total reps. */
   reps?: number;
+  /** Per-set breakdown — only meaningful for `reps` / `weight`
+   *  exercises. Mutually exclusive with {@link intervals}; pick the
+   *  field that matches the measurement type via
+   *  {@link entryBreakdownField}. */
   sets?: number[];
+  /** Per-interval breakdown — only meaningful for endurance
+   *  measurements (`time` / `distance` / `distance-time`). Each
+   *  entry is one repetition of the primary measurement value
+   *  (seconds / meters). */
+  intervals?: number[];
   /** For `'time'` and `'distance-time'` measurements. */
   durationSec?: number;
   /** For `'distance-time'` measurement (meters). */
@@ -119,8 +129,21 @@ export interface ExerciseEntryDialogResult {
   measurement: MeasurementType;
   /** Total reps for reps-measurements; `0` otherwise. */
   reps: number;
-  /** Per-set breakdown for reps-measurements; `[]` otherwise. */
+  /**
+   * Per-set breakdown for strength entries (`reps` / `weight`);
+   * `[]` otherwise. Mutually exclusive with {@link intervals}: at
+   * most one of the two is non-empty at a time; the other is `[]`
+   * so the consumer can use it as a Firestore clear sentinel
+   * (maps to `deleteField()`) to wipe a stale breakdown on edit.
+   */
   sets: number[];
+  /**
+   * Per-interval breakdown for endurance entries (`time`,
+   * `distance`, `distance-time`); `[]` otherwise. Each entry is
+   * one repetition of the primary measurement (seconds for
+   * `time`, meters for `distance` / `distance-time`).
+   */
+  intervals: number[];
   /** Set for `'time'` and `'distance-time'`. */
   durationSec?: number;
   /** Set for `'distance-time'`. */
@@ -506,6 +529,55 @@ interface PushupTypeOption {
         }
       }
 
+      @if (breakdownField() === 'intervals') {
+        @for (interval of intervals(); track $index) {
+          <div class="set-row">
+            <mat-form-field appearance="outline">
+              @if (hasMultipleIntervals()) {
+                <mat-label i18n="@@entry.interval.label"
+                  >Intervall {{ $index + 1 }}</mat-label
+                >
+              } @else {
+                <mat-label i18n="@@entry.intervals.label">Intervalle</mat-label>
+              }
+              <input
+                matInput
+                type="number"
+                inputmode="numeric"
+                min="0"
+                step="1"
+                [value]="interval"
+                (input)="updateInterval($index, asValue($event))"
+              />
+            </mat-form-field>
+            @if (hasMultipleIntervals()) {
+              <button
+                type="button"
+                mat-icon-button
+                (click)="removeInterval($index)"
+                i18n-aria-label="@@entry.intervals.remove"
+                aria-label="Intervall entfernen"
+              >
+                <mat-icon>remove_circle_outline</mat-icon>
+              </button>
+            }
+            @if ($last) {
+              <button
+                type="button"
+                mat-icon-button
+                (click)="addInterval()"
+                i18n-aria-label="@@entry.intervals.add"
+                aria-label="Intervall hinzufügen"
+                i18n-matTooltip="@@entry.intervals.addTooltip"
+                matTooltip="Weiteres Intervall hinzufügen"
+              >
+                <mat-icon>add_circle_outline</mat-icon>
+              </button>
+            }
+          </div>
+        }
+      }
+
       @if (overCap()) {
         <div class="total-reps">
           @if (overCapKind() === 'duration') {
@@ -657,6 +729,24 @@ export class TrainingEntryDialogComponent {
   readonly totalReps = computed(() =>
     this.sets().reduce((sum, s) => sum + (s > 0 ? s : 0), 0)
   );
+
+  /**
+   * Per-interval primary value for endurance exercises (seconds for
+   * `time`, meters for `distance` / `distance-time`). Only rendered
+   * when the current measurement maps to `'intervals'` via
+   * {@link entryBreakdownField}. Strength exercises keep this at the
+   * initial `[0]` so a stale value can't leak through a measurement
+   * switch — the submit path always picks `sets` vs `intervals` based
+   * on the active measurement, never both.
+   */
+  readonly intervals = signal<number[]>(this.initialIntervals());
+
+  readonly hasMultipleIntervals = computed(() => this.intervals().length > 1);
+
+  readonly breakdownField = computed<'sets' | 'intervals'>(() => {
+    const def = this.currentDefinition();
+    return def ? entryBreakdownField(def.measurement) : 'sets';
+  });
 
   /** Active reps cap — catalog `def.max` for exercise mode, fixed for pushup. */
   readonly repsMax = computed(() => {
@@ -861,6 +951,7 @@ export class TrainingEntryDialogComponent {
       this.exerciseId.set(defs[0]?.id ?? '');
     }
     this.sets.set([0]);
+    this.intervals.set([0]);
     this.durationMinutesInput.set('');
     this.durationSecondsInput.set('');
     this.distanceInput.set('');
@@ -878,6 +969,7 @@ export class TrainingEntryDialogComponent {
     this.exerciseId.set(next);
     this.variantControl.setValue('');
     this.sets.set([0]);
+    this.intervals.set([0]);
     this.durationMinutesInput.set('');
     this.durationSecondsInput.set('');
     this.distanceInput.set('');
@@ -910,6 +1002,26 @@ export class TrainingEntryDialogComponent {
       : 0;
     const clamped = Math.min(finite, this.repsMax());
     this.sets.update((s) => s.map((v, i) => (i === index ? clamped : v)));
+  }
+
+  addInterval(): void {
+    const last = this.intervals()[this.intervals().length - 1] ?? 0;
+    this.intervals.update((s) => [...s, last > 0 ? last : 0]);
+  }
+
+  removeInterval(index: number): void {
+    this.intervals.update((s) => {
+      const next = s.filter((_, i) => i !== index);
+      return next.length === 0 ? [0] : next;
+    });
+  }
+
+  updateInterval(index: number, value: string): void {
+    const parsed = Number(value);
+    const finite = Number.isFinite(parsed)
+      ? Math.max(0, Math.floor(parsed))
+      : 0;
+    this.intervals.update((s) => s.map((v, i) => (i === index ? finite : v)));
   }
 
   asValue(event: Event): string {
@@ -967,6 +1079,7 @@ export class TrainingEntryDialogComponent {
             : {};
 
     const measurement = def.measurement;
+    const validIntervals = this.intervals().filter((s) => s > 0);
 
     if (measurement === 'time') {
       const sec = this.durationSec();
@@ -979,6 +1092,7 @@ export class TrainingEntryDialogComponent {
         timestamp,
         reps: 0,
         sets: [],
+        intervals: validIntervals,
         durationSec: sec,
       };
       this.dialogRef.close(result);
@@ -997,6 +1111,7 @@ export class TrainingEntryDialogComponent {
         timestamp,
         reps: 0,
         sets: [],
+        intervals: validIntervals,
         distanceM: m,
         durationSec: sec,
       };
@@ -1016,6 +1131,7 @@ export class TrainingEntryDialogComponent {
       timestamp,
       reps,
       sets: validSets,
+      intervals: [],
     };
     this.dialogRef.close(result);
   }
@@ -1047,6 +1163,12 @@ export class TrainingEntryDialogComponent {
     if (this.data.sets?.length) return [...this.data.sets];
     if (this.data.reps !== undefined && this.data.reps > 0)
       return [this.data.reps];
+    return [0];
+  }
+
+  private initialIntervals(): number[] {
+    if (this.data?.kind !== 'exercise') return [0];
+    if (this.data.intervals?.length) return [...this.data.intervals];
     return [0];
   }
 

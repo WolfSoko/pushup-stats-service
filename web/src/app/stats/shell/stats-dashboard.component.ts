@@ -299,11 +299,19 @@ export class StatsDashboardComponent {
           exerciseId: result.exerciseId,
           timestamp: result.timestamp,
           ...(result.measurement === 'time'
-            ? { durationSec: result.durationSec ?? 0 }
+            ? {
+                durationSec: result.durationSec ?? 0,
+                ...(result.intervals.length > 0
+                  ? { intervals: result.intervals }
+                  : {}),
+              }
             : result.measurement === 'distance-time'
               ? {
                   distanceM: result.distanceM ?? 0,
                   durationSec: result.durationSec ?? 0,
+                  ...(result.intervals.length > 0
+                    ? { intervals: result.intervals }
+                    : {}),
                 }
               : {
                   reps: result.reps,

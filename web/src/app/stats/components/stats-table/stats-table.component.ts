@@ -59,6 +59,13 @@ export interface StatsTableUpdate {
   timestamp: string;
   reps?: number;
   sets?: number[];
+  /**
+   * Per-interval breakdown for endurance exercises (`time` /
+   * `distance` / `distance-time`). Like `sets`, an empty array is
+   * the explicit clear sentinel; the data-access layer maps it to a
+   * Firestore `deleteField()` so a stale breakdown can be wiped.
+   */
+  intervals?: number[];
   durationSec?: number;
   distanceM?: number;
   source: string;
@@ -90,6 +97,9 @@ export interface StatsTableCreate {
   timestamp: string;
   reps?: number;
   sets?: number[];
+  /** Per-interval breakdown for endurance exercises. Mutually
+   *  exclusive with `sets` in practice. */
+  intervals?: number[];
   durationSec?: number;
   distanceM?: number;
   source?: string;
@@ -324,11 +334,19 @@ export class StatsTableComponent {
       exerciseId: result.exerciseId,
       timestamp: result.timestamp,
       ...(result.measurement === 'time'
-        ? { durationSec: result.durationSec ?? 0 }
+        ? {
+            durationSec: result.durationSec ?? 0,
+            ...(result.intervals.length > 0
+              ? { intervals: result.intervals }
+              : {}),
+          }
         : result.measurement === 'distance-time'
           ? {
               distanceM: result.distanceM ?? 0,
               durationSec: result.durationSec ?? 0,
+              ...(result.intervals.length > 0
+                ? { intervals: result.intervals }
+                : {}),
             }
           : {
               reps: result.reps,
@@ -384,6 +402,12 @@ export class StatsTableComponent {
     entry: Extract<UnifiedEntry, { kind: 'exercise' }>,
     result: ExerciseEntryDialogResult
   ): StatsTableUpdate {
+    const intervalsPatch =
+      result.intervals.length > 0
+        ? { intervals: result.intervals }
+        : entry.intervals !== undefined
+          ? { intervals: [] }
+          : {};
     return {
       kind: 'exercise',
       id: entry._id,
@@ -391,11 +415,15 @@ export class StatsTableComponent {
       timestamp: result.timestamp,
       source: entry.source,
       ...(result.measurement === 'time'
-        ? { durationSec: result.durationSec ?? 0 }
+        ? {
+            durationSec: result.durationSec ?? 0,
+            ...intervalsPatch,
+          }
         : result.measurement === 'distance-time'
           ? {
               distanceM: result.distanceM ?? 0,
               durationSec: result.durationSec ?? 0,
+              ...intervalsPatch,
             }
           : {
               reps: result.reps,

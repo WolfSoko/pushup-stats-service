@@ -358,4 +358,142 @@ describe('TrainingEntryDialogComponent', () => {
       }
     );
   });
+
+  describe('intervals (endurance breakdown)', () => {
+    function breakdownLabels(
+      fixture: ComponentFixture<TrainingEntryDialogComponent>
+    ): string[] {
+      const root: HTMLElement = fixture.nativeElement;
+      return Array.from(root.querySelectorAll('mat-label')).map((el) =>
+        (el.textContent ?? '').trim()
+      );
+    }
+
+    it('labels the breakdown row as "Reps" for a single-set strength exercise (sit-ups)', () => {
+      const { fixture } = createDialog(null);
+      fixture.componentInstance.onCategoryChange('core');
+      fixture.componentInstance.onExerciseChange('abs.situps');
+      fixture.detectChanges();
+
+      const labels = breakdownLabels(fixture);
+      // Single-set strength shows the "Reps" headline; the intervals
+      // block must never render for a strength exercise (Firestore
+      // mutex rejects both fields populated at once).
+      expect(labels).toContain('Reps');
+      expect(labels.every((l) => !l.startsWith('Intervall'))).toBe(true);
+    });
+
+    it('labels the per-row breakdown as "Intervall N" for an endurance exercise (plank)', () => {
+      const { fixture, component } = createDialog(null);
+      component.onCategoryChange('core');
+      component.onExerciseChange('plank.standard');
+      component.addInterval();
+      fixture.detectChanges();
+
+      const labels = breakdownLabels(fixture);
+      // With two intervals the per-row label is "Intervall N" — single
+      // interval collapses to the headline "Intervalle" label, mirroring
+      // how single-set sets-mode collapses to "Reps".
+      expect(labels).toContain('Intervall 1');
+      expect(labels).toContain('Intervall 2');
+      expect(labels.every((l) => !l.startsWith('Set '))).toBe(true);
+    });
+
+    it('submits intervals on the payload for an endurance entry (plank with 30s × 3)', () => {
+      const { component, closeSpy } = createDialog(null);
+
+      component.onCategoryChange('core');
+      component.onExerciseChange('plank.standard');
+      component.timestamp.set('2026-02-10T13:45');
+      component.durationMinutesInput.set('1');
+      component.durationSecondsInput.set('30');
+      component.updateInterval(0, '30');
+      component.addInterval();
+      component.updateInterval(1, '30');
+      component.addInterval();
+      component.updateInterval(2, '30');
+
+      expect(component.canSubmit()).toBe(true);
+      component.submit();
+
+      const result = closeSpy.mock.calls[0][0] as ExerciseEntryDialogResult;
+      expect(result).toMatchObject({
+        kind: 'exercise',
+        exerciseId: 'plank.standard',
+        measurement: 'time',
+        durationSec: 90,
+        intervals: [30, 30, 30],
+        sets: [],
+        reps: 0,
+      });
+    });
+
+    it('omits intervals on the payload when none were entered for an endurance entry', () => {
+      const { component, closeSpy } = createDialog(null);
+
+      component.onCategoryChange('core');
+      component.onExerciseChange('plank.standard');
+      component.timestamp.set('2026-02-10T13:45');
+      component.durationMinutesInput.set('1');
+      component.durationSecondsInput.set('30');
+
+      component.submit();
+      const result = closeSpy.mock.calls[0][0] as ExerciseEntryDialogResult;
+      // No intervals typed → result.intervals is the empty-array clear
+      // sentinel so an existing breakdown can be wiped on edit. Never
+      // both fields populated at once: strength uses sets, endurance
+      // uses intervals.
+      expect(result.intervals).toEqual([]);
+      expect(result.sets).toEqual([]);
+    });
+
+    it('keeps intervals empty on a strength submission and writes sets only', () => {
+      const { component, closeSpy } = createDialog(null);
+
+      component.onCategoryChange('core');
+      component.onExerciseChange('abs.situps');
+      component.timestamp.set('2026-02-10T13:45');
+      component.updateSet(0, '12');
+
+      component.submit();
+      const result = closeSpy.mock.calls[0][0] as ExerciseEntryDialogResult;
+      expect(result).toMatchObject({
+        measurement: 'reps',
+        reps: 12,
+        sets: [12],
+        intervals: [],
+      });
+    });
+
+    it('pre-fills intervals from an existing endurance edit payload', () => {
+      const { component } = createDialog({
+        kind: 'exercise',
+        exerciseId: 'plank.standard',
+        timestamp: '2026-02-10T13:45:00+01:00',
+        durationSec: 90,
+        intervals: [30, 30, 30],
+      });
+
+      expect(component.intervals()).toEqual([30, 30, 30]);
+    });
+
+    it('clears stale intervals state when switching from endurance to a strength exercise', () => {
+      const { component } = createDialog(null);
+
+      component.onCategoryChange('core');
+      component.onExerciseChange('plank.standard');
+      component.updateInterval(0, '45');
+      component.addInterval();
+      component.updateInterval(1, '45');
+
+      component.onExerciseChange('abs.situps');
+
+      // Switching exercises must wipe the previous breakdown so a stale
+      // intervals value can't leak through to the new exercise — the
+      // Firestore rules / validator enforce the mutex, and submitting
+      // `intervals` on a reps exercise would be rejected.
+      expect(component.intervals()).toEqual([0]);
+      expect(component.sets()).toEqual([0]);
+    });
+  });
 });
