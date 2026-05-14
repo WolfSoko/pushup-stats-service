@@ -1,4 +1,4 @@
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, formatNumber } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -1170,26 +1170,33 @@ function splitDurationParts(totalSec: number | undefined): {
   return { minutes: String(m), seconds: String(s) };
 }
 
+/**
+ * Parse a user-typed km value back to integer metres. The dialog accepts
+ * either decimal separator (locale-aware), and tolerates the matching
+ * thousands separator that `formatNumber('1.2-2')` emits for
+ * 1000+ km values — Angular's `DecimalPipe` always groups, and we want
+ * the round-trip to survive that. Strategy: the rightmost `.` or `,` is
+ * the decimal separator, anything to the left of it is integer digits
+ * with stray grouping marks dropped.
+ */
 function parseKmToMeters(input: string): number | null {
-  const trimmed = input.trim().replace(',', '.');
+  const trimmed = input.trim();
   if (!trimmed) return null;
-  const km = Number(trimmed);
+  const decimalAt = Math.max(
+    trimmed.lastIndexOf('.'),
+    trimmed.lastIndexOf(',')
+  );
+  const normalized =
+    decimalAt < 0
+      ? trimmed
+      : `${trimmed.slice(0, decimalAt).replace(/[.,]/g, '')}.${trimmed.slice(decimalAt + 1)}`;
+  const km = Number(normalized);
   if (!Number.isFinite(km) || km <= 0) return null;
   return Math.round(km * 1000);
 }
 
-/**
- * `useGrouping: false` keeps the formatted km value separator-free
- * (e.g. de-DE `12345` km → `12345,00`, not `12.345,00`). The thousand
- * separator would otherwise clash with the decimal comma and break the
- * dot/comma swap in {@link parseKmToMeters}.
- */
 function formatKm(km: number, locale: string): string {
-  return new Intl.NumberFormat(locale, {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-    useGrouping: false,
-  }).format(km);
+  return formatNumber(km, locale, '1.2-2');
 }
 
 function formatKmInput(distanceM: number, locale: string): string {

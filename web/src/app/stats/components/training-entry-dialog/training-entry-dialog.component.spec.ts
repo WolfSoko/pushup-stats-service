@@ -170,6 +170,25 @@ describe('TrainingEntryDialogComponent', () => {
       });
     });
 
+    it.each([
+      // Round-trip safety: the formatter is now Angular's `formatNumber`
+      // (via DecimalPipe-style '1.2-2'), which always groups thousands.
+      // The parser must tolerate the matching grouping separator so a
+      // 1000+ km value formatted by edit mode still parses back cleanly.
+      ['de-DE', '1.234,56', 1234560],
+      ['en-US', '1,234.56', 1234560],
+    ])(
+      'parses km input with thousand separators (%s "%s")',
+      (locale, input, expectedM) => {
+        const { component } = createDialog(null, [
+          { provide: LOCALE_ID, useValue: locale },
+        ]);
+        component.onCategoryChange('cardio');
+        component.distanceInput.set(input);
+        expect(component.distanceM()).toBe(expectedM);
+      }
+    );
+
     it('renders a locale-aware placeholder for the km input', () => {
       const { fixture: deFixture } = createDialog(null, [
         { provide: LOCALE_ID, useValue: 'de-DE' },
