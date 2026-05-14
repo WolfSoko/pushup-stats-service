@@ -76,11 +76,12 @@ describe('LeaderboardPageComponent', () => {
         '[data-testid="leaderboard-link-1"]'
       ) as HTMLAnchorElement | null;
       expect(link).not.toBeNull();
-      expect(link!.tagName).toBe('A');
-      expect(link!.classList.contains('alias-link')).toBe(true);
+      if (!link) return;
+      expect(link.tagName).toBe('A');
+      expect(link.classList.contains('alias-link')).toBe(true);
       // routerLink="['/u', 'abc123']" → href in test = `/u/abc123`.
-      expect(link!.getAttribute('href')).toBe('/u/abc123');
-      expect(link!.textContent?.trim()).toBe('Alice');
+      expect(link.getAttribute('href')).toBe('/u/abc123');
+      expect(link.textContent?.trim()).toBe('Alice');
     });
   });
 
@@ -100,7 +101,8 @@ describe('LeaderboardPageComponent', () => {
       ) as HTMLElement[];
       const aliasSpan = spans.find((s) => s.textContent?.trim() === 'Bob');
       expect(aliasSpan).toBeDefined();
-      expect(aliasSpan!.closest('a')).toBeNull();
+      if (!aliasSpan) return;
+      expect(aliasSpan.closest('a')).toBeNull();
     });
   });
 

@@ -1,7 +1,10 @@
 import {
   Component,
+  computed,
+  inject,
   input,
   linkedSignal,
+  LOCALE_ID,
   OnChanges,
   output,
   signal,
@@ -114,6 +117,16 @@ import {
             <mat-icon>date_range</mat-icon>
           </button>
         </div>
+
+        @if (rangeSummary()) {
+          <span
+            class="range-summary"
+            data-testid="filter-bar-range-summary"
+            aria-live="polite"
+          >
+            {{ rangeSummary() }}
+          </span>
+        }
       </section>
 
       <mat-form-field
@@ -170,6 +183,24 @@ export class FilterBarComponent implements OnChanges {
   readonly range = new FormGroup({
     start: new FormControl<Date | null>(null),
     end: new FormControl<Date | null>(null),
+  });
+
+  private readonly locale = inject(LOCALE_ID);
+
+  /**
+   * Compact "DD.MM.YYYY – DD.MM.YYYY" label for the currently-selected
+   * range. A single-day range collapses to one date; an unbounded
+   * range (either side missing) hides the label entirely so the bar
+   * doesn't display a half-formed string while the parent is still
+   * resolving its initial filter.
+   */
+  readonly rangeSummary = computed<string>(() => {
+    const start = parseIsoDate(this.from());
+    const end = parseIsoDate(this.to());
+    if (!start || !end) return '';
+    const startLabel = this.formatRangeDate(start);
+    if (start.getTime() === end.getTime()) return startLabel;
+    return `${startLabel} – ${this.formatRangeDate(end)}`;
   });
 
   constructor() {
@@ -352,5 +383,18 @@ export class FilterBarComponent implements OnChanges {
   private toIsoDate(value: Date | null): string {
     if (!value) return '';
     return toLocalIsoDate(value);
+  }
+
+  private formatRangeDate(value: Date): string {
+    // `Intl.DateTimeFormat` is locale-aware so the German source format
+    // (DD.MM.YYYY) and the English translation (MM/DD/YYYY) both fall
+    // out of the same call. `numeric` keeps the label compact enough
+    // to fit alongside the Zurück/Heute/Vor buttons without wrapping
+    // on narrow viewports.
+    return new Intl.DateTimeFormat(this.locale, {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+    }).format(value);
   }
 }

@@ -237,7 +237,11 @@ describe('AnalysisTeaserCardComponent', () => {
     it('Then .mini-chart height must use responsive clamp, not a fixed 180px', () => {
       // Regression guard: the old 180px height cut off the chart.
       // We verify the component's compiled styles contain the correct clamp().
-      const cmpDef = (AnalysisTeaserCardComponent as any).ɵcmp;
+      const cmpDef = (
+        AnalysisTeaserCardComponent as unknown as {
+          ɵcmp?: { styles?: string[] };
+        }
+      ).ɵcmp;
       const allStyles: string[] = cmpDef?.styles ?? [];
       const joined = allStyles.join(' ');
 
@@ -254,7 +258,11 @@ describe('AnalysisTeaserCardComponent', () => {
       // with `overflow: hidden` on .mini-chart clipped the legend and the
       // x-axis ticks. Use `min-height` (reserve, allow growth) and do not
       // clip.
-      const cmpDef = (AnalysisTeaserCardComponent as any).ɵcmp;
+      const cmpDef = (
+        AnalysisTeaserCardComponent as unknown as {
+          ɵcmp?: { styles?: string[] };
+        }
+      ).ɵcmp;
       const allStyles: string[] = cmpDef?.styles ?? [];
       const joined = allStyles.join(' ');
 

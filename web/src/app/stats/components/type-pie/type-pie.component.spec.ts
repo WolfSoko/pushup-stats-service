@@ -56,7 +56,8 @@ describe('TypePieComponent', () => {
     const host: HTMLElement = fixture.nativeElement;
     const total = host.querySelector('[data-testid="type-pie-total"]');
     expect(total).toBeTruthy();
-    expect(total!.textContent?.replace(/\s+/g, '')).toContain('310');
+    if (!total) return;
+    expect(total.textContent?.replace(/\s+/g, '')).toContain('310');
   });
 
   it('selected types fill the pie 100% (sum of dash fractions ≈ 100)', () => {
@@ -119,7 +120,8 @@ describe('TypePieComponent', () => {
       '[data-testid="type-pie-slice-Diamond"]'
     ) as SVGElement | null;
     expect(slice).toBeTruthy();
-    slice!.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    if (!slice) return;
+    slice.dispatchEvent(new MouseEvent('click', { bubbles: true }));
     fixture.detectChanges();
 
     expect(component.focusedSegment()?.id).toBe('Diamond');
@@ -131,8 +133,9 @@ describe('TypePieComponent', () => {
       '[data-testid="type-pie-slice-Diamond"]'
     ) as SVGElement | null;
     expect(slice).toBeTruthy();
+    if (!slice) return;
 
-    slice!.dispatchEvent(
+    slice.dispatchEvent(
       new KeyboardEvent('keydown', { key: 'Enter', bubbles: true })
     );
     fixture.detectChanges();
@@ -146,8 +149,9 @@ describe('TypePieComponent', () => {
       '[data-testid="type-pie-slice-Wide"]'
     ) as SVGElement | null;
     expect(slice).toBeTruthy();
+    if (!slice) return;
 
-    slice!.dispatchEvent(
+    slice.dispatchEvent(
       new KeyboardEvent('keydown', { key: ' ', bubbles: true })
     );
     fixture.detectChanges();
@@ -297,7 +301,8 @@ describe('TypePieComponent', () => {
 
     // Then: it has a bounded height with vertical overflow auto so users can scroll
     expect(legend).toBeTruthy();
-    const styles = getComputedStyle(legend!);
+    if (!legend) return;
+    const styles = getComputedStyle(legend);
     expect(styles.overflowY).toBe('auto');
     expect(styles.maxHeight).not.toBe('none');
   });

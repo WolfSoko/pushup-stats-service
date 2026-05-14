@@ -1,6 +1,23 @@
 :host {
-  display: block;
-  min-width: min(90vw, 360px);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.exercise-picker {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+
+  mat-button-toggle {
+    flex: 1 1 auto;
+    min-width: 76px;
+  }
+
+  mat-icon {
+    margin-right: 4px;
+    vertical-align: middle;
+  }
 }
 
 .hint {
@@ -9,10 +26,14 @@
   opacity: 0.8;
 }
 
+// Camera stage fills whatever vertical space the dialog leaves after
+// the picker, hint, and action buttons — gives the user a near-full-
+// screen preview on phones and a large preview on desktop.
 .video-stage {
   position: relative;
   width: 100%;
-  aspect-ratio: 4 / 3;
+  flex: 1;
+  min-height: 0;
   background: #000;
   border-radius: 8px;
   overflow: hidden;
@@ -81,6 +102,48 @@
     small {
       opacity: 0.7;
       max-width: 280px;
+    }
+  }
+
+  .form-check-toggle {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(4px);
+  }
+
+  .form-check-panel {
+    position: absolute;
+    top: 8px;
+    right: 56px;
+    display: flex;
+    gap: 16px;
+    padding: 8px 14px;
+    background: rgba(0, 0, 0, 0.55);
+    color: #fff;
+    border-radius: 10px;
+    font-variant-numeric: tabular-nums;
+    backdrop-filter: blur(4px);
+
+    .form-check-cell {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      line-height: 1.1;
+    }
+
+    span {
+      font-size: 10px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      opacity: 0.72;
+    }
+
+    strong {
+      font-size: 17px;
+      font-weight: 600;
     }
   }
 }

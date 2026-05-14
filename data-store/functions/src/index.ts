@@ -1480,9 +1480,9 @@ export const updateUserStatsOnPushupWrite = onDocumentWritten(
         shouldRebuild = true;
       }
 
-      if (shouldRebuild) {
+      if (shouldRebuild && firstEntryAllEntries) {
         // Full rebuild: ensures atomicity and prevents double-counting from concurrent triggers
-        current = rebuildFromEntries(userId, firstEntryAllEntries!, nowIso);
+        current = rebuildFromEntries(userId, firstEntryAllEntries, nowIso);
         const reason =
           isCreate && !statsSnap.exists ? 'first entry' : 'version upgrade';
         logger.info(
@@ -1490,7 +1490,7 @@ export const updateUserStatsOnPushupWrite = onDocumentWritten(
           {
             userId,
             reason,
-            entries: firstEntryAllEntries!.length,
+            entries: firstEntryAllEntries.length,
             newVersion: USERSTATS_VERSION,
           }
         );
@@ -1521,20 +1521,22 @@ export const updateUserStatsOnPushupWrite = onDocumentWritten(
         } else {
           const repsDelta = newReps - oldReps;
           const entriesDelta = isCreate ? 1 : isDelete ? -1 : 0;
-          const timestamp = (newTimestamp ?? oldTimestamp)!;
+          const timestamp = newTimestamp ?? oldTimestamp;
           const setsDelta = (newSets.length || 0) - (oldSets.length || 0);
 
-          current = applyDelta(current, {
-            userId,
-            repsDelta,
-            entriesDelta,
-            timestamp,
-            newReps,
-            nowIso,
-            setsDelta,
-            newSets: newSets.length ? newSets : undefined,
-            oldSets: oldSets.length ? oldSets : undefined,
-          });
+          if (timestamp) {
+            current = applyDelta(current, {
+              userId,
+              repsDelta,
+              entriesDelta,
+              timestamp,
+              newReps,
+              nowIso,
+              setsDelta,
+              newSets: newSets.length ? newSets : undefined,
+              oldSets: oldSets.length ? oldSets : undefined,
+            });
+          }
         }
       } else {
         // Missing userStats on a non-first-create write: rebuild from source of truth
@@ -1665,9 +1667,7 @@ export const updateExerciseStatsOnEntryWrite = onDocumentWritten(
       | string
       | undefined;
     if (!userId) {
-      logger.warn(
-        'updateExerciseStatsOnEntryWrite: no userId found, skipping'
-      );
+      logger.warn('updateExerciseStatsOnEntryWrite: no userId found, skipping');
       return;
     }
 
@@ -1745,9 +1745,11 @@ export const updateExerciseStatsOnEntryWrite = onDocumentWritten(
       ? (statsSnap.data() as UserStats)
       : null;
 
-    let firstEntryAllEntries:
-      | Array<{ timestamp: string; reps: number; sets?: number[] }>
-      | null = null;
+    let firstEntryAllEntries: Array<{
+      timestamp: string;
+      reps: number;
+      sets?: number[];
+    }> | null = null;
     let versionOutdated = false;
 
     if (
@@ -1795,17 +1797,17 @@ export const updateExerciseStatsOnEntryWrite = onDocumentWritten(
         shouldRebuild = true;
       }
 
-      if (shouldRebuild) {
+      if (shouldRebuild && firstEntryAllEntries) {
         // userId is intentionally re-used as the per-exercise stats key —
         // applyDelta/emptyUserStats only treat it as an opaque identifier.
-        current = rebuildFromEntries(userId, firstEntryAllEntries!, nowIso);
+        current = rebuildFromEntries(userId, firstEntryAllEntries, nowIso);
       } else if (current) {
-        if (timestampChanged) {
+        if (timestampChanged && oldTimestamp && newTimestamp) {
           current = applyDelta(current, {
             userId,
             repsDelta: -oldReps,
             entriesDelta: -1,
-            timestamp: oldTimestamp!,
+            timestamp: oldTimestamp,
             newReps: 0,
             nowIso,
             setsDelta: -(oldSets.length || 0),
@@ -1815,7 +1817,7 @@ export const updateExerciseStatsOnEntryWrite = onDocumentWritten(
             userId,
             repsDelta: newReps,
             entriesDelta: 1,
-            timestamp: newTimestamp!,
+            timestamp: newTimestamp,
             newReps,
             nowIso,
             setsDelta: newSets.length || 0,
@@ -1824,8 +1826,9 @@ export const updateExerciseStatsOnEntryWrite = onDocumentWritten(
         } else {
           const repsDelta = newReps - oldReps;
           const entriesDelta = isCreate ? 1 : isDelete ? -1 : 0;
-          const timestamp = (newTimestamp ?? oldTimestamp)!;
+          const timestamp = newTimestamp ?? oldTimestamp;
           const setsDelta = (newSets.length || 0) - (oldSets.length || 0);
+          if (!timestamp) return;
           current = applyDelta(current, {
             userId,
             repsDelta,

@@ -283,8 +283,9 @@ describe('StatsDashboardComponent', () => {
 
         expect(header).toBeTruthy();
         expect(miniBadges).toBeTruthy();
+        if (!header) return;
         // Mini-badges must come right after the hero header, not after today-focus.
-        expect(header!.nextElementSibling).toBe(miniBadges);
+        expect(header.nextElementSibling).toBe(miniBadges);
       });
 
       it('Then the latest entries section navigates to the history page when clicked', async () => {
@@ -294,19 +295,20 @@ describe('StatsDashboardComponent', () => {
         const section = root.querySelector<HTMLElement>('.latest-entries');
 
         expect(section).toBeTruthy();
-        expect(section!.getAttribute('role')).toBe('link');
-        expect(section!.getAttribute('tabindex')).toBe('0');
-        expect(section!.getAttribute('aria-label')).toBe(
+        if (!section) return;
+        expect(section.getAttribute('role')).toBe('link');
+        expect(section.getAttribute('tabindex')).toBe('0');
+        expect(section.getAttribute('aria-label')).toBe(
           'Zur Historie navigieren'
         );
-        expect(section!.querySelector('h2')?.textContent).toContain(
+        expect(section.querySelector('h2')?.textContent).toContain(
           'Letzte Einträge'
         );
-        expect(section!.querySelector('.teaser-cta')?.textContent).toContain(
+        expect(section.querySelector('.teaser-cta')?.textContent).toContain(
           'Zur Historie'
         );
 
-        section!.click();
+        section.click();
         await fixture.whenStable();
 
         expect(navigateSpy).toHaveBeenCalledWith(['/history']);
@@ -442,7 +444,8 @@ describe('StatsDashboardComponent', () => {
           '[data-testid="dashboard-last-entry-exercise"]'
         );
         expect(card).not.toBeNull();
-        const text = card!.textContent ?? '';
+        if (!card) return;
+        const text = card.textContent ?? '';
         expect(text).toContain('Plank');
         expect(text).toContain('1:30');
       });
@@ -953,8 +956,9 @@ describe('StatsDashboardComponent', () => {
       await fixture.whenStable();
       const button = findQuickActionsGoalButton(fixture.nativeElement);
       expect(button).not.toBeNull();
-      expect(button!.disabled).toBe(false);
-      expect(button!.textContent ?? '').toContain('88');
+      if (!button) return;
+      expect(button.disabled).toBe(false);
+      expect(button.textContent ?? '').toContain('88');
     });
 
     it('Given goal reached, Then the button is disabled with erreicht label', async () => {
@@ -968,8 +972,9 @@ describe('StatsDashboardComponent', () => {
 
       const button = findQuickActionsGoalButton(freshFixture.nativeElement);
       expect(button).not.toBeNull();
-      expect(button!.disabled).toBe(true);
-      expect(button!.textContent ?? '').toContain('erreicht');
+      if (!button) return;
+      expect(button.disabled).toBe(true);
+      expect(button.textContent ?? '').toContain('erreicht');
     });
 
     it('Given goal is zero, Then the button is not rendered', async () => {
@@ -988,7 +993,9 @@ describe('StatsDashboardComponent', () => {
       await fixture.whenStable();
       const svc = TestBed.inject(QuickAddOrchestrationService);
       const button = findQuickActionsGoalButton(fixture.nativeElement);
-      button!.click();
+      expect(button).not.toBeNull();
+      if (!button) return;
+      button.click();
       expect(svc.fillToGoal).toHaveBeenCalledTimes(1);
     });
 
@@ -1009,7 +1016,8 @@ describe('StatsDashboardComponent', () => {
 
       let button = findQuickActionsGoalButton(fixture.nativeElement);
       expect(button).not.toBeNull();
-      expect(button!.textContent ?? '').toContain('88');
+      if (!button) return;
+      expect(button.textContent ?? '').toContain('88');
 
       // When Firestore pushes a new 30-rep entry (the SpeedDial path) —
       // simulated by a LiveDataStore.entries update. Crucially we do NOT call
@@ -1031,7 +1039,8 @@ describe('StatsDashboardComponent', () => {
       // Then the label reflects the new total reactively (12 + 30 = 42, gap = 58)
       button = findQuickActionsGoalButton(fixture.nativeElement);
       expect(button).not.toBeNull();
-      expect(button!.textContent ?? '').toContain('58');
+      if (!button) return;
+      expect(button.textContent ?? '').toContain('58');
     });
   });
 
@@ -1237,17 +1246,19 @@ describe('StatsDashboardComponent', () => {
         'dashboard-rest-day-target'
       );
       expect(badge).not.toBeNull();
-      expect(badge!.textContent ?? '').toContain('Ruhetag');
+      if (!badge) return;
+      expect(badge.textContent ?? '').toContain('Ruhetag');
 
       const hint = querySelector(
         freshFixture.nativeElement,
         'dashboard-rest-day-config-hint'
       );
       expect(hint).not.toBeNull();
+      if (!hint) return;
       // Default mock config has dailyGoal: 100 — the configured goal
       // must remain visible (smaller, below) so the user knows what
       // their non-plan baseline is.
-      expect(hint!.textContent ?? '').toContain('100');
+      expect(hint.textContent ?? '').toContain('100');
     });
 
     it('And the configured-goal hint is hidden when the user has no daily goal set', async () => {
@@ -1339,7 +1350,8 @@ describe('StatsDashboardComponent', () => {
           '.plan-banner a[mat-stroked-button]'
         );
       expect(link).not.toBeNull();
-      const href = link!.getAttribute('href') ?? '';
+      if (!link) return;
+      const href = link.getAttribute('href') ?? '';
       expect(href).toContain('/training-plans/recruit-6w');
       expect(href).toContain('day=1');
     });

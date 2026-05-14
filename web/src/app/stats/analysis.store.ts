@@ -972,11 +972,13 @@ export const AnalysisStore = signalStore(
     const setsDistribution = computed<
       Array<{ setCount: number; count: number; percent: number }>
     >(() => {
-      const entriesWithSets = viewFilteredRows().filter((r) => r.sets?.length);
+      const entriesWithSets = viewFilteredRows().filter(
+        (r): r is typeof r & { sets: number[] } => !!r.sets?.length
+      );
       if (!entriesWithSets.length) return [];
       const byCount = new Map<number, number>();
       for (const row of entriesWithSets) {
-        const setCount = row.sets!.length;
+        const setCount = row.sets.length;
         byCount.set(setCount, (byCount.get(setCount) ?? 0) + 1);
       }
       const total = entriesWithSets.length;

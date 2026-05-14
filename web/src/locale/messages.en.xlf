@@ -5342,19 +5342,91 @@ Deine Position: # ·  Reps        </source>
         <target>Close quick-add</target>
       </segment>
     </unit>
-            <unit id="autoCount.title">
+            <unit id="autoCount.formCheck.toggleAria">
       <segment state="translated">
-        <source>Liegestütze automatisch zählen</source>
-        <target>Auto-count push-ups</target>
+        <source>Form-Check anzeigen oder ausblenden</source>
+        <target>Show or hide Form Check</target>
       </segment>
     </unit>
-        <unit id="autoCount.instructions">
+    <unit id="autoCount.formCheck.angle">
       <segment state="translated">
-        <source>Halte das Gerät so, dass deine Schulter, dein Ellbogen und dein Handgelenk im Bild sind. Reps werden bei sauberem Down‑Up gezählt.</source>
-        <target>Hold the device so your shoulder, elbow, and wrist are visible. Reps are counted on a clean down-up motion.</target>
+        <source>Winkel</source>
+        <target>Angle</target>
       </segment>
     </unit>
-        <unit id="autoCount.cameraStarting">
+    <unit id="autoCount.formCheck.confidence">
+      <segment state="translated">
+        <source>Sicherheit</source>
+        <target>Confidence</target>
+      </segment>
+    </unit>
+    <unit id="autoCount.formCheck.phase">
+      <segment state="translated">
+        <source>Phase</source>
+        <target>Phase</target>
+      </segment>
+    </unit>
+    <unit id="autoCount.formCheck.phase.up">
+      <segment state="translated">
+        <source>Oben</source>
+        <target>Up</target>
+      </segment>
+    </unit>
+    <unit id="autoCount.formCheck.phase.down">
+      <segment state="translated">
+        <source>Unten</source>
+        <target>Down</target>
+      </segment>
+    </unit>
+    <unit id="autoCount.formCheck.phase.waiting">
+      <segment state="translated">
+        <source>Bereit</source>
+        <target>Ready</target>
+      </segment>
+    </unit>
+    <unit id="autoCount.title">
+      <segment state="translated">
+        <source>Übungen automatisch zählen</source>
+        <target>Auto-count exercises</target>
+      </segment>
+    </unit>
+    <unit id="autoCount.instructions">
+      <segment state="translated">
+        <source>Halte das Gerät so, dass die relevanten Gelenke (Schulter/Ellbogen/Handgelenk bzw. Hüfte/Knie/Fuß) im Bild sind. Reps werden bei sauberem Down‑Up gezählt.</source>
+        <target>Hold the device so the relevant joints (shoulder/elbow/wrist or hip/knee/foot) are visible. Reps are counted on a clean down-up motion.</target>
+      </segment>
+    </unit>
+    <unit id="autoCount.exercisePickerAria">
+      <segment state="translated">
+        <source>Übung wählen</source>
+        <target>Choose exercise</target>
+      </segment>
+    </unit>
+    <unit id="autoCount.exercise.pushup">
+      <segment state="translated">
+        <source>Liegestütze</source>
+        <target>Push-ups</target>
+      </segment>
+    </unit>
+    <unit id="autoCount.exercise.squat">
+      <segment state="translated">
+        <source>Kniebeugen</source>
+        <target>Squats</target>
+      </segment>
+    </unit>
+    <unit id="autoCount.exercise.pullup">
+      <segment state="translated">
+        <source>Klimmzüge</source>
+        <target>Pull-ups</target>
+      </segment>
+    </unit>
+    <unit id="autoCount.exercise.situp">
+      <segment state="translated">
+        <source>Sit-ups</source>
+        <target>Sit-ups</target>
+      </segment>
+    </unit>
+    <unit id="autoCount.cameraStarting">
       <segment state="translated">
         <source>Kamera startet …</source>
         <target>Camera starting …</target>
@@ -5374,11 +5446,11 @@ Deine Position: # ·  Reps        </source>
     </unit>
         <unit id="autoCount.positionHint">
       <segment state="translated">
-        <source>In Plank‑Position gehen</source>
-        <target>Get into plank position</target>
+        <source>In Startposition gehen</source>
+        <target>Get into starting position</target>
       </segment>
     </unit>
-        <unit id="autoCount.reset">
+    <unit id="autoCount.reset">
       <segment state="translated">
         <source>Zurücksetzen</source>
         <target>Reset</target>

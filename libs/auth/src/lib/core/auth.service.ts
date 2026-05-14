@@ -248,9 +248,9 @@ export class AuthService {
   ): Promise<void> {
     try {
       await Promise.all(
-        this.postAuthHooks
-          .filter((hook) => hook.onGuestMigration)
-          .map((hook) => hook.onGuestMigration!(fromUid, toUid))
+        this.postAuthHooks.flatMap((hook) =>
+          hook.onGuestMigration ? [hook.onGuestMigration(fromUid, toUid)] : []
+        )
       );
     } catch (e) {
       // Migration failure must not block the sign-in itself.

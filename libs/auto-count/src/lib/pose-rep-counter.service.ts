@@ -7,7 +7,7 @@ import {
   POSE_FRAME_SOURCE,
   type PoseFrameSource,
 } from './pose-frame-source.port';
-import { poseToElbowSample } from './pose-to-sample';
+import { poseToAngleSample } from './pose-to-sample';
 import type { RepCounter, RepCounterStartOptions } from './rep-counter.port';
 import { type RepCountSnapshot, RepStateMachine } from './rep-state-machine';
 
@@ -19,6 +19,20 @@ const INITIAL_SNAPSHOT: RepCountSnapshot = {
 
 const snapshotEqual = (a: RepCountSnapshot, b: RepCountSnapshot): boolean =>
   a.count === b.count && a.phase === b.phase && a.lastRepAtMs === b.lastRepAtMs;
+
+/**
+ * Per-frame raw values surfaced for the Form-Check overlay. Updates on
+ * every accepted frame (regardless of state-machine phase change), so
+ * downstream consumers see live angle and confidence ticks at camera
+ * rate. Separate from `snapshot` because `snapshot` uses value-equality
+ * to keep stat displays from re-rendering 60×/s — we explicitly DO
+ * want that high frequency here.
+ */
+export interface FormCheckFrame {
+  readonly angleDeg: number;
+  readonly confidence: number;
+  readonly timestampMs: number;
+}
 
 /**
  * Pose-based rep counter. Browser-only — on the server it stays in
@@ -39,9 +53,16 @@ export class PoseRepCounterService implements RepCounter {
     equal: snapshotEqual,
   });
   private readonly _isActive = signal(false);
+  private readonly _formCheckFrame = signal<FormCheckFrame | null>(null);
 
   readonly snapshot = this._snapshot.asReadonly();
   readonly isActive = this._isActive.asReadonly();
+  /**
+   * Live per-frame angle + confidence + timestamp. Powers the
+   * Form-Check overlay so users can sanity-check that the detector is
+   * tracking the right joint with sufficient confidence.
+   */
+  readonly formCheckFrame = this._formCheckFrame.asReadonly();
 
   private machine: RepStateMachine | null = null;
   private detector: PoseDetector | null = null;
@@ -105,8 +126,19 @@ export class PoseRepCounterService implements RepCounter {
     this.unsubscribeFrames = this.frameSource.subscribe(video, (tick) => {
       if (!this.detector || !this.machine) return;
       const result = this.detector.detectForVideo(video, tick.timestampMs);
-      const sample = poseToElbowSample(result, tick.timestampMs);
-      if (!sample) return;
+      const sample = poseToAngleSample(result, profile, tick.timestampMs);
+      if (!sample) {
+        // Tracking lost (user moved out of frame, landmarks unreadable):
+        // clear the overlay so the user sees an honest "—" instead of
+        // a stale angle/confidence pair frozen from the last good frame.
+        this._formCheckFrame.set(null);
+        return;
+      }
+      this._formCheckFrame.set({
+        angleDeg: sample.angleDeg,
+        confidence: sample.confidence,
+        timestampMs: sample.timestampMs,
+      });
       const out = this.machine.process(sample);
       this._snapshot.set(out.snapshot);
     });
@@ -123,10 +155,12 @@ export class PoseRepCounterService implements RepCounter {
     this.detector?.close();
     this.detector = null;
     this._isActive.set(false);
+    this._formCheckFrame.set(null);
   }
 
   reset(): void {
     this.machine?.reset();
     this._snapshot.set(this.machine?.snapshot() ?? INITIAL_SNAPSHOT);
+    this._formCheckFrame.set(null);
   }
 }

@@ -1,5 +1,11 @@
+import {
+  PULLUP_PROFILE,
+  PUSHUP_PROFILE,
+  SITUP_PROFILE,
+  SQUAT_PROFILE,
+} from './exercise-angle-profile';
 import { POSE_LANDMARK, type PoseLandmark } from './pose-detector.port';
-import { poseToElbowSample } from './pose-to-sample';
+import { poseToAngleSample } from './pose-to-sample';
 
 const makeLandmarks = (
   overrides: Partial<Record<number, PoseLandmark>> = {}
@@ -14,19 +20,62 @@ const makeLandmarks = (
   return arr;
 };
 
-const STRAIGHT_LEFT = makeLandmarks({
+const STRAIGHT_LEFT_ARM = makeLandmarks({
   [POSE_LANDMARK.LEFT_SHOULDER]: { x: 0, y: 0, visibility: 0.9 },
   [POSE_LANDMARK.LEFT_ELBOW]: { x: 1, y: 0, visibility: 0.9 },
   [POSE_LANDMARK.LEFT_WRIST]: { x: 2, y: 0, visibility: 0.9 },
 });
 
-describe('poseToElbowSample', () => {
-  it('given a single fully-extended left arm, when mapped, then angle is 180 and confidence is min visibility', () => {
-    const sample = poseToElbowSample({ landmarks: [STRAIGHT_LEFT] }, 100);
+const STRAIGHT_LEFT_LEG = makeLandmarks({
+  [POSE_LANDMARK.LEFT_HIP]: { x: 0, y: 0, visibility: 0.9 },
+  [POSE_LANDMARK.LEFT_KNEE]: { x: 1, y: 0, visibility: 0.9 },
+  [POSE_LANDMARK.LEFT_ANKLE]: { x: 2, y: 0, visibility: 0.9 },
+});
+
+const STRAIGHT_LEFT_HIP = makeLandmarks({
+  [POSE_LANDMARK.LEFT_SHOULDER]: { x: 0, y: 0, visibility: 0.9 },
+  [POSE_LANDMARK.LEFT_HIP]: { x: 1, y: 0, visibility: 0.9 },
+  [POSE_LANDMARK.LEFT_KNEE]: { x: 2, y: 0, visibility: 0.9 },
+});
+
+describe('poseToAngleSample', () => {
+  it('given a pushup profile and a fully-extended left arm, when mapped, then angle is 180 and confidence is min visibility', () => {
+    const sample = poseToAngleSample(
+      { landmarks: [STRAIGHT_LEFT_ARM] },
+      PUSHUP_PROFILE,
+      100
+    );
     expect(sample).not.toBeNull();
     expect(sample?.angleDeg).toBeCloseTo(180, 5);
     expect(sample?.confidence).toBeCloseTo(0.9, 5);
     expect(sample?.timestampMs).toBe(100);
+  });
+
+  it('given a squat profile and a fully-extended left leg, when mapped, then angle is 180', () => {
+    const sample = poseToAngleSample(
+      { landmarks: [STRAIGHT_LEFT_LEG] },
+      SQUAT_PROFILE,
+      0
+    );
+    expect(sample?.angleDeg).toBeCloseTo(180, 5);
+  });
+
+  it('given a situp profile and an extended hip line, when mapped, then angle is 180', () => {
+    const sample = poseToAngleSample(
+      { landmarks: [STRAIGHT_LEFT_HIP] },
+      SITUP_PROFILE,
+      0
+    );
+    expect(sample?.angleDeg).toBeCloseTo(180, 5);
+  });
+
+  it('given a pullup profile (same triplet as pushup), when mapped against straight arm, then angle is 180', () => {
+    const sample = poseToAngleSample(
+      { landmarks: [STRAIGHT_LEFT_ARM] },
+      PULLUP_PROFILE,
+      0
+    );
+    expect(sample?.angleDeg).toBeCloseTo(180, 5);
   });
 
   it('given both arms detected, when one side is more visible, then that side is selected', () => {
@@ -38,13 +87,17 @@ describe('poseToElbowSample', () => {
       [POSE_LANDMARK.RIGHT_ELBOW]: { x: 1, y: 0, visibility: 0.95 },
       [POSE_LANDMARK.RIGHT_WRIST]: { x: 2, y: 0, visibility: 0.95 },
     });
-    const sample = poseToElbowSample({ landmarks: [landmarks] }, 0);
+    const sample = poseToAngleSample(
+      { landmarks: [landmarks] },
+      PUSHUP_PROFILE,
+      0
+    );
     expect(sample?.angleDeg).toBeCloseTo(180, 5);
     expect(sample?.confidence).toBeCloseTo(0.95, 5);
   });
 
   it('given no poses detected, when mapped, then sample is null', () => {
-    expect(poseToElbowSample({ landmarks: [] }, 0)).toBeNull();
+    expect(poseToAngleSample({ landmarks: [] }, PUSHUP_PROFILE, 0)).toBeNull();
   });
 
   it('given a degenerate triplet (wrist on elbow), when mapped, then sample is null', () => {
@@ -53,7 +106,9 @@ describe('poseToElbowSample', () => {
       [POSE_LANDMARK.LEFT_ELBOW]: { x: 1, y: 0, visibility: 0.9 },
       [POSE_LANDMARK.LEFT_WRIST]: { x: 1, y: 0, visibility: 0.9 },
     });
-    expect(poseToElbowSample({ landmarks: [degenerate] }, 0)).toBeNull();
+    expect(
+      poseToAngleSample({ landmarks: [degenerate] }, PUSHUP_PROFILE, 0)
+    ).toBeNull();
   });
 
   it('given missing visibility on a landmark, when mapped, then confidence is 0', () => {
@@ -62,7 +117,7 @@ describe('poseToElbowSample', () => {
       [POSE_LANDMARK.LEFT_ELBOW]: { x: 1, y: 0, visibility: 0.9 },
       [POSE_LANDMARK.LEFT_WRIST]: { x: 2, y: 0, visibility: 0.9 },
     });
-    const sample = poseToElbowSample({ landmarks: [noVis] }, 0);
+    const sample = poseToAngleSample({ landmarks: [noVis] }, PUSHUP_PROFILE, 0);
     expect(sample?.confidence).toBe(0);
   });
 });

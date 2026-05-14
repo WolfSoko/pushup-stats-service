@@ -250,25 +250,41 @@ export class AnalysisPageComponent {
   } | null;
 
   /**
-   * Categories that have at least one entry in the active date range.
-   * Mirrors `categorySummaries` because both consume the same per-range
-   * roll-up, so a card in the overview always matches a tab here.
+   * Categories with entries in the active range, plus the active view's
+   * category when the user is parked on it — keeping the selected tab
+   * pinned across forward/back filter shifts even if the new range is
+   * empty for that category. The tab body falls back to the
+   * "Keine Einträge im gewählten Zeitraum" notice in that case.
    */
-  readonly visibleTabs = computed<VisibleTab[]>(() =>
-    this.store.categorySummaries().map((s) => ({
+  readonly visibleTabs = computed<VisibleTab[]>(() => {
+    const summaries = this.store.categorySummaries();
+    const tabs: VisibleTab[] = summaries.map((s) => ({
       id: s.categoryId,
       label: categoryDisplayName(s.categoryId),
       icon: s.icon,
-    }))
-  );
+    }));
+    const view = this.store.activeView();
+    if (view !== 'overview' && !tabs.some((t) => t.id === view)) {
+      const meta = EXERCISE_CATEGORIES.find((c) => c.id === view);
+      if (meta) {
+        tabs.push({
+          id: meta.id,
+          label: categoryDisplayName(meta.id),
+          icon: meta.icon,
+        });
+        const orderOf = (id: ExerciseCategoryId): number =>
+          EXERCISE_CATEGORIES.find((c) => c.id === id)?.order ?? 0;
+        tabs.sort((a, b) => orderOf(a.id) - orderOf(b.id));
+      }
+    }
+    return tabs;
+  });
 
   /**
    * Overview is index 0; category tabs follow in `visibleTabs` order.
-   * When the active view points at a category that isn't visible (e.g.
-   * the user narrowed the range past its last entry, or arrived via a
-   * stale deep link), we surface the Overview tab rather than leave the
-   * group falsely selected — the category will reappear once the range
-   * widens again, which also brings its data back.
+   * The active view is always present in `visibleTabs` (as long as it
+   * refers to a valid category), so the only way to land on Overview is
+   * for the user to pick it explicitly.
    */
   readonly selectedTabIndex = computed<number>(() => {
     const view = this.store.activeView();

@@ -397,7 +397,8 @@ describe('TrainingPlanDetailComponent', () => {
       const root = fixture.nativeElement as HTMLElement;
       const day12 = root.querySelector('#day-12') as HTMLElement | null;
       expect(day12).not.toBeNull();
-      expect(day12!.classList.contains('day-row')).toBe(true);
+      if (!day12) return;
+      expect(day12.classList.contains('day-row')).toBe(true);
       expect(scrollIntoView).toHaveBeenCalled();
       const wasCalledOnDay12 = scrollIntoView.mock.contexts.some(
         (ctx) => ctx === day12

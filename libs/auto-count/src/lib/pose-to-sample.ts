@@ -1,9 +1,9 @@
-import { angleAtElbowDeg } from './elbow-angle';
-import {
-  POSE_LANDMARK,
-  type PoseDetectionResult,
-  type PoseLandmark,
-} from './pose-detector.port';
+import { angleAtJointDeg } from './joint-angle';
+import type {
+  ExerciseAngleProfile,
+  JointTriplet,
+} from './exercise-angle-profile';
+import type { PoseDetectionResult, PoseLandmark } from './pose-detector.port';
 import type { PoseSample } from './pose-sample';
 
 interface SideSample {
@@ -11,56 +11,45 @@ interface SideSample {
   readonly confidence: number;
 }
 
-const sideSample = (
+const tripletSample = (
   landmarks: ReadonlyArray<PoseLandmark>,
-  shoulderIdx: number,
-  elbowIdx: number,
-  wristIdx: number
+  [proximalIdx, jointIdx, distalIdx]: JointTriplet
 ): SideSample | null => {
-  const shoulder = landmarks[shoulderIdx];
-  const elbow = landmarks[elbowIdx];
-  const wrist = landmarks[wristIdx];
-  if (!shoulder || !elbow || !wrist) return null;
+  const proximal = landmarks[proximalIdx];
+  const joint = landmarks[jointIdx];
+  const distal = landmarks[distalIdx];
+  if (!proximal || !joint || !distal) return null;
 
-  const angleDeg = angleAtElbowDeg(shoulder, elbow, wrist);
+  const angleDeg = angleAtJointDeg(proximal, joint, distal);
   if (Number.isNaN(angleDeg)) return null;
 
   const confidence = Math.min(
-    shoulder.visibility ?? 0,
-    elbow.visibility ?? 0,
-    wrist.visibility ?? 0
+    proximal.visibility ?? 0,
+    joint.visibility ?? 0,
+    distal.visibility ?? 0
   );
   return { angleDeg, confidence };
 };
 
 /**
  * Reduce a pose-detection frame to a `PoseSample` for the rep state
- * machine. Picks the body side (left or right arm) with the higher
- * triplet visibility — a side-profile pushup typically has one arm
- * occluded, and averaging the two would poison the angle.
+ * machine. Picks the body side (per the active profile's triplets)
+ * with the higher triplet visibility — a side-profile pose typically
+ * has one limb occluded, and averaging the two would poison the angle.
  *
- * Returns null when no pose was detected or both arms are unreadable;
+ * Returns null when no pose was detected or both sides are unreadable;
  * the caller then skips that frame entirely.
  */
-export function poseToElbowSample(
+export function poseToAngleSample(
   result: PoseDetectionResult,
+  profile: ExerciseAngleProfile,
   timestampMs: number
 ): PoseSample | null {
   const landmarks = result.landmarks[0];
   if (!landmarks) return null;
 
-  const left = sideSample(
-    landmarks,
-    POSE_LANDMARK.LEFT_SHOULDER,
-    POSE_LANDMARK.LEFT_ELBOW,
-    POSE_LANDMARK.LEFT_WRIST
-  );
-  const right = sideSample(
-    landmarks,
-    POSE_LANDMARK.RIGHT_SHOULDER,
-    POSE_LANDMARK.RIGHT_ELBOW,
-    POSE_LANDMARK.RIGHT_WRIST
-  );
+  const left = tripletSample(landmarks, profile.tripletLeft);
+  const right = tripletSample(landmarks, profile.tripletRight);
 
   const best =
     left && right
