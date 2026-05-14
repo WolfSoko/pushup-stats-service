@@ -708,6 +708,18 @@
         <target>Inserisci il tuo valore</target>
       </segment>
     </unit>
+        <unit id="quickAdd.fab.autoCountAria">
+      <segment state="translated">
+        <source>Liegestütze automatisch zählen</source>
+        <target>Conta automaticamente le flessioni</target>
+      </segment>
+    </unit>
+    <unit id="quickAdd.fab.autoCount">
+      <segment state="translated">
+        <source>Auto‑Zählen</source>
+        <target>Conteggio auto</target>
+      </segment>
+    </unit>
     <unit id="quickAdd.fab.customValue">
       <notes>
         <note category="location">libs/quick-add/src/lib/quick-add-fab.component.html:27,29</note>

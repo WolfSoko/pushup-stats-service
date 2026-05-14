@@ -35,7 +35,7 @@ import { SwUpdate } from '@angular/service-worker';
 import { AuthService, AuthStore, UserMenuComponent } from '@pu-auth/auth';
 import { filter, interval } from 'rxjs';
 import { SeoService } from './core/seo.service';
-import { UserContextService } from '@pu-auth/auth';
+import { FeatureFlagsService, UserContextService } from '@pu-auth/auth';
 import {
   PushSubscriptionService,
   PushSwRegistrationService,
@@ -132,7 +132,11 @@ export class App {
   private readonly router = inject(Router);
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly user = inject(UserContextService);
+  private readonly featureFlags = inject(FeatureFlagsService);
   readonly isAdmin = computed(() => this.user.isAdmin());
+  readonly autoCountEnabled = computed(() =>
+    this.featureFlags.autoExerciseCounter()
+  );
   readonly isLoggedIn = computed(
     () => !!this.user.userIdSafe() && !this.user.isGuest()
   );
@@ -343,6 +347,10 @@ export class App {
 
   handleOpenDialog(): void {
     this.quickAdd.openDialog();
+  }
+
+  handleOpenAutoCount(): void {
+    this.quickAdd.openAutoCount();
   }
 
   handleFillToGoal(): void {

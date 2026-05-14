@@ -708,6 +708,18 @@
         <target>Εισαγάγετε τη δική σας τιμή</target>
       </segment>
     </unit>
+        <unit id="quickAdd.fab.autoCountAria">
+      <segment state="translated">
+        <source>Liegestütze automatisch zählen</source>
+        <target>Αυτόματη μέτρηση push-up</target>
+      </segment>
+    </unit>
+    <unit id="quickAdd.fab.autoCount">
+      <segment state="translated">
+        <source>Auto‑Zählen</source>
+        <target>Αυτόματη μέτρηση</target>
+      </segment>
+    </unit>
     <unit id="quickAdd.fab.customValue">
       <notes>
         <note category="location">libs/quick-add/src/lib/quick-add-fab.component.html:27,29</note>

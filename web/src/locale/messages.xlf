@@ -625,9 +625,25 @@
         <source>Feedback</source>
       </segment>
     </unit>
-    <unit id="quickAdd.fab.customValueAria">
+    <unit id="quickAdd.fab.autoCountAria">
       <notes>
         <note category="location">libs/quick-add/src/lib/quick-add-fab.component.html:22,23</note>
+      </notes>
+      <segment>
+        <source>Liegestütze automatisch zählen</source>
+      </segment>
+    </unit>
+    <unit id="quickAdd.fab.autoCount">
+      <notes>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.html:27,29</note>
+      </notes>
+      <segment>
+        <source>Auto‑Zählen</source>
+      </segment>
+    </unit>
+    <unit id="quickAdd.fab.customValueAria">
+      <notes>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.html:34,35</note>
       </notes>
       <segment>
         <source>Eigenen Wert eingeben</source>
@@ -635,7 +651,7 @@
     </unit>
     <unit id="quickAdd.fab.customValue">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.html:27,29</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.html:39,41</note>
       </notes>
       <segment>
         <source>Eigener Wert</source>
@@ -643,7 +659,7 @@
     </unit>
     <unit id="quickAdd.fab.fillToGoal">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.html:45,46</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.html:57,58</note>
       </notes>
       <segment>
         <source>+<ph id="0" equiv="INTERPOLATION" disp="{{ item.value }}"/> bis zum Ziel</source>
@@ -651,7 +667,7 @@
     </unit>
     <unit id="quickAdd.fab.quickAddReps">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.html:59,60</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.html:71,72</note>
       </notes>
       <segment>
         <source>+<ph id="0" equiv="INTERPOLATION" disp="{{ item.value }}"/> Reps</source>
@@ -659,7 +675,7 @@
     </unit>
     <unit id="quickAdd.fab.open">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:65</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:70</note>
       </notes>
       <segment>
         <source>Schnellerfassung öffnen</source>
@@ -667,7 +683,7 @@
     </unit>
     <unit id="quickAdd.fab.close">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:66</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:71</note>
       </notes>
       <segment>
         <source>Schnellerfassung schließen</source>
@@ -675,7 +691,7 @@
     </unit>
     <unit id="quickAdd.fab.goalReached">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:67</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:72</note>
       </notes>
       <segment>
         <source>Ziel erreicht ✓</source>
@@ -683,7 +699,7 @@
     </unit>
     <unit id="quickAdd.fab.goalReachedAria">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:68</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:73</note>
       </notes>
       <segment>
         <source>Tagesziel bereits erreicht</source>
@@ -691,7 +707,7 @@
     </unit>
     <unit id="quickAdd.fab.repAria">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:71</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:76</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="REPS" disp="reps"/> Liegestütze hinzufügen</source>
@@ -699,7 +715,7 @@
     </unit>
     <unit id="quickAdd.fab.fillToGoalAria">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:75</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:80</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="GAP" disp="gap"/> Liegestütze bis zum Tagesziel hinzufügen</source>
@@ -2534,7 +2550,7 @@
     </unit>
     <unit id="earlyAccess.text">
       <notes>
-        <note category="location">web/src/app/app.ts:169</note>
+        <note category="location">web/src/app/app.ts:173</note>
       </notes>
       <segment>
         <source>Early Access – pushup-stats.com befindet sich noch im Aufbau. Funktionen und Design können sich jederzeit ändern.</source>
@@ -2542,7 +2558,7 @@
     </unit>
     <unit id="earlyAccess.feedback">
       <notes>
-        <note category="location">web/src/app/app.ts:170</note>
+        <note category="location">web/src/app/app.ts:174</note>
       </notes>
       <segment>
         <source>Feedback</source>
@@ -2550,7 +2566,7 @@
     </unit>
     <unit id="seo.default.title">
       <notes>
-        <note category="location">web/src/app/app.ts:286</note>
+        <note category="location">web/src/app/app.ts:290</note>
       </notes>
       <segment>
         <source>Pushup Tracker</source>
@@ -2558,7 +2574,7 @@
     </unit>
     <unit id="seo.default.description">
       <notes>
-        <note category="location">web/src/app/app.ts:289</note>
+        <note category="location">web/src/app/app.ts:293</note>
       </notes>
       <segment>
         <source>Tracke Reps, Trends und Streaks mit Pushup Tracker.</source>
@@ -2566,7 +2582,7 @@
     </unit>
     <unit id="sw.update.available">
       <notes>
-        <note category="location">web/src/app/app.ts:304</note>
+        <note category="location">web/src/app/app.ts:314</note>
       </notes>
       <segment>
         <source>Neue Version verfügbar</source>
@@ -2574,7 +2590,7 @@
     </unit>
     <unit id="sw.update.reload">
       <notes>
-        <note category="location">web/src/app/app.ts:305</note>
+        <note category="location">web/src/app/app.ts:315</note>
       </notes>
       <segment>
         <source>Neu laden</source>
@@ -2582,7 +2598,7 @@
     </unit>
     <unit id="toolbarDailyGoal.replayAria">
       <notes>
-        <note category="location">web/src/app/app.ts:371</note>
+        <note category="location">web/src/app/app.ts:386</note>
       </notes>
       <segment>
         <source>Tagesziel-Animation erneut abspielen</source>
@@ -2590,7 +2606,7 @@
     </unit>
     <unit id="feedback.success">
       <notes>
-        <note category="location">web/src/app/app.ts:400</note>
+        <note category="location">web/src/app/app.ts:415</note>
       </notes>
       <segment>
         <source>Danke für dein Feedback!</source>
@@ -2598,7 +2614,7 @@
     </unit>
     <unit id="feedback.error">
       <notes>
-        <note category="location">web/src/app/app.ts:407</note>
+        <note category="location">web/src/app/app.ts:422</note>
       </notes>
       <segment>
         <source>Feedback konnte nicht gesendet werden.</source>
@@ -2735,7 +2751,8 @@
     </unit>
     <unit id="quickAdd.success.create">
       <notes>
-        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:30</note>
+        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:41</note>
+        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:181</note>
       </notes>
       <segment>
         <source>Eintrag gespeichert.</source>
@@ -2743,8 +2760,9 @@
     </unit>
     <unit id="quickAdd.error.create">
       <notes>
-        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:42</note>
-        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:81</note>
+        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:53</note>
+        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:92</note>
+        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:192</note>
       </notes>
       <segment>
         <source>Eintrag konnte nicht gespeichert werden.</source>
@@ -2752,7 +2770,7 @@
     </unit>
     <unit id="quickAdd.success.goalReached">
       <notes>
-        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:68</note>
+        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:79</note>
       </notes>
       <segment>
         <source>Tagesziel erreicht 🎉</source>

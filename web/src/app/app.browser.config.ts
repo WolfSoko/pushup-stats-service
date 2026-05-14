@@ -7,6 +7,11 @@ import {
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { fireConfig } from '../env/fire.config';
 import { AdsStore, GoogleAdsService } from '@pu-stats/ads';
+import { provideMediaPipePoseDetector } from './auto-count/mediapipe-pose-detector';
+import {
+  DEFAULT_MEDIAPIPE_POSE_CONFIG,
+  MEDIAPIPE_POSE_CONFIG,
+} from './auto-count/mediapipe-pose.config';
 
 export const appBrowserConfig: ApplicationConfig = {
   providers: [
@@ -23,5 +28,7 @@ export const appBrowserConfig: ApplicationConfig = {
         }
       });
     }),
+    { provide: MEDIAPIPE_POSE_CONFIG, useValue: DEFAULT_MEDIAPIPE_POSE_CONFIG },
+    provideMediaPipePoseDetector(),
   ],
 };

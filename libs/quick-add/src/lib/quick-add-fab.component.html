@@ -14,6 +14,18 @@
             <mat-icon>{{ item.icon }}</mat-icon>
             <span i18n="@@quickAdd.fab.feedback">Feedback</span>
           </button>
+        } @else if (item.type === 'auto-count') {
+          <button
+            mat-fab
+            extended
+            class="auto-count-fab"
+            aria-label="Liegestütze automatisch zählen"
+            i18n-aria-label="@@quickAdd.fab.autoCountAria"
+            (click)="onOpenAutoCount()"
+          >
+            <mat-icon>{{ item.icon }}</mat-icon>
+            <span i18n="@@quickAdd.fab.autoCount">Auto‑Zählen</span>
+          </button>
         } @else if (item.type === 'custom') {
           <button
             mat-fab
