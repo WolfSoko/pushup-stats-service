@@ -644,13 +644,14 @@ describe('TrainingPlanStore', () => {
         setPlan: vitest.fn(),
         updatePlan: vitest.fn(
           (_uid: string, patch: Partial<UserTrainingPlan>) => {
-            const next = { ...stream.value!, ...patch };
+            const current = stream.value ?? initial;
+            const next = { ...current, ...patch };
             stream.next(next);
             return new BehaviorSubject(next).asObservable();
           }
         ),
         addCompletedDay: vitest.fn((_uid: string, dayIndex: number) => {
-          const cur = stream.value!;
+          const cur = stream.value ?? initial;
           stream.next({
             ...cur,
             completedDays: [...cur.completedDays, dayIndex].sort(
