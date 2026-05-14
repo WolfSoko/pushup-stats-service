@@ -279,6 +279,7 @@ export class StatsTableComponent {
             timestamp: entry.timestamp,
             reps: entry.reps,
             sets: entry.sets,
+            intervals: entry.intervals,
             ...(entry.durationSec !== undefined
               ? { durationSec: entry.durationSec }
               : {}),

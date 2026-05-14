@@ -421,6 +421,39 @@ describe('StatsTableComponent', () => {
       expect('variantId' in call).toBe(true);
     });
 
+    it('forwards existing intervals into the edit dialog data so a no-op edit does not erase them', () => {
+      // Regression: previously `openEditDialog` for an endurance entry
+      // did not pass `entry.intervals` into the dialog. The dialog
+      // initialised `intervals` to `[0]` and the submit path then
+      // emitted `intervals: []`, which the update payload helper
+      // translated into a clear-sentinel patch — wiping a saved
+      // breakdown on a timestamp-only edit.
+      const component = fixture.componentInstance;
+      const updateSpy = vitest.fn();
+      component.update.subscribe(updateSpy);
+
+      const openSpy = vitest
+        .spyOn(component.dialog, 'open')
+        .mockReturnValue({ afterClosed: () => of(null) } as never);
+
+      component.openEditDialog({
+        kind: 'exercise',
+        _id: 'ex-int-1',
+        exerciseId: 'plank.standard',
+        timestamp: '2026-02-10T13:45:00',
+        reps: 0,
+        durationSec: 90,
+        intervals: [30, 30, 30],
+        source: 'web',
+      });
+
+      const dialogData = openSpy.mock.calls[0]?.[1]?.data;
+      expect(dialogData).toMatchObject({
+        kind: 'exercise',
+        intervals: [30, 30, 30],
+      });
+    });
+
     it('emits sets: [] as the explicit clear sentinel when collapsing a multi-set entry to one set', () => {
       const component = fixture.componentInstance;
       const updateSpy = vitest.fn();
