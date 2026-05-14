@@ -330,6 +330,11 @@ export class StatsTableComponent {
   private exerciseCreatePayload(
     result: ExerciseEntryDialogResult
   ): StatsTableCreate {
+    // `intervals` is required on the dialog result, but the helpers
+    // are also called from programmatic tests / future callers where
+    // the field might be omitted. Default to `[]` so `.length` is
+    // always safe.
+    const intervals = result.intervals ?? [];
     return {
       kind: 'exercise',
       exerciseId: result.exerciseId,
@@ -337,22 +342,28 @@ export class StatsTableComponent {
       ...(result.measurement === 'time'
         ? {
             durationSec: result.durationSec ?? 0,
-            ...(result.intervals.length > 0
-              ? { intervals: result.intervals }
-              : {}),
+            ...(intervals.length > 0 ? { intervals } : {}),
           }
         : result.measurement === 'distance-time'
           ? {
               distanceM: result.distanceM ?? 0,
               durationSec: result.durationSec ?? 0,
-              ...(result.intervals.length > 0
-                ? { intervals: result.intervals }
-                : {}),
+              ...(intervals.length > 0 ? { intervals } : {}),
             }
-          : {
-              reps: result.reps,
-              ...(result.sets.length > 1 ? { sets: result.sets } : {}),
-            }),
+          : result.measurement === 'distance'
+            ? {
+                // Pure-distance exercises don't ship in the catalog
+                // yet, but the dialog emits a `distance` branch so
+                // the create path must accept it; otherwise the
+                // distanceM + intervals would silently fall through
+                // to the strength shape and be dropped.
+                distanceM: result.distanceM ?? 0,
+                ...(intervals.length > 0 ? { intervals } : {}),
+              }
+            : {
+                reps: result.reps,
+                ...(result.sets.length > 1 ? { sets: result.sets } : {}),
+              }),
       ...(result.variantId ? { variantId: result.variantId } : {}),
     };
   }
@@ -403,9 +414,10 @@ export class StatsTableComponent {
     entry: Extract<UnifiedEntry, { kind: 'exercise' }>,
     result: ExerciseEntryDialogResult
   ): StatsTableUpdate {
+    const resultIntervals = result.intervals ?? [];
     const intervalsPatch =
-      result.intervals.length > 0
-        ? { intervals: result.intervals }
+      resultIntervals.length > 0
+        ? { intervals: resultIntervals }
         : entry.intervals !== undefined
           ? { intervals: [] }
           : {};
@@ -426,15 +438,20 @@ export class StatsTableComponent {
               durationSec: result.durationSec ?? 0,
               ...intervalsPatch,
             }
-          : {
-              reps: result.reps,
-              sets:
-                result.sets.length > 1
-                  ? result.sets
-                  : entry.sets !== undefined
-                    ? []
-                    : undefined,
-            }),
+          : result.measurement === 'distance'
+            ? {
+                distanceM: result.distanceM ?? 0,
+                ...intervalsPatch,
+              }
+            : {
+                reps: result.reps,
+                sets:
+                  result.sets.length > 1
+                    ? result.sets
+                    : entry.sets !== undefined
+                      ? []
+                      : undefined,
+              }),
       ...(result.variantId !== undefined
         ? { variantId: result.variantId }
         : {}),

@@ -4898,10 +4898,18 @@
     </unit>
     <unit id="intervalsDistribution.noData">
       <notes>
-        <note category="location">web/src/app/stats/components/intervals-distribution/intervals-distribution.component.ts:37,41</note>
+        <note category="location">web/src/app/stats/components/intervals-distribution/intervals-distribution.component.ts</note>
       </notes>
       <segment>
         <source> Keine Intervall-Daten vorhanden </source>
+      </segment>
+    </unit>
+    <unit id="intervalsDistribution.listLabel">
+      <notes>
+        <note category="location">web/src/app/stats/components/intervals-distribution/intervals-distribution.component.ts</note>
+      </notes>
+      <segment>
+        <source>Intervall-Verteilung</source>
       </segment>
     </unit>
     <unit id="chart.subtitle.reps">

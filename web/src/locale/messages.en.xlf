@@ -535,6 +535,12 @@ Active:         </target>
         <target>No intervals data available</target>
       </segment>
     </unit>
+    <unit id="intervalsDistribution.listLabel">
+      <segment state="translated">
+        <source>Intervall-Verteilung</source>
+        <target>Interval distribution</target>
+      </segment>
+    </unit>
     <unit id="pie.top5">
       <notes>
         <note category="location">web/src/app/stats/components/type-pie/type-pie.component.ts:62,64</note>

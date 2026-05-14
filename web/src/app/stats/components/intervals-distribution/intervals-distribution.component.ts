@@ -21,14 +21,25 @@ export interface IntervalsDistributionDatum {
   standalone: true,
   template: `
     @if (data().length) {
-      <div class="bars">
+      <div
+        class="bars"
+        role="list"
+        aria-label="Intervall-Verteilung"
+        i18n-aria-label="@@intervalsDistribution.listLabel"
+      >
         @for (d of data(); track d.value) {
-          <div class="bar-row">
-            <span class="label">{{ formatValue(d.value) }}</span>
-            <div class="bar-track">
+          <div
+            class="bar-row"
+            role="listitem"
+            [attr.aria-label]="ariaLabelFor(d)"
+          >
+            <span class="label" aria-hidden="true">{{
+              formatValue(d.value)
+            }}</span>
+            <div class="bar-track" aria-hidden="true">
               <div class="bar-fill" [style.width.%]="barWidth(d.percent)"></div>
             </div>
-            <span class="value">{{ d.percent }}%</span>
+            <span class="value" aria-hidden="true">{{ d.percent }}%</span>
           </div>
         }
       </div>
@@ -110,14 +121,28 @@ export class IntervalsDistributionComponent {
       }));
   });
 
+  // Interval workouts (especially distance / distance-time) often have
+  // every value distinct, so raw `percent` would leave the widest bar
+  // very short. Normalising to the largest bin keeps the chart legible
+  // when the distribution is flat.
+  private readonly maxPercent = computed(() =>
+    this.data().reduce((max, d) => Math.max(max, d.percent), 0)
+  );
+
   barWidth(percent: number): number {
-    return percent;
+    const max = this.maxPercent();
+    if (max <= 0) return 0;
+    return (percent / max) * 100;
   }
 
   formatValue(value: number): string {
     const measurement: MeasurementType = this.measurement();
     if (measurement === 'time') return formatSeconds(value);
     return formatMeters(value);
+  }
+
+  ariaLabelFor(d: IntervalsDistributionDatum): string {
+    return `${this.formatValue(d.value)}: ${d.count} (${d.percent}%)`;
   }
 }
 
@@ -130,8 +155,11 @@ function formatSeconds(seconds: number): string {
 
 function formatMeters(meters: number): string {
   if (meters >= 1000) {
-    const km = Math.round(meters / 100) / 10;
-    return `${km} km`;
+    // toFixed(1) keeps the unit visually consistent at the boundary:
+    // 1000 m → "1.0 km" (not "1 km"), 1050 m → "1.1 km". Without the
+    // trailing zero the boundary bar looks like a different unit
+    // class than its neighbour.
+    return `${(meters / 1000).toFixed(1)} km`;
   }
   return `${meters} m`;
 }

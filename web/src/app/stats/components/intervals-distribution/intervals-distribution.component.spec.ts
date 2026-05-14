@@ -137,15 +137,16 @@ describe('IntervalsDistributionComponent', () => {
       ]);
     });
 
-    it('formats <1000m as "X m" and >=1000m as kilometres (nearest tenth)', () => {
+    it('formats <1000m as "X m" and >=1000m as kilometres (nearest tenth, trailing zero kept)', () => {
       expect(component.formatValue(400)).toBe('400 m');
       expect(component.formatValue(999)).toBe('999 m');
-      // 1000m flips to "1 km" so the unit stays consistent at the boundary
-      // instead of showing "1000 m" then "1.1 km" for the very next bucket.
-      expect(component.formatValue(1000)).toBe('1 km');
-      expect(component.formatValue(1001)).toBe('1 km');
+      // 1000m renders as "1.0 km" (not "1 km") so the unit stays
+      // visually consistent at the boundary between the meters and
+      // kilometres branches.
+      expect(component.formatValue(1000)).toBe('1.0 km');
+      expect(component.formatValue(1001)).toBe('1.0 km');
       expect(component.formatValue(1050)).toBe('1.1 km');
-      // Math.round (not ceil): 1234m rounds to 1.2 km, not the previous 1.3.
+      // Nearest-tenth (not ceil): 1234m rounds to 1.2 km.
       expect(component.formatValue(1234)).toBe('1.2 km');
       expect(component.formatValue(1500)).toBe('1.5 km');
     });
@@ -167,8 +168,43 @@ describe('IntervalsDistributionComponent', () => {
     expect(component.data()).toEqual([{ value: 45, count: 2, percent: 100 }]);
   });
 
-  it('uses absolute percent for bar width', () => {
-    expect(component.barWidth(60)).toBe(60);
-    expect(component.barWidth(40)).toBe(40);
+  describe('barWidth (normalised to the largest bin)', () => {
+    it('returns 0 when there is no data', () => {
+      fixture.componentRef.setInput('measurement', 'time');
+      fixture.componentRef.setInput('entries', []);
+      fixture.detectChanges();
+      expect(component.barWidth(50)).toBe(0);
+    });
+
+    it('renders the biggest bin at 100% and scales others proportionally', () => {
+      fixture.componentRef.setInput('measurement', 'time');
+      // Three 30s, one 60s → 75% / 25% distribution.
+      fixture.componentRef.setInput('entries', [
+        exerciseEntry({
+          exerciseId: 'core.hollowhold',
+          intervals: [30, 30, 30, 60],
+        }),
+      ]);
+      fixture.detectChanges();
+      const [a, b] = component.data();
+      expect(component.barWidth(a.percent)).toBe(100);
+      // Allow 1px rounding noise: 25/75*100 ≈ 33.33.
+      expect(component.barWidth(b.percent)).toBeGreaterThan(33);
+      expect(component.barWidth(b.percent)).toBeLessThan(34);
+    });
+  });
+
+  it('exposes per-bar accessible labels combining value, count, and percent', () => {
+    fixture.componentRef.setInput('measurement', 'time');
+    fixture.componentRef.setInput('entries', [
+      exerciseEntry({
+        exerciseId: 'core.hollowhold',
+        intervals: [30, 30, 30],
+      }),
+    ]);
+    fixture.detectChanges();
+    expect(component.ariaLabelFor({ value: 30, count: 3, percent: 100 })).toBe(
+      '30s: 3 (100%)'
+    );
   });
 });
