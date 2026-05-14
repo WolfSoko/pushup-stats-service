@@ -414,6 +414,14 @@ export class StatsTableComponent {
     entry: Extract<UnifiedEntry, { kind: 'exercise' }>,
     result: ExerciseEntryDialogResult
   ): StatsTableUpdate {
+    // The dialog disables the category + exercise pickers in edit mode
+    // (see `TrainingEntryDialogComponent`), so an update can never
+    // change an entry's measurement type. That's why each branch below
+    // only needs to handle its own breakdown field — there's no
+    // strength→endurance flip where we'd have to wipe a stale `sets`
+    // from an entry that just became endurance (or vice versa). If
+    // measurement switches during edit ever land, this helper plus the
+    // Firestore-rules mutex would need explicit opposite-side clears.
     const resultIntervals = result.intervals ?? [];
     const intervalsPatch =
       resultIntervals.length > 0
