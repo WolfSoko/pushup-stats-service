@@ -16,7 +16,7 @@ export class CameraService {
 
   async open(
     video: HTMLVideoElement,
-    facingMode: CameraFacingMode = 'environment'
+    facingMode: CameraFacingMode = 'user'
   ): Promise<void> {
     if (!isPlatformBrowser(this.platformId)) return;
     if (this.stream) await this.close();
