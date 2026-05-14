@@ -53,6 +53,11 @@ export default [
               sourceTag: 'scope:quick-add',
               onlyDependOnLibsWithTags: ['scope:models', 'scope:testing'],
             },
+            // auto-count depends on models only (port-only lib, no UI)
+            {
+              sourceTag: 'scope:auto-count',
+              onlyDependOnLibsWithTags: ['scope:models'],
+            },
             // ads is isolated
             {
               sourceTag: 'scope:ads',
@@ -88,6 +93,7 @@ export default [
                 'scope:quick-add',
                 'scope:ads',
                 'scope:motivation',
+                'scope:auto-count',
                 'scope:testing',
               ],
             },

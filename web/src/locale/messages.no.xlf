@@ -4401,6 +4401,72 @@ Deine Position: # ·  Reps        </source>
         <target>Lukk hurtiglogging</target>
       </segment>
     </unit>
+            <unit id="autoCount.title">
+      <segment state="translated">
+        <source>Liegestütze automatisch zählen</source>
+        <target>Auto-tell push-ups</target>
+      </segment>
+    </unit>
+        <unit id="autoCount.instructions">
+      <segment state="translated">
+        <source>Halte das Gerät so, dass deine Schulter, dein Ellbogen und dein Handgelenk im Bild sind. Reps werden bei sauberem Down‑Up gezählt.</source>
+        <target>Hold enheten slik at skulder, albue og håndledd er synlige. Reps telles på en ren ned-opp-bevegelse.</target>
+      </segment>
+    </unit>
+        <unit id="autoCount.cameraStarting">
+      <segment state="translated">
+        <source>Kamera startet …</source>
+        <target>Kamera starter …</target>
+      </segment>
+    </unit>
+        <unit id="autoCount.unavailable">
+      <segment state="translated">
+        <source>Auto‑Zählen nicht verfügbar</source>
+        <target>Auto-telling utilgjengelig</target>
+      </segment>
+    </unit>
+        <unit id="autoCount.repsLabel">
+      <segment state="translated">
+        <source>Reps</source>
+        <target>Reps</target>
+      </segment>
+    </unit>
+        <unit id="autoCount.positionHint">
+      <segment state="translated">
+        <source>In Plank‑Position gehen</source>
+        <target>Innta planke-posisjon</target>
+      </segment>
+    </unit>
+        <unit id="autoCount.reset">
+      <segment state="translated">
+        <source>Zurücksetzen</source>
+        <target>Tilbakestill</target>
+      </segment>
+    </unit>
+        <unit id="autoCount.cancel">
+      <segment state="translated">
+        <source>Abbrechen</source>
+        <target>Avbryt</target>
+      </segment>
+    </unit>
+        <unit id="autoCount.save">
+      <segment state="translated">
+        <source>Übernehmen</source>
+        <target>Bruk</target>
+      </segment>
+    </unit>
+    <unit id="quickAdd.fab.autoCountAria">
+      <segment state="translated">
+        <source>Liegestütze automatisch zählen</source>
+        <target>Tell push-ups automatisk</target>
+      </segment>
+    </unit>
+    <unit id="quickAdd.fab.autoCount">
+      <segment state="translated">
+        <source>Auto‑Zählen</source>
+        <target>Auto-telling</target>
+      </segment>
+    </unit>
     <unit id="quickAdd.fab.customValue">
       <segment state="translated">
         <source>Eigener Wert</source>

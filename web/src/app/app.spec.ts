@@ -9,11 +9,17 @@ import { SwUpdate } from '@angular/service-worker';
 import { NEVER, of, Subject } from 'rxjs';
 import { StatsApiService, UserConfigApiService } from '@pu-stats/data-access';
 import { Auth } from '@angular/fire/auth';
-import { AuthService, AuthStore, UserContextService } from '@pu-auth/auth';
+import {
+  AuthService,
+  AuthStore,
+  FeatureFlagsService,
+  UserContextService,
+} from '@pu-auth/auth';
 import { AdsStore } from '@pu-stats/ads';
 import { VAPID_PUBLIC_KEY } from '@pu-reminders/reminders';
 import { App } from './app';
 import { GoalReachedNotificationService } from './core/goal-reached-notification.service';
+import { QuickAddOrchestrationService } from './core/quick-add-orchestration.service';
 
 describe('App (testing-library)', () => {
   let userNameSignal: WritableSignal<string>;
@@ -1100,5 +1106,84 @@ describe('App (testing-library)', () => {
 
     const title = TestBed.inject(Title);
     expect(title.getTitle()).toContain('Pushup Tracker');
+  });
+
+  describe('auto-count feature flag wiring', () => {
+    it('given the admin-gated auto counter flag is true, then app.autoCountEnabled() is true', async () => {
+      const autoFlag = signal(true);
+      const { fixture } = await render(App, {
+        providers: [
+          provideRouter([]),
+          { provide: PLATFORM_ID, useValue: 'browser' },
+          {
+            provide: UserContextService,
+            useValue: {
+              userNameSafe: userNameSignal.asReadonly(),
+              userIdSafe: () => 'u1',
+              isAdmin: () => true,
+              isGuest: () => false,
+            },
+          },
+          {
+            provide: FeatureFlagsService,
+            useValue: { autoExerciseCounter: autoFlag.asReadonly() },
+          },
+          { provide: AuthStore, useValue: authMock },
+          { provide: AuthService, useValue: authServiceMock },
+          { provide: Auth, useValue: firebaseAuthMock },
+          { provide: UserConfigApiService, useValue: userConfigApiMock },
+          { provide: StatsApiService, useValue: statsApiMock },
+          { provide: AdsStore, useValue: adsStoreMock },
+          { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
+        ],
+      });
+      expect(fixture.componentInstance.autoCountEnabled()).toBe(true);
+
+      autoFlag.set(false);
+      expect(fixture.componentInstance.autoCountEnabled()).toBe(false);
+    });
+
+    it('when handleOpenAutoCount is invoked, then it delegates to QuickAddOrchestrationService.openAutoCount', async () => {
+      const openAutoCount = vitest.fn();
+      const { fixture } = await render(App, {
+        providers: [
+          provideRouter([]),
+          { provide: PLATFORM_ID, useValue: 'browser' },
+          {
+            provide: UserContextService,
+            useValue: {
+              userNameSafe: userNameSignal.asReadonly(),
+              userIdSafe: () => 'u1',
+              isAdmin: () => true,
+              isGuest: () => false,
+            },
+          },
+          {
+            provide: FeatureFlagsService,
+            useValue: { autoExerciseCounter: signal(true).asReadonly() },
+          },
+          { provide: AuthStore, useValue: authMock },
+          { provide: AuthService, useValue: authServiceMock },
+          { provide: Auth, useValue: firebaseAuthMock },
+          { provide: UserConfigApiService, useValue: userConfigApiMock },
+          { provide: StatsApiService, useValue: statsApiMock },
+          { provide: AdsStore, useValue: adsStoreMock },
+          { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
+          {
+            provide: QuickAddOrchestrationService,
+            useValue: {
+              add: vitest.fn(),
+              fillToGoal: vitest.fn(),
+              openDialog: vitest.fn(),
+              openAutoCount,
+              fillToGoalInFlight: signal(false).asReadonly(),
+            },
+          },
+        ],
+      });
+
+      fixture.componentInstance.handleOpenAutoCount();
+      expect(openAutoCount).toHaveBeenCalledTimes(1);
+    });
   });
 });
