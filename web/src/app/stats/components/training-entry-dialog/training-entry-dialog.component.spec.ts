@@ -277,6 +277,35 @@ describe('TrainingEntryDialogComponent', () => {
       expect(component.durationSecondsInput()).toBe('30');
     });
 
+    it.each([
+      // Edit-mode km initial value must match the active locale so the
+      // create + edit paths show the same separator. Without this, a
+      // de-DE user opening an existing run would see a dot-formatted
+      // value while typing fresh entries gets a comma placeholder.
+      ['de-DE', '5,25'],
+      ['en-US', '5.25'],
+    ])(
+      'formats the edit-mode km initial value with the active locale (%s)',
+      (locale, expected) => {
+        const { component } = createDialog(
+          {
+            kind: 'exercise',
+            exerciseId: 'cardio.running',
+            timestamp: '2026-02-10T13:45:00+01:00',
+            distanceM: 5250,
+            durationSec: 1500,
+          },
+          [{ provide: LOCALE_ID, useValue: locale }]
+        );
+
+        expect(component.distanceInput()).toBe(expected);
+        // Round-trip: the locale-formatted string must still parse back
+        // to the original metres so the edit dialog opens at green.
+        expect(component.distanceM()).toBe(5250);
+        expect(component.canSubmit()).toBe(true);
+      }
+    );
+
     it('emits a null variantId when the user clears a previously-set variant', () => {
       const { component, closeSpy } = createDialog({
         kind: 'exercise',

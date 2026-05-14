@@ -690,7 +690,7 @@ export class TrainingEntryDialogComponent {
 
   readonly distanceInput = signal(
     this.data?.kind === 'exercise' && this.data.distanceM !== undefined
-      ? formatKmInput(this.data.distanceM)
+      ? formatKmInput(this.data.distanceM, this.locale)
       : ''
   );
 
@@ -702,10 +702,7 @@ export class TrainingEntryDialogComponent {
    * dot- or comma-separated form their locale uses — `<input type="number">`
    * silently rejects "," in most browsers regardless of `LOCALE_ID`.
    */
-  readonly distancePlaceholder = new Intl.NumberFormat(this.locale, {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  }).format(5);
+  readonly distancePlaceholder = formatKm(5, this.locale);
 
   readonly isTimeMeasurement = computed(
     () => this.currentDefinition()?.measurement === 'time'
@@ -1181,9 +1178,23 @@ function parseKmToMeters(input: string): number | null {
   return Math.round(km * 1000);
 }
 
-function formatKmInput(distanceM: number): string {
+/**
+ * `useGrouping: false` keeps the formatted km value separator-free
+ * (e.g. de-DE `12345` km → `12345,00`, not `12.345,00`). The thousand
+ * separator would otherwise clash with the decimal comma and break the
+ * dot/comma swap in {@link parseKmToMeters}.
+ */
+function formatKm(km: number, locale: string): string {
+  return new Intl.NumberFormat(locale, {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+    useGrouping: false,
+  }).format(km);
+}
+
+function formatKmInput(distanceM: number, locale: string): string {
   if (!Number.isFinite(distanceM) || distanceM <= 0) return '';
-  return (distanceM / 1000).toFixed(2);
+  return formatKm(distanceM / 1000, locale);
 }
 
 /**
