@@ -6854,24 +6854,6 @@ Deine Position: # ·  Reps        </source>
         <target>Sammenligning etter øvelsesgruppe</target>
       </segment>
     </unit>
-    <unit id="analysis.overview.comparison.metricAria">
-      <segment state="translated">
-        <source/>
-        <target>Måleverdi</target>
-      </segment>
-    </unit>
-    <unit id="analysis.overview.comparison.metric.reps">
-      <segment state="translated">
-        <source/>
-        <target>Repetisjoner</target>
-      </segment>
-    </unit>
-    <unit id="analysis.overview.comparison.metric.sets">
-      <segment state="translated">
-        <source/>
-        <target>Sett</target>
-      </segment>
-    </unit>
     <unit id="analysis.overview.comparison.empty">
       <segment state="translated">
         <source/>
@@ -6900,6 +6882,72 @@ Deine Position: # ·  Reps        </source>
       <segment state="translated">
         <source/>
         <target>Beste dag</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.comparison.metricLabel">
+      <segment state="translated">
+        <source/>
+        <target>Økter</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.facet.repsTitle">
+      <segment state="translated">
+        <source/>
+        <target>Repetisjoner</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.totalSets">
+      <segment state="translated">
+        <source/>
+        <target>Totalt antall sett</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.facet.timeTitle">
+      <segment state="translated">
+        <source/>
+        <target>Tid</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.totalTime">
+      <segment state="translated">
+        <source/>
+        <target>Total tid</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.todayTime">
+      <segment state="translated">
+        <source/>
+        <target>I dag</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.facet.distanceTitle">
+      <segment state="translated">
+        <source/>
+        <target>Distanse</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.totalDistance">
+      <segment state="translated">
+        <source/>
+        <target>Total distanse</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.todayDistance">
+      <segment state="translated">
+        <source/>
+        <target>I dag</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.facet.distanceTimeTitle">
+      <segment state="translated">
+        <source/>
+        <target>Distanse og tid</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.entries">
+      <segment state="translated">
+        <source/>
+        <target>Økter</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.viewDetails">

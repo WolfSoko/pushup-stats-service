@@ -21,7 +21,7 @@ import { CategorySummaryCardComponent } from '../components/category-summary-car
 class StubComparisonChartComponent {
   // Mirror the real component's signal input surface so the overview's
   // `[data]="..."` binding type-checks against the stub.
-  readonly data = input<CategoryComparison>({ labels: [], reps: [], sets: [] });
+  readonly data = input<CategoryComparison>({ labels: [], entries: [] });
 }
 
 @Component({
@@ -58,8 +58,7 @@ function makeFakeStore(): FakeStore {
     categorySummaries: signal<CategorySummary[]>([]),
     categoryComparison: signal<CategoryComparison>({
       labels: [],
-      reps: [],
-      sets: [],
+      entries: [],
     }),
     unifiedRows: signal<unknown[]>([]),
     activeView,
@@ -150,22 +149,30 @@ describe('AnalysisOverviewComponent', () => {
         nameKey: '@@exercise.category.pushup',
         icon: 'fitness_center',
         order: 10,
-        totalReps: 100,
-        totalSets: 12,
-        todayReps: 7,
+        entries: 5,
         currentStreak: 3,
-        bestDay: { date: '2026-02-13', total: 25 },
+        volume: {
+          kind: 'reps',
+          totalReps: 100,
+          totalSets: 12,
+          todayReps: 7,
+          bestDay: { date: '2026-02-13', total: 25 },
+        },
       },
       {
         categoryId: 'core',
         nameKey: '@@exercise.category.core',
         icon: 'self_improvement',
         order: 20,
-        totalReps: 30,
-        totalSets: 0,
-        todayReps: 0,
+        entries: 2,
         currentStreak: 1,
-        bestDay: { date: '2026-02-12', total: 30 },
+        volume: {
+          kind: 'reps',
+          totalReps: 30,
+          totalSets: 0,
+          todayReps: 0,
+          bestDay: { date: '2026-02-12', total: 30 },
+        },
       },
     ]);
     fixture.detectChanges();
@@ -193,11 +200,15 @@ describe('AnalysisOverviewComponent', () => {
         nameKey: '@@exercise.category.pushup',
         icon: 'fitness_center',
         order: 10,
-        totalReps: 100,
-        totalSets: 12,
-        todayReps: 7,
+        entries: 5,
         currentStreak: 3,
-        bestDay: { date: '2026-02-13', total: 25 },
+        volume: {
+          kind: 'reps',
+          totalReps: 100,
+          totalSets: 12,
+          todayReps: 7,
+          bestDay: { date: '2026-02-13', total: 25 },
+        },
       },
     ]);
     store.unifiedRows.set([{ id: 'orphan' }]);
@@ -226,11 +237,15 @@ describe('AnalysisOverviewComponent', () => {
         nameKey: '@@exercise.category.pushup',
         icon: 'fitness_center',
         order: 10,
-        totalReps: 100,
-        totalSets: 12,
-        todayReps: 7,
+        entries: 5,
         currentStreak: 3,
-        bestDay: null,
+        volume: {
+          kind: 'reps',
+          totalReps: 100,
+          totalSets: 12,
+          todayReps: 7,
+          bestDay: null,
+        },
       },
     ]);
     fixture.detectChanges();
@@ -272,11 +287,15 @@ describe('AnalysisOverviewComponent', () => {
         nameKey: '@@exercise.category.pushup',
         icon: 'fitness_center',
         order: 10,
-        totalReps: 100,
-        totalSets: 12,
-        todayReps: 7,
+        entries: 5,
         currentStreak: 3,
-        bestDay: null,
+        volume: {
+          kind: 'reps',
+          totalReps: 100,
+          totalSets: 12,
+          todayReps: 7,
+          bestDay: null,
+        },
       },
     ]);
     fixture.detectChanges();

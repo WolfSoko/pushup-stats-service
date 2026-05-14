@@ -70,11 +70,69 @@ export interface TypeBreakdownDatum {
 }
 
 /**
+ * Reps-measurement facet of a {@link CategorySummary.volume}. Carries
+ * the set count (only meaningful when entries log per-set breakdowns).
+ */
+export interface CategoryRepsFacet {
+  kind: 'reps';
+  totalReps: number;
+  todayReps: number;
+  totalSets: number;
+  bestDay: { date: string; total: number } | null;
+}
+
+/** Time-measurement facet (planks, hollow holds, mobility holds). */
+export interface CategoryTimeFacet {
+  kind: 'time';
+  totalSec: number;
+  todaySec: number;
+  bestDay: { date: string; totalSec: number } | null;
+}
+
+/** Distance-only facet (loaded carries, future cycling). */
+export interface CategoryDistanceFacet {
+  kind: 'distance';
+  totalM: number;
+  todayM: number;
+  bestDay: { date: string; totalM: number } | null;
+}
+
+/** Distance-time composite facet (cardio runs). */
+export interface CategoryDistanceTimeFacet {
+  kind: 'distance-time';
+  totalM: number;
+  totalSec: number;
+  todayM: number;
+  todaySec: number;
+  bestDay: { date: string; totalM: number; totalSec: number } | null;
+}
+
+export type CategorySingleFacet =
+  | CategoryRepsFacet
+  | CategoryTimeFacet
+  | CategoryDistanceFacet
+  | CategoryDistanceTimeFacet;
+
+/**
+ * Mixed-measurement bucket: emitted when a category contains entries
+ * of more than one measurement type (e.g. `core` mixes sit-ups (reps)
+ * and plank (time)). The card renders one section per facet so neither
+ * dimension swallows the other.
+ */
+export interface CategoryMixedVolume {
+  kind: 'mixed';
+  facets: ReadonlyArray<CategorySingleFacet>;
+}
+
+export type CategoryVolume = CategorySingleFacet | CategoryMixedVolume;
+
+/**
  * Per-category roll-up consumed by the analysis overview tab. The
- * cards render `nameKey`/`icon`, and the comparison chart pulls
- * `totalReps`/`totalSets` from the same shape so the two views stay
- * in lockstep. Categories with no entries in the current date range
- * are filtered out upstream — every entry here represents a present,
+ * cards render `nameKey`/`icon` plus a measurement-aware `volume`,
+ * and the comparison chart compares categories by `entries` (count of
+ * logged trainings) so reps, seconds and meters can no longer share a
+ * bar. Categories with no entries in the current date range are
+ * filtered out upstream — every entry here represents a present,
  * non-empty group.
  */
 export interface CategorySummary {
@@ -82,18 +140,20 @@ export interface CategorySummary {
   nameKey: string;
   icon: string;
   order: number;
-  totalReps: number;
-  totalSets: number;
-  todayReps: number;
+  entries: number;
   currentStreak: number;
-  bestDay: { date: string; total: number } | null;
+  volume: CategoryVolume;
 }
 
-/** Series shape consumed by the overview comparison chart. */
+/**
+ * Series shape consumed by the overview comparison chart. `entries`
+ * counts logged trainings per category — the only metric that lets
+ * reps-, time- and distance-categories share one axis without
+ * mis-comparing seconds vs. repetitions.
+ */
 export interface CategoryComparison {
   labels: ReadonlyArray<string>;
-  reps: ReadonlyArray<number>;
-  sets: ReadonlyArray<number>;
+  entries: ReadonlyArray<number>;
 }
 
 type AnalysisState = {
@@ -193,6 +253,188 @@ function measurementScale(
   return measurement === 'distance' || measurement === 'distance-time'
     ? 1 / 1000
     : 1;
+}
+
+/**
+ * Folds rows that share a single measurement into the matching
+ * {@link CategorySingleFacet}. Pulled out of `categorySummaries` so the
+ * mixed-bucket path can call it once per measurement subset.
+ *
+ * Pushup entries (`kind: 'pushup'`) and `'weight'`-measurement
+ * exercises (currently none in the catalog, but reserved) route through
+ * the reps facet — both expose their volume on `entry.reps`.
+ *
+ * Best-day always picks the day with the largest primary volume in the
+ * facet's dimension; the comparator on a `distance-time` facet uses
+ * distance because that's what users intuitively rank a "best run" by.
+ */
+function durationOf(entry: UnifiedEntry): number {
+  return entry.kind === 'exercise' ? (entry.durationSec ?? 0) : 0;
+}
+
+function distanceOf(entry: UnifiedEntry): number {
+  return entry.kind === 'exercise' ? (entry.distanceM ?? 0) : 0;
+}
+
+function buildFacet(
+  measurement: MeasurementType,
+  rows: ReadonlyArray<UnifiedEntry>,
+  todayKey: string
+): CategorySingleFacet {
+  switch (measurement) {
+    case 'time': {
+      const totalSec = rows.reduce((s, r) => s + durationOf(r), 0);
+      const todaySec = rows.reduce(
+        (s, r) =>
+          r.timestamp.slice(0, 10) === todayKey ? s + durationOf(r) : s,
+        0
+      );
+      const byDay = new Map<string, number>();
+      for (const r of rows) {
+        const k = r.timestamp.slice(0, 10);
+        byDay.set(k, (byDay.get(k) ?? 0) + durationOf(r));
+      }
+      const bestPair = pickBestDay(byDay);
+      return {
+        kind: 'time',
+        totalSec,
+        todaySec,
+        bestDay: bestPair ? { date: bestPair[0], totalSec: bestPair[1] } : null,
+      };
+    }
+    case 'distance': {
+      const totalM = rows.reduce((s, r) => s + distanceOf(r), 0);
+      const todayM = rows.reduce(
+        (s, r) =>
+          r.timestamp.slice(0, 10) === todayKey ? s + distanceOf(r) : s,
+        0
+      );
+      const byDay = new Map<string, number>();
+      for (const r of rows) {
+        const k = r.timestamp.slice(0, 10);
+        byDay.set(k, (byDay.get(k) ?? 0) + distanceOf(r));
+      }
+      const bestPair = pickBestDay(byDay);
+      return {
+        kind: 'distance',
+        totalM,
+        todayM,
+        bestDay: bestPair ? { date: bestPair[0], totalM: bestPair[1] } : null,
+      };
+    }
+    case 'distance-time': {
+      const totalM = rows.reduce((s, r) => s + distanceOf(r), 0);
+      const totalSec = rows.reduce((s, r) => s + durationOf(r), 0);
+      const todayM = rows.reduce(
+        (s, r) =>
+          r.timestamp.slice(0, 10) === todayKey ? s + distanceOf(r) : s,
+        0
+      );
+      const todaySec = rows.reduce(
+        (s, r) =>
+          r.timestamp.slice(0, 10) === todayKey ? s + durationOf(r) : s,
+        0
+      );
+      const byDay = new Map<string, { m: number; sec: number }>();
+      for (const r of rows) {
+        const k = r.timestamp.slice(0, 10);
+        const cur = byDay.get(k) ?? { m: 0, sec: 0 };
+        cur.m += distanceOf(r);
+        cur.sec += durationOf(r);
+        byDay.set(k, cur);
+      }
+      let bestEntry: [string, { m: number; sec: number }] | null = null;
+      for (const e of byDay.entries()) {
+        if (!bestEntry || e[1].m > bestEntry[1].m) bestEntry = e;
+      }
+      return {
+        kind: 'distance-time',
+        totalM,
+        totalSec,
+        todayM,
+        todaySec,
+        bestDay: bestEntry
+          ? {
+              date: bestEntry[0],
+              totalM: bestEntry[1].m,
+              totalSec: bestEntry[1].sec,
+            }
+          : null,
+      };
+    }
+    case 'reps':
+    case 'weight':
+    default: {
+      const totalReps = rows.reduce((s, r) => s + r.reps, 0);
+      const totalSets = rows.reduce((s, r) => s + (r.sets?.length ?? 0), 0);
+      const todayReps = rows.reduce(
+        (s, r) => (r.timestamp.slice(0, 10) === todayKey ? s + r.reps : s),
+        0
+      );
+      const byDay = new Map<string, number>();
+      for (const r of rows) {
+        const k = r.timestamp.slice(0, 10);
+        byDay.set(k, (byDay.get(k) ?? 0) + r.reps);
+      }
+      const bestPair = pickBestDay(byDay);
+      return {
+        kind: 'reps',
+        totalReps,
+        totalSets,
+        todayReps,
+        bestDay: bestPair ? { date: bestPair[0], total: bestPair[1] } : null,
+      };
+    }
+  }
+}
+
+function pickBestDay(byDay: Map<string, number>): [string, number] | null {
+  let best: [string, number] | null = null;
+  for (const e of byDay.entries()) {
+    if (!best || e[1] > best[1]) best = e;
+  }
+  return best;
+}
+
+/**
+ * Resolves a category's rows into a single measurement facet or a
+ * mixed bucket. Unknown exerciseIds (custom catalog entries deleted
+ * from the device's local catalog) fold into the reps facet so they
+ * still surface a number — the rationale matches
+ * {@link unifiedEntryPrimaryValue}'s fallback.
+ */
+function computeCategoryVolume(
+  rows: ReadonlyArray<UnifiedEntry>,
+  todayKey: string
+): CategoryVolume {
+  const byMeasurement = new Map<MeasurementType, UnifiedEntry[]>();
+  for (const row of rows) {
+    const m = unifiedEntryMeasurement(row) ?? 'reps';
+    const bucket = byMeasurement.get(m);
+    if (bucket) bucket.push(row);
+    else byMeasurement.set(m, [row]);
+  }
+  if (byMeasurement.size === 1) {
+    const [[measurement, group]] = [...byMeasurement.entries()];
+    return buildFacet(measurement, group, todayKey);
+  }
+  // Stable facet order: reps → time → distance → distance-time → weight
+  // — matches the dominant-to-rare frequency in the catalog so the
+  // primary-movement facet leads the card.
+  const order: MeasurementType[] = [
+    'reps',
+    'time',
+    'distance',
+    'distance-time',
+    'weight',
+  ];
+  const facets: CategorySingleFacet[] = [];
+  for (const m of order) {
+    const group = byMeasurement.get(m);
+    if (!group?.length) continue;
+    facets.push(buildFacet(m, group, todayKey));
+  }
+  return { kind: 'mixed', facets };
 }
 
 /**
@@ -653,24 +895,6 @@ export const AnalysisStore = signalStore(
       for (const meta of EXERCISE_CATEGORIES) {
         const catRows = byCategory.get(meta.id);
         if (!catRows || !catRows.length) continue;
-        const totalReps = catRows.reduce((s, r) => s + r.reps, 0);
-        const totalSets = catRows.reduce(
-          (s, r) => s + (r.sets?.length ?? 0),
-          0
-        );
-        const todayReps = catRows.reduce(
-          (s, r) => (r.timestamp.slice(0, 10) === todayKey ? s + r.reps : s),
-          0
-        );
-        const byDay = new Map<string, number>();
-        for (const r of catRows) {
-          const k = r.timestamp.slice(0, 10);
-          byDay.set(k, (byDay.get(k) ?? 0) + r.reps);
-        }
-        let bestDayPair: [string, number] | null = null;
-        for (const e of byDay.entries()) {
-          if (!bestDayPair || e[1] > bestDayPair[1]) bestDayPair = e;
-        }
         const dates = sortedUniqueDates(catRows);
         let streak = 0;
         if (dates.length) {
@@ -685,28 +909,25 @@ export const AnalysisStore = signalStore(
           nameKey: meta.nameKey,
           icon: meta.icon,
           order: meta.order,
-          totalReps,
-          totalSets,
-          todayReps,
+          entries: catRows.length,
           currentStreak: streak,
-          bestDay: bestDayPair
-            ? { date: bestDayPair[0], total: bestDayPair[1] }
-            : null,
+          volume: computeCategoryVolume(catRows, todayKey),
         });
       }
       return result.sort((a, b) => a.order - b.order);
     });
 
-    // Labels are resolved here rather than left to the chart component
-    // because Chart.js has no `$localize` hook — feeding it the raw
-    // XLIFF id would render the legend like a developer string in
-    // production builds.
+    // Labels are resolved here (not in the chart component) because the
+    // chart now compares categories by training count — a measurement-
+    // agnostic axis. Reps, seconds and meters can no longer share a
+    // bar, so summed-volume metrics are intentionally omitted: any
+    // future side-by-side reps-vs-time comparison belongs in a
+    // measurement-specific drill-down view, not the overview chart.
     const categoryComparison = computed<CategoryComparison>(() => {
       const summaries = categorySummaries();
       return {
         labels: summaries.map((s) => categoryDisplayName(s.categoryId)),
-        reps: summaries.map((s) => s.totalReps),
-        sets: summaries.map((s) => s.totalSets),
+        entries: summaries.map((s) => s.entries),
       };
     });
 

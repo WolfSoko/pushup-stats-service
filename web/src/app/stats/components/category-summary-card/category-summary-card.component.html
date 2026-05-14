@@ -1,0 +1,245 @@
+<mat-card
+  class="card"
+  [attr.data-testid]="'category-summary-card-' + summary().categoryId"
+>
+  <mat-card-header>
+    <mat-icon mat-card-avatar aria-hidden="true">{{ summary().icon }}</mat-icon>
+    <mat-card-title>{{ displayName() }}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div
+      class="facets"
+      [attr.data-testid]="
+        'category-summary-card-facets-' + summary().categoryId
+      "
+    >
+      @for (facet of facets(); track facet.kind) {
+        @if (isReps(facet)) {
+          <section
+            class="facet"
+            [attr.data-testid]="
+              'category-summary-card-facet-' +
+              facet.kind +
+              '-' +
+              summary().categoryId
+            "
+          >
+            @if (summary().volume.kind === 'mixed') {
+              <h4
+                class="facet-title"
+                i18n="@@analysis.overview.cards.facet.repsTitle"
+              >
+                Wiederholungen
+              </h4>
+            }
+            <dl class="stats">
+              <div>
+                <dt i18n="@@analysis.overview.cards.totalReps">Reps gesamt</dt>
+                <dd
+                  [attr.data-testid]="
+                    'category-summary-card-totalReps-' + summary().categoryId
+                  "
+                >
+                  {{ facet.totalReps | number }}
+                </dd>
+              </div>
+              <div>
+                <dt i18n="@@analysis.overview.cards.todayReps">Heute</dt>
+                <dd>{{ facet.todayReps | number }}</dd>
+              </div>
+              <div>
+                <dt i18n="@@analysis.overview.cards.bestDay">Bester Tag</dt>
+                @if (facet.bestDay; as best) {
+                  <dd>{{ best.date }} · {{ best.total | number }}</dd>
+                } @else {
+                  <dd>—</dd>
+                }
+              </div>
+              <div>
+                <dt i18n="@@analysis.overview.cards.totalSets">Sätze gesamt</dt>
+                <dd>{{ facet.totalSets | number }}</dd>
+              </div>
+            </dl>
+          </section>
+        } @else if (isTime(facet)) {
+          <section
+            class="facet"
+            [attr.data-testid]="
+              'category-summary-card-facet-' +
+              facet.kind +
+              '-' +
+              summary().categoryId
+            "
+          >
+            @if (summary().volume.kind === 'mixed') {
+              <h4
+                class="facet-title"
+                i18n="@@analysis.overview.cards.facet.timeTitle"
+              >
+                Zeit
+              </h4>
+            }
+            <dl class="stats">
+              <div>
+                <dt i18n="@@analysis.overview.cards.totalTime">Zeit gesamt</dt>
+                <dd
+                  [attr.data-testid]="
+                    'category-summary-card-totalTime-' + summary().categoryId
+                  "
+                >
+                  {{ formatSeconds(facet.totalSec) }}
+                </dd>
+              </div>
+              <div>
+                <dt i18n="@@analysis.overview.cards.todayTime">Heute</dt>
+                <dd>{{ formatSeconds(facet.todaySec) }}</dd>
+              </div>
+              <div>
+                <dt i18n="@@analysis.overview.cards.bestDay">Bester Tag</dt>
+                @if (facet.bestDay; as best) {
+                  <dd>{{ best.date }} · {{ formatSeconds(best.totalSec) }}</dd>
+                } @else {
+                  <dd>—</dd>
+                }
+              </div>
+            </dl>
+          </section>
+        } @else if (isDistance(facet)) {
+          <section
+            class="facet"
+            [attr.data-testid]="
+              'category-summary-card-facet-' +
+              facet.kind +
+              '-' +
+              summary().categoryId
+            "
+          >
+            @if (summary().volume.kind === 'mixed') {
+              <h4
+                class="facet-title"
+                i18n="@@analysis.overview.cards.facet.distanceTitle"
+              >
+                Strecke
+              </h4>
+            }
+            <dl class="stats">
+              <div>
+                <dt i18n="@@analysis.overview.cards.totalDistance">
+                  Strecke gesamt
+                </dt>
+                <dd
+                  [attr.data-testid]="
+                    'category-summary-card-totalDistance-' +
+                    summary().categoryId
+                  "
+                >
+                  {{ formatMeters(facet.totalM) }}
+                </dd>
+              </div>
+              <div>
+                <dt i18n="@@analysis.overview.cards.todayDistance">Heute</dt>
+                <dd>{{ formatMeters(facet.todayM) }}</dd>
+              </div>
+              <div>
+                <dt i18n="@@analysis.overview.cards.bestDay">Bester Tag</dt>
+                @if (facet.bestDay; as best) {
+                  <dd>{{ best.date }} · {{ formatMeters(best.totalM) }}</dd>
+                } @else {
+                  <dd>—</dd>
+                }
+              </div>
+            </dl>
+          </section>
+        } @else if (isDistanceTime(facet)) {
+          <section
+            class="facet"
+            [attr.data-testid]="
+              'category-summary-card-facet-' +
+              facet.kind +
+              '-' +
+              summary().categoryId
+            "
+          >
+            @if (summary().volume.kind === 'mixed') {
+              <h4
+                class="facet-title"
+                i18n="@@analysis.overview.cards.facet.distanceTimeTitle"
+              >
+                Strecke &amp; Zeit
+              </h4>
+            }
+            <dl class="stats">
+              <div>
+                <dt i18n="@@analysis.overview.cards.totalDistance">
+                  Strecke gesamt
+                </dt>
+                <dd
+                  [attr.data-testid]="
+                    'category-summary-card-totalDistance-' +
+                    summary().categoryId
+                  "
+                >
+                  {{ formatMeters(facet.totalM) }}
+                </dd>
+              </div>
+              <div>
+                <dt i18n="@@analysis.overview.cards.totalTime">Zeit gesamt</dt>
+                <dd>{{ formatSeconds(facet.totalSec) }}</dd>
+              </div>
+              <div>
+                <dt i18n="@@analysis.overview.cards.todayDistance">Heute</dt>
+                <dd>
+                  {{ formatMeters(facet.todayM) }} ·
+                  {{ formatSeconds(facet.todaySec) }}
+                </dd>
+              </div>
+              <div>
+                <dt i18n="@@analysis.overview.cards.bestDay">Bester Tag</dt>
+                @if (facet.bestDay; as best) {
+                  <dd>
+                    {{ best.date }} · {{ formatMeters(best.totalM) }} ·
+                    {{ formatPace(best.totalM, best.totalSec) }}
+                  </dd>
+                } @else {
+                  <dd>—</dd>
+                }
+              </div>
+            </dl>
+          </section>
+        }
+      }
+    </div>
+    <div class="meta-row">
+      <div>
+        <dt i18n="@@analysis.overview.cards.streak">Streak</dt>
+        <dd>
+          <ng-container i18n="@@analysis.streakDays"
+            >{{ summary().currentStreak }} Tage</ng-container
+          >
+        </dd>
+      </div>
+      <div>
+        <dt i18n="@@analysis.overview.cards.entries">Trainingseinheiten</dt>
+        <dd
+          [attr.data-testid]="
+            'category-summary-card-entries-' + summary().categoryId
+          "
+        >
+          {{ summary().entries | number }}
+        </dd>
+      </div>
+    </div>
+  </mat-card-content>
+  <mat-card-actions align="end">
+    <button
+      mat-flat-button
+      color="primary"
+      (click)="viewSelect.emit(summary().categoryId)"
+      [attr.data-testid]="
+        'category-summary-card-drilldown-' + summary().categoryId
+      "
+    >
+      <span i18n="@@analysis.overview.cards.viewDetails">Details ansehen</span>
+    </button>
+  </mat-card-actions>
+</mat-card>

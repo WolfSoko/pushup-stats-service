@@ -582,7 +582,9 @@ describe('AnalysisPageComponent', () => {
       const { store } = fixture.componentInstance;
       const summaries = store.categorySummaries();
       const pushup = summaries.find((s) => s.categoryId === 'pushup');
-      expect(pushup).toMatchObject({
+      expect(pushup?.entries).toBe(6);
+      expect(pushup?.volume).toEqual({
+        kind: 'reps',
         totalReps: 93,
         // 5+5 + 6+6 + 10+5+5 + 10+8+7 + 9+9 = 12 sets across 5 entries.
         totalSets: 12,
@@ -591,30 +593,32 @@ describe('AnalysisPageComponent', () => {
         bestDay: { date: '2026-02-13', total: 25 },
       });
       const abs = summaries.find((s) => s.categoryId === 'core');
-      expect(abs).toMatchObject({
+      expect(abs?.currentStreak).toBe(1);
+      expect(abs?.volume).toEqual({
+        kind: 'reps',
         totalReps: 30,
         totalSets: 0,
         todayReps: 0,
-        currentStreak: 1,
         bestDay: { date: '2026-02-12', total: 30 },
       });
       const legs = summaries.find((s) => s.categoryId === 'squat');
-      expect(legs).toMatchObject({
+      expect(legs?.volume).toMatchObject({
+        kind: 'reps',
         totalReps: 40,
         bestDay: { date: '2026-02-13', total: 40 },
       });
     });
 
     it('categoryComparison projects summaries into chart-friendly arrays with translated labels', () => {
-      // Chart.js cannot resolve $localize ids at runtime, so labels
-      // are pre-translated by the store. TestBed defaults to the
-      // source locale (de) — assertions use the German source strings
-      // for the movement-pattern category names.
+      // Chart bar metric is `entries` — a measurement-agnostic count
+      // of logged trainings — so the chart can compare reps-, time-
+      // and distance-categories without mixing dimensions on one axis.
+      // TestBed defaults to the source locale (de).
       const { store } = fixture.componentInstance;
       const cmp = store.categoryComparison();
       expect(cmp.labels).toEqual(['Liegestütze', 'Kniebeuge', 'Rumpf']);
-      expect(cmp.reps).toEqual([93, 40, 30]);
-      expect(cmp.sets).toEqual([12, 0, 0]);
+      // 6 pushups + 1 legs ex + 1 abs ex
+      expect(cmp.entries).toEqual([6, 1, 1]);
     });
 
     it('categorySummaries stays insensitive to the active view (it powers the overview)', () => {
@@ -624,6 +628,122 @@ describe('AnalysisPageComponent', () => {
       expect(store.categorySummaries().map((s) => s.categoryId)).toEqual(
         baseline
       );
+    });
+
+    it('categorySummaries emits a mixed volume when a category combines reps and time entries', () => {
+      // `core` collects both sit-ups (reps) and plank (time). Pre-redesign
+      // the roll-up summed `r.reps` across both — pushing plank's true
+      // `durationSec` volume into a `0` reps row and showing "0 Reps
+      // gesamt" on a card that actually had 3.5 min of plank.
+      liveExerciseEntries.set([
+        {
+          _id: 'ex-abs',
+          userId: 'u1',
+          exerciseId: 'abs.situps',
+          timestamp: '2026-02-12T08:00:00.000Z',
+          reps: 30,
+          source: 'web',
+        } as ExerciseEntry,
+        {
+          _id: 'ex-plank-1',
+          userId: 'u1',
+          exerciseId: 'plank.standard',
+          timestamp: '2026-02-13T08:00:00.000Z',
+          reps: 0,
+          durationSec: 90,
+          source: 'web',
+        } as ExerciseEntry,
+        {
+          _id: 'ex-plank-2',
+          userId: 'u1',
+          exerciseId: 'plank.standard',
+          timestamp: '2026-02-15T08:00:00.000Z',
+          reps: 0,
+          durationSec: 120,
+          source: 'web',
+        } as ExerciseEntry,
+      ]);
+      const { store } = fixture.componentInstance;
+      const summaries = store.categorySummaries();
+      const core = summaries.find((s) => s.categoryId === 'core');
+      expect(core?.entries).toBe(3);
+      expect(core?.volume.kind).toBe('mixed');
+      if (core?.volume.kind !== 'mixed') return;
+      // Stable facet order: reps before time.
+      expect(core.volume.facets.map((f) => f.kind)).toEqual(['reps', 'time']);
+      expect(core.volume.facets[0]).toEqual({
+        kind: 'reps',
+        totalReps: 30,
+        totalSets: 0,
+        todayReps: 0,
+        bestDay: { date: '2026-02-12', total: 30 },
+      });
+      expect(core.volume.facets[1]).toEqual({
+        kind: 'time',
+        totalSec: 210,
+        // Locked clock is Sun Feb 15 2026 → only the 120 s entry is "today".
+        todaySec: 120,
+        bestDay: { date: '2026-02-15', totalSec: 120 },
+      });
+    });
+
+    it('categorySummaries emits a distance-time facet for cardio runs', () => {
+      liveExerciseEntries.set([
+        {
+          _id: 'ex-run-1',
+          userId: 'u1',
+          exerciseId: 'cardio.running',
+          timestamp: '2026-02-13T08:00:00.000Z',
+          reps: 0,
+          durationSec: 1500,
+          distanceM: 5000,
+          source: 'web',
+        } as ExerciseEntry,
+      ]);
+      const { store } = fixture.componentInstance;
+      const summaries = store.categorySummaries();
+      const cardio = summaries.find((s) => s.categoryId === 'cardio');
+      expect(cardio?.entries).toBe(1);
+      expect(cardio?.volume).toEqual({
+        kind: 'distance-time',
+        totalM: 5000,
+        totalSec: 1500,
+        todayM: 0,
+        todaySec: 0,
+        bestDay: { date: '2026-02-13', totalM: 5000, totalSec: 1500 },
+      });
+    });
+
+    it('categorySummaries collapses to a single facet when every entry shares one measurement (mobility/time)', () => {
+      liveExerciseEntries.set([
+        {
+          _id: 'ex-mob-1',
+          userId: 'u1',
+          exerciseId: 'mobility.stretching',
+          timestamp: '2026-02-13T08:00:00.000Z',
+          reps: 0,
+          durationSec: 45,
+          source: 'web',
+        } as ExerciseEntry,
+        {
+          _id: 'ex-mob-2',
+          userId: 'u1',
+          exerciseId: 'mobility.stretching',
+          timestamp: '2026-02-14T08:00:00.000Z',
+          reps: 0,
+          durationSec: 60,
+          source: 'web',
+        } as ExerciseEntry,
+      ]);
+      const { store } = fixture.componentInstance;
+      const summaries = store.categorySummaries();
+      const mobility = summaries.find((s) => s.categoryId === 'mobility');
+      expect(mobility?.volume).toEqual({
+        kind: 'time',
+        totalSec: 105,
+        todaySec: 0,
+        bestDay: { date: '2026-02-14', totalSec: 60 },
+      });
     });
 
     it('typeBreakdown collapses to the active category in kind mode (abs)', () => {
