@@ -710,17 +710,47 @@
     </unit>
             <unit id="autoCount.title">
       <segment state="translated">
-        <source>Liegestütze automatisch zählen</source>
-        <target>Conteo automático de flexiones</target>
+        <source>Übungen automatisch zählen</source>
+        <target>Conteo automático de ejercicios</target>
       </segment>
     </unit>
-        <unit id="autoCount.instructions">
+    <unit id="autoCount.instructions">
       <segment state="translated">
-        <source>Halte das Gerät so, dass deine Schulter, dein Ellbogen und dein Handgelenk im Bild sind. Reps werden bei sauberem Down‑Up gezählt.</source>
-        <target>Sostén el dispositivo de modo que se vean tu hombro, codo y muñeca. Las repeticiones se cuentan con un movimiento limpio de bajada y subida.</target>
+        <source>Halte das Gerät so, dass die relevanten Gelenke (Schulter/Ellbogen/Handgelenk bzw. Hüfte/Knie/Fuß) im Bild sind. Reps werden bei sauberem Down‑Up gezählt.</source>
+        <target>Sostén el dispositivo de modo que se vean las articulaciones relevantes (hombro/codo/muñeca o cadera/rodilla/pie). Las repeticiones se cuentan con un movimiento limpio de bajada y subida.</target>
       </segment>
     </unit>
-        <unit id="autoCount.cameraStarting">
+    <unit id="autoCount.exercisePickerAria">
+      <segment state="translated">
+        <source>Übung wählen</source>
+        <target>Elegir ejercicio</target>
+      </segment>
+    </unit>
+    <unit id="autoCount.exercise.pushup">
+      <segment state="translated">
+        <source>Liegestütze</source>
+        <target>Flexiones</target>
+      </segment>
+    </unit>
+    <unit id="autoCount.exercise.squat">
+      <segment state="translated">
+        <source>Kniebeugen</source>
+        <target>Sentadillas</target>
+      </segment>
+    </unit>
+    <unit id="autoCount.exercise.pullup">
+      <segment state="translated">
+        <source>Klimmzüge</source>
+        <target>Dominadas</target>
+      </segment>
+    </unit>
+    <unit id="autoCount.exercise.situp">
+      <segment state="translated">
+        <source>Sit-ups</source>
+        <target>Abdominales</target>
+      </segment>
+    </unit>
+    <unit id="autoCount.cameraStarting">
       <segment state="translated">
         <source>Kamera startet …</source>
         <target>Iniciando cámara …</target>
@@ -740,11 +770,11 @@
     </unit>
         <unit id="autoCount.positionHint">
       <segment state="translated">
-        <source>In Plank‑Position gehen</source>
-        <target>Ponte en posición de plancha</target>
+        <source>In Startposition gehen</source>
+        <target>Ponte en posición inicial</target>
       </segment>
     </unit>
-        <unit id="autoCount.reset">
+    <unit id="autoCount.reset">
       <segment state="translated">
         <source>Zurücksetzen</source>
         <target>Restablecer</target>

@@ -2625,21 +2625,29 @@
         <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:2,5</note>
       </notes>
       <segment>
-        <source> Liegestütze automatisch zählen
+        <source> Übungen automatisch zählen
 </source>
+      </segment>
+    </unit>
+    <unit id="autoCount.exercisePickerAria">
+      <notes>
+        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:10,11</note>
+      </notes>
+      <segment>
+        <source>Übung wählen</source>
       </segment>
     </unit>
     <unit id="autoCount.instructions">
       <notes>
-        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:6,9</note>
+        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:21,24</note>
       </notes>
       <segment>
-        <source> Halte das Gerät so, dass deine Schulter, dein Ellbogen und dein Handgelenk im Bild sind. Reps werden bei sauberem Down‑Up gezählt. </source>
+        <source> Halte das Gerät so, dass die relevanten Gelenke (Schulter/Ellbogen/Handgelenk bzw. Hüfte/Knie/Fuß) im Bild sind. Reps werden bei sauberem Down‑Up gezählt. </source>
       </segment>
     </unit>
     <unit id="autoCount.cameraStarting">
       <notes>
-        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:14,17</note>
+        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:29,32</note>
       </notes>
       <segment>
         <source>Kamera startet …</source>
@@ -2647,7 +2655,7 @@
     </unit>
     <unit id="autoCount.unavailable">
       <notes>
-        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:21,23</note>
+        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:36,38</note>
       </notes>
       <segment>
         <source> Auto‑Zählen nicht verfügbar </source>
@@ -2655,7 +2663,7 @@
     </unit>
     <unit id="autoCount.repsLabel">
       <notes>
-        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:29,31</note>
+        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:44,46</note>
       </notes>
       <segment>
         <source>Reps</source>
@@ -2663,15 +2671,15 @@
     </unit>
     <unit id="autoCount.positionHint">
       <notes>
-        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:33,36</note>
+        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:48,51</note>
       </notes>
       <segment>
-        <source> In Plank‑Position gehen </source>
+        <source> In Startposition gehen </source>
       </segment>
     </unit>
     <unit id="autoCount.reset">
       <notes>
-        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:46,48</note>
+        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:61,63</note>
       </notes>
       <segment>
         <source> Zurücksetzen </source>
@@ -2679,7 +2687,7 @@
     </unit>
     <unit id="autoCount.cancel">
       <notes>
-        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:49,52</note>
+        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:64,67</note>
       </notes>
       <segment>
         <source> Abbrechen </source>
@@ -2687,10 +2695,42 @@
     </unit>
     <unit id="autoCount.save">
       <notes>
-        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:58,60</note>
+        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:73,75</note>
       </notes>
       <segment>
         <source> Übernehmen </source>
+      </segment>
+    </unit>
+    <unit id="autoCount.exercise.pushup">
+      <notes>
+        <note category="location">web/src/app/auto-count/auto-count-dialog.component.ts:69</note>
+      </notes>
+      <segment>
+        <source>Liegestütze</source>
+      </segment>
+    </unit>
+    <unit id="autoCount.exercise.squat">
+      <notes>
+        <note category="location">web/src/app/auto-count/auto-count-dialog.component.ts:70</note>
+      </notes>
+      <segment>
+        <source>Kniebeugen</source>
+      </segment>
+    </unit>
+    <unit id="autoCount.exercise.pullup">
+      <notes>
+        <note category="location">web/src/app/auto-count/auto-count-dialog.component.ts:71</note>
+      </notes>
+      <segment>
+        <source>Klimmzüge</source>
+      </segment>
+    </unit>
+    <unit id="autoCount.exercise.situp">
+      <notes>
+        <note category="location">web/src/app/auto-count/auto-count-dialog.component.ts:72</note>
+      </notes>
+      <segment>
+        <source>Sit-ups</source>
       </segment>
     </unit>
     <unit id="blog.article.back">
@@ -2824,8 +2864,8 @@
     </unit>
     <unit id="quickAdd.success.create">
       <notes>
-        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:42</note>
-        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:188</note>
+        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:74</note>
+        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:259</note>
       </notes>
       <segment>
         <source>Eintrag gespeichert.</source>
@@ -2833,9 +2873,9 @@
     </unit>
     <unit id="quickAdd.error.create">
       <notes>
-        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:54</note>
-        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:93</note>
-        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:199</note>
+        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:86</note>
+        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:125</note>
+        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:275</note>
       </notes>
       <segment>
         <source>Eintrag konnte nicht gespeichert werden.</source>
@@ -2843,7 +2883,7 @@
     </unit>
     <unit id="quickAdd.success.goalReached">
       <notes>
-        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:80</note>
+        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:112</note>
       </notes>
       <segment>
         <source>Tagesziel erreicht 🎉</source>
@@ -4465,8 +4505,8 @@
     <unit id="analysis.streakDays">
       <notes>
         <note category="location">web/src/app/stats/components/category-summary-card/category-summary-card.component.ts:51,52</note>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:81,82</note>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:89,90</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:83,84</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:91,92</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="INTERPOLATION" disp="{{ summary().currentStreak }}"/> Tage</source>
@@ -4896,57 +4936,9 @@
         <source> Keine Sets-Daten vorhanden </source>
       </segment>
     </unit>
-    <unit id="chart.subtitle.reps">
-      <notes>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts</note>
-      </notes>
-      <segment>
-        <source>Balken zeigen deine Wiederholungen pro Zeitabschnitt. Die orange Linie summiert den Tag, die grüne zeigt deinen Trend.</source>
-      </segment>
-    </unit>
-    <unit id="chart.subtitle.time">
-      <notes>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts</note>
-      </notes>
-      <segment>
-        <source>Balken zeigen deine Übungsdauer (s) pro Zeitabschnitt. Die orange Linie summiert den Tag, die grüne zeigt deinen Trend.</source>
-      </segment>
-    </unit>
-    <unit id="chart.subtitle.distance">
-      <notes>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts</note>
-      </notes>
-      <segment>
-        <source>Balken zeigen deine Strecke (km) pro Zeitabschnitt. Die orange Linie zeigt dein Tempo (min/km), die grüne deinen Strecken-Trend.</source>
-      </segment>
-    </unit>
-    <unit id="chart.subtitle.weight">
-      <notes>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts</note>
-      </notes>
-      <segment>
-        <source>Balken zeigen dein Trainingsgewicht (kg) pro Zeitabschnitt. Die orange Linie summiert den Tag, die grüne zeigt deinen Trend.</source>
-      </segment>
-    </unit>
-    <unit id="chart.subtitle.mixed">
-      <notes>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts</note>
-      </notes>
-      <segment>
-        <source>Balken zeigen dein Trainingsvolumen pro Zeitabschnitt. Die orange Linie summiert den Tag, die grüne zeigt deinen Trend.</source>
-      </segment>
-    </unit>
-    <unit id="chart.kmPace">
-      <notes>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts</note>
-      </notes>
-      <segment>
-        <source>km Tempo</source>
-      </segment>
-    </unit>
     <unit id="chart.modeToggleAria">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:60,61</note>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:81,82</note>
       </notes>
       <segment>
         <source>Zeitraum der Stundenansicht</source>
@@ -4954,7 +4946,7 @@
     </unit>
     <unit id="chart.mode14h">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:64,65</note>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:85,86</note>
       </notes>
       <segment>
         <source>14h</source>
@@ -4962,7 +4954,7 @@
     </unit>
     <unit id="chart.mode24h">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:67,68</note>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:88,89</note>
       </notes>
       <segment>
         <source>24h</source>
@@ -4970,43 +4962,16 @@
     </unit>
     <unit id="chart.legendAria">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:81</note>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:102</note>
       </notes>
       <segment>
         <source>Legende</source>
       </segment>
     </unit>
-    <unit id="chart.interval">
-      <notes>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:86,87</note>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:148</note>
-      </notes>
-      <segment>
-        <source>Intervallwert</source>
-      </segment>
-    </unit>
-    <unit id="chart.dayIntegral">
-      <notes>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:92,93</note>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:149</note>
-      </notes>
-      <segment>
-        <source>Tages-Integral</source>
-      </segment>
-    </unit>
-    <unit id="chart.movingAvg">
-      <notes>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:98,99</note>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:150</note>
-      </notes>
-      <segment>
-        <source>Gleitender Durchschnitt</source>
-      </segment>
-    </unit>
     <unit id="chart.withSets">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:105,106</note>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:176</note>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:112,113</note>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:271</note>
       </notes>
       <segment>
         <source>Mit Sets</source>
@@ -5014,7 +4979,7 @@
     </unit>
     <unit id="chart.titleHourly">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:140</note>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:162</note>
       </notes>
       <segment>
         <source>Verlauf (Stundenwerte)</source>
@@ -5022,15 +4987,87 @@
     </unit>
     <unit id="chart.titleDaily">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:141</note>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:163</note>
       </notes>
       <segment>
         <source>Verlauf (Tageswerte)</source>
       </segment>
     </unit>
-    <unit id="chart.setsTooltip">
+    <unit id="chart.subtitle.reps">
       <notes>
         <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:175</note>
+      </notes>
+      <segment>
+        <source>Balken zeigen deine Wiederholungen pro Zeitabschnitt. Die orange Linie summiert den Tag, die grüne zeigt deinen Trend.</source>
+      </segment>
+    </unit>
+    <unit id="chart.subtitle.time">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:176</note>
+      </notes>
+      <segment>
+        <source>Balken zeigen deine Übungsdauer (s) pro Zeitabschnitt. Die orange Linie summiert den Tag, die grüne zeigt deinen Trend.</source>
+      </segment>
+    </unit>
+    <unit id="chart.subtitle.distance">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:177</note>
+      </notes>
+      <segment>
+        <source>Balken zeigen deine Strecke (km) pro Zeitabschnitt. Die orange Linie zeigt dein Tempo (min/km), die grüne deinen Strecken-Trend.</source>
+      </segment>
+    </unit>
+    <unit id="chart.subtitle.weight">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:178</note>
+      </notes>
+      <segment>
+        <source>Balken zeigen dein Trainingsgewicht (kg) pro Zeitabschnitt. Die orange Linie summiert den Tag, die grüne zeigt deinen Trend.</source>
+      </segment>
+    </unit>
+    <unit id="chart.subtitle.mixed">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:179</note>
+      </notes>
+      <segment>
+        <source>Balken zeigen dein Trainingsvolumen pro Zeitabschnitt. Die orange Linie summiert den Tag, die grüne zeigt deinen Trend.</source>
+      </segment>
+    </unit>
+    <unit id="chart.interval">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:199</note>
+      </notes>
+      <segment>
+        <source>Intervallwert</source>
+      </segment>
+    </unit>
+    <unit id="chart.dayIntegral">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:200</note>
+      </notes>
+      <segment>
+        <source>Tages-Integral</source>
+      </segment>
+    </unit>
+    <unit id="chart.kmPace">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:201</note>
+      </notes>
+      <segment>
+        <source>km Tempo</source>
+      </segment>
+    </unit>
+    <unit id="chart.movingAvg">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:202</note>
+      </notes>
+      <segment>
+        <source>Gleitender Durchschnitt</source>
+      </segment>
+    </unit>
+    <unit id="chart.setsTooltip">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:270</note>
       </notes>
       <segment>
         <source>Sets</source>
@@ -6354,7 +6391,7 @@
     </unit>
     <unit id="analysis.bestStreaksTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:49,51</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:51,53</note>
       </notes>
       <segment>
         <source>Bestwerte &amp; Streaks</source>
@@ -6362,7 +6399,7 @@
     </unit>
     <unit id="analysis.bestSingleEntry">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:55,57</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:57,59</note>
       </notes>
       <segment>
         <source>Bestwert Einzel-Eintrag:</source>
@@ -6370,7 +6407,7 @@
     </unit>
     <unit id="analysis.bestDay">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:60,62</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:62,64</note>
       </notes>
       <segment>
         <source>Bester Tag:</source>
@@ -6378,7 +6415,7 @@
     </unit>
     <unit id="analysis.bestSingleSet">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:69,71</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:71,73</note>
       </notes>
       <segment>
         <source>Bestes Einzel-Set:</source>
@@ -6386,7 +6423,7 @@
     </unit>
     <unit id="analysis.repsUnit">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:73,75</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:75,77</note>
       </notes>
       <segment>
         <source>Wdh.</source>
@@ -6394,7 +6431,7 @@
     </unit>
     <unit id="analysis.currentStreak">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:78,80</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:80,82</note>
       </notes>
       <segment>
         <source>Aktuelle Streak:</source>
@@ -6402,7 +6439,7 @@
     </unit>
     <unit id="analysis.longestStreak">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:86,88</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:88,90</note>
       </notes>
       <segment>
         <source>Längste Streak:</source>
@@ -6410,7 +6447,7 @@
     </unit>
     <unit id="analysis.typesTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:99,101</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:101,103</note>
       </notes>
       <segment>
         <source>Typen (Anteile)</source>
@@ -6418,7 +6455,7 @@
     </unit>
     <unit id="analysis.avgSetSizeTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:113,114</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:115,116</note>
       </notes>
       <segment>
         <source>⌀ Set-Größe</source>
@@ -6426,7 +6463,7 @@
     </unit>
     <unit id="analysis.repsPerSet">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:118,119</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:120,121</note>
       </notes>
       <segment>
         <source>Reps / Set</source>
@@ -6434,7 +6471,7 @@
     </unit>
     <unit id="analysis.setsDistTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:127,129</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:129,131</note>
       </notes>
       <segment>
         <source>Sets-Verteilung</source>
@@ -6442,7 +6479,7 @@
     </unit>
     <unit id="analysis.heatmapTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:142,144</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:144,146</note>
       </notes>
       <segment>
         <source>Heatmap (Wochentag/Uhrzeit)</source>
@@ -6450,7 +6487,7 @@
     </unit>
     <unit id="analysis.heatmapToggleAriaLabel">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:148,149</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:150,151</note>
       </notes>
       <segment>
         <source>Heatmap-Modus auswählen</source>
@@ -6458,7 +6495,7 @@
     </unit>
     <unit id="analysis.heatmapReps">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:152,154</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:154,156</note>
       </notes>
       <segment>
         <source>Reps</source>
@@ -6466,7 +6503,7 @@
     </unit>
     <unit id="analysis.heatmapSets">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:155,157</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:157,159</note>
       </notes>
       <segment>
         <source>Sets</source>
@@ -6474,7 +6511,7 @@
     </unit>
     <unit id="analysis.weekTrendTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:173,175</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:175,177</note>
       </notes>
       <segment>
         <source>Wochentrend</source>
@@ -6482,7 +6519,7 @@
     </unit>
     <unit id="analysis.weekTrendSubtitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:176,178</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:178,180</note>
       </notes>
       <segment>
         <source>Letzte 8 Wochen</source>
@@ -6490,7 +6527,7 @@
     </unit>
     <unit id="analysis.weekCol">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:184,185</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:186,187</note>
       </notes>
       <segment>
         <source>Woche</source>
@@ -6498,8 +6535,8 @@
     </unit>
     <unit id="analysis.repsCol">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:190,191</note>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:238,239</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:192,193</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:240,241</note>
       </notes>
       <segment>
         <source>Reps</source>
@@ -6507,8 +6544,8 @@
     </unit>
     <unit id="analysis.avgSetsCol">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:196,197</note>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:244,245</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:198,199</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:246,247</note>
       </notes>
       <segment>
         <source>⌀ Sets</source>
@@ -6516,7 +6553,7 @@
     </unit>
     <unit id="analysis.monthTrendTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:221,223</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:223,225</note>
       </notes>
       <segment>
         <source>Monatstrend</source>
@@ -6524,7 +6561,7 @@
     </unit>
     <unit id="analysis.monthTrendSubtitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:224,226</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:226,228</note>
       </notes>
       <segment>
         <source>Letzte 6 Monate</source>
@@ -6532,7 +6569,7 @@
     </unit>
     <unit id="analysis.monthCol">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:232,233</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:234,235</note>
       </notes>
       <segment>
         <source>Monat</source>
@@ -7841,7 +7878,7 @@
     </unit>
     <unit id="trainingPlans.autoStartFailed">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:683</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:684</note>
       </notes>
       <segment>
         <source>Plan-Start fehlgeschlagen — bitte erneut versuchen.</source>
@@ -7849,7 +7886,7 @@
     </unit>
     <unit id="trainingPlans.started">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:766</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:767</note>
       </notes>
       <segment>
         <source>Plan gestartet — viel Erfolg!</source>
@@ -7857,7 +7894,7 @@
     </unit>
     <unit id="trainingPlans.abandoned">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:783</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:784</note>
       </notes>
       <segment>
         <source>Plan beendet.</source>
@@ -7865,7 +7902,7 @@
     </unit>
     <unit id="trainingPlans.skipped">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:801</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:802</note>
       </notes>
       <segment>
         <source>Tag übersprungen.</source>
@@ -7873,7 +7910,7 @@
     </unit>
     <unit id="trainingPlans.jumped">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:814</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:815</note>
       </notes>
       <segment>
         <source>Auf Tag <ph id="0" equiv="INTERPOLATION" disp="dayIndex"/> gesprungen.</source>
@@ -7881,7 +7918,7 @@
     </unit>
     <unit id="trainingPlans.logged">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:831</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:832</note>
         <note category="location">web/src/app/training-plans/training-plans-page.component.ts:348</note>
       </notes>
       <segment>
@@ -7890,7 +7927,7 @@
     </unit>
     <unit id="trainingPlans.alreadyLogged">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:833</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:834</note>
         <note category="location">web/src/app/training-plans/training-plans-page.component.ts:350</note>
       </notes>
       <segment>
@@ -7899,7 +7936,7 @@
     </unit>
     <unit id="trainingPlans.notReady">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:835</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:836</note>
         <note category="location">web/src/app/training-plans/training-plans-page.component.ts:352</note>
       </notes>
       <segment>

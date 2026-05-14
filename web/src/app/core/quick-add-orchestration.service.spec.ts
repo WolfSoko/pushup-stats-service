@@ -4,18 +4,47 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { signal } from '@angular/core';
 import { of, Subject, throwError } from 'rxjs';
-import { StatsApiService } from '@pu-stats/data-access';
+import { UserContextService } from '@pu-auth/auth';
+import {
+  ExerciseFirestoreService,
+  StatsApiService,
+} from '@pu-stats/data-access';
 import { QuickAddBridgeService } from '@pu-stats/quick-add';
 import { QuickAddOrchestrationService } from './quick-add-orchestration.service';
 import { AppDataFacade } from './app-data.facade';
+
+const baseProviders = (params: {
+  statsApiMock: { createPushup: ReturnType<typeof vitest.fn> };
+  exerciseApiMock: { createEntry: ReturnType<typeof vitest.fn> };
+  appDataMock: Partial<AppDataFacade>;
+  snackBarMock: { open: ReturnType<typeof vitest.fn> };
+  routerMock: { url: string; navigate: ReturnType<typeof vitest.fn> };
+  bridgeMock: { requestOpenDialog: ReturnType<typeof vitest.fn> };
+  userId?: string;
+  dialogMock?: { open: ReturnType<typeof vitest.fn> };
+}) => [
+  QuickAddOrchestrationService,
+  { provide: StatsApiService, useValue: params.statsApiMock },
+  { provide: ExerciseFirestoreService, useValue: params.exerciseApiMock },
+  {
+    provide: UserContextService,
+    useValue: { userIdSafe: () => params.userId ?? 'u1' },
+  },
+  { provide: MatSnackBar, useValue: params.snackBarMock },
+  { provide: Router, useValue: params.routerMock },
+  { provide: QuickAddBridgeService, useValue: params.bridgeMock },
+  { provide: AppDataFacade, useValue: params.appDataMock },
+  ...(params.dialogMock
+    ? [{ provide: MatDialog, useValue: params.dialogMock }]
+    : []),
+];
 
 describe('QuickAddOrchestrationService.fillToGoal', () => {
   const remainingToGoal = signal(42);
   const reloadAfterMutation = vitest.fn();
 
-  const statsApiMock = {
-    createPushup: vitest.fn(),
-  };
+  const statsApiMock = { createPushup: vitest.fn() };
+  const exerciseApiMock = { createEntry: vitest.fn() };
   const snackBarMock = { open: vitest.fn() };
   const routerMock = { url: '/app', navigate: vitest.fn() };
   const bridgeMock = { requestOpenDialog: vitest.fn() };
@@ -32,14 +61,14 @@ describe('QuickAddOrchestrationService.fillToGoal', () => {
 
     TestBed.resetTestingModule();
     TestBed.configureTestingModule({
-      providers: [
-        QuickAddOrchestrationService,
-        { provide: StatsApiService, useValue: statsApiMock },
-        { provide: MatSnackBar, useValue: snackBarMock },
-        { provide: Router, useValue: routerMock },
-        { provide: QuickAddBridgeService, useValue: bridgeMock },
-        { provide: AppDataFacade, useValue: appDataMock },
-      ],
+      providers: baseProviders({
+        statsApiMock,
+        exerciseApiMock,
+        snackBarMock,
+        routerMock,
+        bridgeMock,
+        appDataMock,
+      }),
     });
     return TestBed.inject(QuickAddOrchestrationService);
   }
@@ -122,6 +151,7 @@ describe('QuickAddOrchestrationService.fillToGoal', () => {
 describe('QuickAddOrchestrationService.openAutoCount', () => {
   const reloadAfterMutation = vitest.fn();
   const statsApiMock = { createPushup: vitest.fn() };
+  const exerciseApiMock = { createEntry: vitest.fn() };
   const snackBarMock = { open: vitest.fn() };
   const routerMock = { url: '/app', navigate: vitest.fn() };
   const bridgeMock = { requestOpenDialog: vitest.fn() };
@@ -130,9 +160,17 @@ describe('QuickAddOrchestrationService.openAutoCount', () => {
     reloadAfterMutation,
   };
 
-  function setup(autoCountResult: number | null, trainingResult: unknown) {
+  function setup(
+    autoCountResult: {
+      exerciseId: 'pushup' | 'squat' | 'pullup' | 'situp';
+      reps: number;
+    } | null,
+    trainingResult: unknown,
+    opts: { userId?: string } = {}
+  ) {
     vitest.clearAllMocks();
     statsApiMock.createPushup.mockReturnValue(of({ _id: '1' }));
+    exerciseApiMock.createEntry.mockReturnValue(of({ _id: 'e1' }));
 
     const dialogMock = {
       open: vitest
@@ -143,15 +181,16 @@ describe('QuickAddOrchestrationService.openAutoCount', () => {
 
     TestBed.resetTestingModule();
     TestBed.configureTestingModule({
-      providers: [
-        QuickAddOrchestrationService,
-        { provide: StatsApiService, useValue: statsApiMock },
-        { provide: MatSnackBar, useValue: snackBarMock },
-        { provide: Router, useValue: routerMock },
-        { provide: QuickAddBridgeService, useValue: bridgeMock },
-        { provide: AppDataFacade, useValue: appDataMock },
-        { provide: MatDialog, useValue: dialogMock },
-      ],
+      providers: baseProviders({
+        statsApiMock,
+        exerciseApiMock,
+        snackBarMock,
+        routerMock,
+        bridgeMock,
+        appDataMock,
+        dialogMock,
+        userId: opts.userId,
+      }),
     });
     return {
       service: TestBed.inject(QuickAddOrchestrationService),
@@ -159,7 +198,7 @@ describe('QuickAddOrchestrationService.openAutoCount', () => {
     };
   }
 
-  it('Given the camera dialog returns 0 reps, Then the entry dialog is not opened', async () => {
+  it('Given the camera dialog returns null, Then the entry dialog is not opened', async () => {
     const { service, dialogMock } = setup(null, undefined);
 
     await service.openAutoCount();
@@ -169,23 +208,66 @@ describe('QuickAddOrchestrationService.openAutoCount', () => {
     expect(statsApiMock.createPushup).not.toHaveBeenCalled();
   });
 
-  it('Given the camera dialog returns 12 reps, Then the entry dialog opens prefilled with reps=12 and source=auto-count', async () => {
-    const { service, dialogMock } = setup(12, null);
+  it('Given the camera dialog returns pushup reps, Then the entry dialog opens prefilled with kind=pushup, reps and source=auto-count', async () => {
+    const { service, dialogMock } = setup(
+      { exerciseId: 'pushup', reps: 12 },
+      null
+    );
 
     await service.openAutoCount();
-    // confirmAutoCount() awaits its own dynamic import after the
-    // first afterClosed callback fires; wait until the test fixture
-    // observes the resulting second `dialog.open` call.
     await vitest.waitFor(() => {
       expect(dialogMock.open).toHaveBeenCalledTimes(2);
     });
 
-    expect(dialogMock.open).toHaveBeenCalledTimes(2);
-    const secondCall = dialogMock.open.mock.calls[1];
-    const config = secondCall[1] as { data: { reps: number; source: string } };
+    const config = dialogMock.open.mock.calls[1][1] as {
+      data: { kind: string; reps: number; source: string };
+    };
+    expect(config.data.kind).toBe('pushup');
     expect(config.data.reps).toBe(12);
     expect(config.data.source).toBe('auto-count');
   });
+
+  it('Given the camera dialog returns squat reps, Then the entry dialog opens prefilled with kind=exercise and exerciseId legs.squats', async () => {
+    const { service, dialogMock } = setup(
+      { exerciseId: 'squat', reps: 8 },
+      null
+    );
+
+    await service.openAutoCount();
+    await vitest.waitFor(() => {
+      expect(dialogMock.open).toHaveBeenCalledTimes(2);
+    });
+
+    const config = dialogMock.open.mock.calls[1][1] as {
+      data: { kind: string; exerciseId?: string; reps: number };
+    };
+    expect(config.data.kind).toBe('exercise');
+    expect(config.data.exerciseId).toBe('legs.squats');
+    expect(config.data.reps).toBe(8);
+  });
+
+  it.each([
+    ['pullup', 'pull.pullups'],
+    ['situp', 'abs.situps'],
+  ] as const)(
+    'Given the camera dialog returns %s reps, Then the entry dialog uses catalog id %s',
+    async (autoId, catalogId) => {
+      const { service, dialogMock } = setup(
+        { exerciseId: autoId, reps: 5 },
+        null
+      );
+
+      await service.openAutoCount();
+      await vitest.waitFor(() => {
+        expect(dialogMock.open).toHaveBeenCalledTimes(2);
+      });
+
+      const config = dialogMock.open.mock.calls[1][1] as {
+        data: { exerciseId?: string };
+      };
+      expect(config.data.exerciseId).toBe(catalogId);
+    }
+  );
 
   it('Given the entry dialog returns a confirmed pushup, Then createPushup is called with the confirmed values', async () => {
     const trainingResult = {
@@ -196,7 +278,10 @@ describe('QuickAddOrchestrationService.openAutoCount', () => {
       source: 'auto-count',
       type: 'standard',
     };
-    const { service } = setup(12, trainingResult);
+    const { service } = setup(
+      { exerciseId: 'pushup', reps: 12 },
+      trainingResult
+    );
 
     await service.openAutoCount();
     await vitest.waitFor(() => {
@@ -209,8 +294,121 @@ describe('QuickAddOrchestrationService.openAutoCount', () => {
     expect(payload.type).toBe('standard');
   });
 
-  it('Given the entry dialog is cancelled, Then no pushup is created', async () => {
-    const { service, dialogMock } = setup(12, null);
+  it('Given the entry dialog returns a confirmed exercise, Then exerciseApi.createEntry is called with the userId and exercise payload', async () => {
+    const trainingResult = {
+      kind: 'exercise' as const,
+      timestamp: '2026-05-14T10:00:00+02:00',
+      exerciseId: 'legs.squats',
+      measurement: 'reps' as const,
+      reps: 9,
+      sets: [9],
+      variantId: 'bodyweight',
+    };
+    const { service } = setup(
+      { exerciseId: 'squat', reps: 8 },
+      trainingResult,
+      { userId: 'admin-uid' }
+    );
+
+    await service.openAutoCount();
+    await vitest.waitFor(() => {
+      expect(exerciseApiMock.createEntry).toHaveBeenCalledTimes(1);
+    });
+
+    const [userId, payload] = exerciseApiMock.createEntry.mock.calls[0];
+    expect(userId).toBe('admin-uid');
+    expect(payload.exerciseId).toBe('legs.squats');
+    expect(payload.reps).toBe(9);
+    expect(payload.variantId).toBe('bodyweight');
+    expect(payload.source).toBe('auto-count');
+  });
+
+  it('Given the entry dialog switches to a time-measurement exercise, Then durationSec is forwarded and reps is not', async () => {
+    const trainingResult = {
+      kind: 'exercise' as const,
+      timestamp: '2026-05-14T10:00:00+02:00',
+      exerciseId: 'plank.standard',
+      measurement: 'time' as const,
+      reps: 0,
+      sets: [],
+      durationSec: 45,
+      variantId: 'standard',
+    };
+    const { service } = setup(
+      { exerciseId: 'squat', reps: 8 },
+      trainingResult,
+      { userId: 'admin-uid' }
+    );
+
+    await service.openAutoCount();
+    await vitest.waitFor(() => {
+      expect(exerciseApiMock.createEntry).toHaveBeenCalledTimes(1);
+    });
+
+    const payload = exerciseApiMock.createEntry.mock.calls[0][1];
+    expect(payload.exerciseId).toBe('plank.standard');
+    expect(payload.durationSec).toBe(45);
+    expect(payload.reps).toBeUndefined();
+    expect(payload.source).toBe('auto-count');
+  });
+
+  it('Given the entry dialog switches to a distance-time exercise, Then both distanceM and durationSec are forwarded', async () => {
+    const trainingResult = {
+      kind: 'exercise' as const,
+      timestamp: '2026-05-14T10:00:00+02:00',
+      exerciseId: 'cardio.running',
+      measurement: 'distance-time' as const,
+      reps: 0,
+      sets: [],
+      durationSec: 1800,
+      distanceM: 5000,
+    };
+    const { service } = setup(
+      { exerciseId: 'squat', reps: 8 },
+      trainingResult,
+      { userId: 'admin-uid' }
+    );
+
+    await service.openAutoCount();
+    await vitest.waitFor(() => {
+      expect(exerciseApiMock.createEntry).toHaveBeenCalledTimes(1);
+    });
+
+    const payload = exerciseApiMock.createEntry.mock.calls[0][1];
+    expect(payload.distanceM).toBe(5000);
+    expect(payload.durationSec).toBe(1800);
+    expect(payload.reps).toBeUndefined();
+  });
+
+  it('Given an exercise confirm but no logged-in user, Then no entry is created and an error snackbar opens', async () => {
+    const trainingResult = {
+      kind: 'exercise' as const,
+      timestamp: '2026-05-14T10:00:00+02:00',
+      exerciseId: 'legs.squats',
+      measurement: 'reps' as const,
+      reps: 9,
+      sets: [9],
+    };
+    const { service } = setup(
+      { exerciseId: 'squat', reps: 8 },
+      trainingResult,
+      { userId: '' }
+    );
+
+    await service.openAutoCount();
+    await vitest.waitFor(() => {
+      expect(snackBarMock.open).toHaveBeenCalledTimes(1);
+    });
+
+    expect(exerciseApiMock.createEntry).not.toHaveBeenCalled();
+    expect(snackBarMock.open.mock.calls[0][0]).toContain('konnte nicht');
+  });
+
+  it('Given the entry dialog is cancelled, Then nothing is created', async () => {
+    const { service, dialogMock } = setup(
+      { exerciseId: 'squat', reps: 8 },
+      null
+    );
 
     await service.openAutoCount();
     await vitest.waitFor(() => {
@@ -218,5 +416,6 @@ describe('QuickAddOrchestrationService.openAutoCount', () => {
     });
 
     expect(statsApiMock.createPushup).not.toHaveBeenCalled();
+    expect(exerciseApiMock.createEntry).not.toHaveBeenCalled();
   });
 });

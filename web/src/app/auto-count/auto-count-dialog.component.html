@@ -1,14 +1,28 @@
-<h2 mat-dialog-title i18n="@@autoCount.title">
-  Liegestütze automatisch zählen
-</h2>
+<h2 mat-dialog-title i18n="@@autoCount.title">Übungen automatisch zählen</h2>
 <mat-dialog-content>
+  <mat-button-toggle-group
+    class="exercise-picker"
+    [value]="exerciseId()"
+    (change)="onExerciseChange($event.value)"
+    [disabled]="switching()"
+    aria-label="Übung wählen"
+    i18n-aria-label="@@autoCount.exercisePickerAria"
+  >
+    @for (option of exercises; track option.id) {
+      <mat-button-toggle [value]="option.id">
+        <mat-icon>{{ option.icon }}</mat-icon>
+        <span>{{ option.label }}</span>
+      </mat-button-toggle>
+    }
+  </mat-button-toggle-group>
   <p class="hint" i18n="@@autoCount.instructions">
-    Halte das Gerät so, dass deine Schulter, dein Ellbogen und dein Handgelenk
-    im Bild sind. Reps werden bei sauberem Down‑Up gezählt.
+    Halte das Gerät so, dass die relevanten Gelenke
+    (Schulter/Ellbogen/Handgelenk bzw. Hüfte/Knie/Fuß) im Bild sind. Reps werden
+    bei sauberem Down‑Up gezählt.
   </p>
   <div class="video-stage">
     <video #video class="preview" autoplay playsinline muted></video>
-    @if (isStarting()) {
+    @if (isStarting() || switching()) {
       <div class="overlay-message">
         <mat-spinner diameter="32" />
         <span i18n="@@autoCount.cameraStarting">Kamera startet …</span>
@@ -23,14 +37,14 @@
         <small>{{ err }}</small>
       </div>
     }
-    @if (!isStarting() && !error()) {
+    @if (!isStarting() && !switching() && !error()) {
       <div class="count-overlay" aria-live="polite">
         <span class="count-value">{{ count() }}</span>
         <span class="count-label" i18n="@@autoCount.repsLabel">Reps</span>
       </div>
       @if (phase() === 'awaiting-up') {
         <div class="position-hint" i18n="@@autoCount.positionHint">
-          In Plank‑Position gehen
+          In Startposition gehen
         </div>
       }
     }

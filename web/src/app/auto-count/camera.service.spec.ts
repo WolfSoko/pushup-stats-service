@@ -60,7 +60,7 @@ describe('CameraService', () => {
     expect(getUserMediaSpy).toHaveBeenCalledWith(
       expect.objectContaining({
         audio: false,
-        video: expect.objectContaining({ facingMode: 'environment' }),
+        video: expect.objectContaining({ facingMode: 'user' }),
       })
     );
     expect(video.srcObject).toBe(stream);

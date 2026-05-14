@@ -710,17 +710,47 @@
     </unit>
             <unit id="autoCount.title">
       <segment state="translated">
-        <source>Liegestütze automatisch zählen</source>
-        <target>Αυτόματη μέτρηση push-up</target>
+        <source>Übungen automatisch zählen</source>
+        <target>Αυτόματη μέτρηση ασκήσεων</target>
       </segment>
     </unit>
-        <unit id="autoCount.instructions">
+    <unit id="autoCount.instructions">
       <segment state="translated">
-        <source>Halte das Gerät so, dass deine Schulter, dein Ellbogen und dein Handgelenk im Bild sind. Reps werden bei sauberem Down‑Up gezählt.</source>
-        <target>Κράτα τη συσκευή έτσι ώστε ο ώμος, ο αγκώνας και ο καρπός να φαίνονται. Οι επαναλήψεις μετριούνται σε καθαρή κίνηση κάτω-πάνω.</target>
+        <source>Halte das Gerät so, dass die relevanten Gelenke (Schulter/Ellbogen/Handgelenk bzw. Hüfte/Knie/Fuß) im Bild sind. Reps werden bei sauberem Down‑Up gezählt.</source>
+        <target>Κράτα τη συσκευή έτσι ώστε οι σχετικές αρθρώσεις (ώμος/αγκώνας/καρπός ή ισχίο/γόνατο/πέλμα) να φαίνονται. Οι επαναλήψεις μετριούνται σε καθαρή κίνηση κάτω-πάνω.</target>
       </segment>
     </unit>
-        <unit id="autoCount.cameraStarting">
+    <unit id="autoCount.exercisePickerAria">
+      <segment state="translated">
+        <source>Übung wählen</source>
+        <target>Επιλογή άσκησης</target>
+      </segment>
+    </unit>
+    <unit id="autoCount.exercise.pushup">
+      <segment state="translated">
+        <source>Liegestütze</source>
+        <target>Κάμψεις</target>
+      </segment>
+    </unit>
+    <unit id="autoCount.exercise.squat">
+      <segment state="translated">
+        <source>Kniebeugen</source>
+        <target>Καθίσματα</target>
+      </segment>
+    </unit>
+    <unit id="autoCount.exercise.pullup">
+      <segment state="translated">
+        <source>Klimmzüge</source>
+        <target>Έλξεις</target>
+      </segment>
+    </unit>
+    <unit id="autoCount.exercise.situp">
+      <segment state="translated">
+        <source>Sit-ups</source>
+        <target>Κοιλιακοί</target>
+      </segment>
+    </unit>
+    <unit id="autoCount.cameraStarting">
       <segment state="translated">
         <source>Kamera startet …</source>
         <target>Έναρξη κάμερας …</target>
@@ -740,11 +770,11 @@
     </unit>
         <unit id="autoCount.positionHint">
       <segment state="translated">
-        <source>In Plank‑Position gehen</source>
-        <target>Πάρε θέση σανίδας</target>
+        <source>In Startposition gehen</source>
+        <target>Πάρε αρχική θέση</target>
       </segment>
     </unit>
-        <unit id="autoCount.reset">
+    <unit id="autoCount.reset">
       <segment state="translated">
         <source>Zurücksetzen</source>
         <target>Επαναφορά</target>
