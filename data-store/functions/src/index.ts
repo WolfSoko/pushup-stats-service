@@ -1710,6 +1710,13 @@ export const updateExerciseStatsOnEntryWrite = onDocumentWritten(
     // The Firestore rule enforces `is list` on writes, but documents
     // predating that rule (or admin SDK writes) can still carry
     // surprises.
+    //
+    // `intervals` (endurance per-segment breakdown) is intentionally
+    // NOT extracted: UserStats has no symmetric aggregation for it
+    // (no totalIntervals / bestSingleInterval yet) and the primary
+    // measurement value is already folded into the `reps` slot above.
+    // The Firestore rules enforce `sets` and `intervals` are mutex,
+    // so a strength entry won't smuggle intervals through this path.
     const oldSets = sanitizeSetsArray(beforeData?.sets);
     const newSets = sanitizeSetsArray(afterData?.sets);
 

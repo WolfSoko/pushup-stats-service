@@ -529,6 +529,48 @@ Active:         </target>
         <target>No sets data available</target>
       </segment>
     </unit>
+    <unit id="intervalsDistribution.noData">
+      <segment state="translated">
+        <source>Keine Intervall-Daten vorhanden</source>
+        <target>No intervals data available</target>
+      </segment>
+    </unit>
+    <unit id="intervalsDistribution.listLabel">
+      <segment state="translated">
+        <source>Intervall-Verteilung</source>
+        <target>Interval distribution</target>
+      </segment>
+    </unit>
+    <unit id="entry.interval.label">
+      <segment state="translated">
+        <source>Intervall <ph id="0" equiv="INTERPOLATION" disp="{{ $index + 1 }}"/></source>
+        <target>Interval <ph id="0" equiv="INTERPOLATION" disp="{{ $index + 1 }}"/></target>
+      </segment>
+    </unit>
+    <unit id="entry.intervals.label">
+      <segment state="translated">
+        <source>Intervalle</source>
+        <target>Intervals</target>
+      </segment>
+    </unit>
+    <unit id="entry.intervals.remove">
+      <segment state="translated">
+        <source>Intervall entfernen</source>
+        <target>Remove interval</target>
+      </segment>
+    </unit>
+    <unit id="entry.intervals.add">
+      <segment state="translated">
+        <source>Intervall hinzufügen</source>
+        <target>Add interval</target>
+      </segment>
+    </unit>
+    <unit id="entry.intervals.addTooltip">
+      <segment state="translated">
+        <source>Weiteres Intervall hinzufügen</source>
+        <target>Add another interval</target>
+      </segment>
+    </unit>
     <unit id="pie.top5">
       <notes>
         <note category="location">web/src/app/stats/components/type-pie/type-pie.component.ts:62,64</note>

@@ -59,6 +59,13 @@ export interface StatsTableUpdate {
   timestamp: string;
   reps?: number;
   sets?: number[];
+  /**
+   * Per-interval breakdown for endurance exercises (`time` /
+   * `distance` / `distance-time`). Like `sets`, an empty array is
+   * the explicit clear sentinel; the data-access layer maps it to a
+   * Firestore `deleteField()` so a stale breakdown can be wiped.
+   */
+  intervals?: number[];
   durationSec?: number;
   distanceM?: number;
   source: string;
@@ -90,6 +97,9 @@ export interface StatsTableCreate {
   timestamp: string;
   reps?: number;
   sets?: number[];
+  /** Per-interval breakdown for endurance exercises. Mutually
+   *  exclusive with `sets` in practice. */
+  intervals?: number[];
   durationSec?: number;
   distanceM?: number;
   source?: string;
@@ -269,6 +279,7 @@ export class StatsTableComponent {
             timestamp: entry.timestamp,
             reps: entry.reps,
             sets: entry.sets,
+            intervals: entry.intervals,
             ...(entry.durationSec !== undefined
               ? { durationSec: entry.durationSec }
               : {}),
@@ -319,21 +330,40 @@ export class StatsTableComponent {
   private exerciseCreatePayload(
     result: ExerciseEntryDialogResult
   ): StatsTableCreate {
+    // `intervals` is required on the dialog result, but the helpers
+    // are also called from programmatic tests / future callers where
+    // the field might be omitted. Default to `[]` so `.length` is
+    // always safe.
+    const intervals = result.intervals ?? [];
     return {
       kind: 'exercise',
       exerciseId: result.exerciseId,
       timestamp: result.timestamp,
       ...(result.measurement === 'time'
-        ? { durationSec: result.durationSec ?? 0 }
+        ? {
+            durationSec: result.durationSec ?? 0,
+            ...(intervals.length > 0 ? { intervals } : {}),
+          }
         : result.measurement === 'distance-time'
           ? {
               distanceM: result.distanceM ?? 0,
               durationSec: result.durationSec ?? 0,
+              ...(intervals.length > 0 ? { intervals } : {}),
             }
-          : {
-              reps: result.reps,
-              ...(result.sets.length > 1 ? { sets: result.sets } : {}),
-            }),
+          : result.measurement === 'distance'
+            ? {
+                // Pure-distance exercises don't ship in the catalog
+                // yet, but the dialog emits a `distance` branch so
+                // the create path must accept it; otherwise the
+                // distanceM + intervals would silently fall through
+                // to the strength shape and be dropped.
+                distanceM: result.distanceM ?? 0,
+                ...(intervals.length > 0 ? { intervals } : {}),
+              }
+            : {
+                reps: result.reps,
+                ...(result.sets.length > 1 ? { sets: result.sets } : {}),
+              }),
       ...(result.variantId ? { variantId: result.variantId } : {}),
     };
   }
@@ -384,6 +414,21 @@ export class StatsTableComponent {
     entry: Extract<UnifiedEntry, { kind: 'exercise' }>,
     result: ExerciseEntryDialogResult
   ): StatsTableUpdate {
+    // The dialog disables the category + exercise pickers in edit mode
+    // (see `TrainingEntryDialogComponent`), so an update can never
+    // change an entry's measurement type. That's why each branch below
+    // only needs to handle its own breakdown field — there's no
+    // strength→endurance flip where we'd have to wipe a stale `sets`
+    // from an entry that just became endurance (or vice versa). If
+    // measurement switches during edit ever land, this helper plus the
+    // Firestore-rules mutex would need explicit opposite-side clears.
+    const resultIntervals = result.intervals ?? [];
+    const intervalsPatch =
+      resultIntervals.length > 0
+        ? { intervals: resultIntervals }
+        : entry.intervals !== undefined
+          ? { intervals: [] }
+          : {};
     return {
       kind: 'exercise',
       id: entry._id,
@@ -391,21 +436,30 @@ export class StatsTableComponent {
       timestamp: result.timestamp,
       source: entry.source,
       ...(result.measurement === 'time'
-        ? { durationSec: result.durationSec ?? 0 }
+        ? {
+            durationSec: result.durationSec ?? 0,
+            ...intervalsPatch,
+          }
         : result.measurement === 'distance-time'
           ? {
               distanceM: result.distanceM ?? 0,
               durationSec: result.durationSec ?? 0,
+              ...intervalsPatch,
             }
-          : {
-              reps: result.reps,
-              sets:
-                result.sets.length > 1
-                  ? result.sets
-                  : entry.sets !== undefined
-                    ? []
-                    : undefined,
-            }),
+          : result.measurement === 'distance'
+            ? {
+                distanceM: result.distanceM ?? 0,
+                ...intervalsPatch,
+              }
+            : {
+                reps: result.reps,
+                sets:
+                  result.sets.length > 1
+                    ? result.sets
+                    : entry.sets !== undefined
+                      ? []
+                      : undefined,
+              }),
       ...(result.variantId !== undefined
         ? { variantId: result.variantId }
         : {}),

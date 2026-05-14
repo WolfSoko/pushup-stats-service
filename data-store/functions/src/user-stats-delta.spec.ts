@@ -828,6 +828,69 @@ describe('applyDelta', () => {
       expect(result.avgSetSize).toBe(0);
       expect(result.bestSingleSet).toBe(0);
     });
+
+    it('endurance entries with intervals do not poison set aggregates', () => {
+      // Given an endurance entry (e.g. cardio.running 1500m split into
+      // 3×500m intervals) whose trigger feeds the primary measurement
+      // (distanceM) into the `reps` slot and intentionally passes no
+      // `newSets`/`setsDelta` because intervals are NOT sets — they have
+      // no aggregation in UserStats today.
+      //
+      // When applyDelta runs for the create
+      // Then totalSets / avgSetSize / bestSingleSet stay 0 and the
+      // primary value still lands in `total`, `dailyReps`, etc.
+      const result = applyDelta(null, {
+        userId: 'u1',
+        repsDelta: 1500,
+        entriesDelta: 1,
+        timestamp: TIMESTAMP,
+        newReps: 1500,
+        nowIso: NOW,
+      });
+
+      expect(result.total).toBe(1500);
+      expect(result.dailyReps).toBe(1500);
+      expect(result.totalEntries).toBe(1);
+      expect(result.totalSets).toBe(0);
+      expect(result.totalSetsReps).toBe(0);
+      expect(result.avgSetSize).toBe(0);
+      expect(result.bestSingleSet).toBe(0);
+    });
+
+    it('mixes strength (sets) and endurance (intervals) entries without cross-poisoning', () => {
+      // Given a strength entry with sets followed by an endurance entry
+      // whose trigger contributes no sets payload (intervals are tracked
+      // on the source doc but not surfaced to applyDelta)
+      const afterStrength = applyDelta(null, {
+        userId: 'u1',
+        repsDelta: 30,
+        entriesDelta: 1,
+        timestamp: TIMESTAMP,
+        newReps: 30,
+        nowIso: NOW,
+        setsDelta: 3,
+        newSets: [10, 10, 10],
+      });
+
+      // When the second (endurance) entry is folded in with no sets payload
+      const afterEndurance = applyDelta(afterStrength, {
+        userId: 'u1',
+        repsDelta: 1500,
+        entriesDelta: 1,
+        timestamp: '2026-04-05T15:00:00.000Z',
+        newReps: 1500,
+        nowIso: NOW,
+      });
+
+      // Then sets aggregates reflect ONLY the strength entry
+      expect(afterEndurance.totalSets).toBe(3);
+      expect(afterEndurance.totalSetsReps).toBe(30);
+      expect(afterEndurance.avgSetSize).toBe(10);
+      expect(afterEndurance.bestSingleSet).toBe(10);
+      // And totals incorporate both
+      expect(afterEndurance.totalEntries).toBe(2);
+      expect(afterEndurance.total).toBe(1530);
+    });
   });
 
   describe('bestDay tracking', () => {
@@ -1147,5 +1210,28 @@ describe('rebuildFromEntries', () => {
     expect(stats.totalSets).toBe(0);
     expect(stats.avgSetSize).toBe(0);
     expect(stats.bestSingleSet).toBe(0);
+  });
+
+  it('aggregates endurance entries (no sets) alongside strength entries cleanly', () => {
+    // The exerciseEntries trigger feeds each entry's primary measurement
+    // value (distanceM for cardio.running, durationSec for plank) into
+    // the `reps` slot and only carries the strength `sets` field
+    // forward — intervals are intentionally dropped because UserStats
+    // has no symmetric aggregation for them. This test pins that
+    // contract so an endurance entry doesn't poison the set fields.
+    const entries = [
+      { timestamp: '2026-04-03T08:00:00.000Z', reps: 30, sets: [10, 10, 10] },
+      { timestamp: '2026-04-04T09:00:00.000Z', reps: 1500 },
+      { timestamp: '2026-04-05T14:30:00.000Z', reps: 25, sets: [15, 10] },
+    ];
+
+    const stats = rebuildFromEntries('u1', entries, NOW);
+
+    expect(stats.totalEntries).toBe(3);
+    expect(stats.total).toBe(1555);
+    expect(stats.totalSets).toBe(5);
+    expect(stats.totalSetsReps).toBe(55);
+    expect(stats.avgSetSize).toBe(11);
+    expect(stats.bestSingleSet).toBe(15);
   });
 });

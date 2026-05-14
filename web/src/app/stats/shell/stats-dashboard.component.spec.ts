@@ -550,6 +550,7 @@ describe('StatsDashboardComponent', () => {
           timestamp: '2026-02-10T13:45+01:00',
           reps: 0,
           sets: [],
+          intervals: [],
           durationSec: 90,
         });
         await fixture.whenStable();
@@ -567,6 +568,65 @@ describe('StatsDashboardComponent', () => {
         expect(reloadAfterMutationSpy).toHaveBeenCalledTimes(1);
       });
 
+      it('Then a non-empty intervals array on a time entry is forwarded to ExerciseFirestoreService.createEntry', async () => {
+        // Regression for an earlier silent-drop: the createEntry helper
+        // builds the payload from `result.intervals`, and the previous
+        // strength-fallback shape dropped the field entirely. Pin the
+        // forward so any future shape change can't silently lose
+        // breakdown data again.
+        const component = fixture.componentInstance;
+        vi.clearAllMocks();
+
+        await component.createEntry({
+          kind: 'exercise',
+          exerciseId: 'plank.standard',
+          measurement: 'time',
+          timestamp: '2026-02-10T13:45+01:00',
+          reps: 0,
+          sets: [],
+          intervals: [30, 30, 30],
+          durationSec: 90,
+        });
+        await fixture.whenStable();
+
+        expect(exerciseCreateSpy).toHaveBeenCalledWith(
+          'u1',
+          expect.objectContaining({
+            exerciseId: 'plank.standard',
+            durationSec: 90,
+            intervals: [30, 30, 30],
+          })
+        );
+      });
+
+      it('Then intervals are forwarded on a distance-time entry (cardio.running)', async () => {
+        const component = fixture.componentInstance;
+        vi.clearAllMocks();
+
+        await component.createEntry({
+          kind: 'exercise',
+          exerciseId: 'cardio.running',
+          measurement: 'distance-time',
+          timestamp: '2026-02-10T13:45+01:00',
+          reps: 0,
+          sets: [],
+          intervals: [400, 400, 400],
+          distanceM: 1200,
+          durationSec: 360,
+        });
+        await fixture.whenStable();
+
+        expect(exerciseCreateSpy).toHaveBeenCalledWith(
+          'u1',
+          expect.objectContaining({
+            exerciseId: 'cardio.running',
+            distanceM: 1200,
+            durationSec: 360,
+            intervals: [400, 400, 400],
+          })
+        );
+      });
+
       it('Then it returns early without writing when userIdSafe() is empty', async () => {
         const component = fixture.componentInstance;
         vi.clearAllMocks();
@@ -579,6 +639,7 @@ describe('StatsDashboardComponent', () => {
           timestamp: '2026-02-10T13:45+01:00',
           reps: 0,
           sets: [],
+          intervals: [],
           durationSec: 90,
         });
 
