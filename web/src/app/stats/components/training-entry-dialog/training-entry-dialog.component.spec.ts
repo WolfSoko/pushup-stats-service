@@ -5,7 +5,14 @@ import localeFr from '@angular/common/locales/fr';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { provideRouter } from '@angular/router';
 
+// test-setup.ts also registers `fr`, but the Angular vitest builder
+// doesn't reliably pick that up for the `fr-FR` region key in this spec
+// — re-registering at the spec level is the only configuration that
+// keeps `formatNumber(_, 'fr-FR', _)` from throwing NG0701 in the
+// fr-FR round-trip tests below. de-DE works through the test-setup
+// fallback chain; fr-FR does not, hence the targeted re-register.
 registerLocaleData(localeFr, 'fr-FR');
+
 import {
   ExerciseEntryDialogResult,
   TrainingEntryDialogComponent,
