@@ -227,6 +227,21 @@ describe('PoseRepCounterService', () => {
     expect(svc.formCheckFrame()).toBeNull();
   });
 
+  it('given a frame with no detected pose, then formCheckFrame clears so the overlay does not stale', async () => {
+    const svc = TestBed.inject(PoseRepCounterService);
+    svc.bindVideoElement(video);
+    // First a good frame populates the overlay, then an empty frame
+    // (no landmarks) must clear it again.
+    detector.script = [STRAIGHT, []];
+    await svc.start({ exerciseId: 'pushup' });
+
+    frameSource.emit(0);
+    expect(svc.formCheckFrame()).not.toBeNull();
+
+    frameSource.emit(33);
+    expect(svc.formCheckFrame()).toBeNull();
+  });
+
   it('given start is called again while a previous start is awaiting the detector, then second call is a no-op', async () => {
     TestBed.resetTestingModule();
     let resolveFactory: ((d: PoseDetector) => void) | null = null;

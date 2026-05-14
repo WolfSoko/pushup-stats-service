@@ -56,7 +56,13 @@
         }}</mat-icon>
       </button>
       @if (formCheckOpen()) {
-        <div class="form-check-panel" aria-live="polite">
+        <!--
+          Intentionally NOT aria-live: values tick at 30-60 Hz, which would
+          flood screen readers. The reps counter overlay further up already
+          carries the discrete `aria-live="polite"` for assistive tech; this
+          panel is visual telemetry for sighted users.
+        -->
+        <div class="form-check-panel">
           <div class="form-check-cell">
             <span i18n="@@autoCount.formCheck.angle">Winkel</span>
             <strong>

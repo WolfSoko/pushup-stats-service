@@ -127,7 +127,13 @@ export class PoseRepCounterService implements RepCounter {
       if (!this.detector || !this.machine) return;
       const result = this.detector.detectForVideo(video, tick.timestampMs);
       const sample = poseToAngleSample(result, profile, tick.timestampMs);
-      if (!sample) return;
+      if (!sample) {
+        // Tracking lost (user moved out of frame, landmarks unreadable):
+        // clear the overlay so the user sees an honest "—" instead of
+        // a stale angle/confidence pair frozen from the last good frame.
+        this._formCheckFrame.set(null);
+        return;
+      }
       this._formCheckFrame.set({
         angleDeg: sample.angleDeg,
         confidence: sample.confidence,
