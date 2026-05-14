@@ -1172,24 +1172,39 @@ function splitDurationParts(totalSec: number | undefined): {
 
 /**
  * Parse a user-typed km value back to integer metres. The dialog accepts
- * either decimal separator (locale-aware), and tolerates the matching
- * thousands separator that `formatNumber('1.2-2')` emits for
- * 1000+ km values — Angular's `DecimalPipe` always groups, and we want
- * the round-trip to survive that. Strategy: the rightmost `.` or `,` is
- * the decimal separator, anything to the left of it is integer digits
- * with stray grouping marks dropped.
+ * either decimal separator (locale-aware) and tolerates the grouping
+ * separator that `formatNumber('1.2-2')` emits for 1000+ km values —
+ * `.` / `,` for de/en, narrow no-break space (U+202F) or no-break space
+ * (U+00A0) for fr / no.
+ *
+ * Strategy: strip all whitespace (covers the space-grouped locales),
+ * then take the rightmost `.` or `,` as the decimal separator. The
+ * integer part must be plain digits or a properly-grouped sequence
+ * (`1.234`, `1,234,567`); typos like `1.2.3` or `1,2,3` are rejected
+ * so they don't silently coerce to `12.3`.
  */
+const KM_GROUPED_INT = /^\d{1,3}(?:[.,]\d{3})+$/;
+const KM_DIGITS = /^\d+$/;
+
 function parseKmToMeters(input: string): number | null {
-  const trimmed = input.trim();
+  const trimmed = input.replace(/\s/g, '');
   if (!trimmed) return null;
   const decimalAt = Math.max(
     trimmed.lastIndexOf('.'),
     trimmed.lastIndexOf(',')
   );
-  const normalized =
-    decimalAt < 0
-      ? trimmed
-      : `${trimmed.slice(0, decimalAt).replace(/[.,]/g, '')}.${trimmed.slice(decimalAt + 1)}`;
+  const intPart = decimalAt < 0 ? trimmed : trimmed.slice(0, decimalAt);
+  const fracPart = decimalAt < 0 ? '' : trimmed.slice(decimalAt + 1);
+  if (intPart === '' && fracPart === '') return null;
+  if (
+    intPart !== '' &&
+    !KM_DIGITS.test(intPart) &&
+    !KM_GROUPED_INT.test(intPart)
+  ) {
+    return null;
+  }
+  if (fracPart !== '' && !KM_DIGITS.test(fracPart)) return null;
+  const normalized = `${intPart.replace(/[.,]/g, '') || '0'}.${fracPart || '0'}`;
   const km = Number(normalized);
   if (!Number.isFinite(km) || km <= 0) return null;
   return Math.round(km * 1000);
