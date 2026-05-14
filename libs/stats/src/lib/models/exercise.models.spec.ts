@@ -393,6 +393,74 @@ describe('validateExerciseEntry — partial / patch mode', () => {
   });
 });
 
+describe('validateExerciseEntry — breakdown field mutex', () => {
+  it('accepts sets on a reps exercise', () => {
+    expect(
+      validateExerciseEntry({ reps: 30, sets: [10, 10, 10] }, repsDef)
+    ).toBeNull();
+  });
+
+  it('rejects intervals on a reps exercise', () => {
+    expect(
+      validateExerciseEntry({ reps: 30, intervals: [30, 30, 30] }, repsDef)
+    ).toBe('wrong-measurement-field');
+  });
+
+  it('accepts intervals on a time exercise', () => {
+    expect(
+      validateExerciseEntry(
+        { durationSec: 90, intervals: [30, 30, 30] },
+        timeDef
+      )
+    ).toBeNull();
+  });
+
+  it('rejects sets on a time exercise', () => {
+    expect(
+      validateExerciseEntry({ durationSec: 90, sets: [10, 10, 10] }, timeDef)
+    ).toBe('wrong-measurement-field');
+  });
+
+  it('rejects sets on a distance exercise', () => {
+    expect(
+      validateExerciseEntry(
+        { distanceM: 5000, sets: [10, 10, 10] },
+        distanceDef
+      )
+    ).toBe('wrong-measurement-field');
+  });
+
+  it('accepts intervals on a distance exercise', () => {
+    expect(
+      validateExerciseEntry(
+        { distanceM: 1200, intervals: [400, 400, 400] },
+        distanceDef
+      )
+    ).toBeNull();
+  });
+
+  it('rejects intervals on a weight exercise (strength uses sets)', () => {
+    expect(
+      validateExerciseEntry(
+        { reps: 5, weightKg: 80, intervals: [5, 5, 5] },
+        weightDef
+      )
+    ).toBe('wrong-measurement-field');
+  });
+
+  it('allows an empty wrong-side array as the clear sentinel', () => {
+    // `[]` is the deleteField sentinel used by updateEntry — it must
+    // pass through the validator even on the "wrong" side so a caller
+    // wiping a stale field doesn't have to know the measurement type.
+    expect(
+      validateExerciseEntry({ reps: 30, intervals: [] }, repsDef)
+    ).toBeNull();
+    expect(
+      validateExerciseEntry({ durationSec: 60, sets: [] }, timeDef)
+    ).toBeNull();
+  });
+});
+
 describe('validateExerciseEntry — variants', () => {
   const defWithVariants: Pick<
     ExerciseDefinition,

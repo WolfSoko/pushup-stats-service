@@ -352,7 +352,7 @@ export function requiredCompanionFields(
 export function validateExerciseEntry(
   entry: Pick<
     ExerciseEntry,
-    'reps' | 'durationSec' | 'distanceM' | 'weightKg'
+    'reps' | 'durationSec' | 'distanceM' | 'weightKg' | 'sets' | 'intervals'
   > & {
     // `null` is the patch sentinel for "clear the variant"; the
     // persisted `ExerciseEntry.variantId` is `string | undefined`
@@ -378,6 +378,22 @@ export function validateExerciseEntry(
     if (entry[f] !== undefined) {
       return 'wrong-measurement-field';
     }
+  }
+  // Breakdown fields are mutually exclusive by measurement type:
+  // strength entries use `sets` (rep counts), endurance entries use
+  // `intervals` (per-segment durations/distances). The wrong field
+  // on the wrong measurement type would corrupt aggregations — the
+  // Firestore rules enforce this server-side, but failing fast here
+  // gives callers a structured violation code before the round-trip.
+  // An empty `[]` is the clear-breakdown sentinel and is allowed on
+  // either side so existing entries can be wiped during a measurement
+  // change-of-mind without a special-cased reset path.
+  const wrongBreakdown =
+    entryBreakdownField(def.measurement) === 'sets'
+      ? entry.intervals
+      : entry.sets;
+  if (Array.isArray(wrongBreakdown) && wrongBreakdown.length > 0) {
+    return 'wrong-measurement-field';
   }
   const value = entry[expectedField];
   if (value === undefined || value === null) {

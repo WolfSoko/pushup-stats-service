@@ -6,7 +6,10 @@ jest.mock('@angular/fire/firestore', () => ({
 }));
 
 import { withEmulator } from './provide-firestore';
-import { connectFirestoreEmulator } from '@angular/fire/firestore';
+import {
+  connectFirestoreEmulator,
+  type Firestore,
+} from '@angular/fire/firestore';
 
 describe('withEmulator', () => {
   beforeEach(() => {
@@ -14,7 +17,7 @@ describe('withEmulator', () => {
   });
 
   it('uses hostname/port from a full emulator URL', () => {
-    const firestore = {} as any;
+    const firestore = {} as Firestore;
 
     withEmulator('http://127.0.0.1:8080')(firestore);
 
@@ -26,7 +29,7 @@ describe('withEmulator', () => {
   });
 
   it('supports host:port input without protocol', () => {
-    const firestore = {} as any;
+    const firestore = {} as Firestore;
 
     withEmulator('localhost:9090')(firestore);
 
@@ -38,7 +41,7 @@ describe('withEmulator', () => {
   });
 
   it('falls back to default port when no port is provided', () => {
-    const firestore = {} as any;
+    const firestore = {} as Firestore;
 
     withEmulator('http://localhost')(firestore);
 

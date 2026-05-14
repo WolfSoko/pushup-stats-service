@@ -377,7 +377,7 @@ describe('ExerciseFirestoreService', () => {
       const updateSpy = jest.spyOn(firestoreFns, 'updateDoc');
       const deleteFieldSpy = jest.spyOn(firestoreFns, 'deleteField');
       await firstValueFrom(
-        service.updateEntry('s1', 'abs.situps', { intervals: [] })
+        service.updateEntry('s1', 'plank.standard', { intervals: [] })
       );
       expect(deleteFieldSpy).toHaveBeenCalled();
       const patch = updateSpy.mock.calls[0]?.[1] as Record<string, unknown>;
@@ -387,10 +387,28 @@ describe('ExerciseFirestoreService', () => {
     it('preserves a non-empty intervals array on the update patch', async () => {
       const updateSpy = jest.spyOn(firestoreFns, 'updateDoc');
       await firstValueFrom(
-        service.updateEntry('s1', 'abs.situps', { intervals: [30, 30, 30] })
+        service.updateEntry('s1', 'plank.standard', {
+          intervals: [30, 30, 30],
+        })
       );
       const patch = updateSpy.mock.calls[0]?.[1] as Record<string, unknown>;
       expect(patch['intervals']).toEqual([30, 30, 30]);
+    });
+
+    it('rejects an intervals patch on a reps-measured exercise', async () => {
+      await expect(
+        firstValueFrom(
+          service.updateEntry('s1', 'abs.situps', { intervals: [30, 30, 30] })
+        )
+      ).rejects.toThrow(/wrong-measurement-field/);
+    });
+
+    it('rejects a sets patch on a time-measured exercise', async () => {
+      await expect(
+        firstValueFrom(
+          service.updateEntry('s1', 'plank.standard', { sets: [10, 10, 10] })
+        )
+      ).rejects.toThrow(/wrong-measurement-field/);
     });
 
     it('uses partial validation so a variantId-only update is allowed', async () => {

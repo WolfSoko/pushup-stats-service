@@ -51,7 +51,7 @@ function violationObservable<T>(
   exerciseId: string,
   payload: Pick<
     ExerciseEntry,
-    'reps' | 'durationSec' | 'distanceM' | 'weightKg'
+    'reps' | 'durationSec' | 'distanceM' | 'weightKg' | 'sets' | 'intervals'
   > & { variantId?: string | null },
   options?: { partial?: boolean }
 ): Observable<T> | null {
@@ -97,15 +97,16 @@ export class ExerciseFirestoreService {
       // categories are far below that, but guarding here keeps the
       // failure mode predictable for future larger catalogs (and
       // avoids a cryptic Firestore error to the caller).
-      if (options.exerciseIds.length > 30) {
+      const exerciseIds = options.exerciseIds;
+      if (exerciseIds.length > 30) {
         return throwError(
           () =>
             new Error(
-              `listEntries: exerciseIds supports at most 30 ids, got ${options.exerciseIds!.length}`
+              `listEntries: exerciseIds supports at most 30 ids, got ${exerciseIds.length}`
             )
         );
       }
-      constraints.push(where('exerciseId', 'in', [...options.exerciseIds]));
+      constraints.push(where('exerciseId', 'in', [...exerciseIds]));
     }
     if (options?.filter?.from) {
       constraints.push(
@@ -230,7 +231,15 @@ export class ExerciseFirestoreService {
       );
     }
     const valueChanges = (
-      ['reps', 'durationSec', 'distanceM', 'weightKg', 'variantId'] as const
+      [
+        'reps',
+        'durationSec',
+        'distanceM',
+        'weightKg',
+        'variantId',
+        'sets',
+        'intervals',
+      ] as const
     ).some((k) => payload[k] !== undefined);
     if (valueChanges) {
       const violation = violationObservable<void>(exerciseId, payload, {
