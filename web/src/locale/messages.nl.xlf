@@ -8320,5 +8320,35 @@
         <target>Ringe</target>
       </segment>
     </unit>
+    <unit id="entry.interval.label">
+      <segment state="initial">
+        <source>Intervall <ph id="0" equiv="INTERPOLATION" disp="{{ $index + 1 }}"/></source>
+        <target>Intervall <ph id="0" equiv="INTERPOLATION" disp="{{ $index + 1 }}"/></target>
+      </segment>
+    </unit>
+    <unit id="entry.intervals.label">
+      <segment state="initial">
+        <source>Intervalle</source>
+        <target>Intervalle</target>
+      </segment>
+    </unit>
+    <unit id="entry.intervals.remove">
+      <segment state="initial">
+        <source>Intervall entfernen</source>
+        <target>Intervall entfernen</target>
+      </segment>
+    </unit>
+    <unit id="entry.intervals.add">
+      <segment state="initial">
+        <source>Intervall hinzufügen</source>
+        <target>Intervall hinzufügen</target>
+      </segment>
+    </unit>
+    <unit id="entry.intervals.addTooltip">
+      <segment state="initial">
+        <source>Weiteres Intervall hinzufügen</source>
+        <target>Weiteres Intervall hinzufügen</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

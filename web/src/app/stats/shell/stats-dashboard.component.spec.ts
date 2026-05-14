@@ -547,6 +547,7 @@ describe('StatsDashboardComponent', () => {
           timestamp: '2026-02-10T13:45+01:00',
           reps: 0,
           sets: [],
+          intervals: [],
           durationSec: 90,
         });
         await fixture.whenStable();
@@ -576,6 +577,7 @@ describe('StatsDashboardComponent', () => {
           timestamp: '2026-02-10T13:45+01:00',
           reps: 0,
           sets: [],
+          intervals: [],
           durationSec: 90,
         });
 

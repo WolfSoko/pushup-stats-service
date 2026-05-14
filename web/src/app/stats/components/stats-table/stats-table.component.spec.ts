@@ -112,6 +112,7 @@ describe('StatsTableComponent', () => {
         timestamp: '2026-02-11T07:00',
         reps: 0,
         sets: [],
+        intervals: [],
         durationSec: 90,
       };
       vitest.spyOn(component.dialog, 'open').mockReturnValue({
@@ -302,6 +303,7 @@ describe('StatsTableComponent', () => {
         timestamp: '2026-02-10T14:00+01:00',
         reps: 35,
         sets: [12, 12, 11],
+        intervals: [],
       };
       vitest.spyOn(component.dialog, 'open').mockReturnValue({
         afterClosed: () => of(editResult),
@@ -332,6 +334,7 @@ describe('StatsTableComponent', () => {
         timestamp: '2026-02-10T14:00+01:00',
         reps: 20,
         sets: [20],
+        intervals: [],
       };
       vitest.spyOn(component.dialog, 'open').mockReturnValue({
         afterClosed: () => of(editResult),
@@ -363,6 +366,7 @@ describe('StatsTableComponent', () => {
         timestamp: '2026-02-10T14:00+01:00',
         reps: 30,
         sets: [30],
+        intervals: [],
         variantId: 'weighted',
       };
       vitest.spyOn(component.dialog, 'open').mockReturnValue({
@@ -395,6 +399,7 @@ describe('StatsTableComponent', () => {
         timestamp: '2026-02-10T14:00+01:00',
         reps: 30,
         sets: [30],
+        intervals: [],
         variantId: null,
       };
       vitest.spyOn(component.dialog, 'open').mockReturnValue({
@@ -428,6 +433,7 @@ describe('StatsTableComponent', () => {
         timestamp: '2026-02-10T14:00+01:00',
         reps: 30,
         sets: [30],
+        intervals: [],
       };
       vitest.spyOn(component.dialog, 'open').mockReturnValue({
         afterClosed: () => of(editResult),
@@ -460,6 +466,7 @@ describe('StatsTableComponent', () => {
         timestamp: '2026-02-10T14:00+01:00',
         reps: 0,
         sets: [],
+        intervals: [],
         durationSec: 90,
       };
       vitest.spyOn(component.dialog, 'open').mockReturnValue({
@@ -499,6 +506,7 @@ describe('StatsTableComponent', () => {
         timestamp: '2026-02-10T14:00+01:00',
         reps: 0,
         sets: [],
+        intervals: [],
         distanceM: 5250,
         durationSec: 1500,
       };

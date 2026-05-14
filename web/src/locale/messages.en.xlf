@@ -3231,6 +3231,36 @@ Deine Position: # ·  Reps        </source>
         <target> Total: <ph id="0" equiv="INTERPOLATION" disp="{{ totalReps() }}"/> reps </target>
       </segment>
     </unit>
+    <unit id="entry.interval.label">
+      <segment state="translated">
+        <source>Intervall <ph id="0" equiv="INTERPOLATION" disp="{{ $index + 1 }}"/></source>
+        <target>Interval <ph id="0" equiv="INTERPOLATION" disp="{{ $index + 1 }}"/></target>
+      </segment>
+    </unit>
+    <unit id="entry.intervals.label">
+      <segment state="translated">
+        <source>Intervalle</source>
+        <target>Intervals</target>
+      </segment>
+    </unit>
+    <unit id="entry.intervals.remove">
+      <segment state="translated">
+        <source>Intervall entfernen</source>
+        <target>Remove interval</target>
+      </segment>
+    </unit>
+    <unit id="entry.intervals.add">
+      <segment state="translated">
+        <source>Intervall hinzufügen</source>
+        <target>Add interval</target>
+      </segment>
+    </unit>
+    <unit id="entry.intervals.addTooltip">
+      <segment state="translated">
+        <source>Weiteres Intervall hinzufügen</source>
+        <target>Add another interval</target>
+      </segment>
+    </unit>
     <unit id="saveChanges">
       <notes>
         <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:306,312</note>
