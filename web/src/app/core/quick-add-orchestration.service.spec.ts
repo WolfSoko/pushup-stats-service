@@ -320,6 +320,7 @@ describe('QuickAddOrchestrationService.openAutoCount', () => {
     expect(payload.exerciseId).toBe('legs.squats');
     expect(payload.reps).toBe(9);
     expect(payload.variantId).toBe('bodyweight');
+    expect(payload.source).toBe('auto-count');
   });
 
   it('Given an exercise confirm but no logged-in user, Then no entry is created and an error snackbar opens', async () => {

@@ -22,7 +22,7 @@ export {
   type RepCounter,
   type RepCounterStartOptions,
 } from './lib/rep-counter.port';
-export { angleAtElbowDeg, type Point2D } from './lib/elbow-angle';
+export { angleAtJointDeg, type Point2D } from './lib/joint-angle';
 export {
   POSE_DETECTOR_FACTORY,
   POSE_LANDMARK,

@@ -4,7 +4,7 @@
     class="exercise-picker"
     [value]="exerciseId()"
     (change)="onExerciseChange($event.value)"
-    [disabled]="switching() || !!error()"
+    [disabled]="switching()"
     aria-label="Übung wählen"
     i18n-aria-label="@@autoCount.exercisePickerAria"
   >

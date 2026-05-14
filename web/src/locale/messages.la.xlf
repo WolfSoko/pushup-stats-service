@@ -747,7 +747,7 @@
     <unit id="autoCount.exercise.situp">
       <segment state="translated">
         <source>Sit-ups</source>
-        <target>Sessiones</target>
+        <target>Sit-ups</target>
       </segment>
     </unit>
     <unit id="autoCount.cameraStarting">

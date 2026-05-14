@@ -4404,7 +4404,7 @@ Deine Position: # ·  Reps        </source>
             <unit id="autoCount.title">
       <segment state="translated">
         <source>Übungen automatisch zählen</source>
-        <target>Auto-tell øvelser</target>
+        <target>Tell øvelser automatisk</target>
       </segment>
     </unit>
     <unit id="autoCount.instructions">
@@ -4422,7 +4422,7 @@ Deine Position: # ·  Reps        </source>
     <unit id="autoCount.exercise.pushup">
       <segment state="translated">
         <source>Liegestütze</source>
-        <target>Push-ups</target>
+        <target>Armhevinger</target>
       </segment>
     </unit>
     <unit id="autoCount.exercise.squat">
@@ -4434,7 +4434,7 @@ Deine Position: # ·  Reps        </source>
     <unit id="autoCount.exercise.pullup">
       <segment state="translated">
         <source>Klimmzüge</source>
-        <target>Pull-ups</target>
+        <target>Hangleer</target>
       </segment>
     </unit>
     <unit id="autoCount.exercise.situp">

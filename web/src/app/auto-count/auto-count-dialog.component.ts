@@ -111,13 +111,21 @@ export class AutoCountDialogComponent {
 
   protected async onExerciseChange(next: AutoCountExerciseId): Promise<void> {
     if (next === this.exerciseId() || this.switching()) return;
+    const previous = this.exerciseId();
     this.switching.set(true);
+    this.error.set(null);
     try {
-      this.exerciseId.set(next);
       await this.counter.stop();
       this.counter.reset();
       await this.counter.start({ exerciseId: next });
+      // Only flip the active exercise once the counter is actually
+      // running on the new profile — otherwise a failed start would
+      // leave the UI claiming we are counting `next` while the
+      // detector sits idle (or, worse, still running the previous
+      // profile if start() threw mid-init).
+      this.exerciseId.set(next);
     } catch (err) {
+      this.exerciseId.set(previous);
       this.error.set(err instanceof Error ? err.message : String(err));
     } finally {
       this.switching.set(false);

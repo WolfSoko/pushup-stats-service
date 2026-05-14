@@ -170,8 +170,11 @@ export class QuickAddOrchestrationService {
       .open<AutoCountDialogComponent, void, AutoCountResult | null>(
         AutoCountDialogComponent,
         {
-          width: 'min(96vw, 480px)',
-          maxWidth: '96vw',
+          width: '100vw',
+          maxWidth: '100vw',
+          height: '100vh',
+          maxHeight: '100vh',
+          panelClass: 'auto-count-dialog-panel',
         }
       )
       .afterClosed()
@@ -199,7 +202,7 @@ export class QuickAddOrchestrationService {
       .afterClosed()
       .subscribe((dialogResult) => {
         if (!dialogResult) return;
-        void this.persistConfirmed(dialogResult);
+        void this.persistConfirmed(dialogResult, 'auto-count');
       });
   }
 
@@ -224,7 +227,13 @@ export class QuickAddOrchestrationService {
   }
 
   private async persistConfirmed(
-    result: TrainingEntryDialogResult
+    result: TrainingEntryDialogResult,
+    /**
+     * Source attribution forwarded to the exercise-entry path. Pushup
+     * results already carry their own `source` from the training-entry
+     * dialog, so it is ignored there.
+     */
+    exerciseSource = 'web'
   ): Promise<void> {
     try {
       if (result.kind === 'pushup') {
@@ -248,6 +257,7 @@ export class QuickAddOrchestrationService {
             exerciseId: result.exerciseId,
             timestamp: result.timestamp,
             reps: result.reps,
+            source: exerciseSource,
             ...(result.sets.length > 1 ? { sets: result.sets } : {}),
             ...(result.variantId ? { variantId: result.variantId } : {}),
           })

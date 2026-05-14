@@ -729,7 +729,7 @@
     <unit id="autoCount.exercise.pushup">
       <segment state="translated">
         <source>Liegestütze</source>
-        <target>Push-up</target>
+        <target>Κάμψεις</target>
       </segment>
     </unit>
     <unit id="autoCount.exercise.squat">
@@ -741,13 +741,13 @@
     <unit id="autoCount.exercise.pullup">
       <segment state="translated">
         <source>Klimmzüge</source>
-        <target>Pull-up</target>
+        <target>Έλξεις</target>
       </segment>
     </unit>
     <unit id="autoCount.exercise.situp">
       <segment state="translated">
         <source>Sit-ups</source>
-        <target>Sit-up</target>
+        <target>Κοιλιακοί</target>
       </segment>
     </unit>
     <unit id="autoCount.cameraStarting">

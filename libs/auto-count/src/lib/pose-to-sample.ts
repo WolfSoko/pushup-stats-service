@@ -1,4 +1,4 @@
-import { angleAtElbowDeg } from './elbow-angle';
+import { angleAtJointDeg } from './joint-angle';
 import type {
   ExerciseAngleProfile,
   JointTriplet,
@@ -20,7 +20,7 @@ const tripletSample = (
   const distal = landmarks[distalIdx];
   if (!proximal || !joint || !distal) return null;
 
-  const angleDeg = angleAtElbowDeg(proximal, joint, distal);
+  const angleDeg = angleAtJointDeg(proximal, joint, distal);
   if (Number.isNaN(angleDeg)) return null;
 
   const confidence = Math.min(

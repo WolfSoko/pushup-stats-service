@@ -1,6 +1,7 @@
 :host {
-  display: block;
-  min-width: min(90vw, 360px);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .exercise-picker {
@@ -25,10 +26,14 @@
   opacity: 0.8;
 }
 
+// Camera stage fills whatever vertical space the dialog leaves after
+// the picker, hint, and action buttons — gives the user a near-full-
+// screen preview on phones and a large preview on desktop.
 .video-stage {
   position: relative;
   width: 100%;
-  aspect-ratio: 4 / 3;
+  flex: 1;
+  min-height: 0;
   background: #000;
   border-radius: 8px;
   overflow: hidden;

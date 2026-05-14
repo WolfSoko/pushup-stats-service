@@ -110,6 +110,16 @@ export const PULLUP_PROFILE: ExerciseAngleProfile = {
   maxFrameGapMs: 600,
 };
 
+/**
+ * Sit-up rep. The "up" zone is the **lying-flat** start position
+ * (hip angle ≈ 180°, shoulder/hip/knee on a line). The "down" zone is
+ * the curled-up peak (hip flexed, ≈ 80°). Naming is intentional and
+ * matches every other profile: "up" always means the high-angle /
+ * extended joint, "down" always means the flexed one — that lets the
+ * shared `RepStateMachine` count `down → up` cycles uniformly. The
+ * `'awaiting-up'` UI hint therefore reads correctly: "go to starting
+ * position" = lie flat on your back.
+ */
 export const SITUP_PROFILE: ExerciseAngleProfile = {
   id: 'situp',
   tripletLeft: HIP_TRIPLETS.left,
