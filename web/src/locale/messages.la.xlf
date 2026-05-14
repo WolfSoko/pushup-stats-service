@@ -7636,24 +7636,6 @@
         <target>Comparison by exercise group</target>
       </segment>
     </unit>
-    <unit id="analysis.overview.comparison.metricAria">
-      <segment state="translated">
-        <source/>
-        <target>Metric</target>
-      </segment>
-    </unit>
-    <unit id="analysis.overview.comparison.metric.reps">
-      <segment state="translated">
-        <source/>
-        <target>Reps</target>
-      </segment>
-    </unit>
-    <unit id="analysis.overview.comparison.metric.sets">
-      <segment state="translated">
-        <source/>
-        <target>Sets</target>
-      </segment>
-    </unit>
     <unit id="analysis.overview.comparison.empty">
       <segment state="translated">
         <source/>
@@ -7682,6 +7664,72 @@
       <segment state="translated">
         <source/>
         <target>Best day</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.comparison.metricLabel">
+      <segment state="translated">
+        <source/>
+        <target>Exercitationes</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.facet.repsTitle">
+      <segment state="translated">
+        <source/>
+        <target>Repetitiones</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.totalSets">
+      <segment state="translated">
+        <source/>
+        <target>Summa seriorum</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.facet.timeTitle">
+      <segment state="translated">
+        <source/>
+        <target>Tempus</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.totalTime">
+      <segment state="translated">
+        <source/>
+        <target>Tempus totum</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.todayTime">
+      <segment state="translated">
+        <source/>
+        <target>Hodie</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.facet.distanceTitle">
+      <segment state="translated">
+        <source/>
+        <target>Spatium</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.totalDistance">
+      <segment state="translated">
+        <source/>
+        <target>Spatium totum</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.todayDistance">
+      <segment state="translated">
+        <source/>
+        <target>Hodie</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.facet.distanceTimeTitle">
+      <segment state="translated">
+        <source/>
+        <target>Spatium et tempus</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.entries">
+      <segment state="translated">
+        <source/>
+        <target>Exercitationes</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.viewDetails">

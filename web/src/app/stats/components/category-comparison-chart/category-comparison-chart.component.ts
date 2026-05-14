@@ -1,16 +1,20 @@
 import { DecimalPipe } from '@angular/common';
-import { Component, computed, input, signal } from '@angular/core';
-import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { Component, computed, input } from '@angular/core';
 
 import type { CategoryComparison } from '../../analysis.store';
-
-type Metric = 'reps' | 'sets';
 
 /**
  * Horizontal bar comparison across exercise categories. Sits in the
  * Overview tab next to the per-category cards and shares the same
  * `CategorySummary`-derived data, so a category visible here always
  * has a matching card and a matching tab.
+ *
+ * The bar metric is intentionally a measurement-agnostic count of
+ * logged trainings ("Trainingseinheiten"). Reps, seconds and meters
+ * each live on their own scale — summing 60 s of plank onto 60 reps
+ * of pushups in one bar was the original bug behind this redesign.
+ * Drilling into a single measurement type belongs in the per-category
+ * detail tab, not the overview comparison.
  *
  * CSS bars rather than Chart.js: with at most ~7 categories the SVG
  * chart pulls in framework, registration and PLATFORM_ID/canvas
@@ -19,32 +23,15 @@ type Metric = 'reps' | 'sets';
 @Component({
   selector: 'app-category-comparison-chart',
   standalone: true,
-  imports: [DecimalPipe, MatButtonToggleModule],
+  imports: [DecimalPipe],
   template: `
     <header class="head">
       <h3 class="title" i18n="@@analysis.overview.comparison.title">
         Vergleich nach Übungsgruppe
       </h3>
-      <mat-button-toggle-group
-        [value]="metric()"
-        (change)="metric.set($event.value)"
-        aria-label="Kennzahl"
-        i18n-aria-label="@@analysis.overview.comparison.metricAria"
-        data-testid="category-comparison-metric"
-      >
-        <mat-button-toggle
-          value="reps"
-          i18n="@@analysis.overview.comparison.metric.reps"
-        >
-          Wdh.
-        </mat-button-toggle>
-        <mat-button-toggle
-          value="sets"
-          i18n="@@analysis.overview.comparison.metric.sets"
-        >
-          Sätze
-        </mat-button-toggle>
-      </mat-button-toggle-group>
+      <p class="metric" i18n="@@analysis.overview.comparison.metricLabel">
+        Trainingseinheiten
+      </p>
     </header>
 
     @if (rows().length === 0) {
@@ -75,7 +62,7 @@ type Metric = 'reps' | 'sets';
     }
     .head {
       display: flex;
-      align-items: center;
+      align-items: baseline;
       justify-content: space-between;
       gap: 12px;
       margin-bottom: 12px;
@@ -85,6 +72,13 @@ type Metric = 'reps' | 'sets';
       margin: 0;
       font-size: 1rem;
       font-weight: 600;
+    }
+    .metric {
+      margin: 0;
+      font-size: 0.75rem;
+      opacity: 0.7;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
     }
     .bars {
       list-style: none;
@@ -140,11 +134,10 @@ type Metric = 'reps' | 'sets';
 })
 export class CategoryComparisonChartComponent {
   readonly data = input.required<CategoryComparison>();
-  readonly metric = signal<Metric>('reps');
 
   readonly rows = computed(() => {
     const data = this.data();
-    const values = this.metric() === 'reps' ? data.reps : data.sets;
+    const values = data.entries;
     const max = values.reduce((m, v) => (v > m ? v : m), 0);
     return data.labels.map((label, idx) => {
       const value = values[idx] ?? 0;

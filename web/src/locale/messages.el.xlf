@@ -7636,24 +7636,6 @@
         <target>Σύγκριση ανά ομάδα ασκήσεων</target>
       </segment>
     </unit>
-    <unit id="analysis.overview.comparison.metricAria">
-      <segment state="translated">
-        <source/>
-        <target>Μέγεθος</target>
-      </segment>
-    </unit>
-    <unit id="analysis.overview.comparison.metric.reps">
-      <segment state="translated">
-        <source/>
-        <target>Επαναλήψεις</target>
-      </segment>
-    </unit>
-    <unit id="analysis.overview.comparison.metric.sets">
-      <segment state="translated">
-        <source/>
-        <target>Σετ</target>
-      </segment>
-    </unit>
     <unit id="analysis.overview.comparison.empty">
       <segment state="translated">
         <source/>
@@ -7682,6 +7664,72 @@
       <segment state="translated">
         <source/>
         <target>Καλύτερη ημέρα</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.comparison.metricLabel">
+      <segment state="translated">
+        <source/>
+        <target>Προπονήσεις</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.facet.repsTitle">
+      <segment state="translated">
+        <source/>
+        <target>Επαναλήψεις</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.totalSets">
+      <segment state="translated">
+        <source/>
+        <target>Σύνολο σετ</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.facet.timeTitle">
+      <segment state="translated">
+        <source/>
+        <target>Χρόνος</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.totalTime">
+      <segment state="translated">
+        <source/>
+        <target>Συνολικός χρόνος</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.todayTime">
+      <segment state="translated">
+        <source/>
+        <target>Σήμερα</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.facet.distanceTitle">
+      <segment state="translated">
+        <source/>
+        <target>Απόσταση</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.totalDistance">
+      <segment state="translated">
+        <source/>
+        <target>Συνολική απόσταση</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.todayDistance">
+      <segment state="translated">
+        <source/>
+        <target>Σήμερα</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.facet.distanceTimeTitle">
+      <segment state="translated">
+        <source/>
+        <target>Απόσταση &amp; χρόνος</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.entries">
+      <segment state="translated">
+        <source/>
+        <target>Προπονήσεις</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.viewDetails">

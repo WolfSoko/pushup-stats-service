@@ -7636,24 +7636,6 @@
         <target>Vergelijking per oefeningsgroep</target>
       </segment>
     </unit>
-    <unit id="analysis.overview.comparison.metricAria">
-      <segment state="translated">
-        <source/>
-        <target>Eenheid</target>
-      </segment>
-    </unit>
-    <unit id="analysis.overview.comparison.metric.reps">
-      <segment state="translated">
-        <source/>
-        <target>Herhalingen</target>
-      </segment>
-    </unit>
-    <unit id="analysis.overview.comparison.metric.sets">
-      <segment state="translated">
-        <source/>
-        <target>Sets</target>
-      </segment>
-    </unit>
     <unit id="analysis.overview.comparison.empty">
       <segment state="translated">
         <source/>
@@ -7682,6 +7664,72 @@
       <segment state="translated">
         <source/>
         <target>Beste dag</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.comparison.metricLabel">
+      <segment state="translated">
+        <source/>
+        <target>Trainingen</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.facet.repsTitle">
+      <segment state="translated">
+        <source/>
+        <target>Herhalingen</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.totalSets">
+      <segment state="translated">
+        <source/>
+        <target>Totaal sets</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.facet.timeTitle">
+      <segment state="translated">
+        <source/>
+        <target>Tijd</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.totalTime">
+      <segment state="translated">
+        <source/>
+        <target>Totale tijd</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.todayTime">
+      <segment state="translated">
+        <source/>
+        <target>Vandaag</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.facet.distanceTitle">
+      <segment state="translated">
+        <source/>
+        <target>Afstand</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.totalDistance">
+      <segment state="translated">
+        <source/>
+        <target>Totale afstand</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.todayDistance">
+      <segment state="translated">
+        <source/>
+        <target>Vandaag</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.facet.distanceTimeTitle">
+      <segment state="translated">
+        <source/>
+        <target>Afstand &amp; tijd</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.entries">
+      <segment state="translated">
+        <source/>
+        <target>Trainingen</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.viewDetails">

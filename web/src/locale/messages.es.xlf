@@ -7636,24 +7636,6 @@
         <target>Comparación por grupo de ejercicios</target>
       </segment>
     </unit>
-    <unit id="analysis.overview.comparison.metricAria">
-      <segment state="translated">
-        <source/>
-        <target>Métrica</target>
-      </segment>
-    </unit>
-    <unit id="analysis.overview.comparison.metric.reps">
-      <segment state="translated">
-        <source/>
-        <target>Repeticiones</target>
-      </segment>
-    </unit>
-    <unit id="analysis.overview.comparison.metric.sets">
-      <segment state="translated">
-        <source/>
-        <target>Series</target>
-      </segment>
-    </unit>
     <unit id="analysis.overview.comparison.empty">
       <segment state="translated">
         <source/>
@@ -7682,6 +7664,72 @@
       <segment state="translated">
         <source/>
         <target>Mejor día</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.comparison.metricLabel">
+      <segment state="translated">
+        <source/>
+        <target>Sesiones</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.facet.repsTitle">
+      <segment state="translated">
+        <source/>
+        <target>Repeticiones</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.totalSets">
+      <segment state="translated">
+        <source/>
+        <target>Total de series</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.facet.timeTitle">
+      <segment state="translated">
+        <source/>
+        <target>Tiempo</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.totalTime">
+      <segment state="translated">
+        <source/>
+        <target>Tiempo total</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.todayTime">
+      <segment state="translated">
+        <source/>
+        <target>Hoy</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.facet.distanceTitle">
+      <segment state="translated">
+        <source/>
+        <target>Distancia</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.totalDistance">
+      <segment state="translated">
+        <source/>
+        <target>Distancia total</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.todayDistance">
+      <segment state="translated">
+        <source/>
+        <target>Hoy</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.facet.distanceTimeTitle">
+      <segment state="translated">
+        <source/>
+        <target>Distancia y tiempo</target>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.entries">
+      <segment state="translated">
+        <source/>
+        <target>Sesiones</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.viewDetails">

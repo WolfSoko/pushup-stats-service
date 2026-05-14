@@ -2678,7 +2678,7 @@
     </unit>
     <unit id="autoCount.formCheck.angle">
       <notes>
-        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:61,63</note>
+        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:67,69</note>
       </notes>
       <segment>
         <source>Winkel</source>
@@ -2686,7 +2686,7 @@
     </unit>
     <unit id="autoCount.formCheck.confidence">
       <notes>
-        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:71,73</note>
+        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:77,79</note>
       </notes>
       <segment>
         <source>Sicherheit</source>
@@ -2694,7 +2694,7 @@
     </unit>
     <unit id="autoCount.formCheck.phase">
       <notes>
-        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:81,82</note>
+        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:87,88</note>
       </notes>
       <segment>
         <source>Phase</source>
@@ -2702,7 +2702,7 @@
     </unit>
     <unit id="autoCount.positionHint">
       <notes>
-        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:88,91</note>
+        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:94,97</note>
       </notes>
       <segment>
         <source> In Startposition gehen </source>
@@ -2710,7 +2710,7 @@
     </unit>
     <unit id="autoCount.reset">
       <notes>
-        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:101,103</note>
+        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:107,109</note>
       </notes>
       <segment>
         <source> Zurücksetzen </source>
@@ -2718,7 +2718,7 @@
     </unit>
     <unit id="autoCount.cancel">
       <notes>
-        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:104,107</note>
+        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:110,113</note>
       </notes>
       <segment>
         <source> Abbrechen </source>
@@ -2726,7 +2726,7 @@
     </unit>
     <unit id="autoCount.save">
       <notes>
-        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:113,115</note>
+        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:119,121</note>
       </notes>
       <segment>
         <source> Übernehmen </source>
@@ -4495,47 +4495,39 @@
     </unit>
     <unit id="analysis.overview.comparison.title">
       <notes>
-        <note category="location">web/src/app/stats/components/category-comparison-chart/category-comparison-chart.component.ts:26,28</note>
+        <note category="location">web/src/app/stats/components/category-comparison-chart/category-comparison-chart.component.ts:30,32</note>
       </notes>
       <segment>
         <source> Vergleich nach Übungsgruppe </source>
       </segment>
     </unit>
-    <unit id="analysis.overview.comparison.metricAria">
+    <unit id="analysis.overview.comparison.metricLabel">
       <notes>
-        <note category="location">web/src/app/stats/components/category-comparison-chart/category-comparison-chart.component.ts:31,32</note>
+        <note category="location">web/src/app/stats/components/category-comparison-chart/category-comparison-chart.component.ts:33,37</note>
       </notes>
       <segment>
-        <source>Kennzahl</source>
-      </segment>
-    </unit>
-    <unit id="analysis.overview.comparison.metric.reps">
-      <notes>
-        <note category="location">web/src/app/stats/components/category-comparison-chart/category-comparison-chart.component.ts:39,41</note>
-      </notes>
-      <segment>
-        <source> Wdh. </source>
-      </segment>
-    </unit>
-    <unit id="analysis.overview.comparison.metric.sets">
-      <notes>
-        <note category="location">web/src/app/stats/components/category-comparison-chart/category-comparison-chart.component.ts:45,47</note>
-      </notes>
-      <segment>
-        <source> Sätze </source>
+        <source> Trainingseinheiten </source>
       </segment>
     </unit>
     <unit id="analysis.overview.comparison.empty">
       <notes>
-        <note category="location">web/src/app/stats/components/category-comparison-chart/category-comparison-chart.component.ts:56,59</note>
+        <note category="location">web/src/app/stats/components/category-comparison-chart/category-comparison-chart.component.ts:43,46</note>
       </notes>
       <segment>
         <source> Keine Daten im aktuellen Zeitraum. </source>
       </segment>
     </unit>
+    <unit id="analysis.overview.cards.facet.repsTitle">
+      <notes>
+        <note category="location">web/src/app/stats/components/category-summary-card/category-summary-card.component.html:32,35</note>
+      </notes>
+      <segment>
+        <source> Wiederholungen </source>
+      </segment>
+    </unit>
     <unit id="analysis.overview.cards.totalReps">
       <notes>
-        <note category="location">web/src/app/stats/components/category-summary-card/category-summary-card.component.ts:34,36</note>
+        <note category="location">web/src/app/stats/components/category-summary-card/category-summary-card.component.html:37,39</note>
       </notes>
       <segment>
         <source>Reps gesamt</source>
@@ -4543,15 +4535,93 @@
     </unit>
     <unit id="analysis.overview.cards.todayReps">
       <notes>
-        <note category="location">web/src/app/stats/components/category-summary-card/category-summary-card.component.ts:44,45</note>
+        <note category="location">web/src/app/stats/components/category-summary-card/category-summary-card.component.html:47,48</note>
       </notes>
       <segment>
         <source>Heute</source>
       </segment>
     </unit>
+    <unit id="analysis.overview.cards.bestDay">
+      <notes>
+        <note category="location">web/src/app/stats/components/category-summary-card/category-summary-card.component.html:51,52</note>
+        <note category="location">web/src/app/stats/components/category-summary-card/category-summary-card.component.html:98,99</note>
+        <note category="location">web/src/app/stats/components/category-summary-card/category-summary-card.component.html:144,145</note>
+        <note category="location">web/src/app/stats/components/category-summary-card/category-summary-card.component.html:197,198</note>
+      </notes>
+      <segment>
+        <source>Bester Tag</source>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.totalSets">
+      <notes>
+        <note category="location">web/src/app/stats/components/category-summary-card/category-summary-card.component.html:59,60</note>
+      </notes>
+      <segment>
+        <source>Sätze gesamt</source>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.facet.timeTitle">
+      <notes>
+        <note category="location">web/src/app/stats/components/category-summary-card/category-summary-card.component.html:79,82</note>
+      </notes>
+      <segment>
+        <source> Zeit </source>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.totalTime">
+      <notes>
+        <note category="location">web/src/app/stats/components/category-summary-card/category-summary-card.component.html:84,86</note>
+        <note category="location">web/src/app/stats/components/category-summary-card/category-summary-card.component.html:186,187</note>
+      </notes>
+      <segment>
+        <source>Zeit gesamt</source>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.todayTime">
+      <notes>
+        <note category="location">web/src/app/stats/components/category-summary-card/category-summary-card.component.html:94,95</note>
+      </notes>
+      <segment>
+        <source>Heute</source>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.facet.distanceTitle">
+      <notes>
+        <note category="location">web/src/app/stats/components/category-summary-card/category-summary-card.component.html:122,125</note>
+      </notes>
+      <segment>
+        <source> Strecke </source>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.totalDistance">
+      <notes>
+        <note category="location">web/src/app/stats/components/category-summary-card/category-summary-card.component.html:128,130</note>
+        <note category="location">web/src/app/stats/components/category-summary-card/category-summary-card.component.html:174,176</note>
+      </notes>
+      <segment>
+        <source> Strecke gesamt </source>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.todayDistance">
+      <notes>
+        <note category="location">web/src/app/stats/components/category-summary-card/category-summary-card.component.html:140,141</note>
+        <note category="location">web/src/app/stats/components/category-summary-card/category-summary-card.component.html:190,192</note>
+      </notes>
+      <segment>
+        <source>Heute</source>
+      </segment>
+    </unit>
+    <unit id="analysis.overview.cards.facet.distanceTimeTitle">
+      <notes>
+        <note category="location">web/src/app/stats/components/category-summary-card/category-summary-card.component.html:168,171</note>
+      </notes>
+      <segment>
+        <source> Strecke &amp; Zeit </source>
+      </segment>
+    </unit>
     <unit id="analysis.overview.cards.streak">
       <notes>
-        <note category="location">web/src/app/stats/components/category-summary-card/category-summary-card.component.ts:48,50</note>
+        <note category="location">web/src/app/stats/components/category-summary-card/category-summary-card.component.html:214,216</note>
       </notes>
       <segment>
         <source>Streak</source>
@@ -4559,25 +4629,25 @@
     </unit>
     <unit id="analysis.streakDays">
       <notes>
-        <note category="location">web/src/app/stats/components/category-summary-card/category-summary-card.component.ts:51,52</note>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:83,84</note>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:91,92</note>
+        <note category="location">web/src/app/stats/components/category-summary-card/category-summary-card.component.html:217,218</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:94,95</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:102,103</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="INTERPOLATION" disp="{{ summary().currentStreak }}"/> Tage</source>
       </segment>
     </unit>
-    <unit id="analysis.overview.cards.bestDay">
+    <unit id="analysis.overview.cards.entries">
       <notes>
-        <note category="location">web/src/app/stats/components/category-summary-card/category-summary-card.component.ts:56,57</note>
+        <note category="location">web/src/app/stats/components/category-summary-card/category-summary-card.component.html:222,224</note>
       </notes>
       <segment>
-        <source>Bester Tag</source>
+        <source>Trainingseinheiten</source>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.viewDetails">
       <notes>
-        <note category="location">web/src/app/stats/components/category-summary-card/category-summary-card.component.ts:75,78</note>
+        <note category="location">web/src/app/stats/components/category-summary-card/category-summary-card.component.html:242,245</note>
       </notes>
       <segment>
         <source>Details ansehen</source>
@@ -4585,7 +4655,7 @@
     </unit>
     <unit id="selectRangeTitle">
       <notes>
-        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:43,46</note>
+        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:46,49</note>
       </notes>
       <segment>
         <source>Zeitraum auswählen</source>
@@ -4593,7 +4663,7 @@
     </unit>
     <unit id="quickRangeAria">
       <notes>
-        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:48,49</note>
+        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:51,52</note>
       </notes>
       <segment>
         <source>Schnellwahl Zeitraum</source>
@@ -4601,7 +4671,7 @@
     </unit>
     <unit id="rangeModeDay">
       <notes>
-        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:56,57</note>
+        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:59,60</note>
       </notes>
       <segment>
         <source>Tag</source>
@@ -4609,7 +4679,7 @@
     </unit>
     <unit id="rangeModeWeek">
       <notes>
-        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:59,60</note>
+        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:62,63</note>
       </notes>
       <segment>
         <source>Woche</source>
@@ -4617,7 +4687,7 @@
     </unit>
     <unit id="rangeModeMonth">
       <notes>
-        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:62,63</note>
+        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:65,66</note>
       </notes>
       <segment>
         <source>Monat</source>
@@ -4625,7 +4695,7 @@
     </unit>
     <unit id="rangeModeYear">
       <notes>
-        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:65,66</note>
+        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:68,69</note>
       </notes>
       <segment>
         <source>Jahr</source>
@@ -4633,7 +4703,7 @@
     </unit>
     <unit id="rangeBackAria">
       <notes>
-        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:76,77</note>
+        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:79,80</note>
       </notes>
       <segment>
         <source>Vorheriger Zeitraum</source>
@@ -4641,7 +4711,7 @@
     </unit>
     <unit id="rangeBack">
       <notes>
-        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:80,81</note>
+        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:83,84</note>
       </notes>
       <segment>
         <source>Zurück</source>
@@ -4649,7 +4719,7 @@
     </unit>
     <unit id="rangeTodayAria">
       <notes>
-        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:88,89</note>
+        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:91,92</note>
       </notes>
       <segment>
         <source>Zum heutigen Zeitraum springen</source>
@@ -4657,7 +4727,7 @@
     </unit>
     <unit id="rangeToday">
       <notes>
-        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:91,92</note>
+        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:94,95</note>
       </notes>
       <segment>
         <source>Heute</source>
@@ -4665,7 +4735,7 @@
     </unit>
     <unit id="rangeForwardAria">
       <notes>
-        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:99,100</note>
+        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:102,103</note>
       </notes>
       <segment>
         <source>Nächster Zeitraum</source>
@@ -4673,7 +4743,7 @@
     </unit>
     <unit id="rangeForward">
       <notes>
-        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:102,103</note>
+        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:105,106</note>
       </notes>
       <segment>
         <source>Vor</source>
@@ -4681,7 +4751,7 @@
     </unit>
     <unit id="rangePickerToggleAria">
       <notes>
-        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:111,112</note>
+        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:114,115</note>
       </notes>
       <segment>
         <source>Eigenen Zeitraum auswählen</source>
@@ -4689,7 +4759,7 @@
     </unit>
     <unit id="rangeLabel">
       <notes>
-        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:124,125</note>
+        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:137,138</note>
       </notes>
       <segment>
         <source>Zeitraum</source>
@@ -4697,7 +4767,7 @@
     </unit>
     <unit id="rangeFrom">
       <notes>
-        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:130</note>
+        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:143</note>
       </notes>
       <segment>
         <source>Von</source>
@@ -4705,7 +4775,7 @@
     </unit>
     <unit id="rangeTo">
       <notes>
-        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:136</note>
+        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts:149</note>
       </notes>
       <segment>
         <source>Bis</source>
@@ -5165,6 +5235,7 @@
     <unit id="noEntriesInSelectedRange">
       <notes>
         <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:52,55</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:40,43</note>
       </notes>
       <segment>
         <source> Keine Einträge im gewählten Zeitraum. </source>
@@ -6446,7 +6517,7 @@
     </unit>
     <unit id="analysis.bestStreaksTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:51,53</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:62,64</note>
       </notes>
       <segment>
         <source>Bestwerte &amp; Streaks</source>
@@ -6454,7 +6525,7 @@
     </unit>
     <unit id="analysis.bestSingleEntry">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:57,59</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:68,70</note>
       </notes>
       <segment>
         <source>Bestwert Einzel-Eintrag:</source>
@@ -6462,7 +6533,7 @@
     </unit>
     <unit id="analysis.bestDay">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:62,64</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:73,75</note>
       </notes>
       <segment>
         <source>Bester Tag:</source>
@@ -6470,7 +6541,7 @@
     </unit>
     <unit id="analysis.bestSingleSet">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:71,73</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:82,84</note>
       </notes>
       <segment>
         <source>Bestes Einzel-Set:</source>
@@ -6478,7 +6549,7 @@
     </unit>
     <unit id="analysis.repsUnit">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:75,77</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:86,88</note>
       </notes>
       <segment>
         <source>Wdh.</source>
@@ -6486,7 +6557,7 @@
     </unit>
     <unit id="analysis.currentStreak">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:80,82</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:91,93</note>
       </notes>
       <segment>
         <source>Aktuelle Streak:</source>
@@ -6494,7 +6565,7 @@
     </unit>
     <unit id="analysis.longestStreak">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:88,90</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:99,101</note>
       </notes>
       <segment>
         <source>Längste Streak:</source>
@@ -6502,7 +6573,7 @@
     </unit>
     <unit id="analysis.typesTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:101,103</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:112,114</note>
       </notes>
       <segment>
         <source>Typen (Anteile)</source>
@@ -6510,7 +6581,7 @@
     </unit>
     <unit id="analysis.avgSetSizeTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:115,116</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:126,127</note>
       </notes>
       <segment>
         <source>⌀ Set-Größe</source>
@@ -6518,7 +6589,7 @@
     </unit>
     <unit id="analysis.repsPerSet">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:120,121</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:131,132</note>
       </notes>
       <segment>
         <source>Reps / Set</source>
@@ -6526,7 +6597,7 @@
     </unit>
     <unit id="analysis.setsDistTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:129,131</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:140,142</note>
       </notes>
       <segment>
         <source>Sets-Verteilung</source>
@@ -6534,7 +6605,7 @@
     </unit>
     <unit id="analysis.heatmapTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:144,146</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:155,157</note>
       </notes>
       <segment>
         <source>Heatmap (Wochentag/Uhrzeit)</source>
@@ -6542,7 +6613,7 @@
     </unit>
     <unit id="analysis.heatmapToggleAriaLabel">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:150,151</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:161,162</note>
       </notes>
       <segment>
         <source>Heatmap-Modus auswählen</source>
@@ -6550,7 +6621,7 @@
     </unit>
     <unit id="analysis.heatmapReps">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:154,156</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:165,167</note>
       </notes>
       <segment>
         <source>Reps</source>
@@ -6558,7 +6629,7 @@
     </unit>
     <unit id="analysis.heatmapSets">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:157,159</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:168,170</note>
       </notes>
       <segment>
         <source>Sets</source>
@@ -6566,7 +6637,7 @@
     </unit>
     <unit id="analysis.weekTrendTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:175,177</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:187,189</note>
       </notes>
       <segment>
         <source>Wochentrend</source>
@@ -6574,7 +6645,7 @@
     </unit>
     <unit id="analysis.weekTrendSubtitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:178,180</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:190,192</note>
       </notes>
       <segment>
         <source>Letzte 8 Wochen</source>
@@ -6582,7 +6653,7 @@
     </unit>
     <unit id="analysis.weekCol">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:186,187</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:198,199</note>
       </notes>
       <segment>
         <source>Woche</source>
@@ -6590,8 +6661,8 @@
     </unit>
     <unit id="analysis.repsCol">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:192,193</note>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:240,241</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:204,205</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:252,253</note>
       </notes>
       <segment>
         <source>Reps</source>
@@ -6599,8 +6670,8 @@
     </unit>
     <unit id="analysis.avgSetsCol">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:198,199</note>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:246,247</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:210,211</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:258,259</note>
       </notes>
       <segment>
         <source>⌀ Sets</source>
@@ -6608,7 +6679,7 @@
     </unit>
     <unit id="analysis.monthTrendTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:223,225</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:235,237</note>
       </notes>
       <segment>
         <source>Monatstrend</source>
@@ -6616,7 +6687,7 @@
     </unit>
     <unit id="analysis.monthTrendSubtitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:226,228</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:238,240</note>
       </notes>
       <segment>
         <source>Letzte 6 Monate</source>
@@ -6624,7 +6695,7 @@
     </unit>
     <unit id="analysis.monthCol">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:234,235</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:246,247</note>
       </notes>
       <segment>
         <source>Monat</source>
