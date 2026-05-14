@@ -7,6 +7,7 @@ import {
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { fireConfig } from '../env/fire.config';
 import { AdsStore, GoogleAdsService } from '@pu-stats/ads';
+import { provideAutoCount } from './auto-count/provide-auto-count';
 
 export const appBrowserConfig: ApplicationConfig = {
   providers: [
@@ -23,5 +24,6 @@ export const appBrowserConfig: ApplicationConfig = {
         }
       });
     }),
+    ...provideAutoCount(),
   ],
 };

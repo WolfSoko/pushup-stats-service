@@ -1,0 +1,60 @@
+<h2 mat-dialog-title i18n="@@autoCount.title">
+  Liegestütze automatisch zählen
+</h2>
+<mat-dialog-content>
+  <p class="hint" i18n="@@autoCount.instructions">
+    Halte das Gerät so, dass deine Schulter, dein Ellbogen und dein Handgelenk
+    im Bild sind. Reps werden bei sauberem Down‑Up gezählt.
+  </p>
+  <div class="video-stage">
+    <video #video class="preview" autoplay playsinline muted></video>
+    @if (isStarting()) {
+      <div class="overlay-message">
+        <mat-spinner diameter="32" />
+        <span i18n="@@autoCount.cameraStarting">Kamera startet …</span>
+      </div>
+    }
+    @if (error(); as err) {
+      <div class="overlay-message error">
+        <mat-icon>videocam_off</mat-icon>
+        <strong i18n="@@autoCount.unavailable">
+          Auto‑Zählen nicht verfügbar
+        </strong>
+        <small>{{ err }}</small>
+      </div>
+    }
+    @if (!isStarting() && !error()) {
+      <div class="count-overlay" aria-live="polite">
+        <span class="count-value">{{ count() }}</span>
+        <span class="count-label" i18n="@@autoCount.repsLabel">Reps</span>
+      </div>
+      @if (phase() === 'awaiting-up') {
+        <div class="position-hint" i18n="@@autoCount.positionHint">
+          In Plank‑Position gehen
+        </div>
+      }
+    }
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button
+    mat-button
+    (click)="reset()"
+    [disabled]="count() === 0"
+    i18n="@@autoCount.reset"
+  >
+    Zurücksetzen
+  </button>
+  <button mat-button (click)="cancel()" i18n="@@autoCount.cancel">
+    Abbrechen
+  </button>
+  <button
+    mat-flat-button
+    color="primary"
+    (click)="save()"
+    [disabled]="count() === 0 || !!error()"
+    i18n="@@autoCount.save"
+  >
+    Übernehmen
+  </button>
+</mat-dialog-actions>

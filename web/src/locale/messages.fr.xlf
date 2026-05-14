@@ -708,6 +708,72 @@
         <target>Entrez votre propre valeur</target>
       </segment>
     </unit>
+            <unit id="autoCount.title">
+      <segment state="translated">
+        <source>Liegestütze automatisch zählen</source>
+        <target>Comptage automatique des pompes</target>
+      </segment>
+    </unit>
+        <unit id="autoCount.instructions">
+      <segment state="translated">
+        <source>Halte das Gerät so, dass deine Schulter, dein Ellbogen und dein Handgelenk im Bild sind. Reps werden bei sauberem Down‑Up gezählt.</source>
+        <target>Tenez l’appareil de manière à voir votre épaule, votre coude et votre poignet. Les répétitions sont comptées sur un mouvement descente-montée propre.</target>
+      </segment>
+    </unit>
+        <unit id="autoCount.cameraStarting">
+      <segment state="translated">
+        <source>Kamera startet …</source>
+        <target>Démarrage de la caméra …</target>
+      </segment>
+    </unit>
+        <unit id="autoCount.unavailable">
+      <segment state="translated">
+        <source>Auto‑Zählen nicht verfügbar</source>
+        <target>Comptage automatique indisponible</target>
+      </segment>
+    </unit>
+        <unit id="autoCount.repsLabel">
+      <segment state="translated">
+        <source>Reps</source>
+        <target>Reps</target>
+      </segment>
+    </unit>
+        <unit id="autoCount.positionHint">
+      <segment state="translated">
+        <source>In Plank‑Position gehen</source>
+        <target>Mettez-vous en position de planche</target>
+      </segment>
+    </unit>
+        <unit id="autoCount.reset">
+      <segment state="translated">
+        <source>Zurücksetzen</source>
+        <target>Réinitialiser</target>
+      </segment>
+    </unit>
+        <unit id="autoCount.cancel">
+      <segment state="translated">
+        <source>Abbrechen</source>
+        <target>Annuler</target>
+      </segment>
+    </unit>
+        <unit id="autoCount.save">
+      <segment state="translated">
+        <source>Übernehmen</source>
+        <target>Appliquer</target>
+      </segment>
+    </unit>
+    <unit id="quickAdd.fab.autoCountAria">
+      <segment state="translated">
+        <source>Liegestütze automatisch zählen</source>
+        <target>Compter les pompes automatiquement</target>
+      </segment>
+    </unit>
+    <unit id="quickAdd.fab.autoCount">
+      <segment state="translated">
+        <source>Auto‑Zählen</source>
+        <target>Auto-comptage</target>
+      </segment>
+    </unit>
     <unit id="quickAdd.fab.customValue">
       <notes>
         <note category="location">libs/quick-add/src/lib/quick-add-fab.component.html:27,29</note>

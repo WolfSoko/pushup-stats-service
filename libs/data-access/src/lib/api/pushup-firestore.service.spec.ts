@@ -59,7 +59,7 @@ describe('PushupFirestoreService', () => {
             }),
           },
         ],
-      } as any);
+      } as never);
 
       const result = await firstValueFrom(service.listPushups('u1'));
 
@@ -84,7 +84,7 @@ describe('PushupFirestoreService', () => {
     it('adds userId and orderBy constraints to query', async () => {
       jest.spyOn(firestoreFns, 'getDocs').mockResolvedValueOnce({
         docs: [],
-      } as any);
+      } as never);
 
       await firstValueFrom(service.listPushups('u1'));
 
@@ -95,7 +95,7 @@ describe('PushupFirestoreService', () => {
     it('adds a from constraint when filter.from is provided', async () => {
       jest.spyOn(firestoreFns, 'getDocs').mockResolvedValueOnce({
         docs: [],
-      } as any);
+      } as never);
 
       await firstValueFrom(service.listPushups('u1', { from: '2024-01-05' }));
 
@@ -109,7 +109,7 @@ describe('PushupFirestoreService', () => {
     it('adds a to constraint when filter.to is provided', async () => {
       jest.spyOn(firestoreFns, 'getDocs').mockResolvedValueOnce({
         docs: [],
-      } as any);
+      } as never);
 
       await firstValueFrom(service.listPushups('u1', { to: '2024-01-10' }));
 
@@ -123,7 +123,7 @@ describe('PushupFirestoreService', () => {
     it('does not add from/to constraints when filter is empty', async () => {
       jest.spyOn(firestoreFns, 'getDocs').mockResolvedValueOnce({
         docs: [],
-      } as any);
+      } as never);
 
       await firstValueFrom(service.listPushups('u1', {}));
 
@@ -162,7 +162,7 @@ describe('PushupFirestoreService', () => {
             }),
           },
         ],
-      } as any);
+      } as never);
 
       const result = await firstValueFrom(
         service.listPushups('u1', { from: '2024-01-05' })
@@ -199,7 +199,7 @@ describe('PushupFirestoreService', () => {
             }),
           },
         ],
-      } as any);
+      } as never);
 
       const result = await firstValueFrom(
         service.listPushups('u1', { to: '2024-01-10' })
@@ -236,7 +236,7 @@ describe('PushupFirestoreService', () => {
             }),
           },
         ],
-      } as any);
+      } as never);
 
       const result = await firstValueFrom(
         service.listPushups('u1', { from: '2024-01-05', to: '2024-01-10' })
@@ -249,10 +249,10 @@ describe('PushupFirestoreService', () => {
   describe('createPushup', () => {
     it('calls setDoc and returns a PushupRecord with the new id', async () => {
       const newRef = { id: 'created-id' };
-      jest.spyOn(firestoreFns, 'doc').mockReturnValueOnce(newRef as any);
+      jest.spyOn(firestoreFns, 'doc').mockReturnValueOnce(newRef as never);
       const setDocSpy = jest
         .spyOn(firestoreFns, 'setDoc')
-        .mockResolvedValueOnce(undefined as any);
+        .mockResolvedValueOnce(undefined as never);
 
       const result = await firstValueFrom(
         service.createPushup('u1', {
@@ -278,10 +278,10 @@ describe('PushupFirestoreService', () => {
 
     it('persists sets array when provided', async () => {
       const newRef = { id: 'sets-id' };
-      jest.spyOn(firestoreFns, 'doc').mockReturnValueOnce(newRef as any);
+      jest.spyOn(firestoreFns, 'doc').mockReturnValueOnce(newRef as never);
       const setDocSpy = jest
         .spyOn(firestoreFns, 'setDoc')
-        .mockResolvedValueOnce(undefined as any);
+        .mockResolvedValueOnce(undefined as never);
 
       const result = await firstValueFrom(
         service.createPushup('u1', {
@@ -304,10 +304,10 @@ describe('PushupFirestoreService', () => {
 
     it('omits sets from Firestore when not provided', async () => {
       const newRef = { id: 'no-sets-id' };
-      jest.spyOn(firestoreFns, 'doc').mockReturnValueOnce(newRef as any);
+      jest.spyOn(firestoreFns, 'doc').mockReturnValueOnce(newRef as never);
       const setDocSpy = jest
         .spyOn(firestoreFns, 'setDoc')
-        .mockResolvedValueOnce(undefined as any);
+        .mockResolvedValueOnce(undefined as never);
 
       await firstValueFrom(
         service.createPushup('u1', {
@@ -322,10 +322,10 @@ describe('PushupFirestoreService', () => {
 
     it('omits sets from Firestore when empty array is provided', async () => {
       const newRef = { id: 'empty-sets-id' };
-      jest.spyOn(firestoreFns, 'doc').mockReturnValueOnce(newRef as any);
+      jest.spyOn(firestoreFns, 'doc').mockReturnValueOnce(newRef as never);
       const setDocSpy = jest
         .spyOn(firestoreFns, 'setDoc')
-        .mockResolvedValueOnce(undefined as any);
+        .mockResolvedValueOnce(undefined as never);
 
       await firstValueFrom(
         service.createPushup('u1', {
@@ -395,10 +395,10 @@ describe('PushupFirestoreService', () => {
 
     it('defaults source to "web" and type to "Standard" when omitted', async () => {
       const newRef = { id: 'default-id' };
-      jest.spyOn(firestoreFns, 'doc').mockReturnValueOnce(newRef as any);
+      jest.spyOn(firestoreFns, 'doc').mockReturnValueOnce(newRef as never);
       jest
         .spyOn(firestoreFns, 'setDoc')
-        .mockResolvedValueOnce(undefined as any);
+        .mockResolvedValueOnce(undefined as never);
 
       const result = await firstValueFrom(
         service.createPushup('u1', {
@@ -415,10 +415,10 @@ describe('PushupFirestoreService', () => {
   describe('updatePushup', () => {
     it('calls updateDoc with the patch and updatedAt timestamp', async () => {
       const rowRef = {};
-      jest.spyOn(firestoreFns, 'doc').mockReturnValueOnce(rowRef as any);
+      jest.spyOn(firestoreFns, 'doc').mockReturnValueOnce(rowRef as never);
       const updateDocSpy = jest
         .spyOn(firestoreFns, 'updateDoc')
-        .mockResolvedValueOnce(undefined as any);
+        .mockResolvedValueOnce(undefined as never);
 
       await firstValueFrom(service.updatePushup('id1', { reps: 8 }));
 
@@ -443,10 +443,10 @@ describe('PushupFirestoreService', () => {
 
       it('Then allows updates that omit reps entirely', async () => {
         const rowRef = {};
-        jest.spyOn(firestoreFns, 'doc').mockReturnValueOnce(rowRef as any);
+        jest.spyOn(firestoreFns, 'doc').mockReturnValueOnce(rowRef as never);
         const updateDocSpy = jest
           .spyOn(firestoreFns, 'updateDoc')
-          .mockResolvedValueOnce(undefined as any);
+          .mockResolvedValueOnce(undefined as never);
 
         await firstValueFrom(service.updatePushup('id1', { source: 'web' }));
 
@@ -456,10 +456,10 @@ describe('PushupFirestoreService', () => {
 
     it('strips undefined values from payload before calling updateDoc', async () => {
       const rowRef = {};
-      jest.spyOn(firestoreFns, 'doc').mockReturnValueOnce(rowRef as any);
+      jest.spyOn(firestoreFns, 'doc').mockReturnValueOnce(rowRef as never);
       const updateDocSpy = jest
         .spyOn(firestoreFns, 'updateDoc')
-        .mockResolvedValueOnce(undefined as any);
+        .mockResolvedValueOnce(undefined as never);
 
       await firstValueFrom(
         service.updatePushup('id1', {
@@ -480,10 +480,10 @@ describe('PushupFirestoreService', () => {
   describe('deletePushup', () => {
     it('calls deleteDoc and returns { ok: true }', async () => {
       const rowRef = {};
-      jest.spyOn(firestoreFns, 'doc').mockReturnValueOnce(rowRef as any);
+      jest.spyOn(firestoreFns, 'doc').mockReturnValueOnce(rowRef as never);
       const deleteDocSpy = jest
         .spyOn(firestoreFns, 'deleteDoc')
-        .mockResolvedValueOnce(undefined as any);
+        .mockResolvedValueOnce(undefined as never);
 
       const result = await firstValueFrom(service.deletePushup('id1'));
 

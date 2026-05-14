@@ -125,6 +125,35 @@ describe('exerciseEntryToUnified', () => {
       expect('weightKg' in out).toBe(false);
     });
   });
+
+  describe('Given an endurance entry with an intervals breakdown', () => {
+    it('forwards intervals verbatim (sprint repeats)', () => {
+      const e: ExerciseEntry = {
+        _id: 'e5',
+        userId: 'u1',
+        exerciseId: 'cardio.sprints',
+        timestamp: '2026-04-15T10:00:00Z',
+        durationSec: 90,
+        intervals: [30, 30, 30],
+        source: 'web',
+      };
+      const out = exerciseEntryToUnified(e);
+      expect(out.intervals).toEqual([30, 30, 30]);
+    });
+
+    it('omits intervals when the source doc has none', () => {
+      const e: ExerciseEntry = {
+        _id: 'e6',
+        userId: 'u1',
+        exerciseId: 'core.plank',
+        timestamp: '2026-04-15T10:00:00Z',
+        durationSec: 60,
+        source: 'web',
+      };
+      const out = exerciseEntryToUnified(e);
+      expect('intervals' in out).toBe(false);
+    });
+  });
 });
 
 describe('unifiedEntryFilterKey', () => {

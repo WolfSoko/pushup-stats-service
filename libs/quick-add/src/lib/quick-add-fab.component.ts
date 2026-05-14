@@ -5,7 +5,7 @@ import { patchState, signalState } from '@ngrx/signals';
 
 interface DialItem {
   readonly value: number;
-  readonly type: 'quick' | 'custom' | 'feedback' | 'goal';
+  readonly type: 'quick' | 'custom' | 'feedback' | 'goal' | 'auto-count';
   readonly icon: string;
 }
 
@@ -23,11 +23,13 @@ export class QuickAddFabComponent {
   readonly remainingToGoal = input<number>(0);
   readonly goalReached = input<boolean>(false);
   readonly fillToGoalInFlight = input<boolean>(false);
+  readonly autoCountEnabled = input<boolean>(false);
 
   readonly quickAdd = output<number>();
   readonly openDialog = output<void>();
   readonly openFeedback = output<void>();
   readonly fillToGoal = output<void>();
+  readonly openAutoCount = output<void>();
   readonly opened = output<void>();
 
   protected readonly fabState = signalState({ open: false });
@@ -56,6 +58,9 @@ export class QuickAddFabComponent {
       });
     }
 
+    if (this.autoCountEnabled()) {
+      items.push({ value: 0, type: 'auto-count', icon: 'videocam' });
+    }
     items.push({ value: 0, type: 'custom', icon: 'edit_note' });
     items.push({ value: 0, type: 'feedback', icon: 'feedback' });
 
@@ -93,6 +98,11 @@ export class QuickAddFabComponent {
   protected onOpenDialog(): void {
     patchState(this.fabState, { open: false });
     this.openDialog.emit();
+  }
+
+  protected onOpenAutoCount(): void {
+    patchState(this.fabState, { open: false });
+    this.openAutoCount.emit();
   }
 
   protected onOpenFeedback(): void {

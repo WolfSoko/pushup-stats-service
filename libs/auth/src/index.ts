@@ -7,6 +7,7 @@ export * from './lib/core/admin.guard';
 // Core services
 export * from './lib/core/auth.service';
 export * from './lib/core/user-context.service';
+export * from './lib/core/feature-flags.service';
 
 // Auth provider setup
 export * from './lib/provide-auth';

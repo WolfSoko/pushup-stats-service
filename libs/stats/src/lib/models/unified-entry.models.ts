@@ -28,6 +28,9 @@ export interface UnifiedEntryBase {
   timestamp: string;
   reps: number;
   sets?: number[];
+  /** Per-interval breakdown for endurance exercises (sprints, HIIT). See
+   *  `ExerciseEntry.intervals`. Never set on legacy pushup entries. */
+  intervals?: number[];
   source: string;
   createdAt?: string;
   updatedAt?: string;
@@ -87,6 +90,7 @@ export function exerciseEntryToUnified(e: ExerciseEntry): UnifiedExerciseEntry {
     // tell consumers what value is actually meaningful.
     reps: e.reps ?? 0,
     ...(e.sets ? { sets: e.sets } : {}),
+    ...(e.intervals ? { intervals: e.intervals } : {}),
     source: e.source,
     exerciseId: e.exerciseId,
     ...(e.variantId ? { variantId: e.variantId } : {}),

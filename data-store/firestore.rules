@@ -196,6 +196,13 @@ service cloud.firestore {
     //   - `plank.standard` (time): require `durationSec` int 1..7200;
     //     forbid `reps` and `sets`.
     //
+    // Breakdown fields are split by exercise type:
+    //   - `sets`: per-set rep counts, only for reps-measured exercises.
+    //   - `intervals`: per-interval primary values (sprint repeats,
+    //     HIIT), only for time/distance/distance-time exercises.
+    //   They are mutually exclusive — the wrong field on the wrong
+    //   measurement type is rejected here.
+    //
     // Schema is also pinned via `keys().hasOnly([...])` so unknown
     // fields can't sneak past the trigger / aggregation logic.
     //
@@ -210,7 +217,7 @@ service cloud.firestore {
       allow create: if request.auth != null
                     && request.resource.data.keys().hasOnly([
                       'userId', 'exerciseId', 'reps', 'durationSec', 'distanceM',
-                      'sets', 'variantId', 'timestamp', 'source',
+                      'sets', 'intervals', 'variantId', 'timestamp', 'source',
                       'createdAt', 'updatedAt'
                     ])
                     && request.resource.data.userId == request.auth.uid
@@ -225,12 +232,15 @@ service cloud.firestore {
                       // like `cardio.jumprope`; per-exercise caps are
                       // enforced client-side via the catalog
                       // `min`/`max` plus the `applyDelta` trigger.
+                      // `intervals` is blocked here — endurance-only
+                      // breakdown, symmetric to the `sets` ban below.
                       (isRepsExerciseId(request.resource.data.exerciseId)
                         && request.resource.data.reps is int
                         && request.resource.data.reps >= 1
                         && request.resource.data.reps <= 10000
                         && !('durationSec' in request.resource.data.keys())
-                        && !('distanceM' in request.resource.data.keys()))
+                        && !('distanceM' in request.resource.data.keys())
+                        && !('intervals' in request.resource.data.keys()))
                       ||
                       // Time-measured exercises (plank, hollow hold,
                       // wall sit, dead hang, mobility holds, …). `sets`
@@ -269,12 +279,17 @@ service cloud.firestore {
                     // forever.
                     && (!('sets' in request.resource.data.keys())
                         || (request.resource.data.sets is list
-                            && request.resource.data.sets.size() <= 50));
+                            && request.resource.data.sets.size() <= 50))
+                    // Same bound for `intervals` (endurance breakdown).
+                    // Same NaN-poisoning concern via future delta logic.
+                    && (!('intervals' in request.resource.data.keys())
+                        || (request.resource.data.intervals is list
+                            && request.resource.data.intervals.size() <= 50));
       allow update: if request.auth != null
                     && resource.data.userId == request.auth.uid
                     && request.resource.data.keys().hasOnly([
                       'userId', 'exerciseId', 'reps', 'durationSec', 'distanceM',
-                      'sets', 'variantId', 'timestamp', 'source',
+                      'sets', 'intervals', 'variantId', 'timestamp', 'source',
                       'createdAt', 'updatedAt'
                     ])
                     && request.resource.data.userId == request.auth.uid
@@ -286,12 +301,14 @@ service cloud.firestore {
                     // pin to `resource.data.exerciseId`.
                     && (
                       // Reps-measured exercises: reject `durationSec`/
-                      // `distanceM` and validate reps when changed.
-                      // Caps mirror the create branch (single source of
-                      // truth via `isRepsExerciseId()` at the top).
+                      // `distanceM`/`intervals` and validate reps when
+                      // changed. Caps mirror the create branch (single
+                      // source of truth via `isRepsExerciseId()` at the
+                      // top).
                       (isRepsExerciseId(resource.data.exerciseId)
                         && !('durationSec' in request.resource.data.keys())
                         && !('distanceM' in request.resource.data.keys())
+                        && !('intervals' in request.resource.data.keys())
                         && (!('reps' in request.resource.data.diff(resource.data).affectedKeys())
                             || (request.resource.data.reps is int
                                 && request.resource.data.reps >= 1
@@ -328,7 +345,11 @@ service cloud.firestore {
                     && (!('sets' in request.resource.data.diff(resource.data).affectedKeys())
                         || !('sets' in request.resource.data.keys())
                         || (request.resource.data.sets is list
-                            && request.resource.data.sets.size() <= 50));
+                            && request.resource.data.sets.size() <= 50))
+                    && (!('intervals' in request.resource.data.diff(resource.data).affectedKeys())
+                        || !('intervals' in request.resource.data.keys())
+                        || (request.resource.data.intervals is list
+                            && request.resource.data.intervals.size() <= 50));
     }
 
     // Active training plan — owner-only. Single doc per user.

@@ -115,6 +115,17 @@ export interface ExerciseEntry {
   weightKg?: number;
   /** Optional per-set breakdown, only meaningful for reps/weight. */
   sets?: number[];
+  /**
+   * Optional per-interval breakdown, only meaningful for endurance
+   * measurements (`time`, `distance`, `distance-time`). Each entry is
+   * one repetition of the primary measurement — e.g. for sprint
+   * training a `time` exercise might record `intervals: [30, 30, 30]`
+   * (three 30-second sprints), a `distance` interval workout might
+   * record `intervals: [400, 400, 400]` (3 × 400 m). Mutually
+   * exclusive with `sets` in practice: pick the field that matches
+   * the exercise's measurement type via {@link entryBreakdownField}.
+   */
+  intervals?: number[];
   source: string;
   createdAt?: string;
   updatedAt?: string;
@@ -129,6 +140,7 @@ export interface ExerciseEntryCreate {
   distanceM?: number;
   weightKg?: number;
   sets?: number[];
+  intervals?: number[];
   source?: string;
 }
 
@@ -150,6 +162,7 @@ export interface ExerciseEntryUpdate {
   distanceM?: number;
   weightKg?: number;
   sets?: number[];
+  intervals?: number[];
   source?: string;
 }
 
@@ -209,6 +222,34 @@ export function measurementCompanionValueField(
   measurement: MeasurementType
 ): MeasurementValueField | undefined {
   return measurement === 'distance-time' ? 'durationSec' : undefined;
+}
+
+/**
+ * Returns the per-segment breakdown field that's meaningful for a
+ * measurement type:
+ *
+ *   - `'sets'` for `reps` / `weight` — rep counts per set
+ *     (e.g. 30 squats logged as `sets: [10, 10, 10]`).
+ *   - `'intervals'` for `time` / `distance` / `distance-time` — per-interval
+ *     primary values (e.g. sprint repeats `intervals: [400, 400, 400]` for a
+ *     distance workout, or `intervals: [30, 30, 30]` for 30-second sprints
+ *     on a time-measured exercise).
+ *
+ * Endurance training (sprint repeats, HIIT) doesn't use the strength term
+ * "Sätze/Sets"; UI labels and entry shape pick the field via this helper.
+ */
+export function entryBreakdownField(
+  measurement: MeasurementType
+): 'sets' | 'intervals' {
+  switch (measurement) {
+    case 'reps':
+    case 'weight':
+      return 'sets';
+    case 'time':
+    case 'distance':
+    case 'distance-time':
+      return 'intervals';
+  }
 }
 
 /**
@@ -311,7 +352,7 @@ export function requiredCompanionFields(
 export function validateExerciseEntry(
   entry: Pick<
     ExerciseEntry,
-    'reps' | 'durationSec' | 'distanceM' | 'weightKg'
+    'reps' | 'durationSec' | 'distanceM' | 'weightKg' | 'sets' | 'intervals'
   > & {
     // `null` is the patch sentinel for "clear the variant"; the
     // persisted `ExerciseEntry.variantId` is `string | undefined`
@@ -337,6 +378,22 @@ export function validateExerciseEntry(
     if (entry[f] !== undefined) {
       return 'wrong-measurement-field';
     }
+  }
+  // Breakdown fields are mutually exclusive by measurement type:
+  // strength entries use `sets` (rep counts), endurance entries use
+  // `intervals` (per-segment durations/distances). The wrong field
+  // on the wrong measurement type would corrupt aggregations — the
+  // Firestore rules enforce this server-side, but failing fast here
+  // gives callers a structured violation code before the round-trip.
+  // An empty `[]` is the clear-breakdown sentinel and is allowed on
+  // either side so existing entries can be wiped during a measurement
+  // change-of-mind without a special-cased reset path.
+  const wrongBreakdown =
+    entryBreakdownField(def.measurement) === 'sets'
+      ? entry.intervals
+      : entry.sets;
+  if (Array.isArray(wrongBreakdown) && wrongBreakdown.length > 0) {
+    return 'wrong-measurement-field';
   }
   const value = entry[expectedField];
   if (value === undefined || value === null) {

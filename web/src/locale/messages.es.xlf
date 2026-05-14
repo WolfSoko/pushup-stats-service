@@ -708,6 +708,72 @@
         <target>Introduce tu propio valor</target>
       </segment>
     </unit>
+            <unit id="autoCount.title">
+      <segment state="translated">
+        <source>Liegestütze automatisch zählen</source>
+        <target>Conteo automático de flexiones</target>
+      </segment>
+    </unit>
+        <unit id="autoCount.instructions">
+      <segment state="translated">
+        <source>Halte das Gerät so, dass deine Schulter, dein Ellbogen und dein Handgelenk im Bild sind. Reps werden bei sauberem Down‑Up gezählt.</source>
+        <target>Sostén el dispositivo de modo que se vean tu hombro, codo y muñeca. Las repeticiones se cuentan con un movimiento limpio de bajada y subida.</target>
+      </segment>
+    </unit>
+        <unit id="autoCount.cameraStarting">
+      <segment state="translated">
+        <source>Kamera startet …</source>
+        <target>Iniciando cámara …</target>
+      </segment>
+    </unit>
+        <unit id="autoCount.unavailable">
+      <segment state="translated">
+        <source>Auto‑Zählen nicht verfügbar</source>
+        <target>Conteo automático no disponible</target>
+      </segment>
+    </unit>
+        <unit id="autoCount.repsLabel">
+      <segment state="translated">
+        <source>Reps</source>
+        <target>Reps</target>
+      </segment>
+    </unit>
+        <unit id="autoCount.positionHint">
+      <segment state="translated">
+        <source>In Plank‑Position gehen</source>
+        <target>Ponte en posición de plancha</target>
+      </segment>
+    </unit>
+        <unit id="autoCount.reset">
+      <segment state="translated">
+        <source>Zurücksetzen</source>
+        <target>Restablecer</target>
+      </segment>
+    </unit>
+        <unit id="autoCount.cancel">
+      <segment state="translated">
+        <source>Abbrechen</source>
+        <target>Cancelar</target>
+      </segment>
+    </unit>
+        <unit id="autoCount.save">
+      <segment state="translated">
+        <source>Übernehmen</source>
+        <target>Aplicar</target>
+      </segment>
+    </unit>
+    <unit id="quickAdd.fab.autoCountAria">
+      <segment state="translated">
+        <source>Liegestütze automatisch zählen</source>
+        <target>Contar flexiones automáticamente</target>
+      </segment>
+    </unit>
+    <unit id="quickAdd.fab.autoCount">
+      <segment state="translated">
+        <source>Auto‑Zählen</source>
+        <target>Auto-conteo</target>
+      </segment>
+    </unit>
     <unit id="quickAdd.fab.customValue">
       <notes>
         <note category="location">libs/quick-add/src/lib/quick-add-fab.component.html:27,29</note>

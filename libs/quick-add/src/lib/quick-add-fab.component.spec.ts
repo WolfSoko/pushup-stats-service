@@ -9,11 +9,13 @@ describe('QuickAddFabComponent — goal dial item', () => {
     remainingToGoal?: number;
     goalReached?: boolean;
     fillToGoalInFlight?: boolean;
+    autoCountEnabled?: boolean;
   }) {
     const quickAdd = jest.fn();
     const openDialog = jest.fn();
     const openFeedback = jest.fn();
     const fillToGoal = jest.fn();
+    const openAutoCount = jest.fn();
     const opened = jest.fn();
 
     // Material disabled buttons set pointer-events:none; skip that check so
@@ -28,8 +30,16 @@ describe('QuickAddFabComponent — goal dial item', () => {
         remainingToGoal: inputs.remainingToGoal ?? 0,
         goalReached: inputs.goalReached ?? false,
         fillToGoalInFlight: inputs.fillToGoalInFlight ?? false,
+        autoCountEnabled: inputs.autoCountEnabled ?? false,
       },
-      on: { quickAdd, openDialog, openFeedback, fillToGoal, opened },
+      on: {
+        quickAdd,
+        openDialog,
+        openFeedback,
+        fillToGoal,
+        openAutoCount,
+        opened,
+      },
     });
 
     const mainFab = screen.getByRole('button', {
@@ -44,6 +54,7 @@ describe('QuickAddFabComponent — goal dial item', () => {
       openDialog,
       openFeedback,
       fillToGoal,
+      openAutoCount,
       opened,
     };
   }
@@ -129,6 +140,34 @@ describe('QuickAddFabComponent — goal dial item', () => {
     await user.click(closeFab);
 
     expect(opened).not.toHaveBeenCalled();
+  });
+
+  it('Given autoCountEnabled=false, Then no auto-count item is rendered', async () => {
+    await renderFab({ autoCountEnabled: false });
+
+    expect(
+      screen.queryByRole('button', {
+        name: /Liegestütze automatisch zählen/i,
+      })
+    ).toBeNull();
+  });
+
+  it('Given autoCountEnabled=true, When the auto-count item is clicked, Then openAutoCount is emitted and dial closes', async () => {
+    const { user, openAutoCount } = await renderFab({
+      autoCountEnabled: true,
+    });
+
+    const button = screen.getByRole('button', {
+      name: /Liegestütze automatisch zählen/i,
+    });
+    await user.click(button);
+
+    expect(openAutoCount).toHaveBeenCalledTimes(1);
+    expect(
+      screen.queryByRole('button', {
+        name: /Liegestütze automatisch zählen/i,
+      })
+    ).toBeNull();
   });
 
   it('When the dial is opened a second time, Then opened is emitted again', async () => {
