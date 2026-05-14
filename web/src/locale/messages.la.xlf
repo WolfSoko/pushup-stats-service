@@ -708,7 +708,61 @@
         <target>Intra valorem suum</target>
       </segment>
     </unit>
-        <unit id="quickAdd.fab.autoCountAria">
+            <unit id="autoCount.title">
+      <segment state="translated">
+        <source>Liegestütze automatisch zählen</source>
+        <target>Pulsus automatice numerare</target>
+      </segment>
+    </unit>
+        <unit id="autoCount.instructions">
+      <segment state="translated">
+        <source>Halte das Gerät so, dass deine Schulter, dein Ellbogen und dein Handgelenk im Bild sind. Reps werden bei sauberem Down‑Up gezählt.</source>
+        <target>Tene machinam ita ut umerus, cubitus et carpus videantur. Repetitiones numerantur in motu puro descensus-ascensus.</target>
+      </segment>
+    </unit>
+        <unit id="autoCount.cameraStarting">
+      <segment state="translated">
+        <source>Kamera startet …</source>
+        <target>Camera incipit …</target>
+      </segment>
+    </unit>
+        <unit id="autoCount.unavailable">
+      <segment state="translated">
+        <source>Auto‑Zählen nicht verfügbar</source>
+        <target>Numeratio automatica non praesto</target>
+      </segment>
+    </unit>
+        <unit id="autoCount.repsLabel">
+      <segment state="translated">
+        <source>Reps</source>
+        <target>Reps</target>
+      </segment>
+    </unit>
+        <unit id="autoCount.positionHint">
+      <segment state="translated">
+        <source>In Plank‑Position gehen</source>
+        <target>In positione tabulae sta</target>
+      </segment>
+    </unit>
+        <unit id="autoCount.reset">
+      <segment state="translated">
+        <source>Zurücksetzen</source>
+        <target>Resititue</target>
+      </segment>
+    </unit>
+        <unit id="autoCount.cancel">
+      <segment state="translated">
+        <source>Abbrechen</source>
+        <target>Abscede</target>
+      </segment>
+    </unit>
+        <unit id="autoCount.save">
+      <segment state="translated">
+        <source>Übernehmen</source>
+        <target>Applica</target>
+      </segment>
+    </unit>
+    <unit id="quickAdd.fab.autoCountAria">
       <segment state="translated">
         <source>Liegestütze automatisch zählen</source>
         <target>Pulsus automatice numerare</target>

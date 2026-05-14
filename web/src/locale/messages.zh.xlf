@@ -634,7 +634,61 @@
         <source>Eigenen Wert eingeben</source>
       <target>输入自定义值</target></segment>
     </unit>
-        <unit id="quickAdd.fab.autoCountAria">
+            <unit id="autoCount.title">
+      <segment state="translated">
+        <source>Liegestütze automatisch zählen</source>
+        <target>自动计数俯卧撑</target>
+      </segment>
+    </unit>
+        <unit id="autoCount.instructions">
+      <segment state="translated">
+        <source>Halte das Gerät so, dass deine Schulter, dein Ellbogen und dein Handgelenk im Bild sind. Reps werden bei sauberem Down‑Up gezählt.</source>
+        <target>握持设备,使肩膀、肘部和手腕都在画面中。干净的下-上动作会被计为一次。</target>
+      </segment>
+    </unit>
+        <unit id="autoCount.cameraStarting">
+      <segment state="translated">
+        <source>Kamera startet …</source>
+        <target>相机启动中 …</target>
+      </segment>
+    </unit>
+        <unit id="autoCount.unavailable">
+      <segment state="translated">
+        <source>Auto‑Zählen nicht verfügbar</source>
+        <target>自动计数不可用</target>
+      </segment>
+    </unit>
+        <unit id="autoCount.repsLabel">
+      <segment state="translated">
+        <source>Reps</source>
+        <target>次</target>
+      </segment>
+    </unit>
+        <unit id="autoCount.positionHint">
+      <segment state="translated">
+        <source>In Plank‑Position gehen</source>
+        <target>进入平板支撑姿势</target>
+      </segment>
+    </unit>
+        <unit id="autoCount.reset">
+      <segment state="translated">
+        <source>Zurücksetzen</source>
+        <target>重置</target>
+      </segment>
+    </unit>
+        <unit id="autoCount.cancel">
+      <segment state="translated">
+        <source>Abbrechen</source>
+        <target>取消</target>
+      </segment>
+    </unit>
+        <unit id="autoCount.save">
+      <segment state="translated">
+        <source>Übernehmen</source>
+        <target>应用</target>
+      </segment>
+    </unit>
+    <unit id="quickAdd.fab.autoCountAria">
       <segment state="translated">
         <source>Liegestütze automatisch zählen</source>
         <target>自动计数俯卧撑</target>

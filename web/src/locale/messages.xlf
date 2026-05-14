@@ -2620,6 +2620,79 @@
         <source>Feedback konnte nicht gesendet werden.</source>
       </segment>
     </unit>
+    <unit id="autoCount.title">
+      <notes>
+        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:2,5</note>
+      </notes>
+      <segment>
+        <source> Liegestütze automatisch zählen
+</source>
+      </segment>
+    </unit>
+    <unit id="autoCount.instructions">
+      <notes>
+        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:6,9</note>
+      </notes>
+      <segment>
+        <source> Halte das Gerät so, dass deine Schulter, dein Ellbogen und dein Handgelenk im Bild sind. Reps werden bei sauberem Down‑Up gezählt. </source>
+      </segment>
+    </unit>
+    <unit id="autoCount.cameraStarting">
+      <notes>
+        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:14,17</note>
+      </notes>
+      <segment>
+        <source>Kamera startet …</source>
+      </segment>
+    </unit>
+    <unit id="autoCount.unavailable">
+      <notes>
+        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:21,23</note>
+      </notes>
+      <segment>
+        <source> Auto‑Zählen nicht verfügbar </source>
+      </segment>
+    </unit>
+    <unit id="autoCount.repsLabel">
+      <notes>
+        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:29,31</note>
+      </notes>
+      <segment>
+        <source>Reps</source>
+      </segment>
+    </unit>
+    <unit id="autoCount.positionHint">
+      <notes>
+        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:33,36</note>
+      </notes>
+      <segment>
+        <source> In Plank‑Position gehen </source>
+      </segment>
+    </unit>
+    <unit id="autoCount.reset">
+      <notes>
+        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:46,48</note>
+      </notes>
+      <segment>
+        <source> Zurücksetzen </source>
+      </segment>
+    </unit>
+    <unit id="autoCount.cancel">
+      <notes>
+        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:49,52</note>
+      </notes>
+      <segment>
+        <source> Abbrechen </source>
+      </segment>
+    </unit>
+    <unit id="autoCount.save">
+      <notes>
+        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:58,60</note>
+      </notes>
+      <segment>
+        <source> Übernehmen </source>
+      </segment>
+    </unit>
     <unit id="blog.article.back">
       <notes>
         <note category="location">web/src/app/blog/blog-article.component.ts:40,42</note>
@@ -2751,8 +2824,8 @@
     </unit>
     <unit id="quickAdd.success.create">
       <notes>
-        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:41</note>
-        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:181</note>
+        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:42</note>
+        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:188</note>
       </notes>
       <segment>
         <source>Eintrag gespeichert.</source>
@@ -2760,9 +2833,9 @@
     </unit>
     <unit id="quickAdd.error.create">
       <notes>
-        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:53</note>
-        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:92</note>
-        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:192</note>
+        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:54</note>
+        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:93</note>
+        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:199</note>
       </notes>
       <segment>
         <source>Eintrag konnte nicht gespeichert werden.</source>
@@ -2770,7 +2843,7 @@
     </unit>
     <unit id="quickAdd.success.goalReached">
       <notes>
-        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:79</note>
+        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:80</note>
       </notes>
       <segment>
         <source>Tagesziel erreicht 🎉</source>

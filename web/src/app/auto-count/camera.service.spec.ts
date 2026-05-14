@@ -80,6 +80,24 @@ describe('CameraService', () => {
     expect(stream.trackList.every((t) => t.stopped)).toBe(true);
   });
 
+  it('given video.play rejects, when open is called, then the stream is fully stopped and not retained', async () => {
+    const stream = makeFakeStream();
+    getUserMediaSpy.mockResolvedValue(stream);
+    const video = document.createElement('video');
+    vi.spyOn(video, 'play').mockRejectedValue(new Error('autoplay blocked'));
+
+    const service = TestBed.inject(CameraService);
+    await expect(service.open(video)).rejects.toThrow(/autoplay blocked/);
+
+    expect(stream.trackList.every((t) => t.stopped)).toBe(true);
+    expect(video.srcObject).toBeNull();
+
+    await service.close();
+    // Second close should be a no-op — no extra track.stop calls would
+    // be possible because the stream reference was already cleared.
+    expect(stream.trackList.every((t) => t.stopped)).toBe(true);
+  });
+
   it('given non-browser platform, when open is called, then getUserMedia is not invoked', async () => {
     TestBed.resetTestingModule();
     TestBed.configureTestingModule({

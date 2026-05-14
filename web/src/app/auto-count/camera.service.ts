@@ -21,7 +21,7 @@ export class CameraService {
     if (!isPlatformBrowser(this.platformId)) return;
     if (this.stream) await this.close();
 
-    this.stream = await navigator.mediaDevices.getUserMedia({
+    const stream = await navigator.mediaDevices.getUserMedia({
       audio: false,
       video: {
         facingMode,
@@ -30,10 +30,17 @@ export class CameraService {
       },
     });
 
-    video.srcObject = this.stream;
+    video.srcObject = stream;
     video.playsInline = true;
     video.muted = true;
-    await video.play();
+    try {
+      await video.play();
+    } catch (err) {
+      for (const track of stream.getTracks()) track.stop();
+      video.srcObject = null;
+      throw err;
+    }
+    this.stream = stream;
   }
 
   async close(): Promise<void> {

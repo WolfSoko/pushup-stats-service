@@ -9,7 +9,6 @@ import {
   signal,
   viewChild,
 } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
@@ -49,6 +48,8 @@ export class AutoCountDialogComponent {
   protected readonly count = computed(() => this.counter.snapshot().count);
   protected readonly phase = computed(() => this.counter.snapshot().phase);
 
+  private tornDown = false;
+
   constructor() {
     afterNextRender(async () => {
       const video = this.videoRef().nativeElement;
@@ -63,15 +64,11 @@ export class AutoCountDialogComponent {
       }
     });
 
-    // Ensure detector + camera shut down even if the user closes via
-    // the backdrop or ESC instead of one of the buttons.
-    this.dialogRef
-      .beforeClosed()
-      .pipe(takeUntilDestroyed())
-      .subscribe(() => {
-        void this.teardown();
-      });
-
+    // `destroyRef.onDestroy` is enough to cover every close path
+    // (button, ESC, backdrop) because the dialog component is destroyed
+    // as part of the close sequence. The `tornDown` flag guards
+    // against accidental re-entry if a future refactor adds a second
+    // teardown trigger.
     this.destroyRef.onDestroy(() => {
       void this.teardown();
     });
@@ -91,6 +88,8 @@ export class AutoCountDialogComponent {
   }
 
   private async teardown(): Promise<void> {
+    if (this.tornDown) return;
+    this.tornDown = true;
     await this.counter.stop();
     await this.camera.close();
   }

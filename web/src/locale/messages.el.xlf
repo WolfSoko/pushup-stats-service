@@ -708,7 +708,61 @@
         <target>Εισαγάγετε τη δική σας τιμή</target>
       </segment>
     </unit>
-        <unit id="quickAdd.fab.autoCountAria">
+            <unit id="autoCount.title">
+      <segment state="translated">
+        <source>Liegestütze automatisch zählen</source>
+        <target>Αυτόματη μέτρηση push-up</target>
+      </segment>
+    </unit>
+        <unit id="autoCount.instructions">
+      <segment state="translated">
+        <source>Halte das Gerät so, dass deine Schulter, dein Ellbogen und dein Handgelenk im Bild sind. Reps werden bei sauberem Down‑Up gezählt.</source>
+        <target>Κράτα τη συσκευή έτσι ώστε ο ώμος, ο αγκώνας και ο καρπός να φαίνονται. Οι επαναλήψεις μετριούνται σε καθαρή κίνηση κάτω-πάνω.</target>
+      </segment>
+    </unit>
+        <unit id="autoCount.cameraStarting">
+      <segment state="translated">
+        <source>Kamera startet …</source>
+        <target>Έναρξη κάμερας …</target>
+      </segment>
+    </unit>
+        <unit id="autoCount.unavailable">
+      <segment state="translated">
+        <source>Auto‑Zählen nicht verfügbar</source>
+        <target>Μη διαθέσιμη αυτόματη μέτρηση</target>
+      </segment>
+    </unit>
+        <unit id="autoCount.repsLabel">
+      <segment state="translated">
+        <source>Reps</source>
+        <target>Reps</target>
+      </segment>
+    </unit>
+        <unit id="autoCount.positionHint">
+      <segment state="translated">
+        <source>In Plank‑Position gehen</source>
+        <target>Πάρε θέση σανίδας</target>
+      </segment>
+    </unit>
+        <unit id="autoCount.reset">
+      <segment state="translated">
+        <source>Zurücksetzen</source>
+        <target>Επαναφορά</target>
+      </segment>
+    </unit>
+        <unit id="autoCount.cancel">
+      <segment state="translated">
+        <source>Abbrechen</source>
+        <target>Άκυρο</target>
+      </segment>
+    </unit>
+        <unit id="autoCount.save">
+      <segment state="translated">
+        <source>Übernehmen</source>
+        <target>Εφαρμογή</target>
+      </segment>
+    </unit>
+    <unit id="quickAdd.fab.autoCountAria">
       <segment state="translated">
         <source>Liegestütze automatisch zählen</source>
         <target>Αυτόματη μέτρηση push-up</target>
