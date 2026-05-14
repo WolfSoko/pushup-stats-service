@@ -111,7 +111,9 @@ describe('EntriesPageComponent', () => {
     store.setType('wide');
     store.setRepsMin(11);
 
-    expect(store.filteredRows().map((x: any) => x._id)).toEqual(['3']);
+    expect(store.filteredRows().map((x: { _id: string }) => x._id)).toEqual([
+      '3',
+    ]);
   });
 
   it('creates an entry via api', async () => {
@@ -165,7 +167,7 @@ describe('EntriesPageComponent', () => {
     expect(
       store
         .filteredRows()
-        .map((x: any) => x._id)
+        .map((x: { _id: string }) => x._id)
         .sort()
     ).toEqual(['2', '4']);
   });

@@ -1,4 +1,4 @@
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, formatNumber } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -1170,26 +1170,48 @@ function splitDurationParts(totalSec: number | undefined): {
   return { minutes: String(m), seconds: String(s) };
 }
 
+/**
+ * Parse a user-typed km value back to integer metres. The dialog accepts
+ * either decimal separator (locale-aware) and tolerates the grouping
+ * separator that `formatNumber('1.2-2')` emits for 1000+ km values —
+ * `.` / `,` for de/en, narrow no-break space (U+202F) or no-break space
+ * (U+00A0) for fr / no.
+ *
+ * Strategy: strip all whitespace (covers the space-grouped locales),
+ * then take the rightmost `.` or `,` as the decimal separator. The
+ * integer part must be plain digits or a properly-grouped sequence
+ * (`1.234`, `1,234,567`); typos like `1.2.3` or `1,2,3` are rejected
+ * so they don't silently coerce to `12.3`.
+ */
+const KM_GROUPED_INT = /^\d{1,3}(?:[.,]\d{3})+$/;
+const KM_DIGITS = /^\d+$/;
+
 function parseKmToMeters(input: string): number | null {
-  const trimmed = input.trim().replace(',', '.');
+  const trimmed = input.replace(/\s/g, '');
   if (!trimmed) return null;
-  const km = Number(trimmed);
+  const decimalAt = Math.max(
+    trimmed.lastIndexOf('.'),
+    trimmed.lastIndexOf(',')
+  );
+  const intPart = decimalAt < 0 ? trimmed : trimmed.slice(0, decimalAt);
+  const fracPart = decimalAt < 0 ? '' : trimmed.slice(decimalAt + 1);
+  if (intPart === '' && fracPart === '') return null;
+  if (
+    intPart !== '' &&
+    !KM_DIGITS.test(intPart) &&
+    !KM_GROUPED_INT.test(intPart)
+  ) {
+    return null;
+  }
+  if (fracPart !== '' && !KM_DIGITS.test(fracPart)) return null;
+  const normalized = `${intPart.replace(/[.,]/g, '') || '0'}.${fracPart || '0'}`;
+  const km = Number(normalized);
   if (!Number.isFinite(km) || km <= 0) return null;
   return Math.round(km * 1000);
 }
 
-/**
- * `useGrouping: false` keeps the formatted km value separator-free
- * (e.g. de-DE `12345` km → `12345,00`, not `12.345,00`). The thousand
- * separator would otherwise clash with the decimal comma and break the
- * dot/comma swap in {@link parseKmToMeters}.
- */
 function formatKm(km: number, locale: string): string {
-  return new Intl.NumberFormat(locale, {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-    useGrouping: false,
-  }).format(km);
+  return formatNumber(km, locale, '1.2-2');
 }
 
 function formatKmInput(distanceM: number, locale: string): string {

@@ -256,8 +256,9 @@ describe('AdminPageComponent', () => {
         'mat-row.clickable-row mat-cell.mat-column-displayName'
       ) as HTMLElement | null;
       expect(nameCell).toBeTruthy();
+      if (!nameCell) return;
 
-      nameCell!.dispatchEvent(
+      nameCell.dispatchEvent(
         new MouseEvent('click', { bubbles: true, cancelable: true })
       );
 
@@ -294,8 +295,9 @@ describe('AdminPageComponent', () => {
         'mat-cell.mat-column-actions button'
       ) as HTMLButtonElement | null;
       expect(deleteButton).toBeTruthy();
+      if (!deleteButton) return;
 
-      deleteButton!.dispatchEvent(
+      deleteButton.dispatchEvent(
         new MouseEvent('click', { bubbles: true, cancelable: true })
       );
       await fixture.whenStable();

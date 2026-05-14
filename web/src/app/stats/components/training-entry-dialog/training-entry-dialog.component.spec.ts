@@ -1,7 +1,18 @@
 import { LOCALE_ID, Provider } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { registerLocaleData } from '@angular/common';
+import localeFr from '@angular/common/locales/fr';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { provideRouter } from '@angular/router';
+
+// test-setup.ts also registers `fr`, but the Angular vitest builder
+// doesn't reliably pick that up for the `fr-FR` region key in this spec
+// — re-registering at the spec level is the only configuration that
+// keeps `formatNumber(_, 'fr-FR', _)` from throwing NG0701 in the
+// fr-FR round-trip tests below. de-DE works through the test-setup
+// fallback chain; fr-FR does not, hence the targeted re-register.
+registerLocaleData(localeFr, 'fr-FR');
+
 import {
   ExerciseEntryDialogResult,
   TrainingEntryDialogComponent,
@@ -168,6 +179,71 @@ describe('TrainingEntryDialogComponent', () => {
         distanceM: 5250,
         durationSec: 1500,
       });
+    });
+
+    it.each([
+      // Round-trip safety: the formatter is now Angular's `formatNumber`
+      // (via DecimalPipe-style '1.2-2'), which always groups thousands.
+      // The parser must tolerate the matching grouping separator so a
+      // 1000+ km value formatted by edit mode still parses back cleanly
+      // — including the (narrow) NBSP that fr-style locales use.
+      ['de-DE', '1.234,56', 1234560],
+      ['en-US', '1,234.56', 1234560],
+      // CLDR fr uses U+202F (narrow no-break space) as the grouping
+      // separator; older Intl impls emit U+00A0. The escape sequences
+      // are visually identical in editors — keep them explicit so the
+      // distinction can't get silently normalised away.
+      ['fr-FR', '1\u202F234,56', 1234560],
+      ['fr-FR', '1\u00A0234,56', 1234560],
+    ])(
+      'parses km input with thousand separators (%s "%s")',
+      (locale, input, expectedM) => {
+        const { component } = createDialog(null, [
+          { provide: LOCALE_ID, useValue: locale },
+        ]);
+        component.onCategoryChange('cardio');
+        component.distanceInput.set(input);
+        expect(component.distanceM()).toBe(expectedM);
+      }
+    );
+
+    it('round-trips formatNumber output through parseKmToMeters in fr-FR', () => {
+      // Edit mode writes `formatKm(distanceM/1000, locale)` into the
+      // signal; this guards that whatever the formatter emits for
+      // fr-FR (space-grouped form) is something the parser accepts —
+      // without this the field would render but submit would block.
+      const { component } = createDialog(
+        {
+          kind: 'exercise',
+          exerciseId: 'cardio.running',
+          timestamp: '2026-02-10T13:45:00+01:00',
+          distanceM: 12500,
+          durationSec: 3600,
+        },
+        [{ provide: LOCALE_ID, useValue: 'fr-FR' }]
+      );
+
+      expect(component.distanceM()).toBe(12500);
+      expect(component.canSubmit()).toBe(true);
+    });
+
+    it.each([
+      // The grouping-aware parser must still reject malformed inputs —
+      // typos like "1.2.3" or "1,2,3" used to fail Number(...) outright;
+      // silently coercing them to "12.3" would persist a wrong distance.
+      '1.2.3',
+      '1,2,3',
+      '5..25',
+      'abc',
+    ])('rejects malformed km input %j', (input) => {
+      const { component } = createDialog(null);
+      component.onCategoryChange('cardio');
+      component.distanceInput.set(input);
+      component.timestamp.set('2026-02-10T13:45');
+      component.durationMinutesInput.set('25');
+      component.durationSecondsInput.set('0');
+      expect(component.distanceM()).toBeNull();
+      expect(component.canSubmit()).toBe(false);
     });
 
     it('renders a locale-aware placeholder for the km input', () => {

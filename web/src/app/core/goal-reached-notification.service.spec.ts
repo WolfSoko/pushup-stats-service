@@ -201,7 +201,8 @@ describe('GoalReachedNotificationService', () => {
         return config?.data?.kind === 'weekly';
       });
       expect(weeklyCall).toBeDefined();
-      const [, weeklyConfig] = weeklyCall!;
+      if (!weeklyCall) return;
+      const [, weeklyConfig] = weeklyCall;
       expect(weeklyConfig?.data).toMatchObject({
         kind: 'weekly',
         total: 35,
@@ -233,7 +234,8 @@ describe('GoalReachedNotificationService', () => {
         return config?.data?.kind === 'monthly';
       });
       expect(monthlyCall).toBeDefined();
-      const [, monthlyConfig] = monthlyCall!;
+      if (!monthlyCall) return;
+      const [, monthlyConfig] = monthlyCall;
       expect(monthlyConfig?.data).toMatchObject({
         kind: 'monthly',
         total: 30,
@@ -548,7 +550,8 @@ describe('GoalReachedNotificationService', () => {
         return c?.data?.kind === 'plan';
       });
       expect(planCall).toBeDefined();
-      const [, planConfig] = planCall!;
+      if (!planCall) return;
+      const [, planConfig] = planCall;
       expect(planConfig?.data).toMatchObject({
         kind: 'plan',
         total: 50,
@@ -688,7 +691,8 @@ describe('GoalReachedNotificationService', () => {
         return c?.data?.kind === 'plan';
       });
       expect(planCall).toBeDefined();
-      const [, planConfig] = planCall!;
+      if (!planCall) return;
+      const [, planConfig] = planCall;
       expect(planConfig?.data).toMatchObject({
         kind: 'plan',
         total: 40,
@@ -848,7 +852,8 @@ describe('GoalReachedNotificationService', () => {
         return c?.data?.kind === 'plan';
       });
       expect(planCall).toBeDefined();
-      const [, planConfig] = planCall!;
+      if (!planCall) return;
+      const [, planConfig] = planCall;
       expect(planConfig?.data).toMatchObject({
         kind: 'plan',
         total: 30,

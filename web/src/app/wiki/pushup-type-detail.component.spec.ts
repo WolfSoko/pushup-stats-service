@@ -75,7 +75,8 @@ describe('PushupTypeDetailComponent', () => {
       'script[data-pushup-type-ld]'
     ) as HTMLScriptElement | null;
     expect(ld).toBeTruthy();
-    const payload = JSON.parse(ld!.textContent ?? '{}');
+    if (!ld) return;
+    const payload = JSON.parse(ld.textContent ?? '{}');
     expect(payload['@type']).toBe('HowTo');
     expect(Array.isArray(payload.step)).toBe(true);
     expect(payload.step.length).toBeGreaterThanOrEqual(3);

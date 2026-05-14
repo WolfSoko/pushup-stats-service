@@ -363,10 +363,10 @@ export class StatsChartComponent implements AfterViewInit {
         sets: [],
         totalSets: 0,
       };
-      if ((entry.sets?.length ?? 0) > 1) {
+      if (entry.sets && entry.sets.length > 1) {
         info.setsReps += entry.reps;
-        info.sets.push(entry.sets!);
-        info.totalSets += entry.sets!.length;
+        info.sets.push(entry.sets);
+        info.totalSets += entry.sets.length;
       } else {
         info.noSetsReps += entry.reps;
       }

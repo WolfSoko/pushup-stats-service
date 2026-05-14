@@ -111,24 +111,30 @@ export const PULLUP_PROFILE: ExerciseAngleProfile = {
 };
 
 /**
- * Sit-up rep. The "up" zone is the **lying-flat** start position
- * (hip angle ≈ 180°, shoulder/hip/knee on a line). The "down" zone is
- * the curled-up peak (hip flexed, ≈ 80°). Naming is intentional and
- * matches every other profile: "up" always means the high-angle /
- * extended joint, "down" always means the flexed one — that lets the
- * shared `RepStateMachine` count `down → up` cycles uniformly. The
- * `'awaiting-up'` UI hint therefore reads correctly: "go to starting
- * position" = lie flat on your back.
+ * Sit-up rep. The "up" zone is the **lying-flat** start position and
+ * the "down" zone is the curled-up peak. Naming matches every other
+ * profile: "up" = high-angle (hip extended), "down" = low-angle (hip
+ * flexed). The shared `RepStateMachine` then counts `down → up`
+ * cycles uniformly.
+ *
+ * Threshold tuning is more permissive than the other profiles because
+ * the standard sit-up form keeps the knees bent at ~90° throughout
+ * (feet flat on the floor), so the shoulder-hip-knee angle in the
+ * lying-flat position is closer to ~110-140° than 180° — the previous
+ * 160° / 90° pair caused the "up" zone to be unreachable, which made
+ * the counter silently drop reps. The lower `minConfidence` reflects
+ * the harder camera framing of a lying user (selfie cam looking down
+ * the body, partial body crop) compared to a standing pushup/squat.
  */
 export const SITUP_PROFILE: ExerciseAngleProfile = {
   id: 'situp',
   tripletLeft: HIP_TRIPLETS.left,
   tripletRight: HIP_TRIPLETS.right,
-  upAngleDeg: 160,
-  downAngleDeg: 90,
-  minDwellMs: 250,
-  minConfidence: 0.5,
-  maxFrameGapMs: 600,
+  upAngleDeg: 130,
+  downAngleDeg: 60,
+  minDwellMs: 200,
+  minConfidence: 0.4,
+  maxFrameGapMs: 700,
 };
 
 const PROFILES: ReadonlyMap<string, ExerciseAngleProfile> = new Map([

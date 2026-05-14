@@ -5300,7 +5300,49 @@ Deine Position: # ·  Reps        </source>
         <target>Close quick-add</target>
       </segment>
     </unit>
-            <unit id="autoCount.title">
+            <unit id="autoCount.formCheck.toggleAria">
+      <segment state="translated">
+        <source>Form-Check anzeigen oder ausblenden</source>
+        <target>Show or hide Form Check</target>
+      </segment>
+    </unit>
+    <unit id="autoCount.formCheck.angle">
+      <segment state="translated">
+        <source>Winkel</source>
+        <target>Angle</target>
+      </segment>
+    </unit>
+    <unit id="autoCount.formCheck.confidence">
+      <segment state="translated">
+        <source>Sicherheit</source>
+        <target>Confidence</target>
+      </segment>
+    </unit>
+    <unit id="autoCount.formCheck.phase">
+      <segment state="translated">
+        <source>Phase</source>
+        <target>Phase</target>
+      </segment>
+    </unit>
+    <unit id="autoCount.formCheck.phase.up">
+      <segment state="translated">
+        <source>Oben</source>
+        <target>Up</target>
+      </segment>
+    </unit>
+    <unit id="autoCount.formCheck.phase.down">
+      <segment state="translated">
+        <source>Unten</source>
+        <target>Down</target>
+      </segment>
+    </unit>
+    <unit id="autoCount.formCheck.phase.waiting">
+      <segment state="translated">
+        <source>Bereit</source>
+        <target>Ready</target>
+      </segment>
+    </unit>
+    <unit id="autoCount.title">
       <segment state="translated">
         <source>Übungen automatisch zählen</source>
         <target>Auto-count exercises</target>

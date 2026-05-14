@@ -4401,7 +4401,49 @@ Deine Position: # ·  Reps        </source>
         <target>Lukk hurtiglogging</target>
       </segment>
     </unit>
-            <unit id="autoCount.title">
+            <unit id="autoCount.formCheck.toggleAria">
+      <segment state="translated">
+        <source>Form-Check anzeigen oder ausblenden</source>
+        <target>Vis eller skjul form-sjekk</target>
+      </segment>
+    </unit>
+    <unit id="autoCount.formCheck.angle">
+      <segment state="translated">
+        <source>Winkel</source>
+        <target>Vinkel</target>
+      </segment>
+    </unit>
+    <unit id="autoCount.formCheck.confidence">
+      <segment state="translated">
+        <source>Sicherheit</source>
+        <target>Sikkerhet</target>
+      </segment>
+    </unit>
+    <unit id="autoCount.formCheck.phase">
+      <segment state="translated">
+        <source>Phase</source>
+        <target>Fase</target>
+      </segment>
+    </unit>
+    <unit id="autoCount.formCheck.phase.up">
+      <segment state="translated">
+        <source>Oben</source>
+        <target>Opp</target>
+      </segment>
+    </unit>
+    <unit id="autoCount.formCheck.phase.down">
+      <segment state="translated">
+        <source>Unten</source>
+        <target>Ned</target>
+      </segment>
+    </unit>
+    <unit id="autoCount.formCheck.phase.waiting">
+      <segment state="translated">
+        <source>Bereit</source>
+        <target>Klar</target>
+      </segment>
+    </unit>
+    <unit id="autoCount.title">
       <segment state="translated">
         <source>Übungen automatisch zählen</source>
         <target>Tell øvelser automatisk</target>

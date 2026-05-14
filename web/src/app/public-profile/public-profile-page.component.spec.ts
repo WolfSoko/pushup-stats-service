@@ -110,7 +110,8 @@ describe('PublicProfilePageComponent', () => {
       await setup({ resolve: sampleProfile });
 
       expect(seoMock.update).toHaveBeenCalled();
-      const args = seoMock.update.mock.calls.at(-1)!;
+      const args = seoMock.update.mock.calls.at(-1);
+      if (!args) return;
       expect(args[0]).toContain('Wolfi');
       expect(args[2]).toBe('/u/abcdef1234567890');
     });
@@ -187,7 +188,9 @@ describe('PublicProfilePageComponent', () => {
     it('Sets a dynamic OG image URL pointing at the ogProfile function with URL-encoded UID + locale', async () => {
       await setup({ resolve: sampleProfile });
 
-      const args: unknown[] = seoMock.update.mock.calls.at(-1)!;
+      const args: unknown[] | undefined = seoMock.update.mock.calls.at(-1);
+      expect(args).toBeDefined();
+      if (!args) return;
       const ogExtras = args[3] as
         | { imageUrl?: string; imageAlt?: string }
         | undefined;
@@ -204,7 +207,9 @@ describe('PublicProfilePageComponent', () => {
     it('Sets an imageAlt that mentions the displayName', async () => {
       await setup({ resolve: sampleProfile });
 
-      const args: unknown[] = seoMock.update.mock.calls.at(-1)!;
+      const args: unknown[] | undefined = seoMock.update.mock.calls.at(-1);
+      expect(args).toBeDefined();
+      if (!args) return;
       const ogExtras = args[3] as
         | { imageUrl?: string; imageAlt?: string }
         | undefined;
@@ -214,7 +219,9 @@ describe('PublicProfilePageComponent', () => {
     it('Does not pass an imageUrl in the not-found state (no per-profile card to render)', async () => {
       await setup({ resolve: null });
 
-      const args: unknown[] = seoMock.update.mock.calls.at(-1)!;
+      const args: unknown[] | undefined = seoMock.update.mock.calls.at(-1);
+      expect(args).toBeDefined();
+      if (!args) return;
       const ogExtras = args[3] as { imageUrl?: string } | undefined;
       expect(ogExtras?.imageUrl).toBeUndefined();
     });
@@ -222,7 +229,9 @@ describe('PublicProfilePageComponent', () => {
     it('Includes the canonical path /u/:uid in the SEO call for a ready profile', async () => {
       await setup({ resolve: sampleProfile });
 
-      const args: unknown[] = seoMock.update.mock.calls.at(-1)!;
+      const args: unknown[] | undefined = seoMock.update.mock.calls.at(-1);
+      expect(args).toBeDefined();
+      if (!args) return;
       expect(args[2]).toBe('/u/abcdef1234567890');
     });
   });
