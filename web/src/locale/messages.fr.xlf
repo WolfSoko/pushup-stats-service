@@ -708,7 +708,49 @@
         <target>Entrez votre propre valeur</target>
       </segment>
     </unit>
-            <unit id="autoCount.title">
+            <unit id="autoCount.formCheck.toggleAria">
+      <segment state="translated">
+        <source>Form-Check anzeigen oder ausblenden</source>
+        <target>Afficher ou masquer le contrôle de la forme</target>
+      </segment>
+    </unit>
+    <unit id="autoCount.formCheck.angle">
+      <segment state="translated">
+        <source>Winkel</source>
+        <target>Angle</target>
+      </segment>
+    </unit>
+    <unit id="autoCount.formCheck.confidence">
+      <segment state="translated">
+        <source>Sicherheit</source>
+        <target>Confiance</target>
+      </segment>
+    </unit>
+    <unit id="autoCount.formCheck.phase">
+      <segment state="translated">
+        <source>Phase</source>
+        <target>Phase</target>
+      </segment>
+    </unit>
+    <unit id="autoCount.formCheck.phase.up">
+      <segment state="translated">
+        <source>Oben</source>
+        <target>Haut</target>
+      </segment>
+    </unit>
+    <unit id="autoCount.formCheck.phase.down">
+      <segment state="translated">
+        <source>Unten</source>
+        <target>Bas</target>
+      </segment>
+    </unit>
+    <unit id="autoCount.formCheck.phase.waiting">
+      <segment state="translated">
+        <source>Bereit</source>
+        <target>Prêt</target>
+      </segment>
+    </unit>
+    <unit id="autoCount.title">
       <segment state="translated">
         <source>Übungen automatisch zählen</source>
         <target>Comptage automatique des exercices</target>

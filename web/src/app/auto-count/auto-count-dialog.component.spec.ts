@@ -1,7 +1,8 @@
-import { PLATFORM_ID, signal } from '@angular/core';
+import { PLATFORM_ID, signal, type WritableSignal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { MatDialogRef } from '@angular/material/dialog';
 import {
+  type FormCheckFrame,
   PoseRepCounterService,
   type RepCountSnapshot,
 } from '@pu-stats/auto-count';
@@ -20,14 +21,24 @@ const flushAsync = (): Promise<void> =>
   new Promise((resolve) => setTimeout(resolve, 0));
 
 const makeCounter = (
-  state = signal<RepCountSnapshot>(INITIAL_SNAPSHOT)
+  state = signal<RepCountSnapshot>(INITIAL_SNAPSHOT),
+  frame: WritableSignal<FormCheckFrame | null> = signal<FormCheckFrame | null>(
+    null
+  )
 ): Pick<
   PoseRepCounterService,
-  'snapshot' | 'isActive' | 'bindVideoElement' | 'start' | 'stop' | 'reset'
+  | 'snapshot'
+  | 'isActive'
+  | 'formCheckFrame'
+  | 'bindVideoElement'
+  | 'start'
+  | 'stop'
+  | 'reset'
 > & {
   startSpy: ReturnType<typeof vi.fn>;
   stopSpy: ReturnType<typeof vi.fn>;
   bindSpy: ReturnType<typeof vi.fn>;
+  frame: WritableSignal<FormCheckFrame | null>;
 } => {
   const isActive = signal(false);
   const start = vi.fn(async () => {
@@ -35,11 +46,13 @@ const makeCounter = (
   });
   const stop = vi.fn(async () => {
     isActive.set(false);
+    frame.set(null);
   });
   const bind = vi.fn();
   return {
     snapshot: state.asReadonly(),
     isActive: isActive.asReadonly(),
+    formCheckFrame: frame.asReadonly(),
     bindVideoElement: bind,
     start,
     stop,
@@ -47,6 +60,7 @@ const makeCounter = (
     startSpy: start,
     stopSpy: stop,
     bindSpy: bind,
+    frame,
   };
 };
 
@@ -117,5 +131,38 @@ describe('AutoCountDialogComponent', () => {
     expect(fixture.nativeElement.textContent.includes('NotAllowedError')).toBe(
       true
     );
+  });
+
+  it('given an emitted form-check frame, when the panel is open, then angle and confidence render', async () => {
+    const fixture = TestBed.createComponent(AutoCountDialogComponent);
+    fixture.detectChanges();
+    await flushAsync();
+    await flushAsync();
+
+    counter.frame.set({ angleDeg: 142.3, confidence: 0.87, timestampMs: 100 });
+    fixture.detectChanges();
+
+    const text: string = fixture.nativeElement.textContent;
+    expect(text).toContain('142°');
+    expect(text).toContain('87%');
+  });
+
+  it('given the Form-Check is toggled off, when the panel is hidden, then no angle row is rendered', async () => {
+    const fixture = TestBed.createComponent(AutoCountDialogComponent);
+    fixture.detectChanges();
+    await flushAsync();
+    await flushAsync();
+
+    counter.frame.set({ angleDeg: 99, confidence: 0.5, timestampMs: 0 });
+    fixture.detectChanges();
+    expect(fixture.nativeElement.textContent).toContain('99°');
+
+    const toggle = fixture.nativeElement.querySelector(
+      '.form-check-toggle'
+    ) as HTMLButtonElement;
+    toggle.click();
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.textContent).not.toContain('99°');
   });
 });

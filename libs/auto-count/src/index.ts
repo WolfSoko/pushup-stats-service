@@ -36,4 +36,7 @@ export {
   type PoseFrameSource,
 } from './lib/pose-frame-source.port';
 export { poseToAngleSample } from './lib/pose-to-sample';
-export { PoseRepCounterService } from './lib/pose-rep-counter.service';
+export {
+  PoseRepCounterService,
+  type FormCheckFrame,
+} from './lib/pose-rep-counter.service';

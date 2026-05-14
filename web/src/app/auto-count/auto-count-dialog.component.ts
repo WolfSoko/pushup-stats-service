@@ -1,3 +1,4 @@
+import { DecimalPipe } from '@angular/common';
 import {
   afterNextRender,
   ChangeDetectionStrategy,
@@ -35,6 +36,7 @@ interface ExerciseOption {
   selector: 'app-auto-count-dialog',
   standalone: true,
   imports: [
+    DecimalPipe,
     MatDialogModule,
     MatButtonModule,
     MatButtonToggleModule,
@@ -61,9 +63,21 @@ export class AutoCountDialogComponent {
   protected readonly error = signal<string | null>(null);
   protected readonly switching = signal(false);
   protected readonly exerciseId = signal<AutoCountExerciseId>('pushup');
+  protected readonly formCheckOpen = signal(true);
 
   protected readonly count = computed(() => this.counter.snapshot().count);
   protected readonly phase = computed(() => this.counter.snapshot().phase);
+  protected readonly frame = computed(() => this.counter.formCheckFrame());
+  protected readonly phaseLabel = computed(() => {
+    switch (this.phase()) {
+      case 'up':
+        return $localize`:@@autoCount.formCheck.phase.up:Oben`;
+      case 'down':
+        return $localize`:@@autoCount.formCheck.phase.down:Unten`;
+      default:
+        return $localize`:@@autoCount.formCheck.phase.waiting:Bereit`;
+    }
+  });
 
   protected readonly exercises: ReadonlyArray<ExerciseOption> = [
     {
@@ -146,6 +160,10 @@ export class AutoCountDialogComponent {
 
   protected reset(): void {
     this.counter.reset();
+  }
+
+  protected toggleFormCheck(): void {
+    this.formCheckOpen.update((open) => !open);
   }
 
   private async teardown(): Promise<void> {
