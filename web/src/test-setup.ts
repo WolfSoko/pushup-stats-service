@@ -1,4 +1,20 @@
 import '@angular/localize/init';
+import { registerLocaleData } from '@angular/common';
+import localeDe from '@angular/common/locales/de';
+import localeFr from '@angular/common/locales/fr';
+
+// `formatNumber` / `DecimalPipe` and friends look the active locale up
+// in Angular's static locale registry. The production build bakes the
+// locale data into each `localize`-d bundle, but tests run against the
+// raw bundle — without this registration any spec that pins
+// `LOCALE_ID: 'de-DE'` would silently fall back to en-US formatting.
+//
+// `fr` is here so specs can exercise the space-grouped (NBSP) format
+// path that the km parser must tolerate for 1000+ km round-trips.
+registerLocaleData(localeDe);
+registerLocaleData(localeDe, 'de-DE');
+registerLocaleData(localeFr);
+registerLocaleData(localeFr, 'fr-FR');
 
 // Polyfill Node.js globals für Firebase SDK in Browser-Tests
 globalThis.process =
