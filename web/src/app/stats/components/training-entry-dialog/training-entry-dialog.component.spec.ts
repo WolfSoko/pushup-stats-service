@@ -182,8 +182,12 @@ describe('TrainingEntryDialogComponent', () => {
       // — including the (narrow) NBSP that fr-style locales use.
       ['de-DE', '1.234,56', 1234560],
       ['en-US', '1,234.56', 1234560],
-      ['fr-FR', '1 234,56', 1234560],
-      ['fr-FR', '1 234,56', 1234560],
+      // CLDR fr uses U+202F (narrow no-break space) as the grouping
+      // separator; older Intl impls emit U+00A0. The escape sequences
+      // are visually identical in editors — keep them explicit so the
+      // distinction can't get silently normalised away.
+      ['fr-FR', '1\u202F234,56', 1234560],
+      ['fr-FR', '1\u00A0234,56', 1234560],
     ])(
       'parses km input with thousand separators (%s "%s")',
       (locale, input, expectedM) => {
