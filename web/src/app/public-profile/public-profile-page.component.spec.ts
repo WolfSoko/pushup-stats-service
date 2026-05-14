@@ -189,6 +189,7 @@ describe('PublicProfilePageComponent', () => {
       await setup({ resolve: sampleProfile });
 
       const args: unknown[] | undefined = seoMock.update.mock.calls.at(-1);
+      expect(args).toBeDefined();
       if (!args) return;
       const ogExtras = args[3] as
         | { imageUrl?: string; imageAlt?: string }
@@ -207,6 +208,7 @@ describe('PublicProfilePageComponent', () => {
       await setup({ resolve: sampleProfile });
 
       const args: unknown[] | undefined = seoMock.update.mock.calls.at(-1);
+      expect(args).toBeDefined();
       if (!args) return;
       const ogExtras = args[3] as
         | { imageUrl?: string; imageAlt?: string }
@@ -218,6 +220,7 @@ describe('PublicProfilePageComponent', () => {
       await setup({ resolve: null });
 
       const args: unknown[] | undefined = seoMock.update.mock.calls.at(-1);
+      expect(args).toBeDefined();
       if (!args) return;
       const ogExtras = args[3] as { imageUrl?: string } | undefined;
       expect(ogExtras?.imageUrl).toBeUndefined();
@@ -227,6 +230,7 @@ describe('PublicProfilePageComponent', () => {
       await setup({ resolve: sampleProfile });
 
       const args: unknown[] | undefined = seoMock.update.mock.calls.at(-1);
+      expect(args).toBeDefined();
       if (!args) return;
       expect(args[2]).toBe('/u/abcdef1234567890');
     });
