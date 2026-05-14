@@ -1,3 +1,4 @@
+import { LOCALE_ID } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FilterBarComponent } from './filter-bar.component';
 
@@ -8,6 +9,10 @@ describe('FilterBarComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [FilterBarComponent],
+      // Pin LOCALE_ID so the range-summary `Intl.DateTimeFormat` lookup is
+      // deterministic — Vitest's default would resolve to the host's locale
+      // (typically `en-US` in CI) and break the German-formatted assertions.
+      providers: [{ provide: LOCALE_ID, useValue: 'de' }],
     }).compileComponents();
 
     fixture = TestBed.createComponent(FilterBarComponent);
@@ -254,6 +259,48 @@ describe('FilterBarComponent', () => {
 
     expect(component.range.controls.start.value).toEqual(start);
     expect(component.range.controls.end.value).toEqual(end);
+  });
+
+  it('renders a compact from-to date label derived from the inputs', async () => {
+    fixture.componentRef.setInput('from', '2026-01-26');
+    fixture.componentRef.setInput('to', '2026-02-01');
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    const host: HTMLElement = fixture.nativeElement;
+    const label = host.querySelector(
+      '[data-testid="filter-bar-range-summary"]'
+    );
+    expect(label).toBeTruthy();
+    // German source locale → dd.mm.yyyy. Trim because the template wraps
+    // the text in newlines for readability.
+    expect(label?.textContent?.trim()).toBe('26.01.2026 – 01.02.2026');
+  });
+
+  it('collapses the range label to a single date when from === to', async () => {
+    fixture.componentRef.setInput('from', '2026-02-14');
+    fixture.componentRef.setInput('to', '2026-02-14');
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    const host: HTMLElement = fixture.nativeElement;
+    const label = host.querySelector(
+      '[data-testid="filter-bar-range-summary"]'
+    );
+    expect(label?.textContent?.trim()).toBe('14.02.2026');
+  });
+
+  it('hides the range label entirely while either bound is unset', async () => {
+    fixture.componentRef.setInput('from', '');
+    fixture.componentRef.setInput('to', '');
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    const host: HTMLElement = fixture.nativeElement;
+    const label = host.querySelector(
+      '[data-testid="filter-bar-range-summary"]'
+    );
+    expect(label).toBeNull();
   });
 
   it('switches to week mode using first day when today is outside current range', () => {

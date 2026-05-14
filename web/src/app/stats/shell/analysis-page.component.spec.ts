@@ -861,18 +861,48 @@ describe('AnalysisPageComponent', () => {
       expect(component.selectedTabIndex()).toBe(0);
     });
 
-    it('falls back to Overview when activeView points at a tab that is not visible', () => {
-      // The seeded dataset only has pushup entries, so the core/squat tabs
-      // never render. Pointing activeView at an empty category — e.g. via
-      // a stale `?view=mobility` deep link — must surface index 0 rather
-      // than leaving the binding referencing an out-of-range slot.
+    it('preserves the active category tab when the filter shifts to a range with no entries for that category', () => {
+      // Regression: walking the filter forward/back used to drop the
+      // tab back to Overview the moment the new range fell outside the
+      // active category's entries — `categorySummaries()` shrunk,
+      // `selectedTabIndex()` defaulted to 0, mat-tab-group fired
+      // `selectedIndexChange(0)`, and `onTabIndexChange(0)` clobbered
+      // `activeView`. The fix pins the active category in `visibleTabs`
+      // so the index keeps pointing at it.
+      const component = fixture.componentInstance;
+      component.store.setActiveView('pushup');
+      expect(component.store.activeView()).toBe('pushup');
+
+      // Shift the range somewhere with zero pushup entries. The seeded
+      // mock only has data in Feb 9–15 2026, so January is empty.
+      component.store.setRange('2026-01-05', '2026-01-11');
+      fixture.detectChanges();
+
+      expect(component.store.activeView()).toBe('pushup');
+      expect(component.visibleTabs().map((t) => t.id)).toContain('pushup');
+      const pushupIdx = component
+        .visibleTabs()
+        .findIndex((t) => t.id === 'pushup');
+      expect(component.selectedTabIndex()).toBe(pushupIdx + 1);
+    });
+
+    it('keeps the active category tab visible even when it has no entries in the current range', () => {
+      // Regression: when the user shifts the filter past the last entry
+      // in their active category, the tab used to fall back to Overview
+      // and the user lost their selection. The tab must stay pinned and
+      // the body surfaces a "Keine Einträge im gewählten Zeitraum"
+      // notice instead, so navigating back and forth in the filter is
+      // non-destructive.
       const component = fixture.componentInstance;
       component.store.setActiveView('mobility');
       fixture.detectChanges();
       expect(component.visibleTabs().some((t) => t.id === 'mobility')).toBe(
-        false
+        true
       );
-      expect(component.selectedTabIndex()).toBe(0);
+      const mobilityIdx = component
+        .visibleTabs()
+        .findIndex((t) => t.id === 'mobility');
+      expect(component.selectedTabIndex()).toBe(mobilityIdx + 1);
     });
 
     it('selecting an overview card emits the category and switches the active view', () => {

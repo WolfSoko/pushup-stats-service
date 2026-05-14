@@ -44,6 +44,13 @@
   align-items: center;
 }
 
+.range-summary {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.9rem;
+  opacity: 0.85;
+  white-space: nowrap;
+}
+
 .picker-toggle {
   display: none;
 }
@@ -67,6 +74,12 @@
 
   .step-actions {
     gap: 2px;
+  }
+
+  .range-summary {
+    font-size: 0.8rem;
+    width: 100%;
+    text-align: center;
   }
 
   .step-btn {
