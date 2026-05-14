@@ -111,21 +111,20 @@ export class AutoCountDialogComponent {
 
   protected async onExerciseChange(next: AutoCountExerciseId): Promise<void> {
     if (next === this.exerciseId() || this.switching()) return;
-    const previous = this.exerciseId();
+    // Update the active id immediately so the toggle, the error
+    // overlay (if start fails), and a subsequent retry all agree on
+    // which exercise the user just asked for. The previous counter is
+    // stopped + reset before we kick off the new start, so the only
+    // surprise on failure is "detector idle" — which the error
+    // overlay communicates explicitly.
+    this.exerciseId.set(next);
     this.switching.set(true);
     this.error.set(null);
     try {
       await this.counter.stop();
       this.counter.reset();
       await this.counter.start({ exerciseId: next });
-      // Only flip the active exercise once the counter is actually
-      // running on the new profile — otherwise a failed start would
-      // leave the UI claiming we are counting `next` while the
-      // detector sits idle (or, worse, still running the previous
-      // profile if start() threw mid-init).
-      this.exerciseId.set(next);
     } catch (err) {
-      this.exerciseId.set(previous);
       this.error.set(err instanceof Error ? err.message : String(err));
     } finally {
       this.switching.set(false);

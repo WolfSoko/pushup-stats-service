@@ -7,7 +7,7 @@ import {
   ExerciseFirestoreService,
   StatsApiService,
 } from '@pu-stats/data-access';
-import { appendLocalOffset } from '@pu-stats/models';
+import { appendLocalOffset, type ExerciseEntryCreate } from '@pu-stats/models';
 import { QuickAddBridgeService } from '@pu-stats/quick-add';
 import { firstValueFrom } from 'rxjs';
 
@@ -20,6 +20,7 @@ import type {
 } from '../auto-count/auto-count-dialog.component';
 import type {
   ExerciseEntryDialogData,
+  ExerciseEntryDialogResult,
   PushupEntryDialogData,
   TrainingEntryDialogComponent,
   TrainingEntryDialogData,
@@ -253,14 +254,10 @@ export class QuickAddOrchestrationService {
           return;
         }
         await firstValueFrom(
-          this.exerciseApi.createEntry(userId, {
-            exerciseId: result.exerciseId,
-            timestamp: result.timestamp,
-            reps: result.reps,
-            source: exerciseSource,
-            ...(result.sets.length > 1 ? { sets: result.sets } : {}),
-            ...(result.variantId ? { variantId: result.variantId } : {}),
-          })
+          this.exerciseApi.createEntry(
+            userId,
+            buildExerciseEntryPayload(result, exerciseSource)
+          )
         );
       }
       this.snackBar.open(
@@ -299,4 +296,39 @@ function nowLocalIso(): string {
   const hh = String(now.getHours()).padStart(2, '0');
   const mm = String(now.getMinutes()).padStart(2, '0');
   return appendLocalOffset(`${y}-${m}-${d}T${hh}:${mm}`);
+}
+
+/**
+ * Map an exercise-mode `TrainingEntryDialogResult` to the
+ * `ExerciseEntryCreate` payload shape, honouring the catalog's
+ * measurement discriminator so a switch to a time- or distance-based
+ * exercise mid-flow (e.g. plank, run) doesn't drop the required
+ * companion fields and trigger `validateExerciseEntry` rejection.
+ */
+function buildExerciseEntryPayload(
+  result: ExerciseEntryDialogResult,
+  source: string
+): ExerciseEntryCreate {
+  const base: ExerciseEntryCreate = {
+    exerciseId: result.exerciseId,
+    timestamp: result.timestamp,
+    source,
+    ...(result.variantId ? { variantId: result.variantId } : {}),
+  };
+  switch (result.measurement) {
+    case 'time':
+      return { ...base, durationSec: result.durationSec ?? 0 };
+    case 'distance-time':
+      return {
+        ...base,
+        distanceM: result.distanceM ?? 0,
+        durationSec: result.durationSec ?? 0,
+      };
+    default:
+      return {
+        ...base,
+        reps: result.reps,
+        ...(result.sets.length > 1 ? { sets: result.sets } : {}),
+      };
+  }
 }

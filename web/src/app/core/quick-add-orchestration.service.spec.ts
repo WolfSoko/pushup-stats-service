@@ -323,6 +323,63 @@ describe('QuickAddOrchestrationService.openAutoCount', () => {
     expect(payload.source).toBe('auto-count');
   });
 
+  it('Given the entry dialog switches to a time-measurement exercise, Then durationSec is forwarded and reps is not', async () => {
+    const trainingResult = {
+      kind: 'exercise' as const,
+      timestamp: '2026-05-14T10:00:00+02:00',
+      exerciseId: 'plank.standard',
+      measurement: 'time' as const,
+      reps: 0,
+      sets: [],
+      durationSec: 45,
+      variantId: 'standard',
+    };
+    const { service } = setup(
+      { exerciseId: 'squat', reps: 8 },
+      trainingResult,
+      { userId: 'admin-uid' }
+    );
+
+    await service.openAutoCount();
+    await vitest.waitFor(() => {
+      expect(exerciseApiMock.createEntry).toHaveBeenCalledTimes(1);
+    });
+
+    const payload = exerciseApiMock.createEntry.mock.calls[0][1];
+    expect(payload.exerciseId).toBe('plank.standard');
+    expect(payload.durationSec).toBe(45);
+    expect(payload.reps).toBeUndefined();
+    expect(payload.source).toBe('auto-count');
+  });
+
+  it('Given the entry dialog switches to a distance-time exercise, Then both distanceM and durationSec are forwarded', async () => {
+    const trainingResult = {
+      kind: 'exercise' as const,
+      timestamp: '2026-05-14T10:00:00+02:00',
+      exerciseId: 'cardio.running',
+      measurement: 'distance-time' as const,
+      reps: 0,
+      sets: [],
+      durationSec: 1800,
+      distanceM: 5000,
+    };
+    const { service } = setup(
+      { exerciseId: 'squat', reps: 8 },
+      trainingResult,
+      { userId: 'admin-uid' }
+    );
+
+    await service.openAutoCount();
+    await vitest.waitFor(() => {
+      expect(exerciseApiMock.createEntry).toHaveBeenCalledTimes(1);
+    });
+
+    const payload = exerciseApiMock.createEntry.mock.calls[0][1];
+    expect(payload.distanceM).toBe(5000);
+    expect(payload.durationSec).toBe(1800);
+    expect(payload.reps).toBeUndefined();
+  });
+
   it('Given an exercise confirm but no logged-in user, Then no entry is created and an error snackbar opens', async () => {
     const trainingResult = {
       kind: 'exercise' as const,

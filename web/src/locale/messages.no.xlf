@@ -4434,7 +4434,7 @@ Deine Position: # ·  Reps        </source>
     <unit id="autoCount.exercise.pullup">
       <segment state="translated">
         <source>Klimmzüge</source>
-        <target>Hangleer</target>
+        <target>Kroppshevinger</target>
       </segment>
     </unit>
     <unit id="autoCount.exercise.situp">
