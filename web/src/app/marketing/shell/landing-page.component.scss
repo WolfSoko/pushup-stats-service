@@ -836,18 +836,13 @@ mat-card-header mat-icon {
     fill: var(--lp-ac-text);
     font-size: 22px;
     font-weight: 700;
+    text-anchor: middle;
   }
-  .lp-ac-count-label,
-  .lp-ac-form-value {
-    fill: var(--lp-ac-text);
-    font-size: 11px;
-    font-weight: 600;
+  .lp-ac-form-track {
+    fill: rgba(255, 255, 255, 0.18);
   }
-  .lp-ac-form-key {
-    fill: rgba(255, 255, 255, 0.7);
-    font-size: 8px;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
+  .lp-ac-form-fill {
+    fill: var(--lp-ac-accent);
   }
   .lp-ac-record {
     fill: var(--lp-ac-record);
@@ -867,7 +862,7 @@ html.light-theme .feature-visual--autocount {
     fill: rgba(15, 26, 51, 0.78);
     stroke: rgba(15, 26, 51, 0.78);
   }
-  .lp-ac-form-key {
-    fill: rgba(15, 26, 51, 0.55);
+  .lp-ac-form-track {
+    fill: rgba(15, 26, 51, 0.18);
   }
 }
