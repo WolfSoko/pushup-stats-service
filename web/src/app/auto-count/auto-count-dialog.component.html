@@ -42,6 +42,47 @@
         <span class="count-value">{{ count() }}</span>
         <span class="count-label" i18n="@@autoCount.repsLabel">Reps</span>
       </div>
+      <button
+        type="button"
+        mat-icon-button
+        class="form-check-toggle"
+        (click)="toggleFormCheck()"
+        [attr.aria-pressed]="formCheckOpen()"
+        aria-label="Form-Check anzeigen oder ausblenden"
+        i18n-aria-label="@@autoCount.formCheck.toggleAria"
+      >
+        <mat-icon>{{
+          formCheckOpen() ? 'visibility' : 'visibility_off'
+        }}</mat-icon>
+      </button>
+      @if (formCheckOpen()) {
+        <div class="form-check-panel" aria-live="polite">
+          <div class="form-check-cell">
+            <span i18n="@@autoCount.formCheck.angle">Winkel</span>
+            <strong>
+              @if (frame(); as f) {
+                {{ f.angleDeg | number: '1.0-0' }}°
+              } @else {
+                —
+              }
+            </strong>
+          </div>
+          <div class="form-check-cell">
+            <span i18n="@@autoCount.formCheck.confidence">Sicherheit</span>
+            <strong>
+              @if (frame(); as f) {
+                {{ f.confidence * 100 | number: '1.0-0' }}%
+              } @else {
+                —
+              }
+            </strong>
+          </div>
+          <div class="form-check-cell">
+            <span i18n="@@autoCount.formCheck.phase">Phase</span>
+            <strong>{{ phaseLabel() }}</strong>
+          </div>
+        </div>
+      }
       @if (phase() === 'awaiting-up') {
         <div class="position-hint" i18n="@@autoCount.positionHint">
           In Startposition gehen

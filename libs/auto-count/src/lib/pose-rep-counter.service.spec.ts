@@ -199,6 +199,34 @@ describe('PoseRepCounterService', () => {
     expect(frameSource.subscribed).toBe(1);
   });
 
+  it('given active counting, when a frame is processed, then formCheckFrame exposes angle + confidence', async () => {
+    const svc = TestBed.inject(PoseRepCounterService);
+    svc.bindVideoElement(video);
+    detector.script = [STRAIGHT];
+    await svc.start({ exerciseId: 'pushup' });
+
+    frameSource.emit(123);
+
+    const frame = svc.formCheckFrame();
+    expect(frame).not.toBeNull();
+    expect(frame?.angleDeg).toBeCloseTo(180, 5);
+    expect(frame?.confidence).toBeCloseTo(VISIBLE, 5);
+    expect(frame?.timestampMs).toBe(123);
+  });
+
+  it('given stop is called after a frame, then formCheckFrame returns to null', async () => {
+    const svc = TestBed.inject(PoseRepCounterService);
+    svc.bindVideoElement(video);
+    detector.script = [STRAIGHT];
+    await svc.start({ exerciseId: 'pushup' });
+    frameSource.emit(0);
+    expect(svc.formCheckFrame()).not.toBeNull();
+
+    await svc.stop();
+
+    expect(svc.formCheckFrame()).toBeNull();
+  });
+
   it('given start is called again while a previous start is awaiting the detector, then second call is a no-op', async () => {
     TestBed.resetTestingModule();
     let resolveFactory: ((d: PoseDetector) => void) | null = null;
