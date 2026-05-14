@@ -26,6 +26,18 @@
             <mat-icon>{{ item.icon }}</mat-icon>
             <span i18n="@@quickAdd.fab.autoCount">Auto‑Zählen</span>
           </button>
+        } @else if (item.type === 'exercise-timer') {
+          <button
+            mat-fab
+            extended
+            class="exercise-timer-fab"
+            aria-label="Halteübungs-Timer öffnen"
+            i18n-aria-label="@@quickAdd.fab.exerciseTimerAria"
+            (click)="onOpenExerciseTimer()"
+          >
+            <mat-icon>{{ item.icon }}</mat-icon>
+            <span i18n="@@quickAdd.fab.exerciseTimer">Plank‑Timer</span>
+          </button>
         } @else if (item.type === 'custom') {
           <button
             mat-fab

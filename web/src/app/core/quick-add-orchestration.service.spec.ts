@@ -419,3 +419,126 @@ describe('QuickAddOrchestrationService.openAutoCount', () => {
     expect(exerciseApiMock.createEntry).not.toHaveBeenCalled();
   });
 });
+
+describe('QuickAddOrchestrationService.openExerciseTimer', () => {
+  const reloadAfterMutation = vitest.fn();
+  const statsApiMock = { createPushup: vitest.fn() };
+  const exerciseApiMock = { createEntry: vitest.fn() };
+  const snackBarMock = { open: vitest.fn() };
+  const routerMock = { url: '/app', navigate: vitest.fn() };
+  const bridgeMock = { requestOpenDialog: vitest.fn() };
+  const appDataMock: Partial<AppDataFacade> = {
+    remainingToGoal: signal(0).asReadonly(),
+    reloadAfterMutation,
+  };
+
+  function setup(
+    timerResult: {
+      exerciseId: 'plank' | 'hollowhold';
+      durationSec: number;
+    } | null,
+    trainingResult: unknown
+  ) {
+    vitest.clearAllMocks();
+    statsApiMock.createPushup.mockReturnValue(of({ _id: '1' }));
+    exerciseApiMock.createEntry.mockReturnValue(of({ _id: 'e1' }));
+
+    const dialogMock = {
+      open: vitest
+        .fn()
+        .mockReturnValueOnce({ afterClosed: () => of(timerResult) })
+        .mockReturnValueOnce({ afterClosed: () => of(trainingResult) }),
+    };
+
+    TestBed.resetTestingModule();
+    TestBed.configureTestingModule({
+      providers: baseProviders({
+        statsApiMock,
+        exerciseApiMock,
+        snackBarMock,
+        routerMock,
+        bridgeMock,
+        appDataMock,
+        dialogMock,
+      }),
+    });
+    return {
+      service: TestBed.inject(QuickAddOrchestrationService),
+      dialogMock,
+    };
+  }
+
+  it('Given the timer dialog returns null, Then the entry dialog is not opened', async () => {
+    const { service, dialogMock } = setup(null, undefined);
+
+    await service.openExerciseTimer();
+    await Promise.resolve();
+
+    expect(dialogMock.open).toHaveBeenCalledTimes(1);
+    expect(exerciseApiMock.createEntry).not.toHaveBeenCalled();
+  });
+
+  it('Given the timer dialog returns plank durationSec, Then the entry dialog opens prefilled with kind=exercise and exerciseId=plank.standard', async () => {
+    const { service, dialogMock } = setup(
+      { exerciseId: 'plank', durationSec: 45 },
+      null
+    );
+
+    await service.openExerciseTimer();
+    await vitest.waitFor(() => {
+      expect(dialogMock.open).toHaveBeenCalledTimes(2);
+    });
+
+    const config = dialogMock.open.mock.calls[1][1] as {
+      data: { kind: string; exerciseId: string; durationSec: number };
+    };
+    expect(config.data.kind).toBe('exercise');
+    expect(config.data.exerciseId).toBe('plank.standard');
+    expect(config.data.durationSec).toBe(45);
+  });
+
+  it('Given the timer dialog returns hollow hold durationSec, Then the entry dialog uses core.hollowhold catalog id', async () => {
+    const { service, dialogMock } = setup(
+      { exerciseId: 'hollowhold', durationSec: 30 },
+      null
+    );
+
+    await service.openExerciseTimer();
+    await vitest.waitFor(() => {
+      expect(dialogMock.open).toHaveBeenCalledTimes(2);
+    });
+
+    const config = dialogMock.open.mock.calls[1][1] as {
+      data: { exerciseId: string };
+    };
+    expect(config.data.exerciseId).toBe('core.hollowhold');
+  });
+
+  it('Given the entry dialog returns a confirmed time entry, Then exerciseApi.createEntry is called with the durationSec payload', async () => {
+    const { service } = setup(
+      { exerciseId: 'plank', durationSec: 60 },
+      {
+        kind: 'exercise',
+        timestamp: '2025-01-01T08:00:00+01:00',
+        exerciseId: 'plank.standard',
+        measurement: 'time',
+        durationSec: 60,
+        reps: 0,
+        sets: [],
+        intervals: [],
+      }
+    );
+
+    await service.openExerciseTimer();
+    await vitest.waitFor(() => {
+      expect(exerciseApiMock.createEntry).toHaveBeenCalledTimes(1);
+    });
+    const [userId, payload] = exerciseApiMock.createEntry.mock.calls[0];
+    expect(userId).toBe('u1');
+    expect(payload).toMatchObject({
+      exerciseId: 'plank.standard',
+      durationSec: 60,
+      source: 'exercise-timer',
+    });
+  });
+});

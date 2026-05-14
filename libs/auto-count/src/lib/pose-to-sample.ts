@@ -1,10 +1,18 @@
 import { angleAtJointDeg } from './joint-angle';
-import type {
-  ExerciseAngleProfile,
-  JointTriplet,
-} from './exercise-angle-profile';
+import type { JointTriplet } from './exercise-angle-profile';
 import type { PoseDetectionResult, PoseLandmark } from './pose-detector.port';
 import type { PoseSample } from './pose-sample';
+
+/**
+ * Minimal shape needed to read a per-frame angle: just the two
+ * joint-triplet sides. Both {@link ExerciseAngleProfile} (rep counter)
+ * and {@link ExerciseHoldProfile} (hold timer) satisfy this, so the
+ * mapper is shared between both pipelines.
+ */
+export interface JointTripletPair {
+  readonly tripletLeft: JointTriplet;
+  readonly tripletRight: JointTriplet;
+}
 
 interface SideSample {
   readonly angleDeg: number;
@@ -42,7 +50,7 @@ const tripletSample = (
  */
 export function poseToAngleSample(
   result: PoseDetectionResult,
-  profile: ExerciseAngleProfile,
+  profile: JointTripletPair,
   timestampMs: number
 ): PoseSample | null {
   const landmarks = result.landmarks[0];
