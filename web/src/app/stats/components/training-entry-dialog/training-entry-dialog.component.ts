@@ -1119,6 +1119,30 @@ export class TrainingEntryDialogComponent {
       return;
     }
 
+    if (measurement === 'distance') {
+      // No pure-`distance` exercise ships in the catalog yet (cardio
+      // entries use `distance-time`), so this branch is dead today.
+      // Kept in lockstep with the data model so a future
+      // distance-only exercise (e.g. a sprint-repeats workout
+      // measured purely by metres) emits `intervals` instead of
+      // silently dropping them through the strength fallback.
+      const m = this.distanceM();
+      if (m === null || m <= 0) return;
+      const result: ExerciseEntryDialogResult = {
+        kind: 'exercise',
+        exerciseId: def.id,
+        measurement,
+        ...variantPatch,
+        timestamp,
+        reps: 0,
+        sets: [],
+        intervals: validIntervals,
+        distanceM: m,
+      };
+      this.dialogRef.close(result);
+      return;
+    }
+
     const validSets = this.sets().filter((s) => s > 0);
     const reps = validSets.reduce((sum, s) => sum + s, 0);
     if (reps <= 0) return;

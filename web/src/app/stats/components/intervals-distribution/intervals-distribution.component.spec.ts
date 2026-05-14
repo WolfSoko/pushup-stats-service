@@ -137,11 +137,17 @@ describe('IntervalsDistributionComponent', () => {
       ]);
     });
 
-    it('formats <=1000m as "X m" and >1000m as kilometres', () => {
+    it('formats <1000m as "X m" and >=1000m as kilometres (nearest tenth)', () => {
       expect(component.formatValue(400)).toBe('400 m');
-      expect(component.formatValue(1000)).toBe('1000 m');
+      expect(component.formatValue(999)).toBe('999 m');
+      // 1000m flips to "1 km" so the unit stays consistent at the boundary
+      // instead of showing "1000 m" then "1.1 km" for the very next bucket.
+      expect(component.formatValue(1000)).toBe('1 km');
+      expect(component.formatValue(1001)).toBe('1 km');
+      expect(component.formatValue(1050)).toBe('1.1 km');
+      // Math.round (not ceil): 1234m rounds to 1.2 km, not the previous 1.3.
+      expect(component.formatValue(1234)).toBe('1.2 km');
       expect(component.formatValue(1500)).toBe('1.5 km');
-      expect(component.formatValue(1234)).toBe('1.3 km');
     });
   });
 

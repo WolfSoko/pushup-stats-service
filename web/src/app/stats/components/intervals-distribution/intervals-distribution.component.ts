@@ -129,8 +129,8 @@ function formatSeconds(seconds: number): string {
 }
 
 function formatMeters(meters: number): string {
-  if (meters > 1000) {
-    const km = Math.ceil(meters / 100) / 10;
+  if (meters >= 1000) {
+    const km = Math.round(meters / 100) / 10;
     return `${km} km`;
   }
   return `${meters} m`;
