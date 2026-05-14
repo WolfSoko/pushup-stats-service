@@ -433,6 +433,42 @@ describe('AnalysisGroupViewComponent', () => {
     expect(entries[0].reps).toBe(75);
   });
 
+  it('renders the "Keine Einträge im gewählten Zeitraum" notice when the active category has no entries in the range', async () => {
+    // Regression: when the user shifts the filter past the last entry
+    // in their active category, the tab body needs an explicit empty
+    // copy instead of zero-state KPI cards. The pinned tab keeps the
+    // user's selection (see analysis-page.component.spec.ts) and this
+    // copy explains *why* nothing is rendered.
+    const groupViewEl = fixture.debugElement.query(
+      By.directive(AnalysisGroupViewComponent)
+    );
+    const store = groupViewEl.injector.get(AnalysisStore);
+    // Mobility has no entries in the seeded mock, so switching to it
+    // collapses viewFilteredRows() to [].
+    store.setActiveView('mobility');
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    const host: HTMLElement = fixture.nativeElement;
+    const empty = host.querySelector(
+      '[data-testid="analysis-group-view-empty"]'
+    );
+    expect(empty).toBeTruthy();
+    expect(empty?.textContent).toContain(
+      'Keine Einträge im gewählten Zeitraum'
+    );
+    // The trend section stays visible — it spans a fixed window
+    // independent of the page filter.
+    expect(
+      host.querySelector('[data-testid="analysis-trends-section"]')
+    ).toBeTruthy();
+    // The chart and KPI grid are gone so the page doesn't read as
+    // "0 reps everywhere".
+    expect(host.querySelector('app-stats-chart')).toBeNull();
+    expect(host.querySelector('.grid')).toBeNull();
+  });
+
   it('typeBreakdownDisplay localises bare exerciseIds in kind mode', async () => {
     // Regression: in kind mode (a non-pushup active view, or a kinds
     // filter that excludes pushups) the store emits raw catalog ids

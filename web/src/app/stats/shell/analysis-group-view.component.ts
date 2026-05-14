@@ -31,142 +31,154 @@ import { kindDisplayName } from '../i18n/exercise-display-names';
     TypePieComponent,
   ],
   template: `
-    <app-stats-chart
-      [series]="store.viewChartSeries()"
-      [granularity]="store.viewGranularity()"
-      [rangeMode]="store.rangeMode()"
-      [from]="store.from()"
-      [to]="store.to()"
-      [entries]="store.viewChartEntries()"
-      [measurement]="store.viewMeasurement()"
-      [paceSeries]="store.viewPaceSeries()"
-      [dayChartMode]="store.resolvedDayChartMode()"
-      (dayChartModeChange)="store.setDayChartMode($event)"
-    />
+    @if (isEmptyRange()) {
+      <p
+        class="empty"
+        data-testid="analysis-group-view-empty"
+        i18n="@@noEntriesInSelectedRange"
+      >
+        Keine Einträge im gewählten Zeitraum.
+      </p>
+    } @else {
+      <app-stats-chart
+        [series]="store.viewChartSeries()"
+        [granularity]="store.viewGranularity()"
+        [rangeMode]="store.rangeMode()"
+        [from]="store.from()"
+        [to]="store.to()"
+        [entries]="store.viewChartEntries()"
+        [measurement]="store.viewMeasurement()"
+        [paceSeries]="store.viewPaceSeries()"
+        [dayChartMode]="store.resolvedDayChartMode()"
+        (dayChartModeChange)="store.setDayChartMode($event)"
+      />
+    }
 
-    <section class="grid">
-      <mat-card>
-        <mat-card-header>
-          <mat-card-title i18n="@@analysis.bestStreaksTitle"
-            >Bestwerte & Streaks</mat-card-title
-          >
-        </mat-card-header>
-        <mat-card-content class="best-grid">
-          <div>
-            <strong i18n="@@analysis.bestSingleEntry"
-              >Bestwert Einzel-Eintrag:</strong
-            >
-            <div>{{ store.bestSingleEntry()?.reps ?? 0 }} Reps</div>
-          </div>
-          <div>
-            <strong i18n="@@analysis.bestDay">Bester Tag:</strong>
-            <div>
-              {{ store.bestDay()?.date ?? '—' }} ·
-              {{ store.bestDay()?.total ?? 0 }} Reps
-            </div>
-          </div>
-          @if (store.bestSingleSet()) {
-            <div>
-              <strong i18n="@@analysis.bestSingleSet"
-                >Bestes Einzel-Set:</strong
-              >
-              <div>
-                {{ store.bestSingleSet() }}
-                <span i18n="@@analysis.repsUnit">Wdh.</span>
-              </div>
-            </div>
-          }
-          <div>
-            <strong i18n="@@analysis.currentStreak">Aktuelle Streak:</strong>
-            <div>
-              <ng-container i18n="@@analysis.streakDays"
-                >{{ store.currentStreak() }} Tage</ng-container
-              >
-            </div>
-          </div>
-          <div>
-            <strong i18n="@@analysis.longestStreak">Längste Streak:</strong>
-            <div>
-              <ng-container i18n="@@analysis.streakDays"
-                >{{ store.longestStreak() }} Tage</ng-container
-              >
-            </div>
-          </div>
-        </mat-card-content>
-      </mat-card>
-
-      <mat-card>
-        <mat-card-header>
-          <mat-card-title i18n="@@analysis.typesTitle"
-            >Typen (Anteile)</mat-card-title
-          >
-        </mat-card-header>
-        <mat-card-content>
-          @defer (hydrate on viewport) {
-            <app-type-pie [data]="typeBreakdownDisplay()" />
-          }
-        </mat-card-content>
-      </mat-card>
-
-      @if (store.avgSetSize()) {
+    @if (!isEmptyRange()) {
+      <section class="grid">
         <mat-card>
           <mat-card-header>
-            <mat-card-title i18n="@@analysis.avgSetSizeTitle"
-              >&#x2300; Set-Gr&#x00F6;&#x00DF;e</mat-card-title
+            <mat-card-title i18n="@@analysis.bestStreaksTitle"
+              >Bestwerte & Streaks</mat-card-title
             >
           </mat-card-header>
-          <mat-card-content class="kpi-big">
-            <b>{{ store.avgSetSize() }}</b>
-            <span i18n="@@analysis.repsPerSet">Reps / Set</span>
+          <mat-card-content class="best-grid">
+            <div>
+              <strong i18n="@@analysis.bestSingleEntry"
+                >Bestwert Einzel-Eintrag:</strong
+              >
+              <div>{{ store.bestSingleEntry()?.reps ?? 0 }} Reps</div>
+            </div>
+            <div>
+              <strong i18n="@@analysis.bestDay">Bester Tag:</strong>
+              <div>
+                {{ store.bestDay()?.date ?? '—' }} ·
+                {{ store.bestDay()?.total ?? 0 }} Reps
+              </div>
+            </div>
+            @if (store.bestSingleSet()) {
+              <div>
+                <strong i18n="@@analysis.bestSingleSet"
+                  >Bestes Einzel-Set:</strong
+                >
+                <div>
+                  {{ store.bestSingleSet() }}
+                  <span i18n="@@analysis.repsUnit">Wdh.</span>
+                </div>
+              </div>
+            }
+            <div>
+              <strong i18n="@@analysis.currentStreak">Aktuelle Streak:</strong>
+              <div>
+                <ng-container i18n="@@analysis.streakDays"
+                  >{{ store.currentStreak() }} Tage</ng-container
+                >
+              </div>
+            </div>
+            <div>
+              <strong i18n="@@analysis.longestStreak">Längste Streak:</strong>
+              <div>
+                <ng-container i18n="@@analysis.streakDays"
+                  >{{ store.longestStreak() }} Tage</ng-container
+                >
+              </div>
+            </div>
           </mat-card-content>
         </mat-card>
-      }
 
-      @if (store.setsDistribution().length) {
         <mat-card>
           <mat-card-header>
-            <mat-card-title i18n="@@analysis.setsDistTitle"
-              >Sets-Verteilung</mat-card-title
+            <mat-card-title i18n="@@analysis.typesTitle"
+              >Typen (Anteile)</mat-card-title
             >
           </mat-card-header>
           <mat-card-content>
             @defer (hydrate on viewport) {
-              <app-sets-distribution [data]="store.setsDistribution()" />
+              <app-type-pie [data]="typeBreakdownDisplay()" />
             }
           </mat-card-content>
         </mat-card>
-      }
-    </section>
 
-    <mat-card class="heatmap-full">
-      <mat-card-header>
-        <mat-card-title i18n="@@analysis.heatmapTitle"
-          >Heatmap (Wochentag/Uhrzeit)</mat-card-title
-        >
-        <mat-button-toggle-group
-          [value]="heatmapMode()"
-          (change)="heatmapMode.set($event.value)"
-          class="heatmap-toggle"
-          aria-label="Heatmap-Modus auswählen"
-          i18n-aria-label="@@analysis.heatmapToggleAriaLabel"
-        >
-          <mat-button-toggle value="reps" i18n="@@analysis.heatmapReps"
-            >Reps</mat-button-toggle
-          >
-          <mat-button-toggle value="sets" i18n="@@analysis.heatmapSets"
-            >Sets</mat-button-toggle
-          >
-        </mat-button-toggle-group>
-      </mat-card-header>
-      <mat-card-content class="heatmap-wrap">
-        @defer (hydrate on viewport) {
-          <app-heatmap
-            [entries]="store.viewFilteredRows()"
-            [mode]="heatmapMode()"
-          />
+        @if (store.avgSetSize()) {
+          <mat-card>
+            <mat-card-header>
+              <mat-card-title i18n="@@analysis.avgSetSizeTitle"
+                >&#x2300; Set-Gr&#x00F6;&#x00DF;e</mat-card-title
+              >
+            </mat-card-header>
+            <mat-card-content class="kpi-big">
+              <b>{{ store.avgSetSize() }}</b>
+              <span i18n="@@analysis.repsPerSet">Reps / Set</span>
+            </mat-card-content>
+          </mat-card>
         }
-      </mat-card-content>
-    </mat-card>
+
+        @if (store.setsDistribution().length) {
+          <mat-card>
+            <mat-card-header>
+              <mat-card-title i18n="@@analysis.setsDistTitle"
+                >Sets-Verteilung</mat-card-title
+              >
+            </mat-card-header>
+            <mat-card-content>
+              @defer (hydrate on viewport) {
+                <app-sets-distribution [data]="store.setsDistribution()" />
+              }
+            </mat-card-content>
+          </mat-card>
+        }
+      </section>
+
+      <mat-card class="heatmap-full">
+        <mat-card-header>
+          <mat-card-title i18n="@@analysis.heatmapTitle"
+            >Heatmap (Wochentag/Uhrzeit)</mat-card-title
+          >
+          <mat-button-toggle-group
+            [value]="heatmapMode()"
+            (change)="heatmapMode.set($event.value)"
+            class="heatmap-toggle"
+            aria-label="Heatmap-Modus auswählen"
+            i18n-aria-label="@@analysis.heatmapToggleAriaLabel"
+          >
+            <mat-button-toggle value="reps" i18n="@@analysis.heatmapReps"
+              >Reps</mat-button-toggle
+            >
+            <mat-button-toggle value="sets" i18n="@@analysis.heatmapSets"
+              >Sets</mat-button-toggle
+            >
+          </mat-button-toggle-group>
+        </mat-card-header>
+        <mat-card-content class="heatmap-wrap">
+          @defer (hydrate on viewport) {
+            <app-heatmap
+              [entries]="store.viewFilteredRows()"
+              [mode]="heatmapMode()"
+            />
+          }
+        </mat-card-content>
+      </mat-card>
+    }
 
     <section class="trends-section" data-testid="analysis-trends-section">
       <mat-card>
@@ -318,6 +330,10 @@ import { kindDisplayName } from '../i18n/exercise-display-names';
     .heatmap-toggle {
       margin-left: auto;
     }
+    .empty {
+      opacity: 0.7;
+      margin: 0;
+    }
     @media (max-width: 900px) {
       :host {
         gap: 12px;
@@ -349,6 +365,22 @@ export class AnalysisGroupViewComponent {
   readonly store = inject(AnalysisStore);
   readonly trendColumnsWithSets = ['label', 'total', 'avgSetsPerEntry'];
   readonly heatmapMode = signal<'reps' | 'sets'>('reps');
+
+  /**
+   * True for per-category tabs whose currently-selected range contains
+   * no entries — flips the template into the "Keine Einträge im
+   * gewählten Zeitraum" branch so the user keeps their tab selection
+   * while the filter walks past empty windows. Overview never enters
+   * this branch: the page shell hides this component behind the
+   * `showEmptyCta` gate when the whole dataset is empty, and the
+   * overview tab renders `<app-analysis-overview>` instead of this
+   * component, which has its own empty-state copy.
+   */
+  readonly isEmptyRange = computed(
+    () =>
+      this.store.activeView() !== 'overview' &&
+      this.store.viewFilteredRows().length === 0
+  );
 
   /**
    * Resolves the bare-id labels emitted by `store.typeBreakdown()` (in
