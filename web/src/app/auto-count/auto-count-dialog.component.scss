@@ -3,6 +3,22 @@
   min-width: min(90vw, 360px);
 }
 
+.exercise-picker {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+
+  mat-button-toggle {
+    flex: 1 1 auto;
+    min-width: 76px;
+  }
+
+  mat-icon {
+    margin-right: 4px;
+    vertical-align: middle;
+  }
+}
+
 .hint {
   margin: 0 0 12px;
   font-size: 13px;

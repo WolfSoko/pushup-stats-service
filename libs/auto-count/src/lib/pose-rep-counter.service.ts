@@ -7,7 +7,7 @@ import {
   POSE_FRAME_SOURCE,
   type PoseFrameSource,
 } from './pose-frame-source.port';
-import { poseToElbowSample } from './pose-to-sample';
+import { poseToAngleSample } from './pose-to-sample';
 import type { RepCounter, RepCounterStartOptions } from './rep-counter.port';
 import { type RepCountSnapshot, RepStateMachine } from './rep-state-machine';
 
@@ -105,7 +105,7 @@ export class PoseRepCounterService implements RepCounter {
     this.unsubscribeFrames = this.frameSource.subscribe(video, (tick) => {
       if (!this.detector || !this.machine) return;
       const result = this.detector.detectForVideo(video, tick.timestampMs);
-      const sample = poseToElbowSample(result, tick.timestampMs);
+      const sample = poseToAngleSample(result, profile, tick.timestampMs);
       if (!sample) return;
       const out = this.machine.process(sample);
       this._snapshot.set(out.snapshot);
