@@ -2806,6 +2806,18 @@
         <target> ✓ Δωρεάν · ✓ Χωρίς συνδρομή · ✓ Χωρίς πιστωτική κάρτα · ✓ Πρώτα προστασία δεδομένων </target>
       </segment>
     </unit>
+    <unit id="landing.feature.autoCount.title">
+      <segment state="translated">
+        <source>Reps automatisch zählen</source>
+        <target>Αυτόματη μέτρηση των επαναλήψεων</target>
+      </segment>
+    </unit>
+    <unit id="landing.feature.autoCount.body">
+      <segment state="translated">
+        <source>Stell das Handy hin, öffne die Auto-Zählung und mach deine Liegestütze, Kniebeugen, Klimmzüge oder Sit-ups – die Kamera erkennt die Bewegung und zählt mit. Der Live-Form-Check zeigt Winkel und Sicherheit, damit du jederzeit weißt, dass die Zählung sauber läuft.</source>
+        <target>Στήσε το κινητό, άνοιξε την αυτόματη μέτρηση και ξεκίνα τις κάμψεις, τα καθίσματα, τις έλξεις ή τους κοιλιακούς – η κάμερα εντοπίζει την κίνηση και μετράει. Το ζωντανό Form Check δείχνει γωνία και αξιοπιστία ώστε να ξέρεις ότι η μέτρηση είναι καθαρή.</target>
+      </segment>
+    </unit>
     <unit id="landing.features.aria">
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:196,197</note>

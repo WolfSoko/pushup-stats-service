@@ -2806,6 +2806,18 @@
         <target> ✓ Gratis · ✓ Geen abonnement · ✓ Geen creditcard · ✓ Gegevensbescherming eerst </target>
       </segment>
     </unit>
+    <unit id="landing.feature.autoCount.title">
+      <segment state="translated">
+        <source>Reps automatisch zählen</source>
+        <target>Tel je reps automatisch</target>
+      </segment>
+    </unit>
+    <unit id="landing.feature.autoCount.body">
+      <segment state="translated">
+        <source>Stell das Handy hin, öffne die Auto-Zählung und mach deine Liegestütze, Kniebeugen, Klimmzüge oder Sit-ups – die Kamera erkennt die Bewegung und zählt mit. Der Live-Form-Check zeigt Winkel und Sicherheit, damit du jederzeit weißt, dass die Zählung sauber läuft.</source>
+        <target>Zet de telefoon neer, open de auto-teller en doe je push-ups, squats, pull-ups of sit-ups – de camera herkent de beweging en telt mee. De live Form Check toont hoek en zekerheid, zodat je weet dat de telling klopt.</target>
+      </segment>
+    </unit>
     <unit id="landing.features.aria">
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:196,197</note>

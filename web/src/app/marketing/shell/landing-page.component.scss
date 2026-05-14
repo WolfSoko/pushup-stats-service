@@ -801,3 +801,73 @@ mat-card-header mat-icon {
     }
   }
 }
+
+// Auto-counter feature card: stylised camera frame with count chip,
+// pose silhouette and a live form-check pill. Pulls the same dark
+// tokens as the other inline-SVG previews so the visual harmonises
+// with the rest of the feature grid.
+.feature-visual--autocount {
+  --lp-ac-bg-from: #1a2848;
+  --lp-ac-bg-to: #0f1a33;
+  --lp-ac-chip: rgba(255, 255, 255, 0.16);
+  --lp-ac-stroke: rgba(255, 255, 255, 0.35);
+  --lp-ac-text: #fff;
+  --lp-ac-accent: #7ea5ff;
+  --lp-ac-record: #f87171;
+
+  .lp-ac-bg-from {
+    stop-color: var(--lp-ac-bg-from);
+  }
+  .lp-ac-bg-to {
+    stop-color: var(--lp-ac-bg-to);
+  }
+  .lp-ac-pose {
+    fill: rgba(255, 255, 255, 0.85);
+    stroke: rgba(255, 255, 255, 0.85);
+    stroke-linecap: round;
+  }
+  .lp-ac-count rect,
+  .lp-ac-form rect {
+    fill: var(--lp-ac-chip);
+    stroke: var(--lp-ac-stroke);
+    stroke-width: 1;
+  }
+  .lp-ac-count-value {
+    fill: var(--lp-ac-text);
+    font-size: 22px;
+    font-weight: 700;
+  }
+  .lp-ac-count-label,
+  .lp-ac-form-value {
+    fill: var(--lp-ac-text);
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .lp-ac-form-key {
+    fill: rgba(255, 255, 255, 0.7);
+    font-size: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .lp-ac-record {
+    fill: var(--lp-ac-record);
+    opacity: 0.85;
+  }
+}
+
+html.light-theme .feature-visual--autocount {
+  --lp-ac-bg-from: #e6efff;
+  --lp-ac-bg-to: #c2d4ff;
+  --lp-ac-chip: rgba(255, 255, 255, 0.78);
+  --lp-ac-stroke: rgba(15, 26, 51, 0.18);
+  --lp-ac-text: #0f1a33;
+  --lp-ac-accent: #3460c2;
+
+  .lp-ac-pose {
+    fill: rgba(15, 26, 51, 0.78);
+    stroke: rgba(15, 26, 51, 0.78);
+  }
+  .lp-ac-form-key {
+    fill: rgba(15, 26, 51, 0.55);
+  }
+}
