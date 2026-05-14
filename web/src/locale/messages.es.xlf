@@ -2806,6 +2806,12 @@
         <target> ✓ Gratis · ✓ Sin suscripción · ✓ Sin tarjeta de crédito · ✓ La protección de datos es lo primero </target>
       </segment>
     </unit>
+    <unit id="landing.feature.autoCount.imageAlt">
+      <segment state="translated">
+        <source>Person bei Liegestützen, Smartphone daneben</source>
+        <target>Persona haciendo flexiones con un smartphone al lado</target>
+      </segment>
+    </unit>
     <unit id="landing.feature.autoCount.title">
       <segment state="translated">
         <source>Reps automatisch zählen</source>

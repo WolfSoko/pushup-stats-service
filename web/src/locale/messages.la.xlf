@@ -2806,6 +2806,12 @@
         <target> ✓ Free · ✓ No subscription · ✓ No credit card · ✓ Data protection first </target>
       </segment>
     </unit>
+    <unit id="landing.feature.autoCount.imageAlt">
+      <segment state="translated">
+        <source>Person bei Liegestützen, Smartphone daneben</source>
+        <target>Persona flexiones faciens, telephonum apud eum positum</target>
+      </segment>
+    </unit>
     <unit id="landing.feature.autoCount.title">
       <segment state="translated">
         <source>Reps automatisch zählen</source>

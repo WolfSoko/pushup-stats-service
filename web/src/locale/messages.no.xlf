@@ -1748,6 +1748,12 @@ Aktiv:         </target>
         <target>GDPR-kompatibel med tilpassbar informasjonskapsel-samtykke. Ditt navn på leaderboard? Bare hvis du ønsker det. Ingen abonnement, intet kredittkort.</target>
             </segment>
         </unit>
+    <unit id="landing.feature.autoCount.imageAlt">
+      <segment state="translated">
+        <source>Person bei Liegestützen, Smartphone daneben</source>
+        <target>Person som tar armhevninger med en smarttelefon ved siden av</target>
+      </segment>
+    </unit>
     <unit id="landing.feature.autoCount.title">
       <segment state="translated">
         <source>Reps automatisch zählen</source>

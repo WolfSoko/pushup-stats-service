@@ -3495,6 +3495,12 @@
         <source> ✓ Kostenlos · ✓ Kein Abo · ✓ Keine Kreditkarte · ✓ Datenschutz first </source>
       <target> ✓ 完全免费 · ✓ 无需订阅 · ✓ 无需信用卡 · ✓ 隐私优先 </target></segment>
     </unit>
+    <unit id="landing.feature.autoCount.imageAlt">
+      <segment state="translated">
+        <source>Person bei Liegestützen, Smartphone daneben</source>
+        <target>做俯卧撑的人，旁边放着一部智能手机</target>
+      </segment>
+    </unit>
     <unit id="landing.feature.autoCount.title">
       <segment state="translated">
         <source>Reps automatisch zählen</source>

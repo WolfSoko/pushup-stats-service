@@ -2102,6 +2102,12 @@ Active:         </target>
         <target>GDPR-friendly with customisable cookie consent. Your name on the leaderboard? Only if you want it there. No subscription, no credit card.</target>
             </segment>
         </unit>
+    <unit id="landing.feature.autoCount.imageAlt">
+      <segment state="translated">
+        <source>Person bei Liegestützen, Smartphone daneben</source>
+        <target>Person doing push-ups with a smartphone next to them</target>
+      </segment>
+    </unit>
     <unit id="landing.feature.autoCount.title">
       <segment state="translated">
         <source>Reps automatisch zählen</source>
