@@ -2806,6 +2806,12 @@
         <target> ✓ Gratis · ✓ Geen abonnement · ✓ Geen creditcard · ✓ Gegevensbescherming eerst </target>
       </segment>
     </unit>
+    <unit id="landing.feature.autoCount.imageAlt">
+      <segment state="translated">
+        <source>Sportlerin bei einer sauberen Liegestütze auf Holzboden</source>
+        <target>Atlete die een schone push-up doet op een houten vloer</target>
+      </segment>
+    </unit>
     <unit id="landing.feature.autoCount.title">
       <segment state="translated">
         <source>Reps automatisch zählen</source>
@@ -2814,8 +2820,8 @@
     </unit>
     <unit id="landing.feature.autoCount.body">
       <segment state="translated">
-        <source>Stell das Handy hin, öffne die Auto-Zählung und mach deine Liegestütze, Kniebeugen, Klimmzüge oder Sit-ups – die Kamera erkennt die Bewegung und zählt mit. Der Live-Form-Check zeigt Winkel und Sicherheit, damit du jederzeit weißt, dass die Zählung sauber läuft.</source>
-        <target>Zet de telefoon neer, open de auto-teller en doe je push-ups, squats, pull-ups of sit-ups – de camera herkent de beweging en telt mee. De live Form Check toont hoek en zekerheid, zodat je weet dat de telling klopt.</target>
+        <source>Stell das Handy hin, öffne die Auto-Zählung und mach deine Liegestütze, Kniebeugen, Klimmzüge oder Sit-ups – unsere KI erkennt deine Bewegung in Echtzeit direkt im Browser und zählt automatisch mit. Der Live-Form-Check zeigt Winkel und Sicherheit, damit du jederzeit weißt, dass die Zählung sauber läuft.</source>
+        <target>Zet de telefoon neer, open de auto-teller en doe je push-ups, squats, pull-ups of sit-ups – onze AI herkent je beweging in realtime, direct in de browser, en telt automatisch mee. De live Form Check toont hoek en zekerheid, zodat je weet dat de telling klopt.</target>
       </segment>
     </unit>
     <unit id="landing.features.aria">

@@ -2806,6 +2806,12 @@
         <target> ✓ Gratuit · ✓ Sans abonnement · ✓ Pas de carte bancaire · ✓ La protection des données avant tout </target>
       </segment>
     </unit>
+    <unit id="landing.feature.autoCount.imageAlt">
+      <segment state="translated">
+        <source>Sportlerin bei einer sauberen Liegestütze auf Holzboden</source>
+        <target>Athlète faisant une pompe propre sur un sol en bois</target>
+      </segment>
+    </unit>
     <unit id="landing.feature.autoCount.title">
       <segment state="translated">
         <source>Reps automatisch zählen</source>
@@ -2814,8 +2820,8 @@
     </unit>
     <unit id="landing.feature.autoCount.body">
       <segment state="translated">
-        <source>Stell das Handy hin, öffne die Auto-Zählung und mach deine Liegestütze, Kniebeugen, Klimmzüge oder Sit-ups – die Kamera erkennt die Bewegung und zählt mit. Der Live-Form-Check zeigt Winkel und Sicherheit, damit du jederzeit weißt, dass die Zählung sauber läuft.</source>
-        <target>Pose ton téléphone, ouvre le comptage automatique et fais tes pompes, squats, tractions ou abdominaux – la caméra détecte le mouvement et compte pour toi. Le Form Check en direct affiche l'angle et la confiance pour que tu saches que le décompte est propre.</target>
+        <source>Stell das Handy hin, öffne die Auto-Zählung und mach deine Liegestütze, Kniebeugen, Klimmzüge oder Sit-ups – unsere KI erkennt deine Bewegung in Echtzeit direkt im Browser und zählt automatisch mit. Der Live-Form-Check zeigt Winkel und Sicherheit, damit du jederzeit weißt, dass die Zählung sauber läuft.</source>
+        <target>Pose ton téléphone, ouvre le comptage automatique et fais tes pompes, squats, tractions ou abdominaux – notre IA détecte ton mouvement en temps réel, directement dans le navigateur, et compte automatiquement pour toi. Le Form Check en direct affiche l'angle et la confiance pour que tu saches que le décompte est propre.</target>
       </segment>
     </unit>
     <unit id="landing.features.aria">

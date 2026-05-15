@@ -3495,6 +3495,12 @@
         <source> ✓ Kostenlos · ✓ Kein Abo · ✓ Keine Kreditkarte · ✓ Datenschutz first </source>
       <target> ✓ 完全免费 · ✓ 无需订阅 · ✓ 无需信用卡 · ✓ 隐私优先 </target></segment>
     </unit>
+    <unit id="landing.feature.autoCount.imageAlt">
+      <segment state="translated">
+        <source>Sportlerin bei einer sauberen Liegestütze auf Holzboden</source>
+        <target>女运动员在木地板上做标准俯卧撑</target>
+      </segment>
+    </unit>
     <unit id="landing.feature.autoCount.title">
       <segment state="translated">
         <source>Reps automatisch zählen</source>
@@ -3503,8 +3509,8 @@
     </unit>
     <unit id="landing.feature.autoCount.body">
       <segment state="translated">
-        <source>Stell das Handy hin, öffne die Auto-Zählung und mach deine Liegestütze, Kniebeugen, Klimmzüge oder Sit-ups – die Kamera erkennt die Bewegung und zählt mit. Der Live-Form-Check zeigt Winkel und Sicherheit, damit du jederzeit weißt, dass die Zählung sauber läuft.</source>
-        <target>把手机放好,打开自动计数,然后开始做俯卧撑、深蹲、引体向上或仰卧起坐——相机识别动作并自动计数。实时动作检查显示角度和置信度,让你随时知道计数是否准确。</target>
+        <source>Stell das Handy hin, öffne die Auto-Zählung und mach deine Liegestütze, Kniebeugen, Klimmzüge oder Sit-ups – unsere KI erkennt deine Bewegung in Echtzeit direkt im Browser und zählt automatisch mit. Der Live-Form-Check zeigt Winkel und Sicherheit, damit du jederzeit weißt, dass die Zählung sauber läuft.</source>
+        <target>把手机放好,打开自动计数,然后开始做俯卧撑、深蹲、引体向上或仰卧起坐——我们的 AI 直接在浏览器中实时识别你的动作并自动计数。实时动作检查显示角度和置信度,让你随时知道计数是否准确。</target>
       </segment>
     </unit>
     <unit id="landing.features.aria">
