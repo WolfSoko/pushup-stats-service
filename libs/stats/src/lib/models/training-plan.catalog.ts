@@ -1412,8 +1412,8 @@ const CORE_FOUNDATIONS_DAYS: ReadonlyArray<TrainingPlanDay> = [
   d(
     13,
     'main',
-    26,
-    [13, 13],
+    30,
+    [10, 10, 10],
     $localize`:@@plan.core-4w.day.13.desc:Core-Zirkel 3 Runden — 40 s Plank · 20 s Hollow Hold · 12 Dead Bugs · 10 LS`
   ),
   d(14, 'rest', 0, undefined, REST_DAY),
@@ -1466,8 +1466,8 @@ const CORE_FOUNDATIONS_DAYS: ReadonlyArray<TrainingPlanDay> = [
   d(
     23,
     'main',
-    32,
-    [16, 16],
+    36,
+    [12, 12, 12],
     $localize`:@@plan.core-4w.day.23.desc:Core-Zirkel 3 Runden — 1 min Plank · 30 Russian Twists · 12 Beinheben · 12 LS`
   ),
   d(24, 'rest', 0, undefined, REST_DAY),
@@ -1547,7 +1547,7 @@ const HIIT_BURNER_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     36,
     [12, 12, 12],
-    $localize`:@@plan.hiit-4w.day.10.desc:HIIT-Ladder 10-9-8-…-1 — LS · Burpees (jede Runde 1 Wiederholung weniger)`
+    $localize`:@@plan.hiit-4w.day.10.desc:HIIT-Ladder 8-7-6-5-4-3-2-1 — LS · Burpees (jede Runde 1 Wiederholung weniger)`
   ),
   d(
     11,
@@ -1571,7 +1571,7 @@ const HIIT_BURNER_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     44,
     [11, 11, 11, 11],
-    $localize`:@@plan.hiit-4w.day.15.desc:HIIT-Pyramide 1-2-3-4-5-4-3-2-1 — Burpees · LS · Kniebeugen je Stufe`
+    $localize`:@@plan.hiit-4w.day.15.desc:HIIT 4 Runden 45/15 s — 11 LS · 8 Burpees · 12 Kniebeugen · 30 s Mountain Climbers`
   ),
   d(16, 'rest', 0, undefined, REST_DAY),
   d(
@@ -1611,7 +1611,7 @@ const HIIT_BURNER_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     60,
     [15, 15, 15, 15],
-    $localize`:@@plan.hiit-4w.day.24.desc:EMOM 20 min — pro Minute 5 LS · 5 Burpees · 10 Hampelmänner`
+    $localize`:@@plan.hiit-4w.day.24.desc:EMOM 12 min — pro Minute 5 LS · 5 Burpees · 10 Hampelmänner`
   ),
   d(
     25,

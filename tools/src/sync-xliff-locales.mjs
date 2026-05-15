@@ -43,25 +43,47 @@ async function main() {
     let xml = await fs.readFile(path, 'utf-8');
     const targetUnits = extractUnits(xml);
     const missing = [];
+    let refreshed = 0;
     for (const [id, sourceUnit] of sourceUnits) {
-      if (!targetUnits.has(id)) {
-        const src = extractSource(sourceUnit);
+      const src = extractSource(sourceUnit);
+      const existing = targetUnits.get(id);
+      if (!existing) {
         missing.push(
           `    <unit id="${id}">\n      <segment state="initial">\n        <source>${src}</source>\n        <target>${src}</target>\n      </segment>\n    </unit>`
         );
+        continue;
+      }
+      // Refresh stale fallback units: when the source in messages.xlf
+      // has changed but the locale still carries the previous text as
+      // a target == source fallback, update both to the new German
+      // source. Skip units the translator has actually filled in
+      // (state="translated", or target != source).
+      const existingSrc = extractSource(existing);
+      const tgtMatch = /<target>([\s\S]*?)<\/target>/.exec(existing);
+      const existingTgt = tgtMatch ? tgtMatch[1] : '';
+      const isFallback =
+        existing.includes('state="initial"') && existingSrc === existingTgt;
+      if (isFallback && existingSrc !== src) {
+        const updated = `    <unit id="${id}">\n      <segment state="initial">\n        <source>${src}</source>\n        <target>${src}</target>\n      </segment>\n    </unit>`;
+        xml = xml.replace(existing, updated);
+        refreshed++;
       }
     }
-    if (missing.length === 0) {
+    if (missing.length === 0 && refreshed === 0) {
       console.log(`${locale}: up to date`);
       continue;
     }
-    const closing = '  </file>\n</xliff>';
-    if (!xml.includes(closing)) {
-      throw new Error(`${path}: cannot find closing tags`);
+    if (missing.length > 0) {
+      const closing = '  </file>\n</xliff>';
+      if (!xml.includes(closing)) {
+        throw new Error(`${path}: cannot find closing tags`);
+      }
+      xml = xml.replace(closing, `${missing.join('\n')}\n${closing}`);
     }
-    xml = xml.replace(closing, `${missing.join('\n')}\n${closing}`);
     await fs.writeFile(path, xml);
-    console.log(`${locale}: added ${missing.length} unit(s)`);
+    console.log(
+      `${locale}: added ${missing.length} unit(s), refreshed ${refreshed} fallback(s)`
+    );
   }
 }
 
