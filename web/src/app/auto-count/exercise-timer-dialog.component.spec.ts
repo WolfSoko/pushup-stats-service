@@ -180,4 +180,55 @@ describe('ExerciseTimerDialogComponent', () => {
     expect(timer.stopSpy).toHaveBeenCalledTimes(1);
     expect(cameraClose).toHaveBeenCalledTimes(1);
   });
+
+  it('given camera mode is toggled off again, when settled, then the camera stream is closed (not left running)', async () => {
+    const fixture = TestBed.createComponent(ExerciseTimerDialogComponent);
+    fixture.detectChanges();
+    await flushAsync();
+    await fixture.componentInstance['onModeToggle'](true);
+    await flushAsync();
+
+    cameraClose.mockClear();
+    timer.stopSpy.mockClear();
+
+    await fixture.componentInstance['onModeToggle'](false);
+    await flushAsync();
+
+    expect(timer.stopSpy).toHaveBeenCalledTimes(1);
+    expect(cameraClose).toHaveBeenCalledTimes(1);
+  });
+
+  it('given camera.open succeeds but timer.start throws, when settled, then both timer.stop and camera.close are invoked to release resources', async () => {
+    timer.startSpy.mockRejectedValueOnce(new Error('detector init failed'));
+    const fixture = TestBed.createComponent(ExerciseTimerDialogComponent);
+    fixture.detectChanges();
+    await flushAsync();
+
+    await fixture.componentInstance['onModeToggle'](true);
+    await flushAsync();
+
+    expect(cameraOpen).toHaveBeenCalledTimes(1);
+    expect(timer.stopSpy).toHaveBeenCalledTimes(1);
+    expect(cameraClose).toHaveBeenCalledTimes(1);
+  });
+
+  it('given the manual stopwatch is toggled twice across a tick, when stopped, then manualMs is not double-counted', async () => {
+    vi.useFakeTimers({ now: 1_000 });
+    try {
+      const fixture = TestBed.createComponent(ExerciseTimerDialogComponent);
+      fixture.detectChanges();
+      const component = fixture.componentInstance as unknown as {
+        toggleManual: () => void;
+        totalSec: () => number;
+      };
+
+      component.toggleManual(); // start at performance.now() = 1000
+      vi.advanceTimersByTime(5_000); // tick → manualMs = 5000
+      component.toggleManual(); // stop at performance.now() = 6000
+
+      expect(component.totalSec()).toBe(5);
+    } finally {
+      vi.useRealTimers();
+    }
+  });
 });

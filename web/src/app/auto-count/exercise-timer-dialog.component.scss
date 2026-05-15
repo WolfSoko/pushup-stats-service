@@ -75,7 +75,14 @@
 
   .timer-display {
     position: absolute;
-    inset: auto;
+    // Centered overlay: anchor at 50%/50% and pull back by half its
+    // own size with translate(-50%, -50%). Using `inset: auto` with no
+    // offsets left placement up to "static position" rules, which only
+    // worked here by accident of the flex container — fragile and
+    // breaks the moment the parent stops being a centering flex box.
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     display: flex;
     flex-direction: column;
     align-items: center;

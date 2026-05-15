@@ -8494,5 +8494,131 @@
         <target>Ringe</target>
       </segment>
     </unit>
-  </file>
+      <unit id="exerciseTimer.title">
+      <segment state="initial">
+        <source>Halteübung-Timer</source>
+        <target>Halteübung-Timer</target>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.exercisePickerAria">
+      <segment state="initial">
+        <source>Übung wählen</source>
+        <target>Übung wählen</target>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.cameraMode">
+      <segment state="initial">
+        <source> Kamera: Start/Ende automatisch erkennen </source>
+        <target> Kamera: Start/Ende automatisch erkennen </target>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.cameraStarting">
+      <segment state="initial">
+        <source>Kamera startet …</source>
+        <target>Kamera startet …</target>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.cameraUnavailable">
+      <segment state="initial">
+        <source> Kamera nicht verfügbar </source>
+        <target> Kamera nicht verfügbar </target>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.formCheck.toggleAria">
+      <segment state="initial">
+        <source>Form-Check anzeigen oder ausblenden</source>
+        <target>Form-Check anzeigen oder ausblenden</target>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.formCheck.angle">
+      <segment state="initial">
+        <source>Winkel</source>
+        <target>Winkel</target>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.formCheck.confidence">
+      <segment state="initial">
+        <source>Sicherheit</source>
+        <target>Sicherheit</target>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.pause">
+      <segment state="initial">
+        <source>Pause</source>
+        <target>Pause</target>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.start">
+      <segment state="initial">
+        <source>Start</source>
+        <target>Start</target>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.cameraHint">
+      <segment state="initial">
+        <source> Stelle die Kamera so auf, dass Schulter, Hüfte und Knie sichtbar sind. Der Timer startet automatisch, sobald du in Position bist, und pausiert, wenn du die Position verlässt. </source>
+        <target> Stelle die Kamera so auf, dass Schulter, Hüfte und Knie sichtbar sind. Der Timer startet automatisch, sobald du in Position bist, und pausiert, wenn du die Position verlässt. </target>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.reset">
+      <segment state="initial">
+        <source> Zurücksetzen </source>
+        <target> Zurücksetzen </target>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.cancel">
+      <segment state="initial">
+        <source> Abbrechen </source>
+        <target> Abbrechen </target>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.save">
+      <segment state="initial">
+        <source> Übernehmen </source>
+        <target> Übernehmen </target>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.phase.holding">
+      <segment state="initial">
+        <source>Halten</source>
+        <target>Halten</target>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.phase.paused">
+      <segment state="initial">
+        <source>Pause</source>
+        <target>Pause</target>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.phase.ready">
+      <segment state="initial">
+        <source>Bereit</source>
+        <target>Bereit</target>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.exercise.plank">
+      <segment state="initial">
+        <source>Plank</source>
+        <target>Plank</target>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.exercise.hollowhold">
+      <segment state="initial">
+        <source>Hollow Hold</source>
+        <target>Hollow Hold</target>
+      </segment>
+    </unit>
+    <unit id="quickAdd.fab.exerciseTimerAria">
+      <segment state="initial">
+        <source>Halteübungs-Timer öffnen</source>
+        <target>Halteübungs-Timer öffnen</target>
+      </segment>
+    </unit>
+    <unit id="quickAdd.fab.exerciseTimer">
+      <segment state="initial">
+        <source>Plank‑Timer</source>
+        <target>Plank‑Timer</target>
+      </segment>
+    </unit>
+</file>
 </xliff>

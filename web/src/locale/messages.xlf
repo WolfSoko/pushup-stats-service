@@ -8346,5 +8346,110 @@
         <source>Detailseite öffnen</source>
       </segment>
     </unit>
-  </file>
+      <unit id="exerciseTimer.title">
+      <segment>
+        <source>Halteübung-Timer</source>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.exercisePickerAria">
+      <segment>
+        <source>Übung wählen</source>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.cameraMode">
+      <segment>
+        <source> Kamera: Start/Ende automatisch erkennen </source>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.cameraStarting">
+      <segment>
+        <source>Kamera startet …</source>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.cameraUnavailable">
+      <segment>
+        <source> Kamera nicht verfügbar </source>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.formCheck.toggleAria">
+      <segment>
+        <source>Form-Check anzeigen oder ausblenden</source>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.formCheck.angle">
+      <segment>
+        <source>Winkel</source>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.formCheck.confidence">
+      <segment>
+        <source>Sicherheit</source>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.pause">
+      <segment>
+        <source>Pause</source>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.start">
+      <segment>
+        <source>Start</source>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.cameraHint">
+      <segment>
+        <source> Stelle die Kamera so auf, dass Schulter, Hüfte und Knie sichtbar sind. Der Timer startet automatisch, sobald du in Position bist, und pausiert, wenn du die Position verlässt. </source>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.reset">
+      <segment>
+        <source> Zurücksetzen </source>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.cancel">
+      <segment>
+        <source> Abbrechen </source>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.save">
+      <segment>
+        <source> Übernehmen </source>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.phase.holding">
+      <segment>
+        <source>Halten</source>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.phase.paused">
+      <segment>
+        <source>Pause</source>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.phase.ready">
+      <segment>
+        <source>Bereit</source>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.exercise.plank">
+      <segment>
+        <source>Plank</source>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.exercise.hollowhold">
+      <segment>
+        <source>Hollow Hold</source>
+      </segment>
+    </unit>
+    <unit id="quickAdd.fab.exerciseTimerAria">
+      <segment>
+        <source>Halteübungs-Timer öffnen</source>
+      </segment>
+    </unit>
+    <unit id="quickAdd.fab.exerciseTimer">
+      <segment>
+        <source>Plank‑Timer</source>
+      </segment>
+    </unit>
+</file>
 </xliff>

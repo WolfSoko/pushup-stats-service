@@ -77,6 +77,13 @@ export class ExerciseTimerDialogComponent {
   private readonly manualMs = signal(0);
   private readonly manualRunning = signal(false);
   private manualSegmentStartedAt: number | null = null;
+  /**
+   * Snapshot of `manualMs` at the moment the current segment started. The
+   * interval below sets `manualMs = manualSegmentBaseMs + delta` on every
+   * tick, so when we stop we re-compute the same expression instead of
+   * adding `delta` on top of an already-updated `manualMs`.
+   */
+  private manualSegmentBaseMs = 0;
   private stopwatchHandle: ReturnType<typeof setInterval> | null = null;
 
   protected readonly totalSec = computed(() =>
@@ -140,7 +147,14 @@ export class ExerciseTimerDialogComponent {
     // mental model symmetric between the two.
     this.stopManualStopwatch();
     if (this.cameraMode()) {
+      // Stop the timer first (it owns the frame subscription), then
+      // close the underlying MediaStream. Without the `camera.close()`
+      // call the webcam track keeps running in the background after the
+      // user flipped the toggle off — privacy indicator stays on, extra
+      // battery drain, and potentially blocks other tabs from accessing
+      // the camera until the dialog is destroyed.
       await this.timer.stop();
+      await this.camera.close();
     }
     this.cameraMode.set(useCamera);
     this.error.set(null);
@@ -210,12 +224,12 @@ export class ExerciseTimerDialogComponent {
     if (!isPlatformBrowser(this.platformId)) return;
     if (this.manualRunning() || this.stopwatchHandle !== null) return;
     this.manualSegmentStartedAt = performance.now();
+    this.manualSegmentBaseMs = this.manualMs();
     this.manualRunning.set(true);
-    const baseMs = this.manualMs();
     this.stopwatchHandle = setInterval(() => {
       if (this.manualSegmentStartedAt === null) return;
       const delta = performance.now() - this.manualSegmentStartedAt;
-      this.manualMs.set(baseMs + delta);
+      this.manualMs.set(this.manualSegmentBaseMs + delta);
     }, STOPWATCH_TICK_MS);
   }
 
@@ -226,7 +240,7 @@ export class ExerciseTimerDialogComponent {
     }
     if (this.manualSegmentStartedAt !== null && this.manualRunning()) {
       const delta = performance.now() - this.manualSegmentStartedAt;
-      this.manualMs.update((m) => m + delta);
+      this.manualMs.set(this.manualSegmentBaseMs + delta);
     }
     this.manualSegmentStartedAt = null;
     this.manualRunning.set(false);
@@ -253,6 +267,14 @@ export class ExerciseTimerDialogComponent {
       await this.timer.start({ exerciseId: this.exerciseId() });
     } catch (err) {
       this.error.set(err instanceof Error ? err.message : String(err));
+      // Release any partial resources the partial start grabbed: the
+      // camera may have already been opened (granting webcam access)
+      // before the detector failed to initialise. Without this both the
+      // MediaStream and a half-initialised detector would survive until
+      // dialog teardown, blocking other camera consumers and leaking
+      // detector resources.
+      await this.timer.stop().catch(() => undefined);
+      await this.camera.close().catch(() => undefined);
     } finally {
       this.isStarting.set(false);
     }

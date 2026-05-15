@@ -59,9 +59,16 @@ export class HoldStateMachine {
 
     if (zone === 'dead') {
       // Dead-zone samples preserve phase intent: keep accumulating
-      // while holding, leave debounce candidate untouched. They do
-      // not on their own commit or cancel a candidate transition.
-      if (this.phase === 'holding' && this.candidate === null) {
+      // while holding (regardless of any pending leave candidate),
+      // and leave any debounce candidate untouched. They do not on
+      // their own commit or cancel a candidate transition, so an
+      // active leave candidate neither advances toward `paused` nor
+      // resets — the next decisive in/out sample resolves it. Without
+      // accumulating here, the displayed time would freeze for the
+      // duration of the leave debounce when the user briefly drifts
+      // through the hysteresis dead-zone, then jump on the next in-
+      // zone sample.
+      if (this.phase === 'holding') {
         this.accumulate(sample.timestampMs);
       }
       return this.snapshot();

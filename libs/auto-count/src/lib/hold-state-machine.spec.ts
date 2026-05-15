@@ -152,4 +152,23 @@ describe('HoldStateMachine (plank profile)', () => {
     expect(machine.snapshot().phase).toBe('holding');
     expect(machine.snapshot().totalMs).toBeGreaterThan(totalAtStart);
   });
+
+  it('given a leave-candidate followed by dead-zone samples, when processed, then accumulation continues (no display freeze)', () => {
+    const machine = new HoldStateMachine(PLANK_HOLD_PROFILE);
+    feed(machine, [
+      sample(0, inPose),
+      sample(300, inPose),
+      sample(600, inPose),
+    ]);
+    const totalAtHolding = machine.snapshot().totalMs;
+    // Out-zone arms a leave candidate; the immediate next sample
+    // drifts back into the hysteresis dead-zone (between in- and
+    // out-thresholds). Pre-fix, accumulation froze here because the
+    // dead-zone branch guarded against an active candidate. Post-fix
+    // the timer keeps ticking forward until a decisive sample resolves
+    // the candidate.
+    feed(machine, [sample(700, outPose), sample(900, 150), sample(1100, 150)]);
+    expect(machine.snapshot().phase).toBe('holding');
+    expect(machine.snapshot().totalMs).toBeGreaterThan(totalAtHolding);
+  });
 });
