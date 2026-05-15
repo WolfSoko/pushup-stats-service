@@ -2808,8 +2808,8 @@
     </unit>
     <unit id="landing.feature.autoCount.imageAlt">
       <segment state="translated">
-        <source>Person bei Liegestützen, Smartphone daneben</source>
-        <target>Άτομο που κάνει push-ups με ένα smartphone δίπλα του</target>
+        <source>Sportlerin bei einer sauberen Liegestütze auf Holzboden</source>
+        <target>Αθλήτρια που κάνει ένα καθαρό push-up σε ξύλινο δάπεδο</target>
       </segment>
     </unit>
     <unit id="landing.feature.autoCount.title">
@@ -2820,8 +2820,8 @@
     </unit>
     <unit id="landing.feature.autoCount.body">
       <segment state="translated">
-        <source>Stell das Handy hin, öffne die Auto-Zählung und mach deine Liegestütze, Kniebeugen, Klimmzüge oder Sit-ups – die Kamera erkennt die Bewegung und zählt mit. Der Live-Form-Check zeigt Winkel und Sicherheit, damit du jederzeit weißt, dass die Zählung sauber läuft.</source>
-        <target>Στήσε το κινητό, άνοιξε την αυτόματη μέτρηση και ξεκίνα τις κάμψεις, τα καθίσματα, τις έλξεις ή τους κοιλιακούς – η κάμερα εντοπίζει την κίνηση και μετράει. Το ζωντανό Form Check δείχνει γωνία και αξιοπιστία ώστε να ξέρεις ότι η μέτρηση είναι καθαρή.</target>
+        <source>Stell das Handy hin, öffne die Auto-Zählung und mach deine Liegestütze, Kniebeugen, Klimmzüge oder Sit-ups – unsere KI erkennt deine Bewegung in Echtzeit direkt im Browser und zählt automatisch mit. Der Live-Form-Check zeigt Winkel und Sicherheit, damit du jederzeit weißt, dass die Zählung sauber läuft.</source>
+        <target>Στήσε το κινητό, άνοιξε την αυτόματη μέτρηση και ξεκίνα τις κάμψεις, τα καθίσματα, τις έλξεις ή τους κοιλιακούς – η τεχνητή νοημοσύνη μας αναγνωρίζει την κίνησή σου σε πραγματικό χρόνο, απευθείας στον περιηγητή, και μετράει αυτόματα. Το ζωντανό Form Check δείχνει γωνία και αξιοπιστία ώστε να ξέρεις ότι η μέτρηση είναι καθαρή.</target>
       </segment>
     </unit>
     <unit id="landing.features.aria">

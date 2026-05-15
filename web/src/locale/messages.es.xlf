@@ -2808,8 +2808,8 @@
     </unit>
     <unit id="landing.feature.autoCount.imageAlt">
       <segment state="translated">
-        <source>Person bei Liegestützen, Smartphone daneben</source>
-        <target>Persona haciendo flexiones con un smartphone al lado</target>
+        <source>Sportlerin bei einer sauberen Liegestütze auf Holzboden</source>
+        <target>Atleta haciendo una flexión limpia sobre suelo de madera</target>
       </segment>
     </unit>
     <unit id="landing.feature.autoCount.title">
@@ -2820,8 +2820,8 @@
     </unit>
     <unit id="landing.feature.autoCount.body">
       <segment state="translated">
-        <source>Stell das Handy hin, öffne die Auto-Zählung und mach deine Liegestütze, Kniebeugen, Klimmzüge oder Sit-ups – die Kamera erkennt die Bewegung und zählt mit. Der Live-Form-Check zeigt Winkel und Sicherheit, damit du jederzeit weißt, dass die Zählung sauber läuft.</source>
-        <target>Coloca el teléfono, abre el conteo automático y empieza tus flexiones, sentadillas, dominadas o abdominales: la cámara detecta el movimiento y cuenta por ti. El Form Check en vivo muestra ángulo y confianza para que sepas que el conteo es limpio.</target>
+        <source>Stell das Handy hin, öffne die Auto-Zählung und mach deine Liegestütze, Kniebeugen, Klimmzüge oder Sit-ups – unsere KI erkennt deine Bewegung in Echtzeit direkt im Browser und zählt automatisch mit. Der Live-Form-Check zeigt Winkel und Sicherheit, damit du jederzeit weißt, dass die Zählung sauber läuft.</source>
+        <target>Coloca el teléfono, abre el conteo automático y empieza tus flexiones, sentadillas, dominadas o abdominales: nuestra IA reconoce tu movimiento en tiempo real, directamente en el navegador, y cuenta automáticamente por ti. El Form Check en vivo muestra ángulo y confianza para que sepas que el conteo es limpio.</target>
       </segment>
     </unit>
     <unit id="landing.features.aria">

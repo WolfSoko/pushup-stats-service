@@ -2104,8 +2104,8 @@ Active:         </target>
         </unit>
     <unit id="landing.feature.autoCount.imageAlt">
       <segment state="translated">
-        <source>Person bei Liegestützen, Smartphone daneben</source>
-        <target>Person doing push-ups with a smartphone next to them</target>
+        <source>Sportlerin bei einer sauberen Liegestütze auf Holzboden</source>
+        <target>Athlete doing a clean push-up on a wooden floor</target>
       </segment>
     </unit>
     <unit id="landing.feature.autoCount.title">
@@ -2116,8 +2116,8 @@ Active:         </target>
     </unit>
     <unit id="landing.feature.autoCount.body">
       <segment state="translated">
-        <source>Stell das Handy hin, öffne die Auto-Zählung und mach deine Liegestütze, Kniebeugen, Klimmzüge oder Sit-ups – die Kamera erkennt die Bewegung und zählt mit. Der Live-Form-Check zeigt Winkel und Sicherheit, damit du jederzeit weißt, dass die Zählung sauber läuft.</source>
-        <target>Prop up your phone, open the auto-counter and start your push-ups, squats, pull-ups or sit-ups – the camera spots the motion and counts along. The live Form Check shows angle and confidence so you always know the count is clean.</target>
+        <source>Stell das Handy hin, öffne die Auto-Zählung und mach deine Liegestütze, Kniebeugen, Klimmzüge oder Sit-ups – unsere KI erkennt deine Bewegung in Echtzeit direkt im Browser und zählt automatisch mit. Der Live-Form-Check zeigt Winkel und Sicherheit, damit du jederzeit weißt, dass die Zählung sauber läuft.</source>
+        <target>Prop up your phone, open the auto-counter and start your push-ups, squats, pull-ups or sit-ups – our AI recognises your motion in real time, right in your browser, and counts along automatically. The live Form Check shows angle and confidence so you always know the count is clean.</target>
       </segment>
     </unit>
     <unit id="landing.features.aria">

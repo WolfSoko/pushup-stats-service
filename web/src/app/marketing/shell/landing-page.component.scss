@@ -802,10 +802,6 @@ mat-card-header mat-icon {
   }
 }
 
-// Auto-counter feature card: real stock photo instead of an inline SVG.
-// The image fills the same 2:1 visual slot as the other feature previews;
-// a subtle gradient overlay keeps it cohesive with the surrounding dark
-// theme without washing out the photo's colour.
 .feature-visual--autocount {
   position: relative;
   overflow: hidden;
@@ -832,7 +828,7 @@ mat-card-header mat-icon {
   }
 }
 
-html.light-theme .feature-visual--autocount {
+:host-context(html.light-theme) .feature-visual--autocount {
   background: #e6efff;
 
   &::after {
