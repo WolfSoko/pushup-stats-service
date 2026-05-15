@@ -40,3 +40,20 @@ export {
   PoseRepCounterService,
   type FormCheckFrame,
 } from './lib/pose-rep-counter.service';
+export type { ExerciseHoldProfile } from './lib/exercise-hold-profile';
+export {
+  PLANK_HOLD_PROFILE,
+  HOLLOWHOLD_PROFILE,
+  holdProfileFor,
+  listHoldProfiles,
+} from './lib/exercise-hold-profile';
+export {
+  HoldStateMachine,
+  type HoldPhase,
+  type HoldSnapshot,
+} from './lib/hold-state-machine';
+export {
+  PoseHoldTimerService,
+  type HoldFormCheckFrame,
+  type HoldTimerStartOptions,
+} from './lib/pose-hold-timer.service';

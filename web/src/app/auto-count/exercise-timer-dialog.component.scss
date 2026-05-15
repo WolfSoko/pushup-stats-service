@@ -1,0 +1,175 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.exercise-picker {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+
+  mat-button-toggle {
+    flex: 1 1 auto;
+    min-width: 96px;
+  }
+
+  mat-icon {
+    margin-right: 4px;
+    vertical-align: middle;
+  }
+}
+
+.mode-row {
+  margin: 4px 0 12px;
+  display: flex;
+  align-items: center;
+}
+
+.hint {
+  margin: 12px 0 0;
+  font-size: 13px;
+  opacity: 0.8;
+}
+
+.manual-controls {
+  display: flex;
+  justify-content: center;
+  margin-top: 16px;
+
+  button {
+    min-width: 160px;
+  }
+
+  mat-icon {
+    margin-right: 6px;
+  }
+}
+
+.timer-stage {
+  position: relative;
+  width: 100%;
+  flex: 1;
+  min-height: 220px;
+  background: #111;
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &.camera {
+    background: #000;
+  }
+
+  .preview {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scaleX(-1);
+
+    &.hidden {
+      display: none;
+    }
+  }
+
+  .timer-display {
+    position: absolute;
+    // Centered overlay: anchor at 50%/50% and pull back by half its
+    // own size with translate(-50%, -50%). Using `inset: auto` with no
+    // offsets left placement up to "static position" rules, which only
+    // worked here by accident of the flex container — fragile and
+    // breaks the moment the parent stops being a centering flex box.
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #fff;
+    padding: 10px 20px;
+    background: rgba(0, 0, 0, 0.55);
+    border-radius: 16px;
+    font-variant-numeric: tabular-nums;
+    line-height: 1.05;
+
+    .timer-value {
+      font-size: 56px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .timer-phase {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      opacity: 0.75;
+    }
+  }
+
+  .overlay-message {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    text-align: center;
+    padding: 16px;
+
+    mat-icon {
+      font-size: 48px;
+      width: 48px;
+      height: 48px;
+    }
+    small {
+      opacity: 0.7;
+      max-width: 280px;
+    }
+  }
+
+  .form-check-toggle {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(4px);
+  }
+
+  .form-check-panel {
+    position: absolute;
+    top: 8px;
+    right: 56px;
+    display: flex;
+    gap: 16px;
+    padding: 8px 14px;
+    background: rgba(0, 0, 0, 0.55);
+    color: #fff;
+    border-radius: 10px;
+    font-variant-numeric: tabular-nums;
+    backdrop-filter: blur(4px);
+
+    .form-check-cell {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      line-height: 1.1;
+    }
+
+    span {
+      font-size: 10px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      opacity: 0.72;
+    }
+
+    strong {
+      font-size: 17px;
+      font-weight: 600;
+    }
+  }
+}

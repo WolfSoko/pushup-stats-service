@@ -8660,5 +8660,131 @@ Deine Position: # ·  Reps        </source>
         <target>Ringe</target>
       </segment>
     </unit>
-  </file>
+      <unit id="exerciseTimer.title">
+      <segment state="translated">
+        <source>Halteübung-Timer</source>
+        <target>Hold-exercise timer</target>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.exercisePickerAria">
+      <segment state="translated">
+        <source>Übung wählen</source>
+        <target>Pick exercise</target>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.cameraMode">
+      <segment state="translated">
+        <source> Kamera: Start/Ende automatisch erkennen </source>
+        <target>Camera: detect start/end automatically</target>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.cameraStarting">
+      <segment state="translated">
+        <source>Kamera startet …</source>
+        <target>Camera starting …</target>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.cameraUnavailable">
+      <segment state="translated">
+        <source> Kamera nicht verfügbar </source>
+        <target>Camera unavailable</target>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.formCheck.toggleAria">
+      <segment state="translated">
+        <source>Form-Check anzeigen oder ausblenden</source>
+        <target>Show or hide form-check</target>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.formCheck.angle">
+      <segment state="translated">
+        <source>Winkel</source>
+        <target>Angle</target>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.formCheck.confidence">
+      <segment state="translated">
+        <source>Sicherheit</source>
+        <target>Confidence</target>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.pause">
+      <segment state="translated">
+        <source>Pause</source>
+        <target>Pause</target>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.start">
+      <segment state="translated">
+        <source>Start</source>
+        <target>Start</target>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.cameraHint">
+      <segment state="translated">
+        <source> Stelle die Kamera so auf, dass Schulter, Hüfte und Knie sichtbar sind. Der Timer startet automatisch, sobald du in Position bist, und pausiert, wenn du die Position verlässt. </source>
+        <target>Position the camera so your shoulder, hip and knee are visible. The timer starts automatically once you are in position and pauses when you leave it.</target>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.reset">
+      <segment state="translated">
+        <source> Zurücksetzen </source>
+        <target>Reset</target>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.cancel">
+      <segment state="translated">
+        <source> Abbrechen </source>
+        <target>Cancel</target>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.save">
+      <segment state="translated">
+        <source> Übernehmen </source>
+        <target>Save</target>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.phase.holding">
+      <segment state="translated">
+        <source>Halten</source>
+        <target>Holding</target>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.phase.paused">
+      <segment state="translated">
+        <source>Pause</source>
+        <target>Paused</target>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.phase.ready">
+      <segment state="translated">
+        <source>Bereit</source>
+        <target>Ready</target>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.exercise.plank">
+      <segment state="translated">
+        <source>Plank</source>
+        <target>Plank</target>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.exercise.hollowhold">
+      <segment state="translated">
+        <source>Hollow Hold</source>
+        <target>Hollow hold</target>
+      </segment>
+    </unit>
+    <unit id="quickAdd.fab.exerciseTimerAria">
+      <segment state="translated">
+        <source>Halteübungs-Timer öffnen</source>
+        <target>Open hold-exercise timer</target>
+      </segment>
+    </unit>
+    <unit id="quickAdd.fab.exerciseTimer">
+      <segment state="translated">
+        <source>Plank‑Timer</source>
+        <target>Plank‑timer</target>
+      </segment>
+    </unit>
+</file>
 </xliff>

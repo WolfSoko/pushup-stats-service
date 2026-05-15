@@ -1185,5 +1185,49 @@ describe('App (testing-library)', () => {
       fixture.componentInstance.handleOpenAutoCount();
       expect(openAutoCount).toHaveBeenCalledTimes(1);
     });
+
+    it('when handleOpenExerciseTimer is invoked, then it delegates to QuickAddOrchestrationService.openExerciseTimer', async () => {
+      const openExerciseTimer = vitest.fn();
+      const { fixture } = await render(App, {
+        providers: [
+          provideRouter([]),
+          { provide: PLATFORM_ID, useValue: 'browser' },
+          {
+            provide: UserContextService,
+            useValue: {
+              userNameSafe: userNameSignal.asReadonly(),
+              userIdSafe: () => 'u1',
+              isAdmin: () => true,
+              isGuest: () => false,
+            },
+          },
+          {
+            provide: FeatureFlagsService,
+            useValue: { autoExerciseCounter: signal(true).asReadonly() },
+          },
+          { provide: AuthStore, useValue: authMock },
+          { provide: AuthService, useValue: authServiceMock },
+          { provide: Auth, useValue: firebaseAuthMock },
+          { provide: UserConfigApiService, useValue: userConfigApiMock },
+          { provide: StatsApiService, useValue: statsApiMock },
+          { provide: AdsStore, useValue: adsStoreMock },
+          { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
+          {
+            provide: QuickAddOrchestrationService,
+            useValue: {
+              add: vitest.fn(),
+              fillToGoal: vitest.fn(),
+              openDialog: vitest.fn(),
+              openAutoCount: vitest.fn(),
+              openExerciseTimer,
+              fillToGoalInFlight: signal(false).asReadonly(),
+            },
+          },
+        ],
+      });
+
+      fixture.componentInstance.handleOpenExerciseTimer();
+      expect(openExerciseTimer).toHaveBeenCalledTimes(1);
+    });
   });
 });

@@ -5,7 +5,13 @@ import { patchState, signalState } from '@ngrx/signals';
 
 interface DialItem {
   readonly value: number;
-  readonly type: 'quick' | 'custom' | 'feedback' | 'goal' | 'auto-count';
+  readonly type:
+    | 'quick'
+    | 'custom'
+    | 'feedback'
+    | 'goal'
+    | 'auto-count'
+    | 'exercise-timer';
   readonly icon: string;
 }
 
@@ -30,6 +36,7 @@ export class QuickAddFabComponent {
   readonly openFeedback = output<void>();
   readonly fillToGoal = output<void>();
   readonly openAutoCount = output<void>();
+  readonly openExerciseTimer = output<void>();
   readonly opened = output<void>();
 
   protected readonly fabState = signalState({ open: false });
@@ -61,6 +68,7 @@ export class QuickAddFabComponent {
     if (this.autoCountEnabled()) {
       items.push({ value: 0, type: 'auto-count', icon: 'videocam' });
     }
+    items.push({ value: 0, type: 'exercise-timer', icon: 'timer' });
     items.push({ value: 0, type: 'custom', icon: 'edit_note' });
     items.push({ value: 0, type: 'feedback', icon: 'feedback' });
 
@@ -103,6 +111,11 @@ export class QuickAddFabComponent {
   protected onOpenAutoCount(): void {
     patchState(this.fabState, { open: false });
     this.openAutoCount.emit();
+  }
+
+  protected onOpenExerciseTimer(): void {
+    patchState(this.fabState, { open: false });
+    this.openExerciseTimer.emit();
   }
 
   protected onOpenFeedback(): void {
