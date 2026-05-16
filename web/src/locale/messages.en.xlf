@@ -2963,8 +2963,17 @@ Deine Position: # ·  Reps        </source>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html</note>
       </notes>
       <segment state="translated">
-        <source>+<ph id="0" equiv="INTERPOLATION" disp="{{ reps }}"/> Reps</source>
-        <target>+<ph id="0" equiv="INTERPOLATION" disp="{{ reps }}"/> reps</target>
+        <source>+<ph id="0" equiv="INTERPOLATION" disp="{{ vm.reps }}"/> Reps</source>
+        <target>+<ph id="0" equiv="INTERPOLATION" disp="{{ vm.reps }}"/> reps</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.quickAdd.autoPrefix">
+      <notes>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html</note>
+      </notes>
+      <segment state="translated">
+        <source>Auto:</source>
+        <target>Auto:</target>
       </segment>
     </unit>
     <unit id="quickActions.edit.aria">
@@ -3010,6 +3019,42 @@ Deine Position: # ·  Reps        </source>
       <segment state="translated">
         <source>Im SpeedDial</source>
         <target>In SpeedDial</target>
+      </segment>
+    </unit>
+    <unit id="quickAddConfig.hintV2">
+      <notes>
+        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts</note>
+      </notes>
+      <segment state="translated">
+        <source> Lege bis zu <ph id="0" equiv="INTERPOLATION" disp="{{ maxRows }}"/> Schnellaktionen fest. Wähle pro Button die Übung und – wo verfügbar – Auto-Messung über die Kamera. Leere Felder werden ignoriert. </source>
+        <target> Configure up to <ph id="0" equiv="INTERPOLATION" disp="{{ maxRows }}"/> quick actions. Pick the exercise per button and — where available — auto-count via the camera. Empty fields are ignored. </target>
+      </segment>
+    </unit>
+    <unit id="quickAddConfig.exerciseLabel">
+      <notes>
+        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts</note>
+      </notes>
+      <segment state="translated">
+        <source>Übung</source>
+        <target>Exercise</target>
+      </segment>
+    </unit>
+    <unit id="quickAddConfig.autoCountBadge">
+      <notes>
+        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts</note>
+      </notes>
+      <segment state="translated">
+        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">videocam</pc> Auto </source>
+        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">videocam</pc> Auto </target>
+      </segment>
+    </unit>
+    <unit id="quickAddConfig.autoCount">
+      <notes>
+        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts</note>
+      </notes>
+      <segment state="translated">
+        <source>Auto-Messung</source>
+        <target>Auto-count</target>
       </segment>
     </unit>
     <unit id="quickAddConfig.clearAria">
@@ -5712,6 +5757,12 @@ Deine Position: # ·  Reps        </source>
         <target>Push-up variations</target>
       </segment>
     </unit>
+    <unit id="footer.exercises">
+      <segment state="translated">
+        <source>Übungen</source>
+        <target>Exercises</target>
+      </segment>
+    </unit>
     <unit id="footer.impressum">
       <segment state="translated">
         <source>Impressum</source>
@@ -6306,6 +6357,12 @@ Deine Position: # ·  Reps        </source>
       <segment state="translated">
         <source>Liegestütztypen</source>
         <target>Push-up variations</target>
+      </segment>
+    </unit>
+    <unit id="nav.exercises">
+      <segment state="translated">
+        <source>Übungen</source>
+        <target>Exercises</target>
       </segment>
     </unit>
     <unit id="seo.trainingPlans.title">
@@ -6994,6 +7051,75 @@ Deine Position: # ·  Reps        </source>
         <target>Advanced</target>
       </segment>
     </unit>
+
+    <!-- Exercises wiki page -->
+    <unit id="seo.wiki.exercises.title">
+      <segment state="translated">
+        <source>Übungen erklärt – Pushup Tracker</source>
+        <target>Exercises explained – Pushup Tracker</target>
+      </segment>
+    </unit>
+    <unit id="seo.wiki.exercises.description">
+      <segment state="translated">
+        <source>Saubere Ausführung der Übungen, die du in Pushup Tracker mitloggst – Kniebeugen, Klimmzüge, Plank, Dehnübungen und mehr.</source>
+        <target>Clean execution for every exercise you can log in Pushup Tracker — squats, pull-ups, plank, stretching and more.</target>
+      </segment>
+    </unit>
+    <unit id="seo.wiki.exercise.titleSuffix">
+      <segment state="translated">
+        <source>Anleitung &amp; Technik | Pushup Tracker</source>
+        <target>Guide &amp; technique | Pushup Tracker</target>
+      </segment>
+    </unit>
+    <unit id="wiki.exercises.back">
+      <segment state="translated">
+        <source>Zurück zu den Trainingsplänen</source>
+        <target>Back to training plans</target>
+      </segment>
+    </unit>
+    <unit id="wiki.exercises.title">
+      <segment state="translated">
+        <source> Übungen — saubere Ausführung </source>
+        <target> Exercises — clean execution </target>
+      </segment>
+    </unit>
+    <unit id="wiki.exercises.intro">
+      <segment state="translated">
+        <source> Kurzanleitungen für alle Übungen, die du in der App tracken kannst — von Kniebeugen über Klimmzüge bis zu Mobilitäts-Drills. </source>
+        <target> Short guides for every exercise you can track in the app — from squats and pull-ups to mobility drills. </target>
+      </segment>
+    </unit>
+    <unit id="wiki.exercises.tocTitle">
+      <segment state="translated">
+        <source>Übersicht</source>
+        <target>Overview</target>
+      </segment>
+    </unit>
+    <unit id="wiki.exercises.viewDetail">
+      <segment state="translated">
+        <source>Detailseite öffnen</source>
+        <target>Open detail page</target>
+      </segment>
+    </unit>
+    <unit id="wiki.exercise.detail.back">
+      <segment state="translated">
+        <source> Übungen </source>
+        <target> Exercises </target>
+      </segment>
+    </unit>
+    <unit id="wiki.exercise.detail.toList">
+      <segment state="translated">
+        <source>Alle Übungen</source>
+        <target>All exercises</target>
+      </segment>
+    </unit>
+    <unit id="wiki.exercise.detail.cta">
+      <segment state="translated">
+        <source>Zu den Trainingsplänen</source>
+        <target>Browse training plans</target>
+      </segment>
+    </unit>
+
     <unit id="plan.day.rest">
       <segment state="translated">
         <source>Ruhetag</source>
@@ -8805,6 +8931,696 @@ Deine Position: # ·  Reps        </source>
       <segment state="translated">
         <source>Plank‑Timer</source>
         <target>Plank‑timer</target>
+      </segment>
+    </unit>
+    <unit id="quickAddConfig.clearRowAria">
+      <segment state="translated">
+        <source>Schnellaktion löschen</source>
+        <target>Clear quick action</target>
+      </segment>
+    </unit>
+    <unit id="plan.push-pull-6w.day.1.desc">
+      <segment state="translated">
+        <source>Push 3×10 saubere Liegestütze · Pull 3×8 invertierte Ruderzüge, 90 s Pause</source>
+        <target>Push 3×10 clean push-ups · Pull 3×8 inverted rows, 90 s rest</target>
+      </segment>
+    </unit>
+    <unit id="plan.push-pull-6w.day.2.desc">
+      <segment state="translated">
+        <source>Pull-Tag: 4×8 Australian Rows · Push 2×12 Knie-Liegestütze als Aktivierung</source>
+        <target>Pull day: 4×8 Australian rows · Push 2×12 knee push-ups as activation</target>
+      </segment>
+    </unit>
+    <unit id="plan.push-pull-6w.day.4.desc">
+      <segment state="translated">
+        <source>Push 3×11 · Pull 3×6 Klimmzug-Negative (5 s Exzentrik)</source>
+        <target>Push 3×11 · Pull 3×6 pull-up negatives (5 s eccentric)</target>
+      </segment>
+    </unit>
+    <unit id="plan.push-pull-6w.day.5.desc">
+      <segment state="translated">
+        <source>Leichter Tag 2×10 · 3×12 Face Pulls</source>
+        <target>Light day 2×10 · 3×12 face pulls</target>
+      </segment>
+    </unit>
+    <unit id="plan.push-pull-6w.day.6.desc">
+      <segment state="translated">
+        <source>Push 3×12 · Pull 3×8 invertierte Ruderzüge · Plank 3×30 s</source>
+        <target>Push 3×12 · Pull 3×8 inverted rows · plank 3×30 s</target>
+      </segment>
+    </unit>
+    <unit id="plan.push-pull-6w.day.8.desc">
+      <segment state="translated">
+        <source>Push 3×AMRAP (Ziel 13-12-11) · Pull 3×9 Rudern</source>
+        <target>Push 3×AMRAP (target 13-12-11) · Pull 3×9 rows</target>
+      </segment>
+    </unit>
+    <unit id="plan.push-pull-6w.day.9.desc">
+      <segment state="translated">
+        <source>Pull-Tag: 4×9 Australian Rows · Push 3×9 saubere LS</source>
+        <target>Pull day: 4×9 Australian rows · Push 3×9 clean push-ups</target>
+      </segment>
+    </unit>
+    <unit id="plan.push-pull-6w.day.11.desc">
+      <segment state="translated">
+        <source>Push 3×AMRAP (Ziel 14-13-12) · Pull 3×7 Klimmzug-Negative</source>
+        <target>Push 3×AMRAP (target 14-13-12) · Pull 3×7 pull-up negatives</target>
+      </segment>
+    </unit>
+    <unit id="plan.push-pull-6w.day.12.desc">
+      <segment state="translated">
+        <source>Leichter Tag 2×11 · 3×12 Face Pulls · Schulter-Mobility</source>
+        <target>Light day 2×11 · 3×12 face pulls · shoulder mobility</target>
+      </segment>
+    </unit>
+    <unit id="plan.push-pull-6w.day.13.desc">
+      <segment state="translated">
+        <source>Push 3×AMRAP · Pull 3×10 invertierte Ruderzüge · Plank 3×40 s</source>
+        <target>Push 3×AMRAP · Pull 3×10 inverted rows · plank 3×40 s</target>
+      </segment>
+    </unit>
+    <unit id="plan.push-pull-6w.day.15.desc">
+      <segment state="translated">
+        <source>Push 4 Sätze · Pull 4×6 Klimmzüge (oder Negative)</source>
+        <target>Push 4 sets · Pull 4×6 pull-ups (or negatives)</target>
+      </segment>
+    </unit>
+    <unit id="plan.push-pull-6w.day.16.desc">
+      <segment state="translated">
+        <source>Pull-Tag: 5×8 Australian Rows · Push 3×10 saubere LS</source>
+        <target>Pull day: 5×8 Australian rows · Push 3×10 clean push-ups</target>
+      </segment>
+    </unit>
+    <unit id="plan.push-pull-6w.day.18.desc">
+      <segment state="translated">
+        <source>Push 4×AMRAP · Pull 4×7 Klimmzüge · Plank 3×45 s</source>
+        <target>Push 4×AMRAP · Pull 4×7 pull-ups · plank 3×45 s</target>
+      </segment>
+    </unit>
+    <unit id="plan.push-pull-6w.day.19.desc">
+      <segment state="translated">
+        <source>Leichter Tag 2×12 · 3×15 Face Pulls</source>
+        <target>Light day 2×12 · 3×15 face pulls</target>
+      </segment>
+    </unit>
+    <unit id="plan.push-pull-6w.day.20.desc">
+      <segment state="translated">
+        <source>Push 4×AMRAP · Pull 4×8 Klimmzüge · Hollow Hold 3×20 s</source>
+        <target>Push 4×AMRAP · Pull 4×8 pull-ups · hollow hold 3×20 s</target>
+      </segment>
+    </unit>
+    <unit id="plan.push-pull-6w.day.22.desc">
+      <segment state="translated">
+        <source>Push 4 Sätze, 60 s Pause · Pull 4×8 Klimmzüge</source>
+        <target>Push 4 sets, 60 s rest · Pull 4×8 pull-ups</target>
+      </segment>
+    </unit>
+    <unit id="plan.push-pull-6w.day.23.desc">
+      <segment state="translated">
+        <source>Pull-Tag: 5×9 Australian Rows · Push 3×11 LS</source>
+        <target>Pull day: 5×9 Australian rows · Push 3×11 push-ups</target>
+      </segment>
+    </unit>
+    <unit id="plan.push-pull-6w.day.25.desc">
+      <segment state="translated">
+        <source>Push 4×AMRAP · Pull 4×9 Klimmzüge · Plank 3×50 s</source>
+        <target>Push 4×AMRAP · Pull 4×9 pull-ups · plank 3×50 s</target>
+      </segment>
+    </unit>
+    <unit id="plan.push-pull-6w.day.26.desc">
+      <segment state="translated">
+        <source>Leichter Tag 2×13 · Brust- und Rücken-Mobility</source>
+        <target>Light day 2×13 · chest and back mobility</target>
+      </segment>
+    </unit>
+    <unit id="plan.push-pull-6w.day.27.desc">
+      <segment state="translated">
+        <source>Push 4×AMRAP · Pull 4×10 Klimmzüge · Hollow Hold 3×30 s</source>
+        <target>Push 4×AMRAP · Pull 4×10 pull-ups · hollow hold 3×30 s</target>
+      </segment>
+    </unit>
+    <unit id="plan.push-pull-6w.day.29.desc">
+      <segment state="translated">
+        <source>Push 5 Sätze · Pull 5×7 Klimmzüge, 90 s Pause</source>
+        <target>Push 5 sets · Pull 5×7 pull-ups, 90 s rest</target>
+      </segment>
+    </unit>
+    <unit id="plan.push-pull-6w.day.30.desc">
+      <segment state="translated">
+        <source>Pull-Tag: 5×10 Australian Rows · Push 3×12 LS</source>
+        <target>Pull day: 5×10 Australian rows · Push 3×12 push-ups</target>
+      </segment>
+    </unit>
+    <unit id="plan.push-pull-6w.day.32.desc">
+      <segment state="translated">
+        <source>Push 5 Sätze · Pull 5×8 Klimmzüge · Plank 3×60 s</source>
+        <target>Push 5 sets · Pull 5×8 pull-ups · plank 3×60 s</target>
+      </segment>
+    </unit>
+    <unit id="plan.push-pull-6w.day.33.desc">
+      <segment state="translated">
+        <source>Leichter Tag 2×14 · 4×12 Face Pulls</source>
+        <target>Light day 2×14 · 4×12 face pulls</target>
+      </segment>
+    </unit>
+    <unit id="plan.push-pull-6w.day.34.desc">
+      <segment state="translated">
+        <source>Push 5 Sätze · Pull 5×9 Klimmzüge · Hollow Hold 3×40 s</source>
+        <target>Push 5 sets · Pull 5×9 pull-ups · hollow hold 3×40 s</target>
+      </segment>
+    </unit>
+    <unit id="plan.push-pull-6w.day.36.desc">
+      <segment state="translated">
+        <source>Push 5 Sätze schwer · Pull 5×10 Klimmzüge</source>
+        <target>Push 5 sets heavy · Pull 5×10 pull-ups</target>
+      </segment>
+    </unit>
+    <unit id="plan.push-pull-6w.day.37.desc">
+      <segment state="translated">
+        <source>Pull-Schwerpunkt: 5×AMRAP Klimmzüge · Push 4×10 LS</source>
+        <target>Pull focus: 5×AMRAP pull-ups · Push 4×10 push-ups</target>
+      </segment>
+    </unit>
+    <unit id="plan.push-pull-6w.day.39.desc">
+      <segment state="translated">
+        <source>Taper-Tag: 4×15 saubere LS · 3×6 Klimmzüge</source>
+        <target>Taper day: 4×15 clean push-ups · 3×6 pull-ups</target>
+      </segment>
+    </unit>
+    <unit id="plan.push-pull-6w.day.40.desc">
+      <segment state="translated">
+        <source>Leichter Tag 2×10 · Mobility</source>
+        <target>Light day 2×10 · mobility</target>
+      </segment>
+    </unit>
+    <unit id="plan.push-pull-6w.day.42.desc">
+      <segment state="translated">
+        <source>Endtest: maximale Liegestütze + maximale Klimmzüge in einem Satz</source>
+        <target>Final test: max push-ups + max pull-ups in a single set</target>
+      </segment>
+    </unit>
+    <unit id="plan.full-body-6w.day.1.desc">
+      <segment state="translated">
+        <source>Baseline-Test: maximale Liegestütze · 1 min Wall-Sit · 1 min Plank</source>
+        <target>Baseline test: max push-ups · 1 min wall-sit · 1 min plank</target>
+      </segment>
+    </unit>
+    <unit id="plan.full-body-6w.day.2.desc">
+      <segment state="translated">
+        <source>Zirkel 3 Runden — 10 LS · 15 Kniebeugen · 10 Ausfallschritte je Bein · 30 s Plank</source>
+        <target>Circuit 3 rounds — 10 push-ups · 15 squats · 10 lunges per leg · 30 s plank</target>
+      </segment>
+    </unit>
+    <unit id="plan.full-body-6w.day.4.desc">
+      <segment state="translated">
+        <source>Zirkel 3 Runden — 10 LS · 15 Sumo-Kniebeugen · 12 Glute Bridges · 40 s Plank</source>
+        <target>Circuit 3 rounds — 10 push-ups · 15 sumo squats · 12 glute bridges · 40 s plank</target>
+      </segment>
+    </unit>
+    <unit id="plan.full-body-6w.day.5.desc">
+      <segment state="translated">
+        <source>Leichter Tag — 2×10 LS · Mobility 10 min</source>
+        <target>Light day — 2×10 push-ups · mobility 10 min</target>
+      </segment>
+    </unit>
+    <unit id="plan.full-body-6w.day.6.desc">
+      <segment state="translated">
+        <source>Zirkel 3 Runden — 10 LS · 15 Kniebeugen · 10 Glute Bridges · 30 s Hollow Hold</source>
+        <target>Circuit 3 rounds — 10 push-ups · 15 squats · 10 glute bridges · 30 s hollow hold</target>
+      </segment>
+    </unit>
+    <unit id="plan.full-body-6w.day.8.desc">
+      <segment state="translated">
+        <source>Zirkel 3 Runden — 12 LS · 18 Kniebeugen · 12 Ausfallschritte je Bein · 40 s Plank</source>
+        <target>Circuit 3 rounds — 12 push-ups · 18 squats · 12 lunges per leg · 40 s plank</target>
+      </segment>
+    </unit>
+    <unit id="plan.full-body-6w.day.10.desc">
+      <segment state="translated">
+        <source>Zirkel 3 Runden — 12 LS · 18 Sumo-Kniebeugen · 15 Glute Bridges · 45 s Plank</source>
+        <target>Circuit 3 rounds — 12 push-ups · 18 sumo squats · 15 glute bridges · 45 s plank</target>
+      </segment>
+    </unit>
+    <unit id="plan.full-body-6w.day.11.desc">
+      <segment state="translated">
+        <source>Leichter Tag — 2×11 LS · Hip Opener 10 min</source>
+        <target>Light day — 2×11 push-ups · hip opener 10 min</target>
+      </segment>
+    </unit>
+    <unit id="plan.full-body-6w.day.12.desc">
+      <segment state="translated">
+        <source>Zirkel 3 Runden — 12 LS · 12 Step-Ups je Bein · 15 Russian Twists · 40 s Plank</source>
+        <target>Circuit 3 rounds — 12 push-ups · 12 step-ups per leg · 15 Russian twists · 40 s plank</target>
+      </segment>
+    </unit>
+    <unit id="plan.full-body-6w.day.15.desc">
+      <segment state="translated">
+        <source>Zirkel 4 Runden — 10 LS · 15 Kniebeugen · 12 Glute Bridges · 40 s Plank</source>
+        <target>Circuit 4 rounds — 10 push-ups · 15 squats · 12 glute bridges · 40 s plank</target>
+      </segment>
+    </unit>
+    <unit id="plan.full-body-6w.day.17.desc">
+      <segment state="translated">
+        <source>Zirkel 4 Runden — 11 LS · 16 Ausfallschritte je Bein · 15 Glute Bridges · 45 s Plank</source>
+        <target>Circuit 4 rounds — 11 push-ups · 16 lunges per leg · 15 glute bridges · 45 s plank</target>
+      </segment>
+    </unit>
+    <unit id="plan.full-body-6w.day.18.desc">
+      <segment state="translated">
+        <source>Leichter Tag — 2×12 LS · Yoga 20 min</source>
+        <target>Light day — 2×12 push-ups · yoga 20 min</target>
+      </segment>
+    </unit>
+    <unit id="plan.full-body-6w.day.19.desc">
+      <segment state="translated">
+        <source>Zirkel 4 Runden — 12 LS · 15 Jump Squats · 12 Glute Bridges · 45 s Plank</source>
+        <target>Circuit 4 rounds — 12 push-ups · 15 jump squats · 12 glute bridges · 45 s plank</target>
+      </segment>
+    </unit>
+    <unit id="plan.full-body-6w.day.22.desc">
+      <segment state="translated">
+        <source>Zirkel 4 Runden — 13 LS · 18 Kniebeugen · 15 Glute Bridges · 50 s Plank</source>
+        <target>Circuit 4 rounds — 13 push-ups · 18 squats · 15 glute bridges · 50 s plank</target>
+      </segment>
+    </unit>
+    <unit id="plan.full-body-6w.day.24.desc">
+      <segment state="translated">
+        <source>Zirkel 4 Runden — 14 LS · 18 Ausfallschritte je Bein · 15 Hip Thrusts · 50 s Plank</source>
+        <target>Circuit 4 rounds — 14 push-ups · 18 lunges per leg · 15 hip thrusts · 50 s plank</target>
+      </segment>
+    </unit>
+    <unit id="plan.full-body-6w.day.25.desc">
+      <segment state="translated">
+        <source>Leichter Tag — 2×13 LS · Foam Rolling 15 min</source>
+        <target>Light day — 2×13 push-ups · foam rolling 15 min</target>
+      </segment>
+    </unit>
+    <unit id="plan.full-body-6w.day.26.desc">
+      <segment state="translated">
+        <source>Zirkel 4 Runden — 15 LS · 18 Jump Squats · 15 Glute Bridges · 60 s Plank</source>
+        <target>Circuit 4 rounds — 15 push-ups · 18 jump squats · 15 glute bridges · 60 s plank</target>
+      </segment>
+    </unit>
+    <unit id="plan.full-body-6w.day.29.desc">
+      <segment state="translated">
+        <source>Zirkel 5 Runden — 12 LS · 15 Kniebeugen · 12 Glute Bridges · 45 s Plank</source>
+        <target>Circuit 5 rounds — 12 push-ups · 15 squats · 12 glute bridges · 45 s plank</target>
+      </segment>
+    </unit>
+    <unit id="plan.full-body-6w.day.31.desc">
+      <segment state="translated">
+        <source>Zirkel 5 Runden — 13 LS · 16 Ausfallschritte je Bein · 13 Glute Bridges · 50 s Plank</source>
+        <target>Circuit 5 rounds — 13 push-ups · 16 lunges per leg · 13 glute bridges · 50 s plank</target>
+      </segment>
+    </unit>
+    <unit id="plan.full-body-6w.day.32.desc">
+      <segment state="translated">
+        <source>Leichter Tag — 2×14 LS · Mobility 15 min</source>
+        <target>Light day — 2×14 push-ups · mobility 15 min</target>
+      </segment>
+    </unit>
+    <unit id="plan.full-body-6w.day.33.desc">
+      <segment state="translated">
+        <source>Zirkel 5 Runden — 14 LS · 18 Jump Squats · 15 Hip Thrusts · 60 s Plank</source>
+        <target>Circuit 5 rounds — 14 push-ups · 18 jump squats · 15 hip thrusts · 60 s plank</target>
+      </segment>
+    </unit>
+    <unit id="plan.full-body-6w.day.36.desc">
+      <segment state="translated">
+        <source>Peak-Zirkel 5 Runden — 15 LS · 20 Kniebeugen · 15 Glute Bridges · 60 s Plank</source>
+        <target>Peak circuit 5 rounds — 15 push-ups · 20 squats · 15 glute bridges · 60 s plank</target>
+      </segment>
+    </unit>
+    <unit id="plan.full-body-6w.day.38.desc">
+      <segment state="translated">
+        <source>Taper-Zirkel 4 Runden, kontrolliertes Tempo — 15 LS · 15 Kniebeugen · 12 Glute Bridges · 45 s Plank</source>
+        <target>Taper circuit 4 rounds, controlled tempo — 15 push-ups · 15 squats · 12 glute bridges · 45 s plank</target>
+      </segment>
+    </unit>
+    <unit id="plan.full-body-6w.day.39.desc">
+      <segment state="translated">
+        <source>Leichter Tag — 2×12 LS · Mobility</source>
+        <target>Light day — 2×12 push-ups · mobility</target>
+      </segment>
+    </unit>
+    <unit id="plan.full-body-6w.day.42.desc">
+      <segment state="translated">
+        <source>Funktionstest: maximale LS · 50 Kniebeugen auf Zeit · 1 min Plank-Halt</source>
+        <target>Functional test: max push-ups · 50 squats for time · 1 min plank hold</target>
+      </segment>
+    </unit>
+    <unit id="plan.core-4w.day.1.desc">
+      <segment state="translated">
+        <source>Baseline: maximale Plank-Zeit · 10 saubere LS · maximale Hollow-Hold-Zeit</source>
+        <target>Baseline: max plank time · 10 clean push-ups · max hollow-hold time</target>
+      </segment>
+    </unit>
+    <unit id="plan.core-4w.day.2.desc">
+      <segment state="translated">
+        <source>Plank 3×30 s · Hollow Hold 3×20 s · Dead Bug 3×10 je Seite · LS 2×10</source>
+        <target>plank 3×30 s · hollow hold 3×20 s · dead bug 3×10 per side · push-ups 2×10</target>
+      </segment>
+    </unit>
+    <unit id="plan.core-4w.day.3.desc">
+      <segment state="translated">
+        <source>Beinheben 3×10 · Russian Twist 3×15 · Plank 3×30 s · LS 2×12</source>
+        <target>Beinheben 3×10 · Russian twist 3×15 · plank 3×30 s · push-ups 2×12</target>
+      </segment>
+    </unit>
+    <unit id="plan.core-4w.day.5.desc">
+      <segment state="translated">
+        <source>Mountain Climbers 3×30 s · Dead Bug 3×12 · Plank 3×35 s · LS 2×10</source>
+        <target>mountain climbers 3×30 s · dead bug 3×12 · plank 3×35 s · push-ups 2×10</target>
+      </segment>
+    </unit>
+    <unit id="plan.core-4w.day.6.desc">
+      <segment state="translated">
+        <source>Leichter Tag — Cat-Cow 3×10 · Hip Opener 2 min · 2×7 saubere LS</source>
+        <target>Light day — cat-cow 3×10 · hip opener 2 min · 2×7 clean push-ups</target>
+      </segment>
+    </unit>
+    <unit id="plan.core-4w.day.8.desc">
+      <segment state="translated">
+        <source>Plank 3×40 s · Hollow Hold 3×25 s · Dead Bug 3×12 · LS 2×11</source>
+        <target>plank 3×40 s · hollow hold 3×25 s · dead bug 3×12 · push-ups 2×11</target>
+      </segment>
+    </unit>
+    <unit id="plan.core-4w.day.9.desc">
+      <segment state="translated">
+        <source>Beinheben 3×12 · Russian Twist 3×18 · Plank 3×40 s · LS 2×12</source>
+        <target>Beinheben 3×12 · Russian twist 3×18 · plank 3×40 s · push-ups 2×12</target>
+      </segment>
+    </unit>
+    <unit id="plan.core-4w.day.11.desc">
+      <segment state="translated">
+        <source>Mountain Climbers 4×30 s · Side Plank 2×25 s je Seite · LS 2×12</source>
+        <target>mountain climbers 4×30 s · side plank 2×25 s per side · push-ups 2×12</target>
+      </segment>
+    </unit>
+    <unit id="plan.core-4w.day.12.desc">
+      <segment state="translated">
+        <source>Leichter Tag — Mobility 10 min · 2×8 LS</source>
+        <target>Light day — mobility 10 min · 2×8 push-ups</target>
+      </segment>
+    </unit>
+    <unit id="plan.core-4w.day.13.desc">
+      <segment state="translated">
+        <source>Core-Zirkel 3 Runden — 40 s Plank · 20 s Hollow Hold · 12 Dead Bugs · 10 LS</source>
+        <target>Core circuit 3 rounds — 40 s plank · 20 s hollow hold · 12 dead bugs · 10 push-ups</target>
+      </segment>
+    </unit>
+    <unit id="plan.core-4w.day.15.desc">
+      <segment state="translated">
+        <source>Plank 3×50 s · Side Plank 3×30 s je Seite · Hollow Hold 3×30 s · LS 2×15</source>
+        <target>plank 3×50 s · side plank 3×30 s per side · hollow hold 3×30 s · push-ups 2×15</target>
+      </segment>
+    </unit>
+    <unit id="plan.core-4w.day.16.desc">
+      <segment state="translated">
+        <source>Hängendes Knieheben 3×8 · Russian Twist 3×20 · Plank 3×50 s · LS 2×15</source>
+        <target>hanging knee raises 3×8 · Russian twist 3×20 · plank 3×50 s · push-ups 2×15</target>
+      </segment>
+    </unit>
+    <unit id="plan.core-4w.day.18.desc">
+      <segment state="translated">
+        <source>Core-Power: Plank 3×60 s · Dead Bug 3×15 · Mountain Climbers 3×45 s · LS 2×15</source>
+        <target>Core power: plank 3×60 s · dead bug 3×15 · mountain climbers 3×45 s · push-ups 2×15</target>
+      </segment>
+    </unit>
+    <unit id="plan.core-4w.day.19.desc">
+      <segment state="translated">
+        <source>Leichter Tag — 2×9 LS · Stretching 10 min</source>
+        <target>Light day — 2×9 push-ups · stretching 10 min</target>
+      </segment>
+    </unit>
+    <unit id="plan.core-4w.day.20.desc">
+      <segment state="translated">
+        <source>Core-Zirkel 3 Runden — 50 s Plank · 12 Beinheben · 20 Russian Twists · 10 LS</source>
+        <target>Core circuit 3 rounds — 50 s plank · 12 Beinheben · 20 Russian twists · 10 push-ups</target>
+      </segment>
+    </unit>
+    <unit id="plan.core-4w.day.22.desc">
+      <segment state="translated">
+        <source>Plank 3×60 s · Hollow Hold 3×40 s · Hängendes Knieheben 3×10 · LS 2×16</source>
+        <target>plank 3×60 s · hollow hold 3×40 s · hanging knee raises 3×10 · push-ups 2×16</target>
+      </segment>
+    </unit>
+    <unit id="plan.core-4w.day.23.desc">
+      <segment state="translated">
+        <source>Core-Zirkel 3 Runden — 1 min Plank · 30 Russian Twists · 12 Beinheben · 12 LS</source>
+        <target>Core circuit 3 rounds — 1 min plank · 30 Russian twists · 12 Beinheben · 12 push-ups</target>
+      </segment>
+    </unit>
+    <unit id="plan.core-4w.day.25.desc">
+      <segment state="translated">
+        <source>Side Plank 3×40 s je Seite · Dead Bug 3×16 · Hollow Hold 3×40 s · LS 2×16</source>
+        <target>side plank 3×40 s per side · dead bug 3×16 · hollow hold 3×40 s · push-ups 2×16</target>
+      </segment>
+    </unit>
+    <unit id="plan.core-4w.day.26.desc">
+      <segment state="translated">
+        <source>Leichter Tag — 2×9 LS · Mobility</source>
+        <target>Light day — 2×9 push-ups · mobility</target>
+      </segment>
+    </unit>
+    <unit id="plan.core-4w.day.28.desc">
+      <segment state="translated">
+        <source>Endtest: 1 min Plank-Halt · maximale LS · 1 min Hollow Hold</source>
+        <target>Final test: 1 min plank hold · max push-ups · 1 min hollow hold</target>
+      </segment>
+    </unit>
+    <unit id="plan.hiit-4w.day.1.desc">
+      <segment state="translated">
+        <source>HIIT 4 Runden 30/15 s — LS · Burpees · Mountain Climbers · Jumping Jacks</source>
+        <target>HIIT 4 rounds 30/15 s — push-ups · burpees · mountain climbers · jumping jacks</target>
+      </segment>
+    </unit>
+    <unit id="plan.hiit-4w.day.3.desc">
+      <segment state="translated">
+        <source>HIIT 5 Runden 30/30 s — LS · Burpees · Hampelmänner · Plank</source>
+        <target>HIIT 5 rounds 30/30 s — push-ups · burpees · jumping jacks · plank</target>
+      </segment>
+    </unit>
+    <unit id="plan.hiit-4w.day.4.desc">
+      <segment state="translated">
+        <source>Aktive Erholung — 15 min Gehen · 2×10 LS · Mobility</source>
+        <target>Active recovery — 15 min walking · 2×10 push-ups · mobility</target>
+      </segment>
+    </unit>
+    <unit id="plan.hiit-4w.day.5.desc">
+      <segment state="translated">
+        <source>Tabata 8 Runden 20/10 s — LS · Burpees · Mountain Climbers · Jump Squats</source>
+        <target>Tabata 8 rounds 20/10 s — push-ups · burpees · mountain climbers · jump squats</target>
+      </segment>
+    </unit>
+    <unit id="plan.hiit-4w.day.8.desc">
+      <segment state="translated">
+        <source>HIIT 5 Runden 40/20 s — LS · Burpees · Mountain Climbers · Squats · Plank</source>
+        <target>HIIT 5 rounds 40/20 s — push-ups · burpees · mountain climbers · squats · plank</target>
+      </segment>
+    </unit>
+    <unit id="plan.hiit-4w.day.10.desc">
+      <segment state="translated">
+        <source>HIIT-Ladder 8-7-6-5-4-3-2-1 — LS · Burpees (jede Runde 1 Wiederholung weniger)</source>
+        <target>HIIT ladder 8-7-6-5-4-3-2-1 — push-ups · burpees (each round 1 rep fewer)</target>
+      </segment>
+    </unit>
+    <unit id="plan.hiit-4w.day.11.desc">
+      <segment state="translated">
+        <source>Aktive Erholung — 20 min lockeres Cardio · 2×11 LS</source>
+        <target>Active recovery — 20 min easy cardio · 2×11 push-ups</target>
+      </segment>
+    </unit>
+    <unit id="plan.hiit-4w.day.12.desc">
+      <segment state="translated">
+        <source>HIIT 6 Runden 30/15 s — LS · Burpees · Mountain Climbers · Jumping Jacks</source>
+        <target>HIIT 6 rounds 30/15 s — push-ups · burpees · mountain climbers · jumping jacks</target>
+      </segment>
+    </unit>
+    <unit id="plan.hiit-4w.day.15.desc">
+      <segment state="translated">
+        <source>HIIT 4 Runden 45/15 s — 11 LS · 8 Burpees · 12 Kniebeugen · 30 s Mountain Climbers</source>
+        <target>HIIT 4 rounds 45/15 s — 11 push-ups · 8 burpees · 12 squats · 30 s mountain climbers</target>
+      </segment>
+    </unit>
+    <unit id="plan.hiit-4w.day.17.desc">
+      <segment state="translated">
+        <source>HIIT 6 Runden 40/20 s — LS · Burpees · MC · Hampelmänner · Squats · Plank</source>
+        <target>HIIT 6 rounds 40/20 s — push-ups · burpees · MC · jumping jacks · squats · plank</target>
+      </segment>
+    </unit>
+    <unit id="plan.hiit-4w.day.18.desc">
+      <segment state="translated">
+        <source>Aktive Erholung — Yoga 20 min · 2×12 LS</source>
+        <target>Active recovery — yoga 20 min · 2×12 push-ups</target>
+      </segment>
+    </unit>
+    <unit id="plan.hiit-4w.day.19.desc">
+      <segment state="translated">
+        <source>Tabata 8 Runden 20/10 s — abwechselnd LS · Burpees · Squats · MC</source>
+        <target>Tabata 8 rounds 20/10 s — alternating push-ups · burpees · squats · MC</target>
+      </segment>
+    </unit>
+    <unit id="plan.hiit-4w.day.22.desc">
+      <segment state="translated">
+        <source>HIIT-Finale 10 Runden 30/15 s — LS · Burpees · MC · Hampelmänner</source>
+        <target>HIIT finale 10 rounds 30/15 s — push-ups · burpees · MC · jumping jacks</target>
+      </segment>
+    </unit>
+    <unit id="plan.hiit-4w.day.24.desc">
+      <segment state="translated">
+        <source>EMOM 12 min — pro Minute 5 LS · 5 Burpees · 10 Hampelmänner</source>
+        <target>EMOM 12 min — per minute 5 push-ups · 5 burpees · 10 jumping jacks</target>
+      </segment>
+    </unit>
+    <unit id="plan.hiit-4w.day.25.desc">
+      <segment state="translated">
+        <source>Aktive Erholung — Mobility · 2×13 LS</source>
+        <target>Active recovery — mobility · 2×13 push-ups</target>
+      </segment>
+    </unit>
+    <unit id="plan.hiit-4w.day.28.desc">
+      <segment state="translated">
+        <source>Konditionstest: 100 LS + 50 Burpees auf Zeit (Bestzeit notieren)</source>
+        <target>Conditioning test: 100 push-ups + 50 burpees for time (record your best time)</target>
+      </segment>
+    </unit>
+    <unit id="plan.mobility-2w.day.1.desc">
+      <segment state="translated">
+        <source>Dynamisches Aufwärmen 10 min · 1×10 saubere LS · 10 min Stretching</source>
+        <target>dynamic warm-up 10 min · 1×10 clean push-ups · 10 min stretching</target>
+      </segment>
+    </unit>
+    <unit id="plan.mobility-2w.day.2.desc">
+      <segment state="translated">
+        <source>Yoga-Flow 20 min · 1×10 LS · Brust-Stretching</source>
+        <target>yoga flow 20 min · 1×10 push-ups · chest stretching</target>
+      </segment>
+    </unit>
+    <unit id="plan.mobility-2w.day.3.desc">
+      <segment state="translated">
+        <source>Cat-Cow 3×10 · Hip Opener 2 min · 2×6 LS · 5 min Foam Rolling</source>
+        <target>cat-cow 3×10 · hip opener 2 min · 2×6 push-ups · 5 min foam rolling</target>
+      </segment>
+    </unit>
+    <unit id="plan.mobility-2w.day.4.desc">
+      <segment state="translated">
+        <source>Ruhetag — Foam Rolling 15 min</source>
+        <target>Rest day — foam rolling 15 min</target>
+      </segment>
+    </unit>
+    <unit id="plan.mobility-2w.day.5.desc">
+      <segment state="translated">
+        <source>Brust-Stretching 5 min · 2×6 LS · 10 min Spaziergang</source>
+        <target>chest stretching 5 min · 2×6 push-ups · 10 min walk</target>
+      </segment>
+    </unit>
+    <unit id="plan.mobility-2w.day.6.desc">
+      <segment state="translated">
+        <source>Dynamisches Aufwärmen 10 min · 2×7 LS · Schulter-Mobility 5 min</source>
+        <target>dynamic warm-up 10 min · 2×7 push-ups · shoulder mobility 5 min</target>
+      </segment>
+    </unit>
+    <unit id="plan.mobility-2w.day.8.desc">
+      <segment state="translated">
+        <source>Schulter-Mobility 10 min · 2×7 LS · 10 min Stretching</source>
+        <target>shoulder mobility 10 min · 2×7 push-ups · 10 min stretching</target>
+      </segment>
+    </unit>
+    <unit id="plan.mobility-2w.day.9.desc">
+      <segment state="translated">
+        <source>Yoga 20 min · 2×8 LS</source>
+        <target>yoga 20 min · 2×8 push-ups</target>
+      </segment>
+    </unit>
+    <unit id="plan.mobility-2w.day.10.desc">
+      <segment state="translated">
+        <source>Foam Rolling 10 min · 2×8 LS · Hip Opener 5 min</source>
+        <target>foam rolling 10 min · 2×8 push-ups · hip opener 5 min</target>
+      </segment>
+    </unit>
+    <unit id="plan.mobility-2w.day.11.desc">
+      <segment state="translated">
+        <source>Ruhetag — Stretching nach Bedarf</source>
+        <target>Rest day — stretching as needed</target>
+      </segment>
+    </unit>
+    <unit id="plan.mobility-2w.day.12.desc">
+      <segment state="translated">
+        <source>Dynamisches Aufwärmen · 2×9 LS · 10 min Mobility</source>
+        <target>dynamic warm-up · 2×9 push-ups · 10 min mobility</target>
+      </segment>
+    </unit>
+    <unit id="plan.mobility-2w.day.13.desc">
+      <segment state="translated">
+        <source>2×10 LS · 15 min Yoga</source>
+        <target>2×10 push-ups · 15 min yoga</target>
+      </segment>
+    </unit>
+    <unit id="plan.mobility-2w.day.14.desc">
+      <segment state="translated">
+        <source>Form-Check: 2×10 saubere LS · vollständige Mobility-Session 20 min</source>
+        <target>form check: 2×10 clean push-ups · full mobility session 20 min</target>
+      </segment>
+    </unit>
+    <unit id="plan.push-pull-6w.title">
+      <segment state="translated">
+        <source>Push &amp; Pull Balance — 6-Wochen-Plan</source>
+        <target>Push &amp; Pull Balance — 6-week plan</target>
+      </segment>
+    </unit>
+    <unit id="plan.push-pull-6w.summary">
+      <segment state="translated">
+        <source>Symmetrischer 6-Wochen-Plan für Liegestütze und Rückenübungen (Rudern, Klimmzug-Negative, Face Pulls). Vermeidet das klassische &quot;nur Push&quot;-Ungleichgewicht und stärkt die hintere Kette gleichwertig. Pull-Tag pro Woche zusätzlich zur Push-Progression.</source>
+        <target>Symmetric 6-week plan for push-ups and pulling work (rows, pull-up negatives, face pulls). Avoids the classic &quot;push only&quot; imbalance and strengthens the posterior chain equally. One dedicated pull day per week on top of the push progression.</target>
+      </segment>
+    </unit>
+    <unit id="plan.full-body-6w.title">
+      <segment state="translated">
+        <source>Full Body Strong — 6-Wochen-Ganzkörperplan</source>
+        <target>Full Body Strong — 6-week full-body plan</target>
+      </segment>
+    </unit>
+    <unit id="plan.full-body-6w.summary">
+      <segment state="translated">
+        <source>Sechs Wochen Ganzkörper-Zirkel: Liegestütze, Kniebeugen, Ausfallschritte, Glute Bridges und Plank in 3-, 4- und 5-Runden-Zirkeln. Drei Trainingstage pro Woche, klar steigende Volumen, funktioneller Endtest in Woche 6.</source>
+        <target>Six weeks of full-body circuits: push-ups, squats, lunges, glute bridges, and planks in 3-, 4-, and 5-round circuits. Three training days per week, clearly increasing volume, functional final test in week 6.</target>
+      </segment>
+    </unit>
+    <unit id="plan.core-4w.title">
+      <segment state="translated">
+        <source>Core Foundations — 4-Wochen-Rumpfplan</source>
+        <target>Core Foundations — 4-week core plan</target>
+      </segment>
+    </unit>
+    <unit id="plan.core-4w.summary">
+      <segment state="translated">
+        <source>Vier Wochen Rumpfstabilität: Plank, Hollow Hold, Dead Bug, Beinheben und Rotation. Pro Trainingstag eine moderate Liegestütze-Aktivierung. Vier Trainingstage und ein leichter Tag pro Woche, Endtest mit Plank-Halt und Hollow Hold.</source>
+        <target>Four weeks of core stability: plank, hollow hold, dead bug, leg raises, and rotational work. Each training day also includes a moderate push-up activation. Four training days plus one light day per week, final test with plank hold and hollow hold.</target>
+      </segment>
+    </unit>
+    <unit id="plan.hiit-4w.title">
+      <segment state="translated">
+        <source>HIIT Burner — 4-Wochen-Konditionsplan</source>
+        <target>HIIT Burner — 4-week conditioning plan</target>
+      </segment>
+    </unit>
+    <unit id="plan.hiit-4w.summary">
+      <segment state="translated">
+        <source>Vier Wochen hochintensives Intervalltraining mit Liegestützen, Burpees, Mountain Climbers, Hampelmännern und Kniebeugen. Tabata, Pyramide und EMOM-Strukturen. Eignet sich als Konditions-Booster zwischen klassischen Liegestütze-Plänen.</source>
+        <target>Four weeks of high-intensity intervals with push-ups, burpees, mountain climbers, jumping jacks, and squats. Tabata, pyramid, and EMOM structures. Works well as a conditioning booster between classic push-up plans.</target>
+      </segment>
+    </unit>
+    <unit id="plan.mobility-2w.title">
+      <segment state="translated">
+        <source>Mobility &amp; Recovery — 2-Wochen-Deload</source>
+        <target>Mobility &amp; Recovery — 2-week deload</target>
+      </segment>
+    </unit>
+    <unit id="plan.mobility-2w.summary">
+      <segment state="translated">
+        <source>Zwei Wochen aktive Erholung: tägliche Mobility-, Yoga- und Stretching-Einheiten mit leichtem Liegestütze-Volumen. Ideal als Deload zwischen zwei harten Plänen oder zum Wiedereinstieg nach einer Trainingspause.</source>
+        <target>Two weeks of active recovery: daily mobility, yoga, and stretching sessions with light push-up volume. Ideal as a deload between two hard plans or to ease back in after a training break.</target>
       </segment>
     </unit>
 </file>

@@ -1,12 +1,14 @@
 #!/usr/bin/env node
-// Build-time generator: scans `content/blog/<folder>/<lang>.md` and
-// `content/wiki/pushup-types/<id>.<lang>.md` for any lowercase locale
+// Build-time generator: scans `content/blog/<folder>/<lang>.md`,
+// `content/wiki/pushup-types/<id>.<lang>.md`, and
+// `content/wiki/exercises/<id>.<lang>.md` for any lowercase locale
 // code (de, en, fr, es, it, nl, el, la, …), parses YAML frontmatter
 // and renders markdown bodies to HTML, then writes:
 //
 //   web/src/app/blog/generated/<slug>.<lang>.ts  (one file per post per locale)
 //   web/src/app/blog/generated/index.ts           (barrel re-exporting all posts)
 //   libs/stats/src/lib/models/pushup-type-content.generated.ts
+//   libs/stats/src/lib/models/exercise-wiki-content.generated.ts
 //
 // Authors translate by editing the markdown files; consumers keep
 // reading the generated TS modules. See AGENTS.md ("Translatable
@@ -82,6 +84,11 @@ function readFileIfExists(path) {
 // `..`, leading dot, whitespace, capitals) so a malicious or sloppy
 // frontmatter slug can't write outside web/src/app/blog/generated/.
 const SAFE_SLUG_RE = /^[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/;
+
+// Exercise wiki ids carry dotted segments (`abs.situps`, `plank.standard`).
+// Looser than SAFE_SLUG_RE — only relaxes the dot character, so an id
+// still can't contain path separators or escape sequences.
+const SAFE_EXERCISE_ID_RE = /^[a-z][a-z0-9]*(?:\.[a-zA-Z][a-zA-Z0-9]*)*$/;
 
 function assertSafeSlug(slug, sourcePath) {
   if (typeof slug !== 'string' || !SAFE_SLUG_RE.test(slug)) {
@@ -332,10 +339,93 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
 `;
 }
 
+function emitExerciseWikiModule(content) {
+  return `${HEADER}
+export interface ExerciseWikiContent {
+  readonly name: string;
+  readonly summary: string;
+  readonly instructions: ReadonlyArray<string>;
+  readonly tips: ReadonlyArray<string>;
+}
+
+/**
+ * Translatable wiki copy for non-pushup exercises. Keys are the
+ * \`ExerciseDefinition.id\` (dotted segments like \`abs.situps\`); values
+ * are per-locale content blocks. Locales without a translation fall
+ * back through \`en\` → \`de\` in \`localizeExerciseWiki\`.
+ */
+export const EXERCISE_WIKI_CONTENT: Readonly<
+  Record<string, Readonly<Record<string, ExerciseWikiContent>>>
+> = ${JSON.stringify(content, null, 2)};
+`;
+}
+
+/**
+ * Walks `content/wiki/exercises/<id>.<lang>.md` (any lowercase locale
+ * code) and returns a `Record<id, Record<lang, ExerciseWikiContent>>` map.
+ * Mirrors `loadPushupTypeContent` but accepts dotted ids (e.g.
+ * `abs.situps`) so the wiki entry id can match `ExerciseDefinition.id`
+ * exactly.
+ */
+export function loadExerciseWikiContent(contentRoot) {
+  const dir = join(contentRoot, 'wiki', 'exercises');
+  const files = listDirEntries(dir)
+    .filter((f) => f.endsWith('.md'))
+    .sort();
+  const out = {};
+  for (const file of files) {
+    // Match `<id>.<lang>.md` where id may itself contain dots
+    // (e.g. `abs.situps.de.md`). Locale must be the LAST dotted
+    // segment before `.md` so the id captures the rest unambiguously.
+    const match = /^(.+)\.([a-z][a-z-]*)\.md$/.exec(file);
+    if (!match) {
+      throw new Error(
+        `${join(dir, file)}: filename must be <id>.<lang>.md (lowercase locale code)`
+      );
+    }
+    const [, id, lang] = match;
+    const path = join(dir, file);
+    if (!SAFE_EXERCISE_ID_RE.test(id)) {
+      throw new Error(
+        `${path}: invalid exercise id ${JSON.stringify(id)} — must match ${SAFE_EXERCISE_ID_RE}`
+      );
+    }
+    assertSafeLang(lang, path);
+    const source = readFileSync(path, 'utf-8');
+    let parsed;
+    try {
+      parsed = parseFrontmatter(source);
+    } catch (err) {
+      throw new Error(`${path}: ${err.message}`, { cause: err });
+    }
+    const data = parsed.data;
+    out[id] ??= {};
+    out[id][lang] = {
+      name: requireStr(data, 'name', path),
+      summary: requireStr(data, 'summary', path),
+      instructions: requireStrArray(data, 'instructions', path),
+      tips: data.tips == null ? [] : requireStrArray(data, 'tips', path),
+    };
+  }
+  return Object.fromEntries(
+    Object.keys(out)
+      .sort()
+      .map((id) => [
+        id,
+        Object.fromEntries(
+          Object.keys(out[id])
+            .sort()
+            .map((lang) => [lang, out[id][lang]])
+        ),
+      ])
+  );
+}
+
 function main() {
   const contentRoot = resolve(ROOT, 'content');
   const posts = loadBlogPosts(contentRoot);
   const pushupContent = loadPushupTypeContent(contentRoot);
+  const exerciseWikiContent = loadExerciseWikiContent(contentRoot);
 
   // Per-post generated files + barrel. Track written filenames so two
   // posts colliding on `<slug>.<lang>` (e.g. accidental duplicate slug
@@ -363,11 +453,24 @@ function main() {
   );
   writeFileSync(wikiPath, emitPushupTypeModule(pushupContent), 'utf-8');
 
+  const exerciseWikiPath = resolve(
+    ROOT,
+    'libs/stats/src/lib/models/exercise-wiki-content.generated.ts'
+  );
+  writeFileSync(
+    exerciseWikiPath,
+    emitExerciseWikiModule(exerciseWikiContent),
+    'utf-8'
+  );
+
   console.log(
     `generated ${posts.length} blog post(s) → web/src/app/blog/generated/`
   );
   console.log(
     `generated ${Object.keys(pushupContent).length} push-up type override(s)`
+  );
+  console.log(
+    `generated ${Object.keys(exerciseWikiContent).length} exercise wiki override(s)`
   );
 }
 
