@@ -641,9 +641,25 @@
         <source>Auto‑Zählen</source>
       </segment>
     </unit>
-    <unit id="quickAdd.fab.customValueAria">
+    <unit id="quickAdd.fab.exerciseTimerAria">
       <notes>
         <note category="location">libs/quick-add/src/lib/quick-add-fab.component.html:34,35</note>
+      </notes>
+      <segment>
+        <source>Halteübungs-Timer öffnen</source>
+      </segment>
+    </unit>
+    <unit id="quickAdd.fab.exerciseTimer">
+      <notes>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.html:39,41</note>
+      </notes>
+      <segment>
+        <source>Plank‑Timer</source>
+      </segment>
+    </unit>
+    <unit id="quickAdd.fab.customValueAria">
+      <notes>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.html:46,47</note>
       </notes>
       <segment>
         <source>Eigenen Wert eingeben</source>
@@ -651,7 +667,7 @@
     </unit>
     <unit id="quickAdd.fab.customValue">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.html:39,41</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.html:51,53</note>
       </notes>
       <segment>
         <source>Eigener Wert</source>
@@ -659,7 +675,7 @@
     </unit>
     <unit id="quickAdd.fab.fillToGoal">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.html:57,58</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.html:69,70</note>
       </notes>
       <segment>
         <source>+<ph id="0" equiv="INTERPOLATION" disp="{{ item.value }}"/> bis zum Ziel</source>
@@ -667,7 +683,7 @@
     </unit>
     <unit id="quickAdd.fab.quickAddReps">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.html:71,72</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.html:83,84</note>
       </notes>
       <segment>
         <source>+<ph id="0" equiv="INTERPOLATION" disp="{{ item.value }}"/> Reps</source>
@@ -675,7 +691,7 @@
     </unit>
     <unit id="quickAdd.fab.open">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:70</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:78</note>
       </notes>
       <segment>
         <source>Schnellerfassung öffnen</source>
@@ -683,7 +699,7 @@
     </unit>
     <unit id="quickAdd.fab.close">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:71</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:79</note>
       </notes>
       <segment>
         <source>Schnellerfassung schließen</source>
@@ -691,7 +707,7 @@
     </unit>
     <unit id="quickAdd.fab.goalReached">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:72</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:80</note>
       </notes>
       <segment>
         <source>Ziel erreicht ✓</source>
@@ -699,7 +715,7 @@
     </unit>
     <unit id="quickAdd.fab.goalReachedAria">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:73</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:81</note>
       </notes>
       <segment>
         <source>Tagesziel bereits erreicht</source>
@@ -707,7 +723,7 @@
     </unit>
     <unit id="quickAdd.fab.repAria">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:76</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:84</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="REPS" disp="reps"/> Liegestütze hinzufügen</source>
@@ -715,7 +731,7 @@
     </unit>
     <unit id="quickAdd.fab.fillToGoalAria">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:80</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:88</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="GAP" disp="gap"/> Liegestütze bis zum Tagesziel hinzufügen</source>
@@ -3510,7 +3526,7 @@
     </unit>
     <unit id="toolbarDailyGoal.replayAria">
       <notes>
-        <note category="location">web/src/app/app.ts:386</note>
+        <note category="location">web/src/app/app.ts:390</note>
       </notes>
       <segment>
         <source>Tagesziel-Animation erneut abspielen</source>
@@ -3518,7 +3534,7 @@
     </unit>
     <unit id="feedback.success">
       <notes>
-        <note category="location">web/src/app/app.ts:415</note>
+        <note category="location">web/src/app/app.ts:419</note>
       </notes>
       <segment>
         <source>Danke für dein Feedback!</source>
@@ -3526,7 +3542,7 @@
     </unit>
     <unit id="feedback.error">
       <notes>
-        <note category="location">web/src/app/app.ts:422</note>
+        <note category="location">web/src/app/app.ts:426</note>
       </notes>
       <segment>
         <source>Feedback konnte nicht gesendet werden.</source>
@@ -3700,6 +3716,160 @@
         <source>Sit-ups</source>
       </segment>
     </unit>
+    <unit id="exerciseTimer.title">
+      <notes>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.html:1,3</note>
+      </notes>
+      <segment>
+        <source>Halteübung-Timer</source>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.exercisePickerAria">
+      <notes>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.html:8,9</note>
+      </notes>
+      <segment>
+        <source>Übung wählen</source>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.cameraMode">
+      <notes>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.html:25,28</note>
+      </notes>
+      <segment>
+        <source> Kamera: Start/Ende automatisch erkennen </source>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.cameraStarting">
+      <notes>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.html:42,45</note>
+      </notes>
+      <segment>
+        <source>Kamera startet …</source>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.cameraUnavailable">
+      <notes>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.html:49,51</note>
+      </notes>
+      <segment>
+        <source> Kamera nicht verfügbar </source>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.formCheck.toggleAria">
+      <notes>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.html:67,68</note>
+      </notes>
+      <segment>
+        <source>Form-Check anzeigen oder ausblenden</source>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.formCheck.angle">
+      <notes>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.html:77,79</note>
+      </notes>
+      <segment>
+        <source>Winkel</source>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.formCheck.confidence">
+      <notes>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.html:87,89</note>
+      </notes>
+      <segment>
+        <source>Sicherheit</source>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.pause">
+      <notes>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.html:111,113</note>
+      </notes>
+      <segment>
+        <source>Pause</source>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.start">
+      <notes>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.html:113,116</note>
+      </notes>
+      <segment>
+        <source>Start</source>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.cameraHint">
+      <notes>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.html:119,124</note>
+      </notes>
+      <segment>
+        <source> Stelle die Kamera so auf, dass Schulter, Hüfte und Knie sichtbar sind. Der Timer startet automatisch, sobald du in Position bist, und pausiert, wenn du die Position verlässt. </source>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.reset">
+      <notes>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.html:132,134</note>
+      </notes>
+      <segment>
+        <source> Zurücksetzen </source>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.cancel">
+      <notes>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.html:135,138</note>
+      </notes>
+      <segment>
+        <source> Abbrechen </source>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.save">
+      <notes>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.html:144,146</note>
+      </notes>
+      <segment>
+        <source> Übernehmen </source>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.phase.holding">
+      <notes>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.ts:109</note>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.ts:117</note>
+      </notes>
+      <segment>
+        <source>Halten</source>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.phase.paused">
+      <notes>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.ts:111</note>
+      </notes>
+      <segment>
+        <source>Pause</source>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.phase.ready">
+      <notes>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.ts:113</note>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.ts:118</note>
+      </notes>
+      <segment>
+        <source>Bereit</source>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.exercise.plank">
+      <notes>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.ts:126</note>
+      </notes>
+      <segment>
+        <source>Plank</source>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.exercise.hollowhold">
+      <notes>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.ts:131</note>
+      </notes>
+      <segment>
+        <source>Hollow Hold</source>
+      </segment>
+    </unit>
     <unit id="blog.article.back">
       <notes>
         <note category="location">web/src/app/blog/blog-article.component.ts:40,42</note>
@@ -3831,8 +4001,8 @@
     </unit>
     <unit id="quickAdd.success.create">
       <notes>
-        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:75</note>
-        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:264</note>
+        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:91</note>
+        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:334</note>
       </notes>
       <segment>
         <source>Eintrag gespeichert.</source>
@@ -3840,9 +4010,9 @@
     </unit>
     <unit id="quickAdd.error.create">
       <notes>
-        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:87</note>
-        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:126</note>
-        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:280</note>
+        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:103</note>
+        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:142</note>
+        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:350</note>
       </notes>
       <segment>
         <source>Eintrag konnte nicht gespeichert werden.</source>
@@ -3850,7 +4020,7 @@
     </unit>
     <unit id="quickAdd.success.goalReached">
       <notes>
-        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:113</note>
+        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:129</note>
       </notes>
       <segment>
         <source>Tagesziel erreicht 🎉</source>
@@ -4510,9 +4680,17 @@
         <source>Funktionen</source>
       </segment>
     </unit>
+    <unit id="landing.feature.autoCount.imageAlt">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:205,206</note>
+      </notes>
+      <segment>
+        <source>Sportlerin bei einer sauberen Liegestütze auf Holzboden</source>
+      </segment>
+    </unit>
     <unit id="landing.feature.autoCount.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:249,251</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:216,218</note>
       </notes>
       <segment>
         <source>Reps automatisch zählen</source>
@@ -4520,15 +4698,15 @@
     </unit>
     <unit id="landing.feature.autoCount.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:253,257</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:220,224</note>
       </notes>
       <segment>
-        <source>Stell das Handy hin, öffne die Auto-Zählung und mach deine Liegestütze, Kniebeugen, Klimmzüge oder Sit-ups – die Kamera erkennt die Bewegung und zählt mit. Der Live-Form-Check zeigt Winkel und Sicherheit, damit du jederzeit weißt, dass die Zählung sauber läuft.</source>
+        <source>Stell das Handy hin, öffne die Auto-Zählung und mach deine Liegestütze, Kniebeugen, Klimmzüge oder Sit-ups – unsere KI erkennt deine Bewegung in Echtzeit direkt im Browser und zählt automatisch mit. Der Live-Form-Check zeigt Winkel und Sicherheit, damit du jederzeit weißt, dass die Zählung sauber läuft.</source>
       </segment>
     </unit>
     <unit id="landing.feature.multiset.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:345,347</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:313,315</note>
       </notes>
       <segment>
         <source>Multi-Set Tracking</source>
@@ -4536,7 +4714,7 @@
     </unit>
     <unit id="landing.feature.multiset.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:349,351</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:317,319</note>
       </notes>
       <segment>
         <source>Erfasse jeden Satz einzeln – z. B. 12 + 10 + 8. Die App summiert automatisch und zeigt deine durchschnittliche Set-Größe.</source>
@@ -4544,7 +4722,7 @@
     </unit>
     <unit id="landing.feature.analytics.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:414,416</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:382,384</note>
       </notes>
       <segment>
         <source>Charts, Trends &amp; alle Übungen</source>
@@ -4552,7 +4730,7 @@
     </unit>
     <unit id="landing.feature.analytics.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:418,422</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:386,390</note>
       </notes>
       <segment>
         <source>Verlaufsdiagramme und KPI-Karten für jede Übung: Liegestütz-Varianten (Standard, Wide, Diamond), Sit-ups, Kniebeugen, Plank und Laufen – mit frei wählbarem Zeitraum.</source>
@@ -4560,7 +4738,7 @@
     </unit>
     <unit id="landing.feature.goals.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:516,518</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:484,486</note>
       </notes>
       <segment>
         <source>Tages-, Wochen- &amp; Monatsziele</source>
@@ -4568,7 +4746,7 @@
     </unit>
     <unit id="landing.feature.goals.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:520,523</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:488,491</note>
       </notes>
       <segment>
         <source>Dreifacher Fortschrittsbalken hält dich auf Kurs. Streak-Anzeige belohnt dranbleiben, Konfetti feiert dein erreichtes Tagesziel.</source>
@@ -4576,7 +4754,7 @@
     </unit>
     <unit id="landing.feature.heatmap.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:564,566</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:532,534</note>
       </notes>
       <segment>
         <source>Heatmap-Kalender</source>
@@ -4584,7 +4762,7 @@
     </unit>
     <unit id="landing.feature.heatmap.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:568,572</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:536,540</note>
       </notes>
       <segment>
         <source>Sieh auf einen Blick, an welchen Tagen du wie hart trainiert hast. Lücken werden sichtbar – Konsistenz wird zur Gewohnheit.</source>
@@ -4592,7 +4770,7 @@
     </unit>
     <unit id="landing.feature.quick.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:578,580</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:546,548</note>
       </notes>
       <segment>
         <source>Quick Logging mit FAB</source>
@@ -4600,7 +4778,7 @@
     </unit>
     <unit id="landing.feature.quick.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:582,585</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:550,553</note>
       </notes>
       <segment>
         <source>Eintrag in 2 Sekunden über den Floating Action Button oder Schnellaktionen direkt im Dashboard – ganz ohne Dialog.</source>
@@ -4608,7 +4786,7 @@
     </unit>
     <unit id="landing.feature.adaptive.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:592,594</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:560,562</note>
       </notes>
       <segment>
         <source>Adaptive Vorschläge</source>
@@ -4616,7 +4794,7 @@
     </unit>
     <unit id="landing.feature.adaptive.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:596,600</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:564,568</note>
       </notes>
       <segment>
         <source>Die Schnellaktionen lernen aus deiner Historie und schlagen passende Wiederholungen vor – oder du konfigurierst eigene Buttons.</source>
@@ -4624,7 +4802,7 @@
     </unit>
     <unit id="landing.feature.pwa.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:606,608</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:574,576</note>
       </notes>
       <segment>
         <source>App-Installation, Live-Sync &amp; Teilen</source>
@@ -4632,7 +4810,7 @@
     </unit>
     <unit id="landing.feature.pwa.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:610,613</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:578,581</note>
       </notes>
       <segment>
         <source>Direkt aus dem Browser als App installieren – mit Echtzeit-Sync zwischen allen Geräten und Tagesergebnis per Teilen-Button.</source>
@@ -4640,7 +4818,7 @@
     </unit>
     <unit id="landing.feature.pwa.installed">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:617,619</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:585,587</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon aria-hidden=&quot;true&quot;&gt;" dispEnd="&lt;/mat-icon&gt;">check_circle</pc> Du nutzt bereits die installierte App </source>
@@ -4648,7 +4826,7 @@
     </unit>
     <unit id="landing.feature.pwa.install">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:630,632</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:598,600</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon aria-hidden=&quot;true&quot;&gt;" dispEnd="&lt;/mat-icon&gt;">download</pc> Jetzt als App installieren </source>
@@ -4656,7 +4834,7 @@
     </unit>
     <unit id="landing.feature.pwa.iosHint">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:637,640</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:605,608</note>
       </notes>
       <segment>
         <source> Auf iPhone &amp; iPad: Teilen-Symbol antippen und „Zum Home-Bildschirm“ wählen. </source>
@@ -4664,7 +4842,7 @@
     </unit>
     <unit id="landing.feature.privacy.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:648,650</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:616,618</note>
       </notes>
       <segment>
         <source>Privacy first &amp; 100 % kostenlos</source>
@@ -4672,7 +4850,7 @@
     </unit>
     <unit id="landing.feature.privacy.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:652,656</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:620,624</note>
       </notes>
       <segment>
         <source>DSGVO-konform mit anpassbarer Cookie-Zustimmung. Dein Name auf der Bestenliste? Nur wenn du es willst. Kein Abo, keine Kreditkarte.</source>
@@ -4680,7 +4858,7 @@
     </unit>
     <unit id="ads.landing.aria">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:658</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:626</note>
       </notes>
       <segment>
         <source>Werbung</source>
@@ -4688,7 +4866,7 @@
     </unit>
     <unit id="landing.preview.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:667,669</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:635,637</note>
       </notes>
       <segment>
         <source> Deine Statistik auf einen Blick </source>
@@ -4696,7 +4874,7 @@
     </unit>
     <unit id="landing.preview.alt">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:674,675</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:642,643</note>
       </notes>
       <segment>
         <source>Vorschau der Statistikansicht</source>
@@ -4704,7 +4882,7 @@
     </unit>
     <unit id="landing.discover.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:815,816</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:783,784</note>
       </notes>
       <segment>
         <source>Mehr entdecken</source>
@@ -4712,7 +4890,7 @@
     </unit>
     <unit id="landing.discover.leaderboard.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:821,823</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:789,791</note>
       </notes>
       <segment>
         <source>Bestenliste</source>
@@ -4720,7 +4898,7 @@
     </unit>
     <unit id="landing.discover.leaderboard.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:825,828</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:793,796</note>
       </notes>
       <segment>
         <source> Vergleiche dich mit der Community: Top-Reps für heute, die letzten 7 Tage und die letzten 30 Tage. Privacy first – dein Name erscheint nur, wenn du es willst. </source>
@@ -4728,7 +4906,7 @@
     </unit>
     <unit id="landing.discover.leaderboard.cta">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:835,838</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:803,806</note>
       </notes>
       <segment>
         <source>Zur Bestenliste</source>
@@ -4736,7 +4914,7 @@
     </unit>
     <unit id="landing.discover.blog.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:844,846</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:812,814</note>
       </notes>
       <segment>
         <source>Blog</source>
@@ -4744,7 +4922,7 @@
     </unit>
     <unit id="landing.discover.blog.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:848,851</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:816,819</note>
       </notes>
       <segment>
         <source> Tipps, Hintergrundwissen und Motivation rund um Liegestütze – von Einsteiger bis Fortgeschritten. Viele Artikel verlinken direkt auf den passenden Trainingsplan. </source>
@@ -4752,7 +4930,7 @@
     </unit>
     <unit id="landing.discover.blog.cta">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:858,860</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:826,828</note>
       </notes>
       <segment>
         <source>Zum Blog</source>

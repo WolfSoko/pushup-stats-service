@@ -2102,6 +2102,12 @@ Active:         </target>
         <target>GDPR-friendly with customisable cookie consent. Your name on the leaderboard? Only if you want it there. No subscription, no credit card.</target>
             </segment>
         </unit>
+    <unit id="landing.feature.autoCount.imageAlt">
+      <segment state="translated">
+        <source>Sportlerin bei einer sauberen Liegestütze auf Holzboden</source>
+        <target>Athlete doing a clean push-up on a wooden floor</target>
+      </segment>
+    </unit>
     <unit id="landing.feature.autoCount.title">
       <segment state="translated">
         <source>Reps automatisch zählen</source>
@@ -2110,8 +2116,8 @@ Active:         </target>
     </unit>
     <unit id="landing.feature.autoCount.body">
       <segment state="translated">
-        <source>Stell das Handy hin, öffne die Auto-Zählung und mach deine Liegestütze, Kniebeugen, Klimmzüge oder Sit-ups – die Kamera erkennt die Bewegung und zählt mit. Der Live-Form-Check zeigt Winkel und Sicherheit, damit du jederzeit weißt, dass die Zählung sauber läuft.</source>
-        <target>Prop up your phone, open the auto-counter and start your push-ups, squats, pull-ups or sit-ups – the camera spots the motion and counts along. The live Form Check shows angle and confidence so you always know the count is clean.</target>
+        <source>Stell das Handy hin, öffne die Auto-Zählung und mach deine Liegestütze, Kniebeugen, Klimmzüge oder Sit-ups – unsere KI erkennt deine Bewegung in Echtzeit direkt im Browser und zählt automatisch mit. Der Live-Form-Check zeigt Winkel und Sicherheit, damit du jederzeit weißt, dass die Zählung sauber läuft.</source>
+        <target>Prop up your phone, open the auto-counter and start your push-ups, squats, pull-ups or sit-ups – our AI recognises your motion in real time, right in your browser, and counts along automatically. The live Form Check shows angle and confidence so you always know the count is clean.</target>
       </segment>
     </unit>
     <unit id="landing.features.aria">
@@ -8654,6 +8660,132 @@ Deine Position: # ·  Reps        </source>
         <target>Ringe</target>
       </segment>
     </unit>
+      <unit id="exerciseTimer.title">
+      <segment state="translated">
+        <source>Halteübung-Timer</source>
+        <target>Hold-exercise timer</target>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.exercisePickerAria">
+      <segment state="translated">
+        <source>Übung wählen</source>
+        <target>Pick exercise</target>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.cameraMode">
+      <segment state="translated">
+        <source> Kamera: Start/Ende automatisch erkennen </source>
+        <target>Camera: detect start/end automatically</target>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.cameraStarting">
+      <segment state="translated">
+        <source>Kamera startet …</source>
+        <target>Camera starting …</target>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.cameraUnavailable">
+      <segment state="translated">
+        <source> Kamera nicht verfügbar </source>
+        <target>Camera unavailable</target>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.formCheck.toggleAria">
+      <segment state="translated">
+        <source>Form-Check anzeigen oder ausblenden</source>
+        <target>Show or hide form-check</target>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.formCheck.angle">
+      <segment state="translated">
+        <source>Winkel</source>
+        <target>Angle</target>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.formCheck.confidence">
+      <segment state="translated">
+        <source>Sicherheit</source>
+        <target>Confidence</target>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.pause">
+      <segment state="translated">
+        <source>Pause</source>
+        <target>Pause</target>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.start">
+      <segment state="translated">
+        <source>Start</source>
+        <target>Start</target>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.cameraHint">
+      <segment state="translated">
+        <source> Stelle die Kamera so auf, dass Schulter, Hüfte und Knie sichtbar sind. Der Timer startet automatisch, sobald du in Position bist, und pausiert, wenn du die Position verlässt. </source>
+        <target>Position the camera so your shoulder, hip and knee are visible. The timer starts automatically once you are in position and pauses when you leave it.</target>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.reset">
+      <segment state="translated">
+        <source> Zurücksetzen </source>
+        <target>Reset</target>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.cancel">
+      <segment state="translated">
+        <source> Abbrechen </source>
+        <target>Cancel</target>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.save">
+      <segment state="translated">
+        <source> Übernehmen </source>
+        <target>Save</target>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.phase.holding">
+      <segment state="translated">
+        <source>Halten</source>
+        <target>Holding</target>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.phase.paused">
+      <segment state="translated">
+        <source>Pause</source>
+        <target>Paused</target>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.phase.ready">
+      <segment state="translated">
+        <source>Bereit</source>
+        <target>Ready</target>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.exercise.plank">
+      <segment state="translated">
+        <source>Plank</source>
+        <target>Plank</target>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.exercise.hollowhold">
+      <segment state="translated">
+        <source>Hollow Hold</source>
+        <target>Hollow hold</target>
+      </segment>
+    </unit>
+    <unit id="quickAdd.fab.exerciseTimerAria">
+      <segment state="translated">
+        <source>Halteübungs-Timer öffnen</source>
+        <target>Open hold-exercise timer</target>
+      </segment>
+    </unit>
+    <unit id="quickAdd.fab.exerciseTimer">
+      <segment state="translated">
+        <source>Plank‑Timer</source>
+        <target>Plank‑timer</target>
+      </segment>
+    </unit>
     <unit id="plan.push-pull-6w.day.1.desc">
       <segment state="translated">
         <source>Push 3×10 saubere Liegestütze · Pull 3×8 invertierte Rudern, 90 s Pause</source>
@@ -9338,5 +9470,5 @@ Deine Position: # ·  Reps        </source>
         <target>Two weeks of active recovery: daily mobility, yoga, and stretching sessions with light push-up volume. Ideal as a deload between two hard plans or to ease back in after a training break.</target>
       </segment>
     </unit>
-  </file>
+</file>
 </xliff>

@@ -65,7 +65,9 @@ async function main() {
         existing.includes('state="initial"') && existingSrc === existingTgt;
       if (isFallback && existingSrc !== src) {
         const updated = `    <unit id="${id}">\n      <segment state="initial">\n        <source>${src}</source>\n        <target>${src}</target>\n      </segment>\n    </unit>`;
-        xml = xml.replace(existing, updated);
+        // Pass the replacement as a function so `$&`, `$1` etc. in the
+        // existing XML are not interpreted as backreferences.
+        xml = xml.replace(existing, () => updated);
         refreshed++;
       }
     }
@@ -74,11 +76,15 @@ async function main() {
       continue;
     }
     if (missing.length > 0) {
-      const closing = '  </file>\n</xliff>';
-      if (!xml.includes(closing)) {
+      // Locale files vary on whether `</file>` is indented (the
+      // canonical source uses two spaces, hand-edited locales drop
+      // them). Match either form so we don't lose the trailing tag.
+      const closingMatch = /(\n?)([ \t]*)<\/file>\s*<\/xliff>\s*$/.exec(xml);
+      if (!closingMatch) {
         throw new Error(`${path}: cannot find closing tags`);
       }
-      xml = xml.replace(closing, `${missing.join('\n')}\n${closing}`);
+      const insert = `${missing.join('\n')}\n${closingMatch[2]}</file>\n</xliff>\n`;
+      xml = xml.replace(closingMatch[0], `\n${insert}`);
     }
     await fs.writeFile(path, xml);
     console.log(

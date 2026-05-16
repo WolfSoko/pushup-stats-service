@@ -491,8 +491,21 @@ const TRANSLATIONS = {
   ],
 };
 
+function regexEscape(s) {
+  return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function xmlEscape(s) {
+  // Escape `<` and `>`, plus any `&` that isn't already part of a
+  // recognized XML entity (so `&amp;` in the source map stays valid).
+  return s
+    .replace(/&(?!(?:amp|lt|gt|quot|apos);)/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
 function buildUnit(id, source, target) {
-  return `    <unit id="${id}">\n      <segment state="translated">\n        <source>${source}</source>\n        <target>${target}</target>\n      </segment>\n    </unit>`;
+  return `    <unit id="${xmlEscape(id)}">\n      <segment state="translated">\n        <source>${source}</source>\n        <target>${target}</target>\n      </segment>\n    </unit>`;
 }
 
 async function main() {
@@ -501,14 +514,17 @@ async function main() {
   let skipped = 0;
   for (const [id, [source, target]] of Object.entries(TRANSLATIONS)) {
     const pattern = new RegExp(
-      `    <unit id="${id.replace(/\./g, '\\.')}">[\\s\\S]*?    </unit>`
+      `    <unit id="${regexEscape(id)}">[\\s\\S]*?    </unit>`
     );
     if (!pattern.test(xml)) {
       console.warn(`skipping ${id}: no matching unit in en.xlf`);
       skipped++;
       continue;
     }
-    xml = xml.replace(pattern, buildUnit(id, source, target));
+    const replacement = buildUnit(id, source, target);
+    // Pass a function to `.replace` so `$&`, `$1` etc. in the
+    // replacement string are not interpreted as backreferences.
+    xml = xml.replace(pattern, () => replacement);
     replaced++;
   }
   await fs.writeFile(EN_PATH, xml);

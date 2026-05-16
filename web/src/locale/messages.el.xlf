@@ -2806,6 +2806,12 @@
         <target> ✓ Δωρεάν · ✓ Χωρίς συνδρομή · ✓ Χωρίς πιστωτική κάρτα · ✓ Πρώτα προστασία δεδομένων </target>
       </segment>
     </unit>
+    <unit id="landing.feature.autoCount.imageAlt">
+      <segment state="translated">
+        <source>Sportlerin bei einer sauberen Liegestütze auf Holzboden</source>
+        <target>Αθλήτρια που κάνει ένα καθαρό push-up σε ξύλινο δάπεδο</target>
+      </segment>
+    </unit>
     <unit id="landing.feature.autoCount.title">
       <segment state="translated">
         <source>Reps automatisch zählen</source>
@@ -2814,8 +2820,8 @@
     </unit>
     <unit id="landing.feature.autoCount.body">
       <segment state="translated">
-        <source>Stell das Handy hin, öffne die Auto-Zählung und mach deine Liegestütze, Kniebeugen, Klimmzüge oder Sit-ups – die Kamera erkennt die Bewegung und zählt mit. Der Live-Form-Check zeigt Winkel und Sicherheit, damit du jederzeit weißt, dass die Zählung sauber läuft.</source>
-        <target>Στήσε το κινητό, άνοιξε την αυτόματη μέτρηση και ξεκίνα τις κάμψεις, τα καθίσματα, τις έλξεις ή τους κοιλιακούς – η κάμερα εντοπίζει την κίνηση και μετράει. Το ζωντανό Form Check δείχνει γωνία και αξιοπιστία ώστε να ξέρεις ότι η μέτρηση είναι καθαρή.</target>
+        <source>Stell das Handy hin, öffne die Auto-Zählung und mach deine Liegestütze, Kniebeugen, Klimmzüge oder Sit-ups – unsere KI erkennt deine Bewegung in Echtzeit direkt im Browser und zählt automatisch mit. Der Live-Form-Check zeigt Winkel und Sicherheit, damit du jederzeit weißt, dass die Zählung sauber läuft.</source>
+        <target>Στήσε το κινητό, άνοιξε την αυτόματη μέτρηση και ξεκίνα τις κάμψεις, τα καθίσματα, τις έλξεις ή τους κοιλιακούς – η τεχνητή νοημοσύνη μας αναγνωρίζει την κίνησή σου σε πραγματικό χρόνο, απευθείας στον περιηγητή, και μετράει αυτόματα. Το ζωντανό Form Check δείχνει γωνία και αξιοπιστία ώστε να ξέρεις ότι η μέτρηση είναι καθαρή.</target>
       </segment>
     </unit>
     <unit id="landing.features.aria">
@@ -8494,6 +8500,132 @@
         <target>Ringe</target>
       </segment>
     </unit>
+      <unit id="exerciseTimer.title">
+      <segment state="initial">
+        <source>Halteübung-Timer</source>
+        <target>Halteübung-Timer</target>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.exercisePickerAria">
+      <segment state="initial">
+        <source>Übung wählen</source>
+        <target>Übung wählen</target>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.cameraMode">
+      <segment state="initial">
+        <source> Kamera: Start/Ende automatisch erkennen </source>
+        <target> Kamera: Start/Ende automatisch erkennen </target>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.cameraStarting">
+      <segment state="initial">
+        <source>Kamera startet …</source>
+        <target>Kamera startet …</target>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.cameraUnavailable">
+      <segment state="initial">
+        <source> Kamera nicht verfügbar </source>
+        <target> Kamera nicht verfügbar </target>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.formCheck.toggleAria">
+      <segment state="initial">
+        <source>Form-Check anzeigen oder ausblenden</source>
+        <target>Form-Check anzeigen oder ausblenden</target>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.formCheck.angle">
+      <segment state="initial">
+        <source>Winkel</source>
+        <target>Winkel</target>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.formCheck.confidence">
+      <segment state="initial">
+        <source>Sicherheit</source>
+        <target>Sicherheit</target>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.pause">
+      <segment state="initial">
+        <source>Pause</source>
+        <target>Pause</target>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.start">
+      <segment state="initial">
+        <source>Start</source>
+        <target>Start</target>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.cameraHint">
+      <segment state="initial">
+        <source> Stelle die Kamera so auf, dass Schulter, Hüfte und Knie sichtbar sind. Der Timer startet automatisch, sobald du in Position bist, und pausiert, wenn du die Position verlässt. </source>
+        <target> Stelle die Kamera so auf, dass Schulter, Hüfte und Knie sichtbar sind. Der Timer startet automatisch, sobald du in Position bist, und pausiert, wenn du die Position verlässt. </target>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.reset">
+      <segment state="initial">
+        <source> Zurücksetzen </source>
+        <target> Zurücksetzen </target>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.cancel">
+      <segment state="initial">
+        <source> Abbrechen </source>
+        <target> Abbrechen </target>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.save">
+      <segment state="initial">
+        <source> Übernehmen </source>
+        <target> Übernehmen </target>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.phase.holding">
+      <segment state="initial">
+        <source>Halten</source>
+        <target>Halten</target>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.phase.paused">
+      <segment state="initial">
+        <source>Pause</source>
+        <target>Pause</target>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.phase.ready">
+      <segment state="initial">
+        <source>Bereit</source>
+        <target>Bereit</target>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.exercise.plank">
+      <segment state="initial">
+        <source>Plank</source>
+        <target>Plank</target>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.exercise.hollowhold">
+      <segment state="initial">
+        <source>Hollow Hold</source>
+        <target>Hollow Hold</target>
+      </segment>
+    </unit>
+    <unit id="quickAdd.fab.exerciseTimerAria">
+      <segment state="initial">
+        <source>Halteübungs-Timer öffnen</source>
+        <target>Halteübungs-Timer öffnen</target>
+      </segment>
+    </unit>
+    <unit id="quickAdd.fab.exerciseTimer">
+      <segment state="initial">
+        <source>Plank‑Timer</source>
+        <target>Plank‑Timer</target>
+      </segment>
+    </unit>
     <unit id="plan.push-pull-6w.day.1.desc">
       <segment state="initial">
         <source>Push 3×10 saubere Liegestütze · Pull 3×8 invertierte Rudern, 90 s Pause</source>
@@ -8974,7 +9106,7 @@
         <target>HIIT 5 Runden 40/20 s — LS · Burpees · Mountain Climbers · Squats · Plank</target>
       </segment>
     </unit>
-        <unit id="plan.hiit-4w.day.10.desc">
+    <unit id="plan.hiit-4w.day.10.desc">
       <segment state="initial">
         <source>HIIT-Ladder 8-7-6-5-4-3-2-1 — LS · Burpees (jede Runde 1 Wiederholung weniger)</source>
         <target>HIIT-Ladder 8-7-6-5-4-3-2-1 — LS · Burpees (jede Runde 1 Wiederholung weniger)</target>
@@ -8992,7 +9124,7 @@
         <target>HIIT 6 Runden 30/15 s — LS · Burpees · Mountain Climbers · Jumping Jacks</target>
       </segment>
     </unit>
-        <unit id="plan.hiit-4w.day.15.desc">
+    <unit id="plan.hiit-4w.day.15.desc">
       <segment state="initial">
         <source>HIIT 4 Runden 45/15 s — 11 LS · 8 Burpees · 12 Kniebeugen · 30 s Mountain Climbers</source>
         <target>HIIT 4 Runden 45/15 s — 11 LS · 8 Burpees · 12 Kniebeugen · 30 s Mountain Climbers</target>
@@ -9022,7 +9154,7 @@
         <target>HIIT-Finale 10 Runden 30/15 s — LS · Burpees · MC · Hampelmänner</target>
       </segment>
     </unit>
-        <unit id="plan.hiit-4w.day.24.desc">
+    <unit id="plan.hiit-4w.day.24.desc">
       <segment state="initial">
         <source>EMOM 12 min — pro Minute 5 LS · 5 Burpees · 10 Hampelmänner</source>
         <target>EMOM 12 min — pro Minute 5 LS · 5 Burpees · 10 Hampelmänner</target>
@@ -9178,5 +9310,5 @@
         <target>Zwei Wochen aktive Erholung: tägliche Mobility-, Yoga- und Stretching-Einheiten mit leichtem Liegestütze-Volumen. Ideal als Deload zwischen zwei harten Plänen oder zum Wiedereinstieg nach einer Trainingspause.</target>
       </segment>
     </unit>
-  </file>
+</file>
 </xliff>

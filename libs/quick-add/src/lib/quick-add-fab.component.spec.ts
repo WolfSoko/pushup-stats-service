@@ -16,6 +16,7 @@ describe('QuickAddFabComponent — goal dial item', () => {
     const openFeedback = jest.fn();
     const fillToGoal = jest.fn();
     const openAutoCount = jest.fn();
+    const openExerciseTimer = jest.fn();
     const opened = jest.fn();
 
     // Material disabled buttons set pointer-events:none; skip that check so
@@ -38,6 +39,7 @@ describe('QuickAddFabComponent — goal dial item', () => {
         openFeedback,
         fillToGoal,
         openAutoCount,
+        openExerciseTimer,
         opened,
       },
     });
@@ -55,6 +57,7 @@ describe('QuickAddFabComponent — goal dial item', () => {
       openFeedback,
       fillToGoal,
       openAutoCount,
+      openExerciseTimer,
       opened,
     };
   }
@@ -166,6 +169,22 @@ describe('QuickAddFabComponent — goal dial item', () => {
     expect(
       screen.queryByRole('button', {
         name: /Liegestütze automatisch zählen/i,
+      })
+    ).toBeNull();
+  });
+
+  it('When the exercise-timer item is clicked, Then openExerciseTimer is emitted and the dial closes', async () => {
+    const { user, openExerciseTimer } = await renderFab({});
+
+    const button = screen.getByRole('button', {
+      name: /Halteübungs-Timer öffnen/i,
+    });
+    await user.click(button);
+
+    expect(openExerciseTimer).toHaveBeenCalledTimes(1);
+    expect(
+      screen.queryByRole('button', {
+        name: /Halteübungs-Timer öffnen/i,
       })
     ).toBeNull();
   });

@@ -1,0 +1,146 @@
+<h2 mat-dialog-title i18n="@@exerciseTimer.title">Halteübung-Timer</h2>
+<mat-dialog-content>
+  <mat-button-toggle-group
+    class="exercise-picker"
+    [value]="exerciseId()"
+    (change)="onExerciseChange($event.value)"
+    [disabled]="switching()"
+    aria-label="Übung wählen"
+    i18n-aria-label="@@exerciseTimer.exercisePickerAria"
+  >
+    @for (option of exercises; track option.id) {
+      <mat-button-toggle [value]="option.id">
+        <mat-icon>{{ option.icon }}</mat-icon>
+        <span>{{ option.label }}</span>
+      </mat-button-toggle>
+    }
+  </mat-button-toggle-group>
+
+  <div class="mode-row">
+    <mat-slide-toggle
+      [checked]="cameraMode()"
+      (change)="onModeToggle($event.checked)"
+      i18n="@@exerciseTimer.cameraMode"
+    >
+      Kamera: Start/Ende automatisch erkennen
+    </mat-slide-toggle>
+  </div>
+
+  <div class="timer-stage" [class.camera]="cameraMode()">
+    <video
+      #video
+      class="preview"
+      [class.hidden]="!cameraMode()"
+      autoplay
+      playsinline
+      muted
+    ></video>
+
+    @if (cameraMode() && (isStarting() || switching())) {
+      <div class="overlay-message">
+        <mat-spinner diameter="32" />
+        <span i18n="@@exerciseTimer.cameraStarting">Kamera startet …</span>
+      </div>
+    }
+    @if (cameraMode() && error(); as err) {
+      <div class="overlay-message error">
+        <mat-icon>videocam_off</mat-icon>
+        <strong i18n="@@exerciseTimer.cameraUnavailable">
+          Kamera nicht verfügbar
+        </strong>
+        <small>{{ err }}</small>
+      </div>
+    }
+
+    <div class="timer-display" aria-live="polite">
+      <span class="timer-value">{{ totalMmSs() }}</span>
+      <span class="timer-phase">{{ phaseLabel() }}</span>
+    </div>
+
+    @if (cameraMode() && !isStarting() && !switching() && !error()) {
+      <button
+        type="button"
+        mat-icon-button
+        class="form-check-toggle"
+        (click)="toggleFormCheck()"
+        [attr.aria-pressed]="formCheckOpen()"
+        aria-label="Form-Check anzeigen oder ausblenden"
+        i18n-aria-label="@@exerciseTimer.formCheck.toggleAria"
+      >
+        <mat-icon>{{
+          formCheckOpen() ? 'visibility' : 'visibility_off'
+        }}</mat-icon>
+      </button>
+      @if (formCheckOpen()) {
+        <div class="form-check-panel">
+          <div class="form-check-cell">
+            <span i18n="@@exerciseTimer.formCheck.angle">Winkel</span>
+            <strong>
+              @if (frame(); as f) {
+                {{ f.angleDeg | number: '1.0-0' }}°
+              } @else {
+                —
+              }
+            </strong>
+          </div>
+          <div class="form-check-cell">
+            <span i18n="@@exerciseTimer.formCheck.confidence">Sicherheit</span>
+            <strong>
+              @if (frame(); as f) {
+                {{ f.confidence * 100 | number: '1.0-0' }}%
+              } @else {
+                —
+              }
+            </strong>
+          </div>
+        </div>
+      }
+    }
+  </div>
+
+  @if (!cameraMode()) {
+    <div class="manual-controls">
+      <button
+        mat-flat-button
+        color="primary"
+        (click)="toggleManual()"
+        [attr.aria-pressed]="running()"
+      >
+        <mat-icon>{{ running() ? 'pause' : 'play_arrow' }}</mat-icon>
+        @if (running()) {
+          <span i18n="@@exerciseTimer.pause">Pause</span>
+        } @else {
+          <span i18n="@@exerciseTimer.start">Start</span>
+        }
+      </button>
+    </div>
+  } @else {
+    <p class="hint" i18n="@@exerciseTimer.cameraHint">
+      Stelle die Kamera so auf, dass Schulter, Hüfte und Knie sichtbar sind. Der
+      Timer startet automatisch, sobald du in Position bist, und pausiert, wenn
+      du die Position verlässt.
+    </p>
+  }
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button
+    mat-button
+    (click)="reset()"
+    [disabled]="totalSec() === 0"
+    i18n="@@exerciseTimer.reset"
+  >
+    Zurücksetzen
+  </button>
+  <button mat-button (click)="cancel()" i18n="@@exerciseTimer.cancel">
+    Abbrechen
+  </button>
+  <button
+    mat-flat-button
+    color="primary"
+    (click)="save()"
+    [disabled]="totalSec() === 0 || !!error()"
+    i18n="@@exerciseTimer.save"
+  >
+    Übernehmen
+  </button>
+</mat-dialog-actions>

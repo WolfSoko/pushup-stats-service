@@ -19,6 +19,11 @@ import type {
   AutoCountResult,
 } from '../auto-count/auto-count-dialog.component';
 import type {
+  ExerciseTimerDialogComponent,
+  ExerciseTimerExerciseId,
+  ExerciseTimerResult,
+} from '../auto-count/exercise-timer-dialog.component';
+import type {
   ExerciseEntryDialogData,
   ExerciseEntryDialogResult,
   PushupEntryDialogData,
@@ -40,6 +45,17 @@ const EXERCISE_CATALOG_ID: Record<
   squat: 'legs.squats',
   pullup: 'pull.pullups',
   situp: 'abs.situps',
+};
+
+/**
+ * Maps the hold-timer profile id (lives in `libs/auto-count`) to the
+ * catalog `exerciseId` used by `ExerciseFirestoreService`. Plank uses
+ * the legacy id that was migrated into the `core` category; hollow
+ * hold lives there too.
+ */
+const HOLD_TIMER_CATALOG_ID: Record<ExerciseTimerExerciseId, string> = {
+  plank: 'plank.standard',
+  hollowhold: 'core.hollowhold',
 };
 
 @Injectable({ providedIn: 'root' })
@@ -182,6 +198,60 @@ export class QuickAddOrchestrationService {
       .subscribe((result) => {
         if (!result || result.reps <= 0) return;
         void this.confirmAutoCount(result);
+      });
+  }
+
+  /**
+   * Timer dialog for isometric-hold exercises (plank, hollow hold). The
+   * dialog is manual by default, with an optional pose-detection toggle
+   * that mirrors the rep-counter flow: on a non-zero result, chain into
+   * the standard training-entry dialog so the user can review and adjust
+   * the captured duration before persisting.
+   */
+  async openExerciseTimer(): Promise<void> {
+    const { ExerciseTimerDialogComponent } =
+      await import('../auto-count/exercise-timer-dialog.component');
+    this.dialog
+      .open<ExerciseTimerDialogComponent, void, ExerciseTimerResult | null>(
+        ExerciseTimerDialogComponent,
+        {
+          width: 'min(96vw, 480px)',
+          maxWidth: '96vw',
+          panelClass: 'exercise-timer-dialog-panel',
+        }
+      )
+      .afterClosed()
+      .subscribe((result) => {
+        if (!result || result.durationSec <= 0) return;
+        void this.confirmExerciseTimer(result);
+      });
+  }
+
+  private async confirmExerciseTimer(
+    result: ExerciseTimerResult
+  ): Promise<void> {
+    const { TrainingEntryDialogComponent } =
+      await import('../stats/components/training-entry-dialog/training-entry-dialog.component');
+    const data: ExerciseEntryDialogData = {
+      kind: 'exercise',
+      timestamp: nowLocalIso(),
+      exerciseId: HOLD_TIMER_CATALOG_ID[result.exerciseId],
+      durationSec: result.durationSec,
+    };
+    this.dialog
+      .open<
+        TrainingEntryDialogComponent,
+        TrainingEntryDialogData,
+        TrainingEntryDialogResult
+      >(TrainingEntryDialogComponent, {
+        data,
+        width: 'min(92vw, 420px)',
+        maxWidth: '92vw',
+      })
+      .afterClosed()
+      .subscribe((dialogResult) => {
+        if (!dialogResult) return;
+        void this.persistConfirmed(dialogResult, 'exercise-timer');
       });
   }
 

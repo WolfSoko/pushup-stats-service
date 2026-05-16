@@ -199,49 +199,16 @@
     i18n-aria-label="@@landing.features.aria"
   >
     <mat-card class="feature-card feature-card--visual">
-      <div class="feature-visual feature-visual--autocount" aria-hidden="true">
-        <svg viewBox="0 0 320 160" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <linearGradient id="lp-ac-bg" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" class="lp-ac-bg-from" />
-              <stop offset="100%" class="lp-ac-bg-to" />
-            </linearGradient>
-          </defs>
-          <rect width="320" height="160" rx="14" fill="url(#lp-ac-bg)" />
-          <!-- stylised silhouette in plank position -->
-          <g class="lp-ac-pose" transform="translate(36, 60)">
-            <circle cx="22" cy="22" r="11" />
-            <line x1="33" y1="24" x2="200" y2="40" stroke-width="6" />
-            <line x1="200" y1="40" x2="246" y2="44" stroke-width="6" />
-            <line x1="60" y1="26" x2="60" y2="60" stroke-width="6" />
-            <line x1="150" y1="30" x2="150" y2="60" stroke-width="6" />
-          </g>
-          <!-- count chip: language-free, just the digit -->
-          <g class="lp-ac-count" transform="translate(20, 18)">
-            <rect width="56" height="40" rx="14" />
-            <text x="28" y="29" class="lp-ac-count-value">14</text>
-          </g>
-          <!-- form-check pill: pure data-viz (three telemetry bars
-               filling left-to-right) instead of text labels, so the
-               visual stays consistent across all locales -->
-          <g class="lp-ac-form" transform="translate(196, 18)">
-            <rect width="104" height="40" rx="12" />
-            <g transform="translate(12, 10)">
-              <rect width="80" height="4" rx="2" class="lp-ac-form-track" />
-              <rect width="56" height="4" rx="2" class="lp-ac-form-fill" />
-            </g>
-            <g transform="translate(12, 18)">
-              <rect width="80" height="4" rx="2" class="lp-ac-form-track" />
-              <rect width="68" height="4" rx="2" class="lp-ac-form-fill" />
-            </g>
-            <g transform="translate(12, 26)">
-              <rect width="80" height="4" rx="2" class="lp-ac-form-track" />
-              <rect width="40" height="4" rx="2" class="lp-ac-form-fill" />
-            </g>
-          </g>
-          <!-- record dot -->
-          <circle cx="160" cy="138" r="6" class="lp-ac-record" />
-        </svg>
+      <div class="feature-visual feature-visual--autocount">
+        <img
+          src="https://images.unsplash.com/photo-1717821681365-36b0da044a75?auto=format&fit=crop&w=1200&h=600&q=80"
+          alt="Sportlerin bei einer sauberen Liegestütze auf Holzboden"
+          i18n-alt="@@landing.feature.autoCount.imageAlt"
+          loading="lazy"
+          decoding="async"
+          width="1200"
+          height="600"
+        />
       </div>
       <mat-card-header class="key-features-header">
         <mat-icon aria-hidden="true">videocam</mat-icon>
@@ -251,9 +218,10 @@
       </mat-card-header>
       <mat-card-content i18n="@@landing.feature.autoCount.body"
         >Stell das Handy hin, öffne die Auto-Zählung und mach deine Liegestütze,
-        Kniebeugen, Klimmzüge oder Sit-ups – die Kamera erkennt die Bewegung und
-        zählt mit. Der Live-Form-Check zeigt Winkel und Sicherheit, damit du
-        jederzeit weißt, dass die Zählung sauber läuft.</mat-card-content
+        Kniebeugen, Klimmzüge oder Sit-ups – unsere KI erkennt deine Bewegung in
+        Echtzeit direkt im Browser und zählt automatisch mit. Der
+        Live-Form-Check zeigt Winkel und Sicherheit, damit du jederzeit weißt,
+        dass die Zählung sauber läuft.</mat-card-content
       >
     </mat-card>
 

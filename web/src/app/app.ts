@@ -353,6 +353,10 @@ export class App {
     this.quickAdd.openAutoCount();
   }
 
+  handleOpenExerciseTimer(): void {
+    this.quickAdd.openExerciseTimer();
+  }
+
   handleFillToGoal(): void {
     this.quickAdd.fillToGoal();
   }
