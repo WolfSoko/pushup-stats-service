@@ -8627,39 +8627,39 @@
       </segment>
     </unit>
     <unit id="quickAddConfig.hintV2">
-      <segment state="initial">
+      <segment state="translated">
         <source> Lege bis zu <ph id="0" equiv="INTERPOLATION" disp="{{ maxRows }}"/> Schnellaktionen fest. Wähle pro Button die Übung und – wo verfügbar – Auto-Messung über die Kamera. Leere Felder werden ignoriert. </source>
-        <target> Lege bis zu <ph id="0" equiv="INTERPOLATION" disp="{{ maxRows }}"/> Schnellaktionen fest. Wähle pro Button die Übung und – wo verfügbar – Auto-Messung über die Kamera. Leere Felder werden ignoriert. </target>
+        <target> Όρισε έως <ph id="0" equiv="INTERPOLATION" disp="{{ maxRows }}"/> γρήγορες ενέργειες. Επίλεξε για κάθε κουμπί την άσκηση και – όπου υποστηρίζεται – αυτόματη μέτρηση μέσω κάμερας. Τα κενά πεδία αγνοούνται. </target>
       </segment>
     </unit>
     <unit id="quickAddConfig.exerciseLabel">
-      <segment state="initial">
+      <segment state="translated">
         <source>Übung</source>
-        <target>Übung</target>
+        <target>Άσκηση</target>
       </segment>
     </unit>
     <unit id="quickAddConfig.autoCountBadge">
-      <segment state="initial">
+      <segment state="translated">
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">videocam</pc> Auto </source>
-        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">videocam</pc> Auto </target>
+        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">videocam</pc> Αυτόματο </target>
       </segment>
     </unit>
     <unit id="quickAddConfig.autoCount">
-      <segment state="initial">
+      <segment state="translated">
         <source>Auto-Messung</source>
-        <target>Auto-Messung</target>
+        <target>Αυτόματη μέτρηση</target>
       </segment>
     </unit>
     <unit id="dashboard.quickAdd.autoPrefix">
-      <segment state="initial">
+      <segment state="translated">
         <source>Auto:</source>
-        <target>Auto:</target>
+        <target>Αυτόματο:</target>
       </segment>
     </unit>
     <unit id="quickAddConfig.clearRowAria">
-      <segment state="initial">
+      <segment state="translated">
         <source>Schnellaktion löschen</source>
-        <target>Schnellaktion löschen</target>
+        <target>Διαγραφή γρήγορης ενέργειας</target>
       </segment>
     </unit>
 </file>

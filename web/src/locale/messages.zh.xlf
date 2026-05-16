@@ -8245,39 +8245,39 @@
       </segment>
     </unit>
     <unit id="quickAddConfig.hintV2">
-      <segment state="initial">
+      <segment state="translated">
         <source> Lege bis zu <ph id="0" equiv="INTERPOLATION" disp="{{ maxRows }}"/> Schnellaktionen fest. Wähle pro Button die Übung und – wo verfügbar – Auto-Messung über die Kamera. Leere Felder werden ignoriert. </source>
-        <target> Lege bis zu <ph id="0" equiv="INTERPOLATION" disp="{{ maxRows }}"/> Schnellaktionen fest. Wähle pro Button die Übung und – wo verfügbar – Auto-Messung über die Kamera. Leere Felder werden ignoriert. </target>
+        <target> 最多可设置 <ph id="0" equiv="INTERPOLATION" disp="{{ maxRows }}"/> 个快速操作。为每个按钮选择训练项目，并在支持时启用通过相机进行自动计数。空白项将被忽略。 </target>
       </segment>
     </unit>
     <unit id="quickAddConfig.exerciseLabel">
-      <segment state="initial">
+      <segment state="translated">
         <source>Übung</source>
-        <target>Übung</target>
+        <target>训练项目</target>
       </segment>
     </unit>
     <unit id="quickAddConfig.autoCountBadge">
-      <segment state="initial">
+      <segment state="translated">
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">videocam</pc> Auto </source>
-        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">videocam</pc> Auto </target>
+        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">videocam</pc> 自动 </target>
       </segment>
     </unit>
     <unit id="quickAddConfig.autoCount">
-      <segment state="initial">
+      <segment state="translated">
         <source>Auto-Messung</source>
-        <target>Auto-Messung</target>
+        <target>自动计数</target>
       </segment>
     </unit>
     <unit id="dashboard.quickAdd.autoPrefix">
-      <segment state="initial">
+      <segment state="translated">
         <source>Auto:</source>
-        <target>Auto:</target>
+        <target>自动：</target>
       </segment>
     </unit>
     <unit id="quickAddConfig.clearRowAria">
-      <segment state="initial">
+      <segment state="translated">
         <source>Schnellaktion löschen</source>
-        <target>Schnellaktion löschen</target>
+        <target>清除快速操作</target>
       </segment>
     </unit>
 </file>

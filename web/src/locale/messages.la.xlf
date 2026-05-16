@@ -8627,39 +8627,39 @@
       </segment>
     </unit>
     <unit id="quickAddConfig.hintV2">
-      <segment state="initial">
+      <segment state="translated">
         <source> Lege bis zu <ph id="0" equiv="INTERPOLATION" disp="{{ maxRows }}"/> Schnellaktionen fest. Wähle pro Button die Übung und – wo verfügbar – Auto-Messung über die Kamera. Leere Felder werden ignoriert. </source>
-        <target> Lege bis zu <ph id="0" equiv="INTERPOLATION" disp="{{ maxRows }}"/> Schnellaktionen fest. Wähle pro Button die Übung und – wo verfügbar – Auto-Messung über die Kamera. Leere Felder werden ignoriert. </target>
+        <target> Constitue ad <ph id="0" equiv="INTERPOLATION" disp="{{ maxRows }}"/> actiones celeres. Pro singulis bullis exercitium elige et – ubi praesto est – mensuram automaticam per camerulam. Campi vacui ignorantur. </target>
       </segment>
     </unit>
     <unit id="quickAddConfig.exerciseLabel">
-      <segment state="initial">
+      <segment state="translated">
         <source>Übung</source>
-        <target>Übung</target>
+        <target>Exercitium</target>
       </segment>
     </unit>
     <unit id="quickAddConfig.autoCountBadge">
-      <segment state="initial">
+      <segment state="translated">
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">videocam</pc> Auto </source>
         <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">videocam</pc> Auto </target>
       </segment>
     </unit>
     <unit id="quickAddConfig.autoCount">
-      <segment state="initial">
+      <segment state="translated">
         <source>Auto-Messung</source>
-        <target>Auto-Messung</target>
+        <target>Mensura automatica</target>
       </segment>
     </unit>
     <unit id="dashboard.quickAdd.autoPrefix">
-      <segment state="initial">
+      <segment state="translated">
         <source>Auto:</source>
         <target>Auto:</target>
       </segment>
     </unit>
     <unit id="quickAddConfig.clearRowAria">
-      <segment state="initial">
+      <segment state="translated">
         <source>Schnellaktion löschen</source>
-        <target>Schnellaktion löschen</target>
+        <target>Dele actionem celerem</target>
       </segment>
     </unit>
 </file>
