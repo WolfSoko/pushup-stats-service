@@ -504,8 +504,15 @@ function xmlEscape(s) {
     .replace(/>/g, '&gt;');
 }
 
+function xmlAttrEscape(s) {
+  // Attribute values need `"` and `'` escaped on top of the text-node
+  // escapes, otherwise a quote in the value would break out of the
+  // attribute delimiter.
+  return xmlEscape(s).replace(/"/g, '&quot;').replace(/'/g, '&apos;');
+}
+
 function buildUnit(id, source, target) {
-  return `    <unit id="${xmlEscape(id)}">\n      <segment state="translated">\n        <source>${source}</source>\n        <target>${target}</target>\n      </segment>\n    </unit>`;
+  return `    <unit id="${xmlAttrEscape(id)}">\n      <segment state="translated">\n        <source>${source}</source>\n        <target>${target}</target>\n      </segment>\n    </unit>`;
 }
 
 async function main() {
