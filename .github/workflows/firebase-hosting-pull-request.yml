@@ -83,11 +83,22 @@ jobs:
         working-directory: data-store
         env:
           GOOGLE_APPLICATION_CREDENTIALS: ${{ runner.temp }}/firebase-sa.json
-      - uses: FirebaseExtended/action-hosting-deploy@v0
+      # Diagnostic for hosting-deploy failures: per-site preview quota is 50,
+      # so make channel state visible in the log without failing the build.
+      - name: Inspect staging hosting channels (diagnostic)
+        if: always()
+        continue-on-error: true
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ runner.temp }}/firebase-sa.json
+        working-directory: data-store
+        run: |
+          pnpm exec firebase --version
+          pnpm exec firebase hosting:channel:list --project staging
+      - uses: FirebaseExtended/action-hosting-deploy@v0.10.0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_PUSHUP_STATS_STAGING }}
           projectId: pushup-stats-staging-867b7
           channelId: pr-${{ github.event.pull_request.number }}
-          expires: 7d
+          expires: 2d
           entryPoint: data-store
