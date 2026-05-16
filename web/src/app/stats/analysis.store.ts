@@ -1018,8 +1018,7 @@ export const AnalysisStore = signalStore(
     const weekTrend = computed<TrendPoint[]>(() => {
       // Pre-seed TREND_WEEKS ISO weeks so a sparse history still produces
       // a fixed-length trend with explicit zero rows; otherwise users
-      // would silently see fewer than 8 buckets. Emitted newest → oldest
-      // so the UI table can render the most recent week at the top.
+      // would silently see fewer than 8 buckets.
       const monday = store.currentMonday();
       const byWeek = new Map<
         string,
@@ -1061,8 +1060,6 @@ export const AnalysisStore = signalStore(
     );
 
     const monthTrend = computed<TrendPoint[]>(() => {
-      // Emitted newest → oldest so the most recent month sits at the top
-      // of the trend table.
       const monthStart = store.currentMonthStart();
       const byMonth = new Map<
         string,
