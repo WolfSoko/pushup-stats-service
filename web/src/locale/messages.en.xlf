@@ -1464,7 +1464,7 @@ Active:         </target>
 
             </notes>
       <segment state="translated">
-        <source>Meine Trainings Übersicht</source>
+        <source>Meine Trainingsübersicht</source>
         <target>My Training Overview</target>
 
 
@@ -5637,12 +5637,6 @@ Deine Position: # ·  Reps        </source>
       <segment state="translated">
         <source>Liegestütze</source>
         <target>Pushups</target>
-      </segment>
-    </unit>
-    <unit id="dashboard.tile.pushupValue">
-      <segment state="translated">
-        <source> <ph id="0" equiv="INTERPOLATION" disp="{{ entry.reps }}"/> Reps · <ph id="1" equiv="INTERPOLATION_1" disp="{{ pushupTypeLabel(entry) }}"/> </source>
-        <target> <ph id="0" equiv="INTERPOLATION" disp="{{ entry.reps }}"/> reps · <ph id="1" equiv="INTERPOLATION_1" disp="{{ pushupTypeLabel(entry) }}"/> </target>
       </segment>
     </unit>
     <unit id="dashboard.latestEntriesCtaAriaLabel">

@@ -252,7 +252,7 @@ describe('StatsDashboardComponent', () => {
         const text = fixture.nativeElement.textContent;
 
         // Then
-        expect(text).toContain('Meine Trainings Übersicht');
+        expect(text).toContain('Meine Trainingsübersicht');
         expect(text).toContain('Gesamt');
         expect(text).toContain('Zielfortschritt');
         expect(text).toContain('Letzter Eintrag');

@@ -6158,15 +6158,6 @@
         <target>Push-ups</target>
       </segment>
     </unit>
-    <unit id="dashboard.tile.pushupValue">
-      <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:385,386</note>
-      </notes>
-      <segment state="translated">
-        <source> <ph id="0" equiv="INTERPOLATION" disp="{{ entry.reps }}"/> Reps · <ph id="1" equiv="INTERPOLATION_1" disp="{{ pushupTypeLabel(entry) }}"/> </source>
-        <target> <ph id="0" equiv="INTERPOLATION" disp="{{ entry.reps }}"/> reps · <ph id="1" equiv="INTERPOLATION_1" disp="{{ pushupTypeLabel(entry) }}"/> </target>
-      </segment>
-    </unit>
     <unit id="dashboard.latestEntriesCtaAriaLabel">
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:277,278</note>

@@ -7645,7 +7645,7 @@
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:13,14</note>
       </notes>
       <segment>
-        <source>Meine Trainings Übersicht</source>
+        <source>Meine Trainingsübersicht</source>
       </segment>
     </unit>
     <unit id="dashboardSubtitle">
@@ -7929,6 +7929,7 @@
     <unit id="latEntryReps">
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:317,319</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:383,384</note>
       </notes>
       <segment>
         <source> <ph id="0" equiv="INTERPOLATION" disp="{{ latest.reps }}"/> Reps · <ph id="1" equiv="INTERPOLATION_1" disp="{{ pushupTypeLabel(latest) }}"/> </source>
@@ -7937,7 +7938,7 @@
     <unit id="dashboard.noEntryYet">
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:327,329</note>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:407,410</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:405,408</note>
       </notes>
       <segment>
         <source>Noch kein Eintrag.</source>
@@ -7969,23 +7970,15 @@
     </unit>
     <unit id="dashboard.tile.pushupTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:382,384</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:380,382</note>
       </notes>
       <segment>
         <source>Liegestütze</source>
       </segment>
     </unit>
-    <unit id="dashboard.tile.pushupValue">
-      <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:385,386</note>
-      </notes>
-      <segment>
-        <source> <ph id="0" equiv="INTERPOLATION" disp="{{ entry.reps }}"/> Reps · <ph id="1" equiv="INTERPOLATION_1" disp="{{ pushupTypeLabel(entry) }}"/> </source>
-      </segment>
-    </unit>
     <unit id="dashboard.latestEntriesCtaAriaLabel">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:413,414</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:411,412</note>
       </notes>
       <segment>
         <source>Zur Historie navigieren</source>
@@ -7993,7 +7986,7 @@
     </unit>
     <unit id="dashboard.latestEntriesCta">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:417,420</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:415,418</note>
       </notes>
       <segment>
         <source>Zur Historie</source>
@@ -8001,7 +7994,7 @@
     </unit>
     <unit id="ads.dashboard.aria">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:423</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:421</note>
       </notes>
       <segment>
         <source>Werbung</source>
