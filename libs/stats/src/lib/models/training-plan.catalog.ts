@@ -1451,7 +1451,7 @@ const CORE_FOUNDATIONS_DAYS: ReadonlyArray<TrainingPlanDay> = [
     20,
     'main',
     30,
-    [15, 15],
+    [10, 10, 10],
     $localize`:@@plan.core-4w.day.20.desc:Core-Zirkel 3 Runden — 50 s Plank · 12 Beinheben · 20 Russian Twists · 10 LS`
   ),
   d(21, 'rest', 0, undefined, REST_DAY),
