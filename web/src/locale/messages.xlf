@@ -641,9 +641,25 @@
         <source>Auto‑Zählen</source>
       </segment>
     </unit>
-    <unit id="quickAdd.fab.customValueAria">
+    <unit id="quickAdd.fab.exerciseTimerAria">
       <notes>
         <note category="location">libs/quick-add/src/lib/quick-add-fab.component.html:34,35</note>
+      </notes>
+      <segment>
+        <source>Halteübungs-Timer öffnen</source>
+      </segment>
+    </unit>
+    <unit id="quickAdd.fab.exerciseTimer">
+      <notes>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.html:39,41</note>
+      </notes>
+      <segment>
+        <source>Plank‑Timer</source>
+      </segment>
+    </unit>
+    <unit id="quickAdd.fab.customValueAria">
+      <notes>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.html:46,47</note>
       </notes>
       <segment>
         <source>Eigenen Wert eingeben</source>
@@ -651,7 +667,7 @@
     </unit>
     <unit id="quickAdd.fab.customValue">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.html:39,41</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.html:51,53</note>
       </notes>
       <segment>
         <source>Eigener Wert</source>
@@ -659,7 +675,7 @@
     </unit>
     <unit id="quickAdd.fab.fillToGoal">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.html:57,58</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.html:69,70</note>
       </notes>
       <segment>
         <source>+<ph id="0" equiv="INTERPOLATION" disp="{{ item.value }}"/> bis zum Ziel</source>
@@ -667,7 +683,7 @@
     </unit>
     <unit id="quickAdd.fab.quickAddReps">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.html:71,72</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.html:83,84</note>
       </notes>
       <segment>
         <source>+<ph id="0" equiv="INTERPOLATION" disp="{{ item.value }}"/> Reps</source>
@@ -675,7 +691,7 @@
     </unit>
     <unit id="quickAdd.fab.open">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:70</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:78</note>
       </notes>
       <segment>
         <source>Schnellerfassung öffnen</source>
@@ -683,7 +699,7 @@
     </unit>
     <unit id="quickAdd.fab.close">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:71</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:79</note>
       </notes>
       <segment>
         <source>Schnellerfassung schließen</source>
@@ -691,7 +707,7 @@
     </unit>
     <unit id="quickAdd.fab.goalReached">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:72</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:80</note>
       </notes>
       <segment>
         <source>Ziel erreicht ✓</source>
@@ -699,7 +715,7 @@
     </unit>
     <unit id="quickAdd.fab.goalReachedAria">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:73</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:81</note>
       </notes>
       <segment>
         <source>Tagesziel bereits erreicht</source>
@@ -707,7 +723,7 @@
     </unit>
     <unit id="quickAdd.fab.repAria">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:76</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:84</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="REPS" disp="reps"/> Liegestütze hinzufügen</source>
@@ -715,7 +731,7 @@
     </unit>
     <unit id="quickAdd.fab.fillToGoalAria">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:80</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:88</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="GAP" disp="gap"/> Liegestütze bis zum Tagesziel hinzufügen</source>
@@ -2321,7 +2337,7 @@
         <note category="location">web/src/app/app.routes.ts:16</note>
       </notes>
       <segment>
-        <source>Liegestütze tracken mit kostenloser Web-App: Trainingspläne, 30-Tage-Challenge, Tagesziel, Streaks und Bestenliste – jetzt auch mit Sit-ups, Kniebeugen, Plank und Laufen. Mobil, offline-fähig, mit Live-Sync.</source>
+        <source>Kostenlose Web-App für Liegestütze und mehr: Reps per Kamera-KI im Browser automatisch zählen, plus Trainingspläne, 30-Tage-Challenge, Heatmap, Streaks, Tagesziele und Bestenliste – auch für Sit-ups, Kniebeugen, Klimmzüge, Plank und Laufen. Mobil, offline-fähig, mit Live-Sync.</source>
       </segment>
     </unit>
     <unit id="seo.dashboard.title">
@@ -2598,7 +2614,7 @@
     </unit>
     <unit id="toolbarDailyGoal.replayAria">
       <notes>
-        <note category="location">web/src/app/app.ts:386</note>
+        <note category="location">web/src/app/app.ts:390</note>
       </notes>
       <segment>
         <source>Tagesziel-Animation erneut abspielen</source>
@@ -2606,7 +2622,7 @@
     </unit>
     <unit id="feedback.success">
       <notes>
-        <note category="location">web/src/app/app.ts:415</note>
+        <note category="location">web/src/app/app.ts:419</note>
       </notes>
       <segment>
         <source>Danke für dein Feedback!</source>
@@ -2614,7 +2630,7 @@
     </unit>
     <unit id="feedback.error">
       <notes>
-        <note category="location">web/src/app/app.ts:422</note>
+        <note category="location">web/src/app/app.ts:426</note>
       </notes>
       <segment>
         <source>Feedback konnte nicht gesendet werden.</source>
@@ -2788,6 +2804,160 @@
         <source>Sit-ups</source>
       </segment>
     </unit>
+    <unit id="exerciseTimer.title">
+      <notes>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.html:1,3</note>
+      </notes>
+      <segment>
+        <source>Halteübung-Timer</source>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.exercisePickerAria">
+      <notes>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.html:8,9</note>
+      </notes>
+      <segment>
+        <source>Übung wählen</source>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.cameraMode">
+      <notes>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.html:25,28</note>
+      </notes>
+      <segment>
+        <source> Kamera: Start/Ende automatisch erkennen </source>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.cameraStarting">
+      <notes>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.html:42,45</note>
+      </notes>
+      <segment>
+        <source>Kamera startet …</source>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.cameraUnavailable">
+      <notes>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.html:49,51</note>
+      </notes>
+      <segment>
+        <source> Kamera nicht verfügbar </source>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.formCheck.toggleAria">
+      <notes>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.html:67,68</note>
+      </notes>
+      <segment>
+        <source>Form-Check anzeigen oder ausblenden</source>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.formCheck.angle">
+      <notes>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.html:77,79</note>
+      </notes>
+      <segment>
+        <source>Winkel</source>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.formCheck.confidence">
+      <notes>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.html:87,89</note>
+      </notes>
+      <segment>
+        <source>Sicherheit</source>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.pause">
+      <notes>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.html:111,113</note>
+      </notes>
+      <segment>
+        <source>Pause</source>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.start">
+      <notes>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.html:113,116</note>
+      </notes>
+      <segment>
+        <source>Start</source>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.cameraHint">
+      <notes>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.html:119,124</note>
+      </notes>
+      <segment>
+        <source> Stelle die Kamera so auf, dass Schulter, Hüfte und Knie sichtbar sind. Der Timer startet automatisch, sobald du in Position bist, und pausiert, wenn du die Position verlässt. </source>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.reset">
+      <notes>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.html:132,134</note>
+      </notes>
+      <segment>
+        <source> Zurücksetzen </source>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.cancel">
+      <notes>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.html:135,138</note>
+      </notes>
+      <segment>
+        <source> Abbrechen </source>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.save">
+      <notes>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.html:144,146</note>
+      </notes>
+      <segment>
+        <source> Übernehmen </source>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.phase.holding">
+      <notes>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.ts:109</note>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.ts:117</note>
+      </notes>
+      <segment>
+        <source>Halten</source>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.phase.paused">
+      <notes>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.ts:111</note>
+      </notes>
+      <segment>
+        <source>Pause</source>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.phase.ready">
+      <notes>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.ts:113</note>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.ts:118</note>
+      </notes>
+      <segment>
+        <source>Bereit</source>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.exercise.plank">
+      <notes>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.ts:126</note>
+      </notes>
+      <segment>
+        <source>Plank</source>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.exercise.hollowhold">
+      <notes>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.ts:131</note>
+      </notes>
+      <segment>
+        <source>Hollow Hold</source>
+      </segment>
+    </unit>
     <unit id="blog.article.back">
       <notes>
         <note category="location">web/src/app/blog/blog-article.component.ts:40,42</note>
@@ -2919,8 +3089,8 @@
     </unit>
     <unit id="quickAdd.success.create">
       <notes>
-        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:75</note>
-        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:264</note>
+        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:91</note>
+        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:334</note>
       </notes>
       <segment>
         <source>Eintrag gespeichert.</source>
@@ -2928,9 +3098,9 @@
     </unit>
     <unit id="quickAdd.error.create">
       <notes>
-        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:87</note>
-        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:126</note>
-        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:280</note>
+        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:103</note>
+        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:142</note>
+        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:350</note>
       </notes>
       <segment>
         <source>Eintrag konnte nicht gespeichert werden.</source>
@@ -2938,7 +3108,7 @@
     </unit>
     <unit id="quickAdd.success.goalReached">
       <notes>
-        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:113</note>
+        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:129</note>
       </notes>
       <segment>
         <source>Tagesziel erreicht 🎉</source>
@@ -3437,15 +3607,15 @@
     </unit>
     <unit id="landing.subtitle">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:17,21</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:17,20</note>
       </notes>
       <segment>
-        <source> Liegestütze tracken in Sekunden – mit Trends, Streaks und Live-Sync. Plus Sit-ups, Kniebeugen, Plank und Laufen, wenn du mehr willst. </source>
+        <source> Reps live per Kamera-KI zählen – Liegestütze, Kniebeugen, Klimmzüge, Sit-ups sowie Halte-Timer für Plank &amp; Hollow-Hold. Dazu Trainingspläne, Heatmap, Streaks, Tagesziele und Live-Sync auf allen Geräten. </source>
       </segment>
     </unit>
     <unit id="landing.cta.dashboard">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:30,32</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:31,33</note>
       </notes>
       <segment>
         <source>Zum Dashboard</source>
@@ -3453,8 +3623,8 @@
     </unit>
     <unit id="landing.cta.signup">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:40,43</note>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:52,55</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:41,44</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:53,56</note>
       </notes>
       <segment>
         <source>Konto erstellen</source>
@@ -3462,7 +3632,7 @@
     </unit>
     <unit id="landing.cta.login">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:60,62</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:61,63</note>
       </notes>
       <segment>
         <source>Einloggen</source>
@@ -3470,7 +3640,7 @@
     </unit>
     <unit id="landing.cta.guest">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:68,70</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:69,71</note>
       </notes>
       <segment>
         <source> Als Gast ausprobieren </source>
@@ -3478,7 +3648,7 @@
     </unit>
     <unit id="landing.cta.hint">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:73,76</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:74,77</note>
       </notes>
       <segment>
         <source> Kostenlos · Kein Abo · Jederzeit kündbar </source>
@@ -3486,7 +3656,7 @@
     </unit>
     <unit id="landing.plans.eyebrow">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:84,86</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:85,87</note>
       </notes>
       <segment>
         <source>Strukturiert trainieren</source>
@@ -3494,7 +3664,7 @@
     </unit>
     <unit id="landing.plans.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:87,89</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:88,90</note>
       </notes>
       <segment>
         <source> Liegestütz-Trainingspläne, die wirklich funktionieren </source>
@@ -3502,7 +3672,7 @@
     </unit>
     <unit id="landing.plans.subtitle">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:90,94</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:91,95</note>
       </notes>
       <segment>
         <source> Vom Einsteiger zum 100er-Set: Geführte Pläne mit Tagesziel, Sätzen und automatischer Fortschrittsverfolgung. Stöbere kostenlos — starten und tracken kannst du mit einem kostenlosen Konto. </source>
@@ -3510,7 +3680,7 @@
     </unit>
     <unit id="landing.plans.recruit.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:101,103</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:102,104</note>
       </notes>
       <segment>
         <source>Von 0 auf 100 — 6 Wochen</source>
@@ -3518,7 +3688,7 @@
     </unit>
     <unit id="landing.plans.recruit.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:105,107</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:106,108</note>
       </notes>
       <segment>
         <source> Einsteigerfreundlich: 3 Trainingstage pro Woche, progressiver Aufbau und ein Maximaltest in Woche 6. </source>
@@ -3526,9 +3696,9 @@
     </unit>
     <unit id="landing.plans.viewPlan">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:114,116</note>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:136,138</note>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:158,160</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:115,117</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:137,139</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:159,161</note>
       </notes>
       <segment>
         <source>Plan ansehen</source>
@@ -3536,7 +3706,7 @@
     </unit>
     <unit id="landing.plans.challenge.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:123,125</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:124,126</note>
       </notes>
       <segment>
         <source>30-Tage-Challenge</source>
@@ -3544,7 +3714,7 @@
     </unit>
     <unit id="landing.plans.challenge.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:127,129</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:128,130</note>
       </notes>
       <segment>
         <source> 30 Tage Pushups mit gezielten Ruhetagen. Tag 1 ist der Maximaltest, Tag 30 der Endtest. </source>
@@ -3552,7 +3722,7 @@
     </unit>
     <unit id="landing.plans.over40.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:145,147</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:146,148</note>
       </notes>
       <segment>
         <source>Liegestütze ab 40 — 4 Wochen</source>
@@ -3560,7 +3730,7 @@
     </unit>
     <unit id="landing.plans.over40.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:149,151</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:150,152</note>
       </notes>
       <segment>
         <source> Schonender Plan mit Fokus auf saubere Technik, ausreichend Pause und langsames Tempo. </source>
@@ -3568,7 +3738,7 @@
     </unit>
     <unit id="landing.plans.cta.overview">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:171,173</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:172,174</note>
       </notes>
       <segment>
         <source>Alle Pläne ansehen</source>
@@ -3576,7 +3746,7 @@
     </unit>
     <unit id="landing.plans.cta.signup">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:180,184</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:181,185</note>
       </notes>
       <segment>
         <source>Konto erstellen &amp; Plan starten</source>
@@ -3584,7 +3754,7 @@
     </unit>
     <unit id="landing.trust.bar">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:193,197</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:194,198</note>
       </notes>
       <segment>
         <source> ✓ Kostenlos · ✓ Kein Abo · ✓ Keine Kreditkarte · ✓ Datenschutz first </source>
@@ -3592,7 +3762,7 @@
     </unit>
     <unit id="landing.features.aria">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:198,199</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:199,200</note>
       </notes>
       <segment>
         <source>Funktionen</source>
@@ -3600,7 +3770,7 @@
     </unit>
     <unit id="landing.feature.autoCount.imageAlt">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:205,206</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:206,207</note>
       </notes>
       <segment>
         <source>Sportlerin bei einer sauberen Liegestütze auf Holzboden</source>
@@ -3608,7 +3778,7 @@
     </unit>
     <unit id="landing.feature.autoCount.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:216,218</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:217,219</note>
       </notes>
       <segment>
         <source>Reps automatisch zählen</source>
@@ -3616,31 +3786,15 @@
     </unit>
     <unit id="landing.feature.autoCount.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:220,224</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:221,226</note>
       </notes>
       <segment>
-        <source>Stell das Handy hin, öffne die Auto-Zählung und mach deine Liegestütze, Kniebeugen, Klimmzüge oder Sit-ups – unsere KI erkennt deine Bewegung in Echtzeit direkt im Browser und zählt automatisch mit. Der Live-Form-Check zeigt Winkel und Sicherheit, damit du jederzeit weißt, dass die Zählung sauber läuft.</source>
-      </segment>
-    </unit>
-    <unit id="landing.feature.multiset.title">
-      <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:313,315</note>
-      </notes>
-      <segment>
-        <source>Multi-Set Tracking</source>
-      </segment>
-    </unit>
-    <unit id="landing.feature.multiset.body">
-      <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:317,319</note>
-      </notes>
-      <segment>
-        <source>Erfasse jeden Satz einzeln – z. B. 12 + 10 + 8. Die App summiert automatisch und zeigt deine durchschnittliche Set-Größe.</source>
+        <source>Stell das Handy hin, öffne den Auto-Zähler und leg los: Die KI erkennt Liegestütze, Kniebeugen, Klimmzüge und Sit-ups in Echtzeit direkt im Browser und zählt jede saubere Wiederholung mit. Für Plank und Hollow-Hold läuft stattdessen ein automatischer Halte-Timer. Der Live-Form-Check zeigt Winkel, Phase und Erkennungs-Sicherheit – ohne Cloud, ganz ohne Daten-Upload.</source>
       </segment>
     </unit>
     <unit id="landing.feature.analytics.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:382,384</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:289,291</note>
       </notes>
       <segment>
         <source>Charts, Trends &amp; alle Übungen</source>
@@ -3648,15 +3802,15 @@
     </unit>
     <unit id="landing.feature.analytics.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:386,390</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:293,297</note>
       </notes>
       <segment>
-        <source>Verlaufsdiagramme und KPI-Karten für jede Übung: Liegestütz-Varianten (Standard, Wide, Diamond), Sit-ups, Kniebeugen, Plank und Laufen – mit frei wählbarem Zeitraum.</source>
+        <source>Tabbed Analyse mit Verlaufsdiagrammen, KPI-Karten und Kategorie-Vergleich: Liegestütz-Varianten (Standard, Wide, Diamond), Klimmzüge, Sit-ups, Kniebeugen, Plank-Zeiten und Laufen inkl. Pace – jede Übung mit ihrer eigenen Maßeinheit, Zeitraum frei wählbar.</source>
       </segment>
     </unit>
     <unit id="landing.feature.goals.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:484,486</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:393,395</note>
       </notes>
       <segment>
         <source>Tages-, Wochen- &amp; Monatsziele</source>
@@ -3664,15 +3818,15 @@
     </unit>
     <unit id="landing.feature.goals.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:488,491</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:397,400</note>
       </notes>
       <segment>
-        <source>Dreifacher Fortschrittsbalken hält dich auf Kurs. Streak-Anzeige belohnt dranbleiben, Konfetti feiert dein erreichtes Tagesziel.</source>
+        <source>Dreifacher Fortschrittsbalken hält dich auf Kurs – Tages-, Wochen- und Monatsziel auf einen Blick. Läuft gerade ein Trainingsplan, übernimmt der das Tagesziel automatisch. Die Streak-Anzeige belohnt Dranbleiben, Konfetti feiert dein erreichtes Ziel.</source>
       </segment>
     </unit>
     <unit id="landing.feature.heatmap.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:532,534</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:442,444</note>
       </notes>
       <segment>
         <source>Heatmap-Kalender</source>
@@ -3680,15 +3834,31 @@
     </unit>
     <unit id="landing.feature.heatmap.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:536,540</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:446,450</note>
       </notes>
       <segment>
         <source>Sieh auf einen Blick, an welchen Tagen du wie hart trainiert hast. Lücken werden sichtbar – Konsistenz wird zur Gewohnheit.</source>
       </segment>
     </unit>
+    <unit id="landing.feature.multiset.title">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:537,539</note>
+      </notes>
+      <segment>
+        <source>Sätze &amp; Intervalle</source>
+      </segment>
+    </unit>
+    <unit id="landing.feature.multiset.body">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:541,544</note>
+      </notes>
+      <segment>
+        <source>Erfasse jeden Satz einzeln – z. B. 12 + 10 + 8. Die App summiert automatisch, zeigt deine Set-Verteilung und vergleicht den Aufbau über Wochen. Für Lauf- und Ausdauer-Workouts trägst du genauso einfach Intervalle samt Pace ein.</source>
+      </segment>
+    </unit>
     <unit id="landing.feature.quick.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:546,548</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:553,555</note>
       </notes>
       <segment>
         <source>Quick Logging mit FAB</source>
@@ -3696,15 +3866,15 @@
     </unit>
     <unit id="landing.feature.quick.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:550,553</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:557,560</note>
       </notes>
       <segment>
-        <source>Eintrag in 2 Sekunden über den Floating Action Button oder Schnellaktionen direkt im Dashboard – ganz ohne Dialog.</source>
+        <source>Ein Tap auf den Floating Action Button oder eine Schnellaktion im Dashboard – Eintrag in zwei Sekunden, komplett ohne Dialog. Detaillierte Erfassung mit Sätzen, Intervallen, Dauer oder Distanz erreichst du auf Wunsch im selben Flow.</source>
       </segment>
     </unit>
     <unit id="landing.feature.adaptive.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:560,562</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:568,570</note>
       </notes>
       <segment>
         <source>Adaptive Vorschläge</source>
@@ -3712,15 +3882,15 @@
     </unit>
     <unit id="landing.feature.adaptive.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:564,568</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:572,576</note>
       </notes>
       <segment>
-        <source>Die Schnellaktionen lernen aus deiner Historie und schlagen passende Wiederholungen vor – oder du konfigurierst eigene Buttons.</source>
+        <source>Die Schnellaktionen lernen aus deiner Historie und schlagen passende Wiederholungen vor. Du willst eigene Presets? Konfiguriere bis zu sechs Buttons pro Übung selbst – inklusive Standard-Variante für den FAB.</source>
       </segment>
     </unit>
     <unit id="landing.feature.pwa.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:574,576</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:583,585</note>
       </notes>
       <segment>
         <source>App-Installation, Live-Sync &amp; Teilen</source>
@@ -3728,15 +3898,15 @@
     </unit>
     <unit id="landing.feature.pwa.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:578,581</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:587,590</note>
       </notes>
       <segment>
-        <source>Direkt aus dem Browser als App installieren – mit Echtzeit-Sync zwischen allen Geräten und Tagesergebnis per Teilen-Button.</source>
+        <source>Direkt aus dem Browser als App installieren – mit Echtzeit-Sync zwischen allen Geräten, Offline-Eintrag dank Service Worker und Tagesergebnis per Teilen-Button. Updates kommen automatisch.</source>
       </segment>
     </unit>
     <unit id="landing.feature.pwa.installed">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:585,587</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:594,596</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon aria-hidden=&quot;true&quot;&gt;" dispEnd="&lt;/mat-icon&gt;">check_circle</pc> Du nutzt bereits die installierte App </source>
@@ -3744,7 +3914,7 @@
     </unit>
     <unit id="landing.feature.pwa.install">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:598,600</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:607,609</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon aria-hidden=&quot;true&quot;&gt;" dispEnd="&lt;/mat-icon&gt;">download</pc> Jetzt als App installieren </source>
@@ -3752,7 +3922,7 @@
     </unit>
     <unit id="landing.feature.pwa.iosHint">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:605,608</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:614,617</note>
       </notes>
       <segment>
         <source> Auf iPhone &amp; iPad: Teilen-Symbol antippen und „Zum Home-Bildschirm“ wählen. </source>
@@ -3760,7 +3930,7 @@
     </unit>
     <unit id="landing.feature.privacy.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:616,618</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:625,627</note>
       </notes>
       <segment>
         <source>Privacy first &amp; 100 % kostenlos</source>
@@ -3768,15 +3938,15 @@
     </unit>
     <unit id="landing.feature.privacy.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:620,624</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:629,633</note>
       </notes>
       <segment>
-        <source>DSGVO-konform mit anpassbarer Cookie-Zustimmung. Dein Name auf der Bestenliste? Nur wenn du es willst. Kein Abo, keine Kreditkarte.</source>
+        <source>DSGVO-konform mit anpassbarer Cookie-Zustimmung. Reps werden lokal im Browser ausgewertet – kein Video verlässt dein Gerät. Dein Name auf der Bestenliste? Nur wenn du es willst. Kein Abo, keine Kreditkarte.</source>
       </segment>
     </unit>
     <unit id="ads.landing.aria">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:626</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:636</note>
       </notes>
       <segment>
         <source>Werbung</source>
@@ -3784,7 +3954,7 @@
     </unit>
     <unit id="landing.preview.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:635,637</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:645,647</note>
       </notes>
       <segment>
         <source> Deine Statistik auf einen Blick </source>
@@ -3792,7 +3962,7 @@
     </unit>
     <unit id="landing.preview.alt">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:642,643</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:652,653</note>
       </notes>
       <segment>
         <source>Vorschau der Statistikansicht</source>
@@ -3800,7 +3970,7 @@
     </unit>
     <unit id="landing.discover.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:783,784</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:793,794</note>
       </notes>
       <segment>
         <source>Mehr entdecken</source>
@@ -3808,7 +3978,7 @@
     </unit>
     <unit id="landing.discover.leaderboard.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:789,791</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:799,801</note>
       </notes>
       <segment>
         <source>Bestenliste</source>
@@ -3816,7 +3986,7 @@
     </unit>
     <unit id="landing.discover.leaderboard.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:793,796</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:803,806</note>
       </notes>
       <segment>
         <source> Vergleiche dich mit der Community: Top-Reps für heute, die letzten 7 Tage und die letzten 30 Tage. Privacy first – dein Name erscheint nur, wenn du es willst. </source>
@@ -3824,7 +3994,7 @@
     </unit>
     <unit id="landing.discover.leaderboard.cta">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:803,806</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:813,816</note>
       </notes>
       <segment>
         <source>Zur Bestenliste</source>
@@ -3832,7 +4002,7 @@
     </unit>
     <unit id="landing.discover.blog.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:812,814</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:822,824</note>
       </notes>
       <segment>
         <source>Blog</source>
@@ -3840,7 +4010,7 @@
     </unit>
     <unit id="landing.discover.blog.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:816,819</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:826,829</note>
       </notes>
       <segment>
         <source> Tipps, Hintergrundwissen und Motivation rund um Liegestütze – von Einsteiger bis Fortgeschritten. Viele Artikel verlinken direkt auf den passenden Trainingsplan. </source>
@@ -3848,7 +4018,7 @@
     </unit>
     <unit id="landing.discover.blog.cta">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:826,828</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:836,838</note>
       </notes>
       <segment>
         <source>Zum Blog</source>
@@ -5083,22 +5253,6 @@
       </notes>
       <segment>
         <source> Keine Sets-Daten vorhanden </source>
-      </segment>
-    </unit>
-    <unit id="intervalsDistribution.noData">
-      <notes>
-        <note category="location">web/src/app/stats/components/intervals-distribution/intervals-distribution.component.ts</note>
-      </notes>
-      <segment>
-        <source> Keine Intervall-Daten vorhanden </source>
-      </segment>
-    </unit>
-    <unit id="intervalsDistribution.listLabel">
-      <notes>
-        <note category="location">web/src/app/stats/components/intervals-distribution/intervals-distribution.component.ts</note>
-      </notes>
-      <segment>
-        <source>Intervall-Verteilung</source>
       </segment>
     </unit>
     <unit id="chart.modeToggleAria">
@@ -8354,110 +8508,5 @@
         <source>Detailseite öffnen</source>
       </segment>
     </unit>
-      <unit id="exerciseTimer.title">
-      <segment>
-        <source>Halteübung-Timer</source>
-      </segment>
-    </unit>
-    <unit id="exerciseTimer.exercisePickerAria">
-      <segment>
-        <source>Übung wählen</source>
-      </segment>
-    </unit>
-    <unit id="exerciseTimer.cameraMode">
-      <segment>
-        <source> Kamera: Start/Ende automatisch erkennen </source>
-      </segment>
-    </unit>
-    <unit id="exerciseTimer.cameraStarting">
-      <segment>
-        <source>Kamera startet …</source>
-      </segment>
-    </unit>
-    <unit id="exerciseTimer.cameraUnavailable">
-      <segment>
-        <source> Kamera nicht verfügbar </source>
-      </segment>
-    </unit>
-    <unit id="exerciseTimer.formCheck.toggleAria">
-      <segment>
-        <source>Form-Check anzeigen oder ausblenden</source>
-      </segment>
-    </unit>
-    <unit id="exerciseTimer.formCheck.angle">
-      <segment>
-        <source>Winkel</source>
-      </segment>
-    </unit>
-    <unit id="exerciseTimer.formCheck.confidence">
-      <segment>
-        <source>Sicherheit</source>
-      </segment>
-    </unit>
-    <unit id="exerciseTimer.pause">
-      <segment>
-        <source>Pause</source>
-      </segment>
-    </unit>
-    <unit id="exerciseTimer.start">
-      <segment>
-        <source>Start</source>
-      </segment>
-    </unit>
-    <unit id="exerciseTimer.cameraHint">
-      <segment>
-        <source> Stelle die Kamera so auf, dass Schulter, Hüfte und Knie sichtbar sind. Der Timer startet automatisch, sobald du in Position bist, und pausiert, wenn du die Position verlässt. </source>
-      </segment>
-    </unit>
-    <unit id="exerciseTimer.reset">
-      <segment>
-        <source> Zurücksetzen </source>
-      </segment>
-    </unit>
-    <unit id="exerciseTimer.cancel">
-      <segment>
-        <source> Abbrechen </source>
-      </segment>
-    </unit>
-    <unit id="exerciseTimer.save">
-      <segment>
-        <source> Übernehmen </source>
-      </segment>
-    </unit>
-    <unit id="exerciseTimer.phase.holding">
-      <segment>
-        <source>Halten</source>
-      </segment>
-    </unit>
-    <unit id="exerciseTimer.phase.paused">
-      <segment>
-        <source>Pause</source>
-      </segment>
-    </unit>
-    <unit id="exerciseTimer.phase.ready">
-      <segment>
-        <source>Bereit</source>
-      </segment>
-    </unit>
-    <unit id="exerciseTimer.exercise.plank">
-      <segment>
-        <source>Plank</source>
-      </segment>
-    </unit>
-    <unit id="exerciseTimer.exercise.hollowhold">
-      <segment>
-        <source>Hollow Hold</source>
-      </segment>
-    </unit>
-    <unit id="quickAdd.fab.exerciseTimerAria">
-      <segment>
-        <source>Halteübungs-Timer öffnen</source>
-      </segment>
-    </unit>
-    <unit id="quickAdd.fab.exerciseTimer">
-      <segment>
-        <source>Plank‑Timer</source>
-      </segment>
-    </unit>
-</file>
+  </file>
 </xliff>
