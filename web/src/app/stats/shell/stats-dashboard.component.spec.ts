@@ -309,13 +309,13 @@ describe('StatsDashboardComponent', () => {
           'a[data-testid="dashboard-recent-exercise-tile"]'
         );
         expect(tiles.length).toBeGreaterThan(0);
-        // Each tile's href carries the entry id so a future history-page
-        // enhancement can scroll to / highlight the matching row without
-        // touching the dashboard again.
+        // Each tile's href carries the entry id as a `#entry-<id>`
+        // fragment — the history page reads the fragment, finds the
+        // row, and scrolls/highlights it inside the virtualized table.
         for (const tile of Array.from(tiles)) {
           const href = tile.getAttribute('href') ?? '';
           expect(href).toContain('/history');
-          expect(href).toContain('entry=');
+          expect(href).toMatch(/#entry-[^&?]+$/);
         }
       });
 

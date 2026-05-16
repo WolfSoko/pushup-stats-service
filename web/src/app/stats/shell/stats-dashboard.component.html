@@ -361,7 +361,7 @@
             class="recent-exercise-tile"
             data-testid="dashboard-recent-exercise-tile"
             routerLink="/history"
-            [queryParams]="{ entry: entry._id }"
+            [fragment]="'entry-' + entry._id"
             [attr.aria-label]="tileAriaLabel(entry)"
           >
             <mat-card>
