@@ -1617,9 +1617,841 @@
         <source>Endtest: maximale saubere einarmige Liegestütze pro Seite</source>
       </segment>
     </unit>
+    <unit id="plan.push-pull-6w.day.1.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:908</note>
+      </notes>
+      <segment>
+        <source>Push 3×10 saubere Liegestütze · Pull 3×8 invertierte Ruderzüge, 90 s Pause</source>
+      </segment>
+    </unit>
+    <unit id="plan.push-pull-6w.day.2.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:915</note>
+      </notes>
+      <segment>
+        <source>Pull-Tag: 4×8 Australian Rows · Push 2×12 Knie-Liegestütze als Aktivierung</source>
+      </segment>
+    </unit>
+    <unit id="plan.push-pull-6w.day.4.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:923</note>
+      </notes>
+      <segment>
+        <source>Push 3×11 · Pull 3×6 Klimmzug-Negative (5 s Exzentrik)</source>
+      </segment>
+    </unit>
+    <unit id="plan.push-pull-6w.day.5.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:930</note>
+      </notes>
+      <segment>
+        <source>Leichter Tag 2×10 · 3×12 Face Pulls</source>
+      </segment>
+    </unit>
+    <unit id="plan.push-pull-6w.day.6.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:937</note>
+      </notes>
+      <segment>
+        <source>Push 3×12 · Pull 3×8 invertierte Ruderzüge · Plank 3×30 s</source>
+      </segment>
+    </unit>
+    <unit id="plan.push-pull-6w.day.8.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:946</note>
+      </notes>
+      <segment>
+        <source>Push 3×AMRAP (Ziel 13-12-11) · Pull 3×9 Rudern</source>
+      </segment>
+    </unit>
+    <unit id="plan.push-pull-6w.day.9.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:953</note>
+      </notes>
+      <segment>
+        <source>Pull-Tag: 4×9 Australian Rows · Push 3×9 saubere LS</source>
+      </segment>
+    </unit>
+    <unit id="plan.push-pull-6w.day.11.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:961</note>
+      </notes>
+      <segment>
+        <source>Push 3×AMRAP (Ziel 14-13-12) · Pull 3×7 Klimmzug-Negative</source>
+      </segment>
+    </unit>
+    <unit id="plan.push-pull-6w.day.12.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:968</note>
+      </notes>
+      <segment>
+        <source>Leichter Tag 2×11 · 3×12 Face Pulls · Schulter-Mobility</source>
+      </segment>
+    </unit>
+    <unit id="plan.push-pull-6w.day.13.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:975</note>
+      </notes>
+      <segment>
+        <source>Push 3×AMRAP · Pull 3×10 invertierte Ruderzüge · Plank 3×40 s</source>
+      </segment>
+    </unit>
+    <unit id="plan.push-pull-6w.day.15.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:984</note>
+      </notes>
+      <segment>
+        <source>Push 4 Sätze · Pull 4×6 Klimmzüge (oder Negative)</source>
+      </segment>
+    </unit>
+    <unit id="plan.push-pull-6w.day.16.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:991</note>
+      </notes>
+      <segment>
+        <source>Pull-Tag: 5×8 Australian Rows · Push 3×10 saubere LS</source>
+      </segment>
+    </unit>
+    <unit id="plan.push-pull-6w.day.18.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:999</note>
+      </notes>
+      <segment>
+        <source>Push 4×AMRAP · Pull 4×7 Klimmzüge · Plank 3×45 s</source>
+      </segment>
+    </unit>
+    <unit id="plan.push-pull-6w.day.19.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1006</note>
+      </notes>
+      <segment>
+        <source>Leichter Tag 2×12 · 3×15 Face Pulls</source>
+      </segment>
+    </unit>
+    <unit id="plan.push-pull-6w.day.20.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1013</note>
+      </notes>
+      <segment>
+        <source>Push 4×AMRAP · Pull 4×8 Klimmzüge · Hollow Hold 3×20 s</source>
+      </segment>
+    </unit>
+    <unit id="plan.push-pull-6w.day.22.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1022</note>
+      </notes>
+      <segment>
+        <source>Push 4 Sätze, 60 s Pause · Pull 4×8 Klimmzüge</source>
+      </segment>
+    </unit>
+    <unit id="plan.push-pull-6w.day.23.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1029</note>
+      </notes>
+      <segment>
+        <source>Pull-Tag: 5×9 Australian Rows · Push 3×11 LS</source>
+      </segment>
+    </unit>
+    <unit id="plan.push-pull-6w.day.25.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1037</note>
+      </notes>
+      <segment>
+        <source>Push 4×AMRAP · Pull 4×9 Klimmzüge · Plank 3×50 s</source>
+      </segment>
+    </unit>
+    <unit id="plan.push-pull-6w.day.26.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1044</note>
+      </notes>
+      <segment>
+        <source>Leichter Tag 2×13 · Brust- und Rücken-Mobility</source>
+      </segment>
+    </unit>
+    <unit id="plan.push-pull-6w.day.27.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1051</note>
+      </notes>
+      <segment>
+        <source>Push 4×AMRAP · Pull 4×10 Klimmzüge · Hollow Hold 3×30 s</source>
+      </segment>
+    </unit>
+    <unit id="plan.push-pull-6w.day.29.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1060</note>
+      </notes>
+      <segment>
+        <source>Push 5 Sätze · Pull 5×7 Klimmzüge, 90 s Pause</source>
+      </segment>
+    </unit>
+    <unit id="plan.push-pull-6w.day.30.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1067</note>
+      </notes>
+      <segment>
+        <source>Pull-Tag: 5×10 Australian Rows · Push 3×12 LS</source>
+      </segment>
+    </unit>
+    <unit id="plan.push-pull-6w.day.32.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1075</note>
+      </notes>
+      <segment>
+        <source>Push 5 Sätze · Pull 5×8 Klimmzüge · Plank 3×60 s</source>
+      </segment>
+    </unit>
+    <unit id="plan.push-pull-6w.day.33.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1082</note>
+      </notes>
+      <segment>
+        <source>Leichter Tag 2×14 · 4×12 Face Pulls</source>
+      </segment>
+    </unit>
+    <unit id="plan.push-pull-6w.day.34.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1089</note>
+      </notes>
+      <segment>
+        <source>Push 5 Sätze · Pull 5×9 Klimmzüge · Hollow Hold 3×40 s</source>
+      </segment>
+    </unit>
+    <unit id="plan.push-pull-6w.day.36.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1098</note>
+      </notes>
+      <segment>
+        <source>Push 5 Sätze schwer · Pull 5×10 Klimmzüge</source>
+      </segment>
+    </unit>
+    <unit id="plan.push-pull-6w.day.37.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1105</note>
+      </notes>
+      <segment>
+        <source>Pull-Schwerpunkt: 5×AMRAP Klimmzüge · Push 4×10 LS</source>
+      </segment>
+    </unit>
+    <unit id="plan.push-pull-6w.day.39.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1113</note>
+      </notes>
+      <segment>
+        <source>Taper-Tag: 4×15 saubere LS · 3×6 Klimmzüge</source>
+      </segment>
+    </unit>
+    <unit id="plan.push-pull-6w.day.40.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1120</note>
+      </notes>
+      <segment>
+        <source>Leichter Tag 2×10 · Mobility</source>
+      </segment>
+    </unit>
+    <unit id="plan.push-pull-6w.day.42.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1128</note>
+      </notes>
+      <segment>
+        <source>Endtest: maximale Liegestütze + maximale Klimmzüge in einem Satz</source>
+      </segment>
+    </unit>
+    <unit id="plan.full-body-6w.day.1.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1144</note>
+      </notes>
+      <segment>
+        <source>Baseline-Test: maximale Liegestütze · 1 min Wall-Sit · 1 min Plank</source>
+      </segment>
+    </unit>
+    <unit id="plan.full-body-6w.day.2.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1151</note>
+      </notes>
+      <segment>
+        <source>Zirkel 3 Runden — 10 LS · 15 Kniebeugen · 10 Ausfallschritte je Bein · 30 s Plank</source>
+      </segment>
+    </unit>
+    <unit id="plan.full-body-6w.day.4.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1159</note>
+      </notes>
+      <segment>
+        <source>Zirkel 3 Runden — 10 LS · 15 Sumo-Kniebeugen · 12 Glute Bridges · 40 s Plank</source>
+      </segment>
+    </unit>
+    <unit id="plan.full-body-6w.day.5.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1166</note>
+      </notes>
+      <segment>
+        <source>Leichter Tag — 2×10 LS · Mobility 10 min</source>
+      </segment>
+    </unit>
+    <unit id="plan.full-body-6w.day.6.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1173</note>
+      </notes>
+      <segment>
+        <source>Zirkel 3 Runden — 10 LS · 15 Kniebeugen · 10 Glute Bridges · 30 s Hollow Hold</source>
+      </segment>
+    </unit>
+    <unit id="plan.full-body-6w.day.8.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1182</note>
+      </notes>
+      <segment>
+        <source>Zirkel 3 Runden — 12 LS · 18 Kniebeugen · 12 Ausfallschritte je Bein · 40 s Plank</source>
+      </segment>
+    </unit>
+    <unit id="plan.full-body-6w.day.10.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1190</note>
+      </notes>
+      <segment>
+        <source>Zirkel 3 Runden — 12 LS · 18 Sumo-Kniebeugen · 15 Glute Bridges · 45 s Plank</source>
+      </segment>
+    </unit>
+    <unit id="plan.full-body-6w.day.11.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1197</note>
+      </notes>
+      <segment>
+        <source>Leichter Tag — 2×11 LS · Hip Opener 10 min</source>
+      </segment>
+    </unit>
+    <unit id="plan.full-body-6w.day.12.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1204</note>
+      </notes>
+      <segment>
+        <source>Zirkel 3 Runden — 12 LS · 12 Step-Ups je Bein · 15 Russian Twists · 40 s Plank</source>
+      </segment>
+    </unit>
+    <unit id="plan.full-body-6w.day.15.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1214</note>
+      </notes>
+      <segment>
+        <source>Zirkel 4 Runden — 10 LS · 15 Kniebeugen · 12 Glute Bridges · 40 s Plank</source>
+      </segment>
+    </unit>
+    <unit id="plan.full-body-6w.day.17.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1222</note>
+      </notes>
+      <segment>
+        <source>Zirkel 4 Runden — 11 LS · 16 Ausfallschritte je Bein · 15 Glute Bridges · 45 s Plank</source>
+      </segment>
+    </unit>
+    <unit id="plan.full-body-6w.day.18.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1229</note>
+      </notes>
+      <segment>
+        <source>Leichter Tag — 2×12 LS · Yoga 20 min</source>
+      </segment>
+    </unit>
+    <unit id="plan.full-body-6w.day.19.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1236</note>
+      </notes>
+      <segment>
+        <source>Zirkel 4 Runden — 12 LS · 15 Jump Squats · 12 Glute Bridges · 45 s Plank</source>
+      </segment>
+    </unit>
+    <unit id="plan.full-body-6w.day.22.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1246</note>
+      </notes>
+      <segment>
+        <source>Zirkel 4 Runden — 13 LS · 18 Kniebeugen · 15 Glute Bridges · 50 s Plank</source>
+      </segment>
+    </unit>
+    <unit id="plan.full-body-6w.day.24.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1254</note>
+      </notes>
+      <segment>
+        <source>Zirkel 4 Runden — 14 LS · 18 Ausfallschritte je Bein · 15 Hip Thrusts · 50 s Plank</source>
+      </segment>
+    </unit>
+    <unit id="plan.full-body-6w.day.25.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1261</note>
+      </notes>
+      <segment>
+        <source>Leichter Tag — 2×13 LS · Foam Rolling 15 min</source>
+      </segment>
+    </unit>
+    <unit id="plan.full-body-6w.day.26.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1268</note>
+      </notes>
+      <segment>
+        <source>Zirkel 4 Runden — 15 LS · 18 Jump Squats · 15 Glute Bridges · 60 s Plank</source>
+      </segment>
+    </unit>
+    <unit id="plan.full-body-6w.day.29.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1278</note>
+      </notes>
+      <segment>
+        <source>Zirkel 5 Runden — 12 LS · 15 Kniebeugen · 12 Glute Bridges · 45 s Plank</source>
+      </segment>
+    </unit>
+    <unit id="plan.full-body-6w.day.31.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1286</note>
+      </notes>
+      <segment>
+        <source>Zirkel 5 Runden — 13 LS · 16 Ausfallschritte je Bein · 13 Glute Bridges · 50 s Plank</source>
+      </segment>
+    </unit>
+    <unit id="plan.full-body-6w.day.32.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1293</note>
+      </notes>
+      <segment>
+        <source>Leichter Tag — 2×14 LS · Mobility 15 min</source>
+      </segment>
+    </unit>
+    <unit id="plan.full-body-6w.day.33.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1300</note>
+      </notes>
+      <segment>
+        <source>Zirkel 5 Runden — 14 LS · 18 Jump Squats · 15 Hip Thrusts · 60 s Plank</source>
+      </segment>
+    </unit>
+    <unit id="plan.full-body-6w.day.36.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1310</note>
+      </notes>
+      <segment>
+        <source>Peak-Zirkel 5 Runden — 15 LS · 20 Kniebeugen · 15 Glute Bridges · 60 s Plank</source>
+      </segment>
+    </unit>
+    <unit id="plan.full-body-6w.day.38.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1318</note>
+      </notes>
+      <segment>
+        <source>Taper-Zirkel 4 Runden, kontrolliertes Tempo — 15 LS · 15 Kniebeugen · 12 Glute Bridges · 45 s Plank</source>
+      </segment>
+    </unit>
+    <unit id="plan.full-body-6w.day.39.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1325</note>
+      </notes>
+      <segment>
+        <source>Leichter Tag — 2×12 LS · Mobility</source>
+      </segment>
+    </unit>
+    <unit id="plan.full-body-6w.day.42.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1334</note>
+      </notes>
+      <segment>
+        <source>Funktionstest: maximale LS · 50 Kniebeugen auf Zeit · 1 min Plank-Halt</source>
+      </segment>
+    </unit>
+    <unit id="plan.core-4w.day.1.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1350</note>
+      </notes>
+      <segment>
+        <source>Baseline: maximale Plank-Zeit · 10 saubere LS · maximale Hollow-Hold-Zeit</source>
+      </segment>
+    </unit>
+    <unit id="plan.core-4w.day.2.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1357</note>
+      </notes>
+      <segment>
+        <source>Plank 3×30 s · Hollow Hold 3×20 s · Dead Bug 3×10 je Seite · LS 2×10</source>
+      </segment>
+    </unit>
+    <unit id="plan.core-4w.day.3.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1364</note>
+      </notes>
+      <segment>
+        <source>Beinheben 3×10 · Russian Twist 3×15 · Plank 3×30 s · LS 2×12</source>
+      </segment>
+    </unit>
+    <unit id="plan.core-4w.day.5.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1372</note>
+      </notes>
+      <segment>
+        <source>Mountain Climbers 3×30 s · Dead Bug 3×12 · Plank 3×35 s · LS 2×10</source>
+      </segment>
+    </unit>
+    <unit id="plan.core-4w.day.6.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1379</note>
+      </notes>
+      <segment>
+        <source>Leichter Tag — Cat-Cow 3×10 · Hip Opener 2 min · 2×7 saubere LS</source>
+      </segment>
+    </unit>
+    <unit id="plan.core-4w.day.8.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1388</note>
+      </notes>
+      <segment>
+        <source>Plank 3×40 s · Hollow Hold 3×25 s · Dead Bug 3×12 · LS 2×11</source>
+      </segment>
+    </unit>
+    <unit id="plan.core-4w.day.9.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1395</note>
+      </notes>
+      <segment>
+        <source>Beinheben 3×12 · Russian Twist 3×18 · Plank 3×40 s · LS 2×12</source>
+      </segment>
+    </unit>
+    <unit id="plan.core-4w.day.11.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1403</note>
+      </notes>
+      <segment>
+        <source>Mountain Climbers 4×30 s · Side Plank 2×25 s je Seite · LS 2×12</source>
+      </segment>
+    </unit>
+    <unit id="plan.core-4w.day.12.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1410</note>
+      </notes>
+      <segment>
+        <source>Leichter Tag — Mobility 10 min · 2×8 LS</source>
+      </segment>
+    </unit>
+    <unit id="plan.core-4w.day.13.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1417</note>
+      </notes>
+      <segment>
+        <source>Core-Zirkel 3 Runden — 40 s Plank · 20 s Hollow Hold · 12 Dead Bugs · 10 LS</source>
+      </segment>
+    </unit>
+    <unit id="plan.core-4w.day.15.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1426</note>
+      </notes>
+      <segment>
+        <source>Plank 3×50 s · Side Plank 3×30 s je Seite · Hollow Hold 3×30 s · LS 2×15</source>
+      </segment>
+    </unit>
+    <unit id="plan.core-4w.day.16.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1433</note>
+      </notes>
+      <segment>
+        <source>Hängendes Knieheben 3×8 · Russian Twist 3×20 · Plank 3×50 s · LS 2×15</source>
+      </segment>
+    </unit>
+    <unit id="plan.core-4w.day.18.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1441</note>
+      </notes>
+      <segment>
+        <source>Core-Power: Plank 3×60 s · Dead Bug 3×15 · Mountain Climbers 3×45 s · LS 2×15</source>
+      </segment>
+    </unit>
+    <unit id="plan.core-4w.day.19.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1448</note>
+      </notes>
+      <segment>
+        <source>Leichter Tag — 2×9 LS · Stretching 10 min</source>
+      </segment>
+    </unit>
+    <unit id="plan.core-4w.day.20.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1455</note>
+      </notes>
+      <segment>
+        <source>Core-Zirkel 3 Runden — 50 s Plank · 12 Beinheben · 20 Russian Twists · 10 LS</source>
+      </segment>
+    </unit>
+    <unit id="plan.core-4w.day.22.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1464</note>
+      </notes>
+      <segment>
+        <source>Plank 3×60 s · Hollow Hold 3×40 s · Hängendes Knieheben 3×10 · LS 2×16</source>
+      </segment>
+    </unit>
+    <unit id="plan.core-4w.day.23.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1471</note>
+      </notes>
+      <segment>
+        <source>Core-Zirkel 3 Runden — 1 min Plank · 30 Russian Twists · 12 Beinheben · 12 LS</source>
+      </segment>
+    </unit>
+    <unit id="plan.core-4w.day.25.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1479</note>
+      </notes>
+      <segment>
+        <source>Side Plank 3×40 s je Seite · Dead Bug 3×16 · Hollow Hold 3×40 s · LS 2×16</source>
+      </segment>
+    </unit>
+    <unit id="plan.core-4w.day.26.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1486</note>
+      </notes>
+      <segment>
+        <source>Leichter Tag — 2×9 LS · Mobility</source>
+      </segment>
+    </unit>
+    <unit id="plan.core-4w.day.28.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1494</note>
+      </notes>
+      <segment>
+        <source>Endtest: 1 min Plank-Halt · maximale LS · 1 min Hollow Hold</source>
+      </segment>
+    </unit>
+    <unit id="plan.hiit-4w.day.1.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1510</note>
+      </notes>
+      <segment>
+        <source>HIIT 4 Runden 30/15 s — LS · Burpees · Mountain Climbers · Jumping Jacks</source>
+      </segment>
+    </unit>
+    <unit id="plan.hiit-4w.day.3.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1518</note>
+      </notes>
+      <segment>
+        <source>HIIT 5 Runden 30/30 s — LS · Burpees · Hampelmänner · Plank</source>
+      </segment>
+    </unit>
+    <unit id="plan.hiit-4w.day.4.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1525</note>
+      </notes>
+      <segment>
+        <source>Aktive Erholung — 15 min Gehen · 2×10 LS · Mobility</source>
+      </segment>
+    </unit>
+    <unit id="plan.hiit-4w.day.5.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1532</note>
+      </notes>
+      <segment>
+        <source>Tabata 8 Runden 20/10 s — LS · Burpees · Mountain Climbers · Jump Squats</source>
+      </segment>
+    </unit>
+    <unit id="plan.hiit-4w.day.8.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1542</note>
+      </notes>
+      <segment>
+        <source>HIIT 5 Runden 40/20 s — LS · Burpees · Mountain Climbers · Squats · Plank</source>
+      </segment>
+    </unit>
+    <unit id="plan.hiit-4w.day.10.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1550</note>
+      </notes>
+      <segment>
+        <source>HIIT-Ladder 8-7-6-5-4-3-2-1 — LS · Burpees (jede Runde 1 Wiederholung weniger)</source>
+      </segment>
+    </unit>
+    <unit id="plan.hiit-4w.day.11.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1557</note>
+      </notes>
+      <segment>
+        <source>Aktive Erholung — 20 min lockeres Cardio · 2×11 LS</source>
+      </segment>
+    </unit>
+    <unit id="plan.hiit-4w.day.12.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1564</note>
+      </notes>
+      <segment>
+        <source>HIIT 6 Runden 30/15 s — LS · Burpees · Mountain Climbers · Jumping Jacks</source>
+      </segment>
+    </unit>
+    <unit id="plan.hiit-4w.day.15.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1574</note>
+      </notes>
+      <segment>
+        <source>HIIT 4 Runden 45/15 s — 11 LS · 8 Burpees · 12 Kniebeugen · 30 s Mountain Climbers</source>
+      </segment>
+    </unit>
+    <unit id="plan.hiit-4w.day.17.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1582</note>
+      </notes>
+      <segment>
+        <source>HIIT 6 Runden 40/20 s — LS · Burpees · MC · Hampelmänner · Squats · Plank</source>
+      </segment>
+    </unit>
+    <unit id="plan.hiit-4w.day.18.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1589</note>
+      </notes>
+      <segment>
+        <source>Aktive Erholung — Yoga 20 min · 2×12 LS</source>
+      </segment>
+    </unit>
+    <unit id="plan.hiit-4w.day.19.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1596</note>
+      </notes>
+      <segment>
+        <source>Tabata 8 Runden 20/10 s — abwechselnd LS · Burpees · Squats · MC</source>
+      </segment>
+    </unit>
+    <unit id="plan.hiit-4w.day.22.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1606</note>
+      </notes>
+      <segment>
+        <source>HIIT-Finale 10 Runden 30/15 s — LS · Burpees · MC · Hampelmänner</source>
+      </segment>
+    </unit>
+    <unit id="plan.hiit-4w.day.24.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1614</note>
+      </notes>
+      <segment>
+        <source>EMOM 12 min — pro Minute 5 LS · 5 Burpees · 10 Hampelmänner</source>
+      </segment>
+    </unit>
+    <unit id="plan.hiit-4w.day.25.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1621</note>
+      </notes>
+      <segment>
+        <source>Aktive Erholung — Mobility · 2×13 LS</source>
+      </segment>
+    </unit>
+    <unit id="plan.hiit-4w.day.28.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1630</note>
+      </notes>
+      <segment>
+        <source>Konditionstest: 100 LS + 50 Burpees auf Zeit (Bestzeit notieren)</source>
+      </segment>
+    </unit>
+    <unit id="plan.mobility-2w.day.1.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1644</note>
+      </notes>
+      <segment>
+        <source>Dynamisches Aufwärmen 10 min · 1×10 saubere LS · 10 min Stretching</source>
+      </segment>
+    </unit>
+    <unit id="plan.mobility-2w.day.2.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1651</note>
+      </notes>
+      <segment>
+        <source>Yoga-Flow 20 min · 1×10 LS · Brust-Stretching</source>
+      </segment>
+    </unit>
+    <unit id="plan.mobility-2w.day.3.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1658</note>
+      </notes>
+      <segment>
+        <source>Cat-Cow 3×10 · Hip Opener 2 min · 2×6 LS · 5 min Foam Rolling</source>
+      </segment>
+    </unit>
+    <unit id="plan.mobility-2w.day.4.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1665</note>
+      </notes>
+      <segment>
+        <source>Ruhetag — Foam Rolling 15 min</source>
+      </segment>
+    </unit>
+    <unit id="plan.mobility-2w.day.5.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1672</note>
+      </notes>
+      <segment>
+        <source>Brust-Stretching 5 min · 2×6 LS · 10 min Spaziergang</source>
+      </segment>
+    </unit>
+    <unit id="plan.mobility-2w.day.6.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1679</note>
+      </notes>
+      <segment>
+        <source>Dynamisches Aufwärmen 10 min · 2×7 LS · Schulter-Mobility 5 min</source>
+      </segment>
+    </unit>
+    <unit id="plan.mobility-2w.day.8.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1687</note>
+      </notes>
+      <segment>
+        <source>Schulter-Mobility 10 min · 2×7 LS · 10 min Stretching</source>
+      </segment>
+    </unit>
+    <unit id="plan.mobility-2w.day.9.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1694</note>
+      </notes>
+      <segment>
+        <source>Yoga 20 min · 2×8 LS</source>
+      </segment>
+    </unit>
+    <unit id="plan.mobility-2w.day.10.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1701</note>
+      </notes>
+      <segment>
+        <source>Foam Rolling 10 min · 2×8 LS · Hip Opener 5 min</source>
+      </segment>
+    </unit>
+    <unit id="plan.mobility-2w.day.11.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1708</note>
+      </notes>
+      <segment>
+        <source>Ruhetag — Stretching nach Bedarf</source>
+      </segment>
+    </unit>
+    <unit id="plan.mobility-2w.day.12.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1715</note>
+      </notes>
+      <segment>
+        <source>Dynamisches Aufwärmen · 2×9 LS · 10 min Mobility</source>
+      </segment>
+    </unit>
+    <unit id="plan.mobility-2w.day.13.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1722</note>
+      </notes>
+      <segment>
+        <source>2×10 LS · 15 min Yoga</source>
+      </segment>
+    </unit>
+    <unit id="plan.mobility-2w.day.14.desc">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1729</note>
+      </notes>
+      <segment>
+        <source>Form-Check: 2×10 saubere LS · vollständige Mobility-Session 20 min</source>
+      </segment>
+    </unit>
     <unit id="plan.recruit-6w.title">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:898</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1737</note>
       </notes>
       <segment>
         <source>Von 0 auf 100 — 6-Wochen-Aufbau</source>
@@ -1627,7 +2459,7 @@
     </unit>
     <unit id="plan.recruit-6w.summary">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:899</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1738</note>
       </notes>
       <segment>
         <source>Strukturierter Plan für Einsteiger: drei Trainingstage pro Woche, progressive Belastungssteigerung und ein Endtest in Woche 6.</source>
@@ -1635,7 +2467,7 @@
     </unit>
     <unit id="plan.recruit-6w.blogSlug">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:902</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1741</note>
       </notes>
       <segment>
         <source>liegestuetze-steigern</source>
@@ -1643,7 +2475,7 @@
     </unit>
     <unit id="plan.challenge-30d.title">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:908</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1747</note>
       </notes>
       <segment>
         <source>30-Tage-Challenge</source>
@@ -1651,7 +2483,7 @@
     </unit>
     <unit id="plan.challenge-30d.summary">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:909</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1748</note>
       </notes>
       <segment>
         <source>Dreißig Tage tägliches Training mit gezielten Ruhetagen. Tag 1 ist der Maximaltest, Tag 30 der Endtest.</source>
@@ -1659,7 +2491,7 @@
     </unit>
     <unit id="plan.challenge-30d.blogSlug">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:912</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1751</note>
       </notes>
       <segment>
         <source>30-tage-liegestuetze-challenge</source>
@@ -1667,7 +2499,7 @@
     </unit>
     <unit id="plan.over-40-4w.title">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:918</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1757</note>
       </notes>
       <segment>
         <source>Liegestütze ab 40 — 4-Wochen-Plan</source>
@@ -1675,7 +2507,7 @@
     </unit>
     <unit id="plan.over-40-4w.summary">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:919</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1758</note>
       </notes>
       <segment>
         <source>Schonender 4-Wochen-Plan für Einsteiger ab 40: Fokus auf saubere Technik, ausreichend Pause und langsames Tempo.</source>
@@ -1683,7 +2515,7 @@
     </unit>
     <unit id="plan.over-40-4w.blogSlug">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:922</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1761</note>
       </notes>
       <segment>
         <source>liegestuetze-ab-40</source>
@@ -1691,7 +2523,7 @@
     </unit>
     <unit id="plan.daily-100-30d.title">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:928</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1767</note>
       </notes>
       <segment>
         <source>Daily 100 — 30 Tage zur 100er-Marke</source>
@@ -1699,7 +2531,7 @@
     </unit>
     <unit id="plan.daily-100-30d.summary">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:929</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1768</note>
       </notes>
       <segment>
         <source>30-Tage-Volumenplan: ramp-up von 50 auf 100 saubere Wiederholungen pro Einheit, danach zwei Wochen Konsolidierung. 5 Trainingstage + 1 leichter + 1 Ruhetag pro Woche.</source>
@@ -1707,7 +2539,7 @@
     </unit>
     <unit id="plan.one-arm-12w.title">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:937</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1776</note>
       </notes>
       <segment>
         <source>Einarmige Liegestütze — 12-Wochen-Aufbau</source>
@@ -1715,10 +2547,90 @@
     </unit>
     <unit id="plan.one-arm-12w.summary">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:938</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1777</note>
       </notes>
       <segment>
         <source>Vier-Phasen-Plan in Richtung saubere einarmige Liegestütze: Archer und Wand-Negativen, Bank-Negativen, partielle Einarmige, schließlich volle Einarmige im weiten Stand. 4 aktive Tage + 3 Ruhetage pro Woche.</source>
+      </segment>
+    </unit>
+    <unit id="plan.push-pull-6w.title">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1785</note>
+      </notes>
+      <segment>
+        <source>Push &amp; Pull Balance — 6-Wochen-Plan</source>
+      </segment>
+    </unit>
+    <unit id="plan.push-pull-6w.summary">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1786</note>
+      </notes>
+      <segment>
+        <source>Symmetrischer 6-Wochen-Plan für Liegestütze und Rückenübungen (Rudern, Klimmzug-Negative, Face Pulls). Vermeidet das klassische &quot;nur Push&quot;-Ungleichgewicht und stärkt die hintere Kette gleichwertig. Pull-Tag pro Woche zusätzlich zur Push-Progression.</source>
+      </segment>
+    </unit>
+    <unit id="plan.full-body-6w.title">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1794</note>
+      </notes>
+      <segment>
+        <source>Full Body Strong — 6-Wochen-Ganzkörperplan</source>
+      </segment>
+    </unit>
+    <unit id="plan.full-body-6w.summary">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1795</note>
+      </notes>
+      <segment>
+        <source>Sechs Wochen Ganzkörper-Zirkel: Liegestütze, Kniebeugen, Ausfallschritte, Glute Bridges und Plank in 3-, 4- und 5-Runden-Zirkeln. Drei Trainingstage pro Woche, klar steigende Volumen, funktioneller Endtest in Woche 6.</source>
+      </segment>
+    </unit>
+    <unit id="plan.core-4w.title">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1803</note>
+      </notes>
+      <segment>
+        <source>Core Foundations — 4-Wochen-Rumpfplan</source>
+      </segment>
+    </unit>
+    <unit id="plan.core-4w.summary">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1804</note>
+      </notes>
+      <segment>
+        <source>Vier Wochen Rumpfstabilität: Plank, Hollow Hold, Dead Bug, Beinheben und Rotation. Pro Trainingstag eine moderate Liegestütze-Aktivierung. Vier Trainingstage und ein leichter Tag pro Woche, Endtest mit Plank-Halt und Hollow Hold.</source>
+      </segment>
+    </unit>
+    <unit id="plan.hiit-4w.title">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1812</note>
+      </notes>
+      <segment>
+        <source>HIIT Burner — 4-Wochen-Konditionsplan</source>
+      </segment>
+    </unit>
+    <unit id="plan.hiit-4w.summary">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1813</note>
+      </notes>
+      <segment>
+        <source>Vier Wochen hochintensives Intervalltraining mit Liegestützen, Burpees, Mountain Climbers, Hampelmännern und Kniebeugen. Tabata, Pyramide und EMOM-Strukturen. Eignet sich als Konditions-Booster zwischen klassischen Liegestütze-Plänen.</source>
+      </segment>
+    </unit>
+    <unit id="plan.mobility-2w.title">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1821</note>
+      </notes>
+      <segment>
+        <source>Mobility &amp; Recovery — 2-Wochen-Deload</source>
+      </segment>
+    </unit>
+    <unit id="plan.mobility-2w.summary">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1822</note>
+      </notes>
+      <segment>
+        <source>Zwei Wochen aktive Erholung: tägliche Mobility-, Yoga- und Stretching-Einheiten mit leichtem Liegestütze-Volumen. Ideal als Deload zwischen zwei harten Plänen oder zum Wiedereinstieg nach einer Trainingspause.</source>
       </segment>
     </unit>
     <unit id="adminHeaderTitle">
@@ -2337,7 +3249,7 @@
         <note category="location">web/src/app/app.routes.ts:16</note>
       </notes>
       <segment>
-        <source>Liegestütze tracken mit kostenloser Web-App: Trainingspläne, 30-Tage-Challenge, Tagesziel, Streaks und Bestenliste – jetzt auch mit Sit-ups, Kniebeugen, Plank und Laufen. Mobil, offline-fähig, mit Live-Sync.</source>
+        <source>Kostenlose Web-App für Liegestütze und mehr: Reps per Kamera-KI im Browser automatisch zählen, plus Trainingspläne, 30-Tage-Challenge, Heatmap, Streaks, Tagesziele und Bestenliste – auch für Sit-ups, Kniebeugen, Klimmzüge, Plank und Laufen. Mobil, offline-fähig, mit Live-Sync.</source>
       </segment>
     </unit>
     <unit id="seo.dashboard.title">
@@ -3607,15 +4519,15 @@
     </unit>
     <unit id="landing.subtitle">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:17,21</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:17,20</note>
       </notes>
       <segment>
-        <source> Liegestütze tracken in Sekunden – mit Trends, Streaks und Live-Sync. Plus Sit-ups, Kniebeugen, Plank und Laufen, wenn du mehr willst. </source>
+        <source> Reps live per Kamera-KI zählen – Liegestütze, Kniebeugen, Klimmzüge, Sit-ups sowie Halte-Timer für Plank &amp; Hollow-Hold. Dazu Trainingspläne, Heatmap, Streaks, Tagesziele und Live-Sync auf allen Geräten. </source>
       </segment>
     </unit>
     <unit id="landing.cta.dashboard">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:30,32</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:31,33</note>
       </notes>
       <segment>
         <source>Zum Dashboard</source>
@@ -3623,8 +4535,8 @@
     </unit>
     <unit id="landing.cta.signup">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:40,43</note>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:52,55</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:41,44</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:53,56</note>
       </notes>
       <segment>
         <source>Konto erstellen</source>
@@ -3632,7 +4544,7 @@
     </unit>
     <unit id="landing.cta.login">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:60,62</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:61,63</note>
       </notes>
       <segment>
         <source>Einloggen</source>
@@ -3640,7 +4552,7 @@
     </unit>
     <unit id="landing.cta.guest">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:68,70</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:69,71</note>
       </notes>
       <segment>
         <source> Als Gast ausprobieren </source>
@@ -3648,7 +4560,7 @@
     </unit>
     <unit id="landing.cta.hint">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:73,76</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:74,77</note>
       </notes>
       <segment>
         <source> Kostenlos · Kein Abo · Jederzeit kündbar </source>
@@ -3656,7 +4568,7 @@
     </unit>
     <unit id="landing.plans.eyebrow">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:84,86</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:85,87</note>
       </notes>
       <segment>
         <source>Strukturiert trainieren</source>
@@ -3664,7 +4576,7 @@
     </unit>
     <unit id="landing.plans.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:87,89</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:88,90</note>
       </notes>
       <segment>
         <source> Liegestütz-Trainingspläne, die wirklich funktionieren </source>
@@ -3672,7 +4584,7 @@
     </unit>
     <unit id="landing.plans.subtitle">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:90,94</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:91,95</note>
       </notes>
       <segment>
         <source> Vom Einsteiger zum 100er-Set: Geführte Pläne mit Tagesziel, Sätzen und automatischer Fortschrittsverfolgung. Stöbere kostenlos — starten und tracken kannst du mit einem kostenlosen Konto. </source>
@@ -3680,7 +4592,7 @@
     </unit>
     <unit id="landing.plans.recruit.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:101,103</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:102,104</note>
       </notes>
       <segment>
         <source>Von 0 auf 100 — 6 Wochen</source>
@@ -3688,7 +4600,7 @@
     </unit>
     <unit id="landing.plans.recruit.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:105,107</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:106,108</note>
       </notes>
       <segment>
         <source> Einsteigerfreundlich: 3 Trainingstage pro Woche, progressiver Aufbau und ein Maximaltest in Woche 6. </source>
@@ -3696,9 +4608,9 @@
     </unit>
     <unit id="landing.plans.viewPlan">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:114,116</note>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:136,138</note>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:158,160</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:115,117</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:137,139</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:159,161</note>
       </notes>
       <segment>
         <source>Plan ansehen</source>
@@ -3706,7 +4618,7 @@
     </unit>
     <unit id="landing.plans.challenge.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:123,125</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:124,126</note>
       </notes>
       <segment>
         <source>30-Tage-Challenge</source>
@@ -3714,7 +4626,7 @@
     </unit>
     <unit id="landing.plans.challenge.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:127,129</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:128,130</note>
       </notes>
       <segment>
         <source> 30 Tage Pushups mit gezielten Ruhetagen. Tag 1 ist der Maximaltest, Tag 30 der Endtest. </source>
@@ -3722,7 +4634,7 @@
     </unit>
     <unit id="landing.plans.over40.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:145,147</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:146,148</note>
       </notes>
       <segment>
         <source>Liegestütze ab 40 — 4 Wochen</source>
@@ -3730,7 +4642,7 @@
     </unit>
     <unit id="landing.plans.over40.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:149,151</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:150,152</note>
       </notes>
       <segment>
         <source> Schonender Plan mit Fokus auf saubere Technik, ausreichend Pause und langsames Tempo. </source>
@@ -3738,7 +4650,7 @@
     </unit>
     <unit id="landing.plans.cta.overview">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:171,173</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:172,174</note>
       </notes>
       <segment>
         <source>Alle Pläne ansehen</source>
@@ -3746,7 +4658,7 @@
     </unit>
     <unit id="landing.plans.cta.signup">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:180,184</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:181,185</note>
       </notes>
       <segment>
         <source>Konto erstellen &amp; Plan starten</source>
@@ -3754,7 +4666,7 @@
     </unit>
     <unit id="landing.trust.bar">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:193,197</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:194,198</note>
       </notes>
       <segment>
         <source> ✓ Kostenlos · ✓ Kein Abo · ✓ Keine Kreditkarte · ✓ Datenschutz first </source>
@@ -3762,7 +4674,7 @@
     </unit>
     <unit id="landing.features.aria">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:198,199</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:199,200</note>
       </notes>
       <segment>
         <source>Funktionen</source>
@@ -3770,7 +4682,7 @@
     </unit>
     <unit id="landing.feature.autoCount.imageAlt">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:205,206</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:206,207</note>
       </notes>
       <segment>
         <source>Sportlerin bei einer sauberen Liegestütze auf Holzboden</source>
@@ -3778,7 +4690,7 @@
     </unit>
     <unit id="landing.feature.autoCount.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:216,218</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:217,219</note>
       </notes>
       <segment>
         <source>Reps automatisch zählen</source>
@@ -3786,31 +4698,15 @@
     </unit>
     <unit id="landing.feature.autoCount.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:220,224</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:221,226</note>
       </notes>
       <segment>
-        <source>Stell das Handy hin, öffne die Auto-Zählung und mach deine Liegestütze, Kniebeugen, Klimmzüge oder Sit-ups – unsere KI erkennt deine Bewegung in Echtzeit direkt im Browser und zählt automatisch mit. Der Live-Form-Check zeigt Winkel und Sicherheit, damit du jederzeit weißt, dass die Zählung sauber läuft.</source>
-      </segment>
-    </unit>
-    <unit id="landing.feature.multiset.title">
-      <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:313,315</note>
-      </notes>
-      <segment>
-        <source>Multi-Set Tracking</source>
-      </segment>
-    </unit>
-    <unit id="landing.feature.multiset.body">
-      <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:317,319</note>
-      </notes>
-      <segment>
-        <source>Erfasse jeden Satz einzeln – z. B. 12 + 10 + 8. Die App summiert automatisch und zeigt deine durchschnittliche Set-Größe.</source>
+        <source>Stell das Handy hin, öffne den Auto-Zähler und leg los: Die KI erkennt Liegestütze, Kniebeugen, Klimmzüge und Sit-ups in Echtzeit direkt im Browser und zählt jede saubere Wiederholung mit. Für Plank und Hollow-Hold läuft stattdessen ein automatischer Halte-Timer. Der Live-Form-Check zeigt Winkel, Phase und Erkennungs-Sicherheit – ohne Cloud, ganz ohne Daten-Upload.</source>
       </segment>
     </unit>
     <unit id="landing.feature.analytics.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:382,384</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:289,291</note>
       </notes>
       <segment>
         <source>Charts, Trends &amp; alle Übungen</source>
@@ -3818,15 +4714,15 @@
     </unit>
     <unit id="landing.feature.analytics.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:386,390</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:293,297</note>
       </notes>
       <segment>
-        <source>Verlaufsdiagramme und KPI-Karten für jede Übung: Liegestütz-Varianten (Standard, Wide, Diamond), Sit-ups, Kniebeugen, Plank und Laufen – mit frei wählbarem Zeitraum.</source>
+        <source>Tabbed Analyse mit Verlaufsdiagrammen, KPI-Karten und Kategorie-Vergleich: Liegestütz-Varianten (Standard, Wide, Diamond), Klimmzüge, Sit-ups, Kniebeugen, Plank-Zeiten und Laufen inkl. Pace – jede Übung mit ihrer eigenen Maßeinheit, Zeitraum frei wählbar.</source>
       </segment>
     </unit>
     <unit id="landing.feature.goals.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:484,486</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:393,395</note>
       </notes>
       <segment>
         <source>Tages-, Wochen- &amp; Monatsziele</source>
@@ -3834,15 +4730,15 @@
     </unit>
     <unit id="landing.feature.goals.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:488,491</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:397,400</note>
       </notes>
       <segment>
-        <source>Dreifacher Fortschrittsbalken hält dich auf Kurs. Streak-Anzeige belohnt dranbleiben, Konfetti feiert dein erreichtes Tagesziel.</source>
+        <source>Dreifacher Fortschrittsbalken hält dich auf Kurs – Tages-, Wochen- und Monatsziel auf einen Blick. Läuft gerade ein Trainingsplan, übernimmt der das Tagesziel automatisch. Die Streak-Anzeige belohnt Dranbleiben, Konfetti feiert dein erreichtes Ziel.</source>
       </segment>
     </unit>
     <unit id="landing.feature.heatmap.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:532,534</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:442,444</note>
       </notes>
       <segment>
         <source>Heatmap-Kalender</source>
@@ -3850,15 +4746,31 @@
     </unit>
     <unit id="landing.feature.heatmap.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:536,540</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:446,450</note>
       </notes>
       <segment>
         <source>Sieh auf einen Blick, an welchen Tagen du wie hart trainiert hast. Lücken werden sichtbar – Konsistenz wird zur Gewohnheit.</source>
       </segment>
     </unit>
+    <unit id="landing.feature.multiset.title">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:537,539</note>
+      </notes>
+      <segment>
+        <source>Sätze &amp; Intervalle</source>
+      </segment>
+    </unit>
+    <unit id="landing.feature.multiset.body">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:541,544</note>
+      </notes>
+      <segment>
+        <source>Erfasse jeden Satz einzeln – z. B. 12 + 10 + 8. Die App summiert automatisch, zeigt deine Set-Verteilung und vergleicht den Aufbau über Wochen. Für Lauf- und Ausdauer-Workouts trägst du genauso einfach Intervalle samt Pace ein.</source>
+      </segment>
+    </unit>
     <unit id="landing.feature.quick.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:546,548</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:553,555</note>
       </notes>
       <segment>
         <source>Quick Logging mit FAB</source>
@@ -3866,15 +4778,15 @@
     </unit>
     <unit id="landing.feature.quick.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:550,553</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:557,560</note>
       </notes>
       <segment>
-        <source>Eintrag in 2 Sekunden über den Floating Action Button oder Schnellaktionen direkt im Dashboard – ganz ohne Dialog.</source>
+        <source>Ein Tap auf den Floating Action Button oder eine Schnellaktion im Dashboard – Eintrag in zwei Sekunden, komplett ohne Dialog. Detaillierte Erfassung mit Sätzen, Intervallen, Dauer oder Distanz erreichst du auf Wunsch im selben Flow.</source>
       </segment>
     </unit>
     <unit id="landing.feature.adaptive.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:560,562</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:568,570</note>
       </notes>
       <segment>
         <source>Adaptive Vorschläge</source>
@@ -3882,15 +4794,15 @@
     </unit>
     <unit id="landing.feature.adaptive.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:564,568</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:572,576</note>
       </notes>
       <segment>
-        <source>Die Schnellaktionen lernen aus deiner Historie und schlagen passende Wiederholungen vor – oder du konfigurierst eigene Buttons.</source>
+        <source>Die Schnellaktionen lernen aus deiner Historie und schlagen passende Wiederholungen vor. Du willst eigene Presets? Konfiguriere bis zu sechs Buttons pro Übung selbst – inklusive Standard-Variante für den FAB.</source>
       </segment>
     </unit>
     <unit id="landing.feature.pwa.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:574,576</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:583,585</note>
       </notes>
       <segment>
         <source>App-Installation, Live-Sync &amp; Teilen</source>
@@ -3898,15 +4810,15 @@
     </unit>
     <unit id="landing.feature.pwa.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:578,581</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:587,590</note>
       </notes>
       <segment>
-        <source>Direkt aus dem Browser als App installieren – mit Echtzeit-Sync zwischen allen Geräten und Tagesergebnis per Teilen-Button.</source>
+        <source>Direkt aus dem Browser als App installieren – mit Echtzeit-Sync zwischen allen Geräten, Offline-Eintrag dank Service Worker und Tagesergebnis per Teilen-Button. Updates kommen automatisch.</source>
       </segment>
     </unit>
     <unit id="landing.feature.pwa.installed">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:585,587</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:595,597</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon aria-hidden=&quot;true&quot;&gt;" dispEnd="&lt;/mat-icon&gt;">check_circle</pc> Du nutzt bereits die installierte App </source>
@@ -3914,7 +4826,7 @@
     </unit>
     <unit id="landing.feature.pwa.install">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:598,600</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:608,610</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon aria-hidden=&quot;true&quot;&gt;" dispEnd="&lt;/mat-icon&gt;">download</pc> Jetzt als App installieren </source>
@@ -3922,7 +4834,7 @@
     </unit>
     <unit id="landing.feature.pwa.iosHint">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:605,608</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:615,618</note>
       </notes>
       <segment>
         <source> Auf iPhone &amp; iPad: Teilen-Symbol antippen und „Zum Home-Bildschirm“ wählen. </source>
@@ -3930,7 +4842,7 @@
     </unit>
     <unit id="landing.feature.privacy.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:616,618</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:626,628</note>
       </notes>
       <segment>
         <source>Privacy first &amp; 100 % kostenlos</source>
@@ -3938,15 +4850,15 @@
     </unit>
     <unit id="landing.feature.privacy.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:620,624</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:630,634</note>
       </notes>
       <segment>
-        <source>DSGVO-konform mit anpassbarer Cookie-Zustimmung. Dein Name auf der Bestenliste? Nur wenn du es willst. Kein Abo, keine Kreditkarte.</source>
+        <source>DSGVO-konform mit anpassbarer Cookie-Zustimmung. Reps werden lokal im Browser ausgewertet – kein Video verlässt dein Gerät. Dein Name auf der Bestenliste? Nur wenn du es willst. Kein Abo, keine Kreditkarte.</source>
       </segment>
     </unit>
     <unit id="ads.landing.aria">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:626</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:637</note>
       </notes>
       <segment>
         <source>Werbung</source>
@@ -3954,7 +4866,7 @@
     </unit>
     <unit id="landing.preview.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:635,637</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:646,648</note>
       </notes>
       <segment>
         <source> Deine Statistik auf einen Blick </source>
@@ -3962,7 +4874,7 @@
     </unit>
     <unit id="landing.preview.alt">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:642,643</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:653,654</note>
       </notes>
       <segment>
         <source>Vorschau der Statistikansicht</source>
@@ -3970,7 +4882,7 @@
     </unit>
     <unit id="landing.discover.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:783,784</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:794,795</note>
       </notes>
       <segment>
         <source>Mehr entdecken</source>
@@ -3978,7 +4890,7 @@
     </unit>
     <unit id="landing.discover.leaderboard.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:789,791</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:800,802</note>
       </notes>
       <segment>
         <source>Bestenliste</source>
@@ -3986,7 +4898,7 @@
     </unit>
     <unit id="landing.discover.leaderboard.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:793,796</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:804,807</note>
       </notes>
       <segment>
         <source> Vergleiche dich mit der Community: Top-Reps für heute, die letzten 7 Tage und die letzten 30 Tage. Privacy first – dein Name erscheint nur, wenn du es willst. </source>
@@ -3994,7 +4906,7 @@
     </unit>
     <unit id="landing.discover.leaderboard.cta">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:803,806</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:814,817</note>
       </notes>
       <segment>
         <source>Zur Bestenliste</source>
@@ -4002,7 +4914,7 @@
     </unit>
     <unit id="landing.discover.blog.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:812,814</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:823,825</note>
       </notes>
       <segment>
         <source>Blog</source>
@@ -4010,7 +4922,7 @@
     </unit>
     <unit id="landing.discover.blog.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:816,819</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:827,830</note>
       </notes>
       <segment>
         <source> Tipps, Hintergrundwissen und Motivation rund um Liegestütze – von Einsteiger bis Fortgeschritten. Viele Artikel verlinken direkt auf den passenden Trainingsplan. </source>
@@ -4018,7 +4930,7 @@
     </unit>
     <unit id="landing.discover.blog.cta">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:826,828</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:837,839</note>
       </notes>
       <segment>
         <source>Zum Blog</source>
