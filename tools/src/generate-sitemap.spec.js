@@ -7,11 +7,13 @@ const {
   extractTrainingPlanSlugs,
   extractPushupTypes,
   extractPushupTypeSlugs,
+  extractExerciseWikiSlugs,
   scanMarkdownBlogPosts,
   buildUrl,
   buildBlogRoutes,
   buildTrainingPlanRoutes,
   buildPushupTypeRoutes,
+  buildExerciseWikiRoutes,
   generateSitemap,
 } = require('./generate-sitemap');
 
@@ -30,6 +32,7 @@ describe('generate-sitemap', () => {
         '/blog',
         '/training-plans',
         '/wiki/liegestuetz-typen',
+        '/wiki/uebungen',
         '/leaderboard',
         '/impressum',
         '/datenschutz',
@@ -149,6 +152,52 @@ describe('generate-sitemap', () => {
         lang: 'en',
         path: '/wiki/liegestuetz-typen/diamond-pushup',
       });
+    });
+  });
+
+  describe('extractExerciseWikiSlugs', () => {
+    it('parses slug from EXERCISE_WIKI_CATALOG entries', () => {
+      const source = `
+        export const EXERCISE_WIKI_CATALOG = [
+          {
+            id: 'plank.standard',
+            categoryId: 'core',
+            slug: 'plank',
+            difficulty: 'beginner',
+            icon: 'horizontal_rule',
+          },
+          {
+            id: 'legs.squats',
+            categoryId: 'squat',
+            slug: 'squats',
+            difficulty: 'beginner',
+            icon: 'airline_seat_legroom_reduced',
+          },
+        ];
+      `;
+      expect(extractExerciseWikiSlugs(source)).toEqual(['plank', 'squats']);
+    });
+
+    it('returns empty array when the catalog is missing', () => {
+      expect(extractExerciseWikiSlugs('// no catalog here')).toEqual([]);
+    });
+  });
+
+  describe('buildExerciseWikiRoutes', () => {
+    it('emits a route per slug under /wiki/uebungen', () => {
+      const routes = buildExerciseWikiRoutes(['plank', 'squats']);
+      expect(routes).toEqual([
+        {
+          path: '/wiki/uebungen/plank',
+          changefreq: 'monthly',
+          priority: '0.6',
+        },
+        {
+          path: '/wiki/uebungen/squats',
+          changefreq: 'monthly',
+          priority: '0.6',
+        },
+      ]);
     });
   });
 

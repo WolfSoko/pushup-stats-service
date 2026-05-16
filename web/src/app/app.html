@@ -75,6 +75,16 @@
 
       <a
         mat-list-item
+        routerLink="/wiki/uebungen"
+        routerLinkActive="active"
+        (click)="navOpen.set(false)"
+      >
+        <mat-icon matListItemIcon>auto_stories</mat-icon>
+        <span matListItemTitle i18n="@@nav.exercises">Übungen</span>
+      </a>
+
+      <a
+        mat-list-item
         routerLink="/history"
         routerLinkActive="active"
         (click)="navOpen.set(false)"
@@ -214,6 +224,9 @@
           routerLink="/wiki/liegestuetz-typen"
           i18n="@@footer.pushupTypes"
           >Liegestütztypen</a
+        >
+        <a mat-button routerLink="/wiki/uebungen" i18n="@@footer.exercises"
+          >Übungen</a
         >
         <a mat-button routerLink="/impressum" i18n="@@footer.impressum"
           >Impressum</a

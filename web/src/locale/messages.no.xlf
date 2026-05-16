@@ -4792,6 +4792,12 @@ Deine Position: # ·  Reps        </source>
         <target>Armhevingstyper</target>
       </segment>
     </unit>
+    <unit id="footer.exercises">
+      <segment state="translated">
+        <source>Übungen</source>
+        <target>Øvelser</target>
+      </segment>
+    </unit>
     <unit id="footer.impressum">
       <segment state="translated">
         <source>Impressum</source>
@@ -5386,6 +5392,12 @@ Deine Position: # ·  Reps        </source>
       <segment state="translated">
         <source>Liegestütztypen</source>
         <target>Armhevningsvariasjoner</target>
+      </segment>
+    </unit>
+    <unit id="nav.exercises">
+      <segment state="translated">
+        <source>Übungen</source>
+        <target>Øvelser</target>
       </segment>
     </unit>
     <unit id="seo.trainingPlans.title">
@@ -6072,6 +6084,74 @@ Deine Position: # ·  Reps        </source>
       <segment state="translated">
         <source>Fortgeschritten</source>
         <target>Avansert</target>
+      </segment>
+    </unit>
+
+    <!-- Exercises wiki page -->
+    <unit id="seo.wiki.exercises.title">
+      <segment state="translated">
+        <source>Übungen erklärt – Pushup Tracker</source>
+        <target>Øvelser forklart – Pushup Tracker</target>
+      </segment>
+    </unit>
+    <unit id="seo.wiki.exercises.description">
+      <segment state="translated">
+        <source>Saubere Ausführung der Übungen, die du in Pushup Tracker mitloggst – Kniebeugen, Klimmzüge, Plank, Dehnübungen und mehr.</source>
+        <target>Ren utførelse av hver øvelse du kan logge i Pushup Tracker — knebøy, pull-ups, planke, tøying og mer.</target>
+      </segment>
+    </unit>
+    <unit id="seo.wiki.exercise.titleSuffix">
+      <segment state="translated">
+        <source>Anleitung &amp; Technik | Pushup Tracker</source>
+        <target>Veiledning &amp; teknikk | Pushup Tracker</target>
+      </segment>
+    </unit>
+    <unit id="wiki.exercises.back">
+      <segment state="translated">
+        <source>Zurück zu den Trainingsplänen</source>
+        <target>Tilbake til treningsplaner</target>
+      </segment>
+    </unit>
+    <unit id="wiki.exercises.title">
+      <segment state="translated">
+        <source> Übungen — saubere Ausführung </source>
+        <target> Øvelser — ren utførelse </target>
+      </segment>
+    </unit>
+    <unit id="wiki.exercises.intro">
+      <segment state="translated">
+        <source> Kurzanleitungen für alle Übungen, die du in der App tracken kannst — von Kniebeugen über Klimmzüge bis zu Mobilitäts-Drills. </source>
+        <target> Korte guider for hver øvelse du kan logge i appen — fra knebøy og pull-ups til mobilitetsdrills. </target>
+      </segment>
+    </unit>
+    <unit id="wiki.exercises.tocTitle">
+      <segment state="translated">
+        <source>Übersicht</source>
+        <target>Oversikt</target>
+      </segment>
+    </unit>
+    <unit id="wiki.exercises.viewDetail">
+      <segment state="translated">
+        <source>Detailseite öffnen</source>
+        <target>Åpne detalj</target>
+      </segment>
+    </unit>
+    <unit id="wiki.exercise.detail.back">
+      <segment state="translated">
+        <source> Übungen </source>
+        <target> Øvelser </target>
+      </segment>
+    </unit>
+    <unit id="wiki.exercise.detail.toList">
+      <segment state="translated">
+        <source>Alle Übungen</source>
+        <target>Alle øvelser</target>
+      </segment>
+    </unit>
+    <unit id="wiki.exercise.detail.cta">
+      <segment state="translated">
+        <source>Zu den Trainingsplänen</source>
+        <target>Til treningsplaner</target>
       </segment>
     </unit>
     <unit id="plan.day.rest">
