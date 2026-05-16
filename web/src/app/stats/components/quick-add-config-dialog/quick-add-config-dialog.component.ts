@@ -216,8 +216,8 @@ export class QuickAddConfigDialogComponent {
       return {
         reps: c?.reps ?? null,
         // Auto-count rows can't also live in SpeedDial — see `setAutoCount`
-        // for the full rationale (Codex P2, PR #360). Strip the flag at load
-        // time so we don't carry an inconsistent legacy config back into save.
+        // for the full rationale. Strip the flag at load time so we don't
+        // carry an inconsistent legacy config back into save.
         inSpeedDial:
           effectiveMode === 'auto-count' ? false : (c?.inSpeedDial ?? false),
         exerciseId,
@@ -264,8 +264,8 @@ export class QuickAddConfigDialogComponent {
     if (!this.isAutoCountCapable(prev.exerciseId)) return;
     // Auto-count + SpeedDial is incoherent: the FAB pipeline only knows how
     // to fire a fixed-reps `quickAdd(n)` call, so a SpeedDial item paired
-    // with `reps: 0` would surface as a broken `+0 Reps` action (Codex P2,
-    // PR #360). Force the flag off here, and the read-time facade filter
+    // with `reps: 0` would surface as a broken `+0 Reps` action. Force the
+    // flag off here; the read-time facade filter
     // (`AppDataFacade.quickAddSuggestions`) defends against legacy configs.
     const inSpeedDial = checked ? false : prev.inSpeedDial;
     next[index] = {

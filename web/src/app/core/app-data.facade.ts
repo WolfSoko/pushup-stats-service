@@ -64,7 +64,7 @@ export class AppDataFacade {
       // exclude auto-count rows (they persist `reps: 0` as a sentinel —
       // see `QuickAddConfigDialogComponent.save`). Defends in depth
       // against legacy configs that still carry `inSpeedDial: true`
-      // alongside `mode: 'auto-count'` (Codex P2, PR #360).
+      // alongside `mode: 'auto-count'`.
       return configured
         .filter((q) => q.inSpeedDial && q.mode !== 'auto-count' && q.reps > 0)
         .map((q) => q.reps)

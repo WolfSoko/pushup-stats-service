@@ -210,11 +210,11 @@ describe('AppDataFacade', () => {
       expect(facade.quickAddSuggestions()).toEqual([]);
     });
 
-    // Codex P2, PR #360: a legacy/cross-device-edited config could carry
-    // `inSpeedDial: true` alongside `mode: 'auto-count'` (which persists
-    // `reps: 0` as a sentinel). The FAB would otherwise surface a broken
-    // `+0 Reps` action that hits `quickAdd(0)`. Filter must drop both
-    // auto-count rows and any non-positive reps.
+    // A legacy / cross-device-edited config can carry `inSpeedDial: true`
+    // alongside `mode: 'auto-count'` (which persists `reps: 0` as a
+    // sentinel). The FAB would otherwise surface a broken `+0 Reps`
+    // action that hits `quickAdd(0)`. Filter must drop both auto-count
+    // rows and any non-positive reps.
     it('Given configured quickAdds with an auto-count entry in SpeedDial, Then it is filtered out', async () => {
       userConfigApiMock.getConfig.mockReturnValue(
         of({

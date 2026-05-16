@@ -25,10 +25,10 @@ import {
 } from '@pu-stats/data-access';
 import { UserContextService } from '@pu-auth/auth';
 import {
-  appendLocalOffset,
   displayPushupType,
   findExerciseDefinition,
   formatEntryDisplay,
+  nowLocalIsoTimestamp,
   PUSHUP_QUICK_ADD_EXERCISE_ID,
   QUICK_LOG_REPS_MAX,
   QUICK_LOG_REPS_MIN,
@@ -143,7 +143,7 @@ export class StatsDashboardComponent {
   // Exposed for the template so the quick-add branch can compare against
   // the canonical sentinel instead of the literal string 'pushup' —
   // keeps one source of truth between the schema, the orchestrator, and
-  // the dashboard (Copilot + CodeRabbit review, PR #360).
+  // the dashboard.
   protected readonly PUSHUP_QUICK_ADD_EXERCISE_ID =
     PUSHUP_QUICK_ADD_EXERCISE_ID;
   readonly adSlotDashboardInline = this.store.adSlotDashboardInline;
@@ -397,14 +397,4 @@ export class StatsDashboardComponent {
     this.appData.reloadAfterMutation();
     this.refreshCounter.update((c) => c + 1);
   }
-}
-
-function nowLocalIsoTimestamp(): string {
-  const now = new Date();
-  const y = now.getFullYear();
-  const m = String(now.getMonth() + 1).padStart(2, '0');
-  const d = String(now.getDate()).padStart(2, '0');
-  const hh = String(now.getHours()).padStart(2, '0');
-  const mm = String(now.getMinutes()).padStart(2, '0');
-  return appendLocalOffset(`${y}-${m}-${d}T${hh}:${mm}`);
 }

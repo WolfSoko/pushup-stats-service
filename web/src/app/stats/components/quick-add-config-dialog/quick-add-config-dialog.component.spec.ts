@@ -255,7 +255,7 @@ describe('QuickAddConfigDialogComponent', () => {
   // be coerced back to `mode: 'reps'` at load time — separate code path
   // from setExerciseId. Otherwise the row would render the "Auto" badge
   // but `autoCountProfileForCatalogId()` returns null on click → silent
-  // no-op (CodeRabbit review, PR #360).
+  // no-op.
   describe('Given a persisted unsupported auto-count config on load', () => {
     it('Then the row coerces back to mode "reps" before save', async () => {
       setup([
@@ -292,10 +292,10 @@ describe('QuickAddConfigDialogComponent', () => {
     });
   });
 
-  // Codex P2: enabling Auto-Messung on a row that previously had
-  // `inSpeedDial: true` would persist `reps: 0, inSpeedDial: true`,
-  // surfacing a broken `+0 Reps` FAB item. setAutoCount() must clear the
-  // SpeedDial flag, and save() must defensively coerce it as well.
+  // Enabling Auto-Messung on a row that previously had `inSpeedDial: true`
+  // would otherwise persist `reps: 0, inSpeedDial: true`, surfacing a
+  // broken `+0 Reps` FAB item. setAutoCount() must clear the SpeedDial
+  // flag, and save() must defensively coerce it as well.
   describe('When auto-count is enabled on a slot that had inSpeedDial=true', () => {
     it('Then save persists inSpeedDial=false alongside mode "auto-count"', async () => {
       setup([{ reps: 10, inSpeedDial: true }]); // pushup, in speed dial

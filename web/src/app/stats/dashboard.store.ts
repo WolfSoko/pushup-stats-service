@@ -48,7 +48,7 @@ export interface QuickAddButtonViewModel {
    * Stable per-slot tracking key for `@for`. Derived from the slot index
    * (not from `reps`/`mode`/`exerciseId`) so editing an existing button
    * reuses its DOM node and duplicate buttons (same reps/exercise/mode)
-   * don't collide — CodeRabbit + Copilot review, PR #360.
+   * don't collide.
    */
   readonly key: string;
   readonly mode: QuickAddMode;

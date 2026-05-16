@@ -8,8 +8,8 @@ import {
   StatsApiService,
 } from '@pu-stats/data-access';
 import {
-  appendLocalOffset,
   type ExerciseEntryCreate,
+  nowLocalIsoTimestamp,
   PUSHUP_QUICK_ADD_EXERCISE_ID,
 } from '@pu-stats/models';
 import { QuickAddBridgeService } from '@pu-stats/quick-add';
@@ -103,7 +103,7 @@ export class QuickAddOrchestrationService {
   add(reps: number): void {
     this.statsApi
       .createPushup({
-        timestamp: nowLocalIso(),
+        timestamp: nowLocalIsoTimestamp(),
         reps,
         source: 'quick-add',
       })
@@ -141,7 +141,7 @@ export class QuickAddOrchestrationService {
     this._fillToGoalInFlight.set(true);
     this.statsApi
       .createPushup({
-        timestamp: nowLocalIso(),
+        timestamp: nowLocalIsoTimestamp(),
         reps: gap,
         source: 'goal-fill',
       })
@@ -258,7 +258,7 @@ export class QuickAddOrchestrationService {
       await import('../stats/components/training-entry-dialog/training-entry-dialog.component');
     const data: ExerciseEntryDialogData = {
       kind: 'exercise',
-      timestamp: nowLocalIso(),
+      timestamp: nowLocalIsoTimestamp(),
       exerciseId: HOLD_TIMER_CATALOG_ID[result.exerciseId],
       durationSec: result.durationSec,
     };
@@ -305,7 +305,7 @@ export class QuickAddOrchestrationService {
     if (result.exerciseId === 'pushup') {
       return {
         kind: 'pushup',
-        timestamp: nowLocalIso(),
+        timestamp: nowLocalIsoTimestamp(),
         reps: result.reps,
         sets: [result.reps],
         source: 'auto-count',
@@ -314,7 +314,7 @@ export class QuickAddOrchestrationService {
     }
     return {
       kind: 'exercise',
-      timestamp: nowLocalIso(),
+      timestamp: nowLocalIsoTimestamp(),
       exerciseId: EXERCISE_CATALOG_ID[result.exerciseId],
       reps: result.reps,
       sets: [result.reps],
@@ -380,16 +380,6 @@ export class QuickAddOrchestrationService {
       }
     );
   }
-}
-
-function nowLocalIso(): string {
-  const now = new Date();
-  const y = now.getFullYear();
-  const m = String(now.getMonth() + 1).padStart(2, '0');
-  const d = String(now.getDate()).padStart(2, '0');
-  const hh = String(now.getHours()).padStart(2, '0');
-  const mm = String(now.getMinutes()).padStart(2, '0');
-  return appendLocalOffset(`${y}-${m}-${d}T${hh}:${mm}`);
 }
 
 /**
