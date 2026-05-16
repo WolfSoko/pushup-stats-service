@@ -312,10 +312,17 @@ describe('StatsDashboardComponent', () => {
         // Each tile's href carries the entry id as a `#entry-<id>`
         // fragment — the history page reads the fragment, finds the
         // row, and scrolls/highlights it inside the virtualized table.
+        // The per-tile `data-entry-id` attribute lets E2E tests target
+        // a specific tile without falling back to nth-of-type selectors.
         for (const tile of Array.from(tiles)) {
           const href = tile.getAttribute('href') ?? '';
           expect(href).toContain('/history');
           expect(href).toMatch(/#entry-[^&?]+$/);
+          const entryId = tile.getAttribute('data-entry-id');
+          expect(entryId).toBeTruthy();
+          // Fragment id must match the data-entry-id so the dashboard
+          // tile and the history-row scroll target stay in lockstep.
+          expect(href).toContain(`#entry-${entryId}`);
         }
       });
 

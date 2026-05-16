@@ -83,7 +83,11 @@ jobs:
         working-directory: data-store
         env:
           GOOGLE_APPLICATION_CREDENTIALS: ${{ runner.temp }}/firebase-sa.json
-      - uses: FirebaseExtended/action-hosting-deploy@v0.10.0
+      # Pinned to the v0.10.0 commit (latest release as of 2026-05) per
+      # GitHub's third-party-action hardening guidance — keeps the deploy
+      # immune to a future v0 retag (and removes the ambiguity Copilot
+      # flagged on the floating v0.10.0 semver alias).
+      - uses: FirebaseExtended/action-hosting-deploy@e2eda2e106cfa35cdbcf4ac9ddaf6c4756df2c8c # v0.10.0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_PUSHUP_STATS_STAGING }}

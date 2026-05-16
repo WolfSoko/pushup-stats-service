@@ -360,6 +360,7 @@
           <a
             class="recent-exercise-tile"
             data-testid="dashboard-recent-exercise-tile"
+            [attr.data-entry-id]="entry._id"
             routerLink="/history"
             [fragment]="'entry-' + entry._id"
             [attr.aria-label]="tileAriaLabel(entry)"

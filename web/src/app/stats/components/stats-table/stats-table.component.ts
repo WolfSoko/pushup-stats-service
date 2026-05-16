@@ -1,7 +1,4 @@
-import {
-  CdkVirtualScrollViewport,
-  ScrollingModule,
-} from '@angular/cdk/scrolling';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 import { DatePipe, isPlatformBrowser, NgTemplateOutlet } from '@angular/common';
 import {
   Component,
@@ -146,7 +143,6 @@ export class StatsTableComponent {
   };
 
   readonly sort = viewChild(MatSort);
-  private readonly viewport = viewChild(CdkVirtualScrollViewport);
 
   /**
    * The id of the entry to scroll-into-view and briefly highlight after
@@ -258,27 +254,27 @@ export class StatsTableComponent {
     });
 
     // Drill-in from the dashboard tile: when a `#entry-<id>` fragment
-    // resolves to a row in the current data set, scroll the virtual
-    // viewport to it. Rows are virtualized, so a plain anchor link
-    // wouldn't reach one outside the initially-rendered window.
-    // Indexing off the input list — the page lands fresh with default
-    // sort/filter on a deep-link, so the input order matches what
-    // MatTableDataSource will render.
+    // resolves to a row in the current data set, scroll the matching
+    // row into view. The cdk-virtual-scroll-viewport here only wraps a
+    // scrollable container — the inner mat-table doesn't use
+    // *cdkVirtualFor, so every row is in the DOM and a plain
+    // getElementById/scrollIntoView is the source of truth (a viewport
+    // scrollToIndex would compute `index * itemSize`, which only
+    // coincidentally matches the rendered row position when input
+    // order and the active matSort happen to line up).
     effect(() => {
       const targetId = this.highlightEntryId();
-      if (!targetId || !this.isBrowser) return;
       const rows = this.unifiedEntries();
-      const index = rows.findIndex((r) => r._id === targetId);
-      if (index < 0) return;
-      const vp = this.viewport();
-      queueMicrotask(() => {
-        if (vp) {
-          vp.scrollToIndex(index, 'smooth');
-        } else {
-          document
-            .getElementById(`entry-${targetId}`)
-            ?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
+      if (!targetId || !this.isBrowser) return;
+      if (!rows.some((r) => r._id === targetId)) return;
+      // setTimeout (not queueMicrotask) — MatTable re-renders rows
+      // asynchronously after dataSource.data is assigned in the sibling
+      // effect, so the matching <mat-row> may not exist in the DOM
+      // until the next macrotask.
+      setTimeout(() => {
+        document
+          .getElementById(`entry-${targetId}`)
+          ?.scrollIntoView({ behavior: 'smooth', block: 'center' });
       });
     });
   }
