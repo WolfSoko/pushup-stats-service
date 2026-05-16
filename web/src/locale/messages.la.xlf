@@ -1643,8 +1643,8 @@
       <notes>
         <note category="location">web/src/app/app.routes.ts:16</note>
       </notes>
-      <segment state="translated">
-        <source>Liegestütze tracken mit kostenloser Web-App: Trainingspläne, 30-Tage-Challenge, Tagesziel, Streaks und Bestenliste – jetzt auch mit Sit-ups, Kniebeugen, Plank und Laufen. Mobil, offline-fähig, mit Live-Sync.</source>
+      <segment state="needs-translation">
+        <source>Kostenlose Web-App für Liegestütze und mehr: Reps per Kamera-KI im Browser automatisch zählen, plus Trainingspläne, 30-Tage-Challenge, Heatmap, Streaks, Tagesziele und Bestenliste – auch für Sit-ups, Kniebeugen, Klimmzüge, Plank und Laufen. Mobil, offline-fähig, mit Live-Sync.</source>
         <target>Pressiones cum gratuita applicatione interretiali metiri: rationes exercitii, certamen XXX dierum, propositum cotidianum, series et tabula primorum — nunc etiam cum sedationibus, genuflexionibus, planca et cursu. Mobile, sine rete, cum synchronia viva.</target>
       </segment>
     </unit>
@@ -2636,8 +2636,8 @@
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:19,23</note>
       </notes>
-      <segment state="translated">
-        <source> Liegestütze tracken in Sekunden – mit Trends, Streaks und Live-Sync. Plus Sit-ups, Kniebeugen, Plank und Laufen, wenn du mehr willst. </source>
+      <segment state="needs-translation">
+        <source> Reps live per Kamera-KI zählen – Liegestütze, Kniebeugen, Klimmzüge, Sit-ups sowie Halte-Timer für Plank &amp; Hollow-Hold. Dazu Trainingspläne, Heatmap, Streaks, Tagesziele und Live-Sync auf allen Geräten. </source>
         <target> Pressiones in secundis metiri – cum tendentiis, seriebus et synchronia viva. Praeterea sedationes, genuflexiones, planca et cursus, cum plura velis. </target>
       </segment>
     </unit>
@@ -2819,8 +2819,8 @@
       </segment>
     </unit>
     <unit id="landing.feature.autoCount.body">
-      <segment state="translated">
-        <source>Stell das Handy hin, öffne die Auto-Zählung und mach deine Liegestütze, Kniebeugen, Klimmzüge oder Sit-ups – unsere KI erkennt deine Bewegung in Echtzeit direkt im Browser und zählt automatisch mit. Der Live-Form-Check zeigt Winkel und Sicherheit, damit du jederzeit weißt, dass die Zählung sauber läuft.</source>
+      <segment state="needs-translation">
+        <source>Stell das Handy hin, öffne den Auto-Zähler und leg los: Die KI erkennt Liegestütze, Kniebeugen, Klimmzüge und Sit-ups in Echtzeit direkt im Browser und zählt jede saubere Wiederholung mit. Für Plank und Hollow-Hold läuft stattdessen ein automatischer Halte-Timer. Der Live-Form-Check zeigt Winkel, Phase und Erkennungs-Sicherheit – ohne Cloud, ganz ohne Daten-Upload.</source>
         <target>Telephonum pone, numeratorem automaticum aperi et pulsus, genuflexiones, tractus aut sessiones fac – intellegentia artificialis nostra motum tuum tempore vero in navigatro ipso cognoscit et automatice numerat. Form-Check vivus angulum et fiduciam monstrat, ut scias numerationem mundam esse.</target>
       </segment>
     </unit>
@@ -2837,8 +2837,8 @@
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:284,286</note>
       </notes>
-      <segment state="translated">
-        <source>Multi-Set Tracking</source>
+      <segment state="needs-translation">
+        <source>Sätze &amp; Intervalle</source>
         <target>Multi-parant Semita</target>
       </segment>
     </unit>
@@ -2846,8 +2846,8 @@
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:288,290</note>
       </notes>
-      <segment state="translated">
-        <source>Erfasse jeden Satz einzeln – z. B. 12 + 10 + 8. Die App summiert automatisch und zeigt deine durchschnittliche Set-Größe.</source>
+      <segment state="needs-translation">
+        <source>Erfasse jeden Satz einzeln – z.&#x202F;B. 12&#xA0;+&#xA0;10&#xA0;+&#xA0;8. Die App summiert automatisch, zeigt deine Set-Verteilung und vergleicht den Aufbau über Wochen. Für Lauf- und Ausdauer-Workouts trägst du genauso einfach Intervalle samt Pace ein.</source>
         <target>Record each sentence individually – e.g. E.g. 12 + 10 + 8. Summa app automatice demonstrat ac magnitudinem tuam mediocris statuta ostendit.</target>
       </segment>
     </unit>
@@ -2864,8 +2864,8 @@
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:357,360</note>
       </notes>
-      <segment state="translated">
-        <source>Verlaufsdiagramme und KPI-Karten für jede Übung: Liegestütz-Varianten (Standard, Wide, Diamond), Sit-ups, Kniebeugen, Plank und Laufen – mit frei wählbarem Zeitraum.</source>
+      <segment state="needs-translation">
+        <source>Tabbed Analyse mit Verlaufsdiagrammen, KPI-Karten und Kategorie-Vergleich: Liegestütz-Varianten (Standard, Wide, Diamond), Klimmzüge, Sit-ups, Kniebeugen, Plank-Zeiten und Laufen inkl. Pace – jede Übung mit ihrer eigenen Maßeinheit, Zeitraum frei wählbar.</source>
         <target>Diagrammata tendentiarum et tabellae KPI pro omni exercitatione: varietates pressionum (Standard, Wide, Diamond), sedationes, genuflexiones, planca et cursus — cum tempore libere eligendo.</target>
       </segment>
     </unit>
@@ -2882,8 +2882,8 @@
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:458,461</note>
       </notes>
-      <segment state="translated">
-        <source>Dreifacher Fortschrittsbalken hält dich auf Kurs. Streak-Anzeige belohnt dranbleiben, Konfetti feiert dein erreichtes Tagesziel.</source>
+      <segment state="needs-translation">
+        <source>Dreifacher Fortschrittsbalken hält dich auf Kurs – Tages-, Wochen- und Monatsziel auf einen Blick. Läuft gerade ein Trainingsplan, übernimmt der das Tagesziel automatisch. Die Streak-Anzeige belohnt Dranbleiben, Konfetti feiert dein erreichtes Ziel.</source>
         <target>Triple progress bar keeps you on track. Streak display rewards you for sticking with it, confetti celebrates your daily goal achieved.</target>
       </segment>
     </unit>
@@ -2918,8 +2918,8 @@
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:520,523</note>
       </notes>
-      <segment state="translated">
-        <source>Eintrag in 2 Sekunden über den Floating Action Button oder Schnellaktionen direkt im Dashboard – ganz ohne Dialog.</source>
+      <segment state="needs-translation">
+        <source>Ein Tap auf den Floating Action Button oder eine Schnellaktion im Dashboard – Eintrag in zwei Sekunden, komplett ohne Dialog. Detaillierte Erfassung mit Sätzen, Intervallen, Dauer oder Distanz erreichst du auf Wunsch im selben Flow.</source>
         <target>Entry in 2 seconds using the floating action button or quick actions directly in the dashboard - without any dialog.</target>
       </segment>
     </unit>
@@ -2936,8 +2936,8 @@
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:534,538</note>
       </notes>
-      <segment state="translated">
-        <source>Die Schnellaktionen lernen aus deiner Historie und schlagen passende Wiederholungen vor – oder du konfigurierst eigene Buttons.</source>
+      <segment state="needs-translation">
+        <source>Die Schnellaktionen lernen aus deiner Historie und schlagen passende Wiederholungen vor. Du willst eigene Presets? Konfiguriere bis zu sechs Buttons pro Übung selbst – inklusive Standard-Variante für den FAB.</source>
         <target>The quick actions learn from your history and suggest suitable repetitions - or you can configure your own buttons.</target>
       </segment>
     </unit>
@@ -2954,8 +2954,8 @@
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:548,551</note>
       </notes>
-      <segment state="translated">
-        <source>Direkt aus dem Browser als App installieren – mit Echtzeit-Sync zwischen allen Geräten und Tagesergebnis per Teilen-Button.</source>
+      <segment state="needs-translation">
+        <source>Direkt aus dem Browser als App installieren – mit Echtzeit-Sync zwischen allen Geräten, Offline-Eintrag dank Service Worker und Tagesergebnis per Teilen-Button. Updates kommen automatisch.</source>
         <target>Eam directe e navigatro tamquam applicationem installa – cum synchronia tempore reali inter omnia instrumenta et eventu cotidiano per buttonem communicatum.</target>
       </segment>
     </unit>
@@ -2999,8 +2999,8 @@
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:562,566</note>
       </notes>
-      <segment state="translated">
-        <source>DSGVO-konform mit anpassbarer Cookie-Zustimmung. Dein Name auf der Bestenliste? Nur wenn du es willst. Kein Abo, keine Kreditkarte.</source>
+      <segment state="needs-translation">
+        <source>DSGVO-konform mit anpassbarer Cookie-Zustimmung. Reps werden lokal im Browser ausgewertet – kein Video verlässt dein Gerät. Dein Name auf der Bestenliste? Nur wenn du es willst. Kein Abo, keine Kreditkarte.</source>
         <target>GDPR compliant with customizable cookie consent. Nomen tuum in ducisboard? Si vis tantum. Nulla subscriptio, nulla scidula.</target>
       </segment>
     </unit>

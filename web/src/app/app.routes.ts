@@ -13,7 +13,7 @@ export const appRoutes: Routes = [
     pathMatch: 'full',
     data: {
       seoTitle: $localize`:@@seo.landing.title:Liegestütze Tracker: Trainingsplan, Streaks & Bestenliste`,
-      seoDescription: $localize`:@@seo.landing.description:Liegestütze tracken mit kostenloser Web-App: Trainingspläne, 30-Tage-Challenge, Tagesziel, Streaks und Bestenliste – jetzt auch mit Sit-ups, Kniebeugen, Plank und Laufen. Mobil, offline-fähig, mit Live-Sync.`,
+      seoDescription: $localize`:@@seo.landing.description:Kostenlose Web-App für Liegestütze und mehr: Reps per Kamera-KI im Browser automatisch zählen, plus Trainingspläne, 30-Tage-Challenge, Heatmap, Streaks, Tagesziele und Bestenliste – auch für Sit-ups, Kniebeugen, Klimmzüge, Plank und Laufen. Mobil, offline-fähig, mit Live-Sync.`,
     },
     loadComponent: () =>
       import('./marketing/shell/landing-page.component').then(
