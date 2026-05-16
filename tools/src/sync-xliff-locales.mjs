@@ -84,7 +84,9 @@ async function main() {
         throw new Error(`${path}: cannot find closing tags`);
       }
       const insert = `${missing.join('\n')}\n${closingMatch[2]}</file>\n</xliff>\n`;
-      xml = xml.replace(closingMatch[0], `\n${insert}`);
+      // Function-form replacement so `$&`, `$1` etc. in any unit's
+      // source text are not interpreted as backreferences.
+      xml = xml.replace(closingMatch[0], () => `\n${insert}`);
     }
     await fs.writeFile(path, xml);
     console.log(

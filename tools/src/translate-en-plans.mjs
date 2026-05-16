@@ -38,7 +38,7 @@ const TRANSLATIONS = {
     'Symmetric 6-week plan for push-ups and pulling work (rows, pull-up negatives, face pulls). Avoids the classic &quot;push only&quot; imbalance and strengthens the posterior chain equally. One dedicated pull day per week on top of the push progression.',
   ],
   'plan.push-pull-6w.day.1.desc': [
-    'Push 3×10 saubere Liegestütze · Pull 3×8 invertierte Rudern, 90 s Pause',
+    'Push 3×10 saubere Liegestütze · Pull 3×8 invertierte Ruderzüge, 90 s Pause',
     'Push 3×10 clean push-ups · Pull 3×8 inverted rows, 90 s rest',
   ],
   'plan.push-pull-6w.day.2.desc': [
@@ -54,7 +54,7 @@ const TRANSLATIONS = {
     'Light day 2×10 · 3×12 face pulls',
   ],
   'plan.push-pull-6w.day.6.desc': [
-    'Push 3×12 · Pull 3×8 invertierte Rudern · Plank 3×30 s',
+    'Push 3×12 · Pull 3×8 invertierte Ruderzüge · Plank 3×30 s',
     'Push 3×12 · Pull 3×8 inverted rows · Plank 3×30 s',
   ],
   'plan.push-pull-6w.day.8.desc': [
@@ -74,7 +74,7 @@ const TRANSLATIONS = {
     'Light day 2×11 · 3×12 face pulls · shoulder mobility',
   ],
   'plan.push-pull-6w.day.13.desc': [
-    'Push 3×AMRAP · Pull 3×10 invertierte Rudern · Plank 3×40 s',
+    'Push 3×AMRAP · Pull 3×10 invertierte Ruderzüge · Plank 3×40 s',
     'Push 3×AMRAP · Pull 3×10 inverted rows · Plank 3×40 s',
   ],
   'plan.push-pull-6w.day.15.desc': [
@@ -255,7 +255,7 @@ const TRANSLATIONS = {
     'Peak circuit, 5 rounds — 15 push-ups · 20 squats · 15 glute bridges · 60 s plank',
   ],
   'plan.full-body-6w.day.38.desc': [
-    'Taper-Zirkel 4 Runden, kontrolliertes Tempo — 15 LS · 15 KB · 12 GB · 45 s Plank',
+    'Taper-Zirkel 4 Runden, kontrolliertes Tempo — 15 LS · 15 Kniebeugen · 12 Glute Bridges · 45 s Plank',
     'Taper circuit, 4 rounds, controlled tempo — 15 push-ups · 15 squats · 12 glute bridges · 45 s plank',
   ],
   'plan.full-body-6w.day.39.desc': [

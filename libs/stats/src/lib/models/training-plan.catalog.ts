@@ -905,7 +905,7 @@ const PUSH_PULL_BALANCE_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     30,
     [10, 10, 10],
-    $localize`:@@plan.push-pull-6w.day.1.desc:Push 3×10 saubere Liegestütze · Pull 3×8 invertierte Rudern, 90 s Pause`
+    $localize`:@@plan.push-pull-6w.day.1.desc:Push 3×10 saubere Liegestütze · Pull 3×8 invertierte Ruderzüge, 90 s Pause`
   ),
   d(
     2,
@@ -934,7 +934,7 @@ const PUSH_PULL_BALANCE_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     36,
     [12, 12, 12],
-    $localize`:@@plan.push-pull-6w.day.6.desc:Push 3×12 · Pull 3×8 invertierte Rudern · Plank 3×30 s`
+    $localize`:@@plan.push-pull-6w.day.6.desc:Push 3×12 · Pull 3×8 invertierte Ruderzüge · Plank 3×30 s`
   ),
   d(7, 'rest', 0, undefined, REST_DAY),
   // Week 2 — same scheme, +10 % volume.
@@ -972,7 +972,7 @@ const PUSH_PULL_BALANCE_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     42,
     [15, 14, 13],
-    $localize`:@@plan.push-pull-6w.day.13.desc:Push 3×AMRAP · Pull 3×10 invertierte Rudern · Plank 3×40 s`
+    $localize`:@@plan.push-pull-6w.day.13.desc:Push 3×AMRAP · Pull 3×10 invertierte Ruderzüge · Plank 3×40 s`
   ),
   d(14, 'rest', 0, undefined, REST_DAY),
   // Week 3 — 4 sets, balanced volume.
@@ -1315,7 +1315,7 @@ const FULL_BODY_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     60,
     [15, 15, 15, 15],
-    $localize`:@@plan.full-body-6w.day.38.desc:Taper-Zirkel 4 Runden, kontrolliertes Tempo — 15 LS · 15 KB · 12 GB · 45 s Plank`
+    $localize`:@@plan.full-body-6w.day.38.desc:Taper-Zirkel 4 Runden, kontrolliertes Tempo — 15 LS · 15 Kniebeugen · 12 Glute Bridges · 45 s Plank`
   ),
   d(
     39,
@@ -1546,7 +1546,7 @@ const HIIT_BURNER_DAYS: ReadonlyArray<TrainingPlanDay> = [
     10,
     'main',
     36,
-    [12, 12, 12],
+    [8, 7, 6, 5, 4, 3, 2, 1],
     $localize`:@@plan.hiit-4w.day.10.desc:HIIT-Ladder 8-7-6-5-4-3-2-1 — LS · Burpees (jede Runde 1 Wiederholung weniger)`
   ),
   d(
@@ -1610,7 +1610,7 @@ const HIIT_BURNER_DAYS: ReadonlyArray<TrainingPlanDay> = [
     24,
     'main',
     60,
-    [15, 15, 15, 15],
+    [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5],
     $localize`:@@plan.hiit-4w.day.24.desc:EMOM 12 min — pro Minute 5 LS · 5 Burpees · 10 Hampelmänner`
   ),
   d(
@@ -1625,7 +1625,7 @@ const HIIT_BURNER_DAYS: ReadonlyArray<TrainingPlanDay> = [
   d(
     28,
     'test',
-    50,
+    100,
     undefined,
     $localize`:@@plan.hiit-4w.day.28.desc:Konditionstest: 100 LS + 50 Burpees auf Zeit (Bestzeit notieren)`
   ),

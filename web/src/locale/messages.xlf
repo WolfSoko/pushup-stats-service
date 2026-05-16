@@ -1622,7 +1622,7 @@
         <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:908</note>
       </notes>
       <segment>
-        <source>Push 3×10 saubere Liegestütze · Pull 3×8 invertierte Rudern, 90 s Pause</source>
+        <source>Push 3×10 saubere Liegestütze · Pull 3×8 invertierte Ruderzüge, 90 s Pause</source>
       </segment>
     </unit>
     <unit id="plan.push-pull-6w.day.2.desc">
@@ -1654,7 +1654,7 @@
         <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:937</note>
       </notes>
       <segment>
-        <source>Push 3×12 · Pull 3×8 invertierte Rudern · Plank 3×30 s</source>
+        <source>Push 3×12 · Pull 3×8 invertierte Ruderzüge · Plank 3×30 s</source>
       </segment>
     </unit>
     <unit id="plan.push-pull-6w.day.8.desc">
@@ -1694,7 +1694,7 @@
         <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:975</note>
       </notes>
       <segment>
-        <source>Push 3×AMRAP · Pull 3×10 invertierte Rudern · Plank 3×40 s</source>
+        <source>Push 3×AMRAP · Pull 3×10 invertierte Ruderzüge · Plank 3×40 s</source>
       </segment>
     </unit>
     <unit id="plan.push-pull-6w.day.15.desc">
@@ -2038,7 +2038,7 @@
         <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1318</note>
       </notes>
       <segment>
-        <source>Taper-Zirkel 4 Runden, kontrolliertes Tempo — 15 LS · 15 KB · 12 GB · 45 s Plank</source>
+        <source>Taper-Zirkel 4 Runden, kontrolliertes Tempo — 15 LS · 15 Kniebeugen · 12 Glute Bridges · 45 s Plank</source>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.39.desc">

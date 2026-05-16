@@ -8788,7 +8788,7 @@ Deine Position: # ·  Reps        </source>
     </unit>
     <unit id="plan.push-pull-6w.day.1.desc">
       <segment state="translated">
-        <source>Push 3×10 saubere Liegestütze · Pull 3×8 invertierte Rudern, 90 s Pause</source>
+        <source>Push 3×10 saubere Liegestütze · Pull 3×8 invertierte Ruderzüge, 90 s Pause</source>
         <target>Push 3×10 clean push-ups · Pull 3×8 inverted rows, 90 s rest</target>
       </segment>
     </unit>
@@ -8812,7 +8812,7 @@ Deine Position: # ·  Reps        </source>
     </unit>
     <unit id="plan.push-pull-6w.day.6.desc">
       <segment state="translated">
-        <source>Push 3×12 · Pull 3×8 invertierte Rudern · Plank 3×30 s</source>
+        <source>Push 3×12 · Pull 3×8 invertierte Ruderzüge · Plank 3×30 s</source>
         <target>Push 3×12 · Pull 3×8 inverted rows · Plank 3×30 s</target>
       </segment>
     </unit>
@@ -8842,7 +8842,7 @@ Deine Position: # ·  Reps        </source>
     </unit>
     <unit id="plan.push-pull-6w.day.13.desc">
       <segment state="translated">
-        <source>Push 3×AMRAP · Pull 3×10 invertierte Rudern · Plank 3×40 s</source>
+        <source>Push 3×AMRAP · Pull 3×10 invertierte Ruderzüge · Plank 3×40 s</source>
         <target>Push 3×AMRAP · Pull 3×10 inverted rows · Plank 3×40 s</target>
       </segment>
     </unit>
@@ -9100,7 +9100,7 @@ Deine Position: # ·  Reps        </source>
     </unit>
     <unit id="plan.full-body-6w.day.38.desc">
       <segment state="translated">
-        <source>Taper-Zirkel 4 Runden, kontrolliertes Tempo — 15 LS · 15 KB · 12 GB · 45 s Plank</source>
+        <source>Taper-Zirkel 4 Runden, kontrolliertes Tempo — 15 LS · 15 Kniebeugen · 12 Glute Bridges · 45 s Plank</source>
         <target>Taper circuit, 4 rounds, controlled tempo — 15 push-ups · 15 squats · 12 glute bridges · 45 s plank</target>
       </segment>
     </unit>
