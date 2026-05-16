@@ -8626,688 +8626,688 @@
         <target>Plank‑Timer</target>
       </segment>
     </unit>
-        <unit id="plan.push-pull-6w.day.1.desc">
-      <segment state="initial">
+    <unit id="plan.push-pull-6w.day.1.desc">
+      <segment state="translated">
         <source>Push 3×10 saubere Liegestütze · Pull 3×8 invertierte Ruderzüge, 90 s Pause</source>
-        <target>Push 3×10 saubere Liegestütze · Pull 3×8 invertierte Ruderzüge, 90 s Pause</target>
+        <target>Push 3×10 piegamenti puliti · Pull 3×8 rematori invertiti, 90 s pausa</target>
       </segment>
     </unit>
     <unit id="plan.push-pull-6w.day.2.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Pull-Tag: 4×8 Australian Rows · Push 2×12 Knie-Liegestütze als Aktivierung</source>
-        <target>Pull-Tag: 4×8 Australian Rows · Push 2×12 Knie-Liegestütze als Aktivierung</target>
+        <target>Giorno di trazione: 4×8 rematori australiani · Push 2×12 piegamenti sulle ginocchia come attivazione</target>
       </segment>
     </unit>
     <unit id="plan.push-pull-6w.day.4.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Push 3×11 · Pull 3×6 Klimmzug-Negative (5 s Exzentrik)</source>
-        <target>Push 3×11 · Pull 3×6 Klimmzug-Negative (5 s Exzentrik)</target>
+        <target>Push 3×11 · Pull 3×6 trazioni negative (5 s eccentrica)</target>
       </segment>
     </unit>
     <unit id="plan.push-pull-6w.day.5.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Leichter Tag 2×10 · 3×12 Face Pulls</source>
-        <target>Leichter Tag 2×10 · 3×12 Face Pulls</target>
+        <target>Giorno leggero 2×10 · 3×12 face pull</target>
       </segment>
     </unit>
-        <unit id="plan.push-pull-6w.day.6.desc">
-      <segment state="initial">
+    <unit id="plan.push-pull-6w.day.6.desc">
+      <segment state="translated">
         <source>Push 3×12 · Pull 3×8 invertierte Ruderzüge · Plank 3×30 s</source>
-        <target>Push 3×12 · Pull 3×8 invertierte Ruderzüge · Plank 3×30 s</target>
+        <target>Push 3×12 · Pull 3×8 rematori invertiti · plank 3×30 s</target>
       </segment>
     </unit>
     <unit id="plan.push-pull-6w.day.8.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Push 3×AMRAP (Ziel 13-12-11) · Pull 3×9 Rudern</source>
-        <target>Push 3×AMRAP (Ziel 13-12-11) · Pull 3×9 Rudern</target>
+        <target>Push 3×AMRAP (obiettivo 13-12-11) · Pull 3×9 rematori</target>
       </segment>
     </unit>
     <unit id="plan.push-pull-6w.day.9.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Pull-Tag: 4×9 Australian Rows · Push 3×9 saubere LS</source>
-        <target>Pull-Tag: 4×9 Australian Rows · Push 3×9 saubere LS</target>
+        <target>Giorno di trazione: 4×9 rematori australiani · Push 3×9 pulite piegamenti</target>
       </segment>
     </unit>
     <unit id="plan.push-pull-6w.day.11.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Push 3×AMRAP (Ziel 14-13-12) · Pull 3×7 Klimmzug-Negative</source>
-        <target>Push 3×AMRAP (Ziel 14-13-12) · Pull 3×7 Klimmzug-Negative</target>
+        <target>Push 3×AMRAP (obiettivo 14-13-12) · Pull 3×7 trazioni negative</target>
       </segment>
     </unit>
     <unit id="plan.push-pull-6w.day.12.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Leichter Tag 2×11 · 3×12 Face Pulls · Schulter-Mobility</source>
-        <target>Leichter Tag 2×11 · 3×12 Face Pulls · Schulter-Mobility</target>
+        <target>Giorno leggero 2×11 · 3×12 face pull · mobilità delle spalle</target>
       </segment>
     </unit>
-        <unit id="plan.push-pull-6w.day.13.desc">
-      <segment state="initial">
+    <unit id="plan.push-pull-6w.day.13.desc">
+      <segment state="translated">
         <source>Push 3×AMRAP · Pull 3×10 invertierte Ruderzüge · Plank 3×40 s</source>
-        <target>Push 3×AMRAP · Pull 3×10 invertierte Ruderzüge · Plank 3×40 s</target>
+        <target>Push 3×AMRAP · Pull 3×10 rematori invertiti · plank 3×40 s</target>
       </segment>
     </unit>
     <unit id="plan.push-pull-6w.day.15.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Push 4 Sätze · Pull 4×6 Klimmzüge (oder Negative)</source>
-        <target>Push 4 Sätze · Pull 4×6 Klimmzüge (oder Negative)</target>
+        <target>Push 4 serie · Pull 4×6 trazioni (o negative)</target>
       </segment>
     </unit>
     <unit id="plan.push-pull-6w.day.16.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Pull-Tag: 5×8 Australian Rows · Push 3×10 saubere LS</source>
-        <target>Pull-Tag: 5×8 Australian Rows · Push 3×10 saubere LS</target>
+        <target>Giorno di trazione: 5×8 rematori australiani · Push 3×10 pulite piegamenti</target>
       </segment>
     </unit>
     <unit id="plan.push-pull-6w.day.18.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Push 4×AMRAP · Pull 4×7 Klimmzüge · Plank 3×45 s</source>
-        <target>Push 4×AMRAP · Pull 4×7 Klimmzüge · Plank 3×45 s</target>
+        <target>Push 4×AMRAP · Pull 4×7 trazioni · plank 3×45 s</target>
       </segment>
     </unit>
     <unit id="plan.push-pull-6w.day.19.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Leichter Tag 2×12 · 3×15 Face Pulls</source>
-        <target>Leichter Tag 2×12 · 3×15 Face Pulls</target>
+        <target>Giorno leggero 2×12 · 3×15 face pull</target>
       </segment>
     </unit>
     <unit id="plan.push-pull-6w.day.20.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Push 4×AMRAP · Pull 4×8 Klimmzüge · Hollow Hold 3×20 s</source>
-        <target>Push 4×AMRAP · Pull 4×8 Klimmzüge · Hollow Hold 3×20 s</target>
+        <target>Push 4×AMRAP · Pull 4×8 trazioni · hollow hold 3×20 s</target>
       </segment>
     </unit>
     <unit id="plan.push-pull-6w.day.22.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Push 4 Sätze, 60 s Pause · Pull 4×8 Klimmzüge</source>
-        <target>Push 4 Sätze, 60 s Pause · Pull 4×8 Klimmzüge</target>
+        <target>Push 4 serie, 60 s pausa · Pull 4×8 trazioni</target>
       </segment>
     </unit>
     <unit id="plan.push-pull-6w.day.23.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Pull-Tag: 5×9 Australian Rows · Push 3×11 LS</source>
-        <target>Pull-Tag: 5×9 Australian Rows · Push 3×11 LS</target>
+        <target>Giorno di trazione: 5×9 rematori australiani · Push 3×11 piegamenti</target>
       </segment>
     </unit>
     <unit id="plan.push-pull-6w.day.25.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Push 4×AMRAP · Pull 4×9 Klimmzüge · Plank 3×50 s</source>
-        <target>Push 4×AMRAP · Pull 4×9 Klimmzüge · Plank 3×50 s</target>
+        <target>Push 4×AMRAP · Pull 4×9 trazioni · plank 3×50 s</target>
       </segment>
     </unit>
     <unit id="plan.push-pull-6w.day.26.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Leichter Tag 2×13 · Brust- und Rücken-Mobility</source>
-        <target>Leichter Tag 2×13 · Brust- und Rücken-Mobility</target>
+        <target>Giorno leggero 2×13 · mobilità petto e schiena</target>
       </segment>
     </unit>
     <unit id="plan.push-pull-6w.day.27.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Push 4×AMRAP · Pull 4×10 Klimmzüge · Hollow Hold 3×30 s</source>
-        <target>Push 4×AMRAP · Pull 4×10 Klimmzüge · Hollow Hold 3×30 s</target>
+        <target>Push 4×AMRAP · Pull 4×10 trazioni · hollow hold 3×30 s</target>
       </segment>
     </unit>
     <unit id="plan.push-pull-6w.day.29.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Push 5 Sätze · Pull 5×7 Klimmzüge, 90 s Pause</source>
-        <target>Push 5 Sätze · Pull 5×7 Klimmzüge, 90 s Pause</target>
+        <target>Push 5 serie · Pull 5×7 trazioni, 90 s pausa</target>
       </segment>
     </unit>
     <unit id="plan.push-pull-6w.day.30.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Pull-Tag: 5×10 Australian Rows · Push 3×12 LS</source>
-        <target>Pull-Tag: 5×10 Australian Rows · Push 3×12 LS</target>
+        <target>Giorno di trazione: 5×10 rematori australiani · Push 3×12 piegamenti</target>
       </segment>
     </unit>
     <unit id="plan.push-pull-6w.day.32.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Push 5 Sätze · Pull 5×8 Klimmzüge · Plank 3×60 s</source>
-        <target>Push 5 Sätze · Pull 5×8 Klimmzüge · Plank 3×60 s</target>
+        <target>Push 5 serie · Pull 5×8 trazioni · plank 3×60 s</target>
       </segment>
     </unit>
     <unit id="plan.push-pull-6w.day.33.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Leichter Tag 2×14 · 4×12 Face Pulls</source>
-        <target>Leichter Tag 2×14 · 4×12 Face Pulls</target>
+        <target>Giorno leggero 2×14 · 4×12 face pull</target>
       </segment>
     </unit>
     <unit id="plan.push-pull-6w.day.34.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Push 5 Sätze · Pull 5×9 Klimmzüge · Hollow Hold 3×40 s</source>
-        <target>Push 5 Sätze · Pull 5×9 Klimmzüge · Hollow Hold 3×40 s</target>
+        <target>Push 5 serie · Pull 5×9 trazioni · hollow hold 3×40 s</target>
       </segment>
     </unit>
     <unit id="plan.push-pull-6w.day.36.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Push 5 Sätze schwer · Pull 5×10 Klimmzüge</source>
-        <target>Push 5 Sätze schwer · Pull 5×10 Klimmzüge</target>
+        <target>Push 5 serie pesante · Pull 5×10 trazioni</target>
       </segment>
     </unit>
     <unit id="plan.push-pull-6w.day.37.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Pull-Schwerpunkt: 5×AMRAP Klimmzüge · Push 4×10 LS</source>
-        <target>Pull-Schwerpunkt: 5×AMRAP Klimmzüge · Push 4×10 LS</target>
+        <target>Focus trazione: 5×AMRAP trazioni · Push 4×10 piegamenti</target>
       </segment>
     </unit>
     <unit id="plan.push-pull-6w.day.39.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Taper-Tag: 4×15 saubere LS · 3×6 Klimmzüge</source>
-        <target>Taper-Tag: 4×15 saubere LS · 3×6 Klimmzüge</target>
+        <target>Giorno di scarico: 4×15 pulite piegamenti · 3×6 trazioni</target>
       </segment>
     </unit>
     <unit id="plan.push-pull-6w.day.40.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Leichter Tag 2×10 · Mobility</source>
-        <target>Leichter Tag 2×10 · Mobility</target>
+        <target>Giorno leggero 2×10 · mobilità</target>
       </segment>
     </unit>
     <unit id="plan.push-pull-6w.day.42.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Endtest: maximale Liegestütze + maximale Klimmzüge in einem Satz</source>
-        <target>Endtest: maximale Liegestütze + maximale Klimmzüge in einem Satz</target>
+        <target>Test finale: massimo piegamenti + massimo trazioni in una sola serie</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.1.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Baseline-Test: maximale Liegestütze · 1 min Wall-Sit · 1 min Plank</source>
-        <target>Baseline-Test: maximale Liegestütze · 1 min Wall-Sit · 1 min Plank</target>
+        <target>Test di riferimento: massimo piegamenti · 1 min wall sit · 1 min plank</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.2.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zirkel 3 Runden — 10 LS · 15 Kniebeugen · 10 Ausfallschritte je Bein · 30 s Plank</source>
-        <target>Zirkel 3 Runden — 10 LS · 15 Kniebeugen · 10 Ausfallschritte je Bein · 30 s Plank</target>
+        <target>Circuito 3 round — 10 piegamenti · 15 squat · 10 affondi per gamba · 30 s plank</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.4.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zirkel 3 Runden — 10 LS · 15 Sumo-Kniebeugen · 12 Glute Bridges · 40 s Plank</source>
-        <target>Zirkel 3 Runden — 10 LS · 15 Sumo-Kniebeugen · 12 Glute Bridges · 40 s Plank</target>
+        <target>Circuito 3 round — 10 piegamenti · 15 squat sumo · 12 ponti per i glutei · 40 s plank</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.5.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Leichter Tag — 2×10 LS · Mobility 10 min</source>
-        <target>Leichter Tag — 2×10 LS · Mobility 10 min</target>
+        <target>Giorno leggero — 2×10 piegamenti · mobilità 10 min</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.6.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zirkel 3 Runden — 10 LS · 15 Kniebeugen · 10 Glute Bridges · 30 s Hollow Hold</source>
-        <target>Zirkel 3 Runden — 10 LS · 15 Kniebeugen · 10 Glute Bridges · 30 s Hollow Hold</target>
+        <target>Circuito 3 round — 10 piegamenti · 15 squat · 10 ponti per i glutei · 30 s hollow hold</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.8.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zirkel 3 Runden — 12 LS · 18 Kniebeugen · 12 Ausfallschritte je Bein · 40 s Plank</source>
-        <target>Zirkel 3 Runden — 12 LS · 18 Kniebeugen · 12 Ausfallschritte je Bein · 40 s Plank</target>
+        <target>Circuito 3 round — 12 piegamenti · 18 squat · 12 affondi per gamba · 40 s plank</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.10.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zirkel 3 Runden — 12 LS · 18 Sumo-Kniebeugen · 15 Glute Bridges · 45 s Plank</source>
-        <target>Zirkel 3 Runden — 12 LS · 18 Sumo-Kniebeugen · 15 Glute Bridges · 45 s Plank</target>
+        <target>Circuito 3 round — 12 piegamenti · 18 squat sumo · 15 ponti per i glutei · 45 s plank</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.11.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Leichter Tag — 2×11 LS · Hip Opener 10 min</source>
-        <target>Leichter Tag — 2×11 LS · Hip Opener 10 min</target>
+        <target>Giorno leggero — 2×11 piegamenti · apertura delle anche 10 min</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.12.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zirkel 3 Runden — 12 LS · 12 Step-Ups je Bein · 15 Russian Twists · 40 s Plank</source>
-        <target>Zirkel 3 Runden — 12 LS · 12 Step-Ups je Bein · 15 Russian Twists · 40 s Plank</target>
+        <target>Circuito 3 round — 12 piegamenti · 12 step-up per gamba · 15 russian twist · 40 s plank</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.15.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zirkel 4 Runden — 10 LS · 15 Kniebeugen · 12 Glute Bridges · 40 s Plank</source>
-        <target>Zirkel 4 Runden — 10 LS · 15 Kniebeugen · 12 Glute Bridges · 40 s Plank</target>
+        <target>Circuito 4 round — 10 piegamenti · 15 squat · 12 ponti per i glutei · 40 s plank</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.17.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zirkel 4 Runden — 11 LS · 16 Ausfallschritte je Bein · 15 Glute Bridges · 45 s Plank</source>
-        <target>Zirkel 4 Runden — 11 LS · 16 Ausfallschritte je Bein · 15 Glute Bridges · 45 s Plank</target>
+        <target>Circuito 4 round — 11 piegamenti · 16 affondi per gamba · 15 ponti per i glutei · 45 s plank</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.18.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Leichter Tag — 2×12 LS · Yoga 20 min</source>
-        <target>Leichter Tag — 2×12 LS · Yoga 20 min</target>
+        <target>Giorno leggero — 2×12 piegamenti · yoga 20 min</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.19.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zirkel 4 Runden — 12 LS · 15 Jump Squats · 12 Glute Bridges · 45 s Plank</source>
-        <target>Zirkel 4 Runden — 12 LS · 15 Jump Squats · 12 Glute Bridges · 45 s Plank</target>
+        <target>Circuito 4 round — 12 piegamenti · 15 jump squat · 12 ponti per i glutei · 45 s plank</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.22.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zirkel 4 Runden — 13 LS · 18 Kniebeugen · 15 Glute Bridges · 50 s Plank</source>
-        <target>Zirkel 4 Runden — 13 LS · 18 Kniebeugen · 15 Glute Bridges · 50 s Plank</target>
+        <target>Circuito 4 round — 13 piegamenti · 18 squat · 15 ponti per i glutei · 50 s plank</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.24.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zirkel 4 Runden — 14 LS · 18 Ausfallschritte je Bein · 15 Hip Thrusts · 50 s Plank</source>
-        <target>Zirkel 4 Runden — 14 LS · 18 Ausfallschritte je Bein · 15 Hip Thrusts · 50 s Plank</target>
+        <target>Circuito 4 round — 14 piegamenti · 18 affondi per gamba · 15 hip thrust · 50 s plank</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.25.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Leichter Tag — 2×13 LS · Foam Rolling 15 min</source>
-        <target>Leichter Tag — 2×13 LS · Foam Rolling 15 min</target>
+        <target>Giorno leggero — 2×13 piegamenti · foam rolling 15 min</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.26.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zirkel 4 Runden — 15 LS · 18 Jump Squats · 15 Glute Bridges · 60 s Plank</source>
-        <target>Zirkel 4 Runden — 15 LS · 18 Jump Squats · 15 Glute Bridges · 60 s Plank</target>
+        <target>Circuito 4 round — 15 piegamenti · 18 jump squat · 15 ponti per i glutei · 60 s plank</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.29.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zirkel 5 Runden — 12 LS · 15 Kniebeugen · 12 Glute Bridges · 45 s Plank</source>
-        <target>Zirkel 5 Runden — 12 LS · 15 Kniebeugen · 12 Glute Bridges · 45 s Plank</target>
+        <target>Circuito 5 round — 12 piegamenti · 15 squat · 12 ponti per i glutei · 45 s plank</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.31.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zirkel 5 Runden — 13 LS · 16 Ausfallschritte je Bein · 13 Glute Bridges · 50 s Plank</source>
-        <target>Zirkel 5 Runden — 13 LS · 16 Ausfallschritte je Bein · 13 Glute Bridges · 50 s Plank</target>
+        <target>Circuito 5 round — 13 piegamenti · 16 affondi per gamba · 13 ponti per i glutei · 50 s plank</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.32.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Leichter Tag — 2×14 LS · Mobility 15 min</source>
-        <target>Leichter Tag — 2×14 LS · Mobility 15 min</target>
+        <target>Giorno leggero — 2×14 piegamenti · mobilità 15 min</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.33.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zirkel 5 Runden — 14 LS · 18 Jump Squats · 15 Hip Thrusts · 60 s Plank</source>
-        <target>Zirkel 5 Runden — 14 LS · 18 Jump Squats · 15 Hip Thrusts · 60 s Plank</target>
+        <target>Circuito 5 round — 14 piegamenti · 18 jump squat · 15 hip thrust · 60 s plank</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.36.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Peak-Zirkel 5 Runden — 15 LS · 20 Kniebeugen · 15 Glute Bridges · 60 s Plank</source>
-        <target>Peak-Zirkel 5 Runden — 15 LS · 20 Kniebeugen · 15 Glute Bridges · 60 s Plank</target>
+        <target>Circuito di picco 5 round — 15 piegamenti · 20 squat · 15 ponti per i glutei · 60 s plank</target>
       </segment>
     </unit>
-        <unit id="plan.full-body-6w.day.38.desc">
-      <segment state="initial">
+    <unit id="plan.full-body-6w.day.38.desc">
+      <segment state="translated">
         <source>Taper-Zirkel 4 Runden, kontrolliertes Tempo — 15 LS · 15 Kniebeugen · 12 Glute Bridges · 45 s Plank</source>
-        <target>Taper-Zirkel 4 Runden, kontrolliertes Tempo — 15 LS · 15 Kniebeugen · 12 Glute Bridges · 45 s Plank</target>
+        <target>Circuito di scarico 4 round, tempo controllato — 15 piegamenti · 15 squat · 12 ponti per i glutei · 45 s plank</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.39.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Leichter Tag — 2×12 LS · Mobility</source>
-        <target>Leichter Tag — 2×12 LS · Mobility</target>
+        <target>Giorno leggero — 2×12 piegamenti · mobilità</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.42.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Funktionstest: maximale LS · 50 Kniebeugen auf Zeit · 1 min Plank-Halt</source>
-        <target>Funktionstest: maximale LS · 50 Kniebeugen auf Zeit · 1 min Plank-Halt</target>
+        <target>Test funzionale: massimo piegamenti · 50 squat a tempo · 1 min plank mantenuto</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.1.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Baseline: maximale Plank-Zeit · 10 saubere LS · maximale Hollow-Hold-Zeit</source>
-        <target>Baseline: maximale Plank-Zeit · 10 saubere LS · maximale Hollow-Hold-Zeit</target>
+        <target>Riferimento: massimo tempo di plank · 10 pulite piegamenti · massimo tempo di hollow hold</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.2.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Plank 3×30 s · Hollow Hold 3×20 s · Dead Bug 3×10 je Seite · LS 2×10</source>
-        <target>Plank 3×30 s · Hollow Hold 3×20 s · Dead Bug 3×10 je Seite · LS 2×10</target>
+        <target>plank 3×30 s · hollow hold 3×20 s · dead bug 3×10 per lato · piegamenti 2×10</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.3.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Beinheben 3×10 · Russian Twist 3×15 · Plank 3×30 s · LS 2×12</source>
-        <target>Beinheben 3×10 · Russian Twist 3×15 · Plank 3×30 s · LS 2×12</target>
+        <target>Beinheben 3×10 · russian twist 3×15 · plank 3×30 s · piegamenti 2×12</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.5.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Mountain Climbers 3×30 s · Dead Bug 3×12 · Plank 3×35 s · LS 2×10</source>
-        <target>Mountain Climbers 3×30 s · Dead Bug 3×12 · Plank 3×35 s · LS 2×10</target>
+        <target>mountain climber 3×30 s · dead bug 3×12 · plank 3×35 s · piegamenti 2×10</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.6.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Leichter Tag — Cat-Cow 3×10 · Hip Opener 2 min · 2×7 saubere LS</source>
-        <target>Leichter Tag — Cat-Cow 3×10 · Hip Opener 2 min · 2×7 saubere LS</target>
+        <target>Giorno leggero — gatto-mucca 3×10 · apertura delle anche 2 min · 2×7 pulite piegamenti</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.8.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Plank 3×40 s · Hollow Hold 3×25 s · Dead Bug 3×12 · LS 2×11</source>
-        <target>Plank 3×40 s · Hollow Hold 3×25 s · Dead Bug 3×12 · LS 2×11</target>
+        <target>plank 3×40 s · hollow hold 3×25 s · dead bug 3×12 · piegamenti 2×11</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.9.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Beinheben 3×12 · Russian Twist 3×18 · Plank 3×40 s · LS 2×12</source>
-        <target>Beinheben 3×12 · Russian Twist 3×18 · Plank 3×40 s · LS 2×12</target>
+        <target>Beinheben 3×12 · russian twist 3×18 · plank 3×40 s · piegamenti 2×12</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.11.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Mountain Climbers 4×30 s · Side Plank 2×25 s je Seite · LS 2×12</source>
-        <target>Mountain Climbers 4×30 s · Side Plank 2×25 s je Seite · LS 2×12</target>
+        <target>mountain climber 4×30 s · side plank 2×25 s per lato · piegamenti 2×12</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.12.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Leichter Tag — Mobility 10 min · 2×8 LS</source>
-        <target>Leichter Tag — Mobility 10 min · 2×8 LS</target>
+        <target>Giorno leggero — mobilità 10 min · 2×8 piegamenti</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.13.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Core-Zirkel 3 Runden — 40 s Plank · 20 s Hollow Hold · 12 Dead Bugs · 10 LS</source>
-        <target>Core-Zirkel 3 Runden — 40 s Plank · 20 s Hollow Hold · 12 Dead Bugs · 10 LS</target>
+        <target>Circuito core 3 round — 40 s plank · 20 s hollow hold · 12 dead bug · 10 piegamenti</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.15.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Plank 3×50 s · Side Plank 3×30 s je Seite · Hollow Hold 3×30 s · LS 2×15</source>
-        <target>Plank 3×50 s · Side Plank 3×30 s je Seite · Hollow Hold 3×30 s · LS 2×15</target>
+        <target>plank 3×50 s · side plank 3×30 s per lato · hollow hold 3×30 s · piegamenti 2×15</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.16.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Hängendes Knieheben 3×8 · Russian Twist 3×20 · Plank 3×50 s · LS 2×15</source>
-        <target>Hängendes Knieheben 3×8 · Russian Twist 3×20 · Plank 3×50 s · LS 2×15</target>
+        <target>sollevamento ginocchia appeso 3×8 · russian twist 3×20 · plank 3×50 s · piegamenti 2×15</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.18.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Core-Power: Plank 3×60 s · Dead Bug 3×15 · Mountain Climbers 3×45 s · LS 2×15</source>
-        <target>Core-Power: Plank 3×60 s · Dead Bug 3×15 · Mountain Climbers 3×45 s · LS 2×15</target>
+        <target>Core potenza: plank 3×60 s · dead bug 3×15 · mountain climber 3×45 s · piegamenti 2×15</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.19.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Leichter Tag — 2×9 LS · Stretching 10 min</source>
-        <target>Leichter Tag — 2×9 LS · Stretching 10 min</target>
+        <target>Giorno leggero — 2×9 piegamenti · stretching 10 min</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.20.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Core-Zirkel 3 Runden — 50 s Plank · 12 Beinheben · 20 Russian Twists · 10 LS</source>
-        <target>Core-Zirkel 3 Runden — 50 s Plank · 12 Beinheben · 20 Russian Twists · 10 LS</target>
+        <target>Circuito core 3 round — 50 s plank · 12 Beinheben · 20 russian twist · 10 piegamenti</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.22.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Plank 3×60 s · Hollow Hold 3×40 s · Hängendes Knieheben 3×10 · LS 2×16</source>
-        <target>Plank 3×60 s · Hollow Hold 3×40 s · Hängendes Knieheben 3×10 · LS 2×16</target>
+        <target>plank 3×60 s · hollow hold 3×40 s · sollevamento ginocchia appeso 3×10 · piegamenti 2×16</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.23.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Core-Zirkel 3 Runden — 1 min Plank · 30 Russian Twists · 12 Beinheben · 12 LS</source>
-        <target>Core-Zirkel 3 Runden — 1 min Plank · 30 Russian Twists · 12 Beinheben · 12 LS</target>
+        <target>Circuito core 3 round — 1 min plank · 30 russian twist · 12 Beinheben · 12 piegamenti</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.25.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Side Plank 3×40 s je Seite · Dead Bug 3×16 · Hollow Hold 3×40 s · LS 2×16</source>
-        <target>Side Plank 3×40 s je Seite · Dead Bug 3×16 · Hollow Hold 3×40 s · LS 2×16</target>
+        <target>side plank 3×40 s per lato · dead bug 3×16 · hollow hold 3×40 s · piegamenti 2×16</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.26.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Leichter Tag — 2×9 LS · Mobility</source>
-        <target>Leichter Tag — 2×9 LS · Mobility</target>
+        <target>Giorno leggero — 2×9 piegamenti · mobilità</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.28.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Endtest: 1 min Plank-Halt · maximale LS · 1 min Hollow Hold</source>
-        <target>Endtest: 1 min Plank-Halt · maximale LS · 1 min Hollow Hold</target>
+        <target>Test finale: 1 min plank mantenuto · massimo piegamenti · 1 min hollow hold</target>
       </segment>
     </unit>
     <unit id="plan.hiit-4w.day.1.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>HIIT 4 Runden 30/15 s — LS · Burpees · Mountain Climbers · Jumping Jacks</source>
-        <target>HIIT 4 Runden 30/15 s — LS · Burpees · Mountain Climbers · Jumping Jacks</target>
+        <target>HIIT 4 round 30/15 s — piegamenti · burpees · mountain climber · jumping jack</target>
       </segment>
     </unit>
     <unit id="plan.hiit-4w.day.3.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>HIIT 5 Runden 30/30 s — LS · Burpees · Hampelmänner · Plank</source>
-        <target>HIIT 5 Runden 30/30 s — LS · Burpees · Hampelmänner · Plank</target>
+        <target>HIIT 5 round 30/30 s — piegamenti · burpees · jumping jack · plank</target>
       </segment>
     </unit>
     <unit id="plan.hiit-4w.day.4.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Aktive Erholung — 15 min Gehen · 2×10 LS · Mobility</source>
-        <target>Aktive Erholung — 15 min Gehen · 2×10 LS · Mobility</target>
+        <target>Recupero attivo — 15 min camminata · 2×10 piegamenti · mobilità</target>
       </segment>
     </unit>
     <unit id="plan.hiit-4w.day.5.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Tabata 8 Runden 20/10 s — LS · Burpees · Mountain Climbers · Jump Squats</source>
-        <target>Tabata 8 Runden 20/10 s — LS · Burpees · Mountain Climbers · Jump Squats</target>
+        <target>Tabata 8 round 20/10 s — piegamenti · burpees · mountain climber · jump squat</target>
       </segment>
     </unit>
     <unit id="plan.hiit-4w.day.8.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>HIIT 5 Runden 40/20 s — LS · Burpees · Mountain Climbers · Squats · Plank</source>
-        <target>HIIT 5 Runden 40/20 s — LS · Burpees · Mountain Climbers · Squats · Plank</target>
+        <target>HIIT 5 round 40/20 s — piegamenti · burpees · mountain climber · squat · plank</target>
       </segment>
     </unit>
     <unit id="plan.hiit-4w.day.10.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>HIIT-Ladder 8-7-6-5-4-3-2-1 — LS · Burpees (jede Runde 1 Wiederholung weniger)</source>
-        <target>HIIT-Ladder 8-7-6-5-4-3-2-1 — LS · Burpees (jede Runde 1 Wiederholung weniger)</target>
+        <target>Scala HIIT 8-7-6-5-4-3-2-1 — piegamenti · burpees (ogni round 1 ripetizione in meno)</target>
       </segment>
     </unit>
     <unit id="plan.hiit-4w.day.11.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Aktive Erholung — 20 min lockeres Cardio · 2×11 LS</source>
-        <target>Aktive Erholung — 20 min lockeres Cardio · 2×11 LS</target>
+        <target>Recupero attivo — 20 min cardio leggero · 2×11 piegamenti</target>
       </segment>
     </unit>
     <unit id="plan.hiit-4w.day.12.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>HIIT 6 Runden 30/15 s — LS · Burpees · Mountain Climbers · Jumping Jacks</source>
-        <target>HIIT 6 Runden 30/15 s — LS · Burpees · Mountain Climbers · Jumping Jacks</target>
+        <target>HIIT 6 round 30/15 s — piegamenti · burpees · mountain climber · jumping jack</target>
       </segment>
     </unit>
     <unit id="plan.hiit-4w.day.15.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>HIIT 4 Runden 45/15 s — 11 LS · 8 Burpees · 12 Kniebeugen · 30 s Mountain Climbers</source>
-        <target>HIIT 4 Runden 45/15 s — 11 LS · 8 Burpees · 12 Kniebeugen · 30 s Mountain Climbers</target>
+        <target>HIIT 4 round 45/15 s — 11 piegamenti · 8 burpees · 12 squat · 30 s mountain climber</target>
       </segment>
     </unit>
     <unit id="plan.hiit-4w.day.17.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>HIIT 6 Runden 40/20 s — LS · Burpees · MC · Hampelmänner · Squats · Plank</source>
-        <target>HIIT 6 Runden 40/20 s — LS · Burpees · MC · Hampelmänner · Squats · Plank</target>
+        <target>HIIT 6 round 40/20 s — piegamenti · burpees · MC · jumping jack · squat · plank</target>
       </segment>
     </unit>
     <unit id="plan.hiit-4w.day.18.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Aktive Erholung — Yoga 20 min · 2×12 LS</source>
-        <target>Aktive Erholung — Yoga 20 min · 2×12 LS</target>
+        <target>Recupero attivo — yoga 20 min · 2×12 piegamenti</target>
       </segment>
     </unit>
     <unit id="plan.hiit-4w.day.19.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Tabata 8 Runden 20/10 s — abwechselnd LS · Burpees · Squats · MC</source>
-        <target>Tabata 8 Runden 20/10 s — abwechselnd LS · Burpees · Squats · MC</target>
+        <target>Tabata 8 round 20/10 s — alternando piegamenti · burpees · squat · MC</target>
       </segment>
     </unit>
     <unit id="plan.hiit-4w.day.22.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>HIIT-Finale 10 Runden 30/15 s — LS · Burpees · MC · Hampelmänner</source>
-        <target>HIIT-Finale 10 Runden 30/15 s — LS · Burpees · MC · Hampelmänner</target>
+        <target>Finale HIIT 10 round 30/15 s — piegamenti · burpees · MC · jumping jack</target>
       </segment>
     </unit>
     <unit id="plan.hiit-4w.day.24.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>EMOM 12 min — pro Minute 5 LS · 5 Burpees · 10 Hampelmänner</source>
-        <target>EMOM 12 min — pro Minute 5 LS · 5 Burpees · 10 Hampelmänner</target>
+        <target>EMOM 12 min — al minuto 5 piegamenti · 5 burpees · 10 jumping jack</target>
       </segment>
     </unit>
     <unit id="plan.hiit-4w.day.25.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Aktive Erholung — Mobility · 2×13 LS</source>
-        <target>Aktive Erholung — Mobility · 2×13 LS</target>
+        <target>Recupero attivo — mobilità · 2×13 piegamenti</target>
       </segment>
     </unit>
     <unit id="plan.hiit-4w.day.28.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Konditionstest: 100 LS + 50 Burpees auf Zeit (Bestzeit notieren)</source>
-        <target>Konditionstest: 100 LS + 50 Burpees auf Zeit (Bestzeit notieren)</target>
+        <target>Test di condizione: 100 piegamenti + 50 burpees a tempo (annota il tuo miglior tempo)</target>
       </segment>
     </unit>
     <unit id="plan.mobility-2w.day.1.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Dynamisches Aufwärmen 10 min · 1×10 saubere LS · 10 min Stretching</source>
-        <target>Dynamisches Aufwärmen 10 min · 1×10 saubere LS · 10 min Stretching</target>
+        <target>Riscaldamento dinamico 10 min · 1×10 pulite piegamenti · 10 min stretching</target>
       </segment>
     </unit>
     <unit id="plan.mobility-2w.day.2.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Yoga-Flow 20 min · 1×10 LS · Brust-Stretching</source>
-        <target>Yoga-Flow 20 min · 1×10 LS · Brust-Stretching</target>
+        <target>yoga flow 20 min · 1×10 piegamenti · stretching del petto</target>
       </segment>
     </unit>
     <unit id="plan.mobility-2w.day.3.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Cat-Cow 3×10 · Hip Opener 2 min · 2×6 LS · 5 min Foam Rolling</source>
-        <target>Cat-Cow 3×10 · Hip Opener 2 min · 2×6 LS · 5 min Foam Rolling</target>
+        <target>gatto-mucca 3×10 · apertura delle anche 2 min · 2×6 piegamenti · 5 min foam rolling</target>
       </segment>
     </unit>
     <unit id="plan.mobility-2w.day.4.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ruhetag — Foam Rolling 15 min</source>
-        <target>Ruhetag — Foam Rolling 15 min</target>
+        <target>Giorno di riposo — foam rolling 15 min</target>
       </segment>
     </unit>
     <unit id="plan.mobility-2w.day.5.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Brust-Stretching 5 min · 2×6 LS · 10 min Spaziergang</source>
-        <target>Brust-Stretching 5 min · 2×6 LS · 10 min Spaziergang</target>
+        <target>stretching del petto 5 min · 2×6 piegamenti · 10 min camminata</target>
       </segment>
     </unit>
     <unit id="plan.mobility-2w.day.6.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Dynamisches Aufwärmen 10 min · 2×7 LS · Schulter-Mobility 5 min</source>
-        <target>Dynamisches Aufwärmen 10 min · 2×7 LS · Schulter-Mobility 5 min</target>
+        <target>Riscaldamento dinamico 10 min · 2×7 piegamenti · mobilità delle spalle 5 min</target>
       </segment>
     </unit>
     <unit id="plan.mobility-2w.day.8.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Schulter-Mobility 10 min · 2×7 LS · 10 min Stretching</source>
-        <target>Schulter-Mobility 10 min · 2×7 LS · 10 min Stretching</target>
+        <target>mobilità delle spalle 10 min · 2×7 piegamenti · 10 min stretching</target>
       </segment>
     </unit>
     <unit id="plan.mobility-2w.day.9.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Yoga 20 min · 2×8 LS</source>
-        <target>Yoga 20 min · 2×8 LS</target>
+        <target>yoga 20 min · 2×8 piegamenti</target>
       </segment>
     </unit>
     <unit id="plan.mobility-2w.day.10.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Foam Rolling 10 min · 2×8 LS · Hip Opener 5 min</source>
-        <target>Foam Rolling 10 min · 2×8 LS · Hip Opener 5 min</target>
+        <target>foam rolling 10 min · 2×8 piegamenti · apertura delle anche 5 min</target>
       </segment>
     </unit>
     <unit id="plan.mobility-2w.day.11.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ruhetag — Stretching nach Bedarf</source>
-        <target>Ruhetag — Stretching nach Bedarf</target>
+        <target>Giorno di riposo — stretching secondo necessità</target>
       </segment>
     </unit>
     <unit id="plan.mobility-2w.day.12.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Dynamisches Aufwärmen · 2×9 LS · 10 min Mobility</source>
-        <target>Dynamisches Aufwärmen · 2×9 LS · 10 min Mobility</target>
+        <target>Riscaldamento dinamico · 2×9 piegamenti · 10 min mobilità</target>
       </segment>
     </unit>
     <unit id="plan.mobility-2w.day.13.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>2×10 LS · 15 min Yoga</source>
-        <target>2×10 LS · 15 min Yoga</target>
+        <target>2×10 piegamenti · 15 min yoga</target>
       </segment>
     </unit>
     <unit id="plan.mobility-2w.day.14.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Form-Check: 2×10 saubere LS · vollständige Mobility-Session 20 min</source>
-        <target>Form-Check: 2×10 saubere LS · vollständige Mobility-Session 20 min</target>
+        <target>controllo della forma: 2×10 pulite piegamenti · completa sessione di mobilità 20 min</target>
       </segment>
     </unit>
     <unit id="plan.push-pull-6w.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Push &amp; Pull Balance — 6-Wochen-Plan</source>
-        <target>Push &amp; Pull Balance — 6-Wochen-Plan</target>
+        <target>Push &amp; Pull Balance — piano di 6 settimane</target>
       </segment>
     </unit>
     <unit id="plan.push-pull-6w.summary">
-      <segment state="initial">
+      <segment state="translated">
         <source>Symmetrischer 6-Wochen-Plan für Liegestütze und Rückenübungen (Rudern, Klimmzug-Negative, Face Pulls). Vermeidet das klassische &quot;nur Push&quot;-Ungleichgewicht und stärkt die hintere Kette gleichwertig. Pull-Tag pro Woche zusätzlich zur Push-Progression.</source>
-        <target>Symmetrischer 6-Wochen-Plan für Liegestütze und Rückenübungen (Rudern, Klimmzug-Negative, Face Pulls). Vermeidet das klassische &quot;nur Push&quot;-Ungleichgewicht und stärkt die hintere Kette gleichwertig. Pull-Tag pro Woche zusätzlich zur Push-Progression.</target>
+        <target>Piano simmetrico di 6 settimane per piegamenti e lavoro di trazione (rematori, trazioni negative, face pull). Evita il classico squilibrio &quot;solo spinta&quot; e rafforza la catena posteriore in modo equilibrato. Un giorno dedicato alla trazione a settimana oltre alla progressione di spinta.</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Full Body Strong — 6-Wochen-Ganzkörperplan</source>
-        <target>Full Body Strong — 6-Wochen-Ganzkörperplan</target>
+        <target>Full Body Strong — piano full body di 6 settimane</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.summary">
-      <segment state="initial">
+      <segment state="translated">
         <source>Sechs Wochen Ganzkörper-Zirkel: Liegestütze, Kniebeugen, Ausfallschritte, Glute Bridges und Plank in 3-, 4- und 5-Runden-Zirkeln. Drei Trainingstage pro Woche, klar steigende Volumen, funktioneller Endtest in Woche 6.</source>
-        <target>Sechs Wochen Ganzkörper-Zirkel: Liegestütze, Kniebeugen, Ausfallschritte, Glute Bridges und Plank in 3-, 4- und 5-Runden-Zirkeln. Drei Trainingstage pro Woche, klar steigende Volumen, funktioneller Endtest in Woche 6.</target>
+        <target>Sei settimane di circuiti full body: piegamenti, squat, affondi, ponti per i glutei e plank in circuiti da 3, 4 e 5 round. Tre giorni di allenamento a settimana, volume in chiara crescita e test funzionale finale alla settimana 6.</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Core Foundations — 4-Wochen-Rumpfplan</source>
-        <target>Core Foundations — 4-Wochen-Rumpfplan</target>
+        <target>Core Foundations — piano core di 4 settimane</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.summary">
-      <segment state="initial">
+      <segment state="translated">
         <source>Vier Wochen Rumpfstabilität: Plank, Hollow Hold, Dead Bug, Beinheben und Rotation. Pro Trainingstag eine moderate Liegestütze-Aktivierung. Vier Trainingstage und ein leichter Tag pro Woche, Endtest mit Plank-Halt und Hollow Hold.</source>
-        <target>Vier Wochen Rumpfstabilität: Plank, Hollow Hold, Dead Bug, Beinheben und Rotation. Pro Trainingstag eine moderate Liegestütze-Aktivierung. Vier Trainingstage und ein leichter Tag pro Woche, Endtest mit Plank-Halt und Hollow Hold.</target>
+        <target>Quattro settimane di stabilità del core: plank, hollow hold, dead bug, sollevamenti delle gambe e lavoro rotazionale. Ogni giorno di allenamento prevede anche un'attivazione moderata di piegamenti. Quattro giorni di allenamento più un giorno leggero a settimana, test finale con plank mantenuto e hollow hold.</target>
       </segment>
     </unit>
     <unit id="plan.hiit-4w.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>HIIT Burner — 4-Wochen-Konditionsplan</source>
-        <target>HIIT Burner — 4-Wochen-Konditionsplan</target>
+        <target>HIIT Burner — piano di condizionamento di 4 settimane</target>
       </segment>
     </unit>
     <unit id="plan.hiit-4w.summary">
-      <segment state="initial">
+      <segment state="translated">
         <source>Vier Wochen hochintensives Intervalltraining mit Liegestützen, Burpees, Mountain Climbers, Hampelmännern und Kniebeugen. Tabata, Pyramide und EMOM-Strukturen. Eignet sich als Konditions-Booster zwischen klassischen Liegestütze-Plänen.</source>
-        <target>Vier Wochen hochintensives Intervalltraining mit Liegestützen, Burpees, Mountain Climbers, Hampelmännern und Kniebeugen. Tabata, Pyramide und EMOM-Strukturen. Eignet sich als Konditions-Booster zwischen klassischen Liegestütze-Plänen.</target>
+        <target>Quattro settimane di intervalli ad alta intensità con piegamenti, burpees, mountain climber, jumping jack e squat. Strutture Tabata, piramide ed EMOM. Funziona bene come booster di condizionamento tra piani classici di piegamenti.</target>
       </segment>
     </unit>
     <unit id="plan.mobility-2w.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Mobility &amp; Recovery — 2-Wochen-Deload</source>
-        <target>Mobility &amp; Recovery — 2-Wochen-Deload</target>
+        <target>Mobility &amp; Recovery — scarico di 2 settimane</target>
       </segment>
     </unit>
     <unit id="plan.mobility-2w.summary">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zwei Wochen aktive Erholung: tägliche Mobility-, Yoga- und Stretching-Einheiten mit leichtem Liegestütze-Volumen. Ideal als Deload zwischen zwei harten Plänen oder zum Wiedereinstieg nach einer Trainingspause.</source>
-        <target>Zwei Wochen aktive Erholung: tägliche Mobility-, Yoga- und Stretching-Einheiten mit leichtem Liegestütze-Volumen. Ideal als Deload zwischen zwei harten Plänen oder zum Wiedereinstieg nach einer Trainingspause.</target>
+        <target>Due settimane di recupero attivo: sessioni quotidiane di mobilità, yoga e stretching con un volume leggero di piegamenti. Ideale come scarico tra due piani intensi o per riprendere dopo una pausa.</target>
       </segment>
     </unit>
 </file>
