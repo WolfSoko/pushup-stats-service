@@ -641,9 +641,25 @@
         <source>Auto‑Zählen</source>
       </segment>
     </unit>
-    <unit id="quickAdd.fab.customValueAria">
+    <unit id="quickAdd.fab.exerciseTimerAria">
       <notes>
         <note category="location">libs/quick-add/src/lib/quick-add-fab.component.html:34,35</note>
+      </notes>
+      <segment>
+        <source>Halteübungs-Timer öffnen</source>
+      </segment>
+    </unit>
+    <unit id="quickAdd.fab.exerciseTimer">
+      <notes>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.html:39,41</note>
+      </notes>
+      <segment>
+        <source>Plank‑Timer</source>
+      </segment>
+    </unit>
+    <unit id="quickAdd.fab.customValueAria">
+      <notes>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.html:46,47</note>
       </notes>
       <segment>
         <source>Eigenen Wert eingeben</source>
@@ -651,7 +667,7 @@
     </unit>
     <unit id="quickAdd.fab.customValue">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.html:39,41</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.html:51,53</note>
       </notes>
       <segment>
         <source>Eigener Wert</source>
@@ -659,7 +675,7 @@
     </unit>
     <unit id="quickAdd.fab.fillToGoal">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.html:57,58</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.html:69,70</note>
       </notes>
       <segment>
         <source>+<ph id="0" equiv="INTERPOLATION" disp="{{ item.value }}"/> bis zum Ziel</source>
@@ -667,7 +683,7 @@
     </unit>
     <unit id="quickAdd.fab.quickAddReps">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.html:71,72</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.html:83,84</note>
       </notes>
       <segment>
         <source>+<ph id="0" equiv="INTERPOLATION" disp="{{ item.value }}"/> Reps</source>
@@ -675,7 +691,7 @@
     </unit>
     <unit id="quickAdd.fab.open">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:70</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:78</note>
       </notes>
       <segment>
         <source>Schnellerfassung öffnen</source>
@@ -683,7 +699,7 @@
     </unit>
     <unit id="quickAdd.fab.close">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:71</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:79</note>
       </notes>
       <segment>
         <source>Schnellerfassung schließen</source>
@@ -691,7 +707,7 @@
     </unit>
     <unit id="quickAdd.fab.goalReached">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:72</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:80</note>
       </notes>
       <segment>
         <source>Ziel erreicht ✓</source>
@@ -699,7 +715,7 @@
     </unit>
     <unit id="quickAdd.fab.goalReachedAria">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:73</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:81</note>
       </notes>
       <segment>
         <source>Tagesziel bereits erreicht</source>
@@ -707,7 +723,7 @@
     </unit>
     <unit id="quickAdd.fab.repAria">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:76</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:84</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="REPS" disp="reps"/> Liegestütze hinzufügen</source>
@@ -715,7 +731,7 @@
     </unit>
     <unit id="quickAdd.fab.fillToGoalAria">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:80</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:88</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="GAP" disp="gap"/> Liegestütze bis zum Tagesziel hinzufügen</source>
@@ -2598,7 +2614,7 @@
     </unit>
     <unit id="toolbarDailyGoal.replayAria">
       <notes>
-        <note category="location">web/src/app/app.ts:386</note>
+        <note category="location">web/src/app/app.ts:390</note>
       </notes>
       <segment>
         <source>Tagesziel-Animation erneut abspielen</source>
@@ -2606,7 +2622,7 @@
     </unit>
     <unit id="feedback.success">
       <notes>
-        <note category="location">web/src/app/app.ts:415</note>
+        <note category="location">web/src/app/app.ts:419</note>
       </notes>
       <segment>
         <source>Danke für dein Feedback!</source>
@@ -2614,7 +2630,7 @@
     </unit>
     <unit id="feedback.error">
       <notes>
-        <note category="location">web/src/app/app.ts:422</note>
+        <note category="location">web/src/app/app.ts:426</note>
       </notes>
       <segment>
         <source>Feedback konnte nicht gesendet werden.</source>
@@ -2788,6 +2804,160 @@
         <source>Sit-ups</source>
       </segment>
     </unit>
+    <unit id="exerciseTimer.title">
+      <notes>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.html:1,3</note>
+      </notes>
+      <segment>
+        <source>Halteübung-Timer</source>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.exercisePickerAria">
+      <notes>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.html:8,9</note>
+      </notes>
+      <segment>
+        <source>Übung wählen</source>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.cameraMode">
+      <notes>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.html:25,28</note>
+      </notes>
+      <segment>
+        <source> Kamera: Start/Ende automatisch erkennen </source>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.cameraStarting">
+      <notes>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.html:42,45</note>
+      </notes>
+      <segment>
+        <source>Kamera startet …</source>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.cameraUnavailable">
+      <notes>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.html:49,51</note>
+      </notes>
+      <segment>
+        <source> Kamera nicht verfügbar </source>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.formCheck.toggleAria">
+      <notes>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.html:67,68</note>
+      </notes>
+      <segment>
+        <source>Form-Check anzeigen oder ausblenden</source>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.formCheck.angle">
+      <notes>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.html:77,79</note>
+      </notes>
+      <segment>
+        <source>Winkel</source>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.formCheck.confidence">
+      <notes>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.html:87,89</note>
+      </notes>
+      <segment>
+        <source>Sicherheit</source>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.pause">
+      <notes>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.html:111,113</note>
+      </notes>
+      <segment>
+        <source>Pause</source>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.start">
+      <notes>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.html:113,116</note>
+      </notes>
+      <segment>
+        <source>Start</source>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.cameraHint">
+      <notes>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.html:119,124</note>
+      </notes>
+      <segment>
+        <source> Stelle die Kamera so auf, dass Schulter, Hüfte und Knie sichtbar sind. Der Timer startet automatisch, sobald du in Position bist, und pausiert, wenn du die Position verlässt. </source>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.reset">
+      <notes>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.html:132,134</note>
+      </notes>
+      <segment>
+        <source> Zurücksetzen </source>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.cancel">
+      <notes>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.html:135,138</note>
+      </notes>
+      <segment>
+        <source> Abbrechen </source>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.save">
+      <notes>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.html:144,146</note>
+      </notes>
+      <segment>
+        <source> Übernehmen </source>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.phase.holding">
+      <notes>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.ts:109</note>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.ts:117</note>
+      </notes>
+      <segment>
+        <source>Halten</source>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.phase.paused">
+      <notes>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.ts:111</note>
+      </notes>
+      <segment>
+        <source>Pause</source>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.phase.ready">
+      <notes>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.ts:113</note>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.ts:118</note>
+      </notes>
+      <segment>
+        <source>Bereit</source>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.exercise.plank">
+      <notes>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.ts:126</note>
+      </notes>
+      <segment>
+        <source>Plank</source>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.exercise.hollowhold">
+      <notes>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.ts:131</note>
+      </notes>
+      <segment>
+        <source>Hollow Hold</source>
+      </segment>
+    </unit>
     <unit id="blog.article.back">
       <notes>
         <note category="location">web/src/app/blog/blog-article.component.ts:40,42</note>
@@ -2919,8 +3089,8 @@
     </unit>
     <unit id="quickAdd.success.create">
       <notes>
-        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:75</note>
-        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:264</note>
+        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:91</note>
+        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:334</note>
       </notes>
       <segment>
         <source>Eintrag gespeichert.</source>
@@ -2928,9 +3098,9 @@
     </unit>
     <unit id="quickAdd.error.create">
       <notes>
-        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:87</note>
-        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:126</note>
-        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:280</note>
+        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:103</note>
+        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:142</note>
+        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:350</note>
       </notes>
       <segment>
         <source>Eintrag konnte nicht gespeichert werden.</source>
@@ -2938,7 +3108,7 @@
     </unit>
     <unit id="quickAdd.success.goalReached">
       <notes>
-        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:113</note>
+        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:129</note>
       </notes>
       <segment>
         <source>Tagesziel erreicht 🎉</source>
@@ -5083,22 +5253,6 @@
       </notes>
       <segment>
         <source> Keine Sets-Daten vorhanden </source>
-      </segment>
-    </unit>
-    <unit id="intervalsDistribution.noData">
-      <notes>
-        <note category="location">web/src/app/stats/components/intervals-distribution/intervals-distribution.component.ts</note>
-      </notes>
-      <segment>
-        <source> Keine Intervall-Daten vorhanden </source>
-      </segment>
-    </unit>
-    <unit id="intervalsDistribution.listLabel">
-      <notes>
-        <note category="location">web/src/app/stats/components/intervals-distribution/intervals-distribution.component.ts</note>
-      </notes>
-      <segment>
-        <source>Intervall-Verteilung</source>
       </segment>
     </unit>
     <unit id="chart.modeToggleAria">
@@ -7491,7 +7645,7 @@
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:13,14</note>
       </notes>
       <segment>
-        <source>Liegestütze Statistik</source>
+        <source>Meine Trainings Übersicht</source>
       </segment>
     </unit>
     <unit id="dashboardSubtitle">
@@ -7499,7 +7653,7 @@
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:15,18</note>
       </notes>
       <segment>
-        <source> Behalte Trainingsvolumen und Verlauf im Blick – klar, schnell und mobil optimiert. </source>
+        <source> Behalte Training, Volumen und Verlauf im Blick – klar, schnell und mobil optimiert. </source>
       </segment>
     </unit>
     <unit id="liveStateLabel">
@@ -7562,7 +7716,7 @@
     <unit id="trainingPlans.kind.rest">
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:77,78</note>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:170,172</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:244,246</note>
         <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:241,242</note>
         <note category="location">web/src/app/training-plans/training-plans-page.component.ts:107,108</note>
       </notes>
@@ -7593,7 +7747,7 @@
     <unit id="trainingPlans.reps">
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:85,87</note>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:183,185</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:257,259</note>
         <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:254,255</note>
         <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:260,261</note>
         <note category="location">web/src/app/training-plans/training-plans-page.component.ts:125,127</note>
@@ -7635,106 +7789,9 @@
         <source> Plan wählen </source>
       </segment>
     </unit>
-    <unit id="todayFocusAria">
-      <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:128,129</note>
-      </notes>
-      <segment>
-        <source>Tagesfokus</source>
-      </segment>
-    </unit>
-    <unit id="dashboard.todayTotal">
-      <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:134,136</note>
-      </notes>
-      <segment>
-        <source>Heute Gesamt</source>
-      </segment>
-    </unit>
-    <unit id="goalProgressTitle">
-      <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:145,147</note>
-      </notes>
-      <segment>
-        <source>Zielfortschritt</source>
-      </segment>
-    </unit>
-    <unit id="dashboard.goalEditAria">
-      <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:153,154</note>
-      </notes>
-      <segment>
-        <source>Tagesziel in Einstellungen öffnen</source>
-      </segment>
-    </unit>
-    <unit id="dashboard.dailyGoalLabel">
-      <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:162,164</note>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:189,190</note>
-      </notes>
-      <segment>
-        <source>Tag</source>
-      </segment>
-    </unit>
-    <unit id="dashboard.restDay.configuredGoalHint">
-      <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:179,181</note>
-      </notes>
-      <segment>
-        <source>Konfiguriertes Tagesziel:</source>
-      </segment>
-    </unit>
-    <unit id="dashboard.weeklyGoalLabel">
-      <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:199,200</note>
-      </notes>
-      <segment>
-        <source>Woche</source>
-      </segment>
-    </unit>
-    <unit id="dashboard.monthlyGoalLabel">
-      <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:208,209</note>
-      </notes>
-      <segment>
-        <source>Monat</source>
-      </segment>
-    </unit>
-    <unit id="dashboard.lastEntryLinkAria">
-      <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:233,234</note>
-      </notes>
-      <segment>
-        <source>Letzten Eintrag in der Historie öffnen</source>
-      </segment>
-    </unit>
-    <unit id="lastEntryTitle">
-      <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:237,238</note>
-      </notes>
-      <segment>
-        <source>Letzter Eintrag</source>
-      </segment>
-    </unit>
-    <unit id="latEntryReps">
-      <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:243,245</note>
-      </notes>
-      <segment>
-        <source> <ph id="0" equiv="INTERPOLATION" disp="{{ latest.reps }}"/> Reps · <ph id="1" equiv="INTERPOLATION_1" disp="{{ pushupTypeLabel(latest) }}"/> </source>
-      </segment>
-    </unit>
-    <unit id="dashboard.noEntryYet">
-      <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:253,255</note>
-      </notes>
-      <segment>
-        <source>Noch kein Eintrag.</source>
-      </segment>
-    </unit>
     <unit id="quickActionsTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:262,264</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:129,131</note>
       </notes>
       <segment>
         <source>Schnellaktionen</source>
@@ -7742,7 +7799,7 @@
     </unit>
     <unit id="quickActionsSubtitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:265,267</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:132,134</note>
       </notes>
       <segment>
         <source>Schnell eintragen ohne Dialog</source>
@@ -7750,7 +7807,7 @@
     </unit>
     <unit id="quickActions.edit.aria">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:272,273</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:139,140</note>
       </notes>
       <segment>
         <source>Schnellaktionen bearbeiten</source>
@@ -7758,7 +7815,7 @@
     </unit>
     <unit id="dashboard.quickAdd.button">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:294,295</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:161,162</note>
       </notes>
       <segment>
         <source>+<ph id="0" equiv="INTERPOLATION" disp="{{ reps }}"/> Reps</source>
@@ -7766,7 +7823,7 @@
     </unit>
     <unit id="dashboard.goalFill.reached">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:312,314</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:179,181</note>
       </notes>
       <segment>
         <source>Ziel erreicht ✓</source>
@@ -7774,7 +7831,7 @@
     </unit>
     <unit id="dashboard.goalFill.fill">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:315,316</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:182,183</note>
       </notes>
       <segment>
         <source>+<ph id="0" equiv="INTERPOLATION" disp="{{ remainingToGoal() }}"/> bis zum Ziel</source>
@@ -7782,10 +7839,108 @@
     </unit>
     <unit id="quickAddNew">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:327,329</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:194,196</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">edit_note</pc> Neu </source>
+      </segment>
+    </unit>
+    <unit id="todayFocusAria">
+      <notes>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:202,203</note>
+      </notes>
+      <segment>
+        <source>Tagesfokus</source>
+      </segment>
+    </unit>
+    <unit id="dashboard.todayTotal">
+      <notes>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:208,210</note>
+      </notes>
+      <segment>
+        <source>Heute Gesamt</source>
+      </segment>
+    </unit>
+    <unit id="goalProgressTitle">
+      <notes>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:219,221</note>
+      </notes>
+      <segment>
+        <source>Zielfortschritt</source>
+      </segment>
+    </unit>
+    <unit id="dashboard.goalEditAria">
+      <notes>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:227,228</note>
+      </notes>
+      <segment>
+        <source>Tagesziel in Einstellungen öffnen</source>
+      </segment>
+    </unit>
+    <unit id="dashboard.dailyGoalLabel">
+      <notes>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:236,238</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:263,264</note>
+      </notes>
+      <segment>
+        <source>Tag</source>
+      </segment>
+    </unit>
+    <unit id="dashboard.restDay.configuredGoalHint">
+      <notes>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:253,255</note>
+      </notes>
+      <segment>
+        <source>Konfiguriertes Tagesziel:</source>
+      </segment>
+    </unit>
+    <unit id="dashboard.weeklyGoalLabel">
+      <notes>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:273,274</note>
+      </notes>
+      <segment>
+        <source>Woche</source>
+      </segment>
+    </unit>
+    <unit id="dashboard.monthlyGoalLabel">
+      <notes>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:282,283</note>
+      </notes>
+      <segment>
+        <source>Monat</source>
+      </segment>
+    </unit>
+    <unit id="dashboard.lastEntryLinkAria">
+      <notes>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:307,308</note>
+      </notes>
+      <segment>
+        <source>Letzten Eintrag in der Historie öffnen</source>
+      </segment>
+    </unit>
+    <unit id="lastEntryTitle">
+      <notes>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:311,312</note>
+      </notes>
+      <segment>
+        <source>Letzter Eintrag</source>
+      </segment>
+    </unit>
+    <unit id="latEntryReps">
+      <notes>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:317,319</note>
+      </notes>
+      <segment>
+        <source> <ph id="0" equiv="INTERPOLATION" disp="{{ latest.reps }}"/> Reps · <ph id="1" equiv="INTERPOLATION_1" disp="{{ pushupTypeLabel(latest) }}"/> </source>
+      </segment>
+    </unit>
+    <unit id="dashboard.noEntryYet">
+      <notes>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:327,329</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:407,410</note>
+      </notes>
+      <segment>
+        <source>Noch kein Eintrag.</source>
       </segment>
     </unit>
     <unit id="loadingStats">
@@ -7804,17 +7959,33 @@
         <source>Zur Historie navigieren</source>
       </segment>
     </unit>
-    <unit id="dashboard.latestEntries">
+    <unit id="dashboard.latestExercises">
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:362,363</note>
       </notes>
       <segment>
-        <source>Letzte Einträge</source>
+        <source>Letzte Übungen</source>
+      </segment>
+    </unit>
+    <unit id="dashboard.tile.pushupTitle">
+      <notes>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:382,384</note>
+      </notes>
+      <segment>
+        <source>Liegestütze</source>
+      </segment>
+    </unit>
+    <unit id="dashboard.tile.pushupValue">
+      <notes>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:385,386</note>
+      </notes>
+      <segment>
+        <source> <ph id="0" equiv="INTERPOLATION" disp="{{ entry.reps }}"/> Reps · <ph id="1" equiv="INTERPOLATION_1" disp="{{ pushupTypeLabel(entry) }}"/> </source>
       </segment>
     </unit>
     <unit id="dashboard.latestEntriesCtaAriaLabel">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:369,370</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:413,414</note>
       </notes>
       <segment>
         <source>Zur Historie navigieren</source>
@@ -7822,7 +7993,7 @@
     </unit>
     <unit id="dashboard.latestEntriesCta">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:373,376</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:417,420</note>
       </notes>
       <segment>
         <source>Zur Historie</source>
@@ -7830,7 +8001,7 @@
     </unit>
     <unit id="ads.dashboard.aria">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:379</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:423</note>
       </notes>
       <segment>
         <source>Werbung</source>
@@ -7838,7 +8009,7 @@
     </unit>
     <unit id="dashboard.share.aria">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:104</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:105</note>
       </notes>
       <segment>
         <source>Tagesleistung teilen</source>
@@ -7846,7 +8017,7 @@
     </unit>
     <unit id="dashboard.share">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:105</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:106</note>
       </notes>
       <segment>
         <source>Teilen</source>
@@ -8354,110 +8525,5 @@
         <source>Detailseite öffnen</source>
       </segment>
     </unit>
-      <unit id="exerciseTimer.title">
-      <segment>
-        <source>Halteübung-Timer</source>
-      </segment>
-    </unit>
-    <unit id="exerciseTimer.exercisePickerAria">
-      <segment>
-        <source>Übung wählen</source>
-      </segment>
-    </unit>
-    <unit id="exerciseTimer.cameraMode">
-      <segment>
-        <source> Kamera: Start/Ende automatisch erkennen </source>
-      </segment>
-    </unit>
-    <unit id="exerciseTimer.cameraStarting">
-      <segment>
-        <source>Kamera startet …</source>
-      </segment>
-    </unit>
-    <unit id="exerciseTimer.cameraUnavailable">
-      <segment>
-        <source> Kamera nicht verfügbar </source>
-      </segment>
-    </unit>
-    <unit id="exerciseTimer.formCheck.toggleAria">
-      <segment>
-        <source>Form-Check anzeigen oder ausblenden</source>
-      </segment>
-    </unit>
-    <unit id="exerciseTimer.formCheck.angle">
-      <segment>
-        <source>Winkel</source>
-      </segment>
-    </unit>
-    <unit id="exerciseTimer.formCheck.confidence">
-      <segment>
-        <source>Sicherheit</source>
-      </segment>
-    </unit>
-    <unit id="exerciseTimer.pause">
-      <segment>
-        <source>Pause</source>
-      </segment>
-    </unit>
-    <unit id="exerciseTimer.start">
-      <segment>
-        <source>Start</source>
-      </segment>
-    </unit>
-    <unit id="exerciseTimer.cameraHint">
-      <segment>
-        <source> Stelle die Kamera so auf, dass Schulter, Hüfte und Knie sichtbar sind. Der Timer startet automatisch, sobald du in Position bist, und pausiert, wenn du die Position verlässt. </source>
-      </segment>
-    </unit>
-    <unit id="exerciseTimer.reset">
-      <segment>
-        <source> Zurücksetzen </source>
-      </segment>
-    </unit>
-    <unit id="exerciseTimer.cancel">
-      <segment>
-        <source> Abbrechen </source>
-      </segment>
-    </unit>
-    <unit id="exerciseTimer.save">
-      <segment>
-        <source> Übernehmen </source>
-      </segment>
-    </unit>
-    <unit id="exerciseTimer.phase.holding">
-      <segment>
-        <source>Halten</source>
-      </segment>
-    </unit>
-    <unit id="exerciseTimer.phase.paused">
-      <segment>
-        <source>Pause</source>
-      </segment>
-    </unit>
-    <unit id="exerciseTimer.phase.ready">
-      <segment>
-        <source>Bereit</source>
-      </segment>
-    </unit>
-    <unit id="exerciseTimer.exercise.plank">
-      <segment>
-        <source>Plank</source>
-      </segment>
-    </unit>
-    <unit id="exerciseTimer.exercise.hollowhold">
-      <segment>
-        <source>Hollow Hold</source>
-      </segment>
-    </unit>
-    <unit id="quickAdd.fab.exerciseTimerAria">
-      <segment>
-        <source>Halteübungs-Timer öffnen</source>
-      </segment>
-    </unit>
-    <unit id="quickAdd.fab.exerciseTimer">
-      <segment>
-        <source>Plank‑Timer</source>
-      </segment>
-    </unit>
-</file>
+  </file>
 </xliff>

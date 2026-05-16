@@ -6140,6 +6140,33 @@
         <target>Dernières entrées</target>
       </segment>
     </unit>
+    <unit id="dashboard.latestExercises">
+      <notes>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:362,363</note>
+      </notes>
+      <segment state="translated">
+        <source>Letzte Übungen</source>
+        <target>Derniers exercices</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.tile.pushupTitle">
+      <notes>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:382,384</note>
+      </notes>
+      <segment state="translated">
+        <source>Liegestütze</source>
+        <target>Pompes</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.tile.pushupValue">
+      <notes>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:385,386</note>
+      </notes>
+      <segment state="translated">
+        <source> <ph id="0" equiv="INTERPOLATION" disp="{{ entry.reps }}"/> Reps · <ph id="1" equiv="INTERPOLATION_1" disp="{{ pushupTypeLabel(entry) }}"/> </source>
+        <target> <ph id="0" equiv="INTERPOLATION" disp="{{ entry.reps }}"/> Représentants · <ph id="1" equiv="INTERPOLATION_1" disp="{{ pushupTypeLabel(entry) }}"/> </target>
+      </segment>
+    </unit>
     <unit id="dashboard.latestEntriesCtaAriaLabel">
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:277,278</note>

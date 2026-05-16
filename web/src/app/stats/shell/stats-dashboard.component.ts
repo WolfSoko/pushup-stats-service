@@ -41,7 +41,6 @@ import { AppDataFacade } from '../../core/app-data.facade';
 import { AdSlotComponent } from '@pu-stats/ads';
 import { AnalysisTeaserCardComponent } from '../components/analysis-teaser-card/analysis-teaser-card.component';
 import { PreviewBannerComponent } from '../components/preview-banner/preview-banner.component';
-import { StatsTableComponent } from '../components/stats-table/stats-table.component';
 import {
   TrainingEntryDialogComponent,
   TrainingEntryDialogData,
@@ -60,7 +59,6 @@ import { DashboardStore } from '../dashboard.store';
     DatePipe,
     AnalysisTeaserCardComponent,
     PreviewBannerComponent,
-    StatsTableComponent,
     AdSlotComponent,
     RouterLink,
   ],
@@ -100,6 +98,9 @@ export class StatsDashboardComponent {
   readonly exerciseEntryLabel = (
     entry: Extract<UnifiedEntry, { kind: 'exercise' }>
   ): string => exerciseDisplayName(entry.exerciseId);
+
+  readonly tileIcon = (entry: UnifiedEntry): string =>
+    entry.kind === 'pushup' ? 'fitness_center' : 'sports_gymnastics';
 
   readonly shareDayAriaLabel = $localize`:@@dashboard.share.aria:Tagesleistung teilen`;
   readonly shareDayLabel = $localize`:@@dashboard.share:Teilen`;

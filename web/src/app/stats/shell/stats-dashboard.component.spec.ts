@@ -252,7 +252,7 @@ describe('StatsDashboardComponent', () => {
         const text = fixture.nativeElement.textContent;
 
         // Then
-        expect(text).toContain('Liegestütze Statistik');
+        expect(text).toContain('Meine Trainings Übersicht');
         expect(text).toContain('Gesamt');
         expect(text).toContain('Zielfortschritt');
         expect(text).toContain('Letzter Eintrag');
@@ -288,7 +288,7 @@ describe('StatsDashboardComponent', () => {
         expect(header.nextElementSibling).toBe(miniBadges);
       });
 
-      it('Then the latest entries section navigates to the history page when clicked', async () => {
+      it('Then the latest exercises section renders as tiles and navigates to the history page when clicked', async () => {
         const router = TestBed.inject(Router);
         const navigateSpy = vi.spyOn(router, 'navigate');
         const root = fixture.nativeElement as HTMLElement;
@@ -302,8 +302,18 @@ describe('StatsDashboardComponent', () => {
           'Zur Historie navigieren'
         );
         expect(section.querySelector('h2')?.textContent).toContain(
-          'Letzte Einträge'
+          'Letzte Übungen'
         );
+        // Tiles render via the recent-exercises-grid wrapper, one mat-card
+        // per entry — the table-based preview was replaced in this PR.
+        const grid = section.querySelector<HTMLElement>(
+          '[data-testid="dashboard-recent-exercises-grid"]'
+        );
+        expect(grid).toBeTruthy();
+        const tiles = section.querySelectorAll<HTMLElement>(
+          '[data-testid="dashboard-recent-exercise-tile"]'
+        );
+        expect(tiles.length).toBeGreaterThan(0);
         expect(section.querySelector('.teaser-cta')?.textContent).toContain(
           'Zur Historie'
         );
@@ -312,6 +322,21 @@ describe('StatsDashboardComponent', () => {
         await fixture.whenStable();
 
         expect(navigateSpy).toHaveBeenCalledWith(['/history']);
+      });
+
+      it('Then the Schnellaktionen card is rendered above the today-focus section', () => {
+        const root = fixture.nativeElement as HTMLElement;
+        const quickActions = root.querySelector<HTMLElement>('.quick-actions');
+        const todayFocus = root.querySelector<HTMLElement>('.today-focus');
+
+        expect(quickActions).toBeTruthy();
+        expect(todayFocus).toBeTruthy();
+        if (!quickActions || !todayFocus) return;
+
+        // Compare document position — quick-actions must come before today-focus
+        // in DOM order so the primary entry-point sits higher on the page.
+        const relation = quickActions.compareDocumentPosition(todayFocus);
+        expect(relation & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
       });
     });
 

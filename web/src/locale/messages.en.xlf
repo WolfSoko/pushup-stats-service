@@ -1444,34 +1444,34 @@ Active:         </target>
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:13,16</note>
 
-        
+
             </notes>
       <segment state="translated">
-        <source> Behalte Trainingsvolumen und Verlauf im Blick – klar, schnell und mobil optimiert. </source>
-        <target> Keep an eye on training volume and progress – clear, fast, and mobile optimized. </target>
+        <source> Behalte Training, Volumen und Verlauf im Blick – klar, schnell und mobil optimiert. </source>
+        <target> Keep an eye on your training, volume and progress – clear, fast, and mobile optimized. </target>
 
-        
-        
+
+
             </segment>
 
-      
-      
+
+
         </unit>
     <unit id="dashboardTitle">
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:11,12</note>
 
-        
+
             </notes>
       <segment state="translated">
-        <source>Liegestütze Statistik</source>
-        <target>Pushup Statistics</target>
+        <source>Meine Trainings Übersicht</source>
+        <target>My Training Overview</target>
 
-        
-        
+
+
             </segment>
 
-      
+
       
         </unit>
     <unit id="dayChartMode14h">
@@ -5625,6 +5625,24 @@ Deine Position: # ·  Reps        </source>
       <segment state="translated">
         <source>Letzte Einträge</source>
         <target>Recent Entries</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.latestExercises">
+      <segment state="translated">
+        <source>Letzte Übungen</source>
+        <target>Recent Exercises</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.tile.pushupTitle">
+      <segment state="translated">
+        <source>Liegestütze</source>
+        <target>Pushups</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.tile.pushupValue">
+      <segment state="translated">
+        <source> <ph id="0" equiv="INTERPOLATION" disp="{{ entry.reps }}"/> Reps · <ph id="1" equiv="INTERPOLATION_1" disp="{{ pushupTypeLabel(entry) }}"/> </source>
+        <target> <ph id="0" equiv="INTERPOLATION" disp="{{ entry.reps }}"/> reps · <ph id="1" equiv="INTERPOLATION_1" disp="{{ pushupTypeLabel(entry) }}"/> </target>
       </segment>
     </unit>
     <unit id="dashboard.latestEntriesCtaAriaLabel">
