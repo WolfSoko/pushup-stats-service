@@ -277,21 +277,31 @@
       </button>
     </mat-card-header>
     <mat-card-content>
-      @for (reps of quickAddButtons(); track reps; let i = $index) {
+      @for (vm of quickAddButtons(); track vm.key; let i = $index) {
         <button
           type="button"
           mat-flat-button
           class="quick-btn"
-          [class.quick-btn--ten]="i === 0"
-          [class.quick-btn--twenty]="i === 1"
-          [class.quick-btn--thirty]="i === 2"
+          [class.quick-btn--ten]="i === 0 && vm.mode === 'reps'"
+          [class.quick-btn--twenty]="i === 1 && vm.mode === 'reps'"
+          [class.quick-btn--thirty]="i === 2 && vm.mode === 'reps'"
+          [class.quick-btn--auto]="vm.mode === 'auto-count'"
           [attr.data-testid]="'dashboard-quick-add-' + i"
-          (click)="addQuickEntry(reps)"
+          [attr.data-mode]="vm.mode"
+          [attr.data-exercise]="vm.exerciseId"
+          (click)="addQuickEntryFromConfig(vm)"
         >
-          <mat-icon>
-            {{ i === 0 ? 'bolt' : i === 1 ? 'flash_on' : 'whatshot' }}
-          </mat-icon>
-          <span i18n="@@dashboard.quickAdd.button">+{{ reps }} Reps</span>
+          <mat-icon>{{ vm.icon }}</mat-icon>
+          @if (vm.mode === 'auto-count') {
+            <span>
+              <span i18n="@@dashboard.quickAdd.autoPrefix">Auto:</span>
+              {{ vm.exerciseLabel }}
+            </span>
+          } @else if (vm.exerciseId === 'pushup') {
+            <span i18n="@@dashboard.quickAdd.button">+{{ vm.reps }} Reps</span>
+          } @else {
+            <span>+{{ vm.reps }} {{ vm.exerciseLabel }}</span>
+          }
         </button>
       }
       @if (

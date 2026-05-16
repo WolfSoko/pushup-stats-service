@@ -212,6 +212,9 @@ describe('StatsDashboardComponent', () => {
           useValue: {
             fillToGoal: vitest.fn(),
             fillToGoalInFlight: signal(false).asReadonly(),
+            // Stubbed so the auto-count quick-add tests can `vi.spyOn`
+            // without TestBed handing them an undefined method.
+            openAutoCount: vitest.fn().mockResolvedValue(undefined),
           },
         },
         { provide: AppDataFacade, useValue: appDataMock },
@@ -465,6 +468,113 @@ describe('StatsDashboardComponent', () => {
         expect(serviceMock.createPushup).toHaveBeenCalledWith(
           expect.objectContaining({ reps: 10, source: 'web', type: 'standard' })
         );
+      });
+    });
+  });
+
+  // Configurable Schnellaktionen — a quick-add slot may point at the
+  // legacy pushups collection (default), another rep-based exercise, or
+  // an auto-count camera flow. Each branch routes through a different
+  // service, so the view-model dispatcher is exercised here.
+  describe('Given the configurable Schnellaktionen dispatcher', () => {
+    describe('When the slot targets pushups (default sentinel)', () => {
+      it('Then it persists to the legacy pushups collection with source "quick-add"', async () => {
+        const component = fixture.componentInstance;
+        vi.clearAllMocks();
+
+        await component.addQuickEntryFromConfig({
+          key: 'reps:pushup:12',
+          mode: 'reps',
+          exerciseId: 'pushup',
+          reps: 12,
+          icon: 'fitness_center',
+          exerciseLabel: 'Liegestütze',
+          label: '+12 Liegestütze',
+        });
+
+        expect(serviceMock.createPushup).toHaveBeenCalledWith(
+          expect.objectContaining({
+            reps: 12,
+            source: 'quick-add',
+            type: 'standard',
+          })
+        );
+        expect(exerciseCreateSpy).not.toHaveBeenCalled();
+      });
+    });
+
+    describe('When the slot targets a catalog exercise', () => {
+      it('Then it persists an exerciseEntries doc instead of a pushup', async () => {
+        const component = fixture.componentInstance;
+        vi.clearAllMocks();
+
+        await component.addQuickEntryFromConfig({
+          key: 'reps:abs.situps:20',
+          mode: 'reps',
+          exerciseId: 'abs.situps',
+          reps: 20,
+          icon: 'self_improvement',
+          exerciseLabel: 'Sit-ups',
+          label: '+20 Sit-ups',
+        });
+
+        expect(serviceMock.createPushup).not.toHaveBeenCalled();
+        expect(exerciseCreateSpy).toHaveBeenCalledWith(
+          'u1',
+          expect.objectContaining({
+            exerciseId: 'abs.situps',
+            reps: 20,
+            source: 'quick-add',
+          })
+        );
+      });
+    });
+
+    describe('When the slot is configured for auto-count', () => {
+      it('Then it opens the auto-count dialog with the catalog exercise preselected', async () => {
+        const component = fixture.componentInstance;
+        const orchestrator = TestBed.inject(QuickAddOrchestrationService);
+        const openAutoCount = vi
+          .spyOn(orchestrator, 'openAutoCount')
+          .mockResolvedValue();
+        vi.clearAllMocks();
+
+        await component.addQuickEntryFromConfig({
+          key: 'auto-count:legs.squats:0',
+          mode: 'auto-count',
+          exerciseId: 'legs.squats',
+          reps: 0,
+          icon: 'videocam',
+          exerciseLabel: 'Kniebeugen',
+          label: 'Auto: Kniebeugen',
+        });
+
+        expect(openAutoCount).toHaveBeenCalledWith('squat');
+        expect(serviceMock.createPushup).not.toHaveBeenCalled();
+        expect(exerciseCreateSpy).not.toHaveBeenCalled();
+      });
+
+      it('Then a slot for an unsupported auto-count exercise is a no-op (fail-closed)', async () => {
+        const component = fixture.componentInstance;
+        const orchestrator = TestBed.inject(QuickAddOrchestrationService);
+        const openAutoCount = vi
+          .spyOn(orchestrator, 'openAutoCount')
+          .mockResolvedValue();
+        vi.clearAllMocks();
+
+        await component.addQuickEntryFromConfig({
+          key: 'auto-count:hinge.goodmorning:0',
+          mode: 'auto-count',
+          exerciseId: 'hinge.goodmorning',
+          reps: 0,
+          icon: 'videocam',
+          exerciseLabel: 'Good Morning',
+          label: 'Auto: Good Morning',
+        });
+
+        expect(openAutoCount).not.toHaveBeenCalled();
+        expect(serviceMock.createPushup).not.toHaveBeenCalled();
+        expect(exerciseCreateSpy).not.toHaveBeenCalled();
       });
     });
   });

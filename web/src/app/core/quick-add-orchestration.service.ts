@@ -48,6 +48,24 @@ const EXERCISE_CATALOG_ID: Record<
 };
 
 /**
+ * Inverse of {@link EXERCISE_CATALOG_ID} — resolves a catalog exerciseId
+ * (or the `'pushup'` sentinel) to the auto-count profile id understood by
+ * the camera dialog. Returns `null` for catalog ids without a detector
+ * profile so the dashboard can fail closed instead of opening the wrong
+ * detector. Kept colocated with `EXERCISE_CATALOG_ID` so the two stay in
+ * sync when a new pose profile lands.
+ */
+export function autoCountProfileForCatalogId(
+  catalogId: string
+): AutoCountExerciseId | null {
+  if (catalogId === 'pushup') return 'pushup';
+  if (catalogId === 'legs.squats') return 'squat';
+  if (catalogId === 'pull.pullups') return 'pullup';
+  if (catalogId === 'abs.situps') return 'situp';
+  return null;
+}
+
+/**
  * Maps the hold-timer profile id (lives in `libs/auto-count`) to the
  * catalog `exerciseId` used by `ExerciseFirestoreService`. Plank uses
  * the legacy id that was migrated into the `core` category; hollow
@@ -180,20 +198,22 @@ export class QuickAddOrchestrationService {
    * so MediaPipe-adjacent code stays out of the initial bundle until
    * an admin opens the camera.
    */
-  async openAutoCount(): Promise<void> {
+  async openAutoCount(preselect?: AutoCountExerciseId): Promise<void> {
     const { AutoCountDialogComponent } =
       await import('../auto-count/auto-count-dialog.component');
     this.dialog
-      .open<AutoCountDialogComponent, void, AutoCountResult | null>(
+      .open<
         AutoCountDialogComponent,
-        {
-          width: '100vw',
-          maxWidth: '100vw',
-          height: '100vh',
-          maxHeight: '100vh',
-          panelClass: 'auto-count-dialog-panel',
-        }
-      )
+        { initialExerciseId?: AutoCountExerciseId } | undefined,
+        AutoCountResult | null
+      >(AutoCountDialogComponent, {
+        width: '100vw',
+        maxWidth: '100vw',
+        height: '100vh',
+        maxHeight: '100vh',
+        panelClass: 'auto-count-dialog-panel',
+        ...(preselect ? { data: { initialExerciseId: preselect } } : {}),
+      })
       .afterClosed()
       .subscribe((result) => {
         if (!result || result.reps <= 0) return;

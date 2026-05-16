@@ -1,7 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { QuickAddConfig, UserConfigUpdate } from '@pu-stats/models';
+import {
+  MAX_QUICK_ADDS,
+  QuickAddConfig,
+  UserConfigUpdate,
+} from '@pu-stats/models';
 import { QuickAddConfigDialogComponent } from './quick-add-config-dialog.component';
 import { UserConfigStore } from '../../../core/user-config.store';
 import { signal } from '@angular/core';
@@ -51,17 +55,17 @@ describe('QuickAddConfigDialogComponent', () => {
   });
 
   describe('Given the dialog opens with no previously configured buttons', () => {
-    it('Then three empty rows are rendered', () => {
+    it(`Then ${MAX_QUICK_ADDS} empty rows are rendered`, () => {
       setup();
       const rows = fixture.nativeElement.querySelectorAll(
         '[data-testid^="quick-add-row-"]'
       );
-      expect(rows.length).toBe(3);
+      expect(rows.length).toBe(MAX_QUICK_ADDS);
     });
   });
 
   describe('Given the dialog opens with two configured buttons', () => {
-    it('Then the first two rows are prefilled and the third is empty', () => {
+    it('Then the first two rows are prefilled and the rest are empty', () => {
       setup([
         { reps: 15, inSpeedDial: true },
         { reps: 25, inSpeedDial: false },
@@ -97,9 +101,12 @@ describe('QuickAddConfigDialogComponent', () => {
 
       expect(saveSpy).toHaveBeenCalledTimes(1);
       const patch = saveSpy.mock.calls[0][0] as UserConfigUpdate;
+      // Each persisted row carries the legacy pushup default for
+      // backwards-compat with configs created before the multi-exercise
+      // schema landed.
       expect(patch.ui?.quickAdds).toEqual([
-        { reps: 15, inSpeedDial: false },
-        { reps: 40, inSpeedDial: false },
+        { reps: 15, inSpeedDial: false, exerciseId: 'pushup', mode: 'reps' },
+        { reps: 40, inSpeedDial: false, exerciseId: 'pushup', mode: 'reps' },
       ]);
       expect(closeSpy).toHaveBeenCalled();
     });
@@ -140,6 +147,106 @@ describe('QuickAddConfigDialogComponent', () => {
 
       const patch = saveSpy.mock.calls[0][0] as UserConfigUpdate;
       expect(patch.ui?.quickAdds).toEqual([]);
+    });
+  });
+
+  // Regression: prior to the multi-exercise extension the dialog only
+  // captured reps + speedDial. The new exercise picker must propagate
+  // the chosen exerciseId into the persisted QuickAddConfig so the
+  // dashboard renders the right label and the click routes to the
+  // exerciseEntries collection rather than the legacy pushups one.
+  describe('When the user picks a non-pushup exercise', () => {
+    it('Then save persists exerciseId on that row', async () => {
+      setup([{ reps: 12, inSpeedDial: false }]);
+      const component = fixture.componentInstance as unknown as {
+        setExerciseId(i: number, id: string): void;
+      };
+      component.setExerciseId(0, 'abs.situps');
+      fixture.detectChanges();
+
+      const saveBtn = fixture.nativeElement.querySelector(
+        '[data-testid="quick-add-config-save"]'
+      ) as HTMLButtonElement;
+      saveBtn.click();
+      await fixture.whenStable();
+
+      const patch = saveSpy.mock.calls[0][0] as UserConfigUpdate;
+      expect(patch.ui?.quickAdds).toEqual([
+        {
+          reps: 12,
+          inSpeedDial: false,
+          exerciseId: 'abs.situps',
+          mode: 'reps',
+        },
+      ]);
+    });
+  });
+
+  describe('When the user enables Auto-Messung on an auto-count-capable exercise', () => {
+    it('Then the row persists as mode "auto-count" with reps=0', async () => {
+      setup([{ reps: 10, inSpeedDial: false }]); // default exerciseId=pushup, which IS auto-count-capable
+      const component = fixture.componentInstance as unknown as {
+        setAutoCount(i: number, checked: boolean): void;
+      };
+      component.setAutoCount(0, true);
+      fixture.detectChanges();
+
+      const saveBtn = fixture.nativeElement.querySelector(
+        '[data-testid="quick-add-config-save"]'
+      ) as HTMLButtonElement;
+      saveBtn.click();
+      await fixture.whenStable();
+
+      const patch = saveSpy.mock.calls[0][0] as UserConfigUpdate;
+      expect(patch.ui?.quickAdds).toEqual([
+        {
+          reps: 0,
+          inSpeedDial: false,
+          exerciseId: 'pushup',
+          mode: 'auto-count',
+        },
+      ]);
+    });
+  });
+
+  describe('When the selected exercise is not auto-count-capable', () => {
+    it('Then the auto-count checkbox is hidden and mode resets to reps', async () => {
+      setup([
+        {
+          reps: 15,
+          inSpeedDial: false,
+          exerciseId: 'pushup',
+          mode: 'auto-count',
+        },
+      ]);
+      // pick a rep-based exercise without a detector profile
+      const component = fixture.componentInstance as unknown as {
+        setExerciseId(i: number, id: string): void;
+      };
+      component.setExerciseId(0, 'hinge.goodmorning');
+      fixture.detectChanges();
+
+      // checkbox for row 0 should not be present
+      const autoCountCheckbox = fixture.nativeElement.querySelector(
+        '[data-testid="quick-add-autocount-0"]'
+      );
+      expect(autoCountCheckbox).toBeNull();
+
+      // and a save must coerce mode back to 'reps' so we don't persist
+      // an unreachable auto-count config for an unsupported exercise.
+      const saveBtn = fixture.nativeElement.querySelector(
+        '[data-testid="quick-add-config-save"]'
+      ) as HTMLButtonElement;
+      saveBtn.click();
+      await fixture.whenStable();
+
+      const patch = saveSpy.mock.calls[0][0] as UserConfigUpdate;
+      expect(patch.ui?.quickAdds?.[0]).toEqual(
+        expect.objectContaining({
+          exerciseId: 'hinge.goodmorning',
+          mode: 'reps',
+        })
+      );
     });
   });
 });

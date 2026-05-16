@@ -12,7 +12,11 @@ import {
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogModule,
+  MatDialogRef,
+} from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { PoseRepCounterService } from '@pu-stats/auto-count';
@@ -24,6 +28,15 @@ export type AutoCountExerciseId = 'pushup' | 'squat' | 'pullup' | 'situp';
 export interface AutoCountResult {
   readonly exerciseId: AutoCountExerciseId;
   readonly reps: number;
+}
+
+/**
+ * Optional dialog data: `initialExerciseId` selects which exercise is
+ * active when the camera dialog opens. Used by configurable Schnellaktionen
+ * buttons so the user lands on the right detector without an extra tap.
+ */
+export interface AutoCountDialogData {
+  readonly initialExerciseId?: AutoCountExerciseId;
 }
 
 interface ExerciseOption {
@@ -55,6 +68,10 @@ export class AutoCountDialogComponent {
     MatDialogRef<AutoCountDialogComponent, AutoCountResult | null>
   );
   private readonly destroyRef = inject(DestroyRef);
+  private readonly dialogData = inject<AutoCountDialogData | null>(
+    MAT_DIALOG_DATA,
+    { optional: true }
+  );
 
   protected readonly videoRef =
     viewChild.required<ElementRef<HTMLVideoElement>>('video');
@@ -62,7 +79,9 @@ export class AutoCountDialogComponent {
   protected readonly isStarting = signal(true);
   protected readonly error = signal<string | null>(null);
   protected readonly switching = signal(false);
-  protected readonly exerciseId = signal<AutoCountExerciseId>('pushup');
+  protected readonly exerciseId = signal<AutoCountExerciseId>(
+    this.dialogData?.initialExerciseId ?? 'pushup'
+  );
   protected readonly formCheckOpen = signal(true);
 
   protected readonly count = computed(() => this.counter.snapshot().count);

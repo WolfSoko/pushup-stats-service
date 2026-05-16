@@ -29,6 +29,7 @@ import {
   displayPushupType,
   findExerciseDefinition,
   formatEntryDisplay,
+  PUSHUP_QUICK_ADD_EXERCISE_ID,
   QUICK_LOG_REPS_MAX,
   QUICK_LOG_REPS_MIN,
   UnifiedEntry,
@@ -36,7 +37,10 @@ import {
 import { exerciseDisplayName } from '../i18n/exercise-display-names';
 import { firstValueFrom } from 'rxjs';
 import { QuickAddBridgeService } from '@pu-stats/quick-add';
-import { QuickAddOrchestrationService } from '../../core/quick-add-orchestration.service';
+import {
+  autoCountProfileForCatalogId,
+  QuickAddOrchestrationService,
+} from '../../core/quick-add-orchestration.service';
 import { AppDataFacade } from '../../core/app-data.facade';
 import { AdSlotComponent } from '@pu-stats/ads';
 import { AnalysisTeaserCardComponent } from '../components/analysis-teaser-card/analysis-teaser-card.component';
@@ -48,7 +52,10 @@ import {
   TrainingEntryDialogResult,
 } from '../components/training-entry-dialog/training-entry-dialog.component';
 import { QuickAddConfigDialogComponent } from '../components/quick-add-config-dialog/quick-add-config-dialog.component';
-import { DashboardStore } from '../dashboard.store';
+import {
+  DashboardStore,
+  type QuickAddButtonViewModel,
+} from '../dashboard.store';
 
 @Component({
   selector: 'app-stats-dashboard',
@@ -328,17 +335,13 @@ export class StatsDashboardComponent {
     this.refreshCounter.update((c) => c + 1);
   }
 
-  async addQuickEntry(reps: number, source: 'web' | 'reminder' = 'web') {
-    const now = new Date();
-    const y = now.getFullYear();
-    const m = String(now.getMonth() + 1).padStart(2, '0');
-    const d = String(now.getDate()).padStart(2, '0');
-    const hh = String(now.getHours()).padStart(2, '0');
-    const mm = String(now.getMinutes()).padStart(2, '0');
-
+  async addQuickEntry(
+    reps: number,
+    source: 'web' | 'reminder' | 'quick-add' = 'web'
+  ) {
     await firstValueFrom(
       this.api.createPushup({
-        timestamp: appendLocalOffset(`${y}-${m}-${d}T${hh}:${mm}`),
+        timestamp: nowLocalIsoTimestamp(),
         reps,
         sets: [reps],
         source,
@@ -349,4 +352,53 @@ export class StatsDashboardComponent {
     this.appData.reloadAfterMutation();
     this.refreshCounter.update((c) => c + 1);
   }
+
+  /**
+   * Click handler for the configurable Schnellaktionen buttons. Routes by
+   * mode + exerciseId:
+   *  - `auto-count`     → camera dialog (preselected exercise); the
+   *                       orchestrator handles confirmation + persistence.
+   *  - `reps` + pushup  → legacy pushups collection via StatsApi.
+   *  - `reps` + other   → exerciseEntries collection via ExerciseFirestoreService.
+   *
+   * Source attribution is `'quick-add'` for rep buttons and `'auto-count'`
+   * for camera buttons (the latter set inside the orchestrator) so the
+   * analytics breakdown can distinguish dashboard quick-adds from the
+   * manual entry dialog.
+   */
+  async addQuickEntryFromConfig(vm: QuickAddButtonViewModel): Promise<void> {
+    if (vm.mode === 'auto-count') {
+      const profile = autoCountProfileForCatalogId(vm.exerciseId);
+      if (!profile) return;
+      void this.quickAdd.openAutoCount(profile);
+      return;
+    }
+    if (vm.exerciseId === PUSHUP_QUICK_ADD_EXERCISE_ID) {
+      await this.addQuickEntry(vm.reps, 'quick-add');
+      return;
+    }
+    const userId = this.userContext.userIdSafe();
+    if (!userId) return;
+    await firstValueFrom(
+      this.exerciseService.createEntry(userId, {
+        exerciseId: vm.exerciseId,
+        timestamp: nowLocalIsoTimestamp(),
+        reps: vm.reps,
+        source: 'quick-add',
+      })
+    );
+    this.store.refreshAll();
+    this.appData.reloadAfterMutation();
+    this.refreshCounter.update((c) => c + 1);
+  }
+}
+
+function nowLocalIsoTimestamp(): string {
+  const now = new Date();
+  const y = now.getFullYear();
+  const m = String(now.getMonth() + 1).padStart(2, '0');
+  const d = String(now.getDate()).padStart(2, '0');
+  const hh = String(now.getHours()).padStart(2, '0');
+  const mm = String(now.getMinutes()).padStart(2, '0');
+  return appendLocalOffset(`${y}-${m}-${d}T${hh}:${mm}`);
 }

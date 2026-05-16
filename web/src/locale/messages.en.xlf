@@ -2963,8 +2963,17 @@ Deine Position: # ·  Reps        </source>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html</note>
       </notes>
       <segment state="translated">
-        <source>+<ph id="0" equiv="INTERPOLATION" disp="{{ reps }}"/> Reps</source>
-        <target>+<ph id="0" equiv="INTERPOLATION" disp="{{ reps }}"/> reps</target>
+        <source>+<ph id="0" equiv="INTERPOLATION" disp="{{ vm.reps }}"/> Reps</source>
+        <target>+<ph id="0" equiv="INTERPOLATION" disp="{{ vm.reps }}"/> reps</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.quickAdd.autoPrefix">
+      <notes>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html</note>
+      </notes>
+      <segment state="translated">
+        <source>Auto:</source>
+        <target>Auto:</target>
       </segment>
     </unit>
     <unit id="quickActions.edit.aria">
@@ -3010,6 +3019,42 @@ Deine Position: # ·  Reps        </source>
       <segment state="translated">
         <source>Im SpeedDial</source>
         <target>In SpeedDial</target>
+      </segment>
+    </unit>
+    <unit id="quickAddConfig.hintV2">
+      <notes>
+        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts</note>
+      </notes>
+      <segment state="translated">
+        <source> Lege bis zu <ph id="0" equiv="INTERPOLATION" disp="{{ maxRows }}"/> Schnellaktionen fest. Wähle pro Button die Übung und – wo verfügbar – Auto-Messung über die Kamera. Leere Felder werden ignoriert. </source>
+        <target> Configure up to <ph id="0" equiv="INTERPOLATION" disp="{{ maxRows }}"/> quick actions. Pick the exercise per button and — where available — auto-count via the camera. Empty fields are ignored. </target>
+      </segment>
+    </unit>
+    <unit id="quickAddConfig.exerciseLabel">
+      <notes>
+        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts</note>
+      </notes>
+      <segment state="translated">
+        <source>Übung</source>
+        <target>Exercise</target>
+      </segment>
+    </unit>
+    <unit id="quickAddConfig.autoCountBadge">
+      <notes>
+        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts</note>
+      </notes>
+      <segment state="translated">
+        <source> Auto </source>
+        <target> Auto </target>
+      </segment>
+    </unit>
+    <unit id="quickAddConfig.autoCount">
+      <notes>
+        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts</note>
+      </notes>
+      <segment state="translated">
+        <source>Auto-Messung</source>
+        <target>Auto-count</target>
       </segment>
     </unit>
     <unit id="quickAddConfig.clearAria">

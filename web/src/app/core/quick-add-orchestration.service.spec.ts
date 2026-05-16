@@ -418,6 +418,32 @@ describe('QuickAddOrchestrationService.openAutoCount', () => {
     expect(statsApiMock.createPushup).not.toHaveBeenCalled();
     expect(exerciseApiMock.createEntry).not.toHaveBeenCalled();
   });
+
+  // Regression: the configurable Schnellaktionen card calls
+  // openAutoCount(preselect) so the camera dialog lands on the right
+  // detector without an extra tap. The orchestrator must forward
+  // `preselect` into MAT_DIALOG_DATA as `initialExerciseId`.
+  it('Given openAutoCount("situp"), Then dialog.open receives data.initialExerciseId="situp"', async () => {
+    const { service, dialogMock } = setup(null, undefined);
+
+    await service.openAutoCount('situp');
+
+    const config = dialogMock.open.mock.calls[0][1] as
+      | { data?: { initialExerciseId?: string } }
+      | undefined;
+    expect(config?.data?.initialExerciseId).toBe('situp');
+  });
+
+  it('Given openAutoCount() without a preselect, Then no dialog data is passed (legacy behaviour)', async () => {
+    const { service, dialogMock } = setup(null, undefined);
+
+    await service.openAutoCount();
+
+    const config = dialogMock.open.mock.calls[0][1] as
+      | { data?: unknown }
+      | undefined;
+    expect(config?.data).toBeUndefined();
+  });
 });
 
 describe('QuickAddOrchestrationService.openExerciseTimer', () => {

@@ -1,6 +1,6 @@
 import { PLATFORM_ID, signal, type WritableSignal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import {
   type FormCheckFrame,
   PoseRepCounterService,
@@ -105,6 +105,39 @@ describe('AutoCountDialogComponent', () => {
     expect(cameraOpen).toHaveBeenCalledTimes(1);
     expect(counter.bindSpy).toHaveBeenCalledTimes(1);
     expect(counter.startSpy).toHaveBeenCalledWith({ exerciseId: 'pushup' });
+  });
+
+  it('given MAT_DIALOG_DATA preselects "situp", then the counter starts with situp instead of pushup', async () => {
+    TestBed.resetTestingModule();
+    TestBed.configureTestingModule({
+      imports: [AutoCountDialogComponent],
+      providers: [
+        { provide: PLATFORM_ID, useValue: 'browser' },
+        {
+          provide: CameraService,
+          useValue: { open: cameraOpen, close: cameraClose },
+        },
+        {
+          provide: MatDialogRef,
+          useValue: { close: dialogClose },
+        },
+        {
+          provide: MAT_DIALOG_DATA,
+          useValue: { initialExerciseId: 'situp' },
+        },
+      ],
+    }).overrideComponent(AutoCountDialogComponent, {
+      set: {
+        providers: [{ provide: PoseRepCounterService, useValue: counter }],
+      },
+    });
+
+    const fixture = TestBed.createComponent(AutoCountDialogComponent);
+    fixture.detectChanges();
+    await flushAsync();
+    await flushAsync();
+
+    expect(counter.startSpy).toHaveBeenCalledWith({ exerciseId: 'situp' });
   });
 
   it('given the dialog is destroyed, when teardown runs, then counter.stop and camera.close are each called once', async () => {
