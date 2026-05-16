@@ -1954,8 +1954,8 @@ Active:         </target>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
             </notes>
       <segment state="translated">
-        <source>Tabbed Analyse mit Verlaufsdiagrammen, KPI-Karten und Kategorie-Vergleich: Liegestütz-Varianten (Standard, Wide, Diamond), Klimmzüge, Sit-ups, Kniebeugen, Plank-Zeiten und Laufen inkl. Pace – jede Übung mit ihrer eigenen Maßeinheit, Zeitraum frei wählbar.</source>
-        <target>Tabbed analysis with trend charts, KPI cards and category comparison: push-up variants (Standard, Wide, Diamond), pull-ups, sit-ups, squats, plank durations and running with pace – each exercise in its own unit, time range freely selectable.</target>
+        <source>Verlaufsdiagramme und KPI-Karten für jede Übung: Liegestütz-Varianten (Standard, Wide, Diamond), Sit-ups, Kniebeugen, Plank und Laufen – mit frei wählbarem Zeitraum.</source>
+        <target>Trend charts and KPI cards for every exercise: push-up variants (Standard, Wide, Diamond), sit-ups, squats, planks and running – with a freely selectable time range.</target>
             </segment>
         </unit>
     <unit id="landing.feature.analytics.title">
@@ -1972,8 +1972,8 @@ Active:         </target>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
             </notes>
       <segment state="translated">
-        <source>Sätze &amp; Intervalle</source>
-        <target>Sets &amp; intervals</target>
+        <source>Multi-Set Tracking</source>
+        <target>Multi-set tracking</target>
             </segment>
         </unit>
     <unit id="landing.feature.multiset.body">
@@ -1981,8 +1981,8 @@ Active:         </target>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
             </notes>
       <segment state="translated">
-        <source>Erfasse jeden Satz einzeln – z.&#x202F;B. 12&#xA0;+&#xA0;10&#xA0;+&#xA0;8. Die App summiert automatisch, zeigt deine Set-Verteilung und vergleicht den Aufbau über Wochen. Für Lauf- und Ausdauer-Workouts trägst du genauso einfach Intervalle samt Pace ein.</source>
-        <target>Log every set individually – e.g. 12&#xA0;+&#xA0;10&#xA0;+&#xA0;8. The app totals it up automatically, shows your set distribution and compares the build over weeks. For running and endurance workouts you log intervals with pace in the same flow.</target>
+        <source>Erfasse jeden Satz einzeln – z.&#x202F;B. 12&#xA0;+&#xA0;10&#xA0;+&#xA0;8. Die App summiert automatisch und zeigt deine durchschnittliche Set-Größe.</source>
+        <target>Log every set individually – e.g. 12&#xA0;+&#xA0;10&#xA0;+&#xA0;8. The app sums them up automatically and shows your average set size.</target>
             </segment>
         </unit>
     <unit id="landing.feature.goals.title">
@@ -1999,8 +1999,8 @@ Active:         </target>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
             </notes>
       <segment state="translated">
-        <source>Dreifacher Fortschrittsbalken hält dich auf Kurs – Tages-, Wochen- und Monatsziel auf einen Blick. Läuft gerade ein Trainingsplan, übernimmt der das Tagesziel automatisch. Die Streak-Anzeige belohnt Dranbleiben, Konfetti feiert dein erreichtes Ziel.</source>
-        <target>A triple progress bar keeps you on track – daily, weekly and monthly goal at a glance. When a training plan is active it takes over the daily goal automatically. The streak counter rewards consistency and confetti celebrates each goal you hit.</target>
+        <source>Dreifacher Fortschrittsbalken hält dich auf Kurs. Streak-Anzeige belohnt dranbleiben, Konfetti feiert dein erreichtes Tagesziel.</source>
+        <target>Triple progress bar keeps you on track. The streak counter rewards consistency and confetti celebrates each daily goal you hit.</target>
             </segment>
         </unit>
     <unit id="landing.feature.heatmap.title">
@@ -2026,8 +2026,8 @@ Active:         </target>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
             </notes>
       <segment state="translated">
-        <source>Ein Tap auf den Floating Action Button oder eine Schnellaktion im Dashboard – Eintrag in zwei Sekunden, komplett ohne Dialog. Detaillierte Erfassung mit Sätzen, Intervallen, Dauer oder Distanz erreichst du auf Wunsch im selben Flow.</source>
-        <target>One tap on the floating action button or a quick action on the dashboard – an entry in two seconds, no dialog at all. Detailed logging with sets, intervals, duration or distance is one step further in the same flow.</target>
+        <source>Eintrag in 2 Sekunden über den Floating Action Button oder Schnellaktionen direkt im Dashboard – ganz ohne Dialog.</source>
+        <target>Log an entry in 2 seconds via the floating action button or quick actions directly on the dashboard – no dialog needed.</target>
             </segment>
         </unit>
     <unit id="landing.feature.quick.title">
@@ -2053,8 +2053,8 @@ Active:         </target>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
             </notes>
       <segment state="translated">
-        <source>Direkt aus dem Browser als App installieren – mit Echtzeit-Sync zwischen allen Geräten, Offline-Eintrag dank Service Worker und Tagesergebnis per Teilen-Button. Updates kommen automatisch.</source>
-        <target>Install it as an app straight from the browser – with real-time sync across all your devices, offline logging thanks to the service worker and your daily result one tap of the share button away. Updates roll out automatically.</target>
+        <source>Direkt aus dem Browser als App installieren – mit Echtzeit-Sync zwischen allen Geräten und Tagesergebnis per Teilen-Button.</source>
+        <target>Install it as an app straight from the browser – with real-time sync across all your devices and your daily result a share button away.</target>
             </segment>
         </unit>
     <unit id="landing.feature.pwa.installed">
@@ -2098,8 +2098,8 @@ Active:         </target>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
             </notes>
       <segment state="translated">
-        <source>DSGVO-konform mit anpassbarer Cookie-Zustimmung. Reps werden lokal im Browser ausgewertet – kein Video verlässt dein Gerät. Dein Name auf der Bestenliste? Nur wenn du es willst. Kein Abo, keine Kreditkarte.</source>
-        <target>GDPR-friendly with customisable cookie consent. Reps are analysed locally in the browser – no video ever leaves your device. Your name on the leaderboard? Only if you want it there. No subscription, no credit card.</target>
+        <source>DSGVO-konform mit anpassbarer Cookie-Zustimmung. Dein Name auf der Bestenliste? Nur wenn du es willst. Kein Abo, keine Kreditkarte.</source>
+        <target>GDPR-friendly with customisable cookie consent. Your name on the leaderboard? Only if you want it there. No subscription, no credit card.</target>
             </segment>
         </unit>
     <unit id="landing.feature.autoCount.imageAlt">
@@ -2116,8 +2116,8 @@ Active:         </target>
     </unit>
     <unit id="landing.feature.autoCount.body">
       <segment state="translated">
-        <source>Stell das Handy hin, öffne den Auto-Zähler und leg los: Die KI erkennt Liegestütze, Kniebeugen, Klimmzüge und Sit-ups in Echtzeit direkt im Browser und zählt jede saubere Wiederholung mit. Für Plank und Hollow-Hold läuft stattdessen ein automatischer Halte-Timer. Der Live-Form-Check zeigt Winkel, Phase und Erkennungs-Sicherheit – ohne Cloud, ganz ohne Daten-Upload.</source>
-        <target>Prop up your phone, open the auto-counter and get going: the AI recognises push-ups, squats, pull-ups and sit-ups in real time right in your browser and counts every clean rep. For planks and hollow holds an automatic hold timer kicks in instead. The live Form Check shows angle, phase and detection confidence – on-device, with zero data leaving your phone.</target>
+        <source>Stell das Handy hin, öffne die Auto-Zählung und mach deine Liegestütze, Kniebeugen, Klimmzüge oder Sit-ups – unsere KI erkennt deine Bewegung in Echtzeit direkt im Browser und zählt automatisch mit. Der Live-Form-Check zeigt Winkel und Sicherheit, damit du jederzeit weißt, dass die Zählung sauber läuft.</source>
+        <target>Prop up your phone, open the auto-counter and start your push-ups, squats, pull-ups or sit-ups – our AI recognises your motion in real time, right in your browser, and counts along automatically. The live Form Check shows angle and confidence so you always know the count is clean.</target>
       </segment>
     </unit>
     <unit id="landing.features.aria">
@@ -2414,8 +2414,8 @@ Deine Position: # ·  Reps        </source>
 
             </notes>
       <segment state="translated">
-        <source> Reps live per Kamera-KI zählen – Liegestütze, Kniebeugen, Klimmzüge, Sit-ups sowie Halte-Timer für Plank &amp; Hollow-Hold. Dazu Trainingspläne, Heatmap, Streaks, Tagesziele und Live-Sync auf allen Geräten. </source>
-        <target> Count reps live with camera-AI — push-ups, squats, pull-ups, sit-ups plus a hold timer for planks &amp; hollow holds. With training plans, heatmap, streaks, daily goals and live sync across every device. </target>
+        <source> Liegestütze tracken in Sekunden – mit Trends, Streaks und Live-Sync. Plus Sit-ups, Kniebeugen, Plank und Laufen, wenn du mehr willst. </source>
+        <target> Track push-ups in seconds — with trends, streaks and live sync. Plus sit-ups, squats, planks and running when you want more. </target>
 
 
 
@@ -2963,8 +2963,17 @@ Deine Position: # ·  Reps        </source>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html</note>
       </notes>
       <segment state="translated">
-        <source>+<ph id="0" equiv="INTERPOLATION" disp="{{ reps }}"/> Reps</source>
-        <target>+<ph id="0" equiv="INTERPOLATION" disp="{{ reps }}"/> reps</target>
+        <source>+<ph id="0" equiv="INTERPOLATION" disp="{{ vm.reps }}"/> Reps</source>
+        <target>+<ph id="0" equiv="INTERPOLATION" disp="{{ vm.reps }}"/> reps</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.quickAdd.autoPrefix">
+      <notes>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html</note>
+      </notes>
+      <segment state="translated">
+        <source>Auto:</source>
+        <target>Auto:</target>
       </segment>
     </unit>
     <unit id="quickActions.edit.aria">
@@ -3010,6 +3019,42 @@ Deine Position: # ·  Reps        </source>
       <segment state="translated">
         <source>Im SpeedDial</source>
         <target>In SpeedDial</target>
+      </segment>
+    </unit>
+    <unit id="quickAddConfig.hintV2">
+      <notes>
+        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts</note>
+      </notes>
+      <segment state="translated">
+        <source> Lege bis zu <ph id="0" equiv="INTERPOLATION" disp="{{ maxRows }}"/> Schnellaktionen fest. Wähle pro Button die Übung und – wo verfügbar – Auto-Messung über die Kamera. Leere Felder werden ignoriert. </source>
+        <target> Configure up to <ph id="0" equiv="INTERPOLATION" disp="{{ maxRows }}"/> quick actions. Pick the exercise per button and — where available — auto-count via the camera. Empty fields are ignored. </target>
+      </segment>
+    </unit>
+    <unit id="quickAddConfig.exerciseLabel">
+      <notes>
+        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts</note>
+      </notes>
+      <segment state="translated">
+        <source>Übung</source>
+        <target>Exercise</target>
+      </segment>
+    </unit>
+    <unit id="quickAddConfig.autoCountBadge">
+      <notes>
+        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts</note>
+      </notes>
+      <segment state="translated">
+        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">videocam</pc> Auto </source>
+        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">videocam</pc> Auto </target>
+      </segment>
+    </unit>
+    <unit id="quickAddConfig.autoCount">
+      <notes>
+        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts</note>
+      </notes>
+      <segment state="translated">
+        <source>Auto-Messung</source>
+        <target>Auto-count</target>
       </segment>
     </unit>
     <unit id="quickAddConfig.clearAria">
@@ -3644,8 +3689,8 @@ Deine Position: # ·  Reps        </source>
         </unit>
     <unit id="seo.landing.description">
       <segment state="translated">
-        <source>Kostenlose Web-App für Liegestütze und mehr: Reps per Kamera-KI im Browser automatisch zählen, plus Trainingspläne, 30-Tage-Challenge, Heatmap, Streaks, Tagesziele und Bestenliste – auch für Sit-ups, Kniebeugen, Klimmzüge, Plank und Laufen. Mobil, offline-fähig, mit Live-Sync.</source>
-        <target>Free web app for push-ups and more: count reps automatically with camera-AI in your browser, plus training plans, 30-day challenge, heatmap, streaks, daily goals and global leaderboard – also with sit-ups, squats, pull-ups, planks and running. Mobile, offline-capable, live-synced.</target>
+        <source>Liegestütze tracken mit kostenloser Web-App: Trainingspläne, 30-Tage-Challenge, Tagesziel, Streaks und Bestenliste – jetzt auch mit Sit-ups, Kniebeugen, Plank und Laufen. Mobil, offline-fähig, mit Live-Sync.</source>
+        <target>Track push-ups with a free web app: training plans, 30-day challenge, daily goal, streaks and global leaderboard – now also with sit-ups, squats, planks and running. Mobile, offline-capable, live-synced.</target>
 
 
 
@@ -5542,8 +5587,8 @@ Deine Position: # ·  Reps        </source>
     </unit>
     <unit id="landing.feature.adaptive.body">
       <segment state="translated">
-        <source>Die Schnellaktionen lernen aus deiner Historie und schlagen passende Wiederholungen vor. Du willst eigene Presets? Konfiguriere bis zu sechs Buttons pro Übung selbst – inklusive Standard-Variante für den FAB.</source>
-        <target>The quick actions learn from your history and suggest matching rep counts. Want your own presets? Configure up to six buttons per exercise yourself – including the default the FAB uses.</target>
+        <source>Die Schnellaktionen lernen aus deiner Historie und schlagen passende Wiederholungen vor – oder du konfigurierst eigene Buttons.</source>
+        <target>The quick actions learn from your history and suggest fitting rep counts – or you configure your own buttons.</target>
       </segment>
     </unit>
     <unit id="dashboard.analysisTeaserAriaLabel">
@@ -8865,6 +8910,12 @@ Deine Position: # ·  Reps        </source>
       <segment state="translated">
         <source>Plank‑Timer</source>
         <target>Plank‑timer</target>
+      </segment>
+    </unit>
+    <unit id="quickAddConfig.clearRowAria">
+      <segment state="translated">
+        <source>Schnellaktion löschen</source>
+        <target>Clear quick action</target>
       </segment>
     </unit>
     <unit id="plan.push-pull-6w.day.1.desc">

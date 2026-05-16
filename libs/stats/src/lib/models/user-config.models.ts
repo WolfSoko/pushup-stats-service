@@ -13,13 +13,65 @@ export const SNAP_QUALITY_PARTICLES: Readonly<Record<SnapQuality, number>> = {
 
 export const DEFAULT_SNAP_QUALITY: SnapQuality = 'low';
 
-/** User-configurable quick-add button (up to 3 slots). */
+/**
+ * How a quick-add button behaves when clicked.
+ *  - `'reps'` — persist a fixed-reps entry immediately (legacy default).
+ *  - `'auto-count'` — open the camera-based auto-count dialog with the
+ *    configured exercise preselected; the user confirms before the entry
+ *    is saved.
+ */
+export type QuickAddMode = 'reps' | 'auto-count';
+
+/**
+ * Sentinel exerciseId for the legacy pushups collection. Pushup quick-adds
+ * still flow through `StatsApi.createPushup()` rather than the generic
+ * `exerciseEntries` collection — keep this single source so the dashboard,
+ * config dialog, and orchestrator stay in lockstep.
+ */
+export const PUSHUP_QUICK_ADD_EXERCISE_ID = 'pushup';
+
+/**
+ * Catalog (or sentinel) exercise ids the camera-based auto-counter supports.
+ * Must mirror the dialog's `AutoCountExerciseId` mapping — extending the
+ * camera support requires updating both. Other exercises stay rep-only.
+ */
+export const AUTO_COUNT_QUICK_ADD_EXERCISE_IDS = [
+  PUSHUP_QUICK_ADD_EXERCISE_ID,
+  'legs.squats',
+  'pull.pullups',
+  'abs.situps',
+] as const;
+
+export type AutoCountQuickAddExerciseId =
+  (typeof AUTO_COUNT_QUICK_ADD_EXERCISE_IDS)[number];
+
+export function isAutoCountQuickAddExerciseId(
+  id: string | null | undefined
+): id is AutoCountQuickAddExerciseId {
+  if (!id) return false;
+  return (AUTO_COUNT_QUICK_ADD_EXERCISE_IDS as readonly string[]).includes(id);
+}
+
+/**
+ * User-configurable quick-add button. Legacy configs only persisted `reps`
+ * and `inSpeedDial`; readers must default `exerciseId` to
+ * {@link PUSHUP_QUICK_ADD_EXERCISE_ID} and `mode` to `'reps'` so older
+ * Firestore docs keep their original pushup-quick-add semantics.
+ */
 export interface QuickAddConfig {
   reps: number;
   inSpeedDial: boolean;
+  /**
+   * Either {@link PUSHUP_QUICK_ADD_EXERCISE_ID} for legacy pushup-collection
+   * entries, or a rep-based catalog id (e.g. `'abs.situps'`). Missing on
+   * legacy docs — treat as `'pushup'`.
+   */
+  exerciseId?: string;
+  /** Defaults to `'reps'` when missing. */
+  mode?: QuickAddMode;
 }
 
-export const MAX_QUICK_ADDS = 3;
+export const MAX_QUICK_ADDS = 6;
 
 export interface UserConfig {
   userId: string;

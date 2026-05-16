@@ -1643,8 +1643,8 @@
       <notes>
         <note category="location">web/src/app/app.routes.ts:16</note>
       </notes>
-      <segment state="needs-translation">
-        <source>Kostenlose Web-App für Liegestütze und mehr: Reps per Kamera-KI im Browser automatisch zählen, plus Trainingspläne, 30-Tage-Challenge, Heatmap, Streaks, Tagesziele und Bestenliste – auch für Sit-ups, Kniebeugen, Klimmzüge, Plank und Laufen. Mobil, offline-fähig, mit Live-Sync.</source>
+      <segment state="translated">
+        <source>Liegestütze tracken mit kostenloser Web-App: Trainingspläne, 30-Tage-Challenge, Tagesziel, Streaks und Bestenliste – jetzt auch mit Sit-ups, Kniebeugen, Plank und Laufen. Mobil, offline-fähig, mit Live-Sync.</source>
         <target>Κατέγραψε τις κάμψεις με δωρεάν web-app: προγράμματα προπόνησης, πρόκληση 30 ημερών, ημερήσιος στόχος, σερί και πίνακας κατάταξης — τώρα και με sit-ups, καθίσματα, plank και τρέξιμο. Mobile, χωρίς δίκτυο, με live συγχρονισμό.</target>
       </segment>
     </unit>
@@ -2636,8 +2636,8 @@
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:19,23</note>
       </notes>
-      <segment state="needs-translation">
-        <source> Reps live per Kamera-KI zählen – Liegestütze, Kniebeugen, Klimmzüge, Sit-ups sowie Halte-Timer für Plank &amp; Hollow-Hold. Dazu Trainingspläne, Heatmap, Streaks, Tagesziele und Live-Sync auf allen Geräten. </source>
+      <segment state="translated">
+        <source> Liegestütze tracken in Sekunden – mit Trends, Streaks und Live-Sync. Plus Sit-ups, Kniebeugen, Plank und Laufen, wenn du mehr willst. </source>
         <target> Κατέγραψε τις κάμψεις σου σε δευτερόλεπτα — με τάσεις, σερί και live συγχρονισμό. Επιπλέον sit-ups, καθίσματα, plank και τρέξιμο όταν θέλεις περισσότερα. </target>
       </segment>
     </unit>
@@ -2819,8 +2819,8 @@
       </segment>
     </unit>
     <unit id="landing.feature.autoCount.body">
-      <segment state="needs-translation">
-        <source>Stell das Handy hin, öffne den Auto-Zähler und leg los: Die KI erkennt Liegestütze, Kniebeugen, Klimmzüge und Sit-ups in Echtzeit direkt im Browser und zählt jede saubere Wiederholung mit. Für Plank und Hollow-Hold läuft stattdessen ein automatischer Halte-Timer. Der Live-Form-Check zeigt Winkel, Phase und Erkennungs-Sicherheit – ohne Cloud, ganz ohne Daten-Upload.</source>
+      <segment state="translated">
+        <source>Stell das Handy hin, öffne die Auto-Zählung und mach deine Liegestütze, Kniebeugen, Klimmzüge oder Sit-ups – unsere KI erkennt deine Bewegung in Echtzeit direkt im Browser und zählt automatisch mit. Der Live-Form-Check zeigt Winkel und Sicherheit, damit du jederzeit weißt, dass die Zählung sauber läuft.</source>
         <target>Στήσε το κινητό, άνοιξε την αυτόματη μέτρηση και ξεκίνα τις κάμψεις, τα καθίσματα, τις έλξεις ή τους κοιλιακούς – η τεχνητή νοημοσύνη μας αναγνωρίζει την κίνησή σου σε πραγματικό χρόνο, απευθείας στον περιηγητή, και μετράει αυτόματα. Το ζωντανό Form Check δείχνει γωνία και αξιοπιστία ώστε να ξέρεις ότι η μέτρηση είναι καθαρή.</target>
       </segment>
     </unit>
@@ -2837,8 +2837,8 @@
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:284,286</note>
       </notes>
-      <segment state="needs-translation">
-        <source>Sätze &amp; Intervalle</source>
+      <segment state="translated">
+        <source>Multi-Set Tracking</source>
         <target>Παρακολούθηση πολλαπλών συνόλων</target>
       </segment>
     </unit>
@@ -2846,8 +2846,8 @@
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:288,290</note>
       </notes>
-      <segment state="needs-translation">
-        <source>Erfasse jeden Satz einzeln – z.&#x202F;B. 12&#xA0;+&#xA0;10&#xA0;+&#xA0;8. Die App summiert automatisch, zeigt deine Set-Verteilung und vergleicht den Aufbau über Wochen. Für Lauf- und Ausdauer-Workouts trägst du genauso einfach Intervalle samt Pace ein.</source>
+      <segment state="translated">
+        <source>Erfasse jeden Satz einzeln – z. B. 12 + 10 + 8. Die App summiert automatisch und zeigt deine durchschnittliche Set-Größe.</source>
         <target>Καταγράψτε κάθε πρόταση ξεχωριστά – π.χ. Π.χ. 12 + 10 + 8. Η εφαρμογή αθροίζει αυτόματα και εμφανίζει το μέσο μέγεθος του συνόλου σας.</target>
       </segment>
     </unit>
@@ -2864,8 +2864,8 @@
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:357,360</note>
       </notes>
-      <segment state="needs-translation">
-        <source>Tabbed Analyse mit Verlaufsdiagrammen, KPI-Karten und Kategorie-Vergleich: Liegestütz-Varianten (Standard, Wide, Diamond), Klimmzüge, Sit-ups, Kniebeugen, Plank-Zeiten und Laufen inkl. Pace – jede Übung mit ihrer eigenen Maßeinheit, Zeitraum frei wählbar.</source>
+      <segment state="translated">
+        <source>Verlaufsdiagramme und KPI-Karten für jede Übung: Liegestütz-Varianten (Standard, Wide, Diamond), Sit-ups, Kniebeugen, Plank und Laufen – mit frei wählbarem Zeitraum.</source>
         <target>Γραφήματα τάσεων και κάρτες KPI για κάθε άσκηση: παραλλαγές κάμψεων (Standard, Wide, Diamond), sit-ups, καθίσματα, plank και τρέξιμο — με ελεύθερα επιλέξιμη περίοδο.</target>
       </segment>
     </unit>
@@ -2882,8 +2882,8 @@
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:458,461</note>
       </notes>
-      <segment state="needs-translation">
-        <source>Dreifacher Fortschrittsbalken hält dich auf Kurs – Tages-, Wochen- und Monatsziel auf einen Blick. Läuft gerade ein Trainingsplan, übernimmt der das Tagesziel automatisch. Die Streak-Anzeige belohnt Dranbleiben, Konfetti feiert dein erreichtes Ziel.</source>
+      <segment state="translated">
+        <source>Dreifacher Fortschrittsbalken hält dich auf Kurs. Streak-Anzeige belohnt dranbleiben, Konfetti feiert dein erreichtes Tagesziel.</source>
         <target>Η τριπλή γραμμή προόδου σας κρατά σε καλό δρόμο. Το Streak Display σάς ανταμείβει που το τηρείτε, το κομφετί γιορτάζει τον καθημερινό σας στόχο που επιτύχατε.</target>
       </segment>
     </unit>
@@ -2918,8 +2918,8 @@
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:520,523</note>
       </notes>
-      <segment state="needs-translation">
-        <source>Ein Tap auf den Floating Action Button oder eine Schnellaktion im Dashboard – Eintrag in zwei Sekunden, komplett ohne Dialog. Detaillierte Erfassung mit Sätzen, Intervallen, Dauer oder Distanz erreichst du auf Wunsch im selben Flow.</source>
+      <segment state="translated">
+        <source>Eintrag in 2 Sekunden über den Floating Action Button oder Schnellaktionen direkt im Dashboard – ganz ohne Dialog.</source>
         <target>Είσοδος σε 2 δευτερόλεπτα χρησιμοποιώντας το κουμπί αιωρούμενης ενέργειας ή γρήγορες ενέργειες απευθείας στον πίνακα ελέγχου - χωρίς κανένα παράθυρο διαλόγου.</target>
       </segment>
     </unit>
@@ -2936,8 +2936,8 @@
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:534,538</note>
       </notes>
-      <segment state="needs-translation">
-        <source>Die Schnellaktionen lernen aus deiner Historie und schlagen passende Wiederholungen vor. Du willst eigene Presets? Konfiguriere bis zu sechs Buttons pro Übung selbst – inklusive Standard-Variante für den FAB.</source>
+      <segment state="translated">
+        <source>Die Schnellaktionen lernen aus deiner Historie und schlagen passende Wiederholungen vor – oder du konfigurierst eigene Buttons.</source>
         <target>Οι γρήγορες ενέργειες μαθαίνουν από το ιστορικό σας και προτείνουν κατάλληλες επαναλήψεις - ή μπορείτε να διαμορφώσετε τα δικά σας κουμπιά.</target>
       </segment>
     </unit>
@@ -2954,8 +2954,8 @@
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:548,551</note>
       </notes>
-      <segment state="needs-translation">
-        <source>Direkt aus dem Browser als App installieren – mit Echtzeit-Sync zwischen allen Geräten, Offline-Eintrag dank Service Worker und Tagesergebnis per Teilen-Button. Updates kommen automatisch.</source>
+      <segment state="translated">
+        <source>Direkt aus dem Browser als App installieren – mit Echtzeit-Sync zwischen allen Geräten und Tagesergebnis per Teilen-Button.</source>
         <target>Εγκατάσταση απευθείας από τον περιηγητή σαν εφαρμογή – με συγχρονισμό σε πραγματικό χρόνο σε όλες τις συσκευές και κοινοποίηση του ημερήσιου αποτελέσματος με ένα κουμπί.</target>
       </segment>
     </unit>
@@ -2999,8 +2999,8 @@
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:562,566</note>
       </notes>
-      <segment state="needs-translation">
-        <source>DSGVO-konform mit anpassbarer Cookie-Zustimmung. Reps werden lokal im Browser ausgewertet – kein Video verlässt dein Gerät. Dein Name auf der Bestenliste? Nur wenn du es willst. Kein Abo, keine Kreditkarte.</source>
+      <segment state="translated">
+        <source>DSGVO-konform mit anpassbarer Cookie-Zustimmung. Dein Name auf der Bestenliste? Nur wenn du es willst. Kein Abo, keine Kreditkarte.</source>
         <target>Συμβατό με το GDPR με συναίνεση για προσαρμοσμένα cookie. Το όνομά σας στο leaderboard; Μόνο αν το θέλεις. Χωρίς συνδρομή, χωρίς πιστωτική κάρτα.</target>
       </segment>
     </unit>
@@ -8704,6 +8704,42 @@
       <segment state="initial">
         <source>Plank‑Timer</source>
         <target>Plank‑Timer</target>
+      </segment>
+    </unit>
+    <unit id="quickAddConfig.hintV2">
+      <segment state="translated">
+        <source> Lege bis zu <ph id="0" equiv="INTERPOLATION" disp="{{ maxRows }}"/> Schnellaktionen fest. Wähle pro Button die Übung und – wo verfügbar – Auto-Messung über die Kamera. Leere Felder werden ignoriert. </source>
+        <target> Όρισε έως <ph id="0" equiv="INTERPOLATION" disp="{{ maxRows }}"/> γρήγορες ενέργειες. Επίλεξε για κάθε κουμπί την άσκηση και – όπου υποστηρίζεται – αυτόματη μέτρηση μέσω κάμερας. Τα κενά πεδία αγνοούνται. </target>
+      </segment>
+    </unit>
+    <unit id="quickAddConfig.exerciseLabel">
+      <segment state="translated">
+        <source>Übung</source>
+        <target>Άσκηση</target>
+      </segment>
+    </unit>
+    <unit id="quickAddConfig.autoCountBadge">
+      <segment state="translated">
+        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">videocam</pc> Auto </source>
+        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">videocam</pc> Αυτόματο </target>
+      </segment>
+    </unit>
+    <unit id="quickAddConfig.autoCount">
+      <segment state="translated">
+        <source>Auto-Messung</source>
+        <target>Αυτόματη μέτρηση</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.quickAdd.autoPrefix">
+      <segment state="translated">
+        <source>Auto:</source>
+        <target>Αυτόματο:</target>
+      </segment>
+    </unit>
+    <unit id="quickAddConfig.clearRowAria">
+      <segment state="translated">
+        <source>Schnellaktion löschen</source>
+        <target>Διαγραφή γρήγορης ενέργειας</target>
       </segment>
     </unit>
     <unit id="plan.push-pull-6w.day.1.desc">

@@ -2453,8 +2453,8 @@
       <notes>
         <note category="location">web/src/app/app.routes.ts:16</note>
       </notes>
-      <segment state="needs-translation">
-        <source>Kostenlose Web-App für Liegestütze und mehr: Reps per Kamera-KI im Browser automatisch zählen, plus Trainingspläne, 30-Tage-Challenge, Heatmap, Streaks, Tagesziele und Bestenliste – auch für Sit-ups, Kniebeugen, Klimmzüge, Plank und Laufen. Mobil, offline-fähig, mit Live-Sync.</source>
+      <segment state="translated">
+        <source>Liegestütze tracken mit kostenloser Web-App: Trainingspläne, 30-Tage-Challenge, Tagesziel, Streaks und Bestenliste – jetzt auch mit Sit-ups, Kniebeugen, Plank und Laufen. Mobil, offline-fähig, mit Live-Sync.</source>
       <target>用免费网页应用追踪俯卧撑：训练计划、30 天挑战、每日目标、连续天数与排行榜 — 现在也支持仰卧起坐、深蹲、平板支撑与跑步。手机端、离线可用、实时同步。</target></segment>
     </unit>
     <unit id="seo.dashboard.title">
@@ -3356,8 +3356,8 @@
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:19,23</note>
       </notes>
-      <segment state="needs-translation">
-        <source> Reps live per Kamera-KI zählen – Liegestütze, Kniebeugen, Klimmzüge, Sit-ups sowie Halte-Timer für Plank &amp; Hollow-Hold. Dazu Trainingspläne, Heatmap, Streaks, Tagesziele und Live-Sync auf allen Geräten. </source>
+      <segment state="translated">
+        <source> Liegestütze tracken in Sekunden – mit Trends, Streaks und Live-Sync. Plus Sit-ups, Kniebeugen, Plank und Laufen, wenn du mehr willst. </source>
       <target> 几秒钟记录俯卧撑 — 提供趋势、连续天数与实时同步。需要更多时还可记录仰卧起坐、深蹲、平板支撑和跑步。</target></segment>
     </unit>
     <unit id="landing.cta.dashboard">
@@ -3520,8 +3520,8 @@
       </segment>
     </unit>
     <unit id="landing.feature.autoCount.body">
-      <segment state="needs-translation">
-        <source>Stell das Handy hin, öffne den Auto-Zähler und leg los: Die KI erkennt Liegestütze, Kniebeugen, Klimmzüge und Sit-ups in Echtzeit direkt im Browser und zählt jede saubere Wiederholung mit. Für Plank und Hollow-Hold läuft stattdessen ein automatischer Halte-Timer. Der Live-Form-Check zeigt Winkel, Phase und Erkennungs-Sicherheit – ohne Cloud, ganz ohne Daten-Upload.</source>
+      <segment state="translated">
+        <source>Stell das Handy hin, öffne die Auto-Zählung und mach deine Liegestütze, Kniebeugen, Klimmzüge oder Sit-ups – unsere KI erkennt deine Bewegung in Echtzeit direkt im Browser und zählt automatisch mit. Der Live-Form-Check zeigt Winkel und Sicherheit, damit du jederzeit weißt, dass die Zählung sauber läuft.</source>
         <target>把手机放好,打开自动计数,然后开始做俯卧撑、深蹲、引体向上或仰卧起坐——我们的 AI 直接在浏览器中实时识别你的动作并自动计数。实时动作检查显示角度和置信度,让你随时知道计数是否准确。</target>
       </segment>
     </unit>
@@ -3537,16 +3537,16 @@
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:288,290</note>
       </notes>
-      <segment state="needs-translation">
-        <source>Sätze &amp; Intervalle</source>
+      <segment state="translated">
+        <source>Multi-Set Tracking</source>
       <target>多组次数追踪</target></segment>
     </unit>
     <unit id="landing.feature.multiset.body">
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:292,294</note>
       </notes>
-      <segment state="needs-translation">
-        <source>Erfasse jeden Satz einzeln – z.&#x202F;B. 12&#xA0;+&#xA0;10&#xA0;+&#xA0;8. Die App summiert automatisch, zeigt deine Set-Verteilung und vergleicht den Aufbau über Wochen. Für Lauf- und Ausdauer-Workouts trägst du genauso einfach Intervalle samt Pace ein.</source>
+      <segment state="translated">
+        <source>Erfasse jeden Satz einzeln – z. B. 12 + 10 + 8. Die App summiert automatisch und zeigt deine durchschnittliche Set-Größe.</source>
       <target>逐组记录每一组 — 例如 12 + 10 + 8 次。应用会自动求和，并计算你的平均每组次数。</target></segment>
     </unit>
     <unit id="landing.feature.analytics.title">
@@ -3561,8 +3561,8 @@
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:361,364</note>
       </notes>
-      <segment state="needs-translation">
-        <source>Tabbed Analyse mit Verlaufsdiagrammen, KPI-Karten und Kategorie-Vergleich: Liegestütz-Varianten (Standard, Wide, Diamond), Klimmzüge, Sit-ups, Kniebeugen, Plank-Zeiten und Laufen inkl. Pace – jede Übung mit ihrer eigenen Maßeinheit, Zeitraum frei wählbar.</source>
+      <segment state="translated">
+        <source>Verlaufsdiagramme und KPI-Karten für jede Übung: Liegestütz-Varianten (Standard, Wide, Diamond), Sit-ups, Kniebeugen, Plank und Laufen – mit frei wählbarem Zeitraum.</source>
       <target>为每项练习提供趋势图与 KPI 卡片：俯卧撑变体(Standard、Wide、Diamond)、仰卧起坐、深蹲、平板支撑与跑步 — 可自由选择时间范围。</target></segment>
     </unit>
     <unit id="landing.feature.goals.title">
@@ -3577,8 +3577,8 @@
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:462,465</note>
       </notes>
-      <segment state="needs-translation">
-        <source>Dreifacher Fortschrittsbalken hält dich auf Kurs – Tages-, Wochen- und Monatsziel auf einen Blick. Läuft gerade ein Trainingsplan, übernimmt der das Tagesziel automatisch. Die Streak-Anzeige belohnt Dranbleiben, Konfetti feiert dein erreichtes Ziel.</source>
+      <segment state="translated">
+        <source>Dreifacher Fortschrittsbalken hält dich auf Kurs. Streak-Anzeige belohnt dranbleiben, Konfetti feiert dein erreichtes Tagesziel.</source>
       <target>三重进度条让你保持正轨。连续记录显示会显示你的坚持情况，达成每日目标时还有彩纸庆祝。</target></segment>
     </unit>
     <unit id="landing.feature.heatmap.title">
@@ -3609,8 +3609,8 @@
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:524,527</note>
       </notes>
-      <segment state="needs-translation">
-        <source>Ein Tap auf den Floating Action Button oder eine Schnellaktion im Dashboard – Eintrag in zwei Sekunden, komplett ohne Dialog. Detaillierte Erfassung mit Sätzen, Intervallen, Dauer oder Distanz erreichst du auf Wunsch im selben Flow.</source>
+      <segment state="translated">
+        <source>Eintrag in 2 Sekunden über den Floating Action Button oder Schnellaktionen direkt im Dashboard – ganz ohne Dialog.</source>
       <target>通过悬浮操作按钮或仪表板快速操作，只需2秒就能记录一次训练 — 无需打开对话框。</target></segment>
     </unit>
     <unit id="landing.feature.adaptive.title">
@@ -3625,8 +3625,8 @@
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:538,542</note>
       </notes>
-      <segment state="needs-translation">
-        <source>Die Schnellaktionen lernen aus deiner Historie und schlagen passende Wiederholungen vor. Du willst eigene Presets? Konfiguriere bis zu sechs Buttons pro Übung selbst – inklusive Standard-Variante für den FAB.</source>
+      <segment state="translated">
+        <source>Die Schnellaktionen lernen aus deiner Historie und schlagen passende Wiederholungen vor – oder du konfigurierst eigene Buttons.</source>
       <target>快速操作按钮会学习你的历史数据并推荐合适的次数 — 或者你可以自定义按钮。</target></segment>
     </unit>
     <unit id="landing.feature.pwa.title">
@@ -3641,8 +3641,8 @@
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:552,555</note>
       </notes>
-      <segment state="needs-translation">
-        <source>Direkt aus dem Browser als App installieren – mit Echtzeit-Sync zwischen allen Geräten, Offline-Eintrag dank Service Worker und Tagesergebnis per Teilen-Button. Updates kommen automatisch.</source>
+      <segment state="translated">
+        <source>Direkt aus dem Browser als App installieren – mit Echtzeit-Sync zwischen allen Geräten und Tagesergebnis per Teilen-Button.</source>
       <target>直接从浏览器作为应用安装 — 在所有设备之间实时同步,并通过分享按钮发送当日成绩。</target></segment>
     </unit>
     <unit id="landing.feature.pwa.installed">
@@ -3684,8 +3684,8 @@
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:566,570</note>
       </notes>
-      <segment state="needs-translation">
-        <source>DSGVO-konform mit anpassbarer Cookie-Zustimmung. Reps werden lokal im Browser ausgewertet – kein Video verlässt dein Gerät. Dein Name auf der Bestenliste? Nur wenn du es willst. Kein Abo, keine Kreditkarte.</source>
+      <segment state="translated">
+        <source>DSGVO-konform mit anpassbarer Cookie-Zustimmung. Dein Name auf der Bestenliste? Nur wenn du es willst. Kein Abo, keine Kreditkarte.</source>
       <target>符合GDPR标准，可自定义Cookie同意设置。想要你的名字出现在排行榜上？只有在你同意时才会显示。无需订阅，无需信用卡。</target></segment>
     </unit>
     <unit id="ads.landing.aria">
@@ -8322,6 +8322,42 @@
       <segment state="initial">
         <source>Plank‑Timer</source>
         <target>Plank‑Timer</target>
+      </segment>
+    </unit>
+    <unit id="quickAddConfig.hintV2">
+      <segment state="translated">
+        <source> Lege bis zu <ph id="0" equiv="INTERPOLATION" disp="{{ maxRows }}"/> Schnellaktionen fest. Wähle pro Button die Übung und – wo verfügbar – Auto-Messung über die Kamera. Leere Felder werden ignoriert. </source>
+        <target> 最多可设置 <ph id="0" equiv="INTERPOLATION" disp="{{ maxRows }}"/> 个快速操作。为每个按钮选择训练项目，并在支持时启用通过相机进行自动计数。空白项将被忽略。 </target>
+      </segment>
+    </unit>
+    <unit id="quickAddConfig.exerciseLabel">
+      <segment state="translated">
+        <source>Übung</source>
+        <target>训练项目</target>
+      </segment>
+    </unit>
+    <unit id="quickAddConfig.autoCountBadge">
+      <segment state="translated">
+        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">videocam</pc> Auto </source>
+        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">videocam</pc> 自动 </target>
+      </segment>
+    </unit>
+    <unit id="quickAddConfig.autoCount">
+      <segment state="translated">
+        <source>Auto-Messung</source>
+        <target>自动计数</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.quickAdd.autoPrefix">
+      <segment state="translated">
+        <source>Auto:</source>
+        <target>自动：</target>
+      </segment>
+    </unit>
+    <unit id="quickAddConfig.clearRowAria">
+      <segment state="translated">
+        <source>Schnellaktion löschen</source>
+        <target>清除快速操作</target>
       </segment>
     </unit>
     <unit id="plan.push-pull-6w.day.1.desc">
