@@ -58,3 +58,29 @@ mat-table {
   --mdc-fab-container-color: var(--mat-sys-error-container);
   --mdc-fab-icon-color: var(--mat-sys-on-error-container);
 }
+
+// Brief pulse when the entries-page resolves a `#entry-<id>` deep-link
+// (dashboard tile click) onto a row. Stays visible long enough to draw
+// the eye without being annoying.
+.entry-highlight {
+  animation: entry-highlight-pulse 1.6s ease-out 1;
+}
+
+@keyframes entry-highlight-pulse {
+  0% {
+    background-color: rgba(123, 159, 255, 0);
+  }
+  20% {
+    background-color: rgba(123, 159, 255, 0.32);
+  }
+  100% {
+    background-color: rgba(123, 159, 255, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .entry-highlight {
+    animation: none;
+    background-color: rgba(123, 159, 255, 0.18);
+  }
+}

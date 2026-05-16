@@ -18,7 +18,6 @@ import {
   ActivatedRoute,
   convertToParamMap,
   provideRouter,
-  Router,
 } from '@angular/router';
 import { QuickAddOrchestrationService } from '../../core/quick-add-orchestration.service';
 import { AppDataFacade } from '../../core/app-data.facade';
@@ -255,7 +254,7 @@ describe('StatsDashboardComponent', () => {
         const text = fixture.nativeElement.textContent;
 
         // Then
-        expect(text).toContain('Liegestütze Statistik');
+        expect(text).toContain('Meine Trainingsübersicht');
         expect(text).toContain('Gesamt');
         expect(text).toContain('Zielfortschritt');
         expect(text).toContain('Letzter Eintrag');
@@ -291,30 +290,92 @@ describe('StatsDashboardComponent', () => {
         expect(header.nextElementSibling).toBe(miniBadges);
       });
 
-      it('Then the latest entries section navigates to the history page when clicked', async () => {
-        const router = TestBed.inject(Router);
-        const navigateSpy = vi.spyOn(router, 'navigate');
+      it('Then the latest exercises section renders as per-entry tile links and the section is no longer a global click target', () => {
         const root = fixture.nativeElement as HTMLElement;
         const section = root.querySelector<HTMLElement>('.latest-entries');
 
         expect(section).toBeTruthy();
         if (!section) return;
-        expect(section.getAttribute('role')).toBe('link');
-        expect(section.getAttribute('tabindex')).toBe('0');
-        expect(section.getAttribute('aria-label')).toBe(
-          'Zur Historie navigieren'
-        );
+        // The wrapping <section> no longer carries role="link" / click handler —
+        // every tile is its own link so the visual affordance matches the
+        // destination (Copilot review feedback on the original PR).
+        expect(section.getAttribute('role')).toBeNull();
+        expect(section.getAttribute('tabindex')).toBeNull();
         expect(section.querySelector('h2')?.textContent).toContain(
-          'Letzte Einträge'
+          'Letzte Übungen'
         );
-        expect(section.querySelector('.teaser-cta')?.textContent).toContain(
-          'Zur Historie'
+        const grid = section.querySelector<HTMLElement>(
+          '[data-testid="dashboard-recent-exercises-grid"]'
         );
+        expect(grid).toBeTruthy();
+        const tiles = section.querySelectorAll<HTMLAnchorElement>(
+          'a[data-testid="dashboard-recent-exercise-tile"]'
+        );
+        expect(tiles.length).toBeGreaterThan(0);
+        // Each tile's href carries the entry id as a `#entry-<id>`
+        // fragment — the history page reads the fragment, finds the
+        // row, and scrolls/highlights it inside the virtualized table.
+        // The per-tile `data-entry-id` attribute lets E2E tests target
+        // a specific tile without falling back to nth-of-type selectors.
+        for (const tile of Array.from(tiles)) {
+          const href = tile.getAttribute('href') ?? '';
+          expect(href).toContain('/history');
+          expect(href).toMatch(/#entry-[^&?]+$/);
+          const entryId = tile.getAttribute('data-entry-id');
+          expect(entryId).toBeTruthy();
+          // Fragment id must match the data-entry-id so the dashboard
+          // tile and the history-row scroll target stay in lockstep.
+          expect(href).toContain(`#entry-${entryId}`);
+        }
+      });
 
-        section.click();
-        await fixture.whenStable();
+      it('Then the "Zur Historie" CTA is its own routerLink', () => {
+        const root = fixture.nativeElement as HTMLElement;
+        const cta = root.querySelector<HTMLAnchorElement>(
+          '[data-testid="dashboard-latest-entries-cta"]'
+        );
+        expect(cta).toBeTruthy();
+        if (!cta) return;
+        expect(cta.tagName).toBe('A');
+        expect(cta.getAttribute('href')).toContain('/history');
+        expect(cta.textContent).toContain('Zur Historie');
+      });
 
-        expect(navigateSpy).toHaveBeenCalledWith(['/history']);
+      it('Then tileIcon distinguishes pushup entries from generic exercise entries', () => {
+        const component = fixture.componentInstance;
+        const pushupIcon = component.tileIcon({
+          _id: 'p',
+          kind: 'pushup',
+          timestamp: todayTs,
+          reps: 10,
+        } as unknown as Parameters<typeof component.tileIcon>[0]);
+        const exerciseIcon = component.tileIcon({
+          _id: 'e',
+          kind: 'exercise',
+          exerciseId: 'plank.standard',
+          timestamp: todayTs,
+        } as unknown as Parameters<typeof component.tileIcon>[0]);
+        // Two distinct icons keep pushup tiles visually separable from the
+        // newer multi-exercise tiles — important now that the dashboard
+        // mixes both kinds in the same grid.
+        expect(pushupIcon).toBe('fitness_center');
+        expect(exerciseIcon).toBe('sports_gymnastics');
+        expect(pushupIcon).not.toBe(exerciseIcon);
+      });
+
+      it('Then the Schnellaktionen card is rendered above the today-focus section', () => {
+        const root = fixture.nativeElement as HTMLElement;
+        const quickActions = root.querySelector<HTMLElement>('.quick-actions');
+        const todayFocus = root.querySelector<HTMLElement>('.today-focus');
+
+        expect(quickActions).toBeTruthy();
+        expect(todayFocus).toBeTruthy();
+        if (!quickActions || !todayFocus) return;
+
+        // Compare document position — quick-actions must come before today-focus
+        // in DOM order so the primary entry-point sits higher on the page.
+        const relation = quickActions.compareDocumentPosition(todayFocus);
+        expect(relation & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
       });
     });
 

@@ -6038,7 +6038,7 @@
       </notes>
       <segment state="translated">
         <source> <ph id="0" equiv="INTERPOLATION" disp="{{ latest.reps }}"/> Reps · <ph id="1" equiv="INTERPOLATION_1" disp="{{ latest.type || &apos;Standard&apos; }}"/> </source>
-        <target> Représentants <ph id="0" equiv="INTERPOLATION" disp="{{ latest.reps }}"/> · <ph id="1" equiv="INTERPOLATION_1" disp="{{ latest.type || &apos;Standard&apos; }}"/> </target>
+        <target> <ph id="0" equiv="INTERPOLATION" disp="{{ latest.reps }}"/> Reps · <ph id="1" equiv="INTERPOLATION_1" disp="{{ latest.type || &apos;Standard&apos; }}"/> </target>
       </segment>
     </unit>
     <unit id="dashboard.noEntryYet">
@@ -6138,6 +6138,33 @@
       <segment state="translated">
         <source>Letzte Einträge</source>
         <target>Dernières entrées</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.latestExercises">
+      <notes>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:362,363</note>
+      </notes>
+      <segment state="translated">
+        <source>Letzte Übungen</source>
+        <target>Derniers exercices</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.tile.pushupTitle">
+      <notes>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:382,384</note>
+      </notes>
+      <segment state="translated">
+        <source>Liegestütze</source>
+        <target>Pompes</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.tile.openInHistoryAria">
+      <notes>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:110</note>
+      </notes>
+      <segment state="translated">
+        <source><ph id="0" equiv="label" disp="label"/> in der Historie öffnen</source>
+        <target>Ouvrir <ph id="0" equiv="label" disp="label"/> dans l'historique</target>
       </segment>
     </unit>
     <unit id="dashboard.latestEntriesCtaAriaLabel">

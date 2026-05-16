@@ -10,9 +10,9 @@
     />
     <div class="header-text">
       <p class="eyebrow" i18n="@@eyebrowTitle">Pushup Stats</p>
-      <h1 i18n="@@dashboardTitle">Liegestütze Statistik</h1>
+      <h1 i18n="@@dashboardTitle">Meine Trainingsübersicht</h1>
       <p class="subtitle" i18n="@@dashboardSubtitle">
-        Behalte Trainingsvolumen und Verlauf im Blick – klar, schnell und mobil
+        Behalte Training, Volumen und Verlauf im Blick – klar, schnell und mobil
         optimiert.
       </p>
       <p
@@ -122,6 +122,90 @@
       </mat-card-content>
     </mat-card>
   }
+
+  <mat-card class="quick-actions">
+    <mat-card-header>
+      <mat-card-title i18n="@@quickActionsTitle"
+        >Schnellaktionen</mat-card-title
+      >
+      <mat-card-subtitle i18n="@@quickActionsSubtitle"
+        >Schnell eintragen ohne Dialog</mat-card-subtitle
+      >
+      <button
+        mat-icon-button
+        type="button"
+        class="quick-actions-edit"
+        data-testid="dashboard-quick-actions-edit"
+        aria-label="Schnellaktionen bearbeiten"
+        i18n-aria-label="@@quickActions.edit.aria"
+        (click)="openQuickAddConfig()"
+      >
+        <mat-icon>edit</mat-icon>
+      </button>
+    </mat-card-header>
+    <mat-card-content>
+      @for (vm of quickAddButtons(); track vm.key; let i = $index) {
+        <button
+          type="button"
+          mat-flat-button
+          class="quick-btn"
+          [class.quick-btn--ten]="i === 0 && vm.mode === 'reps'"
+          [class.quick-btn--twenty]="i === 1 && vm.mode === 'reps'"
+          [class.quick-btn--thirty]="i === 2 && vm.mode === 'reps'"
+          [class.quick-btn--auto]="vm.mode === 'auto-count'"
+          [attr.data-testid]="'dashboard-quick-add-' + i"
+          [attr.data-mode]="vm.mode"
+          [attr.data-exercise]="vm.exerciseId"
+          (click)="addQuickEntryFromConfig(vm)"
+        >
+          <mat-icon>{{ vm.icon }}</mat-icon>
+          @if (vm.mode === 'auto-count') {
+            <span>
+              <span i18n="@@dashboard.quickAdd.autoPrefix">Auto:</span>
+              {{ vm.exerciseLabel }}
+            </span>
+          } @else if (vm.exerciseId === PUSHUP_QUICK_ADD_EXERCISE_ID) {
+            <span i18n="@@dashboard.quickAdd.button">+{{ vm.reps }} Reps</span>
+          } @else {
+            <span>+{{ vm.reps }} {{ vm.exerciseLabel }}</span>
+          }
+        </button>
+      }
+      @if (
+        !isPlanRestDay() &&
+        dailyGoalConfigured() &&
+        (remainingToGoal() > 0 || goalReached())
+      ) {
+        <button
+          type="button"
+          mat-flat-button
+          class="quick-btn quick-btn--goal"
+          data-testid="dashboard-quick-actions-goal-fill"
+          [disabled]="goalReached() || fillToGoalInFlight()"
+          (click)="fillToGoal()"
+        >
+          <mat-icon>{{ goalReached() ? 'check' : 'flag' }}</mat-icon>
+          @if (goalReached()) {
+            <span i18n="@@dashboard.goalFill.reached">Ziel erreicht ✓</span>
+          } @else {
+            <span i18n="@@dashboard.goalFill.fill"
+              >+{{ remainingToGoal() }} bis zum Ziel</span
+            >
+          }
+        </button>
+      }
+      <button
+        type="button"
+        mat-flat-button
+        class="quick-btn quick-btn--new"
+        (click)="openCreateDialog()"
+        i18n="@@quickAddNew"
+      >
+        <mat-icon>edit_note</mat-icon>
+        Neu
+      </button>
+    </mat-card-content>
+  </mat-card>
 
   <section
     class="today-focus"
@@ -256,90 +340,6 @@
     </mat-card>
   </section>
 
-  <mat-card class="quick-actions">
-    <mat-card-header>
-      <mat-card-title i18n="@@quickActionsTitle"
-        >Schnellaktionen</mat-card-title
-      >
-      <mat-card-subtitle i18n="@@quickActionsSubtitle"
-        >Schnell eintragen ohne Dialog</mat-card-subtitle
-      >
-      <button
-        mat-icon-button
-        type="button"
-        class="quick-actions-edit"
-        data-testid="dashboard-quick-actions-edit"
-        aria-label="Schnellaktionen bearbeiten"
-        i18n-aria-label="@@quickActions.edit.aria"
-        (click)="openQuickAddConfig()"
-      >
-        <mat-icon>edit</mat-icon>
-      </button>
-    </mat-card-header>
-    <mat-card-content>
-      @for (vm of quickAddButtons(); track vm.key; let i = $index) {
-        <button
-          type="button"
-          mat-flat-button
-          class="quick-btn"
-          [class.quick-btn--ten]="i === 0 && vm.mode === 'reps'"
-          [class.quick-btn--twenty]="i === 1 && vm.mode === 'reps'"
-          [class.quick-btn--thirty]="i === 2 && vm.mode === 'reps'"
-          [class.quick-btn--auto]="vm.mode === 'auto-count'"
-          [attr.data-testid]="'dashboard-quick-add-' + i"
-          [attr.data-mode]="vm.mode"
-          [attr.data-exercise]="vm.exerciseId"
-          (click)="addQuickEntryFromConfig(vm)"
-        >
-          <mat-icon>{{ vm.icon }}</mat-icon>
-          @if (vm.mode === 'auto-count') {
-            <span>
-              <span i18n="@@dashboard.quickAdd.autoPrefix">Auto:</span>
-              {{ vm.exerciseLabel }}
-            </span>
-          } @else if (vm.exerciseId === PUSHUP_QUICK_ADD_EXERCISE_ID) {
-            <span i18n="@@dashboard.quickAdd.button">+{{ vm.reps }} Reps</span>
-          } @else {
-            <span>+{{ vm.reps }} {{ vm.exerciseLabel }}</span>
-          }
-        </button>
-      }
-      @if (
-        !isPlanRestDay() &&
-        dailyGoalConfigured() &&
-        (remainingToGoal() > 0 || goalReached())
-      ) {
-        <button
-          type="button"
-          mat-flat-button
-          class="quick-btn quick-btn--goal"
-          data-testid="dashboard-quick-actions-goal-fill"
-          [disabled]="goalReached() || fillToGoalInFlight()"
-          (click)="fillToGoal()"
-        >
-          <mat-icon>{{ goalReached() ? 'check' : 'flag' }}</mat-icon>
-          @if (goalReached()) {
-            <span i18n="@@dashboard.goalFill.reached">Ziel erreicht ✓</span>
-          } @else {
-            <span i18n="@@dashboard.goalFill.fill"
-              >+{{ remainingToGoal() }} bis zum Ziel</span
-            >
-          }
-        </button>
-      }
-      <button
-        type="button"
-        mat-flat-button
-        class="quick-btn quick-btn--new"
-        (click)="openCreateDialog()"
-        i18n="@@quickAddNew"
-      >
-        <mat-icon>edit_note</mat-icon>
-        Neu
-      </button>
-    </mat-card-content>
-  </mat-card>
-
   @defer (hydrate on viewport) {
     <app-analysis-teaser-card
       [streak]="currentStreak()"
@@ -359,29 +359,72 @@
     </section>
   }
 
-  <section
-    class="latest-entries teaser-card"
-    role="link"
-    tabindex="0"
-    (click)="navigateToHistory()"
-    (keydown.enter)="navigateToHistory()"
-    (keyup.space)="navigateToHistory(); $event.preventDefault()"
-    aria-label="Zur Historie navigieren"
-    i18n-aria-label="@@dashboard.latestEntriesLinkAriaLabel"
-  >
-    <h2 i18n="@@dashboard.latestEntries">Letzte Einträge</h2>
-    <div class="entries-preview">
-      <app-stats-table [entries]="latestEntries()" [readOnly]="true" />
-    </div>
+  <section class="latest-entries teaser-card">
+    <h2 i18n="@@dashboard.latestExercises">Letzte Übungen</h2>
+    @if (latestEntries().length > 0) {
+      <div
+        class="recent-exercises-grid"
+        data-testid="dashboard-recent-exercises-grid"
+      >
+        @for (entry of latestEntries(); track entry._id) {
+          <a
+            class="recent-exercise-tile"
+            data-testid="dashboard-recent-exercise-tile"
+            [attr.data-entry-id]="entry._id"
+            routerLink="/history"
+            [fragment]="'entry-' + entry._id"
+            [attr.aria-label]="tileAriaLabel(entry)"
+          >
+            <mat-card>
+              <mat-card-content>
+                <div class="tile-icon" aria-hidden="true">
+                  <mat-icon>{{ tileIcon(entry) }}</mat-icon>
+                </div>
+                <div class="tile-body">
+                  @if (entry.kind === 'pushup') {
+                    <strong
+                      class="tile-title"
+                      i18n="@@dashboard.tile.pushupTitle"
+                      >Liegestütze</strong
+                    >
+                    <span class="tile-value" i18n="@@latEntryReps">
+                      {{ entry.reps }} Reps · {{ pushupTypeLabel(entry) }}
+                    </span>
+                  } @else {
+                    <strong class="tile-title">{{
+                      exerciseEntryLabel(entry)
+                    }}</strong>
+                    <span
+                      class="tile-value"
+                      data-testid="dashboard-recent-exercise-tile-value"
+                      >{{ exerciseEntryValue(entry) }}</span
+                    >
+                  }
+                  <small class="tile-time">{{
+                    entry.timestamp | date: 'short'
+                  }}</small>
+                </div>
+              </mat-card-content>
+            </mat-card>
+          </a>
+        }
+      </div>
+    } @else {
+      <p class="recent-exercises-empty" i18n="@@dashboard.noEntryYet">
+        Noch kein Eintrag.
+      </p>
+    }
     <div class="teaser-cta-row">
-      <span
+      <a
         class="teaser-cta"
+        routerLink="/history"
         aria-label="Zur Historie navigieren"
         i18n-aria-label="@@dashboard.latestEntriesCtaAriaLabel"
+        data-testid="dashboard-latest-entries-cta"
       >
         <mat-icon aria-hidden="true">history</mat-icon>
         <span i18n="@@dashboard.latestEntriesCta">Zur Historie</span>
-      </span>
+      </a>
     </div>
   </section>
 

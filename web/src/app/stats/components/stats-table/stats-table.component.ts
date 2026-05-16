@@ -145,6 +145,14 @@ export class StatsTableComponent {
   readonly sort = viewChild(MatSort);
 
   /**
+   * The id of the entry to scroll-into-view and briefly highlight after
+   * the next render. Set by the entries page from the `#entry-<id>` URL
+   * fragment so dashboard tile links can drill into the matching row.
+   * Null when the page was opened without a fragment.
+   */
+  readonly highlightEntryId = input<string | null>(null);
+
+  /**
    * The table accepts both legacy `PushupRecord[]` (dashboard preview)
    * and the new `UnifiedEntry[]` (history page). Pushup arrays are
    * mapped on the way in via `pushupRecordToUnified`. Backwards-compat
@@ -243,6 +251,31 @@ export class StatsTableComponent {
       if (s) {
         this.dataSource.sort = s;
       }
+    });
+
+    // Drill-in from the dashboard tile: when a `#entry-<id>` fragment
+    // resolves to a row in the current data set, scroll the matching
+    // row into view. The cdk-virtual-scroll-viewport here only wraps a
+    // scrollable container — the inner mat-table doesn't use
+    // *cdkVirtualFor, so every row is in the DOM and a plain
+    // getElementById/scrollIntoView is the source of truth (a viewport
+    // scrollToIndex would compute `index * itemSize`, which only
+    // coincidentally matches the rendered row position when input
+    // order and the active matSort happen to line up).
+    effect(() => {
+      const targetId = this.highlightEntryId();
+      const rows = this.unifiedEntries();
+      if (!targetId || !this.isBrowser) return;
+      if (!rows.some((r) => r._id === targetId)) return;
+      // setTimeout (not queueMicrotask) — MatTable re-renders rows
+      // asynchronously after dataSource.data is assigned in the sibling
+      // effect, so the matching <mat-row> may not exist in the DOM
+      // until the next macrotask.
+      setTimeout(() => {
+        document
+          .getElementById(`entry-${targetId}`)
+          ?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
     });
   }
 

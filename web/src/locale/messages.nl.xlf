@@ -6140,6 +6140,33 @@
         <target>Laatste inzendingen</target>
       </segment>
     </unit>
+    <unit id="dashboard.latestExercises">
+      <notes>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:362,363</note>
+      </notes>
+      <segment state="translated">
+        <source>Letzte Übungen</source>
+        <target>Recente oefeningen</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.tile.pushupTitle">
+      <notes>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:382,384</note>
+      </notes>
+      <segment state="translated">
+        <source>Liegestütze</source>
+        <target>Push-ups</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.tile.openInHistoryAria">
+      <notes>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:110</note>
+      </notes>
+      <segment state="translated">
+        <source><ph id="0" equiv="label" disp="label"/> in der Historie öffnen</source>
+        <target><ph id="0" equiv="label" disp="label"/> openen in geschiedenis</target>
+      </segment>
+    </unit>
     <unit id="dashboard.latestEntriesCtaAriaLabel">
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:277,278</note>

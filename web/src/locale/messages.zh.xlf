@@ -6693,6 +6693,33 @@
         <source>Letzte Einträge</source>
       <target>最近的记录</target></segment>
     </unit>
+    <unit id="dashboard.latestExercises">
+      <notes>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:362,363</note>
+      </notes>
+      <segment state="translated">
+        <source>Letzte Übungen</source>
+        <target>最近练习</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.tile.pushupTitle">
+      <notes>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:382,384</note>
+      </notes>
+      <segment state="translated">
+        <source>Liegestütze</source>
+        <target>俯卧撑</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.tile.openInHistoryAria">
+      <notes>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:110</note>
+      </notes>
+      <segment state="translated">
+        <source><ph id="0" equiv="label" disp="label"/> in der Historie öffnen</source>
+        <target>在历史记录中打开<ph id="0" equiv="label" disp="label"/></target>
+      </segment>
+    </unit>
     <unit id="dashboard.latestEntriesCtaAriaLabel">
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:279,280</note>
