@@ -79,11 +79,17 @@ const TRANSLATIONS = {
   },
 };
 
+function escapeRegex(s) {
+  // CodeQL: complete regex escape, not just dots — dot-only escaping
+  // would miss `\\`, `[`, `(` etc. and break the wrapping regex below.
+  return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
 function replaceUnit(xliff, id, newTarget) {
   // Match the whole <unit id="..."> ... </unit> block, then within it
   // replace state="initial" with state="translated" and the <target>...</target>.
   const unitRe = new RegExp(
-    `(<unit id="${id.replace(/[.]/g, '\\.')}">)([\\s\\S]*?)(</unit>)`,
+    `(<unit id="${escapeRegex(id)}">)([\\s\\S]*?)(</unit>)`,
     'g'
   );
   return xliff.replace(unitRe, (_full, open, body, close) => {
