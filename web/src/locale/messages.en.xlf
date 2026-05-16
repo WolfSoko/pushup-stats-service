@@ -3044,8 +3044,8 @@ Deine Position: # ·  Reps        </source>
         <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts</note>
       </notes>
       <segment state="translated">
-        <source> Auto </source>
-        <target> Auto </target>
+        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">videocam</pc> Auto </source>
+        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">videocam</pc> Auto </target>
       </segment>
     </unit>
     <unit id="quickAddConfig.autoCount">
@@ -8829,6 +8829,12 @@ Deine Position: # ·  Reps        </source>
       <segment state="translated">
         <source>Plank‑Timer</source>
         <target>Plank‑timer</target>
+      </segment>
+    </unit>
+    <unit id="quickAddConfig.clearRowAria">
+      <segment state="translated">
+        <source>Schnellaktion löschen</source>
+        <target>Clear quick action</target>
       </segment>
     </unit>
 </file>

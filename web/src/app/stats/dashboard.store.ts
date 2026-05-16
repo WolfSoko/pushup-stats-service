@@ -44,7 +44,12 @@ import { TrainingPlanStore } from '../training-plans/training-plan.store';
 import { exerciseDisplayName } from './i18n/exercise-display-names';
 
 export interface QuickAddButtonViewModel {
-  /** Stable key for `@for` tracking — survives reps/mode edits on the same slot. */
+  /**
+   * Stable per-slot tracking key for `@for`. Derived from the slot index
+   * (not from `reps`/`mode`/`exerciseId`) so editing an existing button
+   * reuses its DOM node and duplicate buttons (same reps/exercise/mode)
+   * don't collide — CodeRabbit + Copilot review, PR #360.
+   */
   readonly key: string;
   readonly mode: QuickAddMode;
   /** `'pushup'` sentinel or a rep-based catalog exerciseId. */
@@ -59,7 +64,10 @@ export interface QuickAddButtonViewModel {
   readonly label: string;
 }
 
-function toQuickAddViewModel(config: QuickAddConfig): QuickAddButtonViewModel {
+function toQuickAddViewModel(
+  config: QuickAddConfig,
+  slotIndex: number
+): QuickAddButtonViewModel {
   const exerciseId = config.exerciseId ?? PUSHUP_QUICK_ADD_EXERCISE_ID;
   const mode: QuickAddMode = config.mode ?? 'reps';
   // Resolve the display label for the legacy pushup sentinel separately —
@@ -83,7 +91,7 @@ function toQuickAddViewModel(config: QuickAddConfig): QuickAddButtonViewModel {
   const repsLabel = mode === 'auto-count' ? '' : `+${config.reps} `;
   const label = `${repsLabel}${exerciseLabel}`;
   return {
-    key: `${mode}:${exerciseId}:${config.reps}`,
+    key: `slot:${slotIndex}`,
     mode,
     exerciseId,
     reps: config.reps,
@@ -278,15 +286,18 @@ export const DashboardStore = signalStore(
     const quickAddButtons = computed<QuickAddButtonViewModel[]>(() => {
       const configured = store._userConfig.quickAdds();
       if (configured.length > 0) {
-        return configured.map(toQuickAddViewModel);
+        return configured.map((cfg, i) => toQuickAddViewModel(cfg, i));
       }
-      return [10, 20, 30].map((reps) =>
-        toQuickAddViewModel({
-          reps,
-          inSpeedDial: false,
-          exerciseId: PUSHUP_QUICK_ADD_EXERCISE_ID,
-          mode: 'reps',
-        })
+      return [10, 20, 30].map((reps, i) =>
+        toQuickAddViewModel(
+          {
+            reps,
+            inSpeedDial: false,
+            exerciseId: PUSHUP_QUICK_ADD_EXERCISE_ID,
+            mode: 'reps',
+          },
+          i
+        )
       );
     });
 

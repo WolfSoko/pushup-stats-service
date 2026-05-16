@@ -14,7 +14,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import {
-  AUTO_COUNT_QUICK_ADD_EXERCISE_IDS,
   EXERCISE_CATALOG,
   isAutoCountQuickAddExerciseId,
   MAX_QUICK_ADDS,
@@ -35,7 +34,6 @@ interface DraftRow {
 interface ExerciseOption {
   readonly id: string;
   readonly label: string;
-  readonly autoCountSupported: boolean;
 }
 
 @Component({
@@ -108,18 +106,20 @@ interface ExerciseOption {
             >
           }
 
-          <mat-checkbox
-            [checked]="row.inSpeedDial"
-            (change)="setInSpeedDial($index, $event.checked)"
-            [attr.data-testid]="'quick-add-speeddial-' + $index"
-            i18n="@@quickAddConfig.inSpeedDial"
-            >Im SpeedDial</mat-checkbox
-          >
+          @if (row.mode !== 'auto-count') {
+            <mat-checkbox
+              [checked]="row.inSpeedDial"
+              (change)="setInSpeedDial($index, $event.checked)"
+              [attr.data-testid]="'quick-add-speeddial-' + $index"
+              i18n="@@quickAddConfig.inSpeedDial"
+              >Im SpeedDial</mat-checkbox
+            >
+          }
           <button
             type="button"
             mat-icon-button
             (click)="clearRow($index)"
-            [attr.aria-label]="clearAria"
+            [attr.aria-label]="clearRowAria"
           >
             <mat-icon>backspace</mat-icon>
           </button>
@@ -189,7 +189,9 @@ export class QuickAddConfigDialogComponent {
   private readonly snackBar = inject(MatSnackBar);
 
   protected readonly maxRows = MAX_QUICK_ADDS;
-  protected readonly clearAria = $localize`:@@quickAddConfig.clearAria:Reps löschen`;
+  // Clears the whole slot (exercise, mode, reps) — not just the reps field —
+  // since the picker landed. Keeps the assistive-tech announcement honest.
+  protected readonly clearRowAria = $localize`:@@quickAddConfig.clearRowAria:Schnellaktion löschen`;
   protected readonly saving = signal(false);
 
   protected readonly exerciseOptions: ReadonlyArray<ExerciseOption> =
@@ -204,12 +206,22 @@ export class QuickAddConfigDialogComponent {
     return Array.from({ length: MAX_QUICK_ADDS }, (_, i) => {
       const c = configured[i];
       const exerciseId = c?.exerciseId ?? PUSHUP_QUICK_ADD_EXERCISE_ID;
-      const mode: QuickAddMode = c?.mode ?? 'reps';
+      // Coerce auto-count back to 'reps' if a persisted config points at an
+      // exercise the camera detector no longer supports (or never did) —
+      // otherwise the row would render the auto badge but the click handler
+      // would no-op via `autoCountProfileForCatalogId() === null`.
+      const effectiveMode: QuickAddMode = this.isAutoCountCapable(exerciseId)
+        ? (c?.mode ?? 'reps')
+        : 'reps';
       return {
         reps: c?.reps ?? null,
-        inSpeedDial: c?.inSpeedDial ?? false,
+        // Auto-count rows can't also live in SpeedDial — see `setAutoCount`
+        // for the full rationale (Codex P2, PR #360). Strip the flag at load
+        // time so we don't carry an inconsistent legacy config back into save.
+        inSpeedDial:
+          effectiveMode === 'auto-count' ? false : (c?.inSpeedDial ?? false),
         exerciseId,
-        mode: this.isAutoCountCapable(exerciseId) ? mode : 'reps',
+        mode: effectiveMode,
       };
     });
   })();
@@ -250,7 +262,17 @@ export class QuickAddConfigDialogComponent {
     const next = [...this.rowsState()];
     const prev = next[index];
     if (!this.isAutoCountCapable(prev.exerciseId)) return;
-    next[index] = { ...prev, mode: checked ? 'auto-count' : 'reps' };
+    // Auto-count + SpeedDial is incoherent: the FAB pipeline only knows how
+    // to fire a fixed-reps `quickAdd(n)` call, so a SpeedDial item paired
+    // with `reps: 0` would surface as a broken `+0 Reps` action (Codex P2,
+    // PR #360). Force the flag off here, and the read-time facade filter
+    // (`AppDataFacade.quickAddSuggestions`) defends against legacy configs.
+    const inSpeedDial = checked ? false : prev.inSpeedDial;
+    next[index] = {
+      ...prev,
+      mode: checked ? 'auto-count' : 'reps',
+      inSpeedDial,
+    };
     this.rowsState.set(next);
   }
 
@@ -276,7 +298,12 @@ export class QuickAddConfigDialogComponent {
           // ignores it and routes to the camera dialog. Reps-rows always
           // have a positive integer here (filter above guarantees it).
           reps: r.mode === 'auto-count' ? 0 : (r.reps ?? 0),
-          inSpeedDial: r.inSpeedDial,
+          // Defence-in-depth: never persist `inSpeedDial: true` together
+          // with `mode: 'auto-count'`. The UI hides the checkbox and
+          // `setAutoCount` clears the flag, but a future code path
+          // (programmatic edits, bulk import) might still send both — so
+          // coerce here as well so the saved doc is always coherent.
+          inSpeedDial: r.mode === 'auto-count' ? false : r.inSpeedDial,
           exerciseId: r.exerciseId,
           mode: r.mode,
         };
@@ -310,7 +337,6 @@ function buildExerciseOptions(): ExerciseOption[] {
     {
       id: PUSHUP_QUICK_ADD_EXERCISE_ID,
       label: $localize`:@@exercise.category.pushup:Liegestütze`,
-      autoCountSupported: true,
     },
   ];
   for (const def of EXERCISE_CATALOG) {
@@ -318,9 +344,6 @@ function buildExerciseOptions(): ExerciseOption[] {
     opts.push({
       id: def.id,
       label: exerciseDisplayName(def.id),
-      autoCountSupported: (
-        AUTO_COUNT_QUICK_ADD_EXERCISE_IDS as readonly string[]
-      ).includes(def.id),
     });
   }
   return opts;

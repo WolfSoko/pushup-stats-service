@@ -7916,5 +7916,11 @@ Deine Position: # ·  Reps        </source>
         <target>Auto:</target>
       </segment>
     </unit>
+    <unit id="quickAddConfig.clearRowAria">
+      <segment state="initial">
+        <source>Schnellaktion löschen</source>
+        <target>Schnellaktion löschen</target>
+      </segment>
+    </unit>
 </file>
 </xliff>

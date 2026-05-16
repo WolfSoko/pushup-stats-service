@@ -60,8 +60,13 @@ export class AppDataFacade {
   readonly quickAddSuggestions = computed(() => {
     const configured = this.userConfig.quickAdds();
     if (configured.length > 0) {
+      // SpeedDial FAB only knows fixed-reps `quickAdd(n)` so we must
+      // exclude auto-count rows (they persist `reps: 0` as a sentinel —
+      // see `QuickAddConfigDialogComponent.save`). Defends in depth
+      // against legacy configs that still carry `inSpeedDial: true`
+      // alongside `mode: 'auto-count'` (Codex P2, PR #360).
       return configured
-        .filter((q) => q.inSpeedDial)
+        .filter((q) => q.inSpeedDial && q.mode !== 'auto-count' && q.reps > 0)
         .map((q) => q.reps)
         .slice(0, 3);
     }

@@ -209,6 +209,56 @@ describe('AppDataFacade', () => {
 
       expect(facade.quickAddSuggestions()).toEqual([]);
     });
+
+    // Codex P2, PR #360: a legacy/cross-device-edited config could carry
+    // `inSpeedDial: true` alongside `mode: 'auto-count'` (which persists
+    // `reps: 0` as a sentinel). The FAB would otherwise surface a broken
+    // `+0 Reps` action that hits `quickAdd(0)`. Filter must drop both
+    // auto-count rows and any non-positive reps.
+    it('Given configured quickAdds with an auto-count entry in SpeedDial, Then it is filtered out', async () => {
+      userConfigApiMock.getConfig.mockReturnValue(
+        of({
+          userId: 'u1',
+          dailyGoal: 100,
+          ui: {
+            quickAdds: [
+              { reps: 15, inSpeedDial: true },
+              {
+                reps: 0,
+                inSpeedDial: true,
+                exerciseId: 'pushup',
+                mode: 'auto-count',
+              },
+              { reps: 30, inSpeedDial: true },
+            ],
+          },
+        })
+      );
+      const facade = setup();
+      await flushResources();
+
+      expect(facade.quickAddSuggestions()).toEqual([15, 30]);
+    });
+
+    it('Given a SpeedDial entry with reps<=0 (legacy/corrupt), Then it is filtered out defensively', async () => {
+      userConfigApiMock.getConfig.mockReturnValue(
+        of({
+          userId: 'u1',
+          dailyGoal: 100,
+          ui: {
+            quickAdds: [
+              { reps: 0, inSpeedDial: true },
+              { reps: -5, inSpeedDial: true },
+              { reps: 20, inSpeedDial: true },
+            ],
+          },
+        })
+      );
+      const facade = setup();
+      await flushResources();
+
+      expect(facade.quickAddSuggestions()).toEqual([20]);
+    });
   });
 
   describe('Firestore live reactivity (regression: SpeedDial → fill-to-goal button stale)', () => {

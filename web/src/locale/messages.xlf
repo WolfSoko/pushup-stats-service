@@ -3089,8 +3089,8 @@
     </unit>
     <unit id="quickAdd.success.create">
       <notes>
-        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:109</note>
-        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:354</note>
+        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:113</note>
+        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:358</note>
       </notes>
       <segment>
         <source>Eintrag gespeichert.</source>
@@ -3098,9 +3098,9 @@
     </unit>
     <unit id="quickAdd.error.create">
       <notes>
-        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:121</note>
-        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:160</note>
-        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:370</note>
+        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:125</note>
+        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:164</note>
+        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:374</note>
       </notes>
       <segment>
         <source>Eintrag konnte nicht gespeichert werden.</source>
@@ -3108,7 +3108,7 @@
     </unit>
     <unit id="quickAdd.success.goalReached">
       <notes>
-        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:147</note>
+        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:151</note>
       </notes>
       <segment>
         <source>Tagesziel erreicht 🎉</source>
@@ -4677,10 +4677,10 @@
     <unit id="exercise.category.pushup">
       <notes>
         <note category="location">web/src/app/stats/components/analysis-teaser-card/analysis-teaser-card.component.ts:147</note>
-        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts:312</note>
+        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts:339</note>
         <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:210</note>
         <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:1250</note>
-        <note category="location">web/src/app/stats/dashboard.store.ts:76</note>
+        <note category="location">web/src/app/stats/dashboard.store.ts:82</note>
         <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:197</note>
         <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:221</note>
         <note category="location">web/src/app/stats/shell/entries-page.component.ts:272</note>
@@ -5195,7 +5195,7 @@
     </unit>
     <unit id="quickAddConfig.title">
       <notes>
-        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts:55,57</note>
+        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts:53,55</note>
       </notes>
       <segment>
         <source> Schnellaktionen konfigurieren </source>
@@ -5203,7 +5203,7 @@
     </unit>
     <unit id="quickAddConfig.hintV2">
       <notes>
-        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts:59,62</note>
+        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts:57,60</note>
       </notes>
       <segment>
         <source> Lege bis zu <ph id="0" equiv="INTERPOLATION" disp="{{ maxRows }}"/> Schnellaktionen fest. Wähle pro Button die Übung und – wo verfügbar – Auto-Messung über die Kamera. Leere Felder werden ignoriert. </source>
@@ -5211,7 +5211,7 @@
     </unit>
     <unit id="quickAddConfig.exerciseLabel">
       <notes>
-        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts:66,68</note>
+        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts:64,66</note>
       </notes>
       <segment>
         <source>Übung</source>
@@ -5219,7 +5219,7 @@
     </unit>
     <unit id="quickAddConfig.repsLabel">
       <notes>
-        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts:80,82</note>
+        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts:78,80</note>
       </notes>
       <segment>
         <source>Reps</source>
@@ -5227,7 +5227,7 @@
     </unit>
     <unit id="quickAddConfig.autoCountBadge">
       <notes>
-        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts:96,98</note>
+        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts:94,96</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">videocam</pc> Auto </source>
@@ -5235,7 +5235,7 @@
     </unit>
     <unit id="quickAddConfig.autoCount">
       <notes>
-        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts:107,109</note>
+        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts:105,107</note>
       </notes>
       <segment>
         <source>Auto-Messung</source>
@@ -5243,7 +5243,7 @@
     </unit>
     <unit id="quickAddConfig.inSpeedDial">
       <notes>
-        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts:116,118</note>
+        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts:115,118</note>
       </notes>
       <segment>
         <source>Im SpeedDial</source>
@@ -5257,17 +5257,17 @@
         <source> Speichern </source>
       </segment>
     </unit>
-    <unit id="quickAddConfig.clearAria">
+    <unit id="quickAddConfig.clearRowAria">
       <notes>
-        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts:192</note>
+        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts:194</note>
       </notes>
       <segment>
-        <source>Reps löschen</source>
+        <source>Schnellaktion löschen</source>
       </segment>
     </unit>
     <unit id="quickAddConfig.saveError">
       <notes>
-        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts:294</note>
+        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts:321</note>
       </notes>
       <segment>
         <source>Speichern fehlgeschlagen</source>
@@ -5945,7 +5945,7 @@
     </unit>
     <unit id="dashboard.share.text.profile.streak">
       <notes>
-        <note category="location">web/src/app/stats/dashboard.store.ts:534</note>
+        <note category="location">web/src/app/stats/dashboard.store.ts:543</note>
       </notes>
       <segment>
         <source>Heute schon <ph id="0" equiv="total" disp="total"/> Liegestütze geschafft – Streak: <ph id="1" equiv="streak" disp="streak"/> Tage 🔥 Schau dir mein Profil an:</source>
@@ -5953,7 +5953,7 @@
     </unit>
     <unit id="dashboard.share.text.profile.simple">
       <notes>
-        <note category="location">web/src/app/stats/dashboard.store.ts:535</note>
+        <note category="location">web/src/app/stats/dashboard.store.ts:544</note>
       </notes>
       <segment>
         <source>Heute schon <ph id="0" equiv="total" disp="total"/> Liegestütze geschafft! 💪 Schau dir mein Profil an:</source>
@@ -5961,7 +5961,7 @@
     </unit>
     <unit id="dashboard.share.text.streak">
       <notes>
-        <note category="location">web/src/app/stats/dashboard.store.ts:539</note>
+        <note category="location">web/src/app/stats/dashboard.store.ts:548</note>
       </notes>
       <segment>
         <source>Heute schon <ph id="0" equiv="total" disp="total"/> Liegestütze geschafft – Streak: <ph id="1" equiv="streak" disp="streak"/> Tage 🔥 Tracke deine Stats kostenlos:</source>
@@ -5969,7 +5969,7 @@
     </unit>
     <unit id="dashboard.share.text.simple">
       <notes>
-        <note category="location">web/src/app/stats/dashboard.store.ts:540</note>
+        <note category="location">web/src/app/stats/dashboard.store.ts:549</note>
       </notes>
       <segment>
         <source>Heute schon <ph id="0" equiv="total" disp="total"/> Liegestütze geschafft! 💪 Tracke deine Stats kostenlos:</source>
@@ -5977,7 +5977,7 @@
     </unit>
     <unit id="dashboard.share.title">
       <notes>
-        <note category="location">web/src/app/stats/dashboard.store.ts:544</note>
+        <note category="location">web/src/app/stats/dashboard.store.ts:553</note>
       </notes>
       <segment>
         <source>Pushup Tracker</source>

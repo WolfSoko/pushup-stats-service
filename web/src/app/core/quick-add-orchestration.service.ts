@@ -7,7 +7,11 @@ import {
   ExerciseFirestoreService,
   StatsApiService,
 } from '@pu-stats/data-access';
-import { appendLocalOffset, type ExerciseEntryCreate } from '@pu-stats/models';
+import {
+  appendLocalOffset,
+  type ExerciseEntryCreate,
+  PUSHUP_QUICK_ADD_EXERCISE_ID,
+} from '@pu-stats/models';
 import { QuickAddBridgeService } from '@pu-stats/quick-add';
 import { firstValueFrom } from 'rxjs';
 
@@ -58,7 +62,7 @@ const EXERCISE_CATALOG_ID: Record<
 export function autoCountProfileForCatalogId(
   catalogId: string
 ): AutoCountExerciseId | null {
-  if (catalogId === 'pushup') return 'pushup';
+  if (catalogId === PUSHUP_QUICK_ADD_EXERCISE_ID) return 'pushup';
   if (catalogId === 'legs.squats') return 'squat';
   if (catalogId === 'pull.pullups') return 'pullup';
   if (catalogId === 'abs.situps') return 'situp';

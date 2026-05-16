@@ -249,4 +249,82 @@ describe('QuickAddConfigDialogComponent', () => {
       );
     });
   });
+
+  // Regression: a legacy / cross-device-edited config that persisted
+  // `mode: 'auto-count'` for an exercise without a detector profile must
+  // be coerced back to `mode: 'reps'` at load time — separate code path
+  // from setExerciseId. Otherwise the row would render the "Auto" badge
+  // but `autoCountProfileForCatalogId()` returns null on click → silent
+  // no-op (CodeRabbit review, PR #360).
+  describe('Given a persisted unsupported auto-count config on load', () => {
+    it('Then the row coerces back to mode "reps" before save', async () => {
+      setup([
+        {
+          reps: 5,
+          inSpeedDial: false,
+          exerciseId: 'hinge.goodmorning',
+          mode: 'auto-count',
+        },
+      ]);
+
+      // The hidden checkbox is the visible signal that load-time
+      // coercion happened (it only renders for auto-count-capable rows).
+      expect(
+        fixture.nativeElement.querySelector(
+          '[data-testid="quick-add-autocount-0"]'
+        )
+      ).toBeNull();
+
+      const saveBtn = fixture.nativeElement.querySelector(
+        '[data-testid="quick-add-config-save"]'
+      ) as HTMLButtonElement;
+      saveBtn.click();
+      await fixture.whenStable();
+
+      const patch = saveSpy.mock.calls[0][0] as UserConfigUpdate;
+      expect(patch.ui?.quickAdds?.[0]).toEqual(
+        expect.objectContaining({
+          exerciseId: 'hinge.goodmorning',
+          mode: 'reps',
+          reps: 5,
+        })
+      );
+    });
+  });
+
+  // Codex P2: enabling Auto-Messung on a row that previously had
+  // `inSpeedDial: true` would persist `reps: 0, inSpeedDial: true`,
+  // surfacing a broken `+0 Reps` FAB item. setAutoCount() must clear the
+  // SpeedDial flag, and save() must defensively coerce it as well.
+  describe('When auto-count is enabled on a slot that had inSpeedDial=true', () => {
+    it('Then save persists inSpeedDial=false alongside mode "auto-count"', async () => {
+      setup([{ reps: 10, inSpeedDial: true }]); // pushup, in speed dial
+      const component = fixture.componentInstance as unknown as {
+        setAutoCount(i: number, checked: boolean): void;
+      };
+      component.setAutoCount(0, true);
+      fixture.detectChanges();
+
+      // SpeedDial checkbox should disappear from the auto-count row.
+      expect(
+        fixture.nativeElement.querySelector(
+          '[data-testid="quick-add-speeddial-0"]'
+        )
+      ).toBeNull();
+
+      const saveBtn = fixture.nativeElement.querySelector(
+        '[data-testid="quick-add-config-save"]'
+      ) as HTMLButtonElement;
+      saveBtn.click();
+      await fixture.whenStable();
+
+      const patch = saveSpy.mock.calls[0][0] as UserConfigUpdate;
+      expect(patch.ui?.quickAdds?.[0]).toEqual({
+        reps: 0,
+        inSpeedDial: false,
+        exerciseId: 'pushup',
+        mode: 'auto-count',
+      });
+    });
+  });
 });

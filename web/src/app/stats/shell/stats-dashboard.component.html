@@ -297,7 +297,7 @@
               <span i18n="@@dashboard.quickAdd.autoPrefix">Auto:</span>
               {{ vm.exerciseLabel }}
             </span>
-          } @else if (vm.exerciseId === 'pushup') {
+          } @else if (vm.exerciseId === PUSHUP_QUICK_ADD_EXERCISE_ID) {
             <span i18n="@@dashboard.quickAdd.button">+{{ vm.reps }} Reps</span>
           } @else {
             <span>+{{ vm.reps }} {{ vm.exerciseLabel }}</span>
