@@ -5709,6 +5709,22 @@
         <source>Weiteres Intervall hinzufügen</source>
       </segment>
     </unit>
+    <unit id="intervalsDistribution.listLabel">
+      <notes>
+        <note category="location">web/src/app/stats/components/intervals-distribution/intervals-distribution.component.ts:28</note>
+      </notes>
+      <segment>
+        <source>Intervall-Verteilung</source>
+      </segment>
+    </unit>
+    <unit id="intervalsDistribution.noData">
+      <notes>
+        <note category="location">web/src/app/stats/components/intervals-distribution/intervals-distribution.component.ts:47,49</note>
+      </notes>
+      <segment>
+        <source> Keine Intervall-Daten vorhanden </source>
+      </segment>
+    </unit>
     <unit id="entryDialog.overCapDuration">
       <notes>
         <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:585,586</note>
