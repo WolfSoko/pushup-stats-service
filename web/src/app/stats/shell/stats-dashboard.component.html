@@ -349,16 +349,7 @@
     </section>
   }
 
-  <section
-    class="latest-entries teaser-card"
-    role="link"
-    tabindex="0"
-    (click)="navigateToHistory()"
-    (keydown.enter)="navigateToHistory()"
-    (keyup.space)="navigateToHistory(); $event.preventDefault()"
-    aria-label="Zur Historie navigieren"
-    i18n-aria-label="@@dashboard.latestEntriesLinkAriaLabel"
-  >
+  <section class="latest-entries teaser-card">
     <h2 i18n="@@dashboard.latestExercises">Letzte Übungen</h2>
     @if (latestEntries().length > 0) {
       <div
@@ -366,38 +357,45 @@
         data-testid="dashboard-recent-exercises-grid"
       >
         @for (entry of latestEntries(); track entry._id) {
-          <mat-card
+          <a
             class="recent-exercise-tile"
             data-testid="dashboard-recent-exercise-tile"
+            routerLink="/history"
+            [queryParams]="{ entry: entry._id }"
+            [attr.aria-label]="tileAriaLabel(entry)"
           >
-            <mat-card-content>
-              <div class="tile-icon" aria-hidden="true">
-                <mat-icon>{{ tileIcon(entry) }}</mat-icon>
-              </div>
-              <div class="tile-body">
-                @if (entry.kind === 'pushup') {
-                  <strong class="tile-title" i18n="@@dashboard.tile.pushupTitle"
-                    >Liegestütze</strong
-                  >
-                  <span class="tile-value" i18n="@@latEntryReps">
-                    {{ entry.reps }} Reps · {{ pushupTypeLabel(entry) }}
-                  </span>
-                } @else {
-                  <strong class="tile-title">{{
-                    exerciseEntryLabel(entry)
-                  }}</strong>
-                  <span
-                    class="tile-value"
-                    data-testid="dashboard-recent-exercise-tile-value"
-                    >{{ exerciseEntryValue(entry) }}</span
-                  >
-                }
-                <small class="tile-time">{{
-                  entry.timestamp | date: 'short'
-                }}</small>
-              </div>
-            </mat-card-content>
-          </mat-card>
+            <mat-card>
+              <mat-card-content>
+                <div class="tile-icon" aria-hidden="true">
+                  <mat-icon>{{ tileIcon(entry) }}</mat-icon>
+                </div>
+                <div class="tile-body">
+                  @if (entry.kind === 'pushup') {
+                    <strong
+                      class="tile-title"
+                      i18n="@@dashboard.tile.pushupTitle"
+                      >Liegestütze</strong
+                    >
+                    <span class="tile-value" i18n="@@latEntryReps">
+                      {{ entry.reps }} Reps · {{ pushupTypeLabel(entry) }}
+                    </span>
+                  } @else {
+                    <strong class="tile-title">{{
+                      exerciseEntryLabel(entry)
+                    }}</strong>
+                    <span
+                      class="tile-value"
+                      data-testid="dashboard-recent-exercise-tile-value"
+                      >{{ exerciseEntryValue(entry) }}</span
+                    >
+                  }
+                  <small class="tile-time">{{
+                    entry.timestamp | date: 'short'
+                  }}</small>
+                </div>
+              </mat-card-content>
+            </mat-card>
+          </a>
         }
       </div>
     } @else {
@@ -406,14 +404,16 @@
       </p>
     }
     <div class="teaser-cta-row">
-      <span
+      <a
         class="teaser-cta"
+        routerLink="/history"
         aria-label="Zur Historie navigieren"
         i18n-aria-label="@@dashboard.latestEntriesCtaAriaLabel"
+        data-testid="dashboard-latest-entries-cta"
       >
         <mat-icon aria-hidden="true">history</mat-icon>
         <span i18n="@@dashboard.latestEntriesCta">Zur Historie</span>
-      </span>
+      </a>
     </div>
   </section>
 

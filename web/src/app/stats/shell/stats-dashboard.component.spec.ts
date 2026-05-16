@@ -18,7 +18,6 @@ import {
   ActivatedRoute,
   convertToParamMap,
   provideRouter,
-  Router,
 } from '@angular/router';
 import { QuickAddOrchestrationService } from '../../core/quick-add-orchestration.service';
 import { AppDataFacade } from '../../core/app-data.facade';
@@ -288,40 +287,70 @@ describe('StatsDashboardComponent', () => {
         expect(header.nextElementSibling).toBe(miniBadges);
       });
 
-      it('Then the latest exercises section renders as tiles and navigates to the history page when clicked', async () => {
-        const router = TestBed.inject(Router);
-        const navigateSpy = vi.spyOn(router, 'navigate');
+      it('Then the latest exercises section renders as per-entry tile links and the section is no longer a global click target', () => {
         const root = fixture.nativeElement as HTMLElement;
         const section = root.querySelector<HTMLElement>('.latest-entries');
 
         expect(section).toBeTruthy();
         if (!section) return;
-        expect(section.getAttribute('role')).toBe('link');
-        expect(section.getAttribute('tabindex')).toBe('0');
-        expect(section.getAttribute('aria-label')).toBe(
-          'Zur Historie navigieren'
-        );
+        // The wrapping <section> no longer carries role="link" / click handler —
+        // every tile is its own link so the visual affordance matches the
+        // destination (Copilot review feedback on the original PR).
+        expect(section.getAttribute('role')).toBeNull();
+        expect(section.getAttribute('tabindex')).toBeNull();
         expect(section.querySelector('h2')?.textContent).toContain(
           'Letzte Übungen'
         );
-        // Tiles render via the recent-exercises-grid wrapper, one mat-card
-        // per entry — the table-based preview was replaced in this PR.
         const grid = section.querySelector<HTMLElement>(
           '[data-testid="dashboard-recent-exercises-grid"]'
         );
         expect(grid).toBeTruthy();
-        const tiles = section.querySelectorAll<HTMLElement>(
-          '[data-testid="dashboard-recent-exercise-tile"]'
+        const tiles = section.querySelectorAll<HTMLAnchorElement>(
+          'a[data-testid="dashboard-recent-exercise-tile"]'
         );
         expect(tiles.length).toBeGreaterThan(0);
-        expect(section.querySelector('.teaser-cta')?.textContent).toContain(
-          'Zur Historie'
+        // Each tile's href carries the entry id so a future history-page
+        // enhancement can scroll to / highlight the matching row without
+        // touching the dashboard again.
+        for (const tile of Array.from(tiles)) {
+          const href = tile.getAttribute('href') ?? '';
+          expect(href).toContain('/history');
+          expect(href).toContain('entry=');
+        }
+      });
+
+      it('Then the "Zur Historie" CTA is its own routerLink', () => {
+        const root = fixture.nativeElement as HTMLElement;
+        const cta = root.querySelector<HTMLAnchorElement>(
+          '[data-testid="dashboard-latest-entries-cta"]'
         );
+        expect(cta).toBeTruthy();
+        if (!cta) return;
+        expect(cta.tagName).toBe('A');
+        expect(cta.getAttribute('href')).toContain('/history');
+        expect(cta.textContent).toContain('Zur Historie');
+      });
 
-        section.click();
-        await fixture.whenStable();
-
-        expect(navigateSpy).toHaveBeenCalledWith(['/history']);
+      it('Then tileIcon distinguishes pushup entries from generic exercise entries', () => {
+        const component = fixture.componentInstance;
+        const pushupIcon = component.tileIcon({
+          _id: 'p',
+          kind: 'pushup',
+          timestamp: todayTs,
+          reps: 10,
+        } as unknown as Parameters<typeof component.tileIcon>[0]);
+        const exerciseIcon = component.tileIcon({
+          _id: 'e',
+          kind: 'exercise',
+          exerciseId: 'plank.standard',
+          timestamp: todayTs,
+        } as unknown as Parameters<typeof component.tileIcon>[0]);
+        // Two distinct icons keep pushup tiles visually separable from the
+        // newer multi-exercise tiles — important now that the dashboard
+        // mixes both kinds in the same grid.
+        expect(pushupIcon).toBe('fitness_center');
+        expect(exerciseIcon).toBe('sports_gymnastics');
+        expect(pushupIcon).not.toBe(exerciseIcon);
       });
 
       it('Then the Schnellaktionen card is rendered above the today-focus section', () => {

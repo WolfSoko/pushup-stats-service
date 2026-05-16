@@ -6158,6 +6158,15 @@
         <target>Κάμψεις</target>
       </segment>
     </unit>
+    <unit id="dashboard.tile.openInHistoryAria">
+      <notes>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:110</note>
+      </notes>
+      <segment state="translated">
+        <source><ph id="0" equiv="label" disp="label"/> in der Historie öffnen</source>
+        <target>Άνοιγμα <ph id="0" equiv="label" disp="label"/> στο ιστορικό</target>
+      </segment>
+    </unit>
     <unit id="dashboard.latestEntriesCtaAriaLabel">
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:277,278</note>

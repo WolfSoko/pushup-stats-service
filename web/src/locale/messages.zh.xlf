@@ -6699,6 +6699,15 @@
         <target>俯卧撑</target>
       </segment>
     </unit>
+    <unit id="dashboard.tile.openInHistoryAria">
+      <notes>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:110</note>
+      </notes>
+      <segment state="translated">
+        <source><ph id="0" equiv="label" disp="label"/> in der Historie öffnen</source>
+        <target>在历史记录中打开<ph id="0" equiv="label" disp="label"/></target>
+      </segment>
+    </unit>
     <unit id="dashboard.latestEntriesCtaAriaLabel">
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:279,280</note>

@@ -491,11 +491,7 @@ h1 {
 }
 
 .latest-entries {
-  cursor: pointer;
   border-radius: 8px;
-  transition:
-    box-shadow 0.2s ease,
-    transform 0.15s ease;
 
   h2 {
     margin: 0 0 12px;
@@ -508,18 +504,39 @@ h1 {
   }
 
   .recent-exercise-tile {
-    border: 1px solid rgba(123, 159, 255, 0.24);
-    background: linear-gradient(
-      160deg,
-      rgba(22, 30, 49, 0.86),
-      rgba(14, 19, 33, 0.9)
-    );
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    border-radius: 12px;
+    transition:
+      box-shadow 0.2s ease,
+      transform 0.15s ease;
+
+    mat-card {
+      border: 1px solid rgba(123, 159, 255, 0.24);
+      background: linear-gradient(
+        160deg,
+        rgba(22, 30, 49, 0.86),
+        rgba(14, 19, 33, 0.9)
+      );
+    }
 
     mat-card-content {
       display: flex;
       align-items: center;
       gap: 10px;
       padding: 12px 14px;
+    }
+
+    &:hover,
+    &:focus-visible {
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+      transform: translateY(-2px);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--mat-sys-primary, #3f51b5);
+      outline-offset: 2px;
     }
   }
 
@@ -589,22 +606,23 @@ h1 {
     align-items: center;
     gap: 8px;
     color: var(--mat-sys-primary);
-  }
+    text-decoration: none;
 
-  &:hover,
-  &:focus-visible {
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
-    transform: translateY(-2px);
-  }
+    &:hover,
+    &:focus-visible {
+      text-decoration: underline;
+    }
 
-  &:focus-visible {
-    outline: 2px solid var(--mat-sys-primary, #3f51b5);
-    outline-offset: 2px;
+    &:focus-visible {
+      outline: 2px solid var(--mat-sys-primary, #3f51b5);
+      outline-offset: 4px;
+      border-radius: 4px;
+    }
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .latest-entries {
+  .latest-entries .recent-exercise-tile {
     transition: box-shadow 0.2s ease;
 
     &:hover,

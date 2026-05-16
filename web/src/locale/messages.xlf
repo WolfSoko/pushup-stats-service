@@ -7929,7 +7929,7 @@
     <unit id="latEntryReps">
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:317,319</note>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:383,384</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:380,381</note>
       </notes>
       <segment>
         <source> <ph id="0" equiv="INTERPOLATION" disp="{{ latest.reps }}"/> Reps · <ph id="1" equiv="INTERPOLATION_1" disp="{{ pushupTypeLabel(latest) }}"/> </source>
@@ -7938,7 +7938,7 @@
     <unit id="dashboard.noEntryYet">
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:327,329</note>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:405,408</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:403,406</note>
       </notes>
       <segment>
         <source>Noch kein Eintrag.</source>
@@ -7952,17 +7952,9 @@
         <source> Lade Statistikdaten… </source>
       </segment>
     </unit>
-    <unit id="dashboard.latestEntriesLinkAriaLabel">
-      <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:359,360</note>
-      </notes>
-      <segment>
-        <source>Zur Historie navigieren</source>
-      </segment>
-    </unit>
     <unit id="dashboard.latestExercises">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:362,363</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:353,354</note>
       </notes>
       <segment>
         <source>Letzte Übungen</source>
@@ -7970,7 +7962,8 @@
     </unit>
     <unit id="dashboard.tile.pushupTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:380,382</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:377,379</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:108</note>
       </notes>
       <segment>
         <source>Liegestütze</source>
@@ -7978,7 +7971,7 @@
     </unit>
     <unit id="dashboard.latestEntriesCtaAriaLabel">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:411,412</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:410,411</note>
       </notes>
       <segment>
         <source>Zur Historie navigieren</source>
@@ -8000,9 +7993,17 @@
         <source>Werbung</source>
       </segment>
     </unit>
+    <unit id="dashboard.tile.openInHistoryAria">
+      <notes>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:110</note>
+      </notes>
+      <segment>
+        <source><ph id="0" equiv="label" disp="label"/> in der Historie öffnen</source>
+      </segment>
+    </unit>
     <unit id="dashboard.share.aria">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:105</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:113</note>
       </notes>
       <segment>
         <source>Tagesleistung teilen</source>
@@ -8010,7 +8011,7 @@
     </unit>
     <unit id="dashboard.share">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:106</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:114</note>
       </notes>
       <segment>
         <source>Teilen</source>

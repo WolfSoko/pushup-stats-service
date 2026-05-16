@@ -102,6 +102,14 @@ export class StatsDashboardComponent {
   readonly tileIcon = (entry: UnifiedEntry): string =>
     entry.kind === 'pushup' ? 'fitness_center' : 'sports_gymnastics';
 
+  readonly tileAriaLabel = (entry: UnifiedEntry): string => {
+    const label =
+      entry.kind === 'pushup'
+        ? $localize`:@@dashboard.tile.pushupTitle:Liegestütze`
+        : this.exerciseEntryLabel(entry);
+    return $localize`:@@dashboard.tile.openInHistoryAria:${label}:label: in der Historie öffnen`;
+  };
+
   readonly shareDayAriaLabel = $localize`:@@dashboard.share.aria:Tagesleistung teilen`;
   readonly shareDayLabel = $localize`:@@dashboard.share:Teilen`;
 

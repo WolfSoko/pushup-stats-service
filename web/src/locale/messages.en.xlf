@@ -5636,7 +5636,16 @@ Deine Position: # ·  Reps        </source>
     <unit id="dashboard.tile.pushupTitle">
       <segment state="translated">
         <source>Liegestütze</source>
-        <target>Pushups</target>
+        <target>Push-ups</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.tile.openInHistoryAria">
+      <notes>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:110</note>
+      </notes>
+      <segment state="translated">
+        <source><ph id="0" equiv="label" disp="label"/> in der Historie öffnen</source>
+        <target>Open <ph id="0" equiv="label" disp="label"/> in history</target>
       </segment>
     </unit>
     <unit id="dashboard.latestEntriesCtaAriaLabel">
