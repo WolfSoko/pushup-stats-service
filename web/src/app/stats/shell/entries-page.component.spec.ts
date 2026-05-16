@@ -1,6 +1,7 @@
 import { signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
+import { provideRouter } from '@angular/router';
 import { EntriesPageComponent } from './entries-page.component';
 import {
   ExerciseFirestoreService,
@@ -85,6 +86,7 @@ describe('EntriesPageComponent', () => {
     await TestBed.configureTestingModule({
       imports: [EntriesPageComponent],
       providers: [
+        provideRouter([]),
         { provide: StatsApiService, useValue: apiMock },
         { provide: ExerciseFirestoreService, useValue: exerciseServiceMock },
         { provide: LiveDataStore, useValue: liveMock },

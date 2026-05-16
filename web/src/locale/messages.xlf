@@ -665,6 +665,22 @@
         <source>Eigenen Wert eingeben</source>
       </segment>
     </unit>
+    <unit id="intervalsDistribution.noData">
+      <notes>
+        <note category="location">web/src/app/stats/components/intervals-distribution/intervals-distribution.component.ts</note>
+      </notes>
+      <segment>
+        <source> Keine Intervall-Daten vorhanden </source>
+      </segment>
+    </unit>
+    <unit id="intervalsDistribution.listLabel">
+      <notes>
+        <note category="location">web/src/app/stats/components/intervals-distribution/intervals-distribution.component.ts</note>
+      </notes>
+      <segment>
+        <source>Intervall-Verteilung</source>
+      </segment>
+    </unit>
     <unit id="quickAdd.fab.customValue">
       <notes>
         <note category="location">libs/quick-add/src/lib/quick-add-fab.component.html:51,53</note>

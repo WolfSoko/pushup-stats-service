@@ -1,4 +1,7 @@
-import { ScrollingModule } from '@angular/cdk/scrolling';
+import {
+  CdkVirtualScrollViewport,
+  ScrollingModule,
+} from '@angular/cdk/scrolling';
 import { DatePipe, isPlatformBrowser, NgTemplateOutlet } from '@angular/common';
 import {
   Component,
@@ -143,6 +146,15 @@ export class StatsTableComponent {
   };
 
   readonly sort = viewChild(MatSort);
+  private readonly viewport = viewChild(CdkVirtualScrollViewport);
+
+  /**
+   * The id of the entry to scroll-into-view and briefly highlight after
+   * the next render. Set by the entries page from the `#entry-<id>` URL
+   * fragment so dashboard tile links can drill into the matching row.
+   * Null when the page was opened without a fragment.
+   */
+  readonly highlightEntryId = input<string | null>(null);
 
   /**
    * The table accepts both legacy `PushupRecord[]` (dashboard preview)
@@ -243,6 +255,31 @@ export class StatsTableComponent {
       if (s) {
         this.dataSource.sort = s;
       }
+    });
+
+    // Drill-in from the dashboard tile: when a `#entry-<id>` fragment
+    // resolves to a row in the current data set, scroll the virtual
+    // viewport to it. Rows are virtualized, so a plain anchor link
+    // wouldn't reach one outside the initially-rendered window.
+    // Indexing off the input list — the page lands fresh with default
+    // sort/filter on a deep-link, so the input order matches what
+    // MatTableDataSource will render.
+    effect(() => {
+      const targetId = this.highlightEntryId();
+      if (!targetId || !this.isBrowser) return;
+      const rows = this.unifiedEntries();
+      const index = rows.findIndex((r) => r._id === targetId);
+      if (index < 0) return;
+      const vp = this.viewport();
+      queueMicrotask(() => {
+        if (vp) {
+          vp.scrollToIndex(index, 'smooth');
+        } else {
+          document
+            .getElementById(`entry-${targetId}`)
+            ?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      });
     });
   }
 

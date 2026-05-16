@@ -5,7 +5,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { findExerciseDefinition } from '@pu-stats/models';
 import { exerciseDisplayName } from '../i18n/exercise-display-names';
 import { PreviewBannerComponent } from '../components/preview-banner/preview-banner.component';
@@ -143,6 +144,7 @@ import { PageHeaderComponent } from '../../core/page-header/page-header.componen
         [entries]="store.filteredRows()"
         [busyAction]="store.busyAction()"
         [busyId]="store.busyId()"
+        [highlightEntryId]="highlightEntryId()"
         (create)="store.createEntry($event)"
         (update)="store.updateEntry($event)"
         (remove)="store.deleteEntry($event)"
@@ -216,6 +218,21 @@ import { PageHeaderComponent } from '../../core/page-header/page-header.componen
 })
 export class EntriesPageComponent {
   protected readonly store = inject(EntriesStore);
+  private readonly route = inject(ActivatedRoute);
+
+  /**
+   * Entry id resolved from the URL fragment `#entry-<id>`. The dashboard's
+   * "Letzte Übungen" tile links land here so the matching row can be
+   * scrolled into view and briefly highlighted in the (virtualized)
+   * history table. `null` when the page was opened without a fragment.
+   */
+  private readonly fragment = toSignal(this.route.fragment);
+  readonly highlightEntryId = computed<string | null>(() => {
+    const f = this.fragment();
+    if (!f) return null;
+    const match = /^entry-(.+)$/.exec(f);
+    return match ? match[1] : null;
+  });
 
   /**
    * Locale-aware labels for the new "Übung" multi-select. Built in the
