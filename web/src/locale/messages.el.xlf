@@ -6640,16 +6640,96 @@
         <target>Προχωρημένος</target>
       </segment>
     </unit>
+
+    <!-- Exercises wiki page -->
+    <unit id="seo.wiki.exercises.title">
+      <segment state="translated">
+        <source>Übungen erklärt – Pushup Tracker</source>
+        <target>Οι ασκήσεις με μια ματιά – Pushup Tracker</target>
+      </segment>
+    </unit>
+    <unit id="seo.wiki.exercises.description">
+      <segment state="translated">
+        <source>Saubere Ausführung der Übungen, die du in Pushup Tracker mitloggst – Kniebeugen, Klimmzüge, Plank, Dehnübungen und mehr.</source>
+        <target>Καθαρή εκτέλεση για κάθε άσκηση που μπορείς να καταγράψεις στο Pushup Tracker — squats, έλξεις, plank, διατάσεις και άλλα.</target>
+      </segment>
+    </unit>
+    <unit id="seo.wiki.exercise.titleSuffix">
+      <segment state="translated">
+        <source>Anleitung &amp; Technik | Pushup Tracker</source>
+        <target>Οδηγός &amp; τεχνική | Pushup Tracker</target>
+      </segment>
+    </unit>
+    <unit id="wiki.exercises.back">
+      <segment state="translated">
+        <source>Zurück zu den Trainingsplänen</source>
+        <target>Πίσω στα προγράμματα προπόνησης</target>
+      </segment>
+    </unit>
+    <unit id="wiki.exercises.title">
+      <segment state="translated">
+        <source> Übungen — saubere Ausführung </source>
+        <target> Ασκήσεις — καθαρή εκτέλεση </target>
+      </segment>
+    </unit>
+    <unit id="wiki.exercises.intro">
+      <segment state="translated">
+        <source> Kurzanleitungen für alle Übungen, die du in der App tracken kannst — von Kniebeugen über Klimmzüge bis zu Mobilitäts-Drills. </source>
+        <target> Σύντομοι οδηγοί για κάθε άσκηση που μπορείς να καταγράψεις στην εφαρμογή — από squats και έλξεις μέχρι ασκήσεις κινητικότητας. </target>
+      </segment>
+    </unit>
+    <unit id="wiki.exercises.tocTitle">
+      <segment state="translated">
+        <source>Übersicht</source>
+        <target>Επισκόπηση</target>
+      </segment>
+    </unit>
+    <unit id="wiki.exercises.viewDetail">
+      <segment state="translated">
+        <source>Detailseite öffnen</source>
+        <target>Άνοιγμα λεπτομερειών</target>
+      </segment>
+    </unit>
+    <unit id="wiki.exercise.detail.back">
+      <segment state="translated">
+        <source> Übungen </source>
+        <target> Ασκήσεις </target>
+      </segment>
+    </unit>
+    <unit id="wiki.exercise.detail.toList">
+      <segment state="translated">
+        <source>Alle Übungen</source>
+        <target>Όλες οι ασκήσεις</target>
+      </segment>
+    </unit>
+    <unit id="wiki.exercise.detail.cta">
+      <segment state="translated">
+        <source>Zu den Trainingsplänen</source>
+        <target>Στα προγράμματα προπόνησης</target>
+      </segment>
+    </unit>
     <unit id="nav.pushupTypes">
       <segment state="translated">
         <source>Liegestütztypen</source>
         <target>Παραλλαγές καμπτοτάσεων</target>
       </segment>
     </unit>
+    <unit id="nav.exercises">
+      <segment state="translated">
+        <source>Übungen</source>
+        <target>Ασκήσεις</target>
+      </segment>
+    </unit>
     <unit id="footer.pushupTypes">
       <segment state="translated">
         <source>Liegestütztypen</source>
         <target>Παραλλαγές καμπτοτάσεων</target>
+      </segment>
+    </unit>
+    <unit id="footer.exercises">
+      <segment state="translated">
+        <source>Übungen</source>
+        <target>Ασκήσεις</target>
       </segment>
     </unit>
     <unit id="typeWikiLinkAria">

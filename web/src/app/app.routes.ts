@@ -134,6 +134,30 @@ export const appRoutes: Routes = [
     ],
   },
   {
+    path: 'wiki/uebungen',
+    children: [
+      {
+        path: '',
+        pathMatch: 'full',
+        data: {
+          seoTitle: $localize`:@@seo.wiki.exercises.title:Übungen erklärt – Pushup Tracker`,
+          seoDescription: $localize`:@@seo.wiki.exercises.description:Saubere Ausführung der Übungen, die du in Pushup Tracker mitloggst – Kniebeugen, Klimmzüge, Plank, Dehnübungen und mehr.`,
+        },
+        loadComponent: () =>
+          import('./wiki/exercises-page.component').then(
+            (m) => m.ExercisesWikiPageComponent
+          ),
+      },
+      {
+        path: ':slug',
+        loadComponent: () =>
+          import('./wiki/exercise-detail.component').then(
+            (m) => m.ExerciseDetailComponent
+          ),
+      },
+    ],
+  },
+  {
     path: 'reminders',
     canActivate: [authGuard],
     data: {

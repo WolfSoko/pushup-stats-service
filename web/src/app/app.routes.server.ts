@@ -1,5 +1,9 @@
 import { RenderMode, ServerRoute } from '@angular/ssr';
-import { PUSHUP_TYPES, TRAINING_PLANS } from '@pu-stats/models';
+import {
+  EXERCISE_WIKI_CATALOG,
+  PUSHUP_TYPES,
+  TRAINING_PLANS,
+} from '@pu-stats/models';
 import { BLOG_POSTS } from './blog/blog-posts.data';
 
 export const serverRoutes: ServerRoute[] = [
@@ -60,6 +64,17 @@ export const serverRoutes: ServerRoute[] = [
         }
       }
       return Array.from(slugs).map((slug) => ({ slug }));
+    },
+  },
+  {
+    path: 'wiki/uebungen',
+    renderMode: RenderMode.Prerender,
+  },
+  {
+    path: 'wiki/uebungen/:slug',
+    renderMode: RenderMode.Prerender,
+    async getPrerenderParams() {
+      return EXERCISE_WIKI_CATALOG.map((entry) => ({ slug: entry.slug }));
     },
   },
   {

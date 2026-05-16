@@ -6640,16 +6640,96 @@
         <target>Avanzato</target>
       </segment>
     </unit>
+
+    <!-- Exercises wiki page -->
+    <unit id="seo.wiki.exercises.title">
+      <segment state="translated">
+        <source>Übungen erklärt – Pushup Tracker</source>
+        <target>Esercizi spiegati – Pushup Tracker</target>
+      </segment>
+    </unit>
+    <unit id="seo.wiki.exercises.description">
+      <segment state="translated">
+        <source>Saubere Ausführung der Übungen, die du in Pushup Tracker mitloggst – Kniebeugen, Klimmzüge, Plank, Dehnübungen und mehr.</source>
+        <target>Esecuzione pulita di ogni esercizio che puoi registrare in Pushup Tracker — squat, trazioni, plank, allungamenti e altro.</target>
+      </segment>
+    </unit>
+    <unit id="seo.wiki.exercise.titleSuffix">
+      <segment state="translated">
+        <source>Anleitung &amp; Technik | Pushup Tracker</source>
+        <target>Guida &amp; tecnica | Pushup Tracker</target>
+      </segment>
+    </unit>
+    <unit id="wiki.exercises.back">
+      <segment state="translated">
+        <source>Zurück zu den Trainingsplänen</source>
+        <target>Torna ai piani di allenamento</target>
+      </segment>
+    </unit>
+    <unit id="wiki.exercises.title">
+      <segment state="translated">
+        <source> Übungen — saubere Ausführung </source>
+        <target> Esercizi — esecuzione pulita </target>
+      </segment>
+    </unit>
+    <unit id="wiki.exercises.intro">
+      <segment state="translated">
+        <source> Kurzanleitungen für alle Übungen, die du in der App tracken kannst — von Kniebeugen über Klimmzüge bis zu Mobilitäts-Drills. </source>
+        <target> Brevi guide per ogni esercizio che puoi tracciare nell’app — dagli squat alle trazioni fino ai drill di mobilità. </target>
+      </segment>
+    </unit>
+    <unit id="wiki.exercises.tocTitle">
+      <segment state="translated">
+        <source>Übersicht</source>
+        <target>Panoramica</target>
+      </segment>
+    </unit>
+    <unit id="wiki.exercises.viewDetail">
+      <segment state="translated">
+        <source>Detailseite öffnen</source>
+        <target>Apri dettaglio</target>
+      </segment>
+    </unit>
+    <unit id="wiki.exercise.detail.back">
+      <segment state="translated">
+        <source> Übungen </source>
+        <target> Esercizi </target>
+      </segment>
+    </unit>
+    <unit id="wiki.exercise.detail.toList">
+      <segment state="translated">
+        <source>Alle Übungen</source>
+        <target>Tutti gli esercizi</target>
+      </segment>
+    </unit>
+    <unit id="wiki.exercise.detail.cta">
+      <segment state="translated">
+        <source>Zu den Trainingsplänen</source>
+        <target>Vai ai piani di allenamento</target>
+      </segment>
+    </unit>
     <unit id="nav.pushupTypes">
       <segment state="translated">
         <source>Liegestütztypen</source>
         <target>Varianti di piegamenti</target>
       </segment>
     </unit>
+    <unit id="nav.exercises">
+      <segment state="translated">
+        <source>Übungen</source>
+        <target>Esercizi</target>
+      </segment>
+    </unit>
     <unit id="footer.pushupTypes">
       <segment state="translated">
         <source>Liegestütztypen</source>
         <target>Varianti di piegamenti</target>
+      </segment>
+    </unit>
+    <unit id="footer.exercises">
+      <segment state="translated">
+        <source>Übungen</source>
+        <target>Esercizi</target>
       </segment>
     </unit>
     <unit id="typeWikiLinkAria">

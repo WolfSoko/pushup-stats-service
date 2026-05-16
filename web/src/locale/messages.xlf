@@ -3052,7 +3052,7 @@
     <unit id="app.title">
       <notes>
         <note category="location">web/src/app/app.html:11,12</note>
-        <note category="location">web/src/app/app.html:146,147</note>
+        <note category="location">web/src/app/app.html:156,157</note>
       </notes>
       <segment>
         <source>Pushups</source>
@@ -3061,8 +3061,8 @@
     <unit id="nav.dashboard">
       <notes>
         <note category="location">web/src/app/app.html:23,26</note>
-        <note category="location">web/src/app/app.html:186,188</note>
-        <note category="location">web/src/app/app.html:245,247</note>
+        <note category="location">web/src/app/app.html:196,198</note>
+        <note category="location">web/src/app/app.html:261,263</note>
       </notes>
       <segment>
         <source>Dashboard</source>
@@ -3071,8 +3071,8 @@
     <unit id="nav.analysis">
       <notes>
         <note category="location">web/src/app/app.html:33,36</note>
-        <note category="location">web/src/app/app.html:190,192</note>
-        <note category="location">web/src/app/app.html:249,251</note>
+        <note category="location">web/src/app/app.html:200,202</note>
+        <note category="location">web/src/app/app.html:265,267</note>
       </notes>
       <segment>
         <source>Analyse</source>
@@ -3081,8 +3081,8 @@
     <unit id="nav.leaderboard">
       <notes>
         <note category="location">web/src/app/app.html:43,47</note>
-        <note category="location">web/src/app/app.html:194,196</note>
-        <note category="location">web/src/app/app.html:253,255</note>
+        <note category="location">web/src/app/app.html:204,206</note>
+        <note category="location">web/src/app/app.html:269,271</note>
       </notes>
       <segment>
         <source>Bestenliste</source>
@@ -3091,8 +3091,8 @@
     <unit id="nav.blog">
       <notes>
         <note category="location">web/src/app/app.html:53,56</note>
-        <note category="location">web/src/app/app.html:202,204</note>
-        <note category="location">web/src/app/app.html:261,263</note>
+        <note category="location">web/src/app/app.html:212,214</note>
+        <note category="location">web/src/app/app.html:277,279</note>
       </notes>
       <segment>
         <source>Blog</source>
@@ -3101,8 +3101,8 @@
     <unit id="nav.trainingPlans">
       <notes>
         <note category="location">web/src/app/app.html:63,67</note>
-        <note category="location">web/src/app/app.html:198,200</note>
-        <note category="location">web/src/app/app.html:257,259</note>
+        <note category="location">web/src/app/app.html:208,210</note>
+        <note category="location">web/src/app/app.html:273,275</note>
       </notes>
       <segment>
         <source>Trainingspläne</source>
@@ -3116,9 +3116,17 @@
         <source>Liegestütztypen</source>
       </segment>
     </unit>
-    <unit id="nav.history">
+    <unit id="nav.exercises">
       <notes>
         <note category="location">web/src/app/app.html:83,86</note>
+      </notes>
+      <segment>
+        <source>Übungen</source>
+      </segment>
+    </unit>
+    <unit id="nav.history">
+      <notes>
+        <note category="location">web/src/app/app.html:93,96</note>
       </notes>
       <segment>
         <source>Historie</source>
@@ -3126,7 +3134,7 @@
     </unit>
     <unit id="nav.reminders">
       <notes>
-        <note category="location">web/src/app/app.html:94,98</note>
+        <note category="location">web/src/app/app.html:104,108</note>
       </notes>
       <segment>
         <source>Erinnerungen</source>
@@ -3134,7 +3142,7 @@
     </unit>
     <unit id="nav.language">
       <notes>
-        <note category="location">web/src/app/app.html:107,108</note>
+        <note category="location">web/src/app/app.html:117,118</note>
       </notes>
       <segment>
         <source>Sprache</source>
@@ -3142,7 +3150,7 @@
     </unit>
     <unit id="nav.aria">
       <notes>
-        <note category="location">web/src/app/app.html:125,126</note>
+        <note category="location">web/src/app/app.html:135,136</note>
       </notes>
       <segment>
         <source>Pushup Navigation</source>
@@ -3150,7 +3158,7 @@
     </unit>
     <unit id="nav.openMenu">
       <notes>
-        <note category="location">web/src/app/app.html:131,132</note>
+        <note category="location">web/src/app/app.html:141,142</note>
       </notes>
       <segment>
         <source>Menü öffnen</source>
@@ -3158,7 +3166,7 @@
     </unit>
     <unit id="nav.toLanding">
       <notes>
-        <note category="location">web/src/app/app.html:141,142</note>
+        <note category="location">web/src/app/app.html:151,152</note>
       </notes>
       <segment>
         <source>Zur Landingpage</source>
@@ -3166,7 +3174,7 @@
     </unit>
     <unit id="toolbarDailyGoal">
       <notes>
-        <note category="location">web/src/app/app.html:158,159</note>
+        <note category="location">web/src/app/app.html:168,169</note>
       </notes>
       <segment>
         <source>Tagesziel</source>
@@ -3174,7 +3182,7 @@
     </unit>
     <unit id="nav.admin">
       <notes>
-        <note category="location">web/src/app/app.html:166,167</note>
+        <note category="location">web/src/app/app.html:176,177</note>
       </notes>
       <segment>
         <source>Admin-Bereich</source>
@@ -3182,7 +3190,7 @@
     </unit>
     <unit id="nav.desktop.aria">
       <notes>
-        <note category="location">web/src/app/app.html:177,178</note>
+        <note category="location">web/src/app/app.html:187,188</note>
       </notes>
       <segment>
         <source>Hauptnavigation</source>
@@ -3190,7 +3198,7 @@
     </unit>
     <unit id="footer.aria">
       <notes>
-        <note category="location">web/src/app/app.html:211</note>
+        <note category="location">web/src/app/app.html:221</note>
       </notes>
       <segment>
         <source>Rechtliches</source>
@@ -3198,15 +3206,23 @@
     </unit>
     <unit id="footer.pushupTypes">
       <notes>
-        <note category="location">web/src/app/app.html:216,218</note>
+        <note category="location">web/src/app/app.html:226,229</note>
       </notes>
       <segment>
         <source>Liegestütztypen</source>
       </segment>
     </unit>
+    <unit id="footer.exercises">
+      <notes>
+        <note category="location">web/src/app/app.html:232,234</note>
+      </notes>
+      <segment>
+        <source>Übungen</source>
+      </segment>
+    </unit>
     <unit id="footer.impressum">
       <notes>
-        <note category="location">web/src/app/app.html:219,221</note>
+        <note category="location">web/src/app/app.html:235,237</note>
       </notes>
       <segment>
         <source>Impressum</source>
@@ -3214,7 +3230,7 @@
     </unit>
     <unit id="footer.datenschutz">
       <notes>
-        <note category="location">web/src/app/app.html:222,225</note>
+        <note category="location">web/src/app/app.html:238,241</note>
       </notes>
       <segment>
         <source>Datenschutz</source>
@@ -3222,7 +3238,7 @@
     </unit>
     <unit id="footer.cookies">
       <notes>
-        <note category="location">web/src/app/app.html:229,231</note>
+        <note category="location">web/src/app/app.html:245,247</note>
       </notes>
       <segment>
         <source> Cookie-Einstellungen </source>
@@ -3230,7 +3246,7 @@
     </unit>
     <unit id="nav.bottom.aria">
       <notes>
-        <note category="location">web/src/app/app.html:236,237</note>
+        <note category="location">web/src/app/app.html:252,253</note>
       </notes>
       <segment>
         <source>Mobile-Navigation</source>
@@ -3380,9 +3396,25 @@
         <source>Saubere Ausführung der wichtigsten Liegestütz-Varianten – Standard, Knie, Diamant, Archer, einarmig und mehr.</source>
       </segment>
     </unit>
+    <unit id="seo.wiki.exercises.title">
+      <notes>
+        <note category="location">web/src/app/app.routes.ts:143</note>
+      </notes>
+      <segment>
+        <source>Übungen erklärt – Pushup Tracker</source>
+      </segment>
+    </unit>
+    <unit id="seo.wiki.exercises.description">
+      <notes>
+        <note category="location">web/src/app/app.routes.ts:144</note>
+      </notes>
+      <segment>
+        <source>Saubere Ausführung der Übungen, die du in Pushup Tracker mitloggst – Kniebeugen, Klimmzüge, Plank, Dehnübungen und mehr.</source>
+      </segment>
+    </unit>
     <unit id="seo.reminders.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:140</note>
+        <note category="location">web/src/app/app.routes.ts:164</note>
       </notes>
       <segment>
         <source>Erinnerungen – Pushup Tracker</source>
@@ -3390,7 +3422,7 @@
     </unit>
     <unit id="seo.reminders.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:141</note>
+        <note category="location">web/src/app/app.routes.ts:165</note>
       </notes>
       <segment>
         <source>Konfiguriere Liegestütz-Erinnerungen und Push-Benachrichtigungen.</source>
@@ -3398,7 +3430,7 @@
     </unit>
     <unit id="seo.leaderboard.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:151</note>
+        <note category="location">web/src/app/app.routes.ts:175</note>
       </notes>
       <segment>
         <source>Bestenliste – Pushup Tracker</source>
@@ -3406,7 +3438,7 @@
     </unit>
     <unit id="seo.leaderboard.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:152</note>
+        <note category="location">web/src/app/app.routes.ts:176</note>
       </notes>
       <segment>
         <source>Öffentliche Bestenliste mit Top-Reps für heute, die letzten 7 Tage und die letzten 30 Tage.</source>
@@ -3414,7 +3446,7 @@
     </unit>
     <unit id="seo.publicProfile.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:162</note>
+        <note category="location">web/src/app/app.routes.ts:186</note>
       </notes>
       <segment>
         <source>Profil – Pushup Tracker</source>
@@ -3422,7 +3454,7 @@
     </unit>
     <unit id="seo.publicProfile.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:163</note>
+        <note category="location">web/src/app/app.routes.ts:187</note>
       </notes>
       <segment>
         <source>Öffentliches Pushup-Profil mit Reps, Streak und Bestleistungen.</source>
@@ -3430,7 +3462,7 @@
     </unit>
     <unit id="seo.blog.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:177</note>
+        <note category="location">web/src/app/app.routes.ts:201</note>
       </notes>
       <segment>
         <source>Blog – Liegestütze Tipps &amp; Guides | Pushup Tracker</source>
@@ -3438,7 +3470,7 @@
     </unit>
     <unit id="seo.blog.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:178</note>
+        <note category="location">web/src/app/app.routes.ts:202</note>
       </notes>
       <segment>
         <source>Tipps, Trainingspläne und Motivation rund um Liegestütze – von Einsteiger bis Fortgeschritten.</source>
@@ -3446,7 +3478,7 @@
     </unit>
     <unit id="seo.impressum.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:195</note>
+        <note category="location">web/src/app/app.routes.ts:219</note>
       </notes>
       <segment>
         <source>Impressum – Pushup Tracker</source>
@@ -3454,7 +3486,7 @@
     </unit>
     <unit id="seo.impressum.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:196</note>
+        <note category="location">web/src/app/app.routes.ts:220</note>
       </notes>
       <segment>
         <source>Impressum und Anbieterkennzeichnung von Pushup Tracker.</source>
@@ -3462,7 +3494,7 @@
     </unit>
     <unit id="seo.datenschutz.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:206</note>
+        <note category="location">web/src/app/app.routes.ts:230</note>
       </notes>
       <segment>
         <source>Datenschutzerklärung – Pushup Tracker</source>
@@ -3470,7 +3502,7 @@
     </unit>
     <unit id="seo.datenschutz.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:207</note>
+        <note category="location">web/src/app/app.routes.ts:231</note>
       </notes>
       <segment>
         <source>Datenschutzerklärung von Pushup Tracker – Informationen zu Datenverarbeitung, Cookies und Ihren Rechten.</source>
@@ -4818,7 +4850,7 @@
     </unit>
     <unit id="landing.feature.pwa.installed">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:594,596</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:595,597</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon aria-hidden=&quot;true&quot;&gt;" dispEnd="&lt;/mat-icon&gt;">check_circle</pc> Du nutzt bereits die installierte App </source>
@@ -4826,7 +4858,7 @@
     </unit>
     <unit id="landing.feature.pwa.install">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:607,609</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:608,610</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon aria-hidden=&quot;true&quot;&gt;" dispEnd="&lt;/mat-icon&gt;">download</pc> Jetzt als App installieren </source>
@@ -4834,7 +4866,7 @@
     </unit>
     <unit id="landing.feature.pwa.iosHint">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:614,617</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:615,618</note>
       </notes>
       <segment>
         <source> Auf iPhone &amp; iPad: Teilen-Symbol antippen und „Zum Home-Bildschirm“ wählen. </source>
@@ -4842,7 +4874,7 @@
     </unit>
     <unit id="landing.feature.privacy.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:625,627</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:626,628</note>
       </notes>
       <segment>
         <source>Privacy first &amp; 100 % kostenlos</source>
@@ -4850,7 +4882,7 @@
     </unit>
     <unit id="landing.feature.privacy.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:629,633</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:630,634</note>
       </notes>
       <segment>
         <source>DSGVO-konform mit anpassbarer Cookie-Zustimmung. Reps werden lokal im Browser ausgewertet – kein Video verlässt dein Gerät. Dein Name auf der Bestenliste? Nur wenn du es willst. Kein Abo, keine Kreditkarte.</source>
@@ -4858,7 +4890,7 @@
     </unit>
     <unit id="ads.landing.aria">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:636</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:637</note>
       </notes>
       <segment>
         <source>Werbung</source>
@@ -4866,7 +4898,7 @@
     </unit>
     <unit id="landing.preview.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:645,647</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:646,648</note>
       </notes>
       <segment>
         <source> Deine Statistik auf einen Blick </source>
@@ -4874,7 +4906,7 @@
     </unit>
     <unit id="landing.preview.alt">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:652,653</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:653,654</note>
       </notes>
       <segment>
         <source>Vorschau der Statistikansicht</source>
@@ -4882,7 +4914,7 @@
     </unit>
     <unit id="landing.discover.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:793,794</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:794,795</note>
       </notes>
       <segment>
         <source>Mehr entdecken</source>
@@ -4890,7 +4922,7 @@
     </unit>
     <unit id="landing.discover.leaderboard.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:799,801</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:800,802</note>
       </notes>
       <segment>
         <source>Bestenliste</source>
@@ -4898,7 +4930,7 @@
     </unit>
     <unit id="landing.discover.leaderboard.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:803,806</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:804,807</note>
       </notes>
       <segment>
         <source> Vergleiche dich mit der Community: Top-Reps für heute, die letzten 7 Tage und die letzten 30 Tage. Privacy first – dein Name erscheint nur, wenn du es willst. </source>
@@ -4906,7 +4938,7 @@
     </unit>
     <unit id="landing.discover.leaderboard.cta">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:813,816</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:814,817</note>
       </notes>
       <segment>
         <source>Zur Bestenliste</source>
@@ -4914,7 +4946,7 @@
     </unit>
     <unit id="landing.discover.blog.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:822,824</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:823,825</note>
       </notes>
       <segment>
         <source>Blog</source>
@@ -4922,7 +4954,7 @@
     </unit>
     <unit id="landing.discover.blog.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:826,829</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:827,830</note>
       </notes>
       <segment>
         <source> Tipps, Hintergrundwissen und Motivation rund um Liegestütze – von Einsteiger bis Fortgeschritten. Viele Artikel verlinken direkt auf den passenden Trainingsplan. </source>
@@ -4930,7 +4962,7 @@
     </unit>
     <unit id="landing.discover.blog.cta">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:836,838</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:837,839</note>
       </notes>
       <segment>
         <source>Zum Blog</source>
@@ -6621,22 +6653,6 @@
         <source>Weiteres Intervall hinzufügen</source>
       </segment>
     </unit>
-    <unit id="intervalsDistribution.listLabel">
-      <notes>
-        <note category="location">web/src/app/stats/components/intervals-distribution/intervals-distribution.component.ts:28</note>
-      </notes>
-      <segment>
-        <source>Intervall-Verteilung</source>
-      </segment>
-    </unit>
-    <unit id="intervalsDistribution.noData">
-      <notes>
-        <note category="location">web/src/app/stats/components/intervals-distribution/intervals-distribution.component.ts:47,49</note>
-      </notes>
-      <segment>
-        <source> Keine Intervall-Daten vorhanden </source>
-      </segment>
-    </unit>
     <unit id="entryDialog.overCapDuration">
       <notes>
         <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:585,586</note>
@@ -6713,6 +6729,7 @@
       <notes>
         <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:1251</note>
         <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:222</note>
+        <note category="location">web/src/app/wiki/exercises-page.component.ts:388</note>
       </notes>
       <segment>
         <source>Drücken</source>
@@ -6722,6 +6739,7 @@
       <notes>
         <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:1252</note>
         <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:223</note>
+        <note category="location">web/src/app/wiki/exercises-page.component.ts:389</note>
       </notes>
       <segment>
         <source>Ziehen</source>
@@ -6731,6 +6749,7 @@
       <notes>
         <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:1253</note>
         <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:224</note>
+        <note category="location">web/src/app/wiki/exercises-page.component.ts:390</note>
       </notes>
       <segment>
         <source>Kniebeuge</source>
@@ -6740,6 +6759,7 @@
       <notes>
         <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:1254</note>
         <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:225</note>
+        <note category="location">web/src/app/wiki/exercises-page.component.ts:391</note>
       </notes>
       <segment>
         <source>Hüftstreckung</source>
@@ -6749,6 +6769,7 @@
       <notes>
         <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:1255</note>
         <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:226</note>
+        <note category="location">web/src/app/wiki/exercises-page.component.ts:392</note>
       </notes>
       <segment>
         <source>Ausfallschritt</source>
@@ -6766,6 +6787,7 @@
       <notes>
         <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:1257</note>
         <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:227</note>
+        <note category="location">web/src/app/wiki/exercises-page.component.ts:393</note>
       </notes>
       <segment>
         <source>Rumpf</source>
@@ -6775,6 +6797,7 @@
       <notes>
         <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:1258</note>
         <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:228</note>
+        <note category="location">web/src/app/wiki/exercises-page.component.ts:394</note>
       </notes>
       <segment>
         <source>Ausdauer</source>
@@ -6784,6 +6807,7 @@
       <notes>
         <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:1259</note>
         <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:229</note>
+        <note category="location">web/src/app/wiki/exercises-page.component.ts:395</note>
       </notes>
       <segment>
         <source>Mobilität</source>
@@ -9319,16 +9343,18 @@
         <source>Plan ansehen</source>
       </segment>
     </unit>
-    <unit id="wiki.pushupType.detail.back">
+    <unit id="wiki.exercise.detail.back">
       <notes>
-        <note category="location">web/src/app/wiki/pushup-type-detail.component.ts:49,51</note>
+        <note category="location">web/src/app/wiki/exercise-detail.component.ts:45,47</note>
       </notes>
       <segment>
-        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">arrow_back</pc> Liegestütztypen </source>
+        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">arrow_back</pc> Übungen </source>
       </segment>
     </unit>
     <unit id="wiki.pushupTypes.level.beginner">
       <notes>
+        <note category="location">web/src/app/wiki/exercise-detail.component.ts:54,56</note>
+        <note category="location">web/src/app/wiki/exercises-page.component.ts:114,116</note>
         <note category="location">web/src/app/wiki/pushup-type-detail.component.ts:58,60</note>
         <note category="location">web/src/app/wiki/pushup-types-page.component.ts:104,106</note>
       </notes>
@@ -9338,6 +9364,8 @@
     </unit>
     <unit id="wiki.pushupTypes.level.intermediate">
       <notes>
+        <note category="location">web/src/app/wiki/exercise-detail.component.ts:60,63</note>
+        <note category="location">web/src/app/wiki/exercises-page.component.ts:120,122</note>
         <note category="location">web/src/app/wiki/pushup-type-detail.component.ts:64,67</note>
         <note category="location">web/src/app/wiki/pushup-types-page.component.ts:110,112</note>
       </notes>
@@ -9347,6 +9375,8 @@
     </unit>
     <unit id="wiki.pushupTypes.level.advanced">
       <notes>
+        <note category="location">web/src/app/wiki/exercise-detail.component.ts:66,69</note>
+        <note category="location">web/src/app/wiki/exercises-page.component.ts:126,128</note>
         <note category="location">web/src/app/wiki/pushup-type-detail.component.ts:70,73</note>
         <note category="location">web/src/app/wiki/pushup-types-page.component.ts:116,118</note>
       </notes>
@@ -9356,6 +9386,8 @@
     </unit>
     <unit id="wiki.pushupTypes.instructionsTitle">
       <notes>
+        <note category="location">web/src/app/wiki/exercise-detail.component.ts:75,77</note>
+        <note category="location">web/src/app/wiki/exercises-page.component.ts:134,135</note>
         <note category="location">web/src/app/wiki/pushup-type-detail.component.ts:79,81</note>
         <note category="location">web/src/app/wiki/pushup-types-page.component.ts:124,126</note>
       </notes>
@@ -9365,11 +9397,85 @@
     </unit>
     <unit id="wiki.pushupTypes.tipsTitle">
       <notes>
+        <note category="location">web/src/app/wiki/exercise-detail.component.ts:82,84</note>
+        <note category="location">web/src/app/wiki/exercises-page.component.ts:141,142</note>
         <note category="location">web/src/app/wiki/pushup-type-detail.component.ts:86,88</note>
         <note category="location">web/src/app/wiki/pushup-types-page.component.ts:131,132</note>
       </notes>
       <segment>
         <source>Tipps</source>
+      </segment>
+    </unit>
+    <unit id="wiki.exercise.detail.toList">
+      <notes>
+        <note category="location">web/src/app/wiki/exercise-detail.component.ts:97,100</note>
+      </notes>
+      <segment>
+        <source>Alle Übungen</source>
+      </segment>
+    </unit>
+    <unit id="wiki.exercise.detail.cta">
+      <notes>
+        <note category="location">web/src/app/wiki/exercise-detail.component.ts:104,107</note>
+      </notes>
+      <segment>
+        <source>Zu den Trainingsplänen</source>
+      </segment>
+    </unit>
+    <unit id="seo.wiki.exercise.titleSuffix">
+      <notes>
+        <note category="location">web/src/app/wiki/exercise-detail.component.ts:231</note>
+      </notes>
+      <segment>
+        <source>Anleitung &amp; Technik | Pushup Tracker</source>
+      </segment>
+    </unit>
+    <unit id="wiki.exercises.back">
+      <notes>
+        <note category="location">web/src/app/wiki/exercises-page.component.ts:58,59</note>
+      </notes>
+      <segment>
+        <source>Zurück zu den Trainingsplänen</source>
+      </segment>
+    </unit>
+    <unit id="wiki.exercises.title">
+      <notes>
+        <note category="location">web/src/app/wiki/exercises-page.component.ts:65,67</note>
+      </notes>
+      <segment>
+        <source> Übungen — saubere Ausführung </source>
+      </segment>
+    </unit>
+    <unit id="wiki.exercises.intro">
+      <notes>
+        <note category="location">web/src/app/wiki/exercises-page.component.ts:68,70</note>
+      </notes>
+      <segment>
+        <source> Kurzanleitungen für alle Übungen, die du in der App tracken kannst — von Kniebeugen über Klimmzüge bis zu Mobilitäts-Drills. </source>
+      </segment>
+    </unit>
+    <unit id="wiki.exercises.tocTitle">
+      <notes>
+        <note category="location">web/src/app/wiki/exercises-page.component.ts:76,78</note>
+      </notes>
+      <segment>
+        <source> Übersicht </source>
+      </segment>
+    </unit>
+    <unit id="wiki.exercises.viewDetail">
+      <notes>
+        <note category="location">web/src/app/wiki/exercises-page.component.ts:153,155</note>
+      </notes>
+      <segment>
+        <source>Detailseite öffnen</source>
+      </segment>
+    </unit>
+    <unit id="wiki.pushupType.detail.back">
+      <notes>
+        <note category="location">web/src/app/wiki/pushup-type-detail.component.ts:49,51</note>
+      </notes>
+      <segment>
+        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">arrow_back</pc> Liegestütztypen </source>
       </segment>
     </unit>
     <unit id="wiki.pushupType.detail.toList">

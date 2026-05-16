@@ -1,5 +1,5 @@
 import { RenderMode } from '@angular/ssr';
-import { TRAINING_PLANS } from '@pu-stats/models';
+import { EXERCISE_WIKI_CATALOG, TRAINING_PLANS } from '@pu-stats/models';
 import { serverRoutes } from './app.routes.server';
 
 describe('serverRoutes', () => {
@@ -84,6 +84,27 @@ describe('serverRoutes', () => {
       expect(Object.prototype.hasOwnProperty.call(p, 'slug')).toBe(true);
       expect(typeof (p as { slug: string }).slug).toBe('string');
     }
+  });
+
+  it('prerenders the exercise wiki list and detail routes', () => {
+    const list = serverRoutes.find((r) => r.path === 'wiki/uebungen');
+    const detail = serverRoutes.find((r) => r.path === 'wiki/uebungen/:slug');
+    expect(list?.renderMode).toBe(RenderMode.Prerender);
+    expect(detail?.renderMode).toBe(RenderMode.Prerender);
+  });
+
+  it('prerenders wiki/uebungen/:slug for every exercise wiki entry', async () => {
+    const route = serverRoutes.find((r) => r.path === 'wiki/uebungen/:slug');
+    expect(route).toBeDefined();
+    const fn = (route as { getPrerenderParams?: () => Promise<unknown[]> })
+      .getPrerenderParams;
+    expect(typeof fn).toBe('function');
+    const params = (await fn?.()) ?? [];
+    const expectedSlugs = EXERCISE_WIKI_CATALOG.map((e) => e.slug).sort();
+    const actualSlugs = (params as { slug: string }[])
+      .map((p) => p.slug)
+      .sort();
+    expect(actualSlugs).toEqual(expectedSlugs);
   });
 
   it('u/:uid is NOT prerendered and NOT client-only', () => {

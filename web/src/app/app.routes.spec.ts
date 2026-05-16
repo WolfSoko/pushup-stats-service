@@ -29,6 +29,7 @@ describe('appRoutes', () => {
       'training-plans',
       'training-plans/:slug',
       'wiki/liegestuetz-typen',
+      'wiki/uebungen',
       'reminders',
       'leaderboard',
       'u/:uid',

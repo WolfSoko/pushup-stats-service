@@ -60,6 +60,7 @@ const staticRoutes = [
   { path: '/blog', changefreq: 'weekly', priority: '0.9' },
   { path: '/training-plans', changefreq: 'weekly', priority: '0.9' },
   { path: '/wiki/liegestuetz-typen', changefreq: 'monthly', priority: '0.6' },
+  { path: '/wiki/uebungen', changefreq: 'monthly', priority: '0.6' },
   { path: '/leaderboard', changefreq: 'daily', priority: '0.7' },
   { path: '/impressum', changefreq: 'yearly', priority: '0.3' },
   { path: '/datenschutz', changefreq: 'yearly', priority: '0.3' },
@@ -278,6 +279,55 @@ function buildPushupTypeRoutes(types) {
   return routes;
 }
 
+/**
+ * Extract exercise-wiki slugs from
+ * `libs/stats/src/lib/models/exercise-wiki.models.ts`. Reads the source
+ * directly (no TS build dep) — matches the slug literal after each
+ * `id:` declaration inside EXERCISE_WIKI_CATALOG.
+ */
+function extractExerciseWikiSlugs(source) {
+  const start = source.indexOf('EXERCISE_WIKI_CATALOG');
+  if (start === -1) return [];
+  const tail = source.slice(start);
+  const slugs = [];
+  const blockRegex =
+    /\bid:\s*'[^']+',\s*\n\s*categoryId:\s*'[^']+',\s*\n\s*slug:\s*'([^']+)'/g;
+  let match;
+  while ((match = blockRegex.exec(tail)) !== null) {
+    slugs.push(match[1]);
+  }
+  return slugs;
+}
+
+function readExerciseWikiSlugs() {
+  const catalogPath = resolve(
+    ROOT,
+    'libs/stats/src/lib/models/exercise-wiki.models.ts'
+  );
+  let source;
+  try {
+    source = readFileSync(catalogPath, 'utf-8');
+  } catch (err) {
+    console.error(`Failed to read exercise-wiki.models.ts: ${err.message}`);
+    return [];
+  }
+  const slugs = extractExerciseWikiSlugs(source);
+  if (slugs.length === 0) {
+    console.warn(
+      'No exercise wiki entries found - verify exercise-wiki.models.ts format'
+    );
+  }
+  return slugs;
+}
+
+function buildExerciseWikiRoutes(slugs) {
+  return slugs.map((slug) => ({
+    path: `/wiki/uebungen/${slug}`,
+    changefreq: 'monthly',
+    priority: '0.6',
+  }));
+}
+
 function extractTrainingPlanSlugs(source) {
   // Match `id: '<id>'` immediately followed by `slug: '<slug>'` to scope
   // matches to TRAINING_PLANS catalog entries (other files contain `slug:`
@@ -347,14 +397,21 @@ function buildBlogRoutes(posts) {
   });
 }
 
-function generateSitemap(posts, planSlugs = [], pushupTypes = []) {
+function generateSitemap(
+  posts,
+  planSlugs = [],
+  pushupTypes = [],
+  exerciseWikiSlugs = []
+) {
   const blogRoutes = buildBlogRoutes(posts);
   const planRoutes = buildTrainingPlanRoutes(planSlugs);
   const pushupTypeRoutes = buildPushupTypeRoutes(pushupTypes);
+  const exerciseWikiRoutes = buildExerciseWikiRoutes(exerciseWikiSlugs);
   const allRoutes = [
     ...staticRoutes,
     ...planRoutes,
     ...pushupTypeRoutes,
+    ...exerciseWikiRoutes,
     ...blogRoutes,
   ];
   return `<?xml version="1.0" encoding="UTF-8"?>
@@ -369,11 +426,16 @@ function main() {
   const posts = readBlogPosts();
   const planSlugs = readTrainingPlanSlugs();
   const pushupTypes = readPushupTypes();
-  const xml = generateSitemap(posts, planSlugs, pushupTypes);
+  const exerciseWikiSlugs = readExerciseWikiSlugs();
+  const xml = generateSitemap(posts, planSlugs, pushupTypes, exerciseWikiSlugs);
   const outPath = resolve(ROOT, 'web/public/sitemap.xml');
   writeFileSync(outPath, xml, 'utf-8');
   const total =
-    staticRoutes.length + planSlugs.length + pushupTypes.length + posts.length;
+    staticRoutes.length +
+    planSlugs.length +
+    pushupTypes.length +
+    exerciseWikiSlugs.length +
+    posts.length;
   console.log(`sitemap.xml written (${total} URLs)`);
 }
 
@@ -388,10 +450,12 @@ module.exports = {
   extractTrainingPlanSlugs,
   extractPushupTypes,
   extractPushupTypeSlugs,
+  extractExerciseWikiSlugs,
   scanMarkdownBlogPosts,
   buildUrl,
   buildBlogRoutes,
   buildTrainingPlanRoutes,
   buildPushupTypeRoutes,
+  buildExerciseWikiRoutes,
   generateSitemap,
 };
