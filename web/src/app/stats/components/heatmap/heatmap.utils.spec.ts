@@ -2,16 +2,17 @@ import {
   buildHeatmapCells,
   defaultHeatmapDays,
   defaultHeatmapHoursTopDown,
+  entryHeatmapValue,
+  formatHeatmapCellLabel,
+  formatHeatmapTooltipValue,
   heatmapCellColor,
   hourTopDownLabels,
+  type HeatmapValueEntry,
 } from './heatmap.utils';
-
-// minimal shape used by the utils
-type Entry = { timestamp: string; reps: number; sets?: number[] };
 
 describe('heatmap.utils', () => {
   it('generates 24*7 cells and aggregates reps by weekday+hour', () => {
-    const entries: Entry[] = [
+    const entries: HeatmapValueEntry[] = [
       { timestamp: '2026-02-09T08:00:00', reps: 10 }, // Mon
       { timestamp: '2026-02-09T08:30:00', reps: 5 }, // Mon, same hour
       { timestamp: '2026-02-10T23:00:00', reps: 12 }, // Tue
@@ -25,15 +26,11 @@ describe('heatmap.utils', () => {
 
     expect(cells).toHaveLength(24 * 7);
 
-    const mo8 = cells.find(
-      (c: { x: string; y: string; v: number }) => c.x === 'Mo' && c.y === '08'
-    );
+    const mo8 = cells.find((c) => c.x === 'Mo' && c.y === '08');
     expect(mo8).toBeDefined();
     expect(mo8?.v).toBe(15);
 
-    const di23 = cells.find(
-      (c: { x: string; y: string; v: number }) => c.x === 'Di' && c.y === '23'
-    );
+    const di23 = cells.find((c) => c.x === 'Di' && c.y === '23');
     expect(di23).toBeDefined();
     expect(di23?.v).toBe(12);
   });
@@ -54,8 +51,8 @@ describe('heatmap.utils', () => {
     expect(c.startsWith('rgba(69, 137, 255,')).toBe(true);
   });
 
-  it('aggregates set count instead of reps when mode is "sets"', () => {
-    const entries: Entry[] = [
+  it('aggregates set count in breakdown mode for reps measurement', () => {
+    const entries: HeatmapValueEntry[] = [
       { timestamp: '2026-02-09T08:00:00', reps: 10, sets: [5, 5] }, // Mon
       { timestamp: '2026-02-09T08:30:00', reps: 15, sets: [5, 5, 5] }, // Mon, same hour
       { timestamp: '2026-02-10T23:00:00', reps: 12 }, // Tue, no sets
@@ -65,20 +62,225 @@ describe('heatmap.utils', () => {
       entries,
       days: defaultHeatmapDays,
       hoursTopDown: defaultHeatmapHoursTopDown,
-      mode: 'sets',
+      measurement: 'reps',
+      mode: 'breakdown',
     });
 
     // Mon 08: 2 sets + 3 sets = 5
-    const mo8 = cells.find(
-      (c: { x: string; y: string; v: number }) => c.x === 'Mo' && c.y === '08'
-    );
+    const mo8 = cells.find((c) => c.x === 'Mo' && c.y === '08');
     expect(mo8?.v).toBe(5);
 
     // Tue 23: no sets → 0
-    const di23 = cells.find(
-      (c: { x: string; y: string; v: number }) => c.x === 'Di' && c.y === '23'
-    );
+    const di23 = cells.find((c) => c.x === 'Di' && c.y === '23');
     expect(di23?.v).toBe(0);
+  });
+
+  it('sums durationSec when measurement is "time" (regression: planks no longer surface as zero cells)', () => {
+    const entries: HeatmapValueEntry[] = [
+      { timestamp: '2026-02-09T08:00:00', reps: 0, durationSec: 60 }, // Mon
+      { timestamp: '2026-02-09T08:30:00', reps: 0, durationSec: 90 }, // Mon same hour
+    ];
+
+    const cells = buildHeatmapCells({
+      entries,
+      days: defaultHeatmapDays,
+      hoursTopDown: defaultHeatmapHoursTopDown,
+      measurement: 'time',
+    });
+
+    const mo8 = cells.find((c) => c.x === 'Mo' && c.y === '08');
+    expect(mo8?.v).toBe(150);
+  });
+
+  it('counts intervals in breakdown mode for time-measured entries', () => {
+    const entries: HeatmapValueEntry[] = [
+      {
+        timestamp: '2026-02-09T08:00:00',
+        durationSec: 90,
+        intervals: [30, 30, 30],
+      },
+      {
+        timestamp: '2026-02-09T08:30:00',
+        durationSec: 60,
+        intervals: [30, 30],
+      },
+    ];
+
+    const cells = buildHeatmapCells({
+      entries,
+      days: defaultHeatmapDays,
+      hoursTopDown: defaultHeatmapHoursTopDown,
+      measurement: 'time',
+      mode: 'breakdown',
+    });
+
+    const mo8 = cells.find((c) => c.x === 'Mo' && c.y === '08');
+    expect(mo8?.v).toBe(5);
+  });
+
+  it('sums distanceM when measurement is "distance-time" (cardio runs)', () => {
+    const entries: HeatmapValueEntry[] = [
+      { timestamp: '2026-02-09T08:00:00', distanceM: 5000, durationSec: 1500 },
+      { timestamp: '2026-02-09T08:30:00', distanceM: 3000, durationSec: 900 },
+    ];
+
+    const cells = buildHeatmapCells({
+      entries,
+      days: defaultHeatmapDays,
+      hoursTopDown: defaultHeatmapHoursTopDown,
+      measurement: 'distance-time',
+    });
+
+    const mo8 = cells.find((c) => c.x === 'Mo' && c.y === '08');
+    expect(mo8?.v).toBe(8000);
+  });
+
+  it('counts each entry once when measurement is "mixed"', () => {
+    // Mixed view (e.g. core with planks + sit-ups, or overview): summing
+    // seconds + reps would be nonsense; we render entry count instead.
+    const entries: HeatmapValueEntry[] = [
+      { timestamp: '2026-02-09T08:00:00', reps: 30 }, // sit-ups
+      { timestamp: '2026-02-09T08:30:00', durationSec: 60 }, // plank
+      { timestamp: '2026-02-09T08:45:00', reps: 20 }, // sit-ups
+    ];
+
+    const cells = buildHeatmapCells({
+      entries,
+      days: defaultHeatmapDays,
+      hoursTopDown: defaultHeatmapHoursTopDown,
+      measurement: 'mixed',
+    });
+
+    const mo8 = cells.find((c) => c.x === 'Mo' && c.y === '08');
+    expect(mo8?.v).toBe(3);
+  });
+
+  it('entryHeatmapValue picks the right field per measurement type', () => {
+    const repsEntry: HeatmapValueEntry = {
+      timestamp: '2026-02-09T08:00:00',
+      reps: 30,
+      sets: [10, 10, 10],
+    };
+    expect(entryHeatmapValue(repsEntry, 'reps', 'primary')).toBe(30);
+    expect(entryHeatmapValue(repsEntry, 'reps', 'breakdown')).toBe(3);
+
+    const timeEntry: HeatmapValueEntry = {
+      timestamp: '2026-02-09T08:00:00',
+      durationSec: 90,
+      intervals: [30, 30, 30],
+    };
+    expect(entryHeatmapValue(timeEntry, 'time', 'primary')).toBe(90);
+    expect(entryHeatmapValue(timeEntry, 'time', 'breakdown')).toBe(3);
+
+    const distanceEntry: HeatmapValueEntry = {
+      timestamp: '2026-02-09T08:00:00',
+      distanceM: 5000,
+    };
+    expect(entryHeatmapValue(distanceEntry, 'distance-time', 'primary')).toBe(
+      5000
+    );
+  });
+
+  describe('formatHeatmapCellLabel', () => {
+    it('returns empty string for zero/negative values', () => {
+      expect(
+        formatHeatmapCellLabel({
+          value: 0,
+          measurement: 'reps',
+          mode: 'primary',
+        })
+      ).toBe('');
+    });
+
+    it('renders reps/weight as plain integers', () => {
+      expect(
+        formatHeatmapCellLabel({
+          value: 45,
+          measurement: 'reps',
+          mode: 'primary',
+        })
+      ).toBe('45');
+    });
+
+    it('renders time as m:ss for sub-hour values', () => {
+      expect(
+        formatHeatmapCellLabel({
+          value: 150,
+          measurement: 'time',
+          mode: 'primary',
+        })
+      ).toBe('2:30');
+    });
+
+    it('renders time as h:mm for >= 1 hour values', () => {
+      expect(
+        formatHeatmapCellLabel({
+          value: 3720, // 1h 02m
+          measurement: 'time',
+          mode: 'primary',
+        })
+      ).toBe('1:02h');
+    });
+
+    it('renders distance in meters below 1 km, km above', () => {
+      expect(
+        formatHeatmapCellLabel({
+          value: 750,
+          measurement: 'distance-time',
+          mode: 'primary',
+        })
+      ).toBe('750 m');
+      expect(
+        formatHeatmapCellLabel({
+          value: 5000,
+          measurement: 'distance-time',
+          mode: 'primary',
+        })
+      ).toBe('5.0 km');
+    });
+
+    it('renders breakdown values as plain integers regardless of measurement', () => {
+      expect(
+        formatHeatmapCellLabel({
+          value: 3,
+          measurement: 'time',
+          mode: 'breakdown',
+        })
+      ).toBe('3');
+    });
+  });
+
+  describe('formatHeatmapTooltipValue', () => {
+    it('includes units for time and distance', () => {
+      expect(
+        formatHeatmapTooltipValue({
+          value: 150,
+          measurement: 'time',
+          mode: 'primary',
+        })
+      ).toBe('2:30 min');
+      expect(
+        formatHeatmapTooltipValue({
+          value: 3725, // 1h 02m 05s
+          measurement: 'time',
+          mode: 'primary',
+        })
+      ).toBe('1:02:05 h');
+      expect(
+        formatHeatmapTooltipValue({
+          value: 5000,
+          measurement: 'distance-time',
+          mode: 'primary',
+        })
+      ).toBe('5.00 km');
+      expect(
+        formatHeatmapTooltipValue({
+          value: 250,
+          measurement: 'distance',
+          mode: 'primary',
+        })
+      ).toBe('250 m');
+    });
   });
 
   it('exposes day/hour constants', () => {

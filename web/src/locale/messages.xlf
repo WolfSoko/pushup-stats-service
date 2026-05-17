@@ -6121,6 +6121,38 @@
         <source>Wiederholungen</source>
       </segment>
     </unit>
+    <unit id="heatmap.unit.minutes">
+      <notes>
+        <note category="location">web/src/app/stats/components/heatmap/heatmap.component.ts:82</note>
+      </notes>
+      <segment>
+        <source>min</source>
+      </segment>
+    </unit>
+    <unit id="heatmap.unit.distance">
+      <notes>
+        <note category="location">web/src/app/stats/components/heatmap/heatmap.component.ts:84</note>
+      </notes>
+      <segment>
+        <source>Strecke</source>
+      </segment>
+    </unit>
+    <unit id="heatmap.unit.intervals">
+      <notes>
+        <note category="location">web/src/app/stats/components/heatmap/heatmap.component.ts:91</note>
+      </notes>
+      <segment>
+        <source>Intervalle</source>
+      </segment>
+    </unit>
+    <unit id="heatmap.unit.entries">
+      <notes>
+        <note category="location">web/src/app/stats/components/heatmap/heatmap.component.ts:86</note>
+      </notes>
+      <segment>
+        <source>Einträge</source>
+      </segment>
+    </unit>
     <unit id="previewBanner.text">
       <notes>
         <note category="location">web/src/app/stats/components/preview-banner/preview-banner.component.ts:23,26</note>
@@ -7845,6 +7877,30 @@
       </notes>
       <segment>
         <source>Sets</source>
+      </segment>
+    </unit>
+    <unit id="analysis.heatmapTime">
+      <notes>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:421</note>
+      </notes>
+      <segment>
+        <source>Zeit</source>
+      </segment>
+    </unit>
+    <unit id="analysis.heatmapDistance">
+      <notes>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:428</note>
+      </notes>
+      <segment>
+        <source>Strecke</source>
+      </segment>
+    </unit>
+    <unit id="analysis.heatmapIntervals">
+      <notes>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.ts:422</note>
+      </notes>
+      <segment>
+        <source>Intervalle</source>
       </segment>
     </unit>
     <unit id="analysis.weekTrendTitle">

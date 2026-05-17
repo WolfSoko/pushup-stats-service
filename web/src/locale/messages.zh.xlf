@@ -5153,6 +5153,30 @@
         <source>Wiederholungen</source>
       <target>重复次数</target></segment>
     </unit>
+    <unit id="heatmap.unit.minutes">
+      <segment state="translated">
+        <source>min</source>
+        <target>分</target>
+      </segment>
+    </unit>
+    <unit id="heatmap.unit.distance">
+      <segment state="translated">
+        <source>Strecke</source>
+        <target>距离</target>
+      </segment>
+    </unit>
+    <unit id="heatmap.unit.intervals">
+      <segment state="translated">
+        <source>Intervalle</source>
+        <target>区间</target>
+      </segment>
+    </unit>
+    <unit id="heatmap.unit.entries">
+      <segment state="translated">
+        <source>Einträge</source>
+        <target>记录</target>
+      </segment>
+    </unit>
     <unit id="previewBanner.text">
       <notes>
         <note category="location">web/src/app/stats/components/preview-banner/preview-banner.component.ts:23,26</note>
@@ -5844,6 +5868,24 @@
       <segment state="translated">
         <source>Sets</source>
       <target>组数</target></segment>
+    </unit>
+    <unit id="analysis.heatmapTime">
+      <segment state="translated">
+        <source>Zeit</source>
+        <target>时间</target>
+      </segment>
+    </unit>
+    <unit id="analysis.heatmapDistance">
+      <segment state="translated">
+        <source>Strecke</source>
+        <target>距离</target>
+      </segment>
+    </unit>
+    <unit id="analysis.heatmapIntervals">
+      <segment state="translated">
+        <source>Intervalle</source>
+        <target>区间</target>
+      </segment>
     </unit>
     <unit id="entries.title">
       <notes>
