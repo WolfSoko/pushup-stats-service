@@ -1403,6 +1403,38 @@ describe('AnalysisStore fixed-window trend filters', () => {
     expect(month.every((m) => m.total === 0)).toBe(true);
   });
 
+  it('weekTrend emits buckets newest → oldest', async () => {
+    await createAt(new Date(2026, 0, 14, 12)); // Wed Jan 14 2026, ISO W03
+    const labels = fixture.componentInstance.store
+      .weekTrend()
+      .map((w) => w.label);
+    expect(labels).toEqual([
+      '2026-W03',
+      '2026-W02',
+      '2026-W01',
+      '2025-W52',
+      '2025-W51',
+      '2025-W50',
+      '2025-W49',
+      '2025-W48',
+    ]);
+  });
+
+  it('monthTrend emits buckets newest → oldest', async () => {
+    await createAt(new Date(2026, 0, 14, 12)); // Jan 2026
+    const labels = fixture.componentInstance.store
+      .monthTrend()
+      .map((m) => m.label);
+    expect(labels).toEqual([
+      '2026-01',
+      '2025-12',
+      '2025-11',
+      '2025-10',
+      '2025-09',
+      '2025-08',
+    ]);
+  });
+
   it('weekFilter re-evaluates after tickClock when the day changes', async () => {
     await createAt(new Date(2026, 0, 18, 23, 59)); // Sun Jan 18
     const before = fixture.componentInstance.store.weekFilter();

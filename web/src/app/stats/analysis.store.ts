@@ -1016,9 +1016,9 @@ export const AnalysisStore = signalStore(
     );
 
     const weekTrend = computed<TrendPoint[]>(() => {
-      // Pre-seed TREND_WEEKS ISO weeks (oldest → newest) so a sparse
-      // history still produces a fixed-length trend with explicit zero
-      // rows; otherwise users would silently see fewer than 8 buckets.
+      // Pre-seed TREND_WEEKS ISO weeks so a sparse history still produces
+      // a fixed-length trend with explicit zero rows; otherwise users
+      // would silently see fewer than 8 buckets.
       const monday = store.currentMonday();
       const byWeek = new Map<
         string,
@@ -1039,15 +1039,15 @@ export const AnalysisStore = signalStore(
         entry.entryCount += 1;
         entry.setsCount += row.sets?.length ?? 0;
       }
-      return [...byWeek.entries()].map(
-        ([label, { total, entryCount, setsCount }]) => ({
+      return [...byWeek.entries()]
+        .reverse()
+        .map(([label, { total, entryCount, setsCount }]) => ({
           label,
           total,
           avgSetsPerEntry: entryCount
             ? Math.round((setsCount / entryCount) * 10) / 10
             : undefined,
-        })
-      );
+        }));
     });
 
     const monthTrendRows = computed<UnifiedEntry[]>(() =>
@@ -1083,15 +1083,15 @@ export const AnalysisStore = signalStore(
         entry.entryCount += 1;
         entry.setsCount += row.sets?.length ?? 0;
       }
-      return [...byMonth.entries()].map(
-        ([label, { total, entryCount, setsCount }]) => ({
+      return [...byMonth.entries()]
+        .reverse()
+        .map(([label, { total, entryCount, setsCount }]) => ({
           label,
           total,
           avgSetsPerEntry: entryCount
             ? Math.round((setsCount / entryCount) * 10) / 10
             : undefined,
-        })
-      );
+        }));
     });
 
     const typeBreakdown = computed<TypeBreakdownDatum[]>(() => {
