@@ -44,8 +44,23 @@ describe('ExercisesWikiPageComponent', () => {
     });
 
     const categoryHeadings = container.querySelectorAll('h2.category-heading');
-    // 8 categories (push, pull, squat, hinge, lunge, core, cardio, mobility).
-    expect(categoryHeadings.length).toBeGreaterThanOrEqual(8);
+    // 8 catalog categories (push, pull, squat, hinge, lunge, core,
+    // cardio, mobility) + 1 dedicated Liegestütze heading at the top
+    // that hosts the cross-link card to the pushup-variants wiki.
+    expect(categoryHeadings.length).toBeGreaterThanOrEqual(9);
+  });
+
+  it('renders the dedicated Liegestütze category heading before the first catalog category', async () => {
+    const { container } = await render(ExercisesWikiPageComponent, {
+      providers: [{ provide: ActivatedRoute, useValue: makeRouteMock() }],
+    });
+
+    const headings = Array.from(
+      container.querySelectorAll('h2.category-heading')
+    );
+    // The pushup hub section must come first so users find the
+    // foundational exercise without scrolling past every other category.
+    expect(headings[0]?.textContent?.trim()).toBe('Liegestütze');
   });
 
   it('exposes one TOC entry per catalog exercise plus the pushup hub link', async () => {

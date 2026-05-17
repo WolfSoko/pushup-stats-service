@@ -5623,11 +5623,12 @@
         <note category="location">web/src/app/stats/components/analysis-teaser-card/analysis-teaser-card.component.ts:147</note>
         <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts:379</note>
         <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:222</note>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:1290</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:1288</note>
         <note category="location">web/src/app/stats/dashboard.store.ts:82</note>
         <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:197</note>
         <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:221</note>
         <note category="location">web/src/app/stats/shell/entries-page.component.ts:289</note>
+        <note category="location">web/src/app/wiki/exercises-page.component.ts:392</note>
       </notes>
       <segment>
         <source>Liegestütze</source>
@@ -6794,7 +6795,7 @@
     </unit>
     <unit id="exerciseWikiLinkTooltip.generic">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:902</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:900</note>
       </notes>
       <segment>
         <source>Anleitung zu Übungen öffnen</source>
@@ -6802,7 +6803,7 @@
     </unit>
     <unit id="exerciseWikiLinkTooltip.specific">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:904</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:902</note>
       </notes>
       <segment>
         <source>Anleitung öffnen</source>
@@ -6810,7 +6811,7 @@
     </unit>
     <unit id="typeWikiLinkTooltip.generic">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:911</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:909</note>
       </notes>
       <segment>
         <source>Anleitung zu Liegestütztypen öffnen</source>
@@ -6818,7 +6819,7 @@
     </unit>
     <unit id="typeWikiLinkTooltip.specific">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:913</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:911</note>
       </notes>
       <segment>
         <source>Anleitung öffnen</source>
@@ -6826,9 +6827,9 @@
     </unit>
     <unit id="exercise.category.push">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:1291</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:1289</note>
         <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:222</note>
-        <note category="location">web/src/app/wiki/exercises-page.component.ts:456</note>
+        <note category="location">web/src/app/wiki/exercises-page.component.ts:461</note>
       </notes>
       <segment>
         <source>Drücken</source>
@@ -6836,9 +6837,9 @@
     </unit>
     <unit id="exercise.category.pull">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:1292</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:1290</note>
         <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:223</note>
-        <note category="location">web/src/app/wiki/exercises-page.component.ts:457</note>
+        <note category="location">web/src/app/wiki/exercises-page.component.ts:462</note>
       </notes>
       <segment>
         <source>Ziehen</source>
@@ -6846,9 +6847,9 @@
     </unit>
     <unit id="exercise.category.squat">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:1293</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:1291</note>
         <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:224</note>
-        <note category="location">web/src/app/wiki/exercises-page.component.ts:458</note>
+        <note category="location">web/src/app/wiki/exercises-page.component.ts:463</note>
       </notes>
       <segment>
         <source>Kniebeuge</source>
@@ -6856,9 +6857,9 @@
     </unit>
     <unit id="exercise.category.hinge">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:1294</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:1292</note>
         <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:225</note>
-        <note category="location">web/src/app/wiki/exercises-page.component.ts:459</note>
+        <note category="location">web/src/app/wiki/exercises-page.component.ts:464</note>
       </notes>
       <segment>
         <source>Hüftstreckung</source>
@@ -6866,9 +6867,9 @@
     </unit>
     <unit id="exercise.category.lunge">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:1295</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:1293</note>
         <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:226</note>
-        <note category="location">web/src/app/wiki/exercises-page.component.ts:460</note>
+        <note category="location">web/src/app/wiki/exercises-page.component.ts:465</note>
       </notes>
       <segment>
         <source>Ausfallschritt</source>
@@ -6876,7 +6877,7 @@
     </unit>
     <unit id="exercise.category.carry">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:1296</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:1294</note>
       </notes>
       <segment>
         <source>Tragen</source>
@@ -6884,9 +6885,9 @@
     </unit>
     <unit id="exercise.category.core">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:1297</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:1295</note>
         <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:227</note>
-        <note category="location">web/src/app/wiki/exercises-page.component.ts:461</note>
+        <note category="location">web/src/app/wiki/exercises-page.component.ts:466</note>
       </notes>
       <segment>
         <source>Rumpf</source>
@@ -6894,9 +6895,9 @@
     </unit>
     <unit id="exercise.category.cardio">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:1298</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:1296</note>
         <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:228</note>
-        <note category="location">web/src/app/wiki/exercises-page.component.ts:462</note>
+        <note category="location">web/src/app/wiki/exercises-page.component.ts:467</note>
       </notes>
       <segment>
         <source>Ausdauer</source>
@@ -6904,9 +6905,9 @@
     </unit>
     <unit id="exercise.category.mobility">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:1299</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:1297</note>
         <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:229</note>
-        <note category="location">web/src/app/wiki/exercises-page.component.ts:463</note>
+        <note category="location">web/src/app/wiki/exercises-page.component.ts:468</note>
       </notes>
       <segment>
         <source>Mobilität</source>
@@ -6914,7 +6915,7 @@
     </unit>
     <unit id="exercise.category.strength">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:1300</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:1298</note>
       </notes>
       <segment>
         <source>Krafttraining</source>
@@ -9497,7 +9498,7 @@
     <unit id="wiki.pushupTypes.level.beginner">
       <notes>
         <note category="location">web/src/app/wiki/exercise-detail.component.ts:54,56</note>
-        <note category="location">web/src/app/wiki/exercises-page.component.ts:178,180</note>
+        <note category="location">web/src/app/wiki/exercises-page.component.ts:175,177</note>
         <note category="location">web/src/app/wiki/pushup-type-detail.component.ts:58,60</note>
         <note category="location">web/src/app/wiki/pushup-types-page.component.ts:104,106</note>
       </notes>
@@ -9508,7 +9509,7 @@
     <unit id="wiki.pushupTypes.level.intermediate">
       <notes>
         <note category="location">web/src/app/wiki/exercise-detail.component.ts:60,63</note>
-        <note category="location">web/src/app/wiki/exercises-page.component.ts:184,186</note>
+        <note category="location">web/src/app/wiki/exercises-page.component.ts:181,183</note>
         <note category="location">web/src/app/wiki/pushup-type-detail.component.ts:64,67</note>
         <note category="location">web/src/app/wiki/pushup-types-page.component.ts:110,112</note>
       </notes>
@@ -9519,7 +9520,7 @@
     <unit id="wiki.pushupTypes.level.advanced">
       <notes>
         <note category="location">web/src/app/wiki/exercise-detail.component.ts:66,69</note>
-        <note category="location">web/src/app/wiki/exercises-page.component.ts:190,192</note>
+        <note category="location">web/src/app/wiki/exercises-page.component.ts:187,189</note>
         <note category="location">web/src/app/wiki/pushup-type-detail.component.ts:70,73</note>
         <note category="location">web/src/app/wiki/pushup-types-page.component.ts:116,118</note>
       </notes>
@@ -9530,7 +9531,7 @@
     <unit id="wiki.pushupTypes.instructionsTitle">
       <notes>
         <note category="location">web/src/app/wiki/exercise-detail.component.ts:75,77</note>
-        <note category="location">web/src/app/wiki/exercises-page.component.ts:199,201</note>
+        <note category="location">web/src/app/wiki/exercises-page.component.ts:196,198</note>
         <note category="location">web/src/app/wiki/pushup-type-detail.component.ts:79,81</note>
         <note category="location">web/src/app/wiki/pushup-types-page.component.ts:124,126</note>
       </notes>
@@ -9541,7 +9542,7 @@
     <unit id="wiki.pushupTypes.tipsTitle">
       <notes>
         <note category="location">web/src/app/wiki/exercise-detail.component.ts:82,84</note>
-        <note category="location">web/src/app/wiki/exercises-page.component.ts:207,208</note>
+        <note category="location">web/src/app/wiki/exercises-page.component.ts:204,205</note>
         <note category="location">web/src/app/wiki/pushup-type-detail.component.ts:86,88</note>
         <note category="location">web/src/app/wiki/pushup-types-page.component.ts:131,132</note>
       </notes>
@@ -9607,7 +9608,7 @@
     </unit>
     <unit id="wiki.exercises.pushupHub.tocLink">
       <notes>
-        <note category="location">web/src/app/wiki/exercises-page.component.ts:94,96</note>
+        <note category="location">web/src/app/wiki/exercises-page.component.ts:92,95</note>
       </notes>
       <segment>
         <source>Liegestütze (alle Varianten)</source>
@@ -9615,7 +9616,7 @@
     </unit>
     <unit id="wiki.exercises.pushupHub.summary">
       <notes>
-        <note category="location">web/src/app/wiki/exercises-page.component.ts:100,102</note>
+        <note category="location">web/src/app/wiki/exercises-page.component.ts:98,100</note>
       </notes>
       <segment>
         <source> — Eigenes Wiki mit allen Liegestützvarianten von Standard bis Planche.</source>
@@ -9623,7 +9624,7 @@
     </unit>
     <unit id="wiki.exercises.pushupHub.title">
       <notes>
-        <note category="location">web/src/app/wiki/exercises-page.component.ts:134,135</note>
+        <note category="location">web/src/app/wiki/exercises-page.component.ts:135,137</note>
       </notes>
       <segment>
         <source> Liegestütze (alle Varianten) </source>
@@ -9631,7 +9632,7 @@
     </unit>
     <unit id="wiki.exercises.pushupHub.subtitle">
       <notes>
-        <note category="location">web/src/app/wiki/exercises-page.component.ts:140,141</note>
+        <note category="location">web/src/app/wiki/exercises-page.component.ts:139,140</note>
       </notes>
       <segment>
         <source> Eigenes Wiki mit über 20 Liegestützvarianten </source>
@@ -9639,7 +9640,7 @@
     </unit>
     <unit id="wiki.exercises.pushupHub.body">
       <notes>
-        <note category="location">web/src/app/wiki/exercises-page.component.ts:148,150</note>
+        <note category="location">web/src/app/wiki/exercises-page.component.ts:144,146</note>
       </notes>
       <segment>
         <source> Vom Standard-Liegestütz bis Planche und Archer — alle Varianten mit Ausführung, Tipps und Schwierigkeitsgrad findest du im dedizierten Liegestütz-Wiki. </source>
@@ -9647,7 +9648,7 @@
     </unit>
     <unit id="wiki.exercises.pushupHub.cta">
       <notes>
-        <note category="location">web/src/app/wiki/exercises-page.component.ts:159,161</note>
+        <note category="location">web/src/app/wiki/exercises-page.component.ts:155,157</note>
       </notes>
       <segment>
         <source>Zum Liegestütz-Wiki</source>
@@ -9655,7 +9656,7 @@
     </unit>
     <unit id="wiki.exercises.viewDetail">
       <notes>
-        <note category="location">web/src/app/wiki/exercises-page.component.ts:219,221</note>
+        <note category="location">web/src/app/wiki/exercises-page.component.ts:216,218</note>
       </notes>
       <segment>
         <source>Detailseite öffnen</source>
