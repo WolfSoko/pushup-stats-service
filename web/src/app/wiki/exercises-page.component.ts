@@ -40,11 +40,12 @@ interface CategoryGroup {
 }
 
 /**
- * Hub-card slug for the Liegestütz cross-link in the push category.
- * Kept distinct from any real exercise slug so the TOC anchor can't
- * collide with a future catalog entry named `liegestuetze`.
+ * Hub-card slug for the Liegestütz cross-link. Uses a reserved
+ * `pushup-hub` form that no catalog exercise slug would ever take so
+ * the TOC anchor can never collide with `EXERCISE_WIKI_CATALOG`
+ * entries, current or future.
  */
-const PUSHUP_HUB_SLUG = 'liegestuetze';
+const PUSHUP_HUB_SLUG = 'pushup-hub';
 
 @Component({
   selector: 'app-exercises-wiki-page',

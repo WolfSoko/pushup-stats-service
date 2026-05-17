@@ -96,18 +96,14 @@
         >{{ exerciseColumnLabel }}</mat-header-cell
       >
       <mat-cell *matCellDef="let entry">
-        @if (exerciseWikiLink(entry); as wikiLink) {
-          <a
-            class="exercise-wiki-link"
-            [routerLink]="wikiLink"
-            matTooltip="Wiki-Eintrag öffnen"
-            i18n-matTooltip="@@statsTable.exercise.wikiTooltip"
-            data-testid="stats-table-exercise-link"
-            >{{ exerciseLabel(entry) }}</a
-          >
-        } @else {
-          <span>{{ exerciseLabel(entry) }}</span>
-        }
+        <a
+          class="exercise-wiki-link"
+          [routerLink]="exerciseWikiLink(entry)"
+          matTooltip="Wiki-Eintrag öffnen"
+          i18n-matTooltip="@@statsTable.exercise.wikiTooltip"
+          data-testid="stats-table-exercise-link"
+          >{{ exerciseLabel(entry) }}</a
+        >
       </mat-cell>
     </ng-container>
 

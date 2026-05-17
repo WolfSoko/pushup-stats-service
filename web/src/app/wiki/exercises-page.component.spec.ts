@@ -87,7 +87,7 @@ describe('ExercisesWikiPageComponent', () => {
       '[data-testid="wiki-exercises-pushup-hub"]'
     );
     expect(hub).toBeTruthy();
-    expect(hub?.getAttribute('id')).toBe('liegestuetze');
+    expect(hub?.getAttribute('id')).toBe('pushup-hub');
 
     const cta = container.querySelector(
       '[data-testid="wiki-exercises-pushup-hub-link"]'

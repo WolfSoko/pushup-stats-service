@@ -229,13 +229,13 @@ export class StatsTableComponent {
   /**
    * Wiki deep-link for the entry's exercise label. Pushup rows route to
    * the dedicated `/wiki/liegestuetz-typen` wiki with the variant slug
-   * (when known) so the link lands on the matching detail page; catalog
-   * exercise rows route to `/wiki/uebungen/<slug>` when an entry exists,
-   * else to the list page so a stale catalog id can't 404 the link.
-   * Returns `null` when there's no useful target — the template renders
-   * a plain `<span>` in that case.
+   * (when known); catalog exercise rows route to `/wiki/uebungen/<slug>`
+   * when an entry exists, else to the list page so a stale catalog id
+   * can't 404 the link. Always returns a usable target — every row in
+   * the stats table maps to either the pushup wiki or the generic
+   * exercises wiki, so the column is always rendered as a link.
    */
-  exerciseWikiLink(entry: UnifiedEntry): string[] | null {
+  exerciseWikiLink(entry: UnifiedEntry): string[] {
     if (entry.kind === 'pushup') {
       const variant = findPushupTypeByStoredValue(entry.variantType);
       return variant
