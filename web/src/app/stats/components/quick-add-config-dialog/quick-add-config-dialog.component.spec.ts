@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { provideRouter } from '@angular/router';
 import {
   MAX_QUICK_ADDS,
   QuickAddConfig,
@@ -33,6 +34,7 @@ describe('QuickAddConfigDialogComponent', () => {
     TestBed.configureTestingModule({
       imports: [QuickAddConfigDialogComponent],
       providers: [
+        provideRouter([]),
         { provide: MatDialogRef, useValue: { close: closeSpy } },
         { provide: MatSnackBar, useValue: { open: snackBarSpy } },
         {
@@ -289,6 +291,33 @@ describe('QuickAddConfigDialogComponent', () => {
           reps: 5,
         })
       );
+    });
+  });
+
+  describe('Wiki help icon per row', () => {
+    it('points the pushup default row at /wiki/liegestuetz-typen', () => {
+      setup();
+      const component = fixture.componentInstance as unknown as {
+        wikiLinkFor(id: string): string[];
+      };
+      // Default rows seed with the pushup quick-add id; the help icon
+      // must route to the dedicated pushup wiki rather than the
+      // /wiki/uebungen catalog page (pushups live in their own wiki).
+      expect(component.wikiLinkFor('pushup')).toEqual([
+        '/wiki/liegestuetz-typen',
+      ]);
+    });
+
+    it('points a non-pushup exercise row at the matching /wiki/uebungen detail', () => {
+      setup();
+      const component = fixture.componentInstance as unknown as {
+        wikiLinkFor(id: string): string[];
+      };
+      // abs.situps → slug 'sit-ups' in EXERCISE_WIKI_CATALOG.
+      expect(component.wikiLinkFor('abs.situps')).toEqual([
+        '/wiki/uebungen',
+        'sit-ups',
+      ]);
     });
   });
 

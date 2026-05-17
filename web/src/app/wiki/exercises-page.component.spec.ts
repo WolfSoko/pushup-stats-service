@@ -48,18 +48,37 @@ describe('ExercisesWikiPageComponent', () => {
     expect(categoryHeadings.length).toBeGreaterThanOrEqual(8);
   });
 
-  it('exposes one TOC entry per catalog exercise', async () => {
+  it('exposes one TOC entry per catalog exercise plus the pushup hub link', async () => {
     const { container } = await render(ExercisesWikiPageComponent, {
       providers: [{ provide: ActivatedRoute, useValue: makeRouteMock() }],
     });
 
     const tocLinks = container.querySelectorAll('nav.toc a.toc-link');
-    // 40 exercises across all categories.
-    expect(tocLinks.length).toBe(40);
+    // 40 catalog exercises + 1 hub-card entry that cross-links to the
+    // dedicated /wiki/liegestuetz-typen wiki under the "push" category.
+    expect(tocLinks.length).toBe(41);
     for (const link of Array.from(tocLinks)) {
       const href = link.getAttribute('href') ?? '';
       expect(href.startsWith('#')).toBe(true);
     }
+  });
+
+  it('renders a pushup-wiki hub card in the push category that links to /wiki/liegestuetz-typen', async () => {
+    const { container } = await render(ExercisesWikiPageComponent, {
+      providers: [{ provide: ActivatedRoute, useValue: makeRouteMock() }],
+    });
+
+    const hub = container.querySelector(
+      '[data-testid="wiki-exercises-pushup-hub"]'
+    );
+    expect(hub).toBeTruthy();
+    expect(hub?.getAttribute('id')).toBe('liegestuetze');
+
+    const cta = container.querySelector(
+      '[data-testid="wiki-exercises-pushup-hub-link"]'
+    );
+    expect(cta).toBeTruthy();
+    expect(cta?.getAttribute('href')).toBe('/wiki/liegestuetz-typen');
   });
 
   it('renders an ordered instructions list for the squat section', async () => {

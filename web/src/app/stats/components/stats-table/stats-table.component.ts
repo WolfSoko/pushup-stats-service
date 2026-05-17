@@ -21,11 +21,14 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { RouterLink } from '@angular/router';
 import { UserContextService } from '@pu-auth/auth';
 import { UserConfigApiService } from '@pu-stats/data-access';
 import {
   displayPushupType,
   findExerciseDefinition,
+  findExerciseWikiEntry,
+  findPushupTypeByStoredValue,
   formatEntryDisplay,
   formatExerciseValue,
   measurementValueField,
@@ -122,6 +125,7 @@ export interface StatsTableCreate {
     MatSortModule,
     MatRippleModule,
     MatTooltipModule,
+    RouterLink,
     ScrollingModule,
   ],
   templateUrl: './stats-table.component.html',
@@ -220,6 +224,26 @@ export class StatsTableComponent {
     const def = findExerciseDefinition(entry.exerciseId);
     if (!def) return entry.exerciseId;
     return exerciseDisplayName(def.id);
+  }
+
+  /**
+   * Wiki deep-link for the entry's exercise label. Pushup rows route to
+   * the dedicated `/wiki/liegestuetz-typen` wiki with the variant slug
+   * (when known) so the link lands on the matching detail page; catalog
+   * exercise rows route to `/wiki/uebungen/<slug>` when an entry exists,
+   * else to the list page so a stale catalog id can't 404 the link.
+   * Returns `null` when there's no useful target — the template renders
+   * a plain `<span>` in that case.
+   */
+  exerciseWikiLink(entry: UnifiedEntry): string[] | null {
+    if (entry.kind === 'pushup') {
+      const variant = findPushupTypeByStoredValue(entry.variantType);
+      return variant
+        ? ['/wiki/liegestuetz-typen', variant.slug]
+        : ['/wiki/liegestuetz-typen'];
+    }
+    const wikiEntry = findExerciseWikiEntry(entry.exerciseId);
+    return wikiEntry ? ['/wiki/uebungen', wikiEntry.slug] : ['/wiki/uebungen'];
   }
 
   constructor() {
