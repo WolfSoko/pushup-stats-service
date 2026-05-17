@@ -74,14 +74,10 @@ jobs:
         working-directory: data-store
         env:
           GOOGLE_APPLICATION_CREDENTIALS: ${{ runner.temp }}/firebase-sa.json
-      # Pin firebase-tools to the same major as the project's package.json so
-      # production hosting deploys stop tracking @latest. firebase-tools 15.x
-      # broke this action around 2026-05-13.
-      - uses: FirebaseExtended/action-hosting-deploy@v0.10.0
+      - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_PUSHUP_STATS }}
           channelId: live
           projectId: pushup-stats
           entryPoint: data-store
-          firebaseToolsVersion: '14.27.0'

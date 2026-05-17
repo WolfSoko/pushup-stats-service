@@ -83,27 +83,7 @@ jobs:
         working-directory: data-store
         env:
           GOOGLE_APPLICATION_CREDENTIALS: ${{ runner.temp }}/firebase-sa.json
-      # Surface firebase-tools version and current preview-channel state in
-      # the job summary (visible without raw log access) so deploy failures
-      # are debuggable. Per-site preview quota is 50.
-      - name: Inspect staging hosting channels (diagnostic)
-        if: always()
-        continue-on-error: true
-        env:
-          GOOGLE_APPLICATION_CREDENTIALS: ${{ runner.temp }}/firebase-sa.json
-        working-directory: data-store
-        run: |
-          {
-            echo "### Firebase hosting staging diagnostic"
-            echo '```'
-            pnpm exec firebase --version
-            pnpm exec firebase hosting:channel:list --project staging
-            echo '```'
-          } | tee -a "$GITHUB_STEP_SUMMARY"
-      # Pin firebase-tools to the same major as the project's package.json so
-      # the action stops tracking @latest. firebase-tools 15.x broke this
-      # action around 2026-05-13.
-      - uses: FirebaseExtended/action-hosting-deploy@v0.10.0
+      - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_PUSHUP_STATS_STAGING }}
@@ -111,4 +91,3 @@ jobs:
           channelId: pr-${{ github.event.pull_request.number }}
           expires: 7d
           entryPoint: data-store
-          firebaseToolsVersion: '14.27.0'
