@@ -91,7 +91,7 @@ Enforced via `@nx/enforce-module-boundaries` in `eslint.config.mjs`:
 - **Derived state:** `computed()` inside `withComputed`
 - **Side effects:** `effect()` in components or `withHooks`
 - **API Services:** Stateless, return Promises/Observables - no signals, no state
-- **No RxJS for state** - only in data-access layer for Firestore Observables + `toSignal()`. Reactive read-models that subscribe to those API services live in `@pu-stats/data-access-state` (signal stores), keeping `@pu-stats/data-access` itself stateless.
+- **No RxJS for app-level state** - state lives in `@ngrx/signals` stores. RxJS is allowed inside `@pu-stats/data-access` for Firestore Observables, and `@pu-stats/data-access-state` signal stores may subscribe to those Observables (typically bridged via `toSignal()`, but a direct `.subscribe()` is fine for live-refresh side-effects like `LeaderboardStore`'s snapshot listener — state itself stays in signals).
 - **Signal timing and equality caveats** — see [`gotchas/signals.md`](gotchas/signals.md).
 
 ### Three-Layer Architecture

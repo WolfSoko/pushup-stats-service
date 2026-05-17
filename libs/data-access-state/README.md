@@ -11,9 +11,10 @@ signals to the rest of the app:
 - `LeaderboardStore` — cached leaderboard data with `load({ force })` and a
   live refresh hook driven by `LeaderboardService.observeSnapshot()`.
 
-Importers: `web/src/app/**` only. API-service consumers (e.g. `@pu-reminders/reminders`,
-`@pu-push/push`) keep depending on `@pu-stats/data-access` directly and must
-NOT import from this lib.
+Allowed importers (per `@nx/enforce-module-boundaries`): `scope:app`
+(`web/src/app/**`) and `scope:reminders`. Other libs (e.g. `@pu-push/push`)
+keep depending on `@pu-stats/data-access` directly for the stateless API
+services — they shouldn't reach for signal stores.
 
 ## Running unit tests
 
