@@ -26,6 +26,13 @@ env:
     availability:
       - BUILD
 
+  # Match prod's heap bump — staging builds the same web bundle and
+  # OOMs at the same point without it.
+  - variable: NODE_OPTIONS
+    value: '--max-old-space-size=6144'
+    availability:
+      - BUILD
+
 scripts:
   buildCommand: pnpm nx run web:build -c staging && pnpm sentry:sourcemaps
   runCommand: node dist/web/server/server.mjs
