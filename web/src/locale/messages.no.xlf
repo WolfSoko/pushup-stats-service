@@ -399,6 +399,24 @@ Aktiv:         </target>
         <target>Serier</target>
       </segment>
     </unit>
+    <unit id="analysis.heatmapTime">
+      <segment state="translated">
+        <source>Zeit</source>
+        <target>Tid</target>
+      </segment>
+    </unit>
+    <unit id="analysis.heatmapDistance">
+      <segment state="translated">
+        <source>Strecke</source>
+        <target>Distanse</target>
+      </segment>
+    </unit>
+    <unit id="analysis.heatmapIntervals">
+      <segment state="translated">
+        <source>Intervalle</source>
+        <target>Intervaller</target>
+      </segment>
+    </unit>
     <unit id="heatmap.unit.sets">
       <segment state="translated">
         <source>Sätze</source>
@@ -409,6 +427,30 @@ Aktiv:         </target>
       <segment state="translated">
         <source>Wiederholungen</source>
         <target>Repetisjoner</target>
+      </segment>
+    </unit>
+    <unit id="heatmap.unit.minutes">
+      <segment state="translated">
+        <source>min</source>
+        <target>min</target>
+      </segment>
+    </unit>
+    <unit id="heatmap.unit.distance">
+      <segment state="translated">
+        <source>Strecke</source>
+        <target>Distanse</target>
+      </segment>
+    </unit>
+    <unit id="heatmap.unit.intervals">
+      <segment state="translated">
+        <source>Intervalle</source>
+        <target>Intervaller</target>
+      </segment>
+    </unit>
+    <unit id="heatmap.unit.entries">
+      <segment state="translated">
+        <source>Einträge</source>
+        <target>Oppføringer</target>
       </segment>
     </unit>
     <unit id="setsDistribution.noData">

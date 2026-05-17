@@ -7,7 +7,11 @@ import {
   buildHeatmapCells,
   defaultHeatmapDays,
   defaultHeatmapHoursTopDown,
+  formatHeatmapCellLabel,
+  formatHeatmapTooltipValue,
   heatmapCellColor,
+  type HeatmapMeasurement,
+  type HeatmapMode,
 } from './heatmap.utils';
 
 /** Minimal shape the heatmap reads — narrower than `PushupRecord` or
@@ -15,8 +19,11 @@ import {
  *  caller. `buildHeatmapCells` already requires only these fields. */
 export interface HeatmapEntry {
   timestamp: string;
-  reps: number;
+  reps?: number;
+  durationSec?: number;
+  distanceM?: number;
   sets?: number[];
+  intervals?: number[];
 }
 
 ensureHeatmapChartRegistered();
@@ -24,7 +31,7 @@ ensureHeatmapChartRegistered();
 export interface HeatmapCell {
   x: string; // weekday label
   y: string; // hour label
-  v: number; // reps
+  v: number; // aggregated value (reps / durationSec / distanceM / count)
 }
 
 @Component({
@@ -61,28 +68,50 @@ export interface HeatmapCell {
 })
 export class HeatmapComponent {
   readonly entries = input<ReadonlyArray<HeatmapEntry>>([]);
-  readonly mode = input<'reps' | 'sets'>('reps');
+  readonly measurement = input<HeatmapMeasurement | null>('reps');
+  readonly mode = input<HeatmapMode>('primary');
 
   readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
 
   private readonly days = defaultHeatmapDays;
   private readonly hoursTopDown = defaultHeatmapHoursTopDown;
 
-  private readonly unitLabel = computed(() =>
-    this.mode() === 'sets'
-      ? $localize`:@@heatmap.unit.sets:Sätze`
-      : $localize`:@@heatmap.unit.reps:Wiederholungen`
-  );
+  private readonly unitLabel = computed(() => {
+    const m = this.measurement() ?? 'mixed';
+    if (this.mode() === 'breakdown') {
+      if (m === 'reps' || m === 'weight') {
+        return $localize`:@@heatmap.unit.sets:Sätze`;
+      }
+      if (m === 'mixed') {
+        return $localize`:@@heatmap.unit.entries:Einträge`;
+      }
+      return $localize`:@@heatmap.unit.intervals:Intervalle`;
+    }
+    switch (m) {
+      // `formatHeatmapTooltipValue` already embeds the unit for time
+      // (`2:30 min`, `1:02:05 h`) and distance (`750 m`, `5.00 km`) —
+      // appending another suffix would render `2:30 min min`.
+      case 'time':
+      case 'distance':
+      case 'distance-time':
+        return '';
+      case 'mixed':
+        return $localize`:@@heatmap.unit.entries:Einträge`;
+      case 'reps':
+      case 'weight':
+        return $localize`:@@heatmap.unit.reps:Wiederholungen`;
+    }
+  });
 
   // Matrix chart typing is tricky with string category axes; keep this loosely typed.
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   readonly chartData = computed<any>(() => {
-    const currentMode = this.mode();
     const data = buildHeatmapCells({
       entries: this.entries(),
       days: this.days,
       hoursTopDown: this.hoursTopDown,
-      mode: currentMode,
+      measurement: this.measurement() ?? 'mixed',
+      mode: this.mode(),
     });
 
     const max = Math.max(0, ...data.map((d) => d.v)) || 1;
@@ -90,7 +119,7 @@ export class HeatmapComponent {
     return {
       datasets: [
         {
-          label: 'Pushups',
+          label: 'Heatmap',
           data,
           backgroundColor: (context: unknown) => {
             const raw = (context as { raw?: HeatmapCell }).raw;
@@ -118,6 +147,8 @@ export class HeatmapComponent {
   // Keeping this in the component to avoid leaking Chart.js typing complexity into page components.
   readonly chartOptions = computed<ChartConfiguration['options']>(() => {
     const unit = this.unitLabel();
+    const measurement = this.measurement() ?? 'mixed';
+    const mode = this.mode();
     return {
       responsive: true,
       maintainAspectRatio: false,
@@ -128,7 +159,13 @@ export class HeatmapComponent {
             title: () => '',
             label: (context: unknown) => {
               const v = (context as { raw?: HeatmapCell }).raw;
-              return `${v?.x ?? ''} ${v?.y ?? ''}:00 - ${v?.v ?? 0} ${unit}`;
+              const formatted = formatHeatmapTooltipValue({
+                value: v?.v ?? 0,
+                measurement,
+                mode,
+              });
+              const suffix = unit ? ` ${unit}` : '';
+              return `${v?.x ?? ''} ${v?.y ?? ''}:00 - ${formatted}${suffix}`;
             },
           },
         },
@@ -140,7 +177,12 @@ export class HeatmapComponent {
             )?.dataset?.data?.[(ctx as { dataIndex: number }).dataIndex];
             return !!raw && typeof raw.v === 'number' && raw.v > 0;
           },
-          formatter: (value: HeatmapCell) => (value?.v ? String(value.v) : ''),
+          formatter: (value: HeatmapCell) =>
+            formatHeatmapCellLabel({
+              value: value?.v ?? 0,
+              measurement,
+              mode,
+            }),
           anchor: 'center',
           align: 'center',
           clamp: true,

@@ -4563,6 +4563,30 @@
         <target>Repetitiones</target>
       </segment>
     </unit>
+    <unit id="heatmap.unit.minutes">
+      <segment state="translated">
+        <source>min</source>
+        <target>min</target>
+      </segment>
+    </unit>
+    <unit id="heatmap.unit.distance">
+      <segment state="translated">
+        <source>Strecke</source>
+        <target>Distantia</target>
+      </segment>
+    </unit>
+    <unit id="heatmap.unit.intervals">
+      <segment state="translated">
+        <source>Intervalle</source>
+        <target>Intervalla</target>
+      </segment>
+    </unit>
+    <unit id="heatmap.unit.entries">
+      <segment state="translated">
+        <source>Einträge</source>
+        <target>Inscriptiones</target>
+      </segment>
+    </unit>
     <unit id="previewBanner.text">
       <notes>
         <note category="location">web/src/app/stats/components/preview-banner/preview-banner.component.ts:23,26</note>
@@ -5313,6 +5337,24 @@
       <segment state="translated">
         <source>Sets</source>
         <target>sets</target>
+      </segment>
+    </unit>
+    <unit id="analysis.heatmapTime">
+      <segment state="translated">
+        <source>Zeit</source>
+        <target>Tempus</target>
+      </segment>
+    </unit>
+    <unit id="analysis.heatmapDistance">
+      <segment state="translated">
+        <source>Strecke</source>
+        <target>Distantia</target>
+      </segment>
+    </unit>
+    <unit id="analysis.heatmapIntervals">
+      <segment state="translated">
+        <source>Intervalle</source>
+        <target>Intervalla</target>
       </segment>
     </unit>
     <unit id="entries.title">

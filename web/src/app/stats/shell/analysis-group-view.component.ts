@@ -6,6 +6,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { type UnifiedEntryFilterKey } from '@pu-stats/models';
 import { HeatmapComponent } from '../components/heatmap/heatmap.component';
+import type {
+  HeatmapMeasurement,
+  HeatmapMode,
+} from '../components/heatmap/heatmap.utils';
 import { SetsDistributionComponent } from '../components/sets-distribution/sets-distribution.component';
 import { StatsChartComponent } from '../components/stats-chart/stats-chart.component';
 import { TypePieComponent } from '../components/type-pie/type-pie.component';
@@ -154,25 +158,28 @@ import { kindDisplayName } from '../i18n/exercise-display-names';
           <mat-card-title i18n="@@analysis.heatmapTitle"
             >Heatmap (Wochentag/Uhrzeit)</mat-card-title
           >
-          <mat-button-toggle-group
-            [value]="heatmapMode()"
-            (change)="heatmapMode.set($event.value)"
-            class="heatmap-toggle"
-            aria-label="Heatmap-Modus auswählen"
-            i18n-aria-label="@@analysis.heatmapToggleAriaLabel"
-          >
-            <mat-button-toggle value="reps" i18n="@@analysis.heatmapReps"
-              >Reps</mat-button-toggle
+          @if (heatmapToggleLabels(); as labels) {
+            <mat-button-toggle-group
+              [value]="heatmapMode()"
+              (change)="heatmapMode.set($event.value)"
+              class="heatmap-toggle"
+              aria-label="Heatmap-Modus auswählen"
+              i18n-aria-label="@@analysis.heatmapToggleAriaLabel"
             >
-            <mat-button-toggle value="sets" i18n="@@analysis.heatmapSets"
-              >Sets</mat-button-toggle
-            >
-          </mat-button-toggle-group>
+              <mat-button-toggle value="primary">{{
+                labels.primary
+              }}</mat-button-toggle>
+              <mat-button-toggle value="breakdown">{{
+                labels.breakdown
+              }}</mat-button-toggle>
+            </mat-button-toggle-group>
+          }
         </mat-card-header>
         <mat-card-content class="heatmap-wrap">
           @defer (hydrate on viewport) {
             <app-heatmap
               [entries]="store.viewFilteredRows()"
+              [measurement]="heatmapMeasurement()"
               [mode]="heatmapMode()"
             />
           }
@@ -364,7 +371,52 @@ import { kindDisplayName } from '../i18n/exercise-display-names';
 export class AnalysisGroupViewComponent {
   readonly store = inject(AnalysisStore);
   readonly trendColumnsWithSets = ['label', 'total', 'avgSetsPerEntry'];
-  readonly heatmapMode = signal<'reps' | 'sets'>('reps');
+  readonly heatmapMode = signal<HeatmapMode>('primary');
+
+  /**
+   * Heatmap measurement bucket, derived from the analysis view's
+   * dominant measurement. `null` (no entries) collapses into `'mixed'`
+   * so the heatmap renders entry-count rather than empty cells.
+   */
+  readonly heatmapMeasurement = computed<HeatmapMeasurement>(() => {
+    const m = this.store.viewMeasurement();
+    return m ?? 'mixed';
+  });
+
+  /**
+   * Toggle labels switch with the measurement so users see "Reps/Sätze"
+   * for strength views, "Zeit/Intervalle" for time-measured views (e.g.
+   * planks, holds), and "Strecke/Intervalle" for distance/cardio. Mixed
+   * views (overview, multi-measurement categories like `core`) hide the
+   * toggle — the heatmap then counts entries per cell.
+   */
+  readonly heatmapToggleLabels = computed<{
+    primary: string;
+    breakdown: string;
+  } | null>(() => {
+    const measurement = this.heatmapMeasurement();
+    switch (measurement) {
+      case 'reps':
+      case 'weight':
+        return {
+          primary: $localize`:@@analysis.heatmapReps:Reps`,
+          breakdown: $localize`:@@analysis.heatmapSets:Sets`,
+        };
+      case 'time':
+        return {
+          primary: $localize`:@@analysis.heatmapTime:Zeit`,
+          breakdown: $localize`:@@analysis.heatmapIntervals:Intervalle`,
+        };
+      case 'distance':
+      case 'distance-time':
+        return {
+          primary: $localize`:@@analysis.heatmapDistance:Strecke`,
+          breakdown: $localize`:@@analysis.heatmapIntervals:Intervalle`,
+        };
+      case 'mixed':
+        return null;
+    }
+  });
 
   /**
    * True for per-category tabs whose currently-selected range contains

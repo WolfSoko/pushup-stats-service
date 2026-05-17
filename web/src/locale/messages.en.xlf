@@ -511,6 +511,24 @@ Active:         </target>
         <target>Sets</target>
       </segment>
     </unit>
+    <unit id="analysis.heatmapTime">
+      <segment state="translated">
+        <source>Zeit</source>
+        <target>Time</target>
+      </segment>
+    </unit>
+    <unit id="analysis.heatmapDistance">
+      <segment state="translated">
+        <source>Strecke</source>
+        <target>Distance</target>
+      </segment>
+    </unit>
+    <unit id="analysis.heatmapIntervals">
+      <segment state="translated">
+        <source>Intervalle</source>
+        <target>Intervals</target>
+      </segment>
+    </unit>
     <unit id="heatmap.unit.sets">
       <segment state="translated">
         <source>Sätze</source>
@@ -521,6 +539,30 @@ Active:         </target>
       <segment state="translated">
         <source>Wiederholungen</source>
         <target>Reps</target>
+      </segment>
+    </unit>
+    <unit id="heatmap.unit.minutes">
+      <segment state="translated">
+        <source>min</source>
+        <target>min</target>
+      </segment>
+    </unit>
+    <unit id="heatmap.unit.distance">
+      <segment state="translated">
+        <source>Strecke</source>
+        <target>Distance</target>
+      </segment>
+    </unit>
+    <unit id="heatmap.unit.intervals">
+      <segment state="translated">
+        <source>Intervalle</source>
+        <target>Intervals</target>
+      </segment>
+    </unit>
+    <unit id="heatmap.unit.entries">
+      <segment state="translated">
+        <source>Einträge</source>
+        <target>Entries</target>
       </segment>
     </unit>
     <unit id="setsDistribution.noData">
