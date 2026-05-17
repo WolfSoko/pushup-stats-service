@@ -16,7 +16,7 @@ import {
   UserContextService,
 } from '@pu-auth/auth';
 import { AdsStore } from '@pu-stats/ads';
-import { VAPID_PUBLIC_KEY } from '@pu-reminders/reminders';
+import { VAPID_PUBLIC_KEY } from '@pu-push/push';
 import { App } from './app';
 import { GoalReachedNotificationService } from './core/goal-reached-notification.service';
 import { QuickAddOrchestrationService } from './core/quick-add-orchestration.service';

@@ -3,7 +3,7 @@ import { signal } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { Analytics } from '@angular/fire/analytics';
 import { AuthStore, UserContextService } from '@pu-auth/auth';
-import { PushSubscriptionService } from '@pu-reminders/reminders';
+import { PushSubscriptionService } from '@pu-push/push';
 import { UserConfig, UserConfigUpdate } from '@pu-stats/models';
 import { makeAuthStoreMock } from '@pu-stats/testing';
 import { SettingsPageComponent } from './settings-page.component';

@@ -25,7 +25,7 @@ import { RouterLink } from '@angular/router';
 import { AuthStore, UserContextService } from '@pu-auth/auth';
 import { Router } from '@angular/router';
 import { Analytics, logEvent } from '@angular/fire/analytics';
-import { PushSubscriptionService } from '@pu-reminders/reminders';
+import { PushSubscriptionService } from '@pu-push/push';
 import { DEFAULT_SNAP_QUALITY, SnapQuality } from '@pu-stats/models';
 import { UserConfigStore } from '../../core/user-config.store';
 import { ShareService } from '../../core/share.service';

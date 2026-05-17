@@ -1,15 +1,14 @@
 import { LOCALE_ID, signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
+import { PushSwRegistrationService } from '@pu-push/push';
 import { ReminderStore } from './reminder.store';
 import { ReminderPermissionService } from './reminder-permission.service';
 import { MotivationStore } from '@pu-stats/motivation';
 import { isInQuietHours, ReminderService } from './reminder.service';
-import { PushSubscriptionStore } from './push/push-subscription.store';
-import type { PushStatus } from './push/push-subscription.store';
-import { PushSwRegistrationService } from './push/push-sw-registration.service';
+import { SHOULD_SKIP_IN_APP_REMINDER } from './skip-in-app-reminder.token';
 
 /**
- * Reminder tick() now resolves the SW registration through
+ * Reminder tick() resolves the SW registration through
  * PushSwRegistrationService instead of poking navigator.serviceWorker
  * directly. To keep the rich existing coverage here (SW showNotification vs
  * Notification() fallback, icon baseURI resolution, locale-prefixed data
@@ -56,7 +55,7 @@ describe('ReminderService', () => {
 
   function createService(
     configOverride?: Partial<ReminderConfig>,
-    pushStatus: PushStatus = 'not-subscribed',
+    shouldSkipInApp = false,
     locale = 'de'
   ): ReminderService {
     const config = { ...defaultConfig, ...configOverride };
@@ -80,8 +79,8 @@ describe('ReminderService', () => {
           },
         },
         {
-          provide: PushSubscriptionStore,
-          useValue: { status: signal(pushStatus) },
+          provide: SHOULD_SKIP_IN_APP_REMINDER,
+          useValue: () => shouldSkipInApp,
         },
         {
           provide: PushSwRegistrationService,
@@ -263,7 +262,7 @@ describe('ReminderService', () => {
   });
 
   it('should include locale-prefixed url in notification data (Android navigation fix)', async () => {
-    const service = createService(undefined, 'not-subscribed', 'de');
+    const service = createService(undefined, false, 'de');
     service.start({ userId: 'u1' });
     jest.advanceTimersByTime(5_000);
     await flushMicrotasks();
@@ -279,7 +278,7 @@ describe('ReminderService', () => {
   });
 
   it('should use en locale prefix in notification data when locale is en', async () => {
-    const service = createService(undefined, 'not-subscribed', 'en');
+    const service = createService(undefined, false, 'en');
     service.start({ userId: 'u1' });
     jest.advanceTimersByTime(5_000);
     await flushMicrotasks();
@@ -295,7 +294,7 @@ describe('ReminderService', () => {
   });
 
   it('should normalize regional locale (en-US → en) in notification data', async () => {
-    const service = createService(undefined, 'not-subscribed', 'en-US');
+    const service = createService(undefined, false, 'en-US');
     service.start({ userId: 'u1' });
     jest.advanceTimersByTime(5_000);
     await flushMicrotasks();
@@ -311,7 +310,7 @@ describe('ReminderService', () => {
   });
 
   it('should not show notification when push subscription is active', async () => {
-    const service = createService(undefined, 'subscribed');
+    const service = createService(undefined, true);
     service.start({ userId: 'u1' });
     jest.advanceTimersByTime(5_000);
     await flushMicrotasks();

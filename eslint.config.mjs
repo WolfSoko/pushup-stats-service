@@ -38,13 +38,27 @@ export default [
               sourceTag: 'scope:data-access',
               onlyDependOnLibsWithTags: ['scope:models'],
             },
-            // reminders depends on data-access and motivation (NOT auth)
+            // reminders depends on data-access, motivation, and push (NOT auth).
+            // Runtime coupling to push state is via SHOULD_SKIP_IN_APP_REMINDER
+            // port, not by importing push stores.
             {
               sourceTag: 'scope:reminders',
               onlyDependOnLibsWithTags: [
                 'scope:models',
                 'scope:data-access',
                 'scope:motivation',
+                'scope:push',
+                'scope:testing',
+              ],
+            },
+            // push owns Web Push subscription state + /push/ service worker.
+            // Depends on data-access for QuickLogListener (logs a pushup
+            // entry from the notification action).
+            {
+              sourceTag: 'scope:push',
+              onlyDependOnLibsWithTags: [
+                'scope:models',
+                'scope:data-access',
                 'scope:testing',
               ],
             },
@@ -90,6 +104,7 @@ export default [
                 'scope:data-access',
                 'scope:models',
                 'scope:reminders',
+                'scope:push',
                 'scope:quick-add',
                 'scope:ads',
                 'scope:motivation',

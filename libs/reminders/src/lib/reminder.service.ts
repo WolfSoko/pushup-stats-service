@@ -4,8 +4,8 @@ import { normalizeReminderLocale, reminderTitle } from '@pu-stats/models';
 import { ReminderStore } from './reminder.store';
 import { ReminderPermissionService } from './reminder-permission.service';
 import { MotivationStore } from '@pu-stats/motivation';
-import { PushSubscriptionStore } from './push/push-subscription.store';
-import { PushSwRegistrationService } from './push/push-sw-registration.service';
+import { PushSwRegistrationService } from '@pu-push/push';
+import { SHOULD_SKIP_IN_APP_REMINDER } from './skip-in-app-reminder.token';
 
 export function isInQuietHours(
   quietHours: { from: string; to: string }[],
@@ -48,7 +48,7 @@ export class ReminderService {
   private readonly permissionService = inject(ReminderPermissionService);
   private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
   private readonly motivationStore = inject(MotivationStore);
-  private readonly pushStore = inject(PushSubscriptionStore);
+  private readonly shouldSkipInApp = inject(SHOULD_SKIP_IN_APP_REMINDER);
   private readonly pushSwRegistration = inject(PushSwRegistrationService);
   private readonly locale = normalizeReminderLocale(inject(LOCALE_ID));
 
@@ -111,7 +111,7 @@ export class ReminderService {
 
     // Skip in-app notification when server-side push is active — the Cloud
     // Function already handles delivery, showing both causes duplicate sounds.
-    if (this.pushStore.status() === 'subscribed') return;
+    if (this.shouldSkipInApp()) return;
 
     const quote = await this.getNextQuote();
     if (!quote) return;

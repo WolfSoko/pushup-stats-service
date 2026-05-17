@@ -40,7 +40,7 @@ import {
   PushSubscriptionService,
   PushSwRegistrationService,
   QuickLogListenerService,
-} from '@pu-reminders/reminders';
+} from '@pu-push/push';
 import { CookieConsentBannerComponent } from '@pu-stats/ads';
 import { QuickAddFabComponent } from '@pu-stats/quick-add';
 import { ThemeToggleComponent } from './core/theme';
