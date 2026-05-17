@@ -5,20 +5,23 @@ Detailed architecture reference for the Pushup Stats Service. AGENTS.md keeps th
 ## Library Dependency Graph
 
 ```
-@pu-stats/models          (pure types, zero dependencies)
+@pu-stats/models                (pure types, zero dependencies)
     ^
-    |--- @pu-stats/data-access  (Firestore API layer)
-    |--- @pu-auth/auth          (Firebase Auth, decoupled via ports)
-    |--- @pu-stats/motivation   (quote service, no auth dependency)
-    |--- @pu-stats/quick-add    (FAB + adaptive suggestions)
-    |--- @pu-stats/auto-count   (pose-based rep counter, ports + state machine)
-    |--- @pu-stats/ads          (isolated, no lib dependencies)
-    |--- @pu-push/push          (Web Push subscription state + /push/ SW)
-    |--- @pu-reminders/reminders (in-app reminders; depends on data-access,
-    |                            motivation, push for SW registration. Coupling
-    |                            to push state is via SHOULD_SKIP_IN_APP_REMINDER
-    |                            port — no compile-time knowledge of push state)
-    |--- cloud-functions        (Cloud Functions, depends on models only)
+    |--- @pu-stats/data-access        (stateless Firestore API services)
+    |        ^
+    |        |--- @pu-stats/data-access-state  (reactive signal stores:
+    |                                           LiveDataStore, LeaderboardStore)
+    |--- @pu-auth/auth                (Firebase Auth, decoupled via ports)
+    |--- @pu-stats/motivation         (quote service, no auth dependency)
+    |--- @pu-stats/quick-add          (FAB + adaptive suggestions)
+    |--- @pu-stats/auto-count         (pose-based rep counter, ports + state machine)
+    |--- @pu-stats/ads                (isolated, no lib dependencies)
+    |--- @pu-push/push                (Web Push subscription state + /push/ SW)
+    |--- @pu-reminders/reminders      (in-app reminders; depends on data-access,
+    |                                  motivation, push for SW registration. Coupling
+    |                                  to push state is via SHOULD_SKIP_IN_APP_REMINDER
+    |                                  port — no compile-time knowledge of push state)
+    |--- cloud-functions              (Cloud Functions, depends on models only)
 ```
 
 ## Module Boundary Rules
@@ -28,30 +31,32 @@ Enforced via `@nx/enforce-module-boundaries` in `eslint.config.mjs`:
 - `scope:auth` -> `scope:models` only (no data-access!)
 - `scope:motivation` -> `scope:models` only (no auth!)
 - `scope:data-access` -> `scope:models` only
+- `scope:data-access-state` -> `scope:models`, `scope:data-access`
 - `scope:auto-count` -> `scope:models` only
 - `scope:cloud-functions` -> `scope:models` only
 - `scope:push` -> `scope:models`, `scope:data-access` (no auth, no reminders!)
-- `scope:reminders` -> `scope:models`, `scope:data-access`, `scope:motivation`, `scope:push` (no auth!)
+- `scope:reminders` -> `scope:models`, `scope:data-access`, `scope:data-access-state`, `scope:motivation`, `scope:push` (no auth!)
 - `scope:app` -> everything
 
 ## Nx Project Names
 
-| Library         | Nx Project Name     |
-| --------------- | ------------------- |
-| auth            | `auth`              |
-| data-access     | `stats-data-access` |
-| models/stats    | `stats-models`      |
-| motivation      | `pus-motivation`    |
-| reminders       | `pus-reminders`     |
-| push            | `pus-push`          |
-| quick-add       | `stats-quick-add`   |
-| auto-count      | `auto-count`        |
-| ads             | `stats-ads`         |
-| testing         | `testing`           |
-| tools           | `tools`             |
-| data-store      | `data-store`        |
-| cloud-functions | `cloud-functions`   |
-| web app         | `web`               |
+| Library           | Nx Project Name           |
+| ----------------- | ------------------------- |
+| auth              | `auth`                    |
+| data-access       | `stats-data-access`       |
+| data-access-state | `stats-data-access-state` |
+| models/stats      | `stats-models`            |
+| motivation        | `pus-motivation`          |
+| reminders         | `pus-reminders`           |
+| push              | `pus-push`                |
+| quick-add         | `stats-quick-add`         |
+| auto-count        | `auto-count`              |
+| ads               | `stats-ads`               |
+| testing           | `testing`                 |
+| tools             | `tools`                   |
+| data-store        | `data-store`              |
+| cloud-functions   | `cloud-functions`         |
+| web app           | `web`                     |
 
 ## Key Architectural Patterns
 
@@ -73,8 +78,8 @@ Enforced via `@nx/enforce-module-boundaries` in `eslint.config.mjs`:
 - **Global state:** `@ngrx/signals` signalStore with `providedIn: 'root'`
   - `AdsStore` - Remote Config + consent (ads module)
   - `MotivationStore` - quote cache with user-keyed localStorage (motivation module)
-  - `LiveDataStore` - Firestore real-time entries + tick (data-access, browser-only)
-  - `LeaderboardStore` - shared leaderboard data with `load({ force })` (data-access)
+  - `LiveDataStore` - Firestore real-time entries + tick (data-access-state, browser-only)
+  - `LeaderboardStore` - shared leaderboard data with `load({ force })` (data-access-state)
   - `TrainingPlanStore` - active training plan, derived "today" state, plan-day mutation methods (app-level)
   - `AuthStore`, `ReminderStore`, `PushSubscriptionService` (in `@pu-push/push`), `ThemeService` (existing)
 - **Feature/form state:** signalStore with component-level DI
@@ -86,7 +91,7 @@ Enforced via `@nx/enforce-module-boundaries` in `eslint.config.mjs`:
 - **Derived state:** `computed()` inside `withComputed`
 - **Side effects:** `effect()` in components or `withHooks`
 - **API Services:** Stateless, return Promises/Observables - no signals, no state
-- **No RxJS for state** - only in data-access layer for Firestore Observables + `toSignal()`
+- **No RxJS for state** - only in data-access layer for Firestore Observables + `toSignal()`. Reactive read-models that subscribe to those API services live in `@pu-stats/data-access-state` (signal stores), keeping `@pu-stats/data-access` itself stateless.
 - **Signal timing and equality caveats** — see [`gotchas/signals.md`](gotchas/signals.md).
 
 ### Three-Layer Architecture

@@ -2,11 +2,8 @@ import { TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 import { signal } from '@angular/core';
 import { AppDataFacade } from './app-data.facade';
-import {
-  LiveDataStore,
-  StatsApiService,
-  UserConfigApiService,
-} from '@pu-stats/data-access';
+import { StatsApiService, UserConfigApiService } from '@pu-stats/data-access';
+import { LiveDataStore } from '@pu-stats/data-access-state';
 import { UserContextService } from '@pu-auth/auth';
 import { AdaptiveQuickAddService } from '@pu-stats/quick-add';
 import type { PushupRecord, TrainingPlanDay } from '@pu-stats/models';

@@ -9,7 +9,7 @@ import {
   untracked,
 } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { LiveDataStore } from '@pu-stats/data-access';
+import { LiveDataStore } from '@pu-stats/data-access-state';
 import {
   PushupRecord,
   SNAP_QUALITY_PARTICLES,

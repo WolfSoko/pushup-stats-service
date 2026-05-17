@@ -6,8 +6,8 @@ import { makeAuthStoreMock } from '@pu-stats/testing';
 import {
   type LeaderboardEntry,
   type LeaderboardPeriod,
-  LeaderboardStore,
 } from '@pu-stats/data-access';
+import { LeaderboardStore } from '@pu-stats/data-access-state';
 import { LeaderboardPageComponent } from './leaderboard-page.component';
 
 /**

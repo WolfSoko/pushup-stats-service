@@ -18,10 +18,7 @@ jest.mock('@angular/fire/auth', () => ({ Auth: jest.fn() }));
 import { PLATFORM_ID } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { Subject } from 'rxjs';
-import {
-  LeaderboardData,
-  LeaderboardService,
-} from '../api/leaderboard.service';
+import { LeaderboardData, LeaderboardService } from '@pu-stats/data-access';
 import { LeaderboardStore } from './leaderboard.store';
 
 const emptyLeaderboard: LeaderboardData = {

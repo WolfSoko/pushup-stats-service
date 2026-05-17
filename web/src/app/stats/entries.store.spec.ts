@@ -3,9 +3,9 @@ import { TestBed } from '@angular/core/testing';
 import { of, throwError } from 'rxjs';
 import {
   ExerciseFirestoreService,
-  LiveDataStore,
   StatsApiService,
 } from '@pu-stats/data-access';
+import { LiveDataStore } from '@pu-stats/data-access-state';
 import { UserContextService } from '@pu-auth/auth';
 import { AppDataFacade } from '../core/app-data.facade';
 import { EntriesStore } from './entries.store';

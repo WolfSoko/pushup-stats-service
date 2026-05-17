@@ -9,7 +9,8 @@ import {
 import { Router } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
-import { LiveDataStore, StatsApiService } from '@pu-stats/data-access';
+import { StatsApiService } from '@pu-stats/data-access';
+import { LiveDataStore } from '@pu-stats/data-access-state';
 import {
   StatsResponse,
   StatsSeriesEntry,

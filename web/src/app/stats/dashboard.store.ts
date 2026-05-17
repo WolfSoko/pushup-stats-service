@@ -13,11 +13,8 @@ import {
   withMethods,
   withProps,
 } from '@ngrx/signals';
-import {
-  LiveDataStore,
-  StatsApiService,
-  UserStatsApiService,
-} from '@pu-stats/data-access';
+import { StatsApiService, UserStatsApiService } from '@pu-stats/data-access';
+import { LiveDataStore } from '@pu-stats/data-access-state';
 import {
   exerciseEntryToUnified,
   findExerciseDefinition,

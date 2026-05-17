@@ -4,11 +4,8 @@ import { provideRouter } from '@angular/router';
 import { of } from 'rxjs';
 import { AnalysisPageComponent } from './analysis-page.component';
 import { AnalysisGroupViewComponent } from './analysis-group-view.component';
-import {
-  LiveDataStore,
-  StatsApiService,
-  UserStatsApiService,
-} from '@pu-stats/data-access';
+import { StatsApiService, UserStatsApiService } from '@pu-stats/data-access';
+import { LiveDataStore } from '@pu-stats/data-access-state';
 import { AuthStore, UserContextService } from '@pu-auth/auth';
 import { makeAuthStoreMock } from '@pu-stats/testing';
 import { FilterBarComponent } from '../components/filter-bar/filter-bar.component';

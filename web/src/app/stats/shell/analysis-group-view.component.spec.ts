@@ -2,11 +2,8 @@ import { Component, input, model, PLATFORM_ID, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
-import {
-  LiveDataStore,
-  StatsApiService,
-  UserStatsApiService,
-} from '@pu-stats/data-access';
+import { StatsApiService, UserStatsApiService } from '@pu-stats/data-access';
+import { LiveDataStore } from '@pu-stats/data-access-state';
 import { AuthStore, UserContextService } from '@pu-auth/auth';
 import { makeAuthStoreMock } from '@pu-stats/testing';
 import { ExerciseEntry, RangeModes } from '@pu-stats/models';

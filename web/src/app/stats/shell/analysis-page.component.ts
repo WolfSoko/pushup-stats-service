@@ -18,7 +18,7 @@ import {
   type ExerciseCategoryId,
   EXERCISE_CATEGORIES,
 } from '@pu-stats/models';
-import { LiveDataStore } from '@pu-stats/data-access';
+import { LiveDataStore } from '@pu-stats/data-access-state';
 import { FilterBarComponent } from '../components/filter-bar/filter-bar.component';
 import { PreviewBannerComponent } from '../components/preview-banner/preview-banner.component';
 import { AnalysisStore, type AnalysisView } from '../analysis.store';
