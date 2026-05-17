@@ -14,8 +14,8 @@ import {
   ReminderStore,
   ReminderService,
   ReminderPermissionService,
-  PushSubscriptionService,
 } from '@pu-reminders/reminders';
+import { PushSubscriptionService } from '@pu-push/push';
 import { UnsubscribeAllDevicesDialogComponent } from './unsubscribe-all-devices-dialog.component';
 import { ReminderFormStore } from './reminder-form.store';
 import { PageHeaderComponent } from '../../core/page-header/page-header.component';

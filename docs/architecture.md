@@ -13,7 +13,11 @@ Detailed architecture reference for the Pushup Stats Service. AGENTS.md keeps th
     |--- @pu-stats/quick-add    (FAB + adaptive suggestions)
     |--- @pu-stats/auto-count   (pose-based rep counter, ports + state machine)
     |--- @pu-stats/ads          (isolated, no lib dependencies)
-    |--- @pu-reminders/reminders (depends on data-access + motivation, NOT auth)
+    |--- @pu-push/push          (Web Push subscription state + /push/ SW)
+    |--- @pu-reminders/reminders (in-app reminders; depends on data-access,
+    |                            motivation, push for SW registration. Coupling
+    |                            to push state is via SHOULD_SKIP_IN_APP_REMINDER
+    |                            port — no compile-time knowledge of push state)
     |--- cloud-functions        (Cloud Functions, depends on models only)
 ```
 
@@ -26,7 +30,8 @@ Enforced via `@nx/enforce-module-boundaries` in `eslint.config.mjs`:
 - `scope:data-access` -> `scope:models` only
 - `scope:auto-count` -> `scope:models` only
 - `scope:cloud-functions` -> `scope:models` only
-- `scope:reminders` -> `scope:models`, `scope:data-access`, `scope:motivation` (no auth!)
+- `scope:push` -> `scope:models`, `scope:data-access` (no auth, no reminders!)
+- `scope:reminders` -> `scope:models`, `scope:data-access`, `scope:motivation`, `scope:push` (no auth!)
 - `scope:app` -> everything
 
 ## Nx Project Names
@@ -38,6 +43,7 @@ Enforced via `@nx/enforce-module-boundaries` in `eslint.config.mjs`:
 | models/stats    | `stats-models`      |
 | motivation      | `pus-motivation`    |
 | reminders       | `pus-reminders`     |
+| push            | `pus-push`          |
 | quick-add       | `stats-quick-add`   |
 | auto-count      | `auto-count`        |
 | ads             | `stats-ads`         |
@@ -56,6 +62,12 @@ Enforced via `@nx/enforce-module-boundaries` in `eslint.config.mjs`:
 - Wired in `app.config.ts` via DI providers
 - Auth has ZERO imports from `@pu-stats/data-access`
 
+### Ports & Adapters (Reminders <-> Push)
+
+- `@pu-reminders/reminders` defines `SHOULD_SKIP_IN_APP_REMINDER` injection token (`() => boolean`, defaults to "never skip")
+- App wires it in `app.config.ts` to read `PushSubscriptionService.status() === 'subscribed'`
+- Reminders has ZERO compile-time knowledge of push subscription state — the dep on `@pu-push/push` is only for `PushSwRegistrationService` (the SW used for both in-app `showNotification` and server-side push delivery)
+
 ### State Management Conventions
 
 - **Global state:** `@ngrx/signals` signalStore with `providedIn: 'root'`
@@ -64,7 +76,7 @@ Enforced via `@nx/enforce-module-boundaries` in `eslint.config.mjs`:
   - `LiveDataStore` - Firestore real-time entries + tick (data-access, browser-only)
   - `LeaderboardStore` - shared leaderboard data with `load({ force })` (data-access)
   - `TrainingPlanStore` - active training plan, derived "today" state, plan-day mutation methods (app-level)
-  - `AuthStore`, `ReminderStore`, `PushSubscriptionStore`, `ThemeService` (existing)
+  - `AuthStore`, `ReminderStore`, `PushSubscriptionService` (in `@pu-push/push`), `ThemeService` (existing)
 - **Feature/form state:** signalStore with component-level DI
   - `DashboardStore` - stats, goals, ads, motivation, plan-day target override for dashboard page
   - `AnalysisStore` - date filters, trends, breakdowns for analysis page

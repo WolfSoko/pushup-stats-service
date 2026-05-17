@@ -30,11 +30,7 @@ import {
   withI18nSupport,
   withIncrementalHydration,
 } from '@angular/platform-browser';
-import {
-  provideRouter,
-  Router,
-  withInMemoryScrolling,
-} from '@angular/router';
+import { provideRouter, Router, withInMemoryScrolling } from '@angular/router';
 import { provideServiceWorker } from '@angular/service-worker';
 import {
   provideAuth,
@@ -53,7 +49,8 @@ import { adsConfig } from '../env/ads.config';
 import { firebaseRuntime } from '../env/firebase-runtime';
 import { demoUserId } from '../env/demo.config';
 import { DEMO_USER_ID } from '@pu-stats/data-access';
-import { VAPID_PUBLIC_KEY } from '@pu-reminders/reminders';
+import { PushSubscriptionService, VAPID_PUBLIC_KEY } from '@pu-push/push';
+import { SHOULD_SKIP_IN_APP_REMINDER } from '@pu-reminders/reminders';
 import { appRoutes } from './app.routes';
 
 export const appConfig: ApplicationConfig = {
@@ -104,9 +101,19 @@ export const appConfig: ApplicationConfig = {
     { provide: POST_AUTH_HOOKS, useClass: UserProfileSyncHook, multi: true },
     { provide: POST_AUTH_HOOKS, useClass: GuestDataMigrationHook, multi: true },
     { provide: VAPID_PUBLIC_KEY, useValue: firebaseRuntime.vapidPublicKey },
+    // Wire the reminders → push port: skip in-app notifications when server
+    // Web Push is delivering the same reminder, so the user doesn't get two
+    // sounds. The reminders lib has no compile-time knowledge of push.
+    {
+      provide: SHOULD_SKIP_IN_APP_REMINDER,
+      useFactory: () => {
+        const push = inject(PushSubscriptionService);
+        return () => push.status() === 'subscribed';
+      },
+    },
     // Stock ngsw at scope `/` — handles app shell + asset caching only.
     // Push + notification logic lives in a separate worker registered at
-    // `/push/` by PushSwRegistrationService (libs/reminders). Keeping ngsw
+    // `/push/` by PushSwRegistrationService (libs/push). Keeping ngsw
     // untouched means Angular updates can't accidentally break push.
     provideServiceWorker('ngsw-worker.js', {
       enabled: !isDevMode(),
