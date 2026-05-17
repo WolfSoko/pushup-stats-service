@@ -18,9 +18,9 @@ import { firstValueFrom } from 'rxjs';
 import { UserContextService } from '@pu-auth/auth';
 import {
   ExerciseFirestoreService,
-  LiveDataStore,
   StatsApiService,
 } from '@pu-stats/data-access';
+import { LiveDataStore } from '@pu-stats/data-access-state';
 import {
   canonicalizePushupType,
   displayPushupType,

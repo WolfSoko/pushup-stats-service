@@ -40,6 +40,16 @@ env:
     availability:
       - BUILD
 
+  # Default Node heap (~2 GB) OOMs during the Angular SSR build's
+  # Mark-Compact phase after bundle generation completes. GitHub Actions
+  # already bumps to 6144 for the Firebase deploy workflows
+  # (`.github/workflows/firebase-hosting-*.yml`); App Hosting needs the
+  # same headroom or the production build fails after ~430 s.
+  - variable: NODE_OPTIONS
+    value: '--max-old-space-size=6144'
+    availability:
+      - BUILD
+
 # Grant access to secrets in Cloud Secret Manager.
 # See https://firebase.google.com/docs/app-hosting/configure#secret-parameters
 scripts:

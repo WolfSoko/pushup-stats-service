@@ -20,9 +20,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import {
   ExerciseFirestoreService,
-  LiveDataStore,
   StatsApiService,
 } from '@pu-stats/data-access';
+import { LiveDataStore } from '@pu-stats/data-access-state';
 import { UserContextService } from '@pu-auth/auth';
 import {
   displayPushupType,

@@ -5,9 +5,9 @@ import { provideRouter } from '@angular/router';
 import { EntriesPageComponent } from './entries-page.component';
 import {
   ExerciseFirestoreService,
-  LiveDataStore,
   StatsApiService,
 } from '@pu-stats/data-access';
+import { LiveDataStore } from '@pu-stats/data-access-state';
 import { AuthStore } from '@pu-auth/auth';
 import { makeAuthStoreMock } from '@pu-stats/testing';
 import { AppDataFacade } from '../../core/app-data.facade';

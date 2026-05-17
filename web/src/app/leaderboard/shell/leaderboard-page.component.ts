@@ -4,7 +4,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 import { AuthStore, UserContextService } from '@pu-auth/auth';
-import { LeaderboardPeriod, LeaderboardStore } from '@pu-stats/data-access';
+import { LeaderboardPeriod } from '@pu-stats/data-access';
+import { LeaderboardStore } from '@pu-stats/data-access-state';
 import { PageHeaderComponent } from '../../core/page-header/page-header.component';
 
 @Component({

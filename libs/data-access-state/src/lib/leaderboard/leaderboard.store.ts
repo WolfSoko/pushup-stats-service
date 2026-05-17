@@ -14,7 +14,7 @@ import {
   LeaderboardEntry,
   LeaderboardPeriod,
   LeaderboardService,
-} from '../api/leaderboard.service';
+} from '@pu-stats/data-access';
 
 type LeaderboardState = {
   data: LeaderboardData | null;

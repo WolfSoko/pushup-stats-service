@@ -9,11 +9,8 @@ import {
   withState,
 } from '@ngrx/signals';
 import { firstValueFrom, of } from 'rxjs';
-import {
-  LiveDataStore,
-  StatsApiService,
-  UserStatsApiService,
-} from '@pu-stats/data-access';
+import { StatsApiService, UserStatsApiService } from '@pu-stats/data-access';
+import { LiveDataStore } from '@pu-stats/data-access-state';
 import { UserContextService } from '@pu-auth/auth';
 import {
   canonicalizePushupType,

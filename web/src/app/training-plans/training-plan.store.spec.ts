@@ -3,10 +3,10 @@ import { PLATFORM_ID, signal } from '@angular/core';
 import { BehaviorSubject, from, map, of } from 'rxjs';
 import { UserContextService } from '@pu-auth/auth';
 import {
-  LiveDataStore,
   StatsApiService,
   UserTrainingPlanApiService,
 } from '@pu-stats/data-access';
+import { LiveDataStore } from '@pu-stats/data-access-state';
 import {
   PushupCreate,
   PushupRecord,

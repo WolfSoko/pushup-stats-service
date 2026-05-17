@@ -4,12 +4,12 @@ import { of } from 'rxjs';
 import { StatsDashboardComponent } from './stats-dashboard.component';
 import {
   ExerciseFirestoreService,
-  LiveDataStore,
   StatsApiService,
   UserConfigApiService,
   UserStatsApiService,
   UserTrainingPlanApiService,
 } from '@pu-stats/data-access';
+import { LiveDataStore } from '@pu-stats/data-access-state';
 import { AuthStore, UserContextService } from '@pu-auth/auth';
 import { AdsStore } from '@pu-stats/ads';
 import { signal } from '@angular/core';

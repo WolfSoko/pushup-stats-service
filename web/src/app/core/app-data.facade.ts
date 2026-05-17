@@ -8,7 +8,8 @@ import {
 } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { UserContextService } from '@pu-auth/auth';
-import { LiveDataStore, StatsApiService } from '@pu-stats/data-access';
+import { StatsApiService } from '@pu-stats/data-access';
+import { LiveDataStore } from '@pu-stats/data-access-state';
 import { toBerlinIsoDate } from '@pu-stats/models';
 import { AdaptiveQuickAddService } from '@pu-stats/quick-add';
 import { TrainingPlanStore } from '../training-plans/training-plan.store';

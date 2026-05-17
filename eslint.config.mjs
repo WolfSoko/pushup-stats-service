@@ -38,14 +38,21 @@ export default [
               sourceTag: 'scope:data-access',
               onlyDependOnLibsWithTags: ['scope:models'],
             },
-            // reminders depends on data-access, motivation, and push (NOT auth).
-            // Runtime coupling to push state is via SHOULD_SKIP_IN_APP_REMINDER
-            // port, not by importing push stores.
+            // data-access-state owns reactive read-models (signal stores) layered
+            // on top of the stateless data-access API services.
+            {
+              sourceTag: 'scope:data-access-state',
+              onlyDependOnLibsWithTags: ['scope:models', 'scope:data-access'],
+            },
+            // reminders depends on data-access, data-access-state, motivation,
+            // and push (NOT auth). Runtime coupling to push state is via
+            // SHOULD_SKIP_IN_APP_REMINDER port, not by importing push stores.
             {
               sourceTag: 'scope:reminders',
               onlyDependOnLibsWithTags: [
                 'scope:models',
                 'scope:data-access',
+                'scope:data-access-state',
                 'scope:motivation',
                 'scope:push',
                 'scope:testing',
@@ -102,6 +109,7 @@ export default [
               onlyDependOnLibsWithTags: [
                 'scope:auth',
                 'scope:data-access',
+                'scope:data-access-state',
                 'scope:models',
                 'scope:reminders',
                 'scope:push',
