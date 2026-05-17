@@ -163,6 +163,10 @@ describe('heatmap.utils', () => {
     };
     expect(entryHeatmapValue(repsEntry, 'reps', 'primary')).toBe(30);
     expect(entryHeatmapValue(repsEntry, 'reps', 'breakdown')).toBe(3);
+    // Weight uses `reps` for the primary value (sets × reps with a load
+    // companion); the breakdown count still comes from the sets array.
+    expect(entryHeatmapValue(repsEntry, 'weight', 'primary')).toBe(30);
+    expect(entryHeatmapValue(repsEntry, 'weight', 'breakdown')).toBe(3);
 
     const timeEntry: HeatmapValueEntry = {
       timestamp: '2026-02-09T08:00:00',
@@ -179,6 +183,37 @@ describe('heatmap.utils', () => {
     expect(entryHeatmapValue(distanceEntry, 'distance-time', 'primary')).toBe(
       5000
     );
+    expect(entryHeatmapValue(distanceEntry, 'distance', 'primary')).toBe(5000);
+  });
+
+  it('entryHeatmapValue falls back to entry-count when measurement is null/undefined', () => {
+    const entry: HeatmapValueEntry = {
+      timestamp: '2026-02-09T08:00:00',
+      reps: 30,
+    };
+    expect(entryHeatmapValue(entry, null, 'primary')).toBe(1);
+    expect(entryHeatmapValue(entry, undefined, 'primary')).toBe(1);
+    // Mixed has no meaningful breakdown — defensive fallback is still 1.
+    expect(entryHeatmapValue(entry, null, 'breakdown')).toBe(1);
+    expect(entryHeatmapValue(entry, 'mixed', 'breakdown')).toBe(1);
+  });
+
+  it('entryHeatmapValue returns 0 when the primary value field is absent', () => {
+    // e.g. a time-measured entry with no durationSec, or a reps-measured
+    // entry with no reps — the cell should not get a phantom 1.
+    expect(
+      entryHeatmapValue({ timestamp: '2026-02-09T08:00:00' }, 'time', 'primary')
+    ).toBe(0);
+    expect(
+      entryHeatmapValue({ timestamp: '2026-02-09T08:00:00' }, 'reps', 'primary')
+    ).toBe(0);
+    expect(
+      entryHeatmapValue(
+        { timestamp: '2026-02-09T08:00:00' },
+        'distance',
+        'primary'
+      )
+    ).toBe(0);
   });
 
   describe('formatHeatmapCellLabel', () => {
@@ -266,13 +301,15 @@ describe('heatmap.utils', () => {
           mode: 'primary',
         })
       ).toBe('1:02:05 h');
+      // One decimal place — matches the compact cell label so the
+      // tooltip and the cell don't read as inconsistent precisions.
       expect(
         formatHeatmapTooltipValue({
           value: 5000,
           measurement: 'distance-time',
           mode: 'primary',
         })
-      ).toBe('5.00 km');
+      ).toBe('5.0 km');
       expect(
         formatHeatmapTooltipValue({
           value: 250,
@@ -280,6 +317,33 @@ describe('heatmap.utils', () => {
           mode: 'primary',
         })
       ).toBe('250 m');
+    });
+
+    it('returns plain integers (no unit) for breakdown and mixed modes', () => {
+      // The component appends the localized unit ("Intervalle"/"Sätze"/
+      // "Einträge") after this value — embedding a second unit here
+      // would render "4 min Intervalle".
+      expect(
+        formatHeatmapTooltipValue({
+          value: 4,
+          measurement: 'time',
+          mode: 'breakdown',
+        })
+      ).toBe('4');
+      expect(
+        formatHeatmapTooltipValue({
+          value: 3,
+          measurement: 'reps',
+          mode: 'breakdown',
+        })
+      ).toBe('3');
+      expect(
+        formatHeatmapTooltipValue({
+          value: 2,
+          measurement: 'mixed',
+          mode: 'primary',
+        })
+      ).toBe('2');
     });
   });
 

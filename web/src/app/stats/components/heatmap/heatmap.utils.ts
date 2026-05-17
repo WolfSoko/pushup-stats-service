@@ -231,5 +231,5 @@ function formatDistanceCompact(meters: number): string {
 function formatDistanceLong(meters: number): string {
   const v = Math.max(0, meters);
   if (v < 1000) return `${Math.round(v)} m`;
-  return `${(v / 1000).toFixed(2)} km`;
+  return `${(v / 1000).toFixed(1)} km`;
 }

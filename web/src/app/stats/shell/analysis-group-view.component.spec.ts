@@ -409,6 +409,77 @@ describe('AnalysisGroupViewComponent', () => {
     expect(store.viewPaceSeries()).toEqual([]);
   });
 
+  it('heatmap toggle shows Reps/Sets for reps-measured views', async () => {
+    liveExerciseEntries.set([
+      {
+        _id: 'e1',
+        userId: 'u1',
+        exerciseId: 'abs.situps',
+        timestamp: '2026-02-10T08:00:00.000Z',
+        reps: 30,
+        source: 'web',
+      } as ExerciseEntry,
+    ]);
+    const groupViewEl = fixture.debugElement.query(
+      By.directive(AnalysisGroupViewComponent)
+    );
+    const store = groupViewEl.injector.get(AnalysisStore);
+    store.setRange('2026-02-09', '2026-02-15');
+    store.setActiveView('core');
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    const groupView =
+      groupViewEl.componentInstance as AnalysisGroupViewComponent;
+    expect(groupView.heatmapMeasurement()).toBe('reps');
+    expect(groupView.heatmapToggleLabels()).toEqual({
+      primary: 'Reps',
+      breakdown: 'Sets',
+    });
+
+    const host: HTMLElement = fixture.nativeElement;
+    const toggle = host.querySelector('.heatmap-toggle');
+    expect(toggle?.textContent).toContain('Reps');
+    expect(toggle?.textContent).toContain('Sets');
+  });
+
+  it('heatmap toggle shows Strecke/Intervalle for distance-time views', async () => {
+    liveExerciseEntries.set([
+      {
+        _id: 'e1',
+        userId: 'u1',
+        exerciseId: 'cardio.running',
+        timestamp: '2026-02-10T08:00:00.000Z',
+        distanceM: 5000,
+        durationSec: 1500,
+        source: 'web',
+      } as ExerciseEntry,
+    ]);
+    const groupViewEl = fixture.debugElement.query(
+      By.directive(AnalysisGroupViewComponent)
+    );
+    const store = groupViewEl.injector.get(AnalysisStore);
+    store.setRange('2026-02-09', '2026-02-15');
+    store.setActiveView('cardio');
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    const groupView =
+      groupViewEl.componentInstance as AnalysisGroupViewComponent;
+    expect(groupView.heatmapMeasurement()).toBe('distance-time');
+    expect(groupView.heatmapToggleLabels()).toEqual({
+      primary: 'Strecke',
+      breakdown: 'Intervalle',
+    });
+
+    const host: HTMLElement = fixture.nativeElement;
+    const toggle = host.querySelector('.heatmap-toggle');
+    expect(toggle?.textContent).toContain('Strecke');
+    expect(toggle?.textContent).toContain('Intervalle');
+  });
+
   it('heatmap toggle switches to Zeit/Intervalle for time-measured views', async () => {
     liveExerciseEntries.set([
       {

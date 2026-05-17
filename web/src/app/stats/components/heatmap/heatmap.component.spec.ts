@@ -145,8 +145,10 @@ describe('HeatmapComponent', () => {
     const tooltip = opts.plugins.tooltip.callbacks.label({
       raw: { x: 'Mo', y: '08', v: 150 },
     });
-    expect(tooltip).toContain('2:30');
-    expect(tooltip).toContain('min');
+    // The formatter already embeds the unit ("min"); the component
+    // must not append it a second time — regression: previously
+    // `2:30 min min`.
+    expect(tooltip).toBe('Mo 08:00 - 2:30 min');
 
     const datalabel = opts.plugins.datalabels.formatter({
       x: 'Mo',
@@ -178,7 +180,9 @@ describe('HeatmapComponent', () => {
     const tooltip = opts.plugins.tooltip.callbacks.label({
       raw: { x: 'Mo', y: '08', v: 5000 },
     });
-    expect(tooltip).toContain('5.00 km');
+    // Tooltip must not append "Strecke" after the unit-bearing
+    // formatted value (regression: previously `5.00 km Strecke`).
+    expect(tooltip).toBe('Mo 08:00 - 5.0 km');
 
     const datalabel = opts.plugins.datalabels.formatter({
       x: 'Mo',
@@ -212,6 +216,6 @@ describe('HeatmapComponent', () => {
     const tooltip = opts.plugins.tooltip.callbacks.label({
       raw: { x: 'Mo', y: '08', v: 3 },
     });
-    expect(tooltip).toContain('Einträge');
+    expect(tooltip).toBe('Mo 08:00 - 3 Einträge');
   });
 });

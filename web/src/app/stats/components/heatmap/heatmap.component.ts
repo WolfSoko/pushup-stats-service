@@ -88,11 +88,13 @@ export class HeatmapComponent {
       return $localize`:@@heatmap.unit.intervals:Intervalle`;
     }
     switch (m) {
+      // `formatHeatmapTooltipValue` already embeds the unit for time
+      // (`2:30 min`, `1:02:05 h`) and distance (`750 m`, `5.00 km`) —
+      // appending another suffix would render `2:30 min min`.
       case 'time':
-        return $localize`:@@heatmap.unit.minutes:min`;
       case 'distance':
       case 'distance-time':
-        return $localize`:@@heatmap.unit.distance:Strecke`;
+        return '';
       case 'mixed':
         return $localize`:@@heatmap.unit.entries:Einträge`;
       case 'reps':
@@ -162,7 +164,8 @@ export class HeatmapComponent {
                 measurement,
                 mode,
               });
-              return `${v?.x ?? ''} ${v?.y ?? ''}:00 - ${formatted} ${unit}`;
+              const suffix = unit ? ` ${unit}` : '';
+              return `${v?.x ?? ''} ${v?.y ?? ''}:00 - ${formatted}${suffix}`;
             },
           },
         },

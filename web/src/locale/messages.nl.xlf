@@ -4584,7 +4584,7 @@
     <unit id="heatmap.unit.entries">
       <segment state="translated">
         <source>Einträge</source>
-        <target>Items</target>
+        <target>Vermeldingen</target>
       </segment>
     </unit>
     <unit id="previewBanner.text">
