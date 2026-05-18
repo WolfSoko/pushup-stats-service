@@ -7205,7 +7205,7 @@
       <target>高级</target></segment>
     </unit>
 
-    
+    <!-- Exercises wiki page -->
     <unit id="seo.wiki.exercises.title">
       <segment state="translated">
         <source>Übungen erklärt – Pushup Tracker</source>

@@ -36,6 +36,21 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
         'Bei jeder Wiederholung kurz oben pausieren (1 s) für mehr Reiz bei gleicher Wiederholungszahl.',
       ],
     },
+    el: {
+      name: 'Κρανίαλ (Crunches)',
+      summary:
+        'Σύντομη κάμψη του ανώτερου ράχη — απομόνωση του ορθού κοιλιακού μυός χωρίς παρεμβολή των κάμπτορών του ισχίου.',
+      instructions: [
+        'Ξαπλώνεις ύπτιος, τα γόνατα λυγισμένα, τα πόδια ακίνητα στο έδαφος.',
+        'Τα χέρια ελαφρά πίσω από τα αυτιά ή σταυρωτά στο στήθος.',
+        'Ανύψωση μόνο των λεπίδων των ώμων από το έδαφος — η κάτω μέση μένει σταθερή.',
+        'Κατέβασμα υπό έλεγχο, χωρίς να χάσεις την τάση στο κάτω σημείο.',
+      ],
+      tips: [
+        'Το σαγόνι ευθεία προς το στήθος χωρίς να τραβήξεις ενεργά — η κοιλιά κάνει τη δουλειά, όχι ο λαιμός.',
+        'Προσθήκη 1 δευτερολέπτου κρατήματος στην κορυφή αυξάνει το ερέθισμα με τον ίδιο αριθμό επαναλήψεων.',
+      ],
+    },
     en: {
       name: 'Crunches',
       summary:
@@ -49,6 +64,110 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       tips: [
         'Chin loose toward the chest, but do not actively pull — the abs do the work, not the neck.',
         'Add a 1-second hold at the top to increase the stimulus at the same rep count.',
+      ],
+    },
+    es: {
+      name: 'Abdominales',
+      summary:
+        'Flexión corta de la parte superior de la espalda — aísla el recto abdominal sin que los flexores de la cadera tomen protagonismo.',
+      instructions: [
+        'Acuéstate boca arriba, rodillas dobladas, pies planos en el suelo.',
+        'Manos ligeramente detrás de las orejas o cruzadas sobre el pecho.',
+        'Levanta solo los omóplatos del suelo — la zona lumbar debe mantenerse en contacto con el suelo.',
+        'Baja bajo control, nunca pierdas completamente la tensión en la parte inferior.',
+      ],
+      tips: [
+        'La barbilla relajada hacia el pecho, pero sin tirar activamente — los abdominales hacen el trabajo, no el cuello.',
+        'Agrega una pausa de 1 segundo en la parte superior para aumentar el estímulo sin aumentar las repeticiones.',
+      ],
+    },
+    fr: {
+      name: 'Crunch',
+      summary:
+        'Flexion courte du haut du dos — isole le grand droit sans que les fléchisseurs de la hanche prennent le contrôle.',
+      instructions: [
+        'Allongé sur le dos, genoux fléchis, pieds à plat sur le sol.',
+        'Mains légèrement derrière les oreilles ou croisées sur la poitrine.',
+        'Relevez uniquement les omoplates du sol — le bas du dos reste en contact.',
+        'Descendez de façon contrôlée, en gardant la tension en bas.',
+      ],
+      tips: [
+        'Menton détendu vers la poitrine, sans tirer activement — les abdominaux font le travail, pas le cou.',
+        'Ajoutez une pause de 1 seconde en haut pour augmenter le stimulus au même nombre de répétitions.',
+      ],
+    },
+    it: {
+      name: 'Addominali crunch',
+      summary:
+        "Breve arricciamento del dorso superiore — isola il retto addominale senza il coinvolgimento dei flessori dell'anca.",
+      instructions: [
+        'Sdraiati sulla schiena, ginocchia piegate, piedi appoggiati a terra.',
+        'Mani leggere dietro le orecchie o incrociate sul petto.',
+        'Solleva solo le spalle da terra — la parte bassa della schiena rimane ferma.',
+        'Abbassa in modo controllato, mantenendo sempre tensione.',
+      ],
+      tips: [
+        'Il mento verso il petto (naturalmente), senza tirare il collo — sono gli addominali che lavorano.',
+        'Aggiungi una pausa di 1 secondo in alto per aumentare lo stimolo a parità di ripetizioni.',
+      ],
+    },
+    la: {
+      name: 'Flexiones',
+      summary:
+        'Flexio brevis dorsi superioris — rectus abdominis sine multiplicibus tensionibus coxalis.',
+      instructions: [
+        'Supine, genua flexa, pedes in pavimento.',
+        'Manus leve post aures vel pectore opposito.',
+        'Scapulas tantum leva, dorsum inferius in pavimento remansit.',
+        'Deorsum sub tensione, numquam in fine tensionem omnino amitte.',
+      ],
+      tips: [
+        'Mentum laxe ad pectus, sed collo non tracta — musculi abdominis laborem faciunt, non collum.',
+        'Stationem unius secundae in summitate adde ut stimulus crescat.',
+      ],
+    },
+    nl: {
+      name: 'Crunches',
+      summary:
+        'Korte bovenrug-buiging — isoleert de rectus abdominis zonder dat de heupflexoren overnemen.',
+      instructions: [
+        'Lig op je rug, knieën gebogen, voeten plat op de vloer.',
+        'Handen licht achter de oren of gekruist op de borst.',
+        'Til alleen de schouderblaadjes van de vloer — de onderrug blijft op de grond.',
+        'Laat zakken onder controle, verlies nooit volledig de spanning onderaan.',
+      ],
+      tips: [
+        'Kin losjes naar de borst, maar trek niet actief — de buikspierin doen het werk, niet de nek.',
+        'Voeg een 1-seconde pauze bovenaan toe om de stimulus bij dezelfde herhalingen te vergroten.',
+      ],
+    },
+    no: {
+      name: 'Crunches',
+      summary:
+        'Kort øvre ryggrull – isolerer rectus abdominis uten at hoftefleksorer overtar.',
+      instructions: [
+        'Ligge på ryggen med bøyde knær og flate føtter på gulvet.',
+        'Hendene lett bak örene eller krysset over brystet.',
+        'Løft bare skulderblad av gulvet – nedre rygg forblir på matta.',
+        'Senk med kontroll, aldri helt av spenningen nederst.',
+      ],
+      tips: [
+        'Haken løst mot brystet, men ikke trekk aktivt – abdomene gjør arbeidet, ikke halsen.',
+        'Legg til 1 sekunds pause øverst for å øke stimulansen med samme antall repetisjoner.',
+      ],
+    },
+    zh: {
+      name: '仰卧起坐（卷腹）',
+      summary: '短幅度上背弯曲——隔离腹直肌，避免髂腰肌过度参与。',
+      instructions: [
+        '仰卧，膝盖弯曲，脚踏地面。',
+        '双手轻轻放在耳朵后方或交叉放在胸部。',
+        '仅抬起肩胛骨离地，下背部保持紧贴地面。',
+        '控制速度下降，底部不要完全失去张力。',
+      ],
+      tips: [
+        '下巴放松地靠近胸部，但不要主动拉扯——腹肌做功，不是颈部。',
+        '在顶部停顿1秒钟可以在相同的次数内增加刺激。',
       ],
     },
   },
@@ -68,6 +187,21 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
         'Schulterblätter im Hang aktiv nach unten ziehen, sonst macht der Schultergürtel die Arbeit.',
       ],
     },
+    el: {
+      name: 'Ανύψωση ποδιών',
+      summary:
+        'Ανύψωση ποδιών ξαπλωμένος ή κρεμασμένος — έμφαση στο κάτω τμήμα του κοιλιακού τοιχώματος.',
+      instructions: [
+        'Ξαπλώνεις ύπτιος ή κρέμεσαι από μια μπάρα pull-up.',
+        'Τα πόδια ίσια ή ελαφρώς λυγισμένα, ανύψωση προς την οροφή αργά.',
+        'Η οσφυϊκή σπονδυλική στήλη (ξαπλωμένος) ή ο κορμός (κρεμασμένος) παραμένει ακίνητη — χωρίς κούνημα.',
+        'Κατέβασμα υπό έλεγχο, χωρίς κρούση στο έδαφος και χωρίς χαμογέλαιο στο κάτω σημείο.',
+      ],
+      tips: [
+        'Εξέλιξη: γόνατα λυγισμένα → γόνατα στο στήθος → ίσια πόδια στο οριζόντιο.',
+        'Στο κρέμασμα, δρέπε ενεργά τις λεπίδες των ώμων ή ο ώμιος τραβά τη δουλειά.',
+      ],
+    },
     en: {
       name: 'Leg Raises',
       summary:
@@ -81,6 +215,110 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       tips: [
         'Progression: knees tucked → knees to chest → straight legs to horizontal.',
         'In the hang, actively depress the shoulder blades or the shoulder girdle ends up doing the work.',
+      ],
+    },
+    es: {
+      name: 'Elevaciones de piernas',
+      summary:
+        'Elevaciones de piernas tumbado o colgado — enfatiza la porción inferior de la pared abdominal.',
+      instructions: [
+        'Túmbate boca arriba o cuelgate de una barra de dominadas.',
+        'Piernas rectas o ligeramente dobladas, levántalas lentamente hacia el techo.',
+        'Columna lumbar (tumbado) o torso (colgado) se mantiene inmóvil — sin balanceos.',
+        'Baja bajo control, sin golpear el suelo ni hacer movimiento de chicotazo en la parte inferior.',
+      ],
+      tips: [
+        'Progresión: rodillas metidas → rodillas al pecho → piernas rectas hasta la horizontal.',
+        'En la posición colgada, deprime activamente los omóplatos o los hombros terminan haciendo el trabajo.',
+      ],
+    },
+    fr: {
+      name: 'Montées de jambes',
+      summary:
+        "Levées de jambes allongé ou suspendu — met l'accent sur la partie inférieure de la sangle abdominale.",
+      instructions: [
+        'Allongez-vous sur le dos ou suspendez-vous à une barre de traction.',
+        'Jambes tendues ou légèrement fléchies, soulevez-les lentement vers le plafond.',
+        'La colonne lombaire (allongé) ou le torse (suspendu) reste immobile — pas de balancement.',
+        'Abaissez de façon contrôlée, sans slamming au sol et sans kipping en bas.',
+      ],
+      tips: [
+        "Progression : genoux fléchis → genoux vers la poitrine → jambes tendues à l'horizontale.",
+        'En suspension, déprimez activement les omoplates ou la ceinture scapulaire fait tout le travail.',
+      ],
+    },
+    it: {
+      name: 'Alzate gambe',
+      summary:
+        'Sollevamento gambe da disteso o in sospensione — enfatizza la parte inferiore della parete addominale.',
+      instructions: [
+        'Sdraiati sulla schiena oppure sospeso a una sbarra di trazioni.',
+        'Gambe dritte o leggermente piegate, sollevale lentamente verso il soffitto.',
+        'La colonna lombare (da disteso) o il busto (in sospensione) rimane immobile — niente oscillazioni.',
+        'Abbassa in modo controllato, senza sbattere contro il pavimento e senza oscillazioni in basso.',
+      ],
+      tips: [
+        'Progressione: ginocchia piegate — ginocchia al petto — gambe dritte in orizzontale.',
+        'In sospensione, attiva consapevolmente la depressione scapolare altrimenti i deltoidi fanno il lavoro.',
+      ],
+    },
+    la: {
+      name: 'Crura Elevata',
+      summary:
+        'Crura elevata supina vel pendentia — inferiorem partem muralis abdominis emphasisa.',
+      instructions: [
+        'Supine vel ex barra suspensia.',
+        'Crura recta vel leve flexa, lente ad caelum tolle.',
+        'Spina lumbaris (supina) vel truncus (pendentia) quies manet — nullum molimen.',
+        'Deorsum sub tensione, numquam in pavimentum collidentia et nullum kipping in fine.',
+      ],
+      tips: [
+        'Progressio: genua cohaerentia → genua ad pectus → crura recta horizontalia.',
+        'Pendentia, deprime scapulas active vel spatula pars laborem omnem faciet.',
+      ],
+    },
+    nl: {
+      name: 'Beenraises',
+      summary:
+        'Beenraises liggend of hangend — leggen nadruk op het lagere deel van de buikwand.',
+      instructions: [
+        'Lig op je rug of hang aan een pull-up balk.',
+        'Benen recht of licht gebogen, til ze langzaam naar het plafond.',
+        'Lendenwervels (liggend) of romp (hangend) blijven stil — geen zwaaiing.',
+        'Laat zakken onder controle, niet tegen de vloer klappen en geen kipping onderaan.',
+      ],
+      tips: [
+        'Progressie: knieën getrokken → knieën naar borst → benen recht tot horizontaal.',
+        'Zet in de hang actief de schouderblaadjes neer of het schoudergordel eindigt ermee het werk te doen.',
+      ],
+    },
+    no: {
+      name: 'Leg Raises',
+      summary:
+        'Liggende eller hengende beinhevninger – fokus på nedre del av abdominalveggen.',
+      instructions: [
+        'Enten ligge på ryggen eller henge fra pullup-stang.',
+        'Bena rette eller litt bøyd, løft dem sakte mot taket.',
+        'Lenderygg (liggende) eller torso (hengende) forblir stille – ingen svingging.',
+        'Senk med kontroll, ingen dunking i gulvet og ingen kiping nederst.',
+      ],
+      tips: [
+        'Progresjon: knær tuklet → knær til bryst → rette bein til horisontal.',
+        'I hengende stilling, deprimer aktivt skulderbladene eller skulderleddet gjør hele arbeidet.',
+      ],
+    },
+    zh: {
+      name: '悬垂腿举',
+      summary: '仰卧或悬垂时抬腿——重点锻炼腹壁下部。',
+      instructions: [
+        '仰卧在地上或悬挂在引体向上杆上。',
+        '双腿伸直或略微弯曲，缓慢抬向天花板。',
+        '腰椎（仰卧时）或躯干（悬垂时）保持静止——不要摇晃。',
+        '控制速度下降，不要砸向地面，底部不要有摇晃。',
+      ],
+      tips: [
+        '进阶：膝盖卷曲→膝盖靠近胸部→直腿至水平。',
+        '在悬垂时，主动压低肩胛骨，否则肩关节会承担过多压力。',
       ],
     },
   },
@@ -100,6 +338,21 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
         'Variante: Cross-Body (Knie zum gegenüberliegenden Ellenbogen) trifft die schrägen Bauchmuskeln stärker.',
       ],
     },
+    el: {
+      name: 'Mountain Climbers',
+      summary:
+        'Γρήγοροι εναλλακτικοί χτυπήματα γόνατος από θέση push-up — κοιλιά, κάμπτορες ισχίου και καρδιακό στη μία άσκηση.',
+      instructions: [
+        'Ψηλό plank σαν αρχή push-up, χέρια κάτω από τους ώμους, σώμα σε ευθεία γραμμή.',
+        'Τράβηξη ενός γόνατος προς το στήθος, κατόπιν επιστροφή καθώς το άλλο κινείται μπροστά.',
+        'Το ρυθμό επιλέγεις — γρήγορο για καρδιακό, αργό για περισσότερη κοιλιακή τάση.',
+        'Τα ισχία παραμένουν χαμηλά — χωρίς κόψιμο ή ταλάντευση πλευρά προς πλευρά.',
+      ],
+      tips: [
+        'Μέτρησε «αριστερά + δεξιά = 1 επανάληψη» για συνέπεια της καταγραφής.',
+        'Παραλλαγή: διασταυρωμένο (γόνατο προς αντίθετο αγκώνα) χτυπά περισσότερο τους πλάγιους.',
+      ],
+    },
     en: {
       name: 'Mountain Climbers',
       summary:
@@ -113,6 +366,110 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       tips: [
         'Count "left + right = 1 rep" so logs stay consistent.',
         'Variant: cross-body (knee to the opposite elbow) hits the obliques more.',
+      ],
+    },
+    es: {
+      name: 'Escaladores de montaña',
+      summary:
+        'Impulsos alternados rápidos de las rodillas desde posición de flexión — abdominales, flexores de cadera y cardio en uno.',
+      instructions: [
+        'Posición de flexión alta como al comenzar una flexión, manos bajo los hombros, cuerpo en línea recta.',
+        'Lleva una rodilla al pecho, luego devuélvela mientras el otro impulsa hacia adelante.',
+        'El tempo es tu elección — rápido para cardio, lento para más tensión abdominal.',
+        'Las caderas se mantienen bajas — sin levantamiento o balanceo lateral.',
+      ],
+      tips: [
+        'Cuenta izquierda + derecha = 1 repetición para que los registros sean consistentes.',
+        'Variante: diagonal (rodilla al codo opuesto) enfatiza más los oblicuos.',
+      ],
+    },
+    fr: {
+      name: 'Mountain Climbers',
+      summary:
+        'Entraînement rapide des genoux depuis une position de pompe — abdominaux, fléchisseurs de hanche et cardio en un.',
+      instructions: [
+        "Position planche haute comme au départ d'une pompe, mains sous les épaules, corps en ligne droite.",
+        "Tirez un genou vers la poitrine, puis ramenez-le pendant que l'autre avance.",
+        'Le tempo vous appartient — rapide pour le cardio, lent pour plus de tension abdominale.',
+        'Les hanches restent basses — pas de pike ou de balancement latéral.',
+      ],
+      tips: [
+        'Comptez « gauche + droite = 1 répétition » pour que les logs restent cohérents.',
+        'Variante : corps croisé (genou vers le coude opposé) sollicite plus les obliques.',
+      ],
+    },
+    it: {
+      name: 'Mountain climbers',
+      summary:
+        "Spinte del ginocchio alternate velocemente da posizione di piegamento — addominali, flessori dell'anca e cardio in uno.",
+      instructions: [
+        'Plank alto come inizio di piegamento, mani sotto le spalle, corpo in linea retta.',
+        "Porta un ginocchio al petto, poi tornalo mentre l'altro avanza.",
+        'Il ritmo è tuo — veloce per il cardio, lento per più tensione addominale.',
+        'I fianchi rimangono bassi — niente oscillazioni o spostamenti laterali.',
+      ],
+      tips: [
+        "Conta 'sinistra + destra = 1 rep' per mantenere coerenza nei registri.",
+        'Variante: ginocchio al gomito opposto colpisce più gli obliqui.',
+      ],
+    },
+    la: {
+      name: 'Montium Ascensores',
+      summary:
+        'Celeris alternatio genu ad pressionem — musculi abdominis, flexores coxae et cardio in uno.',
+      instructions: [
+        'Tabula alta ut pressio incipiat, manus sub humeris, corpus in lineam rectam.',
+        'Unum genu ad pectus tracta, tum restitue dum alterum prosiliet.',
+        'Tempus eligit — velociter ad cardio, lente ad tensionem abdominalem maiorem.',
+        'Coxae humiles manent — nullum piking vel rocking.',
+      ],
+      tips: [
+        '"Sinistrum + dextrum = unum reputatum" ut res constantes maneat.',
+        'Varians: inter corpora (genu ad cubito opposito) obliquos magis ferit.',
+      ],
+    },
+    nl: {
+      name: 'Mountain Climbers',
+      summary:
+        'Snelle afwisselende kniedrieven vanuit een push-uppositie — buik, heupflexoren en cardio in één.',
+      instructions: [
+        'Hoge plank als start van een opdruk, handen onder de schouders, lichaam in een rechte lijn.',
+        'Trek één knie naar de borst, laat dan los als de ander naar voren komt.',
+        'Tempo is je keuze — snel voor cardio, langzaam voor meer buikspanning.',
+        'Heupen blijven laag — geen piking of zijwaarts wiegen.',
+      ],
+      tips: [
+        'Tel "links + rechts = 1 herhaling" dus logs blijven consistent.',
+        'Variant: lichaamsoversteking (knie naar tegenovergestelde elleboog) raakt schuin meer.',
+      ],
+    },
+    no: {
+      name: 'Mountain Climbers',
+      summary:
+        'Raske vekslende kneløft fra push-up posisjon – mage, hoftefleksorer og kardio i ett.',
+      instructions: [
+        'Høyt plank som push-up start, hendene under skuldrene, kroppen i rett linje.',
+        'Trekk ett kne mot brystet, så bring det tilbake når det andre kjører fremover.',
+        'Tempo er valgfritt – raskt for kardio, sakte for mer abdominal spenning.',
+        'Hofter forblir lave – ingen piking eller sideveis vipping.',
+      ],
+      tips: [
+        'Tell venstre + høyre = 1 repetisjonsrekke for konsistens.',
+        'Variant: cross-body (kne til motsatt albue) treffer obliquene hardere.',
+      ],
+    },
+    zh: {
+      name: '爬山式',
+      summary: '从俯卧撑位置快速交替抬膝——腹肌、髂腰肌和有氧运动合一。',
+      instructions: [
+        '高平板位置（俯卧撑起始），双手在肩膀下方，身体成一直线。',
+        '拉动一个膝盖靠近胸部，当它返回时另一个膝盖向前驱动。',
+        '节奏由你选择——快速用于有氧运动，缓慢用于更多腹部张力。',
+        '髋部保持低位——不要翘起或左右摇晃。',
+      ],
+      tips: [
+        '计数"左+右=1次"使记录保持一致。',
+        '变式：跨身爬山（膝盖朝向对侧肘部）更多地锻炼斜肌。',
       ],
     },
   },
@@ -132,6 +489,21 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
         'Eine Wiederholung = einmal links und einmal rechts.',
       ],
     },
+    el: {
+      name: 'Ρωσική περιστροφή',
+      summary:
+        'Περιστροφή κορμού ενώ κάθεσαι — περιστροφική δύναμη και πλάγιοι κοιλιακοί.',
+      instructions: [
+        'Κάθεσαι στους γλουτούς, γόνατα λυγισμένα, πόδια είτε ανυψωμένα είτε στο έδαφος.',
+        'Ο κορμός λυγίζει ελαφρώς προς τα πίσω με ίσια (όχι στρογγυλεμένη) μέση.',
+        'Τα χέρια δεμένα μπροστά από το στήθος (ή κρατώντας βάρος)· περιστροφή αριστερά–δεξιά ρυθμικά.',
+        'Κίνηση από τον κορμό, όχι από τα χέρια.',
+      ],
+      tips: [
+        'Φόρτωση με αλτήρα, kettlebell ή μπουκάλι νερού για αύξηση της δυσκολίας.',
+        'Μία επανάληψη = μία περιστροφή αριστερά ΚΑΙ μία προς τα δεξιά.',
+      ],
+    },
     en: {
       name: 'Russian Twist',
       summary: 'Seated torso rotation — rotational strength and obliques.',
@@ -144,6 +516,105 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       tips: [
         'Load with a dumbbell, kettlebell or water bottle to scale up.',
         'One rep = one twist to the left AND one to the right.',
+      ],
+    },
+    es: {
+      name: 'Giro ruso',
+      summary: 'Rotación del torso sentado — fuerza rotacional y oblicuos.',
+      instructions: [
+        'Siéntate sobre los glúteos, rodillas dobladas, pies levantados o en el suelo.',
+        'Inclina el torso ligeramente hacia atrás con la espalda plana (no redondeada).',
+        'Manos entrelazadas frente al pecho (o sosteniendo un peso); rota izquierda-derecha rítmicamente.',
+        'El movimiento proviene del tronco, no de los brazos.',
+      ],
+      tips: [
+        'Agrega carga con una mancuerna, kettlebell o botella de agua para aumentar la dificultad.',
+        'Una repetición = un giro a la izquierda Y uno a la derecha.',
+      ],
+    },
+    fr: {
+      name: 'Rotation russe',
+      summary: 'Rotation du torse assis — force rotationnelle et obliques.',
+      instructions: [
+        'Assis sur les fessiers, genoux fléchis, pieds soulevés ou au sol.',
+        'Penchez le torse légèrement en arrière avec un dos plat (pas arrondi).',
+        'Mains jointes devant la poitrine (ou tenant un poids) ; tournez gauche-droite régulièrement.',
+        'Le mouvement vient du tronc, pas des bras.',
+      ],
+      tips: [
+        "Chargez avec un haltère, une kettlebell ou une bouteille d'eau pour progresser.",
+        'Une répétition = une rotation à gauche ET une à droite.',
+      ],
+    },
+    it: {
+      name: 'Russian twist',
+      summary:
+        'Rotazione del busto in posizione seduta — forza rotazionale e obliqui.',
+      instructions: [
+        'Siediti sui glutei, ginocchia piegate, piedi sollevati o poggiati a terra.',
+        'Inclina leggermente il busto indietro con schiena piatta (non arrotondata).',
+        'Mani unite davanti al petto (o che tengono un peso); ruota sinistra-destra ritmicamente.',
+        'Il movimento viene dal tronco, non dalle braccia.',
+      ],
+      tips: [
+        "Carica con un manubrio, kettlebell o bottiglia d'acqua per aumentare la difficoltà.",
+        'Una ripetizione = una torsione a sinistra E una a destra.',
+      ],
+    },
+    la: {
+      name: 'Tormentum Russicum',
+      summary: 'Rotatio torsi sedentia — vires rotatoriae et obliqui.',
+      instructions: [
+        'Nates sedete, genua flexa, pedes vel elevati vel in pavimento.',
+        'Truncum paulum retrorsum incline cum dorso plano.',
+        'Manus iunctae ante pectus (vel onus tenentes); sinistram dextraque rotate.',
+        'Motus ex trunco, non ex brachiis.',
+      ],
+      tips: [
+        'Onus adiunge — halter, situlas aquae vel lagenas ad aumento scalarum.',
+        'Unum reputatum = tormentum sinistrum ET dextrum.',
+      ],
+    },
+    nl: {
+      name: 'Russian Twist',
+      summary: 'Zittende rompdraaing — rotatiekracht en schuin.',
+      instructions: [
+        'Zit op je billen, knieën gebogen, voeten getild of op de grond.',
+        'Leun de romp licht achterover met een vlakke (niet afgeronde) rug.',
+        'Handen geklapt voor de borst (of houdend een gewicht); roteer links-rechts ritimisch.',
+        'Beweging komt van de romp, niet van de armen.',
+      ],
+      tips: [
+        'Laad met een halter, kettlebell of waterfles om schaal omhoog te gaan.',
+        'Eén herhaling = één draai naar links EN één naar rechts.',
+      ],
+    },
+    no: {
+      name: 'Russian Twist',
+      summary: 'Sitende torsorotasjon – rotasjonsstyrke og obliques.',
+      instructions: [
+        'Sitt på rumpa med bøyde knær, føtter enten løftet eller på gulvet.',
+        'Lut torso litt bakover med flat (ikke rundkurvet) rygg.',
+        'Hendene samlet foran brystet (eller hold en vekt); roter venstre–høyre rytmisk.',
+        'Bevegelsen kommer fra stammen, ikke fra armene.',
+      ],
+      tips: [
+        'Laster med håndvekt, kettlebell eller vannflaske for å skalere opp.',
+        'En rep = en vridning til venstre OG en til høyre.',
+      ],
+    },
+    zh: {
+      name: '俄罗斯转体',
+      summary: '坐姿躯干旋转——旋转力量和斜肌。',
+      instructions: [
+        '坐在臀部上，膝盖弯曲，脚要么抬起要么贴地。',
+        '躯干略微向后倾，背部保持平直（不要圆背）。',
+        '双手在胸部前方交叉握拳（或握住哑铃），左右有节奏地旋转。',
+        '运动来自躯干，不是从双臂。',
+      ],
+      tips: [
+        '用哑铃、壶铃或水瓶增加负荷以提升难度。',
+        '一次重复=向左转一次且向右转一次。',
       ],
     },
   },
@@ -163,6 +634,21 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
         'Decline-Variante (Beine erhöht) macht es spürbar härter.',
       ],
     },
+    el: {
+      name: 'Sit-ups',
+      summary:
+        'Κλασική κάμψη κορμού από ύπτια σε όρθια θέση — η απλούστερη άσκηση απευθείας κοιλιακή.',
+      instructions: [
+        'Ξαπλώνεις ύπτιος, γόνατα λυγισμένα, πόδια στο έδαφος (ασφαλής ή σφιγμένα κάτω από κάτι).',
+        'Χέρια πίσω από το κεφάλι ή σταυρωτά στο στήθος — χωρίς τράβηγμα στον λαιμό.',
+        'Κάμψη του κορμού προς τα πάνω υπό κοιλιακό έλεγχο μέχρι να κάθεσαι όρθιος.',
+        'Κατέβασμα προς τα κάτω με τον ίδιο έλεγχο — χωρίς ρίψη στο έδαφος.',
+      ],
+      tips: [
+        'Αν ο λαιμός παραπονιέται, χρησιμοποίησε crunches ή dead bugs αντί αυτού.',
+        'Η παραλλαγή decline (πόδια ανυψωμένα) καθιστά πολύ δυσκολότερη.',
+      ],
+    },
     en: {
       name: 'Sit-ups',
       summary:
@@ -176,6 +662,110 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       tips: [
         'If your neck complains, use crunches or dead bugs instead.',
         'The decline variant (feet elevated) makes it noticeably harder.',
+      ],
+    },
+    es: {
+      name: 'Abdominales tradicionales',
+      summary:
+        'Curl clásico del torso desde posición supina hasta sentado — el ejercicio abdominal directo más simple.',
+      instructions: [
+        'Acuéstate boca arriba, rodillas dobladas, pies planos en el suelo (sujetos o metidos bajo algo).',
+        'Manos detrás de la cabeza o cruzadas sobre el pecho — no tires del cuello.',
+        'Levanta el torso bajo control abdominal hasta sentarte erguido.',
+        'Baja con el mismo control — no caigas al suelo.',
+      ],
+      tips: [
+        'Si el cuello se queja, usa abdominales o ejercicios muertos en su lugar.',
+        'La variante declinada (pies elevados) la hace notablemente más difícil.',
+      ],
+    },
+    fr: {
+      name: 'Redressements assis',
+      summary:
+        "Flexion classique du torse du couché au redressement — l'exercice abdominal direct le plus simple.",
+      instructions: [
+        'Allongé sur le dos, genoux fléchis, pieds à plat sur le sol (ancrés ou coincés sous quelque chose).',
+        'Mains derrière la tête ou croisées sur la poitrine — ne tirez pas sur le cou.',
+        "Relevez le torse sous contrôle abdominal jusqu''à vous asseoir.",
+        'Redescendez avec le même contrôle — ne vous laissez pas tomber.',
+      ],
+      tips: [
+        'Si votre cou vous gêne, utilisez plutôt des crunches ou du dead bug.',
+        'La variante déclinée (pieds surélevés) est notablement plus difficile.',
+      ],
+    },
+    it: {
+      name: 'Addominali crunch completo',
+      summary:
+        "Classico arricciamento del busto dalla posizione supina a seduta — l'esercizio addominale più diretto e semplice.",
+      instructions: [
+        'Sdraiati sulla schiena, ginocchia piegate, piedi appoggiati a terra (ancorati o infilati sotto qualcosa).',
+        'Mani dietro la testa o incrociate sul petto — non tirare il collo.',
+        "Arrotola il busto verso l'alto controllando gli addominali finché non sei seduto.",
+        'Abbassa controllando — non precipitarti a terra.',
+      ],
+      tips: [
+        'Se il collo protesta, usa i crunch o il dead bug al suo posto.',
+        'La variante declinata (piedi elevati) la rende notevolmente più difficile.',
+      ],
+    },
+    la: {
+      name: 'Assurgentiae',
+      summary:
+        'Flexio torsi classica ex supino ad sedentem — exercitium abdominis simplicissimum.',
+      instructions: [
+        'Supine, genua flexa, pedes in pavimento (fixati vel sub aliquo).',
+        'Manus post caput vel pectore opposito — collum ne tracta.',
+        'Truncum sub vires abdominales flecte donec sedeas.',
+        'Deorsum cum eadem tensione — noli in pavimentum cadere.',
+      ],
+      tips: [
+        'Si collum est molestum, flexiones vel muscae mortui potius eligite.',
+        'Varians declinans (pedes elevati) notabiliter durius fit.',
+      ],
+    },
+    nl: {
+      name: 'Sit-ups',
+      summary:
+        'Klassieke rompbuiging van rugligging naar rechtop zitten — de eenvoudigste directe buikoefening.',
+      instructions: [
+        'Lig op je rug, knieën gebogen, voeten plat op de vloer (verankerd of onder iets getrokken).',
+        'Handen achter het hoofd of gekruist op de borst — trek niet aan de nek.',
+        'Til de romp op onder buikcontrole totdat je rechtop zit.',
+        'Laat terug zakken met dezelfde controle — val niet tegen de vloer.',
+      ],
+      tips: [
+        'Als je nek klaagt, gebruik crunches of dead bugs in plaats daarvan.',
+        'De decline variant (voeten verhoogd) maakt het merkbaar harder.',
+      ],
+    },
+    no: {
+      name: 'Sit-ups',
+      summary:
+        'Klassisk torsorull fra rygglig til opprett sittende – den enkleste direkte abs-øvelse.',
+      instructions: [
+        'Ligge på ryggen med bøyde knær og flate føtter på gulvet (forankret eller tuklet under noe).',
+        'Hendene bak hodet eller krysset over brystet – ikke dra i halsen.',
+        'Rull torso opp under abdominal kontroll til du sitter opprett.',
+        'Senk ned med samme kontroll – ikke dropp inn i gulvet.',
+      ],
+      tips: [
+        'Hvis halsen klager, bruk crunches eller dead bugs i stedet.',
+        'Decline variant (føtter høyt) gjør det merkbart vanskeligere.',
+      ],
+    },
+    zh: {
+      name: '仰卧起坐',
+      summary: '经典的躯干卷起，从仰卧到竖直坐姿——最简单直接的腹肌锻炼。',
+      instructions: [
+        '仰卧，膝盖弯曲，脚踏地面（固定或卡在什么东西下面）。',
+        '双手在头后或交叉放在胸部——不要拉扯颈部。',
+        '在腹肌控制下卷起躯干，直到竖直坐立。',
+        '以相同的控制方式放下——不要砸向地面。',
+      ],
+      tips: [
+        '如果颈部感到不适，改做卷腹或死虫式。',
+        '下斜式变体（脚部抬高）难度会明显增加。',
       ],
     },
   },
@@ -195,6 +785,21 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
         'Skalierung: Liegestütze weglassen, Sprung durch Aufstehen ersetzen — beides macht es zugänglicher.',
       ],
     },
+    el: {
+      name: 'Burpees',
+      summary:
+        'Πλήρες σώμα cardio από squat σε push-up σε άλμα — το δυσκολότερο πρότυπο χωρίς εξοπλισμό.',
+      instructions: [
+        'Όρθιος, πέσε σε squat και τοποθέτησε τα χέρια μπροστά από τα πόδια.',
+        'Άλμα και των δύο ποδιών προς πίσω σε plank, προαιρετικά εκτελέστε ένα push-up.',
+        'Άλμα ποδιών μπροστά κάτω από το σώμα, πίσω σε squat.',
+        'Εκρήγνυση προς τα πάνω σε άλμα, χέρια χτυπώντας σύντομα πάνω από το κεφάλι.',
+      ],
+      tips: [
+        'Επιλογή ρυθμού ανάλογα με την εμπειρία εκπαίδευσης — η μορφή νικά την ταχύτητα.',
+        'Κλιμάκωση: παράλειψη του push-up· αντικατάσταση του άλματος με όρθιο — και τα δύο καθιστούν προσιτό.',
+      ],
+    },
     en: {
       name: 'Burpees',
       summary:
@@ -208,6 +813,110 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       tips: [
         'Choose tempo by training age — form beats speed.',
         'Scaling: skip the push-up; replace the jump with standing up — both make it accessible.',
+      ],
+    },
+    es: {
+      name: 'Burpees',
+      summary:
+        'Cardio de cuerpo completo desde sentadilla a flexión a salto — el estándar más exigente sin equipamiento.',
+      instructions: [
+        'Párate erguido, cae en sentadilla y coloca las manos frente a los pies.',
+        'Salta con ambas piernas hacia atrás en posición de flexión, opcionalmente realiza una flexión.',
+        'Salta las piernas hacia adelante bajo el cuerpo, volviendo a la sentadilla.',
+        'Explota hacia arriba en un salto, con las manos aplaudiendo brevemente sobre la cabeza.',
+      ],
+      tips: [
+        'Elige el tempo según tu nivel de entrenamiento — la forma vence la velocidad.',
+        'Escaladas: omite la flexión; reemplaza el salto por ponerse de pie — ambas la hacen más accesible.',
+      ],
+    },
+    fr: {
+      name: 'Burpees',
+      summary:
+        'Cardio complet du corps du squat à la pompe au saut — le plus difficile sans équipement.',
+      instructions: [
+        'Debout, passez en squat et posez les mains devant vos pieds.',
+        "Sautez les jambes vers l'arrière en planche, optionnellement effectuez une pompe.",
+        "Sautez les jambes vers l'avant sous le corps, retour en squat.",
+        'Explosez vers le haut en saut, mains se frappant brièvement au-dessus de la tête.',
+      ],
+      tips: [
+        'Choisissez le tempo selon votre expérience — la forme prime sur la vitesse.',
+        'Scaling : omettez la pompe ; remplacez le saut par un relevé — les deux le rendent plus accessible.',
+      ],
+    },
+    it: {
+      name: 'Burpees',
+      summary:
+        'Cardio a corpo intero dallo squat al piegamento al salto — il più difficile senza attrezzi.',
+      instructions: [
+        'Stai in piedi, scendi nello squat e posiziona le mani davanti ai piedi.',
+        'Salta le gambe indietro in plank, opzionalmente esegui un piegamento.',
+        'Salta le gambe in avanti sotto il corpo, tornando nello squat.',
+        "Esplodi verso l'alto in un salto, mani che si toccano brevemente sopra la testa.",
+      ],
+      tips: [
+        'Scegli il ritmo in base alla tua esperienza — forma prima di velocità.',
+        'Varianti più semplici: salta il piegamento, sostituisci il salto con alzarsi in piedi.',
+      ],
+    },
+    la: {
+      name: 'Burpees',
+      summary:
+        'Cardio totius corporis ex genuflexione ad pressionem ad saltum — difficillima sine instrumentis.',
+      instructions: [
+        'Sta, in genuflexionem cade et manus ante pedes pone.',
+        'Ambo crura in tabulam salta, optime unam pressionem perfice.',
+        'Crura sub corpus antrorsum salta, in genuflexionem redire.',
+        'In saltum exsurge, manus breve super caput.',
+      ],
+      tips: [
+        'Tempus eligit secundum aetatem — forma velocitate melior.',
+        'Scalae: pressionem omitte; saltum cum assurgemento substitue — ambo accessa faciunt.',
+      ],
+    },
+    nl: {
+      name: 'Burpees',
+      summary:
+        'Full-body cardio van squat naar opdruk naar sprong — de lastigste no-equipment standaard.',
+      instructions: [
+        'Sta rechtop, zak in een squat en plaats handen voor je voeten.',
+        'Spring beide benen terug in een plank, voer optioneel één opdruk uit.',
+        'Spring je benen naar voren onder het lichaam, terug in een squat.',
+        'Explodeer omhoog in een sprong, handen klappen kort boven je hoofd.',
+      ],
+      tips: [
+        'Kies tempo op basis van trainingsleeftijd — vorm slaat snelheid.',
+        'Schaal: sla de opdruk over; vervang de sprong door rechtop staan — beide maken het toegankelijker.',
+      ],
+    },
+    no: {
+      name: 'Burpees',
+      summary:
+        'Fullkropps kardio fra squat til push-up til hopp – den tøffeste no-equipment standard.',
+      instructions: [
+        'Stå oppreist, dropp inn i squat og plasser hendene foran føttene.',
+        'Hopp begge bena bakover til plank, eventuelt gjør en push-up.',
+        'Hopp bena fremover under kroppen, tilbake til squat.',
+        'Eksploderoppover med hopp, hendene klappende kort over hodet.',
+      ],
+      tips: [
+        'Velg tempo etter treningserfarelse – form slår hastighet.',
+        'Skalering: hopp over push-up; erstatt hopp med å stå opp – begge gjør det tilgjengelig.',
+      ],
+    },
+    zh: {
+      name: '波比跳',
+      summary: '从深蹲到俯卧撑到跳跃的全身有氧动作——最硬核的无器械标准。',
+      instructions: [
+        '站立，跳入深蹲，双手放在脚前面。',
+        '向后跳跃双腿进入平板支撑，可以选择做一个俯卧撑。',
+        '向前跳跃双腿进入身体下方，回到深蹲。',
+        '爆发式地跳起，双手在头上方短暂拍掌。',
+      ],
+      tips: [
+        '根据训练年龄选择速度——形式优于速度。',
+        '缩放：跳过俯卧撑；用站立代替跳跃——两者都可以让它更容易接受。',
       ],
     },
   },
@@ -227,6 +936,21 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
         'Klick-Pedale erhöhen Effizienz, brauchen aber Eingewöhnung.',
       ],
     },
+    el: {
+      name: 'Ποδηλασία',
+      summary:
+        'Φιλική προς τις αρθρώσεις εκπαίδευση αντοχής σε δρόμο, δρόμο ή ποδήλατο εσωτερικού χώρου.',
+      instructions: [
+        'Ρύθμιση της σέλας ώστε το γόνατο να παραμένει ελαφρώς λυγισμένο (10-15°) στο κάτω μέρος — χωρίς πλήρως εκτεταμένο πόδι.',
+        'Συχνότητα περιστροφής 80-100 rpm για αποτελεσματική ποδηλασία — λιγότερη ροπή, λιγότερη φθορά γόνατος.',
+        'Χέρια χαλαρά στη μπάρα, ώμοι κάτω — χωρίς σήκωμα.',
+        'Προσαρμογή της αναπνοής στο ρυθμό.',
+      ],
+      tips: [
+        'Μέτρηση προσπάθειας με watts ή καρδιακό ρυθμό — αγνό «αίσθημα» είναι παραπλανητικό.',
+        'Clips πεντάλ αυξάνουν την αποδοτικότητα αλλά χρειάζονται λίγα δρομολόγια για συνήθεια.',
+      ],
+    },
     en: {
       name: 'Cycling',
       summary:
@@ -240,6 +964,110 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       tips: [
         'Gauge effort with power (watts) or heart rate — pure "feel" is misleading.',
         'Clip pedals raise efficiency but need a few rides to get used to.',
+      ],
+    },
+    es: {
+      name: 'Ciclismo',
+      summary:
+        'Entrenamiento de resistencia cómodo para las articulaciones en bicicleta estática, carretera o montaña.',
+      instructions: [
+        'Ajusta el sillín para que la rodilla permanezca ligeramente (10-15°) doblada en el punto más bajo — sin extensión total.',
+        'Cadencia 80-100 rpm para un pedaleo eficiente — menos torque, menos desgaste articular.',
+        'Manos relajadas en el manillar, hombros hacia abajo — sin encogimiento.',
+        'Adapta la respiración al ritmo.',
+      ],
+      tips: [
+        'Mide el esfuerzo con potencia (vatios) o frecuencia cardíaca — la «sensación» es engañosa.',
+        'Los pedales automáticos aumentan la eficiencia pero requieren algunos paseos para acostumbrarse.',
+      ],
+    },
+    fr: {
+      name: 'Cyclisme',
+      summary:
+        "Entraînement d'endurance doux pour les articulations sur route, sentier ou vélo intérieur.",
+      instructions: [
+        'Réglez la selle pour que le genou reste légèrement (10-15°) fléchi en bas — jambe pas totalement tendue.',
+        "Cadence 80-100 tr/min pour un pédalage efficace — moins de couple, moins d'usure du genou.",
+        'Mains détendues sur le guidon, épaules baissées — pas haussées.',
+        'Adaptez la respiration au rythme.',
+      ],
+      tips: [
+        "Mesurez l'effort avec la puissance (watts) ou la fréquence cardiaque — la perception seule trompe.",
+        "Les pédales automatiques augmentent l'efficacité mais demandent quelques sorties pour s'y habituer.",
+      ],
+    },
+    it: {
+      name: 'Ciclismo',
+      summary:
+        'Allenamento di resistenza delicato per le articolazioni su strada, sentiero o bicicletta indoor.',
+      instructions: [
+        'Posiziona la sella in modo che il ginocchio rimanga leggermente piegato (10-15°) nel punto più basso — niente gamba completamente estesa.',
+        'Cadenza 80-100 rpm per pedalata efficiente — meno coppia, meno usura al ginocchio.',
+        'Mani rilassate sul manubrio, spalle abbassate — non sollevate.',
+        'Adatta la respirazione al ritmo.',
+      ],
+      tips: [
+        "Valuta lo sforzo con la potenza (watt) o la frequenza cardiaca — il puro 'intuito' è ingannevole.",
+        "I pedali a scatto aumentano l'efficienza ma richiedono qualche uscita per abituarsi.",
+      ],
+    },
+    la: {
+      name: 'Equitatio Mechanica',
+      summary:
+        'Exercitatio resistentiae, articulis gratia — idae, dorsum et condicio in uno cyclo.',
+      instructions: [
+        'Sellam sic constitue ut genu leve flecti maneat (10-15°) in fundamento — crura numquam plane extensa.',
+        'Cadentia 80-100 rpm — minus tormentum, minus usura genu.',
+        'Manus relaxatae, humeri deorsum — non elevati.',
+        'Spiratio tempori accommodata.',
+      ],
+      tips: [
+        'Quantum exercendi — wattium vel cardiarum — versus sensus purus fallat.',
+        'Pedales adhaerentes vim augebunt, sed paucae equitationes consuetudinis indigent.',
+      ],
+    },
+    nl: {
+      name: 'Fietsen',
+      summary:
+        'Gewrichtsvriendelijke trainingsvariant op weg, trail of hometrainer.',
+      instructions: [
+        'Zet het zadel zo dat de knie licht (10-15°) gebogen blijft onderaan — geen volledig gestrekte benen.',
+        'Cadans 80-100 tpm voor efficiënt trappen — minder koppel, minder kniesleet.',
+        'Handen ontspannen op het stuur, schouders naar beneden — niet opgehaald.',
+        'Pas ademhaling aan aan het tempo.',
+      ],
+      tips: [
+        'Beoordeel inspanning met vermogen (watt) of hartslag — puur "voelen" is misleidend.',
+        'Clippedale verbeteren efficiëntie maar kosten een paar ritten om aan te wennen.',
+      ],
+    },
+    no: {
+      name: 'Cycling',
+      summary:
+        'Leddselvonnelig utholdenhetstrening på vei, stier eller innendørs sykkel.',
+      instructions: [
+        'Still sadelen slik at kneet forblir litt (10-15°) bøyd nederst – ikke fullt strukket ben.',
+        'Kadanse 80-100 rpm for effektiv pedalering – mindre dreiemoment, mindre slitasje på kne.',
+        'Hendene avslappet på styret, skuldrene ned – ikke trukket opp.',
+        'Tilpass pusting til tempoet.',
+      ],
+      tips: [
+        'Måle innsats med watt eller pulsfrekvens – ren «følelse» er villedende.',
+        'Klips-pedaler øker effektivitet men trenger noen turer å vende seg til.',
+      ],
+    },
+    zh: {
+      name: '自行车骑行',
+      summary: '对关节友好的耐力训练，在公路、山地或室内自行车上进行。',
+      instructions: [
+        '调整车座高度使膝盖在底部保持略微弯曲（10-15°）——不要完全伸展。',
+        '踏频80-100转/分用于高效骑行——扭矩更小，膝盖磨损更少。',
+        '双手放松地握住把手，肩膀放松——不要耸肩。',
+        '呼吸节奏跟随骑行步调。',
+      ],
+      tips: [
+        '用功率（瓦数）或心率衡量努力——纯粹的感觉欺骗性很强。',
+        '脚踏夹板提高效率但需要几次骑行才能适应。',
       ],
     },
   },
@@ -259,6 +1087,21 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
         'Wenn die Knie nicht hoch kommen, ist es Joggen auf der Stelle — keine Übung.',
       ],
     },
+    el: {
+      name: 'Ψηλά γόνατα',
+      summary:
+        'Τρέξιμο στη θέση με ψηλό χτύπημα γόνατος — αύξηση καρδιακού ρυθμού και πρόετοιμασία κάμπτορα ισχίου.',
+      instructions: [
+        'Όρθιος, χέρια σε γωνία πυγμάχου.',
+        'Εναλλακτική κίνηση των γονάτων προς το ύψος του ισχίου (ή ψηλότερα) σε γρήγορο ρυθμό.',
+        'Προσγείωση στο μπάλες των ποδιών, ελατηριώδης και ησυχία.',
+        'Παραμονή όρθιος — χωρίς να λυγίσεις μπροστά για να «συναντήσεις» τα γόνατα.',
+      ],
+      tips: [
+        'Μεγάλη καρδιακή ριπή μεταξύ σειρών (30-60 δ.) — χωρίς εξοπλισμό, αρκετό ερέθισμα.',
+        'Αν τα γόνατα δεν ανέρχονται, είναι τρέξιμο στη θέση — όχι η άσκηση.',
+      ],
+    },
     en: {
       name: 'High Knees',
       summary:
@@ -272,6 +1115,110 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       tips: [
         'Great cardio burst between sets (30-60 s) — no gear, plenty of stimulus.',
         "If the knees don't come up, it's jogging in place — not the exercise.",
+      ],
+    },
+    es: {
+      name: 'Rodillas altas',
+      summary:
+        'Carrera en el lugar con impulso alto de rodillas — acelerador de frecuencia cardíaca y preparador de flexores de cadera.',
+      instructions: [
+        'Párate erguido, brazos en posición de boxeador.',
+        'Alterna impulsando las rodillas hasta la altura de la cadera (o superior) a un ritmo rápido.',
+        'Aterriza sobre las puntas de los pies, saltando de forma ágil y silenciosa.',
+        'Mantente erguido — no te inclines hacia adelante para «encontrar» las rodillas.',
+      ],
+      tips: [
+        'Excelente explosión cardio entre series (30-60 s) — sin equipamiento, mucho estímulo.',
+        'Si las rodillas no suben, es trotar en el lugar — no es el ejercicio.',
+      ],
+    },
+    fr: {
+      name: 'Montées de genoux',
+      summary:
+        'Course sur place avec poussée haute des genoux — boosteur de fréquence cardiaque et amorce des fléchisseurs de hanche.',
+      instructions: [
+        'Debout, bras en position boxeur.',
+        'Alternez en poussant les genoux vers la hauteur des hanches (ou plus) rapidement.',
+        "Atterrissez sur l'avant du pied, de façon souple et silencieuse.",
+        'Restez droit — ne penchez pas en avant pour « rencontrer » les genoux.',
+      ],
+      tips: [
+        'Excellent burst cardio entre les séries (30-60 s) — aucun équipement, beaucoup de stimulus.',
+        "Si les genoux ne montent pas, c'est du jogging sur place — pas l'exercice.",
+      ],
+    },
+    it: {
+      name: 'High knees',
+      summary:
+        "Corsa sul posto con sollevamento delle ginocchia alto — acceleratore della frequenza cardiaca e primer dei flessori dell'anca.",
+      instructions: [
+        "Stai in piedi eretto, braccia all'angolo da pugile.",
+        "Alterna il sollevamento delle ginocchia fino all'altezza dell'anca (o più in alto) a ritmo veloce.",
+        'Atterra sulla pianta del piede, elasticamente e silenziosamente.',
+        'Rimani eretto — non inclinarti in avanti per incontrare le ginocchia.',
+      ],
+      tips: [
+        'Ottima esplosione cardio tra le serie (30-60 s) — nessun attrezzo, molto stimolo.',
+        'Se le ginocchia non salgono alto, è jogging sul posto — non è questo esercizio.',
+      ],
+    },
+    la: {
+      name: 'Genua Alta',
+      summary:
+        'Currentia loco cum altis genubus — cordis frequentia augetur et flexores coxae praeparantur.',
+      instructions: [
+        'Rectus sta, bracchia ad pugilarem angulum.',
+        'Genua celeriter ad altitudinem coxae vel altiorem alterna.',
+        'Pedes in digitos cade, elastic et silentio.',
+        'Rectus mane — ne inclina ut genua occurras.',
+      ],
+      tips: [
+        'Optimum cardio-impetum inter series (30-60 s) — nullum instrumentum, stimulus multus.',
+        'Genua non ascendentia — non cursus sed exercitium hoc est.',
+      ],
+    },
+    nl: {
+      name: 'High Knees',
+      summary:
+        'Hardlopen op één plek met hoge kniedrijf — hartslag verhoger en heupflexor voorbereider.',
+      instructions: [
+        'Sta rechtop, armen in bokershoek.',
+        'Wissel af door de knieën naar heuphoogte (of hoger) in snel tempo omhoog te duwen.',
+        'Land op de balletjes van je voeten, veerkrachtig en stil.',
+        'Blijf rechtop — leun niet naar voren om de knieën "tegemoet te komen".',
+      ],
+      tips: [
+        'Geweldige cardio burst tussen series (30-60 s) — geen uitrusting, veel stimulus.',
+        'Als de knieën niet omhoog komen, is het joggen op plaats — niet deze oefening.',
+      ],
+    },
+    no: {
+      name: 'High Knees',
+      summary:
+        'Løping på stedet med høyt kneløft – pulsfrekvensboost og hoftefleksor-primer.',
+      instructions: [
+        'Stå oppreist med armene i boksvinkel.',
+        'Veksl med å kjøre knærne opp til hoftehøyde (eller høyere) i raskt tempo.',
+        'Land på fotulen, fjærende og stille.',
+        'Forbli oppreist – ikke lut fremover for å møte knærne.',
+      ],
+      tips: [
+        'Flott kardio-burst mellom sett (30-60 s) – ingen utstyr, mye stimuli.',
+        'Hvis knærne ikke kommer opp, er det jogging på stedet – ikke øvelsen.',
+      ],
+    },
+    zh: {
+      name: '高抬腿',
+      summary: '原地跑步时高膝驱动——心率快速提升和髂腰肌启动。',
+      instructions: [
+        '站立，双臂保持拳击手势。',
+        '交替快速驱动膝盖抬至髋部高度（或更高）。',
+        '在脚前端着地，轻快有弹性。',
+        '保持竖直——不要向前倾来"迎接"膝盖。',
+      ],
+      tips: [
+        '非常适合组间有氧冲刺（30-60秒）——无需器械，刺激充足。',
+        '如果膝盖没有抬高，那就只是原地慢跑——不是这个动作。',
       ],
     },
   },
@@ -291,6 +1238,21 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
         'Knieprobleme? Step-Touch-Variante (statt springen seitlich treten) bietet niedrigeren Impact.',
       ],
     },
+    el: {
+      name: 'Jumping Jacks',
+      summary:
+        'Κλασική κίνηση θέρμανσης και καρδιακή — ώμοι, ισχία και καρδιακός ρυθμός σε μία.',
+      instructions: [
+        'Όρθιος, πόδια μαζί, χέρια κατά τα πλάγια.',
+        'Σε ένα άλμα, άνοιγμα ποδιών στο πλάι ενώ ανύψωση χεριών πάνω από το κεφάλι.',
+        'Στο επόμενο άλμα, επιστροφή στην αρχική θέση.',
+        'Ρυθμική κίνηση, προσγείωση부드 στα μπάλες των ποδιών.',
+      ],
+      tips: [
+        'Τέλεια θέρμανση πριν από push-up ή περιόδους τρεξίματος — 2-3 λεπτά αρκούν.',
+        'Τα γόνατα παραπονιέται; Βήμα-αγγίζουν αντί άλματος για παραλλαγή χαμηλού αντικτύπου.',
+      ],
+    },
     en: {
       name: 'Jumping Jacks',
       summary:
@@ -304,6 +1266,110 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       tips: [
         'Perfect warm-up before push-up or running sessions — 2-3 minutes is enough.',
         'Knees complaining? Step-touch instead of jumping for a low-impact variant.',
+      ],
+    },
+    es: {
+      name: 'Saltadores',
+      summary:
+        'Movimiento clásico de calentamiento y cardio — hombros, caderas y frecuencia cardíaca en uno.',
+      instructions: [
+        'Párate erguido, pies juntos, brazos a los lados.',
+        'En un salto, separa las piernas lateralmente mientras levantas los brazos por encima de la cabeza.',
+        'En el siguiente salto, vuelve al inicio.',
+        'Mantén un ritmo constante, aterrizando suavemente sobre las puntas de los pies.',
+      ],
+      tips: [
+        'Calentamiento perfecto antes de sesiones de flexiones o carrera — 2-3 minutos es suficiente.',
+        'Las rodillas se quejan? Haz step-touch en lugar de saltar para una variante de bajo impacto.',
+      ],
+    },
+    fr: {
+      name: 'Jumping Jacks',
+      summary:
+        "Mouvement classique d'échauffement et cardio — épaules, hanches et fréquence cardiaque en un.",
+      instructions: [
+        'Debout, pieds joints, bras le long du corps.',
+        'En un saut, écartez les jambes sur les côtés tout en levant les bras au-dessus de la tête.',
+        'Au saut suivant, revenez au départ.',
+        "Gardez un rythme régulier, atterrissez doucement sur l'avant du pied.",
+      ],
+      tips: [
+        'Échauffement parfait avant des séances de pompes ou de course — 2-3 minutes suffisent.',
+        'Les genoux se plaignent ? Faites du pas-touche au lieu de sauter pour une variante sans impact.',
+      ],
+    },
+    it: {
+      name: 'Saltelli',
+      summary:
+        'Classico movimento di riscaldamento e cardio — spalle, fianchi e frequenza cardiaca in uno.',
+      instructions: [
+        'Stai in piedi, piedi uniti, braccia lungo i fianchi.',
+        'In un salto, apri le gambe lateralmente mentre alzi le braccia sopra la testa.',
+        'Al salto successivo, torna alla posizione iniziale.',
+        'Mantieni il ritmo, atterra dolcemente sulla pianta del piede.',
+      ],
+      tips: [
+        'Perfetto riscaldamento prima di sessioni di piegamenti o corsa — 2-3 minuti sono sufficienti.',
+        'Le ginocchia non sopportano i salti? Fai step-touch al posto dei salti per una variante a basso impatto.',
+      ],
+    },
+    la: {
+      name: 'Saltus Gemini',
+      summary:
+        'Motus classicus praeparationis et cardio — humeri, coxae et cordis frequentia in uno.',
+      instructions: [
+        'Rectus sta, pedes simul, bracchia ad latera.',
+        'Unum saltum, crura lateraliter sparge dum bracchia supra caput tollas.',
+        'Proximo saltu, ad initium redire.',
+        'Rhythmicum teneto, pedes in digitos molliter cadens.',
+      ],
+      tips: [
+        'Praeparatio optima ante sessionem pressionis vel currentis — 2-3 minuta satis.',
+        'Genua molesta? Digitorum tactus saltum loco — varians sine impactu.',
+      ],
+    },
+    nl: {
+      name: 'Jumping Jacks',
+      summary:
+        'Klassieke opwarm- en cardiobeweging — schouders, heupen en hartslag in één.',
+      instructions: [
+        'Sta rechtop, voeten bij elkaar, armen langs de zijkanten.',
+        'Spreid in één sprong de benen opzij terwijl je armen boven je hoofd tilt.',
+        'Bij de volgende sprong keer je terug naar de start.',
+        'Houd het ritimisch, land zacht op de balletjes van je voeten.',
+      ],
+      tips: [
+        'Perfect opwarmbeweging voor opdruk- of hardloopsessies — 2-3 minuten volstaat.',
+        'Klagen je knieën? Doe in plaats van springen step-touch voor een low-impact variant.',
+      ],
+    },
+    no: {
+      name: 'Jumping Jacks',
+      summary:
+        'Klassisk oppvarmings- og kardio-bevegelse – skuldre, hofter og pulsfrekvens i ett.',
+      instructions: [
+        'Stå oppreist med føttene sammen, armene langs sidene.',
+        'I ett hopp, spre bena til siden mens du løfter armene over hodet.',
+        'Ved neste hopp, tilbake til start.',
+        'Hold det rytmisk, landing mykt på fotulen.',
+      ],
+      tips: [
+        'Perfekt oppvarming før push-up eller løpinger – 2-3 minutter er nok.',
+        'Klager knærne? Skritt-touch i stedet for hopping for low-impact variant.',
+      ],
+    },
+    zh: {
+      name: '开合跳',
+      summary: '经典热身和有氧动作——肩膀、髋部和心率一起锻炼。',
+      instructions: [
+        '站立，双脚并拢，双臂垂于身侧。',
+        '一次跳跃中，向两侧分开双腿同时抬起双臂头顶。',
+        '下一次跳跃时返回起始位置。',
+        '保持节奏，在脚前端着地。',
+      ],
+      tips: [
+        '在俯卧撑或跑步前的完美热身——2-3分钟足够。',
+        '膝盖不适？用踏步触碰代替跳跃作为低冲击变式。',
       ],
     },
   },
@@ -323,6 +1389,21 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
         'Doppeltakt nicht erzwingen — erst sauberer Grund-Rhythmus, dann Tempo.',
       ],
     },
+    el: {
+      name: 'Σχοινί άλματος',
+      summary:
+        'Cardio υψηλής έντασης με ελάχιστο εξοπλισμό — δύναμη γάμπας, συντονισμός και κατάσταση.',
+      instructions: [
+        'Κάντε το μέγεθος του σχοινιού ώστε τα χέρια να φτάσουν στη μέση του κορμού όταν στέκεσαι στη μέση του.',
+        'Όρθιος, αγκώνες κοντά στο σώμα, κίνηση από τους καρπούς.',
+        'Μικρά, γρήγορα άλματα — μόνο αρκετό για να διαπεράσεις το σχοινί (1-2 εκ.).',
+        'Προσγείωση στα μπάλες των ποδιών, γόνατα απορροφώντας — χωρίς πτώση φτέρνας.',
+      ],
+      tips: [
+        'Αρχάριοι, μέτρησε σειρές σε σετ (3 × 50)· προχωρημένοι κατά τη διάρκεια (3 × 60 δ.).',
+        'Μη αναγκάζεις double-unders — πρώτα καθαρό βασικό ρυθμό, κατόπιν προσθήκη ταχύτητας.',
+      ],
+    },
     en: {
       name: 'Jump Rope',
       summary:
@@ -336,6 +1417,110 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       tips: [
         'Beginners count reps in sets (3 × 50); advanced over time (3 × 60 s).',
         "Don't force double-unders — get a clean basic rhythm first, then add speed.",
+      ],
+    },
+    es: {
+      name: 'Saltar la cuerda',
+      summary:
+        'Cardio de alta intensidad con equipo mínimo — fuerza de pantorrilla, coordinación y acondicionamiento.',
+      instructions: [
+        'Ajusta la cuerda para que los mangos lleguen al esternón cuando estés de pie sobre el medio.',
+        'Párate erguido, codos cerca del cuerpo, el movimiento proviene de las muñecas.',
+        'Pequeños saltos rápidos — solo lo suficiente para pasar la cuerda (1-2 cm).',
+        'Aterriza sobre las puntas de los pies, rodillas absorbiendo — sin golpear con los talones.',
+      ],
+      tips: [
+        'Los principiantes cuentan en series (3 × 50); avanzados en tiempo (3 × 60 s).',
+        'No fuerces dobles — primero consigue un ritmo básico limpio, luego agrega velocidad.',
+      ],
+    },
+    fr: {
+      name: 'Corde à sauter',
+      summary:
+        'Cardio intense avec équipement minimal — force des mollets, coordination et conditionnement.',
+      instructions: [
+        'Dimensionnez la corde pour que les poignées atteignent le milieu du sternum quand vous vous tenez sur le milieu.',
+        'Debout, coudes près du corps, le mouvement vient des poignets.',
+        'Petits sauts rapides — juste assez pour passer la corde (1-2 cm).',
+        "Atterrissez sur l'avant du pied, genoux absorbant — pas de talon lourd.",
+      ],
+      tips: [
+        'Les débutants comptent les répétitions en séries (3 × 50) ; les avancés sur le temps (3 × 60 s).',
+        "Ne forcez pas les double unders — maîtrisez d'abord un rythme de base propre, puis ajoutez la vitesse.",
+      ],
+    },
+    it: {
+      name: 'Corda per saltare',
+      summary:
+        'Cardio ad alta intensità con minimo attrezzo — forza del polpaccio, coordinazione e condizionamento.',
+      instructions: [
+        'Regola la corda in modo che i manici raggiungano il metà sterno quando stai in piedi sul mezzo della corda.',
+        'Stai in piedi eretto, gomiti vicini al corpo, il movimento viene dai polsi.',
+        'Piccoli salti veloci — giusti per far passare la corda (1-2 cm).',
+        'Atterra sulla pianta del piede, le ginocchia assorbono — niente "calpestamento" del tallone.',
+      ],
+      tips: [
+        'I principianti contino le ripetizioni in serie (3 × 50); avanzati nel tempo (3 × 60 s).',
+        'Non forzare i doppi salti — prima una base solida e ritmica, poi aumenta la velocità.',
+      ],
+    },
+    la: {
+      name: 'Funis Saltatio',
+      summary:
+        'Cardio intensissimum cum minimo instrumentum — certa, coordinatio et condicio.',
+      instructions: [
+        'Funem sic constitue ut capita ad medium-pectoris pertingant cum pedibus funis in medio.',
+        'Rectus sta, cubiti prope corpus, motus e carpiis venit.',
+        'Saltus parvi celeriter — iusta funem liberare (1-2 cm).',
+        'Pedes in digitos cadera, genua absorbentia — nulla plantarum vox.',
+      ],
+      tips: [
+        'Incipientes — computationes in seriebus (3 × 50); periti in tempore (3 × 60 s).',
+        'Duplices impetus ne coges — rhythmum purum primo perfice, tum celeritatem adiunge.',
+      ],
+    },
+    nl: {
+      name: 'Springtouw',
+      summary:
+        'High-intensity cardio met minimale uitrusting — kuitkracht, coördinatie en conditioning.',
+      instructions: [
+        'Maak het touw zo groot dat de handvaten je midden-borstbeen bereiken als je op het midden staat.',
+        'Sta rechtop, ellebogen dicht bij het lichaam, de beweging komt van de polsen.',
+        'Kleine, snelle hops — net genoeg om het touw te laten passeren (1-2 cm).',
+        'Land op de balletjes van je voeten, knieën absorberen — geen hakken steunen.',
+      ],
+      tips: [
+        'Beginners tellen herhalingen in series (3 × 50); gevorderden na verloop van tijd (3 × 60 s).',
+        'Forceer geen double-unders — krijg eerst een schoon basisritme, voeg dan snelheid toe.',
+      ],
+    },
+    no: {
+      name: 'Jump Rope',
+      summary:
+        'High-intensity kardio med minimal utstyr – laftestyrke, koordinasjon og kondisjon.',
+      instructions: [
+        'Skalér tauet så håndtakene når midtbrystet når du står på midten av det.',
+        'Stå oppreist med albuer tett inntil kroppen, bevegelsen kommer fra håndleddene.',
+        'Små, raske hopp – bare nok til å rømme tauet (1-2 cm).',
+        'Land på fotulen, knær absorberer – ingen hælstamping.',
+      ],
+      tips: [
+        'Nybegynnere teller repetisjoner i sett (3 × 50); avansert over tid (3 × 60 s).',
+        'Ikke tving double-unders – få først en ren grunnrhytme, så legg til hastighet.',
+      ],
+    },
+    zh: {
+      name: '跳绳',
+      summary: '用最少器械进行高强度有氧运动——小腿力量、协调和耐力。',
+      instructions: [
+        '调整绳长使手柄在你站在绳中点时达到中胸位置。',
+        '站立，肘部贴近身体，动作来自手腕。',
+        '小幅快速跳跃——仅够绳子通过（1-2厘米）。',
+        '在脚前端着地，膝盖吸收冲击——不要足跟重着。',
+      ],
+      tips: [
+        '初学者以组数计数（3×50下）；进阶者按时间（3×60秒）。',
+        '不要强行做二重跳——先掌握基本节奏，再加速。',
       ],
     },
   },
@@ -355,6 +1540,21 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
         'Ziel-Schlagfrequenz 18-26 Züge pro Minute für Ausdauer; höher für Intervalle.',
       ],
     },
+    el: {
+      name: 'Κωπηλασία (Εσωτερικά)',
+      summary:
+        'Πλήρες σώμα cardio στο ergometer — πόδια, πλάτη και κατάσταση σε μία κίνηση.',
+      instructions: [
+        'Catch: γόνατα λυγισμένα, κνήμες κάθετες, χέρια εκτεταμένα, κορμός ελαφρώς μπροστά.',
+        'Drive: σπρώξου τα πόδια πρώτα, κατόπιν κούνησε τον κορμό προς τα πίσω, τέλος τράβηξε τα χέρια προς τις κάτω πλευρές των πλευρών.',
+        'Finish: πόδια ίσια, κορμός λυγισμένος ελαφρώς προς τα πίσω (~11 ώρες), χέρια στις κάτω πλευρές των πλευρών.',
+        'Recovery: αντίστροφη αλληλουχία — χέρια εκτείνονται, κορμός μπροστά, γόνατα λυγίζουν.',
+      ],
+      tips: [
+        '60-70% της δύναμης προέρχεται από τα πόδια — μη υπερβολική τράβηξη με τα χέρια.',
+        'Στόχος ρυθμό κυπέλλου 18-26 spm για αντοχή· υψηλότερο για διαστήματα.',
+      ],
+    },
     en: {
       name: 'Rowing (Indoor)',
       summary:
@@ -368,6 +1568,110 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       tips: [
         "60-70 % of the power comes from the legs — don't over-pull with the arms.",
         'Target stroke rate 18-26 spm for endurance; higher for intervals.',
+      ],
+    },
+    es: {
+      name: 'Remo (Interior)',
+      summary:
+        'Cardio de cuerpo completo en el ergómetro — piernas, espalda y acondicionamiento en un solo movimiento.',
+      instructions: [
+        'Inicio: rodillas dobladas, espinillas verticales, brazos extendidos, torso ligeramente hacia adelante.',
+        'Impulso: empuja las piernas primero, luego balancea el torso hacia atrás, finalmente tira de los brazos hacia las costillas inferiores.',
+        'Final: piernas rectas, torso inclinado ligeramente hacia atrás (~las 11 en punto), manos a las costillas inferiores.',
+        'Recuperación: invierte la secuencia — brazos se extienden, torso hacia adelante, rodillas se doblan.',
+      ],
+      tips: [
+        'El 60-70 % de la potencia proviene de las piernas — no tires excesivamente con los brazos.',
+        'Ritmo de golpe objetivo 18-26 golpes por minuto para resistencia; más alto para intervalos.',
+      ],
+    },
+    fr: {
+      name: 'Aviron (intérieur)',
+      summary:
+        "Cardio complet du corps sur l'ergomètre — jambes, dos et conditionnement en un seul mouvement.",
+      instructions: [
+        'Prise : genoux fléchis, tibias verticaux, bras tendus, torse légèrement en avant.',
+        "Traction : poussez les jambes d'abord, puis basculez le torse en arrière, enfin tirez les bras vers les côtes inférieures.",
+        'Fin : jambes tendues, torse penchant légèrement en arrière (environ 11 heures), mains aux côtes inférieures.',
+        'Récupération : inversez la séquence — bras tendus, torse en avant, genoux fléchis.',
+      ],
+      tips: [
+        '60-70 % de la puissance vient des jambes — ne tirez pas trop avec les bras.',
+        "Visez une cadence de coup 18-26 spm pour l'endurance ; plus pour les intervals.",
+      ],
+    },
+    it: {
+      name: 'Canottaggio indoor',
+      summary:
+        "Cardio a corpo intero sull'ergometro — gambe, schiena e condizionamento in un colpo.",
+      instructions: [
+        'Catch: ginocchia piegate, stinchi verticali, braccia estese, busto leggermente in avanti.',
+        'Drive: spingi le gambe per prime, poi gira il busto indietro, infine tira le braccia verso le costole inferiori.',
+        'Finish: gambe dritte, busto leggermente arretrato (~ore 11), mani alle costole inferiori.',
+        'Recovery: inverti la sequenza — braccia si estendono, busto avanti, ginocchia si piegano.',
+      ],
+      tips: [
+        '60-70% della potenza viene dalle gambe — non tirare eccessivamente con le braccia.',
+        'Mira a una frequenza di colpi 18-26 spm per la resistenza; più alta per gli intervalli.',
+      ],
+    },
+    la: {
+      name: 'Remigatio Mechanica',
+      summary:
+        'Cardio totius corporis in ergometrion — crura, dorsum et condicio in uno ictu.',
+      instructions: [
+        'Captus: genua flexa, tibiae perpendiculares, bracchia extensa, truncus paulum antrorsum.',
+        'Impetus: primus crura, tum truncus retrorsus, denique bracchia ad costas inferiores.',
+        'Finis: crura recta, truncus paulum retrorsus, bracchia ad costas inferiores.',
+        'Recursio: sequentiam inversum — bracchia extendenda, truncus antrorsum, genua flectenda.',
+      ],
+      tips: [
+        '60-70% vis ex cruribus — ne nimium e brachiis tracta.',
+        'Ictus frequentia 18-26 spm ut resistentia; altiora ad intervals.',
+      ],
+    },
+    nl: {
+      name: 'Roeien (Indoor)',
+      summary:
+        'Full-body cardio op de ergometer — benen, rug en conditioning in één slag.',
+      instructions: [
+        'Start: knieën gebogen, scheenbenen verticaal, armen gestrekt, romp licht naar voren.',
+        'Aanzet: zet eerst de benen, zwai dan de romp achterover, trek dan de armen naar de onderste ribben.',
+        'Einde: benen recht, romp licht achterover (~11 uur), handen bij de onderste ribben.',
+        'Terugkeer: keer de volgorde om — armen strekken, romp naar voren, knieën buigen.',
+      ],
+      tips: [
+        '60-70% van de kracht komt van de benen — trek niet te veel met de armen.',
+        'Richt slagfrequentie op 18-26 spm voor duurvermogen; hoger voor intervaltraining.',
+      ],
+    },
+    no: {
+      name: 'Rowing (Indoor)',
+      summary:
+        'Fullkropps kardio på ergometeret – ben, rygg og kondisjon i ett slag.',
+      instructions: [
+        'Catch: knær bøyd, skinneben vertikal, armer strukket, torso litt fremover.',
+        'Drive: skyv bena først, så sving torso bakover, endelig trekk armene til nedre ribben.',
+        "Finish: ben strukket, torso bakover litt (~11 o'clock), hender ved nedre ribben.",
+        'Recovery: omvendt sekvens – armer strukket, torso fremover, knær bøyd.',
+      ],
+      tips: [
+        '60-70 % av kraften kommer fra bena – ikke overtrekk med armene.',
+        'Målslang 18-26 spm for utholdenhet; høyere for intervaller.',
+      ],
+    },
+    zh: {
+      name: '室内划船',
+      summary: '在划船机上进行全身有氧运动——腿部、背部和耐力一次完成。',
+      instructions: [
+        '准备：膝盖弯曲，胫骨竖直，双臂伸展，躯干略微向前。',
+        '驱动：首先推腿，然后摇晃躯干向后，最后拉动双臂靠近下肋。',
+        '完成：双腿伸直，躯干略微向后倾斜（约11点方向），双手靠近下肋。',
+        '恢复：反向序列——双臂伸展，躯干向前，膝盖弯曲。',
+      ],
+      tips: [
+        '60-70%的力量来自腿部——不要过度用双臂拉动。',
+        '目标划水速率18-26次/分用于耐力；高强度训练时更高。',
       ],
     },
   },
@@ -387,6 +1691,21 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
         'Schuhe und Laufgürtel-Tracker helfen, aber Konsistenz schlägt jedes Equipment.',
       ],
     },
+    el: {
+      name: 'Τρέξιμο',
+      summary:
+        'Κλασική εκπαίδευση αντοχής — η ευκολότερη διαδρομή προς καλύτερη κατάσταση και VO₂max.',
+      instructions: [
+        'Χαλαρή στάση, βήματα φυσικά, κορμός λυγισμένος ελαφρώς μπροστά.',
+        'Προσγείωση στη μέση του ποδιού (όχι καθαρή φτέρνα) για μείωση του αντικτύπου.',
+        'Αναπνοή ομαλή — σε εύκολα τρεξίματα 3 βήματα εισόδου, 3 έξω· σε δυσκολότερα ρυθμό 2/2.',
+        'Αύξηση εβδομαδιαίου χιλιομέτρων όχι περισσότερο από 10% (ο κανόνας 10%).',
+      ],
+      tips: [
+        'Αρχάριοι ξεκινήστε με περπατ/τρέχοντα διαστήματα (1 λεπ. τρέχω, 1 λεπ. περπάτημα).',
+        'Παπούτσια και ρολόι τρεξίματος βοηθούν, αλλά συνέπεια νικά οποιοδήποτε εξοπλισμό.',
+      ],
+    },
     en: {
       name: 'Running',
       summary:
@@ -400,6 +1719,110 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       tips: [
         'Beginners start with walk/run intervals (1 min run, 1 min walk).',
         'Shoes and a running watch help, but consistency beats any gear.',
+      ],
+    },
+    es: {
+      name: 'Carrera',
+      summary:
+        'Entrenamiento clásico de resistencia — el camino más fácil hacia mejor acondicionamiento y VO₂max.',
+      instructions: [
+        'Postura relajada, pasos naturales, torso inclinado ligeramente hacia adelante.',
+        'Aterriza sobre el metatarso (no talón puro) para reducir el impacto.',
+        'Respira de forma constante — en carreras fáciles 3 pasos dentro, 3 fuera; a ritmos más rápidos 2/2.',
+        'Aumenta el kilometraje semanal no más del 10 % (la regla del 10 %).',
+      ],
+      tips: [
+        'Los principiantes comienzan con intervalos caminar/correr (1 min corriendo, 1 min caminando).',
+        'Los zapatos y un reloj deportivo ayudan, pero la consistencia vence cualquier equipamiento.',
+      ],
+    },
+    fr: {
+      name: 'Course à pied',
+      summary:
+        "Entraînement d'endurance classique — le chemin le plus simple vers un meilleur conditionnement et VO₂max.",
+      instructions: [
+        'Posture détendue, pas naturels, torse penchant légèrement en avant.',
+        "Atterrissez sur l'avant du pied (pas talons purs) pour réduire l'impact.",
+        'Respirez régulièrement — sur les runs faciles 3 pas inspirations, 3 expirations ; rythmes plus durs 2/2.',
+        'Augmentez le kilométrage hebdomadaire au maximum de 10 % (règle des 10 %).',
+      ],
+      tips: [
+        'Les débutants commencent avec des intervalles marche/course (1 min course, 1 min marche).',
+        "Les chaussures et une montre de course aident, mais la régularité prime sur l'équipement.",
+      ],
+    },
+    it: {
+      name: 'Corsa',
+      summary:
+        'Classico allenamento di resistenza — il percorso più facile verso migliore condizionamento e VO₂max.',
+      instructions: [
+        'Postura rilassata, passi naturali, busto leggermente inclinato in avanti.',
+        "Atterra sulla mezza pianta (non il tallone puro) per ridurre l'impatto.",
+        'Respira in modo uniforme — in corse facili 3 passi dentro, 3 fuori; a ritmi più duri 2/2.',
+        'Aumenta il chilometraggio settimanale non più del 10% (la regola del 10%).',
+      ],
+      tips: [
+        'I principianti iniziano con intervalli camminata/corsa (1 min corsa, 1 min camminata).',
+        'Scarpe e orologio da corsa aiutano, ma la coerenza batte qualsiasi attrezzo.',
+      ],
+    },
+    la: {
+      name: 'Cursio',
+      summary:
+        'Exercitatio resistentiae classica — via facilior ad meliorem condicionem et VO₂max.',
+      instructions: [
+        'Postura relaxata, passus naturales, truncus paulum antrorsum.',
+        'Pedes in parte media cadant (non pure in calcaneis) ut impactus minuatur.',
+        'Spiratio uniformis — in cursibus facillimis tres passi in, tres ex; in velocioribus 2/2.',
+        'Quotidiana miliaria non amplius 10% auge (regula decem percentorum).',
+      ],
+      tips: [
+        'Incipientes cum alternationis ambulationis/currentis (1 min cursio, 1 min ambulatio).',
+        'Calcei et horologia currentia iuvant, sed constantia omne instrumentum superat.',
+      ],
+    },
+    nl: {
+      name: 'Hardlopen',
+      summary:
+        'Klassieke duurtraining — het gemakkelijkste pad naar betere conditioning en VO₂max.',
+      instructions: [
+        'Ontspannen houding, stapjes natuurlijk, romp licht naar voren.',
+        'Land op de middelvoet (geen zuivere hak) om impact te verminderen.',
+        'Adem gelijkmatig — op gemakkelijke runs 3 stappen in, 3 uit; bij hardere tempos 2/2.',
+        'Verhoog weekelijkse kilometers niet meer dan 10% (de 10%-regel).',
+      ],
+      tips: [
+        'Beginners beginnen met loop/wandel intervallen (1 min hardlopen, 1 min wandelen).',
+        'Schoenen en een hardloophorloge helpen, maar consistentie slaat alle uitrusting.',
+      ],
+    },
+    no: {
+      name: 'Running',
+      summary:
+        'Klassisk utholdenhetstrening – den enkleste veien til bedre kondisjon og VO₂max.',
+      instructions: [
+        'Avslappet holdning, skritt naturlig, torso litt fremover tiltet.',
+        'Land på midtfoten (ikke ren hæl) for å redusere impact.',
+        'Pust jevnt – på lett løp 3 skritt inn, 3 ut; på hardere tempo 2/2.',
+        'Øk ukentlig kilometer med ikke mer enn 10 % (10%-regelen).',
+      ],
+      tips: [
+        'Nybegynnere starter med gå/løp-intervaller (1 min løp, 1 min gå).',
+        'Sko og løpevifte hjelper, men konsistens slår alt utstyr.',
+      ],
+    },
+    zh: {
+      name: '跑步',
+      summary: '经典的耐力训练——改善耐力和VO₂最大摄氧量最简单的方法。',
+      instructions: [
+        '放松的姿态，步伐自然，躯干略微向前倾。',
+        '在足中部着地（不是纯粹足跟）以减少冲击。',
+        '均匀呼吸——轻松跑时3步吸气3步呼气；更快速度时2/2。',
+        '每周增加里程数不超过10%（10%原则）。',
+      ],
+      tips: [
+        '初学者从走/跑交替开始（1分钟跑，1分钟走）。',
+        '跑鞋和跑步手表很有帮助，但坚持比任何装备都重要。',
       ],
     },
   },
@@ -419,6 +1842,21 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
         'Schwimmbrille reduziert Reibung und Reizung erheblich — Pflichtausstattung.',
       ],
     },
+    el: {
+      name: 'Κολύμβηση',
+      summary:
+        'Πλήρες σώμα cardio στο νερό — φιλικό προς τις αρθρώσεις και απαιτητικό αναπνοής.',
+      instructions: [
+        'Σώμα οριζόντιο — φέρε τα ισχία και τα πόδια κοντά στην επιφάνεια.',
+        'Αναπνοή πλευρικά κάθε 2-3 κινήσεις (freestyle), ή μπροστά (breaststroke).',
+        'Κλώτσημα από τα ισχία, όχι τα γόνατα — μικρές, γρήγορες κινήσεις.',
+        'Μεγάλες, ομαλές τράβηξες νικούν το κτύπημα — απόδοση ενάντια σε δύναμη.',
+      ],
+      tips: [
+        'Ξεκίνησε με σύντομες αποστάσεις (4 × 50 μ.) και ανάπαυσης, αντί της ακολουθίας σε ένα 200 μ. απόπειρα.',
+        'Γυαλιά κοπής τριβής και ερεθισμού δραματικά — μη διαπραγματεύσιμος εξοπλισμός.',
+      ],
+    },
     en: {
       name: 'Swimming',
       summary:
@@ -432,6 +1870,109 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       tips: [
         'Start with short distances (4 × 50 m) and rest, rather than chasing one 200 m attempt.',
         'Goggles cut friction and irritation dramatically — non-negotiable kit.',
+      ],
+    },
+    es: {
+      name: 'Natación',
+      summary:
+        'Cardio de cuerpo completo en el agua — cómodo para las articulaciones y exigente para la respiración.',
+      instructions: [
+        'Cuerpo horizontal — acerca las caderas y piernas a la superficie.',
+        'Respira lateralmente cada 2-3 brazadas (estilo libre), o hacia adelante (braza).',
+        'Patea desde las caderas, no las rodillas — brazadas pequeñas y rápidas.',
+        'Tirones largos y uniformes vencen al movimiento frenético — eficiencia sobre potencia.',
+      ],
+      tips: [
+        'Comienza con distancias cortas (4 × 50 m) y descansa, en lugar de perseguir un intento de 200 m.',
+        'Las gafas reducen la fricción e irritación dramáticamente — equipo innegociable.',
+      ],
+    },
+    fr: {
+      name: 'Natation',
+      summary:
+        "Cardio complet du corps dans l'eau — doux pour les articulations et exigeant pour la respiration.",
+      instructions: [
+        'Corps horizontal — amenez les hanches et les jambes près de la surface.',
+        "Respirez sur le côté tous les 2-3 coups (crawl), ou vers l'avant (brasse).",
+        'Frappez à partir des hanches, pas des genoux — petits coups rapides.',
+        "Les tirages longs et réguliers battent les mouvements désordonnés — l'efficacité prime sur la puissance.",
+      ],
+      tips: [
+        "Commencez par des courtes distances (4 × 50 m) avec repos, plutôt que d'essayer 200 m d'un coup.",
+        'Les lunettes réduisent drastiquement friction et irritation — équipement indispensable.',
+      ],
+    },
+    it: {
+      name: 'Nuoto',
+      summary:
+        'Cardio a corpo intero in acqua — delicato per le articolazioni e che richiede respiro.',
+      instructions: [
+        'Corpo orizzontale — porta i fianchi e le gambe vicino alla superficie.',
+        'Respira lateralmente ogni 2-3 bracciate (stile libero), o in avanti (rana).',
+        'Calcia dai fianchi, non dalle ginocchia — bracciate piccole e veloci.',
+        'Trazioni lunghe e uniformi battono il thrashing — efficienza sulla potenza.',
+      ],
+      tips: [
+        'Inizia con distanze brevi (4 × 50 m) e ripresa, piuttosto che inseguire un tentativo di 200 m.',
+        "Gli occhialini riducono notevolmente l'attrito e l'irritazione — attrezzo indispensabile.",
+      ],
+    },
+    la: {
+      name: 'Natatio',
+      summary:
+        'Cardio totius corporis in aqua — articulis gratia et respiratione exigentia.',
+      instructions: [
+        'Corpus horizontale — coxas et crura prope superficiem adprope.',
+        'Latere spira omni 2-3 icti (libera) vel antrorsum (pectoralis).',
+        'Pedalem ex coxis, non ex genu — ictus parvi velociter.',
+        'Tractus longi pares agunt melius quam vehementia — efficientia super vim.',
+      ],
+      tips: [
+        'Breves distantiae (4 × 50 m) cum quiete, non unum 200 m conatum.',
+        'Perspicilla penetrant resistentiam et molestiam — non est negotium.',
+      ],
+    },
+    nl: {
+      name: 'Zwemmen',
+      summary:
+        'Full-body cardio in het water — gewrichtsvriendelijk en ademhalingsveeleisend.',
+      instructions: [
+        'Lichaam horizontaal — breng heupen en benen dicht bij het oppervlak.',
+        'Adem opzij elke 2-3 slagen (vrije slag), of naar voren (schoolslag).',
+        'Trap vanuit de heupen, niet van de knieën — kleine, snelle slagen.',
+        'Lange, gelijkmatige trekken slaan wild uit — efficiëntie over kracht.',
+      ],
+      tips: [
+        'Begin met korte afstanden (4 × 50 m) en rust, in plaats van naar één 200 m poging te streven.',
+        'Zwembril vermindert wrijving en irritatie dramatisch — niet-onderhandelbare uitrusting.',
+      ],
+    },
+    no: {
+      name: 'Swimming',
+      summary: 'Fullkropps kardio i vannet – leddselvonnelig og pustekrevende.',
+      instructions: [
+        'Kroppen horisontal – bring hofter og bein nær overflaten.',
+        'Pust til siden hver 2-3 slag (crawl), eller fremover (brystsvøm).',
+        'Spark fra hoften, ikke fra knærne – små, raske slag.',
+        'Lange, jevne drag slår på råstyrke – effektivitet over kraft.',
+      ],
+      tips: [
+        'Start med kort distanser (4 × 50 m) og hvil, i stedet for å jage en 200 m forsøk.',
+        'Svømmebrilller reduserer friksjon og irritasjon drastisk – ikke-forhandlbart utstyr.',
+      ],
+    },
+    zh: {
+      name: '游泳',
+      summary: '水中全身有氧运动——对关节友好且需要屏气。',
+      instructions: [
+        '身体水平——髋部和腿部靠近水面。',
+        '每2-3次划水时横向呼吸（自由泳）或向前呼吸（蛙泳）。',
+        '从髋部打腿，不是膝盖——小幅快速划水。',
+        '长而均匀的划水优于激烈刺激——效率胜于力量。',
+      ],
+      tips: [
+        '从短距离（4×50米）加休息开始，而不是尝试一次200米。',
+        '泳镜大幅减少摩擦和刺激——必须配备的装备。',
       ],
     },
   },
@@ -451,6 +1992,21 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
         'Schuhwerk wichtiger als Tempo — unbequeme Schuhe ruinieren die Mobilität nach 30 Minuten.',
       ],
     },
+    el: {
+      name: 'Περπάτημα',
+      summary:
+        'Γρήγορο περπάτημα στον ανοιχτό χώρο ή σε беговой ταινία — το πιο υποτιμημένο cardio ερέθισμα.',
+      instructions: [
+        'Περπάτημα όρθιο, βήματα φυσικά, χέρια κουνώντας.',
+        'Γρήγορο ρυθμό — μπορείς ακόμα να μιλάς αλλά όχι να τραγουδάς.',
+        'Αναπνοή από τη μύτη αν μπορείς· αλλαγή σε στόμα+μύτη στις ανηφορικές.',
+        '30-60 λεπτά ανά περίοδο για αντοχή, ή αρκετά σύντομα περπατήματα κατά τη διάρκεια της ημέρας.',
+      ],
+      tips: [
+        '6-10 χλμ./ώρα σε επίπεδο έδαφος· λόφοι αυξάνουν το ερέθισμα σημαντικά.',
+        'Παπουτσάκια σημαίνουν περισσότερο από ρυθμό — κακά παπούτσια κατάστρεφαν τη βάδιση μετά από 30 λεπτά.',
+      ],
+    },
     en: {
       name: 'Walking',
       summary:
@@ -464,6 +2020,110 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       tips: [
         '6-10 km/h on flat ground; hills bump the stimulus significantly.',
         'Footwear matters more than pace — bad shoes wreck your gait after 30 minutes.',
+      ],
+    },
+    es: {
+      name: 'Caminar',
+      summary:
+        'Caminata rápida en exteriores o en cinta — el estímulo cardio más subestimado.',
+      instructions: [
+        'Camina erguido, pasos naturales, brazos columpiándose.',
+        'Ritmo rápido — aún puedes hablar pero no cantar.',
+        'Respira por la nariz si puedes; cambia a boca + nariz en inclinaciones.',
+        '30-60 minutos por sesión para resistencia, o varias caminatas cortas durante el día.',
+      ],
+      tips: [
+        '6-10 km/h en terreno plano; las colinas aumentan el estímulo significativamente.',
+        'El calzado importa más que el ritmo — los zapatos malos arruinan tu marcha después de 30 minutos.',
+      ],
+    },
+    fr: {
+      name: 'Marche',
+      summary:
+        'Marche rapide en plein air ou sur tapis roulant — le stimulus cardio le plus sous-estimé.',
+      instructions: [
+        'Marchez droit, pas naturels, bras balançant.',
+        'Rythme rapide — vous pouvez encore parler mais pas chanter.',
+        'Respirez par le nez si possible ; passez à bouche+nez en montée.',
+        "30-60 minutes par séance pour l'endurance, ou plusieurs courtes marches au cours de la journée.",
+      ],
+      tips: [
+        '6-10 km/h en plat ; les côtes augmentent le stimulus de façon significative.',
+        "L'équipement compte plus que le rythme — les mauvaises chaussures ruinent votre marche après 30 minutes.",
+      ],
+    },
+    it: {
+      name: 'Camminata',
+      summary:
+        "Camminata veloce all'aperto o su tapis roulant — lo stimolo cardio più sottovalutato.",
+      instructions: [
+        'Cammina eretto, passi naturali, braccia che oscillano.',
+        'Ritmo veloce — riesci ancora a parlare ma non a cantare.',
+        'Respira dal naso se puoi; passa a bocca+naso in salita.',
+        '30-60 minuti per sessione per la resistenza, o diverse brevi camminate durante la giornata.',
+      ],
+      tips: [
+        '6-10 km/h su terreno piatto; le colline aumentano lo stimolo in modo significativo.',
+        'Le scarpe contano più del ritmo — scarpe scadenti distruggono il tuo andatura dopo 30 minuti.',
+      ],
+    },
+    la: {
+      name: 'Ambulatio',
+      summary:
+        'Ambulatio velox extra vel in maschina — stimulus cardio maxime neglectus.',
+      instructions: [
+        'Rectus ambula, passus naturales, bracchia oscillantia.',
+        'Tempus velox — adhuc fari potis, numquam cantare.',
+        'Per nasum spiratum, nisi declivitas — tum ore et naso.',
+        '30-60 minuta per sessionem ad resistentiam, vel breves ambulationes per diem.',
+      ],
+      tips: [
+        '6-10 km/h in plano; colles vim augent.',
+        'Calcei materiam magis quam tempus significat — mali calcei 30 minutis gressum destruunt.',
+      ],
+    },
+    nl: {
+      name: 'Wandelen',
+      summary:
+        'Snel wandelen buiten of op loopband — de meest onderschatte cardiostimulus.',
+      instructions: [
+        'Sta rechtop, stapjes natuurlijk, armen zwaaiend.',
+        'Snel tempo — je kunt nog praten maar niet zingen.',
+        'Adem door je neus als je kunt; schakel over op neus+mond op hellingen.',
+        '30-60 minuten per sessie voor duurvermogen, of meerdere korte wandelingen gedurende de dag.',
+      ],
+      tips: [
+        '6-10 km/u op vlak terrein; heuvels vergroten de stimulus aanzienlijk.',
+        'Schoeisel telt meer dan tempo — slechte schoenen verpesten je pas na 30 minuten.',
+      ],
+    },
+    no: {
+      name: 'Walking',
+      summary:
+        'Rask gange utendørs eller på tredemølle – den mest undervurderte kardio-stimulansen.',
+      instructions: [
+        'Gå oppreist, skritt naturlig, armer svingane.',
+        'Raskt tempo – du kan fremdeles snakke men ikke synge.',
+        'Pust gjennom nesen hvis du kan; bytt til munn+nese på bakker.',
+        '30-60 minutter per sesjon for utholdenhet, eller flere korte gangturer gjennom dagen.',
+      ],
+      tips: [
+        '6-10 km/t på flatt terreng; bakker øker stimulansen betydelig.',
+        'Fotøy betyr mer enn tempo – dårlige sko ødelegger gangarten etter 30 minutter.',
+      ],
+    },
+    zh: {
+      name: '快走',
+      summary: '户外或跑步机上的快走——最被低估的有氧刺激。',
+      instructions: [
+        '直身走路，步伐自然，双臂摇摆。',
+        '快速节奏——可以说话但不能唱歌。',
+        '尽可能通过鼻子呼吸；在上坡时切换到口鼻呼吸。',
+        '每次30-60分钟的耐力训练，或全天多次短走。',
+      ],
+      tips: [
+        '平地上6-10公里/小时；山坡会大幅增加刺激。',
+        '鞋类比速度更重要——质量差的鞋子30分钟后就会破坏步态。',
       ],
     },
   },
@@ -483,6 +2143,21 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
         'Tempo wichtiger als ROM — 3-4 s pro Seite ist besser als hektisches Hin-und-Her.',
       ],
     },
+    el: {
+      name: 'Νεκρό σκαθάρι',
+      summary:
+        'Ύπτια άσκηση κατά της επέκτασης — συντονισμός του σφιχτού πυρήνα με αντίθετη κίνηση βραχίονα και ποδιού.',
+      instructions: [
+        'Ξαπλώνεις ύπτιος, χέρια ευθεία προς τα πάνω, γόνατα λυγισμένα 90° πάνω από τα ισχία.',
+        'Σπρώξου την κάτω μέση σταθερά στο έδαφος — χωρίς χάσμα μεταξύ πλάτης και στρώματος.',
+        'Αργή ανύψωση του αντίθετου βραχίονα και ποδιού ταυτόχρονα χωρίς ανύψωση της πλάτης.',
+        'Επιστροφή υπό έλεγχο, κατόπιν εναλλαγή πλευρών.',
+      ],
+      tips: [
+        'Αν η κάτω μέση ανυψωθεί, συντόμευσε το εύρος ή κράτησε το γόνατο λυγισμένο ψηλότερα.',
+        'Ο ρυθμός σημαίνει περισσότερο από εύρος — 3-4 δ. ανά πλευρά νικά μια βιαστική πρόσθιο-όπισθεν.',
+      ],
+    },
     en: {
       name: 'Dead Bug',
       summary:
@@ -496,6 +2171,110 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       tips: [
         'If the lower back lifts off, shorten the range or keep the knee bent higher.',
         'Tempo matters more than range — 3-4 s per side beats a rushed back-and-forth.',
+      ],
+    },
+    es: {
+      name: 'Insecto muerto',
+      summary:
+        'Ejercicio supino anti-extensión — coordina un core arriostrado con movimiento contralateral de brazo y pierna.',
+      instructions: [
+        'Acuéstate boca arriba, brazos apuntando directamente hacia arriba, rodillas dobladas 90° sobre las caderas.',
+        'Presiona la zona lumbar firmemente contra el suelo — sin espacio entre la espalda y la colchoneta.',
+        'Baja lentamente el brazo y la pierna opuestos simultáneamente sin levantar la espalda.',
+        'Vuelve bajo control, luego cambia de lado.',
+      ],
+      tips: [
+        'Si la zona lumbar se levanta, acorta el rango o mantén la rodilla doblada más alto.',
+        'El tempo importa más que el rango — 3-4 s por lado vence un movimiento apresurado de ida y vuelta.',
+      ],
+    },
+    fr: {
+      name: 'Dead Bug',
+      summary:
+        'Exercice anti-extension au sol — coordonne un core gainé avec un mouvement contralétéral bras/jambe.',
+      instructions: [
+        'Allongé sur le dos, bras pointant vers le haut, genoux fléchis à 90° au-dessus des hanches.',
+        'Appuyez le bas du dos fermement au sol — aucun gap entre le dos et le tapis.',
+        'Abaissez lentement le bras et la jambe opposés en même temps sans soulever le dos.',
+        'Remontez de façon contrôlée, puis changez de côté.',
+      ],
+      tips: [
+        "Si le bas du dos se soulève, raccourcissez l'amplitude ou gardez le genou plus haut.",
+        "Le tempo compte plus que l'amplitude — 3-4 s par côté vaut mieux qu'un va-et-vient rapide.",
+      ],
+    },
+    it: {
+      name: 'Dead bug',
+      summary:
+        'Esercizio anti-estensione supino — coordina un core braced con movimento di braccia e gambe contralaterale.',
+      instructions: [
+        "Sdraiati sulla schiena, braccia puntate verso l'alto, ginocchia piegate a 90° sui fianchi.",
+        'Premi la parte bassa della schiena saldamente nel pavimento — nessun spazio tra schiena e tappetino.',
+        'Abbassa lentamente il braccio opposto e la gamba contemporaneamente senza sollevare la schiena.',
+        'Ritorna controllato, poi cambia lato.',
+      ],
+      tips: [
+        "Se la parte bassa della schiena si solleva, accorcia l'ampiezza di movimento o mantieni il ginocchio più piegato.",
+        "Il tempo conta più dell'ampiezza — 3-4 s per lato batte un movimento affrettato.",
+      ],
+    },
+    la: {
+      name: 'Muscae Mortui',
+      summary:
+        'Exercitatio supina contra-extensionis — coordina vinculum centrale cum bracchio et crure oppositorum.',
+      instructions: [
+        'Supine, bracchia recta supra, genua 90° super coxas flexa.',
+        'Dorsum inferius in pavimentum premia — nullum spatium inter dorsum et tapete.',
+        'Lente bracchium et crus opposita simul deorsum deprima sine dorso elevato.',
+        'Sub tensione redire, tum alte vicissim.',
+      ],
+      tips: [
+        'Dorsum inferius si elevetur, seriem minue vel genu altiore teneto.',
+        'Tempus plus quam series refert — 3-4 s per latus quam acceleratione melius.',
+      ],
+    },
+    nl: {
+      name: 'Dead Bug',
+      summary:
+        'Rugligging anti-extensie oefening — coördineert een gebonden core met contralaterale arm- en beenbeweging.',
+      instructions: [
+        'Lig op je rug, armen recht omhoog, knieën 90° gebogen boven de heupen.',
+        'Zet de onderrug stevig op de vloer — geen gat tussen rug en mat.',
+        'Laat langzaam tegenovergestelde arm en been tegelijkertijd zakken zonder de rug op te tillen.',
+        'Terugkeer onder controle, wissel dan van kant.',
+      ],
+      tips: [
+        'Als de onderrug afkomt, verkort het bereik of houd de knie hoger gebogen.',
+        'Tempo telt meer dan bereik — 3-4 s per kant slaat een haastig heen-en-weer.',
+      ],
+    },
+    no: {
+      name: 'Dead Bug',
+      summary:
+        'Rygglig anti-extension drill – koordinerer brassed core med kontralateral arm og beibevegelse.',
+      instructions: [
+        'Ligge på ryggen, armer rett opp, knær bøyd 90° over hofter.',
+        'Press nedre rygg fast i gulvet – ingen gap mellom rygg og matte.',
+        'Senk sakte motsatt arm og bein samtidig uten å løfte ryggen.',
+        'Kom tilbake med kontroll, så bytt side.',
+      ],
+      tips: [
+        'Hvis nedre rygg løftes, korta rekkevidden eller hold kneet bøyd høyere.',
+        'Tempo betyr mer enn rekkevidde – 3-4 s per side slår et forhastet fram-og-tilbake.',
+      ],
+    },
+    zh: {
+      name: '死虫式',
+      summary: '仰卧抗伸展训练——协调收紧的核心与对侧手臂和腿部运动。',
+      instructions: [
+        '仰卧，双臂指向正上方，膝盖弯曲90°在髋部上方。',
+        '用力将下背部压入地面——背部和垫子之间没有间隙。',
+        '缓慢将相反的手臂和腿放下，同时不抬起背部。',
+        '控制地返回，然后换另一侧。',
+      ],
+      tips: [
+        '如果下背部抬起，缩短范围或保持膝盖弯曲更高。',
+        '节奏比范围更重要——每侧3-4秒优于仓促的往返。',
       ],
     },
   },
@@ -515,6 +2294,21 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
         'Anfänger: 3 × 15-20 s; Fortgeschrittene 3 × 45-60 s.',
       ],
     },
+    el: {
+      name: 'Hollow Hold',
+      summary:
+        'Στατική θέση «κοίλου σώματος» με χέρια και πόδια ανυψωμένα — βάση για γυμναστική δύναμη.',
+      instructions: [
+        'Ξαπλώνεις ύπτιος, χέρια και πόδια εκτεταμένα ίσια.',
+        'Ανύψωση ώμων και ποδιών ταυτόχρονα ώστε μόνο η κάτω μέση να αγγίζει το έδαφος.',
+        'Ενεργή σπρώξιμο της οσφυϊκής σπονδυλικής στήλης στο έδαφος — η «κοιλία» πρέπει να μείνει.',
+        "Κράτησε τη θέση, αναπνοή ομαλή καθ'όλη τη διάρκεια.",
+      ],
+      tips: [
+        'Κλιμάκωση από εύκολη σε δύσκολη: tucked (γόνατα τραβηγμένα) → ημι-κοίλη (γόνατα 90°) → πλήρης κοίλη (εκτεταμένη).',
+        'Αρχάριοι: 3 × 15-20 δ.· προχωρημένοι 3 × 45-60 δ..',
+      ],
+    },
     en: {
       name: 'Hollow Hold',
       summary:
@@ -528,6 +2322,110 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       tips: [
         'Scale from easy to hard: tuck (knees pulled in) → half-hollow (knees 90°) → full hollow (extended).',
         'Beginners: 3 × 15-20 s; advanced 3 × 45-60 s.',
+      ],
+    },
+    es: {
+      name: 'Posición hueca',
+      summary:
+        'Posición estática de «cuerpo hueco» con brazos y piernas elevados — base para la fuerza gimnástica.',
+      instructions: [
+        'Acuéstate boca arriba, brazos y piernas extendidos rectos.',
+        'Levanta hombros y piernas simultáneamente para que solo la zona lumbar toque el suelo.',
+        'Presiona activamente la columna lumbar contra el suelo — la «forma hueca» debe mantenerse.',
+        'Mantén la posición, respirando de forma pareja durante todo el movimiento.',
+      ],
+      tips: [
+        'Escala de fácil a difícil: posición metida (rodillas adentro) → semi-hueca (rodillas 90°) → hueca completa (extendida).',
+        'Principiantes: 3 × 15-20 s; avanzados 3 × 45-60 s.',
+      ],
+    },
+    fr: {
+      name: 'Hollow Hold',
+      summary:
+        'Position statique « hollow body » avec bras et jambes levés — fondation de la force en gymnastique.',
+      instructions: [
+        'Allongé sur le dos, bras et jambes tendus.',
+        'Soulevez les épaules et les jambes simultanément pour que seul le bas du dos touche le sol.',
+        'Appuyez activement la colonne lombaire au sol — la « creuse » doit rester.',
+        'Maintenez la position, respirez régulièrement tout du long.',
+      ],
+      tips: [
+        'Progression du facile au difficile : genoux fléchis (tuck) → mi-hollow (genoux 90°) → full hollow (tendu).',
+        'Débutants : 3 × 15-20 s ; avancés 3 × 45-60 s.',
+      ],
+    },
+    it: {
+      name: 'Hollow hold',
+      summary:
+        'Posizione statica "hollow body" con braccia e gambe sollevate — una base per la forza ginnastica.',
+      instructions: [
+        'Sdraiati sulla schiena, braccia e gambe distese dritte.',
+        'Solleva le spalle e le gambe simultaneamente in modo che solo la parte bassa della schiena tocchi il pavimento.',
+        'Premi attivamente la colonna lombare nel pavimento — il "hollow" deve rimanere.',
+        'Mantieni la posizione, respirando uniformemente durante tutto.',
+      ],
+      tips: [
+        'Scala da facile a difficile: ginocchia piegate — mezza hollow (ginocchia 90°) — hollow completo (esteso).',
+        'Principianti: 3 × 15-20 s; avanzati 3 × 45-60 s.',
+      ],
+    },
+    la: {
+      name: 'Hollow Hold',
+      summary:
+        'Positio statira "corporis vacui" — fundamentum vires gymnasticae.',
+      instructions: [
+        'Supine, bracchia et crura recta extensa.',
+        'Humeros et crura simul tolle ut dorsum inferius pavimentum tangat.',
+        'Premendo spinam lumbalem in pavimentum — "vacu" maneat.',
+        'Positionem teneto, uniformiter spirando.',
+      ],
+      tips: [
+        'Scala ex facili ad difficile: adducta (genua plicata) → dimidium-vacu (genua 90°) → plenum-vacu (extensum).',
+        'Incipientes: 3 × 15-20 s; periti 3 × 45-60 s.',
+      ],
+    },
+    nl: {
+      name: 'Hollow Hold',
+      summary:
+        'Statische "hollow body" positie met armen en benen omhoog — basis voor gymnastische kracht.',
+      instructions: [
+        'Lig op je rug, armen en benen recht gestrekt.',
+        'Til schouders en benen tegelijkertijd zodat alleen de onderrug de vloer raakt.',
+        'Zet de lendenwervels actief op de vloer — de schotel ("hollow") moet blijven.',
+        'Houd de positie, adem gelijkmatig.',
+      ],
+      tips: [
+        'Schaal van gemakkelijk naar moeilijk: getrokken (knieën getrokken in) → half-hollow (knieën 90°) → volledige hollow (gestrekt).',
+        'Beginners: 3 × 15-20 s; gevorderden 3 × 45-60 s.',
+      ],
+    },
+    no: {
+      name: 'Hollow Hold',
+      summary:
+        'Statisk «hollow body» posisjon med armer og bein løftet – grunnlag for gymnastic styrke.',
+      instructions: [
+        'Ligge på ryggen, armer og bein strukket rett.',
+        'Løft skuldre og bein samtidig slik at bare nedre rygg berører gulvet.',
+        'Press aktivt lenderygg inn i gulvet – «dishen» (hollow) må forble.',
+        'Hold posisjonen, pust jevnt gjennom hele tiden.',
+      ],
+      tips: [
+        'Skaler fra lett til hard: tuklet (knær trukket inn) → half-hollow (knær 90°) → full hollow (strukket).',
+        'Nybegynnere: 3 × 15-20 s; avansert 3 × 45-60 s.',
+      ],
+    },
+    zh: {
+      name: '凹陷身体保持',
+      summary: '静态"凹陷身体"位置，双臂和腿部抬起——体操力量的基础。',
+      instructions: [
+        '仰卧，双臂和双腿向前伸展。',
+        '同时抬起肩膀和腿部，使只有下背部接触地面。',
+        '主动将腰椎压入地面——凹陷形状必须保持。',
+        '保持位置，全程均匀呼吸。',
+      ],
+      tips: [
+        '从易到难的缩放：卷膝（膝盖拉入）→半凹陷（膝盖90°）→完全凹陷（伸展）。',
+        '初学者：3×15-20秒；进阶3×45-60秒。',
       ],
     },
   },
@@ -547,6 +2445,21 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
         '3-1-1 Tempo (3 s runter, 1 s unten, 1 s hoch) maximiert den Trainingsreiz mit wenig Gewicht.',
       ],
     },
+    el: {
+      name: 'Good Morning',
+      summary:
+        'Κύρτωση ισχίου με όρθιο κορμό — τέντωμα και ενδυνάμωση της οπίσθιας αλυσίδας.',
+      instructions: [
+        'Στάση ευρύτητας ώμων, χέρια πίσω από το κεφάλι, στους ώμους (ή μπάρα διασταυρωμένη στο ανώτερο πλάτο).',
+        'Γόνατα ελάχιστα λυγισμένα, σπρώξιμο των ισχίων αργά προς τα πίσω.',
+        'Κύρτωμα του κορμού μπροστά υπό έλεγχο με ίσια πλάτη — μέχρι τα οπίσθια μηρών να σας πούν ότι δουλεύουν.',
+        'Σπρώξιμο από τις φτέρνες πίσω σε όρθια θέση.',
+      ],
+      tips: [
+        'Τα όρια κινητικότητας καθορίζουν το βάθος — ποτέ πρόσφυση κάτω μέσης ή στρογγυλεμένη πλάτη.',
+        'Ρυθμός 3-1-1 (3 δ. κάτω, 1 δ. παύση, 1 δ. πάνω) μεγιστοποιεί ερέθισμα με λίγο βάρος.',
+      ],
+    },
     en: {
       name: 'Good Morning',
       summary:
@@ -560,6 +2473,110 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       tips: [
         'Mobility limits depth — never force a lower-back arch or rounded back.',
         '3-1-1 tempo (3 s down, 1 s pause, 1 s up) maximises stimulus with little weight.',
+      ],
+    },
+    es: {
+      name: 'Buenos días',
+      summary:
+        'Bisagra de cadera con torso erguido — estira y fortalece la cadena posterior.',
+      instructions: [
+        'Postura a la anchura de los hombros, manos detrás de la cabeza, en los hombros (o una barra sobre la espalda superior).',
+        'Rodillas mínimamente dobladas, empuja las caderas hacia atrás lentamente.',
+        'Inclina el torso hacia adelante bajo control con la espalda plana — hasta que los isquiotibiales te digan que están trabajando.',
+        'Impulsa a través de los talones volviendo a la posición de pie.',
+      ],
+      tips: [
+        'La movilidad limita la profundidad — nunca fuerces un arqueamiento de la zona lumbar o una espalda redondeada.',
+        'Tempo 3-1-1 (3 s abajo, 1 s pausa, 1 s arriba) maximiza el estímulo con poco peso.',
+      ],
+    },
+    fr: {
+      name: 'Good Morning',
+      summary:
+        'Pliage à la hanche avec torse droit — étire et renforce la chaîne postérieure.',
+      instructions: [
+        'Écartement des épaules, mains derrière la tête, sur les épaules (ou une barre sur le haut du dos).',
+        "Genoux minimalement fléchis, repoussez les hanches lentement vers l'arrière.",
+        "Penchez le torse en avant de façon contrôlée avec le dos plat — jusqu'à ce que les ischios vous disent qu'ils travaillent.",
+        'Poussez par les talons pour revenir au position debout.',
+      ],
+      tips: [
+        'La mobilité limite la profondeur — ne forcez jamais une cambrure du bas du dos ou un dos arrondi.',
+        'Le tempo 3-1-1 (3 s en bas, 1 s pause, 1 s en haut) maximise le stimulus avec peu de poids.',
+      ],
+    },
+    it: {
+      name: 'Good morning',
+      summary:
+        'Hip hinge con busto eretto — allunga e rinforza la catena posteriore.',
+      instructions: [
+        'Posizione a larghezza spalle, mani dietro la testa, sulle spalle (o una barra sulla parte superiore della schiena).',
+        'Ginocchia leggermente piegate, spingi i fianchi indietro lentamente.',
+        'Inclina il busto in avanti in modo controllato con schiena piatta — finché i femorali non ti dicono che stanno lavorando.',
+        'Spingi attraverso i talloni indietro verso la posizione eretta.',
+      ],
+      tips: [
+        "La mobilità limita la profondità — non forzare mai un'arco della parte bassa della schiena o schiena arrotondata.",
+        'Ritmo 3-1-1 (3 s giù, 1 s pausa, 1 s su) massimizza lo stimolo con poco peso.',
+      ],
+    },
+    la: {
+      name: 'Salutatio Matutina',
+      summary:
+        'Cardo coxae cum trunco erecto — posterior catena extensio et vires.',
+      instructions: [
+        'Statio latitudinis humerorum, manus post caput, super humeros vel barra.',
+        'Genua minime flexa, coxas lente retrorsum proba.',
+        'Truncum antrorsum sub tensione inclina cum dorso plano — donec musculi posterioris femuralis operantem se sensui.',
+        'Per calcanea impelle ut standum redeas.',
+      ],
+      tips: [
+        'Mobilitas profunditatem terminat — numquam dorsum inferius arcua vel rotundum.',
+        'Tempus 3-1-1 (3 s deorsum, 1 s statio, 1 s sursum) stimulus cum parvo onere.',
+      ],
+    },
+    nl: {
+      name: 'Good Morning',
+      summary:
+        'Heupscharnierbeweging met rechtopstaande romp — rekt en versterkt de achterste keten.',
+      instructions: [
+        'Schouderbreedtestand, handen achter het hoofd, op de schouders (of een stok op de bovenrug).',
+        'Knieën minimaal gebogen, duw de heupen langzaam achterover.',
+        'Til de romp naar voren onder controle met een vlakke rug — totdat de hamstrings je zeggen dat ze werken.',
+        'Zet jezelf terug naar staan via de hakken.',
+      ],
+      tips: [
+        'Mobiliteit bepaalt de diepte — dwing nooit onderrug-boogvorming of afgeronde rug.',
+        'Tempo 3-1-1 (3 s omlaag, 1 s pauze, 1 s omhoog) maximalisert stimulus met weinig gewicht.',
+      ],
+    },
+    no: {
+      name: 'Good Morning',
+      summary:
+        'Hoftehenging med opprett torso – strekker og styrker posterior chain.',
+      instructions: [
+        'Skulderbredde stance, hendene bak hodet, på skuldrene (eller en stang over øvre rygg).',
+        'Knær minimalt bøyd, skyv hofter bakover sakte.',
+        'Tilt torso fremover med kontroll med flat rygg – til hamstringene sier de jobber.',
+        'Kjør gjennom hælene tilbake til å stå.',
+      ],
+      tips: [
+        'Mobilitet begrenser dybde – aldri tving lenderyggarking eller rundkurving.',
+        '3-1-1 tempo (3 s ned, 1 s pause, 1 s opp) maksimerer stimuli med lite vekt.',
+      ],
+    },
+    zh: {
+      name: '早安式',
+      summary: '躯干竖直的髋关节铰链——伸展和加强后链。',
+      instructions: [
+        '肩宽站姿，双手在头后或放在肩膀上（或横在上背部的杠铃）。',
+        '膝盖最少弯曲，缓慢推动髋部向后。',
+        '在控制下向前倾斜躯干，背部保持平直——直到腘绳肌告诉你它们在工作。',
+        '通过足跟驱动回到站立。',
+      ],
+      tips: [
+        '活动能力限制深度——从不强制下背部拱起或圆背。',
+        '3-1-1节奏（3秒下，1秒停顿，1秒上）用最少的重量最大化刺激。',
       ],
     },
   },
@@ -579,6 +2596,21 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
         'Anfangs einen Fingerkontakt mit der Wand erlauben — Balance braucht Übung.',
       ],
     },
+    el: {
+      name: 'Single-Leg Romanian Deadlift',
+      summary:
+        'Κύρτωση ισχίου ενός σκέλους — ισορροπία, οπίσθια αλυσίδα και σταθερότητα ισχίου σε μια άσκηση.',
+      instructions: [
+        'Όρθιος, βάρος σε ένα πόδι, το άλλο ελαφρώς ανυψωμένο.',
+        'Στέλνοντας τα ισχία προς τα πίσω και κύρτωμα του κορμού μπροστά — το πόδι του πίσω κάνει το αντίθεσμα.',
+        'Κράτησε ίσια πλάτη, στάσιμο γόνατο μαλακό· κύρτωμα προς το οριζόντιο ή όσο μακριά επιτρέπει η μορφή.',
+        'Σπρώξιμο από τη φτέρνα προς τα πάνω σε όρθια θέση ενώ ωθούνται τα ισχία μπροστά.',
+      ],
+      tips: [
+        'Κράτησε ένα βάρος (αλτήρα, μπουκάλι νερού) στο αντίθετο χέρι αυξάνει τη ζήτηση σταθερότητας.',
+        'Επιτρέπεται ένα άγγιγμα δακτύλου σε τοίχο στην αρχή — ισορροπία ενός σκέλους χρειάζεται εξάσκηση.',
+      ],
+    },
     en: {
       name: 'Single-Leg Romanian Deadlift',
       summary:
@@ -592,6 +2624,110 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       tips: [
         'Holding a weight (dumbbell, water bottle) in the opposite hand raises the stability demand.',
         'Allow a fingertip on a wall in the beginning — single-leg balance takes practice.',
+      ],
+    },
+    es: {
+      name: 'Levantamiento de una sola pierna',
+      summary:
+        'Bisagra de cadera con una pierna — equilibrio, cadena posterior y estabilidad de cadera en un ejercicio.',
+      instructions: [
+        'Párate erguido, peso en una pierna, la otra ligeramente levantada.',
+        'Envía las caderas hacia atrás e inclina el torso hacia adelante — la pierna trasera se extiende hacia atrás como contrapeso.',
+        'Mantén una espalda plana, rodilla de apoyo suave; bisagra hasta la horizontal o lo que la forma permita.',
+        'Impulsa a través del talón volviendo a la posición de pie mientras empujas las caderas hacia adelante.',
+      ],
+      tips: [
+        'Sostener un peso (mancuerna, botella de agua) en la mano opuesta aumenta la demanda de estabilidad.',
+        'Permite una punta de dedo en la pared al principio — el equilibrio de una pierna requiere práctica.',
+      ],
+    },
+    fr: {
+      name: 'Soulevé de terre roumain sur une jambe',
+      summary:
+        'Pliage à la hanche sur une jambe — équilibre, chaîne postérieure et stabilité de hanche en un exercice.',
+      instructions: [
+        "Debout, poids sur une jambe, l'autre légèrement soulevée.",
+        "Envoyez les hanches vers l'arrière et penchez le torse en avant — la jambe arrière s'étend vers l'arrière comme contrepoids.",
+        "Gardez le dos plat, genou debout souple ; articulation jusqu'à l'horizontale ou aussi loin que la forme le permet.",
+        'Poussez par le talon pour revenir à la position debout tout en avançant les hanches.',
+      ],
+      tips: [
+        "Tenez un poids (haltère, bouteille d'eau) à la main opposée pour augmenter la demande de stabilité.",
+        "Autorisez le bout du doigt sur un mur au départ — l'équilibre sur une jambe demande de la pratique.",
+      ],
+    },
+    it: {
+      name: 'Stacco da terra su una gamba',
+      summary:
+        "Hip hinge su una gamba — equilibrio, catena posteriore e stabilità dell'anca in un esercizio.",
+      instructions: [
+        "Stai in piedi eretto, peso su una gamba, l'altra leggermente sollevata.",
+        'Sposta i fianchi indietro e inclina il busto in avanti — la gamba posteriore si estende indietro come contrappeso.',
+        "Mantieni la schiena piatta, il ginocchio in piedi morbido; spingi fino all'orizzontale o finché la forma lo consente.",
+        'Spingi attraverso il tallone indietro verso la posizione eretta mentre spingi i fianchi in avanti.',
+      ],
+      tips: [
+        "Tenere un peso (manubrio, bottiglia d'acqua) nella mano opposta aumenta la richiesta di stabilità.",
+        "Consenti le dita su un muro all'inizio — l'equilibrio su una gamba richiede pratica.",
+      ],
+    },
+    la: {
+      name: 'Singulum Crus Mortuum Elevatum',
+      summary:
+        'Cardo unius cruris — aequilibrium, posterior catena et stabilitas coxae.',
+      instructions: [
+        'Rectus sta, onus in uno crure, alterum leve elevatum.',
+        'Coxas retrorsum et truncum antrorsum — crus posterius ut contrapondus extenditur.',
+        'Dorsum planum, genu standum flexibile; cardo ad horizontale vel quantam forma permittit.',
+        'Per calcneum impelle dum coxas antrorsum propelles.',
+      ],
+      tips: [
+        'Onus in opposita manu (halter, lagena aquae) stabilitate augetur.',
+        'Digito tutelarum in muro initio — unius cruris aequilibrium exercitium indiget.',
+      ],
+    },
+    nl: {
+      name: 'Single-Leg Romanian Deadlift',
+      summary:
+        'Eenbenige heupscharnierbeweging — balans, achterste keten en heupstabiliteit in één oefening.',
+      instructions: [
+        'Sta rechtop, gewicht op één been, het ander licht getild.',
+        'Stuur heupen achteruit en til romp naar voren — achterste been strekt terug als contragewicht.',
+        'Houd vlakke rug, staand knie zacht; scharnierend tot horizontaal of zover als vorm toelaat.',
+        'Zet jezelf terug naar staan via de hak terwijl je heupen naar voren duwt.',
+      ],
+      tips: [
+        'Houd een gewicht (halter, waterfles) in de tegenovergestelde hand verhoogt de stabiliteitsvraag.',
+        'Zet een vinger op een muur in het begin — eenbenige balans vergt oefening.',
+      ],
+    },
+    no: {
+      name: 'Single-Leg Romanian Deadlift',
+      summary:
+        'Enbeint hoftehenging – balanse, posterior chain og hoftstabilitet i én drill.',
+      instructions: [
+        'Stå oppreist, vekt på ett ben, det andre lett løftet.',
+        'Send hofter bakover og tilt torso fremover – bakerste ben strukker seg bakover som motvekt.',
+        'Hold flat rygg, standingkneet mykt; henging til horisontal eller så langt form tillater.',
+        'Kjør gjennom hælen tilbake til å stå mens du skyver hofter fremover.',
+      ],
+      tips: [
+        'Holde en vekt (håndvekt, vannflaske) i motsatt hånd øker stabilitetskravet.',
+        'Tillat fingerspiss på en vegg til å begynne – enbeint balanse tar øving.',
+      ],
+    },
+    zh: {
+      name: '单腿硬拉',
+      summary: '单腿髋关节铰链——平衡、后链和髋部稳定一个动作完成。',
+      instructions: [
+        '站立，重量在一条腿上，另一条腿轻轻抬起。',
+        '推动髋部向后并向前倾斜躯干——后腿作为配重向后伸展。',
+        '保持平直的背部，站立的膝盖柔软；铰链至水平或尽可能的形式。',
+        '通过足跟驱动回到站立，同时推动髋部向前。',
+      ],
+      tips: [
+        '在对侧手中握住重物（哑铃、水瓶）提高稳定性要求。',
+        '开始时允许一根手指轻触墙壁——单腿平衡需要练习。',
       ],
     },
   },
@@ -611,6 +2747,21 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
         'Hohe Wiederholungszahlen funktionieren besser für die Waden — 15-25 pro Satz.',
       ],
     },
+    el: {
+      name: 'Ανύψωση γάμπας',
+      summary:
+        'Απομονωμένη εκπαίδευση γάμπας — δύναμη άλματος και σταθερότητα για αρθρώσεις αστραγάλου και γόνατος.',
+      instructions: [
+        'Όρθιος, πόδια ευρύτητα ισχίου, βάρος στα μπάλες των ποδιών.',
+        'Σπρώξιμο αργά προς τα πάνω στα δάχτυλα, σύντομη παύση στην κορυφή.',
+        'Κατέβασμα υπό έλεγχο — χωρίς κρούση φτέρνας στο έδαφος.',
+        'Όρθιο σε ακμή σκαλοπατιού ξεκλειδώνει πλήρες εύρος κίνησης.',
+      ],
+      tips: [
+        'Όρθιο σε σκαλοπάτι (φτέρνες κρεμασμένες) για πολύ περισσότερο τέντωμα και ερέθισμα.',
+        'Υψηλές επαναλήψεις λειτουργούν καλύτερα για γάμπες — στοχεύστε 15-25 ανά σετ.',
+      ],
+    },
     en: {
       name: 'Calf Raises',
       summary:
@@ -624,6 +2775,110 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       tips: [
         'Stand on a step (heels hanging) for much more stretch and stimulus.',
         'High reps work better for calves — aim for 15-25 per set.',
+      ],
+    },
+    es: {
+      name: 'Elevaciones de pantorrilla',
+      summary:
+        'Entrenamiento aislado de pantorrilla — potencia de salto y estabilidad para tobillos y rodillas.',
+      instructions: [
+        'Párate erguido, pies a la anchura de la cadera, peso sobre las puntas de los pies.',
+        'Presiona lentamente hacia arriba sobre los dedos de los pies, pausa brevemente en la parte superior.',
+        'Baja bajo control — no dejes que los talones se golpeen contra el suelo.',
+        'Estar de pie en el borde de un escalón desbloquea el rango completo de movimiento.',
+      ],
+      tips: [
+        'Estar de pie en un escalón (talones colgando) para mucho más estiramiento y estímulo.',
+        'Las repeticiones altas funcionan mejor para las pantorrillas — apunta a 15-25 por serie.',
+      ],
+    },
+    fr: {
+      name: 'Montées de mollets',
+      summary:
+        'Travail isolé des mollets — puissance de saut et stabilité des chevilles et genoux.',
+      instructions: [
+        "Debout, pieds écartés à la largeur des hanches, poids sur l'avant du pied.",
+        'Montez lentement sur les orteils, pause brève au sommet.',
+        "Abaissez de façon contrôlée — ne laissez pas les talons s'écraser au sol.",
+        "Vous tenir sur le bord d'une marche déverrouille toute l'amplitude du mouvement.",
+      ],
+      tips: [
+        "Placez-vous sur une marche (talons qui dépassent) pour beaucoup plus d'étirement et de stimulus.",
+        'Les répétitions hautes fonctionnent mieux pour les mollets — visez 15-25 par série.',
+      ],
+    },
+    it: {
+      name: 'Alzate polpacci',
+      summary:
+        'Allenamento isolato dei polpacci — potenza di salto e stabilità per caviglie e ginocchia.',
+      instructions: [
+        "Stai in piedi eretto, piedi a larghezza dell'anca, peso sulla pianta del piede.",
+        "Premi lentamente verso l'alto sulle punte, pausa brevemente in alto.",
+        'Abbassa controllando — non lasciare che i talloni si schiantino a terra.',
+        "Stare su uno spigolo di gradino sblocca l'intera ampiezza di movimento.",
+      ],
+      tips: [
+        'Stai su uno scalino (talloni penzolanti) per molto più allungamento e stimolo.',
+        'Le alte ripetizioni funzionano meglio per i polpacci — mira a 15-25 per serie.',
+      ],
+    },
+    la: {
+      name: 'Sura Elevationes',
+      summary:
+        'Exercitatio surarum — potentia saltatoria et stabilitas talorum et genuarum.',
+      instructions: [
+        'Rectus sta, pedes latitudinis coxae, onus in digitis.',
+        'Lente in digitos surge, summitatem breviter statio.',
+        'Deorsum sub tensione — calcanei ne collidant.',
+        'Gradus in margine corpore plenitudinem motus liberat.',
+      ],
+      tips: [
+        'Gradus (calcanei suspensa) multum extensionem et stimulum adit.',
+        'Surarum ad repetitiones — iubilus 15-25 per seriem.',
+      ],
+    },
+    nl: {
+      name: 'Kuitraises',
+      summary:
+        'Geïsoleerde kuittaining — sprankracht en stabiliteit voor enkels en knieën.',
+      instructions: [
+        'Sta rechtop, voeten heupsbreed, gewicht op de balletjes van je voeten.',
+        'Zet jezelf langzaam op je tenen, maak even pauze bovenaan.',
+        'Laat zakken onder controle — laat hakken niet tegen de vloer klappen.',
+        'Sta op een traptreding (hakken bungelen) ontgrendelt het volledige bereik.',
+      ],
+      tips: [
+        'Sta op een trede (hakken bungelen) voor veel meer stretch en stimulus.',
+        'Hoge herhalingen werken beter voor kuiten — richt op 15-25 per serie.',
+      ],
+    },
+    no: {
+      name: 'Calf Raises',
+      summary:
+        'Isolert laftettrening – hoppkraft og stabilitet for ankler og knær.',
+      instructions: [
+        'Stå oppreist, føtter hoftebredde, vekt på fotulen.',
+        'Press sakte opp på tærne, pause kort øverst.',
+        'Senk med kontroll – ikke la hælene krasje i gulvet.',
+        'Å stå på trinnkant låser full bevegelsesrekkevidde.',
+      ],
+      tips: [
+        'Stå på trinn (hæler hengende) for mye mer strekk og stimuli.',
+        'Høye repetisjoner fungerer bedre for laft – målstreben 15-25 per sett.',
+      ],
+    },
+    zh: {
+      name: '提踵',
+      summary: '隔离的小腿训练——跳跃力量和踝关节、膝关节稳定。',
+      instructions: [
+        '站立，脚距髋宽，重量在脚尖。',
+        '缓慢向上按压到脚尖，在顶部短暂停顿。',
+        '控制地放低——不要让足跟砸向地面。',
+        '站在台阶边缘可以解锁全活动范围。',
+      ],
+      tips: [
+        '站在台阶上（足跟悬垂）可以获得更多的伸展和刺激。',
+        '高次数对小腿效果更好——每组争取15-25次。',
       ],
     },
   },
@@ -643,6 +2898,21 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
         'Bei sehr starken Trainierenden Hüftheben mit einbeiniger Variante oder Gewicht progressieren.',
       ],
     },
+    el: {
+      name: 'Glute Bridge',
+      summary:
+        'Επέκταση ισχίου ύπτιο — άμεση δουλειά για τους γλουτούς και οπίσθιας αλυσίδας.',
+      instructions: [
+        'Ξαπλώνεις ύπτιος, γόνατα λυγισμένα, πόδια ακίνητα και ευρύτητα ισχίου στο έδαφος.',
+        'Σφίξιμο των γλουτών και σπρώξιμο των ισχίων προς την οροφή.',
+        'Κράτησε την κορυφή σύντομα (1 δ.) — σώμα σχηματίζει γραμμή από γόνατα σε ώμους.',
+        'Κατέβασμα υπό έλεγχο — αγγίζουν σύντομα, κατόπιν ξανά.',
+      ],
+      tips: [
+        'Σπρώξιμο από τις φτέρνες, όχι τα δάχτυλα — πίεση δακτύλου μετακινεί φορτίο στα τετράκερα.',
+        'Εξέλιξη με παραλλαγή ενός σκέλους ή προστιθέμενο βάρος όταν το βάρος σώματος είναι πολύ εύκολο.',
+      ],
+    },
     en: {
       name: 'Glute Bridge',
       summary:
@@ -656,6 +2926,110 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       tips: [
         'Drive through the heels, not the toes — toe-pressure shifts the load to the quads.',
         'Progress with a single-leg variant or added weight once bodyweight is too easy.',
+      ],
+    },
+    es: {
+      name: 'Puente de glúteos',
+      summary:
+        'Extensión de cadera desde supino — trabajo directo de los glúteos y cadena posterior.',
+      instructions: [
+        'Acuéstate boca arriba, rodillas dobladas, pies planos a la anchura de la cadera en el suelo.',
+        'Aprieta los glúteos e impulsa las caderas hacia el techo.',
+        'Mantén la parte superior brevemente (1 s) — el cuerpo forma una línea desde las rodillas hasta los hombros.',
+        'Baja bajo control — toca brevemente el suelo, luego continúa.',
+      ],
+      tips: [
+        'Impulsa a través de los talones, no los dedos — la presión en los dedos desplaza la carga hacia los cuádriceps.',
+        'Progresa con una variante de una sola pierna o peso añadido una vez que el peso corporal sea demasiado fácil.',
+      ],
+    },
+    fr: {
+      name: 'Pont des fessiers',
+      summary:
+        'Extension de hanche couché — travail direct des fessiers et de la chaîne postérieure.',
+      instructions: [
+        'Allongé sur le dos, genoux fléchis, pieds à plat et écartés à la largeur des hanches.',
+        'Serrez les fessiers et poussez les hanches vers le plafond.',
+        'Maintenez le sommet brièvement (1 s) — le corps forme une ligne des genoux aux épaules.',
+        'Abaissez de façon contrôlée — touchez brièvement, puis recommencez.',
+      ],
+      tips: [
+        'Poussez par les talons, pas par les orteils — la pression des orteils décale la charge vers les quadriceps.',
+        'Progressez avec une variante sur une jambe ou du poids ajouté une fois le poids du corps trop facile.',
+      ],
+    },
+    it: {
+      name: 'Ponte glutei',
+      summary:
+        "Estensione dell'anca da supino — lavoro diretto per i glutei e la catena posteriore.",
+      instructions: [
+        "Sdraiati sulla schiena, ginocchia piegate, piedi piatti a larghezza dell'anca.",
+        'Stringi i glutei e spingi i fianchi verso il soffitto.',
+        'Mantieni il top brevemente (1 s) — il corpo forma una linea da ginocchia a spalle.',
+        'Abbassa controllando — tocca brevemente, poi ricomincia.',
+      ],
+      tips: [
+        'Spingi attraverso i talloni, non le dita dei piedi — la pressione sulle dita sposta il carico ai quadricipiti.',
+        'Progredisci con una variante su una gamba o peso aggiunto una volta che il peso corporeo è troppo facile.',
+      ],
+    },
+    la: {
+      name: 'Pont Natis',
+      summary:
+        'Extensio coxae supina — directum natis et posterior catena opus.',
+      instructions: [
+        'Supine, genua flexa, pedes plana et latitudinis coxae.',
+        'Nates exprime et coxas ad caelum impelle.',
+        'Summitate breve (1 s) teneto — corpus lineam formam genu ad humerum.',
+        'Deorsum sub tensione — pavimentum tangito breviter, tum iterum.',
+      ],
+      tips: [
+        'Per calcanea impelle, non digitis — digiti-pressura quad superscriptum munit.',
+        'Cum singulum-crure variante vel onere adducto cum corporis pondere facile.',
+      ],
+    },
+    nl: {
+      name: 'Glute Bridge',
+      summary:
+        'Heupextensie van rugligging — direct werk voor de billen en achterste keten.',
+      instructions: [
+        'Lig op je rug, knieën gebogen, voeten plat en heupsbreed op de vloer.',
+        'Spann de billen en zet de heupen naar het plafond.',
+        'Houd bovenaan kort vast (1 s) — lichaam vormt een lijn van knieën naar schouders.',
+        'Laat zakken onder controle — raak kort aan, ga dan opnieuw.',
+      ],
+      tips: [
+        'Zet jezelf via de hakken, niet via de tenen — teendruk verschuift belasting naar de quadriceps.',
+        'Maak voortgang met een eenbenig variant of toegevoegd gewicht zodra lichaamsgewicht te gemakkelijk is.',
+      ],
+    },
+    no: {
+      name: 'Glute Bridge',
+      summary:
+        'Hofteekstensjon fra rygglig – direkte arbeid for setemusklene og posterior chain.',
+      instructions: [
+        'Ligge på ryggen, knær bøyd, føtter flate og hoftebredde på gulvet.',
+        'Klem setemusklene og kjør hofter opp til taket.',
+        'Hold øverst kort (1 s) – kroppen danner linje fra knær til skuldre.',
+        'Senk med kontroll – berør kort, så igjen.',
+      ],
+      tips: [
+        'Kjør gjennom hælene, ikke tærne – trykk på tær flytter lasten til quads.',
+        'Framgang med enbeint variant eller added vekt når kroppsvekt er for lett.',
+      ],
+    },
+    zh: {
+      name: '臀桥',
+      summary: '仰卧位臀部伸展——直接锻炼臀部和后链。',
+      instructions: [
+        '仰卧，膝盖弯曲，脚踏地面，距离髋宽。',
+        '收紧臀部并驱动髋部向天花板。',
+        '在顶部短暂保持（1秒）——身体形成膝盖至肩膀的一条线。',
+        '控制地放低——轻轻着地，然后再做一个。',
+      ],
+      tips: [
+        '通过足跟驱动，不是脚尖——脚尖压力会将负荷转移到股四头肌。',
+        '一旦体重太轻，用单腿变式或增加重量来进阶。',
       ],
     },
   },
@@ -675,6 +3049,21 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
         'Hartes Aufkommen schadet den Gelenken; eine Matte oder weiche Schuhe helfen.',
       ],
     },
+    el: {
+      name: 'Jump Squats',
+      summary:
+        'Εκρηκτικό squat με κάθετο άλμα — ταχύ-δύναμη και δύναμη κάτω σώματος.',
+      instructions: [
+        'Κατέβασμα σε κανονικό squat.',
+        'Σπρώξιμο εκρηκτικά από το κάτω, χέρια ταλαντευόμενα δυναμικά.',
+        'Προσγείωση μαλακή στη μέση του ποδιού, γόνατα απορροφώντας — κατευθείαν στο επόμενο squat.',
+        'Έλεγχος ενάντια σε ταχύτητα — αν η μορφή σπάει, ανάπαυση ή πτώση σε κανονικά squats.',
+      ],
+      tips: [
+        'Μη ξεκίνησης από ψηλή στάση — η προ-τέντωμα στο κάτω μέρος του squat είναι αυτό που δημιουργεί ύψος άλματος.',
+        'Σκληρές προσγειώσεις είναι δύσκολες στις αρθρώσεις· ένα στρώμα ή μαξιλαρωτά παπούτσια βοηθούν.',
+      ],
+    },
     en: {
       name: 'Jump Squats',
       summary:
@@ -688,6 +3077,110 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       tips: [
         "Don't start from a tall stance — the pre-stretch at the bottom of the squat is what creates jump height.",
         'Hard landings are tough on joints; a mat or cushioned shoes help.',
+      ],
+    },
+    es: {
+      name: 'Sentadillas con salto',
+      summary:
+        'Sentadilla explosiva con salto vertical — fuerza-velocidad y potencia de las extremidades inferiores.',
+      instructions: [
+        'Baja en una sentadilla regular.',
+        'Impulsa hacia arriba explosivamente desde la parte inferior, brazos columpiándose dinámicamente.',
+        'Aterriza suavemente sobre el metatarso, rodillas absorbiendo — directamente en la siguiente sentadilla.',
+        'Forma sobre velocidad — si la forma se quiebra, descansa o vuelve a sentadillas regulares.',
+      ],
+      tips: [
+        'No comiences desde una postura erguida — el pre-estiramiento en la parte inferior de la sentadilla es lo que crea la altura del salto.',
+        'Los aterrizajes duros son difíciles para las articulaciones; una colchoneta o zapatos acolchados ayudan.',
+      ],
+    },
+    fr: {
+      name: 'Fentes sautées',
+      summary:
+        'Squat explosif avec saut vertical — force vitesse et puissance du bas du corps.',
+      instructions: [
+        'Abaissez-vous en squat régulier.',
+        'Poussez vers le haut de façon explosive du bas, bras balançant dynamiquement.',
+        "Atterrissez doucement sur l'avant du pied, genoux absorbant — droit dans le squat suivant.",
+        "La forme prime sur la vitesse — si la forme s'effondre, reposez-vous ou revenez aux squats réguliers.",
+      ],
+      tips: [
+        "Ne partez pas d'une position debout — la pré-étirement en bas du squat crée la hauteur du saut.",
+        'Les atterrissages durs sont durs pour les articulations ; un tapis ou des chaussures amorties aident.',
+      ],
+    },
+    it: {
+      name: 'Squat con salto',
+      summary:
+        'Squat esplosivo con salto verticale — speed-strength e potenza degli arti inferiori.',
+      instructions: [
+        'Scendi in uno squat regolare.',
+        "Spingi verso l'alto in modo esplosivo dal fondo, braccia che oscillano dinamicamente.",
+        'Atterra dolcemente sulla mezza pianta, ginocchia che assorbono — diretto nello squat successivo.',
+        'Controlla sulla velocità — se la forma si rompe, riposa o torna agli squat normali.',
+      ],
+      tips: [
+        "Non iniziare da una postura eretta — il pre-allungamento in fondo allo squat è ciò che crea l'altezza del salto.",
+        'Gli atterraggi forti sono difficili per le articolazioni; un tappetino o scarpe ammortizzate aiutano.',
+      ],
+    },
+    la: {
+      name: 'Saltus Genua',
+      summary:
+        'Explosiva genuflexio cum saltu verticali — velocitas-vires et crura potentia.',
+      instructions: [
+        'In genuflexionem ordinaria deorsum.',
+        'Impetum fundamento explosivum bracchiis dynamice oscillantibus.',
+        'Digitorum cadum molliter, genua absorbentia — directe in proximam genuflexionem.',
+        'Tensio super velocitatem — forma si frangitur, requiete vel ordinaria genuflexione.',
+      ],
+      tips: [
+        'Non sta alto — praetensio fundamento est quod altitudinem mittit.',
+        'Fortia cadens articulis gravis; tapete vel calcei adiuvant.',
+      ],
+    },
+    nl: {
+      name: 'Jump Squats',
+      summary:
+        'Explosieve squat met verticale sprong — snelheidskracht en onderlichaamskracht.',
+      instructions: [
+        'Zak in een normale squat.',
+        'Zet je explosief af van de onderkant, armen zwaaien dynamisch.',
+        'Land zacht op de middelvoet, knieën absorberen — recht in de volgende squat.',
+        'Controle boven snelheid — als vorm bezwijkt, rust of val terug naar normale squats.',
+      ],
+      tips: [
+        'Begin niet van een rechtopstaande houding — de pre-stretch onderaan de squat creëert spronghoogte.',
+        'Harde landingen zijn moeilijk voor gewrichten; een mat of gevoerde schoenen helpen.',
+      ],
+    },
+    no: {
+      name: 'Jump Squats',
+      summary:
+        'Eksplosiv squat med vertikalt hopp – speed-styrke og nedre kropps kraft.',
+      instructions: [
+        'Senk inn i regular squat.',
+        'Kjør opp eksplosivt fra bunnen, armer svingane dynamisk.',
+        'Land mykt på midtfoten, knær absorberer – rett til neste squat.',
+        'Kontroll over hastighet – hvis form brytes, hvil eller dropp til regular squats.',
+      ],
+      tips: [
+        'Ikke start fra høy stance – pre-strekken nederst i squat er det som skaper hopphøyde.',
+        'Hardt landing er tøft for leddene; matte eller dempe sko hjelper.',
+      ],
+    },
+    zh: {
+      name: '跳跃深蹲',
+      summary: '爆发式深蹲伴随竖直跳跃——速度力量和下肢力量。',
+      instructions: [
+        '降低到常规深蹲。',
+        '从底部爆发式驱动，双臂动态摇摆。',
+        '在足中部软着陆，膝盖吸收——直接进入下一个深蹲。',
+        '控制优于速度——如果形式破裂，休息或回到常规深蹲。',
+      ],
+      tips: [
+        '不要从竖直站姿开始——深蹲底部的预拉伸是产生跳跃高度的原因。',
+        '重着陆对关节很难；垫子或缓冲鞋很有帮助。',
       ],
     },
   },
@@ -707,6 +3200,21 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
         'Variante: Rückwärts (Reverse Lunge) ist gelenkfreundlicher, Walking Lunges sind anspruchsvoller in Balance.',
       ],
     },
+    el: {
+      name: 'Lunges',
+      summary:
+        'Δύναμη ενός σκέλους σε διχάλιασμα στάσης — δύναμη, ισορροπία και πλευρική συμμετρία.',
+      instructions: [
+        'Όρθιος, ένα μεγάλο βήμα μπροστά.',
+        'Κατέβασμα του πίσω γόνατος υπό έλεγχο προς το έδαφος, μπροστά γόνατο στοίβαγμα πάνω από τον αστράγαλο.',
+        'Και τα δύο γόνατα τελειώνουν σε περίπου 90° — το μπροστάς κνήμη παραμένει κάθετη.',
+        'Σπρώξιμο διαμέσου της μπροστάς φτέρνας προς τα πάνω σε όρθια· εναλλαγή πλευρών ή βήμα.',
+      ],
+      tips: [
+        'Παραμένει όρθιος — κορμός δεν πρέπει να κατακλίνεται μπροστά.',
+        'Παραλλαγές: ανάστροφες lunges είναι ευκολότερες στα γόνατα, περπατώντας lunges προσθέτουν ζήτηση ισορροπίας.',
+      ],
+    },
     en: {
       name: 'Lunges',
       summary:
@@ -720,6 +3228,110 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       tips: [
         'Stay upright — torso must not collapse forward.',
         'Variants: reverse lunges are easier on the knees, walking lunges add a balance demand.',
+      ],
+    },
+    es: {
+      name: 'Zancadas',
+      summary:
+        'Fuerza de una sola pierna en postura dividida — potencia, equilibrio y simetría de lado a lado.',
+      instructions: [
+        'Párate erguido, da un paso largo hacia adelante.',
+        'Baja la rodilla trasera bajo control hacia el suelo, rodilla delantera alineada sobre el tobillo.',
+        'Ambas rodillas terminan aproximadamente en 90° — la espinilla delantera se mantiene vertical.',
+        'Impulsa a través del talón delantero volviendo a la posición de pie; cambia de lado o avanza.',
+      ],
+      tips: [
+        'Mantente erguido — el torso no debe colapsar hacia adelante.',
+        'Variantes: las zancadas invertidas son más fáciles para las rodillas, las zancadas caminando agregan una demanda de equilibrio.',
+      ],
+    },
+    fr: {
+      name: 'Fentes',
+      summary:
+        'Force sur une jambe en position fendue — puissance, équilibre et symétrie côté à côté.',
+      instructions: [
+        'Debout, faites un long pas en avant.',
+        'Abaissez le genou arrière de façon contrôlée vers le sol, genou avant empilé sur la cheville.',
+        'Les deux genoux terminent à environ 90° — le tibia avant reste vertical.',
+        'Poussez par le talon avant pour revenir debout ; changez de côté ou avancez.',
+      ],
+      tips: [
+        "Restez droit — le torse ne doit pas s'effondrer en avant.",
+        "Variantes : les fentes inverses sont plus faciles pour les genoux, les fentes marchantes ajoutent une demande d'équilibre.",
+      ],
+    },
+    it: {
+      name: 'Affondi',
+      summary:
+        'Forza su una gamba in posizione spaccata — potenza, equilibrio e simmetria lato a lato.',
+      instructions: [
+        'Stai in piedi eretto, fai un lungo passo in avanti.',
+        'Abbassa il ginocchio posteriore controllato verso il pavimento, ginocchio anteriore impilato sulla caviglia.',
+        'Entrambi i ginocchi finiscono a circa 90° — lo stinco anteriore rimane verticale.',
+        'Spingi attraverso il tallone anteriore tornando in piedi; cambia lato o fai un passo.',
+      ],
+      tips: [
+        'Rimani eretto — il busto non deve crollare in avanti.',
+        "Varianti: gli affondi all'indietro sono più delicati per le ginocchia, gli affondi in movimento aggiungono una richiesta di equilibrio.",
+      ],
+    },
+    la: {
+      name: 'Lunae',
+      summary:
+        'Vires singuli cruris in statu divisso — potentia, aequilibrium et symmetria.',
+      instructions: [
+        'Rectus sta, longum passum antrorsum fac.',
+        'Genu posterius sub tensione deorsum versus pavimentum, genu anterius super talum.',
+        'Ambo genua circa 90° — tibia anterior verticalis.',
+        'Per calcneum anterium impelle ut standum redeas; alterna vel passim.',
+      ],
+      tips: [
+        'Erectus mane — truncus non collapsa antrorsum.',
+        'Variantes: reversae lunae genua facilius, ambulantes lunae aequilibrium augent.',
+      ],
+    },
+    nl: {
+      name: 'Lunges',
+      summary:
+        'Eenbenige kracht in split-houding — kracht, balans en zijwaarts symmetrie.',
+      instructions: [
+        'Sta rechtop, zet een lange stap naar voren.',
+        'Laat achterste knie onder controle naar vloer zakken, voorknie gestapeld over enkel.',
+        'Beide knieën eindigen op ruwweg 90° — voorknie blijft verticaal.',
+        'Zet jezelf via voorknie terug naar staan; wissel van kant of stap.',
+      ],
+      tips: [
+        'Blijf rechtop — romp mag niet naar voren ineenzakken.',
+        'Varianten: reverse lunges zijn gemakkelijker op de knieën, walking lunges voegen balansvereiste toe.',
+      ],
+    },
+    no: {
+      name: 'Lunges',
+      summary:
+        'Enbeint styrke i split stance – kraft, balanse og side-til-side symmetri.',
+      instructions: [
+        'Stå oppreist, ta et langt steg fremover.',
+        'Senk bakerste kne med kontroll mot gulvet, forkneet stablet over ankelen.',
+        'Begge knær finis rundt 90° – forskinnet forblir vertikal.',
+        'Kjør gjennom forhjælen tilbake til å stå; bytt side eller skritt.',
+      ],
+      tips: [
+        'Forbli oppreist – torso må ikke kollapse fremover.',
+        'Varianter: reverse lunges er lettere på knærne, walking lunges legger til balansekrav.',
+      ],
+    },
+    zh: {
+      name: '弓步',
+      summary: '分腿站姿中的单腿力量——力量、平衡和左右对称。',
+      instructions: [
+        '站立，向前跨一大步。',
+        '控制地放低后膝盖靠近地面，前膝盖在踝关节正上方。',
+        '两个膝盖都以大约90°结束——前胫骨保持竖直。',
+        '通过前足跟驱动回到站立；换侧或继续跨步。',
+      ],
+      tips: [
+        '保持竖直——躯干不能向前折叠。',
+        '变式：反向弓步对膝盖更温和，行走弓步增加平衡要求。',
       ],
     },
   },
@@ -739,6 +3351,21 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
         'Beim Hochkommen Po aktiv anspannen, sonst übernimmt der Rücken zu viel.',
       ],
     },
+    el: {
+      name: 'Squats',
+      summary:
+        'Βασιλιάς ασκήσεων ποδιών — τετράκερα, γλουτοί και πυρήνας σε ένα μοτίβο.',
+      instructions: [
+        'Στάση ευρύτητας ώμων, δάχτυλα ελαφρώς προς τα έξω.',
+        'Στέλνοντας τα ισχία προς τα πίσω, κατόπιν κάμψιμο των γονάτων πάνω από τα δάχτυλα — σαν κάθισμα σε αόρατη καρέκλα.',
+        'Κατέβασμα όσο βαθιά όσο κινητικότητα και ισχία επιτρέπουν — ιδανικά μηρά παράλληλα ή κάτω.',
+        'Σπρώξιμο προς τα πάνω δυνατά διαμέσου των φτερνών· μη κλείδωση των γονάτων στην κορυφή.',
+      ],
+      tips: [
+        'Καταπάλαιση γονάτων πάνω από τα δάχτυλα — μην αφήνεις να προσέγγιση προς τα μέσα.',
+        'Σφίξιμο των γλουτών στο ανήφορο ή η κάτω μέση τελειώνει overworking.',
+      ],
+    },
     en: {
       name: 'Squats',
       summary:
@@ -752,6 +3379,108 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       tips: [
         'Track the knees over the toes — do not let them cave inward.',
         'Squeeze the glutes on the way up or the lower back ends up overworking.',
+      ],
+    },
+    es: {
+      name: 'Sentadillas',
+      summary:
+        'Rey de los ejercicios de pierna — cuádriceps, glúteos y core en un solo patrón.',
+      instructions: [
+        'Postura a la anchura de los hombros, dedos de los pies ligeramente hacia fuera.',
+        'Envía las caderas hacia atrás, luego dobla las rodillas sobre los dedos de los pies — como sentándose en una silla invisible.',
+        'Desciende tan profundo como la movilidad y las caderas lo permitan — idealmente muslos paralelos o por debajo.',
+        'Impulsa hacia arriba poderosamente a través de los talones; no bloquees las rodillas en la parte superior.',
+      ],
+      tips: [
+        'Controla las rodillas sobre los dedos de los pies — no dejes que se cierren hacia adentro.',
+        'Aprieta los glúteos en el ascenso o la zona lumbar terminará trabajando en exceso.',
+      ],
+    },
+    fr: {
+      name: 'Squats',
+      summary:
+        'Roi des exercices de jambes — quadriceps, fessiers et core dans un seul mouvement.',
+      instructions: [
+        "Écartement des épaules, orteils légèrement pointés vers l'extérieur.",
+        'Repoussez les hanches en arrière, puis fléchissez les genoux sur les orteils — comme vous asseoir sur une chaise invisible.',
+        'Descendez aussi profond que la mobilité et les hanches le permettent — idéalement cuisses parallèles ou plus bas.',
+        'Remontez puissamment par les talons ; ne verrouillez pas les genoux au sommet.',
+      ],
+      tips: [
+        "Suivez les genoux sur les orteils — ne les laissez pas s'affaisser vers l'intérieur.",
+        'Serrez les fessiers en remontant ou le bas du dos se surcharge.',
+      ],
+    },
+    it: {
+      name: 'Squat',
+      summary:
+        'Il re degli esercizi per le gambe — quadricipiti, glutei e core in un unico modello.',
+      instructions: [
+        "Posizione a larghezza spalle, dita dei piedi leggermente girate verso l'esterno.",
+        'Sposta i fianchi indietro, poi piega le ginocchia sopra le dita dei piedi — come sedersi su una sedia invisibile.',
+        'Scendi il più profondo possibile in base alla mobilità e i fianchi consentono — idealmente coscie parallele o più in basso.',
+        'Torna su con potenza attraverso i talloni; non bloccare le ginocchia in alto.',
+      ],
+      tips: [
+        "Traccia le ginocchia sopra le dita dei piedi — non lasciarle crollare verso l'interno.",
+        'Stringi i glutei mentre sali o la parte bassa della schiena finisce per lavorare eccessivamente.',
+      ],
+    },
+    la: {
+      name: 'Genuflexiones',
+      summary: 'Rex exercitiumorum crurum — quads, nates et centrum in uno.',
+      instructions: [
+        'Statio humerorum latitudinis, digiti paulum extrinsecus versi.',
+        'Coxas retrorsum, genua flexta super digitos — ut in cathedram invisibilem sedes.',
+        'Descendere profundum quoad mobilitas et coxae permittunt — ideale femuralia parallela vel sub.',
+        'Potentialiter surga per calcanea; genua in summitatem ne fixa.',
+      ],
+      tips: [
+        'Genua super digitos sequi — ne introrsum flectantur.',
+        'Nates exprime in via sursum vel dorsum inferius laborat nimis.',
+      ],
+    },
+    nl: {
+      name: 'Squats',
+      summary:
+        'Koningin van beenefeeningen — quadriceps, billen en core in één patroon.',
+      instructions: [
+        'Schouderbreedtestand, tenen licht naar buiten gericht.',
+        'Stuur heupen achteruit, buig dan knieën over de tenen — als zat op een onzichtbare stoel.',
+        'Zak zo diep als mobiliteit en heupen toelaten — ideaal dijen parallel of eronder.',
+        'Zet jezelf krachtdadig omhoog via de hakken; vergrendel de knieën bovenaan niet.',
+      ],
+      tips: [
+        'Hou knieën boven de tenen — laat ze niet naar binnen buigen.',
+        'Spann de billen omhoog of de onderrug eindigt ermee overbelast te zijn.',
+      ],
+    },
+    no: {
+      name: 'Squats',
+      summary: 'Konge av benøvelser – quads, setemuskel og core i ett mønster.',
+      instructions: [
+        'Skulderbredde stance, tær diktert litt utover.',
+        'Send hofter bakover, så bøy knærne over tærne – som å sitte på en usynlig stol.',
+        'Senk så dypt som mobilitet og hofter tillater – ideelt lår parallelt eller under.',
+        'Kjør oppover kraftig gjennom hælene; ikke lås knær øverst.',
+      ],
+      tips: [
+        'Spor knærne over tærne – ikke la dem brette innover.',
+        'Klem setemusklene på vei opp eller nedre rygg ender opp med overarbeid.',
+      ],
+    },
+    zh: {
+      name: '深蹲',
+      summary: '腿部之王——股四头肌、臀部和核心合一。',
+      instructions: [
+        '肩宽站姿，脚趾略微向外。',
+        '推动髋部向后，然后弯曲膝盖在脚尖上——像坐在看不见的椅子上。',
+        '尽活动能力和髋部允许的范围下降——理想情况下大腿平行或以下。',
+        '有力地通过足跟驱动回到站立；不要在顶部锁定膝盖。',
+      ],
+      tips: [
+        '跟踪膝盖在脚趾上方——不要让它们向内塌陷。',
+        '在向上时收紧臀部，否则下背部会过度工作。',
       ],
     },
   },
@@ -771,6 +3500,21 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
         'Nicht mit dem hinteren Bein "abdrücken" — der Reiz kommt aus dem vorderen Bein.',
       ],
     },
+    el: {
+      name: 'Step-ups',
+      summary:
+        'Ανάβαση σε ανύψωση — επέκταση ενός σκέλους με υψηλή μεταφορά σε καθημερινή ζωή.',
+      instructions: [
+        'Όρθιος μπροστά σε σταθερή ανύψωση (πάγκος, σκαλοπάτι).',
+        'Τοποθέτησε ένα πόδι εξολοκλήρου στην ανύψωση — φτέρνα κεντρική στην επιφάνεια.',
+        'Σπρώξιμο προς τα πάνω διαμέσου αυτής της φτέρνας μέχρι το πίσω σκέλος είναι αέρα· παύση σύντομα.',
+        'Βήμα κάτω υπό έλεγχο, επανάληψη στο ίδιο πόδι ή εναλλαγή.',
+      ],
+      tips: [
+        'Επιλογή ύψος όπου το μπροστά γόνατο λυγίζει περίπου 90° — διαφορετικά ορμή παίρνει.',
+        'Μη πίεση του πίσω σκέλους — ερέθισμα πρέπει να έρχεται από το εργαζόμενο (μπροστά) πόδι.',
+      ],
+    },
     en: {
       name: 'Step-ups',
       summary:
@@ -784,6 +3528,110 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       tips: [
         'Pick a height where the front knee bends to about 90° — otherwise momentum takes over.',
         "Don't push off the back leg — the stimulus has to come from the working (front) leg.",
+      ],
+    },
+    es: {
+      name: 'Subidas a paso',
+      summary:
+        'Sube a una elevación — extensión de una sola pierna con alto traslado a la vida diaria.',
+      instructions: [
+        'Párate frente a una elevación estable (banco, escalón).',
+        'Coloca completamente un pie en la elevación — talón centrado en la superficie.',
+        'Impulsa a través de ese talón hasta que la pierna trasera esté en el aire; pausa brevemente.',
+        'Baja bajo control, repitiendo en la misma pierna o alternando.',
+      ],
+      tips: [
+        'Elige una altura donde la rodilla delantera se doble aproximadamente a 90° — de lo contrario, el impulso toma el control.',
+        'No empujes con la pierna trasera — el estímulo debe provenir de la pierna que trabaja (delantera).',
+      ],
+    },
+    fr: {
+      name: 'Montées de marches',
+      summary:
+        "Montée sur une élévation — extension d'une jambe avec un transfert direct à la vie quotidienne.",
+      instructions: [
+        'Placez-vous devant une élévation stable (banc, marche).',
+        "Placez un pied complètement sur l'élévation — talon centré sur la surface.",
+        "Poussez par ce talon jusqu'à ce que la jambe arrière décolle ; pause brève.",
+        'Descendez de façon contrôlée, répétez sur la même jambe ou en alternance.',
+      ],
+      tips: [
+        "Choisissez une hauteur où le genou avant fléchit à environ 90° — sinon l'élan prend le dessus.",
+        'Ne poussez pas avec la jambe arrière — le stimulus doit venir de la jambe travaillante (avant).',
+      ],
+    },
+    it: {
+      name: 'Salita su scalino',
+      summary:
+        "Sali su un'elevazione — estensione su una gamba con alto trasferimento alla vita quotidiana.",
+      instructions: [
+        "Stai di fronte a un'elevazione stabile (panca, scalino).",
+        "Posiziona un piede completamente sull'elevazione — tallone centrato sulla superficie.",
+        "Spingi verso l'alto attraverso quel tallone finché la gamba posteriore non è sospesa; pausa brevemente.",
+        'Scendi controllato, ripetendo sulla stessa gamba o alternando.',
+      ],
+      tips: [
+        "Scegli un'altezza dove il ginocchio anteriore si piega a circa 90° — altrimenti la quantità di moto prende il sopravvento.",
+        'Non spingere con la gamba posteriore — lo stimolo deve venire dalla gamba che lavora (anteriore).',
+      ],
+    },
+    la: {
+      name: 'Ascensus Gradus',
+      summary:
+        'Ascende elevatione — extensio singuli cruris cum exitu cotidiani alto.',
+      instructions: [
+        'Ante elevationem stabila (sella, gradus) sta.',
+        'Unum pedem omnino super elevationem — calcaneus centrato.',
+        'Per eum calcneum impelle donec crus posterius volens; breve statio.',
+        'Deorsum sub tensione, repetitio in crure eodem vel alternatio.',
+      ],
+      tips: [
+        'Altitudinem elige qua genu ante circa 90° flexitur — momenti ne sumit.',
+        'Posterium crus ne propelle — stimulus ex labore cruris (anterioris) venit.',
+      ],
+    },
+    nl: {
+      name: 'Step-ups',
+      summary:
+        'Stap omhoog op een verhoging — eenbenige extensie met hoge overdracht naar dagelijks leven.',
+      instructions: [
+        'Sta voor een stabiele verhoging (bank, trap).',
+        'Plaats één voet volledig op de verhoging — hak gecentreerd op het oppervlak.',
+        'Zet jezelf via die hak omhoog totdat achterste been luchtdicht is; maak kort pauze.',
+        'Stap terug onder controle, herhaal op dezelfde been of wissel af.',
+      ],
+      tips: [
+        'Kies hoogte waarbij voorste knie naar ongeveer 90° buigt — anders neemt momentum het over.',
+        'Duw niet af met achterste been — stimulus moet van werkend (voorste) been komen.',
+      ],
+    },
+    no: {
+      name: 'Step-ups',
+      summary:
+        'Trinn opp på forhøyning – enbeint ekstensjon med høy overgang til dagliglivet.',
+      instructions: [
+        'Stå foran stabil forhøyning (benk, trinn).',
+        'Plasser ett ben helt på forhøyningen – hæl sentrert på overflaten.',
+        'Kjør opp gjennom hælen til bakerste ben er luftig; pause kort.',
+        'Steg ned med kontroll, gjenta på samme ben eller veksle.',
+      ],
+      tips: [
+        'Velg høyde der forkneet bøyer til rundt 90° – ellers tar momentum over.',
+        'Ikke skyv av bakerste ben – stimulansen må komme fra arbeidsbenene (front).',
+      ],
+    },
+    zh: {
+      name: '踏步上升',
+      summary: '踏上抬高物体——单腿伸展，对日常生活有高度转移。',
+      instructions: [
+        '站在稳定的抬高物体前（长凳、台阶）。',
+        '将一只脚完全放在抬高物体上——足跟在表面中央。',
+        '通过该足跟驱动，直到后腿悬空；短暂停顿。',
+        '控制地踏下，重复相同的腿或交替。',
+      ],
+      tips: [
+        '选择前膝盖弯曲到约90°的高度——否则动量会接管。',
+        '不要推后腿——刺激必须来自工作（前）腿。',
       ],
     },
   },
@@ -803,6 +3651,21 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
         'Bewegung soll fließen, nicht ruckartig zwischen Endpositionen springen.',
       ],
     },
+    el: {
+      name: 'Cat-Cow',
+      summary:
+        'Κινητοποίηση σπονδυλικής στήλης σε θέση τετρακτύ — εναλλαγή μεταξύ στρογγυλεμένης και κυρτής πλάτης.',
+      instructions: [
+        'Ξεκίνησε σε χέρια και γόνατα — χέρια κάτω από ώμους, γόνατα κάτω από ισχία.',
+        'Εισπνοή, cow: πτώση της κοιλιάς, ανύψωση του στήθους και ματιά πάνω και μπροστά.',
+        'Εκπνοή, cat: στρογγύλεμα της σπονδυλικής στήλης προς την οροφή, σαγόνι προς το στήθος, ουρά σφιχτή.',
+        'Κίνηση με την αναπνοή για 8-12 επαναλήψεις — κανένα γρήγορο, σπασμωδικό άλμα.',
+      ],
+      tips: [
+        'Τέλειο πριν και μετά το μακρύ κάθισμα — κινητοποιεί ολόκληρη τη σπονδυλική στήλη.',
+        'Κίνηση πρέπει να ροέται, όχι κόψιμο μεταξύ τελικών θέσεων.',
+      ],
+    },
     en: {
       name: 'Cat-Cow',
       summary:
@@ -816,6 +3679,110 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       tips: [
         'Perfect before and after long sitting — mobilises the whole spine.',
         'Movement should flow, not snap between end positions.',
+      ],
+    },
+    es: {
+      name: 'Gato-Vaca',
+      summary:
+        'Movilización espinal en posición cuadrúpeda — alterna entre espalda redondeada y arqueada.',
+      instructions: [
+        'Comienza en posición de manos y rodillas — manos bajo los hombros, rodillas bajo las caderas.',
+        'Inhala, vaca: deja caer el abdomen, levanta el pecho y mira hacia arriba y hacia adelante.',
+        'Exhala, gato: redondea la columna hacia el techo, barbilla al pecho, cola metida.',
+        'Muévete con la respiración durante 8-12 repeticiones — sin transiciones rápidas o bruscas.',
+      ],
+      tips: [
+        'Perfecto antes y después de estar sentado mucho tiempo — moviliza toda la columna.',
+        'El movimiento debe fluir, no chasquear entre posiciones finales.',
+      ],
+    },
+    fr: {
+      name: 'Chat-Vache',
+      summary:
+        'Mobilisation spinale en position quadrupède — alterne entre le dos arrondi et cambré.',
+      instructions: [
+        'Débutez à quatre pattes — mains sous les épaules, genoux sous les hanches.',
+        "Inspire, vache : baissez le ventre, levez la poitrine et regardez vers le haut et l'avant.",
+        'Expire, chat : arrondissez la colonne vertébrale vers le plafond, menton vers la poitrine, bassin rentré.',
+        'Bougez avec le souffle pendant 8-12 répétitions — pas de transitions rapides et saccadées.',
+      ],
+      tips: [
+        'Parfait avant et après une longue assise — mobilise toute la colonne vertébrale.',
+        "Le mouvement doit s'écouler, pas basculer entre les positions extrêmes.",
+      ],
+    },
+    it: {
+      name: 'Cat-Cow',
+      summary:
+        'Mobilizzazione spinale in posizione quadrupede — alterna tra schiena arrotondata e arcuata.',
+      instructions: [
+        'Inizia su mani e ginocchia — mani sotto le spalle, ginocchia sotto i fianchi.',
+        'Inspira, mucca: lascia cadere la pancia, solleva il petto e guarda in alto e in avanti.',
+        'Espira, gatto: arrotonda la colonna vertebrale verso il soffitto, mento al petto, coda stretta.',
+        'Muoviti con il respiro per 8-12 ripetizioni — niente transizioni veloci e scattanti.',
+      ],
+      tips: [
+        "Perfetto prima e dopo lunghe sedute — mobilizza l'intera colonna vertebrale.",
+        'Il movimento deve scorrere, non scattare tra le posizioni finali.',
+      ],
+    },
+    la: {
+      name: 'Felis-Vacca',
+      summary:
+        'Mobilizatio spinalis in quadrupedia — alternatio inter dorsum rotundum et arcuatum.',
+      instructions: [
+        'Incipe super manus et genua — manus sub humeris, genua sub coxis.',
+        'Spirans, vacca: venter deorsum, pectus et oculos supra.',
+        'Exspirans, felis: spina ad caelum rotunda, mentum ad pectus, cauda plicata.',
+        'Cum spiratione 8-12 motus — nullus celer, iactans transitio.',
+      ],
+      tips: [
+        'Perfecta ante et post longum sedentarium — totam spinam mobilizat.',
+        'Motus fluere debet, non inter fines fractus.',
+      ],
+    },
+    nl: {
+      name: 'Cat-Cow',
+      summary:
+        'Wervelkolom mobilisatie in quadruped positie — wisselt tussen afgeronde en boogvormige rug.',
+      instructions: [
+        'Begin op handen en knieën — handen onder schouders, knieën onder heupen.',
+        'In: buik vallen, borst tillen en opkijken en naar voren kijken.',
+        'Uit: rug naar het plafond afronden, kin naar borst, staart getrokken.',
+        'Beweeg met de adem gedurende 8-12 herhalingen — geen snelle, ruchetige overgangen.',
+      ],
+      tips: [
+        'Perfect voor en na lang zitten — mobiliseert hele ruggengraat.',
+        'Beweging moet stromen, niet snappen tussen eindposities.',
+      ],
+    },
+    no: {
+      name: 'Cat-Cow',
+      summary:
+        'Spinal mobilisering i quadruped posisjon – veksler mellom rundkurvet og buet rygg.',
+      instructions: [
+        'Start på hender og knær – hender under skuldre, knær under hofter.',
+        'Innpust, ku: slipp magen, løft brystet og se opp og fremover.',
+        'Utpust, katt: rond ryggen mot taket, hake til bryst, hale tuklet.',
+        'Beveg med pusten i 8-12 repetisjoner – ingen raske, rykkete overganger.',
+      ],
+      tips: [
+        'Perfekt før og etter lang sitting – mobiliserer hele ryggraden.',
+        'Bevegelse skal flyte, ikke knipse mellom endeposisjoner.',
+      ],
+    },
+    zh: {
+      name: '猫式-牛式',
+      summary: '四足位脊椎活动——在圆背和拱背之间交替。',
+      instructions: [
+        '四足着地——双手在肩膀下，膝盖在髋部下。',
+        '吸气时，牛式：放低腹部，抬起胸部和目光向上向前看。',
+        '呼气时，猫式：脊椎圆向天花板，下巴靠近胸部，尾骨内收。',
+        '随呼吸运动8-12次重复——没有快速、生硬的转换。',
+      ],
+      tips: [
+        '长时间坐前后的完美动作——活动整个脊椎。',
+        '运动应该流畅，不是在终点位置间摇晃。',
       ],
     },
   },
@@ -835,6 +3802,21 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
         'Im Winter Aufwärmen verlängern; bei Hitze geht es schneller.',
       ],
     },
+    el: {
+      name: 'Dynamic Warm-up',
+      summary:
+        'Κινητή θέρμανση πριν την εκπαίδευση — προετοιμάζει αρθρώσεις, μύες και το νευρικό σύστημα.',
+      instructions: [
+        '5-10 λεπτά εύκολης κίνησης (jog, jumping jacks, jump rope) για ανύψωση καρδιακού ρυθμού.',
+        'Κατόπιν στοχευμένη κινητοποίηση των αρθρώσεων που ήσουν για φόρτωση (ισχία, ώμοι, αστράγαλοι).',
+        'Χρήση μεγάλων εύρους κίνησης αλλά χωρίς κρατήματα τελικού εύρος — ταλαντεύσεις σαν εκκρεμή ποδιού.',
+        'Τελείωμα με λίγα ελαφρά εργαζόμενα σετ πριν την πραγματική περίοδο.',
+      ],
+      tips: [
+        'Πριν από δύναμη ή άλμα πάντα πάει δυναμικό, ποτέ στατικό — στατικό τέντωμα ματώνει την απόδοση.',
+        'Επέκταση της θέρμανσης το χειμώνα· συντόμευση σε ζεστό καιρό.',
+      ],
+    },
     en: {
       name: 'Dynamic Warm-up',
       summary:
@@ -848,6 +3830,110 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       tips: [
         'Before strength or jumping always go dynamic, never static — static stretching dulls performance.',
         'Extend the warm-up in winter; shorten it in hot weather.',
+      ],
+    },
+    es: {
+      name: 'Calentamiento dinámico',
+      summary:
+        'Calentamiento en movimiento antes del entrenamiento — prepara articulaciones, músculos y el sistema nervioso.',
+      instructions: [
+        '5-10 minutos de movimiento fácil (trote, saltadores, saltar la cuerda) para elevar la frecuencia cardíaca.',
+        'Luego movilización dirigida de las articulaciones que vas a cargar (caderas, hombros, tobillos).',
+        'Usa amplios rangos de movimiento pero sin mantener en rango final — balanceos como péndulos de pierna.',
+        'Termina con algunos juegos de trabajo ligero antes de la sesión real.',
+      ],
+      tips: [
+        'Antes de fuerza o saltos siempre ve dinámico, nunca estático — el estiramiento estático embota el rendimiento.',
+        'Extiende el calentamiento en invierno; acórtalo en clima caluroso.',
+      ],
+    },
+    fr: {
+      name: 'Échauffement dynamique',
+      summary:
+        "Échauffement en mouvement avant l'entraînement — prépare les articulations, les muscles et le système nerveux.",
+      instructions: [
+        '5-10 minutes de mouvement facile (jog, jumping jacks, corde à sauter) pour augmenter la fréquence cardiaque.',
+        'Ensuite, mobilisation ciblée des articulations que vous allez charger (hanches, épaules, chevilles).',
+        "Utilisez grandes amplitudes mais pas de tenues à fin d'amplitude — des balançages comme des pendules.",
+        "Terminez par quelques légers séries d'travail avant la vraie session.",
+      ],
+      tips: [
+        "Avant la force ou les sauts, toujours dynamique, jamais statique — l'étirement statique émoussit la performance.",
+        "Prolongez l'échauffement en hiver ; raccourcissez-le par temps chaud.",
+      ],
+    },
+    it: {
+      name: 'Riscaldamento dinamico',
+      summary:
+        "Riscaldamento in movimento prima dell'allenamento — prepara le articolazioni, i muscoli e il sistema nervoso.",
+      instructions: [
+        '5-10 minuti di movimento facile (jogging, saltelli, corda per saltare) per aumentare la frequenza cardiaca.',
+        'Poi mobilizzazione mirata delle articolazioni che stai per caricare (fianchi, spalle, caviglie).',
+        'Usa ampi range di movimento ma niente pause finali — oscillazioni come pendoli delle gambe.',
+        'Finisci con poche serie di lavoro leggero prima della sessione vera.',
+      ],
+      tips: [
+        'Prima della forza o dei salti sempre dinamico, mai statico — lo stretching statico riduce la prestazione.',
+        'Estendi il riscaldamento in inverno; accorcialo al caldo.',
+      ],
+    },
+    la: {
+      name: 'Praeparatio Dynamica',
+      summary:
+        'Calefactio motus ante exercitium — articulos, musculos et nervum praeparat.',
+      instructions: [
+        '5-10 minuta motus faciles (cursus, saltus, funis) ut cor frequentia crescat.',
+        'Tum articulos proprios qui se gravandos (coxae, humeri, talones) mobiliza.',
+        'Amplitudines motus sed nullae fines-stationes — oscillationes ut crura.',
+        'Finito cum paucis seriebus levibus ante realem sessionem.',
+      ],
+      tips: [
+        'Ante vires vel saltum aliquando dynamica, numquam statica — staticus effeminatus est.',
+        'Hiemem augeto, aestatem minue.',
+      ],
+    },
+    nl: {
+      name: 'Dynamic Warm-up',
+      summary:
+        'Bewegende opwarming voor training — bereidt gewrichten, spieren en zenuwstelsel voor.',
+      instructions: [
+        '5-10 minuten gemakkelijke beweging (joggen, jumping jacks, springtouw) om hartslag te verhogen.',
+        'Richt vervolgens op mobilisatie van gewrichten die je gaat belasten (heupen, schouders, enkels).',
+        'Gebruik grote bewegingsbereiken maar geen eindposities houden — zwaaiingen als beenpendels.',
+        'Eindig met een paar lichte werkingsseries voor de echte sessie begint.',
+      ],
+      tips: [
+        'Zet altijd dynamisch voordat kracht of springen, nooit statisch — statisch uitrekken dempt prestatie.',
+        'Verleng opwarming in winter; verkort in warm weer.',
+      ],
+    },
+    no: {
+      name: 'Dynamic Warm-up',
+      summary:
+        'Bevegelsesoppvarming før trening – primer ledd, musker og nervesystem.',
+      instructions: [
+        '5-10 minutter lett bevegelse (jogg, hoppende jacks, hopprep) for å øke puls.',
+        'Så målrettet mobilisering av ledd du skal laste (hofter, skuldre, ankler).',
+        'Bruk store bevegelsesrekkevidder men ingen endeposisjon-hold – svingninger som benppendler.',
+        'Avslutt med noen få lette arbeidssett før reell sesjon starter.',
+      ],
+      tips: [
+        'Før styrke eller hopping alltid dynamisk, aldri statisk – statisk strekking slukker prestasjon.',
+        'Forleng oppvarmingen på vinteren; fork den i varmt vær.',
+      ],
+    },
+    zh: {
+      name: '动态热身',
+      summary: '训练前的运动热身——准备关节、肌肉和神经系统。',
+      instructions: [
+        '5-10分钟的轻松运动（慢跑、开合跳、跳绳）以提升心率。',
+        '然后是你即将训练的关节的目标活动（髋部、肩膀、踝关节）。',
+        '使用大范围运动但不要在终点范围保持——像腿部摆锤的摇摆。',
+        '在真正的训练开始前完成几个轻负荷工作组。',
+      ],
+      tips: [
+        '力量或跳跃前总是动态，从不静态——静态拉伸会削弱表现。',
+        '冬季延长热身；热天缩短。',
       ],
     },
   },
@@ -867,6 +3953,21 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
         'Keine direkten Knochen oder Gelenke rollen — nur Muskelbäuche.',
       ],
     },
+    el: {
+      name: 'Foam Rolling',
+      summary:
+        'Αυτο-μάλαξη σε αφρό κύλινδρο — απελευθέρωση τάσης και βελτίωση της κυκλοφορίας.',
+      instructions: [
+        'Τοποθέτησε τον στόχευσης μυός στο κύλινδρο, έλεγχο του βάρους σώματός σας πάνω του.',
+        'Κύλιση αργά (2-3 εκ. ανά δευτερόλεπτο), παύση 20-30 δ. σε τρυφερές κηλίδες.',
+        'Αναπνοή ομαλή — ποτέ κράτημα της αναπνοής μέσω της δυσφορίας· στοχεύστε 5-6/10 ένταση, όχι περισσότερο.',
+        '30-60 δ. ανά μεγάλη μυϊκή ομάδα, περισσότερο όταν χρειάζεται.',
+      ],
+      tips: [
+        'Σύντομο (1-2 λεπ. ανά περιοχή) πριν την εκπαίδευση, μακρύτερο και πιο χαλαρωτικό μετά.',
+        'Μη κύλιση απευθείας στα οστά ή αρθρώσεις — μόνο μυϊκές κοιλότητες.',
+      ],
+    },
     en: {
       name: 'Foam Rolling',
       summary:
@@ -880,6 +3981,110 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       tips: [
         'Short (1-2 min per area) before training, longer and more relaxing afterwards.',
         "Don't roll directly on bones or joints — muscle bellies only.",
+      ],
+    },
+    es: {
+      name: 'Rodillo de espuma',
+      summary:
+        'Automásaje en un rodillo de espuma — libera tensión y mejora la circulación.',
+      instructions: [
+        'Coloca el músculo objetivo sobre el rodillo, controla tu peso corporal sobre él.',
+        'Rueda lentamente (2-3 cm por segundo), pausa 20-30 s en puntos sensibles.',
+        'Respira de forma pareja — nunca retenga la respiración durante el malestar; apunta a una intensidad de 5-6/10, no más.',
+        '30-60 s por grupo muscular principal, más tiempo cuando sea necesario.',
+      ],
+      tips: [
+        'Corto (1-2 min por área) antes del entrenamiento, más largo y relajante después.',
+        'No ruedes directamente sobre huesos o articulaciones — solo vientres musculares.',
+      ],
+    },
+    fr: {
+      name: 'Roulement à mousse (Foam Rolling)',
+      summary:
+        'Auto-massage sur un rouleau mousse — libère les tensions et améliore la circulation.',
+      instructions: [
+        'Placez le muscle cible sur le rouleau, contrôlez le poids du corps dessus.',
+        'Roulez lentement (2-3 cm par seconde), pausez 20-30 s sur les points sensibles.',
+        "Respirez régulièrement — ne retenez jamais votre souffle pendant l'inconfort ; visez 5-6/10 intensité, pas plus.",
+        '30-60 s par grand groupe musculaire, plus longtemps si nécessaire.',
+      ],
+      tips: [
+        "Court (1-2 min par zone) avant l'entraînement, plus long et plus relaxant après.",
+        'Ne roulez pas directement sur les os ou les articulations — les ventres musculaires seulement.',
+      ],
+    },
+    it: {
+      name: 'Foam rolling',
+      summary:
+        'Auto-massaggio con foam roller — rilascia la tensione e migliora la circolazione.',
+      instructions: [
+        'Posiziona il muscolo target sul roller, controlla il peso del tuo corpo su di esso.',
+        'Rotola lentamente (2-3 cm al secondo), pausa 20-30 s su punti doloranti.',
+        'Respira uniformemente — mai trattenere il respiro durante il disagio; mira a intensità 5-6/10, non di più.',
+        '30-60 s per principale gruppo muscolare, più a lungo se necessario.',
+      ],
+      tips: [
+        "Breve (1-2 min per area) prima dell'allenamento, più lungo e più rilassante dopo.",
+        'Non rollare direttamente su ossa o articolazioni — solo sui corpi muscolari.',
+      ],
+    },
+    la: {
+      name: 'Rotula Foamea',
+      summary:
+        'Automassagium in rotula — tensionem liberat et circulationem auget.',
+      instructions: [
+        'Musculum obiectivum in rotulam pone, corpus pondus super illa regit.',
+        'Lente (2-3 cm per secundam) voluta, loca tenera 20-30 s statio.',
+        'Uniformiter spirato — numquam teneas respiratum, 5-6/10 intentionem aspira, ne amplius.',
+        '30-60 s per musculum maiorem, longius cum necessitate.',
+      ],
+      tips: [
+        'Breve (1-2 min per aream) ante exercitium, longius et relaxatum post.',
+        'Directe super ossa vel articulos ne voluta — musculum tantum.',
+      ],
+    },
+    nl: {
+      name: 'Foam Rolling',
+      summary:
+        'Zelfmassage op een schuimrol — lost spanning op en verbetert doorbloeding.',
+      instructions: [
+        'Plaats doelspier op de rol, controleer je lichaamsgewicht erover.',
+        'Rol langzaam (2-3 cm per seconde), pauzeer 20-30 s op gevoelige plekken.',
+        'Adem gelijkmatig — hou nooit adem vast door ongemak; richt op 5-6/10 intensiteit, niet meer.',
+        '30-60 s per grote spiergroep, langer wanneer nodig.',
+      ],
+      tips: [
+        'Kort (1-2 min per gebied) vóór training, langer en meer ontspannend daarna.',
+        'Rol niet rechtstreeks op botten of gewrichten — alleen spierbuiken.',
+      ],
+    },
+    no: {
+      name: 'Foam Rolling',
+      summary:
+        'Selv-massasje på skummrull – løser spenning og forbedrer sirkulasjon.',
+      instructions: [
+        'Plasser målmuskel på rulleren, kontroller kroppsvekten over den.',
+        'Rull sakte (2-3 cm per sekund), pause 20-30 s på øm områder.',
+        'Pust jevnt – aldri hold pusten gjennom ubehag; sikte på 5-6/10 intensitet, ikke mer.',
+        '30-60 s per stor muskelgruppe, lengre når nødvendig.',
+      ],
+      tips: [
+        'Kort (1-2 min per område) før trening, lengre og mer avslappende etterpå.',
+        'Ikke rull direkte på bein eller ledd – kun muskelbuker.',
+      ],
+    },
+    zh: {
+      name: '泡沫轴放松',
+      summary: '在泡沫轴上自我按摩——释放张力并改善循环。',
+      instructions: [
+        '将目标肌肉放在轴上，控制身体重量。',
+        '缓慢滚动（每秒2-3厘米），在压痛点停留20-30秒。',
+        '均匀呼吸——从不在不适中屏气；针对5-6/10强度，不要更强。',
+        '每个主要肌肉群30-60秒，需要时更长。',
+      ],
+      tips: [
+        '训练前短（每区域1-2分钟），训练后更长和更放松。',
+        '不要直接在骨头或关节上滚动——仅肌肉腹部。',
       ],
     },
   },
@@ -899,6 +4104,21 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
         'Atmung in die Dehnung — beim Ausatmen bewusst loslassen.',
       ],
     },
+    el: {
+      name: 'Hip Opener',
+      summary:
+        'Ρουτίνα κινητοποίησης για τα ισχία — ουσιαστική για γραφείο-bound δουλειές και βαθιά squats.',
+      instructions: [
+        'Από όλα τα πόδια φέρε ένα πόδι μπροστά σε θέση 90/90.',
+        'Επέκταση του πίσω σκέλους ίσια, και τα δύο σημεία ισχίου τετράγωνα προς το έδαφος.',
+        'Ξαπλώνεται μπροστά πάνω στο μπροστά σκέλος για περισσότερο γλουτό τέντωμα· ήπιο μπρος-πίσω.',
+        'Περιστροφή διαμέσου περιστερού, βατράχου και πεταλούδας για πλήρη κινητοποίηση ισχίου.',
+      ],
+      tips: [
+        '5 λεπτά καθημερινά νικά 30 λεπτά μία φορά την εβδομάδα.',
+        'Αναπνοή προς το τέντωμα — απελευθέρωση λίγο περισσότερο σε κάθε εκπνοή.',
+      ],
+    },
     en: {
       name: 'Hip Opener',
       summary:
@@ -912,6 +4132,110 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       tips: [
         '5 minutes daily beats 30 minutes once a week.',
         'Breathe into the stretch — release a little more on every exhale.',
+      ],
+    },
+    es: {
+      name: 'Apertura de cadera',
+      summary:
+        'Rutina de movilización de cadera — esencial para trabajos de escritorio y sentadillas profundas.',
+      instructions: [
+        'Desde posición de cuadrúpeda, trae una pierna hacia adelante en la posición 90/90.',
+        'Extiende la pierna trasera recta, ambos puntos de cadera cuadrados al suelo.',
+        'Inclínate hacia adelante sobre la pierna delantera para más estiramiento de glúteos; movimiento suave de ida y vuelta.',
+        'Rota a través de paloma, rana y mariposa para movilidad completa de cadera.',
+      ],
+      tips: [
+        '5 minutos diarios vencen 30 minutos una vez a la semana.',
+        'Respira en el estiramiento — libera un poco más en cada exhalación.',
+      ],
+    },
+    fr: {
+      name: 'Ouverture des hanches',
+      summary:
+        'Routine de mobilisation des hanches — essentielle pour les jobs assis et les squats profonds.',
+      instructions: [
+        'À partir de quatre pattes, amenez une jambe en avant dans la position 90/90.',
+        'Tendez la jambe arrière droite, les deux pointes de hanche carrées au sol.',
+        "Penchez-vous en avant sur la jambe avant pour plus d'étirement des fessiers ; un doux va-et-vient.",
+        'Tournez à travers pigeon, grenouille et papillon pour la mobilité complète des hanches.',
+      ],
+      tips: [
+        '5 minutes quotidiennes valent mieux que 30 minutes une fois par semaine.',
+        "Respirez dans l'étirement — relâchez un peu plus à chaque expiration.",
+      ],
+    },
+    it: {
+      name: 'Hip opener',
+      summary:
+        'Routine di mobilizzazione per i fianchi — essenziale per lavori sedentari e squat profondi.',
+      instructions: [
+        'Da posizione a 4 zampe porta una gamba in avanti nella posizione 90/90.',
+        "Estendi la gamba posteriore dritta, entrambi i punti dell'anca quadrati verso il pavimento.",
+        'Inclinati in avanti sulla gamba anteriore per più allungamento dei glutei; avanti e indietro gentile.',
+        "Ruota attraverso piccione, rana e farfalla per mobilità completa dell'anca.",
+      ],
+      tips: [
+        '5 minuti al giorno battono 30 minuti una volta a settimana.',
+        "Respira nello stretching — rilascia un po' di più a ogni espirazione.",
+      ],
+    },
+    la: {
+      name: 'Aperitor Coxae',
+      summary:
+        'Routine mobiliziationis coxarum — essentiale laborantibus sedentia et genuflexionibus profundis.',
+      instructions: [
+        'Ab omni-quattuor, unum crus antrorsum in positionem 90/90 ferre.',
+        'Posterius crus rectum extendere, ambo puncta coxae planitudini quadrata.',
+        'Antrorsum super anticum crus incline ut natis extensionem; lenis antrorsum-retrorsum.',
+        'Rotatio per piceonem, ranam et papilionenem plenitudinem coxae.',
+      ],
+      tips: [
+        'Quotidiana 5 minuta superat 30 minuta semel in septimana.',
+        'In extensionem spirato — release paulum maiorem omni exspiratione.',
+      ],
+    },
+    nl: {
+      name: 'Hip Opener',
+      summary:
+        'Mobiliteitroutine voor de heupen — essentieel voor bureaujobs en diepe squats.',
+      instructions: [
+        'Breng één been naar voren uit all-fours naar de 90/90-positie.',
+        'Strek achterste been recht, beide heuppunten op vloer.',
+        'Leun naar voren boven voorbeen voor meer gluteus stretch; zacht heen en weer.',
+        'Roteer door duif, kikker en vlinder voor volledige heupbeweging.',
+      ],
+      tips: [
+        '5 minuten dagelijks slaat 30 minuten eenmaal per week.',
+        'Adem in de stretch — ontspan een beetje meer bij elke uitademing.',
+      ],
+    },
+    no: {
+      name: 'Hip Opener',
+      summary:
+        'Mobiliseringsrutine for hofter – essensielt for skrivebordsjobber og dype squats.',
+      instructions: [
+        'Fra all firer få ett ben fremover til 90/90 posisjon.',
+        'Strukk bakerste ben rett, begge hoftepunkter kvadratisk til gulvet.',
+        'Lut fremover over forbenene for mer setmuskel-strekk; mykt fram-og-tilbake.',
+        'Roter gjennom pigeon, frosk og sommerfugl for full hofts mobilitet.',
+      ],
+      tips: [
+        '5 minutter daglig slår 30 minutter en gang i uka.',
+        'Pust inn i strekket – slipp litt mer på hver utpust.',
+      ],
+    },
+    zh: {
+      name: '髋部开放',
+      summary: '髋关节活动程序——对办公工作和深蹲至关重要。',
+      instructions: [
+        '从四足位置将一条腿向前带到90/90位置。',
+        '向后伸展后腿，两个髋点在地面上对齐。',
+        '在前腿上向前倾以增加臀部伸展；温和地前后摇动。',
+        '通过鸽式、青蛙式和蝴蝶式旋转以获得完整的髋部活动。',
+      ],
+      tips: [
+        '每天5分钟优于每周30分钟一次。',
+        '向伸展中呼吸——在每次呼气时放松一点。',
       ],
     },
   },
@@ -931,6 +4255,21 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
         'Beweglichkeit braucht Wochen — Geduld schlägt Intensität.',
       ],
     },
+    el: {
+      name: 'Τέντωμα',
+      summary:
+        'Στατικό τέντωμα μετά την εκπαίδευση — βελτίωση του εύρους κίνησης μακροπρόθεσμα.',
+      instructions: [
+        'Μόνο όταν οι μύες είναι ζεστοί (μετά την εκπαίδευση ή ελαφρά θέρμανση).',
+        'Κίνηση σε κάθε τέντωμα αργά μέχρι να νιώσεις ελαφρά τράβηξη (ποτέ πόνο).',
+        'Κράτησε κάθε θέση 30-60 δευτερόλεπτα ήσυχα, αναπνοή ομαλή.',
+        '2-3 επαναλήψεις ανά μυός ανά περίοδο — χωρίς κρύο-τέντωμα από όρθια.',
+      ],
+      tips: [
+        'Αποφυγή στατικού τεντώματος ακριβώς πριν από βαρέία δύναμη ή ταχύ δουλειά (αφήνοντας 10-20 λεπ.).',
+        'Ευλυγισία παίρνει εβδομάδες — υπομονή νικά ένταση.',
+      ],
+    },
     en: {
       name: 'Stretching',
       summary:
@@ -944,6 +4283,110 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       tips: [
         'Avoid static stretching right before heavy strength or speed work (leave 10-20 min).',
         'Flexibility takes weeks — patience beats intensity.',
+      ],
+    },
+    es: {
+      name: 'Estiramientos',
+      summary:
+        'Estiramientos estáticos después del entrenamiento — mejora el rango de movimiento a largo plazo.',
+      instructions: [
+        'Solo cuando los músculos están calientes (después del entrenamiento o calentamiento ligero).',
+        'Muévete hacia cada estiramiento lentamente hasta que sientas un tirón ligero (nunca dolor).',
+        'Mantén cada posición 30-60 segundos en silencio, respirando de forma pareja.',
+        '2-3 repeticiones por músculo por sesión — sin estiramientos fríos de pie.',
+      ],
+      tips: [
+        'Evita estiramientos estáticos justo antes de trabajo de fuerza pesada o velocidad (espera 10-20 min).',
+        'La flexibilidad lleva semanas — la paciencia vence la intensidad.',
+      ],
+    },
+    fr: {
+      name: 'Étirements',
+      summary:
+        "Étirements statiques après l'entraînement — améliore l'amplitude du mouvement à long terme.",
+      instructions: [
+        "Seulement quand les muscles sont chauds (après l'entraînement ou un léger échauffement).",
+        "Bougez dans chaque étirement lentement jusqu'à sentir une légère traction (jamais de douleur).",
+        'Maintenez chaque position 30-60 secondes tranquillement, respirez régulièrement.',
+        "2-3 répétitions par muscle par séance — pas d'étirements froids debout.",
+      ],
+      tips: [
+        'Évitez les étirements statiques juste avant la force lourde ou le travail de vitesse (attendez 10-20 min).',
+        "La flexibilité prend des semaines — la patience prime sur l'intensité.",
+      ],
+    },
+    it: {
+      name: 'Stretching',
+      summary:
+        "Stretching statico dopo l'allenamento — migliora l'ampiezza di movimento a lungo termine.",
+      instructions: [
+        "Solo quando i muscoli sono caldi (dopo l'allenamento o il riscaldamento leggero).",
+        'Muoviti in ogni stretching lentamente finché non senti un leggero allungamento (mai dolore).',
+        'Mantieni ogni posizione 30-60 secondi tranquillamente, respirando uniformemente.',
+        '2-3 ripetizioni per muscolo per sessione — niente stretching freddo da posizione eretta.',
+      ],
+      tips: [
+        'Evita lo stretching statico subito prima di lavoro di forza pesante o velocità (lascia 10-20 min).',
+        "La flessibilità richiede settimane — la pazienza batte l'intensità.",
+      ],
+    },
+    la: {
+      name: 'Extensio',
+      summary:
+        'Extensio statica post exercitium — amplitudinem motus longodurne habet.',
+      instructions: [
+        'Solum cum musculi calidi (post exercitium vel levem calefactionem).',
+        'In unaquaque extensionem lente dum trahumen leve sentis (numquam dolorem).',
+        'Unumquemque locum 30-60 secundas quiete, uniformiter spirando.',
+        '2-3 repetitiones per musculum per sessionem — nullam frigida-extensionem ex statu.',
+      ],
+      tips: [
+        'Extensionem staticem ante gravem vires vel velocitatem evita (10-20 min expecta).',
+        'Flexibilitas multis hebdomadis — patientia intensitatem superat.',
+      ],
+    },
+    nl: {
+      name: 'Stretching',
+      summary:
+        'Statisch uitrekken na training — verbetert bewegingsbereik op lange termijn.',
+      instructions: [
+        'Alleen als spieren warm zijn (na training of lichte opwarming).',
+        'Beweeg langzaam in elke stretch totdat je voelt een lichte trek (nooit pijn).',
+        'Houd elke positie 30-60 seconden stil, adem gelijkmatig.',
+        '2-3 herhalingen per spiergroep per sessie — geen koudstrekking van staan.',
+      ],
+      tips: [
+        'Vermijd statisch uitrekken vlak voor zware kracht- of snelheidswerk (laat 10-20 min).',
+        'Flexibiliteit kost weken — geduld slaat intensiteit.',
+      ],
+    },
+    no: {
+      name: 'Stretching',
+      summary:
+        'Statisk strekking etter trening – forbedrer bevegelsesrekkevidde på lang sikt.',
+      instructions: [
+        'Bare når musker er varme (etter trening eller lett oppvarming).',
+        'Beveg deg inn i hver strekk sakte til du føler lett trekkfølelse (aldri smerte).',
+        'Hold hver posisjon 30-60 sekunder stille, pust jevnt.',
+        '2-3 repetisjoner per muskel per sesjon – ingen kaldstrekking fra stå.',
+      ],
+      tips: [
+        'Unngå statisk strekking rett før tung styrke eller hastighetsarbeid (vente 10-20 min).',
+        'Fleksibilitet tar uker – tålmodighet slår intensitet.',
+      ],
+    },
+    zh: {
+      name: '静态拉伸',
+      summary: '训练后的静态拉伸——长期改善活动范围。',
+      instructions: [
+        '仅在肌肉温暖时进行（训练后或轻热身后）。',
+        '缓慢进入每个拉伸直到感到轻拉（从不疼痛）。',
+        '安静地保持每个位置30-60秒，均匀呼吸。',
+        '每个肌肉群2-3次重复——不要从站立时的冷拉伸。',
+      ],
+      tips: [
+        '避免在大负荷力量或速度工作前进行静态拉伸（保持10-20分钟）。',
+        '灵活性需要几周——耐心优于强度。',
       ],
     },
   },
@@ -963,6 +4406,21 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
         '20-30 Minuten 3× pro Woche bringen schon spürbare Beweglichkeitsgewinne.',
       ],
     },
+    el: {
+      name: 'Yoga',
+      summary:
+        'Κινητή πρακτική της στάσης, αναπνοής και εστίασης — κινητοποίηση και ρύθμιση στρες σε μία.',
+      instructions: [
+        'Ξεκίνησε με στυλ που ταιριάζει στον στόχο σου (Hatha, Vinyasa, Yin).',
+        'Αφήνοντας την αναπνοή να οδηγεί κίνηση — εισπνοή για ανοίγματα, εκπνοή για εμβάθυνση.',
+        'Ευθυγράμμιση κάθε pose καθαρά· πιο σύντομη και καθαρή νικά μακρά και συμπιεσμένη.',
+        'Τελείωμα με shavasana (ξαπλωμένο ακίνητο) — είναι μέρος της πρακτικής.',
+      ],
+      tips: [
+        'Αρχάριοι ωφελούνται περισσότερο από μια οδηγούμενη τάξη (στούντιο ή βίντεο) από ότι από αυτοσχέδιασμα.',
+        '20-30 λεπτά, 3× ανά εβδομάδα, ήδη παράγει αισθητή κέρδη κινητοποίησης.',
+      ],
+    },
     en: {
       name: 'Yoga',
       summary:
@@ -976,6 +4434,110 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       tips: [
         'Beginners benefit more from a guided class (studio or video) than from improvising.',
         '20-30 minutes, 3× a week, already produces noticeable mobility gains.',
+      ],
+    },
+    es: {
+      name: 'Yoga',
+      summary:
+        'Práctica en movimiento de postura, respiración y enfoque — movilidad y regulación del estrés en uno.',
+      instructions: [
+        'Comienza con un estilo que se ajuste a tu objetivo (Hatha, Vinyasa, Yin).',
+        'Deja que la respiración dirija el movimiento — inhala para abrir, exhala para profundizar.',
+        'Alinea cada pose limpiamente; más corto y limpio vence largo y apretado.',
+        'Termina con shavasana (acostado en silencio) — es parte de la práctica.',
+      ],
+      tips: [
+        'Los principiantes se benefician más de una clase guiada (estudio o video) que de improvisar.',
+        '20-30 minutos, 3× a la semana, ya producen ganancias notables de movilidad.',
+      ],
+    },
+    fr: {
+      name: 'Yoga',
+      summary:
+        'Pratique en mouvement de posture, souffle et concentration — mobilité et régulation du stress en un.',
+      instructions: [
+        'Commencez par un style qui correspond à votre objectif (Hatha, Vinyasa, Yin).',
+        'Laissez le souffle mener le mouvement — inspirez pour ouvrir, expirez pour approfondir.',
+        'Alignez chaque pose proprement ; court et propre vaut mieux que long et inconfortable.',
+        "Terminez avec savasana (immobile couché) — c'est partie de la pratique.",
+      ],
+      tips: [
+        "Les débutants bénéficient plus d'un cours guidé (studio ou vidéo) que de l'improvisation.",
+        '20-30 minutes, 3× par semaine, produit déjà des gains de mobilité notables.',
+      ],
+    },
+    it: {
+      name: 'Yoga',
+      summary:
+        'Pratica di movimento, postura, respiro e consapevolezza — mobilità e regolazione dello stress in uno.',
+      instructions: [
+        'Inizia con uno stile che si adatta al tuo obiettivo (Hatha, Vinyasa, Yin).',
+        'Lascia che il respiro guidi il movimento — inspira per aprire, espira per approfondire.',
+        'Allinea ogni asana chiaramente; più corto e pulito che lungo e contratto.',
+        'Finisci con shavasana (disteso tranquillo) — fa parte della pratica.',
+      ],
+      tips: [
+        "I principianti traggono più vantaggio da una classe guidata (studio o video) che dall'improvvisazione.",
+        '20-30 minuti, 3× a settimana, già produce guadagni di mobilità notevoli.',
+      ],
+    },
+    la: {
+      name: 'Yoga',
+      summary:
+        'Praxis motus posturae spirationis et concentrationis — mobilitas et regulatio anxietatis.',
+      instructions: [
+        'Incipe stylo qui fini tuae convenit (Hatha, Vinyasa, Yin).',
+        'Spiratione ducta motum — inspira ad apertionem, exspira ad profunditatem.',
+        'Unumquemque asanam nitide; brevius et nitidus quam longus et compressus.',
+        'Shavasana (silentium) fini — pars est practise.',
+      ],
+      tips: [
+        'Incipientes magis e clasmata alit (studio vel video) quam ex improviso.',
+        '20-30 minuta, 3× per septimana, iam valde mobilitatem adit.',
+      ],
+    },
+    nl: {
+      name: 'Yoga',
+      summary:
+        'Bewegingspraktijk van houding, adem en focus — mobiliteit en stressregulatie in één.',
+      instructions: [
+        'Begin met een stijl die past bij je doel (Hatha, Vinyasa, Yin).',
+        'Laat adem de beweging leiden — inhalen om te openen, uitademen om te verdiepen.',
+        'Lijn elke pose schoon uit; korter en schoon slaat lang en gekramp.',
+        'Eindig met shavasana (stilliggend) — het maakt deel uit van de praktijk.',
+      ],
+      tips: [
+        'Beginners profiteren meer van een geleide les (studio of video) dan improvisatie.',
+        '20-30 minuten, 3× per week, produceert al merkbare mobiliteitsverhogingen.',
+      ],
+    },
+    no: {
+      name: 'Yoga',
+      summary:
+        'Bevegelsespraksis av holdning, pust og fokus – mobilitet og stressregulering i ett.',
+      instructions: [
+        'Start med stil som passer ditt mål (Hatha, Vinyasa, Yin).',
+        'La pusten lede bevegelsen – innpust for å åpne, utpust for å fordype.',
+        'Juster hver pose renlig; kort og ren slår lang og klemmet.',
+        'Avslutt med shavasana (ligge stille) – det er del av praksisen.',
+      ],
+      tips: [
+        'Nybegynnere gagnes mer av guidet klasse (studio eller video) enn improvisering.',
+        '20-30 minutter, 3× i uka, produserer allerede merkbar mobilitetsgain.',
+      ],
+    },
+    zh: {
+      name: '瑜伽',
+      summary: '姿态、呼吸和专注的运动实践——活动性和压力调节合一。',
+      instructions: [
+        '从适合你目标的风格开始（哈他瑜伽、流动瑜伽、阴瑜伽）。',
+        '让呼吸引导运动——吸气时打开，呼气时加深。',
+        '整洁地对齐每个体式；短而整洁优于长而拥挤。',
+        '以摄氏瑞莎那（躺卧）结束——它是实践的一部分。',
+      ],
+      tips: [
+        '初学者从导师课程（工作室或视频）获益更多，而不是即兴。',
+        '每周20-30分钟3次，已经产生明显的活动增益。',
       ],
     },
   },
@@ -995,6 +4557,21 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
         'Anfänger: 3 × 20-30 s, Fortgeschrittene 3 × 60-90 s; bei Formverlust sofort abbrechen.',
       ],
     },
+    el: {
+      name: 'Plank',
+      summary:
+        'Ισομετρικό κράτημα στους αντιβράχιους ή τις παλάμες — το χρυσό πρότυπο για σταθερότητα πυρήνα.',
+      instructions: [
+        'Αντιβράχιοι ή παλάμες ευρύτητα ώμων στο έδαφος, αγκώνες απευθείας κάτω από τους ώμους.',
+        'Σώμα σχηματίζει ευθεία γραμμή από κεφάλι σε φτέρνες· ενεργά σφίξιμο γλουτών και κοιλιακών.',
+        'Τράβηξη των ώμων μακριά από τα αυτιά, λαιμός μακρύς, ματιά μεταξύ των χεριών.',
+        'Κράτησε τη θέση — χωρίς κόμπωμα, χωρίς κάτω μέσα κύρτωμα, χωρίς κοπή ισχίων.',
+      ],
+      tips: [
+        'Παραμονή αναπνοής ομαλή — μη κράτησης της αναπνοής.',
+        'Αρχάριοι: 3 × 20-30 δ., προχωρημένοι 3 × 60-90 δ.· σταματήστε τη στιγμή που η μορφή σπάει.',
+      ],
+    },
     en: {
       name: 'Plank',
       summary:
@@ -1008,6 +4585,110 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       tips: [
         'Keep breathing evenly — do not hold your breath.',
         'Beginners: 3 × 20-30 s, advanced 3 × 60-90 s; stop the moment form breaks.',
+      ],
+    },
+    es: {
+      name: 'Plancha',
+      summary:
+        'Sostén isométrico en antebrazos o manos — el estándar de oro para la estabilidad core.',
+      instructions: [
+        'Antebrazos o palmas a la anchura de los hombros en el suelo, codos directamente bajo los hombros.',
+        'El cuerpo forma una línea recta de la cabeza a los talones; arriostran activamente glúteos y abdominales.',
+        'Separa los hombros de las orejas, cuello largo, mirada entre las manos.',
+        'Mantén la posición — sin hundimiento, sin arqueamiento de la zona lumbar, sin caderas elevadas.',
+      ],
+      tips: [
+        'Respira de forma pareja — no retenga la respiración.',
+        'Principiantes: 3 × 20-30 s, avanzados 3 × 60-90 s; detente en cuanto la forma se quiebre.',
+      ],
+    },
+    fr: {
+      name: 'Planche',
+      summary:
+        "Tenue isométrique sur avant-bras ou mains — l'or standard de la stabilité du core.",
+      instructions: [
+        'Avant-bras ou paumes écartés à la largeur des épaules au sol, coudes directement sous les épaules.',
+        'Le corps forme une ligne droite de la tête aux talons ; gainé activement glutes et abdos.',
+        'Tirez les épaules loin des oreilles, cou long, regard entre les mains.',
+        "Maintenez la position — pas d'affaissement, pas d'arcade du bas du dos, pas de hanches piquées.",
+      ],
+      tips: [
+        'Respirez régulièrement — ne retenez jamais votre souffle.',
+        "Débutants : 3 × 20-30 s, avancés 3 × 60-90 s ; arrêtez dès que la forme s'effondre.",
+      ],
+    },
+    it: {
+      name: 'Plank',
+      summary:
+        'Mantenimento isometrico su avambracci o mani — lo standard aureo per la stabilità del core.',
+      instructions: [
+        'Avambracci o palmi a larghezza spalle per terra, gomiti direttamente sotto le spalle.',
+        'Il corpo forma una linea retta da testa a talloni; attiva consapevolmente glutei e addominali.',
+        'Tira le spalle via dalle orecchie, collo lungo, guarda tra le mani.',
+        'Mantieni la posizione — niente cedimento, niente arco della parte bassa della schiena, niente fianchi sporgenti.',
+      ],
+      tips: [
+        'Mantieni la respirazione uniforme — non trattenere il respiro.',
+        'Principianti: 3 × 20-30 s, avanzati 3 × 60-90 s; ferma quando la forma si rompe.',
+      ],
+    },
+    la: {
+      name: 'Tabula',
+      summary:
+        'Statio isometrica e carpis vel manibus — aureum stabilitatem central.',
+      instructions: [
+        'Carpi vel palmae latitudinis humerorum, cubiti directe sub humeris.',
+        'Corpus lineam a capite ad calces formant — nates et musculos abdominis active firma.',
+        'Humeros ab auribus retracta, collum longum, inter manus spectato.',
+        'Positionem teneto — nullus sagita, nullus dorsum inferius arcuatum, nullae coxae.',
+      ],
+      tips: [
+        'Uniformiter spirato — numquam teneas respiratum.',
+        'Incipientes: 3 × 20-30 s; periti 3 × 60-90 s; forma cum frangit termina.',
+      ],
+    },
+    nl: {
+      name: 'Plank',
+      summary:
+        'Isometrisch houden op onderarmen of handen — goudstandaard voor core stabiliteit.',
+      instructions: [
+        'Onderarmen of palmen schouderbreedte op vloer, ellebogen direct onder schouders.',
+        'Lichaam vormt rechte lijn van hoofd tot hielen; spann actief billen en buik.',
+        'Trek schouders weg van oren, nek lang, blik tussen handen.',
+        'Houd positie — geen doorzakking, geen onderrug-boogvorming, geen heuppiek.',
+      ],
+      tips: [
+        'Houd adem gelijkmatig — hou niet in.',
+        'Beginners: 3 × 20-30 s, gevorderden 3 × 60-90 s; stop zodra vorm bezwijkt.',
+      ],
+    },
+    no: {
+      name: 'Plank',
+      summary:
+        'Isometrisk hold på underarmer eller hender – gullstandarden for core stabilitet.',
+      instructions: [
+        'Underarmer eller håndflater skulderbredde på gulvet, albuer direkte under skuldre.',
+        'Kropp danner rett linje fra hode til hæler; bress aktivt setemuskel og abdomen.',
+        'Trekk skuldrene vekk fra örene, nakke lang, blikk mellom hendene.',
+        'Hold posisjonen – ingen synking, ingen lenderyggarking, ingen piked hofter.',
+      ],
+      tips: [
+        'Hold pusten jevnt – ikke hold pusten.',
+        'Nybegynnere: 3 × 20-30 s, avansert 3 × 60-90 s; stopp øyeblikket form brytes.',
+      ],
+    },
+    zh: {
+      name: '平板支撑',
+      summary: '前臂或双手静态保持——核心稳定的黄金标准。',
+      instructions: [
+        '前臂或手掌与肩宽在地面上，肘部直接在肩膀下。',
+        '身体从头到脚跟形成一直线；主动收紧臀部和腹肌。',
+        '将肩膀远离耳朵，颈部长，目光在双手之间。',
+        '保持位置——不要下沉、不要下背部拱起、不要髋部翘起。',
+      ],
+      tips: [
+        '保持均匀呼吸——不要屏气。',
+        '初学者：3×20-30秒，进阶3×60-90秒；形式破裂时停止。',
       ],
     },
   },
@@ -1027,6 +4708,21 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
         'Bei sensiblen Schultern aktiver Hang (mit gezogenen Schulterblättern) statt passivem.',
       ],
     },
+    el: {
+      name: 'Dead Hang',
+      summary:
+        'Παθητικό κράτημα από μπάρα — δύναμη λαβής, κινητοποίηση ώμων και απόσυμπίεση σπονδυλικής στήλης.',
+      instructions: [
+        'Λαβή μπάρας pull-up ευρύτητα ώμων, αντίχειρες έξω από τη μπάρα (ή τυλιγμένοι) — και τα δύο πόδια από το έδαφος.',
+        'Κράτησε τους ώμους ενεργά κάτω και προς τα πίσω — κανένα σηκωμένη, βυθισμένη θέση.',
+        'Κορμός χαλαρό αλλά χωρίς κάτω-μέση κύρτωμα — πόδια ακίνητα, χωρίς κούνημα.',
+        'Κράτησε όσο η μορφή παραμένει καθαρή, κατόπιν κατέβασμα υπό έλεγχο.',
+      ],
+      tips: [
+        'Αρχάριοι: 3 × 15-20 δ.· προχωρημένοι 3 × 45-60 δ. — μακροπρόθεσμος στόχος 1-2 λεπτά ίσια.',
+        'Ευαίσθητοι ώμοι; Χρησιμοποίησε ενεργά κράτημα (scapulae δρεπάνισμα) αντί παθητικού.',
+      ],
+    },
     en: {
       name: 'Dead Hang',
       summary:
@@ -1040,6 +4736,110 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       tips: [
         'Beginners: 3 × 15-20 s; advanced 3 × 45-60 s — long-term target 1-2 minutes straight.',
         'Sensitive shoulders? Use an active hang (scapulae depressed) instead of passive.',
+      ],
+    },
+    es: {
+      name: 'Cuelgue muerto',
+      summary:
+        'Cuelgue pasivo de una barra — fuerza de agarre, movilidad de hombros y descompresión espinal.',
+      instructions: [
+        'Agarra una barra de dominadas a la anchura de los hombros, pulgares fuera de la barra (o envueltos) — ambos pies fuera del suelo.',
+        'Mantén los hombros activamente hacia abajo y hacia atrás — sin posición encorvada y hundida.',
+        'Torso relajado pero sin arqueamiento de la zona lumbar — piernas quietas, sin balanceo.',
+        'Mantén mientras la forma se mantenga limpia, luego baja bajo control.',
+      ],
+      tips: [
+        'Principiantes: 3 × 15-20 s; avanzados 3 × 45-60 s — objetivo a largo plazo 1-2 minutos seguidos.',
+        'Hombros sensibles? Usa un cuelgue activo (escápulas deprimidas) en lugar de pasivo.',
+      ],
+    },
+    fr: {
+      name: 'Suspension passive',
+      summary:
+        "Suspension passive d'une barre — force de préhension, mobilité d'épaule et décompression spinale.",
+      instructions: [
+        'Saisissez une barre de traction à la largeur des épaules, pouces en dehors de la barre (ou enroulés) — les deux pieds décollés.',
+        "Gardez les épaules activement basses et vers l'arrière — pas de position remontée et enfoncée.",
+        "Tronc détendu mais pas d'arcade du bas du dos — jambes immobiles, pas de balancement.",
+        'Maintenez aussi longtemps que la forme reste propre, puis abaissez de façon contrôlée.',
+      ],
+      tips: [
+        "Débutants : 3 × 15-20 s ; avancés 3 × 45-60 s — l'objectif à long terme 1-2 minutes d'affilée.",
+        'Les épaules sensibles ? Utilisez une suspension active (scapulae déprimées) au lieu de passive.',
+      ],
+    },
+    it: {
+      name: 'Dead hang',
+      summary:
+        'Sospensione passiva da una barra — forza della presa, mobilità della spalla e decompressione spinale.',
+      instructions: [
+        'Afferra una sbarra di trazioni a larghezza spalle, pollici fuori dalla barra (o avvolti) — entrambi i piedi fuori dal pavimento.',
+        'Mantieni le spalle attivamente giù e indietro — niente posizione sollevata e sprofondata.',
+        'Busto rilassato ma niente arco della parte bassa della schiena — gambe ferme, niente oscillazioni.',
+        'Mantieni il tempo che la forma rimane pulita, poi abbassa controllando.',
+      ],
+      tips: [
+        'Principianti: 3 × 15-20 s; avanzati 3 × 45-60 s — target a lungo termine 1-2 minuti di fila.',
+        'Spalle sensibili? Usa una sospensione attiva (scapolari depresse) invece che passiva.',
+      ],
+    },
+    la: {
+      name: 'Dead Hang',
+      summary:
+        'Suspensio passiva ex barra — vires prehensilis, mobilitas humerorum et decompressio spinalis.',
+      instructions: [
+        'Barram latitudinis humerorum prende, pollices extra (vel voluta) — ambo pedes a pavimento.',
+        'Humeros active deorsum et retrorsum — nullus elevatus, nullus sunken.',
+        'Truncus relaxatus sed nullus dorsum inferius arcuatum — crura quies, nullus motus.',
+        'Teneto quantam formam recto, tum sub tensione deorsum.',
+      ],
+      tips: [
+        'Incipientes: 3 × 15-20 s; periti 3 × 45-60 s — longum iubilus 1-2 minuta recta.',
+        'Humeri sensibiles? Suspensione activa (scapulae depressae) pasiva loco.',
+      ],
+    },
+    nl: {
+      name: 'Dead Hang',
+      summary:
+        'Passief hangen aan een balk — greepkracht, schoudermobiliteit en wervelkolom decompressie.',
+      instructions: [
+        'Grijp pull-up balk schouderbreedte, duimen buiten de balk (of omwikkeld) — beide voeten van vloer.',
+        'Houd schouders actief omlaag en terug — geen opgehaalde, ingezonken positie.',
+        'Romp ontspannen maar geen onderrug-boogvorming — benen stil, geen zwaaiing.',
+        'Houd zolang vorm schoon blijft, zak dan onder controle.',
+      ],
+      tips: [
+        'Beginners: 3 × 15-20 s; gevorderden 3 × 45-60 s — lange-termijn doel 1-2 minuten recht.',
+        'Gevoelige schouders? Gebruik actief hangen (scapulae neergedrukt) in plaats van passief.',
+      ],
+    },
+    no: {
+      name: 'Dead Hang',
+      summary:
+        'Passiv henging fra stang – gripstyrke, skuldermobilitet og spinal dekompresjon.',
+      instructions: [
+        'Grep pullup-stang skulderbredde, thumbs utenfor stangen (eller omviklet) – begge føtter av gulvet.',
+        'Hold skuldrene aktivt ned og bakover – ingen shrugged, sunket posisjon.',
+        'Stamme avslappet men ingen lenderyggarking – ben stille, ingen svingging.',
+        'Hold så lenge form forblir ren, så senk med kontroll.',
+      ],
+      tips: [
+        'Nybegynnere: 3 × 15-20 s; avansert 3 × 45-60 s – langsiktig mål 1-2 minutter rett.',
+        'Ømfintlige skuldre? Bruk aktivt hang (scapulae deprimer) i stedet for passivt.',
+      ],
+    },
+    zh: {
+      name: '死亡悬垂',
+      summary: '被动地从杆上悬垂——握力、肩膀活动和脊椎减压。',
+      instructions: [
+        '握住引体向上杆与肩宽，大拇指在杆外（或环绕）——双脚离地。',
+        '保持肩膀主动向下和向后——没有耸肩、下沉的位置。',
+        '躯干放松但没有下背部拱起——腿部静止，不摇晃。',
+        '尽可能长地保持形式清晰，然后控制地放低。',
+      ],
+      tips: [
+        '初学者：3×15-20秒；进阶3×45-60秒——长期目标1-2分钟直接。',
+        '肩膀敏感？使用主动悬垂（肩胛骨压低）而不是被动。',
       ],
     },
   },
@@ -1059,6 +4859,21 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
         'Idealer Begleiter für jede Drück-Einheit; 15-25 Wiederholungen pro Satz.',
       ],
     },
+    el: {
+      name: 'Face Pull',
+      summary:
+        'Ψηλή έλξη με λαστιχάκι ή καλώδιο — εκπαιδεύει τους πίσω ώμους και αντιμέτωπος με ανισορροπίες πίεσης.',
+      instructions: [
+        'Άγκυρα λαστιχάκι ή καλώδιο σε ύψος ματιών, λαβή των άκρων με και τα δύο χέρια.',
+        'Όρθιος με χέρια μπροστά· βήμα προς τα πίσω ένα ή δύο βήματα για τάση στο λαστιχάκι.',
+        'Τράβηξη των αγκώνων πάνω και έξω προς τα αυτιά, αντίχειρες τελικά δείχνοντας προς τα πίσω.',
+        'Παύση σύντομα στο τέλος (1 δ.), κατόπιν επιστροφή υπό έλεγχο.',
+      ],
+      tips: [
+        'Ώμοι μένουν κάτω — χωρίς σήκωμα των λεπίδων ώμων προς τα πάνω.',
+        'Ιδανικός σύντροφος σε οποιαδήποτε περίοδο πίεσης· 15-25 επαναλήψεις ανά σετ.',
+      ],
+    },
     en: {
       name: 'Face Pull',
       summary:
@@ -1072,6 +4887,110 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       tips: [
         'Shoulders stay down — no shrugging the shoulder blades up.',
         'Ideal companion to any pressing session; 15-25 reps per set.',
+      ],
+    },
+    es: {
+      name: 'Tirón al rostro',
+      summary:
+        'Tirón alto con banda o cable — entrena los hombros traseros y contrarresta desequilibrios de presión.',
+      instructions: [
+        'Ancla una banda o cable a la altura de los ojos, agarra los extremos con ambas manos.',
+        'Párate erguido con brazos hacia adelante; retrocede uno o dos pasos para poner tensión en la banda.',
+        'Tira los codos hacia arriba y hacia fuera hacia las orejas, los pulgares apuntando hacia atrás.',
+        'Pausa brevemente al final (1 s), luego vuelve bajo control.',
+      ],
+      tips: [
+        'Los hombros se mantienen hacia abajo — sin encogimiento de los omóplatos hacia arriba.',
+        'Complemento ideal para cualquier sesión de presión; 15-25 repeticiones por serie.',
+      ],
+    },
+    fr: {
+      name: 'Tirage au visage',
+      summary:
+        'Tirage haut avec une bande ou câble — entraîne les épaules arrière et contre les déséquilibres de poussée.',
+      instructions: [
+        'Fixez une bande ou un câble à la hauteur des yeux, saisissez les extrémités des deux mains.',
+        'Debout avec les bras en avant ; reculez une ou deux foulées pour mettre la tension sur la bande.',
+        "Tirez les coudes vers le haut et vers l'extérieur vers les oreilles, pouces terminant pointés vers l'arrière.",
+        'Pause brève à la fin (1 s), puis revenir sous contrôle.',
+      ],
+      tips: [
+        'Les épaules restent basses — pas de haussement des omoplates.',
+        'Compagnon idéal de toute séance de poussée ; 15-25 répétitions par série.',
+      ],
+    },
+    it: {
+      name: 'Face pull',
+      summary:
+        'Tiro alto con band o cavo — allena le spalle posteriori e contrasta gli squilibri da pressione.',
+      instructions: [
+        "Fissa una band o cavo all'altezza degli occhi, afferra i capi con entrambe le mani.",
+        'Stai in piedi eretto con braccia in avanti; fai un passo o due indietro per mettere tensione sulla band.',
+        "Tira i gomiti verso l'alto e verso l'esterno verso le orecchie, i pollici puntano indietro.",
+        'Pausa brevemente alla fine (1 s), poi torna controllato.',
+      ],
+      tips: [
+        'Le spalle rimangono giù — niente sollevamento dei trapezi.',
+        'Compagno ideale a qualsiasi sessione di pressione; 15-25 ripetizioni per serie.',
+      ],
+    },
+    la: {
+      name: 'Tractio Facialis',
+      summary:
+        'Tractio alta cum banda vel chabo — posteriores humeri et pressio contra-balancia.',
+      instructions: [
+        'Bandam vel chabum altitudinis oculorum fi, ambabus manibus fines prende.',
+        'Erectus cum brachiis antrorsum; retroactus passus unum vel duo ut band tensio.',
+        'Cubiti sursum et extra versus aures tracta, pollices retrorsum spectantes.',
+        'Breviter in fine (1 s) statio, tum sub tensione redire.',
+      ],
+      tips: [
+        'Humeri deorsum — nullus elevatio scapularum.',
+        'Sessionem pressione companio optima; 15-25 repetitiones per seriem.',
+      ],
+    },
+    nl: {
+      name: 'Face Pull',
+      summary:
+        'Hoge trek met band of kabel — traint achterste schouders en weegt drukonevenwichtigheid tegen.',
+      instructions: [
+        'Ankeer band of kabel op ooghoogte, grijp uiteinden met beide handen.',
+        'Sta rechtop met armen naar voren; zet een of twee stappen achteruit om spanning op band te zetten.',
+        'Trek ellebogen omhoog en naar buiten naar oren, duimen wijzen terug.',
+        'Maak kort pauze aan einde (1 s), zak dan onder controle.',
+      ],
+      tips: [
+        'Schouders blijven omlaag — geen schouderblaadjes ophaligen.',
+        'Ideale metgezel voor elke drukkingsessie; 15-25 herhalingen per serie.',
+      ],
+    },
+    no: {
+      name: 'Face Pull',
+      summary:
+        'Høy pull med bånd eller kabel – trener bakerste skuldre og motvirker pressing ubalanse.',
+      instructions: [
+        'Anker bånd eller kabel øjehøyde, grep endene med begge hender.',
+        'Stå oppreist med armene fremover; gå tilbake ett eller to skritt for å sette spenning på bånd.',
+        'Trekk albuer opp og ut mot örene, thumbs peker bakover.',
+        'Pause kort ved enden (1 s), så tilbake med kontroll.',
+      ],
+      tips: [
+        'Skuldrene forblir ned – ingen shrugging av skulderbladene oppover.',
+        'Ideell companion til press-sesjon; 15-25 repetisjoner per sett.',
+      ],
+    },
+    zh: {
+      name: '面部拉动',
+      summary: '用带或电缆的高拉动——训练后肩膀并抵消推送不平衡。',
+      instructions: [
+        '在眼睛高度锚定带或电缆，两手握住末端。',
+        '竖直站立双臂向前；向后跨一或两步以在带上加力。',
+        '拉动肘部向上和向外靠向耳朵，大拇指最后指向后方。',
+        '短暂停顿（1秒）末端，然后控制地返回。',
+      ],
+      tips: [
+        '肩膀保持放松——不要耸起肩胛骨。',
+        '任何推送课程的理想伴侣；每组15-25次。',
       ],
     },
   },
@@ -1091,6 +5010,21 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
         'Voller Bewegungsumfang — Kinn über die Stange, unten Ellenbogen ganz strecken.',
       ],
     },
+    el: {
+      name: 'Pull-ups',
+      summary:
+        'Κάθετη έλξη από μπάρα — ο βασιλιάς της ανώτερης έλξης σώματος για πλάτο, δικέφαλοι και λαβή.',
+      instructions: [
+        'Κράτησε από μπάρα pull-up, λαβή ευρύτητα ώμων, παλάμες μπροστά (πρότυπο) ή προς τα πίσω (chin-up).',
+        'Ενεργό δρέπανισμα των λεπίδων ώμων — χωρίς σήκωμα ώμου στο κάτω σημείο.',
+        'Τράβηξη του στήθους στη μπάρα, αγκώνες οδηγώντας κάτω και ελαφρώς προς τα πίσω.',
+        'Κατέβασμα υπό έλεγχο σε πλήρες κράτημα — χωρίς kipping.',
+      ],
+      tips: [
+        'Παλινδρόμηση: αρνητικά (άλμα πάνω, κατέβασμα αργά) ή λαστιχάκι-υποβοηθούμενο pull-up.',
+        'Πλήρες εύρος — σαγόνι πάνω από τη μπάρα στην κορυφή, αγκώνες πλήρως εκτεταμένοι στο κάτω.',
+      ],
+    },
     en: {
       name: 'Pull-ups',
       summary:
@@ -1104,6 +5038,110 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       tips: [
         'Regression: negatives (jump up, lower slowly) or a band-assisted pull.',
         'Full range — chin over the bar at the top, elbows fully extended at the bottom.',
+      ],
+    },
+    es: {
+      name: 'Dominadas',
+      summary:
+        'Tirón vertical de una barra — el rey del tirón de la parte superior del cuerpo para la espalda, bíceps y agarre.',
+      instructions: [
+        'Cuelgate de una barra de dominadas, agarre a la anchura de los hombros, palmas hacia adelante (estándar) o hacia atrás (chin-up).',
+        'Deprime activamente los omóplatos — sin encogimiento de hombros en la parte inferior.',
+        'Tira el pecho hacia la barra, codos impulsando hacia abajo y ligeramente hacia atrás.',
+        'Baja bajo control hasta un cuelgue completo — sin kipping.',
+      ],
+      tips: [
+        'Regresión: negativos (salta hacia arriba, baja lentamente) o una dominada asistida con banda.',
+        'Rango completo — barbilla sobre la barra en la parte superior, codos completamente extendidos en la parte inferior.',
+      ],
+    },
+    fr: {
+      name: 'Tractions',
+      summary:
+        "Tirage vertical d'une barre — le roi de la traction du haut du corps pour le dos, biceps et préhension.",
+      instructions: [
+        "Suspendu d'une barre de traction, prise écartée à la largeur des épaules, paumes vers l'avant (standard) ou en arrière (chin-up).",
+        "Déprimez activement les omoplates — pas de haussement de l'épaule en bas.",
+        "Tirez la poitrine vers la barre, coudes poussant vers le bas et légèrement vers l'arrière.",
+        'Abaissez de façon contrôlée en suspension complète — pas de kipping.',
+      ],
+      tips: [
+        'Régression : négatifs (sautez vers le haut, abaissez lentement) ou traction assistée par bande.',
+        'Amplitude complète — menton au-dessus de la barre au sommet, coudes totalement tendus en bas.',
+      ],
+    },
+    it: {
+      name: 'Trazioni',
+      summary:
+        'Tiro verticale da una barra — il re del tiro superiore per schiena, bicipiti e presa.',
+      instructions: [
+        'Pendi da una sbarra di trazioni, presa a larghezza spalle, palmi rivolti in avanti (standard) o indietro (chin-up).',
+        'Attivamente deprimi i trapezi — niente sollevamento delle spalle in basso.',
+        'Tira il petto verso la barra, gomiti che spingono verso il basso e leggermente indietro.',
+        'Abbassa controllando in una sospensione completa — niente kipping.',
+      ],
+      tips: [
+        'Regressione: negative (salta su, abbassa lentamente) o trazioni assistite con band.',
+        'Ampiezza completa — mento sopra la barra in alto, gomiti completamente estesi in basso.',
+      ],
+    },
+    la: {
+      name: 'Tractationes',
+      summary:
+        'Tractio verticalis ex barra — rex trahentium superioris corporis ut dorsum, biceps et prehensio.',
+      instructions: [
+        'E barra suspende, prensa latitudinis humerorum, palmae antrorsum (ordinaria) vel retrorsum (menti).',
+        'Scapulas active deorsum — nullus elevatio humerorum fundatore.',
+        'Pectus ad barram tracta, cubiti deorsum et paulum retrorsum.',
+        'Deorsum sub tensione in suspensione plenam — nullus kipping.',
+      ],
+      tips: [
+        'Regressio: negativae (salta supra, lente deorsum) vel banda-adiutrix.',
+        'Amplitudo plena — mentum super barram summitatem, cubiti plane extensi fundatore.',
+      ],
+    },
+    nl: {
+      name: 'Pull-ups',
+      summary:
+        'Verticale trek van balk — koning van bovenlichaam trekken voor rug, biceps en grip.',
+      instructions: [
+        'Hang aan pull-up balk, greep schouderbreedte, handpalmen naar voren (standaard) of terug (chin-up).',
+        'Zet schouderbladen actief neer — geen schouderopehalingen onderaan.',
+        'Trek borst naar balk, ellebogen drijven omlaag en licht terug.',
+        'Zak onder controle in volledig hang — geen kipping.',
+      ],
+      tips: [
+        'Stap terug: negatieve bewegingen (spring omhoog, zak langzaam) of band-gesteunde pull-up.',
+        'Volledig bereik — kin over balk bovenaan, ellebogen volledig gestrekt onderaan.',
+      ],
+    },
+    no: {
+      name: 'Pull-ups',
+      summary:
+        'Vertikal pull fra stang – kongen av øvre kropps pulling for rygg, biceps og grep.',
+      instructions: [
+        'Henge fra pullup-stang, grep skulderbredde, håndflater fremover (standard) eller bakover (chin-up).',
+        'Deprimer aktivt skulderbladene – ingen skuldershrug nederst.',
+        'Trekk brystet til stangen, albuer kjørende ned og litt bakover.',
+        'Senk med kontroll til full henging – ingen kiping.',
+      ],
+      tips: [
+        'Regresjon: negatives (hopp opp, senk sakte) eller båndassistert pull.',
+        'Full rekkevidde – hake over stangen øverst, albuer fullt strukket nederst.',
+      ],
+    },
+    zh: {
+      name: '引体向上',
+      summary: '从杆的竖直拉动——上身拉动的之王，适合背部、二头肌和握力。',
+      instructions: [
+        '从引体向上杆悬垂，握距与肩同宽，掌心向前（标准）或向后（下拉）。',
+        '主动压低肩胛骨——底部不要耸肩。',
+        '拉动胸部向杆，肘部向下和略微向后驱动。',
+        '控制地放低进入完整悬垂——不要借力。',
+      ],
+      tips: [
+        '回归：负重（跳起，缓慢放低）或带辅助引体向上。',
+        '完整范围——下巴在杆上方，肘部在底部完全伸展。',
       ],
     },
   },
@@ -1123,6 +5161,21 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
         'Keine Schwungbewegung — Rumpf bleibt stabil, Bewegung kommt nur aus den Armen + oberen Rücken.',
       ],
     },
+    el: {
+      name: 'Rows',
+      summary:
+        'Οριζόντια έλξη — ομόλογος με πίεση και κλειδί για υγιές καθήκον ώμων.',
+      instructions: [
+        'Βάρος σώματος: κράτησε κάτω από ένα χαμηλό bar ή TRX, σώμα σε ευθεία γραμμή.',
+        'Σταθμισμένος: κύρτωμα με ίσια πλάτη, βάρος κοντά ύψος κνήμης.',
+        'Ξεκίνησε με τις λεπίδες ώμων — ανάσυρση πρώτα, κατόπιν τράβηξη των αγκώνων προς τα ισχία.',
+        'Κατέβασμα πίσω υπό έλεγχο έως οι λεπίδες ώμων νιώθουν ξανά μακριά.',
+      ],
+      tips: [
+        'Τράβηξη προς τα κάτω πλευρά για πολλαπλασιασμό των lats· τράβηξη προς το στήθος για mid-back.',
+        'Χωρίς kipping — ο κορμός παραμένει ακίνητο, μόνο τα χέρια και ανώτερη πλάτη κινούνται.',
+      ],
+    },
     en: {
       name: 'Rows',
       summary:
@@ -1136,6 +5189,110 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       tips: [
         'Pull to the lower ribs to bias the lats; pull to the chest for the mid-back.',
         'No kipping — the trunk stays still, only the arms and upper back move.',
+      ],
+    },
+    es: {
+      name: 'Remo',
+      summary:
+        'Tirón horizontal — contraparte de la presión y clave para la salud postural de los hombros.',
+      instructions: [
+        'Peso corporal: cuelgate bajo una barra baja o TRX, cuerpo en línea recta.',
+        'Con peso: inclínate con la espalda plana, peso cerca de la altura de la espinilla.',
+        'Inicia con los omóplatos — retrae primero, luego tira los codos hacia las caderas.',
+        'Baja bajo control hasta que los omóplatos se sientan largos de nuevo.',
+      ],
+      tips: [
+        'Tira hacia las costillas inferiores para sesgar los dorsales; tira hacia el pecho para la espalda media.',
+        'Sin kipping — el torso permanece quieto, solo los brazos y la espalda superior se mueven.',
+      ],
+    },
+    fr: {
+      name: 'Tirage horizontal',
+      summary:
+        "Tirage horizontal — contre-partie de la poussée et clé d'une posture d'épaule saine.",
+      instructions: [
+        'Poids du corps : suspendez-vous sous une barre basse ou TRX, corps en ligne droite.',
+        'Lesté : articulation en avant avec le dos plat, poids près de la hauteur du tibia.',
+        "Initiez par les omoplates — rétractez d'abord, puis tirez les coudes vers les hanches.",
+        "Abaissez de façon contrôlée jusqu'à ce que les omoplates se sentent longues à nouveau.",
+      ],
+      tips: [
+        'Tirez vers les côtes inférieures pour biaiser les lats ; tirez vers la poitrine pour le dos médian.',
+        'Pas de kipping — le tronc reste immobile, seuls les bras et le haut du dos bougent.',
+      ],
+    },
+    it: {
+      name: 'Rematori',
+      summary:
+        'Tiro orizzontale — controparte della pressione e fondamentale per la postura sana delle spalle.',
+      instructions: [
+        'A corpo libero: pendi sotto una barra bassa o TRX, corpo in linea retta.',
+        "Con peso: chinati con schiena piatta, il peso vicino all'altezza dello stinco.",
+        'Inizia con i trapezi — ritrai prima, poi tira i gomiti verso i fianchi.',
+        'Abbassa controllato fino a quando i trapezi non sentono lunghi di nuovo.',
+      ],
+      tips: [
+        'Tira verso le costole inferiori per enfatizzare i latissimi; tira verso il petto per la schiena media.',
+        'Niente kipping — il busto rimane fermo, solo le braccia e la parte superiore della schiena si muovono.',
+      ],
+    },
+    la: {
+      name: 'Tractationes Horizontales',
+      summary:
+        'Tractio horizontalis — contra-pars pressioni et clavis ad postura salubrem.',
+      instructions: [
+        'Corporalis: pendentia sub barra bassa vel TRX, corpus recta in lineam.',
+        'Ponderata: cum dorso plano, onus iuxta tibiam.',
+        'Incipe e scapulis — retrahe primo, tum cubitus ad coxas tracta.',
+        'Deorsum sub tensione donec scapulae longan se sensui.',
+      ],
+      tips: [
+        'Ad inferiores costas tracta ut latas praeferre; ad pectus tractio medii-dorsi.',
+        'Nullus kipping — truncus quiescit, brachia et superior dorsum solum.',
+      ],
+    },
+    nl: {
+      name: 'Rijen',
+      summary:
+        'Horizontale trek — tegenhanger van drukken en sleutel tot gezonde schouderhouding.',
+      instructions: [
+        'Lichaamsgewicht: hang onder lage balk of TRX, lichaam in rechte lijn.',
+        'Gewicht: scharnierend met vlakke rug, gewicht dicht bij scheenbeen.',
+        'Begin met schouderblaadjes — trek terug eerst, trek dan ellebogen naar heupen.',
+        'Zak terug onder controle totdat schouderblaadjes zich lang voelen.',
+      ],
+      tips: [
+        'Trek naar onderste ribben om lat bias; trek naar borst voor mid-rug.',
+        'Geen kipping — romp blijft stil, alleen armen en bovenrug bewegen.',
+      ],
+    },
+    no: {
+      name: 'Rows',
+      summary:
+        'Horisontalt pulling – motstykke til pressing og nøkkel til sunn skulderpostur.',
+      instructions: [
+        'Kroppsvekt: henge under lav stang eller TRX, kropp i rett linje.',
+        'Vektet: hinge over med flat rygg, vekt nær skinnebenhøyde.',
+        'Initiere med skulderbladene – retrahert først, så trekk albuer mot hofter.',
+        'Senk tilbake med kontroll til skulderbladene føles lange igjen.',
+      ],
+      tips: [
+        'Trekk til nedre ribben for å bias lats; trekk til bryst for mid-back.',
+        'Ingen kiping – stammen forblir stille, bare armer og øvre rygg beveger seg.',
+      ],
+    },
+    zh: {
+      name: '划船',
+      summary: '水平拉动——推动的配对，良好肩膀姿态的关键。',
+      instructions: [
+        '体重：在低杆或TRX下悬垂，身体成一直线。',
+        '加重：向前弯曲，背部平直，重量接近胫骨高度。',
+        '从肩胛骨开始——首先缩回，然后拉动肘部向髋部。',
+        '控制地放低，直到肩胛骨再次感到长。',
+      ],
+      tips: [
+        '拉向下肋以偏向背阔肌；拉向胸部用于中背。',
+        '不要借力——躯干保持静止，仅双臂和上背运动。',
       ],
     },
   },
@@ -1155,6 +5312,20 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
         'Schwerer machen mit gestreckten Beinen, Füßen auf einer zweiten Bank oder Zusatzgewicht auf dem Oberschenkel.',
       ],
     },
+    el: {
+      name: 'Bench Dips',
+      summary: 'Tricep dips με χέρια σε πάγκο — προσιτή παραλλαγή εισόδου.',
+      instructions: [
+        'Όρθιος με την πλάτη προς ένα πάγκο, χέρια ευρύτητα ώμων στην άκρη πάγκου.',
+        'Ολίσθηση των ισχίων μπροστά έξω από τον πάγκο, πόδια εκτεταμένα ή λυγισμένα μπροστά.',
+        'Κάμψιμο αγκώνων σε περίπου 90° υπό έλεγχο, ισχία πέφτουν ίσια κάτω (όχι μπροστά).',
+        'Πίεση προς τα πάνω με τριγλώχινες, μη κλειδώματος έξω των αγκώνων.',
+      ],
+      tips: [
+        'Προστασία ώμων — μην πάνε βαθύτερα από ό,τι νιώθεται καλό.',
+        'Κάντε δυσκολότερο με ίσια πόδια, πόδια σε δεύτερο πάγκο, ή βάρος στην αγκάλη.',
+      ],
+    },
     en: {
       name: 'Bench Dips',
       summary: 'Triceps dips with hands on a bench — accessible entry variant.',
@@ -1167,6 +5338,108 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       tips: [
         "Protect the shoulders — don't go deeper than feels good.",
         'Make it harder with straight legs, feet on a second bench, or weight on the lap.',
+      ],
+    },
+    es: {
+      name: 'Flexiones de banco',
+      summary:
+        'Fondos de tríceps con manos en un banco — variante de entrada accesible.',
+      instructions: [
+        'Párate de espaldas a un banco, manos a la anchura de los hombros en el borde del banco.',
+        'Desliza las caderas hacia adelante fuera del banco, piernas extendidas o dobladas frente a ti.',
+        'Dobla los codos aproximadamente 90° bajo control, caderas cayendo directamente hacia abajo (no hacia adelante).',
+        'Presiona hacia arriba con los tríceps, no bloquees los codos.',
+      ],
+      tips: [
+        'Protege los hombros — no bajes más de lo que se sienta bien.',
+        'Hazlo más difícil con piernas rectas, pies en un segundo banco, o peso en el regazo.',
+      ],
+    },
+    fr: {
+      name: 'Dips sur banc',
+      summary:
+        "Dips triceps avec les mains sur un banc — variante d'entrée accessible.",
+      instructions: [
+        'Placez-vous de dos à un banc, mains écartées à la largeur des épaules sur le bord du banc.',
+        'Glissez les hanches en avant du banc, jambes tendues ou fléchies en avant.',
+        "Fléchissez les coudes à environ 90° de façon contrôlée, hanches s'enfonçant droit vers le bas (pas en avant).",
+        'Repoussez avec les triceps, ne verrouillez pas les coudes.',
+      ],
+      tips: [
+        'Protégez les épaules — ne descendez pas plus profond que ce qui se sent bon.',
+        'Rendez-le plus difficile avec les jambes tendues, pieds sur un deuxième banc, ou du poids sur les genoux.',
+      ],
+    },
+    it: {
+      name: 'Dips su panca',
+      summary:
+        'Dips dei tricipiti con le mani su una panca — variante entry più accessibile.',
+      instructions: [
+        'Stai con la schiena verso una panca, mani a larghezza spalle sul bordo della panca.',
+        'Fai scivolare i fianchi in avanti dalla panca, gambe distese o piegate davanti.',
+        'Piega i gomiti a circa 90° controllato, fianchi che affondano dritto verso il basso (non in avanti).',
+        'Spingi indietro con i tricipiti, non bloccare i gomiti.',
+      ],
+      tips: [
+        'Proteggi le spalle — non scendere più profondo di quanto ti senti bene.',
+        'Rendilo più difficile con gambe dritte, piedi su una seconda panca, o peso sulle ginocchia.',
+      ],
+    },
+    la: {
+      name: 'Diptus Selli',
+      summary: 'Diptus tricipitis cum manibus in sella — introductio accessa.',
+      instructions: [
+        'Posterium sella confrons, manus latitudinis humerorum in margine.',
+        'Coxas antrorsum e sella, crura extensa vel flexa antrorsum.',
+        'Cubitos flextos circa 90° sub tensione, coxae recta deorsum (non antrorsum).',
+        'Per tricipitem repellere, cubitos ne fixos.',
+      ],
+      tips: [
+        'Humeros protect — ne profundius quam sentis bene.',
+        'Cruribus rectis, pedibus in sella altera vel onere difficilior.',
+      ],
+    },
+    nl: {
+      name: 'Bench Dips',
+      summary: 'Tricepsdips met handen op bank — toegankelijke basisvariant.',
+      instructions: [
+        'Sta met rug naar bank, handen schouderbreedte op bankkant.',
+        'Schuif heupen naar voren van bank, benen gestrekt of gebogen voor.',
+        'Buig ellebogen tot ongeveer 90° onder controle, heupen zakken recht omlaag (niet naar voren).',
+        'Zet jezelf omhoog met triceps, vergrendel ellebogen niet.',
+      ],
+      tips: [
+        'Bescherm schouders — ga niet dieper dan voelt goed.',
+        'Maak harder met benen recht, voeten op tweede bank, of gewicht op schoot.',
+      ],
+    },
+    no: {
+      name: 'Bench Dips',
+      summary:
+        'Triceps dips med hender på benk – tilgjengelig inngangs variant.',
+      instructions: [
+        'Stå med ryggen til benk, hender skulderbredde på benkkanten.',
+        'Skyv hofter fremover av benken, ben strukket eller bøyd foran.',
+        'Bøy albuer til rundt 90° med kontroll, hofter synker rett ned (ikke fremover).',
+        'Press tilbake opp med triceps, ikke lås ut albuer.',
+      ],
+      tips: [
+        'Beskytt skuldre – ikke dypere enn det som føles bra.',
+        'Gjør det vanskeligere med rette ben, føtter på annen benk, eller vekt i fanget.',
+      ],
+    },
+    zh: {
+      name: '凳上撑体',
+      summary: '双手在长凳上的三头肌撑体——容易接近的变体。',
+      instructions: [
+        '背对长凳站立，双手与肩宽放在长凳边缘。',
+        '将髋部滑向凳子前方，双腿向前伸展或弯曲。',
+        '控制地弯曲肘部到约90°，髋部直向下沉（不向前）。',
+        '用三头肌向上按压，不要完全锁定肘部。',
+      ],
+      tips: [
+        '保护肩膀——不要比感觉好的更深下降。',
+        '用伸直的腿、第二个长凳上的脚或腿上的重量使其更难。',
       ],
     },
   },
@@ -1186,6 +5459,21 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
         'Anfänger: zuerst Bankdips, dann negative Dips (nur die Absenkphase), dann volle Dips.',
       ],
     },
+    el: {
+      name: 'Dips',
+      summary:
+        'Κάθετη πίεση σε παράλληλες μπάρες ή δακτυλίους — στήθος, τριγλώχινες και ώμοι σε μία κίνηση.',
+      instructions: [
+        'Στήριξη σε δύο παράλληλες μπάρες, χέρια εκτεταμένα, πόδια ελεύθερα.',
+        'Ενεργό δρέπανισμα των λεπίδων ώμων — μη κρέμασμα στις αρθρώσεις.',
+        'Κατέβασμα του σώματος υπό έλεγχο, αγκώνες ακολουθώντας ελαφρώς προς τα πίσω, μέχρι ανώτερο χέρι παράλληλο.',
+        'Πίεση προς τα πάνω δυνατά, μη κλειδώματος των αγκώνων.',
+      ],
+      tips: [
+        'Λυγίσιμο ελαφρώς μπροστά προς πολλαπλασιασμό του στήθους· μείνε όρθιος προς δρέπανισμα τριγλώχινων.',
+        'Αρχάριοι: ξεκίνημα με bench dips, κατόπιν αρνητικά dips (εκκεντρικά μόνο), κατόπιν πλήρη dips.',
+      ],
+    },
     en: {
       name: 'Dips',
       summary:
@@ -1199,6 +5487,110 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       tips: [
         'Lean slightly forward to bias the chest; stay upright to bias the triceps.',
         'Beginners: start with bench dips, then negative dips (eccentric only), then full dips.',
+      ],
+    },
+    es: {
+      name: 'Fondos',
+      summary:
+        'Presión vertical en barras paralelas o anillas — pecho, tríceps y hombros en un movimiento.',
+      instructions: [
+        'Sostente en dos barras paralelas, brazos extendidos, piernas libres.',
+        'Deprime activamente los omóplatos — no cuelgues en las articulaciones.',
+        'Baja el cuerpo bajo control, codos rastreando ligeramente hacia atrás, hasta que los brazos superiores sean paralelos.',
+        'Presiona hacia arriba poderosamente, no bloquees los codos.',
+      ],
+      tips: [
+        'Inclínate ligeramente hacia adelante para sesgar el pecho; mantente erguido para sesgar los tríceps.',
+        'Principiantes: comienza con flexiones de banco, luego fondos negativos (solo excéntrico), luego fondos completos.',
+      ],
+    },
+    fr: {
+      name: 'Dips',
+      summary:
+        'Poussée verticale sur barres parallèles ou anneaux — poitrine, triceps et épaules en un seul mouvement.',
+      instructions: [
+        'Support sur deux barres parallèles, bras tendus, jambes libres.',
+        'Déprimez activement les omoplates — ne vous accrochez pas aux articulations.',
+        "Abaissez le corps de façon contrôlée, coudes suivant légèrement vers l'arrière, jusqu'à ce que le bras supérieur soit parallèle.",
+        'Repoussez puissamment vers le haut, ne verrouillez pas les coudes.',
+      ],
+      tips: [
+        'Penchez-vous légèrement en avant pour biaiser la poitrine ; restez droit pour biaiser les triceps.',
+        'Débutants : commencez avec dips sur banc, puis négatif (excentrique seulement), puis dips complets.',
+      ],
+    },
+    it: {
+      name: 'Dips',
+      summary:
+        'Pressione verticale su barre parallele o anelli — petto, tricipiti e spalle in un movimento.',
+      instructions: [
+        'Supporto su due barre parallele, braccia estese, gambe libere.',
+        'Attivamente deprimi i trapezi — non pendere nelle articolazioni.',
+        'Abbassa il corpo controllato, gomiti che inseguono leggermente indietro, finché il braccio superiore non è parallelo.',
+        'Spingi indietro con potenza, non bloccare i gomiti.',
+      ],
+      tips: [
+        'Inclina leggermente in avanti per enfatizzare il petto; rimani eretto per enfatizzare i tricipiti.',
+        'Principianti: inizia con dips su panca, poi dips negativi (solo eccentrico), poi dips completi.',
+      ],
+    },
+    la: {
+      name: 'Diptus',
+      summary:
+        'Pressio verticalis in barris parallelis vel anellis — pectus, tricipites et humeri.',
+      instructions: [
+        'Super duas barras parallelas sustine, brachia extensa, crura libera.',
+        'Scapulas active deorsum — nullus labi in articulis.',
+        'Corpus sub tensione deorsum, cubiti paulum retrorsum, donec bracchium superius parallele.',
+        'Potentialiter surga, cubitus ne fixos.',
+      ],
+      tips: [
+        'Paulum antrorsum inclina ut pectum bias; erecto teneto ad tricipitis bias.',
+        'Incipientes: celler-diptus incipe, tum negativa (excentrica), tum pleni diptus.',
+      ],
+    },
+    nl: {
+      name: 'Dips',
+      summary:
+        'Verticaal drukken op parallelle stangen of ringen — borst, triceps en schouders in één beweging.',
+      instructions: [
+        'Zet jezelf op twee parallelle stangen, armen gestrekt, benen vrij.',
+        'Zet schouderbladen actief neer — hang niet in gewrichten.',
+        'Zak lichaam onder controle, ellebogen volgen licht terug, totdat bovenarm parallel.',
+        'Zet jezelf krachtdadig omhoog, vergrendel ellebogen niet.',
+      ],
+      tips: [
+        'Leun licht naar voren om borst bias; blijf rechtop voor triceps bias.',
+        'Beginners: begin met bench dips, dan negatieve dips (excentrisch alleen), dan volledige dips.',
+      ],
+    },
+    no: {
+      name: 'Dips',
+      summary:
+        'Vertikal pressing på parallelle stanger eller ringer – bryst, triceps og skuldre i ett.',
+      instructions: [
+        'Støtte på to parallelle stanger, armer strukket, ben frie.',
+        'Deprimer aktivt skulderbladene – ikke henge i leddene.',
+        'Senk kroppen med kontroll, albuer sporet litt bakover, til øvre arm er parallelt.',
+        'Press tilbake opp kraftig, ikke lås albuer.',
+      ],
+      tips: [
+        'Lut litt fremover for å bias bryst; forbli oppreist for å bias triceps.',
+        'Nybegynnere: start med bench dips, så negative dips (eksentrist bare), så fulle dips.',
+      ],
+    },
+    zh: {
+      name: '撑体',
+      summary: '在平行杆或环上竖直按压——胸部、三头肌和肩膀合一。',
+      instructions: [
+        '支撑在两个平行杆上，双臂伸展，腿部自由。',
+        '主动压低肩胛骨——不要在关节中悬垂。',
+        '控制地放低身体，肘部略微向后追踪，直到上臂平行。',
+        '有力地向上按压，不要锁定肘部。',
+      ],
+      tips: [
+        '略微向前倾以偏向胸部；保持竖直以偏向三头肌。',
+        '初学者：从凳上撑体开始，然后负重撑体（仅下降），然后完整撑体。',
       ],
     },
   },
@@ -1218,6 +5610,21 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
         'Schultern aktiv "in die Ohren" pressen — keine eingesunkene Position.',
       ],
     },
+    el: {
+      name: 'Handstand Hold',
+      summary:
+        'Στατικό handstand κατά τοίχου ή ελεύθερο — δύναμη ώμων, σταθερότητα και πλήρης σώμα τάση.',
+      instructions: [
+        'Κάθνει μπροστά σε ανοιχτό τοίχο, χέρια ευρύτητα ώμων, άκρα δακτύλων περίπου πλάτος χεριού από τοίχο.',
+        'Κλώτσησε ένα πόδι προς τα πάνω, το άλλο ακολουθεί — φτέρνες ελαφρώς κατά του τοίχου.',
+        'Κράτησε το σώμα ως ευθεία γραμμή — ισχία και στήθος στοίβαγμα πάνω από τα χέρια, γλουτοί σφιχτοί.',
+        'Κατέβασμα προς τα κάτω πριν οι ώμοι κουραστούν.',
+      ],
+      tips: [
+        'Αρχάριοι: δημιουργία pike push-ups και wall walks πρώτα, κατόπιν ξεκίνησε πρακτική του κρατήματος.',
+        'Σπρώξιμο των ώμων ενεργά «μέσα στα αυτιά» — χωρίς βυθισμένη θέση.',
+      ],
+    },
     en: {
       name: 'Handstand Hold',
       summary:
@@ -1231,6 +5638,110 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       tips: [
         'Beginners: build pike push-ups and wall walks first, then start practising the hold.',
         'Press the shoulders actively "into the ears" — no sunken position.',
+      ],
+    },
+    es: {
+      name: 'Sostenimiento en parada de manos',
+      summary:
+        'Parada de manos estática contra una pared o libre — fuerza de hombros, estabilidad y tensión de cuerpo completo.',
+      instructions: [
+        'Arrodíllate frente a una pared abierta, manos a la anchura de los hombros, puntas de los dedos aproximadamente a un ancho de mano de la pared.',
+        'Patea una pierna hacia arriba, la otra la sigue — talones descansan ligeramente contra la pared.',
+        'Sostén el cuerpo como una línea recta — caderas y pecho apilados sobre las manos, glúteos arriostrados.',
+        'Baja antes de que los hombros se fatiguen.',
+      ],
+      tips: [
+        'Principiantes: construye flexiones pike y caminatas de pared primero, luego comienza a practicar el sostenimiento.',
+        'Presiona los hombros activamente «hacia las orejas» — sin posición hundida.',
+      ],
+    },
+    fr: {
+      name: 'Tenue en appui facial',
+      summary:
+        "Équilibre statique sur les mains contre un mur ou libre — force d'épaule, stabilité et tension du corps complet.",
+      instructions: [
+        'Agenouillez-vous devant un mur ouvert, mains écartées à la largeur des épaules, bouts des doigts à environ une largeur de main du mur.',
+        "Poussez une jambe vers le haut, l'autre suit — les talons reposent légèrement contre le mur.",
+        'Maintenez le corps comme une ligne droite — hanches et poitrine empilées sur les mains, fessiers gainés.',
+        'Redescendez avant que les épaules ne fatiguent.',
+      ],
+      tips: [
+        "Débutants : construisez d'abord les pompes pike et les wall walks, puis commencez à pratiquer la tenue.",
+        'Poussez les épaules activement « dans les oreilles » — pas de position enfoncée.',
+      ],
+    },
+    it: {
+      name: 'Verticale',
+      summary:
+        'Verticale statica contro un muro o libera — forza della spalla, stabilità e tensione a corpo intero.',
+      instructions: [
+        'Inginocchiati di fronte a un muro aperto, mani a larghezza spalle, le dita a circa una larghezza di mano dal muro.',
+        "Calcia una gamba su, l'altra segue — i talloni riposano leggermente contro il muro.",
+        'Mantieni il corpo come una linea retta — fianchi e petto impilati sulle mani, glutei braced.',
+        'Abbassati prima che le spalle si affatichino.',
+      ],
+      tips: [
+        'Principianti: costruisci pike push-up e wall walk prima, poi inizia a praticare il mantenimento.',
+        "Premi le spalle attivamente 'nelle orecchie' — niente posizione sprofondata.",
+      ],
+    },
+    la: {
+      name: 'Statio Manuum',
+      summary:
+        'Statira inversio contra murum vel libera — vires humerorum, stabilitas et totius tensio.',
+      instructions: [
+        'Genuflecte ante murum apertum, manus latitudinis humerorum, digiti iuxta muri.',
+        'Unum crus supra, alterum sequere — talones muri leve levantur.',
+        'Corpus rectam lineam teneto — coxae et pectus super manus, nates firma.',
+        'Deorsum antequam humeri defatiguentur.',
+      ],
+      tips: [
+        'Incipientes: prius pike-pressionem et muri-ambulationes perfice, tum habere incipe.',
+        'Humeros active "in aures" preme — nullus sunken.',
+      ],
+    },
+    nl: {
+      name: 'Handstand Hold',
+      summary:
+        'Statische handstand tegen muur of vrij — schouderkracht, stabiliteit en volledige lichaamsspanning.',
+      instructions: [
+        'Kniel voor open muur, handen schouderbreedte, vingertoppen ongeveer handsbreedte van muur.',
+        'Schop één been omhoog, ander volgt — hielen licht tegen muur.',
+        'Houd lichaam als rechte lijn — heupen en borst gestapeld boven handen, billen gespannen.',
+        'Zak terug omlaag voordat schouders vermoeid raken.',
+      ],
+      tips: [
+        'Beginners: bouw first pike push-ups en wall walks, start dan met oefenen van handstand.',
+        'Zet schouders actief "in oren" — geen ingezonken positie.',
+      ],
+    },
+    no: {
+      name: 'Handstand Hold',
+      summary:
+        'Statisk handstand mot vegg eller fri – skulderstyrke, stabilitet og fullkropps spenning.',
+      instructions: [
+        'Knel foran åpen vegg, hender skulderbredde, fingertuppene rundt en håndbredde fra veggen.',
+        'Spark ett ben opp, det andre følger – hæler hviler lett mot veggen.',
+        'Hold kroppen som rett linje – hofter og bryst stablet over hendene, setemuskel brasset.',
+        'Senk ned før skulderne blir trette.',
+      ],
+      tips: [
+        'Nybegynnere: bygg pike push-ups og wall walks først, så start å øve holdet.',
+        'Press skulderne aktivt «inn i örene» – ingen sunket posisjon.',
+      ],
+    },
+    zh: {
+      name: '倒立保持',
+      summary: '靠墙或自由倒立——肩膀力量、稳定和全身张力。',
+      instructions: [
+        '在开放的墙前跪下，双手与肩宽，手指尖距离墙一手距离。',
+        '向上踢一条腿，另一条跟随——脚跟轻轻靠在墙上。',
+        '将身体保持为一条直线——髋部和胸部在双手上方堆叠，臀部收紧。',
+        '肩膀疲劳前放低。',
+      ],
+      tips: [
+        '初学者：首先建立毛毛虫推和墙走，然后开始练习保持。',
+        '主动将肩膀向上按压"进入耳朵"——没有下沉位置。',
       ],
     },
   },
@@ -1250,6 +5761,21 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
         'Nicht herunterspringen — die Belastung beim Landen ist hoch; immer absteigen.',
       ],
     },
+    el: {
+      name: 'Box Jumps',
+      summary:
+        'Άλμα σε ισχυρή ανύψωση — ταχύ-δύναμη, συντονισμός και αυτοπεποίθηση.',
+      instructions: [
+        'Όρθιος μπροστά σε σταθερό κουτί (ή πάγκο, χαμηλό σκαμνί).',
+        'Πτώση σε quarter-squat, χέρια ταλαντευόμενα προς τα πίσω.',
+        'Σπρώξιμο εκρηκτικά από το squat, χέρια ταλαντευόμενα μπροστά.',
+        'Προσγείωση μαλακή και στα δύο πόδια στο κουτί, γόνατα απορροφώντας — κατόπιν βήμα (μη άλμα) κάτω.',
+      ],
+      tips: [
+        'Επιλογή ύψος που μπορείς να ξεπεράσεις με ασφάλεια — τα περισσότερα άλματα κουτιού τραυματισμοί προέρχονται από πάνω ψηλά.',
+        'Βήμα κάτω μεταξύ επαναλήψεων — επαναλαμβάνοντας προσγειώσεις από ύψος είναι δύσκολο στα γόνατα και achilles.',
+      ],
+    },
     en: {
       name: 'Box Jumps',
       summary:
@@ -1263,6 +5789,110 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       tips: [
         'Pick a height you can clear safely — most box-jump injuries come from going too high.',
         'Step down between reps — landing repeatedly from height is hard on knees and Achilles.',
+      ],
+    },
+    es: {
+      name: 'Saltos a caja',
+      summary:
+        'Salta a una elevación robusta — fuerza-velocidad, coordinación y confianza.',
+      instructions: [
+        'Párate frente a una caja estable (o banco, taburete bajo).',
+        'Cae en una cuarto de sentadilla, brazos columpiándose hacia atrás.',
+        'Impulsa hacia arriba explosivamente desde la sentadilla, brazos columpiándose hacia adelante.',
+        'Aterriza suavemente con ambos pies en la caja, rodillas absorbiendo — luego baja (no saltes) hacia atrás.',
+      ],
+      tips: [
+        'Elige una altura que puedas despejar con seguridad — la mayoría de lesiones de saltos de caja provienen de altura excesiva.',
+        'Baja entre repeticiones — aterrizar repetidamente desde altura es difícil para rodillas y tendón de Aquiles.',
+      ],
+    },
+    fr: {
+      name: 'Saut en boîte',
+      summary:
+        'Saut sur une élévation solide — force vitesse, coordination et confiance.',
+      instructions: [
+        'Placez-vous devant une boîte stable (ou banc, petit tabouret).',
+        "Descendez en quart de squat, bras balançant vers l'arrière.",
+        "Poussez vers le haut de façon explosive du squat, bras balançant vers l'avant.",
+        'Atterrissez doucement sur les deux pieds sur la boîte, genoux absorbant — puis redescendez (ne sautez pas vers le bas).',
+      ],
+      tips: [
+        "Choisissez une hauteur que vous pouvez franchir en toute sécurité — la plupart des blessures en saut en boîte viennent d'une hauteur trop grande.",
+        'Redescendez entre les répétitions — les atterrissages répétés en hauteur sont durs pour les genoux et les talons.',
+      ],
+    },
+    it: {
+      name: 'Salto su box',
+      summary:
+        "Salto su un'elevazione robusta — speed-strength, coordinazione e fiducia.",
+      instructions: [
+        'Stai di fronte a un box stabile (o panca, sgabello basso).',
+        'Scendi in un quarto squat, braccia che oscillano indietro.',
+        "Spingi verso l'alto in modo esplosivo dal squat, braccia che oscillano in avanti.",
+        'Atterra dolcemente con entrambi i piedi sul box, ginocchia che assorbono — poi scendi (non saltare) giù.',
+      ],
+      tips: [
+        "Scegli un'altezza che riesci a superare in sicurezza — la maggior parte degli infortuni viene dall'andare troppo alto.",
+        'Scendi tra le ripetizioni — atterra ripetutamente da altezza è difficile per ginocchia e tendine di Achille.',
+      ],
+    },
+    la: {
+      name: 'Saltus Capsa',
+      summary:
+        'Saltus super elevationem — velocitas-vires, coordinatio et fiducia.',
+      instructions: [
+        'Ante capsam firmam (vel sellam, labellum) sta.',
+        'In genuflexionem quartam, brachiis retrorsum oscillantibus.',
+        'Ex fundamento explosivum impelle, bracchia antrorsum oscillantia.',
+        'Mollis ambabus pedibus super capsam, genua absorbentia — tum retrorsum (ne salta).',
+      ],
+      tips: [
+        'Altitudinem elige quam secure traicias — maior pars saltationes vulnera ex altitudine.',
+        'Retrorsum descende inter repetitiones — repetita cadens ex altitudine genua et Achillum gravia.',
+      ],
+    },
+    nl: {
+      name: 'Box Jumps',
+      summary:
+        'Sprong op stevig verheven oppervlak — snelheidskracht, coördinatie en zelfvertrouwen.',
+      instructions: [
+        'Sta voor stabiel kistje (of bank, laag trapje).',
+        'Zak in kniebeuging, armen zwaaiend terug.',
+        'Zet je explosief af van squat, armen zwaaiend naar voren.',
+        'Land zacht op beide voeten op kistje, knieën absorberen — stap dan terug (spring niet).',
+      ],
+      tips: [
+        'Kies hoogte die je veilig kunt springen — meeste kistjesprongblessures van te hoog gaan.',
+        'Stap terug tussen herhalingen — landing herhaaldelijk van hoogte is hard voor knieën en Achilles.',
+      ],
+    },
+    no: {
+      name: 'Box Jumps',
+      summary:
+        'Hopp opp på robust forhøyning – speed-styrke, koordinasjon og tillit.',
+      instructions: [
+        'Stå foran stabil boks (eller benk, lavt stol).',
+        'Dropp inn i quarter-squat, armer svingende bakover.',
+        'Kjør opp eksplosivt fra squat, armer svingende fremover.',
+        'Land mykt på begge føtter på boksen, knær absorberer – så steg (ikke hopp) ned.',
+      ],
+      tips: [
+        'Velg høyde du trygt kan fjerne – mesteparten av box-jump-skader kommer fra for høyt.',
+        'Steg ned mellom repetisjoner – landing gjentatte ganger fra høyde er tøft for knær og Achilles.',
+      ],
+    },
+    zh: {
+      name: '箱跳',
+      summary: '跳到坚固的抬高物体上——速度力量、协调和信心。',
+      instructions: [
+        '站在坚固的箱子前（或长凳、低凳子）。',
+        '降低到1/4深蹲，双臂摇摆向后。',
+        '从深蹲爆发式驱动，双臂向前摇摆。',
+        '软着地到箱子上的双脚，膝盖吸收——然后踏下（不要跳）。',
+      ],
+      tips: [
+        '选择你能安全清除的高度——大多数箱跳伤来自过高。',
+        '组间踏下——重复从高度着地对膝盖和跟腱很难。',
       ],
     },
   },
@@ -1282,6 +5912,21 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
         'Bei Knieschmerzen die Hüfte etwas höher halten — 90° muss nicht erzwungen werden.',
       ],
     },
+    el: {
+      name: 'Wall Sit',
+      summary:
+        'Ισομετρικό squat με την πλάτη στον τοίχο — καθαρή κοπή τετρακέρων.',
+      instructions: [
+        'Όρθιο με την πλάτη επίπεδη κατά τοίχου, πόδια περίπου ευρύτητα ισχίου, ένα βήμα μπροστά.',
+        'Ολίσθησε κάτω τον τοίχο έως τα γόνατα να λυγίζουν σε 90°.',
+        'Μηροί παράλληλα προς το έδαφος, γόνατα στοίβαγμα πάνω από τους αστραγάλους.',
+        'Κράτησε τη θέση — πίεση ομοιόμορφη και στις δύο φτέρνες, κοιλιακή ελαφρώς ενεργή.',
+      ],
+      tips: [
+        'Αρχάριοι: 3 × 20-30 δ.· προχωρημένοι 3 × 60-90 δ..',
+        'Αν τα γόνατα παραπονιέται, κράτησε τα ισχία ελαφρώς ψηλότερα — 90° δεν είναι υποχρεωτικό.',
+      ],
+    },
     en: {
       name: 'Wall Sit',
       summary: 'Isometric squat with the back on a wall — pure quad burn.',
@@ -1294,6 +5939,107 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       tips: [
         'Beginners: 3 × 20-30 s; advanced 3 × 60-90 s.',
         'If knees complain, keep the hips slightly higher — 90° is not mandatory.',
+      ],
+    },
+    es: {
+      name: 'Sentadilla contra la pared',
+      summary:
+        'Sentadilla isométrica con la espalda contra la pared — quemazón pura de cuádriceps.',
+      instructions: [
+        'Párate con la espalda plana contra una pared, pies aproximadamente a la anchura de la cadera, a un paso hacia adelante.',
+        'Deslízate por la pared hasta que las rodillas estén dobladas a 90°.',
+        'Muslos paralelos al suelo, rodillas alineadas sobre los tobillos.',
+        'Mantén la posición — presión uniforme en ambos talones, abdominales ligeramente activados.',
+      ],
+      tips: [
+        'Principiantes: 3 × 20-30 s; avanzados 3 × 60-90 s.',
+        'Si las rodillas se quejan, mantén las caderas ligeramente más altas — 90° no es obligatorio.',
+      ],
+    },
+    fr: {
+      name: 'Appui-fessier contre le mur',
+      summary:
+        'Squat isométrique avec le dos sur un mur — pure brûlure des quadriceps.',
+      instructions: [
+        'Placez-vous le dos plat contre un mur, pieds écartés à la largeur des hanches, une foulée en avant.',
+        "Glissez vers le bas du mur jusqu'à ce que les genoux soient fléchis à 90°.",
+        'Cuisses parallèles au sol, genoux empilés sur les chevilles.',
+        'Maintenez la position — pression égale sur les deux talons, abdos légèrement engagés.',
+      ],
+      tips: [
+        'Débutants : 3 × 20-30 s ; avancés 3 × 60-90 s.',
+        "Si les genoux se plaignent, gardez les hanches légèrement plus hautes — 90° n'est pas obligatoire.",
+      ],
+    },
+    it: {
+      name: 'Wall sit',
+      summary:
+        'Squat isometrico con la schiena su un muro — puro bruciore dei quadricipiti.',
+      instructions: [
+        "Stai con la schiena piatta contro un muro, piedi a larghezza dell'anca, una falcata in avanti.",
+        'Scivola verso il basso lungo il muro finché le ginocchia non sono piegate a 90°.',
+        'Coscie parallele al pavimento, ginocchia impilate sulle caviglie.',
+        'Mantieni la posizione — pressione uniforme su entrambi i talloni, addominali leggermente impegnati.',
+      ],
+      tips: [
+        'Principianti: 3 × 20-30 s; avanzati 3 × 60-90 s.',
+        'Se le ginocchia protestano, mantieni i fianchi leggermente più alti — 90° non è obbligatorio.',
+      ],
+    },
+    la: {
+      name: 'Sessio Muri',
+      summary: 'Genuflexio isometrica cum dorso ad murum — purus quad ardor.',
+      instructions: [
+        'Posterium murum planum cum standu, pedes latitudinis coxae, passus antrorsum.',
+        'Deorsum murum donec genua 90° flexta.',
+        'Femuralia murum parallela, genua super talos.',
+        'Positionem teneto — pressura uniformis ambo calcanei, musculos abdominis leve.',
+      ],
+      tips: [
+        'Incipientes: 3 × 20-30 s; periti 3 × 60-90 s.',
+        'Genua molesta? Coxas paulum altiores teneto — 90° non mandatorium.',
+      ],
+    },
+    nl: {
+      name: 'Wall Sit',
+      summary: 'Isometrische squat met rug tegen muur — zuivere quad brand.',
+      instructions: [
+        'Sta met rug plat tegen muur, voeten ongeveer heupsbreed, één schrijding naar voren.',
+        'Zak de muur af totdat knieën naar 90° buigen.',
+        'Dijen parallel aan vloer, knieën gestapeld boven enkels.',
+        'Houd positie — druk gelijkmatig op beide hakken, buik licht aangespannen.',
+      ],
+      tips: [
+        'Beginners: 3 × 20-30 s; gevorderden 3 × 60-90 s.',
+        'Als knieën klagen, houd heupen licht hoger — 90° verplicht niet.',
+      ],
+    },
+    no: {
+      name: 'Wall Sit',
+      summary: 'Isometrisk squat med ryggen på vegg – ren quad-brenning.',
+      instructions: [
+        'Stå med flat rygg mot vegg, føtter rundt hoftebredde, ett skritt fremover.',
+        'Skyv ned veggen til knærne bøyer til 90°.',
+        'Lår parallelt til gulvet, knær stablet over ankler.',
+        'Hold posisjonen – trykk jevnt på begge hælene, abdomen lett engasjert.',
+      ],
+      tips: [
+        'Nybegynnere: 3 × 20-30 s; avansert 3 × 60-90 s.',
+        'Hvis knærne klager, hold hofter litt høyere – 90° er ikke obligatorisk.',
+      ],
+    },
+    zh: {
+      name: '靠墙深蹲',
+      summary: '背部贴墙的静态深蹲——纯股四头肌烧灼。',
+      instructions: [
+        '背部贴墙站立，脚距离约髋宽，向前跨一步。',
+        '沿墙滑下，直到膝盖弯曲到90°。',
+        '大腿平行于地面，膝盖在脚踝正上方。',
+        '保持位置——压力均匀在两个足跟上，腹肌轻微参与。',
+      ],
+      tips: [
+        '初学者：3×20-30秒；进阶3×60-90秒。',
+        '如果膝盖有意见，保持髋部略高——90°不是强制的。',
       ],
     },
   },
