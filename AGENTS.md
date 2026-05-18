@@ -13,6 +13,12 @@ Angular 21 / Nx monorepo for tracking pushup statistics with Firebase backend.
 - **Never commit secrets or user-identifiable data** (API keys, service account JSON, database UIDs, user email addresses) to the repository. Pass them as CLI arguments, environment variables, or Firebase Secrets instead.
 - **Pre-commit reformats files:** Husky + lint-staged run `eslint --fix` + `prettier --write` on every commit. Your staged files may differ from what you wrote. Re-read the file before further edits after a commit.
 
+## Pull Requests
+
+- **Issue work → feature branch + PR.** When implementing a tracked issue (e.g. `claude/implement-NNN-*` branches), open a PR proactively once the change is pushed and CI-ready, without waiting for an explicit ask. Link the issue with `Closes #ID`.
+- **Ad-hoc trunk changes still go straight to `main`.** Only open a PR when there is an issue, when the change is risky/large, or when the user requests one.
+- **After opening the PR, subscribe to its activity** via `subscribe_pr_activity` so review comments and CI failures are addressed in the same session without prompting.
+
 ## Development Flow (Project Board)
 
 - Create/triage issue → add to **PUS Roadmap** project → Status = **Todo**.

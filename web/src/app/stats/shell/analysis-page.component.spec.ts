@@ -23,7 +23,11 @@ import {
   PLATFORM_ID,
   signal,
 } from '@angular/core';
-import { ExerciseEntry, RangeModes } from '@pu-stats/models';
+import {
+  ExerciseDefinition,
+  ExerciseEntry,
+  RangeModes,
+} from '@pu-stats/models';
 
 @Component({
   selector: 'app-filter-bar',
@@ -88,10 +92,16 @@ describe('AnalysisPageComponent', () => {
   // Mutable mirror of the LiveDataStore so tests can seed exercise
   // entries that the analysis store reads via `unifiedRows`.
   const liveExerciseEntries = signal<ExerciseEntry[]>([]);
+  // Mutable mirror of user-defined exercise definitions. The analysis
+  // store passes these to `unifiedEntryCategoryId` when bucketing rows
+  // into per-category tabs, so seeding them here lets a test exercise
+  // the custom-id branch that the standard catalog cannot reach.
+  const liveExerciseDefinitions = signal<ExerciseDefinition[]>([]);
   const liveMock = {
     connected: signal(true),
     entries: signal([] as never[]),
     exerciseEntries: liveExerciseEntries,
+    exerciseDefinitions: liveExerciseDefinitions,
     updateTick: signal(0),
   };
 
@@ -175,6 +185,7 @@ describe('AnalysisPageComponent', () => {
     vitest.setSystemTime(new Date(2026, 1, 15, 12));
 
     liveExerciseEntries.set([]);
+    liveExerciseDefinitions.set([]);
     await TestBed.configureTestingModule({
       imports: [AnalysisPageComponent],
       providers: [
@@ -908,6 +919,106 @@ describe('AnalysisPageComponent', () => {
       ).toBe(true);
     });
 
+    describe('custom-exercise resolver', () => {
+      // `mobility` is in the picker but the parent `beforeEach` seeds
+      // no mobility rows, so it isolates the contribution of the
+      // custom definition from the catalog rows already in scope.
+      const customDef: ExerciseDefinition = {
+        id: 'custom.foam-roll',
+        categoryId: 'mobility',
+        ownerId: 'u1',
+        measurement: 'reps',
+        min: 1,
+        max: 500,
+        unit: 'reps',
+        customName: 'Foam Rolling',
+      };
+
+      beforeEach(() => {
+        liveExerciseEntries.update((entries) => [
+          ...entries,
+          {
+            _id: 'ex-custom',
+            userId: 'u1',
+            exerciseId: 'custom.foam-roll',
+            timestamp: '2026-02-14T08:00:00.000Z',
+            reps: 50,
+            source: 'web',
+          } as ExerciseEntry,
+        ]);
+      });
+
+      it('drops custom-exercise rows from per-category tabs without a resolver', () => {
+        const { store } = fixture.componentInstance;
+        store.setActiveView('mobility');
+        expect(
+          store
+            .viewFilteredRows()
+            .some(
+              (r) =>
+                r.kind === 'exercise' && r.exerciseId === 'custom.foam-roll'
+            )
+        ).toBe(false);
+      });
+
+      it('routes custom-exercise rows into the user-defined category when the definition is exposed', () => {
+        liveExerciseDefinitions.set([customDef]);
+        const { store } = fixture.componentInstance;
+        store.setActiveView('mobility');
+        expect(
+          store
+            .viewFilteredRows()
+            .some(
+              (r) =>
+                r.kind === 'exercise' && r.exerciseId === 'custom.foam-roll'
+            )
+        ).toBe(true);
+      });
+
+      it('feeds custom-exercise reps into categorySummaries via the resolver', () => {
+        liveExerciseDefinitions.set([customDef]);
+        const { store } = fixture.componentInstance;
+        const mobility = store
+          .categorySummaries()
+          .find((s) => s.categoryId === 'mobility');
+        expect(mobility?.entries).toBe(1);
+        expect(mobility?.volume).toMatchObject({
+          kind: 'reps',
+          totalReps: 50,
+        });
+      });
+
+      it('extends the per-category week trend to include custom-exercise reps', () => {
+        liveExerciseDefinitions.set([customDef]);
+        const { store } = fixture.componentInstance;
+        store.setActiveView('mobility');
+        const week = store.weekTrend().find((w) => w.label === '2026-W07');
+        expect(week?.total).toBe(50);
+      });
+
+      it('lets the catalog win on id collision with a user-defined definition', () => {
+        // The standard catalog maps `legs.squats` to `squat`. A
+        // user-defined definition reusing the id with a different
+        // category must not steal the row.
+        liveExerciseDefinitions.set([
+          {
+            ...customDef,
+            id: 'legs.squats',
+            categoryId: 'mobility',
+          },
+        ]);
+        const { store } = fixture.componentInstance;
+        store.setActiveView('mobility');
+        expect(
+          store
+            .viewFilteredRows()
+            .some(
+              (r) => r.kind === 'exercise' && r.exerciseId === 'legs.squats'
+            )
+        ).toBe(false);
+      });
+    });
+
     it('typeBreakdownDisplay localises kind-mode ids when activeView scopes to a non-pushup category', () => {
       // Regression for codex P2: setActiveView('core') without an
       // explicit kinds filter puts the store in kind-mode and emits
@@ -1091,6 +1202,7 @@ describe('AnalysisPageComponent empty-state CTA gating', () => {
             connected: signal(true),
             entries: signal([]),
             exerciseEntries: signal([]),
+            exerciseDefinitions: signal([]),
             updateTick: signal(0),
           },
         },

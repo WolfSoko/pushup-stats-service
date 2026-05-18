@@ -10,7 +10,11 @@ import {
   query,
   where,
 } from '@angular/fire/firestore';
-import { ExerciseEntry, PushupRecord } from '@pu-stats/models';
+import {
+  ExerciseDefinition,
+  ExerciseEntry,
+  PushupRecord,
+} from '@pu-stats/models';
 import {
   patchState,
   signalStore,
@@ -27,6 +31,14 @@ type LiveDataState = {
    * every existing consumer; new code reads `exerciseEntries`.
    */
   exerciseEntries: ExerciseEntry[];
+  /**
+   * User-defined exercise definitions. Currently always empty: the
+   * Firestore collection is not yet provisioned (rules forbid client
+   * writes), so the signal is plumbing for the eventual storage layer.
+   * The shape is fixed now so category-resolution chains can rely on
+   * `id`/`categoryId` without a follow-up type change.
+   */
+  exerciseDefinitions: ExerciseDefinition[];
   connected: boolean;
   updateTick: number;
 };
@@ -36,6 +48,7 @@ export const LiveDataStore = signalStore(
   withState<LiveDataState>({
     entries: [],
     exerciseEntries: [],
+    exerciseDefinitions: [],
     connected: false,
     updateTick: 0,
   }),
@@ -64,6 +77,7 @@ export const LiveDataStore = signalStore(
             connected: false,
             entries: [],
             exerciseEntries: [],
+            exerciseDefinitions: [],
             updateTick: 0,
           });
           return;

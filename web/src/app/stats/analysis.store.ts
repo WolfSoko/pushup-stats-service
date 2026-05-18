@@ -18,7 +18,9 @@ import {
   displayPushupType,
   exerciseEntryToUnified,
   type ExerciseCategoryId,
+  type ExerciseDefinition,
   EXERCISE_CATEGORIES,
+  findExerciseDefinition,
   inferRangeMode,
   type MeasurementType,
   PushupRecord,
@@ -682,17 +684,33 @@ export const AnalysisStore = signalStore(
       });
     });
 
-    // Entries whose exerciseId is absent from the standard catalog
-    // (e.g. a removed-and-never-replaced custom user exercise) drop
-    // out of every per-category tab — `unifiedEntryCategoryId` returns
-    // null and no tab matches. That's intentional: the overview tab
-    // still surfaces their volume, and resurrecting them under an
-    // "Andere" bucket would mask the catalog-mismatch in normal use.
+    // Resolver chain for `unifiedEntryCategoryId`: the standard catalog
+    // first, then the user's custom definitions from `LiveDataStore`.
+    // Custom definitions are keyed by id so a sparse list is fine for
+    // typical user-defined counts (well under a hundred per user).
+    //
+    // Entries whose `exerciseId` is absent from both layers still drop
+    // out of every per-category tab — the resolver returns `null` and
+    // no tab matches. That's intentional: the overview tab continues
+    // to surface their volume, and resurrecting them under an "Andere"
+    // bucket would mask catalog/definition drift.
+    const resolveDefinition = computed<
+      (id: string) => ExerciseDefinition | null
+    >(() => {
+      const userDefs = store._live.exerciseDefinitions();
+      if (!userDefs.length) return findExerciseDefinition;
+      const byId = new Map<string, ExerciseDefinition>(
+        userDefs.map((d) => [d.id, d])
+      );
+      return (id: string) => findExerciseDefinition(id) ?? byId.get(id) ?? null;
+    });
+
     const viewFilteredRows = computed<UnifiedEntry[]>(() => {
       const view = store.activeView();
       if (view === 'overview') return unifiedRows();
+      const resolver = resolveDefinition();
       return unifiedRows().filter(
-        (row) => unifiedEntryCategoryId(row) === view
+        (row) => unifiedEntryCategoryId(row, resolver) === view
       );
     });
 
@@ -915,9 +933,10 @@ export const AnalysisStore = signalStore(
     const categorySummaries = computed<CategorySummary[]>(() => {
       const todayKey = store.lastDayKey();
       const rows = unifiedRows();
+      const resolver = resolveDefinition();
       const byCategory = new Map<ExerciseCategoryId, UnifiedEntry[]>();
       for (const row of rows) {
-        const cat = unifiedEntryCategoryId(row);
+        const cat = unifiedEntryCategoryId(row, resolver);
         if (!cat) continue;
         const bucket = byCategory.get(cat);
         if (bucket) bucket.push(row);
@@ -1000,7 +1019,10 @@ export const AnalysisStore = signalStore(
     const applyViewFilter = (rows: UnifiedEntry[]): UnifiedEntry[] => {
       const view = store.activeView();
       if (view === 'overview') return rows;
-      return rows.filter((row) => unifiedEntryCategoryId(row) === view);
+      const resolver = resolveDefinition();
+      return rows.filter(
+        (row) => unifiedEntryCategoryId(row, resolver) === view
+      );
     };
 
     const weekTrendRows = computed<UnifiedEntry[]>(() =>
