@@ -184,20 +184,28 @@ describe('generate-sitemap', () => {
   });
 
   describe('buildExerciseWikiRoutes', () => {
-    it('emits a route per slug under /wiki/uebungen', () => {
-      const routes = buildExerciseWikiRoutes(['plank', 'squats']);
-      expect(routes).toEqual([
-        {
-          path: '/wiki/uebungen/plank',
-          changefreq: 'monthly',
-          priority: '0.6',
-        },
-        {
-          path: '/wiki/uebungen/squats',
-          changefreq: 'monthly',
-          priority: '0.6',
-        },
-      ]);
+    const { LOCALES } = require('./generate-sitemap');
+
+    it('emits one route per (slug × locale) under /wiki/uebungen', () => {
+      const routes = buildExerciseWikiRoutes(['plank']);
+      expect(routes).toHaveLength(LOCALES.length);
+      for (const lang of LOCALES) {
+        expect(routes).toContainEqual(
+          expect.objectContaining({
+            path: '/wiki/uebungen/plank',
+            locale: lang,
+            changefreq: 'monthly',
+            priority: '0.6',
+          })
+        );
+      }
+    });
+
+    it('attaches a full hreflang alternates set to every variant', () => {
+      const [route] = buildExerciseWikiRoutes(['plank']);
+      expect(route.alternates).toEqual(
+        LOCALES.map((lang) => ({ lang, path: '/wiki/uebungen/plank' }))
+      );
     });
   });
 
@@ -236,20 +244,36 @@ describe('generate-sitemap', () => {
   });
 
   describe('buildTrainingPlanRoutes', () => {
-    it('emits one /training-plans/<slug> route per plan with bilingual alternates', () => {
+    const { LOCALES } = require('./generate-sitemap');
+
+    it('emits one route per (plan × locale)', () => {
       const routes = buildTrainingPlanRoutes(['recruit-6w', 'challenge-30d']);
-      expect(routes).toEqual([
-        {
-          path: '/training-plans/recruit-6w',
-          changefreq: 'monthly',
-          priority: '0.8',
-        },
-        {
-          path: '/training-plans/challenge-30d',
-          changefreq: 'monthly',
-          priority: '0.8',
-        },
-      ]);
+      expect(routes).toHaveLength(LOCALES.length * 2);
+      for (const lang of LOCALES) {
+        expect(routes).toContainEqual(
+          expect.objectContaining({
+            path: '/training-plans/recruit-6w',
+            locale: lang,
+            changefreq: 'monthly',
+            priority: '0.8',
+          })
+        );
+        expect(routes).toContainEqual(
+          expect.objectContaining({
+            path: '/training-plans/challenge-30d',
+            locale: lang,
+            changefreq: 'monthly',
+            priority: '0.8',
+          })
+        );
+      }
+    });
+
+    it('attaches a full hreflang alternates set to every variant', () => {
+      const [route] = buildTrainingPlanRoutes(['recruit-6w']);
+      expect(route.alternates).toEqual(
+        LOCALES.map((lang) => ({ lang, path: '/training-plans/recruit-6w' }))
+      );
     });
   });
 
@@ -601,19 +625,38 @@ describe('generate-sitemap', () => {
       expect(xml).not.toContain('/en/register');
     });
 
-    it('emits /training-plans list and per-plan detail entries with bilingual alternates', () => {
+    it('emits /training-plans list and per-(plan × locale) detail entries with full hreflang alternates', () => {
+      const { LOCALES } = require('./generate-sitemap');
       const xml = generateSitemap([], ['recruit-6w', 'challenge-30d']);
       expect(xml).toContain(
         '<loc>https://pushup-stats.com/de/training-plans</loc>'
       );
-      expect(xml).toContain(
-        '<loc>https://pushup-stats.com/de/training-plans/recruit-6w</loc>'
-      );
-      expect(xml).toContain(
-        '<loc>https://pushup-stats.com/de/training-plans/challenge-30d</loc>'
-      );
+      for (const lang of LOCALES) {
+        expect(xml).toContain(
+          `<loc>https://pushup-stats.com/${lang}/training-plans/recruit-6w</loc>`
+        );
+        expect(xml).toContain(
+          `<loc>https://pushup-stats.com/${lang}/training-plans/challenge-30d</loc>`
+        );
+      }
       expect(xml).toContain(
         '<xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en/training-plans/recruit-6w"/>'
+      );
+      expect(xml).toContain(
+        '<xhtml:link rel="alternate" hreflang="no" href="https://pushup-stats.com/no/training-plans/recruit-6w"/>'
+      );
+    });
+
+    it('emits per-(slug × locale) exercise-wiki detail entries', () => {
+      const { LOCALES } = require('./generate-sitemap');
+      const xml = generateSitemap([], [], [], ['plank']);
+      for (const lang of LOCALES) {
+        expect(xml).toContain(
+          `<loc>https://pushup-stats.com/${lang}/wiki/uebungen/plank</loc>`
+        );
+      }
+      expect(xml).toContain(
+        '<xhtml:link rel="alternate" hreflang="no" href="https://pushup-stats.com/no/wiki/uebungen/plank"/>'
       );
     });
 
