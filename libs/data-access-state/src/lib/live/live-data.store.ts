@@ -10,7 +10,11 @@ import {
   query,
   where,
 } from '@angular/fire/firestore';
-import { ExerciseEntry, PushupRecord } from '@pu-stats/models';
+import {
+  ExerciseDefinition,
+  ExerciseEntry,
+  PushupRecord,
+} from '@pu-stats/models';
 import {
   patchState,
   signalStore,
@@ -27,6 +31,14 @@ type LiveDataState = {
    * every existing consumer; new code reads `exerciseEntries`.
    */
   exerciseEntries: ExerciseEntry[];
+  /**
+   * User-defined exercise definitions — exposed as an empty signal
+   * until the storage layer (Firestore collection + rules + UI) lands.
+   * Consumers like the analysis page already thread this through
+   * `unifiedEntryCategoryId` so that a custom exercise's category
+   * resolves the moment definitions start flowing in. See issue #319.
+   */
+  exerciseDefinitions: ExerciseDefinition[];
   connected: boolean;
   updateTick: number;
 };
@@ -36,6 +48,7 @@ export const LiveDataStore = signalStore(
   withState<LiveDataState>({
     entries: [],
     exerciseEntries: [],
+    exerciseDefinitions: [],
     connected: false,
     updateTick: 0,
   }),
@@ -64,6 +77,7 @@ export const LiveDataStore = signalStore(
             connected: false,
             entries: [],
             exerciseEntries: [],
+            exerciseDefinitions: [],
             updateTick: 0,
           });
           return;
