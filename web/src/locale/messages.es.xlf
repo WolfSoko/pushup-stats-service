@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<xliff version="2.0" xmlns="urn:oasis:names:tc:xliff:document:2.0" srcLang="de" trgLang="es">
+<?xml version='1.0' encoding='utf-8'?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="de" trgLang="es">
   <file id="ngi18n" original="ng.template">
     <unit id="consent.banner.aria">
       <notes>
@@ -860,8 +860,8 @@
         <note category="location">libs/quick-add/src/lib/quick-add-fab.component.html:45,46</note>
       </notes>
       <segment state="translated">
-        <source>+<ph id="0" equiv="INTERPOLATION" disp="{{ item.value }}"/> bis zum Ziel</source>
-        <target>+<ph id="0" equiv="INTERPOLATION" disp="{{ item.value }}"/> al destino</target>
+        <source>+<ph id="0" equiv="INTERPOLATION" disp="{{ item.value }}" /> bis zum Ziel</source>
+        <target>+<ph id="0" equiv="INTERPOLATION" disp="{{ item.value }}" /> al destino</target>
       </segment>
     </unit>
     <unit id="quickAdd.fab.quickAddReps">
@@ -869,8 +869,8 @@
         <note category="location">libs/quick-add/src/lib/quick-add-fab.component.html:59,60</note>
       </notes>
       <segment state="translated">
-        <source>+<ph id="0" equiv="INTERPOLATION" disp="{{ item.value }}"/> Reps</source>
-        <target>+<ph id="0" equiv="INTERPOLATION" disp="{{ item.value }}"/> Representantes</target>
+        <source>+<ph id="0" equiv="INTERPOLATION" disp="{{ item.value }}" /> Reps</source>
+        <target>+<ph id="0" equiv="INTERPOLATION" disp="{{ item.value }}" /> repeticiones</target>
       </segment>
     </unit>
     <unit id="quickAdd.fab.open">
@@ -914,8 +914,8 @@
         <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:71</note>
       </notes>
       <segment state="translated">
-        <source><ph id="0" equiv="REPS" disp="reps"/> Liegestütze hinzufügen</source>
-        <target><ph id="0" equiv="REPS" disp="reps"/> Añadir flexiones</target>
+        <source><ph id="0" equiv="REPS" disp="reps" /> Liegestütze hinzufügen</source>
+        <target><ph id="0" equiv="REPS" disp="reps" /> Añadir flexiones</target>
       </segment>
     </unit>
     <unit id="quickAdd.fab.fillToGoalAria">
@@ -923,8 +923,8 @@
         <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:75</note>
       </notes>
       <segment state="translated">
-        <source><ph id="0" equiv="GAP" disp="gap"/> Liegestütze bis zum Tagesziel hinzufügen</source>
-        <target><ph id="0" equiv="GAP" disp="gap"/> Añadir flexiones hasta el objetivo diario</target>
+        <source><ph id="0" equiv="GAP" disp="gap" /> Liegestütze bis zum Tagesziel hinzufügen</source>
+        <target><ph id="0" equiv="GAP" disp="gap" /> Añadir flexiones hasta el objetivo diario</target>
       </segment>
     </unit>
     <unit id="reminder.quickLog.success">
@@ -932,8 +932,8 @@
         <note category="location">libs/reminders/src/lib/push/quick-log-listener.service.ts:70</note>
       </notes>
       <segment state="translated">
-        <source><ph id="0" equiv="reps" disp="reps"/> Push-ups eingetragen ✓</source>
-        <target><ph id="0" equiv="reps" disp="reps"/> flexiones ingresadas ✓</target>
+        <source><ph id="0" equiv="reps" disp="reps" /> Push-ups eingetragen ✓</source>
+        <target><ph id="0" equiv="reps" disp="reps" /> flexiones ingresadas ✓</target>
       </segment>
     </unit>
     <unit id="snackbar.close">
@@ -994,8 +994,8 @@
         <note category="location">web/src/app/admin/admin-page.component.ts:97,100</note>
       </notes>
       <segment state="translated">
-        <source> Löscht anonyme Benutzer ohne Pushups in den letzten <ph id="0" equiv="INTERPOLATION" disp="{{ inactiveDays() }}"/> Tagen. </source>
-        <target> Elimina usuarios anónimos sin flexiones en los últimos días <ph id="0" equiv="INTERPOLATION" disp="{{ inactiveDays() }}"/>. </target>
+        <source> Löscht anonyme Benutzer ohne Pushups in den letzten <ph id="0" equiv="INTERPOLATION" disp="{{ inactiveDays() }}" /> Tagen. </source>
+        <target> Elimina usuarios anónimos sin flexiones en los últimos días <ph id="0" equiv="INTERPOLATION" disp="{{ inactiveDays() }}" />. </target>
       </segment>
     </unit>
     <unit id="admin.bulk.button">
@@ -1228,8 +1228,8 @@
         <note category="location">web/src/app/admin/admin-page.component.ts:770</note>
       </notes>
       <segment state="translated">
-        <source>Details öffnen für <ph id="0" equiv="identifier" disp="identifier"/></source>
-        <target>Abrir detalles para <ph id="0" equiv="identifier" disp="identifier"/></target>
+        <source>Details öffnen für <ph id="0" equiv="identifier" disp="identifier" /></source>
+        <target>Abrir detalles para <ph id="0" equiv="identifier" disp="identifier" /></target>
       </segment>
     </unit>
     <unit id="admin.feedback.delete.title">
@@ -1968,8 +1968,8 @@
         <note category="location">web/src/app/blog/blog-article.component.ts:60,61</note>
       </notes>
       <segment state="translated">
-        <source><ph id="0" equiv="INTERPOLATION" disp="{{ readingTimeMinutes }}"/> Min. Lesezeit</source>
-        <target><ph id="0" equiv="INTERPOLATION" disp="{{ readingTimeMinutes }}"/> Mín. tiempo de lectura</target>
+        <source><ph id="0" equiv="INTERPOLATION" disp="{{ readingTimeMinutes }}" /> Min. Lesezeit</source>
+        <target><ph id="0" equiv="INTERPOLATION" disp="{{ readingTimeMinutes }}" /> Mín. tiempo de lectura</target>
       </segment>
     </unit>
     <unit id="blog.article.updated">
@@ -2222,8 +2222,8 @@
         <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:74,76</note>
       </notes>
       <segment state="translated">
-        <source> Deine Position: #<ph id="0" equiv="INTERPOLATION" disp="{{ me.rank }}"/> · <ph id="1" equiv="INTERPOLATION_1" disp="{{ me.reps }}"/> Reps </source>
-        <target> Tu puesto: #<ph id="0" equiv="INTERPOLATION" disp="{{ me.rank }}"/> · <ph id="1" equiv="INTERPOLATION_1" disp="{{ me.reps }}"/> Representantes </target>
+        <source> Deine Position: #<ph id="0" equiv="INTERPOLATION" disp="{{ me.rank }}" /> · <ph id="1" equiv="INTERPOLATION_1" disp="{{ me.reps }}" /> Reps </source>
+        <target> Tu puesto: #<ph id="0" equiv="INTERPOLATION" disp="{{ me.rank }}" /> · <ph id="1" equiv="INTERPOLATION_1" disp="{{ me.reps }}" /> repeticiones </target>
       </segment>
     </unit>
     <unit id="reminder.feature.eyebrow">
@@ -3252,8 +3252,8 @@
         <note category="location">web/src/app/public-profile/public-profile-page.component.ts:129</note>
       </notes>
       <segment state="translated">
-        <source><ph id="0" equiv="name" disp="profile.displayName"/> hat <ph id="1" equiv="total" disp="profile.total"/> Liegestütze auf Pushup Tracker geschafft 💪 Schau&apos;s dir an:</source>
-        <target><ph id="0" equiv="name" disp="profile.displayName"/> hizo flexiones <ph id="1" equiv="total" disp="profile.total"/> en Pushup Tracker 💪 Compruébalo:</target>
+        <source><ph id="0" equiv="name" disp="profile.displayName" /> hat <ph id="1" equiv="total" disp="profile.total" /> Liegestütze auf Pushup Tracker geschafft 💪 Schau's dir an:</source>
+        <target><ph id="0" equiv="name" disp="profile.displayName" /> hizo flexiones <ph id="1" equiv="total" disp="profile.total" /> en Pushup Tracker 💪 Compruébalo:</target>
       </segment>
     </unit>
     <unit id="publicProfile.share.title">
@@ -3288,8 +3288,8 @@
         <note category="location">web/src/app/public-profile/public-profile-page.component.ts:192</note>
       </notes>
       <segment state="translated">
-        <source><ph id="0" equiv="name" disp="profile.displayName"/> – <ph id="1" equiv="total" disp="profile.total"/> Liegestütze · Streak <ph id="2" equiv="streak" disp="profile.currentStreak"/> · Pushup Tracker</source>
-        <target><ph id="0" equiv="name" disp="profile.displayName"/> – <ph id="1" equiv="total" disp="profile.total"/> Flexiones · Racha <ph id="2" equiv="streak" disp="profile.currentStreak"/> · Pushup Tracker</target>
+        <source><ph id="0" equiv="name" disp="profile.displayName" /> – <ph id="1" equiv="total" disp="profile.total" /> Liegestütze · Streak <ph id="2" equiv="streak" disp="profile.currentStreak" /> · Pushup Tracker</source>
+        <target><ph id="0" equiv="name" disp="profile.displayName" /> – <ph id="1" equiv="total" disp="profile.total" /> Flexiones · Racha <ph id="2" equiv="streak" disp="profile.currentStreak" /> · Pushup Tracker</target>
       </segment>
     </unit>
     <unit id="publicProfile.seo.description">
@@ -3297,8 +3297,8 @@
         <note category="location">web/src/app/public-profile/public-profile-page.component.ts:193</note>
       </notes>
       <segment state="translated">
-        <source><ph id="0" equiv="name" disp="profile.displayName"/> hat <ph id="1" equiv="total" disp="profile.total"/> Liegestütze in <ph id="2" equiv="days" disp="profile.totalDays"/> aktiven Tagen geschafft – aktuelle Streak: <ph id="3" equiv="streak" disp="profile.currentStreak"/> Tage. Tracke selbst kostenlos auf pushup-stats.com.</source>
-        <target><ph id="0" equiv="name" disp="profile.displayName"/> ha completado flexiones <ph id="1" equiv="total" disp="profile.total"/> en días activos <ph id="2" equiv="days" disp="profile.totalDays"/> - racha actual: días <ph id="3" equiv="streak" disp="profile.currentStreak"/>. Realice un seguimiento gratuito en pushup-stats.com.</target>
+        <source><ph id="0" equiv="name" disp="profile.displayName" /> hat <ph id="1" equiv="total" disp="profile.total" /> Liegestütze in <ph id="2" equiv="days" disp="profile.totalDays" /> aktiven Tagen geschafft – aktuelle Streak: <ph id="3" equiv="streak" disp="profile.currentStreak" /> Tage. Tracke selbst kostenlos auf pushup-stats.com.</source>
+        <target><ph id="0" equiv="name" disp="profile.displayName" /> ha completado <ph id="1" equiv="total" disp="profile.total" /> flexiones en <ph id="2" equiv="days" disp="profile.totalDays" /> días activos — racha actual: <ph id="3" equiv="streak" disp="profile.currentStreak" /> días. Haz tu seguimiento gratis en pushup-stats.com.</target>
       </segment>
     </unit>
     <unit id="publicProfile.seo.imageAlt">
@@ -3306,8 +3306,8 @@
         <note category="location">web/src/app/public-profile/public-profile-page.component.ts:206</note>
       </notes>
       <segment state="translated">
-        <source><ph id="0" equiv="name" disp="profile.displayName"/> auf Pushup Tracker</source>
-        <target><ph id="0" equiv="name" disp="profile.displayName"/> en el rastreador de flexiones</target>
+        <source><ph id="0" equiv="name" disp="profile.displayName" /> auf Pushup Tracker</source>
+        <target><ph id="0" equiv="name" disp="profile.displayName" /> en el rastreador de flexiones</target>
       </segment>
     </unit>
     <unit id="reminders.page.title">
@@ -3495,8 +3495,8 @@
         <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:164,167</note>
       </notes>
       <segment state="translated">
-        <source> Zeigt einen &quot;Eintragen&quot;-Button auf der Push-Benachrichtigung. Wenn die App schon geöffnet ist, wird der Eintrag im Hintergrund gespeichert; ansonsten öffnet sich kurz ein Tab, der den Eintrag automatisch anlegt. </source>
-        <target> Muestra un botón "Suscribirse" en la notificación push. Si la aplicación ya está abierta, la entrada se guarda en segundo plano; de lo contrario, se abrirá brevemente una pestaña que creará automáticamente la entrada. </target>
+        <source> Zeigt einen "Eintragen"-Button auf der Push-Benachrichtigung. Wenn die App schon geöffnet ist, wird der Eintrag im Hintergrund gespeichert; ansonsten öffnet sich kurz ein Tab, der den Eintrag automatisch anlegt. </source>
+        <target> Muestra un botón «Registrar» en la notificación push. Si la aplicación ya está abierta, la entrada se guarda en segundo plano; de lo contrario, se abrirá brevemente una pestaña que creará automáticamente la entrada. </target>
       </segment>
     </unit>
     <unit id="reminder.quickLog.toggle">
@@ -3657,8 +3657,8 @@
         <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:340,341</note>
       </notes>
       <segment state="translated">
-        <source> Aktiv auf <ph id="0" equiv="INTERPOLATION" disp="{{ pushService.deviceCount() }}"/> Geräten </source>
-        <target> Activo en dispositivos <ph id="0" equiv="INTERPOLATION" disp="{{ pushService.deviceCount() }}"/> </target>
+        <source> Aktiv auf <ph id="0" equiv="INTERPOLATION" disp="{{ pushService.deviceCount() }}" /> Geräten </source>
+        <target> Activo en <ph id="0" equiv="INTERPOLATION" disp="{{ pushService.deviceCount() }}" /> dispositivos </target>
       </segment>
     </unit>
     <unit id="push.cta.desc">
@@ -3812,8 +3812,8 @@
         <note category="location">web/src/app/stats/components/analysis-teaser-card/analysis-teaser-card.component.ts:49,50</note>
       </notes>
       <segment state="translated">
-        <source>Streak: <ph id="0" equiv="INTERPOLATION" disp="{{ streak() }}"/> Tage</source>
-        <target>Racha: <ph id="0" equiv="INTERPOLATION" disp="{{ streak() }}"/> días</target>
+        <source>Streak: <ph id="0" equiv="INTERPOLATION" disp="{{ streak() }}" /> Tage</source>
+        <target>Racha: <ph id="0" equiv="INTERPOLATION" disp="{{ streak() }}" /> días</target>
       </segment>
     </unit>
     <unit id="dashboard.analysisTeaserWeekReps">
@@ -3821,8 +3821,8 @@
         <note category="location">web/src/app/stats/components/analysis-teaser-card/analysis-teaser-card.component.ts:53,55</note>
       </notes>
       <segment state="translated">
-        <source>Diese Woche: <ph id="0" equiv="INTERPOLATION" disp="{{ weekReps() }}"/> / <ph id="1" equiv="INTERPOLATION_1" disp="{{ weeklyGoal() }}"/> Reps</source>
-        <target>Esta semana: Representantes de <ph id="0" equiv="INTERPOLATION" disp="{{ weekReps() }}"/> /<ph id="1" equiv="INTERPOLATION_1" disp="{{ weeklyGoal() }}"/></target>
+        <source>Diese Woche: <ph id="0" equiv="INTERPOLATION" disp="{{ weekReps() }}" /> / <ph id="1" equiv="INTERPOLATION_1" disp="{{ weeklyGoal() }}" /> Reps</source>
+        <target>Esta semana: <ph id="0" equiv="INTERPOLATION" disp="{{ weekReps() }}" /> / <ph id="1" equiv="INTERPOLATION_1" disp="{{ weeklyGoal() }}" /> repeticiones</target>
       </segment>
     </unit>
     <unit id="dashboard.analysisTeaserError">
@@ -3884,8 +3884,8 @@
         <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:117,118</note>
       </notes>
       <segment state="translated">
-        <source>Set <ph id="0" equiv="INTERPOLATION" disp="{{ $index + 1 }}"/></source>
-        <target>Establecer <ph id="0" equiv="INTERPOLATION" disp="{{ $index + 1 }}"/></target>
+        <source>Set <ph id="0" equiv="INTERPOLATION" disp="{{ $index + 1 }}" /></source>
+        <target>Establecer <ph id="0" equiv="INTERPOLATION" disp="{{ $index + 1 }}" /></target>
       </segment>
     </unit>
     <unit id="repsLabel">
@@ -3929,8 +3929,8 @@
         <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:158,160</note>
       </notes>
       <segment state="translated">
-        <source> Gesamt: <ph id="0" equiv="INTERPOLATION" disp="{{ totalReps() }}"/> Reps </source>
-        <target> Total: Representantes <ph id="0" equiv="INTERPOLATION" disp="{{ totalReps() }}"/> </target>
+        <source> Gesamt: <ph id="0" equiv="INTERPOLATION" disp="{{ totalReps() }}" /> Reps </source>
+        <target> Total: <ph id="0" equiv="INTERPOLATION" disp="{{ totalReps() }}" /> repeticiones </target>
       </segment>
     </unit>
     <unit id="typeLabel">
@@ -3998,14 +3998,14 @@
     </unit>
     <unit id="entryDialog.overCapDuration">
       <segment state="translated">
-        <source>Maximum-Dauer: <ph id="0" equiv="INTERPOLATION" disp="{{ formattedDurationMax() }}"/></source>
-        <target>Duración máxima: <ph id="0" equiv="INTERPOLATION" disp="{{ formattedDurationMax() }}"/></target>
+        <source>Maximum-Dauer: <ph id="0" equiv="INTERPOLATION" disp="{{ formattedDurationMax() }}" /></source>
+        <target>Duración máxima: <ph id="0" equiv="INTERPOLATION" disp="{{ formattedDurationMax() }}" /></target>
       </segment>
     </unit>
     <unit id="entryDialog.overCapTime">
       <segment state="translated">
-        <source>Maximum: <ph id="0" equiv="INTERPOLATION" disp="{{ formattedMax() }}"/></source>
-        <target>Máximo: <ph id="0" equiv="INTERPOLATION" disp="{{ formattedMax() }}"/></target>
+        <source>Maximum: <ph id="0" equiv="INTERPOLATION" disp="{{ formattedMax() }}" /></source>
+        <target>Máximo: <ph id="0" equiv="INTERPOLATION" disp="{{ formattedMax() }}" /></target>
       </segment>
     </unit>
     <unit id="exercise.category.plank">
@@ -4046,8 +4046,8 @@
     </unit>
     <unit id="entryDialog.overCap">
       <segment state="translated">
-        <source> Maximum: <ph id="0" equiv="INTERPOLATION" disp="{{ data.definition.max }}"/> pro Eintrag </source>
-        <target> Máximo: <ph id="0" equiv="INTERPOLATION" disp="{{ data.definition.max }}"/> por entrada </target>
+        <source> Maximum: <ph id="0" equiv="INTERPOLATION" disp="{{ data.definition.max }}" /> pro Eintrag </source>
+        <target> Máximo: <ph id="0" equiv="INTERPOLATION" disp="{{ data.definition.max }}" /> por entrada </target>
       </segment>
     </unit>
     <unit id="exerciseSection.lastEntry">
@@ -4379,8 +4379,8 @@
         <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:84</note>
       </notes>
       <segment state="translated">
-        <source>Wochenziel von <ph id="0" equiv="goal" disp="goal"/> Liegestützen geschafft – <ph id="1" equiv="total" disp="total"/> insgesamt! 💪 Tracke deine Stats kostenlos:</source>
-        <target>Meta semanal de flexiones <ph id="0" equiv="goal" disp="goal"/> logradas - ¡<ph id="1" equiv="total" disp="total"/> total! 💪 Realice un seguimiento de sus estadísticas de forma gratuita:</target>
+        <source>Wochenziel von <ph id="0" equiv="goal" disp="goal" /> Liegestützen geschafft – <ph id="1" equiv="total" disp="total" /> insgesamt! 💪 Tracke deine Stats kostenlos:</source>
+        <target>Meta semanal de flexiones <ph id="0" equiv="goal" disp="goal" /> logradas - ¡<ph id="1" equiv="total" disp="total" /> total! 💪 Realice un seguimiento de sus estadísticas de forma gratuita:</target>
       </segment>
     </unit>
     <unit id="goalReached.monthly.title">
@@ -4415,8 +4415,8 @@
         <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:92</note>
       </notes>
       <segment state="translated">
-        <source>Monatsziel von <ph id="0" equiv="goal" disp="goal"/> Liegestützen geschafft – <ph id="1" equiv="total" disp="total"/> insgesamt! 💪 Tracke deine Stats kostenlos:</source>
-        <target>Meta mensual de flexiones <ph id="0" equiv="goal" disp="goal"/> logradas - ¡<ph id="1" equiv="total" disp="total"/> total! 💪 Realice un seguimiento de sus estadísticas de forma gratuita:</target>
+        <source>Monatsziel von <ph id="0" equiv="goal" disp="goal" /> Liegestützen geschafft – <ph id="1" equiv="total" disp="total" /> insgesamt! 💪 Tracke deine Stats kostenlos:</source>
+        <target>Meta mensual de flexiones <ph id="0" equiv="goal" disp="goal" /> logradas - ¡<ph id="1" equiv="total" disp="total" /> total! 💪 Realice un seguimiento de sus estadísticas de forma gratuita:</target>
       </segment>
     </unit>
     <unit id="goalReached.plan.title">
@@ -4451,8 +4451,8 @@
         <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:100</note>
       </notes>
       <segment state="translated">
-        <source>Heute mein Trainingsplan-Ziel von <ph id="0" equiv="goal" disp="goal"/> Liegestützen erreicht – <ph id="1" equiv="total" disp="total"/> insgesamt! 💪 Tracke deine Stats kostenlos:</source>
-        <target>¡Hoy alcancé mi objetivo del plan de entrenamiento de <ph id="0" equiv="goal" disp="goal"/> flexiones – <ph id="1" equiv="total" disp="total"/> en total! 💪 Sigue tus estadísticas gratis:</target>
+        <source>Heute mein Trainingsplan-Ziel von <ph id="0" equiv="goal" disp="goal" /> Liegestützen erreicht – <ph id="1" equiv="total" disp="total" /> insgesamt! 💪 Tracke deine Stats kostenlos:</source>
+        <target>¡Hoy alcancé mi objetivo del plan de entrenamiento de <ph id="0" equiv="goal" disp="goal" /> flexiones – <ph id="1" equiv="total" disp="total" /> en total! 💪 Sigue tus estadísticas gratis:</target>
       </segment>
     </unit>
     <unit id="goalReached.daily.title">
@@ -4487,8 +4487,8 @@
         <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:100</note>
       </notes>
       <segment state="translated">
-        <source>Heute mein Tagesziel von <ph id="0" equiv="goal" disp="goal"/> Liegestützen geschafft! 💪 Tracke deine Stats kostenlos:</source>
-        <target>¡Hoy logré mi objetivo diario de flexiones <ph id="0" equiv="goal" disp="goal"/>! 💪 Realice un seguimiento de sus estadísticas de forma gratuita:</target>
+        <source>Heute mein Tagesziel von <ph id="0" equiv="goal" disp="goal" /> Liegestützen geschafft! 💪 Tracke deine Stats kostenlos:</source>
+        <target>¡Hoy logré mi objetivo diario de flexiones <ph id="0" equiv="goal" disp="goal" />! 💪 Realice un seguimiento de sus estadísticas de forma gratuita:</target>
       </segment>
     </unit>
     <unit id="goalReached.snapAria">
@@ -4619,8 +4619,8 @@
         <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts:40,42</note>
       </notes>
       <segment state="translated">
-        <source> Lege bis zu <ph id="0" equiv="INTERPOLATION" disp="{{ maxRows }}"/> eigene Reps-Buttons fest. Leere Felder werden ignoriert. </source>
-        <target> Configure los botones de repetición personalizados <ph id="0" equiv="INTERPOLATION" disp="{{ maxRows }}"/>. Los campos vacíos se ignoran. </target>
+        <source> Lege bis zu <ph id="0" equiv="INTERPOLATION" disp="{{ maxRows }}" /> eigene Reps-Buttons fest. Leere Felder werden ignoriert. </source>
+        <target> Configure los botones de repetición personalizados <ph id="0" equiv="INTERPOLATION" disp="{{ maxRows }}" />. Los campos vacíos se ignoran. </target>
       </segment>
     </unit>
     <unit id="quickAddConfig.repsLabel">
@@ -4678,45 +4678,45 @@
       </segment>
     </unit>
     <unit id="intervalsDistribution.noData">
-      <segment state="initial">
+      <segment state="translated">
         <source>Keine Intervall-Daten vorhanden</source>
-        <target>Keine Intervall-Daten vorhanden</target>
+        <target>No hay datos de intervalo</target>
       </segment>
     </unit>
     <unit id="intervalsDistribution.listLabel">
-      <segment state="initial">
+      <segment state="translated">
         <source>Intervall-Verteilung</source>
-        <target>Intervall-Verteilung</target>
+        <target>Distribución de intervalos</target>
       </segment>
     </unit>
     <unit id="entry.interval.label">
-      <segment state="initial">
-        <source>Intervall <ph id="0" equiv="INTERPOLATION" disp="{{ $index + 1 }}"/></source>
-        <target>Intervall <ph id="0" equiv="INTERPOLATION" disp="{{ $index + 1 }}"/></target>
+      <segment state="translated">
+        <source>Intervall <ph id="0" equiv="INTERPOLATION" disp="{{ $index + 1 }}" /></source>
+        <target>Intervalo  <ph id="0" equiv="INTERPOLATION" disp="{{ $index + 1 }}" /></target>
       </segment>
     </unit>
     <unit id="entry.intervals.label">
-      <segment state="initial">
+      <segment state="translated">
         <source>Intervalle</source>
-        <target>Intervalle</target>
+        <target>Intervalos</target>
       </segment>
     </unit>
     <unit id="entry.intervals.remove">
-      <segment state="initial">
+      <segment state="translated">
         <source>Intervall entfernen</source>
-        <target>Intervall entfernen</target>
+        <target>Eliminar intervalo</target>
       </segment>
     </unit>
     <unit id="entry.intervals.add">
-      <segment state="initial">
+      <segment state="translated">
         <source>Intervall hinzufügen</source>
-        <target>Intervall hinzufügen</target>
+        <target>Agregar intervalo</target>
       </segment>
     </unit>
     <unit id="entry.intervals.addTooltip">
-      <segment state="initial">
+      <segment state="translated">
         <source>Weiteres Intervall hinzufügen</source>
-        <target>Weiteres Intervall hinzufügen</target>
+        <target>Agregar intervalo adicional</target>
       </segment>
     </unit>
     <unit id="chart.subtitle.reps">
@@ -4899,8 +4899,8 @@
         <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:5</note>
       </notes>
       <segment state="translated">
-        <source><ph id="0" equiv="INTERPOLATION" disp="{{ entries().length }}"/> Einträge</source>
-        <target>Entradas <ph id="0" equiv="INTERPOLATION" disp="{{ entries().length }}"/></target>
+        <source><ph id="0" equiv="INTERPOLATION" disp="{{ entries().length }}" /> Einträge</source>
+        <target><ph id="0" equiv="INTERPOLATION" disp="{{ entries().length }}" /> entradas</target>
       </segment>
     </unit>
     <unit id="sourceColumnToggle">
@@ -4908,12 +4908,8 @@
         <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:15,20</note>
       </notes>
       <segment state="translated">
-        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;"><ph id="1" equiv="INTERPOLATION" disp="{{
-        showSourceColumn() ? &apos;visibility&apos; : &apos;visibility_off&apos;
-      }}"/></pc> Quelle </source>
-        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;"><ph id="1" equiv="INTERPOLATION" disp="{{
-        showSourceColumn()? &apos;visibility&apos;: &apos;visibility_off&apos;
-      }}"/></pc> Fuente </target>
+        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;"><ph id="1" equiv="INTERPOLATION" disp="{{         showSourceColumn() ? 'visibility' : 'visibility_off'       }}" /></pc> Quelle </source>
+        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;"><ph id="1" equiv="INTERPOLATION" disp="{{         showSourceColumn()? 'visibility': 'visibility_off'       }}" /></pc> Fuente </target>
       </segment>
     </unit>
     <unit id="createNewEntry">
@@ -5080,8 +5076,8 @@
         <note category="location">web/src/app/stats/dashboard.store.ts:436</note>
       </notes>
       <segment state="translated">
-        <source>Heute schon <ph id="0" equiv="total" disp="total"/> Liegestütze geschafft – Streak: <ph id="1" equiv="streak" disp="streak"/> Tage 🔥 Schau dir mein Profil an:</source>
-        <target>Ya hice flexiones <ph id="0" equiv="total" disp="total"/> hoy – Racha: días <ph id="1" equiv="streak" disp="streak"/> 🔥 Mira mi perfil:</target>
+        <source>Heute schon <ph id="0" equiv="total" disp="total" /> Liegestütze geschafft – Streak: <ph id="1" equiv="streak" disp="streak" /> Tage 🔥 Schau dir mein Profil an:</source>
+        <target>Ya hice <ph id="0" equiv="total" disp="total" /> flexiones hoy – Racha: <ph id="1" equiv="streak" disp="streak" /> días 🔥 Mira mi perfil:</target>
       </segment>
     </unit>
     <unit id="dashboard.share.text.profile.simple">
@@ -5089,8 +5085,8 @@
         <note category="location">web/src/app/stats/dashboard.store.ts:437</note>
       </notes>
       <segment state="translated">
-        <source>Heute schon <ph id="0" equiv="total" disp="total"/> Liegestütze geschafft! 💪 Schau dir mein Profil an:</source>
-        <target>¡<ph id="0" equiv="total" disp="total"/> flexiones hechas hoy! 💪 Mira mi perfil:</target>
+        <source>Heute schon <ph id="0" equiv="total" disp="total" /> Liegestütze geschafft! 💪 Schau dir mein Profil an:</source>
+        <target>¡<ph id="0" equiv="total" disp="total" /> flexiones hechas hoy! 💪 Mira mi perfil:</target>
       </segment>
     </unit>
     <unit id="dashboard.share.text.streak">
@@ -5098,8 +5094,8 @@
         <note category="location">web/src/app/stats/dashboard.store.ts:441</note>
       </notes>
       <segment state="translated">
-        <source>Heute schon <ph id="0" equiv="total" disp="total"/> Liegestütze geschafft – Streak: <ph id="1" equiv="streak" disp="streak"/> Tage 🔥 Tracke deine Stats kostenlos:</source>
-        <target>Flexiones <ph id="0" equiv="total" disp="total"/> ya hechas hoy – Racha: días <ph id="1" equiv="streak" disp="streak"/> 🔥 Realice un seguimiento de sus estadísticas de forma gratuita:</target>
+        <source>Heute schon <ph id="0" equiv="total" disp="total" /> Liegestütze geschafft – Streak: <ph id="1" equiv="streak" disp="streak" /> Tage 🔥 Tracke deine Stats kostenlos:</source>
+        <target><ph id="0" equiv="total" disp="total" /> flexiones ya hechas hoy – Racha: <ph id="1" equiv="streak" disp="streak" /> días 🔥 Haz seguimiento de tus estadísticas gratis:</target>
       </segment>
     </unit>
     <unit id="dashboard.share.text.simple">
@@ -5107,8 +5103,8 @@
         <note category="location">web/src/app/stats/dashboard.store.ts:442</note>
       </notes>
       <segment state="translated">
-        <source>Heute schon <ph id="0" equiv="total" disp="total"/> Liegestütze geschafft! 💪 Tracke deine Stats kostenlos:</source>
-        <target>¡Ya hice flexiones <ph id="0" equiv="total" disp="total"/> hoy! 💪 Realice un seguimiento de sus estadísticas de forma gratuita:</target>
+        <source>Heute schon <ph id="0" equiv="total" disp="total" /> Liegestütze geschafft! 💪 Tracke deine Stats kostenlos:</source>
+        <target>¡Ya hice flexiones <ph id="0" equiv="total" disp="total" /> hoy! 💪 Realice un seguimiento de sus estadísticas de forma gratuita:</target>
       </segment>
     </unit>
     <unit id="dashboard.share.title">
@@ -5254,8 +5250,8 @@
         <note category="location">web/src/app/stats/shell/analysis-page.component.ts:194,195</note>
       </notes>
       <segment state="translated">
-        <source><ph id="0" equiv="INTERPOLATION" disp="{{ store.currentStreak() }}"/> Tage</source>
-        <target><ph id="0" equiv="INTERPOLATION" disp="{{ store.currentStreak() }}"/> días</target>
+        <source><ph id="0" equiv="INTERPOLATION" disp="{{ store.currentStreak() }}" /> Tage</source>
+        <target><ph id="0" equiv="INTERPOLATION" disp="{{ store.currentStreak() }}" /> días</target>
       </segment>
     </unit>
     <unit id="analysis.longestStreak">
@@ -5522,7 +5518,7 @@
     </unit>
     <unit id="settings.leaderboardRequiresPublicProfile">
       <segment state="translated">
-        <source/>
+        <source />
         <target> Solo los perfiles con Perfil público activado aparecen en la tabla de clasificación. Activa «Perfil público» abajo para usar esta opción. </target>
       </segment>
     </unit>
@@ -5631,7 +5627,7 @@
       </notes>
       <segment state="translated">
         <source>Monatsziel (Reps)</source>
-        <target>Objetivo Mensual (Representantes)</target>
+        <target>Objetivo Mensual (repeticiones)</target>
       </segment>
     </unit>
     <unit id="monthlyGoalPlaceholder">
@@ -5891,8 +5887,8 @@
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:23,25</note>
       </notes>
       <segment state="translated">
-        <source> Live: <ph id="0" equiv="INTERPOLATION" disp="{{ liveConnected() ? &apos;verbunden&apos; : &apos;getrennt&apos; }}"/> </source>
-        <target> En vivo: <ph id="0" equiv="INTERPOLATION" disp="{{ liveConnected()? &apos;verbunden&apos;: &apos;getrennt&apos; }}"/> </target>
+        <source> Live: <ph id="0" equiv="INTERPOLATION" disp="{{ liveConnected() ? 'verbunden' : 'getrennt' }}" /> </source>
+        <target> En vivo: <ph id="0" equiv="INTERPOLATION" disp="{{ liveConnected()? 'verbunden': 'getrennt' }}" /> </target>
       </segment>
     </unit>
     <unit id="allTimeSummaryAria">
@@ -6079,8 +6075,8 @@
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:163,165</note>
       </notes>
       <segment state="translated">
-        <source> <ph id="0" equiv="INTERPOLATION" disp="{{ latest.reps }}"/> Reps · <ph id="1" equiv="INTERPOLATION_1" disp="{{ latest.type || &apos;Standard&apos; }}"/> </source>
-        <target> <ph id="0" equiv="INTERPOLATION" disp="{{ latest.reps }}"/> Reps · <ph id="1" equiv="INTERPOLATION_1" disp="{{ latest.type || &apos;Standard&apos; }}"/> </target>
+        <source> <ph id="0" equiv="INTERPOLATION" disp="{{ latest.reps }}" /> Reps · <ph id="1" equiv="INTERPOLATION_1" disp="{{ latest.type || 'Standard' }}" /> </source>
+        <target> <ph id="0" equiv="INTERPOLATION" disp="{{ latest.reps }}" /> Reps · <ph id="1" equiv="INTERPOLATION_1" disp="{{ latest.type || 'Standard' }}" /> </target>
       </segment>
     </unit>
     <unit id="dashboard.noEntryYet">
@@ -6124,8 +6120,8 @@
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:208,209</note>
       </notes>
       <segment state="translated">
-        <source>+<ph id="0" equiv="INTERPOLATION" disp="{{ reps }}"/> Reps</source>
-        <target>+<ph id="0" equiv="INTERPOLATION" disp="{{ reps }}"/> Representantes</target>
+        <source>+<ph id="0" equiv="INTERPOLATION" disp="{{ reps }}" /> Reps</source>
+        <target>+<ph id="0" equiv="INTERPOLATION" disp="{{ reps }}" /> repeticiones</target>
       </segment>
     </unit>
     <unit id="dashboard.goalFill.reached">
@@ -6142,8 +6138,8 @@
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:225,226</note>
       </notes>
       <segment state="translated">
-        <source>+<ph id="0" equiv="INTERPOLATION" disp="{{ remainingToGoal() }}"/> bis zum Ziel</source>
-        <target>+<ph id="0" equiv="INTERPOLATION" disp="{{ remainingToGoal() }}"/> al destino</target>
+        <source>+<ph id="0" equiv="INTERPOLATION" disp="{{ remainingToGoal() }}" /> bis zum Ziel</source>
+        <target>+<ph id="0" equiv="INTERPOLATION" disp="{{ remainingToGoal() }}" /> al destino</target>
       </segment>
     </unit>
     <unit id="quickAddNew">
@@ -6205,8 +6201,8 @@
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:110</note>
       </notes>
       <segment state="translated">
-        <source><ph id="0" equiv="label" disp="label"/> in der Historie öffnen</source>
-        <target>Abrir <ph id="0" equiv="label" disp="label"/> en el historial</target>
+        <source><ph id="0" equiv="label" disp="label" /> in der Historie öffnen</source>
+        <target>Abrir <ph id="0" equiv="label" disp="label" /> en el historial</target>
       </segment>
     </unit>
     <unit id="dashboard.latestEntriesCtaAriaLabel">
@@ -6430,8 +6426,8 @@
     </unit>
     <unit id="trainingPlans.jumped">
       <segment state="translated">
-        <source>Auf Tag <ph id="0" equiv="INTERPOLATION" disp="dayIndex"/> gesprungen.</source>
-        <target>Saltado al día <ph id="0" equiv="INTERPOLATION" disp="dayIndex"/>.</target>
+        <source>Auf Tag <ph id="0" equiv="INTERPOLATION" disp="dayIndex" /> gesprungen.</source>
+        <target>Saltado al día <ph id="0" equiv="INTERPOLATION" disp="dayIndex" />.</target>
       </segment>
     </unit>
     <unit id="trainingPlans.notFound">
@@ -6642,7 +6638,7 @@
       </segment>
     </unit>
 
-    <!-- Pushup-types wiki page -->
+    
     <unit id="seo.wiki.pushupTypes.title">
       <segment state="translated">
         <source>Liegestütztypen erklärt – Pushup Tracker</source>
@@ -6710,7 +6706,7 @@
       </segment>
     </unit>
 
-    <!-- Exercises wiki page -->
+    
     <unit id="seo.wiki.exercises.title">
       <segment state="translated">
         <source>Übungen erklärt – Pushup Tracker</source>
@@ -7781,265 +7777,265 @@
     </unit>
     <unit id="leaderboard.visibilityHint">
       <segment state="translated">
-        <source/>
+        <source />
         <target> ¿Cambiar la visibilidad o el nombre? </target>
       </segment>
     </unit>
     <unit id="leaderboard.visibilityHint.cta">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Abrir configuración</target>
       </segment>
     </unit>
     <unit id="leaderboard.loginHint">
       <segment state="translated">
-        <source/>
+        <source />
         <target> ¿Quieres participar y aparecer aquí? </target>
       </segment>
     </unit>
     <unit id="leaderboard.loginHint.cta">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Iniciar sesión</target>
       </segment>
     </unit>
     <unit id="analysis.empty.title">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Aún no hay datos para analizar.</target>
       </segment>
     </unit>
     <unit id="analysis.empty.body">
       <segment state="translated">
-        <source/>
+        <source />
         <target> Inicia un plan de entrenamiento o registra tu primera serie y mostraremos tendencias y rachas aquí. </target>
       </segment>
     </unit>
     <unit id="analysis.empty.cta">
       <segment state="translated">
-        <source/>
+        <source />
         <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">fitness_center</pc> Elegir plan de entrenamiento </target>
       </segment>
     </unit>
     <unit id="analysis.tabs.overview">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Resumen</target>
       </segment>
     </unit>
     <unit id="analysis.overview.empty">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Aún no hay entradas en el rango de fechas actual.</target>
       </segment>
     </unit>
     <unit id="analysis.overview.uncategorisedNotice">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Estas entradas no pertenecen a ninguna categoría conocida — agregado abajo.</target>
       </segment>
     </unit>
     <unit id="analysis.overview.comparison.title">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Comparación por grupo de ejercicios</target>
       </segment>
     </unit>
     <unit id="analysis.overview.comparison.empty">
       <segment state="translated">
-        <source/>
+        <source />
         <target>No hay datos en el rango de fechas actual.</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.totalReps">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Repeticiones totales</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.todayReps">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Hoy</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.streak">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Racha</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.bestDay">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Mejor día</target>
       </segment>
     </unit>
     <unit id="analysis.overview.comparison.metricLabel">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Sesiones</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.facet.repsTitle">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Repeticiones</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.totalSets">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Total de series</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.facet.timeTitle">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Tiempo</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.totalTime">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Tiempo total</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.todayTime">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Hoy</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.facet.distanceTitle">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Distancia</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.totalDistance">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Distancia total</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.todayDistance">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Hoy</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.facet.distanceTimeTitle">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Distancia y tiempo</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.entries">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Sesiones</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.viewDetails">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Ver detalles</target>
       </segment>
     </unit>
     <unit id="entries.empty.title">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Aún no hay entradas.</target>
       </segment>
     </unit>
     <unit id="entries.empty.body">
       <segment state="translated">
-        <source/>
+        <source />
         <target> Añade tu primera entrada de entrenamiento — tu historial aparecerá aquí. </target>
       </segment>
     </unit>
     <unit id="entries.empty.cta">
       <segment state="translated">
-        <source/>
+        <source />
         <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">add</pc> Crear entrada </target>
       </segment>
     </unit>
     <unit id="settings.displayNameHint.leaderboardLink">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Ver la clasificación</target>
       </segment>
     </unit>
     <unit id="settings.publicProfile.previewCta">
       <segment state="translated">
-        <source/>
+        <source />
         <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">visibility</pc> Vista previa</target>
       </segment>
     </unit>
     <unit id="settings.goals.planOverrideHint">
       <segment state="translated">
-        <source/>
+        <source />
         <target> Un plan de entrenamiento activo establece tu objetivo diario automáticamente. Los valores manuales solo se aplican al finalizar el plan. </target>
       </segment>
     </unit>
     <unit id="settings.goals.openActivePlan">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Abrir plan activo</target>
       </segment>
     </unit>
     <unit id="settings.adsConsent.privacyLink">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Política de privacidad</target>
       </segment>
     </unit>
     <unit id="dashboard.noPlanTitle">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Aún no hay un plan de entrenamiento activo</target>
       </segment>
     </unit>
     <unit id="dashboard.noPlanSubtitle">
       <segment state="translated">
-        <source/>
+        <source />
         <target> Elige un plan para que tu objetivo diario se fije automáticamente. </target>
       </segment>
     </unit>
     <unit id="dashboard.noPlanCta">
       <segment state="translated">
-        <source/>
+        <source />
         <target> Elegir plan </target>
       </segment>
     </unit>
     <unit id="dashboard.goalEditAria">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Abrir el objetivo diario en la configuración</target>
       </segment>
     </unit>
     <unit id="dashboard.lastEntryLinkAria">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Abrir la última entrada en el historial</target>
       </segment>
     </unit>
     <unit id="dashboard.allTimeBadges.cta">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Al análisis</target>
       </segment>
     </unit>
     <unit id="trainingPlans.goalOverrideHint">
       <segment state="translated">
-        <source/>
+        <source />
         <target> El objetivo diario lo establece el plan. </target>
       </segment>
     </unit>
     <unit id="trainingPlans.goalOverrideHint.cta">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Ajustar objetivos manuales</target>
       </segment>
     </unit>
@@ -8074,711 +8070,711 @@
       </segment>
     </unit>
       <unit id="exercise.category.push">
-      <segment state="initial">
+      <segment state="translated">
         <source>Drücken</source>
-        <target>Drücken</target>
+        <target>Empujar</target>
       </segment>
     </unit>
     <unit id="exercise.category.pull">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ziehen</source>
-        <target>Ziehen</target>
+        <target>Tirar</target>
       </segment>
     </unit>
     <unit id="exercise.category.squat">
-      <segment state="initial">
+      <segment state="translated">
         <source>Kniebeuge</source>
-        <target>Kniebeuge</target>
+        <target>Sentadilla</target>
       </segment>
     </unit>
     <unit id="exercise.category.hinge">
-      <segment state="initial">
+      <segment state="translated">
         <source>Hüftstreckung</source>
-        <target>Hüftstreckung</target>
+        <target>Extensión de cadera</target>
       </segment>
     </unit>
     <unit id="exercise.category.lunge">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ausfallschritt</source>
-        <target>Ausfallschritt</target>
+        <target>Estocada</target>
       </segment>
     </unit>
     <unit id="exercise.category.carry">
-      <segment state="initial">
+      <segment state="translated">
         <source>Tragen</source>
-        <target>Tragen</target>
+        <target>Levantamiento</target>
       </segment>
     </unit>
     <unit id="exercise.category.core">
-      <segment state="initial">
+      <segment state="translated">
         <source>Rumpf</source>
-        <target>Rumpf</target>
+        <target>Core</target>
       </segment>
     </unit>
     <unit id="exercise.category.mobility">
-      <segment state="initial">
+      <segment state="translated">
         <source>Mobilität</source>
-        <target>Mobilität</target>
+        <target>Movilidad</target>
       </segment>
     </unit>
     <unit id="exercise.category.strength">
-      <segment state="initial">
+      <segment state="translated">
         <source>Krafttraining</source>
-        <target>Krafttraining</target>
+        <target>Entrenamiento de fuerza</target>
       </segment>
     </unit>
     <unit id="exercise.core.deadbug.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Dead Bug</source>
         <target>Dead Bug</target>
       </segment>
     </unit>
     <unit id="exercise.core.hollowhold.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Hollow Hold</source>
         <target>Hollow Hold</target>
       </segment>
     </unit>
     <unit id="exercise.squat.wallsit.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Wandsitz</source>
-        <target>Wandsitz</target>
+        <target>Wall Sit</target>
       </segment>
     </unit>
     <unit id="exercise.squat.boxjump.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Box Jumps</source>
         <target>Box Jumps</target>
       </segment>
     </unit>
     <unit id="exercise.hinge.singlelegRdl.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Einbeiniges Kreuzheben</source>
-        <target>Einbeiniges Kreuzheben</target>
+        <target>Peso muerto de una pierna</target>
       </segment>
     </unit>
     <unit id="exercise.hinge.goodmorning.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Good Morning</source>
         <target>Good Morning</target>
       </segment>
     </unit>
     <unit id="exercise.lunge.stepup.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Step-ups</source>
         <target>Step-ups</target>
       </segment>
     </unit>
     <unit id="exercise.pull.pullups.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Klimmzüge</source>
-        <target>Klimmzüge</target>
+        <target>Dominadas</target>
       </segment>
     </unit>
     <unit id="exercise.pull.rows.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ruderzug</source>
-        <target>Ruderzug</target>
+        <target>Remo</target>
       </segment>
     </unit>
     <unit id="exercise.pull.deadhang.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Dead Hang</source>
         <target>Dead Hang</target>
       </segment>
     </unit>
     <unit id="exercise.pull.facepull.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Face Pull</source>
         <target>Face Pull</target>
       </segment>
     </unit>
     <unit id="exercise.carry.farmer.name">
-      <segment state="initial">
-        <source>Farmer&apos;s Walk</source>
-        <target>Farmer&apos;s Walk</target>
+      <segment state="translated">
+        <source>Farmer's Walk</source>
+        <target>Farmer's Walk</target>
       </segment>
     </unit>
     <unit id="exercise.carry.suitcase.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Suitcase Carry</source>
         <target>Suitcase Carry</target>
       </segment>
     </unit>
     <unit id="exercise.carry.overhead.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Overhead Carry</source>
         <target>Overhead Carry</target>
       </segment>
     </unit>
     <unit id="exercise.cardio.walking.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Gehen</source>
-        <target>Gehen</target>
+        <target>Caminar</target>
       </segment>
     </unit>
     <unit id="exercise.cardio.cycling.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Radfahren</source>
-        <target>Radfahren</target>
+        <target>Ciclismo</target>
       </segment>
     </unit>
     <unit id="exercise.cardio.rowing.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Rudern</source>
-        <target>Rudern</target>
+        <target>Remo</target>
       </segment>
     </unit>
     <unit id="exercise.cardio.swimming.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Schwimmen</source>
-        <target>Schwimmen</target>
+        <target>Natación</target>
       </segment>
     </unit>
     <unit id="exercise.cardio.jumprope.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Seilspringen</source>
-        <target>Seilspringen</target>
+        <target>Saltar la cuerda</target>
       </segment>
     </unit>
     <unit id="exercise.cardio.burpees.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Burpees</source>
         <target>Burpees</target>
       </segment>
     </unit>
     <unit id="exercise.cardio.jumpingjacks.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Hampelmänner</source>
-        <target>Hampelmänner</target>
+        <target>Saltos de tijera</target>
       </segment>
     </unit>
     <unit id="exercise.cardio.highknees.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>High Knees</source>
         <target>High Knees</target>
       </segment>
     </unit>
     <unit id="exercise.mobility.stretching.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Dehnen</source>
-        <target>Dehnen</target>
+        <target>Estiramientos</target>
       </segment>
     </unit>
     <unit id="exercise.mobility.yoga.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Yoga</source>
         <target>Yoga</target>
       </segment>
     </unit>
     <unit id="exercise.mobility.foamrolling.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Faszienrolle</source>
-        <target>Faszienrolle</target>
+        <target>Rodillo de espuma</target>
       </segment>
     </unit>
     <unit id="exercise.mobility.dynamicwarmup.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Dynamisches Aufwärmen</source>
-        <target>Dynamisches Aufwärmen</target>
+        <target>Calentamiento dinámico</target>
       </segment>
     </unit>
     <unit id="exercise.mobility.catcow.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Katze-Kuh</source>
-        <target>Katze-Kuh</target>
+        <target>Gato-Vaca</target>
       </segment>
     </unit>
     <unit id="exercise.mobility.hipopener.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Hüftöffner</source>
-        <target>Hüftöffner</target>
+        <target>Apertura de cadera</target>
       </segment>
     </unit>
     <unit id="exercise.strength.benchpress.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Bankdrücken</source>
-        <target>Bankdrücken</target>
+        <target>Press de banca</target>
       </segment>
     </unit>
     <unit id="exercise.strength.overheadpress.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Schulterdrücken</source>
-        <target>Schulterdrücken</target>
+        <target>Press de hombro</target>
       </segment>
     </unit>
     <unit id="exercise.strength.deadlift.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Kreuzheben</source>
-        <target>Kreuzheben</target>
+        <target>Peso muerto</target>
       </segment>
     </unit>
     <unit id="exercise.strength.barbellsquat.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Langhantel-Kniebeuge</source>
-        <target>Langhantel-Kniebeuge</target>
+        <target>Sentadilla con barra</target>
       </segment>
     </unit>
     <unit id="exercise.strength.barbellrow.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Langhantelrudern</source>
-        <target>Langhantelrudern</target>
+        <target>Remo con barra</target>
       </segment>
     </unit>
     <unit id="exercise.strength.kettlebellswing.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Kettlebell Swing</source>
         <target>Kettlebell Swing</target>
       </segment>
     </unit>
       <unit id="exercise.variant.situps.standard">
-      <segment state="initial">
+      <segment state="translated">
         <source>Standard</source>
-        <target>Standard</target>
+        <target>Estándar</target>
       </segment>
     </unit>
     <unit id="exercise.variant.situps.decline">
-      <segment state="initial">
+      <segment state="translated">
         <source>Decline</source>
         <target>Decline</target>
       </segment>
     </unit>
     <unit id="exercise.variant.situps.weighted">
-      <segment state="initial">
+      <segment state="translated">
         <source>Mit Zusatzgewicht</source>
-        <target>Mit Zusatzgewicht</target>
+        <target>Con peso adicional</target>
       </segment>
     </unit>
     <unit id="exercise.variant.crunches.standard">
-      <segment state="initial">
+      <segment state="translated">
         <source>Standard</source>
-        <target>Standard</target>
+        <target>Estándar</target>
       </segment>
     </unit>
     <unit id="exercise.variant.crunches.reverse">
-      <segment state="initial">
+      <segment state="translated">
         <source>Reverse Crunches</source>
         <target>Reverse Crunches</target>
       </segment>
     </unit>
     <unit id="exercise.variant.crunches.bicycle">
-      <segment state="initial">
+      <segment state="translated">
         <source>Bicycle Crunches</source>
         <target>Bicycle Crunches</target>
       </segment>
     </unit>
     <unit id="exercise.variant.crunches.oblique">
-      <segment state="initial">
+      <segment state="translated">
         <source>Schräge Crunches</source>
-        <target>Schräge Crunches</target>
+        <target>Crunches oblicuos</target>
       </segment>
     </unit>
     <unit id="exercise.variant.legraises.lying">
-      <segment state="initial">
+      <segment state="translated">
         <source>Liegend</source>
-        <target>Liegend</target>
+        <target>Acostado</target>
       </segment>
     </unit>
     <unit id="exercise.variant.legraises.hanging-knee">
-      <segment state="initial">
+      <segment state="translated">
         <source>Hängend (Knie)</source>
-        <target>Hängend (Knie)</target>
+        <target>Colgante (rodilla)</target>
       </segment>
     </unit>
     <unit id="exercise.variant.legraises.hanging-straight">
-      <segment state="initial">
+      <segment state="translated">
         <source>Hängend (gestreckt)</source>
-        <target>Hängend (gestreckt)</target>
+        <target>Colgante (estirado)</target>
       </segment>
     </unit>
     <unit id="exercise.variant.russiantwist.bodyweight">
-      <segment state="initial">
+      <segment state="translated">
         <source>Eigengewicht</source>
-        <target>Eigengewicht</target>
+        <target>Peso corporal</target>
       </segment>
     </unit>
     <unit id="exercise.variant.russiantwist.weighted">
-      <segment state="initial">
+      <segment state="translated">
         <source>Mit Zusatzgewicht</source>
-        <target>Mit Zusatzgewicht</target>
+        <target>Con peso adicional</target>
       </segment>
     </unit>
     <unit id="exercise.variant.mountainclimbers.standard">
-      <segment state="initial">
+      <segment state="translated">
         <source>Standard</source>
-        <target>Standard</target>
+        <target>Estándar</target>
       </segment>
     </unit>
     <unit id="exercise.variant.mountainclimbers.cross-body">
-      <segment state="initial">
+      <segment state="translated">
         <source>Cross-Body</source>
         <target>Cross-Body</target>
       </segment>
     </unit>
     <unit id="exercise.variant.plank.standard">
-      <segment state="initial">
+      <segment state="translated">
         <source>Standard</source>
-        <target>Standard</target>
+        <target>Estándar</target>
       </segment>
     </unit>
     <unit id="exercise.variant.plank.forearm">
-      <segment state="initial">
+      <segment state="translated">
         <source>Unterarmstütz</source>
-        <target>Unterarmstütz</target>
+        <target>Plancha de antebrazo</target>
       </segment>
     </unit>
     <unit id="exercise.variant.plank.side">
-      <segment state="initial">
+      <segment state="translated">
         <source>Seitlich</source>
-        <target>Seitlich</target>
+        <target>Lateral</target>
       </segment>
     </unit>
     <unit id="exercise.variant.plank.reverse">
-      <segment state="initial">
+      <segment state="translated">
         <source>Umgekehrt</source>
-        <target>Umgekehrt</target>
+        <target>Invertido</target>
       </segment>
     </unit>
     <unit id="exercise.variant.squats.bodyweight">
-      <segment state="initial">
+      <segment state="translated">
         <source>Eigengewicht</source>
-        <target>Eigengewicht</target>
+        <target>Peso corporal</target>
       </segment>
     </unit>
     <unit id="exercise.variant.squats.sumo">
-      <segment state="initial">
+      <segment state="translated">
         <source>Sumo</source>
         <target>Sumo</target>
       </segment>
     </unit>
     <unit id="exercise.variant.squats.goblet">
-      <segment state="initial">
+      <segment state="translated">
         <source>Goblet</source>
         <target>Goblet</target>
       </segment>
     </unit>
     <unit id="exercise.variant.squats.bulgarian-split">
-      <segment state="initial">
+      <segment state="translated">
         <source>Bulgarian Split</source>
         <target>Bulgarian Split</target>
       </segment>
     </unit>
     <unit id="exercise.variant.squats.pistol">
-      <segment state="initial">
+      <segment state="translated">
         <source>Pistol</source>
         <target>Pistol</target>
       </segment>
     </unit>
     <unit id="exercise.variant.calfraises.standard">
-      <segment state="initial">
+      <segment state="translated">
         <source>Standard</source>
-        <target>Standard</target>
+        <target>Estándar</target>
       </segment>
     </unit>
     <unit id="exercise.variant.calfraises.single-leg">
-      <segment state="initial">
+      <segment state="translated">
         <source>Einbeinig</source>
-        <target>Einbeinig</target>
+        <target>De una pierna</target>
       </segment>
     </unit>
     <unit id="exercise.variant.calfraises.seated">
-      <segment state="initial">
+      <segment state="translated">
         <source>Sitzend</source>
-        <target>Sitzend</target>
+        <target>Sentado</target>
       </segment>
     </unit>
     <unit id="exercise.variant.glutebridge.standard">
-      <segment state="initial">
+      <segment state="translated">
         <source>Standard</source>
-        <target>Standard</target>
+        <target>Estándar</target>
       </segment>
     </unit>
     <unit id="exercise.variant.glutebridge.single-leg">
-      <segment state="initial">
+      <segment state="translated">
         <source>Einbeinig</source>
-        <target>Einbeinig</target>
+        <target>De una pierna</target>
       </segment>
     </unit>
     <unit id="exercise.variant.glutebridge.hip-thrust">
-      <segment state="initial">
+      <segment state="translated">
         <source>Hip Thrust</source>
         <target>Hip Thrust</target>
       </segment>
     </unit>
     <unit id="exercise.variant.glutebridge.march">
-      <segment state="initial">
+      <segment state="translated">
         <source>Marching</source>
-        <target>Marching</target>
+        <target>Marcha</target>
       </segment>
     </unit>
     <unit id="exercise.variant.lunges.forward">
-      <segment state="initial">
+      <segment state="translated">
         <source>Vorwärts</source>
-        <target>Vorwärts</target>
+        <target>Hacia adelante</target>
       </segment>
     </unit>
     <unit id="exercise.variant.lunges.reverse">
-      <segment state="initial">
+      <segment state="translated">
         <source>Rückwärts</source>
-        <target>Rückwärts</target>
+        <target>Hacia atrás</target>
       </segment>
     </unit>
     <unit id="exercise.variant.lunges.walking">
-      <segment state="initial">
+      <segment state="translated">
         <source>Walking</source>
-        <target>Walking</target>
+        <target>Caminando</target>
       </segment>
     </unit>
     <unit id="exercise.variant.lunges.lateral">
-      <segment state="initial">
+      <segment state="translated">
         <source>Seitlich</source>
-        <target>Seitlich</target>
+        <target>Lateral</target>
       </segment>
     </unit>
     <unit id="exercise.variant.lunges.curtsy">
-      <segment state="initial">
+      <segment state="translated">
         <source>Curtsy</source>
         <target>Curtsy</target>
       </segment>
     </unit>
     <unit id="exercise.variant.lunges.jumping">
-      <segment state="initial">
+      <segment state="translated">
         <source>Jumping</source>
-        <target>Jumping</target>
+        <target>Con salto</target>
       </segment>
     </unit>
     <unit id="exercise.variant.pullups.standard">
-      <segment state="initial">
+      <segment state="translated">
         <source>Standard</source>
-        <target>Standard</target>
+        <target>Estándar</target>
       </segment>
     </unit>
     <unit id="exercise.variant.pullups.chin-up">
-      <segment state="initial">
+      <segment state="translated">
         <source>Chin-up</source>
         <target>Chin-up</target>
       </segment>
     </unit>
     <unit id="exercise.variant.pullups.wide-grip">
-      <segment state="initial">
+      <segment state="translated">
         <source>Breiter Griff</source>
-        <target>Breiter Griff</target>
+        <target>Agarre ancho</target>
       </segment>
     </unit>
     <unit id="exercise.variant.pullups.neutral-grip">
-      <segment state="initial">
+      <segment state="translated">
         <source>Neutraler Griff</source>
-        <target>Neutraler Griff</target>
+        <target>Agarre neutral</target>
       </segment>
     </unit>
     <unit id="exercise.variant.pullups.negative">
-      <segment state="initial">
+      <segment state="translated">
         <source>Negativ</source>
-        <target>Negativ</target>
+        <target>Negativo</target>
       </segment>
     </unit>
     <unit id="exercise.variant.pullups.assisted">
-      <segment state="initial">
+      <segment state="translated">
         <source>Assistiert</source>
-        <target>Assistiert</target>
+        <target>Asistido</target>
       </segment>
     </unit>
     <unit id="exercise.variant.pullups.archer">
-      <segment state="initial">
+      <segment state="translated">
         <source>Archer</source>
         <target>Archer</target>
       </segment>
     </unit>
     <unit id="exercise.variant.rows.inverted">
-      <segment state="initial">
+      <segment state="translated">
         <source>Inverted Row</source>
-        <target>Inverted Row</target>
+        <target>Remo invertido</target>
       </segment>
     </unit>
     <unit id="exercise.variant.rows.australian">
-      <segment state="initial">
+      <segment state="translated">
         <source>Australian Row</source>
-        <target>Australian Row</target>
+        <target>Remo australiano</target>
       </segment>
     </unit>
     <unit id="exercise.variant.rows.dumbbell">
-      <segment state="initial">
+      <segment state="translated">
         <source>Kurzhantel</source>
-        <target>Kurzhantel</target>
+        <target>Mancuerna</target>
       </segment>
     </unit>
     <unit id="exercise.variant.rows.barbell">
-      <segment state="initial">
+      <segment state="translated">
         <source>Langhantel</source>
-        <target>Langhantel</target>
+        <target>Barra</target>
       </segment>
     </unit>
     <unit id="exercise.push.dips.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Dips</source>
         <target>Dips</target>
       </segment>
     </unit>
     <unit id="exercise.push.benchdips.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Bankdips</source>
-        <target>Bankdips</target>
+        <target>Dips en banco</target>
       </segment>
     </unit>
     <unit id="exercise.push.handstandhold.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Handstand-Hold</source>
         <target>Handstand-Hold</target>
       </segment>
     </unit>
     <unit id="exercise.variant.dips.parallel">
-      <segment state="initial">
+      <segment state="translated">
         <source>Barren</source>
-        <target>Barren</target>
+        <target>Barras</target>
       </segment>
     </unit>
     <unit id="exercise.variant.dips.straight-bar">
-      <segment state="initial">
+      <segment state="translated">
         <source>Stange</source>
-        <target>Stange</target>
+        <target>Barra</target>
       </segment>
     </unit>
     <unit id="exercise.variant.dips.ring">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ringe</source>
-        <target>Ringe</target>
+        <target>Anillas</target>
       </segment>
     </unit>
       <unit id="exerciseTimer.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Halteübung-Timer</source>
-        <target>Halteübung-Timer</target>
+        <target>Temporizador de retención</target>
       </segment>
     </unit>
     <unit id="exerciseTimer.exercisePickerAria">
-      <segment state="initial">
+      <segment state="translated">
         <source>Übung wählen</source>
-        <target>Übung wählen</target>
+        <target>Seleccionar ejercicio</target>
       </segment>
     </unit>
     <unit id="exerciseTimer.cameraMode">
-      <segment state="initial">
+      <segment state="translated">
         <source> Kamera: Start/Ende automatisch erkennen </source>
-        <target> Kamera: Start/Ende automatisch erkennen </target>
+        <target> Cámara: detectar inicio/fin automáticamente </target>
       </segment>
     </unit>
     <unit id="exerciseTimer.cameraStarting">
-      <segment state="initial">
+      <segment state="translated">
         <source>Kamera startet …</source>
-        <target>Kamera startet …</target>
+        <target>Iniciando cámara…</target>
       </segment>
     </unit>
     <unit id="exerciseTimer.cameraUnavailable">
-      <segment state="initial">
+      <segment state="translated">
         <source> Kamera nicht verfügbar </source>
-        <target> Kamera nicht verfügbar </target>
+        <target> Cámara no disponible </target>
       </segment>
     </unit>
     <unit id="exerciseTimer.formCheck.toggleAria">
-      <segment state="initial">
+      <segment state="translated">
         <source>Form-Check anzeigen oder ausblenden</source>
-        <target>Form-Check anzeigen oder ausblenden</target>
+        <target>Mostrar u ocultar verificación de forma</target>
       </segment>
     </unit>
     <unit id="exerciseTimer.formCheck.angle">
-      <segment state="initial">
+      <segment state="translated">
         <source>Winkel</source>
-        <target>Winkel</target>
+        <target>Ángulo</target>
       </segment>
     </unit>
     <unit id="exerciseTimer.formCheck.confidence">
-      <segment state="initial">
+      <segment state="translated">
         <source>Sicherheit</source>
-        <target>Sicherheit</target>
+        <target>Seguridad</target>
       </segment>
     </unit>
     <unit id="exerciseTimer.pause">
-      <segment state="initial">
+      <segment state="translated">
         <source>Pause</source>
-        <target>Pause</target>
+        <target>Pausa</target>
       </segment>
     </unit>
     <unit id="exerciseTimer.start">
-      <segment state="initial">
+      <segment state="translated">
         <source>Start</source>
-        <target>Start</target>
+        <target>Iniciar</target>
       </segment>
     </unit>
     <unit id="exerciseTimer.cameraHint">
-      <segment state="initial">
+      <segment state="translated">
         <source> Stelle die Kamera so auf, dass Schulter, Hüfte und Knie sichtbar sind. Der Timer startet automatisch, sobald du in Position bist, und pausiert, wenn du die Position verlässt. </source>
-        <target> Stelle die Kamera so auf, dass Schulter, Hüfte und Knie sichtbar sind. Der Timer startet automatisch, sobald du in Position bist, und pausiert, wenn du die Position verlässt. </target>
+        <target> Posiciona la cámara para que se vean el hombro, la cadera y la rodilla. El temporizador se inicia automáticamente cuando estés en posición y se pausa cuando salgas. </target>
       </segment>
     </unit>
     <unit id="exerciseTimer.reset">
-      <segment state="initial">
+      <segment state="translated">
         <source> Zurücksetzen </source>
-        <target> Zurücksetzen </target>
+        <target> Restablecer </target>
       </segment>
     </unit>
     <unit id="exerciseTimer.cancel">
-      <segment state="initial">
+      <segment state="translated">
         <source> Abbrechen </source>
-        <target> Abbrechen </target>
+        <target> Cancelar </target>
       </segment>
     </unit>
     <unit id="exerciseTimer.save">
-      <segment state="initial">
+      <segment state="translated">
         <source> Übernehmen </source>
-        <target> Übernehmen </target>
+        <target> Aplicar </target>
       </segment>
     </unit>
     <unit id="exerciseTimer.phase.holding">
-      <segment state="initial">
+      <segment state="translated">
         <source>Halten</source>
-        <target>Halten</target>
+        <target>Mantener</target>
       </segment>
     </unit>
     <unit id="exerciseTimer.phase.paused">
-      <segment state="initial">
+      <segment state="translated">
         <source>Pause</source>
-        <target>Pause</target>
+        <target>Pausa</target>
       </segment>
     </unit>
     <unit id="exerciseTimer.phase.ready">
-      <segment state="initial">
+      <segment state="translated">
         <source>Bereit</source>
-        <target>Bereit</target>
+        <target>Listo</target>
       </segment>
     </unit>
     <unit id="exerciseTimer.exercise.plank">
-      <segment state="initial">
+      <segment state="translated">
         <source>Plank</source>
-        <target>Plank</target>
+        <target>Plancha</target>
       </segment>
     </unit>
     <unit id="exerciseTimer.exercise.hollowhold">
-      <segment state="initial">
+      <segment state="translated">
         <source>Hollow Hold</source>
         <target>Hollow Hold</target>
       </segment>
     </unit>
     <unit id="quickAdd.fab.exerciseTimerAria">
-      <segment state="initial">
+      <segment state="translated">
         <source>Halteübungs-Timer öffnen</source>
-        <target>Halteübungs-Timer öffnen</target>
+        <target>Abrir temporizador de retención</target>
       </segment>
     </unit>
     <unit id="quickAdd.fab.exerciseTimer">
-      <segment state="initial">
+      <segment state="translated">
         <source>Plank‑Timer</source>
-        <target>Plank‑Timer</target>
+        <target>Temporizador de Plancha</target>
       </segment>
     </unit>
     <unit id="quickAddConfig.hintV2">
       <segment state="translated">
-        <source> Lege bis zu <ph id="0" equiv="INTERPOLATION" disp="{{ maxRows }}"/> Schnellaktionen fest. Wähle pro Button die Übung und – wo verfügbar – Auto-Messung über die Kamera. Leere Felder werden ignoriert. </source>
-        <target> Configura hasta <ph id="0" equiv="INTERPOLATION" disp="{{ maxRows }}"/> acciones rápidas. Elige el ejercicio para cada botón y, donde esté disponible, la medición automática con la cámara. Los campos vacíos se ignoran. </target>
+        <source> Lege bis zu <ph id="0" equiv="INTERPOLATION" disp="{{ maxRows }}" /> Schnellaktionen fest. Wähle pro Button die Übung und – wo verfügbar – Auto-Messung über die Kamera. Leere Felder werden ignoriert. </source>
+        <target> Configura hasta <ph id="0" equiv="INTERPOLATION" disp="{{ maxRows }}" /> acciones rápidas. Elige el ejercicio para cada botón y, donde esté disponible, la medición automática con la cámara. Los campos vacíos se ignoran. </target>
       </segment>
     </unit>
     <unit id="quickAddConfig.exerciseLabel">
@@ -9443,8 +9439,8 @@
     </unit>
     <unit id="plan.push-pull-6w.summary">
       <segment state="translated">
-        <source>Symmetrischer 6-Wochen-Plan für Liegestütze und Rückenübungen (Rudern, Klimmzug-Negative, Face Pulls). Vermeidet das klassische &quot;nur Push&quot;-Ungleichgewicht und stärkt die hintere Kette gleichwertig. Pull-Tag pro Woche zusätzlich zur Push-Progression.</source>
-        <target>Plan simétrico de 6 semanas para flexiones y trabajo de tracción (remos, dominadas negativas, face pulls). Evita el clásico desequilibrio &quot;solo empuje&quot; y fortalece la cadena posterior por igual. Un día dedicado a la tracción por semana, además de la progresión de empuje.</target>
+        <source>Symmetrischer 6-Wochen-Plan für Liegestütze und Rückenübungen (Rudern, Klimmzug-Negative, Face Pulls). Vermeidet das klassische "nur Push"-Ungleichgewicht und stärkt die hintere Kette gleichwertig. Pull-Tag pro Woche zusätzlich zur Push-Progression.</source>
+        <target>Plan simétrico de 6 semanas para flexiones y trabajo de tracción (remos, dominadas negativas, face pulls). Evita el clásico desequilibrio "solo empuje" y fortalece la cadena posterior por igual. Un día dedicado a la tracción por semana, además de la progresión de empuje.</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.title">

@@ -460,45 +460,45 @@ Aktiv:         </target>
       </segment>
     </unit>
     <unit id="intervalsDistribution.noData">
-      <segment state="initial">
+      <segment state="translated">
         <source>Keine Intervall-Daten vorhanden</source>
-        <target>Keine Intervall-Daten vorhanden</target>
+        <target>Ingen intervalldata tilgjengelig</target>
       </segment>
     </unit>
     <unit id="intervalsDistribution.listLabel">
-      <segment state="initial">
+      <segment state="translated">
         <source>Intervall-Verteilung</source>
-        <target>Intervall-Verteilung</target>
+        <target>Intervallfordeling</target>
       </segment>
     </unit>
     <unit id="entry.interval.label">
-      <segment state="initial">
+      <segment state="translated">
         <source>Intervall <ph id="0" equiv="INTERPOLATION" disp="{{ $index + 1 }}"/></source>
         <target>Intervall <ph id="0" equiv="INTERPOLATION" disp="{{ $index + 1 }}"/></target>
       </segment>
     </unit>
     <unit id="entry.intervals.label">
-      <segment state="initial">
+      <segment state="translated">
         <source>Intervalle</source>
-        <target>Intervalle</target>
+        <target>Intervaller</target>
       </segment>
     </unit>
     <unit id="entry.intervals.remove">
-      <segment state="initial">
+      <segment state="translated">
         <source>Intervall entfernen</source>
-        <target>Intervall entfernen</target>
+        <target>Fjern intervall</target>
       </segment>
     </unit>
     <unit id="entry.intervals.add">
-      <segment state="initial">
+      <segment state="translated">
         <source>Intervall hinzufügen</source>
-        <target>Intervall hinzufügen</target>
+        <target>Legg til intervall</target>
       </segment>
     </unit>
     <unit id="entry.intervals.addTooltip">
-      <segment state="initial">
+      <segment state="translated">
         <source>Weiteres Intervall hinzufügen</source>
-        <target>Weiteres Intervall hinzufügen</target>
+        <target>Legg til et til intervall</target>
       </segment>
     </unit>
     <unit id="pie.top5">
@@ -7334,705 +7334,705 @@ Deine Position: # ·  Reps        </source>
       </segment>
     </unit>
       <unit id="exercise.category.push">
-      <segment state="initial">
-        <source>Drücken</source>
-        <target>Drücken</target>
+        <segment state="translated">
+          <source>Drücken</source>
+          <target>Press</target>
       </segment>
     </unit>
     <unit id="exercise.category.pull">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ziehen</source>
-        <target>Ziehen</target>
+        <target>Trekk</target>
       </segment>
     </unit>
     <unit id="exercise.category.squat">
-      <segment state="initial">
+      <segment state="translated">
         <source>Kniebeuge</source>
-        <target>Kniebeuge</target>
+        <target>Knebøy</target>
       </segment>
     </unit>
     <unit id="exercise.category.hinge">
-      <segment state="initial">
+      <segment state="translated">
         <source>Hüftstreckung</source>
-        <target>Hüftstreckung</target>
+        <target>Hoftelengde</target>
       </segment>
     </unit>
     <unit id="exercise.category.lunge">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ausfallschritt</source>
-        <target>Ausfallschritt</target>
+        <target>Utfall</target>
       </segment>
     </unit>
     <unit id="exercise.category.carry">
-      <segment state="initial">
+      <segment state="translated">
         <source>Tragen</source>
-        <target>Tragen</target>
+        <target>Bæring</target>
       </segment>
     </unit>
     <unit id="exercise.category.core">
-      <segment state="initial">
+      <segment state="translated">
         <source>Rumpf</source>
-        <target>Rumpf</target>
+        <target>Kjerne</target>
       </segment>
     </unit>
     <unit id="exercise.category.mobility">
-      <segment state="initial">
+      <segment state="translated">
         <source>Mobilität</source>
-        <target>Mobilität</target>
+        <target>Mobilitet</target>
       </segment>
     </unit>
     <unit id="exercise.category.strength">
-      <segment state="initial">
+      <segment state="translated">
         <source>Krafttraining</source>
-        <target>Krafttraining</target>
+        <target>Styrke</target>
       </segment>
     </unit>
     <unit id="exercise.core.deadbug.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Dead Bug</source>
         <target>Dead Bug</target>
       </segment>
     </unit>
     <unit id="exercise.core.hollowhold.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Hollow Hold</source>
         <target>Hollow Hold</target>
       </segment>
     </unit>
     <unit id="exercise.squat.wallsit.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Wandsitz</source>
-        <target>Wandsitz</target>
+        <target>Veggstøtte</target>
       </segment>
     </unit>
     <unit id="exercise.squat.boxjump.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Box Jumps</source>
         <target>Box Jumps</target>
       </segment>
     </unit>
     <unit id="exercise.hinge.singlelegRdl.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Einbeiniges Kreuzheben</source>
-        <target>Einbeiniges Kreuzheben</target>
+        <target>Einbenet markløft</target>
       </segment>
     </unit>
     <unit id="exercise.hinge.goodmorning.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Good Morning</source>
         <target>Good Morning</target>
       </segment>
     </unit>
     <unit id="exercise.lunge.stepup.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Step-ups</source>
         <target>Step-ups</target>
       </segment>
     </unit>
     <unit id="exercise.pull.pullups.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Klimmzüge</source>
-        <target>Klimmzüge</target>
+        <target>Kroppshevinger</target>
       </segment>
     </unit>
     <unit id="exercise.pull.rows.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ruderzug</source>
-        <target>Ruderzug</target>
+        <target>Roing</target>
       </segment>
     </unit>
     <unit id="exercise.pull.deadhang.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Dead Hang</source>
         <target>Dead Hang</target>
       </segment>
     </unit>
     <unit id="exercise.pull.facepull.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Face Pull</source>
         <target>Face Pull</target>
       </segment>
     </unit>
     <unit id="exercise.carry.farmer.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Farmer&apos;s Walk</source>
         <target>Farmer&apos;s Walk</target>
       </segment>
     </unit>
     <unit id="exercise.carry.suitcase.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Suitcase Carry</source>
         <target>Suitcase Carry</target>
       </segment>
     </unit>
     <unit id="exercise.carry.overhead.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Overhead Carry</source>
         <target>Overhead Carry</target>
       </segment>
     </unit>
     <unit id="exercise.cardio.walking.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Gehen</source>
-        <target>Gehen</target>
+        <target>Gåing</target>
       </segment>
     </unit>
     <unit id="exercise.cardio.cycling.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Radfahren</source>
-        <target>Radfahren</target>
+        <target>Sykling</target>
       </segment>
     </unit>
     <unit id="exercise.cardio.rowing.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Rudern</source>
-        <target>Rudern</target>
+        <target>Roing</target>
       </segment>
     </unit>
     <unit id="exercise.cardio.swimming.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Schwimmen</source>
-        <target>Schwimmen</target>
+        <target>Svømming</target>
       </segment>
     </unit>
     <unit id="exercise.cardio.jumprope.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Seilspringen</source>
-        <target>Seilspringen</target>
+        <target>Tauhopping</target>
       </segment>
     </unit>
     <unit id="exercise.cardio.burpees.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Burpees</source>
         <target>Burpees</target>
       </segment>
     </unit>
     <unit id="exercise.cardio.jumpingjacks.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Hampelmänner</source>
-        <target>Hampelmänner</target>
+        <target>Hoppestrekk</target>
       </segment>
     </unit>
     <unit id="exercise.cardio.highknees.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>High Knees</source>
         <target>High Knees</target>
       </segment>
     </unit>
     <unit id="exercise.mobility.stretching.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Dehnen</source>
-        <target>Dehnen</target>
+        <target>Tøyninger</target>
       </segment>
     </unit>
     <unit id="exercise.mobility.yoga.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Yoga</source>
         <target>Yoga</target>
       </segment>
     </unit>
     <unit id="exercise.mobility.foamrolling.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Faszienrolle</source>
-        <target>Faszienrolle</target>
+        <target>Faszieroller</target>
       </segment>
     </unit>
     <unit id="exercise.mobility.dynamicwarmup.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Dynamisches Aufwärmen</source>
-        <target>Dynamisches Aufwärmen</target>
+        <target>Dynamisk oppvarming</target>
       </segment>
     </unit>
     <unit id="exercise.mobility.catcow.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Katze-Kuh</source>
-        <target>Katze-Kuh</target>
+        <target>Katt-Ku</target>
       </segment>
     </unit>
     <unit id="exercise.mobility.hipopener.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Hüftöffner</source>
-        <target>Hüftöffner</target>
+        <target>Hofteåpner</target>
       </segment>
     </unit>
     <unit id="exercise.strength.benchpress.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Bankdrücken</source>
-        <target>Bankdrücken</target>
+        <target>Benkepress</target>
       </segment>
     </unit>
     <unit id="exercise.strength.overheadpress.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Schulterdrücken</source>
-        <target>Schulterdrücken</target>
+        <target>Skulderpress</target>
       </segment>
     </unit>
     <unit id="exercise.strength.deadlift.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Kreuzheben</source>
-        <target>Kreuzheben</target>
+        <target>Markløft</target>
       </segment>
     </unit>
     <unit id="exercise.strength.barbellsquat.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Langhantel-Kniebeuge</source>
-        <target>Langhantel-Kniebeuge</target>
+        <target>Stangknebøy</target>
       </segment>
     </unit>
     <unit id="exercise.strength.barbellrow.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Langhantelrudern</source>
-        <target>Langhantelrudern</target>
+        <target>Stangroing</target>
       </segment>
     </unit>
     <unit id="exercise.strength.kettlebellswing.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Kettlebell Swing</source>
         <target>Kettlebell Swing</target>
       </segment>
     </unit>
       <unit id="exercise.variant.situps.standard">
-      <segment state="initial">
-        <source>Standard</source>
-        <target>Standard</target>
+        <segment state="translated">
+          <source>Standard</source>
+          <target>Standard</target>
       </segment>
     </unit>
     <unit id="exercise.variant.situps.decline">
-      <segment state="initial">
+      <segment state="translated">
         <source>Decline</source>
         <target>Decline</target>
       </segment>
     </unit>
     <unit id="exercise.variant.situps.weighted">
-      <segment state="initial">
+      <segment state="translated">
         <source>Mit Zusatzgewicht</source>
-        <target>Mit Zusatzgewicht</target>
+        <target>Med ekstra vekt</target>
       </segment>
     </unit>
     <unit id="exercise.variant.crunches.standard">
-      <segment state="initial">
+      <segment state="translated">
         <source>Standard</source>
         <target>Standard</target>
       </segment>
     </unit>
     <unit id="exercise.variant.crunches.reverse">
-      <segment state="initial">
+      <segment state="translated">
         <source>Reverse Crunches</source>
         <target>Reverse Crunches</target>
       </segment>
     </unit>
     <unit id="exercise.variant.crunches.bicycle">
-      <segment state="initial">
+      <segment state="translated">
         <source>Bicycle Crunches</source>
         <target>Bicycle Crunches</target>
       </segment>
     </unit>
     <unit id="exercise.variant.crunches.oblique">
-      <segment state="initial">
+      <segment state="translated">
         <source>Schräge Crunches</source>
-        <target>Schräge Crunches</target>
+        <target>Skrå Crunches</target>
       </segment>
     </unit>
     <unit id="exercise.variant.legraises.lying">
-      <segment state="initial">
+      <segment state="translated">
         <source>Liegend</source>
-        <target>Liegend</target>
+        <target>Liggende</target>
       </segment>
     </unit>
     <unit id="exercise.variant.legraises.hanging-knee">
-      <segment state="initial">
+      <segment state="translated">
         <source>Hängend (Knie)</source>
-        <target>Hängend (Knie)</target>
+        <target>Hengende (knær)</target>
       </segment>
     </unit>
     <unit id="exercise.variant.legraises.hanging-straight">
-      <segment state="initial">
+      <segment state="translated">
         <source>Hängend (gestreckt)</source>
-        <target>Hängend (gestreckt)</target>
+        <target>Hengende (strekt)</target>
       </segment>
     </unit>
     <unit id="exercise.variant.russiantwist.bodyweight">
-      <segment state="initial">
+      <segment state="translated">
         <source>Eigengewicht</source>
-        <target>Eigengewicht</target>
+        <target>Kroppsvekt</target>
       </segment>
     </unit>
     <unit id="exercise.variant.russiantwist.weighted">
-      <segment state="initial">
+      <segment state="translated">
         <source>Mit Zusatzgewicht</source>
-        <target>Mit Zusatzgewicht</target>
+        <target>Med ekstra vekt</target>
       </segment>
     </unit>
     <unit id="exercise.variant.mountainclimbers.standard">
-      <segment state="initial">
+      <segment state="translated">
         <source>Standard</source>
         <target>Standard</target>
       </segment>
     </unit>
     <unit id="exercise.variant.mountainclimbers.cross-body">
-      <segment state="initial">
+      <segment state="translated">
         <source>Cross-Body</source>
         <target>Cross-Body</target>
       </segment>
     </unit>
     <unit id="exercise.variant.plank.standard">
-      <segment state="initial">
+      <segment state="translated">
         <source>Standard</source>
         <target>Standard</target>
       </segment>
     </unit>
     <unit id="exercise.variant.plank.forearm">
-      <segment state="initial">
+      <segment state="translated">
         <source>Unterarmstütz</source>
-        <target>Unterarmstütz</target>
+        <target>Underarmsplanken</target>
       </segment>
     </unit>
     <unit id="exercise.variant.plank.side">
-      <segment state="initial">
+      <segment state="translated">
         <source>Seitlich</source>
-        <target>Seitlich</target>
+        <target>Sideveis</target>
       </segment>
     </unit>
     <unit id="exercise.variant.plank.reverse">
-      <segment state="initial">
+      <segment state="translated">
         <source>Umgekehrt</source>
-        <target>Umgekehrt</target>
+        <target>Omvendt</target>
       </segment>
     </unit>
     <unit id="exercise.variant.squats.bodyweight">
-      <segment state="initial">
+      <segment state="translated">
         <source>Eigengewicht</source>
-        <target>Eigengewicht</target>
+        <target>Kroppsvekt</target>
       </segment>
     </unit>
     <unit id="exercise.variant.squats.sumo">
-      <segment state="initial">
+      <segment state="translated">
         <source>Sumo</source>
         <target>Sumo</target>
       </segment>
     </unit>
     <unit id="exercise.variant.squats.goblet">
-      <segment state="initial">
+      <segment state="translated">
         <source>Goblet</source>
         <target>Goblet</target>
       </segment>
     </unit>
     <unit id="exercise.variant.squats.bulgarian-split">
-      <segment state="initial">
+      <segment state="translated">
         <source>Bulgarian Split</source>
         <target>Bulgarian Split</target>
       </segment>
     </unit>
     <unit id="exercise.variant.squats.pistol">
-      <segment state="initial">
+      <segment state="translated">
         <source>Pistol</source>
         <target>Pistol</target>
       </segment>
     </unit>
     <unit id="exercise.variant.calfraises.standard">
-      <segment state="initial">
+      <segment state="translated">
         <source>Standard</source>
         <target>Standard</target>
       </segment>
     </unit>
     <unit id="exercise.variant.calfraises.single-leg">
-      <segment state="initial">
+      <segment state="translated">
         <source>Einbeinig</source>
-        <target>Einbeinig</target>
+        <target>Énbenet</target>
       </segment>
     </unit>
     <unit id="exercise.variant.calfraises.seated">
-      <segment state="initial">
+      <segment state="translated">
         <source>Sitzend</source>
-        <target>Sitzend</target>
+        <target>Sittende</target>
       </segment>
     </unit>
     <unit id="exercise.variant.glutebridge.standard">
-      <segment state="initial">
+      <segment state="translated">
         <source>Standard</source>
         <target>Standard</target>
       </segment>
     </unit>
     <unit id="exercise.variant.glutebridge.single-leg">
-      <segment state="initial">
+      <segment state="translated">
         <source>Einbeinig</source>
-        <target>Einbeinig</target>
+        <target>Énbenet</target>
       </segment>
     </unit>
     <unit id="exercise.variant.glutebridge.hip-thrust">
-      <segment state="initial">
+      <segment state="translated">
         <source>Hip Thrust</source>
         <target>Hip Thrust</target>
       </segment>
     </unit>
     <unit id="exercise.variant.glutebridge.march">
-      <segment state="initial">
+      <segment state="translated">
         <source>Marching</source>
-        <target>Marching</target>
+        <target>Marsjering</target>
       </segment>
     </unit>
     <unit id="exercise.variant.lunges.forward">
-      <segment state="initial">
+      <segment state="translated">
         <source>Vorwärts</source>
-        <target>Vorwärts</target>
+        <target>Fremover</target>
       </segment>
     </unit>
     <unit id="exercise.variant.lunges.reverse">
-      <segment state="initial">
+      <segment state="translated">
         <source>Rückwärts</source>
-        <target>Rückwärts</target>
+        <target>Bakover</target>
       </segment>
     </unit>
     <unit id="exercise.variant.lunges.walking">
-      <segment state="initial">
+      <segment state="translated">
         <source>Walking</source>
-        <target>Walking</target>
+        <target>Gåing</target>
       </segment>
     </unit>
     <unit id="exercise.variant.lunges.lateral">
-      <segment state="initial">
+      <segment state="translated">
         <source>Seitlich</source>
-        <target>Seitlich</target>
+        <target>Sideveis</target>
       </segment>
     </unit>
     <unit id="exercise.variant.lunges.curtsy">
-      <segment state="initial">
+      <segment state="translated">
         <source>Curtsy</source>
         <target>Curtsy</target>
       </segment>
     </unit>
     <unit id="exercise.variant.lunges.jumping">
-      <segment state="initial">
+      <segment state="translated">
         <source>Jumping</source>
-        <target>Jumping</target>
+        <target>Hopping</target>
       </segment>
     </unit>
     <unit id="exercise.variant.pullups.standard">
-      <segment state="initial">
+      <segment state="translated">
         <source>Standard</source>
         <target>Standard</target>
       </segment>
     </unit>
     <unit id="exercise.variant.pullups.chin-up">
-      <segment state="initial">
+      <segment state="translated">
         <source>Chin-up</source>
         <target>Chin-up</target>
       </segment>
     </unit>
     <unit id="exercise.variant.pullups.wide-grip">
-      <segment state="initial">
+      <segment state="translated">
         <source>Breiter Griff</source>
-        <target>Breiter Griff</target>
+        <target>Bredt grep</target>
       </segment>
     </unit>
     <unit id="exercise.variant.pullups.neutral-grip">
-      <segment state="initial">
+      <segment state="translated">
         <source>Neutraler Griff</source>
-        <target>Neutraler Griff</target>
+        <target>Nøytralt grep</target>
       </segment>
     </unit>
     <unit id="exercise.variant.pullups.negative">
-      <segment state="initial">
+      <segment state="translated">
         <source>Negativ</source>
         <target>Negativ</target>
       </segment>
     </unit>
     <unit id="exercise.variant.pullups.assisted">
-      <segment state="initial">
+      <segment state="translated">
         <source>Assistiert</source>
-        <target>Assistiert</target>
+        <target>Assistert</target>
       </segment>
     </unit>
     <unit id="exercise.variant.pullups.archer">
-      <segment state="initial">
+      <segment state="translated">
         <source>Archer</source>
         <target>Archer</target>
       </segment>
     </unit>
     <unit id="exercise.variant.rows.inverted">
-      <segment state="initial">
+      <segment state="translated">
         <source>Inverted Row</source>
         <target>Inverted Row</target>
       </segment>
     </unit>
     <unit id="exercise.variant.rows.australian">
-      <segment state="initial">
+      <segment state="translated">
         <source>Australian Row</source>
         <target>Australian Row</target>
       </segment>
     </unit>
     <unit id="exercise.variant.rows.dumbbell">
-      <segment state="initial">
+      <segment state="translated">
         <source>Kurzhantel</source>
-        <target>Kurzhantel</target>
+        <target>Håndvekt</target>
       </segment>
     </unit>
     <unit id="exercise.variant.rows.barbell">
-      <segment state="initial">
+      <segment state="translated">
         <source>Langhantel</source>
-        <target>Langhantel</target>
+        <target>Stang</target>
       </segment>
     </unit>
     <unit id="exercise.push.dips.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Dips</source>
         <target>Dips</target>
       </segment>
     </unit>
     <unit id="exercise.push.benchdips.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Bankdips</source>
-        <target>Bankdips</target>
+        <target>Benk-dips</target>
       </segment>
     </unit>
     <unit id="exercise.push.handstandhold.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Handstand-Hold</source>
-        <target>Handstand-Hold</target>
+        <target>Handstand-hold</target>
       </segment>
     </unit>
     <unit id="exercise.variant.dips.parallel">
-      <segment state="initial">
+      <segment state="translated">
         <source>Barren</source>
-        <target>Barren</target>
+        <target>Barrer</target>
       </segment>
     </unit>
     <unit id="exercise.variant.dips.straight-bar">
-      <segment state="initial">
+      <segment state="translated">
         <source>Stange</source>
-        <target>Stange</target>
+        <target>Stang</target>
       </segment>
     </unit>
     <unit id="exercise.variant.dips.ring">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ringe</source>
-        <target>Ringe</target>
+        <target>Ringer</target>
       </segment>
     </unit>
       <unit id="exerciseTimer.title">
-      <segment state="initial">
-        <source>Halteübung-Timer</source>
-        <target>Halteübung-Timer</target>
+        <segment state="translated">
+          <source>Halteübung-Timer</source>
+          <target>Hold-øvelses-timer</target>
       </segment>
     </unit>
     <unit id="exerciseTimer.exercisePickerAria">
-      <segment state="initial">
+      <segment state="translated">
         <source>Übung wählen</source>
-        <target>Übung wählen</target>
+        <target>Velg øvelse</target>
       </segment>
     </unit>
     <unit id="exerciseTimer.cameraMode">
-      <segment state="initial">
+      <segment state="translated">
         <source> Kamera: Start/Ende automatisch erkennen </source>
-        <target> Kamera: Start/Ende automatisch erkennen </target>
+        <target> Kamera: Automatisk start/stopp deteksjon </target>
       </segment>
     </unit>
     <unit id="exerciseTimer.cameraStarting">
-      <segment state="initial">
+      <segment state="translated">
         <source>Kamera startet …</source>
-        <target>Kamera startet …</target>
+        <target>Kamera starter...</target>
       </segment>
     </unit>
     <unit id="exerciseTimer.cameraUnavailable">
-      <segment state="initial">
+      <segment state="translated">
         <source> Kamera nicht verfügbar </source>
-        <target> Kamera nicht verfügbar </target>
+        <target> Kamera ikke tilgjengelig </target>
       </segment>
     </unit>
     <unit id="exerciseTimer.formCheck.toggleAria">
-      <segment state="initial">
+      <segment state="translated">
         <source>Form-Check anzeigen oder ausblenden</source>
-        <target>Form-Check anzeigen oder ausblenden</target>
+        <target>Vis eller skjul formkontroll</target>
       </segment>
     </unit>
     <unit id="exerciseTimer.formCheck.angle">
-      <segment state="initial">
+      <segment state="translated">
         <source>Winkel</source>
-        <target>Winkel</target>
+        <target>Vinkel</target>
       </segment>
     </unit>
     <unit id="exerciseTimer.formCheck.confidence">
-      <segment state="initial">
+      <segment state="translated">
         <source>Sicherheit</source>
-        <target>Sicherheit</target>
+        <target>Sikkerhet</target>
       </segment>
     </unit>
     <unit id="exerciseTimer.pause">
-      <segment state="initial">
+      <segment state="translated">
         <source>Pause</source>
         <target>Pause</target>
       </segment>
     </unit>
     <unit id="exerciseTimer.start">
-      <segment state="initial">
+      <segment state="translated">
         <source>Start</source>
         <target>Start</target>
       </segment>
     </unit>
     <unit id="exerciseTimer.cameraHint">
-      <segment state="initial">
+      <segment state="translated">
         <source> Stelle die Kamera so auf, dass Schulter, Hüfte und Knie sichtbar sind. Der Timer startet automatisch, sobald du in Position bist, und pausiert, wenn du die Position verlässt. </source>
-        <target> Stelle die Kamera so auf, dass Schulter, Hüfte und Knie sichtbar sind. Der Timer startet automatisch, sobald du in Position bist, und pausiert, wenn du die Position verlässt. </target>
+        <target> Still kameraet slik at skulder, hofte og kne er synlige. Timeren starter automatisk når du er i posisjon, og pauser når du forlater posisjonen. </target>
       </segment>
     </unit>
     <unit id="exerciseTimer.reset">
-      <segment state="initial">
+      <segment state="translated">
         <source> Zurücksetzen </source>
-        <target> Zurücksetzen </target>
+        <target> Tilbakestill </target>
       </segment>
     </unit>
     <unit id="exerciseTimer.cancel">
-      <segment state="initial">
+      <segment state="translated">
         <source> Abbrechen </source>
-        <target> Abbrechen </target>
+        <target> Avbryt </target>
       </segment>
     </unit>
     <unit id="exerciseTimer.save">
-      <segment state="initial">
+      <segment state="translated">
         <source> Übernehmen </source>
-        <target> Übernehmen </target>
+        <target> Bruk </target>
       </segment>
     </unit>
     <unit id="exerciseTimer.phase.holding">
-      <segment state="initial">
+      <segment state="translated">
         <source>Halten</source>
-        <target>Halten</target>
+        <target>Hold</target>
       </segment>
     </unit>
     <unit id="exerciseTimer.phase.paused">
-      <segment state="initial">
+      <segment state="translated">
         <source>Pause</source>
         <target>Pause</target>
       </segment>
     </unit>
     <unit id="exerciseTimer.phase.ready">
-      <segment state="initial">
+      <segment state="translated">
         <source>Bereit</source>
-        <target>Bereit</target>
+        <target>Klar</target>
       </segment>
     </unit>
     <unit id="exerciseTimer.exercise.plank">
-      <segment state="initial">
+      <segment state="translated">
         <source>Plank</source>
         <target>Plank</target>
       </segment>
     </unit>
     <unit id="exerciseTimer.exercise.hollowhold">
-      <segment state="initial">
+      <segment state="translated">
         <source>Hollow Hold</source>
         <target>Hollow Hold</target>
       </segment>
     </unit>
     <unit id="quickAdd.fab.exerciseTimerAria">
-      <segment state="initial">
+      <segment state="translated">
         <source>Halteübungs-Timer öffnen</source>
-        <target>Halteübungs-Timer öffnen</target>
+        <target>Åpne hold-øvelses-timer</target>
       </segment>
     </unit>
     <unit id="quickAdd.fab.exerciseTimer">
-      <segment state="initial">
+      <segment state="translated">
         <source>Plank‑Timer</source>
-        <target>Plank‑Timer</target>
+        <target>Plank-timer</target>
       </segment>
     </unit>
     <unit id="quickAddConfig.hintV2">

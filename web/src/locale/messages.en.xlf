@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<xliff version="2.0" xmlns="urn:oasis:names:tc:xliff:document:2.0" srcLang="de" trgLang="en">
+<?xml version='1.0' encoding='utf-8'?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="de" trgLang="en">
   <file id="ngi18n" original="ng.template">
     <unit id="1713004850888488155">
       <notes>
@@ -54,7 +54,7 @@
         </unit>
     <unit id="2721806142807617942">
       <segment state="translated">
-        <source/>
+        <source />
         <target> Register </target>
       </segment>
     </unit>
@@ -77,7 +77,7 @@
         </unit>
     <unit id="6031063121455734122">
       <segment state="translated">
-        <source/>
+        <source />
         <target> Back </target>
       </segment>
     </unit>
@@ -106,10 +106,10 @@
             </notes>
       <segment state="translated">
         <source>
-          <ph id="0" equiv="INTERPOLATION" disp="{{ activeUserId() }}"/>
+          <ph id="0" equiv="INTERPOLATION" disp="{{ activeUserId() }}" />
 Aktiv:         </source>
         <target>
-          <ph id="0" equiv="INTERPOLATION" disp="{{ activeUserId() }}"/>
+          <ph id="0" equiv="INTERPOLATION" disp="{{ activeUserId() }}" />
 Active:         </target>
 
         
@@ -392,10 +392,10 @@ Active:         </target>
             </notes>
       <segment state="translated">
         <source>
-          <ph id="0" equiv="INTERPOLATION" disp="{{ currentStreak() }}"/>
+          <ph id="0" equiv="INTERPOLATION" disp="{{ currentStreak() }}" />
  Tage        </source>
         <target>
-          <ph id="0" equiv="INTERPOLATION" disp="{{ currentStreak() }}"/>
+          <ph id="0" equiv="INTERPOLATION" disp="{{ currentStreak() }}" />
  days        </target>
 
         
@@ -459,8 +459,8 @@ Active:         </target>
     </unit>
     <unit id="analysis.avgSetsCol">
       <segment state="translated">
-        <source>&#x2300; Sets</source>
-        <target>&#x2300; Sets</target>
+        <source>⌀ Sets</source>
+        <target>⌀ Sets</target>
       </segment>
     </unit>
     <unit id="analysis.bestSingleSet">
@@ -471,8 +471,8 @@ Active:         </target>
     </unit>
     <unit id="analysis.avgSetSizeTitle">
       <segment state="translated">
-        <source>&#x2300; Set-Gr&#x00F6;&#x00DF;e</source>
-        <target>&#x2300; Set size</target>
+        <source>⌀ Set-Größe</source>
+        <target>⌀ Set size</target>
       </segment>
     </unit>
     <unit id="analysis.repsPerSet">
@@ -585,8 +585,8 @@ Active:         </target>
     </unit>
     <unit id="entry.interval.label">
       <segment state="translated">
-        <source>Intervall <ph id="0" equiv="INTERPOLATION" disp="{{ $index + 1 }}"/></source>
-        <target>Interval <ph id="0" equiv="INTERPOLATION" disp="{{ $index + 1 }}"/></target>
+        <source>Intervall <ph id="0" equiv="INTERPOLATION" disp="{{ $index + 1 }}" /></source>
+        <target>Interval <ph id="0" equiv="INTERPOLATION" disp="{{ $index + 1 }}" /></target>
       </segment>
     </unit>
     <unit id="entry.intervals.label">
@@ -624,8 +624,8 @@ Active:         </target>
     </unit>
     <unit id="pie.avgSetSize">
       <segment state="translated">
-        <source>&#x2300; Set-Gr&#x00F6;&#x00DF;e</source>
-        <target>&#x2300; Set size</target>
+        <source>⌀ Set-Größe</source>
+        <target>⌀ Set size</target>
       </segment>
     </unit>
     <unit id="chart.modeToggleAria">
@@ -660,8 +660,8 @@ Active:         </target>
     </unit>
     <unit id="chart.avgSetSize">
       <segment state="translated">
-        <source>&#x2300; Set-Gr&#x00F6;&#x00DF;e</source>
-        <target>&#x2300; Set size</target>
+        <source>⌀ Set-Größe</source>
+        <target>⌀ Set size</target>
       </segment>
     </unit>
     <unit id="app.title">
@@ -685,265 +685,265 @@ Active:         </target>
         </unit>
     <unit id="auth.email">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Email</target>
       </segment>
     </unit>
     <unit id="auth.error.emailInUse">
       <segment state="translated">
-        <source/>
+        <source />
         <target>An account already exists for this email.</target>
       </segment>
     </unit>
     <unit id="auth.error.generic">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Login failed. Please try again.</target>
       </segment>
     </unit>
     <unit id="auth.error.internalError">
       <segment state="translated">
-        <source/>
+        <source />
         <target>A technical error occurred. Please try again shortly.</target>
       </segment>
     </unit>
     <unit id="auth.error.invalidCredential">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Email or password is incorrect.</target>
       </segment>
     </unit>
     <unit id="auth.error.invalidEmail">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Please enter a valid email address.</target>
       </segment>
     </unit>
     <unit id="auth.error.network">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Network error. Please check your internet connection and try again.</target>
       </segment>
     </unit>
     <unit id="auth.error.popupBlocked">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Popup was blocked. Please allow popups and try again.</target>
       </segment>
     </unit>
     <unit id="auth.error.popupClosed">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Google sign-in was canceled. The sign-in window was closed.</target>
       </segment>
     </unit>
     <unit id="auth.error.tooManyRequests">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Too many attempts. Please wait a moment and try again.</target>
       </segment>
     </unit>
     <unit id="auth.error.userDisabled">
       <segment state="translated">
-        <source/>
+        <source />
         <target>This account is disabled.</target>
       </segment>
     </unit>
     <unit id="auth.error.userNotFound">
       <segment state="translated">
-        <source/>
+        <source />
         <target>No account found for this email.</target>
       </segment>
     </unit>
     <unit id="auth.error.weakPassword">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Password is too weak (at least 6 characters).</target>
       </segment>
     </unit>
     <unit id="auth.error.wrongPassword">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Email or password is incorrect.</target>
       </segment>
     </unit>
     <unit id="auth.google.signin">
       <segment state="translated">
-        <source/>
+        <source />
         <target> Sign in with Google </target>
       </segment>
     </unit>
     <unit id="auth.google.signup">
       <segment state="translated">
-        <source/>
+        <source />
         <target> Sign up with Google </target>
       </segment>
     </unit>
     <unit id="auth.login.loading">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Signing in...</target>
       </segment>
     </unit>
     <unit id="auth.login.submit">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Sign in</target>
       </segment>
     </unit>
     <unit id="auth.login.subtitle">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Please sign in</target>
       </segment>
     </unit>
     <unit id="auth.login.title">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Welcome to PushUp Stats</target>
       </segment>
     </unit>
     <unit id="auth.next">
       <segment state="translated">
-        <source/>
+        <source />
         <target> Next </target>
       </segment>
     </unit>
     <unit id="auth.onboarding.google.consent.checkbox">
       <segment state="translated">
-        <source/>
+        <source />
         <target> Grant consent </target>
       </segment>
     </unit>
     <unit id="auth.onboarding.google.consent.text">
       <segment state="translated">
-        <source/>
+        <source />
         <target> I consent to data processing for technically required data collection, statistical analysis, and personalized advertising. </target>
       </segment>
     </unit>
     <unit id="auth.onboarding.google.error.consentRequired">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Please consent to data processing.</target>
       </segment>
     </unit>
     <unit id="auth.onboarding.google.error.noUser">
       <segment state="translated">
-        <source/>
+        <source />
         <target>No logged-in user found.</target>
       </segment>
     </unit>
     <unit id="auth.onboarding.google.error.saveFailed">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Onboarding could not be saved. Please try again.</target>
       </segment>
     </unit>
     <unit id="auth.onboarding.google.finish">
       <segment state="translated">
-        <source/>
+        <source />
         <target> Finish </target>
       </segment>
     </unit>
     <unit id="auth.onboarding.google.goal">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Daily goal</target>
       </segment>
     </unit>
     <unit id="auth.onboarding.google.title">
       <segment state="translated">
-        <source/>
+        <source />
         <target> Complete setup </target>
       </segment>
     </unit>
     <unit id="auth.onboarding.google.username">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Username</target>
       </segment>
     </unit>
     <unit id="auth.onboarding.google.username.hint">
       <segment state="translated">
-        <source/>
+        <source />
         <target>At least 2 characters.</target>
       </segment>
     </unit>
     <unit id="auth.or">
       <segment state="translated">
-        <source/>
+        <source />
         <target>or</target>
       </segment>
     </unit>
     <unit id="auth.password">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Password</target>
       </segment>
     </unit>
     <unit id="auth.register.back">
       <segment state="translated">
-        <source/>
+        <source />
         <target> Back </target>
       </segment>
     </unit>
     <unit id="auth.register.finalizing">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Creating account and saving profile...</target>
       </segment>
     </unit>
     <unit id="auth.register.google.skipPassword">
       <segment state="translated">
-        <source/>
+        <source />
         <target> Password step skipped (Google registration). </target>
       </segment>
     </unit>
     <unit id="auth.register.noAccount">
       <segment state="translated">
-        <source/>
+        <source />
         <target>No account yet?</target>
       </segment>
     </unit>
     <unit id="auth.register.password.hint">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Min. 8 characters, 1 number, and 1 special character.</target>
       </segment>
     </unit>
     <unit id="auth.register.password.invalid">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Password does not meet requirements.</target>
       </segment>
     </unit>
     <unit id="auth.register.password.repeat">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Repeat password</target>
       </segment>
     </unit>
     <unit id="auth.register.password.repeat.invalid">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Passwords do not match.</target>
       </segment>
     </unit>
     <unit id="auth.register.processing">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Preparing registration...</target>
       </segment>
     </unit>
     <unit id="auth.register.submit">
       <segment state="translated">
-        <source/>
+        <source />
         <target> Register </target>
       </segment>
     </unit>
     <unit id="auth.register.subtitle">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Create your account</target>
       </segment>
     </unit>
@@ -967,25 +967,25 @@ Active:         </target>
     </unit>
     <unit id="auth.register.success.dashboard">
       <segment state="translated">
-        <source/>
+        <source />
         <target> Go to dashboard </target>
       </segment>
     </unit>
     <unit id="auth.register.success.text">
       <segment state="translated">
-        <source/>
+        <source />
         <target> Your account is ready. Time for the first push-ups 💪 </target>
       </segment>
     </unit>
     <unit id="auth.register.success.title">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Done! 🎉</target>
       </segment>
     </unit>
     <unit id="auth.register.title">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Registration</target>
       </segment>
     </unit>
@@ -1518,19 +1518,19 @@ Active:         </target>
         </unit>
     <unit id="dayChartMode14h">
       <segment state="translated">
-        <source/>
+        <source />
         <target>14h Day Mode</target>
       </segment>
     </unit>
     <unit id="dayChartMode24h">
       <segment state="translated">
-        <source/>
+        <source />
         <target>24h</target>
       </segment>
     </unit>
     <unit id="dayChartModeLabel">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Day view</target>
       </segment>
     </unit>
@@ -1816,10 +1816,10 @@ Active:         </target>
             </notes>
       <segment state="translated">
         <source>
-          <ph id="0" equiv="INTERPOLATION" disp="{{ entries().length }}"/>
+          <ph id="0" equiv="INTERPOLATION" disp="{{ entries().length }}" />
  Einträge        </source>
         <target>
-          <ph id="0" equiv="INTERPOLATION" disp="{{ entries().length }}"/>
+          <ph id="0" equiv="INTERPOLATION" disp="{{ entries().length }}" />
  entries        </target>
 
         
@@ -2023,8 +2023,8 @@ Active:         </target>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
             </notes>
       <segment state="translated">
-        <source>Erfasse jeden Satz einzeln – z.&#x202F;B. 12&#xA0;+&#xA0;10&#xA0;+&#xA0;8. Die App summiert automatisch und zeigt deine durchschnittliche Set-Größe.</source>
-        <target>Log every set individually – e.g. 12&#xA0;+&#xA0;10&#xA0;+&#xA0;8. The app sums them up automatically and shows your average set size.</target>
+        <source>Erfasse jeden Satz einzeln – z. B. 12 + 10 + 8. Die App summiert automatisch und zeigt deine durchschnittliche Set-Größe.</source>
+        <target>Log every set individually – e.g. 12 + 10 + 8. The app sums them up automatically and shows your average set size.</target>
             </segment>
         </unit>
     <unit id="landing.feature.goals.title">
@@ -2123,7 +2123,7 @@ Active:         </target>
             </notes>
       <segment state="translated">
         <source> Auf iPhone &amp; iPad: Teilen-Symbol antippen und „Zum Home-Bildschirm“ wählen. </source>
-        <target> On iPhone &amp; iPad: tap the Share icon and choose &quot;Add to Home Screen&quot;. </target>
+        <target> On iPhone &amp; iPad: tap the Share icon and choose "Add to Home Screen". </target>
             </segment>
         </unit>
     <unit id="landing.feature.privacy.title">
@@ -2131,7 +2131,7 @@ Active:         </target>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
             </notes>
       <segment state="translated">
-        <source>Privacy first &amp; 100&#xA0;% kostenlos</source>
+        <source>Privacy first &amp; 100 % kostenlos</source>
         <target>Privacy first &amp; 100% free</target>
             </segment>
         </unit>
@@ -2285,8 +2285,8 @@ Active:         </target>
             </notes>
       <segment state="translated">
         <source>
-          <x id="INTERPOLATION" equiv-text="{{ me.rank }}"/>
-          <x id="INTERPOLATION_1" equiv-text="{{ me.reps }}"/>
+          <x id="INTERPOLATION" equiv-text="{{ me.rank }}" />
+          <x id="INTERPOLATION_1" equiv-text="{{ me.reps }}" />
 Deine Position: # ·  Reps        </source>
         <target> Your position: #{$INTERPOLATION} · {$INTERPOLATION_1} reps </target>
 
@@ -2508,12 +2508,12 @@ Deine Position: # ·  Reps        </source>
             </notes>
       <segment state="translated">
         <source>
-          <ph id="0" equiv="INTERPOLATION" disp="{{ latest.reps }}"/>
-          <ph id="1" equiv="INTERPOLATION_1" disp="{{ latest.type || &apos;Standard&apos; }}"/>
+          <ph id="0" equiv="INTERPOLATION" disp="{{ latest.reps }}" />
+          <ph id="1" equiv="INTERPOLATION_1" disp="{{ latest.type || 'Standard' }}" />
   Reps ·          </source>
         <target>
-          <ph id="0" equiv="INTERPOLATION" disp="{{ latest.reps }}"/>
-          <ph id="1" equiv="INTERPOLATION_1" disp="{{ latest.type || &apos;Standard&apos; }}"/>
+          <ph id="0" equiv="INTERPOLATION" disp="{{ latest.reps }}" />
+          <ph id="1" equiv="INTERPOLATION_1" disp="{{ latest.type || 'Standard' }}" />
   reps ·          </target>
 
         
@@ -2525,13 +2525,13 @@ Deine Position: # ·  Reps        </source>
         </unit>
     <unit id="leaderboard.page.subtitle">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Today · Last 7 days · Last 30 days</target>
       </segment>
     </unit>
     <unit id="leaderboard.page.title">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Leaderboard</target>
       </segment>
     </unit>
@@ -2543,10 +2543,10 @@ Deine Position: # ·  Reps        </source>
             </notes>
       <segment state="translated">
         <source>
-          <ph id="0" equiv="INTERPOLATION" disp="{{ liveConnected() ? &apos;verbunden&apos; : &apos;getrennt&apos; }}"/>
+          <ph id="0" equiv="INTERPOLATION" disp="{{ liveConnected() ? 'verbunden' : 'getrennt' }}" />
  Live:          </source>
         <target>
-          <ph id="0" equiv="INTERPOLATION" disp="{{ liveConnected() ? &apos;connected&apos; : &apos;disconnected&apos; }}"/>
+          <ph id="0" equiv="INTERPOLATION" disp="{{ liveConnected() ? 'connected' : 'disconnected' }}" />
  Live:          </target>
 
         
@@ -2711,7 +2711,7 @@ Deine Position: # ·  Reps        </source>
         </unit>
     <unit id="nav.leaderboard">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Leaderboard</target>
       </segment>
     </unit>
@@ -3005,8 +3005,8 @@ Deine Position: # ·  Reps        </source>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html</note>
       </notes>
       <segment state="translated">
-        <source>+<ph id="0" equiv="INTERPOLATION" disp="{{ vm.reps }}"/> Reps</source>
-        <target>+<ph id="0" equiv="INTERPOLATION" disp="{{ vm.reps }}"/> reps</target>
+        <source>+<ph id="0" equiv="INTERPOLATION" disp="{{ vm.reps }}" /> Reps</source>
+        <target>+<ph id="0" equiv="INTERPOLATION" disp="{{ vm.reps }}" /> reps</target>
       </segment>
     </unit>
     <unit id="dashboard.quickAdd.autoPrefix">
@@ -3041,8 +3041,8 @@ Deine Position: # ·  Reps        </source>
         <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts</note>
       </notes>
       <segment state="translated">
-        <source> Lege bis zu <ph id="0" equiv="INTERPOLATION" disp="{{ maxRows }}"/> eigene Reps-Buttons fest. Leere Felder werden ignoriert. </source>
-        <target> Define up to <ph id="0" equiv="INTERPOLATION" disp="{{ maxRows }}"/> custom rep buttons. Empty fields are ignored. </target>
+        <source> Lege bis zu <ph id="0" equiv="INTERPOLATION" disp="{{ maxRows }}" /> eigene Reps-Buttons fest. Leere Felder werden ignoriert. </source>
+        <target> Define up to <ph id="0" equiv="INTERPOLATION" disp="{{ maxRows }}" /> custom rep buttons. Empty fields are ignored. </target>
       </segment>
     </unit>
     <unit id="quickAddConfig.repsLabel">
@@ -3068,8 +3068,8 @@ Deine Position: # ·  Reps        </source>
         <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts</note>
       </notes>
       <segment state="translated">
-        <source> Lege bis zu <ph id="0" equiv="INTERPOLATION" disp="{{ maxRows }}"/> Schnellaktionen fest. Wähle pro Button die Übung und – wo verfügbar – Auto-Messung über die Kamera. Leere Felder werden ignoriert. </source>
-        <target> Configure up to <ph id="0" equiv="INTERPOLATION" disp="{{ maxRows }}"/> quick actions. Pick the exercise per button and — where available — auto-count via the camera. Empty fields are ignored. </target>
+        <source> Lege bis zu <ph id="0" equiv="INTERPOLATION" disp="{{ maxRows }}" /> Schnellaktionen fest. Wähle pro Button die Übung und – wo verfügbar – Auto-Messung über die Kamera. Leere Felder werden ignoriert. </source>
+        <target> Configure up to <ph id="0" equiv="INTERPOLATION" disp="{{ maxRows }}" /> quick actions. Pick the exercise per button and — where available — auto-count via the camera. Empty fields are ignored. </target>
       </segment>
     </unit>
     <unit id="quickAddConfig.exerciseLabel">
@@ -3356,8 +3356,8 @@ Deine Position: # ·  Reps        </source>
     </unit>
     <unit id="setLabel">
       <segment state="translated">
-        <source>Set <ph id="0" equiv="INTERPOLATION" disp="{{ $index + 1 }}"/></source>
-        <target>Set <ph id="0" equiv="INTERPOLATION" disp="{{ $index + 1 }}"/></target>
+        <source>Set <ph id="0" equiv="INTERPOLATION" disp="{{ $index + 1 }}" /></source>
+        <target>Set <ph id="0" equiv="INTERPOLATION" disp="{{ $index + 1 }}" /></target>
       </segment>
     </unit>
     <unit id="removeSetAria">
@@ -3368,8 +3368,8 @@ Deine Position: # ·  Reps        </source>
     </unit>
     <unit id="totalReps">
       <segment state="translated">
-        <source> Gesamt: <ph id="0" equiv="INTERPOLATION" disp="{{ totalReps() }}"/> Reps </source>
-        <target> Total: <ph id="0" equiv="INTERPOLATION" disp="{{ totalReps() }}"/> reps </target>
+        <source> Gesamt: <ph id="0" equiv="INTERPOLATION" disp="{{ totalReps() }}" /> Reps </source>
+        <target> Total: <ph id="0" equiv="INTERPOLATION" disp="{{ totalReps() }}" /> reps </target>
       </segment>
     </unit>
     <unit id="saveChanges">
@@ -3380,14 +3380,14 @@ Deine Position: # ·  Reps        </source>
             </notes>
       <segment state="translated">
         <source>
-          <pc id="0" equivStart="START_BLOCK_IF" equivEnd="CLOSE_BLOCK_IF" type="other" dispStart="@if (editingId() &amp;&amp; isBusy(&apos;update&apos;, editBusyId())) {" dispEnd="}">
-            <pc id="1" equivStart="START_TAG_MAT_SPINNER" equivEnd="CLOSE_TAG_MAT_SPINNER" type="other" dispStart="&lt;mat-spinner diameter=&quot;14&quot;&gt;" dispEnd="&lt;/mat-spinner&gt;"/>
+          <pc id="0" equivStart="START_BLOCK_IF" equivEnd="CLOSE_BLOCK_IF" type="other" dispStart="@if (editingId() &amp;&amp; isBusy('update', editBusyId())) {" dispEnd="}">
+            <pc id="1" equivStart="START_TAG_MAT_SPINNER" equivEnd="CLOSE_TAG_MAT_SPINNER" type="other" dispStart="&lt;mat-spinner diameter=&quot;14&quot;&gt;" dispEnd="&lt;/mat-spinner&gt;" />
           </pc>
           <pc id="2" equivStart="START_BLOCK_ELSE" equivEnd="CLOSE_BLOCK_ELSE" type="other" dispStart="@else {" dispEnd="}"> Speichern </pc>
         </source>
         <target>
-          <pc id="0" equivStart="START_BLOCK_IF" equivEnd="CLOSE_BLOCK_IF" type="other" dispStart="@if (editingId() &amp;&amp; isBusy(&apos;update&apos;, editBusyId())) {" dispEnd="}">
-            <pc id="1" equivStart="START_TAG_MAT_SPINNER" equivEnd="CLOSE_TAG_MAT_SPINNER" type="other" dispStart="&lt;mat-spinner diameter=&quot;14&quot;&gt;" dispEnd="&lt;/mat-spinner&gt;"/>
+          <pc id="0" equivStart="START_BLOCK_IF" equivEnd="CLOSE_BLOCK_IF" type="other" dispStart="@if (editingId() &amp;&amp; isBusy('update', editBusyId())) {" dispEnd="}">
+            <pc id="1" equivStart="START_TAG_MAT_SPINNER" equivEnd="CLOSE_TAG_MAT_SPINNER" type="other" dispStart="&lt;mat-spinner diameter=&quot;14&quot;&gt;" dispEnd="&lt;/mat-spinner&gt;" />
           </pc>
           <pc id="2" equivStart="START_BLOCK_ELSE" equivEnd="CLOSE_BLOCK_ELSE" type="other" dispStart="@else {" dispEnd="}"> Save </pc>
         </target>
@@ -3428,14 +3428,14 @@ Deine Position: # ·  Reps        </source>
     </unit>
     <unit id="entryDialog.overCapDuration">
       <segment state="translated">
-        <source>Maximum-Dauer: <ph id="0" equiv="INTERPOLATION" disp="{{ formattedDurationMax() }}"/></source>
-        <target>Maximum duration: <ph id="0" equiv="INTERPOLATION" disp="{{ formattedDurationMax() }}"/></target>
+        <source>Maximum-Dauer: <ph id="0" equiv="INTERPOLATION" disp="{{ formattedDurationMax() }}" /></source>
+        <target>Maximum duration: <ph id="0" equiv="INTERPOLATION" disp="{{ formattedDurationMax() }}" /></target>
       </segment>
     </unit>
     <unit id="entryDialog.overCapTime">
       <segment state="translated">
-        <source>Maximum: <ph id="0" equiv="INTERPOLATION" disp="{{ formattedMax() }}"/></source>
-        <target>Maximum: <ph id="0" equiv="INTERPOLATION" disp="{{ formattedMax() }}"/></target>
+        <source>Maximum: <ph id="0" equiv="INTERPOLATION" disp="{{ formattedMax() }}" /></source>
+        <target>Maximum: <ph id="0" equiv="INTERPOLATION" disp="{{ formattedMax() }}" /></target>
       </segment>
     </unit>
     <unit id="exercise.category.plank">
@@ -3476,8 +3476,8 @@ Deine Position: # ·  Reps        </source>
     </unit>
     <unit id="entryDialog.overCap">
       <segment state="translated">
-        <source> Maximum: <ph id="0" equiv="INTERPOLATION" disp="{{ data.definition.max }}"/> pro Eintrag </source>
-        <target> Maximum: <ph id="0" equiv="INTERPOLATION" disp="{{ data.definition.max }}"/> per entry </target>
+        <source> Maximum: <ph id="0" equiv="INTERPOLATION" disp="{{ data.definition.max }}" /> pro Eintrag </source>
+        <target> Maximum: <ph id="0" equiv="INTERPOLATION" disp="{{ data.definition.max }}" /> per entry </target>
       </segment>
     </unit>
     <unit id="exerciseSection.lastEntry">
@@ -3841,13 +3841,13 @@ Deine Position: # ·  Reps        </source>
         </unit>
     <unit id="settings.adsConsentHint">
       <segment state="translated">
-        <source/>
+        <source />
         <target> Controls whether ad slots may be loaded on the dashboard. </target>
       </segment>
     </unit>
     <unit id="settings.adsConsentOptIn">
       <segment state="translated">
-        <source/>
+        <source />
         <target> Enable personalized ads </target>
       </segment>
     </unit>
@@ -3949,7 +3949,7 @@ Deine Position: # ·  Reps        </source>
     </unit>
     <unit id="settings.dangerZoneBody">
       <segment state="translated">
-        <source/>
+        <source />
         <target> Deleting your account removes your account. Training data remains anonymized for statistical analysis. </target>
       </segment>
     </unit>
@@ -3973,85 +3973,85 @@ Deine Position: # ·  Reps        </source>
     </unit>
     <unit id="settings.dangerZoneTitle">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Danger Zone</target>
       </segment>
     </unit>
     <unit id="settings.deleteAccount">
       <segment state="translated">
-        <source/>
+        <source />
         <target>{$START_TAG_MAT_ICON}warning{$CLOSE_TAG_MAT_ICON} Delete account </target>
       </segment>
     </unit>
     <unit id="settings.deleteConfirmFinal">
       <segment state="translated">
-        <source/>
+        <source />
         <target> Final delete </target>
       </segment>
     </unit>
     <unit id="settings.deleteDialogInfo">
       <segment state="translated">
-        <source/>
+        <source />
         <target> Your account will be deleted. Training data remains anonymized for statistical analysis. </target>
       </segment>
     </unit>
     <unit id="settings.deleteDialogPhraseHint">
       <segment state="translated">
-        <source/>
-        <target>Please enter exactly &quot;löscchen&quot;.</target>
+        <source />
+        <target>Please enter exactly "löschen".</target>
       </segment>
     </unit>
     <unit id="settings.deleteDialogPhraseLabel">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Enter confirmation word</target>
       </segment>
     </unit>
     <unit id="settings.deleteDialogTitle">
       <segment state="translated">
-        <source/>
+        <source />
         <target> Really delete account? </target>
       </segment>
     </unit>
     <unit id="settings.deleteDialogWarning">
       <segment state="translated">
-        <source/>
+        <source />
         <target> Warning: This action cannot be undone. </target>
       </segment>
     </unit>
     <unit id="settings.deletingAccount">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Deleting account…</target>
       </segment>
     </unit>
     <unit id="settings.displayNameHint">
       <segment state="translated">
-        <source/>
+        <source />
         <target>May be shown on the leaderboard.</target>
       </segment>
     </unit>
     <unit id="settings.goalHint">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Shown prominently in the toolbar.</target>
       </segment>
     </unit>
     <unit id="settings.leaderboardOptIn">
       <segment state="translated">
-        <source/>
+        <source />
         <target> Show in leaderboard </target>
       </segment>
     </unit>
     <unit id="settings.leaderboardOptOutHint">
       <segment state="translated">
-        <source/>
+        <source />
         <target> If disabled, your profile will not be shown in the leaderboard. </target>
       </segment>
     </unit>
     <unit id="settings.leaderboardRequiresPublicProfile">
       <segment state="translated">
-        <source/>
+        <source />
         <target> Only profiles with Public profile enabled appear on the leaderboard. Enable “Public profile” below to use this option. </target>
       </segment>
     </unit>
@@ -4098,16 +4098,12 @@ Deine Position: # ·  Reps        </source>
       <segment state="translated">
         <source>
           <pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">
-            <ph id="1" equiv="INTERPOLATION" disp="{{
-        showSourceColumn() ? &apos;visibility&apos; : &apos;visibility_off&apos;
-      }}"/>
+            <ph id="1" equiv="INTERPOLATION" disp="{{         showSourceColumn() ? 'visibility' : 'visibility_off'       }}" />
           </pc>
  Quelle         </source>
         <target>
           <pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">
-            <ph id="1" equiv="INTERPOLATION" disp="{{
-        showSourceColumn() ? &apos;visibility&apos; : &apos;visibility_off&apos;
-      }}"/>
+            <ph id="1" equiv="INTERPOLATION" disp="{{         showSourceColumn() ? 'visibility' : 'visibility_off'       }}" />
           </pc>
  Source         </target>
 
@@ -4221,7 +4217,7 @@ Deine Position: # ·  Reps        </source>
             </notes>
       <segment state="translated">
         <source>Tagesfokus</source>
-        <target>Today&apos;s focus</target>
+        <target>Today's focus</target>
 
         
         
@@ -4232,7 +4228,7 @@ Deine Position: # ·  Reps        </source>
         </unit>
     <unit id="toolbarDailyGoal">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Daily goal</target>
       </segment>
     </unit>
@@ -4723,8 +4719,8 @@ Deine Position: # ·  Reps        </source>
     </unit>
     <unit id="admin.bulk.hint">
       <segment state="translated">
-        <source> Löscht anonyme Benutzer ohne Pushups in den letzten <ph id="0" equiv="INTERPOLATION" disp="{{ inactiveDays }}"/> Tagen. </source>
-        <target>Deletes anonymous users without pushups in the last  days.</target>
+        <source> Löscht anonyme Benutzer ohne Pushups in den letzten <ph id="0" equiv="INTERPOLATION" disp="{{ inactiveDays }}" /> Tagen. </source>
+        <target>Deletes anonymous users without pushups in the last <ph id="0" equiv="INTERPOLATION" disp="{{ inactiveDays }}" /> days.</target>
       </segment>
     </unit>
     <unit id="admin.bulk.button">
@@ -4813,8 +4809,8 @@ Deine Position: # ·  Reps        </source>
     </unit>
     <unit id="admin.row.detailsAria">
       <segment state="translated">
-        <source>Details öffnen für <ph id="0" equiv="identifier" disp="identifier"/></source>
-        <target>Open details for <ph id="0" equiv="identifier" disp="identifier"/></target>
+        <source>Details öffnen für <ph id="0" equiv="identifier" disp="identifier" /></source>
+        <target>Open details for <ph id="0" equiv="identifier" disp="identifier" /></target>
       </segment>
     </unit>
     <unit id="admin.details.uid">
@@ -4999,8 +4995,8 @@ Deine Position: # ·  Reps        </source>
     </unit>
     <unit id="blog.article.readingTime">
       <segment state="translated">
-        <source><ph id="0" equiv="INTERPOLATION" disp="{{ readingTimeMinutes }}"/> Min. Lesezeit</source>
-        <target><ph id="0" equiv="INTERPOLATION" disp="{{ readingTimeMinutes }}"/> min read</target>
+        <source><ph id="0" equiv="INTERPOLATION" disp="{{ readingTimeMinutes }}" /> Min. Lesezeit</source>
+        <target><ph id="0" equiv="INTERPOLATION" disp="{{ readingTimeMinutes }}" /> min read</target>
       </segment>
     </unit>
     <unit id="blog.article.updated">
@@ -5287,8 +5283,8 @@ Deine Position: # ·  Reps        </source>
     </unit>
     <unit id="reminder.quickLog.success">
       <segment state="translated">
-        <source><ph id="0" equiv="reps" disp="reps"/> Push-ups eingetragen ✓</source>
-        <target><ph id="0" equiv="reps" disp="reps"/> push-ups logged ✓</target>
+        <source><ph id="0" equiv="reps" disp="reps" /> Push-ups eingetragen ✓</source>
+        <target><ph id="0" equiv="reps" disp="reps" /> push-ups logged ✓</target>
       </segment>
     </unit>
     <unit id="reminder.quickLog.error">
@@ -5419,8 +5415,8 @@ Deine Position: # ·  Reps        </source>
     </unit>
     <unit id="push.device.count">
       <segment state="translated">
-        <source>Aktiv auf <ph id="0" equiv="INTERPOLATION" disp="{{ pushService.deviceCount() }}"/> Geräten</source>
-        <target>Active on <ph id="0" equiv="INTERPOLATION" disp="{{ pushService.deviceCount() }}"/> devices</target>
+        <source>Aktiv auf <ph id="0" equiv="INTERPOLATION" disp="{{ pushService.deviceCount() }}" /> Geräten</source>
+        <target>Active on <ph id="0" equiv="INTERPOLATION" disp="{{ pushService.deviceCount() }}" /> devices</target>
       </segment>
     </unit>
     <unit id="push.cta.desc">
@@ -5599,14 +5595,14 @@ Deine Position: # ·  Reps        </source>
     </unit>
     <unit id="quickAdd.fab.quickAddReps">
       <segment state="translated">
-        <source>+<ph id="0" equiv="INTERPOLATION" disp="{{ item.value }}"/> Reps</source>
-        <target>+<ph id="0" equiv="INTERPOLATION" disp="{{ item.value }}"/> Reps</target>
+        <source>+<ph id="0" equiv="INTERPOLATION" disp="{{ item.value }}" /> Reps</source>
+        <target>+<ph id="0" equiv="INTERPOLATION" disp="{{ item.value }}" /> Reps</target>
       </segment>
     </unit>
     <unit id="quickAdd.fab.repAria">
       <segment state="translated">
-        <source><ph id="0" equiv="REPS" disp="reps"/> Liegestütze hinzufügen</source>
-        <target>Add <ph id="0" equiv="REPS" disp="reps"/> push-ups</target>
+        <source><ph id="0" equiv="REPS" disp="reps" /> Liegestütze hinzufügen</source>
+        <target>Add <ph id="0" equiv="REPS" disp="reps" /> push-ups</target>
       </segment>
     </unit>
     <unit id="quickAdd.success.create">
@@ -5656,8 +5652,8 @@ Deine Position: # ·  Reps        </source>
         <note category="location">web/src/app/stats/components/analysis-teaser-card/analysis-teaser-card.component.ts</note>
       </notes>
       <segment state="translated">
-        <source>Streak: <ph id="0" equiv="INTERPOLATION" disp="{{ streak() }}"/> Tage</source>
-        <target>Streak: <ph id="0" equiv="INTERPOLATION" disp="{{ streak() }}"/> days</target>
+        <source>Streak: <ph id="0" equiv="INTERPOLATION" disp="{{ streak() }}" /> Tage</source>
+        <target>Streak: <ph id="0" equiv="INTERPOLATION" disp="{{ streak() }}" /> days</target>
       </segment>
     </unit>
     <unit id="dashboard.analysisTeaserWeekReps">
@@ -5665,8 +5661,8 @@ Deine Position: # ·  Reps        </source>
         <note category="location">web/src/app/stats/components/analysis-teaser-card/analysis-teaser-card.component.ts</note>
       </notes>
       <segment state="translated">
-        <source>Diese Woche: <ph id="0" equiv="INTERPOLATION" disp="{{ weekReps() }}"/> / <ph id="1" equiv="INTERPOLATION_1" disp="{{ weeklyGoal() }}"/> Reps</source>
-        <target>This week: <ph id="0" equiv="INTERPOLATION" disp="{{ weekReps() }}"/> / <ph id="1" equiv="INTERPOLATION_1" disp="{{ weeklyGoal() }}"/> reps</target>
+        <source>Diese Woche: <ph id="0" equiv="INTERPOLATION" disp="{{ weekReps() }}" /> / <ph id="1" equiv="INTERPOLATION_1" disp="{{ weeklyGoal() }}" /> Reps</source>
+        <target>This week: <ph id="0" equiv="INTERPOLATION" disp="{{ weekReps() }}" /> / <ph id="1" equiv="INTERPOLATION_1" disp="{{ weeklyGoal() }}" /> reps</target>
       </segment>
     </unit>
     <unit id="dashboard.analysisTeaserError">
@@ -5731,8 +5727,8 @@ Deine Position: # ·  Reps        </source>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:110</note>
       </notes>
       <segment state="translated">
-        <source><ph id="0" equiv="label" disp="label"/> in der Historie öffnen</source>
-        <target>Open <ph id="0" equiv="label" disp="label"/> in history</target>
+        <source><ph id="0" equiv="label" disp="label" /> in der Historie öffnen</source>
+        <target>Open <ph id="0" equiv="label" disp="label" /> in history</target>
       </segment>
     </unit>
     <unit id="dashboard.latestEntriesCtaAriaLabel">
@@ -5786,7 +5782,7 @@ Deine Position: # ·  Reps        </source>
         <target>Dark theme active. Click to switch</target>
       </segment>
     </unit>
-    <!-- Footer -->
+    
     <unit id="footer.aria">
       <segment state="translated">
         <source>Rechtliches</source>
@@ -5824,7 +5820,7 @@ Deine Position: # ·  Reps        </source>
       </segment>
     </unit>
 
-    <!-- Cookie Consent Banner -->
+    
     <unit id="consent.banner.aria">
       <segment state="translated">
         <source>Cookie-Einstellungen</source>
@@ -5856,7 +5852,7 @@ Deine Position: # ·  Reps        </source>
       </segment>
     </unit>
 
-    <!-- SEO: Legal pages -->
+    
     <unit id="seo.impressum.title">
       <segment state="translated">
         <source>Impressum – Pushup Tracker</source>
@@ -5882,7 +5878,7 @@ Deine Position: # ·  Reps        </source>
       </segment>
     </unit>
 
-    <!-- Impressum page -->
+    
     <unit id="impressum.title">
       <segment state="translated">
         <source>Impressum</source>
@@ -5950,7 +5946,7 @@ Deine Position: # ·  Reps        </source>
       </segment>
     </unit>
 
-    <!-- Datenschutz page -->
+    
     <unit id="datenschutz.title">
       <segment state="translated">
         <source>Datenschutzerklärung</source>
@@ -6277,14 +6273,14 @@ Deine Position: # ·  Reps        </source>
     </unit>
     <unit id="quickAdd.fab.fillToGoal">
       <segment state="translated">
-        <source>+<ph id="0" equiv="INTERPOLATION" disp="{{ item.value }}"/> bis zum Ziel</source>
-        <target>+<ph id="0" equiv="INTERPOLATION" disp="{{ item.value }}"/> to goal</target>
+        <source>+<ph id="0" equiv="INTERPOLATION" disp="{{ item.value }}" /> bis zum Ziel</source>
+        <target>+<ph id="0" equiv="INTERPOLATION" disp="{{ item.value }}" /> to goal</target>
       </segment>
     </unit>
     <unit id="quickAdd.fab.fillToGoalAria">
       <segment state="translated">
-        <source><ph id="0" equiv="GAP" disp="gap"/> Liegestütze bis zum Tagesziel hinzufügen</source>
-        <target>Add <ph id="0" equiv="GAP" disp="gap"/> pushups to reach the daily goal</target>
+        <source><ph id="0" equiv="GAP" disp="gap" /> Liegestütze bis zum Tagesziel hinzufügen</source>
+        <target>Add <ph id="0" equiv="GAP" disp="gap" /> pushups to reach the daily goal</target>
       </segment>
     </unit>
     <unit id="quickAdd.fab.goalReached">
@@ -6307,8 +6303,8 @@ Deine Position: # ·  Reps        </source>
     </unit>
     <unit id="dashboard.goalFill.fill">
       <segment state="translated">
-        <source>+<ph id="0" equiv="INTERPOLATION" disp="{{ remainingToGoal() }}"/> bis zum Ziel</source>
-        <target>+<ph id="0" equiv="INTERPOLATION" disp="{{ remainingToGoal() }}"/> to goal</target>
+        <source>+<ph id="0" equiv="INTERPOLATION" disp="{{ remainingToGoal() }}" /> bis zum Ziel</source>
+        <target>+<ph id="0" equiv="INTERPOLATION" disp="{{ remainingToGoal() }}" /> to goal</target>
       </segment>
     </unit>
     <unit id="dashboard.goalFill.reached">
@@ -6685,8 +6681,8 @@ Deine Position: # ·  Reps        </source>
     </unit>
     <unit id="trainingPlans.jumped">
       <segment state="translated">
-        <source>Auf Tag <ph id="0" equiv="INTERPOLATION" disp="dayIndex"/> gesprungen.</source>
-        <target>Jumped to day <ph id="0" equiv="INTERPOLATION" disp="dayIndex"/>.</target>
+        <source>Auf Tag <ph id="0" equiv="INTERPOLATION" disp="dayIndex" /> gesprungen.</source>
+        <target>Jumped to day <ph id="0" equiv="INTERPOLATION" disp="dayIndex" />.</target>
       </segment>
     </unit>
     <unit id="trainingPlans.back">
@@ -6721,8 +6717,8 @@ Deine Position: # ·  Reps        </source>
     </unit>
     <unit id="goalReached.share.daily.text">
       <segment state="translated">
-        <source>Heute mein Tagesziel von <ph id="0" equiv="goal" disp="goal"/> Liegestützen geschafft! 💪 Tracke deine Stats kostenlos:</source>
-        <target>Hit my daily goal of <ph id="0" equiv="goal" disp="goal"/> push-ups today! 💪 Track your stats for free:</target>
+        <source>Heute mein Tagesziel von <ph id="0" equiv="goal" disp="goal" /> Liegestützen geschafft! 💪 Tracke deine Stats kostenlos:</source>
+        <target>Hit my daily goal of <ph id="0" equiv="goal" disp="goal" /> push-ups today! 💪 Track your stats for free:</target>
       </segment>
     </unit>
     <unit id="goalReached.share.weekly.title">
@@ -6733,8 +6729,8 @@ Deine Position: # ·  Reps        </source>
     </unit>
     <unit id="goalReached.share.weekly.text">
       <segment state="translated">
-        <source>Wochenziel von <ph id="0" equiv="goal" disp="goal"/> Liegestützen geschafft – <ph id="1" equiv="total" disp="total"/> insgesamt! 💪 Tracke deine Stats kostenlos:</source>
-        <target>Hit my weekly goal of <ph id="0" equiv="goal" disp="goal"/> push-ups – <ph id="1" equiv="total" disp="total"/> total! 💪 Track your stats for free:</target>
+        <source>Wochenziel von <ph id="0" equiv="goal" disp="goal" /> Liegestützen geschafft – <ph id="1" equiv="total" disp="total" /> insgesamt! 💪 Tracke deine Stats kostenlos:</source>
+        <target>Hit my weekly goal of <ph id="0" equiv="goal" disp="goal" /> push-ups – <ph id="1" equiv="total" disp="total" /> total! 💪 Track your stats for free:</target>
       </segment>
     </unit>
     <unit id="goalReached.share.monthly.title">
@@ -6745,8 +6741,8 @@ Deine Position: # ·  Reps        </source>
     </unit>
     <unit id="goalReached.share.monthly.text">
       <segment state="translated">
-        <source>Monatsziel von <ph id="0" equiv="goal" disp="goal"/> Liegestützen geschafft – <ph id="1" equiv="total" disp="total"/> insgesamt! 💪 Tracke deine Stats kostenlos:</source>
-        <target>Hit my monthly goal of <ph id="0" equiv="goal" disp="goal"/> push-ups – <ph id="1" equiv="total" disp="total"/> total! 💪 Track your stats for free:</target>
+        <source>Monatsziel von <ph id="0" equiv="goal" disp="goal" /> Liegestützen geschafft – <ph id="1" equiv="total" disp="total" /> insgesamt! 💪 Tracke deine Stats kostenlos:</source>
+        <target>Hit my monthly goal of <ph id="0" equiv="goal" disp="goal" /> push-ups – <ph id="1" equiv="total" disp="total" /> total! 💪 Track your stats for free:</target>
       </segment>
     </unit>
     <unit id="goalReached.share.plan.title">
@@ -6757,8 +6753,8 @@ Deine Position: # ·  Reps        </source>
     </unit>
     <unit id="goalReached.share.plan.text">
       <segment state="translated">
-        <source>Heute mein Trainingsplan-Ziel von <ph id="0" equiv="goal" disp="goal"/> Liegestützen erreicht – <ph id="1" equiv="total" disp="total"/> insgesamt! 💪 Tracke deine Stats kostenlos:</source>
-        <target>Hit today's training plan goal of <ph id="0" equiv="goal" disp="goal"/> push-ups – <ph id="1" equiv="total" disp="total"/> total! 💪 Track your stats for free:</target>
+        <source>Heute mein Trainingsplan-Ziel von <ph id="0" equiv="goal" disp="goal" /> Liegestützen erreicht – <ph id="1" equiv="total" disp="total" /> insgesamt! 💪 Tracke deine Stats kostenlos:</source>
+        <target>Hit today's training plan goal of <ph id="0" equiv="goal" disp="goal" /> push-ups – <ph id="1" equiv="total" disp="total" /> total! 💪 Track your stats for free:</target>
       </segment>
     </unit>
     <unit id="dashboard.share">
@@ -6781,26 +6777,26 @@ Deine Position: # ·  Reps        </source>
     </unit>
     <unit id="dashboard.share.text.simple">
       <segment state="translated">
-        <source>Heute schon <ph id="0" equiv="total" disp="total"/> Liegestütze geschafft! 💪 Tracke deine Stats kostenlos:</source>
-        <target>Already <ph id="0" equiv="total" disp="total"/> push-ups today! 💪 Track your stats for free:</target>
+        <source>Heute schon <ph id="0" equiv="total" disp="total" /> Liegestütze geschafft! 💪 Tracke deine Stats kostenlos:</source>
+        <target>Already <ph id="0" equiv="total" disp="total" /> push-ups today! 💪 Track your stats for free:</target>
       </segment>
     </unit>
     <unit id="dashboard.share.text.streak">
       <segment state="translated">
-        <source>Heute schon <ph id="0" equiv="total" disp="total"/> Liegestütze geschafft – Streak: <ph id="1" equiv="streak" disp="streak"/> Tage 🔥 Tracke deine Stats kostenlos:</source>
-        <target>Already <ph id="0" equiv="total" disp="total"/> push-ups today – streak: <ph id="1" equiv="streak" disp="streak"/> days 🔥 Track your stats for free:</target>
+        <source>Heute schon <ph id="0" equiv="total" disp="total" /> Liegestütze geschafft – Streak: <ph id="1" equiv="streak" disp="streak" /> Tage 🔥 Tracke deine Stats kostenlos:</source>
+        <target>Already <ph id="0" equiv="total" disp="total" /> push-ups today – streak: <ph id="1" equiv="streak" disp="streak" /> days 🔥 Track your stats for free:</target>
       </segment>
     </unit>
     <unit id="dashboard.share.text.profile.simple">
       <segment state="translated">
-        <source>Heute schon <ph id="0" equiv="total" disp="total"/> Liegestütze geschafft! 💪 Schau dir mein Profil an:</source>
-        <target>Already <ph id="0" equiv="total" disp="total"/> push-ups today! 💪 Check out my profile:</target>
+        <source>Heute schon <ph id="0" equiv="total" disp="total" /> Liegestütze geschafft! 💪 Schau dir mein Profil an:</source>
+        <target>Already <ph id="0" equiv="total" disp="total" /> push-ups today! 💪 Check out my profile:</target>
       </segment>
     </unit>
     <unit id="dashboard.share.text.profile.streak">
       <segment state="translated">
-        <source>Heute schon <ph id="0" equiv="total" disp="total"/> Liegestütze geschafft – Streak: <ph id="1" equiv="streak" disp="streak"/> Tage 🔥 Schau dir mein Profil an:</source>
-        <target>Already <ph id="0" equiv="total" disp="total"/> push-ups today – streak: <ph id="1" equiv="streak" disp="streak"/> days 🔥 Check out my profile:</target>
+        <source>Heute schon <ph id="0" equiv="total" disp="total" /> Liegestütze geschafft – Streak: <ph id="1" equiv="streak" disp="streak" /> Tage 🔥 Schau dir mein Profil an:</source>
+        <target>Already <ph id="0" equiv="total" disp="total" /> push-ups today – streak: <ph id="1" equiv="streak" disp="streak" /> days 🔥 Check out my profile:</target>
       </segment>
     </unit>
     <unit id="share.success.clipboard">
@@ -6859,8 +6855,8 @@ Deine Position: # ·  Reps        </source>
     </unit>
     <unit id="publicProfile.seo.imageAlt">
       <segment state="translated">
-        <source><ph id="0" equiv="name" disp="name"/> auf Pushup Tracker</source>
-        <target><ph id="0" equiv="name" disp="name"/> on Pushup Tracker</target>
+        <source><ph id="0" equiv="name" disp="name" /> auf Pushup Tracker</source>
+        <target><ph id="0" equiv="name" disp="name" /> on Pushup Tracker</target>
       </segment>
     </unit>
     <unit id="publicProfile.notFound.title">
@@ -6961,8 +6957,8 @@ Deine Position: # ·  Reps        </source>
     </unit>
     <unit id="publicProfile.share.text">
       <segment state="translated">
-        <source><ph id="0" equiv="name" disp="name"/> hat <ph id="1" equiv="total" disp="total"/> Liegestütze auf Pushup Tracker geschafft 💪 Schau's dir an:</source>
-        <target><ph id="0" equiv="name" disp="name"/> hit <ph id="1" equiv="total" disp="total"/> push-ups on Pushup Tracker 💪 Check it out:</target>
+        <source><ph id="0" equiv="name" disp="name" /> hat <ph id="1" equiv="total" disp="total" /> Liegestütze auf Pushup Tracker geschafft 💪 Schau's dir an:</source>
+        <target><ph id="0" equiv="name" disp="name" /> hit <ph id="1" equiv="total" disp="total" /> push-ups on Pushup Tracker 💪 Check it out:</target>
       </segment>
     </unit>
     <unit id="publicProfile.share.title">
@@ -6985,14 +6981,14 @@ Deine Position: # ·  Reps        </source>
     </unit>
     <unit id="publicProfile.seo.title">
       <segment state="translated">
-        <source><ph id="0" equiv="name" disp="name"/> – <ph id="1" equiv="total" disp="total"/> Liegestütze · Streak <ph id="2" equiv="streak" disp="streak"/> · Pushup Tracker</source>
-        <target><ph id="0" equiv="name" disp="name"/> – <ph id="1" equiv="total" disp="total"/> push-ups · streak <ph id="2" equiv="streak" disp="streak"/> · Pushup Tracker</target>
+        <source><ph id="0" equiv="name" disp="name" /> – <ph id="1" equiv="total" disp="total" /> Liegestütze · Streak <ph id="2" equiv="streak" disp="streak" /> · Pushup Tracker</source>
+        <target><ph id="0" equiv="name" disp="name" /> – <ph id="1" equiv="total" disp="total" /> push-ups · streak <ph id="2" equiv="streak" disp="streak" /> · Pushup Tracker</target>
       </segment>
     </unit>
     <unit id="publicProfile.seo.description">
       <segment state="translated">
-        <source><ph id="0" equiv="name" disp="name"/> hat <ph id="1" equiv="total" disp="total"/> Liegestütze in <ph id="2" equiv="days" disp="days"/> aktiven Tagen geschafft – aktuelle Streak: <ph id="3" equiv="streak" disp="streak"/> Tage. Tracke selbst kostenlos auf pushup-stats.com.</source>
-        <target><ph id="0" equiv="name" disp="name"/> hit <ph id="1" equiv="total" disp="total"/> push-ups across <ph id="2" equiv="days" disp="days"/> active days – current streak: <ph id="3" equiv="streak" disp="streak"/> days. Start tracking free at pushup-stats.com.</target>
+        <source><ph id="0" equiv="name" disp="name" /> hat <ph id="1" equiv="total" disp="total" /> Liegestütze in <ph id="2" equiv="days" disp="days" /> aktiven Tagen geschafft – aktuelle Streak: <ph id="3" equiv="streak" disp="streak" /> Tage. Tracke selbst kostenlos auf pushup-stats.com.</source>
+        <target><ph id="0" equiv="name" disp="name" /> hit <ph id="1" equiv="total" disp="total" /> push-ups across <ph id="2" equiv="days" disp="days" /> active days – current streak: <ph id="3" equiv="streak" disp="streak" /> days. Start tracking free at pushup-stats.com.</target>
       </segment>
     </unit>
     <unit id="settings.publicProfile.toggle">
@@ -7026,7 +7022,7 @@ Deine Position: # ·  Reps        </source>
       </segment>
     </unit>
 
-    <!-- Pushup-types wiki page -->
+    
     <unit id="seo.wiki.pushupTypes.title">
       <segment state="translated">
         <source>Liegestütztypen erklärt – Pushup Tracker</source>
@@ -7094,7 +7090,7 @@ Deine Position: # ·  Reps        </source>
       </segment>
     </unit>
 
-    <!-- Exercises wiki page -->
+    
     <unit id="seo.wiki.exercises.title">
       <segment state="translated">
         <source>Übungen erklärt – Pushup Tracker</source>
@@ -7978,268 +7974,268 @@ Deine Position: # ·  Reps        </source>
         <target>User management, feedback and clean-up.</target>
       </segment>
     </unit>
-    <!-- Cross-reference links -->
+    
     <unit id="dashboard.noPlanTitle">
       <segment state="translated">
-        <source/>
+        <source />
         <target>No active training plan yet</target>
       </segment>
     </unit>
     <unit id="dashboard.noPlanSubtitle">
       <segment state="translated">
-        <source/>
+        <source />
         <target> Pick a plan to have your daily goal set automatically. </target>
       </segment>
     </unit>
     <unit id="dashboard.noPlanCta">
       <segment state="translated">
-        <source/>
+        <source />
         <target> Pick a plan </target>
       </segment>
     </unit>
     <unit id="dashboard.goalEditAria">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Open daily goal in settings</target>
       </segment>
     </unit>
     <unit id="dashboard.lastEntryLinkAria">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Open last entry in history</target>
       </segment>
     </unit>
     <unit id="settings.displayNameHint.leaderboardLink">
       <segment state="translated">
-        <source/>
+        <source />
         <target>View leaderboard</target>
       </segment>
     </unit>
     <unit id="settings.publicProfile.previewCta">
       <segment state="translated">
-        <source/>
+        <source />
         <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">visibility</pc> Preview</target>
       </segment>
     </unit>
     <unit id="settings.goals.planOverrideHint">
       <segment state="translated">
-        <source/>
+        <source />
         <target> An active training plan sets your daily goal automatically. Manual values only apply once the plan ends. </target>
       </segment>
     </unit>
     <unit id="settings.goals.openActivePlan">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Open active plan</target>
       </segment>
     </unit>
     <unit id="settings.adsConsent.privacyLink">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Privacy policy</target>
       </segment>
     </unit>
     <unit id="leaderboard.visibilityHint">
       <segment state="translated">
-        <source/>
+        <source />
         <target> Want to change your visibility or display name? </target>
       </segment>
     </unit>
     <unit id="leaderboard.visibilityHint.cta">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Open settings</target>
       </segment>
     </unit>
     <unit id="leaderboard.loginHint">
       <segment state="translated">
-        <source/>
+        <source />
         <target> Want to compete and show up here? </target>
       </segment>
     </unit>
     <unit id="leaderboard.loginHint.cta">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Sign in</target>
       </segment>
     </unit>
     <unit id="trainingPlans.goalOverrideHint">
       <segment state="translated">
-        <source/>
+        <source />
         <target> Your daily goal is set by the plan. </target>
       </segment>
     </unit>
     <unit id="trainingPlans.goalOverrideHint.cta">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Adjust manual goals</target>
       </segment>
     </unit>
     <unit id="entries.empty.title">
       <segment state="translated">
-        <source/>
+        <source />
         <target>No entries yet.</target>
       </segment>
     </unit>
     <unit id="entries.empty.body">
       <segment state="translated">
-        <source/>
+        <source />
         <target> Add your first training entry — your history will appear here. </target>
       </segment>
     </unit>
     <unit id="entries.empty.cta">
       <segment state="translated">
-        <source/>
+        <source />
         <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">add</pc> Create entry</target>
       </segment>
     </unit>
     <unit id="analysis.empty.title">
       <segment state="translated">
-        <source/>
+        <source />
         <target>No data to analyse yet.</target>
       </segment>
     </unit>
     <unit id="analysis.empty.body">
       <segment state="translated">
-        <source/>
+        <source />
         <target> Start a training plan or log your first set — we'll show trends and streaks here. </target>
       </segment>
     </unit>
     <unit id="analysis.empty.cta">
       <segment state="translated">
-        <source/>
+        <source />
         <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">fitness_center</pc> Pick a training plan</target>
       </segment>
     </unit>
     <unit id="analysis.tabs.overview">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Overview</target>
       </segment>
     </unit>
     <unit id="analysis.overview.empty">
       <segment state="translated">
-        <source/>
+        <source />
         <target>No entries in the current date range yet.</target>
       </segment>
     </unit>
     <unit id="analysis.overview.uncategorisedNotice">
       <segment state="translated">
-        <source/>
+        <source />
         <target>These entries don't belong to a known category — aggregate below.</target>
       </segment>
     </unit>
     <unit id="analysis.overview.comparison.title">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Comparison by exercise group</target>
       </segment>
     </unit>
     <unit id="analysis.overview.comparison.empty">
       <segment state="translated">
-        <source/>
+        <source />
         <target>No data in the current date range.</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.totalReps">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Total reps</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.todayReps">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Today</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.bestDay">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Best day</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.streak">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Streak</target>
       </segment>
     </unit>
     <unit id="analysis.overview.comparison.metricLabel">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Training sessions</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.facet.repsTitle">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Reps</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.totalSets">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Total sets</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.facet.timeTitle">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Time</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.totalTime">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Total time</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.todayTime">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Today</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.facet.distanceTitle">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Distance</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.totalDistance">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Total distance</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.todayDistance">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Today</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.facet.distanceTimeTitle">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Distance &amp; Time</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.entries">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Training sessions</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.viewDetails">
       <segment state="translated">
-        <source/>
+        <source />
         <target>View details</target>
       </segment>
     </unit>
     <unit id="dashboard.allTimeBadges.cta">
       <segment state="translated">
-        <source/>
+        <source />
         <target>Open analysis</target>
       </segment>
     </unit>
@@ -8274,579 +8270,579 @@ Deine Position: # ·  Reps        </source>
       </segment>
     </unit>
       <unit id="exercise.category.push">
-      <segment state="initial">
+      <segment state="translated">
         <source>Drücken</source>
-        <target>Drücken</target>
+        <target>Push</target>
       </segment>
     </unit>
     <unit id="exercise.category.pull">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ziehen</source>
-        <target>Ziehen</target>
+        <target>Pull</target>
       </segment>
     </unit>
     <unit id="exercise.category.squat">
-      <segment state="initial">
+      <segment state="translated">
         <source>Kniebeuge</source>
-        <target>Kniebeuge</target>
+        <target>Squat</target>
       </segment>
     </unit>
     <unit id="exercise.category.hinge">
-      <segment state="initial">
+      <segment state="translated">
         <source>Hüftstreckung</source>
-        <target>Hüftstreckung</target>
+        <target>Hinge</target>
       </segment>
     </unit>
     <unit id="exercise.category.lunge">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ausfallschritt</source>
-        <target>Ausfallschritt</target>
+        <target>Lunge</target>
       </segment>
     </unit>
     <unit id="exercise.category.carry">
-      <segment state="initial">
+      <segment state="translated">
         <source>Tragen</source>
-        <target>Tragen</target>
+        <target>Carry</target>
       </segment>
     </unit>
     <unit id="exercise.category.core">
-      <segment state="initial">
+      <segment state="translated">
         <source>Rumpf</source>
-        <target>Rumpf</target>
+        <target>Core</target>
       </segment>
     </unit>
     <unit id="exercise.category.mobility">
-      <segment state="initial">
+      <segment state="translated">
         <source>Mobilität</source>
-        <target>Mobilität</target>
+        <target>Mobility</target>
       </segment>
     </unit>
     <unit id="exercise.category.strength">
-      <segment state="initial">
+      <segment state="translated">
         <source>Krafttraining</source>
-        <target>Krafttraining</target>
+        <target>Strength</target>
       </segment>
     </unit>
     <unit id="exercise.core.deadbug.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Dead Bug</source>
         <target>Dead Bug</target>
       </segment>
     </unit>
     <unit id="exercise.core.hollowhold.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Hollow Hold</source>
         <target>Hollow Hold</target>
       </segment>
     </unit>
     <unit id="exercise.squat.wallsit.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Wandsitz</source>
-        <target>Wandsitz</target>
+        <target>Wall Sit</target>
       </segment>
     </unit>
     <unit id="exercise.squat.boxjump.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Box Jumps</source>
         <target>Box Jumps</target>
       </segment>
     </unit>
     <unit id="exercise.hinge.singlelegRdl.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Einbeiniges Kreuzheben</source>
-        <target>Einbeiniges Kreuzheben</target>
+        <target>Single-Leg Deadlift</target>
       </segment>
     </unit>
     <unit id="exercise.hinge.goodmorning.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Good Morning</source>
         <target>Good Morning</target>
       </segment>
     </unit>
     <unit id="exercise.lunge.stepup.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Step-ups</source>
         <target>Step-ups</target>
       </segment>
     </unit>
     <unit id="exercise.pull.pullups.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Klimmzüge</source>
-        <target>Klimmzüge</target>
+        <target>Pull-ups</target>
       </segment>
     </unit>
     <unit id="exercise.pull.rows.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ruderzug</source>
-        <target>Ruderzug</target>
+        <target>Rows</target>
       </segment>
     </unit>
     <unit id="exercise.pull.deadhang.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Dead Hang</source>
         <target>Dead Hang</target>
       </segment>
     </unit>
     <unit id="exercise.pull.facepull.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Face Pull</source>
         <target>Face Pull</target>
       </segment>
     </unit>
     <unit id="exercise.carry.farmer.name">
-      <segment state="initial">
-        <source>Farmer&apos;s Walk</source>
-        <target>Farmer&apos;s Walk</target>
+      <segment state="translated">
+        <source>Farmer's Walk</source>
+        <target>Farmer's Walk</target>
       </segment>
     </unit>
     <unit id="exercise.carry.suitcase.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Suitcase Carry</source>
         <target>Suitcase Carry</target>
       </segment>
     </unit>
     <unit id="exercise.carry.overhead.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Overhead Carry</source>
         <target>Overhead Carry</target>
       </segment>
     </unit>
     <unit id="exercise.cardio.walking.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Gehen</source>
-        <target>Gehen</target>
+        <target>Walking</target>
       </segment>
     </unit>
     <unit id="exercise.cardio.cycling.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Radfahren</source>
-        <target>Radfahren</target>
+        <target>Cycling</target>
       </segment>
     </unit>
     <unit id="exercise.cardio.rowing.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Rudern</source>
-        <target>Rudern</target>
+        <target>Rowing</target>
       </segment>
     </unit>
     <unit id="exercise.cardio.swimming.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Schwimmen</source>
-        <target>Schwimmen</target>
+        <target>Swimming</target>
       </segment>
     </unit>
     <unit id="exercise.cardio.jumprope.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Seilspringen</source>
-        <target>Seilspringen</target>
+        <target>Jump Rope</target>
       </segment>
     </unit>
     <unit id="exercise.cardio.burpees.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Burpees</source>
         <target>Burpees</target>
       </segment>
     </unit>
     <unit id="exercise.cardio.jumpingjacks.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Hampelmänner</source>
-        <target>Hampelmänner</target>
+        <target>Jumping Jacks</target>
       </segment>
     </unit>
     <unit id="exercise.cardio.highknees.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>High Knees</source>
         <target>High Knees</target>
       </segment>
     </unit>
     <unit id="exercise.mobility.stretching.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Dehnen</source>
-        <target>Dehnen</target>
+        <target>Stretching</target>
       </segment>
     </unit>
     <unit id="exercise.mobility.yoga.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Yoga</source>
         <target>Yoga</target>
       </segment>
     </unit>
     <unit id="exercise.mobility.foamrolling.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Faszienrolle</source>
-        <target>Faszienrolle</target>
+        <target>Foam Rolling</target>
       </segment>
     </unit>
     <unit id="exercise.mobility.dynamicwarmup.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Dynamisches Aufwärmen</source>
-        <target>Dynamisches Aufwärmen</target>
+        <target>Dynamic Warm-up</target>
       </segment>
     </unit>
     <unit id="exercise.mobility.catcow.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Katze-Kuh</source>
-        <target>Katze-Kuh</target>
+        <target>Cat-Cow</target>
       </segment>
     </unit>
     <unit id="exercise.mobility.hipopener.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Hüftöffner</source>
-        <target>Hüftöffner</target>
+        <target>Hip Opener</target>
       </segment>
     </unit>
     <unit id="exercise.strength.benchpress.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Bankdrücken</source>
-        <target>Bankdrücken</target>
+        <target>Bench Press</target>
       </segment>
     </unit>
     <unit id="exercise.strength.overheadpress.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Schulterdrücken</source>
-        <target>Schulterdrücken</target>
+        <target>Overhead Press</target>
       </segment>
     </unit>
     <unit id="exercise.strength.deadlift.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Kreuzheben</source>
-        <target>Kreuzheben</target>
+        <target>Deadlift</target>
       </segment>
     </unit>
     <unit id="exercise.strength.barbellsquat.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Langhantel-Kniebeuge</source>
-        <target>Langhantel-Kniebeuge</target>
+        <target>Barbell Squat</target>
       </segment>
     </unit>
     <unit id="exercise.strength.barbellrow.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Langhantelrudern</source>
-        <target>Langhantelrudern</target>
+        <target>Barbell Row</target>
       </segment>
     </unit>
     <unit id="exercise.strength.kettlebellswing.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Kettlebell Swing</source>
         <target>Kettlebell Swing</target>
       </segment>
     </unit>
       <unit id="exercise.variant.situps.standard">
-      <segment state="initial">
+      <segment state="translated">
         <source>Standard</source>
         <target>Standard</target>
       </segment>
     </unit>
     <unit id="exercise.variant.situps.decline">
-      <segment state="initial">
+      <segment state="translated">
         <source>Decline</source>
         <target>Decline</target>
       </segment>
     </unit>
     <unit id="exercise.variant.situps.weighted">
-      <segment state="initial">
+      <segment state="translated">
         <source>Mit Zusatzgewicht</source>
-        <target>Mit Zusatzgewicht</target>
+        <target>Weighted</target>
       </segment>
     </unit>
     <unit id="exercise.variant.crunches.standard">
-      <segment state="initial">
+      <segment state="translated">
         <source>Standard</source>
         <target>Standard</target>
       </segment>
     </unit>
     <unit id="exercise.variant.crunches.reverse">
-      <segment state="initial">
+      <segment state="translated">
         <source>Reverse Crunches</source>
         <target>Reverse Crunches</target>
       </segment>
     </unit>
     <unit id="exercise.variant.crunches.bicycle">
-      <segment state="initial">
+      <segment state="translated">
         <source>Bicycle Crunches</source>
         <target>Bicycle Crunches</target>
       </segment>
     </unit>
     <unit id="exercise.variant.crunches.oblique">
-      <segment state="initial">
+      <segment state="translated">
         <source>Schräge Crunches</source>
-        <target>Schräge Crunches</target>
+        <target>Oblique Crunches</target>
       </segment>
     </unit>
     <unit id="exercise.variant.legraises.lying">
-      <segment state="initial">
+      <segment state="translated">
         <source>Liegend</source>
-        <target>Liegend</target>
+        <target>Lying</target>
       </segment>
     </unit>
     <unit id="exercise.variant.legraises.hanging-knee">
-      <segment state="initial">
+      <segment state="translated">
         <source>Hängend (Knie)</source>
-        <target>Hängend (Knie)</target>
+        <target>Hanging (Knee)</target>
       </segment>
     </unit>
     <unit id="exercise.variant.legraises.hanging-straight">
-      <segment state="initial">
+      <segment state="translated">
         <source>Hängend (gestreckt)</source>
-        <target>Hängend (gestreckt)</target>
+        <target>Hanging (Straight)</target>
       </segment>
     </unit>
     <unit id="exercise.variant.russiantwist.bodyweight">
-      <segment state="initial">
+      <segment state="translated">
         <source>Eigengewicht</source>
-        <target>Eigengewicht</target>
+        <target>Bodyweight</target>
       </segment>
     </unit>
     <unit id="exercise.variant.russiantwist.weighted">
-      <segment state="initial">
+      <segment state="translated">
         <source>Mit Zusatzgewicht</source>
-        <target>Mit Zusatzgewicht</target>
+        <target>Weighted</target>
       </segment>
     </unit>
     <unit id="exercise.variant.mountainclimbers.standard">
-      <segment state="initial">
+      <segment state="translated">
         <source>Standard</source>
         <target>Standard</target>
       </segment>
     </unit>
     <unit id="exercise.variant.mountainclimbers.cross-body">
-      <segment state="initial">
+      <segment state="translated">
         <source>Cross-Body</source>
         <target>Cross-Body</target>
       </segment>
     </unit>
     <unit id="exercise.variant.plank.standard">
-      <segment state="initial">
+      <segment state="translated">
         <source>Standard</source>
         <target>Standard</target>
       </segment>
     </unit>
     <unit id="exercise.variant.plank.forearm">
-      <segment state="initial">
+      <segment state="translated">
         <source>Unterarmstütz</source>
-        <target>Unterarmstütz</target>
+        <target>Forearm Plank</target>
       </segment>
     </unit>
     <unit id="exercise.variant.plank.side">
-      <segment state="initial">
+      <segment state="translated">
         <source>Seitlich</source>
-        <target>Seitlich</target>
+        <target>Side</target>
       </segment>
     </unit>
     <unit id="exercise.variant.plank.reverse">
-      <segment state="initial">
+      <segment state="translated">
         <source>Umgekehrt</source>
-        <target>Umgekehrt</target>
+        <target>Reverse</target>
       </segment>
     </unit>
     <unit id="exercise.variant.squats.bodyweight">
-      <segment state="initial">
+      <segment state="translated">
         <source>Eigengewicht</source>
-        <target>Eigengewicht</target>
+        <target>Bodyweight</target>
       </segment>
     </unit>
     <unit id="exercise.variant.squats.sumo">
-      <segment state="initial">
+      <segment state="translated">
         <source>Sumo</source>
         <target>Sumo</target>
       </segment>
     </unit>
     <unit id="exercise.variant.squats.goblet">
-      <segment state="initial">
+      <segment state="translated">
         <source>Goblet</source>
         <target>Goblet</target>
       </segment>
     </unit>
     <unit id="exercise.variant.squats.bulgarian-split">
-      <segment state="initial">
+      <segment state="translated">
         <source>Bulgarian Split</source>
         <target>Bulgarian Split</target>
       </segment>
     </unit>
     <unit id="exercise.variant.squats.pistol">
-      <segment state="initial">
+      <segment state="translated">
         <source>Pistol</source>
         <target>Pistol</target>
       </segment>
     </unit>
     <unit id="exercise.variant.calfraises.standard">
-      <segment state="initial">
+      <segment state="translated">
         <source>Standard</source>
         <target>Standard</target>
       </segment>
     </unit>
     <unit id="exercise.variant.calfraises.single-leg">
-      <segment state="initial">
+      <segment state="translated">
         <source>Einbeinig</source>
-        <target>Einbeinig</target>
+        <target>Single-Leg</target>
       </segment>
     </unit>
     <unit id="exercise.variant.calfraises.seated">
-      <segment state="initial">
+      <segment state="translated">
         <source>Sitzend</source>
-        <target>Sitzend</target>
+        <target>Seated</target>
       </segment>
     </unit>
     <unit id="exercise.variant.glutebridge.standard">
-      <segment state="initial">
+      <segment state="translated">
         <source>Standard</source>
         <target>Standard</target>
       </segment>
     </unit>
     <unit id="exercise.variant.glutebridge.single-leg">
-      <segment state="initial">
+      <segment state="translated">
         <source>Einbeinig</source>
-        <target>Einbeinig</target>
+        <target>Single-Leg</target>
       </segment>
     </unit>
     <unit id="exercise.variant.glutebridge.hip-thrust">
-      <segment state="initial">
+      <segment state="translated">
         <source>Hip Thrust</source>
         <target>Hip Thrust</target>
       </segment>
     </unit>
     <unit id="exercise.variant.glutebridge.march">
-      <segment state="initial">
+      <segment state="translated">
         <source>Marching</source>
         <target>Marching</target>
       </segment>
     </unit>
     <unit id="exercise.variant.lunges.forward">
-      <segment state="initial">
+      <segment state="translated">
         <source>Vorwärts</source>
-        <target>Vorwärts</target>
+        <target>Forward</target>
       </segment>
     </unit>
     <unit id="exercise.variant.lunges.reverse">
-      <segment state="initial">
+      <segment state="translated">
         <source>Rückwärts</source>
-        <target>Rückwärts</target>
+        <target>Reverse</target>
       </segment>
     </unit>
     <unit id="exercise.variant.lunges.walking">
-      <segment state="initial">
+      <segment state="translated">
         <source>Walking</source>
         <target>Walking</target>
       </segment>
     </unit>
     <unit id="exercise.variant.lunges.lateral">
-      <segment state="initial">
+      <segment state="translated">
         <source>Seitlich</source>
-        <target>Seitlich</target>
+        <target>Lateral</target>
       </segment>
     </unit>
     <unit id="exercise.variant.lunges.curtsy">
-      <segment state="initial">
+      <segment state="translated">
         <source>Curtsy</source>
         <target>Curtsy</target>
       </segment>
     </unit>
     <unit id="exercise.variant.lunges.jumping">
-      <segment state="initial">
+      <segment state="translated">
         <source>Jumping</source>
         <target>Jumping</target>
       </segment>
     </unit>
     <unit id="exercise.variant.pullups.standard">
-      <segment state="initial">
+      <segment state="translated">
         <source>Standard</source>
         <target>Standard</target>
       </segment>
     </unit>
     <unit id="exercise.variant.pullups.chin-up">
-      <segment state="initial">
+      <segment state="translated">
         <source>Chin-up</source>
         <target>Chin-up</target>
       </segment>
     </unit>
     <unit id="exercise.variant.pullups.wide-grip">
-      <segment state="initial">
+      <segment state="translated">
         <source>Breiter Griff</source>
-        <target>Breiter Griff</target>
+        <target>Wide Grip</target>
       </segment>
     </unit>
     <unit id="exercise.variant.pullups.neutral-grip">
-      <segment state="initial">
+      <segment state="translated">
         <source>Neutraler Griff</source>
-        <target>Neutraler Griff</target>
+        <target>Neutral Grip</target>
       </segment>
     </unit>
     <unit id="exercise.variant.pullups.negative">
-      <segment state="initial">
+      <segment state="translated">
         <source>Negativ</source>
-        <target>Negativ</target>
+        <target>Negative</target>
       </segment>
     </unit>
     <unit id="exercise.variant.pullups.assisted">
-      <segment state="initial">
+      <segment state="translated">
         <source>Assistiert</source>
-        <target>Assistiert</target>
+        <target>Assisted</target>
       </segment>
     </unit>
     <unit id="exercise.variant.pullups.archer">
-      <segment state="initial">
+      <segment state="translated">
         <source>Archer</source>
         <target>Archer</target>
       </segment>
     </unit>
     <unit id="exercise.variant.rows.inverted">
-      <segment state="initial">
+      <segment state="translated">
         <source>Inverted Row</source>
         <target>Inverted Row</target>
       </segment>
     </unit>
     <unit id="exercise.variant.rows.australian">
-      <segment state="initial">
+      <segment state="translated">
         <source>Australian Row</source>
         <target>Australian Row</target>
       </segment>
     </unit>
     <unit id="exercise.variant.rows.dumbbell">
-      <segment state="initial">
+      <segment state="translated">
         <source>Kurzhantel</source>
-        <target>Kurzhantel</target>
+        <target>Dumbbell</target>
       </segment>
     </unit>
     <unit id="exercise.variant.rows.barbell">
-      <segment state="initial">
+      <segment state="translated">
         <source>Langhantel</source>
-        <target>Langhantel</target>
+        <target>Barbell</target>
       </segment>
     </unit>
     <unit id="exercise.push.dips.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Dips</source>
         <target>Dips</target>
       </segment>
     </unit>
     <unit id="exercise.push.benchdips.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Bankdips</source>
-        <target>Bankdips</target>
+        <target>Bench Dips</target>
       </segment>
     </unit>
     <unit id="exercise.push.handstandhold.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Handstand-Hold</source>
-        <target>Handstand-Hold</target>
+        <target>Handstand Hold</target>
       </segment>
     </unit>
     <unit id="exercise.variant.dips.parallel">
-      <segment state="initial">
+      <segment state="translated">
         <source>Barren</source>
-        <target>Barren</target>
+        <target>Parallel Bars</target>
       </segment>
     </unit>
     <unit id="exercise.variant.dips.straight-bar">
-      <segment state="initial">
+      <segment state="translated">
         <source>Stange</source>
-        <target>Stange</target>
+        <target>Straight Bar</target>
       </segment>
     </unit>
     <unit id="exercise.variant.dips.ring">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ringe</source>
-        <target>Ringe</target>
+        <target>Rings</target>
       </segment>
     </unit>
       <unit id="exerciseTimer.title">
@@ -9613,8 +9609,8 @@ Deine Position: # ·  Reps        </source>
     </unit>
     <unit id="plan.push-pull-6w.summary">
       <segment state="translated">
-        <source>Symmetrischer 6-Wochen-Plan für Liegestütze und Rückenübungen (Rudern, Klimmzug-Negative, Face Pulls). Vermeidet das klassische &quot;nur Push&quot;-Ungleichgewicht und stärkt die hintere Kette gleichwertig. Pull-Tag pro Woche zusätzlich zur Push-Progression.</source>
-        <target>Symmetric 6-week plan for push-ups and pulling work (rows, pull-up negatives, face pulls). Avoids the classic &quot;push only&quot; imbalance and strengthens the posterior chain equally. One dedicated pull day per week on top of the push progression.</target>
+        <source>Symmetrischer 6-Wochen-Plan für Liegestütze und Rückenübungen (Rudern, Klimmzug-Negative, Face Pulls). Vermeidet das klassische "nur Push"-Ungleichgewicht und stärkt die hintere Kette gleichwertig. Pull-Tag pro Woche zusätzlich zur Push-Progression.</source>
+        <target>Symmetric 6-week plan for push-ups and pulling work (rows, pull-up negatives, face pulls). Avoids the classic "push only" imbalance and strengthens the posterior chain equally. One dedicated pull day per week on top of the push progression.</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.title">

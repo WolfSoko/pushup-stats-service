@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version='1.0' encoding='utf-8'?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="de" trgLang="zh">
   <file id="ngi18n" original="ng.template">
     <unit id="consent.banner.aria">
@@ -4626,14 +4626,14 @@
     </unit>
     <unit id="entryDialog.overCapDuration">
       <segment state="translated">
-        <source>Maximum-Dauer: <ph id="0" equiv="INTERPOLATION" disp="{{ formattedDurationMax() }}"/></source>
-        <target>最长时长：<ph id="0" equiv="INTERPOLATION" disp="{{ formattedDurationMax() }}"/></target>
+        <source>Maximum-Dauer: <ph id="0" equiv="INTERPOLATION" disp="{{ formattedDurationMax() }}" /></source>
+        <target>最长时长：<ph id="0" equiv="INTERPOLATION" disp="{{ formattedDurationMax() }}" /></target>
       </segment>
     </unit>
     <unit id="entryDialog.overCapTime">
       <segment state="translated">
-        <source>Maximum: <ph id="0" equiv="INTERPOLATION" disp="{{ formattedMax() }}"/></source>
-        <target>最大: <ph id="0" equiv="INTERPOLATION" disp="{{ formattedMax() }}"/></target>
+        <source>Maximum: <ph id="0" equiv="INTERPOLATION" disp="{{ formattedMax() }}" /></source>
+        <target>最大: <ph id="0" equiv="INTERPOLATION" disp="{{ formattedMax() }}" /></target>
       </segment>
     </unit>
     <unit id="exercise.category.plank">
@@ -4674,8 +4674,8 @@
     </unit>
     <unit id="entryDialog.overCap">
       <segment state="translated">
-        <source> Maximum: <ph id="0" equiv="INTERPOLATION" disp="{{ data.definition.max }}"/> pro Eintrag </source>
-        <target> 每条记录最多 <ph id="0" equiv="INTERPOLATION" disp="{{ data.definition.max }}"/> </target>
+        <source> Maximum: <ph id="0" equiv="INTERPOLATION" disp="{{ data.definition.max }}" /> pro Eintrag </source>
+        <target> 每条记录最多 <ph id="0" equiv="INTERPOLATION" disp="{{ data.definition.max }}" /> </target>
       </segment>
     </unit>
     <unit id="exerciseSection.lastEntry">
@@ -4735,7 +4735,7 @@
     <unit id="exercise.abs.legraises.name">
       <segment state="translated">
         <source>Beinheben</source>
-        <target>Beinheben</target>
+        <target>抬腿</target>
       </segment>
     </unit>
     <unit id="exercise.abs.russiantwist.name">
@@ -5258,46 +5258,39 @@
       <target> 没有可用的组次数数据 </target></segment>
     </unit>
     <unit id="intervalsDistribution.noData">
-      <segment state="initial">
+      <segment state="translated">
         <source>Keine Intervall-Daten vorhanden</source>
-        <target>Keine Intervall-Daten vorhanden</target>
-      </segment>
+        <target>无区间数据</target></segment>
     </unit>
     <unit id="intervalsDistribution.listLabel">
-      <segment state="initial">
+      <segment state="translated">
         <source>Intervall-Verteilung</source>
-        <target>Intervall-Verteilung</target>
-      </segment>
+        <target>区间分布</target></segment>
     </unit>
     <unit id="entry.interval.label">
-      <segment state="initial">
-        <source>Intervall <ph id="0" equiv="INTERPOLATION" disp="{{ $index + 1 }}"/></source>
-        <target>Intervall <ph id="0" equiv="INTERPOLATION" disp="{{ $index + 1 }}"/></target>
-      </segment>
+      <segment state="translated">
+        <source>Intervall <ph id="0" equiv="INTERPOLATION" disp="{{ $index + 1 }}" /></source>
+        <target>区间 <ph id="0" equiv="INTERPOLATION" disp="{{ $index + 1 }}" /></target></segment>
     </unit>
     <unit id="entry.intervals.label">
-      <segment state="initial">
+      <segment state="translated">
         <source>Intervalle</source>
-        <target>Intervalle</target>
-      </segment>
+        <target>区间</target></segment>
     </unit>
     <unit id="entry.intervals.remove">
-      <segment state="initial">
+      <segment state="translated">
         <source>Intervall entfernen</source>
-        <target>Intervall entfernen</target>
-      </segment>
+        <target>移除区间</target></segment>
     </unit>
     <unit id="entry.intervals.add">
-      <segment state="initial">
+      <segment state="translated">
         <source>Intervall hinzufügen</source>
-        <target>Intervall hinzufügen</target>
-      </segment>
+        <target>添加区间</target></segment>
     </unit>
     <unit id="entry.intervals.addTooltip">
-      <segment state="initial">
+      <segment state="translated">
         <source>Weiteres Intervall hinzufügen</source>
-        <target>Weiteres Intervall hinzufügen</target>
-      </segment>
+        <target>添加另一个区间</target></segment>
     </unit>
     <unit id="chart.subtitle.reps">
       <notes>
@@ -6114,7 +6107,7 @@
     </unit>
     <unit id="settings.leaderboardRequiresPublicProfile">
       <segment state="translated">
-        <source/>
+        <source />
         <target> 只有启用了「公开档案」的用户才会出现在排行榜上。请在下方启用「公开档案」以使用此选项。 </target>
       </segment>
     </unit>
@@ -6758,8 +6751,8 @@
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:110</note>
       </notes>
       <segment state="translated">
-        <source><ph id="0" equiv="label" disp="label"/> in der Historie öffnen</source>
-        <target>在历史记录中打开<ph id="0" equiv="label" disp="label"/></target>
+        <source><ph id="0" equiv="label" disp="label" /> in der Historie öffnen</source>
+        <target>在历史记录中打开<ph id="0" equiv="label" disp="label" /></target>
       </segment>
     </unit>
     <unit id="dashboard.latestEntriesCtaAriaLabel">
@@ -6962,8 +6955,8 @@
     </unit>
     <unit id="trainingPlans.jumped">
       <segment state="translated">
-        <source>Auf Tag <ph id="0" equiv="INTERPOLATION" disp="dayIndex"/> gesprungen.</source>
-        <target>已跳转到第 <ph id="0" equiv="INTERPOLATION" disp="dayIndex"/> 天。</target>
+        <source>Auf Tag <ph id="0" equiv="INTERPOLATION" disp="dayIndex" /> gesprungen.</source>
+        <target>已跳转到第 <ph id="0" equiv="INTERPOLATION" disp="dayIndex" /> 天。</target>
       </segment>
     </unit>
     <unit id="trainingPlans.notFound">
@@ -7212,7 +7205,7 @@
       <target>高级</target></segment>
     </unit>
 
-    <!-- Exercises wiki page -->
+    
     <unit id="seo.wiki.exercises.title">
       <segment state="translated">
         <source>Übungen erklärt – Pushup Tracker</source>
@@ -7399,265 +7392,265 @@
     </unit>
     <unit id="leaderboard.visibilityHint">
       <segment state="translated">
-        <source/>
+        <source />
         <target> 想修改可见性或显示名称？ </target>
       </segment>
     </unit>
     <unit id="leaderboard.visibilityHint.cta">
       <segment state="translated">
-        <source/>
+        <source />
         <target>打开设置</target>
       </segment>
     </unit>
     <unit id="leaderboard.loginHint">
       <segment state="translated">
-        <source/>
+        <source />
         <target> 想参与并出现在这里？ </target>
       </segment>
     </unit>
     <unit id="leaderboard.loginHint.cta">
       <segment state="translated">
-        <source/>
+        <source />
         <target>登录</target>
       </segment>
     </unit>
     <unit id="analysis.empty.title">
       <segment state="translated">
-        <source/>
+        <source />
         <target>还没有可分析的数据。</target>
       </segment>
     </unit>
     <unit id="analysis.empty.body">
       <segment state="translated">
-        <source/>
+        <source />
         <target> 启动训练计划或记录第一组——我们会在这里显示趋势和连续记录。 </target>
       </segment>
     </unit>
     <unit id="analysis.empty.cta">
       <segment state="translated">
-        <source/>
+        <source />
         <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">fitness_center</pc> 选择训练计划 </target>
       </segment>
     </unit>
     <unit id="analysis.tabs.overview">
       <segment state="translated">
-        <source/>
+        <source />
         <target>概览</target>
       </segment>
     </unit>
     <unit id="analysis.overview.empty">
       <segment state="translated">
-        <source/>
+        <source />
         <target>当前日期范围内尚无条目。</target>
       </segment>
     </unit>
     <unit id="analysis.overview.uncategorisedNotice">
       <segment state="translated">
-        <source/>
+        <source />
         <target>这些条目不属于任何已知类别 — 下方为汇总。</target>
       </segment>
     </unit>
     <unit id="analysis.overview.comparison.title">
       <segment state="translated">
-        <source/>
+        <source />
         <target>按训练组对比</target>
       </segment>
     </unit>
     <unit id="analysis.overview.comparison.empty">
       <segment state="translated">
-        <source/>
+        <source />
         <target>当前日期范围内暂无数据。</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.totalReps">
       <segment state="translated">
-        <source/>
+        <source />
         <target>总次数</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.todayReps">
       <segment state="translated">
-        <source/>
+        <source />
         <target>今天</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.streak">
       <segment state="translated">
-        <source/>
+        <source />
         <target>连续天数</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.bestDay">
       <segment state="translated">
-        <source/>
+        <source />
         <target>最佳日</target>
       </segment>
     </unit>
     <unit id="analysis.overview.comparison.metricLabel">
       <segment state="translated">
-        <source/>
+        <source />
         <target>训练次数</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.facet.repsTitle">
       <segment state="translated">
-        <source/>
+        <source />
         <target>次数</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.totalSets">
       <segment state="translated">
-        <source/>
+        <source />
         <target>总组数</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.facet.timeTitle">
       <segment state="translated">
-        <source/>
+        <source />
         <target>时间</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.totalTime">
       <segment state="translated">
-        <source/>
+        <source />
         <target>总时间</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.todayTime">
       <segment state="translated">
-        <source/>
+        <source />
         <target>今天</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.facet.distanceTitle">
       <segment state="translated">
-        <source/>
+        <source />
         <target>距离</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.totalDistance">
       <segment state="translated">
-        <source/>
+        <source />
         <target>总距离</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.todayDistance">
       <segment state="translated">
-        <source/>
+        <source />
         <target>今天</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.facet.distanceTimeTitle">
       <segment state="translated">
-        <source/>
+        <source />
         <target>距离与时间</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.entries">
       <segment state="translated">
-        <source/>
+        <source />
         <target>训练次数</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.viewDetails">
       <segment state="translated">
-        <source/>
+        <source />
         <target>查看详情</target>
       </segment>
     </unit>
     <unit id="entries.empty.title">
       <segment state="translated">
-        <source/>
+        <source />
         <target>还没有记录。</target>
       </segment>
     </unit>
     <unit id="entries.empty.body">
       <segment state="translated">
-        <source/>
+        <source />
         <target> 添加你的第一条训练记录——历史记录就会显示在这里。 </target>
       </segment>
     </unit>
     <unit id="entries.empty.cta">
       <segment state="translated">
-        <source/>
+        <source />
         <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">add</pc> 创建记录 </target>
       </segment>
     </unit>
     <unit id="settings.displayNameHint.leaderboardLink">
       <segment state="translated">
-        <source/>
+        <source />
         <target>查看排行榜</target>
       </segment>
     </unit>
     <unit id="settings.publicProfile.previewCta">
       <segment state="translated">
-        <source/>
+        <source />
         <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">visibility</pc> 预览</target>
       </segment>
     </unit>
     <unit id="settings.goals.planOverrideHint">
       <segment state="translated">
-        <source/>
+        <source />
         <target> 活动的训练计划会自动设定每日目标。手动值仅在计划结束后生效。 </target>
       </segment>
     </unit>
     <unit id="settings.goals.openActivePlan">
       <segment state="translated">
-        <source/>
+        <source />
         <target>打开活动计划</target>
       </segment>
     </unit>
     <unit id="settings.adsConsent.privacyLink">
       <segment state="translated">
-        <source/>
+        <source />
         <target>隐私声明</target>
       </segment>
     </unit>
     <unit id="dashboard.noPlanTitle">
       <segment state="translated">
-        <source/>
+        <source />
         <target>尚无活动训练计划</target>
       </segment>
     </unit>
     <unit id="dashboard.noPlanSubtitle">
       <segment state="translated">
-        <source/>
+        <source />
         <target> 选择一个计划，让每日目标自动设定。 </target>
       </segment>
     </unit>
     <unit id="dashboard.noPlanCta">
       <segment state="translated">
-        <source/>
+        <source />
         <target> 选择计划 </target>
       </segment>
     </unit>
     <unit id="dashboard.goalEditAria">
       <segment state="translated">
-        <source/>
+        <source />
         <target>在设置中打开每日目标</target>
       </segment>
     </unit>
     <unit id="dashboard.lastEntryLinkAria">
       <segment state="translated">
-        <source/>
+        <source />
         <target>在历史记录中打开最后一条记录</target>
       </segment>
     </unit>
     <unit id="dashboard.allTimeBadges.cta">
       <segment state="translated">
-        <source/>
+        <source />
         <target>查看分析</target>
       </segment>
     </unit>
     <unit id="trainingPlans.goalOverrideHint">
       <segment state="translated">
-        <source/>
+        <source />
         <target> 每日目标由计划设定。 </target>
       </segment>
     </unit>
     <unit id="trainingPlans.goalOverrideHint.cta">
       <segment state="translated">
-        <source/>
+        <source />
         <target>调整手动目标</target>
       </segment>
     </unit>
@@ -7692,711 +7685,594 @@
       </segment>
     </unit>
       <unit id="exercise.category.push">
-      <segment state="initial">
+      <segment state="translated">
         <source>Drücken</source>
-        <target>Drücken</target>
-      </segment>
+        <target>推</target></segment>
     </unit>
     <unit id="exercise.category.pull">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ziehen</source>
-        <target>Ziehen</target>
-      </segment>
+        <target>拉</target></segment>
     </unit>
     <unit id="exercise.category.squat">
-      <segment state="initial">
+      <segment state="translated">
         <source>Kniebeuge</source>
-        <target>Kniebeuge</target>
-      </segment>
+        <target>深蹲</target></segment>
     </unit>
     <unit id="exercise.category.hinge">
-      <segment state="initial">
+      <segment state="translated">
         <source>Hüftstreckung</source>
-        <target>Hüftstreckung</target>
-      </segment>
+        <target>髋部伸展</target></segment>
     </unit>
     <unit id="exercise.category.lunge">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ausfallschritt</source>
-        <target>Ausfallschritt</target>
-      </segment>
+        <target>弓步</target></segment>
     </unit>
     <unit id="exercise.category.carry">
-      <segment state="initial">
+      <segment state="translated">
         <source>Tragen</source>
-        <target>Tragen</target>
-      </segment>
+        <target>负重行走</target></segment>
     </unit>
     <unit id="exercise.category.core">
-      <segment state="initial">
+      <segment state="translated">
         <source>Rumpf</source>
-        <target>Rumpf</target>
-      </segment>
+        <target>核心</target></segment>
     </unit>
     <unit id="exercise.category.mobility">
-      <segment state="initial">
+      <segment state="translated">
         <source>Mobilität</source>
-        <target>Mobilität</target>
-      </segment>
+        <target>活动能力</target></segment>
     </unit>
     <unit id="exercise.category.strength">
-      <segment state="initial">
+      <segment state="translated">
         <source>Krafttraining</source>
-        <target>Krafttraining</target>
-      </segment>
+        <target>力量训练</target></segment>
     </unit>
     <unit id="exercise.core.deadbug.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Dead Bug</source>
-        <target>Dead Bug</target>
-      </segment>
+        <target>死虫式</target></segment>
     </unit>
     <unit id="exercise.core.hollowhold.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Hollow Hold</source>
-        <target>Hollow Hold</target>
-      </segment>
+        <target>空心支撑</target></segment>
     </unit>
     <unit id="exercise.squat.wallsit.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Wandsitz</source>
-        <target>Wandsitz</target>
-      </segment>
+        <target>靠墙深蹲</target></segment>
     </unit>
     <unit id="exercise.squat.boxjump.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Box Jumps</source>
-        <target>Box Jumps</target>
-      </segment>
+        <target>跳箱</target></segment>
     </unit>
     <unit id="exercise.hinge.singlelegRdl.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Einbeiniges Kreuzheben</source>
-        <target>Einbeiniges Kreuzheben</target>
-      </segment>
+        <target>单腿硬拉</target></segment>
     </unit>
     <unit id="exercise.hinge.goodmorning.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Good Morning</source>
-        <target>Good Morning</target>
-      </segment>
+        <target>早安式</target></segment>
     </unit>
     <unit id="exercise.lunge.stepup.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Step-ups</source>
-        <target>Step-ups</target>
-      </segment>
+        <target>台阶式</target></segment>
     </unit>
     <unit id="exercise.pull.pullups.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Klimmzüge</source>
-        <target>Klimmzüge</target>
-      </segment>
+        <target>引体向上</target></segment>
     </unit>
     <unit id="exercise.pull.rows.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ruderzug</source>
-        <target>Ruderzug</target>
-      </segment>
+        <target>划船</target></segment>
     </unit>
     <unit id="exercise.pull.deadhang.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Dead Hang</source>
-        <target>Dead Hang</target>
-      </segment>
+        <target>悬垂保持</target></segment>
     </unit>
     <unit id="exercise.pull.facepull.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Face Pull</source>
-        <target>Face Pull</target>
-      </segment>
+        <target>面部拉力</target></segment>
     </unit>
     <unit id="exercise.carry.farmer.name">
-      <segment state="initial">
-        <source>Farmer&apos;s Walk</source>
-        <target>Farmer&apos;s Walk</target>
-      </segment>
+      <segment state="translated">
+        <source>Farmer's Walk</source>
+        <target>农夫行走</target></segment>
     </unit>
     <unit id="exercise.carry.suitcase.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Suitcase Carry</source>
-        <target>Suitcase Carry</target>
-      </segment>
+        <target>手提箱负重行走</target></segment>
     </unit>
     <unit id="exercise.carry.overhead.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Overhead Carry</source>
-        <target>Overhead Carry</target>
-      </segment>
+        <target>头顶负重行走</target></segment>
     </unit>
     <unit id="exercise.cardio.walking.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Gehen</source>
-        <target>Gehen</target>
-      </segment>
+        <target>步行</target></segment>
     </unit>
     <unit id="exercise.cardio.cycling.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Radfahren</source>
-        <target>Radfahren</target>
-      </segment>
+        <target>骑自行车</target></segment>
     </unit>
     <unit id="exercise.cardio.rowing.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Rudern</source>
-        <target>Rudern</target>
-      </segment>
+        <target>划船</target></segment>
     </unit>
     <unit id="exercise.cardio.swimming.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Schwimmen</source>
-        <target>Schwimmen</target>
-      </segment>
+        <target>游泳</target></segment>
     </unit>
     <unit id="exercise.cardio.jumprope.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Seilspringen</source>
-        <target>Seilspringen</target>
-      </segment>
+        <target>跳绳</target></segment>
     </unit>
     <unit id="exercise.cardio.burpees.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Burpees</source>
-        <target>Burpees</target>
-      </segment>
+        <target>波比跳</target></segment>
     </unit>
     <unit id="exercise.cardio.jumpingjacks.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Hampelmänner</source>
-        <target>Hampelmänner</target>
-      </segment>
+        <target>开合跳</target></segment>
     </unit>
     <unit id="exercise.cardio.highknees.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>High Knees</source>
-        <target>High Knees</target>
-      </segment>
+        <target>高抬腿</target></segment>
     </unit>
     <unit id="exercise.mobility.stretching.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Dehnen</source>
-        <target>Dehnen</target>
-      </segment>
+        <target>拉伸</target></segment>
     </unit>
     <unit id="exercise.mobility.yoga.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Yoga</source>
-        <target>Yoga</target>
-      </segment>
+        <target>瑜伽</target></segment>
     </unit>
     <unit id="exercise.mobility.foamrolling.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Faszienrolle</source>
-        <target>Faszienrolle</target>
-      </segment>
+        <target>泡沫轴</target></segment>
     </unit>
     <unit id="exercise.mobility.dynamicwarmup.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Dynamisches Aufwärmen</source>
-        <target>Dynamisches Aufwärmen</target>
-      </segment>
+        <target>动态热身</target></segment>
     </unit>
     <unit id="exercise.mobility.catcow.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Katze-Kuh</source>
-        <target>Katze-Kuh</target>
-      </segment>
+        <target>猫牛式</target></segment>
     </unit>
     <unit id="exercise.mobility.hipopener.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Hüftöffner</source>
-        <target>Hüftöffner</target>
-      </segment>
+        <target>开髋</target></segment>
     </unit>
     <unit id="exercise.strength.benchpress.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Bankdrücken</source>
-        <target>Bankdrücken</target>
-      </segment>
+        <target>卧推</target></segment>
     </unit>
     <unit id="exercise.strength.overheadpress.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Schulterdrücken</source>
-        <target>Schulterdrücken</target>
-      </segment>
+        <target>肩推</target></segment>
     </unit>
     <unit id="exercise.strength.deadlift.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Kreuzheben</source>
-        <target>Kreuzheben</target>
-      </segment>
+        <target>硬拉</target></segment>
     </unit>
     <unit id="exercise.strength.barbellsquat.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Langhantel-Kniebeuge</source>
-        <target>Langhantel-Kniebeuge</target>
-      </segment>
+        <target>杠铃深蹲</target></segment>
     </unit>
     <unit id="exercise.strength.barbellrow.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Langhantelrudern</source>
-        <target>Langhantelrudern</target>
-      </segment>
+        <target>杠铃划船</target></segment>
     </unit>
     <unit id="exercise.strength.kettlebellswing.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Kettlebell Swing</source>
-        <target>Kettlebell Swing</target>
-      </segment>
+        <target>壶铃摇摆</target></segment>
     </unit>
       <unit id="exercise.variant.situps.standard">
-      <segment state="initial">
+      <segment state="translated">
         <source>Standard</source>
-        <target>Standard</target>
-      </segment>
+        <target>标准</target></segment>
     </unit>
     <unit id="exercise.variant.situps.decline">
-      <segment state="initial">
+      <segment state="translated">
         <source>Decline</source>
-        <target>Decline</target>
-      </segment>
+        <target>下斜</target></segment>
     </unit>
     <unit id="exercise.variant.situps.weighted">
-      <segment state="initial">
+      <segment state="translated">
         <source>Mit Zusatzgewicht</source>
-        <target>Mit Zusatzgewicht</target>
-      </segment>
+        <target>带负重</target></segment>
     </unit>
     <unit id="exercise.variant.crunches.standard">
-      <segment state="initial">
+      <segment state="translated">
         <source>Standard</source>
-        <target>Standard</target>
-      </segment>
+        <target>标准</target></segment>
     </unit>
     <unit id="exercise.variant.crunches.reverse">
-      <segment state="initial">
+      <segment state="translated">
         <source>Reverse Crunches</source>
-        <target>Reverse Crunches</target>
-      </segment>
+        <target>反向卷腹</target></segment>
     </unit>
     <unit id="exercise.variant.crunches.bicycle">
-      <segment state="initial">
+      <segment state="translated">
         <source>Bicycle Crunches</source>
-        <target>Bicycle Crunches</target>
-      </segment>
+        <target>自行车卷腹</target></segment>
     </unit>
     <unit id="exercise.variant.crunches.oblique">
-      <segment state="initial">
+      <segment state="translated">
         <source>Schräge Crunches</source>
-        <target>Schräge Crunches</target>
-      </segment>
+        <target>斜向卷腹</target></segment>
     </unit>
     <unit id="exercise.variant.legraises.lying">
-      <segment state="initial">
+      <segment state="translated">
         <source>Liegend</source>
-        <target>Liegend</target>
-      </segment>
+        <target>平躺</target></segment>
     </unit>
     <unit id="exercise.variant.legraises.hanging-knee">
-      <segment state="initial">
+      <segment state="translated">
         <source>Hängend (Knie)</source>
-        <target>Hängend (Knie)</target>
-      </segment>
+        <target>悬垂（膝盖）</target></segment>
     </unit>
     <unit id="exercise.variant.legraises.hanging-straight">
-      <segment state="initial">
+      <segment state="translated">
         <source>Hängend (gestreckt)</source>
-        <target>Hängend (gestreckt)</target>
-      </segment>
+        <target>悬垂（伸直）</target></segment>
     </unit>
     <unit id="exercise.variant.russiantwist.bodyweight">
-      <segment state="initial">
+      <segment state="translated">
         <source>Eigengewicht</source>
-        <target>Eigengewicht</target>
-      </segment>
+        <target>自重</target></segment>
     </unit>
     <unit id="exercise.variant.russiantwist.weighted">
-      <segment state="initial">
+      <segment state="translated">
         <source>Mit Zusatzgewicht</source>
-        <target>Mit Zusatzgewicht</target>
-      </segment>
+        <target>带负重</target></segment>
     </unit>
     <unit id="exercise.variant.mountainclimbers.standard">
-      <segment state="initial">
+      <segment state="translated">
         <source>Standard</source>
-        <target>Standard</target>
-      </segment>
+        <target>标准</target></segment>
     </unit>
     <unit id="exercise.variant.mountainclimbers.cross-body">
-      <segment state="initial">
+      <segment state="translated">
         <source>Cross-Body</source>
-        <target>Cross-Body</target>
-      </segment>
+        <target>交叉身体</target></segment>
     </unit>
     <unit id="exercise.variant.plank.standard">
-      <segment state="initial">
+      <segment state="translated">
         <source>Standard</source>
-        <target>Standard</target>
-      </segment>
+        <target>标准</target></segment>
     </unit>
     <unit id="exercise.variant.plank.forearm">
-      <segment state="initial">
+      <segment state="translated">
         <source>Unterarmstütz</source>
-        <target>Unterarmstütz</target>
-      </segment>
+        <target>前臂平板支撑</target></segment>
     </unit>
     <unit id="exercise.variant.plank.side">
-      <segment state="initial">
+      <segment state="translated">
         <source>Seitlich</source>
-        <target>Seitlich</target>
-      </segment>
+        <target>侧卧</target></segment>
     </unit>
     <unit id="exercise.variant.plank.reverse">
-      <segment state="initial">
+      <segment state="translated">
         <source>Umgekehrt</source>
-        <target>Umgekehrt</target>
-      </segment>
+        <target>反向</target></segment>
     </unit>
     <unit id="exercise.variant.squats.bodyweight">
-      <segment state="initial">
+      <segment state="translated">
         <source>Eigengewicht</source>
-        <target>Eigengewicht</target>
-      </segment>
+        <target>自重</target></segment>
     </unit>
     <unit id="exercise.variant.squats.sumo">
-      <segment state="initial">
+      <segment state="translated">
         <source>Sumo</source>
-        <target>Sumo</target>
-      </segment>
+        <target>相扑式</target></segment>
     </unit>
     <unit id="exercise.variant.squats.goblet">
-      <segment state="initial">
+      <segment state="translated">
         <source>Goblet</source>
-        <target>Goblet</target>
-      </segment>
+        <target>哥布林式</target></segment>
     </unit>
     <unit id="exercise.variant.squats.bulgarian-split">
-      <segment state="initial">
+      <segment state="translated">
         <source>Bulgarian Split</source>
-        <target>Bulgarian Split</target>
-      </segment>
+        <target>保加利亚分腿蹲</target></segment>
     </unit>
     <unit id="exercise.variant.squats.pistol">
-      <segment state="initial">
+      <segment state="translated">
         <source>Pistol</source>
-        <target>Pistol</target>
-      </segment>
+        <target>手枪蹲</target></segment>
     </unit>
     <unit id="exercise.variant.calfraises.standard">
-      <segment state="initial">
+      <segment state="translated">
         <source>Standard</source>
-        <target>Standard</target>
-      </segment>
+        <target>标准</target></segment>
     </unit>
     <unit id="exercise.variant.calfraises.single-leg">
-      <segment state="initial">
+      <segment state="translated">
         <source>Einbeinig</source>
-        <target>Einbeinig</target>
-      </segment>
+        <target>单腿</target></segment>
     </unit>
     <unit id="exercise.variant.calfraises.seated">
-      <segment state="initial">
+      <segment state="translated">
         <source>Sitzend</source>
-        <target>Sitzend</target>
-      </segment>
+        <target>坐姿</target></segment>
     </unit>
     <unit id="exercise.variant.glutebridge.standard">
-      <segment state="initial">
+      <segment state="translated">
         <source>Standard</source>
-        <target>Standard</target>
-      </segment>
+        <target>标准</target></segment>
     </unit>
     <unit id="exercise.variant.glutebridge.single-leg">
-      <segment state="initial">
+      <segment state="translated">
         <source>Einbeinig</source>
-        <target>Einbeinig</target>
-      </segment>
+        <target>单腿</target></segment>
     </unit>
     <unit id="exercise.variant.glutebridge.hip-thrust">
-      <segment state="initial">
+      <segment state="translated">
         <source>Hip Thrust</source>
-        <target>Hip Thrust</target>
-      </segment>
+        <target>臀推</target></segment>
     </unit>
     <unit id="exercise.variant.glutebridge.march">
-      <segment state="initial">
+      <segment state="translated">
         <source>Marching</source>
-        <target>Marching</target>
-      </segment>
+        <target>行军式</target></segment>
     </unit>
     <unit id="exercise.variant.lunges.forward">
-      <segment state="initial">
+      <segment state="translated">
         <source>Vorwärts</source>
-        <target>Vorwärts</target>
-      </segment>
+        <target>向前</target></segment>
     </unit>
     <unit id="exercise.variant.lunges.reverse">
-      <segment state="initial">
+      <segment state="translated">
         <source>Rückwärts</source>
-        <target>Rückwärts</target>
-      </segment>
+        <target>向后</target></segment>
     </unit>
     <unit id="exercise.variant.lunges.walking">
-      <segment state="initial">
+      <segment state="translated">
         <source>Walking</source>
-        <target>Walking</target>
-      </segment>
+        <target>行走</target></segment>
     </unit>
     <unit id="exercise.variant.lunges.lateral">
-      <segment state="initial">
+      <segment state="translated">
         <source>Seitlich</source>
-        <target>Seitlich</target>
-      </segment>
+        <target>侧卧</target></segment>
     </unit>
     <unit id="exercise.variant.lunges.curtsy">
-      <segment state="initial">
+      <segment state="translated">
         <source>Curtsy</source>
-        <target>Curtsy</target>
-      </segment>
+        <target>屈膝式</target></segment>
     </unit>
     <unit id="exercise.variant.lunges.jumping">
-      <segment state="initial">
+      <segment state="translated">
         <source>Jumping</source>
-        <target>Jumping</target>
-      </segment>
+        <target>跳跃</target></segment>
     </unit>
     <unit id="exercise.variant.pullups.standard">
-      <segment state="initial">
+      <segment state="translated">
         <source>Standard</source>
-        <target>Standard</target>
-      </segment>
+        <target>标准</target></segment>
     </unit>
     <unit id="exercise.variant.pullups.chin-up">
-      <segment state="initial">
+      <segment state="translated">
         <source>Chin-up</source>
-        <target>Chin-up</target>
-      </segment>
+        <target>正握引体向上</target></segment>
     </unit>
     <unit id="exercise.variant.pullups.wide-grip">
-      <segment state="initial">
+      <segment state="translated">
         <source>Breiter Griff</source>
-        <target>Breiter Griff</target>
-      </segment>
+        <target>宽握</target></segment>
     </unit>
     <unit id="exercise.variant.pullups.neutral-grip">
-      <segment state="initial">
+      <segment state="translated">
         <source>Neutraler Griff</source>
-        <target>Neutraler Griff</target>
-      </segment>
+        <target>中立握</target></segment>
     </unit>
     <unit id="exercise.variant.pullups.negative">
-      <segment state="initial">
+      <segment state="translated">
         <source>Negativ</source>
-        <target>Negativ</target>
-      </segment>
+        <target>负向</target></segment>
     </unit>
     <unit id="exercise.variant.pullups.assisted">
-      <segment state="initial">
+      <segment state="translated">
         <source>Assistiert</source>
-        <target>Assistiert</target>
-      </segment>
+        <target>辅助</target></segment>
     </unit>
     <unit id="exercise.variant.pullups.archer">
-      <segment state="initial">
+      <segment state="translated">
         <source>Archer</source>
-        <target>Archer</target>
-      </segment>
+        <target>弓箭式</target></segment>
     </unit>
     <unit id="exercise.variant.rows.inverted">
-      <segment state="initial">
+      <segment state="translated">
         <source>Inverted Row</source>
-        <target>Inverted Row</target>
-      </segment>
+        <target>反向划船</target></segment>
     </unit>
     <unit id="exercise.variant.rows.australian">
-      <segment state="initial">
+      <segment state="translated">
         <source>Australian Row</source>
-        <target>Australian Row</target>
-      </segment>
+        <target>澳大利亚划船</target></segment>
     </unit>
     <unit id="exercise.variant.rows.dumbbell">
-      <segment state="initial">
+      <segment state="translated">
         <source>Kurzhantel</source>
-        <target>Kurzhantel</target>
-      </segment>
+        <target>哑铃</target></segment>
     </unit>
     <unit id="exercise.variant.rows.barbell">
-      <segment state="initial">
+      <segment state="translated">
         <source>Langhantel</source>
-        <target>Langhantel</target>
-      </segment>
+        <target>杠铃</target></segment>
     </unit>
     <unit id="exercise.push.dips.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Dips</source>
-        <target>Dips</target>
-      </segment>
+        <target>屈臂撑</target></segment>
     </unit>
     <unit id="exercise.push.benchdips.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Bankdips</source>
-        <target>Bankdips</target>
-      </segment>
+        <target>长凳屈臂撑</target></segment>
     </unit>
     <unit id="exercise.push.handstandhold.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Handstand-Hold</source>
-        <target>Handstand-Hold</target>
-      </segment>
+        <target>倒立保持</target></segment>
     </unit>
     <unit id="exercise.variant.dips.parallel">
-      <segment state="initial">
+      <segment state="translated">
         <source>Barren</source>
-        <target>Barren</target>
-      </segment>
+        <target>双杠</target></segment>
     </unit>
     <unit id="exercise.variant.dips.straight-bar">
-      <segment state="initial">
+      <segment state="translated">
         <source>Stange</source>
-        <target>Stange</target>
-      </segment>
+        <target>单杠</target></segment>
     </unit>
     <unit id="exercise.variant.dips.ring">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ringe</source>
-        <target>Ringe</target>
-      </segment>
+        <target>吊环</target></segment>
     </unit>
       <unit id="exerciseTimer.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Halteübung-Timer</source>
-        <target>Halteübung-Timer</target>
-      </segment>
+        <target>静力练习计时器</target></segment>
     </unit>
     <unit id="exerciseTimer.exercisePickerAria">
-      <segment state="initial">
+      <segment state="translated">
         <source>Übung wählen</source>
-        <target>Übung wählen</target>
-      </segment>
+        <target>选择练习</target></segment>
     </unit>
     <unit id="exerciseTimer.cameraMode">
-      <segment state="initial">
+      <segment state="translated">
         <source> Kamera: Start/Ende automatisch erkennen </source>
-        <target> Kamera: Start/Ende automatisch erkennen </target>
-      </segment>
+        <target> 相机：自动识别开始/结束 </target></segment>
     </unit>
     <unit id="exerciseTimer.cameraStarting">
-      <segment state="initial">
+      <segment state="translated">
         <source>Kamera startet …</source>
-        <target>Kamera startet …</target>
-      </segment>
+        <target>相机启动中…</target></segment>
     </unit>
     <unit id="exerciseTimer.cameraUnavailable">
-      <segment state="initial">
+      <segment state="translated">
         <source> Kamera nicht verfügbar </source>
-        <target> Kamera nicht verfügbar </target>
-      </segment>
+        <target> 相机不可用 </target></segment>
     </unit>
     <unit id="exerciseTimer.formCheck.toggleAria">
-      <segment state="initial">
+      <segment state="translated">
         <source>Form-Check anzeigen oder ausblenden</source>
-        <target>Form-Check anzeigen oder ausblenden</target>
-      </segment>
+        <target>显示或隐藏动作检查</target></segment>
     </unit>
     <unit id="exerciseTimer.formCheck.angle">
-      <segment state="initial">
+      <segment state="translated">
         <source>Winkel</source>
-        <target>Winkel</target>
-      </segment>
+        <target>角度</target></segment>
     </unit>
     <unit id="exerciseTimer.formCheck.confidence">
-      <segment state="initial">
+      <segment state="translated">
         <source>Sicherheit</source>
-        <target>Sicherheit</target>
-      </segment>
+        <target>置信度</target></segment>
     </unit>
     <unit id="exerciseTimer.pause">
-      <segment state="initial">
+      <segment state="translated">
         <source>Pause</source>
-        <target>Pause</target>
-      </segment>
+        <target>暂停</target></segment>
     </unit>
     <unit id="exerciseTimer.start">
-      <segment state="initial">
+      <segment state="translated">
         <source>Start</source>
-        <target>Start</target>
-      </segment>
+        <target>开始</target></segment>
     </unit>
     <unit id="exerciseTimer.cameraHint">
-      <segment state="initial">
+      <segment state="translated">
         <source> Stelle die Kamera so auf, dass Schulter, Hüfte und Knie sichtbar sind. Der Timer startet automatisch, sobald du in Position bist, und pausiert, wenn du die Position verlässt. </source>
-        <target> Stelle die Kamera so auf, dass Schulter, Hüfte und Knie sichtbar sind. Der Timer startet automatisch, sobald du in Position bist, und pausiert, wenn du die Position verlässt. </target>
-      </segment>
+        <target> 将摄像头对准肩膀、臀部和膝盖。当你就位时计时器会自动开始，当你离开位置时会暂停。 </target></segment>
     </unit>
     <unit id="exerciseTimer.reset">
-      <segment state="initial">
+      <segment state="translated">
         <source> Zurücksetzen </source>
-        <target> Zurücksetzen </target>
-      </segment>
+        <target> 重置 </target></segment>
     </unit>
     <unit id="exerciseTimer.cancel">
-      <segment state="initial">
+      <segment state="translated">
         <source> Abbrechen </source>
-        <target> Abbrechen </target>
-      </segment>
+        <target> 取消 </target></segment>
     </unit>
     <unit id="exerciseTimer.save">
-      <segment state="initial">
+      <segment state="translated">
         <source> Übernehmen </source>
-        <target> Übernehmen </target>
-      </segment>
+        <target> 保存 </target></segment>
     </unit>
     <unit id="exerciseTimer.phase.holding">
-      <segment state="initial">
+      <segment state="translated">
         <source>Halten</source>
-        <target>Halten</target>
-      </segment>
+        <target>保持</target></segment>
     </unit>
     <unit id="exerciseTimer.phase.paused">
-      <segment state="initial">
+      <segment state="translated">
         <source>Pause</source>
-        <target>Pause</target>
-      </segment>
+        <target>暂停</target></segment>
     </unit>
     <unit id="exerciseTimer.phase.ready">
-      <segment state="initial">
+      <segment state="translated">
         <source>Bereit</source>
-        <target>Bereit</target>
-      </segment>
+        <target>就绪</target></segment>
     </unit>
     <unit id="exerciseTimer.exercise.plank">
-      <segment state="initial">
+      <segment state="translated">
         <source>Plank</source>
-        <target>Plank</target>
-      </segment>
+        <target>平板支撑</target></segment>
     </unit>
     <unit id="exerciseTimer.exercise.hollowhold">
-      <segment state="initial">
+      <segment state="translated">
         <source>Hollow Hold</source>
-        <target>Hollow Hold</target>
-      </segment>
+        <target>空心支撑</target></segment>
     </unit>
     <unit id="quickAdd.fab.exerciseTimerAria">
-      <segment state="initial">
+      <segment state="translated">
         <source>Halteübungs-Timer öffnen</source>
-        <target>Halteübungs-Timer öffnen</target>
-      </segment>
+        <target>打开静力练习计时器</target></segment>
     </unit>
     <unit id="quickAdd.fab.exerciseTimer">
-      <segment state="initial">
+      <segment state="translated">
         <source>Plank‑Timer</source>
-        <target>Plank‑Timer</target>
-      </segment>
+        <target>平板支撑计时器</target></segment>
     </unit>
     <unit id="quickAddConfig.hintV2">
       <segment state="translated">
-        <source> Lege bis zu <ph id="0" equiv="INTERPOLATION" disp="{{ maxRows }}"/> Schnellaktionen fest. Wähle pro Button die Übung und – wo verfügbar – Auto-Messung über die Kamera. Leere Felder werden ignoriert. </source>
-        <target> 最多可设置 <ph id="0" equiv="INTERPOLATION" disp="{{ maxRows }}"/> 个快速操作。为每个按钮选择训练项目，并在支持时启用通过相机进行自动计数。空白项将被忽略。 </target>
+        <source> Lege bis zu <ph id="0" equiv="INTERPOLATION" disp="{{ maxRows }}" /> Schnellaktionen fest. Wähle pro Button die Übung und – wo verfügbar – Auto-Messung über die Kamera. Leere Felder werden ignoriert. </source>
+        <target> 最多可设置 <ph id="0" equiv="INTERPOLATION" disp="{{ maxRows }}" /> 个快速操作。为每个按钮选择训练项目，并在支持时启用通过相机进行自动计数。空白项将被忽略。 </target>
       </segment>
     </unit>
     <unit id="quickAddConfig.exerciseLabel">
@@ -8774,7 +8650,7 @@
     <unit id="plan.core-4w.day.3.desc">
       <segment state="translated">
         <source>Beinheben 3×10 · Russian Twist 3×15 · Plank 3×30 s · LS 2×12</source>
-        <target>Beinheben 3×10 · 俄罗斯转体 3×15 · 平板支撑 3×30 s · 俯卧撑 2×12</target>
+        <target>抬腿 3×10 · 俄罗斯转体 3×15 · 平板支撑 3×30 s · 俯卧撑 2×12</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.5.desc">
@@ -8798,7 +8674,7 @@
     <unit id="plan.core-4w.day.9.desc">
       <segment state="translated">
         <source>Beinheben 3×12 · Russian Twist 3×18 · Plank 3×40 s · LS 2×12</source>
-        <target>Beinheben 3×12 · 俄罗斯转体 3×18 · 平板支撑 3×40 s · 俯卧撑 2×12</target>
+        <target>抬腿 3×12 · 俄罗斯转体 3×18 · 平板支撑 3×40 s · 俯卧撑 2×12</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.11.desc">
@@ -8846,7 +8722,7 @@
     <unit id="plan.core-4w.day.20.desc">
       <segment state="translated">
         <source>Core-Zirkel 3 Runden — 50 s Plank · 12 Beinheben · 20 Russian Twists · 10 LS</source>
-        <target>核心循环 3 轮 — 50 s 平板支撑 · 12 Beinheben · 20 俄罗斯转体 · 10 俯卧撑</target>
+        <target>核心循环 3 轮 — 50 s 平板支撑 · 12 抬腿 · 20 俄罗斯转体 · 10 俯卧撑</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.22.desc">
@@ -8858,7 +8734,7 @@
     <unit id="plan.core-4w.day.23.desc">
       <segment state="translated">
         <source>Core-Zirkel 3 Runden — 1 min Plank · 30 Russian Twists · 12 Beinheben · 12 LS</source>
-        <target>核心循环 3 轮 — 1 min 平板支撑 · 30 俄罗斯转体 · 12 Beinheben · 12 俯卧撑</target>
+        <target>核心循环 3 轮 — 1 min 平板支撑 · 30 俄罗斯转体 · 12 抬腿 · 12 俯卧撑</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.25.desc">
@@ -9061,7 +8937,7 @@
     </unit>
     <unit id="plan.push-pull-6w.summary">
       <segment state="translated">
-        <source>Symmetrischer 6-Wochen-Plan für Liegestütze und Rückenübungen (Rudern, Klimmzug-Negative, Face Pulls). Vermeidet das klassische &quot;nur Push&quot;-Ungleichgewicht und stärkt die hintere Kette gleichwertig. Pull-Tag pro Woche zusätzlich zur Push-Progression.</source>
+        <source>Symmetrischer 6-Wochen-Plan für Liegestütze und Rückenübungen (Rudern, Klimmzug-Negative, Face Pulls). Vermeidet das klassische "nur Push"-Ungleichgewicht und stärkt die hintere Kette gleichwertig. Pull-Tag pro Woche zusätzlich zur Push-Progression.</source>
         <target>6周对称推拉训练计划：俯卧撑配合拉力训练（划船、引体向上离心、面拉）。避免经典的"只推不拉"失衡，均衡强化后链。每周一天专门的拉日，作为推力进阶之外的补充。</target>
       </segment>
     </unit>
