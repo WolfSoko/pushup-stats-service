@@ -8178,7 +8178,7 @@
     <unit id="exercise.pull.rows.name">
       <segment state="translated">
         <source>Ruderzug</source>
-        <target>Remata</target>
+        <target>Rematore</target>
       </segment>
     </unit>
     <unit id="exercise.pull.deadhang.name">
@@ -8292,7 +8292,7 @@
     <unit id="exercise.mobility.hipopener.name">
       <segment state="translated">
         <source>Hüftöffner</source>
-        <target>Apriscchi</target>
+        <target>Apertura delle anche</target>
       </segment>
     </unit>
     <unit id="exercise.strength.benchpress.name">
@@ -8712,7 +8712,7 @@
     <unit id="exerciseTimer.cameraHint">
       <segment state="translated">
         <source> Stelle die Kamera so auf, dass Schulter, Hüfte und Knie sichtbar sind. Der Timer startet automatisch, sobald du in Position bist, und pausiert, wenn du die Position verlässt. </source>
-        <target>Posiziona la fotocamera in modo che siano visibili spalla, fianco e ginocchio. Il timer si avvia automaticamente</target>
+        <target>Posiziona la fotocamera in modo che siano visibili spalla, fianco e ginocchio. Il timer si avvia automaticamente non appena sei in posizione e si mette in pausa quando esci dalla posizione.</target>
       </segment>
     </unit>
     <unit id="exerciseTimer.reset">

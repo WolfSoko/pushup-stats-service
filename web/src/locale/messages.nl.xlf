@@ -8154,7 +8154,7 @@
     <unit id="exercise.hinge.singlelegRdl.name">
       <segment state="translated">
         <source>Einbeiniges Kreuzheben</source>
-        <target>Eenbenigig deadlift</target>
+        <target>Eenbenig deadlift</target>
       </segment>
     </unit>
     <unit id="exercise.hinge.goodmorning.name">
@@ -8178,7 +8178,7 @@
     <unit id="exercise.pull.rows.name">
       <segment state="translated">
         <source>Ruderzug</source>
-        <target>Rij</target>
+        <target>Roeien</target>
       </segment>
     </unit>
     <unit id="exercise.pull.deadhang.name">
@@ -8478,7 +8478,7 @@
     <unit id="exercise.variant.calfraises.single-leg">
       <segment state="translated">
         <source>Einbeinig</source>
-        <target>Eenbenigig</target>
+        <target>Eenbenig</target>
       </segment>
     </unit>
     <unit id="exercise.variant.calfraises.seated">
@@ -8496,7 +8496,7 @@
     <unit id="exercise.variant.glutebridge.single-leg">
       <segment state="translated">
         <source>Einbeinig</source>
-        <target>Eenbenigig</target>
+        <target>Eenbenig</target>
       </segment>
     </unit>
     <unit id="exercise.variant.glutebridge.hip-thrust">
@@ -8664,7 +8664,7 @@
     <unit id="exerciseTimer.cameraMode">
       <segment state="translated">
         <source> Kamera: Start/Ende automatisch erkennen </source>
-        <target> Kamera: Start/Ende automatisch erkennen </target>
+        <target> Camera: begin/einde automatisch detecteren </target>
       </segment>
     </unit>
     <unit id="exerciseTimer.cameraStarting">
@@ -8676,7 +8676,7 @@
     <unit id="exerciseTimer.cameraUnavailable">
       <segment state="translated">
         <source> Kamera nicht verfügbar </source>
-        <target> Kamera nicht verfügbar </target>
+        <target> Camera niet beschikbaar </target>
       </segment>
     </unit>
     <unit id="exerciseTimer.formCheck.toggleAria">
@@ -8712,25 +8712,25 @@
     <unit id="exerciseTimer.cameraHint">
       <segment state="translated">
         <source> Stelle die Kamera so auf, dass Schulter, Hüfte und Knie sichtbar sind. Der Timer startet automatisch, sobald du in Position bist, und pausiert, wenn du die Position verlässt. </source>
-        <target> Stelle die Kamera so auf, dass Schulter, Hüfte und Knie sichtbar sind. Der Timer startet automatisch, sobald du in Position bist, und pausiert, wenn du die Position verlässt. </target>
+        <target> Plaats de camera zo dat schouder, heup en knie zichtbaar zijn. De timer start automatisch zodra je in positie bent en pauzeert wanneer je de positie verlaat. </target>
       </segment>
     </unit>
     <unit id="exerciseTimer.reset">
       <segment state="translated">
         <source> Zurücksetzen </source>
-        <target> Zurücksetzen </target>
+        <target> Resetten </target>
       </segment>
     </unit>
     <unit id="exerciseTimer.cancel">
       <segment state="translated">
         <source> Abbrechen </source>
-        <target> Abbrechen </target>
+        <target> Annuleren </target>
       </segment>
     </unit>
     <unit id="exerciseTimer.save">
       <segment state="translated">
         <source> Übernehmen </source>
-        <target> Übernehmen </target>
+        <target> Toepassen </target>
       </segment>
     </unit>
     <unit id="exerciseTimer.phase.holding">

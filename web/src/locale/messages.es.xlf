@@ -870,7 +870,7 @@
       </notes>
       <segment state="translated">
         <source>+<ph id="0" equiv="INTERPOLATION" disp="{{ item.value }}" /> Reps</source>
-        <target>+<ph id="0" equiv="INTERPOLATION" disp="{{ item.value }}" /> Representantes</target>
+        <target>+<ph id="0" equiv="INTERPOLATION" disp="{{ item.value }}" /> repeticiones</target>
       </segment>
     </unit>
     <unit id="quickAdd.fab.open">
@@ -2223,7 +2223,7 @@
       </notes>
       <segment state="translated">
         <source> Deine Position: #<ph id="0" equiv="INTERPOLATION" disp="{{ me.rank }}" /> · <ph id="1" equiv="INTERPOLATION_1" disp="{{ me.reps }}" /> Reps </source>
-        <target> Tu puesto: #<ph id="0" equiv="INTERPOLATION" disp="{{ me.rank }}" /> · <ph id="1" equiv="INTERPOLATION_1" disp="{{ me.reps }}" /> Representantes </target>
+        <target> Tu puesto: #<ph id="0" equiv="INTERPOLATION" disp="{{ me.rank }}" /> · <ph id="1" equiv="INTERPOLATION_1" disp="{{ me.reps }}" /> repeticiones </target>
       </segment>
     </unit>
     <unit id="reminder.feature.eyebrow">
@@ -3298,7 +3298,7 @@
       </notes>
       <segment state="translated">
         <source><ph id="0" equiv="name" disp="profile.displayName" /> hat <ph id="1" equiv="total" disp="profile.total" /> Liegestütze in <ph id="2" equiv="days" disp="profile.totalDays" /> aktiven Tagen geschafft – aktuelle Streak: <ph id="3" equiv="streak" disp="profile.currentStreak" /> Tage. Tracke selbst kostenlos auf pushup-stats.com.</source>
-        <target><ph id="0" equiv="name" disp="profile.displayName" /> ha completado flexiones <ph id="1" equiv="total" disp="profile.total" /> en días activos <ph id="2" equiv="days" disp="profile.totalDays" /> - racha actual: días <ph id="3" equiv="streak" disp="profile.currentStreak" />. Realice un seguimiento gratuito en pushup-stats.com.</target>
+        <target><ph id="0" equiv="name" disp="profile.displayName" /> ha completado <ph id="1" equiv="total" disp="profile.total" /> flexiones en <ph id="2" equiv="days" disp="profile.totalDays" /> días activos — racha actual: <ph id="3" equiv="streak" disp="profile.currentStreak" /> días. Haz tu seguimiento gratis en pushup-stats.com.</target>
       </segment>
     </unit>
     <unit id="publicProfile.seo.imageAlt">
@@ -3496,7 +3496,7 @@
       </notes>
       <segment state="translated">
         <source> Zeigt einen "Eintragen"-Button auf der Push-Benachrichtigung. Wenn die App schon geöffnet ist, wird der Eintrag im Hintergrund gespeichert; ansonsten öffnet sich kurz ein Tab, der den Eintrag automatisch anlegt. </source>
-        <target> Muestra un botón "Suscribirse" en la notificación push. Si la aplicación ya está abierta, la entrada se guarda en segundo plano; de lo contrario, se abrirá brevemente una pestaña que creará automáticamente la entrada. </target>
+        <target> Muestra un botón «Registrar» en la notificación push. Si la aplicación ya está abierta, la entrada se guarda en segundo plano; de lo contrario, se abrirá brevemente una pestaña que creará automáticamente la entrada. </target>
       </segment>
     </unit>
     <unit id="reminder.quickLog.toggle">
@@ -3658,7 +3658,7 @@
       </notes>
       <segment state="translated">
         <source> Aktiv auf <ph id="0" equiv="INTERPOLATION" disp="{{ pushService.deviceCount() }}" /> Geräten </source>
-        <target> Activo en dispositivos <ph id="0" equiv="INTERPOLATION" disp="{{ pushService.deviceCount() }}" /> </target>
+        <target> Activo en <ph id="0" equiv="INTERPOLATION" disp="{{ pushService.deviceCount() }}" /> dispositivos </target>
       </segment>
     </unit>
     <unit id="push.cta.desc">
@@ -3822,7 +3822,7 @@
       </notes>
       <segment state="translated">
         <source>Diese Woche: <ph id="0" equiv="INTERPOLATION" disp="{{ weekReps() }}" /> / <ph id="1" equiv="INTERPOLATION_1" disp="{{ weeklyGoal() }}" /> Reps</source>
-        <target>Esta semana: Representantes de <ph id="0" equiv="INTERPOLATION" disp="{{ weekReps() }}" /> /<ph id="1" equiv="INTERPOLATION_1" disp="{{ weeklyGoal() }}" /></target>
+        <target>Esta semana: <ph id="0" equiv="INTERPOLATION" disp="{{ weekReps() }}" /> / <ph id="1" equiv="INTERPOLATION_1" disp="{{ weeklyGoal() }}" /> repeticiones</target>
       </segment>
     </unit>
     <unit id="dashboard.analysisTeaserError">
@@ -3930,7 +3930,7 @@
       </notes>
       <segment state="translated">
         <source> Gesamt: <ph id="0" equiv="INTERPOLATION" disp="{{ totalReps() }}" /> Reps </source>
-        <target> Total: Representantes <ph id="0" equiv="INTERPOLATION" disp="{{ totalReps() }}" /> </target>
+        <target> Total: <ph id="0" equiv="INTERPOLATION" disp="{{ totalReps() }}" /> repeticiones </target>
       </segment>
     </unit>
     <unit id="typeLabel">
@@ -4900,7 +4900,7 @@
       </notes>
       <segment state="translated">
         <source><ph id="0" equiv="INTERPOLATION" disp="{{ entries().length }}" /> Einträge</source>
-        <target>Entradas <ph id="0" equiv="INTERPOLATION" disp="{{ entries().length }}" /></target>
+        <target><ph id="0" equiv="INTERPOLATION" disp="{{ entries().length }}" /> entradas</target>
       </segment>
     </unit>
     <unit id="sourceColumnToggle">
@@ -5077,7 +5077,7 @@
       </notes>
       <segment state="translated">
         <source>Heute schon <ph id="0" equiv="total" disp="total" /> Liegestütze geschafft – Streak: <ph id="1" equiv="streak" disp="streak" /> Tage 🔥 Schau dir mein Profil an:</source>
-        <target>Ya hice flexiones <ph id="0" equiv="total" disp="total" /> hoy – Racha: días <ph id="1" equiv="streak" disp="streak" /> 🔥 Mira mi perfil:</target>
+        <target>Ya hice <ph id="0" equiv="total" disp="total" /> flexiones hoy – Racha: <ph id="1" equiv="streak" disp="streak" /> días 🔥 Mira mi perfil:</target>
       </segment>
     </unit>
     <unit id="dashboard.share.text.profile.simple">
@@ -5095,7 +5095,7 @@
       </notes>
       <segment state="translated">
         <source>Heute schon <ph id="0" equiv="total" disp="total" /> Liegestütze geschafft – Streak: <ph id="1" equiv="streak" disp="streak" /> Tage 🔥 Tracke deine Stats kostenlos:</source>
-        <target>Flexiones <ph id="0" equiv="total" disp="total" /> ya hechas hoy – Racha: días <ph id="1" equiv="streak" disp="streak" /> 🔥 Realice un seguimiento de sus estadísticas de forma gratuita:</target>
+        <target><ph id="0" equiv="total" disp="total" /> flexiones ya hechas hoy – Racha: <ph id="1" equiv="streak" disp="streak" /> días 🔥 Haz seguimiento de tus estadísticas gratis:</target>
       </segment>
     </unit>
     <unit id="dashboard.share.text.simple">
@@ -5627,7 +5627,7 @@
       </notes>
       <segment state="translated">
         <source>Monatsziel (Reps)</source>
-        <target>Objetivo Mensual (Representantes)</target>
+        <target>Objetivo Mensual (repeticiones)</target>
       </segment>
     </unit>
     <unit id="monthlyGoalPlaceholder">
@@ -6121,7 +6121,7 @@
       </notes>
       <segment state="translated">
         <source>+<ph id="0" equiv="INTERPOLATION" disp="{{ reps }}" /> Reps</source>
-        <target>+<ph id="0" equiv="INTERPOLATION" disp="{{ reps }}" /> Representantes</target>
+        <target>+<ph id="0" equiv="INTERPOLATION" disp="{{ reps }}" /> repeticiones</target>
       </segment>
     </unit>
     <unit id="dashboard.goalFill.reached">

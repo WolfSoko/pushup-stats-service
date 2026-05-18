@@ -4735,7 +4735,7 @@
     <unit id="exercise.abs.legraises.name">
       <segment state="translated">
         <source>Beinheben</source>
-        <target>Beinheben</target>
+        <target>抬腿</target>
       </segment>
     </unit>
     <unit id="exercise.abs.russiantwist.name">
@@ -7737,7 +7737,7 @@
     <unit id="exercise.core.hollowhold.name">
       <segment state="translated">
         <source>Hollow Hold</source>
-        <target>空心式hold</target></segment>
+        <target>空心支撑</target></segment>
     </unit>
     <unit id="exercise.squat.wallsit.name">
       <segment state="translated">
@@ -7777,7 +7777,7 @@
     <unit id="exercise.pull.deadhang.name">
       <segment state="translated">
         <source>Dead Hang</source>
-        <target>悬垂hold</target></segment>
+        <target>悬垂保持</target></segment>
     </unit>
     <unit id="exercise.pull.facepull.name">
       <segment state="translated">
@@ -7852,7 +7852,7 @@
     <unit id="exercise.mobility.foamrolling.name">
       <segment state="translated">
         <source>Faszienrolle</source>
-        <target>筋膜枪</target></segment>
+        <target>泡沫轴</target></segment>
     </unit>
     <unit id="exercise.mobility.dynamicwarmup.name">
       <segment state="translated">
@@ -8147,7 +8147,7 @@
     <unit id="exercise.push.handstandhold.name">
       <segment state="translated">
         <source>Handstand-Hold</source>
-        <target>倒立hold</target></segment>
+        <target>倒立保持</target></segment>
     </unit>
     <unit id="exercise.variant.dips.parallel">
       <segment state="translated">
@@ -8192,7 +8192,7 @@
     <unit id="exerciseTimer.formCheck.toggleAria">
       <segment state="translated">
         <source>Form-Check anzeigen oder ausblenden</source>
-        <target>显示或隐藏表单检查</target></segment>
+        <target>显示或隐藏动作检查</target></segment>
     </unit>
     <unit id="exerciseTimer.formCheck.angle">
       <segment state="translated">
@@ -8257,7 +8257,7 @@
     <unit id="exerciseTimer.exercise.hollowhold">
       <segment state="translated">
         <source>Hollow Hold</source>
-        <target>空心式hold</target></segment>
+        <target>空心支撑</target></segment>
     </unit>
     <unit id="quickAdd.fab.exerciseTimerAria">
       <segment state="translated">
@@ -8650,7 +8650,7 @@
     <unit id="plan.core-4w.day.3.desc">
       <segment state="translated">
         <source>Beinheben 3×10 · Russian Twist 3×15 · Plank 3×30 s · LS 2×12</source>
-        <target>Beinheben 3×10 · 俄罗斯转体 3×15 · 平板支撑 3×30 s · 俯卧撑 2×12</target>
+        <target>抬腿 3×10 · 俄罗斯转体 3×15 · 平板支撑 3×30 s · 俯卧撑 2×12</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.5.desc">
@@ -8674,7 +8674,7 @@
     <unit id="plan.core-4w.day.9.desc">
       <segment state="translated">
         <source>Beinheben 3×12 · Russian Twist 3×18 · Plank 3×40 s · LS 2×12</source>
-        <target>Beinheben 3×12 · 俄罗斯转体 3×18 · 平板支撑 3×40 s · 俯卧撑 2×12</target>
+        <target>抬腿 3×12 · 俄罗斯转体 3×18 · 平板支撑 3×40 s · 俯卧撑 2×12</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.11.desc">
@@ -8722,7 +8722,7 @@
     <unit id="plan.core-4w.day.20.desc">
       <segment state="translated">
         <source>Core-Zirkel 3 Runden — 50 s Plank · 12 Beinheben · 20 Russian Twists · 10 LS</source>
-        <target>核心循环 3 轮 — 50 s 平板支撑 · 12 Beinheben · 20 俄罗斯转体 · 10 俯卧撑</target>
+        <target>核心循环 3 轮 — 50 s 平板支撑 · 12 抬腿 · 20 俄罗斯转体 · 10 俯卧撑</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.22.desc">
@@ -8734,7 +8734,7 @@
     <unit id="plan.core-4w.day.23.desc">
       <segment state="translated">
         <source>Core-Zirkel 3 Runden — 1 min Plank · 30 Russian Twists · 12 Beinheben · 12 LS</source>
-        <target>核心循环 3 轮 — 1 min 平板支撑 · 30 俄罗斯转体 · 12 Beinheben · 12 俯卧撑</target>
+        <target>核心循环 3 轮 — 1 min 平板支撑 · 30 俄罗斯转体 · 12 抬腿 · 12 俯卧撑</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.25.desc">

@@ -4692,7 +4692,7 @@
     <unit id="entry.interval.label">
       <segment state="translated">
         <source>Intervall <ph id="0" equiv="INTERPOLATION" disp="{{ $index + 1 }}"/></source>
-        <target>Intervall <ph id="0" equiv="INTERPOLATION" disp="{{ $index + 1 }}"/></target>
+        <target>Διάστημα <ph id="0" equiv="INTERPOLATION" disp="{{ $index + 1 }}"/></target>
       </segment>
     </unit>
     <unit id="entry.intervals.label">
@@ -8094,13 +8094,13 @@
     <unit id="exercise.category.hinge">
       <segment state="translated">
         <source>Hüftstreckung</source>
-        <target>Εκτέλεση του ισχίου</target>
+        <target>Έκταση ισχίου</target>
       </segment>
     </unit>
     <unit id="exercise.category.lunge">
       <segment state="translated">
         <source>Ausfallschritt</source>
-        <target>Αιχμές</target>
+        <target>Προβολές</target>
       </segment>
     </unit>
     <unit id="exercise.category.carry">
@@ -8286,7 +8286,7 @@
     <unit id="exercise.mobility.catcow.name">
       <segment state="translated">
         <source>Katze-Kuh</source>
-        <target>Κάτω-Αγελάδα</target>
+        <target>Γάτα-Αγελάδα</target>
       </segment>
     </unit>
     <unit id="exercise.mobility.hipopener.name">
@@ -8664,7 +8664,7 @@
     <unit id="exerciseTimer.cameraMode">
       <segment state="translated">
         <source> Kamera: Start/Ende automatisch erkennen </source>
-        <target> Kamera: Start/Ende automatisch erkennen </target>
+        <target> Κάμερα: αυτόματη ανίχνευση έναρξης/λήξης </target>
       </segment>
     </unit>
     <unit id="exerciseTimer.cameraStarting">
@@ -8676,7 +8676,7 @@
     <unit id="exerciseTimer.cameraUnavailable">
       <segment state="translated">
         <source> Kamera nicht verfügbar </source>
-        <target> Kamera nicht verfügbar </target>
+        <target> Η κάμερα δεν είναι διαθέσιμη </target>
       </segment>
     </unit>
     <unit id="exerciseTimer.formCheck.toggleAria">
@@ -8712,25 +8712,25 @@
     <unit id="exerciseTimer.cameraHint">
       <segment state="translated">
         <source> Stelle die Kamera so auf, dass Schulter, Hüfte und Knie sichtbar sind. Der Timer startet automatisch, sobald du in Position bist, und pausiert, wenn du die Position verlässt. </source>
-        <target> Stelle die Kamera so auf, dass Schulter, Hüfte und Knie sichtbar sind. Der Timer startet automatisch, sobald du in Position bist, und pausiert, wenn du die Position verlässt. </target>
+        <target> Τοποθέτησε την κάμερα ώστε να φαίνονται ώμος, ισχίο και γόνατο. Ο χρονομετρητής ξεκινά αυτόματα μόλις πάρεις θέση και κάνει παύση όταν φύγεις από τη θέση. </target>
       </segment>
     </unit>
     <unit id="exerciseTimer.reset">
       <segment state="translated">
         <source> Zurücksetzen </source>
-        <target> Zurücksetzen </target>
+        <target> Επαναφορά </target>
       </segment>
     </unit>
     <unit id="exerciseTimer.cancel">
       <segment state="translated">
         <source> Abbrechen </source>
-        <target> Abbrechen </target>
+        <target> Ακύρωση </target>
       </segment>
     </unit>
     <unit id="exerciseTimer.save">
       <segment state="translated">
         <source> Übernehmen </source>
-        <target> Übernehmen </target>
+        <target> Εφαρμογή </target>
       </segment>
     </unit>
     <unit id="exerciseTimer.phase.holding">

@@ -3496,7 +3496,7 @@
       </notes>
       <segment state="translated">
         <source> Zeigt einen "Eintragen"-Button auf der Push-Benachrichtigung. Wenn die App schon geöffnet ist, wird der Eintrag im Hintergrund gespeichert; ansonsten öffnet sich kurz ein Tab, der den Eintrag automatisch anlegt. </source>
-        <target> Affiche un bouton "S'abonner" sur la notification push. Si l'application est déjà ouverte, l'entrée est enregistrée en arrière-plan; sinon, un onglet s'ouvrira brièvement et créera automatiquement l'entrée. </target>
+        <target> Affiche un bouton « Enregistrer » sur la notification push. Si l'application est déjà ouverte, l'entrée est enregistrée en arrière-plan ; sinon, un onglet s'ouvre brièvement et crée automatiquement l'entrée. </target>
       </segment>
     </unit>
     <unit id="reminder.quickLog.toggle">
@@ -4690,7 +4690,7 @@
     <unit id="entry.interval.label">
       <segment state="translated">
         <source>Intervall <ph id="0" equiv="INTERPOLATION" disp="{{ $index + 1 }}" /></source>
-        <target>Intervalle </target></segment>
+        <target>Intervalle <ph id="0" equiv="INTERPOLATION" disp="{{ $index + 1 }}" /></target></segment>
     </unit>
     <unit id="entry.intervals.label">
       <segment state="translated">

@@ -3998,7 +3998,7 @@ Deine Position: # ·  Reps        </source>
     <unit id="settings.deleteDialogPhraseHint">
       <segment state="translated">
         <source />
-        <target>Please enter exactly "löscchen".</target>
+        <target>Please enter exactly "löschen".</target>
       </segment>
     </unit>
     <unit id="settings.deleteDialogPhraseLabel">
@@ -4720,7 +4720,7 @@ Deine Position: # ·  Reps        </source>
     <unit id="admin.bulk.hint">
       <segment state="translated">
         <source> Löscht anonyme Benutzer ohne Pushups in den letzten <ph id="0" equiv="INTERPOLATION" disp="{{ inactiveDays }}" /> Tagen. </source>
-        <target>Deletes anonymous users without pushups in the last  days.</target>
+        <target>Deletes anonymous users without pushups in the last <ph id="0" equiv="INTERPOLATION" disp="{{ inactiveDays }}" /> days.</target>
       </segment>
     </unit>
     <unit id="admin.bulk.button">
